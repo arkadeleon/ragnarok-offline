@@ -1,0 +1,595 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E15245C7B87000A60FE /* AppDelegate.swift */; };
+		35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E17245C7B87000A60FE /* SceneDelegate.swift */; };
+		35116E1A245C7B87000A60FE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E19245C7B87000A60FE /* ViewController.swift */; };
+		35116E1D245C7B87000A60FE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35116E1B245C7B87000A60FE /* Main.storyboard */; };
+		35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35116E1E245C7B8A000A60FE /* Assets.xcassets */; };
+		35116E22245C7B8A000A60FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */; };
+		35116E2D245C7B8A000A60FE /* RagnarokOnlineWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E2C245C7B8A000A60FE /* RagnarokOnlineWorldTests.swift */; };
+		35116E38245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E37245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		35116E29245C7B8A000A60FE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 35116E0A245C7B87000A60FE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 35116E11245C7B87000A60FE;
+			remoteInfo = RagnarokOnlineWorld;
+		};
+		35116E34245C7B8A000A60FE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 35116E0A245C7B87000A60FE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 35116E11245C7B87000A60FE;
+			remoteInfo = RagnarokOnlineWorld;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		35116E12245C7B87000A60FE /* RagnarokOnlineWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOnlineWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		35116E15245C7B87000A60FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		35116E17245C7B87000A60FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		35116E19245C7B87000A60FE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		35116E1C245C7B87000A60FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		35116E1E245C7B8A000A60FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		35116E21245C7B8A000A60FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		35116E23245C7B8A000A60FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		35116E28245C7B8A000A60FE /* RagnarokOnlineWorldTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RagnarokOnlineWorldTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		35116E2C245C7B8A000A60FE /* RagnarokOnlineWorldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagnarokOnlineWorldTests.swift; sourceTree = "<group>"; };
+		35116E2E245C7B8A000A60FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		35116E33245C7B8A000A60FE /* RagnarokOnlineWorldUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RagnarokOnlineWorldUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		35116E37245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagnarokOnlineWorldUITests.swift; sourceTree = "<group>"; };
+		35116E39245C7B8B000A60FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		35116E0F245C7B87000A60FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		35116E25245C7B8A000A60FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		35116E30245C7B8A000A60FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		35116E09245C7B87000A60FE = {
+			isa = PBXGroup;
+			children = (
+				35116E14245C7B87000A60FE /* RagnarokOnlineWorld */,
+				35116E2B245C7B8A000A60FE /* RagnarokOnlineWorldTests */,
+				35116E36245C7B8A000A60FE /* RagnarokOnlineWorldUITests */,
+				35116E13245C7B87000A60FE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		35116E13245C7B87000A60FE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				35116E12245C7B87000A60FE /* RagnarokOnlineWorld.app */,
+				35116E28245C7B8A000A60FE /* RagnarokOnlineWorldTests.xctest */,
+				35116E33245C7B8A000A60FE /* RagnarokOnlineWorldUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		35116E14245C7B87000A60FE /* RagnarokOnlineWorld */ = {
+			isa = PBXGroup;
+			children = (
+				35116E15245C7B87000A60FE /* AppDelegate.swift */,
+				35116E17245C7B87000A60FE /* SceneDelegate.swift */,
+				35116E19245C7B87000A60FE /* ViewController.swift */,
+				35116E1B245C7B87000A60FE /* Main.storyboard */,
+				35116E1E245C7B8A000A60FE /* Assets.xcassets */,
+				35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */,
+				35116E23245C7B8A000A60FE /* Info.plist */,
+			);
+			path = RagnarokOnlineWorld;
+			sourceTree = "<group>";
+		};
+		35116E2B245C7B8A000A60FE /* RagnarokOnlineWorldTests */ = {
+			isa = PBXGroup;
+			children = (
+				35116E2C245C7B8A000A60FE /* RagnarokOnlineWorldTests.swift */,
+				35116E2E245C7B8A000A60FE /* Info.plist */,
+			);
+			path = RagnarokOnlineWorldTests;
+			sourceTree = "<group>";
+		};
+		35116E36245C7B8A000A60FE /* RagnarokOnlineWorldUITests */ = {
+			isa = PBXGroup;
+			children = (
+				35116E37245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift */,
+				35116E39245C7B8B000A60FE /* Info.plist */,
+			);
+			path = RagnarokOnlineWorldUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		35116E11245C7B87000A60FE /* RagnarokOnlineWorld */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 35116E3C245C7B8B000A60FE /* Build configuration list for PBXNativeTarget "RagnarokOnlineWorld" */;
+			buildPhases = (
+				35116E0E245C7B87000A60FE /* Sources */,
+				35116E0F245C7B87000A60FE /* Frameworks */,
+				35116E10245C7B87000A60FE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RagnarokOnlineWorld;
+			productName = RagnarokOnlineWorld;
+			productReference = 35116E12245C7B87000A60FE /* RagnarokOnlineWorld.app */;
+			productType = "com.apple.product-type.application";
+		};
+		35116E27245C7B8A000A60FE /* RagnarokOnlineWorldTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 35116E3F245C7B8B000A60FE /* Build configuration list for PBXNativeTarget "RagnarokOnlineWorldTests" */;
+			buildPhases = (
+				35116E24245C7B8A000A60FE /* Sources */,
+				35116E25245C7B8A000A60FE /* Frameworks */,
+				35116E26245C7B8A000A60FE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				35116E2A245C7B8A000A60FE /* PBXTargetDependency */,
+			);
+			name = RagnarokOnlineWorldTests;
+			productName = RagnarokOnlineWorldTests;
+			productReference = 35116E28245C7B8A000A60FE /* RagnarokOnlineWorldTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		35116E32245C7B8A000A60FE /* RagnarokOnlineWorldUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 35116E42245C7B8B000A60FE /* Build configuration list for PBXNativeTarget "RagnarokOnlineWorldUITests" */;
+			buildPhases = (
+				35116E2F245C7B8A000A60FE /* Sources */,
+				35116E30245C7B8A000A60FE /* Frameworks */,
+				35116E31245C7B8A000A60FE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				35116E35245C7B8A000A60FE /* PBXTargetDependency */,
+			);
+			name = RagnarokOnlineWorldUITests;
+			productName = RagnarokOnlineWorldUITests;
+			productReference = 35116E33245C7B8A000A60FE /* RagnarokOnlineWorldUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		35116E0A245C7B87000A60FE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1140;
+				LastUpgradeCheck = 1140;
+				ORGANIZATIONNAME = "Leon & Vane";
+				TargetAttributes = {
+					35116E11245C7B87000A60FE = {
+						CreatedOnToolsVersion = 11.4.1;
+					};
+					35116E27245C7B8A000A60FE = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = 35116E11245C7B87000A60FE;
+					};
+					35116E32245C7B8A000A60FE = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = 35116E11245C7B87000A60FE;
+					};
+				};
+			};
+			buildConfigurationList = 35116E0D245C7B87000A60FE /* Build configuration list for PBXProject "RagnarokOnlineWorld" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 35116E09245C7B87000A60FE;
+			productRefGroup = 35116E13245C7B87000A60FE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				35116E11245C7B87000A60FE /* RagnarokOnlineWorld */,
+				35116E27245C7B8A000A60FE /* RagnarokOnlineWorldTests */,
+				35116E32245C7B8A000A60FE /* RagnarokOnlineWorldUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		35116E10245C7B87000A60FE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35116E22245C7B8A000A60FE /* LaunchScreen.storyboard in Resources */,
+				35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */,
+				35116E1D245C7B87000A60FE /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		35116E26245C7B8A000A60FE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		35116E31245C7B8A000A60FE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		35116E0E245C7B87000A60FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35116E1A245C7B87000A60FE /* ViewController.swift in Sources */,
+				35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */,
+				35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		35116E24245C7B8A000A60FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35116E2D245C7B8A000A60FE /* RagnarokOnlineWorldTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		35116E2F245C7B8A000A60FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35116E38245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		35116E2A245C7B8A000A60FE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 35116E11245C7B87000A60FE /* RagnarokOnlineWorld */;
+			targetProxy = 35116E29245C7B8A000A60FE /* PBXContainerItemProxy */;
+		};
+		35116E35245C7B8A000A60FE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 35116E11245C7B87000A60FE /* RagnarokOnlineWorld */;
+			targetProxy = 35116E34245C7B8A000A60FE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		35116E1B245C7B87000A60FE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				35116E1C245C7B87000A60FE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				35116E21245C7B8A000A60FE /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		35116E3A245C7B8B000A60FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		35116E3B245C7B8B000A60FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		35116E3D245C7B8B000A60FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A47Q8ENB5Y;
+				INFOPLIST_FILE = RagnarokOnlineWorld/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = date.leonandvane.RagnarokOnlineWorld;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		35116E3E245C7B8B000A60FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A47Q8ENB5Y;
+				INFOPLIST_FILE = RagnarokOnlineWorld/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = date.leonandvane.RagnarokOnlineWorld;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		35116E40245C7B8B000A60FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A47Q8ENB5Y;
+				INFOPLIST_FILE = RagnarokOnlineWorldTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = date.leonandvane.RagnarokOnlineWorldTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RagnarokOnlineWorld.app/RagnarokOnlineWorld";
+			};
+			name = Debug;
+		};
+		35116E41245C7B8B000A60FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A47Q8ENB5Y;
+				INFOPLIST_FILE = RagnarokOnlineWorldTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = date.leonandvane.RagnarokOnlineWorldTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RagnarokOnlineWorld.app/RagnarokOnlineWorld";
+			};
+			name = Release;
+		};
+		35116E43245C7B8B000A60FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A47Q8ENB5Y;
+				INFOPLIST_FILE = RagnarokOnlineWorldUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = date.leonandvane.RagnarokOnlineWorldUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = RagnarokOnlineWorld;
+			};
+			name = Debug;
+		};
+		35116E44245C7B8B000A60FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A47Q8ENB5Y;
+				INFOPLIST_FILE = RagnarokOnlineWorldUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = date.leonandvane.RagnarokOnlineWorldUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = RagnarokOnlineWorld;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		35116E0D245C7B87000A60FE /* Build configuration list for PBXProject "RagnarokOnlineWorld" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				35116E3A245C7B8B000A60FE /* Debug */,
+				35116E3B245C7B8B000A60FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		35116E3C245C7B8B000A60FE /* Build configuration list for PBXNativeTarget "RagnarokOnlineWorld" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				35116E3D245C7B8B000A60FE /* Debug */,
+				35116E3E245C7B8B000A60FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		35116E3F245C7B8B000A60FE /* Build configuration list for PBXNativeTarget "RagnarokOnlineWorldTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				35116E40245C7B8B000A60FE /* Debug */,
+				35116E41245C7B8B000A60FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		35116E42245C7B8B000A60FE /* Build configuration list for PBXNativeTarget "RagnarokOnlineWorldUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				35116E43245C7B8B000A60FE /* Debug */,
+				35116E44245C7B8B000A60FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 35116E0A245C7B87000A60FE /* Project object */;
+}
