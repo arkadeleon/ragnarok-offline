@@ -13,9 +13,12 @@
 		35116E1D245C7B87000A60FE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35116E1B245C7B87000A60FE /* Main.storyboard */; };
 		35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35116E1E245C7B8A000A60FE /* Assets.xcassets */; };
 		35116E22245C7B8A000A60FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */; };
-		35116E2D245C7B8A000A60FE /* RagnarokOnlineWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E2C245C7B8A000A60FE /* RagnarokOnlineWorldTests.swift */; };
 		35116E38245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E37245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift */; };
 		35116E50245FBF65000A60FE /* DataCompression in Frameworks */ = {isa = PBXBuildFile; productRef = 35116E4F245FBF65000A60FE /* DataCompression */; };
+		35116E57245FC152000A60FE /* FileHandle+Reading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E53245FC152000A60FE /* FileHandle+Reading.swift */; };
+		35116E58245FC152000A60FE /* GRFDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E55245FC152000A60FE /* GRFDocument.swift */; };
+		35116E5A245FC2B5000A60FE /* GRFDocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E59245FC2B5000A60FE /* GRFDocumentTests.swift */; };
+		35116E5C245FC2DF000A60FE /* test.grf in Resources */ = {isa = PBXBuildFile; fileRef = 35116E5B245FC2DF000A60FE /* test.grf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,11 +48,14 @@
 		35116E21245C7B8A000A60FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		35116E23245C7B8A000A60FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		35116E28245C7B8A000A60FE /* RagnarokOnlineWorldTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RagnarokOnlineWorldTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		35116E2C245C7B8A000A60FE /* RagnarokOnlineWorldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagnarokOnlineWorldTests.swift; sourceTree = "<group>"; };
 		35116E2E245C7B8A000A60FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		35116E33245C7B8A000A60FE /* RagnarokOnlineWorldUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RagnarokOnlineWorldUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35116E37245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagnarokOnlineWorldUITests.swift; sourceTree = "<group>"; };
 		35116E39245C7B8B000A60FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		35116E53245FC152000A60FE /* FileHandle+Reading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileHandle+Reading.swift"; sourceTree = "<group>"; };
+		35116E55245FC152000A60FE /* GRFDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GRFDocument.swift; sourceTree = "<group>"; };
+		35116E59245FC2B5000A60FE /* GRFDocumentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRFDocumentTests.swift; sourceTree = "<group>"; };
+		35116E5B245FC2DF000A60FE /* test.grf */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.grf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +110,8 @@
 				35116E15245C7B87000A60FE /* AppDelegate.swift */,
 				35116E17245C7B87000A60FE /* SceneDelegate.swift */,
 				35116E19245C7B87000A60FE /* ViewController.swift */,
+				35116E55245FC152000A60FE /* GRFDocument.swift */,
+				35116E53245FC152000A60FE /* FileHandle+Reading.swift */,
 				35116E1B245C7B87000A60FE /* Main.storyboard */,
 				35116E1E245C7B8A000A60FE /* Assets.xcassets */,
 				35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */,
@@ -115,7 +123,8 @@
 		35116E2B245C7B8A000A60FE /* RagnarokOnlineWorldTests */ = {
 			isa = PBXGroup;
 			children = (
-				35116E2C245C7B8A000A60FE /* RagnarokOnlineWorldTests.swift */,
+				35116E59245FC2B5000A60FE /* GRFDocumentTests.swift */,
+				35116E5B245FC2DF000A60FE /* test.grf */,
 				35116E2E245C7B8A000A60FE /* Info.plist */,
 			);
 			path = RagnarokOnlineWorldTests;
@@ -250,6 +259,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35116E5C245FC2DF000A60FE /* test.grf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +280,8 @@
 				35116E1A245C7B87000A60FE /* ViewController.swift in Sources */,
 				35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */,
 				35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */,
+				35116E57245FC152000A60FE /* FileHandle+Reading.swift in Sources */,
+				35116E58245FC152000A60FE /* GRFDocument.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,7 +289,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35116E2D245C7B8A000A60FE /* RagnarokOnlineWorldTests.swift in Sources */,
+				35116E5A245FC2B5000A60FE /* GRFDocumentTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
