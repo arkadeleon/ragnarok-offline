@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,7 @@
 		35116E22245C7B8A000A60FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */; };
 		35116E2D245C7B8A000A60FE /* RagnarokOnlineWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E2C245C7B8A000A60FE /* RagnarokOnlineWorldTests.swift */; };
 		35116E38245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E37245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift */; };
+		35116E50245FBF65000A60FE /* DataCompression in Frameworks */ = {isa = PBXBuildFile; productRef = 35116E4F245FBF65000A60FE /* DataCompression */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35116E50245FBF65000A60FE /* DataCompression in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +146,9 @@
 			dependencies = (
 			);
 			name = RagnarokOnlineWorld;
+			packageProductDependencies = (
+				35116E4F245FBF65000A60FE /* DataCompression */,
+			);
 			productName = RagnarokOnlineWorld;
 			productReference = 35116E12245C7B87000A60FE /* RagnarokOnlineWorld.app */;
 			productType = "com.apple.product-type.application";
@@ -216,6 +221,9 @@
 				Base,
 			);
 			mainGroup = 35116E09245C7B87000A60FE;
+			packageReferences = (
+				35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */,
+			);
 			productRefGroup = 35116E13245C7B87000A60FE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -590,6 +598,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mw99/DataCompression";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		35116E4F245FBF65000A60FE /* DataCompression */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */;
+			productName = DataCompression;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 35116E0A245C7B87000A60FE /* Project object */;
 }
