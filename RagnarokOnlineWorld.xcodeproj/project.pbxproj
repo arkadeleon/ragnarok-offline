@@ -19,6 +19,16 @@
 		35116E58245FC152000A60FE /* GRFDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E55245FC152000A60FE /* GRFDocument.swift */; };
 		35116E5A245FC2B5000A60FE /* GRFDocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E59245FC2B5000A60FE /* GRFDocumentTests.swift */; };
 		35116E5C245FC2DF000A60FE /* test.grf in Resources */ = {isa = PBXBuildFile; fileRef = 35116E5B245FC2DF000A60FE /* test.grf */; };
+		35116E5E2461A5DB000A60FE /* DESDecryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E5D2461A5DB000A60FE /* DESDecryptor.swift */; };
+		35116E692461C435000A60FE /* balls.wav in Resources */ = {isa = PBXBuildFile; fileRef = 35116E602461C435000A60FE /* balls.wav */; };
+		35116E6A2461C435000A60FE /* idnum2itemdesctable.txt in Resources */ = {isa = PBXBuildFile; fileRef = 35116E612461C435000A60FE /* idnum2itemdesctable.txt */; };
+		35116E6B2461C435000A60FE /* resnametable.txt in Resources */ = {isa = PBXBuildFile; fileRef = 35116E622461C435000A60FE /* resnametable.txt */; };
+		35116E6C2461C435000A60FE /* 11001.txt in Resources */ = {isa = PBXBuildFile; fileRef = 35116E632461C435000A60FE /* 11001.txt */; };
+		35116E6D2461C435000A60FE /* 0_Tex1.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 35116E642461C435000A60FE /* 0_Tex1.bmp */; };
+		35116E6E2461C435000A60FE /* t2_배경1-1.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 35116E652461C435000A60FE /* t2_배경1-1.bmp */; };
+		35116E6F2461C435000A60FE /* loading00.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35116E662461C435000A60FE /* loading00.jpg */; };
+		35116E702461C435000A60FE /* idnum2itemdisplaynametable.txt in Resources */ = {isa = PBXBuildFile; fileRef = 35116E672461C435000A60FE /* idnum2itemdisplaynametable.txt */; };
+		35116E712461C435000A60FE /* monstertalktable.xml in Resources */ = {isa = PBXBuildFile; fileRef = 35116E682461C435000A60FE /* monstertalktable.xml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +66,16 @@
 		35116E55245FC152000A60FE /* GRFDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GRFDocument.swift; sourceTree = "<group>"; };
 		35116E59245FC2B5000A60FE /* GRFDocumentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRFDocumentTests.swift; sourceTree = "<group>"; };
 		35116E5B245FC2DF000A60FE /* test.grf */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.grf; sourceTree = "<group>"; };
+		35116E5D2461A5DB000A60FE /* DESDecryptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DESDecryptor.swift; sourceTree = "<group>"; };
+		35116E602461C435000A60FE /* balls.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = balls.wav; sourceTree = "<group>"; };
+		35116E612461C435000A60FE /* idnum2itemdesctable.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = idnum2itemdesctable.txt; sourceTree = "<group>"; };
+		35116E622461C435000A60FE /* resnametable.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = resnametable.txt; sourceTree = "<group>"; };
+		35116E632461C435000A60FE /* 11001.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 11001.txt; sourceTree = "<group>"; };
+		35116E642461C435000A60FE /* 0_Tex1.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = 0_Tex1.bmp; sourceTree = "<group>"; };
+		35116E652461C435000A60FE /* t2_배경1-1.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = "t2_배경1-1.bmp"; sourceTree = "<group>"; };
+		35116E662461C435000A60FE /* loading00.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loading00.jpg; sourceTree = "<group>"; };
+		35116E672461C435000A60FE /* idnum2itemdisplaynametable.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = idnum2itemdisplaynametable.txt; sourceTree = "<group>"; };
+		35116E682461C435000A60FE /* monstertalktable.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = monstertalktable.xml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +131,7 @@
 				35116E17245C7B87000A60FE /* SceneDelegate.swift */,
 				35116E19245C7B87000A60FE /* ViewController.swift */,
 				35116E55245FC152000A60FE /* GRFDocument.swift */,
+				35116E5D2461A5DB000A60FE /* DESDecryptor.swift */,
 				35116E53245FC152000A60FE /* FileHandle+Reading.swift */,
 				35116E1B245C7B87000A60FE /* Main.storyboard */,
 				35116E1E245C7B8A000A60FE /* Assets.xcassets */,
@@ -125,6 +146,7 @@
 			children = (
 				35116E59245FC2B5000A60FE /* GRFDocumentTests.swift */,
 				35116E5B245FC2DF000A60FE /* test.grf */,
+				35116E5F2461C435000A60FE /* data */,
 				35116E2E245C7B8A000A60FE /* Info.plist */,
 			);
 			path = RagnarokOnlineWorldTests;
@@ -137,6 +159,22 @@
 				35116E39245C7B8B000A60FE /* Info.plist */,
 			);
 			path = RagnarokOnlineWorldUITests;
+			sourceTree = "<group>";
+		};
+		35116E5F2461C435000A60FE /* data */ = {
+			isa = PBXGroup;
+			children = (
+				35116E602461C435000A60FE /* balls.wav */,
+				35116E612461C435000A60FE /* idnum2itemdesctable.txt */,
+				35116E622461C435000A60FE /* resnametable.txt */,
+				35116E632461C435000A60FE /* 11001.txt */,
+				35116E642461C435000A60FE /* 0_Tex1.bmp */,
+				35116E652461C435000A60FE /* t2_배경1-1.bmp */,
+				35116E662461C435000A60FE /* loading00.jpg */,
+				35116E672461C435000A60FE /* idnum2itemdisplaynametable.txt */,
+				35116E682461C435000A60FE /* monstertalktable.xml */,
+			);
+			path = data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,7 +297,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35116E6E2461C435000A60FE /* t2_배경1-1.bmp in Resources */,
+				35116E6A2461C435000A60FE /* idnum2itemdesctable.txt in Resources */,
+				35116E6F2461C435000A60FE /* loading00.jpg in Resources */,
+				35116E6C2461C435000A60FE /* 11001.txt in Resources */,
+				35116E702461C435000A60FE /* idnum2itemdisplaynametable.txt in Resources */,
+				35116E6B2461C435000A60FE /* resnametable.txt in Resources */,
 				35116E5C245FC2DF000A60FE /* test.grf in Resources */,
+				35116E712461C435000A60FE /* monstertalktable.xml in Resources */,
+				35116E6D2461C435000A60FE /* 0_Tex1.bmp in Resources */,
+				35116E692461C435000A60FE /* balls.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +325,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				35116E1A245C7B87000A60FE /* ViewController.swift in Sources */,
+				35116E5E2461A5DB000A60FE /* DESDecryptor.swift in Sources */,
 				35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */,
 				35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */,
 				35116E57245FC152000A60FE /* FileHandle+Reading.swift in Sources */,

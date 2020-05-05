@@ -24,5 +24,21 @@ class GRFDocumentTests: XCTestCase {
         XCTAssert(grf.entries[6].filename == "data\\monstertalktable.xml")
         XCTAssert(grf.entries[7].filename == "data\\resnametable.txt")
         XCTAssert(grf.entries[8].filename == "data\\t2_¹è°æ1-1.bmp")
+
+        let files = [
+            Bundle(for: GRFDocumentTests.self).url(forResource: "0_Tex1", withExtension: "bmp")!,
+            Bundle(for: GRFDocumentTests.self).url(forResource: "11001", withExtension: "txt")!,
+            Bundle(for: GRFDocumentTests.self).url(forResource: "balls", withExtension: "wav")!,
+            Bundle(for: GRFDocumentTests.self).url(forResource: "idnum2itemdesctable", withExtension: "txt")!,
+            Bundle(for: GRFDocumentTests.self).url(forResource: "idnum2itemdisplaynametable", withExtension: "txt")!,
+            Bundle(for: GRFDocumentTests.self).url(forResource: "loading00", withExtension: "jpg")!,
+            Bundle(for: GRFDocumentTests.self).url(forResource: "monstertalktable", withExtension: "xml")!,
+            Bundle(for: GRFDocumentTests.self).url(forResource: "resnametable", withExtension: "txt")!,
+            Bundle(for: GRFDocumentTests.self).url(forResource: "t2_배경1-1", withExtension: "bmp")!
+        ]
+
+        for (i, entry) in grf.entries.enumerated() {
+            try XCTAssert(grf.contents(of: entry) == Data(contentsOf: files[i]))
+        }
     }
 }

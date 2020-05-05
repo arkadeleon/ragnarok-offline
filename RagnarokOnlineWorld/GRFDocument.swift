@@ -30,6 +30,18 @@ public class GRFDocument {
     }
 
     public struct Entry {
+        public struct FileType: OptionSet {
+            public let rawValue: UInt8
+
+            public init(rawValue: UInt8) {
+                self.rawValue = rawValue
+            }
+
+            public static let file          = FileType(rawValue: 0x01)  // entry is a file
+            public static let encryptMixed  = FileType(rawValue: 0x02)  // encryption mode 0 (header DES + periodic DES/shuffle)
+            public static let encryptHeader = FileType(rawValue: 0x04)  // encryption mode 1 (header DES only)
+        }
+
         public let filename: String
         public let packSize: UInt32
         public let lengthAligned: UInt32
@@ -41,6 +53,7 @@ public class GRFDocument {
     public enum Error: Swift.Error {
         case invalidHeader
         case invalidTable
+        case invalidEntry
     }
 
     public let header: Header
@@ -129,5 +142,33 @@ public class GRFDocument {
         }
 
         self.entries = entries
+    }
+
+    deinit {
+        fileHandle.closeFile()
+    }
+
+    public func contents(of entry: Entry) throws -> Data {
+        try fileHandle.seek(toOffset: Header.size + UInt64(entry.offset))
+        var bytes = try fileHandle.readBytes(Int(entry.lengthAligned))
+
+        if entry.type & Entry.FileType.file.rawValue == 0 {
+            guard let data = Data(bytes).unzip() else {
+                throw Error.invalidEntry
+            }
+            return data
+        }
+
+        let decryptor = DESDecryptor()
+        if entry.type & Entry.FileType.encryptMixed.rawValue != 0 {
+            decryptor.decodeFull(buf: &bytes, len: Int(entry.lengthAligned), entrylen: Int(entry.packSize))
+        } else if entry.type & Entry.FileType.encryptHeader.rawValue != 0 {
+            decryptor.decodeHeader(buf: &bytes, len: Int(entry.lengthAligned))
+        }
+
+        guard let data = Data(bytes).unzip() else {
+            throw Error.invalidEntry
+        }
+        return data
     }
 }
