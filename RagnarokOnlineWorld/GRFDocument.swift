@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreFoundation
 import DataCompression
 
 public class GRFDocument {
@@ -127,8 +128,12 @@ public class GRFDocument {
             let type = decompressedData[12]
             let offset = Data(decompressedData[(pos + 13)..<(pos + 17)]).withUnsafeBytes { $0.load(as: UInt32.self) }
 
+            let cfEncoding = CFStringEncoding(CFStringEncodings.EUC_KR.rawValue)
+            let nsEncoding = CFStringConvertEncodingToNSStringEncoding(cfEncoding)
+            let nsFilename = NSString(data: Data(filename), encoding: nsEncoding) ?? ""
+
             let entry = Entry(
-                filename: String(bytes: filename, encoding: .ascii) ?? "",
+                filename: nsFilename as String,
                 packSize: packSize,
                 lengthAligned: lengthAligned,
                 realSize: realSize,
