@@ -30,7 +30,7 @@ public class GRFDocument {
         public let realSize: UInt32
     }
 
-    public struct Entry {
+    public struct Entry: Equatable {
         public struct FileType: OptionSet {
             public let rawValue: UInt8
 
