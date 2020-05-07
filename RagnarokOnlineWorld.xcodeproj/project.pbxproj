@@ -27,11 +27,9 @@
 		35116E6F2461C435000A60FE /* loading00.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35116E662461C435000A60FE /* loading00.jpg */; };
 		35116E702461C435000A60FE /* idnum2itemdisplaynametable.txt in Resources */ = {isa = PBXBuildFile; fileRef = 35116E672461C435000A60FE /* idnum2itemdisplaynametable.txt */; };
 		35116E712461C435000A60FE /* monstertalktable.xml in Resources */ = {isa = PBXBuildFile; fileRef = 35116E682461C435000A60FE /* monstertalktable.xml */; };
-		35116E732463014E000A60FE /* GRFDirectoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E722463014E000A60FE /* GRFDirectoryViewController.swift */; };
-		3587F6E92462B8ED007D1C9B /* GRFPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6E82462B8ED007D1C9B /* GRFPreviewViewController.swift */; };
-		3587F6EB2463DBF0007D1C9B /* DocumentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EA2463DBF0007D1C9B /* DocumentsViewController.swift */; };
-		3587F6ED2463DF3F007D1C9B /* DocumentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EC2463DF3F007D1C9B /* DocumentCell.swift */; };
-		3587F6EF2463E435007D1C9B /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EE2463E435007D1C9B /* Document.swift */; };
+		35116E7524644AAA000A60FE /* DocumentWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7424644AAA000A60FE /* DocumentWrapper.swift */; };
+		3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */; };
+		3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,11 +75,9 @@
 		35116E662461C435000A60FE /* loading00.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loading00.jpg; sourceTree = "<group>"; };
 		35116E672461C435000A60FE /* idnum2itemdisplaynametable.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = idnum2itemdisplaynametable.txt; sourceTree = "<group>"; };
 		35116E682461C435000A60FE /* monstertalktable.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = monstertalktable.xml; sourceTree = "<group>"; };
-		35116E722463014E000A60FE /* GRFDirectoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRFDirectoryViewController.swift; sourceTree = "<group>"; };
-		3587F6E82462B8ED007D1C9B /* GRFPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRFPreviewViewController.swift; sourceTree = "<group>"; };
-		3587F6EA2463DBF0007D1C9B /* DocumentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsViewController.swift; sourceTree = "<group>"; };
-		3587F6EC2463DF3F007D1C9B /* DocumentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentCell.swift; sourceTree = "<group>"; };
-		3587F6EE2463E435007D1C9B /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
+		35116E7424644AAA000A60FE /* DocumentWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrapper.swift; sourceTree = "<group>"; };
+		3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrappersViewController.swift; sourceTree = "<group>"; };
+		3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrapperCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,12 +131,10 @@
 			children = (
 				35116E15245C7B87000A60FE /* AppDelegate.swift */,
 				35116E17245C7B87000A60FE /* SceneDelegate.swift */,
+				35116E7424644AAA000A60FE /* DocumentWrapper.swift */,
+				3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */,
+				3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */,
 				35116E55245FC152000A60FE /* GRFDocument.swift */,
-				3587F6EE2463E435007D1C9B /* Document.swift */,
-				3587F6EC2463DF3F007D1C9B /* DocumentCell.swift */,
-				3587F6EA2463DBF0007D1C9B /* DocumentsViewController.swift */,
-				3587F6E82462B8ED007D1C9B /* GRFPreviewViewController.swift */,
-				35116E722463014E000A60FE /* GRFDirectoryViewController.swift */,
 				35116E5D2461A5DB000A60FE /* DESDecryptor.swift */,
 				35116E53245FC152000A60FE /* FileHandle+Reading.swift */,
 				35116E1E245C7B8A000A60FE /* Assets.xcassets */,
@@ -333,15 +327,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				35116E5E2461A5DB000A60FE /* DESDecryptor.swift in Sources */,
-				3587F6EB2463DBF0007D1C9B /* DocumentsViewController.swift in Sources */,
+				35116E7524644AAA000A60FE /* DocumentWrapper.swift in Sources */,
+				3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */,
 				35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */,
 				35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */,
-				3587F6EF2463E435007D1C9B /* Document.swift in Sources */,
 				35116E57245FC152000A60FE /* FileHandle+Reading.swift in Sources */,
-				3587F6E92462B8ED007D1C9B /* GRFPreviewViewController.swift in Sources */,
-				3587F6ED2463DF3F007D1C9B /* DocumentCell.swift in Sources */,
+				3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */,
 				35116E58245FC152000A60FE /* GRFDocument.swift in Sources */,
-				35116E732463014E000A60FE /* GRFDirectoryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

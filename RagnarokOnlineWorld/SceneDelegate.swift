@@ -21,15 +21,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
 
-        let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        let documents = try! FileManager.default.contentsOfDirectory(at: documentDirectory, includingPropertiesForKeys: nil, options: [])
-        let documentsViewController = DocumentsViewController(documents: documents)
+        do {
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: .directory(documentDirectory))
 
-        let navigationController = UINavigationController(rootViewController: documentsViewController)
+            let navigationController = UINavigationController(rootViewController: documentWrappersViewController)
 
-        window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
+            window = UIWindow(windowScene: windowScene)
+            window?.rootViewController = navigationController
+            window?.makeKeyAndVisible()
+        } catch {
+            fatalError()
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

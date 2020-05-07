@@ -57,6 +57,7 @@ public class GRFDocument {
         case invalidEntry
     }
 
+    public let url: URL
     public let header: Header
     public let table: Table
     public let entries: [Entry]
@@ -65,6 +66,8 @@ public class GRFDocument {
     private let attributes: [FileAttributeKey : Any]
 
     public init(url: URL) throws {
+        self.url = url
+        
         fileHandle = try FileHandle(forReadingFrom: url)
         attributes = try FileManager.default.attributesOfItem(atPath: url.path)
 

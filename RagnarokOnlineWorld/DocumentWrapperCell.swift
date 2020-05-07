@@ -1,5 +1,5 @@
 //
-//  DocumentCell.swift
+//  DocumentWrapperCell.swift
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/5/7.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DocumentCell: UICollectionViewCell {
+class DocumentWrapperCell: UICollectionViewCell {
     let iconView: UIImageView
     let nameLabel: UILabel
 
