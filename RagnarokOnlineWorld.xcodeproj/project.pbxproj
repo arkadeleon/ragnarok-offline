@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E15245C7B87000A60FE /* AppDelegate.swift */; };
 		35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E17245C7B87000A60FE /* SceneDelegate.swift */; };
-		35116E1D245C7B87000A60FE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35116E1B245C7B87000A60FE /* Main.storyboard */; };
 		35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35116E1E245C7B8A000A60FE /* Assets.xcassets */; };
 		35116E22245C7B8A000A60FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */; };
 		35116E38245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E37245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift */; };
@@ -30,6 +29,9 @@
 		35116E712461C435000A60FE /* monstertalktable.xml in Resources */ = {isa = PBXBuildFile; fileRef = 35116E682461C435000A60FE /* monstertalktable.xml */; };
 		35116E732463014E000A60FE /* GRFDirectoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E722463014E000A60FE /* GRFDirectoryViewController.swift */; };
 		3587F6E92462B8ED007D1C9B /* GRFPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6E82462B8ED007D1C9B /* GRFPreviewViewController.swift */; };
+		3587F6EB2463DBF0007D1C9B /* DocumentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EA2463DBF0007D1C9B /* DocumentsViewController.swift */; };
+		3587F6ED2463DF3F007D1C9B /* DocumentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EC2463DF3F007D1C9B /* DocumentCell.swift */; };
+		3587F6EF2463E435007D1C9B /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EE2463E435007D1C9B /* Document.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,10 +52,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		35116E12245C7B87000A60FE /* RagnarokOnlineWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOnlineWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		35116E12245C7B87000A60FE /* R.O.W..app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = R.O.W..app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35116E15245C7B87000A60FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		35116E17245C7B87000A60FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		35116E1C245C7B87000A60FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		35116E1E245C7B8A000A60FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		35116E21245C7B8A000A60FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		35116E23245C7B8A000A60FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -78,6 +79,9 @@
 		35116E682461C435000A60FE /* monstertalktable.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = monstertalktable.xml; sourceTree = "<group>"; };
 		35116E722463014E000A60FE /* GRFDirectoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRFDirectoryViewController.swift; sourceTree = "<group>"; };
 		3587F6E82462B8ED007D1C9B /* GRFPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRFPreviewViewController.swift; sourceTree = "<group>"; };
+		3587F6EA2463DBF0007D1C9B /* DocumentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsViewController.swift; sourceTree = "<group>"; };
+		3587F6EC2463DF3F007D1C9B /* DocumentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentCell.swift; sourceTree = "<group>"; };
+		3587F6EE2463E435007D1C9B /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,7 +123,7 @@
 		35116E13245C7B87000A60FE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				35116E12245C7B87000A60FE /* RagnarokOnlineWorld.app */,
+				35116E12245C7B87000A60FE /* R.O.W..app */,
 				35116E28245C7B8A000A60FE /* RagnarokOnlineWorldTests.xctest */,
 				35116E33245C7B8A000A60FE /* RagnarokOnlineWorldUITests.xctest */,
 			);
@@ -132,11 +136,13 @@
 				35116E15245C7B87000A60FE /* AppDelegate.swift */,
 				35116E17245C7B87000A60FE /* SceneDelegate.swift */,
 				35116E55245FC152000A60FE /* GRFDocument.swift */,
+				3587F6EE2463E435007D1C9B /* Document.swift */,
+				3587F6EC2463DF3F007D1C9B /* DocumentCell.swift */,
+				3587F6EA2463DBF0007D1C9B /* DocumentsViewController.swift */,
 				3587F6E82462B8ED007D1C9B /* GRFPreviewViewController.swift */,
 				35116E722463014E000A60FE /* GRFDirectoryViewController.swift */,
 				35116E5D2461A5DB000A60FE /* DESDecryptor.swift */,
 				35116E53245FC152000A60FE /* FileHandle+Reading.swift */,
-				35116E1B245C7B87000A60FE /* Main.storyboard */,
 				35116E1E245C7B8A000A60FE /* Assets.xcassets */,
 				35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */,
 				35116E23245C7B8A000A60FE /* Info.plist */,
@@ -200,7 +206,7 @@
 				35116E4F245FBF65000A60FE /* DataCompression */,
 			);
 			productName = RagnarokOnlineWorld;
-			productReference = 35116E12245C7B87000A60FE /* RagnarokOnlineWorld.app */;
+			productReference = 35116E12245C7B87000A60FE /* R.O.W..app */;
 			productType = "com.apple.product-type.application";
 		};
 		35116E27245C7B8A000A60FE /* RagnarokOnlineWorldTests */ = {
@@ -292,7 +298,6 @@
 			files = (
 				35116E22245C7B8A000A60FE /* LaunchScreen.storyboard in Resources */,
 				35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */,
-				35116E1D245C7B87000A60FE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,10 +333,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				35116E5E2461A5DB000A60FE /* DESDecryptor.swift in Sources */,
+				3587F6EB2463DBF0007D1C9B /* DocumentsViewController.swift in Sources */,
 				35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */,
 				35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */,
+				3587F6EF2463E435007D1C9B /* Document.swift in Sources */,
 				35116E57245FC152000A60FE /* FileHandle+Reading.swift in Sources */,
 				3587F6E92462B8ED007D1C9B /* GRFPreviewViewController.swift in Sources */,
+				3587F6ED2463DF3F007D1C9B /* DocumentCell.swift in Sources */,
 				35116E58245FC152000A60FE /* GRFDocument.swift in Sources */,
 				35116E732463014E000A60FE /* GRFDirectoryViewController.swift in Sources */,
 			);
@@ -369,14 +377,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		35116E1B245C7B87000A60FE /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				35116E1C245C7B87000A60FE /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -514,7 +514,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = date.leonandvane.RagnarokOnlineWorld;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = R.O.W.;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -532,7 +532,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = date.leonandvane.RagnarokOnlineWorld;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = R.O.W.;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -54,7 +54,7 @@ class GRFDirectoryViewController: UIViewController, UICollectionViewDataSource, 
         collectionView.backgroundColor = .systemBackground
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(ItemCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(DocumentCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         view.addSubview(collectionView)
 
         collectionView.reloadData()
@@ -65,12 +65,12 @@ class GRFDirectoryViewController: UIViewController, UICollectionViewDataSource, 
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ItemCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! DocumentCell
         switch items[indexPath.row] {
         case .directory(let directory):
-            cell.textLabel.text = String(directory.split(separator: "\\").last!)
+            cell.nameLabel.text = String(directory.split(separator: "\\").last!)
         case .entry(let entry):
-            cell.textLabel.text = String(entry.filename.split(separator: "\\").last!)
+            cell.nameLabel.text = String(entry.filename.split(separator: "\\").last!)
         }
         return cell
     }
@@ -112,40 +112,6 @@ extension GRFDirectoryViewController {
             case .entry(let entry):
                 entry.filename.hash(into: &hasher)
             }
-        }
-    }
-
-    class ItemCell: UICollectionViewCell {
-        let imageView: UIImageView
-        let textLabel: UILabel
-
-        override init(frame: CGRect) {
-            imageView = UIImageView()
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            imageView.contentMode = .scaleAspectFit
-
-            textLabel = UILabel()
-            textLabel.translatesAutoresizingMaskIntoConstraints = false
-            textLabel.textColor = .label
-            textLabel.textAlignment = .center
-            textLabel.numberOfLines = 2
-
-            super.init(frame: frame)
-
-            contentView.addSubview(imageView)
-            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor).isActive = true
-
-            contentView.addSubview(textLabel)
-            textLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-            textLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-            textLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor).isActive = true
-        }
-
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
         }
     }
 }
