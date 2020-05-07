@@ -180,3 +180,10 @@ public class GRFDocument {
         return data
     }
 }
+
+extension GRFDocument: Equatable {
+
+    public static func == (lhs: GRFDocument, rhs: GRFDocument) -> Bool {
+        return lhs.url == rhs.url
+    }
+}

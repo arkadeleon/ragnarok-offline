@@ -45,9 +45,9 @@ extension DocumentWrapper {
         case .grfDocument(let grf):
             return grf.url.lastPathComponent
         case .grfDocumentDirectory(_, let directory):
-            return (directory as NSString).lastPathComponent
+            return String(directory.split(separator: "\\").last ?? "")
         case .grfDocumentEntry(let entry):
-            return (entry.filename as NSString).lastPathComponent
+            return String(entry.filename.split(separator: "\\").last ?? "")
         case .regularDocument(let url):
             return url.lastPathComponent
         }
@@ -73,7 +73,7 @@ extension DocumentWrapper {
                 }
                 return .regularDocument(url)
             }
-            return documentWrappers
+            return documentWrappers.sorted()
         case .grfDocument(let grf):
             return DocumentWrapper.grfDocumentDirectory(grf, "data").documentWrappers
         case .grfDocumentDirectory(let grf, let directory):
@@ -83,17 +83,47 @@ extension DocumentWrapper {
                 filename.removeSubrange(directory.startIndex..<directory.endIndex)
                 let components = filename.split(separator: "\\")
                 if components.count == 1 {
-                    documentWrappers.append(.grfDocumentEntry(entry))
+                    let documentWrapper: DocumentWrapper = .grfDocumentEntry(entry)
+                    documentWrappers.append(documentWrapper)
                 } else if components.count > 1 {
                     let directory = directory.appending("\\").appending(components[0])
-                    documentWrappers.append(.grfDocumentDirectory(grf, directory))
+                    let documentWrapper: DocumentWrapper = .grfDocumentDirectory(grf, directory)
+                    if !documentWrappers.contains(documentWrapper) {
+                        documentWrappers.append(documentWrapper)
+                    }
                 }
             }
-            return documentWrappers
+            return documentWrappers.sorted()
         case .grfDocumentEntry:
             return nil
         case .regularDocument:
             return nil
+        }
+    }
+}
+
+extension DocumentWrapper: Equatable, Comparable {
+
+    static func < (lhs: DocumentWrapper, rhs: DocumentWrapper) -> Bool {
+        if lhs.rank == rhs.rank {
+            return lhs.name.lowercased() < rhs.name.lowercased()
+        } else {
+            return lhs.rank < rhs.rank
+        }
+    }
+
+    var rank: Int {
+        switch self {
+        case .directory:
+            return 0
+        case .grfDocument:
+            return 1
+        case .grfDocumentDirectory:
+            return 0
+        case .grfDocumentEntry:
+            return 1
+        case .regularDocument:
+            return 1
         }
     }
 }
