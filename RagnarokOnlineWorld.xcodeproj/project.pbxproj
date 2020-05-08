@@ -131,12 +131,8 @@
 			children = (
 				35116E15245C7B87000A60FE /* AppDelegate.swift */,
 				35116E17245C7B87000A60FE /* SceneDelegate.swift */,
-				35116E7424644AAA000A60FE /* DocumentWrapper.swift */,
-				3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */,
-				3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */,
-				35116E55245FC152000A60FE /* GRFDocument.swift */,
-				35116E5D2461A5DB000A60FE /* DESDecryptor.swift */,
-				35116E53245FC152000A60FE /* FileHandle+Reading.swift */,
+				35116E76246596A5000A60FE /* Documents */,
+				35116E77246596BB000A60FE /* Views */,
 				35116E1E245C7B8A000A60FE /* Assets.xcassets */,
 				35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */,
 				35116E23245C7B8A000A60FE /* Info.plist */,
@@ -178,6 +174,26 @@
 				35116E682461C435000A60FE /* monstertalktable.xml */,
 			);
 			path = data;
+			sourceTree = "<group>";
+		};
+		35116E76246596A5000A60FE /* Documents */ = {
+			isa = PBXGroup;
+			children = (
+				35116E55245FC152000A60FE /* GRFDocument.swift */,
+				35116E5D2461A5DB000A60FE /* DESDecryptor.swift */,
+				35116E53245FC152000A60FE /* FileHandle+Reading.swift */,
+			);
+			path = Documents;
+			sourceTree = "<group>";
+		};
+		35116E77246596BB000A60FE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				35116E7424644AAA000A60FE /* DocumentWrapper.swift */,
+				3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */,
+				3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
