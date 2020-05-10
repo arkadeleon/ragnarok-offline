@@ -19,11 +19,10 @@ class TextDocument: Document {
         super.init(source: source)
     }
 
-    override func load(from contents: DocumentContents) throws {
+    override func load(from contents: Data) throws {
         switch fileType {
         case "txt", "xml", "lua":
-            let data = try contents.data()
-            text = String(data: data, encoding: encoding)
+            text = String(data: contents, encoding: encoding)
         case "lub":
             // TODO: Decompile lub
             break

@@ -42,19 +42,6 @@ enum DocumentSource {
     }
 }
 
-class DocumentContents {
-
-    private let source: DocumentSource
-
-    init(source: DocumentSource) {
-        self.source = source
-    }
-
-    func data() throws -> Data {
-        return try source.data()
-    }
-}
-
 class Document: NSObject {
 
     let source: DocumentSource
@@ -69,8 +56,8 @@ class Document: NSObject {
 
     func open(completionHandler: ((Bool) -> Void)? = nil) {
         DispatchQueue.global().async {
-            let contents = DocumentContents(source: self.source)
             do {
+                let contents = try self.source.data()
                 try self.load(from: contents)
                 DispatchQueue.main.async {
                     completionHandler?(true)
@@ -83,7 +70,7 @@ class Document: NSObject {
         }
     }
 
-    func load(from contents: DocumentContents) throws {
+    func load(from contents: Data) throws {
 
     }
 
