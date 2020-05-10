@@ -59,13 +59,14 @@ extension DocumentWrapper {
         }
     }
 
-    var documentWrappers: [DocumentWrapper]? {
+    var documentWrappers: [String : DocumentWrapper]? {
         switch self {
         case .directory(let url):
             guard let urls = try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: []) else {
                 return nil
             }
-            let documentWrappers = urls.map { url -> DocumentWrapper in
+            let urlsWithNames = Dictionary(uniqueKeysWithValues: zip(urls.map { $0.lastPathComponent }, urls))
+            let documentWrappers = urlsWithNames.mapValues { url -> DocumentWrapper in
                 if url.hasDirectoryPath {
                     return .directory(url)
                 }
@@ -83,36 +84,38 @@ extension DocumentWrapper {
                     return .document(url)
                 }
             }
-            return documentWrappers.sorted()
+            return documentWrappers
         case .document:
             return nil
         case .archive(let archive):
             return DocumentWrapper.directoryInArchive(archive, "data").documentWrappers
         case .directoryInArchive(let archive, let path):
-            var documentWrappers: [DocumentWrapper] = []
+            var documentWrappers: [String : DocumentWrapper] = [:]
             for entry in archive.entries where entry.path.hasPrefix(path) {
                 let relativePath = entry.path.dropFirst(path.count)
-                let components = relativePath.split(separator: "\\")
-                if components.count == 1 {
-                    let component = String(components[0]) as NSString
-                    switch component.pathExtension {
+                let pathComponents = relativePath.split(separator: "\\")
+                if pathComponents.count == 1 {
+                    let pathComponent = String(pathComponents[0])
+                    let pathExtension = (pathComponent as NSString).pathExtension
+                    switch pathExtension {
                     case "txt", "xml", "lua", "lub":
                         let textDocument = TextDocument(source: .entryInArchive(archive, entry))
                         let documentWrapper: DocumentWrapper = .textDocument(textDocument)
-                        documentWrappers.append(documentWrapper)
+                        documentWrappers[pathComponent] = documentWrapper
                     default:
                         let documentWrapper: DocumentWrapper = .entryInArchive(entry.lastPathComponent)
-                        documentWrappers.append(documentWrapper)
+                        documentWrappers[pathComponent] = documentWrapper
                     }
-                } else if components.count > 1 {
-                    let path = path.appending("\\").appending(components[0])
-                    let documentWrapper: DocumentWrapper = .directoryInArchive(archive, path)
-                    if !documentWrappers.contains(documentWrapper) {
-                        documentWrappers.append(documentWrapper)
+                } else if pathComponents.count > 1 {
+                    let pathComponent = String(pathComponents[0])
+                    if documentWrappers[pathComponent] == nil {
+                        let path = path.appending("\\").appending(pathComponent)
+                        let documentWrapper: DocumentWrapper = .directoryInArchive(archive, path)
+                        documentWrappers[pathComponent] = documentWrapper
                     }
                 }
             }
-            return documentWrappers.sorted()
+            return documentWrappers
         case .entryInArchive:
             return nil
         case .textDocument:

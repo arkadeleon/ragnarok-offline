@@ -19,7 +19,7 @@ class DocumentWrappersViewController: UIViewController, UICollectionViewDataSour
 
     init(documentWrapper: DocumentWrapper) {
         self.documentWrapper = documentWrapper
-        self.documentWrappers = documentWrapper.documentWrappers ?? []
+        self.documentWrappers = Array((documentWrapper.documentWrappers ?? [:]).values).sorted()
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -70,8 +70,8 @@ class DocumentWrappersViewController: UIViewController, UICollectionViewDataSour
             break
         }
 
-        if let _ = documentWrappers[indexPath.row].documentWrappers {
-            let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: documentWrappers[indexPath.row])
+        if let _ = documentWrapper.documentWrappers {
+            let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: documentWrapper)
             navigationController?.pushViewController(documentWrappersViewController, animated: true)
         }
     }
