@@ -61,10 +61,18 @@ class DocumentWrappersViewController: UIViewController, UICollectionViewDataSour
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let _ = documentWrappers[indexPath.row].documentWrappers else {
-            return
+        let documentWrapper = documentWrappers[indexPath.row]
+        switch documentWrapper {
+        case .textDocument(let document):
+            let textDocumentViewController = TextDocumentViewController(document: document)
+            navigationController?.pushViewController(textDocumentViewController, animated: true)
+        default:
+            break
         }
-        let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: documentWrappers[indexPath.row])
-        navigationController?.pushViewController(documentWrappersViewController, animated: true)
+
+        if let _ = documentWrappers[indexPath.row].documentWrappers {
+            let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: documentWrappers[indexPath.row])
+            navigationController?.pushViewController(documentWrappersViewController, animated: true)
+        }
     }
 }

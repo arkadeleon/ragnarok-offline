@@ -12,13 +12,15 @@ enum DocumentWrapper {
 
     case directory(URL)
 
+    case directoryInArchive(GRFDocument, String)
+
     case grfDocument(GRFDocument)
 
-    case grfDocumentDirectory(GRFDocument, String)
+    case textDocument(TextDocument)
 
-    case grfDocumentEntry(GRFDocument.Entry)
+    case unknownDocument(String)
 
-    case regularDocument(URL)
+    case unknownEntryInArchive(String)
 }
 
 extension DocumentWrapper {
@@ -27,13 +29,15 @@ extension DocumentWrapper {
         switch self {
         case .directory:
             return UIImage(systemName: "folder")
+        case .directoryInArchive:
+            return UIImage(systemName: "folder")
         case .grfDocument:
             return UIImage(systemName: "doc")
-        case .grfDocumentDirectory:
-            return UIImage(systemName: "folder")
-        case .grfDocumentEntry:
+        case .textDocument:
+            return UIImage(systemName: "doc.text")
+        case .unknownDocument:
             return UIImage(systemName: "doc")
-        case .regularDocument:
+        case .unknownEntryInArchive:
             return UIImage(systemName: "doc")
         }
     }
@@ -42,14 +46,16 @@ extension DocumentWrapper {
         switch self {
         case .directory(let directory):
             return directory.lastPathComponent
+        case .directoryInArchive(_, let directory):
+            return String(directory.split(separator: "\\").last ?? "")
         case .grfDocument(let grf):
             return grf.url.lastPathComponent
-        case .grfDocumentDirectory(_, let directory):
-            return String(directory.split(separator: "\\").last ?? "")
-        case .grfDocumentEntry(let entry):
-            return String(entry.filename.split(separator: "\\").last ?? "")
-        case .regularDocument(let url):
-            return url.lastPathComponent
+        case .textDocument(let document):
+            return document.name
+        case .unknownDocument(let name):
+            return name
+        case .unknownEntryInArchive(let name):
+            return name
         }
     }
 
@@ -68,35 +74,49 @@ extension DocumentWrapper {
                     if let grf = try? GRFDocument(url: url) {
                         return .grfDocument(grf)
                     }
+                case "txt", "xml", "lua", "lub":
+                    let document = TextDocument(source: .url(url))
+                    return .textDocument(document)
                 default:
                     break
                 }
-                return .regularDocument(url)
+                return .unknownDocument(url.lastPathComponent)
             }
             return documentWrappers.sorted()
-        case .grfDocument(let grf):
-            return DocumentWrapper.grfDocumentDirectory(grf, "data").documentWrappers
-        case .grfDocumentDirectory(let grf, let directory):
+        case .directoryInArchive(let grf, let directory):
             var documentWrappers: [DocumentWrapper] = []
-            for entry in grf.entries where entry.filename.hasPrefix(directory) {
-                var filename = entry.filename
+            for entry in grf.entries where entry.path.hasPrefix(directory) {
+                var filename = entry.path
                 filename.removeSubrange(directory.startIndex..<directory.endIndex)
                 let components = filename.split(separator: "\\")
                 if components.count == 1 {
-                    let documentWrapper: DocumentWrapper = .grfDocumentEntry(entry)
-                    documentWrappers.append(documentWrapper)
+                    let component = String(components[0]) as NSString
+                    switch component.pathExtension {
+                    case "txt", "xml", "lua", "lub":
+                        let textDocument = TextDocument(source: .entryInArchive(entry, grf))
+                        let documentWrapper: DocumentWrapper = .textDocument(textDocument)
+                        documentWrappers.append(documentWrapper)
+                    default:
+                        let documentWrapper: DocumentWrapper = .unknownEntryInArchive(entry.lastPathComponent)
+                        documentWrappers.append(documentWrapper)
+                    }
+
                 } else if components.count > 1 {
                     let directory = directory.appending("\\").appending(components[0])
-                    let documentWrapper: DocumentWrapper = .grfDocumentDirectory(grf, directory)
+                    let documentWrapper: DocumentWrapper = .directoryInArchive(grf, directory)
                     if !documentWrappers.contains(documentWrapper) {
                         documentWrappers.append(documentWrapper)
                     }
                 }
             }
             return documentWrappers.sorted()
-        case .grfDocumentEntry:
+        case .grfDocument(let grf):
+            return DocumentWrapper.directoryInArchive(grf, "data").documentWrappers
+        case .textDocument:
             return nil
-        case .regularDocument:
+        case .unknownDocument:
+            return nil
+        case .unknownEntryInArchive:
             return nil
         }
     }
@@ -116,13 +136,15 @@ extension DocumentWrapper: Equatable, Comparable {
         switch self {
         case .directory:
             return 0
+        case .directoryInArchive:
+            return 0
         case .grfDocument:
             return 1
-        case .grfDocumentDirectory:
-            return 0
-        case .grfDocumentEntry:
+        case .textDocument:
             return 1
-        case .regularDocument:
+        case .unknownDocument:
+            return 1
+        case .unknownEntryInArchive:
             return 1
         }
     }

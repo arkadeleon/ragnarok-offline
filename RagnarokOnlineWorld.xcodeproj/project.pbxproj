@@ -28,6 +28,10 @@
 		35116E702461C435000A60FE /* idnum2itemdisplaynametable.txt in Resources */ = {isa = PBXBuildFile; fileRef = 35116E672461C435000A60FE /* idnum2itemdisplaynametable.txt */; };
 		35116E712461C435000A60FE /* monstertalktable.xml in Resources */ = {isa = PBXBuildFile; fileRef = 35116E682461C435000A60FE /* monstertalktable.xml */; };
 		35116E7524644AAA000A60FE /* DocumentWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7424644AAA000A60FE /* DocumentWrapper.swift */; };
+		35116E7924659FD6000A60FE /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7824659FD6000A60FE /* Document.swift */; };
+		35116E7B2465B453000A60FE /* Archive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7A2465B453000A60FE /* Archive.swift */; };
+		35116E7D2466FEB3000A60FE /* TextDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7C2466FEB3000A60FE /* TextDocument.swift */; };
+		35116E7F246713AD000A60FE /* TextDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7E246713AD000A60FE /* TextDocumentViewController.swift */; };
 		3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */; };
 		3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */; };
 /* End PBXBuildFile section */
@@ -76,6 +80,10 @@
 		35116E672461C435000A60FE /* idnum2itemdisplaynametable.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = idnum2itemdisplaynametable.txt; sourceTree = "<group>"; };
 		35116E682461C435000A60FE /* monstertalktable.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = monstertalktable.xml; sourceTree = "<group>"; };
 		35116E7424644AAA000A60FE /* DocumentWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrapper.swift; sourceTree = "<group>"; };
+		35116E7824659FD6000A60FE /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
+		35116E7A2465B453000A60FE /* Archive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Archive.swift; sourceTree = "<group>"; };
+		35116E7C2466FEB3000A60FE /* TextDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDocument.swift; sourceTree = "<group>"; };
+		35116E7E246713AD000A60FE /* TextDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDocumentViewController.swift; sourceTree = "<group>"; };
 		3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrappersViewController.swift; sourceTree = "<group>"; };
 		3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrapperCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -179,6 +187,9 @@
 		35116E76246596A5000A60FE /* Documents */ = {
 			isa = PBXGroup;
 			children = (
+				35116E7A2465B453000A60FE /* Archive.swift */,
+				35116E7824659FD6000A60FE /* Document.swift */,
+				35116E7C2466FEB3000A60FE /* TextDocument.swift */,
 				35116E55245FC152000A60FE /* GRFDocument.swift */,
 				35116E5D2461A5DB000A60FE /* DESDecryptor.swift */,
 				35116E53245FC152000A60FE /* FileHandle+Reading.swift */,
@@ -192,6 +203,7 @@
 				35116E7424644AAA000A60FE /* DocumentWrapper.swift */,
 				3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */,
 				3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */,
+				35116E7E246713AD000A60FE /* TextDocumentViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -342,11 +354,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35116E7F246713AD000A60FE /* TextDocumentViewController.swift in Sources */,
+				35116E7D2466FEB3000A60FE /* TextDocument.swift in Sources */,
+				35116E7B2465B453000A60FE /* Archive.swift in Sources */,
 				35116E5E2461A5DB000A60FE /* DESDecryptor.swift in Sources */,
 				35116E7524644AAA000A60FE /* DocumentWrapper.swift in Sources */,
 				3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */,
 				35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */,
 				35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */,
+				35116E7924659FD6000A60FE /* Document.swift in Sources */,
 				35116E57245FC152000A60FE /* FileHandle+Reading.swift in Sources */,
 				3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */,
 				35116E58245FC152000A60FE /* GRFDocument.swift in Sources */,
