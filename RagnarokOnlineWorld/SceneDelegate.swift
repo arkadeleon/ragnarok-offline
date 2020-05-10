@@ -22,8 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         do {
-            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: .directory(documentDirectory))
+            let url = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: .directory(url))
 
             let navigationController = UINavigationController(rootViewController: documentWrappersViewController)
 

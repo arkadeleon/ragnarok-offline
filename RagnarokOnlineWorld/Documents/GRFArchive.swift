@@ -29,16 +29,12 @@ struct GRFArchiveTable {
 }
 
 struct GRFArchiveEntry: ArchiveEntry, Equatable {
-    let name: String
+    let path: String
     let packSize: UInt32
     let lengthAligned: UInt32
     let realSize: UInt32
     let type: UInt8
     let offset: UInt32
-
-    var path: String {
-        name
-    }
 
     var lastPathComponent: String {
         String(path.split(separator: "\\").last ?? "")
@@ -144,11 +140,11 @@ class GRFArchive: NSObject, Archive {
             let offset = Data(decompressedData[(pos + 13)..<(pos + 17)]).withUnsafeBytes { $0.load(as: UInt32.self) }
 
             let cfEncoding = CFStringEncoding(CFStringEncodings.EUC_KR.rawValue)
-            let nsEncoding = CFStringConvertEncodingToNSStringEncoding(cfEncoding)
-            let nsFilename = NSString(data: Data(filename), encoding: nsEncoding) ?? ""
+            let encoding = CFStringConvertEncodingToNSStringEncoding(cfEncoding)
+            let path = NSString(data: Data(filename), encoding: encoding) ?? ""
 
             let entry = GRFArchiveEntry(
-                name: nsFilename as String,
+                path: path as String,
                 packSize: packSize,
                 lengthAligned: lengthAligned,
                 realSize: realSize,

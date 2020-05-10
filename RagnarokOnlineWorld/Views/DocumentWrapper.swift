@@ -12,15 +12,15 @@ enum DocumentWrapper {
 
     case directory(URL)
 
-    case directoryInArchive(GRFArchive, String)
+    case document(URL)
 
     case archive(GRFArchive)
 
+    case directoryInArchive(GRFArchive, String)
+
+    case entryInArchive(String)
+
     case textDocument(TextDocument)
-
-    case unknownDocument(String)
-
-    case unknownEntryInArchive(String)
 }
 
 extension DocumentWrapper {
@@ -29,40 +29,40 @@ extension DocumentWrapper {
         switch self {
         case .directory:
             return UIImage(systemName: "folder")
+        case .document:
+            return UIImage(systemName: "doc")
+        case .archive:
+            return UIImage(systemName: "doc")
         case .directoryInArchive:
             return UIImage(systemName: "folder")
-        case .archive:
+        case .entryInArchive:
             return UIImage(systemName: "doc")
         case .textDocument:
             return UIImage(systemName: "doc.text")
-        case .unknownDocument:
-            return UIImage(systemName: "doc")
-        case .unknownEntryInArchive:
-            return UIImage(systemName: "doc")
         }
     }
 
     var name: String {
         switch self {
-        case .directory(let directory):
-            return directory.lastPathComponent
-        case .directoryInArchive(_, let directory):
-            return String(directory.split(separator: "\\").last ?? "")
+        case .directory(let url):
+            return url.lastPathComponent
+        case .document(let url):
+            return url.lastPathComponent
         case .archive(let archive):
             return archive.url.lastPathComponent
+        case .directoryInArchive(_, let path):
+            return String(path.split(separator: "\\").last ?? "")
+        case .entryInArchive(let name):
+            return name
         case .textDocument(let document):
             return document.name
-        case .unknownDocument(let name):
-            return name
-        case .unknownEntryInArchive(let name):
-            return name
         }
     }
 
     var documentWrappers: [DocumentWrapper]? {
         switch self {
-        case .directory(let directory):
-            guard let urls = try? FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil, options: []) else {
+        case .directory(let url):
+            guard let urls = try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: []) else {
                 return nil
             }
             let documentWrappers = urls.map { url -> DocumentWrapper in
@@ -73,22 +73,26 @@ extension DocumentWrapper {
                 case "grf":
                     if let archive = try? GRFArchive(url: url) {
                         return .archive(archive)
+                    } else {
+                        return .document(url)
                     }
                 case "txt", "xml", "lua", "lub":
                     let document = TextDocument(source: .url(url))
                     return .textDocument(document)
                 default:
-                    break
+                    return .document(url)
                 }
-                return .unknownDocument(url.lastPathComponent)
             }
             return documentWrappers.sorted()
-        case .directoryInArchive(let archive, let directory):
+        case .document:
+            return nil
+        case .archive(let archive):
+            return DocumentWrapper.directoryInArchive(archive, "data").documentWrappers
+        case .directoryInArchive(let archive, let path):
             var documentWrappers: [DocumentWrapper] = []
-            for entry in archive.entries where entry.path.hasPrefix(directory) {
-                var filename = entry.path
-                filename.removeSubrange(directory.startIndex..<directory.endIndex)
-                let components = filename.split(separator: "\\")
+            for entry in archive.entries where entry.path.hasPrefix(path) {
+                let relativePath = entry.path.dropFirst(path.count)
+                let components = relativePath.split(separator: "\\")
                 if components.count == 1 {
                     let component = String(components[0]) as NSString
                     switch component.pathExtension {
@@ -97,26 +101,21 @@ extension DocumentWrapper {
                         let documentWrapper: DocumentWrapper = .textDocument(textDocument)
                         documentWrappers.append(documentWrapper)
                     default:
-                        let documentWrapper: DocumentWrapper = .unknownEntryInArchive(entry.lastPathComponent)
+                        let documentWrapper: DocumentWrapper = .entryInArchive(entry.lastPathComponent)
                         documentWrappers.append(documentWrapper)
                     }
-
                 } else if components.count > 1 {
-                    let directory = directory.appending("\\").appending(components[0])
-                    let documentWrapper: DocumentWrapper = .directoryInArchive(archive, directory)
+                    let path = path.appending("\\").appending(components[0])
+                    let documentWrapper: DocumentWrapper = .directoryInArchive(archive, path)
                     if !documentWrappers.contains(documentWrapper) {
                         documentWrappers.append(documentWrapper)
                     }
                 }
             }
             return documentWrappers.sorted()
-        case .archive(let archive):
-            return DocumentWrapper.directoryInArchive(archive, "data").documentWrappers
+        case .entryInArchive:
+            return nil
         case .textDocument:
-            return nil
-        case .unknownDocument:
-            return nil
-        case .unknownEntryInArchive:
             return nil
         }
     }
@@ -136,15 +135,15 @@ extension DocumentWrapper: Equatable, Comparable {
         switch self {
         case .directory:
             return 0
-        case .directoryInArchive:
-            return 0
+        case .document:
+            return 1
         case .archive:
             return 1
+        case .directoryInArchive:
+            return 0
+        case .entryInArchive:
+            return 1
         case .textDocument:
-            return 1
-        case .unknownDocument:
-            return 1
-        case .unknownEntryInArchive:
             return 1
         }
     }
