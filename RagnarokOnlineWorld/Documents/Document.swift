@@ -12,13 +12,13 @@ enum DocumentSource {
 
     case url(URL)
 
-    case entryInArchive(ArchiveEntry, Archive)
+    case entryInArchive(GRFArchive, GRFArchiveEntry)
 
     fileprivate var name: String {
         switch self {
         case .url(let url):
             return url.lastPathComponent
-        case .entryInArchive(let entry, _):
+        case .entryInArchive(_, let entry):
             return entry.lastPathComponent
         }
     }
@@ -27,7 +27,7 @@ enum DocumentSource {
         switch self {
         case .url(let url):
             return url.pathExtension
-        case .entryInArchive(let entry, _):
+        case .entryInArchive(_, let entry):
             return entry.pathExtension
         }
     }
@@ -36,7 +36,7 @@ enum DocumentSource {
         switch self {
         case .url(let url):
             return try Data(contentsOf: url)
-        case .entryInArchive(let entry, let archive):
+        case .entryInArchive(let archive, let entry):
             return try archive.contents(of: entry)
         }
     }

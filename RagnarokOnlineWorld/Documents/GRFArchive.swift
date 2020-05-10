@@ -1,5 +1,5 @@
 //
-//  GRFDocument.swift
+//  GRFArchive.swift
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/5/1.
@@ -10,7 +10,7 @@ import Foundation
 import CoreFoundation
 import DataCompression
 
-struct GRFHeader {
+struct GRFArchiveHeader {
     static let size: UInt64 = 0x2e
 
     let signature: [UInt8]
@@ -21,14 +21,14 @@ struct GRFHeader {
     let version: UInt32
 }
 
-struct GRFTable {
+struct GRFArchiveTable {
     static let size: UInt64 = 0x08
 
     let packSize: UInt32
     let realSize: UInt32
 }
 
-struct GRFEntry: ArchiveEntry, Equatable {
+struct GRFArchiveEntry: ArchiveEntry, Equatable {
     let name: String
     let packSize: UInt32
     let lengthAligned: UInt32
@@ -49,16 +49,16 @@ struct GRFEntry: ArchiveEntry, Equatable {
     }
 }
 
-struct GRFEntryType: OptionSet {
+struct GRFArchiveEntryType: OptionSet {
     let rawValue: UInt8
 
     init(rawValue: UInt8) {
         self.rawValue = rawValue
     }
 
-    static let file          = GRFEntryType(rawValue: 0x01) // entry is a file
-    static let encryptMixed  = GRFEntryType(rawValue: 0x02) // encryption mode 0 (header DES + periodic DES/shuffle)
-    static let encryptHeader = GRFEntryType(rawValue: 0x04) // encryption mode 1 (header DES only)
+    static let file          = GRFArchiveEntryType(rawValue: 0x01) // entry is a file
+    static let encryptMixed  = GRFArchiveEntryType(rawValue: 0x02) // encryption mode 0 (header DES + periodic DES/shuffle)
+    static let encryptHeader = GRFArchiveEntryType(rawValue: 0x04) // encryption mode 1 (header DES only)
 }
 
 class GRFArchive: NSObject, Archive {
@@ -70,9 +70,9 @@ class GRFArchive: NSObject, Archive {
     }
 
     let url: URL
-    let header: GRFHeader
-    let table: GRFTable
-    let entries: [ArchiveEntry]
+    let header: GRFArchiveHeader
+    let table: GRFArchiveTable
+    let entries: [GRFArchiveEntry]
 
     private let fileHandle: FileHandle
     private let attributes: [FileAttributeKey : Any]
@@ -98,11 +98,11 @@ class GRFArchive: NSObject, Archive {
             throw Error.invalidHeader
         }
 
-        guard GRFHeader.size + UInt64(fileTableOffset) < attributes[.size] as? UInt64 ?? 0 else {
+        guard GRFArchiveHeader.size + UInt64(fileTableOffset) < attributes[.size] as? UInt64 ?? 0 else {
             throw Error.invalidHeader
         }
 
-        header = GRFHeader(
+        header = GRFArchiveHeader(
             signature: signature,
             key: key,
             fileTableOffset: fileTableOffset,
@@ -111,24 +111,24 @@ class GRFArchive: NSObject, Archive {
             version: version
         )
 
-        try fileHandle.seek(toOffset: GRFHeader.size + UInt64(fileTableOffset))
+        try fileHandle.seek(toOffset: GRFArchiveHeader.size + UInt64(fileTableOffset))
 
         let packSize = try fileHandle.readUInt32()
         let realSize = try fileHandle.readUInt32()
 
-        table = GRFTable(
+        table = GRFArchiveTable(
             packSize: packSize,
             realSize: realSize
         )
 
-        try fileHandle.seek(toOffset: GRFHeader.size + UInt64(fileTableOffset) + GRFTable.size)
+        try fileHandle.seek(toOffset: GRFArchiveHeader.size + UInt64(fileTableOffset) + GRFArchiveTable.size)
         let data = try fileHandle.readBytes(Int(packSize))
         guard let decompressedData = Data(data).unzip() else {
             throw Error.invalidTable
         }
 
         var pos = 0
-        var entries: [GRFEntry] = []
+        var entries: [GRFArchiveEntry] = []
         for _ in 0..<header.fileCount {
             var filename: [UInt8] = []
             while decompressedData[pos] != 0 {
@@ -147,7 +147,7 @@ class GRFArchive: NSObject, Archive {
             let nsEncoding = CFStringConvertEncodingToNSStringEncoding(cfEncoding)
             let nsFilename = NSString(data: Data(filename), encoding: nsEncoding) ?? ""
 
-            let entry = GRFEntry(
+            let entry = GRFArchiveEntry(
                 name: nsFilename as String,
                 packSize: packSize,
                 lengthAligned: lengthAligned,
@@ -168,15 +168,11 @@ class GRFArchive: NSObject, Archive {
         fileHandle.closeFile()
     }
 
-    func contents(of entry: ArchiveEntry) throws -> Data {
-        guard let entry = entry as? GRFEntry else {
-            throw Error.invalidEntry
-        }
-
-        try fileHandle.seek(toOffset: GRFHeader.size + UInt64(entry.offset))
+    func contents(of entry: GRFArchiveEntry) throws -> Data {
+        try fileHandle.seek(toOffset: GRFArchiveHeader.size + UInt64(entry.offset))
         var bytes = try fileHandle.readBytes(Int(entry.lengthAligned))
 
-        if entry.type & GRFEntryType.file.rawValue == 0 {
+        if entry.type & GRFArchiveEntryType.file.rawValue == 0 {
             guard let data = Data(bytes).unzip() else {
                 throw Error.invalidEntry
             }
@@ -184,9 +180,9 @@ class GRFArchive: NSObject, Archive {
         }
 
         let decryptor = DESDecryptor()
-        if entry.type & GRFEntryType.encryptMixed.rawValue != 0 {
+        if entry.type & GRFArchiveEntryType.encryptMixed.rawValue != 0 {
             decryptor.decodeFull(buf: &bytes, len: Int(entry.lengthAligned), entrylen: Int(entry.packSize))
-        } else if entry.type & GRFEntryType.encryptHeader.rawValue != 0 {
+        } else if entry.type & GRFArchiveEntryType.encryptHeader.rawValue != 0 {
             decryptor.decodeHeader(buf: &bytes, len: Int(entry.lengthAligned))
         }
 

@@ -12,9 +12,9 @@ enum DocumentWrapper {
 
     case directory(URL)
 
-    case directoryInArchive(GRFDocument, String)
+    case directoryInArchive(GRFArchive, String)
 
-    case grfDocument(GRFDocument)
+    case archive(GRFArchive)
 
     case textDocument(TextDocument)
 
@@ -31,7 +31,7 @@ extension DocumentWrapper {
             return UIImage(systemName: "folder")
         case .directoryInArchive:
             return UIImage(systemName: "folder")
-        case .grfDocument:
+        case .archive:
             return UIImage(systemName: "doc")
         case .textDocument:
             return UIImage(systemName: "doc.text")
@@ -48,8 +48,8 @@ extension DocumentWrapper {
             return directory.lastPathComponent
         case .directoryInArchive(_, let directory):
             return String(directory.split(separator: "\\").last ?? "")
-        case .grfDocument(let grf):
-            return grf.url.lastPathComponent
+        case .archive(let archive):
+            return archive.url.lastPathComponent
         case .textDocument(let document):
             return document.name
         case .unknownDocument(let name):
@@ -71,8 +71,8 @@ extension DocumentWrapper {
                 }
                 switch url.pathExtension {
                 case "grf":
-                    if let grf = try? GRFDocument(url: url) {
-                        return .grfDocument(grf)
+                    if let archive = try? GRFArchive(url: url) {
+                        return .archive(archive)
                     }
                 case "txt", "xml", "lua", "lub":
                     let document = TextDocument(source: .url(url))
@@ -83,9 +83,9 @@ extension DocumentWrapper {
                 return .unknownDocument(url.lastPathComponent)
             }
             return documentWrappers.sorted()
-        case .directoryInArchive(let grf, let directory):
+        case .directoryInArchive(let archive, let directory):
             var documentWrappers: [DocumentWrapper] = []
-            for entry in grf.entries where entry.path.hasPrefix(directory) {
+            for entry in archive.entries where entry.path.hasPrefix(directory) {
                 var filename = entry.path
                 filename.removeSubrange(directory.startIndex..<directory.endIndex)
                 let components = filename.split(separator: "\\")
@@ -93,7 +93,7 @@ extension DocumentWrapper {
                     let component = String(components[0]) as NSString
                     switch component.pathExtension {
                     case "txt", "xml", "lua", "lub":
-                        let textDocument = TextDocument(source: .entryInArchive(entry, grf))
+                        let textDocument = TextDocument(source: .entryInArchive(archive, entry))
                         let documentWrapper: DocumentWrapper = .textDocument(textDocument)
                         documentWrappers.append(documentWrapper)
                     default:
@@ -103,15 +103,15 @@ extension DocumentWrapper {
 
                 } else if components.count > 1 {
                     let directory = directory.appending("\\").appending(components[0])
-                    let documentWrapper: DocumentWrapper = .directoryInArchive(grf, directory)
+                    let documentWrapper: DocumentWrapper = .directoryInArchive(archive, directory)
                     if !documentWrappers.contains(documentWrapper) {
                         documentWrappers.append(documentWrapper)
                     }
                 }
             }
             return documentWrappers.sorted()
-        case .grfDocument(let grf):
-            return DocumentWrapper.directoryInArchive(grf, "data").documentWrappers
+        case .archive(let archive):
+            return DocumentWrapper.directoryInArchive(archive, "data").documentWrappers
         case .textDocument:
             return nil
         case .unknownDocument:
@@ -138,7 +138,7 @@ extension DocumentWrapper: Equatable, Comparable {
             return 0
         case .directoryInArchive:
             return 0
-        case .grfDocument:
+        case .archive:
             return 1
         case .textDocument:
             return 1

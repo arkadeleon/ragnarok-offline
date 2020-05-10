@@ -10,9 +10,11 @@ import Foundation
 
 protocol Archive {
 
-    var entries: [ArchiveEntry] { get }
+    associatedtype Entry: ArchiveEntry
 
-    func contents(of entry: ArchiveEntry) throws -> Data
+    var entries: [Entry] { get }
+
+    func contents(of entry: Entry) throws -> Data
 }
 
 protocol ArchiveEntry {
