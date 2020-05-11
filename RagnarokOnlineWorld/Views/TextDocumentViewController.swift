@@ -26,6 +26,10 @@ class TextDocumentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = document.name
+
+        view.backgroundColor = .systemBackground
+
         textView = UITextView(frame: view.bounds)
         textView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(textView)

@@ -32,6 +32,8 @@ class DocumentWrappersViewController: UIViewController, UICollectionViewDataSour
 
         title = documentWrapper.name
 
+        view.backgroundColor = .systemBackground
+
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 16
         layout.minimumInteritemSpacing = 16
@@ -40,7 +42,7 @@ class DocumentWrappersViewController: UIViewController, UICollectionViewDataSour
 
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .systemBackground
+        collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(DocumentWrapperCell.self, forCellWithReuseIdentifier: reuseIdentifier)
