@@ -57,6 +57,21 @@ struct GRFArchiveEntryType: OptionSet {
     static let encryptHeader = GRFArchiveEntryType(rawValue: 0x04) // encryption mode 1 (header DES only)
 }
 
+class GRFArchiveNode {
+
+    let pathComponent: String
+    var entry: GRFArchiveEntry?
+    private(set) var childNodes: [String : GRFArchiveNode] = [:]
+
+    init(pathComponent: String) {
+        self.pathComponent = pathComponent
+    }
+
+    func addChildNode(_ childNode: GRFArchiveNode) {
+        childNodes[childNode.pathComponent] = childNode
+    }
+}
+
 class GRFArchive: NSObject, Archive {
 
     enum Error: Swift.Error {
@@ -69,6 +84,7 @@ class GRFArchive: NSObject, Archive {
     let header: GRFArchiveHeader
     let table: GRFArchiveTable
     let entries: [GRFArchiveEntry]
+    let rootNode = GRFArchiveNode(pathComponent: "")
 
     private let fileHandle: FileHandle
     private let attributes: [FileAttributeKey : Any]
@@ -125,6 +141,7 @@ class GRFArchive: NSObject, Archive {
 
         var pos = 0
         var entries: [GRFArchiveEntry] = []
+
         for _ in 0..<header.fileCount {
             var filename: [UInt8] = []
             while decompressedData[pos] != 0 {
@@ -158,10 +175,47 @@ class GRFArchive: NSObject, Archive {
         }
 
         self.entries = entries
+
+        super.init()
+
+        for entry in entries {
+            self.insert(entry: entry)
+        }
     }
 
     deinit {
         fileHandle.closeFile()
+    }
+
+    private func insert(entry: GRFArchiveEntry) {
+        var currentNode = rootNode
+
+        let pathComponents = entry.path.split(separator: "\\")
+        for pathComponent in pathComponents {
+            if let childNode = currentNode.childNodes[String(pathComponent)] {
+                currentNode = childNode
+            } else {
+                let childNode = GRFArchiveNode(pathComponent: String(pathComponent))
+                currentNode.addChildNode(childNode)
+                currentNode = childNode
+            }
+        }
+
+        currentNode.entry = entry
+    }
+
+    func nodes(withPath path: String) -> [GRFArchiveNode] {
+        var currentNode = rootNode
+
+        let pathComponents = path.split(separator: "\\")
+        for pathComponent in pathComponents {
+            guard let childNode = currentNode.childNodes[String(pathComponent)] else {
+                return []
+            }
+            currentNode = childNode
+        }
+
+        return Array(currentNode.childNodes.values)
     }
 
     func contents(of entry: GRFArchiveEntry) throws -> Data {

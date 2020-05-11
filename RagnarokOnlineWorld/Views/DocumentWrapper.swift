@@ -100,32 +100,27 @@ extension DocumentWrapper {
             return DocumentWrapper.directoryInArchive(archive, "data").documentWrappers
         case .directoryInArchive(let archive, let path):
             var documentWrappers: [String : DocumentWrapper] = [:]
-            for entry in archive.entries where entry.path.hasPrefix(path) {
-                let relativePath = entry.path.dropFirst(path.count)
-                let pathComponents = relativePath.split(separator: "\\")
-                if pathComponents.count == 1 {
-                    let pathComponent = String(pathComponents[0])
-                    let pathExtension = (pathComponent as NSString).pathExtension
+            let nodes = archive.nodes(withPath: path)
+            for node in nodes {
+                if let entry = node.entry {
+                    let pathExtension = (node.pathComponent as NSString).pathExtension
                     switch pathExtension {
                     case "txt", "xml", "lua":
                         let textDocument = TextDocument(source: .entryInArchive(archive, entry))
                         let documentWrapper: DocumentWrapper = .textDocument(textDocument)
-                        documentWrappers[pathComponent] = documentWrapper
+                        documentWrappers[node.pathComponent] = documentWrapper
                     case "bmp", "jpg", "jpeg":
                         let imageDocument = ImageDocument(source: .entryInArchive(archive, entry))
                         let documentWrapper: DocumentWrapper = .imageDocument(imageDocument)
-                        documentWrappers[pathComponent] = documentWrapper
+                        documentWrappers[node.pathComponent] = documentWrapper
                     default:
                         let documentWrapper: DocumentWrapper = .entryInArchive(entry.lastPathComponent)
-                        documentWrappers[pathComponent] = documentWrapper
+                        documentWrappers[node.pathComponent] = documentWrapper
                     }
-                } else if pathComponents.count > 1 {
-                    let pathComponent = String(pathComponents[0])
-                    if documentWrappers[pathComponent] == nil {
-                        let path = path.appending("\\").appending(pathComponent)
-                        let documentWrapper: DocumentWrapper = .directoryInArchive(archive, path)
-                        documentWrappers[pathComponent] = documentWrapper
-                    }
+                } else {
+                    let path = path.appending("\\").appending(node.pathComponent)
+                    let documentWrapper: DocumentWrapper = .directoryInArchive(archive, path)
+                    documentWrappers[node.pathComponent] = documentWrapper
                 }
             }
             return documentWrappers

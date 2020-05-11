@@ -52,6 +52,7 @@ class Document: NSObject {
         self.source = source
         self.name = source.name
         self.fileType = source.fileType
+        super.init()
     }
 
     func open(completionHandler: ((Bool) -> Void)? = nil) {
