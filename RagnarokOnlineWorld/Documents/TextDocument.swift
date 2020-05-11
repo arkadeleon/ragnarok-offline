@@ -23,9 +23,6 @@ class TextDocument: Document {
         switch fileType {
         case "txt", "xml", "lua":
             text = String(data: contents, encoding: encoding)
-        case "lub":
-            // TODO: Decompile lub
-            break
         default:
             break
         }

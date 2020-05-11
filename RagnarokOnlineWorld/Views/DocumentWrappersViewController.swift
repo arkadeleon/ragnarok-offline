@@ -66,6 +66,9 @@ class DocumentWrappersViewController: UIViewController, UICollectionViewDataSour
         case .textDocument(let document):
             let textDocumentViewController = TextDocumentViewController(document: document)
             navigationController?.pushViewController(textDocumentViewController, animated: true)
+        case .imageDocument(let document):
+            let imageDocumentViewController = ImageDocumentViewController(document: document)
+            navigationController?.pushViewController(imageDocumentViewController, animated: true)
         default:
             break
         }

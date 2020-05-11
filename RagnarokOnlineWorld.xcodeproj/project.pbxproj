@@ -32,6 +32,8 @@
 		35116E7B2465B453000A60FE /* Archive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7A2465B453000A60FE /* Archive.swift */; };
 		35116E7D2466FEB3000A60FE /* TextDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7C2466FEB3000A60FE /* TextDocument.swift */; };
 		35116E7F246713AD000A60FE /* TextDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7E246713AD000A60FE /* TextDocumentViewController.swift */; };
+		35116E81246858F0000A60FE /* ImageDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E80246858F0000A60FE /* ImageDocument.swift */; };
+		35116E8324685AE4000A60FE /* ImageDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8224685AE4000A60FE /* ImageDocumentViewController.swift */; };
 		3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */; };
 		3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */; };
 /* End PBXBuildFile section */
@@ -84,6 +86,8 @@
 		35116E7A2465B453000A60FE /* Archive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Archive.swift; sourceTree = "<group>"; };
 		35116E7C2466FEB3000A60FE /* TextDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDocument.swift; sourceTree = "<group>"; };
 		35116E7E246713AD000A60FE /* TextDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDocumentViewController.swift; sourceTree = "<group>"; };
+		35116E80246858F0000A60FE /* ImageDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDocument.swift; sourceTree = "<group>"; };
+		35116E8224685AE4000A60FE /* ImageDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDocumentViewController.swift; sourceTree = "<group>"; };
 		3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrappersViewController.swift; sourceTree = "<group>"; };
 		3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrapperCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -191,6 +195,7 @@
 				35116E55245FC152000A60FE /* GRFArchive.swift */,
 				35116E7824659FD6000A60FE /* Document.swift */,
 				35116E7C2466FEB3000A60FE /* TextDocument.swift */,
+				35116E80246858F0000A60FE /* ImageDocument.swift */,
 				35116E5D2461A5DB000A60FE /* DESDecryptor.swift */,
 				35116E53245FC152000A60FE /* FileHandle+Reading.swift */,
 			);
@@ -204,6 +209,7 @@
 				3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */,
 				3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */,
 				35116E7E246713AD000A60FE /* TextDocumentViewController.swift */,
+				35116E8224685AE4000A60FE /* ImageDocumentViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -362,6 +368,8 @@
 				3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */,
 				35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */,
 				35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */,
+				35116E81246858F0000A60FE /* ImageDocument.swift in Sources */,
+				35116E8324685AE4000A60FE /* ImageDocumentViewController.swift in Sources */,
 				35116E7924659FD6000A60FE /* Document.swift in Sources */,
 				35116E57245FC152000A60FE /* FileHandle+Reading.swift in Sources */,
 				3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */,
