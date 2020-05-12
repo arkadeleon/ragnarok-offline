@@ -99,6 +99,7 @@ extension DocumentWrapper {
         case .archive(let archive):
             return DocumentWrapper.directoryInArchive(archive, "data").documentWrappers
         case .directoryInArchive(let archive, let path):
+            archive.unarchive()
             var documentWrappers: [String : DocumentWrapper] = [:]
             let nodes = archive.nodes(withPath: path)
             for node in nodes {
