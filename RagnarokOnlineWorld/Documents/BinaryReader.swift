@@ -8,13 +8,6 @@
 
 import Foundation
 
-protocol Stream {
-
-    func seek(toOffset offset: Int) throws
-
-    func read(upToCount count: Int) throws -> Data
-}
-
 enum StreamError: Error {
 
     case endOfStream
@@ -22,61 +15,59 @@ enum StreamError: Error {
     case invalidStringEncoding
 }
 
-enum Streams {
+protocol Stream {
+
+    func seek(toOffset offset: Int) throws
+
+    func read(upToCount count: Int) throws -> Data
 }
 
-extension Streams {
+class FileStream: Stream {
+    private let fileHandle: FileHandle
 
-    class FileStream: Stream {
-        private let fileHandle: FileHandle
+    init(url: URL) throws {
+        fileHandle = try FileHandle(forReadingFrom: url)
+    }
 
-        init(url: URL) throws {
-            fileHandle = try FileHandle(forReadingFrom: url)
+    deinit {
+        try? fileHandle.close()
+    }
+
+    func seek(toOffset offset: Int) throws {
+        try fileHandle.seek(toOffset: UInt64(offset))
+    }
+
+    func read(upToCount count: Int) throws -> Data {
+        guard let data = try fileHandle.read(upToCount: count) else {
+            throw StreamError.endOfStream
         }
-
-        deinit {
-            try? fileHandle.close()
-        }
-
-        func seek(toOffset offset: Int) throws {
-            try fileHandle.seek(toOffset: UInt64(offset))
-        }
-
-        func read(upToCount count: Int) throws -> Data {
-            guard let data = try fileHandle.read(upToCount: count) else {
-                throw StreamError.endOfStream
-            }
-            return data
-        }
+        return data
     }
 }
 
-extension Streams {
+class DataStream: Stream {
+    private let data: Data
+    private var offset = 0
 
-    class DataStream: Stream {
-        private let data: Data
-        private var offset = 0
+    init(data: Data) {
+        self.data = data
+    }
 
-        init(data: Data) {
-            self.data = data
+    func seek(toOffset offset: Int) throws {
+        self.offset = offset
+    }
+
+    func read(upToCount count: Int) throws -> Data {
+        guard offset + count <= data.count else {
+            throw StreamError.endOfStream
         }
-
-        func seek(toOffset offset: Int) throws {
-            self.offset = offset
-        }
-
-        func read(upToCount count: Int) throws -> Data {
-            guard offset + count <= data.count else {
-                throw StreamError.endOfStream
-            }
-            let data = Data(self.data[offset..<(offset + count)])
-            offset += count
-            return data
-        }
+        let data = Data(self.data[offset..<(offset + count)])
+        offset += count
+        return data
     }
 }
 
-class StreamReader {
+class BinaryReader {
 
     let stream: Stream
 
