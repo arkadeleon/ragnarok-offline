@@ -1,5 +1,5 @@
 //
-//  StreamReader.swift
+//  BinaryReader.swift
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/5/11.
