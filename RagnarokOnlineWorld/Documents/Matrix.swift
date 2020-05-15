@@ -14,6 +14,49 @@ typealias Vector4 = simd_float4
 typealias Matrix3 = simd_float3x3
 typealias Matrix4 = simd_float4x4
 
+extension Matrix3 {
+
+    static var identity: Matrix3 {
+        return matrix_identity_float3x3
+    }
+
+    init(translationX tx: Float, y ty: Float) {
+        self.init(rows: [
+            [1,  0,  0],
+            [0,  1,  0],
+            [tx, ty, 1]
+        ])
+    }
+
+    init(scaleX sx: Float, y sy: Float) {
+        self.init(rows: [
+            [sx, 0,  0],
+            [0,  sy, 0],
+            [0,  0,  1]
+        ])
+    }
+
+    init(rotationAngle angle: Float) {
+        self.init(rows: [
+            [ cos(angle), sin(angle), 0],
+            [-sin(angle), cos(angle), 0],
+            [ 0,          0,          1]
+        ])
+    }
+
+    func translatedBy(x tx: Float, y ty: Float) -> Matrix3 {
+        return self * Matrix3(translationX: tx, y: ty)
+    }
+
+    func scaledBy(x sx: Float, y sy: Float) -> Matrix3 {
+        return self * Matrix3(scaleX: sx, y: sy)
+    }
+
+    func rotated(by angle: Float) -> Matrix3 {
+        return self * Matrix3(rotationAngle: angle)
+    }
+}
+
 /// Calculate a normal from the three givens vectors
 func calcNormal(_ a: Vector3, _ b: Vector3, _ c: Vector3) -> Vector3 {
     let v1 = c - b
@@ -122,12 +165,12 @@ func mat4toInverseMat3(_ mat: Matrix4) -> Matrix3 {
 
     let d = a00 * b01 + a01 * b11 + a02 * b21
     if d == 0 {
-        return matrix_identity_float3x3
+        return .identity
     }
 
     let id = 1 / d
 
-    var dest = matrix_identity_float3x3
+    var dest: Matrix3 = .identity
     dest[0, 0] = b01 * id
     dest[1, 0] = (-a22 * a01 + a02 * a21) * id
     dest[2, 0] = (a12 * a01 - a02 * a11) * id
