@@ -13,6 +13,8 @@ enum StreamError: Error {
     case endOfStream
 
     case invalidStringEncoding
+
+    case invalidContents
 }
 
 protocol Stream {
