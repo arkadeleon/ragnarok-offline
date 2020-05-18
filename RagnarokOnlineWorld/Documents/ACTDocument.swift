@@ -38,8 +38,8 @@ class ACTDocument: Document {
 
     private var reader: BinaryReader!
 
-    private(set) var header: String = ""
-    private(set) var version: String = ""
+    private(set) var header = ""
+    private(set) var version = ""
     private(set) var actions: [ACTAction] = []
     private(set) var sounds: [String] = []
 

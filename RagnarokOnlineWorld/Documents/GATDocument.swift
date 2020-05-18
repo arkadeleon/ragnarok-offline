@@ -43,8 +43,8 @@ class GATDocument: Document {
         6: [.walkable, .snipable]           // ???
     ]
 
-    private(set) var header: String = ""
-    private(set) var version: String = ""
+    private(set) var header = ""
+    private(set) var version = ""
     private(set) var width: UInt32 = 0
     private(set) var height: UInt32 = 0
     private(set) var cells: [GATCell] = []
