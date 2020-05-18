@@ -11,17 +11,11 @@ import UIKit
 enum DocumentWrapper {
 
     case directory(URL)
-
     case document(URL)
-
     case archive(GRFArchive)
-
     case directoryInArchive(GRFArchive, String)
-
     case entryInArchive(String)
-
     case textDocument(TextDocument)
-
     case imageDocument(ImageDocument)
 }
 

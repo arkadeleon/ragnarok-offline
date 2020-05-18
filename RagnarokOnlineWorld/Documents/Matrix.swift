@@ -8,8 +8,9 @@
 
 import simd
 
-typealias Vector3 = simd_float3
-typealias Vector4 = simd_float4
+typealias Vector2 = SIMD2
+typealias Vector3 = SIMD3
+typealias Vector4 = SIMD4
 
 typealias Matrix3 = simd_float3x3
 typealias Matrix4 = simd_float4x4
@@ -58,7 +59,7 @@ extension Matrix3 {
 }
 
 /// Calculate a normal from the three givens vectors
-func calcNormal(_ a: Vector3, _ b: Vector3, _ c: Vector3) -> Vector3 {
+func calcNormal(_ a: Vector3<Float>, _ b: Vector3<Float>, _ c: Vector3<Float>) -> Vector3<Float> {
     let v1 = c - b
     let v2 = a - b
     let v3 = cross(v1, v2)
@@ -66,7 +67,7 @@ func calcNormal(_ a: Vector3, _ b: Vector3, _ c: Vector3) -> Vector3 {
 }
 
 /// Create a normal with the four givens vector
-func calcNormal(_ a: Vector3, _ b: Vector3, _ c: Vector3, _ d: Vector3) -> Vector3 {
+func calcNormal(_ a: Vector3<Float>, _ b: Vector3<Float>, _ c: Vector3<Float>, _ d: Vector3<Float>) -> Vector3<Float> {
     var v1 = c - b
     var v2 = a - b
     var v3 = cross(v1, v2)
@@ -91,7 +92,7 @@ func translateZ(_ mat: Matrix4, _ z: Float) -> Matrix4 {
 }
 
 /// Do a quaternon rotation
-func rotateQuat(_ mat: Matrix4, _ w: Vector4) -> Matrix4 {
+func rotateQuat(_ mat: Matrix4, _ w: Vector4<Float>) -> Matrix4 {
     let norm = normalize(w)
     let a = norm[0]
     let b = norm[1]
@@ -109,13 +110,13 @@ func rotateQuat(_ mat: Matrix4, _ w: Vector4) -> Matrix4 {
 
 /// Extract rotation matrix
 func extractRotation(_ mat: Matrix4) -> Matrix4 {
-    let x: Vector3 = [mat[0, 0], mat[1, 0], mat[2, 0]]
+    let x: Vector3<Float> = [mat[0, 0], mat[1, 0], mat[2, 0]]
     let norm_x = normalize(x)
 
-    let y: Vector3 = [mat[0, 1], mat[1, 1], mat[2, 1]]
+    let y: Vector3<Float> = [mat[0, 1], mat[1, 1], mat[2, 1]]
     let norm_y = normalize(y)
 
-    let z: Vector3 = [mat[0, 2], mat[1, 2], mat[2, 2]]
+    let z: Vector3<Float> = [mat[0, 2], mat[1, 2], mat[2, 2]]
     let norm_z = normalize(z)
 
     var dest: Matrix4 = matrix_identity_float4x4

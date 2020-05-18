@@ -28,7 +28,7 @@ struct GATCell {
     let height2: Float
     let height3: Float
     let height4: Float
-    let type: GATType?
+    let types: GATType
 }
 
 class GATDocument: Document {
@@ -58,18 +58,23 @@ class GATDocument: Document {
             throw StreamError.invalidContents
         }
 
-        version = try String(reader.readUInt8()) + "." + String(reader.readUInt8())
+        let major = try String(reader.readUInt8())
+        let minor = try String(reader.readUInt8())
+        version = major + "." + minor
+
         width = try reader.readUInt32()
         height = try reader.readUInt32()
 
-        cells = try (0..<(width * height)).map { _ -> GATCell in
-            return try GATCell(
+        cells = []
+        for _ in 0..<(width * height) {
+            let cell = try GATCell(
                 height1: reader.readFloat32() * 0.2,
                 height2: reader.readFloat32() * 0.2,
                 height3: reader.readFloat32() * 0.2,
                 height4: reader.readFloat32() * 0.2,
-                type: GATDocument.typeTable[reader.readUInt32()]
+                types: GATDocument.typeTable[reader.readUInt32()] ?? []
             )
+            cells.append(cell)
         }
     }
 }
