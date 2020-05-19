@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImageDocumentViewController: UIViewController, UIScrollViewDelegate {
+class ImageDocumentViewController: UIViewController {
 
     let document: ImageDocument
 
@@ -47,6 +47,9 @@ class ImageDocumentViewController: UIViewController, UIScrollViewDelegate {
             self.document.close()
         }
     }
+}
+
+extension ImageDocumentViewController: UIScrollViewDelegate {
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView

@@ -10,7 +10,7 @@ import UIKit
 
 private let reuseIdentifier = "DocumentWrapperCell"
 
-class DocumentWrappersViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class DocumentWrappersViewController: UIViewController {
 
     let documentWrapper: DocumentWrapper
     let documentWrappers: [DocumentWrapper]
@@ -50,6 +50,9 @@ class DocumentWrappersViewController: UIViewController, UICollectionViewDataSour
 
         collectionView.reloadData()
     }
+}
+
+extension DocumentWrappersViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return documentWrappers.count
@@ -61,6 +64,9 @@ class DocumentWrappersViewController: UIViewController, UICollectionViewDataSour
         cell.nameLabel.text = documentWrappers[indexPath.row].name
         return cell
     }
+}
+
+extension DocumentWrappersViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let documentWrapper = documentWrappers[indexPath.row]
