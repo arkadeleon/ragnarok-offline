@@ -33,7 +33,7 @@ struct GATCell {
 
 class GATDocument: Document {
 
-    static let typeTable: [UInt32 : GATType] = [
+    static let typeTable: [UInt32: GATType] = [
         0: [.walkable, .snipable],          // walkable ground
         1: [.none],                         // non-walkable ground
         2: [.walkable, .snipable],          // ???

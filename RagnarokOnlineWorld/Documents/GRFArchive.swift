@@ -62,7 +62,7 @@ class GRFArchiveNode {
 
     let pathComponent: String
     var entry: GRFArchiveEntry?
-    private(set) var childNodes: [String : GRFArchiveNode] = [:]
+    private(set) var childNodes: [String: GRFArchiveNode] = [:]
 
     init(pathComponent: String) {
         self.pathComponent = pathComponent

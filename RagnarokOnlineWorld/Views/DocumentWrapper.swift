@@ -59,7 +59,7 @@ extension DocumentWrapper {
         }
     }
 
-    var documentWrappers: [String : DocumentWrapper]? {
+    var documentWrappers: [String: DocumentWrapper]? {
         switch self {
         case .directory(let url):
             guard let urls = try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: []) else {
@@ -94,7 +94,7 @@ extension DocumentWrapper {
             return DocumentWrapper.directoryInArchive(archive, "data").documentWrappers
         case .directoryInArchive(let archive, let path):
             archive.unarchive()
-            var documentWrappers: [String : DocumentWrapper] = [:]
+            var documentWrappers: [String: DocumentWrapper] = [:]
             let nodes = archive.nodes(withPath: path)
             for node in nodes {
                 if let entry = node.entry {
