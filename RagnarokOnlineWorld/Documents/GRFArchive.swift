@@ -10,7 +10,8 @@ import Foundation
 import CoreFoundation
 import DataCompression
 
-struct GRFArchiveHeader {
+struct GRFHeader {
+
     static let size: UInt64 = 0x2e
 
     let signature: [UInt8]
@@ -21,7 +22,8 @@ struct GRFArchiveHeader {
     let version: UInt32
 }
 
-struct GRFArchiveTable {
+struct GRFTable {
+
     static let size: UInt64 = 0x08
 
     let packSize: UInt32
@@ -29,7 +31,8 @@ struct GRFArchiveTable {
     let data: Data
 }
 
-struct GRFArchiveEntry: ArchiveEntry, Equatable {
+struct GRFEntry: Equatable {
+
     let path: String
     let packSize: UInt32
     let lengthAligned: UInt32
@@ -46,34 +49,35 @@ struct GRFArchiveEntry: ArchiveEntry, Equatable {
     }
 }
 
-struct GRFArchiveEntryType: OptionSet {
+struct GRFEntryType: OptionSet {
+
     let rawValue: UInt8
 
     init(rawValue: UInt8) {
         self.rawValue = rawValue
     }
 
-    static let file          = GRFArchiveEntryType(rawValue: 0x01) // entry is a file
-    static let encryptMixed  = GRFArchiveEntryType(rawValue: 0x02) // encryption mode 0 (header DES + periodic DES/shuffle)
-    static let encryptHeader = GRFArchiveEntryType(rawValue: 0x04) // encryption mode 1 (header DES only)
+    static let file          = GRFEntryType(rawValue: 0x01) // entry is a file
+    static let encryptMixed  = GRFEntryType(rawValue: 0x02) // encryption mode 0 (header DES + periodic DES/shuffle)
+    static let encryptHeader = GRFEntryType(rawValue: 0x04) // encryption mode 1 (header DES only)
 }
 
-class GRFArchiveNode {
+class GRFNode {
 
     let pathComponent: String
-    var entry: GRFArchiveEntry?
-    private(set) var childNodes: [String: GRFArchiveNode] = [:]
+    var entry: GRFEntry?
+    private(set) var childNodes: [String: GRFNode] = [:]
 
     init(pathComponent: String) {
         self.pathComponent = pathComponent
     }
 
-    func addChildNode(_ childNode: GRFArchiveNode) {
+    func addChildNode(_ childNode: GRFNode) {
         childNodes[childNode.pathComponent] = childNode
     }
 }
 
-class GRFArchive: NSObject, Archive {
+class GRFArchive: NSObject {
 
     enum Error: Swift.Error {
         case invalidHeader
@@ -82,11 +86,11 @@ class GRFArchive: NSObject, Archive {
     }
 
     let url: URL
-    let header: GRFArchiveHeader
-    let table: GRFArchiveTable
+    let header: GRFHeader
+    let table: GRFTable
 
-    private(set) var entries: [GRFArchiveEntry] = []
-    private(set) var rootNode = GRFArchiveNode(pathComponent: "")
+    private(set) var entries: [GRFEntry] = []
+    private(set) var rootNode = GRFNode(pathComponent: "")
 
     init(url: URL) throws {
         self.url = url
@@ -113,11 +117,11 @@ class GRFArchive: NSObject, Archive {
             throw Error.invalidHeader
         }
 
-        guard GRFArchiveHeader.size + UInt64(fileTableOffset) < attributes[.size] as? UInt64 ?? 0 else {
+        guard GRFHeader.size + UInt64(fileTableOffset) < attributes[.size] as? UInt64 ?? 0 else {
             throw Error.invalidHeader
         }
 
-        header = GRFArchiveHeader(
+        header = GRFHeader(
             signature: signature,
             key: key,
             fileTableOffset: fileTableOffset,
@@ -126,18 +130,18 @@ class GRFArchive: NSObject, Archive {
             version: version
         )
 
-        try fileHandle.seek(toOffset: GRFArchiveHeader.size + UInt64(fileTableOffset))
+        try fileHandle.seek(toOffset: GRFHeader.size + UInt64(fileTableOffset))
 
         let packSize = try fileHandle.readUInt32()
         let realSize = try fileHandle.readUInt32()
 
-        try fileHandle.seek(toOffset: GRFArchiveHeader.size + UInt64(fileTableOffset) + GRFArchiveTable.size)
+        try fileHandle.seek(toOffset: GRFHeader.size + UInt64(fileTableOffset) + GRFTable.size)
         let compressedData = try fileHandle.readBytes(Int(packSize))
         guard let data = Data(compressedData).unzip() else {
             throw Error.invalidTable
         }
 
-        table = GRFArchiveTable(
+        table = GRFTable(
             packSize: packSize,
             realSize: realSize,
             data: data
@@ -171,7 +175,7 @@ class GRFArchive: NSObject, Archive {
             let encoding = CFStringConvertEncodingToNSStringEncoding(cfEncoding)
             let path = NSString(data: Data(filename), encoding: encoding) ?? ""
 
-            let entry = GRFArchiveEntry(
+            let entry = GRFEntry(
                 path: path as String,
                 packSize: packSize,
                 lengthAligned: lengthAligned,
@@ -188,7 +192,7 @@ class GRFArchive: NSObject, Archive {
         }
     }
 
-    private func insert(entry: GRFArchiveEntry) {
+    private func insert(entry: GRFEntry) {
         var currentNode = rootNode
 
         let pathComponents = entry.path.split(separator: "\\")
@@ -196,7 +200,7 @@ class GRFArchive: NSObject, Archive {
             if let childNode = currentNode.childNodes[String(pathComponent)] {
                 currentNode = childNode
             } else {
-                let childNode = GRFArchiveNode(pathComponent: String(pathComponent))
+                let childNode = GRFNode(pathComponent: String(pathComponent))
                 currentNode.addChildNode(childNode)
                 currentNode = childNode
             }
@@ -205,7 +209,7 @@ class GRFArchive: NSObject, Archive {
         currentNode.entry = entry
     }
 
-    func nodes(withPath path: String) -> [GRFArchiveNode] {
+    func nodes(withPath path: String) -> [GRFNode] {
         var currentNode = rootNode
 
         let pathComponents = path.split(separator: "\\")
@@ -219,17 +223,17 @@ class GRFArchive: NSObject, Archive {
         return Array(currentNode.childNodes.values)
     }
 
-    func contents(of entry: GRFArchiveEntry) throws -> Data {
+    func contents(of entry: GRFEntry) throws -> Data {
         let fileHandle = try FileHandle(forReadingFrom: url)
 
         defer {
             try? fileHandle.close()
         }
 
-        try fileHandle.seek(toOffset: GRFArchiveHeader.size + UInt64(entry.offset))
+        try fileHandle.seek(toOffset: GRFHeader.size + UInt64(entry.offset))
         var bytes = try fileHandle.readBytes(Int(entry.lengthAligned))
 
-        if entry.type & GRFArchiveEntryType.file.rawValue == 0 {
+        if entry.type & GRFEntryType.file.rawValue == 0 {
             guard let data = Data(bytes).unzip() else {
                 throw Error.invalidEntry
             }
@@ -237,9 +241,9 @@ class GRFArchive: NSObject, Archive {
         }
 
         let decryptor = DESDecryptor()
-        if entry.type & GRFArchiveEntryType.encryptMixed.rawValue != 0 {
+        if entry.type & GRFEntryType.encryptMixed.rawValue != 0 {
             decryptor.decodeFull(buf: &bytes, len: Int(entry.lengthAligned), entrylen: Int(entry.packSize))
-        } else if entry.type & GRFArchiveEntryType.encryptHeader.rawValue != 0 {
+        } else if entry.type & GRFEntryType.encryptHeader.rawValue != 0 {
             decryptor.decodeHeader(buf: &bytes, len: Int(entry.lengthAligned))
         }
 

@@ -29,7 +29,6 @@
 		35116E712461C435000A60FE /* monstertalktable.xml in Resources */ = {isa = PBXBuildFile; fileRef = 35116E682461C435000A60FE /* monstertalktable.xml */; };
 		35116E7524644AAA000A60FE /* DocumentWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7424644AAA000A60FE /* DocumentWrapper.swift */; };
 		35116E7924659FD6000A60FE /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7824659FD6000A60FE /* Document.swift */; };
-		35116E7B2465B453000A60FE /* Archive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7A2465B453000A60FE /* Archive.swift */; };
 		35116E7D2466FEB3000A60FE /* TextDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7C2466FEB3000A60FE /* TextDocument.swift */; };
 		35116E7F246713AD000A60FE /* TextDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7E246713AD000A60FE /* TextDocumentViewController.swift */; };
 		35116E81246858F0000A60FE /* ImageDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E80246858F0000A60FE /* ImageDocument.swift */; };
@@ -88,7 +87,6 @@
 		35116E682461C435000A60FE /* monstertalktable.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = monstertalktable.xml; sourceTree = "<group>"; };
 		35116E7424644AAA000A60FE /* DocumentWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrapper.swift; sourceTree = "<group>"; };
 		35116E7824659FD6000A60FE /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
-		35116E7A2465B453000A60FE /* Archive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Archive.swift; sourceTree = "<group>"; };
 		35116E7C2466FEB3000A60FE /* TextDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDocument.swift; sourceTree = "<group>"; };
 		35116E7E246713AD000A60FE /* TextDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDocumentViewController.swift; sourceTree = "<group>"; };
 		35116E80246858F0000A60FE /* ImageDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDocument.swift; sourceTree = "<group>"; };
@@ -201,7 +199,6 @@
 		35116E76246596A5000A60FE /* Documents */ = {
 			isa = PBXGroup;
 			children = (
-				35116E7A2465B453000A60FE /* Archive.swift */,
 				35116E55245FC152000A60FE /* GRFArchive.swift */,
 				35116E7824659FD6000A60FE /* Document.swift */,
 				35116E7C2466FEB3000A60FE /* TextDocument.swift */,
@@ -377,7 +374,6 @@
 			files = (
 				35116E7F246713AD000A60FE /* TextDocumentViewController.swift in Sources */,
 				35116E7D2466FEB3000A60FE /* TextDocument.swift in Sources */,
-				35116E7B2465B453000A60FE /* Archive.swift in Sources */,
 				35116E5E2461A5DB000A60FE /* DESDecryptor.swift in Sources */,
 				35116E7524644AAA000A60FE /* DocumentWrapper.swift in Sources */,
 				3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */,

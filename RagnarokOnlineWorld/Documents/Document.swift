@@ -12,7 +12,7 @@ enum DocumentSource {
 
     case url(URL)
 
-    case entryInArchive(GRFArchive, GRFArchiveEntry)
+    case entryInArchive(GRFArchive, GRFEntry)
 
     fileprivate var name: String {
         switch self {
