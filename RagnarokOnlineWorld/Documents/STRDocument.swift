@@ -2,7 +2,7 @@
 //  STRDocument.swift
 //  RagnarokOnlineWorld
 //
-//  Created by Li, Junlin on 2020/5/19.
+//  Created by Leon Li on 2020/5/19.
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
