@@ -62,7 +62,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		35116E12245C7B87000A60FE /* R.O.W..app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = R.O.W..app; sourceTree = BUILT_PRODUCTS_DIR; };
+		35116E12245C7B87000A60FE /* RagnarokOnlineWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOnlineWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35116E15245C7B87000A60FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		35116E17245C7B87000A60FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		35116E1E245C7B8A000A60FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -143,7 +143,7 @@
 		35116E13245C7B87000A60FE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				35116E12245C7B87000A60FE /* R.O.W..app */,
+				35116E12245C7B87000A60FE /* RagnarokOnlineWorld.app */,
 				35116E28245C7B8A000A60FE /* RagnarokOnlineWorldTests.xctest */,
 				35116E33245C7B8A000A60FE /* RagnarokOnlineWorldUITests.xctest */,
 			);
@@ -156,7 +156,7 @@
 				35116E15245C7B87000A60FE /* AppDelegate.swift */,
 				35116E17245C7B87000A60FE /* SceneDelegate.swift */,
 				35116E76246596A5000A60FE /* Documents */,
-				35116E77246596BB000A60FE /* Views */,
+				35116E77246596BB000A60FE /* Browser */,
 				35116E1E245C7B8A000A60FE /* Assets.xcassets */,
 				35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */,
 				35116E23245C7B8A000A60FE /* Info.plist */,
@@ -220,7 +220,7 @@
 			path = Documents;
 			sourceTree = "<group>";
 		};
-		35116E77246596BB000A60FE /* Views */ = {
+		35116E77246596BB000A60FE /* Browser */ = {
 			isa = PBXGroup;
 			children = (
 				35116E7424644AAA000A60FE /* DocumentWrapper.swift */,
@@ -229,7 +229,7 @@
 				35116E7E246713AD000A60FE /* TextDocumentViewController.swift */,
 				35116E8224685AE4000A60FE /* ImageDocumentViewController.swift */,
 			);
-			path = Views;
+			path = Browser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,7 +252,7 @@
 				35116E4F245FBF65000A60FE /* DataCompression */,
 			);
 			productName = RagnarokOnlineWorld;
-			productReference = 35116E12245C7B87000A60FE /* R.O.W..app */;
+			productReference = 35116E12245C7B87000A60FE /* RagnarokOnlineWorld.app */;
 			productType = "com.apple.product-type.application";
 		};
 		35116E27245C7B8A000A60FE /* RagnarokOnlineWorldTests */ = {
@@ -570,7 +570,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = date.leonandvane.RagnarokOnlineWorld;
-				PRODUCT_NAME = R.O.W.;
+				PRODUCT_NAME = RagnarokOnlineWorld;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -588,7 +588,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = date.leonandvane.RagnarokOnlineWorld;
-				PRODUCT_NAME = R.O.W.;
+				PRODUCT_NAME = RagnarokOnlineWorld;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
