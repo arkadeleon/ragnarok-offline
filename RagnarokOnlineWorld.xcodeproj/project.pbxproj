@@ -43,6 +43,7 @@
 		35CB3BAC247827A700EC04C3 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CB3BAB247827A700EC04C3 /* GameViewController.swift */; };
 		35CB3BAE24782A5100EC04C3 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CB3BAD24782A5100EC04C3 /* Renderer.swift */; };
 		35CB3BB52478359100EC04C3 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35CB3BB42478359100EC04C3 /* Shaders.metal */; };
+		35CB3BB7247D81B300EC04C3 /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35CB3BB6247D81B300EC04C3 /* wall.jpg */; };
 		35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8502473D9E8007DF105 /* STRDocument.swift */; };
 		35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8522473E1D7007DF105 /* RSWDocument.swift */; };
 /* End PBXBuildFile section */
@@ -108,6 +109,7 @@
 		35CB3BAF2478339500EC04C3 /* RagnarokOnlineWorld-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RagnarokOnlineWorld-Bridging-Header.h"; sourceTree = "<group>"; };
 		35CB3BB3247833C200EC04C3 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 		35CB3BB42478359100EC04C3 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		35CB3BB6247D81B300EC04C3 /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
 		35F8D8502473D9E8007DF105 /* STRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRDocument.swift; sourceTree = "<group>"; };
 		35F8D8522473E1D7007DF105 /* RSWDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWDocument.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -249,6 +251,7 @@
 				35CB3BAD24782A5100EC04C3 /* Renderer.swift */,
 				35CB3BB3247833C200EC04C3 /* ShaderTypes.h */,
 				35CB3BB42478359100EC04C3 /* Shaders.metal */,
+				35CB3BB6247D81B300EC04C3 /* wall.jpg */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				35116E22245C7B8A000A60FE /* LaunchScreen.storyboard in Resources */,
+				35CB3BB7247D81B300EC04C3 /* wall.jpg in Resources */,
 				35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

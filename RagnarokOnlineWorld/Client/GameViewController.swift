@@ -27,12 +27,17 @@ class GameViewController: UIViewController {
 
         renderer = Renderer(vertexFunctionName: "vertexShader", fragmentFunctionName: "fragmentShader") { encoder in
             let vertices = [
-                VertexIn(position: [0, 1], color: [1, 0, 0, 1]),
-                VertexIn(position: [-1, -1], color: [0, 1, 0, 1]),
-                VertexIn(position: [1, -1], color: [0, 0, 1, 1])
+                VertexIn(position: [0, 1], textureCoordinate: [1, 0]),
+                VertexIn(position: [-1, -1], textureCoordinate: [0, 1]),
+                VertexIn(position: [1, -1], textureCoordinate: [0, 0])
             ]
             let vertexBuffer = encoder.device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<VertexIn>.stride, options: [])!
             encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+
+            let textureLoaader = MTKTextureLoader(device: encoder.device)
+            let image = UIImage(named: "wall.jpg")!
+            let texture = try! textureLoaader.newTexture(cgImage: image.cgImage!, options: nil)
+            encoder.setFragmentTexture(texture, index: 0)
 
             encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
         }
