@@ -22,13 +22,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         do {
+            let gameViewController = GameViewController()
+            
             let url = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: .directory(url))
 
-            let navigationController = UINavigationController(rootViewController: documentWrappersViewController)
+            let tabBarController = UITabBarController()
+            tabBarController.viewControllers = [
+                UINavigationController(rootViewController: gameViewController),
+                UINavigationController(rootViewController: documentWrappersViewController)
+            ]
 
             window = UIWindow(windowScene: windowScene)
-            window?.rootViewController = navigationController
+            window?.rootViewController = tabBarController
             window?.makeKeyAndVisible()
         } catch {
             fatalError()

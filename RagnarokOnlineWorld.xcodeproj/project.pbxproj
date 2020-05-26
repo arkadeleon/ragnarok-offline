@@ -40,6 +40,9 @@
 		3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */; };
 		3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */; };
 		3587F70924694FA7007D1C9B /* BinaryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F70824694FA7007D1C9B /* BinaryReader.swift */; };
+		35CB3BAC247827A700EC04C3 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CB3BAB247827A700EC04C3 /* GameViewController.swift */; };
+		35CB3BAE24782A5100EC04C3 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CB3BAD24782A5100EC04C3 /* Renderer.swift */; };
+		35CB3BB52478359100EC04C3 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35CB3BB42478359100EC04C3 /* Shaders.metal */; };
 		35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8502473D9E8007DF105 /* STRDocument.swift */; };
 		35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8522473E1D7007DF105 /* RSWDocument.swift */; };
 /* End PBXBuildFile section */
@@ -100,6 +103,11 @@
 		3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrappersViewController.swift; sourceTree = "<group>"; };
 		3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrapperCell.swift; sourceTree = "<group>"; };
 		3587F70824694FA7007D1C9B /* BinaryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryReader.swift; sourceTree = "<group>"; };
+		35CB3BAB247827A700EC04C3 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		35CB3BAD24782A5100EC04C3 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		35CB3BAF2478339500EC04C3 /* RagnarokOnlineWorld-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RagnarokOnlineWorld-Bridging-Header.h"; sourceTree = "<group>"; };
+		35CB3BB3247833C200EC04C3 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
+		35CB3BB42478359100EC04C3 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		35F8D8502473D9E8007DF105 /* STRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRDocument.swift; sourceTree = "<group>"; };
 		35F8D8522473E1D7007DF105 /* RSWDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWDocument.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -156,9 +164,11 @@
 				35116E15245C7B87000A60FE /* AppDelegate.swift */,
 				35116E17245C7B87000A60FE /* SceneDelegate.swift */,
 				35116E76246596A5000A60FE /* Documents */,
+				35CB3BAA2478277600EC04C3 /* Client */,
 				35116E77246596BB000A60FE /* Browser */,
 				35116E1E245C7B8A000A60FE /* Assets.xcassets */,
 				35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */,
+				35CB3BAF2478339500EC04C3 /* RagnarokOnlineWorld-Bridging-Header.h */,
 				35116E23245C7B8A000A60FE /* Info.plist */,
 			);
 			path = RagnarokOnlineWorld;
@@ -232,6 +242,17 @@
 			path = Browser;
 			sourceTree = "<group>";
 		};
+		35CB3BAA2478277600EC04C3 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				35CB3BAB247827A700EC04C3 /* GameViewController.swift */,
+				35CB3BAD24782A5100EC04C3 /* Renderer.swift */,
+				35CB3BB3247833C200EC04C3 /* ShaderTypes.h */,
+				35CB3BB42478359100EC04C3 /* Shaders.metal */,
+			);
+			path = Client;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -303,6 +324,7 @@
 				TargetAttributes = {
 					35116E11245C7B87000A60FE = {
 						CreatedOnToolsVersion = 11.4.1;
+						LastSwiftMigration = 1150;
 					};
 					35116E27245C7B8A000A60FE = {
 						CreatedOnToolsVersion = 11.4.1;
@@ -382,9 +404,11 @@
 				35116E7D2466FEB3000A60FE /* TextDocument.swift in Sources */,
 				35116E5E2461A5DB000A60FE /* DESDecryptor.swift in Sources */,
 				35116E7524644AAA000A60FE /* DocumentWrapper.swift in Sources */,
+				35CB3BAE24782A5100EC04C3 /* Renderer.swift in Sources */,
 				3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */,
 				35116E8B247025EE000A60FE /* GATDocument.swift in Sources */,
 				35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */,
+				35CB3BAC247827A700EC04C3 /* GameViewController.swift in Sources */,
 				35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */,
 				35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */,
 				35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */,
@@ -392,6 +416,7 @@
 				35116E8324685AE4000A60FE /* ImageDocumentViewController.swift in Sources */,
 				35116E7924659FD6000A60FE /* Document.swift in Sources */,
 				35116E57245FC152000A60FE /* FileHandle+Reading.swift in Sources */,
+				35CB3BB52478359100EC04C3 /* Shaders.metal in Sources */,
 				35116E89246EDBE7000A60FE /* Matrix.swift in Sources */,
 				3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */,
 				35116E8D247035AC000A60FE /* ACTDocument.swift in Sources */,
@@ -562,6 +587,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A47Q8ENB5Y;
 				INFOPLIST_FILE = RagnarokOnlineWorld/Info.plist;
@@ -571,6 +597,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = date.leonandvane.RagnarokOnlineWorld;
 				PRODUCT_NAME = RagnarokOnlineWorld;
+				SWIFT_OBJC_BRIDGING_HEADER = "RagnarokOnlineWorld/RagnarokOnlineWorld-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -580,6 +608,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A47Q8ENB5Y;
 				INFOPLIST_FILE = RagnarokOnlineWorld/Info.plist;
@@ -589,6 +618,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = date.leonandvane.RagnarokOnlineWorld;
 				PRODUCT_NAME = RagnarokOnlineWorld;
+				SWIFT_OBJC_BRIDGING_HEADER = "RagnarokOnlineWorld/RagnarokOnlineWorld-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
