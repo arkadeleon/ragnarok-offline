@@ -167,9 +167,10 @@
 			children = (
 				35116E15245C7B87000A60FE /* AppDelegate.swift */,
 				35116E17245C7B87000A60FE /* SceneDelegate.swift */,
-				35116E76246596A5000A60FE /* Documents */,
 				35CB3BAA2478277600EC04C3 /* Client */,
 				35116E77246596BB000A60FE /* Browser */,
+				35116E76246596A5000A60FE /* Documents */,
+				35CB3BBA247EB2C100EC04C3 /* Utilities */,
 				35116E1E245C7B8A000A60FE /* Assets.xcassets */,
 				35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */,
 				35CB3BAF2478339500EC04C3 /* RagnarokOnlineWorld-Bridging-Header.h */,
@@ -227,10 +228,6 @@
 				35116E8E2472E685000A60FE /* SPRDocument.swift */,
 				35F8D8502473D9E8007DF105 /* STRDocument.swift */,
 				35116E5D2461A5DB000A60FE /* DESDecryptor.swift */,
-				35116E53245FC152000A60FE /* FileHandle+Reading.swift */,
-				3587F70824694FA7007D1C9B /* BinaryReader.swift */,
-				35116E88246EDBE7000A60FE /* Matrix.swift */,
-				35CB3BB8247EA51A00EC04C3 /* Matrix4.swift */,
 			);
 			path = Documents;
 			sourceTree = "<group>";
@@ -257,6 +254,17 @@
 				35CB3BB6247D81B300EC04C3 /* wall.jpg */,
 			);
 			path = Client;
+			sourceTree = "<group>";
+		};
+		35CB3BBA247EB2C100EC04C3 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				3587F70824694FA7007D1C9B /* BinaryReader.swift */,
+				35116E53245FC152000A60FE /* FileHandle+Reading.swift */,
+				35116E88246EDBE7000A60FE /* Matrix.swift */,
+				35CB3BB8247EA51A00EC04C3 /* Matrix4.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
