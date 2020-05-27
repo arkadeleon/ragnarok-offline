@@ -1,5 +1,5 @@
 //
-//  Matrix.swift
+//  Vector.swift
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/5/15.
@@ -11,51 +11,6 @@ import simd
 typealias Vector2 = SIMD2
 typealias Vector3 = SIMD3
 typealias Vector4 = SIMD4
-
-typealias Matrix3 = simd_float3x3
-
-extension Matrix3 {
-
-    static var identity: Matrix3 {
-        return matrix_identity_float3x3
-    }
-
-    init(translationX tx: Float, y ty: Float) {
-        self.init(rows: [
-            [1,  0,  0],
-            [0,  1,  0],
-            [tx, ty, 1]
-        ])
-    }
-
-    init(scaleX sx: Float, y sy: Float) {
-        self.init(rows: [
-            [sx, 0,  0],
-            [0,  sy, 0],
-            [0,  0,  1]
-        ])
-    }
-
-    init(rotationAngle angle: Float) {
-        self.init(rows: [
-            [ cos(angle), sin(angle), 0],
-            [-sin(angle), cos(angle), 0],
-            [ 0,          0,          1]
-        ])
-    }
-
-    func translatedBy(x tx: Float, y ty: Float) -> Matrix3 {
-        return self * Matrix3(translationX: tx, y: ty)
-    }
-
-    func scaledBy(x sx: Float, y sy: Float) -> Matrix3 {
-        return self * Matrix3(scaleX: sx, y: sy)
-    }
-
-    func rotated(by angle: Float) -> Matrix3 {
-        return self * Matrix3(rotationAngle: angle)
-    }
-}
 
 /// Calculate a normal from the three givens vectors
 func calcNormal(_ a: Vector3<Float>, _ b: Vector3<Float>, _ c: Vector3<Float>) -> Vector3<Float> {
