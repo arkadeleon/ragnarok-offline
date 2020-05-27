@@ -24,7 +24,7 @@ vertexShader(const device VertexIn *vertices [[buffer(0)]],
     VertexIn in = vertices[vertexIndex];
 
     VertexOut out;
-    out.position = uniforms.transform * float4(in.position, 0, 1);
+    out.position = uniforms.projection * uniforms.view * uniforms.model * float4(in.position, 1);
     out.textureCoordinate = in.textureCoordinate;
     return out;
 }

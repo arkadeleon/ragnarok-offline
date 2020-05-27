@@ -9,10 +9,12 @@
 #include <simd/simd.h>
 
 typedef struct {
-    vector_float2 position;
+    vector_float3 position;
     vector_float2 textureCoordinate;
 } VertexIn;
 
 typedef struct {
-    matrix_float4x4 transform;
+    matrix_float4x4 model;
+    matrix_float4x4 view;
+    matrix_float4x4 projection;
 } VertexUniforms;

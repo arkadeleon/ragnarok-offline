@@ -40,6 +40,11 @@ extension Matrix4 {
         self.init(glkMatrix4)
     }
 
+    init(rotationAngle angle: Float, x: Float, y: Float, z: Float) {
+        let glkMatrix4 = GLKMatrix4MakeRotation(angle, x, y, z)
+        self.init(glkMatrix4)
+    }
+
     init(xRotationAngle angle: Float) {
         let glkMatrix4 = GLKMatrix4MakeXRotation(angle)
         self.init(glkMatrix4)
@@ -55,8 +60,8 @@ extension Matrix4 {
         self.init(glkMatrix4)
     }
 
-    init(rotationAngle angle: Float, x: Float, y: Float, z: Float) {
-        let glkMatrix4 = GLKMatrix4MakeRotation(angle, x, y, z)
+    init(perspectiveFovyAngle fovyAngle: Float, aspect: Float, nearZ: Float, farZ: Float) {
+        let glkMatrix4 = GLKMatrix4MakePerspective(fovyAngle, aspect, nearZ, farZ)
         self.init(glkMatrix4)
     }
 }

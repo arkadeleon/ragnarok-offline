@@ -18,6 +18,7 @@ class Renderer: NSObject {
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
     let colorPixelFormat: MTLPixelFormat
+    let depthStencilPixelFormat: MTLPixelFormat
     let renderPipelineState: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState
 
@@ -43,6 +44,9 @@ class Renderer: NSObject {
         renderPipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .sourceAlpha
         renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
         renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
+
+        depthStencilPixelFormat = .depth32Float
+        renderPipelineDescriptor.depthAttachmentPixelFormat = depthStencilPixelFormat
 
         renderPipelineState = try! device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
 
@@ -82,7 +86,7 @@ extension Renderer: MTKViewDelegate {
         }
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
-//        renderCommandEncoder.setDepthStencilState(depthStencilState)
+        renderCommandEncoder.setDepthStencilState(depthStencilState)
 
         render(renderCommandEncoder)
 

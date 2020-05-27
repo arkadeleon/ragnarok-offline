@@ -34,6 +34,11 @@ extension Matrix3 {
         self.init(glkMatrix3)
     }
 
+    init(rotationAngle angle: Float, x: Float, y: Float, z: Float) {
+        let glkMatrix3 = GLKMatrix3MakeRotation(angle, x, y, z)
+        self.init(glkMatrix3)
+    }
+
     init(xRotationAngle angle: Float) {
         let glkMatrix3 = GLKMatrix3MakeXRotation(angle)
         self.init(glkMatrix3)
@@ -46,11 +51,6 @@ extension Matrix3 {
 
     init(zRotationAngle angle: Float) {
         let glkMatrix3 = GLKMatrix3MakeZRotation(angle)
-        self.init(glkMatrix3)
-    }
-
-    init(rotationAngle angle: Float, x: Float, y: Float, z: Float) {
-        let glkMatrix3 = GLKMatrix3MakeRotation(angle, x, y, z)
         self.init(glkMatrix3)
     }
 }
