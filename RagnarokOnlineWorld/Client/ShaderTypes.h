@@ -8,7 +8,7 @@
 
 #include <simd/simd.h>
 
-struct VertexIn {
+typedef struct {
     vector_float2 position;
     vector_float2 textureCoordinate;
-};
+} VertexIn;

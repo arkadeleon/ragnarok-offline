@@ -7,7 +7,12 @@
 //
 
 import UIKit
+import GLKit
 import MetalKit
+
+struct VertexUniforms {
+    var transform: GLKMatrix4
+}
 
 class GameViewController: UIViewController {
 
@@ -27,12 +32,18 @@ class GameViewController: UIViewController {
 
         renderer = Renderer(vertexFunctionName: "vertexShader", fragmentFunctionName: "fragmentShader") { encoder in
             let vertices = [
-                VertexIn(position: [0, 1], textureCoordinate: [1, 0]),
+                VertexIn(position: [0, 1], textureCoordinate: [4, 0]),
                 VertexIn(position: [-1, -1], textureCoordinate: [0, 1]),
                 VertexIn(position: [1, -1], textureCoordinate: [0, 0])
             ]
             let vertexBuffer = encoder.device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<VertexIn>.stride, options: [])!
             encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+
+            var uniforms = VertexUniforms(
+                transform: GLKMatrix4RotateX(GLKMatrix4Identity, Float.pi)
+            )
+            let uniformsBuffer = encoder.device.makeBuffer(bytes: &uniforms, length: MemoryLayout<VertexUniforms>.stride, options: [])!
+            encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1);
 
             let textureLoaader = MTKTextureLoader(device: encoder.device)
             let image = UIImage(named: "wall.jpg")!
