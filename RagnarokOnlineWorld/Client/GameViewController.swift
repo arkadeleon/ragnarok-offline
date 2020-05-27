@@ -7,12 +7,7 @@
 //
 
 import UIKit
-import GLKit
 import MetalKit
-
-struct VertexUniforms {
-    var transform: GLKMatrix4
-}
 
 class GameViewController: UIViewController {
 
@@ -40,7 +35,7 @@ class GameViewController: UIViewController {
             encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
 
             var uniforms = VertexUniforms(
-                transform: GLKMatrix4RotateX(GLKMatrix4Identity, Float.pi)
+                transform: Matrix4(zRotationAngle: .pi)
             )
             let uniformsBuffer = encoder.device.makeBuffer(bytes: &uniforms, length: MemoryLayout<VertexUniforms>.stride, options: [])!
             encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1);

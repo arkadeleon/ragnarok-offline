@@ -12,10 +12,6 @@ using namespace metal;
 #include "ShaderTypes.h"
 
 typedef struct {
-    float4x4 transform;
-} VertexUniforms;
-
-typedef struct {
     float4 position [[position]];
     float2 textureCoordinate;
 } VertexOut;

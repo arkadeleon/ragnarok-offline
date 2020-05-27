@@ -13,7 +13,6 @@ typealias Vector3 = SIMD3
 typealias Vector4 = SIMD4
 
 typealias Matrix3 = simd_float3x3
-typealias Matrix4 = simd_float4x4
 
 extension Matrix3 {
 

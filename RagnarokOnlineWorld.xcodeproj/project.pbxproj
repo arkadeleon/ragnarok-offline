@@ -44,6 +44,7 @@
 		35CB3BAE24782A5100EC04C3 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CB3BAD24782A5100EC04C3 /* Renderer.swift */; };
 		35CB3BB52478359100EC04C3 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35CB3BB42478359100EC04C3 /* Shaders.metal */; };
 		35CB3BB7247D81B300EC04C3 /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35CB3BB6247D81B300EC04C3 /* wall.jpg */; };
+		35CB3BB9247EA51A00EC04C3 /* Matrix4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CB3BB8247EA51A00EC04C3 /* Matrix4.swift */; };
 		35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8502473D9E8007DF105 /* STRDocument.swift */; };
 		35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8522473E1D7007DF105 /* RSWDocument.swift */; };
 /* End PBXBuildFile section */
@@ -110,6 +111,7 @@
 		35CB3BB3247833C200EC04C3 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 		35CB3BB42478359100EC04C3 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		35CB3BB6247D81B300EC04C3 /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
+		35CB3BB8247EA51A00EC04C3 /* Matrix4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix4.swift; sourceTree = "<group>"; };
 		35F8D8502473D9E8007DF105 /* STRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRDocument.swift; sourceTree = "<group>"; };
 		35F8D8522473E1D7007DF105 /* RSWDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWDocument.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -228,6 +230,7 @@
 				35116E53245FC152000A60FE /* FileHandle+Reading.swift */,
 				3587F70824694FA7007D1C9B /* BinaryReader.swift */,
 				35116E88246EDBE7000A60FE /* Matrix.swift */,
+				35CB3BB8247EA51A00EC04C3 /* Matrix4.swift */,
 			);
 			path = Documents;
 			sourceTree = "<group>";
@@ -421,6 +424,7 @@
 				35116E7924659FD6000A60FE /* Document.swift in Sources */,
 				35116E57245FC152000A60FE /* FileHandle+Reading.swift in Sources */,
 				35CB3BB52478359100EC04C3 /* Shaders.metal in Sources */,
+				35CB3BB9247EA51A00EC04C3 /* Matrix4.swift in Sources */,
 				35116E89246EDBE7000A60FE /* Matrix.swift in Sources */,
 				3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */,
 				35116E8D247035AC000A60FE /* ACTDocument.swift in Sources */,
