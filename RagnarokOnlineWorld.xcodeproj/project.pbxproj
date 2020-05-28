@@ -37,6 +37,7 @@
 		35116E8B247025EE000A60FE /* GATDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8A247025EE000A60FE /* GATDocument.swift */; };
 		35116E8D247035AC000A60FE /* ACTDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8C247035AC000A60FE /* ACTDocument.swift */; };
 		35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8E2472E685000A60FE /* SPRDocument.swift */; };
+		351A96AE247F5D9F00274D64 /* SGLMath in Frameworks */ = {isa = PBXBuildFile; productRef = 351A96AD247F5D9F00274D64 /* SGLMath */; };
 		3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */; };
 		3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */; };
 		3587F70924694FA7007D1C9B /* BinaryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F70824694FA7007D1C9B /* BinaryReader.swift */; };
@@ -124,6 +125,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				35116E50245FBF65000A60FE /* DataCompression in Frameworks */,
+				351A96AE247F5D9F00274D64 /* SGLMath in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +290,7 @@
 			name = RagnarokOnlineWorld;
 			packageProductDependencies = (
 				35116E4F245FBF65000A60FE /* DataCompression */,
+				351A96AD247F5D9F00274D64 /* SGLMath */,
 			);
 			productName = RagnarokOnlineWorld;
 			productReference = 35116E12245C7B87000A60FE /* RagnarokOnlineWorld.app */;
@@ -364,6 +367,7 @@
 			mainGroup = 35116E09245C7B87000A60FE;
 			packageReferences = (
 				35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */,
+				351A96AC247F5D9F00274D64 /* XCRemoteSwiftPackageReference "Math" */,
 			);
 			productRefGroup = 35116E13245C7B87000A60FE /* Products */;
 			projectDirPath = "";
@@ -778,6 +782,14 @@
 				minimumVersion = 3.6.0;
 			};
 		};
+		351A96AC247F5D9F00274D64 /* XCRemoteSwiftPackageReference "Math" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftGL/Math.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -785,6 +797,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */;
 			productName = DataCompression;
+		};
+		351A96AD247F5D9F00274D64 /* SGLMath */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 351A96AC247F5D9F00274D64 /* XCRemoteSwiftPackageReference "Math" */;
+			productName = SGLMath;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
