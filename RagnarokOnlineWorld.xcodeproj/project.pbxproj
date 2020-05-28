@@ -101,6 +101,7 @@
 		35116E8A247025EE000A60FE /* GATDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GATDocument.swift; sourceTree = "<group>"; };
 		35116E8C247035AC000A60FE /* ACTDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACTDocument.swift; sourceTree = "<group>"; };
 		35116E8E2472E685000A60FE /* SPRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPRDocument.swift; sourceTree = "<group>"; };
+		355EFD2B247FE7B00033C280 /* RagnarokOnlineWorld.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RagnarokOnlineWorld.entitlements; sourceTree = "<group>"; };
 		3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrappersViewController.swift; sourceTree = "<group>"; };
 		3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrapperCell.swift; sourceTree = "<group>"; };
 		3587F70824694FA7007D1C9B /* BinaryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryReader.swift; sourceTree = "<group>"; };
@@ -173,6 +174,7 @@
 				35116E1E245C7B8A000A60FE /* Assets.xcassets */,
 				35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */,
 				35CB3BAF2478339500EC04C3 /* RagnarokOnlineWorld-Bridging-Header.h */,
+				355EFD2B247FE7B00033C280 /* RagnarokOnlineWorld.entitlements */,
 				35116E23245C7B8A000A60FE /* Info.plist */,
 			);
 			path = RagnarokOnlineWorld;
@@ -602,6 +604,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = RagnarokOnlineWorld/RagnarokOnlineWorld.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A47Q8ENB5Y;
 				INFOPLIST_FILE = RagnarokOnlineWorld/Info.plist;
@@ -611,6 +614,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = date.leonandvane.RagnarokOnlineWorld;
 				PRODUCT_NAME = RagnarokOnlineWorld;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "RagnarokOnlineWorld/RagnarokOnlineWorld-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -623,6 +627,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = RagnarokOnlineWorld/RagnarokOnlineWorld.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A47Q8ENB5Y;
 				INFOPLIST_FILE = RagnarokOnlineWorld/Info.plist;
@@ -632,6 +637,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = date.leonandvane.RagnarokOnlineWorld;
 				PRODUCT_NAME = RagnarokOnlineWorld;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "RagnarokOnlineWorld/RagnarokOnlineWorld-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
