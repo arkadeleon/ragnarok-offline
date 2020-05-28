@@ -14,6 +14,7 @@ class GameViewController: UIViewController {
 
     private var mtkView: MTKView!
     private var renderer: Renderer!
+    private var camera = Camera()
 
     override func loadView() {
         mtkView = MTKView()
@@ -31,6 +32,8 @@ class GameViewController: UIViewController {
         mtkView.colorPixelFormat = renderer.colorPixelFormat
         mtkView.depthStencilPixelFormat = renderer.depthStencilPixelFormat
         mtkView.delegate = renderer
+
+        mtkView.addGestureRecognizer(camera.pinchGestureRecognizer)
     }
 
     func render(encoder: MTLRenderCommandEncoder) {
@@ -75,10 +78,14 @@ class GameViewController: UIViewController {
         let vertexBuffer = encoder.device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<VertexIn>.stride, options: [])!
         encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
 
-        let angle = CACurrentMediaTime()
-        let model = SGLMath.rotate(Matrix4x4<Float>(), Float(angle), [0.5, 1, 0])
-        let view = SGLMath.translate(Matrix4x4<Float>(), [0, 0, -3])
-        let projection = SGLMath.perspective(Float.pi / 4, Float(mtkView.bounds.width / mtkView.bounds.height), 0.1, 100)
+        let time = Float(CACurrentMediaTime())
+
+        let model = SGLMath.rotate(Matrix4x4<Float>(), time, [0.5, 1, 0])
+
+        let view: Matrix4x4<Float> = SGLMath.lookAt([0, 3, 3], [0, 0, 0], [0, 1, -0.3])
+
+        let projection = SGLMath.perspective(radians(camera.fieldOfView), Float(mtkView.bounds.width / mtkView.bounds.height), 0.1, 100)
+
         var uniforms = VertexUniforms(
             model: unsafeBitCast(model, to: float4x4.self),
             view: unsafeBitCast(view, to: float4x4.self),
