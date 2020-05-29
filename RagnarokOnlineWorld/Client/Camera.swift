@@ -6,37 +6,83 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-import Foundation
 import UIKit
+import SGLMath
 
 class Camera: NSObject {
 
-    let pinchGestureRecognizer: UIPinchGestureRecognizer
+    private(set) var position: Vector3<Float> = [0, 0, 3]
+    private(set) var front: Vector3<Float> = [0, 0, -1]
+    private(set) var up: Vector3<Float> = [0, 1, 0]
 
-    private(set) var fieldOfView: Float = 15 {
+    private(set) var pitch: Float = 0 {
         didSet {
-            fieldOfView = max(fieldOfView, 1)
-            fieldOfView = min(fieldOfView, 45)
+            pitch = max(pitch, -89)
+            pitch = min(pitch, 90)
+
+            let direction: Vector3<Float> = [
+                cos(radians(yaw)) * cos(radians(pitch)),
+                sin(radians(pitch)),
+                sin(radians(yaw)) * cos(radians(pitch))
+            ]
+            front = normalize(direction)
         }
     }
 
+    private(set) var yaw: Float = -90 {
+        didSet {
+            let direction: Vector3<Float> = [
+                cos(radians(yaw)) * cos(radians(pitch)),
+                sin(radians(pitch)),
+                sin(radians(yaw)) * cos(radians(pitch))
+            ]
+            front = normalize(direction)
+        }
+    }
+
+    private(set) var zoom: Float = 45 {
+        didSet {
+            zoom = max(zoom, 1)
+            zoom = min(zoom, 90)
+        }
+    }
+
+    let panGestureRecognizer = UIPanGestureRecognizer()
+    let pinchGestureRecognizer = UIPinchGestureRecognizer()
+
+    private var panPreviousTranslation: CGPoint = .zero
     private var pinchStartScale: Float = 0
 
     override init() {
-        pinchGestureRecognizer = UIPinchGestureRecognizer()
-
         super.init()
 
+        panGestureRecognizer.addTarget(self, action: #selector(handlePan(_:)))
         pinchGestureRecognizer.addTarget(self, action: #selector(handlePinch(_:)))
+    }
+
+    @objc private func handlePan(_ sender: Any) {
+        switch panGestureRecognizer.state {
+        case .began:
+            panPreviousTranslation = panGestureRecognizer.translation(in: panGestureRecognizer.view)
+        case .changed:
+            let translation = panGestureRecognizer.translation(in: panGestureRecognizer.view)
+            let offset = CGPoint(x: translation.x - panPreviousTranslation.x, y: translation.y - panPreviousTranslation.y)
+            let sensitivity: Float = 0.1
+            pitch += Float(-offset.y) * sensitivity
+            yaw += Float(offset.x) * sensitivity
+            panPreviousTranslation = translation
+        default:
+            break
+        }
     }
 
     @objc private func handlePinch(_ sender: Any) {
         switch pinchGestureRecognizer.state {
         case .began:
-            pinchStartScale = fieldOfView
-            fieldOfView = pinchStartScale / Float(pinchGestureRecognizer.scale)
+            pinchStartScale = zoom
+            zoom = pinchStartScale / Float(pinchGestureRecognizer.scale)
         case .changed:
-            fieldOfView = pinchStartScale / Float(pinchGestureRecognizer.scale)
+            zoom = pinchStartScale / Float(pinchGestureRecognizer.scale)
         default:
             break
         }

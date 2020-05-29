@@ -33,6 +33,7 @@ class GameViewController: UIViewController {
         mtkView.depthStencilPixelFormat = renderer.depthStencilPixelFormat
         mtkView.delegate = renderer
 
+        mtkView.addGestureRecognizer(camera.panGestureRecognizer)
         mtkView.addGestureRecognizer(camera.pinchGestureRecognizer)
     }
 
@@ -82,9 +83,9 @@ class GameViewController: UIViewController {
 
         let model = SGLMath.rotate(Matrix4x4<Float>(), time, [0.5, 1, 0])
 
-        let view: Matrix4x4<Float> = SGLMath.lookAt([0, 3, 3], [0, 0, 0], [0, 1, -0.3])
+        let view: Matrix4x4<Float> = SGLMath.lookAt(camera.position, camera.position + camera.front, camera.up)
 
-        let projection = SGLMath.perspective(radians(camera.fieldOfView), Float(mtkView.bounds.width / mtkView.bounds.height), 0.1, 100)
+        let projection = SGLMath.perspective(radians(camera.zoom), Float(mtkView.bounds.width / mtkView.bounds.height), 0.1, 100)
 
         var uniforms = VertexUniforms(
             model: unsafeBitCast(model, to: float4x4.self),
