@@ -39,42 +39,42 @@ class GameViewController: UIViewController {
 
     func render(encoder: MTLRenderCommandEncoder) {
         let vertices = [
-            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 0.0]),
-            VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [1.0, 0.0]),
-            VertexIn(position: [ 0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0]),
-            VertexIn(position: [ 0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0]),
-            VertexIn(position: [-0.5,  0.5, -0.5], textureCoordinate: [0.0, 1.0]),
-            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 0.0]),
-            VertexIn(position: [-0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0]),
-            VertexIn(position: [ 0.5, -0.5,  0.5], textureCoordinate: [1.0, 0.0]),
-            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 1.0]),
-            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 1.0]),
-            VertexIn(position: [-0.5,  0.5,  0.5], textureCoordinate: [0.0, 1.0]),
-            VertexIn(position: [-0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0]),
-            VertexIn(position: [-0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0]),
-            VertexIn(position: [-0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0]),
-            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0]),
-            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0]),
-            VertexIn(position: [-0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0]),
-            VertexIn(position: [-0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0]),
-            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0]),
-            VertexIn(position: [ 0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0]),
-            VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0]),
-            VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0]),
-            VertexIn(position: [ 0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0]),
-            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0]),
-            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0]),
-            VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [1.0, 1.0]),
-            VertexIn(position: [ 0.5, -0.5,  0.5], textureCoordinate: [1.0, 0.0]),
-            VertexIn(position: [ 0.5, -0.5,  0.5], textureCoordinate: [1.0, 0.0]),
-            VertexIn(position: [-0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0]),
-            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0]),
-            VertexIn(position: [-0.5,  0.5, -0.5], textureCoordinate: [0.0, 1.0]),
-            VertexIn(position: [ 0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0]),
-            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0]),
-            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0]),
-            VertexIn(position: [-0.5,  0.5,  0.5], textureCoordinate: [0.0, 0.0]),
-            VertexIn(position: [-0.5,  0.5, -0.5], textureCoordinate: [0.0, 1.0])
+            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 0.0], normal: [0.0,  0.0, -1.0]),
+            VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [1.0, 0.0], normal: [0.0,  0.0, -1.0]),
+            VertexIn(position: [ 0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [0.0,  0.0, -1.0]),
+            VertexIn(position: [ 0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [0.0,  0.0, -1.0]),
+            VertexIn(position: [-0.5,  0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [0.0,  0.0, -1.0]),
+            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 0.0], normal: [0.0,  0.0, -1.0]),
+            VertexIn(position: [-0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [0.0,  0.0,  1.0]),
+            VertexIn(position: [ 0.5, -0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [0.0,  0.0,  1.0]),
+            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 1.0], normal: [0.0,  0.0,  1.0]),
+            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 1.0], normal: [0.0,  0.0,  1.0]),
+            VertexIn(position: [-0.5,  0.5,  0.5], textureCoordinate: [0.0, 1.0], normal: [0.0,  0.0,  1.0]),
+            VertexIn(position: [-0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [0.0,  0.0,  1.0]),
+            VertexIn(position: [-0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [-0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [-0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [-0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [ 0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [ 0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [0.0, -1.0,  0.0]),
+            VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [0.0, -1.0,  0.0]),
+            VertexIn(position: [ 0.5, -0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [0.0, -1.0,  0.0]),
+            VertexIn(position: [ 0.5, -0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [0.0, -1.0,  0.0]),
+            VertexIn(position: [-0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [0.0, -1.0,  0.0]),
+            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [0.0, -1.0,  0.0]),
+            VertexIn(position: [-0.5,  0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [0.0,  1.0,  0.0]),
+            VertexIn(position: [ 0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [0.0,  1.0,  0.0]),
+            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [0.0,  1.0,  0.0]),
+            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [0.0,  1.0,  0.0]),
+            VertexIn(position: [-0.5,  0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [0.0,  1.0,  0.0]),
+            VertexIn(position: [-0.5,  0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [0.0,  1.0,  0.0])
         ]
         let vertexBuffer = encoder.device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<VertexIn>.stride, options: [])!
         encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
@@ -83,17 +83,26 @@ class GameViewController: UIViewController {
 
         let model = SGLMath.rotate(Matrix4x4<Float>(), time, [0.5, 1, 0])
 
+        let normal = Matrix3x3(model.inverse.transpose)
+
         let view: Matrix4x4<Float> = SGLMath.lookAt(camera.position, camera.position + camera.front, camera.up)
 
         let projection = SGLMath.perspective(radians(camera.zoom), Float(mtkView.bounds.width / mtkView.bounds.height), 0.1, 100)
 
         var uniforms = VertexUniforms(
             model: unsafeBitCast(model, to: float4x4.self),
+            normal: float3x3([normal[0][0], normal[0][1], normal[0][2]], [normal[1][0], normal[1][1], normal[1][2]], [normal[2][0], normal[2][1], normal[2][2]]),
             view: unsafeBitCast(view, to: float4x4.self),
             projection: unsafeBitCast(projection, to: float4x4.self)
         )
         let uniformsBuffer = encoder.device.makeBuffer(bytes: &uniforms, length: MemoryLayout<VertexUniforms>.stride, options: [])!
-        encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1);
+        encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)
+
+        var fragmentUniforms = FragmentUniforms(
+            lightPosition: [0, 5, 0]
+        )
+        let fragmentUniformsBuffer = encoder.device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<FragmentUniforms>.stride, options: [])!
+        encoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
         let textureLoaader = MTKTextureLoader(device: encoder.device)
         let image = UIImage(named: "wall.jpg")!
