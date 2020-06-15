@@ -17,6 +17,7 @@ enum DocumentWrapper {
     case entryInArchive(String)
     case textDocument(TextDocument)
     case imageDocument(ImageDocument)
+    case rsmDocument(RSMDocument)
 }
 
 extension DocumentWrapper {
@@ -37,6 +38,8 @@ extension DocumentWrapper {
             return UIImage(systemName: "doc.text")
         case .imageDocument:
             return UIImage(systemName: "doc.richtext")
+        case .rsmDocument:
+            return UIImage(systemName: "square.stack.3d.up")
         }
     }
 
@@ -55,6 +58,8 @@ extension DocumentWrapper {
         case .textDocument(let document):
             return document.name
         case .imageDocument(let document):
+            return document.name
+        case .rsmDocument(let document):
             return document.name
         }
     }
@@ -83,6 +88,9 @@ extension DocumentWrapper {
                 case "bmp", "jpg", "jpeg":
                     let document = ImageDocument(source: .url(url))
                     return .imageDocument(document)
+                case "rsm":
+                    let document = RSMDocument(source: .url(url))
+                    return .rsmDocument(document)
                 default:
                     return .document(url)
                 }
@@ -101,12 +109,16 @@ extension DocumentWrapper {
                     let pathExtension = (node.pathComponent as NSString).pathExtension
                     switch pathExtension {
                     case "txt", "xml", "lua":
-                        let textDocument = TextDocument(source: .entryInArchive(archive, entry))
-                        let documentWrapper: DocumentWrapper = .textDocument(textDocument)
+                        let document = TextDocument(source: .entryInArchive(archive, entry))
+                        let documentWrapper: DocumentWrapper = .textDocument(document)
                         documentWrappers[node.pathComponent] = documentWrapper
                     case "bmp", "jpg", "jpeg":
-                        let imageDocument = ImageDocument(source: .entryInArchive(archive, entry))
-                        let documentWrapper: DocumentWrapper = .imageDocument(imageDocument)
+                        let document = ImageDocument(source: .entryInArchive(archive, entry))
+                        let documentWrapper: DocumentWrapper = .imageDocument(document)
+                        documentWrappers[node.pathComponent] = documentWrapper
+                    case "rsm":
+                        let document = RSMDocument(source: .entryInArchive(archive, entry))
+                        let documentWrapper: DocumentWrapper = .rsmDocument(document)
                         documentWrappers[node.pathComponent] = documentWrapper
                     default:
                         let documentWrapper: DocumentWrapper = .entryInArchive(entry.lastPathComponent)
@@ -124,6 +136,8 @@ extension DocumentWrapper {
         case .textDocument:
             return nil
         case .imageDocument:
+            return nil
+        case .rsmDocument:
             return nil
         }
     }
@@ -154,6 +168,8 @@ extension DocumentWrapper: Equatable, Comparable {
         case .textDocument:
             return 1
         case .imageDocument:
+            return 1
+        case .rsmDocument:
             return 1
         }
     }

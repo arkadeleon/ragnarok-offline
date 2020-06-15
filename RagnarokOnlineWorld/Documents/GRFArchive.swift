@@ -223,6 +223,21 @@ class GRFArchive: NSObject {
         return Array(currentNode.childNodes.values)
     }
 
+    func entry(forPath path: String) -> GRFEntry? {
+        var currentNode = rootNode
+
+        let pathComponents = path.split(separator: "\\")
+
+        for pathComponent in pathComponents {
+            guard let childNode = currentNode.childNodes[String(pathComponent)] else {
+                return nil
+            }
+            currentNode = childNode
+        }
+
+        return currentNode.entry
+    }
+
     func contents(of entry: GRFEntry) throws -> Data {
         let fileHandle = try FileHandle(forReadingFrom: url)
 

@@ -72,11 +72,14 @@ extension DocumentWrappersViewController: UICollectionViewDelegate {
         let documentWrapper = documentWrappers[indexPath.row]
         switch documentWrapper {
         case .textDocument(let document):
-            let textDocumentViewController = TextDocumentViewController(document: document)
-            navigationController?.pushViewController(textDocumentViewController, animated: true)
+            let documentViewController = TextDocumentViewController(document: document)
+            navigationController?.pushViewController(documentViewController, animated: true)
         case .imageDocument(let document):
-            let imageDocumentViewController = ImageDocumentViewController(document: document)
-            navigationController?.pushViewController(imageDocumentViewController, animated: true)
+            let documentViewController = ImageDocumentViewController(document: document)
+            navigationController?.pushViewController(documentViewController, animated: true)
+        case .rsmDocument(let document):
+            let documentViewController = RSMDocumentViewController(document: document)
+            navigationController?.pushViewController(documentViewController, animated: true)
         default:
             break
         }

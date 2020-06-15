@@ -3,3 +3,4 @@
 //
 
 #include "ShaderTypes.h"
+#include "RSMShaderTypes.h"
