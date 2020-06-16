@@ -13,7 +13,7 @@ import SGLMath
 class RSMDocumentViewController: UIViewController {
 
     let document: RSMDocument
-    private var textures: [MTLTexture] = []
+    private var textures: [MTLTexture?] = []
     private var vectices: [[[RSMVertexIn]]] = []
 
     private var mtkView: MTKView!
@@ -56,46 +56,15 @@ class RSMDocumentViewController: UIViewController {
             case .url(_):
                 break
             case .entryInArchive(let archive, _):
-                let textureLoader = MTKTextureLoader(device: self.renderer.device)
-                for textureName in self.document.textures {
+                let textureLoader = TextureLoader(device: self.renderer.device)
+                self.textures = self.document.textures.map { textureName -> MTLTexture? in
                     guard let entry = archive.entry(forPath: "data\\texture\\" + textureName) else {
-                        continue
+                        return nil
                     }
                     guard let contents = try? archive.contents(of: entry) else {
-                        continue
+                        return nil
                     }
-                    guard let image = UIImage(data: contents), let cgImage = image.cgImage else {
-                        continue
-                    }
-                    do {
-                        let context = CGContext(
-                            data: nil,
-                            width: Int(image.size.width),
-                            height: Int(image.size.height),
-                            bitsPerComponent: 8,
-                            bytesPerRow: Int(image.size.width) * 4,
-                            space: CGColorSpaceCreateDeviceRGB(),
-                            bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
-                        )!
-                        context.draw(cgImage, in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
-                        let data = context.data!.bindMemory(to: UInt8.self, capacity: Int(image.size.width) * Int(image.size.height) * 4)
-                        for i in 0..<(Int(image.size.width) * Int(image.size.height)) {
-                            if data[i * 4 + 0] > 230 && data[i * 4 + 1] < 20 && data[i * 4 + 2] > 230 {
-                                data[i * 4 + 0] = 0
-                                data[i * 4 + 1] = 0
-                                data[i * 4 + 2] = 0
-                                data[i * 4 + 3] = 0
-                            }
-                        }
-                        let cg = context.makeImage()
-                        let texture = try textureLoader.newTexture(cgImage: cg!, options: nil)
-                        self.textures.append(texture)
-                    } catch let error {
-                        print(error)
-                    }
-//                    guard let texture = try? textureLoader.newTexture(cgImage: cgImage, options: nil) else {
-//                        continue
-//                    }
+                    return textureLoader.newTexture(data: contents)
                 }
 
                 let model = RSMModel(
