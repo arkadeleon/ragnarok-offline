@@ -40,7 +40,7 @@ class Camera: NSObject {
         }
     }
 
-    private(set) var zoom: Float = 45 {
+    private(set) var zoom: Float = 15 {
         didSet {
             zoom = max(zoom, 1)
             zoom = min(zoom, 90)

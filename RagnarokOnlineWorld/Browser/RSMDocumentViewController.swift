@@ -120,41 +120,44 @@ class RSMDocumentViewController: UIViewController {
     }
 
     func render(encoder: MTLRenderCommandEncoder) {
-        
-
-//        encoder.setTriangleFillMode(.lines)
-
         let time = Float(CACurrentMediaTime())
 
-        var model = SGLMath.rotate(Matrix4x4<Float>(), time, [0.5, 1, 0])
-        model = SGLMath.scale(model, [0.1, 0.1, 0.1])
+        var modelView = Matrix4x4<Float>()
+        modelView = SGLMath.translate(modelView, [0, -document.box.range[1]*0.1, -document.box.range[1]*0.5-5])
+        modelView = SGLMath.rotate(modelView, radians(15), [1, 0, 0])
+        modelView = SGLMath.rotate(modelView, time, [0, 1, 0])
 
-        let normal = Matrix3x3(model.inverse.transpose)
+        let normal = Matrix3x3(modelView).inverse.transpose
 
-        let view: Matrix4x4<Float> = SGLMath.lookAt(camera.position, camera.position + camera.front, camera.up)
+        let projection = SGLMath.perspective(radians(camera.zoom), Float(mtkView.bounds.width / mtkView.bounds.height), 1, 1000)
 
-        let projection = SGLMath.perspective(radians(camera.zoom), Float(mtkView.bounds.width / mtkView.bounds.height), 0.1, 100)
-
-        var uniforms = VertexUniforms(
-            model: unsafeBitCast(model, to: float4x4.self),
-            normal: float3x3([normal[0][0], normal[0][1], normal[0][2]], [normal[1][0], normal[1][1], normal[1][2]], [normal[2][0], normal[2][1], normal[2][2]]),
-            view: unsafeBitCast(view, to: float4x4.self),
-            projection: unsafeBitCast(projection, to: float4x4.self)
+        var uniforms = RSMVertexUniforms(
+            modelViewMat: unsafeBitCast(modelView, to: float4x4.self),
+            projectionMat: unsafeBitCast(projection, to: float4x4.self),
+            lightDirection: [0, 1, 0],
+            normalMat: float3x3([normal[0][0], normal[0][1], normal[0][2]], [normal[1][0], normal[1][1], normal[1][2]], [normal[2][0], normal[2][1], normal[2][2]])
         )
-        let uniformsBuffer = encoder.device.makeBuffer(bytes: &uniforms, length: MemoryLayout<VertexUniforms>.stride, options: [])!
+        let uniformsBuffer = encoder.device.makeBuffer(bytes: &uniforms, length: MemoryLayout<RSMVertexUniforms>.stride, options: [])!
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)
 
+        var fragmentUniforms = RSMFragmentUniforms(
+            fogUse: 0,
+            fogNear: 180,
+            fogFar: 30,
+            fogColor: [1, 1, 1],
+            lightAmbient: [1, 1, 1],
+            lightDiffuse: [0, 0, 0],
+            lightOpacity: 1
+        )
+        let fragmentUniformsBuffer = encoder.device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<RSMFragmentUniforms>.stride, options: [])!
+        encoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
         for v1s in vectices {
             for (i, vs) in v1s.enumerated() {
                 let vertexBuffer = encoder.device.makeBuffer(bytes: vs, length: vs.count * MemoryLayout<RSMVertexIn>.stride, options: [])!
                 encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
 
-                var fragmentUniforms = FragmentUniforms(
-                    lightPosition: [0, 5, 0]
-                )
-                let fragmentUniformsBuffer = encoder.device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<FragmentUniforms>.stride, options: [])!
-                encoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
+
 
                 let texture = textures[i]
                 encoder.setFragmentTexture(texture, index: 0)

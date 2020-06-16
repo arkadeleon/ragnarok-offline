@@ -16,12 +16,20 @@ typedef struct {
 } RSMVertexIn;
 
 typedef struct {
-    matrix_float4x4 model;
-    matrix_float3x3 normal;
-    matrix_float4x4 view;
-    matrix_float4x4 projection;
+    matrix_float4x4 modelViewMat;
+    matrix_float4x4 projectionMat;
+
+    vector_float3 lightDirection;
+    matrix_float3x3 normalMat;
 } RSMVertexUniforms;
 
 typedef struct {
-    vector_float3 lightPosition;
+    int fogUse;
+    float fogNear;
+    float fogFar;
+    vector_float3 fogColor;
+
+    vector_float3 lightAmbient;
+    vector_float3 lightDiffuse;
+    float lightOpacity;
 } RSMFragmentUniforms;
