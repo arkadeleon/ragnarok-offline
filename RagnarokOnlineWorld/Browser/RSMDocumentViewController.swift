@@ -68,7 +68,6 @@ class RSMDocumentViewController: UIViewController {
                         continue
                     }
                     do {
-                        var data = NSMutableData(capacity: Int(image.size.width) * Int(image.size.height) * 4)
                         let context = CGContext(
                             data: nil,
                             width: Int(image.size.width),
@@ -77,9 +76,18 @@ class RSMDocumentViewController: UIViewController {
                             bytesPerRow: Int(image.size.width) * 4,
                             space: CGColorSpaceCreateDeviceRGB(),
                             bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
-                        )
-                        context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
-                        let cg = context?.makeImage()
+                        )!
+                        context.draw(cgImage, in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
+                        let data = context.data!.bindMemory(to: UInt8.self, capacity: Int(image.size.width) * Int(image.size.height) * 4)
+                        for i in 0..<(Int(image.size.width) * Int(image.size.height)) {
+                            if data[i * 4 + 0] > 230 && data[i * 4 + 1] < 20 && data[i * 4 + 2] > 230 {
+                                data[i * 4 + 0] = 0
+                                data[i * 4 + 1] = 0
+                                data[i * 4 + 2] = 0
+                                data[i * 4 + 3] = 0
+                            }
+                        }
+                        let cg = context.makeImage()
                         let texture = try textureLoader.newTexture(cgImage: cg!, options: nil)
                         self.textures.append(texture)
                     } catch let error {
