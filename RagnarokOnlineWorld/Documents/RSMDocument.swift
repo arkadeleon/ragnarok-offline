@@ -98,7 +98,7 @@ class RSMNode: NSObject {
         if rotationKeyframes.count == 0 {
 //            self.matrix = SGLMath.rotate(self.matrix, rotangle, rotaxis)
         } else {
-//            mat4.rotateQuat( this.matrix, this.matrix, this.rotKeyframes[0].q );
+            self.matrix = SGLMath.rotateQuat(self.matrix, w: rotationKeyframes[0].q)
         }
 
         self.matrix = SGLMath.scale(self.matrix, scale)
@@ -141,6 +141,9 @@ class RSMNode: NSObject {
     }
 
     func compile(instance_matrix: Matrix4x4<Float>) -> [[Float]] {
+        var shadeGroup = [[Float]](repeating: [], count: 32)
+        var shadeGroupUsed = [Bool](repeating: false, count: 32)
+
         var matrix = Matrix4x4<Float>()
         matrix = SGLMath.translate(matrix, [-main!.box.center[0], -main!.box.max[1], -main!.box.center[2]])
         matrix = matrix * self.matrix
@@ -152,8 +155,7 @@ class RSMNode: NSObject {
         matrix = matrix * Matrix4x4(mat3)
 
         let modelViewMat = instance_matrix * matrix
-//        let normalMat = extractRotation(modelViewMat)
-        let normalMat = Matrix4x4<Float>()
+        let normalMat = SGLMath.extractRotation(modelViewMat)
 
         let count = vertices.count
         var vert = [Float](repeating: 0, count: count * 3)
@@ -188,12 +190,10 @@ class RSMNode: NSObject {
             calcNormal_NONE(out: &face_normal)
             generate_mesh_FLAT(vert: vert, norm: face_normal, mesh: &mesh)
         case RSMShadingType.flat.rawValue:
-//            this.calcNormal_FLAT( face_normal, normalMat, shadeGroupUsed );
+            calcNormal_FLAT(out: &face_normal, normalMat: normalMat, groupUsed: &shadeGroupUsed)
             generate_mesh_FLAT(vert: vert, norm: face_normal, mesh: &mesh)
         case RSMShadingType.smooth.rawValue:
-            var shadeGroup = [[Float]](repeating: [], count: 32)
-            var shadeGroupUsed = [Bool](repeating: false, count: 32)
-//            this.calcNormal_FLAT( face_normal, normalMat, shadeGroupUsed );
+            calcNormal_FLAT(out: &face_normal, normalMat: normalMat, groupUsed: &shadeGroupUsed)
             calcNormal_SMOOTH(normal: face_normal, groupUsed: shadeGroupUsed, group: &shadeGroup)
             generate_mesh_SMOOTH(vert: vert, shadeGroup: shadeGroup, mesh: &mesh)
         default:
@@ -211,26 +211,24 @@ class RSMNode: NSObject {
         }
     }
 
-//    func calcNormal_FLAT(out: inout [Float], normalMat: Matrix4x4<Float>, groupUsed: inout [Bool]) {
-//        var j = 0
-//        for face in faces {
-//            vec3.calcNormal(
-//                vertices[ face.vertidx[0] ],
-//                vertices[ face.vertidx[1] ],
-//                vertices[ face.vertidx[2] ],
-//                temp_vec
-//            );
-//
-//            // (vec3)out = (mat4)normalMat * (vec3)temp_vec:
-//            out[j  ] = normalMat[0] * temp_vec[0] + normalMat[4] * temp_vec[1] + normalMat[8]  * temp_vec[2] + normalMat[12];
-//            out[j+1] = normalMat[1] * temp_vec[0] + normalMat[5] * temp_vec[1] + normalMat[9]  * temp_vec[2] + normalMat[13];
-//            out[j+2] = normalMat[2] * temp_vec[0] + normalMat[6] * temp_vec[1] + normalMat[10] * temp_vec[2] + normalMat[14];
-//
-//            groupUsed[face.smoothGroup] = true;
-//
-//            j += 3
-//        }
-//    }
+    func calcNormal_FLAT(out: inout [Float], normalMat: Matrix4x4<Float>, groupUsed: inout [Bool]) {
+        var j = 0
+        for face in faces {
+            let temp_vec = SGLMath.calcNormal(
+                vertices[Int(face.vertidx[0])],
+                vertices[Int(face.vertidx[1])],
+                vertices[Int(face.vertidx[2])]
+            )
+
+            out[j + 0] = normalMat[0, 0] * temp_vec[0] + normalMat[1, 0] * temp_vec[1] + normalMat[2, 0] * temp_vec[2] + normalMat[3, 0]
+            out[j + 1] = normalMat[0, 1] * temp_vec[0] + normalMat[1, 1] * temp_vec[1] + normalMat[2, 1] * temp_vec[2] + normalMat[3, 1]
+            out[j + 2] = normalMat[0, 2] * temp_vec[0] + normalMat[1, 2] * temp_vec[1] + normalMat[2, 2] * temp_vec[2] + normalMat[3, 2]
+
+            groupUsed[Int(face.smoothGroup)] = true
+
+            j += 3
+        }
+    }
 
     func calcNormal_SMOOTH(normal: [Float], groupUsed: [Bool], group: inout [[Float]]) {
         for j in 0..<32 {
@@ -330,9 +328,9 @@ class RSMNode: NSObject {
                 out[o + 0] = vert[a + 0]
                 out[o + 1] = vert[a + 1]
                 out[o + 2] = vert[a + 2]
-//                out[o + 3] = norm[a + 0]
-//                out[o + 4] = norm[a + 1]
-//                out[o + 5] = norm[a + 2]
+                out[o + 3] = norm[a + 0]
+                out[o + 4] = norm[a + 1]
+                out[o + 5] = norm[a + 2]
                 out[o + 6] = tvertices[b + 4]
                 out[o + 7] = tvertices[b + 5]
                 out[o + 8] = main!.alpha
