@@ -41,6 +41,7 @@
 		35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8E2472E685000A60FE /* SPRDocument.swift */; };
 		351A96AE247F5D9F00274D64 /* SGLMath in Frameworks */ = {isa = PBXBuildFile; productRef = 351A96AD247F5D9F00274D64 /* SGLMath */; };
 		355EFD2D2480264B0033C280 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355EFD2C2480264B0033C280 /* Camera.swift */; };
+		35617A73249863580097C60C /* SGLMath+ROW.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617A72249863580097C60C /* SGLMath+ROW.swift */; };
 		3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */; };
 		3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */; };
 		3587F70924694FA7007D1C9B /* BinaryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F70824694FA7007D1C9B /* BinaryReader.swift */; };
@@ -105,12 +106,12 @@
 		35116E8224685AE4000A60FE /* ImageDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDocumentViewController.swift; sourceTree = "<group>"; };
 		35116E84246ADFFA000A60FE /* RSMDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSMDocument.swift; sourceTree = "<group>"; };
 		35116E86246AE56B000A60FE /* RSMDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSMDocumentViewController.swift; sourceTree = "<group>"; };
-		35116E88246EDBE7000A60FE /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
 		35116E8A247025EE000A60FE /* GATDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GATDocument.swift; sourceTree = "<group>"; };
 		35116E8C247035AC000A60FE /* ACTDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACTDocument.swift; sourceTree = "<group>"; };
 		35116E8E2472E685000A60FE /* SPRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPRDocument.swift; sourceTree = "<group>"; };
 		355EFD2B247FE7B00033C280 /* RagnarokOnlineWorld.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RagnarokOnlineWorld.entitlements; sourceTree = "<group>"; };
 		355EFD2C2480264B0033C280 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		35617A72249863580097C60C /* SGLMath+ROW.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SGLMath+ROW.swift"; sourceTree = "<group>"; };
 		3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrappersViewController.swift; sourceTree = "<group>"; };
 		3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrapperCell.swift; sourceTree = "<group>"; };
 		3587F70824694FA7007D1C9B /* BinaryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryReader.swift; sourceTree = "<group>"; };
@@ -276,7 +277,7 @@
 			children = (
 				3587F70824694FA7007D1C9B /* BinaryReader.swift */,
 				35116E53245FC152000A60FE /* FileHandle+Reading.swift */,
-				35116E88246EDBE7000A60FE /* Vector.swift */,
+				35617A72249863580097C60C /* SGLMath+ROW.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -455,6 +456,7 @@
 				35116E8D247035AC000A60FE /* ACTDocument.swift in Sources */,
 				35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */,
 				35116E85246ADFFA000A60FE /* RSMDocument.swift in Sources */,
+				35617A73249863580097C60C /* SGLMath+ROW.swift in Sources */,
 				3587F70924694FA7007D1C9B /* BinaryReader.swift in Sources */,
 				35116E58245FC152000A60FE /* GRFArchive.swift in Sources */,
 			);
