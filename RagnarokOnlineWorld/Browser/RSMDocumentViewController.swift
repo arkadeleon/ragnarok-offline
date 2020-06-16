@@ -130,7 +130,7 @@ class RSMDocumentViewController: UIViewController {
         encoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
         for v1s in vectices {
-            for (i, vs) in v1s.enumerated() {
+            for (i, vs) in v1s.enumerated() where vs.count > 0 {
                 let vertexBuffer = encoder.device.makeBuffer(bytes: vs, length: vs.count * MemoryLayout<RSMVertexIn>.stride, options: [])!
                 encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
 

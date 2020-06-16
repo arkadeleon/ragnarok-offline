@@ -158,22 +158,21 @@ class GRFArchive: NSObject {
         var pos = 0
 
         for _ in 0..<header.fileCount {
-            var filename: [UInt8] = []
-            while table.data[pos] != 0 {
-                filename.append(table.data[pos])
-                pos += 1
+            guard let index = table.data[pos...].firstIndex(of: 0) else {
+                break
             }
-            pos += 1
+
+            let cfEncoding = CFStringEncoding(CFStringEncodings.EUC_KR.rawValue)
+            let encoding = CFStringConvertEncodingToNSStringEncoding(cfEncoding)
+            let path = NSString(data: table.data[pos..<index], encoding: encoding) ?? ""
+
+            pos = index + 1
 
             let packSize = Data(table.data[(pos + 0)..<(pos + 4)]).withUnsafeBytes { $0.load(as: UInt32.self) }
             let lengthAligned = Data(table.data[(pos + 4)..<(pos + 8)]).withUnsafeBytes { $0.load(as: UInt32.self) }
             let realSize = Data(table.data[(pos + 8)..<(pos + 12)]).withUnsafeBytes { $0.load(as: UInt32.self) }
             let type = table.data[12]
             let offset = Data(table.data[(pos + 13)..<(pos + 17)]).withUnsafeBytes { $0.load(as: UInt32.self) }
-
-            let cfEncoding = CFStringEncoding(CFStringEncodings.EUC_KR.rawValue)
-            let encoding = CFStringConvertEncodingToNSStringEncoding(cfEncoding)
-            let path = NSString(data: Data(filename), encoding: encoding) ?? ""
 
             let entry = GRFEntry(
                 path: path as String,
