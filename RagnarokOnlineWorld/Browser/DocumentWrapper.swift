@@ -53,8 +53,8 @@ extension DocumentWrapper {
             return archive.url.lastPathComponent
         case .directoryInArchive(_, let path):
             return String(path.split(separator: "\\").last ?? "")
-        case .entryInArchive(let name):
-            return name
+        case .entryInArchive(let entryName):
+            return String(entryName.split(separator: "\\").last ?? "")
         case .textDocument(let document):
             return document.name
         case .imageDocument(let document):
@@ -64,14 +64,13 @@ extension DocumentWrapper {
         }
     }
 
-    var documentWrappers: [String: DocumentWrapper]? {
+    var documentWrappers: [DocumentWrapper]? {
         switch self {
         case .directory(let url):
             guard let urls = try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: []) else {
                 return nil
             }
-            let urlsWithNames = Dictionary(uniqueKeysWithValues: zip(urls.map { $0.lastPathComponent }, urls))
-            let documentWrappers = urlsWithNames.mapValues { url -> DocumentWrapper in
+            let documentWrappers = urls.map { url -> DocumentWrapper in
                 if url.hasDirectoryPath {
                     return .directory(url)
                 }
@@ -99,37 +98,38 @@ extension DocumentWrapper {
         case .document:
             return nil
         case .archive(let archive):
-            return DocumentWrapper.directoryInArchive(archive, "data").documentWrappers
+            return DocumentWrapper.directoryInArchive(archive, "data\\").documentWrappers
         case .directoryInArchive(let archive, let path):
             archive.unarchive()
-            var documentWrappers: [String: DocumentWrapper] = [:]
-            let nodes = archive.nodes(withPath: path)
-            for node in nodes {
-                if let entry = node.entry {
-                    let pathExtension = (node.pathComponent as NSString).pathExtension
-                    switch pathExtension {
-                    case "txt", "xml", "lua":
-                        let document = TextDocument(source: .entryInArchive(archive, entry))
+
+            var documentWrappers: [DocumentWrapper] = []
+
+            let entryNames = archive.entryNames(forPath: path)
+            for entryName in entryNames {
+                if let index = entryName.firstIndex(of: ".") {
+                    switch entryName[index...] {
+                    case ".txt", ".xml", ".lua":
+                        let document = TextDocument(source: .entryInArchive(archive, entryName))
                         let documentWrapper: DocumentWrapper = .textDocument(document)
-                        documentWrappers[node.pathComponent] = documentWrapper
-                    case "bmp", "jpg", "jpeg":
-                        let document = ImageDocument(source: .entryInArchive(archive, entry))
+                        documentWrappers.append(documentWrapper)
+                    case ".bmp", ".jpg", ".jpeg":
+                        let document = ImageDocument(source: .entryInArchive(archive, entryName))
                         let documentWrapper: DocumentWrapper = .imageDocument(document)
-                        documentWrappers[node.pathComponent] = documentWrapper
-                    case "rsm":
-                        let document = RSMDocument(source: .entryInArchive(archive, entry))
+                        documentWrappers.append(documentWrapper)
+                    case ".rsm":
+                        let document = RSMDocument(source: .entryInArchive(archive, entryName))
                         let documentWrapper: DocumentWrapper = .rsmDocument(document)
-                        documentWrappers[node.pathComponent] = documentWrapper
+                        documentWrappers.append(documentWrapper)
                     default:
-                        let documentWrapper: DocumentWrapper = .entryInArchive(entry.lastPathComponent)
-                        documentWrappers[node.pathComponent] = documentWrapper
+                        let documentWrapper: DocumentWrapper = .entryInArchive(entryName)
+                        documentWrappers.append(documentWrapper)
                     }
                 } else {
-                    let path = path.appending("\\").appending(node.pathComponent)
-                    let documentWrapper: DocumentWrapper = .directoryInArchive(archive, path)
-                    documentWrappers[node.pathComponent] = documentWrapper
+                    let documentWrapper: DocumentWrapper = .directoryInArchive(archive, entryName + "\\")
+                    documentWrappers.append(documentWrapper)
                 }
             }
+
             return documentWrappers
         case .entryInArchive:
             return nil

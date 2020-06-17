@@ -19,7 +19,7 @@ class DocumentWrappersViewController: UIViewController {
 
     init(documentWrapper: DocumentWrapper) {
         self.documentWrapper = documentWrapper
-        self.documentWrappers = Array((documentWrapper.documentWrappers ?? [:]).values).sorted()
+        self.documentWrappers = (documentWrapper.documentWrappers ?? []).sorted()
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -71,6 +71,9 @@ extension DocumentWrappersViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let documentWrapper = documentWrappers[indexPath.row]
         switch documentWrapper {
+        case .directory, .archive, .directoryInArchive:
+            let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: documentWrapper)
+            navigationController?.pushViewController(documentWrappersViewController, animated: true)
         case .textDocument(let document):
             let documentViewController = TextDocumentViewController(document: document)
             navigationController?.pushViewController(documentViewController, animated: true)
@@ -82,11 +85,6 @@ extension DocumentWrappersViewController: UICollectionViewDelegate {
             navigationController?.pushViewController(documentViewController, animated: true)
         default:
             break
-        }
-
-        if let _ = documentWrapper.documentWrappers {
-            let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: documentWrapper)
-            navigationController?.pushViewController(documentWrappersViewController, animated: true)
         }
     }
 }

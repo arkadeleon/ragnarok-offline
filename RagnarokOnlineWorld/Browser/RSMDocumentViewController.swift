@@ -58,7 +58,7 @@ class RSMDocumentViewController: UIViewController {
             case .entryInArchive(let archive, _):
                 let textureLoader = TextureLoader(device: self.renderer.device)
                 self.textures = self.document.textures.map { textureName -> MTLTexture? in
-                    guard let entry = archive.entry(forPath: "data\\texture\\" + textureName) else {
+                    guard let entry = archive.entry(forName: "data\\texture\\" + textureName) else {
                         return nil
                     }
                     guard let contents = try? archive.contents(of: entry) else {

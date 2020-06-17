@@ -33,20 +33,12 @@ struct GRFTable {
 
 struct GRFEntry: Equatable {
 
-    let path: String
+    let name: String
     let packSize: UInt32
     let lengthAligned: UInt32
     let realSize: UInt32
     let type: UInt8
     let offset: UInt32
-
-    var lastPathComponent: String {
-        String(path.split(separator: "\\").last ?? "")
-    }
-
-    var pathExtension: String {
-        (lastPathComponent as NSString).pathExtension
-    }
 }
 
 struct GRFEntryType: OptionSet {
@@ -62,21 +54,6 @@ struct GRFEntryType: OptionSet {
     static let encryptHeader = GRFEntryType(rawValue: 0x04) // encryption mode 1 (header DES only)
 }
 
-class GRFNode {
-
-    let pathComponent: String
-    var entry: GRFEntry?
-    private(set) var childNodes: [String: GRFNode] = [:]
-
-    init(pathComponent: String) {
-        self.pathComponent = pathComponent
-    }
-
-    func addChildNode(_ childNode: GRFNode) {
-        childNodes[childNode.pathComponent] = childNode
-    }
-}
-
 class GRFArchive: NSObject {
 
     enum Error: Swift.Error {
@@ -90,7 +67,7 @@ class GRFArchive: NSObject {
     let table: GRFTable
 
     private(set) var entries: [GRFEntry] = []
-    private(set) var rootNode = GRFNode(pathComponent: "")
+    private(set) var entryNameTable = ""
 
     init(url: URL) throws {
         self.url = url
@@ -164,7 +141,7 @@ class GRFArchive: NSObject {
 
             let cfEncoding = CFStringEncoding(CFStringEncodings.EUC_KR.rawValue)
             let encoding = CFStringConvertEncodingToNSStringEncoding(cfEncoding)
-            let path = NSString(data: table.data[pos..<index], encoding: encoding) ?? ""
+            let name = NSString(data: table.data[pos..<index], encoding: encoding) ?? ""
 
             pos = index + 1
 
@@ -175,7 +152,7 @@ class GRFArchive: NSObject {
             let offset = Data(table.data[(pos + 13)..<(pos + 17)]).withUnsafeBytes { $0.load(as: UInt32.self) }
 
             let entry = GRFEntry(
-                path: path as String,
+                name: name as String,
                 packSize: packSize,
                 lengthAligned: lengthAligned,
                 realSize: realSize,
@@ -185,56 +162,33 @@ class GRFArchive: NSObject {
 
             entries.append(entry)
 
-            insert(entry: entry)
+            entryNameTable += entry.name + "\0"
 
             pos += 17
         }
     }
 
-    private func insert(entry: GRFEntry) {
-        var currentNode = rootNode
-
-        let pathComponents = entry.path.split(separator: "\\")
-        for pathComponent in pathComponents {
-            if let childNode = currentNode.childNodes[String(pathComponent)] {
-                currentNode = childNode
-            } else {
-                let childNode = GRFNode(pathComponent: String(pathComponent))
-                currentNode.addChildNode(childNode)
-                currentNode = childNode
-            }
+    func entryNames(forPath path: String) -> [String] {
+        let pattern = path.replacingOccurrences(of: "\\", with: "\\\\") + "([^(\\x0|\\\\)]+)"
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
+            return []
         }
 
-        currentNode.entry = entry
+        let entryNameTable = self.entryNameTable as NSString
+        let range = NSRange(location: 0, length: entryNameTable.length)
+        let matches = regex.matches(in: entryNameTable as String, options: [], range: range)
+
+        var entryNames: [String] = []
+        for match in matches {
+            let entryName = entryNameTable.substring(with: match.range)
+            entryNames.append(entryName)
+        }
+
+        return Array(Set(entryNames))
     }
 
-    func nodes(withPath path: String) -> [GRFNode] {
-        var currentNode = rootNode
-
-        let pathComponents = path.split(separator: "\\")
-        for pathComponent in pathComponents {
-            guard let childNode = currentNode.childNodes[String(pathComponent)] else {
-                return []
-            }
-            currentNode = childNode
-        }
-
-        return Array(currentNode.childNodes.values)
-    }
-
-    func entry(forPath path: String) -> GRFEntry? {
-        var currentNode = rootNode
-
-        let pathComponents = path.split(separator: "\\")
-
-        for pathComponent in pathComponents {
-            guard let childNode = currentNode.childNodes[String(pathComponent)] else {
-                return nil
-            }
-            currentNode = childNode
-        }
-
-        return currentNode.entry
+    func entry(forName name: String) -> GRFEntry? {
+        return entries.first { $0.name == name }
     }
 
     func contents(of entry: GRFEntry) throws -> Data {
