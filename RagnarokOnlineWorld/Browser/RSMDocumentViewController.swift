@@ -106,12 +106,12 @@ class RSMDocumentViewController: UIViewController {
     }
 
     private func render(encoder: MTLRenderCommandEncoder) {
-        let time = Float(CACurrentMediaTime())
+        let time = CACurrentMediaTime()
 
         var modelView = Matrix4x4<Float>()
         modelView = SGLMath.translate(modelView, [0, -document.box.range[1]*0.1, -document.box.range[1]*0.5-5])
         modelView = SGLMath.rotate(modelView, radians(15), [1, 0, 0])
-        modelView = SGLMath.rotate(modelView, time, [0, 1, 0])
+        modelView = SGLMath.rotate(modelView, Float(radians(time * 360 / 8)), [0, 1, 0])
 
         let normal = Matrix3x3(modelView).inverse.transpose
 
