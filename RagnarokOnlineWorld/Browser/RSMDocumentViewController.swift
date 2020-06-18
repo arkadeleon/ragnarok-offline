@@ -40,6 +40,9 @@ class RSMDocumentViewController: UIViewController {
         title = document.name
         edgesForExtendedLayout = []
 
+        let infoItem = UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .plain, target: self, action: #selector(infoItemAction(_:)))
+        navigationItem.rightBarButtonItem = infoItem
+
         view.backgroundColor = .systemBackground
 
         renderer = Renderer(vertexFunctionName: "rsmVertexShader", fragmentFunctionName: "rsmFragmentShader", render: render)
@@ -96,7 +99,13 @@ class RSMDocumentViewController: UIViewController {
         }
     }
 
-    func render(encoder: MTLRenderCommandEncoder) {
+    @objc private func infoItemAction(_ sender: Any) {
+        let infoViewController = RSMDocumentInfoViewController(document: document)
+        let navigationController = UINavigationController(rootViewController: infoViewController)
+        present(navigationController, animated: true, completion: nil)
+    }
+
+    private func render(encoder: MTLRenderCommandEncoder) {
         let time = Float(CACurrentMediaTime())
 
         var modelView = Matrix4x4<Float>()
