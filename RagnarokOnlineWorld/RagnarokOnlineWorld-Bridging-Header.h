@@ -4,3 +4,4 @@
 
 #include "ShaderTypes.h"
 #include "RSMShaderTypes.h"
+#include "GNDVertex.h"

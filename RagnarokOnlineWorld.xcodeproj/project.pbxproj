@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		35021BAD24A054700021B99B /* GNDDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35021BAC24A054700021B99B /* GNDDocument.swift */; };
 		35049AA0248E9FA300DAD5C1 /* RSMShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35049A9F248E9FA300DAD5C1 /* RSMShaders.metal */; };
 		35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E15245C7B87000A60FE /* AppDelegate.swift */; };
 		35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E17245C7B87000A60FE /* SceneDelegate.swift */; };
@@ -73,6 +74,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		35021BAC24A054700021B99B /* GNDDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNDDocument.swift; sourceTree = "<group>"; };
+		35021BAE24A0A4760021B99B /* GNDVertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GNDVertex.h; sourceTree = "<group>"; };
 		35049A9F248E9FA300DAD5C1 /* RSMShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RSMShaders.metal; sourceTree = "<group>"; };
 		35049AA1248E9FB600DAD5C1 /* RSMShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSMShaderTypes.h; sourceTree = "<group>"; };
 		35116E12245C7B87000A60FE /* RagnarokOnlineWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOnlineWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -239,6 +242,8 @@
 				35116E80246858F0000A60FE /* ImageDocument.swift */,
 				35116E8C247035AC000A60FE /* ACTDocument.swift */,
 				35116E8A247025EE000A60FE /* GATDocument.swift */,
+				35021BAE24A0A4760021B99B /* GNDVertex.h */,
+				35021BAC24A054700021B99B /* GNDDocument.swift */,
 				35F8D8522473E1D7007DF105 /* RSWDocument.swift */,
 				35116E8E2472E685000A60FE /* SPRDocument.swift */,
 				35F8D8502473D9E8007DF105 /* STRDocument.swift */,
@@ -454,6 +459,7 @@
 				35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */,
 				35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */,
 				35049AA0248E9FA300DAD5C1 /* RSMShaders.metal in Sources */,
+				35021BAD24A054700021B99B /* GNDDocument.swift in Sources */,
 				35116E81246858F0000A60FE /* ImageDocument.swift in Sources */,
 				35116E8324685AE4000A60FE /* ImageDocumentViewController.swift in Sources */,
 				35116E7924659FD6000A60FE /* Document.swift in Sources */,

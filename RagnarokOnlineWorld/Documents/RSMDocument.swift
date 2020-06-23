@@ -376,9 +376,9 @@ class RSMDocument: Document {
             throw StreamError.invalidContents
         }
 
-        let major = try String(reader.readUInt8())
-        let minor = try String(reader.readUInt8())
-        version = major + "." + minor
+        let major = try reader.readUInt8()
+        let minor = try reader.readUInt8()
+        version = "\(major).\(minor)"
 
         animLen = try reader.readInt32()
         shadeType = try reader.readInt32()

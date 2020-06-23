@@ -113,9 +113,9 @@ class RSWDocument: Document {
             throw StreamError.invalidContents
         }
 
-        let major = try String(reader.readUInt8())
-        let minor = try String(reader.readUInt8())
-        version = major + "." + minor
+        let major = try reader.readUInt8()
+        let minor = try reader.readUInt8()
+        version = "\(major).\(minor)"
 
         files.ini = try reader.readString(count: 40)
         files.gnd = try reader.readString(count: 40)

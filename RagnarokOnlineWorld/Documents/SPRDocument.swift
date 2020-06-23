@@ -42,9 +42,9 @@ class SPRDocument: Document {
             throw StreamError.invalidContents
         }
 
-        let minor = try String(reader.readUInt8())
-        let major = try String(reader.readUInt8())
-        version = major + "." + minor
+        let minor = try reader.readUInt8()
+        let major = try reader.readUInt8()
+        version = "\(major).\(minor)"
 
         indexed_count = try reader.readUInt16()
 

@@ -53,9 +53,9 @@ class ACTDocument: Document {
             throw StreamError.invalidContents
         }
 
-        let minor = try String(reader.readUInt8())
-        let major = try String(reader.readUInt8())
-        version = major + "." + minor
+        let minor = try reader.readUInt8()
+        let major = try reader.readUInt8()
+        version = "\(major).\(minor)"
 
         let actionCount = try reader.readUInt16()
 

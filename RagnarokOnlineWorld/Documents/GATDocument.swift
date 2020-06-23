@@ -58,9 +58,9 @@ class GATDocument: Document {
             throw StreamError.invalidContents
         }
 
-        let major = try String(reader.readUInt8())
-        let minor = try String(reader.readUInt8())
-        version = major + "." + minor
+        let major = try reader.readUInt8()
+        let minor = try reader.readUInt8()
+        version = "\(major).\(minor)"
 
         width = try reader.readUInt32()
         height = try reader.readUInt32()
