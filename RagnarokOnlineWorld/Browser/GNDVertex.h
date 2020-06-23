@@ -20,3 +20,10 @@ typedef struct {
     vector_float3 position;
     vector_float2 textureCoordinate;
 } GNDWaterVertex;
+
+typedef struct {
+    matrix_float4x4 projectionMat;
+} GNDVertexUniforms;
+
+typedef struct {
+} GNDFragmentUniforms;

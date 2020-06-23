@@ -289,6 +289,14 @@ extension GNDDocument {
         let count = width * height
         var tmp: [Vector3<Float>?] = Array(repeating: nil, count: count)
 
+        let vec_in_tmp: (Int) -> Vector3<Float> = { (i: Int) -> Vector3<Float> in
+            if i > 0 && i < tmp.count {
+                return tmp[i] ?? Vector3<Float>()
+            } else {
+                return Vector3<Float>()
+            }
+        }
+
         let normal = Array(repeating: Vector3<Float>(), count: 4)
         var normals = Array(repeating: normal, count: count)
 
@@ -312,30 +320,29 @@ extension GNDDocument {
         for y in 0..<height {
             for x in 0..<width {
                 var n = normals[x + y * width]
-                let empty_vec = Vector3<Float>()
 
-                n[0] = n[0] + (tmp[(x + 0) + (y + 0) * width] ?? empty_vec)
-                n[0] = n[0] + (tmp[(x - 1) + (y + 0) * width] ?? empty_vec)
-                n[0] = n[0] + (tmp[(x - 1) + (y - 1) * width] ?? empty_vec)
-                n[0] = n[0] + (tmp[(x + 0) + (y - 1) * width] ?? empty_vec)
+                n[0] = n[0] + vec_in_tmp((x + 0) + (y + 0) * width)
+                n[0] = n[0] + vec_in_tmp((x - 1) + (y + 0) * width)
+                n[0] = n[0] + vec_in_tmp((x - 1) + (y - 1) * width)
+                n[0] = n[0] + vec_in_tmp((x + 0) + (y - 1) * width)
                 n[0] = normalize(n[0])
 
-                n[1] = n[1] + (tmp[(x + 0) + (y + 0) * width] ?? empty_vec)
-                n[1] = n[1] + (tmp[(x + 1) + (y + 0) * width] ?? empty_vec)
-                n[1] = n[1] + (tmp[(x + 1) + (y - 1) * width] ?? empty_vec)
-                n[1] = n[1] + (tmp[(x + 0) + (y - 1) * width] ?? empty_vec)
+                n[1] = n[1] + vec_in_tmp((x + 0) + (y + 0) * width)
+                n[1] = n[1] + vec_in_tmp((x + 1) + (y + 0) * width)
+                n[1] = n[1] + vec_in_tmp((x + 1) + (y - 1) * width)
+                n[1] = n[1] + vec_in_tmp((x + 0) + (y - 1) * width)
                 n[1] = normalize(n[1])
 
-                n[2] = n[2] + (tmp[(x + 0) + (y + 0) * width] ?? empty_vec)
-                n[2] = n[2] + (tmp[(x + 1) + (y + 0) * width] ?? empty_vec)
-                n[2] = n[2] + (tmp[(x + 1) + (y + 1) * width] ?? empty_vec)
-                n[2] = n[2] + (tmp[(x + 0) + (y + 1) * width] ?? empty_vec)
+                n[2] = n[2] + vec_in_tmp((x + 0) + (y + 0) * width)
+                n[2] = n[2] + vec_in_tmp((x + 1) + (y + 0) * width)
+                n[2] = n[2] + vec_in_tmp((x + 1) + (y + 1) * width)
+                n[2] = n[2] + vec_in_tmp((x + 0) + (y + 1) * width)
                 n[2] = normalize(n[2])
 
-                n[3] = n[3] + (tmp[(x + 0) + (y + 0) * width] ?? empty_vec)
-                n[3] = n[3] + (tmp[(x - 1) + (y + 0) * width] ?? empty_vec)
-                n[3] = n[3] + (tmp[(x - 1) + (y + 1) * width] ?? empty_vec)
-                n[3] = n[3] + (tmp[(x + 0) + (y + 1) * width] ?? empty_vec)
+                n[3] = n[3] + vec_in_tmp((x + 0) + (y + 0) * width)
+                n[3] = n[3] + vec_in_tmp((x - 1) + (y + 0) * width)
+                n[3] = n[3] + vec_in_tmp((x - 1) + (y + 1) * width)
+                n[3] = n[3] + vec_in_tmp((x + 0) + (y + 1) * width)
                 n[3] = normalize(n[3])
 
                 normals[x + y * width] = n

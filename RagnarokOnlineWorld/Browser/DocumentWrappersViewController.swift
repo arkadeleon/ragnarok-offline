@@ -83,6 +83,9 @@ extension DocumentWrappersViewController: UICollectionViewDelegate {
         case .rsmDocument(let document):
             let documentViewController = RSMDocumentViewController(document: document)
             navigationController?.pushViewController(documentViewController, animated: true)
+        case .gndDocument(let document):
+            let documentViewController = GNDDocumentViewController(document: document)
+            navigationController?.pushViewController(documentViewController, animated: true)
         default:
             break
         }

@@ -14,7 +14,7 @@ class RSMDocumentViewController: UIViewController {
 
     let document: RSMDocument
     private var textures: [MTLTexture?] = []
-    private var vectices: [[[RSMVertexIn]]] = []
+    private var vertices: [[[RSMVertexIn]]] = []
 
     private var mtkView: MTKView!
     private var renderer: Renderer!
@@ -78,7 +78,7 @@ class RSMDocumentViewController: UIViewController {
                 self.document.createInstance(model: model, width: 0, height: 0)
 
                 let meshes = self.document.compile()
-                self.vectices = meshes.map({ (x) -> [[RSMVertexIn]] in
+                self.vertices = meshes.map({ (x) -> [[RSMVertexIn]] in
                     return x.map { (y) -> [RSMVertexIn] in
                         let count = y.count / 9
                         var vs = [RSMVertexIn]()
@@ -138,7 +138,7 @@ class RSMDocumentViewController: UIViewController {
         let fragmentUniformsBuffer = encoder.device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<RSMFragmentUniforms>.stride, options: [])!
         encoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
-        for v1s in vectices {
+        for v1s in vertices {
             for (i, vs) in v1s.enumerated() where vs.count > 0 {
                 let vertexBuffer = encoder.device.makeBuffer(bytes: vs, length: vs.count * MemoryLayout<RSMVertexIn>.stride, options: [])!
                 encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
