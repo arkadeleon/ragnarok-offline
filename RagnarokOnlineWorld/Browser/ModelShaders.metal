@@ -1,5 +1,5 @@
 //
-//  RSMShaders.metal
+//  ModelShaders.metal
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/6/9.
@@ -9,23 +9,23 @@
 #include <metal_stdlib>
 using namespace metal;
 
-#include "RSMShaderTypes.h"
+#include "ModelShaderTypes.h"
 
 typedef struct {
     float4 position [[position]];
     float2 textureCoordinate;
     float lightWeighting;
     float alpha;
-} RSMVertexOut;
+} ModelRasterizerData;
 
-vertex RSMVertexOut
-rsmVertexShader(const device RSMVertexIn *vertices [[buffer(0)]],
-                unsigned int vertexIndex [[vertex_id]],
-                constant RSMVertexUniforms &uniforms [[buffer(1)]])
+vertex ModelRasterizerData
+modelVertexShader(const device ModelVertex *vertices [[buffer(0)]],
+                  unsigned int vertexIndex [[vertex_id]],
+                  constant ModelVertexUniforms &uniforms [[buffer(1)]])
 {
-    RSMVertexIn in = vertices[vertexIndex];
+    ModelVertex in = vertices[vertexIndex];
 
-    RSMVertexOut out;
+    ModelRasterizerData out;
     out.position = uniforms.projectionMat * uniforms.modelViewMat * float4(in.position, 1.0);
     out.textureCoordinate = in.textureCoordinate;
     out.alpha = in.alpha;
@@ -39,9 +39,9 @@ rsmVertexShader(const device RSMVertexIn *vertices [[buffer(0)]],
 }
 
 fragment float4
-rsmFragmentShader(RSMVertexOut in [[stage_in]],
-                  constant RSMFragmentUniforms &uniforms [[buffer(0)]],
-                  texture2d<float> texture [[texture(0)]])
+modelFragmentShader(ModelRasterizerData in [[stage_in]],
+                    constant ModelFragmentUniforms &uniforms [[buffer(0)]],
+                    texture2d<float> texture [[texture(0)]])
 {
     constexpr sampler textureSampler(address::repeat, mag_filter::linear, min_filter::linear);
     float4 fragColor = texture.sample(textureSampler, in.textureCoordinate);

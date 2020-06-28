@@ -1,5 +1,5 @@
 //
-//  RSMShaderTypes.h
+//  ModelShaderTypes.h
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/6/9.
@@ -13,7 +13,7 @@ typedef struct {
     vector_float3 normal;
     vector_float2 textureCoordinate;
     float alpha;
-} RSMVertexIn;
+} ModelVertex;
 
 typedef struct {
     matrix_float4x4 modelViewMat;
@@ -21,7 +21,7 @@ typedef struct {
 
     vector_float3 lightDirection;
     matrix_float3x3 normalMat;
-} RSMVertexUniforms;
+} ModelVertexUniforms;
 
 typedef struct {
     int fogUse;
@@ -32,4 +32,4 @@ typedef struct {
     vector_float3 lightAmbient;
     vector_float3 lightDiffuse;
     float lightOpacity;
-} RSMFragmentUniforms;
+} ModelFragmentUniforms;

@@ -14,7 +14,7 @@ class RSMDocumentViewController: UIViewController {
 
     let document: RSMDocument
     private var textures: [MTLTexture?] = []
-    private var vertices: [[[RSMVertexIn]]] = []
+    private var vertices: [[[ModelVertex]]] = []
 
     private var mtkView: MTKView!
     private var renderer: Renderer!
@@ -45,7 +45,7 @@ class RSMDocumentViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
 
-        renderer = Renderer(vertexFunctionName: "rsmVertexShader", fragmentFunctionName: "rsmFragmentShader", render: render)
+        renderer = Renderer(vertexFunctionName: "modelVertexShader", fragmentFunctionName: "modelFragmentShader", render: render)
         mtkView.device = renderer.device
         mtkView.colorPixelFormat = renderer.colorPixelFormat
         mtkView.depthStencilPixelFormat = renderer.depthStencilPixelFormat
@@ -78,12 +78,12 @@ class RSMDocumentViewController: UIViewController {
                 self.document.createInstance(model: model, width: 0, height: 0)
 
                 let meshes = self.document.compile()
-                self.vertices = meshes.map({ (x) -> [[RSMVertexIn]] in
-                    return x.map { (y) -> [RSMVertexIn] in
+                self.vertices = meshes.map({ (x) -> [[ModelVertex]] in
+                    return x.map { (y) -> [ModelVertex] in
                         let count = y.count / 9
-                        var vs = [RSMVertexIn]()
+                        var vs = [ModelVertex]()
                         for i in 0..<count {
-                            let v = RSMVertexIn(
+                            let v = ModelVertex(
                                 position: [y[i * 9 + 0], y[i * 9 + 1], y[i * 9 + 2]],
                                 normal: [y[i * 9 + 3], y[i * 9 + 4], y[i * 9 + 5]],
                                 textureCoordinate: [y[i * 9 + 6], y[i * 9 + 7]],
@@ -117,16 +117,16 @@ class RSMDocumentViewController: UIViewController {
 
         let projection = SGLMath.perspective(radians(camera.zoom), Float(mtkView.bounds.width / mtkView.bounds.height), 1, 1000)
 
-        var uniforms = RSMVertexUniforms(
+        var uniforms = ModelVertexUniforms(
             modelViewMat: unsafeBitCast(modelView, to: float4x4.self),
             projectionMat: unsafeBitCast(projection, to: float4x4.self),
             lightDirection: [0, 1, 0],
             normalMat: float3x3([normal[0][0], normal[0][1], normal[0][2]], [normal[1][0], normal[1][1], normal[1][2]], [normal[2][0], normal[2][1], normal[2][2]])
         )
-        let uniformsBuffer = encoder.device.makeBuffer(bytes: &uniforms, length: MemoryLayout<RSMVertexUniforms>.stride, options: [])!
+        let uniformsBuffer = encoder.device.makeBuffer(bytes: &uniforms, length: MemoryLayout<ModelVertexUniforms>.stride, options: [])!
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)
 
-        var fragmentUniforms = RSMFragmentUniforms(
+        var fragmentUniforms = ModelFragmentUniforms(
             fogUse: 0,
             fogNear: 180,
             fogFar: 30,
@@ -135,12 +135,12 @@ class RSMDocumentViewController: UIViewController {
             lightDiffuse: [0, 0, 0],
             lightOpacity: 1
         )
-        let fragmentUniformsBuffer = encoder.device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<RSMFragmentUniforms>.stride, options: [])!
+        let fragmentUniformsBuffer = encoder.device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<ModelFragmentUniforms>.stride, options: [])!
         encoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
         for v1s in vertices {
             for (i, vs) in v1s.enumerated() where vs.count > 0 {
-                let vertexBuffer = encoder.device.makeBuffer(bytes: vs, length: vs.count * MemoryLayout<RSMVertexIn>.stride, options: [])!
+                let vertexBuffer = encoder.device.makeBuffer(bytes: vs, length: vs.count * MemoryLayout<ModelVertex>.stride, options: [])!
                 encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
 
 

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		35021BAD24A054700021B99B /* GNDDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35021BAC24A054700021B99B /* GNDDocument.swift */; };
-		35049AA0248E9FA300DAD5C1 /* RSMShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35049A9F248E9FA300DAD5C1 /* RSMShaders.metal */; };
+		35049AA0248E9FA300DAD5C1 /* ModelShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35049A9F248E9FA300DAD5C1 /* ModelShaders.metal */; };
 		35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E15245C7B87000A60FE /* AppDelegate.swift */; };
 		35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E17245C7B87000A60FE /* SceneDelegate.swift */; };
 		35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35116E1E245C7B8A000A60FE /* Assets.xcassets */; };
@@ -78,8 +78,8 @@
 /* Begin PBXFileReference section */
 		35021BAC24A054700021B99B /* GNDDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNDDocument.swift; sourceTree = "<group>"; };
 		35021BAE24A0A4760021B99B /* GNDVertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GNDVertex.h; sourceTree = "<group>"; };
-		35049A9F248E9FA300DAD5C1 /* RSMShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RSMShaders.metal; sourceTree = "<group>"; };
-		35049AA1248E9FB600DAD5C1 /* RSMShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSMShaderTypes.h; sourceTree = "<group>"; };
+		35049A9F248E9FA300DAD5C1 /* ModelShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ModelShaders.metal; sourceTree = "<group>"; };
+		35049AA1248E9FB600DAD5C1 /* ModelShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelShaderTypes.h; sourceTree = "<group>"; };
 		35116E12245C7B87000A60FE /* RagnarokOnlineWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOnlineWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35116E15245C7B87000A60FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		35116E17245C7B87000A60FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -266,8 +266,8 @@
 				35116E8224685AE4000A60FE /* ImageDocumentViewController.swift */,
 				35116E86246AE56B000A60FE /* RSMDocumentViewController.swift */,
 				35704ECE249BC430008D378A /* RSMDocumentInfoViewController.swift */,
-				35049AA1248E9FB600DAD5C1 /* RSMShaderTypes.h */,
-				35049A9F248E9FA300DAD5C1 /* RSMShaders.metal */,
+				35049AA1248E9FB600DAD5C1 /* ModelShaderTypes.h */,
+				35049A9F248E9FA300DAD5C1 /* ModelShaders.metal */,
 				359D5C1524A1F8CA00C2D8D3 /* GNDDocumentViewController.swift */,
 				35021BAE24A0A4760021B99B /* GNDVertex.h */,
 				359D5C1724A1FA7C00C2D8D3 /* GNDShaders.metal */,
@@ -464,7 +464,7 @@
 				35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */,
 				35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */,
 				35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */,
-				35049AA0248E9FA300DAD5C1 /* RSMShaders.metal in Sources */,
+				35049AA0248E9FA300DAD5C1 /* ModelShaders.metal in Sources */,
 				35021BAD24A054700021B99B /* GNDDocument.swift in Sources */,
 				35116E81246858F0000A60FE /* ImageDocument.swift in Sources */,
 				35116E8324685AE4000A60FE /* ImageDocumentViewController.swift in Sources */,
@@ -577,7 +577,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -631,7 +631,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
