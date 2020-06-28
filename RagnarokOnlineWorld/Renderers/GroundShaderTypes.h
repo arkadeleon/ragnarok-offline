@@ -1,5 +1,5 @@
 //
-//  GNDVertex.h
+//  GroundShaderTypes.h
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/6/22.
@@ -14,16 +14,11 @@ typedef struct {
     vector_float2 textureCoordinate;
     vector_float2 lightmapCoordinate;
     vector_float2 tileColorCoordinate;
-} GNDVertex;
-
-typedef struct {
-    vector_float3 position;
-    vector_float2 textureCoordinate;
-} GNDWaterVertex;
+} GroundVertex;
 
 typedef struct {
     matrix_float4x4 projectionMat;
-} GNDVertexUniforms;
+} GroundVertexUniforms;
 
 typedef struct {
-} GNDFragmentUniforms;
+} GroundFragmentUniforms;

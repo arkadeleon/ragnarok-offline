@@ -4,4 +4,5 @@
 
 #include "ShaderTypes.h"
 #include "ModelShaderTypes.h"
-#include "GNDVertex.h"
+#include "WaterShaderTypes.h"
+#include "GroundShaderTypes.h"

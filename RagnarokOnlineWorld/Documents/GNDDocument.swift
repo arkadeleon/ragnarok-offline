@@ -352,14 +352,14 @@ extension GNDDocument {
         return normals
     }
 
-    func compile(WATER_LEVEL: Float, WATER_HEIGHT: Float) -> (mesh: [GNDVertex], waterMesh: [GNDWaterVertex]) {
+    func compile(WATER_LEVEL: Float, WATER_HEIGHT: Float) -> (mesh: [GroundVertex], waterMesh: [WaterVertex]) {
         let _width = Int(self.width)
         let _height = Int(self.height)
 
         let normals = getSmoothNormal()
 
-        var mesh: [GNDVertex] = []
-        var water: [GNDWaterVertex] = []
+        var mesh: [GroundVertex] = []
+        var water: [WaterVertex] = []
 
         let l_count_w  = roundf(sqrtf(Float(lightmap.count)))
         let l_count_h  = ceilf(sqrtf(Float(lightmap.count)))
@@ -394,42 +394,42 @@ extension GNDDocument {
                     let n = normals[ _x + _y * _width ]
                     let l = lightmap_atlas(Int(tile.light))
 
-                    let v0 = GNDVertex(
+                    let v0 = GroundVertex(
                         position: [(x + 0) * 2, h_a[0], (y + 0) * 2],
                         normal: [n[0][0], n[0][1], n[0][1]],
                         textureCoordinate: [tile.u1, tile.v1],
                         lightmapCoordinate: [l.u1, l.v1],
                         tileColorCoordinate: [(x + 0.5) / width, (y + 0.5) / height]
                     )
-                    let v1 = GNDVertex(
+                    let v1 = GroundVertex(
                         position: [(x + 1) * 2, h_a[1], (y + 0) * 2],
                         normal: [n[1][0], n[1][1], n[1][1]],
                         textureCoordinate: [tile.u2, tile.v2],
                         lightmapCoordinate: [l.u2, l.v1],
                         tileColorCoordinate: [(x + 1.5) / width, (y + 0.5) / height]
                     )
-                    let v2 = GNDVertex(
+                    let v2 = GroundVertex(
                         position: [(x + 1) * 2, h_a[3], (y + 1) * 2],
                         normal: [n[2][0], n[2][1], n[2][1]],
                         textureCoordinate: [tile.u4, tile.v4],
                         lightmapCoordinate: [l.u2, l.v2],
                         tileColorCoordinate: [(x + 1.5) / width, (y + 1.5) / height]
                     )
-                    let v3 = GNDVertex(
+                    let v3 = GroundVertex(
                         position: [(x + 1) * 2, h_a[3], (y + 1) * 2],
                         normal: [n[2][0], n[2][1], n[2][1]],
                         textureCoordinate: [tile.u4, tile.v4],
                         lightmapCoordinate: [l.u2, l.v2],
                         tileColorCoordinate: [(x + 1.5) / width, (y + 1.5) / height]
                     )
-                    let v4 = GNDVertex(
+                    let v4 = GroundVertex(
                         position: [(x + 0) * 2, h_a[2], (y + 1) * 2],
                         normal: [n[3][0], n[3][1], n[3][1]],
                         textureCoordinate: [tile.u3, tile.v3],
                         lightmapCoordinate: [l.u1, l.v2],
                         tileColorCoordinate: [(x + 0.5) / width, (y + 1.5) / height]
                     )
-                    let v5 = GNDVertex(
+                    let v5 = GroundVertex(
                         position: [(x + 0) * 2, h_a[0], (y + 0) * 2],
                         normal: [n[0][0], n[0][1], n[0][1]],
                         textureCoordinate: [tile.u1, tile.v1],
@@ -450,27 +450,27 @@ extension GNDDocument {
                         let x1 = ((x + 1) % 5 / 5) > 0 ? ((x + 1) % 5 / 5) : 1
                         let y1 = ((y + 1) % 5 / 5) > 0 ? ((y + 1) % 5 / 5) : 1
 
-                        let v0 = GNDWaterVertex(
+                        let v0 = WaterVertex(
                             position: [(x + 0) * 2, WATER_LEVEL, (y + 0) * 2],
                             textureCoordinate: [x0, y0]
                         )
-                        let v1 = GNDWaterVertex(
+                        let v1 = WaterVertex(
                             position: [(x + 1) * 2, WATER_LEVEL, (y + 0) * 2],
                             textureCoordinate: [x1, y0]
                         )
-                        let v2 = GNDWaterVertex(
+                        let v2 = WaterVertex(
                             position: [(x + 1) * 2, WATER_LEVEL, (y + 1) * 2],
                             textureCoordinate: [x1, y1]
                         )
-                        let v3 = GNDWaterVertex(
+                        let v3 = WaterVertex(
                             position: [(x + 1) * 2, WATER_LEVEL, (y + 1) * 2],
                             textureCoordinate: [x1, y1]
                         )
-                        let v4 = GNDWaterVertex(
+                        let v4 = WaterVertex(
                             position: [(x + 0) * 2, WATER_LEVEL, (y + 1) * 2],
                             textureCoordinate: [x0, y1]
                         )
-                        let v5 = GNDWaterVertex(
+                        let v5 = WaterVertex(
                             position: [(x + 0) * 2, WATER_LEVEL, (y + 0) * 2],
                             textureCoordinate: [x0, y0]
                         )
@@ -487,42 +487,42 @@ extension GNDDocument {
                     let h_b    = cell_b.height
                     let l = lightmap_atlas(Int(tile.light))
 
-                    let v0 = GNDVertex(
+                    let v0 = GroundVertex(
                         position: [(x+0)*2, h_b[0], (y+1)*2],
                         normal: [0.0, 0.0, 1.0],
                         textureCoordinate: [tile.u3, tile.v3],
                         lightmapCoordinate: [l.u1, l.v2],
                         tileColorCoordinate: [0, 0]
                     )
-                    let v1 = GNDVertex(
+                    let v1 = GroundVertex(
                         position: [(x+1)*2, h_a[3], (y+1)*2],
                         normal: [0.0, 0.0, 1.0],
                         textureCoordinate: [tile.u2, tile.v2],
                         lightmapCoordinate: [l.u2, l.v1],
                         tileColorCoordinate: [0, 0]
                     )
-                    let v2 = GNDVertex(
+                    let v2 = GroundVertex(
                         position: [(x+1)*2, h_b[1], (y+1)*2],
                         normal: [0.0, 0.0, 1.0],
                         textureCoordinate: [tile.u4, tile.v4],
                         lightmapCoordinate: [l.u2, l.v2],
                         tileColorCoordinate: [0, 0]
                     )
-                    let v3 = GNDVertex(
+                    let v3 = GroundVertex(
                         position: [(x+0)*2, h_b[0], (y+1)*2],
                         normal: [0.0, 0.0, 1.0],
                         textureCoordinate: [tile.u3, tile.v3],
                         lightmapCoordinate: [l.u1, l.v2],
                         tileColorCoordinate: [0, 0]
                     )
-                    let v4 = GNDVertex(
+                    let v4 = GroundVertex(
                         position: [(x+1)*2, h_a[3], (y+1)*2],
                         normal: [0.0, 0.0, 1.0],
                         textureCoordinate: [tile.u2, tile.v2],
                         lightmapCoordinate: [l.u2, l.v1],
                         tileColorCoordinate: [0, 0]
                     )
-                    let v5 = GNDVertex(
+                    let v5 = GroundVertex(
                         position: [(x+0)*2, h_a[2], (y+1)*2],
                         normal: [0.0, 0.0, 1.0],
                         textureCoordinate: [tile.u1, tile.v1],
@@ -542,42 +542,42 @@ extension GNDDocument {
                     let h_b    = cell_b.height
                     let l = lightmap_atlas(Int(tile.light))
 
-                    let v0 = GNDVertex(
+                    let v0 = GroundVertex(
                         position: [(x+1)*2, h_a[1], (y+0)*2],
                         normal: [1.0, 0.0, 0.0],
                         textureCoordinate: [tile.u2, tile.v2],
                         lightmapCoordinate: [l.u2, l.v1],
                         tileColorCoordinate: [0, 0]
                     )
-                    let v1 = GNDVertex(
+                    let v1 = GroundVertex(
                         position: [(x+1)*2, h_a[3], (y+1)*2],
                         normal: [1.0, 0.0, 0.0],
                         textureCoordinate: [tile.u1, tile.v1],
                         lightmapCoordinate: [l.u1, l.v1],
                         tileColorCoordinate: [0, 0]
                     )
-                    let v2 = GNDVertex(
+                    let v2 = GroundVertex(
                         position: [(x+1)*2, h_b[0], (y+0)*2],
                         normal: [1.0, 0.0, 0.0],
                         textureCoordinate: [tile.u4, tile.v4],
                         lightmapCoordinate: [l.u2, l.v2],
                         tileColorCoordinate: [0, 0]
                     )
-                    let v3 = GNDVertex(
+                    let v3 = GroundVertex(
                         position: [(x+1)*2, h_b[0], (y+0)*2],
                         normal: [1.0, 0.0, 0.0],
                         textureCoordinate: [tile.u4, tile.v4],
                         lightmapCoordinate: [l.u2, l.v2],
                         tileColorCoordinate: [0, 0]
                     )
-                    let v4 = GNDVertex(
+                    let v4 = GroundVertex(
                         position: [(x+1)*2, h_b[2], (y+1)*2],
                         normal: [1.0, 0.0, 0.0],
                         textureCoordinate: [tile.u3, tile.v3],
                         lightmapCoordinate: [l.u1, l.v2],
                         tileColorCoordinate: [0, 0]
                     )
-                    let v5 = GNDVertex(
+                    let v5 = GroundVertex(
                         position: [(x+1)*2, h_a[3], (y+1)*2],
                         normal: [1.0, 0.0, 0.0],
                         textureCoordinate: [tile.u1, tile.v1],

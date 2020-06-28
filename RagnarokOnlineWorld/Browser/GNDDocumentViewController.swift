@@ -14,7 +14,7 @@ class GNDDocumentViewController: UIViewController {
 
     let document: GNDDocument
     private var textures: [MTLTexture?] = []
-    private var vertices: [GNDVertex] = []
+    private var vertices: [GroundVertex] = []
 
     private var mtkView: MTKView!
     private var renderer: Renderer!
@@ -45,7 +45,7 @@ class GNDDocumentViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
 
-        renderer = Renderer(vertexFunctionName: "gndVertexShader", fragmentFunctionName: "gndFragmentShader", render: render)
+        renderer = Renderer(vertexFunctionName: "groundVertexShader", fragmentFunctionName: "groundFragmentShader", render: render)
         mtkView.device = renderer.device
         mtkView.colorPixelFormat = renderer.colorPixelFormat
         mtkView.depthStencilPixelFormat = renderer.depthStencilPixelFormat
@@ -70,19 +70,19 @@ class GNDDocumentViewController: UIViewController {
 
         let projection = SGLMath.perspective(radians(camera.zoom), Float(mtkView.bounds.width / mtkView.bounds.height), 1, 1000)
 
-        var uniforms = GNDVertexUniforms(
+        var uniforms = GroundVertexUniforms(
             projectionMat: unsafeBitCast(projection, to: float4x4.self)
         )
-        let uniformsBuffer = encoder.device.makeBuffer(bytes: &uniforms, length: MemoryLayout<GNDVertexUniforms>.stride, options: [])!
+        let uniformsBuffer = encoder.device.makeBuffer(bytes: &uniforms, length: MemoryLayout<GroundVertexUniforms>.stride, options: [])!
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)
 
-        var fragmentUniforms = GNDFragmentUniforms()
-        let fragmentUniformsBuffer = encoder.device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<GNDFragmentUniforms>.stride, options: [])!
+        var fragmentUniforms = GroundFragmentUniforms()
+        let fragmentUniformsBuffer = encoder.device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<GroundFragmentUniforms>.stride, options: [])!
         encoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
         let vertices = self.vertices
         if vertices.count > 0 {
-            let vertexBuffer = encoder.device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<GNDVertex>.stride, options: [])!
+            let vertexBuffer = encoder.device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<GroundVertex>.stride, options: [])!
             encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
 
 
