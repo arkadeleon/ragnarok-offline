@@ -77,23 +77,7 @@ class RSMDocumentViewController: UIViewController {
                     filename: "")
                 self.document.createInstance(model: model, width: 0, height: 0)
 
-                let meshes = self.document.compile()
-                self.vertices = meshes.map({ (x) -> [[ModelVertex]] in
-                    return x.map { (y) -> [ModelVertex] in
-                        let count = y.count / 9
-                        var vs = [ModelVertex]()
-                        for i in 0..<count {
-                            let v = ModelVertex(
-                                position: [y[i * 9 + 0], y[i * 9 + 1], y[i * 9 + 2]],
-                                normal: [y[i * 9 + 3], y[i * 9 + 4], y[i * 9 + 5]],
-                                textureCoordinate: [y[i * 9 + 6], y[i * 9 + 7]],
-                                alpha: y[i * 9 + 8]
-                            )
-                            vs.append(v)
-                        }
-                        return vs
-                    }
-                })
+                self.vertices = self.document.compile()
             }
             self.document.close()
         }

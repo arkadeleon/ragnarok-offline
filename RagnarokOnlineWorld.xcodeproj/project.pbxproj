@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		35021BAD24A054700021B99B /* GNDDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35021BAC24A054700021B99B /* GNDDocument.swift */; };
 		35049AA0248E9FA300DAD5C1 /* ModelShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35049A9F248E9FA300DAD5C1 /* ModelShaders.metal */; };
+		3509565324A8EE010077C134 /* RSMDocument+Compile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565224A8EE010077C134 /* RSMDocument+Compile.swift */; };
 		35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E15245C7B87000A60FE /* AppDelegate.swift */; };
 		35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E17245C7B87000A60FE /* SceneDelegate.swift */; };
 		35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35116E1E245C7B8A000A60FE /* Assets.xcassets */; };
@@ -81,6 +82,7 @@
 		35021BAE24A0A4760021B99B /* GroundShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroundShaderTypes.h; sourceTree = "<group>"; };
 		35049A9F248E9FA300DAD5C1 /* ModelShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ModelShaders.metal; sourceTree = "<group>"; };
 		35049AA1248E9FB600DAD5C1 /* ModelShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelShaderTypes.h; sourceTree = "<group>"; };
+		3509565224A8EE010077C134 /* RSMDocument+Compile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSMDocument+Compile.swift"; sourceTree = "<group>"; };
 		35116E12245C7B87000A60FE /* RagnarokOnlineWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOnlineWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35116E15245C7B87000A60FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		35116E17245C7B87000A60FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -308,6 +310,7 @@
 				35E8DCDA24A88BCC00A14FC5 /* WaterShaders.metal */,
 				35021BAE24A0A4760021B99B /* GroundShaderTypes.h */,
 				359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */,
+				3509565224A8EE010077C134 /* RSMDocument+Compile.swift */,
 			);
 			path = Renderers;
 			sourceTree = "<group>";
@@ -473,6 +476,7 @@
 				3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */,
 				35116E8B247025EE000A60FE /* GATDocument.swift in Sources */,
 				35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */,
+				3509565324A8EE010077C134 /* RSMDocument+Compile.swift in Sources */,
 				35CB3BAC247827A700EC04C3 /* GameViewController.swift in Sources */,
 				35704ECF249BC430008D378A /* RSMDocumentInfoViewController.swift in Sources */,
 				35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */,
