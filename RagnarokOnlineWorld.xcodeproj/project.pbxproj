@@ -190,6 +190,7 @@
 				35116E17245C7B87000A60FE /* SceneDelegate.swift */,
 				35CB3BAA2478277600EC04C3 /* Client */,
 				35116E77246596BB000A60FE /* Browser */,
+				35E8DCD924A88AE600A14FC5 /* Renderers */,
 				35116E76246596A5000A60FE /* Documents */,
 				35CB3BBA247EB2C100EC04C3 /* Utilities */,
 				35116E1E245C7B8A000A60FE /* Assets.xcassets */,
@@ -266,11 +267,7 @@
 				35116E8224685AE4000A60FE /* ImageDocumentViewController.swift */,
 				35116E86246AE56B000A60FE /* RSMDocumentViewController.swift */,
 				35704ECE249BC430008D378A /* RSMDocumentInfoViewController.swift */,
-				35049AA1248E9FB600DAD5C1 /* ModelShaderTypes.h */,
-				35049A9F248E9FA300DAD5C1 /* ModelShaders.metal */,
 				359D5C1524A1F8CA00C2D8D3 /* GNDDocumentViewController.swift */,
-				35021BAE24A0A4760021B99B /* GNDVertex.h */,
-				359D5C1724A1FA7C00C2D8D3 /* GNDShaders.metal */,
 			);
 			path = Browser;
 			sourceTree = "<group>";
@@ -297,6 +294,17 @@
 				35617A72249863580097C60C /* SGLMath+ROW.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		35E8DCD924A88AE600A14FC5 /* Renderers */ = {
+			isa = PBXGroup;
+			children = (
+				35049AA1248E9FB600DAD5C1 /* ModelShaderTypes.h */,
+				35049A9F248E9FA300DAD5C1 /* ModelShaders.metal */,
+				35021BAE24A0A4760021B99B /* GNDVertex.h */,
+				359D5C1724A1FA7C00C2D8D3 /* GNDShaders.metal */,
+			);
+			path = Renderers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
