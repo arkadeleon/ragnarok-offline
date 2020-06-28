@@ -16,16 +16,16 @@ typedef struct {
     float2 textureCoordinate;
     float lightWeighting;
     float alpha;
-} ModelRasterizerData;
+} RasterizerData;
 
-vertex ModelRasterizerData
+vertex RasterizerData
 modelVertexShader(const device ModelVertex *vertices [[buffer(0)]],
                   unsigned int vertexIndex [[vertex_id]],
                   constant ModelVertexUniforms &uniforms [[buffer(1)]])
 {
     ModelVertex in = vertices[vertexIndex];
 
-    ModelRasterizerData out;
+    RasterizerData out;
     out.position = uniforms.projectionMat * uniforms.modelViewMat * float4(in.position, 1.0);
     out.textureCoordinate = in.textureCoordinate;
     out.alpha = in.alpha;
@@ -39,7 +39,7 @@ modelVertexShader(const device ModelVertex *vertices [[buffer(0)]],
 }
 
 fragment float4
-modelFragmentShader(ModelRasterizerData in [[stage_in]],
+modelFragmentShader(RasterizerData in [[stage_in]],
                     constant ModelFragmentUniforms &uniforms [[buffer(0)]],
                     texture2d<float> texture [[texture(0)]])
 {

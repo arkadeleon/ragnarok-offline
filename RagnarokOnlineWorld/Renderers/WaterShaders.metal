@@ -14,9 +14,9 @@ using namespace metal;
 typedef struct {
     float4 position [[position]];
     float2 textureCoordinate;
-} WaterRasterizerData;
+} RasterizerData;
 
-vertex WaterRasterizerData
+vertex RasterizerData
 waterVertexShader(const device WaterVertex *vertices [[buffer(0)]],
                   unsigned int vertexIndex [[vertex_id]],
                   constant WaterVertexUniforms &uniforms [[buffer(1)]])
@@ -28,14 +28,14 @@ waterVertexShader(const device WaterVertex *vertices [[buffer(0)]],
     float pi = 3.14159265358979323846264;
     float height = sin((pi / 180.0) * (uniforms.waterOffset + 0.5 * uniforms.wavePitch * (in.position.x + in.position.z + diff))) * uniforms.waveHeight;
 
-    WaterRasterizerData out;
+    RasterizerData out;
     out.position = uniforms.projectionMat * uniforms.modelViewMat * float4(in.position.x, in.position.y + height, in.position.z, 1.0);
     out.textureCoordinate = in.textureCoordinate;
     return out;
 }
 
 fragment float4
-waterFragmentShader(WaterRasterizerData in [[stage_in]],
+waterFragmentShader(RasterizerData in [[stage_in]],
                     constant WaterFragmentUniforms &uniforms [[buffer(0)]],
                     texture2d<float> diffuse [[texture(0)]])
 {

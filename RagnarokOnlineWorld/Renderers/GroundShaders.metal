@@ -14,22 +14,22 @@ using namespace metal;
 typedef struct {
     float4 position [[position]];
     float2 textureCoordinate;
-} GroundRasterizerData;
+} RasterizerData;
 
-vertex GroundRasterizerData
+vertex RasterizerData
 groundVertexShader(const device GroundVertex *vertices [[buffer(0)]],
                    unsigned int vertexIndex [[vertex_id]],
                    constant GroundVertexUniforms &uniforms [[buffer(1)]])
 {
     GroundVertex in = vertices[vertexIndex];
 
-    GroundRasterizerData out;
+    RasterizerData out;
     out.position = uniforms.projectionMat * float4(in.position, 1.0);
     return out;
 }
 
 fragment float4
-groundFragmentShader(GroundRasterizerData in [[stage_in]],
+groundFragmentShader(RasterizerData in [[stage_in]],
                      constant GroundFragmentUniforms &uniforms [[buffer(0)]],
                      texture2d<float> texture [[texture(0)]])
 {
