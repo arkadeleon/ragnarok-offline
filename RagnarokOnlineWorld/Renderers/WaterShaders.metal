@@ -37,10 +37,10 @@ waterVertexShader(const device WaterVertex *vertices [[buffer(0)]],
 fragment float4
 waterFragmentShader(RasterizerData in [[stage_in]],
                     constant WaterFragmentUniforms &uniforms [[buffer(0)]],
-                    texture2d<float> diffuse [[texture(0)]])
+                    texture2d<float> colorTexture [[texture(0)]])
 {
     constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
-    float4 color = float4(diffuse.sample(textureSampler, in.textureCoordinate).rgb, uniforms.opacity);
+    float4 color = float4(colorTexture.sample(textureSampler, in.textureCoordinate).rgb, uniforms.opacity);
 
     if (uniforms.fogUse) {
         float depth = in.position.z / in.position.w;
