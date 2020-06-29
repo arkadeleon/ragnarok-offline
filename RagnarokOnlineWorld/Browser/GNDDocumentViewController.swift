@@ -71,7 +71,10 @@ class GNDDocumentViewController: UIViewController {
         let projection = SGLMath.perspective(radians(camera.zoom), Float(mtkView.bounds.width / mtkView.bounds.height), 1, 1000)
 
         var uniforms = GroundVertexUniforms(
-            projectionMat: unsafeBitCast(projection, to: float4x4.self)
+            modelViewMat: matrix_identity_float4x4,
+            projectionMat: unsafeBitCast(projection, to: float4x4.self),
+            lightDirection: [0.0, 0.0, 0.0],
+            normalMat: matrix_identity_float3x3
         )
         let uniformsBuffer = encoder.device.makeBuffer(bytes: &uniforms, length: MemoryLayout<GroundVertexUniforms>.stride, options: [])!
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)

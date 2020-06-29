@@ -17,8 +17,22 @@ typedef struct {
 } GroundVertex;
 
 typedef struct {
+    matrix_float4x4 modelViewMat;
     matrix_float4x4 projectionMat;
+
+    vector_float3 lightDirection;
+    matrix_float3x3 normalMat;
 } GroundVertexUniforms;
 
 typedef struct {
+    int lightMapUse;
+
+    int fogUse;
+    float fogNear;
+    float fogFar;
+    vector_float3 fogColor;
+
+    vector_float3 lightAmbient;
+    vector_float3 lightDiffuse;
+    float lightOpacity;
 } GroundFragmentUniforms;
