@@ -90,10 +90,10 @@ class GameViewController: UIViewController {
         let projection = SGLMath.perspective(radians(camera.zoom), Float(mtkView.bounds.width / mtkView.bounds.height), 0.1, 100)
 
         var uniforms = VertexUniforms(
-            model: unsafeBitCast(model, to: float4x4.self),
-            normal: float3x3([normal[0][0], normal[0][1], normal[0][2]], [normal[1][0], normal[1][1], normal[1][2]], [normal[2][0], normal[2][1], normal[2][2]]),
-            view: unsafeBitCast(view, to: float4x4.self),
-            projection: unsafeBitCast(projection, to: float4x4.self)
+            model: model.simd,
+            normal: normal.simd,
+            view: view.simd,
+            projection: projection.simd
         )
         let uniformsBuffer = encoder.device.makeBuffer(bytes: &uniforms, length: MemoryLayout<VertexUniforms>.stride, options: [])!
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)

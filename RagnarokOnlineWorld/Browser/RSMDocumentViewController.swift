@@ -102,10 +102,10 @@ class RSMDocumentViewController: UIViewController {
         let projection = SGLMath.perspective(radians(camera.zoom), Float(mtkView.bounds.width / mtkView.bounds.height), 1, 1000)
 
         var uniforms = ModelVertexUniforms(
-            modelViewMat: unsafeBitCast(modelView, to: float4x4.self),
-            projectionMat: unsafeBitCast(projection, to: float4x4.self),
+            modelViewMat: modelView.simd,
+            projectionMat: projection.simd,
             lightDirection: [0, 1, 0],
-            normalMat: float3x3([normal[0][0], normal[0][1], normal[0][2]], [normal[1][0], normal[1][1], normal[1][2]], [normal[2][0], normal[2][1], normal[2][2]])
+            normalMat: normal.simd
         )
         let uniformsBuffer = encoder.device.makeBuffer(bytes: &uniforms, length: MemoryLayout<ModelVertexUniforms>.stride, options: [])!
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)

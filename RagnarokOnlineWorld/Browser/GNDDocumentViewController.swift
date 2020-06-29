@@ -72,7 +72,7 @@ class GNDDocumentViewController: UIViewController {
 
         var uniforms = GroundVertexUniforms(
             modelViewMat: matrix_identity_float4x4,
-            projectionMat: unsafeBitCast(projection, to: float4x4.self),
+            projectionMat: projection.simd,
             lightDirection: [0.0, 0.0, 0.0],
             normalMat: matrix_identity_float3x3
         )
