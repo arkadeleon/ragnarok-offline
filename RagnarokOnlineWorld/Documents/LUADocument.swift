@@ -1,5 +1,5 @@
 //
-//  TextDocument.swift
+//  LUADocument.swift
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/5/9.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TextDocument: Document {
+class LUADocument: Document {
 
     let encoding: String.Encoding
 
@@ -20,11 +20,6 @@ class TextDocument: Document {
     }
 
     override func load(from contents: Data) throws {
-        switch fileType {
-        case "txt", "xml", "lua":
-            text = String(data: contents, encoding: encoding)
-        default:
-            break
-        }
+        text = String(data: contents, encoding: encoding)
     }
 }

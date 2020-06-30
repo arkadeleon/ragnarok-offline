@@ -2,7 +2,7 @@
 //  TextureLoader.swift
 //  RagnarokOnlineWorld
 //
-//  Created by Li, Junlin on 2020/6/16.
+//  Created by Leon Li on 2020/6/16.
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 

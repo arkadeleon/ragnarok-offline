@@ -2,7 +2,7 @@
 //  GroundShaders.metal
 //  RagnarokOnlineWorld
 //
-//  Created by Li, Junlin on 2020/6/23.
+//  Created by Leon Li on 2020/6/23.
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 

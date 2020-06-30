@@ -15,8 +15,8 @@ enum DocumentWrapper {
     case archive(GRFArchive)
     case directoryInArchive(GRFArchive, String)
     case entryInArchive(String)
-    case textDocument(TextDocument)
-    case imageDocument(ImageDocument)
+    case luaDocument(LUADocument)
+    case bmpDocument(BMPDocument)
     case rsmDocument(RSMDocument)
     case gndDocument(GNDDocument)
 }
@@ -35,9 +35,9 @@ extension DocumentWrapper {
             return UIImage(systemName: "folder")
         case .entryInArchive:
             return UIImage(systemName: "doc")
-        case .textDocument:
+        case .luaDocument:
             return UIImage(systemName: "doc.text")
-        case .imageDocument:
+        case .bmpDocument:
             return UIImage(systemName: "doc.richtext")
         case .rsmDocument:
             return UIImage(systemName: "square.stack.3d.up")
@@ -58,9 +58,9 @@ extension DocumentWrapper {
             return String(path.split(separator: "\\").last ?? "")
         case .entryInArchive(let entryName):
             return String(entryName.split(separator: "\\").last ?? "")
-        case .textDocument(let document):
+        case .luaDocument(let document):
             return document.name
-        case .imageDocument(let document):
+        case .bmpDocument(let document):
             return document.name
         case .rsmDocument(let document):
             return document.name
@@ -86,12 +86,12 @@ extension DocumentWrapper {
                     } else {
                         return .document(url)
                     }
-                case "txt", "xml", "lua":
-                    let document = TextDocument(source: .url(url))
-                    return .textDocument(document)
-                case "bmp", "jpg", "jpeg":
-                    let document = ImageDocument(source: .url(url))
-                    return .imageDocument(document)
+                case "lua":
+                    let document = LUADocument(source: .url(url))
+                    return .luaDocument(document)
+                case "bmp":
+                    let document = BMPDocument(source: .url(url))
+                    return .bmpDocument(document)
                 case "rsm":
                     let document = RSMDocument(source: .url(url))
                     return .rsmDocument(document)
@@ -113,13 +113,13 @@ extension DocumentWrapper {
             for entryName in entryNames {
                 if let index = entryName.firstIndex(of: ".") {
                     switch entryName[index...] {
-                    case ".txt", ".xml", ".lua":
-                        let document = TextDocument(source: .entryInArchive(archive, entryName))
-                        let documentWrapper: DocumentWrapper = .textDocument(document)
+                    case ".lua":
+                        let document = LUADocument(source: .entryInArchive(archive, entryName))
+                        let documentWrapper: DocumentWrapper = .luaDocument(document)
                         documentWrappers.append(documentWrapper)
-                    case ".bmp", ".jpg", ".jpeg":
-                        let document = ImageDocument(source: .entryInArchive(archive, entryName))
-                        let documentWrapper: DocumentWrapper = .imageDocument(document)
+                    case ".bmp":
+                        let document = BMPDocument(source: .entryInArchive(archive, entryName))
+                        let documentWrapper: DocumentWrapper = .bmpDocument(document)
                         documentWrappers.append(documentWrapper)
                     case ".rsm":
                         let document = RSMDocument(source: .entryInArchive(archive, entryName))
@@ -142,9 +142,9 @@ extension DocumentWrapper {
             return documentWrappers
         case .entryInArchive:
             return nil
-        case .textDocument:
+        case .luaDocument:
             return nil
-        case .imageDocument:
+        case .bmpDocument:
             return nil
         case .rsmDocument:
             return nil
@@ -176,9 +176,9 @@ extension DocumentWrapper: Equatable, Comparable {
             return 0
         case .entryInArchive:
             return 1
-        case .textDocument:
+        case .luaDocument:
             return 1
-        case .imageDocument:
+        case .bmpDocument:
             return 1
         case .rsmDocument:
             return 1

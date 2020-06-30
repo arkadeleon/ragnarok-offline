@@ -33,9 +33,9 @@
 		35116E712461C435000A60FE /* monstertalktable.xml in Resources */ = {isa = PBXBuildFile; fileRef = 35116E682461C435000A60FE /* monstertalktable.xml */; };
 		35116E7524644AAA000A60FE /* DocumentWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7424644AAA000A60FE /* DocumentWrapper.swift */; };
 		35116E7924659FD6000A60FE /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7824659FD6000A60FE /* Document.swift */; };
-		35116E7D2466FEB3000A60FE /* TextDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7C2466FEB3000A60FE /* TextDocument.swift */; };
+		35116E7D2466FEB3000A60FE /* LUADocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7C2466FEB3000A60FE /* LUADocument.swift */; };
 		35116E7F246713AD000A60FE /* TextDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7E246713AD000A60FE /* TextDocumentViewController.swift */; };
-		35116E81246858F0000A60FE /* ImageDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E80246858F0000A60FE /* ImageDocument.swift */; };
+		35116E81246858F0000A60FE /* BMPDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E80246858F0000A60FE /* BMPDocument.swift */; };
 		35116E8324685AE4000A60FE /* ImageDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8224685AE4000A60FE /* ImageDocumentViewController.swift */; };
 		35116E85246ADFFA000A60FE /* RSMDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E84246ADFFA000A60FE /* RSMDocument.swift */; };
 		35116E87246AE56B000A60FE /* RSMDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E86246AE56B000A60FE /* RSMDocumentViewController.swift */; };
@@ -57,9 +57,9 @@
 		35CB3BB52478359100EC04C3 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35CB3BB42478359100EC04C3 /* Shaders.metal */; };
 		35CB3BB7247D81B300EC04C3 /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35CB3BB6247D81B300EC04C3 /* wall.jpg */; };
 		35E8DCDB24A88BCC00A14FC5 /* WaterShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDA24A88BCC00A14FC5 /* WaterShaders.metal */; };
-		35E8DCE224A9DF4100A14FC5 /* SGLMath+SIMD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCE124A9DF4100A14FC5 /* SGLMath+SIMD.swift */; };
 		35E8DCDE24A9D99000A14FC5 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDD24A9D99000A14FC5 /* Renderable.swift */; };
 		35E8DCE024A9DC1100A14FC5 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDF24A9DC1100A14FC5 /* Model.swift */; };
+		35E8DCE224A9DF4100A14FC5 /* SGLMath+SIMD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCE124A9DF4100A14FC5 /* SGLMath+SIMD.swift */; };
 		35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8502473D9E8007DF105 /* STRDocument.swift */; };
 		35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8522473E1D7007DF105 /* RSWDocument.swift */; };
 /* End PBXBuildFile section */
@@ -115,9 +115,9 @@
 		35116E682461C435000A60FE /* monstertalktable.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = monstertalktable.xml; sourceTree = "<group>"; };
 		35116E7424644AAA000A60FE /* DocumentWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrapper.swift; sourceTree = "<group>"; };
 		35116E7824659FD6000A60FE /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
-		35116E7C2466FEB3000A60FE /* TextDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDocument.swift; sourceTree = "<group>"; };
+		35116E7C2466FEB3000A60FE /* LUADocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUADocument.swift; sourceTree = "<group>"; };
 		35116E7E246713AD000A60FE /* TextDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDocumentViewController.swift; sourceTree = "<group>"; };
-		35116E80246858F0000A60FE /* ImageDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDocument.swift; sourceTree = "<group>"; };
+		35116E80246858F0000A60FE /* BMPDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMPDocument.swift; sourceTree = "<group>"; };
 		35116E8224685AE4000A60FE /* ImageDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDocumentViewController.swift; sourceTree = "<group>"; };
 		35116E84246ADFFA000A60FE /* RSMDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSMDocument.swift; sourceTree = "<group>"; };
 		35116E86246AE56B000A60FE /* RSMDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSMDocumentViewController.swift; sourceTree = "<group>"; };
@@ -142,9 +142,9 @@
 		35CB3BB6247D81B300EC04C3 /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
 		35E8DCDA24A88BCC00A14FC5 /* WaterShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = WaterShaders.metal; sourceTree = "<group>"; };
 		35E8DCDC24A88BEB00A14FC5 /* WaterShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WaterShaderTypes.h; sourceTree = "<group>"; };
-		35E8DCE124A9DF4100A14FC5 /* SGLMath+SIMD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SGLMath+SIMD.swift"; sourceTree = "<group>"; };
 		35E8DCDD24A9D99000A14FC5 /* Renderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
 		35E8DCDF24A9DC1100A14FC5 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		35E8DCE124A9DF4100A14FC5 /* SGLMath+SIMD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SGLMath+SIMD.swift"; sourceTree = "<group>"; };
 		35F8D8502473D9E8007DF105 /* STRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRDocument.swift; sourceTree = "<group>"; };
 		35F8D8522473E1D7007DF105 /* RSWDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWDocument.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -255,17 +255,17 @@
 			isa = PBXGroup;
 			children = (
 				35116E55245FC152000A60FE /* GRFArchive.swift */,
+				35116E5D2461A5DB000A60FE /* DESDecryptor.swift */,
 				35116E7824659FD6000A60FE /* Document.swift */,
-				35116E7C2466FEB3000A60FE /* TextDocument.swift */,
-				35116E80246858F0000A60FE /* ImageDocument.swift */,
 				35116E8C247035AC000A60FE /* ACTDocument.swift */,
+				35116E80246858F0000A60FE /* BMPDocument.swift */,
 				35116E8A247025EE000A60FE /* GATDocument.swift */,
 				35021BAC24A054700021B99B /* GNDDocument.swift */,
+				35116E7C2466FEB3000A60FE /* LUADocument.swift */,
+				35116E84246ADFFA000A60FE /* RSMDocument.swift */,
 				35F8D8522473E1D7007DF105 /* RSWDocument.swift */,
 				35116E8E2472E685000A60FE /* SPRDocument.swift */,
 				35F8D8502473D9E8007DF105 /* STRDocument.swift */,
-				35116E84246ADFFA000A60FE /* RSMDocument.swift */,
-				35116E5D2461A5DB000A60FE /* DESDecryptor.swift */,
 			);
 			path = Documents;
 			sourceTree = "<group>";
@@ -479,7 +479,7 @@
 			files = (
 				35116E7F246713AD000A60FE /* TextDocumentViewController.swift in Sources */,
 				35E8DCE224A9DF4100A14FC5 /* SGLMath+SIMD.swift in Sources */,
-				35116E7D2466FEB3000A60FE /* TextDocument.swift in Sources */,
+				35116E7D2466FEB3000A60FE /* LUADocument.swift in Sources */,
 				35C06DBC2498C9C000F0A229 /* TextureLoader.swift in Sources */,
 				35E8DCDE24A9D99000A14FC5 /* Renderable.swift in Sources */,
 				35116E87246AE56B000A60FE /* RSMDocumentViewController.swift in Sources */,
@@ -500,7 +500,7 @@
 				35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */,
 				35049AA0248E9FA300DAD5C1 /* ModelShaders.metal in Sources */,
 				35021BAD24A054700021B99B /* GNDDocument.swift in Sources */,
-				35116E81246858F0000A60FE /* ImageDocument.swift in Sources */,
+				35116E81246858F0000A60FE /* BMPDocument.swift in Sources */,
 				35116E8324685AE4000A60FE /* ImageDocumentViewController.swift in Sources */,
 				35116E7924659FD6000A60FE /* Document.swift in Sources */,
 				359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */,

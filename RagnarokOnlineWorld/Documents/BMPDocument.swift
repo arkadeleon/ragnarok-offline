@@ -1,5 +1,5 @@
 //
-//  ImageDocument.swift
+//  BMPDocument.swift
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/5/10.
@@ -8,16 +8,11 @@
 
 import UIKit
 
-class ImageDocument: Document {
+class BMPDocument: Document {
 
     private(set) var image: UIImage?
 
     override func load(from contents: Data) throws {
-        switch fileType {
-        case "bmp", "jpg", "jpeg":
-            image = UIImage(data: contents)
-        default:
-            break
-        }
+        image = UIImage(data: contents)
     }
 }

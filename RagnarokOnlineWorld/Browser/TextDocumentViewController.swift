@@ -10,11 +10,11 @@ import UIKit
 
 class TextDocumentViewController: UIViewController {
 
-    let document: TextDocument
+    let document: LUADocument
 
     private var textView: UITextView!
 
-    init(document: TextDocument) {
+    init(document: LUADocument) {
         self.document = document
         super.init(nibName: nil, bundle: nil)
     }

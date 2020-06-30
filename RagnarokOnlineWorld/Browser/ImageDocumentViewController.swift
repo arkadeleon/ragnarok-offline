@@ -10,12 +10,12 @@ import UIKit
 
 class ImageDocumentViewController: UIViewController {
 
-    let document: ImageDocument
+    let document: BMPDocument
 
     private var scrollView: UIScrollView!
     private var imageView: UIImageView!
 
-    init(document: ImageDocument) {
+    init(document: BMPDocument) {
         self.document = document
         super.init(nibName: nil, bundle: nil)
     }
