@@ -34,62 +34,78 @@ struct STRAnimation {
     var mtpreset: UInt32
 }
 
-class STRDocument: Document<Void> {
+class STRDocument: Document<STRDocument.Contents> {
 
-    private var reader: BinaryReader!
+    struct Contents {
+        var header: String
+        var version: UInt32
+        var fps: UInt32
+        var maxKey: UInt32
+        var layernum: UInt32
+        var layers: [STRLayer]
+    }
 
-    private(set) var header = ""
-    private(set) var version: UInt32 = 0
-    private(set) var fps: UInt32 = 0
-    private(set) var maxKey: UInt32 = 0
-    private(set) var layernum: UInt32 = 0
-    private(set) var layers: [STRLayer] = []
-
-    override func load(from data: Data) throws -> Result<Void, DocumentError> {
+    override func load(from data: Data) throws -> Result<Contents, DocumentError> {
         let stream = DataStream(data: data)
-        reader = BinaryReader(stream: stream)
+        let reader = BinaryReader(stream: stream)
 
-        header = try reader.readString(count: 4)
+        do {
+            let contents = try reader.readSTRContents()
+            return .success(contents)
+        } catch {
+            return .failure(.invalidContents)
+        }
+    }
+}
+
+extension BinaryReader {
+
+    fileprivate func readSTRContents() throws -> STRDocument.Contents {
+        let header = try readString(count: 4)
         guard header == "STRM" else {
             throw DocumentError.invalidContents
         }
 
-        version = try reader.readUInt32()
+        let version = try readUInt32()
         guard version == 0x94 else {
             throw DocumentError.invalidContents
         }
 
-        fps = try reader.readUInt32()
-        maxKey = try reader.readUInt32()
-        layernum = try reader.readUInt32()
+        let fps = try readUInt32()
+        let maxKey = try readUInt32()
+        let layernum = try readUInt32()
 
-        try reader.skip(count: 16)
+        try skip(count: 16)
 
-        layers = []
+        var layers: [STRLayer] = []
         for _ in 0..<layernum {
-            let layer = try readLayer()
+            let layer = try readSTRLayer()
             layers.append(layer)
         }
 
-        reader = nil
-
-        return .success(())
+        let contents = STRDocument.Contents(
+            header: header,
+            version: version,
+            fps: fps,
+            maxKey: maxKey,
+            layernum: layernum,
+            layers: layers
+        )
+        return contents
     }
 
-    private func readLayer() throws -> STRLayer {
-        let texcnt = try reader.readInt32()
-
+    fileprivate func readSTRLayer() throws -> STRLayer {
+        let texcnt = try readInt32()
         var texname: [String] = []
         for _ in 0..<texcnt {
-            let name = try "data\\texture\\effect\\" + reader.readString(count: 128)
+            let name = try "data\\texture\\effect\\" + readString(count: 128)
             texname.append(name)
         }
 
-        let anikeynum = try reader.readInt32()
-
+        let anikeynum = try readInt32()
         var animations: [STRAnimation] = []
         for _ in 0..<anikeynum {
-            let animation = try readAnimation()
+            let animation = try readSTRAnimation()
             animations.append(animation)
         }
 
@@ -102,21 +118,21 @@ class STRDocument: Document<Void> {
         return layer
     }
 
-    private func readAnimation() throws -> STRAnimation {
+    fileprivate func readSTRAnimation() throws -> STRAnimation {
         let animation = try STRAnimation(
-            frame: reader.readInt32(),
-            type: reader.readUInt32(),
-            pos: [reader.readFloat32(), reader.readFloat32()],
-            uv: [reader.readFloat32(), reader.readFloat32(), reader.readFloat32(), reader.readFloat32(), reader.readFloat32(), reader.readFloat32(), reader.readFloat32(), reader.readFloat32()],
-            xy: [reader.readFloat32(), reader.readFloat32(), reader.readFloat32(), reader.readFloat32(), reader.readFloat32(), reader.readFloat32(), reader.readFloat32(), reader.readFloat32()],
-            aniframe: reader.readFloat32(),
-            anitype: reader.readUInt32(),
-            delay: reader.readFloat32(),
-            angle: reader.readFloat32() / (1024 / 360),
-            color: [reader.readFloat32() / 255, reader.readFloat32() / 255, reader.readFloat32() / 255, reader.readFloat32() / 255],
-            srcalpha: reader.readUInt32(),
-            destalpha: reader.readUInt32(),
-            mtpreset: reader.readUInt32()
+            frame: readInt32(),
+            type: readUInt32(),
+            pos: [readFloat32(), readFloat32()],
+            uv: [readFloat32(), readFloat32(), readFloat32(), readFloat32(), readFloat32(), readFloat32(), readFloat32(), readFloat32()],
+            xy: [readFloat32(), readFloat32(), readFloat32(), readFloat32(), readFloat32(), readFloat32(), readFloat32(), readFloat32()],
+            aniframe: readFloat32(),
+            anitype: readUInt32(),
+            delay: readFloat32(),
+            angle: readFloat32() / (1024 / 360),
+            color: [readFloat32() / 255, readFloat32() / 255, readFloat32() / 255, readFloat32() / 255],
+            srcalpha: readUInt32(),
+            destalpha: readUInt32(),
+            mtpreset: readUInt32()
         )
         return animation
     }
