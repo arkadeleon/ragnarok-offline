@@ -35,64 +35,72 @@ struct ACTAction {
     var delay: Float
 }
 
-class ACTDocument: Document<Void> {
+class ACTDocument: Document<ACTDocument.Contents> {
 
-    private var reader: BinaryReader!
-
-    private(set) var header = ""
-    private(set) var version = ""
-    private(set) var actions: [ACTAction] = []
-    private(set) var sounds: [String] = []
-
-    override func load(from data: Data) throws -> Result<Void, DocumentError> {
-        let stream = DataStream(data: data)
-        reader = BinaryReader(stream: stream)
-
-        header = try reader.readString(count: 2)
-        guard header == "AC" else {
-            throw DocumentError.invalidContents
-        }
-
-        let minor = try reader.readUInt8()
-        let major = try reader.readUInt8()
-        version = "\(major).\(minor)"
-
-        let actionCount = try reader.readUInt16()
-
-        try reader.skip(count: 10)
-
-        actions = []
-        for _ in 0..<actionCount {
-            let action = try readAction()
-            actions.append(action)
-        }
-
-        if version >= "2.1" {
-            let soundCount = try reader.readInt32()
-            sounds = []
-            for _ in 0..<soundCount {
-                let sound = try reader.readString(count: 40)
-                sounds.append(sound)
-            }
-
-            if version >= "2.2" {
-                for i in 0..<Int(actionCount) {
-                    actions[i].delay = try reader.readFloat32() * 25
-                }
-            }
-        }
-
-        reader = nil
-
-        return .success(())
+    struct Contents {
+        var header: String
+        var version: String
+        var actions: [ACTAction]
+        var sounds: [String]
     }
 
-    private func readAction() throws -> ACTAction {
+    override func load(from data: Data) throws -> Result<Contents, DocumentError> {
+        let stream = DataStream(data: data)
+        let reader = BinaryReader(stream: stream)
+
+        do {
+            let header = try reader.readString(count: 2)
+            guard header == "AC" else {
+                return .failure(.invalidContents)
+            }
+
+            let minor = try reader.readUInt8()
+            let major = try reader.readUInt8()
+            let version = "\(major).\(minor)"
+
+            let actionCount = try reader.readUInt16()
+
+            try reader.skip(count: 10)
+
+            var actions: [ACTAction] = []
+            for _ in 0..<actionCount {
+                let action = try readAction(reader: reader, version: version)
+                actions.append(action)
+            }
+
+            var sounds: [String] = []
+            if version >= "2.1" {
+                let soundCount = try reader.readInt32()
+                for _ in 0..<soundCount {
+                    let sound = try reader.readString(count: 40)
+                    sounds.append(sound)
+                }
+
+                if version >= "2.2" {
+                    for i in 0..<Int(actionCount) {
+                        actions[i].delay = try reader.readFloat32() * 25
+                    }
+                }
+            }
+
+            let contents = Contents(
+                header: header,
+                version: version,
+                actions: actions,
+                sounds: sounds
+            )
+            return .success(contents)
+        } catch {
+            return .failure(.invalidContents)
+        }
+    }
+
+    private func readAction(reader: BinaryReader, version: String) throws -> ACTAction {
         let animationCount = try reader.readUInt32()
         var animations: [ACTAnimation] = []
         for _ in 0..<animationCount {
             try reader.skip(count: 32)
-            let animation = try readAnimation()
+            let animation = try readAnimation(reader: reader, version: version)
             animations.append(animation)
         }
 
@@ -102,11 +110,11 @@ class ACTDocument: Document<Void> {
         )
     }
 
-    private func readAnimation() throws -> ACTAnimation {
+    private func readAnimation(reader: BinaryReader, version: String) throws -> ACTAnimation {
         let layerCount = try reader.readUInt32()
         var layers: [ACTLayer] = []
         for _ in 0..<layerCount {
-            let layer = try readLayer()
+            let layer = try readLayer(reader: reader, version: version)
             layers.append(layer)
         }
 
@@ -130,7 +138,7 @@ class ACTDocument: Document<Void> {
         )
     }
 
-    private func readLayer() throws -> ACTLayer {
+    private func readLayer(reader: BinaryReader, version: String) throws -> ACTLayer {
         var layer = try ACTLayer(
             pos: [reader.readInt32(), reader.readInt32()],
             index: reader.readInt32(),
