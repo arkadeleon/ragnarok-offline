@@ -56,21 +56,21 @@ class ImageDocumentViewController: UIViewController {
                 return
             }
 
-            self.imageView.image = image
-            self.imageView.frame = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+            self.imageView.image = UIImage(cgImage: image)
+            self.imageView.frame = CGRect(x: 0, y: 0, width: image.width, height: image.height)
 
-            self.scrollView.contentSize = image.size
+            self.scrollView.contentSize = CGSize(width: image.width, height: image.height)
 
             self.updateZoomScale(image: image)
             self.centerScrollViewContents()
         }
     }
 
-    private func updateZoomScale(image: UIImage) {
+    private func updateZoomScale(image: CGImage) {
         let scrollViewFrame = scrollView.bounds
 
-        let scaleWidth = scrollViewFrame.size.width / image.size.width
-        let scaleHeight = scrollViewFrame.size.height / image.size.height
+        let scaleWidth = scrollViewFrame.size.width / CGFloat(image.width)
+        let scaleHeight = scrollViewFrame.size.height / CGFloat(image.height)
         let minScale = min(scaleWidth, scaleHeight)
 
         scrollView.minimumZoomScale = minScale
