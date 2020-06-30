@@ -64,7 +64,7 @@ class ACTDocument: Document<ACTDocument.Contents> {
 
             var actions: [ACTAction] = []
             for _ in 0..<actionCount {
-                let action = try readAction(reader: reader, version: version)
+                let action = try reader.readACTAction(version: version)
                 actions.append(action)
             }
 
@@ -94,13 +94,16 @@ class ACTDocument: Document<ACTDocument.Contents> {
             return .failure(.invalidContents)
         }
     }
+}
 
-    private func readAction(reader: BinaryReader, version: String) throws -> ACTAction {
-        let animationCount = try reader.readUInt32()
+extension BinaryReader {
+
+    fileprivate func readACTAction(version: String) throws -> ACTAction {
+        let animationCount = try readUInt32()
         var animations: [ACTAnimation] = []
         for _ in 0..<animationCount {
-            try reader.skip(count: 32)
-            let animation = try readAnimation(reader: reader, version: version)
+            try skip(count: 32)
+            let animation = try readACTAnimation(version: version)
             animations.append(animation)
         }
 
@@ -110,24 +113,24 @@ class ACTDocument: Document<ACTDocument.Contents> {
         )
     }
 
-    private func readAnimation(reader: BinaryReader, version: String) throws -> ACTAnimation {
-        let layerCount = try reader.readUInt32()
+    fileprivate func readACTAnimation(version: String) throws -> ACTAnimation {
+        let layerCount = try readUInt32()
         var layers: [ACTLayer] = []
         for _ in 0..<layerCount {
-            let layer = try readLayer(reader: reader, version: version)
+            let layer = try readACTLayer(version: version)
             layers.append(layer)
         }
 
-        let sound = try version >= "2.0" ? reader.readInt32() : -1
+        let sound = try version >= "2.0" ? readInt32() : -1
 
         var positions: [Vector2<Int32>] = []
         if version >= "2.3" {
-            let positionCount = try reader.readInt32()
+            let positionCount = try readInt32()
             for _ in 0..<positionCount {
-                try reader.skip(count: 4)
-                let position: Vector2<Int32> = try [reader.readInt32(), reader.readInt32()]
+                try skip(count: 4)
+                let position: Vector2<Int32> = try [readInt32(), readInt32()]
                 positions.append(position)
-                try reader.skip(count: 4)
+                try skip(count: 4)
             }
         }
 
@@ -138,11 +141,11 @@ class ACTDocument: Document<ACTDocument.Contents> {
         )
     }
 
-    private func readLayer(reader: BinaryReader, version: String) throws -> ACTLayer {
+    fileprivate func readACTLayer(version: String) throws -> ACTLayer {
         var layer = try ACTLayer(
-            pos: [reader.readInt32(), reader.readInt32()],
-            index: reader.readInt32(),
-            is_mirror: reader.readInt32(),
+            pos: [readInt32(), readInt32()],
+            index: readInt32(),
+            is_mirror: readInt32(),
             scale: [1.0, 1.0],
             color: [1.0, 1.0, 1.0, 1.0],
             angle: 0,
@@ -152,18 +155,18 @@ class ACTDocument: Document<ACTDocument.Contents> {
         )
 
         if version >= "2.0" {
-            layer.color[0] = try Float(reader.readUInt8()) / 255
-            layer.color[1] = try Float(reader.readUInt8()) / 255
-            layer.color[2] = try Float(reader.readUInt8()) / 255
-            layer.color[3] = try Float(reader.readUInt8()) / 255
-            layer.scale[0] = try reader.readFloat32()
-            layer.scale[1] = try version <= "2.3" ? layer.scale[0] : reader.readFloat32()
-            layer.angle = try reader.readInt32()
-            layer.spr_type = try reader.readInt32()
+            layer.color[0] = try Float(readUInt8()) / 255
+            layer.color[1] = try Float(readUInt8()) / 255
+            layer.color[2] = try Float(readUInt8()) / 255
+            layer.color[3] = try Float(readUInt8()) / 255
+            layer.scale[0] = try readFloat32()
+            layer.scale[1] = try version <= "2.3" ? layer.scale[0] : readFloat32()
+            layer.angle = try readInt32()
+            layer.spr_type = try readInt32()
 
             if version >= "2.5" {
-                layer.width = try reader.readInt32()
-                layer.height = try reader.readInt32()
+                layer.width = try readInt32()
+                layer.height = try readInt32()
             }
         }
 
