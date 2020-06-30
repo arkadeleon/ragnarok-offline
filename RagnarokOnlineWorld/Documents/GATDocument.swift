@@ -24,14 +24,22 @@ struct GATType: OptionSet {
 
 struct GATCell {
 
-    let height1: Float
-    let height2: Float
-    let height3: Float
-    let height4: Float
-    let types: GATType
+    var height1: Float
+    var height2: Float
+    var height3: Float
+    var height4: Float
+    var types: GATType
 }
 
-class GATDocument: Document<Void> {
+class GATDocument: Document<GATDocument.Contents> {
+
+    struct Contents {
+        var header: String
+        var version: String
+        var width: UInt32
+        var height: UInt32
+        var cells: [GATCell]
+    }
 
     static let typeTable: [UInt32: GATType] = [
         0: [.walkable, .snipable],          // walkable ground
@@ -43,40 +51,45 @@ class GATDocument: Document<Void> {
         6: [.walkable, .snipable]           // ???
     ]
 
-    private(set) var header = ""
-    private(set) var version = ""
-    private(set) var width: UInt32 = 0
-    private(set) var height: UInt32 = 0
-    private(set) var cells: [GATCell] = []
-
-    override func load(from data: Data) throws -> Result<Void, DocumentError> {
+    override func load(from data: Data) throws -> Result<Contents, DocumentError> {
         let stream = DataStream(data: data)
         let reader = BinaryReader(stream: stream)
 
-        header = try reader.readString(count: 4)
-        guard header == "GRAT" else {
-            throw DocumentError.invalidContents
-        }
+        do {
+            let header = try reader.readString(count: 4)
+            guard header == "GRAT" else {
+                return .failure(.invalidContents)
+            }
 
-        let major = try reader.readUInt8()
-        let minor = try reader.readUInt8()
-        version = "\(major).\(minor)"
+            let major = try reader.readUInt8()
+            let minor = try reader.readUInt8()
+            let version = "\(major).\(minor)"
 
-        width = try reader.readUInt32()
-        height = try reader.readUInt32()
+            let width = try reader.readUInt32()
+            let height = try reader.readUInt32()
 
-        cells = []
-        for _ in 0..<(width * height) {
-            let cell = try GATCell(
-                height1: reader.readFloat32() * 0.2,
-                height2: reader.readFloat32() * 0.2,
-                height3: reader.readFloat32() * 0.2,
-                height4: reader.readFloat32() * 0.2,
-                types: GATDocument.typeTable[reader.readUInt32()] ?? []
+            var cells: [GATCell] = []
+            for _ in 0..<(width * height) {
+                let cell = try GATCell(
+                    height1: reader.readFloat32() * 0.2,
+                    height2: reader.readFloat32() * 0.2,
+                    height3: reader.readFloat32() * 0.2,
+                    height4: reader.readFloat32() * 0.2,
+                    types: GATDocument.typeTable[reader.readUInt32()] ?? []
+                )
+                cells.append(cell)
+            }
+
+            let contents = Contents(
+                header: header,
+                version: version,
+                width: width,
+                height: height,
+                cells: cells
             )
-            cells.append(cell)
+            return .success(contents)
+        } catch {
+            return .failure(.invalidContents)
         }
-
-        return .success(())
     }
 }
