@@ -49,46 +49,7 @@ class ACTDocument: Document<ACTDocument.Contents> {
         let reader = BinaryReader(stream: stream)
 
         do {
-            let header = try reader.readString(count: 2)
-            guard header == "AC" else {
-                return .failure(.invalidContents)
-            }
-
-            let minor = try reader.readUInt8()
-            let major = try reader.readUInt8()
-            let version = "\(major).\(minor)"
-
-            let actionCount = try reader.readUInt16()
-
-            try reader.skip(count: 10)
-
-            var actions: [ACTAction] = []
-            for _ in 0..<actionCount {
-                let action = try reader.readACTAction(version: version)
-                actions.append(action)
-            }
-
-            var sounds: [String] = []
-            if version >= "2.1" {
-                let soundCount = try reader.readInt32()
-                for _ in 0..<soundCount {
-                    let sound = try reader.readString(count: 40)
-                    sounds.append(sound)
-                }
-
-                if version >= "2.2" {
-                    for i in 0..<Int(actionCount) {
-                        actions[i].delay = try reader.readFloat32() * 25
-                    }
-                }
-            }
-
-            let contents = Contents(
-                header: header,
-                version: version,
-                actions: actions,
-                sounds: sounds
-            )
+            let contents = try reader.readACTContents()
             return .success(contents)
         } catch {
             return .failure(.invalidContents)
@@ -97,6 +58,50 @@ class ACTDocument: Document<ACTDocument.Contents> {
 }
 
 extension BinaryReader {
+
+    fileprivate func readACTContents() throws -> ACTDocument.Contents {
+        let header = try readString(count: 2)
+        guard header == "AC" else {
+            throw DocumentError.invalidContents
+        }
+
+        let minor = try readUInt8()
+        let major = try readUInt8()
+        let version = "\(major).\(minor)"
+
+        let actionCount = try readUInt16()
+
+        try skip(count: 10)
+
+        var actions: [ACTAction] = []
+        for _ in 0..<actionCount {
+            let action = try readACTAction(version: version)
+            actions.append(action)
+        }
+
+        var sounds: [String] = []
+        if version >= "2.1" {
+            let soundCount = try readInt32()
+            for _ in 0..<soundCount {
+                let sound = try readString(count: 40)
+                sounds.append(sound)
+            }
+
+            if version >= "2.2" {
+                for i in 0..<Int(actionCount) {
+                    actions[i].delay = try readFloat32() * 25
+                }
+            }
+        }
+
+        let contents = ACTDocument.Contents(
+            header: header,
+            version: version,
+            actions: actions,
+            sounds: sounds
+        )
+        return contents
+    }
 
     fileprivate func readACTAction(version: String) throws -> ACTAction {
         let animationCount = try readUInt32()

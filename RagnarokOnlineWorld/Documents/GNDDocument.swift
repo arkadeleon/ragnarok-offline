@@ -62,37 +62,7 @@ class GNDDocument: Document<GNDDocument.Contents> {
         let reader = BinaryReader(stream: stream)
 
         do {
-            let header = try reader.readString(count: 4)
-            guard header == "GRGN" else {
-                return .failure(.invalidContents)
-            }
-
-            let major = try reader.readUInt8()
-            let minor = try reader.readUInt8()
-            let version = "\(major).\(minor)"
-
-            let width = try reader.readUInt32()
-            let height = try reader.readUInt32()
-            let zoom = try reader.readFloat32()
-
-            let (textures, textureIndexes) = try reader.readGNDTextures()
-            let lightmap = try reader.readGNDLightmap()
-
-            let tiles = try reader.readGNDTiles(textures: textures, textureIndexes: textureIndexes)
-            let surfaces = try reader.readGNDSurfaces(width: width, height: height)
-
-            let contents = Contents(
-                header: header,
-                version: version,
-                width: width,
-                height: height,
-                zoom: zoom,
-                textures: textures,
-                textureIndexes: textureIndexes,
-                lightmap: lightmap,
-                tiles: tiles,
-                surfaces: surfaces
-            )
+            let contents = try reader.readGNDContents()
             return .success(contents)
         } catch {
             return .failure(.invalidContents)
@@ -101,6 +71,41 @@ class GNDDocument: Document<GNDDocument.Contents> {
 }
 
 extension BinaryReader {
+
+    fileprivate func readGNDContents() throws -> GNDDocument.Contents {
+        let header = try readString(count: 4)
+        guard header == "GRGN" else {
+            throw DocumentError.invalidContents
+        }
+
+        let major = try readUInt8()
+        let minor = try readUInt8()
+        let version = "\(major).\(minor)"
+
+        let width = try readUInt32()
+        let height = try readUInt32()
+        let zoom = try readFloat32()
+
+        let (textures, textureIndexes) = try readGNDTextures()
+        let lightmap = try readGNDLightmap()
+
+        let tiles = try readGNDTiles(textures: textures, textureIndexes: textureIndexes)
+        let surfaces = try readGNDSurfaces(width: width, height: height)
+
+        let contents = GNDDocument.Contents(
+            header: header,
+            version: version,
+            width: width,
+            height: height,
+            zoom: zoom,
+            textures: textures,
+            textureIndexes: textureIndexes,
+            lightmap: lightmap,
+            tiles: tiles,
+            surfaces: surfaces
+        )
+        return contents
+    }
 
     fileprivate func readGNDTextures() throws -> ([String], [UInt16]) {
         let count = try readUInt32()
