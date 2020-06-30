@@ -141,7 +141,7 @@ class RSMNode: NSObject {
     }
 }
 
-class RSMDocument: Document {
+class RSMDocument: Document<Void> {
 
     private var reader: BinaryReader!
 
@@ -163,8 +163,8 @@ class RSMDocument: Document {
     private(set) var instances: [Matrix4x4<Float>] = []
     private(set) var box = RSMBoundingBox()
 
-    override func load(from contents: Data) throws {
-        let stream = DataStream(data: contents)
+    override func load(from data: Data) throws -> Result<Void, DocumentError> {
+        let stream = DataStream(data: data)
         reader = BinaryReader(stream: stream)
 
         header = try reader.readString(count: 4)
@@ -227,6 +227,8 @@ class RSMDocument: Document {
         calcBoundingBox()
 
         reader = nil
+
+        return .success(())
     }
 
     func createInstance(model: RSMModel, width: Float, height: Float) {

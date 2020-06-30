@@ -9,17 +9,15 @@
 import Foundation
 import ImageIO
 
-class BMPDocument: Document {
+class BMPDocument: Document<CGImage> {
 
-    private(set) var image: CGImage?
-
-    override func load(from contents: Data) throws {
-        guard let imageSource = CGImageSourceCreateWithData(contents as CFData, nil),
+    override func load(from data: Data) throws -> Result<CGImage, DocumentError> {
+        guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
               let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil)
         else {
-            throw DocumentError.invalidContents
+            return .failure(.invalidContents)
         }
 
-        self.image = image
+        return .success(image)
     }
 }

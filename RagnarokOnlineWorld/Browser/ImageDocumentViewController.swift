@@ -47,22 +47,23 @@ class ImageDocumentViewController: UIViewController {
         scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         scrollView.frameLayoutGuide.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
 
-        document.open { _ in
-            defer {
-                self.document.close()
+        document.open { result in
+            switch result {
+            case .success(let image):
+                self.imageView.image = UIImage(cgImage: image)
+                self.imageView.frame = CGRect(x: 0, y: 0, width: image.width, height: image.height)
+
+                self.scrollView.contentSize = CGSize(width: image.width, height: image.height)
+
+                self.updateZoomScale(image: image)
+                self.centerScrollViewContents()
+            case .failure(let error):
+                let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
 
-            guard let image = self.document.image else {
-                return
-            }
-
-            self.imageView.image = UIImage(cgImage: image)
-            self.imageView.frame = CGRect(x: 0, y: 0, width: image.width, height: image.height)
-
-            self.scrollView.contentSize = CGSize(width: image.width, height: image.height)
-
-            self.updateZoomScale(image: image)
-            self.centerScrollViewContents()
+            self.document.close()
         }
     }
 

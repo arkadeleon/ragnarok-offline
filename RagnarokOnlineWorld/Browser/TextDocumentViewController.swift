@@ -34,8 +34,16 @@ class TextDocumentViewController: UIViewController {
         textView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(textView)
 
-        document.open { _ in
-            self.textView.text = self.document.text
+        document.open { result in
+            switch result {
+            case .success(let string):
+                self.textView.text = string
+            case .failure(let error):
+                let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+
             self.document.close()
         }
     }

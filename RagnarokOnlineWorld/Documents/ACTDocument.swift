@@ -35,7 +35,7 @@ struct ACTAction {
     var delay: Float
 }
 
-class ACTDocument: Document {
+class ACTDocument: Document<Void> {
 
     private var reader: BinaryReader!
 
@@ -44,8 +44,8 @@ class ACTDocument: Document {
     private(set) var actions: [ACTAction] = []
     private(set) var sounds: [String] = []
 
-    override func load(from contents: Data) throws {
-        let stream = DataStream(data: contents)
+    override func load(from data: Data) throws -> Result<Void, DocumentError> {
+        let stream = DataStream(data: data)
         reader = BinaryReader(stream: stream)
 
         header = try reader.readString(count: 2)
@@ -83,6 +83,8 @@ class ACTDocument: Document {
         }
 
         reader = nil
+
+        return .success(())
     }
 
     private func readAction() throws -> ACTAction {

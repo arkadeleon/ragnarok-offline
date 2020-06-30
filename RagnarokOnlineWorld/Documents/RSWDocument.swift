@@ -91,7 +91,7 @@ enum RSWObject {
     }
 }
 
-class RSWDocument: Document {
+class RSWDocument: Document<Void> {
 
     private(set) var header = ""
     private(set) var version = ""
@@ -104,8 +104,8 @@ class RSWDocument: Document {
     private(set) var sounds: [RSWObject.Sound] = []
     private(set) var effects: [RSWObject.Effect] = []
 
-    override func load(from contents: Data) throws {
-        let stream = DataStream(data: contents)
+    override func load(from data: Data) throws -> Result<Void, DocumentError> {
+        let stream = DataStream(data: data)
         let reader = BinaryReader(stream: stream)
 
         header = try reader.readString(count: 4)
@@ -208,5 +208,7 @@ class RSWDocument: Document {
                 break
             }
         }
+
+        return .success(())
     }
 }

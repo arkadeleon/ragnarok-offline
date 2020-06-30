@@ -31,7 +31,7 @@ struct GATCell {
     let types: GATType
 }
 
-class GATDocument: Document {
+class GATDocument: Document<Void> {
 
     static let typeTable: [UInt32: GATType] = [
         0: [.walkable, .snipable],          // walkable ground
@@ -49,8 +49,8 @@ class GATDocument: Document {
     private(set) var height: UInt32 = 0
     private(set) var cells: [GATCell] = []
 
-    override func load(from contents: Data) throws {
-        let stream = DataStream(data: contents)
+    override func load(from data: Data) throws -> Result<Void, DocumentError> {
+        let stream = DataStream(data: data)
         let reader = BinaryReader(stream: stream)
 
         header = try reader.readString(count: 4)
@@ -76,5 +76,7 @@ class GATDocument: Document {
             )
             cells.append(cell)
         }
+
+        return .success(())
     }
 }

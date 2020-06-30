@@ -39,7 +39,7 @@ struct GNDSurface {
     var tile_right: Int32
 }
 
-class GNDDocument: Document {
+class GNDDocument: Document<Void> {
 
     private var reader: BinaryReader!
 
@@ -57,8 +57,8 @@ class GNDDocument: Document {
     private(set) var tiles: [GNDTile] = []
     private(set) var surfaces: [GNDSurface] = []
 
-    override func load(from contents: Data) throws {
-        let stream = DataStream(data: contents)
+    override func load(from data: Data) throws -> Result<Void, DocumentError> {
+        let stream = DataStream(data: data)
         reader = BinaryReader(stream: stream)
 
         header = try reader.readString(count: 4)
@@ -81,6 +81,8 @@ class GNDDocument: Document {
         surfaces = try parseSurfaces()
 
         reader = nil
+
+        return .success(())
     }
 
     private func parseTextures() throws {

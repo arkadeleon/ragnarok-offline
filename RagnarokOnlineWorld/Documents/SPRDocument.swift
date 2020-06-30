@@ -22,7 +22,7 @@ struct SPRFrame {
     var data: Data
 }
 
-class SPRDocument: Document {
+class SPRDocument: Document<Void> {
 
     private var reader: BinaryReader!
 
@@ -33,8 +33,8 @@ class SPRDocument: Document {
     private(set) var palette = Data()
     private(set) var frames: [SPRFrame] = []
 
-    override func load(from contents: Data) throws {
-        let stream = DataStream(data: contents)
+    override func load(from data: Data) throws -> Result<Void, DocumentError> {
+        let stream = DataStream(data: data)
         reader = BinaryReader(stream: stream)
 
         header = try reader.readString(count: 2)
@@ -63,11 +63,13 @@ class SPRDocument: Document {
         try readRGBAImage()
 
         if version > "1.0" {
-            try stream.seek(toOffset: UInt64(contents.count) - 1024)
+            try stream.seek(toOffset: UInt64(data.count) - 1024)
             palette = try reader.readData(count: 1024)
         }
 
         reader = nil
+
+        return .success(())
     }
 
     private func readIndexedImage() throws {

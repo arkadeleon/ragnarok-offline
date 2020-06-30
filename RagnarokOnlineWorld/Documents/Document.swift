@@ -10,6 +10,7 @@ import Foundation
 
 enum DocumentError: Error {
 
+    case invalidSource
     case invalidContents
 }
 
@@ -52,7 +53,7 @@ enum DocumentSource {
     }
 }
 
-class Document: NSObject {
+class Document<Contents>: NSObject {
 
     let source: DocumentSource
     let name: String
@@ -65,24 +66,30 @@ class Document: NSObject {
         super.init()
     }
 
-    func open(completionHandler: ((Bool) -> Void)? = nil) {
+    func open(completionHandler: ((Result<Contents, DocumentError>) -> Void)? = nil) {
         DispatchQueue.global().async {
-            do {
-                let contents = try self.source.data()
-                try self.load(from: contents)
+            guard let data = try? self.source.data() else {
                 DispatchQueue.main.async {
-                    completionHandler?(true)
+                    completionHandler?(.failure(.invalidSource))
+                }
+                return
+            }
+
+            do {
+                let result = try self.load(from: data)
+                DispatchQueue.main.async {
+                    completionHandler?(result)
                 }
             } catch {
                 DispatchQueue.main.async {
-                    completionHandler?(false)
+                    completionHandler?(.failure(.invalidContents))
                 }
             }
         }
     }
 
-    func load(from contents: Data) throws {
-
+    func load(from data: Data) throws -> Result<Contents, DocumentError> {
+        fatalError("This method must be overridden by subclasses")
     }
 
     func close(completionHandler: ((Bool) -> Void)? = nil) {
