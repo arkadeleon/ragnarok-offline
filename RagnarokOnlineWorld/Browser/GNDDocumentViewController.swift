@@ -54,8 +54,16 @@ class GNDDocumentViewController: UIViewController {
         mtkView.addGestureRecognizer(camera.panGestureRecognizer)
         mtkView.addGestureRecognizer(camera.pinchGestureRecognizer)
 
-        document.open { _ in
-            self.vertices = self.document.compile(WATER_LEVEL: 1, WATER_HEIGHT: 1).mesh
+        document.open { result in
+            switch result {
+            case .success(let contents):
+                self.vertices = contents.compile(WATER_LEVEL: 1, WATER_HEIGHT: 1).mesh
+            case .failure(let error):
+                let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+            
             self.document.close()
         }
     }
