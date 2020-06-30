@@ -8,6 +8,11 @@
 
 import Foundation
 
+enum DocumentError: Error {
+
+    case invalidContents
+}
+
 enum DocumentSource {
 
     case url(URL)

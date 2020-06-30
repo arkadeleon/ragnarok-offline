@@ -39,7 +39,7 @@ class SPRDocument: Document {
 
         header = try reader.readString(count: 2)
         guard header == "SP" else {
-            throw StreamError.invalidContents
+            throw DocumentError.invalidContents
         }
 
         let minor = try reader.readUInt8()

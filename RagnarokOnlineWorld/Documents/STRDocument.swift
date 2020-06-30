@@ -51,12 +51,12 @@ class STRDocument: Document {
 
         header = try reader.readString(count: 4)
         guard header == "STRM" else {
-            throw StreamError.invalidContents
+            throw DocumentError.invalidContents
         }
 
         version = try reader.readUInt32()
         guard version == 0x94 else {
-            throw StreamError.invalidContents
+            throw DocumentError.invalidContents
         }
 
         fps = try reader.readUInt32()

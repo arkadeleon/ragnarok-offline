@@ -110,7 +110,7 @@ class RSWDocument: Document {
 
         header = try reader.readString(count: 4)
         guard header == "GRSW" else {
-            throw StreamError.invalidContents
+            throw DocumentError.invalidContents
         }
 
         let major = try reader.readUInt8()

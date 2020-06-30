@@ -55,7 +55,7 @@ class GATDocument: Document {
 
         header = try reader.readString(count: 4)
         guard header == "GRAT" else {
-            throw StreamError.invalidContents
+            throw DocumentError.invalidContents
         }
 
         let major = try reader.readUInt8()

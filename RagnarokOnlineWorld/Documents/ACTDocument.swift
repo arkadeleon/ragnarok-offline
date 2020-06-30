@@ -50,7 +50,7 @@ class ACTDocument: Document {
 
         header = try reader.readString(count: 2)
         guard header == "AC" else {
-            throw StreamError.invalidContents
+            throw DocumentError.invalidContents
         }
 
         let minor = try reader.readUInt8()
