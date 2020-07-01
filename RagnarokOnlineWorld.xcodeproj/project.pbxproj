@@ -11,6 +11,8 @@
 		35049AA0248E9FA300DAD5C1 /* ModelShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35049A9F248E9FA300DAD5C1 /* ModelShaders.metal */; };
 		3509565324A8EE010077C134 /* RSMDocument+Compile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565224A8EE010077C134 /* RSMDocument+Compile.swift */; };
 		3509565524A8F6010077C134 /* GNDDocument+Compile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565424A8F6010077C134 /* GNDDocument+Compile.swift */; };
+		3509565724ACD8FB0077C134 /* SPRDocument+Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565624ACD8FB0077C134 /* SPRDocument+Images.swift */; };
+		3509565924ACE48A0077C134 /* SpritePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */; };
 		35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E15245C7B87000A60FE /* AppDelegate.swift */; };
 		35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E17245C7B87000A60FE /* SceneDelegate.swift */; };
 		35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35116E1E245C7B8A000A60FE /* Assets.xcassets */; };
@@ -90,6 +92,8 @@
 		35049AA1248E9FB600DAD5C1 /* ModelShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelShaderTypes.h; sourceTree = "<group>"; };
 		3509565224A8EE010077C134 /* RSMDocument+Compile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSMDocument+Compile.swift"; sourceTree = "<group>"; };
 		3509565424A8F6010077C134 /* GNDDocument+Compile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GNDDocument+Compile.swift"; sourceTree = "<group>"; };
+		3509565624ACD8FB0077C134 /* SPRDocument+Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SPRDocument+Images.swift"; sourceTree = "<group>"; };
+		3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpritePreviewViewController.swift; sourceTree = "<group>"; };
 		35116E12245C7B87000A60FE /* RagnarokOnlineWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOnlineWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35116E15245C7B87000A60FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		35116E17245C7B87000A60FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -286,6 +290,7 @@
 				35116E86246AE56B000A60FE /* RSMDocumentViewController.swift */,
 				35704ECE249BC430008D378A /* RSMDocumentInfoViewController.swift */,
 				359D5C1524A1F8CA00C2D8D3 /* GNDDocumentViewController.swift */,
+				3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */,
 			);
 			path = Browser;
 			sourceTree = "<group>";
@@ -329,6 +334,7 @@
 				3509565224A8EE010077C134 /* RSMDocument+Compile.swift */,
 				35D091F324AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift */,
 				3509565424A8F6010077C134 /* GNDDocument+Compile.swift */,
+				3509565624ACD8FB0077C134 /* SPRDocument+Images.swift */,
 			);
 			path = Renderers;
 			sourceTree = "<group>";
@@ -493,10 +499,12 @@
 				35E8DCDB24A88BCC00A14FC5 /* WaterShaders.metal in Sources */,
 				35116E7524644AAA000A60FE /* DocumentWrapper.swift in Sources */,
 				35CB3BAE24782A5100EC04C3 /* Renderer.swift in Sources */,
+				3509565924ACE48A0077C134 /* SpritePreviewViewController.swift in Sources */,
 				3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */,
 				35116E8B247025EE000A60FE /* GATDocument.swift in Sources */,
 				35E8DCE024A9DC1100A14FC5 /* Model.swift in Sources */,
 				35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */,
+				3509565724ACD8FB0077C134 /* SPRDocument+Images.swift in Sources */,
 				3509565324A8EE010077C134 /* RSMDocument+Compile.swift in Sources */,
 				35CB3BAC247827A700EC04C3 /* GameViewController.swift in Sources */,
 				35D091F624AC8EB1008D7CEA /* PALDocument.swift in Sources */,

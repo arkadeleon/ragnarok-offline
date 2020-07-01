@@ -19,6 +19,7 @@ enum DocumentWrapper {
     case imageDocument(Document<CGImage>)
     case rsmDocument(RSMDocument)
     case gndDocument(GNDDocument)
+    case sprite(SPRDocument)
 }
 
 extension DocumentWrapper {
@@ -43,6 +44,8 @@ extension DocumentWrapper {
             return UIImage(systemName: "square.stack.3d.up")
         case .gndDocument:
             return UIImage(systemName: "doc")
+        case .sprite:
+            return UIImage(systemName: "doc.richtext")
         }
     }
 
@@ -65,6 +68,8 @@ extension DocumentWrapper {
         case .rsmDocument(let document):
             return document.name
         case .gndDocument(let document):
+            return document.name
+        case .sprite(let document):
             return document.name
         }
     }
@@ -133,6 +138,10 @@ extension DocumentWrapper {
                         let document = GNDDocument(source: .entryInArchive(archive, entryName))
                         let documentWrapper: DocumentWrapper = .gndDocument(document)
                         documentWrappers.append(documentWrapper)
+                    case ".spr":
+                        let document = SPRDocument(source: .entryInArchive(archive, entryName))
+                        let documentWrapper: DocumentWrapper = .sprite(document)
+                        documentWrappers.append(documentWrapper)
                     default:
                         let documentWrapper: DocumentWrapper = .entryInArchive(entryName)
                         documentWrappers.append(documentWrapper)
@@ -153,6 +162,8 @@ extension DocumentWrapper {
         case .rsmDocument:
             return nil
         case .gndDocument:
+            return nil
+        case .sprite:
             return nil
         }
     }
@@ -187,6 +198,8 @@ extension DocumentWrapper: Equatable, Comparable {
         case .rsmDocument:
             return 1
         case .gndDocument:
+            return 1
+        case .sprite:
             return 1
         }
     }

@@ -86,6 +86,9 @@ extension DocumentWrappersViewController: UICollectionViewDelegate {
         case .gndDocument(let document):
             let documentViewController = GNDDocumentViewController(document: document)
             navigationController?.pushViewController(documentViewController, animated: true)
+        case .sprite(let document):
+            let previewViewController = SpritePreviewViewController(document: document)
+            navigationController?.pushViewController(previewViewController, animated: true)
         default:
             break
         }
