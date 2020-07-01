@@ -26,6 +26,9 @@ class PALDocument: Document<CGImage> {
             return .failure(.invalidContents)
         }
 
+        let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: 128)
+        context.concatenate(flipVertical)
+
         let count = data.count / 4
         for i in 0..<count {
             let color = CGColor(
