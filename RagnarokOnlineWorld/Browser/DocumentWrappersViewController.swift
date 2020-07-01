@@ -77,7 +77,7 @@ extension DocumentWrappersViewController: UICollectionViewDelegate {
         case .luaDocument(let document):
             let documentViewController = TextDocumentViewController(document: document)
             navigationController?.pushViewController(documentViewController, animated: true)
-        case .bmpDocument(let document):
+        case .imageDocument(let document):
             let documentViewController = ImageDocumentViewController(document: document)
             navigationController?.pushViewController(documentViewController, animated: true)
         case .rsmDocument(let document):

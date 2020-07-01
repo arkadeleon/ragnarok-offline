@@ -13,7 +13,7 @@ class PALDocument: Document<CGImage> {
 
     override func load(from data: Data) throws -> Result<CGImage, DocumentError> {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGImageAlphaInfo.noneSkipLast.rawValue | CGImageByteOrderInfo.order32Big.rawValue
+        let bitmapInfo = CGImageAlphaInfo.noneSkipFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
         guard let context = CGContext(
             data: nil,
             width: 128,

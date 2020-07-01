@@ -16,7 +16,7 @@ enum DocumentWrapper {
     case directoryInArchive(GRFArchive, String)
     case entryInArchive(String)
     case luaDocument(LUADocument)
-    case bmpDocument(BMPDocument)
+    case imageDocument(Document<CGImage>)
     case rsmDocument(RSMDocument)
     case gndDocument(GNDDocument)
 }
@@ -37,7 +37,7 @@ extension DocumentWrapper {
             return UIImage(systemName: "doc")
         case .luaDocument:
             return UIImage(systemName: "doc.text")
-        case .bmpDocument:
+        case .imageDocument:
             return UIImage(systemName: "doc.richtext")
         case .rsmDocument:
             return UIImage(systemName: "square.stack.3d.up")
@@ -60,7 +60,7 @@ extension DocumentWrapper {
             return String(entryName.split(separator: "\\").last ?? "")
         case .luaDocument(let document):
             return document.name
-        case .bmpDocument(let document):
+        case .imageDocument(let document):
             return document.name
         case .rsmDocument(let document):
             return document.name
@@ -91,7 +91,7 @@ extension DocumentWrapper {
                     return .luaDocument(document)
                 case "bmp":
                     let document = BMPDocument(source: .url(url))
-                    return .bmpDocument(document)
+                    return .imageDocument(document)
                 case "rsm":
                     let document = RSMDocument(source: .url(url))
                     return .rsmDocument(document)
@@ -119,7 +119,11 @@ extension DocumentWrapper {
                         documentWrappers.append(documentWrapper)
                     case ".bmp":
                         let document = BMPDocument(source: .entryInArchive(archive, entryName))
-                        let documentWrapper: DocumentWrapper = .bmpDocument(document)
+                        let documentWrapper: DocumentWrapper = .imageDocument(document)
+                        documentWrappers.append(documentWrapper)
+                    case ".pal":
+                        let document = PALDocument(source: .entryInArchive(archive, entryName))
+                        let documentWrapper: DocumentWrapper = .imageDocument(document)
                         documentWrappers.append(documentWrapper)
                     case ".rsm":
                         let document = RSMDocument(source: .entryInArchive(archive, entryName))
@@ -144,7 +148,7 @@ extension DocumentWrapper {
             return nil
         case .luaDocument:
             return nil
-        case .bmpDocument:
+        case .imageDocument:
             return nil
         case .rsmDocument:
             return nil
@@ -178,7 +182,7 @@ extension DocumentWrapper: Equatable, Comparable {
             return 1
         case .luaDocument:
             return 1
-        case .bmpDocument:
+        case .imageDocument:
             return 1
         case .rsmDocument:
             return 1
