@@ -11,11 +11,18 @@ import SGLMath
 
 class Model: Renderable {
 
-    private var meshes: [[[ModelVertex]]] = []
-    private var textures: [MTLTexture?] = []
+    let meshes: [[[ModelVertex]]]
+    let textures: [MTLTexture?]
+    let boundingBox: RSMBoundingBox
 
     let vertexFunctionName = "modelVertexShader"
     let fragmentFunctionName = "modelFragmentShader"
+
+    init(meshes: [[[ModelVertex]]], textures: [MTLTexture?], boundingBox: RSMBoundingBox) {
+        self.meshes = meshes
+        self.textures = textures
+        self.boundingBox = boundingBox
+    }
 
     func render(encoder: MTLRenderCommandEncoder,
                 modelviewMatrix: Matrix4x4<Float>,
