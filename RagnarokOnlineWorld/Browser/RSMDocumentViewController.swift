@@ -13,6 +13,7 @@ import SGLMath
 class RSMDocumentViewController: UIViewController {
 
     let document: RSMDocument
+    private var boundingBox = RSMBoundingBox()
     private var textures: [MTLTexture?] = []
     private var vertices: [[[ModelVertex]]] = []
 
@@ -54,32 +55,42 @@ class RSMDocumentViewController: UIViewController {
         mtkView.addGestureRecognizer(camera.panGestureRecognizer)
         mtkView.addGestureRecognizer(camera.pinchGestureRecognizer)
 
-        document.open { _ in
-            switch self.document.source {
-            case .url(_):
-                break
-            case .entryInArchive(let archive, _):
-                let textureLoader = TextureLoader(device: self.renderer.device)
-                self.textures = self.document.textures.map { textureName -> MTLTexture? in
-                    guard let entry = archive.entry(forName: "data\\texture\\" + textureName) else {
-                        return nil
-                    }
-                    guard let contents = try? archive.contents(of: entry) else {
-                        return nil
-                    }
-                    return textureLoader.newTexture(data: contents)
-                }
-
-                let model = RSMModel(
-                    position: [0, 0, 0],
-                    rotation: [0, 0, 0],
-                    scale: [-0.075, -0.075, -0.075],
-                    filename: "")
-                self.document.createInstance(model: model, width: 0, height: 0)
-
-                self.vertices = self.document.compile()
+        document.open { result in
+            defer {
+                self.document.close()
             }
-            self.document.close()
+
+            guard case .entryInArchive(let archive, _) = self.document.source else {
+                return
+            }
+
+            guard case .success(let contents) = result else {
+                return
+            }
+
+            let textureLoader = TextureLoader(device: self.renderer.device)
+            self.textures = contents.textures.map { textureName -> MTLTexture? in
+                guard let entry = archive.entry(forName: "data\\texture\\" + textureName) else {
+                    return nil
+                }
+                guard let contents = try? archive.contents(of: entry) else {
+                    return nil
+                }
+                return textureLoader.newTexture(data: contents)
+            }
+
+            let (boundingBox, wrappers) = contents.calcBoundingBox()
+            self.boundingBox = boundingBox
+
+            let model = RSMModel(
+                position: [0, 0, 0],
+                rotation: [0, 0, 0],
+                scale: [-0.075, -0.075, -0.075],
+                filename: ""
+            )
+            let instance = contents.createInstance(model: model, width: 0, height: 0)
+
+            self.vertices = contents.compile(instances: [instance], wrappers: wrappers, boundingBox: boundingBox)
         }
     }
 
@@ -93,7 +104,7 @@ class RSMDocumentViewController: UIViewController {
         let time = CACurrentMediaTime()
 
         var modelView = Matrix4x4<Float>()
-        modelView = SGLMath.translate(modelView, [0, -document.box.range[1]*0.1, -document.box.range[1]*0.5-5])
+        modelView = SGLMath.translate(modelView, [0, -boundingBox.range[1]*0.1, -boundingBox.range[1]*0.5-5])
         modelView = SGLMath.rotate(modelView, radians(15), [1, 0, 0])
         modelView = SGLMath.rotate(modelView, Float(radians(time * 360 / 8)), [0, 1, 0])
 

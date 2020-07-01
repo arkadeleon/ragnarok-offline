@@ -34,41 +34,48 @@ class RSMDocumentInfoViewController: UIViewController {
         textView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(textView)
 
-        document.open { _ in
-            var text = ""
+        document.open { result in
+            switch result {
+            case .success(let contents):
+                var text = ""
 
-            text.append("Textures:\n")
+                text.append("Textures:\n")
 
-            for texture in self.document.textures {
-                text.append(texture)
-                text.append("\n")
-            }
-
-            text.append("\n")
-
-            for node in self.document.nodes {
-                text.append("Name: \(node.name)\n")
-                text.append("Parent name: \(node.parentname)\n")
-
-                text.append("Textures: \(node.textures)\n")
-
-                text.append("Mat3: \(node.mat3)\n")
-                text.append("Offset: \(node.offset)\n")
-                text.append("Pos: \(node.pos)\n")
-                text.append("Rot angle: \(node.rotangle)\n")
-                text.append("Rot Axis: \(node.rotaxis)\n")
-                text.append("Scale: \(node.scale)\n")
-
-                text.append("Vertices: \(node.vertices)\n")
-                text.append("T Vertices: \(node.vertices)\n")
-                text.append("Faces: \(node.faces)\n")
-                text.append("Position keyframes: \(node.positionKeyframes)\n")
-                text.append("Rotation keyframes: \(node.rotationKeyframes)\n")
+                for texture in contents.textures {
+                    text.append(texture)
+                    text.append("\n")
+                }
 
                 text.append("\n")
-            }
 
-            self.textView.text = text
+                for node in contents.nodes {
+                    text.append("Name: \(node.name)\n")
+                    text.append("Parent name: \(node.parentname)\n")
+
+                    text.append("Textures: \(node.textures)\n")
+
+                    text.append("Mat3: \(node.mat3)\n")
+                    text.append("Offset: \(node.offset)\n")
+                    text.append("Pos: \(node.pos)\n")
+                    text.append("Rot angle: \(node.rotangle)\n")
+                    text.append("Rot Axis: \(node.rotaxis)\n")
+                    text.append("Scale: \(node.scale)\n")
+
+                    text.append("Vertices: \(node.vertices)\n")
+                    text.append("T Vertices: \(node.vertices)\n")
+                    text.append("Faces: \(node.faces)\n")
+                    text.append("Position keyframes: \(node.positionKeyframes)\n")
+                    text.append("Rotation keyframes: \(node.rotationKeyframes)\n")
+
+                    text.append("\n")
+                }
+
+                self.textView.text = text
+            case .failure(let error):
+                let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
 
             self.document.close()
         }
