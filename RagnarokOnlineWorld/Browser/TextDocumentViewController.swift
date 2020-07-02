@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import WebKit
 
 class TextDocumentViewController: UIViewController {
 
     let document: LUADocument
 
-    private var textView: UITextView!
+    private var webView: WKWebView!
 
     init(document: LUADocument) {
         self.document = document
@@ -30,14 +31,41 @@ class TextDocumentViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
 
-        textView = UITextView(frame: view.bounds)
-        textView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(textView)
+        webView = WKWebView(frame: view.bounds)
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(webView)
 
         document.open { result in
             switch result {
             case .success(let string):
-                self.textView.text = string
+                let htmlString = """
+                <html>
+                    <head>
+                        <meta name="viewport" content="width=device-width; initial-scale=1.0">
+                        <link rel="stylesheet" href="styles/default.css">
+                        <style>
+                            pre, code {
+                                white-space: pre-wrap;
+                                overflow-x: hidden;
+                            }
+                            .hljs {
+                                overflow-x: hidden;
+                            }
+                        </style>
+                        <script src="highlight.pack.js"></script>
+                        <script>
+                            hljs.initHighlightingOnLoad();
+                        </script>
+                    </head>
+                    <body>
+                        <pre>
+                            <code class="lua">\(string)</code>
+                        </pre>
+                    </body>
+                </html>
+                """
+                let baseURL = Bundle.main.bundleURL.appendingPathComponent("Vendors/highlightjs")
+                self.webView.loadHTMLString(htmlString, baseURL: baseURL)
             case .failure(let error):
                 let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))

@@ -60,6 +60,7 @@
 		35CB3BB7247D81B300EC04C3 /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35CB3BB6247D81B300EC04C3 /* wall.jpg */; };
 		35D091F424AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D091F324AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift */; };
 		35D091F624AC8EB1008D7CEA /* PALDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D091F524AC8EB0008D7CEA /* PALDocument.swift */; };
+		35D091FA24ADADD1008D7CEA /* Vendors in Resources */ = {isa = PBXBuildFile; fileRef = 35D091F924ADADD1008D7CEA /* Vendors */; };
 		35E8DCDB24A88BCC00A14FC5 /* WaterShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDA24A88BCC00A14FC5 /* WaterShaders.metal */; };
 		35E8DCDE24A9D99000A14FC5 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDD24A9D99000A14FC5 /* Renderable.swift */; };
 		35E8DCE024A9DC1100A14FC5 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDF24A9DC1100A14FC5 /* Model.swift */; };
@@ -148,6 +149,7 @@
 		35CB3BB6247D81B300EC04C3 /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
 		35D091F324AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSMDocument+BoundingBox.swift"; sourceTree = "<group>"; };
 		35D091F524AC8EB0008D7CEA /* PALDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PALDocument.swift; sourceTree = "<group>"; };
+		35D091F924ADADD1008D7CEA /* Vendors */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Vendors; sourceTree = "<group>"; };
 		35E8DCDA24A88BCC00A14FC5 /* WaterShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = WaterShaders.metal; sourceTree = "<group>"; };
 		35E8DCDC24A88BEB00A14FC5 /* WaterShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WaterShaderTypes.h; sourceTree = "<group>"; };
 		35E8DCDD24A9D99000A14FC5 /* Renderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 				35E8DCD924A88AE600A14FC5 /* Renderers */,
 				35116E76246596A5000A60FE /* Documents */,
 				35CB3BBA247EB2C100EC04C3 /* Utilities */,
+				35D091F924ADADD1008D7CEA /* Vendors */,
 				35116E1E245C7B8A000A60FE /* Assets.xcassets */,
 				35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */,
 				35CB3BAF2478339500EC04C3 /* RagnarokOnlineWorld-Bridging-Header.h */,
@@ -452,6 +455,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35D091FA24ADADD1008D7CEA /* Vendors in Resources */,
 				35116E22245C7B8A000A60FE /* LaunchScreen.storyboard in Resources */,
 				35CB3BB7247D81B300EC04C3 /* wall.jpg in Resources */,
 				35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */,
