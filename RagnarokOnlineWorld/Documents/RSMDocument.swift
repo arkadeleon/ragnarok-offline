@@ -88,6 +88,12 @@ class RSMDocument: Document {
         var volumeBoxes: [RSMVolumeBox]
     }
 
+    let source: DocumentSource
+
+    required init(source: DocumentSource) {
+        self.source = source
+    }
+
     func load(from data: Data) -> Result<Contents, DocumentError> {
         let stream = DataStream(data: data)
         let reader = BinaryReader(stream: stream)

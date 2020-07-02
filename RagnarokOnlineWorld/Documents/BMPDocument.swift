@@ -11,6 +11,12 @@ import ImageIO
 
 class BMPDocument: Document {
 
+    let source: DocumentSource
+
+    required init(source: DocumentSource) {
+        self.source = source
+    }
+
     func load(from data: Data) -> Result<CGImage, DocumentError> {
         guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
               let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil)

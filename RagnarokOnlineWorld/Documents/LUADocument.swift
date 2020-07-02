@@ -10,14 +10,14 @@ import Foundation
 
 class LUADocument: Document {
 
-    let encoding: String.Encoding
+    let source: DocumentSource
 
-    init(encoding: String.Encoding = .ascii) {
-        self.encoding = encoding
+    required init(source: DocumentSource) {
+        self.source = source
     }
 
     func load(from data: Data) -> Result<String, DocumentError> {
-        guard let string = String(data: data, encoding: encoding) else {
+        guard let string = String(data: data, encoding: .ascii) else {
             return .failure(.invalidContents)
         }
 

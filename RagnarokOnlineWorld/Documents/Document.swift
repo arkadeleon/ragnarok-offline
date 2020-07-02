@@ -57,30 +57,16 @@ protocol Document {
 
     associatedtype Contents
 
+    var source: DocumentSource { get }
+
+    init(source: DocumentSource)
+
+    func open(completionHandler: @escaping (Result<Contents, DocumentError>) -> Void)
+
     func load(from data: Data) -> Result<Contents, DocumentError>
 }
 
 extension Document {
-
-    func eraseToAnyDocument(source: DocumentSource) -> AnyDocument<Contents> {
-        AnyDocument(document: self, source: source)
-    }
-}
-
-class AnyDocument<Contents>: NSObject {
-
-    let load: (Data) -> Result<Contents, DocumentError>
-    let source: DocumentSource
-    let name: String
-    let fileType: String
-
-    init<D: Document>(document: D, source: DocumentSource) where Contents == D.Contents {
-        self.load = document.load
-        self.source = source
-        self.name = source.name
-        self.fileType = source.fileType
-        super.init()
-    }
 
     func open(completionHandler: @escaping (Result<Contents, DocumentError>) -> Void) {
         DispatchQueue.global().async {
@@ -91,10 +77,28 @@ class AnyDocument<Contents>: NSObject {
                 return
             }
 
-            let result = self.load(data)
+            let result = self.load(from: data)
             DispatchQueue.main.async {
                 completionHandler(result)
             }
         }
+    }
+
+    func eraseToAnyDocument() -> AnyDocument<Contents> {
+        AnyDocument(document: self)
+    }
+}
+
+class AnyDocument<Contents>: NSObject {
+
+    let source: DocumentSource
+    let name: String
+    let open: (@escaping (Result<Contents, DocumentError>) -> Void) -> Void
+
+    init<D: Document>(document: D) where Contents == D.Contents {
+        self.source = document.source
+        self.name = document.source.name
+        self.open = document.open
+        super.init()
     }
 }
