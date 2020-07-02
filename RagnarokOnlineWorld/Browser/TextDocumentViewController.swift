@@ -11,11 +11,11 @@ import WebKit
 
 class TextDocumentViewController: UIViewController {
 
-    let document: LUADocument
+    let document: AnyDocument<String>
 
     private var webView: WKWebView!
 
-    init(document: LUADocument) {
+    init(document: AnyDocument<String>) {
         self.document = document
         super.init(nibName: nil, bundle: nil)
     }
@@ -71,8 +71,6 @@ class TextDocumentViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
-
-            self.document.close()
         }
     }
 }

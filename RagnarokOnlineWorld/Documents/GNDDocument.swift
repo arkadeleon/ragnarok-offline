@@ -39,7 +39,7 @@ struct GNDSurface {
     var tile_right: Int32
 }
 
-class GNDDocument: Document<GNDDocument.Contents> {
+class GNDDocument: Document {
 
     struct Contents {
         var header: String
@@ -57,7 +57,7 @@ class GNDDocument: Document<GNDDocument.Contents> {
         var surfaces: [GNDSurface]
     }
 
-    override func load(from data: Data) throws -> Result<Contents, DocumentError> {
+    func load(from data: Data) -> Result<Contents, DocumentError> {
         let stream = DataStream(data: data)
         let reader = BinaryReader(stream: stream)
 

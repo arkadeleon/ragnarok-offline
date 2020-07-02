@@ -12,14 +12,14 @@ import SGLMath
 
 class RSMDocumentViewController: UIViewController {
 
-    let document: RSMDocument
+    let document: AnyDocument<RSMDocument.Contents>
     private var model: Model?
 
     private var mtkView: MTKView!
     private var renderer: Renderer!
     private var camera = Camera()
 
-    init(document: RSMDocument) {
+    init(document: AnyDocument<RSMDocument.Contents>) {
         self.document = document
         super.init(nibName: nil, bundle: nil)
     }
@@ -54,10 +54,6 @@ class RSMDocumentViewController: UIViewController {
         mtkView.addGestureRecognizer(camera.pinchGestureRecognizer)
 
         document.open { result in
-            defer {
-                self.document.close()
-            }
-
             guard case .entryInArchive(let archive, _) = self.document.source else {
                 return
             }

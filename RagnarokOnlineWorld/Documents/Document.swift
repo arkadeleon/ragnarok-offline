@@ -53,46 +53,48 @@ enum DocumentSource {
     }
 }
 
-class Document<Contents>: NSObject {
+protocol Document {
 
+    associatedtype Contents
+
+    func load(from data: Data) -> Result<Contents, DocumentError>
+}
+
+extension Document {
+
+    func eraseToAnyDocument(source: DocumentSource) -> AnyDocument<Contents> {
+        AnyDocument(document: self, source: source)
+    }
+}
+
+class AnyDocument<Contents>: NSObject {
+
+    let load: (Data) -> Result<Contents, DocumentError>
     let source: DocumentSource
     let name: String
     let fileType: String
 
-    init(source: DocumentSource) {
+    init<D: Document>(document: D, source: DocumentSource) where Contents == D.Contents {
+        self.load = document.load
         self.source = source
         self.name = source.name
         self.fileType = source.fileType
         super.init()
     }
 
-    func open(completionHandler: ((Result<Contents, DocumentError>) -> Void)? = nil) {
+    func open(completionHandler: @escaping (Result<Contents, DocumentError>) -> Void) {
         DispatchQueue.global().async {
             guard let data = try? self.source.data() else {
                 DispatchQueue.main.async {
-                    completionHandler?(.failure(.invalidSource))
+                    completionHandler(.failure(.invalidSource))
                 }
                 return
             }
 
-            do {
-                let result = try self.load(from: data)
-                DispatchQueue.main.async {
-                    completionHandler?(result)
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    completionHandler?(.failure(.invalidContents))
-                }
+            let result = self.load(data)
+            DispatchQueue.main.async {
+                completionHandler(result)
             }
         }
-    }
-
-    func load(from data: Data) throws -> Result<Contents, DocumentError> {
-        fatalError("This method must be overridden by subclasses")
-    }
-
-    func close(completionHandler: ((Bool) -> Void)? = nil) {
-
     }
 }

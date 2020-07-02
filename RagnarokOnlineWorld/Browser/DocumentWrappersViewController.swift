@@ -74,7 +74,7 @@ extension DocumentWrappersViewController: UICollectionViewDelegate {
         case .directory, .archive, .directoryInArchive:
             let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: documentWrapper)
             navigationController?.pushViewController(documentWrappersViewController, animated: true)
-        case .luaDocument(let document):
+        case .textDocument(let document):
             let documentViewController = TextDocumentViewController(document: document)
             navigationController?.pushViewController(documentViewController, animated: true)
         case .imageDocument(let document):

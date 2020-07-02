@@ -31,7 +31,7 @@ struct GATCell {
     var types: GATType
 }
 
-class GATDocument: Document<GATDocument.Contents> {
+class GATDocument: Document {
 
     struct Contents {
         var header: String
@@ -51,7 +51,7 @@ class GATDocument: Document<GATDocument.Contents> {
         6: [.walkable, .snipable]           // ???
     ]
 
-    override func load(from data: Data) throws -> Result<Contents, DocumentError> {
+    func load(from data: Data) -> Result<Contents, DocumentError> {
         let stream = DataStream(data: data)
         let reader = BinaryReader(stream: stream)
 

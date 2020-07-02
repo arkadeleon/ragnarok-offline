@@ -10,11 +10,11 @@ import UIKit
 
 class RSMDocumentInfoViewController: UIViewController {
 
-    let document: RSMDocument
+    let document: AnyDocument<RSMDocument.Contents>
 
     private var textView: UITextView!
 
-    init(document: RSMDocument) {
+    init(document: AnyDocument<RSMDocument.Contents>) {
         self.document = document
         super.init(nibName: nil, bundle: nil)
     }
@@ -76,8 +76,6 @@ class RSMDocumentInfoViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
-
-            self.document.close()
         }
     }
 }

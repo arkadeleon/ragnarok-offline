@@ -69,7 +69,7 @@ struct RSMVolumeBox {
     var flag: Int32
 }
 
-class RSMDocument: Document<RSMDocument.Contents> {
+class RSMDocument: Document {
 
     struct Contents {
         var header: String
@@ -88,7 +88,7 @@ class RSMDocument: Document<RSMDocument.Contents> {
         var volumeBoxes: [RSMVolumeBox]
     }
 
-    override func load(from data: Data) throws -> Result<Contents, DocumentError> {
+    func load(from data: Data) -> Result<Contents, DocumentError> {
         let stream = DataStream(data: data)
         let reader = BinaryReader(stream: stream)
 

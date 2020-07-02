@@ -91,7 +91,7 @@ enum RSWObject {
     }
 }
 
-class RSWDocument: Document<RSWDocument.Contents> {
+class RSWDocument: Document {
 
     struct Contents {
         var header: String
@@ -106,7 +106,7 @@ class RSWDocument: Document<RSWDocument.Contents> {
         var effects: [RSWObject.Effect]
     }
 
-    override func load(from data: Data) throws -> Result<Contents, DocumentError> {
+    func load(from data: Data) -> Result<Contents, DocumentError> {
         let stream = DataStream(data: data)
         let reader = BinaryReader(stream: stream)
 

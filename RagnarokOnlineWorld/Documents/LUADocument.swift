@@ -8,16 +8,15 @@
 
 import Foundation
 
-class LUADocument: Document<String> {
+class LUADocument: Document {
 
     let encoding: String.Encoding
 
-    init(source: DocumentSource, encoding: String.Encoding = .ascii) {
+    init(encoding: String.Encoding = .ascii) {
         self.encoding = encoding
-        super.init(source: source)
     }
 
-    override func load(from data: Data) throws -> Result<String, DocumentError> {
+    func load(from data: Data) -> Result<String, DocumentError> {
         guard let string = String(data: data, encoding: encoding) else {
             return .failure(.invalidContents)
         }

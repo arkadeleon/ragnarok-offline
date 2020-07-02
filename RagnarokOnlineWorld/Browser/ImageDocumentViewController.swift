@@ -10,12 +10,12 @@ import UIKit
 
 class ImageDocumentViewController: UIViewController {
 
-    let document: Document<CGImage>
+    let document: AnyDocument<CGImage>
 
     private var scrollView: UIScrollView!
     private var imageView: UIImageView!
 
-    init(document: Document<CGImage>) {
+    init(document: AnyDocument<CGImage>) {
         self.document = document
         super.init(nibName: nil, bundle: nil)
     }
@@ -62,8 +62,6 @@ class ImageDocumentViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
-
-            self.document.close()
         }
     }
 

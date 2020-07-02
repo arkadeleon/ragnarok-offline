@@ -22,7 +22,7 @@ struct SPRFrame {
     var data: Data
 }
 
-class SPRDocument: Document<SPRDocument.Contents> {
+class SPRDocument: Document {
 
     struct Contents {
         var header: String
@@ -33,7 +33,7 @@ class SPRDocument: Document<SPRDocument.Contents> {
         var palette: Data
     }
 
-    override func load(from data: Data) throws -> Result<Contents, DocumentError> {
+    func load(from data: Data) -> Result<Contents, DocumentError> {
         let stream = DataStream(data: data)
         let reader = BinaryReader(stream: stream)
 

@@ -10,12 +10,12 @@ import UIKit
 
 class SpritePreviewViewController: UIViewController {
 
-    let document: SPRDocument
+    let document: AnyDocument<SPRDocument.Contents>
 
     private var scrollView: UIScrollView!
     private var imageView: UIImageView!
 
-    init(document: SPRDocument) {
+    init(document: AnyDocument<SPRDocument.Contents>) {
         self.document = document
         super.init(nibName: nil, bundle: nil)
     }
@@ -64,8 +64,6 @@ class SpritePreviewViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
-
-            self.document.close()
         }
     }
 

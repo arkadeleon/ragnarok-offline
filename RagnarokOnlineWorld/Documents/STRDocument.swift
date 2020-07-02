@@ -34,7 +34,7 @@ struct STRAnimation {
     var mtpreset: UInt32
 }
 
-class STRDocument: Document<STRDocument.Contents> {
+class STRDocument: Document {
 
     struct Contents {
         var header: String
@@ -45,7 +45,7 @@ class STRDocument: Document<STRDocument.Contents> {
         var layers: [STRLayer]
     }
 
-    override func load(from data: Data) throws -> Result<Contents, DocumentError> {
+    func load(from data: Data) -> Result<Contents, DocumentError> {
         let stream = DataStream(data: data)
         let reader = BinaryReader(stream: stream)
 

@@ -9,9 +9,9 @@
 import Foundation
 import CoreGraphics
 
-class PALDocument: Document<CGImage> {
+class PALDocument: Document {
 
-    override func load(from data: Data) throws -> Result<CGImage, DocumentError> {
+    func load(from data: Data) -> Result<CGImage, DocumentError> {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bitmapInfo = CGImageAlphaInfo.noneSkipFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
         guard let context = CGContext(

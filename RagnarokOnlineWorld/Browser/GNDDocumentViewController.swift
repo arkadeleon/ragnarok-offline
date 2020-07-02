@@ -12,7 +12,7 @@ import SGLMath
 
 class GNDDocumentViewController: UIViewController {
 
-    let document: GNDDocument
+    let document: AnyDocument<GNDDocument.Contents>
     private var textures: [MTLTexture?] = []
     private var vertices: [GroundVertex] = []
 
@@ -20,7 +20,7 @@ class GNDDocumentViewController: UIViewController {
     private var renderer: Renderer!
     private var camera = Camera()
 
-    init(document: GNDDocument) {
+    init(document: AnyDocument<GNDDocument.Contents>) {
         self.document = document
         super.init(nibName: nil, bundle: nil)
     }
@@ -63,8 +63,6 @@ class GNDDocumentViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
-            
-            self.document.close()
         }
     }
 

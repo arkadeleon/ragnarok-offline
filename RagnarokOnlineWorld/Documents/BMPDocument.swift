@@ -9,9 +9,9 @@
 import Foundation
 import ImageIO
 
-class BMPDocument: Document<CGImage> {
+class BMPDocument: Document {
 
-    override func load(from data: Data) throws -> Result<CGImage, DocumentError> {
+    func load(from data: Data) -> Result<CGImage, DocumentError> {
         guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
               let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil)
         else {
