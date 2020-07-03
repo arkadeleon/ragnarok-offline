@@ -13,8 +13,7 @@ import SGLMath
 class GNDDocumentViewController: UIViewController {
 
     let document: AnyDocument<GNDDocument.Contents>
-    private var textures: [MTLTexture?] = []
-    private var vertices: [GroundVertex] = []
+    private var ground: Ground?
 
     private var mtkView: MTKView!
     private var renderer: Renderer!
@@ -57,7 +56,8 @@ class GNDDocumentViewController: UIViewController {
         document.open { result in
             switch result {
             case .success(let contents):
-                self.vertices = contents.compile(WATER_LEVEL: 1, WATER_HEIGHT: 1).mesh
+                let state = contents.compile(WATER_LEVEL: 1, WATER_HEIGHT: 1)
+                self.ground = Ground(vertices: state.mesh, textures: [])
             case .failure(let error):
                 let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -73,33 +73,43 @@ class GNDDocumentViewController: UIViewController {
     }
 
     private func render(encoder: MTLRenderCommandEncoder) {
-
-        let projection = SGLMath.perspective(radians(camera.zoom), Float(mtkView.bounds.width / mtkView.bounds.height), 1, 1000)
-
-        var uniforms = GroundVertexUniforms(
-            modelViewMat: matrix_identity_float4x4,
-            projectionMat: projection.simd,
-            lightDirection: [0.0, 0.0, 0.0],
-            normalMat: matrix_identity_float3x3
-        )
-        let uniformsBuffer = encoder.device.makeBuffer(bytes: &uniforms, length: MemoryLayout<GroundVertexUniforms>.stride, options: [])!
-        encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)
-
-        var fragmentUniforms = GroundFragmentUniforms()
-        let fragmentUniformsBuffer = encoder.device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<GroundFragmentUniforms>.stride, options: [])!
-        encoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
-
-        let vertices = self.vertices
-        if vertices.count > 0 {
-            let vertexBuffer = encoder.device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<GroundVertex>.stride, options: [])!
-            encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-
-
-
-    //        let texture = textures[i]
-    //        encoder.setFragmentTexture(texture, index: 0)
-
-            encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
+        guard let ground = ground else {
+            return
         }
+
+        var modelviewMatrix = Matrix4x4<Float>()
+        modelviewMatrix = SGLMath.translateZ(modelviewMatrix, -400)
+        modelviewMatrix = SGLMath.rotate(modelviewMatrix, radians(15), [1, 0, 0])
+        modelviewMatrix = SGLMath.rotate(modelviewMatrix, Float(radians(435595.22182600008 * 360 / 8)), [0, 1, 0])
+        modelviewMatrix = SGLMath.translate(modelviewMatrix, [100, -40, 60])
+
+        let projectionMatrix = SGLMath.perspective(radians(camera.zoom), Float(mtkView.bounds.width / mtkView.bounds.height), 1, 1000)
+
+        let normalMatrix = Matrix3x3(modelviewMatrix).inverse.transpose
+
+        let fog = Fog(
+            use: false,
+            exist: true,
+            far: 30,
+            near: 80,
+            factor: 1,
+            color: [1, 1, 1]
+        )
+
+        let light = Light(
+            opacity: 1,
+            ambient: [1, 1, 1],
+            diffuse: [0, 0, 0],
+            direction: [0, 1, 0]
+        )
+
+        ground.render(
+            encoder: encoder,
+            modelviewMatrix: modelviewMatrix,
+            projectionMatrix: projectionMatrix,
+            normalMatrix: normalMatrix,
+            fog: fog,
+            light: light
+        )
     }
 }

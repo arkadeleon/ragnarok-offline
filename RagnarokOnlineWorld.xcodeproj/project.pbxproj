@@ -65,6 +65,7 @@
 		35E8DCDE24A9D99000A14FC5 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDD24A9D99000A14FC5 /* Renderable.swift */; };
 		35E8DCE024A9DC1100A14FC5 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDF24A9DC1100A14FC5 /* Model.swift */; };
 		35E8DCE224A9DF4100A14FC5 /* SGLMath+SIMD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCE124A9DF4100A14FC5 /* SGLMath+SIMD.swift */; };
+		35EF769424AF18D800371F1F /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF769324AF18D800371F1F /* Ground.swift */; };
 		35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8502473D9E8007DF105 /* STRDocument.swift */; };
 		35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8522473E1D7007DF105 /* RSWDocument.swift */; };
 /* End PBXBuildFile section */
@@ -155,6 +156,7 @@
 		35E8DCDD24A9D99000A14FC5 /* Renderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
 		35E8DCDF24A9DC1100A14FC5 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		35E8DCE124A9DF4100A14FC5 /* SGLMath+SIMD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SGLMath+SIMD.swift"; sourceTree = "<group>"; };
+		35EF769324AF18D800371F1F /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
 		35F8D8502473D9E8007DF105 /* STRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRDocument.swift; sourceTree = "<group>"; };
 		35F8D8522473E1D7007DF105 /* RSWDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWDocument.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -326,12 +328,13 @@
 		35E8DCD924A88AE600A14FC5 /* Renderers */ = {
 			isa = PBXGroup;
 			children = (
-				35E8DCDF24A9DC1100A14FC5 /* Model.swift */,
 				35E8DCDD24A9D99000A14FC5 /* Renderable.swift */,
+				35E8DCDF24A9DC1100A14FC5 /* Model.swift */,
 				35049AA1248E9FB600DAD5C1 /* ModelShaderTypes.h */,
 				35049A9F248E9FA300DAD5C1 /* ModelShaders.metal */,
 				35E8DCDC24A88BEB00A14FC5 /* WaterShaderTypes.h */,
 				35E8DCDA24A88BCC00A14FC5 /* WaterShaders.metal */,
+				35EF769324AF18D800371F1F /* Ground.swift */,
 				35021BAE24A0A4760021B99B /* GroundShaderTypes.h */,
 				359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */,
 				3509565224A8EE010077C134 /* RSMDocument+Compile.swift */,
@@ -529,6 +532,7 @@
 				3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */,
 				355EFD2D2480264B0033C280 /* Camera.swift in Sources */,
 				35116E8D247035AC000A60FE /* ACTDocument.swift in Sources */,
+				35EF769424AF18D800371F1F /* Ground.swift in Sources */,
 				35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */,
 				35116E85246ADFFA000A60FE /* RSMDocument.swift in Sources */,
 				35617A73249863580097C60C /* SGLMath+Calculation.swift in Sources */,
