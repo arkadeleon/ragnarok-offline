@@ -137,8 +137,8 @@ class BinaryReader {
         return data
     }
 
-    func readString(count: Int, encoding: UInt = String.Encoding.ascii.rawValue) throws -> String {
-        let data = try stream.read(upToCount: count)
+    func readString(count: Int, encoding: UInt = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.EUC_KR.rawValue))) throws -> String {
+        let data = try stream.read(upToCount: count).prefix { $0 != 0 }
         guard let string = NSString(data: data, encoding: encoding) else {
             throw StreamError.invalidStringEncoding
         }

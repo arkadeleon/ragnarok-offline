@@ -19,12 +19,12 @@ class TextureLoader: NSObject {
     }
 
     func newTexture(data: Data) -> MTLTexture? {
-        guard let image = UIImage(data: data), let cgImage = image.cgImage else {
+        guard let image = UIImage(data: data)?.cgImage else {
             return nil
         }
 
-        let width = cgImage.width
-        let height = cgImage.height
+        let width = image.width
+        let height = image.height
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bitmapInfo = CGImageAlphaInfo.premultipliedFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
 
@@ -41,7 +41,7 @@ class TextureLoader: NSObject {
         }
 
         let rect = CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height))
-        context.draw(cgImage, in: rect)
+        context.draw(image, in: rect)
 
         let pixelCount = width * height
         guard let pixels = context.data?.bindMemory(to: Pixel_8888.self, capacity: pixelCount) else {

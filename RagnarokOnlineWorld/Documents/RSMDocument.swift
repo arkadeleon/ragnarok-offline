@@ -128,10 +128,7 @@ extension BinaryReader {
         let textureCount = try readInt32()
         var textures: [String] = []
         for _ in 0..<textureCount {
-            var texture: String = try readString(count: 40)
-            if let index = texture.firstIndex(of: "\0") {
-                texture = String(texture.prefix(upTo: index))
-            }
+            let texture: String = try readString(count: 40)
             textures.append(texture)
         }
 

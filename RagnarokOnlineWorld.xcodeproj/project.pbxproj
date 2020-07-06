@@ -46,7 +46,7 @@
 		35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8E2472E685000A60FE /* SPRDocument.swift */; };
 		351A96AE247F5D9F00274D64 /* SGLMath in Frameworks */ = {isa = PBXBuildFile; productRef = 351A96AD247F5D9F00274D64 /* SGLMath */; };
 		355EFD2D2480264B0033C280 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355EFD2C2480264B0033C280 /* Camera.swift */; };
-		35617A73249863580097C60C /* SGLMath+Calculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617A72249863580097C60C /* SGLMath+Calculation.swift */; };
+		35617A73249863580097C60C /* SGLMath+Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617A72249863580097C60C /* SGLMath+Calculate.swift */; };
 		35704ECF249BC430008D378A /* RSMDocumentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35704ECE249BC430008D378A /* RSMDocumentInfoViewController.swift */; };
 		3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */; };
 		3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */; };
@@ -66,6 +66,7 @@
 		35E8DCE024A9DC1100A14FC5 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDF24A9DC1100A14FC5 /* Model.swift */; };
 		35E8DCE224A9DF4100A14FC5 /* SGLMath+SIMD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCE124A9DF4100A14FC5 /* SGLMath+SIMD.swift */; };
 		35EF769424AF18D800371F1F /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF769324AF18D800371F1F /* Ground.swift */; };
+		35EF769C24B3222000371F1F /* CGImage+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF769B24B3222000371F1F /* CGImage+Decode.swift */; };
 		35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8502473D9E8007DF105 /* STRDocument.swift */; };
 		35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8522473E1D7007DF105 /* RSWDocument.swift */; };
 /* End PBXBuildFile section */
@@ -134,7 +135,7 @@
 		35116E8E2472E685000A60FE /* SPRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPRDocument.swift; sourceTree = "<group>"; };
 		355EFD2B247FE7B00033C280 /* RagnarokOnlineWorld.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RagnarokOnlineWorld.entitlements; sourceTree = "<group>"; };
 		355EFD2C2480264B0033C280 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
-		35617A72249863580097C60C /* SGLMath+Calculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SGLMath+Calculation.swift"; sourceTree = "<group>"; };
+		35617A72249863580097C60C /* SGLMath+Calculate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SGLMath+Calculate.swift"; sourceTree = "<group>"; };
 		35704ECE249BC430008D378A /* RSMDocumentInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSMDocumentInfoViewController.swift; sourceTree = "<group>"; };
 		3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrappersViewController.swift; sourceTree = "<group>"; };
 		3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrapperCell.swift; sourceTree = "<group>"; };
@@ -157,6 +158,7 @@
 		35E8DCDF24A9DC1100A14FC5 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		35E8DCE124A9DF4100A14FC5 /* SGLMath+SIMD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SGLMath+SIMD.swift"; sourceTree = "<group>"; };
 		35EF769324AF18D800371F1F /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
+		35EF769B24B3222000371F1F /* CGImage+Decode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImage+Decode.swift"; sourceTree = "<group>"; };
 		35F8D8502473D9E8007DF105 /* STRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRDocument.swift; sourceTree = "<group>"; };
 		35F8D8522473E1D7007DF105 /* RSWDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWDocument.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -318,8 +320,9 @@
 			children = (
 				3587F70824694FA7007D1C9B /* BinaryReader.swift */,
 				35C06DBB2498C9C000F0A229 /* TextureLoader.swift */,
+				35EF769B24B3222000371F1F /* CGImage+Decode.swift */,
 				35116E53245FC152000A60FE /* FileHandle+Reading.swift */,
-				35617A72249863580097C60C /* SGLMath+Calculation.swift */,
+				35617A72249863580097C60C /* SGLMath+Calculate.swift */,
 				35E8DCE124A9DF4100A14FC5 /* SGLMath+SIMD.swift */,
 			);
 			path = Utilities;
@@ -507,6 +510,7 @@
 				35116E7524644AAA000A60FE /* DocumentWrapper.swift in Sources */,
 				35CB3BAE24782A5100EC04C3 /* Renderer.swift in Sources */,
 				3509565924ACE48A0077C134 /* SpritePreviewViewController.swift in Sources */,
+				35EF769C24B3222000371F1F /* CGImage+Decode.swift in Sources */,
 				3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */,
 				35116E8B247025EE000A60FE /* GATDocument.swift in Sources */,
 				35E8DCE024A9DC1100A14FC5 /* Model.swift in Sources */,
@@ -535,7 +539,7 @@
 				35EF769424AF18D800371F1F /* Ground.swift in Sources */,
 				35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */,
 				35116E85246ADFFA000A60FE /* RSMDocument.swift in Sources */,
-				35617A73249863580097C60C /* SGLMath+Calculation.swift in Sources */,
+				35617A73249863580097C60C /* SGLMath+Calculate.swift in Sources */,
 				3587F70924694FA7007D1C9B /* BinaryReader.swift in Sources */,
 				35116E58245FC152000A60FE /* GRFArchive.swift in Sources */,
 				359D5C1624A1F8CA00C2D8D3 /* GNDDocumentViewController.swift in Sources */,

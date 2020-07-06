@@ -12,14 +12,14 @@ import SGLMath
 class Ground: Renderable {
 
     let vertices: [GroundVertex]
-    let textures: [MTLTexture?]
+    let texture: MTLTexture?
 
     let vertexFunctionName = "groundVertexShader"
     let fragmentFunctionName = "groundFragmentShader"
 
-    init(vertices: [GroundVertex], textures: [MTLTexture?]) {
+    init(vertices: [GroundVertex], texture: MTLTexture?) {
         self.vertices = vertices
-        self.textures = textures
+        self.texture = texture
     }
 
     func render(encoder: MTLRenderCommandEncoder,
@@ -28,8 +28,6 @@ class Ground: Renderable {
                 normalMatrix: Matrix3x3<Float>,
                 fog: Fog,
                 light: Light) {
-
-        encoder.setTriangleFillMode(.lines)
 
         var vertexUniforms = GroundVertexUniforms(
             modelViewMat: modelviewMatrix.simd,
@@ -71,8 +69,9 @@ class Ground: Renderable {
 
         encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
 
-//        let texture = textures[i]
-//        encoder.setFragmentTexture(texture, index: 0)
+        encoder.setFragmentTexture(texture, index: 0)
+        encoder.setFragmentTexture(texture, index: 1)
+        encoder.setFragmentTexture(texture, index: 2)
 
         encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
     }
