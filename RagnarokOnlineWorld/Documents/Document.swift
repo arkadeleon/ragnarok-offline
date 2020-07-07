@@ -20,7 +20,7 @@ enum DocumentSource {
 
     case entryInArchive(GRFArchive, String)
 
-    fileprivate var name: String {
+    var name: String {
         switch self {
         case .url(let url):
             return url.lastPathComponent
@@ -30,7 +30,7 @@ enum DocumentSource {
         }
     }
 
-    fileprivate var fileType: String {
+    var fileType: String {
         switch self {
         case .url(let url):
             return url.pathExtension
@@ -40,7 +40,7 @@ enum DocumentSource {
         }
     }
 
-    fileprivate func data() throws -> Data {
+    func data() throws -> Data {
         switch self {
         case .url(let url):
             return try Data(contentsOf: url)
@@ -55,50 +55,15 @@ enum DocumentSource {
 
 protocol Document {
 
+    associatedtype Source
+
     associatedtype Contents
 
-    var source: DocumentSource { get }
+    var source: Source { get }
 
-    init(source: DocumentSource)
+    var name: String { get }
 
-    func open(completionHandler: @escaping (Result<Contents, DocumentError>) -> Void)
+    init(source: Source)
 
-    func load(from data: Data) -> Result<Contents, DocumentError>
-}
-
-extension Document {
-
-    func open(completionHandler: @escaping (Result<Contents, DocumentError>) -> Void) {
-        DispatchQueue.global().async {
-            guard let data = try? self.source.data() else {
-                DispatchQueue.main.async {
-                    completionHandler(.failure(.invalidSource))
-                }
-                return
-            }
-
-            let result = self.load(from: data)
-            DispatchQueue.main.async {
-                completionHandler(result)
-            }
-        }
-    }
-
-    func eraseToAnyDocument() -> AnyDocument<Contents> {
-        AnyDocument(document: self)
-    }
-}
-
-class AnyDocument<Contents>: NSObject {
-
-    let source: DocumentSource
-    let name: String
-    let open: (@escaping (Result<Contents, DocumentError>) -> Void) -> Void
-
-    init<D: Document>(document: D) where Contents == D.Contents {
-        self.source = document.source
-        self.name = document.source.name
-        self.open = document.open
-        super.init()
-    }
+    func load() -> Result<Contents, DocumentError>
 }

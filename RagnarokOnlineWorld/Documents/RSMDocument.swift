@@ -89,12 +89,18 @@ class RSMDocument: Document {
     }
 
     let source: DocumentSource
+    let name: String
 
     required init(source: DocumentSource) {
         self.source = source
+        self.name = source.name
     }
 
-    func load(from data: Data) -> Result<Contents, DocumentError> {
+    func load() -> Result<Contents, DocumentError> {
+        guard let data = try? source.data() else {
+            return .failure(.invalidSource)
+        }
+
         let stream = DataStream(data: data)
         let reader = BinaryReader(stream: stream)
 

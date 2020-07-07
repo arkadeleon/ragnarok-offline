@@ -10,12 +10,12 @@ import UIKit
 
 class ImageDocumentViewController: UIViewController {
 
-    let document: AnyDocument<CGImage>
+    let document: AnyDocument<DocumentSource, CGImage>
 
     private var scrollView: UIScrollView!
     private var imageView: UIImageView!
 
-    init(document: AnyDocument<CGImage>) {
+    init(document: AnyDocument<DocumentSource, CGImage>) {
         self.document = document
         super.init(nibName: nil, bundle: nil)
     }
@@ -47,7 +47,7 @@ class ImageDocumentViewController: UIViewController {
         scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         scrollView.frameLayoutGuide.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
 
-        document.open { result in
+        document.loadAsynchronously { result in
             switch result {
             case .success(let image):
                 self.imageView.image = UIImage(cgImage: image)

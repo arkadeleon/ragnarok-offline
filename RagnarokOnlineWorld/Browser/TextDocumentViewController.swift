@@ -11,11 +11,11 @@ import WebKit
 
 class TextDocumentViewController: UIViewController {
 
-    let document: AnyDocument<String>
+    let document: AnyDocument<DocumentSource, String>
 
     private var webView: WKWebView!
 
-    init(document: AnyDocument<String>) {
+    init(document: AnyDocument<DocumentSource, String>) {
         self.document = document
         super.init(nibName: nil, bundle: nil)
     }
@@ -35,7 +35,7 @@ class TextDocumentViewController: UIViewController {
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(webView)
 
-        document.open { result in
+        document.loadAsynchronously { result in
             switch result {
             case .success(let string):
                 let htmlString = """

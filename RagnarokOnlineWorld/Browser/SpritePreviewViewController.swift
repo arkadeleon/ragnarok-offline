@@ -10,12 +10,12 @@ import UIKit
 
 class SpritePreviewViewController: UIViewController {
 
-    let document: AnyDocument<SPRDocument.Contents>
+    let document: AnyDocument<DocumentSource, SPRDocument.Contents>
 
     private var scrollView: UIScrollView!
     private var imageView: UIImageView!
 
-    init(document: AnyDocument<SPRDocument.Contents>) {
+    init(document: AnyDocument<DocumentSource, SPRDocument.Contents>) {
         self.document = document
         super.init(nibName: nil, bundle: nil)
     }
@@ -47,7 +47,7 @@ class SpritePreviewViewController: UIViewController {
         scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         scrollView.frameLayoutGuide.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
 
-        document.open { result in
+        document.loadAsynchronously { result in
             switch result {
             case .success(let contents):
                 let images = contents.images()

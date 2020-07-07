@@ -10,11 +10,11 @@ import UIKit
 
 class RSMDocumentInfoViewController: UIViewController {
 
-    let document: AnyDocument<RSMDocument.Contents>
+    let document: AnyDocument<DocumentSource, RSMDocument.Contents>
 
     private var textView: UITextView!
 
-    init(document: AnyDocument<RSMDocument.Contents>) {
+    init(document: AnyDocument<DocumentSource, RSMDocument.Contents>) {
         self.document = document
         super.init(nibName: nil, bundle: nil)
     }
@@ -34,7 +34,7 @@ class RSMDocumentInfoViewController: UIViewController {
         textView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(textView)
 
-        document.open { result in
+        document.loadAsynchronously { result in
             switch result {
             case .success(let contents):
                 var text = ""

@@ -11,12 +11,18 @@ import Foundation
 class LUADocument: Document {
 
     let source: DocumentSource
+    let name: String
 
     required init(source: DocumentSource) {
         self.source = source
+        self.name = source.name
     }
 
-    func load(from data: Data) -> Result<String, DocumentError> {
+    func load() -> Result<String, DocumentError> {
+        guard let data = try? source.data() else {
+            return .failure(.invalidSource)
+        }
+
         guard let string = String(data: data, encoding: .ascii) else {
             return .failure(.invalidContents)
         }

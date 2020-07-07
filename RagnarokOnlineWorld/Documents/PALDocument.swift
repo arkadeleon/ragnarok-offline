@@ -12,12 +12,18 @@ import CoreGraphics
 class PALDocument: Document {
 
     let source: DocumentSource
+    let name: String
 
     required init(source: DocumentSource) {
         self.source = source
+        self.name = source.name
     }
 
-    func load(from data: Data) -> Result<CGImage, DocumentError> {
+    func load() -> Result<CGImage, DocumentError> {
+        guard let data = try? source.data() else {
+            return .failure(.invalidSource)
+        }
+
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bitmapInfo = CGImageAlphaInfo.noneSkipFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
         guard let context = CGContext(

@@ -12,14 +12,14 @@ import SGLMath
 
 class GNDDocumentViewController: UIViewController {
 
-    let document: AnyDocument<GNDDocument.Contents>
+    let document: AnyDocument<DocumentSource, GNDDocument.Contents>
     private var ground: Ground?
 
     private var mtkView: MTKView!
     private var renderer: Renderer!
     private var camera = Camera()
 
-    init(document: AnyDocument<GNDDocument.Contents>) {
+    init(document: AnyDocument<DocumentSource, GNDDocument.Contents>) {
         self.document = document
         super.init(nibName: nil, bundle: nil)
     }
@@ -53,7 +53,7 @@ class GNDDocumentViewController: UIViewController {
         mtkView.addGestureRecognizer(camera.panGestureRecognizer)
         mtkView.addGestureRecognizer(camera.pinchGestureRecognizer)
 
-        document.open { result in
+        document.loadAsynchronously { result in
             guard case .entryInArchive(let archive, _) = self.document.source else {
                 return
             }

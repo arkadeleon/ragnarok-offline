@@ -15,11 +15,11 @@ enum DocumentWrapper {
     case archive(GRFArchive)
     case directoryInArchive(GRFArchive, String)
     case entryInArchive(String)
-    case textDocument(AnyDocument<String>)
-    case imageDocument(AnyDocument<CGImage>)
-    case rsmDocument(AnyDocument<RSMDocument.Contents>)
-    case gndDocument(AnyDocument<GNDDocument.Contents>)
-    case sprite(AnyDocument<SPRDocument.Contents>)
+    case textDocument(AnyDocument<DocumentSource, String>)
+    case imageDocument(AnyDocument<DocumentSource, CGImage>)
+    case rsmDocument(AnyDocument<DocumentSource, RSMDocument.Contents>)
+    case gndDocument(AnyDocument<DocumentSource, GNDDocument.Contents>)
+    case sprite(AnyDocument<DocumentSource, SPRDocument.Contents>)
 }
 
 extension DocumentWrapper {
