@@ -32,7 +32,6 @@ struct SPRDocument: Document {
     var palette: Data
 
     init(from stream: Stream) throws {
-        let data = try stream.readToEnd()
         try stream.seek(toOffset: 0)
         let reader = BinaryReader(stream: stream)
 
@@ -66,7 +65,7 @@ struct SPRDocument: Document {
 
         var palette = Data()
         if version > "1.0" {
-            try stream.seek(toOffset: UInt64(data.count) - 1024)
+            try stream.seek(toOffset: stream.length() - 1024)
             palette = try reader.readData(count: 1024)
         }
         self.palette = palette

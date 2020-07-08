@@ -17,6 +17,7 @@ enum StreamError: Error {
 protocol Stream {
 
     func offset() throws -> UInt64
+    func length() throws -> UInt64
     func seek(toOffset offset: UInt64) throws
     func read(upToCount count: Int) throws -> Data
     func readToEnd() throws -> Data
@@ -36,6 +37,13 @@ class FileStream: Stream {
 
     func offset() throws -> UInt64 {
         return try fileHandle.offset()
+    }
+
+    func length() throws -> UInt64 {
+        let offset = try fileHandle.offset()
+        let length = try fileHandle.seekToEnd()
+        try fileHandle.seek(toOffset: offset)
+        return length
     }
 
     func seek(toOffset offset: UInt64) throws {
@@ -68,6 +76,10 @@ class DataStream: Stream {
 
     func offset() throws -> UInt64 {
         return UInt64(dataOffset)
+    }
+
+    func length() throws -> UInt64 {
+        return UInt64(data.count)
     }
 
     func seek(toOffset offset: UInt64) throws {
