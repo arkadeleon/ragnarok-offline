@@ -10,13 +10,13 @@ import UIKit
 
 class ImageDocumentViewController: UIViewController {
 
-    let document: AnyDocument<DocumentSource, CGImage>
+    let source: DocumentSource
 
     private var scrollView: UIScrollView!
     private var imageView: UIImageView!
 
-    init(document: AnyDocument<DocumentSource, CGImage>) {
-        self.document = document
+    init(source: DocumentSource) {
+        self.source = source
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -27,7 +27,7 @@ class ImageDocumentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = document.name
+        title = source.name
 
         view.backgroundColor = .systemBackground
 
@@ -47,9 +47,23 @@ class ImageDocumentViewController: UIViewController {
         scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         scrollView.frameLayoutGuide.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
 
-        document.loadAsynchronously { result in
-            switch result {
-            case .success(let image):
+        loadSource()
+    }
+
+    private func loadSource() {
+        DispatchQueue.global().async {
+            guard let data = try? self.source.data() else {
+                return
+            }
+
+            let loader = DocumentLoader()
+            guard let document = try? loader.load(BMPDocument.self, from: data) else {
+                return
+            }
+
+            DispatchQueue.main.async {
+                let image = document.image
+
                 self.imageView.image = UIImage(cgImage: image)
                 self.imageView.frame = CGRect(x: 0, y: 0, width: image.width, height: image.height)
 
@@ -57,10 +71,6 @@ class ImageDocumentViewController: UIViewController {
 
                 self.updateZoomScale(image: image)
                 self.centerScrollViewContents()
-            case .failure(let error):
-                let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
             }
         }
     }

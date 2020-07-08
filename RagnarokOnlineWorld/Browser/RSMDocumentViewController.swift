@@ -12,15 +12,15 @@ import SGLMath
 
 class RSMDocumentViewController: UIViewController {
 
-    let document: AnyDocument<DocumentSource, RSMDocument.Contents>
+    let source: DocumentSource
     private var model: Model?
 
     private var mtkView: MTKView!
     private var renderer: Renderer!
     private var camera = Camera()
 
-    init(document: AnyDocument<DocumentSource, RSMDocument.Contents>) {
-        self.document = document
+    init(source: DocumentSource) {
+        self.source = source
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -36,11 +36,8 @@ class RSMDocumentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = document.name
+        title = source.name
         edgesForExtendedLayout = []
-
-        let infoItem = UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .plain, target: self, action: #selector(infoItemAction(_:)))
-        navigationItem.rightBarButtonItem = infoItem
 
         view.backgroundColor = .systemBackground
 
@@ -53,17 +50,26 @@ class RSMDocumentViewController: UIViewController {
         mtkView.addGestureRecognizer(camera.panGestureRecognizer)
         mtkView.addGestureRecognizer(camera.pinchGestureRecognizer)
 
-        document.loadAsynchronously { result in
-            guard case .entryInArchive(let archive, _) = self.document.source else {
+        loadSource()
+    }
+
+    private func loadSource() {
+        DispatchQueue.global().async {
+            guard case .entryInArchive(let archive, _) = self.source else {
                 return
             }
 
-            guard case .success(let contents) = result else {
+            guard let data = try? self.source.data() else {
+                return
+            }
+
+            let loader = DocumentLoader()
+            guard let document = try? loader.load(RSMDocument.self, from: data) else {
                 return
             }
 
             let textureLoader = TextureLoader(device: self.renderer.device)
-            let textures = contents.textures.map { textureName -> MTLTexture? in
+            let textures = document.textures.map { textureName -> MTLTexture? in
                 guard let entry = archive.entry(forName: "data\\texture\\" + textureName) else {
                     return nil
                 }
@@ -73,26 +79,22 @@ class RSMDocumentViewController: UIViewController {
                 return textureLoader.newTexture(data: contents)
             }
 
-            let (boundingBox, wrappers) = contents.calcBoundingBox()
+            let (boundingBox, wrappers) = document.calcBoundingBox()
 
-            let model = RSMModel(
+            let m = RSMModel(
                 position: [0, 0, 0],
                 rotation: [0, 0, 0],
                 scale: [-0.075, -0.075, -0.075],
                 filename: ""
             )
-            let instance = contents.createInstance(model: model, width: 0, height: 0)
+            let instance = document.createInstance(model: m, width: 0, height: 0)
 
-            let meshes = contents.compile(instances: [instance], wrappers: wrappers, boundingBox: boundingBox)
+            let meshes = document.compile(instances: [instance], wrappers: wrappers, boundingBox: boundingBox)
 
-            self.model = Model(meshes: meshes, textures: textures, boundingBox: boundingBox)
+            DispatchQueue.main.async {
+                self.model = Model(meshes: meshes, textures: textures, boundingBox: boundingBox)
+            }
         }
-    }
-
-    @objc private func infoItemAction(_ sender: Any) {
-        let infoViewController = RSMDocumentInfoViewController(document: document)
-        let navigationController = UINavigationController(rootViewController: infoViewController)
-        present(navigationController, animated: true, completion: nil)
     }
 
     private func render(encoder: MTLRenderCommandEncoder) {

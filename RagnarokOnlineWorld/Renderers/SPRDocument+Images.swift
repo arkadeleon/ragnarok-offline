@@ -8,7 +8,7 @@
 
 import CoreGraphics
 
-extension SPRDocument.Contents {
+extension SPRDocument {
 
     func images() -> [CGImage] {
         var images: [CGImage] = []

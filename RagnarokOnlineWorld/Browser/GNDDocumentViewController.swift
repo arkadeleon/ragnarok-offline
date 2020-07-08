@@ -12,15 +12,15 @@ import SGLMath
 
 class GNDDocumentViewController: UIViewController {
 
-    let document: AnyDocument<DocumentSource, GNDDocument.Contents>
+    let source: DocumentSource
     private var ground: Ground?
 
     private var mtkView: MTKView!
     private var renderer: Renderer!
     private var camera = Camera()
 
-    init(document: AnyDocument<DocumentSource, GNDDocument.Contents>) {
-        self.document = document
+    init(source: DocumentSource) {
+        self.source = source
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -36,11 +36,8 @@ class GNDDocumentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = document.name
+        title = source.name
         edgesForExtendedLayout = []
-
-        let infoItem = UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .plain, target: self, action: #selector(infoItemAction(_:)))
-        navigationItem.rightBarButtonItem = infoItem
 
         view.backgroundColor = .systemBackground
 
@@ -53,71 +50,73 @@ class GNDDocumentViewController: UIViewController {
         mtkView.addGestureRecognizer(camera.panGestureRecognizer)
         mtkView.addGestureRecognizer(camera.pinchGestureRecognizer)
 
-        document.loadAsynchronously { result in
-            guard case .entryInArchive(let archive, _) = self.document.source else {
+        loadSource()
+    }
+
+    private func loadSource() {
+        DispatchQueue.global().async {
+            guard case .entryInArchive(let archive, _) = self.source else {
                 return
             }
 
-            switch result {
-            case .success(let contents):
-                let state = contents.compile(WATER_LEVEL: 1, WATER_HEIGHT: 1)
+            guard let data = try? self.source.data() else {
+                return
+            }
 
-                let textures = contents.textures
+            let loader = DocumentLoader()
+            guard let document = try? loader.load(GNDDocument.self, from: data) else {
+                return
+            }
 
-                let ATLAS_COLS         = roundf(sqrtf(Float(textures.count)))
-                let ATLAS_ROWS         = ceilf(sqrtf(Float(textures.count)))
-                let ATLAS_WIDTH        = powf(2, ceilf(logf(ATLAS_COLS * 258) / logf(2)))
-                let ATLAS_HEIGHT       = powf(2, ceilf(logf(ATLAS_ROWS * 258) / logf(2)))
+            let state = document.compile(WATER_LEVEL: 1, WATER_HEIGHT: 1)
 
-                let colorSpace = CGColorSpaceCreateDeviceRGB()
-                let bitmapInfo = CGImageAlphaInfo.premultipliedFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
+            let textures = document.textures
 
-                guard let context = CGContext(
-                    data: nil,
-                    width: Int(ATLAS_WIDTH),
-                    height: Int(ATLAS_HEIGHT),
-                    bitsPerComponent: 8,
-                    bytesPerRow: Int(ATLAS_WIDTH) * 4,
-                    space: colorSpace,
-                    bitmapInfo: bitmapInfo
-                ) else {
-                    return
+            let ATLAS_COLS         = roundf(sqrtf(Float(textures.count)))
+            let ATLAS_ROWS         = ceilf(sqrtf(Float(textures.count)))
+            let ATLAS_WIDTH        = powf(2, ceilf(logf(ATLAS_COLS * 258) / logf(2)))
+            let ATLAS_HEIGHT       = powf(2, ceilf(logf(ATLAS_ROWS * 258) / logf(2)))
+
+            let colorSpace = CGColorSpaceCreateDeviceRGB()
+            let bitmapInfo = CGImageAlphaInfo.premultipliedFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
+
+            guard let context = CGContext(
+                data: nil,
+                width: Int(ATLAS_WIDTH),
+                height: Int(ATLAS_HEIGHT),
+                bitsPerComponent: 8,
+                bytesPerRow: Int(ATLAS_WIDTH) * 4,
+                space: colorSpace,
+                bitmapInfo: bitmapInfo
+            ) else {
+                return
+            }
+
+            let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: CGFloat(Int(ATLAS_HEIGHT)))
+            context.concatenate(flipVertical)
+
+            for (i, name) in textures.enumerated() {
+                guard let entry = archive.entry(forName: "data\\texture\\" + name.lowercased()) else {
+                    continue
                 }
+                let data = try! archive.contents(of: entry)
+                let image = UIImage(data: data)?.cgImage?.decoded
 
-                let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: CGFloat(Int(ATLAS_HEIGHT)))
-                context.concatenate(flipVertical)
+                let x = (i % Int(ATLAS_WIDTH)) * 258
+                let y = (i / Int(ATLAS_WIDTH)) * 258
+                context.draw(image!, in: CGRect(x: x, y: y, width: 258, height: 258))
+                context.draw(image!, in: CGRect(x: x + 0, y: y + 0, width: 256, height: 256))
+            }
 
-                for (i, name) in textures.enumerated() {
-                    guard let entry = archive.entry(forName: "data\\texture\\" + name.lowercased()) else {
-                        continue
-                    }
-                    let data = try! archive.contents(of: entry)
-                    let image = UIImage(data: data)?.cgImage?.decoded
+            let jpeg = UIImage(cgImage: context.makeImage()!).jpegData(compressionQuality: 1.0)!
 
-                    let x = (i % Int(ATLAS_WIDTH)) * 258
-                    let y = (i / Int(ATLAS_WIDTH)) * 258
-                    context.draw(image!, in: CGRect(x: x, y: y, width: 258, height: 258))
-                    context.draw(image!, in: CGRect(x: x + 0, y: y + 0, width: 256, height: 256))
-                }
+            let textureLoader = MTKTextureLoader(device: self.renderer.device)
+            let texture = try? textureLoader.newTexture(cgImage: UIImage(data: jpeg)!.cgImage!, options: nil)
 
-                let jpeg = UIImage(cgImage: context.makeImage()!).jpegData(compressionQuality: 1.0)!
-
-                let textureLoader = MTKTextureLoader(device: self.renderer.device)
-                let texture = try? textureLoader.newTexture(cgImage: UIImage(data: jpeg)!.cgImage!, options: nil)
-
+            DispatchQueue.main.async {
                 self.ground = Ground(vertices: state.mesh, texture: texture)
-            case .failure(let error):
-                let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
             }
         }
-    }
-
-    @objc private func infoItemAction(_ sender: Any) {
-//        let infoViewController = RSMDocumentInfoViewController(document: document)
-//        let navigationController = UINavigationController(rootViewController: infoViewController)
-//        present(navigationController, animated: true, completion: nil)
     }
 
     private func render(encoder: MTLRenderCommandEncoder) {

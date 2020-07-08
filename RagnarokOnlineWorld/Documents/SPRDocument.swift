@@ -22,87 +22,58 @@ struct SPRFrame {
     var data: Data
 }
 
-class SPRDocument: Document {
+struct SPRDocument: Document {
 
-    struct Contents {
-        var header: String
-        var version: String
-        var indexed_count: UInt16
-        var rgba_count: UInt16
-        var frames: [SPRFrame]
-        var palette: Data
-    }
+    var header: String
+    var version: String
+    var indexed_count: UInt16
+    var rgba_count: UInt16
+    var frames: [SPRFrame]
+    var palette: Data
 
-    let source: DocumentSource
-    let name: String
-
-    required init(source: DocumentSource) {
-        self.source = source
-        self.name = source.name
-    }
-
-    func load() -> Result<Contents, DocumentError> {
-        guard let data = try? source.data() else {
-            return .failure(.invalidSource)
-        }
-
-        let stream = DataStream(data: data)
+    init(from stream: Stream) throws {
+        let data = try stream.readToEnd()
+        try stream.seek(toOffset: 0)
         let reader = BinaryReader(stream: stream)
 
-        do {
-            let contents = try reader.readSPRContents(count: data.count)
-            return .success(contents)
-        } catch {
-            return .failure(.invalidContents)
-        }
-    }
-}
-
-extension BinaryReader {
-
-    fileprivate func readSPRContents(count: Int) throws -> SPRDocument.Contents {
-        let header = try readString(count: 2)
+        header = try reader.readString(count: 2)
         guard header == "SP" else {
             throw DocumentError.invalidContents
         }
 
-        let minor = try readUInt8()
-        let major = try readUInt8()
-        let version = "\(major).\(minor)"
+        let minor = try reader.readUInt8()
+        let major = try reader.readUInt8()
+        version = "\(major).\(minor)"
 
-        let indexed_count = try readUInt16()
+        indexed_count = try reader.readUInt16()
 
-        var rgba_count: UInt16 = 0
+        rgba_count = 0
         if version > "1.1" {
-            rgba_count = try readUInt16()
+            rgba_count = try reader.readUInt16()
         }
 
         var frames: [SPRFrame] = []
 
         if version < "2.1" {
-            frames += try readSPRIndexedImage(indexed_count: indexed_count)
+            frames += try reader.readSPRIndexedImage(indexed_count: indexed_count)
         } else {
-            frames += try readSPRIndexedImageRLE(indexed_count: indexed_count)
+            frames += try reader.readSPRIndexedImageRLE(indexed_count: indexed_count)
         }
 
-        frames += try readSPRRGBAImage(rgba_count: rgba_count)
+        frames += try reader.readSPRRGBAImage(rgba_count: rgba_count)
+
+        self.frames = frames
 
         var palette = Data()
         if version > "1.0" {
-            try stream.seek(toOffset: UInt64(count) - 1024)
-            palette = try readData(count: 1024)
+            try stream.seek(toOffset: UInt64(data.count) - 1024)
+            palette = try reader.readData(count: 1024)
         }
-
-        let contents = SPRDocument.Contents(
-            header: header,
-            version: version,
-            indexed_count: indexed_count,
-            rgba_count: rgba_count,
-            frames: frames,
-            palette: palette
-        )
-        return contents
+        self.palette = palette
     }
+}
+
+extension BinaryReader {
 
     fileprivate func readSPRIndexedImage(indexed_count: UInt16) throws -> [SPRFrame] {
         var frames: [SPRFrame] = []

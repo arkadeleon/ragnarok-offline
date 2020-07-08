@@ -15,11 +15,11 @@ enum DocumentWrapper {
     case archive(GRFArchive)
     case directoryInArchive(GRFArchive, String)
     case entryInArchive(String)
-    case textDocument(AnyDocument<DocumentSource, String>)
-    case imageDocument(AnyDocument<DocumentSource, CGImage>)
-    case rsmDocument(AnyDocument<DocumentSource, RSMDocument.Contents>)
-    case gndDocument(AnyDocument<DocumentSource, GNDDocument.Contents>)
-    case sprite(AnyDocument<DocumentSource, SPRDocument.Contents>)
+    case textDocument(DocumentSource)
+    case imageDocument(DocumentSource)
+    case rsmDocument(DocumentSource)
+    case gndDocument(DocumentSource)
+    case sprite(DocumentSource)
 }
 
 extension DocumentWrapper {
@@ -61,16 +61,16 @@ extension DocumentWrapper {
             return String(path.split(separator: "\\").last ?? "")
         case .entryInArchive(let entryName):
             return String(entryName.split(separator: "\\").last ?? "")
-        case .textDocument(let document):
-            return document.name
-        case .imageDocument(let document):
-            return document.name
-        case .rsmDocument(let document):
-            return document.name
-        case .gndDocument(let document):
-            return document.name
-        case .sprite(let document):
-            return document.name
+        case .textDocument(let source):
+            return source.name
+        case .imageDocument(let source):
+            return source.name
+        case .rsmDocument(let source):
+            return source.name
+        case .gndDocument(let source):
+            return source.name
+        case .sprite(let source):
+            return source.name
         }
     }
 
@@ -92,14 +92,11 @@ extension DocumentWrapper {
                         return .document(url)
                     }
                 case "lua":
-                    let document = LUADocument(source: .url(url)).eraseToAnyDocument()
-                    return .textDocument(document)
+                    return .textDocument(.url(url))
                 case "bmp":
-                    let document = BMPDocument(source: .url(url)).eraseToAnyDocument()
-                    return .imageDocument(document)
+                    return .imageDocument(.url(url))
                 case "rsm":
-                    let document = RSMDocument(source: .url(url)).eraseToAnyDocument()
-                    return .rsmDocument(document)
+                    return .rsmDocument(.url(url))
                 default:
                     return .document(url)
                 }
@@ -119,28 +116,22 @@ extension DocumentWrapper {
                 if let index = entryName.firstIndex(of: ".") {
                     switch entryName[index...] {
                     case ".lua":
-                        let document = LUADocument(source: .entryInArchive(archive, entryName)).eraseToAnyDocument()
-                        let documentWrapper: DocumentWrapper = .textDocument(document)
+                        let documentWrapper: DocumentWrapper = .textDocument(.entryInArchive(archive, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".bmp":
-                        let document = BMPDocument(source: .entryInArchive(archive, entryName)).eraseToAnyDocument()
-                        let documentWrapper: DocumentWrapper = .imageDocument(document)
+                        let documentWrapper: DocumentWrapper = .imageDocument(.entryInArchive(archive, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".pal":
-                        let document = PALDocument(source: .entryInArchive(archive, entryName)).eraseToAnyDocument()
-                        let documentWrapper: DocumentWrapper = .imageDocument(document)
+                        let documentWrapper: DocumentWrapper = .imageDocument(.entryInArchive(archive, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".rsm":
-                        let document = RSMDocument(source: .entryInArchive(archive, entryName)).eraseToAnyDocument()
-                        let documentWrapper: DocumentWrapper = .rsmDocument(document)
+                        let documentWrapper: DocumentWrapper = .rsmDocument(.entryInArchive(archive, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".gnd":
-                        let document = GNDDocument(source: .entryInArchive(archive, entryName)).eraseToAnyDocument()
-                        let documentWrapper: DocumentWrapper = .gndDocument(document)
+                        let documentWrapper: DocumentWrapper = .gndDocument(.entryInArchive(archive, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".spr":
-                        let document = SPRDocument(source: .entryInArchive(archive, entryName)).eraseToAnyDocument()
-                        let documentWrapper: DocumentWrapper = .sprite(document)
+                        let documentWrapper: DocumentWrapper = .sprite(.entryInArchive(archive, entryName))
                         documentWrappers.append(documentWrapper)
                     default:
                         let documentWrapper: DocumentWrapper = .entryInArchive(entryName)

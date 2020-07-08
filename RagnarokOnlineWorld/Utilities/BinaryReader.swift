@@ -19,6 +19,7 @@ protocol Stream {
     func offset() throws -> UInt64
     func seek(toOffset offset: UInt64) throws
     func read(upToCount count: Int) throws -> Data
+    func readToEnd() throws -> Data
 }
 
 class FileStream: Stream {
@@ -43,6 +44,13 @@ class FileStream: Stream {
 
     func read(upToCount count: Int) throws -> Data {
         guard let data = try fileHandle.read(upToCount: count) else {
+            throw StreamError.endOfStream
+        }
+        return data
+    }
+
+    func readToEnd() throws -> Data {
+        guard let data = try fileHandle.readToEnd() else {
             throw StreamError.endOfStream
         }
         return data
@@ -75,6 +83,12 @@ class DataStream: Stream {
         }
         let data = Data(self.data[dataOffset..<(dataOffset + count)])
         dataOffset += count
+        return data
+    }
+
+    func readToEnd() throws -> Data {
+        let data = Data(self.data[dataOffset...])
+        dataOffset += data.count
         return data
     }
 }

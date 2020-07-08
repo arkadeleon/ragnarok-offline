@@ -9,20 +9,12 @@
 import Foundation
 import CoreGraphics
 
-class PALDocument: Document {
+struct PALDocument: Document {
 
-    let source: DocumentSource
-    let name: String
+    var image: CGImage
 
-    required init(source: DocumentSource) {
-        self.source = source
-        self.name = source.name
-    }
-
-    func load() -> Result<CGImage, DocumentError> {
-        guard let data = try? source.data() else {
-            return .failure(.invalidSource)
-        }
+    init(from stream: Stream) throws {
+        let data = try stream.readToEnd()
 
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bitmapInfo = CGImageAlphaInfo.noneSkipFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
@@ -35,7 +27,7 @@ class PALDocument: Document {
             space: colorSpace,
             bitmapInfo: bitmapInfo
         ) else {
-            return .failure(.invalidContents)
+            throw DocumentError.invalidContents
         }
 
         let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: 128)
@@ -61,9 +53,9 @@ class PALDocument: Document {
         }
 
         guard let image = context.makeImage() else {
-            return .failure(.invalidContents)
+            throw DocumentError.invalidContents
         }
 
-        return .success(image)
+        self.image = image
     }
 }

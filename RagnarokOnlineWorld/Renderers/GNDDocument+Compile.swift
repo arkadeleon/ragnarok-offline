@@ -8,7 +8,7 @@
 
 import SGLMath
 
-extension GNDDocument.Contents {
+extension GNDDocument {
 
     private struct LightmapAtlas {
         var u1: Float

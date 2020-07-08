@@ -6,7 +6,6 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-import Foundation
 import SGLMath
 
 struct ACTLayer {
@@ -35,85 +34,55 @@ struct ACTAction {
     var delay: Float
 }
 
-class ACTDocument: Document {
+struct ACTDocument: Document {
 
-    struct Contents {
-        var header: String
-        var version: String
-        var actions: [ACTAction]
-        var sounds: [String]
-    }
+    var header: String
+    var version: String
+    var actions: [ACTAction]
+    var sounds: [String]
 
-    let source: DocumentSource
-    let name: String
-
-    required init(source: DocumentSource) {
-        self.source = source
-        self.name = source.name
-    }
-
-    func load() -> Result<Contents, DocumentError> {
-        guard let data = try? source.data() else {
-            return .failure(.invalidSource)
-        }
-
-        let stream = DataStream(data: data)
+    init(from stream: Stream) throws {
         let reader = BinaryReader(stream: stream)
 
-        do {
-            let contents = try reader.readACTContents()
-            return .success(contents)
-        } catch {
-            return .failure(.invalidContents)
-        }
-    }
-}
-
-extension BinaryReader {
-
-    fileprivate func readACTContents() throws -> ACTDocument.Contents {
-        let header = try readString(count: 2)
+        header = try reader.readString(count: 2)
         guard header == "AC" else {
             throw DocumentError.invalidContents
         }
 
-        let minor = try readUInt8()
-        let major = try readUInt8()
-        let version = "\(major).\(minor)"
+        let minor = try reader.readUInt8()
+        let major = try reader.readUInt8()
+        version = "\(major).\(minor)"
 
-        let actionCount = try readUInt16()
+        let actionCount = try reader.readUInt16()
 
-        try skip(count: 10)
+        try reader.skip(count: 10)
 
         var actions: [ACTAction] = []
         for _ in 0..<actionCount {
-            let action = try readACTAction(version: version)
+            let action = try reader.readACTAction(version: version)
             actions.append(action)
         }
+        self.actions = actions
 
         var sounds: [String] = []
         if version >= "2.1" {
-            let soundCount = try readInt32()
+            let soundCount = try reader.readInt32()
             for _ in 0..<soundCount {
-                let sound = try readString(count: 40)
+                let sound = try reader.readString(count: 40)
                 sounds.append(sound)
             }
 
             if version >= "2.2" {
                 for i in 0..<Int(actionCount) {
-                    actions[i].delay = try readFloat32() * 25
+                    actions[i].delay = try reader.readFloat32() * 25
                 }
             }
         }
-
-        let contents = ACTDocument.Contents(
-            header: header,
-            version: version,
-            actions: actions,
-            sounds: sounds
-        )
-        return contents
+        self.sounds = sounds
     }
+}
+
+extension BinaryReader {
 
     fileprivate func readACTAction(version: String) throws -> ACTAction {
         let animationCount = try readUInt32()

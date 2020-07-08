@@ -18,7 +18,7 @@ struct RSMModel {
 
 extension RSMNodeBoundingBoxWrapper {
 
-    func compile(contents: RSMDocument.Contents, instance_matrix: Matrix4x4<Float>, boundingBox: RSMBoundingBox) -> [[ModelVertex]] {
+    func compile(contents: RSMDocument, instance_matrix: Matrix4x4<Float>, boundingBox: RSMBoundingBox) -> [[ModelVertex]] {
         var shadeGroup = [[Float]](repeating: [], count: 32)
         var shadeGroupUsed = [Bool](repeating: false, count: 32)
 
@@ -184,7 +184,7 @@ extension RSMNodeBoundingBoxWrapper {
     }
 }
 
-extension RSMDocument.Contents {
+extension RSMDocument {
 
     func compile(instances: [Matrix4x4<Float>], wrappers: [RSMNodeBoundingBoxWrapper], boundingBox: RSMBoundingBox) -> [[[ModelVertex]]] {
         var meshes = [[[ModelVertex]]]()

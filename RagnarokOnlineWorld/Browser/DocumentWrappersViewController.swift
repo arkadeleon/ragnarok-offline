@@ -74,20 +74,20 @@ extension DocumentWrappersViewController: UICollectionViewDelegate {
         case .directory, .archive, .directoryInArchive:
             let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: documentWrapper)
             navigationController?.pushViewController(documentWrappersViewController, animated: true)
-        case .textDocument(let document):
-            let documentViewController = TextDocumentViewController(document: document)
+        case .textDocument(let source):
+            let documentViewController = TextDocumentViewController(source: source)
             navigationController?.pushViewController(documentViewController, animated: true)
-        case .imageDocument(let document):
-            let documentViewController = ImageDocumentViewController(document: document)
+        case .imageDocument(let source):
+            let documentViewController = ImageDocumentViewController(source: source)
             navigationController?.pushViewController(documentViewController, animated: true)
-        case .rsmDocument(let document):
-            let documentViewController = RSMDocumentViewController(document: document)
+        case .rsmDocument(let source):
+            let documentViewController = RSMDocumentViewController(source: source)
             navigationController?.pushViewController(documentViewController, animated: true)
-        case .gndDocument(let document):
-            let documentViewController = GNDDocumentViewController(document: document)
+        case .gndDocument(let source):
+            let documentViewController = GNDDocumentViewController(source: source)
             navigationController?.pushViewController(documentViewController, animated: true)
-        case .sprite(let document):
-            let previewViewController = SpritePreviewViewController(document: document)
+        case .sprite(let source):
+            let previewViewController = SpritePreviewViewController(source: source)
             navigationController?.pushViewController(previewViewController, animated: true)
         default:
             break

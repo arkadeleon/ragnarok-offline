@@ -69,125 +69,91 @@ struct RSMVolumeBox {
     var flag: Int32
 }
 
-class RSMDocument: Document {
+struct RSMDocument: Document {
 
-    struct Contents {
-        var header: String
-        var version: String
-        var animLen: Int32
-        var shadeType: Int32
-        var alpha: Float
+    var header: String
+    var version: String
+    var animLen: Int32
+    var shadeType: Int32
+    var alpha: Float
 
-        var textures: [String]
+    var textures: [String]
 
-        var nodes: [RSMNode]
-        var mainNode: RSMNode?
+    var nodes: [RSMNode]
+    var mainNode: RSMNode?
 
-        var positionKeyframes: [RSMPositionKeyframe]
+    var positionKeyframes: [RSMPositionKeyframe]
 
-        var volumeBoxes: [RSMVolumeBox]
-    }
+    var volumeBoxes: [RSMVolumeBox]
 
-    let source: DocumentSource
-    let name: String
-
-    required init(source: DocumentSource) {
-        self.source = source
-        self.name = source.name
-    }
-
-    func load() -> Result<Contents, DocumentError> {
-        guard let data = try? source.data() else {
-            return .failure(.invalidSource)
-        }
-
-        let stream = DataStream(data: data)
+    init(from stream: Stream) throws {
         let reader = BinaryReader(stream: stream)
 
-        do {
-            let contents = try reader.readRSMContents()
-            return .success(contents)
-        } catch {
-            return .failure(.invalidContents)
-        }
-    }
-}
-
-extension BinaryReader {
-
-    fileprivate func readRSMContents() throws -> RSMDocument.Contents {
-        let header = try readString(count: 4)
+        header = try reader.readString(count: 4)
         guard header == "GRSM" else {
             throw DocumentError.invalidContents
         }
 
-        let major = try readUInt8()
-        let minor = try readUInt8()
-        let version = "\(major).\(minor)"
+        let major = try reader.readUInt8()
+        let minor = try reader.readUInt8()
+        version = "\(major).\(minor)"
 
-        let animLen = try readInt32()
-        let shadeType = try readInt32()
-        let alpha = try version >= "1.4" ? Float(readUInt8()) / 255 : 1
+        animLen = try reader.readInt32()
+        shadeType = try reader.readInt32()
+        alpha = try version >= "1.4" ? Float(reader.readUInt8()) / 255 : 1
 
-        try skip(count: 16)
+        try reader.skip(count: 16)
 
-        let textureCount = try readInt32()
+        let textureCount = try reader.readInt32()
         var textures: [String] = []
         for _ in 0..<textureCount {
-            let texture: String = try readString(count: 40)
+            let texture: String = try reader.readString(count: 40)
             textures.append(texture)
         }
+        self.textures = textures
 
-        let name = try readString(count: 40)
-        let nodeCount = try readInt32()
+        let name = try reader.readString(count: 40)
+        let nodeCount = try reader.readInt32()
         var nodes: [RSMNode] = []
         for _ in 0..<nodeCount {
-            let node = try readRSMNode(version: version)
+            let node = try reader.readRSMNode(version: version)
             nodes.append(node)
         }
+        self.nodes = nodes
 
-        let mainNode = nodes.first { $0.name == name} ?? nodes.first
+        mainNode = nodes.first { $0.name == name} ?? nodes.first
 
         var positionKeyframes: [RSMPositionKeyframe] = []
         if version < "1.5" {
-            let positionKeyframeCount = try readInt32()
+            let positionKeyframeCount = try reader.readInt32()
             for _ in 0..<positionKeyframeCount {
                 let keyframe = try RSMPositionKeyframe(
-                    frame: readInt32(),
-                    px: readFloat32(),
-                    py: readFloat32(),
-                    pz: readFloat32()
+                    frame: reader.readInt32(),
+                    px: reader.readFloat32(),
+                    py: reader.readFloat32(),
+                    pz: reader.readFloat32()
                 )
                 positionKeyframes.append(keyframe)
             }
         }
+        self.positionKeyframes = positionKeyframes
 
-        let volumeBoxCount = try readInt32()
+        let volumeBoxCount = try reader.readInt32()
         var volumeBoxes: [RSMVolumeBox] = []
         for _ in 0..<volumeBoxCount {
             let volumeBox = try RSMVolumeBox(
-                size: [readFloat32(), readFloat32(), readFloat32()],
-                position: [readFloat32(), readFloat32(), readFloat32()],
-                rotation: [readFloat32(), readFloat32(), readFloat32()],
-                flag: version >= "1.3" ? readInt32() : 0
+                size: [reader.readFloat32(), reader.readFloat32(), reader.readFloat32()],
+                position: [reader.readFloat32(), reader.readFloat32(), reader.readFloat32()],
+                rotation: [reader.readFloat32(), reader.readFloat32(), reader.readFloat32()],
+                flag: version >= "1.3" ? reader.readInt32() : 0
             )
             volumeBoxes.append(volumeBox)
         }
-
-        let contents = RSMDocument.Contents(
-            header: header,
-            version: version,
-            animLen: animLen,
-            shadeType: shadeType,
-            alpha: alpha,
-            textures: textures,
-            nodes: nodes,
-            mainNode: mainNode,
-            positionKeyframes: positionKeyframes,
-            volumeBoxes: volumeBoxes
-        )
-        return contents
+        self.volumeBoxes = volumeBoxes
     }
+}
+
+extension BinaryReader {
 
     fileprivate func readRSMNode(version: String) throws -> RSMNode {
         let name = try readString(count: 40)

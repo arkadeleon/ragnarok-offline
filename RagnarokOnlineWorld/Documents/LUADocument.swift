@@ -6,27 +6,17 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-import Foundation
+struct LUADocument: Document {
 
-class LUADocument: Document {
+    var string: String
 
-    let source: DocumentSource
-    let name: String
-
-    required init(source: DocumentSource) {
-        self.source = source
-        self.name = source.name
-    }
-
-    func load() -> Result<String, DocumentError> {
-        guard let data = try? source.data() else {
-            return .failure(.invalidSource)
-        }
+    init(from stream: Stream) throws {
+        let data = try stream.readToEnd()
 
         guard let string = String(data: data, encoding: .ascii) else {
-            return .failure(.invalidContents)
+            throw DocumentError.invalidContents
         }
 
-        return .success(string)
+        self.string = string
     }
 }

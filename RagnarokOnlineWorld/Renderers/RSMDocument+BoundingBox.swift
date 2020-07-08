@@ -17,7 +17,7 @@ struct RSMBoundingBox {
     var center = Vector3<Float>()
 }
 
-extension RSMDocument.Contents {
+extension RSMDocument {
 
     func calcBoundingBox() -> (RSMBoundingBox, [RSMNodeBoundingBoxWrapper]) {
         var box = RSMBoundingBox()

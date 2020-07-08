@@ -34,77 +34,44 @@ struct STRAnimation {
     var mtpreset: UInt32
 }
 
-class STRDocument: Document {
+struct STRDocument: Document {
 
-    struct Contents {
-        var header: String
-        var version: UInt32
-        var fps: UInt32
-        var maxKey: UInt32
-        var layernum: UInt32
-        var layers: [STRLayer]
-    }
+    var header: String
+    var version: UInt32
+    var fps: UInt32
+    var maxKey: UInt32
+    var layernum: UInt32
+    var layers: [STRLayer]
 
-    let source: DocumentSource
-    let name: String
-
-    required init(source: DocumentSource) {
-        self.source = source
-        self.name = source.name
-    }
-
-    func load() -> Result<Contents, DocumentError> {
-        guard let data = try? source.data() else {
-            return .failure(.invalidSource)
-        }
-
-        let stream = DataStream(data: data)
+    init(from stream: Stream) throws {
         let reader = BinaryReader(stream: stream)
 
-        do {
-            let contents = try reader.readSTRContents()
-            return .success(contents)
-        } catch {
-            return .failure(.invalidContents)
-        }
-    }
-}
-
-extension BinaryReader {
-
-    fileprivate func readSTRContents() throws -> STRDocument.Contents {
-        let header = try readString(count: 4)
+        header = try reader.readString(count: 4)
         guard header == "STRM" else {
             throw DocumentError.invalidContents
         }
 
-        let version = try readUInt32()
+        version = try reader.readUInt32()
         guard version == 0x94 else {
             throw DocumentError.invalidContents
         }
 
-        let fps = try readUInt32()
-        let maxKey = try readUInt32()
-        let layernum = try readUInt32()
+        fps = try reader.readUInt32()
+        maxKey = try reader.readUInt32()
+        layernum = try reader.readUInt32()
 
-        try skip(count: 16)
+        try reader.skip(count: 16)
 
         var layers: [STRLayer] = []
         for _ in 0..<layernum {
-            let layer = try readSTRLayer()
+            let layer = try reader.readSTRLayer()
             layers.append(layer)
         }
-
-        let contents = STRDocument.Contents(
-            header: header,
-            version: version,
-            fps: fps,
-            maxKey: maxKey,
-            layernum: layernum,
-            layers: layers
-        )
-        return contents
+        self.layers = layers
     }
+}
+
+extension BinaryReader {
 
     fileprivate func readSTRLayer() throws -> STRLayer {
         let texcnt = try readInt32()

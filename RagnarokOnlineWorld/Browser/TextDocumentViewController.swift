@@ -11,12 +11,12 @@ import WebKit
 
 class TextDocumentViewController: UIViewController {
 
-    let document: AnyDocument<DocumentSource, String>
+    let source: DocumentSource
 
     private var webView: WKWebView!
 
-    init(document: AnyDocument<DocumentSource, String>) {
-        self.document = document
+    init(source: DocumentSource) {
+        self.source = source
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -27,7 +27,7 @@ class TextDocumentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = document.name
+        title = source.name
 
         view.backgroundColor = .systemBackground
 
@@ -35,9 +35,21 @@ class TextDocumentViewController: UIViewController {
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(webView)
 
-        document.loadAsynchronously { result in
-            switch result {
-            case .success(let string):
+        loadSource()
+    }
+
+    private func loadSource() {
+        DispatchQueue.global().async {
+            guard let data = try? self.source.data() else {
+                return
+            }
+
+            let loader = DocumentLoader()
+            guard let document = try? loader.load(LUADocument.self, from: data) else {
+                return
+            }
+
+            DispatchQueue.main.async {
                 let htmlString = """
                 <html>
                     <head>
@@ -59,17 +71,13 @@ class TextDocumentViewController: UIViewController {
                     </head>
                     <body>
                         <pre>
-                            <code class="lua">\(string)</code>
+                            <code class="lua">\(document.string)</code>
                         </pre>
                     </body>
                 </html>
                 """
                 let baseURL = Bundle.main.bundleURL.appendingPathComponent("Vendors/highlightjs")
                 self.webView.loadHTMLString(htmlString, baseURL: baseURL)
-            case .failure(let error):
-                let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
             }
         }
     }

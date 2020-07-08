@@ -6,30 +6,21 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-import Foundation
 import ImageIO
 
-class BMPDocument: Document {
+struct BMPDocument: Document {
 
-    let source: DocumentSource
-    let name: String
+    var image: CGImage
 
-    required init(source: DocumentSource) {
-        self.source = source
-        self.name = source.name
-    }
-
-    func load() -> Result<CGImage, DocumentError> {
-        guard let data = try? source.data() else {
-            return .failure(.invalidSource)
-        }
+    init(from stream: Stream) throws {
+        let data = try stream.readToEnd()
 
         guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
               let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil)
         else {
-            return .failure(.invalidContents)
+            throw DocumentError.invalidContents
         }
 
-        return .success(image)
+        self.image = image
     }
 }
