@@ -14,8 +14,8 @@ struct GRFHeader {
 
     static let size: UInt64 = 0x2e
 
-    let signature: [UInt8]
-    let key: [UInt8]
+    let signature: String
+    let key: Data
     let fileTableOffset: UInt32
     let skip: UInt32
     let fileCount: UInt32
@@ -72,21 +72,17 @@ class GRFArchive: NSObject {
     init(url: URL) throws {
         self.url = url
 
-        let fileHandle = try FileHandle(forReadingFrom: url)
-        let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
+        let stream = try FileStream(url: url)
+        let reader = BinaryReader(stream: stream)
 
-        defer {
-            try? fileHandle.close()
-        }
+        let signature = try reader.readString(count: 15, encoding: String.Encoding.ascii.rawValue)
+        let key = try reader.readData(count: 15)
+        let fileTableOffset = try reader.readUInt32()
+        let skip = try reader.readUInt32()
+        let fileCount = try reader.readUInt32()
+        let version = try reader.readUInt32()
 
-        let signature = try fileHandle.readBytes(15)
-        let key = try fileHandle.readBytes(15)
-        let fileTableOffset = try fileHandle.readUInt32()
-        let skip = try fileHandle.readUInt32()
-        let fileCount = try fileHandle.readUInt32()
-        let version = try fileHandle.readUInt32()
-
-        guard String(bytes: signature, encoding: .ascii) == "Master of Magic" else {
+        guard signature == "Master of Magic" else {
             throw Error.invalidHeader
         }
 
@@ -94,7 +90,7 @@ class GRFArchive: NSObject {
             throw Error.invalidHeader
         }
 
-        guard GRFHeader.size + UInt64(fileTableOffset) < attributes[.size] as? UInt64 ?? 0 else {
+        guard GRFHeader.size + UInt64(fileTableOffset) < (try stream.length()) else {
             throw Error.invalidHeader
         }
 
@@ -107,14 +103,13 @@ class GRFArchive: NSObject {
             version: version
         )
 
-        try fileHandle.seek(toOffset: GRFHeader.size + UInt64(fileTableOffset))
+        try reader.skip(count: UInt64(fileTableOffset))
 
-        let packSize = try fileHandle.readUInt32()
-        let realSize = try fileHandle.readUInt32()
+        let packSize = try reader.readUInt32()
+        let realSize = try reader.readUInt32()
 
-        try fileHandle.seek(toOffset: GRFHeader.size + UInt64(fileTableOffset) + GRFTable.size)
-        let compressedData = try fileHandle.readBytes(Int(packSize))
-        guard let data = Data(compressedData).unzip() else {
+        let compressedData = try reader.readData(count: Int(packSize))
+        guard let data = compressedData.unzip() else {
             throw Error.invalidTable
         }
 
@@ -192,14 +187,11 @@ class GRFArchive: NSObject {
     }
 
     func contents(of entry: GRFEntry) throws -> Data {
-        let fileHandle = try FileHandle(forReadingFrom: url)
+        let stream = try FileStream(url: url)
+        let reader = BinaryReader(stream: stream)
 
-        defer {
-            try? fileHandle.close()
-        }
-
-        try fileHandle.seek(toOffset: GRFHeader.size + UInt64(entry.offset))
-        var bytes = try fileHandle.readBytes(Int(entry.lengthAligned))
+        try reader.skip(count: GRFHeader.size + UInt64(entry.offset))
+        var bytes = try Array(reader.readData(count: Int(entry.lengthAligned)))
 
         if entry.type & GRFEntryType.file.rawValue == 0 {
             guard let data = Data(bytes).unzip() else {

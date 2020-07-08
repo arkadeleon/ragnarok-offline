@@ -20,7 +20,6 @@
 		35116E22245C7B8A000A60FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */; };
 		35116E38245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E37245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift */; };
 		35116E50245FBF65000A60FE /* DataCompression in Frameworks */ = {isa = PBXBuildFile; productRef = 35116E4F245FBF65000A60FE /* DataCompression */; };
-		35116E57245FC152000A60FE /* FileHandle+Reading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E53245FC152000A60FE /* FileHandle+Reading.swift */; };
 		35116E58245FC152000A60FE /* GRFArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E55245FC152000A60FE /* GRFArchive.swift */; };
 		35116E5A245FC2B5000A60FE /* GRFDocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E59245FC2B5000A60FE /* GRFDocumentTests.swift */; };
 		35116E5C245FC2DF000A60FE /* test.grf in Resources */ = {isa = PBXBuildFile; fileRef = 35116E5B245FC2DF000A60FE /* test.grf */; };
@@ -109,7 +108,6 @@
 		35116E33245C7B8A000A60FE /* RagnarokOnlineWorldUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RagnarokOnlineWorldUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35116E37245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagnarokOnlineWorldUITests.swift; sourceTree = "<group>"; };
 		35116E39245C7B8B000A60FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		35116E53245FC152000A60FE /* FileHandle+Reading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileHandle+Reading.swift"; sourceTree = "<group>"; };
 		35116E55245FC152000A60FE /* GRFArchive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GRFArchive.swift; sourceTree = "<group>"; };
 		35116E59245FC2B5000A60FE /* GRFDocumentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRFDocumentTests.swift; sourceTree = "<group>"; };
 		35116E5B245FC2DF000A60FE /* test.grf */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.grf; sourceTree = "<group>"; };
@@ -321,7 +319,6 @@
 				35116E5D2461A5DB000A60FE /* DESDecryptor.swift */,
 				35C06DBB2498C9C000F0A229 /* TextureLoader.swift */,
 				35EF769B24B3222000371F1F /* CGImage+Decode.swift */,
-				35116E53245FC152000A60FE /* FileHandle+Reading.swift */,
 				35617A72249863580097C60C /* SGLMath+Calculate.swift */,
 				35E8DCE124A9DF4100A14FC5 /* SGLMath+SIMD.swift */,
 			);
@@ -531,7 +528,6 @@
 				35116E8324685AE4000A60FE /* ImageDocumentViewController.swift in Sources */,
 				35116E7924659FD6000A60FE /* Document.swift in Sources */,
 				359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */,
-				35116E57245FC152000A60FE /* FileHandle+Reading.swift in Sources */,
 				35CB3BB52478359100EC04C3 /* Shaders.metal in Sources */,
 				3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */,
 				355EFD2D2480264B0033C280 /* Camera.swift in Sources */,
