@@ -11,10 +11,11 @@ import CoreFoundation
 import DataCompression
 
 struct GRFHeader {
+
     static let size: UInt64 = 0x2e
 
-    let signature: [UInt8]
-    let key: [UInt8]
+    let signature: String
+    let key: Data
     let fileTableOffset: UInt32
     let skip: UInt32
     let fileCount: UInt32
@@ -22,34 +23,26 @@ struct GRFHeader {
 }
 
 struct GRFTable {
+
     static let size: UInt64 = 0x08
 
     let packSize: UInt32
     let realSize: UInt32
+    let data: Data
 }
 
-struct GRFEntry: ArchiveEntry, Equatable {
+struct GRFEntry: Equatable {
+
     let name: String
     let packSize: UInt32
     let lengthAligned: UInt32
     let realSize: UInt32
     let type: UInt8
     let offset: UInt32
-
-    var path: String {
-        name
-    }
-
-    var lastPathComponent: String {
-        String(path.split(separator: "\\").last ?? "")
-    }
-
-    var pathExtension: String {
-        (lastPathComponent as NSString).pathExtension
-    }
 }
 
 struct GRFEntryType: OptionSet {
+
     let rawValue: UInt8
 
     init(rawValue: UInt8) {
@@ -61,45 +54,33 @@ struct GRFEntryType: OptionSet {
     static let encryptHeader = GRFEntryType(rawValue: 0x04) // encryption mode 1 (header DES only)
 }
 
-class GRFArchive: NSObject, Archive {
+struct GRFDocument: Document {
 
-    enum Error: Swift.Error {
-        case invalidHeader
-        case invalidTable
-        case invalidEntry
-    }
+    var header: GRFHeader
+    var table: GRFTable
+    var entries: [GRFEntry]
+    var entryNameTable: String
 
-    let url: URL
-    let header: GRFHeader
-    let table: GRFTable
-    let entries: [ArchiveEntry]
+    init(from stream: Stream) throws {
+        let reader = BinaryReader(stream: stream)
 
-    private let fileHandle: FileHandle
-    private let attributes: [FileAttributeKey : Any]
+        let signature = try reader.readString(count: 15, encoding: String.Encoding.ascii.rawValue)
+        let key = try reader.readData(count: 15)
+        let fileTableOffset = try reader.readUInt32()
+        let skip = try reader.readUInt32()
+        let fileCount = try reader.readUInt32()
+        let version = try reader.readUInt32()
 
-    init(url: URL) throws {
-        self.url = url
-        
-        fileHandle = try FileHandle(forReadingFrom: url)
-        attributes = try FileManager.default.attributesOfItem(atPath: url.path)
-
-        let signature = try fileHandle.readBytes(15)
-        let key = try fileHandle.readBytes(15)
-        let fileTableOffset = try fileHandle.readUInt32()
-        let skip = try fileHandle.readUInt32()
-        let fileCount = try fileHandle.readUInt32()
-        let version = try fileHandle.readUInt32()
-
-        guard String(bytes: signature, encoding: .ascii) == "Master of Magic" else {
-            throw Error.invalidHeader
+        guard signature == "Master of Magic" else {
+            throw DocumentError.invalidContents
         }
 
         guard version == 0x200 else {
-            throw Error.invalidHeader
+            throw DocumentError.invalidContents
         }
 
-        guard GRFHeader.size + UInt64(fileTableOffset) < attributes[.size] as? UInt64 ?? 0 else {
-            throw Error.invalidHeader
+        guard GRFHeader.size + UInt64(fileTableOffset) < (try stream.length()) else {
+            throw DocumentError.invalidContents
         }
 
         header = GRFHeader(
@@ -111,44 +92,45 @@ class GRFArchive: NSObject, Archive {
             version: version
         )
 
-        try fileHandle.seek(toOffset: GRFHeader.size + UInt64(fileTableOffset))
+        try reader.skip(count: UInt64(fileTableOffset))
 
-        let packSize = try fileHandle.readUInt32()
-        let realSize = try fileHandle.readUInt32()
+        let packSize = try reader.readUInt32()
+        let realSize = try reader.readUInt32()
+
+        let compressedData = try reader.readData(count: Int(packSize))
+        guard let data = compressedData.unzip() else {
+            throw DocumentError.invalidContents
+        }
 
         table = GRFTable(
             packSize: packSize,
-            realSize: realSize
+            realSize: realSize,
+            data: data
         )
 
-        try fileHandle.seek(toOffset: GRFHeader.size + UInt64(fileTableOffset) + GRFTable.size)
-        let data = try fileHandle.readBytes(Int(packSize))
-        guard let decompressedData = Data(data).unzip() else {
-            throw Error.invalidTable
-        }
+        var entries: [GRFEntry] = []
+        var entryNameTable = ""
 
         var pos = 0
-        var entries: [GRFEntry] = []
         for _ in 0..<header.fileCount {
-            var filename: [UInt8] = []
-            while decompressedData[pos] != 0 {
-                filename.append(decompressedData[pos])
-                pos += 1
+            guard let index = table.data[pos...].firstIndex(of: 0) else {
+                break
             }
-            pos += 1
-
-            let packSize = Data(decompressedData[(pos + 0)..<(pos + 4)]).withUnsafeBytes { $0.load(as: UInt32.self) }
-            let lengthAligned = Data(decompressedData[(pos + 4)..<(pos + 8)]).withUnsafeBytes { $0.load(as: UInt32.self) }
-            let realSize = Data(decompressedData[(pos + 8)..<(pos + 12)]).withUnsafeBytes { $0.load(as: UInt32.self) }
-            let type = decompressedData[12]
-            let offset = Data(decompressedData[(pos + 13)..<(pos + 17)]).withUnsafeBytes { $0.load(as: UInt32.self) }
 
             let cfEncoding = CFStringEncoding(CFStringEncodings.EUC_KR.rawValue)
-            let nsEncoding = CFStringConvertEncodingToNSStringEncoding(cfEncoding)
-            let nsFilename = NSString(data: Data(filename), encoding: nsEncoding) ?? ""
+            let encoding = CFStringConvertEncodingToNSStringEncoding(cfEncoding)
+            let name = NSString(data: table.data[pos..<index], encoding: encoding) ?? ""
+
+            pos = index + 1
+
+            let packSize = Data(table.data[(pos + 0)..<(pos + 4)]).withUnsafeBytes { $0.load(as: UInt32.self) }
+            let lengthAligned = Data(table.data[(pos + 4)..<(pos + 8)]).withUnsafeBytes { $0.load(as: UInt32.self) }
+            let realSize = Data(table.data[(pos + 8)..<(pos + 12)]).withUnsafeBytes { $0.load(as: UInt32.self) }
+            let type = table.data[12]
+            let offset = Data(table.data[(pos + 13)..<(pos + 17)]).withUnsafeBytes { $0.load(as: UInt32.self) }
 
             let entry = GRFEntry(
-                name: nsFilename as String,
+                name: name as String,
                 packSize: packSize,
                 lengthAligned: lengthAligned,
                 realSize: realSize,
@@ -158,27 +140,47 @@ class GRFArchive: NSObject, Archive {
 
             entries.append(entry)
 
+            entryNameTable += entry.name + "\0"
+
             pos += 17
         }
 
         self.entries = entries
+        self.entryNameTable = entryNameTable
     }
 
-    deinit {
-        fileHandle.closeFile()
-    }
-
-    func contents(of entry: ArchiveEntry) throws -> Data {
-        guard let entry = entry as? GRFEntry else {
-            throw Error.invalidEntry
+    func entryNames(forPath path: String) -> [String] {
+        let pattern = path.replacingOccurrences(of: "\\", with: "\\\\") + "([^(\\x0|\\\\)]+)"
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
+            return []
         }
 
-        try fileHandle.seek(toOffset: GRFHeader.size + UInt64(entry.offset))
-        var bytes = try fileHandle.readBytes(Int(entry.lengthAligned))
+        let entryNameTable = self.entryNameTable as NSString
+        let range = NSRange(location: 0, length: entryNameTable.length)
+        let matches = regex.matches(in: entryNameTable as String, options: [], range: range)
+
+        var entryNames: [String] = []
+        for match in matches {
+            let entryName = entryNameTable.substring(with: match.range)
+            entryNames.append(entryName)
+        }
+
+        return Array(Set(entryNames))
+    }
+
+    func entry(forName name: String) -> GRFEntry? {
+        return entries.first { $0.name == name }
+    }
+
+    func contents(of entry: GRFEntry, from stream: Stream) throws -> Data {
+        let reader = BinaryReader(stream: stream)
+
+        try reader.skip(count: GRFHeader.size + UInt64(entry.offset))
+        var bytes = try Array(reader.readData(count: Int(entry.lengthAligned)))
 
         if entry.type & GRFEntryType.file.rawValue == 0 {
             guard let data = Data(bytes).unzip() else {
-                throw Error.invalidEntry
+                throw DocumentError.invalidContents
             }
             return data
         }
@@ -191,7 +193,7 @@ class GRFArchive: NSObject, Archive {
         }
 
         guard let data = Data(bytes).unzip() else {
-            throw Error.invalidEntry
+            throw DocumentError.invalidContents
         }
         return data
     }

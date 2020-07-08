@@ -20,6 +20,9 @@ class DocumentWrappersViewController: UIViewController {
     init(documentWrapper: DocumentWrapper) {
         self.documentWrapper = documentWrapper
         self.documentWrappers = (documentWrapper.documentWrappers ?? []).sorted()
+        for dw in documentWrappers {
+            print(dw.url)
+        }
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -30,7 +33,7 @@ class DocumentWrappersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = documentWrapper.name
+        title = documentWrapper.url.lastPathComponent
 
         view.backgroundColor = .systemBackground
 
@@ -61,7 +64,7 @@ extension DocumentWrappersViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! DocumentWrapperCell
         cell.iconView.image = documentWrappers[indexPath.row].icon
-        cell.nameLabel.text = documentWrappers[indexPath.row].name
+        cell.nameLabel.text = documentWrappers[indexPath.row].url.lastPathComponent
         return cell
     }
 }
@@ -71,7 +74,7 @@ extension DocumentWrappersViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let documentWrapper = documentWrappers[indexPath.row]
         switch documentWrapper {
-        case .directory, .archive, .directoryInArchive:
+        case .directory, .grfDocument, .directoryInArchive:
             let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: documentWrapper)
             navigationController?.pushViewController(documentWrappersViewController, animated: true)
         case .textDocument(let source):

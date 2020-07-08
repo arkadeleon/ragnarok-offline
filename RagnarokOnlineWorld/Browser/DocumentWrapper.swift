@@ -12,9 +12,9 @@ enum DocumentWrapper {
 
     case directory(URL)
     case document(URL)
-    case archive(GRFArchive)
-    case directoryInArchive(GRFArchive, String)
-    case entryInArchive(String)
+    case grfDocument(URL, GRFDocument)
+    case directoryInArchive(URL, GRFDocument, String)
+    case entryInArchive(URL, GRFDocument, String)
     case textDocument(DocumentSource)
     case imageDocument(DocumentSource)
     case rsmDocument(DocumentSource)
@@ -24,13 +24,39 @@ enum DocumentWrapper {
 
 extension DocumentWrapper {
 
+    var url: URL {
+        switch self {
+        case .directory(let url):
+            return url
+        case .document(let url):
+            return url
+        case .grfDocument(let url, _):
+            return url
+        case .directoryInArchive(let url, _, let path):
+            return url.appendingPathComponent(path.replacingOccurrences(of: "\\", with: "/"))
+        case .entryInArchive(let url, _, let entryName):
+            return url.appendingPathComponent(entryName.replacingOccurrences(of: "\\", with: "/"))
+        case .textDocument(let source),
+             .imageDocument(let source),
+             .rsmDocument(let source),
+             .gndDocument(let source),
+             .sprite(let source):
+            switch source {
+            case .url(let url):
+                return url
+            case .entryInArchive(let url, _, let entryName):
+                return url.appendingPathComponent(entryName.replacingOccurrences(of: "\\", with: "/"))
+            }
+        }
+    }
+
     var icon: UIImage? {
         switch self {
         case .directory:
             return UIImage(systemName: "folder")
         case .document:
             return UIImage(systemName: "doc")
-        case .archive:
+        case .grfDocument:
             return UIImage(systemName: "doc")
         case .directoryInArchive:
             return UIImage(systemName: "folder")
@@ -49,31 +75,6 @@ extension DocumentWrapper {
         }
     }
 
-    var name: String {
-        switch self {
-        case .directory(let url):
-            return url.lastPathComponent
-        case .document(let url):
-            return url.lastPathComponent
-        case .archive(let archive):
-            return archive.url.lastPathComponent
-        case .directoryInArchive(_, let path):
-            return String(path.split(separator: "\\").last ?? "")
-        case .entryInArchive(let entryName):
-            return String(entryName.split(separator: "\\").last ?? "")
-        case .textDocument(let source):
-            return source.name
-        case .imageDocument(let source):
-            return source.name
-        case .rsmDocument(let source):
-            return source.name
-        case .gndDocument(let source):
-            return source.name
-        case .sprite(let source):
-            return source.name
-        }
-    }
-
     var documentWrappers: [DocumentWrapper]? {
         switch self {
         case .directory(let url):
@@ -86,8 +87,9 @@ extension DocumentWrapper {
                 }
                 switch url.pathExtension {
                 case "grf":
-                    if let archive = try? GRFArchive(url: url) {
-                        return .archive(archive)
+                    let loader = DocumentLoader()
+                    if let document = try? loader.load(GRFDocument.self, from: url) {
+                        return .grfDocument(url, document)
                     } else {
                         return .document(url)
                     }
@@ -104,11 +106,9 @@ extension DocumentWrapper {
             return documentWrappers
         case .document:
             return nil
-        case .archive(let archive):
-            return DocumentWrapper.directoryInArchive(archive, "data\\").documentWrappers
-        case .directoryInArchive(let archive, let path):
-            archive.unarchive()
-
+        case .grfDocument(let url, let document):
+            return DocumentWrapper.directoryInArchive(url, document, "data\\").documentWrappers
+        case .directoryInArchive(let url, let archive, let path):
             var documentWrappers: [DocumentWrapper] = []
 
             let entryNames = archive.entryNames(forPath: path)
@@ -116,29 +116,29 @@ extension DocumentWrapper {
                 if let index = entryName.firstIndex(of: ".") {
                     switch entryName[index...] {
                     case ".lua":
-                        let documentWrapper: DocumentWrapper = .textDocument(.entryInArchive(archive, entryName))
+                        let documentWrapper: DocumentWrapper = .textDocument(.entryInArchive(url, archive, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".bmp":
-                        let documentWrapper: DocumentWrapper = .imageDocument(.entryInArchive(archive, entryName))
+                        let documentWrapper: DocumentWrapper = .imageDocument(.entryInArchive(url, archive, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".pal":
-                        let documentWrapper: DocumentWrapper = .imageDocument(.entryInArchive(archive, entryName))
+                        let documentWrapper: DocumentWrapper = .imageDocument(.entryInArchive(url, archive, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".rsm":
-                        let documentWrapper: DocumentWrapper = .rsmDocument(.entryInArchive(archive, entryName))
+                        let documentWrapper: DocumentWrapper = .rsmDocument(.entryInArchive(url, archive, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".gnd":
-                        let documentWrapper: DocumentWrapper = .gndDocument(.entryInArchive(archive, entryName))
+                        let documentWrapper: DocumentWrapper = .gndDocument(.entryInArchive(url, archive, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".spr":
-                        let documentWrapper: DocumentWrapper = .sprite(.entryInArchive(archive, entryName))
+                        let documentWrapper: DocumentWrapper = .sprite(.entryInArchive(url, archive, entryName))
                         documentWrappers.append(documentWrapper)
                     default:
-                        let documentWrapper: DocumentWrapper = .entryInArchive(entryName)
+                        let documentWrapper: DocumentWrapper = .entryInArchive(url, archive, entryName)
                         documentWrappers.append(documentWrapper)
                     }
                 } else {
-                    let documentWrapper: DocumentWrapper = .directoryInArchive(archive, entryName + "\\")
+                    let documentWrapper: DocumentWrapper = .directoryInArchive(url, archive, entryName + "\\")
                     documentWrappers.append(documentWrapper)
                 }
             }
@@ -161,37 +161,19 @@ extension DocumentWrapper {
 }
 
 extension DocumentWrapper: Equatable, Comparable {
-
-    static func < (lhs: DocumentWrapper, rhs: DocumentWrapper) -> Bool {
-        if lhs.rank == rhs.rank {
-            return lhs.name.lowercased() < rhs.name.lowercased()
-        } else {
-            return lhs.rank < rhs.rank
-        }
+    static func == (lhs: DocumentWrapper, rhs: DocumentWrapper) -> Bool {
+        lhs.url == rhs.url
     }
 
-    var rank: Int {
-        switch self {
-        case .directory:
-            return 0
-        case .document:
-            return 1
-        case .archive:
-            return 1
-        case .directoryInArchive:
-            return 0
-        case .entryInArchive:
-            return 1
-        case .textDocument:
-            return 1
-        case .imageDocument:
-            return 1
-        case .rsmDocument:
-            return 1
-        case .gndDocument:
-            return 1
-        case .sprite:
-            return 1
+    static func < (lhs: DocumentWrapper, rhs: DocumentWrapper) -> Bool {
+        switch (lhs.url.pathExtension.isEmpty, rhs.url.pathExtension.isEmpty) {
+        case (true, true),
+             (false, false):
+            return lhs.url.path.lowercased() < rhs.url.path.lowercased()
+        case (true, false):
+            return true
+        case (false, true):
+            return false
         }
     }
 }

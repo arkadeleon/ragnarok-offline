@@ -20,7 +20,7 @@
 		35116E22245C7B8A000A60FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */; };
 		35116E38245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E37245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift */; };
 		35116E50245FBF65000A60FE /* DataCompression in Frameworks */ = {isa = PBXBuildFile; productRef = 35116E4F245FBF65000A60FE /* DataCompression */; };
-		35116E58245FC152000A60FE /* GRFArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E55245FC152000A60FE /* GRFArchive.swift */; };
+		35116E58245FC152000A60FE /* GRFDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E55245FC152000A60FE /* GRFDocument.swift */; };
 		35116E5A245FC2B5000A60FE /* GRFDocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E59245FC2B5000A60FE /* GRFDocumentTests.swift */; };
 		35116E5C245FC2DF000A60FE /* test.grf in Resources */ = {isa = PBXBuildFile; fileRef = 35116E5B245FC2DF000A60FE /* test.grf */; };
 		35116E5E2461A5DB000A60FE /* DESDecryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E5D2461A5DB000A60FE /* DESDecryptor.swift */; };
@@ -108,7 +108,7 @@
 		35116E33245C7B8A000A60FE /* RagnarokOnlineWorldUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RagnarokOnlineWorldUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35116E37245C7B8A000A60FE /* RagnarokOnlineWorldUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagnarokOnlineWorldUITests.swift; sourceTree = "<group>"; };
 		35116E39245C7B8B000A60FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		35116E55245FC152000A60FE /* GRFArchive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GRFArchive.swift; sourceTree = "<group>"; };
+		35116E55245FC152000A60FE /* GRFDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GRFDocument.swift; sourceTree = "<group>"; };
 		35116E59245FC2B5000A60FE /* GRFDocumentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRFDocumentTests.swift; sourceTree = "<group>"; };
 		35116E5B245FC2DF000A60FE /* test.grf */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.grf; sourceTree = "<group>"; };
 		35116E5D2461A5DB000A60FE /* DESDecryptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DESDecryptor.swift; sourceTree = "<group>"; };
@@ -268,11 +268,11 @@
 			isa = PBXGroup;
 			children = (
 				35116E7824659FD6000A60FE /* Document.swift */,
-				35116E55245FC152000A60FE /* GRFArchive.swift */,
 				35116E8C247035AC000A60FE /* ACTDocument.swift */,
 				35116E80246858F0000A60FE /* BMPDocument.swift */,
 				35116E8A247025EE000A60FE /* GATDocument.swift */,
 				35021BAC24A054700021B99B /* GNDDocument.swift */,
+				35116E55245FC152000A60FE /* GRFDocument.swift */,
 				35116E7C2466FEB3000A60FE /* LUADocument.swift */,
 				35D091F524AC8EB0008D7CEA /* PALDocument.swift */,
 				35116E84246ADFFA000A60FE /* RSMDocument.swift */,
@@ -537,7 +537,7 @@
 				35116E85246ADFFA000A60FE /* RSMDocument.swift in Sources */,
 				35617A73249863580097C60C /* SGLMath+Calculate.swift in Sources */,
 				3587F70924694FA7007D1C9B /* BinaryReader.swift in Sources */,
-				35116E58245FC152000A60FE /* GRFArchive.swift in Sources */,
+				35116E58245FC152000A60FE /* GRFDocument.swift in Sources */,
 				359D5C1624A1F8CA00C2D8D3 /* GNDDocumentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

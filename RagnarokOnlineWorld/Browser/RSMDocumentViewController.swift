@@ -55,7 +55,11 @@ class RSMDocumentViewController: UIViewController {
 
     private func loadSource() {
         DispatchQueue.global().async {
-            guard case .entryInArchive(let archive, _) = self.source else {
+            guard case .entryInArchive(let url, let archive, _) = self.source else {
+                return
+            }
+
+            guard let stream = try? FileStream(url: url) else {
                 return
             }
 
@@ -73,7 +77,7 @@ class RSMDocumentViewController: UIViewController {
                 guard let entry = archive.entry(forName: "data\\texture\\" + textureName) else {
                     return nil
                 }
-                guard let contents = try? archive.contents(of: entry) else {
+                guard let contents = try? archive.contents(of: entry, from: stream) else {
                     return nil
                 }
                 return textureLoader.newTexture(data: contents)

@@ -21,7 +21,13 @@ enum DocumentError: Error {
 
 class DocumentLoader {
 
-    func load<D: Document>(_ type: D.Type, from data: Data) throws -> D {
+    func load<T: Document>(_ type: T.Type, from url: URL) throws -> T {
+        let stream = try FileStream(url: url)
+        let document = try type.init(from: stream)
+        return document
+    }
+
+    func load<T: Document>(_ type: T.Type, from data: Data) throws -> T {
         let stream = DataStream(data: data)
         let document = try type.init(from: stream)
         return document

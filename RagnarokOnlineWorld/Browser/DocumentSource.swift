@@ -8,17 +8,17 @@
 
 import Foundation
 
-enum DocumentSource: Equatable {
+enum DocumentSource {
 
     case url(URL)
 
-    case entryInArchive(GRFArchive, String)
+    case entryInArchive(URL, GRFDocument, String)
 
     var name: String {
         switch self {
         case .url(let url):
             return url.lastPathComponent
-        case .entryInArchive(_, let entryName):
+        case .entryInArchive(_, _, let entryName):
             let lastPathComponent = entryName.split(separator: "\\").last
             return String(lastPathComponent ?? "")
         }
@@ -28,7 +28,7 @@ enum DocumentSource: Equatable {
         switch self {
         case .url(let url):
             return url.pathExtension
-        case .entryInArchive(_, let entryName):
+        case .entryInArchive(_, _, let entryName):
             let pathExtension = entryName.split(separator: "\\").last?.split(separator: ".").last
             return String(pathExtension ?? "")
         }
@@ -38,11 +38,12 @@ enum DocumentSource: Equatable {
         switch self {
         case .url(let url):
             return try Data(contentsOf: url)
-        case .entryInArchive(let archive, let entryName):
+        case .entryInArchive(let url, let archive, let entryName):
             guard let entry = archive.entry(forName: entryName) else {
                 return Data()
             }
-            return try archive.contents(of: entry)
+            let stream = try FileStream(url: url)
+            return try archive.contents(of: entry, from: stream)
         }
     }
 }

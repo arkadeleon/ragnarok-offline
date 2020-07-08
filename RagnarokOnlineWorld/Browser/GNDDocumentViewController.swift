@@ -55,7 +55,11 @@ class GNDDocumentViewController: UIViewController {
 
     private func loadSource() {
         DispatchQueue.global().async {
-            guard case .entryInArchive(let archive, _) = self.source else {
+            guard case .entryInArchive(let url, let archive, _) = self.source else {
+                return
+            }
+
+            guard let stream = try? FileStream(url: url) else {
                 return
             }
 
@@ -99,7 +103,7 @@ class GNDDocumentViewController: UIViewController {
                 guard let entry = archive.entry(forName: "data\\texture\\" + name.lowercased()) else {
                     continue
                 }
-                let data = try! archive.contents(of: entry)
+                let data = try! archive.contents(of: entry, from: stream)
                 let image = UIImage(data: data)?.cgImage?.decoded
 
                 let x = (i % Int(ATLAS_WIDTH)) * 258
