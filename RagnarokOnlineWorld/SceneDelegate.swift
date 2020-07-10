@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -34,8 +35,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             ]
 
             window = UIWindow(windowScene: windowScene)
-            window?.rootViewController = tabBarController
-            window?.makeKeyAndVisible()
+            window!.rootViewController = tabBarController
+            window!.makeKeyAndVisible()
+
+            let hud = MBProgressHUD.showAdded(to: window!, animated: true)
+            DispatchQueue.global().async {
+                try? ResourceManager.default.preload()
+                DispatchQueue.main.async {
+                    hud.hide(animated: true)
+                }
+            }
         } catch {
             fatalError()
         }

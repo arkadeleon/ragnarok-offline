@@ -12,9 +12,9 @@ enum DocumentWrapper {
 
     case directory(URL)
     case regular(URL)
-    case grf(URL, GRFDocument)
-    case entryGroup(URL, GRFDocument, String)
-    case entry(URL, GRFDocument, String)
+    case grf(URL)
+    case entryGroup(URL, String)
+    case entry(URL, String)
     case text(DocumentSource)
     case image(DocumentSource)
     case model(DocumentSource)
@@ -30,12 +30,12 @@ extension DocumentWrapper {
             return url
         case .regular(let url):
             return url
-        case .grf(let url, _):
+        case .grf(let url):
             return url
-        case .entryGroup(let url, _, let path):
+        case .entryGroup(let url, let path):
             return url.appendingPathComponent(path.replacingOccurrences(of: "\\", with: "/"))
-        case .entry(let url, _, let entryName):
-            return url.appendingPathComponent(entryName.replacingOccurrences(of: "\\", with: "/"))
+        case .entry(let url, let name):
+            return url.appendingPathComponent(name.replacingOccurrences(of: "\\", with: "/"))
         case .text(let source),
              .image(let source),
              .model(let source),
@@ -44,8 +44,8 @@ extension DocumentWrapper {
             switch source {
             case .url(let url):
                 return url
-            case .entry(let url, _, let entryName):
-                return url.appendingPathComponent(entryName.replacingOccurrences(of: "\\", with: "/"))
+            case .entry(let url, let name):
+                return url.appendingPathComponent(name.replacingOccurrences(of: "\\", with: "/"))
             }
         }
     }
@@ -81,64 +81,65 @@ extension DocumentWrapper {
             guard let urls = try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: []) else {
                 return nil
             }
-            let documentWrappers = urls.map { url -> DocumentWrapper in
-                if url.hasDirectoryPath {
-                    return .directory(url)
+            let documentWrappers = urls
+                .map{ url -> URL in
+                    url.resolvingSymlinksInPath()
                 }
-                switch url.pathExtension {
-                case "grf":
-                    let loader = DocumentLoader()
-                    if let document = try? loader.load(GRFDocument.self, from: url) {
-                        return .grf(url, document)
-                    } else {
+                .map { url -> DocumentWrapper in
+                    if url.hasDirectoryPath {
+                        return .directory(url)
+                    }
+                    switch url.pathExtension {
+                    case "grf":
+                        return .grf(url)
+                    case "lua":
+                        return .text(.url(url))
+                    case "bmp":
+                        return .image(.url(url))
+                    case "rsm":
+                        return .model(.url(url))
+                    default:
                         return .regular(url)
                     }
-                case "lua":
-                    return .text(.url(url))
-                case "bmp":
-                    return .image(.url(url))
-                case "rsm":
-                    return .model(.url(url))
-                default:
-                    return .regular(url)
                 }
-            }
             return documentWrappers
         case .regular:
             return nil
-        case .grf(let url, let document):
-            return DocumentWrapper.entryGroup(url, document, "data\\").documentWrappers
-        case .entryGroup(let url, let grf, let path):
+        case .grf(let url):
+            return DocumentWrapper.entryGroup(url, "data\\").documentWrappers
+        case .entryGroup(let url, let path):
+            guard let grf = ResourceManager.default.grfs[url] else {
+                return []
+            }
             var documentWrappers: [DocumentWrapper] = []
-
             let entryNames = grf.entryNames(forPath: path)
             for entryName in entryNames {
                 if let index = entryName.firstIndex(of: ".") {
                     switch entryName[index...] {
                     case ".lua":
-                        let documentWrapper: DocumentWrapper = .text(.entry(url, grf, entryName))
+                        let documentWrapper: DocumentWrapper = .text(.entry(url, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".bmp":
-                        let documentWrapper: DocumentWrapper = .image(.entry(url, grf, entryName))
+                        let documentWrapper: DocumentWrapper = .image(.entry(url, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".pal":
-                        let documentWrapper: DocumentWrapper = .image(.entry(url, grf, entryName))
+                        let documentWrapper: DocumentWrapper = .image(.entry(url, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".rsm":
-                        let documentWrapper: DocumentWrapper = .model(.entry(url, grf, entryName))
+                        let documentWrapper: DocumentWrapper = .model(.entry(url, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".gnd":
-                        let documentWrapper: DocumentWrapper = .world(.entry(url, grf, entryName))
+                        let documentWrapper: DocumentWrapper = .world(.entry(url, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".spr":
-                        let documentWrapper: DocumentWrapper = .sprite(.entry(url, grf, entryName))
+                        let documentWrapper: DocumentWrapper = .sprite(.entry(url, entryName))
                         documentWrappers.append(documentWrapper)
                     default:
-                        let documentWrapper: DocumentWrapper = .entry(url, grf, entryName)
+                        let documentWrapper: DocumentWrapper = .entry(url, entryName)
                         documentWrappers.append(documentWrapper)
                     }
                 } else {
-                    let documentWrapper: DocumentWrapper = .entryGroup(url, grf, entryName + "\\")
+                    let documentWrapper: DocumentWrapper = .entryGroup(url, entryName + "\\")
                     documentWrappers.append(documentWrapper)
                 }
             }

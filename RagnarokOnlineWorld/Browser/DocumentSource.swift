@@ -12,14 +12,14 @@ enum DocumentSource {
 
     case url(URL)
 
-    case entry(URL, GRFDocument, String)
+    case entry(URL, String)
 
     var name: String {
         switch self {
         case .url(let url):
             return url.lastPathComponent
-        case .entry(_, _, let entryName):
-            let lastPathComponent = entryName.split(separator: "\\").last
+        case .entry(_, let name):
+            let lastPathComponent = name.split(separator: "\\").last
             return String(lastPathComponent ?? "")
         }
     }
@@ -28,8 +28,8 @@ enum DocumentSource {
         switch self {
         case .url(let url):
             return url.pathExtension
-        case .entry(_, _, let entryName):
-            let pathExtension = entryName.split(separator: "\\").last?.split(separator: ".").last
+        case .entry(_, let name):
+            let pathExtension = name.split(separator: "\\").last?.split(separator: ".").last
             return String(pathExtension ?? "")
         }
     }
@@ -38,8 +38,10 @@ enum DocumentSource {
         switch self {
         case .url(let url):
             return try Data(contentsOf: url)
-        case .entry(let url, let grf, let entryName):
-            guard let entry = grf.entry(forName: entryName) else {
+        case .entry(let url, let name):
+            guard let grf = ResourceManager.default.grfs[url],
+                  let entry = grf.entry(forName: name)
+            else {
                 throw DocumentError.invalidSource
             }
             let stream = try FileStream(url: url)

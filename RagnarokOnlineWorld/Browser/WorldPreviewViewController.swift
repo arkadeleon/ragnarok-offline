@@ -55,15 +55,11 @@ class WorldPreviewViewController: UIViewController {
 
     private func loadSource() {
         DispatchQueue.global().async {
-            guard case .entry(let url, let grf, _) = self.source else {
-                return
-            }
-
-            guard let stream = try? FileStream(url: url) else {
-                return
-            }
-
-            guard let data = try? self.source.data() else {
+            guard case .entry(let url, _) = self.source,
+                  let grf = ResourceManager.default.grfs[url],
+                  let stream = try? FileStream(url: url),
+                  let data = try? self.source.data()
+            else {
                 return
             }
 

@@ -20,9 +20,6 @@ class DocumentWrappersViewController: UIViewController {
     init(documentWrapper: DocumentWrapper) {
         self.documentWrapper = documentWrapper
         self.documentWrappers = (documentWrapper.documentWrappers ?? []).sorted()
-        for dw in documentWrappers {
-            print(dw.url)
-        }
         super.init(nibName: nil, bundle: nil)
     }
 
