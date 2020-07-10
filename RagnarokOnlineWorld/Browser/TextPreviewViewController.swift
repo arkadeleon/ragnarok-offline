@@ -1,5 +1,5 @@
 //
-//  TextDocumentViewController.swift
+//  TextPreviewViewController.swift
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/5/10.
@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class TextDocumentViewController: UIViewController {
+class TextPreviewViewController: UIViewController {
 
     let source: DocumentSource
 

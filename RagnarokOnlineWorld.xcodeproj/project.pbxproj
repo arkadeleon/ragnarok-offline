@@ -36,11 +36,11 @@
 		35116E7524644AAA000A60FE /* DocumentWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7424644AAA000A60FE /* DocumentWrapper.swift */; };
 		35116E7924659FD6000A60FE /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7824659FD6000A60FE /* Document.swift */; };
 		35116E7D2466FEB3000A60FE /* LUADocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7C2466FEB3000A60FE /* LUADocument.swift */; };
-		35116E7F246713AD000A60FE /* TextDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7E246713AD000A60FE /* TextDocumentViewController.swift */; };
+		35116E7F246713AD000A60FE /* TextPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7E246713AD000A60FE /* TextPreviewViewController.swift */; };
 		35116E81246858F0000A60FE /* BMPDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E80246858F0000A60FE /* BMPDocument.swift */; };
-		35116E8324685AE4000A60FE /* ImageDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8224685AE4000A60FE /* ImageDocumentViewController.swift */; };
+		35116E8324685AE4000A60FE /* ImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8224685AE4000A60FE /* ImagePreviewViewController.swift */; };
 		35116E85246ADFFA000A60FE /* RSMDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E84246ADFFA000A60FE /* RSMDocument.swift */; };
-		35116E87246AE56B000A60FE /* RSMDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E86246AE56B000A60FE /* RSMDocumentViewController.swift */; };
+		35116E87246AE56B000A60FE /* ModelPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E86246AE56B000A60FE /* ModelPreviewViewController.swift */; };
 		35116E8B247025EE000A60FE /* GATDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8A247025EE000A60FE /* GATDocument.swift */; };
 		35116E8D247035AC000A60FE /* ACTDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8C247035AC000A60FE /* ACTDocument.swift */; };
 		35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8E2472E685000A60FE /* SPRDocument.swift */; };
@@ -50,7 +50,7 @@
 		3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */; };
 		3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */; };
 		3587F70924694FA7007D1C9B /* BinaryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F70824694FA7007D1C9B /* BinaryReader.swift */; };
-		359D5C1624A1F8CA00C2D8D3 /* GNDDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1524A1F8CA00C2D8D3 /* GNDDocumentViewController.swift */; };
+		359D5C1624A1F8CA00C2D8D3 /* WorldPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */; };
 		359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */; };
 		35C06DBC2498C9C000F0A229 /* TextureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C06DBB2498C9C000F0A229 /* TextureLoader.swift */; };
 		35CB3BAC247827A700EC04C3 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CB3BAB247827A700EC04C3 /* GameViewController.swift */; };
@@ -124,11 +124,11 @@
 		35116E7424644AAA000A60FE /* DocumentWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrapper.swift; sourceTree = "<group>"; };
 		35116E7824659FD6000A60FE /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		35116E7C2466FEB3000A60FE /* LUADocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUADocument.swift; sourceTree = "<group>"; };
-		35116E7E246713AD000A60FE /* TextDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDocumentViewController.swift; sourceTree = "<group>"; };
+		35116E7E246713AD000A60FE /* TextPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPreviewViewController.swift; sourceTree = "<group>"; };
 		35116E80246858F0000A60FE /* BMPDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMPDocument.swift; sourceTree = "<group>"; };
-		35116E8224685AE4000A60FE /* ImageDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDocumentViewController.swift; sourceTree = "<group>"; };
+		35116E8224685AE4000A60FE /* ImagePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePreviewViewController.swift; sourceTree = "<group>"; };
 		35116E84246ADFFA000A60FE /* RSMDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSMDocument.swift; sourceTree = "<group>"; };
-		35116E86246AE56B000A60FE /* RSMDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSMDocumentViewController.swift; sourceTree = "<group>"; };
+		35116E86246AE56B000A60FE /* ModelPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPreviewViewController.swift; sourceTree = "<group>"; };
 		35116E8A247025EE000A60FE /* GATDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GATDocument.swift; sourceTree = "<group>"; };
 		35116E8C247035AC000A60FE /* ACTDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACTDocument.swift; sourceTree = "<group>"; };
 		35116E8E2472E685000A60FE /* SPRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPRDocument.swift; sourceTree = "<group>"; };
@@ -138,7 +138,7 @@
 		3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrappersViewController.swift; sourceTree = "<group>"; };
 		3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrapperCell.swift; sourceTree = "<group>"; };
 		3587F70824694FA7007D1C9B /* BinaryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryReader.swift; sourceTree = "<group>"; };
-		359D5C1524A1F8CA00C2D8D3 /* GNDDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNDDocumentViewController.swift; sourceTree = "<group>"; };
+		359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPreviewViewController.swift; sourceTree = "<group>"; };
 		359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = GroundShaders.metal; sourceTree = "<group>"; };
 		35C06DBB2498C9C000F0A229 /* TextureLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureLoader.swift; sourceTree = "<group>"; };
 		35CB3BAB247827A700EC04C3 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -290,10 +290,10 @@
 				35116E7424644AAA000A60FE /* DocumentWrapper.swift */,
 				3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */,
 				3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */,
-				35116E7E246713AD000A60FE /* TextDocumentViewController.swift */,
-				35116E8224685AE4000A60FE /* ImageDocumentViewController.swift */,
-				35116E86246AE56B000A60FE /* RSMDocumentViewController.swift */,
-				359D5C1524A1F8CA00C2D8D3 /* GNDDocumentViewController.swift */,
+				35116E7E246713AD000A60FE /* TextPreviewViewController.swift */,
+				35116E8224685AE4000A60FE /* ImagePreviewViewController.swift */,
+				35116E86246AE56B000A60FE /* ModelPreviewViewController.swift */,
+				359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */,
 				3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */,
 			);
 			path = Browser;
@@ -496,12 +496,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35116E7F246713AD000A60FE /* TextDocumentViewController.swift in Sources */,
+				35116E7F246713AD000A60FE /* TextPreviewViewController.swift in Sources */,
 				35E8DCE224A9DF4100A14FC5 /* SGLMath+SIMD.swift in Sources */,
 				35116E7D2466FEB3000A60FE /* LUADocument.swift in Sources */,
 				35C06DBC2498C9C000F0A229 /* TextureLoader.swift in Sources */,
 				35E8DCDE24A9D99000A14FC5 /* Renderable.swift in Sources */,
-				35116E87246AE56B000A60FE /* RSMDocumentViewController.swift in Sources */,
+				35116E87246AE56B000A60FE /* ModelPreviewViewController.swift in Sources */,
 				35116E5E2461A5DB000A60FE /* DESDecryptor.swift in Sources */,
 				35E8DCDB24A88BCC00A14FC5 /* WaterShaders.metal in Sources */,
 				350F347324B5610F00848ED5 /* DocumentSource.swift in Sources */,
@@ -525,7 +525,7 @@
 				35049AA0248E9FA300DAD5C1 /* ModelShaders.metal in Sources */,
 				35021BAD24A054700021B99B /* GNDDocument.swift in Sources */,
 				35116E81246858F0000A60FE /* BMPDocument.swift in Sources */,
-				35116E8324685AE4000A60FE /* ImageDocumentViewController.swift in Sources */,
+				35116E8324685AE4000A60FE /* ImagePreviewViewController.swift in Sources */,
 				35116E7924659FD6000A60FE /* Document.swift in Sources */,
 				359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */,
 				35CB3BB52478359100EC04C3 /* Shaders.metal in Sources */,
@@ -538,7 +538,7 @@
 				35617A73249863580097C60C /* SGLMath+Calculate.swift in Sources */,
 				3587F70924694FA7007D1C9B /* BinaryReader.swift in Sources */,
 				35116E58245FC152000A60FE /* GRFDocument.swift in Sources */,
-				359D5C1624A1F8CA00C2D8D3 /* GNDDocumentViewController.swift in Sources */,
+				359D5C1624A1F8CA00C2D8D3 /* WorldPreviewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

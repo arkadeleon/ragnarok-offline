@@ -1,5 +1,5 @@
 //
-//  GNDDocumentViewController.swift
+//  WorldPreviewViewController.swift
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/6/23.
@@ -10,7 +10,7 @@ import UIKit
 import MetalKit
 import SGLMath
 
-class GNDDocumentViewController: UIViewController {
+class WorldPreviewViewController: UIViewController {
 
     let source: DocumentSource
     private var ground: Ground?
@@ -55,7 +55,7 @@ class GNDDocumentViewController: UIViewController {
 
     private func loadSource() {
         DispatchQueue.global().async {
-            guard case .entryInArchive(let url, let archive, _) = self.source else {
+            guard case .entry(let url, let grf, _) = self.source else {
                 return
             }
 
@@ -100,10 +100,10 @@ class GNDDocumentViewController: UIViewController {
             context.concatenate(flipVertical)
 
             for (i, name) in textures.enumerated() {
-                guard let entry = archive.entry(forName: "data\\texture\\" + name.lowercased()) else {
+                guard let entry = grf.entry(forName: "data\\texture\\" + name.lowercased()) else {
                     continue
                 }
-                let data = try! archive.contents(of: entry, from: stream)
+                let data = try! grf.contents(of: entry, from: stream)
                 let image = UIImage(data: data)?.cgImage?.decoded
 
                 let x = (i % Int(ATLAS_WIDTH)) * 258

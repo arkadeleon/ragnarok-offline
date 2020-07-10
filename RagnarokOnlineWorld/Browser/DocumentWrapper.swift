@@ -11,14 +11,14 @@ import UIKit
 enum DocumentWrapper {
 
     case directory(URL)
-    case document(URL)
-    case grfDocument(URL, GRFDocument)
-    case directoryInArchive(URL, GRFDocument, String)
-    case entryInArchive(URL, GRFDocument, String)
-    case textDocument(DocumentSource)
-    case imageDocument(DocumentSource)
-    case rsmDocument(DocumentSource)
-    case gndDocument(DocumentSource)
+    case regular(URL)
+    case grf(URL, GRFDocument)
+    case entryGroup(URL, GRFDocument, String)
+    case entry(URL, GRFDocument, String)
+    case text(DocumentSource)
+    case image(DocumentSource)
+    case model(DocumentSource)
+    case world(DocumentSource)
     case sprite(DocumentSource)
 }
 
@@ -28,23 +28,23 @@ extension DocumentWrapper {
         switch self {
         case .directory(let url):
             return url
-        case .document(let url):
+        case .regular(let url):
             return url
-        case .grfDocument(let url, _):
+        case .grf(let url, _):
             return url
-        case .directoryInArchive(let url, _, let path):
+        case .entryGroup(let url, _, let path):
             return url.appendingPathComponent(path.replacingOccurrences(of: "\\", with: "/"))
-        case .entryInArchive(let url, _, let entryName):
+        case .entry(let url, _, let entryName):
             return url.appendingPathComponent(entryName.replacingOccurrences(of: "\\", with: "/"))
-        case .textDocument(let source),
-             .imageDocument(let source),
-             .rsmDocument(let source),
-             .gndDocument(let source),
+        case .text(let source),
+             .image(let source),
+             .model(let source),
+             .world(let source),
              .sprite(let source):
             switch source {
             case .url(let url):
                 return url
-            case .entryInArchive(let url, _, let entryName):
+            case .entry(let url, _, let entryName):
                 return url.appendingPathComponent(entryName.replacingOccurrences(of: "\\", with: "/"))
             }
         }
@@ -54,21 +54,21 @@ extension DocumentWrapper {
         switch self {
         case .directory:
             return UIImage(systemName: "folder")
-        case .document:
+        case .regular:
             return UIImage(systemName: "doc")
-        case .grfDocument:
+        case .grf:
             return UIImage(systemName: "doc")
-        case .directoryInArchive:
+        case .entryGroup:
             return UIImage(systemName: "folder")
-        case .entryInArchive:
+        case .entry:
             return UIImage(systemName: "doc")
-        case .textDocument:
+        case .text:
             return UIImage(systemName: "doc.text")
-        case .imageDocument:
+        case .image:
             return UIImage(systemName: "doc.richtext")
-        case .rsmDocument:
+        case .model:
             return UIImage(systemName: "square.stack.3d.up")
-        case .gndDocument:
+        case .world:
             return UIImage(systemName: "doc")
         case .sprite:
             return UIImage(systemName: "doc.richtext")
@@ -89,70 +89,70 @@ extension DocumentWrapper {
                 case "grf":
                     let loader = DocumentLoader()
                     if let document = try? loader.load(GRFDocument.self, from: url) {
-                        return .grfDocument(url, document)
+                        return .grf(url, document)
                     } else {
-                        return .document(url)
+                        return .regular(url)
                     }
                 case "lua":
-                    return .textDocument(.url(url))
+                    return .text(.url(url))
                 case "bmp":
-                    return .imageDocument(.url(url))
+                    return .image(.url(url))
                 case "rsm":
-                    return .rsmDocument(.url(url))
+                    return .model(.url(url))
                 default:
-                    return .document(url)
+                    return .regular(url)
                 }
             }
             return documentWrappers
-        case .document:
+        case .regular:
             return nil
-        case .grfDocument(let url, let document):
-            return DocumentWrapper.directoryInArchive(url, document, "data\\").documentWrappers
-        case .directoryInArchive(let url, let archive, let path):
+        case .grf(let url, let document):
+            return DocumentWrapper.entryGroup(url, document, "data\\").documentWrappers
+        case .entryGroup(let url, let grf, let path):
             var documentWrappers: [DocumentWrapper] = []
 
-            let entryNames = archive.entryNames(forPath: path)
+            let entryNames = grf.entryNames(forPath: path)
             for entryName in entryNames {
                 if let index = entryName.firstIndex(of: ".") {
                     switch entryName[index...] {
                     case ".lua":
-                        let documentWrapper: DocumentWrapper = .textDocument(.entryInArchive(url, archive, entryName))
+                        let documentWrapper: DocumentWrapper = .text(.entry(url, grf, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".bmp":
-                        let documentWrapper: DocumentWrapper = .imageDocument(.entryInArchive(url, archive, entryName))
+                        let documentWrapper: DocumentWrapper = .image(.entry(url, grf, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".pal":
-                        let documentWrapper: DocumentWrapper = .imageDocument(.entryInArchive(url, archive, entryName))
+                        let documentWrapper: DocumentWrapper = .image(.entry(url, grf, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".rsm":
-                        let documentWrapper: DocumentWrapper = .rsmDocument(.entryInArchive(url, archive, entryName))
+                        let documentWrapper: DocumentWrapper = .model(.entry(url, grf, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".gnd":
-                        let documentWrapper: DocumentWrapper = .gndDocument(.entryInArchive(url, archive, entryName))
+                        let documentWrapper: DocumentWrapper = .world(.entry(url, grf, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".spr":
-                        let documentWrapper: DocumentWrapper = .sprite(.entryInArchive(url, archive, entryName))
+                        let documentWrapper: DocumentWrapper = .sprite(.entry(url, grf, entryName))
                         documentWrappers.append(documentWrapper)
                     default:
-                        let documentWrapper: DocumentWrapper = .entryInArchive(url, archive, entryName)
+                        let documentWrapper: DocumentWrapper = .entry(url, grf, entryName)
                         documentWrappers.append(documentWrapper)
                     }
                 } else {
-                    let documentWrapper: DocumentWrapper = .directoryInArchive(url, archive, entryName + "\\")
+                    let documentWrapper: DocumentWrapper = .entryGroup(url, grf, entryName + "\\")
                     documentWrappers.append(documentWrapper)
                 }
             }
 
             return documentWrappers
-        case .entryInArchive:
+        case .entry:
             return nil
-        case .textDocument:
+        case .text:
             return nil
-        case .imageDocument:
+        case .image:
             return nil
-        case .rsmDocument:
+        case .model:
             return nil
-        case .gndDocument:
+        case .world:
             return nil
         case .sprite:
             return nil

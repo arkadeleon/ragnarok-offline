@@ -1,5 +1,5 @@
 //
-//  ImageDocumentViewController.swift
+//  ImagePreviewViewController.swift
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/5/10.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImageDocumentViewController: UIViewController {
+class ImagePreviewViewController: UIViewController {
 
     let source: DocumentSource
 
@@ -48,6 +48,15 @@ class ImageDocumentViewController: UIViewController {
         scrollView.frameLayoutGuide.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
 
         loadSource()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        if let image = imageView.image?.cgImage {
+            updateZoomScale(image: image)
+            centerScrollViewContents()
+        }
     }
 
     private func loadSource() {
@@ -104,7 +113,7 @@ class ImageDocumentViewController: UIViewController {
     }
 }
 
-extension ImageDocumentViewController: UIScrollViewDelegate {
+extension ImagePreviewViewController: UIScrollViewDelegate {
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView

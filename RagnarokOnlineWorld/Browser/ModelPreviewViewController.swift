@@ -1,5 +1,5 @@
 //
-//  RSMDocumentViewController.swift
+//  ModelPreviewViewController.swift
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/5/12.
@@ -10,7 +10,7 @@ import UIKit
 import MetalKit
 import SGLMath
 
-class RSMDocumentViewController: UIViewController {
+class ModelPreviewViewController: UIViewController {
 
     let source: DocumentSource
     private var model: Model?
@@ -55,7 +55,7 @@ class RSMDocumentViewController: UIViewController {
 
     private func loadSource() {
         DispatchQueue.global().async {
-            guard case .entryInArchive(let url, let archive, _) = self.source else {
+            guard case .entry(let url, let grf, _) = self.source else {
                 return
             }
 
@@ -74,10 +74,10 @@ class RSMDocumentViewController: UIViewController {
 
             let textureLoader = TextureLoader(device: self.renderer.device)
             let textures = document.textures.map { textureName -> MTLTexture? in
-                guard let entry = archive.entry(forName: "data\\texture\\" + textureName) else {
+                guard let entry = grf.entry(forName: "data\\texture\\" + textureName) else {
                     return nil
                 }
-                guard let contents = try? archive.contents(of: entry, from: stream) else {
+                guard let contents = try? grf.contents(of: entry, from: stream) else {
                     return nil
                 }
                 return textureLoader.newTexture(data: contents)

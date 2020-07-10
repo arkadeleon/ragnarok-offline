@@ -74,21 +74,21 @@ extension DocumentWrappersViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let documentWrapper = documentWrappers[indexPath.row]
         switch documentWrapper {
-        case .directory, .grfDocument, .directoryInArchive:
+        case .directory, .grf, .entryGroup:
             let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: documentWrapper)
             navigationController?.pushViewController(documentWrappersViewController, animated: true)
-        case .textDocument(let source):
-            let documentViewController = TextDocumentViewController(source: source)
-            navigationController?.pushViewController(documentViewController, animated: true)
-        case .imageDocument(let source):
-            let documentViewController = ImageDocumentViewController(source: source)
-            navigationController?.pushViewController(documentViewController, animated: true)
-        case .rsmDocument(let source):
-            let documentViewController = RSMDocumentViewController(source: source)
-            navigationController?.pushViewController(documentViewController, animated: true)
-        case .gndDocument(let source):
-            let documentViewController = GNDDocumentViewController(source: source)
-            navigationController?.pushViewController(documentViewController, animated: true)
+        case .text(let source):
+            let previewViewController = TextPreviewViewController(source: source)
+            navigationController?.pushViewController(previewViewController, animated: true)
+        case .image(let source):
+            let previewViewController = ImagePreviewViewController(source: source)
+            navigationController?.pushViewController(previewViewController, animated: true)
+        case .model(let source):
+            let previewViewController = ModelPreviewViewController(source: source)
+            navigationController?.pushViewController(previewViewController, animated: true)
+        case .world(let source):
+            let previewViewController = WorldPreviewViewController(source: source)
+            navigationController?.pushViewController(previewViewController, animated: true)
         case .sprite(let source):
             let previewViewController = SpritePreviewViewController(source: source)
             navigationController?.pushViewController(previewViewController, animated: true)
