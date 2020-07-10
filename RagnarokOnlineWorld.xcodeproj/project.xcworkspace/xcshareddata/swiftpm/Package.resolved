@@ -18,6 +18,15 @@
           "revision": "8bdd2e542f28828d0c224c1ea8e046c6f652ec40",
           "version": "3.0.0"
         }
+      },
+      {
+        "package": "MBProgressHUD",
+        "repositoryURL": "https://github.com/jdg/MBProgressHUD.git",
+        "state": {
+          "branch": null,
+          "revision": "bca42b801100b2b3a4eda0ba8dd33d858c780b0d",
+          "version": "1.2.0"
+        }
       }
     ]
   },
