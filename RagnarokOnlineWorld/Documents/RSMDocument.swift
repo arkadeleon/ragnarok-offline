@@ -107,7 +107,7 @@ struct RSMDocument: Document {
         let textureCount = try reader.readInt32()
         var textures: [String] = []
         for _ in 0..<textureCount {
-            let texture: String = try reader.readString(count: 40)
+            let texture: String = try reader.readString(count: 40, encoding: .koreanEUC)
             textures.append(texture)
         }
         self.textures = textures

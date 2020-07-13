@@ -64,7 +64,7 @@ struct GRFDocument: Document {
     init(from stream: Stream) throws {
         let reader = BinaryReader(stream: stream)
 
-        let signature = try reader.readString(count: 15, encoding: String.Encoding.ascii.rawValue)
+        let signature = try reader.readString(count: 15)
         let key = try reader.readData(count: 15)
         let fileTableOffset = try reader.readUInt32()
         let skip = try reader.readUInt32()
@@ -117,9 +117,7 @@ struct GRFDocument: Document {
                 break
             }
 
-            let cfEncoding = CFStringEncoding(CFStringEncodings.EUC_KR.rawValue)
-            let encoding = CFStringConvertEncodingToNSStringEncoding(cfEncoding)
-            let name = NSString(data: table.data[pos..<index], encoding: encoding) ?? ""
+            let name = String(data: table.data[pos..<index], encoding: .koreanEUC) ?? ""
 
             pos = index + 1
 

@@ -89,7 +89,7 @@ extension BinaryReader {
         var textures: [String] = []
 
         for _ in 0..<count {
-            let texture = try readString(count: Int(length))
+            let texture = try readString(count: Int(length), encoding: .koreanEUC)
             var pos = textures.firstIndex(of: texture) ?? -1
 
             if pos == -1 {

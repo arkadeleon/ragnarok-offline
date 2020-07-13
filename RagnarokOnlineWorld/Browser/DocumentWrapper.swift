@@ -167,14 +167,20 @@ extension DocumentWrapper: Equatable, Comparable {
     }
 
     static func < (lhs: DocumentWrapper, rhs: DocumentWrapper) -> Bool {
-        switch (lhs.url.pathExtension.isEmpty, rhs.url.pathExtension.isEmpty) {
-        case (true, true),
-             (false, false):
+        if lhs.rank == rhs.rank {
             return lhs.url.path.lowercased() < rhs.url.path.lowercased()
-        case (true, false):
-            return true
-        case (false, true):
-            return false
+        } else {
+            return lhs.rank < rhs.rank
+        }
+    }
+
+    var rank: Int {
+        switch self {
+        case .directory,
+             .entryGroup:
+            return 0
+        default:
+            return 1
         }
     }
 }
