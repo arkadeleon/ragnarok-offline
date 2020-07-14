@@ -34,7 +34,7 @@ class ResourceManager {
 
     func contentsOfEntry(withName name: String) throws -> Data {
         for (url, grf) in grfs {
-            guard let entry = grf.entry(forName: name) else {
+            guard let entry = grf.entries.first(where: { $0.name.lowercased() == name.lowercased() }) else {
                 continue
             }
             let stream = try FileStream(url: url)

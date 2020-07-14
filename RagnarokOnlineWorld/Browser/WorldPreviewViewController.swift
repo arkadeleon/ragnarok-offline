@@ -55,11 +55,7 @@ class WorldPreviewViewController: UIViewController {
 
     private func loadSource() {
         DispatchQueue.global().async {
-            guard case .entry(let url, _) = self.source,
-                  let grf = ResourceManager.default.grf(for: url),
-                  let stream = try? FileStream(url: url),
-                  let data = try? self.source.data()
-            else {
+            guard let data = try? self.source.data() else {
                 return
             }
 
@@ -96,10 +92,9 @@ class WorldPreviewViewController: UIViewController {
             context.concatenate(flipVertical)
 
             for (i, name) in textures.enumerated() {
-                guard let entry = grf.entry(forName: "data\\texture\\" + name.lowercased()) else {
+                guard let data = try? ResourceManager.default.contentsOfEntry(withName: "data\\texture\\" + name) else {
                     continue
                 }
-                let data = try! grf.contents(of: entry, from: stream)
                 let image = UIImage(data: data)?.cgImage?.decoded
 
                 let x = (i % Int(ATLAS_WIDTH)) * 258
