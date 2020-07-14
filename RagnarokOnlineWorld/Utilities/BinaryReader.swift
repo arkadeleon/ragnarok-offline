@@ -168,6 +168,30 @@ class BinaryReader {
         guard let string = String(data: data, encoding: encoding) else {
             throw StreamError.invalidStringEncoding
         }
-        return string as String
+        return string
+    }
+
+    func readLine(encoding: String.Encoding = .ascii, separator: String = "\n") throws -> String {
+        guard let separatorData = separator.data(using: encoding) else {
+            throw StreamError.invalidStringEncoding
+        }
+
+        var data = Data()
+        repeat {
+            guard let byte = try? stream.read(upToCount: 1) else {
+                break
+            }
+            data.append(byte)
+        } while data.suffix(separatorData.count) != separatorData
+
+        guard data.count > 0 else {
+            throw StreamError.endOfStream
+        }
+
+        let lineData = data.dropLast(separatorData.count)
+        guard let line = String(data: lineData, encoding: encoding) else {
+            throw StreamError.invalidStringEncoding
+        }
+        return line
     }
 }

@@ -45,6 +45,7 @@
 		35116E8D247035AC000A60FE /* ACTDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8C247035AC000A60FE /* ACTDocument.swift */; };
 		35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8E2472E685000A60FE /* SPRDocument.swift */; };
 		351A96AE247F5D9F00274D64 /* SGLMath in Frameworks */ = {isa = PBXBuildFile; productRef = 351A96AD247F5D9F00274D64 /* SGLMath */; };
+		351E225624BC5D98000EF504 /* INIDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351E225524BC5D98000EF504 /* INIDocument.swift */; };
 		355EFD2D2480264B0033C280 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355EFD2C2480264B0033C280 /* Camera.swift */; };
 		35617A73249863580097C60C /* SGLMath+Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617A72249863580097C60C /* SGLMath+Calculate.swift */; };
 		3573037824B83BEA0011F6AA /* MBProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3573037724B83BEA0011F6AA /* MBProgressHUD */; };
@@ -135,6 +136,7 @@
 		35116E8A247025EE000A60FE /* GATDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GATDocument.swift; sourceTree = "<group>"; };
 		35116E8C247035AC000A60FE /* ACTDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACTDocument.swift; sourceTree = "<group>"; };
 		35116E8E2472E685000A60FE /* SPRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPRDocument.swift; sourceTree = "<group>"; };
+		351E225524BC5D98000EF504 /* INIDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INIDocument.swift; sourceTree = "<group>"; };
 		355EFD2B247FE7B00033C280 /* RagnarokOnlineWorld.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RagnarokOnlineWorld.entitlements; sourceTree = "<group>"; };
 		355EFD2C2480264B0033C280 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		35617A72249863580097C60C /* SGLMath+Calculate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SGLMath+Calculate.swift"; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 				35116E8A247025EE000A60FE /* GATDocument.swift */,
 				35021BAC24A054700021B99B /* GNDDocument.swift */,
 				35116E55245FC152000A60FE /* GRFDocument.swift */,
+				351E225524BC5D98000EF504 /* INIDocument.swift */,
 				35116E7C2466FEB3000A60FE /* LUADocument.swift */,
 				35D091F524AC8EB0008D7CEA /* PALDocument.swift */,
 				35116E84246ADFFA000A60FE /* RSMDocument.swift */,
@@ -547,6 +550,7 @@
 				35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */,
 				35116E85246ADFFA000A60FE /* RSMDocument.swift in Sources */,
 				35617A73249863580097C60C /* SGLMath+Calculate.swift in Sources */,
+				351E225624BC5D98000EF504 /* INIDocument.swift in Sources */,
 				3587F70924694FA7007D1C9B /* BinaryReader.swift in Sources */,
 				35116E58245FC152000A60FE /* GRFDocument.swift in Sources */,
 				359D5C1624A1F8CA00C2D8D3 /* WorldPreviewViewController.swift in Sources */,

@@ -12,22 +12,24 @@ class ResourceManager {
 
     static let `default` = ResourceManager()
 
-    private(set) var grfs: [URL: GRFDocument] = [:]
+    private var grfs: [(URL, GRFDocument)] = []
 
     func preload() throws {
         let url = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        let ini = try String(contentsOf: url.appendingPathComponent("DATA.INI"))
-        let lines = ini.replacingOccurrences(of: "\r\n", with: "\n").split(separator: "\n")
-        for line in lines {
-            let pair = line.split(separator: "=")
-            guard pair.count == 2 else {
-                continue
+        let iniURL = url.appendingPathComponent("DATA.INI")
+        let loader = DocumentLoader()
+        let ini = try loader.load(INIDocument.self, from: iniURL)
+        for section in ini.sections where section.name == "Data" {
+            for entry in section.entries {
+                let grfURL = url.appendingPathComponent(entry.value)
+                let grf = try loader.load(GRFDocument.self, from: grfURL)
+                grfs.append((grfURL, grf))
             }
-            let url = url.appendingPathComponent(String(pair[1]))
-            let loader = DocumentLoader()
-            let grf = try loader.load(GRFDocument.self, from: url)
-            grfs[url] = grf
         }
+    }
+
+    func grf(for url: URL) -> GRFDocument? {
+        grfs.first { $0.0 == url }?.1
     }
 
     func contentsOfEntry(withName name: String) throws -> Data {

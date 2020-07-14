@@ -108,7 +108,7 @@ extension DocumentWrapper {
         case .grf(let url):
             return DocumentWrapper.entryGroup(url, "data\\").documentWrappers
         case .entryGroup(let url, let path):
-            guard let grf = ResourceManager.default.grfs[url] else {
+            guard let grf = ResourceManager.default.grf(for: url) else {
                 return []
             }
             var documentWrappers: [DocumentWrapper] = []

@@ -39,7 +39,7 @@ enum DocumentSource {
         case .url(let url):
             return try Data(contentsOf: url)
         case .entry(let url, let name):
-            guard let grf = ResourceManager.default.grfs[url],
+            guard let grf = ResourceManager.default.grf(for: url),
                   let entry = grf.entry(forName: name)
             else {
                 throw DocumentError.invalidSource
