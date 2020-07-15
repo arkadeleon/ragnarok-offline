@@ -89,12 +89,12 @@ extension DocumentWrapper {
                     if url.hasDirectoryPath {
                         return .directory(url)
                     }
-                    switch url.pathExtension {
+                    switch url.pathExtension.lowercased() {
                     case "grf":
                         return .grf(url)
                     case "lua":
                         return .text(.url(url))
-                    case "bmp":
+                    case "bmp", "jpg", "jpeg":
                         return .image(.url(url))
                     case "rsm":
                         return .model(.url(url))
@@ -115,11 +115,11 @@ extension DocumentWrapper {
             let entryNames = grf.entryNames(forPath: path)
             for entryName in entryNames {
                 if let index = entryName.firstIndex(of: ".") {
-                    switch entryName[index...] {
+                    switch entryName[index...].lowercased() {
                     case ".lua":
                         let documentWrapper: DocumentWrapper = .text(.entry(url, entryName))
                         documentWrappers.append(documentWrapper)
-                    case ".bmp":
+                    case ".bmp", ".jpg", ".jpeg":
                         let documentWrapper: DocumentWrapper = .image(.entry(url, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".pal":

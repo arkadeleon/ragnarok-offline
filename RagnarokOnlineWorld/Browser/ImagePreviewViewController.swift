@@ -65,21 +65,27 @@ class ImagePreviewViewController: UIViewController {
                 return
             }
 
+            var image: CGImage? = nil
             let loader = DocumentLoader()
-            guard let document = try? loader.load(BMPDocument.self, from: data) else {
-                return
+            switch self.source.fileType.lowercased() {
+            case "bmp":
+                image = try? loader.load(BMPDocument.self, from: data).image
+            case "jpg", "jpeg":
+                image = try? loader.load(JPGDocument.self, from: data).image
+            default:
+                break
             }
 
             DispatchQueue.main.async {
-                let image = document.image
+                if let image = image {
+                    self.imageView.image = UIImage(cgImage: image)
+                    self.imageView.frame = CGRect(x: 0, y: 0, width: image.width, height: image.height)
 
-                self.imageView.image = UIImage(cgImage: image)
-                self.imageView.frame = CGRect(x: 0, y: 0, width: image.width, height: image.height)
+                    self.scrollView.contentSize = CGSize(width: image.width, height: image.height)
 
-                self.scrollView.contentSize = CGSize(width: image.width, height: image.height)
-
-                self.updateZoomScale(image: image)
-                self.centerScrollViewContents()
+                    self.updateZoomScale(image: image)
+                    self.centerScrollViewContents()
+                }
             }
         }
     }
