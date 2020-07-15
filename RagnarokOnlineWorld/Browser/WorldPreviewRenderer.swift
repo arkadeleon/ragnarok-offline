@@ -16,15 +16,17 @@ class WorldPreviewRenderer: NSObject {
     let commandQueue: MTLCommandQueue
 
     let groundRenderer: GroundRenderer
+    let waterRenderer: WaterRenderer
 
     let camera = Camera()
 
-    init(vertices: [GroundVertex], texture: Data?) throws {
+    init(vertices: [GroundVertex], texture: Data?, waterVertices: [WaterVertex], waterTextures: [Data?]) throws {
         device = MTLCreateSystemDefaultDevice()!
         commandQueue = device.makeCommandQueue()!
 
         let library = device.makeDefaultLibrary()!
         groundRenderer = try GroundRenderer(device: device, library: library, vertices: vertices, texture: texture)
+        waterRenderer = try WaterRenderer(device: device, library: library, vertices: waterVertices, textures: waterTextures)
 
         super.init()
     }
@@ -63,15 +65,28 @@ extension WorldPreviewRenderer: MTKViewDelegate {
 
         let normalMatrix = Matrix3x3(modelviewMatrix).inverse.transpose
 
+        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
+            return
+        }
+
         groundRenderer.render(
             atTime: time,
             device: device,
-            commandBuffer: commandBuffer,
-            renderPassDescriptor: renderPassDescriptor,
+            renderCommandEncoder: renderCommandEncoder,
             modelviewMatrix: modelviewMatrix,
             projectionMatrix: projectionMatrix,
             normalMatrix: normalMatrix
         )
+
+        waterRenderer.render(
+            atTime: time,
+            device: device,
+            renderCommandEncoder: renderCommandEncoder,
+            modelviewMatrix: modelviewMatrix,
+            projectionMatrix: projectionMatrix
+        )
+
+        renderCommandEncoder.endEncoding()
 
         commandBuffer.present(view.currentDrawable!)
         commandBuffer.commit()

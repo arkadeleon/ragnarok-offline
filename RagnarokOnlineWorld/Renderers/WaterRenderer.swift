@@ -1,8 +1,8 @@
 //
-//  GroundRenderer.swift
+//  WaterRenderer.swift
 //  RagnarokOnlineWorld
 //
-//  Created by Leon Li on 2020/7/3.
+//  Created by Leon Li on 2020/7/15.
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
@@ -10,12 +10,19 @@ import Metal
 import MetalKit
 import SGLMath
 
-class GroundRenderer {
+class WaterRenderer {
 
     let renderPipelineState: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState?
-    let vertices: [GroundVertex]
-    let texture: MTLTexture?
+    let vertices: [WaterVertex]
+    let textures: [MTLTexture?]
+
+    var waveSpeed: Float = 0
+    var waveHeight: Float = 0
+    var wavePitch: Float = 0
+    var waterLevel: Float = 0
+    var animSpeed: Float = 1
+    var waterOpacity: Float = 0.6
 
     let fog = Fog(
         use: false,
@@ -33,11 +40,11 @@ class GroundRenderer {
         direction: [0, 1, 0]
     )
 
-    init(device: MTLDevice, library: MTLLibrary, vertices: [GroundVertex], texture: Data?) throws {
+    init(device: MTLDevice, library: MTLLibrary, vertices: [WaterVertex], textures: [Data?]) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
-        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "groundVertexShader")
-        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "groundFragmentShader")
+        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "waterVertexShader")
+        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "waterFragmentShader")
 
         renderPipelineDescriptor.colorAttachments[0].pixelFormat = Formats.colorPixelFormat
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
@@ -59,62 +66,65 @@ class GroundRenderer {
         self.vertices = vertices
 
         let textureLoader = MTKTextureLoader(device: device)
-        self.texture = try texture.flatMap { try textureLoader.newTexture(data: $0, options: nil) }
+        self.textures = try textures.map { data -> MTLTexture? in
+            try data.flatMap { try textureLoader.newTexture(data: $0, options: nil) }
+        }
     }
 
     func render(atTime time: CFTimeInterval,
                 device: MTLDevice,
                 renderCommandEncoder: MTLRenderCommandEncoder,
                 modelviewMatrix: Matrix4x4<Float>,
-                projectionMatrix: Matrix4x4<Float>,
-                normalMatrix: Matrix3x3<Float>) {
+                projectionMatrix: Matrix4x4<Float>) {
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
-        var vertexUniforms = GroundVertexUniforms(
+        let frame = Float(time * 60)
+
+        var vertexUniforms = WaterVertexUniforms(
             modelViewMat: modelviewMatrix.simd,
             projectionMat: projectionMatrix.simd,
-            lightDirection: light.direction.simd,
-            normalMat: normalMatrix.simd
+            waveHeight: waveHeight,
+            wavePitch: wavePitch,
+            waterOffset: frame * waveSpeed.truncatingRemainder(dividingBy: 360) - 180
         )
 
-        guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<GroundVertexUniforms>.stride, options: []) else {
+        guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<WaterVertexUniforms>.stride, options: []) else {
             return
         }
 
         renderCommandEncoder.setVertexBuffer(vertexUniformsBuffer, offset: 0, index: 1)
 
-        var fragmentUniforms = GroundFragmentUniforms(
-            lightMapUse: 1,
+        var fragmentUniforms = WaterFragmentUniforms(
             fogUse: fog.use && fog.exist ? 1 : 0,
             fogNear: fog.near,
             fogFar: fog.far,
             fogColor: fog.color.simd,
             lightAmbient: light.ambient.simd,
             lightDiffuse: light.diffuse.simd,
-            lightOpacity: light.opacity
+            lightOpacity: light.opacity,
+            opacity: waterOpacity
         )
 
-        guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<GroundFragmentUniforms>.stride, options: []) else {
+        guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<WaterFragmentUniforms>.stride, options: []) else {
             return
         }
-        
+
         renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
         guard vertices.count > 0 else {
             return
         }
 
-        guard let vertexBuffer = device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<GroundVertex>.stride, options: []) else {
+        guard let vertexBuffer = device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<WaterVertex>.stride, options: []) else {
             return
         }
 
         renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
 
+        let texture = textures[Int(frame / animSpeed) % textures.count]
         renderCommandEncoder.setFragmentTexture(texture, index: 0)
-        renderCommandEncoder.setFragmentTexture(texture, index: 1)
-        renderCommandEncoder.setFragmentTexture(texture, index: 2)
 
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
     }

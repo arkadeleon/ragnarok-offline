@@ -94,8 +94,15 @@ class WorldPreviewViewController: UIViewController {
 
             let jpeg = UIImage(cgImage: context.makeImage()!).jpegData(compressionQuality: 1.0)!
 
+            var waterTextures: [Data?] = []
+            for i in 0..<32 {
+                let name = NSString(format: "data\\texture\\워터\\water0%02d.jpg", i)
+                let data = try? ResourceManager.default.contentsOfEntry(withName: name as String)
+                waterTextures.append(data)
+            }
+
             DispatchQueue.main.async { [self] in
-                guard let renderer = try? WorldPreviewRenderer(vertices: state.mesh, texture: jpeg) else {
+                guard let renderer = try? WorldPreviewRenderer(vertices: state.mesh, texture: jpeg, waterVertices: state.waterMesh, waterTextures: waterTextures) else {
                     return
                 }
 

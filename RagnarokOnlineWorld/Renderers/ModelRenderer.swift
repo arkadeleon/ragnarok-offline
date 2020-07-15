@@ -65,15 +65,10 @@ class ModelRenderer {
 
     func render(atTime time: CFTimeInterval,
                 device: MTLDevice,
-                commandBuffer: MTLCommandBuffer,
-                renderPassDescriptor: MTLRenderPassDescriptor,
+                renderCommandEncoder: MTLRenderCommandEncoder,
                 modelviewMatrix: Matrix4x4<Float>,
                 projectionMatrix: Matrix4x4<Float>,
                 normalMatrix: Matrix3x3<Float>) {
-
-        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
-            return
-        }
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
@@ -119,7 +114,5 @@ class ModelRenderer {
                 renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
             }
         }
-
-        renderCommandEncoder.endEncoding()
     }
 }

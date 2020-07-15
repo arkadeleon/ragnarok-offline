@@ -65,15 +65,20 @@ extension ModelPreviewRenderer: MTKViewDelegate {
 
         let normalMatrix = Matrix3x3(modelviewMatrix).inverse.transpose
 
+        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
+            return
+        }
+
         modelRenderer.render(
             atTime: time,
             device: device,
-            commandBuffer: commandBuffer,
-            renderPassDescriptor: renderPassDescriptor,
+            renderCommandEncoder: renderCommandEncoder,
             modelviewMatrix: modelviewMatrix,
             projectionMatrix: projectionMatrix,
             normalMatrix: normalMatrix
         )
+
+        renderCommandEncoder.endEncoding()
 
         commandBuffer.present(view.currentDrawable!)
         commandBuffer.commit()
