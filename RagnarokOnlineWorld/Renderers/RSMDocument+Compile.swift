@@ -8,14 +8,6 @@
 
 import SGLMath
 
-struct RSMModel {
-
-    var position: Vector3<Float>
-    var rotation: Vector3<Float>
-    var scale: Vector3<Float>
-    var filename: String
-}
-
 extension RSMNodeBoundingBoxWrapper {
 
     func compile(contents: RSMDocument, instance_matrix: Matrix4x4<Float>, boundingBox: RSMBoundingBox) -> [[ModelVertex]] {
@@ -197,13 +189,13 @@ extension RSMDocument {
         return meshes
     }
 
-    func createInstance(model: RSMModel, width: Float, height: Float) -> Matrix4x4<Float> {
+    func createInstance(position: Vector3<Float>, rotation: Vector3<Float>, scale: Vector3<Float>, width: Float, height: Float) -> Matrix4x4<Float> {
         var matrix = Matrix4x4<Float>()
-        matrix = SGLMath.translate(matrix, [model.position[0] + width, model.position[1], model.position[2] + height])
-        matrix = SGLMath.rotate(matrix, radians(model.rotation[2]), [0, 0, 1])  // rotateZ
-        matrix = SGLMath.rotate(matrix, radians(model.rotation[0]), [1, 0, 0])  // rotateX
-        matrix = SGLMath.rotate(matrix, radians(model.rotation[1]), [0, 1, 0])  // rotateY
-        matrix = SGLMath.scale(matrix, model.scale)
+        matrix = SGLMath.translate(matrix, [position[0] + width, position[1], position[2] + height])
+        matrix = SGLMath.rotate(matrix, radians(rotation[2]), [0, 0, 1])  // rotateZ
+        matrix = SGLMath.rotate(matrix, radians(rotation[0]), [1, 0, 0])  // rotateX
+        matrix = SGLMath.rotate(matrix, radians(rotation[1]), [0, 1, 0])  // rotateY
+        matrix = SGLMath.scale(matrix, scale)
         return matrix
     }
 }

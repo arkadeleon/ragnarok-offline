@@ -17,16 +17,21 @@ class WorldPreviewRenderer: NSObject {
 
     let groundRenderer: GroundRenderer
     let waterRenderer: WaterRenderer
+    let modelRenderers: [ModelRenderer]
 
     let camera = Camera()
 
-    init(vertices: [GroundVertex], texture: Data?, waterVertices: [WaterVertex], waterTextures: [Data?]) throws {
-        device = MTLCreateSystemDefaultDevice()!
-        commandQueue = device.makeCommandQueue()!
+    init(vertices: [GroundVertex], texture: Data?, waterVertices: [WaterVertex], waterTextures: [Data?], models: [([[[ModelVertex]]], [Data?])]) throws {
+        let d = MTLCreateSystemDefaultDevice()!
+        let commandQueue = d.makeCommandQueue()!
+
+        self.device = d
+        self.commandQueue = commandQueue
 
         let library = device.makeDefaultLibrary()!
         groundRenderer = try GroundRenderer(device: device, library: library, vertices: vertices, texture: texture)
         waterRenderer = try WaterRenderer(device: device, library: library, vertices: waterVertices, textures: waterTextures)
+        modelRenderers = try models.map { try ModelRenderer(device: d, library: library, meshes: $0.0, textures: $0.1) }
 
         super.init()
     }

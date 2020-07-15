@@ -43,4 +43,16 @@ class ResourceManager {
         }
         throw DocumentError.invalidContents
     }
+
+    func contentsOfEntry(withName name: String, at url: URL) throws -> Data {
+        if let grf = self.grf(for: url) {
+            if let entry = grf.entries.first(where: { $0.name.lowercased() == name.lowercased() }) {
+                let stream = try FileStream(url: url)
+                let contents = try grf.contents(of: entry, from: stream)
+                return contents
+            }
+        }
+
+        return try contentsOfEntry(withName: name)
+    }
 }

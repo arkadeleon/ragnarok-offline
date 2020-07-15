@@ -69,13 +69,13 @@ class ModelPreviewViewController: UIViewController {
 
             let (boundingBox, wrappers) = document.calcBoundingBox()
 
-            let m = RSMModel(
+            let instance = document.createInstance(
                 position: [0, 0, 0],
                 rotation: [0, 0, 0],
                 scale: [-0.075, -0.075, -0.075],
-                filename: ""
+                width: 0,
+                height: 0
             )
-            let instance = document.createInstance(model: m, width: 0, height: 0)
 
             let meshes = document.compile(instances: [instance], wrappers: wrappers, boundingBox: boundingBox)
 

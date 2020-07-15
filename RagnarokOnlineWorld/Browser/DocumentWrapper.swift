@@ -69,7 +69,7 @@ extension DocumentWrapper {
         case .model:
             return UIImage(systemName: "square.stack.3d.up")
         case .world:
-            return UIImage(systemName: "doc")
+            return UIImage(systemName: "map")
         case .sprite:
             return UIImage(systemName: "doc.richtext")
         }
@@ -94,10 +94,8 @@ extension DocumentWrapper {
                         return .grf(url)
                     case "lua":
                         return .text(.url(url))
-                    case "bmp", "jpg", "jpeg":
+                    case "bmp", "jpg", "jpeg", "pal":
                         return .image(.url(url))
-                    case "rsm":
-                        return .model(.url(url))
                     default:
                         return .regular(url)
                     }
@@ -119,16 +117,13 @@ extension DocumentWrapper {
                     case ".lua":
                         let documentWrapper: DocumentWrapper = .text(.entry(url, entryName))
                         documentWrappers.append(documentWrapper)
-                    case ".bmp", ".jpg", ".jpeg":
-                        let documentWrapper: DocumentWrapper = .image(.entry(url, entryName))
-                        documentWrappers.append(documentWrapper)
-                    case ".pal":
+                    case ".bmp", ".jpg", ".jpeg", ".pal":
                         let documentWrapper: DocumentWrapper = .image(.entry(url, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".rsm":
                         let documentWrapper: DocumentWrapper = .model(.entry(url, entryName))
                         documentWrappers.append(documentWrapper)
-                    case ".gnd":
+                    case ".rsw":
                         let documentWrapper: DocumentWrapper = .world(.entry(url, entryName))
                         documentWrappers.append(documentWrapper)
                     case ".spr":

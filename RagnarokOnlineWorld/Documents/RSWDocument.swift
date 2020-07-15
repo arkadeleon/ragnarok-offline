@@ -176,11 +176,11 @@ struct RSWDocument: Document {
             switch (try reader.readInt32()) {
             case 1:
                 let model = try RSWObject.Model(
-                    name: version >= "1.3" ? reader.readString(count: 40) : "",
+                    name: version >= "1.3" ? reader.readString(count: 40, encoding: .koreanEUC) : "",
                     animType: version >= "1.3" ? reader.readInt32() : 0,
                     animSpeed: version >= "1.3" ? reader.readFloat32() : 0,
                     blockType: version >= "1.3" ? reader.readInt32() : 0,
-                    filename: reader.readString(count: 80),
+                    filename: reader.readString(count: 80, encoding: .koreanEUC),
                     nodename:  reader.readString(count: 80),
                     position: [reader.readFloat32() / 5, reader.readFloat32() / 5, reader.readFloat32() / 5],
                     rotation: [reader.readFloat32(), reader.readFloat32(), reader.readFloat32()],

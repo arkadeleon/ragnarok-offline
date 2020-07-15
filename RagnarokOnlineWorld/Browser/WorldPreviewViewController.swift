@@ -44,18 +44,23 @@ class WorldPreviewViewController: UIViewController {
 
     private func loadSource() {
         DispatchQueue.global().async {
-            guard let data = try? self.source.data() else {
+            guard case .entry(let url, _) = self.source,
+                  let data = try? self.source.data()
+            else {
                 return
             }
 
             let loader = DocumentLoader()
-            guard let document = try? loader.load(GNDDocument.self, from: data) else {
+            guard let rsw = try? loader.load(RSWDocument.self, from: data) else {
                 return
             }
 
-            let state = document.compile(WATER_LEVEL: 1, WATER_HEIGHT: 1)
+            let gndData = try! ResourceManager.default.contentsOfEntry(withName: "data\\" + rsw.files.gnd, at: url)
+            let gnd = try! loader.load(GNDDocument.self, from: gndData)
 
-            let textures = document.textures
+            let state = gnd.compile(WATER_LEVEL: rsw.water.level, WATER_HEIGHT: rsw.water.waveHeight)
+
+            let textures = gnd.textures
 
             let ATLAS_COLS         = roundf(sqrtf(Float(textures.count)))
             let ATLAS_ROWS         = ceilf(sqrtf(Float(textures.count)))
@@ -101,8 +106,35 @@ class WorldPreviewViewController: UIViewController {
                 waterTextures.append(data)
             }
 
+            var models: [([[[ModelVertex]]], [Data?])] = []
+            for model in rsw.models {
+                let name = "data\\model\\" + model.filename
+                guard let data = try? ResourceManager.default.contentsOfEntry(withName: name, at: url),
+                      let rsm = try? loader.load(RSMDocument.self, from: data) else {
+                    continue
+                }
+
+                let textures = rsm.textures.map { textureName -> Data? in
+                    return try? ResourceManager.default.contentsOfEntry(withName: "data\\texture\\" + textureName)
+                }
+
+                let (boundingBox, wrappers) = rsm.calcBoundingBox()
+
+                let instance = rsm.createInstance(
+                    position: model.position,
+                    rotation: model.rotation,
+                    scale: model.scale,
+                    width: Float(gnd.width),
+                    height: Float(gnd.height)
+                )
+
+                let meshes = rsm.compile(instances: [instance], wrappers: wrappers, boundingBox: boundingBox)
+
+                models.append((meshes, textures))
+            }
+
             DispatchQueue.main.async { [self] in
-                guard let renderer = try? WorldPreviewRenderer(vertices: state.mesh, texture: jpeg, waterVertices: state.waterMesh, waterTextures: waterTextures) else {
+                guard let renderer = try? WorldPreviewRenderer(vertices: state.mesh, texture: jpeg, waterVertices: state.waterMesh, waterTextures: waterTextures, models: models) else {
                     return
                 }
 
