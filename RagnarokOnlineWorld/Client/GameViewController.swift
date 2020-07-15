@@ -13,7 +13,7 @@ import SGLMath
 class GameViewController: UIViewController {
 
     private var mtkView: MTKView!
-    private var renderer: Renderer!
+    private var renderer: GameRenderer!
     private var camera = Camera()
 
     override func loadView() {
@@ -27,7 +27,7 @@ class GameViewController: UIViewController {
         title = "Game"
         edgesForExtendedLayout = []
 
-        renderer = Renderer(vertexFunctionName: "vertexShader", fragmentFunctionName: "fragmentShader", render: render)
+        renderer = GameRenderer(render: render)
         mtkView.device = renderer.device
         mtkView.colorPixelFormat = renderer.colorPixelFormat
         mtkView.depthStencilPixelFormat = renderer.depthStencilPixelFormat

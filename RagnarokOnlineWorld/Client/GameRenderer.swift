@@ -1,5 +1,5 @@
 //
-//  Renderer.swift
+//  GameRenderer.swift
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/5/22.
@@ -9,10 +9,8 @@
 import Metal
 import MetalKit
 
-class Renderer: NSObject {
+class GameRenderer: NSObject {
 
-    let vertexFunctionName: String
-    let fragmentFunctionName: String
     let render: (MTLRenderCommandEncoder) -> Void
 
     let device: MTLDevice
@@ -22,9 +20,7 @@ class Renderer: NSObject {
     let renderPipelineState: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState
 
-    init(vertexFunctionName: String, fragmentFunctionName: String, render: @escaping (MTLRenderCommandEncoder) -> Void) {
-        self.vertexFunctionName = vertexFunctionName
-        self.fragmentFunctionName = fragmentFunctionName
+    init(render: @escaping (MTLRenderCommandEncoder) -> Void) {
         self.render = render
 
         device = MTLCreateSystemDefaultDevice()!
@@ -33,8 +29,8 @@ class Renderer: NSObject {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
         let library = device.makeDefaultLibrary()!
-        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: vertexFunctionName)
-        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: fragmentFunctionName)
+        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "vertexShader")
+        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "fragmentShader")
 
         colorPixelFormat = .bgra8Unorm
         renderPipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
@@ -60,7 +56,7 @@ class Renderer: NSObject {
     }
 }
 
-extension Renderer: MTKViewDelegate {
+extension GameRenderer: MTKViewDelegate {
 
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
 

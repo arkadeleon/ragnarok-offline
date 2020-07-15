@@ -13,11 +13,9 @@ import SGLMath
 class WorldPreviewViewController: UIViewController {
 
     let source: DocumentSource
-    private var ground: Ground?
 
     private var mtkView: MTKView!
-    private var renderer: Renderer!
-    private var camera = Camera()
+    private var renderer: WorldPreviewRenderer!
 
     init(source: DocumentSource) {
         self.source = source
@@ -40,15 +38,6 @@ class WorldPreviewViewController: UIViewController {
         edgesForExtendedLayout = []
 
         view.backgroundColor = .systemBackground
-
-        renderer = Renderer(vertexFunctionName: "groundVertexShader", fragmentFunctionName: "groundFragmentShader", render: render)
-        mtkView.device = renderer.device
-        mtkView.colorPixelFormat = renderer.colorPixelFormat
-        mtkView.depthStencilPixelFormat = renderer.depthStencilPixelFormat
-        mtkView.delegate = renderer
-
-        mtkView.addGestureRecognizer(camera.panGestureRecognizer)
-        mtkView.addGestureRecognizer(camera.pinchGestureRecognizer)
 
         loadSource()
     }
@@ -105,53 +94,21 @@ class WorldPreviewViewController: UIViewController {
 
             let jpeg = UIImage(cgImage: context.makeImage()!).jpegData(compressionQuality: 1.0)!
 
-            let textureLoader = MTKTextureLoader(device: self.renderer.device)
-            let texture = try? textureLoader.newTexture(cgImage: UIImage(data: jpeg)!.cgImage!, options: nil)
+            DispatchQueue.main.async { [self] in
+                guard let renderer = try? WorldPreviewRenderer(vertices: state.mesh, texture: jpeg) else {
+                    return
+                }
 
-            DispatchQueue.main.async {
-                self.ground = Ground(vertices: state.mesh, texture: texture)
+                self.renderer = renderer
+
+                mtkView.device = renderer.device
+                mtkView.colorPixelFormat = Formats.colorPixelFormat
+                mtkView.depthStencilPixelFormat = Formats.depthPixelFormat
+                mtkView.delegate = renderer
+
+                mtkView.addGestureRecognizer(renderer.camera.panGestureRecognizer)
+                mtkView.addGestureRecognizer(renderer.camera.pinchGestureRecognizer)
             }
         }
-    }
-
-    private func render(encoder: MTLRenderCommandEncoder) {
-        guard let ground = ground else {
-            return
-        }
-
-        var modelviewMatrix = Matrix4x4<Float>()
-        modelviewMatrix = SGLMath.translateZ(modelviewMatrix, -400)
-        modelviewMatrix = SGLMath.rotate(modelviewMatrix, radians(15), [1, 0, 0])
-        modelviewMatrix = SGLMath.rotate(modelviewMatrix, Float(radians(435595.22182600008 * 360 / 8)), [0, 1, 0])
-        modelviewMatrix = SGLMath.translate(modelviewMatrix, [100, -40, 60])
-
-        let projectionMatrix = SGLMath.perspective(radians(camera.zoom), Float(mtkView.bounds.width / mtkView.bounds.height), 1, 1000)
-
-        let normalMatrix = Matrix3x3(modelviewMatrix).inverse.transpose
-
-        let fog = Fog(
-            use: false,
-            exist: true,
-            far: 30,
-            near: 80,
-            factor: 1,
-            color: [1, 1, 1]
-        )
-
-        let light = Light(
-            opacity: 1,
-            ambient: [1, 1, 1],
-            diffuse: [0, 0, 0],
-            direction: [0, 1, 0]
-        )
-
-        ground.render(
-            encoder: encoder,
-            modelviewMatrix: modelviewMatrix,
-            projectionMatrix: projectionMatrix,
-            normalMatrix: normalMatrix,
-            fog: fog,
-            light: light
-        )
     }
 }

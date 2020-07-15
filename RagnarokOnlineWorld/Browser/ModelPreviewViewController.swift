@@ -13,11 +13,9 @@ import SGLMath
 class ModelPreviewViewController: UIViewController {
 
     let source: DocumentSource
-    private var model: Model?
 
     private var mtkView: MTKView!
-    private var renderer: Renderer!
-    private var camera = Camera()
+    private var renderer: ModelPreviewRenderer!
 
     init(source: DocumentSource) {
         self.source = source
@@ -41,15 +39,6 @@ class ModelPreviewViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
 
-        renderer = Renderer(vertexFunctionName: "modelVertexShader", fragmentFunctionName: "modelFragmentShader", render: render)
-        mtkView.device = renderer.device
-        mtkView.colorPixelFormat = renderer.colorPixelFormat
-        mtkView.depthStencilPixelFormat = renderer.depthStencilPixelFormat
-        mtkView.delegate = renderer
-
-        mtkView.addGestureRecognizer(camera.panGestureRecognizer)
-        mtkView.addGestureRecognizer(camera.pinchGestureRecognizer)
-
         loadSource()
     }
 
@@ -68,15 +57,14 @@ class ModelPreviewViewController: UIViewController {
                 return
             }
 
-            let textureLoader = TextureLoader(device: self.renderer.device)
-            let textures = document.textures.map { textureName -> MTLTexture? in
+            let textures = document.textures.map { textureName -> Data? in
                 guard let entry = grf.entry(forName: "data\\texture\\" + textureName) else {
                     return nil
                 }
                 guard let contents = try? grf.contents(of: entry, from: stream) else {
                     return nil
                 }
-                return textureLoader.newTexture(data: contents)
+                return contents
             }
 
             let (boundingBox, wrappers) = document.calcBoundingBox()
@@ -91,51 +79,21 @@ class ModelPreviewViewController: UIViewController {
 
             let meshes = document.compile(instances: [instance], wrappers: wrappers, boundingBox: boundingBox)
 
-            DispatchQueue.main.async {
-                self.model = Model(meshes: meshes, textures: textures, boundingBox: boundingBox)
+            DispatchQueue.main.async { [self] in
+                guard let renderer = try? ModelPreviewRenderer(meshes: meshes, textures: textures, boundingBox: boundingBox) else {
+                    return
+                }
+
+                self.renderer = renderer
+
+                mtkView.device = renderer.device
+                mtkView.colorPixelFormat = Formats.colorPixelFormat
+                mtkView.depthStencilPixelFormat = Formats.depthPixelFormat
+                mtkView.delegate = renderer
+
+                mtkView.addGestureRecognizer(renderer.camera.panGestureRecognizer)
+                mtkView.addGestureRecognizer(renderer.camera.pinchGestureRecognizer)
             }
         }
-    }
-
-    private func render(encoder: MTLRenderCommandEncoder) {
-        guard let model = model else {
-            return
-        }
-
-        let time = CACurrentMediaTime()
-
-        var modelviewMatrix = Matrix4x4<Float>()
-        modelviewMatrix = SGLMath.translate(modelviewMatrix, [0, -model.boundingBox.range[1] * 0.1, -model.boundingBox.range[1] * 0.5 - 5])
-        modelviewMatrix = SGLMath.rotate(modelviewMatrix, radians(15), [1, 0, 0])
-        modelviewMatrix = SGLMath.rotate(modelviewMatrix, Float(radians(time * 360 / 8)), [0, 1, 0])
-
-        let projectionMatrix = SGLMath.perspective(radians(camera.zoom), Float(mtkView.bounds.width / mtkView.bounds.height), 1, 1000)
-
-        let normalMatrix = Matrix3x3(modelviewMatrix).inverse.transpose
-
-        let fog = Fog(
-            use: false,
-            exist: true,
-            far: 30,
-            near: 80,
-            factor: 1,
-            color: [1, 1, 1]
-        )
-
-        let light = Light(
-            opacity: 1,
-            ambient: [1, 1, 1],
-            diffuse: [0, 0, 0],
-            direction: [0, 1, 0]
-        )
-
-        model.render(
-            encoder: encoder,
-            modelviewMatrix: modelviewMatrix,
-            projectionMatrix: projectionMatrix,
-            normalMatrix: normalMatrix,
-            fog: fog,
-            light: light
-        )
     }
 }

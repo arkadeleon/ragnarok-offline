@@ -1,5 +1,5 @@
 //
-//  Renderable.swift
+//  RendererCommon.swift
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/6/29.
@@ -27,15 +27,16 @@ struct Light {
     var direction: Vector3<Float>
 }
 
-protocol Renderable {
+enum Formats {
+}
 
-    var vertexFunctionName: String { get }
-    var fragmentFunctionName: String { get }
+extension Formats {
 
-    func render(encoder: MTLRenderCommandEncoder,
-                modelviewMatrix: Matrix4x4<Float>,
-                projectionMatrix: Matrix4x4<Float>,
-                normalMatrix: Matrix3x3<Float>,
-                fog: Fog,
-                light: Light)
+    static var colorPixelFormat: MTLPixelFormat {
+        .bgra8Unorm
+    }
+
+    static var depthPixelFormat: MTLPixelFormat {
+        .depth32Float
+    }
 }
