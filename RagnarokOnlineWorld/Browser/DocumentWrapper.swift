@@ -106,35 +106,33 @@ extension DocumentWrapper {
         case .grf(let url):
             return DocumentWrapper.entryGroup(url, "data\\").documentWrappers
         case .entryGroup(let url, let path):
-            guard let grf = ResourceManager.default.grf(for: url) else {
-                return []
-            }
             var documentWrappers: [DocumentWrapper] = []
-            let entryNames = grf.entryNames(forPath: path)
-            for entryName in entryNames {
-                if let index = entryName.firstIndex(of: ".") {
-                    switch entryName[index...].lowercased() {
-                    case ".lua":
-                        let documentWrapper: DocumentWrapper = .text(.entry(url, entryName))
+            let nodes = try? ResourceManager.default.nodes(withPath: path, url: url)
+            for node in nodes ?? [] {
+                if let entry = node.entry {
+                    switch (entry.name as NSString).pathExtension.lowercased() {
+                    case "lua":
+                        let documentWrapper: DocumentWrapper = .text(.entry(url, entry.name))
                         documentWrappers.append(documentWrapper)
-                    case ".bmp", ".jpg", ".jpeg", ".pal":
-                        let documentWrapper: DocumentWrapper = .image(.entry(url, entryName))
+                    case "bmp", "jpg", "jpeg", "pal":
+                        let documentWrapper: DocumentWrapper = .image(.entry(url, entry.name))
                         documentWrappers.append(documentWrapper)
-                    case ".rsm":
-                        let documentWrapper: DocumentWrapper = .model(.entry(url, entryName))
+                    case "rsm":
+                        let documentWrapper: DocumentWrapper = .model(.entry(url, entry.name))
                         documentWrappers.append(documentWrapper)
-                    case ".rsw":
-                        let documentWrapper: DocumentWrapper = .world(.entry(url, entryName))
+                    case "rsw":
+                        let documentWrapper: DocumentWrapper = .world(.entry(url, entry.name))
                         documentWrappers.append(documentWrapper)
-                    case ".spr":
-                        let documentWrapper: DocumentWrapper = .sprite(.entry(url, entryName))
+                    case "spr":
+                        let documentWrapper: DocumentWrapper = .sprite(.entry(url, entry.name))
                         documentWrappers.append(documentWrapper)
                     default:
-                        let documentWrapper: DocumentWrapper = .entry(url, entryName)
+                        let documentWrapper: DocumentWrapper = .entry(url, entry.name)
                         documentWrappers.append(documentWrapper)
                     }
                 } else {
-                    let documentWrapper: DocumentWrapper = .entryGroup(url, entryName + "\\")
+                    let path = "\(path)\(node.pathComponent)\\"
+                    let documentWrapper: DocumentWrapper = .entryGroup(url, path)
                     documentWrappers.append(documentWrapper)
                 }
             }

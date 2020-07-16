@@ -14,31 +14,57 @@ struct GRFHeader {
 
     static let size: UInt64 = 0x2e
 
-    let signature: String
-    let key: Data
-    let fileTableOffset: UInt32
-    let skip: UInt32
-    let fileCount: UInt32
-    let version: UInt32
+    var signature: String
+    var key: Data
+    var fileTableOffset: UInt32
+    var skip: UInt32
+    var fileCount: UInt32
+    var version: UInt32
 }
 
 struct GRFTable {
 
     static let size: UInt64 = 0x08
 
-    let packSize: UInt32
-    let realSize: UInt32
-    let data: Data
+    var packSize: UInt32
+    var realSize: UInt32
+    var data: Data
 }
 
-struct GRFEntry: Equatable {
+struct GRFEntry {
 
-    let name: String
-    let packSize: UInt32
-    let lengthAligned: UInt32
-    let realSize: UInt32
-    let type: UInt8
-    let offset: UInt32
+    var name: String
+    var packSize: UInt32
+    var lengthAligned: UInt32
+    var realSize: UInt32
+    var type: UInt8
+    var offset: UInt32
+
+    func data(from stream: Stream) throws -> Data {
+        try stream.seek(toOffset: GRFHeader.size + UInt64(offset))
+        let reader = BinaryReader(stream: stream)
+
+        var bytes = try Array(reader.readData(count: Int(lengthAligned)))
+
+        if type & GRFEntryType.file.rawValue == 0 {
+            guard let data = Data(bytes).unzip() else {
+                throw DocumentError.invalidContents
+            }
+            return data
+        }
+
+        let decryptor = DESDecryptor()
+        if type & GRFEntryType.encryptMixed.rawValue != 0 {
+            decryptor.decodeFull(buf: &bytes, len: Int(lengthAligned), entrylen: Int(packSize))
+        } else if type & GRFEntryType.encryptHeader.rawValue != 0 {
+            decryptor.decodeHeader(buf: &bytes, len: Int(lengthAligned))
+        }
+
+        guard let data = Data(bytes).unzip() else {
+            throw DocumentError.invalidContents
+        }
+        return data
+    }
 }
 
 struct GRFEntryType: OptionSet {
@@ -59,7 +85,6 @@ struct GRFDocument: Document {
     var header: GRFHeader
     var table: GRFTable
     var entries: [GRFEntry]
-    var entryNameTable: String
 
     init(from stream: Stream) throws {
         let reader = BinaryReader(stream: stream)
@@ -109,7 +134,6 @@ struct GRFDocument: Document {
         )
 
         var entries: [GRFEntry] = []
-        var entryNameTable = ""
 
         var pos = 0
         for _ in 0..<header.fileCount {
@@ -138,61 +162,9 @@ struct GRFDocument: Document {
 
             entries.append(entry)
 
-            entryNameTable += entry.name + "\0"
-
             pos += 17
         }
 
         self.entries = entries
-        self.entryNameTable = entryNameTable
-    }
-
-    func entryNames(forPath path: String) -> [String] {
-        let pattern = path.replacingOccurrences(of: "\\", with: "\\\\") + "([^(\\x0|\\\\)]+)"
-        guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
-            return []
-        }
-
-        let entryNameTable = self.entryNameTable as NSString
-        let range = NSRange(location: 0, length: entryNameTable.length)
-        let matches = regex.matches(in: entryNameTable as String, options: [], range: range)
-
-        var entryNames: [String] = []
-        for match in matches {
-            let entryName = entryNameTable.substring(with: match.range)
-            entryNames.append(entryName)
-        }
-
-        return Array(Set(entryNames))
-    }
-
-    func entry(forName name: String) -> GRFEntry? {
-        return entries.first { $0.name == name }
-    }
-
-    func contents(of entry: GRFEntry, from stream: Stream) throws -> Data {
-        try stream.seek(toOffset: GRFHeader.size + UInt64(entry.offset))
-        let reader = BinaryReader(stream: stream)
-
-        var bytes = try Array(reader.readData(count: Int(entry.lengthAligned)))
-
-        if entry.type & GRFEntryType.file.rawValue == 0 {
-            guard let data = Data(bytes).unzip() else {
-                throw DocumentError.invalidContents
-            }
-            return data
-        }
-
-        let decryptor = DESDecryptor()
-        if entry.type & GRFEntryType.encryptMixed.rawValue != 0 {
-            decryptor.decodeFull(buf: &bytes, len: Int(entry.lengthAligned), entrylen: Int(entry.packSize))
-        } else if entry.type & GRFEntryType.encryptHeader.rawValue != 0 {
-            decryptor.decodeHeader(buf: &bytes, len: Int(entry.lengthAligned))
-        }
-
-        guard let data = Data(bytes).unzip() else {
-            throw DocumentError.invalidContents
-        }
-        return data
     }
 }

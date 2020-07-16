@@ -44,9 +44,7 @@ class ModelPreviewViewController: UIViewController {
 
     private func loadSource() {
         DispatchQueue.global().async {
-            guard case .entry(let url, _) = self.source,
-                  let grf = ResourceManager.default.grf(for: url),
-                  let stream = try? FileStream(url: url),
+            guard case .entry = self.source,
                   let data = try? self.source.data()
             else {
                 return
@@ -58,13 +56,7 @@ class ModelPreviewViewController: UIViewController {
             }
 
             let textures = document.textures.map { textureName -> Data? in
-                guard let entry = grf.entry(forName: "data\\texture\\" + textureName) else {
-                    return nil
-                }
-                guard let contents = try? grf.contents(of: entry, from: stream) else {
-                    return nil
-                }
-                return contents
+                return try? ResourceManager.default.contentsOfEntry(withName: "data\\texture\\" + textureName)
             }
 
             let (boundingBox, wrappers) = document.calcBoundingBox()

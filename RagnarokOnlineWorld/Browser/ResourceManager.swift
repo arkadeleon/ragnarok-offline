@@ -8,12 +8,86 @@
 
 import Foundation
 
-class ResourceManager {
+class GRFNode {
 
-    private struct GRFDocumentWrapper {
-        var url: URL
-        var grf: GRFDocument
+    let pathComponent: String
+    var entry: GRFEntry?
+    private(set) var childNodes: [String: GRFNode] = [:]
+
+    init(pathComponent: String) {
+        self.pathComponent = pathComponent
     }
+
+    func addChildNode(_ childNode: GRFNode) {
+        childNodes[childNode.pathComponent] = childNode
+    }
+}
+
+private class GRFDocumentWrapper {
+
+    let url: URL
+    let grf: GRFDocument
+    let rootNode = GRFNode(pathComponent: "data")
+
+    init(url: URL) throws {
+        self.url = url
+
+        let loader = DocumentLoader()
+        grf = try loader.load(GRFDocument.self, from: url)
+
+        for entry in grf.entries {
+            insert(entry: entry)
+        }
+    }
+
+    private func insert(entry: GRFEntry) {
+        var currentNode = rootNode
+
+        let pathComponents = entry.name.split(separator: "\\")
+        for pathComponent in pathComponents {
+            if let childNode = currentNode.childNodes[String(pathComponent)] {
+                currentNode = childNode
+            } else {
+                let childNode = GRFNode(pathComponent: String(pathComponent))
+                currentNode.addChildNode(childNode)
+                currentNode = childNode
+            }
+        }
+
+        currentNode.entry = entry
+    }
+
+    func nodes(withPath path: String) -> [GRFNode] {
+        var currentNode = rootNode
+
+        let pathComponents = path.split(separator: "\\")
+        for pathComponent in pathComponents {
+            guard let childNode = currentNode.childNodes[String(pathComponent)] else {
+                return []
+            }
+            currentNode = childNode
+        }
+
+        return Array(currentNode.childNodes.values)
+    }
+
+    func entry(forPath path: String) -> GRFEntry? {
+        var currentNode = rootNode
+
+        let pathComponents = path.split(separator: "\\")
+
+        for pathComponent in pathComponents {
+            guard let childNode = currentNode.childNodes[String(pathComponent)] else {
+                return nil
+            }
+            currentNode = childNode
+        }
+
+        return currentNode.entry
+    }
+}
+
+class ResourceManager {
 
     static let `default` = ResourceManager()
 
@@ -27,25 +101,28 @@ class ResourceManager {
         for section in ini.sections where section.name == "Data" {
             for entry in section.entries {
                 let grfURL = url.appendingPathComponent(entry.value)
-                let grf = try loader.load(GRFDocument.self, from: grfURL)
-                let wrapper = GRFDocumentWrapper(url: grfURL, grf: grf)
+                let wrapper = try GRFDocumentWrapper(url: grfURL)
                 wrappers.append(wrapper)
             }
         }
     }
 
-    func grf(for url: URL) -> GRFDocument? {
-        wrappers.first { $0.url == url }?.grf
+    func nodes(withPath path: String, url: URL) throws -> [GRFNode] {
+        guard let wrapper = wrappers.first(where: { $0.url == url }) else {
+            throw DocumentError.invalidContents
+        }
+
+        return wrapper.nodes(withPath: path)
     }
 
     func contentsOfEntry(withName name: String) throws -> Data {
         for wrapper in wrappers {
-            guard let entry = wrapper.grf.entries.first(where: { $0.name.lowercased() == name.lowercased() }) else {
+            guard let entry = wrapper.entry(forPath: name) else {
                 continue
             }
             let stream = try FileStream(url: wrapper.url)
-            let contents = try wrapper.grf.contents(of: entry, from: stream)
-            return contents
+            let data = try entry.data(from: stream)
+            return data
         }
         throw DocumentError.invalidContents
     }
@@ -55,13 +132,13 @@ class ResourceManager {
             throw DocumentError.invalidContents
         }
 
-        guard let entry = wrapper.grf.entries.first(where: { $0.name.lowercased() == name.lowercased() }) else {
+        guard let entry = wrapper.entry(forPath: name) else {
             throw DocumentError.invalidContents
         }
 
         let stream = try FileStream(url: wrapper.url)
-        let contents = try wrapper.grf.contents(of: entry, from: stream)
-        return contents
+        let data = try entry.data(from: stream)
+        return data
     }
 
     func contentsOfEntry(withName name: String, preferredURL url: URL) throws -> Data {
