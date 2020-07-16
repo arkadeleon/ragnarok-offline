@@ -92,6 +92,9 @@ class WorldPreviewViewController: UIViewController {
                 return
             }
 
+            context.setFillColor(UIColor.black.cgColor)
+            context.fill(CGRect(x: 0, y: 0, width: Int(ATLAS_WIDTH), height: Int(ATLAS_HEIGHT)))
+
             let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: CGFloat(Int(ATLAS_HEIGHT)))
             context.concatenate(flipVertical)
 
@@ -101,8 +104,8 @@ class WorldPreviewViewController: UIViewController {
                 }
                 let image = UIImage(data: data)?.cgImage?.decoded
 
-                let x = (i % Int(ATLAS_WIDTH)) * 258
-                let y = (i / Int(ATLAS_WIDTH)) * 258
+                let x = (i % Int(ATLAS_COLS)) * 258
+                let y = (i / Int(ATLAS_COLS)) * 258
                 context.draw(image!, in: CGRect(x: x, y: y, width: 258, height: 258))
                 context.draw(image!, in: CGRect(x: x + 0, y: y + 0, width: 256, height: 256))
             }
