@@ -106,7 +106,7 @@ class WorldPreviewViewController: UIViewController {
                 waterTextures.append(data)
             }
 
-            var models: [([[ModelVertex]], [Data?])] = []
+            var models: [String: ([[ModelVertex]], [Data?])] = [:]
             for model in rsw.models {
                 let name = "data\\model\\" + model.filename
                 guard let data = try? ResourceManager.default.contentsOfEntry(withName: name, preferredURL: url),
@@ -114,9 +114,12 @@ class WorldPreviewViewController: UIViewController {
                     continue
                 }
 
+                var m = models[name] ?? ([[ModelVertex]](repeating: [], count: rsm.textures.count), [])
+
                 let textures = rsm.textures.map { textureName -> Data? in
                     return try? ResourceManager.default.contentsOfEntry(withName: "data\\texture\\" + textureName)
                 }
+                m.1 = textures
 
                 let (boundingBox, wrappers) = rsm.calcBoundingBox()
 
@@ -129,12 +132,22 @@ class WorldPreviewViewController: UIViewController {
                 )
 
                 let meshes = rsm.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox)
+                for (i, mesh) in meshes.enumerated() {
+                    m.0[i].append(contentsOf: mesh)
+                }
 
-                models.append((meshes, textures))
+                models[name] = m
+            }
+
+            var modelMeshes: [[ModelVertex]] = []
+            var modelTextures: [Data?] = []
+            for value in models.values {
+                modelMeshes.append(contentsOf: value.0)
+                modelTextures.append(contentsOf: value.1)
             }
 
             DispatchQueue.main.async { [self] in
-                guard let renderer = try? WorldPreviewRenderer(vertices: state.mesh, texture: jpeg, waterVertices: state.waterMesh, waterTextures: waterTextures, models: models) else {
+                guard let renderer = try? WorldPreviewRenderer(vertices: state.mesh, texture: jpeg, waterVertices: state.waterMesh, waterTextures: waterTextures, modelMeshes: modelMeshes, modelTextures: modelTextures) else {
                     return
                 }
 

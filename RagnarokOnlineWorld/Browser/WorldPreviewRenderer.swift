@@ -17,21 +17,18 @@ class WorldPreviewRenderer: NSObject {
 
     let groundRenderer: GroundRenderer
     let waterRenderer: WaterRenderer
-    let modelRenderers: [ModelRenderer]
+    let modelRenderer: ModelRenderer
 
     let camera = Camera()
 
-    init(vertices: [GroundVertex], texture: Data?, waterVertices: [WaterVertex], waterTextures: [Data?], models: [([[ModelVertex]], [Data?])]) throws {
-        let d = MTLCreateSystemDefaultDevice()!
-        let commandQueue = d.makeCommandQueue()!
-
-        self.device = d
-        self.commandQueue = commandQueue
+    init(vertices: [GroundVertex], texture: Data?, waterVertices: [WaterVertex], waterTextures: [Data?], modelMeshes: [[ModelVertex]], modelTextures: [Data?]) throws {
+        device = MTLCreateSystemDefaultDevice()!
+        commandQueue = device.makeCommandQueue()!
 
         let library = device.makeDefaultLibrary()!
         groundRenderer = try GroundRenderer(device: device, library: library, vertices: vertices, texture: texture)
         waterRenderer = try WaterRenderer(device: device, library: library, vertices: waterVertices, textures: waterTextures)
-        modelRenderers = try models.map { try ModelRenderer(device: d, library: library, meshes: $0.0, textures: $0.1) }
+        modelRenderer = try ModelRenderer(device: device, library: library, meshes: modelMeshes, textures: modelTextures)
 
         super.init()
     }
@@ -91,16 +88,14 @@ extension WorldPreviewRenderer: MTKViewDelegate {
             projectionMatrix: projectionMatrix
         )
 
-        for modelRenderer in modelRenderers {
-            modelRenderer.render(
-                atTime: time,
-                device: device,
-                renderCommandEncoder: renderCommandEncoder,
-                modelviewMatrix: modelviewMatrix,
-                projectionMatrix: projectionMatrix,
-                normalMatrix: normalMatrix
-            )
-        }
+        modelRenderer.render(
+            atTime: time,
+            device: device,
+            renderCommandEncoder: renderCommandEncoder,
+            modelviewMatrix: modelviewMatrix,
+            projectionMatrix: projectionMatrix,
+            normalMatrix: normalMatrix
+        )
 
         renderCommandEncoder.endEncoding()
 

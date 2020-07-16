@@ -47,7 +47,6 @@ groundFragmentShader(RasterizerData in [[stage_in]],
 {
     constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
     float4 texture = colorTexture.sample(textureSampler, in.textureCoordinate);
-    return texture;
     float lightWeight = 1.0;
 
     if (texture.a == 0.0) {
