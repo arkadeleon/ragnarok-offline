@@ -19,9 +19,9 @@ class WorldPreviewRenderer: NSObject {
     let waterRenderer: WaterRenderer
     let modelRenderer: ModelRenderer
 
-    let camera = Camera()
+    let camera: WorldPreviewCamera
 
-    init(vertices: [GroundVertex], texture: Data?, waterVertices: [WaterVertex], waterTextures: [Data?], modelMeshes: [[ModelVertex]], modelTextures: [Data?]) throws {
+    init(altitude: Altitude, vertices: [GroundVertex], texture: Data?, waterVertices: [WaterVertex], waterTextures: [Data?], modelMeshes: [[ModelVertex]], modelTextures: [Data?]) throws {
         device = MTLCreateSystemDefaultDevice()!
         commandQueue = device.makeCommandQueue()!
 
@@ -29,6 +29,15 @@ class WorldPreviewRenderer: NSObject {
         groundRenderer = try GroundRenderer(device: device, library: library, vertices: vertices, texture: texture)
         waterRenderer = try WaterRenderer(device: device, library: library, vertices: waterVertices, textures: waterTextures)
         modelRenderer = try ModelRenderer(device: device, library: library, meshes: modelMeshes, textures: modelTextures)
+
+        let target: Vector3 = [
+            Float(altitude.width) / 2,
+            Float(altitude.height) / 2,
+            altitude.heightForCell(atX: altitude.width / 2, y: altitude.height / 2)
+        ]
+        camera = WorldPreviewCamera(target: target)
+        camera.altitudeTo = -200
+        camera.zoomFinal = 200
 
         super.init()
     }
@@ -57,15 +66,11 @@ extension WorldPreviewRenderer: MTKViewDelegate {
 
         let time = CACurrentMediaTime()
 
-        var modelviewMatrix = Matrix4x4<Float>()
-        modelviewMatrix = SGLMath.translateZ(modelviewMatrix, -400)
-        modelviewMatrix = SGLMath.rotate(modelviewMatrix, radians(15), [1, 0, 0])
-        modelviewMatrix = SGLMath.rotate(modelviewMatrix, Float(radians(435595.22182600008 * 360 / 8)), [0, 1, 0])
-        modelviewMatrix = SGLMath.translate(modelviewMatrix, [100, -40, 60])
+        camera.update(time: time)
 
+        let modelviewMatrix = camera.modelviewMatrix
         let projectionMatrix = SGLMath.perspective(radians(camera.zoom), Float(view.bounds.width / view.bounds.height), 1, 1000)
-
-        let normalMatrix = Matrix3x3(modelviewMatrix).inverse.transpose
+        let normalMatrix = camera.normalMatrix
 
         guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return

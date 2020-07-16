@@ -55,9 +55,19 @@ class WorldPreviewViewController: UIViewController {
                 return
             }
 
-            let gndData = try! ResourceManager.default.contentsOfEntry(withName: "data\\" + rsw.files.gnd, preferredURL: url)
-            let gnd = try! loader.load(GNDDocument.self, from: gndData)
+            guard let gatData = try? ResourceManager.default.contentsOfEntry(withName: "data\\" + rsw.files.gat, preferredURL: url),
+                  let gat = try? loader.load(GATDocument.self, from: gatData)
+            else {
+                return
+            }
 
+            guard let gndData = try? ResourceManager.default.contentsOfEntry(withName: "data\\" + rsw.files.gnd, preferredURL: url),
+                  let gnd = try? loader.load(GNDDocument.self, from: gndData)
+            else {
+                return
+            }
+
+            let altitude = gat.compile()
             let state = gnd.compile(WATER_LEVEL: rsw.water.level, WATER_HEIGHT: rsw.water.waveHeight)
 
             let textures = gnd.textures
@@ -147,7 +157,7 @@ class WorldPreviewViewController: UIViewController {
             }
 
             DispatchQueue.main.async { [self] in
-                guard let renderer = try? WorldPreviewRenderer(vertices: state.mesh, texture: jpeg, waterVertices: state.waterMesh, waterTextures: waterTextures, modelMeshes: modelMeshes, modelTextures: modelTextures) else {
+                guard let renderer = try? WorldPreviewRenderer(altitude: altitude, vertices: state.mesh, texture: jpeg, waterVertices: state.waterMesh, waterTextures: waterTextures, modelMeshes: modelMeshes, modelTextures: modelTextures) else {
                     return
                 }
 
@@ -158,7 +168,6 @@ class WorldPreviewViewController: UIViewController {
                 mtkView.depthStencilPixelFormat = Formats.depthPixelFormat
                 mtkView.delegate = renderer
 
-                mtkView.addGestureRecognizer(renderer.camera.panGestureRecognizer)
                 mtkView.addGestureRecognizer(renderer.camera.pinchGestureRecognizer)
             }
         }

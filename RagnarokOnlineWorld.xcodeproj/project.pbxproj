@@ -50,6 +50,8 @@
 		355E914B24BEDDAE00361AF6 /* WorldPreviewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914A24BEDDAE00361AF6 /* WorldPreviewRenderer.swift */; };
 		355E914D24BEEA9200361AF6 /* WaterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914C24BEEA9200361AF6 /* WaterRenderer.swift */; };
 		355E914F24BEFF2100361AF6 /* JPGDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914E24BEFF2100361AF6 /* JPGDocument.swift */; };
+		355E915124C04A5D00361AF6 /* GATDocument+Compile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E915024C04A5C00361AF6 /* GATDocument+Compile.swift */; };
+		355E915324C04DCA00361AF6 /* WorldPreviewCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E915224C04DCA00361AF6 /* WorldPreviewCamera.swift */; };
 		355EFD2D2480264B0033C280 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355EFD2C2480264B0033C280 /* Camera.swift */; };
 		35617A73249863580097C60C /* SGLMath+Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617A72249863580097C60C /* SGLMath+Calculate.swift */; };
 		3573037824B83BEA0011F6AA /* MBProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3573037724B83BEA0011F6AA /* MBProgressHUD */; };
@@ -145,6 +147,8 @@
 		355E914A24BEDDAE00361AF6 /* WorldPreviewRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPreviewRenderer.swift; sourceTree = "<group>"; };
 		355E914C24BEEA9200361AF6 /* WaterRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterRenderer.swift; sourceTree = "<group>"; };
 		355E914E24BEFF2100361AF6 /* JPGDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPGDocument.swift; sourceTree = "<group>"; };
+		355E915024C04A5C00361AF6 /* GATDocument+Compile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GATDocument+Compile.swift"; sourceTree = "<group>"; };
+		355E915224C04DCA00361AF6 /* WorldPreviewCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPreviewCamera.swift; sourceTree = "<group>"; };
 		355EFD2B247FE7B00033C280 /* RagnarokOnlineWorld.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RagnarokOnlineWorld.entitlements; sourceTree = "<group>"; };
 		355EFD2C2480264B0033C280 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		35617A72249863580097C60C /* SGLMath+Calculate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SGLMath+Calculate.swift"; sourceTree = "<group>"; };
@@ -314,6 +318,7 @@
 				3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */,
 				355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */,
 				35116E86246AE56B000A60FE /* ModelPreviewViewController.swift */,
+				355E915224C04DCA00361AF6 /* WorldPreviewCamera.swift */,
 				355E914A24BEDDAE00361AF6 /* WorldPreviewRenderer.swift */,
 				359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */,
 			);
@@ -360,9 +365,10 @@
 				35EF769324AF18D800371F1F /* GroundRenderer.swift */,
 				35021BAE24A0A4760021B99B /* GroundShaderTypes.h */,
 				359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */,
+				355E915024C04A5C00361AF6 /* GATDocument+Compile.swift */,
+				3509565424A8F6010077C134 /* GNDDocument+Compile.swift */,
 				3509565224A8EE010077C134 /* RSMDocument+Compile.swift */,
 				35D091F324AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift */,
-				3509565424A8F6010077C134 /* GNDDocument+Compile.swift */,
 				3509565624ACD8FB0077C134 /* SPRDocument+Images.swift */,
 			);
 			path = Renderers;
@@ -527,6 +533,7 @@
 				35C06DBC2498C9C000F0A229 /* TextureLoader.swift in Sources */,
 				35E8DCDE24A9D99000A14FC5 /* RendererCommon.swift in Sources */,
 				35116E87246AE56B000A60FE /* ModelPreviewViewController.swift in Sources */,
+				355E915124C04A5D00361AF6 /* GATDocument+Compile.swift in Sources */,
 				35116E5E2461A5DB000A60FE /* DESDecryptor.swift in Sources */,
 				35E8DCDB24A88BCC00A14FC5 /* WaterShaders.metal in Sources */,
 				350F347324B5610F00848ED5 /* DocumentSource.swift in Sources */,
@@ -558,6 +565,7 @@
 				35CB3BB52478359100EC04C3 /* Shaders.metal in Sources */,
 				3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */,
 				355EFD2D2480264B0033C280 /* Camera.swift in Sources */,
+				355E915324C04DCA00361AF6 /* WorldPreviewCamera.swift in Sources */,
 				35116E8D247035AC000A60FE /* ACTDocument.swift in Sources */,
 				35EF769424AF18D800371F1F /* GroundRenderer.swift in Sources */,
 				35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */,
