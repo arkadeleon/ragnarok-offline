@@ -13,7 +13,7 @@ class ModelRenderer {
 
     let renderPipelineState: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState?
-    let meshes: [[[ModelVertex]]]
+    let meshes: [[ModelVertex]]
     let textures: [MTLTexture?]
 
     let fog = Fog(
@@ -32,7 +32,7 @@ class ModelRenderer {
         direction: [0, 1, 0]
     )
 
-    init(device: MTLDevice, library: MTLLibrary, meshes: [[[ModelVertex]]], textures: [Data?]) throws {
+    init(device: MTLDevice, library: MTLLibrary, meshes: [[ModelVertex]], textures: [Data?]) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "modelVertexShader")
@@ -100,19 +100,17 @@ class ModelRenderer {
         }
         renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
-        for mesh in meshes {
-            for (i, vertices) in mesh.enumerated() where vertices.count > 0 {
-                guard let vertexBuffer = device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<ModelVertex>.stride, options: []) else {
-                    continue
-                }
-
-                renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-
-                let texture = textures[i]
-                renderCommandEncoder.setFragmentTexture(texture, index: 0)
-
-                renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
+        for (i, vertices) in meshes.enumerated() where vertices.count > 0 {
+            guard let vertexBuffer = device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<ModelVertex>.stride, options: []) else {
+                continue
             }
+
+            renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+
+            let texture = textures[i]
+            renderCommandEncoder.setFragmentTexture(texture, index: 0)
+
+            renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
         }
     }
 }

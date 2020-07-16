@@ -20,7 +20,7 @@ class ModelPreviewRenderer: NSObject {
     let boundingBox: RSMBoundingBox
     let camera = Camera()
 
-    init(meshes: [[[ModelVertex]]], textures: [Data?], boundingBox: RSMBoundingBox) throws {
+    init(meshes: [[ModelVertex]], textures: [Data?], boundingBox: RSMBoundingBox) throws {
         device = MTLCreateSystemDefaultDevice()!
         commandQueue = device.makeCommandQueue()!
 

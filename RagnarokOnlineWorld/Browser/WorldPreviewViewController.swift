@@ -106,7 +106,7 @@ class WorldPreviewViewController: UIViewController {
                 waterTextures.append(data)
             }
 
-            var models: [([[[ModelVertex]]], [Data?])] = []
+            var models: [([[ModelVertex]], [Data?])] = []
             for model in rsw.models {
                 let name = "data\\model\\" + model.filename
                 guard let data = try? ResourceManager.default.contentsOfEntry(withName: name, preferredURL: url),
@@ -128,7 +128,7 @@ class WorldPreviewViewController: UIViewController {
                     height: Float(gnd.height)
                 )
 
-                let meshes = rsm.compile(instances: [instance], wrappers: wrappers, boundingBox: boundingBox)
+                let meshes = rsm.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox)
 
                 models.append((meshes, textures))
             }

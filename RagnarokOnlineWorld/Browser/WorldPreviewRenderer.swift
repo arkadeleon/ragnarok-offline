@@ -21,7 +21,7 @@ class WorldPreviewRenderer: NSObject {
 
     let camera = Camera()
 
-    init(vertices: [GroundVertex], texture: Data?, waterVertices: [WaterVertex], waterTextures: [Data?], models: [([[[ModelVertex]]], [Data?])]) throws {
+    init(vertices: [GroundVertex], texture: Data?, waterVertices: [WaterVertex], waterTextures: [Data?], models: [([[ModelVertex]], [Data?])]) throws {
         let d = MTLCreateSystemDefaultDevice()!
         let commandQueue = d.makeCommandQueue()!
 

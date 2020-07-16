@@ -69,7 +69,7 @@ class ModelPreviewViewController: UIViewController {
                 height: 0
             )
 
-            let meshes = document.compile(instances: [instance], wrappers: wrappers, boundingBox: boundingBox)
+            let meshes = document.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox)
 
             DispatchQueue.main.async { [self] in
                 guard let renderer = try? ModelPreviewRenderer(meshes: meshes, textures: textures, boundingBox: boundingBox) else {

@@ -178,12 +178,12 @@ extension RSMNodeBoundingBoxWrapper {
 
 extension RSMDocument {
 
-    func compile(instances: [Matrix4x4<Float>], wrappers: [RSMNodeBoundingBoxWrapper], boundingBox: RSMBoundingBox) -> [[[ModelVertex]]] {
-        var meshes = [[[ModelVertex]]]()
+    func compile(instance: Matrix4x4<Float>, wrappers: [RSMNodeBoundingBoxWrapper], boundingBox: RSMBoundingBox) -> [[ModelVertex]] {
+        var meshes: [[ModelVertex]] = Array(repeating: [], count: textures.count)
         for wrapper in wrappers {
-            for instance in instances {
-                let mesh = wrapper.compile(contents: self, instance_matrix: instance, boundingBox: boundingBox)
-                meshes.append(mesh)
+            let ms = wrapper.compile(contents: self, instance_matrix: instance, boundingBox: boundingBox)
+            for (i, m) in ms.enumerated() {
+                meshes[i].append(contentsOf: m)
             }
         }
         return meshes
