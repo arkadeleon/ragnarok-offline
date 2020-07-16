@@ -91,6 +91,17 @@ extension WorldPreviewRenderer: MTKViewDelegate {
             projectionMatrix: projectionMatrix
         )
 
+        for modelRenderer in modelRenderers {
+            modelRenderer.render(
+                atTime: time,
+                device: device,
+                renderCommandEncoder: renderCommandEncoder,
+                modelviewMatrix: modelviewMatrix,
+                projectionMatrix: projectionMatrix,
+                normalMatrix: normalMatrix
+            )
+        }
+
         renderCommandEncoder.endEncoding()
 
         commandBuffer.present(view.currentDrawable!)

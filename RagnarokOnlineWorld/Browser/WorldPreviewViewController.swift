@@ -55,7 +55,7 @@ class WorldPreviewViewController: UIViewController {
                 return
             }
 
-            let gndData = try! ResourceManager.default.contentsOfEntry(withName: "data\\" + rsw.files.gnd, at: url)
+            let gndData = try! ResourceManager.default.contentsOfEntry(withName: "data\\" + rsw.files.gnd, preferredURL: url)
             let gnd = try! loader.load(GNDDocument.self, from: gndData)
 
             let state = gnd.compile(WATER_LEVEL: rsw.water.level, WATER_HEIGHT: rsw.water.waveHeight)
@@ -109,7 +109,7 @@ class WorldPreviewViewController: UIViewController {
             var models: [([[[ModelVertex]]], [Data?])] = []
             for model in rsw.models {
                 let name = "data\\model\\" + model.filename
-                guard let data = try? ResourceManager.default.contentsOfEntry(withName: name, at: url),
+                guard let data = try? ResourceManager.default.contentsOfEntry(withName: name, preferredURL: url),
                       let rsm = try? loader.load(RSMDocument.self, from: data) else {
                     continue
                 }

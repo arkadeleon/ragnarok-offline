@@ -171,9 +171,9 @@ struct GRFDocument: Document {
     }
 
     func contents(of entry: GRFEntry, from stream: Stream) throws -> Data {
+        try stream.seek(toOffset: GRFHeader.size + UInt64(entry.offset))
         let reader = BinaryReader(stream: stream)
 
-        try reader.skip(count: GRFHeader.size + UInt64(entry.offset))
         var bytes = try Array(reader.readData(count: Int(entry.lengthAligned)))
 
         if entry.type & GRFEntryType.file.rawValue == 0 {
