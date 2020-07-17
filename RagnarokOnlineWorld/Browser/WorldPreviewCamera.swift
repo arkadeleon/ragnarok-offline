@@ -17,10 +17,11 @@ class WorldPreviewCamera: NSObject {
     var zoom: Float = 50
     var zoomFinal: Float = 50
 
-    var angle: Vector2<Float> = [0, 0]
-    var angleFinal: Vector2<Float> = [0, 0]
+    var angleStart: Vector2<Float> = [240, 0]
+    var angle: Vector2<Float> = [240, 0]
 
     var position: Vector3<Float> = [0, 0, 0]
+    var targetStart: Vector3<Float> = [0, 0, 0]
     var target: Vector3<Float> = [0, 0, 0]
 
     var lastTime: CFTimeInterval = 0
@@ -32,7 +33,10 @@ class WorldPreviewCamera: NSObject {
     var rotationTo: Float   =  360
     var range: Float        =  240
 
+    let panGestureRecognizer = UIPanGestureRecognizer()
+    let twoFingerPanGestureRecognizer = UIPanGestureRecognizer()
     let pinchGestureRecognizer = UIPinchGestureRecognizer()
+    let rotationGestureRecognizer = UIRotationGestureRecognizer()
 
     private var panPreviousTranslation: CGPoint = .zero
     private var pinchStartScale: Float = 0
@@ -42,18 +46,21 @@ class WorldPreviewCamera: NSObject {
 
         self.lastTime = CACurrentMediaTime()
 
+        self.targetStart = target
         self.target = target
-
-        angle[0]      = 240.0
-        angle[1]      = rotationFrom % 360.0
-        angleFinal[0] = range % 360.0
-        angleFinal[1] = rotationFrom % 360.0
 
         position[0] = -target[0]
         position[1] = -target[1]
         position[2] =  target[2]
 
+        panGestureRecognizer.addTarget(self, action: #selector(handlePan(_:)))
+
+        twoFingerPanGestureRecognizer.minimumNumberOfTouches = 2
+        twoFingerPanGestureRecognizer.addTarget(self, action: #selector(handleTwoFingerPan(_:)))
+
         pinchGestureRecognizer.addTarget(self, action: #selector(handlePinch(_:)))
+
+        rotationGestureRecognizer.addTarget(self, action: #selector(handleRotation(_:)))
     }
 
     func update(time: CFTimeInterval) {
@@ -66,7 +73,7 @@ class WorldPreviewCamera: NSObject {
 //        }
 
         // Move Camera
-        let smooth = true
+        let smooth = false
         if smooth {
             position[0] += ( -target[0] - position[0] ) * lerp
             position[1] += ( -target[1] - position[1] ) * lerp
@@ -81,10 +88,10 @@ class WorldPreviewCamera: NSObject {
 //        zoom        += ( zoomFinal - zoom ) * lerp * 2.0
 
         // Angle
-        angle[0]    += ( angleFinal[0] - angle[0] ) * lerp * 2.0
-        angle[1]    += ( angleFinal[1] - angle[1] ) * lerp * 2.0
-        angle[0]    %=   360
-        angle[1]    %=   360
+//        angle[0]    += ( angleFinal[0] - angle[0] ) * lerp * 2.0
+//        angle[1]    += ( angleFinal[1] - angle[1] ) * lerp * 2.0
+//        angle[0]    %=   360
+//        angle[1]    %=   360
 
         // Find Camera direction (for NPC direction)
         direction    = floor( ( angle[1] + 22.5 ) / 45 ) % 8;
@@ -105,6 +112,31 @@ class WorldPreviewCamera: NSObject {
         normalMatrix = Matrix3x3(modelviewMatrix).inverse.transpose
     }
 
+    @objc private func handlePan(_ sender: Any) {
+        switch panGestureRecognizer.state {
+        case .began:
+            targetStart = target
+        case .changed:
+            let translation = panGestureRecognizer.translation(in: panGestureRecognizer.view)
+            target[0] = targetStart[0] - Float(translation.x) / 3
+            target[1] = targetStart[1] + Float(translation.y) / 3
+        default:
+            break
+        }
+    }
+
+    @objc private func handleTwoFingerPan(_ sender: Any) {
+        switch twoFingerPanGestureRecognizer.state {
+        case .began:
+            angleStart[0] = angle[0]
+        case .changed:
+            let translation = twoFingerPanGestureRecognizer.translation(in: twoFingerPanGestureRecognizer.view)
+            angle[0] = angleStart[0] + Float(translation.y)
+        default:
+            break
+        }
+    }
+
     @objc private func handlePinch(_ sender: Any) {
         switch pinchGestureRecognizer.state {
         case .began:
@@ -112,6 +144,17 @@ class WorldPreviewCamera: NSObject {
             zoom = pinchStartScale / Float(pinchGestureRecognizer.scale)
         case .changed:
             zoom = pinchStartScale / Float(pinchGestureRecognizer.scale)
+        default:
+            break
+        }
+    }
+
+    @objc private func handleRotation(_ sender: Any) {
+        switch rotationGestureRecognizer.state {
+        case .began:
+            angleStart[1] = angle[1]
+        case .changed:
+            angle[1] = angleStart[1] + degrees(Float(rotationGestureRecognizer.rotation))
         default:
             break
         }

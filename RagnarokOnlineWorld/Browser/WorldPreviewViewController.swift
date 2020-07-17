@@ -171,7 +171,10 @@ class WorldPreviewViewController: UIViewController {
                 mtkView.depthStencilPixelFormat = Formats.depthPixelFormat
                 mtkView.delegate = renderer
 
+                mtkView.addGestureRecognizer(renderer.camera.panGestureRecognizer)
+                mtkView.addGestureRecognizer(renderer.camera.twoFingerPanGestureRecognizer)
                 mtkView.addGestureRecognizer(renderer.camera.pinchGestureRecognizer)
+                mtkView.addGestureRecognizer(renderer.camera.rotationGestureRecognizer)
             }
         }
     }
