@@ -46,17 +46,11 @@ struct GRFEntry {
 
         var bytes = try Array(reader.readData(count: Int(lengthAligned)))
 
-        if type & GRFEntryType.file.rawValue == 0 {
-            guard let data = Data(bytes).unzip() else {
-                throw DocumentError.invalidContents
-            }
-            return data
-        }
-
-        let decryptor = DESDecryptor()
         if type & GRFEntryType.encryptMixed.rawValue != 0 {
+            let decryptor = DESDecryptor()
             decryptor.decodeFull(buf: &bytes, len: Int(lengthAligned), entrylen: Int(packSize))
         } else if type & GRFEntryType.encryptHeader.rawValue != 0 {
+            let decryptor = DESDecryptor()
             decryptor.decodeHeader(buf: &bytes, len: Int(lengthAligned))
         }
 
@@ -148,8 +142,14 @@ struct GRFDocument: Document {
             let packSize = Data(table.data[(pos + 0)..<(pos + 4)]).withUnsafeBytes { $0.load(as: UInt32.self) }
             let lengthAligned = Data(table.data[(pos + 4)..<(pos + 8)]).withUnsafeBytes { $0.load(as: UInt32.self) }
             let realSize = Data(table.data[(pos + 8)..<(pos + 12)]).withUnsafeBytes { $0.load(as: UInt32.self) }
-            let type = table.data[12]
+            let type = table.data[pos + 12]
             let offset = Data(table.data[(pos + 13)..<(pos + 17)]).withUnsafeBytes { $0.load(as: UInt32.self) }
+
+            pos += 17
+
+            if type & GRFEntryType.file.rawValue == 0 {
+                continue
+            }
 
             let entry = GRFEntry(
                 name: name as String,
@@ -161,8 +161,6 @@ struct GRFDocument: Document {
             )
 
             entries.append(entry)
-
-            pos += 17
         }
 
         self.entries = entries

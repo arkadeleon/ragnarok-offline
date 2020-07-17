@@ -96,12 +96,24 @@ class ResourceManager {
     func preload() throws {
         let url = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         let iniURL = url.appendingPathComponent("DATA.INI")
-        let loader = DocumentLoader()
-        let ini = try loader.load(INIDocument.self, from: iniURL)
-        for section in ini.sections where section.name == "Data" {
-            for entry in section.entries {
-                let grfURL = url.appendingPathComponent(entry.value)
-                let wrapper = try GRFDocumentWrapper(url: grfURL)
+
+        if FileManager.default.fileExists(atPath: iniURL.path) {
+            let loader = DocumentLoader()
+            let ini = try loader.load(INIDocument.self, from: iniURL)
+            for section in ini.sections where section.name == "Data" {
+                for entry in section.entries {
+                    let url = url.appendingPathComponent(entry.value)
+                    let wrapper = try GRFDocumentWrapper(url: url)
+                    wrappers.append(wrapper)
+                }
+            }
+        } else if let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys: nil) {
+            for element in enumerator {
+                print(element)
+                guard let url = element as? URL, url.pathExtension == "grf" else {
+                    continue
+                }
+                let wrapper = try GRFDocumentWrapper(url: url.resolvingSymlinksInPath())
                 wrappers.append(wrapper)
             }
         }
