@@ -44,12 +44,22 @@ class TextPreviewViewController: UIViewController {
                 return
             }
 
+            var text: String? = nil
             let loader = DocumentLoader()
-            guard let document = try? loader.load(LUADocument.self, from: data) else {
-                return
+            switch self.source.fileType.lowercased() {
+            case "txt":
+                text = try? loader.load(TXTDocument.self, from: data).string
+            case "lua":
+                text = try? loader.load(LUADocument.self, from: data).string
+            default:
+                break
             }
 
             DispatchQueue.main.async {
+                guard let text = text else {
+                    return
+                }
+                
                 let htmlString = """
                 <html>
                     <head>
@@ -71,7 +81,7 @@ class TextPreviewViewController: UIViewController {
                     </head>
                     <body>
                         <pre>
-                            <code class="lua">\(document.string)</code>
+                            <code>\(String(describing: text))</code>
                         </pre>
                     </body>
                 </html>

@@ -92,7 +92,7 @@ extension DocumentWrapper {
                     switch url.pathExtension.lowercased() {
                     case "grf":
                         return .grf(url)
-                    case "lua":
+                    case "txt", "lua":
                         return .text(.url(url))
                     case "bmp", "jpg", "jpeg", "pal":
                         return .image(.url(url))
@@ -111,7 +111,7 @@ extension DocumentWrapper {
             for node in nodes ?? [] {
                 if let entry = node.entry {
                     switch (entry.name as NSString).pathExtension.lowercased() {
-                    case "lua":
+                    case "txt", "lua":
                         let documentWrapper: DocumentWrapper = .text(.entry(url, entry.name))
                         documentWrappers.append(documentWrapper)
                     case "bmp", "jpg", "jpeg", "pal":

@@ -79,15 +79,17 @@ class ImagePreviewViewController: UIViewController {
             }
 
             DispatchQueue.main.async {
-                if let image = image {
-                    self.imageView.image = UIImage(cgImage: image)
-                    self.imageView.frame = CGRect(x: 0, y: 0, width: image.width, height: image.height)
-
-                    self.scrollView.contentSize = CGSize(width: image.width, height: image.height)
-
-                    self.updateZoomScale(image: image)
-                    self.centerScrollViewContents()
+                guard let image = image else {
+                    return
                 }
+
+                self.imageView.image = UIImage(cgImage: image)
+                self.imageView.frame = CGRect(x: 0, y: 0, width: image.width, height: image.height)
+
+                self.scrollView.contentSize = CGSize(width: image.width, height: image.height)
+
+                self.updateZoomScale(image: image)
+                self.centerScrollViewContents()
             }
         }
     }
