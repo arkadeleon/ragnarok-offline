@@ -72,6 +72,8 @@ class ImagePreviewViewController: UIViewController {
                 image = try? loader.load(BMPDocument.self, from: data).image
             case "jpg", "jpeg":
                 image = try? loader.load(JPGDocument.self, from: data).image
+            case "pal":
+                image = try? loader.load(PALDocument.self, from: data).image
             default:
                 break
             }

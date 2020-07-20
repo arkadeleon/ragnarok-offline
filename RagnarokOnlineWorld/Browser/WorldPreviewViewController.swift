@@ -159,22 +159,22 @@ class WorldPreviewViewController: UIViewController {
                 modelTextures.append(contentsOf: value.1)
             }
 
-            DispatchQueue.main.async { [self] in
+            DispatchQueue.main.async {
                 guard let renderer = try? WorldPreviewRenderer(altitude: altitude, vertices: state.mesh, texture: jpeg, waterVertices: state.waterMesh, waterTextures: waterTextures, modelMeshes: modelMeshes, modelTextures: modelTextures) else {
                     return
                 }
 
                 self.renderer = renderer
 
-                mtkView.device = renderer.device
-                mtkView.colorPixelFormat = Formats.colorPixelFormat
-                mtkView.depthStencilPixelFormat = Formats.depthPixelFormat
-                mtkView.delegate = renderer
+                self.mtkView.device = renderer.device
+                self.mtkView.colorPixelFormat = Formats.colorPixelFormat
+                self.mtkView.depthStencilPixelFormat = Formats.depthPixelFormat
+                self.mtkView.delegate = renderer
 
-                mtkView.addGestureRecognizer(renderer.camera.panGestureRecognizer)
-                mtkView.addGestureRecognizer(renderer.camera.twoFingerPanGestureRecognizer)
-                mtkView.addGestureRecognizer(renderer.camera.pinchGestureRecognizer)
-                mtkView.addGestureRecognizer(renderer.camera.rotationGestureRecognizer)
+                self.mtkView.addGestureRecognizer(renderer.camera.panGestureRecognizer)
+                self.mtkView.addGestureRecognizer(renderer.camera.twoFingerPanGestureRecognizer)
+                self.mtkView.addGestureRecognizer(renderer.camera.pinchGestureRecognizer)
+                self.mtkView.addGestureRecognizer(renderer.camera.rotationGestureRecognizer)
             }
         }
     }

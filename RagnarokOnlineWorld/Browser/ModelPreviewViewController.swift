@@ -71,20 +71,20 @@ class ModelPreviewViewController: UIViewController {
 
             let meshes = document.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox)
 
-            DispatchQueue.main.async { [self] in
+            DispatchQueue.main.async {
                 guard let renderer = try? ModelPreviewRenderer(meshes: meshes, textures: textures, boundingBox: boundingBox) else {
                     return
                 }
 
                 self.renderer = renderer
 
-                mtkView.device = renderer.device
-                mtkView.colorPixelFormat = Formats.colorPixelFormat
-                mtkView.depthStencilPixelFormat = Formats.depthPixelFormat
-                mtkView.delegate = renderer
+                self.mtkView.device = renderer.device
+                self.mtkView.colorPixelFormat = Formats.colorPixelFormat
+                self.mtkView.depthStencilPixelFormat = Formats.depthPixelFormat
+                self.mtkView.delegate = renderer
 
-                mtkView.addGestureRecognizer(renderer.camera.panGestureRecognizer)
-                mtkView.addGestureRecognizer(renderer.camera.pinchGestureRecognizer)
+                self.mtkView.addGestureRecognizer(renderer.camera.panGestureRecognizer)
+                self.mtkView.addGestureRecognizer(renderer.camera.pinchGestureRecognizer)
             }
         }
     }

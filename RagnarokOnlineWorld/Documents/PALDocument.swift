@@ -35,12 +35,16 @@ struct PALDocument: Document {
 
         let count = data.count / 4
         for i in 0..<count {
-            let color = CGColor(
-                red: CGFloat(data[i * 4 + 0]) / 255,
-                green: CGFloat(data[i * 4 + 1]) / 255,
-                blue: CGFloat(data[i * 4 + 2]) / 255,
-                alpha: 1
-            )
+            let components = [
+                CGFloat(data[i * 4 + 0]) / 255,
+                CGFloat(data[i * 4 + 1]) / 255,
+                CGFloat(data[i * 4 + 2]) / 255,
+                1
+            ]
+            guard let color = CGColor(colorSpace: colorSpace, components: components) else {
+                continue
+            }
+
             context.setFillColor(color)
 
             let rect = CGRect(
