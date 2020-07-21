@@ -36,7 +36,6 @@
 		35116E7524644AAA000A60FE /* DocumentWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7424644AAA000A60FE /* DocumentWrapper.swift */; };
 		35116E7924659FD6000A60FE /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7824659FD6000A60FE /* Document.swift */; };
 		35116E7F246713AD000A60FE /* TextPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E7E246713AD000A60FE /* TextPreviewViewController.swift */; };
-		35116E81246858F0000A60FE /* BMPDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E80246858F0000A60FE /* BMPDocument.swift */; };
 		35116E8324685AE4000A60FE /* ImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8224685AE4000A60FE /* ImagePreviewViewController.swift */; };
 		35116E85246ADFFA000A60FE /* RSMDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E84246ADFFA000A60FE /* RSMDocument.swift */; };
 		35116E87246AE56B000A60FE /* ModelPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E86246AE56B000A60FE /* ModelPreviewViewController.swift */; };
@@ -48,7 +47,6 @@
 		355E914924BECC5C00361AF6 /* ModelPreviewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */; };
 		355E914B24BEDDAE00361AF6 /* WorldPreviewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914A24BEDDAE00361AF6 /* WorldPreviewRenderer.swift */; };
 		355E914D24BEEA9200361AF6 /* WaterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914C24BEEA9200361AF6 /* WaterRenderer.swift */; };
-		355E914F24BEFF2100361AF6 /* JPGDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914E24BEFF2100361AF6 /* JPGDocument.swift */; };
 		355E915124C04A5D00361AF6 /* GATDocument+Compile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E915024C04A5C00361AF6 /* GATDocument+Compile.swift */; };
 		355E915324C04DCA00361AF6 /* WorldPreviewCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E915224C04DCA00361AF6 /* WorldPreviewCamera.swift */; };
 		355EFD2D2480264B0033C280 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355EFD2C2480264B0033C280 /* Camera.swift */; };
@@ -134,7 +132,6 @@
 		35116E7424644AAA000A60FE /* DocumentWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrapper.swift; sourceTree = "<group>"; };
 		35116E7824659FD6000A60FE /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		35116E7E246713AD000A60FE /* TextPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPreviewViewController.swift; sourceTree = "<group>"; };
-		35116E80246858F0000A60FE /* BMPDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMPDocument.swift; sourceTree = "<group>"; };
 		35116E8224685AE4000A60FE /* ImagePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePreviewViewController.swift; sourceTree = "<group>"; };
 		35116E84246ADFFA000A60FE /* RSMDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSMDocument.swift; sourceTree = "<group>"; };
 		35116E86246AE56B000A60FE /* ModelPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPreviewViewController.swift; sourceTree = "<group>"; };
@@ -145,7 +142,6 @@
 		355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPreviewRenderer.swift; sourceTree = "<group>"; };
 		355E914A24BEDDAE00361AF6 /* WorldPreviewRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPreviewRenderer.swift; sourceTree = "<group>"; };
 		355E914C24BEEA9200361AF6 /* WaterRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterRenderer.swift; sourceTree = "<group>"; };
-		355E914E24BEFF2100361AF6 /* JPGDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPGDocument.swift; sourceTree = "<group>"; };
 		355E915024C04A5C00361AF6 /* GATDocument+Compile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GATDocument+Compile.swift"; sourceTree = "<group>"; };
 		355E915224C04DCA00361AF6 /* WorldPreviewCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPreviewCamera.swift; sourceTree = "<group>"; };
 		355EFD2B247FE7B00033C280 /* RagnarokOnlineWorld.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RagnarokOnlineWorld.entitlements; sourceTree = "<group>"; };
@@ -289,12 +285,10 @@
 			children = (
 				35116E7824659FD6000A60FE /* Document.swift */,
 				35116E8C247035AC000A60FE /* ACTDocument.swift */,
-				35116E80246858F0000A60FE /* BMPDocument.swift */,
 				35116E8A247025EE000A60FE /* GATDocument.swift */,
 				35021BAC24A054700021B99B /* GNDDocument.swift */,
 				35116E55245FC152000A60FE /* GRFDocument.swift */,
 				351E225524BC5D98000EF504 /* INIDocument.swift */,
-				355E914E24BEFF2100361AF6 /* JPGDocument.swift */,
 				35D091F524AC8EB0008D7CEA /* PALDocument.swift */,
 				35116E84246ADFFA000A60FE /* RSMDocument.swift */,
 				35F8D8522473E1D7007DF105 /* RSWDocument.swift */,
@@ -558,7 +552,6 @@
 				35049AA0248E9FA300DAD5C1 /* ModelShaders.metal in Sources */,
 				35A254F224BC42C300C43567 /* StringEncoding+KoreanEUC.swift in Sources */,
 				35021BAD24A054700021B99B /* GNDDocument.swift in Sources */,
-				35116E81246858F0000A60FE /* BMPDocument.swift in Sources */,
 				35116E8324685AE4000A60FE /* ImagePreviewViewController.swift in Sources */,
 				35116E7924659FD6000A60FE /* Document.swift in Sources */,
 				359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */,
@@ -573,7 +566,6 @@
 				355E914924BECC5C00361AF6 /* ModelPreviewRenderer.swift in Sources */,
 				35617A73249863580097C60C /* SGLMath+Calculate.swift in Sources */,
 				355E914D24BEEA9200361AF6 /* WaterRenderer.swift in Sources */,
-				355E914F24BEFF2100361AF6 /* JPGDocument.swift in Sources */,
 				351E225624BC5D98000EF504 /* INIDocument.swift in Sources */,
 				3587F70924694FA7007D1C9B /* BinaryReader.swift in Sources */,
 				35116E58245FC152000A60FE /* GRFDocument.swift in Sources */,
