@@ -17,6 +17,7 @@ enum DocumentWrapper {
     case entry(URL, String)
     case text(DocumentSource)
     case image(DocumentSource)
+    case audio(DocumentSource)
     case model(DocumentSource)
     case world(DocumentSource)
     case sprite(DocumentSource)
@@ -38,6 +39,7 @@ extension DocumentWrapper {
             return url.appendingPathComponent(name.replacingOccurrences(of: "\\", with: "/"))
         case .text(let source),
              .image(let source),
+             .audio(let source),
              .model(let source),
              .world(let source),
              .sprite(let source):
@@ -66,6 +68,8 @@ extension DocumentWrapper {
             return UIImage(systemName: "doc.text")
         case .image:
             return UIImage(systemName: "doc.richtext")
+        case .audio:
+            return UIImage(systemName: "waveform.circle")
         case .model:
             return UIImage(systemName: "square.stack.3d.up")
         case .world:
@@ -96,6 +100,8 @@ extension DocumentWrapper {
                         return .text(.url(url))
                     case "bmp", "jpg", "jpeg", "pal":
                         return .image(.url(url))
+                    case "mp3", "wav":
+                        return .audio(.url(url))
                     default:
                         return .regular(url)
                     }
@@ -116,6 +122,9 @@ extension DocumentWrapper {
                         documentWrappers.append(documentWrapper)
                     case "bmp", "jpg", "jpeg", "pal":
                         let documentWrapper: DocumentWrapper = .image(.entry(url, entry.name))
+                        documentWrappers.append(documentWrapper)
+                    case "mp3", "wav":
+                        let documentWrapper: DocumentWrapper = .audio(.entry(url, entry.name))
                         documentWrappers.append(documentWrapper)
                     case "rsm":
                         let documentWrapper: DocumentWrapper = .model(.entry(url, entry.name))
@@ -143,6 +152,8 @@ extension DocumentWrapper {
         case .text:
             return nil
         case .image:
+            return nil
+        case .audio:
             return nil
         case .model:
             return nil

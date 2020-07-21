@@ -80,14 +80,17 @@ extension DocumentWrappersViewController: UICollectionViewDelegate {
         case .image(let source):
             let previewViewController = ImagePreviewViewController(source: source)
             navigationController?.pushViewController(previewViewController, animated: true)
+        case .audio(let source):
+            let previewViewController = AudioPreviewViewController(source: source)
+            navigationController?.pushViewController(previewViewController, animated: true)
+        case .sprite(let source):
+            let previewViewController = SpritePreviewViewController(source: source)
+            navigationController?.pushViewController(previewViewController, animated: true)
         case .model(let source):
             let previewViewController = ModelPreviewViewController(source: source)
             navigationController?.pushViewController(previewViewController, animated: true)
         case .world(let source):
             let previewViewController = WorldPreviewViewController(source: source)
-            navigationController?.pushViewController(previewViewController, animated: true)
-        case .sprite(let source):
-            let previewViewController = SpritePreviewViewController(source: source)
             navigationController?.pushViewController(previewViewController, animated: true)
         default:
             break
