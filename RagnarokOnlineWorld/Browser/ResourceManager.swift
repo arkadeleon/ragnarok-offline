@@ -109,7 +109,6 @@ class ResourceManager {
             }
         } else if let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys: nil) {
             for element in enumerator {
-                print(element)
                 guard let url = element as? URL, url.pathExtension == "grf" else {
                     continue
                 }

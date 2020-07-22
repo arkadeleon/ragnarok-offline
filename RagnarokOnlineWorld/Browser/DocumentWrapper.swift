@@ -18,9 +18,9 @@ enum DocumentWrapper {
     case text(DocumentSource)
     case image(DocumentSource)
     case audio(DocumentSource)
+    case sprite(DocumentSource)
     case model(DocumentSource)
     case world(DocumentSource)
-    case sprite(DocumentSource)
 }
 
 extension DocumentWrapper {
@@ -40,9 +40,9 @@ extension DocumentWrapper {
         case .text(let source),
              .image(let source),
              .audio(let source),
+             .sprite(let source),
              .model(let source),
-             .world(let source),
-             .sprite(let source):
+             .world(let source):
             switch source {
             case .url(let url):
                 return url
@@ -59,7 +59,7 @@ extension DocumentWrapper {
         case .regular:
             return UIImage(systemName: "doc")
         case .grf:
-            return UIImage(systemName: "doc")
+            return UIImage(systemName: "doc.zipper")
         case .entryGroup:
             return UIImage(systemName: "folder")
         case .entry:
@@ -67,15 +67,15 @@ extension DocumentWrapper {
         case .text:
             return UIImage(systemName: "doc.text")
         case .image:
-            return UIImage(systemName: "doc.richtext")
+            return UIImage(systemName: "photo")
         case .audio:
             return UIImage(systemName: "waveform.circle")
+        case .sprite:
+            return UIImage(systemName: "photo")
         case .model:
             return UIImage(systemName: "square.stack.3d.up")
         case .world:
             return UIImage(systemName: "map")
-        case .sprite:
-            return UIImage(systemName: "doc.richtext")
         }
     }
 
@@ -98,7 +98,7 @@ extension DocumentWrapper {
                         return .grf(url)
                     case "txt", "lua", "ini":
                         return .text(.url(url))
-                    case "bmp", "jpg", "jpeg", "pal":
+                    case "bmp", "jpg", "jpeg", "tga", "pal":
                         return .image(.url(url))
                     case "mp3", "wav":
                         return .audio(.url(url))
@@ -120,7 +120,7 @@ extension DocumentWrapper {
                     case "txt", "lua", "ini":
                         let documentWrapper: DocumentWrapper = .text(.entry(url, entry.name))
                         documentWrappers.append(documentWrapper)
-                    case "bmp", "jpg", "jpeg", "pal":
+                    case "bmp", "jpg", "jpeg", "tga", "pal":
                         let documentWrapper: DocumentWrapper = .image(.entry(url, entry.name))
                         documentWrappers.append(documentWrapper)
                     case "mp3", "wav":
@@ -155,11 +155,11 @@ extension DocumentWrapper {
             return nil
         case .audio:
             return nil
+        case .sprite:
+            return nil
         case .model:
             return nil
         case .world:
-            return nil
-        case .sprite:
             return nil
         }
     }
