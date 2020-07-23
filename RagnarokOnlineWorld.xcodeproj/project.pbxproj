@@ -232,7 +232,6 @@
 				35116E15245C7B87000A60FE /* AppDelegate.swift */,
 				35116E17245C7B87000A60FE /* SceneDelegate.swift */,
 				35CB3BAA2478277600EC04C3 /* Client */,
-				35116E77246596BB000A60FE /* Browser */,
 				35E8DCD924A88AE600A14FC5 /* Renderers */,
 				35116E76246596A5000A60FE /* Documents */,
 				35CB3BBA247EB2C100EC04C3 /* Utilities */,
@@ -322,7 +321,7 @@
 			path = Browser;
 			sourceTree = "<group>";
 		};
-		35CB3BAA2478277600EC04C3 /* Client */ = {
+		358E6BAB24C9691300283BAD /* Game */ = {
 			isa = PBXGroup;
 			children = (
 				355EFD2C2480264B0033C280 /* Camera.swift */,
@@ -331,6 +330,15 @@
 				35CB3BB3247833C200EC04C3 /* ShaderTypes.h */,
 				35CB3BB42478359100EC04C3 /* Shaders.metal */,
 				35CB3BB6247D81B300EC04C3 /* wall.jpg */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		35CB3BAA2478277600EC04C3 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				35116E77246596BB000A60FE /* Browser */,
+				358E6BAB24C9691300283BAD /* Game */,
 			);
 			path = Client;
 			sourceTree = "<group>";
