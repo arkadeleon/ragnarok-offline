@@ -9,6 +9,7 @@
 import UIKit
 
 class DocumentWrapperCell: UICollectionViewCell {
+    
     let iconView: UIImageView
     let nameLabel: UILabel
 

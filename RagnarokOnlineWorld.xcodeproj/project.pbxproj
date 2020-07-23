@@ -51,13 +51,13 @@
 		355E915324C04DCA00361AF6 /* WorldPreviewCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E915224C04DCA00361AF6 /* WorldPreviewCamera.swift */; };
 		355EFD2D2480264B0033C280 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355EFD2C2480264B0033C280 /* Camera.swift */; };
 		35617A73249863580097C60C /* SGLMath+Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617A72249863580097C60C /* SGLMath+Calculate.swift */; };
-		3573037824B83BEA0011F6AA /* MBProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3573037724B83BEA0011F6AA /* MBProgressHUD */; };
 		3573037A24B83CC70011F6AA /* ResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3573037924B83CC70011F6AA /* ResourceManager.swift */; };
 		3587577B24C6DB480050F734 /* AudioPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587577A24C6DB480050F734 /* AudioPreviewViewController.swift */; };
 		3587944A24C73E9400A5074B /* TGADocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587944924C73E9400A5074B /* TGADocument.swift */; };
 		3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */; };
 		3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */; };
 		3587F70924694FA7007D1C9B /* BinaryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F70824694FA7007D1C9B /* BinaryReader.swift */; };
+		358E6BAD24C9793B00283BAD /* ClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358E6BAC24C9793B00283BAD /* ClientViewController.swift */; };
 		359D5C1624A1F8CA00C2D8D3 /* WorldPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */; };
 		359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */; };
 		35A254F224BC42C300C43567 /* StringEncoding+KoreanEUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A254F124BC42C300C43567 /* StringEncoding+KoreanEUC.swift */; };
@@ -154,6 +154,7 @@
 		3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrappersViewController.swift; sourceTree = "<group>"; };
 		3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWrapperCell.swift; sourceTree = "<group>"; };
 		3587F70824694FA7007D1C9B /* BinaryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryReader.swift; sourceTree = "<group>"; };
+		358E6BAC24C9793B00283BAD /* ClientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientViewController.swift; sourceTree = "<group>"; };
 		359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPreviewViewController.swift; sourceTree = "<group>"; };
 		359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = GroundShaders.metal; sourceTree = "<group>"; };
 		35A254F124BC42C300C43567 /* StringEncoding+KoreanEUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringEncoding+KoreanEUC.swift"; sourceTree = "<group>"; };
@@ -183,7 +184,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3573037824B83BEA0011F6AA /* MBProgressHUD in Frameworks */,
 				35116E50245FBF65000A60FE /* DataCompression in Frameworks */,
 				351A96AE247F5D9F00274D64 /* SGLMath in Frameworks */,
 			);
@@ -303,7 +303,6 @@
 		35116E77246596BB000A60FE /* Browser */ = {
 			isa = PBXGroup;
 			children = (
-				3573037924B83CC70011F6AA /* ResourceManager.swift */,
 				350F347224B5610F00848ED5 /* DocumentSource.swift */,
 				35116E7424644AAA000A60FE /* DocumentWrapper.swift */,
 				3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */,
@@ -339,6 +338,8 @@
 			children = (
 				35116E77246596BB000A60FE /* Browser */,
 				358E6BAB24C9691300283BAD /* Game */,
+				3573037924B83CC70011F6AA /* ResourceManager.swift */,
+				358E6BAC24C9793B00283BAD /* ClientViewController.swift */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -398,7 +399,6 @@
 			packageProductDependencies = (
 				35116E4F245FBF65000A60FE /* DataCompression */,
 				351A96AD247F5D9F00274D64 /* SGLMath */,
-				3573037724B83BEA0011F6AA /* MBProgressHUD */,
 			);
 			productName = RagnarokOnlineWorld;
 			productReference = 35116E12245C7B87000A60FE /* RagnarokOnlineWorld.app */;
@@ -476,7 +476,6 @@
 			packageReferences = (
 				35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */,
 				351A96AC247F5D9F00274D64 /* XCRemoteSwiftPackageReference "Math" */,
-				3573037624B83BEA0011F6AA /* XCRemoteSwiftPackageReference "MBProgressHUD" */,
 			);
 			productRefGroup = 35116E13245C7B87000A60FE /* Products */;
 			projectDirPath = "";
@@ -551,6 +550,7 @@
 				35E8DCE024A9DC1100A14FC5 /* ModelRenderer.swift in Sources */,
 				35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */,
 				3509565724ACD8FB0077C134 /* SPRDocument+Images.swift in Sources */,
+				358E6BAD24C9793B00283BAD /* ClientViewController.swift in Sources */,
 				3587577B24C6DB480050F734 /* AudioPreviewViewController.swift in Sources */,
 				3509565324A8EE010077C134 /* RSMDocument+Compile.swift in Sources */,
 				35CB3BAC247827A700EC04C3 /* GameViewController.swift in Sources */,
@@ -930,14 +930,6 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		3573037624B83BEA0011F6AA /* XCRemoteSwiftPackageReference "MBProgressHUD" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/jdg/MBProgressHUD.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -950,11 +942,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 351A96AC247F5D9F00274D64 /* XCRemoteSwiftPackageReference "Math" */;
 			productName = SGLMath;
-		};
-		3573037724B83BEA0011F6AA /* MBProgressHUD */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3573037624B83BEA0011F6AA /* XCRemoteSwiftPackageReference "MBProgressHUD" */;
-			productName = MBProgressHUD;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -30,9 +30,7 @@ class DocumentWrappersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if title == nil {
-            title = documentWrapper.url.lastPathComponent
-        }
+        title = documentWrapper.url.lastPathComponent
 
         view.backgroundColor = .systemBackground
 

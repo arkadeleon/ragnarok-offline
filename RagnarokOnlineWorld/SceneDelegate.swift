@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MBProgressHUD
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -22,31 +21,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
 
-        do {
-            let url = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: .directory(url))
-            documentWrappersViewController.title = "Client"
-            documentWrappersViewController.tabBarItem.image = UIImage(systemName: "desktopcomputer")
+        let clientViewController = ClientViewController()
+        clientViewController.tabBarItem.image = UIImage(systemName: "desktopcomputer")
 
-            let tabBarController = UITabBarController()
-            tabBarController.viewControllers = [
-                UINavigationController(rootViewController: documentWrappersViewController)
-            ]
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [
+            UINavigationController(rootViewController: clientViewController)
+        ]
 
-            window = UIWindow(windowScene: windowScene)
-            window!.rootViewController = tabBarController
-            window!.makeKeyAndVisible()
-
-            let hud = MBProgressHUD.showAdded(to: window!, animated: true)
-            DispatchQueue.global().async {
-                try? ResourceManager.default.preload()
-                DispatchQueue.main.async {
-                    hud.hide(animated: true)
-                }
-            }
-        } catch {
-            fatalError()
-        }
+        window = UIWindow(windowScene: windowScene)
+        window?.rootViewController = tabBarController
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
