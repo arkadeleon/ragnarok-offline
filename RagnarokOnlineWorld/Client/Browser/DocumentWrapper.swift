@@ -65,7 +65,7 @@ extension DocumentWrapper {
         case .entry:
             return UIImage(systemName: "doc")
         case .text:
-            return UIImage(systemName: "doc.text")
+            return UIImage(systemName: "doc.plaintext")
         case .image:
             return UIImage(systemName: "photo")
         case .audio:
@@ -96,7 +96,7 @@ extension DocumentWrapper {
                     switch url.pathExtension.lowercased() {
                     case "grf":
                         return .grf(url)
-                    case "txt", "lua", "ini":
+                    case "txt", "xml", "ini", "lua":
                         return .text(.url(url))
                     case "bmp", "jpg", "jpeg", "tga", "pal":
                         return .image(.url(url))
@@ -117,7 +117,7 @@ extension DocumentWrapper {
             for node in nodes ?? [] {
                 if let entry = node.entry {
                     switch (entry.name as NSString).pathExtension.lowercased() {
-                    case "txt", "lua", "ini":
+                    case "txt", "xml", "ini", "lua":
                         let documentWrapper: DocumentWrapper = .text(.entry(url, entry.name))
                         documentWrappers.append(documentWrapper)
                     case "bmp", "jpg", "jpeg", "tga", "pal":

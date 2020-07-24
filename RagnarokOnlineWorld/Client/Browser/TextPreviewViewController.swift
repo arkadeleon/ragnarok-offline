@@ -45,7 +45,7 @@ class TextPreviewViewController: UIViewController {
             }
 
             DispatchQueue.main.async {
-                guard let text = String(data: data, encoding: .koreanEUC) else {
+                guard let text = String(data: data, encoding: .ascii) else {
                     return
                 }
 
