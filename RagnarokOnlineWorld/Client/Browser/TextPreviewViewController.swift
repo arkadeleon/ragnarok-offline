@@ -75,7 +75,7 @@ class TextPreviewViewController: UIViewController {
                     </body>
                 </html>
                 """
-                let baseURL = Bundle.main.bundleURL.appendingPathComponent("Vendors/highlightjs")
+                let baseURL = Bundle.main.bundleURL.appendingPathComponent("Highlight.js")
                 self.webView.loadHTMLString(htmlString, baseURL: baseURL)
             }
         }
