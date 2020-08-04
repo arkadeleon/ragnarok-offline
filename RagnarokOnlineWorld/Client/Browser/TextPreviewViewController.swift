@@ -40,8 +40,17 @@ class TextPreviewViewController: UIViewController {
 
     private func loadSource() {
         DispatchQueue.global().async {
-            guard let data = try? self.source.data() else {
+            guard var data = try? self.source.data() else {
                 return
+            }
+
+
+            switch self.source.fileType.lowercased() {
+            case "lub":
+                let disassembler = LuaDisassembler()
+                data = (try? disassembler.disassemble(data: data)) ?? Data()
+            default:
+                break
             }
 
             DispatchQueue.main.async {
