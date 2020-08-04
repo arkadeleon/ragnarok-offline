@@ -43,10 +43,7 @@ class LuaDisassembler {
         function DisassembleFile(src, dest)
             config.OUTPUT_FILE = dest
             OutputInit()
-            local INF = io.open(src, "rb")
-            local binchunk = INF:read("*a")
-            ChunkSpy(src, binchunk)
-            io.close(INF)
+            ChunkSpy_DoFiles({src})
             OutputExit()
         end
         """)
