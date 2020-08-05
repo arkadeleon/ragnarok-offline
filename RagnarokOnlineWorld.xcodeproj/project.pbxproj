@@ -84,6 +84,17 @@
 		355E915124C04A5D00361AF6 /* GATDocument+Compile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E915024C04A5C00361AF6 /* GATDocument+Compile.swift */; };
 		355E915324C04DCA00361AF6 /* WorldPreviewCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E915224C04DCA00361AF6 /* WorldPreviewCamera.swift */; };
 		355EFD2D2480264B0033C280 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355EFD2C2480264B0033C280 /* Camera.swift */; };
+		355F205E24DA4CC3001302FC /* StringBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 355F203E24DA4CC0001302FC /* StringBuffer.c */; };
+		355F205F24DA4CC3001302FC /* structs.c in Sources */ = {isa = PBXBuildFile; fileRef = 355F203F24DA4CC0001302FC /* structs.c */; };
+		355F206124DA4CC3001302FC /* macro-array.c in Sources */ = {isa = PBXBuildFile; fileRef = 355F204324DA4CC1001302FC /* macro-array.c */; };
+		355F206724DA4CC3001302FC /* decompile.c in Sources */ = {isa = PBXBuildFile; fileRef = 355F204F24DA4CC2001302FC /* decompile.c */; };
+		355F206924DA4CC3001302FC /* srcversion.h in Resources */ = {isa = PBXBuildFile; fileRef = 355F205124DA4CC2001302FC /* srcversion.h */; };
+		355F206A24DA4CC3001302FC /* statement.c in Sources */ = {isa = PBXBuildFile; fileRef = 355F205224DA4CC2001302FC /* statement.c */; };
+		355F206C24DA4CC3001302FC /* expression.c in Sources */ = {isa = PBXBuildFile; fileRef = 355F205424DA4CC2001302FC /* expression.c */; };
+		355F206E24DA4CC3001302FC /* proto.c in Sources */ = {isa = PBXBuildFile; fileRef = 355F205824DA4CC2001302FC /* proto.c */; };
+		355F207024DA4CC3001302FC /* disassemble.c in Sources */ = {isa = PBXBuildFile; fileRef = 355F205A24DA4CC2001302FC /* disassemble.c */; };
+		355F207124DA4CC3001302FC /* guess.c in Sources */ = {isa = PBXBuildFile; fileRef = 355F205B24DA4CC2001302FC /* guess.c */; };
+		355F207224DA4FFD001302FC /* luadec.c in Sources */ = {isa = PBXBuildFile; fileRef = 355F205024DA4CC2001302FC /* luadec.c */; };
 		35617A73249863580097C60C /* SGLMath+Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617A72249863580097C60C /* SGLMath+Calculate.swift */; };
 		3573037A24B83CC70011F6AA /* ResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3573037924B83CC70011F6AA /* ResourceManager.swift */; };
 		3587577B24C6DB480050F734 /* AudioPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587577A24C6DB480050F734 /* AudioPreviewViewController.swift */; };
@@ -96,13 +107,6 @@
 		359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */; };
 		35A254F224BC42C300C43567 /* StringEncoding+KoreanEUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A254F124BC42C300C43567 /* StringEncoding+KoreanEUC.swift */; };
 		35C06DBC2498C9C000F0A229 /* TextureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C06DBB2498C9C000F0A229 /* TextureLoader.swift */; };
-		35CAF9BE24D9BD2000F9426A /* structs.c in Sources */ = {isa = PBXBuildFile; fileRef = 35CAF9B224D9BD2000F9426A /* structs.c */; };
-		35CAF9BF24D9BD2000F9426A /* ldprint.c in Sources */ = {isa = PBXBuildFile; fileRef = 35CAF9B424D9BD2000F9426A /* ldprint.c */; };
-		35CAF9C024D9BD2000F9426A /* luadec.c in Sources */ = {isa = PBXBuildFile; fileRef = 35CAF9B524D9BD2000F9426A /* luadec.c */; };
-		35CAF9C124D9BD2000F9426A /* guess.c in Sources */ = {isa = PBXBuildFile; fileRef = 35CAF9B624D9BD2000F9426A /* guess.c */; };
-		35CAF9C224D9BD2000F9426A /* proto.c in Sources */ = {isa = PBXBuildFile; fileRef = 35CAF9B924D9BD2000F9426A /* proto.c */; };
-		35CAF9C324D9BD2000F9426A /* StringBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 35CAF9BC24D9BD2000F9426A /* StringBuffer.c */; };
-		35CAF9C424D9BD2000F9426A /* output.c in Sources */ = {isa = PBXBuildFile; fileRef = 35CAF9BD24D9BD2000F9426A /* output.c */; };
 		35CAF9C724D9BFDD00F9426A /* LuaDecompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CAF9C624D9BFDD00F9426A /* LuaDecompiler.m */; };
 		35CB3BAC247827A700EC04C3 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CB3BAB247827A700EC04C3 /* GameViewController.swift */; };
 		35CB3BAE24782A5100EC04C3 /* GameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CB3BAD24782A5100EC04C3 /* GameRenderer.swift */; };
@@ -245,6 +249,29 @@
 		355E915224C04DCA00361AF6 /* WorldPreviewCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPreviewCamera.swift; sourceTree = "<group>"; };
 		355EFD2B247FE7B00033C280 /* RagnarokOnlineWorld.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RagnarokOnlineWorld.entitlements; sourceTree = "<group>"; };
 		355EFD2C2480264B0033C280 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		355F203B24DA4CC0001302FC /* StringBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringBuffer.h; sourceTree = "<group>"; };
+		355F203D24DA4CC0001302FC /* disassemble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = disassemble.h; sourceTree = "<group>"; };
+		355F203E24DA4CC0001302FC /* StringBuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = StringBuffer.c; sourceTree = "<group>"; };
+		355F203F24DA4CC0001302FC /* structs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = structs.c; sourceTree = "<group>"; };
+		355F204124DA4CC0001302FC /* allopcodes_lua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = allopcodes_lua.h; sourceTree = "<group>"; };
+		355F204224DA4CC1001302FC /* structs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = structs.h; sourceTree = "<group>"; };
+		355F204324DA4CC1001302FC /* macro-array.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "macro-array.c"; sourceTree = "<group>"; };
+		355F204424DA4CC1001302FC /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		355F204624DA4CC1001302FC /* proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = proto.h; sourceTree = "<group>"; };
+		355F204724DA4CC1001302FC /* macro-array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "macro-array.h"; sourceTree = "<group>"; };
+		355F204924DA4CC1001302FC /* allopcodes_luac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = allopcodes_luac.h; sourceTree = "<group>"; };
+		355F204A24DA4CC1001302FC /* lua-compat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "lua-compat.h"; sourceTree = "<group>"; };
+		355F204E24DA4CC2001302FC /* statement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = statement.h; sourceTree = "<group>"; };
+		355F204F24DA4CC2001302FC /* decompile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = decompile.c; sourceTree = "<group>"; };
+		355F205024DA4CC2001302FC /* luadec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = luadec.c; sourceTree = "<group>"; };
+		355F205124DA4CC2001302FC /* srcversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = srcversion.h; sourceTree = "<group>"; };
+		355F205224DA4CC2001302FC /* statement.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = statement.c; sourceTree = "<group>"; };
+		355F205424DA4CC2001302FC /* expression.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = expression.c; sourceTree = "<group>"; };
+		355F205524DA4CC2001302FC /* decompile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decompile.h; sourceTree = "<group>"; };
+		355F205724DA4CC2001302FC /* expression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = expression.h; sourceTree = "<group>"; };
+		355F205824DA4CC2001302FC /* proto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = proto.c; sourceTree = "<group>"; };
+		355F205A24DA4CC2001302FC /* disassemble.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = disassemble.c; sourceTree = "<group>"; };
+		355F205B24DA4CC2001302FC /* guess.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = guess.c; sourceTree = "<group>"; };
 		35617A72249863580097C60C /* SGLMath+Calculate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SGLMath+Calculate.swift"; sourceTree = "<group>"; };
 		3573037924B83CC70011F6AA /* ResourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceManager.swift; sourceTree = "<group>"; };
 		3587577A24C6DB480050F734 /* AudioPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPreviewViewController.swift; sourceTree = "<group>"; };
@@ -257,18 +284,6 @@
 		359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = GroundShaders.metal; sourceTree = "<group>"; };
 		35A254F124BC42C300C43567 /* StringEncoding+KoreanEUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringEncoding+KoreanEUC.swift"; sourceTree = "<group>"; };
 		35C06DBB2498C9C000F0A229 /* TextureLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureLoader.swift; sourceTree = "<group>"; };
-		35CAF9B224D9BD2000F9426A /* structs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = structs.c; sourceTree = "<group>"; };
-		35CAF9B324D9BD2000F9426A /* proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = proto.h; sourceTree = "<group>"; };
-		35CAF9B424D9BD2000F9426A /* ldprint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldprint.c; sourceTree = "<group>"; };
-		35CAF9B524D9BD2000F9426A /* luadec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = luadec.c; sourceTree = "<group>"; };
-		35CAF9B624D9BD2000F9426A /* guess.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = guess.c; sourceTree = "<group>"; };
-		35CAF9B724D9BD2000F9426A /* StringBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringBuffer.h; sourceTree = "<group>"; };
-		35CAF9B824D9BD2000F9426A /* output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = output.h; sourceTree = "<group>"; };
-		35CAF9B924D9BD2000F9426A /* proto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = proto.c; sourceTree = "<group>"; };
-		35CAF9BA24D9BD2000F9426A /* print.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = print.h; sourceTree = "<group>"; };
-		35CAF9BB24D9BD2000F9426A /* structs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = structs.h; sourceTree = "<group>"; };
-		35CAF9BC24D9BD2000F9426A /* StringBuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = StringBuffer.c; sourceTree = "<group>"; };
-		35CAF9BD24D9BD2000F9426A /* output.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = output.c; sourceTree = "<group>"; };
 		35CAF9C524D9BFDD00F9426A /* LuaDecompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LuaDecompiler.h; sourceTree = "<group>"; };
 		35CAF9C624D9BFDD00F9426A /* LuaDecompiler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LuaDecompiler.m; sourceTree = "<group>"; };
 		35CB3BAB247827A700EC04C3 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -535,18 +550,29 @@
 		35CAF9B124D9BD2000F9426A /* luadec */ = {
 			isa = PBXGroup;
 			children = (
-				35CAF9B624D9BD2000F9426A /* guess.c */,
-				35CAF9B424D9BD2000F9426A /* ldprint.c */,
-				35CAF9B524D9BD2000F9426A /* luadec.c */,
-				35CAF9BD24D9BD2000F9426A /* output.c */,
-				35CAF9B824D9BD2000F9426A /* output.h */,
-				35CAF9BA24D9BD2000F9426A /* print.h */,
-				35CAF9B924D9BD2000F9426A /* proto.c */,
-				35CAF9B324D9BD2000F9426A /* proto.h */,
-				35CAF9BC24D9BD2000F9426A /* StringBuffer.c */,
-				35CAF9B724D9BD2000F9426A /* StringBuffer.h */,
-				35CAF9B224D9BD2000F9426A /* structs.c */,
-				35CAF9BB24D9BD2000F9426A /* structs.h */,
+				355F204124DA4CC0001302FC /* allopcodes_lua.h */,
+				355F204924DA4CC1001302FC /* allopcodes_luac.h */,
+				355F204424DA4CC1001302FC /* common.h */,
+				355F204F24DA4CC2001302FC /* decompile.c */,
+				355F205524DA4CC2001302FC /* decompile.h */,
+				355F205A24DA4CC2001302FC /* disassemble.c */,
+				355F203D24DA4CC0001302FC /* disassemble.h */,
+				355F205424DA4CC2001302FC /* expression.c */,
+				355F205724DA4CC2001302FC /* expression.h */,
+				355F205B24DA4CC2001302FC /* guess.c */,
+				355F204A24DA4CC1001302FC /* lua-compat.h */,
+				355F205024DA4CC2001302FC /* luadec.c */,
+				355F204324DA4CC1001302FC /* macro-array.c */,
+				355F204724DA4CC1001302FC /* macro-array.h */,
+				355F205824DA4CC2001302FC /* proto.c */,
+				355F204624DA4CC1001302FC /* proto.h */,
+				355F205124DA4CC2001302FC /* srcversion.h */,
+				355F205224DA4CC2001302FC /* statement.c */,
+				355F204E24DA4CC2001302FC /* statement.h */,
+				355F203E24DA4CC0001302FC /* StringBuffer.c */,
+				355F203B24DA4CC0001302FC /* StringBuffer.h */,
+				355F203F24DA4CC0001302FC /* structs.c */,
+				355F204224DA4CC1001302FC /* structs.h */,
 			);
 			path = luadec;
 			sourceTree = "<group>";
@@ -715,6 +741,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				35116E22245C7B8A000A60FE /* LaunchScreen.storyboard in Resources */,
+				355F206924DA4CC3001302FC /* srcversion.h in Resources */,
 				3533CC1C24D80992006AFE04 /* dkjson.lua in Resources */,
 				3533CC1724D40664006AFE04 /* chunkspy.lua in Resources */,
 				35CB3BB7247D81B300EC04C3 /* wall.jpg in Resources */,
@@ -761,31 +788,33 @@
 				35116E87246AE56B000A60FE /* ModelPreviewViewController.swift in Sources */,
 				3587944A24C73E9400A5074B /* TGADocument.swift in Sources */,
 				355E915124C04A5D00361AF6 /* GATDocument+Compile.swift in Sources */,
+				355F207124DA4CC3001302FC /* guess.c in Sources */,
 				3533CBC424D2BB26006AFE04 /* lparser.c in Sources */,
 				3533CBAD24D2BB26006AFE04 /* lmathlib.c in Sources */,
 				35116E5E2461A5DB000A60FE /* DESDecryptor.swift in Sources */,
 				3533CBC124D2BB26006AFE04 /* lapi.c in Sources */,
 				35E8DCDB24A88BCC00A14FC5 /* WaterShaders.metal in Sources */,
+				355F206E24DA4CC3001302FC /* proto.c in Sources */,
 				350F347324B5610F00848ED5 /* DocumentSource.swift in Sources */,
-				35CAF9C324D9BD2000F9426A /* StringBuffer.c in Sources */,
 				35116E7524644AAA000A60FE /* DocumentWrapper.swift in Sources */,
 				3533CBC624D2BB26006AFE04 /* ltm.c in Sources */,
 				35CB3BAE24782A5100EC04C3 /* GameRenderer.swift in Sources */,
 				3509565924ACE48A0077C134 /* SpritePreviewViewController.swift in Sources */,
 				3533CBA724D2BB26006AFE04 /* lauxlib.c in Sources */,
+				355F207024DA4CC3001302FC /* disassemble.c in Sources */,
 				35CAF9C724D9BFDD00F9426A /* LuaDecompiler.m in Sources */,
 				3533CBC724D2BB26006AFE04 /* ldo.c in Sources */,
+				355F206124DA4CC3001302FC /* macro-array.c in Sources */,
 				3533CBAA24D2BB26006AFE04 /* lstate.c in Sources */,
-				35CAF9C224D9BD2000F9426A /* proto.c in Sources */,
 				35EF769C24B3222000371F1F /* CGImage+Decode.swift in Sources */,
 				3533CBBE24D2BB26006AFE04 /* lmem.c in Sources */,
 				3587F6EB2463DBF0007D1C9B /* DocumentWrappersViewController.swift in Sources */,
+				355F206C24DA4CC3001302FC /* expression.c in Sources */,
 				3533CC1E24D900FA006AFE04 /* LuaDisassembler.swift in Sources */,
 				3533CBB424D2BB26006AFE04 /* linit.c in Sources */,
 				3533CBBB24D2BB26006AFE04 /* lgc.c in Sources */,
 				3533CBB624D2BB26006AFE04 /* lundump.c in Sources */,
 				3533CBAC24D2BB26006AFE04 /* print.c in Sources */,
-				35CAF9C424D9BD2000F9426A /* output.c in Sources */,
 				35116E8B247025EE000A60FE /* GATDocument.swift in Sources */,
 				35E8DCE024A9DC1100A14FC5 /* ModelRenderer.swift in Sources */,
 				3533CBA824D2BB26006AFE04 /* liolib.c in Sources */,
@@ -804,18 +833,19 @@
 				3533CBA924D2BB26006AFE04 /* lopcodes.c in Sources */,
 				3533CBC224D2BB26006AFE04 /* lbaselib.c in Sources */,
 				355E914B24BEDDAE00361AF6 /* WorldPreviewRenderer.swift in Sources */,
-				35CAF9BE24D9BD2000F9426A /* structs.c in Sources */,
+				355F206724DA4CC3001302FC /* decompile.c in Sources */,
 				3533CBC324D2BB26006AFE04 /* ldebug.c in Sources */,
 				3509565524A8F6010077C134 /* GNDDocument+Compile.swift in Sources */,
 				3533CBBD24D2BB26006AFE04 /* ldblib.c in Sources */,
 				3533CBB024D2BB26006AFE04 /* lfunc.c in Sources */,
 				35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */,
 				35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */,
-				35CAF9C024D9BD2000F9426A /* luadec.c in Sources */,
 				35D091F424AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift in Sources */,
 				3533CBAE24D2BB26006AFE04 /* loadlib.c in Sources */,
 				35049AA0248E9FA300DAD5C1 /* ModelShaders.metal in Sources */,
+				355F206A24DA4CC3001302FC /* statement.c in Sources */,
 				35A254F224BC42C300C43567 /* StringEncoding+KoreanEUC.swift in Sources */,
+				355F205E24DA4CC3001302FC /* StringBuffer.c in Sources */,
 				35021BAD24A054700021B99B /* GNDDocument.swift in Sources */,
 				35116E8324685AE4000A60FE /* ImagePreviewViewController.swift in Sources */,
 				3533CBAF24D2BB26006AFE04 /* lvm.c in Sources */,
@@ -823,17 +853,17 @@
 				3533CBB824D2BB26006AFE04 /* ltable.c in Sources */,
 				35116E7924659FD6000A60FE /* Document.swift in Sources */,
 				359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */,
+				355F207224DA4FFD001302FC /* luadec.c in Sources */,
 				3533CBBA24D2BB26006AFE04 /* loslib.c in Sources */,
-				35CAF9BF24D9BD2000F9426A /* ldprint.c in Sources */,
 				3533CBC524D2BB26006AFE04 /* llex.c in Sources */,
 				35CB3BB52478359100EC04C3 /* Shaders.metal in Sources */,
 				3587F6ED2463DF3F007D1C9B /* DocumentWrapperCell.swift in Sources */,
+				355F205F24DA4CC3001302FC /* structs.c in Sources */,
 				355EFD2D2480264B0033C280 /* Camera.swift in Sources */,
 				3533CBB924D2BB26006AFE04 /* ldump.c in Sources */,
 				355E915324C04DCA00361AF6 /* WorldPreviewCamera.swift in Sources */,
 				35116E8D247035AC000A60FE /* ACTDocument.swift in Sources */,
 				35EF769424AF18D800371F1F /* GroundRenderer.swift in Sources */,
-				35CAF9C124D9BD2000F9426A /* guess.c in Sources */,
 				35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */,
 				35116E85246ADFFA000A60FE /* RSMDocument.swift in Sources */,
 				355E914924BECC5C00361AF6 /* ModelPreviewRenderer.swift in Sources */,

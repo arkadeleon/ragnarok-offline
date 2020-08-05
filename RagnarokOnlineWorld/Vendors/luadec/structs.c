@@ -1,123 +1,287 @@
-/* luadec, based on luac */
+#include "common.h"
+
+#include <stdlib.h>
+#include <assert.h>
 
 #include "structs.h"
 
-#include <assert.h>
+/*
+** List Functions
+*/
 
-void InitList(List * list) {
-   list->head = NULL;
-   list->tail = NULL;
-   list->size = 0;
+List* NewList() {
+	List* list = (List*)calloc(1, sizeof(List));
+	return list;
 }
 
-void AddToList(List * list, ListItem * item) {
-   if (list->tail)
-      list->tail->next = item;
-   if (!list->head)
-      list->head = item;
-   list->tail = item;
-   list->size++;
+void InitList(List* list) {
+	list->head = NULL;
+	list->tail = NULL;
+	list->size = 0;
 }
 
-ListItem *LastItem(List * list) {
-   return list->tail;
+void AddToList(List* list, ListItem* item) {
+	if (!list || !item) {
+		return;
+	}
+	if (list->tail) {
+		list->tail->next = item;
+	} else {
+		list->head = item;
+	}
+	item->prev = list->tail;
+	item->next = NULL;
+	list->tail = item;
+	list->size++;
 }
 
-ListItem *PopFromList(List * list) {
-   ListItem *walk, *prev;
-   if (!list->tail)
-      return NULL;
-   prev = NULL;
-   walk = list->head;
-   while (walk) {
-      if (walk == list->tail) {
-         if (prev)
-            prev->next = NULL;
-         else
-            list->head = NULL;
-         list->tail = prev;
-         list->size--;
-         return walk;
-      }
-      prev = walk;
-      walk = walk->next;
-   }
-   assert(0);
-   return NULL;
+void AddToListHead(List* list, ListItem* item) {
+	if (!list || !item) {
+		return;
+	}
+	if (list->head) {
+		list->head->prev = item;
+	} else {
+		list->tail = item;
+	}
+	item->next = list->head;
+	item->prev = NULL;
+	list->head = item;
+	list->size++;
 }
 
-void LoopList(List * list, ListItemFn fn, void* param) {
-   ListItem *walk = list->head;
-   while (walk) {
-      ListItem *save = walk;
-      walk = walk->next;
-      fn(save, param);
-   }
+ListItem* FirstItem(List* list) {
+	return list->head;
 }
 
-ListItem *FindInList(List * list, ListItemCmpFn cmp, const void *sample) {
-   ListItem *walk = list->head;
-   while (walk) {
-      if (cmp(walk, sample))
-         return walk;
-      walk = walk->next;
-   }
-   return NULL;
+ListItem* LastItem(List* list) {
+	return list->tail;
 }
 
-int AddToSet(IntSet * set, int a) {
-   int i;
-   if (! set->mayRepeat) {
-      for (i = 0; i < set->ctr; i++) {
-         if (set->values[i] == a)
-            return 0;
-      }
-   }
-   set->values[set->ctr] = a;
-   set->ctr++;
-   assert(set->ctr <= MAXARG_A);
-   return 1;
+ListItem* PopFromList(List* list) {
+	return RemoveFromList(list, list->tail);
 }
 
-int PeekSet(IntSet * set, int a) {
-   int i;
-   for (i = 0; i < set->ctr; i++) {
-      if (set->values[i] == a) {
-         return 1;
-         break;
-      }
-   }
-   return 0;
+void LoopList(List* list, ListItemFn fn, void* param) {
+	ListItem* walk = list->head;
+	while (walk) {
+		ListItem* save = walk;
+		walk = walk->next;
+		fn(save, param);
+	}
 }
 
-int PopSet(IntSet * set) {
-   if (set->ctr == 0)
-      return 0;
-   set->ctr--;
-   return set->values[set->ctr];
+void ClearList(List* list, ListItemFn fn) {
+	ListItem* walk = list->head;
+
+	while (walk) {
+		ListItem* save = walk;
+		walk = walk->next;
+		if (fn) {
+			fn(save, NULL);
+		}
+		free(save);
+	}
+
+	list->head = NULL;
+	list->tail = NULL;
+	list->size = 0;
 }
 
-int RemoveFromSet(IntSet * set, int a) {
-   int i;
-   int at = -1;
-   for (i = 0; i < set->ctr; i++) {
-      if (set->values[i] == a) {
-         at = i;
-         break;
-      }
-   }
-   if (at == -1)
-      return 0;
-   for (i = at; i < set->ctr; i++)
-      set->values[i] = set->values[i + 1];
-   set->ctr--;
-   return 1;
+ListItem* FindFromListHead(List* list, ListItemCmpFn cmp, const void* sample) {
+	ListItem* walk = list->head;
+	while (walk) {
+		if (cmp(walk, sample))
+			return walk;
+		walk = walk->next;
+	}
+	return NULL;
 }
 
-void AddToVarStack(VarStack * stack, char* dest, char* src, int reg) {
-   stack->dests[stack->ctr] = dest;
-   stack->srcs[stack->ctr] = src;
-   stack->regs[stack->ctr] = reg;
-   stack->ctr++;
+ListItem* FindFromListTail(List* list, ListItemCmpFn cmp, const void* sample) {
+	ListItem* walk = list->tail;
+	while (walk) {
+		if (cmp(walk, sample))
+			return walk;
+		walk = walk->prev;
+	}
+	return NULL;
 }
 
+ListItem* RemoveFromList(List* list, ListItem* item) {
+	if (!list || !item) {
+		return NULL;
+	}
+	if (item->next) {
+		item->next->prev = item->prev;
+	} else if (list->tail == item) {
+		list->tail = item->prev;
+	} else {
+		assert(0);
+	}
+	if (item->prev) {
+		item->prev->next = item->next;
+	} else if (list->head == item) {
+		list->head = item->next;
+	} else {
+		assert(0);
+	}
+	list->size--;
+	item->next = NULL;
+	item->prev = NULL;
+	return item;
+}
+
+int AddAllAfterListItem(List* list, ListItem* pos, ListItem* item) {
+	ListItem* last = NULL;
+	int count = 0;
+	if (!list || !item) {
+		return count;
+	}
+	last = item;
+	count = 1;
+	while (last->next) {
+		count++;
+		last = last->next;
+	}
+	item->prev = pos;
+	if (pos == NULL) {
+		last->next = list->head;
+		list->head = item;
+	} else {
+		last->next = pos->next;
+		pos->next = item;
+	}
+	if (last->next == NULL) {
+		list->tail = last;
+	} else {
+		last->next->prev = last;
+	}
+	list->size += count;
+	return count;
+}
+
+int AddAllBeforeListItem(List* list, ListItem* pos, ListItem* item) {
+	ListItem* last = NULL;
+	int count = 0;
+	if (!list || !item) {
+		return count;
+	}
+	last = item;
+	count = 1;
+	while (last->next) {
+		count++;
+		last = last->next;
+	}
+	last->next = pos;
+	if (pos == NULL) {
+		item->prev = list->tail;
+		list->tail = last;
+	} else {
+		item->prev = pos->prev;
+		pos->prev = last;
+	}
+	if (item->prev == NULL) {
+		list->head = item;
+	} else {
+		item->prev->next = item;
+	}
+	list->size += count;
+	return count;
+}
+
+/*
+** IntSet Functions
+*/
+
+IntSet* NewIntSet(int mayRepeat) {
+	IntSet* set = (IntSet*)calloc(1, sizeof(IntSet));
+	InitIntSet(set, mayRepeat);
+	return set;
+}
+
+void InitIntSet(IntSet* set, int mayRepeat) {
+	set->mayRepeat = mayRepeat;
+	InitList(&(set->list));
+}
+
+void DeleteIntSet(IntSet* set) {
+	ClearList(&(set->list), NULL);
+	free(set);
+}
+
+int AddToSet(IntSet* set, int a) {
+	IntSetItem* item;
+	if (!set->mayRepeat) {
+		ListItem* ptr = set->list.head;
+		while (ptr) {
+			if (cast(IntSetItem*, ptr)->value == a) {
+				return 0;
+			}
+			ptr = ptr->next;
+		}
+	}
+	item = (IntSetItem*)calloc(1, sizeof(IntSetItem));
+	item->value = a;
+	AddToList(&(set->list), (ListItem*)item); 
+	return 1;
+}
+
+int PeekSet(IntSet* set, int a) {
+	ListItem* ptr = set->list.head;
+	while (ptr) {
+		if (cast(IntSetItem*, ptr)->value == a) {
+			return 1;
+			break;
+		}
+		ptr = ptr->next;
+	}
+	return 0;
+}
+
+int PopSet(IntSet* set) {
+	int val;
+	ListItem* item = PopFromList(&(set->list));
+	if (item == NULL) {
+		return 0;
+	}
+	val = cast(IntSetItem*, item)->value;
+	free(item);
+	return val;	
+}
+
+int RemoveFromSet(IntSet* set, int a) {
+	ListItem* ptr = set->list.head;
+	while (ptr) {
+		if (cast(IntSetItem*, ptr)->value == a) {
+			break;
+		}
+		ptr = ptr->next;
+	}
+	if (ptr == NULL) {
+		return 0;
+	}
+	free(RemoveFromList(&(set->list), ptr));
+	return 1;
+}
+
+/*
+** VarList Functions
+*/
+
+void AddToVarList(List* stack, char* dest, char* src, int reg) {
+	VarListItem* var = (VarListItem*)calloc(1, sizeof(VarListItem));
+	var->dest = dest;
+	var->src = src;
+	var->reg = reg;
+	AddToList(stack, (ListItem*)var);
+}
+
+void ClearVarListItem(VarListItem* item, void* dummy) {
+	if (item) {
+		free(item->src);
+		item->src = NULL;
+		free(item->dest);
+		item->dest = NULL;
+	}
+}

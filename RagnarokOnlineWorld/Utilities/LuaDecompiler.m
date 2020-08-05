@@ -11,8 +11,9 @@
 #include "lualib.h"
 #include "lauxlib.h"
 #include "lobject.h"
+#include "decompile.h"
 
-char *ProcessCode(const Proto *f, int indent);
+extern lua_State* glstate;
 
 @interface LuaDecompiler () {
     lua_State *l;
@@ -36,11 +37,13 @@ char *ProcessCode(const Proto *f, int indent);
 }
 
 - (NSData *)decompileData:(NSData *)data {
+    glstate = l;
+
     luaL_loadbuffer(l, data.bytes, data.length, nil);
 
     Closure *c = (Closure *)lua_topointer(l, -1);
     Proto *f = c->l.p;
-    char *code = ProcessCode(f, 4);
+    char *code = ProcessCode(f, 0, 0, strdup("0"));
 
     NSData *output = [NSData dataWithBytesNoCopy:code length:strlen(code)];
     return output;
