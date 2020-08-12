@@ -62,8 +62,9 @@ class SpritePreviewViewController: UIViewController {
             }
 
             DispatchQueue.main.async {
-                let images = document.images()
-                let image = images[0]
+                guard let image = document.imageForFrame(at: 0) else {
+                    return
+                }
 
                 self.imageView.image = UIImage(cgImage: image)
                 self.imageView.frame = CGRect(x: 0, y: 0, width: image.width, height: image.height)

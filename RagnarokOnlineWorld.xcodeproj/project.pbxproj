@@ -11,7 +11,7 @@
 		35049AA0248E9FA300DAD5C1 /* ModelShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35049A9F248E9FA300DAD5C1 /* ModelShaders.metal */; };
 		3509565324A8EE010077C134 /* RSMDocument+Compile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565224A8EE010077C134 /* RSMDocument+Compile.swift */; };
 		3509565524A8F6010077C134 /* GNDDocument+Compile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565424A8F6010077C134 /* GNDDocument+Compile.swift */; };
-		3509565724ACD8FB0077C134 /* SPRDocument+Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565624ACD8FB0077C134 /* SPRDocument+Images.swift */; };
+		3509565724ACD8FB0077C134 /* SPRDocument+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565624ACD8FB0077C134 /* SPRDocument+Image.swift */; };
 		3509565924ACE48A0077C134 /* SpritePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */; };
 		350F347324B5610F00848ED5 /* DocumentSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350F347224B5610F00848ED5 /* DocumentSource.swift */; };
 		35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E15245C7B87000A60FE /* AppDelegate.swift */; };
@@ -148,7 +148,7 @@
 		35049AA1248E9FB600DAD5C1 /* ModelShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelShaderTypes.h; sourceTree = "<group>"; };
 		3509565224A8EE010077C134 /* RSMDocument+Compile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSMDocument+Compile.swift"; sourceTree = "<group>"; };
 		3509565424A8F6010077C134 /* GNDDocument+Compile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GNDDocument+Compile.swift"; sourceTree = "<group>"; };
-		3509565624ACD8FB0077C134 /* SPRDocument+Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SPRDocument+Images.swift"; sourceTree = "<group>"; };
+		3509565624ACD8FB0077C134 /* SPRDocument+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SPRDocument+Image.swift"; sourceTree = "<group>"; };
 		3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpritePreviewViewController.swift; sourceTree = "<group>"; };
 		350F347224B5610F00848ED5 /* DocumentSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSource.swift; sourceTree = "<group>"; };
 		35116E12245C7B87000A60FE /* RagnarokOnlineWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOnlineWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -580,10 +580,10 @@
 		35CB3BAA2478277600EC04C3 /* Client */ = {
 			isa = PBXGroup;
 			children = (
-				35116E77246596BB000A60FE /* Browser */,
-				358E6BAB24C9691300283BAD /* Game */,
 				3573037924B83CC70011F6AA /* ResourceManager.swift */,
 				358E6BAC24C9793B00283BAD /* ClientViewController.swift */,
+				35116E77246596BB000A60FE /* Browser */,
+				358E6BAB24C9691300283BAD /* Game */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -622,7 +622,7 @@
 				3509565424A8F6010077C134 /* GNDDocument+Compile.swift */,
 				3509565224A8EE010077C134 /* RSMDocument+Compile.swift */,
 				35D091F324AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift */,
-				3509565624ACD8FB0077C134 /* SPRDocument+Images.swift */,
+				3509565624ACD8FB0077C134 /* SPRDocument+Image.swift */,
 			);
 			path = Renderers;
 			sourceTree = "<group>";
@@ -820,7 +820,7 @@
 				3533CBA824D2BB26006AFE04 /* liolib.c in Sources */,
 				3533CBB124D2BB26006AFE04 /* lstrlib.c in Sources */,
 				35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */,
-				3509565724ACD8FB0077C134 /* SPRDocument+Images.swift in Sources */,
+				3509565724ACD8FB0077C134 /* SPRDocument+Image.swift in Sources */,
 				358E6BAD24C9793B00283BAD /* ClientViewController.swift in Sources */,
 				3587577B24C6DB480050F734 /* AudioPreviewViewController.swift in Sources */,
 				3509565324A8EE010077C134 /* RSMDocument+Compile.swift in Sources */,

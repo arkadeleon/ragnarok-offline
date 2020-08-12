@@ -65,7 +65,7 @@ extension DocumentWrapper {
         case .entry:
             return UIImage(systemName: "doc")
         case .text:
-            return UIImage(systemName: "doc.plaintext")
+            return UIImage(systemName: "doc.text")
         case .image:
             return UIImage(systemName: "photo")
         case .audio:
