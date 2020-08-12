@@ -114,6 +114,7 @@
 		35CB3BB7247D81B300EC04C3 /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35CB3BB6247D81B300EC04C3 /* wall.jpg */; };
 		35D091F424AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D091F324AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift */; };
 		35D091F624AC8EB1008D7CEA /* PALDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D091F524AC8EB0008D7CEA /* PALDocument.swift */; };
+		35E5E8FD24E43CAA00716592 /* SpriteFrameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E8FC24E43CAA00716592 /* SpriteFrameCell.swift */; };
 		35E8DCDB24A88BCC00A14FC5 /* WaterShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDA24A88BCC00A14FC5 /* WaterShaders.metal */; };
 		35E8DCDE24A9D99000A14FC5 /* RendererCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDD24A9D99000A14FC5 /* RendererCommon.swift */; };
 		35E8DCE024A9DC1100A14FC5 /* ModelRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDF24A9DC1100A14FC5 /* ModelRenderer.swift */; };
@@ -294,6 +295,7 @@
 		35CB3BB6247D81B300EC04C3 /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
 		35D091F324AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSMDocument+BoundingBox.swift"; sourceTree = "<group>"; };
 		35D091F524AC8EB0008D7CEA /* PALDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PALDocument.swift; sourceTree = "<group>"; };
+		35E5E8FC24E43CAA00716592 /* SpriteFrameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteFrameCell.swift; sourceTree = "<group>"; };
 		35E8DCDA24A88BCC00A14FC5 /* WaterShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = WaterShaders.metal; sourceTree = "<group>"; };
 		35E8DCDC24A88BEB00A14FC5 /* WaterShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WaterShaderTypes.h; sourceTree = "<group>"; };
 		35E8DCDD24A9D99000A14FC5 /* RendererCommon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommon.swift; sourceTree = "<group>"; };
@@ -603,6 +605,7 @@
 				35116E7E246713AD000A60FE /* TextPreviewViewController.swift */,
 				35116E8224685AE4000A60FE /* ImagePreviewViewController.swift */,
 				3587577A24C6DB480050F734 /* AudioPreviewViewController.swift */,
+				35E5E8FC24E43CAA00716592 /* SpriteFrameCell.swift */,
 				3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */,
 				355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */,
 				35116E86246AE56B000A60FE /* ModelPreviewViewController.swift */,
@@ -825,6 +828,7 @@
 				3533CBAC24D2BB26006AFE04 /* print.c in Sources */,
 				35116E8B247025EE000A60FE /* GATDocument.swift in Sources */,
 				35E8DCE024A9DC1100A14FC5 /* ModelRenderer.swift in Sources */,
+				35E5E8FD24E43CAA00716592 /* SpriteFrameCell.swift in Sources */,
 				3533CBA824D2BB26006AFE04 /* liolib.c in Sources */,
 				3533CBB124D2BB26006AFE04 /* lstrlib.c in Sources */,
 				35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */,

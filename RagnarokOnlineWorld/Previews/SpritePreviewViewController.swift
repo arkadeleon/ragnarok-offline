@@ -8,10 +8,15 @@
 
 import UIKit
 
+private let frameCellReuseIdentifier = "FrameCell"
+
 class SpritePreviewViewController: UIViewController {
 
     let previewItem: PreviewItem
 
+    private var frames: [CGImage?] = []
+
+    private var framesView: UICollectionView!
     private var scrollView: UIScrollView!
     private var imageView: UIImageView!
 
@@ -31,8 +36,28 @@ class SpritePreviewViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
 
+        let framesViewLayout = UICollectionViewFlowLayout()
+        framesViewLayout.itemSize = CGSize(width: 96, height: 96)
+        framesViewLayout.scrollDirection = .horizontal
+
+        framesView = UICollectionView(frame: .zero, collectionViewLayout: framesViewLayout)
+        framesView.translatesAutoresizingMaskIntoConstraints = false
+        framesView.backgroundColor = .secondarySystemBackground
+        framesView.dataSource = self
+        framesView.delegate = self
+        framesView.showsVerticalScrollIndicator = false
+        framesView.showsHorizontalScrollIndicator = false
+        framesView.register(SpriteFrameCell.self, forCellWithReuseIdentifier: frameCellReuseIdentifier)
+        view.addSubview(framesView)
+
+        framesView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        framesView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        framesView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        framesView.heightAnchor.constraint(equalToConstant: 96).isActive = true
+
         scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = .tertiarySystemBackground
         scrollView.delegate = self
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
@@ -45,7 +70,7 @@ class SpritePreviewViewController: UIViewController {
         scrollView.frameLayoutGuide.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         scrollView.frameLayoutGuide.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        scrollView.frameLayoutGuide.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        scrollView.frameLayoutGuide.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -96).isActive = true
 
         loadPreviewItem()
     }
@@ -61,17 +86,29 @@ class SpritePreviewViewController: UIViewController {
                 return
             }
 
+            var frames: [CGImage?] = []
+            for index in 0..<document.frames.count {
+                let frame = document.imageForFrame(at: index)
+                frames.append(frame)
+            }
+            self.frames = frames
+
             DispatchQueue.main.async {
-                guard let image = document.imageForFrame(at: 0) else {
+                self.framesView.reloadData()
+
+                guard self.frames.count > 0, let frame = frames[0] else {
                     return
                 }
 
-                self.imageView.image = UIImage(cgImage: image)
-                self.imageView.frame = CGRect(x: 0, y: 0, width: image.width, height: image.height)
+                let indexPath = IndexPath(item: 0, section: 0)
+                self.framesView.selectItem(at: indexPath, animated: false, scrollPosition: .left)
 
-                self.scrollView.contentSize = CGSize(width: image.width, height: image.height)
+                self.imageView.image = UIImage(cgImage: frame)
+                self.imageView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
 
-                self.updateZoomScale(image: image)
+                self.scrollView.contentSize = CGSize(width: frame.width, height: frame.height)
+
+                self.updateZoomScale(image: frame)
                 self.centerScrollViewContents()
             }
         }
@@ -103,6 +140,26 @@ class SpritePreviewViewController: UIViewController {
         }
 
         scrollView.contentInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
+    }
+}
+
+extension SpritePreviewViewController: UICollectionViewDataSource {
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return frames.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: frameCellReuseIdentifier, for: indexPath) as! SpriteFrameCell
+        cell.frameView.image = frames[indexPath.item].flatMap { UIImage(cgImage: $0) }
+        return cell
+    }
+}
+
+extension SpritePreviewViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        imageView.image = frames[indexPath.item].flatMap { UIImage(cgImage: $0) }
     }
 }
 
