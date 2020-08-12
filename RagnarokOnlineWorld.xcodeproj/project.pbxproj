@@ -115,6 +115,9 @@
 		35D091F424AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D091F324AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift */; };
 		35D091F624AC8EB1008D7CEA /* PALDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D091F524AC8EB0008D7CEA /* PALDocument.swift */; };
 		35E5E8FD24E43CAA00716592 /* SpriteFrameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E8FC24E43CAA00716592 /* SpriteFrameCell.swift */; };
+		35E5E90124E44E9200716592 /* ActionPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E8FE24E44E9200716592 /* ActionPreviewViewController.swift */; };
+		35E5E90224E44E9200716592 /* ActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E8FF24E44E9200716592 /* ActionCell.swift */; };
+		35E5E90324E44E9200716592 /* ActionFrameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E90024E44E9200716592 /* ActionFrameCell.swift */; };
 		35E8DCDB24A88BCC00A14FC5 /* WaterShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDA24A88BCC00A14FC5 /* WaterShaders.metal */; };
 		35E8DCDE24A9D99000A14FC5 /* RendererCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDD24A9D99000A14FC5 /* RendererCommon.swift */; };
 		35E8DCE024A9DC1100A14FC5 /* ModelRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDF24A9DC1100A14FC5 /* ModelRenderer.swift */; };
@@ -296,6 +299,9 @@
 		35D091F324AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSMDocument+BoundingBox.swift"; sourceTree = "<group>"; };
 		35D091F524AC8EB0008D7CEA /* PALDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PALDocument.swift; sourceTree = "<group>"; };
 		35E5E8FC24E43CAA00716592 /* SpriteFrameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteFrameCell.swift; sourceTree = "<group>"; };
+		35E5E8FE24E44E9200716592 /* ActionPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionPreviewViewController.swift; sourceTree = "<group>"; };
+		35E5E8FF24E44E9200716592 /* ActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCell.swift; sourceTree = "<group>"; };
+		35E5E90024E44E9200716592 /* ActionFrameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionFrameCell.swift; sourceTree = "<group>"; };
 		35E8DCDA24A88BCC00A14FC5 /* WaterShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = WaterShaders.metal; sourceTree = "<group>"; };
 		35E8DCDC24A88BEB00A14FC5 /* WaterShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WaterShaderTypes.h; sourceTree = "<group>"; };
 		35E8DCDD24A9D99000A14FC5 /* RendererCommon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommon.swift; sourceTree = "<group>"; };
@@ -607,6 +613,9 @@
 				3587577A24C6DB480050F734 /* AudioPreviewViewController.swift */,
 				35E5E8FC24E43CAA00716592 /* SpriteFrameCell.swift */,
 				3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */,
+				35E5E8FF24E44E9200716592 /* ActionCell.swift */,
+				35E5E90024E44E9200716592 /* ActionFrameCell.swift */,
+				35E5E8FE24E44E9200716592 /* ActionPreviewViewController.swift */,
 				355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */,
 				35116E86246AE56B000A60FE /* ModelPreviewViewController.swift */,
 				355E915224C04DCA00361AF6 /* WorldPreviewCamera.swift */,
@@ -827,6 +836,7 @@
 				3533CBB624D2BB26006AFE04 /* lundump.c in Sources */,
 				3533CBAC24D2BB26006AFE04 /* print.c in Sources */,
 				35116E8B247025EE000A60FE /* GATDocument.swift in Sources */,
+				35E5E90224E44E9200716592 /* ActionCell.swift in Sources */,
 				35E8DCE024A9DC1100A14FC5 /* ModelRenderer.swift in Sources */,
 				35E5E8FD24E43CAA00716592 /* SpriteFrameCell.swift in Sources */,
 				3533CBA824D2BB26006AFE04 /* liolib.c in Sources */,
@@ -854,6 +864,7 @@
 				35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */,
 				35D091F424AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift in Sources */,
 				3533CBAE24D2BB26006AFE04 /* loadlib.c in Sources */,
+				35E5E90324E44E9200716592 /* ActionFrameCell.swift in Sources */,
 				35049AA0248E9FA300DAD5C1 /* ModelShaders.metal in Sources */,
 				355F206A24DA4CC3001302FC /* statement.c in Sources */,
 				35A254F224BC42C300C43567 /* StringEncoding+KoreanEUC.swift in Sources */,
@@ -873,6 +884,7 @@
 				355F205F24DA4CC3001302FC /* structs.c in Sources */,
 				355EFD2D2480264B0033C280 /* Camera.swift in Sources */,
 				3533CBB924D2BB26006AFE04 /* ldump.c in Sources */,
+				35E5E90124E44E9200716592 /* ActionPreviewViewController.swift in Sources */,
 				355E915324C04DCA00361AF6 /* WorldPreviewCamera.swift in Sources */,
 				35116E8D247035AC000A60FE /* ACTDocument.swift in Sources */,
 				35EF769424AF18D800371F1F /* GroundRenderer.swift in Sources */,

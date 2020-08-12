@@ -19,6 +19,7 @@ enum DocumentWrapper {
     case image(PreviewItem)
     case audio(PreviewItem)
     case sprite(PreviewItem)
+    case action(PreviewItem)
     case model(PreviewItem)
     case world(PreviewItem)
 }
@@ -41,6 +42,7 @@ extension DocumentWrapper {
              .image(let previewItem),
              .audio(let previewItem),
              .sprite(let previewItem),
+             .action(let previewItem),
              .model(let previewItem),
              .world(let previewItem):
             switch previewItem {
@@ -72,6 +74,8 @@ extension DocumentWrapper {
             return UIImage(systemName: "waveform.circle")
         case .sprite:
             return UIImage(systemName: "photo")
+        case .action:
+            return UIImage(systemName: "bolt")
         case .model:
             return UIImage(systemName: "square.stack.3d.up")
         case .world:
@@ -126,14 +130,17 @@ extension DocumentWrapper {
                     case "mp3", "wav":
                         let documentWrapper: DocumentWrapper = .audio(.entry(url, entry.name))
                         documentWrappers.append(documentWrapper)
+                    case "spr":
+                        let documentWrapper: DocumentWrapper = .sprite(.entry(url, entry.name))
+                        documentWrappers.append(documentWrapper)
+                    case "act":
+                        let documentWrapper: DocumentWrapper = .action(.entry(url, entry.name))
+                        documentWrappers.append(documentWrapper)
                     case "rsm":
                         let documentWrapper: DocumentWrapper = .model(.entry(url, entry.name))
                         documentWrappers.append(documentWrapper)
                     case "rsw":
                         let documentWrapper: DocumentWrapper = .world(.entry(url, entry.name))
-                        documentWrappers.append(documentWrapper)
-                    case "spr":
-                        let documentWrapper: DocumentWrapper = .sprite(.entry(url, entry.name))
                         documentWrappers.append(documentWrapper)
                     default:
                         let documentWrapper: DocumentWrapper = .entry(url, entry.name)
@@ -156,6 +163,8 @@ extension DocumentWrapper {
         case .audio:
             return nil
         case .sprite:
+            return nil
+        case .action:
             return nil
         case .model:
             return nil

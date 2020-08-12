@@ -86,6 +86,9 @@ extension DocumentWrappersViewController: UICollectionViewDelegate {
         case .sprite(let previewItem):
             let previewViewController = SpritePreviewViewController(previewItem: previewItem)
             navigationController?.pushViewController(previewViewController, animated: true)
+        case .action(let previewItem):
+            let previewViewController = ActionPreviewViewController(previewItem: previewItem)
+            navigationController?.pushViewController(previewViewController, animated: true)
         case .model(let previewItem):
             let previewViewController = ModelPreviewViewController(previewItem: previewItem)
             navigationController?.pushViewController(previewViewController, animated: true)
