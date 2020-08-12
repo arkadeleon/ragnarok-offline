@@ -358,6 +358,7 @@
 				35116E15245C7B87000A60FE /* AppDelegate.swift */,
 				35116E17245C7B87000A60FE /* SceneDelegate.swift */,
 				35CB3BAA2478277600EC04C3 /* Client */,
+				35E5E8FB24E4396200716592 /* Previews */,
 				35E8DCD924A88AE600A14FC5 /* Renderers */,
 				35116E76246596A5000A60FE /* Documents */,
 				35CB3BBA247EB2C100EC04C3 /* Utilities */,
@@ -430,19 +431,9 @@
 		35116E77246596BB000A60FE /* Browser */ = {
 			isa = PBXGroup;
 			children = (
-				350F347224B5610F00848ED5 /* PreviewItem.swift */,
 				35116E7424644AAA000A60FE /* DocumentWrapper.swift */,
 				3587F6EC2463DF3F007D1C9B /* DocumentWrapperCell.swift */,
 				3587F6EA2463DBF0007D1C9B /* DocumentWrappersViewController.swift */,
-				35116E7E246713AD000A60FE /* TextPreviewViewController.swift */,
-				35116E8224685AE4000A60FE /* ImagePreviewViewController.swift */,
-				3587577A24C6DB480050F734 /* AudioPreviewViewController.swift */,
-				3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */,
-				355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */,
-				35116E86246AE56B000A60FE /* ModelPreviewViewController.swift */,
-				355E915224C04DCA00361AF6 /* WorldPreviewCamera.swift */,
-				355E914A24BEDDAE00361AF6 /* WorldPreviewRenderer.swift */,
-				359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */,
 			);
 			path = Browser;
 			sourceTree = "<group>";
@@ -603,6 +594,23 @@
 				35E8DCE124A9DF4100A14FC5 /* SGLMath+SIMD.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		35E5E8FB24E4396200716592 /* Previews */ = {
+			isa = PBXGroup;
+			children = (
+				350F347224B5610F00848ED5 /* PreviewItem.swift */,
+				35116E7E246713AD000A60FE /* TextPreviewViewController.swift */,
+				35116E8224685AE4000A60FE /* ImagePreviewViewController.swift */,
+				3587577A24C6DB480050F734 /* AudioPreviewViewController.swift */,
+				3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */,
+				355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */,
+				35116E86246AE56B000A60FE /* ModelPreviewViewController.swift */,
+				355E915224C04DCA00361AF6 /* WorldPreviewCamera.swift */,
+				355E914A24BEDDAE00361AF6 /* WorldPreviewRenderer.swift */,
+				359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */,
+			);
+			path = Previews;
 			sourceTree = "<group>";
 		};
 		35E8DCD924A88AE600A14FC5 /* Renderers */ = {
