@@ -10,13 +10,13 @@ import UIKit
 
 class ImagePreviewViewController: UIViewController {
 
-    let source: DocumentSource
+    let previewItem: PreviewItem
 
     private var scrollView: UIScrollView!
     private var imageView: UIImageView!
 
-    init(source: DocumentSource) {
-        self.source = source
+    init(previewItem: PreviewItem) {
+        self.previewItem = previewItem
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -27,7 +27,7 @@ class ImagePreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = source.name
+        title = previewItem.name
 
         view.backgroundColor = .systemBackground
 
@@ -47,7 +47,7 @@ class ImagePreviewViewController: UIViewController {
         scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         scrollView.frameLayoutGuide.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
 
-        loadSource()
+        loadPreviewItem()
     }
 
     override func viewDidLayoutSubviews() {
@@ -59,14 +59,14 @@ class ImagePreviewViewController: UIViewController {
         }
     }
 
-    private func loadSource() {
+    private func loadPreviewItem() {
         DispatchQueue.global().async {
-            guard let data = try? self.source.data() else {
+            guard let data = try? self.previewItem.data() else {
                 return
             }
 
             var image: CGImage? = nil
-            switch self.source.fileType.lowercased() {
+            switch self.previewItem.fileType.lowercased() {
             case "bmp", "jpg", "jpeg":
                 image = UIImage(data: data)?.cgImage
             case "tga":

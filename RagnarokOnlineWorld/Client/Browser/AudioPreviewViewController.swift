@@ -11,12 +11,12 @@ import AVFoundation
 
 class AudioPreviewViewController: UIViewController {
 
-    let source: DocumentSource
+    let previewItem: PreviewItem
 
     private var player: AVAudioPlayer?
 
-    init(source: DocumentSource) {
-        self.source = source
+    init(previewItem: PreviewItem) {
+        self.previewItem = previewItem
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -27,16 +27,16 @@ class AudioPreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = source.name
+        title = previewItem.name
 
         view.backgroundColor = .systemBackground
 
-        loadSource()
+        loadPreviewItem()
     }
 
-    private func loadSource() {
+    private func loadPreviewItem() {
         DispatchQueue.global().async {
-            guard let data = try? self.source.data() else {
+            guard let data = try? self.previewItem.data() else {
                 return
             }
 

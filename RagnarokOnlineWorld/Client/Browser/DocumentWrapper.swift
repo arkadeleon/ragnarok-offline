@@ -15,12 +15,12 @@ enum DocumentWrapper {
     case grf(URL)
     case entryGroup(URL, String)
     case entry(URL, String)
-    case text(DocumentSource)
-    case image(DocumentSource)
-    case audio(DocumentSource)
-    case sprite(DocumentSource)
-    case model(DocumentSource)
-    case world(DocumentSource)
+    case text(PreviewItem)
+    case image(PreviewItem)
+    case audio(PreviewItem)
+    case sprite(PreviewItem)
+    case model(PreviewItem)
+    case world(PreviewItem)
 }
 
 extension DocumentWrapper {
@@ -37,13 +37,13 @@ extension DocumentWrapper {
             return url.appendingPathComponent(path.replacingOccurrences(of: "\\", with: "/"))
         case .entry(let url, let name):
             return url.appendingPathComponent(name.replacingOccurrences(of: "\\", with: "/"))
-        case .text(let source),
-             .image(let source),
-             .audio(let source),
-             .sprite(let source),
-             .model(let source),
-             .world(let source):
-            switch source {
+        case .text(let previewItem),
+             .image(let previewItem),
+             .audio(let previewItem),
+             .sprite(let previewItem),
+             .model(let previewItem),
+             .world(let previewItem):
+            switch previewItem {
             case .url(let url):
                 return url
             case .entry(let url, let name):

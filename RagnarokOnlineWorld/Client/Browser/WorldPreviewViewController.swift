@@ -12,13 +12,13 @@ import SGLMath
 
 class WorldPreviewViewController: UIViewController {
 
-    let source: DocumentSource
+    let previewItem: PreviewItem
 
     private var mtkView: MTKView!
     private var renderer: WorldPreviewRenderer!
 
-    init(source: DocumentSource) {
-        self.source = source
+    init(previewItem: PreviewItem) {
+        self.previewItem = previewItem
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -34,18 +34,18 @@ class WorldPreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = source.name
+        title = previewItem.name
         edgesForExtendedLayout = []
 
         view.backgroundColor = .systemBackground
 
-        loadSource()
+        loadPreviewItem()
     }
 
-    private func loadSource() {
+    private func loadPreviewItem() {
         DispatchQueue.global().async {
-            guard case .entry(let url, _) = self.source,
-                  let data = try? self.source.data()
+            guard case .entry(let url, _) = self.previewItem,
+                  let data = try? self.previewItem.data()
             else {
                 return
             }

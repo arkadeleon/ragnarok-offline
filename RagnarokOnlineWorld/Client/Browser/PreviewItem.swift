@@ -1,5 +1,5 @@
 //
-//  DocumentSource.swift
+//  PreviewItem.swift
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/7/8.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum DocumentSource {
+enum PreviewItem {
 
     case url(URL)
 

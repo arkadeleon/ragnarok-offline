@@ -74,23 +74,23 @@ extension DocumentWrappersViewController: UICollectionViewDelegate {
         case .directory, .grf, .entryGroup:
             let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: documentWrapper)
             navigationController?.pushViewController(documentWrappersViewController, animated: true)
-        case .text(let source):
-            let previewViewController = TextPreviewViewController(source: source)
+        case .text(let previewItem):
+            let previewViewController = TextPreviewViewController(previewItem: previewItem)
             navigationController?.pushViewController(previewViewController, animated: true)
-        case .image(let source):
-            let previewViewController = ImagePreviewViewController(source: source)
+        case .image(let previewItem):
+            let previewViewController = ImagePreviewViewController(previewItem: previewItem)
             navigationController?.pushViewController(previewViewController, animated: true)
-        case .audio(let source):
-            let previewViewController = AudioPreviewViewController(source: source)
+        case .audio(let previewItem):
+            let previewViewController = AudioPreviewViewController(previewItem: previewItem)
             navigationController?.pushViewController(previewViewController, animated: true)
-        case .sprite(let source):
-            let previewViewController = SpritePreviewViewController(source: source)
+        case .sprite(let previewItem):
+            let previewViewController = SpritePreviewViewController(previewItem: previewItem)
             navigationController?.pushViewController(previewViewController, animated: true)
-        case .model(let source):
-            let previewViewController = ModelPreviewViewController(source: source)
+        case .model(let previewItem):
+            let previewViewController = ModelPreviewViewController(previewItem: previewItem)
             navigationController?.pushViewController(previewViewController, animated: true)
-        case .world(let source):
-            let previewViewController = WorldPreviewViewController(source: source)
+        case .world(let previewItem):
+            let previewViewController = WorldPreviewViewController(previewItem: previewItem)
             navigationController?.pushViewController(previewViewController, animated: true)
         default:
             break

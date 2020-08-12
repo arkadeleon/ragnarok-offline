@@ -11,12 +11,12 @@ import WebKit
 
 class TextPreviewViewController: UIViewController {
 
-    let source: DocumentSource
+    let previewItem: PreviewItem
 
     private var webView: WKWebView!
 
-    init(source: DocumentSource) {
-        self.source = source
+    init(previewItem: PreviewItem) {
+        self.previewItem = previewItem
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -27,7 +27,7 @@ class TextPreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = source.name
+        title = previewItem.name
 
         view.backgroundColor = .systemBackground
 
@@ -35,17 +35,16 @@ class TextPreviewViewController: UIViewController {
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(webView)
 
-        loadSource()
+        loadPreviewItem()
     }
 
-    private func loadSource() {
+    private func loadPreviewItem() {
         DispatchQueue.global().async {
-            guard var data = try? self.source.data() else {
+            guard var data = try? self.previewItem.data() else {
                 return
             }
 
-
-            switch self.source.fileType.lowercased() {
+            switch self.previewItem.fileType.lowercased() {
             case "lub":
                 let disassembler = LuaDecompiler()
                 data = disassembler.decompileData(data)
