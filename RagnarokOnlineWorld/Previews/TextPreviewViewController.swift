@@ -53,8 +53,13 @@ class TextPreviewViewController: UIViewController {
             }
 
             DispatchQueue.main.async {
-                guard let text = String(data: data, encoding: .ascii) else {
+                guard var text = String(data: data, encoding: .ascii) else {
                     return
+                }
+
+                if self.previewItem.fileType.lowercased() == "xml" {
+                    text = text.replacingOccurrences(of: "<", with: "&lt;")
+                    text = text.replacingOccurrences(of: ">", with: "&gt;")
                 }
 
                 let htmlString = """
