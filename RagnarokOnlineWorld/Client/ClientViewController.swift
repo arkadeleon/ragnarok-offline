@@ -28,9 +28,9 @@ class ClientViewController: UIViewController {
 
         DispatchQueue.global().async {
             try? ResourceManager.default.preload()
-            DispatchQueue.main.async { [weak self] in
-                self?.activityIndicatorView.stopAnimating()
-                try? self?.addRootDocumentItemsViewController()
+            DispatchQueue.main.async {
+                self.activityIndicatorView.stopAnimating()
+                try? self.addRootDocumentItemsViewController()
             }
         }
     }

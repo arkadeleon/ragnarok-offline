@@ -13,13 +13,13 @@ private let reuseIdentifier = "DocumentItemCell"
 class DocumentItemsViewController: UIViewController {
 
     let documentItem: DocumentItem
-    let documentItems: [DocumentItem]
+    var childDocumentItems: [DocumentItem] = []
 
     private var collectionView: UICollectionView!
+    private var activityIndicatorView: UIActivityIndicatorView!
 
     init(documentItem: DocumentItem) {
         self.documentItem = documentItem
-        self.documentItems = (documentItem.children ?? []).sorted()
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -48,20 +48,34 @@ class DocumentItemsViewController: UIViewController {
         collectionView.register(DocumentItemCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         view.addSubview(collectionView)
 
-        collectionView.reloadData()
+        activityIndicatorView = UIActivityIndicatorView(style: .medium)
+        activityIndicatorView.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
+        activityIndicatorView.autoresizingMask = [.flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin, .flexibleBottomMargin]
+        view.addSubview(activityIndicatorView)
+
+        activityIndicatorView.startAnimating()
+
+        DispatchQueue.global().async {
+            self.childDocumentItems = (self.documentItem.children ?? []).sorted()
+            DispatchQueue.main.async {
+                self.activityIndicatorView.stopAnimating()
+                self.collectionView.reloadData()
+            }
+        }
+
     }
 }
 
 extension DocumentItemsViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return documentItems.count
+        return childDocumentItems.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! DocumentItemCell
-        cell.iconView.image = documentItems[indexPath.row].icon
-        cell.nameLabel.text = documentItems[indexPath.row].url.lastPathComponent
+        cell.iconView.image = childDocumentItems[indexPath.row].icon
+        cell.nameLabel.text = childDocumentItems[indexPath.row].url.lastPathComponent
         return cell
     }
 }
@@ -69,7 +83,7 @@ extension DocumentItemsViewController: UICollectionViewDataSource {
 extension DocumentItemsViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let documentItem = documentItems[indexPath.row]
+        let documentItem = childDocumentItems[indexPath.row]
         switch documentItem {
         case .directory, .grf, .entryGroup:
             let documentItemsViewController = DocumentItemsViewController(documentItem: documentItem)
