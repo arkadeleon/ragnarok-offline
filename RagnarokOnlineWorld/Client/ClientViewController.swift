@@ -10,8 +10,6 @@ import UIKit
 
 class ClientViewController: UIViewController {
 
-    private var activityIndicatorView: UIActivityIndicatorView!
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,20 +17,7 @@ class ClientViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
 
-        activityIndicatorView = UIActivityIndicatorView(style: .medium)
-        activityIndicatorView.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
-        activityIndicatorView.autoresizingMask = [.flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin, .flexibleBottomMargin]
-        view.addSubview(activityIndicatorView)
-
-        activityIndicatorView.startAnimating()
-
-        DispatchQueue.global().async {
-            try? ResourceManager.default.preload()
-            DispatchQueue.main.async {
-                self.activityIndicatorView.stopAnimating()
-                try? self.addRootDocumentItemsViewController()
-            }
-        }
+        try? addRootDocumentItemsViewController()
     }
 
     private func addRootDocumentItemsViewController() throws {

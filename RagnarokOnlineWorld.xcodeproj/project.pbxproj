@@ -118,6 +118,7 @@
 		35E5E90124E44E9200716592 /* ActionPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E8FE24E44E9200716592 /* ActionPreviewViewController.swift */; };
 		35E5E90224E44E9200716592 /* ActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E8FF24E44E9200716592 /* ActionCell.swift */; };
 		35E5E90324E44E9200716592 /* ActionFrameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E90024E44E9200716592 /* ActionFrameCell.swift */; };
+		35E5E90524EAB9EB00716592 /* GRFDocument+Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E90424EAB9EB00716592 /* GRFDocument+Tree.swift */; };
 		35E8DCDB24A88BCC00A14FC5 /* WaterShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDA24A88BCC00A14FC5 /* WaterShaders.metal */; };
 		35E8DCDE24A9D99000A14FC5 /* RendererCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDD24A9D99000A14FC5 /* RendererCommon.swift */; };
 		35E8DCE024A9DC1100A14FC5 /* ModelRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDF24A9DC1100A14FC5 /* ModelRenderer.swift */; };
@@ -302,6 +303,7 @@
 		35E5E8FE24E44E9200716592 /* ActionPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionPreviewViewController.swift; sourceTree = "<group>"; };
 		35E5E8FF24E44E9200716592 /* ActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCell.swift; sourceTree = "<group>"; };
 		35E5E90024E44E9200716592 /* ActionFrameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionFrameCell.swift; sourceTree = "<group>"; };
+		35E5E90424EAB9EB00716592 /* GRFDocument+Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GRFDocument+Tree.swift"; sourceTree = "<group>"; };
 		35E8DCDA24A88BCC00A14FC5 /* WaterShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = WaterShaders.metal; sourceTree = "<group>"; };
 		35E8DCDC24A88BEB00A14FC5 /* WaterShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WaterShaderTypes.h; sourceTree = "<group>"; };
 		35E8DCDD24A9D99000A14FC5 /* RendererCommon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommon.swift; sourceTree = "<group>"; };
@@ -539,6 +541,7 @@
 			children = (
 				355E915024C04A5C00361AF6 /* GATDocument+Compile.swift */,
 				3509565424A8F6010077C134 /* GNDDocument+Compile.swift */,
+				35E5E90424EAB9EB00716592 /* GRFDocument+Tree.swift */,
 				3509565224A8EE010077C134 /* RSMDocument+Compile.swift */,
 				35D091F324AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift */,
 				3509565624ACD8FB0077C134 /* SPRDocument+Image.swift */,
@@ -549,6 +552,7 @@
 		358E6BAB24C9691300283BAD /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				3573037924B83CC70011F6AA /* ResourceManager.swift */,
 				355EFD2C2480264B0033C280 /* Camera.swift */,
 				35CB3BAD24782A5100EC04C3 /* GameRenderer.swift */,
 				35CB3BAB247827A700EC04C3 /* GameViewController.swift */,
@@ -592,7 +596,6 @@
 		35CB3BAA2478277600EC04C3 /* Client */ = {
 			isa = PBXGroup;
 			children = (
-				3573037924B83CC70011F6AA /* ResourceManager.swift */,
 				358E6BAC24C9793B00283BAD /* ClientViewController.swift */,
 				35116E77246596BB000A60FE /* Browser */,
 				358E6BAB24C9691300283BAD /* Game */,
@@ -857,6 +860,7 @@
 				3533CBAB24D2BB26006AFE04 /* lobject.c in Sources */,
 				3533CBC024D2BB26006AFE04 /* ltablib.c in Sources */,
 				35CB3BAC247827A700EC04C3 /* GameViewController.swift in Sources */,
+				35E5E90524EAB9EB00716592 /* GRFDocument+Tree.swift in Sources */,
 				3533CBBF24D2BB26006AFE04 /* lcode.c in Sources */,
 				35D091F624AC8EB1008D7CEA /* PALDocument.swift in Sources */,
 				35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */,

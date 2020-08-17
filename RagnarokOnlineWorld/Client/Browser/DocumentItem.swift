@@ -12,8 +12,8 @@ enum DocumentItem {
 
     case directory(URL)
     case regular(URL)
-    case grf(URL)
-    case entryGroup(URL, String)
+    case grf(GRFTree)
+    case entryGroup(GRFTree, String)
     case entry(URL, String)
     case text(PreviewItem)
     case image(PreviewItem)
@@ -32,10 +32,10 @@ extension DocumentItem {
             return url
         case .regular(let url):
             return url
-        case .grf(let url):
-            return url
-        case .entryGroup(let url, let path):
-            return url.appendingPathComponent(path.replacingOccurrences(of: "\\", with: "/"))
+        case .grf(let tree):
+            return tree.url
+        case .entryGroup(let tree, let path):
+            return tree.url.appendingPathComponent(path.replacingOccurrences(of: "\\", with: "/"))
         case .entry(let url, let name):
             return url.appendingPathComponent(name.replacingOccurrences(of: "\\", with: "/"))
         case .text(let previewItem),
@@ -48,8 +48,8 @@ extension DocumentItem {
             switch previewItem {
             case .url(let url):
                 return url
-            case .entry(let url, let name):
-                return url.appendingPathComponent(name.replacingOccurrences(of: "\\", with: "/"))
+            case .entry(let tree, let name):
+                return tree.url.appendingPathComponent(name.replacingOccurrences(of: "\\", with: "/"))
             }
         }
     }
@@ -99,7 +99,8 @@ extension DocumentItem {
                     }
                     switch url.pathExtension.lowercased() {
                     case "grf":
-                        return .grf(url)
+                        let tree = GRFTree(url: url)
+                        return .grf(tree)
                     case "txt", "xml", "ini", "lua", "lub":
                         return .text(.url(url))
                     case "bmp", "jpg", "jpeg", "tga", "pal":
@@ -113,34 +114,34 @@ extension DocumentItem {
             return children
         case .regular:
             return nil
-        case .grf(let url):
-            return DocumentItem.entryGroup(url, "data\\").children
-        case .entryGroup(let url, let path):
+        case .grf(let tree):
+            return DocumentItem.entryGroup(tree, "data\\").children
+        case .entryGroup(let tree, let path):
             var children: [DocumentItem] = []
-            let nodes = try? ResourceManager.default.nodes(withPath: path, url: url)
-            for node in nodes ?? [] {
+            let nodes = tree.nodes(withPath: path)
+            for node in nodes {
                 if let entry = node.entry {
                     switch (entry.name as NSString).pathExtension.lowercased() {
                     case "txt", "xml", "ini", "lua", "lub":
-                        let child: DocumentItem = .text(.entry(url, entry.name))
+                        let child: DocumentItem = .text(.entry(tree, entry.name))
                         children.append(child)
                     case "bmp", "jpg", "jpeg", "tga", "pal":
-                        let child: DocumentItem = .image(.entry(url, entry.name))
+                        let child: DocumentItem = .image(.entry(tree, entry.name))
                         children.append(child)
                     case "mp3", "wav":
-                        let child: DocumentItem = .audio(.entry(url, entry.name))
+                        let child: DocumentItem = .audio(.entry(tree, entry.name))
                         children.append(child)
                     case "spr":
-                        let child: DocumentItem = .sprite(.entry(url, entry.name))
+                        let child: DocumentItem = .sprite(.entry(tree, entry.name))
                         children.append(child)
                     case "act":
-                        let child: DocumentItem = .action(.entry(url, entry.name))
+                        let child: DocumentItem = .action(.entry(tree, entry.name))
                         children.append(child)
                     case "rsm":
-                        let child: DocumentItem = .model(.entry(url, entry.name))
+                        let child: DocumentItem = .model(.entry(tree, entry.name))
                         children.append(child)
                     case "rsw":
-                        let child: DocumentItem = .world(.entry(url, entry.name))
+                        let child: DocumentItem = .world(.entry(tree, entry.name))
                         children.append(child)
                     default:
                         let child: DocumentItem = .entry(url, entry.name)
@@ -148,11 +149,10 @@ extension DocumentItem {
                     }
                 } else {
                     let path = "\(path)\(node.pathComponent)\\"
-                    let child: DocumentItem = .entryGroup(url, path)
+                    let child: DocumentItem = .entryGroup(tree, path)
                     children.append(child)
                 }
             }
-
             return children
         case .entry:
             return nil

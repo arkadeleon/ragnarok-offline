@@ -44,7 +44,7 @@ class WorldPreviewViewController: UIViewController {
 
     private func loadPreviewItem() {
         DispatchQueue.global().async {
-            guard case .entry(let url, _) = self.previewItem,
+            guard case .entry(let tree, _) = self.previewItem,
                   let data = try? self.previewItem.data()
             else {
                 return
@@ -55,13 +55,13 @@ class WorldPreviewViewController: UIViewController {
                 return
             }
 
-            guard let gatData = try? ResourceManager.default.contentsOfEntry(withName: "data\\" + rsw.files.gat, preferredURL: url),
+            guard let gatData = try? tree.contentsOfEntry(withName: "data\\" + rsw.files.gat),
                   let gat = try? loader.load(GATDocument.self, from: gatData)
             else {
                 return
             }
 
-            guard let gndData = try? ResourceManager.default.contentsOfEntry(withName: "data\\" + rsw.files.gnd, preferredURL: url),
+            guard let gndData = try? tree.contentsOfEntry(withName: "data\\" + rsw.files.gnd),
                   let gnd = try? loader.load(GNDDocument.self, from: gndData)
             else {
                 return
@@ -99,7 +99,7 @@ class WorldPreviewViewController: UIViewController {
             context.concatenate(flipVertical)
 
             for (i, name) in textures.enumerated() {
-                guard let data = try? ResourceManager.default.contentsOfEntry(withName: "data\\texture\\" + name) else {
+                guard let data = try? tree.contentsOfEntry(withName: "data\\texture\\" + name) else {
                     continue
                 }
                 let image = UIImage(data: data)?.cgImage?.decoded
@@ -115,14 +115,14 @@ class WorldPreviewViewController: UIViewController {
             var waterTextures: [Data?] = []
             for i in 0..<32 {
                 let name = NSString(format: "data\\texture\\워터\\water0%02d.jpg", i)
-                let data = try? ResourceManager.default.contentsOfEntry(withName: name as String)
+                let data = try? tree.contentsOfEntry(withName: name as String)
                 waterTextures.append(data)
             }
 
             var models: [String: ([[ModelVertex]], [Data?])] = [:]
             for model in rsw.models {
                 let name = "data\\model\\" + model.filename
-                guard let data = try? ResourceManager.default.contentsOfEntry(withName: name, preferredURL: url),
+                guard let data = try? tree.contentsOfEntry(withName: name),
                       let rsm = try? loader.load(RSMDocument.self, from: data) else {
                     continue
                 }
@@ -130,7 +130,7 @@ class WorldPreviewViewController: UIViewController {
                 var m = models[name] ?? ([[ModelVertex]](repeating: [], count: rsm.textures.count), [])
 
                 let textures = rsm.textures.map { textureName -> Data? in
-                    return try? ResourceManager.default.contentsOfEntry(withName: "data\\texture\\" + textureName)
+                    return try? tree.contentsOfEntry(withName: "data\\texture\\" + textureName)
                 }
                 m.1 = textures
 

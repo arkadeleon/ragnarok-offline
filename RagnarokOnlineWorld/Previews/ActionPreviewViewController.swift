@@ -137,14 +137,14 @@ class ActionPreviewViewController: UIViewController {
 
     private func loadPreviewItem() {
         DispatchQueue.global().async {
-            guard case .entry(let url, let actName) = self.previewItem,
+            guard case .entry(let tree, let actName) = self.previewItem,
                   let actData = try? self.previewItem.data()
             else {
                 return
             }
 
             let sprName = (actName as NSString).deletingPathExtension.appending(".spr")
-            guard let sprData = try? ResourceManager.default.contentsOfEntry(withName: sprName, url: url) else {
+            guard let sprData = try? tree.contentsOfEntry(withName: sprName) else {
                 return
             }
 

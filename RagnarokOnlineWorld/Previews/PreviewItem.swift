@@ -12,7 +12,7 @@ enum PreviewItem {
 
     case url(URL)
 
-    case entry(URL, String)
+    case entry(GRFTree, String)
 
     var name: String {
         switch self {
@@ -38,8 +38,8 @@ enum PreviewItem {
         switch self {
         case .url(let url):
             return try Data(contentsOf: url)
-        case .entry(let url, let name):
-            return try ResourceManager.default.contentsOfEntry(withName: name, url: url)
+        case .entry(let tree, let name):
+            return try tree.contentsOfEntry(withName: name)
         }
     }
 }

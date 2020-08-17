@@ -44,7 +44,7 @@ class ModelPreviewViewController: UIViewController {
 
     private func loadPreviewItem() {
         DispatchQueue.global().async {
-            guard case .entry = self.previewItem,
+            guard case .entry(let tree, _) = self.previewItem,
                   let data = try? self.previewItem.data()
             else {
                 return
@@ -56,7 +56,7 @@ class ModelPreviewViewController: UIViewController {
             }
 
             let textures = document.textures.map { textureName -> Data? in
-                return try? ResourceManager.default.contentsOfEntry(withName: "data\\texture\\" + textureName)
+                return try? tree.contentsOfEntry(withName: "data\\texture\\" + textureName)
             }
 
             let (boundingBox, wrappers) = document.calcBoundingBox()
