@@ -1,5 +1,5 @@
 //
-//  DocumentWrappersViewController.swift
+//  DocumentItemsViewController.swift
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/5/7.
@@ -8,18 +8,18 @@
 
 import UIKit
 
-private let reuseIdentifier = "DocumentWrapperCell"
+private let reuseIdentifier = "DocumentItemCell"
 
-class DocumentWrappersViewController: UIViewController {
+class DocumentItemsViewController: UIViewController {
 
-    let documentWrapper: DocumentWrapper
-    let documentWrappers: [DocumentWrapper]
+    let documentItem: DocumentItem
+    let documentItems: [DocumentItem]
 
     private var collectionView: UICollectionView!
 
-    init(documentWrapper: DocumentWrapper) {
-        self.documentWrapper = documentWrapper
-        self.documentWrappers = (documentWrapper.documentWrappers ?? []).sorted()
+    init(documentItem: DocumentItem) {
+        self.documentItem = documentItem
+        self.documentItems = (documentItem.children ?? []).sorted()
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -30,7 +30,7 @@ class DocumentWrappersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = documentWrapper.url.lastPathComponent
+        title = documentItem.url.lastPathComponent
 
         view.backgroundColor = .systemBackground
 
@@ -45,35 +45,35 @@ class DocumentWrappersViewController: UIViewController {
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(DocumentWrapperCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(DocumentItemCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         view.addSubview(collectionView)
 
         collectionView.reloadData()
     }
 }
 
-extension DocumentWrappersViewController: UICollectionViewDataSource {
+extension DocumentItemsViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return documentWrappers.count
+        return documentItems.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! DocumentWrapperCell
-        cell.iconView.image = documentWrappers[indexPath.row].icon
-        cell.nameLabel.text = documentWrappers[indexPath.row].url.lastPathComponent
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! DocumentItemCell
+        cell.iconView.image = documentItems[indexPath.row].icon
+        cell.nameLabel.text = documentItems[indexPath.row].url.lastPathComponent
         return cell
     }
 }
 
-extension DocumentWrappersViewController: UICollectionViewDelegate {
+extension DocumentItemsViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let documentWrapper = documentWrappers[indexPath.row]
-        switch documentWrapper {
+        let documentItem = documentItems[indexPath.row]
+        switch documentItem {
         case .directory, .grf, .entryGroup:
-            let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: documentWrapper)
-            navigationController?.pushViewController(documentWrappersViewController, animated: true)
+            let documentItemsViewController = DocumentItemsViewController(documentItem: documentItem)
+            navigationController?.pushViewController(documentItemsViewController, animated: true)
         case .text(let previewItem):
             let previewViewController = TextPreviewViewController(previewItem: previewItem)
             navigationController?.pushViewController(previewViewController, animated: true)

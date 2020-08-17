@@ -30,19 +30,19 @@ class ClientViewController: UIViewController {
             try? ResourceManager.default.preload()
             DispatchQueue.main.async { [weak self] in
                 self?.activityIndicatorView.stopAnimating()
-                try? self?.addRootDocumentWrappersViewController()
+                try? self?.addRootDocumentItemsViewController()
             }
         }
     }
 
-    private func addRootDocumentWrappersViewController() throws {
+    private func addRootDocumentItemsViewController() throws {
         let url = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        let documentWrappersViewController = DocumentWrappersViewController(documentWrapper: .directory(url))
+        let documentItemsViewController = DocumentItemsViewController(documentItem: .directory(url))
 
-        addChild(documentWrappersViewController)
-        documentWrappersViewController.view.frame = view.bounds
-        documentWrappersViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(documentWrappersViewController.view)
-        documentWrappersViewController.didMove(toParent: self)
+        addChild(documentItemsViewController)
+        documentItemsViewController.view.frame = view.bounds
+        documentItemsViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(documentItemsViewController.view)
+        documentItemsViewController.didMove(toParent: self)
     }
 }

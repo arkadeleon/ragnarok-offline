@@ -1,5 +1,5 @@
 //
-//  DocumentWrapper.swift
+//  DocumentItem.swift
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/5/7.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum DocumentWrapper {
+enum DocumentItem {
 
     case directory(URL)
     case regular(URL)
@@ -24,7 +24,7 @@ enum DocumentWrapper {
     case world(PreviewItem)
 }
 
-extension DocumentWrapper {
+extension DocumentItem {
 
     var url: URL {
         switch self {
@@ -83,17 +83,17 @@ extension DocumentWrapper {
         }
     }
 
-    var documentWrappers: [DocumentWrapper]? {
+    var children: [DocumentItem]? {
         switch self {
         case .directory(let url):
             guard let urls = try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: []) else {
                 return nil
             }
-            let documentWrappers = urls
+            let children = urls
                 .map{ url -> URL in
                     url.resolvingSymlinksInPath()
                 }
-                .map { url -> DocumentWrapper in
+                .map { url -> DocumentItem in
                     if url.hasDirectoryPath {
                         return .directory(url)
                     }
@@ -110,50 +110,50 @@ extension DocumentWrapper {
                         return .regular(url)
                     }
                 }
-            return documentWrappers
+            return children
         case .regular:
             return nil
         case .grf(let url):
-            return DocumentWrapper.entryGroup(url, "data\\").documentWrappers
+            return DocumentItem.entryGroup(url, "data\\").children
         case .entryGroup(let url, let path):
-            var documentWrappers: [DocumentWrapper] = []
+            var children: [DocumentItem] = []
             let nodes = try? ResourceManager.default.nodes(withPath: path, url: url)
             for node in nodes ?? [] {
                 if let entry = node.entry {
                     switch (entry.name as NSString).pathExtension.lowercased() {
                     case "txt", "xml", "ini", "lua", "lub":
-                        let documentWrapper: DocumentWrapper = .text(.entry(url, entry.name))
-                        documentWrappers.append(documentWrapper)
+                        let child: DocumentItem = .text(.entry(url, entry.name))
+                        children.append(child)
                     case "bmp", "jpg", "jpeg", "tga", "pal":
-                        let documentWrapper: DocumentWrapper = .image(.entry(url, entry.name))
-                        documentWrappers.append(documentWrapper)
+                        let child: DocumentItem = .image(.entry(url, entry.name))
+                        children.append(child)
                     case "mp3", "wav":
-                        let documentWrapper: DocumentWrapper = .audio(.entry(url, entry.name))
-                        documentWrappers.append(documentWrapper)
+                        let child: DocumentItem = .audio(.entry(url, entry.name))
+                        children.append(child)
                     case "spr":
-                        let documentWrapper: DocumentWrapper = .sprite(.entry(url, entry.name))
-                        documentWrappers.append(documentWrapper)
+                        let child: DocumentItem = .sprite(.entry(url, entry.name))
+                        children.append(child)
                     case "act":
-                        let documentWrapper: DocumentWrapper = .action(.entry(url, entry.name))
-                        documentWrappers.append(documentWrapper)
+                        let child: DocumentItem = .action(.entry(url, entry.name))
+                        children.append(child)
                     case "rsm":
-                        let documentWrapper: DocumentWrapper = .model(.entry(url, entry.name))
-                        documentWrappers.append(documentWrapper)
+                        let child: DocumentItem = .model(.entry(url, entry.name))
+                        children.append(child)
                     case "rsw":
-                        let documentWrapper: DocumentWrapper = .world(.entry(url, entry.name))
-                        documentWrappers.append(documentWrapper)
+                        let child: DocumentItem = .world(.entry(url, entry.name))
+                        children.append(child)
                     default:
-                        let documentWrapper: DocumentWrapper = .entry(url, entry.name)
-                        documentWrappers.append(documentWrapper)
+                        let child: DocumentItem = .entry(url, entry.name)
+                        children.append(child)
                     }
                 } else {
                     let path = "\(path)\(node.pathComponent)\\"
-                    let documentWrapper: DocumentWrapper = .entryGroup(url, path)
-                    documentWrappers.append(documentWrapper)
+                    let child: DocumentItem = .entryGroup(url, path)
+                    children.append(child)
                 }
             }
 
-            return documentWrappers
+            return children
         case .entry:
             return nil
         case .text:
@@ -174,12 +174,12 @@ extension DocumentWrapper {
     }
 }
 
-extension DocumentWrapper: Equatable, Comparable {
-    static func == (lhs: DocumentWrapper, rhs: DocumentWrapper) -> Bool {
+extension DocumentItem: Equatable, Comparable {
+    static func == (lhs: DocumentItem, rhs: DocumentItem) -> Bool {
         lhs.url == rhs.url
     }
 
-    static func < (lhs: DocumentWrapper, rhs: DocumentWrapper) -> Bool {
+    static func < (lhs: DocumentItem, rhs: DocumentItem) -> Bool {
         if lhs.rank == rhs.rank {
             return lhs.url.path.lowercased() < rhs.url.path.lowercased()
         } else {
