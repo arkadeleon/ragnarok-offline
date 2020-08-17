@@ -368,6 +368,7 @@
 				35CB3BAA2478277600EC04C3 /* Client */,
 				35E5E8FB24E4396200716592 /* Previews */,
 				35E8DCD924A88AE600A14FC5 /* Renderers */,
+				356A0D9224EA303000E2ED32 /* DocumentExtensions */,
 				35116E76246596A5000A60FE /* Documents */,
 				35CB3BBA247EB2C100EC04C3 /* Utilities */,
 				3533CB6B24D2BACA006AFE04 /* Vendors */,
@@ -533,6 +534,18 @@
 			path = dkjson;
 			sourceTree = "<group>";
 		};
+		356A0D9224EA303000E2ED32 /* DocumentExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				355E915024C04A5C00361AF6 /* GATDocument+Compile.swift */,
+				3509565424A8F6010077C134 /* GNDDocument+Compile.swift */,
+				3509565224A8EE010077C134 /* RSMDocument+Compile.swift */,
+				35D091F324AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift */,
+				3509565624ACD8FB0077C134 /* SPRDocument+Image.swift */,
+			);
+			path = DocumentExtensions;
+			sourceTree = "<group>";
+		};
 		358E6BAB24C9691300283BAD /* Game */ = {
 			isa = PBXGroup;
 			children = (
@@ -638,11 +651,6 @@
 				35EF769324AF18D800371F1F /* GroundRenderer.swift */,
 				35021BAE24A0A4760021B99B /* GroundShaderTypes.h */,
 				359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */,
-				355E915024C04A5C00361AF6 /* GATDocument+Compile.swift */,
-				3509565424A8F6010077C134 /* GNDDocument+Compile.swift */,
-				3509565224A8EE010077C134 /* RSMDocument+Compile.swift */,
-				35D091F324AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift */,
-				3509565624ACD8FB0077C134 /* SPRDocument+Image.swift */,
 			);
 			path = Renderers;
 			sourceTree = "<group>";
