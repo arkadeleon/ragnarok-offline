@@ -66,13 +66,13 @@ class ImagePreviewViewController: UIViewController {
             }
 
             var image: CGImage? = nil
-            switch self.previewItem.fileType.lowercased() {
-            case "bmp", "jpg", "jpeg":
+            switch self.previewItem.fileType {
+            case .bmp, .jpg:
                 image = UIImage(data: data)?.cgImage
-            case "tga":
+            case .tga:
                 let loader = DocumentLoader()
                 image = try? loader.load(TGADocument.self, from: data).image
-            case "pal":
+            case .pal:
                 let loader = DocumentLoader()
                 image = try? loader.load(PALDocument.self, from: data).image
             default:

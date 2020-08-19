@@ -119,6 +119,8 @@
 		35E5E90224E44E9200716592 /* ActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E8FF24E44E9200716592 /* ActionCell.swift */; };
 		35E5E90324E44E9200716592 /* ActionFrameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E90024E44E9200716592 /* ActionFrameCell.swift */; };
 		35E5E90524EAB9EB00716592 /* GRFDocument+Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E90424EAB9EB00716592 /* GRFDocument+Tree.swift */; };
+		35E5E90724ED68BC00716592 /* PreviewItem+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E90624ED68BC00716592 /* PreviewItem+Thumbnail.swift */; };
+		35E5E90924ED6A8F00716592 /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E90824ED6A8F00716592 /* FileType.swift */; };
 		35E8DCDB24A88BCC00A14FC5 /* WaterShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDA24A88BCC00A14FC5 /* WaterShaders.metal */; };
 		35E8DCDE24A9D99000A14FC5 /* RendererCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDD24A9D99000A14FC5 /* RendererCommon.swift */; };
 		35E8DCE024A9DC1100A14FC5 /* ModelRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDF24A9DC1100A14FC5 /* ModelRenderer.swift */; };
@@ -304,6 +306,8 @@
 		35E5E8FF24E44E9200716592 /* ActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCell.swift; sourceTree = "<group>"; };
 		35E5E90024E44E9200716592 /* ActionFrameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionFrameCell.swift; sourceTree = "<group>"; };
 		35E5E90424EAB9EB00716592 /* GRFDocument+Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GRFDocument+Tree.swift"; sourceTree = "<group>"; };
+		35E5E90624ED68BC00716592 /* PreviewItem+Thumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PreviewItem+Thumbnail.swift"; sourceTree = "<group>"; };
+		35E5E90824ED6A8F00716592 /* FileType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileType.swift; sourceTree = "<group>"; };
 		35E8DCDA24A88BCC00A14FC5 /* WaterShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = WaterShaders.metal; sourceTree = "<group>"; };
 		35E8DCDC24A88BEB00A14FC5 /* WaterShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WaterShaderTypes.h; sourceTree = "<group>"; };
 		35E8DCDD24A9D99000A14FC5 /* RendererCommon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommon.swift; sourceTree = "<group>"; };
@@ -623,7 +627,9 @@
 		35E5E8FB24E4396200716592 /* Previews */ = {
 			isa = PBXGroup;
 			children = (
+				35E5E90824ED6A8F00716592 /* FileType.swift */,
 				350F347224B5610F00848ED5 /* PreviewItem.swift */,
+				35E5E90624ED68BC00716592 /* PreviewItem+Thumbnail.swift */,
 				35116E7E246713AD000A60FE /* TextPreviewViewController.swift */,
 				35116E8224685AE4000A60FE /* ImagePreviewViewController.swift */,
 				3587577A24C6DB480050F734 /* AudioPreviewViewController.swift */,
@@ -865,6 +871,7 @@
 				35D091F624AC8EB1008D7CEA /* PALDocument.swift in Sources */,
 				35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */,
 				3533CBA924D2BB26006AFE04 /* lopcodes.c in Sources */,
+				35E5E90924ED6A8F00716592 /* FileType.swift in Sources */,
 				3533CBC224D2BB26006AFE04 /* lbaselib.c in Sources */,
 				355E914B24BEDDAE00361AF6 /* WorldPreviewRenderer.swift in Sources */,
 				355F206724DA4CC3001302FC /* decompile.c in Sources */,
@@ -906,6 +913,7 @@
 				35617A73249863580097C60C /* SGLMath+Calculate.swift in Sources */,
 				355E914D24BEEA9200361AF6 /* WaterRenderer.swift in Sources */,
 				351E225624BC5D98000EF504 /* INIDocument.swift in Sources */,
+				35E5E90724ED68BC00716592 /* PreviewItem+Thumbnail.swift in Sources */,
 				3587F70924694FA7007D1C9B /* BinaryReader.swift in Sources */,
 				35116E58245FC152000A60FE /* GRFDocument.swift in Sources */,
 				3533CBBC24D2BB26006AFE04 /* lzio.c in Sources */,

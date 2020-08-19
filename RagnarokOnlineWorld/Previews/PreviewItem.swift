@@ -24,13 +24,13 @@ enum PreviewItem {
         }
     }
 
-    var fileType: String {
+    var fileType: FileType {
         switch self {
         case .url(let url):
-            return url.pathExtension
+            return FileType(rawValue: url.pathExtension)
         case .entry(_, let name):
             let pathExtension = name.split(separator: "\\").last?.split(separator: ".").last
-            return String(pathExtension ?? "")
+            return FileType(rawValue: String(pathExtension ?? ""))
         }
     }
 

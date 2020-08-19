@@ -88,29 +88,32 @@ extension DocumentItemsViewController: UICollectionViewDelegate {
         case .directory, .grf, .entryGroup:
             let documentItemsViewController = DocumentItemsViewController(documentItem: documentItem)
             navigationController?.pushViewController(documentItemsViewController, animated: true)
-        case .text(let previewItem):
-            let previewViewController = TextPreviewViewController(previewItem: previewItem)
-            navigationController?.pushViewController(previewViewController, animated: true)
-        case .image(let previewItem):
-            let previewViewController = ImagePreviewViewController(previewItem: previewItem)
-            navigationController?.pushViewController(previewViewController, animated: true)
-        case .audio(let previewItem):
-            let previewViewController = AudioPreviewViewController(previewItem: previewItem)
-            navigationController?.pushViewController(previewViewController, animated: true)
-        case .sprite(let previewItem):
-            let previewViewController = SpritePreviewViewController(previewItem: previewItem)
-            navigationController?.pushViewController(previewViewController, animated: true)
-        case .action(let previewItem):
-            let previewViewController = ActionPreviewViewController(previewItem: previewItem)
-            navigationController?.pushViewController(previewViewController, animated: true)
-        case .model(let previewItem):
-            let previewViewController = ModelPreviewViewController(previewItem: previewItem)
-            navigationController?.pushViewController(previewViewController, animated: true)
-        case .world(let previewItem):
-            let previewViewController = WorldPreviewViewController(previewItem: previewItem)
-            navigationController?.pushViewController(previewViewController, animated: true)
-        default:
-            break
+        case .previewItem(let previewItem):
+            switch previewItem.fileType {
+            case .txt, .xml, .ini, .lua, .lub:
+                let previewViewController = TextPreviewViewController(previewItem: previewItem)
+                navigationController?.pushViewController(previewViewController, animated: true)
+            case .bmp, .jpg, .tga, .pal:
+                let previewViewController = ImagePreviewViewController(previewItem: previewItem)
+                navigationController?.pushViewController(previewViewController, animated: true)
+            case .mp3, .wav:
+                let previewViewController = AudioPreviewViewController(previewItem: previewItem)
+                navigationController?.pushViewController(previewViewController, animated: true)
+            case .spr:
+                let previewViewController = SpritePreviewViewController(previewItem: previewItem)
+                navigationController?.pushViewController(previewViewController, animated: true)
+            case .act:
+                let previewViewController = ActionPreviewViewController(previewItem: previewItem)
+                navigationController?.pushViewController(previewViewController, animated: true)
+            case .rsm:
+                let previewViewController = ModelPreviewViewController(previewItem: previewItem)
+                navigationController?.pushViewController(previewViewController, animated: true)
+            case .rsw:
+                let previewViewController = WorldPreviewViewController(previewItem: previewItem)
+                navigationController?.pushViewController(previewViewController, animated: true)
+            case .xxx:
+                break
+            }
         }
     }
 }

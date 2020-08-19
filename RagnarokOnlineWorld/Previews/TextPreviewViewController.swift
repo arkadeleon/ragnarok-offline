@@ -44,8 +44,8 @@ class TextPreviewViewController: UIViewController {
                 return
             }
 
-            switch self.previewItem.fileType.lowercased() {
-            case "lub":
+            switch self.previewItem.fileType {
+            case .lub:
                 let disassembler = LuaDecompiler()
                 data = disassembler.decompileData(data)
             default:
@@ -57,7 +57,7 @@ class TextPreviewViewController: UIViewController {
                     return
                 }
 
-                if self.previewItem.fileType.lowercased() == "xml" {
+                if self.previewItem.fileType == .xml {
                     text = text.replacingOccurrences(of: "<", with: "&lt;")
                     text = text.replacingOccurrences(of: ">", with: "&gt;")
                 }
