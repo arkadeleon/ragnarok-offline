@@ -87,7 +87,7 @@ struct RSMDocument: Document {
     var volumeBoxes: [RSMVolumeBox]
 
     init(from stream: Stream) throws {
-        let reader = BinaryReader(stream: stream)
+        let reader = StreamReader(stream: stream)
 
         header = try reader.readString(count: 4)
         guard header == "GRSM" else {
@@ -153,7 +153,7 @@ struct RSMDocument: Document {
     }
 }
 
-extension BinaryReader {
+extension StreamReader {
 
     fileprivate func readRSMNode(version: String) throws -> RSMNode {
         let name = try readString(count: 40)

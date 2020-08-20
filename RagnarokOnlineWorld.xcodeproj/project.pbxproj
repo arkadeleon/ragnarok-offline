@@ -101,7 +101,7 @@
 		3587944A24C73E9400A5074B /* TGADocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587944924C73E9400A5074B /* TGADocument.swift */; };
 		3587F6EB2463DBF0007D1C9B /* DocumentItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EA2463DBF0007D1C9B /* DocumentItemsViewController.swift */; };
 		3587F6ED2463DF3F007D1C9B /* DocumentItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EC2463DF3F007D1C9B /* DocumentItemCell.swift */; };
-		3587F70924694FA7007D1C9B /* BinaryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F70824694FA7007D1C9B /* BinaryReader.swift */; };
+		3587F70924694FA7007D1C9B /* StreamReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F70824694FA7007D1C9B /* StreamReader.swift */; };
 		358E6BAD24C9793B00283BAD /* ClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358E6BAC24C9793B00283BAD /* ClientViewController.swift */; };
 		359D5C1624A1F8CA00C2D8D3 /* WorldPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */; };
 		359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */; };
@@ -285,7 +285,7 @@
 		3587944924C73E9400A5074B /* TGADocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TGADocument.swift; sourceTree = "<group>"; };
 		3587F6EA2463DBF0007D1C9B /* DocumentItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentItemsViewController.swift; sourceTree = "<group>"; };
 		3587F6EC2463DF3F007D1C9B /* DocumentItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentItemCell.swift; sourceTree = "<group>"; };
-		3587F70824694FA7007D1C9B /* BinaryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryReader.swift; sourceTree = "<group>"; };
+		3587F70824694FA7007D1C9B /* StreamReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamReader.swift; sourceTree = "<group>"; };
 		358E6BAC24C9793B00283BAD /* ClientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientViewController.swift; sourceTree = "<group>"; };
 		359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPreviewViewController.swift; sourceTree = "<group>"; };
 		359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = GroundShaders.metal; sourceTree = "<group>"; };
@@ -610,8 +610,8 @@
 		35CB3BBA247EB2C100EC04C3 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				3587F70824694FA7007D1C9B /* BinaryReader.swift */,
 				35116E5D2461A5DB000A60FE /* DESDecryptor.swift */,
+				3587F70824694FA7007D1C9B /* StreamReader.swift */,
 				35C06DBB2498C9C000F0A229 /* TextureLoader.swift */,
 				3533CC1D24D900F9006AFE04 /* LuaDisassembler.swift */,
 				35CAF9C524D9BFDD00F9426A /* LuaDecompiler.h */,
@@ -914,7 +914,7 @@
 				355E914D24BEEA9200361AF6 /* WaterRenderer.swift in Sources */,
 				351E225624BC5D98000EF504 /* INIDocument.swift in Sources */,
 				35E5E90724ED68BC00716592 /* PreviewItem+Thumbnail.swift in Sources */,
-				3587F70924694FA7007D1C9B /* BinaryReader.swift in Sources */,
+				3587F70924694FA7007D1C9B /* StreamReader.swift in Sources */,
 				35116E58245FC152000A60FE /* GRFDocument.swift in Sources */,
 				3533CBBC24D2BB26006AFE04 /* lzio.c in Sources */,
 				359D5C1624A1F8CA00C2D8D3 /* WorldPreviewViewController.swift in Sources */,

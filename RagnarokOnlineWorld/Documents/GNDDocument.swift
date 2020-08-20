@@ -56,7 +56,7 @@ struct GNDDocument: Document {
     var surfaces: [GNDSurface]
 
     init(from stream: Stream) throws {
-        let reader = BinaryReader(stream: stream)
+        let reader = StreamReader(stream: stream)
 
         header = try reader.readString(count: 4)
         guard header == "GRGN" else {
@@ -79,7 +79,7 @@ struct GNDDocument: Document {
     }
 }
 
-extension BinaryReader {
+extension StreamReader {
 
     fileprivate func readGNDTextures() throws -> ([String], [UInt16]) {
         let count = try readUInt32()

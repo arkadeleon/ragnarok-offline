@@ -48,7 +48,7 @@ struct GATDocument: Document {
     var cells: [GATCell]
 
     init(from stream: Stream) throws {
-        let reader = BinaryReader(stream: stream)
+        let reader = StreamReader(stream: stream)
 
         header = try reader.readString(count: 4)
         guard header == "GRAT" else {

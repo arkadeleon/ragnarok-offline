@@ -28,7 +28,7 @@ class DocumentLoader {
     }
 
     func load<T: Document>(_ type: T.Type, from data: Data) throws -> T {
-        let stream = DataStream(data: data)
+        let stream = MemoryStream(data: data)
         let document = try type.init(from: stream)
         return document
     }

@@ -74,8 +74,8 @@ extension DocumentItemsViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! DocumentItemCell
-        cell.iconView.image = childDocumentItems[indexPath.row].icon
-        cell.nameLabel.text = childDocumentItems[indexPath.row].url.lastPathComponent
+        cell.iconView.image = childDocumentItems[indexPath.item].icon
+        cell.nameLabel.text = childDocumentItems[indexPath.item].url.lastPathComponent
         return cell
     }
 }
@@ -83,7 +83,7 @@ extension DocumentItemsViewController: UICollectionViewDataSource {
 extension DocumentItemsViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let documentItem = childDocumentItems[indexPath.row]
+        let documentItem = childDocumentItems[indexPath.item]
         switch documentItem {
         case .directory, .grf, .entryGroup:
             let documentItemsViewController = DocumentItemsViewController(documentItem: documentItem)

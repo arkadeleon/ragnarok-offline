@@ -25,7 +25,7 @@ struct INIDocument: Document {
     var sections: [INISection]
 
     init(from stream: Stream) throws {
-        let reader = BinaryReader(stream: stream)
+        let reader = StreamReader(stream: stream)
 
         var sections: [INISection] = []
 

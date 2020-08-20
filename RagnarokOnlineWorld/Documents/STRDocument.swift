@@ -44,7 +44,7 @@ struct STRDocument: Document {
     var layers: [STRLayer]
 
     init(from stream: Stream) throws {
-        let reader = BinaryReader(stream: stream)
+        let reader = StreamReader(stream: stream)
 
         header = try reader.readString(count: 4)
         guard header == "STRM" else {
@@ -71,7 +71,7 @@ struct STRDocument: Document {
     }
 }
 
-extension BinaryReader {
+extension StreamReader {
 
     fileprivate func readSTRLayer() throws -> STRLayer {
         let texcnt = try readInt32()

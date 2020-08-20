@@ -42,7 +42,7 @@ struct GRFEntry {
 
     func data(from stream: Stream) throws -> Data {
         try stream.seek(toOffset: GRFHeader.size + UInt64(offset))
-        let reader = BinaryReader(stream: stream)
+        let reader = StreamReader(stream: stream)
 
         var bytes = try Array(reader.readData(count: Int(lengthAligned)))
 
@@ -81,7 +81,7 @@ struct GRFDocument: Document {
     var entries: [GRFEntry]
 
     init(from stream: Stream) throws {
-        let reader = BinaryReader(stream: stream)
+        let reader = StreamReader(stream: stream)
 
         let signature = try reader.readString(count: 15)
         let key = try reader.readData(count: 15)

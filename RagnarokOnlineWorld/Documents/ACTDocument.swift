@@ -42,7 +42,7 @@ struct ACTDocument: Document {
     var sounds: [String]
 
     init(from stream: Stream) throws {
-        let reader = BinaryReader(stream: stream)
+        let reader = StreamReader(stream: stream)
 
         header = try reader.readString(count: 2)
         guard header == "AC" else {
@@ -82,7 +82,7 @@ struct ACTDocument: Document {
     }
 }
 
-extension BinaryReader {
+extension StreamReader {
 
     fileprivate func readACTAction(version: String) throws -> ACTAction {
         let animationCount = try readUInt32()

@@ -1,5 +1,5 @@
 //
-//  BinaryReader.swift
+//  StreamReader.swift
 //  RagnarokOnlineWorld
 //
 //  Created by Leon Li on 2020/5/11.
@@ -7,12 +7,6 @@
 //
 
 import Foundation
-
-enum StreamError: Error {
-
-    case endOfStream
-    case invalidStringEncoding
-}
 
 protocol Stream {
 
@@ -65,7 +59,7 @@ class FileStream: Stream {
     }
 }
 
-class DataStream: Stream {
+class MemoryStream: Stream {
     
     private let data: Data
     private var dataOffset = 0
@@ -105,7 +99,7 @@ class DataStream: Stream {
     }
 }
 
-class BinaryReader {
+class StreamReader {
 
     let stream: Stream
 
@@ -194,4 +188,10 @@ class BinaryReader {
         }
         return line
     }
+}
+
+enum StreamError: Error {
+
+    case endOfStream
+    case invalidStringEncoding
 }

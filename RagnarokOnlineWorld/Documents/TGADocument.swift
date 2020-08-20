@@ -64,7 +64,7 @@ struct TGADocument: Document {
     let image: CGImage
 
     init(from stream: Stream) throws {
-        let reader = BinaryReader(stream: stream)
+        let reader = StreamReader(stream: stream)
 
         header = try reader.readTGAHeader()
 
@@ -168,7 +168,7 @@ struct TGADocument: Document {
     }
 }
 
-extension BinaryReader {
+extension StreamReader {
 
     func readTGAHeader() throws -> TGAHeader {
         let header = try TGAHeader(

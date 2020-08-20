@@ -33,7 +33,7 @@ struct SPRDocument: Document {
 
     init(from stream: Stream) throws {
         try stream.seek(toOffset: 0)
-        let reader = BinaryReader(stream: stream)
+        let reader = StreamReader(stream: stream)
 
         header = try reader.readString(count: 2)
         guard header == "SP" else {
@@ -72,7 +72,7 @@ struct SPRDocument: Document {
     }
 }
 
-extension BinaryReader {
+extension StreamReader {
 
     fileprivate func readSPRIndexedImage(indexed_count: UInt16) throws -> [SPRFrame] {
         var frames: [SPRFrame] = []
@@ -100,8 +100,8 @@ extension BinaryReader {
             let raw = try readData(count: Int(length))
             var data = Data(capacity: Int(width) * Int(height))
 
-            let stream = DataStream(data: raw)
-            let reader = BinaryReader(stream: stream)
+            let stream = MemoryStream(data: raw)
+            let reader = StreamReader(stream: stream)
 
             while let c = try? reader.readUInt8() {
                 data.append(c)
