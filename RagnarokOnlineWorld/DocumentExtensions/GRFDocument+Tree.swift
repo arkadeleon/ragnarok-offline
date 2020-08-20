@@ -6,18 +6,18 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-class GRFNode {
+class GRFTreeNode {
 
     let pathComponent: String
 
     fileprivate(set) var entry: GRFEntry?
-    private(set) var children: [String: GRFNode] = [:]
+    private(set) var children: [String: GRFTreeNode] = [:]
 
     init(pathComponent: String) {
         self.pathComponent = pathComponent
     }
 
-    fileprivate func add(child: GRFNode) {
+    fileprivate func add(child: GRFTreeNode) {
         children[child.pathComponent] = child
     }
 }
@@ -26,7 +26,7 @@ class GRFTree {
 
     let url: URL
 
-    private let root = GRFNode(pathComponent: "data")
+    private let root = GRFTreeNode(pathComponent: "data")
     private var isLoaded = false
 
     init(url: URL) {
@@ -56,7 +56,7 @@ class GRFTree {
             if let childNode = currentNode.children[String(pathComponent)] {
                 currentNode = childNode
             } else {
-                let childNode = GRFNode(pathComponent: String(pathComponent))
+                let childNode = GRFTreeNode(pathComponent: String(pathComponent))
                 currentNode.add(child: childNode)
                 currentNode = childNode
             }
@@ -65,7 +65,7 @@ class GRFTree {
         currentNode.entry = entry
     }
 
-    func nodes(withPath path: String) -> [GRFNode] {
+    func nodes(withPath path: String) -> [GRFTreeNode] {
         try? loadIfNeeded()
 
         var currentNode = root

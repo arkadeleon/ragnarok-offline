@@ -73,7 +73,7 @@ class ActionPreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = previewItem.name
+        title = previewItem.title
 
         view.backgroundColor = .systemBackground
 
@@ -137,14 +137,14 @@ class ActionPreviewViewController: UIViewController {
 
     private func loadPreviewItem() {
         DispatchQueue.global().async {
-            guard case .entry(let tree, let actName) = self.previewItem,
+            guard let entry = self.previewItem as? Entry,
                   let actData = try? self.previewItem.data()
             else {
                 return
             }
 
-            let sprName = (actName as NSString).deletingPathExtension.appending(".spr")
-            guard let sprData = try? tree.contentsOfEntry(withName: sprName) else {
+            let sprName = (entry.name as NSString).deletingPathExtension.appending(".spr")
+            guard let sprData = try? entry.tree.contentsOfEntry(withName: sprName) else {
                 return
             }
 

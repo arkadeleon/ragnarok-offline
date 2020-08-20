@@ -18,21 +18,16 @@ enum DocumentItem {
 
 extension DocumentItem {
 
-    var url: URL {
+    var title: String {
         switch self {
         case .directory(let url):
-            return url
+            return url.lastPathComponent
         case .grf(let tree):
-            return tree.url
+            return tree.url.lastPathComponent
         case .entryGroup(let tree, let path):
-            return tree.url.appendingPathComponent(path.replacingOccurrences(of: "\\", with: "/"))
+            return tree.url.appendingPathComponent(path.replacingOccurrences(of: "\\", with: "/")).lastPathComponent
         case .previewItem(let previewItem):
-            switch previewItem {
-            case .url(let url):
-                return url
-            case .entry(let tree, let name):
-                return tree.url.appendingPathComponent(name.replacingOccurrences(of: "\\", with: "/"))
-            }
+            return previewItem.title
         }
     }
 
@@ -68,8 +63,7 @@ extension DocumentItem {
                         let tree = GRFTree(url: url)
                         return .grf(tree)
                     default:
-                        let previewItem: PreviewItem = .url(url)
-                        return .previewItem(previewItem)
+                        return .previewItem(url)
                     }
                 }
             return children
@@ -80,7 +74,7 @@ extension DocumentItem {
             let nodes = tree.nodes(withPath: path)
             for node in nodes {
                 if let entry = node.entry {
-                    let previewItem: PreviewItem = .entry(tree, entry.name)
+                    let previewItem = Entry(tree: tree, name: entry.name)
                     let child: DocumentItem = .previewItem(previewItem)
                     children.append(child)
                 } else {
@@ -98,12 +92,12 @@ extension DocumentItem {
 
 extension DocumentItem: Equatable, Comparable {
     static func == (lhs: DocumentItem, rhs: DocumentItem) -> Bool {
-        lhs.url == rhs.url
+        lhs.title == rhs.title
     }
 
     static func < (lhs: DocumentItem, rhs: DocumentItem) -> Bool {
         if lhs.rank == rhs.rank {
-            return lhs.url.path.lowercased() < rhs.url.path.lowercased()
+            return lhs.title.lowercased() < rhs.title.lowercased()
         } else {
             return lhs.rank < rhs.rank
         }

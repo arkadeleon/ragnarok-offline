@@ -30,7 +30,7 @@ class DocumentItemsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = documentItem.url.lastPathComponent
+        title = documentItem.title
 
         view.backgroundColor = .systemBackground
 
@@ -75,7 +75,7 @@ extension DocumentItemsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! DocumentItemCell
         cell.iconView.image = childDocumentItems[indexPath.item].icon
-        cell.nameLabel.text = childDocumentItems[indexPath.item].url.lastPathComponent
+        cell.nameLabel.text = childDocumentItems[indexPath.item].title
         return cell
     }
 }

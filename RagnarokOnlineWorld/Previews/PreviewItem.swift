@@ -8,38 +8,44 @@
 
 import Foundation
 
-enum PreviewItem {
+protocol PreviewItem {
 
-    case url(URL)
+    var title: String { get }
+    var fileType: FileType { get }
+    func data() throws -> Data
+}
 
-    case entry(GRFTree, String)
+extension URL: PreviewItem {
 
-    var name: String {
-        switch self {
-        case .url(let url):
-            return url.lastPathComponent
-        case .entry(_, let name):
-            let lastPathComponent = name.split(separator: "\\").last
-            return String(lastPathComponent ?? "")
-        }
+    var title: String {
+        lastPathComponent
     }
 
     var fileType: FileType {
-        switch self {
-        case .url(let url):
-            return FileType(rawValue: url.pathExtension)
-        case .entry(_, let name):
-            let pathExtension = name.split(separator: "\\").last?.split(separator: ".").last
-            return FileType(rawValue: String(pathExtension ?? ""))
-        }
+        FileType(rawValue: pathExtension)
     }
 
     func data() throws -> Data {
-        switch self {
-        case .url(let url):
-            return try Data(contentsOf: url)
-        case .entry(let tree, let name):
-            return try tree.contentsOfEntry(withName: name)
-        }
+        try Data(contentsOf: self)
+    }
+}
+
+struct Entry: PreviewItem {
+
+    var tree: GRFTree
+    var name: String
+
+    var title: String {
+        let lastPathComponent = name.split(separator: "\\").last
+        return String(lastPathComponent ?? "")
+    }
+
+    var fileType: FileType {
+        let pathExtension = name.split(separator: "\\").last?.split(separator: ".").last
+        return FileType(rawValue: String(pathExtension ?? ""))
+    }
+
+    func data() throws -> Data {
+        try tree.contentsOfEntry(withName: name)
     }
 }

@@ -34,7 +34,7 @@ class ModelPreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = previewItem.name
+        title = previewItem.title
         edgesForExtendedLayout = []
 
         view.backgroundColor = .systemBackground
@@ -44,7 +44,7 @@ class ModelPreviewViewController: UIViewController {
 
     private func loadPreviewItem() {
         DispatchQueue.global().async {
-            guard case .entry(let tree, _) = self.previewItem,
+            guard let entry = self.previewItem as? Entry,
                   let data = try? self.previewItem.data()
             else {
                 return
@@ -56,7 +56,7 @@ class ModelPreviewViewController: UIViewController {
             }
 
             let textures = document.textures.map { textureName -> Data? in
-                return try? tree.contentsOfEntry(withName: "data\\texture\\" + textureName)
+                return try? entry.tree.contentsOfEntry(withName: "data\\texture\\" + textureName)
             }
 
             let (boundingBox, wrappers) = document.calcBoundingBox()

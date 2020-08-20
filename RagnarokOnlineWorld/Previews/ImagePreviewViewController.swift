@@ -27,7 +27,7 @@ class ImagePreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = previewItem.name
+        title = previewItem.title
 
         view.backgroundColor = .systemBackground
 
