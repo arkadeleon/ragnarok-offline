@@ -46,8 +46,8 @@ class TextPreviewViewController: UIViewController {
 
             switch self.previewItem.fileType {
             case .lub:
-                let disassembler = LuaDecompiler()
-                data = disassembler.decompileData(data)
+                let decompiler = LuaDecompiler()
+                data = decompiler.decompileData(data)
             default:
                 break
             }

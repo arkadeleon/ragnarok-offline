@@ -75,9 +75,6 @@
 		3533CBC524D2BB26006AFE04 /* llex.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CBA224D2BB26006AFE04 /* llex.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3533CBC624D2BB26006AFE04 /* ltm.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CBA424D2BB26006AFE04 /* ltm.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3533CBC724D2BB26006AFE04 /* ldo.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CBA524D2BB26006AFE04 /* ldo.c */; settings = {COMPILER_FLAGS = "-w"; }; };
-		3533CC1724D40664006AFE04 /* chunkspy.lua in Resources */ = {isa = PBXBuildFile; fileRef = 3533CC1624D40663006AFE04 /* chunkspy.lua */; };
-		3533CC1C24D80992006AFE04 /* dkjson.lua in Resources */ = {isa = PBXBuildFile; fileRef = 3533CC1B24D80992006AFE04 /* dkjson.lua */; };
-		3533CC1E24D900FA006AFE04 /* LuaDisassembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3533CC1D24D900F9006AFE04 /* LuaDisassembler.swift */; };
 		355E914924BECC5C00361AF6 /* ModelPreviewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */; };
 		355E914B24BEDDAE00361AF6 /* WorldPreviewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914A24BEDDAE00361AF6 /* WorldPreviewRenderer.swift */; };
 		355E914D24BEEA9200361AF6 /* WaterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914C24BEEA9200361AF6 /* WaterRenderer.swift */; };
@@ -246,9 +243,6 @@
 		3533CBA424D2BB26006AFE04 /* ltm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ltm.c; sourceTree = "<group>"; };
 		3533CBA524D2BB26006AFE04 /* ldo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldo.c; sourceTree = "<group>"; };
 		3533CBA624D2BB26006AFE04 /* lundump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lundump.h; sourceTree = "<group>"; };
-		3533CC1624D40663006AFE04 /* chunkspy.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chunkspy.lua; sourceTree = "<group>"; };
-		3533CC1B24D80992006AFE04 /* dkjson.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dkjson.lua; sourceTree = "<group>"; };
-		3533CC1D24D900F9006AFE04 /* LuaDisassembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaDisassembler.swift; sourceTree = "<group>"; };
 		355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPreviewRenderer.swift; sourceTree = "<group>"; };
 		355E914A24BEDDAE00361AF6 /* WorldPreviewRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPreviewRenderer.swift; sourceTree = "<group>"; };
 		355E914C24BEEA9200361AF6 /* WaterRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterRenderer.swift; sourceTree = "<group>"; };
@@ -456,8 +450,6 @@
 		3533CB6B24D2BACA006AFE04 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
-				3533CC1524D40663006AFE04 /* chunkspy */,
-				3533CC1A24D80992006AFE04 /* dkjson */,
 				3533CB6E24D2BB25006AFE04 /* lua */,
 				35CAF9B124D9BD2000F9426A /* luadec */,
 			);
@@ -522,22 +514,6 @@
 				3533CB7A24D2BB25006AFE04 /* print.c */,
 			);
 			path = lua;
-			sourceTree = "<group>";
-		};
-		3533CC1524D40663006AFE04 /* chunkspy */ = {
-			isa = PBXGroup;
-			children = (
-				3533CC1624D40663006AFE04 /* chunkspy.lua */,
-			);
-			path = chunkspy;
-			sourceTree = "<group>";
-		};
-		3533CC1A24D80992006AFE04 /* dkjson */ = {
-			isa = PBXGroup;
-			children = (
-				3533CC1B24D80992006AFE04 /* dkjson.lua */,
-			);
-			path = dkjson;
 			sourceTree = "<group>";
 		};
 		356A0D9224EA303000E2ED32 /* DocumentExtensions */ = {
@@ -613,7 +589,6 @@
 				35116E5D2461A5DB000A60FE /* DESDecryptor.swift */,
 				3587F70824694FA7007D1C9B /* StreamReader.swift */,
 				35C06DBB2498C9C000F0A229 /* TextureLoader.swift */,
-				3533CC1D24D900F9006AFE04 /* LuaDisassembler.swift */,
 				35CAF9C524D9BFDD00F9426A /* LuaDecompiler.h */,
 				35CAF9C624D9BFDD00F9426A /* LuaDecompiler.m */,
 				35A254F124BC42C300C43567 /* StringEncoding+KoreanEUC.swift */,
@@ -779,8 +754,6 @@
 			files = (
 				35116E22245C7B8A000A60FE /* LaunchScreen.storyboard in Resources */,
 				355F206924DA4CC3001302FC /* srcversion.h in Resources */,
-				3533CC1C24D80992006AFE04 /* dkjson.lua in Resources */,
-				3533CC1724D40664006AFE04 /* chunkspy.lua in Resources */,
 				35CB3BB7247D81B300EC04C3 /* wall.jpg in Resources */,
 				35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */,
 				3533CB6A24D2B7EB006AFE04 /* Highlight.js in Resources */,
@@ -847,7 +820,6 @@
 				3533CBBE24D2BB26006AFE04 /* lmem.c in Sources */,
 				3587F6EB2463DBF0007D1C9B /* DocumentItemsViewController.swift in Sources */,
 				355F206C24DA4CC3001302FC /* expression.c in Sources */,
-				3533CC1E24D900FA006AFE04 /* LuaDisassembler.swift in Sources */,
 				3533CBB424D2BB26006AFE04 /* linit.c in Sources */,
 				3533CBBB24D2BB26006AFE04 /* lgc.c in Sources */,
 				3533CBB624D2BB26006AFE04 /* lundump.c in Sources */,
