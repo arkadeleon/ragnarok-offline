@@ -102,6 +102,8 @@
 		358E6BAD24C9793B00283BAD /* ClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358E6BAC24C9793B00283BAD /* ClientViewController.swift */; };
 		359D5C1624A1F8CA00C2D8D3 /* WorldPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */; };
 		359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */; };
+		35A0ACF924FF421E00B72EB9 /* MDLTexture+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0ACF824FF421E00B72EB9 /* MDLTexture+Data.swift */; };
+		35A0ACFB24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0ACFA24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift */; };
 		35A254F224BC42C300C43567 /* StringEncoding+KoreanEUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A254F124BC42C300C43567 /* StringEncoding+KoreanEUC.swift */; };
 		35C06DBC2498C9C000F0A229 /* TextureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C06DBB2498C9C000F0A229 /* TextureLoader.swift */; };
 		35CAF9C724D9BFDD00F9426A /* LuaDecompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CAF9C624D9BFDD00F9426A /* LuaDecompiler.m */; };
@@ -283,6 +285,8 @@
 		358E6BAC24C9793B00283BAD /* ClientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientViewController.swift; sourceTree = "<group>"; };
 		359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPreviewViewController.swift; sourceTree = "<group>"; };
 		359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = GroundShaders.metal; sourceTree = "<group>"; };
+		35A0ACF824FF421E00B72EB9 /* MDLTexture+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MDLTexture+Data.swift"; sourceTree = "<group>"; };
+		35A0ACFA24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MDLMaterial+Texture.swift"; sourceTree = "<group>"; };
 		35A254F124BC42C300C43567 /* StringEncoding+KoreanEUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringEncoding+KoreanEUC.swift"; sourceTree = "<group>"; };
 		35C06DBB2498C9C000F0A229 /* TextureLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureLoader.swift; sourceTree = "<group>"; };
 		35CAF9C524D9BFDD00F9426A /* LuaDecompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LuaDecompiler.h; sourceTree = "<group>"; };
@@ -593,6 +597,8 @@
 				35CAF9C624D9BFDD00F9426A /* LuaDecompiler.m */,
 				35A254F124BC42C300C43567 /* StringEncoding+KoreanEUC.swift */,
 				35EF769B24B3222000371F1F /* CGImage+Decode.swift */,
+				35A0ACFA24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift */,
+				35A0ACF824FF421E00B72EB9 /* MDLTexture+Data.swift */,
 				35617A72249863580097C60C /* SGLMath+Calculate.swift */,
 				35E8DCE124A9DF4100A14FC5 /* SGLMath+SIMD.swift */,
 			);
@@ -791,6 +797,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35A0ACF924FF421E00B72EB9 /* MDLTexture+Data.swift in Sources */,
 				35116E7F246713AD000A60FE /* TextPreviewViewController.swift in Sources */,
 				35E8DCE224A9DF4100A14FC5 /* SGLMath+SIMD.swift in Sources */,
 				35C06DBC2498C9C000F0A229 /* TextureLoader.swift in Sources */,
@@ -806,6 +813,7 @@
 				35E8DCDB24A88BCC00A14FC5 /* WaterShaders.metal in Sources */,
 				355F206E24DA4CC3001302FC /* proto.c in Sources */,
 				350F347324B5610F00848ED5 /* PreviewItem.swift in Sources */,
+				35A0ACFB24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift in Sources */,
 				35116E7524644AAA000A60FE /* DocumentItem.swift in Sources */,
 				3533CBC624D2BB26006AFE04 /* ltm.c in Sources */,
 				35CB3BAE24782A5100EC04C3 /* GameRenderer.swift in Sources */,
