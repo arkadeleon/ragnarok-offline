@@ -104,6 +104,7 @@
 		359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */; };
 		35A0ACF924FF421E00B72EB9 /* MDLTexture+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0ACF824FF421E00B72EB9 /* MDLTexture+Data.swift */; };
 		35A0ACFB24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0ACFA24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift */; };
+		35A0ACFD24FF94D400B72EB9 /* ResourceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0ACFC24FF94D400B72EB9 /* ResourceBundle.swift */; };
 		35A254F224BC42C300C43567 /* StringEncoding+KoreanEUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A254F124BC42C300C43567 /* StringEncoding+KoreanEUC.swift */; };
 		35C06DBC2498C9C000F0A229 /* TextureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C06DBB2498C9C000F0A229 /* TextureLoader.swift */; };
 		35CAF9C724D9BFDD00F9426A /* LuaDecompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CAF9C624D9BFDD00F9426A /* LuaDecompiler.m */; };
@@ -287,6 +288,7 @@
 		359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = GroundShaders.metal; sourceTree = "<group>"; };
 		35A0ACF824FF421E00B72EB9 /* MDLTexture+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MDLTexture+Data.swift"; sourceTree = "<group>"; };
 		35A0ACFA24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MDLMaterial+Texture.swift"; sourceTree = "<group>"; };
+		35A0ACFC24FF94D400B72EB9 /* ResourceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceBundle.swift; sourceTree = "<group>"; };
 		35A254F124BC42C300C43567 /* StringEncoding+KoreanEUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringEncoding+KoreanEUC.swift"; sourceTree = "<group>"; };
 		35C06DBB2498C9C000F0A229 /* TextureLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureLoader.swift; sourceTree = "<group>"; };
 		35CAF9C524D9BFDD00F9426A /* LuaDecompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LuaDecompiler.h; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 				35CB3BAA2478277600EC04C3 /* Client */,
 				35E5E8FB24E4396200716592 /* Previews */,
 				35E8DCD924A88AE600A14FC5 /* Renderers */,
+				35A0ACFE24FFA52B00B72EB9 /* Resources */,
 				356A0D9224EA303000E2ED32 /* DocumentExtensions */,
 				35116E76246596A5000A60FE /* Documents */,
 				35CB3BBA247EB2C100EC04C3 /* Utilities */,
@@ -536,7 +539,6 @@
 		358E6BAB24C9691300283BAD /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				3573037924B83CC70011F6AA /* ResourceManager.swift */,
 				355EFD2C2480264B0033C280 /* Camera.swift */,
 				35CB3BAD24782A5100EC04C3 /* GameRenderer.swift */,
 				35CB3BAB247827A700EC04C3 /* GameViewController.swift */,
@@ -545,6 +547,15 @@
 				35CB3BB6247D81B300EC04C3 /* wall.jpg */,
 			);
 			path = Game;
+			sourceTree = "<group>";
+		};
+		35A0ACFE24FFA52B00B72EB9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				35A0ACFC24FF94D400B72EB9 /* ResourceBundle.swift */,
+				3573037924B83CC70011F6AA /* ResourceManager.swift */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		35CAF9B124D9BD2000F9426A /* luadec */ = {
@@ -826,6 +837,7 @@
 				3533CBAA24D2BB26006AFE04 /* lstate.c in Sources */,
 				35EF769C24B3222000371F1F /* CGImage+Decode.swift in Sources */,
 				3533CBBE24D2BB26006AFE04 /* lmem.c in Sources */,
+				35A0ACFD24FF94D400B72EB9 /* ResourceBundle.swift in Sources */,
 				3587F6EB2463DBF0007D1C9B /* DocumentItemsViewController.swift in Sources */,
 				355F206C24DA4CC3001302FC /* expression.c in Sources */,
 				3533CBB424D2BB26006AFE04 /* linit.c in Sources */,
