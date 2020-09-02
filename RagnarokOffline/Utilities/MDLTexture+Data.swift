@@ -18,7 +18,7 @@ extension MDLTexture {
         }
 
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGImageAlphaInfo.premultipliedFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
+        let bitmapInfo = CGImageAlphaInfo.premultipliedLast.rawValue | CGImageByteOrderInfo.order32Big.rawValue
 
         guard let context = CGContext(
             data: nil,
@@ -35,13 +35,30 @@ extension MDLTexture {
         let rect = CGRect(x: 0, y: 0, width: image.width, height: image.height)
         context.draw(image, in: rect)
 
-        guard let pixelData = context.data else {
+        let pixelDataCount = context.bytesPerRow * image.height
+        guard var pixelData = context.data.flatMap({ Data(bytes: $0, count: pixelDataCount) }) else {
             return nil
         }
 
+        // Remove magenta pixels
+        for y in 0..<image.height {
+            for x in 0..<image.width {
+                let base = y * context.bytesPerRow + x * 4
+                let red = pixelData[base + 0]
+                let green = pixelData[base + 1]
+                let blue = pixelData[base + 2]
+                if red > 230 && green < 20 && blue > 230 {
+                    pixelData[base + 0] = 0
+                    pixelData[base + 1] = 0
+                    pixelData[base + 2] = 0
+                    pixelData[base + 3] = 0
+                }
+            }
+        }
+
         self.init(
-            data: Data(bytes: pixelData, count: context.bytesPerRow * image.height),
-            topLeftOrigin: true,
+            data: pixelData,
+            topLeftOrigin: false,
             name: name,
             dimensions: [Int32(image.width), Int32(image.height)],
             rowStride: context.bytesPerRow,

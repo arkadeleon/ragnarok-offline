@@ -10,14 +10,14 @@ import ModelIO
 
 extension MDLMaterial {
 
-    convenience init(name: String, textureData: Data) {
+    convenience init(textureName: String, textureData: Data) {
         let scatteringFunction = MDLScatteringFunction()
-        self.init(name: name, scatteringFunction: scatteringFunction)
+        self.init(name: textureName, scatteringFunction: scatteringFunction)
 
         let textureSampler = MDLTextureSampler()
-        textureSampler.texture = MDLTexture(name: name, data: textureData)
+        textureSampler.texture = MDLTexture(name: textureName, data: textureData)
 
-        let property = MDLMaterialProperty(name: name, semantic: .baseColor, textureSampler: textureSampler)
-        setProperty(property)
+        let baseColorProperty = MDLMaterialProperty(name: textureName, semantic: .baseColor, textureSampler: textureSampler)
+        setProperty(baseColorProperty)
     }
 }

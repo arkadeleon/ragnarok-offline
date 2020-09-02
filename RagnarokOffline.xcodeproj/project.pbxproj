@@ -93,6 +93,7 @@
 		355F207124DA4CC3001302FC /* guess.c in Sources */ = {isa = PBXBuildFile; fileRef = 355F205B24DA4CC2001302FC /* guess.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		355F207224DA4FFD001302FC /* luadec.c in Sources */ = {isa = PBXBuildFile; fileRef = 355F205024DA4CC2001302FC /* luadec.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		35617A73249863580097C60C /* SGLMath+Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617A72249863580097C60C /* SGLMath+Calculate.swift */; };
+		35727EAD24F7F873004F8B02 /* RSMDocument+Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35727EAC24F7F873004F8B02 /* RSMDocument+Mesh.swift */; };
 		3573037A24B83CC70011F6AA /* ResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3573037924B83CC70011F6AA /* ResourceManager.swift */; };
 		3587577B24C6DB480050F734 /* AudioPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587577A24C6DB480050F734 /* AudioPreviewViewController.swift */; };
 		3587944A24C73E9400A5074B /* TGADocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587944924C73E9400A5074B /* TGADocument.swift */; };
@@ -277,6 +278,7 @@
 		355F205A24DA4CC2001302FC /* disassemble.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = disassemble.c; sourceTree = "<group>"; };
 		355F205B24DA4CC2001302FC /* guess.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = guess.c; sourceTree = "<group>"; };
 		35617A72249863580097C60C /* SGLMath+Calculate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SGLMath+Calculate.swift"; sourceTree = "<group>"; };
+		35727EAC24F7F873004F8B02 /* RSMDocument+Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSMDocument+Mesh.swift"; sourceTree = "<group>"; };
 		3573037924B83CC70011F6AA /* ResourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceManager.swift; sourceTree = "<group>"; };
 		3587577A24C6DB480050F734 /* AudioPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPreviewViewController.swift; sourceTree = "<group>"; };
 		3587944924C73E9400A5074B /* TGADocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TGADocument.swift; sourceTree = "<group>"; };
@@ -529,6 +531,7 @@
 				355E915024C04A5C00361AF6 /* GATDocument+Compile.swift */,
 				3509565424A8F6010077C134 /* GNDDocument+Compile.swift */,
 				35E5E90424EAB9EB00716592 /* GRFDocument+Tree.swift */,
+				35727EAC24F7F873004F8B02 /* RSMDocument+Mesh.swift */,
 				3509565224A8EE010077C134 /* RSMDocument+Compile.swift */,
 				35D091F324AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift */,
 				3509565624ACD8FB0077C134 /* SPRDocument+Image.swift */,
@@ -901,6 +904,7 @@
 				35EF769424AF18D800371F1F /* GroundRenderer.swift in Sources */,
 				35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */,
 				35116E85246ADFFA000A60FE /* RSMDocument.swift in Sources */,
+				35727EAD24F7F873004F8B02 /* RSMDocument+Mesh.swift in Sources */,
 				355E914924BECC5C00361AF6 /* ModelPreviewRenderer.swift in Sources */,
 				35617A73249863580097C60C /* SGLMath+Calculate.swift in Sources */,
 				355E914D24BEEA9200361AF6 /* WaterRenderer.swift in Sources */,
