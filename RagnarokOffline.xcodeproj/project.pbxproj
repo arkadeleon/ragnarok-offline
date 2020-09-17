@@ -42,9 +42,9 @@
 		35116E8B247025EE000A60FE /* GATDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8A247025EE000A60FE /* GATDocument.swift */; };
 		35116E8D247035AC000A60FE /* ACTDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8C247035AC000A60FE /* ACTDocument.swift */; };
 		35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8E2472E685000A60FE /* SPRDocument.swift */; };
+		35131F272513219B0009B15C /* HighlightedTextView in Frameworks */ = {isa = PBXBuildFile; productRef = 35131F262513219B0009B15C /* HighlightedTextView */; };
 		351A96AE247F5D9F00274D64 /* SGLMath in Frameworks */ = {isa = PBXBuildFile; productRef = 351A96AD247F5D9F00274D64 /* SGLMath */; };
 		351E225624BC5D98000EF504 /* INIDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351E225524BC5D98000EF504 /* INIDocument.swift */; };
-		3533CB6A24D2B7EB006AFE04 /* Highlight.js in Resources */ = {isa = PBXBuildFile; fileRef = 3533CB6924D2B7EB006AFE04 /* Highlight.js */; };
 		3533CBA724D2BB26006AFE04 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CB6F24D2BB25006AFE04 /* lauxlib.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3533CBA824D2BB26006AFE04 /* liolib.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CB7524D2BB25006AFE04 /* liolib.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3533CBA924D2BB26006AFE04 /* lopcodes.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CB7624D2BB25006AFE04 /* lopcodes.c */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -193,7 +193,6 @@
 		35116E8C247035AC000A60FE /* ACTDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACTDocument.swift; sourceTree = "<group>"; };
 		35116E8E2472E685000A60FE /* SPRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPRDocument.swift; sourceTree = "<group>"; };
 		351E225524BC5D98000EF504 /* INIDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INIDocument.swift; sourceTree = "<group>"; };
-		3533CB6924D2B7EB006AFE04 /* Highlight.js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Highlight.js; sourceTree = "<group>"; };
 		3533CB6F24D2BB25006AFE04 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lauxlib.c; sourceTree = "<group>"; };
 		3533CB7024D2BB25006AFE04 /* lmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lmem.h; sourceTree = "<group>"; };
 		3533CB7124D2BB25006AFE04 /* llimits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = llimits.h; sourceTree = "<group>"; };
@@ -328,6 +327,7 @@
 			files = (
 				35116E50245FBF65000A60FE /* DataCompression in Frameworks */,
 				351A96AE247F5D9F00274D64 /* SGLMath in Frameworks */,
+				35131F272513219B0009B15C /* HighlightedTextView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,7 +381,6 @@
 				35116E76246596A5000A60FE /* Documents */,
 				35CB3BBA247EB2C100EC04C3 /* Utilities */,
 				3533CB6B24D2BACA006AFE04 /* Vendors */,
-				3533CB6924D2B7EB006AFE04 /* Highlight.js */,
 				35116E1E245C7B8A000A60FE /* Assets.xcassets */,
 				35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */,
 				35CB3BAF2478339500EC04C3 /* RagnarokOffline-Bridging-Header.h */,
@@ -678,6 +677,7 @@
 			packageProductDependencies = (
 				35116E4F245FBF65000A60FE /* DataCompression */,
 				351A96AD247F5D9F00274D64 /* SGLMath */,
+				35131F262513219B0009B15C /* HighlightedTextView */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35116E12245C7B87000A60FE /* RagnarokOffline.app */;
@@ -755,6 +755,7 @@
 			packageReferences = (
 				35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */,
 				351A96AC247F5D9F00274D64 /* XCRemoteSwiftPackageReference "Math" */,
+				35131F252513219B0009B15C /* XCRemoteSwiftPackageReference "highlighted-text-view" */,
 			);
 			productRefGroup = 35116E13245C7B87000A60FE /* Products */;
 			projectDirPath = "";
@@ -776,7 +777,6 @@
 				355F206924DA4CC3001302FC /* srcversion.h in Resources */,
 				35CB3BB7247D81B300EC04C3 /* wall.jpg in Resources */,
 				35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */,
-				3533CB6A24D2B7EB006AFE04 /* Highlight.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1254,6 +1254,14 @@
 				minimumVersion = 3.6.0;
 			};
 		};
+		35131F252513219B0009B15C /* XCRemoteSwiftPackageReference "highlighted-text-view" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/arkadeleon/highlighted-text-view";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.1;
+			};
+		};
 		351A96AC247F5D9F00274D64 /* XCRemoteSwiftPackageReference "Math" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftGL/Math.git";
@@ -1269,6 +1277,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */;
 			productName = DataCompression;
+		};
+		35131F262513219B0009B15C /* HighlightedTextView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35131F252513219B0009B15C /* XCRemoteSwiftPackageReference "highlighted-text-view" */;
+			productName = HighlightedTextView;
 		};
 		351A96AD247F5D9F00274D64 /* SGLMath */ = {
 			isa = XCSwiftPackageProductDependency;

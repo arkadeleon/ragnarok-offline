@@ -7,13 +7,13 @@
 //
 
 import UIKit
-import WebKit
+import HighlightedTextView
 
 class TextPreviewViewController: UIViewController {
 
     let previewItem: PreviewItem
 
-    private var webView: WKWebView!
+    private var textView: HighlightedTextView!
 
     init(previewItem: PreviewItem) {
         self.previewItem = previewItem
@@ -31,9 +31,9 @@ class TextPreviewViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
 
-        webView = WKWebView(frame: view.bounds)
-        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(webView)
+        textView = HighlightedTextView(frame: view.bounds)
+        textView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(textView)
 
         loadPreviewItem()
     }
@@ -62,34 +62,7 @@ class TextPreviewViewController: UIViewController {
                     text = text.replacingOccurrences(of: ">", with: "&gt;")
                 }
 
-                let htmlString = """
-                <html>
-                    <head>
-                        <meta name="viewport" content="width=device-width; initial-scale=1.0">
-                        <link rel="stylesheet" href="styles/default.css">
-                        <style>
-                            pre, code {
-                                white-space: pre-wrap;
-                                overflow-x: hidden;
-                            }
-                            .hljs {
-                                overflow-x: hidden;
-                            }
-                        </style>
-                        <script src="highlight.pack.js"></script>
-                        <script>
-                            hljs.initHighlightingOnLoad();
-                        </script>
-                    </head>
-                    <body>
-                        <pre>
-                            <code>\(text)</code>
-                        </pre>
-                    </body>
-                </html>
-                """
-                let baseURL = Bundle.main.bundleURL.appendingPathComponent("Highlight.js")
-                self.webView.loadHTMLString(htmlString, baseURL: baseURL)
+                self.textView.text = text
             }
         }
     }

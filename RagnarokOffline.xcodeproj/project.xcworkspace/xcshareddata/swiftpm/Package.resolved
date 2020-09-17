@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "HighlightedTextView",
+        "repositoryURL": "https://github.com/arkadeleon/highlighted-text-view",
+        "state": {
+          "branch": null,
+          "revision": "5a2a0d8e8d4d399c893a116c3cce6ce5edf730b5",
+          "version": "0.0.1"
+        }
+      },
+      {
         "package": "SGLMath",
         "repositoryURL": "https://github.com/SwiftGL/Math.git",
         "state": {
