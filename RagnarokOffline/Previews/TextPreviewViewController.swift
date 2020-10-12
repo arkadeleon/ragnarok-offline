@@ -7,13 +7,13 @@
 //
 
 import UIKit
-import HighlightedTextView
+import Highlighter
 
 class TextPreviewViewController: UIViewController {
 
     let previewItem: PreviewItem
 
-    private var textView: HighlightedTextView!
+    private var textView: UITextView!
 
     init(previewItem: PreviewItem) {
         self.previewItem = previewItem
@@ -31,7 +31,7 @@ class TextPreviewViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
 
-        textView = HighlightedTextView(frame: view.bounds)
+        textView = UITextView(frame: view.bounds)
         textView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(textView)
 
@@ -53,16 +53,13 @@ class TextPreviewViewController: UIViewController {
             }
 
             DispatchQueue.main.async {
-                guard var text = String(data: data, encoding: .ascii) else {
+                guard let highlighter = Highlighter(),
+                      let text = String(data: data, encoding: .ascii)
+                else {
                     return
                 }
 
-                if self.previewItem.fileType == .xml {
-                    text = text.replacingOccurrences(of: "<", with: "&lt;")
-                    text = text.replacingOccurrences(of: ">", with: "&gt;")
-                }
-
-                self.textView.text = text
+                self.textView.attributedText = highlighter.highlight(text)
             }
         }
     }

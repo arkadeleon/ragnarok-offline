@@ -14,6 +14,7 @@
 		3509565724ACD8FB0077C134 /* SPRDocument+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565624ACD8FB0077C134 /* SPRDocument+Image.swift */; };
 		3509565924ACE48A0077C134 /* SpritePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */; };
 		350F347324B5610F00848ED5 /* PreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350F347224B5610F00848ED5 /* PreviewItem.swift */; };
+		35106FAA253435E300CACA20 /* Highlighter in Frameworks */ = {isa = PBXBuildFile; productRef = 35106FA9253435E300CACA20 /* Highlighter */; };
 		35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E15245C7B87000A60FE /* AppDelegate.swift */; };
 		35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E17245C7B87000A60FE /* SceneDelegate.swift */; };
 		35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35116E1E245C7B8A000A60FE /* Assets.xcassets */; };
@@ -42,7 +43,6 @@
 		35116E8B247025EE000A60FE /* GATDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8A247025EE000A60FE /* GATDocument.swift */; };
 		35116E8D247035AC000A60FE /* ACTDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8C247035AC000A60FE /* ACTDocument.swift */; };
 		35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8E2472E685000A60FE /* SPRDocument.swift */; };
-		35131F272513219B0009B15C /* HighlightedTextView in Frameworks */ = {isa = PBXBuildFile; productRef = 35131F262513219B0009B15C /* HighlightedTextView */; };
 		351A96AE247F5D9F00274D64 /* SGLMath in Frameworks */ = {isa = PBXBuildFile; productRef = 351A96AD247F5D9F00274D64 /* SGLMath */; };
 		351E225624BC5D98000EF504 /* INIDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351E225524BC5D98000EF504 /* INIDocument.swift */; };
 		3533CBA724D2BB26006AFE04 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CB6F24D2BB25006AFE04 /* lauxlib.c */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -159,6 +159,7 @@
 		3509565624ACD8FB0077C134 /* SPRDocument+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SPRDocument+Image.swift"; sourceTree = "<group>"; };
 		3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpritePreviewViewController.swift; sourceTree = "<group>"; };
 		350F347224B5610F00848ED5 /* PreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewItem.swift; sourceTree = "<group>"; };
+		35106F9E2534334E00CACA20 /* highlighter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = highlighter; path = ../../highlighter; sourceTree = "<group>"; };
 		35116E12245C7B87000A60FE /* RagnarokOffline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOffline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35116E15245C7B87000A60FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		35116E17245C7B87000A60FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -326,8 +327,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				35116E50245FBF65000A60FE /* DataCompression in Frameworks */,
+				35106FAA253435E300CACA20 /* Highlighter in Frameworks */,
 				351A96AE247F5D9F00274D64 /* SGLMath in Frameworks */,
-				35131F272513219B0009B15C /* HighlightedTextView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,6 +384,7 @@
 				3533CB6B24D2BACA006AFE04 /* Vendors */,
 				35116E1E245C7B8A000A60FE /* Assets.xcassets */,
 				35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */,
+				35106F9E2534334E00CACA20 /* highlighter */,
 				35CB3BAF2478339500EC04C3 /* RagnarokOffline-Bridging-Header.h */,
 				355EFD2B247FE7B00033C280 /* RagnarokOffline.entitlements */,
 				35116E23245C7B8A000A60FE /* Info.plist */,
@@ -677,7 +679,7 @@
 			packageProductDependencies = (
 				35116E4F245FBF65000A60FE /* DataCompression */,
 				351A96AD247F5D9F00274D64 /* SGLMath */,
-				35131F262513219B0009B15C /* HighlightedTextView */,
+				35106FA9253435E300CACA20 /* Highlighter */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35116E12245C7B87000A60FE /* RagnarokOffline.app */;
@@ -755,7 +757,7 @@
 			packageReferences = (
 				35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */,
 				351A96AC247F5D9F00274D64 /* XCRemoteSwiftPackageReference "Math" */,
-				35131F252513219B0009B15C /* XCRemoteSwiftPackageReference "highlighted-text-view" */,
+				35106FA8253435E300CACA20 /* XCRemoteSwiftPackageReference "highlighter" */,
 			);
 			productRefGroup = 35116E13245C7B87000A60FE /* Products */;
 			projectDirPath = "";
@@ -1246,20 +1248,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		35106FA8253435E300CACA20 /* XCRemoteSwiftPackageReference "highlighter" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/arkadeleon/highlighter.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.1;
+			};
+		};
 		35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mw99/DataCompression";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 3.6.0;
-			};
-		};
-		35131F252513219B0009B15C /* XCRemoteSwiftPackageReference "highlighted-text-view" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/arkadeleon/highlighted-text-view";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.1;
 			};
 		};
 		351A96AC247F5D9F00274D64 /* XCRemoteSwiftPackageReference "Math" */ = {
@@ -1273,15 +1275,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		35106FA9253435E300CACA20 /* Highlighter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35106FA8253435E300CACA20 /* XCRemoteSwiftPackageReference "highlighter" */;
+			productName = Highlighter;
+		};
 		35116E4F245FBF65000A60FE /* DataCompression */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */;
 			productName = DataCompression;
-		};
-		35131F262513219B0009B15C /* HighlightedTextView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 35131F252513219B0009B15C /* XCRemoteSwiftPackageReference "highlighted-text-view" */;
-			productName = HighlightedTextView;
 		};
 		351A96AD247F5D9F00274D64 /* SGLMath */ = {
 			isa = XCSwiftPackageProductDependency;
