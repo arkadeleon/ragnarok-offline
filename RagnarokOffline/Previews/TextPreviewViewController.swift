@@ -38,6 +38,12 @@ class TextPreviewViewController: UIViewController {
         loadPreviewItem()
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if previousTraitCollection == nil || previousTraitCollection!.userInterfaceStyle != traitCollection.userInterfaceStyle {
+            loadPreviewItem()
+        }
+    }
+
     private func loadPreviewItem() {
         DispatchQueue.global().async {
             guard var data = try? self.previewItem.data() else {
@@ -53,7 +59,17 @@ class TextPreviewViewController: UIViewController {
             }
 
             DispatchQueue.main.async {
-                guard let highlighter = Highlighter(),
+                let style: Highlighter.Style
+                switch self.traitCollection.userInterfaceStyle {
+                case .unspecified, .light:
+                    style = .atomOneLight
+                case .dark:
+                    style = .atomOneDark
+                @unknown default:
+                    style = .default
+                }
+
+                guard let highlighter = Highlighter(style: style),
                       let text = String(data: data, encoding: .ascii)
                 else {
                     return
