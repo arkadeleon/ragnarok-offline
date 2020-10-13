@@ -33,6 +33,7 @@ class TextPreviewViewController: UIViewController {
 
         textView = UITextView(frame: view.bounds)
         textView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        textView.isEditable = false
         view.addSubview(textView)
 
         loadPreviewItem()

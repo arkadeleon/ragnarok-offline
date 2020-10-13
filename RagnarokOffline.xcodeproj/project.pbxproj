@@ -159,7 +159,6 @@
 		3509565624ACD8FB0077C134 /* SPRDocument+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SPRDocument+Image.swift"; sourceTree = "<group>"; };
 		3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpritePreviewViewController.swift; sourceTree = "<group>"; };
 		350F347224B5610F00848ED5 /* PreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewItem.swift; sourceTree = "<group>"; };
-		35106F9E2534334E00CACA20 /* highlighter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = highlighter; path = ../../highlighter; sourceTree = "<group>"; };
 		35116E12245C7B87000A60FE /* RagnarokOffline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOffline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35116E15245C7B87000A60FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		35116E17245C7B87000A60FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -384,7 +383,6 @@
 				3533CB6B24D2BACA006AFE04 /* Vendors */,
 				35116E1E245C7B8A000A60FE /* Assets.xcassets */,
 				35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */,
-				35106F9E2534334E00CACA20 /* highlighter */,
 				35CB3BAF2478339500EC04C3 /* RagnarokOffline-Bridging-Header.h */,
 				355EFD2B247FE7B00033C280 /* RagnarokOffline.entitlements */,
 				35116E23245C7B8A000A60FE /* Info.plist */,

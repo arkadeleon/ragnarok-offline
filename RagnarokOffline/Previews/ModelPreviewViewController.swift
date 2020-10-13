@@ -7,14 +7,15 @@
 //
 
 import UIKit
-import SceneKit
-import SceneKit.ModelIO
+import MetalKit
+import SGLMath
 
 class ModelPreviewViewController: UIViewController {
 
     let previewItem: PreviewItem
 
-    private var scnView: SCNView!
+    private var mtkView: MTKView!
+    private var renderer: ModelPreviewRenderer!
 
     init(previewItem: PreviewItem) {
         self.previewItem = previewItem
@@ -26,8 +27,8 @@ class ModelPreviewViewController: UIViewController {
     }
 
     override func loadView() {
-        scnView = SCNView()
-        view = scnView
+        mtkView = MTKView()
+        view = mtkView
     }
 
     override func viewDidLoad() {
@@ -36,7 +37,7 @@ class ModelPreviewViewController: UIViewController {
         title = previewItem.title
         edgesForExtendedLayout = []
 
-        view.backgroundColor = .tertiarySystemBackground
+        view.backgroundColor = .systemBackground
 
         loadPreviewItem()
     }
@@ -54,29 +55,36 @@ class ModelPreviewViewController: UIViewController {
                 return
             }
 
-            let materials = document.textures.map { textureName -> MDLMaterial? in
-                guard let textureData = try? entry.tree.contentsOfEntry(withName: "data\\texture\\" + textureName) else {
-                    return nil
-                }
-                return MDLMaterial(textureName: textureName, textureData: textureData)
+            let textures = document.textures.map { textureName -> Data? in
+                return try? entry.tree.contentsOfEntry(withName: "data\\texture\\" + textureName)
             }
 
+            let (boundingBox, wrappers) = document.calcBoundingBox()
+
+            let instance = document.createInstance(
+                position: [0, 0, 0],
+                rotation: [0, 0, 0],
+                scale: [-0.075, -0.075, -0.075],
+                width: 0,
+                height: 0
+            )
+
+            let meshes = document.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox)
+
             DispatchQueue.main.async {
-                let asset = MDLAsset(document: document, materials: materials)
-                let scene = SCNScene(mdlAsset: asset)
+                guard let renderer = try? ModelPreviewRenderer(meshes: meshes, textures: textures, boundingBox: boundingBox) else {
+                    return
+                }
 
-//                let cameraNode = SCNNode()
-//                cameraNode.camera = SCNCamera()
-//                cameraNode.position = SCNVector3(x: 0, y: 0, z: 30)
-//                scene.rootNode.addChildNode(cameraNode)
+                self.renderer = renderer
 
-//                let action = SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 2, z: 0, duration: 2))
-//                scene.rootNode.childNodes.first?.runAction(action)
+                self.mtkView.device = renderer.device
+                self.mtkView.colorPixelFormat = Formats.colorPixelFormat
+                self.mtkView.depthStencilPixelFormat = Formats.depthPixelFormat
+                self.mtkView.delegate = renderer
 
-                self.scnView.scene = scene
-                self.scnView.showsStatistics = true
-                self.scnView.allowsCameraControl = true
-                self.scnView.autoenablesDefaultLighting = true
+                self.mtkView.addGestureRecognizer(renderer.camera.panGestureRecognizer)
+                self.mtkView.addGestureRecognizer(renderer.camera.pinchGestureRecognizer)
             }
         }
     }
