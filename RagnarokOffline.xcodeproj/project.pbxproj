@@ -348,6 +348,68 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		351070212537004400CACA20 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				3587577A24C6DB480050F734 /* AudioPreviewViewController.swift */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		351070252537011F00CACA20 /* Sprite */ = {
+			isa = PBXGroup;
+			children = (
+				35E5E8FC24E43CAA00716592 /* SpriteFrameCell.swift */,
+				3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */,
+			);
+			path = Sprite;
+			sourceTree = "<group>";
+		};
+		351070292537012E00CACA20 /* Action */ = {
+			isa = PBXGroup;
+			children = (
+				35E5E8FF24E44E9200716592 /* ActionCell.swift */,
+				35E5E90024E44E9200716592 /* ActionFrameCell.swift */,
+				35E5E8FE24E44E9200716592 /* ActionPreviewViewController.swift */,
+			);
+			path = Action;
+			sourceTree = "<group>";
+		};
+		3510702D2537013C00CACA20 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */,
+				35116E86246AE56B000A60FE /* ModelPreviewViewController.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3510702E2537014600CACA20 /* World */ = {
+			isa = PBXGroup;
+			children = (
+				355E915224C04DCA00361AF6 /* WorldPreviewCamera.swift */,
+				355E914A24BEDDAE00361AF6 /* WorldPreviewRenderer.swift */,
+				359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */,
+			);
+			path = World;
+			sourceTree = "<group>";
+		};
+		35107037253D347600CACA20 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				35116E8224685AE4000A60FE /* ImagePreviewViewController.swift */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+		35107038253D347D00CACA20 /* Text */ = {
+			isa = PBXGroup;
+			children = (
+				35116E7E246713AD000A60FE /* TextPreviewViewController.swift */,
+			);
+			path = Text;
+			sourceTree = "<group>";
+		};
 		35116E09245C7B87000A60FE = {
 			isa = PBXGroup;
 			children = (
@@ -624,19 +686,13 @@
 				35E5E90824ED6A8F00716592 /* FileType.swift */,
 				350F347224B5610F00848ED5 /* PreviewItem.swift */,
 				35E5E90624ED68BC00716592 /* PreviewItem+Thumbnail.swift */,
-				35116E7E246713AD000A60FE /* TextPreviewViewController.swift */,
-				35116E8224685AE4000A60FE /* ImagePreviewViewController.swift */,
-				3587577A24C6DB480050F734 /* AudioPreviewViewController.swift */,
-				35E5E8FC24E43CAA00716592 /* SpriteFrameCell.swift */,
-				3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */,
-				35E5E8FF24E44E9200716592 /* ActionCell.swift */,
-				35E5E90024E44E9200716592 /* ActionFrameCell.swift */,
-				35E5E8FE24E44E9200716592 /* ActionPreviewViewController.swift */,
-				355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */,
-				35116E86246AE56B000A60FE /* ModelPreviewViewController.swift */,
-				355E915224C04DCA00361AF6 /* WorldPreviewCamera.swift */,
-				355E914A24BEDDAE00361AF6 /* WorldPreviewRenderer.swift */,
-				359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */,
+				35107038253D347D00CACA20 /* Text */,
+				35107037253D347600CACA20 /* Image */,
+				351070212537004400CACA20 /* Audio */,
+				351070252537011F00CACA20 /* Sprite */,
+				351070292537012E00CACA20 /* Action */,
+				3510702D2537013C00CACA20 /* Model */,
+				3510702E2537014600CACA20 /* World */,
 			);
 			path = Previews;
 			sourceTree = "<group>";
