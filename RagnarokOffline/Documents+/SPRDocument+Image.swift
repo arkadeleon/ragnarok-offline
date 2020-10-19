@@ -39,10 +39,17 @@ extension SPRDocument {
                 for x in 0..<width {
                     let i = Int(frame.data[x + y * width]) * 4
                     let j = (x + y * width) * 4
-                    data[j + 0] = palette[i + 0]
-                    data[j + 1] = palette[i + 1]
-                    data[j + 2] = palette[i + 2]
-                    data[j + 3] = i > 0 ? 255 : 0
+                    if i == 0 {
+                        data[j + 0] = 0
+                        data[j + 1] = 0
+                        data[j + 2] = 0
+                        data[j + 3] = 0
+                    } else {
+                        data[j + 0] = palette[i + 0]
+                        data[j + 1] = palette[i + 1]
+                        data[j + 2] = palette[i + 2]
+                        data[j + 3] = 255
+                    }
                 }
             }
         case .rgba:

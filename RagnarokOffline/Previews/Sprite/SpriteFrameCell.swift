@@ -24,10 +24,6 @@ class SpriteFrameCell: UICollectionViewCell {
         frameView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
         frameView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         frameView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-
-        let selectedBackgroundView = UIView()
-        selectedBackgroundView.backgroundColor = .tertiarySystemBackground
-        self.selectedBackgroundView = selectedBackgroundView
     }
 
     required init?(coder: NSCoder) {
