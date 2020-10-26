@@ -1,14 +1,14 @@
 //
-//  ActionFrameCell.swift
+//  ActionAnimationCell.swift
 //  RagnarokOffline
 //
-//  Created by Leon Li on 2020/8/13.
+//  Created by Leon Li on 2020/8/7.
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
 import UIKit
 
-class ActionFrameCell: UICollectionViewCell {
+class ActionAnimationCell: UICollectionViewCell {
 
     let frameView: UIImageView
 
@@ -24,14 +24,6 @@ class ActionFrameCell: UICollectionViewCell {
         frameView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
         frameView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         frameView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-
-        let backgroundView = UIView()
-        backgroundView.backgroundColor = .secondarySystemBackground
-        self.backgroundView = backgroundView
-
-        let selectedBackgroundView = UIView()
-        selectedBackgroundView.backgroundColor = .tertiarySystemBackground
-        self.selectedBackgroundView = selectedBackgroundView
     }
 
     required init?(coder: NSCoder) {

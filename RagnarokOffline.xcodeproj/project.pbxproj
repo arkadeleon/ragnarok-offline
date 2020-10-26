@@ -101,6 +101,7 @@
 		3587F6ED2463DF3F007D1C9B /* DocumentItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EC2463DF3F007D1C9B /* DocumentItemCell.swift */; };
 		3587F70924694FA7007D1C9B /* StreamReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F70824694FA7007D1C9B /* StreamReader.swift */; };
 		358E6BAD24C9793B00283BAD /* ClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358E6BAC24C9793B00283BAD /* ClientViewController.swift */; };
+		358F497B2542D7560065D488 /* ACTDocument+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358F497A2542D7560065D488 /* ACTDocument+Image.swift */; };
 		359D5C1624A1F8CA00C2D8D3 /* WorldPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */; };
 		359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */; };
 		35A0ACF924FF421E00B72EB9 /* MDLTexture+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0ACF824FF421E00B72EB9 /* MDLTexture+Data.swift */; };
@@ -117,8 +118,7 @@
 		35D091F624AC8EB1008D7CEA /* PALDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D091F524AC8EB0008D7CEA /* PALDocument.swift */; };
 		35E5E8FD24E43CAA00716592 /* SpriteFrameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E8FC24E43CAA00716592 /* SpriteFrameCell.swift */; };
 		35E5E90124E44E9200716592 /* ActionPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E8FE24E44E9200716592 /* ActionPreviewViewController.swift */; };
-		35E5E90224E44E9200716592 /* ActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E8FF24E44E9200716592 /* ActionCell.swift */; };
-		35E5E90324E44E9200716592 /* ActionFrameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E90024E44E9200716592 /* ActionFrameCell.swift */; };
+		35E5E90224E44E9200716592 /* ActionAnimationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E8FF24E44E9200716592 /* ActionAnimationCell.swift */; };
 		35E5E90524EAB9EB00716592 /* GRFDocument+Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E90424EAB9EB00716592 /* GRFDocument+Tree.swift */; };
 		35E5E90724ED68BC00716592 /* PreviewItem+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E90624ED68BC00716592 /* PreviewItem+Thumbnail.swift */; };
 		35E5E90924ED6A8F00716592 /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E90824ED6A8F00716592 /* FileType.swift */; };
@@ -285,6 +285,7 @@
 		3587F6EC2463DF3F007D1C9B /* DocumentItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentItemCell.swift; sourceTree = "<group>"; };
 		3587F70824694FA7007D1C9B /* StreamReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamReader.swift; sourceTree = "<group>"; };
 		358E6BAC24C9793B00283BAD /* ClientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientViewController.swift; sourceTree = "<group>"; };
+		358F497A2542D7560065D488 /* ACTDocument+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ACTDocument+Image.swift"; sourceTree = "<group>"; };
 		359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPreviewViewController.swift; sourceTree = "<group>"; };
 		359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = GroundShaders.metal; sourceTree = "<group>"; };
 		35A0ACF824FF421E00B72EB9 /* MDLTexture+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MDLTexture+Data.swift"; sourceTree = "<group>"; };
@@ -304,8 +305,7 @@
 		35D091F524AC8EB0008D7CEA /* PALDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PALDocument.swift; sourceTree = "<group>"; };
 		35E5E8FC24E43CAA00716592 /* SpriteFrameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteFrameCell.swift; sourceTree = "<group>"; };
 		35E5E8FE24E44E9200716592 /* ActionPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionPreviewViewController.swift; sourceTree = "<group>"; };
-		35E5E8FF24E44E9200716592 /* ActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCell.swift; sourceTree = "<group>"; };
-		35E5E90024E44E9200716592 /* ActionFrameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionFrameCell.swift; sourceTree = "<group>"; };
+		35E5E8FF24E44E9200716592 /* ActionAnimationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionAnimationCell.swift; sourceTree = "<group>"; };
 		35E5E90424EAB9EB00716592 /* GRFDocument+Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GRFDocument+Tree.swift"; sourceTree = "<group>"; };
 		35E5E90624ED68BC00716592 /* PreviewItem+Thumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PreviewItem+Thumbnail.swift"; sourceTree = "<group>"; };
 		35E5E90824ED6A8F00716592 /* FileType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileType.swift; sourceTree = "<group>"; };
@@ -368,8 +368,7 @@
 		351070292537012E00CACA20 /* Action */ = {
 			isa = PBXGroup;
 			children = (
-				35E5E8FF24E44E9200716592 /* ActionCell.swift */,
-				35E5E90024E44E9200716592 /* ActionFrameCell.swift */,
+				35E5E8FF24E44E9200716592 /* ActionAnimationCell.swift */,
 				35E5E8FE24E44E9200716592 /* ActionPreviewViewController.swift */,
 			);
 			path = Action;
@@ -589,6 +588,7 @@
 		356A0D9224EA303000E2ED32 /* Documents+ */ = {
 			isa = PBXGroup;
 			children = (
+				358F497A2542D7560065D488 /* ACTDocument+Image.swift */,
 				355E915024C04A5C00361AF6 /* GATDocument+Compile.swift */,
 				3509565424A8F6010077C134 /* GNDDocument+Compile.swift */,
 				35E5E90424EAB9EB00716592 /* GRFDocument+Tree.swift */,
@@ -882,6 +882,7 @@
 				3533CBC124D2BB26006AFE04 /* lapi.c in Sources */,
 				35E8DCDB24A88BCC00A14FC5 /* WaterShaders.metal in Sources */,
 				355F206E24DA4CC3001302FC /* proto.c in Sources */,
+				358F497B2542D7560065D488 /* ACTDocument+Image.swift in Sources */,
 				350F347324B5610F00848ED5 /* PreviewItem.swift in Sources */,
 				35A0ACFB24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift in Sources */,
 				35116E7524644AAA000A60FE /* DocumentItem.swift in Sources */,
@@ -904,7 +905,7 @@
 				3533CBB624D2BB26006AFE04 /* lundump.c in Sources */,
 				3533CBAC24D2BB26006AFE04 /* print.c in Sources */,
 				35116E8B247025EE000A60FE /* GATDocument.swift in Sources */,
-				35E5E90224E44E9200716592 /* ActionCell.swift in Sources */,
+				35E5E90224E44E9200716592 /* ActionAnimationCell.swift in Sources */,
 				35E8DCE024A9DC1100A14FC5 /* ModelRenderer.swift in Sources */,
 				35E5E8FD24E43CAA00716592 /* SpriteFrameCell.swift in Sources */,
 				3533CBA824D2BB26006AFE04 /* liolib.c in Sources */,
@@ -934,7 +935,6 @@
 				35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */,
 				35D091F424AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift in Sources */,
 				3533CBAE24D2BB26006AFE04 /* loadlib.c in Sources */,
-				35E5E90324E44E9200716592 /* ActionFrameCell.swift in Sources */,
 				35049AA0248E9FA300DAD5C1 /* ModelShaders.metal in Sources */,
 				355F206A24DA4CC3001302FC /* statement.c in Sources */,
 				35A254F224BC42C300C43567 /* StringEncoding+KoreanEUC.swift in Sources */,
