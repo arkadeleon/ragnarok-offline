@@ -130,6 +130,7 @@
 		35EF769C24B3222000371F1F /* CGImage+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF769B24B3222000371F1F /* CGImage+Decode.swift */; };
 		35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8502473D9E8007DF105 /* STRDocument.swift */; };
 		35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8522473E1D7007DF105 /* RSWDocument.swift */; };
+		35FD46AF25AC3D770032D07A /* SQL in Resources */ = {isa = PBXBuildFile; fileRef = 35FD46AE25AC3D770032D07A /* SQL */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -318,6 +319,7 @@
 		35EF769B24B3222000371F1F /* CGImage+Decode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImage+Decode.swift"; sourceTree = "<group>"; };
 		35F8D8502473D9E8007DF105 /* STRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRDocument.swift; sourceTree = "<group>"; };
 		35F8D8522473E1D7007DF105 /* RSWDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWDocument.swift; sourceTree = "<group>"; };
+		35FD46AE25AC3D770032D07A /* SQL */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SQL; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -442,6 +444,7 @@
 				35116E76246596A5000A60FE /* Documents */,
 				35CB3BBA247EB2C100EC04C3 /* Utilities */,
 				3533CB6B24D2BACA006AFE04 /* Vendors */,
+				35FD46AE25AC3D770032D07A /* SQL */,
 				35116E1E245C7B8A000A60FE /* Assets.xcassets */,
 				35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */,
 				35CB3BAF2478339500EC04C3 /* RagnarokOffline-Bridging-Header.h */,
@@ -724,6 +727,7 @@
 				35116E0E245C7B87000A60FE /* Sources */,
 				35116E0F245C7B87000A60FE /* Frameworks */,
 				35116E10245C7B87000A60FE /* Resources */,
+				35FD465025AC32BE0032D07A /* Convert SQL Statements */,
 			);
 			buildRules = (
 			);
@@ -830,6 +834,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				35116E22245C7B8A000A60FE /* LaunchScreen.storyboard in Resources */,
+				35FD46AF25AC3D770032D07A /* SQL in Resources */,
 				355F206924DA4CC3001302FC /* srcversion.h in Resources */,
 				35CB3BB7247D81B300EC04C3 /* wall.jpg in Resources */,
 				35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */,
@@ -861,6 +866,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		35FD465025AC32BE0032D07A /* Convert SQL Statements */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Convert SQL Statements";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -rf \"${SRCROOT}/RagnarokOffline/SQL/SQLite\"/*.sql\nfor sql in \"${SRCROOT}/RagnarokOffline/SQL/MySQL\"/*.sql\ndo\n  \"${SRCROOT}/RagnarokOffline/SQL/mysql2sqlite\" \"$sql\" > \"${sql/MySQL/SQLite}\"\ndone\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		35116E0E245C7B87000A60FE /* Sources */ = {
