@@ -69,6 +69,9 @@
 		3523AD3725B048EA00828217 /* mob_skill_db_re.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD1F25B048EA00828217 /* mob_skill_db_re.sql */; };
 		3523AD3825B048EA00828217 /* item_db2_re.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD2025B048EA00828217 /* item_db2_re.sql */; };
 		352677DE25B67CB600A39EE2 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 35FD46B425AC49950032D07A /* SQLite */; };
+		352DC2D425EF21C200DAAACE /* NSDiffableDataSourceSnapshot+Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352DC2D125EF21C100DAAACE /* NSDiffableDataSourceSnapshot+Record.swift */; };
+		352DC2D525EF21C200DAAACE /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352DC2D225EF21C100DAAACE /* Record.swift */; };
+		352DC2D625EF21C200DAAACE /* RecordListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352DC2D325EF21C100DAAACE /* RecordListViewController.swift */; };
 		3533CBA724D2BB26006AFE04 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CB6F24D2BB25006AFE04 /* lauxlib.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3533CBA824D2BB26006AFE04 /* liolib.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CB7524D2BB25006AFE04 /* liolib.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3533CBA924D2BB26006AFE04 /* lopcodes.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CB7624D2BB25006AFE04 /* lopcodes.c */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -244,6 +247,9 @@
 		3523AD1E25B048EA00828217 /* logs.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = logs.sql; sourceTree = "<group>"; };
 		3523AD1F25B048EA00828217 /* mob_skill_db_re.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mob_skill_db_re.sql; sourceTree = "<group>"; };
 		3523AD2025B048EA00828217 /* item_db2_re.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = item_db2_re.sql; sourceTree = "<group>"; };
+		352DC2D125EF21C100DAAACE /* NSDiffableDataSourceSnapshot+Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDiffableDataSourceSnapshot+Record.swift"; sourceTree = "<group>"; };
+		352DC2D225EF21C100DAAACE /* Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
+		352DC2D325EF21C100DAAACE /* RecordListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordListViewController.swift; sourceTree = "<group>"; };
 		3533CB6F24D2BB25006AFE04 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lauxlib.c; sourceTree = "<group>"; };
 		3533CB7024D2BB25006AFE04 /* lmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lmem.h; sourceTree = "<group>"; };
 		3533CB7124D2BB25006AFE04 /* llimits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = llimits.h; sourceTree = "<group>"; };
@@ -816,6 +822,9 @@
 			isa = PBXGroup;
 			children = (
 				35FD46BA25AD4AFB0032D07A /* Database.swift */,
+				352DC2D225EF21C100DAAACE /* Record.swift */,
+				352DC2D325EF21C100DAAACE /* RecordListViewController.swift */,
+				352DC2D125EF21C100DAAACE /* NSDiffableDataSourceSnapshot+Record.swift */,
 				355BF19E25E8F7CA006E2D73 /* client.sqlite3 */,
 			);
 			path = Database;
@@ -1059,6 +1068,7 @@
 				35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */,
 				3533CBA924D2BB26006AFE04 /* lopcodes.c in Sources */,
 				35E5E90924ED6A8F00716592 /* FileType.swift in Sources */,
+				352DC2D425EF21C200DAAACE /* NSDiffableDataSourceSnapshot+Record.swift in Sources */,
 				3533CBC224D2BB26006AFE04 /* lbaselib.c in Sources */,
 				355E914B24BEDDAE00361AF6 /* WorldPreviewRenderer.swift in Sources */,
 				355F206724DA4CC3001302FC /* decompile.c in Sources */,
@@ -1082,6 +1092,7 @@
 				35116E7924659FD6000A60FE /* Document.swift in Sources */,
 				359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */,
 				355BF1E425ECD3BA006E2D73 /* SidebarItem.swift in Sources */,
+				352DC2D625EF21C200DAAACE /* RecordListViewController.swift in Sources */,
 				355F207224DA4FFD001302FC /* luadec.c in Sources */,
 				3533CBBA24D2BB26006AFE04 /* loslib.c in Sources */,
 				3533CBC524D2BB26006AFE04 /* llex.c in Sources */,
@@ -1092,6 +1103,7 @@
 				3533CBB924D2BB26006AFE04 /* ldump.c in Sources */,
 				35E5E90124E44E9200716592 /* ActionPreviewViewController.swift in Sources */,
 				355E915324C04DCA00361AF6 /* WorldPreviewCamera.swift in Sources */,
+				352DC2D525EF21C200DAAACE /* Record.swift in Sources */,
 				35116E8D247035AC000A60FE /* ACTDocument.swift in Sources */,
 				35EF769424AF18D800371F1F /* GroundRenderer.swift in Sources */,
 				35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */,

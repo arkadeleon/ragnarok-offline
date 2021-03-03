@@ -21,4 +21,8 @@ class Database {
     init(connection: Connection) {
         self.connection = connection
     }
+
+    func perform(_ query: QueryType) throws -> AnySequence<Row> {
+        try connection.prepare(query)
+    }
 }

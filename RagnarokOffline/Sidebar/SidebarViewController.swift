@@ -108,7 +108,8 @@ extension SidebarViewController: UICollectionViewDelegate {
             case .database:
                 rootViewController = UIViewController()
             case .weapons:
-                rootViewController = UIViewController()
+                let snapshot = NSDiffableDataSourceSnapshot<Int, Record>.snapshotForWeapons()
+                rootViewController = RecordListViewController(snapshot: snapshot)
             case .armors:
                 rootViewController = UIViewController()
             case .cards:
