@@ -31,7 +31,14 @@ enum Record: Hashable {
         switch self {
         case .item(let row):
             let name = Expression<String>("name_english")
-            return row[name]
+            let type = Expression<String>("type")
+            switch row[type] {
+            case "Weapon", "Armor":
+                let slots = Expression<String?>("slots")
+                return "\(row[name]) [\(row[slots] ?? "0")]"
+            default:
+                return "\(row[name])"
+            }
         case .monster(let row):
             let name = Expression<String>("iName")
             return row[name]

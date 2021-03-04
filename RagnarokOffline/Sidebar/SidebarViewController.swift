@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SQLite
 
 class SidebarViewController: UIViewController {
 
@@ -108,16 +109,29 @@ extension SidebarViewController: UICollectionViewDelegate {
             case .database:
                 rootViewController = UIViewController()
             case .weapons:
-                let snapshot = NSDiffableDataSourceSnapshot<Int, Record>.snapshotForWeapons()
-                rootViewController = RecordListViewController(snapshot: snapshot)
+                let type = Expression<String>("type")
+                let records = Database.shared.fetchItems(with: type == "Weapon")
+                rootViewController = RecordListViewController(records: records)
+                rootViewController.title = "Weapons"
             case .armors:
-                rootViewController = UIViewController()
+                let type = Expression<String>("type")
+                let records = Database.shared.fetchItems(with: type == "Armor")
+                rootViewController = RecordListViewController(records: records)
+                rootViewController.title = "Armors"
             case .cards:
-                rootViewController = UIViewController()
+                let type = Expression<String>("type")
+                let records = Database.shared.fetchItems(with: type == "Card")
+                rootViewController = RecordListViewController(records: records)
+                rootViewController.title = "Cards"
             case .items:
-                rootViewController = UIViewController()
+                let type = Expression<String>("type")
+                let records = Database.shared.fetchItems(with: type != "Weapon" && type != "Armor" && type != "Card")
+                rootViewController = RecordListViewController(records: records)
+                rootViewController.title = "Items"
             case .monsters:
-                rootViewController = UIViewController()
+                let records = Database.shared.fetchMonsters()
+                rootViewController = RecordListViewController(records: records)
+                rootViewController.title = "Monsters"
             case .skills:
                 rootViewController = UIViewController()
             }
