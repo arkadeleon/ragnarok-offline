@@ -21,6 +21,7 @@ class DocumentItemsViewController: UIViewController {
     init(documentItem: DocumentItem) {
         self.documentItem = documentItem
         super.init(nibName: nil, bundle: nil)
+        title = documentItem.title
     }
 
     required init?(coder: NSCoder) {
@@ -29,8 +30,6 @@ class DocumentItemsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        title = documentItem.title
 
         view.backgroundColor = .systemBackground
 
@@ -62,7 +61,6 @@ class DocumentItemsViewController: UIViewController {
                 self.collectionView.reloadData()
             }
         }
-
     }
 }
 

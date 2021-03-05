@@ -10,10 +10,17 @@ import UIKit
 
 class ClientViewController: UIViewController {
 
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        title = NSLocalizedString("Client", value: "Client", comment: "")
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        title = "Client"
 
         view.backgroundColor = .systemBackground
 
