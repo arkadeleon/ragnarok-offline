@@ -17,7 +17,7 @@ class SidebarViewController: UIViewController {
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        title = NSLocalizedString("RagnarokOffline", value: "Ragnarok Offline", comment: "")
+        title = R.string.ragnarokOffline
     }
 
     required init?(coder: NSCoder) {
@@ -112,26 +112,26 @@ extension SidebarViewController: UICollectionViewDelegate {
                 let type = Expression<String>("type")
                 let records = Database.shared.fetchItems(with: type == "Weapon")
                 rootViewController = RecordListViewController(records: records)
-                rootViewController.title = NSLocalizedString("Weapons", value: "Weapons", comment: "")
+                rootViewController.title = R.string.weapons
             case .armors:
                 let type = Expression<String>("type")
                 let records = Database.shared.fetchItems(with: type == "Armor")
                 rootViewController = RecordListViewController(records: records)
-                rootViewController.title = NSLocalizedString("Armors", value: "Armors", comment: "")
+                rootViewController.title = R.string.armors
             case .cards:
                 let type = Expression<String>("type")
                 let records = Database.shared.fetchItems(with: type == "Card")
                 rootViewController = RecordListViewController(records: records)
-                rootViewController.title = NSLocalizedString("Cards", value: "Cards", comment: "")
+                rootViewController.title = R.string.cards
             case .items:
                 let type = Expression<String>("type")
                 let records = Database.shared.fetchItems(with: type != "Weapon" && type != "Armor" && type != "Card")
                 rootViewController = RecordListViewController(records: records)
-                rootViewController.title = NSLocalizedString("Items", value: "Items", comment: "")
+                rootViewController.title = R.string.items
             case .monsters:
                 let records = Database.shared.fetchMonsters()
                 rootViewController = RecordListViewController(records: records)
-                rootViewController.title = NSLocalizedString("Monsters", value: "Monsters", comment: "")
+                rootViewController.title = R.string.monsters
             case .skills:
                 rootViewController = UIViewController()
             }

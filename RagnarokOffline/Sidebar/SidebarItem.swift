@@ -20,23 +20,23 @@ enum SidebarItem: Hashable {
     var title: String {
         switch self {
         case .client:
-            return NSLocalizedString("Client", value: "Client", comment: "")
+            return R.string.client
         case .server:
-            return NSLocalizedString("Server", value: "Server", comment: "")
+            return R.string.server
         case .database:
-            return NSLocalizedString("Database", value: "Database", comment: "")
+            return R.string.database
         case .weapons:
-            return NSLocalizedString("Weapons", value: "Weapons", comment: "")
+            return R.string.weapons
         case .armors:
-            return NSLocalizedString("Armors", value: "Armors", comment: "")
+            return R.string.armors
         case .cards:
-            return NSLocalizedString("Cards", value: "Cards", comment: "")
+            return R.string.cards
         case .items:
-            return NSLocalizedString("Items", value: "Items", comment: "")
+            return R.string.items
         case .monsters:
-            return NSLocalizedString("Monsters", value: "Monsters", comment: "")
+            return R.string.monsters
         case .skills:
-            return NSLocalizedString("Skills", value: "Skills", comment: "")
+            return R.string.skills
         }
     }
 }

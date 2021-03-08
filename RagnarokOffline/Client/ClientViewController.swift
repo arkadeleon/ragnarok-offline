@@ -12,7 +12,7 @@ class ClientViewController: UIViewController {
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        title = NSLocalizedString("Client", value: "Client", comment: "")
+        title = R.string.client
     }
 
     required init?(coder: NSCoder) {
