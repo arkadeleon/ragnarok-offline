@@ -101,6 +101,9 @@
 		3533CBC524D2BB26006AFE04 /* llex.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CBA224D2BB26006AFE04 /* llex.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3533CBC624D2BB26006AFE04 /* ltm.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CBA424D2BB26006AFE04 /* ltm.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3533CBC724D2BB26006AFE04 /* ldo.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CBA524D2BB26006AFE04 /* ldo.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		3535FCD325F9DF8B000C5608 /* Records.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3535FCD225F9DF8B000C5608 /* Records.swift */; };
+		3535FCD825F9DFE2000C5608 /* Records+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3535FCD725F9DFE2000C5608 /* Records+Item.swift */; };
+		3535FCDD25F9DFF0000C5608 /* Records+Monster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3535FCDC25F9DFF0000C5608 /* Records+Monster.swift */; };
 		355BF1A225E8FB35006E2D73 /* client.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 355BF19E25E8F7CA006E2D73 /* client.sqlite3 */; };
 		355BF1D125ECB13A006E2D73 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BF1D025ECB13A006E2D73 /* SidebarViewController.swift */; };
 		355BF1E425ECD3BA006E2D73 /* SidebarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BF1E325ECD3BA006E2D73 /* SidebarItem.swift */; };
@@ -302,6 +305,9 @@
 		3533CBA424D2BB26006AFE04 /* ltm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ltm.c; sourceTree = "<group>"; };
 		3533CBA524D2BB26006AFE04 /* ldo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldo.c; sourceTree = "<group>"; };
 		3533CBA624D2BB26006AFE04 /* lundump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lundump.h; sourceTree = "<group>"; };
+		3535FCD225F9DF8B000C5608 /* Records.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Records.swift; sourceTree = "<group>"; };
+		3535FCD725F9DFE2000C5608 /* Records+Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Records+Item.swift"; sourceTree = "<group>"; };
+		3535FCDC25F9DFF0000C5608 /* Records+Monster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Records+Monster.swift"; sourceTree = "<group>"; };
 		355BF19E25E8F7CA006E2D73 /* client.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = client.sqlite3; sourceTree = "<group>"; };
 		355BF1D025ECB13A006E2D73 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		355BF1E325ECD3BA006E2D73 /* SidebarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarItem.swift; sourceTree = "<group>"; };
@@ -824,6 +830,9 @@
 			children = (
 				35FD46BA25AD4AFB0032D07A /* Database.swift */,
 				352DC2D225EF21C100DAAACE /* Record.swift */,
+				3535FCD225F9DF8B000C5608 /* Records.swift */,
+				3535FCD725F9DFE2000C5608 /* Records+Item.swift */,
+				3535FCDC25F9DFF0000C5608 /* Records+Monster.swift */,
 				352DC2D325EF21C100DAAACE /* RecordListViewController.swift */,
 				355BF19E25E8F7CA006E2D73 /* client.sqlite3 */,
 			);
@@ -1018,6 +1027,7 @@
 				3587944A24C73E9400A5074B /* TGADocument.swift in Sources */,
 				355E915124C04A5D00361AF6 /* GATDocument+Compile.swift in Sources */,
 				355F207124DA4CC3001302FC /* guess.c in Sources */,
+				3535FCD825F9DFE2000C5608 /* Records+Item.swift in Sources */,
 				3533CBC424D2BB26006AFE04 /* lparser.c in Sources */,
 				3533CBAD24D2BB26006AFE04 /* lmathlib.c in Sources */,
 				35116E5E2461A5DB000A60FE /* DESDecryptor.swift in Sources */,
@@ -1039,6 +1049,7 @@
 				3533CBAA24D2BB26006AFE04 /* lstate.c in Sources */,
 				35EF769C24B3222000371F1F /* CGImage+Decode.swift in Sources */,
 				3533CBBE24D2BB26006AFE04 /* lmem.c in Sources */,
+				3535FCD325F9DF8B000C5608 /* Records.swift in Sources */,
 				35A0ACFD24FF94D400B72EB9 /* ResourceBundle.swift in Sources */,
 				355BF1D125ECB13A006E2D73 /* SidebarViewController.swift in Sources */,
 				3587F6EB2463DBF0007D1C9B /* DocumentItemsViewController.swift in Sources */,
@@ -1060,6 +1071,7 @@
 				3587577B24C6DB480050F734 /* AudioPreviewViewController.swift in Sources */,
 				3509565324A8EE010077C134 /* RSMDocument+Compile.swift in Sources */,
 				3533CBAB24D2BB26006AFE04 /* lobject.c in Sources */,
+				3535FCDD25F9DFF0000C5608 /* Records+Monster.swift in Sources */,
 				3533CBC024D2BB26006AFE04 /* ltablib.c in Sources */,
 				35CB3BAC247827A700EC04C3 /* GameViewController.swift in Sources */,
 				35E5E90524EAB9EB00716592 /* GRFDocument+Tree.swift in Sources */,

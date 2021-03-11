@@ -23,5 +23,15 @@ struct RString {
     let monsters = NSLocalizedString("Monsters", value: "Monsters", comment: "")
     let skills = NSLocalizedString("Skills", value: "Skills", comment: "")
 
+    let type = NSLocalizedString("Type", value: "Type", comment: "")
+    let `class` = NSLocalizedString("Class", value: "Class", comment: "")
+    let buy = NSLocalizedString("Buy", value: "Buy", comment: "")
+    let sell = NSLocalizedString("Sell", value: "Sell", comment: "")
+    let weight = NSLocalizedString("Weight", value: "Weight", comment: "")
+    let attack = NSLocalizedString("Attack", value: "Attack", comment: "")
+    let magicAttack = NSLocalizedString("MagicAttack", value: "Magic Attack", comment: "")
+    let defense = NSLocalizedString("Defense", value: "Defense", comment: "")
+    let range = NSLocalizedString("Range", value: "Range", comment: "")
+    let slots = NSLocalizedString("Slots", value: "Slots", comment: "")
     
 }

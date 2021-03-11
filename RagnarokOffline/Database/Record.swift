@@ -8,51 +8,36 @@
 
 import SQLite
 
-enum Record: Hashable {
-    case item(row: Row)
-    case monster(row: Row)
-    case skill(row: Row)
+protocol Record {
 
-    var id: String {
-        switch self {
-        case .item(let row):
-            let id = Expression<String>("id")
-            return "Item#\(row[id])"
-        case .monster(let row):
-            let id = Expression<String>("ID")
-            return "Monster#\(row[id])"
-        case .skill(let row):
-            let id = Expression<Int64>("SKILL_ID")
-            return "Skill#(\(row[id])"
-        }
+    var id: String { get }
+    var name: String { get }
+    var fields: [String: RecordValue] { get }
+}
+
+struct AnyRecord: Record, Hashable {
+
+    let id: String
+    let name: String
+    let fields: [String: RecordValue]
+
+    init<R>(_ record: R) where R: Record {
+        id = record.id
+        name = record.name
+        fields = record.fields
     }
 
-    var name: String {
-        switch self {
-        case .item(let row):
-            let name = Expression<String>("name_english")
-            let type = Expression<String>("type")
-            switch row[type] {
-            case "Weapon", "Armor":
-                let slots = Expression<String?>("slots")
-                return "\(row[name]) [\(row[slots] ?? "0")]"
-            default:
-                return "\(row[name])"
-            }
-        case .monster(let row):
-            let name = Expression<String>("iName")
-            return row[name]
-        case .skill(let row):
-            let info = Expression<String>("INFO")
-            return row[info]
-        }
-    }
-
-    static func == (lhs: Record, rhs: Record) -> Bool {
+    static func == (lhs: AnyRecord, rhs: AnyRecord) -> Bool {
         return lhs.id == rhs.id
     }
 
     func hash(into hasher: inout Hasher) {
         id.hash(into: &hasher)
     }
+}
+
+enum RecordValue {
+    case string(String)
+    case attributedString(NSAttributedString)
+    case records([AnyRecord])
 }

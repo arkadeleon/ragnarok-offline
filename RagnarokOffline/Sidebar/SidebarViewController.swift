@@ -110,26 +110,31 @@ extension SidebarViewController: UICollectionViewDelegate {
                 rootViewController = UIViewController()
             case .weapons:
                 let type = Expression<String>("type")
-                let records = Database.shared.fetchItems(with: type == "Weapon")
+                let items = Database.shared.fetchItems(with: type == "Weapon")
+                let records = items.map { AnyRecord($0) }
                 rootViewController = RecordListViewController(records: records)
                 rootViewController.title = R.string.weapons
             case .armors:
                 let type = Expression<String>("type")
-                let records = Database.shared.fetchItems(with: type == "Armor")
+                let items = Database.shared.fetchItems(with: type == "Armor")
+                let records = items.map { AnyRecord($0) }
                 rootViewController = RecordListViewController(records: records)
                 rootViewController.title = R.string.armors
             case .cards:
                 let type = Expression<String>("type")
-                let records = Database.shared.fetchItems(with: type == "Card")
+                let items = Database.shared.fetchItems(with: type == "Card")
+                let records = items.map { AnyRecord($0) }
                 rootViewController = RecordListViewController(records: records)
                 rootViewController.title = R.string.cards
             case .items:
                 let type = Expression<String>("type")
-                let records = Database.shared.fetchItems(with: type != "Weapon" && type != "Armor" && type != "Card")
+                let items = Database.shared.fetchItems(with: type != "Weapon" && type != "Armor" && type != "Card")
+                let records = items.map { AnyRecord($0) }
                 rootViewController = RecordListViewController(records: records)
                 rootViewController.title = R.string.items
             case .monsters:
-                let records = Database.shared.fetchMonsters()
+                let monsters = Database.shared.fetchMonsters()
+                let records = monsters.map { AnyRecord($0) }
                 rootViewController = RecordListViewController(records: records)
                 rootViewController.title = R.string.monsters
             case .skills:

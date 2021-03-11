@@ -11,10 +11,10 @@ import UIKit
 class RecordListViewController: UIViewController {
 
     private var collectionView: UICollectionView!
-    private var dataSource: UICollectionViewDiffableDataSource<Int, Record>!
-    private var records: [Record]
+    private var dataSource: UICollectionViewDiffableDataSource<Int, AnyRecord>!
+    private var records: [AnyRecord]
 
-    init(records: [Record]) {
+    init(records: [AnyRecord]) {
         self.records = records
         super.init(nibName: nil, bundle: nil)
     }
@@ -47,11 +47,11 @@ class RecordListViewController: UIViewController {
             cell.accessories = [.disclosureIndicator()]
         }
 
-        dataSource = UICollectionViewDiffableDataSource<Int, Record>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Int, AnyRecord>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
         }
 
-        var snapshot = NSDiffableDataSourceSnapshot<Int, Record>()
+        var snapshot = NSDiffableDataSourceSnapshot<Int, AnyRecord>()
         snapshot.appendSections([0])
         snapshot.appendItems(self.records, toSection: 0)
         dataSource.apply(snapshot)

@@ -19,7 +19,7 @@ class Database {
         client = try! Connection(path)
     }
 
-    func fetchItems(with predicate: Expression<Bool>? = nil, renewal: Bool = true) -> [Record] {
+    func fetchItems(with predicate: Expression<Bool>? = nil, renewal: Bool = true) -> [Records.Item] {
         let table = renewal ? Table("item_db") : Table("item_db_re")
 
         let query: QueryType
@@ -30,13 +30,13 @@ class Database {
         }
 
         if let results = try? client.prepare(query) {
-            return results.map { Record.item(row: $0) }
+            return results.map { Records.Item(from: $0) }
         } else {
             return []
         }
     }
 
-    func fetchMonsters(with predicate: Expression<Bool>? = nil, renewal: Bool = true) -> [Record] {
+    func fetchMonsters(with predicate: Expression<Bool>? = nil, renewal: Bool = true) -> [Records.Monster] {
         let table = renewal ? Table("mob_db") : Table("mob_db_re")
 
         let query: QueryType
@@ -47,7 +47,7 @@ class Database {
         }
 
         if let results = try? client.prepare(query) {
-            return results.map { Record.monster(row: $0) }
+            return results.map { Records.Monster(from: $0) }
         } else {
             return []
         }
