@@ -18,6 +18,7 @@ class AudioPreviewViewController: UIViewController {
     init(previewItem: PreviewItem) {
         self.previewItem = previewItem
         super.init(nibName: nil, bundle: nil)
+        title = previewItem.title
     }
 
     required init?(coder: NSCoder) {
@@ -26,8 +27,6 @@ class AudioPreviewViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        title = previewItem.title
 
         view.backgroundColor = .systemBackground
 

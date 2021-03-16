@@ -160,6 +160,12 @@
 		35E8DCE224A9DF4100A14FC5 /* SGLMath+SIMD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCE124A9DF4100A14FC5 /* SGLMath+SIMD.swift */; };
 		35EF769424AF18D800371F1F /* GroundRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF769324AF18D800371F1F /* GroundRenderer.swift */; };
 		35EF769C24B3222000371F1F /* CGImage+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF769B24B3222000371F1F /* CGImage+Decode.swift */; };
+		35F1334D2600A2D700E39181 /* DatabaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F1334C2600A2D700E39181 /* DatabaseViewController.swift */; };
+		35F133522600AC6C00E39181 /* RecordListViewController+Weapons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F133512600AC6C00E39181 /* RecordListViewController+Weapons.swift */; };
+		35F133572600AC7B00E39181 /* RecordListViewController+Armors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F133562600AC7B00E39181 /* RecordListViewController+Armors.swift */; };
+		35F1335C2600AC8400E39181 /* RecordListViewController+Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F1335B2600AC8400E39181 /* RecordListViewController+Cards.swift */; };
+		35F133612600AC8F00E39181 /* RecordListViewController+Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F133602600AC8F00E39181 /* RecordListViewController+Items.swift */; };
+		35F133662600AC9B00E39181 /* RecordListViewController+Monsters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F133652600AC9B00E39181 /* RecordListViewController+Monsters.swift */; };
 		35F19B1B25F61F6100A21D54 /* R.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F19B1A25F61F6100A21D54 /* R.swift */; };
 		35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8502473D9E8007DF105 /* STRDocument.swift */; };
 		35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8522473E1D7007DF105 /* RSWDocument.swift */; };
@@ -381,6 +387,12 @@
 		35E8DCE124A9DF4100A14FC5 /* SGLMath+SIMD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SGLMath+SIMD.swift"; sourceTree = "<group>"; };
 		35EF769324AF18D800371F1F /* GroundRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroundRenderer.swift; sourceTree = "<group>"; };
 		35EF769B24B3222000371F1F /* CGImage+Decode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImage+Decode.swift"; sourceTree = "<group>"; };
+		35F1334C2600A2D700E39181 /* DatabaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseViewController.swift; sourceTree = "<group>"; };
+		35F133512600AC6C00E39181 /* RecordListViewController+Weapons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordListViewController+Weapons.swift"; sourceTree = "<group>"; };
+		35F133562600AC7B00E39181 /* RecordListViewController+Armors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordListViewController+Armors.swift"; sourceTree = "<group>"; };
+		35F1335B2600AC8400E39181 /* RecordListViewController+Cards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordListViewController+Cards.swift"; sourceTree = "<group>"; };
+		35F133602600AC8F00E39181 /* RecordListViewController+Items.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordListViewController+Items.swift"; sourceTree = "<group>"; };
+		35F133652600AC9B00E39181 /* RecordListViewController+Monsters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordListViewController+Monsters.swift"; sourceTree = "<group>"; };
 		35F19B1A25F61F6100A21D54 /* R.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = R.swift; sourceTree = "<group>"; };
 		35F8D8502473D9E8007DF105 /* STRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRDocument.swift; sourceTree = "<group>"; };
 		35F8D8522473E1D7007DF105 /* RSWDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWDocument.swift; sourceTree = "<group>"; };
@@ -828,12 +840,18 @@
 		35FD46B925AD4AE20032D07A /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				35FD46BA25AD4AFB0032D07A /* Database.swift */,
 				352DC2D225EF21C100DAAACE /* Record.swift */,
 				3535FCD225F9DF8B000C5608 /* Records.swift */,
 				3535FCD725F9DFE2000C5608 /* Records+Item.swift */,
 				3535FCDC25F9DFF0000C5608 /* Records+Monster.swift */,
+				35FD46BA25AD4AFB0032D07A /* Database.swift */,
+				35F1334C2600A2D700E39181 /* DatabaseViewController.swift */,
 				352DC2D325EF21C100DAAACE /* RecordListViewController.swift */,
+				35F133512600AC6C00E39181 /* RecordListViewController+Weapons.swift */,
+				35F133562600AC7B00E39181 /* RecordListViewController+Armors.swift */,
+				35F1335B2600AC8400E39181 /* RecordListViewController+Cards.swift */,
+				35F133602600AC8F00E39181 /* RecordListViewController+Items.swift */,
+				35F133652600AC9B00E39181 /* RecordListViewController+Monsters.swift */,
 				355BF19E25E8F7CA006E2D73 /* client.sqlite3 */,
 			);
 			path = Database;
@@ -1063,6 +1081,7 @@
 				35E5E90224E44E9200716592 /* ActionAnimationCell.swift in Sources */,
 				35E8DCE024A9DC1100A14FC5 /* ModelRenderer.swift in Sources */,
 				35E5E8FD24E43CAA00716592 /* SpriteFrameCell.swift in Sources */,
+				35F133522600AC6C00E39181 /* RecordListViewController+Weapons.swift in Sources */,
 				3533CBA824D2BB26006AFE04 /* liolib.c in Sources */,
 				3533CBB124D2BB26006AFE04 /* lstrlib.c in Sources */,
 				35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */,
@@ -1081,6 +1100,8 @@
 				3533CBA924D2BB26006AFE04 /* lopcodes.c in Sources */,
 				35E5E90924ED6A8F00716592 /* FileType.swift in Sources */,
 				3533CBC224D2BB26006AFE04 /* lbaselib.c in Sources */,
+				35F1334D2600A2D700E39181 /* DatabaseViewController.swift in Sources */,
+				35F133662600AC9B00E39181 /* RecordListViewController+Monsters.swift in Sources */,
 				355E914B24BEDDAE00361AF6 /* WorldPreviewRenderer.swift in Sources */,
 				355F206724DA4CC3001302FC /* decompile.c in Sources */,
 				3533CBC324D2BB26006AFE04 /* ldebug.c in Sources */,
@@ -1101,10 +1122,12 @@
 				3533CBB524D2BB26006AFE04 /* lstring.c in Sources */,
 				3533CBB824D2BB26006AFE04 /* ltable.c in Sources */,
 				35116E7924659FD6000A60FE /* Document.swift in Sources */,
+				35F133572600AC7B00E39181 /* RecordListViewController+Armors.swift in Sources */,
 				359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */,
 				355BF1E425ECD3BA006E2D73 /* SidebarItem.swift in Sources */,
 				352DC2D625EF21C200DAAACE /* RecordListViewController.swift in Sources */,
 				355F207224DA4FFD001302FC /* luadec.c in Sources */,
+				35F1335C2600AC8400E39181 /* RecordListViewController+Cards.swift in Sources */,
 				3533CBBA24D2BB26006AFE04 /* loslib.c in Sources */,
 				3533CBC524D2BB26006AFE04 /* llex.c in Sources */,
 				35CB3BB52478359100EC04C3 /* Shaders.metal in Sources */,
@@ -1130,6 +1153,7 @@
 				35116E58245FC152000A60FE /* GRFDocument.swift in Sources */,
 				3533CBBC24D2BB26006AFE04 /* lzio.c in Sources */,
 				359D5C1624A1F8CA00C2D8D3 /* WorldPreviewViewController.swift in Sources */,
+				35F133612600AC8F00E39181 /* RecordListViewController+Items.swift in Sources */,
 				3573037A24B83CC70011F6AA /* ResourceManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

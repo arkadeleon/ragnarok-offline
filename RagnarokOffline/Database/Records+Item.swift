@@ -49,8 +49,8 @@ extension Records {
         }
 
         var subtype: String {
-            let type = Expression<String>("subtype")
-            return row[type]
+            let type = Expression<String?>("subtype")
+            return row[type] ?? ""
         }
 
         var buy: String {

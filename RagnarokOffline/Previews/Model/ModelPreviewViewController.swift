@@ -20,6 +20,8 @@ class ModelPreviewViewController: UIViewController {
     init(previewItem: PreviewItem) {
         self.previewItem = previewItem
         super.init(nibName: nil, bundle: nil)
+        title = previewItem.title
+        edgesForExtendedLayout = []
     }
 
     required init?(coder: NSCoder) {
@@ -33,9 +35,6 @@ class ModelPreviewViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        title = previewItem.title
-        edgesForExtendedLayout = []
 
         view.backgroundColor = .systemBackground
 

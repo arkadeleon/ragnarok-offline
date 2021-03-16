@@ -15,7 +15,6 @@ enum SidebarItem: Hashable {
     case cards
     case items
     case monsters
-    case skills
 
     var title: String {
         switch self {
@@ -35,8 +34,6 @@ enum SidebarItem: Hashable {
             return R.string.items
         case .monsters:
             return R.string.monsters
-        case .skills:
-            return R.string.skills
         }
     }
 }

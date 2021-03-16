@@ -68,7 +68,7 @@ class SidebarViewController: UIViewController {
         snapshot.append([.client, .server])
         snapshot.append([.database])
         snapshot.expand([.database])
-        snapshot.append([.weapons, .armors, .cards, .items, .monsters, .skills], to: .database)
+        snapshot.append([.weapons, .armors, .cards, .items, .monsters], to: .database)
         dataSource.apply(snapshot, to: 0, animatingDifferences: false)
 
         let indexPath = IndexPath(item: 0, section: 0)
@@ -109,36 +109,15 @@ extension SidebarViewController: UICollectionViewDelegate {
             case .database:
                 rootViewController = UIViewController()
             case .weapons:
-                let type = Expression<String>("type")
-                let items = Database.shared.fetchItems(with: type == "Weapon")
-                let records = items.map { AnyRecord($0) }
-                rootViewController = RecordListViewController(records: records)
-                rootViewController.title = R.string.weapons
+                rootViewController = RecordListViewController.weapons()
             case .armors:
-                let type = Expression<String>("type")
-                let items = Database.shared.fetchItems(with: type == "Armor")
-                let records = items.map { AnyRecord($0) }
-                rootViewController = RecordListViewController(records: records)
-                rootViewController.title = R.string.armors
+                rootViewController = RecordListViewController.armors()
             case .cards:
-                let type = Expression<String>("type")
-                let items = Database.shared.fetchItems(with: type == "Card")
-                let records = items.map { AnyRecord($0) }
-                rootViewController = RecordListViewController(records: records)
-                rootViewController.title = R.string.cards
+                rootViewController = RecordListViewController.cards()
             case .items:
-                let type = Expression<String>("type")
-                let items = Database.shared.fetchItems(with: type != "Weapon" && type != "Armor" && type != "Card")
-                let records = items.map { AnyRecord($0) }
-                rootViewController = RecordListViewController(records: records)
-                rootViewController.title = R.string.items
+                rootViewController = RecordListViewController.items()
             case .monsters:
-                let monsters = Database.shared.fetchMonsters()
-                let records = monsters.map { AnyRecord($0) }
-                rootViewController = RecordListViewController(records: records)
-                rootViewController.title = R.string.monsters
-            case .skills:
-                rootViewController = UIViewController()
+                rootViewController = RecordListViewController.monsters()
             }
             let navigationController = UINavigationController(rootViewController: rootViewController)
             viewController = navigationController
