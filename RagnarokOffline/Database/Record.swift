@@ -8,23 +8,41 @@
 
 import SQLite
 
-protocol Record {
+enum RecordValue {
+    case string(String)
+    case attributedString(NSAttributedString)
+    case references([AnyRecord])
+}
 
+struct RecordField {
+    var name: String
+    var value: RecordValue
+}
+
+protocol Record {
     var id: String { get }
     var name: String { get }
-    var fields: [String: RecordValue] { get }
+    var fields: [RecordField] { get }
 }
 
 struct AnyRecord: Record, Hashable {
 
-    let id: String
-    let name: String
-    let fields: [String: RecordValue]
+    private let record: Record
 
     init<R>(_ record: R) where R: Record {
-        id = record.id
-        name = record.name
-        fields = record.fields
+        self.record = record
+    }
+
+    var id: String {
+        record.id
+    }
+
+    var name: String {
+        record.name
+    }
+
+    var fields: [RecordField] {
+        record.fields
     }
 
     static func == (lhs: AnyRecord, rhs: AnyRecord) -> Bool {
@@ -34,10 +52,4 @@ struct AnyRecord: Record, Hashable {
     func hash(into hasher: inout Hasher) {
         id.hash(into: &hasher)
     }
-}
-
-enum RecordValue {
-    case string(String)
-    case attributedString(NSAttributedString)
-    case records([AnyRecord])
 }

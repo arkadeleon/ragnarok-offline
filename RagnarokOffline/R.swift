@@ -33,5 +33,7 @@ struct RString {
     let defense = NSLocalizedString("Defense", value: "Defense", comment: "")
     let range = NSLocalizedString("Range", value: "Range", comment: "")
     let slots = NSLocalizedString("Slots", value: "Slots", comment: "")
-    
+
+    let information = NSLocalizedString("Information", value: "Information", comment: "")
+    let drops = NSLocalizedString("Drops", value: "Drops", comment: "")
 }

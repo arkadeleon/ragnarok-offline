@@ -34,33 +34,36 @@ extension Records {
             }
         }
 
-        var fields: [String: RecordValue] {
+        var fields: [RecordField] {
             return [
-                R.string.type: .string(type),
-                R.string.class: .string(subtype),
-                R.string.buy: .string(buy),
-                R.string.sell: .string(sell)
+                RecordField(name: R.string.type, value: .string(type)),
+                RecordField(name: R.string.class, value: .string(subtype)),
+                RecordField(name: R.string.buy, value: .string(buy)),
+                RecordField(name: R.string.sell, value: .string(sell))
             ]
         }
+    }
+}
 
-        var type: String {
-            let type = Expression<String>("type")
-            return row[type]
-        }
+private extension Records.Item {
 
-        var subtype: String {
-            let type = Expression<String?>("subtype")
-            return row[type] ?? ""
-        }
+    var type: String {
+        let type = Expression<String>("type")
+        return row[type]
+    }
 
-        var buy: String {
-            let buy = Expression<String?>("price_buy")
-            return row[buy] ?? ""
-        }
+    var subtype: String {
+        let type = Expression<String?>("subtype")
+        return row[type] ?? ""
+    }
 
-        var sell: String {
-            let sell = Expression<String?>("price_sell")
-            return row[sell] ?? ""
-        }
+    var buy: String {
+        let buy = Expression<String?>("price_buy")
+        return row[buy] ?? ""
+    }
+
+    var sell: String {
+        let sell = Expression<String?>("price_sell")
+        return row[sell] ?? ""
     }
 }

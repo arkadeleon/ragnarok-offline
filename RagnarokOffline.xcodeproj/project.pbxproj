@@ -166,6 +166,8 @@
 		35F1335C2600AC8400E39181 /* RecordListViewController+Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F1335B2600AC8400E39181 /* RecordListViewController+Cards.swift */; };
 		35F133612600AC8F00E39181 /* RecordListViewController+Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F133602600AC8F00E39181 /* RecordListViewController+Items.swift */; };
 		35F133662600AC9B00E39181 /* RecordListViewController+Monsters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F133652600AC9B00E39181 /* RecordListViewController+Monsters.swift */; };
+		35F1336B2600B25900E39181 /* RecordDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F1336A2600B25900E39181 /* RecordDetailViewController.swift */; };
+		35F1337D2601EACC00E39181 /* Records+DroppedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F1337C2601EACC00E39181 /* Records+DroppedItem.swift */; };
 		35F19B1B25F61F6100A21D54 /* R.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F19B1A25F61F6100A21D54 /* R.swift */; };
 		35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8502473D9E8007DF105 /* STRDocument.swift */; };
 		35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8522473E1D7007DF105 /* RSWDocument.swift */; };
@@ -393,6 +395,8 @@
 		35F1335B2600AC8400E39181 /* RecordListViewController+Cards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordListViewController+Cards.swift"; sourceTree = "<group>"; };
 		35F133602600AC8F00E39181 /* RecordListViewController+Items.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordListViewController+Items.swift"; sourceTree = "<group>"; };
 		35F133652600AC9B00E39181 /* RecordListViewController+Monsters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordListViewController+Monsters.swift"; sourceTree = "<group>"; };
+		35F1336A2600B25900E39181 /* RecordDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailViewController.swift; sourceTree = "<group>"; };
+		35F1337C2601EACC00E39181 /* Records+DroppedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Records+DroppedItem.swift"; sourceTree = "<group>"; };
 		35F19B1A25F61F6100A21D54 /* R.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = R.swift; sourceTree = "<group>"; };
 		35F8D8502473D9E8007DF105 /* STRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRDocument.swift; sourceTree = "<group>"; };
 		35F8D8522473E1D7007DF105 /* RSWDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWDocument.swift; sourceTree = "<group>"; };
@@ -843,6 +847,7 @@
 				352DC2D225EF21C100DAAACE /* Record.swift */,
 				3535FCD225F9DF8B000C5608 /* Records.swift */,
 				3535FCD725F9DFE2000C5608 /* Records+Item.swift */,
+				35F1337C2601EACC00E39181 /* Records+DroppedItem.swift */,
 				3535FCDC25F9DFF0000C5608 /* Records+Monster.swift */,
 				35FD46BA25AD4AFB0032D07A /* Database.swift */,
 				35F1334C2600A2D700E39181 /* DatabaseViewController.swift */,
@@ -852,6 +857,7 @@
 				35F1335B2600AC8400E39181 /* RecordListViewController+Cards.swift */,
 				35F133602600AC8F00E39181 /* RecordListViewController+Items.swift */,
 				35F133652600AC9B00E39181 /* RecordListViewController+Monsters.swift */,
+				35F1336A2600B25900E39181 /* RecordDetailViewController.swift */,
 				355BF19E25E8F7CA006E2D73 /* client.sqlite3 */,
 			);
 			path = Database;
@@ -1083,6 +1089,7 @@
 				35E5E8FD24E43CAA00716592 /* SpriteFrameCell.swift in Sources */,
 				35F133522600AC6C00E39181 /* RecordListViewController+Weapons.swift in Sources */,
 				3533CBA824D2BB26006AFE04 /* liolib.c in Sources */,
+				35F1337D2601EACC00E39181 /* Records+DroppedItem.swift in Sources */,
 				3533CBB124D2BB26006AFE04 /* lstrlib.c in Sources */,
 				35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */,
 				3509565724ACD8FB0077C134 /* SPRDocument+Image.swift in Sources */,
@@ -1108,6 +1115,7 @@
 				3509565524A8F6010077C134 /* GNDDocument+Compile.swift in Sources */,
 				3533CBBD24D2BB26006AFE04 /* ldblib.c in Sources */,
 				3533CBB024D2BB26006AFE04 /* lfunc.c in Sources */,
+				35F1336B2600B25900E39181 /* RecordDetailViewController.swift in Sources */,
 				35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */,
 				35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */,
 				35D091F424AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift in Sources */,

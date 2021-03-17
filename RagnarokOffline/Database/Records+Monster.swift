@@ -28,8 +28,49 @@ extension Records {
             return row[name]
         }
 
-        var fields: [String: RecordValue] {
-            return [:]
+        var fields: [RecordField] {
+            return [
+                RecordField(name: R.string.drops, value: .references(droppedItems))
+            ]
         }
+    }
+}
+
+private extension Records.Monster {
+
+    var droppedItems: [AnyRecord] {
+        let columns = [
+            (Expression<String?>("Drop1id"), Expression<String?>("Drop1per")),
+            (Expression<String?>("Drop2id"), Expression<String?>("Drop2per")),
+            (Expression<String?>("Drop3id"), Expression<String?>("Drop3per")),
+            (Expression<String?>("Drop4id"), Expression<String?>("Drop4per")),
+            (Expression<String?>("Drop5id"), Expression<String?>("Drop5per")),
+            (Expression<String?>("Drop6id"), Expression<String?>("Drop6per")),
+            (Expression<String?>("Drop7id"), Expression<String?>("Drop7per")),
+            (Expression<String?>("Drop8id"), Expression<String?>("Drop8per")),
+            (Expression<String?>("Drop9id"), Expression<String?>("Drop9per"))
+        ]
+
+        var droppedItems: [AnyRecord] = []
+        for column in columns {
+            guard let dropId = row[column.0], let dropPer = row[column.1] else {
+                continue
+            }
+
+            guard let dropRate = Double(dropPer) else {
+                continue
+            }
+
+            let id = Expression<String>("id")
+            guard let item = Database.shared.fetchItems(with: id == dropId).first else {
+                continue
+            }
+
+            let droppedItem = Records.DroppedItem(item: item, dropRate: dropRate / 100)
+            let record = AnyRecord(droppedItem)
+            droppedItems.append(record)
+        }
+
+        return droppedItems
     }
 }

@@ -39,8 +39,8 @@ class RecordListViewController: UIViewController {
         collectionView.delegate = self
         view.addSubview(collectionView)
 
-        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Record> { (cell, indexPath, item) in
-            var contentConfiguration = UIListContentConfiguration.sidebarCell()
+        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, AnyRecord> { (cell, indexPath, item) in
+            var contentConfiguration = UIListContentConfiguration.cell()
             contentConfiguration.text = item.name
 
             cell.contentConfiguration = contentConfiguration
@@ -59,4 +59,13 @@ class RecordListViewController: UIViewController {
 }
 
 extension RecordListViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let item = dataSource.itemIdentifier(for: indexPath) else {
+            return
+        }
+
+        let recordDetailViewController = RecordDetailViewController(record: item)
+        navigationController?.pushViewController(recordDetailViewController, animated: true)
+    }
 }
