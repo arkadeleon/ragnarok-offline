@@ -26,14 +26,14 @@ class RecordListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let collectionViewLayout = UICollectionViewCompositionalLayout { (section, layoutEnvironment) -> NSCollectionLayoutSection? in
+        let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
             configuration.showsSeparators = true
             configuration.headerMode = .none
             return NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
         }
 
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: collectionViewLayout)
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = .systemBackground
         collectionView.delegate = self

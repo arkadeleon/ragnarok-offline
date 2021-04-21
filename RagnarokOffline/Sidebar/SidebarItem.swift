@@ -7,9 +7,9 @@
 //
 
 enum SidebarItem: Hashable {
+    case header(String)
     case client
     case server
-    case database
     case weapons
     case armors
     case cards
@@ -18,12 +18,12 @@ enum SidebarItem: Hashable {
 
     var title: String {
         switch self {
+        case .header(let title):
+            return title
         case .client:
             return Strings.client
         case .server:
             return Strings.server
-        case .database:
-            return Strings.database
         case .weapons:
             return Strings.weapons
         case .armors:

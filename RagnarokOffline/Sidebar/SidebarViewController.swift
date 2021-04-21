@@ -27,49 +27,46 @@ class SidebarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let collectionViewLayout = UICollectionViewCompositionalLayout { (section, layoutEnvironment) -> NSCollectionLayoutSection? in
+        let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
             configuration.showsSeparators = false
-            configuration.headerMode = .none
+            configuration.headerMode = sectionIndex == 0 ? .none : .firstItemInSection
             return NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
         }
 
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: collectionViewLayout)
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = .systemBackground
         collectionView.delegate = self
         view.addSubview(collectionView)
 
         let headerRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SidebarItem> { (cell, indexPath, item) in
-            var contentConfiguration = UIListContentConfiguration.sidebarCell()
+            var contentConfiguration = UIListContentConfiguration.sidebarHeader()
             contentConfiguration.text = item.title
-
             cell.contentConfiguration = contentConfiguration
-            cell.accessories = [.outlineDisclosure()]
         }
 
         let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SidebarItem> { (cell, indexPath, item) in
             var contentConfiguration = UIListContentConfiguration.sidebarCell()
             contentConfiguration.text = item.title
-
             cell.contentConfiguration = contentConfiguration
         }
 
         dataSource = UICollectionViewDiffableDataSource<Int, SidebarItem>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             switch item {
-            case .database:
+            case .header:
                 return collectionView.dequeueConfiguredReusableCell(using: headerRegistration, for: indexPath, item: item)
             default:
                 return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
             }
         }
 
-        var snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>()
-        snapshot.append([.client, .server])
-        snapshot.append([.database])
-        snapshot.expand([.database])
-        snapshot.append([.weapons, .armors, .cards, .items, .monsters], to: .database)
-        dataSource.apply(snapshot, to: 0, animatingDifferences: false)
+        var snapshot = NSDiffableDataSourceSnapshot<Int, SidebarItem>()
+        snapshot.appendSections([0])
+        snapshot.appendItems([.client, .server])
+        snapshot.appendSections([1])
+        snapshot.appendItems([.header(Strings.database), .weapons, .armors, .cards, .items, .monsters])
+        dataSource.apply(snapshot)
 
         let indexPath = IndexPath(item: 0, section: 0)
         collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
@@ -78,19 +75,6 @@ class SidebarViewController: UIViewController {
 }
 
 extension SidebarViewController: UICollectionViewDelegate {
-
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        guard let item = dataSource.itemIdentifier(for: indexPath) else {
-            return false
-        }
-
-        switch item {
-        case .database:
-            return false
-        default:
-            return true
-        }
-    }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let item = dataSource.itemIdentifier(for: indexPath) else {
@@ -102,11 +86,11 @@ extension SidebarViewController: UICollectionViewDelegate {
         if viewController == nil {
             let rootViewController: UIViewController
             switch item {
+            case .header:
+                fatalError("Header cannot be selected")
             case .client:
                 rootViewController = ClientViewController()
             case .server:
-                rootViewController = UIViewController()
-            case .database:
                 rootViewController = UIViewController()
             case .weapons:
                 rootViewController = RecordListViewController.weapons()
