@@ -17,7 +17,7 @@ class SidebarViewController: UIViewController {
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        title = R.string.ragnarokOffline
+        title = Strings.ragnarokOffline
     }
 
     required init?(coder: NSCoder) {

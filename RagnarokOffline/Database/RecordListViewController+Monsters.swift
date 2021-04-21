@@ -14,7 +14,7 @@ extension RecordListViewController {
         let monsters = Database.shared.fetchMonsters()
         let records = monsters.map { AnyRecord($0) }
         let recordListViewController = RecordListViewController(records: records)
-        recordListViewController.title = R.string.monsters
+        recordListViewController.title = Strings.monsters
         return recordListViewController
     }
 }

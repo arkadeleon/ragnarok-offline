@@ -20,15 +20,15 @@ class DatabaseViewController: UIViewController {
         var title: String {
             switch self {
             case .weapons:
-                return R.string.weapons
+                return Strings.weapons
             case .armors:
-                return R.string.armors
+                return Strings.armors
             case .cards:
-                return R.string.cards
+                return Strings.cards
             case .items:
-                return R.string.items
+                return Strings.items
             case .monsters:
-                return R.string.monsters
+                return Strings.monsters
             }
         }
     }
@@ -38,7 +38,7 @@ class DatabaseViewController: UIViewController {
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        title = R.string.database
+        title = Strings.database
     }
 
     required init?(coder: NSCoder) {

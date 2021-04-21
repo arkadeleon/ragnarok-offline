@@ -96,14 +96,14 @@ class RecordDetailViewController: UIViewController {
         }
 
         var snapshot = NSDiffableDataSourceSnapshot<String, Item>()
-        snapshot.appendSections([R.string.information])
-        snapshot.appendItems([.header(R.string.information)], toSection: R.string.information)
+        snapshot.appendSections([Strings.information])
+        snapshot.appendItems([.header(Strings.information)], toSection: Strings.information)
         for field in record.fields {
             switch field.value {
             case .string(let value):
                 let entry = Item.Entry(name: field.name, value: value)
                 let item: Item = .entry(entry)
-                snapshot.appendItems([item], toSection: R.string.information)
+                snapshot.appendItems([item], toSection: Strings.information)
             case .attributedString(let value):
                 var items: [Item] = [.header(field.name)]
                 items += [.description(value)]

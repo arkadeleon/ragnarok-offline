@@ -15,7 +15,7 @@ extension RecordListViewController {
         let items = Database.shared.fetchItems(with: type == "Armor")
         let records = items.map { AnyRecord($0) }
         let recordListViewController = RecordListViewController(records: records)
-        recordListViewController.title = R.string.armors
+        recordListViewController.title = Strings.armors
         return recordListViewController
     }
 }

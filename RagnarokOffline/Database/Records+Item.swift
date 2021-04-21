@@ -36,10 +36,10 @@ extension Records {
 
         var fields: [RecordField] {
             return [
-                RecordField(name: R.string.type, value: .string(type)),
-                RecordField(name: R.string.class, value: .string(subtype)),
-                RecordField(name: R.string.buy, value: .string(buy)),
-                RecordField(name: R.string.sell, value: .string(sell))
+                RecordField(name: Strings.itemType, value: .string(type)),
+                RecordField(name: Strings.itemClass, value: .string(subtype)),
+                RecordField(name: Strings.itemBuy, value: .string(buy)),
+                RecordField(name: Strings.itemSell, value: .string(sell))
             ]
         }
     }

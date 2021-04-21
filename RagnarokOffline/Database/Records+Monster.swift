@@ -30,7 +30,7 @@ extension Records {
 
         var fields: [RecordField] {
             return [
-                RecordField(name: R.string.drops, value: .references(droppedItems))
+                RecordField(name: Strings.drops, value: .references(droppedItems))
             ]
         }
     }

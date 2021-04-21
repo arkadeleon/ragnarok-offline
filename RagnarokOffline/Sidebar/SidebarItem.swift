@@ -19,21 +19,21 @@ enum SidebarItem: Hashable {
     var title: String {
         switch self {
         case .client:
-            return R.string.client
+            return Strings.client
         case .server:
-            return R.string.server
+            return Strings.server
         case .database:
-            return R.string.database
+            return Strings.database
         case .weapons:
-            return R.string.weapons
+            return Strings.weapons
         case .armors:
-            return R.string.armors
+            return Strings.armors
         case .cards:
-            return R.string.cards
+            return Strings.cards
         case .items:
-            return R.string.items
+            return Strings.items
         case .monsters:
-            return R.string.monsters
+            return Strings.monsters
         }
     }
 }
