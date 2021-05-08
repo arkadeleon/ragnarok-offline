@@ -6,10 +6,12 @@
 //  Copyright © 2021 Leon & Vane. All rights reserved.
 //
 
+import UIKit
+
 enum SidebarItem: Hashable {
-    case header(String)
     case client
     case server
+    case database
     case weapons
     case armors
     case cards
@@ -18,12 +20,12 @@ enum SidebarItem: Hashable {
 
     var title: String {
         switch self {
-        case .header(let title):
-            return title
         case .client:
             return Strings.client
         case .server:
             return Strings.server
+        case .database:
+            return Strings.database
         case .weapons:
             return Strings.weapons
         case .armors:
@@ -34,6 +36,27 @@ enum SidebarItem: Hashable {
             return Strings.items
         case .monsters:
             return Strings.monsters
+        }
+    }
+
+    var image: UIImage? {
+        switch self {
+        case .client:
+            return UIImage(systemName: "desktopcomputer")
+        case .server:
+            return UIImage(systemName: "server.rack")
+        case .database:
+            return UIImage(systemName: "text.book.closed")
+        case .weapons:
+            return UIImage(systemName: "list.dash")
+        case .armors:
+            return UIImage(systemName: "list.dash")
+        case .cards:
+            return UIImage(systemName: "list.dash")
+        case .items:
+            return UIImage(systemName: "list.dash")
+        case .monsters:
+            return UIImage(systemName: "list.dash")
         }
     }
 }

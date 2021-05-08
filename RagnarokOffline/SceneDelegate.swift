@@ -27,25 +27,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         #endif
 
-        UINavigationBar.appearance().prefersLargeTitles = true
+        let splitViewController = UISplitViewController(style: .doubleColumn)
+        splitViewController.preferredDisplayMode = .oneBesideSecondary
+        splitViewController.primaryBackgroundStyle = .sidebar
+
+        let sidebarViewController = SidebarViewController()
+        splitViewController.setViewController(sidebarViewController, for: .primary)
 
         window = UIWindow(windowScene: windowScene)
-
-        if window?.traitCollection.userInterfaceIdiom == .phone {
-            let tabBarController = makeTabBarController()
-
-            window?.rootViewController = tabBarController
-        } else {
-            let splitViewController = UISplitViewController(style: .doubleColumn)
-            splitViewController.preferredDisplayMode = .oneBesideSecondary
-            splitViewController.primaryBackgroundStyle = .sidebar
-
-            let sidebarViewController = SidebarViewController()
-            splitViewController.setViewController(sidebarViewController, for: .primary)
-
-            window?.rootViewController = splitViewController
-        }
-
+        window?.rootViewController = splitViewController
         window?.makeKeyAndVisible()
     }
 
@@ -75,32 +65,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-    }
-}
-
-extension SceneDelegate {
-
-    private func makeTabBarController() -> UITabBarController {
-        let tabBarController = UITabBarController()
-
-        let clientViewController = ClientViewController()
-        clientViewController.tabBarItem.image = UIImage(systemName: "desktopcomputer")
-        let clientNavigationController = UINavigationController(rootViewController: clientViewController)
-
-        let serverViewController = UIViewController()
-        serverViewController.tabBarItem.image = UIImage(systemName: "server.rack")
-        let serverNavigationController = UINavigationController(rootViewController: serverViewController)
-
-        let databaseViewController = DatabaseViewController()
-        databaseViewController.tabBarItem.image = UIImage(systemName: "text.book.closed")
-        let databaseNavigationController = UINavigationController(rootViewController: databaseViewController)
-
-        tabBarController.viewControllers = [
-            clientNavigationController,
-            serverNavigationController,
-            databaseNavigationController
-        ]
-
-        return tabBarController
     }
 }

@@ -27,6 +27,8 @@ class SidebarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationController?.navigationBar.prefersLargeTitles = true
+
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
             configuration.showsSeparators = false
@@ -48,13 +50,14 @@ class SidebarViewController: UIViewController {
 
         let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SidebarItem> { (cell, indexPath, item) in
             var contentConfiguration = UIListContentConfiguration.sidebarCell()
+            contentConfiguration.image = item.image
             contentConfiguration.text = item.title
             cell.contentConfiguration = contentConfiguration
         }
 
         dataSource = UICollectionViewDiffableDataSource<Int, SidebarItem>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             switch item {
-            case .header:
+            case .database:
                 return collectionView.dequeueConfiguredReusableCell(using: headerRegistration, for: indexPath, item: item)
             default:
                 return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
@@ -65,7 +68,7 @@ class SidebarViewController: UIViewController {
         snapshot.appendSections([0])
         snapshot.appendItems([.client, .server])
         snapshot.appendSections([1])
-        snapshot.appendItems([.header(Strings.database), .weapons, .armors, .cards, .items, .monsters])
+        snapshot.appendItems([.database, .weapons, .armors, .cards, .items, .monsters])
         dataSource.apply(snapshot)
 
         let indexPath = IndexPath(item: 0, section: 0)
@@ -75,6 +78,19 @@ class SidebarViewController: UIViewController {
 }
 
 extension SidebarViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        guard let item = dataSource.itemIdentifier(for: indexPath) else {
+            return false
+        }
+
+        switch item {
+        case .database:
+            return false
+        default:
+            return true
+        }
+    }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let item = dataSource.itemIdentifier(for: indexPath) else {
@@ -86,12 +102,12 @@ extension SidebarViewController: UICollectionViewDelegate {
         if viewController == nil {
             let rootViewController: UIViewController
             switch item {
-            case .header:
-                fatalError("Header cannot be selected")
             case .client:
                 rootViewController = ClientViewController()
             case .server:
                 rootViewController = UIViewController()
+            case .database:
+                fatalError("Database cannot be selected")
             case .weapons:
                 rootViewController = RecordListViewController.weapons()
             case .armors:
