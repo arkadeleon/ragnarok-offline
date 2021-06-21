@@ -6,8 +6,6 @@
 //  Copyright © 2021 Leon & Vane. All rights reserved.
 //
 
-import SQLite
-
 enum RecordValue {
     case string(String)
     case attributedString(NSAttributedString)

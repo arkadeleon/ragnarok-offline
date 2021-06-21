@@ -6,13 +6,10 @@
 //  Copyright © 2021 Leon & Vane. All rights reserved.
 //
 
-import SQLite
-
 extension RecordListViewController {
 
     static func armors() -> RecordListViewController {
-        let type = Expression<String>("type")
-        let items = Database.shared.fetchItems(with: type == "Armor")
+        let items = Database.shared.fetchItems(with: { $0.type == "Armor" })
         let records = items.map { AnyRecord($0) }
         let recordListViewController = RecordListViewController(records: records)
         recordListViewController.title = Strings.armors

@@ -6,8 +6,6 @@
 //  Copyright © 2021 Leon & Vane. All rights reserved.
 //
 
-import SQLite
-
 extension RecordListViewController {
 
     static func monsters() -> RecordListViewController {

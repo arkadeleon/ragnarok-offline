@@ -6,31 +6,23 @@
 //  Copyright © 2021 Leon & Vane. All rights reserved.
 //
 
-import SQLite
-
 extension Records {
 
     struct Item: Record {
 
-        private let row: Row
-
-        init(from row: Row) {
-            self.row = row
-        }
-
         var id: String {
-            let id = Expression<String>("id")
-            return "Item#\(row[id])"
+            let id = "$(id)"
+            return "Item#\(id)"
         }
 
         var name: String {
-            let name = Expression<String>("name_english")
+            let name = "$(name_english)"
             switch type {
             case "Weapon", "Armor":
-                let slots = Expression<String?>("slots")
-                return "\(row[name]) [\(row[slots] ?? "0")]"
+                let slots: String? = "$(slots)"
+                return "\(name) [\(slots ?? "0")]"
             default:
-                return "\(row[name])"
+                return "\(name)"
             }
         }
 
@@ -45,25 +37,21 @@ extension Records {
     }
 }
 
-private extension Records.Item {
+extension Records.Item {
 
     var type: String {
-        let type = Expression<String>("type")
-        return row[type]
+        return "$(type)"
     }
 
     var subtype: String {
-        let type = Expression<String?>("subtype")
-        return row[type] ?? ""
+        return "$(subtype)"
     }
 
     var buy: String {
-        let buy = Expression<String?>("price_buy")
-        return row[buy] ?? ""
+        return "$(price_buy)"
     }
 
     var sell: String {
-        let sell = Expression<String?>("price_sell")
-        return row[sell] ?? ""
+        return "$(price_sell)"
     }
 }

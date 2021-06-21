@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SQLite
 
 class SidebarViewController: UIViewController {
 

@@ -6,13 +6,10 @@
 //  Copyright © 2021 Leon & Vane. All rights reserved.
 //
 
-import SQLite
-
 extension RecordListViewController {
 
     static func cards() -> RecordListViewController {
-        let type = Expression<String>("type")
-        let items = Database.shared.fetchItems(with: type == "Card")
+        let items = Database.shared.fetchItems(with: { $0.type == "Card" })
         let records = items.map { AnyRecord($0) }
         let recordListViewController = RecordListViewController(records: records)
         recordListViewController.title = Strings.cards
