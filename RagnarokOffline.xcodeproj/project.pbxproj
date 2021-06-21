@@ -45,29 +45,6 @@
 		35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8E2472E685000A60FE /* SPRDocument.swift */; };
 		351A96AE247F5D9F00274D64 /* SGLMath in Frameworks */ = {isa = PBXBuildFile; productRef = 351A96AD247F5D9F00274D64 /* SGLMath */; };
 		351E225624BC5D98000EF504 /* INIDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351E225524BC5D98000EF504 /* INIDocument.swift */; };
-		3523AD2125B048EA00828217 /* item_db_equip.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD0925B048EA00828217 /* item_db_equip.sql */; };
-		3523AD2225B048EA00828217 /* mob_db2.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD0A25B048EA00828217 /* mob_db2.sql */; };
-		3523AD2325B048EA00828217 /* item_cash_db.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD0B25B048EA00828217 /* item_cash_db.sql */; };
-		3523AD2425B048EA00828217 /* mob_db.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD0C25B048EA00828217 /* mob_db.sql */; };
-		3523AD2525B048EA00828217 /* item_db_re_etc.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD0D25B048EA00828217 /* item_db_re_etc.sql */; };
-		3523AD2625B048EA00828217 /* mob_db2_re.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD0E25B048EA00828217 /* mob_db2_re.sql */; };
-		3523AD2725B048EA00828217 /* mob_db_re.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD0F25B048EA00828217 /* mob_db_re.sql */; };
-		3523AD2825B048EA00828217 /* item_db_usable.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD1025B048EA00828217 /* item_db_usable.sql */; };
-		3523AD2925B048EA00828217 /* roulette_default_data.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD1125B048EA00828217 /* roulette_default_data.sql */; };
-		3523AD2A25B048EA00828217 /* item_db_re_equip.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD1225B048EA00828217 /* item_db_re_equip.sql */; };
-		3523AD2B25B048EA00828217 /* item_db_etc.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD1325B048EA00828217 /* item_db_etc.sql */; };
-		3523AD2D25B048EA00828217 /* mob_skill_db.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD1525B048EA00828217 /* mob_skill_db.sql */; };
-		3523AD2E25B048EA00828217 /* mob_skill_db2.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD1625B048EA00828217 /* mob_skill_db2.sql */; };
-		3523AD2F25B048EA00828217 /* item_db_re.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD1725B048EA00828217 /* item_db_re.sql */; };
-		3523AD3025B048EA00828217 /* item_db.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD1825B048EA00828217 /* item_db.sql */; };
-		3523AD3125B048EA00828217 /* item_cash_db2.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD1925B048EA00828217 /* item_cash_db2.sql */; };
-		3523AD3225B048EA00828217 /* mob_skill_db2_re.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD1A25B048EA00828217 /* mob_skill_db2_re.sql */; };
-		3523AD3325B048EA00828217 /* item_db2.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD1B25B048EA00828217 /* item_db2.sql */; };
-		3523AD3425B048EA00828217 /* main.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD1C25B048EA00828217 /* main.sql */; };
-		3523AD3525B048EA00828217 /* item_db_re_usable.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD1D25B048EA00828217 /* item_db_re_usable.sql */; };
-		3523AD3625B048EA00828217 /* logs.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD1E25B048EA00828217 /* logs.sql */; };
-		3523AD3725B048EA00828217 /* mob_skill_db_re.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD1F25B048EA00828217 /* mob_skill_db_re.sql */; };
-		3523AD3825B048EA00828217 /* item_db2_re.sql in Resources */ = {isa = PBXBuildFile; fileRef = 3523AD2025B048EA00828217 /* item_db2_re.sql */; };
 		352DC2D525EF21C200DAAACE /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352DC2D225EF21C100DAAACE /* Record.swift */; };
 		352DC2D625EF21C200DAAACE /* RecordListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352DC2D325EF21C100DAAACE /* RecordListViewController.swift */; };
 		3533CBA724D2BB26006AFE04 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CB6F24D2BB25006AFE04 /* lauxlib.c */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -103,6 +80,14 @@
 		3535FCD325F9DF8B000C5608 /* Records.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3535FCD225F9DF8B000C5608 /* Records.swift */; };
 		3535FCD825F9DFE2000C5608 /* Records+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3535FCD725F9DFE2000C5608 /* Records+Item.swift */; };
 		3535FCDD25F9DFF0000C5608 /* Records+Monster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3535FCDC25F9DFF0000C5608 /* Records+Monster.swift */; };
+		35471775268083F3008184CD /* rAthena.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35471771268083F2008184CD /* rAthena.xcframework */; };
+		35471776268083F3008184CD /* rAthena.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 35471771268083F2008184CD /* rAthena.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		35471777268083F3008184CD /* rAthenaChar.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35471772268083F2008184CD /* rAthenaChar.xcframework */; };
+		35471778268083F3008184CD /* rAthenaChar.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 35471772268083F2008184CD /* rAthenaChar.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		35471779268083F3008184CD /* rAthenaLogin.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35471773268083F2008184CD /* rAthenaLogin.xcframework */; };
+		3547177A268083F3008184CD /* rAthenaLogin.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 35471773268083F2008184CD /* rAthenaLogin.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3547177B268083F3008184CD /* rAthenaMap.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35471774268083F2008184CD /* rAthenaMap.xcframework */; };
+		3547177C268083F3008184CD /* rAthenaMap.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 35471774268083F2008184CD /* rAthenaMap.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		355BF1D125ECB13A006E2D73 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BF1D025ECB13A006E2D73 /* SidebarViewController.swift */; };
 		355BF1E425ECD3BA006E2D73 /* SidebarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BF1E325ECD3BA006E2D73 /* SidebarItem.swift */; };
 		355E914924BECC5C00361AF6 /* ModelPreviewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */; };
@@ -189,6 +174,23 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		3547177D268083F3008184CD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3547177A268083F3008184CD /* rAthenaLogin.xcframework in Embed Frameworks */,
+				35471776268083F3008184CD /* rAthena.xcframework in Embed Frameworks */,
+				3547177C268083F3008184CD /* rAthenaMap.xcframework in Embed Frameworks */,
+				35471778268083F3008184CD /* rAthenaChar.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		35021BAC24A054700021B99B /* GNDDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNDDocument.swift; sourceTree = "<group>"; };
 		35021BAE24A0A4760021B99B /* GroundShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroundShaderTypes.h; sourceTree = "<group>"; };
@@ -233,29 +235,6 @@
 		35116E8C247035AC000A60FE /* ACTDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACTDocument.swift; sourceTree = "<group>"; };
 		35116E8E2472E685000A60FE /* SPRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPRDocument.swift; sourceTree = "<group>"; };
 		351E225524BC5D98000EF504 /* INIDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INIDocument.swift; sourceTree = "<group>"; };
-		3523AD0925B048EA00828217 /* item_db_equip.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = item_db_equip.sql; sourceTree = "<group>"; };
-		3523AD0A25B048EA00828217 /* mob_db2.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mob_db2.sql; sourceTree = "<group>"; };
-		3523AD0B25B048EA00828217 /* item_cash_db.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = item_cash_db.sql; sourceTree = "<group>"; };
-		3523AD0C25B048EA00828217 /* mob_db.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mob_db.sql; sourceTree = "<group>"; };
-		3523AD0D25B048EA00828217 /* item_db_re_etc.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = item_db_re_etc.sql; sourceTree = "<group>"; };
-		3523AD0E25B048EA00828217 /* mob_db2_re.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mob_db2_re.sql; sourceTree = "<group>"; };
-		3523AD0F25B048EA00828217 /* mob_db_re.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mob_db_re.sql; sourceTree = "<group>"; };
-		3523AD1025B048EA00828217 /* item_db_usable.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = item_db_usable.sql; sourceTree = "<group>"; };
-		3523AD1125B048EA00828217 /* roulette_default_data.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = roulette_default_data.sql; sourceTree = "<group>"; };
-		3523AD1225B048EA00828217 /* item_db_re_equip.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = item_db_re_equip.sql; sourceTree = "<group>"; };
-		3523AD1325B048EA00828217 /* item_db_etc.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = item_db_etc.sql; sourceTree = "<group>"; };
-		3523AD1525B048EA00828217 /* mob_skill_db.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mob_skill_db.sql; sourceTree = "<group>"; };
-		3523AD1625B048EA00828217 /* mob_skill_db2.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mob_skill_db2.sql; sourceTree = "<group>"; };
-		3523AD1725B048EA00828217 /* item_db_re.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = item_db_re.sql; sourceTree = "<group>"; };
-		3523AD1825B048EA00828217 /* item_db.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = item_db.sql; sourceTree = "<group>"; };
-		3523AD1925B048EA00828217 /* item_cash_db2.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = item_cash_db2.sql; sourceTree = "<group>"; };
-		3523AD1A25B048EA00828217 /* mob_skill_db2_re.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mob_skill_db2_re.sql; sourceTree = "<group>"; };
-		3523AD1B25B048EA00828217 /* item_db2.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = item_db2.sql; sourceTree = "<group>"; };
-		3523AD1C25B048EA00828217 /* main.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.sql; sourceTree = "<group>"; };
-		3523AD1D25B048EA00828217 /* item_db_re_usable.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = item_db_re_usable.sql; sourceTree = "<group>"; };
-		3523AD1E25B048EA00828217 /* logs.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = logs.sql; sourceTree = "<group>"; };
-		3523AD1F25B048EA00828217 /* mob_skill_db_re.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mob_skill_db_re.sql; sourceTree = "<group>"; };
-		3523AD2025B048EA00828217 /* item_db2_re.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = item_db2_re.sql; sourceTree = "<group>"; };
 		352DC2D225EF21C100DAAACE /* Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		352DC2D325EF21C100DAAACE /* RecordListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordListViewController.swift; sourceTree = "<group>"; };
 		3533CB6F24D2BB25006AFE04 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lauxlib.c; sourceTree = "<group>"; };
@@ -314,6 +293,10 @@
 		3535FCD225F9DF8B000C5608 /* Records.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Records.swift; sourceTree = "<group>"; };
 		3535FCD725F9DFE2000C5608 /* Records+Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Records+Item.swift"; sourceTree = "<group>"; };
 		3535FCDC25F9DFF0000C5608 /* Records+Monster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Records+Monster.swift"; sourceTree = "<group>"; };
+		35471771268083F2008184CD /* rAthena.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = rAthena.xcframework; path = Carthage/Build/rAthena.xcframework; sourceTree = "<group>"; };
+		35471772268083F2008184CD /* rAthenaChar.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = rAthenaChar.xcframework; path = Carthage/Build/rAthenaChar.xcframework; sourceTree = "<group>"; };
+		35471773268083F2008184CD /* rAthenaLogin.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = rAthenaLogin.xcframework; path = Carthage/Build/rAthenaLogin.xcframework; sourceTree = "<group>"; };
+		35471774268083F2008184CD /* rAthenaMap.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = rAthenaMap.xcframework; path = Carthage/Build/rAthenaMap.xcframework; sourceTree = "<group>"; };
 		355BF1D025ECB13A006E2D73 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		355BF1E325ECD3BA006E2D73 /* SidebarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarItem.swift; sourceTree = "<group>"; };
 		355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPreviewRenderer.swift; sourceTree = "<group>"; };
@@ -406,7 +389,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				35116E50245FBF65000A60FE /* DataCompression in Frameworks */,
+				35471777268083F3008184CD /* rAthenaChar.xcframework in Frameworks */,
+				35471775268083F3008184CD /* rAthena.xcframework in Frameworks */,
+				35471779268083F3008184CD /* rAthenaLogin.xcframework in Frameworks */,
 				35106FAA253435E300CACA20 /* Highlighter in Frameworks */,
+				3547177B268083F3008184CD /* rAthenaMap.xcframework in Frameworks */,
 				351A96AE247F5D9F00274D64 /* SGLMath in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -496,6 +483,7 @@
 				35116E2B245C7B8A000A60FE /* RagnarokOfflineTests */,
 				35116E36245C7B8A000A60FE /* RagnarokOfflineUITests */,
 				35116E13245C7B87000A60FE /* Products */,
+				35471770268083F2008184CD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -525,7 +513,6 @@
 				35116E76246596A5000A60FE /* Documents */,
 				35CB3BBA247EB2C100EC04C3 /* Utilities */,
 				3533CB6B24D2BACA006AFE04 /* Vendors */,
-				3523AD0825B048EA00828217 /* SQLs */,
 				35116E1E245C7B8A000A60FE /* Assets.xcassets */,
 				35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */,
 				35CB3BAF2478339500EC04C3 /* RagnarokOffline-Bridging-Header.h */,
@@ -600,36 +587,6 @@
 			path = Browser;
 			sourceTree = "<group>";
 		};
-		3523AD0825B048EA00828217 /* SQLs */ = {
-			isa = PBXGroup;
-			children = (
-				3523AD0B25B048EA00828217 /* item_cash_db.sql */,
-				3523AD1925B048EA00828217 /* item_cash_db2.sql */,
-				3523AD0925B048EA00828217 /* item_db_equip.sql */,
-				3523AD1325B048EA00828217 /* item_db_etc.sql */,
-				3523AD1225B048EA00828217 /* item_db_re_equip.sql */,
-				3523AD0D25B048EA00828217 /* item_db_re_etc.sql */,
-				3523AD1D25B048EA00828217 /* item_db_re_usable.sql */,
-				3523AD1725B048EA00828217 /* item_db_re.sql */,
-				3523AD1025B048EA00828217 /* item_db_usable.sql */,
-				3523AD1825B048EA00828217 /* item_db.sql */,
-				3523AD2025B048EA00828217 /* item_db2_re.sql */,
-				3523AD1B25B048EA00828217 /* item_db2.sql */,
-				3523AD1E25B048EA00828217 /* logs.sql */,
-				3523AD1C25B048EA00828217 /* main.sql */,
-				3523AD0F25B048EA00828217 /* mob_db_re.sql */,
-				3523AD0C25B048EA00828217 /* mob_db.sql */,
-				3523AD0E25B048EA00828217 /* mob_db2_re.sql */,
-				3523AD0A25B048EA00828217 /* mob_db2.sql */,
-				3523AD1F25B048EA00828217 /* mob_skill_db_re.sql */,
-				3523AD1525B048EA00828217 /* mob_skill_db.sql */,
-				3523AD1A25B048EA00828217 /* mob_skill_db2_re.sql */,
-				3523AD1625B048EA00828217 /* mob_skill_db2.sql */,
-				3523AD1125B048EA00828217 /* roulette_default_data.sql */,
-			);
-			path = SQLs;
-			sourceTree = "<group>";
-		};
 		3533CB6B24D2BACA006AFE04 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
@@ -697,6 +654,17 @@
 				3533CB7A24D2BB25006AFE04 /* print.c */,
 			);
 			path = lua;
+			sourceTree = "<group>";
+		};
+		35471770268083F2008184CD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				35471771268083F2008184CD /* rAthena.xcframework */,
+				35471772268083F2008184CD /* rAthenaChar.xcframework */,
+				35471773268083F2008184CD /* rAthenaLogin.xcframework */,
+				35471774268083F2008184CD /* rAthenaMap.xcframework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		355BF1D725ECD2D7006E2D73 /* Sidebar */ = {
@@ -868,6 +836,7 @@
 				35116E0E245C7B87000A60FE /* Sources */,
 				35116E0F245C7B87000A60FE /* Frameworks */,
 				35116E10245C7B87000A60FE /* Resources */,
+				3547177D268083F3008184CD /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -973,32 +942,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3523AD3325B048EA00828217 /* item_db2.sql in Resources */,
-				3523AD2E25B048EA00828217 /* mob_skill_db2.sql in Resources */,
-				3523AD2D25B048EA00828217 /* mob_skill_db.sql in Resources */,
-				3523AD3625B048EA00828217 /* logs.sql in Resources */,
-				3523AD3425B048EA00828217 /* main.sql in Resources */,
-				3523AD2525B048EA00828217 /* item_db_re_etc.sql in Resources */,
-				3523AD2A25B048EA00828217 /* item_db_re_equip.sql in Resources */,
-				3523AD2125B048EA00828217 /* item_db_equip.sql in Resources */,
-				3523AD3025B048EA00828217 /* item_db.sql in Resources */,
 				35116E22245C7B8A000A60FE /* LaunchScreen.storyboard in Resources */,
-				3523AD3525B048EA00828217 /* item_db_re_usable.sql in Resources */,
-				3523AD2F25B048EA00828217 /* item_db_re.sql in Resources */,
-				3523AD2825B048EA00828217 /* item_db_usable.sql in Resources */,
-				3523AD2325B048EA00828217 /* item_cash_db.sql in Resources */,
-				3523AD3125B048EA00828217 /* item_cash_db2.sql in Resources */,
-				3523AD2425B048EA00828217 /* mob_db.sql in Resources */,
-				3523AD3825B048EA00828217 /* item_db2_re.sql in Resources */,
-				3523AD2925B048EA00828217 /* roulette_default_data.sql in Resources */,
-				3523AD2625B048EA00828217 /* mob_db2_re.sql in Resources */,
 				355F206924DA4CC3001302FC /* srcversion.h in Resources */,
-				3523AD3725B048EA00828217 /* mob_skill_db_re.sql in Resources */,
-				3523AD2B25B048EA00828217 /* item_db_etc.sql in Resources */,
-				3523AD3225B048EA00828217 /* mob_skill_db2_re.sql in Resources */,
 				35CB3BB7247D81B300EC04C3 /* wall.jpg in Resources */,
-				3523AD2225B048EA00828217 /* mob_db2.sql in Resources */,
-				3523AD2725B048EA00828217 /* mob_db_re.sql in Resources */,
 				35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
