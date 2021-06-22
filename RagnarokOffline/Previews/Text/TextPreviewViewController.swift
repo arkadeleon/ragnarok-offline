@@ -7,13 +7,14 @@
 //
 
 import UIKit
-import Highlighter
+import WebKit
+import Highlight
 
 class TextPreviewViewController: UIViewController {
 
     let previewItem: PreviewItem
 
-    private var textView: UITextView!
+    private var webView: WKWebView!
 
     init(previewItem: PreviewItem) {
         self.previewItem = previewItem
@@ -30,10 +31,9 @@ class TextPreviewViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
 
-        textView = UITextView(frame: view.bounds)
-        textView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        textView.isEditable = false
-        view.addSubview(textView)
+        webView = WKWebView(frame: view.bounds)
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(webView)
 
         loadPreviewItem()
     }
@@ -59,7 +59,7 @@ class TextPreviewViewController: UIViewController {
             }
 
             DispatchQueue.main.async {
-                let style: Highlighter.Style
+                let style: HighlightStyle
                 switch self.traitCollection.userInterfaceStyle {
                 case .unspecified, .light:
                     style = .atomOneLight
@@ -69,13 +69,12 @@ class TextPreviewViewController: UIViewController {
                     style = .default
                 }
 
-                guard let highlighter = Highlighter(style: style),
-                      let text = String(data: data, encoding: .ascii)
+                guard let text = String(data: data, encoding: .ascii)
                 else {
                     return
                 }
 
-                self.textView.attributedText = highlighter.highlight(text)
+                self.webView.loadCode(text, style: style)
             }
         }
     }

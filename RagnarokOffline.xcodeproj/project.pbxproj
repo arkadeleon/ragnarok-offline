@@ -14,7 +14,6 @@
 		3509565724ACD8FB0077C134 /* SPRDocument+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565624ACD8FB0077C134 /* SPRDocument+Image.swift */; };
 		3509565924ACE48A0077C134 /* SpritePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */; };
 		350F347324B5610F00848ED5 /* PreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350F347224B5610F00848ED5 /* PreviewItem.swift */; };
-		35106FAA253435E300CACA20 /* Highlighter in Frameworks */ = {isa = PBXBuildFile; productRef = 35106FA9253435E300CACA20 /* Highlighter */; };
 		35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E15245C7B87000A60FE /* AppDelegate.swift */; };
 		35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E17245C7B87000A60FE /* SceneDelegate.swift */; };
 		35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35116E1E245C7B8A000A60FE /* Assets.xcassets */; };
@@ -88,6 +87,8 @@
 		3547177A268083F3008184CD /* rAthenaLogin.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 35471773268083F2008184CD /* rAthenaLogin.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3547177B268083F3008184CD /* rAthenaMap.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35471774268083F2008184CD /* rAthenaMap.xcframework */; };
 		3547177C268083F3008184CD /* rAthenaMap.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 35471774268083F2008184CD /* rAthenaMap.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		355B4B852681C7D700F3A6BF /* Highlight.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 355B4B842681C7D700F3A6BF /* Highlight.xcframework */; };
+		355B4B862681C7D700F3A6BF /* Highlight.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 355B4B842681C7D700F3A6BF /* Highlight.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		355BF1D125ECB13A006E2D73 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BF1D025ECB13A006E2D73 /* SidebarViewController.swift */; };
 		355BF1E425ECD3BA006E2D73 /* SidebarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BF1E325ECD3BA006E2D73 /* SidebarItem.swift */; };
 		355E914924BECC5C00361AF6 /* ModelPreviewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */; };
@@ -184,6 +185,7 @@
 				3547177A268083F3008184CD /* rAthenaLogin.xcframework in Embed Frameworks */,
 				35471776268083F3008184CD /* rAthena.xcframework in Embed Frameworks */,
 				3547177C268083F3008184CD /* rAthenaMap.xcframework in Embed Frameworks */,
+				355B4B862681C7D700F3A6BF /* Highlight.xcframework in Embed Frameworks */,
 				35471778268083F3008184CD /* rAthenaChar.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -297,6 +299,7 @@
 		35471772268083F2008184CD /* rAthenaChar.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = rAthenaChar.xcframework; path = Carthage/Build/rAthenaChar.xcframework; sourceTree = "<group>"; };
 		35471773268083F2008184CD /* rAthenaLogin.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = rAthenaLogin.xcframework; path = Carthage/Build/rAthenaLogin.xcframework; sourceTree = "<group>"; };
 		35471774268083F2008184CD /* rAthenaMap.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = rAthenaMap.xcframework; path = Carthage/Build/rAthenaMap.xcframework; sourceTree = "<group>"; };
+		355B4B842681C7D700F3A6BF /* Highlight.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Highlight.xcframework; path = Carthage/Build/Highlight.xcframework; sourceTree = "<group>"; };
 		355BF1D025ECB13A006E2D73 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		355BF1E325ECD3BA006E2D73 /* SidebarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarItem.swift; sourceTree = "<group>"; };
 		355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPreviewRenderer.swift; sourceTree = "<group>"; };
@@ -388,11 +391,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				355B4B852681C7D700F3A6BF /* Highlight.xcframework in Frameworks */,
 				35116E50245FBF65000A60FE /* DataCompression in Frameworks */,
 				35471777268083F3008184CD /* rAthenaChar.xcframework in Frameworks */,
 				35471775268083F3008184CD /* rAthena.xcframework in Frameworks */,
 				35471779268083F3008184CD /* rAthenaLogin.xcframework in Frameworks */,
-				35106FAA253435E300CACA20 /* Highlighter in Frameworks */,
 				3547177B268083F3008184CD /* rAthenaMap.xcframework in Frameworks */,
 				351A96AE247F5D9F00274D64 /* SGLMath in Frameworks */,
 			);
@@ -659,6 +662,7 @@
 		35471770268083F2008184CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				355B4B842681C7D700F3A6BF /* Highlight.xcframework */,
 				35471771268083F2008184CD /* rAthena.xcframework */,
 				35471772268083F2008184CD /* rAthenaChar.xcframework */,
 				35471773268083F2008184CD /* rAthenaLogin.xcframework */,
@@ -846,7 +850,6 @@
 			packageProductDependencies = (
 				35116E4F245FBF65000A60FE /* DataCompression */,
 				351A96AD247F5D9F00274D64 /* SGLMath */,
-				35106FA9253435E300CACA20 /* Highlighter */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35116E12245C7B87000A60FE /* RagnarokOffline.app */;
@@ -924,7 +927,6 @@
 			packageReferences = (
 				35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */,
 				351A96AC247F5D9F00274D64 /* XCRemoteSwiftPackageReference "Math" */,
-				35106FA8253435E300CACA20 /* XCRemoteSwiftPackageReference "highlighter" */,
 			);
 			productRefGroup = 35116E13245C7B87000A60FE /* Products */;
 			projectDirPath = "";
@@ -1434,14 +1436,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		35106FA8253435E300CACA20 /* XCRemoteSwiftPackageReference "highlighter" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/arkadeleon/highlighter.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.1;
-			};
-		};
 		35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mw99/DataCompression";
@@ -1461,11 +1455,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		35106FA9253435E300CACA20 /* Highlighter */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 35106FA8253435E300CACA20 /* XCRemoteSwiftPackageReference "highlighter" */;
-			productName = Highlighter;
-		};
 		35116E4F245FBF65000A60FE /* DataCompression */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */;
