@@ -20,13 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
 
-        #if targetEnvironment(macCatalyst)
-        if let titlebar = windowScene.titlebar {
-            titlebar.titleVisibility = .hidden
-            titlebar.toolbar = nil
-        }
-        #endif
-
         let splitViewController = UISplitViewController(style: .doubleColumn)
         splitViewController.preferredDisplayMode = .oneBesideSecondary
         splitViewController.primaryBackgroundStyle = .sidebar
