@@ -11,15 +11,6 @@
         }
       },
       {
-        "package": "Highlight",
-        "repositoryURL": "https://github.com/arkadeleon/highlight.git",
-        "state": {
-          "branch": "master",
-          "revision": "f8195e21a4654cf944da90fd0779a5798daf5414",
-          "version": null
-        }
-      },
-      {
         "package": "SGLMath",
         "repositoryURL": "https://github.com/SwiftGL/Math.git",
         "state": {

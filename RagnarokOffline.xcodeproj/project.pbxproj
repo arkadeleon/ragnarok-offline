@@ -136,7 +136,6 @@
 		35E5E90524EAB9EB00716592 /* GRFDocument+Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E90424EAB9EB00716592 /* GRFDocument+Tree.swift */; };
 		35E5E90724ED68BC00716592 /* PreviewItem+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E90624ED68BC00716592 /* PreviewItem+Thumbnail.swift */; };
 		35E5E90924ED6A8F00716592 /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5E90824ED6A8F00716592 /* FileType.swift */; };
-		35E896232685B5D300A2FBA1 /* Highlight in Frameworks */ = {isa = PBXBuildFile; productRef = 35E896222685B5D300A2FBA1 /* Highlight */; };
 		35E8DCDB24A88BCC00A14FC5 /* WaterShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDA24A88BCC00A14FC5 /* WaterShaders.metal */; };
 		35E8DCDE24A9D99000A14FC5 /* RendererCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDD24A9D99000A14FC5 /* RendererCommon.swift */; };
 		35E8DCE024A9DC1100A14FC5 /* ModelRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDF24A9DC1100A14FC5 /* ModelRenderer.swift */; };
@@ -155,6 +154,8 @@
 		35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8502473D9E8007DF105 /* STRDocument.swift */; };
 		35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8522473E1D7007DF105 /* RSWDocument.swift */; };
 		35FD46BB25AD4AFB0032D07A /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FD46BA25AD4AFB0032D07A /* Database.swift */; };
+		35FFBB32268642030026D40A /* Highlight.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35FFBB31268642030026D40A /* Highlight.xcframework */; };
+		35FFBB33268642030026D40A /* Highlight.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 35FFBB31268642030026D40A /* Highlight.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,6 +185,7 @@
 				3547177A268083F3008184CD /* rAthenaLogin.xcframework in Embed Frameworks */,
 				35471776268083F3008184CD /* rAthena.xcframework in Embed Frameworks */,
 				3547177C268083F3008184CD /* rAthenaMap.xcframework in Embed Frameworks */,
+				35FFBB33268642030026D40A /* Highlight.xcframework in Embed Frameworks */,
 				35471778268083F3008184CD /* rAthenaChar.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -380,6 +382,7 @@
 		35F8D8502473D9E8007DF105 /* STRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRDocument.swift; sourceTree = "<group>"; };
 		35F8D8522473E1D7007DF105 /* RSWDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWDocument.swift; sourceTree = "<group>"; };
 		35FD46BA25AD4AFB0032D07A /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		35FFBB31268642030026D40A /* Highlight.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Highlight.xcframework; path = Carthage/Build/Highlight.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -387,7 +390,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35E896232685B5D300A2FBA1 /* Highlight in Frameworks */,
+				35FFBB32268642030026D40A /* Highlight.xcframework in Frameworks */,
 				35116E50245FBF65000A60FE /* DataCompression in Frameworks */,
 				35471777268083F3008184CD /* rAthenaChar.xcframework in Frameworks */,
 				35471775268083F3008184CD /* rAthena.xcframework in Frameworks */,
@@ -657,6 +660,7 @@
 		35471770268083F2008184CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				35FFBB31268642030026D40A /* Highlight.xcframework */,
 				35471771268083F2008184CD /* rAthena.xcframework */,
 				35471772268083F2008184CD /* rAthenaChar.xcframework */,
 				35471773268083F2008184CD /* rAthenaLogin.xcframework */,
@@ -844,7 +848,6 @@
 			packageProductDependencies = (
 				35116E4F245FBF65000A60FE /* DataCompression */,
 				351A96AD247F5D9F00274D64 /* SGLMath */,
-				35E896222685B5D300A2FBA1 /* Highlight */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35116E12245C7B87000A60FE /* RagnarokOffline.app */;
@@ -922,7 +925,6 @@
 			packageReferences = (
 				35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */,
 				351A96AC247F5D9F00274D64 /* XCRemoteSwiftPackageReference "Math" */,
-				35E896212685B5D300A2FBA1 /* XCRemoteSwiftPackageReference "highlight" */,
 			);
 			productRefGroup = 35116E13245C7B87000A60FE /* Products */;
 			projectDirPath = "";
@@ -1444,14 +1446,6 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		35E896212685B5D300A2FBA1 /* XCRemoteSwiftPackageReference "highlight" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/arkadeleon/highlight.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1464,11 +1458,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 351A96AC247F5D9F00274D64 /* XCRemoteSwiftPackageReference "Math" */;
 			productName = SGLMath;
-		};
-		35E896222685B5D300A2FBA1 /* Highlight */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 35E896212685B5D300A2FBA1 /* XCRemoteSwiftPackageReference "highlight" */;
-			productName = Highlight;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
