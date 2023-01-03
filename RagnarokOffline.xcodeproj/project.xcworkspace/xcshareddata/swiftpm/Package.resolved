@@ -1,25 +1,41 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "DataCompression",
-        "repositoryURL": "https://github.com/mw99/DataCompression",
-        "state": {
-          "branch": null,
-          "revision": "6abb8f3cd0e4b2a33b4927a7a92b6764528f2440",
-          "version": "3.6.0"
-        }
-      },
-      {
-        "package": "SGLMath",
-        "repositoryURL": "https://github.com/SwiftGL/Math.git",
-        "state": {
-          "branch": null,
-          "revision": "8bdd2e542f28828d0c224c1ea8e046c6f652ec40",
-          "version": "3.0.0"
-        }
+  "pins" : [
+    {
+      "identity" : "datacompression",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mw99/DataCompression",
+      "state" : {
+        "revision" : "6abb8f3cd0e4b2a33b4927a7a92b6764528f2440",
+        "version" : "3.6.0"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "highlight",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/arkadeleon/highlight",
+      "state" : {
+        "branch" : "master",
+        "revision" : "cd48c68effe07e97cd55489198538d665f45b179"
+      }
+    },
+    {
+      "identity" : "math",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftGL/Math.git",
+      "state" : {
+        "revision" : "8bdd2e542f28828d0c224c1ea8e046c6f652ec40",
+        "version" : "3.0.0"
+      }
+    },
+    {
+      "identity" : "rathena-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/arkadeleon/rathena-ios.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "8d204ff1edfd4ba086fb0999cf0f39126acd12d9"
+      }
+    }
+  ],
+  "version" : 2
 }

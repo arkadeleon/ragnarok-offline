@@ -6,6 +6,8 @@
 //  Copyright © 2021 Leon & Vane. All rights reserved.
 //
 
+import Foundation
+
 struct Strings {
     
     static let ragnarokOffline = NSLocalizedString("RagnarokOffline", value: "Ragnarok Offline", comment: "")

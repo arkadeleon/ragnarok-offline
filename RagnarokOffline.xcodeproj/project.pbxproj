@@ -79,14 +79,6 @@
 		3535FCD325F9DF8B000C5608 /* Records.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3535FCD225F9DF8B000C5608 /* Records.swift */; };
 		3535FCD825F9DFE2000C5608 /* Records+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3535FCD725F9DFE2000C5608 /* Records+Item.swift */; };
 		3535FCDD25F9DFF0000C5608 /* Records+Monster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3535FCDC25F9DFF0000C5608 /* Records+Monster.swift */; };
-		35471775268083F3008184CD /* rAthena.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35471771268083F2008184CD /* rAthena.xcframework */; };
-		35471776268083F3008184CD /* rAthena.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 35471771268083F2008184CD /* rAthena.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		35471777268083F3008184CD /* rAthenaChar.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35471772268083F2008184CD /* rAthenaChar.xcframework */; };
-		35471778268083F3008184CD /* rAthenaChar.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 35471772268083F2008184CD /* rAthenaChar.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		35471779268083F3008184CD /* rAthenaLogin.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35471773268083F2008184CD /* rAthenaLogin.xcframework */; };
-		3547177A268083F3008184CD /* rAthenaLogin.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 35471773268083F2008184CD /* rAthenaLogin.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		3547177B268083F3008184CD /* rAthenaMap.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35471774268083F2008184CD /* rAthenaMap.xcframework */; };
-		3547177C268083F3008184CD /* rAthenaMap.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 35471774268083F2008184CD /* rAthenaMap.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		355BF1D125ECB13A006E2D73 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BF1D025ECB13A006E2D73 /* SidebarViewController.swift */; };
 		355BF1E425ECD3BA006E2D73 /* SidebarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BF1E325ECD3BA006E2D73 /* SidebarItem.swift */; };
 		355E914924BECC5C00361AF6 /* ModelPreviewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */; };
@@ -114,8 +106,19 @@
 		3587F6EB2463DBF0007D1C9B /* DocumentItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EA2463DBF0007D1C9B /* DocumentItemsViewController.swift */; };
 		3587F6ED2463DF3F007D1C9B /* DocumentItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EC2463DF3F007D1C9B /* DocumentItemCell.swift */; };
 		3587F70924694FA7007D1C9B /* StreamReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F70824694FA7007D1C9B /* StreamReader.swift */; };
+		358BF591292E7EC7007DA1C0 /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 358BF590292E7EC7007DA1C0 /* rAthenaChar */; };
+		358BF592292E7EC7007DA1C0 /* rAthenaChar in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 358BF590292E7EC7007DA1C0 /* rAthenaChar */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		358BF594292E7EC7007DA1C0 /* rAthenaLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 358BF593292E7EC7007DA1C0 /* rAthenaLogin */; };
+		358BF595292E7EC7007DA1C0 /* rAthenaLogin in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 358BF593292E7EC7007DA1C0 /* rAthenaLogin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		358BF597292E7EC7007DA1C0 /* rAthenaMap in Frameworks */ = {isa = PBXBuildFile; productRef = 358BF596292E7EC7007DA1C0 /* rAthenaMap */; };
+		358BF598292E7EC7007DA1C0 /* rAthenaMap in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 358BF596292E7EC7007DA1C0 /* rAthenaMap */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		358BF59A292E7EC7007DA1C0 /* rAthenaWeb in Frameworks */ = {isa = PBXBuildFile; productRef = 358BF599292E7EC7007DA1C0 /* rAthenaWeb */; };
+		358BF59B292E7EC7007DA1C0 /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 358BF599292E7EC7007DA1C0 /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		358E6BAD24C9793B00283BAD /* ClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358E6BAC24C9793B00283BAD /* ClientViewController.swift */; };
 		358F497B2542D7560065D488 /* ACTDocument+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358F497A2542D7560065D488 /* ACTDocument+Image.swift */; };
+		3593154B2964207300167448 /* Highlight in Frameworks */ = {isa = PBXBuildFile; productRef = 3593154A2964207300167448 /* Highlight */; };
+		3593154D296421E400167448 /* rAthenaResource in Frameworks */ = {isa = PBXBuildFile; productRef = 3593154C296421E400167448 /* rAthenaResource */; };
+		3593154E296421E400167448 /* rAthenaResource in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3593154C296421E400167448 /* rAthenaResource */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		359D5C1624A1F8CA00C2D8D3 /* WorldPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */; };
 		359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */; };
 		35A0ACF924FF421E00B72EB9 /* MDLTexture+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0ACF824FF421E00B72EB9 /* MDLTexture+Data.swift */; };
@@ -154,8 +157,6 @@
 		35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8502473D9E8007DF105 /* STRDocument.swift */; };
 		35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8522473E1D7007DF105 /* RSWDocument.swift */; };
 		35FD46BB25AD4AFB0032D07A /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FD46BA25AD4AFB0032D07A /* Database.swift */; };
-		35FFBB32268642030026D40A /* Highlight.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35FFBB31268642030026D40A /* Highlight.xcframework */; };
-		35FFBB33268642030026D40A /* Highlight.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 35FFBB31268642030026D40A /* Highlight.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,11 +183,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3547177A268083F3008184CD /* rAthenaLogin.xcframework in Embed Frameworks */,
-				35471776268083F3008184CD /* rAthena.xcframework in Embed Frameworks */,
-				3547177C268083F3008184CD /* rAthenaMap.xcframework in Embed Frameworks */,
-				35FFBB33268642030026D40A /* Highlight.xcframework in Embed Frameworks */,
-				35471778268083F3008184CD /* rAthenaChar.xcframework in Embed Frameworks */,
+				358BF595292E7EC7007DA1C0 /* rAthenaLogin in Embed Frameworks */,
+				358BF592292E7EC7007DA1C0 /* rAthenaChar in Embed Frameworks */,
+				358BF59B292E7EC7007DA1C0 /* rAthenaWeb in Embed Frameworks */,
+				3593154E296421E400167448 /* rAthenaResource in Embed Frameworks */,
+				358BF598292E7EC7007DA1C0 /* rAthenaMap in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,10 +296,6 @@
 		3535FCD225F9DF8B000C5608 /* Records.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Records.swift; sourceTree = "<group>"; };
 		3535FCD725F9DFE2000C5608 /* Records+Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Records+Item.swift"; sourceTree = "<group>"; };
 		3535FCDC25F9DFF0000C5608 /* Records+Monster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Records+Monster.swift"; sourceTree = "<group>"; };
-		35471771268083F2008184CD /* rAthena.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = rAthena.xcframework; path = Carthage/Build/rAthena.xcframework; sourceTree = "<group>"; };
-		35471772268083F2008184CD /* rAthenaChar.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = rAthenaChar.xcframework; path = Carthage/Build/rAthenaChar.xcframework; sourceTree = "<group>"; };
-		35471773268083F2008184CD /* rAthenaLogin.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = rAthenaLogin.xcframework; path = Carthage/Build/rAthenaLogin.xcframework; sourceTree = "<group>"; };
-		35471774268083F2008184CD /* rAthenaMap.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = rAthenaMap.xcframework; path = Carthage/Build/rAthenaMap.xcframework; sourceTree = "<group>"; };
 		355BF1D025ECB13A006E2D73 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		355BF1E325ECD3BA006E2D73 /* SidebarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarItem.swift; sourceTree = "<group>"; };
 		355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPreviewRenderer.swift; sourceTree = "<group>"; };
@@ -382,7 +379,6 @@
 		35F8D8502473D9E8007DF105 /* STRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRDocument.swift; sourceTree = "<group>"; };
 		35F8D8522473E1D7007DF105 /* RSWDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWDocument.swift; sourceTree = "<group>"; };
 		35FD46BA25AD4AFB0032D07A /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
-		35FFBB31268642030026D40A /* Highlight.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Highlight.xcframework; path = Carthage/Build/Highlight.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -390,12 +386,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35FFBB32268642030026D40A /* Highlight.xcframework in Frameworks */,
+				358BF594292E7EC7007DA1C0 /* rAthenaLogin in Frameworks */,
+				358BF591292E7EC7007DA1C0 /* rAthenaChar in Frameworks */,
+				3593154D296421E400167448 /* rAthenaResource in Frameworks */,
+				358BF59A292E7EC7007DA1C0 /* rAthenaWeb in Frameworks */,
 				35116E50245FBF65000A60FE /* DataCompression in Frameworks */,
-				35471777268083F3008184CD /* rAthenaChar.xcframework in Frameworks */,
-				35471775268083F3008184CD /* rAthena.xcframework in Frameworks */,
-				35471779268083F3008184CD /* rAthenaLogin.xcframework in Frameworks */,
-				3547177B268083F3008184CD /* rAthenaMap.xcframework in Frameworks */,
+				3593154B2964207300167448 /* Highlight in Frameworks */,
+				358BF597292E7EC7007DA1C0 /* rAthenaMap in Frameworks */,
 				351A96AE247F5D9F00274D64 /* SGLMath in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -660,11 +657,6 @@
 		35471770268083F2008184CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				35FFBB31268642030026D40A /* Highlight.xcframework */,
-				35471771268083F2008184CD /* rAthena.xcframework */,
-				35471772268083F2008184CD /* rAthenaChar.xcframework */,
-				35471773268083F2008184CD /* rAthenaLogin.xcframework */,
-				35471774268083F2008184CD /* rAthenaMap.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -848,6 +840,12 @@
 			packageProductDependencies = (
 				35116E4F245FBF65000A60FE /* DataCompression */,
 				351A96AD247F5D9F00274D64 /* SGLMath */,
+				358BF590292E7EC7007DA1C0 /* rAthenaChar */,
+				358BF593292E7EC7007DA1C0 /* rAthenaLogin */,
+				358BF596292E7EC7007DA1C0 /* rAthenaMap */,
+				358BF599292E7EC7007DA1C0 /* rAthenaWeb */,
+				3593154A2964207300167448 /* Highlight */,
+				3593154C296421E400167448 /* rAthenaResource */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35116E12245C7B87000A60FE /* RagnarokOffline.app */;
@@ -925,6 +923,8 @@
 			packageReferences = (
 				35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */,
 				351A96AC247F5D9F00274D64 /* XCRemoteSwiftPackageReference "Math" */,
+				3539AFCB292DB91A00FA1A78 /* XCRemoteSwiftPackageReference "rathena-ios" */,
+				359315472964202900167448 /* XCRemoteSwiftPackageReference "highlight" */,
 			);
 			productRefGroup = 35116E13245C7B87000A60FE /* Products */;
 			projectDirPath = "";
@@ -1446,6 +1446,22 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		3539AFCB292DB91A00FA1A78 /* XCRemoteSwiftPackageReference "rathena-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/arkadeleon/rathena-ios.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		359315472964202900167448 /* XCRemoteSwiftPackageReference "highlight" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/arkadeleon/highlight";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1458,6 +1474,36 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 351A96AC247F5D9F00274D64 /* XCRemoteSwiftPackageReference "Math" */;
 			productName = SGLMath;
+		};
+		358BF590292E7EC7007DA1C0 /* rAthenaChar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3539AFCB292DB91A00FA1A78 /* XCRemoteSwiftPackageReference "rathena-ios" */;
+			productName = rAthenaChar;
+		};
+		358BF593292E7EC7007DA1C0 /* rAthenaLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3539AFCB292DB91A00FA1A78 /* XCRemoteSwiftPackageReference "rathena-ios" */;
+			productName = rAthenaLogin;
+		};
+		358BF596292E7EC7007DA1C0 /* rAthenaMap */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3539AFCB292DB91A00FA1A78 /* XCRemoteSwiftPackageReference "rathena-ios" */;
+			productName = rAthenaMap;
+		};
+		358BF599292E7EC7007DA1C0 /* rAthenaWeb */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3539AFCB292DB91A00FA1A78 /* XCRemoteSwiftPackageReference "rathena-ios" */;
+			productName = rAthenaWeb;
+		};
+		3593154A2964207300167448 /* Highlight */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 359315472964202900167448 /* XCRemoteSwiftPackageReference "highlight" */;
+			productName = Highlight;
+		};
+		3593154C296421E400167448 /* rAthenaResource */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3539AFCB292DB91A00FA1A78 /* XCRemoteSwiftPackageReference "rathena-ios" */;
+			productName = rAthenaResource;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
