@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SGLMath
 
 enum RSMShadingType: Int32 {
 
@@ -18,8 +17,8 @@ enum RSMShadingType: Int32 {
 
 struct RSMFace {
 
-    var vertidx: Vector3<UInt16>
-    var tvertidx: Vector3<UInt16>
+    var vertidx: simd_ushort3
+    var tvertidx: simd_ushort3
     var texid: UInt16
     var padding: UInt16
     var twoSide: Int32
@@ -37,7 +36,7 @@ struct RSMPositionKeyframe {
 struct RSMRotationKeyframe {
 
     var frame: Int32
-    var q: Vector4<Float>
+    var q: simd_float4
 }
 
 struct RSMNode {
@@ -47,14 +46,14 @@ struct RSMNode {
 
     var textures: [Int32]
 
-    var mat3: Matrix3x3<Float>
-    var offset: Vector3<Float>
-    var pos: Vector3<Float>
+    var mat3: simd_float3x3
+    var offset: simd_float3
+    var pos: simd_float3
     var rotangle: Float
-    var rotaxis: Vector3<Float>
-    var scale: Vector3<Float>
+    var rotaxis: simd_float3
+    var scale: simd_float3
 
-    var vertices: [Vector3<Float>]
+    var vertices: [simd_float3]
     var tvertices: [Float]
     var faces: [RSMFace]
     var positionKeyframes: [RSMPositionKeyframe]
@@ -63,9 +62,9 @@ struct RSMNode {
 
 struct RSMVolumeBox {
 
-    var size: Vector3<Float>
-    var position: Vector3<Float>
-    var rotation: Vector3<Float>
+    var size: simd_float3
+    var position: simd_float3
+    var rotation: simd_float3
     var flag: Int32
 }
 
@@ -166,21 +165,21 @@ extension StreamReader {
             textures.append(texture)
         }
 
-        let mat3 = try Matrix3x3(
-            readFloat32(), readFloat32(), readFloat32(),
-            readFloat32(), readFloat32(), readFloat32(),
-            readFloat32(), readFloat32(), readFloat32()
+        let mat3 = try simd_float3x3(
+            [readFloat32(), readFloat32(), readFloat32()],
+            [readFloat32(), readFloat32(), readFloat32()],
+            [readFloat32(), readFloat32(), readFloat32()]
         )
-        let offset = try Vector3(readFloat32(), readFloat32(), readFloat32())
-        let pos = try Vector3(readFloat32(), readFloat32(), readFloat32())
+        let offset: simd_float3 = try [readFloat32(), readFloat32(), readFloat32()]
+        let pos: simd_float3 = try [readFloat32(), readFloat32(), readFloat32()]
         let rotangle = try readFloat32()
-        let rotaxis = try Vector3(readFloat32(), readFloat32(), readFloat32())
-        let scale = try Vector3(readFloat32(), readFloat32(), readFloat32())
+        let rotaxis: simd_float3 = try [readFloat32(), readFloat32(), readFloat32()]
+        let scale: simd_float3 = try [readFloat32(), readFloat32(), readFloat32()]
 
         let vertexCount = try readInt32()
-        var vertices: [Vector3<Float>] = []
+        var vertices: [simd_float3] = []
         for _ in 0..<vertexCount {
-            let vertex = try Vector3(readFloat32(), readFloat32(), readFloat32())
+            let vertex: simd_float3 = try [readFloat32(), readFloat32(), readFloat32()]
             vertices.append(vertex)
         }
 

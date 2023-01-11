@@ -8,7 +8,6 @@
 
 import UIKit
 import MetalKit
-import SGLMath
 
 class WorldPreviewViewController: UIViewController {
 

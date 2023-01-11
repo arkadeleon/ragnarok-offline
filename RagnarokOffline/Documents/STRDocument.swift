@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SGLMath
 
 struct STRLayer {
 
@@ -21,14 +20,14 @@ struct STRAnimation {
 
     var frame: Int32
     var type: UInt32
-    var pos: Vector2<Float>
+    var pos: simd_float2
     var uv: [Float]
     var xy: [Float]
     var aniframe: Float
     var anitype: UInt32
     var delay: Float
     var angle: Float
-    var color: Vector4<Float>
+    var color: simd_float4
     var srcalpha: UInt32
     var destalpha: UInt32
     var mtpreset: UInt32

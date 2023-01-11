@@ -6,26 +6,24 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-import SGLMath
-
 extension RSMNodeBoundingBoxWrapper {
 
-    func compile(contents: RSMDocument, instance_matrix: Matrix4x4<Float>, boundingBox: RSMBoundingBox) -> [[ModelVertex]] {
+    func compile(contents: RSMDocument, instance_matrix: simd_float4x4, boundingBox: RSMBoundingBox) -> [[ModelVertex]] {
         var shadeGroup = [[Float]](repeating: [], count: 32)
         var shadeGroupUsed = [Bool](repeating: false, count: 32)
 
-        var matrix = Matrix4x4<Float>()
-        matrix = SGLMath.translate(matrix, [-boundingBox.center[0], -boundingBox.max[1], -boundingBox.center[2]])
+        var matrix = matrix_identity_float4x4
+        matrix = matrix_translate(matrix, [-boundingBox.center[0], -boundingBox.max[1], -boundingBox.center[2]])
         matrix = matrix * self.matrix
 
         if contents.nodes.count == 1 {
-            matrix = SGLMath.translate(matrix, node.offset)
+            matrix = matrix_translate(matrix, node.offset)
         }
 
-        matrix = matrix * Matrix4x4(node.mat3)
+        matrix = matrix * simd_float4x4(node.mat3)
 
         let modelViewMat = instance_matrix * matrix
-        let normalMat = SGLMath.extractRotation(modelViewMat)
+        let normalMat = extractRotation(modelViewMat)
 
         let count = node.vertices.count
         var vert = [Float](repeating: 0, count: count * 3)
@@ -70,10 +68,10 @@ extension RSMNodeBoundingBoxWrapper {
         }
     }
 
-    func calcNormal_FLAT(out: inout [Float], normalMat: Matrix4x4<Float>, groupUsed: inout [Bool]) {
+    func calcNormal_FLAT(out: inout [Float], normalMat: simd_float4x4, groupUsed: inout [Bool]) {
         var j = 0
         for face in node.faces {
-            let temp_vec = SGLMath.calcNormal(
+            let temp_vec = calcNormal(
                 node.vertices[Int(face.vertidx[0])],
                 node.vertices[Int(face.vertidx[1])],
                 node.vertices[Int(face.vertidx[2])]
@@ -178,7 +176,7 @@ extension RSMNodeBoundingBoxWrapper {
 
 extension RSMDocument {
 
-    func compile(instance: Matrix4x4<Float>, wrappers: [RSMNodeBoundingBoxWrapper], boundingBox: RSMBoundingBox) -> [[ModelVertex]] {
+    func compile(instance: simd_float4x4, wrappers: [RSMNodeBoundingBoxWrapper], boundingBox: RSMBoundingBox) -> [[ModelVertex]] {
         var meshes: [[ModelVertex]] = Array(repeating: [], count: textures.count)
         for wrapper in wrappers {
             let ms = wrapper.compile(contents: self, instance_matrix: instance, boundingBox: boundingBox)
@@ -189,13 +187,13 @@ extension RSMDocument {
         return meshes
     }
 
-    func createInstance(position: Vector3<Float>, rotation: Vector3<Float>, scale: Vector3<Float>, width: Float, height: Float) -> Matrix4x4<Float> {
-        var matrix = Matrix4x4<Float>()
-        matrix = SGLMath.translate(matrix, [position[0] + width, position[1], position[2] + height])
-        matrix = SGLMath.rotate(matrix, radians(rotation[2]), [0, 0, 1])  // rotateZ
-        matrix = SGLMath.rotate(matrix, radians(rotation[0]), [1, 0, 0])  // rotateX
-        matrix = SGLMath.rotate(matrix, radians(rotation[1]), [0, 1, 0])  // rotateY
-        matrix = SGLMath.scale(matrix, scale)
+    func createInstance(position: simd_float3, rotation: simd_float3, scale: simd_float3, width: Float, height: Float) -> simd_float4x4 {
+        var matrix = matrix_identity_float4x4
+        matrix = matrix_translate(matrix, [position[0] + width, position[1], position[2] + height])
+        matrix = matrix_rotate(matrix, radians(rotation[2]), [0, 0, 1])  // rotateZ
+        matrix = matrix_rotate(matrix, radians(rotation[0]), [1, 0, 0])  // rotateX
+        matrix = matrix_rotate(matrix, radians(rotation[1]), [0, 1, 0])  // rotateY
+        matrix = matrix_scale(matrix, scale)
         return matrix
     }
 }

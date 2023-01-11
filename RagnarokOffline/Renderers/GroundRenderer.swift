@@ -8,7 +8,6 @@
 
 import Metal
 import MetalKit
-import SGLMath
 
 class GroundRenderer {
 
@@ -65,18 +64,18 @@ class GroundRenderer {
     func render(atTime time: CFTimeInterval,
                 device: MTLDevice,
                 renderCommandEncoder: MTLRenderCommandEncoder,
-                modelviewMatrix: Matrix4x4<Float>,
-                projectionMatrix: Matrix4x4<Float>,
-                normalMatrix: Matrix3x3<Float>) {
+                modelviewMatrix: simd_float4x4,
+                projectionMatrix: simd_float4x4,
+                normalMatrix: simd_float3x3) {
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
         var vertexUniforms = GroundVertexUniforms(
-            modelViewMat: modelviewMatrix.simd,
-            projectionMat: projectionMatrix.simd,
-            lightDirection: light.direction.simd,
-            normalMat: normalMatrix.simd
+            modelViewMat: modelviewMatrix,
+            projectionMat: projectionMatrix,
+            lightDirection: light.direction,
+            normalMat: normalMatrix
         )
 
         guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<GroundVertexUniforms>.stride, options: []) else {
@@ -90,9 +89,9 @@ class GroundRenderer {
             fogUse: fog.use && fog.exist ? 1 : 0,
             fogNear: fog.near,
             fogFar: fog.far,
-            fogColor: fog.color.simd,
-            lightAmbient: light.ambient.simd,
-            lightDiffuse: light.diffuse.simd,
+            fogColor: fog.color,
+            lightAmbient: light.ambient,
+            lightDiffuse: light.diffuse,
             lightOpacity: light.opacity
         )
 

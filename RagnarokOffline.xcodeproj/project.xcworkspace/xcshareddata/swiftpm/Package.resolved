@@ -19,15 +19,6 @@
       }
     },
     {
-      "identity" : "math",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SwiftGL/Math.git",
-      "state" : {
-        "revision" : "8bdd2e542f28828d0c224c1ea8e046c6f652ec40",
-        "version" : "3.0.0"
-      }
-    },
-    {
       "identity" : "rathena-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/arkadeleon/rathena-ios.git",

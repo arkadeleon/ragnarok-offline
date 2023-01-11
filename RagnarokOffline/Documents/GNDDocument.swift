@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SGLMath
 
 struct GNDLightmap {
 
@@ -28,12 +27,12 @@ struct GNDTile {
     var v4: Float
     var texture: UInt16
     var light: UInt16
-    var color: Vector4<UInt8>
+    var color: simd_uchar4
 }
 
 struct GNDSurface {
 
-    var height: Vector4<Float>
+    var height: simd_float4
     var tile_up: Int32
     var tile_front: Int32
     var tile_right: Int32

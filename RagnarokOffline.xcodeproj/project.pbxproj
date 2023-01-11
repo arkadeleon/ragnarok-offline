@@ -42,7 +42,6 @@
 		35116E8B247025EE000A60FE /* GATDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8A247025EE000A60FE /* GATDocument.swift */; };
 		35116E8D247035AC000A60FE /* ACTDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8C247035AC000A60FE /* ACTDocument.swift */; };
 		35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8E2472E685000A60FE /* SPRDocument.swift */; };
-		351A96AE247F5D9F00274D64 /* SGLMath in Frameworks */ = {isa = PBXBuildFile; productRef = 351A96AD247F5D9F00274D64 /* SGLMath */; };
 		351E225624BC5D98000EF504 /* INIDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351E225524BC5D98000EF504 /* INIDocument.swift */; };
 		352DC2D525EF21C200DAAACE /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352DC2D225EF21C100DAAACE /* Record.swift */; };
 		352DC2D625EF21C200DAAACE /* RecordListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352DC2D325EF21C100DAAACE /* RecordListViewController.swift */; };
@@ -121,6 +120,7 @@
 		3593154E296421E400167448 /* rAthenaResource in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3593154C296421E400167448 /* rAthenaResource */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		359D5C1624A1F8CA00C2D8D3 /* WorldPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */; };
 		359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */; };
+		359E5B1C296BF90F00B10164 /* SGLMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359E5B1B296BF90F00B10164 /* SGLMath.swift */; };
 		35A0ACF924FF421E00B72EB9 /* MDLTexture+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0ACF824FF421E00B72EB9 /* MDLTexture+Data.swift */; };
 		35A0ACFB24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0ACFA24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift */; };
 		35A0ACFD24FF94D400B72EB9 /* ResourceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0ACFC24FF94D400B72EB9 /* ResourceBundle.swift */; };
@@ -142,7 +142,6 @@
 		35E8DCDB24A88BCC00A14FC5 /* WaterShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDA24A88BCC00A14FC5 /* WaterShaders.metal */; };
 		35E8DCDE24A9D99000A14FC5 /* RendererCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDD24A9D99000A14FC5 /* RendererCommon.swift */; };
 		35E8DCE024A9DC1100A14FC5 /* ModelRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDF24A9DC1100A14FC5 /* ModelRenderer.swift */; };
-		35E8DCE224A9DF4100A14FC5 /* SGLMath+SIMD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCE124A9DF4100A14FC5 /* SGLMath+SIMD.swift */; };
 		35EF769424AF18D800371F1F /* GroundRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF769324AF18D800371F1F /* GroundRenderer.swift */; };
 		35EF769C24B3222000371F1F /* CGImage+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF769B24B3222000371F1F /* CGImage+Decode.swift */; };
 		35F1334D2600A2D700E39181 /* DatabaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F1334C2600A2D700E39181 /* DatabaseViewController.swift */; };
@@ -339,6 +338,7 @@
 		358F497A2542D7560065D488 /* ACTDocument+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ACTDocument+Image.swift"; sourceTree = "<group>"; };
 		359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPreviewViewController.swift; sourceTree = "<group>"; };
 		359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = GroundShaders.metal; sourceTree = "<group>"; };
+		359E5B1B296BF90F00B10164 /* SGLMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SGLMath.swift; sourceTree = "<group>"; };
 		35A0ACF824FF421E00B72EB9 /* MDLTexture+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MDLTexture+Data.swift"; sourceTree = "<group>"; };
 		35A0ACFA24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MDLMaterial+Texture.swift"; sourceTree = "<group>"; };
 		35A0ACFC24FF94D400B72EB9 /* ResourceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceBundle.swift; sourceTree = "<group>"; };
@@ -364,7 +364,6 @@
 		35E8DCDC24A88BEB00A14FC5 /* WaterShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WaterShaderTypes.h; sourceTree = "<group>"; };
 		35E8DCDD24A9D99000A14FC5 /* RendererCommon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommon.swift; sourceTree = "<group>"; };
 		35E8DCDF24A9DC1100A14FC5 /* ModelRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelRenderer.swift; sourceTree = "<group>"; };
-		35E8DCE124A9DF4100A14FC5 /* SGLMath+SIMD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SGLMath+SIMD.swift"; sourceTree = "<group>"; };
 		35EF769324AF18D800371F1F /* GroundRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroundRenderer.swift; sourceTree = "<group>"; };
 		35EF769B24B3222000371F1F /* CGImage+Decode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImage+Decode.swift"; sourceTree = "<group>"; };
 		35F1334C2600A2D700E39181 /* DatabaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseViewController.swift; sourceTree = "<group>"; };
@@ -393,7 +392,6 @@
 				35116E50245FBF65000A60FE /* DataCompression in Frameworks */,
 				3593154B2964207300167448 /* Highlight in Frameworks */,
 				358BF597292E7EC7007DA1C0 /* rAthenaMap in Frameworks */,
-				351A96AE247F5D9F00274D64 /* SGLMath in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -759,8 +757,8 @@
 				35EF769B24B3222000371F1F /* CGImage+Decode.swift */,
 				35A0ACFA24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift */,
 				35A0ACF824FF421E00B72EB9 /* MDLTexture+Data.swift */,
+				359E5B1B296BF90F00B10164 /* SGLMath.swift */,
 				35617A72249863580097C60C /* SGLMath+Calculate.swift */,
-				35E8DCE124A9DF4100A14FC5 /* SGLMath+SIMD.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -839,7 +837,6 @@
 			name = RagnarokOffline;
 			packageProductDependencies = (
 				35116E4F245FBF65000A60FE /* DataCompression */,
-				351A96AD247F5D9F00274D64 /* SGLMath */,
 				358BF590292E7EC7007DA1C0 /* rAthenaChar */,
 				358BF593292E7EC7007DA1C0 /* rAthenaLogin */,
 				358BF596292E7EC7007DA1C0 /* rAthenaMap */,
@@ -922,7 +919,6 @@
 			mainGroup = 35116E09245C7B87000A60FE;
 			packageReferences = (
 				35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */,
-				351A96AC247F5D9F00274D64 /* XCRemoteSwiftPackageReference "Math" */,
 				3539AFCB292DB91A00FA1A78 /* XCRemoteSwiftPackageReference "rathena-ios" */,
 				359315472964202900167448 /* XCRemoteSwiftPackageReference "highlight" */,
 			);
@@ -982,7 +978,6 @@
 			files = (
 				35A0ACF924FF421E00B72EB9 /* MDLTexture+Data.swift in Sources */,
 				35116E7F246713AD000A60FE /* TextPreviewViewController.swift in Sources */,
-				35E8DCE224A9DF4100A14FC5 /* SGLMath+SIMD.swift in Sources */,
 				35C06DBC2498C9C000F0A229 /* TextureLoader.swift in Sources */,
 				35E8DCDE24A9D99000A14FC5 /* RendererCommon.swift in Sources */,
 				35116E87246AE56B000A60FE /* ModelPreviewViewController.swift in Sources */,
@@ -1081,6 +1076,7 @@
 				355F205F24DA4CC3001302FC /* structs.c in Sources */,
 				355EFD2D2480264B0033C280 /* Camera.swift in Sources */,
 				3533CBB924D2BB26006AFE04 /* ldump.c in Sources */,
+				359E5B1C296BF90F00B10164 /* SGLMath.swift in Sources */,
 				35E5E90124E44E9200716592 /* ActionPreviewViewController.swift in Sources */,
 				355E915324C04DCA00361AF6 /* WorldPreviewCamera.swift in Sources */,
 				352DC2D525EF21C200DAAACE /* Record.swift in Sources */,
@@ -1438,14 +1434,6 @@
 				minimumVersion = 3.6.0;
 			};
 		};
-		351A96AC247F5D9F00274D64 /* XCRemoteSwiftPackageReference "Math" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftGL/Math.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
-			};
-		};
 		3539AFCB292DB91A00FA1A78 /* XCRemoteSwiftPackageReference "rathena-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/arkadeleon/rathena-ios.git";
@@ -1469,11 +1457,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */;
 			productName = DataCompression;
-		};
-		351A96AD247F5D9F00274D64 /* SGLMath */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 351A96AC247F5D9F00274D64 /* XCRemoteSwiftPackageReference "Math" */;
-			productName = SGLMath;
 		};
 		358BF590292E7EC7007DA1C0 /* rAthenaChar */ = {
 			isa = XCSwiftPackageProductDependency;

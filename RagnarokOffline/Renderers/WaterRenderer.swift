@@ -8,7 +8,6 @@
 
 import Metal
 import MetalKit
-import SGLMath
 
 class WaterRenderer {
 
@@ -74,8 +73,8 @@ class WaterRenderer {
     func render(atTime time: CFTimeInterval,
                 device: MTLDevice,
                 renderCommandEncoder: MTLRenderCommandEncoder,
-                modelviewMatrix: Matrix4x4<Float>,
-                projectionMatrix: Matrix4x4<Float>) {
+                modelviewMatrix: simd_float4x4,
+                projectionMatrix: simd_float4x4) {
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
@@ -83,8 +82,8 @@ class WaterRenderer {
         let frame = Float(time * 60)
 
         var vertexUniforms = WaterVertexUniforms(
-            modelViewMat: modelviewMatrix.simd,
-            projectionMat: projectionMatrix.simd,
+            modelViewMat: modelviewMatrix,
+            projectionMat: projectionMatrix,
             waveHeight: waveHeight,
             wavePitch: wavePitch,
             waterOffset: frame * waveSpeed.truncatingRemainder(dividingBy: 360) - 180
@@ -100,9 +99,9 @@ class WaterRenderer {
             fogUse: fog.use && fog.exist ? 1 : 0,
             fogNear: fog.near,
             fogFar: fog.far,
-            fogColor: fog.color.simd,
-            lightAmbient: light.ambient.simd,
-            lightDiffuse: light.diffuse.simd,
+            fogColor: fog.color,
+            lightAmbient: light.ambient,
+            lightDiffuse: light.diffuse,
             lightOpacity: light.opacity,
             opacity: waterOpacity
         )

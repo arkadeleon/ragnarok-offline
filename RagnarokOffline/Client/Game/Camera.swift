@@ -7,36 +7,35 @@
 //
 
 import UIKit
-import SGLMath
 
 class Camera: NSObject {
 
-    private(set) var position: Vector3<Float> = [0, 0, 3]
-    private(set) var front: Vector3<Float> = [0, 0, -1]
-    private(set) var up: Vector3<Float> = [0, 1, 0]
+    private(set) var position: simd_float3 = [0, 0, 3]
+    private(set) var front: simd_float3 = [0, 0, -1]
+    private(set) var up: simd_float3 = [0, 1, 0]
 
     private(set) var pitch: Float = 0 {
         didSet {
             pitch = max(pitch, -89)
             pitch = min(pitch, 90)
 
-            let direction: Vector3<Float> = [
+            let direction: simd_float3 = [
                 cos(radians(yaw)) * cos(radians(pitch)),
                 sin(radians(pitch)),
                 sin(radians(yaw)) * cos(radians(pitch))
             ]
-            front = normalize(direction)
+            front = simd_normalize(direction)
         }
     }
 
     private(set) var yaw: Float = -90 {
         didSet {
-            let direction: Vector3<Float> = [
+            let direction: simd_float3 = [
                 cos(radians(yaw)) * cos(radians(pitch)),
                 sin(radians(pitch)),
                 sin(radians(yaw)) * cos(radians(pitch))
             ]
-            front = normalize(direction)
+            front = simd_normalize(direction)
         }
     }
 

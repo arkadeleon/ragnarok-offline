@@ -6,15 +6,13 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-import SGLMath
-
 struct RSMBoundingBox {
 
-    var max = Vector3<Float>(-.infinity, -.infinity, -.infinity)
-    var min = Vector3<Float>(.infinity, .infinity, .infinity)
-    var offset = Vector3<Float>()
-    var range = Vector3<Float>()
-    var center = Vector3<Float>()
+    var max = simd_float3(-.infinity, -.infinity, -.infinity)
+    var min = simd_float3(.infinity, .infinity, .infinity)
+    var offset = simd_float3()
+    var range = simd_float3()
+    var center = simd_float3()
 }
 
 extension RSMDocument {
@@ -22,7 +20,7 @@ extension RSMDocument {
     func calcBoundingBox() -> (RSMBoundingBox, [RSMNodeBoundingBoxWrapper]) {
         var box = RSMBoundingBox()
 
-        let matrix = Matrix4x4<Float>()
+        let matrix = matrix_identity_float4x4
 
         let wrappers = nodes.map(RSMNodeBoundingBoxWrapper.init)
         let mainWrapper = wrappers.first { $0.node.name == mainNode?.name }
@@ -48,38 +46,38 @@ class RSMNodeBoundingBoxWrapper {
     let node: RSMNode
 
     var box = RSMBoundingBox()
-    var matrix = Matrix4x4<Float>()
+    var matrix = matrix_identity_float4x4
 
     init(node: RSMNode) {
         self.node = node
     }
 
-    func calcBoundingBox(_ _matrix: Matrix4x4<Float>, wrappers: [RSMNodeBoundingBoxWrapper]) {
+    func calcBoundingBox(_ _matrix: simd_float4x4, wrappers: [RSMNodeBoundingBoxWrapper]) {
         self.matrix = _matrix
-        self.matrix =  SGLMath.translate(self.matrix, node.pos)
+        self.matrix =  matrix_translate(self.matrix, node.pos)
 
         if node.rotationKeyframes.count == 0 {
 //            self.matrix = SGLMath.rotate(self.matrix, rotangle, rotaxis)
         } else {
-            self.matrix = SGLMath.rotateQuat(self.matrix, w: node.rotationKeyframes[0].q)
+            self.matrix = rotateQuat(self.matrix, w: node.rotationKeyframes[0].q)
         }
 
-        self.matrix = SGLMath.scale(self.matrix, node.scale)
+        self.matrix = matrix_scale(self.matrix, node.scale)
 
         var matrix = self.matrix
 
         if wrappers.count > 1 {
-            matrix = SGLMath.translate(matrix, node.offset)
+            matrix = matrix_translate(matrix, node.offset)
         }
 
-        matrix = matrix * Matrix4x4(node.mat3)
+        matrix = matrix * simd_float4x4(node.mat3)
 
         for i in 0..<node.vertices.count {
             let x = node.vertices[i][0]
             let y = node.vertices[i][1]
             let z = node.vertices[i][2]
 
-            var v = Vector3<Float>()
+            var v = simd_float3()
             v[0] = matrix[0, 0] * x + matrix[1, 0] * y + matrix[2, 0] * z + matrix[3, 0]
             v[1] = matrix[0, 1] * x + matrix[1, 1] * y + matrix[2, 1] * z + matrix[3, 1]
             v[2] = matrix[0, 2] * x + matrix[1, 2] * y + matrix[2, 2] * z + matrix[3, 2]

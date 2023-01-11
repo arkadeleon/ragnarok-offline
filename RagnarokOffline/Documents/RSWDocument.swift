@@ -6,8 +6,6 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-import SGLMath
-
 struct RSWFiles {
 
     var ini = ""
@@ -31,10 +29,10 @@ struct RSWLight {
 
     var longitude: Int32 = 45
     var latitude: Int32 = 45
-    var diffuse: Vector3<Float> = [1, 1, 1]
-    var ambient: Vector3<Float> = [0.3, 0.3, 0.3]
+    var diffuse: simd_float3 = [1, 1, 1]
+    var ambient: simd_float3 = [0.3, 0.3, 0.3]
     var opacity: Float = 1
-    var direction: Vector3<Float> = [0, 0, 0]
+    var direction: simd_float3 = [0, 0, 0]
 }
 
 struct RSWGround {
@@ -55,16 +53,16 @@ enum RSWObject {
         var blockType: Int32
         var filename: String
         var nodename: String
-        var position: Vector3<Float>
-        var rotation: Vector3<Float>
-        var scale: Vector3<Float>
+        var position: simd_float3
+        var rotation: simd_float3
+        var scale: simd_float3
     }
 
     struct Light {
 
         var name: String
-        var pos: Vector3<Float>
-        var color: Vector3<Int32>
+        var pos: simd_float3
+        var color: simd_int3
         var range: Float
     }
 
@@ -72,7 +70,7 @@ enum RSWObject {
 
         var name: String
         var file: String
-        var pos: Vector3<Float>
+        var pos: simd_float3
         var vol: Float
         var width: Int32
         var height: Int32
@@ -83,10 +81,10 @@ enum RSWObject {
     struct Effect {
 
         var name: String
-        var pos: Vector3<Float>
+        var pos: simd_float3
         var id: Int32
         var delay: Float
-        var param: Vector4<Float>
+        var param: simd_float4
     }
 }
 

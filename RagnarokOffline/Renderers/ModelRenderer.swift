@@ -7,7 +7,6 @@
 //
 
 import Metal
-import SGLMath
 
 class ModelRenderer {
 
@@ -66,18 +65,18 @@ class ModelRenderer {
     func render(atTime time: CFTimeInterval,
                 device: MTLDevice,
                 renderCommandEncoder: MTLRenderCommandEncoder,
-                modelviewMatrix: Matrix4x4<Float>,
-                projectionMatrix: Matrix4x4<Float>,
-                normalMatrix: Matrix3x3<Float>) {
+                modelviewMatrix: simd_float4x4,
+                projectionMatrix: simd_float4x4,
+                normalMatrix: simd_float3x3) {
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
         var vertexUniforms = ModelVertexUniforms(
-            modelViewMat: modelviewMatrix.simd,
-            projectionMat: projectionMatrix.simd,
+            modelViewMat: modelviewMatrix,
+            projectionMat: projectionMatrix,
             lightDirection: [0, 1, 0],
-            normalMat: normalMatrix.simd
+            normalMat: normalMatrix
         )
 
         guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<ModelVertexUniforms>.stride, options: []) else {
@@ -90,9 +89,9 @@ class ModelRenderer {
             fogUse: fog.use ? 1 : 0,
             fogNear: fog.near,
             fogFar: fog.far,
-            fogColor: fog.color.simd,
-            lightAmbient: light.ambient.simd,
-            lightDiffuse: light.diffuse.simd,
+            fogColor: fog.color,
+            lightAmbient: light.ambient,
+            lightDiffuse: light.diffuse,
             lightOpacity: light.opacity
         )
         guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<ModelFragmentUniforms>.stride, options: []) else {

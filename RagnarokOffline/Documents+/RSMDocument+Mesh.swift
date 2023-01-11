@@ -7,12 +7,11 @@
 //
 
 import ModelIO
-import SGLMath
 
 struct RSMVertex {
 
-    var position: Vector3<Float>
-    var textureCoordinate: Vector2<Float>
+    var position: simd_float3
+    var textureCoordinate: simd_float2
 }
 
 struct RSMFaceElement: Equatable {
@@ -101,11 +100,11 @@ extension MDLMesh {
 
         self.init(vertexBuffer: vertexBuffer, vertexCount: vertices.count, descriptor: vertexDescriptor, submeshes: submeshes)
 
-        var matrix = Matrix4x4<Float>()
-        matrix = SGLMath.translate(matrix, node.pos)
+        var matrix = matrix_identity_float4x4
+        matrix = matrix_translate(matrix, node.pos)
         // TODO: rotate
-        matrix = SGLMath.scale(matrix, node.scale)
-        matrix = matrix * Matrix4x4(node.mat3)
-        self.transform = MDLTransform(matrix: matrix.simd)
+        matrix = matrix_scale(matrix, node.scale)
+        matrix = matrix * simd_float4x4(node.mat3)
+        self.transform = MDLTransform(matrix: matrix)
     }
 }

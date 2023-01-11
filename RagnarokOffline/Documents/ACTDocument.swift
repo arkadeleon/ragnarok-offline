@@ -6,15 +6,13 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-import SGLMath
-
 struct ACTLayer {
 
-    var pos: Vector2<Int32>
+    var pos: simd_int2
     var index: Int32
     var is_mirror: Int32
-    var scale: Vector2<Float>
-    var color: Vector4<Float>
+    var scale: simd_float2
+    var color: simd_float4
     var angle: Int32
     var spr_type: Int32
     var width: Int32
@@ -25,7 +23,7 @@ struct ACTAnimation {
 
     var layers: [ACTLayer]
     var sound: Int32
-    var pos: [Vector2<Int32>]
+    var pos: [simd_int2]
 }
 
 struct ACTAction {
@@ -109,12 +107,12 @@ extension StreamReader {
 
         let sound = try version >= "2.0" ? readInt32() : -1
 
-        var positions: [Vector2<Int32>] = []
+        var positions: [simd_int2] = []
         if version >= "2.3" {
             let positionCount = try readInt32()
             for _ in 0..<positionCount {
                 try skip(count: 4)
-                let position: Vector2<Int32> = try [readInt32(), readInt32()]
+                let position: simd_int2 = try [readInt32(), readInt32()]
                 positions.append(position)
                 try skip(count: 4)
             }

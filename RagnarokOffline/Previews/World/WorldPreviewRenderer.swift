@@ -8,7 +8,6 @@
 
 import Metal
 import MetalKit
-import SGLMath
 
 class WorldPreviewRenderer: NSObject {
 
@@ -30,7 +29,7 @@ class WorldPreviewRenderer: NSObject {
         waterRenderer = try WaterRenderer(device: device, library: library, vertices: waterVertices, textures: waterTextures)
         modelRenderer = try ModelRenderer(device: device, library: library, meshes: modelMeshes, textures: modelTextures)
 
-        let target: Vector3 = [
+        let target: simd_float3 = [
             Float(altitude.width) / 2,
             Float(altitude.height) / 2,
             altitude.heightForCell(atX: altitude.width / 2, y: altitude.height / 2)
@@ -69,7 +68,7 @@ extension WorldPreviewRenderer: MTKViewDelegate {
         camera.update(time: time)
 
         let modelviewMatrix = camera.modelviewMatrix
-        let projectionMatrix = SGLMath.perspective(radians(camera.zoom), Float(view.bounds.width / view.bounds.height), 1, 1000)
+        let projectionMatrix = perspective(radians(camera.zoom), Float(view.bounds.width / view.bounds.height), 1, 1000)
         let normalMatrix = camera.normalMatrix
 
         guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {

@@ -6,8 +6,6 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-import SGLMath
-
 extension GNDDocument {
 
     private struct LightmapAtlas {
@@ -104,37 +102,37 @@ extension GNDDocument {
         return out
     }
 
-    private func getSmoothNormal() -> [[Vector3<Float>]] {
+    private func getSmoothNormal() -> [[simd_float3]] {
         let width = Int(self.width)
         let height = Int(self.height)
 
         let count = width * height
-        var tmp: [Vector3<Float>?] = Array(repeating: nil, count: count)
+        var tmp: [simd_float3?] = Array(repeating: nil, count: count)
 
-        let vec_in_tmp: (Int) -> Vector3<Float> = { (i: Int) -> Vector3<Float> in
+        let vec_in_tmp: (Int) -> simd_float3 = { (i: Int) -> simd_float3 in
             if i > 0 && i < tmp.count {
-                return tmp[i] ?? Vector3<Float>()
+                return tmp[i] ?? simd_float3()
             } else {
-                return Vector3<Float>()
+                return simd_float3()
             }
         }
 
-        let normal = Array(repeating: Vector3<Float>(), count: 4)
+        let normal = Array(repeating: simd_float3(), count: 4)
         var normals = Array(repeating: normal, count: count)
 
         for y in 0..<height {
             for x in 0..<width {
-                tmp[x + y * width] = Vector3<Float>()
+                tmp[x + y * width] = simd_float3()
                 let cell = surfaces[x + y * width]
 
                 if cell.tile_up > -1 {
                     let fx = Float(x)
                     let fy = Float(y)
-                    let a: Vector3<Float> = [(fx+0)*2, cell.height[0], (fy+0)*2]
-                    let b: Vector3<Float> = [(fx+1)*2, cell.height[1], (fy+0)*2]
-                    let c: Vector3<Float> = [(fx+1)*2, cell.height[3], (fy+1)*2]
-                    let d: Vector3<Float> = [(fx+0)*2, cell.height[2], (fy+1)*2]
-                    tmp[x + y * width] = SGLMath.calcNormal(a, b, c, d)
+                    let a: simd_float3 = [(fx+0)*2, cell.height[0], (fy+0)*2]
+                    let b: simd_float3 = [(fx+1)*2, cell.height[1], (fy+0)*2]
+                    let c: simd_float3 = [(fx+1)*2, cell.height[3], (fy+1)*2]
+                    let d: simd_float3 = [(fx+0)*2, cell.height[2], (fy+1)*2]
+                    tmp[x + y * width] = calcNormal(a, b, c, d)
                 }
             }
         }
@@ -147,25 +145,25 @@ extension GNDDocument {
                 n[0] = n[0] + vec_in_tmp((x - 1) + (y + 0) * width)
                 n[0] = n[0] + vec_in_tmp((x - 1) + (y - 1) * width)
                 n[0] = n[0] + vec_in_tmp((x + 0) + (y - 1) * width)
-                n[0] = normalize(n[0])
+                n[0] = simd_normalize(n[0])
 
                 n[1] = n[1] + vec_in_tmp((x + 0) + (y + 0) * width)
                 n[1] = n[1] + vec_in_tmp((x + 1) + (y + 0) * width)
                 n[1] = n[1] + vec_in_tmp((x + 1) + (y - 1) * width)
                 n[1] = n[1] + vec_in_tmp((x + 0) + (y - 1) * width)
-                n[1] = normalize(n[1])
+                n[1] = simd_normalize(n[1])
 
                 n[2] = n[2] + vec_in_tmp((x + 0) + (y + 0) * width)
                 n[2] = n[2] + vec_in_tmp((x + 1) + (y + 0) * width)
                 n[2] = n[2] + vec_in_tmp((x + 1) + (y + 1) * width)
                 n[2] = n[2] + vec_in_tmp((x + 0) + (y + 1) * width)
-                n[2] = normalize(n[2])
+                n[2] = simd_normalize(n[2])
 
                 n[3] = n[3] + vec_in_tmp((x + 0) + (y + 0) * width)
                 n[3] = n[3] + vec_in_tmp((x - 1) + (y + 0) * width)
                 n[3] = n[3] + vec_in_tmp((x - 1) + (y + 1) * width)
                 n[3] = n[3] + vec_in_tmp((x + 0) + (y + 1) * width)
-                n[3] = normalize(n[3])
+                n[3] = simd_normalize(n[3])
 
                 normals[x + y * width] = n
             }
@@ -267,10 +265,10 @@ extension GNDDocument {
                         h_a[2] > WATER_LEVEL - WATER_HEIGHT ||
                         h_a[3] > WATER_LEVEL - WATER_HEIGHT {
 
-                        let x0 = ((x + 0) % 5 / 5)
-                        let y0 = ((y + 0) % 5 / 5)
-                        let x1 = ((x + 1) % 5 / 5) > 0 ? ((x + 1) % 5 / 5) : 1
-                        let y1 = ((y + 1) % 5 / 5) > 0 ? ((y + 1) % 5 / 5) : 1
+                        let x0 = ((x + 0).truncatingRemainder(dividingBy: 5) / 5)
+                        let y0 = ((y + 0).truncatingRemainder(dividingBy: 5) / 5)
+                        let x1 = ((x + 1).truncatingRemainder(dividingBy: 5) / 5) > 0 ? ((x + 1).truncatingRemainder(dividingBy: 5) / 5) : 1
+                        let y1 = ((y + 1).truncatingRemainder(dividingBy: 5) / 5) > 0 ? ((y + 1).truncatingRemainder(dividingBy: 5) / 5) : 1
 
                         let v0 = WaterVertex(
                             position: [(x + 0) * 2, WATER_LEVEL, (y + 0) * 2],

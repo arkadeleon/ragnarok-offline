@@ -8,7 +8,6 @@
 
 import Metal
 import MetalKit
-import SGLMath
 
 class ModelPreviewRenderer: NSObject {
 
@@ -56,14 +55,14 @@ extension ModelPreviewRenderer: MTKViewDelegate {
 
         let time = CACurrentMediaTime()
 
-        var modelviewMatrix = Matrix4x4<Float>()
-        modelviewMatrix = SGLMath.translate(modelviewMatrix, [0, -boundingBox.range[1] * 0.1, -boundingBox.range[1] * 0.5 - 5])
-        modelviewMatrix = SGLMath.rotate(modelviewMatrix, radians(15), [1, 0, 0])
-        modelviewMatrix = SGLMath.rotate(modelviewMatrix, Float(radians(time * 360 / 8)), [0, 1, 0])
+        var modelviewMatrix = matrix_identity_float4x4
+        modelviewMatrix = matrix_translate(modelviewMatrix, [0, -boundingBox.range[1] * 0.1, -boundingBox.range[1] * 0.5 - 5])
+        modelviewMatrix = matrix_rotate(modelviewMatrix, radians(15), [1, 0, 0])
+        modelviewMatrix = matrix_rotate(modelviewMatrix, Float(radians(time * 360 / 8)), [0, 1, 0])
 
-        let projectionMatrix = SGLMath.perspective(radians(camera.zoom), Float(view.bounds.width / view.bounds.height), 1, 1000)
+        let projectionMatrix = perspective(radians(camera.zoom), Float(view.bounds.width / view.bounds.height), 1, 1000)
 
-        let normalMatrix = Matrix3x3(modelviewMatrix).inverse.transpose
+        let normalMatrix = simd_float3x3(modelviewMatrix).inverse.transpose
 
         guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return

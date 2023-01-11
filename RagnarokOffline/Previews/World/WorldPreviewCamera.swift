@@ -7,22 +7,21 @@
 //
 
 import UIKit
-import SGLMath
 
 class WorldPreviewCamera: NSObject {
 
-    var modelviewMatrix: Matrix4x4<Float> = Matrix4x4()
-    var normalMatrix: Matrix3x3<Float> = Matrix3x3()
+    var modelviewMatrix = matrix_identity_float4x4
+    var normalMatrix = matrix_identity_float3x3
 
     var zoom: Float = 50
     var zoomFinal: Float = 50
 
-    var angleStart: Vector2<Float> = [240, 0]
-    var angle: Vector2<Float> = [240, 0]
+    var angleStart: simd_float2 = [240, 0]
+    var angle: simd_float2 = [240, 0]
 
-    var position: Vector3<Float> = [0, 0, 0]
-    var targetStart: Vector3<Float> = [0, 0, 0]
-    var target: Vector3<Float> = [0, 0, 0]
+    var position: simd_float3 = [0, 0, 0]
+    var targetStart: simd_float3 = [0, 0, 0]
+    var target: simd_float3 = [0, 0, 0]
 
     var lastTime: CFTimeInterval = 0
 
@@ -41,7 +40,7 @@ class WorldPreviewCamera: NSObject {
     private var panPreviousTranslation: CGPoint = .zero
     private var pinchStartScale: Float = 0
 
-    init(target: Vector3<Float>) {
+    init(target: simd_float3) {
         super.init()
 
         self.lastTime = CACurrentMediaTime()
@@ -94,22 +93,22 @@ class WorldPreviewCamera: NSObject {
 //        angle[1]    %=   360
 
         // Find Camera direction (for NPC direction)
-        direction    = floor( ( angle[1] + 22.5 ) / 45 ) % 8;
+        direction    = floor( ( angle[1] + 22.5 ) / 45 ).truncatingRemainder(dividingBy: 8);
 
         // Calculate new modelView mat
-        modelviewMatrix = Matrix4x4<Float>()
-        modelviewMatrix = SGLMath.translateZ(modelviewMatrix, (altitudeFrom - zoom) / 2)
-        modelviewMatrix = SGLMath.rotate(modelviewMatrix, radians(angle[0]), [1, 0, 0])
-        modelviewMatrix = SGLMath.rotate(modelviewMatrix, radians(angle[1]), [0, 1, 0])
+        modelviewMatrix = matrix_identity_float4x4
+        modelviewMatrix = translateZ(modelviewMatrix, (altitudeFrom - zoom) / 2)
+        modelviewMatrix = matrix_rotate(modelviewMatrix, radians(angle[0]), [1, 0, 0])
+        modelviewMatrix = matrix_rotate(modelviewMatrix, radians(angle[1]), [0, 1, 0])
 
         // Center of the cell and inversed Y-Z axis
-        var _position: Vector3<Float> = Vector3()
+        var _position = simd_float3()
         _position[0] = position[0] - 0.5;
         _position[1] = position[2];
         _position[2] = position[1] - 0.5;
-        modelviewMatrix = SGLMath.translate(modelviewMatrix, _position)
+        modelviewMatrix = matrix_translate(modelviewMatrix, _position)
 
-        normalMatrix = Matrix3x3(modelviewMatrix).inverse.transpose
+        normalMatrix = simd_float3x3(modelviewMatrix).inverse.transpose
     }
 
     @objc private func handlePan(_ sender: Any) {

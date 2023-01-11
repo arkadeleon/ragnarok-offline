@@ -8,7 +8,6 @@
 
 import UIKit
 import MetalKit
-import SGLMath
 
 class GameViewController: UIViewController {
 
@@ -81,19 +80,19 @@ class GameViewController: UIViewController {
 
         let time = Float(CACurrentMediaTime())
 
-        let model = SGLMath.rotate(Matrix4x4<Float>(), time, [0.5, 1, 0])
+        let model = matrix_rotate(matrix_identity_float4x4, time, [0.5, 1, 0])
 
-        let normal = Matrix3x3(model.inverse.transpose)
+        let normal = simd_float3x3(model.inverse.transpose)
 
-        let view: Matrix4x4<Float> = SGLMath.lookAt(camera.position, camera.position + camera.front, camera.up)
+        let view = lookAt(camera.position, camera.position + camera.front, camera.up)
 
-        let projection = SGLMath.perspective(radians(camera.zoom), Float(mtkView.bounds.width / mtkView.bounds.height), 0.1, 100)
+        let projection = perspective(radians(camera.zoom), Float(mtkView.bounds.width / mtkView.bounds.height), 0.1, 100)
 
         var uniforms = VertexUniforms(
-            model: model.simd,
-            normal: normal.simd,
-            view: view.simd,
-            projection: projection.simd
+            model: model,
+            normal: normal,
+            view: view,
+            projection: projection
         )
         let uniformsBuffer = encoder.device.makeBuffer(bytes: &uniforms, length: MemoryLayout<VertexUniforms>.stride, options: [])!
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)

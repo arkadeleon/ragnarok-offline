@@ -7,7 +7,6 @@
 //
 
 import Metal
-import SGLMath
 
 struct Fog {
 
@@ -16,15 +15,15 @@ struct Fog {
     var far: Float
     var near: Float
     var factor: Float
-    var color: Vector3<Float>
+    var color: simd_float3
 }
 
 struct Light {
 
     var opacity: Float
-    var ambient: Vector3<Float>
-    var diffuse: Vector3<Float>
-    var direction: Vector3<Float>
+    var ambient: simd_float3
+    var diffuse: simd_float3
+    var direction: simd_float3
 }
 
 enum Formats {
