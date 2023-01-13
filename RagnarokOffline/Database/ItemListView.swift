@@ -1,18 +1,23 @@
 //
-//  RecordListViewController+Items.swift
+//  ItemListView.swift
 //  RagnarokOffline
 //
-//  Created by Leon Li on 2021/3/16.
-//  Copyright © 2021 Leon & Vane. All rights reserved.
+//  Created by Leon Li on 2023/1/13.
+//  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
-extension RecordListViewController {
+import SwiftUI
 
-    static func items() -> RecordListViewController {
+struct ItemListView: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> some UIViewController {
         let items = Database.shared.fetchItems(with: { $0.type != "Weapon" && $0.type != "Armor" && $0.type != "Card" })
         let records = items.map { AnyRecord($0) }
         let recordListViewController = RecordListViewController(records: records)
         recordListViewController.title = Strings.items
         return recordListViewController
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
     }
 }

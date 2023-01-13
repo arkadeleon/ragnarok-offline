@@ -9,7 +9,7 @@
 import Foundation
 
 struct Strings {
-    
+
     static let ragnarokOffline = NSLocalizedString("RagnarokOffline", value: "Ragnarok Offline", comment: "")
 
     static let client = NSLocalizedString("Client", value: "Client", comment: "")

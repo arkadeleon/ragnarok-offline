@@ -14,8 +14,6 @@
 		3509565724ACD8FB0077C134 /* SPRDocument+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565624ACD8FB0077C134 /* SPRDocument+Image.swift */; };
 		3509565924ACE48A0077C134 /* SpritePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */; };
 		350F347324B5610F00848ED5 /* PreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350F347224B5610F00848ED5 /* PreviewItem.swift */; };
-		35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E15245C7B87000A60FE /* AppDelegate.swift */; };
-		35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E17245C7B87000A60FE /* SceneDelegate.swift */; };
 		35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35116E1E245C7B8A000A60FE /* Assets.xcassets */; };
 		35116E22245C7B8A000A60FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */; };
 		35116E38245C7B8A000A60FE /* RagnarokOfflineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E37245C7B8A000A60FE /* RagnarokOfflineUITests.swift */; };
@@ -78,8 +76,14 @@
 		3535FCD325F9DF8B000C5608 /* Records.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3535FCD225F9DF8B000C5608 /* Records.swift */; };
 		3535FCD825F9DFE2000C5608 /* Records+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3535FCD725F9DFE2000C5608 /* Records+Item.swift */; };
 		3535FCDD25F9DFF0000C5608 /* Records+Monster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3535FCDC25F9DFF0000C5608 /* Records+Monster.swift */; };
-		355BF1D125ECB13A006E2D73 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BF1D025ECB13A006E2D73 /* SidebarViewController.swift */; };
-		355BF1E425ECD3BA006E2D73 /* SidebarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BF1E325ECD3BA006E2D73 /* SidebarItem.swift */; };
+		354EB1F529713D2E00E57287 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1F329713D2D00E57287 /* ContentView.swift */; };
+		354EB1F629713D2E00E57287 /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1F429713D2D00E57287 /* RagnarokOfflineApp.swift */; };
+		354EB1F82971414A00E57287 /* ClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1F72971414A00E57287 /* ClientView.swift */; };
+		354EB1FA297142C200E57287 /* WeaponListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1F9297142C200E57287 /* WeaponListView.swift */; };
+		354EB1FC2971431100E57287 /* ArmorListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1FB2971431100E57287 /* ArmorListView.swift */; };
+		354EB1FE2971434D00E57287 /* CardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1FD2971434D00E57287 /* CardListView.swift */; };
+		354EB2002971438A00E57287 /* ItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1FF2971438A00E57287 /* ItemListView.swift */; };
+		354EB202297143BD00E57287 /* MonsterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB201297143BD00E57287 /* MonsterListView.swift */; };
 		355E914924BECC5C00361AF6 /* ModelPreviewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */; };
 		355E914B24BEDDAE00361AF6 /* WorldPreviewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914A24BEDDAE00361AF6 /* WorldPreviewRenderer.swift */; };
 		355E914D24BEEA9200361AF6 /* WaterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914C24BEEA9200361AF6 /* WaterRenderer.swift */; };
@@ -144,12 +148,6 @@
 		35E8DCE024A9DC1100A14FC5 /* ModelRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDF24A9DC1100A14FC5 /* ModelRenderer.swift */; };
 		35EF769424AF18D800371F1F /* GroundRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF769324AF18D800371F1F /* GroundRenderer.swift */; };
 		35EF769C24B3222000371F1F /* CGImage+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF769B24B3222000371F1F /* CGImage+Decode.swift */; };
-		35F1334D2600A2D700E39181 /* DatabaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F1334C2600A2D700E39181 /* DatabaseViewController.swift */; };
-		35F133522600AC6C00E39181 /* RecordListViewController+Weapons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F133512600AC6C00E39181 /* RecordListViewController+Weapons.swift */; };
-		35F133572600AC7B00E39181 /* RecordListViewController+Armors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F133562600AC7B00E39181 /* RecordListViewController+Armors.swift */; };
-		35F1335C2600AC8400E39181 /* RecordListViewController+Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F1335B2600AC8400E39181 /* RecordListViewController+Cards.swift */; };
-		35F133612600AC8F00E39181 /* RecordListViewController+Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F133602600AC8F00E39181 /* RecordListViewController+Items.swift */; };
-		35F133662600AC9B00E39181 /* RecordListViewController+Monsters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F133652600AC9B00E39181 /* RecordListViewController+Monsters.swift */; };
 		35F1336B2600B25900E39181 /* RecordDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F1336A2600B25900E39181 /* RecordDetailViewController.swift */; };
 		35F1337D2601EACC00E39181 /* Records+DroppedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F1337C2601EACC00E39181 /* Records+DroppedItem.swift */; };
 		35F19B1B25F61F6100A21D54 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F19B1A25F61F6100A21D54 /* Strings.swift */; };
@@ -204,8 +202,6 @@
 		3509565824ACE48A0077C134 /* SpritePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpritePreviewViewController.swift; sourceTree = "<group>"; };
 		350F347224B5610F00848ED5 /* PreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewItem.swift; sourceTree = "<group>"; };
 		35116E12245C7B87000A60FE /* RagnarokOffline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOffline.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		35116E15245C7B87000A60FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		35116E17245C7B87000A60FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		35116E1E245C7B8A000A60FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		35116E21245C7B8A000A60FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		35116E23245C7B8A000A60FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -295,8 +291,14 @@
 		3535FCD225F9DF8B000C5608 /* Records.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Records.swift; sourceTree = "<group>"; };
 		3535FCD725F9DFE2000C5608 /* Records+Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Records+Item.swift"; sourceTree = "<group>"; };
 		3535FCDC25F9DFF0000C5608 /* Records+Monster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Records+Monster.swift"; sourceTree = "<group>"; };
-		355BF1D025ECB13A006E2D73 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
-		355BF1E325ECD3BA006E2D73 /* SidebarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarItem.swift; sourceTree = "<group>"; };
+		354EB1F329713D2D00E57287 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		354EB1F429713D2D00E57287 /* RagnarokOfflineApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RagnarokOfflineApp.swift; sourceTree = "<group>"; };
+		354EB1F72971414A00E57287 /* ClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientView.swift; sourceTree = "<group>"; };
+		354EB1F9297142C200E57287 /* WeaponListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponListView.swift; sourceTree = "<group>"; };
+		354EB1FB2971431100E57287 /* ArmorListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArmorListView.swift; sourceTree = "<group>"; };
+		354EB1FD2971434D00E57287 /* CardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListView.swift; sourceTree = "<group>"; };
+		354EB1FF2971438A00E57287 /* ItemListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListView.swift; sourceTree = "<group>"; };
+		354EB201297143BD00E57287 /* MonsterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterListView.swift; sourceTree = "<group>"; };
 		355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPreviewRenderer.swift; sourceTree = "<group>"; };
 		355E914A24BEDDAE00361AF6 /* WorldPreviewRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPreviewRenderer.swift; sourceTree = "<group>"; };
 		355E914C24BEEA9200361AF6 /* WaterRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterRenderer.swift; sourceTree = "<group>"; };
@@ -366,12 +368,6 @@
 		35E8DCDF24A9DC1100A14FC5 /* ModelRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelRenderer.swift; sourceTree = "<group>"; };
 		35EF769324AF18D800371F1F /* GroundRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroundRenderer.swift; sourceTree = "<group>"; };
 		35EF769B24B3222000371F1F /* CGImage+Decode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImage+Decode.swift"; sourceTree = "<group>"; };
-		35F1334C2600A2D700E39181 /* DatabaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseViewController.swift; sourceTree = "<group>"; };
-		35F133512600AC6C00E39181 /* RecordListViewController+Weapons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordListViewController+Weapons.swift"; sourceTree = "<group>"; };
-		35F133562600AC7B00E39181 /* RecordListViewController+Armors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordListViewController+Armors.swift"; sourceTree = "<group>"; };
-		35F1335B2600AC8400E39181 /* RecordListViewController+Cards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordListViewController+Cards.swift"; sourceTree = "<group>"; };
-		35F133602600AC8F00E39181 /* RecordListViewController+Items.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordListViewController+Items.swift"; sourceTree = "<group>"; };
-		35F133652600AC9B00E39181 /* RecordListViewController+Monsters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordListViewController+Monsters.swift"; sourceTree = "<group>"; };
 		35F1336A2600B25900E39181 /* RecordDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailViewController.swift; sourceTree = "<group>"; };
 		35F1337C2601EACC00E39181 /* Records+DroppedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Records+DroppedItem.swift"; sourceTree = "<group>"; };
 		35F19B1A25F61F6100A21D54 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -497,10 +493,9 @@
 		35116E14245C7B87000A60FE /* RagnarokOffline */ = {
 			isa = PBXGroup;
 			children = (
+				354EB1F429713D2D00E57287 /* RagnarokOfflineApp.swift */,
+				354EB1F329713D2D00E57287 /* ContentView.swift */,
 				35F19B1A25F61F6100A21D54 /* Strings.swift */,
-				35116E15245C7B87000A60FE /* AppDelegate.swift */,
-				35116E17245C7B87000A60FE /* SceneDelegate.swift */,
-				355BF1D725ECD2D7006E2D73 /* Sidebar */,
 				35CB3BAA2478277600EC04C3 /* Client */,
 				35FD46B925AD4AE20032D07A /* Database */,
 				35E5E8FB24E4396200716592 /* Previews */,
@@ -659,15 +654,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		355BF1D725ECD2D7006E2D73 /* Sidebar */ = {
-			isa = PBXGroup;
-			children = (
-				355BF1E325ECD3BA006E2D73 /* SidebarItem.swift */,
-				355BF1D025ECB13A006E2D73 /* SidebarViewController.swift */,
-			);
-			path = Sidebar;
-			sourceTree = "<group>";
-		};
 		356A0D9224EA303000E2ED32 /* Documents+ */ = {
 			isa = PBXGroup;
 			children = (
@@ -738,6 +724,7 @@
 		35CB3BAA2478277600EC04C3 /* Client */ = {
 			isa = PBXGroup;
 			children = (
+				354EB1F72971414A00E57287 /* ClientView.swift */,
 				358E6BAC24C9793B00283BAD /* ClientViewController.swift */,
 				35116E77246596BB000A60FE /* Browser */,
 				358E6BAB24C9691300283BAD /* Game */,
@@ -800,19 +787,18 @@
 		35FD46B925AD4AE20032D07A /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				354EB1F9297142C200E57287 /* WeaponListView.swift */,
+				354EB1FB2971431100E57287 /* ArmorListView.swift */,
+				354EB1FD2971434D00E57287 /* CardListView.swift */,
+				354EB1FF2971438A00E57287 /* ItemListView.swift */,
+				354EB201297143BD00E57287 /* MonsterListView.swift */,
 				352DC2D225EF21C100DAAACE /* Record.swift */,
 				3535FCD225F9DF8B000C5608 /* Records.swift */,
 				3535FCD725F9DFE2000C5608 /* Records+Item.swift */,
 				35F1337C2601EACC00E39181 /* Records+DroppedItem.swift */,
 				3535FCDC25F9DFF0000C5608 /* Records+Monster.swift */,
 				35FD46BA25AD4AFB0032D07A /* Database.swift */,
-				35F1334C2600A2D700E39181 /* DatabaseViewController.swift */,
 				352DC2D325EF21C100DAAACE /* RecordListViewController.swift */,
-				35F133512600AC6C00E39181 /* RecordListViewController+Weapons.swift */,
-				35F133562600AC7B00E39181 /* RecordListViewController+Armors.swift */,
-				35F1335B2600AC8400E39181 /* RecordListViewController+Cards.swift */,
-				35F133602600AC8F00E39181 /* RecordListViewController+Items.swift */,
-				35F133652600AC9B00E39181 /* RecordListViewController+Monsters.swift */,
 				35F1336A2600B25900E39181 /* RecordDetailViewController.swift */,
 			);
 			path = Database;
@@ -983,10 +969,13 @@
 				35116E87246AE56B000A60FE /* ModelPreviewViewController.swift in Sources */,
 				3587944A24C73E9400A5074B /* TGADocument.swift in Sources */,
 				355E915124C04A5D00361AF6 /* GATDocument+Compile.swift in Sources */,
+				354EB1F629713D2E00E57287 /* RagnarokOfflineApp.swift in Sources */,
 				355F207124DA4CC3001302FC /* guess.c in Sources */,
 				3535FCD825F9DFE2000C5608 /* Records+Item.swift in Sources */,
+				354EB1FC2971431100E57287 /* ArmorListView.swift in Sources */,
 				3533CBC424D2BB26006AFE04 /* lparser.c in Sources */,
 				3533CBAD24D2BB26006AFE04 /* lmathlib.c in Sources */,
+				354EB2002971438A00E57287 /* ItemListView.swift in Sources */,
 				35116E5E2461A5DB000A60FE /* DESDecryptor.swift in Sources */,
 				3533CBC124D2BB26006AFE04 /* lapi.c in Sources */,
 				35E8DCDB24A88BCC00A14FC5 /* WaterShaders.metal in Sources */,
@@ -1001,6 +990,7 @@
 				3533CBA724D2BB26006AFE04 /* lauxlib.c in Sources */,
 				355F207024DA4CC3001302FC /* disassemble.c in Sources */,
 				35CAF9C724D9BFDD00F9426A /* LuaDecompiler.m in Sources */,
+				354EB1FA297142C200E57287 /* WeaponListView.swift in Sources */,
 				3533CBC724D2BB26006AFE04 /* ldo.c in Sources */,
 				355F206124DA4CC3001302FC /* macro-array.c in Sources */,
 				3533CBAA24D2BB26006AFE04 /* lstate.c in Sources */,
@@ -1008,8 +998,8 @@
 				3533CBBE24D2BB26006AFE04 /* lmem.c in Sources */,
 				3535FCD325F9DF8B000C5608 /* Records.swift in Sources */,
 				35A0ACFD24FF94D400B72EB9 /* ResourceBundle.swift in Sources */,
-				355BF1D125ECB13A006E2D73 /* SidebarViewController.swift in Sources */,
 				3587F6EB2463DBF0007D1C9B /* DocumentItemsViewController.swift in Sources */,
+				354EB1F529713D2E00E57287 /* ContentView.swift in Sources */,
 				355F206C24DA4CC3001302FC /* expression.c in Sources */,
 				35FD46BB25AD4AFB0032D07A /* Database.swift in Sources */,
 				3533CBB424D2BB26006AFE04 /* linit.c in Sources */,
@@ -1020,11 +1010,9 @@
 				35E5E90224E44E9200716592 /* ActionAnimationCell.swift in Sources */,
 				35E8DCE024A9DC1100A14FC5 /* ModelRenderer.swift in Sources */,
 				35E5E8FD24E43CAA00716592 /* SpriteFrameCell.swift in Sources */,
-				35F133522600AC6C00E39181 /* RecordListViewController+Weapons.swift in Sources */,
 				3533CBA824D2BB26006AFE04 /* liolib.c in Sources */,
 				35F1337D2601EACC00E39181 /* Records+DroppedItem.swift in Sources */,
 				3533CBB124D2BB26006AFE04 /* lstrlib.c in Sources */,
-				35116E16245C7B87000A60FE /* AppDelegate.swift in Sources */,
 				3509565724ACD8FB0077C134 /* SPRDocument+Image.swift in Sources */,
 				358E6BAD24C9793B00283BAD /* ClientViewController.swift in Sources */,
 				3587577B24C6DB480050F734 /* AudioPreviewViewController.swift in Sources */,
@@ -1033,15 +1021,15 @@
 				3535FCDD25F9DFF0000C5608 /* Records+Monster.swift in Sources */,
 				3533CBC024D2BB26006AFE04 /* ltablib.c in Sources */,
 				35CB3BAC247827A700EC04C3 /* GameViewController.swift in Sources */,
+				354EB202297143BD00E57287 /* MonsterListView.swift in Sources */,
 				35E5E90524EAB9EB00716592 /* GRFDocument+Tree.swift in Sources */,
 				3533CBBF24D2BB26006AFE04 /* lcode.c in Sources */,
+				354EB1FE2971434D00E57287 /* CardListView.swift in Sources */,
 				35D091F624AC8EB1008D7CEA /* PALDocument.swift in Sources */,
 				35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */,
 				3533CBA924D2BB26006AFE04 /* lopcodes.c in Sources */,
 				35E5E90924ED6A8F00716592 /* FileType.swift in Sources */,
 				3533CBC224D2BB26006AFE04 /* lbaselib.c in Sources */,
-				35F1334D2600A2D700E39181 /* DatabaseViewController.swift in Sources */,
-				35F133662600AC9B00E39181 /* RecordListViewController+Monsters.swift in Sources */,
 				355E914B24BEDDAE00361AF6 /* WorldPreviewRenderer.swift in Sources */,
 				355F206724DA4CC3001302FC /* decompile.c in Sources */,
 				3533CBC324D2BB26006AFE04 /* ldebug.c in Sources */,
@@ -1049,7 +1037,6 @@
 				3533CBBD24D2BB26006AFE04 /* ldblib.c in Sources */,
 				3533CBB024D2BB26006AFE04 /* lfunc.c in Sources */,
 				35F1336B2600B25900E39181 /* RecordDetailViewController.swift in Sources */,
-				35116E18245C7B87000A60FE /* SceneDelegate.swift in Sources */,
 				35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */,
 				35D091F424AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift in Sources */,
 				3533CBAE24D2BB26006AFE04 /* loadlib.c in Sources */,
@@ -1063,14 +1050,12 @@
 				3533CBB524D2BB26006AFE04 /* lstring.c in Sources */,
 				3533CBB824D2BB26006AFE04 /* ltable.c in Sources */,
 				35116E7924659FD6000A60FE /* Document.swift in Sources */,
-				35F133572600AC7B00E39181 /* RecordListViewController+Armors.swift in Sources */,
 				359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */,
-				355BF1E425ECD3BA006E2D73 /* SidebarItem.swift in Sources */,
 				352DC2D625EF21C200DAAACE /* RecordListViewController.swift in Sources */,
 				355F207224DA4FFD001302FC /* luadec.c in Sources */,
-				35F1335C2600AC8400E39181 /* RecordListViewController+Cards.swift in Sources */,
 				3533CBBA24D2BB26006AFE04 /* loslib.c in Sources */,
 				3533CBC524D2BB26006AFE04 /* llex.c in Sources */,
+				354EB1F82971414A00E57287 /* ClientView.swift in Sources */,
 				35CB3BB52478359100EC04C3 /* Shaders.metal in Sources */,
 				3587F6ED2463DF3F007D1C9B /* DocumentItemCell.swift in Sources */,
 				355F205F24DA4CC3001302FC /* structs.c in Sources */,
@@ -1095,7 +1080,6 @@
 				35116E58245FC152000A60FE /* GRFDocument.swift in Sources */,
 				3533CBBC24D2BB26006AFE04 /* lzio.c in Sources */,
 				359D5C1624A1F8CA00C2D8D3 /* WorldPreviewViewController.swift in Sources */,
-				35F133612600AC8F00E39181 /* RecordListViewController+Items.swift in Sources */,
 				3573037A24B83CC70011F6AA /* ResourceManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1194,7 +1178,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1249,7 +1233,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
