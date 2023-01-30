@@ -84,6 +84,8 @@
 		354EB1FE2971434D00E57287 /* CardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1FD2971434D00E57287 /* CardListView.swift */; };
 		354EB2002971438A00E57287 /* ItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1FF2971438A00E57287 /* ItemListView.swift */; };
 		354EB202297143BD00E57287 /* MonsterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB201297143BD00E57287 /* MonsterListView.swift */; };
+		35549C892986182400FDCA7E /* rAthenaDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 35549C882986182400FDCA7E /* rAthenaDatabase */; };
+		35549C8A2986182400FDCA7E /* rAthenaDatabase in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 35549C882986182400FDCA7E /* rAthenaDatabase */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		355E914924BECC5C00361AF6 /* ModelPreviewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */; };
 		355E914B24BEDDAE00361AF6 /* WorldPreviewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914A24BEDDAE00361AF6 /* WorldPreviewRenderer.swift */; };
 		355E914D24BEEA9200361AF6 /* WaterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914C24BEEA9200361AF6 /* WaterRenderer.swift */; };
@@ -120,8 +122,6 @@
 		358E6BAD24C9793B00283BAD /* ClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358E6BAC24C9793B00283BAD /* ClientViewController.swift */; };
 		358F497B2542D7560065D488 /* ACTDocument+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358F497A2542D7560065D488 /* ACTDocument+Image.swift */; };
 		3593154B2964207300167448 /* Highlight in Frameworks */ = {isa = PBXBuildFile; productRef = 3593154A2964207300167448 /* Highlight */; };
-		3593154D296421E400167448 /* rAthenaResource in Frameworks */ = {isa = PBXBuildFile; productRef = 3593154C296421E400167448 /* rAthenaResource */; };
-		3593154E296421E400167448 /* rAthenaResource in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3593154C296421E400167448 /* rAthenaResource */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		359D5C1624A1F8CA00C2D8D3 /* WorldPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1524A1F8CA00C2D8D3 /* WorldPreviewViewController.swift */; };
 		359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 359D5C1724A1FA7C00C2D8D3 /* GroundShaders.metal */; };
 		359E5B1C296BF90F00B10164 /* SGLMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359E5B1B296BF90F00B10164 /* SGLMath.swift */; };
@@ -183,7 +183,7 @@
 				358BF595292E7EC7007DA1C0 /* rAthenaLogin in Embed Frameworks */,
 				358BF592292E7EC7007DA1C0 /* rAthenaChar in Embed Frameworks */,
 				358BF59B292E7EC7007DA1C0 /* rAthenaWeb in Embed Frameworks */,
-				3593154E296421E400167448 /* rAthenaResource in Embed Frameworks */,
+				35549C8A2986182400FDCA7E /* rAthenaDatabase in Embed Frameworks */,
 				358BF598292E7EC7007DA1C0 /* rAthenaMap in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -383,11 +383,11 @@
 			files = (
 				358BF594292E7EC7007DA1C0 /* rAthenaLogin in Frameworks */,
 				358BF591292E7EC7007DA1C0 /* rAthenaChar in Frameworks */,
-				3593154D296421E400167448 /* rAthenaResource in Frameworks */,
 				358BF59A292E7EC7007DA1C0 /* rAthenaWeb in Frameworks */,
 				35116E50245FBF65000A60FE /* DataCompression in Frameworks */,
 				3593154B2964207300167448 /* Highlight in Frameworks */,
 				358BF597292E7EC7007DA1C0 /* rAthenaMap in Frameworks */,
+				35549C892986182400FDCA7E /* rAthenaDatabase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -828,7 +828,7 @@
 				358BF596292E7EC7007DA1C0 /* rAthenaMap */,
 				358BF599292E7EC7007DA1C0 /* rAthenaWeb */,
 				3593154A2964207300167448 /* Highlight */,
-				3593154C296421E400167448 /* rAthenaResource */,
+				35549C882986182400FDCA7E /* rAthenaDatabase */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35116E12245C7B87000A60FE /* RagnarokOffline.app */;
@@ -1257,10 +1257,13 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "date.leonandvane.ragnarok-offline";
 				PRODUCT_NAME = RagnarokOffline;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "RagnarokOffline/RagnarokOffline-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1278,9 +1281,12 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "date.leonandvane.ragnarok-offline";
 				PRODUCT_NAME = RagnarokOffline;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "RagnarokOffline/RagnarokOffline-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1442,6 +1448,11 @@
 			package = 35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */;
 			productName = DataCompression;
 		};
+		35549C882986182400FDCA7E /* rAthenaDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3539AFCB292DB91A00FA1A78 /* XCRemoteSwiftPackageReference "rathena-ios" */;
+			productName = rAthenaDatabase;
+		};
 		358BF590292E7EC7007DA1C0 /* rAthenaChar */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3539AFCB292DB91A00FA1A78 /* XCRemoteSwiftPackageReference "rathena-ios" */;
@@ -1466,11 +1477,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 359315472964202900167448 /* XCRemoteSwiftPackageReference "highlight" */;
 			productName = Highlight;
-		};
-		3593154C296421E400167448 /* rAthenaResource */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3539AFCB292DB91A00FA1A78 /* XCRemoteSwiftPackageReference "rathena-ios" */;
-			productName = rAthenaResource;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

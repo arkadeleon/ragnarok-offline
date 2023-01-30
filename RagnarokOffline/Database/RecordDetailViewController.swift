@@ -29,7 +29,7 @@ class RecordDetailViewController: UIViewController {
     init(record: AnyRecord) {
         self.record = record
         super.init(nibName: nil, bundle: nil)
-        title = record.name
+        title = record.recordName
     }
 
     required init?(coder: NSCoder) {
@@ -76,7 +76,7 @@ class RecordDetailViewController: UIViewController {
 
         let recordCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, AnyRecord> { (cell, indexPath, item) in
             var contentConfiguration = UIListContentConfiguration.cell()
-            contentConfiguration.text = item.name
+            contentConfiguration.text = item.recordName
 
             cell.contentConfiguration = contentConfiguration
             cell.accessories = [.disclosureIndicator()]
@@ -98,7 +98,7 @@ class RecordDetailViewController: UIViewController {
         var snapshot = NSDiffableDataSourceSnapshot<String, Item>()
         snapshot.appendSections([Strings.information])
         snapshot.appendItems([.header(Strings.information)], toSection: Strings.information)
-        for field in record.fields {
+        for field in record.recordFields {
             switch field.value {
             case .string(let value):
                 let entry = Item.Entry(name: field.name, value: value)

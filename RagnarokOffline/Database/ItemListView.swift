@@ -6,18 +6,19 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
+import rAthenaDatabase
 import SwiftUI
 
-struct ItemListView: UIViewControllerRepresentable {
+struct ItemListView: View {
+    @State private var items: [Item] = []
 
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let items = Database.shared.fetchItems(with: { $0.type != "Weapon" && $0.type != "Armor" && $0.type != "Card" })
-        let records = items.map { AnyRecord($0) }
-        let recordListViewController = RecordListViewController(records: records)
-        recordListViewController.title = Strings.items
-        return recordListViewController
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+    var body: some View {
+        List(items, id: \.id) { item in
+            Text(item.name)
+        }
+        .navigationTitle("Items")
+        .task {
+            items = rAthenaDatabase.Database.renewal.fetchItems()
+        }
     }
 }

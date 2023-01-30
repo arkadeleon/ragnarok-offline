@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mw99/DataCompression",
       "state" : {
-        "revision" : "6abb8f3cd0e4b2a33b4927a7a92b6764528f2440",
-        "version" : "3.6.0"
+        "revision" : "5ab15951321b08b74511601cbd0497667649d70b",
+        "version" : "3.8.0"
       }
     },
     {
@@ -24,7 +24,16 @@
       "location" : "https://github.com/arkadeleon/rathena-ios.git",
       "state" : {
         "branch" : "master",
-        "revision" : "8d204ff1edfd4ba086fb0999cf0f39126acd12d9"
+        "revision" : "55deced328cba8d409bbed368bc8766a2169b40a"
+      }
+    },
+    {
+      "identity" : "yams",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jpsim/Yams.git",
+      "state" : {
+        "revision" : "c7facc5ccb8c5a4577ea8c491aa875762cdee57a",
+        "version" : "5.0.3"
       }
     }
   ],

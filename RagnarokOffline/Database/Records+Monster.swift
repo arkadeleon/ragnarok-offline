@@ -10,16 +10,16 @@ extension Records {
 
     struct Monster: Record {
 
-        var id: String {
+        var recordID: String {
             let id = "$(ID)"
             return "Monster#\(id)"
         }
 
-        var name: String {
+        var recordName: String {
             return "$(iName)"
         }
 
-        var fields: [RecordField] {
+        var recordFields: [RecordField] {
             return [
                 RecordField(name: Strings.drops, value: .references(droppedItems))
             ]
@@ -52,7 +52,7 @@ extension Records.Monster {
                 continue
             }
 
-            guard let item = Database.shared.fetchItems(with: { $0.id == dropId }).first else {
+            guard let item = Database.shared.fetchItems(with: { $0.recordID == dropId }).first else {
                 continue
             }
 

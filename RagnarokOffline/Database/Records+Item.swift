@@ -10,12 +10,12 @@ extension Records {
 
     struct Item: Record {
 
-        var id: String {
+        var recordID: String {
             let id = "$(id)"
             return "Item#\(id)"
         }
 
-        var name: String {
+        var recordName: String {
             let name = "$(name_english)"
             switch type {
             case "Weapon", "Armor":
@@ -26,7 +26,7 @@ extension Records {
             }
         }
 
-        var fields: [RecordField] {
+        var recordFields: [RecordField] {
             return [
                 RecordField(name: Strings.itemType, value: .string(type)),
                 RecordField(name: Strings.itemClass, value: .string(subtype)),

@@ -18,9 +18,9 @@ struct RecordField {
 }
 
 protocol Record {
-    var id: String { get }
-    var name: String { get }
-    var fields: [RecordField] { get }
+    var recordID: String { get }
+    var recordName: String { get }
+    var recordFields: [RecordField] { get }
 }
 
 struct AnyRecord: Record, Hashable {
@@ -31,23 +31,23 @@ struct AnyRecord: Record, Hashable {
         self.record = record
     }
 
-    var id: String {
-        record.id
+    var recordID: String {
+        record.recordID
     }
 
-    var name: String {
-        record.name
+    var recordName: String {
+        record.recordName
     }
 
-    var fields: [RecordField] {
-        record.fields
+    var recordFields: [RecordField] {
+        record.recordFields
     }
 
     static func == (lhs: AnyRecord, rhs: AnyRecord) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.recordID == rhs.recordID
     }
 
     func hash(into hasher: inout Hasher) {
-        id.hash(into: &hasher)
+        recordID.hash(into: &hasher)
     }
 }

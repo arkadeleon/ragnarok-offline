@@ -18,16 +18,16 @@ extension Records {
             self.dropRate = dropRate
         }
 
-        var id: String {
-            return "\(item.id)(\(dropRate)"
+        var recordID: String {
+            return "\(item.recordID)(\(dropRate)"
         }
 
-        var name: String {
-            return "\(item.name) (\(dropRate)%)"
+        var recordName: String {
+            return "\(item.recordName) (\(dropRate)%)"
         }
 
-        var fields: [RecordField] {
-            return item.fields
+        var recordFields: [RecordField] {
+            return item.recordFields
         }
     }
 }

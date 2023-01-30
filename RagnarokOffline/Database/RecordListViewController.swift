@@ -41,7 +41,7 @@ class RecordListViewController: UIViewController {
 
         let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, AnyRecord> { (cell, indexPath, item) in
             var contentConfiguration = UIListContentConfiguration.cell()
-            contentConfiguration.text = item.name
+            contentConfiguration.text = item.recordName
 
             cell.contentConfiguration = contentConfiguration
             cell.accessories = [.disclosureIndicator()]
