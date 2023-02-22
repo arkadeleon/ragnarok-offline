@@ -6,19 +6,20 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
-import rAthenaDatabase
+import rAthenaCommon
 import SwiftUI
 
 struct ItemListView: View {
-    @State private var items: [Item] = []
+    @State private var items: [RAItem] = []
 
     var body: some View {
-        List(items, id: \.id) { item in
+        List(items, id: \.itemID) { item in
             Text(item.name)
         }
         .navigationTitle("Items")
         .task {
-            items = rAthenaDatabase.Database.renewal.fetchItems()
+            let database = RAItemDatabase()
+            items = await database.fetchAllItems()
         }
     }
 }

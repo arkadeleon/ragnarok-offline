@@ -84,8 +84,7 @@
 		354EB1FE2971434D00E57287 /* CardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1FD2971434D00E57287 /* CardListView.swift */; };
 		354EB2002971438A00E57287 /* ItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1FF2971438A00E57287 /* ItemListView.swift */; };
 		354EB202297143BD00E57287 /* MonsterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB201297143BD00E57287 /* MonsterListView.swift */; };
-		35549C892986182400FDCA7E /* rAthenaDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 35549C882986182400FDCA7E /* rAthenaDatabase */; };
-		35549C8A2986182400FDCA7E /* rAthenaDatabase in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 35549C882986182400FDCA7E /* rAthenaDatabase */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3557DB2229A60CD400ABB683 /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 3557DB2129A60CD400ABB683 /* rAthenaCommon */; };
 		355E914924BECC5C00361AF6 /* ModelPreviewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */; };
 		355E914B24BEDDAE00361AF6 /* WorldPreviewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914A24BEDDAE00361AF6 /* WorldPreviewRenderer.swift */; };
 		355E914D24BEEA9200361AF6 /* WaterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914C24BEEA9200361AF6 /* WaterRenderer.swift */; };
@@ -183,7 +182,6 @@
 				358BF595292E7EC7007DA1C0 /* rAthenaLogin in Embed Frameworks */,
 				358BF592292E7EC7007DA1C0 /* rAthenaChar in Embed Frameworks */,
 				358BF59B292E7EC7007DA1C0 /* rAthenaWeb in Embed Frameworks */,
-				35549C8A2986182400FDCA7E /* rAthenaDatabase in Embed Frameworks */,
 				358BF598292E7EC7007DA1C0 /* rAthenaMap in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -382,12 +380,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				358BF594292E7EC7007DA1C0 /* rAthenaLogin in Frameworks */,
+				3557DB2229A60CD400ABB683 /* rAthenaCommon in Frameworks */,
 				358BF591292E7EC7007DA1C0 /* rAthenaChar in Frameworks */,
 				358BF59A292E7EC7007DA1C0 /* rAthenaWeb in Frameworks */,
 				35116E50245FBF65000A60FE /* DataCompression in Frameworks */,
 				3593154B2964207300167448 /* Highlight in Frameworks */,
 				358BF597292E7EC7007DA1C0 /* rAthenaMap in Frameworks */,
-				35549C892986182400FDCA7E /* rAthenaDatabase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -828,7 +826,7 @@
 				358BF596292E7EC7007DA1C0 /* rAthenaMap */,
 				358BF599292E7EC7007DA1C0 /* rAthenaWeb */,
 				3593154A2964207300167448 /* Highlight */,
-				35549C882986182400FDCA7E /* rAthenaDatabase */,
+				3557DB2129A60CD400ABB683 /* rAthenaCommon */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35116E12245C7B87000A60FE /* RagnarokOffline.app */;
@@ -1448,10 +1446,10 @@
 			package = 35116E4E245FBF65000A60FE /* XCRemoteSwiftPackageReference "DataCompression" */;
 			productName = DataCompression;
 		};
-		35549C882986182400FDCA7E /* rAthenaDatabase */ = {
+		3557DB2129A60CD400ABB683 /* rAthenaCommon */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3539AFCB292DB91A00FA1A78 /* XCRemoteSwiftPackageReference "rathena-ios" */;
-			productName = rAthenaDatabase;
+			productName = rAthenaCommon;
 		};
 		358BF590292E7EC7007DA1C0 /* rAthenaChar */ = {
 			isa = XCSwiftPackageProductDependency;
