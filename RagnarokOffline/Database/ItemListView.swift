@@ -19,7 +19,7 @@ struct ItemListView: View {
         .navigationTitle("Items")
         .task {
             let database = RAItemDatabase()
-            items = await database.fetchAllItems()
+            items = await database.fetchAllItems().filter({ $0.type != .weapon && $0.type != .armor && $0.type != .card })
         }
     }
 }

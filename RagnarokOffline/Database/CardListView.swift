@@ -6,18 +6,20 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
+import rAthenaCommon
 import SwiftUI
 
-struct CardListView: UIViewControllerRepresentable {
+struct CardListView: View {
+    @State private var cards: [RAItem] = []
 
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let items = Database.shared.fetchItems(with: { $0.type == "Card" })
-        let records = items.map { AnyRecord($0) }
-        let recordListViewController = RecordListViewController(records: records)
-        recordListViewController.title = Strings.cards
-        return recordListViewController
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+    var body: some View {
+        List(cards, id: \.itemID) { card in
+            Text(card.name)
+        }
+        .navigationTitle("Cards")
+        .task {
+            let database = RAItemDatabase()
+            cards = await database.fetchAllItems().filter({ $0.type == .card })
+        }
     }
 }

@@ -6,18 +6,20 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
+import rAthenaCommon
 import SwiftUI
 
-struct WeaponListView: UIViewControllerRepresentable {
+struct WeaponListView: View {
+    @State private var weapons: [RAItem] = []
 
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let items = Database.shared.fetchItems(with: { $0.type == "Weapon" })
-        let records = items.map { AnyRecord($0) }
-        let recordListViewController = RecordListViewController(records: records)
-        recordListViewController.title = Strings.weapons
-        return recordListViewController
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+    var body: some View {
+        List(weapons, id: \.itemID) { weapon in
+            Text("\(weapon.name) [\(weapon.slots)]")
+        }
+        .navigationTitle("Weapons")
+        .task {
+            let database = RAItemDatabase()
+            weapons = await database.fetchAllItems().filter({ $0.type == .weapon })
+        }
     }
 }
