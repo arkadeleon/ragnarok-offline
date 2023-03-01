@@ -9,22 +9,26 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var database = Database()
+
     var body: some View {
         NavigationView {
             List {
-                NavigationLink {
-                    ClientView()
-                        .navigationTitle("Client")
-                        .navigationBarTitleDisplayMode(.inline)
-                } label: {
-                    Label("Client", systemImage: "desktopcomputer")
-                }
-                NavigationLink {
-                    Text("Server")
-                        .navigationTitle("Server")
-                        .navigationBarTitleDisplayMode(.inline)
-                } label: {
-                    Label("Server", systemImage: "server.rack")
+                Section {
+                    NavigationLink {
+                        ClientView()
+                            .navigationTitle("Client")
+                            .navigationBarTitleDisplayMode(.inline)
+                    } label: {
+                        Label("Client", systemImage: "desktopcomputer")
+                    }
+                    NavigationLink {
+                        Text("Server")
+                            .navigationTitle("Server")
+                            .navigationBarTitleDisplayMode(.inline)
+                    } label: {
+                        Label("Server", systemImage: "server.rack")
+                    }
                 }
 
                 Section("Database") {
@@ -32,6 +36,7 @@ struct ContentView: View {
                         WeaponListView()
                             .navigationTitle("Weapons")
                             .navigationBarTitleDisplayMode(.inline)
+                            .environmentObject(database)
                     } label: {
                         Label("Weapons", systemImage: "list.dash")
                     }
@@ -39,6 +44,7 @@ struct ContentView: View {
                         ArmorListView()
                             .navigationTitle("Armors")
                             .navigationBarTitleDisplayMode(.inline)
+                            .environmentObject(database)
                     } label: {
                         Label("Armors", systemImage: "list.dash")
                     }
@@ -46,6 +52,7 @@ struct ContentView: View {
                         CardListView()
                             .navigationTitle("Cards")
                             .navigationBarTitleDisplayMode(.inline)
+                            .environmentObject(database)
                     } label: {
                         Label("Cards", systemImage: "list.dash")
                     }
@@ -53,6 +60,7 @@ struct ContentView: View {
                         ItemListView()
                             .navigationTitle("Items")
                             .navigationBarTitleDisplayMode(.inline)
+                            .environmentObject(database)
                     } label: {
                         Label("Items", systemImage: "list.dash")
                     }
@@ -60,6 +68,7 @@ struct ContentView: View {
                         MonsterListView()
                             .navigationTitle("Monsters")
                             .navigationBarTitleDisplayMode(.inline)
+                            .environmentObject(database)
                     } label: {
                         Label("Monsters", systemImage: "list.dash")
                     }

@@ -41,8 +41,6 @@
 		35116E8D247035AC000A60FE /* ACTDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8C247035AC000A60FE /* ACTDocument.swift */; };
 		35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8E2472E685000A60FE /* SPRDocument.swift */; };
 		351E225624BC5D98000EF504 /* INIDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351E225524BC5D98000EF504 /* INIDocument.swift */; };
-		352DC2D525EF21C200DAAACE /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352DC2D225EF21C100DAAACE /* Record.swift */; };
-		352DC2D625EF21C200DAAACE /* RecordListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352DC2D325EF21C100DAAACE /* RecordListViewController.swift */; };
 		3533CBA724D2BB26006AFE04 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CB6F24D2BB25006AFE04 /* lauxlib.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3533CBA824D2BB26006AFE04 /* liolib.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CB7524D2BB25006AFE04 /* liolib.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3533CBA924D2BB26006AFE04 /* lopcodes.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CB7624D2BB25006AFE04 /* lopcodes.c */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -73,9 +71,6 @@
 		3533CBC524D2BB26006AFE04 /* llex.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CBA224D2BB26006AFE04 /* llex.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3533CBC624D2BB26006AFE04 /* ltm.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CBA424D2BB26006AFE04 /* ltm.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3533CBC724D2BB26006AFE04 /* ldo.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CBA524D2BB26006AFE04 /* ldo.c */; settings = {COMPILER_FLAGS = "-w"; }; };
-		3535FCD325F9DF8B000C5608 /* Records.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3535FCD225F9DF8B000C5608 /* Records.swift */; };
-		3535FCD825F9DFE2000C5608 /* Records+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3535FCD725F9DFE2000C5608 /* Records+Item.swift */; };
-		3535FCDD25F9DFF0000C5608 /* Records+Monster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3535FCDC25F9DFF0000C5608 /* Records+Monster.swift */; };
 		354EB1F529713D2E00E57287 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1F329713D2D00E57287 /* ContentView.swift */; };
 		354EB1F629713D2E00E57287 /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1F429713D2D00E57287 /* RagnarokOfflineApp.swift */; };
 		354EB1F82971414A00E57287 /* ClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1F72971414A00E57287 /* ClientView.swift */; };
@@ -147,8 +142,6 @@
 		35E8DCE024A9DC1100A14FC5 /* ModelRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E8DCDF24A9DC1100A14FC5 /* ModelRenderer.swift */; };
 		35EF769424AF18D800371F1F /* GroundRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF769324AF18D800371F1F /* GroundRenderer.swift */; };
 		35EF769C24B3222000371F1F /* CGImage+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF769B24B3222000371F1F /* CGImage+Decode.swift */; };
-		35F1336B2600B25900E39181 /* RecordDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F1336A2600B25900E39181 /* RecordDetailViewController.swift */; };
-		35F1337D2601EACC00E39181 /* Records+DroppedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F1337C2601EACC00E39181 /* Records+DroppedItem.swift */; };
 		35F19B1B25F61F6100A21D54 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F19B1A25F61F6100A21D54 /* Strings.swift */; };
 		35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8502473D9E8007DF105 /* STRDocument.swift */; };
 		35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8D8522473E1D7007DF105 /* RSWDocument.swift */; };
@@ -231,8 +224,6 @@
 		35116E8C247035AC000A60FE /* ACTDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACTDocument.swift; sourceTree = "<group>"; };
 		35116E8E2472E685000A60FE /* SPRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPRDocument.swift; sourceTree = "<group>"; };
 		351E225524BC5D98000EF504 /* INIDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INIDocument.swift; sourceTree = "<group>"; };
-		352DC2D225EF21C100DAAACE /* Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
-		352DC2D325EF21C100DAAACE /* RecordListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordListViewController.swift; sourceTree = "<group>"; };
 		3533CB6F24D2BB25006AFE04 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lauxlib.c; sourceTree = "<group>"; };
 		3533CB7024D2BB25006AFE04 /* lmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lmem.h; sourceTree = "<group>"; };
 		3533CB7124D2BB25006AFE04 /* llimits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = llimits.h; sourceTree = "<group>"; };
@@ -286,9 +277,6 @@
 		3533CBA424D2BB26006AFE04 /* ltm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ltm.c; sourceTree = "<group>"; };
 		3533CBA524D2BB26006AFE04 /* ldo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldo.c; sourceTree = "<group>"; };
 		3533CBA624D2BB26006AFE04 /* lundump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lundump.h; sourceTree = "<group>"; };
-		3535FCD225F9DF8B000C5608 /* Records.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Records.swift; sourceTree = "<group>"; };
-		3535FCD725F9DFE2000C5608 /* Records+Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Records+Item.swift"; sourceTree = "<group>"; };
-		3535FCDC25F9DFF0000C5608 /* Records+Monster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Records+Monster.swift"; sourceTree = "<group>"; };
 		354EB1F329713D2D00E57287 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		354EB1F429713D2D00E57287 /* RagnarokOfflineApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RagnarokOfflineApp.swift; sourceTree = "<group>"; };
 		354EB1F72971414A00E57287 /* ClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientView.swift; sourceTree = "<group>"; };
@@ -366,8 +354,6 @@
 		35E8DCDF24A9DC1100A14FC5 /* ModelRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelRenderer.swift; sourceTree = "<group>"; };
 		35EF769324AF18D800371F1F /* GroundRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroundRenderer.swift; sourceTree = "<group>"; };
 		35EF769B24B3222000371F1F /* CGImage+Decode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImage+Decode.swift"; sourceTree = "<group>"; };
-		35F1336A2600B25900E39181 /* RecordDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailViewController.swift; sourceTree = "<group>"; };
-		35F1337C2601EACC00E39181 /* Records+DroppedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Records+DroppedItem.swift"; sourceTree = "<group>"; };
 		35F19B1A25F61F6100A21D54 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		35F8D8502473D9E8007DF105 /* STRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRDocument.swift; sourceTree = "<group>"; };
 		35F8D8522473E1D7007DF105 /* RSWDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWDocument.swift; sourceTree = "<group>"; };
@@ -785,19 +771,12 @@
 		35FD46B925AD4AE20032D07A /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				35FD46BA25AD4AFB0032D07A /* Database.swift */,
 				354EB1F9297142C200E57287 /* WeaponListView.swift */,
 				354EB1FB2971431100E57287 /* ArmorListView.swift */,
 				354EB1FD2971434D00E57287 /* CardListView.swift */,
 				354EB1FF2971438A00E57287 /* ItemListView.swift */,
 				354EB201297143BD00E57287 /* MonsterListView.swift */,
-				352DC2D225EF21C100DAAACE /* Record.swift */,
-				3535FCD225F9DF8B000C5608 /* Records.swift */,
-				3535FCD725F9DFE2000C5608 /* Records+Item.swift */,
-				35F1337C2601EACC00E39181 /* Records+DroppedItem.swift */,
-				3535FCDC25F9DFF0000C5608 /* Records+Monster.swift */,
-				35FD46BA25AD4AFB0032D07A /* Database.swift */,
-				352DC2D325EF21C100DAAACE /* RecordListViewController.swift */,
-				35F1336A2600B25900E39181 /* RecordDetailViewController.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -969,7 +948,6 @@
 				355E915124C04A5D00361AF6 /* GATDocument+Compile.swift in Sources */,
 				354EB1F629713D2E00E57287 /* RagnarokOfflineApp.swift in Sources */,
 				355F207124DA4CC3001302FC /* guess.c in Sources */,
-				3535FCD825F9DFE2000C5608 /* Records+Item.swift in Sources */,
 				354EB1FC2971431100E57287 /* ArmorListView.swift in Sources */,
 				3533CBC424D2BB26006AFE04 /* lparser.c in Sources */,
 				3533CBAD24D2BB26006AFE04 /* lmathlib.c in Sources */,
@@ -994,7 +972,6 @@
 				3533CBAA24D2BB26006AFE04 /* lstate.c in Sources */,
 				35EF769C24B3222000371F1F /* CGImage+Decode.swift in Sources */,
 				3533CBBE24D2BB26006AFE04 /* lmem.c in Sources */,
-				3535FCD325F9DF8B000C5608 /* Records.swift in Sources */,
 				35A0ACFD24FF94D400B72EB9 /* ResourceBundle.swift in Sources */,
 				3587F6EB2463DBF0007D1C9B /* DocumentItemsViewController.swift in Sources */,
 				354EB1F529713D2E00E57287 /* ContentView.swift in Sources */,
@@ -1009,14 +986,12 @@
 				35E8DCE024A9DC1100A14FC5 /* ModelRenderer.swift in Sources */,
 				35E5E8FD24E43CAA00716592 /* SpriteFrameCell.swift in Sources */,
 				3533CBA824D2BB26006AFE04 /* liolib.c in Sources */,
-				35F1337D2601EACC00E39181 /* Records+DroppedItem.swift in Sources */,
 				3533CBB124D2BB26006AFE04 /* lstrlib.c in Sources */,
 				3509565724ACD8FB0077C134 /* SPRDocument+Image.swift in Sources */,
 				358E6BAD24C9793B00283BAD /* ClientViewController.swift in Sources */,
 				3587577B24C6DB480050F734 /* AudioPreviewViewController.swift in Sources */,
 				3509565324A8EE010077C134 /* RSMDocument+Compile.swift in Sources */,
 				3533CBAB24D2BB26006AFE04 /* lobject.c in Sources */,
-				3535FCDD25F9DFF0000C5608 /* Records+Monster.swift in Sources */,
 				3533CBC024D2BB26006AFE04 /* ltablib.c in Sources */,
 				35CB3BAC247827A700EC04C3 /* GameViewController.swift in Sources */,
 				354EB202297143BD00E57287 /* MonsterListView.swift in Sources */,
@@ -1034,7 +1009,6 @@
 				3509565524A8F6010077C134 /* GNDDocument+Compile.swift in Sources */,
 				3533CBBD24D2BB26006AFE04 /* ldblib.c in Sources */,
 				3533CBB024D2BB26006AFE04 /* lfunc.c in Sources */,
-				35F1336B2600B25900E39181 /* RecordDetailViewController.swift in Sources */,
 				35F8D8512473D9E8007DF105 /* STRDocument.swift in Sources */,
 				35D091F424AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift in Sources */,
 				3533CBAE24D2BB26006AFE04 /* loadlib.c in Sources */,
@@ -1049,7 +1023,6 @@
 				3533CBB824D2BB26006AFE04 /* ltable.c in Sources */,
 				35116E7924659FD6000A60FE /* Document.swift in Sources */,
 				359D5C1824A1FA7C00C2D8D3 /* GroundShaders.metal in Sources */,
-				352DC2D625EF21C200DAAACE /* RecordListViewController.swift in Sources */,
 				355F207224DA4FFD001302FC /* luadec.c in Sources */,
 				3533CBBA24D2BB26006AFE04 /* loslib.c in Sources */,
 				3533CBC524D2BB26006AFE04 /* llex.c in Sources */,
@@ -1062,7 +1035,6 @@
 				359E5B1C296BF90F00B10164 /* SGLMath.swift in Sources */,
 				35E5E90124E44E9200716592 /* ActionPreviewViewController.swift in Sources */,
 				355E915324C04DCA00361AF6 /* WorldPreviewCamera.swift in Sources */,
-				352DC2D525EF21C200DAAACE /* Record.swift in Sources */,
 				35116E8D247035AC000A60FE /* ACTDocument.swift in Sources */,
 				35EF769424AF18D800371F1F /* GroundRenderer.swift in Sources */,
 				35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */,

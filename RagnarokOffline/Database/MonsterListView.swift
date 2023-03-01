@@ -8,16 +8,16 @@
 
 import SwiftUI
 
-struct MonsterListView: UIViewControllerRepresentable {
+struct MonsterListView: View {
+    @EnvironmentObject var database: Database
 
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let monsters = Database.shared.fetchMonsters()
-        let records = monsters.map { AnyRecord($0) }
-        let recordListViewController = RecordListViewController(records: records)
-        recordListViewController.title = Strings.monsters
-        return recordListViewController
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+    var body: some View {
+        List(database.allMonsters, id: \.monsterID) { monster in
+            Text(monster.name)
+        }
+        .navigationTitle("Cards")
+        .task {
+            await database.fetchMonsters()
+        }
     }
 }

@@ -6,11 +6,15 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
-import rAthenaCommon
 import SwiftUI
+import rAthenaCommon
 
 struct CardListView: View {
-    @State private var cards: [RAItem] = []
+    @EnvironmentObject var database: Database
+
+    private var cards: [RAItem] {
+        database.allItems.filter({ $0.type == .card })
+    }
 
     var body: some View {
         List(cards, id: \.itemID) { card in
@@ -18,8 +22,7 @@ struct CardListView: View {
         }
         .navigationTitle("Cards")
         .task {
-            let database = RAItemDatabase()
-            cards = await database.fetchAllItems().filter({ $0.type == .card })
+            await database.fetchItems()
         }
     }
 }

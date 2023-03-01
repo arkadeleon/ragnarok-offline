@@ -6,15 +6,29 @@
 //  Copyright © 2021 Leon & Vane. All rights reserved.
 //
 
-class Database {
+import Foundation
+import rAthenaCommon
 
-    static let shared = Database()
+@MainActor
+class Database: ObservableObject {
+    @Published var allItems: [RAItem] = []
+    @Published var allMonsters: [RAMonster] = []
 
-    func fetchItems(with predicate: (Records.Item) -> Bool = { _ in true }, renewal: Bool = true) -> [Records.Item] {
-        return []
+    func fetchItems() async {
+        if !allItems.isEmpty {
+            return
+        }
+
+        let database = RAItemDatabase()
+        allItems = await database.fetchAllItems()
     }
 
-    func fetchMonsters(with predicate: (Records.Monster) -> Bool = { _ in true }, renewal: Bool = true) -> [Records.Monster] {
-        return []
+    func fetchMonsters() async {
+        if !allMonsters.isEmpty {
+            return
+        }
+
+        let database = RAMonsterDatabase()
+        allMonsters = await database.fetchAllMonsters()
     }
 }

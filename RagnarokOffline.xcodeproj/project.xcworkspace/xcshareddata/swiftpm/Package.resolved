@@ -24,16 +24,7 @@
       "location" : "https://github.com/arkadeleon/rathena-ios.git",
       "state" : {
         "branch" : "master",
-        "revision" : "c47a6e1cec1dcddcc23333dee92bb0a40c8eb1b2"
-      }
-    },
-    {
-      "identity" : "yams",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/jpsim/Yams.git",
-      "state" : {
-        "revision" : "f47ba4838c30dbd59998a4e4c87ab620ff959e8a",
-        "version" : "5.0.5"
+        "revision" : "8e401264f3d9cf8b6d8764eb2712b98961f54d09"
       }
     }
   ],

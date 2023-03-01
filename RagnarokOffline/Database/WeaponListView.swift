@@ -6,11 +6,15 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
-import rAthenaCommon
 import SwiftUI
+import rAthenaCommon
 
 struct WeaponListView: View {
-    @State private var weapons: [RAItem] = []
+    @EnvironmentObject var database: Database
+
+    private var weapons: [RAItem] {
+        database.allItems.filter({ $0.type == .weapon })
+    }
 
     var body: some View {
         List(weapons, id: \.itemID) { weapon in
@@ -18,8 +22,7 @@ struct WeaponListView: View {
         }
         .navigationTitle("Weapons")
         .task {
-            let database = RAItemDatabase()
-            weapons = await database.fetchAllItems().filter({ $0.type == .weapon })
+            await database.fetchItems()
         }
     }
 }
