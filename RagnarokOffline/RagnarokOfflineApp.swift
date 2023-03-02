@@ -10,9 +10,12 @@ import SwiftUI
 
 @main
 struct RagnarokOfflineApp: App {
+    @StateObject private var database = Database()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(database)
         }
     }
 }

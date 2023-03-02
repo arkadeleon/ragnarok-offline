@@ -14,6 +14,9 @@ class Database: ObservableObject {
     @Published var allItems: [RAItem] = []
     @Published var allMonsters: [RAMonster] = []
 
+    private var allItemsWithNames: [String: RAItem] = [:]
+    private var allMonstersWithNames: [String: RAMonster] = [:]
+
     func fetchItems() async {
         if !allItems.isEmpty {
             return
@@ -21,6 +24,7 @@ class Database: ObservableObject {
 
         let database = RAItemDatabase()
         allItems = await database.fetchAllItems()
+        allItemsWithNames = Dictionary(uniqueKeysWithValues: allItems.map({ ($0.aegisName, $0) }))
     }
 
     func fetchMonsters() async {
@@ -30,5 +34,10 @@ class Database: ObservableObject {
 
         let database = RAMonsterDatabase()
         allMonsters = await database.fetchAllMonsters()
+        allMonstersWithNames = Dictionary(uniqueKeysWithValues: allMonsters.map({ ($0.aegisName, $0) }))
+    }
+
+    func item(for aegisName: String) -> RAItem? {
+        return allItemsWithNames[aegisName];
     }
 }

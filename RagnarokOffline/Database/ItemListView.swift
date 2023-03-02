@@ -12,17 +12,44 @@ import rAthenaCommon
 struct ItemListView: View {
     @EnvironmentObject var database: Database
 
+    let title: String
+    let includedTypes: [RAItemType]
+    let excludedTypes: [RAItemType]
+
     private var items: [RAItem] {
-        database.allItems.filter({ $0.type != .weapon && $0.type != .armor && $0.type != .card })
+        var items = database.allItems
+        if !excludedTypes.isEmpty {
+            items = items.filter({ !excludedTypes.contains($0.type) })
+        }
+        if !includedTypes.isEmpty {
+            items = items.filter({ includedTypes.contains($0.type) })
+        }
+        return items
     }
 
     var body: some View {
         List(items, id: \.itemID) { item in
-            Text(item.name)
+            NavigationLink {
+                ItemDetailView(item: item)
+            } label: {
+                switch item.type {
+                case .weapon, .armor:
+                    Text("\(item.name) [\(item.slots)]")
+                default:
+                    Text(item.name)
+                }
+            }
         }
-        .navigationTitle("Items")
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
         .task {
             await database.fetchItems()
         }
+    }
+
+    init(_ title: String, includedTypes: [RAItemType] = [], excludedTypes: [RAItemType] = []) {
+        self.title = title
+        self.includedTypes = includedTypes
+        self.excludedTypes = excludedTypes
     }
 }

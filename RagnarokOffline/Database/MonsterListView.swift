@@ -13,9 +13,14 @@ struct MonsterListView: View {
 
     var body: some View {
         List(database.allMonsters, id: \.monsterID) { monster in
-            Text(monster.name)
+            NavigationLink {
+                MonsterDetailView(monster: monster)
+            } label: {
+                Text(monster.name)
+            }
         }
-        .navigationTitle("Cards")
+        .navigationTitle("Monsters")
+        .navigationBarTitleDisplayMode(.inline)
         .task {
             await database.fetchMonsters()
         }

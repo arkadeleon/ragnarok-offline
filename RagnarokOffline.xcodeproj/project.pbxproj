@@ -74,12 +74,13 @@
 		354EB1F529713D2E00E57287 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1F329713D2D00E57287 /* ContentView.swift */; };
 		354EB1F629713D2E00E57287 /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1F429713D2D00E57287 /* RagnarokOfflineApp.swift */; };
 		354EB1F82971414A00E57287 /* ClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1F72971414A00E57287 /* ClientView.swift */; };
-		354EB1FA297142C200E57287 /* WeaponListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1F9297142C200E57287 /* WeaponListView.swift */; };
-		354EB1FC2971431100E57287 /* ArmorListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1FB2971431100E57287 /* ArmorListView.swift */; };
-		354EB1FE2971434D00E57287 /* CardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1FD2971434D00E57287 /* CardListView.swift */; };
 		354EB2002971438A00E57287 /* ItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1FF2971438A00E57287 /* ItemListView.swift */; };
 		354EB202297143BD00E57287 /* MonsterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB201297143BD00E57287 /* MonsterListView.swift */; };
 		3557DB2229A60CD400ABB683 /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 3557DB2129A60CD400ABB683 /* rAthenaCommon */; };
+		3557DB2429AF1D3600ABB683 /* MonsterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3557DB2329AF1D3600ABB683 /* MonsterDetailView.swift */; };
+		3557DB2629AF50BF00ABB683 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3557DB2529AF50BF00ABB683 /* ItemDetailView.swift */; };
+		3557DB2829B04CBC00ABB683 /* Monster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3557DB2729B04CBC00ABB683 /* Monster.swift */; };
+		3557DB2A29B079F800ABB683 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3557DB2929B079F800ABB683 /* Item.swift */; };
 		355E914924BECC5C00361AF6 /* ModelPreviewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */; };
 		355E914B24BEDDAE00361AF6 /* WorldPreviewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914A24BEDDAE00361AF6 /* WorldPreviewRenderer.swift */; };
 		355E914D24BEEA9200361AF6 /* WaterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E914C24BEEA9200361AF6 /* WaterRenderer.swift */; };
@@ -280,11 +281,12 @@
 		354EB1F329713D2D00E57287 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		354EB1F429713D2D00E57287 /* RagnarokOfflineApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RagnarokOfflineApp.swift; sourceTree = "<group>"; };
 		354EB1F72971414A00E57287 /* ClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientView.swift; sourceTree = "<group>"; };
-		354EB1F9297142C200E57287 /* WeaponListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponListView.swift; sourceTree = "<group>"; };
-		354EB1FB2971431100E57287 /* ArmorListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArmorListView.swift; sourceTree = "<group>"; };
-		354EB1FD2971434D00E57287 /* CardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListView.swift; sourceTree = "<group>"; };
 		354EB1FF2971438A00E57287 /* ItemListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListView.swift; sourceTree = "<group>"; };
 		354EB201297143BD00E57287 /* MonsterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterListView.swift; sourceTree = "<group>"; };
+		3557DB2329AF1D3600ABB683 /* MonsterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailView.swift; sourceTree = "<group>"; };
+		3557DB2529AF50BF00ABB683 /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
+		3557DB2729B04CBC00ABB683 /* Monster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Monster.swift; sourceTree = "<group>"; };
+		3557DB2929B079F800ABB683 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		355E914824BECC5C00361AF6 /* ModelPreviewRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPreviewRenderer.swift; sourceTree = "<group>"; };
 		355E914A24BEDDAE00361AF6 /* WorldPreviewRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPreviewRenderer.swift; sourceTree = "<group>"; };
 		355E914C24BEEA9200361AF6 /* WaterRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterRenderer.swift; sourceTree = "<group>"; };
@@ -772,11 +774,12 @@
 			isa = PBXGroup;
 			children = (
 				35FD46BA25AD4AFB0032D07A /* Database.swift */,
-				354EB1F9297142C200E57287 /* WeaponListView.swift */,
-				354EB1FB2971431100E57287 /* ArmorListView.swift */,
-				354EB1FD2971434D00E57287 /* CardListView.swift */,
+				3557DB2929B079F800ABB683 /* Item.swift */,
 				354EB1FF2971438A00E57287 /* ItemListView.swift */,
+				3557DB2529AF50BF00ABB683 /* ItemDetailView.swift */,
+				3557DB2729B04CBC00ABB683 /* Monster.swift */,
 				354EB201297143BD00E57287 /* MonsterListView.swift */,
+				3557DB2329AF1D3600ABB683 /* MonsterDetailView.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -948,7 +951,6 @@
 				355E915124C04A5D00361AF6 /* GATDocument+Compile.swift in Sources */,
 				354EB1F629713D2E00E57287 /* RagnarokOfflineApp.swift in Sources */,
 				355F207124DA4CC3001302FC /* guess.c in Sources */,
-				354EB1FC2971431100E57287 /* ArmorListView.swift in Sources */,
 				3533CBC424D2BB26006AFE04 /* lparser.c in Sources */,
 				3533CBAD24D2BB26006AFE04 /* lmathlib.c in Sources */,
 				354EB2002971438A00E57287 /* ItemListView.swift in Sources */,
@@ -956,6 +958,7 @@
 				3533CBC124D2BB26006AFE04 /* lapi.c in Sources */,
 				35E8DCDB24A88BCC00A14FC5 /* WaterShaders.metal in Sources */,
 				355F206E24DA4CC3001302FC /* proto.c in Sources */,
+				3557DB2429AF1D3600ABB683 /* MonsterDetailView.swift in Sources */,
 				358F497B2542D7560065D488 /* ACTDocument+Image.swift in Sources */,
 				350F347324B5610F00848ED5 /* PreviewItem.swift in Sources */,
 				35A0ACFB24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift in Sources */,
@@ -966,7 +969,6 @@
 				3533CBA724D2BB26006AFE04 /* lauxlib.c in Sources */,
 				355F207024DA4CC3001302FC /* disassemble.c in Sources */,
 				35CAF9C724D9BFDD00F9426A /* LuaDecompiler.m in Sources */,
-				354EB1FA297142C200E57287 /* WeaponListView.swift in Sources */,
 				3533CBC724D2BB26006AFE04 /* ldo.c in Sources */,
 				355F206124DA4CC3001302FC /* macro-array.c in Sources */,
 				3533CBAA24D2BB26006AFE04 /* lstate.c in Sources */,
@@ -982,11 +984,14 @@
 				3533CBB624D2BB26006AFE04 /* lundump.c in Sources */,
 				3533CBAC24D2BB26006AFE04 /* print.c in Sources */,
 				35116E8B247025EE000A60FE /* GATDocument.swift in Sources */,
+				3557DB2A29B079F800ABB683 /* Item.swift in Sources */,
 				35E5E90224E44E9200716592 /* ActionAnimationCell.swift in Sources */,
 				35E8DCE024A9DC1100A14FC5 /* ModelRenderer.swift in Sources */,
 				35E5E8FD24E43CAA00716592 /* SpriteFrameCell.swift in Sources */,
 				3533CBA824D2BB26006AFE04 /* liolib.c in Sources */,
+				3557DB2629AF50BF00ABB683 /* ItemDetailView.swift in Sources */,
 				3533CBB124D2BB26006AFE04 /* lstrlib.c in Sources */,
+				3557DB2829B04CBC00ABB683 /* Monster.swift in Sources */,
 				3509565724ACD8FB0077C134 /* SPRDocument+Image.swift in Sources */,
 				358E6BAD24C9793B00283BAD /* ClientViewController.swift in Sources */,
 				3587577B24C6DB480050F734 /* AudioPreviewViewController.swift in Sources */,
@@ -997,7 +1002,6 @@
 				354EB202297143BD00E57287 /* MonsterListView.swift in Sources */,
 				35E5E90524EAB9EB00716592 /* GRFDocument+Tree.swift in Sources */,
 				3533CBBF24D2BB26006AFE04 /* lcode.c in Sources */,
-				354EB1FE2971434D00E57287 /* CardListView.swift in Sources */,
 				35D091F624AC8EB1008D7CEA /* PALDocument.swift in Sources */,
 				35F8D8532473E1D7007DF105 /* RSWDocument.swift in Sources */,
 				3533CBA924D2BB26006AFE04 /* lopcodes.c in Sources */,

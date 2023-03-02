@@ -9,66 +9,47 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var database = Database()
-
     var body: some View {
         NavigationView {
             List {
-                Section {
-                    NavigationLink {
-                        ClientView()
-                            .navigationTitle("Client")
-                            .navigationBarTitleDisplayMode(.inline)
-                    } label: {
-                        Label("Client", systemImage: "desktopcomputer")
-                    }
-                    NavigationLink {
-                        Text("Server")
-                            .navigationTitle("Server")
-                            .navigationBarTitleDisplayMode(.inline)
-                    } label: {
-                        Label("Server", systemImage: "server.rack")
-                    }
+                NavigationLink {
+                    ClientView()
+                        .navigationTitle("Client")
+                        .navigationBarTitleDisplayMode(.inline)
+                } label: {
+                    Label("Client", systemImage: "desktopcomputer")
+                }
+                NavigationLink {
+                    Text("Server")
+                        .navigationTitle("Server")
+                        .navigationBarTitleDisplayMode(.inline)
+                } label: {
+                    Label("Server", systemImage: "server.rack")
                 }
 
                 Section("Database") {
                     NavigationLink {
-                        WeaponListView()
-                            .navigationTitle("Weapons")
-                            .navigationBarTitleDisplayMode(.inline)
-                            .environmentObject(database)
+                        ItemListView("Weapons", includedTypes: [.weapon])
                     } label: {
                         Label("Weapons", systemImage: "list.dash")
                     }
                     NavigationLink {
-                        ArmorListView()
-                            .navigationTitle("Armors")
-                            .navigationBarTitleDisplayMode(.inline)
-                            .environmentObject(database)
+                        ItemListView("Armors", includedTypes: [.armor])
                     } label: {
                         Label("Armors", systemImage: "list.dash")
                     }
                     NavigationLink {
-                        CardListView()
-                            .navigationTitle("Cards")
-                            .navigationBarTitleDisplayMode(.inline)
-                            .environmentObject(database)
+                        ItemListView("Cards", includedTypes: [.card])
                     } label: {
                         Label("Cards", systemImage: "list.dash")
                     }
                     NavigationLink {
-                        ItemListView()
-                            .navigationTitle("Items")
-                            .navigationBarTitleDisplayMode(.inline)
-                            .environmentObject(database)
+                        ItemListView("Items", excludedTypes: [.weapon, .armor, .card])
                     } label: {
                         Label("Items", systemImage: "list.dash")
                     }
                     NavigationLink {
                         MonsterListView()
-                            .navigationTitle("Monsters")
-                            .navigationBarTitleDisplayMode(.inline)
-                            .environmentObject(database)
                     } label: {
                         Label("Monsters", systemImage: "list.dash")
                     }
