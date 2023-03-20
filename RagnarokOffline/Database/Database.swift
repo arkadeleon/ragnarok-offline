@@ -23,7 +23,7 @@ class Database: ObservableObject {
         }
 
         let database = RAItemDatabase()
-        allItems = await database.fetchAllItems()
+        allItems = await database.fetchItems(in: .renewal)
         allItemsWithNames = Dictionary(uniqueKeysWithValues: allItems.map({ ($0.aegisName, $0) }))
     }
 
@@ -33,7 +33,7 @@ class Database: ObservableObject {
         }
 
         let database = RAMonsterDatabase()
-        allMonsters = await database.fetchAllMonsters()
+        allMonsters = await database.fetchMonsters(in: .renewal)
         allMonstersWithNames = Dictionary(uniqueKeysWithValues: allMonsters.map({ ($0.aegisName, $0) }))
     }
 
