@@ -27,31 +27,21 @@ struct ContentView: View {
                     Label("Server", systemImage: "server.rack")
                 }
 
-                Section("Database") {
+                Section("Databases") {
                     NavigationLink {
-                        ItemListView("Weapons", includedTypes: [.weapon])
+                        ItemListView()
                     } label: {
-                        Label("Weapons", systemImage: "list.dash")
-                    }
-                    NavigationLink {
-                        ItemListView("Armors", includedTypes: [.armor])
-                    } label: {
-                        Label("Armors", systemImage: "list.dash")
-                    }
-                    NavigationLink {
-                        ItemListView("Cards", includedTypes: [.card])
-                    } label: {
-                        Label("Cards", systemImage: "list.dash")
-                    }
-                    NavigationLink {
-                        ItemListView("Items", excludedTypes: [.weapon, .armor, .card])
-                    } label: {
-                        Label("Items", systemImage: "list.dash")
+                        Label("Item Database", systemImage: "list.dash")
                     }
                     NavigationLink {
                         MonsterListView()
                     } label: {
-                        Label("Monsters", systemImage: "list.dash")
+                        Label("Monster Database", systemImage: "list.dash")
+                    }
+                    NavigationLink {
+                        SkillTreeListView()
+                    } label: {
+                        Label("Skill Database", systemImage: "list.dash")
                     }
                 }
             }

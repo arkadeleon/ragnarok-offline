@@ -12,14 +12,14 @@ struct MonsterListView: View {
     @EnvironmentObject var database: Database
 
     var body: some View {
-        List(database.allMonsters, id: \.monsterID) { monster in
+        List(database.monsters, id: \.monsterID) { monster in
             NavigationLink {
                 MonsterDetailView(monster: monster)
             } label: {
                 Text(monster.name)
             }
         }
-        .navigationTitle("Monsters")
+        .navigationTitle("Monster Database")
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await database.fetchMonsters()

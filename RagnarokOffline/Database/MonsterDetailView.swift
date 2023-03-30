@@ -68,7 +68,7 @@ struct MonsterDetailView_Previews: PreviewProvider {
                 .environmentObject(database)
                 .task {
                     await database.fetchMonsters()
-                    monster = database.allMonsters[1]
+                    monster = database.monsters[1]
                 }
         }
     }

@@ -14,9 +14,9 @@ extension RAItem {
     var attributes: [Attribute] {
         let attributes: [Attribute?] = [
             ("Type", type.englishName),
-            (type == .weapon ? ("Weapon Type", subType?.asWeaponType()?.englishName ?? "") : nil),
-            (type == .ammo ? ("Ammo Type", subType?.asAmmoType()?.englishName ?? "") : nil),
-            (type == .card ? ("Card Type", subType?.asCardType()?.englishName ?? "") : nil),
+            (type == .weapon ? ("Weapon Type", (subType as? RAWeaponType)?.englishName ?? "") : nil),
+            (type == .ammo ? ("Ammo Type", (subType as? RAAmmoType)?.englishName ?? "") : nil),
+            (type == .card ? ("Card Type", (subType as? RACardType)?.englishName ?? "") : nil),
             ("Buy", String(buy > 0 ? buy : sell * 2)),
             ("Sell", String(sell > 0 ? sell : buy / 2)),
             ("Weight", String(weight / 10)),

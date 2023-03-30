@@ -40,6 +40,10 @@
 		35116E8B247025EE000A60FE /* GATDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8A247025EE000A60FE /* GATDocument.swift */; };
 		35116E8D247035AC000A60FE /* ACTDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8C247035AC000A60FE /* ACTDocument.swift */; };
 		35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35116E8E2472E685000A60FE /* SPRDocument.swift */; };
+		351BAE6829D572CF001CED64 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BAE6729D572CF001CED64 /* Skill.swift */; };
+		351BAE6A29D5731E001CED64 /* SkillTreeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BAE6929D5731E001CED64 /* SkillTreeListView.swift */; };
+		351BAE6C29D573AB001CED64 /* SkillTreeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BAE6B29D573AB001CED64 /* SkillTreeDetailView.swift */; };
+		351BAE6E29D57C5F001CED64 /* SkillDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BAE6D29D57C5F001CED64 /* SkillDetailView.swift */; };
 		351E225624BC5D98000EF504 /* INIDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351E225524BC5D98000EF504 /* INIDocument.swift */; };
 		3533CBA724D2BB26006AFE04 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CB6F24D2BB25006AFE04 /* lauxlib.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3533CBA824D2BB26006AFE04 /* liolib.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CB7524D2BB25006AFE04 /* liolib.c */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -224,6 +228,10 @@
 		35116E8A247025EE000A60FE /* GATDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GATDocument.swift; sourceTree = "<group>"; };
 		35116E8C247035AC000A60FE /* ACTDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACTDocument.swift; sourceTree = "<group>"; };
 		35116E8E2472E685000A60FE /* SPRDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPRDocument.swift; sourceTree = "<group>"; };
+		351BAE6729D572CF001CED64 /* Skill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skill.swift; sourceTree = "<group>"; };
+		351BAE6929D5731E001CED64 /* SkillTreeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillTreeListView.swift; sourceTree = "<group>"; };
+		351BAE6B29D573AB001CED64 /* SkillTreeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillTreeDetailView.swift; sourceTree = "<group>"; };
+		351BAE6D29D57C5F001CED64 /* SkillDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillDetailView.swift; sourceTree = "<group>"; };
 		351E225524BC5D98000EF504 /* INIDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INIDocument.swift; sourceTree = "<group>"; };
 		3533CB6F24D2BB25006AFE04 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lauxlib.c; sourceTree = "<group>"; };
 		3533CB7024D2BB25006AFE04 /* lmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lmem.h; sourceTree = "<group>"; };
@@ -780,6 +788,10 @@
 				3557DB2729B04CBC00ABB683 /* Monster.swift */,
 				354EB201297143BD00E57287 /* MonsterListView.swift */,
 				3557DB2329AF1D3600ABB683 /* MonsterDetailView.swift */,
+				351BAE6729D572CF001CED64 /* Skill.swift */,
+				351BAE6929D5731E001CED64 /* SkillTreeListView.swift */,
+				351BAE6B29D573AB001CED64 /* SkillTreeDetailView.swift */,
+				351BAE6D29D57C5F001CED64 /* SkillDetailView.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -961,6 +973,7 @@
 				3557DB2429AF1D3600ABB683 /* MonsterDetailView.swift in Sources */,
 				358F497B2542D7560065D488 /* ACTDocument+Image.swift in Sources */,
 				350F347324B5610F00848ED5 /* PreviewItem.swift in Sources */,
+				351BAE6829D572CF001CED64 /* Skill.swift in Sources */,
 				35A0ACFB24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift in Sources */,
 				35116E7524644AAA000A60FE /* DocumentItem.swift in Sources */,
 				3533CBC624D2BB26006AFE04 /* ltm.c in Sources */,
@@ -981,6 +994,7 @@
 				35FD46BB25AD4AFB0032D07A /* Database.swift in Sources */,
 				3533CBB424D2BB26006AFE04 /* linit.c in Sources */,
 				3533CBBB24D2BB26006AFE04 /* lgc.c in Sources */,
+				351BAE6E29D57C5F001CED64 /* SkillDetailView.swift in Sources */,
 				3533CBB624D2BB26006AFE04 /* lundump.c in Sources */,
 				3533CBAC24D2BB26006AFE04 /* print.c in Sources */,
 				35116E8B247025EE000A60FE /* GATDocument.swift in Sources */,
@@ -1034,6 +1048,7 @@
 				35CB3BB52478359100EC04C3 /* Shaders.metal in Sources */,
 				3587F6ED2463DF3F007D1C9B /* DocumentItemCell.swift in Sources */,
 				355F205F24DA4CC3001302FC /* structs.c in Sources */,
+				351BAE6C29D573AB001CED64 /* SkillTreeDetailView.swift in Sources */,
 				355EFD2D2480264B0033C280 /* Camera.swift in Sources */,
 				3533CBB924D2BB26006AFE04 /* ldump.c in Sources */,
 				359E5B1C296BF90F00B10164 /* SGLMath.swift in Sources */,
@@ -1043,6 +1058,7 @@
 				35EF769424AF18D800371F1F /* GroundRenderer.swift in Sources */,
 				35116E8F2472E685000A60FE /* SPRDocument.swift in Sources */,
 				35116E85246ADFFA000A60FE /* RSMDocument.swift in Sources */,
+				351BAE6A29D5731E001CED64 /* SkillTreeListView.swift in Sources */,
 				35F19B1B25F61F6100A21D54 /* Strings.swift in Sources */,
 				35727EAD24F7F873004F8B02 /* RSMDocument+Mesh.swift in Sources */,
 				355E914924BECC5C00361AF6 /* ModelPreviewRenderer.swift in Sources */,

@@ -11,33 +11,61 @@ import rAthenaCommon
 
 @MainActor
 class Database: ObservableObject {
-    @Published var allItems: [RAItem] = []
-    @Published var allMonsters: [RAMonster] = []
+    @Published var items: [RAItem] = []
+    @Published var monsters: [RAMonster] = []
+    @Published var skillTrees: [RASkillTree] = []
+    @Published var skills: [RASkill] = []
 
-    private var allItemsWithNames: [String: RAItem] = [:]
-    private var allMonstersWithNames: [String: RAMonster] = [:]
+    private var itemsWithNames: [String: RAItem] = [:]
+    private var monstersWithNames: [String: RAMonster] = [:]
+    private var skillTreesWithJobNames: [String: RASkillTree] = [:]
+    private var skillsWithNames: [String: RASkill] = [:]
 
     func fetchItems() async {
-        if !allItems.isEmpty {
+        if !items.isEmpty {
             return
         }
 
-        let database = RAItemDatabase()
-        allItems = await database.fetchItems(in: .renewal)
-        allItemsWithNames = Dictionary(uniqueKeysWithValues: allItems.map({ ($0.aegisName, $0) }))
+        items = await RADatabase.renewal.fetchItems()
+        itemsWithNames = Dictionary(uniqueKeysWithValues: items.map({ ($0.aegisName, $0) }))
     }
 
     func fetchMonsters() async {
-        if !allMonsters.isEmpty {
+        if !monsters.isEmpty {
             return
         }
 
-        let database = RAMonsterDatabase()
-        allMonsters = await database.fetchMonsters(in: .renewal)
-        allMonstersWithNames = Dictionary(uniqueKeysWithValues: allMonsters.map({ ($0.aegisName, $0) }))
+        monsters = await RADatabase.renewal.fetchMonsters()
+        monstersWithNames = Dictionary(uniqueKeysWithValues: monsters.map({ ($0.aegisName, $0) }))
+    }
+
+    func fetchSkillTrees() async {
+        if !skillTrees.isEmpty {
+            return
+        }
+
+        skillTrees = await RADatabase.renewal.fetchSkillTrees()
+        skillTreesWithJobNames = Dictionary(uniqueKeysWithValues: skillTrees.map({ ($0.job.name, $0) }))
+
+        skills = await RADatabase.renewal.fetchSkills()
+        skillsWithNames = Dictionary(uniqueKeysWithValues: skills.map({ ($0.skillName, $0) }))
     }
 
     func item(for aegisName: String) -> RAItem? {
-        return allItemsWithNames[aegisName];
+        itemsWithNames[aegisName]
+    }
+
+    func skillTree(for jobName: String) -> RASkillTree? {
+        skillTreesWithJobNames[jobName]
+    }
+
+    func skill(for name: String) -> RASkill? {
+        skillsWithNames[name]
+    }
+}
+
+extension RAJob: Comparable {
+    public static func < (lhs: RAJob, rhs: RAJob) -> Bool {
+        lhs.value < rhs.value
     }
 }
