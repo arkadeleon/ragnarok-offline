@@ -10,15 +10,6 @@
       }
     },
     {
-      "identity" : "highlight",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/arkadeleon/highlight",
-      "state" : {
-        "branch" : "master",
-        "revision" : "09402e27bdeedb6b3db66beb8e28e0b52b36e1c1"
-      }
-    },
-    {
       "identity" : "rathena-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/arkadeleon/rathena-ios.git",

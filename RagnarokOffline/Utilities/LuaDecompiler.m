@@ -12,6 +12,7 @@
 #include "lauxlib.h"
 #include "lobject.h"
 #include "decompile.h"
+#include "proto.h"
 
 extern lua_State* glstate;
 
@@ -26,6 +27,7 @@ extern lua_State* glstate;
 - (instancetype)init {
     self = [super init];
     if (self) {
+        InitOperators();
         l = luaL_newstate();
         luaL_openlibs(l);
     }

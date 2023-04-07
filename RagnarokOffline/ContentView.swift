@@ -14,8 +14,6 @@ struct ContentView: View {
             List {
                 NavigationLink {
                     ClientView()
-                        .navigationTitle("Client")
-                        .navigationBarTitleDisplayMode(.inline)
                 } label: {
                     Label("Client", systemImage: "desktopcomputer")
                 }

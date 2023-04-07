@@ -8,12 +8,25 @@
 
 import UIKit
 
-enum DocumentItem {
+enum DocumentItem: Identifiable {
 
     case directory(URL)
     case grf(GRFTree)
     case entryGroup(GRFTree, String)
     case previewItem(PreviewItem)
+
+    var id: URL {
+        switch self {
+        case .directory(let url):
+            return url
+        case .grf(let tree):
+            return tree.url
+        case .entryGroup(let tree, let path):
+            return tree.url.appendingPathComponent(path.replacingOccurrences(of: "\\", with: "/"))
+        case .previewItem(let previewItem):
+            return previewItem.url
+        }
+    }
 }
 
 extension DocumentItem {

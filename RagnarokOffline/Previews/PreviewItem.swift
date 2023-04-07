@@ -10,12 +10,17 @@ import Foundation
 
 protocol PreviewItem {
 
+    var url: URL { get }
     var title: String { get }
     var fileType: FileType { get }
     func data() throws -> Data
 }
 
 extension URL: PreviewItem {
+
+    var url: URL {
+        self
+    }
 
     var title: String {
         lastPathComponent
@@ -34,6 +39,10 @@ struct Entry: PreviewItem {
 
     var tree: GRFTree
     var name: String
+
+    var url: URL {
+        tree.url.appendingPathComponent(name.replacingOccurrences(of: "\\", with: "/"))
+    }
 
     var title: String {
         let lastPathComponent = name.split(separator: "\\").last

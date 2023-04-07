@@ -8,12 +8,16 @@
 
 import SwiftUI
 
-struct ClientView: UIViewControllerRepresentable {
+struct ClientView: View {
 
-    func makeUIViewController(context: Context) -> some UIViewController {
-        return ClientViewController()
+    let documentItem: DocumentItem
+
+    var body: some View {
+        DocumentItemsView(title: "Client", documentItem: documentItem)
     }
 
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+    init() {
+        let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        documentItem = .directory(url)
     }
 }
