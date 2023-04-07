@@ -6,60 +6,54 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-import Foundation
-import CoreGraphics
+import UIKit
 
 struct PALDocument: Document {
 
-    var image: CGImage
+    var colors: [simd_uchar4]
 
     init(from stream: Stream) throws {
-        let data = try stream.readToEnd()
+        let reader = StreamReader(stream: stream)
 
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGImageAlphaInfo.noneSkipFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
-        guard let context = CGContext(
-            data: nil,
-            width: 128,
-            height: 128,
-            bitsPerComponent: 8,
-            bytesPerRow: 512,
-            space: colorSpace,
-            bitmapInfo: bitmapInfo
-        ) else {
-            throw DocumentError.invalidContents
-        }
-
-        let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: 128)
-        context.concatenate(flipVertical)
-
-        let count = data.count / 4
-        for i in 0..<count {
-            let components = [
-                CGFloat(data[i * 4 + 0]) / 255,
-                CGFloat(data[i * 4 + 1]) / 255,
-                CGFloat(data[i * 4 + 2]) / 255,
-                1
+        colors = try (0..<256).map { _ in
+            try [
+                reader.readUInt8(),
+                reader.readUInt8(),
+                reader.readUInt8(),
+                reader.readUInt8()
             ]
-            guard let color = CGColor(colorSpace: colorSpace, components: components) else {
-                continue
+        }
+    }
+}
+
+extension PALDocument {
+
+    func image(at size: CGSize) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: size)
+        let blockSize = CGSizeMake(size.width / 16, size.height / 16)
+
+        let image = renderer.image { context in
+            for x in 0..<16 {
+                for y in 0..<16 {
+                    let color = colors[y * 16 + x]
+                    let uiColor = UIColor(
+                        red: CGFloat(color[0]) / 255,
+                        green: CGFloat(color[1]) / 255,
+                        blue: CGFloat(color[2]) / 255,
+                        alpha: 1
+                    )
+                    uiColor.setFill()
+
+                    let rect = CGRect(
+                        x: CGFloat(x) * blockSize.width,
+                        y: CGFloat(y) * blockSize.height,
+                        width: blockSize.width,
+                        height: blockSize.height
+                    )
+                    context.fill(rect)
+                }
             }
-
-            context.setFillColor(color)
-
-            let rect = CGRect(
-                x: i % 16 * 8,
-                y: i / 16 * 8,
-                width: 8,
-                height: 8
-            )
-            context.fill(rect)
         }
-
-        guard let image = context.makeImage() else {
-            throw DocumentError.invalidContents
-        }
-
-        self.image = image
+        return image
     }
 }

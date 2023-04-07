@@ -53,7 +53,7 @@ class ImagePreviewViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        if let image = imageView.image?.cgImage {
+        if let image = imageView.image {
             updateZoomScale(image: image)
             centerScrollViewContents()
         }
@@ -65,16 +65,14 @@ class ImagePreviewViewController: UIViewController {
                 return
             }
 
-            var image: CGImage? = nil
+            var image: UIImage? = nil
             switch self.previewItem.fileType {
-            case .bmp, .jpg:
-                image = UIImage(data: data)?.cgImage
-            case .tga:
-                let loader = DocumentLoader()
-                image = try? loader.load(TGADocument.self, from: data).image
+            case .bmp, .jpg, .tga:
+                image = UIImage(data: data)
             case .pal:
                 let loader = DocumentLoader()
-                image = try? loader.load(PALDocument.self, from: data).image
+                let pal = try? loader.load(PALDocument.self, from: data)
+                image = pal?.image(at: CGSize(width: 128, height: 128))
             default:
                 break
             }
@@ -84,10 +82,10 @@ class ImagePreviewViewController: UIViewController {
                     return
                 }
 
-                self.imageView.image = UIImage(cgImage: image)
-                self.imageView.frame = CGRect(x: 0, y: 0, width: image.width, height: image.height)
+                self.imageView.image = image
+                self.imageView.frame = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
 
-                self.scrollView.contentSize = CGSize(width: image.width, height: image.height)
+                self.scrollView.contentSize = image.size
 
                 self.updateZoomScale(image: image)
                 self.centerScrollViewContents()
@@ -95,11 +93,11 @@ class ImagePreviewViewController: UIViewController {
         }
     }
 
-    private func updateZoomScale(image: CGImage) {
+    private func updateZoomScale(image: UIImage) {
         let scrollViewFrame = scrollView.bounds
 
-        let scaleWidth = scrollViewFrame.size.width / CGFloat(image.width)
-        let scaleHeight = scrollViewFrame.size.height / CGFloat(image.height)
+        let scaleWidth = scrollViewFrame.size.width / CGFloat(image.size.width)
+        let scaleHeight = scrollViewFrame.size.height / CGFloat(image.size.height)
         let minScale = min(scaleWidth, scaleHeight)
 
         scrollView.minimumZoomScale = minScale

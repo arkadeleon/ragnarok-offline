@@ -33,7 +33,7 @@ extension ACTDocument {
             let image = context.image { (context) in
                 for layer in animation.layers {
                     let frameIndex = Int(layer.index)
-                    guard frameIndex < frames.count, let image = frames[frameIndex] else {
+                    guard 0..<frames.count ~= frameIndex, let image = frames[frameIndex] else {
                         continue
                     }
                     let width = CGFloat(layer.width) * CGFloat(layer.scale.x)

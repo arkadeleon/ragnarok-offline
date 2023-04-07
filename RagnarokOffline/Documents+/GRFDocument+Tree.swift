@@ -70,7 +70,7 @@ class GRFTree {
 
         var currentNode = root
 
-        let pathComponents = path.split(separator: "\\")
+        let pathComponents = path.lowercased().split(separator: "\\")
         for pathComponent in pathComponents {
             guard let childNode = currentNode.children[String(pathComponent)] else {
                 return []
@@ -86,7 +86,7 @@ class GRFTree {
 
         var currentNode = root
 
-        let pathComponents = name.split(separator: "\\")
+        let pathComponents = name.lowercased().split(separator: "\\")
 
         for pathComponent in pathComponents {
             guard let childNode = currentNode.children[String(pathComponent)] else {

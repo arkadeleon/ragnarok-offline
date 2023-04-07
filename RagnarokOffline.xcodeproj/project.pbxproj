@@ -106,7 +106,6 @@
 		35727EAD24F7F873004F8B02 /* RSMDocument+Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35727EAC24F7F873004F8B02 /* RSMDocument+Mesh.swift */; };
 		3573037A24B83CC70011F6AA /* ResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3573037924B83CC70011F6AA /* ResourceManager.swift */; };
 		3587577B24C6DB480050F734 /* AudioPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587577A24C6DB480050F734 /* AudioPreviewViewController.swift */; };
-		3587944A24C73E9400A5074B /* TGADocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587944924C73E9400A5074B /* TGADocument.swift */; };
 		3587F6EB2463DBF0007D1C9B /* DocumentItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EA2463DBF0007D1C9B /* DocumentItemsViewController.swift */; };
 		3587F6ED2463DF3F007D1C9B /* DocumentItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F6EC2463DF3F007D1C9B /* DocumentItemCell.swift */; };
 		3587F70924694FA7007D1C9B /* StreamReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F70824694FA7007D1C9B /* StreamReader.swift */; };
@@ -328,7 +327,6 @@
 		35727EAC24F7F873004F8B02 /* RSMDocument+Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSMDocument+Mesh.swift"; sourceTree = "<group>"; };
 		3573037924B83CC70011F6AA /* ResourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceManager.swift; sourceTree = "<group>"; };
 		3587577A24C6DB480050F734 /* AudioPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPreviewViewController.swift; sourceTree = "<group>"; };
-		3587944924C73E9400A5074B /* TGADocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TGADocument.swift; sourceTree = "<group>"; };
 		3587F6EA2463DBF0007D1C9B /* DocumentItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentItemsViewController.swift; sourceTree = "<group>"; };
 		3587F6EC2463DF3F007D1C9B /* DocumentItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentItemCell.swift; sourceTree = "<group>"; };
 		3587F70824694FA7007D1C9B /* StreamReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamReader.swift; sourceTree = "<group>"; };
@@ -557,7 +555,6 @@
 				35F8D8522473E1D7007DF105 /* RSWDocument.swift */,
 				35116E8E2472E685000A60FE /* SPRDocument.swift */,
 				35F8D8502473D9E8007DF105 /* STRDocument.swift */,
-				3587944924C73E9400A5074B /* TGADocument.swift */,
 			);
 			path = Documents;
 			sourceTree = "<group>";
@@ -959,7 +956,6 @@
 				35C06DBC2498C9C000F0A229 /* TextureLoader.swift in Sources */,
 				35E8DCDE24A9D99000A14FC5 /* RendererCommon.swift in Sources */,
 				35116E87246AE56B000A60FE /* ModelPreviewViewController.swift in Sources */,
-				3587944A24C73E9400A5074B /* TGADocument.swift in Sources */,
 				355E915124C04A5D00361AF6 /* GATDocument+Compile.swift in Sources */,
 				354EB1F629713D2E00E57287 /* RagnarokOfflineApp.swift in Sources */,
 				355F207124DA4CC3001302FC /* guess.c in Sources */,

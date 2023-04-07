@@ -152,7 +152,7 @@ struct GRFDocument: Document {
             }
 
             let entry = GRFEntry(
-                name: name as String,
+                name: name,
                 packSize: packSize,
                 lengthAligned: lengthAligned,
                 realSize: realSize,
