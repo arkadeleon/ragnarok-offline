@@ -3199,17 +3199,16 @@ errorHandler:
 	return output;
 }
 
-void luaU_decompile(Proto* f, int dflag) {
+char *luaU_decompile(Proto* f, int dflag) {
 	char* code;
 	debug = dflag;
 	functionnum = 0;
 	errorStr = StringBuffer_new(NULL);
 	code = ProcessCode(f, 0, 0, luadec_strdup("0"));
 	StringBuffer_delete(errorStr);
-	printf("%s\n", code);
-	free(code);
 	fflush(stdout);
 	fflush(stderr);
+	return code;
 }
 
 Proto* findSubFunction(Proto* f, const char* funcnumstr, char* realfuncnumstr) {

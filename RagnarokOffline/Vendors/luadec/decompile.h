@@ -170,7 +170,7 @@ enum IndexType_ {
 IndexType MakeIndex(Function* F, StringBuffer* str, char* rstr, IndexType type);
 int isIdentifier(const char* src);
 
-void luaU_decompile(Proto* f, int lflag);
+char *luaU_decompile(Proto* f, int lflag);
 void luaU_decompileSubFunction(Proto* f, int dflag, const char* funcnumstr);
 
 BoolOp* NewBoolOp();

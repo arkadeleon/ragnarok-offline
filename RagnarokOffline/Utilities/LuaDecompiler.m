@@ -45,7 +45,7 @@ extern lua_State* glstate;
 
     Closure *c = (Closure *)lua_topointer(l, -1);
     Proto *f = c->l.p;
-    char *code = ProcessCode(f, 0, 0, strdup("0"));
+    char *code = luaU_decompile(f, 0);
 
     NSData *output = [NSData dataWithBytesNoCopy:code length:strlen(code)];
     return output;

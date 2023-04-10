@@ -121,7 +121,6 @@
 		35A0ACF924FF421E00B72EB9 /* MDLTexture+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0ACF824FF421E00B72EB9 /* MDLTexture+Data.swift */; };
 		35A0ACFB24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0ACFA24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift */; };
 		35A0ACFD24FF94D400B72EB9 /* ResourceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0ACFC24FF94D400B72EB9 /* ResourceBundle.swift */; };
-		35A254F224BC42C300C43567 /* StringEncoding+KoreanEUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A254F124BC42C300C43567 /* StringEncoding+KoreanEUC.swift */; };
 		35AAB2F929DFB0C300234025 /* WorldPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AAB2F829DFB0C300234025 /* WorldPreviewView.swift */; };
 		35AAB2FB29DFB73B00234025 /* ModelPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AAB2FA29DFB73B00234025 /* ModelPreviewView.swift */; };
 		35AAB2FD29DFB7A000234025 /* ActionPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AAB2FC29DFB7A000234025 /* ActionPreviewView.swift */; };
@@ -132,6 +131,7 @@
 		35AAB30729DFBA8C00234025 /* DocumentItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AAB30629DFBA8C00234025 /* DocumentItemsView.swift */; };
 		35AAB30929DFC50400234025 /* PreviewItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AAB30829DFC50400234025 /* PreviewItemView.swift */; };
 		35AAB30B29DFE1ED00234025 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AAB30A29DFE1ED00234025 /* WebView.swift */; };
+		35AAB30D29E1160100234025 /* Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AAB30C29E1160100234025 /* Encoding.swift */; };
 		35C06DBC2498C9C000F0A229 /* TextureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C06DBB2498C9C000F0A229 /* TextureLoader.swift */; };
 		35CAF9C724D9BFDD00F9426A /* LuaDecompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CAF9C624D9BFDD00F9426A /* LuaDecompiler.m */; };
 		35CB3BAC247827A700EC04C3 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CB3BAB247827A700EC04C3 /* GameViewController.swift */; };
@@ -317,7 +317,7 @@
 		355F204924DA4CC1001302FC /* allopcodes_luac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = allopcodes_luac.h; sourceTree = "<group>"; };
 		355F204A24DA4CC1001302FC /* lua-compat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "lua-compat.h"; sourceTree = "<group>"; };
 		355F204E24DA4CC2001302FC /* statement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = statement.h; sourceTree = "<group>"; };
-		355F204F24DA4CC2001302FC /* decompile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = decompile.c; sourceTree = "<group>"; };
+		355F204F24DA4CC2001302FC /* decompile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = decompile.c; sourceTree = "<group>"; usesTabs = 1; };
 		355F205024DA4CC2001302FC /* luadec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = luadec.c; sourceTree = "<group>"; };
 		355F205124DA4CC2001302FC /* srcversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = srcversion.h; sourceTree = "<group>"; };
 		355F205224DA4CC2001302FC /* statement.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = statement.c; sourceTree = "<group>"; };
@@ -339,7 +339,6 @@
 		35A0ACF824FF421E00B72EB9 /* MDLTexture+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MDLTexture+Data.swift"; sourceTree = "<group>"; };
 		35A0ACFA24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MDLMaterial+Texture.swift"; sourceTree = "<group>"; };
 		35A0ACFC24FF94D400B72EB9 /* ResourceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceBundle.swift; sourceTree = "<group>"; };
-		35A254F124BC42C300C43567 /* StringEncoding+KoreanEUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringEncoding+KoreanEUC.swift"; sourceTree = "<group>"; };
 		35AAB2F829DFB0C300234025 /* WorldPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPreviewView.swift; sourceTree = "<group>"; };
 		35AAB2FA29DFB73B00234025 /* ModelPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPreviewView.swift; sourceTree = "<group>"; };
 		35AAB2FC29DFB7A000234025 /* ActionPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionPreviewView.swift; sourceTree = "<group>"; };
@@ -350,6 +349,7 @@
 		35AAB30629DFBA8C00234025 /* DocumentItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentItemsView.swift; sourceTree = "<group>"; };
 		35AAB30829DFC50400234025 /* PreviewItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewItemView.swift; sourceTree = "<group>"; };
 		35AAB30A29DFE1ED00234025 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		35AAB30C29E1160100234025 /* Encoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encoding.swift; sourceTree = "<group>"; };
 		35C06DBB2498C9C000F0A229 /* TextureLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureLoader.swift; sourceTree = "<group>"; };
 		35CAF9C524D9BFDD00F9426A /* LuaDecompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LuaDecompiler.h; sourceTree = "<group>"; };
 		35CAF9C624D9BFDD00F9426A /* LuaDecompiler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LuaDecompiler.m; sourceTree = "<group>"; };
@@ -746,7 +746,7 @@
 				35C06DBB2498C9C000F0A229 /* TextureLoader.swift */,
 				35CAF9C524D9BFDD00F9426A /* LuaDecompiler.h */,
 				35CAF9C624D9BFDD00F9426A /* LuaDecompiler.m */,
-				35A254F124BC42C300C43567 /* StringEncoding+KoreanEUC.swift */,
+				35AAB30C29E1160100234025 /* Encoding.swift */,
 				35EF769B24B3222000371F1F /* CGImage+Decode.swift */,
 				35A0ACFA24FF5D2D00B72EB9 /* MDLMaterial+Texture.swift */,
 				35A0ACF824FF421E00B72EB9 /* MDLTexture+Data.swift */,
@@ -1046,7 +1046,6 @@
 				3533CBAE24D2BB26006AFE04 /* loadlib.c in Sources */,
 				35049AA0248E9FA300DAD5C1 /* ModelShaders.metal in Sources */,
 				355F206A24DA4CC3001302FC /* statement.c in Sources */,
-				35A254F224BC42C300C43567 /* StringEncoding+KoreanEUC.swift in Sources */,
 				355F205E24DA4CC3001302FC /* StringBuffer.c in Sources */,
 				35021BAD24A054700021B99B /* GNDDocument.swift in Sources */,
 				35116E8324685AE4000A60FE /* ImagePreviewViewController.swift in Sources */,
@@ -1082,6 +1081,7 @@
 				351E225624BC5D98000EF504 /* INIDocument.swift in Sources */,
 				35E5E90724ED68BC00716592 /* PreviewItem+Thumbnail.swift in Sources */,
 				3587F70924694FA7007D1C9B /* StreamReader.swift in Sources */,
+				35AAB30D29E1160100234025 /* Encoding.swift in Sources */,
 				35116E58245FC152000A60FE /* GRFDocument.swift in Sources */,
 				3533CBBC24D2BB26006AFE04 /* lzio.c in Sources */,
 				35AAB2FD29DFB7A000234025 /* ActionPreviewView.swift in Sources */,
