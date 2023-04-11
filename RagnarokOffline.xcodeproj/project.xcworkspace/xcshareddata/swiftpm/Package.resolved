@@ -17,6 +17,15 @@
         "branch" : "master",
         "revision" : "17caf8fca0e3fed8d0d806b441501f7b689a3180"
       }
+    },
+    {
+      "identity" : "terminal",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dnpp73/Terminal.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "407d3ed9d88da9c4c7518e72f7bfbe2cd5cf0b49"
+      }
     }
   ],
   "version" : 2

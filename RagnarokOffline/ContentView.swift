@@ -12,38 +12,38 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                NavigationLink {
-                    ClientView()
-                } label: {
-                    Label("Client", systemImage: "desktopcomputer")
-                }
-                NavigationLink {
-                    Text("Server")
-                        .navigationTitle("Server")
-                        .navigationBarTitleDisplayMode(.inline)
-                } label: {
-                    Label("Server", systemImage: "server.rack")
+                Section("Browse") {
+                    NavigationLink {
+                        ClientView()
+                    } label: {
+                        Label("Client", systemImage: "ipad.and.iphone")
+                    }
+                    NavigationLink {
+                        ServersView()
+                    } label: {
+                        Label("Server", systemImage: "macpro.gen3.server")
+                    }
                 }
 
                 Section("Databases") {
                     NavigationLink {
                         ItemListView()
                     } label: {
-                        Label("Item Database", systemImage: "list.dash")
+                        Label("Item Database", systemImage: "list.bullet.rectangle")
                     }
                     NavigationLink {
                         MonsterListView()
                     } label: {
-                        Label("Monster Database", systemImage: "list.dash")
+                        Label("Monster Database", systemImage: "list.bullet.rectangle")
                     }
                     NavigationLink {
                         SkillTreeListView()
                     } label: {
-                        Label("Skill Database", systemImage: "list.dash")
+                        Label("Skill Database", systemImage: "list.bullet.rectangle")
                     }
                 }
             }
-            .listStyle(SidebarListStyle())
+            .listStyle(.sidebar)
             .navigationTitle("Ragnarok Offline")
         }
     }
