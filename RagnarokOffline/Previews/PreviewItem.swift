@@ -35,26 +35,26 @@ extension URL: PreviewItem {
     }
 }
 
-struct Entry: PreviewItem {
+struct GRFPreviewItem: PreviewItem {
 
-    var tree: GRFTree
-    var name: String
+    var grf: GRFDocument
+    var node: GRFTreeNode
 
     var url: URL {
-        tree.url.appendingPathComponent(name.replacingOccurrences(of: "\\", with: "/"))
+        grf.url.appendingPathComponent(node.name.replacingOccurrences(of: "\\", with: "/"))
     }
 
     var title: String {
-        let lastPathComponent = name.split(separator: "\\").last
+        let lastPathComponent = node.name.split(separator: "\\").last
         return String(lastPathComponent ?? "")
     }
 
     var fileType: FileType {
-        let pathExtension = name.split(separator: "\\").last?.split(separator: ".").last
+        let pathExtension = node.name.split(separator: "\\").last?.split(separator: ".").last
         return FileType(rawValue: String(pathExtension ?? ""))
     }
 
     func data() throws -> Data {
-        try tree.contentsOfEntry(withName: name)
+        node.contents ?? Data()
     }
 }

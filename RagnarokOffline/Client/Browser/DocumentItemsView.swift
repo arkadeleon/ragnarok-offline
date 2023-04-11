@@ -22,7 +22,7 @@ struct DocumentItemsView: View {
                 ForEach(childDocumentItems) { documentItem in
                     NavigationLink {
                         switch documentItem {
-                        case .directory, .grf, .entryGroup:
+                        case .directory, .grf, .grfDirectory:
                             DocumentItemsView(title: documentItem.title, documentItem: documentItem)
                         case .previewItem(let previewItem):
                             PreviewItemView(previewItem: previewItem)
@@ -51,9 +51,11 @@ struct DocumentItemsView: View {
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            isLoading = true
-            childDocumentItems = documentItem.children?.sorted() ?? []
-            isLoading = false
+            if childDocumentItems.isEmpty {
+                isLoading = true
+                childDocumentItems = documentItem.children?.sorted() ?? []
+                isLoading = false
+            }
         }
     }
 }

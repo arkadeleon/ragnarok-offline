@@ -42,7 +42,7 @@ class WorldPreviewViewController: UIViewController {
 
     private func loadPreviewItem() {
         DispatchQueue.global().async {
-            guard let entry = self.previewItem as? Entry,
+            guard let previewItem = self.previewItem as? GRFPreviewItem,
                   let data = try? self.previewItem.data()
             else {
                 return
@@ -53,13 +53,13 @@ class WorldPreviewViewController: UIViewController {
                 return
             }
 
-            guard let gatData = try? entry.tree.contentsOfEntry(withName: "data\\" + rsw.files.gat),
+            guard let gatData = previewItem.grf.node(atPath: "data\\" + rsw.files.gat)?.contents,
                   let gat = try? loader.load(GATDocument.self, from: gatData)
             else {
                 return
             }
 
-            guard let gndData = try? entry.tree.contentsOfEntry(withName: "data\\" + rsw.files.gnd),
+            guard let gndData = previewItem.grf.node(atPath: "data\\" + rsw.files.gnd)?.contents,
                   let gnd = try? loader.load(GNDDocument.self, from: gndData)
             else {
                 return
@@ -97,7 +97,7 @@ class WorldPreviewViewController: UIViewController {
             context.concatenate(flipVertical)
 
             for (i, name) in textures.enumerated() {
-                guard let data = try? entry.tree.contentsOfEntry(withName: "data\\texture\\" + name) else {
+                guard let data = previewItem.grf.node(atPath: "data\\texture\\" + name)?.contents else {
                     continue
                 }
                 let image = UIImage(data: data)?.cgImage?.decoded
@@ -113,14 +113,14 @@ class WorldPreviewViewController: UIViewController {
             var waterTextures: [Data?] = []
             for i in 0..<32 {
                 let name = NSString(format: "data\\texture\\워터\\water0%02d.jpg", i)
-                let data = try? entry.tree.contentsOfEntry(withName: name as String)
+                let data = previewItem.grf.node(atPath: name as String)?.contents
                 waterTextures.append(data)
             }
 
             var models: [String: ([[ModelVertex]], [Data?])] = [:]
             for model in rsw.models {
                 let name = "data\\model\\" + model.filename
-                guard let data = try? entry.tree.contentsOfEntry(withName: name),
+                guard let data = previewItem.grf.node(atPath: name)?.contents,
                       let rsm = try? loader.load(RSMDocument.self, from: data) else {
                     continue
                 }
@@ -128,7 +128,7 @@ class WorldPreviewViewController: UIViewController {
                 var m = models[name] ?? ([[ModelVertex]](repeating: [], count: rsm.textures.count), [])
 
                 let textures = rsm.textures.map { textureName -> Data? in
-                    return try? entry.tree.contentsOfEntry(withName: "data\\texture\\" + textureName)
+                    return previewItem.grf.node(atPath: "data\\texture\\" + textureName)?.contents
                 }
                 m.1 = textures
 

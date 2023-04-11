@@ -1,12 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "datacompression",
+      "identity" : "grf",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mw99/DataCompression",
+      "location" : "https://github.com/arkadeleon/grf.git",
       "state" : {
-        "revision" : "5ab15951321b08b74511601cbd0497667649d70b",
-        "version" : "3.8.0"
+        "branch" : "master",
+        "revision" : "2afec4a2bafd5d4f4d79ead8a4da1afa11d88a91"
       }
     },
     {

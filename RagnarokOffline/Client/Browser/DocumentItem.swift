@@ -11,18 +11,18 @@ import UIKit
 enum DocumentItem: Identifiable {
 
     case directory(URL)
-    case grf(GRFTree)
-    case entryGroup(GRFTree, String)
+    case grf(GRFDocument)
+    case grfDirectory(GRFDocument, String)
     case previewItem(PreviewItem)
 
     var id: URL {
         switch self {
         case .directory(let url):
             return url
-        case .grf(let tree):
-            return tree.url
-        case .entryGroup(let tree, let path):
-            return tree.url.appendingPathComponent(path.replacingOccurrences(of: "\\", with: "/"))
+        case .grf(let grf):
+            return grf.url
+        case .grfDirectory(let grf, let path):
+            return grf.url.appendingPathComponent(path.replacingOccurrences(of: "\\", with: "/"))
         case .previewItem(let previewItem):
             return previewItem.url
         }
@@ -35,10 +35,10 @@ extension DocumentItem {
         switch self {
         case .directory(let url):
             return url.lastPathComponent
-        case .grf(let tree):
-            return tree.url.lastPathComponent
-        case .entryGroup(let tree, let path):
-            return tree.url.appendingPathComponent(path.replacingOccurrences(of: "\\", with: "/")).lastPathComponent
+        case .grf(let grf):
+            return grf.url.lastPathComponent
+        case .grfDirectory(let grf, let path):
+            return grf.url.appendingPathComponent(path.replacingOccurrences(of: "\\", with: "/")).lastPathComponent
         case .previewItem(let previewItem):
             return previewItem.title
         }
@@ -50,7 +50,7 @@ extension DocumentItem {
             return UIImage(systemName: "folder")
         case .grf:
             return UIImage(systemName: "doc.zipper")
-        case .entryGroup:
+        case .grfDirectory:
             return UIImage(systemName: "folder")
         case .previewItem(let previewItem):
             return previewItem.placeholder
@@ -73,26 +73,26 @@ extension DocumentItem {
                     }
                     switch url.pathExtension.lowercased() {
                     case "grf":
-                        let tree = GRFTree(url: url)
-                        return .grf(tree)
+                        let grf = GRFDocument(fileURL: url)
+                        return .grf(grf)
                     default:
                         return .previewItem(url)
                     }
                 }
             return children
-        case .grf(let tree):
-            return DocumentItem.entryGroup(tree, "data\\").children
-        case .entryGroup(let tree, let path):
+        case .grf(let grf):
+            return DocumentItem.grfDirectory(grf, "data\\").children
+        case .grfDirectory(let grf, let path):
             var children: [DocumentItem] = []
-            let nodes = tree.nodes(withPath: path)
+            let nodes = grf.node(atPath: path)?.children ?? []
             for node in nodes {
-                if let entry = node.entry {
-                    let previewItem = Entry(tree: tree, name: entry.name)
-                    let child: DocumentItem = .previewItem(previewItem)
+                if node.isDirectory {
+                    let path = "\(path)\(node.name)\\"
+                    let child: DocumentItem = .grfDirectory(grf, path)
                     children.append(child)
                 } else {
-                    let path = "\(path)\(node.pathComponent)\\"
-                    let child: DocumentItem = .entryGroup(tree, path)
+                    let previewItem = GRFPreviewItem(grf: grf, node: node)
+                    let child: DocumentItem = .previewItem(previewItem)
                     children.append(child)
                 }
             }
@@ -118,8 +118,7 @@ extension DocumentItem: Equatable, Comparable {
 
     var rank: Int {
         switch self {
-        case .directory,
-             .entryGroup:
+        case .directory, .grfDirectory:
             return 0
         default:
             return 1
