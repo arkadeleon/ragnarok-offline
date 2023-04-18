@@ -42,7 +42,7 @@ class ModelPreviewViewController: UIViewController {
 
     private func loadPreviewItem() {
         DispatchQueue.global().async {
-            guard let previewItem = self.previewItem as? GRFPreviewItem,
+            guard case let .grf(grf, _) = self.previewItem,
                   let data = try? self.previewItem.data()
             else {
                 return
@@ -54,7 +54,7 @@ class ModelPreviewViewController: UIViewController {
             }
 
             let textures = document.textures.map { textureName -> Data? in
-                return previewItem.grf.node(atPath: "data\\texture\\" + textureName)?.contents
+                return grf.node(atPath: "data\\texture\\" + textureName)?.contents
             }
 
             let (boundingBox, wrappers) = document.calcBoundingBox()

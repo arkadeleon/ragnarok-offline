@@ -8,53 +8,46 @@
 
 import Foundation
 
-protocol PreviewItem {
+enum PreviewItem {
 
-    var url: URL { get }
-    var title: String { get }
-    var fileType: FileType { get }
-    func data() throws -> Data
-}
-
-extension URL: PreviewItem {
+    case url(URL)
+    case grf(GRFDocument, GRFTreeNode)
 
     var url: URL {
-        self
+        switch self {
+        case .url(let url):
+            return url
+        case .grf(let grf, let node):
+            return grf.url.appendingPathComponent(node.name.replacingOccurrences(of: "\\", with: "/"))
+        }
     }
 
     var title: String {
-        lastPathComponent
+        switch self {
+        case .url(let url):
+            return url.lastPathComponent
+        case .grf(_, let node):
+            let lastPathComponent = node.name.split(separator: "\\").last
+            return String(lastPathComponent ?? "")
+        }
     }
 
     var fileType: FileType {
-        FileType(rawValue: pathExtension)
+        switch self {
+        case .url(let url):
+            return FileType(rawValue: url.pathExtension)
+        case .grf(_, let node):
+            let pathExtension = node.name.split(separator: "\\").last?.split(separator: ".").last
+            return FileType(rawValue: String(pathExtension ?? ""))
+        }
     }
 
     func data() throws -> Data {
-        try Data(contentsOf: self)
-    }
-}
-
-struct GRFPreviewItem: PreviewItem {
-
-    var grf: GRFDocument
-    var node: GRFTreeNode
-
-    var url: URL {
-        grf.url.appendingPathComponent(node.name.replacingOccurrences(of: "\\", with: "/"))
-    }
-
-    var title: String {
-        let lastPathComponent = node.name.split(separator: "\\").last
-        return String(lastPathComponent ?? "")
-    }
-
-    var fileType: FileType {
-        let pathExtension = node.name.split(separator: "\\").last?.split(separator: ".").last
-        return FileType(rawValue: String(pathExtension ?? ""))
-    }
-
-    func data() throws -> Data {
-        node.contents ?? Data()
+        switch self {
+        case .url(let url):
+            return try Data(contentsOf: url)
+        case .grf(_, let node):
+            return node.contents ?? Data()
+        }
     }
 }

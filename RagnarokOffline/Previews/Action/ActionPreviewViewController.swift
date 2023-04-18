@@ -59,14 +59,14 @@ class ActionPreviewViewController: UIViewController {
 
     private func loadPreviewItem() {
         DispatchQueue.global().async {
-            guard let previewItem = self.previewItem as? GRFPreviewItem,
+            guard case let .grf(grf, node) = self.previewItem,
                   let actData = try? self.previewItem.data()
             else {
                 return
             }
 
-            let sprName = (previewItem.node.name as NSString).deletingPathExtension.appending(".spr")
-            guard let sprData = previewItem.grf.node(atPath: sprName)?.contents else {
+            let sprName = (node.name as NSString).deletingPathExtension.appending(".spr")
+            guard let sprData = grf.node(atPath: sprName)?.contents else {
                 return
             }
 

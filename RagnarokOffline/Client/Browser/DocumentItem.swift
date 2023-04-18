@@ -76,7 +76,7 @@ extension DocumentItem {
                         let grf = GRFDocument(fileURL: url)
                         return .grf(grf)
                     default:
-                        return .previewItem(url)
+                        return .previewItem(.url(url))
                     }
                 }
             return children
@@ -91,8 +91,7 @@ extension DocumentItem {
                     let child: DocumentItem = .grfDirectory(grf, path)
                     children.append(child)
                 } else {
-                    let previewItem = GRFPreviewItem(grf: grf, node: node)
-                    let child: DocumentItem = .previewItem(previewItem)
+                    let child: DocumentItem = .previewItem(.grf(grf, node))
                     children.append(child)
                 }
             }
