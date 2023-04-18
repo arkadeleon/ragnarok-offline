@@ -1,5 +1,5 @@
 //
-//  ModelPreviewViewController.swift
+//  ModelDocumentViewController.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/5/12.
@@ -9,17 +9,17 @@
 import UIKit
 import MetalKit
 
-class ModelPreviewViewController: UIViewController {
+class ModelDocumentViewController: UIViewController {
 
-    let previewItem: PreviewItem
+    let document: DocumentWrapper
 
     private var mtkView: MTKView!
-    private var renderer: ModelPreviewRenderer!
+    private var renderer: ModelDocumentRenderer!
 
-    init(previewItem: PreviewItem) {
-        self.previewItem = previewItem
+    init(document: DocumentWrapper) {
+        self.document = document
         super.init(nibName: nil, bundle: nil)
-        title = previewItem.title
+        title = document.name
         edgesForExtendedLayout = []
     }
 
@@ -37,13 +37,13 @@ class ModelPreviewViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
 
-        loadPreviewItem()
+        loadDocumentContents()
     }
 
-    private func loadPreviewItem() {
+    private func loadDocumentContents() {
         DispatchQueue.global().async {
-            guard case let .grf(grf, _) = self.previewItem,
-                  let data = try? self.previewItem.data()
+            guard case let .grfNode(grf, _) = self.document,
+                  let data = self.document.contents()
             else {
                 return
             }
@@ -70,7 +70,7 @@ class ModelPreviewViewController: UIViewController {
             let meshes = document.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox)
 
             DispatchQueue.main.async {
-                guard let renderer = try? ModelPreviewRenderer(meshes: meshes, textures: textures, boundingBox: boundingBox) else {
+                guard let renderer = try? ModelDocumentRenderer(meshes: meshes, textures: textures, boundingBox: boundingBox) else {
                     return
                 }
 

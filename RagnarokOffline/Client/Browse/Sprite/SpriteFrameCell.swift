@@ -1,5 +1,5 @@
 //
-//  SpritePreviewItem.swift
+//  SpriteFrameCell.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/8/12.

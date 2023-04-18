@@ -10,14 +10,12 @@ import SwiftUI
 
 struct ClientView: View {
 
-    let documentItem: DocumentItem
-
-    var body: some View {
-        DocumentItemsView(title: "Client", documentItem: documentItem)
+    var document: DocumentWrapper {
+        let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        return .url(url)
     }
 
-    init() {
-        let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        documentItem = .directory(url)
+    var body: some View {
+        DocumentGridView(title: "Client", document: document)
     }
 }

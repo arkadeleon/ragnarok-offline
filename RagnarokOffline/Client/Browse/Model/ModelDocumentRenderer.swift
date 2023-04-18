@@ -1,5 +1,5 @@
 //
-//  WorldPreviewRenderer.swift
+//  ModelDocumentRenderer.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/7/15.
@@ -9,40 +9,30 @@
 import Metal
 import MetalKit
 
-class WorldPreviewRenderer: NSObject {
+class ModelDocumentRenderer: NSObject {
 
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
 
-    let groundRenderer: GroundRenderer
-    let waterRenderer: WaterRenderer
     let modelRenderer: ModelRenderer
 
-    let camera: WorldPreviewCamera
+    let boundingBox: RSMBoundingBox
+    let camera = Camera()
 
-    init(altitude: Altitude, vertices: [GroundVertex], texture: Data?, waterVertices: [WaterVertex], waterTextures: [Data?], modelMeshes: [[ModelVertex]], modelTextures: [Data?]) throws {
+    init(meshes: [[ModelVertex]], textures: [Data?], boundingBox: RSMBoundingBox) throws {
         device = MTLCreateSystemDefaultDevice()!
         commandQueue = device.makeCommandQueue()!
 
         let library = device.makeDefaultLibrary()!
-        groundRenderer = try GroundRenderer(device: device, library: library, vertices: vertices, texture: texture)
-        waterRenderer = try WaterRenderer(device: device, library: library, vertices: waterVertices, textures: waterTextures)
-        modelRenderer = try ModelRenderer(device: device, library: library, meshes: modelMeshes, textures: modelTextures)
+        modelRenderer = try ModelRenderer(device: device, library: library, meshes: meshes, textures: textures)
 
-        let target: simd_float3 = [
-            Float(altitude.width) / 2,
-            Float(altitude.height) / 2,
-            altitude.heightForCell(atX: altitude.width / 2, y: altitude.height / 2)
-        ]
-        camera = WorldPreviewCamera(target: target)
-        camera.altitudeTo = -200
-        camera.zoomFinal = 200
+        self.boundingBox = boundingBox
 
         super.init()
     }
 }
 
-extension WorldPreviewRenderer: MTKViewDelegate {
+extension ModelDocumentRenderer: MTKViewDelegate {
 
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
 
@@ -65,32 +55,18 @@ extension WorldPreviewRenderer: MTKViewDelegate {
 
         let time = CACurrentMediaTime()
 
-        camera.update(time: time)
+        var modelviewMatrix = matrix_identity_float4x4
+        modelviewMatrix = matrix_translate(modelviewMatrix, [0, -boundingBox.range[1] * 0.1, -boundingBox.range[1] * 0.5 - 5])
+        modelviewMatrix = matrix_rotate(modelviewMatrix, radians(15), [1, 0, 0])
+        modelviewMatrix = matrix_rotate(modelviewMatrix, Float(radians(time * 360 / 8)), [0, 1, 0])
 
-        let modelviewMatrix = camera.modelviewMatrix
         let projectionMatrix = perspective(radians(camera.zoom), Float(view.bounds.width / view.bounds.height), 1, 1000)
-        let normalMatrix = camera.normalMatrix
+
+        let normalMatrix = simd_float3x3(modelviewMatrix).inverse.transpose
 
         guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
         }
-
-        groundRenderer.render(
-            atTime: time,
-            device: device,
-            renderCommandEncoder: renderCommandEncoder,
-            modelviewMatrix: modelviewMatrix,
-            projectionMatrix: projectionMatrix,
-            normalMatrix: normalMatrix
-        )
-
-        waterRenderer.render(
-            atTime: time,
-            device: device,
-            renderCommandEncoder: renderCommandEncoder,
-            modelviewMatrix: modelviewMatrix,
-            projectionMatrix: projectionMatrix
-        )
 
         modelRenderer.render(
             atTime: time,

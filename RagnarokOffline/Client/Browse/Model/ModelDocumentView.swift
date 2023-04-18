@@ -1,5 +1,5 @@
 //
-//  ActionPreviewView.swift
+//  ModelDocumentView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/4/7.
@@ -8,12 +8,12 @@
 
 import SwiftUI
 
-struct ActionPreviewView: UIViewControllerRepresentable {
+struct ModelDocumentView: UIViewControllerRepresentable {
 
-    let previewItem: PreviewItem
+    let document: DocumentWrapper
 
     func makeUIViewController(context: Context) -> some UIViewController {
-        ActionPreviewViewController(previewItem: previewItem)
+        ModelDocumentViewController(document: document)
     }
 
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {

@@ -1,5 +1,5 @@
 //
-//  WorldPreviewViewController.swift
+//  WorldDocumentViewController.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/6/23.
@@ -9,17 +9,17 @@
 import UIKit
 import MetalKit
 
-class WorldPreviewViewController: UIViewController {
+class WorldDocumentViewController: UIViewController {
 
-    let previewItem: PreviewItem
+    let document: DocumentWrapper
 
     private var mtkView: MTKView!
-    private var renderer: WorldPreviewRenderer!
+    private var renderer: WorldDocumentRenderer!
 
-    init(previewItem: PreviewItem) {
-        self.previewItem = previewItem
+    init(document: DocumentWrapper) {
+        self.document = document
         super.init(nibName: nil, bundle: nil)
-        title = previewItem.title
+        title = document.name
         edgesForExtendedLayout = []
     }
 
@@ -37,13 +37,13 @@ class WorldPreviewViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
 
-        loadPreviewItem()
+        loadDocumentContents()
     }
 
-    private func loadPreviewItem() {
+    private func loadDocumentContents() {
         DispatchQueue.global().async {
-            guard case let .grf(grf, _) = self.previewItem,
-                  let data = try? self.previewItem.data()
+            guard case let .grfNode(grf, _) = self.document,
+                  let data = self.document.contents()
             else {
                 return
             }
@@ -158,7 +158,7 @@ class WorldPreviewViewController: UIViewController {
             }
 
             DispatchQueue.main.async {
-                guard let renderer = try? WorldPreviewRenderer(altitude: altitude, vertices: state.mesh, texture: jpeg, waterVertices: state.waterMesh, waterTextures: waterTextures, modelMeshes: modelMeshes, modelTextures: modelTextures) else {
+                guard let renderer = try? WorldDocumentRenderer(altitude: altitude, vertices: state.mesh, texture: jpeg, waterVertices: state.waterMesh, waterTextures: waterTextures, modelMeshes: modelMeshes, modelTextures: modelTextures) else {
                     return
                 }
 

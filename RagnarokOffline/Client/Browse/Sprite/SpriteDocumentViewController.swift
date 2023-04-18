@@ -1,5 +1,5 @@
 //
-//  SpritePreviewViewController.swift
+//  SpriteDocumentViewController.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/7/1.
@@ -10,18 +10,18 @@ import UIKit
 
 private let frameCellReuseIdentifier = "FrameCell"
 
-class SpritePreviewViewController: UIViewController {
+class SpriteDocumentViewController: UIViewController {
 
-    let previewItem: PreviewItem
+    let document: DocumentWrapper
 
     private var frames: [CGImage?] = []
 
     private var framesView: UICollectionView!
 
-    init(previewItem: PreviewItem) {
-        self.previewItem = previewItem
+    init(document: DocumentWrapper) {
+        self.document = document
         super.init(nibName: nil, bundle: nil)
-        title = previewItem.title
+        title = document.name
     }
 
     required init?(coder: NSCoder) {
@@ -53,12 +53,12 @@ class SpritePreviewViewController: UIViewController {
         framesView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         framesView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
-        loadPreviewItem()
+        loadDocumentContents()
     }
 
-    private func loadPreviewItem() {
+    private func loadDocumentContents() {
         DispatchQueue.global().async {
-            guard let data = try? self.previewItem.data() else {
+            guard let data = self.document.contents() else {
                 return
             }
 
@@ -81,7 +81,7 @@ class SpritePreviewViewController: UIViewController {
     }
 }
 
-extension SpritePreviewViewController: UICollectionViewDataSource {
+extension SpriteDocumentViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return frames.count

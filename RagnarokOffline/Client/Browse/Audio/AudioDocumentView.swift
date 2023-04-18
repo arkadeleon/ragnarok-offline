@@ -1,5 +1,5 @@
 //
-//  WorldPreviewView.swift
+//  AudioDocumentView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/4/7.
@@ -8,12 +8,12 @@
 
 import SwiftUI
 
-struct WorldPreviewView: UIViewControllerRepresentable {
+struct AudioDocumentView: UIViewControllerRepresentable {
 
-    let previewItem: PreviewItem
+    let document: DocumentWrapper
 
     func makeUIViewController(context: Context) -> some UIViewController {
-        WorldPreviewViewController(previewItem: previewItem)
+        AudioDocumentViewController(document: document)
     }
 
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {

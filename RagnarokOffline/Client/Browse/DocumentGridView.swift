@@ -1,5 +1,5 @@
 //
-//  DocumentItemsView.swift
+//  DocumentGridView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/4/7.
@@ -8,32 +8,31 @@
 
 import SwiftUI
 
-struct DocumentItemsView: View {
+struct DocumentGridView: View {
 
     let title: String
-    let documentItem: DocumentItem
+    let document: DocumentWrapper
 
     @State private var isLoading = true
-    @State private var childDocumentItems: [DocumentItem] = []
+    @State private var documents: [DocumentWrapper] = []
 
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [.init(.adaptive(minimum: 80), spacing: 16)], spacing: 16) {
-                ForEach(childDocumentItems) { documentItem in
+                ForEach(documents, id: \.name) { document in
                     NavigationLink {
-                        switch documentItem {
-                        case .directory, .grf, .grfDirectory:
-                            DocumentItemsView(title: documentItem.title, documentItem: documentItem)
-                        case .previewItem(let previewItem):
-                            PreviewItemView(previewItem: previewItem)
+                        if document.isDirectory || document.isArchive {
+                            DocumentGridView(title: document.name, document: document)
+                        } else {
+                            DocumentDetailView(document: document)
                         }
                     } label: {
                         VStack {
-                            Image(uiImage: documentItem.icon ?? UIImage())
+                            Image(uiImage: document.icon ?? UIImage())
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 40, height: 40)
-                            Text(documentItem.title)
+                            Text(document.name)
                                 .lineLimit(2, reservesSpace: true)
                                 .font(.subheadline)
                                 .foregroundColor(.init(uiColor: .label))
@@ -51,9 +50,9 @@ struct DocumentItemsView: View {
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            if childDocumentItems.isEmpty {
+            if documents.isEmpty {
                 isLoading = true
-                childDocumentItems = documentItem.children?.sorted() ?? []
+                documents = document.documentWrappers()
                 isLoading = false
             }
         }

@@ -1,5 +1,5 @@
 //
-//  SpritePreviewView.swift
+//  ActionDocumentView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/4/7.
@@ -8,12 +8,12 @@
 
 import SwiftUI
 
-struct SpritePreviewView: UIViewControllerRepresentable {
+struct ActionDocumentView: UIViewControllerRepresentable {
 
-    let previewItem: PreviewItem
+    let document: DocumentWrapper
 
     func makeUIViewController(context: Context) -> some UIViewController {
-        SpritePreviewViewController(previewItem: previewItem)
+        ActionDocumentViewController(document: document)
     }
 
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {

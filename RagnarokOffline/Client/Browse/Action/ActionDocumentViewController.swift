@@ -1,5 +1,5 @@
 //
-//  ActionPreviewViewController.swift
+//  ActionDocumentViewController.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/8/13.
@@ -10,18 +10,18 @@ import UIKit
 
 private let animationCellReuseIdentifier = "AnimationCell"
 
-class ActionPreviewViewController: UIViewController {
+class ActionDocumentViewController: UIViewController {
 
-    let previewItem: PreviewItem
+    let document: DocumentWrapper
 
     private var animations: [(images: [UIImage], duration: Double)] = []
 
     private var animationsView: UICollectionView!
 
-    init(previewItem: PreviewItem) {
-        self.previewItem = previewItem
+    init(document: DocumentWrapper) {
+        self.document = document
         super.init(nibName: nil, bundle: nil)
-        title = previewItem.title
+        title = document.name
     }
 
     required init?(coder: NSCoder) {
@@ -54,13 +54,13 @@ class ActionPreviewViewController: UIViewController {
         animationsView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         animationsView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
-        loadPreviewItem()
+        loadDocumentContents()
     }
 
-    private func loadPreviewItem() {
+    private func loadDocumentContents() {
         DispatchQueue.global().async {
-            guard case let .grf(grf, node) = self.previewItem,
-                  let actData = try? self.previewItem.data()
+            guard case let .grfNode(grf, node) = self.document,
+                  let actData = self.document.contents()
             else {
                 return
             }
@@ -97,7 +97,7 @@ class ActionPreviewViewController: UIViewController {
     }
 }
 
-extension ActionPreviewViewController: UICollectionViewDataSource {
+extension ActionDocumentViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return animations.count
@@ -110,7 +110,7 @@ extension ActionPreviewViewController: UICollectionViewDataSource {
     }
 }
 
-extension ActionPreviewViewController: UICollectionViewDelegate {
+extension ActionDocumentViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! ActionAnimationCell?

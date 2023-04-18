@@ -6,6 +6,8 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
+import UIKit
+
 enum FileType: String {
 
     case txt
@@ -59,6 +61,27 @@ enum FileType: String {
             self = .rsw
         default:
             self = .xxx
+        }
+    }
+
+    var icon: UIImage? {
+        switch self {
+        case .txt, .xml, .ini, .lua, .lub:
+            return UIImage(systemName: "doc.text")
+        case .bmp, .jpg, .tga, .pal:
+            return UIImage(systemName: "photo")
+        case .mp3, .wav:
+            return UIImage(systemName: "waveform.circle")
+        case .spr:
+            return UIImage(systemName: "photo")
+        case .act:
+            return UIImage(systemName: "bolt")
+        case .rsm:
+            return UIImage(systemName: "square.stack.3d.up")
+        case .rsw:
+            return UIImage(systemName: "map")
+        case .xxx:
+            return UIImage(systemName: "doc")
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ImagePreviewViewController.swift
+//  ImageDocumentViewController.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/5/10.
@@ -8,17 +8,17 @@
 
 import UIKit
 
-class ImagePreviewViewController: UIViewController {
+class ImageDocumentViewController: UIViewController {
 
-    let previewItem: PreviewItem
+    let document: DocumentWrapper
 
     private var scrollView: UIScrollView!
     private var imageView: UIImageView!
 
-    init(previewItem: PreviewItem) {
-        self.previewItem = previewItem
+    init(document: DocumentWrapper) {
+        self.document = document
         super.init(nibName: nil, bundle: nil)
-        title = previewItem.title
+        title = document.name
     }
 
     required init?(coder: NSCoder) {
@@ -47,7 +47,7 @@ class ImagePreviewViewController: UIViewController {
         scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         scrollView.frameLayoutGuide.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
 
-        loadPreviewItem()
+        loadDocumentContents()
     }
 
     override func viewDidLayoutSubviews() {
@@ -59,14 +59,14 @@ class ImagePreviewViewController: UIViewController {
         }
     }
 
-    private func loadPreviewItem() {
+    private func loadDocumentContents() {
         DispatchQueue.global().async {
-            guard let data = try? self.previewItem.data() else {
+            guard let data = self.document.contents() else {
                 return
             }
 
             var image: UIImage? = nil
-            switch self.previewItem.fileType {
+            switch self.document.contentType {
             case .bmp, .jpg, .tga:
                 image = UIImage(data: data)
             case .pal:
@@ -122,7 +122,7 @@ class ImagePreviewViewController: UIViewController {
     }
 }
 
-extension ImagePreviewViewController: UIScrollViewDelegate {
+extension ImageDocumentViewController: UIScrollViewDelegate {
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView

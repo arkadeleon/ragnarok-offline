@@ -1,5 +1,5 @@
 //
-//  AudioPreviewViewController.swift
+//  AudioDocumentViewController.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/7/21.
@@ -9,16 +9,16 @@
 import UIKit
 import AVFoundation
 
-class AudioPreviewViewController: UIViewController {
+class AudioDocumentViewController: UIViewController {
 
-    let previewItem: PreviewItem
+    let document: DocumentWrapper
 
     private var player: AVAudioPlayer?
 
-    init(previewItem: PreviewItem) {
-        self.previewItem = previewItem
+    init(document: DocumentWrapper) {
+        self.document = document
         super.init(nibName: nil, bundle: nil)
-        title = previewItem.title
+        title = document.name
     }
 
     required init?(coder: NSCoder) {
@@ -30,12 +30,12 @@ class AudioPreviewViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
 
-        loadPreviewItem()
+        loadDocumentContents()
     }
 
-    private func loadPreviewItem() {
+    private func loadDocumentContents() {
         DispatchQueue.global().async {
-            guard let data = try? self.previewItem.data() else {
+            guard let data = self.document.contents() else {
                 return
             }
 

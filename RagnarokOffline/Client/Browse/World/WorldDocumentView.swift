@@ -1,5 +1,5 @@
 //
-//  ImagePreviewView.swift
+//  WorldDocumentView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/4/7.
@@ -8,12 +8,12 @@
 
 import SwiftUI
 
-struct ImagePreviewView: UIViewControllerRepresentable {
+struct WorldDocumentView: UIViewControllerRepresentable {
 
-    let previewItem: PreviewItem
+    let document: DocumentWrapper
 
     func makeUIViewController(context: Context) -> some UIViewController {
-        ImagePreviewViewController(previewItem: previewItem)
+        WorldDocumentViewController(document: document)
     }
 
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {

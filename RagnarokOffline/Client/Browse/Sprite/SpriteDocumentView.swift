@@ -1,5 +1,5 @@
 //
-//  AudioPreviewView.swift
+//  SpriteDocumentView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/4/7.
@@ -8,12 +8,12 @@
 
 import SwiftUI
 
-struct AudioPreviewView: UIViewControllerRepresentable {
+struct SpriteDocumentView: UIViewControllerRepresentable {
 
-    let previewItem: PreviewItem
+    let document: DocumentWrapper
 
     func makeUIViewController(context: Context) -> some UIViewController {
-        AudioPreviewViewController(previewItem: previewItem)
+        SpriteDocumentViewController(document: document)
     }
 
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
