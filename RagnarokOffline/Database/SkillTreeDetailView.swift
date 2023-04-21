@@ -33,7 +33,7 @@ struct SkillTreeDetailView: View {
         List {
             if !inherit.isEmpty {
                 Section("Inherit") {
-                    ForEach(inherit, id: \.job.name) { skillTree in
+                    ForEach(inherit) { skillTree in
                         NavigationLink {
                             SkillTreeDetailView(skillTree: skillTree)
                         } label: {
@@ -45,7 +45,7 @@ struct SkillTreeDetailView: View {
 
             if !tree.isEmpty {
                 Section("Tree") {
-                    ForEach(tree, id: \.skillName) { skill in
+                    ForEach(tree) { skill in
                         NavigationLink {
                             SkillDetailView(skill: skill)
                         } label: {

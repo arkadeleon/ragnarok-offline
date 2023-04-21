@@ -12,7 +12,7 @@ struct MonsterListView: View {
     @EnvironmentObject var database: Database
 
     var body: some View {
-        List(database.monsters, id: \.monsterID) { monster in
+        List(database.monsters) { monster in
             NavigationLink {
                 MonsterDetailView(monster: monster)
             } label: {

@@ -8,6 +8,12 @@
 
 import rAthenaCommon
 
+extension RAItem: Identifiable {
+    public var id: Int {
+        itemID
+    }
+}
+
 extension RAItem {
     typealias Attribute = (name: String, value: String)
 

@@ -8,6 +8,18 @@
 
 import rAthenaCommon
 
+extension RASkillTree: Identifiable {
+    public var id: String {
+        job.name
+    }
+}
+
+extension RASkill: Identifiable {
+    public var id: Int {
+        skillID
+    }
+}
+
 extension RASkill {
     typealias Attribute = (name: String, value: String)
 

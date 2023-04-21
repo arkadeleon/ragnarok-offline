@@ -8,11 +8,15 @@
 
 import UIKit
 
-enum DocumentWrapper {
+enum DocumentWrapper: Identifiable {
 
     case url(URL)
     case grf(GRFDocument)
     case grfNode(GRFDocument, GRFTreeNode)
+
+    var id: String {
+        name
+    }
 
     var isDirectory: Bool {
         switch self {
@@ -49,7 +53,7 @@ enum DocumentWrapper {
         case .grf:
             return nil
         case .grfNode(_, let node):
-            let pathExtension = node.name.split(separator: "\\").last!.split(separator: ".").last
+            let pathExtension = node.name.split(separator: "\\").last?.split(separator: ".").last
             let fileType = FileType(rawValue: String(pathExtension ?? ""))
             return fileType
         }
@@ -62,8 +66,8 @@ enum DocumentWrapper {
         case .grf(let grf):
             return grf.url.lastPathComponent
         case .grfNode(_, let node):
-            let lastPathComponent = node.name.split(separator: "\\").last!
-            return String(lastPathComponent)
+            let lastPathComponent = node.name.split(separator: "\\").last
+            return String(lastPathComponent ?? "")
         }
     }
 
@@ -79,7 +83,7 @@ enum DocumentWrapper {
         case .grf:
             return UIImage(systemName: "doc.zipper")
         case .grfNode(_, let node):
-            let pathExtension = node.name.split(separator: "\\").last!.split(separator: ".").last
+            let pathExtension = node.name.split(separator: "\\").last?.split(separator: ".").last
             let fileType = FileType(rawValue: String(pathExtension ?? ""))
             return fileType.icon
         }

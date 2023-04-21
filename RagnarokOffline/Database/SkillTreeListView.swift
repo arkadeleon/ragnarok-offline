@@ -12,7 +12,7 @@ struct SkillTreeListView: View {
     @EnvironmentObject var database: Database
 
     var body: some View {
-        List(database.skillTrees, id: \.job.name) { skillTree in
+        List(database.skillTrees) { skillTree in
             NavigationLink {
                 SkillTreeDetailView(skillTree: skillTree)
             } label: {

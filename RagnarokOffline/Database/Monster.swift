@@ -8,6 +8,12 @@
 
 import rAthenaCommon
 
+extension RAMonster: Identifiable {
+    public var id: Int {
+        monsterID
+    }
+}
+
 extension RAMonster {
     typealias Attribute = (name: String, value: String)
 

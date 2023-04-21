@@ -19,7 +19,7 @@ struct DocumentGridView: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [.init(.adaptive(minimum: 80), spacing: 16)], spacing: 16) {
-                ForEach(documents, id: \.name) { document in
+                ForEach(documents) { document in
                     NavigationLink {
                         if document.isDirectory || document.isArchive {
                             DocumentGridView(title: document.name, document: document)
