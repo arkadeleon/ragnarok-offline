@@ -8,15 +8,11 @@
 
 import UIKit
 
-enum DocumentWrapper: Identifiable {
+enum DocumentWrapper {
 
     case url(URL)
     case grf(GRFDocument)
     case grfNode(GRFDocument, GRFTreeNode)
-
-    var id: String {
-        name
-    }
 
     var isDirectory: Bool {
         switch self {
@@ -59,6 +55,18 @@ enum DocumentWrapper: Identifiable {
         }
     }
 
+    var url: URL {
+        switch self {
+        case .url(let url):
+            return url
+        case .grf(let grf):
+            return grf.url
+        case .grfNode(let grf, let node):
+            let name = node.name.replacing("\\", with: "/")
+            return grf.url.appendingPathComponent(name)
+        }
+    }
+
     var name: String {
         switch self {
         case .url(let url):
@@ -68,24 +76,6 @@ enum DocumentWrapper: Identifiable {
         case .grfNode(_, let node):
             let lastPathComponent = node.name.split(separator: "\\").last
             return String(lastPathComponent ?? "")
-        }
-    }
-
-    var icon: UIImage? {
-        if isDirectory {
-            return UIImage(systemName: "folder")
-        }
-
-        switch self {
-        case .url(let url):
-            let fileType = FileType(rawValue: url.pathExtension)
-            return fileType.icon
-        case .grf:
-            return UIImage(systemName: "doc.zipper")
-        case .grfNode(_, let node):
-            let pathExtension = node.name.split(separator: "\\").last?.split(separator: ".").last
-            let fileType = FileType(rawValue: String(pathExtension ?? ""))
-            return fileType.icon
         }
     }
 
@@ -144,5 +134,11 @@ enum DocumentWrapper: Identifiable {
         }
 
         return documentWrappers
+    }
+}
+
+extension DocumentWrapper: Identifiable {
+    var id: URL {
+        url
     }
 }

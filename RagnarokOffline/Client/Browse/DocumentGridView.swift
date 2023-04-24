@@ -18,7 +18,7 @@ struct DocumentGridView: View {
 
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: [.init(.adaptive(minimum: 80), spacing: 16)], spacing: 16) {
+            LazyVGrid(columns: [.init(.adaptive(minimum: 80), spacing: 16)], spacing: 32) {
                 ForEach(documents) { document in
                     NavigationLink {
                         if document.isDirectory || document.isArchive {
@@ -28,10 +28,8 @@ struct DocumentGridView: View {
                         }
                     } label: {
                         VStack {
-                            Image(uiImage: document.icon ?? UIImage())
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 40, height: 40)
+                            DocumentThumbnailView(document: document)
+
                             Text(document.name)
                                 .lineLimit(2, reservesSpace: true)
                                 .font(.subheadline)
