@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DataCompression
 
 class ImageDocumentViewController: UIViewController {
 
@@ -67,8 +68,12 @@ class ImageDocumentViewController: UIViewController {
 
             var image: UIImage? = nil
             switch self.document.contentType {
-            case .bmp, .jpg, .tga:
+            case .bmp, .png, .jpg, .tga:
                 image = UIImage(data: data)
+            case .ebm:
+                if let decompressedData = data.unzip() {
+                    image = UIImage(data: decompressedData)
+                }
             case .pal:
                 let loader = DocumentLoader()
                 let pal = try? loader.load(PALDocument.self, from: data)

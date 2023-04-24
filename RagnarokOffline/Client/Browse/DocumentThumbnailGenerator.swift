@@ -9,6 +9,7 @@
 import CoreGraphics
 import ImageIO
 import UIKit
+import DataCompression
 
 enum DocumentThumbnailRepresentation {
     case icon(name: String)
@@ -33,7 +34,7 @@ class DocumentThumbnailGenerator {
         switch document.contentType {
         case .txt, .xml, .ini, .lua, .lub:
             updateHandler(.icon(name: "doc.text"))
-        case .bmp, .jpg, .tga, .pal:
+        case .bmp, .png, .jpg, .tga:
             updateHandler(.icon(name: "photo"))
 
             queue.async {
@@ -52,6 +53,48 @@ class DocumentThumbnailGenerator {
                     kCGImageSourceThumbnailMaxPixelSize: 40 * UIScreen.main.scale
                 ]
                 guard let thumbnail = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary) else {
+                    return
+                }
+
+                updateHandler(.thumbnail(image: thumbnail))
+            }
+        case .ebm:
+            updateHandler(.icon(name: "photo"))
+
+            queue.async {
+                guard let data = document.contents(), let decompressedData = data.unzip() else {
+                    return
+                }
+
+                guard let imageSource = CGImageSourceCreateWithData(decompressedData as CFData, nil) else {
+                    return
+                }
+
+                let options = [
+                    kCGImageSourceCreateThumbnailFromImageIfAbsent: true,
+                    kCGImageSourceCreateThumbnailWithTransform: true,
+                    kCGImageSourceShouldCacheImmediately: true
+                ]
+                guard let thumbnail = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary) else {
+                    return
+                }
+
+                updateHandler(.thumbnail(image: thumbnail))
+            }
+        case .pal:
+            updateHandler(.icon(name: "photo"))
+
+            queue.async {
+                guard let data = document.contents() else {
+                    return
+                }
+
+                let stream = MemoryStream(data: data)
+                guard let pal = try? PALDocument(from: stream) else {
+                    return
+                }
+
+                guard let thumbnail = pal.image(at: CGSize(width: 32, height: 32)).cgImage else {
                     return
                 }
 

@@ -133,6 +133,7 @@
 		35AAB31C29E5098000234025 /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AAB31B29E5098000234025 /* TerminalView.swift */; };
 		35AAB31E29E509CC00234025 /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AAB31D29E509CC00234025 /* ServerView.swift */; };
 		35B1281629F597B6001A5B55 /* DocumentThumbnailCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B1281529F597B6001A5B55 /* DocumentThumbnailCache.swift */; };
+		35B1281929F67060001A5B55 /* DataCompression in Frameworks */ = {isa = PBXBuildFile; productRef = 35B1281829F67060001A5B55 /* DataCompression */; };
 		35C06DBC2498C9C000F0A229 /* TextureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C06DBB2498C9C000F0A229 /* TextureLoader.swift */; };
 		35CAF9C724D9BFDD00F9426A /* LuaDecompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CAF9C624D9BFDD00F9426A /* LuaDecompiler.m */; };
 		35CB3BAC247827A700EC04C3 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CB3BAB247827A700EC04C3 /* GameViewController.swift */; };
@@ -391,6 +392,7 @@
 				35AAB31429E415BF00234025 /* grf in Frameworks */,
 				358BF594292E7EC7007DA1C0 /* rAthenaLogin in Frameworks */,
 				35AAB31A29E5090F00234025 /* Terminal in Frameworks */,
+				35B1281929F67060001A5B55 /* DataCompression in Frameworks */,
 				3557DB2229A60CD400ABB683 /* rAthenaCommon in Frameworks */,
 				358BF591292E7EC7007DA1C0 /* rAthenaChar in Frameworks */,
 				358BF59A292E7EC7007DA1C0 /* rAthenaWeb in Frameworks */,
@@ -842,6 +844,7 @@
 				3557DB2129A60CD400ABB683 /* rAthenaCommon */,
 				35AAB31329E415BF00234025 /* grf */,
 				35AAB31929E5090F00234025 /* Terminal */,
+				35B1281829F67060001A5B55 /* DataCompression */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35116E12245C7B87000A60FE /* RagnarokOffline.app */;
@@ -920,6 +923,7 @@
 				3539AFCB292DB91A00FA1A78 /* XCRemoteSwiftPackageReference "rathena-ios" */,
 				35AAB31229E415BF00234025 /* XCRemoteSwiftPackageReference "grf" */,
 				35AAB31829E5090F00234025 /* XCRemoteSwiftPackageReference "Terminal" */,
+				35B1281729F67060001A5B55 /* XCRemoteSwiftPackageReference "DataCompression" */,
 			);
 			productRefGroup = 35116E13245C7B87000A60FE /* Products */;
 			projectDirPath = "";
@@ -1456,6 +1460,14 @@
 				kind = branch;
 			};
 		};
+		35B1281729F67060001A5B55 /* XCRemoteSwiftPackageReference "DataCompression" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mw99/DataCompression.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1493,6 +1505,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 35AAB31829E5090F00234025 /* XCRemoteSwiftPackageReference "Terminal" */;
 			productName = Terminal;
+		};
+		35B1281829F67060001A5B55 /* DataCompression */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35B1281729F67060001A5B55 /* XCRemoteSwiftPackageReference "DataCompression" */;
+			productName = DataCompression;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

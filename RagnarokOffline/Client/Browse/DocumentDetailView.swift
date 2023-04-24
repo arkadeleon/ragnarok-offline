@@ -16,7 +16,7 @@ struct DocumentDetailView: View {
         switch document.contentType {
         case .txt, .xml, .ini, .lua, .lub:
             TextDocumentView(document: document)
-        case .bmp, .jpg, .tga, .pal:
+        case .bmp, .png, .jpg, .tga, .ebm, .pal:
             ImageDocumentView(document: document)
         case .mp3, .wav:
             AudioDocumentView(document: document)

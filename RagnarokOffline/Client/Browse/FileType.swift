@@ -16,8 +16,10 @@ enum FileType: String {
     case lua
     case lub
     case bmp
+    case png
     case jpg
     case tga
+    case ebm
     case pal
     case mp3
     case wav
@@ -41,10 +43,14 @@ enum FileType: String {
             self = .lub
         case "bmp":
             self = .bmp
+        case "png":
+            self = .png
         case "jpg", "jpeg":
             self = .jpg
         case "tga":
             self = .tga
+        case "ebm":
+            self = .ebm
         case "pal":
             self = .pal
         case "mp3":
