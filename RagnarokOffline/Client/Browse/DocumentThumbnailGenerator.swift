@@ -89,12 +89,11 @@ class DocumentThumbnailGenerator {
                     return
                 }
 
-                let stream = MemoryStream(data: data)
-                guard let pal = try? PALDocument(from: stream) else {
+                guard let palette = try? Palette(data: data) else {
                     return
                 }
 
-                guard let thumbnail = pal.image(at: CGSize(width: 32, height: 32)).cgImage else {
+                guard let thumbnail = palette.image(at: CGSize(width: 32, height: 32)).cgImage else {
                     return
                 }
 

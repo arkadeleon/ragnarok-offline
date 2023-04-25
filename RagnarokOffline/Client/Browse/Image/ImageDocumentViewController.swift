@@ -75,9 +75,8 @@ class ImageDocumentViewController: UIViewController {
                     image = UIImage(data: decompressedData)
                 }
             case .pal:
-                let loader = DocumentLoader()
-                let pal = try? loader.load(PALDocument.self, from: data)
-                image = pal?.image(at: CGSize(width: 128, height: 128))
+                let palette = try? Palette(data: data)
+                image = palette?.image(at: CGSize(width: 128, height: 128))
             default:
                 break
             }
