@@ -72,12 +72,12 @@ class ActionDocumentViewController: UIViewController {
 
             let loader = DocumentLoader()
             guard let actDocument = try? loader.load(ACTDocument.self, from: actData),
-                  let sprDocument = try? loader.load(SPRDocument.self, from: sprData)
+                  let sprDocument = try? SPRDocument(data: sprData)
             else {
                 return
             }
 
-            var frames: [CGImage?] = []
+            var frames: [UIImage?] = []
             for index in 0..<sprDocument.frames.count {
                 let frame = sprDocument.imageForFrame(at: index)
                 frames.append(frame)

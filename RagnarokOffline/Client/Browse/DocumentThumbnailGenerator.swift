@@ -6,14 +6,13 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
-import CoreGraphics
+import DataCompression
 import ImageIO
 import UIKit
-import DataCompression
 
 enum DocumentThumbnailRepresentation {
     case icon(name: String)
-    case thumbnail(image: CGImage)
+    case thumbnail(image: UIImage)
 }
 
 class DocumentThumbnailGenerator {
@@ -46,17 +45,18 @@ class DocumentThumbnailGenerator {
                     return
                 }
 
+                let scale = UIScreen.main.scale
                 let options = [
                     kCGImageSourceCreateThumbnailFromImageIfAbsent: true,
                     kCGImageSourceCreateThumbnailWithTransform: true,
                     kCGImageSourceShouldCacheImmediately: true,
-                    kCGImageSourceThumbnailMaxPixelSize: 40 * UIScreen.main.scale
+                    kCGImageSourceThumbnailMaxPixelSize: 40 * scale
                 ]
                 guard let thumbnail = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary) else {
                     return
                 }
 
-                updateHandler(.thumbnail(image: thumbnail))
+                updateHandler(.thumbnail(image: UIImage(cgImage: thumbnail)))
             }
         case .ebm:
             updateHandler(.icon(name: "photo"))
@@ -79,7 +79,7 @@ class DocumentThumbnailGenerator {
                     return
                 }
 
-                updateHandler(.thumbnail(image: thumbnail))
+                updateHandler(.thumbnail(image: UIImage(cgImage: thumbnail)))
             }
         case .pal:
             updateHandler(.icon(name: "photo"))
@@ -93,16 +93,30 @@ class DocumentThumbnailGenerator {
                     return
                 }
 
-                guard let thumbnail = palette.image(at: CGSize(width: 32, height: 32)).cgImage else {
-                    return
-                }
-
-                updateHandler(.thumbnail(image: thumbnail))
+                let scale = UIScreen.main.scale
+                let image = palette.image(at: CGSize(width: 32 * scale, height: 32 * scale))
+                updateHandler(.thumbnail(image: image))
             }
         case .mp3, .wav:
             updateHandler(.icon(name: "waveform.circle"))
         case .spr:
-            updateHandler(.icon(name: "photo"))
+            updateHandler(.icon(name: "photo.stack"))
+
+            queue.async {
+                guard let data = document.contents() else {
+                    return
+                }
+
+                guard let spr = try? SPRDocument(data: data) else {
+                    return
+                }
+
+                guard let image = spr.imageForFrame(at: 0) else {
+                    return
+                }
+
+                updateHandler(.thumbnail(image: image))
+            }
         case .act:
             updateHandler(.icon(name: "bolt"))
         case .rsm:

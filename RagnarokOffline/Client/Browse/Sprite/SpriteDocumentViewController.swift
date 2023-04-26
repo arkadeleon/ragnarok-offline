@@ -14,7 +14,7 @@ class SpriteDocumentViewController: UIViewController {
 
     let document: DocumentWrapper
 
-    private var frames: [CGImage?] = []
+    private var frames: [UIImage?] = []
 
     private var framesView: UICollectionView!
 
@@ -62,14 +62,13 @@ class SpriteDocumentViewController: UIViewController {
                 return
             }
 
-            let loader = DocumentLoader()
-            guard let document = try? loader.load(SPRDocument.self, from: data) else {
+            guard let sprDocument = try? SPRDocument(data: data) else {
                 return
             }
 
-            var frames: [CGImage?] = []
-            for index in 0..<document.frames.count {
-                let frame = document.imageForFrame(at: index)
+            var frames: [UIImage?] = []
+            for index in 0..<sprDocument.frames.count {
+                let frame = sprDocument.imageForFrame(at: index)
                 frames.append(frame)
             }
             self.frames = frames
@@ -89,7 +88,7 @@ extension SpriteDocumentViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: frameCellReuseIdentifier, for: indexPath) as! SpriteFrameCell
-        cell.frameView.image = frames[indexPath.item].flatMap { UIImage(cgImage: $0) }
+        cell.frameView.image = frames[indexPath.item].flatMap { $0 }
         return cell
     }
 }

@@ -6,144 +6,211 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
+import CoreGraphics
 import Foundation
+import UIKit
 
-enum SPRType: Int {
-
-    case pal = 0
+enum SPRFrameType: Int {
+    case indexed = 0
     case rgba = 1
 }
 
 struct SPRFrame {
-
-    var type: SPRType
+    var type: SPRFrameType
     var width: UInt16
     var height: UInt16
     var data: Data
 }
 
-struct SPRDocument: Document {
+struct SPRDocument {
 
     var header: String
     var version: String
-    var indexed_count: UInt16
-    var rgba_count: UInt16
+    var indexedFrameCount: UInt16
+    var rgbaFrameCount: UInt16
     var frames: [SPRFrame]
-    var palette: Data
+    var palette: Palette?
 
-    init(from stream: Stream) throws {
-        try stream.seek(toOffset: 0)
-        let reader = StreamReader(stream: stream)
+    init(data: Data) throws {
+        var buffer = ByteBuffer(data: data)
 
-        header = try reader.readString(count: 2)
+        header = try buffer.readString(length: 2)
         guard header == "SP" else {
             throw DocumentError.invalidContents
         }
 
-        let minor = try reader.readUInt8()
-        let major = try reader.readUInt8()
+        let minor = try buffer.readUInt8()
+        let major = try buffer.readUInt8()
         version = "\(major).\(minor)"
 
-        indexed_count = try reader.readUInt16()
+        indexedFrameCount = try buffer.readUInt16()
 
-        rgba_count = 0
+        rgbaFrameCount = 0
         if version > "1.1" {
-            rgba_count = try reader.readUInt16()
+            rgbaFrameCount = try buffer.readUInt16()
         }
 
-        var frames: [SPRFrame] = []
+        frames = []
 
         if version < "2.1" {
-            frames += try reader.readSPRIndexedImage(indexed_count: indexed_count)
+            frames += try (0..<indexedFrameCount).map { _ in
+                try buffer.readIndexedFrame()
+            }
         } else {
-            frames += try reader.readSPRIndexedImageRLE(indexed_count: indexed_count)
+            frames += try (0..<indexedFrameCount).map { _ in
+                try buffer.readIndexedFrameRLE()
+            }
         }
 
-        frames += try reader.readSPRRGBAImage(rgba_count: rgba_count)
+        frames += try (0..<rgbaFrameCount).map { _ in
+            try buffer.readRGBAFrame()
+        }
 
-        self.frames = frames
-
-        var palette = Data()
         if version > "1.0" {
-            try stream.seek(toOffset: stream.length() - 1024)
-            palette = try reader.readData(count: 1024)
+            try buffer.moveReaderIndex(to: data.count - 1024)
+            let paletteData = try buffer.readData(length: 1024)
+            palette = try Palette(data: paletteData)
         }
-        self.palette = palette
     }
 }
 
-extension StreamReader {
+extension SPRDocument {
 
-    fileprivate func readSPRIndexedImage(indexed_count: UInt16) throws -> [SPRFrame] {
-        var frames: [SPRFrame] = []
-        for _ in 0..<indexed_count {
-            let width = try readUInt16()
-            let height = try readUInt16()
-            let data = try readData(count: Int(width) * Int(height))
-            let frame = SPRFrame(
-                type: .pal,
+    func imageForFrame(at index: Int) -> UIImage? {
+        let frame = frames[index]
+        let width = Int(frame.width)
+        let height = Int(frame.height)
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+
+        switch frame.type {
+        case .indexed:
+            guard let palette else {
+                return nil
+            }
+
+            let byteOrder = CGBitmapInfo.byteOrder32Big
+            let alphaInfo = CGImageAlphaInfo.last
+            let bitmapInfo = CGBitmapInfo(rawValue: byteOrder.rawValue | alphaInfo.rawValue)
+
+            let data = frame.data
+                .map { colorIndex in
+                    var color = palette.colors[Int(colorIndex)]
+                    color.alpha = colorIndex == 0 ? 0 : 255
+                    return [color.red, color.green, color.blue, color.alpha]
+                }
+                .flatMap({ $0 })
+            guard let provider = CGDataProvider(data: Data(data) as CFData) else {
+                return nil
+            }
+
+            guard let cgImage = CGImage(
                 width: width,
                 height: height,
-                data: data
-            )
-            frames.append(frame)
+                bitsPerComponent: 8,
+                bitsPerPixel: 32,
+                bytesPerRow: width * 4,
+                space: colorSpace,
+                bitmapInfo: bitmapInfo,
+                provider: provider,
+                decode: nil,
+                shouldInterpolate: true,
+                intent: .defaultIntent
+            ) else {
+                return nil
+            }
+
+            let image = UIImage(cgImage: cgImage, scale: 1, orientation: .up)
+            return image
+        case .rgba:
+            let byteOrder = CGBitmapInfo.byteOrder32Little
+            let alphaInfo = CGImageAlphaInfo.last
+            let bitmapInfo = CGBitmapInfo(rawValue: byteOrder.rawValue | alphaInfo.rawValue)
+
+            guard let provider = CGDataProvider(data: frame.data as CFData) else {
+                return nil
+            }
+
+            guard let cgImage = CGImage(
+                width: width,
+                height: height,
+                bitsPerComponent: 8,
+                bitsPerPixel: 32,
+                bytesPerRow: width * 4,
+                space: colorSpace,
+                bitmapInfo: bitmapInfo,
+                provider: provider,
+                decode: nil,
+                shouldInterpolate: true,
+                intent: .defaultIntent
+            ) else {
+                return nil
+            }
+
+            let image = UIImage(cgImage: cgImage, scale: 1, orientation: .downMirrored)
+            return image
         }
-        return frames
+    }
+}
+
+extension ByteBuffer {
+
+    @inlinable
+    mutating func readIndexedFrame() throws -> SPRFrame {
+        let width = try readUInt16()
+        let height = try readUInt16()
+        let data = try readData(length: Int(width) * Int(height))
+        let frame = SPRFrame(
+            type: .indexed,
+            width: width,
+            height: height,
+            data: data
+        )
+        return frame
     }
 
-    fileprivate func readSPRIndexedImageRLE(indexed_count: UInt16) throws -> [SPRFrame] {
-        var frames: [SPRFrame] = []
-        for _ in 0..<indexed_count {
-            let width = try readUInt16()
-            let height = try readUInt16()
-            let length = try readUInt16()
-            let raw = try readData(count: Int(length))
-            var data = Data(capacity: Int(width) * Int(height))
+    @inlinable
+    mutating func readIndexedFrameRLE() throws -> SPRFrame {
+        let width = try readUInt16()
+        let height = try readUInt16()
+        var data = Data(capacity: Int(width) * Int(height))
 
-            let stream = MemoryStream(data: raw)
-            let reader = StreamReader(stream: stream)
+        let endIndex = try Int(readUInt16()) + readerIndex
+        while readerIndex < endIndex {
+            let c = try readUInt8()
+            data.append(c)
 
-            while let c = try? reader.readUInt8() {
-                data.append(c)
-
-                if c == 0 {
-                    if let count = try? reader.readUInt8() {
-                        if count == 0 {
-                            data.append(count)
-                        } else {
-                            for _ in 1..<count {
-                                data.append(c)
-                            }
-                        }
+            if c == 0 {
+                let count = try readUInt8()
+                if count == 0 {
+                    data.append(count)
+                } else {
+                    for _ in 1..<count {
+                        data.append(c)
                     }
                 }
             }
-
-            let frame = SPRFrame(
-                type: .pal,
-                width: width,
-                height: height,
-                data: data
-            )
-            frames.append(frame)
         }
-        return frames
+
+        let frame = SPRFrame(
+            type: .indexed,
+            width: width,
+            height: height,
+            data: data
+        )
+        return frame
     }
 
-    fileprivate func readSPRRGBAImage(rgba_count: UInt16) throws -> [SPRFrame] {
-        var frames: [SPRFrame] = []
-        for _ in 0..<rgba_count {
-            let width = try readUInt16()
-            let height = try readUInt16()
-            let data = try readData(count: Int(width) * Int(height) * 4)
-            let frame = SPRFrame(
-                type: .rgba,
-                width: width,
-                height: height,
-                data: data
-            )
-            frames.append(frame)
-        }
-        return frames
+    @inlinable
+    mutating func readRGBAFrame() throws -> SPRFrame {
+        let width = try readUInt16()
+        let height = try readUInt16()
+        let data = try readData(length: Int(width) * Int(height) * 4)
+        let frame = SPRFrame(
+            type: .rgba,
+            width: width,
+            height: height,
+            data: data
+        )
+        return frame
     }
 }

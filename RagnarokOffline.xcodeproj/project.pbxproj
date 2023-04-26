@@ -11,7 +11,6 @@
 		35049AA0248E9FA300DAD5C1 /* ModelShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35049A9F248E9FA300DAD5C1 /* ModelShaders.metal */; };
 		3509565324A8EE010077C134 /* RSMDocument+Compile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565224A8EE010077C134 /* RSMDocument+Compile.swift */; };
 		3509565524A8F6010077C134 /* GNDDocument+Compile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565424A8F6010077C134 /* GNDDocument+Compile.swift */; };
-		3509565724ACD8FB0077C134 /* SPRDocument+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565624ACD8FB0077C134 /* SPRDocument+Image.swift */; };
 		3509565924ACE48A0077C134 /* SpriteDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3509565824ACE48A0077C134 /* SpriteDocumentViewController.swift */; };
 		35116E1F245C7B8A000A60FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35116E1E245C7B8A000A60FE /* Assets.xcassets */; };
 		35116E22245C7B8A000A60FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35116E20245C7B8A000A60FE /* LaunchScreen.storyboard */; };
@@ -201,7 +200,6 @@
 		35049AA1248E9FB600DAD5C1 /* ModelShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelShaderTypes.h; sourceTree = "<group>"; };
 		3509565224A8EE010077C134 /* RSMDocument+Compile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSMDocument+Compile.swift"; sourceTree = "<group>"; };
 		3509565424A8F6010077C134 /* GNDDocument+Compile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GNDDocument+Compile.swift"; sourceTree = "<group>"; };
-		3509565624ACD8FB0077C134 /* SPRDocument+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SPRDocument+Image.swift"; sourceTree = "<group>"; };
 		3509565824ACE48A0077C134 /* SpriteDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteDocumentViewController.swift; sourceTree = "<group>"; };
 		35116E12245C7B87000A60FE /* RagnarokOffline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOffline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35116E1E245C7B8A000A60FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -692,7 +690,6 @@
 				35727EAC24F7F873004F8B02 /* RSMDocument+Mesh.swift */,
 				3509565224A8EE010077C134 /* RSMDocument+Compile.swift */,
 				35D091F324AB3CCC008D7CEA /* RSMDocument+BoundingBox.swift */,
-				3509565624ACD8FB0077C134 /* SPRDocument+Image.swift */,
 			);
 			path = "Documents+";
 			sourceTree = "<group>";
@@ -1046,7 +1043,6 @@
 				3557DB2629AF50BF00ABB683 /* ItemDetailView.swift in Sources */,
 				3533CBB124D2BB26006AFE04 /* lstrlib.c in Sources */,
 				3557DB2829B04CBC00ABB683 /* Monster.swift in Sources */,
-				3509565724ACD8FB0077C134 /* SPRDocument+Image.swift in Sources */,
 				3587577B24C6DB480050F734 /* AudioDocumentViewController.swift in Sources */,
 				3509565324A8EE010077C134 /* RSMDocument+Compile.swift in Sources */,
 				3533CBAB24D2BB26006AFE04 /* lobject.c in Sources */,

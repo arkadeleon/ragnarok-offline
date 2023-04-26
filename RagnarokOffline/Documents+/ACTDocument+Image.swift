@@ -10,7 +10,7 @@ import UIKit
 
 extension ACTDocument {
 
-    func animationForAction(at index: Int, with frames: [CGImage?]) -> (images: [UIImage], duration: Double) {
+    func animationForAction(at index: Int, with frames: [UIImage?]) -> (images: [UIImage], duration: Double) {
         let action = actions[index]
 
         var bounds: CGRect = .zero
@@ -40,7 +40,7 @@ extension ACTDocument {
                     let height = CGFloat(layer.height) * CGFloat(layer.scale.y)
                     var rect = CGRect(x: -width / 2, y: -height / 2, width: width, height: height)
                     rect = rect.offsetBy(dx: CGFloat(layer.pos.x), dy: CGFloat(layer.pos.y))
-                    UIImage(cgImage: image).draw(in: rect)
+                    image.draw(in: rect)
                 }
             }
             return image
