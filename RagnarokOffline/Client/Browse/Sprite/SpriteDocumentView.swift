@@ -8,14 +8,64 @@
 
 import SwiftUI
 
-struct SpriteDocumentView: UIViewControllerRepresentable {
+struct SpriteDocumentView: View {
 
     let document: DocumentWrapper
 
-    func makeUIViewController(context: Context) -> some UIViewController {
-        SpriteDocumentViewController(document: document)
+    @State private var isLoading = true
+    @State private var images: [UIImage] = []
+
+    @State private var imageSize = CGSize(width: 80, height: 80)
+
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: imageSize.width), spacing: 16)], spacing: 32) {
+                ForEach(images, id: \.self) { image in
+                    Image(uiImage: image)
+                        .frame(width: imageSize.width, height: imageSize.height)
+                }
+            }
+            .padding(32)
+        }
+        .overlay {
+            if isLoading {
+                ProgressView()
+            }
+        }
+        .navigationTitle(document.name)
+        .navigationBarTitleDisplayMode(.inline)
+        .task {
+            load()
+        }
     }
 
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+    func load() {
+        guard images.isEmpty else {
+            return
+        }
+
+        isLoading = true
+        defer {
+            isLoading = false
+        }
+
+        guard let data = self.document.contents() else {
+            return
+        }
+
+        guard let sprDocument = try? SPRDocument(data: data) else {
+            return
+        }
+
+        images = (0..<sprDocument.frames.count).map { index in
+            sprDocument.imageForFrame(at: index) ?? UIImage()
+        }
+
+        imageSize = images.reduce(CGSize(width: 80, height: 80)) { imageSize, image in
+            CGSize(
+                width: max(imageSize.width, image.size.width),
+                height: max(imageSize.height, image.size.height)
+            )
+        }
     }
 }
