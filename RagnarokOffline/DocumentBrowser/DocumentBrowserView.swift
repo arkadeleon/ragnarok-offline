@@ -1,5 +1,5 @@
 //
-//  DocumentGridView.swift
+//  DocumentBrowserView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/4/7.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct DocumentGridView: View {
+struct DocumentBrowserView: View {
 
     let title: String
     let document: DocumentWrapper
@@ -22,7 +22,7 @@ struct DocumentGridView: View {
                 ForEach(documents) { document in
                     NavigationLink {
                         if document.isDirectory || document.isArchive {
-                            DocumentGridView(title: document.name, document: document)
+                            DocumentBrowserView(title: document.name, document: document)
                         } else {
                             DocumentDetailView(document: document)
                         }

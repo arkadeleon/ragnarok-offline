@@ -118,7 +118,28 @@ class DocumentThumbnailGenerator {
                 updateHandler(.thumbnail(image: image))
             }
         case .act:
-            updateHandler(.icon(name: "bolt"))
+            updateHandler(.icon(name: "livephoto"))
+
+            queue.async {
+                guard case let .grfNode(grf, node) = document else {
+                    return
+                }
+
+                let sprPath = (node.path as NSString).deletingPathExtension.appending(".spr")
+                guard let sprData = grf.node(atPath: sprPath)?.contents else {
+                    return
+                }
+
+                guard let spr = try? SPRDocument(data: sprData) else {
+                    return
+                }
+
+                guard let image = spr.imageForFrame(at: 0) else {
+                    return
+                }
+
+                updateHandler(.thumbnail(image: image))
+            }
         case .rsm:
             updateHandler(.icon(name: "square.stack.3d.up"))
         case .rsw:

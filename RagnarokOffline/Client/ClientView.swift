@@ -16,6 +16,6 @@ struct ClientView: View {
     }
 
     var body: some View {
-        DocumentGridView(title: "Client", document: document)
+        DocumentBrowserView(title: "Client", document: document)
     }
 }

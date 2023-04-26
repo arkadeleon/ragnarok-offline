@@ -28,6 +28,17 @@ struct GRFTreeNode {
         }
     }
 
+    var path: String {
+        if grf_tree_is_dir(node) {
+            return grf_tree_get_name(node)
+                .flatMap({ String(cString: $0, encoding: .koreanEUC) }) ?? ""
+        } else {
+            return grf_tree_get_file(node)
+                .flatMap { grf_file_get_filename($0) }
+                .flatMap { String(cString: $0, encoding: .koreanEUC) } ?? ""
+        }
+    }
+
     var contents: Data? {
         if grf_tree_is_dir(node) {
             return nil

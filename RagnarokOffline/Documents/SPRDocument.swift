@@ -6,8 +6,6 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-import CoreGraphics
-import Foundation
 import UIKit
 
 enum SPRFrameType: Int {
