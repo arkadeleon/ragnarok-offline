@@ -10,6 +10,8 @@ import SwiftUI
 
 struct DocumentBrowserView: View {
 
+    @EnvironmentObject var documentPasteboard: DocumentPasteboard
+
     let title: String
     let document: DocumentWrapper
 
@@ -36,9 +38,38 @@ struct DocumentBrowserView: View {
                                 .foregroundColor(.init(uiColor: .label))
                         }
                     }
+                    .contextMenu {
+                        if !document.isDirectory && !document.isArchive {
+                            Button {
+                                documentPasteboard.copy(document)
+                            } label: {
+                                HStack {
+                                    Text("Copy")
+                                    Spacer()
+                                    Image(systemName: "doc.on.doc")
+                                }
+                            }
+                        }
+                    }
                 }
             }
             .padding(32)
+        }
+        .toolbar {
+            Menu {
+                Button {
+                    documentPasteboard.paste(into: document.url)
+                } label: {
+                    HStack {
+                        Text("Paste")
+                        Spacer()
+                        Image(systemName: "doc.on.clipboard")
+                    }
+                }
+                .disabled(!document.isDirectory || !documentPasteboard.hasDocument)
+            } label: {
+                Image(systemName: "ellipsis.circle")
+            }
         }
         .overlay {
             if isLoading {

@@ -69,6 +69,7 @@
 		3533CBC624D2BB26006AFE04 /* ltm.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CBA424D2BB26006AFE04 /* ltm.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3533CBC724D2BB26006AFE04 /* ldo.c in Sources */ = {isa = PBXBuildFile; fileRef = 3533CBA524D2BB26006AFE04 /* ldo.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3535006A29F91E5E009FC904 /* AnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3535006929F91E5E009FC904 /* AnimatedImageView.swift */; };
+		3535006C29FA6D1F009FC904 /* DocumentPasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3535006B29FA6D1F009FC904 /* DocumentPasteboard.swift */; };
 		354EB1F529713D2E00E57287 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1F329713D2D00E57287 /* ContentView.swift */; };
 		354EB1F629713D2E00E57287 /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1F429713D2D00E57287 /* RagnarokOfflineApp.swift */; };
 		354EB1F82971414A00E57287 /* ClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354EB1F72971414A00E57287 /* ClientView.swift */; };
@@ -283,6 +284,7 @@
 		3533CBA524D2BB26006AFE04 /* ldo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldo.c; sourceTree = "<group>"; };
 		3533CBA624D2BB26006AFE04 /* lundump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lundump.h; sourceTree = "<group>"; };
 		3535006929F91E5E009FC904 /* AnimatedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImageView.swift; sourceTree = "<group>"; };
+		3535006B29FA6D1F009FC904 /* DocumentPasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPasteboard.swift; sourceTree = "<group>"; };
 		354EB1F329713D2D00E57287 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		354EB1F429713D2D00E57287 /* RagnarokOfflineApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RagnarokOfflineApp.swift; sourceTree = "<group>"; };
 		354EB1F72971414A00E57287 /* ClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientView.swift; sourceTree = "<group>"; };
@@ -552,6 +554,7 @@
 			children = (
 				35E5E90824ED6A8F00716592 /* FileType.swift */,
 				3591686D29EE6054004F6067 /* DocumentWrapper.swift */,
+				3535006B29FA6D1F009FC904 /* DocumentPasteboard.swift */,
 				35B1281529F597B6001A5B55 /* DocumentThumbnailCache.swift */,
 				35F9AD1E29F568BB006E2228 /* DocumentThumbnailGenerator.swift */,
 				35AAB30629DFBA8C00234025 /* DocumentBrowserView.swift */,
@@ -958,6 +961,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				35A0ACF924FF421E00B72EB9 /* MDLTexture+Data.swift in Sources */,
+				3535006C29FA6D1F009FC904 /* DocumentPasteboard.swift in Sources */,
 				35C06DBC2498C9C000F0A229 /* TextureLoader.swift in Sources */,
 				35E8DCDE24A9D99000A14FC5 /* RendererCommon.swift in Sources */,
 				35116E87246AE56B000A60FE /* ModelDocumentViewController.swift in Sources */,
