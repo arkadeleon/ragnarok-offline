@@ -17,22 +17,4 @@ class DocumentPasteboard: ObservableObject {
         self.document = document
         hasDocument = true
     }
-
-    func paste(into directory: URL) {
-        guard let document else {
-            return
-        }
-
-        let destination = directory.appending(path: document.name)
-        switch document {
-        case .url(let url):
-            try? FileManager.default.copyItem(at: url, to: destination)
-        case .grf:
-            break
-        case .grfNode(_, let node):
-            if let contents = node.contents {
-                try? contents.write(to: destination)
-            }
-        }
-    }
 }

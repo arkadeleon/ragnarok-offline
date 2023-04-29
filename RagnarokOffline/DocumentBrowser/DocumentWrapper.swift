@@ -123,22 +123,61 @@ enum DocumentWrapper {
             break
         }
 
-        documentWrappers.sort { document1, document2 in
-            if document1.isDirectory == document2.isDirectory {
-                return document1.name.lowercased() < document2.name.lowercased()
-            } else {
-                let rank1 = document1.isDirectory ? 0 : 1
-                let rank2 = document2.isDirectory ? 0 : 1
-                return rank1 < rank2
-            }
+        return documentWrappers
+    }
+
+    func pasteFromPasteboard(_ pasteboard: DocumentPasteboard) -> DocumentWrapper? {
+        guard let sourceDocument = pasteboard.document else {
+            return nil
         }
 
-        return documentWrappers
+        guard case let .url(url) = self else {
+            return nil
+        }
+
+        let destinationDocument = DocumentWrapper.url(url.appending(path: sourceDocument.name))
+        switch sourceDocument {
+        case .url:
+            do {
+                try FileManager.default.copyItem(at: sourceDocument.url, to: destinationDocument.url)
+                return destinationDocument
+            } catch {
+                return nil
+            }
+        case .grf:
+            return nil
+        case .grfNode(_, let node):
+            guard let contents = node.contents else {
+                return nil
+            }
+            do {
+                try contents.write(to: destinationDocument.url)
+                return destinationDocument
+            } catch {
+                return nil
+            }
+        }
     }
 }
 
 extension DocumentWrapper: Identifiable {
     var id: URL {
         url
+    }
+}
+
+extension DocumentWrapper: Comparable {
+    static func < (lhs: DocumentWrapper, rhs: DocumentWrapper) -> Bool {
+        if lhs.isDirectory == rhs.isDirectory {
+            return lhs.name.lowercased() < rhs.name.lowercased()
+        } else {
+            let lhsRank = lhs.isDirectory ? 0 : 1
+            let rhsRank = rhs.isDirectory ? 0 : 1
+            return lhsRank < rhsRank
+        }
+    }
+
+    static func == (lhs: DocumentWrapper, rhs: DocumentWrapper) -> Bool {
+        lhs.id == rhs.id
     }
 }

@@ -15,7 +15,7 @@ struct DocumentBrowserView: View {
     let title: String
     let document: DocumentWrapper
 
-    @State private var isLoading = true
+    @State private var isLoaded = false
     @State private var documents: [DocumentWrapper] = []
 
     var body: some View {
@@ -58,7 +58,12 @@ struct DocumentBrowserView: View {
         .toolbar {
             Menu {
                 Button {
-                    documentPasteboard.paste(into: document.url)
+                    if let document = document.pasteFromPasteboard(documentPasteboard) {
+                        var documents = self.documents
+                        documents.append(document)
+                        documents.sort()
+                        self.documents = documents
+                    }
                 } label: {
                     HStack {
                         Text("Paste")
@@ -72,17 +77,16 @@ struct DocumentBrowserView: View {
             }
         }
         .overlay {
-            if isLoading {
+            if !isLoaded {
                 ProgressView()
             }
         }
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            if documents.isEmpty {
-                isLoading = true
-                documents = document.documentWrappers()
-                isLoading = false
+            if !isLoaded {
+                documents = document.documentWrappers().sorted()
+                isLoaded = true
             }
         }
     }
