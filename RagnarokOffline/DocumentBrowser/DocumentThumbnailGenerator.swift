@@ -46,7 +46,7 @@ class DocumentThumbnailGenerator {
                 }
 
                 let scale = UIScreen.main.scale
-                let options = [
+                let options: [CFString : Any] = [
                     kCGImageSourceCreateThumbnailFromImageIfAbsent: true,
                     kCGImageSourceCreateThumbnailWithTransform: true,
                     kCGImageSourceShouldCacheImmediately: true,
@@ -111,7 +111,7 @@ class DocumentThumbnailGenerator {
                     return
                 }
 
-                guard let image = spr.imageForFrame(at: 0) else {
+                guard let image = spr.imageForSprite(at: 0) else {
                     return
                 }
 
@@ -134,7 +134,7 @@ class DocumentThumbnailGenerator {
                     return
                 }
 
-                guard let image = spr.imageForFrame(at: 0) else {
+                guard let image = spr.imageForSprite(at: 0) else {
                     return
                 }
 

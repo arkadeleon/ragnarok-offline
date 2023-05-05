@@ -50,6 +50,22 @@ struct DocumentBrowserView: View {
                                 }
                             }
                         }
+                        if case let .url(url) = document, !document.isDirectory {
+                            Button(role: .destructive) {
+                                do {
+                                    try FileManager.default.removeItem(at: url)
+                                    documents.removeAll(where: { $0 == document })
+                                } catch {
+
+                                }
+                            } label: {
+                                HStack {
+                                    Text("Delete")
+                                    Spacer()
+                                    Image(systemName: "trash")
+                                }
+                            }
+                        }
                     }
                 }
             }

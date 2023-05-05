@@ -10,12 +10,12 @@ import UIKit
 
 struct ACTLayer {
     var pos: simd_int2
-    var sprIndex: Int32
+    var spriteIndex: Int32
     var isMirrored: Int32
     var color: simd_float4
     var scale: simd_float2
     var angle: Int32
-    var sprType: Int32
+    var spriteType: Int32
     var width: Int32
     var height: Int32
 }
@@ -78,7 +78,7 @@ struct ACTDocument {
 
 extension ACTDocument {
 
-    func animatedImageForAction(at index: Int, with frames: [UIImage?]) -> UIImage? {
+    func animatedImageForAction(at index: Int, imagesForSpritesByType: [SPRSpriteType : [UIImage]]) -> UIImage? {
         let action = actions[index]
 
         var bounds: CGRect = .zero
@@ -100,9 +100,19 @@ extension ACTDocument {
             let context = UIGraphicsImageRenderer(bounds: bounds)
             let image = context.image { (context) in
                 for layer in frame.layers {
-                    let frameIndex = Int(layer.sprIndex)
-                    guard 0..<frames.count ~= frameIndex, let image = frames[frameIndex] else {
+                    let spriteIndex = Int(layer.spriteIndex)
+                    guard let spriteType = SPRSpriteType(rawValue: Int(layer.spriteType)) else {
                         continue
+                    }
+                    guard let imagesForSprites = imagesForSpritesByType[spriteType] else {
+                        continue
+                    }
+                    guard 0..<imagesForSprites.count ~= spriteIndex else {
+                        continue
+                    }
+                    var image = imagesForSprites[spriteIndex]
+                    if layer.isMirrored != 0 {
+                        image = image.withHorizontallyFlippedOrientation()
                     }
                     let width = CGFloat(layer.width) * CGFloat(layer.scale.x)
                     let height = CGFloat(layer.height) * CGFloat(layer.scale.y)
@@ -165,12 +175,12 @@ extension ByteBuffer {
     mutating func readActionFrameLayer(version: String) throws -> ACTLayer {
         var layer = try ACTLayer(
             pos: [readInt32(), readInt32()],
-            sprIndex: readInt32(),
+            spriteIndex: readInt32(),
             isMirrored: readInt32(),
             color: [1.0, 1.0, 1.0, 1.0],
             scale: [1.0, 1.0],
             angle: 0,
-            sprType: 0,
+            spriteType: 0,
             width: 0,
             height: 0
         )
@@ -183,7 +193,7 @@ extension ByteBuffer {
             layer.scale[0] = try readFloat32()
             layer.scale[1] = try version <= "2.3" ? layer.scale[0] : readFloat32()
             layer.angle = try readInt32()
-            layer.sprType = try readInt32()
+            layer.spriteType = try readInt32()
 
             if version >= "2.5" {
                 layer.width = try readInt32()

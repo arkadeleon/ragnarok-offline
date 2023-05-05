@@ -8,13 +8,13 @@
 
 import UIKit
 
-enum SPRFrameType: Int {
+enum SPRSpriteType: Int {
     case indexed = 0
     case rgba = 1
 }
 
-struct SPRFrame {
-    var type: SPRFrameType
+struct SPRSprite {
+    var type: SPRSpriteType
     var width: UInt16
     var height: UInt16
     var data: Data
@@ -24,9 +24,7 @@ struct SPRDocument {
 
     var header: String
     var version: String
-    var indexedFrameCount: UInt16
-    var rgbaFrameCount: UInt16
-    var frames: [SPRFrame]
+    var sprites: [SPRSprite]
     var palette: Palette?
 
     init(data: Data) throws {
@@ -41,27 +39,29 @@ struct SPRDocument {
         let major = try buffer.readUInt8()
         version = "\(major).\(minor)"
 
-        indexedFrameCount = try buffer.readUInt16()
+        let indexedSpriteCount = try buffer.readUInt16()
 
-        rgbaFrameCount = 0
+        let rgbaSpriteCount: UInt16
         if version > "1.1" {
-            rgbaFrameCount = try buffer.readUInt16()
+            rgbaSpriteCount = try buffer.readUInt16()
+        } else {
+            rgbaSpriteCount = 0
         }
 
-        frames = []
+        sprites = []
 
         if version < "2.1" {
-            frames += try (0..<indexedFrameCount).map { _ in
-                try buffer.readIndexedFrame()
+            sprites += try (0..<indexedSpriteCount).map { _ in
+                try buffer.readIndexedSprite()
             }
         } else {
-            frames += try (0..<indexedFrameCount).map { _ in
-                try buffer.readIndexedFrameRLE()
+            sprites += try (0..<indexedSpriteCount).map { _ in
+                try buffer.readIndexedSpriteRLE()
             }
         }
 
-        frames += try (0..<rgbaFrameCount).map { _ in
-            try buffer.readRGBAFrame()
+        sprites += try (0..<rgbaSpriteCount).map { _ in
+            try buffer.readRGBASprite()
         }
 
         if version > "1.0" {
@@ -74,13 +74,13 @@ struct SPRDocument {
 
 extension SPRDocument {
 
-    func imageForFrame(at index: Int) -> UIImage? {
-        let frame = frames[index]
-        let width = Int(frame.width)
-        let height = Int(frame.height)
+    func imageForSprite(at index: Int) -> UIImage? {
+        let sprite = sprites[index]
+        let width = Int(sprite.width)
+        let height = Int(sprite.height)
         let colorSpace = CGColorSpaceCreateDeviceRGB()
 
-        switch frame.type {
+        switch sprite.type {
         case .indexed:
             guard let palette else {
                 return nil
@@ -90,7 +90,7 @@ extension SPRDocument {
             let alphaInfo = CGImageAlphaInfo.last
             let bitmapInfo = CGBitmapInfo(rawValue: byteOrder.rawValue | alphaInfo.rawValue)
 
-            let data = frame.data
+            let data = sprite.data
                 .map { colorIndex in
                     var color = palette.colors[Int(colorIndex)]
                     color.alpha = colorIndex == 0 ? 0 : 255
@@ -124,7 +124,7 @@ extension SPRDocument {
             let alphaInfo = CGImageAlphaInfo.last
             let bitmapInfo = CGBitmapInfo(rawValue: byteOrder.rawValue | alphaInfo.rawValue)
 
-            guard let provider = CGDataProvider(data: frame.data as CFData) else {
+            guard let provider = CGDataProvider(data: sprite.data as CFData) else {
                 return nil
             }
 
@@ -153,21 +153,21 @@ extension SPRDocument {
 extension ByteBuffer {
 
     @inlinable
-    mutating func readIndexedFrame() throws -> SPRFrame {
+    mutating func readIndexedSprite() throws -> SPRSprite {
         let width = try readUInt16()
         let height = try readUInt16()
         let data = try readData(length: Int(width) * Int(height))
-        let frame = SPRFrame(
+        let sprite = SPRSprite(
             type: .indexed,
             width: width,
             height: height,
             data: data
         )
-        return frame
+        return sprite
     }
 
     @inlinable
-    mutating func readIndexedFrameRLE() throws -> SPRFrame {
+    mutating func readIndexedSpriteRLE() throws -> SPRSprite {
         let width = try readUInt16()
         let height = try readUInt16()
         var data = Data(capacity: Int(width) * Int(height))
@@ -189,26 +189,26 @@ extension ByteBuffer {
             }
         }
 
-        let frame = SPRFrame(
+        let sprite = SPRSprite(
             type: .indexed,
             width: width,
             height: height,
             data: data
         )
-        return frame
+        return sprite
     }
 
     @inlinable
-    mutating func readRGBAFrame() throws -> SPRFrame {
+    mutating func readRGBASprite() throws -> SPRSprite {
         let width = try readUInt16()
         let height = try readUInt16()
         let data = try readData(length: Int(width) * Int(height) * 4)
-        let frame = SPRFrame(
+        let sprite = SPRSprite(
             type: .rgba,
             width: width,
             height: height,
             data: data
         )
-        return frame
+        return sprite
     }
 }

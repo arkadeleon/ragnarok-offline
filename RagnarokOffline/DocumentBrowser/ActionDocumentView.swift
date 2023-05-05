@@ -53,14 +53,25 @@ struct ActionDocumentView: View {
             isLoading = false
         }
 
-        guard case let .grfNode(grf, node) = document,
-              let actData = document.contents()
-        else {
+        guard let actData = document.contents() else {
             return
         }
 
-        let sprPath = (node.path as NSString).deletingPathExtension.appending(".spr")
-        guard let sprData = grf.node(atPath: sprPath)?.contents else {
+        let sprData: Data
+        switch document {
+        case .url(let url):
+            let sprPath = url.deletingPathExtension().path().appending(".spr")
+            guard let data = try? Data(contentsOf: URL(filePath: sprPath)) else {
+                return
+            }
+            sprData = data
+        case .grfNode(let grf, let node):
+            let sprPath = (node.path as NSString).deletingPathExtension.appending(".spr")
+            guard let data = grf.node(atPath: sprPath)?.contents else {
+                return
+            }
+            sprData = data
+        default:
             return
         }
 
@@ -70,15 +81,17 @@ struct ActionDocumentView: View {
             return
         }
 
-        var frames: [UIImage?] = []
-        for index in 0..<sprDocument.frames.count {
-            let frame = sprDocument.imageForFrame(at: index)
-            frames.append(frame)
+        let sprites = sprDocument.sprites.enumerated()
+        let spritesByType = Dictionary(grouping: sprites, by: { $0.element.type })
+        let imagesForSpritesByType = spritesByType.mapValues { sprites in
+            sprites.map { sprite in
+                sprDocument.imageForSprite(at: sprite.offset) ?? UIImage()
+            }
         }
 
         var animations: [UIImage] = []
         for index in 0..<actDocument.actions.count {
-            let animation = actDocument.animatedImageForAction(at: index, with: frames)
+            let animation = actDocument.animatedImageForAction(at: index, imagesForSpritesByType: imagesForSpritesByType)
             animations.append(animation ?? UIImage())
         }
         images = animations
