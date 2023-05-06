@@ -85,7 +85,7 @@ struct ActionDocumentView: View {
         let spritesByType = Dictionary(grouping: sprites, by: { $0.element.type })
         let imagesForSpritesByType = spritesByType.mapValues { sprites in
             sprites.map { sprite in
-                sprDocument.imageForSprite(at: sprite.offset) ?? UIImage()
+                sprDocument.imageForSprite(at: sprite.offset)
             }
         }
 

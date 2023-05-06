@@ -58,7 +58,7 @@ struct SpriteDocumentView: View {
         }
 
         images = (0..<sprDocument.sprites.count).map { index in
-            sprDocument.imageForSprite(at: index) ?? UIImage()
+            sprDocument.imageForSprite(at: index).map(UIImage.init) ?? UIImage()
         }
 
         imageSize = images.reduce(CGSize(width: 80, height: 80)) { imageSize, image in

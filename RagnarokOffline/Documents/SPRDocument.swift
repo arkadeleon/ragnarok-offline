@@ -6,7 +6,7 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-import UIKit
+import CoreGraphics
 
 enum SPRSpriteType: Int {
     case indexed = 0
@@ -74,7 +74,7 @@ struct SPRDocument {
 
 extension SPRDocument {
 
-    func imageForSprite(at index: Int) -> UIImage? {
+    func imageForSprite(at index: Int) -> CGImage? {
         let sprite = sprites[index]
         let width = Int(sprite.width)
         let height = Int(sprite.height)
@@ -101,7 +101,7 @@ extension SPRDocument {
                 return nil
             }
 
-            guard let cgImage = CGImage(
+            let image = CGImage(
                 width: width,
                 height: height,
                 bitsPerComponent: 8,
@@ -113,11 +113,7 @@ extension SPRDocument {
                 decode: nil,
                 shouldInterpolate: true,
                 intent: .defaultIntent
-            ) else {
-                return nil
-            }
-
-            let image = UIImage(cgImage: cgImage, scale: 1, orientation: .up)
+            )
             return image
         case .rgba:
             let byteOrder = CGBitmapInfo.byteOrder32Little
@@ -128,7 +124,7 @@ extension SPRDocument {
                 return nil
             }
 
-            guard let cgImage = CGImage(
+            guard let image = CGImage(
                 width: width,
                 height: height,
                 bitsPerComponent: 8,
@@ -144,8 +140,24 @@ extension SPRDocument {
                 return nil
             }
 
-            let image = UIImage(cgImage: cgImage, scale: 1, orientation: .downMirrored)
-            return image
+            guard let context = CGContext(
+                data: nil,
+                width: width,
+                height: height,
+                bitsPerComponent: 8,
+                bytesPerRow: width * 4,
+                space: colorSpace,
+                bitmapInfo: CGBitmapInfo.byteOrder32Little.rawValue | CGImageAlphaInfo.premultipliedLast.rawValue
+            ) else {
+                return nil
+            }
+
+            let transform = CGAffineTransform(1, 0, 0, -1, 0, CGFloat(height))
+            context.concatenate(transform)
+            context.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
+
+            let downMirroredImage = context.makeImage()
+            return downMirroredImage
         }
     }
 }

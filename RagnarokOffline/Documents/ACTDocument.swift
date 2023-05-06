@@ -68,8 +68,8 @@ struct ACTDocument {
             }
 
             if version >= "2.2" {
-                for var action in actions {
-                    action.delay = try buffer.readFloat32() * 25
+                for i in 0..<actions.count {
+                    actions[i].delay = try buffer.readFloat32() * 25
                 }
             }
         }
@@ -78,7 +78,7 @@ struct ACTDocument {
 
 extension ACTDocument {
 
-    func animatedImageForAction(at index: Int, imagesForSpritesByType: [SPRSpriteType : [UIImage]]) -> UIImage? {
+    func animatedImageForAction(at index: Int, imagesForSpritesByType: [SPRSpriteType : [CGImage?]]) -> UIImage? {
         let action = actions[index]
 
         var bounds: CGRect = .zero
@@ -97,29 +97,45 @@ extension ACTDocument {
         bounds = CGRect(x: -halfWidth, y: -halfHeight, width: halfWidth * 2, height: halfHeight * 2)
 
         let images = action.frames.map { frame -> UIImage in
-            let context = UIGraphicsImageRenderer(bounds: bounds)
-            let image = context.image { (context) in
-                for layer in frame.layers {
-                    let spriteIndex = Int(layer.spriteIndex)
-                    guard let spriteType = SPRSpriteType(rawValue: Int(layer.spriteType)) else {
-                        continue
-                    }
-                    guard let imagesForSprites = imagesForSpritesByType[spriteType] else {
-                        continue
-                    }
-                    guard 0..<imagesForSprites.count ~= spriteIndex else {
-                        continue
-                    }
-                    var image = imagesForSprites[spriteIndex]
-                    if layer.isMirrored != 0 {
-                        image = image.withHorizontallyFlippedOrientation()
-                    }
-                    let width = CGFloat(layer.width) * CGFloat(layer.scale.x)
-                    let height = CGFloat(layer.height) * CGFloat(layer.scale.y)
-                    var rect = CGRect(x: -width / 2, y: -height / 2, width: width, height: height)
-                    rect = rect.offsetBy(dx: CGFloat(layer.pos.x), dy: CGFloat(layer.pos.y))
-                    image.draw(in: rect)
+            let frameLayer = CALayer()
+            frameLayer.bounds = bounds
+
+            for layer in frame.layers {
+                let spriteIndex = Int(layer.spriteIndex)
+                guard let spriteType = SPRSpriteType(rawValue: Int(layer.spriteType)) else {
+                    continue
                 }
+                guard let imagesForSprites = imagesForSpritesByType[spriteType] else {
+                    continue
+                }
+                guard 0..<imagesForSprites.count ~= spriteIndex else {
+                    continue
+                }
+                let image = imagesForSprites[spriteIndex]
+
+                let width = CGFloat(layer.width) * CGFloat(layer.scale.x)
+                let height = CGFloat(layer.height) * CGFloat(layer.scale.y)
+                var rect = CGRect(x: -width / 2, y: -height / 2, width: width, height: height)
+                rect = rect.offsetBy(dx: CGFloat(layer.pos.x), dy: CGFloat(layer.pos.y))
+
+                var transform = CATransform3DIdentity
+                transform = CATransform3DRotate(transform, CGFloat(layer.angle) / 180 * .pi, 0, 0, 1)
+
+                if layer.isMirrored != 0 {
+                    transform = CATransform3DScale(transform, -1, 1, 1)
+                }
+
+                let caLayer = CALayer()
+                caLayer.frame = rect
+                caLayer.transform = transform
+                caLayer.contents = image
+
+                frameLayer.addSublayer(caLayer)
+            }
+
+            let renderer = UIGraphicsImageRenderer(bounds: bounds)
+            let image = renderer.image { context in
+                frameLayer.render(in: context.cgContext)
             }
             return image
         }
