@@ -12,7 +12,7 @@ import UIKit
 
 enum DocumentThumbnailRepresentation {
     case icon(name: String)
-    case thumbnail(image: UIImage)
+    case thumbnail(image: CGImage)
 }
 
 class DocumentThumbnailGenerator {
@@ -56,7 +56,7 @@ class DocumentThumbnailGenerator {
                     return
                 }
 
-                updateHandler(.thumbnail(image: UIImage(cgImage: thumbnail)))
+                updateHandler(.thumbnail(image: thumbnail))
             }
         case .ebm:
             updateHandler(.icon(name: "photo"))
@@ -79,7 +79,7 @@ class DocumentThumbnailGenerator {
                     return
                 }
 
-                updateHandler(.thumbnail(image: UIImage(cgImage: thumbnail)))
+                updateHandler(.thumbnail(image: thumbnail))
             }
         case .pal:
             updateHandler(.icon(name: "photo"))
@@ -94,7 +94,10 @@ class DocumentThumbnailGenerator {
                 }
 
                 let scale = UIScreen.main.scale
-                let image = palette.image(at: CGSize(width: 32 * scale, height: 32 * scale))
+                guard let image = palette.image(at: CGSize(width: 32 * scale, height: 32 * scale)) else {
+                    return
+                }
+
                 updateHandler(.thumbnail(image: image))
             }
         case .mp3, .wav:
@@ -115,7 +118,7 @@ class DocumentThumbnailGenerator {
                     return
                 }
 
-                updateHandler(.thumbnail(image: UIImage(cgImage: image)))
+                updateHandler(.thumbnail(image: image))
             }
         case .act:
             updateHandler(.icon(name: "livephoto"))
@@ -138,7 +141,7 @@ class DocumentThumbnailGenerator {
                     return
                 }
 
-                updateHandler(.thumbnail(image: UIImage(cgImage: image)))
+                updateHandler(.thumbnail(image: image))
             }
         case .rsm:
             updateHandler(.icon(name: "square.stack.3d.up"))

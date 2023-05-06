@@ -76,7 +76,7 @@ class ImageDocumentViewController: UIViewController {
                 }
             case .pal:
                 let palette = try? Palette(data: data)
-                image = palette?.image(at: CGSize(width: 128, height: 128))
+                image = palette?.image(at: CGSize(width: 256, height: 256)).map(UIImage.init)
             default:
                 break
             }

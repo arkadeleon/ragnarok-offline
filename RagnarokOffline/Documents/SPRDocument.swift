@@ -152,8 +152,10 @@ extension SPRDocument {
                 return nil
             }
 
+            // Flip vertically
             let transform = CGAffineTransform(1, 0, 0, -1, 0, CGFloat(height))
             context.concatenate(transform)
+
             context.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
 
             let downMirroredImage = context.makeImage()

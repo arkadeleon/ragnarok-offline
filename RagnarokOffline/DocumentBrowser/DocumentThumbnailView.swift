@@ -27,7 +27,7 @@ struct DocumentThumbnailView: View {
                     .foregroundColor(Color(.label))
                     .frame(width: 40, height: 40)
             case .thumbnail(let image):
-                Image(uiImage: image)
+                Image(uiImage: UIImage(cgImage: image))
                     .resizable()
                     .scaledToFit()
                     .frame(width: 40, height: 40)

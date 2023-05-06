@@ -6,7 +6,7 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-import UIKit
+import CoreGraphics
 
 struct Palette {
 
@@ -30,28 +30,71 @@ struct Palette {
 
 extension Palette {
 
-    func image(at size: CGSize) -> UIImage {
-        let renderer = UIGraphicsImageRenderer(size: size)
+    func image(at size: CGSize) -> CGImage? {
+        let width = Int(size.width)
+        let height = Int(size.height)
+        guard let context = CGContext(
+            data: nil,
+            width: width,
+            height: height,
+            bitsPerComponent: 8,
+            bytesPerRow: width * 4,
+            space: CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo: CGBitmapInfo.byteOrderDefault.rawValue | CGImageAlphaInfo.premultipliedLast.rawValue
+        ) else {
+            return nil
+        }
+
+        // Flip vertically
+        let transform = CGAffineTransform(1, 0, 0, -1, 0, CGFloat(height))
+        context.concatenate(transform)
+
         let blockSize = CGSizeMake(size.width / 16, size.height / 16)
+        for x in 0..<16 {
+            for y in 0..<16 {
+                let color = colors[y * 16 + x].cgColor()
+                context.setFillColor(color)
 
-        let image = renderer.image { context in
-            for x in 0..<16 {
-                for y in 0..<16 {
-                    let color = colors[y * 16 + x]
-                    let uiColor = UIColor(paletteColor: color)
-                    uiColor.setFill()
-
-                    let rect = CGRect(
-                        x: CGFloat(x) * blockSize.width,
-                        y: CGFloat(y) * blockSize.height,
-                        width: blockSize.width,
-                        height: blockSize.height
-                    )
-                    context.fill(rect)
-                }
+                let rect = CGRect(
+                    x: CGFloat(x) * blockSize.width,
+                    y: CGFloat(y) * blockSize.height,
+                    width: blockSize.width,
+                    height: blockSize.height
+                )
+                context.fill(rect)
             }
         }
+
+        let image = context.makeImage()
         return image
+    }
+}
+
+extension Palette.Color {
+
+    func cgColor() -> CGColor {
+        var red = red
+        var green = green
+        var blue = blue
+        var alpha = alpha
+
+        // Reference: https://github.com/rdw-archive/RagnarokFileFormats/blob/master/PAL.MD
+        if red >= 0xFE && green < 0x04 && blue >= 0xFE {
+            red = 10
+            green = 10
+            blue = 10
+            alpha = 0
+        } else {
+            alpha = 255
+        }
+
+        let color = CGColor(
+            red: CGFloat(red) / 255,
+            green: CGFloat(green) / 255,
+            blue: CGFloat(blue) / 255,
+            alpha: CGFloat(alpha) / 255
+        )
+        return color
     }
 }
 
@@ -70,32 +113,5 @@ extension ByteBuffer {
             alpha: alpha
         )
         return color
-    }
-}
-
-extension UIColor {
-
-    convenience init(paletteColor: Palette.Color) {
-        var red = paletteColor.red
-        var green = paletteColor.green
-        var blue = paletteColor.blue
-        var alpha = paletteColor.alpha
-
-        // Reference: https://github.com/rdw-archive/RagnarokFileFormats/blob/master/PAL.MD
-        if red >= 0xFE && green < 0x04 && blue >= 0xFE {
-            red = 10
-            green = 10
-            blue = 10
-            alpha = 0
-        } else {
-            alpha = 255
-        }
-
-        self.init(
-            red: CGFloat(red) / 255,
-            green: CGFloat(green) / 255,
-            blue: CGFloat(blue) / 255,
-            alpha: CGFloat(alpha) / 255
-        )
     }
 }
