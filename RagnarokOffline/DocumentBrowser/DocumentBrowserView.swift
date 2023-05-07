@@ -50,7 +50,7 @@ struct DocumentBrowserView: View {
                                 }
                             }
                         }
-                        if case let .url(url) = document, !document.isDirectory {
+                        if case .url(let url) = document, !document.isDirectory {
                             Button(role: .destructive) {
                                 do {
                                     try FileManager.default.removeItem(at: url)

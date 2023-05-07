@@ -131,7 +131,7 @@ enum DocumentWrapper {
             return nil
         }
 
-        guard case let .url(url) = self else {
+        guard case .url(let url) = self else {
             return nil
         }
 

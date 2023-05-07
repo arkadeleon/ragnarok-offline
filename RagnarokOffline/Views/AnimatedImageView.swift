@@ -11,7 +11,6 @@ import SwiftUI
 struct AnimatedImageView: UIViewRepresentable {
 
     let animatedImage: UIImage
-    let isAnimating: Bool
 
     func makeUIView(context: Context) -> UIImageView {
         let imageView = UIImageView()
@@ -20,10 +19,6 @@ struct AnimatedImageView: UIViewRepresentable {
     }
 
     func updateUIView(_ imageView: UIImageView, context: Context) {
-        if isAnimating {
-            imageView.image = animatedImage
-        } else {
-            imageView.image = animatedImage.images?.first
-        }
+        imageView.image = animatedImage
     }
 }

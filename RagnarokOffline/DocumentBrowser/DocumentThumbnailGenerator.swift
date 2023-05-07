@@ -124,7 +124,7 @@ class DocumentThumbnailGenerator {
             updateHandler(.icon(name: "livephoto"))
 
             queue.async {
-                guard case let .grfNode(grf, node) = document else {
+                guard case .grfNode(let grf, let node) = document else {
                     return
                 }
 

@@ -84,56 +84,52 @@ extension ACTDocument {
         var bounds: CGRect = .zero
         for frame in action.frames {
             for layer in frame.layers {
-                let width = CGFloat(layer.width) * CGFloat(layer.scale.x)
-                let height = CGFloat(layer.height) * CGFloat(layer.scale.y)
-                var rect = CGRect(x: -width / 2, y: -height / 2, width: width, height: height)
-                rect = rect.offsetBy(dx: CGFloat(layer.pos.x), dy: CGFloat(layer.pos.y))
-                bounds = bounds.union(rect)
+                guard let caLayer = CALayer(layer: layer, contents: { spriteType, spriteIndex in
+                    guard let imagesForSprites = imagesForSpritesByType[spriteType] else {
+                        return nil
+                    }
+                    guard 0..<imagesForSprites.count ~= spriteIndex else {
+                        return nil
+                    }
+                    let image = imagesForSprites[spriteIndex]
+                    return image
+                }) else {
+                    continue
+                }
+
+                bounds = bounds.union(caLayer.frame)
             }
         }
 
-        let halfWidth = max(abs(bounds.minX), abs(bounds.maxX))
-        let halfHeight = max(abs(bounds.minY), abs(bounds.maxY))
-        bounds = CGRect(x: -halfWidth, y: -halfHeight, width: halfWidth * 2, height: halfHeight * 2)
+//        let halfWidth = max(abs(bounds.minX), abs(bounds.maxX))
+//        let halfHeight = max(abs(bounds.minY), abs(bounds.maxY))
+//        bounds = CGRect(x: -halfWidth, y: -halfHeight, width: halfWidth * 2, height: halfHeight * 2)
 
         let images = action.frames.map { frame -> UIImage in
             let frameLayer = CALayer()
             frameLayer.bounds = bounds
 
             for layer in frame.layers {
-                let spriteIndex = Int(layer.spriteIndex)
-                guard let spriteType = SPRSpriteType(rawValue: Int(layer.spriteType)) else {
+                guard let caLayer = CALayer(layer: layer, contents: { spriteType, spriteIndex in
+                    guard let imagesForSprites = imagesForSpritesByType[spriteType] else {
+                        return nil
+                    }
+                    guard 0..<imagesForSprites.count ~= spriteIndex else {
+                        return nil
+                    }
+                    let image = imagesForSprites[spriteIndex]
+                    return image
+                }) else {
                     continue
                 }
-                guard let imagesForSprites = imagesForSpritesByType[spriteType] else {
-                    continue
-                }
-                guard 0..<imagesForSprites.count ~= spriteIndex else {
-                    continue
-                }
-                let image = imagesForSprites[spriteIndex]
-
-                let width = CGFloat(layer.width) * CGFloat(layer.scale.x)
-                let height = CGFloat(layer.height) * CGFloat(layer.scale.y)
-                var rect = CGRect(x: -width / 2, y: -height / 2, width: width, height: height)
-                rect = rect.offsetBy(dx: CGFloat(layer.pos.x), dy: CGFloat(layer.pos.y))
-
-                var transform = CATransform3DIdentity
-                transform = CATransform3DRotate(transform, CGFloat(layer.angle) / 180 * .pi, 0, 0, 1)
-
-                if layer.isMirrored != 0 {
-                    transform = CATransform3DScale(transform, -1, 1, 1)
-                }
-
-                let caLayer = CALayer()
-                caLayer.frame = rect
-                caLayer.transform = transform
-                caLayer.contents = image
 
                 frameLayer.addSublayer(caLayer)
             }
 
-            let renderer = UIGraphicsImageRenderer(bounds: bounds)
+            let format = UIGraphicsImageRendererFormat()
+            format.scale = 1
+
+            let renderer = UIGraphicsImageRenderer(bounds: bounds, format: format)
             let image = renderer.image { context in
                 frameLayer.render(in: context.cgContext)
             }
@@ -233,5 +229,35 @@ extension ByteBuffer {
 
         let anchorPoint = simd_int2(x: x, y: y)
         return anchorPoint
+    }
+}
+
+extension CALayer {
+
+    convenience init?(layer: ACTLayer, contents: (SPRSpriteType, Int) -> CGImage?) {
+        guard let spriteType = SPRSpriteType(rawValue: Int(layer.spriteType)) else {
+            return nil
+        }
+
+        guard let image = contents(spriteType, Int(layer.spriteIndex)) else {
+            return nil
+        }
+
+        let width = CGFloat(image.width) * CGFloat(layer.scale.x)
+        let height = CGFloat(image.height) * CGFloat(layer.scale.y)
+        var rect = CGRect(x: -width / 2, y: -height / 2, width: width, height: height)
+        rect = rect.offsetBy(dx: CGFloat(layer.pos.x), dy: CGFloat(layer.pos.y))
+
+        var transform = CATransform3DIdentity
+        transform = CATransform3DRotate(transform, CGFloat(layer.angle) / 180 * .pi, 0, 0, 1)
+
+        if layer.isMirrored != 0 {
+            transform = CATransform3DScale(transform, -1, 1, 1)
+        }
+
+        self.init()
+        self.frame = rect
+        self.transform = transform
+        self.contents = image
     }
 }

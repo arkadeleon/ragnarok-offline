@@ -42,7 +42,7 @@ class WorldDocumentViewController: UIViewController {
 
     private func loadDocumentContents() {
         DispatchQueue.global().async {
-            guard case let .grfNode(grf, _) = self.document,
+            guard case .grfNode(let grf, _) = self.document,
                   let data = self.document.contents()
             else {
                 return

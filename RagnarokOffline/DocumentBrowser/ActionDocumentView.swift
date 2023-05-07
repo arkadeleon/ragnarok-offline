@@ -10,50 +10,82 @@ import SwiftUI
 
 struct ActionDocumentView: View {
 
+    enum Status {
+        case notYetLoaded
+        case loading
+        case loaded(ACTDocument, [SPRSpriteType : [CGImage?]])
+        case failed
+    }
+
     let document: DocumentWrapper
 
-    @State private var isLoading = true
-    @State private var images: [UIImage] = []
-    @State private var animatingImage: UIImage?
+    @State private var status: Status = .notYetLoaded
+    @State private var selectedAction = 0
 
-    @State private var imageSize = CGSize(width: 80, height: 80)
+    private var imageForSelectedAction: UIImage {
+        guard case .loaded(let actDocument, let imagesForSpritesByType) = status else {
+            return UIImage()
+        }
+        let animatedImage = actDocument.animatedImageForAction(at: selectedAction, imagesForSpritesByType: imagesForSpritesByType)
+        return animatedImage ?? UIImage()
+    }
 
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: imageSize.width), spacing: 16)], spacing: 32) {
-                ForEach(images, id: \.self) { image in
-                    AnimatedImageView(animatedImage: image, isAnimating: animatingImage == image)
-                        .frame(width: imageSize.width, height: imageSize.height)
-                        .onTapGesture {
-                            animatingImage = image
+        VStack {
+            Spacer()
+
+            AnimatedImageView(animatedImage: imageForSelectedAction)
+
+            Spacer()
+
+            if case .loaded(let actDocument, _) = status {
+                HStack {
+                    Button {
+                        if selectedAction > 0 {
+                            selectedAction -= 1
                         }
+                    } label: {
+                        Image(systemName: "chevron.left")
+                    }
+
+                    Picker("", selection: $selectedAction) {
+                        ForEach(0..<actDocument.actions.count) { index in
+                            Text("Action \(index)")
+                        }
+                    }
+                    .pickerStyle(.menu)
+
+                    Button {
+                        if selectedAction < actDocument.actions.count - 1 {
+                            selectedAction += 1
+                        }
+                    } label: {
+                        Image(systemName: "chevron.right")
+                    }
                 }
             }
-            .padding(32)
         }
         .overlay {
-            if isLoading {
+            if case .loading = status {
                 ProgressView()
             }
         }
         .navigationTitle(document.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            load()
+            await load()
         }
     }
 
-    func load() {
-        guard images.isEmpty else {
+    func load() async {
+        guard case .notYetLoaded = status else {
             return
         }
 
-        isLoading = true
-        defer {
-            isLoading = false
-        }
+        status = .loading
 
         guard let actData = document.contents() else {
+            status = .failed
             return
         }
 
@@ -62,22 +94,26 @@ struct ActionDocumentView: View {
         case .url(let url):
             let sprPath = url.deletingPathExtension().path().appending(".spr")
             guard let data = try? Data(contentsOf: URL(filePath: sprPath)) else {
+                status = .failed
                 return
             }
             sprData = data
         case .grfNode(let grf, let node):
             let sprPath = (node.path as NSString).deletingPathExtension.appending(".spr")
             guard let data = grf.node(atPath: sprPath)?.contents else {
+                status = .failed
                 return
             }
             sprData = data
         default:
+            status = .failed
             return
         }
 
         guard let actDocument = try? ACTDocument(data: actData),
               let sprDocument = try? SPRDocument(data: sprData)
         else {
+            status = .failed
             return
         }
 
@@ -89,18 +125,6 @@ struct ActionDocumentView: View {
             }
         }
 
-        var animations: [UIImage] = []
-        for index in 0..<actDocument.actions.count {
-            let animation = actDocument.animatedImageForAction(at: index, imagesForSpritesByType: imagesForSpritesByType)
-            animations.append(animation ?? UIImage())
-        }
-        images = animations
-
-        imageSize = images.reduce(CGSize(width: 80, height: 80)) { imageSize, image in
-            CGSize(
-                width: max(imageSize.width, image.size.width),
-                height: max(imageSize.height, image.size.height)
-            )
-        }
+        status = .loaded(actDocument, imagesForSpritesByType)
     }
 }
