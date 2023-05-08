@@ -13,56 +13,24 @@ struct ActionDocumentView: View {
     enum Status {
         case notYetLoaded
         case loading
-        case loaded(ACTDocument, [SPRSpriteType : [CGImage?]])
+        case loaded([UIImage], CGSize)
         case failed
     }
 
     let document: DocumentWrapper
 
     @State private var status: Status = .notYetLoaded
-    @State private var selectedAction = 0
-
-    private var imageForSelectedAction: UIImage {
-        guard case .loaded(let actDocument, let imagesForSpritesByType) = status else {
-            return UIImage()
-        }
-        let animatedImage = actDocument.animatedImageForAction(at: selectedAction, imagesForSpritesByType: imagesForSpritesByType)
-        return animatedImage ?? UIImage()
-    }
 
     var body: some View {
-        VStack {
-            Spacer()
-
-            AnimatedImageView(animatedImage: imageForSelectedAction)
-
-            Spacer()
-
-            if case .loaded(let actDocument, _) = status {
-                HStack {
-                    Button {
-                        if selectedAction > 0 {
-                            selectedAction -= 1
-                        }
-                    } label: {
-                        Image(systemName: "chevron.left")
-                    }
-
-                    Picker("", selection: $selectedAction) {
-                        ForEach(0..<actDocument.actions.count) { index in
-                            Text("Action \(index)")
-                        }
-                    }
-                    .pickerStyle(.menu)
-
-                    Button {
-                        if selectedAction < actDocument.actions.count - 1 {
-                            selectedAction += 1
-                        }
-                    } label: {
-                        Image(systemName: "chevron.right")
+        ScrollView {
+            if case .loaded(let animatedImages, let imageSize) = status {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: imageSize.width), spacing: 16)], spacing: 32) {
+                    ForEach(animatedImages, id: \.self) { animatedImage in
+                        AnimatedImageView(animatedImage: animatedImage)
+                            .frame(width: imageSize.width, height: imageSize.height)
                     }
                 }
+                .padding(32)
             }
         }
         .overlay {
@@ -125,6 +93,19 @@ struct ActionDocumentView: View {
             }
         }
 
-        status = .loaded(actDocument, imagesForSpritesByType)
+        var animatedImages: [UIImage] = []
+        for index in 0..<actDocument.actions.count {
+            let animatedImage = actDocument.animatedImageForAction(at: index, imagesForSpritesByType: imagesForSpritesByType)
+            animatedImages.append(animatedImage ?? UIImage())
+        }
+
+        let imageSize = animatedImages.reduce(CGSize(width: 80, height: 80)) { imageSize, image in
+            CGSize(
+                width: max(imageSize.width, image.size.width),
+                height: max(imageSize.height, image.size.height)
+            )
+        }
+
+        status = .loaded(animatedImages, imageSize)
     }
 }
