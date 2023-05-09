@@ -13,16 +13,19 @@ struct SpriteDocumentView: View {
     let document: DocumentWrapper
 
     @State private var isLoading = true
-    @State private var images: [UIImage] = []
+    @State private var images: [StillImage] = []
 
     @State private var imageSize = CGSize(width: 80, height: 80)
 
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: imageSize.width), spacing: 16)], spacing: 32) {
-                ForEach(images, id: \.self) { image in
-                    Image(uiImage: image)
+                ForEach(0..<images.count, id: \.self) { index in
+                    Image(uiImage: UIImage(cgImage: images[index].image))
                         .frame(width: imageSize.width, height: imageSize.height)
+                        .contextMenu {
+                            ShareLink(item: images[index].named(String(format: "%@.%03d.png", document.name, index)), preview: SharePreview(document.name, image: Image(uiImage: UIImage(cgImage: images[index].image))))
+                        }
                 }
             }
             .padding(32)
@@ -34,12 +37,21 @@ struct SpriteDocumentView: View {
         }
         .navigationTitle(document.name)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            Menu {
+                ShareLink(items: images) { image in
+                    SharePreview(document.name, image: Image(uiImage: UIImage(cgImage: image.image)))
+                }
+            } label: {
+                Image(systemName: "ellipsis.circle")
+            }
+        }
         .task {
-            load()
+            await load()
         }
     }
 
-    func load() {
+    func load() async {
         guard images.isEmpty else {
             return
         }
@@ -57,14 +69,14 @@ struct SpriteDocumentView: View {
             return
         }
 
-        images = (0..<sprDocument.sprites.count).map { index in
-            sprDocument.imageForSprite(at: index).map(UIImage.init) ?? UIImage()
+        images = (0..<sprDocument.sprites.count).compactMap { index in
+            sprDocument.imageForSprite(at: index)
         }
 
         imageSize = images.reduce(CGSize(width: 80, height: 80)) { imageSize, image in
             CGSize(
-                width: max(imageSize.width, image.size.width),
-                height: max(imageSize.height, image.size.height)
+                width: max(imageSize.width, CGFloat(image.image.width)),
+                height: max(imageSize.height, CGFloat(image.image.height))
             )
         }
     }

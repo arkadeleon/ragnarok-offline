@@ -13,7 +13,7 @@ struct ActionDocumentView: View {
     enum Status {
         case notYetLoaded
         case loading
-        case loaded([UIImage], CGSize)
+        case loaded([AnimatedImage], CGSize)
         case failed
     }
 
@@ -25,9 +25,12 @@ struct ActionDocumentView: View {
         ScrollView {
             if case .loaded(let animatedImages, let imageSize) = status {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: imageSize.width), spacing: 16)], spacing: 32) {
-                    ForEach(animatedImages, id: \.self) { animatedImage in
-                        AnimatedImageView(animatedImage: animatedImage)
+                    ForEach(0..<animatedImages.count, id: \.self) { index in
+                        AnimatedImageView(animatedImage: animatedImages[index])
                             .frame(width: imageSize.width, height: imageSize.height)
+                            .contextMenu {
+                                ShareLink(item: animatedImages[index].named(String(format: "%@.%03d.png", document.name, index)), preview: SharePreview(document.name, image: Image(uiImage: UIImage(cgImage: animatedImages[index].images[0]))))
+                            }
                     }
                 }
                 .padding(32)
@@ -40,6 +43,17 @@ struct ActionDocumentView: View {
         }
         .navigationTitle(document.name)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            Menu {
+                if case .loaded(let animatedImages, _) = status {
+                    ShareLink(items: animatedImages) { animatedImage in
+                        SharePreview(document.name, image: Image(uiImage: UIImage(cgImage: animatedImage.images[0])))
+                    }
+                }
+            } label: {
+                Image(systemName: "ellipsis.circle")
+            }
+        }
         .task {
             await load()
         }
@@ -89,20 +103,21 @@ struct ActionDocumentView: View {
         let spritesByType = Dictionary(grouping: sprites, by: { $0.element.type })
         let imagesForSpritesByType = spritesByType.mapValues { sprites in
             sprites.map { sprite in
-                sprDocument.imageForSprite(at: sprite.offset)
+                sprDocument.imageForSprite(at: sprite.offset)?.image
             }
         }
 
-        var animatedImages: [UIImage] = []
+        var animatedImages: [AnimatedImage] = []
         for index in 0..<actDocument.actions.count {
-            let animatedImage = actDocument.animatedImageForAction(at: index, imagesForSpritesByType: imagesForSpritesByType)
-            animatedImages.append(animatedImage ?? UIImage())
+            if let animatedImage = actDocument.animatedImageForAction(at: index, imagesForSpritesByType: imagesForSpritesByType) {
+                animatedImages.append(animatedImage)
+            }
         }
 
         let imageSize = animatedImages.reduce(CGSize(width: 80, height: 80)) { imageSize, image in
             CGSize(
-                width: max(imageSize.width, image.size.width),
-                height: max(imageSize.height, image.size.height)
+                width: max(imageSize.width, CGFloat(image.images[0].width)),
+                height: max(imageSize.height, CGFloat(image.images[0].height))
             )
         }
 

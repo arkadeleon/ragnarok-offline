@@ -9,8 +9,7 @@
 import SwiftUI
 
 struct AnimatedImageView: UIViewRepresentable {
-
-    let animatedImage: UIImage
+    let animatedImage: AnimatedImage
 
     func makeUIView(context: Context) -> UIImageView {
         let imageView = UIImageView()
@@ -19,6 +18,8 @@ struct AnimatedImageView: UIViewRepresentable {
     }
 
     func updateUIView(_ imageView: UIImageView, context: Context) {
-        imageView.image = animatedImage
+        imageView.animationImages = animatedImage.images.map(UIImage.init)
+        imageView.animationDuration = animatedImage.delay * CGFloat(animatedImage.images.count)
+        imageView.startAnimating()
     }
 }

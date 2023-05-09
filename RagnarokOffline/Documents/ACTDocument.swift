@@ -78,7 +78,7 @@ struct ACTDocument {
 
 extension ACTDocument {
 
-    func animatedImageForAction(at index: Int, imagesForSpritesByType: [SPRSpriteType : [CGImage?]]) -> UIImage? {
+    func animatedImageForAction(at index: Int, imagesForSpritesByType: [SPRSpriteType : [CGImage?]]) -> AnimatedImage? {
         let action = actions[index]
 
         var bounds: CGRect = .zero
@@ -105,7 +105,7 @@ extension ACTDocument {
 //        let halfHeight = max(abs(bounds.minY), abs(bounds.maxY))
 //        bounds = CGRect(x: -halfWidth, y: -halfHeight, width: halfWidth * 2, height: halfHeight * 2)
 
-        let images = action.frames.map { frame -> UIImage in
+        let images = action.frames.map { frame in
             let frameLayer = CALayer()
             frameLayer.bounds = bounds
 
@@ -133,10 +133,10 @@ extension ACTDocument {
             let image = renderer.image { context in
                 frameLayer.render(in: context.cgContext)
             }
-            return image
+            return image.cgImage!
         }
-        let duration = Double(action.delay / 1000) * Double(images.count)
-        let animatedImage = UIImage.animatedImage(with: images, duration: duration)
+        let delay = CGFloat(action.delay / 1000)
+        let animatedImage = AnimatedImage(images: images, delay: delay)
         return animatedImage
     }
 }

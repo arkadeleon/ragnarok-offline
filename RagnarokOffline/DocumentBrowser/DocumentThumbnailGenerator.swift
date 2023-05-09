@@ -118,7 +118,7 @@ class DocumentThumbnailGenerator {
                     return
                 }
 
-                updateHandler(.thumbnail(image: image))
+                updateHandler(.thumbnail(image: image.image))
             }
         case .act:
             updateHandler(.icon(name: "livephoto"))
@@ -141,7 +141,7 @@ class DocumentThumbnailGenerator {
                     return
                 }
 
-                updateHandler(.thumbnail(image: image))
+                updateHandler(.thumbnail(image: image.image))
             }
         case .rsm:
             updateHandler(.icon(name: "square.stack.3d.up"))

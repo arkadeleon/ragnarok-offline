@@ -144,6 +144,8 @@
 		35B3BA452A08C74900B4540B /* rAthenaLogin in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA332A08C3C700B4540B /* rAthenaLogin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		35B3BA462A08C74A00B4540B /* rAthenaMap in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA352A08C3C700B4540B /* rAthenaMap */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		35B3BA472A08C74C00B4540B /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA372A08C3C700B4540B /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		35B3BA492A08DA0C00B4540B /* StillImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3BA482A08DA0C00B4540B /* StillImage.swift */; };
+		35B3BA4B2A08DA2C00B4540B /* AnimatedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3BA4A2A08DA2C00B4540B /* AnimatedImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -353,6 +355,8 @@
 		35B3B9B42A08C01600B4540B /* TerminalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
 		35B3B9B52A08C01600B4540B /* ServersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServersView.swift; sourceTree = "<group>"; };
 		35B3BA422A08C51000B4540B /* RagnarokOffline-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RagnarokOffline-Bridging-Header.h"; sourceTree = "<group>"; };
+		35B3BA482A08DA0C00B4540B /* StillImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillImage.swift; sourceTree = "<group>"; };
+		35B3BA4A2A08DA2C00B4540B /* AnimatedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -414,16 +418,16 @@
 				35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */,
 				35B3B8D92A08BEA600B4540B /* ContentView.swift */,
 				35B3B9512A08C01600B4540B /* Strings.swift */,
-				35B3B9AF2A08C01600B4540B /* Core */,
 				35B3B96C2A08C01600B4540B /* Client */,
 				35B3B9B22A08C01600B4540B /* Server */,
 				35B3B95D2A08C01600B4540B /* Database */,
 				35B3B9892A08C01600B4540B /* DocumentBrowser */,
-				35B3B9692A08C01600B4540B /* Views */,
 				35B3B9A42A08C01600B4540B /* Renderers */,
 				35B3B9752A08C01600B4540B /* Resources */,
 				35B3B9782A08C01600B4540B /* Documents+ */,
 				35B3B9522A08C01600B4540B /* Documents */,
+				35B3B9692A08C01600B4540B /* Views */,
+				35B3B9AF2A08C01600B4540B /* Core */,
 				35B3B97E2A08C01600B4540B /* Utilities */,
 				35B3B9012A08C01600B4540B /* Vendors */,
 				35B3BA422A08C51000B4540B /* RagnarokOffline-Bridging-Header.h */,
@@ -743,8 +747,10 @@
 		35B3B9AF2A08C01600B4540B /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				35B3BA4A2A08DA2C00B4540B /* AnimatedImage.swift */,
 				35B3B9B12A08C01600B4540B /* ByteBuffer.swift */,
 				35B3B9B02A08C01600B4540B /* Palette.swift */,
+				35B3BA482A08DA0C00B4540B /* StillImage.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1001,6 +1007,7 @@
 				35B3BA0A2A08C01600B4540B /* StreamReader.swift in Sources */,
 				35B3BA072A08C01600B4540B /* MDLMaterial+Texture.swift in Sources */,
 				35B3BA022A08C01600B4540B /* RSMDocument+Mesh.swift in Sources */,
+				35B3BA492A08DA0C00B4540B /* StillImage.swift in Sources */,
 				35B3BA002A08C01600B4540B /* RSMDocument+Compile.swift in Sources */,
 				35B3BA282A08C01600B4540B /* WaterRenderer.swift in Sources */,
 				35B3B9D92A08C01600B4540B /* decompile.c in Sources */,
@@ -1018,6 +1025,7 @@
 				35B3B9C82A08C01600B4540B /* lzio.c in Sources */,
 				35B3B9C92A08C01600B4540B /* ldblib.c in Sources */,
 				35B3B9E52A08C01600B4540B /* Document.swift in Sources */,
+				35B3BA4B2A08DA2C00B4540B /* AnimatedImage.swift in Sources */,
 				35B3BA062A08C01600B4540B /* CGImage+Decode.swift in Sources */,
 				35B3B9F02A08C01600B4540B /* MonsterDetailView.swift in Sources */,
 				35B3B9CF2A08C01600B4540B /* ldebug.c in Sources */,

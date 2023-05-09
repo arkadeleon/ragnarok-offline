@@ -74,7 +74,7 @@ struct SPRDocument {
 
 extension SPRDocument {
 
-    func imageForSprite(at index: Int) -> CGImage? {
+    func imageForSprite(at index: Int) -> StillImage? {
         let sprite = sprites[index]
         let width = Int(sprite.width)
         let height = Int(sprite.height)
@@ -114,7 +114,7 @@ extension SPRDocument {
                 shouldInterpolate: true,
                 intent: .defaultIntent
             )
-            return image
+            return image.map(StillImage.init)
         case .rgba:
             let byteOrder = CGBitmapInfo.byteOrder32Little
             let alphaInfo = CGImageAlphaInfo.last
@@ -159,7 +159,7 @@ extension SPRDocument {
             context.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
 
             let downMirroredImage = context.makeImage()
-            return downMirroredImage
+            return downMirroredImage.map(StillImage.init)
         }
     }
 }

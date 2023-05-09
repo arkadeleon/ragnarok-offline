@@ -71,6 +71,13 @@ struct DocumentBrowserView: View {
             }
             .padding(32)
         }
+        .overlay {
+            if !isLoaded {
+                ProgressView()
+            }
+        }
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             Menu {
                 Button {
@@ -92,13 +99,6 @@ struct DocumentBrowserView: View {
                 Image(systemName: "ellipsis.circle")
             }
         }
-        .overlay {
-            if !isLoaded {
-                ProgressView()
-            }
-        }
-        .navigationTitle(title)
-        .navigationBarTitleDisplayMode(.inline)
         .task {
             if !isLoaded {
                 documents = document.documentWrappers().sorted()
