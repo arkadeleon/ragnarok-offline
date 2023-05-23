@@ -9,7 +9,7 @@
 import Metal
 import MetalKit
 
-class WorldDocumentRenderer: NSObject {
+class WorldDocumentRenderer: NSObject, Renderer {
 
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
@@ -40,9 +40,6 @@ class WorldDocumentRenderer: NSObject {
 
         super.init()
     }
-}
-
-extension WorldDocumentRenderer: MTKViewDelegate {
 
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
 

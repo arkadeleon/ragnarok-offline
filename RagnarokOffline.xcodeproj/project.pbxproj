@@ -104,7 +104,6 @@
 		35B3BA0F2A08C01600B4540B /* DocumentWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98D2A08C01600B4540B /* DocumentWrapper.swift */; };
 		35B3BA102A08C01600B4540B /* ActionDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98E2A08C01600B4540B /* ActionDocumentView.swift */; };
 		35B3BA112A08C01600B4540B /* WorldDocumentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9902A08C01600B4540B /* WorldDocumentRenderer.swift */; };
-		35B3BA122A08C01600B4540B /* WorldDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9912A08C01600B4540B /* WorldDocumentViewController.swift */; };
 		35B3BA132A08C01600B4540B /* WorldDocumentCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9922A08C01600B4540B /* WorldDocumentCamera.swift */; };
 		35B3BA142A08C01600B4540B /* WorldDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9932A08C01600B4540B /* WorldDocumentView.swift */; };
 		35B3BA152A08C01600B4540B /* DocumentThumbnailCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9942A08C01600B4540B /* DocumentThumbnailCache.swift */; };
@@ -324,7 +323,6 @@
 		35B3B98D2A08C01600B4540B /* DocumentWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentWrapper.swift; sourceTree = "<group>"; };
 		35B3B98E2A08C01600B4540B /* ActionDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionDocumentView.swift; sourceTree = "<group>"; };
 		35B3B9902A08C01600B4540B /* WorldDocumentRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldDocumentRenderer.swift; sourceTree = "<group>"; };
-		35B3B9912A08C01600B4540B /* WorldDocumentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldDocumentViewController.swift; sourceTree = "<group>"; };
 		35B3B9922A08C01600B4540B /* WorldDocumentCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldDocumentCamera.swift; sourceTree = "<group>"; };
 		35B3B9932A08C01600B4540B /* WorldDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldDocumentView.swift; sourceTree = "<group>"; };
 		35B3B9942A08C01600B4540B /* DocumentThumbnailCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentThumbnailCache.swift; sourceTree = "<group>"; };
@@ -697,7 +695,6 @@
 				35B3B9922A08C01600B4540B /* WorldDocumentCamera.swift */,
 				35B3B9902A08C01600B4540B /* WorldDocumentRenderer.swift */,
 				35B3B9932A08C01600B4540B /* WorldDocumentView.swift */,
-				35B3B9912A08C01600B4540B /* WorldDocumentViewController.swift */,
 			);
 			path = World;
 			sourceTree = "<group>";
@@ -942,7 +939,6 @@
 				35B3B9DA2A08C01600B4540B /* macro-array.c in Sources */,
 				35B3BA0C2A08C01600B4540B /* SpriteDocumentView.swift in Sources */,
 				35B3B9D62A08C01600B4540B /* structs.c in Sources */,
-				35B3BA122A08C01600B4540B /* WorldDocumentViewController.swift in Sources */,
 				35B3B9CA2A08C01600B4540B /* lmem.c in Sources */,
 				35B3BA102A08C01600B4540B /* ActionDocumentView.swift in Sources */,
 				35B3BA132A08C01600B4540B /* WorldDocumentCamera.swift in Sources */,

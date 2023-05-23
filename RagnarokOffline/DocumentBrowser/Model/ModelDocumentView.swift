@@ -81,5 +81,8 @@ struct ModelDocumentView: View {
         }
 
         status = .loaded(renderer)
+
+//        self.mtkView.addGestureRecognizer(renderer.camera.panGestureRecognizer)
+//        self.mtkView.addGestureRecognizer(renderer.camera.pinchGestureRecognizer)
     }
 }
