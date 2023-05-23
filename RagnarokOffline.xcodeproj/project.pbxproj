@@ -116,7 +116,6 @@
 		35B3BA1B2A08C01600B4540B /* AudioDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99C2A08C01600B4540B /* AudioDocumentViewController.swift */; };
 		35B3BA1C2A08C01600B4540B /* AudioDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99D2A08C01600B4540B /* AudioDocumentView.swift */; };
 		35B3BA1D2A08C01600B4540B /* DocumentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99E2A08C01600B4540B /* DocumentDetailView.swift */; };
-		35B3BA1E2A08C01600B4540B /* ModelDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A02A08C01600B4540B /* ModelDocumentViewController.swift */; };
 		35B3BA1F2A08C01600B4540B /* ModelDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A12A08C01600B4540B /* ModelDocumentView.swift */; };
 		35B3BA202A08C01600B4540B /* ModelDocumentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A22A08C01600B4540B /* ModelDocumentRenderer.swift */; };
 		35B3BA212A08C01600B4540B /* DocumentThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A32A08C01600B4540B /* DocumentThumbnailView.swift */; };
@@ -146,6 +145,8 @@
 		35B3BA472A08C74C00B4540B /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA372A08C3C700B4540B /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		35B3BA492A08DA0C00B4540B /* StillImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3BA482A08DA0C00B4540B /* StillImage.swift */; };
 		35B3BA4B2A08DA2C00B4540B /* AnimatedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3BA4A2A08DA2C00B4540B /* AnimatedImage.swift */; };
+		35B4990A2A1B73D700607EE6 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B499092A1B73D700607EE6 /* MetalView.swift */; };
+		35B4990C2A1C50B400607EE6 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B4990B2A1C50B400607EE6 /* Renderer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -335,7 +336,6 @@
 		35B3B99C2A08C01600B4540B /* AudioDocumentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioDocumentViewController.swift; sourceTree = "<group>"; };
 		35B3B99D2A08C01600B4540B /* AudioDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioDocumentView.swift; sourceTree = "<group>"; };
 		35B3B99E2A08C01600B4540B /* DocumentDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentDetailView.swift; sourceTree = "<group>"; };
-		35B3B9A02A08C01600B4540B /* ModelDocumentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelDocumentViewController.swift; sourceTree = "<group>"; };
 		35B3B9A12A08C01600B4540B /* ModelDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelDocumentView.swift; sourceTree = "<group>"; };
 		35B3B9A22A08C01600B4540B /* ModelDocumentRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelDocumentRenderer.swift; sourceTree = "<group>"; };
 		35B3B9A32A08C01600B4540B /* DocumentThumbnailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentThumbnailView.swift; sourceTree = "<group>"; };
@@ -357,6 +357,8 @@
 		35B3BA422A08C51000B4540B /* RagnarokOffline-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RagnarokOffline-Bridging-Header.h"; sourceTree = "<group>"; };
 		35B3BA482A08DA0C00B4540B /* StillImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillImage.swift; sourceTree = "<group>"; };
 		35B3BA4A2A08DA2C00B4540B /* AnimatedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImage.swift; sourceTree = "<group>"; };
+		35B499092A1B73D700607EE6 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
+		35B4990B2A1C50B400607EE6 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -600,6 +602,7 @@
 			isa = PBXGroup;
 			children = (
 				35B3B96A2A08C01600B4540B /* AnimatedImageView.swift */,
+				35B499092A1B73D700607EE6 /* MetalView.swift */,
 				35B3B9B42A08C01600B4540B /* TerminalView.swift */,
 				35B3B96B2A08C01600B4540B /* WebView.swift */,
 			);
@@ -722,7 +725,6 @@
 			children = (
 				35B3B9A22A08C01600B4540B /* ModelDocumentRenderer.swift */,
 				35B3B9A12A08C01600B4540B /* ModelDocumentView.swift */,
-				35B3B9A02A08C01600B4540B /* ModelDocumentViewController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -750,6 +752,7 @@
 				35B3BA4A2A08DA2C00B4540B /* AnimatedImage.swift */,
 				35B3B9B12A08C01600B4540B /* ByteBuffer.swift */,
 				35B3B9B02A08C01600B4540B /* Palette.swift */,
+				35B4990B2A1C50B400607EE6 /* Renderer.swift */,
 				35B3BA482A08DA0C00B4540B /* StillImage.swift */,
 			);
 			path = Core;
@@ -949,6 +952,7 @@
 				35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */,
 				35B3B9F52A08C01600B4540B /* WebView.swift in Sources */,
 				35B3BA1D2A08C01600B4540B /* DocumentDetailView.swift in Sources */,
+				35B4990A2A1B73D700607EE6 /* MetalView.swift in Sources */,
 				35B3B9F22A08C01600B4540B /* Skill.swift in Sources */,
 				35B3B9B92A08C01600B4540B /* lstate.c in Sources */,
 				35B3B9E82A08C01600B4540B /* GATDocument.swift in Sources */,
@@ -979,7 +983,6 @@
 				35B3BA092A08C01600B4540B /* LuaDecompiler.m in Sources */,
 				35B3BA1A2A08C01600B4540B /* DocumentBrowserView.swift in Sources */,
 				35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */,
-				35B3BA1E2A08C01600B4540B /* ModelDocumentViewController.swift in Sources */,
 				35B3BA252A08C01600B4540B /* GroundShaders.metal in Sources */,
 				35B3B9F12A08C01600B4540B /* ItemListView.swift in Sources */,
 				35B3B9F72A08C01600B4540B /* GameViewController.swift in Sources */,
@@ -1033,6 +1036,7 @@
 				35B3B9B62A08C01600B4540B /* lauxlib.c in Sources */,
 				35B3B9C32A08C01600B4540B /* lundump.c in Sources */,
 				35B3B9DD2A08C01600B4540B /* statement.c in Sources */,
+				35B4990C2A1C50B400607EE6 /* Renderer.swift in Sources */,
 				35B3BA172A08C01600B4540B /* DocumentPasteboard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
