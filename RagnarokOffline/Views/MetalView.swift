@@ -14,10 +14,12 @@ struct MetalView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> MTKView {
         let mtkView = MTKView()
+        mtkView.isOpaque = false
         mtkView.delegate = renderer
         mtkView.device = renderer.device
-        mtkView.colorPixelFormat = .bgra8Unorm
-        mtkView.depthStencilPixelFormat = .depth32Float
+        mtkView.colorPixelFormat = renderer.colorPixelFormat
+        mtkView.depthStencilPixelFormat = renderer.depthStencilPixelFormat
+        mtkView.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
         return mtkView
     }
 
