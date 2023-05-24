@@ -68,37 +68,38 @@ class WorldDocumentRenderer: NSObject, Renderer {
         let projectionMatrix = perspective(radians(camera.zoom), Float(view.bounds.width / view.bounds.height), 1, 1000)
         let normalMatrix = camera.normalMatrix
 
-        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
-            return
-        }
-
         groundRenderer.render(
             atTime: time,
             device: device,
-            renderCommandEncoder: renderCommandEncoder,
+            renderPassDescriptor: renderPassDescriptor,
+            commandBuffer: commandBuffer,
             modelviewMatrix: modelviewMatrix,
             projectionMatrix: projectionMatrix,
             normalMatrix: normalMatrix
         )
+
+        renderPassDescriptor.colorAttachments[0].loadAction = .load
 
         waterRenderer.render(
             atTime: time,
             device: device,
-            renderCommandEncoder: renderCommandEncoder,
+            renderPassDescriptor: renderPassDescriptor,
+            commandBuffer: commandBuffer,
             modelviewMatrix: modelviewMatrix,
             projectionMatrix: projectionMatrix
         )
 
+        renderPassDescriptor.colorAttachments[0].loadAction = .load
+
         modelRenderer.render(
             atTime: time,
             device: device,
-            renderCommandEncoder: renderCommandEncoder,
+            renderPassDescriptor: renderPassDescriptor,
+            commandBuffer: commandBuffer,
             modelviewMatrix: modelviewMatrix,
             projectionMatrix: projectionMatrix,
             normalMatrix: normalMatrix
         )
-
-        renderCommandEncoder.endEncoding()
 
         commandBuffer.present(view.currentDrawable!)
         commandBuffer.commit()

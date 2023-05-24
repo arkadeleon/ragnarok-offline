@@ -64,13 +64,11 @@ class ModelRenderer {
 
     func render(atTime time: CFTimeInterval,
                 device: MTLDevice,
-                renderCommandEncoder: MTLRenderCommandEncoder,
+                renderPassDescriptor: MTLRenderPassDescriptor,
+                commandBuffer: MTLCommandBuffer,
                 modelviewMatrix: simd_float4x4,
                 projectionMatrix: simd_float4x4,
                 normalMatrix: simd_float3x3) {
-
-        renderCommandEncoder.setRenderPipelineState(renderPipelineState)
-        renderCommandEncoder.setDepthStencilState(depthStencilState)
 
         var vertexUniforms = ModelVertexUniforms(
             modelViewMat: modelviewMatrix,
@@ -78,12 +76,9 @@ class ModelRenderer {
             lightDirection: [0, 1, 0],
             normalMat: normalMatrix
         )
-
         guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<ModelVertexUniforms>.stride, options: []) else {
             return
         }
-
-        renderCommandEncoder.setVertexBuffer(vertexUniformsBuffer, offset: 0, index: 1)
 
         var fragmentUniforms = ModelFragmentUniforms(
             fogUse: fog.use ? 1 : 0,
@@ -97,6 +92,16 @@ class ModelRenderer {
         guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<ModelFragmentUniforms>.stride, options: []) else {
             return
         }
+
+        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
+            return
+        }
+
+        renderCommandEncoder.setRenderPipelineState(renderPipelineState)
+        renderCommandEncoder.setDepthStencilState(depthStencilState)
+
+        renderCommandEncoder.setVertexBuffer(vertexUniformsBuffer, offset: 0, index: 1)
+
         renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
         for (i, vertices) in meshes.enumerated() where vertices.count > 0 {
@@ -111,5 +116,7 @@ class ModelRenderer {
 
             renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
         }
+
+        renderCommandEncoder.endEncoding()
     }
 }

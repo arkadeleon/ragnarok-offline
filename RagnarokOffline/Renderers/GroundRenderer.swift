@@ -63,13 +63,15 @@ class GroundRenderer {
 
     func render(atTime time: CFTimeInterval,
                 device: MTLDevice,
-                renderCommandEncoder: MTLRenderCommandEncoder,
+                renderPassDescriptor: MTLRenderPassDescriptor,
+                commandBuffer: MTLCommandBuffer,
                 modelviewMatrix: simd_float4x4,
                 projectionMatrix: simd_float4x4,
                 normalMatrix: simd_float3x3) {
 
-        renderCommandEncoder.setRenderPipelineState(renderPipelineState)
-        renderCommandEncoder.setDepthStencilState(depthStencilState)
+        guard vertices.count > 0, let vertexBuffer = device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<GroundVertex>.stride, options: []) else {
+            return
+        }
 
         var vertexUniforms = GroundVertexUniforms(
             modelViewMat: modelviewMatrix,
@@ -77,12 +79,9 @@ class GroundRenderer {
             lightDirection: light.direction,
             normalMat: normalMatrix
         )
-
         guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<GroundVertexUniforms>.stride, options: []) else {
             return
         }
-
-        renderCommandEncoder.setVertexBuffer(vertexUniformsBuffer, offset: 0, index: 1)
 
         var fragmentUniforms = GroundFragmentUniforms(
             lightMapUse: 1,
@@ -94,27 +93,28 @@ class GroundRenderer {
             lightDiffuse: light.diffuse,
             lightOpacity: light.opacity
         )
-
         guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<GroundFragmentUniforms>.stride, options: []) else {
             return
         }
-        
-        renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
-        guard vertices.count > 0 else {
+        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
         }
 
-        guard let vertexBuffer = device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<GroundVertex>.stride, options: []) else {
-            return
-        }
+        renderCommandEncoder.setRenderPipelineState(renderPipelineState)
+        renderCommandEncoder.setDepthStencilState(depthStencilState)
 
         renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        renderCommandEncoder.setVertexBuffer(vertexUniformsBuffer, offset: 0, index: 1)
+
+        renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
         renderCommandEncoder.setFragmentTexture(texture, index: 0)
         renderCommandEncoder.setFragmentTexture(texture, index: 1)
         renderCommandEncoder.setFragmentTexture(texture, index: 2)
 
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
+
+        renderCommandEncoder.endEncoding()
     }
 }

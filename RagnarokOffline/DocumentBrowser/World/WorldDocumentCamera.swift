@@ -13,8 +13,8 @@ class WorldDocumentCamera: NSObject {
     var modelviewMatrix = matrix_identity_float4x4
     var normalMatrix = matrix_identity_float3x3
 
-    var zoom: Float = 50
-    var zoomFinal: Float = 50
+    var zoom: Float = 100
+    var zoomFinal: Float = 100
 
     var angleStart: simd_float2 = [240, 0]
     var angle: simd_float2 = [240, 0]
