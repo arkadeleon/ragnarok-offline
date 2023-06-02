@@ -74,10 +74,10 @@ class GroundRenderer {
         }
 
         var vertexUniforms = GroundVertexUniforms(
-            modelViewMat: modelviewMatrix,
-            projectionMat: projectionMatrix,
+            modelviewMatrix: modelviewMatrix,
+            projectionMatrix: projectionMatrix,
             lightDirection: light.direction,
-            normalMat: normalMatrix
+            normalMatrix: normalMatrix
         )
         guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<GroundVertexUniforms>.stride, options: []) else {
             return

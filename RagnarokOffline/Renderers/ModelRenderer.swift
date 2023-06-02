@@ -71,10 +71,10 @@ class ModelRenderer {
                 normalMatrix: simd_float3x3) {
 
         var vertexUniforms = ModelVertexUniforms(
-            modelViewMat: modelviewMatrix,
-            projectionMat: projectionMatrix,
+            modelviewMatrix: modelviewMatrix,
+            projectionMatrix: projectionMatrix,
             lightDirection: [0, 1, 0],
-            normalMat: normalMatrix
+            normalMatrix: normalMatrix
         )
         guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<ModelVertexUniforms>.stride, options: []) else {
             return

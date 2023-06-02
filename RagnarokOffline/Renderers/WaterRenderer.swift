@@ -84,8 +84,8 @@ class WaterRenderer {
         }
 
         var vertexUniforms = WaterVertexUniforms(
-            modelViewMat: modelviewMatrix,
-            projectionMat: projectionMatrix,
+            modelviewMatrix: modelviewMatrix,
+            projectionMatrix: projectionMatrix,
             waveHeight: waveHeight,
             wavePitch: wavePitch,
             waterOffset: frame * waveSpeed.truncatingRemainder(dividingBy: 360) - 180
