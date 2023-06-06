@@ -39,12 +39,14 @@ class Camera: NSObject {
         }
     }
 
-    private(set) var zoom: Float = 15 {
+    var zoom: Float = 15 {
         didSet {
             zoom = max(zoom, 1)
             zoom = min(zoom, 90)
         }
     }
+
+    var magnification: Float = 1
 
     let panGestureRecognizer = UIPanGestureRecognizer()
     let pinchGestureRecognizer = UIPinchGestureRecognizer()

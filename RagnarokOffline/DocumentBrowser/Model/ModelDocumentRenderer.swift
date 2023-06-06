@@ -57,7 +57,7 @@ class ModelDocumentRenderer: NSObject, Renderer {
         modelviewMatrix = matrix_rotate(modelviewMatrix, radians(15), [1, 0, 0])
         modelviewMatrix = matrix_rotate(modelviewMatrix, Float(radians(time * 360 / 8)), [0, 1, 0])
 
-        let projectionMatrix = perspective(radians(camera.zoom), Float(view.bounds.width / view.bounds.height), 1, 1000)
+        let projectionMatrix = perspective(radians(camera.zoom / camera.magnification), Float(view.bounds.width / view.bounds.height), 1, 1000)
 
         let normalMatrix = simd_float3x3(modelviewMatrix).inverse.transpose
 

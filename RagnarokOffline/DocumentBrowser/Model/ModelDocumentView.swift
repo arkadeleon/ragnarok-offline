@@ -25,6 +25,16 @@ struct ModelDocumentView: View {
         ZStack {
             if case .loaded(let renderer) = status {
                 MetalView(renderer: renderer)
+                    .gesture(
+                        MagnificationGesture()
+                            .onChanged { value in
+                                renderer.camera.magnification = Float(value)
+                            }
+                            .onEnded { value in
+                                renderer.camera.zoom /= renderer.camera.magnification
+                                renderer.camera.magnification = 1
+                            }
+                    )
             }
         }
         .overlay {
