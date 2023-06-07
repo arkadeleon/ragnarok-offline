@@ -16,7 +16,6 @@ class GameRenderer: NSObject, Renderer {
     let depthStencilPixelFormat: MTLPixelFormat
     let renderPipelineState: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState
-    let texture: MTLTexture
 
     lazy var scene = GameScene(device: device)
 
@@ -50,10 +49,6 @@ class GameRenderer: NSObject, Renderer {
 
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)!
 
-        let textureLoaader = MTKTextureLoader(device: device)
-        let image = UIImage(named: "wall.jpg")!
-        texture = try! textureLoaader.newTexture(cgImage: image.cgImage!, options: nil)
-
         super.init()
     }
 
@@ -83,7 +78,9 @@ class GameRenderer: NSObject, Renderer {
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
-        render(encoder: renderCommandEncoder, size: view.bounds.size)
+        for model in scene.models {
+            render(model, encoder: renderCommandEncoder, size: view.bounds.size)
+        }
 
         renderCommandEncoder.endEncoding()
 
@@ -91,77 +88,49 @@ class GameRenderer: NSObject, Renderer {
         commandBuffer.commit()
     }
 
-    func render(encoder: MTLRenderCommandEncoder, size: CGSize) {
-        let vertices = [
-            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 0.0], normal: [0.0,  0.0, -1.0]),
-            VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [1.0, 0.0], normal: [0.0,  0.0, -1.0]),
-            VertexIn(position: [ 0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [0.0,  0.0, -1.0]),
-            VertexIn(position: [ 0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [0.0,  0.0, -1.0]),
-            VertexIn(position: [-0.5,  0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [0.0,  0.0, -1.0]),
-            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 0.0], normal: [0.0,  0.0, -1.0]),
-            VertexIn(position: [-0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [0.0,  0.0,  1.0]),
-            VertexIn(position: [ 0.5, -0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [0.0,  0.0,  1.0]),
-            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 1.0], normal: [0.0,  0.0,  1.0]),
-            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 1.0], normal: [0.0,  0.0,  1.0]),
-            VertexIn(position: [-0.5,  0.5,  0.5], textureCoordinate: [0.0, 1.0], normal: [0.0,  0.0,  1.0]),
-            VertexIn(position: [-0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [0.0,  0.0,  1.0]),
-            VertexIn(position: [-0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [1.0,  0.0,  0.0]),
-            VertexIn(position: [-0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [1.0,  0.0,  0.0]),
-            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [1.0,  0.0,  0.0]),
-            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [1.0,  0.0,  0.0]),
-            VertexIn(position: [-0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [1.0,  0.0,  0.0]),
-            VertexIn(position: [-0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [1.0,  0.0,  0.0]),
-            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [1.0,  0.0,  0.0]),
-            VertexIn(position: [ 0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [1.0,  0.0,  0.0]),
-            VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [1.0,  0.0,  0.0]),
-            VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [1.0,  0.0,  0.0]),
-            VertexIn(position: [ 0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [1.0,  0.0,  0.0]),
-            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [1.0,  0.0,  0.0]),
-            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [0.0, -1.0,  0.0]),
-            VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [0.0, -1.0,  0.0]),
-            VertexIn(position: [ 0.5, -0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [0.0, -1.0,  0.0]),
-            VertexIn(position: [ 0.5, -0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [0.0, -1.0,  0.0]),
-            VertexIn(position: [-0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [0.0, -1.0,  0.0]),
-            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [0.0, -1.0,  0.0]),
-            VertexIn(position: [-0.5,  0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [0.0,  1.0,  0.0]),
-            VertexIn(position: [ 0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [0.0,  1.0,  0.0]),
-            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [0.0,  1.0,  0.0]),
-            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [0.0,  1.0,  0.0]),
-            VertexIn(position: [-0.5,  0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [0.0,  1.0,  0.0]),
-            VertexIn(position: [-0.5,  0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [0.0,  1.0,  0.0])
-        ]
-        let vertexBuffer = encoder.device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<VertexIn>.stride, options: [])!
-        encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-
+    func render(_ model: Model3D, encoder: MTLRenderCommandEncoder, size: CGSize) {
         let time = Float(CACurrentMediaTime())
 
         scene.camera.update(size: size)
 
-        let model = matrix_rotate(matrix_identity_float4x4, time, [0.5, 1, 0])
-
-        let normal = simd_float3x3(model.inverse.transpose)
-
-        let view = simd_float4x4(scene.camera.viewMatrix)
-
-        let projection = simd_float4x4(scene.camera.projectionMatrix)
+        let modelMatrix = matrix_rotate(matrix_identity_float4x4, time, [0.5, 1, 0])
+        let normal = simd_float3x3(modelMatrix.inverse.transpose)
+        let viewMatrix = simd_float4x4(scene.camera.viewMatrix)
+        let projectionMatrix = simd_float4x4(scene.camera.projectionMatrix)
 
         var uniforms = VertexUniforms(
-            model: model,
+            model: modelMatrix,
             normal: normal,
-            view: view,
-            projection: projection
+            view: viewMatrix,
+            projection: projectionMatrix
         )
-        let uniformsBuffer = encoder.device.makeBuffer(bytes: &uniforms, length: MemoryLayout<VertexUniforms>.stride, options: [])!
-        encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)
 
         var fragmentUniforms = FragmentUniforms(
             lightPosition: [0, 5, 0]
         )
-        let fragmentUniformsBuffer = encoder.device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<FragmentUniforms>.stride, options: [])!
-        encoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
-        encoder.setFragmentTexture(texture, index: 0)
+        for mesh in model.meshes {
+            for (index, vertexBuffer) in mesh.vertexBuffers.enumerated() {
+                encoder.setVertexBuffer(vertexBuffer, offset: 0, index: index)
+            }
 
-        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
+            let uniformsBuffer = encoder.device.makeBuffer(bytes: &uniforms, length: MemoryLayout<VertexUniforms>.stride)!
+            encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)
+
+            let fragmentUniformsBuffer = encoder.device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<FragmentUniforms>.stride)!
+            encoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
+
+            for submesh in mesh.submeshes {
+                encoder.setFragmentTexture(submesh.texture, index: 0)
+
+                encoder.drawIndexedPrimitives(
+                    type: submesh.primitiveType,
+                    indexCount: submesh.indexCount,
+                    indexType: submesh.indexType,
+                    indexBuffer: submesh.indexBuffer,
+                    indexBufferOffset: submesh.indexBufferOffset
+                )
+            }
+        }
     }
 }

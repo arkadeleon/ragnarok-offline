@@ -12,7 +12,7 @@ import MetalKit
 struct GameScene {
     let device: MTLDevice
 
-    lazy var box: Mesh = {
+    lazy var models: [Model3D] = {
         let vertices = [
             VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 0.0], normal: [0.0,  0.0, -1.0]),
             VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [1.0, 0.0], normal: [0.0,  0.0, -1.0]),
@@ -56,14 +56,15 @@ struct GameScene {
         let indices: [UInt16] = (0..<vertices.count).map({ UInt16($0) })
         let indexBuffer = device.makeBuffer(bytes: indices, length: MemoryLayout<UInt16>.size * indices.count)!
 
-        let textureLoaader = MTKTextureLoader(device: device)
+        let textureLoader = MTKTextureLoader(device: device)
         let image = UIImage(named: "wall.jpg")!
-        let texture = try! textureLoaader.newTexture(cgImage: image.cgImage!, options: nil)
+        let texture = try! textureLoader.newTexture(cgImage: image.cgImage!, options: nil)
 
         let submesh = Submesh(
             primitiveType: .triangle,
             indexType: .uint16,
             indexBuffer: indexBuffer,
+            indexBufferOffset: 0,
             indexCount: indices.count,
             texture: texture
         )
@@ -75,7 +76,9 @@ struct GameScene {
             vertexCount: vertices.count
         )
 
-        return mesh
+        let model = Model3D(meshes: [mesh])
+
+        return [model]
     }()
 
     var camera = ArcballCamera()

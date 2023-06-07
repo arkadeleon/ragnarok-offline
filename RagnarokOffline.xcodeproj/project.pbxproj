@@ -150,6 +150,7 @@
 		35B695EC2A307164006F1904 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695EB2A307164006F1904 /* GameScene.swift */; };
 		35B695EF2A30763A006F1904 /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695EE2A30763A006F1904 /* Mesh.swift */; };
 		35B695F12A30775E006F1904 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695F02A30775E006F1904 /* Submesh.swift */; };
+		35B695F32A3080D9006F1904 /* Model3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695F22A3080D9006F1904 /* Model3D.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -365,6 +366,7 @@
 		35B695EB2A307164006F1904 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		35B695EE2A30763A006F1904 /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
 		35B695F02A30775E006F1904 /* Submesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
+		35B695F22A3080D9006F1904 /* Model3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model3D.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -778,6 +780,7 @@
 				3504AB8B2A2EFB900029AC46 /* ArcballCamera.swift */,
 				35B695EE2A30763A006F1904 /* Mesh.swift */,
 				35B499092A1B73D700607EE6 /* MetalView.swift */,
+				35B695F22A3080D9006F1904 /* Model3D.swift */,
 				35B4990B2A1C50B400607EE6 /* Renderer.swift */,
 				35B695F02A30775E006F1904 /* Submesh.swift */,
 			);
@@ -1007,6 +1010,7 @@
 				35B3BA0B2A08C01600B4540B /* SGLMath.swift in Sources */,
 				35B3B9FF2A08C01600B4540B /* GNDDocument+Compile.swift in Sources */,
 				35B3B9D72A08C01600B4540B /* luadec.c in Sources */,
+				35B695F32A3080D9006F1904 /* Model3D.swift in Sources */,
 				35B3BA192A08C01600B4540B /* ImageDocumentViewController.swift in Sources */,
 				35B3B9FB2A08C01600B4540B /* Camera.swift in Sources */,
 				35B3B9D52A08C01600B4540B /* disassemble.c in Sources */,
