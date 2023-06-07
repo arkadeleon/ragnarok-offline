@@ -9,20 +9,18 @@
 import Metal
 import MetalKit
 
-class GameRenderer: NSObject {
-
-    let render: (MTLRenderCommandEncoder) -> Void
-
+class GameRenderer: NSObject, Renderer {
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
     let colorPixelFormat: MTLPixelFormat
     let depthStencilPixelFormat: MTLPixelFormat
     let renderPipelineState: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState
+    let texture: MTLTexture
 
-    init(render: @escaping (MTLRenderCommandEncoder) -> Void) {
-        self.render = render
+    var camera = ArcballCamera()
 
+    override init() {
         device = MTLCreateSystemDefaultDevice()!
         commandQueue = device.makeCommandQueue()!
 
@@ -52,11 +50,12 @@ class GameRenderer: NSObject {
 
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)!
 
+        let textureLoaader = MTKTextureLoader(device: device)
+        let image = UIImage(named: "wall.jpg")!
+        texture = try! textureLoaader.newTexture(cgImage: image.cgImage!, options: nil)
+
         super.init()
     }
-}
-
-extension GameRenderer: MTKViewDelegate {
 
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
 
@@ -84,11 +83,85 @@ extension GameRenderer: MTKViewDelegate {
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
-        render(renderCommandEncoder)
+        render(encoder: renderCommandEncoder, size: view.bounds.size)
 
         renderCommandEncoder.endEncoding()
 
         commandBuffer.present(view.currentDrawable!)
         commandBuffer.commit()
+    }
+
+    func render(encoder: MTLRenderCommandEncoder, size: CGSize) {
+        let vertices = [
+            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 0.0], normal: [0.0,  0.0, -1.0]),
+            VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [1.0, 0.0], normal: [0.0,  0.0, -1.0]),
+            VertexIn(position: [ 0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [0.0,  0.0, -1.0]),
+            VertexIn(position: [ 0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [0.0,  0.0, -1.0]),
+            VertexIn(position: [-0.5,  0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [0.0,  0.0, -1.0]),
+            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 0.0], normal: [0.0,  0.0, -1.0]),
+            VertexIn(position: [-0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [0.0,  0.0,  1.0]),
+            VertexIn(position: [ 0.5, -0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [0.0,  0.0,  1.0]),
+            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 1.0], normal: [0.0,  0.0,  1.0]),
+            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 1.0], normal: [0.0,  0.0,  1.0]),
+            VertexIn(position: [-0.5,  0.5,  0.5], textureCoordinate: [0.0, 1.0], normal: [0.0,  0.0,  1.0]),
+            VertexIn(position: [-0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [0.0,  0.0,  1.0]),
+            VertexIn(position: [-0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [-0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [-0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [-0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [ 0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [ 0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [1.0,  0.0,  0.0]),
+            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [0.0, -1.0,  0.0]),
+            VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [0.0, -1.0,  0.0]),
+            VertexIn(position: [ 0.5, -0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [0.0, -1.0,  0.0]),
+            VertexIn(position: [ 0.5, -0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [0.0, -1.0,  0.0]),
+            VertexIn(position: [-0.5, -0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [0.0, -1.0,  0.0]),
+            VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [0.0, -1.0,  0.0]),
+            VertexIn(position: [-0.5,  0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [0.0,  1.0,  0.0]),
+            VertexIn(position: [ 0.5,  0.5, -0.5], textureCoordinate: [1.0, 1.0], normal: [0.0,  1.0,  0.0]),
+            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [0.0,  1.0,  0.0]),
+            VertexIn(position: [ 0.5,  0.5,  0.5], textureCoordinate: [1.0, 0.0], normal: [0.0,  1.0,  0.0]),
+            VertexIn(position: [-0.5,  0.5,  0.5], textureCoordinate: [0.0, 0.0], normal: [0.0,  1.0,  0.0]),
+            VertexIn(position: [-0.5,  0.5, -0.5], textureCoordinate: [0.0, 1.0], normal: [0.0,  1.0,  0.0])
+        ]
+        let vertexBuffer = encoder.device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<VertexIn>.stride, options: [])!
+        encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+
+        let time = Float(CACurrentMediaTime())
+
+        camera.update(size: size)
+
+        let model = matrix_rotate(matrix_identity_float4x4, time, [0.5, 1, 0])
+
+        let normal = simd_float3x3(model.inverse.transpose)
+
+        let view = simd_float4x4(camera.viewMatrix)
+
+        let projection = simd_float4x4(camera.projectionMatrix)
+
+        var uniforms = VertexUniforms(
+            model: model,
+            normal: normal,
+            view: view,
+            projection: projection
+        )
+        let uniformsBuffer = encoder.device.makeBuffer(bytes: &uniforms, length: MemoryLayout<VertexUniforms>.stride, options: [])!
+        encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)
+
+        var fragmentUniforms = FragmentUniforms(
+            lightPosition: [0, 5, 0]
+        )
+        let fragmentUniformsBuffer = encoder.device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<FragmentUniforms>.stride, options: [])!
+        encoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
+
+        encoder.setFragmentTexture(texture, index: 0)
+
+        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
     }
 }

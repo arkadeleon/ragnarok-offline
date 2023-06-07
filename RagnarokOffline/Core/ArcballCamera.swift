@@ -14,13 +14,13 @@ struct ArcballCamera {
 
     var target = Point3D()
 
-    var fovyRadians: Double = 15
-    var aspectRatio: Double = 1
-    var nearZ: Double = 1
-    var farZ: Double = 1000
+    var fovy = Angle2D(degrees: 70)
+    var aspectRatio = 1.0
+    var nearZ = 0.1
+    var farZ = 100.0
 
     var projectionMatrix: ProjectiveTransform3D {
-        ProjectiveTransform3D(fovyRadians: fovyRadians, aspectRatio: aspectRatio, nearZ: nearZ, farZ: farZ)
+        ProjectiveTransform3D(fovyRadians: fovy.radians, aspectRatio: aspectRatio, nearZ: nearZ, farZ: farZ)
     }
 
     var viewMatrix: ProjectiveTransform3D {
@@ -29,9 +29,10 @@ struct ArcballCamera {
             let rotationMatrix = ProjectiveTransform3D(rotation: rotation)
             return (translationMatrix * rotationMatrix).inverse ?? .identity
         } else {
-            let up = Vector3D(x: 0, y: 1, z: 0)
-            let rotation = Rotation3D(position: position, target: target, up: up)
-            return ProjectiveTransform3D(rotation: rotation)
+            let translationMatrix = ProjectiveTransform3D(translation: target - position)
+            let rotation = Rotation3D(position: position, target: target)
+            let rotationMatrix = ProjectiveTransform3D(rotation: rotation)
+            return (translationMatrix * rotationMatrix).inverse ?? .identity
         }
     }
 

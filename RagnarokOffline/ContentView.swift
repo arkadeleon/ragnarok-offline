@@ -23,6 +23,11 @@ struct ContentView: View {
                     } label: {
                         Label("Server", systemImage: "macpro.gen3.server")
                     }
+                    NavigationLink {
+                        GameView()
+                    } label: {
+                        Label("Game", systemImage: "xbox.logo")
+                    }
                 }
 
                 Section("Databases") {

@@ -80,7 +80,6 @@
 		35B3B9F42A08C01600B4540B /* AnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B96A2A08C01600B4540B /* AnimatedImageView.swift */; };
 		35B3B9F52A08C01600B4540B /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B96B2A08C01600B4540B /* WebView.swift */; };
 		35B3B9F62A08C01600B4540B /* ClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B96D2A08C01600B4540B /* ClientView.swift */; };
-		35B3B9F72A08C01600B4540B /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B96F2A08C01600B4540B /* GameViewController.swift */; };
 		35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9702A08C01600B4540B /* Shaders.metal */; };
 		35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9722A08C01600B4540B /* GameRenderer.swift */; };
 		35B3B9FA2A08C01600B4540B /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B9732A08C01600B4540B /* wall.jpg */; };
@@ -147,6 +146,7 @@
 		35B3BA4B2A08DA2C00B4540B /* AnimatedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3BA4A2A08DA2C00B4540B /* AnimatedImage.swift */; };
 		35B4990A2A1B73D700607EE6 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B499092A1B73D700607EE6 /* MetalView.swift */; };
 		35B4990C2A1C50B400607EE6 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B4990B2A1C50B400607EE6 /* Renderer.swift */; };
+		35B695EA2A305EF6006F1904 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695E92A305EF6006F1904 /* GameView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -296,7 +296,6 @@
 		35B3B96A2A08C01600B4540B /* AnimatedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedImageView.swift; sourceTree = "<group>"; };
 		35B3B96B2A08C01600B4540B /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		35B3B96D2A08C01600B4540B /* ClientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientView.swift; sourceTree = "<group>"; };
-		35B3B96F2A08C01600B4540B /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		35B3B9702A08C01600B4540B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		35B3B9712A08C01600B4540B /* ShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 		35B3B9722A08C01600B4540B /* GameRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameRenderer.swift; sourceTree = "<group>"; };
@@ -359,6 +358,7 @@
 		35B3BA4A2A08DA2C00B4540B /* AnimatedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImage.swift; sourceTree = "<group>"; };
 		35B499092A1B73D700607EE6 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
 		35B4990B2A1C50B400607EE6 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		35B695E92A305EF6006F1904 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -623,7 +623,7 @@
 			children = (
 				35B3B9742A08C01600B4540B /* Camera.swift */,
 				35B3B9722A08C01600B4540B /* GameRenderer.swift */,
-				35B3B96F2A08C01600B4540B /* GameViewController.swift */,
+				35B695E92A305EF6006F1904 /* GameView.swift */,
 				35B3B9702A08C01600B4540B /* Shaders.metal */,
 				35B3B9712A08C01600B4540B /* ShaderTypes.h */,
 				35B3B9732A08C01600B4540B /* wall.jpg */,
@@ -932,6 +932,7 @@
 				35B3B9C02A08C01600B4540B /* lstrlib.c in Sources */,
 				35B3BA2A2A08C01600B4540B /* ByteBuffer.swift in Sources */,
 				35B3B9BA2A08C01600B4540B /* lobject.c in Sources */,
+				35B695EA2A305EF6006F1904 /* GameView.swift in Sources */,
 				35B3BA182A08C01600B4540B /* ImageDocumentView.swift in Sources */,
 				35B3B9D22A08C01600B4540B /* ltm.c in Sources */,
 				35B3BA202A08C01600B4540B /* ModelDocumentRenderer.swift in Sources */,
@@ -985,7 +986,6 @@
 				35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */,
 				35B3BA252A08C01600B4540B /* GroundShaders.metal in Sources */,
 				35B3B9F12A08C01600B4540B /* ItemListView.swift in Sources */,
-				35B3B9F72A08C01600B4540B /* GameViewController.swift in Sources */,
 				35B3BA0B2A08C01600B4540B /* SGLMath.swift in Sources */,
 				35B3B9FF2A08C01600B4540B /* GNDDocument+Compile.swift in Sources */,
 				35B3B9D72A08C01600B4540B /* luadec.c in Sources */,
