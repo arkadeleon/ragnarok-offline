@@ -18,7 +18,7 @@ class GameRenderer: NSObject, Renderer {
     let depthStencilState: MTLDepthStencilState
     let texture: MTLTexture
 
-    var camera = ArcballCamera()
+    lazy var scene = GameScene(device: device)
 
     override init() {
         device = MTLCreateSystemDefaultDevice()!
@@ -135,15 +135,15 @@ class GameRenderer: NSObject, Renderer {
 
         let time = Float(CACurrentMediaTime())
 
-        camera.update(size: size)
+        scene.camera.update(size: size)
 
         let model = matrix_rotate(matrix_identity_float4x4, time, [0.5, 1, 0])
 
         let normal = simd_float3x3(model.inverse.transpose)
 
-        let view = simd_float4x4(camera.viewMatrix)
+        let view = simd_float4x4(scene.camera.viewMatrix)
 
-        let projection = simd_float4x4(camera.projectionMatrix)
+        let projection = simd_float4x4(scene.camera.projectionMatrix)
 
         var uniforms = VertexUniforms(
             model: model,

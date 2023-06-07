@@ -20,7 +20,7 @@ struct GameView: View {
             .gesture(
                 MagnificationGesture()
                     .onChanged { value in
-                        renderer.camera.update(magnification: magnification * value, dragTranslation: dragTranslation)
+                        renderer.scene.camera.update(magnification: magnification * value, dragTranslation: dragTranslation)
                     }
                     .onEnded { value in
                         magnification *= value
