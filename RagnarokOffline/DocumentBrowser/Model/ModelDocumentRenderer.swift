@@ -17,7 +17,8 @@ class ModelDocumentRenderer: NSObject, Renderer {
     let modelRenderer: ModelRenderer
 
     let boundingBox: RSMBoundingBox
-    let camera = Camera()
+
+    var camera = Camera()
 
     init(meshes: [[ModelVertex]], textures: [Data?], boundingBox: RSMBoundingBox) throws {
         device = MTLCreateSystemDefaultDevice()!
@@ -52,21 +53,25 @@ class ModelDocumentRenderer: NSObject, Renderer {
 
         let time = CACurrentMediaTime()
 
-        var modelviewMatrix = matrix_identity_float4x4
-        modelviewMatrix = matrix_translate(modelviewMatrix, [0, -boundingBox.range[1] * 0.1, -boundingBox.range[1] * 0.5 - 5])
-        modelviewMatrix = matrix_rotate(modelviewMatrix, radians(15), [1, 0, 0])
-        modelviewMatrix = matrix_rotate(modelviewMatrix, Float(radians(time * 360 / 8)), [0, 1, 0])
+        camera.update(size: view.bounds.size)
 
-        let projectionMatrix = perspective(radians(camera.zoom / camera.magnification), Float(view.bounds.width / view.bounds.height), 1, 1000)
+        var modelMatrix = matrix_identity_float4x4
+        modelMatrix = matrix_translate(modelMatrix, [0, -boundingBox.range[1] * 0.1, -boundingBox.range[1] * 0.5 - 5])
+        modelMatrix = matrix_rotate(modelMatrix, radians(15), [1, 0, 0])
+        modelMatrix = matrix_rotate(modelMatrix, Float(radians(time * 360 / 8)), [0, 1, 0])
 
-        let normalMatrix = simd_float3x3(modelviewMatrix).inverse.transpose
+        let viewMatrix = simd_float4x4(camera.viewMatrix)
+        let projectionMatrix = simd_float4x4(camera.projectionMatrix)
+
+        let normalMatrix = simd_float3x3(modelMatrix).inverse.transpose
 
         modelRenderer.render(
             atTime: time,
             device: device,
             renderPassDescriptor: renderPassDescriptor,
             commandBuffer: commandBuffer,
-            modelviewMatrix: modelviewMatrix,
+            modelMatrix: modelMatrix,
+            viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,
             normalMatrix: normalMatrix
         )

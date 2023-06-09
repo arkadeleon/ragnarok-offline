@@ -24,12 +24,12 @@ modelVertexShader(const device ModelVertex *vertices [[buffer(0)]],
                   constant ModelVertexUniforms &uniforms [[buffer(1)]])
 {
     ModelVertex in = vertices[vertexIndex];
-    float4 lDirection = uniforms.modelviewMatrix * float4(uniforms.lightDirection, 0.0);
+    float4 lDirection = uniforms.modelMatrix * float4(uniforms.lightDirection, 0.0);
     float3 dirVector = normalize(lDirection.xyz);
     float dotProduct = dot(uniforms.normalMatrix * in.normal, dirVector);
 
     RasterizerData out;
-    out.position = uniforms.projectionMatrix * uniforms.modelviewMatrix * float4(in.position, 1.0);
+    out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * float4(in.position, 1.0);
     out.textureCoordinate = in.textureCoordinate;
     out.lightWeighting = max(dotProduct, 0.5);
     out.alpha = in.alpha;

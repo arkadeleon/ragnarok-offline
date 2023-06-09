@@ -12,7 +12,6 @@ struct Submesh {
     let primitiveType: MTLPrimitiveType
     let indexType: MTLIndexType
     let indexBuffer: MTLBuffer
-    let indexBufferOffset: Int
     let indexCount: Int
     let texture: MTLTexture?
 }

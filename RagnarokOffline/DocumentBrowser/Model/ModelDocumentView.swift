@@ -20,6 +20,7 @@ struct ModelDocumentView: View {
     let document: DocumentWrapper
 
     @State private var status: Status = .notYetLoaded
+    @State private var magnification = 1.0
 
     var body: some View {
         ZStack {
@@ -28,11 +29,10 @@ struct ModelDocumentView: View {
                     .gesture(
                         MagnificationGesture()
                             .onChanged { value in
-                                renderer.camera.magnification = Float(value)
+                                renderer.camera.update(magnification: magnification * value, dragTranslation: .zero)
                             }
                             .onEnded { value in
-                                renderer.camera.zoom /= renderer.camera.magnification
-                                renderer.camera.magnification = 1
+                                magnification *= value
                             }
                     )
             }
@@ -91,8 +91,5 @@ struct ModelDocumentView: View {
         }
 
         status = .loaded(renderer)
-
-//        self.mtkView.addGestureRecognizer(renderer.camera.panGestureRecognizer)
-//        self.mtkView.addGestureRecognizer(renderer.camera.pinchGestureRecognizer)
     }
 }

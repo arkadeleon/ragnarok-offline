@@ -64,7 +64,6 @@ struct GameScene {
             primitiveType: .triangle,
             indexType: .uint16,
             indexBuffer: indexBuffer,
-            indexBufferOffset: 0,
             indexCount: indices.count,
             texture: texture
         )
@@ -81,5 +80,5 @@ struct GameScene {
         return [model]
     }()
 
-    var camera = ArcballCamera()
+    var camera = Camera()
 }

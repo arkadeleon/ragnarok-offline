@@ -66,12 +66,14 @@ class ModelRenderer {
                 device: MTLDevice,
                 renderPassDescriptor: MTLRenderPassDescriptor,
                 commandBuffer: MTLCommandBuffer,
-                modelviewMatrix: simd_float4x4,
+                modelMatrix: simd_float4x4,
+                viewMatrix: simd_float4x4,
                 projectionMatrix: simd_float4x4,
                 normalMatrix: simd_float3x3) {
 
         var vertexUniforms = ModelVertexUniforms(
-            modelviewMatrix: modelviewMatrix,
+            modelMatrix: modelMatrix,
+            viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,
             lightDirection: [0, 1, 0],
             normalMatrix: normalMatrix

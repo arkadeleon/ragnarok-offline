@@ -128,7 +128,7 @@ class GameRenderer: NSObject, Renderer {
                     indexCount: submesh.indexCount,
                     indexType: submesh.indexType,
                     indexBuffer: submesh.indexBuffer,
-                    indexBufferOffset: submesh.indexBufferOffset
+                    indexBufferOffset: 0
                 )
             }
         }

@@ -1,5 +1,5 @@
 //
-//  ArcballCamera.swift
+//  Camera.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/6/6.
@@ -8,7 +8,7 @@
 
 import Spatial
 
-struct ArcballCamera {
+struct Camera {
     var position = Point3D()
     var rotation = Rotation3D()
 
@@ -18,6 +18,8 @@ struct ArcballCamera {
     var aspectRatio = 1.0
     var nearZ = 0.1
     var farZ = 100.0
+
+    var sensitivity = 0.01
 
     var projectionMatrix: ProjectiveTransform3D {
         ProjectiveTransform3D(fovyRadians: fovy.radians, aspectRatio: aspectRatio, nearZ: nearZ, farZ: farZ)
@@ -46,8 +48,8 @@ struct ArcballCamera {
         distance = max(distance, 0)
         distance = min(distance, 20)
 
-        let angleX = -dragTranslation.height * 0.01
-        let angleY = dragTranslation.width * 0.01
+        let angleX = -dragTranslation.height * sensitivity
+        let angleY = dragTranslation.width * sensitivity
         let angles = EulerAngles(angles: [angleX, angleY, 0], order: .pitchYawRoll)
         rotation = Rotation3D(eulerAngles: angles)
 
