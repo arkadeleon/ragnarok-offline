@@ -8,6 +8,6 @@
 
 import Metal
 
-struct Model3D {
+struct Object3D {
     let meshes: [Mesh]
 }

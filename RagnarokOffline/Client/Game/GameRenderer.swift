@@ -78,8 +78,8 @@ class GameRenderer: NSObject, Renderer {
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
-        for model in scene.models {
-            render(model, encoder: renderCommandEncoder, size: view.bounds.size)
+        for object in scene.objects {
+            render(object, encoder: renderCommandEncoder, size: view.bounds.size)
         }
 
         renderCommandEncoder.endEncoding()
@@ -88,7 +88,7 @@ class GameRenderer: NSObject, Renderer {
         commandBuffer.commit()
     }
 
-    func render(_ model: Model3D, encoder: MTLRenderCommandEncoder, size: CGSize) {
+    func render(_ object: Object3D, encoder: MTLRenderCommandEncoder, size: CGSize) {
         let time = Float(CACurrentMediaTime())
 
         scene.camera.update(size: size)
@@ -109,7 +109,7 @@ class GameRenderer: NSObject, Renderer {
             lightPosition: [0, 5, 0]
         )
 
-        for mesh in model.meshes {
+        for mesh in object.meshes {
             for (index, vertexBuffer) in mesh.vertexBuffers.enumerated() {
                 encoder.setVertexBuffer(vertexBuffer, offset: 0, index: index)
             }

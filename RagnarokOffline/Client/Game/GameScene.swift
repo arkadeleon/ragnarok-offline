@@ -12,7 +12,7 @@ import MetalKit
 struct GameScene {
     let device: MTLDevice
 
-    lazy var models: [Model3D] = {
+    lazy var objects: [Object3D] = {
         let vertices = [
             VertexIn(position: [-0.5, -0.5, -0.5], textureCoordinate: [0.0, 0.0], normal: [0.0,  0.0, -1.0]),
             VertexIn(position: [ 0.5, -0.5, -0.5], textureCoordinate: [1.0, 0.0], normal: [0.0,  0.0, -1.0]),
@@ -75,9 +75,9 @@ struct GameScene {
             vertexCount: vertices.count
         )
 
-        let model = Model3D(meshes: [mesh])
+        let object = Object3D(meshes: [mesh])
 
-        return [model]
+        return [object]
     }()
 
     var camera = Camera()
