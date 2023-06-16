@@ -60,7 +60,7 @@ struct WorldDocumentView: View {
         }
 
         guard let gatData = grf.node(atPath: "data\\" + rsw.files.gat)?.contents,
-              let gat = try? loader.load(GATDocument.self, from: gatData)
+              let gat = try? GATDocument(data: gatData)
         else {
             status = .failed
             return
@@ -73,7 +73,6 @@ struct WorldDocumentView: View {
             return
         }
 
-        let altitude = gat.compile()
         let state = gnd.compile(WATER_LEVEL: rsw.water.level, WATER_HEIGHT: rsw.water.waveHeight)
 
         let textures = gnd.textures
@@ -166,7 +165,7 @@ struct WorldDocumentView: View {
             modelTextures.append(contentsOf: value.1)
         }
 
-        guard let renderer = try? WorldDocumentRenderer(altitude: altitude, vertices: state.mesh, texture: jpeg, waterVertices: state.waterMesh, waterTextures: waterTextures, modelMeshes: modelMeshes, modelTextures: modelTextures) else {
+        guard let renderer = try? WorldDocumentRenderer(gat: gat, vertices: state.mesh, texture: jpeg, waterVertices: state.waterMesh, waterTextures: waterTextures, modelMeshes: modelMeshes, modelTextures: modelTextures) else {
             status = .failed
             return
         }

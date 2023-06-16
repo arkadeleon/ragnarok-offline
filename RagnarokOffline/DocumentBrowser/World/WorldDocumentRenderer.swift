@@ -20,7 +20,7 @@ class WorldDocumentRenderer: NSObject, Renderer {
 
     let camera: WorldDocumentCamera
 
-    init(altitude: Altitude, vertices: [GroundVertex], texture: Data?, waterVertices: [WaterVertex], waterTextures: [Data?], modelMeshes: [[ModelVertex]], modelTextures: [Data?]) throws {
+    init(gat: GATDocument, vertices: [GroundVertex], texture: Data?, waterVertices: [WaterVertex], waterTextures: [Data?], modelMeshes: [[ModelVertex]], modelTextures: [Data?]) throws {
         device = MTLCreateSystemDefaultDevice()!
         commandQueue = device.makeCommandQueue()!
 
@@ -30,9 +30,9 @@ class WorldDocumentRenderer: NSObject, Renderer {
         modelRenderer = try ModelRenderer(device: device, library: library, meshes: modelMeshes, textures: modelTextures)
 
         let target: simd_float3 = [
-            Float(altitude.width) / 2,
-            Float(altitude.height) / 2,
-            altitude.heightForCell(atX: altitude.width / 2, y: altitude.height / 2)
+            Float(gat.width) / 2,
+            Float(gat.height) / 2,
+            gat.heightForCell(atX: Int(gat.width / 2), y: Int(gat.height / 2))
         ]
         camera = WorldDocumentCamera(target: target)
         camera.altitudeTo = -200

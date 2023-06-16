@@ -8,6 +8,10 @@
 
 import Metal
 
-struct Object3D {
+class Object3D {
     let meshes: [Mesh]
+
+    init(meshes: [Mesh]) {
+        self.meshes = meshes
+    }
 }
