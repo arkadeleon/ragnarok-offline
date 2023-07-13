@@ -34,14 +34,16 @@ struct ContentView: View {
             List {
                 Section("Client") {
                     NavigationLink {
-                        ClientView()
+                        let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                        DocumentBrowserView(title: "Browse", document: .url(url))
                     } label: {
-                        Label("Client", systemImage: "ipad.and.iphone")
+                        Label("Browse", systemImage: "folder")
                     }
+
                     NavigationLink {
                         GameView()
                     } label: {
-                        Label("Game", systemImage: "xbox.logo")
+                        Label("Game", systemImage: "gamecontroller")
                     }
                 }
 
