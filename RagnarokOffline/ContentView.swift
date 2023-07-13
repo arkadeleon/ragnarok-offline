@@ -7,21 +7,36 @@
 //
 
 import SwiftUI
+import rAthenaLogin
+import rAthenaChar
+import rAthenaMap
+import rAthenaWeb
+import rAthenaControl
 
 struct ContentView: View {
+    private let servers: [RAServer] = [
+        RALoginServer.shared,
+        RACharServer.shared,
+        RAMapServer.shared,
+        RAWebServer.shared,
+    ]
+
+    private let databases: [RADatabase] = [
+        RAItemDatabase.shared,
+        RAMonsterDatabase.shared,
+        RAJobDatabase.shared,
+        RASkillDatabase.shared,
+        RASkillTreeDatabase.shared,
+    ]
+
     var body: some View {
         NavigationView {
             List {
-                Section("Browse") {
+                Section("Client") {
                     NavigationLink {
                         ClientView()
                     } label: {
                         Label("Client", systemImage: "ipad.and.iphone")
-                    }
-                    NavigationLink {
-                        ServersView()
-                    } label: {
-                        Label("Server", systemImage: "macpro.gen3.server")
                     }
                     NavigationLink {
                         GameView()
@@ -30,21 +45,23 @@ struct ContentView: View {
                     }
                 }
 
+                Section("Servers") {
+                    ForEach(servers, id: \.name) { server in
+                        NavigationLink {
+                            ServerView(server: server)
+                        } label: {
+                            Label(server.name, systemImage: "macpro.gen3.server")
+                        }
+                    }
+                }
+
                 Section("Databases") {
-                    NavigationLink {
-                        ItemListView()
-                    } label: {
-                        Label("Item Database", systemImage: "list.bullet.rectangle")
-                    }
-                    NavigationLink {
-                        MonsterListView()
-                    } label: {
-                        Label("Monster Database", systemImage: "list.bullet.rectangle")
-                    }
-                    NavigationLink {
-                        SkillTreeListView()
-                    } label: {
-                        Label("Skill Database", systemImage: "list.bullet.rectangle")
+                    ForEach(databases, id: \.name) { database in
+                        NavigationLink {
+                            DatabaseView(database: database)
+                        } label: {
+                            Label(database.name, systemImage: "list.bullet.rectangle")
+                        }
                     }
                 }
             }

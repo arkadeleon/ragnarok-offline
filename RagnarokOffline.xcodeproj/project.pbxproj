@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3504AB8C2A2EFB900029AC46 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3504AB8B2A2EFB900029AC46 /* Camera.swift */; };
+		35270D272A5FE9470001A8BD /* rAthenaControl in Frameworks */ = {isa = PBXBuildFile; productRef = 35270D262A5FE9470001A8BD /* rAthenaControl */; };
 		35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */; };
 		35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D92A08BEA600B4540B /* ContentView.swift */; };
 		35B3B8DC2A08BEA700B4540B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B8DB2A08BEA700B4540B /* Assets.xcassets */; };
@@ -55,7 +56,6 @@
 		35B3B9DB2A08C01600B4540B /* proto.c in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B94A2A08C01600B4540B /* proto.c */; };
 		35B3B9DC2A08C01600B4540B /* StringBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B94E2A08C01600B4540B /* StringBuffer.c */; };
 		35B3B9DD2A08C01600B4540B /* statement.c in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B94F2A08C01600B4540B /* statement.c */; };
-		35B3B9DE2A08C01600B4540B /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9512A08C01600B4540B /* Strings.swift */; };
 		35B3B9DF2A08C01600B4540B /* GNDDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9532A08C01600B4540B /* GNDDocument.swift */; };
 		35B3B9E02A08C01600B4540B /* RSWDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9542A08C01600B4540B /* RSWDocument.swift */; };
 		35B3B9E12A08C01600B4540B /* GRFDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9552A08C01600B4540B /* GRFDocument.swift */; };
@@ -66,17 +66,6 @@
 		35B3B9E62A08C01600B4540B /* SPRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95A2A08C01600B4540B /* SPRDocument.swift */; };
 		35B3B9E72A08C01600B4540B /* ACTDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95B2A08C01600B4540B /* ACTDocument.swift */; };
 		35B3B9E82A08C01600B4540B /* GATDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95C2A08C01600B4540B /* GATDocument.swift */; };
-		35B3B9E92A08C01600B4540B /* Monster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95E2A08C01600B4540B /* Monster.swift */; };
-		35B3B9EA2A08C01600B4540B /* SkillTreeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95F2A08C01600B4540B /* SkillTreeListView.swift */; };
-		35B3B9EB2A08C01600B4540B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9602A08C01600B4540B /* Item.swift */; };
-		35B3B9EC2A08C01600B4540B /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9612A08C01600B4540B /* ItemDetailView.swift */; };
-		35B3B9ED2A08C01600B4540B /* MonsterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9622A08C01600B4540B /* MonsterListView.swift */; };
-		35B3B9EE2A08C01600B4540B /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9632A08C01600B4540B /* Database.swift */; };
-		35B3B9EF2A08C01600B4540B /* SkillTreeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9642A08C01600B4540B /* SkillTreeDetailView.swift */; };
-		35B3B9F02A08C01600B4540B /* MonsterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9652A08C01600B4540B /* MonsterDetailView.swift */; };
-		35B3B9F12A08C01600B4540B /* ItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9662A08C01600B4540B /* ItemListView.swift */; };
-		35B3B9F22A08C01600B4540B /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9672A08C01600B4540B /* Skill.swift */; };
-		35B3B9F32A08C01600B4540B /* SkillDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9682A08C01600B4540B /* SkillDetailView.swift */; };
 		35B3B9F42A08C01600B4540B /* AnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B96A2A08C01600B4540B /* AnimatedImageView.swift */; };
 		35B3B9F52A08C01600B4540B /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B96B2A08C01600B4540B /* WebView.swift */; };
 		35B3B9F62A08C01600B4540B /* ClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B96D2A08C01600B4540B /* ClientView.swift */; };
@@ -125,16 +114,13 @@
 		35B3BA282A08C01600B4540B /* WaterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9AE2A08C01600B4540B /* WaterRenderer.swift */; };
 		35B3BA292A08C01600B4540B /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9B02A08C01600B4540B /* Palette.swift */; };
 		35B3BA2A2A08C01600B4540B /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9B12A08C01600B4540B /* ByteBuffer.swift */; };
-		35B3BA2B2A08C01600B4540B /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9B32A08C01600B4540B /* ServerView.swift */; };
 		35B3BA2C2A08C01600B4540B /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9B42A08C01600B4540B /* TerminalView.swift */; };
-		35B3BA2D2A08C01600B4540B /* ServersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9B52A08C01600B4540B /* ServersView.swift */; };
 		35B3BA302A08C3C700B4540B /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA2F2A08C3C700B4540B /* rAthenaChar */; };
 		35B3BA322A08C3C700B4540B /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA312A08C3C700B4540B /* rAthenaCommon */; };
 		35B3BA342A08C3C700B4540B /* rAthenaLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA332A08C3C700B4540B /* rAthenaLogin */; };
 		35B3BA362A08C3C700B4540B /* rAthenaMap in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA352A08C3C700B4540B /* rAthenaMap */; };
 		35B3BA382A08C3C700B4540B /* rAthenaWeb in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA372A08C3C700B4540B /* rAthenaWeb */; };
 		35B3BA3B2A08C40900B4540B /* grf in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA3A2A08C40900B4540B /* grf */; };
-		35B3BA3E2A08C43C00B4540B /* Terminal in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA3D2A08C43C00B4540B /* Terminal */; };
 		35B3BA412A08C45000B4540B /* DataCompression in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA402A08C45000B4540B /* DataCompression */; };
 		35B3BA432A08C74700B4540B /* rAthenaChar in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA2F2A08C3C700B4540B /* rAthenaChar */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		35B3BA452A08C74900B4540B /* rAthenaLogin in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA332A08C3C700B4540B /* rAthenaLogin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -273,7 +259,6 @@
 		35B3B94E2A08C01600B4540B /* StringBuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = StringBuffer.c; sourceTree = "<group>"; };
 		35B3B94F2A08C01600B4540B /* statement.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = statement.c; sourceTree = "<group>"; };
 		35B3B9502A08C01600B4540B /* macro-array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "macro-array.h"; sourceTree = "<group>"; };
-		35B3B9512A08C01600B4540B /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		35B3B9532A08C01600B4540B /* GNDDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GNDDocument.swift; sourceTree = "<group>"; };
 		35B3B9542A08C01600B4540B /* RSWDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSWDocument.swift; sourceTree = "<group>"; };
 		35B3B9552A08C01600B4540B /* GRFDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GRFDocument.swift; sourceTree = "<group>"; };
@@ -284,17 +269,6 @@
 		35B3B95A2A08C01600B4540B /* SPRDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPRDocument.swift; sourceTree = "<group>"; };
 		35B3B95B2A08C01600B4540B /* ACTDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACTDocument.swift; sourceTree = "<group>"; };
 		35B3B95C2A08C01600B4540B /* GATDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GATDocument.swift; sourceTree = "<group>"; };
-		35B3B95E2A08C01600B4540B /* Monster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Monster.swift; sourceTree = "<group>"; };
-		35B3B95F2A08C01600B4540B /* SkillTreeListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillTreeListView.swift; sourceTree = "<group>"; };
-		35B3B9602A08C01600B4540B /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
-		35B3B9612A08C01600B4540B /* ItemDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
-		35B3B9622A08C01600B4540B /* MonsterListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonsterListView.swift; sourceTree = "<group>"; };
-		35B3B9632A08C01600B4540B /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
-		35B3B9642A08C01600B4540B /* SkillTreeDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillTreeDetailView.swift; sourceTree = "<group>"; };
-		35B3B9652A08C01600B4540B /* MonsterDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonsterDetailView.swift; sourceTree = "<group>"; };
-		35B3B9662A08C01600B4540B /* ItemListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListView.swift; sourceTree = "<group>"; };
-		35B3B9672A08C01600B4540B /* Skill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skill.swift; sourceTree = "<group>"; };
-		35B3B9682A08C01600B4540B /* SkillDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillDetailView.swift; sourceTree = "<group>"; };
 		35B3B96A2A08C01600B4540B /* AnimatedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedImageView.swift; sourceTree = "<group>"; };
 		35B3B96B2A08C01600B4540B /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		35B3B96D2A08C01600B4540B /* ClientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientView.swift; sourceTree = "<group>"; };
@@ -350,9 +324,7 @@
 		35B3B9AE2A08C01600B4540B /* WaterRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterRenderer.swift; sourceTree = "<group>"; };
 		35B3B9B02A08C01600B4540B /* Palette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		35B3B9B12A08C01600B4540B /* ByteBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteBuffer.swift; sourceTree = "<group>"; };
-		35B3B9B32A08C01600B4540B /* ServerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerView.swift; sourceTree = "<group>"; };
 		35B3B9B42A08C01600B4540B /* TerminalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
-		35B3B9B52A08C01600B4540B /* ServersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServersView.swift; sourceTree = "<group>"; };
 		35B3BA422A08C51000B4540B /* RagnarokOffline-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RagnarokOffline-Bridging-Header.h"; sourceTree = "<group>"; };
 		35B3BA482A08DA0C00B4540B /* StillImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillImage.swift; sourceTree = "<group>"; };
 		35B3BA4A2A08DA2C00B4540B /* AnimatedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImage.swift; sourceTree = "<group>"; };
@@ -371,8 +343,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				35B3BA3B2A08C40900B4540B /* grf in Frameworks */,
+				35270D272A5FE9470001A8BD /* rAthenaControl in Frameworks */,
 				35B3BA342A08C3C700B4540B /* rAthenaLogin in Frameworks */,
-				35B3BA3E2A08C43C00B4540B /* Terminal in Frameworks */,
 				35B3BA412A08C45000B4540B /* DataCompression in Frameworks */,
 				35B3BA302A08C3C700B4540B /* rAthenaChar in Frameworks */,
 				35B3BA322A08C3C700B4540B /* rAthenaCommon in Frameworks */,
@@ -398,6 +370,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		35270D252A5FE9470001A8BD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		35B3B8CB2A08BEA600B4540B = {
 			isa = PBXGroup;
 			children = (
@@ -405,6 +384,7 @@
 				35B3B8E72A08BEA700B4540B /* RagnarokOfflineTests */,
 				35B3B8F12A08BEA700B4540B /* RagnarokOfflineUITests */,
 				35B3B8D52A08BEA600B4540B /* Products */,
+				35270D252A5FE9470001A8BD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -423,10 +403,7 @@
 			children = (
 				35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */,
 				35B3B8D92A08BEA600B4540B /* ContentView.swift */,
-				35B3B9512A08C01600B4540B /* Strings.swift */,
 				35B3B96C2A08C01600B4540B /* Client */,
-				35B3B9B22A08C01600B4540B /* Server */,
-				35B3B95D2A08C01600B4540B /* Database */,
 				35B3B9892A08C01600B4540B /* DocumentBrowser */,
 				35B3B9A42A08C01600B4540B /* Renderers */,
 				35B3B9752A08C01600B4540B /* Resources */,
@@ -585,24 +562,6 @@
 			path = Documents;
 			sourceTree = "<group>";
 		};
-		35B3B95D2A08C01600B4540B /* Database */ = {
-			isa = PBXGroup;
-			children = (
-				35B3B9632A08C01600B4540B /* Database.swift */,
-				35B3B9602A08C01600B4540B /* Item.swift */,
-				35B3B9662A08C01600B4540B /* ItemListView.swift */,
-				35B3B9612A08C01600B4540B /* ItemDetailView.swift */,
-				35B3B95E2A08C01600B4540B /* Monster.swift */,
-				35B3B9622A08C01600B4540B /* MonsterListView.swift */,
-				35B3B9652A08C01600B4540B /* MonsterDetailView.swift */,
-				35B3B9672A08C01600B4540B /* Skill.swift */,
-				35B3B95F2A08C01600B4540B /* SkillTreeListView.swift */,
-				35B3B9642A08C01600B4540B /* SkillTreeDetailView.swift */,
-				35B3B9682A08C01600B4540B /* SkillDetailView.swift */,
-			);
-			path = Database;
-			sourceTree = "<group>";
-		};
 		35B3B9692A08C01600B4540B /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -759,15 +718,6 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
-		35B3B9B22A08C01600B4540B /* Server */ = {
-			isa = PBXGroup;
-			children = (
-				35B3B9B52A08C01600B4540B /* ServersView.swift */,
-				35B3B9B32A08C01600B4540B /* ServerView.swift */,
-			);
-			path = Server;
-			sourceTree = "<group>";
-		};
 		35B695ED2A307553006F1904 /* Metal */ = {
 			isa = PBXGroup;
 			children = (
@@ -805,8 +755,8 @@
 				35B3BA352A08C3C700B4540B /* rAthenaMap */,
 				35B3BA372A08C3C700B4540B /* rAthenaWeb */,
 				35B3BA3A2A08C40900B4540B /* grf */,
-				35B3BA3D2A08C43C00B4540B /* Terminal */,
 				35B3BA402A08C45000B4540B /* DataCompression */,
+				35270D262A5FE9470001A8BD /* rAthenaControl */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -884,7 +834,6 @@
 			packageReferences = (
 				35B3BA2E2A08C3C700B4540B /* XCRemoteSwiftPackageReference "rathena-ios" */,
 				35B3BA392A08C40900B4540B /* XCRemoteSwiftPackageReference "grf" */,
-				35B3BA3C2A08C43C00B4540B /* XCRemoteSwiftPackageReference "Terminal" */,
 				35B3BA3F2A08C45000B4540B /* XCRemoteSwiftPackageReference "DataCompression" */,
 			);
 			productRefGroup = 35B3B8D52A08BEA600B4540B /* Products */;
@@ -935,9 +884,7 @@
 				35B3B9BF2A08C01600B4540B /* lfunc.c in Sources */,
 				35B3BA152A08C01600B4540B /* DocumentThumbnailCache.swift in Sources */,
 				35B3B9D42A08C01600B4540B /* expression.c in Sources */,
-				35B3B9ED2A08C01600B4540B /* MonsterListView.swift in Sources */,
 				35B3B9BE2A08C01600B4540B /* lvm.c in Sources */,
-				35B3B9EB2A08C01600B4540B /* Item.swift in Sources */,
 				35B3B9D82A08C01600B4540B /* guess.c in Sources */,
 				35B3B9CC2A08C01600B4540B /* ltablib.c in Sources */,
 				35B3B9C42A08C01600B4540B /* ltable.c in Sources */,
@@ -962,33 +909,24 @@
 				35B695EC2A307164006F1904 /* GameScene.swift in Sources */,
 				35B3BA132A08C01600B4540B /* WorldDocumentCamera.swift in Sources */,
 				35B3BA242A08C01600B4540B /* ModelShaders.metal in Sources */,
-				35B3B9DE2A08C01600B4540B /* Strings.swift in Sources */,
 				35B3BA052A08C01600B4540B /* TextureLoader.swift in Sources */,
 				35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */,
 				35B3B9F52A08C01600B4540B /* WebView.swift in Sources */,
 				35B3BA1D2A08C01600B4540B /* DocumentDetailView.swift in Sources */,
 				35B4990A2A1B73D700607EE6 /* MetalView.swift in Sources */,
-				35B3B9F22A08C01600B4540B /* Skill.swift in Sources */,
 				35B3B9B92A08C01600B4540B /* lstate.c in Sources */,
 				35B3B9E82A08C01600B4540B /* GATDocument.swift in Sources */,
 				35B3B9C62A08C01600B4540B /* loslib.c in Sources */,
 				35B3BA272A08C01600B4540B /* ModelRenderer.swift in Sources */,
-				35B3B9EE2A08C01600B4540B /* Database.swift in Sources */,
 				35B3B9B82A08C01600B4540B /* lopcodes.c in Sources */,
 				35B3B9F42A08C01600B4540B /* AnimatedImageView.swift in Sources */,
-				35B3BA2B2A08C01600B4540B /* ServerView.swift in Sources */,
 				35B3B9CD2A08C01600B4540B /* lapi.c in Sources */,
 				35B3B9DB2A08C01600B4540B /* proto.c in Sources */,
-				35B3B9F32A08C01600B4540B /* SkillDetailView.swift in Sources */,
 				35B3B9E42A08C01600B4540B /* STRDocument.swift in Sources */,
-				35B3B9EF2A08C01600B4540B /* SkillTreeDetailView.swift in Sources */,
 				35B3BA1B2A08C01600B4540B /* AudioDocumentViewController.swift in Sources */,
 				35B3B9D02A08C01600B4540B /* lparser.c in Sources */,
-				35B3B9EA2A08C01600B4540B /* SkillTreeListView.swift in Sources */,
 				35B3B9DC2A08C01600B4540B /* StringBuffer.c in Sources */,
 				35B3BA222A08C01600B4540B /* WaterShaders.metal in Sources */,
-				35B3B9E92A08C01600B4540B /* Monster.swift in Sources */,
-				35B3BA2D2A08C01600B4540B /* ServersView.swift in Sources */,
 				35B3B9E22A08C01600B4540B /* INIDocument.swift in Sources */,
 				35B3BA0E2A08C01600B4540B /* DocumentThumbnailGenerator.swift in Sources */,
 				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,
@@ -999,7 +937,6 @@
 				35B3BA1A2A08C01600B4540B /* DocumentBrowserView.swift in Sources */,
 				35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */,
 				35B3BA252A08C01600B4540B /* GroundShaders.metal in Sources */,
-				35B3B9F12A08C01600B4540B /* ItemListView.swift in Sources */,
 				35B3BA0B2A08C01600B4540B /* SGLMath.swift in Sources */,
 				35B3B9FF2A08C01600B4540B /* GNDDocument+Compile.swift in Sources */,
 				35B3B9D72A08C01600B4540B /* luadec.c in Sources */,
@@ -1038,14 +975,12 @@
 				35B3B9DF2A08C01600B4540B /* GNDDocument.swift in Sources */,
 				35B3B9E72A08C01600B4540B /* ACTDocument.swift in Sources */,
 				35B3BA142A08C01600B4540B /* WorldDocumentView.swift in Sources */,
-				35B3B9EC2A08C01600B4540B /* ItemDetailView.swift in Sources */,
 				35B695EF2A30763A006F1904 /* Mesh.swift in Sources */,
 				35B3B9C82A08C01600B4540B /* lzio.c in Sources */,
 				35B3B9C92A08C01600B4540B /* ldblib.c in Sources */,
 				35B3B9E52A08C01600B4540B /* Document.swift in Sources */,
 				35B3BA4B2A08DA2C00B4540B /* AnimatedImage.swift in Sources */,
 				35B3BA062A08C01600B4540B /* CGImage+Decode.swift in Sources */,
-				35B3B9F02A08C01600B4540B /* MonsterDetailView.swift in Sources */,
 				35B3B9CF2A08C01600B4540B /* ldebug.c in Sources */,
 				35B3B9C22A08C01600B4540B /* lstring.c in Sources */,
 				35B3B9B62A08C01600B4540B /* lauxlib.c in Sources */,
@@ -1400,14 +1335,6 @@
 				kind = branch;
 			};
 		};
-		35B3BA3C2A08C43C00B4540B /* XCRemoteSwiftPackageReference "Terminal" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/dnpp73/Terminal.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.3.4;
-			};
-		};
 		35B3BA3F2A08C45000B4540B /* XCRemoteSwiftPackageReference "DataCompression" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mw99/DataCompression.git";
@@ -1419,6 +1346,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		35270D262A5FE9470001A8BD /* rAthenaControl */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35B3BA2E2A08C3C700B4540B /* XCRemoteSwiftPackageReference "rathena-ios" */;
+			productName = rAthenaControl;
+		};
 		35B3BA2F2A08C3C700B4540B /* rAthenaChar */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 35B3BA2E2A08C3C700B4540B /* XCRemoteSwiftPackageReference "rathena-ios" */;
@@ -1448,11 +1380,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 35B3BA392A08C40900B4540B /* XCRemoteSwiftPackageReference "grf" */;
 			productName = grf;
-		};
-		35B3BA3D2A08C43C00B4540B /* Terminal */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 35B3BA3C2A08C43C00B4540B /* XCRemoteSwiftPackageReference "Terminal" */;
-			productName = Terminal;
 		};
 		35B3BA402A08C45000B4540B /* DataCompression */ = {
 			isa = XCSwiftPackageProductDependency;
