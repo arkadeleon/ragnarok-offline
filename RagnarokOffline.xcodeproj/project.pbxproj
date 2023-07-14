@@ -113,7 +113,6 @@
 		35B3BA282A08C01600B4540B /* WaterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9AE2A08C01600B4540B /* WaterRenderer.swift */; };
 		35B3BA292A08C01600B4540B /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9B02A08C01600B4540B /* Palette.swift */; };
 		35B3BA2A2A08C01600B4540B /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9B12A08C01600B4540B /* ByteBuffer.swift */; };
-		35B3BA2C2A08C01600B4540B /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9B42A08C01600B4540B /* TerminalView.swift */; };
 		35B3BA302A08C3C700B4540B /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA2F2A08C3C700B4540B /* rAthenaChar */; };
 		35B3BA322A08C3C700B4540B /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA312A08C3C700B4540B /* rAthenaCommon */; };
 		35B3BA342A08C3C700B4540B /* rAthenaLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA332A08C3C700B4540B /* rAthenaLogin */; };
@@ -322,7 +321,6 @@
 		35B3B9AE2A08C01600B4540B /* WaterRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterRenderer.swift; sourceTree = "<group>"; };
 		35B3B9B02A08C01600B4540B /* Palette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		35B3B9B12A08C01600B4540B /* ByteBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteBuffer.swift; sourceTree = "<group>"; };
-		35B3B9B42A08C01600B4540B /* TerminalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
 		35B3BA422A08C51000B4540B /* RagnarokOffline-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RagnarokOffline-Bridging-Header.h"; sourceTree = "<group>"; };
 		35B3BA482A08DA0C00B4540B /* StillImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillImage.swift; sourceTree = "<group>"; };
 		35B3BA4A2A08DA2C00B4540B /* AnimatedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImage.swift; sourceTree = "<group>"; };
@@ -564,7 +562,6 @@
 			isa = PBXGroup;
 			children = (
 				35B3B96A2A08C01600B4540B /* AnimatedImageView.swift */,
-				35B3B9B42A08C01600B4540B /* TerminalView.swift */,
 				35B3B96B2A08C01600B4540B /* WebView.swift */,
 			);
 			path = Views;
@@ -957,7 +954,6 @@
 				35B3BA212A08C01600B4540B /* DocumentThumbnailView.swift in Sources */,
 				35B3B9C52A08C01600B4540B /* ldump.c in Sources */,
 				35B3B9BD2A08C01600B4540B /* loadlib.c in Sources */,
-				35B3BA2C2A08C01600B4540B /* TerminalView.swift in Sources */,
 				35B3BA082A08C01600B4540B /* MDLTexture+Data.swift in Sources */,
 				35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */,
 				35B3B9DF2A08C01600B4540B /* GNDDocument.swift in Sources */,
