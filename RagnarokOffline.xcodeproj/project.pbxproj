@@ -171,6 +171,7 @@
 
 /* Begin PBXFileReference section */
 		3504AB8B2A2EFB900029AC46 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		35270D2B2A68F4610001A8BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOffline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagnarokOfflineApp.swift; sourceTree = "<group>"; };
 		35B3B8D92A08BEA600B4540B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -411,6 +412,7 @@
 				35B3B97E2A08C01600B4540B /* Utilities */,
 				35B3B9012A08C01600B4540B /* Vendors */,
 				35B3BA422A08C51000B4540B /* RagnarokOffline-Bridging-Header.h */,
+				35270D2B2A68F4610001A8BD /* Info.plist */,
 				35B3B8DB2A08BEA700B4540B /* Assets.xcassets */,
 				35B3B8DD2A08BEA700B4540B /* Preview Content */,
 			);
@@ -1134,6 +1136,7 @@
 				DEVELOPMENT_TEAM = GG76KD534U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RagnarokOffline/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Ragnarok Offline";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1165,6 +1168,7 @@
 				DEVELOPMENT_TEAM = GG76KD534U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RagnarokOffline/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Ragnarok Offline";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

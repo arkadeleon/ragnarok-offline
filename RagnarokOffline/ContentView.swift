@@ -50,7 +50,7 @@ struct ContentView: View {
                 Section("Servers") {
                     ForEach(servers, id: \.name) { server in
                         NavigationLink {
-                            ServerView(server: server)
+                            RAServerView(server: server)
                         } label: {
                             Label(server.name, systemImage: "macpro.gen3.server")
                         }
@@ -60,7 +60,7 @@ struct ContentView: View {
                 Section("Databases") {
                     ForEach(databases, id: \.name) { database in
                         NavigationLink {
-                            DatabaseView(database: database)
+                            RADatabaseView(database: database)
                         } label: {
                             Label(database.name, systemImage: "list.bullet.rectangle")
                         }
