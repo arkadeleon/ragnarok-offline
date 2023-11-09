@@ -12,7 +12,7 @@ struct GNDLightmap {
 
     var per_cell: Int32
     var count: UInt32
-    var data: Data
+    var data: [UInt8]
 }
 
 struct GNDTile {
@@ -28,6 +28,46 @@ struct GNDTile {
     var texture: UInt16
     var light: UInt16
     var color: simd_uchar4
+
+    init(from reader: BinaryReader, textures: [String], textureIndexes: [UInt16]) throws {
+        u1 = try reader.readFloat()
+        u2 = try reader.readFloat()
+        u3 = try reader.readFloat()
+        u4 = try reader.readFloat()
+        v1 = try reader.readFloat()
+        v2 = try reader.readFloat()
+        v3 = try reader.readFloat()
+        v4 = try reader.readFloat()
+        texture = try reader.readInt()
+        light = try reader.readInt()
+        color = try [reader.readInt(), reader.readInt(), reader.readInt(), reader.readInt()]
+
+        texture = textureIndexes[Int(texture)]
+
+        generateAtlas(textures: textures)
+    }
+
+    private mutating func generateAtlas(textures: [String]) {
+        let ATLAS_COLS         = roundf(sqrtf(Float(textures.count)))
+        let ATLAS_ROWS         = ceilf(sqrtf(Float(textures.count)))
+        let ATLAS_WIDTH        = powf(2, ceilf(logf(ATLAS_COLS * 258) / logf(2)))
+        let ATLAS_HEIGHT       = powf(2, ceilf(logf(ATLAS_ROWS * 258) / logf(2)))
+        let ATLAS_FACTOR_U     = (ATLAS_COLS * 258) / ATLAS_WIDTH
+        let ATLAS_FACTOR_V     = (ATLAS_ROWS * 258) / ATLAS_HEIGHT
+        let ATLAS_PX_U         = Float(1) / Float(258)
+        let ATLAS_PX_V         = Float(1) / Float(258)
+
+        let u   = Float(Int(texture) % Int(ATLAS_COLS))
+        let v   = floorf(Float(texture) / ATLAS_COLS)
+        u1 = (u + u1 * (1 - ATLAS_PX_U * 2) + ATLAS_PX_U) * ATLAS_FACTOR_U / ATLAS_COLS
+        u2 = (u + u2 * (1 - ATLAS_PX_U * 2) + ATLAS_PX_U) * ATLAS_FACTOR_U / ATLAS_COLS
+        u3 = (u + u3 * (1 - ATLAS_PX_U * 2) + ATLAS_PX_U) * ATLAS_FACTOR_U / ATLAS_COLS
+        u4 = (u + u4 * (1 - ATLAS_PX_U * 2) + ATLAS_PX_U) * ATLAS_FACTOR_U / ATLAS_COLS
+        v1 = (v + v1 * (1 - ATLAS_PX_V * 2) + ATLAS_PX_V) * ATLAS_FACTOR_V / ATLAS_ROWS
+        v2 = (v + v2 * (1 - ATLAS_PX_V * 2) + ATLAS_PX_V) * ATLAS_FACTOR_V / ATLAS_ROWS
+        v3 = (v + v3 * (1 - ATLAS_PX_V * 2) + ATLAS_PX_V) * ATLAS_FACTOR_V / ATLAS_ROWS
+        v4 = (v + v4 * (1 - ATLAS_PX_V * 2) + ATLAS_PX_V) * ATLAS_FACTOR_V / ATLAS_ROWS
+    }
 }
 
 struct GNDSurface {
@@ -36,9 +76,21 @@ struct GNDSurface {
     var tile_up: Int32
     var tile_front: Int32
     var tile_right: Int32
+
+    init(from reader: BinaryReader) throws {
+        height = try [
+            reader.readFloat() / 5,
+            reader.readFloat() / 5,
+            reader.readFloat() / 5,
+            reader.readFloat() / 5
+        ]
+        tile_up = try reader.readInt()
+        tile_front = try reader.readInt()
+        tile_right = try reader.readInt()
+    }
 }
 
-struct GNDDocument: Document {
+struct GNDDocument {
 
     var header: String
     var version: String
@@ -54,41 +106,43 @@ struct GNDDocument: Document {
     var tiles: [GNDTile]
     var surfaces: [GNDSurface]
 
-    init(from stream: Stream) throws {
-        let reader = StreamReader(stream: stream)
+    init(data: Data) throws {
+        let stream = MemoryStream(data: data)
+        defer {
+            stream.close()
+        }
 
-        header = try reader.readString(count: 4)
+        let reader = BinaryReader(stream: stream)
+
+        header = try reader.readString(4, encoding: .ascii)
         guard header == "GRGN" else {
             throw DocumentError.invalidContents
         }
 
-        let major = try reader.readUInt8()
-        let minor = try reader.readUInt8()
+        let major: UInt8 = try reader.readInt()
+        let minor: UInt8 = try reader.readInt()
         version = "\(major).\(minor)"
 
-        width = try reader.readUInt32()
-        height = try reader.readUInt32()
-        zoom = try reader.readFloat32()
+        width = try reader.readInt()
+        height = try reader.readInt()
+        zoom = try reader.readFloat()
 
-        (textures, textureIndexes) = try reader.readGNDTextures()
-        lightmap = try reader.readGNDLightmap()
+        (textures, textureIndexes) = try GNDDocument.loadTextures(reader: reader)
+        lightmap = try GNDDocument.loadLightmap(reader: reader)
 
-        tiles = try reader.readGNDTiles(textures: textures, textureIndexes: textureIndexes)
-        surfaces = try reader.readGNDSurfaces(width: width, height: height)
+        tiles = try GNDDocument.loadTiles(reader: reader, textures: textures, textureIndexes: textureIndexes)
+        surfaces = try GNDDocument.loadSurfaces(reader: reader, width: width, height: height)
     }
-}
 
-extension StreamReader {
-
-    fileprivate func readGNDTextures() throws -> ([String], [UInt16]) {
-        let count = try readUInt32()
-        let length = try readUInt32()
+    private static func loadTextures(reader: BinaryReader) throws -> (textures: [String], indexes: [UInt16]) {
+        let count: UInt32 = try reader.readInt()
+        let length: UInt32 = try reader.readInt()
 
         var indexes: [UInt16] = []
         var textures: [String] = []
 
         for _ in 0..<count {
-            let texture = try readString(count: Int(length), encoding: .koreanEUC)
+            let texture = try reader.readString(Int(length), encoding: .koreanEUC)
             var pos = textures.firstIndex(of: texture) ?? -1
 
             if pos == -1 {
@@ -102,80 +156,39 @@ extension StreamReader {
         return (textures, indexes)
     }
 
-    fileprivate func readGNDLightmap() throws -> GNDLightmap {
-        let count = try readUInt32()
-        let per_cell_x = try readInt32()
-        let per_cell_y = try readInt32()
-        let size_cell = try readInt32()
+    private static func loadLightmap(reader: BinaryReader) throws -> GNDLightmap {
+        let count: UInt32 = try reader.readInt()
+        let per_cell_x: Int32 = try reader.readInt()
+        let per_cell_y: Int32 = try reader.readInt()
+        let size_cell: Int32 = try reader.readInt()
         let per_cell = per_cell_x * per_cell_y * size_cell
 
         let lightmap = try GNDLightmap(
             per_cell: per_cell,
             count: count,
-            data: readData(count: Int(count) * Int(per_cell) * 4)
+            data: reader.readBytes(Int(count) * Int(per_cell) * 4)
         )
         return lightmap
     }
 
-    fileprivate func readGNDTiles(textures: [String], textureIndexes: [UInt16]) throws -> [GNDTile] {
-        let count = try readUInt32()
+    private static func loadTiles(reader: BinaryReader, textures: [String], textureIndexes: [UInt16]) throws -> [GNDTile] {
+        let count: UInt32 = try reader.readInt()
         var tiles: [GNDTile] = []
 
-        func ATLAS_GENERATE(tile: inout GNDTile) {
-            let ATLAS_COLS         = roundf(sqrtf(Float(textures.count)))
-            let ATLAS_ROWS         = ceilf(sqrtf(Float(textures.count)))
-            let ATLAS_WIDTH        = powf(2, ceilf(logf(ATLAS_COLS * 258) / logf(2)))
-            let ATLAS_HEIGHT       = powf(2, ceilf(logf(ATLAS_ROWS * 258) / logf(2)))
-            let ATLAS_FACTOR_U     = (ATLAS_COLS * 258) / ATLAS_WIDTH
-            let ATLAS_FACTOR_V     = (ATLAS_ROWS * 258) / ATLAS_HEIGHT
-            let ATLAS_PX_U         = Float(1) / Float(258)
-            let ATLAS_PX_V         = Float(1) / Float(258)
-
-            let u   = Float(Int(tile.texture) % Int(ATLAS_COLS))
-            let v   = floorf(Float(tile.texture) / ATLAS_COLS)
-            tile.u1 = (u + tile.u1 * (1 - ATLAS_PX_U * 2) + ATLAS_PX_U) * ATLAS_FACTOR_U / ATLAS_COLS
-            tile.u2 = (u + tile.u2 * (1 - ATLAS_PX_U * 2) + ATLAS_PX_U) * ATLAS_FACTOR_U / ATLAS_COLS
-            tile.u3 = (u + tile.u3 * (1 - ATLAS_PX_U * 2) + ATLAS_PX_U) * ATLAS_FACTOR_U / ATLAS_COLS
-            tile.u4 = (u + tile.u4 * (1 - ATLAS_PX_U * 2) + ATLAS_PX_U) * ATLAS_FACTOR_U / ATLAS_COLS
-            tile.v1 = (v + tile.v1 * (1 - ATLAS_PX_V * 2) + ATLAS_PX_V) * ATLAS_FACTOR_V / ATLAS_ROWS
-            tile.v2 = (v + tile.v2 * (1 - ATLAS_PX_V * 2) + ATLAS_PX_V) * ATLAS_FACTOR_V / ATLAS_ROWS
-            tile.v3 = (v + tile.v3 * (1 - ATLAS_PX_V * 2) + ATLAS_PX_V) * ATLAS_FACTOR_V / ATLAS_ROWS
-            tile.v4 = (v + tile.v4 * (1 - ATLAS_PX_V * 2) + ATLAS_PX_V) * ATLAS_FACTOR_V / ATLAS_ROWS
-        }
-
         for _ in 0..<count {
-            var tile = try GNDTile(
-                u1: readFloat32(),
-                u2: readFloat32(),
-                u3: readFloat32(),
-                u4: readFloat32(),
-                v1: readFloat32(),
-                v2: readFloat32(),
-                v3: readFloat32(),
-                v4: readFloat32(),
-                texture: readUInt16(),
-                light: readUInt16(),
-                color: [readUInt8(), readUInt8(), readUInt8(), readUInt8()]
-            )
-            tile.texture = textureIndexes[Int(tile.texture)]
-            ATLAS_GENERATE(tile: &tile)
+            let tile = try GNDTile(from: reader, textures: textures, textureIndexes: textureIndexes)
             tiles.append(tile)
         }
 
         return tiles
     }
 
-    fileprivate func readGNDSurfaces(width: UInt32, height: UInt32) throws -> [GNDSurface] {
+    private static func loadSurfaces(reader: BinaryReader, width: UInt32, height: UInt32) throws -> [GNDSurface] {
         let count = width * height
         var surfaces: [GNDSurface] = []
 
         for _ in 0..<count {
-            let surface = try GNDSurface(
-                height: [readFloat32() / 5, readFloat32() / 5, readFloat32() / 5, readFloat32() / 5],
-                tile_up: readInt32(),
-                tile_front: readInt32(),
-                tile_right: readInt32()
-            )
+            let surface = try GNDSurface(from: reader)
             surfaces.append(surface)
         }
 

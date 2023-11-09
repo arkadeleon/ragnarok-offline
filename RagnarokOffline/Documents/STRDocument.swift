@@ -14,6 +14,22 @@ struct STRLayer {
     var texname: [String]
     var anikeynum: Int32
     var animations: [STRAnimation]
+
+    init(from reader: BinaryReader) throws {
+        texcnt = try reader.readInt()
+        texname = []
+        for _ in 0..<texcnt {
+            let name = try "data\\texture\\effect\\" + reader.readString(128, encoding: .ascii)
+            texname.append(name)
+        }
+
+        anikeynum = try reader.readInt()
+        animations = []
+        for _ in 0..<anikeynum {
+            let animation = try STRAnimation(from: reader)
+            animations.append(animation)
+        }
+    }
 }
 
 struct STRAnimation {
@@ -31,9 +47,51 @@ struct STRAnimation {
     var srcalpha: UInt32
     var destalpha: UInt32
     var mtpreset: UInt32
+
+    init(from reader: BinaryReader) throws {
+        frame = try reader.readInt()
+        type = try reader.readInt()
+        pos = try [
+            reader.readFloat(),
+            reader.readFloat()
+        ]
+        uv = try [
+            reader.readFloat(),
+            reader.readFloat(),
+            reader.readFloat(),
+            reader.readFloat(),
+            reader.readFloat(),
+            reader.readFloat(),
+            reader.readFloat(),
+            reader.readFloat()
+        ]
+        xy = try [
+            reader.readFloat(),
+            reader.readFloat(),
+            reader.readFloat(),
+            reader.readFloat(),
+            reader.readFloat(),
+            reader.readFloat(),
+            reader.readFloat(),
+            reader.readFloat()
+        ]
+        aniframe = try reader.readFloat()
+        anitype = try reader.readInt()
+        delay = try reader.readFloat()
+        angle = try reader.readFloat() / (1024 / 360)
+        color = try [
+            reader.readFloat() / 255,
+            reader.readFloat() / 255,
+            reader.readFloat() / 255,
+            reader.readFloat() / 255
+        ]
+        srcalpha = try reader.readInt()
+        destalpha = try reader.readInt()
+        mtpreset = try reader.readInt()
+    }
 }
 
-struct STRDocument: Document {
+struct STRDocument {
 
     var header: String
     var version: UInt32
@@ -42,76 +100,34 @@ struct STRDocument: Document {
     var layernum: UInt32
     var layers: [STRLayer]
 
-    init(from stream: Stream) throws {
-        let reader = StreamReader(stream: stream)
+    init(data: Data) throws {
+        let stream = MemoryStream(data: data)
+        defer {
+            stream.close()
+        }
 
-        header = try reader.readString(count: 4)
+        let reader = BinaryReader(stream: stream)
+
+        header = try reader.readString(4, encoding: .ascii)
         guard header == "STRM" else {
             throw DocumentError.invalidContents
         }
 
-        version = try reader.readUInt32()
+        version = try reader.readInt()
         guard version == 0x94 else {
             throw DocumentError.invalidContents
         }
 
-        fps = try reader.readUInt32()
-        maxKey = try reader.readUInt32()
-        layernum = try reader.readUInt32()
+        fps = try reader.readInt()
+        maxKey = try reader.readInt()
+        layernum = try reader.readInt()
 
-        try reader.skip(count: 16)
+        _ = try reader.readBytes(16)
 
-        var layers: [STRLayer] = []
+        layers = []
         for _ in 0..<layernum {
-            let layer = try reader.readSTRLayer()
+            let layer = try STRLayer(from: reader)
             layers.append(layer)
         }
-        self.layers = layers
-    }
-}
-
-extension StreamReader {
-
-    fileprivate func readSTRLayer() throws -> STRLayer {
-        let texcnt = try readInt32()
-        var texname: [String] = []
-        for _ in 0..<texcnt {
-            let name = try "data\\texture\\effect\\" + readString(count: 128)
-            texname.append(name)
-        }
-
-        let anikeynum = try readInt32()
-        var animations: [STRAnimation] = []
-        for _ in 0..<anikeynum {
-            let animation = try readSTRAnimation()
-            animations.append(animation)
-        }
-
-        let layer = STRLayer(
-            texcnt: texcnt,
-            texname: texname,
-            anikeynum: anikeynum,
-            animations: animations
-        )
-        return layer
-    }
-
-    fileprivate func readSTRAnimation() throws -> STRAnimation {
-        let animation = try STRAnimation(
-            frame: readInt32(),
-            type: readUInt32(),
-            pos: [readFloat32(), readFloat32()],
-            uv: [readFloat32(), readFloat32(), readFloat32(), readFloat32(), readFloat32(), readFloat32(), readFloat32(), readFloat32()],
-            xy: [readFloat32(), readFloat32(), readFloat32(), readFloat32(), readFloat32(), readFloat32(), readFloat32(), readFloat32()],
-            aniframe: readFloat32(),
-            anitype: readUInt32(),
-            delay: readFloat32(),
-            angle: readFloat32() / (1024 / 360),
-            color: [readFloat32() / 255, readFloat32() / 255, readFloat32() / 255, readFloat32() / 255],
-            srcalpha: readUInt32(),
-            destalpha: readUInt32(),
-            mtpreset: readUInt32()
-        )
-        return animation
     }
 }

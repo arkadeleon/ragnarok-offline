@@ -21,8 +21,7 @@ class ResourceBundle {
         self.url = url
         self.priority = priority
 
-        let loader = DocumentLoader()
-        guard let document = try? loader.load(GRFDocument.self, from: url) else {
+        guard let document = try? GRFDocument(url: url) else {
             return nil
         }
 

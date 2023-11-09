@@ -83,7 +83,7 @@ class GRFDocument {
     private var grf: grf_handle?
     private var isLoaded = false
 
-    init(fileURL url: URL) {
+    init(url: URL) {
         self.url = url
     }
 

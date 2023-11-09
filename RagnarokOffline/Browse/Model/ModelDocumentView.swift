@@ -63,19 +63,18 @@ struct ModelDocumentView: View {
             return
         }
 
-        let loader = DocumentLoader()
-        guard let document = try? loader.load(RSMDocument.self, from: data) else {
+        guard let rsm = try? RSMDocument(data: data) else {
             status = .failed
             return
         }
 
-        let textures = document.textures.map { textureName -> Data? in
+        let textures = rsm.textures.map { textureName -> Data? in
             grf.node(atPath: "data\\texture\\" + textureName)?.contents
         }
 
-        let (boundingBox, wrappers) = document.calcBoundingBox()
+        let (boundingBox, wrappers) = rsm.calcBoundingBox()
 
-        let instance = document.createInstance(
+        let instance = rsm.createInstance(
             position: [0, 0, 0],
             rotation: [0, 0, 0],
             scale: [-0.075, -0.075, -0.075],
@@ -83,7 +82,7 @@ struct ModelDocumentView: View {
             height: 0
         )
 
-        let meshes = document.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox)
+        let meshes = rsm.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox)
 
         guard let renderer = try? ModelDocumentRenderer(meshes: meshes, textures: textures, boundingBox: boundingBox) else {
             status = .failed

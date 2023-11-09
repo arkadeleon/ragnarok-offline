@@ -53,8 +53,7 @@ struct WorldDocumentView: View {
             return
         }
 
-        let loader = DocumentLoader()
-        guard let rsw = try? loader.load(RSWDocument.self, from: data) else {
+        guard let rsw = try? RSWDocument(data: data) else {
             status = .failed
             return
         }
@@ -67,7 +66,7 @@ struct WorldDocumentView: View {
         }
 
         guard let gndData = grf.node(atPath: "data\\" + rsw.files.gnd)?.contents,
-              let gnd = try? loader.load(GNDDocument.self, from: gndData)
+              let gnd = try? GNDDocument(data: gndData)
         else {
             status = .failed
             return
@@ -129,7 +128,7 @@ struct WorldDocumentView: View {
         for model in rsw.models {
             let name = "data\\model\\" + model.filename
             guard let data = grf.node(atPath: name)?.contents,
-                  let rsm = try? loader.load(RSMDocument.self, from: data) else {
+                  let rsm = try? RSMDocument(data: data) else {
                 continue
             }
 

@@ -8,10 +8,24 @@
 
 struct RSWFiles {
 
-    var ini = ""
-    var gnd = ""
-    var gat = ""
-    var src = ""
+    var ini: String
+    var gnd: String
+    var gat: String
+    var src: String
+
+    init(from reader: BinaryReader, version: String) throws {
+        ini = try reader.readString(40, encoding: .ascii)
+
+        gnd = try reader.readString(40, encoding: .ascii)
+
+        gat = try reader.readString(40, encoding: .ascii)
+
+        if version >= "1.4" {
+            src = try reader.readString(40, encoding: .ascii)
+        } else {
+            src = ""
+        }
+    }
 }
 
 struct RSWWater {
@@ -23,6 +37,23 @@ struct RSWWater {
     var wavePitch: Float = 50
     var animSpeed: Int32 = 3
     var images: [String] = []
+
+    init(from reader: BinaryReader, version: String) throws {
+        if version >= "1.3" {
+            level = try reader.readFloat() / 5
+
+            if version >= "1.8" {
+                type = try reader.readInt()
+                waveHeight = try reader.readFloat() / 5
+                waveSpeed = try reader.readFloat()
+                wavePitch = try reader.readFloat()
+
+                if version >= "1.9" {
+                    animSpeed = try reader.readInt()
+                }
+            }
+        }
+    }
 }
 
 struct RSWLight {
@@ -33,6 +64,19 @@ struct RSWLight {
     var ambient: simd_float3 = [0.3, 0.3, 0.3]
     var opacity: Float = 1
     var direction: simd_float3 = [0, 0, 0]
+
+    init(from reader: BinaryReader, version: String) throws {
+        if version >= "1.5" {
+            longitude = try reader.readInt()
+            latitude = try reader.readInt()
+            diffuse = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
+            ambient = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
+
+            if version >= "1.7" {
+                opacity = try reader.readFloat()
+            }
+        }
+    }
 }
 
 struct RSWGround {
@@ -41,6 +85,15 @@ struct RSWGround {
     var bottom: Int32 = 500
     var left: Int32 = -500
     var right: Int32 = 500
+
+    init(from reader: BinaryReader, version: String) throws {
+        if version >= "1.6" {
+            top = try reader.readInt()
+            bottom = try reader.readInt()
+            left = try reader.readInt()
+            right = try reader.readInt()
+        }
+    }
 }
 
 enum RSWObject {
@@ -56,6 +109,18 @@ enum RSWObject {
         var position: simd_float3
         var rotation: simd_float3
         var scale: simd_float3
+
+        init(from reader: BinaryReader, version: String) throws {
+            name = try version >= "1.3" ? reader.readString(40, encoding: .koreanEUC) : ""
+            animType = try version >= "1.3" ? reader.readInt() : 0
+            animSpeed = try version >= "1.3" ? reader.readFloat() : 0
+            blockType = try version >= "1.3" ? reader.readInt() : 0
+            filename = try reader.readString(80, encoding: .koreanEUC)
+            nodename = try  reader.readString(80, encoding: .ascii)
+            position = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
+            rotation = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
+            scale = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
+        }
     }
 
     struct Light {
@@ -64,6 +129,13 @@ enum RSWObject {
         var pos: simd_float3
         var color: simd_int3
         var range: Float
+
+        init(from reader: BinaryReader, version: String) throws {
+            name = try reader.readString(80, encoding: .ascii)
+            pos = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
+            color = try [reader.readInt(), reader.readInt(), reader.readInt()]
+            range = try reader.readFloat()
+        }
     }
 
     struct Sound {
@@ -76,6 +148,17 @@ enum RSWObject {
         var height: Int32
         var range: Float
         var cycle: Float
+
+        init(from reader: BinaryReader, version: String) throws {
+            name = try reader.readString(80, encoding: .ascii)
+            file = try reader.readString(80, encoding: .ascii)
+            pos = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
+            vol = try reader.readFloat()
+            width = try reader.readInt()
+            height = try reader.readInt()
+            range = try reader.readFloat()
+            cycle = try version >= "2.0" ? reader.readFloat() : 0
+        }
     }
 
     struct Effect {
@@ -85,10 +168,18 @@ enum RSWObject {
         var id: Int32
         var delay: Float
         var param: simd_float4
+
+        init(from reader: BinaryReader, version: String) throws {
+            name = try reader.readString(80, encoding: .ascii)
+            pos = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
+            id = try reader.readInt()
+            delay = try reader.readFloat() * 10
+            param = try [reader.readFloat(), reader.readFloat(), reader.readFloat(), reader.readFloat()]
+        }
     }
 }
 
-struct RSWDocument: Document {
+struct RSWDocument {
 
     var header: String
     var version: String
@@ -101,127 +192,56 @@ struct RSWDocument: Document {
     var sounds: [RSWObject.Sound]
     var effects: [RSWObject.Effect]
 
-    init(from stream: Stream) throws {
-        let reader = StreamReader(stream: stream)
+    init(data: Data) throws {
+        let stream = MemoryStream(data: data)
+        defer {
+            stream.close()
+        }
 
-        header = try reader.readString(count: 4)
+        let reader = BinaryReader(stream: stream)
+
+        header = try reader.readString(4, encoding: .ascii)
         guard header == "GRSW" else {
             throw DocumentError.invalidContents
         }
 
-        let major = try reader.readUInt8()
-        let minor = try reader.readUInt8()
+        let major: UInt8 = try reader.readInt()
+        let minor: UInt8 = try reader.readInt()
         version = "\(major).\(minor)"
 
-        var files = RSWFiles()
-        files.ini = try reader.readString(count: 40)
-        files.gnd = try reader.readString(count: 40)
-        files.gat = try reader.readString(count: 40)
+        files = try RSWFiles(from: reader, version: version)
 
-        if version >= "1.4" {
-            files.src = try reader.readString(count: 40)
-        }
+        water = try RSWWater(from: reader, version: version)
 
-        self.files = files
+        light = try RSWLight(from: reader, version: version)
 
-        var water = RSWWater()
-        if version >= "1.3" {
-            water.level = try reader.readFloat32() / 5
+        ground = try RSWGround(from: reader, version: version)
 
-            if version >= "1.8" {
-                water.type = try reader.readInt32()
-                water.waveHeight = try reader.readFloat32() / 5
-                water.waveSpeed = try reader.readFloat32()
-                water.wavePitch = try reader.readFloat32()
+        let count: Int32 = try reader.readInt()
 
-                if version >= "1.9" {
-                    water.animSpeed = try reader.readInt32()
-                }
-            }
-        }
-        self.water = water
-
-        var light = RSWLight()
-        if version >= "1.5" {
-            light.longitude = try reader.readInt32()
-            light.latitude = try reader.readInt32()
-            light.diffuse = try [reader.readFloat32(), reader.readFloat32(), reader.readFloat32()]
-            light.ambient = try [reader.readFloat32(), reader.readFloat32(), reader.readFloat32()]
-
-            if version >= "1.7" {
-                light.opacity = try reader.readFloat32()
-            }
-        }
-        self.light = light
-
-        var ground = RSWGround()
-        if version >= "1.6" {
-            ground.top = try reader.readInt32()
-            ground.bottom = try reader.readInt32()
-            ground.left = try reader.readInt32()
-            ground.right = try reader.readInt32()
-        }
-        self.ground = ground
-
-        let count = try reader.readInt32()
-
-        var models: [RSWObject.Model] = []
-        var lights: [RSWObject.Light] = []
-        var sounds: [RSWObject.Sound] = []
-        var effects: [RSWObject.Effect] = []
+        models = []
+        lights = []
+        sounds = []
+        effects = []
 
         for _ in 0..<count {
-            switch (try reader.readInt32()) {
+            let type: Int32 = try reader.readInt()
+            switch (type) {
             case 1:
-                let model = try RSWObject.Model(
-                    name: version >= "1.3" ? reader.readString(count: 40, encoding: .koreanEUC) : "",
-                    animType: version >= "1.3" ? reader.readInt32() : 0,
-                    animSpeed: version >= "1.3" ? reader.readFloat32() : 0,
-                    blockType: version >= "1.3" ? reader.readInt32() : 0,
-                    filename: reader.readString(count: 80, encoding: .koreanEUC),
-                    nodename:  reader.readString(count: 80),
-                    position: [reader.readFloat32() / 5, reader.readFloat32() / 5, reader.readFloat32() / 5],
-                    rotation: [reader.readFloat32(), reader.readFloat32(), reader.readFloat32()],
-                    scale: [reader.readFloat32() / 5, reader.readFloat32() / 5, reader.readFloat32() / 5]
-                )
+                let model = try RSWObject.Model(from: reader, version: version)
                 models.append(model)
             case 2:
-                let light = try RSWObject.Light(
-                    name: reader.readString(count: 80),
-                    pos: [reader.readFloat32() / 5, reader.readFloat32() / 5, reader.readFloat32() / 5],
-                    color: [reader.readInt32(), reader.readInt32(), reader.readInt32()],
-                    range: reader.readFloat32()
-                )
+                let light = try RSWObject.Light(from: reader, version: version)
                 lights.append(light)
             case 3:
-                let sound = try RSWObject.Sound(
-                    name: reader.readString(count: 80),
-                    file: reader.readString(count: 80),
-                    pos: [reader.readFloat32() / 5, reader.readFloat32() / 5, reader.readFloat32() / 5],
-                    vol: reader.readFloat32(),
-                    width: reader.readInt32(),
-                    height: reader.readInt32(),
-                    range: reader.readFloat32(),
-                    cycle: version >= "2.0" ? reader.readFloat32() : 0
-                )
+                let sound = try RSWObject.Sound(from: reader, version: version)
                 sounds.append(sound)
             case 4:
-                let effect = try RSWObject.Effect(
-                    name: reader.readString(count: 80),
-                    pos: [reader.readFloat32() / 5, reader.readFloat32() / 5, reader.readFloat32() / 5],
-                    id: reader.readInt32(),
-                    delay: reader.readFloat32() * 10,
-                    param: [reader.readFloat32(), reader.readFloat32(), reader.readFloat32(), reader.readFloat32()]
-                )
+                let effect = try RSWObject.Effect(from: reader, version: version)
                 effects.append(effect)
             default:
                 break
             }
         }
-
-        self.models = models
-        self.lights = lights
-        self.sounds = sounds
-        self.effects = effects
     }
 }

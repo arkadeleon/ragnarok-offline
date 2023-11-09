@@ -20,16 +20,17 @@ struct INISection {
     var entries: [INIEntry]
 }
 
-struct INIDocument: Document {
+struct INIDocument {
 
     var sections: [INISection]
 
-    init(from stream: Stream) throws {
-        let reader = StreamReader(stream: stream)
+    init(url: URL) throws {
+        let contents = try String(contentsOf: url)
+        let lines = contents.split(separator: "\r\n")
 
-        var sections: [INISection] = []
+        sections = []
 
-        while let line = try? reader.readLine(separator: "\r\n") {
+        for line in lines {
             let line = line.trimmingCharacters(in: .whitespaces)
             if line.hasPrefix(";") || line.hasPrefix("#") {
                 continue
@@ -66,7 +67,5 @@ struct INIDocument: Document {
                 sections.append(section)
             }
         }
-
-        self.sections = sections
     }
 }

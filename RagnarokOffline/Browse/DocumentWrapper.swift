@@ -103,7 +103,7 @@ enum DocumentWrapper {
             documentWrappers = urls.map({ $0.resolvingSymlinksInPath() }).map { url -> DocumentWrapper in
                 switch url.pathExtension.lowercased() {
                 case "grf":
-                    let grf = GRFDocument(fileURL: url)
+                    let grf = GRFDocument(url: url)
                     return .grf(grf)
                 default:
                     return .url(url)
