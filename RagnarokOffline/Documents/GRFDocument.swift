@@ -6,121 +6,167 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-import grf
+import Foundation
+import CoreFoundation
+import DataCompression
 
-struct GRFTreeNode {
+struct GRFHeader {
 
-    fileprivate let grf: grf_handle
-    fileprivate var node = grf_treenode(nil)
+    static let size: Int = 0x2e
 
-    var isDirectory: Bool {
-        grf_tree_is_dir(node)
-    }
+    var signature: String
+    var key: Data
+    var fileTableOffset: UInt32
+    var skip: UInt32
+    var fileCount: UInt32
+    var version: UInt32
+}
 
-    var name: String {
-        if grf_tree_is_dir(node) {
-            return grf_tree_get_name(node)
-                .flatMap({ String(cString: $0, encoding: .koreanEUC) }) ?? ""
-        } else {
-            return grf_tree_get_file(node)
-                .flatMap { grf_file_get_basename($0) }
-                .flatMap { String(cString: $0, encoding: .koreanEUC) } ?? ""
-        }
-    }
+struct GRFTable {
 
-    var path: String {
-        if grf_tree_is_dir(node) {
-            return grf_tree_get_name(node)
-                .flatMap({ String(cString: $0, encoding: .koreanEUC) }) ?? ""
-        } else {
-            return grf_tree_get_file(node)
-                .flatMap { grf_file_get_filename($0) }
-                .flatMap { String(cString: $0, encoding: .koreanEUC) } ?? ""
-        }
-    }
+    static let size: UInt64 = 0x08
 
-    var contents: Data? {
-        if grf_tree_is_dir(node) {
-            return nil
-        }
+    var packSize: UInt32
+    var realSize: UInt32
+    var data: Data
+}
 
-        guard let file = grf_tree_get_file(node) else {
-            return nil
-        }
+struct GRFEntry {
 
-        let size = grf_file_get_size(file)
-        let ptr = malloc(Int(size))
-        guard grf_file_get_contents(file, ptr) == size else {
-            free(ptr)
-            return nil
+    var name: String
+    var packSize: UInt32
+    var lengthAligned: UInt32
+    var realSize: UInt32
+    var type: UInt8
+    var offset: UInt32
+
+    func data(from reader: BinaryReader) throws -> Data {
+        try reader.stream.seek(GRFHeader.size + Int(offset), origin: .begin)
+
+        var bytes = try reader.readBytes(Int(lengthAligned))
+
+        if type & GRFEntryType.encryptMixed.rawValue != 0 {
+            let decryptor = DESDecryptor()
+            decryptor.decodeFull(buf: &bytes, len: Int(lengthAligned), entrylen: Int(packSize))
+        } else if type & GRFEntryType.encryptHeader.rawValue != 0 {
+            let decryptor = DESDecryptor()
+            decryptor.decodeHeader(buf: &bytes, len: Int(lengthAligned))
         }
 
-        let contents = Data(bytesNoCopy: ptr!, count: Int(size), deallocator: .free)
-        return contents
-    }
-
-    var children: [GRFTreeNode] {
-        let count = grf_tree_dir_count_files(node)
-        guard let list = grf_tree_list_node(node) else {
-            return []
+        guard let data = Data(bytes).unzip() else {
+            throw DocumentError.invalidContents
         }
-
-        let children = (0..<count).map { i in
-            let child = GRFTreeNode(grf: grf, node: list[Int(i)])
-            return child
-        }
-
-        free(list)
-
-        return children
+        return data
     }
 }
 
-class GRFDocument {
+struct GRFEntryType: OptionSet {
 
-    let url: URL
+    let rawValue: UInt8
 
-    private var grf: grf_handle?
-    private var isLoaded = false
-
-    init(url: URL) {
-        self.url = url
+    init(rawValue: UInt8) {
+        self.rawValue = rawValue
     }
 
-    deinit {
-        if let grf {
-            grf_free(grf)
+    static let file          = GRFEntryType(rawValue: 0x01) // entry is a file
+    static let encryptMixed  = GRFEntryType(rawValue: 0x02) // encryption mode 0 (header DES + periodic DES/shuffle)
+    static let encryptHeader = GRFEntryType(rawValue: 0x04) // encryption mode 1 (header DES only)
+}
+
+struct GRFDocument {
+
+    var header: GRFHeader
+    var table: GRFTable
+    var entries: [GRFEntry]
+
+    init(url: URL) throws {
+        let stream = try FileStream(url: url)
+        let reader = BinaryReader(stream: stream)
+
+        defer {
+            reader.close()
         }
-    }
 
-    func node(atPath path: String) -> GRFTreeNode? {
-        loadIfNeeded()
+        let signature = try reader.readString(15)
+        let key = try reader.readBytes(15)
+        let fileTableOffset: UInt32 = try reader.readInt()
+        let skip: UInt32 = try reader.readInt()
+        let fileCount: UInt32 = try reader.readInt()
+        let version: UInt32 = try reader.readInt()
 
-        guard let grf else {
-            return nil
+        guard signature == "Master of Magic" else {
+            throw DocumentError.invalidContents
         }
 
-        var currentNode = GRFTreeNode(grf: grf, node: grf_tree_get_root(grf))
+        guard version == 0x200 else {
+            throw DocumentError.invalidContents
+        }
 
-        let pathComponents = path.lowercased().split(separator: "\\")
-        for pathComponent in pathComponents {
-            guard let childNode = currentNode.children.filter({ $0.name == pathComponent }).first else {
-                return nil
+        guard GRFHeader.size + Int(fileTableOffset) < stream.length else {
+            throw DocumentError.invalidContents
+        }
+
+        header = GRFHeader(
+            signature: signature,
+            key: Data(key),
+            fileTableOffset: fileTableOffset,
+            skip: skip,
+            fileCount: fileCount - skip - 7,
+            version: version
+        )
+
+        try stream.seek(Int(fileTableOffset), origin: .current)
+
+        let packSize: UInt32 = try reader.readInt()
+        let realSize: UInt32 = try reader.readInt()
+
+        let compressedData = try reader.readBytes(Int(packSize))
+        guard let data = Data(compressedData).unzip() else {
+            throw DocumentError.invalidContents
+        }
+
+        table = GRFTable(
+            packSize: packSize,
+            realSize: realSize,
+            data: data
+        )
+
+        var entries: [GRFEntry] = []
+
+        var pos = 0
+        for _ in 0..<header.fileCount {
+            guard let index = table.data[pos...].firstIndex(of: 0) else {
+                break
             }
-            currentNode = childNode
+
+            let name = String(data: table.data[pos..<index], encoding: .koreanEUC) ?? ""
+
+            pos = index + 1
+
+            let packSize = Data(table.data[(pos + 0)..<(pos + 4)]).withUnsafeBytes { $0.load(as: UInt32.self) }
+            let lengthAligned = Data(table.data[(pos + 4)..<(pos + 8)]).withUnsafeBytes { $0.load(as: UInt32.self) }
+            let realSize = Data(table.data[(pos + 8)..<(pos + 12)]).withUnsafeBytes { $0.load(as: UInt32.self) }
+            let type = table.data[pos + 12]
+            let offset = Data(table.data[(pos + 13)..<(pos + 17)]).withUnsafeBytes { $0.load(as: UInt32.self) }
+
+            pos += 17
+
+            if type & GRFEntryType.file.rawValue == 0 {
+                continue
+            }
+
+            let entry = GRFEntry(
+                name: name as String,
+                packSize: packSize,
+                lengthAligned: lengthAligned,
+                realSize: realSize,
+                type: type,
+                offset: offset
+            )
+
+            entries.append(entry)
         }
 
-        return currentNode
-    }
-
-    private func loadIfNeeded() {
-        guard isLoaded == false else {
-            return
-        }
-
-        grf = grf_load(url.path(), false)
-        grf_create_tree(grf)
-
-        isLoaded = true
+        self.entries = entries
     }
 }

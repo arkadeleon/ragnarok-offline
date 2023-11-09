@@ -10,18 +10,9 @@
       }
     },
     {
-      "identity" : "grf",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/arkadeleon/grf.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "2afec4a2bafd5d4f4d79ead8a4da1afa11d88a91"
-      }
-    },
-    {
       "identity" : "rathena-ios",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/arkadeleon/rathena-ios.git",
+      "location" : "https://github.com/arkadeleon/rathena-ios",
       "state" : {
         "branch" : "master",
         "revision" : "58e11f5eaa2dc99b00b2d0fe97aa4967beefb6d1"

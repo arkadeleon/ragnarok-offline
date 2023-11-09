@@ -11,8 +11,9 @@ import UIKit
 enum DocumentWrapper {
 
     case url(URL)
-    case grf(GRFDocument)
-    case grfNode(GRFDocument, GRFTreeNode)
+    case grf(GRFTree)
+    case grfDirectory(GRFTree, String)
+    case grfEntry(GRFTree, String)
 
     var isDirectory: Bool {
         switch self {
@@ -21,8 +22,10 @@ enum DocumentWrapper {
             return values?.isDirectory == true
         case .grf:
             return false
-        case .grfNode(_, let node):
-            return node.isDirectory
+        case .grfDirectory:
+            return true
+        case .grfEntry:
+            return false
         }
     }
 
@@ -32,7 +35,9 @@ enum DocumentWrapper {
             return false
         case .grf:
             return true
-        case .grfNode:
+        case .grfDirectory:
+            return false
+        case .grfEntry:
             return false
         }
     }
@@ -48,8 +53,10 @@ enum DocumentWrapper {
             return fileType
         case .grf:
             return nil
-        case .grfNode(_, let node):
-            let pathExtension = node.name.split(separator: "\\").last?.split(separator: ".").last
+        case .grfDirectory:
+            return nil
+        case .grfEntry(_, let path):
+            let pathExtension = path.split(separator: "\\").last?.split(separator: ".").last
             let fileType = FileType(rawValue: String(pathExtension ?? ""))
             return fileType
         }
@@ -59,11 +66,14 @@ enum DocumentWrapper {
         switch self {
         case .url(let url):
             return url
-        case .grf(let grf):
-            return grf.url
-        case .grfNode(let grf, let node):
-            let name = node.name.replacing("\\", with: "/")
-            return grf.url.appendingPathComponent(name)
+        case .grf(let tree):
+            return tree.url
+        case .grfDirectory(let tree, let path):
+            let path = path.replacing("\\", with: "/")
+            return tree.url.appendingPathComponent(path)
+        case .grfEntry(let tree, let path):
+            let path = path.replacing("\\", with: "/")
+            return tree.url.appendingPathComponent(path)
         }
     }
 
@@ -71,24 +81,31 @@ enum DocumentWrapper {
         switch self {
         case .url(let url):
             return url.lastPathComponent
-        case .grf(let grf):
-            return grf.url.lastPathComponent
-        case .grfNode(_, let node):
-            let lastPathComponent = node.name.split(separator: "\\").last
+        case .grf(let tree):
+            return tree.url.lastPathComponent
+        case .grfDirectory(_, let path):
+            let lastPathComponent = path.split(separator: "\\").last
+            return String(lastPathComponent ?? "")
+        case .grfEntry(_, let path):
+            let lastPathComponent = path.split(separator: "\\").last
             return String(lastPathComponent ?? "")
         }
     }
 
     func contents() -> Data? {
         switch self {
-        case .url(let url) where !isDirectory:
-            return try? Data(contentsOf: url)
+        case .url(let url):
+            if isDirectory {
+                return nil
+            } else {
+                return try? Data(contentsOf: url)
+            }
         case .grf:
             return nil
-        case .grfNode(_, let node) where !isDirectory:
-            return node.contents
-        default:
+        case .grfDirectory:
             return nil
+        case .grfEntry(let tree, let path):
+            return try? tree.contentsOfEntry(withName: path)
         }
     }
 
@@ -96,30 +113,38 @@ enum DocumentWrapper {
         var documentWrappers: [DocumentWrapper] = []
 
         switch self {
-        case .url(let url) where isDirectory:
+        case .url(let url):
+            guard isDirectory else {
+                break
+            }
             guard let urls = try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: []) else {
                 break
             }
             documentWrappers = urls.map({ $0.resolvingSymlinksInPath() }).map { url -> DocumentWrapper in
                 switch url.pathExtension.lowercased() {
                 case "grf":
-                    let grf = GRFDocument(url: url)
-                    return .grf(grf)
+                    let tree = GRFTree(url: url)
+                    return .grf(tree)
                 default:
                     return .url(url)
                 }
             }
-        case .grf(let grf):
-            guard let node = grf.node(atPath: "data\\") else {
-                break
-            }
-            let documentWrapper = DocumentWrapper.grfNode(grf, node)
+        case .grf(let tree):
+            let documentWrapper = DocumentWrapper.grfDirectory(tree, "data\\")
             documentWrappers = documentWrapper.documentWrappers()
-        case .grfNode(let grf, let node) where isDirectory:
-            documentWrappers = node.children.map { node in
-                DocumentWrapper.grfNode(grf, node)
+        case .grfDirectory(let tree, let path):
+            let nodes = tree.nodes(withPath: path)
+            for node in nodes {
+                if let entry = node.entry {
+                    let documentWrapper = DocumentWrapper.grfEntry(tree, entry.name)
+                    documentWrappers.append(documentWrapper)
+                } else {
+                    let path = "\(path)\(node.pathComponent)\\"
+                    let documentWrapper = DocumentWrapper.grfDirectory(tree, path)
+                    documentWrappers.append(documentWrapper)
+                }
             }
-        default:
+        case .grfEntry:
             break
         }
 
@@ -146,8 +171,10 @@ enum DocumentWrapper {
             }
         case .grf:
             return nil
-        case .grfNode(_, let node):
-            guard let contents = node.contents else {
+        case .grfDirectory:
+            return nil
+        case .grfEntry(let tree, let path):
+            guard let contents = try? tree.contentsOfEntry(withName: path) else {
                 return nil
             }
             do {

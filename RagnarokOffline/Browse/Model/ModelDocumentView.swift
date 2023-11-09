@@ -56,7 +56,7 @@ struct ModelDocumentView: View {
 
         status = .loading
 
-        guard case .grfNode(let grf, _) = self.document,
+        guard case .grfEntry(let tree, _) = self.document,
               let data = self.document.contents()
         else {
             status = .failed
@@ -69,7 +69,7 @@ struct ModelDocumentView: View {
         }
 
         let textures = rsm.textures.map { textureName -> Data? in
-            grf.node(atPath: "data\\texture\\" + textureName)?.contents
+            try? tree.contentsOfEntry(withName: "data\\texture\\" + textureName)
         }
 
         let (boundingBox, wrappers) = rsm.calcBoundingBox()

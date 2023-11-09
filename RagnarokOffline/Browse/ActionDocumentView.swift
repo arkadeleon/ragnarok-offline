@@ -80,9 +80,9 @@ struct ActionDocumentView: View {
                 return
             }
             sprData = data
-        case .grfNode(let grf, let node):
-            let sprPath = (node.path as NSString).deletingPathExtension.appending(".spr")
-            guard let data = grf.node(atPath: sprPath)?.contents else {
+        case .grfEntry(let tree, let path):
+            let sprPath = (path as NSString).deletingPathExtension.appending(".spr")
+            guard let data = try? tree.contentsOfEntry(withName: sprPath) else {
                 status = .failed
                 return
             }

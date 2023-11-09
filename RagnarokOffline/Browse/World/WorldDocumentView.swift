@@ -46,7 +46,7 @@ struct WorldDocumentView: View {
 
         status = .loading
 
-        guard case .grfNode(let grf, _) = self.document,
+        guard case .grfEntry(let tree, _) = self.document,
               let data = self.document.contents()
         else {
             status = .failed
@@ -58,14 +58,14 @@ struct WorldDocumentView: View {
             return
         }
 
-        guard let gatData = grf.node(atPath: "data\\" + rsw.files.gat)?.contents,
+        guard let gatData = try? tree.contentsOfEntry(withName: "data\\" + rsw.files.gat),
               let gat = try? GATDocument(data: gatData)
         else {
             status = .failed
             return
         }
 
-        guard let gndData = grf.node(atPath: "data\\" + rsw.files.gnd)?.contents,
+        guard let gndData = try? tree.contentsOfEntry(withName: "data\\" + rsw.files.gnd),
               let gnd = try? GNDDocument(data: gndData)
         else {
             status = .failed
@@ -104,7 +104,7 @@ struct WorldDocumentView: View {
         context.concatenate(flipVertical)
 
         for (i, name) in textures.enumerated() {
-            guard let data = grf.node(atPath: "data\\texture\\" + name)?.contents else {
+            guard let data = try? tree.contentsOfEntry(withName: "data\\texture\\" + name) else {
                 continue
             }
             let image = UIImage(data: data)?.cgImage?.decoded
@@ -119,15 +119,15 @@ struct WorldDocumentView: View {
 
         var waterTextures: [Data?] = []
         for i in 0..<32 {
-            let name = NSString(format: "data\\texture\\워터\\water0%02d.jpg", i)
-            let data = grf.node(atPath: name as String)?.contents
+            let name = String(format: "data\\texture\\워터\\water0%02d.jpg", i)
+            let data = try? tree.contentsOfEntry(withName: name)
             waterTextures.append(data)
         }
 
         var models: [String: ([[ModelVertex]], [Data?])] = [:]
         for model in rsw.models {
             let name = "data\\model\\" + model.filename
-            guard let data = grf.node(atPath: name)?.contents,
+            guard let data = try? tree.contentsOfEntry(withName: name),
                   let rsm = try? RSMDocument(data: data) else {
                 continue
             }
@@ -135,7 +135,7 @@ struct WorldDocumentView: View {
             var m = models[name] ?? ([[ModelVertex]](repeating: [], count: rsm.textures.count), [])
 
             let textures = rsm.textures.map { textureName -> Data? in
-                grf.node(atPath: "data\\texture\\" + textureName)?.contents
+                try? tree.contentsOfEntry(withName: "data\\texture\\" + textureName)
             }
             m.1 = textures
 
