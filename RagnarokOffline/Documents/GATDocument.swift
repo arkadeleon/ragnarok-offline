@@ -48,27 +48,32 @@ struct GATDocument {
     var cells: [GATCell]
 
     init(data: Data) throws {
-        var buffer = ByteBuffer(data: data)
+        let stream = MemoryStream(data: data)
+        let reader = BinaryReader(stream: stream)
 
-        header = try buffer.readString(length: 4)
+        defer {
+            reader.close()
+        }
+
+        header = try reader.readString(4)
         guard header == "GRAT" else {
             throw DocumentError.invalidContents
         }
 
-        let major = try buffer.readUInt8()
-        let minor = try buffer.readUInt8()
+        let major: UInt8 = try reader.readInt()
+        let minor: UInt8 = try reader.readInt()
         version = "\(major).\(minor)"
 
-        width = try buffer.readUInt32()
-        height = try buffer.readUInt32()
+        width = try reader.readInt()
+        height = try reader.readInt()
 
         cells = try (0..<(width * height)).map { _ in
             try GATCell(
-                height1: buffer.readFloat32() * 0.2,
-                height2: buffer.readFloat32() * 0.2,
-                height3: buffer.readFloat32() * 0.2,
-                height4: buffer.readFloat32() * 0.2,
-                types: GATCellType(rawType: buffer.readUInt32())
+                height1: reader.readFloat() * 0.2,
+                height2: reader.readFloat() * 0.2,
+                height3: reader.readFloat() * 0.2,
+                height4: reader.readFloat() * 0.2,
+                types: GATCellType(rawType: reader.readInt())
             )
         }
     }

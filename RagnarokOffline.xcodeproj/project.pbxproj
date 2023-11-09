@@ -116,7 +116,6 @@
 		35B3BA272A08C01600B4540B /* ModelRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9AD2A08C01600B4540B /* ModelRenderer.swift */; };
 		35B3BA282A08C01600B4540B /* WaterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9AE2A08C01600B4540B /* WaterRenderer.swift */; };
 		35B3BA292A08C01600B4540B /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9B02A08C01600B4540B /* Palette.swift */; };
-		35B3BA2A2A08C01600B4540B /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9B12A08C01600B4540B /* ByteBuffer.swift */; };
 		35B3BA302A08C3C700B4540B /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA2F2A08C3C700B4540B /* rAthenaChar */; };
 		35B3BA322A08C3C700B4540B /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA312A08C3C700B4540B /* rAthenaCommon */; };
 		35B3BA342A08C3C700B4540B /* rAthenaLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA332A08C3C700B4540B /* rAthenaLogin */; };
@@ -329,7 +328,6 @@
 		35B3B9AD2A08C01600B4540B /* ModelRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelRenderer.swift; sourceTree = "<group>"; };
 		35B3B9AE2A08C01600B4540B /* WaterRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterRenderer.swift; sourceTree = "<group>"; };
 		35B3B9B02A08C01600B4540B /* Palette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
-		35B3B9B12A08C01600B4540B /* ByteBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteBuffer.swift; sourceTree = "<group>"; };
 		35B3BA422A08C51000B4540B /* RagnarokOffline-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RagnarokOffline-Bridging-Header.h"; sourceTree = "<group>"; };
 		35B3BA482A08DA0C00B4540B /* StillImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillImage.swift; sourceTree = "<group>"; };
 		35B3BA4A2A08DA2C00B4540B /* AnimatedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImage.swift; sourceTree = "<group>"; };
@@ -708,7 +706,6 @@
 				35B3BA4A2A08DA2C00B4540B /* AnimatedImage.swift */,
 				356BF66C2AFC8963005B67F7 /* BinaryReader.swift */,
 				356BF66A2AFC8963005B67F7 /* BinaryWriter.swift */,
-				35B3B9B12A08C01600B4540B /* ByteBuffer.swift */,
 				356BF66B2AFC8963005B67F7 /* FileStream.swift */,
 				356BF66D2AFC8963005B67F7 /* MemoryStream.swift */,
 				35B3B9B02A08C01600B4540B /* Palette.swift */,
@@ -891,7 +888,6 @@
 				35B3B9C42A08C01600B4540B /* ltable.c in Sources */,
 				35B3B9B72A08C01600B4540B /* liolib.c in Sources */,
 				35B3B9C02A08C01600B4540B /* lstrlib.c in Sources */,
-				35B3BA2A2A08C01600B4540B /* ByteBuffer.swift in Sources */,
 				35B3B9BA2A08C01600B4540B /* lobject.c in Sources */,
 				35B695EA2A305EF6006F1904 /* GameView.swift in Sources */,
 				35B3BA182A08C01600B4540B /* ImageDocumentView.swift in Sources */,

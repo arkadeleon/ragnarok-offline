@@ -81,8 +81,8 @@ struct RSMNode {
     var rotationKeyframes: [RSMRotationKeyframe]
 
     init(from reader: BinaryReader, version: String) throws {
-        name = try reader.readString(40, encoding: .ascii)
-        parentname = try reader.readString(40, encoding: .ascii)
+        name = try reader.readString(40)
+        parentname = try reader.readString(40)
 
         let textureCount: Int32 = try reader.readInt()
         textures = []
@@ -182,13 +182,13 @@ struct RSMDocument {
 
     init(data: Data) throws {
         let stream = MemoryStream(data: data)
-        defer {
-            stream.close()
-        }
-
         let reader = BinaryReader(stream: stream)
 
-        header = try reader.readString(4, encoding: .ascii)
+        defer {
+            reader.close()
+        }
+
+        header = try reader.readString(4)
         guard header == "GRSM" else {
             throw DocumentError.invalidContents
         }
@@ -210,7 +210,7 @@ struct RSMDocument {
             textures.append(texture)
         }
 
-        let name = try reader.readString(40, encoding: .ascii)
+        let name = try reader.readString(40)
         let nodeCount: Int32 = try reader.readInt()
         nodes = []
         for _ in 0..<nodeCount {

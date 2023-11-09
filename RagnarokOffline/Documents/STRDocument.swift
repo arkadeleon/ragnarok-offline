@@ -19,7 +19,7 @@ struct STRLayer {
         texcnt = try reader.readInt()
         texname = []
         for _ in 0..<texcnt {
-            let name = try "data\\texture\\effect\\" + reader.readString(128, encoding: .ascii)
+            let name = try "data\\texture\\effect\\" + reader.readString(128)
             texname.append(name)
         }
 
@@ -102,13 +102,13 @@ struct STRDocument {
 
     init(data: Data) throws {
         let stream = MemoryStream(data: data)
-        defer {
-            stream.close()
-        }
-
         let reader = BinaryReader(stream: stream)
 
-        header = try reader.readString(4, encoding: .ascii)
+        defer {
+            reader.close()
+        }
+
+        header = try reader.readString(4)
         guard header == "STRM" else {
             throw DocumentError.invalidContents
         }

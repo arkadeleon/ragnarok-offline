@@ -18,17 +18,84 @@ struct ACTLayer {
     var spriteType: Int32
     var width: Int32
     var height: Int32
+
+    init(from reader: BinaryReader, version: String) throws {
+        pos = try [reader.readInt(), reader.readInt()]
+        spriteIndex = try reader.readInt()
+        isMirrored = try reader.readInt()
+        color = [1.0, 1.0, 1.0, 1.0]
+        scale = [1.0, 1.0]
+        angle = 0
+        spriteType = 0
+        width = 0
+        height = 0
+
+        if version >= "2.0" {
+            color[0] = try Float(reader.readInt() as UInt8) / 255
+            color[1] = try Float(reader.readInt() as UInt8) / 255
+            color[2] = try Float(reader.readInt() as UInt8) / 255
+            color[3] = try Float(reader.readInt() as UInt8) / 255
+            scale[0] = try reader.readFloat()
+            scale[1] = try version <= "2.3" ? scale[0] : reader.readFloat()
+            angle = try reader.readInt()
+            spriteType = try reader.readInt()
+
+            if version >= "2.5" {
+                width = try reader.readInt()
+                height = try reader.readInt()
+            }
+        }
+    }
 }
 
 struct ACTFrame {
     var layers: [ACTLayer]
     var sound: Int32
     var anchorPoints: [simd_int2]
+
+    init(from reader: BinaryReader, version: String) throws {
+        // Range1 and Range2, seems to be unused.
+        _ = try reader.readBytes(32)
+
+        let layerCount: UInt32 = try reader.readInt()
+        layers = try (0..<layerCount).map { _ in
+            try ACTLayer(from: reader, version: version)
+        }
+
+        sound = try version >= "2.0" ? reader.readInt() : -1
+
+        anchorPoints = []
+        if version >= "2.3" {
+            let anchorPointCount: Int32 = try reader.readInt()
+            anchorPoints = try (0..<anchorPointCount).map { _ in
+                // Unknown bytes.
+                _ = try reader.readBytes(4)
+
+                let x: Int32 = try reader.readInt()
+                let y: Int32 = try reader.readInt()
+
+                // Unknown bytes.
+                _ = try reader.readBytes(4)
+
+                let anchorPoint = simd_int2(x: x, y: y)
+                return anchorPoint
+            }
+        }
+    }
 }
 
 struct ACTAction {
     var frames: [ACTFrame]
     var delay: Float
+
+    init(from reader: BinaryReader, version: String) throws {
+        let frameCount: UInt32 = try reader.readInt()
+        frames = try (0..<frameCount).map { _ in
+            try ACTFrame(from: reader, version: version)
+        }
+
+        delay = 150
+    }
 }
 
 struct ACTDocument {
@@ -39,37 +106,42 @@ struct ACTDocument {
     var sounds: [String]
 
     init(data: Data) throws {
-        var buffer = ByteBuffer(data: data)
+        let stream = MemoryStream(data: data)
+        let reader = BinaryReader(stream: stream)
 
-        header = try buffer.readString(length: 2)
+        defer {
+            reader.close()
+        }
+
+        header = try reader.readString(2)
         guard header == "AC" else {
             throw DocumentError.invalidContents
         }
 
-        let minor = try buffer.readUInt8()
-        let major = try buffer.readUInt8()
+        let minor: UInt8 = try reader.readInt()
+        let major: UInt8 = try reader.readInt()
         let version = "\(major).\(minor)"
         self.version = version
 
-        let actionCount = try buffer.readUInt16()
+        let actionCount: UInt16 = try reader.readInt()
 
         // Reserved, unused bytes.
-        try buffer.moveReaderIndex(forwardBy: 10)
+        _ = try reader.readBytes(10)
 
         actions = try (0..<actionCount).map { _ in
-            try buffer.readAction(version: version)
+            try ACTAction(from: reader, version: version)
         }
 
         sounds = []
         if version >= "2.1" {
-            let soundCount = try buffer.readInt32()
+            let soundCount: Int32 = try reader.readInt()
             sounds = try (0..<soundCount).map { _ in
-                try buffer.readString(length: 40)
+                try reader.readString(40)
             }
 
             if version >= "2.2" {
                 for i in 0..<actions.count {
-                    actions[i].delay = try buffer.readFloat32() * 25
+                    actions[i].delay = try reader.readFloat() * 25
                 }
             }
         }
@@ -138,97 +210,6 @@ extension ACTDocument {
         let delay = CGFloat(action.delay / 1000)
         let animatedImage = AnimatedImage(images: images, delay: delay)
         return animatedImage
-    }
-}
-
-extension ByteBuffer {
-
-    @inlinable
-    mutating func readAction(version: String) throws -> ACTAction {
-        let frameCount = try readUInt32()
-        let frames = try (0..<frameCount).map { _ in
-            try readActionFrame(version: version)
-        }
-        let action = ACTAction(
-            frames: frames,
-            delay: 150
-        )
-        return action
-    }
-
-    @inlinable
-    mutating func readActionFrame(version: String) throws -> ACTFrame {
-        // Range1 and Range2, seems to be unused.
-        try moveReaderIndex(forwardBy: 32)
-
-        let layerCount = try readUInt32()
-        let layers = try (0..<layerCount).map { _ in
-            try readActionFrameLayer(version: version)
-        }
-
-        let sound = try version >= "2.0" ? readInt32() : -1
-
-        var anchorPoints: [simd_int2] = []
-        if version >= "2.3" {
-            let anchorPointCount = try readInt32()
-            anchorPoints = try (0..<anchorPointCount).map { _ in
-                try readActionFrameAnchorPoint()
-            }
-        }
-
-        return ACTFrame(
-            layers: layers,
-            sound: sound,
-            anchorPoints: anchorPoints
-        )
-    }
-
-    @inlinable
-    mutating func readActionFrameLayer(version: String) throws -> ACTLayer {
-        var layer = try ACTLayer(
-            pos: [readInt32(), readInt32()],
-            spriteIndex: readInt32(),
-            isMirrored: readInt32(),
-            color: [1.0, 1.0, 1.0, 1.0],
-            scale: [1.0, 1.0],
-            angle: 0,
-            spriteType: 0,
-            width: 0,
-            height: 0
-        )
-
-        if version >= "2.0" {
-            layer.color[0] = try Float(readUInt8()) / 255
-            layer.color[1] = try Float(readUInt8()) / 255
-            layer.color[2] = try Float(readUInt8()) / 255
-            layer.color[3] = try Float(readUInt8()) / 255
-            layer.scale[0] = try readFloat32()
-            layer.scale[1] = try version <= "2.3" ? layer.scale[0] : readFloat32()
-            layer.angle = try readInt32()
-            layer.spriteType = try readInt32()
-
-            if version >= "2.5" {
-                layer.width = try readInt32()
-                layer.height = try readInt32()
-            }
-        }
-
-        return layer
-    }
-
-    @inlinable
-    mutating func readActionFrameAnchorPoint() throws -> simd_int2 {
-        // Unknown bytes.
-        try moveReaderIndex(forwardBy: 4)
-
-        let x = try readInt32()
-        let y = try readInt32()
-
-        // Unknown bytes.
-        try moveReaderIndex(forwardBy: 4)
-
-        let anchorPoint = simd_int2(x: x, y: y)
-        return anchorPoint
     }
 }
 

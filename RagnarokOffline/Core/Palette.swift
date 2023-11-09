@@ -20,10 +20,15 @@ struct Palette {
     var colors: [Color]
 
     init(data: Data) throws {
-        var buffer = ByteBuffer(data: data)
+        let stream = MemoryStream(data: data)
+        let reader = BinaryReader(stream: stream)
+
+        defer {
+            reader.close()
+        }
 
         colors = try (0..<256).map { _ in
-            try buffer.readPaletteColor()
+            try reader.readPaletteColor()
         }
     }
 }
@@ -98,14 +103,14 @@ extension Palette.Color {
     }
 }
 
-extension ByteBuffer {
+extension BinaryReader {
 
     @inlinable
-    mutating func readPaletteColor() throws -> Palette.Color {
-        let red = try readUInt8()
-        let green = try readUInt8()
-        let blue = try readUInt8()
-        let alpha = try readUInt8()
+    func readPaletteColor() throws -> Palette.Color {
+        let red: UInt8 = try readInt()
+        let green: UInt8 = try readInt()
+        let blue: UInt8 = try readInt()
+        let alpha: UInt8 = try readInt()
         let color = Palette.Color(
             red: red,
             green: green,

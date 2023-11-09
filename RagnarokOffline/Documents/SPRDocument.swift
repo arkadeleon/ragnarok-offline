@@ -28,22 +28,27 @@ struct SPRDocument {
     var palette: Palette?
 
     init(data: Data) throws {
-        var buffer = ByteBuffer(data: data)
+        let stream = MemoryStream(data: data)
+        let reader = BinaryReader(stream: stream)
 
-        header = try buffer.readString(length: 2)
+        defer {
+            reader.close()
+        }
+
+        header = try reader.readString(2)
         guard header == "SP" else {
             throw DocumentError.invalidContents
         }
 
-        let minor = try buffer.readUInt8()
-        let major = try buffer.readUInt8()
+        let minor: UInt8 = try reader.readInt()
+        let major: UInt8 = try reader.readInt()
         version = "\(major).\(minor)"
 
-        let indexedSpriteCount = try buffer.readUInt16()
+        let indexedSpriteCount: UInt16 = try reader.readInt()
 
         let rgbaSpriteCount: UInt16
         if version > "1.1" {
-            rgbaSpriteCount = try buffer.readUInt16()
+            rgbaSpriteCount = try reader.readInt()
         } else {
             rgbaSpriteCount = 0
         }
@@ -52,22 +57,22 @@ struct SPRDocument {
 
         if version < "2.1" {
             sprites += try (0..<indexedSpriteCount).map { _ in
-                try buffer.readIndexedSprite()
+                try reader.readIndexedSprite()
             }
         } else {
             sprites += try (0..<indexedSpriteCount).map { _ in
-                try buffer.readIndexedSpriteRLE()
+                try reader.readIndexedSpriteRLE()
             }
         }
 
         sprites += try (0..<rgbaSpriteCount).map { _ in
-            try buffer.readRGBASprite()
+            try reader.readRGBASprite()
         }
 
         if version > "1.0" {
-            try buffer.moveReaderIndex(to: data.count - 1024)
-            let paletteData = try buffer.readData(length: 1024)
-            palette = try Palette(data: paletteData)
+            try stream.seek(-1024, origin: .end)
+            let paletteData = try reader.readBytes(1024)
+            palette = try Palette(data: Data(paletteData))
         }
     }
 }
@@ -164,35 +169,35 @@ extension SPRDocument {
     }
 }
 
-extension ByteBuffer {
+extension BinaryReader {
 
     @inlinable
-    mutating func readIndexedSprite() throws -> SPRSprite {
-        let width = try readUInt16()
-        let height = try readUInt16()
-        let data = try readData(length: Int(width) * Int(height))
+    func readIndexedSprite() throws -> SPRSprite {
+        let width: UInt16 = try readInt()
+        let height: UInt16 = try readInt()
+        let data = try readBytes(Int(width) * Int(height))
         let sprite = SPRSprite(
             type: .indexed,
             width: width,
             height: height,
-            data: data
+            data: Data(data)
         )
         return sprite
     }
 
     @inlinable
-    mutating func readIndexedSpriteRLE() throws -> SPRSprite {
-        let width = try readUInt16()
-        let height = try readUInt16()
+    func readIndexedSpriteRLE() throws -> SPRSprite {
+        let width: UInt16 = try readInt()
+        let height: UInt16 = try readInt()
         var data = Data(capacity: Int(width) * Int(height))
 
-        let endIndex = try Int(readUInt16()) + readerIndex
-        while readerIndex < endIndex {
-            let c = try readUInt8()
+        let endIndex = try Int(readInt() as UInt16) + stream.position
+        while stream.position < endIndex {
+            let c: UInt8 = try readInt()
             data.append(c)
 
             if c == 0 {
-                let count = try readUInt8()
+                let count: UInt8 = try readInt()
                 if count == 0 {
                     data.append(count)
                 } else {
@@ -213,15 +218,15 @@ extension ByteBuffer {
     }
 
     @inlinable
-    mutating func readRGBASprite() throws -> SPRSprite {
-        let width = try readUInt16()
-        let height = try readUInt16()
-        let data = try readData(length: Int(width) * Int(height) * 4)
+    func readRGBASprite() throws -> SPRSprite {
+        let width: UInt16 = try readInt()
+        let height: UInt16 = try readInt()
+        let data = try readBytes(Int(width) * Int(height) * 4)
         let sprite = SPRSprite(
             type: .rgba,
             width: width,
             height: height,
-            data: data
+            data: Data(data)
         )
         return sprite
     }

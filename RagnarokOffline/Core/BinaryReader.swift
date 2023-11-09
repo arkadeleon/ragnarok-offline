@@ -43,7 +43,7 @@ class BinaryReader {
         return bytes
     }
 
-    func readString(_ count: Int, encoding: String.Encoding) throws -> String {
+    func readString(_ count: Int, encoding: String.Encoding = .ascii) throws -> String {
         let bytes = try readBytes(count).prefix { $0 != 0 }
         guard let string = String(bytes: bytes, encoding: encoding) else {
             throw StreamError.invalidEncoding

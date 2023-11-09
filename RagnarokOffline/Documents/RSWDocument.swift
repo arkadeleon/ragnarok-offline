@@ -14,14 +14,14 @@ struct RSWFiles {
     var src: String
 
     init(from reader: BinaryReader, version: String) throws {
-        ini = try reader.readString(40, encoding: .ascii)
+        ini = try reader.readString(40)
 
-        gnd = try reader.readString(40, encoding: .ascii)
+        gnd = try reader.readString(40)
 
-        gat = try reader.readString(40, encoding: .ascii)
+        gat = try reader.readString(40)
 
         if version >= "1.4" {
-            src = try reader.readString(40, encoding: .ascii)
+            src = try reader.readString(40)
         } else {
             src = ""
         }
@@ -116,7 +116,7 @@ enum RSWObject {
             animSpeed = try version >= "1.3" ? reader.readFloat() : 0
             blockType = try version >= "1.3" ? reader.readInt() : 0
             filename = try reader.readString(80, encoding: .koreanEUC)
-            nodename = try  reader.readString(80, encoding: .ascii)
+            nodename = try  reader.readString(80)
             position = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
             rotation = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
             scale = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
@@ -131,7 +131,7 @@ enum RSWObject {
         var range: Float
 
         init(from reader: BinaryReader, version: String) throws {
-            name = try reader.readString(80, encoding: .ascii)
+            name = try reader.readString(80)
             pos = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
             color = try [reader.readInt(), reader.readInt(), reader.readInt()]
             range = try reader.readFloat()
@@ -150,8 +150,8 @@ enum RSWObject {
         var cycle: Float
 
         init(from reader: BinaryReader, version: String) throws {
-            name = try reader.readString(80, encoding: .ascii)
-            file = try reader.readString(80, encoding: .ascii)
+            name = try reader.readString(80)
+            file = try reader.readString(80)
             pos = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
             vol = try reader.readFloat()
             width = try reader.readInt()
@@ -170,7 +170,7 @@ enum RSWObject {
         var param: simd_float4
 
         init(from reader: BinaryReader, version: String) throws {
-            name = try reader.readString(80, encoding: .ascii)
+            name = try reader.readString(80)
             pos = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
             id = try reader.readInt()
             delay = try reader.readFloat() * 10
@@ -194,13 +194,13 @@ struct RSWDocument {
 
     init(data: Data) throws {
         let stream = MemoryStream(data: data)
-        defer {
-            stream.close()
-        }
-
         let reader = BinaryReader(stream: stream)
 
-        header = try reader.readString(4, encoding: .ascii)
+        defer {
+            reader.close()
+        }
+
+        header = try reader.readString(4)
         guard header == "GRSW" else {
             throw DocumentError.invalidContents
         }
