@@ -11,9 +11,9 @@ import UIKit
 enum DocumentWrapper {
 
     case url(URL)
-    case grf(GRFTree)
-    case grfDirectory(GRFTree, String)
-    case grfEntry(GRFTree, String)
+    case grf(GRFWrapper)
+    case grfDirectory(GRFWrapper, GRF.Path)
+    case grfEntry(GRFWrapper, GRF.Entry)
 
     var isDirectory: Bool {
         switch self {
@@ -55,9 +55,8 @@ enum DocumentWrapper {
             return nil
         case .grfDirectory:
             return nil
-        case .grfEntry(_, let path):
-            let pathExtension = path.split(separator: "\\").last?.split(separator: ".").last
-            let fileType = FileType(rawValue: String(pathExtension ?? ""))
+        case .grfEntry(_, let entry):
+            let fileType = FileType(rawValue: String(entry.path.extension))
             return fileType
         }
     }
@@ -66,14 +65,14 @@ enum DocumentWrapper {
         switch self {
         case .url(let url):
             return url
-        case .grf(let tree):
-            return tree.url
-        case .grfDirectory(let tree, let path):
-            let path = path.replacing("\\", with: "/")
-            return tree.url.appendingPathComponent(path)
-        case .grfEntry(let tree, let path):
-            let path = path.replacing("\\", with: "/")
-            return tree.url.appendingPathComponent(path)
+        case .grf(let grf):
+            return grf.url
+        case .grfDirectory(let grf, let directory):
+            let path = directory.string.replacing("\\", with: "/")
+            return grf.url.appendingPathComponent(path)
+        case .grfEntry(let grf, let entry):
+            let path = entry.path.string.replacing("\\", with: "/")
+            return grf.url.appendingPathComponent(path)
         }
     }
 
@@ -81,14 +80,12 @@ enum DocumentWrapper {
         switch self {
         case .url(let url):
             return url.lastPathComponent
-        case .grf(let tree):
-            return tree.url.lastPathComponent
-        case .grfDirectory(_, let path):
-            let lastPathComponent = path.split(separator: "\\").last
-            return String(lastPathComponent ?? "")
-        case .grfEntry(_, let path):
-            let lastPathComponent = path.split(separator: "\\").last
-            return String(lastPathComponent ?? "")
+        case .grf(let grf):
+            return grf.url.lastPathComponent
+        case .grfDirectory(_, let directory):
+            return directory.lastComponent
+        case .grfEntry(_, let entry):
+            return entry.path.lastComponent
         }
     }
 
@@ -104,8 +101,8 @@ enum DocumentWrapper {
             return nil
         case .grfDirectory:
             return nil
-        case .grfEntry(let tree, let path):
-            return try? tree.contentsOfEntry(withName: path)
+        case .grfEntry(let grf, let entry):
+            return try? grf.contentsOfEntry(entry)
         }
     }
 
@@ -123,26 +120,24 @@ enum DocumentWrapper {
             documentWrappers = urls.map({ $0.resolvingSymlinksInPath() }).map { url -> DocumentWrapper in
                 switch url.pathExtension.lowercased() {
                 case "grf":
-                    let tree = GRFTree(url: url)
-                    return .grf(tree)
+                    let grf = GRFWrapper(url: url)
+                    return .grf(grf)
                 default:
                     return .url(url)
                 }
             }
-        case .grf(let tree):
-            let documentWrapper = DocumentWrapper.grfDirectory(tree, "data\\")
+        case .grf(let grf):
+            let documentWrapper = DocumentWrapper.grfDirectory(grf, GRF.Path(string: "data"))
             documentWrappers = documentWrapper.documentWrappers()
-        case .grfDirectory(let tree, let path):
-            let nodes = tree.nodes(withPath: path)
-            for node in nodes {
-                if let entry = node.entry {
-                    let documentWrapper = DocumentWrapper.grfEntry(tree, entry.name)
-                    documentWrappers.append(documentWrapper)
-                } else {
-                    let path = "\(path)\(node.pathComponent)\\"
-                    let documentWrapper = DocumentWrapper.grfDirectory(tree, path)
-                    documentWrappers.append(documentWrapper)
-                }
+        case .grfDirectory(let grf, let directory):
+            let (directories, entries) = grf.contentsOfDirectory(directory)
+            for directory in directories {
+                let documentWrapper = DocumentWrapper.grfDirectory(grf, directory)
+                documentWrappers.append(documentWrapper)
+            }
+            for entry in entries {
+                let documentWrapper = DocumentWrapper.grfEntry(grf, entry)
+                documentWrappers.append(documentWrapper)
             }
         case .grfEntry:
             break
@@ -173,8 +168,8 @@ enum DocumentWrapper {
             return nil
         case .grfDirectory:
             return nil
-        case .grfEntry(let tree, let path):
-            guard let contents = try? tree.contentsOfEntry(withName: path) else {
+        case .grfEntry(let grf, let entry):
+            guard let contents = try? grf.contentsOfEntry(entry) else {
                 return nil
             }
             do {

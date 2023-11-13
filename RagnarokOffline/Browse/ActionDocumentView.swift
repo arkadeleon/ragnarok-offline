@@ -80,9 +80,9 @@ struct ActionDocumentView: View {
                 return
             }
             sprData = data
-        case .grfEntry(let tree, let path):
-            let sprPath = (path as NSString).deletingPathExtension.appending(".spr")
-            guard let data = try? tree.contentsOfEntry(withName: sprPath) else {
+        case .grfEntry(let grf, let entry):
+            let sprPath = entry.path.replacingExtension("spr")
+            guard let data = try? grf.contentsOfEntry(at: sprPath) else {
                 status = .failed
                 return
             }

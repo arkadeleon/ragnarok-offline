@@ -124,12 +124,12 @@ class DocumentThumbnailGenerator {
             updateHandler(.icon(name: "livephoto"))
 
             queue.async {
-                guard case .grfEntry(let tree, let path) = document else {
+                guard case .grfEntry(let grf, let entry) = document else {
                     return
                 }
 
-                let sprPath = (path as NSString).deletingPathExtension.appending(".spr")
-                guard let sprData = try? tree.contentsOfEntry(withName: sprPath) else {
+                let sprPath = entry.path.replacingExtension("spr")
+                guard let sprData = try? grf.contentsOfEntry(at: sprPath) else {
                     return
                 }
 
