@@ -16,6 +16,7 @@
 		356BF6732AFC8964005B67F7 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF66E2AFC8964005B67F7 /* Stream.swift */; };
 		356BF6752AFCCBF1005B67F7 /* DESDecryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6742AFCCBF1005B67F7 /* DESDecryptor.swift */; };
 		356BF6772AFCCDD9005B67F7 /* GRFWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6762AFCCDD9005B67F7 /* GRFWrapper.swift */; };
+		356BF67B2B037088005B67F7 /* ACT+AnimatedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF67A2B037088005B67F7 /* ACT+AnimatedImage.swift */; };
 		35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */; };
 		35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D92A08BEA600B4540B /* ContentView.swift */; };
 		35B3B8DC2A08BEA700B4540B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B8DB2A08BEA700B4540B /* Assets.xcassets */; };
@@ -71,7 +72,7 @@
 		35B3B9E42A08C01600B4540B /* STRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9582A08C01600B4540B /* STRDocument.swift */; };
 		35B3B9E52A08C01600B4540B /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9592A08C01600B4540B /* Document.swift */; };
 		35B3B9E62A08C01600B4540B /* SPRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95A2A08C01600B4540B /* SPRDocument.swift */; };
-		35B3B9E72A08C01600B4540B /* ACTDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95B2A08C01600B4540B /* ACTDocument.swift */; };
+		35B3B9E72A08C01600B4540B /* ACT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95B2A08C01600B4540B /* ACT.swift */; };
 		35B3B9E82A08C01600B4540B /* GATDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95C2A08C01600B4540B /* GATDocument.swift */; };
 		35B3B9F42A08C01600B4540B /* AnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B96A2A08C01600B4540B /* AnimatedImageView.swift */; };
 		35B3B9F52A08C01600B4540B /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B96B2A08C01600B4540B /* WebView.swift */; };
@@ -183,6 +184,7 @@
 		356BF66E2AFC8964005B67F7 /* Stream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
 		356BF6742AFCCBF1005B67F7 /* DESDecryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESDecryptor.swift; sourceTree = "<group>"; };
 		356BF6762AFCCDD9005B67F7 /* GRFWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GRFWrapper.swift; sourceTree = "<group>"; };
+		356BF67A2B037088005B67F7 /* ACT+AnimatedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ACT+AnimatedImage.swift"; sourceTree = "<group>"; };
 		35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOffline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagnarokOfflineApp.swift; sourceTree = "<group>"; };
 		35B3B8D92A08BEA600B4540B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -277,7 +279,7 @@
 		35B3B9582A08C01600B4540B /* STRDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STRDocument.swift; sourceTree = "<group>"; };
 		35B3B9592A08C01600B4540B /* Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		35B3B95A2A08C01600B4540B /* SPRDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPRDocument.swift; sourceTree = "<group>"; };
-		35B3B95B2A08C01600B4540B /* ACTDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACTDocument.swift; sourceTree = "<group>"; };
+		35B3B95B2A08C01600B4540B /* ACT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACT.swift; sourceTree = "<group>"; };
 		35B3B95C2A08C01600B4540B /* GATDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GATDocument.swift; sourceTree = "<group>"; };
 		35B3B96A2A08C01600B4540B /* AnimatedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedImageView.swift; sourceTree = "<group>"; };
 		35B3B96B2A08C01600B4540B /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
@@ -555,7 +557,8 @@
 			isa = PBXGroup;
 			children = (
 				35B3B9592A08C01600B4540B /* Document.swift */,
-				35B3B95B2A08C01600B4540B /* ACTDocument.swift */,
+				35B3B95B2A08C01600B4540B /* ACT.swift */,
+				356BF67A2B037088005B67F7 /* ACT+AnimatedImage.swift */,
 				35B3B95C2A08C01600B4540B /* GATDocument.swift */,
 				35B3B9532A08C01600B4540B /* GNDDocument.swift */,
 				35B3B9552A08C01600B4540B /* GRF.swift */,
@@ -955,6 +958,7 @@
 				356BF6732AFC8964005B67F7 /* Stream.swift in Sources */,
 				35B3B9C12A08C01600B4540B /* linit.c in Sources */,
 				35B3B9CE2A08C01600B4540B /* lbaselib.c in Sources */,
+				356BF67B2B037088005B67F7 /* ACT+AnimatedImage.swift in Sources */,
 				35B3B9D32A08C01600B4540B /* ldo.c in Sources */,
 				35B3BA292A08C01600B4540B /* Palette.swift in Sources */,
 				35B3B9CB2A08C01600B4540B /* lcode.c in Sources */,
@@ -974,7 +978,7 @@
 				35B3BA082A08C01600B4540B /* MDLTexture+Data.swift in Sources */,
 				35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */,
 				35B3B9DF2A08C01600B4540B /* GNDDocument.swift in Sources */,
-				35B3B9E72A08C01600B4540B /* ACTDocument.swift in Sources */,
+				35B3B9E72A08C01600B4540B /* ACT.swift in Sources */,
 				35B3BA142A08C01600B4540B /* WorldDocumentView.swift in Sources */,
 				35B695EF2A30763A006F1904 /* Mesh.swift in Sources */,
 				35B3B9C82A08C01600B4540B /* lzio.c in Sources */,

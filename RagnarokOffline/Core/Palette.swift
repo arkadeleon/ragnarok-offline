@@ -9,15 +9,7 @@
 import CoreGraphics
 
 struct Palette {
-
-    struct Color {
-        var red: UInt8
-        var green: UInt8
-        var blue: UInt8
-        var alpha: UInt8
-    }
-
-    var colors: [Color]
+    var colors: [Color] = []
 
     init(data: Data) throws {
         let stream = MemoryStream(data: data)
@@ -27,14 +19,37 @@ struct Palette {
             reader.close()
         }
 
-        colors = try (0..<256).map { _ in
-            try reader.readPaletteColor()
+        for _ in 0..<256 {
+            let color = try Color(from: reader)
+            colors.append(color)
         }
     }
 }
 
 extension Palette {
+    struct Color {
+        var red: UInt8
+        var green: UInt8
+        var blue: UInt8
+        var alpha: UInt8
 
+        init(red: UInt8, green: UInt8, blue: UInt8, alpha: UInt8) {
+            self.red = red
+            self.green = green
+            self.blue = blue
+            self.alpha = alpha
+        }
+
+        init(from reader: BinaryReader) throws {
+            red = try reader.readInt()
+            green = try reader.readInt()
+            blue = try reader.readInt()
+            alpha = try reader.readInt()
+        }
+    }
+}
+
+extension Palette {
     func image(at size: CGSize) -> CGImage? {
         let width = Int(size.width)
         let height = Int(size.height)
@@ -76,7 +91,6 @@ extension Palette {
 }
 
 extension Palette.Color {
-
     func cgColor() -> CGColor {
         var red = red
         var green = green
@@ -98,24 +112,6 @@ extension Palette.Color {
             green: CGFloat(green) / 255,
             blue: CGFloat(blue) / 255,
             alpha: CGFloat(alpha) / 255
-        )
-        return color
-    }
-}
-
-extension BinaryReader {
-
-    @inlinable
-    func readPaletteColor() throws -> Palette.Color {
-        let red: UInt8 = try readInt()
-        let green: UInt8 = try readInt()
-        let blue: UInt8 = try readInt()
-        let alpha: UInt8 = try readInt()
-        let color = Palette.Color(
-            red: red,
-            green: green,
-            blue: blue,
-            alpha: alpha
         )
         return color
     }

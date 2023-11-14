@@ -92,7 +92,7 @@ struct ActionDocumentView: View {
             return
         }
 
-        guard let actDocument = try? ACTDocument(data: actData),
+        guard let act = try? ACT(data: actData),
               let sprDocument = try? SPRDocument(data: sprData)
         else {
             status = .failed
@@ -108,8 +108,8 @@ struct ActionDocumentView: View {
         }
 
         var animatedImages: [AnimatedImage] = []
-        for index in 0..<actDocument.actions.count {
-            if let animatedImage = actDocument.animatedImageForAction(at: index, imagesForSpritesByType: imagesForSpritesByType) {
+        for index in 0..<act.actions.count {
+            if let animatedImage = act.animatedImage(forActionAt: index, imagesForSpritesByType: imagesForSpritesByType) {
                 animatedImages.append(animatedImage)
             }
         }
