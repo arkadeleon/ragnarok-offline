@@ -103,7 +103,7 @@ struct GRF {
             entries.append(entry)
         }
 
-        directories = Set(entries.map({ $0.path.removingLastComponent() }))
+        directories = Set(entries.map({ $0.path.removingLastComponent }))
     }
 }
 
@@ -177,9 +177,20 @@ extension GRF {
 }
 
 extension GRF {
-    struct Path: Comparable, Hashable {
+    class Path: Comparable, Hashable {
         /// A string representation of the path.
         let string: String
+
+        /// The path except for the last path component.
+        lazy var removingLastComponent: Path = {
+            let startIndex = string.startIndex
+            guard let endIndex = string.lastIndex(of: "\\") else {
+                return self
+            }
+
+            let substring = string[startIndex..<endIndex]
+            return Path(string: String(substring))
+        }()
 
         /// The last path component (including any extension).
         var lastComponent: String {
@@ -196,22 +207,23 @@ extension GRF {
             lastComponent.split(separator: ".").last.map(String.init) ?? ""
         }
 
-        /// The path except for the last path component.
-        func removingLastComponent() -> Path {
-            let startIndex = string.startIndex
-            guard let endIndex = string.lastIndex(of: "\\") else {
-                return self
-            }
-
-            let substring = string[startIndex..<endIndex]
-            return Path(string: String(substring))
+        init(string: String) {
+            self.string = string
         }
 
         /// The result of replacing with the new extension.
         func replacingExtension(_ newExtension: String) -> Path {
             let newLastComponent = stem + "." + newExtension
-            let newString = removingLastComponent().string + "\\" + newLastComponent
+            let newString = removingLastComponent.string + "\\" + newLastComponent
             return Path(string: newString)
+        }
+
+        func hash(into hasher: inout Hasher) {
+            string.hash(into: &hasher)
+        }
+
+        static func == (lhs: GRF.Path, rhs: GRF.Path) -> Bool {
+            lhs.string == rhs.string
         }
 
         static func < (lhs: GRF.Path, rhs: GRF.Path) -> Bool {
