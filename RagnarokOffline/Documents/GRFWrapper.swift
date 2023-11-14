@@ -32,11 +32,11 @@ class GRFWrapper {
         let start = Date()
         print("Start loading contents of directory: \(directory.string)")
 
-        let directories = grf.directories
+        let directories = grf.table.directories
             .filter { $0.removingLastComponent == directory }
             .sorted()
 
-        let entries = grf.entries
+        let entries = grf.table.entries
             .filter { $0.path.removingLastComponent == directory }
             .sorted()
 
@@ -63,7 +63,7 @@ class GRFWrapper {
             throw DocumentError.invalidSource
         }
 
-        guard let entry = grf.entries.first(where: { $0.path == path }) else {
+        guard let entry = grf.table.entries.first(where: { $0.path == path }) else {
             throw DocumentError.invalidSource
         }
 

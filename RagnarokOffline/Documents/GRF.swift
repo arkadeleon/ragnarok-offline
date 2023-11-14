@@ -13,8 +13,6 @@ import DataCompression
 struct GRF {
     var header: Header
     var table: Table
-    var entries: [Entry]
-    var directories: Set<Path>
 
     init(url: URL) throws {
         let stream = try FileStream(url: url)
@@ -24,86 +22,11 @@ struct GRF {
             reader.close()
         }
 
-        let signature = try reader.readString(15)
-        let key = try reader.readBytes(15)
-        let fileTableOffset: UInt32 = try reader.readInt()
-        let skip: UInt32 = try reader.readInt()
-        let fileCount: UInt32 = try reader.readInt()
-        let version: UInt32 = try reader.readInt()
+        header = try Header(from: reader)
 
-        guard signature == "Master of Magic" else {
-            throw DocumentError.invalidContents
-        }
+        try stream.seek(Int(header.fileTableOffset), origin: .current)
 
-        guard version == 0x200 else {
-            throw DocumentError.invalidContents
-        }
-
-        guard Header.size + Int(fileTableOffset) < stream.length else {
-            throw DocumentError.invalidContents
-        }
-
-        header = Header(
-            signature: signature,
-            key: Data(key),
-            fileTableOffset: fileTableOffset,
-            skip: skip,
-            fileCount: fileCount - skip - 7,
-            version: version
-        )
-
-        try stream.seek(Int(fileTableOffset), origin: .current)
-
-        let packSize: UInt32 = try reader.readInt()
-        let realSize: UInt32 = try reader.readInt()
-
-        let compressedData = try reader.readBytes(Int(packSize))
-        guard let data = Data(compressedData).unzip() else {
-            throw DocumentError.invalidContents
-        }
-
-        table = Table(
-            packSize: packSize,
-            realSize: realSize,
-            data: data
-        )
-
-        entries = []
-
-        var pos = 0
-        for _ in 0..<header.fileCount {
-            guard let index = table.data[pos...].firstIndex(of: 0) else {
-                break
-            }
-
-            let name = String(data: table.data[pos..<index], encoding: .koreanEUC) ?? ""
-
-            pos = index + 1
-
-            let packSize = Data(table.data[(pos + 0)..<(pos + 4)]).withUnsafeBytes { $0.load(as: UInt32.self) }
-            let lengthAligned = Data(table.data[(pos + 4)..<(pos + 8)]).withUnsafeBytes { $0.load(as: UInt32.self) }
-            let realSize = Data(table.data[(pos + 8)..<(pos + 12)]).withUnsafeBytes { $0.load(as: UInt32.self) }
-            let type = table.data[pos + 12]
-            let offset = Data(table.data[(pos + 13)..<(pos + 17)]).withUnsafeBytes { $0.load(as: UInt32.self) }
-
-            pos += 17
-
-            if type & EntryType.file.rawValue == 0 {
-                continue
-            }
-
-            let entry = Entry(
-                path: Path(string: name),
-                packSize: packSize,
-                lengthAligned: lengthAligned,
-                realSize: realSize,
-                type: type,
-                offset: offset
-            )
-            entries.append(entry)
-        }
-
-        directories = Set(entries.map({ $0.path.removingLastComponent }))
+        table = try Table(from: reader, header: header)
     }
 }
 
@@ -111,12 +34,27 @@ extension GRF {
     struct Header {
         static let size: Int = 0x2e
 
-        var signature: String
-        var key: Data
+        var magic: String
+        var key: [UInt8]
         var fileTableOffset: UInt32
-        var skip: UInt32
+        var seed: UInt32
         var fileCount: UInt32
         var version: UInt32
+
+        init(from reader: BinaryReader) throws {
+            magic = try reader.readString(15)
+            guard magic == "Master of Magic" else {
+                throw DocumentError.invalidContents
+            }
+
+            key = try reader.readBytes(15)
+            fileTableOffset = try reader.readInt()
+            seed = try reader.readInt()
+            fileCount = try reader.readInt()
+            version = try reader.readInt()
+
+            fileCount = fileCount - seed - 7
+        }
     }
 }
 
@@ -124,32 +62,85 @@ extension GRF {
     struct Table {
         static let size: UInt64 = 0x08
 
-        var packSize: UInt32
-        var realSize: UInt32
-        var data: Data
+        var tableSizeCompressed: UInt32
+        var tableSize: UInt32
+
+        var entries: [Entry]
+        var directories: Set<Path>
+
+        init(from reader: BinaryReader, header: Header) throws {
+            switch header.version {
+            case 0x102, 0x103:
+                throw DocumentError.invalidContents
+            case 0x200:
+                tableSizeCompressed = try reader.readInt()
+                tableSize = try reader.readInt()
+
+                let compressedData = try reader.readBytes(Int(tableSizeCompressed))
+                guard let data = Data(compressedData).unzip() else {
+                    throw DocumentError.invalidContents
+                }
+
+                entries = []
+
+                var position = 0
+                for _ in 0..<header.fileCount {
+                    let entry = try Entry(data: data, position: &position)
+
+                    if entry.type & EntryType.file.rawValue == 0 {
+                        continue
+                    }
+
+                    entries.append(entry)
+                }
+            default:
+                throw DocumentError.invalidContents
+            }
+
+            directories = Set(entries.map({ $0.path.removingLastComponent }))
+        }
     }
 }
 
 extension GRF {
     struct Entry: Comparable {
         var path: Path
-        var packSize: UInt32
-        var lengthAligned: UInt32
-        var realSize: UInt32
+        var sizeCompressed: UInt32
+        var sizeCompressedAligned: UInt32
+        var size: UInt32
         var type: UInt8
         var offset: UInt32
+
+        init(data: Data, position: inout Int) throws {
+            guard let index = data[position...].firstIndex(of: 0) else {
+                throw DocumentError.invalidContents
+            }
+
+            let name = String(data: data[position..<index], encoding: .koreanEUC) ?? ""
+            path = Path(string: name)
+
+            position = index + 1
+
+            sizeCompressed = Data(data[(position + 0)..<(position + 4)]).withUnsafeBytes { $0.load(as: UInt32.self) }
+            sizeCompressedAligned = Data(data[(position + 4)..<(position + 8)]).withUnsafeBytes { $0.load(as: UInt32.self) }
+            size = Data(data[(position + 8)..<(position + 12)]).withUnsafeBytes { $0.load(as: UInt32.self) }
+            type = data[position + 12]
+            offset = Data(data[(position + 13)..<(position + 17)]).withUnsafeBytes { $0.load(as: UInt32.self) }
+
+            position += 17
+        }
 
         func data(from reader: BinaryReader) throws -> Data {
             try reader.stream.seek(Header.size + Int(offset), origin: .begin)
 
-            var bytes = try reader.readBytes(Int(lengthAligned))
+            var bytes = try reader.readBytes(Int(sizeCompressedAligned))
 
             if type & EntryType.encryptMixed.rawValue != 0 {
                 let decryptor = DESDecryptor()
-                decryptor.decodeFull(buf: &bytes, len: Int(lengthAligned), entrylen: Int(packSize))
+                decryptor.decodeFull(buf: &bytes, len: Int(sizeCompressedAligned), entrylen: Int(sizeCompressed))
             } else if type & EntryType.encryptHeader.rawValue != 0 {
                 let decryptor = DESDecryptor()
-                decryptor.decodeHeader(buf: &bytes, len: Int(lengthAligned))
+                decryptor.decodeHeader(buf: &bytes, len: Int(sizeCompressedAligned))
             }
 
             guard let data = Data(bytes).unzip() else {
