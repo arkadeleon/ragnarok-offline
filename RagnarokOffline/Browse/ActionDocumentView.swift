@@ -116,8 +116,8 @@ struct ActionDocumentView: View {
 
         let imageSize = animatedImages.reduce(CGSize(width: 80, height: 80)) { imageSize, image in
             CGSize(
-                width: max(imageSize.width, CGFloat(image.images[0].width)),
-                height: max(imageSize.height, CGFloat(image.images[0].height))
+                width: max(imageSize.width, CGFloat(image.size.width)),
+                height: max(imageSize.height, CGFloat(image.size.height))
             )
         }
 

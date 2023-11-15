@@ -418,7 +418,6 @@
 				35B3B96E2A08C01600B4540B /* Game */,
 				35B3B9A42A08C01600B4540B /* Renderers */,
 				35B3B9752A08C01600B4540B /* Resources */,
-				35B3B9782A08C01600B4540B /* Documents+ */,
 				35B3B9522A08C01600B4540B /* Documents */,
 				35B695ED2A307553006F1904 /* Metal */,
 				35B3B9692A08C01600B4540B /* Views */,
@@ -565,10 +564,14 @@
 				356BF67A2B037088005B67F7 /* ACT+AnimatedImage.swift */,
 				35B3B95C2A08C01600B4540B /* GATDocument.swift */,
 				35B3B9532A08C01600B4540B /* GNDDocument.swift */,
+				35B3B97A2A08C01600B4540B /* GNDDocument+Compile.swift */,
 				35B3B9552A08C01600B4540B /* GRF.swift */,
 				356BF6762AFCCDD9005B67F7 /* GRFWrapper.swift */,
 				35B3B9562A08C01600B4540B /* INIDocument.swift */,
 				35B3B9572A08C01600B4540B /* RSMDocument.swift */,
+				35B3B9792A08C01600B4540B /* RSMDocument+BoundingBox.swift */,
+				35B3B97B2A08C01600B4540B /* RSMDocument+Compile.swift */,
+				35B3B97D2A08C01600B4540B /* RSMDocument+Mesh.swift */,
 				35B3B9542A08C01600B4540B /* RSWDocument.swift */,
 				35B3B95A2A08C01600B4540B /* SPR.swift */,
 				356BF67C2B0489CE005B67F7 /* SPR+Image.swift */,
@@ -606,17 +609,6 @@
 				35B3B9772A08C01600B4540B /* ResourceManager.swift */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		35B3B9782A08C01600B4540B /* Documents+ */ = {
-			isa = PBXGroup;
-			children = (
-				35B3B97A2A08C01600B4540B /* GNDDocument+Compile.swift */,
-				35B3B9792A08C01600B4540B /* RSMDocument+BoundingBox.swift */,
-				35B3B97B2A08C01600B4540B /* RSMDocument+Compile.swift */,
-				35B3B97D2A08C01600B4540B /* RSMDocument+Mesh.swift */,
-			);
-			path = "Documents+";
 			sourceTree = "<group>";
 		};
 		35B3B97E2A08C01600B4540B /* Utilities */ = {

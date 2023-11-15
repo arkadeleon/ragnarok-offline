@@ -15,6 +15,15 @@ struct AnimatedImage: Hashable {
     var images: [CGImage]
     var delay: CGFloat
 
+    var size: CGSize {
+        images.reduce(CGSize.zero) { size, image in
+            CGSize(
+                width: max(size.width, CGFloat(image.width)),
+                height: max(size.height, CGFloat(image.height))
+            )
+        }
+    }
+
     func pngData() -> Data? {
         guard let data = CFDataCreateMutable(kCFAllocatorDefault, 0) else {
             return nil

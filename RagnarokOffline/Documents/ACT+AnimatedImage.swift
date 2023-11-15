@@ -15,26 +15,38 @@ extension ACT {
         var bounds: CGRect = .zero
         for frame in action.frames {
             for layer in frame.layers {
-                guard let caLayer = CALayer(layer: layer, contents: { spriteType, spriteIndex in
-                    guard let imagesForSprites = imagesForSpritesByType[spriteType] else {
-                        return nil
-                    }
-                    guard 0..<imagesForSprites.count ~= spriteIndex else {
-                        return nil
-                    }
-                    let image = imagesForSprites[spriteIndex]
-                    return image
-                }) else {
+                guard let spriteType = SPR.SpriteType(rawValue: Int(layer.spriteType)),
+                      let imagesForSprites = imagesForSpritesByType[spriteType]
+                else {
                     continue
                 }
 
-                bounds = bounds.union(caLayer.frame)
+                let spriteIndex = Int(layer.spriteIndex)
+                guard 0..<imagesForSprites.count ~= spriteIndex, let image = imagesForSprites[spriteIndex] else {
+                    continue
+                }
+
+                let width = CGFloat(image.width) * CGFloat(layer.scale.x)
+                let height = CGFloat(image.height) * CGFloat(layer.scale.y)
+                var rect = CGRect(x: -width / 2, y: -height / 2, width: width, height: height)
+
+                var transform = CGAffineTransformIdentity
+
+                transform = CGAffineTransformTranslate(transform, CGFloat(layer.offset.x), CGFloat(layer.offset.y))
+
+                transform = CGAffineTransformRotate(transform, CGFloat(layer.rotationAngle) / 180 * .pi)
+
+                if layer.isMirrored == 0 {
+                    transform = CGAffineTransformScale(transform, CGFloat(layer.scale.x), CGFloat(layer.scale.y))
+                } else {
+                    transform = CGAffineTransformScale(transform, -CGFloat(layer.scale.x), CGFloat(layer.scale.y))
+                }
+
+                rect = rect.applying(transform)
+
+                bounds = bounds.union(rect)
             }
         }
-
-//        let halfWidth = max(abs(bounds.minX), abs(bounds.maxX))
-//        let halfHeight = max(abs(bounds.minY), abs(bounds.maxY))
-//        bounds = CGRect(x: -halfWidth, y: -halfHeight, width: halfWidth * 2, height: halfHeight * 2)
 
         let images = action.frames.map { frame in
             let frameLayer = CALayer()
@@ -84,14 +96,18 @@ extension CALayer {
 
         let width = CGFloat(image.width) * CGFloat(layer.scale.x)
         let height = CGFloat(image.height) * CGFloat(layer.scale.y)
-        var rect = CGRect(x: -width / 2, y: -height / 2, width: width, height: height)
-        rect = rect.offsetBy(dx: CGFloat(layer.offset.x), dy: CGFloat(layer.offset.y))
+        let rect = CGRect(x: -width / 2, y: -height / 2, width: width, height: height)
 
         var transform = CATransform3DIdentity
+
+        transform = CATransform3DTranslate(transform, CGFloat(layer.offset.x), CGFloat(layer.offset.y), 0)
+
         transform = CATransform3DRotate(transform, CGFloat(layer.rotationAngle) / 180 * .pi, 0, 0, 1)
 
-        if layer.isMirrored != 0 {
-            transform = CATransform3DScale(transform, -1, 1, 1)
+        if layer.isMirrored == 0 {
+            transform = CATransform3DScale(transform, CGFloat(layer.scale.x), CGFloat(layer.scale.y), 1)
+        } else {
+            transform = CATransform3DScale(transform, -CGFloat(layer.scale.x), CGFloat(layer.scale.y), 1)
         }
 
         self.init()
