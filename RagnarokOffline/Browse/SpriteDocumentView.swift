@@ -65,12 +65,12 @@ struct SpriteDocumentView: View {
             return
         }
 
-        guard let sprDocument = try? SPRDocument(data: data) else {
+        guard let spr = try? SPR(data: data) else {
             return
         }
 
-        images = (0..<sprDocument.sprites.count).compactMap { index in
-            sprDocument.imageForSprite(at: index)
+        images = (0..<spr.sprites.count).compactMap { index in
+            spr.image(forSpriteAt: index)
         }
 
         imageSize = images.reduce(CGSize(width: 80, height: 80)) { imageSize, image in

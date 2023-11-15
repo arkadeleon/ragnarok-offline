@@ -110,11 +110,11 @@ class DocumentThumbnailGenerator {
                     return
                 }
 
-                guard let spr = try? SPRDocument(data: data) else {
+                guard let spr = try? SPR(data: data) else {
                     return
                 }
 
-                guard let image = spr.imageForSprite(at: 0) else {
+                guard let image = spr.image(forSpriteAt: 0) else {
                     return
                 }
 
@@ -133,11 +133,11 @@ class DocumentThumbnailGenerator {
                     return
                 }
 
-                guard let spr = try? SPRDocument(data: sprData) else {
+                guard let spr = try? SPR(data: sprData) else {
                     return
                 }
 
-                guard let image = spr.imageForSprite(at: 0) else {
+                guard let image = spr.image(forSpriteAt: 0) else {
                     return
                 }
 

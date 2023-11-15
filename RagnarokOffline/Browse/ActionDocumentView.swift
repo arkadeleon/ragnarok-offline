@@ -93,17 +93,17 @@ struct ActionDocumentView: View {
         }
 
         guard let act = try? ACT(data: actData),
-              let sprDocument = try? SPRDocument(data: sprData)
+              let spr = try? SPR(data: sprData)
         else {
             status = .failed
             return
         }
 
-        let sprites = sprDocument.sprites.enumerated()
+        let sprites = spr.sprites.enumerated()
         let spritesByType = Dictionary(grouping: sprites, by: { $0.element.type })
         let imagesForSpritesByType = spritesByType.mapValues { sprites in
             sprites.map { sprite in
-                sprDocument.imageForSprite(at: sprite.offset)?.image
+                spr.image(forSpriteAt: sprite.offset)?.image
             }
         }
 

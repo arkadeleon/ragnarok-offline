@@ -9,7 +9,7 @@
 import UIKit
 
 extension ACT {
-    func animatedImage(forActionAt index: Int, imagesForSpritesByType: [SPRSpriteType : [CGImage?]]) -> AnimatedImage? {
+    func animatedImage(forActionAt index: Int, imagesForSpritesByType: [SPR.SpriteType : [CGImage?]]) -> AnimatedImage? {
         let action = actions[index]
 
         var bounds: CGRect = .zero
@@ -73,8 +73,8 @@ extension ACT {
 }
 
 extension CALayer {
-    convenience init?(layer: ACT.Layer, contents: (SPRSpriteType, Int) -> CGImage?) {
-        guard let spriteType = SPRSpriteType(rawValue: Int(layer.spriteType)) else {
+    convenience init?(layer: ACT.Layer, contents: (SPR.SpriteType, Int) -> CGImage?) {
+        guard let spriteType = SPR.SpriteType(rawValue: Int(layer.spriteType)) else {
             return nil
         }
 

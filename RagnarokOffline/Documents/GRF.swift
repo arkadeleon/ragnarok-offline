@@ -103,6 +103,18 @@ extension GRF {
 }
 
 extension GRF {
+    struct EntryType: OptionSet {
+        let rawValue: UInt8
+
+        init(rawValue: UInt8) {
+            self.rawValue = rawValue
+        }
+
+        static let file          = EntryType(rawValue: 0x01) // entry is a file
+        static let encryptMixed  = EntryType(rawValue: 0x02) // encryption mode 0 (header DES + periodic DES/shuffle)
+        static let encryptHeader = EntryType(rawValue: 0x04) // encryption mode 1 (header DES only)
+    }
+
     struct Entry: Comparable {
         var path: Path
         var sizeCompressed: UInt32
@@ -152,18 +164,6 @@ extension GRF {
         static func < (lhs: GRF.Entry, rhs: GRF.Entry) -> Bool {
             lhs.path < rhs.path
         }
-    }
-
-    struct EntryType: OptionSet {
-        let rawValue: UInt8
-
-        init(rawValue: UInt8) {
-            self.rawValue = rawValue
-        }
-
-        static let file          = EntryType(rawValue: 0x01) // entry is a file
-        static let encryptMixed  = EntryType(rawValue: 0x02) // encryption mode 0 (header DES + periodic DES/shuffle)
-        static let encryptHeader = EntryType(rawValue: 0x04) // encryption mode 1 (header DES only)
     }
 }
 
