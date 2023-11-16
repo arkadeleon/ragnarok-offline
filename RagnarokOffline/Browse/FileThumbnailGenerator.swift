@@ -1,5 +1,5 @@
 //
-//  DocumentThumbnailGenerator.swift
+//  FileThumbnailGenerator.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/4/23.
@@ -10,34 +10,34 @@ import DataCompression
 import ImageIO
 import UIKit
 
-enum DocumentThumbnailRepresentation {
+enum FileThumbnailRepresentation {
     case icon(name: String)
     case thumbnail(image: CGImage)
 }
 
-class DocumentThumbnailGenerator {
+class FileThumbnailGenerator {
 
-    private let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.document-thumbnail-generator")
+    private let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.file-thumbnail-generator")
 
-    func generateThumbnail(for document: DocumentWrapper, update updateHandler: @escaping (DocumentThumbnailRepresentation) -> Void) {
-        if document.isDirectory {
+    func generateThumbnail(for file: File, update updateHandler: @escaping (FileThumbnailRepresentation) -> Void) {
+        if file.isDirectory {
             updateHandler(.icon(name: "folder.fill"))
             return
         }
 
-        if document.isArchive {
+        if file.isArchive {
             updateHandler(.icon(name: "doc.zipper"))
             return
         }
 
-        switch document.contentType {
+        switch file.contentType {
         case .txt, .xml, .ini, .lua, .lub:
             updateHandler(.icon(name: "doc.text"))
         case .bmp, .png, .jpg, .tga:
             updateHandler(.icon(name: "photo"))
 
             queue.async {
-                guard let data = document.contents() else {
+                guard let data = file.contents() else {
                     return
                 }
 
@@ -62,7 +62,7 @@ class DocumentThumbnailGenerator {
             updateHandler(.icon(name: "photo"))
 
             queue.async {
-                guard let data = document.contents(), let decompressedData = data.unzip() else {
+                guard let data = file.contents(), let decompressedData = data.unzip() else {
                     return
                 }
 
@@ -85,7 +85,7 @@ class DocumentThumbnailGenerator {
             updateHandler(.icon(name: "photo"))
 
             queue.async {
-                guard let data = document.contents() else {
+                guard let data = file.contents() else {
                     return
                 }
 
@@ -106,7 +106,7 @@ class DocumentThumbnailGenerator {
             updateHandler(.icon(name: "photo.stack"))
 
             queue.async {
-                guard let data = document.contents() else {
+                guard let data = file.contents() else {
                     return
                 }
 
@@ -124,7 +124,7 @@ class DocumentThumbnailGenerator {
             updateHandler(.icon(name: "livephoto"))
 
             queue.async {
-                guard case .grfEntry(let grf, let entry) = document else {
+                guard case .grfEntry(let grf, let entry) = file else {
                     return
                 }
 

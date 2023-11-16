@@ -10,12 +10,12 @@ import SwiftUI
 
 @main
 struct RagnarokOfflineApp: App {
-    @StateObject private var documentPasteboard = DocumentPasteboard()
+    @StateObject private var filePasteboard = FilePasteboard()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(documentPasteboard)
+                .environmentObject(filePasteboard)
         }
     }
 }

@@ -11,14 +11,14 @@ import AVFoundation
 
 class AudioDocumentViewController: UIViewController {
 
-    let document: DocumentWrapper
+    let file: File
 
     private var player: AVAudioPlayer?
 
-    init(document: DocumentWrapper) {
-        self.document = document
+    init(file: File) {
+        self.file = file
         super.init(nibName: nil, bundle: nil)
-        title = document.name
+        title = file.name
     }
 
     required init?(coder: NSCoder) {
@@ -35,7 +35,7 @@ class AudioDocumentViewController: UIViewController {
 
     private func loadDocumentContents() {
         DispatchQueue.global().async {
-            guard let data = self.document.contents() else {
+            guard let data = self.file.contents() else {
                 return
             }
 

@@ -17,7 +17,7 @@ struct ModelDocumentView: View {
         case failed
     }
 
-    let document: DocumentWrapper
+    let file: File
 
     @State private var status: Status = .notYetLoaded
     @State private var magnification = 1.0
@@ -42,7 +42,7 @@ struct ModelDocumentView: View {
                 ProgressView()
             }
         }
-        .navigationTitle(document.name)
+        .navigationTitle(file.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await load()
@@ -56,8 +56,8 @@ struct ModelDocumentView: View {
 
         status = .loading
 
-        guard case .grfEntry(let grf, _) = self.document,
-              let data = self.document.contents()
+        guard case .grfEntry(let grf, _) = self.file,
+              let data = self.file.contents()
         else {
             status = .failed
             return

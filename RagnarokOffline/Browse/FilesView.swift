@@ -1,5 +1,5 @@
 //
-//  DocumentBrowserView.swift
+//  FilesView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/4/7.
@@ -8,29 +8,29 @@
 
 import SwiftUI
 
-struct DocumentBrowserView: View {
+struct FilesView: View {
 
-    @EnvironmentObject var documentPasteboard: DocumentPasteboard
+    @EnvironmentObject var filePasteboard: FilePasteboard
 
     let title: String
-    let document: DocumentWrapper
+    let file: File
 
     @State private var isLoaded = false
     @State private var isPreviewPresented = false
-    @State private var documents: [DocumentWrapper] = []
+    @State private var files: [File] = []
 
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [.init(.adaptive(minimum: 80), spacing: 16)], spacing: 32) {
-                ForEach(documents) { document in
-                    if document.isDirectory || document.isArchive {
+                ForEach(files) { file in
+                    if file.isDirectory || file.isArchive {
                         NavigationLink {
-                            DocumentBrowserView(title: document.name, document: document)
+                            FilesView(title: file.name, file: file)
                         } label: {
                             VStack {
-                                DocumentThumbnailView(document: document)
+                                FileThumbnailView(file: file)
 
-                                Text(document.name)
+                                Text(file.name)
                                     .lineLimit(2, reservesSpace: true)
                                     .font(.subheadline)
                                     .foregroundColor(.init(uiColor: .label))
@@ -41,21 +41,21 @@ struct DocumentBrowserView: View {
                             isPreviewPresented.toggle()
                         } label: {
                             VStack {
-                                DocumentThumbnailView(document: document)
+                                FileThumbnailView(file: file)
 
-                                Text(document.name)
+                                Text(file.name)
                                     .lineLimit(2, reservesSpace: true)
                                     .font(.subheadline)
                                     .foregroundColor(.init(uiColor: .label))
                             }
                             .fullScreenCover(isPresented: $isPreviewPresented) {
-                                FilePreviewPageView(file: document, files: documents)
+                                FilePreviewPageView(file: file, files: files)
                             }
                         }
                         .contextMenu {
-                            if !document.isDirectory && !document.isArchive {
+                            if !file.isDirectory && !file.isArchive {
                                 Button {
-                                    documentPasteboard.copy(document)
+                                    filePasteboard.copy(file)
                                 } label: {
                                     HStack {
                                         Text("Copy")
@@ -64,11 +64,11 @@ struct DocumentBrowserView: View {
                                     }
                                 }
                             }
-                            if case .url(let url) = document, !document.isDirectory {
+                            if case .url(let url) = file, !file.isDirectory {
                                 Button(role: .destructive) {
                                     do {
                                         try FileManager.default.removeItem(at: url)
-                                        documents.removeAll(where: { $0 == document })
+                                        files.removeAll(where: { $0 == file })
                                     } catch {
 
                                     }
@@ -96,11 +96,11 @@ struct DocumentBrowserView: View {
         .toolbar {
             Menu {
                 Button {
-                    if let document = document.pasteFromPasteboard(documentPasteboard) {
-                        var documents = self.documents
-                        documents.append(document)
-                        documents.sort()
-                        self.documents = documents
+                    if let file = file.pasteFromPasteboard(filePasteboard) {
+                        var files = self.files
+                        files.append(file)
+                        files.sort()
+                        self.files = files
                     }
                 } label: {
                     HStack {
@@ -109,14 +109,14 @@ struct DocumentBrowserView: View {
                         Image(systemName: "doc.on.clipboard")
                     }
                 }
-                .disabled(!document.isDirectory || !documentPasteboard.hasDocument)
+                .disabled(!file.isDirectory || !filePasteboard.hasFile)
             } label: {
                 Image(systemName: "ellipsis.circle")
             }
         }
         .task {
             if !isLoaded {
-                documents = document.documentWrappers().sorted()
+                files = file.files().sorted()
                 isLoaded = true
             }
         }

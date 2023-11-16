@@ -10,13 +10,13 @@ import SwiftUI
 
 struct TextDocumentView: View {
 
-    let document: DocumentWrapper
+    let file: File
 
     @State private var htmlString = ""
 
     var body: some View {
         WebView(htmlString: htmlString)
-            .navigationTitle(document.name)
+            .navigationTitle(file.name)
             .navigationBarTitleDisplayMode(.inline)
             .task {
                 loadDocumentContents()
@@ -24,11 +24,11 @@ struct TextDocumentView: View {
     }
 
     private func loadDocumentContents() {
-        guard var data = document.contents() else {
+        guard var data = file.contents() else {
             return
         }
 
-        switch document.contentType {
+        switch file.contentType {
         case .lub:
             let decompiler = LuaDecompiler()
             data = decompiler.decompileData(data)

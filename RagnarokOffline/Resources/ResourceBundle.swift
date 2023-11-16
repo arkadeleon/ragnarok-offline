@@ -21,12 +21,12 @@ class ResourceBundle {
         self.url = url
         self.priority = priority
 
-        guard let document = try? GRFDocument(url: url) else {
+        guard let grf = try? GRF(url: url) else {
             return nil
         }
 
-        var entries: [String: GRFEntry] = [:]
-        for entry in document.entries {
+        var entries: [String: GRF.Entry] = [:]
+        for entry in grf.table.entries {
             entries[entry.name] = entry
         }
         self.entries = entries

@@ -17,7 +17,7 @@ struct WorldDocumentView: View {
         case failed
     }
 
-    let document: DocumentWrapper
+    let file: File
 
     @State private var status: Status = .notYetLoaded
 
@@ -32,7 +32,7 @@ struct WorldDocumentView: View {
                 ProgressView()
             }
         }
-        .navigationTitle(document.name)
+        .navigationTitle(file.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await load()
@@ -46,8 +46,8 @@ struct WorldDocumentView: View {
 
         status = .loading
 
-        guard case .grfEntry(let grf, _) = self.document,
-              let data = self.document.contents()
+        guard case .grfEntry(let grf, _) = self.file,
+              let data = self.file.contents()
         else {
             status = .failed
             return

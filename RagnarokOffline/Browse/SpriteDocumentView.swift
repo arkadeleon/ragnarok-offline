@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SpriteDocumentView: View {
 
-    let document: DocumentWrapper
+    let file: File
 
     @State private var isLoading = true
     @State private var images: [StillImage] = []
@@ -24,7 +24,7 @@ struct SpriteDocumentView: View {
                     Image(uiImage: UIImage(cgImage: images[index].image))
                         .frame(width: imageSize.width, height: imageSize.height)
                         .contextMenu {
-                            ShareLink(item: images[index].named(String(format: "%@.%03d.png", document.name, index)), preview: SharePreview(document.name, image: Image(uiImage: UIImage(cgImage: images[index].image))))
+                            ShareLink(item: images[index].named(String(format: "%@.%03d.png", file.name, index)), preview: SharePreview(file.name, image: Image(uiImage: UIImage(cgImage: images[index].image))))
                         }
                 }
             }
@@ -35,12 +35,12 @@ struct SpriteDocumentView: View {
                 ProgressView()
             }
         }
-        .navigationTitle(document.name)
+        .navigationTitle(file.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             Menu {
                 ShareLink(items: images) { image in
-                    SharePreview(document.name, image: Image(uiImage: UIImage(cgImage: image.image)))
+                    SharePreview(file.name, image: Image(uiImage: UIImage(cgImage: image.image)))
                 }
             } label: {
                 Image(systemName: "ellipsis.circle")
@@ -61,7 +61,7 @@ struct SpriteDocumentView: View {
             isLoading = false
         }
 
-        guard let data = document.contents() else {
+        guard let data = file.contents() else {
             return
         }
 

@@ -1,5 +1,5 @@
 //
-//  DocumentThumbnailView.swift
+//  FileThumbnailView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/4/24.
@@ -8,10 +8,10 @@
 
 import SwiftUI
 
-struct DocumentThumbnailView: View {
-    let document: DocumentWrapper
+struct FileThumbnailView: View {
+    let file: File
 
-    @State private var thumbnail: DocumentThumbnailRepresentation?
+    @State private var thumbnail: FileThumbnailRepresentation?
 
     var body: some View {
         Group {
@@ -35,7 +35,7 @@ struct DocumentThumbnailView: View {
             }
         }
         .task {
-            DocumentThumbnailCache.shared.generateThumbnail(for: document) { thumbnail in
+            FileThumbnailCache.shared.generateThumbnail(for: file) { thumbnail in
                 self.thumbnail = thumbnail
             }
         }

@@ -10,15 +10,15 @@ import CoreGraphics
 import UIKit
 
 class ACTPreviewViewController: UIViewController {
-    let document: DocumentWrapper
+    let file: File
 
     private var collectionView: UICollectionView!
     private var activityIndicatorView: UIActivityIndicatorView!
 
     private var diffableDataSource: UICollectionViewDiffableDataSource<Section, AnimatedImage>!
 
-    init(document: DocumentWrapper) {
-        self.document = document
+    init(file: File) {
+        self.file = file
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -75,12 +75,12 @@ class ACTPreviewViewController: UIViewController {
     }
 
     nonisolated private func loadAnimatedImages() async -> [AnimatedImage] {
-        guard let actData = document.contents() else {
+        guard let actData = file.contents() else {
             return []
         }
 
         let sprData: Data?
-        switch document {
+        switch file {
         case .url(let url):
             let sprPath = url.deletingPathExtension().path().appending(".spr")
             sprData = try? Data(contentsOf: URL(filePath: sprPath))
@@ -169,7 +169,7 @@ extension ACTPreviewViewController: UICollectionViewDelegate {
                 return nil
             }
             let index = indexPath.section * 8 + indexPath.item
-            let activityItem = AnimatedImageActivityItem(animatedImage: animatedImage, filename: document.name, index: index)
+            let activityItem = AnimatedImageActivityItem(animatedImage: animatedImage, filename: file.name, index: index)
             return activityItem
         }
         guard !activityItems.isEmpty else {

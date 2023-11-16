@@ -11,15 +11,15 @@ import DataCompression
 
 class ImageDocumentViewController: UIViewController {
 
-    let document: DocumentWrapper
+    let file: File
 
     private var scrollView: UIScrollView!
     private var imageView: UIImageView!
 
-    init(document: DocumentWrapper) {
-        self.document = document
+    init(file: File) {
+        self.file = file
         super.init(nibName: nil, bundle: nil)
-        title = document.name
+        title = file.name
     }
 
     required init?(coder: NSCoder) {
@@ -62,12 +62,12 @@ class ImageDocumentViewController: UIViewController {
 
     private func loadDocumentContents() {
         DispatchQueue.global().async {
-            guard let data = self.document.contents() else {
+            guard let data = self.file.contents() else {
                 return
             }
 
             var image: UIImage? = nil
-            switch self.document.contentType {
+            switch self.file.contentType {
             case .bmp, .png, .jpg, .tga:
                 image = UIImage(data: data)
             case .ebm:

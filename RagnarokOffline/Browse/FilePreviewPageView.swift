@@ -9,8 +9,8 @@
 import SwiftUI
 
 struct FilePreviewPageView: UIViewControllerRepresentable {
-    let file: DocumentWrapper
-    let files: [DocumentWrapper]
+    let file: File
+    let files: [File]
 
     func makeUIViewController(context: Context) -> UINavigationController {
         let pageViewController = FilePreviewPageViewController(file: file, files: files)

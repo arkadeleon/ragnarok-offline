@@ -11,9 +11,9 @@ import UIKit
 
 class FilePreviewViewController: UIViewController {
 
-    let file: DocumentWrapper
+    let file: File
 
-    init(file: DocumentWrapper) {
+    init(file: File) {
         self.file = file
         super.init(nibName: nil, bundle: nil)
     }
@@ -27,19 +27,19 @@ class FilePreviewViewController: UIViewController {
 
         let contentViewController = switch file.contentType {
         case .txt, .xml, .ini, .lua, .lub:
-            UIHostingController(rootView: TextDocumentView(document: file))
+            UIHostingController(rootView: TextDocumentView(file: file))
         case .bmp, .png, .jpg, .tga, .ebm, .pal:
-            UIHostingController(rootView: ImageDocumentView(document: file))
+            ImageDocumentViewController(file: file)
         case .mp3, .wav:
-            UIHostingController(rootView: AudioDocumentView(document: file))
+            AudioDocumentViewController(file: file)
         case .spr:
-            UIHostingController(rootView: SpriteDocumentView(document: file))
+            UIHostingController(rootView: SpriteDocumentView(file: file))
         case .act:
-            ACTPreviewViewController(document: file)
+            ACTPreviewViewController(file: file)
         case .rsm:
-            UIHostingController(rootView: ModelDocumentView(document: file))
+            UIHostingController(rootView: ModelDocumentView(file: file))
         case .rsw:
-            UIHostingController(rootView: WorldDocumentView(document: file))
+            UIHostingController(rootView: WorldDocumentView(file: file))
         default:
             UIViewController()
         }

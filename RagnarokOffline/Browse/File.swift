@@ -1,5 +1,5 @@
 //
-//  DocumentWrapper.swift
+//  File.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/4/18.
@@ -8,8 +8,7 @@
 
 import UIKit
 
-enum DocumentWrapper {
-
+enum File {
     case url(URL)
     case grf(GRFWrapper)
     case grfDirectory(GRFWrapper, GRF.Path)
@@ -106,8 +105,8 @@ enum DocumentWrapper {
         }
     }
 
-    func documentWrappers() -> [DocumentWrapper] {
-        var documentWrappers: [DocumentWrapper] = []
+    func files() -> [File] {
+        var files: [File] = []
 
         switch self {
         case .url(let url):
@@ -117,7 +116,7 @@ enum DocumentWrapper {
             guard let urls = try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: []) else {
                 break
             }
-            documentWrappers = urls.map({ $0.resolvingSymlinksInPath() }).map { url -> DocumentWrapper in
+            files = urls.map({ $0.resolvingSymlinksInPath() }).map { url -> File in
                 switch url.pathExtension.lowercased() {
                 case "grf":
                     let grf = GRFWrapper(url: url)
@@ -127,27 +126,27 @@ enum DocumentWrapper {
                 }
             }
         case .grf(let grf):
-            let documentWrapper = DocumentWrapper.grfDirectory(grf, GRF.Path(string: "data"))
-            documentWrappers = documentWrapper.documentWrappers()
+            let file = File.grfDirectory(grf, GRF.Path(string: "data"))
+            files = file.files()
         case .grfDirectory(let grf, let directory):
             let (directories, entries) = grf.contentsOfDirectory(directory)
             for directory in directories {
-                let documentWrapper = DocumentWrapper.grfDirectory(grf, directory)
-                documentWrappers.append(documentWrapper)
+                let file = File.grfDirectory(grf, directory)
+                files.append(file)
             }
             for entry in entries {
-                let documentWrapper = DocumentWrapper.grfEntry(grf, entry)
-                documentWrappers.append(documentWrapper)
+                let file = File.grfEntry(grf, entry)
+                files.append(file)
             }
         case .grfEntry:
             break
         }
 
-        return documentWrappers
+        return files
     }
 
-    func pasteFromPasteboard(_ pasteboard: DocumentPasteboard) -> DocumentWrapper? {
-        guard let sourceDocument = pasteboard.document else {
+    func pasteFromPasteboard(_ pasteboard: FilePasteboard) -> File? {
+        guard let sourceFile = pasteboard.file else {
             return nil
         }
 
@@ -155,12 +154,12 @@ enum DocumentWrapper {
             return nil
         }
 
-        let destinationDocument = DocumentWrapper.url(url.appending(path: sourceDocument.name))
-        switch sourceDocument {
+        let destinationFile = File.url(url.appending(path: sourceFile.name))
+        switch sourceFile {
         case .url:
             do {
-                try FileManager.default.copyItem(at: sourceDocument.url, to: destinationDocument.url)
-                return destinationDocument
+                try FileManager.default.copyItem(at: sourceFile.url, to: destinationFile.url)
+                return destinationFile
             } catch {
                 return nil
             }
@@ -173,8 +172,8 @@ enum DocumentWrapper {
                 return nil
             }
             do {
-                try contents.write(to: destinationDocument.url)
-                return destinationDocument
+                try contents.write(to: destinationFile.url)
+                return destinationFile
             } catch {
                 return nil
             }
@@ -182,14 +181,14 @@ enum DocumentWrapper {
     }
 }
 
-extension DocumentWrapper: Identifiable {
+extension File: Identifiable {
     var id: URL {
         url
     }
 }
 
-extension DocumentWrapper: Comparable {
-    static func < (lhs: DocumentWrapper, rhs: DocumentWrapper) -> Bool {
+extension File: Comparable {
+    static func < (lhs: File, rhs: File) -> Bool {
         if lhs.isDirectory == rhs.isDirectory {
             return lhs.name.lowercased() < rhs.name.lowercased()
         } else {
@@ -199,7 +198,7 @@ extension DocumentWrapper: Comparable {
         }
     }
 
-    static func == (lhs: DocumentWrapper, rhs: DocumentWrapper) -> Bool {
+    static func == (lhs: File, rhs: File) -> Bool {
         lhs.id == rhs.id
     }
 }
