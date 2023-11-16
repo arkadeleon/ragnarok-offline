@@ -9,7 +9,7 @@
 import UIKit
 
 extension ACT {
-    func animatedImage(forActionAt index: Int, imagesForSpritesByType: [SPR.SpriteType : [CGImage?]]) -> AnimatedImage? {
+    func animatedImage(forActionAt index: Int, imagesForSpritesByType: [SPR.SpriteType : [CGImage?]]) -> AnimatedImage {
         let action = actions[index]
 
         var bounds: CGRect = .zero
@@ -48,7 +48,7 @@ extension ACT {
             }
         }
 
-        let images = action.frames.map { frame in
+        let images = action.frames.compactMap { frame in
             let frameLayer = CALayer()
             frameLayer.bounds = bounds
 
@@ -76,7 +76,7 @@ extension ACT {
             let image = renderer.image { context in
                 frameLayer.render(in: context.cgContext)
             }
-            return image.cgImage!
+            return image.cgImage
         }
         let delay = CGFloat(action.animationSpeed * 25 / 1000)
         let animatedImage = AnimatedImage(images: images, delay: delay)

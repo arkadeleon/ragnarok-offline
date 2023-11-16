@@ -7,8 +7,9 @@
 //
 
 import CoreGraphics
-import CoreTransferable
 import ImageIO
+import LinkPresentation
+import UIKit
 import UniformTypeIdentifiers
 
 struct AnimatedImage: Hashable {
@@ -47,40 +48,54 @@ struct AnimatedImage: Hashable {
     }
 }
 
-extension AnimatedImage: Transferable {
-    static var transferRepresentation: some TransferRepresentation {
-        DataRepresentation(exportedContentType: .png) { animatedImage in
-            guard let data = animatedImage.pngData() else {
-                throw NSError(domain: kCFErrorDomainCGImageMetadata as String, code: Int(CGImageMetadataErrors.unknown.rawValue))
-            }
-            return data
+class AnimatedImageActivityItem: NSObject, UIActivityItemSource {
+    let animatedImage: AnimatedImage
+    let filename: String
+    let index: Int?
+
+    init(animatedImage: AnimatedImage, filename: String, index: Int? = nil) {
+        self.animatedImage = animatedImage
+        self.filename = filename
+        self.index = index
+    }
+
+    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        animatedImage.images.first.map(UIImage.init) ?? UIImage()
+    }
+
+    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        animatedImage.pngData()
+    }
+
+    func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
+        if let index {
+            return String(format: "%@.%03d", filename, index)
+        } else {
+            return filename
         }
     }
-}
 
-extension AnimatedImage {
-    struct Named: Hashable {
-        var name: String
-        var image: AnimatedImage
+    func activityViewController(_ activityViewController: UIActivityViewController, dataTypeIdentifierForActivityType activityType: UIActivity.ActivityType?) -> String {
+        UTType.png.identifier
     }
 
-    func named(_ name: String) -> Named {
-        Named(name: name, image: self)
+    func activityViewController(_ activityViewController: UIActivityViewController, thumbnailImageForActivityType activityType: UIActivity.ActivityType?, suggestedSize size: CGSize) -> UIImage? {
+        animatedImage.images.first.map(UIImage.init)
     }
-}
 
-extension AnimatedImage.Named: Transferable {
-    static var transferRepresentation: some TransferRepresentation {
-        FileRepresentation(exportedContentType: .png) { namedAnimatedImage in
-            guard let data = namedAnimatedImage.image.pngData() else {
-                throw NSError(domain: kCFErrorDomainCGImageMetadata as String, code: Int(CGImageMetadataErrors.unknown.rawValue))
-            }
+    func activityViewControllerLinkMetadata(_ activityViewController: UIActivityViewController) -> LPLinkMetadata? {
+        let metadata = LPLinkMetadata()
 
-            let url = FileManager.default.temporaryDirectory.appending(path: namedAnimatedImage.name)
-            try data.write(to: url)
-
-            let file = SentTransferredFile(url)
-            return file
+        if let index {
+            metadata.originalURL = URL(fileURLWithPath: String(format: "%03d", index))
         }
+
+        metadata.title = filename
+
+        if let image = animatedImage.images.first.map(UIImage.init) {
+            metadata.iconProvider = NSItemProvider(object: image)
+        }
+
+        return metadata
     }
 }

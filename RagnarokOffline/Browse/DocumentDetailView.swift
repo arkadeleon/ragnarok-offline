@@ -23,7 +23,7 @@ struct DocumentDetailView: View {
         case .spr:
             SpriteDocumentView(document: document)
         case .act:
-            ActionDocumentView(document: document)
+            ACTPreviewView(document: document)
         case .rsm:
             ModelDocumentView(document: document)
         case .rsw:
