@@ -34,10 +34,10 @@ class ACTPreviewViewController: UIViewController {
 
         activityIndicatorView.startAnimating()
 
-        Task {
-            let animatedImages = await loadAnimatedImages()
-            activityIndicatorView.stopAnimating()
-            await updateSnapshot(animatedImages: animatedImages)
+        Task(priority: .userInitiated) { [weak self] in
+            let animatedImages = await self?.loadAnimatedImages()
+            self?.activityIndicatorView.stopAnimating()
+            await self?.updateSnapshot(animatedImages: animatedImages ?? [])
         }
     }
 
@@ -74,7 +74,7 @@ class ACTPreviewViewController: UIViewController {
         activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
 
-    private func loadAnimatedImages() async -> [AnimatedImage] {
+    nonisolated private func loadAnimatedImages() async -> [AnimatedImage] {
         guard let actData = document.contents() else {
             return []
         }
@@ -118,7 +118,7 @@ class ACTPreviewViewController: UIViewController {
         return animatedImages
     }
 
-    private func updateSnapshot(animatedImages: [AnimatedImage]) async {
+    nonisolated private func updateSnapshot(animatedImages: [AnimatedImage]) async {
         var snapshot = NSDiffableDataSourceSnapshot<Section, AnimatedImage>()
 
         if animatedImages.count % 8 != 0 {

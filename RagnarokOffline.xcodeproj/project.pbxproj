@@ -21,6 +21,8 @@
 		356BF67F2B0495FA005B67F7 /* RLE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF67E2B0495FA005B67F7 /* RLE.swift */; };
 		356BF6822B04F54A005B67F7 /* ACTPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6812B04F54A005B67F7 /* ACTPreviewViewController.swift */; };
 		356BF6842B04F569005B67F7 /* ACTActionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6832B04F569005B67F7 /* ACTActionCollectionViewCell.swift */; };
+		356BF6862B05FF59005B67F7 /* FilePreviewPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6852B05FF59005B67F7 /* FilePreviewPageViewController.swift */; };
+		356BF6882B060243005B67F7 /* FilePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6872B060243005B67F7 /* FilePreviewViewController.swift */; };
 		35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */; };
 		35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D92A08BEA600B4540B /* ContentView.swift */; };
 		35B3B8DC2A08BEA700B4540B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B8DB2A08BEA700B4540B /* Assets.xcassets */; };
@@ -98,7 +100,6 @@
 		35B3BA0D2A08C01600B4540B /* TextDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98B2A08C01600B4540B /* TextDocumentView.swift */; };
 		35B3BA0E2A08C01600B4540B /* DocumentThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98C2A08C01600B4540B /* DocumentThumbnailGenerator.swift */; };
 		35B3BA0F2A08C01600B4540B /* DocumentWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98D2A08C01600B4540B /* DocumentWrapper.swift */; };
-		35B3BA102A08C01600B4540B /* ACTPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98E2A08C01600B4540B /* ACTPreviewView.swift */; };
 		35B3BA112A08C01600B4540B /* WorldDocumentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9902A08C01600B4540B /* WorldDocumentRenderer.swift */; };
 		35B3BA132A08C01600B4540B /* WorldDocumentCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9922A08C01600B4540B /* WorldDocumentCamera.swift */; };
 		35B3BA142A08C01600B4540B /* WorldDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9932A08C01600B4540B /* WorldDocumentView.swift */; };
@@ -110,7 +111,7 @@
 		35B3BA1A2A08C01600B4540B /* DocumentBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99A2A08C01600B4540B /* DocumentBrowserView.swift */; };
 		35B3BA1B2A08C01600B4540B /* AudioDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99C2A08C01600B4540B /* AudioDocumentViewController.swift */; };
 		35B3BA1C2A08C01600B4540B /* AudioDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99D2A08C01600B4540B /* AudioDocumentView.swift */; };
-		35B3BA1D2A08C01600B4540B /* DocumentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99E2A08C01600B4540B /* DocumentDetailView.swift */; };
+		35B3BA1D2A08C01600B4540B /* FilePreviewPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99E2A08C01600B4540B /* FilePreviewPageView.swift */; };
 		35B3BA1F2A08C01600B4540B /* ModelDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A12A08C01600B4540B /* ModelDocumentView.swift */; };
 		35B3BA202A08C01600B4540B /* ModelDocumentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A22A08C01600B4540B /* ModelDocumentRenderer.swift */; };
 		35B3BA212A08C01600B4540B /* DocumentThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A32A08C01600B4540B /* DocumentThumbnailView.swift */; };
@@ -192,6 +193,8 @@
 		356BF67E2B0495FA005B67F7 /* RLE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLE.swift; sourceTree = "<group>"; };
 		356BF6812B04F54A005B67F7 /* ACTPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACTPreviewViewController.swift; sourceTree = "<group>"; };
 		356BF6832B04F569005B67F7 /* ACTActionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACTActionCollectionViewCell.swift; sourceTree = "<group>"; };
+		356BF6852B05FF59005B67F7 /* FilePreviewPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePreviewPageViewController.swift; sourceTree = "<group>"; };
+		356BF6872B060243005B67F7 /* FilePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePreviewViewController.swift; sourceTree = "<group>"; };
 		35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOffline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagnarokOfflineApp.swift; sourceTree = "<group>"; };
 		35B3B8D92A08BEA600B4540B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -312,7 +315,6 @@
 		35B3B98B2A08C01600B4540B /* TextDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextDocumentView.swift; sourceTree = "<group>"; };
 		35B3B98C2A08C01600B4540B /* DocumentThumbnailGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentThumbnailGenerator.swift; sourceTree = "<group>"; };
 		35B3B98D2A08C01600B4540B /* DocumentWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentWrapper.swift; sourceTree = "<group>"; };
-		35B3B98E2A08C01600B4540B /* ACTPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACTPreviewView.swift; sourceTree = "<group>"; };
 		35B3B9902A08C01600B4540B /* WorldDocumentRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldDocumentRenderer.swift; sourceTree = "<group>"; };
 		35B3B9922A08C01600B4540B /* WorldDocumentCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldDocumentCamera.swift; sourceTree = "<group>"; };
 		35B3B9932A08C01600B4540B /* WorldDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldDocumentView.swift; sourceTree = "<group>"; };
@@ -324,7 +326,7 @@
 		35B3B99A2A08C01600B4540B /* DocumentBrowserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentBrowserView.swift; sourceTree = "<group>"; };
 		35B3B99C2A08C01600B4540B /* AudioDocumentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioDocumentViewController.swift; sourceTree = "<group>"; };
 		35B3B99D2A08C01600B4540B /* AudioDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioDocumentView.swift; sourceTree = "<group>"; };
-		35B3B99E2A08C01600B4540B /* DocumentDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentDetailView.swift; sourceTree = "<group>"; };
+		35B3B99E2A08C01600B4540B /* FilePreviewPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePreviewPageView.swift; sourceTree = "<group>"; };
 		35B3B9A12A08C01600B4540B /* ModelDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelDocumentView.swift; sourceTree = "<group>"; };
 		35B3B9A22A08C01600B4540B /* ModelDocumentRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelDocumentRenderer.swift; sourceTree = "<group>"; };
 		35B3B9A32A08C01600B4540B /* DocumentThumbnailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentThumbnailView.swift; sourceTree = "<group>"; };
@@ -393,7 +395,6 @@
 		356BF6802B04F51E005B67F7 /* ACT */ = {
 			isa = PBXGroup;
 			children = (
-				35B3B98E2A08C01600B4540B /* ACTPreviewView.swift */,
 				356BF6812B04F54A005B67F7 /* ACTPreviewViewController.swift */,
 				356BF6832B04F569005B67F7 /* ACTActionCollectionViewCell.swift */,
 			);
@@ -649,7 +650,9 @@
 				35B3B98C2A08C01600B4540B /* DocumentThumbnailGenerator.swift */,
 				35B3B99A2A08C01600B4540B /* DocumentBrowserView.swift */,
 				35B3B9A32A08C01600B4540B /* DocumentThumbnailView.swift */,
-				35B3B99E2A08C01600B4540B /* DocumentDetailView.swift */,
+				35B3B99E2A08C01600B4540B /* FilePreviewPageView.swift */,
+				356BF6852B05FF59005B67F7 /* FilePreviewPageViewController.swift */,
+				356BF6872B060243005B67F7 /* FilePreviewViewController.swift */,
 				35B3B98B2A08C01600B4540B /* TextDocumentView.swift */,
 				35B3B98A2A08C01600B4540B /* SpriteDocumentView.swift */,
 				356BF6802B04F51E005B67F7 /* ACT */,
@@ -901,6 +904,7 @@
 				35B3B9CC2A08C01600B4540B /* ltablib.c in Sources */,
 				35B3B9C42A08C01600B4540B /* ltable.c in Sources */,
 				35B3B9B72A08C01600B4540B /* liolib.c in Sources */,
+				356BF6862B05FF59005B67F7 /* FilePreviewPageViewController.swift in Sources */,
 				35B3B9C02A08C01600B4540B /* lstrlib.c in Sources */,
 				35B3B9BA2A08C01600B4540B /* lobject.c in Sources */,
 				35B695EA2A305EF6006F1904 /* GameView.swift in Sources */,
@@ -916,20 +920,20 @@
 				35B3BA0C2A08C01600B4540B /* SpriteDocumentView.swift in Sources */,
 				35B3B9D62A08C01600B4540B /* structs.c in Sources */,
 				35B3B9CA2A08C01600B4540B /* lmem.c in Sources */,
-				35B3BA102A08C01600B4540B /* ACTPreviewView.swift in Sources */,
 				35B695EC2A307164006F1904 /* GameScene.swift in Sources */,
 				35B3BA132A08C01600B4540B /* WorldDocumentCamera.swift in Sources */,
 				35B3BA242A08C01600B4540B /* ModelShaders.metal in Sources */,
 				35B3BA052A08C01600B4540B /* TextureLoader.swift in Sources */,
 				35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */,
 				35B3B9F52A08C01600B4540B /* WebView.swift in Sources */,
-				35B3BA1D2A08C01600B4540B /* DocumentDetailView.swift in Sources */,
+				35B3BA1D2A08C01600B4540B /* FilePreviewPageView.swift in Sources */,
 				35B4990A2A1B73D700607EE6 /* MetalView.swift in Sources */,
 				35B3B9B92A08C01600B4540B /* lstate.c in Sources */,
 				35B3B9E82A08C01600B4540B /* GATDocument.swift in Sources */,
 				356BF6822B04F54A005B67F7 /* ACTPreviewViewController.swift in Sources */,
 				356BF6752AFCCBF1005B67F7 /* DESDecryptor.swift in Sources */,
 				356BF6702AFC8964005B67F7 /* FileStream.swift in Sources */,
+				356BF6882B060243005B67F7 /* FilePreviewViewController.swift in Sources */,
 				35B3B9C62A08C01600B4540B /* loslib.c in Sources */,
 				35B3BA272A08C01600B4540B /* ModelRenderer.swift in Sources */,
 				35B3B9B82A08C01600B4540B /* lopcodes.c in Sources */,
