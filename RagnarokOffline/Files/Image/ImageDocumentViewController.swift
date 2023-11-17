@@ -10,7 +10,6 @@ import UIKit
 import DataCompression
 
 class ImageDocumentViewController: UIViewController {
-
     let file: File
 
     private var scrollView: UIScrollView!

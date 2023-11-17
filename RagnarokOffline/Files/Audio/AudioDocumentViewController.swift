@@ -10,7 +10,6 @@ import UIKit
 import AVFoundation
 
 class AudioDocumentViewController: UIViewController {
-
     let file: File
 
     private var player: AVAudioPlayer?

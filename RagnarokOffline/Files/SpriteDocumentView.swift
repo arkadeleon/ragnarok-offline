@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct SpriteDocumentView: View {
-
     let file: File
 
     @State private var isLoading = true

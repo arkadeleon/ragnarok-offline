@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct TextDocumentView: View {
-
     let file: File
 
     @State private var htmlString = ""

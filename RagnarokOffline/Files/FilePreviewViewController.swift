@@ -10,7 +10,6 @@ import SwiftUI
 import UIKit
 
 class FilePreviewViewController: UIViewController {
-
     let file: File
 
     init(file: File) {
@@ -49,9 +48,9 @@ class FilePreviewViewController: UIViewController {
         contentViewController.didMove(toParent: self)
 
         contentViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        contentViewController.view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        contentViewController.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        contentViewController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        contentViewController.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        contentViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        contentViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        contentViewController.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        contentViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 }

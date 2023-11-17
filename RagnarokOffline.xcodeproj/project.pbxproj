@@ -23,6 +23,8 @@
 		356BF6842B04F569005B67F7 /* ACTActionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6832B04F569005B67F7 /* ACTActionCollectionViewCell.swift */; };
 		356BF6862B05FF59005B67F7 /* FilePreviewPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6852B05FF59005B67F7 /* FilePreviewPageViewController.swift */; };
 		356BF6882B060243005B67F7 /* FilePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6872B060243005B67F7 /* FilePreviewViewController.swift */; };
+		356BF68A2B064965005B67F7 /* FilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6892B064965005B67F7 /* FilesViewController.swift */; };
+		356BF68C2B06497D005B67F7 /* FileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF68B2B06497D005B67F7 /* FileCollectionViewCell.swift */; };
 		35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */; };
 		35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D92A08BEA600B4540B /* ContentView.swift */; };
 		35B3B8DC2A08BEA700B4540B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B8DB2A08BEA700B4540B /* Assets.xcassets */; };
@@ -109,10 +111,8 @@
 		35B3BA192A08C01600B4540B /* ImageDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9992A08C01600B4540B /* ImageDocumentViewController.swift */; };
 		35B3BA1A2A08C01600B4540B /* FilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99A2A08C01600B4540B /* FilesView.swift */; };
 		35B3BA1B2A08C01600B4540B /* AudioDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99C2A08C01600B4540B /* AudioDocumentViewController.swift */; };
-		35B3BA1D2A08C01600B4540B /* FilePreviewPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99E2A08C01600B4540B /* FilePreviewPageView.swift */; };
 		35B3BA1F2A08C01600B4540B /* ModelDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A12A08C01600B4540B /* ModelDocumentView.swift */; };
 		35B3BA202A08C01600B4540B /* ModelDocumentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A22A08C01600B4540B /* ModelDocumentRenderer.swift */; };
-		35B3BA212A08C01600B4540B /* FileThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A32A08C01600B4540B /* FileThumbnailView.swift */; };
 		35B3BA222A08C01600B4540B /* WaterShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A52A08C01600B4540B /* WaterShaders.metal */; };
 		35B3BA232A08C01600B4540B /* GroundRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A82A08C01600B4540B /* GroundRenderer.swift */; };
 		35B3BA242A08C01600B4540B /* ModelShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A92A08C01600B4540B /* ModelShaders.metal */; };
@@ -193,6 +193,8 @@
 		356BF6832B04F569005B67F7 /* ACTActionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACTActionCollectionViewCell.swift; sourceTree = "<group>"; };
 		356BF6852B05FF59005B67F7 /* FilePreviewPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePreviewPageViewController.swift; sourceTree = "<group>"; };
 		356BF6872B060243005B67F7 /* FilePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePreviewViewController.swift; sourceTree = "<group>"; };
+		356BF6892B064965005B67F7 /* FilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesViewController.swift; sourceTree = "<group>"; };
+		356BF68B2B06497D005B67F7 /* FileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCollectionViewCell.swift; sourceTree = "<group>"; };
 		35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOffline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagnarokOfflineApp.swift; sourceTree = "<group>"; };
 		35B3B8D92A08BEA600B4540B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -322,10 +324,8 @@
 		35B3B9992A08C01600B4540B /* ImageDocumentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDocumentViewController.swift; sourceTree = "<group>"; };
 		35B3B99A2A08C01600B4540B /* FilesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesView.swift; sourceTree = "<group>"; };
 		35B3B99C2A08C01600B4540B /* AudioDocumentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioDocumentViewController.swift; sourceTree = "<group>"; };
-		35B3B99E2A08C01600B4540B /* FilePreviewPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePreviewPageView.swift; sourceTree = "<group>"; };
 		35B3B9A12A08C01600B4540B /* ModelDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelDocumentView.swift; sourceTree = "<group>"; };
 		35B3B9A22A08C01600B4540B /* ModelDocumentRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelDocumentRenderer.swift; sourceTree = "<group>"; };
-		35B3B9A32A08C01600B4540B /* FileThumbnailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileThumbnailView.swift; sourceTree = "<group>"; };
 		35B3B9A52A08C01600B4540B /* WaterShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = WaterShaders.metal; sourceTree = "<group>"; };
 		35B3B9A62A08C01600B4540B /* ModelShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelShaderTypes.h; sourceTree = "<group>"; };
 		35B3B9A72A08C01600B4540B /* GroundShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroundShaderTypes.h; sourceTree = "<group>"; };
@@ -423,7 +423,7 @@
 			children = (
 				35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */,
 				35B3B8D92A08BEA600B4540B /* ContentView.swift */,
-				35B3B9892A08C01600B4540B /* Browse */,
+				35B3B9892A08C01600B4540B /* Files */,
 				35B3B96E2A08C01600B4540B /* Game */,
 				35B3B9A42A08C01600B4540B /* Renderers */,
 				35B3B9752A08C01600B4540B /* Resources */,
@@ -636,17 +636,17 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		35B3B9892A08C01600B4540B /* Browse */ = {
+		35B3B9892A08C01600B4540B /* Files */ = {
 			isa = PBXGroup;
 			children = (
-				35B3B9952A08C01600B4540B /* FileType.swift */,
 				35B3B98D2A08C01600B4540B /* File.swift */,
+				35B3B9952A08C01600B4540B /* FileType.swift */,
 				35B3B9962A08C01600B4540B /* FilePasteboard.swift */,
 				35B3B9942A08C01600B4540B /* FileThumbnailCache.swift */,
 				35B3B98C2A08C01600B4540B /* FileThumbnailGenerator.swift */,
 				35B3B99A2A08C01600B4540B /* FilesView.swift */,
-				35B3B9A32A08C01600B4540B /* FileThumbnailView.swift */,
-				35B3B99E2A08C01600B4540B /* FilePreviewPageView.swift */,
+				356BF6892B064965005B67F7 /* FilesViewController.swift */,
+				356BF68B2B06497D005B67F7 /* FileCollectionViewCell.swift */,
 				356BF6852B05FF59005B67F7 /* FilePreviewPageViewController.swift */,
 				356BF6872B060243005B67F7 /* FilePreviewViewController.swift */,
 				35B3B98B2A08C01600B4540B /* TextDocumentView.swift */,
@@ -657,7 +657,7 @@
 				35B3B99F2A08C01600B4540B /* Model */,
 				35B3B98F2A08C01600B4540B /* World */,
 			);
-			path = Browse;
+			path = Files;
 			sourceTree = "<group>";
 		};
 		35B3B98F2A08C01600B4540B /* World */ = {
@@ -919,7 +919,6 @@
 				35B3BA052A08C01600B4540B /* TextureLoader.swift in Sources */,
 				35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */,
 				35B3B9F52A08C01600B4540B /* WebView.swift in Sources */,
-				35B3BA1D2A08C01600B4540B /* FilePreviewPageView.swift in Sources */,
 				35B4990A2A1B73D700607EE6 /* MetalView.swift in Sources */,
 				35B3B9B92A08C01600B4540B /* lstate.c in Sources */,
 				35B3B9E82A08C01600B4540B /* GATDocument.swift in Sources */,
@@ -929,6 +928,7 @@
 				356BF6882B060243005B67F7 /* FilePreviewViewController.swift in Sources */,
 				35B3B9C62A08C01600B4540B /* loslib.c in Sources */,
 				35B3BA272A08C01600B4540B /* ModelRenderer.swift in Sources */,
+				356BF68C2B06497D005B67F7 /* FileCollectionViewCell.swift in Sources */,
 				35B3B9B82A08C01600B4540B /* lopcodes.c in Sources */,
 				35B3B9CD2A08C01600B4540B /* lapi.c in Sources */,
 				35B3B9DB2A08C01600B4540B /* proto.c in Sources */,
@@ -978,12 +978,12 @@
 				35B3BA282A08C01600B4540B /* WaterRenderer.swift in Sources */,
 				356BF6712AFC8964005B67F7 /* BinaryReader.swift in Sources */,
 				35B3B9D92A08C01600B4540B /* decompile.c in Sources */,
-				35B3BA212A08C01600B4540B /* FileThumbnailView.swift in Sources */,
 				35B3B9C52A08C01600B4540B /* ldump.c in Sources */,
 				35B3B9BD2A08C01600B4540B /* loadlib.c in Sources */,
 				35B3BA082A08C01600B4540B /* MDLTexture+Data.swift in Sources */,
 				35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */,
 				35B3B9DF2A08C01600B4540B /* GNDDocument.swift in Sources */,
+				356BF68A2B064965005B67F7 /* FilesViewController.swift in Sources */,
 				35B3B9E72A08C01600B4540B /* ACT.swift in Sources */,
 				35B3BA142A08C01600B4540B /* WorldDocumentView.swift in Sources */,
 				35B695EF2A30763A006F1904 /* Mesh.swift in Sources */,

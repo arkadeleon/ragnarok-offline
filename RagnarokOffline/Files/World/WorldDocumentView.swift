@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct WorldDocumentView: View {
-
     enum Status {
         case notYetLoaded
         case loading

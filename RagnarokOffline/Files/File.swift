@@ -6,7 +6,7 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 enum File {
     case url(URL)
@@ -67,11 +67,13 @@ enum File {
         case .grf(let grf):
             return grf.url
         case .grfDirectory(let grf, let directory):
-            let path = directory.string.replacing("\\", with: "/")
-            return grf.url.appendingPathComponent(path)
+            return grf.url.appending(queryItems: [
+                URLQueryItem(name: "path", value: directory.string)
+            ])
         case .grfEntry(let grf, let entry):
-            let path = entry.path.string.replacing("\\", with: "/")
-            return grf.url.appendingPathComponent(path)
+            return grf.url.appending(queryItems: [
+                URLQueryItem(name: "path", value: entry.path.string)
+            ])
         }
     }
 
@@ -181,12 +183,6 @@ enum File {
     }
 }
 
-extension File: Identifiable {
-    var id: URL {
-        url
-    }
-}
-
 extension File: Comparable {
     static func < (lhs: File, rhs: File) -> Bool {
         if lhs.isDirectory == rhs.isDirectory {
@@ -197,8 +193,22 @@ extension File: Comparable {
             return lhsRank < rhsRank
         }
     }
+}
 
+extension File: Equatable {
     static func == (lhs: File, rhs: File) -> Bool {
         lhs.id == rhs.id
+    }
+}
+
+extension File: Hashable {
+    func hash(into hasher: inout Hasher) {
+        url.hash(into: &hasher)
+    }
+}
+
+extension File: Identifiable {
+    var id: URL {
+        url
     }
 }

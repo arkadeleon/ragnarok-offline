@@ -9,7 +9,6 @@
 import UIKit
 
 class WorldDocumentCamera: NSObject {
-
     var modelviewMatrix = matrix_identity_float4x4
     var normalMatrix = matrix_identity_float3x3
 

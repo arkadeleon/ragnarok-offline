@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct ModelDocumentView: View {
-
     enum Status {
         case notYetLoaded
         case loading

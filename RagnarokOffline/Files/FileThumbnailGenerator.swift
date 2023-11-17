@@ -16,7 +16,6 @@ enum FileThumbnailRepresentation {
 }
 
 class FileThumbnailGenerator {
-
     private let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.file-thumbnail-generator")
 
     func generateThumbnail(for file: File, update updateHandler: @escaping (FileThumbnailRepresentation) -> Void) {

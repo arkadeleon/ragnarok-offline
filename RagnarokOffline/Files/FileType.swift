@@ -6,10 +6,7 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-import UIKit
-
 enum FileType: String {
-
     case txt
     case xml
     case ini

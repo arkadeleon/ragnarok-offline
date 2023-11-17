@@ -6,12 +6,11 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
-import Foundation
+class FilePasteboard {
+    static let shared = FilePasteboard()
 
-class FilePasteboard: ObservableObject {
-
-    @Published var file: File?
-    @Published var hasFile = false
+    var file: File?
+    var hasFile = false
 
     func copy(_ file: File) {
         self.file = file

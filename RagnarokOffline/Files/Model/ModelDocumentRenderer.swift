@@ -10,7 +10,6 @@ import Metal
 import MetalKit
 
 class ModelDocumentRenderer: NSObject, Renderer {
-
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
 

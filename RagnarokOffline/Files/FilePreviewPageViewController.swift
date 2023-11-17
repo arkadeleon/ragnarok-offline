@@ -9,11 +9,10 @@
 import UIKit
 
 class FilePreviewPageViewController: UIViewController {
-
     private(set) var file: File
     let files: [File]
 
-    var pageViewController: UIPageViewController!
+    private var pageViewController: UIPageViewController!
 
     init(file: File, files: [File]) {
         self.file = file

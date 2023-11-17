@@ -35,9 +35,10 @@ class ACTPreviewViewController: UIViewController {
         activityIndicatorView.startAnimating()
 
         Task(priority: .userInitiated) { [weak self] in
-            let animatedImages = await self?.loadAnimatedImages()
+            if let animatedImages = await self?.loadAnimatedImages() {
+                await self?.updateSnapshot(animatedImages: animatedImages, animatingDifferences: false)
+            }
             self?.activityIndicatorView.stopAnimating()
-            await self?.updateSnapshot(animatedImages: animatedImages ?? [])
         }
     }
 
@@ -118,7 +119,7 @@ class ACTPreviewViewController: UIViewController {
         return animatedImages
     }
 
-    nonisolated private func updateSnapshot(animatedImages: [AnimatedImage]) async {
+    nonisolated private func updateSnapshot(animatedImages: [AnimatedImage], animatingDifferences: Bool) async {
         var snapshot = NSDiffableDataSourceSnapshot<Section, AnimatedImage>()
 
         if animatedImages.count % 8 != 0 {
@@ -147,7 +148,7 @@ class ACTPreviewViewController: UIViewController {
             }
         }
 
-        await diffableDataSource.apply(snapshot)
+        await diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
 }
 

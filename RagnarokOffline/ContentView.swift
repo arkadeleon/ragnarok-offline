@@ -35,7 +35,10 @@ struct ContentView: View {
                 Section("Client") {
                     NavigationLink {
                         let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-                        FilesView(title: "Files", file: .url(url))
+                        FilesView(file: .url(url))
+                            .ignoresSafeArea()
+                            .navigationTitle("Files")
+                            .navigationBarTitleDisplayMode(.inline)
                     } label: {
                         Label("Files", systemImage: "folder")
                     }

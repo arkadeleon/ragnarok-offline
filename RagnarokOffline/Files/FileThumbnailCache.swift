@@ -9,7 +9,6 @@
 import Foundation
 
 class FileThumbnailCache {
-
     private class CachedThumbnail {
         let thumbnail: FileThumbnailRepresentation
 
