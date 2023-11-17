@@ -67,13 +67,13 @@ struct WorldDocumentView: View {
 
         let gndPath = GRF.Path(string: "data\\" + rsw.files.gnd)
         guard let gndData = try? grf.contentsOfEntry(at: gndPath),
-              let gnd = try? GNDDocument(data: gndData)
+              let gnd = try? GND(data: gndData)
         else {
             status = .failed
             return
         }
 
-        let state = gnd.compile(WATER_LEVEL: rsw.water.level, WATER_HEIGHT: rsw.water.waveHeight)
+        let state = gnd.compile(waterLevel: rsw.water.level, waterHeight: rsw.water.waveHeight)
 
         let textures = gnd.textures
 
@@ -127,38 +127,38 @@ struct WorldDocumentView: View {
         }
 
         var models: [String: ([[ModelVertex]], [Data?])] = [:]
-        for model in rsw.models {
-            let path = GRF.Path(string: "data\\model\\" + model.filename)
-            guard let data = try? grf.contentsOfEntry(at: path),
-                  let rsm = try? RSMDocument(data: data) else {
-                continue
-            }
-
-            var m = models[path.string] ?? ([[ModelVertex]](repeating: [], count: rsm.textures.count), [])
-
-            let textures = rsm.textures.map { textureName -> Data? in
-                let path = GRF.Path(string: "data\\texture\\" + textureName)
-                return try? grf.contentsOfEntry(at: path)
-            }
-            m.1 = textures
-
-            let (boundingBox, wrappers) = rsm.calcBoundingBox()
-
-            let instance = rsm.createInstance(
-                position: model.position,
-                rotation: model.rotation,
-                scale: model.scale,
-                width: Float(gnd.width),
-                height: Float(gnd.height)
-            )
-
-            let meshes = rsm.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox)
-            for (i, mesh) in meshes.enumerated() {
-                m.0[i].append(contentsOf: mesh)
-            }
-
-            models[path.string] = m
-        }
+//        for model in rsw.models {
+//            let path = GRF.Path(string: "data\\model\\" + model.filename)
+//            guard let data = try? grf.contentsOfEntry(at: path),
+//                  let rsm = try? RSMDocument(data: data) else {
+//                continue
+//            }
+//
+//            var m = models[path.string] ?? ([[ModelVertex]](repeating: [], count: rsm.textures.count), [])
+//
+//            let textures = rsm.textures.map { textureName -> Data? in
+//                let path = GRF.Path(string: "data\\texture\\" + textureName)
+//                return try? grf.contentsOfEntry(at: path)
+//            }
+//            m.1 = textures
+//
+//            let (boundingBox, wrappers) = rsm.calcBoundingBox()
+//
+//            let instance = rsm.createInstance(
+//                position: model.position,
+//                rotation: model.rotation,
+//                scale: model.scale,
+//                width: Float(gnd.width),
+//                height: Float(gnd.height)
+//            )
+//
+//            let meshes = rsm.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox)
+//            for (i, mesh) in meshes.enumerated() {
+//                m.0[i].append(contentsOf: mesh)
+//            }
+//
+//            models[path.string] = m
+//        }
 
         var modelMeshes: [[ModelVertex]] = []
         var modelTextures: [Data?] = []

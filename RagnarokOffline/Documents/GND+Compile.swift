@@ -1,12 +1,12 @@
 //
-//  GNDDocument+Compile.swift
+//  GND+Compile.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/6/29.
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-extension GNDDocument {
+extension GND {
 
     private struct LightmapAtlas {
         var u1: Float
@@ -54,13 +54,13 @@ extension GNDDocument {
         for y in 0..<height {
             for x in 0..<width {
                 let cell = surfaces[x + y * width]
-                if cell.tile_up > -1 {
+                if cell.tileUp > -1 {
                     let index = (x + y * width) * 4
-                    let color = tiles[Int(cell.tile_up)].color
-                    data[index + 0] = color[0]
-                    data[index + 1] = color[1]
-                    data[index + 2] = color[2]
-                    data[index + 3] = color[3]
+                    let color = tiles[Int(cell.tileUp)].color
+                    data[index + 0] = color.alpha
+                    data[index + 1] = color.red
+                    data[index + 2] = color.green
+                    data[index + 3] = color.blue
                 }
             }
         }
@@ -78,9 +78,9 @@ extension GNDDocument {
             for x in 0..<width {
                 let cell = surfaces[x + y * width]
 
-                if cell.tile_up > -1 {
-                    let tile_up = Int(cell.tile_up)
-                    let light = Int(tiles[tile_up].light)
+                if cell.tileUp > -1 {
+                    let tile_up = Int(cell.tileUp)
+                    let light = Int(tiles[tile_up].lightmapIndex)
                     let per_cell = Int(lightmap.per_cell)
                     let index = light * 4 * per_cell
 
@@ -103,15 +103,15 @@ extension GNDDocument {
     }
 
     private func getSmoothNormal() -> [[simd_float3]] {
-        let width = Int(self.width)
-        let height = Int(self.height)
+        let width = Int(width)
+        let height = Int(height)
 
         let count = width * height
-        var tmp: [simd_float3?] = Array(repeating: nil, count: count)
+        var tmp: [simd_float3] = Array(repeating: simd_float3(), count: count)
 
-        let vec_in_tmp: (Int) -> simd_float3 = { (i: Int) -> simd_float3 in
-            if i > 0 && i < tmp.count {
-                return tmp[i] ?? simd_float3()
+        let vec_in_tmp: ((Int) -> simd_float3) = { i -> simd_float3 in
+            if i >= 0 && i < tmp.count {
+                return tmp[i]
             } else {
                 return simd_float3()
             }
@@ -122,16 +122,29 @@ extension GNDDocument {
 
         for y in 0..<height {
             for x in 0..<width {
-                tmp[x + y * width] = simd_float3()
-                let cell = surfaces[x + y * width]
+                let cell = surfaces[Int(x + y * width)]
 
-                if cell.tile_up > -1 {
-                    let fx = Float(x)
-                    let fy = Float(y)
-                    let a: simd_float3 = [(fx+0)*2, cell.height[0], (fy+0)*2]
-                    let b: simd_float3 = [(fx+1)*2, cell.height[1], (fy+0)*2]
-                    let c: simd_float3 = [(fx+1)*2, cell.height[3], (fy+1)*2]
-                    let d: simd_float3 = [(fx+0)*2, cell.height[2], (fy+1)*2]
+                if cell.tileUp > -1 /*&& tiles[Int(cell.tileUp)].textureIndex > -1*/ {
+                    let a: simd_float3 = [
+                        (Float(x) + 0) * 2,
+                        cell.bottomLeft,
+                        (Float(y) + 0) * 2
+                    ]
+                    let b: simd_float3 = [
+                        (Float(x) + 1) * 2,
+                        cell.bottomRight,
+                        (Float(y) + 0) * 2
+                    ]
+                    let c: simd_float3 = [
+                        (Float(x) + 1) * 2,
+                        cell.topLeft,
+                        (Float(y) + 1) * 2
+                    ]
+                    let d: simd_float3 = [
+                        (Float(x) + 0) * 2,
+                        cell.topRight,
+                        (Float(y) + 1) * 2
+                    ]
                     tmp[x + y * width] = calcNormal(a, b, c, d)
                 }
             }
@@ -141,24 +154,28 @@ extension GNDDocument {
             for x in 0..<width {
                 var n = normals[x + y * width]
 
+                // Up left
                 n[0] = n[0] + vec_in_tmp((x + 0) + (y + 0) * width)
                 n[0] = n[0] + vec_in_tmp((x - 1) + (y + 0) * width)
                 n[0] = n[0] + vec_in_tmp((x - 1) + (y - 1) * width)
                 n[0] = n[0] + vec_in_tmp((x + 0) + (y - 1) * width)
                 n[0] = simd_normalize(n[0])
 
+                // Up right
                 n[1] = n[1] + vec_in_tmp((x + 0) + (y + 0) * width)
                 n[1] = n[1] + vec_in_tmp((x + 1) + (y + 0) * width)
                 n[1] = n[1] + vec_in_tmp((x + 1) + (y - 1) * width)
                 n[1] = n[1] + vec_in_tmp((x + 0) + (y - 1) * width)
                 n[1] = simd_normalize(n[1])
 
+                // Bottom right
                 n[2] = n[2] + vec_in_tmp((x + 0) + (y + 0) * width)
                 n[2] = n[2] + vec_in_tmp((x + 1) + (y + 0) * width)
                 n[2] = n[2] + vec_in_tmp((x + 1) + (y + 1) * width)
                 n[2] = n[2] + vec_in_tmp((x + 0) + (y + 1) * width)
                 n[2] = simd_normalize(n[2])
 
+                // Bottom left
                 n[3] = n[3] + vec_in_tmp((x + 0) + (y + 0) * width)
                 n[3] = n[3] + vec_in_tmp((x - 1) + (y + 0) * width)
                 n[3] = n[3] + vec_in_tmp((x - 1) + (y + 1) * width)
@@ -172,9 +189,9 @@ extension GNDDocument {
         return normals
     }
 
-    func compile(WATER_LEVEL: Float, WATER_HEIGHT: Float) -> (mesh: [GroundVertex], waterMesh: [WaterVertex]) {
-        let _width = Int(self.width)
-        let _height = Int(self.height)
+    func compile(waterLevel: Float, waterHeight: Float) -> (mesh: [GroundVertex], waterMesh: [WaterVertex]) {
+        let width = Int(width)
+        let height = Int(height)
 
         let normals = getSmoothNormal()
 
@@ -194,104 +211,103 @@ extension GNDDocument {
             )
         }
 
-        let width = Float(_width)
-        let height = Float(_height)
-
         // Compiling mesh
-        for _y in 0..<_height {
-            for _x in 0..<_width {
-                let x = Float(_x)
-                let y = Float(_y)
-
-                let cell_a = surfaces[ _x + _y * _width ]
-                let h_a    = cell_a.height
+        for y in 0..<height {
+            for x in 0..<width {
+                let cell_a = surfaces[x + y * width]
+                let h_a = [
+                    cell_a.bottomLeft,
+                    cell_a.bottomRight,
+                    cell_a.topLeft,
+                    cell_a.topRight
+                ]
 
                 // Check tile up
-                if (cell_a.tile_up > -1) {
-                    let tile = tiles[Int(cell_a.tile_up)]
+                if cell_a.tileUp > -1 {
+                    let tile = tiles[Int(cell_a.tileUp)]
 
                     // Check if has texture
-                    let n = normals[ _x + _y * _width ]
-                    let l = lightmap_atlas(Int(tile.light))
+                    let n = normals[x + y * width]
+                    let l = lightmap_atlas(Int(tile.lightmapIndex))
 
                     let v0 = GroundVertex(
-                        position: [(x + 0) * 2, h_a[0], (y + 0) * 2],
+                        position: [(Float(x) + 0) * 2, h_a[0], (Float(y) + 0) * 2],
                         normal: [n[0][0], n[0][1], n[0][1]],
                         textureCoordinate: [tile.u1, tile.v1],
                         lightmapCoordinate: [l.u1, l.v1],
-                        tileColorCoordinate: [(x + 0.5) / width, (y + 0.5) / height]
+                        tileColorCoordinate: [(Float(x) + 0.5) / Float(width), (Float(y) + 0.5) / Float(height)]
                     )
                     let v1 = GroundVertex(
-                        position: [(x + 1) * 2, h_a[1], (y + 0) * 2],
+                        position: [(Float(x) + 1) * 2, h_a[1], (Float(y) + 0) * 2],
                         normal: [n[1][0], n[1][1], n[1][1]],
                         textureCoordinate: [tile.u2, tile.v2],
                         lightmapCoordinate: [l.u2, l.v1],
-                        tileColorCoordinate: [(x + 1.5) / width, (y + 0.5) / height]
+                        tileColorCoordinate: [(Float(x) + 1.5) / Float(width), (Float(y) + 0.5) / Float(height)]
                     )
                     let v2 = GroundVertex(
-                        position: [(x + 1) * 2, h_a[3], (y + 1) * 2],
+                        position: [(Float(x) + 1) * 2, h_a[3], (Float(y) + 1) * 2],
                         normal: [n[2][0], n[2][1], n[2][1]],
                         textureCoordinate: [tile.u4, tile.v4],
                         lightmapCoordinate: [l.u2, l.v2],
-                        tileColorCoordinate: [(x + 1.5) / width, (y + 1.5) / height]
+                        tileColorCoordinate: [(Float(x) + 1.5) / Float(width), (Float(y) + 1.5) / Float(height)]
                     )
                     let v3 = GroundVertex(
-                        position: [(x + 1) * 2, h_a[3], (y + 1) * 2],
+                        position: [(Float(x) + 1) * 2, h_a[3], (Float(y) + 1) * 2],
                         normal: [n[2][0], n[2][1], n[2][1]],
                         textureCoordinate: [tile.u4, tile.v4],
                         lightmapCoordinate: [l.u2, l.v2],
-                        tileColorCoordinate: [(x + 1.5) / width, (y + 1.5) / height]
+                        tileColorCoordinate: [(Float(x) + 1.5) / Float(width), (Float(y) + 1.5) / Float(height)]
                     )
                     let v4 = GroundVertex(
-                        position: [(x + 0) * 2, h_a[2], (y + 1) * 2],
+                        position: [(Float(x) + 0) * 2, h_a[2], (Float(y) + 1) * 2],
                         normal: [n[3][0], n[3][1], n[3][1]],
                         textureCoordinate: [tile.u3, tile.v3],
                         lightmapCoordinate: [l.u1, l.v2],
-                        tileColorCoordinate: [(x + 0.5) / width, (y + 1.5) / height]
+                        tileColorCoordinate: [(Float(x) + 0.5) / Float(width), (Float(y) + 1.5) / Float(height)]
                     )
                     let v5 = GroundVertex(
-                        position: [(x + 0) * 2, h_a[0], (y + 0) * 2],
+                        position: [(Float(x) + 0) * 2, h_a[0], (Float(y) + 0) * 2],
                         normal: [n[0][0], n[0][1], n[0][1]],
                         textureCoordinate: [tile.u1, tile.v1],
                         lightmapCoordinate: [l.u1, l.v1],
-                        tileColorCoordinate: [(x + 0.5) / width, (y + 0.5) / height]
+                        tileColorCoordinate: [(Float(x) + 0.5) / Float(width), (Float(y) + 0.5) / Float(height)]
                     )
 
                     mesh += [v0, v1, v2, v3, v4, v5]
 
                     // Add water only if it's upper than the ground.
-                    if h_a[0] > WATER_LEVEL - WATER_HEIGHT ||
-                        h_a[1] > WATER_LEVEL - WATER_HEIGHT ||
-                        h_a[2] > WATER_LEVEL - WATER_HEIGHT ||
-                        h_a[3] > WATER_LEVEL - WATER_HEIGHT {
+                    if h_a[0] > waterLevel - waterHeight ||
+                        h_a[1] > waterLevel - waterHeight ||
+                        h_a[2] > waterLevel - waterHeight ||
+                        h_a[3] > waterLevel - waterHeight {
 
-                        let x0 = ((x + 0).truncatingRemainder(dividingBy: 5) / 5)
-                        let y0 = ((y + 0).truncatingRemainder(dividingBy: 5) / 5)
-                        let x1 = ((x + 1).truncatingRemainder(dividingBy: 5) / 5) > 0 ? ((x + 1).truncatingRemainder(dividingBy: 5) / 5) : 1
-                        let y1 = ((y + 1).truncatingRemainder(dividingBy: 5) / 5) > 0 ? ((y + 1).truncatingRemainder(dividingBy: 5) / 5) : 1
+                        let x0 = ((Float(x) + 0).truncatingRemainder(dividingBy: 5) / 5)
+                        let y0 = ((Float(y) + 0).truncatingRemainder(dividingBy: 5) / 5)
+                        let x1 = ((Float(x) + 1).truncatingRemainder(dividingBy: 5) / 5) > 0 ? ((Float(x) + 1).truncatingRemainder(dividingBy: 5) / 5) : 1
+                        let y1 = ((Float(y) + 1).truncatingRemainder(dividingBy: 5) / 5) > 0 ? ((Float(y) + 1).truncatingRemainder(dividingBy: 5) / 5) : 1
 
                         let v0 = WaterVertex(
-                            position: [(x + 0) * 2, WATER_LEVEL, (y + 0) * 2],
+                            position: [(Float(x) + 0) * 2, waterLevel, (Float(y) + 0) * 2],
                             textureCoordinate: [x0, y0]
                         )
                         let v1 = WaterVertex(
-                            position: [(x + 1) * 2, WATER_LEVEL, (y + 0) * 2],
+                            position: [(Float(x) + 1) * 2, waterLevel, (Float(y) + 0) * 2],
                             textureCoordinate: [x1, y0]
                         )
                         let v2 = WaterVertex(
-                            position: [(x + 1) * 2, WATER_LEVEL, (y + 1) * 2],
+                            position: [(Float(x) + 1) * 2, waterLevel, (Float(y) + 1) * 2],
                             textureCoordinate: [x1, y1]
                         )
                         let v3 = WaterVertex(
-                            position: [(x + 1) * 2, WATER_LEVEL, (y + 1) * 2],
+                            position: [(Float(x) + 1) * 2, waterLevel, (Float(y) + 1) * 2],
                             textureCoordinate: [x1, y1]
                         )
                         let v4 = WaterVertex(
-                            position: [(x + 0) * 2, WATER_LEVEL, (y + 1) * 2],
+                            position: [(Float(x) + 0) * 2, waterLevel, (Float(y) + 1) * 2],
                             textureCoordinate: [x0, y1]
                         )
                         let v5 = WaterVertex(
-                            position: [(x + 0) * 2, WATER_LEVEL, (y + 0) * 2],
+                            position: [(Float(x) + 0) * 2, waterLevel, (Float(y) + 0) * 2],
                             textureCoordinate: [x0, y0]
                         )
 
@@ -300,50 +316,55 @@ extension GNDDocument {
                 }
 
                 // Check tile front
-                if (cell_a.tile_front > -1) && (y + 1 < height) {
-                    let tile = tiles[Int(cell_a.tile_front)]
+                if (cell_a.tileFront > -1) && (Float(y) + 1 < Float(height)) {
+                    let tile = tiles[Int(cell_a.tileFront)]
 
-                    let cell_b = surfaces[ _x + (_y + 1) * _width ]
-                    let h_b    = cell_b.height
-                    let l = lightmap_atlas(Int(tile.light))
+                    let cell_b = surfaces[ x + (y + 1) * width ]
+                    let h_b = [
+                        cell_b.bottomLeft,
+                        cell_b.bottomRight,
+                        cell_b.topLeft,
+                        cell_b.topRight
+                    ]
+                    let l = lightmap_atlas(Int(tile.lightmapIndex))
 
                     let v0 = GroundVertex(
-                        position: [(x+0)*2, h_b[0], (y+1)*2],
+                        position: [(Float(x)+0)*2, h_b[0], (Float(y)+1)*2],
                         normal: [0.0, 0.0, 1.0],
                         textureCoordinate: [tile.u3, tile.v3],
                         lightmapCoordinate: [l.u1, l.v2],
                         tileColorCoordinate: [0, 0]
                     )
                     let v1 = GroundVertex(
-                        position: [(x+1)*2, h_a[3], (y+1)*2],
+                        position: [(Float(x)+1)*2, h_a[3], (Float(y)+1)*2],
                         normal: [0.0, 0.0, 1.0],
                         textureCoordinate: [tile.u2, tile.v2],
                         lightmapCoordinate: [l.u2, l.v1],
                         tileColorCoordinate: [0, 0]
                     )
                     let v2 = GroundVertex(
-                        position: [(x+1)*2, h_b[1], (y+1)*2],
+                        position: [(Float(x)+1)*2, h_b[1], (Float(y)+1)*2],
                         normal: [0.0, 0.0, 1.0],
                         textureCoordinate: [tile.u4, tile.v4],
                         lightmapCoordinate: [l.u2, l.v2],
                         tileColorCoordinate: [0, 0]
                     )
                     let v3 = GroundVertex(
-                        position: [(x+0)*2, h_b[0], (y+1)*2],
+                        position: [(Float(x)+0)*2, h_b[0], (Float(y)+1)*2],
                         normal: [0.0, 0.0, 1.0],
                         textureCoordinate: [tile.u3, tile.v3],
                         lightmapCoordinate: [l.u1, l.v2],
                         tileColorCoordinate: [0, 0]
                     )
                     let v4 = GroundVertex(
-                        position: [(x+1)*2, h_a[3], (y+1)*2],
+                        position: [(Float(x)+1)*2, h_a[3], (Float(y)+1)*2],
                         normal: [0.0, 0.0, 1.0],
                         textureCoordinate: [tile.u2, tile.v2],
                         lightmapCoordinate: [l.u2, l.v1],
                         tileColorCoordinate: [0, 0]
                     )
                     let v5 = GroundVertex(
-                        position: [(x+0)*2, h_a[2], (y+1)*2],
+                        position: [(Float(x)+0)*2, h_a[2], (Float(y)+1)*2],
                         normal: [0.0, 0.0, 1.0],
                         textureCoordinate: [tile.u1, tile.v1],
                         lightmapCoordinate: [l.u1, l.v1],
@@ -353,52 +374,56 @@ extension GNDDocument {
                     mesh += [v0, v1, v2, v3, v4, v5]
                 }
 
-
                 // Check tile right
-                if (cell_a.tile_right > -1) && (x + 1 < width) {
-                    let tile = tiles[Int(cell_a.tile_right)]
+                if (cell_a.tileRight > -1) && (Float(x) + 1 < Float(width)) {
+                    let tile = tiles[Int(cell_a.tileRight)]
 
-                    let cell_b = surfaces[ (_x+1) + _y * _width ]
-                    let h_b    = cell_b.height
-                    let l = lightmap_atlas(Int(tile.light))
+                    let cell_b = surfaces[ (x+1) + y * width ]
+                    let h_b    = [
+                        cell_b.bottomLeft,
+                        cell_b.bottomRight,
+                        cell_b.topLeft,
+                        cell_b.topRight
+                    ]
+                    let l = lightmap_atlas(Int(tile.lightmapIndex))
 
                     let v0 = GroundVertex(
-                        position: [(x+1)*2, h_a[1], (y+0)*2],
+                        position: [(Float(x)+1)*2, h_a[1], (Float(y)+0)*2],
                         normal: [1.0, 0.0, 0.0],
                         textureCoordinate: [tile.u2, tile.v2],
                         lightmapCoordinate: [l.u2, l.v1],
                         tileColorCoordinate: [0, 0]
                     )
                     let v1 = GroundVertex(
-                        position: [(x+1)*2, h_a[3], (y+1)*2],
+                        position: [(Float(x)+1)*2, h_a[3], (Float(y)+1)*2],
                         normal: [1.0, 0.0, 0.0],
                         textureCoordinate: [tile.u1, tile.v1],
                         lightmapCoordinate: [l.u1, l.v1],
                         tileColorCoordinate: [0, 0]
                     )
                     let v2 = GroundVertex(
-                        position: [(x+1)*2, h_b[0], (y+0)*2],
+                        position: [(Float(x)+1)*2, h_b[0], (Float(y)+0)*2],
                         normal: [1.0, 0.0, 0.0],
                         textureCoordinate: [tile.u4, tile.v4],
                         lightmapCoordinate: [l.u2, l.v2],
                         tileColorCoordinate: [0, 0]
                     )
                     let v3 = GroundVertex(
-                        position: [(x+1)*2, h_b[0], (y+0)*2],
+                        position: [(Float(x)+1)*2, h_b[0], (Float(y)+0)*2],
                         normal: [1.0, 0.0, 0.0],
                         textureCoordinate: [tile.u4, tile.v4],
                         lightmapCoordinate: [l.u2, l.v2],
                         tileColorCoordinate: [0, 0]
                     )
                     let v4 = GroundVertex(
-                        position: [(x+1)*2, h_b[2], (y+1)*2],
+                        position: [(Float(x)+1)*2, h_b[2], (Float(y)+1)*2],
                         normal: [1.0, 0.0, 0.0],
                         textureCoordinate: [tile.u3, tile.v3],
                         lightmapCoordinate: [l.u1, l.v2],
                         tileColorCoordinate: [0, 0]
                     )
                     let v5 = GroundVertex(
-                        position: [(x+1)*2, h_a[3], (y+1)*2],
+                        position: [(Float(x)+1)*2, h_a[3], (Float(y)+1)*2],
                         normal: [1.0, 0.0, 0.0],
                         textureCoordinate: [tile.u1, tile.v1],
                         lightmapCoordinate: [l.u1, l.v1],
