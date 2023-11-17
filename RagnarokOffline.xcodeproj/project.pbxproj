@@ -81,7 +81,7 @@
 		35B3B9E52A08C01600B4540B /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9592A08C01600B4540B /* Document.swift */; };
 		35B3B9E62A08C01600B4540B /* SPR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95A2A08C01600B4540B /* SPR.swift */; };
 		35B3B9E72A08C01600B4540B /* ACT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95B2A08C01600B4540B /* ACT.swift */; };
-		35B3B9E82A08C01600B4540B /* GATDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95C2A08C01600B4540B /* GATDocument.swift */; };
+		35B3B9E82A08C01600B4540B /* GAT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95C2A08C01600B4540B /* GAT.swift */; };
 		35B3B9F52A08C01600B4540B /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B96B2A08C01600B4540B /* WebView.swift */; };
 		35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9702A08C01600B4540B /* Shaders.metal */; };
 		35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9722A08C01600B4540B /* GameRenderer.swift */; };
@@ -290,7 +290,7 @@
 		35B3B9592A08C01600B4540B /* Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		35B3B95A2A08C01600B4540B /* SPR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPR.swift; sourceTree = "<group>"; };
 		35B3B95B2A08C01600B4540B /* ACT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACT.swift; sourceTree = "<group>"; };
-		35B3B95C2A08C01600B4540B /* GATDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GATDocument.swift; sourceTree = "<group>"; };
+		35B3B95C2A08C01600B4540B /* GAT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GAT.swift; sourceTree = "<group>"; };
 		35B3B96B2A08C01600B4540B /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		35B3B9702A08C01600B4540B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		35B3B9712A08C01600B4540B /* ShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
@@ -571,7 +571,7 @@
 				35B3B9592A08C01600B4540B /* Document.swift */,
 				35B3B95B2A08C01600B4540B /* ACT.swift */,
 				356BF67A2B037088005B67F7 /* ACT+AnimatedImage.swift */,
-				35B3B95C2A08C01600B4540B /* GATDocument.swift */,
+				35B3B95C2A08C01600B4540B /* GAT.swift */,
 				35B3B9532A08C01600B4540B /* GNDDocument.swift */,
 				35B3B97A2A08C01600B4540B /* GNDDocument+Compile.swift */,
 				35B3B9552A08C01600B4540B /* GRF.swift */,
@@ -921,7 +921,7 @@
 				35B3B9F52A08C01600B4540B /* WebView.swift in Sources */,
 				35B4990A2A1B73D700607EE6 /* MetalView.swift in Sources */,
 				35B3B9B92A08C01600B4540B /* lstate.c in Sources */,
-				35B3B9E82A08C01600B4540B /* GATDocument.swift in Sources */,
+				35B3B9E82A08C01600B4540B /* GAT.swift in Sources */,
 				356BF6822B04F54A005B67F7 /* ACTPreviewViewController.swift in Sources */,
 				356BF6752AFCCBF1005B67F7 /* DESDecryptor.swift in Sources */,
 				356BF6702AFC8964005B67F7 /* FileStream.swift in Sources */,

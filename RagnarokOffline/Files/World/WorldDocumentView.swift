@@ -59,7 +59,7 @@ struct WorldDocumentView: View {
 
         let gatPath = GRF.Path(string: "data\\" + rsw.files.gat)
         guard let gatData = try? grf.contentsOfEntry(at: gatPath),
-              let gat = try? GATDocument(data: gatData)
+              let gat = try? GAT(data: gatData)
         else {
             status = .failed
             return
