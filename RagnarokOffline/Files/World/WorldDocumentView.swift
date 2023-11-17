@@ -52,7 +52,7 @@ struct WorldDocumentView: View {
             return
         }
 
-        guard let rsw = try? RSWDocument(data: data) else {
+        guard let rsw = try? RSW(data: data) else {
             status = .failed
             return
         }

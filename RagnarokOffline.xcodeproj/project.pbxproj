@@ -73,7 +73,7 @@
 		35B3B9DC2A08C01600B4540B /* StringBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B94E2A08C01600B4540B /* StringBuffer.c */; };
 		35B3B9DD2A08C01600B4540B /* statement.c in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B94F2A08C01600B4540B /* statement.c */; };
 		35B3B9DF2A08C01600B4540B /* GND.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9532A08C01600B4540B /* GND.swift */; };
-		35B3B9E02A08C01600B4540B /* RSWDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9542A08C01600B4540B /* RSWDocument.swift */; };
+		35B3B9E02A08C01600B4540B /* RSW.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9542A08C01600B4540B /* RSW.swift */; };
 		35B3B9E12A08C01600B4540B /* GRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9552A08C01600B4540B /* GRF.swift */; };
 		35B3B9E22A08C01600B4540B /* INIDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9562A08C01600B4540B /* INIDocument.swift */; };
 		35B3B9E32A08C01600B4540B /* RSMDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9572A08C01600B4540B /* RSMDocument.swift */; };
@@ -282,7 +282,7 @@
 		35B3B94F2A08C01600B4540B /* statement.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = statement.c; sourceTree = "<group>"; };
 		35B3B9502A08C01600B4540B /* macro-array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "macro-array.h"; sourceTree = "<group>"; };
 		35B3B9532A08C01600B4540B /* GND.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GND.swift; sourceTree = "<group>"; };
-		35B3B9542A08C01600B4540B /* RSWDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSWDocument.swift; sourceTree = "<group>"; };
+		35B3B9542A08C01600B4540B /* RSW.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSW.swift; sourceTree = "<group>"; };
 		35B3B9552A08C01600B4540B /* GRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GRF.swift; sourceTree = "<group>"; };
 		35B3B9562A08C01600B4540B /* INIDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INIDocument.swift; sourceTree = "<group>"; };
 		35B3B9572A08C01600B4540B /* RSMDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSMDocument.swift; sourceTree = "<group>"; };
@@ -581,7 +581,7 @@
 				35B3B9792A08C01600B4540B /* RSMDocument+BoundingBox.swift */,
 				35B3B97B2A08C01600B4540B /* RSMDocument+Compile.swift */,
 				35B3B97D2A08C01600B4540B /* RSMDocument+Mesh.swift */,
-				35B3B9542A08C01600B4540B /* RSWDocument.swift */,
+				35B3B9542A08C01600B4540B /* RSW.swift */,
 				35B3B95A2A08C01600B4540B /* SPR.swift */,
 				356BF67C2B0489CE005B67F7 /* SPR+Image.swift */,
 				35B3B9582A08C01600B4540B /* STRDocument.swift */,
@@ -967,7 +967,7 @@
 				35B3B9D32A08C01600B4540B /* ldo.c in Sources */,
 				35B3BA292A08C01600B4540B /* Palette.swift in Sources */,
 				35B3B9CB2A08C01600B4540B /* lcode.c in Sources */,
-				35B3B9E02A08C01600B4540B /* RSWDocument.swift in Sources */,
+				35B3B9E02A08C01600B4540B /* RSW.swift in Sources */,
 				35B3BA0D2A08C01600B4540B /* TextDocumentView.swift in Sources */,
 				35B3B9E62A08C01600B4540B /* SPR.swift in Sources */,
 				35B3BA072A08C01600B4540B /* MDLMaterial+Texture.swift in Sources */,
