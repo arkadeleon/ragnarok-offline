@@ -7,8 +7,7 @@
 //
 
 struct RSW {
-    var header: String
-    var version: String
+    var header: Header
     var files: Files
     var water: Water
     var light: Light
@@ -26,43 +25,64 @@ struct RSW {
             reader.close()
         }
 
-        header = try reader.readString(4)
-        guard header == "GRSW" else {
-            throw DocumentError.invalidContents
+        header = try Header(from: reader)
+
+        if header.version >= "2.5" {
+            // Build number
+            _ = try reader.readInt() as UInt32
         }
 
-        let major: UInt8 = try reader.readInt()
-        let minor: UInt8 = try reader.readInt()
-        version = "\(major).\(minor)"
+        if header.version >= "2.2" {
+            // Unknown data
+            _ = try reader.readInt() as UInt8
+        }
 
-        files = try Files(from: reader, version: version)
+        files = try Files(from: reader, version: header.version)
 
-        water = try Water(from: reader, version: version)
+        water = try Water(from: reader, version: header.version)
 
-        light = try Light(from: reader, version: version)
+        light = try Light(from: reader, version: header.version)
 
-        ground = try Ground(from: reader, version: version)
+        ground = try Ground(from: reader, version: header.version)
 
         let objectCount: Int32 = try reader.readInt()
 
         for _ in 0..<objectCount {
-            let objectType: Int32 = try reader.readInt()
+            let objectType = try Object.ObjectType(rawValue: reader.readInt())
             switch objectType {
-            case 1:
-                let model = try Object.Model(from: reader, version: version)
+            case .model:
+                let model = try Object.Model(from: reader, version: header.version)
                 models.append(model)
-            case 2:
-                let light = try Object.Light(from: reader, version: version)
+            case .light:
+                let light = try Object.Light(from: reader, version: header.version)
                 lights.append(light)
-            case 3:
-                let sound = try Object.Sound(from: reader, version: version)
+            case .sound:
+                let sound = try Object.Sound(from: reader, version: header.version)
                 sounds.append(sound)
-            case 4:
-                let effect = try Object.Effect(from: reader, version: version)
+            case .effect:
+                let effect = try Object.Effect(from: reader, version: header.version)
                 effects.append(effect)
             default:
                 break
             }
+        }
+    }
+}
+
+extension RSW {
+    struct Header {
+        var magic: String
+        var version: String
+
+        init(from reader: BinaryReader) throws {
+            magic = try reader.readString(4)
+            guard magic == "GRSW" else {
+                throw DocumentError.invalidContents
+            }
+
+            let major: UInt8 = try reader.readInt()
+            let minor: UInt8 = try reader.readInt()
+            version = "\(major).\(minor)"
         }
     }
 }
@@ -79,41 +99,59 @@ extension RSW {
 
             gnd = try reader.readString(40)
 
-            gat = try reader.readString(40)
-
             if version >= "1.4" {
-                src = try reader.readString(40)
+                gat = try reader.readString(40)
             } else {
-                src = ""
+                gat = ""
             }
+
+            src = try reader.readString(40)
         }
     }
 }
 
 extension RSW {
     struct Water {
-        var level: Float = 0
-        var type: Int32 = 0
-        var waveHeight: Float = 0.2
-        var waveSpeed: Float = 2
-        var wavePitch: Float = 50
-        var animSpeed: Int32 = 3
-        var images: [String] = []
+        var level: Float
+        var type: Int32
+        var waveHeight: Float
+        var waveSpeed: Float
+        var wavePitch: Float
+        var animSpeed: Int32
 
         init(from reader: BinaryReader, version: String) throws {
+            if version >= "2.6" {
+                level = 0
+                type = 0
+                waveHeight = 0
+                waveSpeed = 0
+                wavePitch = 0
+                animSpeed = 0
+                return
+            }
+
             if version >= "1.3" {
                 level = try reader.readFloat() / 5
+            } else {
+                level = 0
+            }
 
-                if version >= "1.8" {
-                    type = try reader.readInt()
-                    waveHeight = try reader.readFloat() / 5
-                    waveSpeed = try reader.readFloat()
-                    wavePitch = try reader.readFloat()
+            if version >= "1.8" {
+                type = try reader.readInt()
+                waveHeight = try reader.readFloat()
+                waveSpeed = try reader.readFloat()
+                wavePitch = try reader.readFloat()
+            } else {
+                type = 0
+                waveHeight = 1
+                waveSpeed = 2
+                wavePitch = 50
+            }
 
-                    if version >= "1.9" {
-                        animSpeed = try reader.readInt()
-                    }
-                }
+            if version >= "1.9" {
+                animSpeed = try reader.readInt()
+            } else {
+                animSpeed = 3
             }
         }
     }
@@ -121,23 +159,32 @@ extension RSW {
 
 extension RSW {
     struct Light {
-        var longitude: Int32 = 45
-        var latitude: Int32 = 45
-        var diffuse: simd_float3 = [1, 1, 1]
-        var ambient: simd_float3 = [0.3, 0.3, 0.3]
-        var opacity: Float = 1
-        var direction: simd_float3 = [0, 0, 0]
+        typealias Diffuse = (red: Float, green: Float, blue: Float)
+        typealias Ambient = (red: Float, green: Float, blue: Float)
+
+        var longitude: Int32
+        var latitude: Int32
+        var diffuse: Diffuse
+        var ambient: Ambient
+        var opacity: Float
 
         init(from reader: BinaryReader, version: String) throws {
             if version >= "1.5" {
                 longitude = try reader.readInt()
                 latitude = try reader.readInt()
-                diffuse = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
-                ambient = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
+                diffuse = try (reader.readFloat(), reader.readFloat(), reader.readFloat())
+                ambient = try (reader.readFloat(), reader.readFloat(), reader.readFloat())
+            } else {
+                longitude = 45
+                latitude = 45
+                diffuse = (1, 1, 1)
+                ambient = (0.3, 0.3, 0.3)
+            }
 
-                if version >= "1.7" {
-                    opacity = try reader.readFloat()
-                }
+            if version >= "1.7" {
+                opacity = try reader.readFloat()
+            } else {
+                opacity = 1
             }
         }
     }
@@ -145,10 +192,10 @@ extension RSW {
 
 extension RSW {
     struct Ground {
-        var top: Int32 = -500
-        var bottom: Int32 = 500
-        var left: Int32 = -500
-        var right: Int32 = 500
+        var top: Int32
+        var bottom: Int32
+        var left: Int32
+        var right: Int32
 
         init(from reader: BinaryReader, version: String) throws {
             if version >= "1.6" {
@@ -156,6 +203,11 @@ extension RSW {
                 bottom = try reader.readInt()
                 left = try reader.readInt()
                 right = try reader.readInt()
+            } else {
+                top = -500
+                bottom = 500
+                left = -500
+                right = 500
             }
         }
     }
@@ -163,24 +215,39 @@ extension RSW {
 
 extension RSW {
     enum Object {
+        enum ObjectType: Int32 {
+            case model = 1
+            case light = 2
+            case sound = 3
+            case effect = 4
+        }
+
         struct Model {
             var name: String
-            var animType: Int32
-            var animSpeed: Float
+            var animationType: Int32
+            var animationSpeed: Float
             var blockType: Int32
-            var filename: String
-            var nodename: String
+            var modelName: String
+            var nodeName: String
             var position: simd_float3
             var rotation: simd_float3
             var scale: simd_float3
 
             init(from reader: BinaryReader, version: String) throws {
-                name = try version >= "1.3" ? reader.readString(40, encoding: .koreanEUC) : ""
-                animType = try version >= "1.3" ? reader.readInt() : 0
-                animSpeed = try version >= "1.3" ? reader.readFloat() : 0
-                blockType = try version >= "1.3" ? reader.readInt() : 0
-                filename = try reader.readString(80, encoding: .koreanEUC)
-                nodename = try  reader.readString(80)
+                if version >= "1.3" {
+                    name = try reader.readString(40, encoding: .koreanEUC)
+                    animationType = try reader.readInt()
+                    animationSpeed = try reader.readFloat()
+                    blockType = try reader.readInt()
+                } else {
+                    name = ""
+                    animationType = 0
+                    animationSpeed = 1
+                    blockType = 0
+                }
+
+                modelName = try reader.readString(80, encoding: .koreanEUC)
+                nodeName = try  reader.readString(80)
                 position = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
                 rotation = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
                 scale = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
@@ -189,13 +256,13 @@ extension RSW {
 
         struct Light {
             var name: String
-            var pos: simd_float3
+            var position: simd_float3
             var color: simd_int3
             var range: Float
 
             init(from reader: BinaryReader, version: String) throws {
                 name = try reader.readString(80)
-                pos = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
+                position = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
                 color = try [reader.readInt(), reader.readInt(), reader.readInt()]
                 range = try reader.readFloat()
             }
@@ -203,9 +270,9 @@ extension RSW {
 
         struct Sound {
             var name: String
-            var file: String
-            var pos: simd_float3
-            var vol: Float
+            var waveName: String
+            var position: simd_float3
+            var volume: Float
             var width: Int32
             var height: Int32
             var range: Float
@@ -213,9 +280,9 @@ extension RSW {
 
             init(from reader: BinaryReader, version: String) throws {
                 name = try reader.readString(80)
-                file = try reader.readString(80)
-                pos = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
-                vol = try reader.readFloat()
+                waveName = try reader.readString(80)
+                position = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
+                volume = try reader.readFloat()
                 width = try reader.readInt()
                 height = try reader.readInt()
                 range = try reader.readFloat()
@@ -225,14 +292,14 @@ extension RSW {
 
         struct Effect {
             var name: String
-            var pos: simd_float3
+            var position: simd_float3
             var id: Int32
             var delay: Float
             var param: simd_float4
 
             init(from reader: BinaryReader, version: String) throws {
                 name = try reader.readString(80)
-                pos = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
+                position = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
                 id = try reader.readInt()
                 delay = try reader.readFloat() * 10
                 param = try [reader.readFloat(), reader.readFloat(), reader.readFloat(), reader.readFloat()]
