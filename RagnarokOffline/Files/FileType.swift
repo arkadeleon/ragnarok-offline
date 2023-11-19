@@ -23,6 +23,8 @@ enum FileType: String {
     case spr
     case act
     case rsm
+    case gat
+    case gnd
     case rsw
     case xxx
 
@@ -60,6 +62,10 @@ enum FileType: String {
             self = .act
         case "rsm":
             self = .rsm
+        case "gat":
+            self = .gat
+        case "gnd":
+            self = .gnd
         case "rsw":
             self = .rsw
         default:

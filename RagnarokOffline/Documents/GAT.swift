@@ -66,26 +66,14 @@ extension GAT {
         var bottomRight: Float
         var topLeft: Float
         var topRight: Float
-        var type: CellType?
+        var type: CellType
 
         init(from reader: BinaryReader) throws {
-            bottomLeft = try reader.readFloat() * 0.2
-            bottomRight = try reader.readFloat() * 0.2
-            topLeft = try reader.readFloat() * 0.2
-            topRight = try reader.readFloat() * 0.2
-            type = try CellType(rawValue: reader.readInt())
+            bottomLeft = try reader.readFloat()
+            bottomRight = try reader.readFloat()
+            topLeft = try reader.readFloat()
+            topRight = try reader.readFloat()
+            type = try CellType(rawValue: reader.readInt()) ?? .walkable
         }
-    }
-}
-
-extension GAT {
-    func height(forCellAtX x: Int, y: Int) -> Float {
-        let index = x + y * Int(width)
-        let cell = cells[index]
-
-        let x1 = cell.bottomLeft + (cell.bottomRight - cell.bottomLeft) / 2
-        let x2 = cell.topLeft + (cell.topRight - cell.topLeft) / 2
-
-        return -(x1 + (x2 - x1) / 2)
     }
 }

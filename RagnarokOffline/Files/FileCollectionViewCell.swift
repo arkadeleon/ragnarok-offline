@@ -50,7 +50,7 @@ class FileCollectionViewCell: UICollectionViewCell {
                 case .icon(let name):
                     self?.thumbnailView.image = UIImage(systemName: name)?.withRenderingMode(.alwaysOriginal)
                 case .thumbnail(let image):
-                    self?.thumbnailView.image = UIImage(cgImage: image)
+                    self?.thumbnailView.image = image
                 }
             }
         }

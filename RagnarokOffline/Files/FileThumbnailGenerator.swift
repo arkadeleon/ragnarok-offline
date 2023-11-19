@@ -12,7 +12,7 @@ import UIKit
 
 enum FileThumbnailRepresentation {
     case icon(name: String)
-    case thumbnail(image: CGImage)
+    case thumbnail(image: UIImage)
 }
 
 class FileThumbnailGenerator {
@@ -55,7 +55,7 @@ class FileThumbnailGenerator {
                     return
                 }
 
-                updateHandler(.thumbnail(image: thumbnail))
+                updateHandler(.thumbnail(image: UIImage(cgImage: thumbnail)))
             }
         case .ebm:
             updateHandler(.icon(name: "photo"))
@@ -78,7 +78,7 @@ class FileThumbnailGenerator {
                     return
                 }
 
-                updateHandler(.thumbnail(image: thumbnail))
+                updateHandler(.thumbnail(image: UIImage(cgImage: thumbnail)))
             }
         case .pal:
             updateHandler(.icon(name: "photo"))
@@ -97,7 +97,7 @@ class FileThumbnailGenerator {
                     return
                 }
 
-                updateHandler(.thumbnail(image: image))
+                updateHandler(.thumbnail(image: UIImage(cgImage: image)))
             }
         case .mp3, .wav:
             updateHandler(.icon(name: "waveform.circle"))
@@ -117,7 +117,7 @@ class FileThumbnailGenerator {
                     return
                 }
 
-                updateHandler(.thumbnail(image: image.image))
+                updateHandler(.thumbnail(image: UIImage(cgImage: image.image)))
             }
         case .act:
             updateHandler(.icon(name: "livephoto"))
@@ -140,10 +140,28 @@ class FileThumbnailGenerator {
                     return
                 }
 
-                updateHandler(.thumbnail(image: image.image))
+                updateHandler(.thumbnail(image: UIImage(cgImage: image.image)))
             }
         case .rsm:
             updateHandler(.icon(name: "square.stack.3d.up"))
+        case .gat:
+            updateHandler(.icon(name: "square.grid.3x3.middle.filled"))
+
+            queue.async {
+                guard let data = file.contents() else {
+                    return
+                }
+
+                guard let gat = try? GAT(data: data) else {
+                    return
+                }
+
+                guard let image = gat.image() else {
+                    return
+                }
+
+                updateHandler(.thumbnail(image: image))
+            }
         case .rsw:
             updateHandler(.icon(name: "map"))
         default:
