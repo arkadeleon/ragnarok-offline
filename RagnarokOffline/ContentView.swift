@@ -45,6 +45,9 @@ struct ContentView: View {
 
                     NavigationLink {
                         GameView()
+                            .ignoresSafeArea()
+                            .navigationTitle("Game")
+                            .navigationBarTitleDisplayMode(.inline)
                     } label: {
                         Label("Game", systemImage: "gamecontroller")
                     }

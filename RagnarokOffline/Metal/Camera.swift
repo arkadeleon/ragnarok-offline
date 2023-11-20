@@ -9,7 +9,7 @@
 import Spatial
 
 struct Camera {
-    var position = Point3D()
+    var position = Point3D(x: 0, y: 0, z: -2.5)
     var rotation = Rotation3D()
 
     var target = Point3D()
@@ -19,7 +19,7 @@ struct Camera {
     var nearZ = 0.1
     var farZ = 100.0
 
-    var sensitivity = 0.001
+    var sensitivity = 0.01
 
     var projectionMatrix: ProjectiveTransform3D {
         ProjectiveTransform3D(fovyRadians: fovy.radians, aspectRatio: aspectRatio, nearZ: nearZ, farZ: farZ)
