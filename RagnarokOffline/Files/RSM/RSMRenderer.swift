@@ -1,5 +1,5 @@
 //
-//  ModelDocumentRenderer.swift
+//  RSMRenderer.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/7/15.
@@ -9,7 +9,7 @@
 import Metal
 import MetalKit
 
-class ModelDocumentRenderer: NSObject, Renderer {
+class RSMRenderer: NSObject, Renderer {
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
 

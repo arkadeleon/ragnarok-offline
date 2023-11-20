@@ -13,7 +13,7 @@ struct GameView: View {
     let renderer = GameRenderer()
 
     @State private var magnification = 1.0
-    @State private var dragTranslation = CGSize()
+    @State private var dragTranslation = CGPoint()
 
     var body: some View {
         MetalView(renderer: renderer)

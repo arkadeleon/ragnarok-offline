@@ -1,0 +1,139 @@
+//
+//  RSMPreviewViewController.swift
+//  RagnarokOffline
+//
+//  Created by Leon Li on 2023/11/20.
+//  Copyright © 2023 Leon & Vane. All rights reserved.
+//
+
+import MetalKit
+import UIKit
+
+class RSMPreviewViewController: UIViewController {
+    let file: File
+
+    private var mtkView: MTKView!
+    private var activityIndicatorView: UIActivityIndicatorView!
+
+    private var renderer: RSMRenderer!
+
+    private var magnification: CGFloat = 1
+    private var dragTranslation: CGPoint = .zero
+
+    init(file: File) {
+        self.file = file
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        addActivityIndicatorView()
+
+        activityIndicatorView.startAnimating()
+
+        Task {
+            guard let renderer = await loadRenderer() else {
+                return
+            }
+
+            self.renderer = renderer
+
+            mtkView = MTKView()
+            mtkView.translatesAutoresizingMaskIntoConstraints = false
+            mtkView.isOpaque = false
+            mtkView.delegate = renderer
+            mtkView.device = renderer.device
+            mtkView.colorPixelFormat = renderer.colorPixelFormat
+            mtkView.depthStencilPixelFormat = renderer.depthStencilPixelFormat
+            mtkView.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
+            view.addSubview(mtkView)
+
+            mtkView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            mtkView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            mtkView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+            mtkView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+            let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
+            mtkView.addGestureRecognizer(pinchGestureRecognizer)
+
+            let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+            mtkView.addGestureRecognizer(panGestureRecognizer)
+
+            activityIndicatorView.stopAnimating()
+        }
+    }
+
+    private func addActivityIndicatorView() {
+        activityIndicatorView = UIActivityIndicatorView(style: .medium)
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(activityIndicatorView)
+
+        activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+
+    @objc private func handlePinch(_ pinchGestureRecognizer: UIPinchGestureRecognizer) {
+        switch pinchGestureRecognizer.state {
+        case .changed:
+            let magnification = magnification * pinchGestureRecognizer.scale
+            renderer.camera.update(magnification: magnification, dragTranslation: dragTranslation)
+        case .ended:
+            magnification = magnification * pinchGestureRecognizer.scale
+        default:
+            break
+        }
+    }
+
+    @objc private func handlePan(_ panGestureRecognizer: UIPanGestureRecognizer) {
+        switch panGestureRecognizer.state {
+        case .changed:
+            let translation = panGestureRecognizer.translation(in: panGestureRecognizer.view)
+            let dragTranslation = CGPoint(x: dragTranslation.x + translation.x, y: dragTranslation.y + translation.y)
+            renderer.camera.update(magnification: magnification, dragTranslation: dragTranslation)
+        case .ended:
+            let translation = panGestureRecognizer.translation(in: panGestureRecognizer.view)
+            dragTranslation = CGPoint(x: dragTranslation.x + translation.x, y: dragTranslation.y + translation.y)
+        default:
+            break
+        }
+    }
+
+    nonisolated private func loadRenderer() async -> RSMRenderer? {
+        guard case .grfEntry(let grf, _) = file, let data = file.contents() else {
+            return nil
+        }
+
+        guard let rsm = try? RSMDocument(data: data) else {
+            return nil
+        }
+
+        let textures = rsm.textures.map { textureName -> Data? in
+            let path = GRF.Path(string: "data\\texture\\" + textureName)
+            return try? grf.contentsOfEntry(at: path)
+        }
+
+        let (boundingBox, wrappers) = rsm.calcBoundingBox()
+
+        let instance = rsm.createInstance(
+            position: [0, 0, 0],
+            rotation: [0, 0, 0],
+            scale: [-0.075, -0.075, -0.075],
+            width: 0,
+            height: 0
+        )
+
+        let meshes = rsm.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox)
+
+        guard let renderer = try? RSMRenderer(meshes: meshes, textures: textures, boundingBox: boundingBox) else {
+            return nil
+        }
+
+        return renderer
+    }
+}

@@ -19,7 +19,7 @@ struct Camera {
     var nearZ = 0.1
     var farZ = 100.0
 
-    var sensitivity = 0.01
+    var sensitivity = 0.001
 
     var projectionMatrix: ProjectiveTransform3D {
         ProjectiveTransform3D(fovyRadians: fovy.radians, aspectRatio: aspectRatio, nearZ: nearZ, farZ: farZ)
@@ -42,14 +42,14 @@ struct Camera {
         aspectRatio = size.width / size.height
     }
 
-    mutating func update(magnification: CGFloat, dragTranslation: CGSize) {
+    mutating func update(magnification: CGFloat, dragTranslation: CGPoint) {
         var distance = 2.5
         distance /= magnification
         distance = max(distance, 0)
         distance = min(distance, 20)
 
-        let angleX = -dragTranslation.height * sensitivity
-        let angleY = dragTranslation.width * sensitivity
+        let angleX = -dragTranslation.y * sensitivity
+        let angleY = dragTranslation.x * sensitivity
         let angles = EulerAngles(angles: [angleX, angleY, 0], order: .pitchYawRoll)
         rotation = Rotation3D(eulerAngles: angles)
 
