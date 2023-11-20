@@ -40,7 +40,7 @@ class FilePreviewViewController: UIViewController {
         case .gat:
             GATPreviewViewController(file: file)
         case .rsw:
-            UIHostingController(rootView: WorldDocumentView(file: file))
+            RSWPreviewViewController(file: file)
         default:
             UIViewController()
         }

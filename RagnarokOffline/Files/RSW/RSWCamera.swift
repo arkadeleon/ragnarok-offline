@@ -1,5 +1,5 @@
 //
-//  WorldDocumentCamera.swift
+//  RSWCamera.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/7/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WorldDocumentCamera: NSObject {
+class RSWCamera: NSObject {
     var modelviewMatrix = matrix_identity_float4x4
     var normalMatrix = matrix_identity_float3x3
 

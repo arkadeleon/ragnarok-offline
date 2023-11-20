@@ -1,5 +1,5 @@
 //
-//  WorldDocumentRenderer.swift
+//  RSWRenderer.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/7/15.
@@ -9,7 +9,7 @@
 import Metal
 import MetalKit
 
-class WorldDocumentRenderer: NSObject, Renderer {
+class RSWRenderer: NSObject, Renderer {
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
 
@@ -17,7 +17,7 @@ class WorldDocumentRenderer: NSObject, Renderer {
     let waterRenderer: WaterRenderer
     let modelRenderer: ModelRenderer
 
-    let camera: WorldDocumentCamera
+    let camera: RSWCamera
 
     init(gat: GAT, vertices: [GroundVertex], texture: Data?, waterVertices: [WaterVertex], waterTextures: [Data?], modelMeshes: [[ModelVertex]], modelTextures: [Data?]) throws {
         device = MTLCreateSystemDefaultDevice()!
@@ -33,7 +33,7 @@ class WorldDocumentRenderer: NSObject, Renderer {
             Float(gat.height) / 2,
             gat.height(forCellAtX: Int(gat.width / 2), y: Int(gat.height / 2))
         ]
-        camera = WorldDocumentCamera(target: target)
+        camera = RSWCamera(target: target)
         camera.altitudeTo = -200
         camera.zoomFinal = 200
 

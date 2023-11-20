@@ -10,6 +10,7 @@
 		3504AB8C2A2EFB900029AC46 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3504AB8B2A2EFB900029AC46 /* Camera.swift */; };
 		3511C1CC2B0A4EAE006DD639 /* GAT+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1CB2B0A4EAE006DD639 /* GAT+Image.swift */; };
 		3511C1D12B0A535A006DD639 /* GATPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D02B0A535A006DD639 /* GATPreviewViewController.swift */; };
+		3511C1D32B0A6C5D006DD639 /* RSWPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */; };
 		35270D272A5FE9470001A8BD /* rAthenaControl in Frameworks */ = {isa = PBXBuildFile; productRef = 35270D262A5FE9470001A8BD /* rAthenaControl */; };
 		356BF66F2AFC8964005B67F7 /* BinaryWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF66A2AFC8963005B67F7 /* BinaryWriter.swift */; };
 		356BF6702AFC8964005B67F7 /* FileStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF66B2AFC8963005B67F7 /* FileStream.swift */; };
@@ -104,9 +105,8 @@
 		35B3BA0D2A08C01600B4540B /* TextDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98B2A08C01600B4540B /* TextDocumentView.swift */; };
 		35B3BA0E2A08C01600B4540B /* FileThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98C2A08C01600B4540B /* FileThumbnailGenerator.swift */; };
 		35B3BA0F2A08C01600B4540B /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98D2A08C01600B4540B /* File.swift */; };
-		35B3BA112A08C01600B4540B /* WorldDocumentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9902A08C01600B4540B /* WorldDocumentRenderer.swift */; };
-		35B3BA132A08C01600B4540B /* WorldDocumentCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9922A08C01600B4540B /* WorldDocumentCamera.swift */; };
-		35B3BA142A08C01600B4540B /* WorldDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9932A08C01600B4540B /* WorldDocumentView.swift */; };
+		35B3BA112A08C01600B4540B /* RSWRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9902A08C01600B4540B /* RSWRenderer.swift */; };
+		35B3BA132A08C01600B4540B /* RSWCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9922A08C01600B4540B /* RSWCamera.swift */; };
 		35B3BA152A08C01600B4540B /* FileThumbnailCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9942A08C01600B4540B /* FileThumbnailCache.swift */; };
 		35B3BA162A08C01600B4540B /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9952A08C01600B4540B /* FileType.swift */; };
 		35B3BA172A08C01600B4540B /* FilePasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9962A08C01600B4540B /* FilePasteboard.swift */; };
@@ -182,6 +182,7 @@
 		3504AB8B2A2EFB900029AC46 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		3511C1CB2B0A4EAE006DD639 /* GAT+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GAT+Image.swift"; sourceTree = "<group>"; };
 		3511C1D02B0A535A006DD639 /* GATPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GATPreviewViewController.swift; sourceTree = "<group>"; };
+		3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWPreviewViewController.swift; sourceTree = "<group>"; };
 		35270D2B2A68F4610001A8BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		356BF66A2AFC8963005B67F7 /* BinaryWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryWriter.swift; sourceTree = "<group>"; };
 		356BF66B2AFC8963005B67F7 /* FileStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileStream.swift; sourceTree = "<group>"; };
@@ -319,9 +320,8 @@
 		35B3B98B2A08C01600B4540B /* TextDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextDocumentView.swift; sourceTree = "<group>"; };
 		35B3B98C2A08C01600B4540B /* FileThumbnailGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileThumbnailGenerator.swift; sourceTree = "<group>"; };
 		35B3B98D2A08C01600B4540B /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		35B3B9902A08C01600B4540B /* WorldDocumentRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldDocumentRenderer.swift; sourceTree = "<group>"; };
-		35B3B9922A08C01600B4540B /* WorldDocumentCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldDocumentCamera.swift; sourceTree = "<group>"; };
-		35B3B9932A08C01600B4540B /* WorldDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldDocumentView.swift; sourceTree = "<group>"; };
+		35B3B9902A08C01600B4540B /* RSWRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSWRenderer.swift; sourceTree = "<group>"; };
+		35B3B9922A08C01600B4540B /* RSWCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSWCamera.swift; sourceTree = "<group>"; };
 		35B3B9942A08C01600B4540B /* FileThumbnailCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileThumbnailCache.swift; sourceTree = "<group>"; };
 		35B3B9952A08C01600B4540B /* FileType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileType.swift; sourceTree = "<group>"; };
 		35B3B9962A08C01600B4540B /* FilePasteboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePasteboard.swift; sourceTree = "<group>"; };
@@ -693,9 +693,9 @@
 		35B3B98F2A08C01600B4540B /* RSW */ = {
 			isa = PBXGroup;
 			children = (
-				35B3B9922A08C01600B4540B /* WorldDocumentCamera.swift */,
-				35B3B9902A08C01600B4540B /* WorldDocumentRenderer.swift */,
-				35B3B9932A08C01600B4540B /* WorldDocumentView.swift */,
+				35B3B9922A08C01600B4540B /* RSWCamera.swift */,
+				35B3B9902A08C01600B4540B /* RSWRenderer.swift */,
+				3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */,
 			);
 			path = RSW;
 			sourceTree = "<group>";
@@ -944,7 +944,7 @@
 				35B3B9D62A08C01600B4540B /* structs.c in Sources */,
 				35B3B9CA2A08C01600B4540B /* lmem.c in Sources */,
 				35B695EC2A307164006F1904 /* GameScene.swift in Sources */,
-				35B3BA132A08C01600B4540B /* WorldDocumentCamera.swift in Sources */,
+				35B3BA132A08C01600B4540B /* RSWCamera.swift in Sources */,
 				35B3BA242A08C01600B4540B /* ModelShaders.metal in Sources */,
 				35B3BA052A08C01600B4540B /* TextureLoader.swift in Sources */,
 				35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */,
@@ -984,7 +984,7 @@
 				35B3BA192A08C01600B4540B /* ImageDocumentViewController.swift in Sources */,
 				35B3B9D52A08C01600B4540B /* disassemble.c in Sources */,
 				35B3BA032A08C01600B4540B /* Encoding.swift in Sources */,
-				35B3BA112A08C01600B4540B /* WorldDocumentRenderer.swift in Sources */,
+				35B3BA112A08C01600B4540B /* RSWRenderer.swift in Sources */,
 				35B3BA162A08C01600B4540B /* FileType.swift in Sources */,
 				35B3B9BB2A08C01600B4540B /* print.c in Sources */,
 				35B3BA262A08C01600B4540B /* RendererCommon.swift in Sources */,
@@ -1016,7 +1016,6 @@
 				356BF68A2B064965005B67F7 /* FilesViewController.swift in Sources */,
 				35B3B9E72A08C01600B4540B /* ACT.swift in Sources */,
 				3511C1D12B0A535A006DD639 /* GATPreviewViewController.swift in Sources */,
-				35B3BA142A08C01600B4540B /* WorldDocumentView.swift in Sources */,
 				35B695EF2A30763A006F1904 /* Mesh.swift in Sources */,
 				3511C1CC2B0A4EAE006DD639 /* GAT+Image.swift in Sources */,
 				35B3B9C82A08C01600B4540B /* lzio.c in Sources */,
@@ -1032,6 +1031,7 @@
 				35B3B9C32A08C01600B4540B /* lundump.c in Sources */,
 				35B3B9DD2A08C01600B4540B /* statement.c in Sources */,
 				35B695F12A30775E006F1904 /* Submesh.swift in Sources */,
+				3511C1D32B0A6C5D006DD639 /* RSWPreviewViewController.swift in Sources */,
 				35B4990C2A1C50B400607EE6 /* Renderer.swift in Sources */,
 				35B3BA172A08C01600B4540B /* FilePasteboard.swift in Sources */,
 				356BF67F2B0495FA005B67F7 /* RLE.swift in Sources */,
