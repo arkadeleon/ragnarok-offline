@@ -33,8 +33,8 @@ func translateZ(_ mat: simd_float4x4, _ z: Float) -> simd_float4x4 {
     return dest
 }
 
-func rotateQuat(_ mat: simd_float4x4, w: simd_float4) -> simd_float4x4 {
-    let norm = simd_normalize(w)
+func rotateQuat(_ mat: simd_float4x4, w: simd_quatf) -> simd_float4x4 {
+    let norm = simd_normalize(w.vector)
     let a = norm[0]
     let b = norm[1]
     let c = norm[2]

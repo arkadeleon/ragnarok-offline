@@ -153,7 +153,7 @@ class RSWPreviewViewController: UIViewController {
         for model in rsw.models {
             let path = GRF.Path(string: "data\\model\\" + model.modelName)
             guard let data = try? grf.contentsOfEntry(at: path),
-                  let rsm = try? RSMDocument(data: data) else {
+                  let rsm = try? RSM(data: data) else {
                 continue
             }
 

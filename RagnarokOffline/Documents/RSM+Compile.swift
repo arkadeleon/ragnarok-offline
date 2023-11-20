@@ -8,7 +8,7 @@
 
 extension RSMNodeBoundingBoxWrapper {
 
-    func compile(contents: RSMDocument, instance_matrix: simd_float4x4, boundingBox: RSMBoundingBox) -> [[ModelVertex]] {
+    func compile(contents: RSM, instance_matrix: simd_float4x4, boundingBox: RSMBoundingBox) -> [[ModelVertex]] {
         var shadeGroup = [[Float]](repeating: [], count: 32)
         var shadeGroupUsed = [Bool](repeating: false, count: 32)
 
@@ -20,7 +20,7 @@ extension RSMNodeBoundingBoxWrapper {
             matrix = matrix_translate(matrix, node.offset)
         }
 
-        matrix = matrix * simd_float4x4(node.mat3)
+        matrix = matrix * simd_float4x4(node.transformationMatrix)
 
         let modelViewMat = instance_matrix * matrix
         let normalMat = extractRotation(modelViewMat)
@@ -39,17 +39,17 @@ extension RSMNodeBoundingBoxWrapper {
 
         var face_normal = [Float](repeating: 0, count: node.faces.count * 3)
 
-        let maxTexture = node.textures.max() ?? 0
+        let maxTexture = node.textureIndexes.max() ?? 0
         var mesh = [[ModelVertex]](repeating: [], count: Int(maxTexture) + 1)
 
         switch contents.shadeType {
-        case RSMShadingType.none.rawValue:
+        case RSM.RSMShadingType.none.rawValue:
             calcNormal_NONE(out: &face_normal)
             generate_mesh_FLAT(vert: vert, norm: face_normal, alpha: contents.alpha, mesh: &mesh)
-        case RSMShadingType.flat.rawValue:
+        case RSM.RSMShadingType.flat.rawValue:
             calcNormal_FLAT(out: &face_normal, normalMat: normalMat, groupUsed: &shadeGroupUsed)
             generate_mesh_FLAT(vert: vert, norm: face_normal, alpha: contents.alpha, mesh: &mesh)
-        case RSMShadingType.smooth.rawValue:
+        case RSM.RSMShadingType.smooth.rawValue:
             calcNormal_FLAT(out: &face_normal, normalMat: normalMat, groupUsed: &shadeGroupUsed)
             calcNormal_SMOOTH(normal: face_normal, groupUsed: shadeGroupUsed, group: &shadeGroup)
             generate_mesh_SMOOTH(vert: vert, shadeGroup: shadeGroup, alpha: contents.alpha, mesh: &mesh)
@@ -81,7 +81,7 @@ extension RSMNodeBoundingBoxWrapper {
             out[j + 1] = normalMat[0, 1] * temp_vec[0] + normalMat[1, 1] * temp_vec[1] + normalMat[2, 1] * temp_vec[2] + normalMat[3, 1]
             out[j + 2] = normalMat[0, 2] * temp_vec[0] + normalMat[1, 2] * temp_vec[1] + normalMat[2, 2] * temp_vec[2] + normalMat[3, 2]
 
-            groupUsed[Int(face.smoothGroup)] = true
+            groupUsed[Int(face.smoothGroup[0])] = true
 
             j += 3
         }
@@ -104,7 +104,7 @@ extension RSMNodeBoundingBoxWrapper {
 
                 var k = 0
                 for face in node.faces {
-                    if face.smoothGroup == j && (face.vertidx[0] == v || face.vertidx[1] == v || face.vertidx[2] == v) {
+                    if face.smoothGroup[0] == j && (face.vertidx[0] == v || face.vertidx[1] == v || face.vertidx[2] == v) {
                         x += normal[k]
                         y += normal[k + 1]
                         z += normal[k + 2]
@@ -125,23 +125,26 @@ extension RSMNodeBoundingBoxWrapper {
         }
     }
 
-    func generate_mesh_FLAT(vert: [Float], norm: [Float], alpha: Float, mesh: inout [[ModelVertex]]) {
+    func generate_mesh_FLAT(vert: [Float], norm: [Float], alpha: UInt8, mesh: inout [[ModelVertex]]) {
         var k = 0
         for face in node.faces {
             let idx = face.vertidx
             let tidx = face.tvertidx
 
-            let t = Int(node.textures[Int(face.texid)])
+            let t = Int(node.textureIndexes[Int(face.texid)])
 
             for j in 0..<3 {
                 let a = Int(idx[j]) * 3
-                let b = Int(tidx[j]) * 6
+                let b = Int(tidx[j])
 
                 let vertex = ModelVertex(
                     position: [vert[a + 0], vert[a + 1], vert[a + 2]],
                     normal: [norm[k + 0], norm[k + 1], norm[k + 2]],
-                    textureCoordinate: [node.tvertices[b + 4], node.tvertices[b + 5]],
-                    alpha: alpha
+                    textureCoordinate: [
+                        node.tvertices[b].u * 0.98 + 0.01,
+                        node.tvertices[b].v * 0.98 + 0.01
+                    ],
+                    alpha: Float(alpha) / 255
                 )
                 mesh[t].append(vertex)
             }
@@ -150,23 +153,26 @@ extension RSMNodeBoundingBoxWrapper {
         }
     }
 
-    func generate_mesh_SMOOTH(vert: [Float], shadeGroup: [[Float]], alpha: Float, mesh: inout [[ModelVertex]]) {
+    func generate_mesh_SMOOTH(vert: [Float], shadeGroup: [[Float]], alpha: UInt8, mesh: inout [[ModelVertex]]) {
         for face in node.faces {
-            let norm = shadeGroup[Int(face.smoothGroup)]
+            let norm = shadeGroup[Int(face.smoothGroup[0])]
             let idx = face.vertidx
             let tidx = face.tvertidx
 
-            let t = Int(node.textures[Int(face.texid)])
+            let t = Int(node.textureIndexes[Int(face.texid)])
 
             for j in 0..<3 {
                 let a = Int(idx[j]) * 3
-                let b = Int(tidx[j]) * 6
+                let b = Int(tidx[j])
 
                 let vertex = ModelVertex(
                     position: [vert[a + 0], vert[a + 1], vert[a + 2]],
                     normal: [norm[a + 0], norm[a + 1], norm[a + 2]],
-                    textureCoordinate: [node.tvertices[b + 4], node.tvertices[b + 5]],
-                    alpha: alpha
+                    textureCoordinate: [
+                        node.tvertices[b].u * 0.98 + 0.01,
+                        node.tvertices[b].v * 0.98 + 0.01
+                    ],
+                    alpha: Float(alpha) / 255
                 )
                 mesh[t].append(vertex)
             }
@@ -174,7 +180,7 @@ extension RSMNodeBoundingBoxWrapper {
     }
 }
 
-extension RSMDocument {
+extension RSM {
 
     func compile(instance: simd_float4x4, wrappers: [RSMNodeBoundingBoxWrapper], boundingBox: RSMBoundingBox) -> [[ModelVertex]] {
         var meshes: [[ModelVertex]] = Array(repeating: [], count: textures.count)

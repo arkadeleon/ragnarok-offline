@@ -15,7 +15,7 @@ struct RSMBoundingBox {
     var center = simd_float3()
 }
 
-extension RSMDocument {
+extension RSM {
 
     func calcBoundingBox() -> (RSMBoundingBox, [RSMNodeBoundingBoxWrapper]) {
         var box = RSMBoundingBox()
@@ -43,23 +43,23 @@ extension RSMDocument {
 
 class RSMNodeBoundingBoxWrapper {
 
-    let node: RSMNode
+    let node: RSM.Node
 
     var box = RSMBoundingBox()
     var matrix = matrix_identity_float4x4
 
-    init(node: RSMNode) {
+    init(node: RSM.Node) {
         self.node = node
     }
 
     func calcBoundingBox(_ _matrix: simd_float4x4, wrappers: [RSMNodeBoundingBoxWrapper]) {
         self.matrix = _matrix
-        self.matrix =  matrix_translate(self.matrix, node.pos)
+        self.matrix =  matrix_translate(self.matrix, node.position)
 
         if node.rotationKeyframes.count == 0 {
 //            self.matrix = SGLMath.rotate(self.matrix, rotangle, rotaxis)
         } else {
-            self.matrix = rotateQuat(self.matrix, w: node.rotationKeyframes[0].q)
+            self.matrix = rotateQuat(self.matrix, w: node.rotationKeyframes[0].quaternion)
         }
 
         self.matrix = matrix_scale(self.matrix, node.scale)
@@ -70,7 +70,7 @@ class RSMNodeBoundingBoxWrapper {
             matrix = matrix_translate(matrix, node.offset)
         }
 
-        matrix = matrix * simd_float4x4(node.mat3)
+        matrix = matrix * simd_float4x4(node.transformationMatrix)
 
         for i in 0..<node.vertices.count {
             let x = node.vertices[i][0]
@@ -95,7 +95,7 @@ class RSMNodeBoundingBoxWrapper {
         }
 
         for wrapper in wrappers {
-            if wrapper.node.parentname == node.name && node.name != node.parentname {
+            if wrapper.node.parentName == node.name && node.name != node.parentName {
                 wrapper.calcBoundingBox(self.matrix, wrappers: wrappers)
             }
         }

@@ -18,7 +18,6 @@ class RSMPreviewViewController: UIViewController {
     private var renderer: RSMRenderer!
 
     private var magnification: CGFloat = 1
-    private var dragTranslation: CGPoint = .zero
 
     init(file: File) {
         self.file = file
@@ -61,9 +60,6 @@ class RSMPreviewViewController: UIViewController {
             let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
             mtkView.addGestureRecognizer(pinchGestureRecognizer)
 
-            let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
-            mtkView.addGestureRecognizer(panGestureRecognizer)
-
             activityIndicatorView.stopAnimating()
         }
     }
@@ -82,23 +78,9 @@ class RSMPreviewViewController: UIViewController {
         switch pinchGestureRecognizer.state {
         case .changed:
             let magnification = magnification * pinchGestureRecognizer.scale
-            renderer.camera.update(magnification: magnification, dragTranslation: dragTranslation)
+            renderer.camera.update(magnification: magnification, dragTranslation: .zero)
         case .ended:
             magnification = magnification * pinchGestureRecognizer.scale
-        default:
-            break
-        }
-    }
-
-    @objc private func handlePan(_ panGestureRecognizer: UIPanGestureRecognizer) {
-        switch panGestureRecognizer.state {
-        case .changed:
-            let translation = panGestureRecognizer.translation(in: panGestureRecognizer.view)
-            let dragTranslation = CGPoint(x: dragTranslation.x + translation.x, y: dragTranslation.y + translation.y)
-            renderer.camera.update(magnification: magnification, dragTranslation: dragTranslation)
-        case .ended:
-            let translation = panGestureRecognizer.translation(in: panGestureRecognizer.view)
-            dragTranslation = CGPoint(x: dragTranslation.x + translation.x, y: dragTranslation.y + translation.y)
         default:
             break
         }
@@ -109,7 +91,7 @@ class RSMPreviewViewController: UIViewController {
             return nil
         }
 
-        guard let rsm = try? RSMDocument(data: data) else {
+        guard let rsm = try? RSM(data: data) else {
             return nil
         }
 

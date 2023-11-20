@@ -22,7 +22,7 @@ struct RSMFaceElement: Equatable {
 
 extension MDLAsset {
 
-    convenience init(document: RSMDocument, materials: [MDLMaterial?]) {
+    convenience init(document: RSM, materials: [MDLMaterial?]) {
         self.init(bufferAllocator: nil)
 
         if let rootNode = document.mainNode {
@@ -34,7 +34,7 @@ extension MDLAsset {
 
 extension MDLMesh {
 
-    convenience init(node: RSMNode, materials: [MDLMaterial?]) {
+    convenience init(node: RSM.Node, materials: [MDLMaterial?]) {
         var elements: [RSMFaceElement] = []
         let indexOfElement = { (element: RSMFaceElement) -> UInt16 in
             if let index = elements.firstIndex(of: element) {
@@ -46,7 +46,7 @@ extension MDLMesh {
             }
         }
 
-        var indexBuffers = Array(repeating: [UInt16](), count: node.textures.count)
+        var indexBuffers = Array(repeating: [UInt16](), count: node.textureIndexes.count)
 
         for face in node.faces {
             let textureIndex = Int(face.texid)
@@ -68,7 +68,10 @@ extension MDLMesh {
         let vertices = elements.map { (element) -> RSMVertex in
             let vertex = RSMVertex(
                 position: node.vertices[Int(element.vertexIndex)],
-                textureCoordinate: [node.tvertices[Int(element.textureVertexIndex) * 6 + 4], node.tvertices[Int(element.textureVertexIndex) * 6 + 5]]
+                textureCoordinate: [
+                    node.tvertices[Int(element.textureVertexIndex)].u * 0.98 + 0.01,
+                    node.tvertices[Int(element.textureVertexIndex)].v * 0.98 + 0.01
+                ]
             )
             return vertex
         }
@@ -94,17 +97,17 @@ extension MDLMesh {
             let data = Data(bytes: indexBuffer, count: MemoryLayout<UInt16>.size * indexBuffer.count)
             let meshBuffer = allocator.newBuffer(with: data, type: .index)
             let submesh = MDLSubmesh(indexBuffer: meshBuffer, indexCount: indexBuffer.count, indexType: .uInt16, geometryType: .triangles, material: nil)
-            submesh.material = materials[Int(node.textures[index])]
+            submesh.material = materials[Int(node.textureIndexes[index])]
             return submesh
         }
 
         self.init(vertexBuffer: vertexBuffer, vertexCount: vertices.count, descriptor: vertexDescriptor, submeshes: submeshes)
 
         var matrix = matrix_identity_float4x4
-        matrix = matrix_translate(matrix, node.pos)
+        matrix = matrix_translate(matrix, node.position)
         // TODO: rotate
         matrix = matrix_scale(matrix, node.scale)
-        matrix = matrix * simd_float4x4(node.mat3)
+        matrix = matrix * simd_float4x4(node.transformationMatrix)
         self.transform = MDLTransform(matrix: matrix)
     }
 }
