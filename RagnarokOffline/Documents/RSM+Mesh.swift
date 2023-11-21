@@ -9,23 +9,20 @@
 import ModelIO
 
 struct RSMVertex {
-
     var position: simd_float3
     var textureCoordinate: simd_float2
 }
 
 struct RSMFaceElement: Equatable {
-
     var vertexIndex: UInt16
     var textureVertexIndex: UInt16
 }
 
 extension MDLAsset {
-
-    convenience init(document: RSM, materials: [MDLMaterial?]) {
+    convenience init(rsm: RSM, materials: [MDLMaterial?]) {
         self.init(bufferAllocator: nil)
 
-        if let rootNode = document.mainNode {
+        if let rootNode = rsm.mainNode {
             let mesh = MDLMesh(node: rootNode, materials: materials)
             add(mesh)
         }
@@ -33,7 +30,6 @@ extension MDLAsset {
 }
 
 extension MDLMesh {
-
     convenience init(node: RSM.Node, materials: [MDLMaterial?]) {
         var elements: [RSMFaceElement] = []
         let indexOfElement = { (element: RSMFaceElement) -> UInt16 in

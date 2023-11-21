@@ -105,7 +105,7 @@ class RSMPreviewViewController: UIViewController {
         let instance = rsm.createInstance(
             position: [0, 0, 0],
             rotation: [0, 0, 0],
-            scale: [-0.075, -0.075, -0.075],
+            scale: [-0.25, -0.25, -0.25],
             width: 0,
             height: 0
         )

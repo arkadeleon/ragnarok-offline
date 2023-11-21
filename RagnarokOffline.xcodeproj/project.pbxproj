@@ -91,9 +91,8 @@
 		35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9702A08C01600B4540B /* Shaders.metal */; };
 		35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9722A08C01600B4540B /* GameRenderer.swift */; };
 		35B3B9FA2A08C01600B4540B /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B9732A08C01600B4540B /* wall.jpg */; };
-		35B3B9FE2A08C01600B4540B /* RSM+BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9792A08C01600B4540B /* RSM+BoundingBox.swift */; };
+		35B3B9FE2A08C01600B4540B /* RSMWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9792A08C01600B4540B /* RSMWrapper.swift */; };
 		35B3B9FF2A08C01600B4540B /* GND+Compile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B97A2A08C01600B4540B /* GND+Compile.swift */; };
-		35B3BA002A08C01600B4540B /* RSM+Compile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B97B2A08C01600B4540B /* RSM+Compile.swift */; };
 		35B3BA022A08C01600B4540B /* RSM+Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B97D2A08C01600B4540B /* RSM+Mesh.swift */; };
 		35B3BA032A08C01600B4540B /* Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B97F2A08C01600B4540B /* Encoding.swift */; };
 		35B3BA042A08C01600B4540B /* SGLMath+Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9802A08C01600B4540B /* SGLMath+Calculate.swift */; };
@@ -305,9 +304,8 @@
 		35B3B9732A08C01600B4540B /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
 		35B3B9762A08C01600B4540B /* ResourceBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceBundle.swift; sourceTree = "<group>"; };
 		35B3B9772A08C01600B4540B /* ResourceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceManager.swift; sourceTree = "<group>"; };
-		35B3B9792A08C01600B4540B /* RSM+BoundingBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RSM+BoundingBox.swift"; sourceTree = "<group>"; };
+		35B3B9792A08C01600B4540B /* RSMWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSMWrapper.swift; sourceTree = "<group>"; };
 		35B3B97A2A08C01600B4540B /* GND+Compile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GND+Compile.swift"; sourceTree = "<group>"; };
-		35B3B97B2A08C01600B4540B /* RSM+Compile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RSM+Compile.swift"; sourceTree = "<group>"; };
 		35B3B97D2A08C01600B4540B /* RSM+Mesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RSM+Mesh.swift"; sourceTree = "<group>"; };
 		35B3B97F2A08C01600B4540B /* Encoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Encoding.swift; sourceTree = "<group>"; };
 		35B3B9802A08C01600B4540B /* SGLMath+Calculate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SGLMath+Calculate.swift"; sourceTree = "<group>"; };
@@ -607,8 +605,7 @@
 				356BF6762AFCCDD9005B67F7 /* GRFWrapper.swift */,
 				35B3B9562A08C01600B4540B /* INIDocument.swift */,
 				35B3B9572A08C01600B4540B /* RSM.swift */,
-				35B3B9792A08C01600B4540B /* RSM+BoundingBox.swift */,
-				35B3B97B2A08C01600B4540B /* RSM+Compile.swift */,
+				35B3B9792A08C01600B4540B /* RSMWrapper.swift */,
 				35B3B97D2A08C01600B4540B /* RSM+Mesh.swift */,
 				35B3B9542A08C01600B4540B /* RSW.swift */,
 				35B3B95A2A08C01600B4540B /* SPR.swift */,
@@ -938,7 +935,7 @@
 				35B3B9BC2A08C01600B4540B /* lmathlib.c in Sources */,
 				35B3B9E12A08C01600B4540B /* GRF.swift in Sources */,
 				35B3B9E32A08C01600B4540B /* RSM.swift in Sources */,
-				35B3B9FE2A08C01600B4540B /* RSM+BoundingBox.swift in Sources */,
+				35B3B9FE2A08C01600B4540B /* RSMWrapper.swift in Sources */,
 				35B3B9DA2A08C01600B4540B /* macro-array.c in Sources */,
 				3504AB8C2A2EFB900029AC46 /* Camera.swift in Sources */,
 				35B3BA0C2A08C01600B4540B /* SpriteDocumentView.swift in Sources */,
@@ -1003,7 +1000,6 @@
 				35B3BA022A08C01600B4540B /* RSM+Mesh.swift in Sources */,
 				35B3BA492A08DA0C00B4540B /* StillImage.swift in Sources */,
 				356BF67D2B0489CE005B67F7 /* SPR+Image.swift in Sources */,
-				35B3BA002A08C01600B4540B /* RSM+Compile.swift in Sources */,
 				35B3BA282A08C01600B4540B /* WaterRenderer.swift in Sources */,
 				356BF6712AFC8964005B67F7 /* BinaryReader.swift in Sources */,
 				35B3B9D92A08C01600B4540B /* decompile.c in Sources */,

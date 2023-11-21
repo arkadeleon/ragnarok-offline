@@ -1,12 +1,69 @@
 //
-//  RSMDocument+Compile.swift
+//  RSMWrapper.swift
 //  RagnarokOffline
 //
-//  Created by Leon Li on 2020/6/28.
+//  Created by Leon Li on 2020/6/30.
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-extension RSMNodeBoundingBoxWrapper {
+class RSMNodeWrapper {
+    let node: RSM.Node
+
+    var box = RSMBoundingBox()
+    var matrix = matrix_identity_float4x4
+
+    init(node: RSM.Node) {
+        self.node = node
+    }
+
+    func calcBoundingBox(parentMatrix: simd_float4x4, wrappers: [RSMNodeWrapper]) {
+        self.matrix = parentMatrix
+        self.matrix =  matrix_translate(self.matrix, node.position)
+
+        if node.rotationKeyframes.count == 0 {
+//            self.matrix = SGLMath.rotate(self.matrix, rotangle, rotaxis)
+        } else {
+            self.matrix = rotateQuat(self.matrix, w: node.rotationKeyframes[0].quaternion)
+        }
+
+        self.matrix = matrix_scale(self.matrix, node.scale)
+
+        var matrix = self.matrix
+
+        if wrappers.count > 1 {
+            matrix = matrix_translate(matrix, node.offset)
+        }
+
+        matrix = matrix * simd_float4x4(node.transformationMatrix)
+
+        for i in 0..<node.vertices.count {
+            let x = node.vertices[i][0]
+            let y = node.vertices[i][1]
+            let z = node.vertices[i][2]
+
+            var v = simd_float3()
+            v[0] = matrix[0, 0] * x + matrix[1, 0] * y + matrix[2, 0] * z + matrix[3, 0]
+            v[1] = matrix[0, 1] * x + matrix[1, 1] * y + matrix[2, 1] * z + matrix[3, 1]
+            v[2] = matrix[0, 2] * x + matrix[1, 2] * y + matrix[2, 2] * z + matrix[3, 2]
+
+            for j in 0..<3 {
+                box.min[j] = min(v[j], box.min[j])
+                box.max[j] = max(v[j], box.max[j])
+            }
+        }
+
+        for i in 0..<3 {
+            box.offset[i] = (box.max[i] + box.min[i]) / 2
+            box.range[i] = (box.max[i] - box.min[i]) / 2
+            box.center[i] = box.min[i] + box.range[i]
+        }
+
+        for wrapper in wrappers {
+            if wrapper.node.parentName == node.name && node.name != node.parentName {
+                wrapper.calcBoundingBox(parentMatrix: self.matrix, wrappers: wrappers)
+            }
+        }
+    }
 
     func compile(contents: RSM, instance_matrix: simd_float4x4, boundingBox: RSMBoundingBox) -> [[ModelVertex]] {
         var shadeGroup = [[Float]](repeating: [], count: 32)
@@ -180,9 +237,39 @@ extension RSMNodeBoundingBoxWrapper {
     }
 }
 
-extension RSM {
+struct RSMBoundingBox {
+    var max = simd_float3(-.infinity, -.infinity, -.infinity)
+    var min = simd_float3(.infinity, .infinity, .infinity)
+    var offset = simd_float3()
+    var range = simd_float3()
+    var center = simd_float3()
+}
 
-    func compile(instance: simd_float4x4, wrappers: [RSMNodeBoundingBoxWrapper], boundingBox: RSMBoundingBox) -> [[ModelVertex]] {
+extension RSM {
+    func calcBoundingBox() -> (RSMBoundingBox, [RSMNodeWrapper]) {
+        var box = RSMBoundingBox()
+
+        let matrix = matrix_identity_float4x4
+
+        let wrappers = nodes.map(RSMNodeWrapper.init)
+        let mainWrapper = wrappers.first { $0.node.name == mainNode?.name }
+
+        mainWrapper?.calcBoundingBox(parentMatrix: matrix, wrappers: wrappers)
+
+        for i in 0..<3 {
+            for j in 0..<wrappers.count {
+                box.max[i] = max(box.max[i], wrappers[j].box.max[i])
+                box.min[i] = min(box.min[i], wrappers[j].box.min[i])
+            }
+            box.offset[i] = (box.max[i] + box.min[i]) / 2
+            box.range[i] = (box.max[i] - box.min[i]) / 2
+            box.center[i] = box.min[i] + box.range[i]
+        }
+
+        return (box, wrappers)
+    }
+
+    func compile(instance: simd_float4x4, wrappers: [RSMNodeWrapper], boundingBox: RSMBoundingBox) -> [[ModelVertex]] {
         var meshes: [[ModelVertex]] = Array(repeating: [], count: textures.count)
         for wrapper in wrappers {
             let ms = wrapper.compile(contents: self, instance_matrix: instance, boundingBox: boundingBox)

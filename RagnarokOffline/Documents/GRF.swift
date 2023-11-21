@@ -98,6 +98,13 @@ extension GRF {
             }
 
             directories = Set(entries.map({ $0.path.removingLastComponent }))
+            for directory in directories {
+                var parent = directory
+                repeat {
+                    parent = parent.removingLastComponent
+                    directories.insert(parent)
+                } while !parent.string.isEmpty
+            }
         }
     }
 }
@@ -176,7 +183,7 @@ extension GRF {
         lazy var removingLastComponent: Path = {
             let startIndex = string.startIndex
             guard let endIndex = string.lastIndex(of: "\\") else {
-                return self
+                return Path(string: "")
             }
 
             let substring = string[startIndex..<endIndex]
