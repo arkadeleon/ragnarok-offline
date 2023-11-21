@@ -131,7 +131,7 @@ extension RSW {
             }
 
             if version >= "1.3" {
-                level = try reader.readFloat() / 5
+                level = try reader.readFloat()
             } else {
                 level = 0
             }

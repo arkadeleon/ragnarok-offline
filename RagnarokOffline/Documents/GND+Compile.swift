@@ -56,7 +56,7 @@ extension GND {
 
         for y in 0..<height {
             for x in 0..<width {
-                let cell = surfaces[x + y * width]
+                let cell = cubes[x + y * width]
                 if cell.tileUp > -1 {
                     let index = (x + y * width) * 4
                     let color = tiles[Int(cell.tileUp)].color
@@ -79,7 +79,7 @@ extension GND {
 
         for y in 0..<height {
             for x in 0..<width {
-                let cell = surfaces[x + y * width]
+                let cell = cubes[x + y * width]
 
                 if cell.tileUp > -1 {
                     let tile_up = Int(cell.tileUp)
@@ -125,7 +125,7 @@ extension GND {
 
         for y in 0..<height {
             for x in 0..<width {
-                let cell = surfaces[Int(x + y * width)]
+                let cell = cubes[Int(x + y * width)]
 
                 if cell.tileUp > -1 /*&& tiles[Int(cell.tileUp)].textureIndex > -1*/ {
                     let a: simd_float3 = [
@@ -259,7 +259,7 @@ extension GND {
         // Compiling mesh
         for y in 0..<height {
             for x in 0..<width {
-                let cell_a = surfaces[x + y * width]
+                let cell_a = cubes[x + y * width]
                 let h_a = [
                     cell_a.bottomLeft / 5,
                     cell_a.bottomRight / 5,
@@ -364,7 +364,7 @@ extension GND {
                 if (cell_a.tileFront > -1) && (Float(y) + 1 < Float(height)) {
                     let tile = tiles[Int(cell_a.tileFront)]
 
-                    let cell_b = surfaces[ x + (y + 1) * width ]
+                    let cell_b = cubes[ x + (y + 1) * width ]
                     let h_b = [
                         cell_b.bottomLeft / 5,
                         cell_b.bottomRight / 5,
@@ -423,7 +423,7 @@ extension GND {
                 if (cell_a.tileRight > -1) && (Float(x) + 1 < Float(width)) {
                     let tile = tiles[Int(cell_a.tileRight)]
 
-                    let cell_b = surfaces[ (x+1) + y * width ]
+                    let cell_b = cubes[ (x+1) + y * width ]
                     let h_b    = [
                         cell_b.bottomLeft / 5,
                         cell_b.bottomRight / 5,

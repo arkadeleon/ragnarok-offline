@@ -21,7 +21,7 @@ struct GND {
 
     var tiles: [Tile] = []
 
-    var surfaces: [Surface] = []
+    var cubes: [Cube] = []
 
     init(data: Data) throws {
         let stream = MemoryStream(data: data)
@@ -70,10 +70,10 @@ struct GND {
             tiles.append(tile)
         }
 
-        let surfaceCount = width * height
-        for _ in 0..<surfaceCount {
-            let surface = try Surface(from: reader)
-            surfaces.append(surface)
+        let cubeCount = width * height
+        for _ in 0..<cubeCount {
+            let cube = try Cube(from: reader)
+            cubes.append(cube)
         }
     }
 }
@@ -169,7 +169,7 @@ extension GND {
 }
 
 extension GND {
-    struct Surface {
+    struct Cube {
         var bottomLeft: Float
         var bottomRight: Float
         var topLeft: Float

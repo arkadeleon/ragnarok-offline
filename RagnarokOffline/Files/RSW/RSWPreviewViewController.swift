@@ -97,7 +97,7 @@ class RSWPreviewViewController: UIViewController {
             return nil
         }
 
-        let state = gnd.compile(waterLevel: rsw.water.level, waterHeight: rsw.water.waveHeight)
+        let state = gnd.compile(waterLevel: rsw.water.level / 5, waterHeight: rsw.water.waveHeight / 5)
 
         let groundTextureImage = gnd.generateTextureImage { textureName in
             let path = GRF.Path(string: "data\\texture\\" + textureName)
