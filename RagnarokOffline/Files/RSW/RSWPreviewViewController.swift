@@ -99,48 +99,14 @@ class RSWPreviewViewController: UIViewController {
 
         let state = gnd.compile(waterLevel: rsw.water.level, waterHeight: rsw.water.waveHeight)
 
-        let textures = gnd.textures
-
-        let ATLAS_COLS         = roundf(sqrtf(Float(textures.count)))
-        let ATLAS_ROWS         = ceilf(sqrtf(Float(textures.count)))
-        let ATLAS_WIDTH        = powf(2, ceilf(logf(ATLAS_COLS * 258) / logf(2)))
-        let ATLAS_HEIGHT       = powf(2, ceilf(logf(ATLAS_ROWS * 258) / logf(2)))
-
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGImageAlphaInfo.premultipliedFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
-
-        guard let context = CGContext(
-            data: nil,
-            width: Int(ATLAS_WIDTH),
-            height: Int(ATLAS_HEIGHT),
-            bitsPerComponent: 8,
-            bytesPerRow: Int(ATLAS_WIDTH) * 4,
-            space: colorSpace,
-            bitmapInfo: bitmapInfo
-        ) else {
+        let groundTextureImage = gnd.generateTextureImage { textureName in
+            let path = GRF.Path(string: "data\\texture\\" + textureName)
+            let data = try? grf.contentsOfEntry(at: path)
+            return data
+        }
+        guard let groundTextureImage else {
             return nil
         }
-
-        context.setFillColor(UIColor.black.cgColor)
-        context.fill(CGRect(x: 0, y: 0, width: Int(ATLAS_WIDTH), height: Int(ATLAS_HEIGHT)))
-
-        let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: CGFloat(Int(ATLAS_HEIGHT)))
-        context.concatenate(flipVertical)
-
-        for (i, name) in textures.enumerated() {
-            let path = GRF.Path(string: "data\\texture\\" + name)
-            guard let data = try? grf.contentsOfEntry(at: path) else {
-                continue
-            }
-            let image = UIImage(data: data)?.cgImage?.decoded
-
-            let x = (i % Int(ATLAS_COLS)) * 258
-            let y = (i / Int(ATLAS_COLS)) * 258
-            context.draw(image!, in: CGRect(x: x, y: y, width: 258, height: 258))
-            context.draw(image!, in: CGRect(x: x + 0, y: y + 0, width: 256, height: 256))
-        }
-
-        let jpeg = UIImage(cgImage: context.makeImage()!).jpegData(compressionQuality: 1.0)!
 
         var waterTextures: [Data?] = []
         for i in 0..<32 {
@@ -150,38 +116,38 @@ class RSWPreviewViewController: UIViewController {
         }
 
         var models: [String: ([[ModelVertex]], [Data?])] = [:]
-        for model in rsw.models {
-            let path = GRF.Path(string: "data\\model\\" + model.modelName)
-            guard let data = try? grf.contentsOfEntry(at: path),
-                  let rsm = try? RSM(data: data) else {
-                continue
-            }
-
-            var m = models[path.string] ?? ([[ModelVertex]](repeating: [], count: rsm.textures.count), [])
-
-            let textures = rsm.textures.map { textureName -> Data? in
-                let path = GRF.Path(string: "data\\texture\\" + textureName)
-                return try? grf.contentsOfEntry(at: path)
-            }
-            m.1 = textures
-
-            let (boundingBox, wrappers) = rsm.calcBoundingBox()
-
-            let instance = rsm.createInstance(
-                position: model.position,
-                rotation: model.rotation,
-                scale: model.scale,
-                width: Float(gnd.width),
-                height: Float(gnd.height)
-            )
-
-            let meshes = rsm.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox)
-            for (i, mesh) in meshes.enumerated() {
-                m.0[i].append(contentsOf: mesh)
-            }
-
-            models[path.string] = m
-        }
+//        for model in rsw.models {
+//            let path = GRF.Path(string: "data\\model\\" + model.modelName)
+//            guard let data = try? grf.contentsOfEntry(at: path),
+//                  let rsm = try? RSM(data: data) else {
+//                continue
+//            }
+//
+//            var m = models[path.string] ?? ([[ModelVertex]](repeating: [], count: rsm.textures.count), [])
+//
+//            let textures = rsm.textures.map { textureName -> Data? in
+//                let path = GRF.Path(string: "data\\texture\\" + textureName)
+//                return try? grf.contentsOfEntry(at: path)
+//            }
+//            m.1 = textures
+//
+//            let (boundingBox, wrappers) = rsm.calcBoundingBox()
+//
+//            let instance = rsm.createInstance(
+//                position: model.position,
+//                rotation: model.rotation,
+//                scale: model.scale,
+//                width: Float(gnd.width),
+//                height: Float(gnd.height)
+//            )
+//
+//            let meshes = rsm.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox)
+//            for (i, mesh) in meshes.enumerated() {
+//                m.0[i].append(contentsOf: mesh)
+//            }
+//
+//            models[path.string] = m
+//        }
 
         var modelMeshes: [[ModelVertex]] = []
         var modelTextures: [Data?] = []
@@ -190,7 +156,7 @@ class RSWPreviewViewController: UIViewController {
             modelTextures.append(contentsOf: value.1)
         }
 
-        guard let renderer = try? RSWRenderer(gat: gat, vertices: state.mesh, texture: jpeg, waterVertices: state.waterMesh, waterTextures: waterTextures, modelMeshes: modelMeshes, modelTextures: modelTextures) else {
+        guard let renderer = try? RSWRenderer(gat: gat, vertices: state.mesh, groundTextureImage: groundTextureImage, waterVertices: state.waterMesh, waterTextures: waterTextures, modelMeshes: modelMeshes, modelTextures: modelTextures) else {
             return nil
         }
 

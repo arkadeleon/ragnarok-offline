@@ -9,14 +9,13 @@
 import Foundation
 
 struct GND {
-    var magic: String
-    var version: String
+    var header: Header
     var width: UInt32
     var height: UInt32
     var zoom: Float
 
-    var textures: [String]
-    var textureIndexes: [UInt16]
+    var textures: [String] = []
+    var textureIndexes: [UInt16] = []
 
     var lightmap: GNDLightmap
 
@@ -32,22 +31,38 @@ struct GND {
             reader.close()
         }
 
-        magic = try reader.readString(4)
-        guard magic == "GRGN" else {
-            throw DocumentError.invalidContents
-        }
-
-        let major: UInt8 = try reader.readInt()
-        let minor: UInt8 = try reader.readInt()
-        version = "\(major).\(minor)"
+        header = try Header(from: reader)
 
         width = try reader.readInt()
         height = try reader.readInt()
         zoom = try reader.readFloat()
 
-        (textures, textureIndexes) = try GND.loadTextures(reader: reader)
+        let textureCount: UInt32 = try reader.readInt()
+        let textureNameLength: UInt32 = try reader.readInt()
 
-        lightmap = try GND.loadLightmap(reader: reader)
+        for _ in 0..<textureCount {
+            let texture = try reader.readString(Int(textureNameLength), encoding: .koreanEUC)
+
+            var index = textures.firstIndex(of: texture) ?? -1
+            if index == -1 {
+                textures.append(texture)
+                index = textures.count - 1
+            }
+
+            textureIndexes.append(UInt16(index))
+        }
+
+        let count: UInt32 = try reader.readInt()
+        let per_cell_x: Int32 = try reader.readInt()
+        let per_cell_y: Int32 = try reader.readInt()
+        let size_cell: Int32 = try reader.readInt()
+        let per_cell = per_cell_x * per_cell_y * size_cell
+
+        lightmap = try GNDLightmap(
+            per_cell: per_cell,
+            count: count,
+            data: reader.readBytes(Int(count) * Int(per_cell) * 4)
+        )
 
         let tileCount: UInt32 = try reader.readInt()
         for _ in 0..<tileCount {
@@ -61,53 +76,38 @@ struct GND {
             surfaces.append(surface)
         }
     }
+}
 
-    private static func loadTextures(reader: BinaryReader) throws -> (textures: [String], indexes: [UInt16]) {
-        let textureCount: UInt32 = try reader.readInt()
-        let textureNameLength: UInt32 = try reader.readInt()
+extension GND {
+    struct Header {
+        var magic: String
+        var version: String
 
-        var indexes: [UInt16] = []
-        var textures: [String] = []
-
-        for _ in 0..<textureCount {
-            let texture = try reader.readString(Int(textureNameLength), encoding: .koreanEUC)
-            var pos = textures.firstIndex(of: texture) ?? -1
-
-            if pos == -1 {
-                textures.append(texture)
-                pos = textures.count - 1
+        init(from reader: BinaryReader) throws {
+            magic = try reader.readString(4)
+            guard magic == "GRGN" else {
+                throw DocumentError.invalidContents
             }
 
-            indexes.append(UInt16(pos))
+            let major: UInt8 = try reader.readInt()
+            let minor: UInt8 = try reader.readInt()
+            version = "\(major).\(minor)"
         }
-
-        return (textures, indexes)
-    }
-
-    private static func loadLightmap(reader: BinaryReader) throws -> GNDLightmap {
-        let count: UInt32 = try reader.readInt()
-        let per_cell_x: Int32 = try reader.readInt()
-        let per_cell_y: Int32 = try reader.readInt()
-        let size_cell: Int32 = try reader.readInt()
-        let per_cell = per_cell_x * per_cell_y * size_cell
-
-        let lightmap = try GNDLightmap(
-            per_cell: per_cell,
-            count: count,
-            data: reader.readBytes(Int(count) * Int(per_cell) * 4)
-        )
-        return lightmap
     }
 }
 
-struct GNDLightmap {
-    var per_cell: Int32
-    var count: UInt32
-    var data: [UInt8]
+extension GND {
+    struct GNDLightmap {
+        var per_cell: Int32
+        var count: UInt32
+        var data: [UInt8]
+    }
 }
 
 extension GND {
     struct Tile {
+        typealias Color = (alpha: UInt8, red: UInt8, green: UInt8, blue: UInt8)
+
         var u1: Float
         var u2: Float
         var u3: Float
@@ -118,7 +118,7 @@ extension GND {
         var v4: Float
         var textureIndex: UInt16
         var lightmapIndex: UInt16
-        var color: Palette.Color
+        var color: Color
 
         init(from reader: BinaryReader, textures: [String], textureIndexes: [UInt16]) throws {
             u1 = try reader.readFloat()
@@ -137,7 +137,7 @@ extension GND {
             let red: UInt8 = try reader.readInt()
             let green: UInt8 = try reader.readInt()
             let blue: UInt8 = try reader.readInt()
-            color = Palette.Color(red: red, green: green, blue: blue, alpha: alpha)
+            color = (alpha, red, green, blue)
 
             textureIndex = textureIndexes[Int(textureIndex)]
 
@@ -180,10 +180,10 @@ extension GND {
         var tileRight: Int32
 
         init(from reader: BinaryReader) throws {
-            bottomLeft = try reader.readFloat() / 5
-            bottomRight = try reader.readFloat() / 5
-            topLeft = try reader.readFloat() / 5
-            topRight = try reader.readFloat() / 5
+            bottomLeft = try reader.readFloat()
+            bottomRight = try reader.readFloat()
+            topLeft = try reader.readFloat()
+            topRight = try reader.readFloat()
 
             tileUp = try reader.readInt()
             tileFront = try reader.readInt()

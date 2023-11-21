@@ -6,6 +6,9 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
+import CoreGraphics
+import UIKit
+
 extension GND {
 
     private struct LightmapAtlas {
@@ -127,22 +130,22 @@ extension GND {
                 if cell.tileUp > -1 /*&& tiles[Int(cell.tileUp)].textureIndex > -1*/ {
                     let a: simd_float3 = [
                         (Float(x) + 0) * 2,
-                        cell.bottomLeft,
+                        cell.bottomLeft / 5,
                         (Float(y) + 0) * 2
                     ]
                     let b: simd_float3 = [
                         (Float(x) + 1) * 2,
-                        cell.bottomRight,
+                        cell.bottomRight / 5,
                         (Float(y) + 0) * 2
                     ]
                     let c: simd_float3 = [
                         (Float(x) + 1) * 2,
-                        cell.topLeft,
+                        cell.topLeft / 5,
                         (Float(y) + 1) * 2
                     ]
                     let d: simd_float3 = [
                         (Float(x) + 0) * 2,
-                        cell.topRight,
+                        cell.topRight / 5,
                         (Float(y) + 1) * 2
                     ]
                     tmp[x + y * width] = calcNormal(a, b, c, d)
@@ -189,6 +192,48 @@ extension GND {
         return normals
     }
 
+    func generateTextureImage(textureProvider: (String) -> Data?) -> CGImage? {
+        let ATLAS_COLS         = roundf(sqrtf(Float(textures.count)))
+        let ATLAS_ROWS         = ceilf(sqrtf(Float(textures.count)))
+        let ATLAS_WIDTH        = powf(2, ceilf(logf(ATLAS_COLS * 258) / logf(2)))
+        let ATLAS_HEIGHT       = powf(2, ceilf(logf(ATLAS_ROWS * 258) / logf(2)))
+
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = CGImageAlphaInfo.premultipliedFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
+
+        guard let context = CGContext(
+            data: nil,
+            width: Int(ATLAS_WIDTH),
+            height: Int(ATLAS_HEIGHT),
+            bitsPerComponent: 8,
+            bytesPerRow: Int(ATLAS_WIDTH) * 4,
+            space: colorSpace,
+            bitmapInfo: bitmapInfo
+        ) else {
+            return nil
+        }
+
+        context.setFillColor(UIColor.black.cgColor)
+        context.fill(CGRect(x: 0, y: 0, width: Int(ATLAS_WIDTH), height: Int(ATLAS_HEIGHT)))
+
+        let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: CGFloat(Int(ATLAS_HEIGHT)))
+        context.concatenate(flipVertical)
+
+        for (i, name) in textures.enumerated() {
+            guard let data = textureProvider(name) else {
+                continue
+            }
+            let image = UIImage(data: data)?.cgImage?.decoded
+
+            let x = (i % Int(ATLAS_COLS)) * 258
+            let y = (i / Int(ATLAS_COLS)) * 258
+            context.draw(image!, in: CGRect(x: x, y: y, width: 258, height: 258))
+            context.draw(image!, in: CGRect(x: x + 0, y: y + 0, width: 256, height: 256))
+        }
+
+        return context.makeImage()
+    }
+
     func compile(waterLevel: Float, waterHeight: Float) -> (mesh: [GroundVertex], waterMesh: [WaterVertex]) {
         let width = Int(width)
         let height = Int(height)
@@ -216,10 +261,10 @@ extension GND {
             for x in 0..<width {
                 let cell_a = surfaces[x + y * width]
                 let h_a = [
-                    cell_a.bottomLeft,
-                    cell_a.bottomRight,
-                    cell_a.topLeft,
-                    cell_a.topRight
+                    cell_a.bottomLeft / 5,
+                    cell_a.bottomRight / 5,
+                    cell_a.topLeft / 5,
+                    cell_a.topRight / 5
                 ]
 
                 // Check tile up
@@ -321,10 +366,10 @@ extension GND {
 
                     let cell_b = surfaces[ x + (y + 1) * width ]
                     let h_b = [
-                        cell_b.bottomLeft,
-                        cell_b.bottomRight,
-                        cell_b.topLeft,
-                        cell_b.topRight
+                        cell_b.bottomLeft / 5,
+                        cell_b.bottomRight / 5,
+                        cell_b.topLeft / 5,
+                        cell_b.topRight / 5
                     ]
                     let l = lightmap_atlas(Int(tile.lightmapIndex))
 
@@ -380,10 +425,10 @@ extension GND {
 
                     let cell_b = surfaces[ (x+1) + y * width ]
                     let h_b    = [
-                        cell_b.bottomLeft,
-                        cell_b.bottomRight,
-                        cell_b.topLeft,
-                        cell_b.topRight
+                        cell_b.bottomLeft / 5,
+                        cell_b.bottomRight / 5,
+                        cell_b.topLeft / 5,
+                        cell_b.topRight / 5
                     ]
                     let l = lightmap_atlas(Int(tile.lightmapIndex))
 

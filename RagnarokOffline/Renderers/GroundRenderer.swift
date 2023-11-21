@@ -32,7 +32,7 @@ class GroundRenderer {
         direction: [0, 1, 0]
     )
 
-    init(device: MTLDevice, library: MTLLibrary, vertices: [GroundVertex], texture: Data?) throws {
+    init(device: MTLDevice, library: MTLLibrary, vertices: [GroundVertex], textureImage: CGImage) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "groundVertexShader")
@@ -58,7 +58,7 @@ class GroundRenderer {
         self.vertices = vertices
 
         let textureLoader = MTKTextureLoader(device: device)
-        self.texture = try texture.flatMap { try textureLoader.newTexture(data: $0, options: nil) }
+        self.texture = try textureLoader.newTexture(cgImage: textureImage)
     }
 
     func render(atTime time: CFTimeInterval,
