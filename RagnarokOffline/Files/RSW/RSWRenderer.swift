@@ -73,7 +73,8 @@ class RSWRenderer: NSObject, Renderer {
             device: device,
             renderPassDescriptor: renderPassDescriptor,
             commandBuffer: commandBuffer,
-            modelviewMatrix: modelviewMatrix,
+            modelMatrix: modelviewMatrix,
+            viewMatrix: matrix_identity_float4x4,
             projectionMatrix: projectionMatrix,
             normalMatrix: normalMatrix
         )
@@ -85,7 +86,8 @@ class RSWRenderer: NSObject, Renderer {
             device: device,
             renderPassDescriptor: renderPassDescriptor,
             commandBuffer: commandBuffer,
-            modelviewMatrix: modelviewMatrix,
+            modelMatrix: modelviewMatrix,
+            viewMatrix: matrix_identity_float4x4,
             projectionMatrix: projectionMatrix
         )
 

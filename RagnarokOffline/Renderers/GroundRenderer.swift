@@ -64,12 +64,14 @@ class GroundRenderer {
                 device: MTLDevice,
                 renderPassDescriptor: MTLRenderPassDescriptor,
                 commandBuffer: MTLCommandBuffer,
-                modelviewMatrix: simd_float4x4,
+                modelMatrix: simd_float4x4,
+                viewMatrix: simd_float4x4,
                 projectionMatrix: simd_float4x4,
                 normalMatrix: simd_float3x3) {
 
         var vertexUniforms = GroundVertexUniforms(
-            modelviewMatrix: modelviewMatrix,
+            modelMatrix: modelMatrix,
+            viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,
             lightDirection: light.direction,
             normalMatrix: normalMatrix

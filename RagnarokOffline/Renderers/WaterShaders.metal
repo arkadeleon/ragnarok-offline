@@ -29,7 +29,7 @@ waterVertexShader(const device WaterVertex *vertices [[buffer(0)]],
     float height = sin((pi / 180.0) * (uniforms.waterOffset + 0.5 * uniforms.wavePitch * (in.position.x + in.position.z + diff))) * uniforms.waveHeight;
 
     RasterizerData out;
-    out.position = uniforms.projectionMatrix * uniforms.modelviewMatrix * float4(in.position.x, in.position.y + height, in.position.z, 1.0);
+    out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * float4(in.position.x, in.position.y + height, in.position.z, 1.0);
     out.textureCoordinate = in.textureCoordinate;
     return out;
 }

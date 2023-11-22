@@ -71,7 +71,8 @@ class WaterRenderer {
                 device: MTLDevice,
                 renderPassDescriptor: MTLRenderPassDescriptor,
                 commandBuffer: MTLCommandBuffer,
-                modelviewMatrix: simd_float4x4,
+                modelMatrix: simd_float4x4,
+                viewMatrix: simd_float4x4,
                 projectionMatrix: simd_float4x4) {
 
         let frame = Float(time * 60)
@@ -81,7 +82,8 @@ class WaterRenderer {
         }
 
         var vertexUniforms = WaterVertexUniforms(
-            modelviewMatrix: modelviewMatrix,
+            modelMatrix: modelMatrix,
+            viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,
             waveHeight: waveHeight,
             wavePitch: wavePitch,

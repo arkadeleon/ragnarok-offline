@@ -14,7 +14,8 @@ typedef struct {
 } WaterVertex;
 
 typedef struct {
-    matrix_float4x4 modelviewMatrix;
+    matrix_float4x4 modelMatrix;
+    matrix_float4x4 viewMatrix;
     matrix_float4x4 projectionMatrix;
 
     float waveHeight;
