@@ -7,14 +7,16 @@
 //
 
 import Metal
-import MetalKit
+
+struct WaterMesh {
+    var vertices: [WaterVertex] = []
+    var textures: [MTLTexture?] = []
+}
 
 class WaterRenderer {
-
     let renderPipelineState: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState?
-    let vertices: [WaterVertex]
-    let textures: [MTLTexture?]
+    let mesh: WaterMesh
 
     var waveSpeed: Float = 0
     var waveHeight: Float = 0
@@ -39,7 +41,7 @@ class WaterRenderer {
         direction: [0, 1, 0]
     )
 
-    init(device: MTLDevice, library: MTLLibrary, vertices: [WaterVertex], textures: [Data?]) throws {
+    init(device: MTLDevice, library: MTLLibrary, mesh: WaterMesh) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "waterVertexShader")
@@ -62,12 +64,7 @@ class WaterRenderer {
 
         self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
 
-        self.vertices = vertices
-
-        let textureLoader = MTKTextureLoader(device: device)
-        self.textures = try textures.map { data -> MTLTexture? in
-            try data.flatMap { try textureLoader.newTexture(data: $0, options: nil) }
-        }
+        self.mesh = mesh
     }
 
     func render(atTime time: CFTimeInterval,
@@ -79,7 +76,7 @@ class WaterRenderer {
 
         let frame = Float(time * 60)
 
-        guard vertices.count > 0, let vertexBuffer = device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<WaterVertex>.stride, options: []) else {
+        guard mesh.vertices.count > 0, let vertexBuffer = device.makeBuffer(bytes: mesh.vertices, length: mesh.vertices.count * MemoryLayout<WaterVertex>.stride, options: []) else {
             return
         }
 
@@ -120,10 +117,10 @@ class WaterRenderer {
 
         renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
-        let texture = textures[Int(frame / animSpeed) % textures.count]
+        let texture = mesh.textures[Int(frame / animSpeed) % mesh.textures.count]
         renderCommandEncoder.setFragmentTexture(texture, index: 0)
 
-        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
+        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: mesh.vertices.count)
 
         renderCommandEncoder.endEncoding()
     }

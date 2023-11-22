@@ -8,12 +8,15 @@
 
 import Metal
 
-class ModelRenderer {
+struct ModelMesh {
+    var vertices: [ModelVertex] = []
+    var texture: MTLTexture?
+}
 
+class ModelRenderer {
     let renderPipelineState: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState?
-    let meshes: [[ModelVertex]]
-    let textures: [MTLTexture?]
+    let meshes: [ModelMesh]
 
     let fog = Fog(
         use: false,
@@ -31,7 +34,7 @@ class ModelRenderer {
         direction: [0, 1, 0]
     )
 
-    init(device: MTLDevice, library: MTLLibrary, meshes: [[ModelVertex]], textures: [Data?]) throws {
+    init(device: MTLDevice, library: MTLLibrary, meshes: [ModelMesh]) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "modelVertexShader")
@@ -55,11 +58,6 @@ class ModelRenderer {
         self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
 
         self.meshes = meshes
-
-        let textureLoader = TextureLoader(device: device)
-        self.textures = textures.map { data -> MTLTexture? in
-            return data.flatMap { textureLoader.newTexture(data: $0) }
-        }
     }
 
     func render(atTime time: CFTimeInterval,
@@ -106,17 +104,16 @@ class ModelRenderer {
 
         renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
-        for (i, vertices) in meshes.enumerated() where vertices.count > 0 {
-            guard let vertexBuffer = device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<ModelVertex>.stride, options: []) else {
+        for mesh in meshes where mesh.vertices.count > 0 {
+            guard let vertexBuffer = device.makeBuffer(bytes: mesh.vertices, length: mesh.vertices.count * MemoryLayout<ModelVertex>.stride, options: []) else {
                 continue
             }
 
             renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
 
-            let texture = textures[i]
-            renderCommandEncoder.setFragmentTexture(texture, index: 0)
+            renderCommandEncoder.setFragmentTexture(mesh.texture, index: 0)
 
-            renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
+            renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: mesh.vertices.count)
         }
 
         renderCommandEncoder.endEncoding()

@@ -67,10 +67,10 @@ extension GAT {
     func height(forCellAtX x: Int, y: Int) -> Float {
         let index = x + y * Int(width)
         let cell = cells[index]
-        let bottomLeft = cell.bottomLeft * 0.2
-        let bottomRight = cell.bottomRight * 0.2
-        let topLeft = cell.topLeft * 0.2
-        let topRight = cell.topRight * 0.2
+        let bottomLeft = cell.bottomLeft
+        let bottomRight = cell.bottomRight
+        let topLeft = cell.topLeft
+        let topRight = cell.topRight
 
         let x1 = bottomLeft + (bottomRight - bottomLeft) / 2
         let x2 = topLeft + (topRight - topLeft) / 2

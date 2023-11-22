@@ -7,14 +7,16 @@
 //
 
 import Metal
-import MetalKit
+
+struct GroundMesh {
+    var vertices: [GroundVertex] = []
+    var texture: MTLTexture?
+}
 
 class GroundRenderer {
-
     let renderPipelineState: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState?
     let meshes: [GroundMesh]
-    let textures: [MTLTexture?]
 
     let fog = Fog(
         use: false,
@@ -56,11 +58,6 @@ class GroundRenderer {
         self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
 
         self.meshes = meshes
-
-        let textureLoader = TextureLoader(device: device)
-        self.textures = meshes.map { mesh -> MTLTexture? in
-            return mesh.texture.flatMap { textureLoader.newTexture(data: $0) }
-        }
     }
 
     func render(atTime time: CFTimeInterval,
@@ -106,17 +103,16 @@ class GroundRenderer {
 
         renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
-        for (i, mesh) in meshes.enumerated() where mesh.vertices.count > 0 {
+        for mesh in meshes where mesh.vertices.count > 0 {
             guard let vertexBuffer = device.makeBuffer(bytes: mesh.vertices, length: mesh.vertices.count * MemoryLayout<GroundVertex>.stride, options: []) else {
                 continue
             }
 
             renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
 
-            let texture = textures[i]
-            renderCommandEncoder.setFragmentTexture(texture, index: 0)
-            renderCommandEncoder.setFragmentTexture(texture, index: 1)
-            renderCommandEncoder.setFragmentTexture(texture, index: 2)
+            renderCommandEncoder.setFragmentTexture(mesh.texture, index: 0)
+            renderCommandEncoder.setFragmentTexture(mesh.texture, index: 1)
+            renderCommandEncoder.setFragmentTexture(mesh.texture, index: 2)
 
             renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: mesh.vertices.count)
         }

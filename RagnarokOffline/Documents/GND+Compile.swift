@@ -9,8 +9,6 @@
 import CoreGraphics
 import UIKit
 
-typealias GroundMesh = (vertices: [GroundVertex], texture: Data?)
-
 extension GND {
     private struct LightmapAtlas {
         var u1: Float
@@ -193,17 +191,17 @@ extension GND {
         return normals
     }
 
-    func compile(waterLevel: Float, waterHeight: Float, textureProvider: (String) -> Data?) -> (meshes: [GroundMesh], waterMesh: [WaterVertex]) {
+    func compile(waterLevel: Float, waterHeight: Float, textureProvider: (String) -> MTLTexture?) -> (groundMeshes: [GroundMesh], waterVertices: [WaterVertex]) {
         let width = Int(width)
         let height = Int(height)
 
         let normals = getSmoothNormal()
 
-        var meshes: [GroundMesh] = textures.map { texture in
-            ([], textureProvider(texture))
+        var groundMeshes: [GroundMesh] = textures.map { texture in
+            GroundMesh(texture: textureProvider(texture))
         }
 
-        var water: [WaterVertex] = []
+        var waterVertices: [WaterVertex] = []
 
         let l_count_w  = roundf(sqrtf(Float(lightmap.count)))
         let l_count_h  = ceilf(sqrtf(Float(lightmap.count)))
@@ -281,7 +279,7 @@ extension GND {
                             tileColorCoordinate: [(Float(x) + 0.5) / Float(width), (Float(y) + 0.5) / Float(height)]
                         )
 
-                        meshes[Int(tile.textureIndex)].vertices += [v0, v1, v2, v3, v4, v5]
+                        groundMeshes[Int(tile.textureIndex)].vertices += [v0, v1, v2, v3, v4, v5]
 
                         // Add water only if it's upper than the ground.
                         if h_a[0] > waterLevel - waterHeight ||
@@ -319,7 +317,7 @@ extension GND {
                                 textureCoordinate: [x0, y0]
                             )
 
-                            water += [v0, v1, v2, v3, v4, v5]
+                            waterVertices += [v0, v1, v2, v3, v4, v5]
                         }
                     }
                 }
@@ -381,7 +379,7 @@ extension GND {
                             tileColorCoordinate: [0, 0]
                         )
 
-                        meshes[Int(tile.textureIndex)].vertices += [v0, v1, v2, v3, v4, v5]
+                        groundMeshes[Int(tile.textureIndex)].vertices += [v0, v1, v2, v3, v4, v5]
                     }
                 }
 
@@ -442,12 +440,12 @@ extension GND {
                             tileColorCoordinate: [0, 0]
                         )
 
-                        meshes[Int(tile.textureIndex)].vertices += [v0, v1, v2, v3, v4, v5]
+                        groundMeshes[Int(tile.textureIndex)].vertices += [v0, v1, v2, v3, v4, v5]
                     }
                 }
             }
         }
 
-        return (meshes, water)
+        return (groundMeshes, waterVertices)
     }
 }

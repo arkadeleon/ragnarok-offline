@@ -6,6 +6,8 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
+import Metal
+
 class RSMNodeWrapper {
     let node: RSM.Node
 
@@ -269,12 +271,14 @@ extension RSM {
         return (box, wrappers)
     }
 
-    func compile(instance: simd_float4x4, wrappers: [RSMNodeWrapper], boundingBox: RSMBoundingBox) -> [[ModelVertex]] {
-        var meshes: [[ModelVertex]] = Array(repeating: [], count: textures.count)
+    func compile(instance: simd_float4x4, wrappers: [RSMNodeWrapper], boundingBox: RSMBoundingBox, textureProvider: (String) -> MTLTexture?) -> [ModelMesh] {
+        var meshes = textures.map { textureName in
+            ModelMesh(texture: textureProvider(textureName))
+        }
         for wrapper in wrappers {
             let ms = wrapper.compile(contents: self, instance_matrix: instance, boundingBox: boundingBox)
             for (i, m) in ms.enumerated() {
-                meshes[i].append(contentsOf: m)
+                meshes[i].vertices.append(contentsOf: m)
             }
         }
         return meshes

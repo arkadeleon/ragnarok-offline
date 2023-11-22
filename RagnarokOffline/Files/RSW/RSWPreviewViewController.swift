@@ -75,6 +75,10 @@ class RSWPreviewViewController: UIViewController {
     }
 
     nonisolated private func loadRenderer() async -> RSWRenderer? {
+        guard let device = MTLCreateSystemDefaultDevice() else {
+            return nil
+        }
+
         guard case .grfEntry(let grf, _) = file, let data = file.contents() else {
             return nil
         }
@@ -97,61 +101,64 @@ class RSWPreviewViewController: UIViewController {
             return nil
         }
 
-        let state = gnd.compile(waterLevel: rsw.water.level / 5, waterHeight: rsw.water.waveHeight) { textureName in
+        let textureLoader = TextureLoader(device: device)
+
+        let object = gnd.compile(waterLevel: rsw.water.level / 5, waterHeight: rsw.water.waveHeight) { textureName in
             let path = GRF.Path(string: "data\\texture\\" + textureName)
-            let data = try? grf.contentsOfEntry(at: path)
-            return data
+            guard let data = try? grf.contentsOfEntry(at: path) else {
+                return nil
+            }
+            let texture = textureLoader.newTexture(data: data)
+            return texture
         }
 
-        var waterTextures: [Data?] = []
+        var waterTextures: [MTLTexture?] = []
         for i in 0..<32 {
-            let path = GRF.Path(string: String(format: "data\\texture\\워터\\water0%02d.jpg", i))
-            let data = try? grf.contentsOfEntry(at: path)
-            waterTextures.append(data)
+            let path = GRF.Path(string: String(format: "data\\texture\\워터\\water%03d.jpg", i))
+            if let data = try? grf.contentsOfEntry(at: path) {
+                let texture = textureLoader.newTexture(data: data)
+                waterTextures.append(texture)
+            }
         }
 
-        var models: [String: ([[ModelVertex]], [Data?])] = [:]
-//        for model in rsw.models {
-//            let path = GRF.Path(string: "data\\model\\" + model.modelName)
-//            guard let data = try? grf.contentsOfEntry(at: path),
-//                  let rsm = try? RSM(data: data) else {
-//                continue
-//            }
-//
-//            var m = models[path.string] ?? ([[ModelVertex]](repeating: [], count: rsm.textures.count), [])
-//
-//            let textures = rsm.textures.map { textureName -> Data? in
-//                let path = GRF.Path(string: "data\\texture\\" + textureName)
-//                return try? grf.contentsOfEntry(at: path)
-//            }
-//            m.1 = textures
-//
-//            let (boundingBox, wrappers) = rsm.calcBoundingBox()
-//
-//            let instance = rsm.createInstance(
-//                position: model.position,
-//                rotation: model.rotation,
-//                scale: model.scale,
-//                width: Float(gnd.width),
-//                height: Float(gnd.height)
-//            )
-//
-//            let meshes = rsm.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox)
-//            for (i, mesh) in meshes.enumerated() {
-//                m.0[i].append(contentsOf: mesh)
-//            }
-//
-//            models[path.string] = m
-//        }
+        let waterMesh = WaterMesh(vertices: object.waterVertices, textures: waterTextures)
 
-        var modelMeshes: [[ModelVertex]] = []
-        var modelTextures: [Data?] = []
-        for value in models.values {
-            modelMeshes.append(contentsOf: value.0)
-            modelTextures.append(contentsOf: value.1)
+        var models: [String : [ModelMesh]] = [:]
+        for model in rsw.models {
+            let path = GRF.Path(string: "data\\model\\" + model.modelName)
+            guard let data = try? grf.contentsOfEntry(at: path),
+                  let rsm = try? RSM(data: data) else {
+                continue
+            }
+
+            let (boundingBox, wrappers) = rsm.calcBoundingBox()
+
+            let instance = rsm.createInstance(
+                position: model.position,
+                rotation: model.rotation,
+                scale: model.scale,
+                width: Float(gnd.width),
+                height: Float(gnd.height)
+            )
+
+            let meshes = rsm.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox) { textureName in
+                let path = GRF.Path(string: "data\\texture\\" + textureName)
+                guard let data = try? grf.contentsOfEntry(at: path) else {
+                    return nil
+                }
+                let texture = textureLoader.newTexture(data: data)
+                return texture
+            }
+
+            models[path.string] = meshes
         }
 
-        guard let renderer = try? RSWRenderer(gat: gat, groundMeshes: state.meshes, waterVertices: state.waterMesh, waterTextures: waterTextures, modelMeshes: modelMeshes, modelTextures: modelTextures) else {
+        var modelMeshes: [ModelMesh] = []
+        for meshes in models.values {
+            modelMeshes.append(contentsOf: meshes)
+        }
+
+        guard let renderer = try? RSWRenderer(device: device, gat: gat, groundMeshes: object.groundMeshes, waterMesh: waterMesh, modelMeshes: modelMeshes) else {
             return nil
         }
 

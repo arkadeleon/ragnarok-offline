@@ -19,19 +19,20 @@ class RSWRenderer: NSObject, Renderer {
 
     let camera: RSWCamera
 
-    init(gat: GAT, groundMeshes: [GroundMesh], waterVertices: [WaterVertex], waterTextures: [Data?], modelMeshes: [[ModelVertex]], modelTextures: [Data?]) throws {
-        device = MTLCreateSystemDefaultDevice()!
+    init(device: MTLDevice, gat: GAT, groundMeshes: [GroundMesh], waterMesh: WaterMesh, modelMeshes: [ModelMesh]) throws {
+        self.device = device
+
         commandQueue = device.makeCommandQueue()!
 
         let library = device.makeDefaultLibrary()!
         groundRenderer = try GroundRenderer(device: device, library: library, meshes: groundMeshes)
-        waterRenderer = try WaterRenderer(device: device, library: library, vertices: waterVertices, textures: waterTextures)
-        modelRenderer = try ModelRenderer(device: device, library: library, meshes: modelMeshes, textures: modelTextures)
+        waterRenderer = try WaterRenderer(device: device, library: library, mesh: waterMesh)
+        modelRenderer = try ModelRenderer(device: device, library: library, meshes: modelMeshes)
 
         let target: simd_float3 = [
             Float(gat.width) / 2,
             Float(gat.height) / 2,
-            gat.height(forCellAtX: Int(gat.width / 2), y: Int(gat.height / 2))
+            gat.height(forCellAtX: Int(gat.width / 2), y: Int(gat.height / 2)) / 5
         ]
         camera = RSWCamera(target: target)
         camera.altitudeTo = -200

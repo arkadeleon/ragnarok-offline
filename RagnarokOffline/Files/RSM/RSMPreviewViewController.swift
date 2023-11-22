@@ -87,17 +87,16 @@ class RSMPreviewViewController: UIViewController {
     }
 
     nonisolated private func loadRenderer() async -> RSMRenderer? {
+        guard let device = MTLCreateSystemDefaultDevice() else {
+            return nil
+        }
+
         guard case .grfEntry(let grf, _) = file, let data = file.contents() else {
             return nil
         }
 
         guard let rsm = try? RSM(data: data) else {
             return nil
-        }
-
-        let textures = rsm.textures.map { textureName -> Data? in
-            let path = GRF.Path(string: "data\\texture\\" + textureName)
-            return try? grf.contentsOfEntry(at: path)
         }
 
         let (boundingBox, wrappers) = rsm.calcBoundingBox()
@@ -110,9 +109,18 @@ class RSMPreviewViewController: UIViewController {
             height: 0
         )
 
-        let meshes = rsm.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox)
+        let textureLoader = TextureLoader(device: device)
 
-        guard let renderer = try? RSMRenderer(meshes: meshes, textures: textures, boundingBox: boundingBox) else {
+        let meshes = rsm.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox) { textureName in
+            let path = GRF.Path(string: "data\\texture\\" + textureName)
+            guard let data = try? grf.contentsOfEntry(at: path) else {
+                return nil
+            }
+            let texture = textureLoader.newTexture(data: data)
+            return texture
+        }
+
+        guard let renderer = try? RSMRenderer(device: device, meshes: meshes, boundingBox: boundingBox) else {
             return nil
         }
 

@@ -19,12 +19,13 @@ class RSMRenderer: NSObject, Renderer {
 
     var camera = Camera()
 
-    init(meshes: [[ModelVertex]], textures: [Data?], boundingBox: RSMBoundingBox) throws {
-        device = MTLCreateSystemDefaultDevice()!
+    init(device: MTLDevice, meshes: [ModelMesh], boundingBox: RSMBoundingBox) throws {
+        self.device = device
+
         commandQueue = device.makeCommandQueue()!
 
         let library = device.makeDefaultLibrary()!
-        modelRenderer = try ModelRenderer(device: device, library: library, meshes: meshes, textures: textures)
+        modelRenderer = try ModelRenderer(device: device, library: library, meshes: meshes)
 
         self.boundingBox = boundingBox
 
