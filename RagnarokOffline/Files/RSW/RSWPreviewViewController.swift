@@ -123,7 +123,9 @@ class RSWPreviewViewController: UIViewController {
 
         let waterMesh = WaterMesh(vertices: object.waterVertices, textures: waterTextures)
 
-        var models: [String : [ModelMesh]] = [:]
+        var modelTextures: [String : MTLTexture] = [:]
+        var models: [String : ModelMesh] = [:]
+
         for model in rsw.models {
             let path = GRF.Path(string: "data\\model\\" + model.modelName)
             guard let data = try? grf.contentsOfEntry(at: path),
@@ -142,23 +144,27 @@ class RSWPreviewViewController: UIViewController {
             )
 
             let meshes = rsm.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox) { textureName in
+                if let texture = modelTextures[textureName] {
+                    return texture
+                }
                 let path = GRF.Path(string: "data\\texture\\" + textureName)
                 guard let data = try? grf.contentsOfEntry(at: path) else {
                     return nil
                 }
                 let texture = textureLoader.newTexture(data: data)
+                modelTextures[textureName] = texture
                 return texture
             }
 
-            models[path.string] = meshes
+            for (i, mesh) in meshes.enumerated() {
+                let textureName = rsm.textures[i]
+                var m = models[textureName] ?? ModelMesh(texture: mesh.texture)
+                m.vertices += mesh.vertices
+                models[textureName] = m
+            }
         }
 
-        var modelMeshes: [ModelMesh] = []
-        for meshes in models.values {
-            modelMeshes.append(contentsOf: meshes)
-        }
-
-        guard let renderer = try? RSWRenderer(device: device, gat: gat, groundMeshes: object.groundMeshes, waterMesh: waterMesh, modelMeshes: modelMeshes) else {
+        guard let renderer = try? RSWRenderer(device: device, gat: gat, groundMeshes: object.groundMeshes, waterMesh: waterMesh, modelMeshes: Array(models.values)) else {
             return nil
         }
 
