@@ -19,12 +19,12 @@ class RSWRenderer: NSObject, Renderer {
 
     let camera: RSWCamera
 
-    init(gat: GAT, vertices: [GroundVertex], groundTextureImage: CGImage, waterVertices: [WaterVertex], waterTextures: [Data?], modelMeshes: [[ModelVertex]], modelTextures: [Data?]) throws {
+    init(gat: GAT, groundMeshes: [GroundMesh], waterVertices: [WaterVertex], waterTextures: [Data?], modelMeshes: [[ModelVertex]], modelTextures: [Data?]) throws {
         device = MTLCreateSystemDefaultDevice()!
         commandQueue = device.makeCommandQueue()!
 
         let library = device.makeDefaultLibrary()!
-        groundRenderer = try GroundRenderer(device: device, library: library, vertices: vertices, textureImage: groundTextureImage)
+        groundRenderer = try GroundRenderer(device: device, library: library, meshes: groundMeshes)
         waterRenderer = try WaterRenderer(device: device, library: library, vertices: waterVertices, textures: waterTextures)
         modelRenderer = try ModelRenderer(device: device, library: library, meshes: modelMeshes, textures: modelTextures)
 

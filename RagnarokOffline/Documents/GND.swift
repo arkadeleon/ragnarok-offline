@@ -116,7 +116,7 @@ extension GND {
         var v2: Float
         var v3: Float
         var v4: Float
-        var textureIndex: UInt16
+        var textureIndex: Int16
         var lightmapIndex: UInt16
         var color: Color
 
@@ -138,32 +138,6 @@ extension GND {
             let green: UInt8 = try reader.readInt()
             let blue: UInt8 = try reader.readInt()
             color = (alpha, red, green, blue)
-
-            textureIndex = textureIndexes[Int(textureIndex)]
-
-            generateAtlas(textures: textures)
-        }
-
-        private mutating func generateAtlas(textures: [String]) {
-            let ATLAS_COLS         = roundf(sqrtf(Float(textures.count)))
-            let ATLAS_ROWS         = ceilf(sqrtf(Float(textures.count)))
-            let ATLAS_WIDTH        = powf(2, ceilf(logf(ATLAS_COLS * 258) / logf(2)))
-            let ATLAS_HEIGHT       = powf(2, ceilf(logf(ATLAS_ROWS * 258) / logf(2)))
-            let ATLAS_FACTOR_U     = (ATLAS_COLS * 258) / ATLAS_WIDTH
-            let ATLAS_FACTOR_V     = (ATLAS_ROWS * 258) / ATLAS_HEIGHT
-            let ATLAS_PX_U         = Float(1) / Float(258)
-            let ATLAS_PX_V         = Float(1) / Float(258)
-
-            let u   = Float(Int(textureIndex) % Int(ATLAS_COLS))
-            let v   = floorf(Float(textureIndex) / ATLAS_COLS)
-            u1 = (u + u1 * (1 - ATLAS_PX_U * 2) + ATLAS_PX_U) * ATLAS_FACTOR_U / ATLAS_COLS
-            u2 = (u + u2 * (1 - ATLAS_PX_U * 2) + ATLAS_PX_U) * ATLAS_FACTOR_U / ATLAS_COLS
-            u3 = (u + u3 * (1 - ATLAS_PX_U * 2) + ATLAS_PX_U) * ATLAS_FACTOR_U / ATLAS_COLS
-            u4 = (u + u4 * (1 - ATLAS_PX_U * 2) + ATLAS_PX_U) * ATLAS_FACTOR_U / ATLAS_COLS
-            v1 = (v + v1 * (1 - ATLAS_PX_V * 2) + ATLAS_PX_V) * ATLAS_FACTOR_V / ATLAS_ROWS
-            v2 = (v + v2 * (1 - ATLAS_PX_V * 2) + ATLAS_PX_V) * ATLAS_FACTOR_V / ATLAS_ROWS
-            v3 = (v + v3 * (1 - ATLAS_PX_V * 2) + ATLAS_PX_V) * ATLAS_FACTOR_V / ATLAS_ROWS
-            v4 = (v + v4 * (1 - ATLAS_PX_V * 2) + ATLAS_PX_V) * ATLAS_FACTOR_V / ATLAS_ROWS
         }
     }
 }

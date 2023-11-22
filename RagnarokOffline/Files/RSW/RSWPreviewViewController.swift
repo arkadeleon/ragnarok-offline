@@ -97,15 +97,10 @@ class RSWPreviewViewController: UIViewController {
             return nil
         }
 
-        let state = gnd.compile(waterLevel: rsw.water.level / 5, waterHeight: rsw.water.waveHeight / 5)
-
-        let groundTextureImage = gnd.generateTextureImage { textureName in
+        let state = gnd.compile(waterLevel: rsw.water.level / 5, waterHeight: rsw.water.waveHeight) { textureName in
             let path = GRF.Path(string: "data\\texture\\" + textureName)
             let data = try? grf.contentsOfEntry(at: path)
             return data
-        }
-        guard let groundTextureImage else {
-            return nil
         }
 
         var waterTextures: [Data?] = []
@@ -156,7 +151,7 @@ class RSWPreviewViewController: UIViewController {
             modelTextures.append(contentsOf: value.1)
         }
 
-        guard let renderer = try? RSWRenderer(gat: gat, vertices: state.mesh, groundTextureImage: groundTextureImage, waterVertices: state.waterMesh, waterTextures: waterTextures, modelMeshes: modelMeshes, modelTextures: modelTextures) else {
+        guard let renderer = try? RSWRenderer(gat: gat, groundMeshes: state.meshes, waterVertices: state.waterMesh, waterTextures: waterTextures, modelMeshes: modelMeshes, modelTextures: modelTextures) else {
             return nil
         }
 

@@ -15,8 +15,8 @@ class RSWCamera: NSObject {
     var zoom: Float = 100
     var zoomFinal: Float = 100
 
-    var angleStart: simd_float2 = [240, 0]
-    var angle: simd_float2 = [240, 0]
+    var angleStart: simd_float2 = [270, 0]
+    var angle: simd_float2 = [270, 0]
 
     var position: simd_float3 = [0, 0, 0]
     var targetStart: simd_float3 = [0, 0, 0]
