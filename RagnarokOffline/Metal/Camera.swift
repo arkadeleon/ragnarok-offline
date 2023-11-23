@@ -8,18 +8,18 @@
 
 import Spatial
 
-struct Camera {
-    var position: simd_float3 = [0, 0, -2.5]
-    var rotation = Rotation3D()
+class Camera {
+    private(set) var position = Point3D(x: 0, y: 0, z: -2.5)
+    private(set) var rotation = Rotation3D()
 
-    var target: simd_float3 = [0, 0, 0]
+    private(set) var target = Point3D()
 
-    var fovy = Angle2D(degrees: 70)
-    var aspectRatio = 1.0
-    var nearZ = 0.1
-    var farZ = 100.0
+    private(set) var fovy = Angle2D(degrees: 70)
+    private(set) var aspectRatio = 1.0
+    private(set) var nearZ = 0.1
+    private(set) var farZ = 100.0
 
-    var sensitivity = 0.01
+    private(set) var sensitivity = 0.001
 
     var projectionMatrix: ProjectiveTransform3D {
         ProjectiveTransform3D(fovyRadians: fovy.radians, aspectRatio: aspectRatio, nearZ: nearZ, farZ: farZ)
@@ -31,20 +31,18 @@ struct Camera {
             let rotationMatrix = ProjectiveTransform3D(rotation: rotation)
             return (translationMatrix * rotationMatrix).inverse ?? .identity
         } else {
-            let position = Point3D(position)
-            let target = Point3D(target)
-            let translationMatrix = ProjectiveTransform3D(translation: target - position)
+            let translationMatrix = ProjectiveTransform3D(translation: .zero - position)
             let rotation = Rotation3D(position: position, target: target)
             let rotationMatrix = ProjectiveTransform3D(rotation: rotation)
             return (translationMatrix * rotationMatrix).inverse ?? .identity
         }
     }
 
-    mutating func update(size: CGSize) {
+    func update(size: CGSize) {
         aspectRatio = size.width / size.height
     }
 
-    mutating func update(magnification: CGFloat, dragTranslation: CGPoint) {
+    func update(magnification: CGFloat, dragTranslation: CGPoint) {
         var distance = 2.5
         distance /= magnification
         distance = max(distance, 0)
@@ -55,8 +53,13 @@ struct Camera {
         let angles = EulerAngles(angles: [angleX, angleY, 0], order: .pitchYawRoll)
         rotation = Rotation3D(eulerAngles: angles)
 
-        let target = Point3D(target)
-        let position = target + Vector3D(x: 0, y: 0, z: -distance).rotated(by: rotation)
-        self.position = [Float(position.x), Float(position.y), Float(position.z)]
+        position = target + Vector3D(x: 0, y: 0, z: -distance).rotated(by: rotation)
+    }
+
+    func move(offset: CGPoint) {
+        target.x = offset.x * sensitivity
+        target.y = offset.y * sensitivity
+        position.x = offset.x * sensitivity
+        position.y = offset.y * sensitivity
     }
 }

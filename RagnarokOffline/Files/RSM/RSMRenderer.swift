@@ -17,7 +17,7 @@ class RSMRenderer: NSObject, Renderer {
 
     let boundingBox: RSMBoundingBox
 
-    var camera = Camera()
+    let camera = Camera()
 
     init(device: MTLDevice, meshes: [ModelMesh], boundingBox: RSMBoundingBox) throws {
         self.device = device

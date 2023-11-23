@@ -80,5 +80,5 @@ struct GameScene {
         return [object]
     }()
 
-    var camera = Camera()
+    let camera = Camera()
 }

@@ -17,7 +17,9 @@ class RSWRenderer: NSObject, Renderer {
     let waterRenderer: WaterRenderer
     let modelRenderer: ModelRenderer
 
-    let camera: RSWCamera
+    let camera = Camera()
+
+    let target: simd_float3
 
     init(device: MTLDevice, gat: GAT, groundMeshes: [GroundMesh], waterMesh: WaterMesh, modelMeshes: [ModelMesh]) throws {
         self.device = device
@@ -29,14 +31,11 @@ class RSWRenderer: NSObject, Renderer {
         waterRenderer = try WaterRenderer(device: device, library: library, mesh: waterMesh)
         modelRenderer = try ModelRenderer(device: device, library: library, meshes: modelMeshes)
 
-        let target: simd_float3 = [
+        target = [
             Float(gat.width) / 2,
             Float(gat.height) / 2,
             gat.height(forCellAtX: Int(gat.width / 2), y: Int(gat.height / 2)) / 5
         ]
-        camera = RSWCamera(target: target)
-        camera.altitudeTo = -200
-        camera.zoomFinal = 200
 
         super.init()
     }
@@ -62,19 +61,27 @@ class RSWRenderer: NSObject, Renderer {
 
         let time = CACurrentMediaTime()
 
-        camera.update(time: time)
+        camera.update(size: view.bounds.size)
 
-        let modelviewMatrix = camera.modelviewMatrix
-        let projectionMatrix = perspective(radians(camera.zoom), Float(view.bounds.width / view.bounds.height), 1, 1000)
-        let normalMatrix = camera.normalMatrix
+        let scale = 1 / max(target.x, target.y)
+
+        var modelMatrix = matrix_identity_float4x4
+        modelMatrix = matrix_scale(modelMatrix, [scale, scale, scale])
+        modelMatrix = matrix_translate(modelMatrix, [-target.x, -target.y, -target.z])
+        modelMatrix = matrix_rotate(modelMatrix, radians(270), [1, 0, 0])
+
+        let viewMatrix = simd_float4x4(camera.viewMatrix)
+        let projectionMatrix = simd_float4x4(camera.projectionMatrix)
+
+        let normalMatrix = simd_float3x3(modelMatrix).inverse.transpose
 
         groundRenderer.render(
             atTime: time,
             device: device,
             renderPassDescriptor: renderPassDescriptor,
             commandBuffer: commandBuffer,
-            modelMatrix: modelviewMatrix,
-            viewMatrix: matrix_identity_float4x4,
+            modelMatrix: modelMatrix,
+            viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,
             normalMatrix: normalMatrix
         )
@@ -86,8 +93,8 @@ class RSWRenderer: NSObject, Renderer {
             device: device,
             renderPassDescriptor: renderPassDescriptor,
             commandBuffer: commandBuffer,
-            modelMatrix: modelviewMatrix,
-            viewMatrix: matrix_identity_float4x4,
+            modelMatrix: modelMatrix,
+            viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix
         )
 
@@ -98,8 +105,8 @@ class RSWRenderer: NSObject, Renderer {
             device: device,
             renderPassDescriptor: renderPassDescriptor,
             commandBuffer: commandBuffer,
-            modelMatrix: modelviewMatrix,
-            viewMatrix: matrix_identity_float4x4,
+            modelMatrix: modelMatrix,
+            viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,
             normalMatrix: normalMatrix
         )

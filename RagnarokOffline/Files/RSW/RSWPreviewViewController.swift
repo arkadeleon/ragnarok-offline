@@ -17,6 +17,9 @@ class RSWPreviewViewController: UIViewController {
 
     private var renderer: RSWRenderer!
 
+    private var magnification: CGFloat = 1
+    private var offset: CGPoint = .zero
+
     init(file: File) {
         self.file = file
         super.init(nibName: nil, bundle: nil)
@@ -55,10 +58,14 @@ class RSWPreviewViewController: UIViewController {
             mtkView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
             mtkView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
-            mtkView.addGestureRecognizer(renderer.camera.panGestureRecognizer)
-            mtkView.addGestureRecognizer(renderer.camera.twoFingerPanGestureRecognizer)
-            mtkView.addGestureRecognizer(renderer.camera.pinchGestureRecognizer)
-            mtkView.addGestureRecognizer(renderer.camera.rotationGestureRecognizer)
+            let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
+            mtkView.addGestureRecognizer(pinchGestureRecognizer)
+
+            let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+            mtkView.addGestureRecognizer(panGestureRecognizer)
+
+//            mtkView.addGestureRecognizer(renderer.camera.twoFingerPanGestureRecognizer)
+//            mtkView.addGestureRecognizer(renderer.camera.rotationGestureRecognizer)
 
             activityIndicatorView.stopAnimating()
         }
@@ -72,6 +79,32 @@ class RSWPreviewViewController: UIViewController {
 
         activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+
+    @objc private func handlePinch(_ pinchGestureRecognizer: UIPinchGestureRecognizer) {
+        switch pinchGestureRecognizer.state {
+        case .changed:
+            let magnification = magnification * pinchGestureRecognizer.scale
+            renderer.camera.update(magnification: magnification, dragTranslation: .zero)
+        case .ended:
+            magnification = magnification * pinchGestureRecognizer.scale
+        default:
+            break
+        }
+    }
+
+    @objc private func handlePan(_ panGestureRecognizer: UIPanGestureRecognizer) {
+        switch panGestureRecognizer.state {
+        case .changed:
+            let translation = panGestureRecognizer.translation(in: panGestureRecognizer.view)
+            let offset = CGPoint(x: offset.x + translation.x, y: offset.y - translation.y)
+            renderer.camera.move(offset: offset)
+        case .ended:
+            let translation = panGestureRecognizer.translation(in: panGestureRecognizer.view)
+            offset = CGPoint(x: offset.x + translation.x, y: offset.y - translation.y)
+        default:
+            break
+        }
     }
 
     nonisolated private func loadRenderer() async -> RSWRenderer? {
