@@ -136,7 +136,7 @@ class RSWPreviewViewController: UIViewController {
 
         let textureLoader = TextureLoader(device: device)
 
-        let object = gnd.compile(waterLevel: rsw.water.level / 5, waterHeight: rsw.water.waveHeight) { textureName in
+        let object = gnd.compile(waterLevel: rsw.water.level, waterHeight: rsw.water.waveHeight) { textureName in
             let path = GRF.Path(string: "data\\texture\\" + textureName)
             guard let data = try? grf.contentsOfEntry(at: path) else {
                 return nil
