@@ -33,11 +33,11 @@ class GRFWrapper {
         print("Start loading contents of directory: \(directory.string)")
 
         let directories = grf.table.directories
-            .filter { $0.removingLastComponent == directory }
+            .filter { $0.parent == directory }
             .sorted()
 
         let entries = grf.table.entries
-            .filter { $0.path.removingLastComponent == directory }
+            .filter { $0.path.parent == directory }
             .sorted()
 
         print("Finish loading contents of directory (\(Date().timeIntervalSince(start))")

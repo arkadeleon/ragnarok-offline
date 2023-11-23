@@ -80,9 +80,9 @@
 		35B3B9DF2A08C01600B4540B /* GND.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9532A08C01600B4540B /* GND.swift */; };
 		35B3B9E02A08C01600B4540B /* RSW.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9542A08C01600B4540B /* RSW.swift */; };
 		35B3B9E12A08C01600B4540B /* GRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9552A08C01600B4540B /* GRF.swift */; };
-		35B3B9E22A08C01600B4540B /* INIDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9562A08C01600B4540B /* INIDocument.swift */; };
+		35B3B9E22A08C01600B4540B /* INI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9562A08C01600B4540B /* INI.swift */; };
 		35B3B9E32A08C01600B4540B /* RSM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9572A08C01600B4540B /* RSM.swift */; };
-		35B3B9E42A08C01600B4540B /* STRDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9582A08C01600B4540B /* STRDocument.swift */; };
+		35B3B9E42A08C01600B4540B /* STR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9582A08C01600B4540B /* STR.swift */; };
 		35B3B9E52A08C01600B4540B /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9592A08C01600B4540B /* Document.swift */; };
 		35B3B9E62A08C01600B4540B /* SPR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95A2A08C01600B4540B /* SPR.swift */; };
 		35B3B9E72A08C01600B4540B /* ACT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95B2A08C01600B4540B /* ACT.swift */; };
@@ -290,9 +290,9 @@
 		35B3B9532A08C01600B4540B /* GND.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GND.swift; sourceTree = "<group>"; };
 		35B3B9542A08C01600B4540B /* RSW.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSW.swift; sourceTree = "<group>"; };
 		35B3B9552A08C01600B4540B /* GRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GRF.swift; sourceTree = "<group>"; };
-		35B3B9562A08C01600B4540B /* INIDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INIDocument.swift; sourceTree = "<group>"; };
+		35B3B9562A08C01600B4540B /* INI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INI.swift; sourceTree = "<group>"; };
 		35B3B9572A08C01600B4540B /* RSM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSM.swift; sourceTree = "<group>"; };
-		35B3B9582A08C01600B4540B /* STRDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STRDocument.swift; sourceTree = "<group>"; };
+		35B3B9582A08C01600B4540B /* STR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STR.swift; sourceTree = "<group>"; };
 		35B3B9592A08C01600B4540B /* Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		35B3B95A2A08C01600B4540B /* SPR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPR.swift; sourceTree = "<group>"; };
 		35B3B95B2A08C01600B4540B /* ACT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACT.swift; sourceTree = "<group>"; };
@@ -603,14 +603,14 @@
 				35B3B97A2A08C01600B4540B /* GND+Compile.swift */,
 				35B3B9552A08C01600B4540B /* GRF.swift */,
 				356BF6762AFCCDD9005B67F7 /* GRFWrapper.swift */,
-				35B3B9562A08C01600B4540B /* INIDocument.swift */,
+				35B3B9562A08C01600B4540B /* INI.swift */,
 				35B3B9572A08C01600B4540B /* RSM.swift */,
 				35B3B9792A08C01600B4540B /* RSMWrapper.swift */,
 				35B3B97D2A08C01600B4540B /* RSM+Mesh.swift */,
 				35B3B9542A08C01600B4540B /* RSW.swift */,
 				35B3B95A2A08C01600B4540B /* SPR.swift */,
 				356BF67C2B0489CE005B67F7 /* SPR+Image.swift */,
-				35B3B9582A08C01600B4540B /* STRDocument.swift */,
+				35B3B9582A08C01600B4540B /* STR.swift */,
 			);
 			path = Documents;
 			sourceTree = "<group>";
@@ -959,13 +959,13 @@
 				35B3B9B82A08C01600B4540B /* lopcodes.c in Sources */,
 				35B3B9CD2A08C01600B4540B /* lapi.c in Sources */,
 				35B3B9DB2A08C01600B4540B /* proto.c in Sources */,
-				35B3B9E42A08C01600B4540B /* STRDocument.swift in Sources */,
+				35B3B9E42A08C01600B4540B /* STR.swift in Sources */,
 				35B3BA1B2A08C01600B4540B /* AudioDocumentViewController.swift in Sources */,
 				35B3B9D02A08C01600B4540B /* lparser.c in Sources */,
 				35B3B9DC2A08C01600B4540B /* StringBuffer.c in Sources */,
 				356BF6772AFCCDD9005B67F7 /* GRFWrapper.swift in Sources */,
 				35B3BA222A08C01600B4540B /* WaterShaders.metal in Sources */,
-				35B3B9E22A08C01600B4540B /* INIDocument.swift in Sources */,
+				35B3B9E22A08C01600B4540B /* INI.swift in Sources */,
 				35B3BA0E2A08C01600B4540B /* FileThumbnailGenerator.swift in Sources */,
 				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,
 				35B3BA042A08C01600B4540B /* SGLMath+Calculate.swift in Sources */,

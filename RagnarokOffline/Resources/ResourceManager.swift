@@ -19,7 +19,7 @@ class ResourceManager {
         let iniURL = url.appendingPathComponent("DATA.INI")
 
         if FileManager.default.fileExists(atPath: iniURL.path) {
-            let ini = try INIDocument(url: iniURL)
+            let ini = try INI(url: iniURL)
             for section in ini.sections where section.name == "Data" {
                 for entry in section.entries {
                     let url = url.appendingPathComponent(entry.value)

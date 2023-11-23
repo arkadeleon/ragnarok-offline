@@ -1,5 +1,5 @@
 //
-//  INIDocument.swift
+//  INI.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/7/13.
@@ -8,27 +8,12 @@
 
 import Foundation
 
-struct INIEntry {
-
-    var name: String
-    var value: String
-}
-
-struct INISection {
-
-    var name: String
-    var entries: [INIEntry]
-}
-
-struct INIDocument {
-
-    var sections: [INISection]
+struct INI {
+    var sections: [Section] = []
 
     init(url: URL) throws {
         let contents = try String(contentsOf: url)
         let lines = contents.split(separator: "\r\n")
-
-        sections = []
 
         for line in lines {
             let line = line.trimmingCharacters(in: .whitespaces)
@@ -38,7 +23,7 @@ struct INIDocument {
                 let startIndex = line.index(after: line.startIndex)
                 let endIndex = line.index(before: line.endIndex)
                 let sectionName = line[startIndex..<endIndex]
-                let section = INISection(name: String(sectionName), entries: [])
+                let section = Section(name: String(sectionName), entries: [])
                 sections.append(section)
             } else {
                 var components = line.split(separator: "=")
@@ -57,8 +42,8 @@ struct INIDocument {
                     value = value.prefix(upTo: index)
                 }
 
-                var section = sections.last ?? INISection(name: "", entries: [])
-                let entry = INIEntry(name: String(name), value: String(value.trimmingCharacters(in: .whitespaces)))
+                var section = sections.last ?? Section(name: "", entries: [])
+                let entry = Entry(name: String(name), value: String(value.trimmingCharacters(in: .whitespaces)))
                 section.entries.append(entry)
 
                 if !sections.isEmpty {
@@ -67,5 +52,19 @@ struct INIDocument {
                 sections.append(section)
             }
         }
+    }
+}
+
+extension INI {
+    struct Section {
+        var name: String
+        var entries: [Entry]
+    }
+}
+
+extension INI {
+    struct Entry {
+        var name: String
+        var value: String
     }
 }
