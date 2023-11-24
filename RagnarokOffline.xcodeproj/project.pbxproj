@@ -414,6 +414,36 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		356508C12B104A4900543562 /* Ground */ = {
+			isa = PBXGroup;
+			children = (
+				35B3B9A82A08C01600B4540B /* GroundRenderer.swift */,
+				35B3B9AA2A08C01600B4540B /* GroundShaders.metal */,
+				35B3B9A72A08C01600B4540B /* GroundShaderTypes.h */,
+			);
+			path = Ground;
+			sourceTree = "<group>";
+		};
+		356508C22B104A5400543562 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				35B3B9AD2A08C01600B4540B /* ModelRenderer.swift */,
+				35B3B9A92A08C01600B4540B /* ModelShaders.metal */,
+				35B3B9A62A08C01600B4540B /* ModelShaderTypes.h */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		356508C32B104A5E00543562 /* Water */ = {
+			isa = PBXGroup;
+			children = (
+				35B3B9AE2A08C01600B4540B /* WaterRenderer.swift */,
+				35B3B9A52A08C01600B4540B /* WaterShaders.metal */,
+				35B3B9AB2A08C01600B4540B /* WaterShaderTypes.h */,
+			);
+			path = Water;
+			sourceTree = "<group>";
+		};
 		356BF6802B04F51E005B67F7 /* ACT */ = {
 			isa = PBXGroup;
 			children = (
@@ -726,16 +756,10 @@
 		35B3B9A42A08C01600B4540B /* Renderers */ = {
 			isa = PBXGroup;
 			children = (
-				35B3B9A82A08C01600B4540B /* GroundRenderer.swift */,
-				35B3B9AA2A08C01600B4540B /* GroundShaders.metal */,
-				35B3B9A72A08C01600B4540B /* GroundShaderTypes.h */,
-				35B3B9AD2A08C01600B4540B /* ModelRenderer.swift */,
-				35B3B9A92A08C01600B4540B /* ModelShaders.metal */,
-				35B3B9A62A08C01600B4540B /* ModelShaderTypes.h */,
 				35B3B9AC2A08C01600B4540B /* RendererCommon.swift */,
-				35B3B9AE2A08C01600B4540B /* WaterRenderer.swift */,
-				35B3B9A52A08C01600B4540B /* WaterShaders.metal */,
-				35B3B9AB2A08C01600B4540B /* WaterShaderTypes.h */,
+				356508C12B104A4900543562 /* Ground */,
+				356508C22B104A5400543562 /* Model */,
+				356508C32B104A5E00543562 /* Water */,
 			);
 			path = Renderers;
 			sourceTree = "<group>";
