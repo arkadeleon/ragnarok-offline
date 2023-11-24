@@ -36,7 +36,7 @@ class GRFWrapper {
             .filter { $0.parent == directory }
             .sorted()
 
-        let entries = grf.table.entries
+        let entries = grf.table.entries.values
             .filter { $0.path.parent == directory }
             .sorted()
 
@@ -63,7 +63,7 @@ class GRFWrapper {
             throw DocumentError.invalidSource
         }
 
-        guard let entry = grf.table.entries.first(where: { $0.path == path }) else {
+        guard let entry = grf.table.entries[path] else {
             throw DocumentError.invalidSource
         }
 
