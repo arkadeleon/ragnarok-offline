@@ -9,7 +9,6 @@
 import Metal
 
 struct Fog {
-
     var use: Bool
     var exist: Bool
     var far: Float
@@ -19,7 +18,6 @@ struct Fog {
 }
 
 struct Light {
-
     var opacity: Float
     var ambient: simd_float3
     var diffuse: simd_float3
@@ -30,7 +28,6 @@ enum Formats {
 }
 
 extension Formats {
-
     static var colorPixelFormat: MTLPixelFormat {
         .bgra8Unorm
     }

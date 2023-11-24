@@ -108,10 +108,6 @@ class RSWPreviewViewController: UIViewController {
     }
 
     nonisolated private func loadRenderer() async -> RSWRenderer? {
-        guard let device = MTLCreateSystemDefaultDevice() else {
-            return nil
-        }
-
         guard case .grfEntry(let grf, _) = file, let data = file.contents() else {
             return nil
         }
@@ -134,6 +130,7 @@ class RSWPreviewViewController: UIViewController {
             return nil
         }
 
+        let device = MTLCreateSystemDefaultDevice()!
         let textureLoader = TextureLoader(device: device)
 
         let object = gnd.compile(waterLevel: rsw.water.level, waterHeight: rsw.water.waveHeight) { textureName in

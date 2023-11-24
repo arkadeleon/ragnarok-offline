@@ -6,6 +6,8 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
+import simd
+
 public func radians<T: FloatingPoint>(_ degrees: T) -> T {
     return degrees * .pi / 180
 }
@@ -93,17 +95,17 @@ public func perspective(_ fovy: Float, _ aspect: Float, _ zNear: Float, _ zFar: 
 
 public func lookAt(_ eye: simd_float3, _ center: simd_float3, _ up: simd_float3) -> simd_float4x4 {
     let f = simd_normalize(center - eye)
-    let s = simd_normalize(simd_cross(f, up))
-    let u = simd_cross(s, f)
+    let s = simd_normalize(simd_cross(up, f))
+    let u = simd_cross(f, s)
 
     let r30 = -simd_dot(s, eye)
     let r31 = -simd_dot(u, eye)
-    let r32 = simd_dot(f, eye)
+    let r32 = -simd_dot(f, eye)
 
     return simd_float4x4(
-        [s.x, u.x, -f.x, 0],
-        [s.y, u.y, -f.y, 0],
-        [s.z, u.z, -f.z, 0],
+        [s.x, u.x, f.x, 0],
+        [s.y, u.y, f.y, 0],
+        [s.z, u.z, f.z, 0],
         [r30, r31, r32, 1]
     )
 }
@@ -126,5 +128,50 @@ extension simd_float4x4 {
             [m[2, 0], m[2, 1], m[2, 2], 0.0],
             [0.0, 0.0, 0.0, 1.0]
         )
+    }
+}
+
+extension simd_float4x4 {
+    init(translation: simd_float3) {
+        self = simd_float4x4(
+            [            1,             0,             0, 0],
+            [            0,             1,             0, 0],
+            [            0,             0,             1, 0],
+            [translation.x, translation.y, translation.z, 1]
+        )
+    }
+
+    init(rotationX angle: Float) {
+        self = simd_float4x4(
+            [1,           0,          0, 0],
+            [0,  cos(angle), sin(angle), 0],
+            [0, -sin(angle), cos(angle), 0],
+            [0,           0,          0, 1]
+        )
+    }
+
+    init(rotationY angle: Float) {
+        self = simd_float4x4(
+            [cos(angle), 0, -sin(angle), 0],
+            [         0, 1,           0, 0],
+            [sin(angle), 0,  cos(angle), 0],
+            [         0, 0,           0, 1]
+        )
+    }
+
+    init(rotationZ angle: Float) {
+        self = simd_float4x4(
+            [ cos(angle), sin(angle), 0, 0],
+            [-sin(angle), cos(angle), 0, 0],
+            [          0,          0, 1, 0],
+            [          0,          0, 0, 1]
+        )
+    }
+
+    init(rotationXYZ angle: simd_float3) {
+        let rotationX = simd_float4x4(rotationX: angle.x)
+        let rotationY = simd_float4x4(rotationY: angle.y)
+        let rotationZ = simd_float4x4(rotationZ: angle.z)
+        self = rotationX * rotationY * rotationZ
     }
 }

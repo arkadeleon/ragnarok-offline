@@ -70,8 +70,8 @@ class RSWRenderer: NSObject, Renderer {
         modelMatrix = matrix_translate(modelMatrix, [-target.x, -target.y, -target.z])
         modelMatrix = matrix_rotate(modelMatrix, radians(270), [1, 0, 0])
 
-        let viewMatrix = simd_float4x4(camera.viewMatrix)
-        let projectionMatrix = simd_float4x4(camera.projectionMatrix)
+        let viewMatrix = camera.viewMatrix
+        let projectionMatrix = camera.projectionMatrix
 
         let normalMatrix = simd_float3x3(modelMatrix).inverse.transpose
 

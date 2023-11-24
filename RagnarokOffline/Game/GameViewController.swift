@@ -12,13 +12,16 @@ import UIKit
 class GameViewController: UIViewController {
     private var mtkView: MTKView!
 
-    private let renderer = GameRenderer()
+    private var renderer: GameRenderer!
 
     private var magnification: CGFloat = 1
     private var dragTranslation: CGPoint = .zero
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let device = MTLCreateSystemDefaultDevice()!
+        renderer = GameRenderer(device: device)
 
         mtkView = MTKView()
         mtkView.translatesAutoresizingMaskIntoConstraints = false

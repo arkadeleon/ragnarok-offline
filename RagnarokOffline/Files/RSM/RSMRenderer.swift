@@ -58,10 +58,10 @@ class RSMRenderer: NSObject, Renderer {
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_translate(modelMatrix, [0, -boundingBox.range[1] * 0.1, -boundingBox.range[1] * 0.5 - 5])
         modelMatrix = matrix_rotate(modelMatrix, radians(15), [1, 0, 0])
-        modelMatrix = matrix_rotate(modelMatrix, Float(radians(time * 360 / 8)), [0, 1, 0])
+        modelMatrix = matrix_rotate(modelMatrix, Float(radians(time.truncatingRemainder(dividingBy: 8) * 360 / 8)), [0, 1, 0])
 
-        let viewMatrix = simd_float4x4(camera.viewMatrix)
-        let projectionMatrix = simd_float4x4(camera.projectionMatrix)
+        let viewMatrix = camera.viewMatrix
+        let projectionMatrix = camera.projectionMatrix
 
         let normalMatrix = simd_float3x3(modelMatrix).inverse.transpose
 

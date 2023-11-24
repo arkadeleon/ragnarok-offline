@@ -19,8 +19,9 @@ class GameRenderer: NSObject, Renderer {
 
     lazy var scene = GameScene(device: device)
 
-    override init() {
-        device = MTLCreateSystemDefaultDevice()!
+    init(device: MTLDevice) {
+        self.device = device
+
         commandQueue = device.makeCommandQueue()!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
@@ -89,14 +90,14 @@ class GameRenderer: NSObject, Renderer {
     }
 
     func render(_ object: Object3D, encoder: MTLRenderCommandEncoder, size: CGSize) {
-        let time = Float(CACurrentMediaTime())
+        let time = CACurrentMediaTime()
 
         scene.camera.update(size: size)
 
-        let modelMatrix = matrix_rotate(matrix_identity_float4x4, time, [0.5, 1, 0])
+        let modelMatrix = matrix_rotate(matrix_identity_float4x4, Float(radians(time.truncatingRemainder(dividingBy: 8) * 360 / 8)), [0.5, 1, 0])
         let normal = simd_float3x3(modelMatrix.inverse.transpose)
-        let viewMatrix = simd_float4x4(scene.camera.viewMatrix)
-        let projectionMatrix = simd_float4x4(scene.camera.projectionMatrix)
+        let viewMatrix = scene.camera.viewMatrix
+        let projectionMatrix = scene.camera.projectionMatrix
 
         var uniforms = VertexUniforms(
             model: modelMatrix,
