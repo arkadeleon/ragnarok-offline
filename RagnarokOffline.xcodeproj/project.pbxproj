@@ -14,6 +14,11 @@
 		3511C1D52B0AF9B1006DD639 /* RSMPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D42B0AF9B1006DD639 /* RSMPreviewViewController.swift */; };
 		3511C1D92B0B05B3006DD639 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D82B0B05B3006DD639 /* GameViewController.swift */; };
 		35270D272A5FE9470001A8BD /* rAthenaControl in Frameworks */ = {isa = PBXBuildFile; productRef = 35270D262A5FE9470001A8BD /* rAthenaControl */; };
+		356508C72B104C9500543562 /* EffectShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 356508C62B104C9500543562 /* EffectShaders.metal */; };
+		356508C92B104DCC00543562 /* EffectRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508C82B104DCC00543562 /* EffectRenderer.swift */; };
+		356508CF2B108D1500543562 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508CE2B108D1500543562 /* Effect.swift */; };
+		356508D22B10A02000543562 /* STRRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508D12B10A02000543562 /* STRRenderer.swift */; };
+		356508D42B10A02D00543562 /* STRPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508D32B10A02D00543562 /* STRPreviewViewController.swift */; };
 		356BF66F2AFC8964005B67F7 /* BinaryWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF66A2AFC8963005B67F7 /* BinaryWriter.swift */; };
 		356BF6702AFC8964005B67F7 /* FileStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF66B2AFC8963005B67F7 /* FileStream.swift */; };
 		356BF6712AFC8964005B67F7 /* BinaryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF66C2AFC8963005B67F7 /* BinaryReader.swift */; };
@@ -185,6 +190,12 @@
 		3511C1D42B0AF9B1006DD639 /* RSMPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSMPreviewViewController.swift; sourceTree = "<group>"; };
 		3511C1D82B0B05B3006DD639 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		35270D2B2A68F4610001A8BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		356508C52B104AD400543562 /* EffectShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EffectShaderTypes.h; sourceTree = "<group>"; };
+		356508C62B104C9500543562 /* EffectShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = EffectShaders.metal; sourceTree = "<group>"; };
+		356508C82B104DCC00543562 /* EffectRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectRenderer.swift; sourceTree = "<group>"; };
+		356508CE2B108D1500543562 /* Effect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
+		356508D12B10A02000543562 /* STRRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRRenderer.swift; sourceTree = "<group>"; };
+		356508D32B10A02D00543562 /* STRPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRPreviewViewController.swift; sourceTree = "<group>"; };
 		356BF66A2AFC8963005B67F7 /* BinaryWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryWriter.swift; sourceTree = "<group>"; };
 		356BF66B2AFC8963005B67F7 /* FileStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileStream.swift; sourceTree = "<group>"; };
 		356BF66C2AFC8963005B67F7 /* BinaryReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryReader.swift; sourceTree = "<group>"; };
@@ -442,6 +453,26 @@
 				35B3B9AB2A08C01600B4540B /* WaterShaderTypes.h */,
 			);
 			path = Water;
+			sourceTree = "<group>";
+		};
+		356508C42B104AB200543562 /* Effect */ = {
+			isa = PBXGroup;
+			children = (
+				356508CE2B108D1500543562 /* Effect.swift */,
+				356508C82B104DCC00543562 /* EffectRenderer.swift */,
+				356508C62B104C9500543562 /* EffectShaders.metal */,
+				356508C52B104AD400543562 /* EffectShaderTypes.h */,
+			);
+			path = Effect;
+			sourceTree = "<group>";
+		};
+		356508D02B109FF600543562 /* STR */ = {
+			isa = PBXGroup;
+			children = (
+				356508D12B10A02000543562 /* STRRenderer.swift */,
+				356508D32B10A02D00543562 /* STRPreviewViewController.swift */,
+			);
+			path = STR;
 			sourceTree = "<group>";
 		};
 		356BF6802B04F51E005B67F7 /* ACT */ = {
@@ -712,6 +743,7 @@
 				356BF6802B04F51E005B67F7 /* ACT */,
 				3511C1CF2B0A5341006DD639 /* GAT */,
 				3511C1CE2B0A531C006DD639 /* SPR */,
+				356508D02B109FF600543562 /* STR */,
 				35B3B99F2A08C01600B4540B /* RSM */,
 				35B3B98F2A08C01600B4540B /* RSW */,
 			);
@@ -757,6 +789,7 @@
 			isa = PBXGroup;
 			children = (
 				35B3B9AC2A08C01600B4540B /* RendererCommon.swift */,
+				356508C42B104AB200543562 /* Effect */,
 				356508C12B104A4900543562 /* Ground */,
 				356508C22B104A5400543562 /* Model */,
 				356508C32B104A5E00543562 /* Water */,
@@ -948,6 +981,7 @@
 				35B3B9BE2A08C01600B4540B /* lvm.c in Sources */,
 				35B3B9D82A08C01600B4540B /* guess.c in Sources */,
 				35B3B9CC2A08C01600B4540B /* ltablib.c in Sources */,
+				356508D22B10A02000543562 /* STRRenderer.swift in Sources */,
 				35B3B9C42A08C01600B4540B /* ltable.c in Sources */,
 				35B3B9B72A08C01600B4540B /* liolib.c in Sources */,
 				356BF6862B05FF59005B67F7 /* FilePreviewPageViewController.swift in Sources */,
@@ -962,10 +996,12 @@
 				35B3B9FE2A08C01600B4540B /* RSMWrapper.swift in Sources */,
 				35B3B9DA2A08C01600B4540B /* macro-array.c in Sources */,
 				3504AB8C2A2EFB900029AC46 /* Camera.swift in Sources */,
+				356508D42B10A02D00543562 /* STRPreviewViewController.swift in Sources */,
 				35B3BA0C2A08C01600B4540B /* SpriteDocumentView.swift in Sources */,
 				35B3B9D62A08C01600B4540B /* structs.c in Sources */,
 				35B3B9CA2A08C01600B4540B /* lmem.c in Sources */,
 				35B695EC2A307164006F1904 /* GameScene.swift in Sources */,
+				356508C92B104DCC00543562 /* EffectRenderer.swift in Sources */,
 				35B3BA132A08C01600B4540B /* RSWCamera.swift in Sources */,
 				35B3BA242A08C01600B4540B /* ModelShaders.metal in Sources */,
 				35B3BA052A08C01600B4540B /* TextureLoader.swift in Sources */,
@@ -973,6 +1009,7 @@
 				35B3B9F52A08C01600B4540B /* WebView.swift in Sources */,
 				35B3B9B92A08C01600B4540B /* lstate.c in Sources */,
 				35B3B9E82A08C01600B4540B /* GAT.swift in Sources */,
+				356508C72B104C9500543562 /* EffectShaders.metal in Sources */,
 				356BF6822B04F54A005B67F7 /* ACTPreviewViewController.swift in Sources */,
 				356BF6752AFCCBF1005B67F7 /* DESDecryptor.swift in Sources */,
 				356BF6702AFC8964005B67F7 /* FileStream.swift in Sources */,
@@ -1037,6 +1074,7 @@
 				35B3B9E72A08C01600B4540B /* ACT.swift in Sources */,
 				3511C1D12B0A535A006DD639 /* GATPreviewViewController.swift in Sources */,
 				35B695EF2A30763A006F1904 /* Mesh.swift in Sources */,
+				356508CF2B108D1500543562 /* Effect.swift in Sources */,
 				3511C1CC2B0A4EAE006DD639 /* GAT+Image.swift in Sources */,
 				35B3B9C82A08C01600B4540B /* lzio.c in Sources */,
 				356BF6842B04F569005B67F7 /* ACTActionCollectionViewCell.swift in Sources */,

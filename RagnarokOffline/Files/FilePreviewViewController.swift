@@ -41,6 +41,8 @@ class FilePreviewViewController: UIViewController {
             GATPreviewViewController(file: file)
         case .rsw:
             RSWPreviewViewController(file: file)
+        case .str:
+            STRPreviewViewController(file: file)
         default:
             UIViewController()
         }

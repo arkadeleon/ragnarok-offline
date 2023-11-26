@@ -3,8 +3,9 @@
 //
 
 #include "ShaderTypes.h"
+#include "EffectShaderTypes.h"
+#include "GroundShaderTypes.h"
 #include "ModelShaderTypes.h"
 #include "WaterShaderTypes.h"
-#include "GroundShaderTypes.h"
 
 #include "LuaDecompiler.h"

@@ -25,6 +25,7 @@ enum FileType: String {
     case rsm
     case gat
     case rsw
+    case str
     case xxx
 
     init(rawValue: String) {
@@ -65,6 +66,8 @@ enum FileType: String {
             self = .gat
         case "rsw":
             self = .rsw
+        case "str":
+            self = .str
         default:
             self = .xxx
         }

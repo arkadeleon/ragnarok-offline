@@ -12,7 +12,7 @@ struct STR {
     var header: String
     var version: String
     var fps: Int32
-    var maxKeyFrame: Int32
+    var maxKeyframeIndex: Int32
     var layers: [Layer] = []
 
     init(data: Data) throws {
@@ -35,7 +35,7 @@ struct STR {
         _ = try reader.readBytes(2)
 
         fps = try reader.readInt()
-        maxKeyFrame = try reader.readInt()
+        maxKeyframeIndex = try reader.readInt()
 
         let layerCount: Int32 = try reader.readInt()
 
@@ -51,7 +51,7 @@ struct STR {
 extension STR {
     struct Layer {
         var textureNames: [String] = []
-        var keyFrames: [KeyFrame] = []
+        var keyframes: [Keyframe] = []
 
         init(from reader: BinaryReader) throws {
             let textureCount: Int32 = try reader.readInt()
@@ -60,17 +60,17 @@ extension STR {
                 textureNames.append(textureName)
             }
 
-            let keyFrameCount: Int32 = try reader.readInt()
-            for _ in 0..<keyFrameCount {
-                let keyFrame = try KeyFrame(from: reader)
-                keyFrames.append(keyFrame)
+            let keyframeCount: Int32 = try reader.readInt()
+            for _ in 0..<keyframeCount {
+                let keyframe = try Keyframe(from: reader)
+                keyframes.append(keyframe)
             }
         }
     }
 }
 
 extension STR {
-    struct KeyFrame {
+    struct Keyframe {
         var frameIndex: Int32
         var type: Int32
         var position: simd_float2
