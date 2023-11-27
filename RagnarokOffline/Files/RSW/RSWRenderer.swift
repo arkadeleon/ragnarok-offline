@@ -31,10 +31,18 @@ class RSWRenderer: NSObject, Renderer {
         waterRenderer = try WaterRenderer(device: device, library: library, mesh: waterMesh)
         modelRenderer = try ModelRenderer(device: device, library: library, meshes: modelMeshes)
 
+        var maxAltitude: Float = 0
+        for y in 0..<gat.height {
+            for x in 0..<gat.width {
+                let altitude = gat.height(forCellAtX: Int(x), y: Int(y))
+                maxAltitude = max(maxAltitude, altitude)
+            }
+        }
+
         target = [
             Float(gat.width) / 2,
             Float(gat.height) / 2,
-            gat.height(forCellAtX: Int(gat.width / 2), y: Int(gat.height / 2)) / 5
+            maxAltitude / 5
         ]
 
         super.init()
@@ -66,9 +74,10 @@ class RSWRenderer: NSObject, Renderer {
         let scale = 1 / max(target.x, target.y)
 
         var modelMatrix = matrix_identity_float4x4
-        modelMatrix = matrix_scale(modelMatrix, [scale, scale, scale])
-        modelMatrix = matrix_translate(modelMatrix, [-target.x, -target.y, -target.z])
-        modelMatrix = matrix_rotate(modelMatrix, radians(270), [1, 0, 0])
+        modelMatrix = matrix_scale(modelMatrix, [-scale, scale, scale])
+        modelMatrix = matrix_rotate(modelMatrix, radians(180), [0, 0, 1])
+        modelMatrix = matrix_rotate(modelMatrix, radians(90), [1, 0, 0])
+        modelMatrix = matrix_translate(modelMatrix, [-target.x, target.z, -target.y])
 
         let viewMatrix = camera.viewMatrix
         let projectionMatrix = camera.projectionMatrix

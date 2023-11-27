@@ -6,6 +6,9 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
+import Foundation
+import simd
+
 struct RSW {
     var header: Header
     var files: Files

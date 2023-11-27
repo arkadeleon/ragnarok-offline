@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import simd
 
 struct RSM {
     var header: Header

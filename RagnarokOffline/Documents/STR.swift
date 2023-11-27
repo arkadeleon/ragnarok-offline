@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import simd
 
 struct STR {
     var header: String

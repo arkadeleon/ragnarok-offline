@@ -52,7 +52,7 @@ class STRRenderer: NSObject, Renderer {
         camera.update(size: view.bounds.size)
 
         var modelMatrix = matrix_identity_float4x4
-        modelMatrix = matrix_translate(modelMatrix, [0, -3, -50])
+        modelMatrix = matrix_translate(modelMatrix, [0, -3, 20])
         modelMatrix = matrix_rotate(modelMatrix, radians(270), [1, 0, 0])
 
         let viewMatrix = camera.viewMatrix

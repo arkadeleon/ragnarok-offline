@@ -6,6 +6,8 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
+import Foundation
+
 struct GAT {
     var header: Header
     var width: UInt32

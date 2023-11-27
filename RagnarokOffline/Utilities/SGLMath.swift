@@ -73,24 +73,15 @@ public func matrix_scale(_ m: simd_float4x4, _ v: simd_float3) -> simd_float4x4 
     )
 }
 
-public func perspective(_ fovy: Float, _ aspect: Float, _ zNear: Float, _ zFar: Float) -> simd_float4x4 {
-    assert(aspect > 0)
-
-    let tanHalfFovy = tan(fovy / 2)
-
-    let r00 = 1 / (aspect * tanHalfFovy)
-    let r11 = 1 / (tanHalfFovy)
-
-    let r22 = -(zFar + zNear) / (zFar - zNear)
-    var r32 = -(2 * zFar * zNear)
-    r32 /= (zFar - zNear)
-
-    return simd_float4x4(
-        [r00, 0, 0, 0],
-        [0, r11, 0, 0],
-        [0, 0, r22, -1],
-        [0, 0, r32, 0]
-    )
+public func perspective(_ fov: Float, _ aspect: Float, _ near: Float, _ far: Float) -> simd_float4x4 {
+    let y = 1 / tan(fov * 0.5)
+    let x = y / aspect
+    let z = far / (far - near)
+    let X = simd_float4( x,  0,  0,  0)
+    let Y = simd_float4( 0,  y,  0,  0)
+    let Z = simd_float4( 0,  0,  z, 1)
+    let W = simd_float4( 0,  0,  z * -near,  0)
+    return simd_float4x4(columns: (X, Y, Z, W))
 }
 
 public func lookAt(_ eye: simd_float3, _ center: simd_float3, _ up: simd_float3) -> simd_float4x4 {

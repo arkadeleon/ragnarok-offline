@@ -6,6 +6,7 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
+import CoreGraphics
 import simd
 
 class Camera {
@@ -31,7 +32,7 @@ class Camera {
             let rotationMatrix = simd_float4x4(rotationXYZ: rotation)
             return (translationMatrix * rotationMatrix).inverse
         } else {
-            let translationMatrix = simd_float4x4(translation: -position)
+            let translationMatrix = simd_float4x4(translation: position)
             let rotationMatrix = simd_float4x4(rotationXYZ: rotation)
             return (translationMatrix * rotationMatrix).inverse
         }
@@ -58,9 +59,9 @@ class Camera {
     }
 
     func move(offset: CGPoint) {
-        target.x = Float(offset.x) * sensitivity
-        target.y = Float(offset.y) * sensitivity
-        position.x = Float(offset.x) * sensitivity
-        position.y = Float(offset.y) * sensitivity
+        target.x = -Float(offset.x) * sensitivity
+        target.y = -Float(offset.y) * sensitivity
+        position.x = -Float(offset.x) * sensitivity
+        position.y = -Float(offset.y) * sensitivity
     }
 }
