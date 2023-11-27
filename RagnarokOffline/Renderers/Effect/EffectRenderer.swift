@@ -11,6 +11,7 @@ import Metal
 class EffectRenderer {
     let renderPipelineState: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState?
+
     let effect: Effect
 
     let fog = Fog(

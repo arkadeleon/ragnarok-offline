@@ -7,16 +7,13 @@
 //
 
 import Metal
-
-struct WaterMesh {
-    var vertices: [WaterVertex] = []
-    var textures: [MTLTexture?] = []
-}
+import simd
 
 class WaterRenderer {
     let renderPipelineState: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState?
-    let mesh: WaterMesh
+
+    let water: Water
 
     var waveSpeed: Float = 0
     var waveHeight: Float = 0
@@ -41,7 +38,7 @@ class WaterRenderer {
         direction: [0, 1, 0]
     )
 
-    init(device: MTLDevice, library: MTLLibrary, mesh: WaterMesh) throws {
+    init(device: MTLDevice, library: MTLLibrary, water: Water) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "waterVertexShader")
@@ -64,7 +61,7 @@ class WaterRenderer {
 
         self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
 
-        self.mesh = mesh
+        self.water = water
     }
 
     func render(atTime time: CFTimeInterval,
@@ -77,7 +74,7 @@ class WaterRenderer {
 
         let frame = Float(time * 60)
 
-        guard mesh.vertices.count > 0, let vertexBuffer = device.makeBuffer(bytes: mesh.vertices, length: mesh.vertices.count * MemoryLayout<WaterVertex>.stride, options: []) else {
+        guard water.mesh.vertices.count > 0, let vertexBuffer = device.makeBuffer(bytes: water.mesh.vertices, length: water.mesh.vertices.count * MemoryLayout<WaterVertex>.stride, options: []) else {
             return
         }
 
@@ -119,10 +116,10 @@ class WaterRenderer {
 
         renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
-        let texture = mesh.textures[Int(frame / animSpeed) % mesh.textures.count]
+        let texture = water.mesh.textures[Int(frame / animSpeed) % water.mesh.textures.count]
         renderCommandEncoder.setFragmentTexture(texture, index: 0)
 
-        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: mesh.vertices.count)
+        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: water.mesh.vertices.count)
 
         renderCommandEncoder.endEncoding()
     }

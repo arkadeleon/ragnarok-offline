@@ -133,7 +133,7 @@ class RSWPreviewViewController: UIViewController {
         let device = MTLCreateSystemDefaultDevice()!
         let textureLoader = TextureLoader(device: device)
 
-        let object = gnd.compile(waterLevel: rsw.water.level, waterHeight: rsw.water.waveHeight) { textureName in
+        let ground = Ground(gat: gat, gnd: gnd) { textureName in
             let path = GRF.Path(string: "data\\texture\\" + textureName)
             guard let data = try? grf.contentsOfEntry(at: path) else {
                 return nil
@@ -142,16 +142,14 @@ class RSWPreviewViewController: UIViewController {
             return texture
         }
 
-        var waterTextures: [MTLTexture?] = []
-        for i in 0..<32 {
-            let path = GRF.Path(string: String(format: "data\\texture\\워터\\water%03d.jpg", i))
-            if let data = try? grf.contentsOfEntry(at: path) {
-                let texture = textureLoader.newTexture(data: data)
-                waterTextures.append(texture)
+        let water = Water(gnd: gnd, rsw: rsw) { textureName in
+            let path = GRF.Path(string: "data\\texture\\" + textureName)
+            guard let data = try? grf.contentsOfEntry(at: path) else {
+                return nil
             }
+            let texture = textureLoader.newTexture(data: data)
+            return texture
         }
-
-        let waterMesh = WaterMesh(vertices: object.waterVertices, textures: waterTextures)
 
         var modelTextures: [String : MTLTexture] = [:]
         var models: [String : ModelMesh] = [:]
@@ -194,7 +192,7 @@ class RSWPreviewViewController: UIViewController {
             }
         }
 
-        guard let renderer = try? RSWRenderer(device: device, gat: gat, groundMeshes: object.groundMeshes, waterMesh: waterMesh, modelMeshes: Array(models.values)) else {
+        guard let renderer = try? RSWRenderer(device: device, ground: ground, water: water, modelMeshes: Array(models.values)) else {
             return nil
         }
 

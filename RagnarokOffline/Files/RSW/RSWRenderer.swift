@@ -19,31 +19,15 @@ class RSWRenderer: NSObject, Renderer {
 
     let camera = Camera()
 
-    let target: simd_float3
-
-    init(device: MTLDevice, gat: GAT, groundMeshes: [GroundMesh], waterMesh: WaterMesh, modelMeshes: [ModelMesh]) throws {
+    init(device: MTLDevice, ground: Ground, water: Water, modelMeshes: [ModelMesh]) throws {
         self.device = device
 
         commandQueue = device.makeCommandQueue()!
 
         let library = device.makeDefaultLibrary()!
-        groundRenderer = try GroundRenderer(device: device, library: library, meshes: groundMeshes)
-        waterRenderer = try WaterRenderer(device: device, library: library, mesh: waterMesh)
+        groundRenderer = try GroundRenderer(device: device, library: library, ground: ground)
+        waterRenderer = try WaterRenderer(device: device, library: library, water: water)
         modelRenderer = try ModelRenderer(device: device, library: library, meshes: modelMeshes)
-
-        var maxAltitude: Float = 0
-        for y in 0..<gat.height {
-            for x in 0..<gat.width {
-                let altitude = gat.height(forCellAtX: Int(x), y: Int(y))
-                maxAltitude = max(maxAltitude, altitude)
-            }
-        }
-
-        target = [
-            Float(gat.width) / 2,
-            Float(gat.height) / 2,
-            maxAltitude / 5
-        ]
 
         super.init()
     }
@@ -69,15 +53,17 @@ class RSWRenderer: NSObject, Renderer {
 
         let time = CACurrentMediaTime()
 
+        let ground = groundRenderer.ground
+
         camera.update(size: view.bounds.size)
 
-        let scale = 1 / max(target.x, target.y)
+        let scale = 1 / Float(max(ground.width, ground.height) / 2)
 
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_scale(modelMatrix, [-scale, scale, scale])
         modelMatrix = matrix_rotate(modelMatrix, radians(180), [0, 0, 1])
         modelMatrix = matrix_rotate(modelMatrix, radians(90), [1, 0, 0])
-        modelMatrix = matrix_translate(modelMatrix, [-target.x, target.z, -target.y])
+        modelMatrix = matrix_translate(modelMatrix, [-Float(ground.width / 2), ground.maxAltitude / 5, -Float(ground.height / 2)])
 
         let viewMatrix = camera.viewMatrix
         let projectionMatrix = camera.projectionMatrix

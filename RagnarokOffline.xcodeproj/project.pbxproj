@@ -14,6 +14,8 @@
 		3511C1D52B0AF9B1006DD639 /* RSMPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D42B0AF9B1006DD639 /* RSMPreviewViewController.swift */; };
 		3511C1D92B0B05B3006DD639 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D82B0B05B3006DD639 /* GameViewController.swift */; };
 		35270D272A5FE9470001A8BD /* rAthenaControl in Frameworks */ = {isa = PBXBuildFile; productRef = 35270D262A5FE9470001A8BD /* rAthenaControl */; };
+		3530982E2B145D6A00F32B62 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982D2B145D6A00F32B62 /* Ground.swift */; };
+		353098302B1480A600F32B62 /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982F2B1480A600F32B62 /* Water.swift */; };
 		356508C72B104C9500543562 /* EffectShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 356508C62B104C9500543562 /* EffectShaders.metal */; };
 		356508C92B104DCC00543562 /* EffectRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508C82B104DCC00543562 /* EffectRenderer.swift */; };
 		356508CF2B108D1500543562 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508CE2B108D1500543562 /* Effect.swift */; };
@@ -97,7 +99,6 @@
 		35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9722A08C01600B4540B /* GameRenderer.swift */; };
 		35B3B9FA2A08C01600B4540B /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B9732A08C01600B4540B /* wall.jpg */; };
 		35B3B9FE2A08C01600B4540B /* RSMWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9792A08C01600B4540B /* RSMWrapper.swift */; };
-		35B3B9FF2A08C01600B4540B /* GND+Compile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B97A2A08C01600B4540B /* GND+Compile.swift */; };
 		35B3BA032A08C01600B4540B /* Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B97F2A08C01600B4540B /* Encoding.swift */; };
 		35B3BA042A08C01600B4540B /* SGLMath+Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9802A08C01600B4540B /* SGLMath+Calculate.swift */; };
 		35B3BA052A08C01600B4540B /* TextureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9812A08C01600B4540B /* TextureLoader.swift */; };
@@ -188,6 +189,8 @@
 		3511C1D42B0AF9B1006DD639 /* RSMPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSMPreviewViewController.swift; sourceTree = "<group>"; };
 		3511C1D82B0B05B3006DD639 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		35270D2B2A68F4610001A8BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3530982D2B145D6A00F32B62 /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
+		3530982F2B1480A600F32B62 /* Water.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Water.swift; sourceTree = "<group>"; };
 		356508C52B104AD400543562 /* EffectShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EffectShaderTypes.h; sourceTree = "<group>"; };
 		356508C62B104C9500543562 /* EffectShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = EffectShaders.metal; sourceTree = "<group>"; };
 		356508C82B104DCC00543562 /* EffectRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectRenderer.swift; sourceTree = "<group>"; };
@@ -314,7 +317,6 @@
 		35B3B9762A08C01600B4540B /* ResourceBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceBundle.swift; sourceTree = "<group>"; };
 		35B3B9772A08C01600B4540B /* ResourceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceManager.swift; sourceTree = "<group>"; };
 		35B3B9792A08C01600B4540B /* RSMWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSMWrapper.swift; sourceTree = "<group>"; };
-		35B3B97A2A08C01600B4540B /* GND+Compile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GND+Compile.swift"; sourceTree = "<group>"; };
 		35B3B97F2A08C01600B4540B /* Encoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Encoding.swift; sourceTree = "<group>"; };
 		35B3B9802A08C01600B4540B /* SGLMath+Calculate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SGLMath+Calculate.swift"; sourceTree = "<group>"; };
 		35B3B9812A08C01600B4540B /* TextureLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextureLoader.swift; sourceTree = "<group>"; };
@@ -424,6 +426,7 @@
 		356508C12B104A4900543562 /* Ground */ = {
 			isa = PBXGroup;
 			children = (
+				3530982D2B145D6A00F32B62 /* Ground.swift */,
 				35B3B9A82A08C01600B4540B /* GroundRenderer.swift */,
 				35B3B9AA2A08C01600B4540B /* GroundShaders.metal */,
 				35B3B9A72A08C01600B4540B /* GroundShaderTypes.h */,
@@ -444,6 +447,7 @@
 		356508C32B104A5E00543562 /* Water */ = {
 			isa = PBXGroup;
 			children = (
+				3530982F2B1480A600F32B62 /* Water.swift */,
 				35B3B9AE2A08C01600B4540B /* WaterRenderer.swift */,
 				35B3B9A52A08C01600B4540B /* WaterShaders.metal */,
 				35B3B9AB2A08C01600B4540B /* WaterShaderTypes.h */,
@@ -657,7 +661,6 @@
 				35B3B95C2A08C01600B4540B /* GAT.swift */,
 				3511C1CB2B0A4EAE006DD639 /* GAT+Image.swift */,
 				35B3B9532A08C01600B4540B /* GND.swift */,
-				35B3B97A2A08C01600B4540B /* GND+Compile.swift */,
 				35B3B9552A08C01600B4540B /* GRF.swift */,
 				356BF6762AFCCDD9005B67F7 /* GRFWrapper.swift */,
 				35B3B9562A08C01600B4540B /* INI.swift */,
@@ -1029,7 +1032,6 @@
 				35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */,
 				35B3BA252A08C01600B4540B /* GroundShaders.metal in Sources */,
 				35B3BA0B2A08C01600B4540B /* SGLMath.swift in Sources */,
-				35B3B9FF2A08C01600B4540B /* GND+Compile.swift in Sources */,
 				35B3B9D72A08C01600B4540B /* luadec.c in Sources */,
 				35B695F32A3080D9006F1904 /* Object3D.swift in Sources */,
 				35B3BA192A08C01600B4540B /* ImageDocumentViewController.swift in Sources */,
@@ -1063,6 +1065,7 @@
 				35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */,
 				35B3B9DF2A08C01600B4540B /* GND.swift in Sources */,
 				356BF68A2B064965005B67F7 /* FilesViewController.swift in Sources */,
+				3530982E2B145D6A00F32B62 /* Ground.swift in Sources */,
 				35B3B9E72A08C01600B4540B /* ACT.swift in Sources */,
 				3511C1D12B0A535A006DD639 /* GATPreviewViewController.swift in Sources */,
 				35B695EF2A30763A006F1904 /* Mesh.swift in Sources */,
@@ -1075,6 +1078,7 @@
 				35B3BA4B2A08DA2C00B4540B /* AnimatedImage.swift in Sources */,
 				35B3BA062A08C01600B4540B /* CGImage+Decode.swift in Sources */,
 				35B3B9CF2A08C01600B4540B /* ldebug.c in Sources */,
+				353098302B1480A600F32B62 /* Water.swift in Sources */,
 				35B3B9C22A08C01600B4540B /* lstring.c in Sources */,
 				356BF66F2AFC8964005B67F7 /* BinaryWriter.swift in Sources */,
 				35B3B9B62A08C01600B4540B /* lauxlib.c in Sources */,

@@ -7,6 +7,7 @@
 //
 
 import Metal
+import simd
 
 struct Effect {
     var fps: Int

@@ -7,16 +7,13 @@
 //
 
 import Metal
-
-struct GroundMesh {
-    var vertices: [GroundVertex] = []
-    var texture: MTLTexture?
-}
+import simd
 
 class GroundRenderer {
     let renderPipelineState: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState?
-    let meshes: [GroundMesh]
+
+    let ground: Ground
 
     let fog = Fog(
         use: false,
@@ -34,7 +31,7 @@ class GroundRenderer {
         direction: [0, 1, 0]
     )
 
-    init(device: MTLDevice, library: MTLLibrary, meshes: [GroundMesh]) throws {
+    init(device: MTLDevice, library: MTLLibrary, ground: Ground) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "groundVertexShader")
@@ -57,7 +54,7 @@ class GroundRenderer {
 
         self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
 
-        self.meshes = meshes
+        self.ground = ground
     }
 
     func render(atTime time: CFTimeInterval,
@@ -105,7 +102,7 @@ class GroundRenderer {
 
         renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
-        for mesh in meshes where mesh.vertices.count > 0 {
+        for mesh in ground.meshes where mesh.vertices.count > 0 {
             guard let vertexBuffer = device.makeBuffer(bytes: mesh.vertices, length: mesh.vertices.count * MemoryLayout<GroundVertex>.stride, options: []) else {
                 continue
             }
