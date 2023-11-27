@@ -1,24 +1,85 @@
 //
-//  RSMWrapper.swift
+//  Model.swift
 //  RagnarokOffline
 //
-//  Created by Leon Li on 2020/6/30.
-//  Copyright © 2020 Leon & Vane. All rights reserved.
+//  Created by Leon Li on 2023/11/27.
+//  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
 import Metal
+import simd
 
-class RSMNodeWrapper {
+struct ModelMesh {
+    var vertices: [ModelVertex] = []
+    var texture: MTLTexture?
+}
+
+struct ModelBoundingBox {
+    var max = simd_float3(-.infinity, -.infinity, -.infinity)
+    var min = simd_float3(.infinity, .infinity, .infinity)
+    var offset = simd_float3()
+    var range = simd_float3()
+    var center = simd_float3()
+}
+
+struct Model {
+    var meshes: [ModelMesh] = []
+    var boundingBox: ModelBoundingBox
+
+    init(rsm: RSM, instance: simd_float4x4, textureProvider: (String) -> MTLTexture?) {
+        boundingBox = ModelBoundingBox()
+
+        let matrix = matrix_identity_float4x4
+
+        let wrappers = rsm.nodes.map(ModelNodeWrapper.init)
+        let mainWrapper = wrappers.first { $0.node.name == rsm.mainNode?.name }
+
+        mainWrapper?.calcBoundingBox(parentMatrix: matrix, wrappers: wrappers)
+
+        for i in 0..<3 {
+            for j in 0..<wrappers.count {
+                boundingBox.max[i] = max(boundingBox.max[i], wrappers[j].box.max[i])
+                boundingBox.min[i] = min(boundingBox.min[i], wrappers[j].box.min[i])
+            }
+            boundingBox.offset[i] = (boundingBox.max[i] + boundingBox.min[i]) / 2
+            boundingBox.range[i] = (boundingBox.max[i] - boundingBox.min[i]) / 2
+            boundingBox.center[i] = boundingBox.min[i] + boundingBox.range[i]
+        }
+
+        meshes = rsm.textures.map { textureName in
+            ModelMesh(texture: textureProvider(textureName))
+        }
+
+        for wrapper in wrappers {
+            let ms = wrapper.compile(contents: rsm, instance_matrix: instance, boundingBox: boundingBox)
+            for (i, m) in ms.enumerated() {
+                meshes[i].vertices.append(contentsOf: m)
+            }
+        }
+    }
+
+    static func createInstance(position: simd_float3, rotation: simd_float3, scale: simd_float3, width: Float, height: Float) -> simd_float4x4 {
+        var matrix = matrix_identity_float4x4
+        matrix = matrix_translate(matrix, [position[0] + width, position[1], position[2] + height])
+        matrix = matrix_rotate(matrix, radians(rotation[2]), [0, 0, 1])  // rotateZ
+        matrix = matrix_rotate(matrix, radians(rotation[0]), [1, 0, 0])  // rotateX
+        matrix = matrix_rotate(matrix, radians(rotation[1]), [0, 1, 0])  // rotateY
+        matrix = matrix_scale(matrix, scale)
+        return matrix
+    }
+}
+
+class ModelNodeWrapper {
     let node: RSM.Node
 
-    var box = RSMBoundingBox()
+    var box = ModelBoundingBox()
     var matrix = matrix_identity_float4x4
 
     init(node: RSM.Node) {
         self.node = node
     }
 
-    func calcBoundingBox(parentMatrix: simd_float4x4, wrappers: [RSMNodeWrapper]) {
+    func calcBoundingBox(parentMatrix: simd_float4x4, wrappers: [ModelNodeWrapper]) {
         self.matrix = parentMatrix
         self.matrix =  matrix_translate(self.matrix, node.position)
 
@@ -67,7 +128,7 @@ class RSMNodeWrapper {
         }
     }
 
-    func compile(contents: RSM, instance_matrix: simd_float4x4, boundingBox: RSMBoundingBox) -> [[ModelVertex]] {
+    func compile(contents: RSM, instance_matrix: simd_float4x4, boundingBox: ModelBoundingBox) -> [[ModelVertex]] {
         var shadeGroup = [[Float]](repeating: [], count: 32)
         var shadeGroupUsed = [Bool](repeating: false, count: 32)
 
@@ -236,61 +297,5 @@ class RSMNodeWrapper {
                 mesh[t].append(vertex)
             }
         }
-    }
-}
-
-struct RSMBoundingBox {
-    var max = simd_float3(-.infinity, -.infinity, -.infinity)
-    var min = simd_float3(.infinity, .infinity, .infinity)
-    var offset = simd_float3()
-    var range = simd_float3()
-    var center = simd_float3()
-}
-
-extension RSM {
-    func calcBoundingBox() -> (RSMBoundingBox, [RSMNodeWrapper]) {
-        var box = RSMBoundingBox()
-
-        let matrix = matrix_identity_float4x4
-
-        let wrappers = nodes.map(RSMNodeWrapper.init)
-        let mainWrapper = wrappers.first { $0.node.name == mainNode?.name }
-
-        mainWrapper?.calcBoundingBox(parentMatrix: matrix, wrappers: wrappers)
-
-        for i in 0..<3 {
-            for j in 0..<wrappers.count {
-                box.max[i] = max(box.max[i], wrappers[j].box.max[i])
-                box.min[i] = min(box.min[i], wrappers[j].box.min[i])
-            }
-            box.offset[i] = (box.max[i] + box.min[i]) / 2
-            box.range[i] = (box.max[i] - box.min[i]) / 2
-            box.center[i] = box.min[i] + box.range[i]
-        }
-
-        return (box, wrappers)
-    }
-
-    func compile(instance: simd_float4x4, wrappers: [RSMNodeWrapper], boundingBox: RSMBoundingBox, textureProvider: (String) -> MTLTexture?) -> [ModelMesh] {
-        var meshes = textures.map { textureName in
-            ModelMesh(texture: textureProvider(textureName))
-        }
-        for wrapper in wrappers {
-            let ms = wrapper.compile(contents: self, instance_matrix: instance, boundingBox: boundingBox)
-            for (i, m) in ms.enumerated() {
-                meshes[i].vertices.append(contentsOf: m)
-            }
-        }
-        return meshes
-    }
-
-    func createInstance(position: simd_float3, rotation: simd_float3, scale: simd_float3, width: Float, height: Float) -> simd_float4x4 {
-        var matrix = matrix_identity_float4x4
-        matrix = matrix_translate(matrix, [position[0] + width, position[1], position[2] + height])
-        matrix = matrix_rotate(matrix, radians(rotation[2]), [0, 0, 1])  // rotateZ
-        matrix = matrix_rotate(matrix, radians(rotation[0]), [1, 0, 0])  // rotateX
-        matrix = matrix_rotate(matrix, radians(rotation[1]), [0, 1, 0])  // rotateY
-        matrix = matrix_scale(matrix, scale)
-        return matrix
     }
 }

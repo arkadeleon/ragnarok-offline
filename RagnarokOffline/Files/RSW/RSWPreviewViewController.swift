@@ -151,8 +151,8 @@ class RSWPreviewViewController: UIViewController {
             return texture
         }
 
+        var models: [Model] = []
         var modelTextures: [String : MTLTexture] = [:]
-        var models: [String : ModelMesh] = [:]
 
         for model in rsw.models {
             let path = GRF.Path(string: "data\\model\\" + model.modelName)
@@ -161,9 +161,7 @@ class RSWPreviewViewController: UIViewController {
                 continue
             }
 
-            let (boundingBox, wrappers) = rsm.calcBoundingBox()
-
-            let instance = rsm.createInstance(
+            let instance = Model.createInstance(
                 position: model.position,
                 rotation: model.rotation,
                 scale: model.scale,
@@ -171,7 +169,7 @@ class RSWPreviewViewController: UIViewController {
                 height: Float(gnd.height)
             )
 
-            let meshes = rsm.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox) { textureName in
+            let model = Model(rsm: rsm, instance: instance) { textureName in
                 if let texture = modelTextures[textureName] {
                     return texture
                 }
@@ -184,15 +182,10 @@ class RSWPreviewViewController: UIViewController {
                 return texture
             }
 
-            for (i, mesh) in meshes.enumerated() {
-                let textureName = rsm.textures[i]
-                var m = models[textureName] ?? ModelMesh(texture: mesh.texture)
-                m.vertices += mesh.vertices
-                models[textureName] = m
-            }
+            models.append(model)
         }
 
-        guard let renderer = try? RSWRenderer(device: device, ground: ground, water: water, modelMeshes: Array(models.values)) else {
+        guard let renderer = try? RSWRenderer(device: device, ground: ground, water: water, models: models) else {
             return nil
         }
 

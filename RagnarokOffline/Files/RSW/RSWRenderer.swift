@@ -19,7 +19,7 @@ class RSWRenderer: NSObject, Renderer {
 
     let camera = Camera()
 
-    init(device: MTLDevice, ground: Ground, water: Water, modelMeshes: [ModelMesh]) throws {
+    init(device: MTLDevice, ground: Ground, water: Water, models: [Model]) throws {
         self.device = device
 
         commandQueue = device.makeCommandQueue()!
@@ -27,7 +27,7 @@ class RSWRenderer: NSObject, Renderer {
         let library = device.makeDefaultLibrary()!
         groundRenderer = try GroundRenderer(device: device, library: library, ground: ground)
         waterRenderer = try WaterRenderer(device: device, library: library, water: water)
-        modelRenderer = try ModelRenderer(device: device, library: library, meshes: modelMeshes)
+        modelRenderer = try ModelRenderer(device: device, library: library, models: models)
 
         super.init()
     }

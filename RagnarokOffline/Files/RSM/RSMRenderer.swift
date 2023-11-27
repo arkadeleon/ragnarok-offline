@@ -15,19 +15,15 @@ class RSMRenderer: NSObject, Renderer {
 
     let modelRenderer: ModelRenderer
 
-    let boundingBox: RSMBoundingBox
-
     let camera = Camera()
 
-    init(device: MTLDevice, meshes: [ModelMesh], boundingBox: RSMBoundingBox) throws {
+    init(device: MTLDevice, model: Model) throws {
         self.device = device
 
         commandQueue = device.makeCommandQueue()!
 
         let library = device.makeDefaultLibrary()!
-        modelRenderer = try ModelRenderer(device: device, library: library, meshes: meshes)
-
-        self.boundingBox = boundingBox
+        modelRenderer = try ModelRenderer(device: device, library: library, models: [model])
 
         super.init()
     }
@@ -53,10 +49,12 @@ class RSMRenderer: NSObject, Renderer {
 
         let time = CACurrentMediaTime()
 
+        let model = modelRenderer.models[0]
+
         camera.update(size: view.bounds.size)
 
         var modelMatrix = matrix_identity_float4x4
-        modelMatrix = matrix_translate(modelMatrix, [0, -boundingBox.range[1] * 0.1, +boundingBox.range[1] * 0.5])
+        modelMatrix = matrix_translate(modelMatrix, [0, -model.boundingBox.range[1] * 0.1, model.boundingBox.range[1] * 0.5])
         modelMatrix = matrix_rotate(modelMatrix, radians(-15), [1, 0, 0])
         modelMatrix = matrix_rotate(modelMatrix, Float(radians(time.truncatingRemainder(dividingBy: 8) * 360 / 8)), [0, 1, 0])
 

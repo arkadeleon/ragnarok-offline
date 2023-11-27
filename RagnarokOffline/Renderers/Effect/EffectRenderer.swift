@@ -7,6 +7,7 @@
 //
 
 import Metal
+import simd
 
 class EffectRenderer {
     let renderPipelineState: MTLRenderPipelineState

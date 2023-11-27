@@ -95,9 +95,10 @@ class RSMPreviewViewController: UIViewController {
             return nil
         }
 
-        let (boundingBox, wrappers) = rsm.calcBoundingBox()
+        let device = MTLCreateSystemDefaultDevice()!
+        let textureLoader = TextureLoader(device: device)
 
-        let instance = rsm.createInstance(
+        let instance = Model.createInstance(
             position: [0, 0, 0],
             rotation: [0, 0, 0],
             scale: [-0.25, -0.25, -0.25],
@@ -105,10 +106,7 @@ class RSMPreviewViewController: UIViewController {
             height: 0
         )
 
-        let device = MTLCreateSystemDefaultDevice()!
-        let textureLoader = TextureLoader(device: device)
-
-        let meshes = rsm.compile(instance: instance, wrappers: wrappers, boundingBox: boundingBox) { textureName in
+        let model = Model(rsm: rsm, instance: instance) { textureName in
             let path = GRF.Path(string: "data\\texture\\" + textureName)
             guard let data = try? grf.contentsOfEntry(at: path) else {
                 return nil
@@ -117,7 +115,7 @@ class RSMPreviewViewController: UIViewController {
             return texture
         }
 
-        guard let renderer = try? RSMRenderer(device: device, meshes: meshes, boundingBox: boundingBox) else {
+        guard let renderer = try? RSMRenderer(device: device, model: model) else {
             return nil
         }
 
