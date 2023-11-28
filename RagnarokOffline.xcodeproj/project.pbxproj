@@ -17,6 +17,8 @@
 		3530982E2B145D6A00F32B62 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982D2B145D6A00F32B62 /* Ground.swift */; };
 		353098302B1480A600F32B62 /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982F2B1480A600F32B62 /* Water.swift */; };
 		353098322B148E4100F32B62 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353098312B148E4100F32B62 /* Model.swift */; };
+		353098352B14EB0100F32B62 /* FileInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353098342B14EB0100F32B62 /* FileInfoViewController.swift */; };
+		353098402B15C75200F32B62 /* jsoneditor in Resources */ = {isa = PBXBuildFile; fileRef = 3530983F2B15C75200F32B62 /* jsoneditor */; };
 		356508C72B104C9500543562 /* EffectShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 356508C62B104C9500543562 /* EffectShaders.metal */; };
 		356508C92B104DCC00543562 /* EffectRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508C82B104DCC00543562 /* EffectRenderer.swift */; };
 		356508CF2B108D1500543562 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508CE2B108D1500543562 /* Effect.swift */; };
@@ -192,6 +194,8 @@
 		3530982D2B145D6A00F32B62 /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
 		3530982F2B1480A600F32B62 /* Water.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Water.swift; sourceTree = "<group>"; };
 		353098312B148E4100F32B62 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		353098342B14EB0100F32B62 /* FileInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileInfoViewController.swift; sourceTree = "<group>"; };
+		3530983F2B15C75200F32B62 /* jsoneditor */ = {isa = PBXFileReference; lastKnownFileType = folder; path = jsoneditor; sourceTree = "<group>"; };
 		356508C52B104AD400543562 /* EffectShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EffectShaderTypes.h; sourceTree = "<group>"; };
 		356508C62B104C9500543562 /* EffectShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = EffectShaders.metal; sourceTree = "<group>"; };
 		356508C82B104DCC00543562 /* EffectRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectRenderer.swift; sourceTree = "<group>"; };
@@ -421,6 +425,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		353098332B14EAE600F32B62 /* FileInfo */ = {
+			isa = PBXGroup;
+			children = (
+				3530983F2B15C75200F32B62 /* jsoneditor */,
+				353098342B14EB0100F32B62 /* FileInfoViewController.swift */,
+			);
+			path = FileInfo;
 			sourceTree = "<group>";
 		};
 		356508C12B104A4900543562 /* Ground */ = {
@@ -744,6 +757,7 @@
 				356508D02B109FF600543562 /* STR */,
 				35B3B99F2A08C01600B4540B /* RSM */,
 				35B3B98F2A08C01600B4540B /* RSW */,
+				353098332B14EAE600F32B62 /* FileInfo */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -785,6 +799,7 @@
 		35B3B9A42A08C01600B4540B /* Renderers */ = {
 			isa = PBXGroup;
 			children = (
+				3504AB8B2A2EFB900029AC46 /* Camera.swift */,
 				35B3B9AC2A08C01600B4540B /* RendererCommon.swift */,
 				356508C42B104AB200543562 /* Effect */,
 				356508C12B104A4900543562 /* Ground */,
@@ -813,7 +828,6 @@
 		35B695ED2A307553006F1904 /* Metal */ = {
 			isa = PBXGroup;
 			children = (
-				3504AB8B2A2EFB900029AC46 /* Camera.swift */,
 				35B695EE2A30763A006F1904 /* Mesh.swift */,
 				35B695F22A3080D9006F1904 /* Object3D.swift */,
 				35B4990B2A1C50B400607EE6 /* Renderer.swift */,
@@ -944,6 +958,7 @@
 				35B3B8DF2A08BEA700B4540B /* Preview Assets.xcassets in Resources */,
 				35B3B9FA2A08C01600B4540B /* wall.jpg in Resources */,
 				35B3B8DC2A08BEA700B4540B /* Assets.xcassets in Resources */,
+				353098402B15C75200F32B62 /* jsoneditor in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1028,6 +1043,7 @@
 				35B3BA0F2A08C01600B4540B /* File.swift in Sources */,
 				35B3BA092A08C01600B4540B /* LuaDecompiler.m in Sources */,
 				35B3BA1A2A08C01600B4540B /* FilesView.swift in Sources */,
+				353098352B14EB0100F32B62 /* FileInfoViewController.swift in Sources */,
 				35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */,
 				35B3BA252A08C01600B4540B /* GroundShaders.metal in Sources */,
 				353098322B148E4100F32B62 /* Model.swift in Sources */,

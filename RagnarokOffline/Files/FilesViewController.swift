@@ -127,6 +127,15 @@ extension FilesViewController: UICollectionViewDelegate {
 
         var actions: [UIAction] = []
 
+        if let file = files.first, file.hasInfo {
+            let fileInfoAction = UIAction(title: "File Info", image: UIImage(systemName: "info.circle")) { _ in
+                let fileInfoViewController = FileInfoViewController(file: file)
+                let navigationController = UINavigationController(rootViewController: fileInfoViewController)
+                self.present(navigationController, animated: true)
+            }
+            actions.append(fileInfoAction)
+        }
+
         if let file = files.first, !file.isDirectory && !file.isArchive {
             let copyAction = UIAction(title: "Copy", image: UIImage(systemName: "doc.on.doc")) { _ in
                 FilePasteboard.shared.copy(file)

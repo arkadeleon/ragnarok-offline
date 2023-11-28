@@ -90,6 +90,28 @@ enum File {
         }
     }
 
+    var hasInfo: Bool {
+        switch contentType {
+        case .gat:
+            true
+        default:
+            false
+        }
+    }
+
+    var info: Encodable? {
+        switch contentType {
+        case .gat:
+            guard let data = contents() else {
+                return nil
+            }
+            let gat = try? GAT(data: data)
+            return gat
+        default:
+            return nil
+        }
+    }
+
     func contents() -> Data? {
         switch self {
         case .url(let url):

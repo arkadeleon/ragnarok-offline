@@ -8,10 +8,11 @@
 
 import Foundation
 
-struct GAT {
-    var header: Header
-    var width: UInt32
-    var height: UInt32
+struct GAT: Encodable {
+    var header: String
+    var version: String
+    var width: Int32
+    var height: Int32
     var cells: [Cell] = []
 
     init(data: Data) throws {
@@ -22,7 +23,14 @@ struct GAT {
             reader.close()
         }
 
-        header = try Header(from: reader)
+        header = try reader.readString(4)
+        guard header == "GRAT" else {
+            throw DocumentError.invalidContents
+        }
+
+        let major: UInt8 = try reader.readInt()
+        let minor: UInt8 = try reader.readInt()
+        version = "\(major).\(minor)"
 
         width = try reader.readInt()
         height = try reader.readInt()
@@ -35,25 +43,7 @@ struct GAT {
 }
 
 extension GAT {
-    struct Header {
-        var magic: String
-        var version: String
-
-        init(from reader: BinaryReader) throws {
-            magic = try reader.readString(4)
-            guard magic == "GRAT" else {
-                throw DocumentError.invalidContents
-            }
-
-            let major: UInt8 = try reader.readInt()
-            let minor: UInt8 = try reader.readInt()
-            version = "\(major).\(minor)"
-        }
-    }
-}
-
-extension GAT {
-    enum CellType: Int32 {
+    enum CellType: Int32, Encodable {
         case walkable = 0
         case noWalkable = 1
         case noWalkableNoSnipable = 2
@@ -63,7 +53,7 @@ extension GAT {
         case walkable3 = 6
     }
 
-    struct Cell {
+    struct Cell: Encodable {
         var bottomLeft: Float
         var bottomRight: Float
         var topLeft: Float
