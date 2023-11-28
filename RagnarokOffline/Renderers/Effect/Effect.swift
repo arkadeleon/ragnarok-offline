@@ -57,7 +57,7 @@ struct Effect {
                     continue
                 }
 
-                let textureName = layer.textureNames[Int(from.textureIndex)]
+                let textureName = layer.textures[Int(from.textureIndex)]
                 let texture = textureProvider(textureName)
 
                 // Static frame (or frame that can't be updated)

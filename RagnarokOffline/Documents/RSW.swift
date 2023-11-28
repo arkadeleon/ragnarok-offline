@@ -15,7 +15,7 @@ struct RSW: Encodable {
     var files: Files
     var water: Water
     var light: Light
-    var ground: Ground
+    var boundingBox: BoundingBox
     var models: [Object.Model] = []
     var lights: [Object.Light] = []
     var sounds: [Object.Sound] = []
@@ -54,7 +54,7 @@ struct RSW: Encodable {
 
         light = try Light(from: reader, version: version)
 
-        ground = try Ground(from: reader, version: version)
+        boundingBox = try BoundingBox(from: reader, version: version)
 
         let objectCount: Int32 = try reader.readInt()
 
@@ -201,7 +201,7 @@ extension RSW {
 }
 
 extension RSW {
-    struct Ground: Encodable {
+    struct BoundingBox: Encodable {
         var top: Int32
         var bottom: Int32
         var left: Int32
@@ -265,15 +265,25 @@ extension RSW {
         }
 
         struct Light: Encodable {
+            struct Diffuse: Encodable {
+                var red: Float
+                var green: Float
+                var blue: Float
+            }
+
             var name: String
             var position: simd_float3
-            var color: simd_int3
+            var diffuse: Diffuse
             var range: Float
 
             init(from reader: BinaryReader, version: String) throws {
-                name = try reader.readString(80)
+                name = try reader.readString(80, encoding: .koreanEUC)
                 position = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
-                color = try [reader.readInt(), reader.readInt(), reader.readInt()]
+                diffuse = try Diffuse(
+                    red: reader.readFloat(),
+                    green: reader.readFloat(),
+                    blue: reader.readFloat()
+                )
                 range = try reader.readFloat()
             }
         }
@@ -289,7 +299,7 @@ extension RSW {
             var cycle: Float
 
             init(from reader: BinaryReader, version: String) throws {
-                name = try reader.readString(80)
+                name = try reader.readString(80, encoding: .koreanEUC)
                 waveName = try reader.readString(80)
                 position = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
                 volume = try reader.readFloat()
@@ -305,14 +315,19 @@ extension RSW {
             var position: simd_float3
             var id: Int32
             var delay: Float
-            var param: simd_float4
+            var parameters: simd_float4
 
             init(from reader: BinaryReader, version: String) throws {
-                name = try reader.readString(80)
+                name = try reader.readString(80, encoding: .koreanEUC)
                 position = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
                 id = try reader.readInt()
                 delay = try reader.readFloat() * 10
-                param = try [reader.readFloat(), reader.readFloat(), reader.readFloat(), reader.readFloat()]
+                parameters = try [
+                    reader.readFloat(),
+                    reader.readFloat(),
+                    reader.readFloat(),
+                    reader.readFloat()
+                ]
             }
         }
     }

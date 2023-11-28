@@ -27,9 +27,8 @@ enum FileType: String {
     case gnd
     case rsw
     case str
-    case xxx
 
-    init(rawValue: String) {
+    init?(rawValue: String) {
         switch rawValue.lowercased() {
         case "txt":
             self = .txt
@@ -72,7 +71,7 @@ enum FileType: String {
         case "str":
             self = .str
         default:
-            self = .xxx
+            return nil
         }
     }
 }

@@ -93,6 +93,22 @@ class FilesViewController: UIViewController {
 
         await diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
+
+    private func presentFileInfoViewController(file: File) {
+        let fileInfoViewController = FileInfoViewController(file: file)
+        let navigationController = UINavigationController(rootViewController: fileInfoViewController)
+        present(navigationController, animated: true)
+    }
+
+    private func presentFilePreviewViewController(file: File) {
+        let files = diffableDataSource.snapshot().itemIdentifiers.filter({ $0.contentType != nil })
+
+        let pageViewController = FilePreviewPageViewController(file: file, files: files)
+        let navigationController = UINavigationController(rootViewController: pageViewController)
+        navigationController.modalTransitionStyle = .coverVertical
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
+    }
 }
 
 extension FilesViewController: UICollectionViewDelegate {
@@ -104,21 +120,8 @@ extension FilesViewController: UICollectionViewDelegate {
         if file.isDirectory || file.isArchive {
             let filesViewController = FilesViewController(file: file)
             navigationController?.pushViewController(filesViewController, animated: true)
-        } else if let fileType = file.contentType, fileType != .xxx {
-            let files = diffableDataSource.snapshot().itemIdentifiers
-                .filter { file in
-                    if let fileType = file.contentType, fileType != .xxx {
-                        true
-                    } else {
-                        false
-                    }
-                }
-
-            let pageViewController = FilePreviewPageViewController(file: file, files: files)
-            let navigationController = UINavigationController(rootViewController: pageViewController)
-            navigationController.modalTransitionStyle = .coverVertical
-            navigationController.modalPresentationStyle = .fullScreen
-            present(navigationController, animated: true)
+        } else if file.contentType != nil {
+            presentFilePreviewViewController(file: file)
         }
     }
 
@@ -129,11 +132,16 @@ extension FilesViewController: UICollectionViewDelegate {
 
         if let file = files.first, file.hasInfo {
             let fileInfoAction = UIAction(title: "File Info", image: UIImage(systemName: "info.circle")) { _ in
-                let fileInfoViewController = FileInfoViewController(file: file)
-                let navigationController = UINavigationController(rootViewController: fileInfoViewController)
-                self.present(navigationController, animated: true)
+                self.presentFileInfoViewController(file: file)
             }
             actions.append(fileInfoAction)
+        }
+
+        if let file = files.first, file.contentType != nil {
+            let previewAction = UIAction(title: "Preview", image: UIImage(systemName: "eye")) { _ in
+                self.presentFilePreviewViewController(file: file)
+            }
+            actions.append(previewAction)
         }
 
         if let file = files.first, !file.isDirectory && !file.isArchive {

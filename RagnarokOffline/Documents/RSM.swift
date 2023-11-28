@@ -143,8 +143,8 @@ extension RSM {
                 let textureCount: Int32 = try reader.readInt()
                 for textureIndex in 0..<textureCount {
                     let textureNameLength: Int32 = try reader.readInt()
-                    let textureName = try reader.readString(Int(textureNameLength))
-                    textures.append(textureName)
+                    let texture = try reader.readString(Int(textureNameLength))
+                    textures.append(texture)
                     textureIndexes.append(textureIndex)
                 }
             } else {

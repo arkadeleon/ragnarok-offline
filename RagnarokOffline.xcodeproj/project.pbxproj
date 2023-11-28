@@ -436,6 +436,24 @@
 			path = FileInfo;
 			sourceTree = "<group>";
 		};
+		353098412B161C3800F32B62 /* FilePreview */ = {
+			isa = PBXGroup;
+			children = (
+				356BF6852B05FF59005B67F7 /* FilePreviewPageViewController.swift */,
+				356BF6872B060243005B67F7 /* FilePreviewViewController.swift */,
+				3511C1CD2B0A5313006DD639 /* Text */,
+				35B3B9972A08C01600B4540B /* Image */,
+				35B3B99B2A08C01600B4540B /* Audio */,
+				356BF6802B04F51E005B67F7 /* ACT */,
+				3511C1CF2B0A5341006DD639 /* GAT */,
+				3511C1CE2B0A531C006DD639 /* SPR */,
+				356508D02B109FF600543562 /* STR */,
+				35B3B99F2A08C01600B4540B /* RSM */,
+				35B3B98F2A08C01600B4540B /* RSW */,
+			);
+			path = FilePreview;
+			sourceTree = "<group>";
+		};
 		356508C12B104A4900543562 /* Ground */ = {
 			isa = PBXGroup;
 			children = (
@@ -746,17 +764,7 @@
 				35B3B99A2A08C01600B4540B /* FilesView.swift */,
 				356BF6892B064965005B67F7 /* FilesViewController.swift */,
 				356BF68B2B06497D005B67F7 /* FileCollectionViewCell.swift */,
-				356BF6852B05FF59005B67F7 /* FilePreviewPageViewController.swift */,
-				356BF6872B060243005B67F7 /* FilePreviewViewController.swift */,
-				3511C1CD2B0A5313006DD639 /* Text */,
-				35B3B9972A08C01600B4540B /* Image */,
-				35B3B99B2A08C01600B4540B /* Audio */,
-				356BF6802B04F51E005B67F7 /* ACT */,
-				3511C1CF2B0A5341006DD639 /* GAT */,
-				3511C1CE2B0A531C006DD639 /* SPR */,
-				356508D02B109FF600543562 /* STR */,
-				35B3B99F2A08C01600B4540B /* RSM */,
-				35B3B98F2A08C01600B4540B /* RSW */,
+				353098412B161C3800F32B62 /* FilePreview */,
 				353098332B14EAE600F32B62 /* FileInfo */,
 			);
 			path = Files;

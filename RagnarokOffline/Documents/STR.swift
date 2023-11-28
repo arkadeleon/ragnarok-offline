@@ -29,8 +29,8 @@ struct STR: Encodable {
             throw DocumentError.invalidContents
         }
 
-        let minor: UInt8 = try reader.readInt()
         let major: UInt8 = try reader.readInt()
+        let minor: UInt8 = try reader.readInt()
         version = "\(major).\(minor)"
 
         _ = try reader.readBytes(2)
@@ -51,14 +51,14 @@ struct STR: Encodable {
 
 extension STR {
     struct Layer: Encodable {
-        var textureNames: [String] = []
+        var textures: [String] = []
         var keyframes: [Keyframe] = []
 
         init(from reader: BinaryReader) throws {
             let textureCount: Int32 = try reader.readInt()
             for _ in 0..<textureCount {
-                let textureName = try reader.readString(128)
-                textureNames.append(textureName)
+                let texture = try reader.readString(128)
+                textures.append(texture)
             }
 
             let keyframeCount: Int32 = try reader.readInt()
