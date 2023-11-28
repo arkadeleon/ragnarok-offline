@@ -9,7 +9,7 @@
 import Foundation
 import simd
 
-struct STR {
+struct STR: Encodable {
     var header: String
     var version: String
     var fps: Int32
@@ -50,7 +50,7 @@ struct STR {
 }
 
 extension STR {
-    struct Layer {
+    struct Layer: Encodable {
         var textureNames: [String] = []
         var keyframes: [Keyframe] = []
 
@@ -71,7 +71,7 @@ extension STR {
 }
 
 extension STR {
-    struct Keyframe {
+    struct Keyframe: Encodable {
         var frameIndex: Int32
         var type: Int32
         var position: simd_float2

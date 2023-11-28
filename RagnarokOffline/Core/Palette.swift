@@ -8,7 +8,7 @@
 
 import CoreGraphics
 
-struct Palette {
+struct Palette: Encodable {
     var colors: [Color] = []
 
     init(data: Data) throws {
@@ -27,7 +27,7 @@ struct Palette {
 }
 
 extension Palette {
-    struct Color {
+    struct Color: Encodable {
         var red: UInt8
         var green: UInt8
         var blue: UInt8

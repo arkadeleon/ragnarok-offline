@@ -8,8 +8,9 @@
 
 import Foundation
 
-struct SPR {
-    var header: Header
+struct SPR: Encodable {
+    var header: String
+    var version: String
     var sprites: [Sprite] = []
     var palette: Palette?
 
@@ -21,18 +22,25 @@ struct SPR {
             reader.close()
         }
 
-        header = try Header(from: reader)
+        header = try reader.readString(2)
+        guard header == "SP" else {
+            throw DocumentError.invalidContents
+        }
+
+        let minor: UInt8 = try reader.readInt()
+        let major: UInt8 = try reader.readInt()
+        version = "\(major).\(minor)"
 
         let indexedSpriteCount: UInt16 = try reader.readInt()
 
         let rgbaSpriteCount: UInt16
-        if header.version > "1.1" {
+        if version > "1.1" {
             rgbaSpriteCount = try reader.readInt()
         } else {
             rgbaSpriteCount = 0
         }
 
-        if header.version < "2.1" {
+        if version < "2.1" {
             for _ in 0..<indexedSpriteCount {
                 let sprite = try Sprite.indexedSprite(from: reader)
                 sprites.append(sprite)
@@ -49,7 +57,7 @@ struct SPR {
             sprites.append(sprite)
         }
 
-        if header.version > "1.0" {
+        if version > "1.0" {
             try stream.seek(-1024, origin: .end)
             let paletteData = try reader.readBytes(1024)
             palette = try Palette(data: Data(paletteData))
@@ -58,30 +66,12 @@ struct SPR {
 }
 
 extension SPR {
-    struct Header {
-        var magic: String
-        var version: String
-
-        init(from reader: BinaryReader) throws {
-            magic = try reader.readString(2)
-            guard magic == "SP" else {
-                throw DocumentError.invalidContents
-            }
-
-            let minor: UInt8 = try reader.readInt()
-            let major: UInt8 = try reader.readInt()
-            version = "\(major).\(minor)"
-        }
-    }
-}
-
-extension SPR {
-    enum SpriteType: Int {
+    enum SpriteType: Int, Encodable {
         case indexed = 0
         case rgba = 1
     }
 
-    struct Sprite {
+    struct Sprite: Encodable {
         var type: SpriteType
         var width: UInt16
         var height: UInt16

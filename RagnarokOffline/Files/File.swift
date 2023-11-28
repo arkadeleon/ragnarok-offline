@@ -92,7 +92,7 @@ enum File {
 
     var hasInfo: Bool {
         switch contentType {
-        case .gat:
+        case .act, .gat, .gnd, .rsw, .spr, .str:
             true
         default:
             false
@@ -101,12 +101,42 @@ enum File {
 
     var info: Encodable? {
         switch contentType {
+        case .act:
+            guard let data = contents() else {
+                return nil
+            }
+            let act = try? ACT(data: data)
+            return act
         case .gat:
             guard let data = contents() else {
                 return nil
             }
             let gat = try? GAT(data: data)
             return gat
+        case .gnd:
+            guard let data = contents() else {
+                return nil
+            }
+            let gnd = try? GND(data: data)
+            return gnd
+        case .rsw:
+            guard let data = contents() else {
+                return nil
+            }
+            let rsw = try? RSW(data: data)
+            return rsw
+        case .spr:
+            guard let data = contents() else {
+                return nil
+            }
+            let spr = try? SPR(data: data)
+            return spr
+        case .str:
+            guard let data = contents() else {
+                return nil
+            }
+            let str = try? STR(data: data)
+            return str
         default:
             return nil
         }

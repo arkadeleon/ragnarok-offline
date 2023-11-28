@@ -8,8 +8,9 @@
 
 import Foundation
 
-struct ACT {
-    var header: Header
+struct ACT: Encodable {
+    var header: String
+    var version: String
     var actions: [Action] = []
     var sounds: [String] = []
 
@@ -21,7 +22,14 @@ struct ACT {
             reader.close()
         }
 
-        header = try Header(from: reader)
+        header = try reader.readString(2)
+        guard header == "AC" else {
+            throw DocumentError.invalidContents
+        }
+
+        let minor: UInt8 = try reader.readInt()
+        let major: UInt8 = try reader.readInt()
+        version = "\(major).\(minor)"
 
         let actionCount: UInt16 = try reader.readInt()
 
@@ -29,18 +37,18 @@ struct ACT {
         _ = try reader.readBytes(10)
 
         for _ in 0..<actionCount {
-            let action = try Action(from: reader, version: header.version)
+            let action = try Action(from: reader, version: version)
             actions.append(action)
         }
 
-        if header.version >= "2.1" {
+        if version >= "2.1" {
             let soundCount: Int32 = try reader.readInt()
             for _ in 0..<soundCount {
                 let sound = try reader.readString(40)
                 sounds.append(sound)
             }
 
-            if header.version >= "2.2" {
+            if version >= "2.2" {
                 for i in 0..<actions.count {
                     actions[i].animationSpeed = try reader.readFloat()
                 }
@@ -50,25 +58,7 @@ struct ACT {
 }
 
 extension ACT {
-    struct Header {
-        var magic: String
-        var version: String
-
-        init(from reader: BinaryReader) throws {
-            magic = try reader.readString(2)
-            guard magic == "AC" else {
-                throw DocumentError.invalidContents
-            }
-
-            let minor: UInt8 = try reader.readInt()
-            let major: UInt8 = try reader.readInt()
-            version = "\(major).\(minor)"
-        }
-    }
-}
-
-extension ACT {
-    struct Action {
+    struct Action: Encodable {
         var frames: [Frame] = []
         var animationSpeed: Float = 6
 
@@ -83,7 +73,7 @@ extension ACT {
 }
 
 extension ACT {
-    struct Frame {
+    struct Frame: Encodable {
         var layers: [Layer] = []
         var soundIndex: Int32 = -1
         var anchorPoints: [AnchorPoint] = []
@@ -114,7 +104,7 @@ extension ACT {
 }
 
 extension ACT {
-    struct Layer {
+    struct Layer: Encodable {
         var offset: simd_int2
         var spriteIndex: Int32
         var isMirrored: Int32
@@ -154,7 +144,7 @@ extension ACT {
 }
 
 extension ACT {
-    struct AnchorPoint {
+    struct AnchorPoint: Encodable {
         var x: Int32
         var y: Int32
 

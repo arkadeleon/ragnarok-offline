@@ -8,14 +8,15 @@
 
 import Foundation
 
-struct GND {
-    var header: Header
-    var width: UInt32
-    var height: UInt32
+struct GND: Encodable {
+    var header: String
+    var version: String
+    var width: Int32
+    var height: Int32
     var zoom: Float
 
     var textures: [String] = []
-    var textureIndexes: [UInt16] = []
+    var textureIndexes: [Int16] = []
 
     var lightmap: GNDLightmap
 
@@ -31,7 +32,14 @@ struct GND {
             reader.close()
         }
 
-        header = try Header(from: reader)
+        header = try reader.readString(4)
+        guard header == "GRGN" else {
+            throw DocumentError.invalidContents
+        }
+
+        let major: UInt8 = try reader.readInt()
+        let minor: UInt8 = try reader.readInt()
+        version = "\(major).\(minor)"
 
         width = try reader.readInt()
         height = try reader.readInt()
@@ -49,7 +57,7 @@ struct GND {
                 index = textures.count - 1
             }
 
-            textureIndexes.append(UInt16(index))
+            textureIndexes.append(Int16(index))
         }
 
         let count: UInt32 = try reader.readInt()
@@ -79,25 +87,7 @@ struct GND {
 }
 
 extension GND {
-    struct Header {
-        var magic: String
-        var version: String
-
-        init(from reader: BinaryReader) throws {
-            magic = try reader.readString(4)
-            guard magic == "GRGN" else {
-                throw DocumentError.invalidContents
-            }
-
-            let major: UInt8 = try reader.readInt()
-            let minor: UInt8 = try reader.readInt()
-            version = "\(major).\(minor)"
-        }
-    }
-}
-
-extension GND {
-    struct GNDLightmap {
+    struct GNDLightmap: Encodable {
         var per_cell: Int32
         var count: UInt32
         var data: [UInt8]
@@ -105,9 +95,7 @@ extension GND {
 }
 
 extension GND {
-    struct Tile {
-        typealias Color = (alpha: UInt8, red: UInt8, green: UInt8, blue: UInt8)
-
+    struct Tile: Encodable {
         var u1: Float
         var u2: Float
         var u3: Float
@@ -118,9 +106,9 @@ extension GND {
         var v4: Float
         var textureIndex: Int16
         var lightmapIndex: UInt16
-        var color: Color
+        var color: Palette.Color
 
-        init(from reader: BinaryReader, textures: [String], textureIndexes: [UInt16]) throws {
+        init(from reader: BinaryReader, textures: [String], textureIndexes: [Int16]) throws {
             u1 = try reader.readFloat()
             u2 = try reader.readFloat()
             u3 = try reader.readFloat()
@@ -137,13 +125,13 @@ extension GND {
             let red: UInt8 = try reader.readInt()
             let green: UInt8 = try reader.readInt()
             let blue: UInt8 = try reader.readInt()
-            color = (alpha, red, green, blue)
+            color = Palette.Color(red: red, green: green, blue: blue, alpha: alpha)
         }
     }
 }
 
 extension GND {
-    struct Cube {
+    struct Cube: Encodable {
         var bottomLeft: Float
         var bottomRight: Float
         var topLeft: Float

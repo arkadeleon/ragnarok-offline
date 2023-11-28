@@ -26,7 +26,7 @@ extension SPR {
             let bitmapInfo = CGBitmapInfo(rawValue: byteOrder.rawValue | alphaInfo.rawValue)
 
             var data = sprite.data
-            if header.version >= "2.1" {
+            if version >= "2.1" {
                 data = RLE().decompress(data)
             }
 

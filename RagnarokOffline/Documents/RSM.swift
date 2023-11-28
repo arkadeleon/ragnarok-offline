@@ -10,7 +10,8 @@ import Foundation
 import simd
 
 struct RSM {
-    var header: Header
+    var header: String
+    var version: String
     var animationLength: Int32
     var shadeType: Int32
     var alpha: UInt8
@@ -32,20 +33,27 @@ struct RSM {
             reader.close()
         }
 
-        header = try Header(from: reader)
+        header = try reader.readString(4)
+        guard header == "GRSM" else {
+            throw DocumentError.invalidContents
+        }
+
+        let major: UInt8 = try reader.readInt()
+        let minor: UInt8 = try reader.readInt()
+        version = "\(major).\(minor)"
 
         animationLength = try reader.readInt()
         shadeType = try reader.readInt()
 
-        if header.version >= "1.4" {
+        if version >= "1.4" {
             alpha = try reader.readInt()
         } else {
             alpha = 255
         }
 
-        if header.version >= "2.3" {
+        if version >= "2.3" {
 
-        } else if header.version >= "2.2" {
+        } else if version >= "2.2" {
 
         } else {
             // Reserved
@@ -60,14 +68,14 @@ struct RSM {
             let mainNodeName = try reader.readString(40)
             let nodeCount: Int32 = try reader.readInt()
             for _ in 0..<nodeCount {
-                let node = try Node(from: reader, version: header.version)
+                let node = try Node(from: reader, version: version)
                 nodes.append(node)
             }
 
             mainNode = nodes.first(where: { $0.name == mainNodeName }) ?? nodes.first
         }
 
-        if header.version < "1.6" {
+        if version < "1.6" {
             let scaleKeyframeCount: Int32 = try reader.readInt()
             for _ in 0..<scaleKeyframeCount {
                 let keyframe = try ScaleKeyframe(from: reader)
@@ -78,27 +86,9 @@ struct RSM {
         if reader.stream.length > reader.stream.position {
             let volumeBoxCount: Int32 = try reader.readInt()
             for _ in 0..<volumeBoxCount {
-                let volumeBox = try VolumeBox(from: reader, version: header.version)
+                let volumeBox = try VolumeBox(from: reader, version: version)
                 volumeBoxes.append(volumeBox)
             }
-        }
-    }
-}
-
-extension RSM {
-    struct Header {
-        var magic: String
-        var version: String
-
-        init(from reader: BinaryReader) throws {
-            magic = try reader.readString(4)
-            guard magic == "GRSM" else {
-                throw DocumentError.invalidContents
-            }
-
-            let major: UInt8 = try reader.readInt()
-            let minor: UInt8 = try reader.readInt()
-            version = "\(major).\(minor)"
         }
     }
 }

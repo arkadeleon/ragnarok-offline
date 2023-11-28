@@ -9,8 +9,9 @@
 import Foundation
 import simd
 
-struct RSW {
-    var header: Header
+struct RSW: Encodable {
+    var header: String
+    var version: String
     var files: Files
     var water: Water
     var light: Light
@@ -28,25 +29,32 @@ struct RSW {
             reader.close()
         }
 
-        header = try Header(from: reader)
+        header = try reader.readString(4)
+        guard header == "GRSW" else {
+            throw DocumentError.invalidContents
+        }
 
-        if header.version >= "2.5" {
+        let major: UInt8 = try reader.readInt()
+        let minor: UInt8 = try reader.readInt()
+        version = "\(major).\(minor)"
+
+        if version >= "2.5" {
             // Build number
             _ = try reader.readInt() as UInt32
         }
 
-        if header.version >= "2.2" {
+        if version >= "2.2" {
             // Unknown data
             _ = try reader.readInt() as UInt8
         }
 
-        files = try Files(from: reader, version: header.version)
+        files = try Files(from: reader, version: version)
 
-        water = try Water(from: reader, version: header.version)
+        water = try Water(from: reader, version: version)
 
-        light = try Light(from: reader, version: header.version)
+        light = try Light(from: reader, version: version)
 
-        ground = try Ground(from: reader, version: header.version)
+        ground = try Ground(from: reader, version: version)
 
         let objectCount: Int32 = try reader.readInt()
 
@@ -54,16 +62,16 @@ struct RSW {
             let objectType = try Object.ObjectType(rawValue: reader.readInt())
             switch objectType {
             case .model:
-                let model = try Object.Model(from: reader, version: header.version)
+                let model = try Object.Model(from: reader, version: version)
                 models.append(model)
             case .light:
-                let light = try Object.Light(from: reader, version: header.version)
+                let light = try Object.Light(from: reader, version: version)
                 lights.append(light)
             case .sound:
-                let sound = try Object.Sound(from: reader, version: header.version)
+                let sound = try Object.Sound(from: reader, version: version)
                 sounds.append(sound)
             case .effect:
-                let effect = try Object.Effect(from: reader, version: header.version)
+                let effect = try Object.Effect(from: reader, version: version)
                 effects.append(effect)
             default:
                 break
@@ -73,25 +81,7 @@ struct RSW {
 }
 
 extension RSW {
-    struct Header {
-        var magic: String
-        var version: String
-
-        init(from reader: BinaryReader) throws {
-            magic = try reader.readString(4)
-            guard magic == "GRSW" else {
-                throw DocumentError.invalidContents
-            }
-
-            let major: UInt8 = try reader.readInt()
-            let minor: UInt8 = try reader.readInt()
-            version = "\(major).\(minor)"
-        }
-    }
-}
-
-extension RSW {
-    struct Files {
+    struct Files: Encodable {
         var ini: String
         var gnd: String
         var gat: String
@@ -114,7 +104,7 @@ extension RSW {
 }
 
 extension RSW {
-    struct Water {
+    struct Water: Encodable {
         var level: Float
         var type: Int32
         var waveHeight: Float
@@ -161,9 +151,18 @@ extension RSW {
 }
 
 extension RSW {
-    struct Light {
-        typealias Diffuse = (red: Float, green: Float, blue: Float)
-        typealias Ambient = (red: Float, green: Float, blue: Float)
+    struct Light: Encodable {
+        struct Diffuse: Encodable {
+            var red: Float
+            var green: Float
+            var blue: Float
+        }
+
+        struct Ambient: Encodable {
+            var red: Float
+            var green: Float
+            var blue: Float
+        }
 
         var longitude: Int32
         var latitude: Int32
@@ -175,13 +174,21 @@ extension RSW {
             if version >= "1.5" {
                 longitude = try reader.readInt()
                 latitude = try reader.readInt()
-                diffuse = try (reader.readFloat(), reader.readFloat(), reader.readFloat())
-                ambient = try (reader.readFloat(), reader.readFloat(), reader.readFloat())
+                diffuse = try Diffuse(
+                    red: reader.readFloat(),
+                    green: reader.readFloat(),
+                    blue: reader.readFloat()
+                )
+                ambient = try Ambient(
+                    red: reader.readFloat(),
+                    green: reader.readFloat(),
+                    blue: reader.readFloat()
+                )
             } else {
                 longitude = 45
                 latitude = 45
-                diffuse = (1, 1, 1)
-                ambient = (0.3, 0.3, 0.3)
+                diffuse = Diffuse(red: 1, green: 1, blue: 1)
+                ambient = Ambient(red: 0.3, green: 0.3, blue: 0.3)
             }
 
             if version >= "1.7" {
@@ -194,7 +201,7 @@ extension RSW {
 }
 
 extension RSW {
-    struct Ground {
+    struct Ground: Encodable {
         var top: Int32
         var bottom: Int32
         var left: Int32
@@ -225,7 +232,7 @@ extension RSW {
             case effect = 4
         }
 
-        struct Model {
+        struct Model: Encodable {
             var name: String
             var animationType: Int32
             var animationSpeed: Float
@@ -257,7 +264,7 @@ extension RSW {
             }
         }
 
-        struct Light {
+        struct Light: Encodable {
             var name: String
             var position: simd_float3
             var color: simd_int3
@@ -271,7 +278,7 @@ extension RSW {
             }
         }
 
-        struct Sound {
+        struct Sound: Encodable {
             var name: String
             var waveName: String
             var position: simd_float3
@@ -293,7 +300,7 @@ extension RSW {
             }
         }
 
-        struct Effect {
+        struct Effect: Encodable {
             var name: String
             var position: simd_float3
             var id: Int32
