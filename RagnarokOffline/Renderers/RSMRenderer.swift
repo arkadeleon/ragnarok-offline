@@ -63,16 +63,20 @@ class RSMRenderer: NSObject, Renderer {
 
         let normalMatrix = simd_float3x3(modelMatrix).inverse.transpose
 
+        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
+            return
+        }
+
         modelRenderer.render(
             atTime: time,
-            device: device,
-            renderPassDescriptor: renderPassDescriptor,
-            commandBuffer: commandBuffer,
+            renderCommandEncoder: renderCommandEncoder,
             modelMatrix: modelMatrix,
             viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,
             normalMatrix: normalMatrix
         )
+
+        renderCommandEncoder.endEncoding()
 
         commandBuffer.present(view.currentDrawable!)
         commandBuffer.commit()

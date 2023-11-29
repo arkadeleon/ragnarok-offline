@@ -58,15 +58,19 @@ class STRRenderer: NSObject, Renderer {
         let viewMatrix = camera.viewMatrix
         let projectionMatrix = camera.projectionMatrix
 
+        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
+            return
+        }
+
         effectRenderer.render(
             atTime: time,
-            device: device,
-            renderPassDescriptor: renderPassDescriptor,
-            commandBuffer: commandBuffer,
+            renderCommandEncoder: renderCommandEncoder,
             modelMatrix: modelMatrix,
             viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix
         )
+
+        renderCommandEncoder.endEncoding()
 
         commandBuffer.present(view.currentDrawable!)
         commandBuffer.commit()

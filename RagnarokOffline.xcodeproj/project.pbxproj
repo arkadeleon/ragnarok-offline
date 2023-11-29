@@ -396,30 +396,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3511C1CD2B0A5313006DD639 /* Text */ = {
-			isa = PBXGroup;
-			children = (
-				35B3B98B2A08C01600B4540B /* TextDocumentView.swift */,
-			);
-			path = Text;
-			sourceTree = "<group>";
-		};
-		3511C1CE2B0A531C006DD639 /* SPR */ = {
-			isa = PBXGroup;
-			children = (
-				35B3B98A2A08C01600B4540B /* SpriteDocumentView.swift */,
-			);
-			path = SPR;
-			sourceTree = "<group>";
-		};
-		3511C1CF2B0A5341006DD639 /* GAT */ = {
-			isa = PBXGroup;
-			children = (
-				3511C1D02B0A535A006DD639 /* GATPreviewViewController.swift */,
-			);
-			path = GAT;
-			sourceTree = "<group>";
-		};
 		35270D252A5FE9470001A8BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -441,15 +417,16 @@
 			children = (
 				356BF6852B05FF59005B67F7 /* FilePreviewPageViewController.swift */,
 				356BF6872B060243005B67F7 /* FilePreviewViewController.swift */,
-				3511C1CD2B0A5313006DD639 /* Text */,
-				35B3B9972A08C01600B4540B /* Image */,
-				35B3B99B2A08C01600B4540B /* Audio */,
-				356BF6802B04F51E005B67F7 /* ACT */,
-				3511C1CF2B0A5341006DD639 /* GAT */,
-				3511C1CE2B0A531C006DD639 /* SPR */,
-				356508D02B109FF600543562 /* STR */,
-				35B3B99F2A08C01600B4540B /* RSM */,
-				35B3B98F2A08C01600B4540B /* RSW */,
+				35B3B98B2A08C01600B4540B /* TextDocumentView.swift */,
+				35B3B9992A08C01600B4540B /* ImageDocumentViewController.swift */,
+				35B3B99C2A08C01600B4540B /* AudioDocumentViewController.swift */,
+				356BF6812B04F54A005B67F7 /* ACTPreviewViewController.swift */,
+				356BF6832B04F569005B67F7 /* ACTActionCollectionViewCell.swift */,
+				3511C1D02B0A535A006DD639 /* GATPreviewViewController.swift */,
+				35B3B98A2A08C01600B4540B /* SpriteDocumentView.swift */,
+				3511C1D42B0AF9B1006DD639 /* RSMPreviewViewController.swift */,
+				3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */,
+				356508D32B10A02D00543562 /* STRPreviewViewController.swift */,
 			);
 			path = FilePreview;
 			sourceTree = "<group>";
@@ -496,24 +473,6 @@
 				356508C52B104AD400543562 /* EffectShaderTypes.h */,
 			);
 			path = Effect;
-			sourceTree = "<group>";
-		};
-		356508D02B109FF600543562 /* STR */ = {
-			isa = PBXGroup;
-			children = (
-				356508D12B10A02000543562 /* STRRenderer.swift */,
-				356508D32B10A02D00543562 /* STRPreviewViewController.swift */,
-			);
-			path = STR;
-			sourceTree = "<group>";
-		};
-		356BF6802B04F51E005B67F7 /* ACT */ = {
-			isa = PBXGroup;
-			children = (
-				356BF6812B04F54A005B67F7 /* ACTPreviewViewController.swift */,
-				356BF6832B04F569005B67F7 /* ACTActionCollectionViewCell.swift */,
-			);
-			path = ACT;
 			sourceTree = "<group>";
 		};
 		35B3B8CB2A08BEA600B4540B = {
@@ -770,45 +729,14 @@
 			path = Files;
 			sourceTree = "<group>";
 		};
-		35B3B98F2A08C01600B4540B /* RSW */ = {
-			isa = PBXGroup;
-			children = (
-				35B3B9902A08C01600B4540B /* RSWRenderer.swift */,
-				3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */,
-			);
-			path = RSW;
-			sourceTree = "<group>";
-		};
-		35B3B9972A08C01600B4540B /* Image */ = {
-			isa = PBXGroup;
-			children = (
-				35B3B9992A08C01600B4540B /* ImageDocumentViewController.swift */,
-			);
-			path = Image;
-			sourceTree = "<group>";
-		};
-		35B3B99B2A08C01600B4540B /* Audio */ = {
-			isa = PBXGroup;
-			children = (
-				35B3B99C2A08C01600B4540B /* AudioDocumentViewController.swift */,
-			);
-			path = Audio;
-			sourceTree = "<group>";
-		};
-		35B3B99F2A08C01600B4540B /* RSM */ = {
-			isa = PBXGroup;
-			children = (
-				35B3B9A22A08C01600B4540B /* RSMRenderer.swift */,
-				3511C1D42B0AF9B1006DD639 /* RSMPreviewViewController.swift */,
-			);
-			path = RSM;
-			sourceTree = "<group>";
-		};
 		35B3B9A42A08C01600B4540B /* Renderers */ = {
 			isa = PBXGroup;
 			children = (
 				3504AB8B2A2EFB900029AC46 /* Camera.swift */,
 				35B3B9AC2A08C01600B4540B /* RendererCommon.swift */,
+				35B3B9A22A08C01600B4540B /* RSMRenderer.swift */,
+				35B3B9902A08C01600B4540B /* RSWRenderer.swift */,
+				356508D12B10A02000543562 /* STRRenderer.swift */,
 				356508C42B104AB200543562 /* Effect */,
 				356508C12B104A4900543562 /* Ground */,
 				356508C22B104A5400543562 /* Model */,

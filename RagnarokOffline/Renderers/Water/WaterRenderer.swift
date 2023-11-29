@@ -65,12 +65,12 @@ class WaterRenderer {
     }
 
     func render(atTime time: CFTimeInterval,
-                device: MTLDevice,
-                renderPassDescriptor: MTLRenderPassDescriptor,
-                commandBuffer: MTLCommandBuffer,
+                renderCommandEncoder: MTLRenderCommandEncoder,
                 modelMatrix: simd_float4x4,
                 viewMatrix: simd_float4x4,
                 projectionMatrix: simd_float4x4) {
+
+        let device = renderCommandEncoder.device
 
         let frame = Float(time * 60)
 
@@ -104,10 +104,6 @@ class WaterRenderer {
             return
         }
 
-        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
-            return
-        }
-
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
@@ -120,7 +116,5 @@ class WaterRenderer {
         renderCommandEncoder.setFragmentTexture(texture, index: 0)
 
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: water.mesh.vertices.count)
-
-        renderCommandEncoder.endEncoding()
     }
 }

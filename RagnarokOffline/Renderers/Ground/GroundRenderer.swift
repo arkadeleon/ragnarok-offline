@@ -58,13 +58,13 @@ class GroundRenderer {
     }
 
     func render(atTime time: CFTimeInterval,
-                device: MTLDevice,
-                renderPassDescriptor: MTLRenderPassDescriptor,
-                commandBuffer: MTLCommandBuffer,
+                renderCommandEncoder: MTLRenderCommandEncoder,
                 modelMatrix: simd_float4x4,
                 viewMatrix: simd_float4x4,
                 projectionMatrix: simd_float4x4,
                 normalMatrix: simd_float3x3) {
+
+        let device = renderCommandEncoder.device
 
         var vertexUniforms = GroundVertexUniforms(
             modelMatrix: modelMatrix,
@@ -91,10 +91,6 @@ class GroundRenderer {
             return
         }
 
-        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
-            return
-        }
-
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
@@ -115,7 +111,5 @@ class GroundRenderer {
 
             renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: mesh.vertices.count)
         }
-
-        renderCommandEncoder.endEncoding()
     }
 }

@@ -51,19 +51,15 @@ class EffectRenderer {
     }
 
     func render(atTime time: CFTimeInterval,
-                device: MTLDevice,
-                renderPassDescriptor: MTLRenderPassDescriptor,
-                commandBuffer: MTLCommandBuffer,
+                renderCommandEncoder: MTLRenderCommandEncoder,
                 modelMatrix: simd_float4x4,
                 viewMatrix: simd_float4x4,
                 projectionMatrix: simd_float4x4) {
 
+        let device = renderCommandEncoder.device
+
         let frameIndex = Int(time * CFTimeInterval(effect.fps)) % effect.frames.count
         let frame = effect.frames[frameIndex]
-
-        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
-            return
-        }
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
@@ -105,7 +101,5 @@ class EffectRenderer {
 
             renderCommandEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: sprite.vertices.count)
         }
-
-        renderCommandEncoder.endEncoding()
     }
 }
