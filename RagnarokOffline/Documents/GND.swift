@@ -16,11 +16,10 @@ struct GND: Encodable {
     var zoom: Float
 
     var textures: [String] = []
-    var textureIndexes: [Int16] = []
 
     var lightmap: GNDLightmap
 
-    var tiles: [Tile] = []
+    var surfaces: [Surface] = []
 
     var cubes: [Cube] = []
 
@@ -50,14 +49,7 @@ struct GND: Encodable {
 
         for _ in 0..<textureCount {
             let texture = try reader.readString(Int(textureNameLength), encoding: .koreanEUC)
-
-            var index = textures.firstIndex(of: texture) ?? -1
-            if index == -1 {
-                textures.append(texture)
-                index = textures.count - 1
-            }
-
-            textureIndexes.append(Int16(index))
+            textures.append(texture)
         }
 
         let count: UInt32 = try reader.readInt()
@@ -72,10 +64,10 @@ struct GND: Encodable {
             data: reader.readBytes(Int(count) * Int(per_cell) * 4)
         )
 
-        let tileCount: UInt32 = try reader.readInt()
-        for _ in 0..<tileCount {
-            let tile = try Tile(from: reader, textures: textures, textureIndexes: textureIndexes)
-            tiles.append(tile)
+        let surfaceCount: UInt32 = try reader.readInt()
+        for _ in 0..<surfaceCount {
+            let surface = try Surface(from: reader)
+            surfaces.append(surface)
         }
 
         let cubeCount = width * height
@@ -95,7 +87,7 @@ extension GND {
 }
 
 extension GND {
-    struct Tile: Encodable {
+    struct Surface: Encodable {
         var u1: Float
         var u2: Float
         var u3: Float
@@ -108,7 +100,7 @@ extension GND {
         var lightmapIndex: UInt16
         var color: Palette.Color
 
-        init(from reader: BinaryReader, textures: [String], textureIndexes: [Int16]) throws {
+        init(from reader: BinaryReader) throws {
             u1 = try reader.readFloat()
             u2 = try reader.readFloat()
             u3 = try reader.readFloat()
@@ -137,9 +129,9 @@ extension GND {
         var topLeft: Float
         var topRight: Float
 
-        var tileUp: Int32
-        var tileFront: Int32
-        var tileRight: Int32
+        var topSurface: Int32
+        var frontSurface: Int32
+        var rightSurface: Int32
 
         init(from reader: BinaryReader) throws {
             bottomLeft = try reader.readFloat()
@@ -147,9 +139,9 @@ extension GND {
             topLeft = try reader.readFloat()
             topRight = try reader.readFloat()
 
-            tileUp = try reader.readInt()
-            tileFront = try reader.readInt()
-            tileRight = try reader.readInt()
+            topSurface = try reader.readInt()
+            frontSurface = try reader.readInt()
+            rightSurface = try reader.readInt()
         }
     }
 }

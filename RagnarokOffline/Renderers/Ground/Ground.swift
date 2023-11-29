@@ -60,169 +60,169 @@ struct Ground {
             for x in 0..<width {
                 let cube = gnd.cubes[x + y * width]
 
-                // Check tile up
-                if cube.tileUp > -1 {
-                    let tile = gnd.tiles[Int(cube.tileUp)]
+                // Check top surface
+                if cube.topSurface > -1 {
+                    let surface = gnd.surfaces[Int(cube.topSurface)]
 
                     // Check if has texture
-                    if tile.textureIndex > -1 {
+                    if surface.textureIndex > -1 {
                         let n = normals[x + y * width]
-                        let l = lightmap_atlas(Int(tile.lightmapIndex))
+                        let l = lightmap_atlas(Int(surface.lightmapIndex))
 
                         let v0 = GroundVertex(
                             position: [(Float(x) + 0) * 2, cube.bottomLeft / 5, (Float(y) + 0) * 2],
                             normal: n[0],
-                            textureCoordinate: [tile.u1, tile.v1],
+                            textureCoordinate: [surface.u1, surface.v1],
                             lightmapCoordinate: [l.u1, l.v1],
                             tileColorCoordinate: [(Float(x) + 0.5) / Float(width), (Float(y) + 0.5) / Float(height)]
                         )
                         let v1 = GroundVertex(
                             position: [(Float(x) + 1) * 2, cube.bottomRight / 5, (Float(y) + 0) * 2],
                             normal: n[1],
-                            textureCoordinate: [tile.u2, tile.v2],
+                            textureCoordinate: [surface.u2, surface.v2],
                             lightmapCoordinate: [l.u2, l.v1],
                             tileColorCoordinate: [(Float(x) + 1.5) / Float(width), (Float(y) + 0.5) / Float(height)]
                         )
                         let v2 = GroundVertex(
                             position: [(Float(x) + 1) * 2, cube.topRight / 5, (Float(y) + 1) * 2],
                             normal: n[2],
-                            textureCoordinate: [tile.u4, tile.v4],
+                            textureCoordinate: [surface.u4, surface.v4],
                             lightmapCoordinate: [l.u2, l.v2],
                             tileColorCoordinate: [(Float(x) + 1.5) / Float(width), (Float(y) + 1.5) / Float(height)]
                         )
                         let v3 = GroundVertex(
                             position: [(Float(x) + 1) * 2, cube.topRight / 5, (Float(y) + 1) * 2],
                             normal: n[2],
-                            textureCoordinate: [tile.u4, tile.v4],
+                            textureCoordinate: [surface.u4, surface.v4],
                             lightmapCoordinate: [l.u2, l.v2],
                             tileColorCoordinate: [(Float(x) + 1.5) / Float(width), (Float(y) + 1.5) / Float(height)]
                         )
                         let v4 = GroundVertex(
                             position: [(Float(x) + 0) * 2, cube.topLeft / 5, (Float(y) + 1) * 2],
                             normal: n[3],
-                            textureCoordinate: [tile.u3, tile.v3],
+                            textureCoordinate: [surface.u3, surface.v3],
                             lightmapCoordinate: [l.u1, l.v2],
                             tileColorCoordinate: [(Float(x) + 0.5) / Float(width), (Float(y) + 1.5) / Float(height)]
                         )
                         let v5 = GroundVertex(
                             position: [(Float(x) + 0) * 2, cube.bottomLeft / 5, (Float(y) + 0) * 2],
                             normal: n[0],
-                            textureCoordinate: [tile.u1, tile.v1],
+                            textureCoordinate: [surface.u1, surface.v1],
                             lightmapCoordinate: [l.u1, l.v1],
                             tileColorCoordinate: [(Float(x) + 0.5) / Float(width), (Float(y) + 0.5) / Float(height)]
                         )
 
-                        meshes[Int(tile.textureIndex)].vertices += [v0, v1, v2, v3, v4, v5]
+                        meshes[Int(surface.textureIndex)].vertices += [v0, v1, v2, v3, v4, v5]
                     }
                 }
 
-                // Check tile front
-                if cube.tileFront > -1 && y + 1 < height {
-                    let tile = gnd.tiles[Int(cube.tileFront)]
+                // Check front surface
+                if cube.frontSurface > -1 && y + 1 < height {
+                    let surface = gnd.surfaces[Int(cube.frontSurface)]
 
-                    if tile.textureIndex > -1 {
+                    if surface.textureIndex > -1 {
                         let frontCube = gnd.cubes[x + (y + 1) * width]
-                        let l = lightmap_atlas(Int(tile.lightmapIndex))
+                        let l = lightmap_atlas(Int(surface.lightmapIndex))
 
                         let v0 = GroundVertex(
                             position: [(Float(x) + 0) * 2, frontCube.bottomLeft / 5, (Float(y) + 1) * 2],
                             normal: [0, 0, 1],
-                            textureCoordinate: [tile.u3, tile.v3],
+                            textureCoordinate: [surface.u3, surface.v3],
                             lightmapCoordinate: [l.u1, l.v2],
                             tileColorCoordinate: [0, 0]
                         )
                         let v1 = GroundVertex(
                             position: [(Float(x) + 1) * 2, cube.topRight / 5, (Float(y) + 1) * 2],
                             normal: [0, 0, 1],
-                            textureCoordinate: [tile.u2, tile.v2],
+                            textureCoordinate: [surface.u2, surface.v2],
                             lightmapCoordinate: [l.u2, l.v1],
                             tileColorCoordinate: [0, 0]
                         )
                         let v2 = GroundVertex(
                             position: [(Float(x) + 1) * 2, frontCube.bottomRight / 5, (Float(y) + 1) * 2],
                             normal: [0, 0, 1],
-                            textureCoordinate: [tile.u4, tile.v4],
+                            textureCoordinate: [surface.u4, surface.v4],
                             lightmapCoordinate: [l.u2, l.v2],
                             tileColorCoordinate: [0, 0]
                         )
                         let v3 = GroundVertex(
                             position: [(Float(x) + 0) * 2, frontCube.bottomLeft / 5, (Float(y) + 1) * 2],
                             normal: [0, 0, 1],
-                            textureCoordinate: [tile.u3, tile.v3],
+                            textureCoordinate: [surface.u3, surface.v3],
                             lightmapCoordinate: [l.u1, l.v2],
                             tileColorCoordinate: [0, 0]
                         )
                         let v4 = GroundVertex(
                             position: [(Float(x) + 1) * 2, cube.topRight / 5, (Float(y) + 1) * 2],
                             normal: [0, 0, 1],
-                            textureCoordinate: [tile.u2, tile.v2],
+                            textureCoordinate: [surface.u2, surface.v2],
                             lightmapCoordinate: [l.u2, l.v1],
                             tileColorCoordinate: [0, 0]
                         )
                         let v5 = GroundVertex(
                             position: [(Float(x) + 0) * 2, cube.topLeft / 5, (Float(y) + 1) * 2],
                             normal: [0, 0, 1],
-                            textureCoordinate: [tile.u1, tile.v1],
+                            textureCoordinate: [surface.u1, surface.v1],
                             lightmapCoordinate: [l.u1, l.v1],
                             tileColorCoordinate: [0, 0]
                         )
 
-                        meshes[Int(tile.textureIndex)].vertices += [v0, v1, v2, v3, v4, v5]
+                        meshes[Int(surface.textureIndex)].vertices += [v0, v1, v2, v3, v4, v5]
                     }
                 }
 
-                // Check tile right
-                if cube.tileRight > -1 && x + 1 < width {
-                    let tile = gnd.tiles[Int(cube.tileRight)]
+                // Check right surface
+                if cube.rightSurface > -1 && x + 1 < width {
+                    let surface = gnd.surfaces[Int(cube.rightSurface)]
 
-                    if tile.textureIndex > -1 {
+                    if surface.textureIndex > -1 {
                         let rightCube = gnd.cubes[(x + 1) + y * width]
-                        let l = lightmap_atlas(Int(tile.lightmapIndex))
+                        let l = lightmap_atlas(Int(surface.lightmapIndex))
 
                         let v0 = GroundVertex(
                             position: [(Float(x) + 1) * 2, cube.bottomRight / 5, (Float(y) + 0) * 2],
                             normal: [1, 0, 0],
-                            textureCoordinate: [tile.u2, tile.v2],
+                            textureCoordinate: [surface.u2, surface.v2],
                             lightmapCoordinate: [l.u2, l.v1],
                             tileColorCoordinate: [0, 0]
                         )
                         let v1 = GroundVertex(
                             position: [(Float(x) + 1) * 2, cube.topRight / 5, (Float(y) + 1) * 2],
                             normal: [1, 0, 0],
-                            textureCoordinate: [tile.u1, tile.v1],
+                            textureCoordinate: [surface.u1, surface.v1],
                             lightmapCoordinate: [l.u1, l.v1],
                             tileColorCoordinate: [0, 0]
                         )
                         let v2 = GroundVertex(
                             position: [(Float(x) + 1) * 2, rightCube.bottomLeft / 5, (Float(y) + 0) * 2],
                             normal: [1, 0, 0],
-                            textureCoordinate: [tile.u4, tile.v4],
+                            textureCoordinate: [surface.u4, surface.v4],
                             lightmapCoordinate: [l.u2, l.v2],
                             tileColorCoordinate: [0, 0]
                         )
                         let v3 = GroundVertex(
                             position: [(Float(x) + 1) * 2, rightCube.bottomLeft / 5, (Float(y) + 0) * 2],
                             normal: [1, 0, 0],
-                            textureCoordinate: [tile.u4, tile.v4],
+                            textureCoordinate: [surface.u4, surface.v4],
                             lightmapCoordinate: [l.u2, l.v2],
                             tileColorCoordinate: [0, 0]
                         )
                         let v4 = GroundVertex(
                             position: [(Float(x) + 1) * 2, rightCube.topLeft / 5, (Float(y) + 1) * 2],
                             normal: [1, 0, 0],
-                            textureCoordinate: [tile.u3, tile.v3],
+                            textureCoordinate: [surface.u3, surface.v3],
                             lightmapCoordinate: [l.u1, l.v2],
                             tileColorCoordinate: [0, 0]
                         )
                         let v5 = GroundVertex(
                             position: [(Float(x) + 1) * 2, cube.topRight / 5, (Float(y) + 1) * 2],
                             normal: [1, 0, 0],
-                            textureCoordinate: [tile.u1, tile.v1],
+                            textureCoordinate: [surface.u1, surface.v1],
                             lightmapCoordinate: [l.u1, l.v1],
                             tileColorCoordinate: [0, 0]
                         )
 
-                        meshes[Int(tile.textureIndex)].vertices += [v0, v1, v2, v3, v4, v5]
+                        meshes[Int(surface.textureIndex)].vertices += [v0, v1, v2, v3, v4, v5]
                     }
                 }
             }
@@ -274,10 +274,10 @@ struct Ground {
 
         for y in 0..<height {
             for x in 0..<width {
-                let cell = gnd.cubes[x + y * width]
-                if cell.tileUp > -1 {
+                let cube = gnd.cubes[x + y * width]
+                if cube.topSurface > -1 {
                     let index = (x + y * width) * 4
-                    let color = gnd.tiles[Int(cell.tileUp)].color
+                    let color = gnd.surfaces[Int(cube.topSurface)].color
                     data[index + 0] = color.alpha
                     data[index + 1] = color.red
                     data[index + 2] = color.green
@@ -297,11 +297,11 @@ struct Ground {
 
         for y in 0..<height {
             for x in 0..<width {
-                let cell = gnd.cubes[x + y * width]
+                let cube = gnd.cubes[x + y * width]
 
-                if cell.tileUp > -1 {
-                    let tile_up = Int(cell.tileUp)
-                    let light = Int(gnd.tiles[tile_up].lightmapIndex)
+                if cube.topSurface > -1 {
+                    let topSurface = Int(cube.topSurface)
+                    let light = Int(gnd.surfaces[topSurface].lightmapIndex)
                     let per_cell = Int(gnd.lightmap.per_cell)
                     let index = light * 4 * per_cell
 
@@ -343,27 +343,27 @@ struct Ground {
 
         for y in 0..<height {
             for x in 0..<width {
-                let cell = gnd.cubes[Int(x + y * width)]
+                let cube = gnd.cubes[Int(x + y * width)]
 
-                if cell.tileUp > -1 /*&& tiles[Int(cell.tileUp)].textureIndex > -1*/ {
+                if cube.topSurface > -1 /*&& surfaces[Int(cube.topSurface)].textureIndex > -1*/ {
                     let a: simd_float3 = [
                         (Float(x) + 0) * 2,
-                        cell.bottomLeft / 5,
+                        cube.bottomLeft / 5,
                         (Float(y) + 0) * 2
                     ]
                     let b: simd_float3 = [
                         (Float(x) + 1) * 2,
-                        cell.bottomRight / 5,
+                        cube.bottomRight / 5,
                         (Float(y) + 0) * 2
                     ]
                     let c: simd_float3 = [
                         (Float(x) + 1) * 2,
-                        cell.topLeft / 5,
+                        cube.topLeft / 5,
                         (Float(y) + 1) * 2
                     ]
                     let d: simd_float3 = [
                         (Float(x) + 0) * 2,
-                        cell.topRight / 5,
+                        cube.topRight / 5,
                         (Float(y) + 1) * 2
                     ]
                     tmp[x + y * width] = calcNormal(a, b, c, d)

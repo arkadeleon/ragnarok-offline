@@ -27,12 +27,12 @@ struct Water {
             for x in 0..<width {
                 let cube = gnd.cubes[x + y * width]
 
-                // Check tile up
-                if cube.tileUp > -1 {
-                    let tile = gnd.tiles[Int(cube.tileUp)]
+                // Check top surface
+                if cube.topSurface > -1 {
+                    let surface = gnd.surfaces[Int(cube.topSurface)]
 
                     // Check if has texture
-                    if tile.textureIndex > -1 {
+                    if surface.textureIndex > -1 {
                         // Add water only if it's upper than the ground.
                         if cube.bottomLeft > rsw.water.level - rsw.water.waveHeight ||
                             cube.bottomRight > rsw.water.level - rsw.water.waveHeight ||
