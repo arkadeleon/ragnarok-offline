@@ -20,6 +20,33 @@ class GRFWrapper {
         return grf
     }()
 
+    private lazy var directories: Set<GRF.Path> = {
+        guard let grf else {
+            return []
+        }
+
+        var directories = Set(grf.table.entries.map({ $0.path.parent }))
+        for directory in directories {
+            var parent = directory
+            repeat {
+                parent = parent.parent
+                directories.insert(parent)
+            } while !parent.string.isEmpty
+        }
+
+        return directories
+    }()
+
+    private lazy var entries: [GRF.Path : GRF.Entry] = {
+        guard let grf else {
+            return [:]
+        }
+
+        let entries = Dictionary(grf.table.entries.map({ ($0.path, $0) }), uniquingKeysWith: { (first, _) in first })
+
+        return entries
+    }()
+
     init(url: URL) {
         self.url = url
     }
@@ -32,11 +59,11 @@ class GRFWrapper {
         let start = Date()
         print("Start loading contents of directory: \(directory.string)")
 
-        let directories = grf.table.directories
+        let directories = directories
             .filter { $0.parent == directory }
             .sorted()
 
-        let entries = grf.table.entries.values
+        let entries = grf.table.entries
             .filter { $0.path.parent == directory }
             .sorted()
 
@@ -59,11 +86,7 @@ class GRFWrapper {
     }
 
     func contentsOfEntry(at path: GRF.Path) throws -> Data {
-        guard let grf else {
-            throw DocumentError.invalidSource
-        }
-
-        guard let entry = grf.table.entries[path] else {
+        guard let entry = entries[path] else {
             throw DocumentError.invalidSource
         }
 

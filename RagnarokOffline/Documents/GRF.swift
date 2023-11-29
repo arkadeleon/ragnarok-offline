@@ -65,12 +65,9 @@ extension GRF {
         var tableSizeCompressed: UInt32
         var tableSize: UInt32
 
-        var entries: [Path : Entry] = [:]
-        var directories: Set<Path>
+        var entries: [Entry] = []
 
         init(from reader: BinaryReader, header: Header) throws {
-            var entries: [Entry] = []
-
             switch header.version {
             case 0x102, 0x103:
                 throw DocumentError.invalidContents
@@ -95,17 +92,6 @@ extension GRF {
                 }
             default:
                 throw DocumentError.invalidContents
-            }
-
-            self.entries = Dictionary(entries.map({ ($0.path, $0) }), uniquingKeysWith: { (first, _) in first })
-
-            directories = Set(entries.map({ $0.path.parent }))
-            for directory in directories {
-                var parent = directory
-                repeat {
-                    parent = parent.parent
-                    directories.insert(parent)
-                } while !parent.string.isEmpty
             }
         }
     }
