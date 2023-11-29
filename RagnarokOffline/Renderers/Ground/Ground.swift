@@ -28,7 +28,7 @@ struct Ground {
         maxAltitude = 0
         for y in 0..<height {
             for x in 0..<width {
-                let altitude = gat.height(forCellAtX: x, y: y)
+                let altitude = gat.altitude(forTileAtX: x, y: y)
                 maxAltitude = max(maxAltitude, altitude)
             }
         }

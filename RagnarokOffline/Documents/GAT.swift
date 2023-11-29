@@ -13,7 +13,7 @@ struct GAT: Encodable {
     var version: String
     var width: Int32
     var height: Int32
-    var cells: [Cell] = []
+    var tiles: [Tile] = []
 
     init(data: Data) throws {
         let stream = MemoryStream(data: data)
@@ -36,14 +36,14 @@ struct GAT: Encodable {
         height = try reader.readInt()
 
         for _ in 0..<(width * height) {
-            let cell = try Cell(from: reader)
-            cells.append(cell)
+            let tile = try Tile(from: reader)
+            tiles.append(tile)
         }
     }
 }
 
 extension GAT {
-    enum CellType: Int32, Encodable {
+    enum TileType: Int32, Encodable {
         case walkable = 0
         case noWalkable = 1
         case noWalkableNoSnipable = 2
@@ -53,19 +53,19 @@ extension GAT {
         case walkable3 = 6
     }
 
-    struct Cell: Encodable {
+    struct Tile: Encodable {
         var bottomLeft: Float
         var bottomRight: Float
         var topLeft: Float
         var topRight: Float
-        var type: CellType
+        var type: TileType
 
         init(from reader: BinaryReader) throws {
             bottomLeft = try reader.readFloat()
             bottomRight = try reader.readFloat()
             topLeft = try reader.readFloat()
             topRight = try reader.readFloat()
-            type = try CellType(rawValue: reader.readInt()) ?? .walkable
+            type = try TileType(rawValue: reader.readInt()) ?? .walkable
         }
     }
 }

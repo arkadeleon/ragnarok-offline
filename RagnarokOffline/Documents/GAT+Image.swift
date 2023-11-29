@@ -30,8 +30,8 @@ extension GAT {
                     continue
                 }
 
-                let cell = cells[index]
-                switch cell.type {
+                let tile = tiles[index]
+                switch tile.type {
                 case .walkable, .walkable2, .unknown, .walkable3:
                     data[index] = 25
                 case .noWalkable, .noWalkableNoSnipable:
@@ -64,13 +64,13 @@ extension GAT {
 }
 
 extension GAT {
-    func height(forCellAtX x: Int, y: Int) -> Float {
+    func altitude(forTileAtX x: Int, y: Int) -> Float {
         let index = x + y * Int(width)
-        let cell = cells[index]
-        let bottomLeft = cell.bottomLeft
-        let bottomRight = cell.bottomRight
-        let topLeft = cell.topLeft
-        let topRight = cell.topRight
+        let tile = tiles[index]
+        let bottomLeft = tile.bottomLeft
+        let bottomRight = tile.bottomRight
+        let topLeft = tile.topLeft
+        let topRight = tile.topRight
 
         let x1 = bottomLeft + (bottomRight - bottomLeft) / 2
         let x2 = topLeft + (topRight - topLeft) / 2
