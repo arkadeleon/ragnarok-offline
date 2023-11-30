@@ -9,7 +9,7 @@
 import Foundation
 import simd
 
-struct RSM {
+struct RSM: Encodable {
     var header: String
     var version: String
     var animationLength: Int32
@@ -18,8 +18,8 @@ struct RSM {
 
     var textures: [String] = []
 
+    var rootNode: String?
     var nodes: [Node] = []
-    var mainNode: Node?
 
     var scaleKeyframes: [ScaleKeyframe] = []
 
@@ -65,14 +65,15 @@ struct RSM {
                 textures.append(texture)
             }
 
-            let mainNodeName = try reader.readString(40)
+            rootNode = try reader.readString(40)
+
             let nodeCount: Int32 = try reader.readInt()
             for _ in 0..<nodeCount {
                 let node = try Node(from: reader, version: version)
                 nodes.append(node)
             }
 
-            mainNode = nodes.first(where: { $0.name == mainNodeName }) ?? nodes.first
+            rootNode = rootNode ?? nodes.first?.name
         }
 
         if version < "1.6" {
@@ -102,8 +103,12 @@ extension RSM {
 }
 
 extension RSM {
-    struct Node {
-        typealias TextureVertex = (color: UInt32, u: Float, v: Float)
+    struct Node: Encodable {
+        struct TextureVertex: Encodable {
+            var color: UInt32
+            var u: Float
+            var v: Float
+        }
 
         var name: String
         var parentName: String
@@ -191,7 +196,7 @@ extension RSM {
                 }
                 let u: Float = try reader.readFloat()
                 let v: Float = try reader.readFloat()
-                let textureVertex = (color, u, v)
+                let textureVertex = TextureVertex(color: color, u: u, v: v)
                 tvertices.append(textureVertex)
             }
 
@@ -248,10 +253,10 @@ extension RSM {
 }
 
 extension RSM {
-    struct Face {
+    struct Face: Encodable {
         var vertidx: simd_ushort3
         var tvertidx: simd_ushort3
-        var texid: UInt16
+        var textureIndex: UInt16
         var padding: UInt16
         var twoSide: Int32
         var smoothGroup: simd_int3
@@ -264,7 +269,7 @@ extension RSM {
 
             vertidx = try [reader.readInt(), reader.readInt(), reader.readInt()]
             tvertidx = try [reader.readInt(), reader.readInt(), reader.readInt()]
-            texid = try reader.readInt()
+            textureIndex = try reader.readInt()
             padding = try reader.readInt()
             twoSide = try reader.readInt()
 
@@ -291,7 +296,7 @@ extension RSM {
 }
 
 extension RSM {
-    struct ScaleKeyframe {
+    struct ScaleKeyframe: Encodable {
         var frame: Int32
         var sx: Float
         var sy: Float
@@ -307,22 +312,22 @@ extension RSM {
         }
     }
 
-    struct RotationKeyframe {
+    struct RotationKeyframe: Encodable {
         var frame: Int32
-        var quaternion: simd_quatf
+        var quaternion: simd_float4
 
         init(from reader: BinaryReader) throws {
             frame = try reader.readInt()
-            quaternion = try simd_quatf(vector: [
+            quaternion = try [
                 reader.readFloat(),
                 reader.readFloat(),
                 reader.readFloat(),
                 reader.readFloat()
-            ])
+            ]
         }
     }
 
-    struct PositionKeyframe {
+    struct PositionKeyframe: Encodable {
         var frame: Int32
         var px: Float
         var py: Float
@@ -340,7 +345,7 @@ extension RSM {
 }
 
 extension RSM {
-    struct VolumeBox {
+    struct VolumeBox: Encodable {
         var size: simd_float3
         var position: simd_float3
         var rotation: simd_float3

@@ -92,7 +92,7 @@ enum File {
 
     var hasInfo: Bool {
         switch contentType {
-        case .act, .gat, .gnd, .rsw, .spr, .str:
+        case .act, .gat, .gnd, .rsm, .rsw, .spr, .str:
             true
         default:
             false
@@ -119,6 +119,12 @@ enum File {
             }
             let gnd = try? GND(data: data)
             return gnd
+        case .rsm:
+            guard let data = contents() else {
+                return nil
+            }
+            let rsm = try? RSM(data: data)
+            return rsm
         case .rsw:
             guard let data = contents() else {
                 return nil

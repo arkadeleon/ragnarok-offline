@@ -32,7 +32,7 @@ struct Model {
         let matrix = matrix_identity_float4x4
 
         let wrappers = rsm.nodes.map(ModelNodeWrapper.init)
-        let mainWrapper = wrappers.first { $0.node.name == rsm.mainNode?.name }
+        let mainWrapper = wrappers.first { $0.node.name == rsm.rootNode }
 
         mainWrapper?.calcBoundingBox(parentMatrix: matrix, wrappers: wrappers)
 
@@ -251,7 +251,7 @@ class ModelNodeWrapper {
             let idx = face.vertidx
             let tidx = face.tvertidx
 
-            let t = Int(node.textureIndexes[Int(face.texid)])
+            let t = Int(node.textureIndexes[Int(face.textureIndex)])
 
             for j in 0..<3 {
                 let a = Int(idx[j]) * 3
@@ -261,8 +261,8 @@ class ModelNodeWrapper {
                     position: [vert[a + 0], vert[a + 1], vert[a + 2]],
                     normal: [norm[k + 0], norm[k + 1], norm[k + 2]],
                     textureCoordinate: [
-                        node.tvertices[b].u * 0.98 + 0.01,
-                        node.tvertices[b].v * 0.98 + 0.01
+                        node.tvertices[b].u,
+                        node.tvertices[b].v
                     ],
                     alpha: Float(alpha) / 255
                 )
@@ -279,7 +279,7 @@ class ModelNodeWrapper {
             let idx = face.vertidx
             let tidx = face.tvertidx
 
-            let t = Int(node.textureIndexes[Int(face.texid)])
+            let t = Int(node.textureIndexes[Int(face.textureIndex)])
 
             for j in 0..<3 {
                 let a = Int(idx[j]) * 3
@@ -289,8 +289,8 @@ class ModelNodeWrapper {
                     position: [vert[a + 0], vert[a + 1], vert[a + 2]],
                     normal: [norm[a + 0], norm[a + 1], norm[a + 2]],
                     textureCoordinate: [
-                        node.tvertices[b].u * 0.98 + 0.01,
-                        node.tvertices[b].v * 0.98 + 0.01
+                        node.tvertices[b].u,
+                        node.tvertices[b].v
                     ],
                     alpha: Float(alpha) / 255
                 )
