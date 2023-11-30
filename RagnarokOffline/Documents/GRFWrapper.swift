@@ -37,12 +37,12 @@ class GRFWrapper {
         return directories
     }()
 
-    private lazy var entries: [GRF.Path : GRF.Entry] = {
+    private lazy var entries: [String : GRF.Entry] = {
         guard let grf else {
             return [:]
         }
 
-        let entries = Dictionary(grf.table.entries.map({ ($0.path, $0) }), uniquingKeysWith: { (first, _) in first })
+        let entries = Dictionary(grf.table.entries.map({ ($0.path.string.uppercased(), $0) }), uniquingKeysWith: { (first, _) in first })
 
         return entries
     }()
@@ -86,7 +86,7 @@ class GRFWrapper {
     }
 
     func contentsOfEntry(at path: GRF.Path) throws -> Data {
-        guard let entry = entries[path] else {
+        guard let entry = entries[path.string.uppercased()] else {
             throw DocumentError.invalidSource
         }
 

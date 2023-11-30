@@ -29,12 +29,13 @@ struct ContentView: View {
         RASkillTreeDatabase.shared,
     ]
 
+    private let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+
     var body: some View {
         NavigationView {
             List {
                 Section("Client") {
                     NavigationLink {
-                        let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
                         FilesView(file: .url(url))
                             .ignoresSafeArea()
                             .navigationTitle("Files")
@@ -73,8 +74,12 @@ struct ContentView: View {
                     }
                 }
             }
-            .listStyle(.sidebar)
             .navigationTitle("Ragnarok Offline")
+
+            FilesView(file: .url(url))
+                .ignoresSafeArea()
+                .navigationTitle("Files")
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

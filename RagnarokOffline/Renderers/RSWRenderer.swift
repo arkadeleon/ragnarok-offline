@@ -83,8 +83,6 @@ class RSWRenderer: NSObject, Renderer {
             normalMatrix: normalMatrix
         )
 
-//        renderPassDescriptor.colorAttachments[0].loadAction = .load
-
         waterRenderer.render(
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
@@ -92,8 +90,6 @@ class RSWRenderer: NSObject, Renderer {
             viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix
         )
-
-//        renderPassDescriptor.colorAttachments[0].loadAction = .load
 
         modelRenderer.render(
             atTime: time,
