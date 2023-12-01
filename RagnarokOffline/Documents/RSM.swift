@@ -18,7 +18,7 @@ struct RSM: Encodable {
 
     var textures: [String] = []
 
-    var rootNode: String?
+    var rootNodes: [String] = []
     var nodes: [Node] = []
 
     var scaleKeyframes: [ScaleKeyframe] = []
@@ -43,6 +43,7 @@ struct RSM: Encodable {
         version = "\(major).\(minor)"
 
         animationLength = try reader.readInt()
+
         shadeType = try reader.readInt()
 
         if version >= "1.4" {
@@ -52,9 +53,42 @@ struct RSM: Encodable {
         }
 
         if version >= "2.3" {
+            let fps: Float = try reader.readFloat()
 
+            let rootNodeCount: Int32 = try reader.readInt()
+            for _ in 0..<rootNodeCount {
+                let nodeNameLength: Int32 = try reader.readInt()
+                let rootNodeName = try reader.readString(Int(nodeNameLength))
+                rootNodes.append(rootNodeName)
+            }
+
+            let nodeCount: Int32 = try reader.readInt()
+            for _ in 0..<nodeCount {
+                let node = try Node(from: reader, version: version)
+                nodes.append(node)
+            }
         } else if version >= "2.2" {
+            let fps: Float = try reader.readFloat()
 
+            let textureCount: Int32 = try reader.readInt()
+            for _ in 0..<textureCount {
+                let textureNameLength: Int32 = try reader.readInt()
+                let texture = try reader.readString(Int(textureNameLength), encoding: .koreanEUC)
+                textures.append(texture)
+            }
+
+            let rootNodeCount: Int32 = try reader.readInt()
+            for _ in 0..<rootNodeCount {
+                let nodeNameLength: Int32 = try reader.readInt()
+                let rootNodeName = try reader.readString(Int(nodeNameLength))
+                rootNodes.append(rootNodeName)
+            }
+
+            let nodeCount: Int32 = try reader.readInt()
+            for _ in 0..<nodeCount {
+                let node = try Node(from: reader, version: version)
+                nodes.append(node)
+            }
         } else {
             // Reserved
             _ = try reader.readBytes(16)
@@ -65,15 +99,18 @@ struct RSM: Encodable {
                 textures.append(texture)
             }
 
-            rootNode = try reader.readString(40)
+            let rootNode = try reader.readString(40)
+            rootNodes.append(rootNode)
 
             let nodeCount: Int32 = try reader.readInt()
             for _ in 0..<nodeCount {
                 let node = try Node(from: reader, version: version)
                 nodes.append(node)
             }
+        }
 
-            rootNode = rootNode ?? nodes.first?.name
+        if rootNodes.isEmpty, let firstNode = nodes.first {
+            rootNodes.append(firstNode.name)
         }
 
         if version < "1.6" {

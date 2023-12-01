@@ -32,7 +32,7 @@ struct Model {
         let matrix = matrix_identity_float4x4
 
         let wrappers = rsm.nodes.map(ModelNodeWrapper.init)
-        let mainWrapper = wrappers.first { $0.node.name == rsm.rootNode }
+        let mainWrapper = wrappers.first { $0.node.name == rsm.rootNodes.first }
 
         mainWrapper?.calcBoundingBox(parentMatrix: matrix, wrappers: wrappers)
 
