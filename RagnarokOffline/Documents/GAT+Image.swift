@@ -75,6 +75,6 @@ extension GAT {
         let x1 = bottomLeft + (bottomRight - bottomLeft) / 2
         let x2 = topLeft + (topRight - topLeft) / 2
 
-        return -(x1 + (x2 - x1) / 2)
+        return x1 + (x2 - x1) / 2
     }
 }

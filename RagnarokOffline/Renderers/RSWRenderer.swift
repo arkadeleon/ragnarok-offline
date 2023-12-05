@@ -17,7 +17,7 @@ class RSWRenderer: NSObject, Renderer {
     let waterRenderer: WaterRenderer
     let modelRenderer: ModelRenderer
 
-    let camera = Camera()
+    let camera: Camera
 
     init(device: MTLDevice, ground: Ground, water: Water, models: [Model]) throws {
         self.device = device
@@ -28,6 +28,12 @@ class RSWRenderer: NSObject, Renderer {
         groundRenderer = try GroundRenderer(device: device, library: library, ground: ground)
         waterRenderer = try WaterRenderer(device: device, library: library, water: water)
         modelRenderer = try ModelRenderer(device: device, library: library, models: models)
+
+        camera = Camera()
+        camera.defaultDistance = -ground.altitude / 5 + 200
+        camera.minimumDistance = camera.defaultDistance - 190
+        camera.maximumDistance = camera.defaultDistance + 200
+        camera.farZ = 500
 
         super.init()
     }
@@ -57,13 +63,10 @@ class RSWRenderer: NSObject, Renderer {
 
         camera.update(size: view.bounds.size)
 
-        let scale = 1 / Float(max(ground.width, ground.height) / 2)
-
         var modelMatrix = matrix_identity_float4x4
-        modelMatrix = matrix_scale(modelMatrix, [-scale, scale, scale])
-        modelMatrix = matrix_rotate(modelMatrix, radians(180), [0, 0, 1])
+        modelMatrix = matrix_scale(modelMatrix, [1, -1, 1])
         modelMatrix = matrix_rotate(modelMatrix, radians(90), [1, 0, 0])
-        modelMatrix = matrix_translate(modelMatrix, [-Float(ground.width / 2), ground.maxAltitude / 5, -Float(ground.height / 2)])
+        modelMatrix = matrix_translate(modelMatrix, [-Float(ground.width / 2), 0, -Float(ground.height / 2)])
 
         let viewMatrix = camera.viewMatrix
         let projectionMatrix = camera.projectionMatrix

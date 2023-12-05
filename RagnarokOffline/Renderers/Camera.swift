@@ -10,17 +10,25 @@ import CoreGraphics
 import simd
 
 class Camera {
+    var defaultDistance: Float = 2.5 {
+        didSet {
+            position = [0, 0, -defaultDistance]
+        }
+    }
+    var minimumDistance: Float = 0
+    var maximumDistance: Float = 20
+
     private(set) var position: simd_float3 = [0, 0, -2.5]
     private(set) var rotation: simd_float3 = [0, 0, 0]
 
     private(set) var target: simd_float3 = [0, 0, 0]
 
-    private(set) var fovy: Float = 70
-    private(set) var aspectRatio: Float = 1.0
-    private(set) var nearZ: Float = 0.1
-    private(set) var farZ: Float = 100.0
+    var fovy: Float = 70
+    var aspectRatio: Float = 1.0
+    var nearZ: Float = 0.1
+    var farZ: Float = 100.0
 
-    private(set) var sensitivity: Float = 0.001
+    private(set) var sensitivity: Float = 0.1
 
     var projectionMatrix: simd_float4x4 {
         perspective(radians(fovy), aspectRatio, nearZ, farZ)
@@ -43,10 +51,10 @@ class Camera {
     }
 
     func update(magnification: CGFloat, dragTranslation: CGPoint) {
-        var distance: Float = 2.5
+        var distance = defaultDistance
         distance /= Float(magnification)
-        distance = max(distance, 0)
-        distance = min(distance, 20)
+        distance = max(distance, minimumDistance)
+        distance = min(distance, maximumDistance)
 
         rotation.x = Float(dragTranslation.y) * sensitivity
         rotation.y = Float(dragTranslation.x) * sensitivity

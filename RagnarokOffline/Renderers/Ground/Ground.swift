@@ -17,21 +17,14 @@ struct GroundMesh {
 struct Ground {
     var width: Int
     var height: Int
-    var maxAltitude: Float
+    var altitude: Float
 
     var meshes: [GroundMesh] = []
 
     init(gat: GAT, gnd: GND, textureProvider: (String) -> MTLTexture?) {
         width = Int(gat.width)
         height = Int(gat.height)
-
-        maxAltitude = 0
-        for y in 0..<height {
-            for x in 0..<width {
-                let altitude = gat.altitude(forTileAtX: x, y: y)
-                maxAltitude = max(maxAltitude, altitude)
-            }
-        }
+        altitude = gat.altitude(forTileAtX: width / 2, y: height / 2)
 
         meshes = gnd.textures.map { texture in
             GroundMesh(texture: textureProvider(texture))
