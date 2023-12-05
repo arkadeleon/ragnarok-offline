@@ -15,11 +15,16 @@ struct ModelMesh {
 }
 
 struct ModelBoundingBox {
-    var max = simd_float3(-.infinity, -.infinity, -.infinity)
-    var min = simd_float3(.infinity, .infinity, .infinity)
-    var offset = simd_float3()
-    var range = simd_float3()
-    var center = simd_float3()
+    var min: simd_float3 = [.infinity, .infinity, .infinity]
+    var max: simd_float3 = [-.infinity, -.infinity, -.infinity]
+
+    var range: simd_float3 {
+        (max - min) / 2
+    }
+
+    var center: simd_float3 {
+        (min + max) / 2
+    }
 }
 
 struct Model {
@@ -32,18 +37,23 @@ struct Model {
         let matrix = matrix_identity_float4x4
 
         let wrappers = rsm.nodes.map(ModelNodeWrapper.init)
-        let mainWrapper = wrappers.first { $0.node.name == rsm.rootNodes.first }
+        let rootWrapper = wrappers.first { $0.node.name == rsm.rootNodes.first }
 
-        mainWrapper?.calcBoundingBox(parentMatrix: matrix, wrappers: wrappers)
+        for parent in wrappers {
+            for child in wrappers {
+                if child.node.parentName == parent.node.name && parent.node.name != parent.node.parentName {
+                    parent.addChild(child)
+                }
+            }
+        }
+
+        rootWrapper?.calcBoundingBox(wrappers: wrappers)
 
         for i in 0..<3 {
-            for j in 0..<wrappers.count {
-                boundingBox.max[i] = max(boundingBox.max[i], wrappers[j].box.max[i])
-                boundingBox.min[i] = min(boundingBox.min[i], wrappers[j].box.min[i])
+            for wrapper in wrappers {
+                boundingBox.max[i] = max(boundingBox.max[i], wrapper.box.max[i])
+                boundingBox.min[i] = min(boundingBox.min[i], wrapper.box.min[i])
             }
-            boundingBox.offset[i] = (boundingBox.max[i] + boundingBox.min[i]) / 2
-            boundingBox.range[i] = (boundingBox.max[i] - boundingBox.min[i]) / 2
-            boundingBox.center[i] = boundingBox.min[i] + boundingBox.range[i]
         }
 
         meshes = rsm.textures.map { textureName in
@@ -51,7 +61,7 @@ struct Model {
         }
 
         for wrapper in wrappers {
-            let ms = wrapper.compile(contents: rsm, instance_matrix: instance, boundingBox: boundingBox)
+            let ms = wrapper.compile(rsm: rsm, instance_matrix: instance, boundingBox: boundingBox)
             for (i, m) in ms.enumerated() {
                 meshes[i].vertices.append(contentsOf: m)
             }
@@ -73,25 +83,42 @@ class ModelNodeWrapper {
     let node: RSM.Node
 
     var box = ModelBoundingBox()
-    var matrix = matrix_identity_float4x4
+
+    weak var parent: ModelNodeWrapper?
+    var children: [ModelNodeWrapper] = []
+
+    var transform = matrix_identity_float4x4
+
+    var worldTransform: simd_float4x4 {
+        if let parent {
+            return parent.worldTransform * transform
+        } else {
+            return transform
+        }
+    }
 
     init(node: RSM.Node) {
         self.node = node
     }
 
-    func calcBoundingBox(parentMatrix: simd_float4x4, wrappers: [ModelNodeWrapper]) {
-        self.matrix = parentMatrix
-        self.matrix =  matrix_translate(self.matrix, node.position)
+    func addChild(_ child: ModelNodeWrapper) {
+        children.append(child)
+        child.parent = self
+    }
+
+    func calcBoundingBox(wrappers: [ModelNodeWrapper]) {
+        transform = matrix_identity_float4x4
+        transform = matrix_translate(transform, node.position)
 
         if node.rotationKeyframes.count == 0 {
-//            self.matrix = SGLMath.rotate(self.matrix, rotangle, rotaxis)
+//            transform = SGLMath.rotate(transform, rotangle, rotaxis)
         } else {
-            self.matrix = rotateQuat(self.matrix, w: node.rotationKeyframes[0].quaternion)
+            transform = rotateQuat(transform, w: node.rotationKeyframes[0].quaternion)
         }
 
-        self.matrix = matrix_scale(self.matrix, node.scale)
+        transform = matrix_scale(transform, node.scale)
 
-        var matrix = self.matrix
+        var matrix = worldTransform
 
         if wrappers.count > 1 {
             matrix = matrix_translate(matrix, node.offset)
@@ -99,49 +126,35 @@ class ModelNodeWrapper {
 
         matrix = matrix * simd_float4x4(node.transformationMatrix)
 
-        for i in 0..<node.vertices.count {
-            let x = node.vertices[i][0]
-            let y = node.vertices[i][1]
-            let z = node.vertices[i][2]
-
-            var v = simd_float3()
-            v[0] = matrix[0, 0] * x + matrix[1, 0] * y + matrix[2, 0] * z + matrix[3, 0]
-            v[1] = matrix[0, 1] * x + matrix[1, 1] * y + matrix[2, 1] * z + matrix[3, 1]
-            v[2] = matrix[0, 2] * x + matrix[1, 2] * y + matrix[2, 2] * z + matrix[3, 2]
+        for vertex in node.vertices {
+            let vertex = matrix * simd_float4(vertex, 1)
 
             for j in 0..<3 {
-                box.min[j] = min(v[j], box.min[j])
-                box.max[j] = max(v[j], box.max[j])
+                box.min[j] = min(vertex[j], box.min[j])
+                box.max[j] = max(vertex[j], box.max[j])
             }
         }
 
-        for i in 0..<3 {
-            box.offset[i] = (box.max[i] + box.min[i]) / 2
-            box.range[i] = (box.max[i] - box.min[i]) / 2
-            box.center[i] = box.min[i] + box.range[i]
-        }
-
-        for wrapper in wrappers {
-            if wrapper.node.parentName == node.name && node.name != node.parentName {
-                wrapper.calcBoundingBox(parentMatrix: self.matrix, wrappers: wrappers)
-            }
+        for child in children {
+            child.calcBoundingBox(wrappers: wrappers)
         }
     }
 
-    func compile(contents: RSM, instance_matrix: simd_float4x4, boundingBox: ModelBoundingBox) -> [[ModelVertex]] {
+    func compile(rsm: RSM, instance_matrix: simd_float4x4, boundingBox: ModelBoundingBox) -> [[ModelVertex]] {
         var shadeGroup = [[Float]](repeating: [], count: 32)
         var shadeGroupUsed = [Bool](repeating: false, count: 32)
 
         var matrix = matrix_identity_float4x4
         matrix = matrix_translate(matrix, [-boundingBox.center[0], -boundingBox.max[1], -boundingBox.center[2]])
-        matrix = matrix * self.matrix
+        matrix = matrix * worldTransform
 
-        if contents.nodes.count == 1 {
+        if rsm.nodes.count == 1 {
             matrix = matrix_translate(matrix, node.offset)
         }
 
         matrix = matrix * simd_float4x4(node.transformationMatrix)
 
+        // modelMatrix = instance * translate * worldTransform * node.offset * node.transformationMatrix
         let modelViewMat = instance_matrix * matrix
         let normalMat = extractRotation(modelViewMat)
 
@@ -162,17 +175,17 @@ class ModelNodeWrapper {
         let maxTexture = node.textureIndexes.max() ?? 0
         var mesh = [[ModelVertex]](repeating: [], count: Int(maxTexture) + 1)
 
-        switch contents.shadeType {
+        switch rsm.shadeType {
         case RSM.RSMShadingType.none.rawValue:
             calcNormal_NONE(out: &face_normal)
-            generate_mesh_FLAT(vert: vert, norm: face_normal, alpha: contents.alpha, mesh: &mesh)
+            generate_mesh_FLAT(vert: vert, norm: face_normal, alpha: rsm.alpha, mesh: &mesh)
         case RSM.RSMShadingType.flat.rawValue:
             calcNormal_FLAT(out: &face_normal, normalMat: normalMat, groupUsed: &shadeGroupUsed)
-            generate_mesh_FLAT(vert: vert, norm: face_normal, alpha: contents.alpha, mesh: &mesh)
+            generate_mesh_FLAT(vert: vert, norm: face_normal, alpha: rsm.alpha, mesh: &mesh)
         case RSM.RSMShadingType.smooth.rawValue:
             calcNormal_FLAT(out: &face_normal, normalMat: normalMat, groupUsed: &shadeGroupUsed)
             calcNormal_SMOOTH(normal: face_normal, groupUsed: shadeGroupUsed, group: &shadeGroup)
-            generate_mesh_SMOOTH(vert: vert, shadeGroup: shadeGroup, alpha: contents.alpha, mesh: &mesh)
+            generate_mesh_SMOOTH(vert: vert, shadeGroup: shadeGroup, alpha: rsm.alpha, mesh: &mesh)
         default:
             break
         }
