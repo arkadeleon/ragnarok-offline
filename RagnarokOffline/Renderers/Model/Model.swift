@@ -34,8 +34,6 @@ struct Model {
     init(rsm: RSM, instance: simd_float4x4, textureProvider: (String) -> MTLTexture?) {
         boundingBox = ModelBoundingBox()
 
-        let matrix = matrix_identity_float4x4
-
         let wrappers = rsm.nodes.map(ModelNodeWrapper.init)
         let rootWrapper = wrappers.first { $0.node.name == rsm.rootNodes.first }
 
@@ -87,11 +85,21 @@ class ModelNodeWrapper {
     weak var parent: ModelNodeWrapper?
     var children: [ModelNodeWrapper] = []
 
+    var transformForChildren = matrix_identity_float4x4
+
+    var worldTransformForChildren: simd_float4x4 {
+        if let parent {
+            return parent.worldTransformForChildren * transformForChildren
+        } else {
+            return transformForChildren
+        }
+    }
+
     var transform = matrix_identity_float4x4
 
     var worldTransform: simd_float4x4 {
         if let parent {
-            return parent.worldTransform * transform
+            return parent.worldTransformForChildren * transform
         } else {
             return transform
         }
@@ -107,25 +115,26 @@ class ModelNodeWrapper {
     }
 
     func calcBoundingBox(wrappers: [ModelNodeWrapper]) {
-        transform = matrix_identity_float4x4
-        transform = matrix_translate(transform, node.position)
+        transformForChildren = matrix_identity_float4x4
+        transformForChildren = matrix_translate(transformForChildren, node.position)
 
         if node.rotationKeyframes.count == 0 {
-//            transform = SGLMath.rotate(transform, rotangle, rotaxis)
+//            transformForChildren = SGLMath.rotate(transformForChildren, rotangle, rotaxis)
         } else {
-            transform = rotateQuat(transform, w: node.rotationKeyframes[0].quaternion)
+            transformForChildren = rotateQuat(transformForChildren, w: node.rotationKeyframes[0].quaternion)
         }
 
-        transform = matrix_scale(transform, node.scale)
+        transformForChildren = matrix_scale(transformForChildren, node.scale)
 
-        var matrix = worldTransform
+        transform = transformForChildren
 
-        if wrappers.count > 1 {
-            matrix = matrix_translate(matrix, node.offset)
-        }
+//        if wrappers.count > 1 {
+            transform = matrix_translate(transform, node.offset)
+//        }
 
-        matrix = matrix * simd_float4x4(node.transformationMatrix)
+        transform = transform * simd_float4x4(node.transformationMatrix)
 
+        let matrix = worldTransform
         for vertex in node.vertices {
             let vertex = matrix * simd_float4(vertex, 1)
 
@@ -148,13 +157,13 @@ class ModelNodeWrapper {
         matrix = matrix_translate(matrix, [-boundingBox.center[0], -boundingBox.max[1], -boundingBox.center[2]])
         matrix = matrix * worldTransform
 
-        if rsm.nodes.count == 1 {
-            matrix = matrix_translate(matrix, node.offset)
-        }
+//        if rsm.nodes.count == 1 {
+//            matrix = matrix_translate(matrix, node.offset)
+//        }
+//
+//        matrix = matrix * simd_float4x4(node.transformationMatrix)
 
-        matrix = matrix * simd_float4x4(node.transformationMatrix)
-
-        // modelMatrix = instance * translate * worldTransform * node.offset * node.transformationMatrix
+        // modelMatrix = instance * translate * worldTransform
         let modelViewMat = instance_matrix * matrix
         let normalMat = extractRotation(modelViewMat)
 
