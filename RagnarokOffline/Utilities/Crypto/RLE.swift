@@ -6,6 +6,8 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
+import Foundation
+
 struct RLE {
     func decompress(_ data: Data) -> Data {
         var decompressedData = Data()

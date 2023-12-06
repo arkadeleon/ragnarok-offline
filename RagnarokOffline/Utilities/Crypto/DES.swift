@@ -1,5 +1,5 @@
 //
-//  DESDecryptor.swift
+//  DES.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/5/5.
@@ -8,8 +8,7 @@
 
 import Foundation
 
-class DESDecryptor: NSObject {
-
+class DES {
     let mask: [UInt8] = [
         0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01
     ]
@@ -89,106 +88,6 @@ class DESDecryptor: NSObject {
         return out
     }()
 
-    var tmp: [UInt8] = Array(repeating: 0, count: 8)
-    var tmp2: [UInt8] = Array(repeating: 0, count: 8)
-    let clean: [UInt8] = Array(repeating: 0, count: 8)
-
-    func initialPermutation(_ src: inout [UInt8], _ index: Int) {
-        for i in 0..<64 {
-            let j = Int(initialPermutationTable[i]) - 1
-            if src[index + ((j >> 3) & 7)] & mask[j & 7] != 0 {
-                tmp[(i >> 3) & 7] |= mask[i & 7]
-            }
-        }
-
-        src.replaceSubrange(index..<(index + 8), with: tmp)
-        tmp.replaceSubrange(0..<8, with: clean)
-    }
-
-    func finalPermutation(_ src: inout [UInt8], _ index: Int) {
-        for i in 0..<64 {
-            let j = Int(finalPermutationTable[i]) - 1
-            if src[index + ((j >> 3) & 7)] & mask[j & 7] != 0 {
-                tmp[(i >> 3) & 7] |= mask[i & 7]
-            }
-        }
-
-        src.replaceSubrange(index..<(index + 8), with: tmp)
-        tmp.replaceSubrange(0..<8, with: clean)
-    }
-
-    func transposition(_ src: inout [UInt8], _ index: Int) {
-        for i in 0..<32 {
-            let j = Int(transpositionTable[i]) - 1
-            if src[index + (j >> 3)] & mask[j & 7] != 0 {
-                tmp[(i >> 3) + 4] |= mask[i & 7]
-            }
-        }
-
-        src.replaceSubrange(index..<(index + 8), with: tmp)
-        tmp.replaceSubrange(0..<8, with: clean)
-    }
-
-    func expansion(_ src: inout [UInt8], _ index: Int) {
-        tmp[0] = ((src[index + 7] << 5) | (src[index + 4] >> 3)) & 0x3f // ..0 vutsr
-        tmp[1] = ((src[index + 4] << 1) | (src[index + 5] >> 7)) & 0x3f // ..srqpo n
-        tmp[2] = ((src[index + 4] << 5) | (src[index + 5] >> 3)) & 0x3f // ..o nmlkj
-        tmp[3] = ((src[index + 5] << 1) | (src[index + 6] >> 7)) & 0x3f // ..kjihg f
-        tmp[4] = ((src[index + 5] << 5) | (src[index + 6] >> 3)) & 0x3f // ..g fedcb
-        tmp[5] = ((src[index + 6] << 1) | (src[index + 7] >> 7)) & 0x3f // ..cba98 7
-        tmp[6] = ((src[index + 6] << 5) | (src[index + 7] >> 3)) & 0x3f // ..8 76543
-        tmp[7] = ((src[index + 7] << 1) | (src[index + 4] >> 7)) & 0x3f // ..43210 v
-
-        src.replaceSubrange(index..<(index + 8), with: tmp)
-        tmp.replaceSubrange(0..<8, with: clean)
-    }
-
-    func substitutionBox(_ src: inout [UInt8], _ index: Int) {
-        for i in 0..<4 {
-            let j = Int(src[i * 2 + 0 + index])
-            let k = Int(src[i * 2 + 1 + index])
-            tmp[i] = (substitutionBoxTable[i][j] & 0xf0) | (substitutionBoxTable[i][k] & 0x0f)
-        }
-
-        src.replaceSubrange(index..<(index + 8), with: tmp)
-        tmp.replaceSubrange(0..<8, with: clean)
-    }
-
-    func roundFunction(_ src: inout [UInt8], _ index: Int) {
-        for i in 0..<8 {
-            tmp2[i] = src[index + i]
-        }
-
-        expansion(&tmp2, 0)
-        substitutionBox(&tmp2, 0)
-        transposition(&tmp2, 0)
-
-        src[index + 0] ^= tmp2[4]
-        src[index + 1] ^= tmp2[5]
-        src[index + 2] ^= tmp2[6]
-        src[index + 3] ^= tmp2[7]
-    }
-
-    func decryptBlock(_ src: inout [UInt8], _ index: Int) {
-        initialPermutation(&src, index)
-        roundFunction(&src, index)
-        finalPermutation(&src, index)
-    }
-
-    func shuffleDec(_ src: inout [UInt8], _ index: Int) {
-        tmp[0] = src[index + 3]
-        tmp[1] = src[index + 4]
-        tmp[2] = src[index + 6]
-        tmp[3] = src[index + 0]
-        tmp[4] = src[index + 1]
-        tmp[5] = src[index + 2]
-        tmp[6] = src[index + 5]
-        tmp[7] = shuffleDecTable[Int(src[index + 7])]
-
-        src.replaceSubrange(index..<(index + 8), with: tmp)
-        tmp.replaceSubrange(0..<8, with: clean)
-    }
-
     func decodeFull(buf: inout [UInt8], len: Int, entrylen: Int) {
         let nblocks = len >> 3
 
@@ -208,7 +107,7 @@ class DESDecryptor: NSObject {
 
         // first 20 blocks are all des-encrypted
         while i < 20 && i < nblocks {
-            decryptBlock(&buf, i * 8)
+            decryptBlock(&buf[(i * 8)..<(i * 8 + 8)])
             i += 1
         }
 
@@ -216,14 +115,14 @@ class DESDecryptor: NSObject {
         while i < nblocks {
             // decrypt block
             if i % cycle == 0 {
-                decryptBlock(&buf, i * 8)
+                decryptBlock(&buf[(i * 8)..<(i * 8 + 8)])
                 i += 1
                 continue
             }
 
             // de-shuffle block
             if j == 7 {
-                shuffleDec(&buf, i * 8)
+                shuffleDec(&buf[(i * 8)..<(i * 8 + 8)])
                 j = 0
             }
 
@@ -239,10 +138,114 @@ class DESDecryptor: NSObject {
 
         // first 20 blocks are all des-encrypted
         while i < 20 && i < nblocks {
-            decryptBlock(&buf, i * 8)
+            decryptBlock(&buf[(i * 8)..<(i * 8 + 8)])
             i += 1
         }
 
         // the rest is plaintext, done.
+    }
+
+    private func decryptBlock(_ src: inout ArraySlice<UInt8>) {
+        initialPermutation(&src)
+        roundFunction(&src)
+        finalPermutation(&src)
+    }
+
+    private func initialPermutation(_ src: inout ArraySlice<UInt8>) {
+        var tmp = [UInt8](repeating: 0, count: 8)
+
+        for i in 0..<64 {
+            let j = Int(initialPermutationTable[i]) - 1
+            if src[src.startIndex + ((j >> 3) & 7)] & mask[j & 7] != 0 {
+                tmp[(i >> 3) & 7] |= mask[i & 7]
+            }
+        }
+
+        src[...] = tmp[...]
+    }
+
+    private func finalPermutation(_ src: inout ArraySlice<UInt8>) {
+        var tmp = [UInt8](repeating: 0, count: 8)
+
+        for i in 0..<64 {
+            let j = Int(finalPermutationTable[i]) - 1
+            if src[src.startIndex + ((j >> 3) & 7)] & mask[j & 7] != 0 {
+                tmp[(i >> 3) & 7] |= mask[i & 7]
+            }
+        }
+
+        src[...] = tmp[...]
+    }
+
+    private func roundFunction(_ src: inout ArraySlice<UInt8>) {
+        var tmp = [UInt8](repeating: 0, count: 8)
+
+        for i in 0..<8 {
+            tmp[i] = src[src.startIndex + i]
+        }
+
+        expansion(&tmp[...])
+        substitutionBox(&tmp[...])
+        transposition(&tmp[...])
+
+        src[src.startIndex + 0] ^= tmp[4]
+        src[src.startIndex + 1] ^= tmp[5]
+        src[src.startIndex + 2] ^= tmp[6]
+        src[src.startIndex + 3] ^= tmp[7]
+    }
+
+    private func expansion(_ src: inout ArraySlice<UInt8>) {
+        var tmp = [UInt8](repeating: 0, count: 8)
+
+        tmp[0] = ((src[src.startIndex + 7] << 5) | (src[src.startIndex + 4] >> 3)) & 0x3f // ..0 vutsr
+        tmp[1] = ((src[src.startIndex + 4] << 1) | (src[src.startIndex + 5] >> 7)) & 0x3f // ..srqpo n
+        tmp[2] = ((src[src.startIndex + 4] << 5) | (src[src.startIndex + 5] >> 3)) & 0x3f // ..o nmlkj
+        tmp[3] = ((src[src.startIndex + 5] << 1) | (src[src.startIndex + 6] >> 7)) & 0x3f // ..kjihg f
+        tmp[4] = ((src[src.startIndex + 5] << 5) | (src[src.startIndex + 6] >> 3)) & 0x3f // ..g fedcb
+        tmp[5] = ((src[src.startIndex + 6] << 1) | (src[src.startIndex + 7] >> 7)) & 0x3f // ..cba98 7
+        tmp[6] = ((src[src.startIndex + 6] << 5) | (src[src.startIndex + 7] >> 3)) & 0x3f // ..8 76543
+        tmp[7] = ((src[src.startIndex + 7] << 1) | (src[src.startIndex + 4] >> 7)) & 0x3f // ..43210 v
+
+        src[...] = tmp[...]
+    }
+
+    private func substitutionBox(_ src: inout ArraySlice<UInt8>) {
+        var tmp = [UInt8](repeating: 0, count: 8)
+
+        for i in 0..<4 {
+            let j = Int(src[src.startIndex + i * 2 + 0])
+            let k = Int(src[src.startIndex + i * 2 + 1])
+            tmp[i] = (substitutionBoxTable[i][j] & 0xf0) | (substitutionBoxTable[i][k] & 0x0f)
+        }
+
+        src[...] = tmp[...]
+    }
+
+    private func transposition(_ src: inout ArraySlice<UInt8>) {
+        var tmp = [UInt8](repeating: 0, count: 8)
+
+        for i in 0..<32 {
+            let j = Int(transpositionTable[i]) - 1
+            if src[src.startIndex + (j >> 3)] & mask[j & 7] != 0 {
+                tmp[(i >> 3) + 4] |= mask[i & 7]
+            }
+        }
+
+        src[...] = tmp[...]
+    }
+
+    private func shuffleDec(_ src: inout ArraySlice<UInt8>) {
+        var tmp = [UInt8](repeating: 0, count: 8)
+
+        tmp[0] = src[src.startIndex + 3]
+        tmp[1] = src[src.startIndex + 4]
+        tmp[2] = src[src.startIndex + 6]
+        tmp[3] = src[src.startIndex + 0]
+        tmp[4] = src[src.startIndex + 1]
+        tmp[5] = src[src.startIndex + 2]
+        tmp[6] = src[src.startIndex + 5]
+        tmp[7] = shuffleDecTable[Int(src[src.startIndex + 7])]
+
+        src[...] = tmp[...]
     }
 }

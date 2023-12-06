@@ -29,7 +29,7 @@
 		356BF6712AFC8964005B67F7 /* BinaryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF66C2AFC8963005B67F7 /* BinaryReader.swift */; };
 		356BF6722AFC8964005B67F7 /* MemoryStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF66D2AFC8963005B67F7 /* MemoryStream.swift */; };
 		356BF6732AFC8964005B67F7 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF66E2AFC8964005B67F7 /* Stream.swift */; };
-		356BF6752AFCCBF1005B67F7 /* DESDecryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6742AFCCBF1005B67F7 /* DESDecryptor.swift */; };
+		356BF6752AFCCBF1005B67F7 /* DES.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6742AFCCBF1005B67F7 /* DES.swift */; };
 		356BF6772AFCCDD9005B67F7 /* GRFWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6762AFCCDD9005B67F7 /* GRFWrapper.swift */; };
 		356BF67B2B037088005B67F7 /* ACT+AnimatedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF67A2B037088005B67F7 /* ACT+AnimatedImage.swift */; };
 		356BF67D2B0489CE005B67F7 /* SPR+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF67C2B0489CE005B67F7 /* SPR+Image.swift */; };
@@ -205,7 +205,7 @@
 		356BF66C2AFC8963005B67F7 /* BinaryReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryReader.swift; sourceTree = "<group>"; };
 		356BF66D2AFC8963005B67F7 /* MemoryStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryStream.swift; sourceTree = "<group>"; };
 		356BF66E2AFC8964005B67F7 /* Stream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
-		356BF6742AFCCBF1005B67F7 /* DESDecryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESDecryptor.swift; sourceTree = "<group>"; };
+		356BF6742AFCCBF1005B67F7 /* DES.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DES.swift; sourceTree = "<group>"; };
 		356BF6762AFCCDD9005B67F7 /* GRFWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GRFWrapper.swift; sourceTree = "<group>"; };
 		356BF67A2B037088005B67F7 /* ACT+AnimatedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ACT+AnimatedImage.swift"; sourceTree = "<group>"; };
 		356BF67C2B0489CE005B67F7 /* SPR+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SPR+Image.swift"; sourceTree = "<group>"; };
@@ -494,7 +494,7 @@
 			isa = PBXGroup;
 			children = (
 				356BF67E2B0495FA005B67F7 /* RLE.swift */,
-				356BF6742AFCCBF1005B67F7 /* DESDecryptor.swift */,
+				356BF6742AFCCBF1005B67F7 /* DES.swift */,
 			);
 			path = Crypto;
 			sourceTree = "<group>";
@@ -955,7 +955,7 @@
 				35B3B9E82A08C01600B4540B /* GAT.swift in Sources */,
 				356508C72B104C9500543562 /* EffectShaders.metal in Sources */,
 				356BF6822B04F54A005B67F7 /* ACTPreviewViewController.swift in Sources */,
-				356BF6752AFCCBF1005B67F7 /* DESDecryptor.swift in Sources */,
+				356BF6752AFCCBF1005B67F7 /* DES.swift in Sources */,
 				356BF6702AFC8964005B67F7 /* FileStream.swift in Sources */,
 				356BF6882B060243005B67F7 /* FilePreviewViewController.swift in Sources */,
 				35B3B9C62A08C01600B4540B /* loslib.c in Sources */,

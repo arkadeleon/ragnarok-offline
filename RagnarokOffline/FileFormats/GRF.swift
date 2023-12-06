@@ -143,11 +143,11 @@ extension GRF {
             var bytes = try reader.readBytes(Int(sizeCompressedAligned))
 
             if type & EntryType.encryptMixed.rawValue != 0 {
-                let decryptor = DESDecryptor()
-                decryptor.decodeFull(buf: &bytes, len: Int(sizeCompressedAligned), entrylen: Int(sizeCompressed))
+                let des = DES()
+                des.decodeFull(buf: &bytes, len: Int(sizeCompressedAligned), entrylen: Int(sizeCompressed))
             } else if type & EntryType.encryptHeader.rawValue != 0 {
-                let decryptor = DESDecryptor()
-                decryptor.decodeHeader(buf: &bytes, len: Int(sizeCompressedAligned))
+                let des = DES()
+                des.decodeHeader(buf: &bytes, len: Int(sizeCompressedAligned))
             }
 
             guard let data = Data(bytes).unzip() else {
