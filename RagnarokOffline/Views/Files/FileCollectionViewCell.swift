@@ -18,6 +18,7 @@ class FileCollectionViewCell: UICollectionViewCell {
         thumbnailView = UIImageView()
         thumbnailView.translatesAutoresizingMaskIntoConstraints = false
         thumbnailView.contentMode = .scaleAspectFit
+        thumbnailView.tintColor = .label
         contentView.addSubview(thumbnailView)
 
         thumbnailView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
@@ -48,7 +49,11 @@ class FileCollectionViewCell: UICollectionViewCell {
             DispatchQueue.main.async {
                 switch thumbnail {
                 case .icon(let name):
-                    self?.thumbnailView.image = UIImage(systemName: name)?.withRenderingMode(.alwaysOriginal)
+                    if file.isDirectory {
+                        self?.thumbnailView.image = UIImage(systemName: name)?.withRenderingMode(.alwaysOriginal)
+                    } else {
+                        self?.thumbnailView.image = UIImage(systemName: name)?.withRenderingMode(.alwaysTemplate)
+                    }
                 case .thumbnail(let image):
                     self?.thumbnailView.image = image
                 }

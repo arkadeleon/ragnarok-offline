@@ -44,14 +44,14 @@ struct ContentView: View {
                         Label("Files", systemImage: "folder")
                     }
 
-                    NavigationLink {
-                        GameView()
-                            .ignoresSafeArea()
-                            .navigationTitle("Game")
-                            .navigationBarTitleDisplayMode(.inline)
-                    } label: {
-                        Label("Game", systemImage: "gamecontroller")
-                    }
+//                    NavigationLink {
+//                        GameView()
+//                            .ignoresSafeArea()
+//                            .navigationTitle("Game")
+//                            .navigationBarTitleDisplayMode(.inline)
+//                    } label: {
+//                        Label("Game", systemImage: "gamecontroller")
+//                    }
                 }
 
                 Section("Servers") {
