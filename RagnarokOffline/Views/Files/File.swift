@@ -204,41 +204,6 @@ enum File {
 
         return files
     }
-
-    func pasteFromPasteboard(_ pasteboard: FilePasteboard) -> File? {
-        guard let sourceFile = pasteboard.file else {
-            return nil
-        }
-
-        guard case .url(let url) = self else {
-            return nil
-        }
-
-        let destinationFile = File.url(url.appending(path: sourceFile.name))
-        switch sourceFile {
-        case .url:
-            do {
-                try FileManager.default.copyItem(at: sourceFile.url, to: destinationFile.url)
-                return destinationFile
-            } catch {
-                return nil
-            }
-        case .grf:
-            return nil
-        case .grfDirectory:
-            return nil
-        case .grfEntry(let grf, let entry):
-            guard let contents = try? grf.contentsOfEntry(entry) else {
-                return nil
-            }
-            do {
-                try contents.write(to: destinationFile.url)
-                return destinationFile
-            } catch {
-                return nil
-            }
-        }
-    }
 }
 
 extension File: Comparable {
