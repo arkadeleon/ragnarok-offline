@@ -88,12 +88,12 @@ class FileThumbnailGenerator {
                     return
                 }
 
-                guard let palette = try? Palette(data: data) else {
+                guard let pal = try? PAL(data: data) else {
                     return
                 }
 
                 let scale = UIScreen.main.scale
-                guard let image = palette.image(at: CGSize(width: 32 * scale, height: 32 * scale)) else {
+                guard let image = pal.image(at: CGSize(width: 32 * scale, height: 32 * scale)) else {
                     return
                 }
 

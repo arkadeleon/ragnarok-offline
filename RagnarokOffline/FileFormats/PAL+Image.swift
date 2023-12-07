@@ -1,55 +1,14 @@
 //
-//  Palette.swift
+//  PAL+Image.swift
 //  RagnarokOffline
 //
-//  Created by Leon Li on 2020/7/1.
-//  Copyright © 2020 Leon & Vane. All rights reserved.
+//  Created by Leon Li on 2023/12/7.
+//  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
 import CoreGraphics
 
-struct Palette: Encodable {
-    var colors: [Color] = []
-
-    init(data: Data) throws {
-        let stream = MemoryStream(data: data)
-        let reader = BinaryReader(stream: stream)
-
-        defer {
-            reader.close()
-        }
-
-        for _ in 0..<256 {
-            let color = try Color(from: reader)
-            colors.append(color)
-        }
-    }
-}
-
-extension Palette {
-    struct Color: Encodable {
-        var red: UInt8
-        var green: UInt8
-        var blue: UInt8
-        var alpha: UInt8
-
-        init(red: UInt8, green: UInt8, blue: UInt8, alpha: UInt8) {
-            self.red = red
-            self.green = green
-            self.blue = blue
-            self.alpha = alpha
-        }
-
-        init(from reader: BinaryReader) throws {
-            red = try reader.readInt()
-            green = try reader.readInt()
-            blue = try reader.readInt()
-            alpha = try reader.readInt()
-        }
-    }
-}
-
-extension Palette {
+extension PAL {
     func image(at size: CGSize) -> CGImage? {
         let width = Int(size.width)
         let height = Int(size.height)
@@ -72,7 +31,7 @@ extension Palette {
         let blockSize = CGSizeMake(size.width / 16, size.height / 16)
         for x in 0..<16 {
             for y in 0..<16 {
-                let color = colors[y * 16 + x].cgColor()
+                let color = cgColor(for: colors[y * 16 + x])
                 context.setFillColor(color)
 
                 let rect = CGRect(
@@ -88,14 +47,12 @@ extension Palette {
         let image = context.makeImage()
         return image
     }
-}
 
-extension Palette.Color {
-    func cgColor() -> CGColor {
-        var red = red
-        var green = green
-        var blue = blue
-        var alpha = alpha
+    func cgColor(for color: Color) -> CGColor {
+        var red = color.red
+        var green = color.green
+        var blue = color.blue
+        var alpha = color.alpha
 
         // Reference: https://github.com/rdw-archive/RagnarokFileFormats/blob/master/PAL.MD
         if red >= 0xFE && green < 0x04 && blue >= 0xFE {

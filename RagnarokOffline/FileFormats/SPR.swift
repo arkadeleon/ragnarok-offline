@@ -12,7 +12,7 @@ struct SPR: Encodable {
     var header: String
     var version: String
     var sprites: [Sprite] = []
-    var palette: Palette?
+    var palette: PAL?
 
     init(data: Data) throws {
         let stream = MemoryStream(data: data)
@@ -60,7 +60,7 @@ struct SPR: Encodable {
         if version > "1.0" {
             try stream.seek(-1024, origin: .end)
             let paletteData = try reader.readBytes(1024)
-            palette = try Palette(data: Data(paletteData))
+            palette = try PAL(data: Data(paletteData))
         }
     }
 }

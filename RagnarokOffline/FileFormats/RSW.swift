@@ -152,43 +152,23 @@ extension RSW {
 
 extension RSW {
     struct Light: Encodable {
-        struct Diffuse: Encodable {
-            var red: Float
-            var green: Float
-            var blue: Float
-        }
-
-        struct Ambient: Encodable {
-            var red: Float
-            var green: Float
-            var blue: Float
-        }
-
         var longitude: Int32
         var latitude: Int32
-        var diffuse: Diffuse
-        var ambient: Ambient
+        var diffuse: DiffuseColor
+        var ambient: AmbientColor
         var opacity: Float
 
         init(from reader: BinaryReader, version: String) throws {
             if version >= "1.5" {
                 longitude = try reader.readInt()
                 latitude = try reader.readInt()
-                diffuse = try Diffuse(
-                    red: reader.readFloat(),
-                    green: reader.readFloat(),
-                    blue: reader.readFloat()
-                )
-                ambient = try Ambient(
-                    red: reader.readFloat(),
-                    green: reader.readFloat(),
-                    blue: reader.readFloat()
-                )
+                diffuse = try DiffuseColor(from: reader)
+                ambient = try AmbientColor(from: reader)
             } else {
                 longitude = 45
                 latitude = 45
-                diffuse = Diffuse(red: 1, green: 1, blue: 1)
-                ambient = Ambient(red: 0.3, green: 0.3, blue: 0.3)
+                diffuse = DiffuseColor(red: 1, green: 1, blue: 1)
+                ambient = AmbientColor(red: 0.3, green: 0.3, blue: 0.3)
             }
 
             if version >= "1.7" {
@@ -265,25 +245,15 @@ extension RSW {
         }
 
         struct Light: Encodable {
-            struct Diffuse: Encodable {
-                var red: Float
-                var green: Float
-                var blue: Float
-            }
-
             var name: String
             var position: simd_float3
-            var diffuse: Diffuse
+            var diffuse: DiffuseColor
             var range: Float
 
             init(from reader: BinaryReader, version: String) throws {
                 name = try reader.readString(80, encoding: .koreanEUC)
                 position = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
-                diffuse = try Diffuse(
-                    red: reader.readFloat(),
-                    green: reader.readFloat(),
-                    blue: reader.readFloat()
-                )
+                diffuse = try DiffuseColor(from: reader)
                 range = try reader.readFloat()
             }
         }

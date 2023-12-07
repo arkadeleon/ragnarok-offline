@@ -98,7 +98,7 @@ extension GND {
         var v4: Float
         var textureIndex: Int16
         var lightmapIndex: UInt16
-        var color: Palette.Color
+        var color: Color
 
         init(from reader: BinaryReader) throws {
             u1 = try reader.readFloat()
@@ -117,7 +117,7 @@ extension GND {
             let red: UInt8 = try reader.readInt()
             let green: UInt8 = try reader.readInt()
             let blue: UInt8 = try reader.readInt()
-            color = Palette.Color(red: red, green: green, blue: blue, alpha: alpha)
+            color = Color(red: red, green: green, blue: blue, alpha: alpha)
         }
     }
 }
