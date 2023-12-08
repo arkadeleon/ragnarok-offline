@@ -6,7 +6,7 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
-struct Color: Encodable {
+struct Color: Equatable, Encodable {
     var red: UInt8
     var green: UInt8
     var blue: UInt8
