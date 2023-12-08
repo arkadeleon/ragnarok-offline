@@ -30,7 +30,9 @@ struct TextDocumentView: View {
         switch file.contentType {
         case .lub:
             let decompiler = LuaDecompiler()
-            data = decompiler.decompileData(data)
+            if let decompiledData = decompiler.decompileData(data) {
+                data = decompiledData
+            }
         default:
             break
         }

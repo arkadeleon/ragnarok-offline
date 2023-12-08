@@ -10,6 +10,6 @@
 
 @interface LuaDecompiler : NSObject
 
-- (NSData *)decompileData:(NSData *)data;
+- (nullable NSData *)decompileData:(nonnull NSData *)data;
 
 @end

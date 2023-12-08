@@ -39,6 +39,11 @@ extern lua_State* glstate;
 }
 
 - (NSData *)decompileData:(NSData *)data {
+    // Only lua 5.1 is supported.
+    if (data.length < 5 || ((uint8_t *)data.bytes)[4] != 0x51) {
+        return nil;
+    }
+
     glstate = l;
 
     luaL_loadbuffer(l, data.bytes, data.length, nil);
