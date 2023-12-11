@@ -61,14 +61,12 @@ class ImageDocumentViewController: UIViewController {
 
     private func loadDocumentContents() {
         DispatchQueue.global().async {
-            guard let data = self.file.contents() else {
+            guard let type = self.file.type, let data = self.file.contents() else {
                 return
             }
 
             var image: UIImage? = nil
-            switch self.file.contentType {
-            case .bmp, .png, .jpg, .tga:
-                image = UIImage(data: data)
+            switch type {
             case .ebm:
                 if let decompressedData = data.unzip() {
                     image = UIImage(data: decompressedData)
@@ -77,7 +75,7 @@ class ImageDocumentViewController: UIViewController {
                 let pal = try? PAL(data: data)
                 image = pal?.image(at: CGSize(width: 256, height: 256)).map(UIImage.init)
             default:
-                break
+                image = UIImage(data: data)
             }
 
             DispatchQueue.main.async {

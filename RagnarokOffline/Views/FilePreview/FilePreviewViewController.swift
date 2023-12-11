@@ -24,23 +24,27 @@ class FilePreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let contentViewController = switch file.contentType {
-        case .txt, .xml, .ini, .lua, .lub:
+        guard let type = file.type else {
+            return
+        }
+
+        let contentViewController = switch type {
+        case let type where type.conforms(to: .text) == true || type == .lua || type == .lub:
             UIHostingController(rootView: TextDocumentView(file: file))
-        case .bmp, .png, .jpg, .tga, .ebm, .pal:
+        case let type where type.conforms(to: .image) == true || type == .ebm || type == .pal:
             ImageDocumentViewController(file: file)
-        case .mp3, .wav:
+        case let type where type.conforms(to: .audio) == true:
             AudioDocumentViewController(file: file)
-        case .spr:
-            UIHostingController(rootView: SpriteDocumentView(file: file))
         case .act:
             ACTPreviewViewController(file: file)
-        case .rsm:
-            RSMPreviewViewController(file: file)
         case .gat:
             GATPreviewViewController(file: file)
+        case .rsm:
+            RSMPreviewViewController(file: file)
         case .rsw:
             RSWPreviewViewController(file: file)
+        case .spr:
+            UIHostingController(rootView: SpriteDocumentView(file: file))
         case .str:
             STRPreviewViewController(file: file)
         default:

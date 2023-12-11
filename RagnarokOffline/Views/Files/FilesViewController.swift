@@ -101,7 +101,16 @@ class FilesViewController: UIViewController {
     }
 
     private func presentFilePreviewViewController(file: File) {
-        let files = diffableDataSource.snapshot().itemIdentifiers.filter({ $0.contentType != nil })
+        let files = diffableDataSource.snapshot().itemIdentifiers.filter { file in
+            guard let type = file.type else {
+                return false
+            }
+            if type.conforms(to: .directory) || type.conforms(to: .archive) {
+                return false
+            } else {
+                return true
+            }
+        }
 
         let pageViewController = FilePreviewPageViewController(file: file, files: files)
         let navigationController = UINavigationController(rootViewController: pageViewController)
@@ -113,14 +122,14 @@ class FilesViewController: UIViewController {
 
 extension FilesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let file = diffableDataSource.itemIdentifier(for: indexPath) else {
+        guard let file = diffableDataSource.itemIdentifier(for: indexPath), let type = file.type else {
             return
         }
 
-        if file.isDirectory || file.isArchive {
+        if type.conforms(to: .directory) || type.conforms(to: .archive) {
             let filesViewController = FilesViewController(file: file)
             navigationController?.pushViewController(filesViewController, animated: true)
-        } else if file.contentType != nil {
+        } else {
             presentFilePreviewViewController(file: file)
         }
     }
@@ -137,21 +146,23 @@ extension FilesViewController: UICollectionViewDelegate {
             actions.append(fileInfoAction)
         }
 
-        if let file = files.first, file.contentType != nil {
-            let previewAction = UIAction(title: "Preview", image: UIImage(systemName: "eye")) { _ in
-                self.presentFilePreviewViewController(file: file)
+        if let file = files.first, let type = file.type {
+            if !type.conforms(to: .directory) && !type.conforms(to: .archive) {
+                let previewAction = UIAction(title: "Preview", image: UIImage(systemName: "eye")) { _ in
+                    self.presentFilePreviewViewController(file: file)
+                }
+                actions.append(previewAction)
             }
-            actions.append(previewAction)
         }
 
-        if let file = files.first, !file.isDirectory && !file.isArchive {
+        if let file = files.first, let type = file.type, !type.conforms(to: .directory), !type.conforms(to: .archive) {
             let copyAction = UIAction(title: "Copy", image: UIImage(systemName: "doc.on.doc")) { _ in
                 FilePasteboard.shared.copy(file)
             }
             actions.append(copyAction)
         }
 
-        if file.isDirectory && FilePasteboard.shared.hasFile {
+        if let type = file.type, type.conforms(to: .directory), FilePasteboard.shared.hasFile {
             let pasteAction = UIAction(title: "Paste", image: UIImage(systemName: "doc.on.clipboard")) { _ in
                 if let file = self.file.pasteFromPasteboard(FilePasteboard.shared) {
                     Task {
@@ -165,7 +176,14 @@ extension FilesViewController: UICollectionViewDelegate {
             actions.append(pasteAction)
         }
 
-        if let file = files.first, case .url(let url) = file, !file.isDirectory {
+        let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
+            let activityItems = files.map({ $0.activityItem }).compactMap({ $0 })
+            let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+            self.present(activityViewController, animated: true)
+        }
+        actions.append(shareAction)
+
+        if let file = files.first, let type = file.type, case .url(let url) = file, !type.conforms(to: .directory) {
             let deleteAction = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
                 do {
                     try FileManager.default.removeItem(at: url)

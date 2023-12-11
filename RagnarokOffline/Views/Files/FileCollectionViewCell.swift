@@ -49,7 +49,7 @@ class FileCollectionViewCell: UICollectionViewCell {
             DispatchQueue.main.async {
                 switch thumbnail {
                 case .icon(let name):
-                    if file.isDirectory {
+                    if let type = file.type, type.conforms(to: .directory) {
                         self?.thumbnailView.image = UIImage(systemName: name)?.withRenderingMode(.alwaysOriginal)
                     } else {
                         self?.thumbnailView.image = UIImage(systemName: name)?.withRenderingMode(.alwaysTemplate)

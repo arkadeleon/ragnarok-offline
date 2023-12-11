@@ -23,12 +23,12 @@ class FileThumbnailCache {
     private let cache = NSCache<NSURL, CachedThumbnail>()
 
     func generateThumbnail(for file: File, update updateHandler: @escaping (FileThumbnailRepresentation) -> Void) {
-        if let thumbnail = cache.object(forKey: file.id as NSURL)?.thumbnail {
+        if let thumbnail = cache.object(forKey: file.url as NSURL)?.thumbnail {
             updateHandler(thumbnail)
         } else {
             generator.generateThumbnail(for: file) { [weak self] thumbnail in
                 let cachedThumbnail = CachedThumbnail(thumbnail: thumbnail)
-                self?.cache.setObject(cachedThumbnail, forKey: file.id as NSURL)
+                self?.cache.setObject(cachedThumbnail, forKey: file.url as NSURL)
                 updateHandler(thumbnail)
             }
         }

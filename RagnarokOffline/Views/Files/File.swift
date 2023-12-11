@@ -14,52 +14,6 @@ enum File {
     case grfDirectory(GRFWrapper, GRF.Path)
     case grfEntry(GRFWrapper, GRF.Entry)
 
-    var isDirectory: Bool {
-        switch self {
-        case .url(let url):
-            let values = try? url.resourceValues(forKeys: [.isDirectoryKey])
-            return values?.isDirectory == true
-        case .grf:
-            return false
-        case .grfDirectory:
-            return true
-        case .grfEntry:
-            return false
-        }
-    }
-
-    var isArchive: Bool {
-        switch self {
-        case .url:
-            return false
-        case .grf:
-            return true
-        case .grfDirectory:
-            return false
-        case .grfEntry:
-            return false
-        }
-    }
-
-    var contentType: FileType? {
-        if isDirectory {
-            return nil
-        }
-
-        switch self {
-        case .url(let url):
-            let fileType = FileType(rawValue: url.pathExtension)
-            return fileType
-        case .grf:
-            return nil
-        case .grfDirectory:
-            return nil
-        case .grfEntry(_, let entry):
-            let fileType = FileType(rawValue: String(entry.path.extension))
-            return fileType
-        }
-    }
-
     var url: URL {
         switch self {
         case .url(let url):
@@ -90,72 +44,22 @@ enum File {
         }
     }
 
-    var hasInfo: Bool {
-        switch contentType {
-        case .act, .gat, .gnd, .rsm, .rsw, .spr, .str:
-            true
-        default:
-            false
-        }
-    }
-
-    var info: Encodable? {
-        switch contentType {
-        case .act:
-            guard let data = contents() else {
-                return nil
-            }
-            let act = try? ACT(data: data)
-            return act
-        case .gat:
-            guard let data = contents() else {
-                return nil
-            }
-            let gat = try? GAT(data: data)
-            return gat
-        case .gnd:
-            guard let data = contents() else {
-                return nil
-            }
-            let gnd = try? GND(data: data)
-            return gnd
-        case .rsm:
-            guard let data = contents() else {
-                return nil
-            }
-            let rsm = try? RSM(data: data)
-            return rsm
-        case .rsw:
-            guard let data = contents() else {
-                return nil
-            }
-            let rsw = try? RSW(data: data)
-            return rsw
-        case .spr:
-            guard let data = contents() else {
-                return nil
-            }
-            let spr = try? SPR(data: data)
-            return spr
-        case .str:
-            guard let data = contents() else {
-                return nil
-            }
-            let str = try? STR(data: data)
-            return str
-        default:
-            return nil
-        }
+    var `extension`: String {
+        (name as NSString).pathExtension
     }
 
     func contents() -> Data? {
+        guard let type else {
+            return nil
+        }
+
+        guard !type.conforms(to: .directory), !type.conforms(to: .archive) else {
+            return nil
+        }
+
         switch self {
         case .url(let url):
-            if isDirectory {
-                return nil
-            } else {
-                return try? Data(contentsOf: url)
-            }
+            return try? Data(contentsOf: url)
         case .grf:
             return nil
         case .grfDirectory:
@@ -170,7 +74,7 @@ enum File {
 
         switch self {
         case .url(let url):
-            guard isDirectory else {
+            guard let type, type.conforms(to: .directory) else {
                 break
             }
             guard let urls = try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: []) else {
@@ -208,11 +112,12 @@ enum File {
 
 extension File: Comparable {
     static func < (lhs: File, rhs: File) -> Bool {
-        if lhs.isDirectory == rhs.isDirectory {
+        let lhsRank = lhs.type?.conforms(to: .directory) == true ? 0 : 1
+        let rhsRank = rhs.type?.conforms(to: .directory) == true ? 0 : 1
+
+        if lhsRank == rhsRank {
             return lhs.name.lowercased() < rhs.name.lowercased()
         } else {
-            let lhsRank = lhs.isDirectory ? 0 : 1
-            let rhsRank = rhs.isDirectory ? 0 : 1
             return lhsRank < rhsRank
         }
     }
@@ -220,18 +125,12 @@ extension File: Comparable {
 
 extension File: Equatable {
     static func == (lhs: File, rhs: File) -> Bool {
-        lhs.id == rhs.id
+        lhs.url == rhs.url
     }
 }
 
 extension File: Hashable {
     func hash(into hasher: inout Hasher) {
         url.hash(into: &hasher)
-    }
-}
-
-extension File: Identifiable {
-    var id: URL {
-        url
     }
 }

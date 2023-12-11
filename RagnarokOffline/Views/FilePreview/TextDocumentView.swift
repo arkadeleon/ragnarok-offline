@@ -23,11 +23,11 @@ struct TextDocumentView: View {
     }
 
     private func loadDocumentContents() {
-        guard var data = file.contents() else {
+        guard let type = file.type, var data = file.contents() else {
             return
         }
 
-        switch file.contentType {
+        switch type {
         case .lub:
             let decompiler = LuaDecompiler()
             if let decompiledData = decompiler.decompileData(data) {
