@@ -10,11 +10,8 @@ import UniformTypeIdentifiers
 
 extension File {
     var type: UTType? {
-        if case .url(let url) = self {
-            let values = try? url.resourceValues(forKeys: [.isDirectoryKey])
-            if values?.isDirectory == true {
-                return .folder
-            }
+        if case .directory = self {
+            return .folder
         }
 
         if case .grfDirectory = self {

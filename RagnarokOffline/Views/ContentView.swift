@@ -36,7 +36,7 @@ struct ContentView: View {
             List {
                 Section("Client") {
                     NavigationLink {
-                        FilesView(file: .url(url))
+                        FilesView(file: .directory(url))
                             .ignoresSafeArea()
                             .navigationTitle("Files")
                             .navigationBarTitleDisplayMode(.inline)
@@ -76,7 +76,7 @@ struct ContentView: View {
             }
             .navigationTitle("Ragnarok Offline")
 
-            FilesView(file: .url(url))
+            FilesView(file: .directory(url))
                 .ignoresSafeArea()
                 .navigationTitle("Files")
                 .navigationBarTitleDisplayMode(.inline)

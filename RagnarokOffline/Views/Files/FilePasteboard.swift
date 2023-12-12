@@ -24,13 +24,15 @@ extension File {
             return nil
         }
 
-        guard case .url(let url) = self else {
+        guard case .directory(let url) = self else {
             return nil
         }
 
-        let destinationFile = File.url(url.appending(path: sourceFile.name))
+        let destinationFile: File = .regularFile(url.appending(path: sourceFile.name))
         switch sourceFile {
-        case .url:
+        case.directory:
+            return nil
+        case .regularFile:
             do {
                 try FileManager.default.copyItem(at: sourceFile.url, to: destinationFile.url)
                 return destinationFile

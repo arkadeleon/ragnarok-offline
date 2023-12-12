@@ -155,14 +155,19 @@ extension FilesViewController: UICollectionViewDelegate {
             }
         }
 
-        if let file = files.first, let type = file.type, !type.conforms(to: .directory), !type.conforms(to: .archive) {
-            let copyAction = UIAction(title: "Copy", image: UIImage(systemName: "doc.on.doc")) { _ in
-                FilePasteboard.shared.copy(file)
+        if let file = files.first {
+            switch file {
+            case .regularFile, .grf, .grfEntry:
+                let copyAction = UIAction(title: "Copy", image: UIImage(systemName: "doc.on.doc")) { _ in
+                    FilePasteboard.shared.copy(file)
+                }
+                actions.append(copyAction)
+            default:
+                break
             }
-            actions.append(copyAction)
         }
 
-        if let type = file.type, type.conforms(to: .directory), FilePasteboard.shared.hasFile {
+        if case .directory = file, FilePasteboard.shared.hasFile {
             let pasteAction = UIAction(title: "Paste", image: UIImage(systemName: "doc.on.clipboard")) { _ in
                 if let file = self.file.pasteFromPasteboard(FilePasteboard.shared) {
                     Task {
@@ -176,14 +181,16 @@ extension FilesViewController: UICollectionViewDelegate {
             actions.append(pasteAction)
         }
 
-        let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
-            let activityItems = files.map({ $0.activityItem }).compactMap({ $0 })
-            let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-            self.present(activityViewController, animated: true)
+        let activityItems = files.map({ $0.activityItem }).compactMap({ $0 })
+        if !activityItems.isEmpty {
+            let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
+                let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+                self.present(activityViewController, animated: true)
+            }
+            actions.append(shareAction)
         }
-        actions.append(shareAction)
 
-        if let file = files.first, let type = file.type, case .url(let url) = file, !type.conforms(to: .directory) {
+        if let file = files.first, case .regularFile(let url) = file {
             let deleteAction = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
                 do {
                     try FileManager.default.removeItem(at: url)

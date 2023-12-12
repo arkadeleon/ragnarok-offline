@@ -82,7 +82,7 @@ class ACTPreviewViewController: UIViewController {
 
         let sprData: Data?
         switch file {
-        case .url(let url):
+        case .regularFile(let url):
             let sprPath = url.deletingPathExtension().path().appending(".spr")
             sprData = try? Data(contentsOf: URL(filePath: sprPath))
         case .grfEntry(let grf, let entry):

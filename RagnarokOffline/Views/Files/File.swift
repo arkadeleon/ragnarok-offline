@@ -9,14 +9,17 @@
 import Foundation
 
 enum File {
-    case url(URL)
+    case directory(URL)
+    case regularFile(URL)
     case grf(GRFWrapper)
     case grfDirectory(GRFWrapper, GRF.Path)
     case grfEntry(GRFWrapper, GRF.Entry)
 
     var url: URL {
         switch self {
-        case .url(let url):
+        case .directory(let url):
+            return url
+        case .regularFile(let url):
             return url
         case .grf(let grf):
             return grf.url
@@ -33,7 +36,9 @@ enum File {
 
     var name: String {
         switch self {
-        case .url(let url):
+        case .directory(let url):
+            return url.lastPathComponent
+        case .regularFile(let url):
             return url.lastPathComponent
         case .grf(let grf):
             return grf.url.lastPathComponent
@@ -49,16 +54,10 @@ enum File {
     }
 
     func contents() -> Data? {
-        guard let type else {
-            return nil
-        }
-
-        guard !type.conforms(to: .directory), !type.conforms(to: .archive) else {
-            return nil
-        }
-
         switch self {
-        case .url(let url):
+        case .directory:
+            return nil
+        case .regularFile(let url):
             return try? Data(contentsOf: url)
         case .grf:
             return nil
@@ -70,29 +69,31 @@ enum File {
     }
 
     func files() -> [File] {
-        var files: [File] = []
-
         switch self {
-        case .url(let url):
-            guard let type, type.conforms(to: .directory) else {
-                break
-            }
-            guard let urls = try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: []) else {
-                break
-            }
-            files = urls.map({ $0.resolvingSymlinksInPath() }).map { url -> File in
+        case .directory(let url):
+            let urls = (try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [])) ?? []
+            let files = urls.map({ $0.resolvingSymlinksInPath() }).map { url -> File in
                 switch url.pathExtension.lowercased() {
                 case "grf":
                     let grf = GRFWrapper(url: url)
                     return .grf(grf)
                 default:
-                    return .url(url)
+                    let values = try? url.resourceValues(forKeys: [.isDirectoryKey])
+                    if values?.isDirectory == true {
+                        return .directory(url)
+                    } else {
+                        return .regularFile(url)
+                    }
                 }
             }
+            return files
+        case .regularFile:
+            return []
         case .grf(let grf):
             let file = File.grfDirectory(grf, GRF.Path(string: "data"))
-            files = file.files()
+            return file.files()
         case .grfDirectory(let grf, let directory):
+            var files: [File] = []
             let (directories, entries) = grf.contentsOfDirectory(directory)
             for directory in directories {
                 let file = File.grfDirectory(grf, directory)
@@ -102,18 +103,24 @@ enum File {
                 let file = File.grfEntry(grf, entry)
                 files.append(file)
             }
+            return files
         case .grfEntry:
-            break
+            return []
         }
-
-        return files
     }
 }
 
 extension File: Comparable {
     static func < (lhs: File, rhs: File) -> Bool {
-        let lhsRank = lhs.type?.conforms(to: .directory) == true ? 0 : 1
-        let rhsRank = rhs.type?.conforms(to: .directory) == true ? 0 : 1
+        let lhsRank = switch lhs {
+        case .directory, .grfDirectory: 0
+        default: 1
+        }
+
+        let rhsRank = switch rhs {
+        case .directory, .grfDirectory: 0
+        default: 1
+        }
 
         if lhsRank == rhsRank {
             return lhs.name.lowercased() < rhs.name.lowercased()

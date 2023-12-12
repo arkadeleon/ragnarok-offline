@@ -48,12 +48,10 @@ class FileActivityItem: NSObject, UIActivityItemSource {
 extension File {
     var activityItem: Any? {
         switch self {
-        case .url:
-            if let type, type.conforms(to: .directory) {
-                return nil
-            } else {
-                return FileActivityItem(file: self)
-            }
+        case .directory:
+            return nil
+        case .regularFile:
+            return FileActivityItem(file: self)
         case .grf:
             return url
         case .grfDirectory:
