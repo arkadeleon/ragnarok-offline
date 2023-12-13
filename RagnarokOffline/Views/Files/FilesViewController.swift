@@ -135,39 +135,7 @@ extension FilesViewController: UICollectionViewDelegate {
     }
 
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
-        let files = indexPaths.compactMap({ diffableDataSource.itemIdentifier(for: $0) })
-
-        var actions: [UIAction] = []
-
-        if let file = files.first, file.hasInfo {
-            let fileInfoAction = UIAction(title: "File Info", image: UIImage(systemName: "info.circle")) { _ in
-                self.presentFileInfoViewController(file: file)
-            }
-            actions.append(fileInfoAction)
-        }
-
-        if let file = files.first, let type = file.type {
-            if !type.conforms(to: .directory) && !type.conforms(to: .archive) {
-                let previewAction = UIAction(title: "Preview", image: UIImage(systemName: "eye")) { _ in
-                    self.presentFilePreviewViewController(file: file)
-                }
-                actions.append(previewAction)
-            }
-        }
-
-        if let file = files.first {
-            switch file {
-            case .regularFile, .grf, .grfEntry:
-                let copyAction = UIAction(title: "Copy", image: UIImage(systemName: "doc.on.doc")) { _ in
-                    FilePasteboard.shared.copy(file)
-                }
-                actions.append(copyAction)
-            default:
-                break
-            }
-        }
-
-        if case .directory = file, FilePasteboard.shared.hasFile {
+        if indexPaths.isEmpty, case .directory = file, FilePasteboard.shared.hasFile {
             let pasteAction = UIAction(title: "Paste", image: UIImage(systemName: "doc.on.clipboard")) { _ in
                 if let file = self.file.pasteFromPasteboard(FilePasteboard.shared) {
                     Task {
@@ -178,19 +146,57 @@ extension FilesViewController: UICollectionViewDelegate {
                     }
                 }
             }
-            actions.append(pasteAction)
+            let configuration = UIContextMenuConfiguration(actionProvider: { _ in
+                UIMenu(children: [pasteAction])
+            })
+            return configuration
         }
 
-        let activityItems = files.map({ $0.activityItem }).compactMap({ $0 })
-        if !activityItems.isEmpty {
+        guard let indexPath = indexPaths.first,
+              let cell = collectionView.cellForItem(at: indexPath),
+              let file = diffableDataSource.itemIdentifier(for: indexPath)
+        else {
+            return nil
+        }
+
+        var actions: [UIAction] = []
+
+        if file.jsonRepresentable {
+            let fileInfoAction = UIAction(title: "File Info", image: UIImage(systemName: "info.circle")) { _ in
+                self.presentFileInfoViewController(file: file)
+            }
+            actions.append(fileInfoAction)
+        }
+
+        if let type = file.type, !type.conforms(to: .directory) && !type.conforms(to: .archive) {
+            let previewAction = UIAction(title: "Preview", image: UIImage(systemName: "eye")) { _ in
+                self.presentFilePreviewViewController(file: file)
+            }
+            actions.append(previewAction)
+        }
+
+        switch file {
+        case .regularFile, .grf, .grfEntry:
+            let copyAction = UIAction(title: "Copy", image: UIImage(systemName: "doc.on.doc")) { _ in
+                FilePasteboard.shared.copy(file)
+            }
+            actions.append(copyAction)
+        default:
+            break
+        }
+
+        if let activityItem = file.activityItem {
             let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
-                let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+                let activityViewController = UIActivityViewController(activityItems: [activityItem], applicationActivities: nil)
+                activityViewController.modalPresentationStyle = .popover
+                activityViewController.popoverPresentationController?.sourceView = cell
+                activityViewController.popoverPresentationController?.sourceRect = cell.bounds
                 self.present(activityViewController, animated: true)
             }
             actions.append(shareAction)
         }
 
-        if let file = files.first, case .regularFile(let url) = file {
+        if case .regularFile(let url) = file {
             let deleteAction = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
                 do {
                     try FileManager.default.removeItem(at: url)

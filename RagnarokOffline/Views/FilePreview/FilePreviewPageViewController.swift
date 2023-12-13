@@ -12,6 +12,8 @@ class FilePreviewPageViewController: UIViewController {
     private(set) var file: File
     let files: [File]
 
+    private var backBarButtonItem: UIBarButtonItem!
+    private var shareBarButtonItem: UIBarButtonItem!
     private var pageViewController: UIPageViewController!
 
     init(file: File, files: [File]) {
@@ -39,14 +41,14 @@ class FilePreviewPageViewController: UIViewController {
         let backAction = UIAction(image: UIImage(systemName: "chevron.left")) { _ in
             self.dismiss(animated: true)
         }
-        let backItem = UIBarButtonItem(primaryAction: backAction)
-        navigationItem.leftBarButtonItem = backItem
+        backBarButtonItem = UIBarButtonItem(primaryAction: backAction)
+        navigationItem.leftBarButtonItem = backBarButtonItem
 
         let shareAction = UIAction(image: UIImage(systemName: "square.and.arrow.up")) { _ in
-            // Share
+            self.share()
         }
-        let shareItem = UIBarButtonItem(primaryAction: shareAction)
-        navigationItem.rightBarButtonItem = shareItem
+        shareBarButtonItem = UIBarButtonItem(primaryAction: shareAction)
+        navigationItem.rightBarButtonItem = shareBarButtonItem
 
         addPageViewController()
     }
@@ -68,6 +70,17 @@ class FilePreviewPageViewController: UIViewController {
 
         let previewViewController = FilePreviewViewController(file: file)
         pageViewController.setViewControllers([previewViewController], direction: .forward, animated: false)
+    }
+
+    private func share() {
+        guard let activityItem = file.activityItem else {
+            return
+        }
+
+        let activityViewController = UIActivityViewController(activityItems: [activityItem], applicationActivities: nil)
+        activityViewController.modalPresentationStyle = .popover
+        activityViewController.popoverPresentationController?.barButtonItem = shareBarButtonItem
+        self.present(activityViewController, animated: true)
     }
 }
 

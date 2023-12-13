@@ -49,8 +49,21 @@ enum File {
         }
     }
 
-    var `extension`: String {
-        (name as NSString).pathExtension
+    var size: Int? {
+        switch self {
+        case .directory:
+            return nil
+        case .regularFile(let url):
+            let values = try? url.resourceValues(forKeys: [.fileSizeKey])
+            return values?.fileSize
+        case .grf(let grf):
+            let values = try? grf.url.resourceValues(forKeys: [.fileSizeKey])
+            return values?.fileSize
+        case .grfDirectory:
+            return nil
+        case .grfEntry(_, let entry):
+            return Int(entry.size)
+        }
     }
 
     func contents() -> Data? {

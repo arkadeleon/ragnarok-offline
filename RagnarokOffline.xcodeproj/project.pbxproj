@@ -19,7 +19,7 @@
 		353098322B148E4100F32B62 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353098312B148E4100F32B62 /* Model.swift */; };
 		353098352B14EB0100F32B62 /* FileInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353098342B14EB0100F32B62 /* FileInfoViewController.swift */; };
 		353098402B15C75200F32B62 /* jsoneditor in Resources */ = {isa = PBXBuildFile; fileRef = 3530983F2B15C75200F32B62 /* jsoneditor */; };
-		35482AF12B2759DD0062DC4B /* File+Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35482AF02B2759DD0062DC4B /* File+Info.swift */; };
+		35482AF12B2759DD0062DC4B /* File+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35482AF02B2759DD0062DC4B /* File+JSON.swift */; };
 		356508C72B104C9500543562 /* EffectShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 356508C62B104C9500543562 /* EffectShaders.metal */; };
 		356508C92B104DCC00543562 /* EffectRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508C82B104DCC00543562 /* EffectRenderer.swift */; };
 		356508CF2B108D1500543562 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508CE2B108D1500543562 /* Effect.swift */; };
@@ -200,7 +200,7 @@
 		353098312B148E4100F32B62 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		353098342B14EB0100F32B62 /* FileInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileInfoViewController.swift; sourceTree = "<group>"; };
 		3530983F2B15C75200F32B62 /* jsoneditor */ = {isa = PBXFileReference; lastKnownFileType = folder; path = jsoneditor; sourceTree = "<group>"; };
-		35482AF02B2759DD0062DC4B /* File+Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+Info.swift"; sourceTree = "<group>"; };
+		35482AF02B2759DD0062DC4B /* File+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+JSON.swift"; sourceTree = "<group>"; };
 		356508C52B104AD400543562 /* EffectShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EffectShaderTypes.h; sourceTree = "<group>"; };
 		356508C62B104C9500543562 /* EffectShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = EffectShaders.metal; sourceTree = "<group>"; };
 		356508C82B104DCC00543562 /* EffectRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectRenderer.swift; sourceTree = "<group>"; };
@@ -755,7 +755,7 @@
 			children = (
 				35B3B98D2A08C01600B4540B /* File.swift */,
 				35B3B9952A08C01600B4540B /* File+Type.swift */,
-				35482AF02B2759DD0062DC4B /* File+Info.swift */,
+				35482AF02B2759DD0062DC4B /* File+JSON.swift */,
 				35774F792B231FAF00438311 /* FileActivityItem.swift */,
 				35B3B9962A08C01600B4540B /* FilePasteboard.swift */,
 				35B3B9942A08C01600B4540B /* FileThumbnailCache.swift */,
@@ -966,7 +966,7 @@
 				35B3BA202A08C01600B4540B /* RSMRenderer.swift in Sources */,
 				35B3B9BC2A08C01600B4540B /* lmathlib.c in Sources */,
 				35B3B9E12A08C01600B4540B /* GRF.swift in Sources */,
-				35482AF12B2759DD0062DC4B /* File+Info.swift in Sources */,
+				35482AF12B2759DD0062DC4B /* File+JSON.swift in Sources */,
 				35B3B9E32A08C01600B4540B /* RSM.swift in Sources */,
 				35B3B9DA2A08C01600B4540B /* macro-array.c in Sources */,
 				3504AB8C2A2EFB900029AC46 /* Camera.swift in Sources */,
@@ -1225,7 +1225,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20231206;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RagnarokOffline/Preview Content\"";
 				DEVELOPMENT_TEAM = GG76KD534U;
 				ENABLE_PREVIEWS = YES;
@@ -1258,7 +1258,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20231206;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RagnarokOffline/Preview Content\"";
 				DEVELOPMENT_TEAM = GG76KD534U;
 				ENABLE_PREVIEWS = YES;

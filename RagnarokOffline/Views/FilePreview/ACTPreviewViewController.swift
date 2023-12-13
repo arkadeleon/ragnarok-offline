@@ -165,25 +165,26 @@ extension ACTPreviewViewController {
 
 extension ACTPreviewViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
-        let activityItems = indexPaths.compactMap { indexPath -> AnimatedImageActivityItem? in
-            guard let animatedImage = diffableDataSource.itemIdentifier(for: indexPath) else {
-                return nil
-            }
-            let index = indexPath.section * 8 + indexPath.item
-            let activityItem = AnimatedImageActivityItem(animatedImage: animatedImage, filename: file.name, index: index)
-            return activityItem
-        }
-        guard !activityItems.isEmpty else {
+        guard let indexPath = indexPaths.first,
+              let cell = collectionView.cellForItem(at: indexPath),
+              let animatedImage = diffableDataSource.itemIdentifier(for: indexPath)
+        else {
             return nil
         }
 
+        let index = indexPath.section * 8 + indexPath.item
+        let activityItem = AnimatedImageActivityItem(animatedImage: animatedImage, filename: file.name, index: index)
+
+        let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
+            let activityViewController = UIActivityViewController(activityItems: [activityItem], applicationActivities: nil)
+            activityViewController.modalPresentationStyle = .popover
+            activityViewController.popoverPresentationController?.sourceView = cell
+            activityViewController.popoverPresentationController?.sourceRect = cell.bounds
+            self.present(activityViewController, animated: true)
+        }
+
         let configuration = UIContextMenuConfiguration(actionProvider: { _ in
-            UIMenu(children: [
-                UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
-                    let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-                    self.present(activityViewController, animated: true)
-                }
-            ])
+            UIMenu(children: [shareAction])
         })
         return configuration
     }

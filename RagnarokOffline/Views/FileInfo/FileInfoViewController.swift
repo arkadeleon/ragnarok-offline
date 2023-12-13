@@ -38,18 +38,12 @@ class FileInfoViewController: UIViewController {
         webView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
         Task {
-            await loadFileInfo()
+            await load()
         }
     }
 
-    nonisolated private func loadFileInfo() async {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
-
-        guard let fileInfo = file.info,
-              let data = try? encoder.encode(fileInfo),
-              let string = String(data: data, encoding: .utf8)
-        else {
+    nonisolated private func load() async {
+        guard let json = file.jsonRepresentation else {
             return
         }
 
@@ -74,7 +68,7 @@ class FileInfoViewController: UIViewController {
             editor.setName('\(file.name)')
 
             // set json
-            const json = \(string)
+            const json = \(json)
             editor.set(json)
         </script>
         """

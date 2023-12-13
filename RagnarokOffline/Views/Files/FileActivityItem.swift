@@ -38,7 +38,7 @@ class FileActivityItem: NSObject, UIActivityItemSource {
 
     func activityViewControllerLinkMetadata(_ activityViewController: UIActivityViewController) -> LPLinkMetadata? {
         let metadata = LPLinkMetadata()
-        metadata.originalURL = file.url
+        metadata.originalURL = file.size.map({ URL(fileURLWithPath: "\($0) B") })
         metadata.title = file.name
         metadata.iconProvider = NSItemProvider(object: UIImage())
         return metadata
