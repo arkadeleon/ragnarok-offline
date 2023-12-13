@@ -79,6 +79,6 @@ extension UTType {
     static let spr = UTType(exportedAs: "kr.co.gravity.spr")
     static let str = UTType(exportedAs: "kr.co.gravity.str")
 
-    static let lua = UTType(importedAs: "text/x-lua")
-    static let lub = UTType(importedAs: "application/x-lua-bytecode")
+    static let lua = UTType(importedAs: "public.x-lua")
+    static let lub = UTType(importedAs: "public.x-lua-bytecode")
 }
