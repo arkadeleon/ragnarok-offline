@@ -10,12 +10,30 @@ import CoreGraphics
 import UIKit
 
 class ACTPreviewViewController: UIViewController {
+    struct Section: Hashable {
+        var index: Int
+        var itemSize: CGSize
+
+        func hash(into hasher: inout Hasher) {
+            index.hash(into: &hasher)
+        }
+    }
+
+    struct Item: Hashable {
+        var index: Int
+        var animatedImage: AnimatedImage
+
+        func hash(into hasher: inout Hasher) {
+            index.hash(into: &hasher)
+        }
+    }
+
     let file: File
 
     private var collectionView: UICollectionView!
     private var activityIndicatorView: UIActivityIndicatorView!
 
-    private var diffableDataSource: UICollectionViewDiffableDataSource<Section, AnimatedImage>!
+    private var diffableDataSource: UICollectionViewDiffableDataSource<Section, Item>!
 
     init(file: File) {
         self.file = file
@@ -52,12 +70,12 @@ class ACTPreviewViewController: UIViewController {
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.delegate = self
 
-        let cellRegistration = UICollectionView.CellRegistration<ACTActionCollectionViewCell, AnimatedImage> { cell, indexPath, animatedImage in
-            cell.imageView.image = UIImage.animatedImage(with: animatedImage.images.map(UIImage.init), duration: animatedImage.delay * CGFloat(animatedImage.images.count))
+        let cellRegistration = UICollectionView.CellRegistration<ACTActionCollectionViewCell, Item> { cell, indexPath, item in
+            cell.imageView.image = UIImage.animatedImage(with: item.animatedImage.images.map(UIImage.init), duration: item.animatedImage.delay * CGFloat(item.animatedImage.images.count))
         }
 
-        diffableDataSource = UICollectionViewDiffableDataSource<Section, AnimatedImage>(collectionView: collectionView) { collectionView, indexPath, animatedImage in
-            let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: animatedImage)
+        diffableDataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView) { collectionView, indexPath, item in
+            let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
             return cell
         }
         collectionView.dataSource = diffableDataSource
@@ -120,31 +138,38 @@ class ACTPreviewViewController: UIViewController {
     }
 
     nonisolated private func updateSnapshot(animatedImages: [AnimatedImage], animatingDifferences: Bool) async {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, AnimatedImage>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
 
         if animatedImages.count % 8 != 0 {
-            let itemSize = animatedImages.reduce(CGSize(width: 80, height: 80)) { itemSize, image in
+            let items = animatedImages.enumerated().map { (index, animatedImage) in
+                Item(index: index, animatedImage: animatedImage)
+            }
+            let itemSize = items.reduce(CGSize(width: 80, height: 80)) { itemSize, item in
                 CGSize(
-                    width: max(itemSize.width, CGFloat(image.size.width)),
-                    height: max(itemSize.height, CGFloat(image.size.height))
+                    width: max(itemSize.width, CGFloat(item.animatedImage.size.width)),
+                    height: max(itemSize.height, CGFloat(item.animatedImage.size.height))
                 )
             }
             let section = Section(index: 0, itemSize: itemSize)
             snapshot.appendSections([section])
-            snapshot.appendItems(animatedImages, toSection: section)
+            snapshot.appendItems(items, toSection: section)
         } else {
             let sectionCount = animatedImages.count / 8
             for sectionIndex in 0..<sectionCount {
-                let animatedImagesInSection = Array(animatedImages[(sectionIndex * 8)..<((sectionIndex + 1) * 8)])
-                let itemSize = animatedImagesInSection.reduce(CGSize(width: 80, height: 80)) { itemSize, image in
+                let startIndex = sectionIndex * 8
+                let endIndex = (sectionIndex + 1) * 8
+                let items = animatedImages[startIndex..<endIndex].enumerated().map { (index, animatedImage) in
+                    Item(index: index, animatedImage: animatedImage)
+                }
+                let itemSize = items.reduce(CGSize(width: 80, height: 80)) { itemSize, item in
                     CGSize(
-                        width: max(itemSize.width, CGFloat(image.size.width)),
-                        height: max(itemSize.height, CGFloat(image.size.height))
+                        width: max(itemSize.width, CGFloat(item.animatedImage.size.width)),
+                        height: max(itemSize.height, CGFloat(item.animatedImage.size.height))
                     )
                 }
                 let section = Section(index: sectionIndex, itemSize: itemSize)
                 snapshot.appendSections([section])
-                snapshot.appendItems(animatedImagesInSection, toSection: section)
+                snapshot.appendItems(items, toSection: section)
             }
         }
 
@@ -152,28 +177,17 @@ class ACTPreviewViewController: UIViewController {
     }
 }
 
-extension ACTPreviewViewController {
-    struct Section: Hashable {
-        var index: Int
-        var itemSize: CGSize
-
-        func hash(into hasher: inout Hasher) {
-            index.hash(into: &hasher)
-        }
-    }
-}
-
 extension ACTPreviewViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
         guard let indexPath = indexPaths.first,
               let cell = collectionView.cellForItem(at: indexPath),
-              let animatedImage = diffableDataSource.itemIdentifier(for: indexPath)
+              let item = diffableDataSource.itemIdentifier(for: indexPath)
         else {
             return nil
         }
 
         let index = indexPath.section * 8 + indexPath.item
-        let activityItem = AnimatedImageActivityItem(animatedImage: animatedImage, filename: file.name, index: index)
+        let activityItem = AnimatedImageActivityItem(animatedImage: item.animatedImage, filename: file.name, index: index)
 
         let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
             let activityViewController = UIActivityViewController(activityItems: [activityItem], applicationActivities: nil)

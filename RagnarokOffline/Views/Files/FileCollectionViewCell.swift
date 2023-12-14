@@ -31,6 +31,7 @@ class FileCollectionViewCell: UICollectionViewCell {
         nameLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
         nameLabel.textColor = .label
         nameLabel.textAlignment = .center
+        nameLabel.lineBreakMode = .byTruncatingMiddle
         nameLabel.numberOfLines = 2
         contentView.addSubview(nameLabel)
 
