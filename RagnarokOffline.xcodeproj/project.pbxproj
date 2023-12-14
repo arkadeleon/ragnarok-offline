@@ -20,6 +20,7 @@
 		353098352B14EB0100F32B62 /* FileInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353098342B14EB0100F32B62 /* FileInfoViewController.swift */; };
 		353098402B15C75200F32B62 /* jsoneditor in Resources */ = {isa = PBXBuildFile; fileRef = 3530983F2B15C75200F32B62 /* jsoneditor */; };
 		35482AF12B2759DD0062DC4B /* File+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35482AF02B2759DD0062DC4B /* File+JSON.swift */; };
+		354CB4612B2AA70F001FC2A1 /* FileThumbnailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */; };
 		356508C72B104C9500543562 /* EffectShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 356508C62B104C9500543562 /* EffectShaders.metal */; };
 		356508C92B104DCC00543562 /* EffectRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508C82B104DCC00543562 /* EffectRenderer.swift */; };
 		356508CF2B108D1500543562 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508CE2B108D1500543562 /* Effect.swift */; };
@@ -118,7 +119,6 @@
 		35B3BA0E2A08C01600B4540B /* FileThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98C2A08C01600B4540B /* FileThumbnailGenerator.swift */; };
 		35B3BA0F2A08C01600B4540B /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98D2A08C01600B4540B /* File.swift */; };
 		35B3BA112A08C01600B4540B /* RSWRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9902A08C01600B4540B /* RSWRenderer.swift */; };
-		35B3BA152A08C01600B4540B /* FileThumbnailCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9942A08C01600B4540B /* FileThumbnailCache.swift */; };
 		35B3BA162A08C01600B4540B /* File+Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9952A08C01600B4540B /* File+Type.swift */; };
 		35B3BA172A08C01600B4540B /* FilePasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9962A08C01600B4540B /* FilePasteboard.swift */; };
 		35B3BA192A08C01600B4540B /* ImageDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9992A08C01600B4540B /* ImageDocumentViewController.swift */; };
@@ -201,6 +201,7 @@
 		353098342B14EB0100F32B62 /* FileInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileInfoViewController.swift; sourceTree = "<group>"; };
 		3530983F2B15C75200F32B62 /* jsoneditor */ = {isa = PBXFileReference; lastKnownFileType = folder; path = jsoneditor; sourceTree = "<group>"; };
 		35482AF02B2759DD0062DC4B /* File+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+JSON.swift"; sourceTree = "<group>"; };
+		354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnailManager.swift; sourceTree = "<group>"; };
 		356508C52B104AD400543562 /* EffectShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EffectShaderTypes.h; sourceTree = "<group>"; };
 		356508C62B104C9500543562 /* EffectShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = EffectShaders.metal; sourceTree = "<group>"; };
 		356508C82B104DCC00543562 /* EffectRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectRenderer.swift; sourceTree = "<group>"; };
@@ -341,7 +342,6 @@
 		35B3B98C2A08C01600B4540B /* FileThumbnailGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileThumbnailGenerator.swift; sourceTree = "<group>"; };
 		35B3B98D2A08C01600B4540B /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		35B3B9902A08C01600B4540B /* RSWRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSWRenderer.swift; sourceTree = "<group>"; };
-		35B3B9942A08C01600B4540B /* FileThumbnailCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileThumbnailCache.swift; sourceTree = "<group>"; };
 		35B3B9952A08C01600B4540B /* File+Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "File+Type.swift"; sourceTree = "<group>"; };
 		35B3B9962A08C01600B4540B /* FilePasteboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePasteboard.swift; sourceTree = "<group>"; };
 		35B3B9992A08C01600B4540B /* ImageDocumentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDocumentViewController.swift; sourceTree = "<group>"; };
@@ -758,7 +758,7 @@
 				35482AF02B2759DD0062DC4B /* File+JSON.swift */,
 				35774F792B231FAF00438311 /* FileActivityItem.swift */,
 				35B3B9962A08C01600B4540B /* FilePasteboard.swift */,
-				35B3B9942A08C01600B4540B /* FileThumbnailCache.swift */,
+				354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */,
 				35B3B98C2A08C01600B4540B /* FileThumbnailGenerator.swift */,
 				35B3B99A2A08C01600B4540B /* FilesView.swift */,
 				356BF6892B064965005B67F7 /* FilesViewController.swift */,
@@ -949,7 +949,6 @@
 				3511C1D52B0AF9B1006DD639 /* RSMPreviewViewController.swift in Sources */,
 				356BF6722AFC8964005B67F7 /* MemoryStream.swift in Sources */,
 				35B3B9BF2A08C01600B4540B /* lfunc.c in Sources */,
-				35B3BA152A08C01600B4540B /* FileThumbnailCache.swift in Sources */,
 				35B3B9D42A08C01600B4540B /* expression.c in Sources */,
 				35B3B9BE2A08C01600B4540B /* lvm.c in Sources */,
 				35B3B9D82A08C01600B4540B /* guess.c in Sources */,
@@ -1015,6 +1014,7 @@
 				35B3BA0B2A08C01600B4540B /* SGLMath.swift in Sources */,
 				35B3B9D72A08C01600B4540B /* luadec.c in Sources */,
 				35B695F32A3080D9006F1904 /* Object3D.swift in Sources */,
+				354CB4612B2AA70F001FC2A1 /* FileThumbnailManager.swift in Sources */,
 				35B3BA192A08C01600B4540B /* ImageDocumentViewController.swift in Sources */,
 				35B3B9D52A08C01600B4540B /* disassemble.c in Sources */,
 				35B3BA032A08C01600B4540B /* Encoding.swift in Sources */,

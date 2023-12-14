@@ -12,6 +12,8 @@ class FileCollectionViewCell: UICollectionViewCell {
     var thumbnailView: UIImageView!
     var nameLabel: UILabel!
 
+    private var thumbnailTask: Task<UIImage?, Error>?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -44,20 +46,25 @@ class FileCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        thumbnailTask?.cancel()
+        thumbnailTask = nil
+    }
+
     func configure(with file: File) {
-        thumbnailView.image = nil
-        FileThumbnailCache.shared.generateThumbnail(for: file) { [weak self] thumbnail in
-            DispatchQueue.main.async {
-                switch thumbnail {
-                case .icon(let name):
-                    if let type = file.type, type.conforms(to: .directory) {
-                        self?.thumbnailView.image = UIImage(systemName: name)?.withRenderingMode(.alwaysOriginal)
-                    } else {
-                        self?.thumbnailView.image = UIImage(systemName: name)?.withRenderingMode(.alwaysTemplate)
-                    }
-                case .thumbnail(let image):
-                    self?.thumbnailView.image = image
-                }
+        if let type = file.type, type.conforms(to: .directory) {
+            thumbnailView.image = file.icon?.withRenderingMode(.alwaysOriginal)
+        } else {
+            thumbnailView.image = file.icon?.withRenderingMode(.alwaysTemplate)
+        }
+
+        thumbnailTask = FileThumbnailManager.shared.thumbnailTask(for: file)
+
+        Task {
+            if let thumbnail = try await thumbnailTask?.value {
+                thumbnailView.image = thumbnail
             }
         }
 

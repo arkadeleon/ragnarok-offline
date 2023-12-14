@@ -29,11 +29,11 @@ class FilePreviewViewController: UIViewController {
         }
 
         let contentViewController = switch type {
-        case let type where type.conforms(to: .text) == true || type == .lua || type == .lub:
+        case let type where type.conforms(to: .text) || type == .lua || type == .lub:
             UIHostingController(rootView: TextDocumentView(file: file))
-        case let type where type.conforms(to: .image) == true || type == .ebm || type == .pal:
+        case let type where type.conforms(to: .image) || type == .ebm || type == .pal:
             ImageDocumentViewController(file: file)
-        case let type where type.conforms(to: .audio) == true:
+        case let type where type.conforms(to: .audio):
             AudioDocumentViewController(file: file)
         case .act:
             ACTPreviewViewController(file: file)

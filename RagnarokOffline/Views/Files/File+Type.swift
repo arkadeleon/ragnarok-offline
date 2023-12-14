@@ -6,6 +6,7 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
+import UIKit
 import UniformTypeIdentifiers
 
 extension File {
@@ -63,6 +64,45 @@ extension File {
             return .xml
         default:
             return nil
+        }
+    }
+}
+
+extension File {
+    var icon: UIImage? {
+        guard let type else {
+            return UIImage(systemName: "doc")
+        }
+
+        if type.conforms(to: .directory) {
+            return UIImage(systemName: "folder.fill")
+        }
+
+        if type.conforms(to: .archive) {
+            return UIImage(systemName: "doc.zipper")
+        }
+
+        switch type {
+        case let type where type.conforms(to: .text) || type == .lua || type == .lub:
+            return UIImage(systemName: "doc.text")
+        case let type where type.conforms(to: .image) || type == .ebm || type == .pal:
+            return UIImage(systemName: "photo")
+        case let type where type.conforms(to: .audio):
+            return UIImage(systemName: "waveform.circle")
+        case .act:
+            return UIImage(systemName: "livephoto")
+        case .gat:
+            return UIImage(systemName: "square.grid.3x3.middle.filled")
+        case .rsm:
+            return UIImage(systemName: "square.stack.3d.up")
+        case .rsw:
+            return UIImage(systemName: "map")
+        case .spr:
+            return UIImage(systemName: "photo.stack")
+        case .str:
+            return UIImage(systemName: "sparkles.rectangle.stack")
+        default:
+            return UIImage(systemName: "doc")
         }
     }
 }

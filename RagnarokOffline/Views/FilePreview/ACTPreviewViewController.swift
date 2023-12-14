@@ -158,8 +158,8 @@ class ACTPreviewViewController: UIViewController {
             for sectionIndex in 0..<sectionCount {
                 let startIndex = sectionIndex * 8
                 let endIndex = (sectionIndex + 1) * 8
-                let items = animatedImages[startIndex..<endIndex].enumerated().map { (index, animatedImage) in
-                    Item(index: index, animatedImage: animatedImage)
+                let items = (startIndex..<endIndex).map { index in
+                    Item(index: index, animatedImage: animatedImages[index])
                 }
                 let itemSize = items.reduce(CGSize(width: 80, height: 80)) { itemSize, item in
                     CGSize(
