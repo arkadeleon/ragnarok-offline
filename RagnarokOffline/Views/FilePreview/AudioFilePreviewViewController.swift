@@ -1,5 +1,5 @@
 //
-//  AudioDocumentViewController.swift
+//  AudioFilePreviewViewController.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/7/21.
@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class AudioDocumentViewController: UIViewController {
+class AudioFilePreviewViewController: UIViewController {
     let file: File
 
     private var player: AVAudioPlayer?
@@ -29,21 +29,18 @@ class AudioDocumentViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
 
-        loadDocumentContents()
-    }
-
-    private func loadDocumentContents() {
-        DispatchQueue.global().async {
-            guard let data = self.file.contents() else {
+        Task {
+            guard let data = await loadAudio() else {
                 return
             }
 
-            DispatchQueue.main.async {
-                let player = try? AVAudioPlayer(data: data)
-                player?.play()
-
-                self.player = player
-            }
+            player = try? AVAudioPlayer(data: data)
+            player?.play()
         }
+    }
+
+    nonisolated private func loadAudio() async -> Data? {
+        let data = self.file.contents()
+        return data
     }
 }

@@ -21,6 +21,7 @@
 		353098402B15C75200F32B62 /* jsoneditor in Resources */ = {isa = PBXBuildFile; fileRef = 3530983F2B15C75200F32B62 /* jsoneditor */; };
 		35482AF12B2759DD0062DC4B /* File+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35482AF02B2759DD0062DC4B /* File+JSON.swift */; };
 		354CB4612B2AA70F001FC2A1 /* FileThumbnailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */; };
+		3552D8742B315D8F004831D0 /* TextFilePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8732B315D8F004831D0 /* TextFilePreviewViewController.swift */; };
 		356508C72B104C9500543562 /* EffectShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 356508C62B104C9500543562 /* EffectShaders.metal */; };
 		356508C92B104DCC00543562 /* EffectRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508C82B104DCC00543562 /* EffectRenderer.swift */; };
 		356508CF2B108D1500543562 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508CE2B108D1500543562 /* Effect.swift */; };
@@ -105,7 +106,6 @@
 		35B3B9E62A08C01600B4540B /* SPR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95A2A08C01600B4540B /* SPR.swift */; };
 		35B3B9E72A08C01600B4540B /* ACT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95B2A08C01600B4540B /* ACT.swift */; };
 		35B3B9E82A08C01600B4540B /* GAT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B95C2A08C01600B4540B /* GAT.swift */; };
-		35B3B9F52A08C01600B4540B /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B96B2A08C01600B4540B /* WebView.swift */; };
 		35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9702A08C01600B4540B /* Shaders.metal */; };
 		35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9722A08C01600B4540B /* GameRenderer.swift */; };
 		35B3B9FA2A08C01600B4540B /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B9732A08C01600B4540B /* wall.jpg */; };
@@ -115,15 +115,14 @@
 		35B3BA092A08C01600B4540B /* LuaDecompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9852A08C01600B4540B /* LuaDecompiler.m */; };
 		35B3BA0B2A08C01600B4540B /* SGLMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9872A08C01600B4540B /* SGLMath.swift */; };
 		35B3BA0C2A08C01600B4540B /* SpriteDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98A2A08C01600B4540B /* SpriteDocumentView.swift */; };
-		35B3BA0D2A08C01600B4540B /* TextDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98B2A08C01600B4540B /* TextDocumentView.swift */; };
 		35B3BA0E2A08C01600B4540B /* FileThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98C2A08C01600B4540B /* FileThumbnailGenerator.swift */; };
 		35B3BA0F2A08C01600B4540B /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98D2A08C01600B4540B /* File.swift */; };
 		35B3BA112A08C01600B4540B /* RSWRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9902A08C01600B4540B /* RSWRenderer.swift */; };
 		35B3BA162A08C01600B4540B /* File+Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9952A08C01600B4540B /* File+Type.swift */; };
 		35B3BA172A08C01600B4540B /* FilePasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9962A08C01600B4540B /* FilePasteboard.swift */; };
-		35B3BA192A08C01600B4540B /* ImageDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9992A08C01600B4540B /* ImageDocumentViewController.swift */; };
+		35B3BA192A08C01600B4540B /* ImageFilePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9992A08C01600B4540B /* ImageFilePreviewViewController.swift */; };
 		35B3BA1A2A08C01600B4540B /* FilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99A2A08C01600B4540B /* FilesView.swift */; };
-		35B3BA1B2A08C01600B4540B /* AudioDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99C2A08C01600B4540B /* AudioDocumentViewController.swift */; };
+		35B3BA1B2A08C01600B4540B /* AudioFilePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99C2A08C01600B4540B /* AudioFilePreviewViewController.swift */; };
 		35B3BA202A08C01600B4540B /* RSMRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A22A08C01600B4540B /* RSMRenderer.swift */; };
 		35B3BA222A08C01600B4540B /* WaterShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A52A08C01600B4540B /* WaterShaders.metal */; };
 		35B3BA232A08C01600B4540B /* GroundRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A82A08C01600B4540B /* GroundRenderer.swift */; };
@@ -202,6 +201,7 @@
 		3530983F2B15C75200F32B62 /* jsoneditor */ = {isa = PBXFileReference; lastKnownFileType = folder; path = jsoneditor; sourceTree = "<group>"; };
 		35482AF02B2759DD0062DC4B /* File+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+JSON.swift"; sourceTree = "<group>"; };
 		354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnailManager.swift; sourceTree = "<group>"; };
+		3552D8732B315D8F004831D0 /* TextFilePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFilePreviewViewController.swift; sourceTree = "<group>"; };
 		356508C52B104AD400543562 /* EffectShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EffectShaderTypes.h; sourceTree = "<group>"; };
 		356508C62B104C9500543562 /* EffectShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = EffectShaders.metal; sourceTree = "<group>"; };
 		356508C82B104DCC00543562 /* EffectRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectRenderer.swift; sourceTree = "<group>"; };
@@ -326,7 +326,6 @@
 		35B3B95A2A08C01600B4540B /* SPR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPR.swift; sourceTree = "<group>"; };
 		35B3B95B2A08C01600B4540B /* ACT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACT.swift; sourceTree = "<group>"; };
 		35B3B95C2A08C01600B4540B /* GAT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GAT.swift; sourceTree = "<group>"; };
-		35B3B96B2A08C01600B4540B /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		35B3B9702A08C01600B4540B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		35B3B9712A08C01600B4540B /* ShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 		35B3B9722A08C01600B4540B /* GameRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameRenderer.swift; sourceTree = "<group>"; };
@@ -338,15 +337,14 @@
 		35B3B9872A08C01600B4540B /* SGLMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGLMath.swift; sourceTree = "<group>"; };
 		35B3B9882A08C01600B4540B /* LuaDecompiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaDecompiler.h; sourceTree = "<group>"; };
 		35B3B98A2A08C01600B4540B /* SpriteDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpriteDocumentView.swift; sourceTree = "<group>"; };
-		35B3B98B2A08C01600B4540B /* TextDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextDocumentView.swift; sourceTree = "<group>"; };
 		35B3B98C2A08C01600B4540B /* FileThumbnailGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileThumbnailGenerator.swift; sourceTree = "<group>"; };
 		35B3B98D2A08C01600B4540B /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		35B3B9902A08C01600B4540B /* RSWRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSWRenderer.swift; sourceTree = "<group>"; };
 		35B3B9952A08C01600B4540B /* File+Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "File+Type.swift"; sourceTree = "<group>"; };
 		35B3B9962A08C01600B4540B /* FilePasteboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePasteboard.swift; sourceTree = "<group>"; };
-		35B3B9992A08C01600B4540B /* ImageDocumentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDocumentViewController.swift; sourceTree = "<group>"; };
+		35B3B9992A08C01600B4540B /* ImageFilePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageFilePreviewViewController.swift; sourceTree = "<group>"; };
 		35B3B99A2A08C01600B4540B /* FilesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesView.swift; sourceTree = "<group>"; };
-		35B3B99C2A08C01600B4540B /* AudioDocumentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioDocumentViewController.swift; sourceTree = "<group>"; };
+		35B3B99C2A08C01600B4540B /* AudioFilePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFilePreviewViewController.swift; sourceTree = "<group>"; };
 		35B3B9A22A08C01600B4540B /* RSMRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSMRenderer.swift; sourceTree = "<group>"; };
 		35B3B9A52A08C01600B4540B /* WaterShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = WaterShaders.metal; sourceTree = "<group>"; };
 		35B3B9A62A08C01600B4540B /* ModelShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelShaderTypes.h; sourceTree = "<group>"; };
@@ -423,9 +421,9 @@
 			children = (
 				356BF6852B05FF59005B67F7 /* FilePreviewPageViewController.swift */,
 				356BF6872B060243005B67F7 /* FilePreviewViewController.swift */,
-				35B3B98B2A08C01600B4540B /* TextDocumentView.swift */,
-				35B3B9992A08C01600B4540B /* ImageDocumentViewController.swift */,
-				35B3B99C2A08C01600B4540B /* AudioDocumentViewController.swift */,
+				3552D8732B315D8F004831D0 /* TextFilePreviewViewController.swift */,
+				35B3B9992A08C01600B4540B /* ImageFilePreviewViewController.swift */,
+				35B3B99C2A08C01600B4540B /* AudioFilePreviewViewController.swift */,
 				356BF6812B04F54A005B67F7 /* ACTPreviewViewController.swift */,
 				356BF6832B04F569005B67F7 /* ACTActionCollectionViewCell.swift */,
 				3511C1D02B0A535A006DD639 /* GATPreviewViewController.swift */,
@@ -530,7 +528,6 @@
 				353098332B14EAE600F32B62 /* FileInfo */,
 				35B3B96E2A08C01600B4540B /* Game */,
 				35B3B8D92A08BEA600B4540B /* ContentView.swift */,
-				35B3B96B2A08C01600B4540B /* WebView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -980,8 +977,8 @@
 				35B3BA242A08C01600B4540B /* ModelShaders.metal in Sources */,
 				35B3BA052A08C01600B4540B /* TextureLoader.swift in Sources */,
 				35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */,
-				35B3B9F52A08C01600B4540B /* WebView.swift in Sources */,
 				35B3B9B92A08C01600B4540B /* lstate.c in Sources */,
+				3552D8742B315D8F004831D0 /* TextFilePreviewViewController.swift in Sources */,
 				35B3B9E82A08C01600B4540B /* GAT.swift in Sources */,
 				356508C72B104C9500543562 /* EffectShaders.metal in Sources */,
 				356BF6822B04F54A005B67F7 /* ACTPreviewViewController.swift in Sources */,
@@ -995,7 +992,7 @@
 				35B3B9CD2A08C01600B4540B /* lapi.c in Sources */,
 				35B3B9DB2A08C01600B4540B /* proto.c in Sources */,
 				35B3B9E42A08C01600B4540B /* STR.swift in Sources */,
-				35B3BA1B2A08C01600B4540B /* AudioDocumentViewController.swift in Sources */,
+				35B3BA1B2A08C01600B4540B /* AudioFilePreviewViewController.swift in Sources */,
 				35B3B9D02A08C01600B4540B /* lparser.c in Sources */,
 				35B3B9DC2A08C01600B4540B /* StringBuffer.c in Sources */,
 				356BF6772AFCCDD9005B67F7 /* GRFWrapper.swift in Sources */,
@@ -1015,7 +1012,7 @@
 				35B3B9D72A08C01600B4540B /* luadec.c in Sources */,
 				35B695F32A3080D9006F1904 /* Object3D.swift in Sources */,
 				354CB4612B2AA70F001FC2A1 /* FileThumbnailManager.swift in Sources */,
-				35B3BA192A08C01600B4540B /* ImageDocumentViewController.swift in Sources */,
+				35B3BA192A08C01600B4540B /* ImageFilePreviewViewController.swift in Sources */,
 				35B3B9D52A08C01600B4540B /* disassemble.c in Sources */,
 				35B3BA032A08C01600B4540B /* Encoding.swift in Sources */,
 				35B3BA112A08C01600B4540B /* RSWRenderer.swift in Sources */,
@@ -1031,7 +1028,6 @@
 				35B3BA292A08C01600B4540B /* PAL.swift in Sources */,
 				35B3B9CB2A08C01600B4540B /* lcode.c in Sources */,
 				35B3B9E02A08C01600B4540B /* RSW.swift in Sources */,
-				35B3BA0D2A08C01600B4540B /* TextDocumentView.swift in Sources */,
 				35B3B9E62A08C01600B4540B /* SPR.swift in Sources */,
 				35B3BA492A08DA0C00B4540B /* StillImage.swift in Sources */,
 				356BF67D2B0489CE005B67F7 /* SPR+Image.swift in Sources */,

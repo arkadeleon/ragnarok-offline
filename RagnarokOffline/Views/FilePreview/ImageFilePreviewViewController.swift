@@ -1,5 +1,5 @@
 //
-//  ImageDocumentViewController.swift
+//  ImageFilePreviewViewController.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/5/10.
@@ -9,7 +9,7 @@
 import UIKit
 import DataCompression
 
-class ImageDocumentViewController: UIViewController {
+class ImageFilePreviewViewController: UIViewController {
     let file: File
 
     private var scrollView: UIScrollView!
@@ -42,12 +42,26 @@ class ImageDocumentViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         scrollView.addSubview(imageView)
 
-        scrollView.frameLayoutGuide.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        scrollView.frameLayoutGuide.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        scrollView.frameLayoutGuide.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            scrollView.frameLayoutGuide.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.frameLayoutGuide.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.frameLayoutGuide.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
 
-        loadDocumentContents()
+        Task {
+            guard let image = await loadImage() else {
+                return
+            }
+
+            imageView.image = image
+            imageView.frame = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+
+            scrollView.contentSize = image.size
+
+            updateZoomScale(image: image)
+            centerScrollViewContents()
+        }
     }
 
     override func viewDidLayoutSubviews() {
@@ -59,38 +73,25 @@ class ImageDocumentViewController: UIViewController {
         }
     }
 
-    private func loadDocumentContents() {
-        DispatchQueue.global().async {
-            guard let type = self.file.type, let data = self.file.contents() else {
-                return
+    nonisolated private func loadImage() async -> UIImage? {
+        guard let type = file.type, let data = file.contents() else {
+            return nil
+        }
+
+        switch type {
+        case .ebm:
+            guard let decompressedData = data.unzip() else {
+                return nil
             }
-
-            var image: UIImage? = nil
-            switch type {
-            case .ebm:
-                if let decompressedData = data.unzip() {
-                    image = UIImage(data: decompressedData)
-                }
-            case .pal:
-                let pal = try? PAL(data: data)
-                image = pal?.image(at: CGSize(width: 256, height: 256)).map(UIImage.init)
-            default:
-                image = UIImage(data: data)
-            }
-
-            DispatchQueue.main.async {
-                guard let image = image else {
-                    return
-                }
-
-                self.imageView.image = image
-                self.imageView.frame = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
-
-                self.scrollView.contentSize = image.size
-
-                self.updateZoomScale(image: image)
-                self.centerScrollViewContents()
-            }
+            let image = UIImage(data: decompressedData)
+            return image
+        case .pal:
+            let pal = try? PAL(data: data)
+            let image = pal?.image(at: CGSize(width: 256, height: 256)).map(UIImage.init)
+            return image
+        default:
+            let image = UIImage(data: data)
+            return image
         }
     }
 
@@ -123,8 +124,7 @@ class ImageDocumentViewController: UIViewController {
     }
 }
 
-extension ImageDocumentViewController: UIScrollViewDelegate {
-
+extension ImageFilePreviewViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
