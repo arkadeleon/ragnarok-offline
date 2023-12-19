@@ -14,7 +14,7 @@ class FilesViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var activityIndicatorView: UIActivityIndicatorView!
 
-    private var diffableDataSource: UICollectionViewDiffableDataSource<String, File>!
+    private var diffableDataSource: UICollectionViewDiffableDataSource<Int, File>!
 
     init(file: File) {
         self.file = file
@@ -38,11 +38,10 @@ class FilesViewController: UIViewController {
 
         activityIndicatorView.startAnimating()
 
-        Task(priority: .userInitiated) { [weak self] in
-            if let files = await self?.loadFiles() {
-                await self?.updateSnapshot(files: files, animatingDifferences: false)
-            }
-            self?.activityIndicatorView.stopAnimating()
+        Task {
+            let files = await loadFiles()
+            await updateSnapshot(with: files, animatingDifferences: false)
+            activityIndicatorView.stopAnimating()
         }
     }
 
@@ -61,7 +60,7 @@ class FilesViewController: UIViewController {
 
         }
 
-        diffableDataSource = UICollectionViewDiffableDataSource<String, File>(collectionView: collectionView) { collectionView, indexPath, file in
+        diffableDataSource = UICollectionViewDiffableDataSource<Int, File>(collectionView: collectionView) { collectionView, indexPath, file in
             let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: file)
             cell.configure(with: file)
             return cell
@@ -85,11 +84,11 @@ class FilesViewController: UIViewController {
         file.files().sorted()
     }
 
-    nonisolated private func updateSnapshot(files: [File], animatingDifferences: Bool) async {
-        var snapshot = NSDiffableDataSourceSnapshot<String, File>()
+    nonisolated private func updateSnapshot(with files: [File], animatingDifferences: Bool) async {
+        var snapshot = NSDiffableDataSourceSnapshot<Int, File>()
 
-        snapshot.appendSections(["All"])
-        snapshot.appendItems(files, toSection: "All")
+        snapshot.appendSections([0])
+        snapshot.appendItems(files, toSection: 0)
 
         await diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
@@ -142,7 +141,7 @@ extension FilesViewController: UICollectionViewDelegate {
                         var files = self.diffableDataSource.snapshot().itemIdentifiers
                         files.append(file)
                         files.sort()
-                        await self.updateSnapshot(files: files, animatingDifferences: true)
+                        await self.updateSnapshot(with: files, animatingDifferences: true)
                     }
                 }
             }
@@ -203,7 +202,7 @@ extension FilesViewController: UICollectionViewDelegate {
                     Task {
                         var files = self.diffableDataSource.snapshot().itemIdentifiers
                         files.removeAll(where: { $0 == file })
-                        await self.updateSnapshot(files: files, animatingDifferences: true)
+                        await self.updateSnapshot(with: files, animatingDifferences: true)
                     }
                 } catch {
                 }

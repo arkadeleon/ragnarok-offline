@@ -10,17 +10,18 @@ import CoreGraphics
 import UIKit
 
 class ACTPreviewViewController: UIViewController {
-    struct Section: Hashable {
+    struct ActionSection: Hashable {
         var index: Int
-        var itemSize: CGSize
+        var actions: [Action]
 
         func hash(into hasher: inout Hasher) {
             index.hash(into: &hasher)
         }
     }
 
-    struct Item: Hashable {
+    struct Action: Hashable {
         var index: Int
+        var size: CGSize
         var animatedImage: AnimatedImage
 
         func hash(into hasher: inout Hasher) {
@@ -33,7 +34,7 @@ class ACTPreviewViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var activityIndicatorView: UIActivityIndicatorView!
 
-    private var diffableDataSource: UICollectionViewDiffableDataSource<Section, Item>!
+    private var diffableDataSource: UICollectionViewDiffableDataSource<ActionSection, Action>!
 
     init(file: File) {
         self.file = file
@@ -52,11 +53,10 @@ class ACTPreviewViewController: UIViewController {
 
         activityIndicatorView.startAnimating()
 
-        Task(priority: .userInitiated) { [weak self] in
-            if let animatedImages = await self?.loadAnimatedImages() {
-                await self?.updateSnapshot(animatedImages: animatedImages, animatingDifferences: false)
-            }
-            self?.activityIndicatorView.stopAnimating()
+        Task {
+            let actionSections = await loadActionSections()
+            await updateSnapshot(with: actionSections, animatingDifferences: false)
+            activityIndicatorView.stopAnimating()
         }
     }
 
@@ -70,12 +70,14 @@ class ACTPreviewViewController: UIViewController {
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.delegate = self
 
-        let cellRegistration = UICollectionView.CellRegistration<ACTActionCollectionViewCell, Item> { cell, indexPath, item in
-            cell.imageView.image = UIImage.animatedImage(with: item.animatedImage.images.map(UIImage.init), duration: item.animatedImage.delay * CGFloat(item.animatedImage.images.count))
+        let cellRegistration = UICollectionView.CellRegistration<ImageCollectionViewCell, Action> { cell, indexPath, action in
+            let images = action.animatedImage.images.map(UIImage.init)
+            let duration = action.animatedImage.delay * CGFloat(action.animatedImage.images.count)
+            cell.imageView.image = UIImage.animatedImage(with: images, duration: duration)
         }
 
-        diffableDataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView) { collectionView, indexPath, item in
-            let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
+        diffableDataSource = UICollectionViewDiffableDataSource<ActionSection, Action>(collectionView: collectionView) { collectionView, indexPath, action in
+            let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: action)
             return cell
         }
         collectionView.dataSource = diffableDataSource
@@ -93,7 +95,7 @@ class ACTPreviewViewController: UIViewController {
         activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
 
-    nonisolated private func loadAnimatedImages() async -> [AnimatedImage] {
+    nonisolated private func loadActionSections() async -> [ActionSection] {
         guard let actData = file.contents() else {
             return []
         }
@@ -134,43 +136,46 @@ class ACTPreviewViewController: UIViewController {
             animatedImages.append(animatedImage)
         }
 
-        return animatedImages
-    }
-
-    nonisolated private func updateSnapshot(animatedImages: [AnimatedImage], animatingDifferences: Bool) async {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-
         if animatedImages.count % 8 != 0 {
-            let items = animatedImages.enumerated().map { (index, animatedImage) in
-                Item(index: index, animatedImage: animatedImage)
-            }
-            let itemSize = items.reduce(CGSize(width: 80, height: 80)) { itemSize, item in
+            let size = animatedImages.reduce(CGSize(width: 80, height: 80)) { size, animatedImage in
                 CGSize(
-                    width: max(itemSize.width, CGFloat(item.animatedImage.size.width)),
-                    height: max(itemSize.height, CGFloat(item.animatedImage.size.height))
+                    width: max(size.width, CGFloat(animatedImage.size.width)),
+                    height: max(size.height, CGFloat(animatedImage.size.height))
                 )
             }
-            let section = Section(index: 0, itemSize: itemSize)
-            snapshot.appendSections([section])
-            snapshot.appendItems(items, toSection: section)
+            let actions = animatedImages.enumerated().map { (index, animatedImage) in
+                Action(index: index, size: size, animatedImage: animatedImage)
+            }
+            let actionSection = ActionSection(index: 0, actions: actions)
+            return [actionSection]
         } else {
             let sectionCount = animatedImages.count / 8
-            for sectionIndex in 0..<sectionCount {
+            let actionSections = (0..<sectionCount).map { sectionIndex in
                 let startIndex = sectionIndex * 8
                 let endIndex = (sectionIndex + 1) * 8
-                let items = (startIndex..<endIndex).map { index in
-                    Item(index: index, animatedImage: animatedImages[index])
-                }
-                let itemSize = items.reduce(CGSize(width: 80, height: 80)) { itemSize, item in
+                let animatedImages = Array(animatedImages[startIndex..<endIndex])
+                let size = animatedImages.reduce(CGSize(width: 80, height: 80)) { size, animatedImage in
                     CGSize(
-                        width: max(itemSize.width, CGFloat(item.animatedImage.size.width)),
-                        height: max(itemSize.height, CGFloat(item.animatedImage.size.height))
+                        width: max(size.width, CGFloat(animatedImage.size.width)),
+                        height: max(size.height, CGFloat(animatedImage.size.height))
                     )
                 }
-                let section = Section(index: sectionIndex, itemSize: itemSize)
-                snapshot.appendSections([section])
-                snapshot.appendItems(items, toSection: section)
+                let actions = animatedImages.enumerated().map { (index, animatedImage) in
+                    Action(index: startIndex + index, size: size, animatedImage: animatedImage)
+                }
+                let actionSection = ActionSection(index: sectionIndex, actions: actions)
+                return actionSection
             }
+            return actionSections
+        }
+    }
+
+    nonisolated private func updateSnapshot(with actionSections: [ActionSection], animatingDifferences: Bool) async {
+        var snapshot = NSDiffableDataSourceSnapshot<ActionSection, Action>()
+
+        for actionSection in actionSections {
+            snapshot.appendSections([actionSection])
+            snapshot.appendItems(actionSection.actions, toSection: actionSection)
         }
 
         await diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
@@ -181,13 +186,12 @@ extension ACTPreviewViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
         guard let indexPath = indexPaths.first,
               let cell = collectionView.cellForItem(at: indexPath),
-              let item = diffableDataSource.itemIdentifier(for: indexPath)
+              let action = diffableDataSource.itemIdentifier(for: indexPath)
         else {
             return nil
         }
 
-        let index = indexPath.section * 8 + indexPath.item
-        let activityItem = AnimatedImageActivityItem(animatedImage: item.animatedImage, filename: file.name, index: index)
+        let activityItem = AnimatedImageActivityItem(animatedImage: action.animatedImage, filename: file.name, index: action.index)
 
         let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
             let activityViewController = UIActivityViewController(activityItems: [activityItem], applicationActivities: nil)
@@ -206,7 +210,7 @@ extension ACTPreviewViewController: UICollectionViewDelegate {
 
 extension ACTPreviewViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let section = diffableDataSource.sectionIdentifier(for: indexPath.section)
-        return section?.itemSize ?? .zero
+        let action = diffableDataSource.itemIdentifier(for: indexPath)
+        return action?.size ?? .zero
     }
 }

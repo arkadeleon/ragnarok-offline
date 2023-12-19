@@ -6,7 +6,6 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
-import SwiftUI
 import UIKit
 
 class FilePreviewViewController: UIViewController {
@@ -44,7 +43,7 @@ class FilePreviewViewController: UIViewController {
         case .rsw:
             RSWPreviewViewController(file: file)
         case .spr:
-            UIHostingController(rootView: SpriteDocumentView(file: file))
+            SPRPreviewViewController(file: file)
         case .str:
             STRPreviewViewController(file: file)
         default:
@@ -52,13 +51,15 @@ class FilePreviewViewController: UIViewController {
         }
 
         addChild(contentViewController)
+        contentViewController.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(contentViewController.view)
         contentViewController.didMove(toParent: self)
 
-        contentViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        contentViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        contentViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        contentViewController.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        contentViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            contentViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            contentViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 }

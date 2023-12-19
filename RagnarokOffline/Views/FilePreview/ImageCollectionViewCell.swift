@@ -1,5 +1,5 @@
 //
-//  ACTActionCollectionViewCell.swift
+//  ImageCollectionViewCell.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/11/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ACTActionCollectionViewCell: UICollectionViewCell {
+class ImageCollectionViewCell: UICollectionViewCell {
     var imageView: UIImageView!
 
     override init(frame: CGRect) {
@@ -19,10 +19,12 @@ class ACTActionCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .center
         contentView.addSubview(imageView)
 
-        imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        imageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
     }
 
     required init?(coder: NSCoder) {
