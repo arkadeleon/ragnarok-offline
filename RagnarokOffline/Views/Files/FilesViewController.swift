@@ -10,6 +10,7 @@ import UIKit
 
 class FilesViewController: UIViewController {
     let file: File
+    private var files: [File] = []
 
     private var collectionView: UICollectionView!
     private var activityIndicatorView: UIActivityIndicatorView!
@@ -38,8 +39,23 @@ class FilesViewController: UIViewController {
 
         activityIndicatorView.startAnimating()
 
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+
         Task {
-            let files = await loadFiles()
+            if navigationController?.viewControllers.count == 1 {
+                let navigationItem = navigationController?.navigationBar.topItem
+                navigationItem?.searchController = searchController
+                navigationItem?.hidesSearchBarWhenScrolling = false
+            }
+        }
+
+        Task {
+            files = await loadFiles()
             await updateSnapshot(with: files, animatingDifferences: false)
             activityIndicatorView.stopAnimating()
         }
@@ -55,6 +71,7 @@ class FilesViewController: UIViewController {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.delegate = self
+        collectionView.keyboardDismissMode = .onDrag
 
         let cellRegistration = UICollectionView.CellRegistration<FileCollectionViewCell, File> { cell, indexPath, file in
 
@@ -214,5 +231,28 @@ extension FilesViewController: UICollectionViewDelegate {
             UIMenu(children: actions)
         })
         return configuration
+    }
+}
+
+extension FilesViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        let filteredFiles: [File]
+        if let searchText = searchController.searchBar.text?.trimmingCharacters(in: .whitespaces).lowercased(), !searchText.isEmpty {
+            filteredFiles = files.filter { file in
+                file.name.lowercased().contains(searchText)
+            }
+        } else {
+            filteredFiles = files
+        }
+
+        Task {
+            await updateSnapshot(with: filteredFiles, animatingDifferences: true)
+        }
+    }
+}
+
+extension FilesViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }
