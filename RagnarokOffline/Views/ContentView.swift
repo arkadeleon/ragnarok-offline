@@ -57,7 +57,10 @@ struct ContentView: View {
                 Section("Servers") {
                     ForEach(servers, id: \.name) { server in
                         NavigationLink {
-                            RAServerView(server: server)
+                            ServerView(server: server)
+                                .ignoresSafeArea()
+                                .navigationTitle(server.name)
+                                .navigationBarTitleDisplayMode(.inline)
                         } label: {
                             Label(server.name, systemImage: "macpro.gen3.server")
                         }
