@@ -10,12 +10,12 @@
       }
     },
     {
-      "identity" : "rathena-ios",
+      "identity" : "swift-rathena",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/arkadeleon/rathena-ios",
+      "location" : "https://github.com/arkadeleon/swift-rathena.git",
       "state" : {
         "branch" : "master",
-        "revision" : "23b239f91ab9a94c4bc9c5579323026f180ec26f"
+        "revision" : "5fabd283988d0da73ad22d11573078b91d3ae87c"
       }
     },
     {

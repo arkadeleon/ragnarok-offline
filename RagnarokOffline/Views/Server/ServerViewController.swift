@@ -7,6 +7,7 @@
 //
 
 import rAthenaCommon
+import rAthenaResource
 import Terminal
 import UIKit
 
@@ -61,7 +62,7 @@ class ServerViewController: UIViewController {
     }
 
     nonisolated private func configureServer() async {
-        RAResourceManager.shared.copyResourcesToLibraryDirectory()
+        try? RAResourceManager.shared.copyResourceFilesToLibraryDirectory()
 
         server.outputHandler = { [weak self] data in
             if let data = String(data: data, encoding: .isoLatin1)?

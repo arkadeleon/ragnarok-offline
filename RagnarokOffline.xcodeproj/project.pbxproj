@@ -13,7 +13,6 @@
 		3511C1D32B0A6C5D006DD639 /* RSWPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */; };
 		3511C1D52B0AF9B1006DD639 /* RSMPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D42B0AF9B1006DD639 /* RSMPreviewViewController.swift */; };
 		3511C1D92B0B05B3006DD639 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D82B0B05B3006DD639 /* GameViewController.swift */; };
-		35270D272A5FE9470001A8BD /* rAthenaControl in Frameworks */ = {isa = PBXBuildFile; productRef = 35270D262A5FE9470001A8BD /* rAthenaControl */; };
 		3530982E2B145D6A00F32B62 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982D2B145D6A00F32B62 /* Ground.swift */; };
 		353098302B1480A600F32B62 /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982F2B1480A600F32B62 /* Water.swift */; };
 		353098322B148E4100F32B62 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353098312B148E4100F32B62 /* Model.swift */; };
@@ -25,6 +24,7 @@
 		3552D8762B316876004831D0 /* SPRPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8752B316876004831D0 /* SPRPreviewViewController.swift */; };
 		3552D8782B3182A8004831D0 /* AnimatedImageActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */; };
 		3552D87A2B318323004831D0 /* StillImageActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8792B318323004831D0 /* StillImageActivityItem.swift */; };
+		356363612B3DB17F00F7C249 /* rAthenaResource in Frameworks */ = {isa = PBXBuildFile; productRef = 356363602B3DB17F00F7C249 /* rAthenaResource */; };
 		356508C72B104C9500543562 /* EffectShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 356508C62B104C9500543562 /* EffectShaders.metal */; };
 		356508C92B104DCC00543562 /* EffectRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508C82B104DCC00543562 /* EffectRenderer.swift */; };
 		356508CF2B108D1500543562 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508CE2B108D1500543562 /* Effect.swift */; };
@@ -54,6 +54,16 @@
 		359C6E122B187AE60077CB4C /* SIMD+Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359C6E112B187AE60077CB4C /* SIMD+Encodable.swift */; };
 		35A2ABBC2B3AC6BA0026DAC2 /* ServerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBB2B3AC6BA0026DAC2 /* ServerViewController.swift */; };
 		35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */; };
+		35A2ABC22B3D3EA70026DAC2 /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 35A2ABC12B3D3EA70026DAC2 /* rAthenaChar */; };
+		35A2ABC32B3D3EA70026DAC2 /* rAthenaChar in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 35A2ABC12B3D3EA70026DAC2 /* rAthenaChar */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		35A2ABC52B3D3EA70026DAC2 /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 35A2ABC42B3D3EA70026DAC2 /* rAthenaCommon */; };
+		35A2ABC72B3D3EA70026DAC2 /* rAthenaControl in Frameworks */ = {isa = PBXBuildFile; productRef = 35A2ABC62B3D3EA70026DAC2 /* rAthenaControl */; };
+		35A2ABC92B3D3EA70026DAC2 /* rAthenaLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 35A2ABC82B3D3EA70026DAC2 /* rAthenaLogin */; };
+		35A2ABCA2B3D3EA70026DAC2 /* rAthenaLogin in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 35A2ABC82B3D3EA70026DAC2 /* rAthenaLogin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		35A2ABCC2B3D3EA70026DAC2 /* rAthenaMap in Frameworks */ = {isa = PBXBuildFile; productRef = 35A2ABCB2B3D3EA70026DAC2 /* rAthenaMap */; };
+		35A2ABCD2B3D3EA70026DAC2 /* rAthenaMap in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 35A2ABCB2B3D3EA70026DAC2 /* rAthenaMap */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		35A2ABCF2B3D3EA70026DAC2 /* rAthenaWeb in Frameworks */ = {isa = PBXBuildFile; productRef = 35A2ABCE2B3D3EA70026DAC2 /* rAthenaWeb */; };
+		35A2ABD02B3D3EA70026DAC2 /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 35A2ABCE2B3D3EA70026DAC2 /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */; };
 		35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D92A08BEA600B4540B /* ContentView.swift */; };
 		35B3B8DC2A08BEA700B4540B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B8DB2A08BEA700B4540B /* Assets.xcassets */; };
@@ -136,16 +146,7 @@
 		35B3BA272A08C01600B4540B /* ModelRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9AD2A08C01600B4540B /* ModelRenderer.swift */; };
 		35B3BA282A08C01600B4540B /* WaterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9AE2A08C01600B4540B /* WaterRenderer.swift */; };
 		35B3BA292A08C01600B4540B /* PAL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9B02A08C01600B4540B /* PAL.swift */; };
-		35B3BA302A08C3C700B4540B /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA2F2A08C3C700B4540B /* rAthenaChar */; };
-		35B3BA322A08C3C700B4540B /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA312A08C3C700B4540B /* rAthenaCommon */; };
-		35B3BA342A08C3C700B4540B /* rAthenaLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA332A08C3C700B4540B /* rAthenaLogin */; };
-		35B3BA362A08C3C700B4540B /* rAthenaMap in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA352A08C3C700B4540B /* rAthenaMap */; };
-		35B3BA382A08C3C700B4540B /* rAthenaWeb in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA372A08C3C700B4540B /* rAthenaWeb */; };
 		35B3BA412A08C45000B4540B /* DataCompression in Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA402A08C45000B4540B /* DataCompression */; };
-		35B3BA432A08C74700B4540B /* rAthenaChar in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA2F2A08C3C700B4540B /* rAthenaChar */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		35B3BA452A08C74900B4540B /* rAthenaLogin in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA332A08C3C700B4540B /* rAthenaLogin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		35B3BA462A08C74A00B4540B /* rAthenaMap in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA352A08C3C700B4540B /* rAthenaMap */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		35B3BA472A08C74C00B4540B /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 35B3BA372A08C3C700B4540B /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		35B3BA492A08DA0C00B4540B /* StillImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3BA482A08DA0C00B4540B /* StillImage.swift */; };
 		35B3BA4B2A08DA2C00B4540B /* AnimatedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3BA4A2A08DA2C00B4540B /* AnimatedImage.swift */; };
 		35B4990C2A1C50B400607EE6 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B4990B2A1C50B400607EE6 /* Renderer.swift */; };
@@ -180,10 +181,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				35B3BA462A08C74A00B4540B /* rAthenaMap in Embed Frameworks */,
-				35B3BA452A08C74900B4540B /* rAthenaLogin in Embed Frameworks */,
-				35B3BA432A08C74700B4540B /* rAthenaChar in Embed Frameworks */,
-				35B3BA472A08C74C00B4540B /* rAthenaWeb in Embed Frameworks */,
+				35A2ABCD2B3D3EA70026DAC2 /* rAthenaMap in Embed Frameworks */,
+				35A2ABCA2B3D3EA70026DAC2 /* rAthenaLogin in Embed Frameworks */,
+				35A2ABC32B3D3EA70026DAC2 /* rAthenaChar in Embed Frameworks */,
+				35A2ABD02B3D3EA70026DAC2 /* rAthenaWeb in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -381,13 +382,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35270D272A5FE9470001A8BD /* rAthenaControl in Frameworks */,
-				35B3BA342A08C3C700B4540B /* rAthenaLogin in Frameworks */,
+				35A2ABC22B3D3EA70026DAC2 /* rAthenaChar in Frameworks */,
+				35A2ABC52B3D3EA70026DAC2 /* rAthenaCommon in Frameworks */,
+				356363612B3DB17F00F7C249 /* rAthenaResource in Frameworks */,
+				35A2ABCF2B3D3EA70026DAC2 /* rAthenaWeb in Frameworks */,
+				35A2ABC72B3D3EA70026DAC2 /* rAthenaControl in Frameworks */,
+				35A2ABCC2B3D3EA70026DAC2 /* rAthenaMap in Frameworks */,
+				35A2ABC92B3D3EA70026DAC2 /* rAthenaLogin in Frameworks */,
 				35B3BA412A08C45000B4540B /* DataCompression in Frameworks */,
-				35B3BA302A08C3C700B4540B /* rAthenaChar in Frameworks */,
-				35B3BA322A08C3C700B4540B /* rAthenaCommon in Frameworks */,
-				35B3BA382A08C3C700B4540B /* rAthenaWeb in Frameworks */,
-				35B3BA362A08C3C700B4540B /* rAthenaMap in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -831,13 +833,14 @@
 			);
 			name = RagnarokOffline;
 			packageProductDependencies = (
-				35B3BA2F2A08C3C700B4540B /* rAthenaChar */,
-				35B3BA312A08C3C700B4540B /* rAthenaCommon */,
-				35B3BA332A08C3C700B4540B /* rAthenaLogin */,
-				35B3BA352A08C3C700B4540B /* rAthenaMap */,
-				35B3BA372A08C3C700B4540B /* rAthenaWeb */,
 				35B3BA402A08C45000B4540B /* DataCompression */,
-				35270D262A5FE9470001A8BD /* rAthenaControl */,
+				35A2ABC12B3D3EA70026DAC2 /* rAthenaChar */,
+				35A2ABC42B3D3EA70026DAC2 /* rAthenaCommon */,
+				35A2ABC62B3D3EA70026DAC2 /* rAthenaControl */,
+				35A2ABC82B3D3EA70026DAC2 /* rAthenaLogin */,
+				35A2ABCB2B3D3EA70026DAC2 /* rAthenaMap */,
+				35A2ABCE2B3D3EA70026DAC2 /* rAthenaWeb */,
+				356363602B3DB17F00F7C249 /* rAthenaResource */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -887,7 +890,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1510;
 				ORGANIZATIONNAME = "Leon & Vane";
 				TargetAttributes = {
 					35B3B8D32A08BEA600B4540B = {
@@ -913,8 +916,8 @@
 			);
 			mainGroup = 35B3B8CB2A08BEA600B4540B;
 			packageReferences = (
-				35B3BA2E2A08C3C700B4540B /* XCRemoteSwiftPackageReference "rathena-ios" */,
 				35B3BA3F2A08C45000B4540B /* XCRemoteSwiftPackageReference "DataCompression" */,
+				35A2ABC02B3D3E910026DAC2 /* XCRemoteSwiftPackageReference "swift-rathena" */,
 			);
 			productRefGroup = 35B3B8D52A08BEA600B4540B /* Products */;
 			projectDirPath = "";
@@ -1423,9 +1426,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		35B3BA2E2A08C3C700B4540B /* XCRemoteSwiftPackageReference "rathena-ios" */ = {
+		35A2ABC02B3D3E910026DAC2 /* XCRemoteSwiftPackageReference "swift-rathena" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/arkadeleon/rathena-ios";
+			repositoryURL = "https://github.com/arkadeleon/swift-rathena.git";
 			requirement = {
 				branch = master;
 				kind = branch;
@@ -1442,34 +1445,39 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		35270D262A5FE9470001A8BD /* rAthenaControl */ = {
+		356363602B3DB17F00F7C249 /* rAthenaResource */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 35B3BA2E2A08C3C700B4540B /* XCRemoteSwiftPackageReference "rathena-ios" */;
-			productName = rAthenaControl;
+			package = 35A2ABC02B3D3E910026DAC2 /* XCRemoteSwiftPackageReference "swift-rathena" */;
+			productName = rAthenaResource;
 		};
-		35B3BA2F2A08C3C700B4540B /* rAthenaChar */ = {
+		35A2ABC12B3D3EA70026DAC2 /* rAthenaChar */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 35B3BA2E2A08C3C700B4540B /* XCRemoteSwiftPackageReference "rathena-ios" */;
+			package = 35A2ABC02B3D3E910026DAC2 /* XCRemoteSwiftPackageReference "swift-rathena" */;
 			productName = rAthenaChar;
 		};
-		35B3BA312A08C3C700B4540B /* rAthenaCommon */ = {
+		35A2ABC42B3D3EA70026DAC2 /* rAthenaCommon */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 35B3BA2E2A08C3C700B4540B /* XCRemoteSwiftPackageReference "rathena-ios" */;
+			package = 35A2ABC02B3D3E910026DAC2 /* XCRemoteSwiftPackageReference "swift-rathena" */;
 			productName = rAthenaCommon;
 		};
-		35B3BA332A08C3C700B4540B /* rAthenaLogin */ = {
+		35A2ABC62B3D3EA70026DAC2 /* rAthenaControl */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 35B3BA2E2A08C3C700B4540B /* XCRemoteSwiftPackageReference "rathena-ios" */;
+			package = 35A2ABC02B3D3E910026DAC2 /* XCRemoteSwiftPackageReference "swift-rathena" */;
+			productName = rAthenaControl;
+		};
+		35A2ABC82B3D3EA70026DAC2 /* rAthenaLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35A2ABC02B3D3E910026DAC2 /* XCRemoteSwiftPackageReference "swift-rathena" */;
 			productName = rAthenaLogin;
 		};
-		35B3BA352A08C3C700B4540B /* rAthenaMap */ = {
+		35A2ABCB2B3D3EA70026DAC2 /* rAthenaMap */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 35B3BA2E2A08C3C700B4540B /* XCRemoteSwiftPackageReference "rathena-ios" */;
+			package = 35A2ABC02B3D3E910026DAC2 /* XCRemoteSwiftPackageReference "swift-rathena" */;
 			productName = rAthenaMap;
 		};
-		35B3BA372A08C3C700B4540B /* rAthenaWeb */ = {
+		35A2ABCE2B3D3EA70026DAC2 /* rAthenaWeb */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 35B3BA2E2A08C3C700B4540B /* XCRemoteSwiftPackageReference "rathena-ios" */;
+			package = 35A2ABC02B3D3E910026DAC2 /* XCRemoteSwiftPackageReference "swift-rathena" */;
 			productName = rAthenaWeb;
 		};
 		35B3BA402A08C45000B4540B /* DataCompression */ = {
