@@ -6,6 +6,8 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
+import Foundation
+
 class FilePasteboard {
     static let shared = FilePasteboard()
 

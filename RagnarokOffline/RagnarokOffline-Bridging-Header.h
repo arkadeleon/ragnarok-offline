@@ -7,5 +7,3 @@
 #include "GroundShaderTypes.h"
 #include "ModelShaderTypes.h"
 #include "WaterShaderTypes.h"
-
-#include "LuaDecompiler.h"

@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "swift-lua",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/arkadeleon/swift-lua.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "75cc250760bc7c88460eaf5d53257db01fdf6004"
+      }
+    },
+    {
       "identity" : "swift-rathena",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/arkadeleon/swift-rathena.git",

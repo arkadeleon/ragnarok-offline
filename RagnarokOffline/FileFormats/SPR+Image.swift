@@ -7,6 +7,7 @@
 //
 
 import CoreGraphics
+import Foundation
 
 extension SPR {
     func image(forSpriteAt index: Int) -> StillImage? {

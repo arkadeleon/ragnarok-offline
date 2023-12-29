@@ -6,6 +6,8 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
+import Foundation
+
 class GRFWrapper {
     let url: URL
 

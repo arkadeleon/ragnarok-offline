@@ -6,6 +6,7 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
+import Lua
 import UIKit
 import WebKit
 

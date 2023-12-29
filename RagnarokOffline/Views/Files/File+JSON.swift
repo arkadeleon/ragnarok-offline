@@ -6,6 +6,8 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
+import Foundation
+
 extension File {
     var jsonRepresentable: Bool {
         guard let type else {
