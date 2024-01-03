@@ -1,37 +1,34 @@
 //
-//  SkillDatabaseView.swift
+//  ItemDatabaseView.swift
 //  RagnarokOffline
 //
-//  Created by Leon Li on 2024/1/2.
+//  Created by Leon Li on 2024/1/3.
 //  Copyright © 2024 Leon & Vane. All rights reserved.
 //
 
 import rAthenaMap
 import SwiftUI
 
-struct SkillDatabaseView: View {
+struct ItemDatabaseView: View {
     @State private var searchText = ""
-    @State private var allRecords = [RASkill]()
-    @State private var filteredRecords = [RASkill]()
+    @State private var allRecords = [RAItem]()
+    @State private var filteredRecords = [RAItem]()
 
     public var body: some View {
-        List(filteredRecords) { skill in
+        List(filteredRecords) { item in
             NavigationLink {
-                SkillDetailView(skill: skill)
+                ItemDetailView(item: item)
             } label: {
-                HStack {
-                    SkillIcon(skillName: skill.skillName)
-                    Text(skill.skillDescription)
-                }
+                ItemListRow(item: item)
             }
         }
         .listStyle(.plain)
         .searchable(text: $searchText)
-        .navigationTitle(RASkillDatabase.shared.name)
+        .navigationTitle(RAItemDatabase.shared.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {
             Task {
-                allRecords = RASkillDatabase.shared.allRecords() as! [RASkill]
+                allRecords = RAItemDatabase.shared.allRecords() as! [RAItem]
                 filterRecords()
             }
         }
@@ -52,4 +49,8 @@ struct SkillDatabaseView: View {
             }
         }
     }
+}
+
+#Preview {
+    ItemDatabaseView()
 }

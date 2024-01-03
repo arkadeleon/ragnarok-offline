@@ -13,6 +13,8 @@
 		3511C1D32B0A6C5D006DD639 /* RSWPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */; };
 		3511C1D52B0AF9B1006DD639 /* RSMPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D42B0AF9B1006DD639 /* RSMPreviewViewController.swift */; };
 		3511C1D92B0B05B3006DD639 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D82B0B05B3006DD639 /* GameViewController.swift */; };
+		3514BF452B4526F40065ED89 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF442B4526F40065ED89 /* ItemDetailView.swift */; };
+		3514BF492B4532C80065ED89 /* ClientConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF482B4532C80065ED89 /* ClientConfiguration.swift */; };
 		3530982E2B145D6A00F32B62 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982D2B145D6A00F32B62 /* Ground.swift */; };
 		353098302B1480A600F32B62 /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982F2B1480A600F32B62 /* Water.swift */; };
 		353098322B148E4100F32B62 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353098312B148E4100F32B62 /* Model.swift */; };
@@ -20,10 +22,12 @@
 		353098402B15C75200F32B62 /* jsoneditor in Resources */ = {isa = PBXBuildFile; fileRef = 3530983F2B15C75200F32B62 /* jsoneditor */; };
 		353B4F0C2B43A9AC00605E92 /* ClientResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0B2B43A9AC00605E92 /* ClientResourceManager.swift */; };
 		353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */; };
-		353B4F142B43D33F00605E92 /* SkillIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F132B43D33F00605E92 /* SkillIcon.swift */; };
 		353B4F162B43F3BB00605E92 /* ClientBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F152B43F3BB00605E92 /* ClientBundle.swift */; };
 		353B4F182B44FFE100605E92 /* SkillDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F172B44FFE100605E92 /* SkillDetailView.swift */; };
 		353B4F1A2B4504D400605E92 /* DatabaseRecordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F192B4504D400605E92 /* DatabaseRecordField.swift */; };
+		353B4F1C2B451F1300605E92 /* ItemListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F1B2B451F1300605E92 /* ItemListRow.swift */; };
+		353B4F1E2B451FBC00605E92 /* DatabaseRecordIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F1D2B451FBC00605E92 /* DatabaseRecordIcon.swift */; };
+		353B4F202B4520F900605E92 /* ItemDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F1F2B4520F900605E92 /* ItemDatabaseView.swift */; };
 		35482AF12B2759DD0062DC4B /* File+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35482AF02B2759DD0062DC4B /* File+JSON.swift */; };
 		354CB4612B2AA70F001FC2A1 /* FileThumbnailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */; };
 		3552D8742B315D8F004831D0 /* TextFilePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8732B315D8F004831D0 /* TextFilePreviewViewController.swift */; };
@@ -165,6 +169,8 @@
 		3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWPreviewViewController.swift; sourceTree = "<group>"; };
 		3511C1D42B0AF9B1006DD639 /* RSMPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSMPreviewViewController.swift; sourceTree = "<group>"; };
 		3511C1D82B0B05B3006DD639 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		3514BF442B4526F40065ED89 /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
+		3514BF482B4532C80065ED89 /* ClientConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientConfiguration.swift; sourceTree = "<group>"; };
 		35270D2B2A68F4610001A8BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3530982D2B145D6A00F32B62 /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
 		3530982F2B1480A600F32B62 /* Water.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Water.swift; sourceTree = "<group>"; };
@@ -173,10 +179,12 @@
 		3530983F2B15C75200F32B62 /* jsoneditor */ = {isa = PBXFileReference; lastKnownFileType = folder; path = jsoneditor; sourceTree = "<group>"; };
 		353B4F0B2B43A9AC00605E92 /* ClientResourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientResourceManager.swift; sourceTree = "<group>"; };
 		353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillDatabaseView.swift; sourceTree = "<group>"; };
-		353B4F132B43D33F00605E92 /* SkillIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillIcon.swift; sourceTree = "<group>"; };
 		353B4F152B43F3BB00605E92 /* ClientBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientBundle.swift; sourceTree = "<group>"; };
 		353B4F172B44FFE100605E92 /* SkillDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillDetailView.swift; sourceTree = "<group>"; };
 		353B4F192B4504D400605E92 /* DatabaseRecordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordField.swift; sourceTree = "<group>"; };
+		353B4F1B2B451F1300605E92 /* ItemListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListRow.swift; sourceTree = "<group>"; };
+		353B4F1D2B451FBC00605E92 /* DatabaseRecordIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordIcon.swift; sourceTree = "<group>"; };
+		353B4F1F2B4520F900605E92 /* ItemDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDatabaseView.swift; sourceTree = "<group>"; };
 		35482AF02B2759DD0062DC4B /* File+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+JSON.swift"; sourceTree = "<group>"; };
 		354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnailManager.swift; sourceTree = "<group>"; };
 		3552D8732B315D8F004831D0 /* TextFilePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFilePreviewViewController.swift; sourceTree = "<group>"; };
@@ -307,6 +315,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3514BF422B4526D00065ED89 /* Item */ = {
+			isa = PBXGroup;
+			children = (
+				353B4F1F2B4520F900605E92 /* ItemDatabaseView.swift */,
+				353B4F1B2B451F1300605E92 /* ItemListRow.swift */,
+				3514BF442B4526F40065ED89 /* ItemDetailView.swift */,
+			);
+			path = Item;
+			sourceTree = "<group>";
+		};
+		3514BF432B4526DE0065ED89 /* Skill */ = {
+			isa = PBXGroup;
+			children = (
+				353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */,
+				353B4F172B44FFE100605E92 /* SkillDetailView.swift */,
+			);
+			path = Skill;
+			sourceTree = "<group>";
+		};
 		35270D252A5FE9470001A8BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -345,9 +372,9 @@
 		353B4F0E2B43AEC000605E92 /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */,
-				353B4F172B44FFE100605E92 /* SkillDetailView.swift */,
-				353B4F132B43D33F00605E92 /* SkillIcon.swift */,
+				3514BF422B4526D00065ED89 /* Item */,
+				3514BF432B4526DE0065ED89 /* Skill */,
+				353B4F1D2B451FBC00605E92 /* DatabaseRecordIcon.swift */,
 				353B4F192B4504D400605E92 /* DatabaseRecordField.swift */,
 			);
 			path = Database;
@@ -359,6 +386,7 @@
 				353B4F152B43F3BB00605E92 /* ClientBundle.swift */,
 				356363662B3F303F00F7C249 /* ClientDatabase.swift */,
 				353B4F0B2B43A9AC00605E92 /* ClientResourceManager.swift */,
+				3514BF482B4532C80065ED89 /* ClientConfiguration.swift */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -822,8 +850,11 @@
 				35B3BA1B2A08C01600B4540B /* AudioFilePreviewViewController.swift in Sources */,
 				3552D8782B3182A8004831D0 /* AnimatedImageActivityItem.swift in Sources */,
 				356BF6772AFCCDD9005B67F7 /* GRFWrapper.swift in Sources */,
+				353B4F1E2B451FBC00605E92 /* DatabaseRecordIcon.swift in Sources */,
 				35B3BA222A08C01600B4540B /* WaterShaders.metal in Sources */,
 				35B3B9E22A08C01600B4540B /* INI.swift in Sources */,
+				3514BF492B4532C80065ED89 /* ClientConfiguration.swift in Sources */,
+				353B4F202B4520F900605E92 /* ItemDatabaseView.swift in Sources */,
 				35B3BA0E2A08C01600B4540B /* FileThumbnailGenerator.swift in Sources */,
 				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,
 				3552D87A2B318323004831D0 /* StillImageActivityItem.swift in Sources */,
@@ -853,6 +884,7 @@
 				356BF67D2B0489CE005B67F7 /* SPR+Image.swift in Sources */,
 				35B3BA282A08C01600B4540B /* WaterRenderer.swift in Sources */,
 				356BF6712AFC8964005B67F7 /* BinaryReader.swift in Sources */,
+				3514BF452B4526F40065ED89 /* ItemDetailView.swift in Sources */,
 				3511C1D92B0B05B3006DD639 /* GameViewController.swift in Sources */,
 				35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */,
 				35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */,
@@ -862,7 +894,7 @@
 				35B3B9E72A08C01600B4540B /* ACT.swift in Sources */,
 				3511C1D12B0A535A006DD639 /* GATPreviewViewController.swift in Sources */,
 				35B695EF2A30763A006F1904 /* Mesh.swift in Sources */,
-				353B4F142B43D33F00605E92 /* SkillIcon.swift in Sources */,
+				353B4F1C2B451F1300605E92 /* ItemListRow.swift in Sources */,
 				35774F6D2B21991400438311 /* Color.swift in Sources */,
 				356508CF2B108D1500543562 /* Effect.swift in Sources */,
 				3511C1CC2B0A4EAE006DD639 /* GAT+Image.swift in Sources */,

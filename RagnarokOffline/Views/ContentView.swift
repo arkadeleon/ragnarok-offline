@@ -67,7 +67,7 @@ struct ContentView: View {
 
                 Section("Databases") {
                     NavigationLink {
-                        RADatabaseView(database: RAItemDatabase.shared)
+                        ItemDatabaseView()
                     } label: {
                         Label(RAItemDatabase.shared.name, systemImage: "list.bullet.rectangle")
                     }

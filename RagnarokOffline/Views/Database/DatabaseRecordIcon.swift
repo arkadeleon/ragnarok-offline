@@ -1,15 +1,15 @@
 //
-//  SkillIcon.swift
+//  DatabaseRecordIcon.swift
 //  RagnarokOffline
 //
-//  Created by Leon Li on 2024/1/2.
+//  Created by Leon Li on 2024/1/3.
 //  Copyright © 2024 Leon & Vane. All rights reserved.
 //
 
 import SwiftUI
 
-struct SkillIcon: View {
-    let skillName: String
+struct DatabaseRecordIcon: View {
+    let loader: () async -> UIImage?
 
     @State private var phase: AsyncImagePhase = .empty
 
@@ -28,11 +28,15 @@ struct SkillIcon: View {
         }
         .frame(width: 24, height: 24)
         .task {
-            if let image = await ClientResourceManager.shared.skillIconImage(skillName) {
+            if let image = await loader() {
                 phase = .success(Image(uiImage: image))
             } else {
                 phase = .failure(NSError())
             }
         }
     }
+}
+
+#Preview {
+    DatabaseRecordIcon(loader: { nil })
 }

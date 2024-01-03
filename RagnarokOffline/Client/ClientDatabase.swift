@@ -19,6 +19,11 @@ class ClientDatabase {
     private var isSkillScriptsLoaded = false
 
     func itemDisplayName(_ itemID: Int) -> String? {
+        objc_sync_enter(self)
+        defer {
+            objc_sync_exit(self)
+        }
+
         try? loadItemScriptsIfNeeded()
 
         guard let result = try? context.call("itemDisplayName", with: [itemID]) as? String else {
@@ -29,13 +34,16 @@ class ClientDatabase {
             return nil
         }
 
-        var convertedString: NSString? = nil
-        NSString.stringEncoding(for: data, convertedString: &convertedString, usedLossyConversion: nil)
-
-        return convertedString as String?
+        let string = String(data: data, encoding: ClientConfiguration.shared.encoding)
+        return string
     }
 
     func itemResourceName(_ itemID: Int) -> String? {
+        objc_sync_enter(self)
+        defer {
+            objc_sync_exit(self)
+        }
+
         try? loadItemScriptsIfNeeded()
 
         guard let result = try? context.call("itemResourceName", with: [itemID]) as? String else {
@@ -51,6 +59,11 @@ class ClientDatabase {
     }
 
     func itemDescription(_ itemID: Int) -> String? {
+        objc_sync_enter(self)
+        defer {
+            objc_sync_exit(self)
+        }
+
         try? loadItemScriptsIfNeeded()
 
         guard let result = try? context.call("itemDescription", with: [itemID]) as? [String] else {
@@ -61,13 +74,16 @@ class ClientDatabase {
             return nil
         }
 
-        var convertedString: NSString? = nil
-        NSString.stringEncoding(for: data, convertedString: &convertedString, usedLossyConversion: nil)
-
-        return convertedString as String?
+        let string = String(data: data, encoding: ClientConfiguration.shared.encoding)
+        return string
     }
 
     func skillDescription(_ skillID: Int) -> String? {
+        objc_sync_enter(self)
+        defer {
+            objc_sync_exit(self)
+        }
+
         try? loadSkillScriptsIfNeeded()
 
         guard let result = try? context.call("skillDescription", with: [skillID]) as? [String] else {
@@ -78,10 +94,8 @@ class ClientDatabase {
             return nil
         }
 
-        var convertedString: NSString? = nil
-        NSString.stringEncoding(for: data, convertedString: &convertedString, usedLossyConversion: nil)
-
-        return convertedString as String?
+        let string = String(data: data, encoding: ClientConfiguration.shared.encoding)
+        return string
     }
 
     private func loadItemScriptsIfNeeded() throws {
