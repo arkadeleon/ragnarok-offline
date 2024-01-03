@@ -29,14 +29,12 @@ struct ContentView: View {
         RASkillTreeDatabase.shared,
     ]
 
-    private let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-
     var body: some View {
         NavigationView {
             List {
                 Section("Client") {
                     NavigationLink {
-                        FilesView(file: .directory(url))
+                        FilesView(file: .directory(ClientBundle.shared.url))
                             .ignoresSafeArea()
                             .navigationTitle("Files")
                             .navigationBarTitleDisplayMode(.inline)
@@ -68,18 +66,40 @@ struct ContentView: View {
                 }
 
                 Section("Databases") {
-                    ForEach(databases, id: \.name) { database in
-                        NavigationLink {
-                            RADatabaseView(database: database)
-                        } label: {
-                            Label(database.name, systemImage: "list.bullet.rectangle")
-                        }
+                    NavigationLink {
+                        RADatabaseView(database: RAItemDatabase.shared)
+                    } label: {
+                        Label(RAItemDatabase.shared.name, systemImage: "list.bullet.rectangle")
+                    }
+
+                    NavigationLink {
+                        RADatabaseView(database: RAMonsterDatabase.shared)
+                    } label: {
+                        Label(RAMonsterDatabase.shared.name, systemImage: "list.bullet.rectangle")
+                    }
+
+                    NavigationLink {
+                        RADatabaseView(database: RAJobDatabase.shared)
+                    } label: {
+                        Label(RAJobDatabase.shared.name, systemImage: "list.bullet.rectangle")
+                    }
+
+                    NavigationLink {
+                        SkillDatabaseView()
+                    } label: {
+                        Label(RASkillDatabase.shared.name, systemImage: "list.bullet.rectangle")
+                    }
+
+                    NavigationLink {
+                        RADatabaseView(database: RASkillTreeDatabase.shared)
+                    } label: {
+                        Label(RASkillTreeDatabase.shared.name, systemImage: "list.bullet.rectangle")
                     }
                 }
             }
             .navigationTitle("Ragnarok Offline")
 
-            FilesView(file: .directory(url))
+            FilesView(file: .directory(ClientBundle.shared.url))
                 .ignoresSafeArea()
                 .navigationTitle("Files")
                 .navigationBarTitleDisplayMode(.inline)
