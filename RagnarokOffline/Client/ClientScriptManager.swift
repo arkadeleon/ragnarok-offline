@@ -1,5 +1,5 @@
 //
-//  ClientDatabase.swift
+//  ClientScriptManager.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/12/30.
@@ -9,8 +9,8 @@
 import Foundation
 import Lua
 
-class ClientDatabase {
-    static let shared = ClientDatabase()
+class ClientScriptManager {
+    static let shared = ClientScriptManager()
 
     private let context = LuaContext()
     private let decompiler = LuaDecompiler()
@@ -78,6 +78,26 @@ class ClientDatabase {
         return string
     }
 
+    func skillName(_ skillID: Int) -> String? {
+        objc_sync_enter(self)
+        defer {
+            objc_sync_exit(self)
+        }
+
+        try? loadSkillScriptsIfNeeded()
+
+        guard let result = try? context.call("skillName", with: [skillID]) as? String else {
+            return nil
+        }
+
+        guard let data = result.data(using: .isoLatin1) else {
+            return nil
+        }
+
+        let string = String(data: data, encoding: ClientConfiguration.shared.encoding)
+        return string
+    }
+
     func skillDescription(_ skillID: Int) -> String? {
         objc_sync_enter(self)
         defer {
@@ -129,16 +149,29 @@ class ClientDatabase {
         }
 
         try loadScript([
-            GRF.Path(string: "data\\lua files\\skillinfoz\\skillid.lub"),
-            GRF.Path(string: "data\\luafiles514\\lua files\\skillinfoz\\skillid.lub"),
+            GRF.Path(string: "data\\luafiles514\\lua files\\skillinfoz\\jobinheritlist.lub"),
+            GRF.Path(string: "data\\LuaFiles514\\Lua Files\\skillinfoz\\JobInheritList.lub"),
         ])
 
         try loadScript([
-            GRF.Path(string: "data\\lua files\\skillinfoz\\skilldescript.lub"),
+            GRF.Path(string: "data\\luafiles514\\lua files\\skillinfoz\\skillid.lub"),
+            GRF.Path(string: "data\\LuaFiles514\\Lua Files\\skillinfoz\\SkillID.lub"),
+        ])
+
+        try loadScript([
+            GRF.Path(string: "data\\luafiles514\\lua files\\skillinfoz\\skillinfolist.lub"),
+            GRF.Path(string: "data\\LuaFiles514\\Lua Files\\skillinfoz\\SkillInfoList.lub"),
+        ])
+
+        try loadScript([
             GRF.Path(string: "data\\luafiles514\\lua files\\skillinfoz\\skilldescript.lub"),
+            GRF.Path(string: "data\\LuaFiles514\\Lua Files\\skillinfoz\\SkillDescript.lub"),
         ])
 
         try context.parse("""
+        function skillName(skillID)
+            return SKILL_INFO_LIST[skillID]["SkillName"]
+        end
         function skillDescription(skillID)
             return SKILL_DESCRIPT[skillID]
         end

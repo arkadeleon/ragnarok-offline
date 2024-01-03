@@ -28,7 +28,7 @@ struct ItemListRow: View {
             }
         }
         .task {
-            localizedItemName = ClientDatabase.shared.itemDisplayName(item.itemID)
+            localizedItemName = ClientScriptManager.shared.itemDisplayName(item.itemID)
         }
     }
 }

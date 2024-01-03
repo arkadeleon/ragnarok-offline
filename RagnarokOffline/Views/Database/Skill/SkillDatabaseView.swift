@@ -20,10 +20,7 @@ struct SkillDatabaseView: View {
                 SkillDetailView(skill: skill)
             } label: {
                 HStack {
-                    DatabaseRecordIcon {
-                        await ClientResourceManager.shared.skillIconImage(skill.skillName)
-                    }
-                    Text(skill.skillDescription)
+                    SkillListRow(skill: skill)
                 }
             }
         }

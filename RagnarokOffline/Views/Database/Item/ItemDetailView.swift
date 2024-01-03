@@ -46,7 +46,7 @@ struct ItemDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task {
             itemPreview = await ClientResourceManager.shared.itemPreviewImage(item.itemID)
-            itemDescription = ClientDatabase.shared.itemDescription(item.itemID)
+            itemDescription = ClientScriptManager.shared.itemDescription(item.itemID)
         }
     }
 }

@@ -12,7 +12,7 @@ class ClientResourceManager {
     static let shared = ClientResourceManager()
 
     func itemIconImage(_ itemID: Int) async -> UIImage? {
-        guard let resourceName = ClientDatabase.shared.itemResourceName(itemID) else {
+        guard let resourceName = ClientScriptManager.shared.itemResourceName(itemID) else {
             return nil
         }
 
@@ -32,7 +32,7 @@ class ClientResourceManager {
     }
 
     func itemPreviewImage(_ itemID: Int) async -> UIImage? {
-        guard let resourceName = ClientDatabase.shared.itemResourceName(itemID) else {
+        guard let resourceName = ClientScriptManager.shared.itemResourceName(itemID) else {
             return nil
         }
 
