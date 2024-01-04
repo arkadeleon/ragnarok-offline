@@ -1,5 +1,5 @@
 //
-//  SkillListRow.swift
+//  SkillListCell.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/3.
@@ -9,16 +9,17 @@
 import rAthenaMap
 import SwiftUI
 
-struct SkillListRow: View {
+struct SkillListCell: View {
     let skill: RASkill
 
     @State private var localizedSkillName: String?
 
     var body: some View {
         HStack {
-            DatabaseRecordIcon {
+            DatabaseRecordImage {
                 await ClientResourceManager.shared.skillIconImage(skill.skillName)
             }
+            .frame(width: 24, height: 24)
 
             Text(skill.skillDescription)
 
@@ -34,5 +35,5 @@ struct SkillListRow: View {
 }
 
 #Preview {
-    SkillListRow(skill: RASkill())
+    SkillListCell(skill: RASkill())
 }

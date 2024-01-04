@@ -69,13 +69,13 @@ struct ContentView: View {
                     NavigationLink {
                         ItemDatabaseView()
                     } label: {
-                        Label(RAItemDatabase.shared.name, systemImage: "list.bullet.rectangle")
+                        Label(RAItemDatabase.shared.name, systemImage: "carrot")
                     }
 
                     NavigationLink {
-                        RADatabaseView(database: RAMonsterDatabase.shared)
+                        MonsterDatabaseView()
                     } label: {
-                        Label(RAMonsterDatabase.shared.name, systemImage: "list.bullet.rectangle")
+                        Label(RAMonsterDatabase.shared.name, systemImage: "pawprint")
                     }
 
                     NavigationLink {
@@ -87,7 +87,7 @@ struct ContentView: View {
                     NavigationLink {
                         SkillDatabaseView()
                     } label: {
-                        Label(RASkillDatabase.shared.name, systemImage: "list.bullet.rectangle")
+                        Label(RASkillDatabase.shared.name, systemImage: "arrow.up.heart")
                     }
 
                     NavigationLink {

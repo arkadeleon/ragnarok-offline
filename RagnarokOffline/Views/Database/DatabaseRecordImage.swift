@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct DatabaseRecordIcon: View {
+struct DatabaseRecordImage: View {
     let loader: () async -> UIImage?
 
     @State private var phase: AsyncImagePhase = .empty
@@ -19,14 +19,13 @@ struct DatabaseRecordIcon: View {
             case .empty:
                 EmptyView()
             case .success(let image):
-                image
+                image.resizable().scaledToFit()
             case .failure(let error):
                 EmptyView()
             @unknown default:
                 fatalError()
             }
         }
-        .frame(width: 24, height: 24)
         .task {
             if let image = await loader() {
                 phase = .success(Image(uiImage: image))
@@ -38,5 +37,5 @@ struct DatabaseRecordIcon: View {
 }
 
 #Preview {
-    DatabaseRecordIcon(loader: { nil })
+    DatabaseRecordImage(loader: { nil })
 }

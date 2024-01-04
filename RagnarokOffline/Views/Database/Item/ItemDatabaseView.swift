@@ -19,7 +19,7 @@ struct ItemDatabaseView: View {
             NavigationLink {
                 ItemDetailView(item: item)
             } label: {
-                ItemListRow(item: item)
+                ItemListCell(item: item)
             }
         }
         .listStyle(.plain)

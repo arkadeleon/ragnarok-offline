@@ -1,5 +1,5 @@
 //
-//  ItemListRow.swift
+//  ItemListCell.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/3.
@@ -9,16 +9,17 @@
 import rAthenaMap
 import SwiftUI
 
-struct ItemListRow: View {
+struct ItemListCell: View {
     let item: RAItem
 
     @State private var localizedItemName: String?
 
     var body: some View {
         HStack {
-            DatabaseRecordIcon {
+            DatabaseRecordImage {
                 await ClientResourceManager.shared.itemIconImage(item.itemID)
             }
+            .frame(width: 24, height: 24)
 
             Text(item.name)
 
@@ -34,5 +35,5 @@ struct ItemListRow: View {
 }
 
 #Preview {
-    ItemListRow(item: RAItem())
+    ItemListCell(item: RAItem())
 }

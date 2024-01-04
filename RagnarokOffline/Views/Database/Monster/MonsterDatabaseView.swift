@@ -1,34 +1,38 @@
 //
-//  SkillDatabaseView.swift
+//  MonsterDatabaseView.swift
 //  RagnarokOffline
 //
-//  Created by Leon Li on 2024/1/2.
+//  Created by Leon Li on 2024/1/3.
 //  Copyright © 2024 Leon & Vane. All rights reserved.
 //
 
 import rAthenaMap
 import SwiftUI
 
-struct SkillDatabaseView: View {
+struct MonsterDatabaseView: View {
     @State private var searchText = ""
-    @State private var allRecords = [RASkill]()
-    @State private var filteredRecords = [RASkill]()
+    @State private var allRecords = [RAMonster]()
+    @State private var filteredRecords = [RAMonster]()
 
     public var body: some View {
-        List(filteredRecords) { skill in
-            NavigationLink {
-                SkillDetailView(skill: skill)
-            } label: {
-                SkillListCell(skill: skill)
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 16)], spacing: 32) {
+                ForEach(filteredRecords) { monster in
+                    NavigationLink {
+                        MonsterDetailView(monster: monster)
+                    } label: {
+                        MonsterGridCell(monster: monster)
+                    }
+                }
             }
+            .padding(32)
         }
-        .listStyle(.plain)
         .searchable(text: $searchText)
-        .navigationTitle(RASkillDatabase.shared.name)
+        .navigationTitle(RAMonsterDatabase.shared.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {
             Task {
-                allRecords = RASkillDatabase.shared.allRecords() as! [RASkill]
+                allRecords = RAMonsterDatabase.shared.allRecords() as! [RAMonster]
                 filterRecords()
             }
         }
@@ -52,5 +56,5 @@ struct SkillDatabaseView: View {
 }
 
 #Preview {
-    SkillDatabaseView()
+    MonsterDatabaseView()
 }

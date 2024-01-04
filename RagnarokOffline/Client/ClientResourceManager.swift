@@ -50,6 +50,8 @@ class ClientResourceManager {
     func monsterImage(_ monsterName: String) async -> UIImage? {
         let path = GRF.Path(string: "data\\sprite\\몬스터\\\(monsterName).spr")
 
+        print("Load: " + path.string)
+
         do {
             let sprData = try ClientBundle.shared.grf.contentsOfEntry(at: path)
             let spr = try SPR(data: sprData)
