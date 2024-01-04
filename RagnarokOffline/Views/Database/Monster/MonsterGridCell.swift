@@ -15,7 +15,7 @@ struct MonsterGridCell: View {
     var body: some View {
         VStack {
             DatabaseRecordImage {
-                await ClientResourceManager.shared.monsterImage(monster.aegisName)
+                await ClientResourceManager.shared.monsterImage(monster.monsterID)
             }
             .frame(width: 48, height: 48)
 

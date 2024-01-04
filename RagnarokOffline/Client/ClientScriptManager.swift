@@ -16,6 +16,7 @@ class ClientScriptManager {
     private let decompiler = LuaDecompiler()
 
     private var isItemScriptsLoaded = false
+    private var isMonsterScriptsLoaded = false
     private var isSkillScriptsLoaded = false
 
     func itemDisplayName(_ itemID: Int) -> String? {
@@ -76,6 +77,18 @@ class ClientScriptManager {
 
         let string = String(data: data, encoding: ClientConfiguration.shared.encoding)
         return string
+    }
+
+    func monsterResourceName(_ monsterID: Int) -> String? {
+        objc_sync_enter(self)
+        defer {
+            objc_sync_exit(self)
+        }
+
+        try? loadMonsterScriptsIfNeeded()
+
+        let result = try? context.call("monsterResourceName", with: [monsterID]) as? String
+        return result
     }
 
     func skillName(_ skillID: Int) -> String? {
@@ -141,6 +154,30 @@ class ClientScriptManager {
         """)
 
         isItemScriptsLoaded = true
+    }
+
+    private func loadMonsterScriptsIfNeeded() throws {
+        guard !isMonsterScriptsLoaded else {
+            return
+        }
+
+        try loadScript([
+            GRF.Path(string: "data\\luafiles514\\lua files\\datainfo\\npcidentity.lub"),
+            GRF.Path(string: "data\\LuaFiles514\\Lua Files\\Datainfo\\NPCIdentity.lub"),
+        ])
+
+        try loadScript([
+            GRF.Path(string: "data\\luafiles514\\lua files\\datainfo\\jobname.lub"),
+            GRF.Path(string: "data\\LuaFiles514\\Lua Files\\Datainfo\\jobName.lub"),
+        ])
+
+        try context.parse("""
+        function monsterResourceName(monsterID)
+            return JobNameTable[monsterID]
+        end
+        """)
+
+        isMonsterScriptsLoaded = true
     }
 
     private func loadSkillScriptsIfNeeded() throws {

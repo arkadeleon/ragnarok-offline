@@ -15,7 +15,7 @@ struct MonsterDetailView: View {
     var body: some View {
         List {
             DatabaseRecordImage {
-                await ClientResourceManager.shared.animatedMonsterImage(monster.aegisName)
+                await ClientResourceManager.shared.animatedMonsterImage(monster.monsterID)
             }
             .frame(width: 150, height: 150)
 

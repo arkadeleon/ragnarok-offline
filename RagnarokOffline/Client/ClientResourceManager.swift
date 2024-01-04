@@ -47,8 +47,12 @@ class ClientResourceManager {
         }
     }
 
-    func monsterImage(_ monsterName: String) async -> UIImage? {
-        let path = GRF.Path(string: "data\\sprite\\몬스터\\\(monsterName).spr")
+    func monsterImage(_ monsterID: Int) async -> UIImage? {
+        guard let resourceName = ClientScriptManager.shared.monsterResourceName(monsterID) else {
+            return nil
+        }
+
+        let path = GRF.Path(string: "data\\sprite\\몬스터\\\(resourceName).spr")
 
         print("Load: " + path.string)
 
@@ -65,9 +69,13 @@ class ClientResourceManager {
         }
     }
 
-    func animatedMonsterImage(_ monsterName: String) async -> UIImage? {
-        let sprPath = GRF.Path(string: "data\\sprite\\몬스터\\\(monsterName).spr")
-        let actPath = GRF.Path(string: "data\\sprite\\몬스터\\\(monsterName).act")
+    func animatedMonsterImage(_ monsterID: Int) async -> UIImage? {
+        guard let resourceName = ClientScriptManager.shared.monsterResourceName(monsterID) else {
+            return nil
+        }
+
+        let sprPath = GRF.Path(string: "data\\sprite\\몬스터\\\(resourceName).spr")
+        let actPath = GRF.Path(string: "data\\sprite\\몬스터\\\(resourceName).act")
 
         do {
             let sprData = try ClientBundle.shared.grf.contentsOfEntry(at: sprPath)

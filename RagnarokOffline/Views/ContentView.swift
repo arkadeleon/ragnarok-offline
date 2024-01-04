@@ -69,7 +69,7 @@ struct ContentView: View {
                     NavigationLink {
                         ItemDatabaseView()
                     } label: {
-                        Label(RAItemDatabase.shared.name, systemImage: "carrot")
+                        Label(RAItemDatabase.shared.name, systemImage: "leaf")
                     }
 
                     NavigationLink {
