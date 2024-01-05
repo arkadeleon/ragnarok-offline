@@ -6,8 +6,8 @@
 //  Copyright © 2024 Leon & Vane. All rights reserved.
 //
 
-import rAthenaMap
 import SwiftUI
+import rAthenaMap
 
 struct SkillDetailView: View {
     let skill: RASkill

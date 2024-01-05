@@ -1,34 +1,38 @@
 //
-//  SkillDatabaseView.swift
+//  JobDatabaseView.swift
 //  RagnarokOffline
 //
-//  Created by Leon Li on 2024/1/2.
+//  Created by Leon Li on 2024/1/5.
 //  Copyright © 2024 Leon & Vane. All rights reserved.
 //
 
 import SwiftUI
 import rAthenaMap
 
-struct SkillDatabaseView: View {
+struct JobDatabaseView: View {
     @State private var searchText = ""
-    @State private var allRecords = [RASkill]()
-    @State private var filteredRecords = [RASkill]()
+    @State private var allRecords = [RAJob]()
+    @State private var filteredRecords = [RAJob]()
 
     public var body: some View {
-        List(filteredRecords, id: \.skillID) { skill in
-            NavigationLink {
-                SkillDetailView(skill: skill)
-            } label: {
-                SkillListCell(skill: skill)
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 16)], spacing: 32) {
+                ForEach(filteredRecords, id: \.jobID) { job in
+                    NavigationLink {
+                        JobDetailView(job: job)
+                    } label: {
+                        JobGridCell(job: job)
+                    }
+                }
             }
+            .padding(32)
         }
-        .listStyle(.plain)
         .searchable(text: $searchText)
-        .navigationTitle(RASkillDatabase.shared.name)
+        .navigationTitle(RAJobDatabase.shared.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {
             Task {
-                allRecords = RASkillDatabase.shared.allRecords() as! [RASkill]
+                allRecords = RAJobDatabase.shared.allRecords() as! [RAJob]
                 filterRecords()
             }
         }
@@ -52,5 +56,5 @@ struct SkillDatabaseView: View {
 }
 
 #Preview {
-    SkillDatabaseView()
+    JobDatabaseView()
 }

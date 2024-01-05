@@ -6,8 +6,8 @@
 //  Copyright © 2024 Leon & Vane. All rights reserved.
 //
 
-import rAthenaMap
 import SwiftUI
+import rAthenaMap
 
 struct ItemDatabaseView: View {
     @State private var searchText = ""
@@ -15,7 +15,7 @@ struct ItemDatabaseView: View {
     @State private var filteredRecords = [RAItem]()
 
     public var body: some View {
-        List(filteredRecords) { item in
+        List(filteredRecords, id: \.itemID) { item in
             NavigationLink {
                 ItemDetailView(item: item)
             } label: {

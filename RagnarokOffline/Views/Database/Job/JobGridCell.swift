@@ -1,25 +1,25 @@
 //
-//  MonsterGridCell.swift
+//  JobGridCell.swift
 //  RagnarokOffline
 //
-//  Created by Leon Li on 2024/1/3.
+//  Created by Leon Li on 2024/1/5.
 //  Copyright © 2024 Leon & Vane. All rights reserved.
 //
 
 import SwiftUI
 import rAthenaMap
 
-struct MonsterGridCell: View {
-    let monster: RAMonster
+struct JobGridCell: View {
+    let job: RAJob
 
     var body: some View {
         VStack {
             DatabaseRecordImage {
-                await ClientResourceManager.shared.monsterImage(monster.monsterID)
+                await ClientResourceManager.shared.jobImage(sexID: RA_SEX_MALE, jobID: job.jobID)
             }
             .frame(width: 64, height: 64)
 
-            Text(monster.name)
+            Text(job.jobName)
                 .lineLimit(2, reservesSpace: true)
                 .font(.subheadline)
                 .foregroundColor(.init(uiColor: .label))
@@ -28,5 +28,5 @@ struct MonsterGridCell: View {
 }
 
 #Preview {
-    MonsterGridCell(monster: RAMonster())
+    JobGridCell(job: RAJob())
 }

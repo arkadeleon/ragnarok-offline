@@ -11,7 +11,6 @@ import rAthenaLogin
 import rAthenaChar
 import rAthenaMap
 import rAthenaWeb
-import rAthenaControl
 
 struct ContentView: View {
     private let servers: [RAServer] = [
@@ -19,14 +18,6 @@ struct ContentView: View {
         RACharServer.shared,
         RAMapServer.shared,
         RAWebServer.shared,
-    ]
-
-    private let databases: [RADatabase] = [
-        RAItemDatabase.shared,
-        RAMonsterDatabase.shared,
-        RAJobDatabase.shared,
-        RASkillDatabase.shared,
-        RASkillTreeDatabase.shared,
     ]
 
     var body: some View {
@@ -79,21 +70,15 @@ struct ContentView: View {
                     }
 
                     NavigationLink {
-                        RADatabaseView(database: RAJobDatabase.shared)
+                        JobDatabaseView()
                     } label: {
-                        Label(RAJobDatabase.shared.name, systemImage: "list.bullet.rectangle")
+                        Label(RAJobDatabase.shared.name, systemImage: "person")
                     }
 
                     NavigationLink {
                         SkillDatabaseView()
                     } label: {
                         Label(RASkillDatabase.shared.name, systemImage: "arrow.up.heart")
-                    }
-
-                    NavigationLink {
-                        RADatabaseView(database: RASkillTreeDatabase.shared)
-                    } label: {
-                        Label(RASkillTreeDatabase.shared.name, systemImage: "list.bullet.rectangle")
                     }
                 }
             }

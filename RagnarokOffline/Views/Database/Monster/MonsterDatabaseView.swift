@@ -6,8 +6,8 @@
 //  Copyright © 2024 Leon & Vane. All rights reserved.
 //
 
-import rAthenaMap
 import SwiftUI
+import rAthenaMap
 
 struct MonsterDatabaseView: View {
     @State private var searchText = ""
@@ -17,7 +17,7 @@ struct MonsterDatabaseView: View {
     public var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 16)], spacing: 32) {
-                ForEach(filteredRecords) { monster in
+                ForEach(filteredRecords, id: \.monsterID) { monster in
                     NavigationLink {
                         MonsterDetailView(monster: monster)
                     } label: {

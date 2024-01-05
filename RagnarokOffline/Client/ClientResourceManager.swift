@@ -6,6 +6,7 @@
 //  Copyright © 2024 Leon & Vane. All rights reserved.
 //
 
+import rAthenaCommon
 import UIKit
 
 class ClientResourceManager {
@@ -92,10 +93,47 @@ class ClientResourceManager {
                 }
             }
 
-            let animatedImage = act.animatedImage(forActionAt: 0, imagesForSpritesByType: [:])
+            let animatedImage = act.animatedImage(forActionAt: 0, imagesForSpritesByType: imagesForSpritesByType)
             let images = animatedImage.images.map(UIImage.init)
             let duration = animatedImage.delay * CGFloat(animatedImage.images.count)
             let uiImage = UIImage.animatedImage(with: images, duration: duration)
+            return uiImage
+        } catch {
+            return nil
+        }
+    }
+
+    func jobImage(sexID: Int, jobID: Int) async -> UIImage? {
+        let sex = switch sexID {
+        case RA_SEX_MALE: "여"
+        case RA_SEX_FEMALE: "남"
+        default: ""
+        }
+
+        let job = JobID(rawValue: jobID).resourceName
+
+        let bodySPRPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(sex)\\\(job)_\(sex).spr")
+        let bodyACTPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(sex)\\\(job)_\(sex).act")
+
+        do {
+            let sprData = try ClientBundle.shared.grf.contentsOfEntry(at: bodySPRPath)
+            let spr = try SPR(data: sprData)
+
+            let actData = try ClientBundle.shared.grf.contentsOfEntry(at: bodyACTPath)
+            let act = try ACT(data: actData)
+
+            let sprites = spr.sprites.enumerated()
+            let spritesByType = Dictionary(grouping: sprites, by: { $0.element.type })
+            let imagesForSpritesByType = spritesByType.mapValues { sprites in
+                sprites.map { sprite in
+                    spr.image(forSpriteAt: sprite.offset)?.image
+                }
+            }
+
+            let animatedImage = act.animatedImage(forActionAt: 0, imagesForSpritesByType: imagesForSpritesByType)
+            let images = animatedImage.images.map(UIImage.init)
+            let duration = animatedImage.delay * CGFloat(animatedImage.images.count)
+            let uiImage = images.first
             return uiImage
         } catch {
             return nil
