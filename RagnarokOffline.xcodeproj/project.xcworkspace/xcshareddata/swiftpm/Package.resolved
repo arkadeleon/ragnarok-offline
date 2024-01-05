@@ -15,7 +15,7 @@
       "location" : "https://github.com/arkadeleon/swift-lua.git",
       "state" : {
         "branch" : "master",
-        "revision" : "75cc250760bc7c88460eaf5d53257db01fdf6004"
+        "revision" : "10a255a212e4e55679b81f2b231d58bf5d6c790b"
       }
     },
     {
@@ -24,7 +24,7 @@
       "location" : "https://github.com/arkadeleon/swift-rathena.git",
       "state" : {
         "branch" : "master",
-        "revision" : "5fabd283988d0da73ad22d11573078b91d3ae87c"
+        "revision" : "1ea86f451fe418973621e0f1018ce604699cd176"
       }
     },
     {

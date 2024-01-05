@@ -28,7 +28,7 @@ struct ItemDatabaseView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task {
             Task {
-                allRecords = RAItemDatabase.shared.allRecords() as! [RAItem]
+                allRecords = RAItemDatabase.shared.allRecords()
                 filterRecords()
             }
         }
@@ -44,8 +44,8 @@ struct ItemDatabaseView: View {
         if searchText.isEmpty {
             filteredRecords = allRecords
         } else {
-            filteredRecords = allRecords.filter { record in
-                record.recordTitle.localizedCaseInsensitiveContains(searchText)
+            filteredRecords = allRecords.filter { item in
+                item.name.localizedCaseInsensitiveContains(searchText)
             }
         }
     }

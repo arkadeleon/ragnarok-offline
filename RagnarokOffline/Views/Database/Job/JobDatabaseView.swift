@@ -32,7 +32,7 @@ struct JobDatabaseView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task {
             Task {
-                allRecords = RAJobDatabase.shared.allRecords() as! [RAJob]
+                allRecords = RAJobDatabase.shared.allRecords()
                 filterRecords()
             }
         }
@@ -48,8 +48,8 @@ struct JobDatabaseView: View {
         if searchText.isEmpty {
             filteredRecords = allRecords
         } else {
-            filteredRecords = allRecords.filter { record in
-                record.recordTitle.localizedCaseInsensitiveContains(searchText)
+            filteredRecords = allRecords.filter { job in
+                job.jobName.localizedCaseInsensitiveContains(searchText)
             }
         }
     }

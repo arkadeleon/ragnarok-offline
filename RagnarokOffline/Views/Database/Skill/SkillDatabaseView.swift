@@ -28,7 +28,7 @@ struct SkillDatabaseView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task {
             Task {
-                allRecords = RASkillDatabase.shared.allRecords() as! [RASkill]
+                allRecords = RASkillDatabase.shared.allRecords()
                 filterRecords()
             }
         }
@@ -44,8 +44,8 @@ struct SkillDatabaseView: View {
         if searchText.isEmpty {
             filteredRecords = allRecords
         } else {
-            filteredRecords = allRecords.filter { record in
-                record.recordTitle.localizedCaseInsensitiveContains(searchText)
+            filteredRecords = allRecords.filter { skill in
+                skill.skillName.localizedCaseInsensitiveContains(searchText)
             }
         }
     }

@@ -32,7 +32,7 @@ struct MonsterDatabaseView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task {
             Task {
-                allRecords = RAMonsterDatabase.shared.allRecords() as! [RAMonster]
+                allRecords = RAMonsterDatabase.shared.allRecords()
                 filterRecords()
             }
         }
@@ -48,8 +48,8 @@ struct MonsterDatabaseView: View {
         if searchText.isEmpty {
             filteredRecords = allRecords
         } else {
-            filteredRecords = allRecords.filter { record in
-                record.recordTitle.localizedCaseInsensitiveContains(searchText)
+            filteredRecords = allRecords.filter { monster in
+                monster.name.localizedCaseInsensitiveContains(searchText)
             }
         }
     }
