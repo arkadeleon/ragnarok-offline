@@ -6,7 +6,7 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
-import rAthenaMap
+import rAthenaCommon
 
 struct JobID: RawRepresentable {
     let rawValue: Int

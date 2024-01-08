@@ -13,11 +13,12 @@ import rAthenaMap
 import rAthenaWeb
 
 struct ContentView: View {
-    private let servers: [RAServer] = [
-        RALoginServer.shared,
-        RACharServer.shared,
-        RAMapServer.shared,
-        RAWebServer.shared,
+    private let filesView = FilesView(file: .directory(ClientBundle.shared.url))
+    private let serverViews: [ServerView] = [
+        ServerView(server: RALoginServer.shared),
+        ServerView(server: RACharServer.shared),
+        ServerView(server: RAMapServer.shared),
+        ServerView(server: RAWebServer.shared),
     ]
 
     var body: some View {
@@ -25,7 +26,7 @@ struct ContentView: View {
             List {
                 Section("Client") {
                     NavigationLink {
-                        FilesView(file: .directory(ClientBundle.shared.url))
+                        filesView
                             .ignoresSafeArea()
                             .navigationTitle("Files")
                             .navigationBarTitleDisplayMode(.inline)
@@ -44,14 +45,14 @@ struct ContentView: View {
                 }
 
                 Section("Servers") {
-                    ForEach(servers, id: \.name) { server in
+                    ForEach(serverViews, id: \.server.name) { serverView in
                         NavigationLink {
-                            ServerView(server: server)
+                            serverView
                                 .ignoresSafeArea()
-                                .navigationTitle(server.name)
+                                .navigationTitle(serverView.server.name)
                                 .navigationBarTitleDisplayMode(.inline)
                         } label: {
-                            Label(server.name, systemImage: "macpro.gen3.server")
+                            Label(serverView.server.name, systemImage: "macpro.gen3.server")
                         }
                     }
                 }
@@ -84,7 +85,7 @@ struct ContentView: View {
             }
             .navigationTitle("Ragnarok Offline")
 
-            FilesView(file: .directory(ClientBundle.shared.url))
+            filesView
                 .ignoresSafeArea()
                 .navigationTitle("Files")
                 .navigationBarTitleDisplayMode(.inline)

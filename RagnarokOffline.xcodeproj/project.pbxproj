@@ -24,6 +24,7 @@
 		3514BF842B4801E20065ED89 /* JobGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF832B4801E20065ED89 /* JobGridCell.swift */; };
 		3514BF862B4801EB0065ED89 /* JobDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF852B4801EB0065ED89 /* JobDetailView.swift */; };
 		3514BF892B48642B0065ED89 /* Terminal in Frameworks */ = {isa = PBXBuildFile; productRef = 3514BF882B48642B0065ED89 /* Terminal */; };
+		3514BF8D2B4BE93A0065ED89 /* SexID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF8C2B4BE93A0065ED89 /* SexID.swift */; };
 		3530982E2B145D6A00F32B62 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982D2B145D6A00F32B62 /* Ground.swift */; };
 		353098302B1480A600F32B62 /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982F2B1480A600F32B62 /* Water.swift */; };
 		353098322B148E4100F32B62 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353098312B148E4100F32B62 /* Model.swift */; };
@@ -187,6 +188,7 @@
 		3514BF812B4801D70065ED89 /* JobDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDatabaseView.swift; sourceTree = "<group>"; };
 		3514BF832B4801E20065ED89 /* JobGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobGridCell.swift; sourceTree = "<group>"; };
 		3514BF852B4801EB0065ED89 /* JobDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailView.swift; sourceTree = "<group>"; };
+		3514BF8C2B4BE93A0065ED89 /* SexID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SexID.swift; sourceTree = "<group>"; };
 		35270D2B2A68F4610001A8BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3530982D2B145D6A00F32B62 /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
 		3530982F2B1480A600F32B62 /* Water.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Water.swift; sourceTree = "<group>"; };
@@ -422,10 +424,11 @@
 		356363652B3F301C00F7C249 /* Client */ = {
 			isa = PBXGroup;
 			children = (
-				353B4F152B43F3BB00605E92 /* ClientBundle.swift */,
-				356363662B3F303F00F7C249 /* ClientScriptManager.swift */,
 				353B4F0B2B43A9AC00605E92 /* ClientResourceManager.swift */,
+				356363662B3F303F00F7C249 /* ClientScriptManager.swift */,
 				3514BF482B4532C80065ED89 /* ClientConfiguration.swift */,
+				353B4F152B43F3BB00605E92 /* ClientBundle.swift */,
+				3514BF8C2B4BE93A0065ED89 /* SexID.swift */,
 				3514BF7E2B47D64F0065ED89 /* JobID.swift */,
 			);
 			path = Client;
@@ -882,6 +885,7 @@
 				35B3B9E82A08C01600B4540B /* GAT.swift in Sources */,
 				356508C72B104C9500543562 /* EffectShaders.metal in Sources */,
 				356BF6822B04F54A005B67F7 /* ACTPreviewViewController.swift in Sources */,
+				3514BF8D2B4BE93A0065ED89 /* SexID.swift in Sources */,
 				3514BF822B4801D70065ED89 /* JobDatabaseView.swift in Sources */,
 				356BF6752AFCCBF1005B67F7 /* DES.swift in Sources */,
 				3552D8762B316876004831D0 /* SPRPreviewViewController.swift in Sources */,

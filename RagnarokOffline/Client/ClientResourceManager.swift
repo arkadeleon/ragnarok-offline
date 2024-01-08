@@ -17,7 +17,7 @@ class ClientResourceManager {
             return nil
         }
 
-        let path = GRF.Path(string: "data\\sprite\\아이템\\\(resourceName).spr")
+        let (path, _) = ClientBundle.shared.itemSpritePath(forResourceName: resourceName)
 
         do {
             let sprData = try ClientBundle.shared.grf.contentsOfEntry(at: path)
@@ -37,7 +37,7 @@ class ClientResourceManager {
             return nil
         }
 
-        let path = GRF.Path(string: "data\\texture\\유저인터페이스\\collection\\\(resourceName).bmp")
+        let path = ClientBundle.shared.itemUserInterfacePath(forResourceName: resourceName)
 
         do {
             let bmpData = try ClientBundle.shared.grf.contentsOfEntry(at: path)
@@ -53,7 +53,7 @@ class ClientResourceManager {
             return nil
         }
 
-        let path = GRF.Path(string: "data\\sprite\\몬스터\\\(resourceName).spr")
+        let (path, _) = ClientBundle.shared.monsterSpritePath(forResourceName: resourceName)
 
         print("Load: " + path.string)
 
@@ -75,8 +75,7 @@ class ClientResourceManager {
             return nil
         }
 
-        let sprPath = GRF.Path(string: "data\\sprite\\몬스터\\\(resourceName).spr")
-        let actPath = GRF.Path(string: "data\\sprite\\몬스터\\\(resourceName).act")
+        let (sprPath, actPath) = ClientBundle.shared.monsterSpritePath(forResourceName: resourceName)
 
         do {
             let sprData = try ClientBundle.shared.grf.contentsOfEntry(at: sprPath)
@@ -104,16 +103,10 @@ class ClientResourceManager {
     }
 
     func jobImage(sexID: Int, jobID: Int) async -> UIImage? {
-        let sex = switch sexID {
-        case RA_SEX_MALE: "여"
-        case RA_SEX_FEMALE: "남"
-        default: ""
-        }
+        let sexResourceName = SexID(rawValue: sexID).resourceName
+        let jobResourceName = JobID(rawValue: jobID).resourceName
 
-        let job = JobID(rawValue: jobID).resourceName
-
-        let bodySPRPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(sex)\\\(job)_\(sex).spr")
-        let bodyACTPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(sex)\\\(job)_\(sex).act")
+        let (bodySPRPath, bodyACTPath) = ClientBundle.shared.bodySpritePath(forSexID: sexID, jobID: jobID)
 
         do {
             let sprData = try ClientBundle.shared.grf.contentsOfEntry(at: bodySPRPath)
@@ -141,7 +134,7 @@ class ClientResourceManager {
     }
 
     func skillIconImage(_ skillName: String) async -> UIImage? {
-        let path = GRF.Path(string: "data\\sprite\\아이템\\\(skillName).spr")
+        let (path, _) = ClientBundle.shared.skillSpritePath(forResourceName: skillName)
 
         do {
             let sprData = try ClientBundle.shared.grf.contentsOfEntry(at: path)
