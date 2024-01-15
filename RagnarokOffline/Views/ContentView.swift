@@ -57,29 +57,29 @@ struct ContentView: View {
                     }
                 }
 
-                Section("Databases") {
+                Section("Database") {
                     NavigationLink {
-                        ItemDatabaseView()
+                        ItemList()
                     } label: {
-                        Label(RAItemDatabase.shared.name, systemImage: "leaf")
+                        Label("Items", systemImage: "leaf")
                     }
 
                     NavigationLink {
-                        MonsterDatabaseView()
+                        MonsterGrid()
                     } label: {
-                        Label(RAMonsterDatabase.shared.name, systemImage: "pawprint")
+                        Label("Monsters", systemImage: "pawprint")
                     }
 
                     NavigationLink {
-                        JobDatabaseView()
+                        JobGrid()
                     } label: {
-                        Label(RAJobDatabase.shared.name, systemImage: "person")
+                        Label("Jobs", systemImage: "person")
                     }
 
                     NavigationLink {
-                        SkillDatabaseView()
+                        SkillList()
                     } label: {
-                        Label(RASkillDatabase.shared.name, systemImage: "arrow.up.heart")
+                        Label("Skills", systemImage: "arrow.up.heart")
                     }
                 }
             }

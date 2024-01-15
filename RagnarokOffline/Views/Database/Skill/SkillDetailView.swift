@@ -7,22 +7,22 @@
 //
 
 import SwiftUI
-import rAthenaMap
+import rAthenaDatabase
 
 struct SkillDetailView: View {
-    let skill: RASkill
+    let skill: Skill
 
     @State private var skillDescription: String?
 
     var body: some View {
         List {
             Section("Info") {
-                DatabaseRecordField(name: "ID", value: "#\(skill.skillID)")
-                DatabaseRecordField(name: "Aegis Name", value: skill.skillName)
-                DatabaseRecordField(name: "Name", value: skill.skillDescription)
+                DatabaseRecordField(name: "ID", value: "#\(skill.id)")
+                DatabaseRecordField(name: "Aegis Name", value: skill.aegisName)
+                DatabaseRecordField(name: "Name", value: skill.name)
                 DatabaseRecordField(name: "Maximum Level", value: "\(skill.maxLevel)")
-                DatabaseRecordField(name: "Type", value: "\(skill.type)")
-                DatabaseRecordField(name: "Target Type", value: "\(skill.targetType)")
+                DatabaseRecordField(name: "Type", value: skill.type.description)
+                DatabaseRecordField(name: "Target Type", value: skill.targetType.description)
             }
 
             if let skillDescription {
@@ -32,10 +32,10 @@ struct SkillDetailView: View {
             }
         }
         .listStyle(.plain)
-        .navigationTitle(skill.skillDescription)
+        .navigationTitle(skill.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            skillDescription = ClientScriptManager.shared.skillDescription(skill.skillID)
+            skillDescription = ClientScriptManager.shared.skillDescription(skill.id)
         }
     }
 }

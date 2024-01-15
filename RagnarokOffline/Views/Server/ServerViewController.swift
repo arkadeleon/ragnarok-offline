@@ -62,7 +62,7 @@ class ServerViewController: UIViewController {
     }
 
     nonisolated private func configureServer() async {
-        try? RAResourceManager.shared.copyResourceFilesToLibraryDirectory()
+        try? ResourceManager.shared.copyResourceFilesToLibraryDirectory()
 
         server.outputHandler = { [weak self] data in
             if let data = String(data: data, encoding: .isoLatin1)?

@@ -7,21 +7,21 @@
 //
 
 import SwiftUI
-import rAthenaMap
+import rAthenaDatabase
 
 struct SkillListCell: View {
-    let skill: RASkill
+    let skill: Skill
 
     @State private var localizedSkillName: String?
 
     var body: some View {
         HStack {
             DatabaseRecordImage {
-                await ClientResourceManager.shared.skillIconImage(skill.skillName)
+                await ClientResourceManager.shared.skillIconImage(skill.aegisName)
             }
             .frame(width: 24, height: 24)
 
-            Text(skill.skillDescription)
+            Text(skill.name)
 
             if let localizedSkillName {
                 Text(localizedSkillName)
@@ -29,11 +29,7 @@ struct SkillListCell: View {
             }
         }
         .task {
-            localizedSkillName = ClientScriptManager.shared.skillName(skill.skillID)
+            localizedSkillName = ClientScriptManager.shared.skillName(skill.id)
         }
     }
-}
-
-#Preview {
-    SkillListCell(skill: RASkill())
 }

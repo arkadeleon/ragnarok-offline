@@ -24,7 +24,7 @@
       "location" : "https://github.com/arkadeleon/swift-rathena.git",
       "state" : {
         "branch" : "master",
-        "revision" : "1ea86f451fe418973621e0f1018ce604699cd176"
+        "revision" : "affa9e6770bdbd55c0ad7a42451be7642cbd94d5"
       }
     },
     {
@@ -34,6 +34,15 @@
       "state" : {
         "revision" : "407d3ed9d88da9c4c7518e72f7bfbe2cd5cf0b49",
         "version" : "0.3.4"
+      }
+    },
+    {
+      "identity" : "yams",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jpsim/Yams.git",
+      "state" : {
+        "revision" : "0d9ee7ea8c4ebd4a489ad7a73d5c6cad55d6fed3",
+        "version" : "5.0.6"
       }
     }
   ],

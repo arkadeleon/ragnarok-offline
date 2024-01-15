@@ -7,6 +7,7 @@
 //
 
 import rAthenaCommon
+import rAthenaDatabase
 import UIKit
 
 class ClientResourceManager {
@@ -102,11 +103,8 @@ class ClientResourceManager {
         }
     }
 
-    func jobImage(sexID: Int, jobID: Int) async -> UIImage? {
-        let sexResourceName = SexID(rawValue: sexID).resourceName
-        let jobResourceName = JobID(rawValue: jobID).resourceName
-
-        let (bodySPRPath, bodyACTPath) = ClientBundle.shared.bodySpritePath(forSexID: sexID, jobID: jobID)
+    func jobImage(gender: Gender, job: Job) async -> UIImage? {
+        let (bodySPRPath, bodyACTPath) = ClientBundle.shared.bodySpritePath(forGender: gender, job: job)
 
         do {
             let sprData = try ClientBundle.shared.grf.contentsOfEntry(at: bodySPRPath)

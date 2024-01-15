@@ -7,26 +7,22 @@
 //
 
 import SwiftUI
-import rAthenaMap
+import rAthenaDatabase
 
 struct JobDetailView: View {
-    let job: RAJob
+    let jobStats: JobStats
 
     var body: some View {
         List {
             Section("Info") {
-                DatabaseRecordField(name: "Max Weight", value: "#\(job.maxWeight)")
-                DatabaseRecordField(name: "HP Factor", value: "\(job.hpFactor)")
-                DatabaseRecordField(name: "HP Increase", value: "\(job.hpIncrease)")
-                DatabaseRecordField(name: "SP Increase", value: "\(job.spIncrease)")
+                DatabaseRecordField(name: "Max Weight", value: "#\(jobStats.maxWeight)")
+                DatabaseRecordField(name: "HP Factor", value: "\(jobStats.hpFactor)")
+                DatabaseRecordField(name: "HP Increase", value: "\(jobStats.hpIncrease)")
+                DatabaseRecordField(name: "SP Increase", value: "\(jobStats.spIncrease)")
             }
         }
         .listStyle(.plain)
-        .navigationTitle(job.jobName)
+        .navigationTitle(jobStats.job.description)
         .navigationBarTitleDisplayMode(.inline)
     }
-}
-
-#Preview {
-    JobDetailView(job: RAJob())
 }

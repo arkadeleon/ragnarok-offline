@@ -7,26 +7,22 @@
 //
 
 import SwiftUI
-import rAthenaMap
+import rAthenaDatabase
 
 struct JobGridCell: View {
-    let job: RAJob
+    let job: Job
 
     var body: some View {
         VStack {
             DatabaseRecordImage {
-                await ClientResourceManager.shared.jobImage(sexID: RA_SEX_MALE, jobID: job.jobID)
+                await ClientResourceManager.shared.jobImage(gender: .male, job: job)
             }
             .frame(width: 64, height: 64)
 
-            Text(job.jobName)
+            Text(job.description)
                 .lineLimit(2, reservesSpace: true)
                 .font(.subheadline)
                 .foregroundColor(.init(uiColor: .label))
         }
     }
-}
-
-#Preview {
-    JobGridCell(job: RAJob())
 }

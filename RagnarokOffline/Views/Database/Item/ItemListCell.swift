@@ -7,17 +7,17 @@
 //
 
 import SwiftUI
-import rAthenaMap
+import rAthenaDatabase
 
 struct ItemListCell: View {
-    let item: RAItem
+    let item: Item
 
     @State private var localizedItemName: String?
 
     var body: some View {
         HStack {
             DatabaseRecordImage {
-                await ClientResourceManager.shared.itemIconImage(item.itemID)
+                await ClientResourceManager.shared.itemIconImage(item.id)
             }
             .frame(width: 24, height: 24)
 
@@ -29,11 +29,7 @@ struct ItemListCell: View {
             }
         }
         .task {
-            localizedItemName = ClientScriptManager.shared.itemDisplayName(item.itemID)
+            localizedItemName = ClientScriptManager.shared.itemDisplayName(item.id)
         }
     }
-}
-
-#Preview {
-    ItemListCell(item: RAItem())
 }

@@ -7,15 +7,15 @@
 //
 
 import SwiftUI
-import rAthenaMap
+import rAthenaDatabase
 
 struct MonsterGridCell: View {
-    let monster: RAMonster
+    let monster: Monster
 
     var body: some View {
         VStack {
             DatabaseRecordImage {
-                await ClientResourceManager.shared.monsterImage(monster.monsterID)
+                await ClientResourceManager.shared.monsterImage(monster.id)
             }
             .frame(width: 64, height: 64)
 
@@ -25,8 +25,4 @@ struct MonsterGridCell: View {
                 .foregroundColor(.init(uiColor: .label))
         }
     }
-}
-
-#Preview {
-    MonsterGridCell(monster: RAMonster())
 }

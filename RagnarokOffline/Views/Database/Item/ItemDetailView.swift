@@ -7,10 +7,10 @@
 //
 
 import SwiftUI
-import rAthenaMap
+import rAthenaDatabase
 
 struct ItemDetailView: View {
-    let item: RAItem
+    let item: Item
 
     @State private var itemPreview: UIImage?
     @State private var itemDescription: String?
@@ -27,10 +27,10 @@ struct ItemDetailView: View {
             .frame(width: 150, height: 150, alignment: .center)
 
             Section("Info") {
-                DatabaseRecordField(name: "ID", value: "#\(item.itemID)")
+                DatabaseRecordField(name: "ID", value: "#\(item.id)")
                 DatabaseRecordField(name: "Aegis Name", value: item.aegisName)
                 DatabaseRecordField(name: "Name", value: item.name)
-                DatabaseRecordField(name: "Type", value: NSStringFromRAItemType(item.type))
+                DatabaseRecordField(name: "Type", value: item.type.description)
                 DatabaseRecordField(name: "Buy", value: "\(item.buy)z")
                 DatabaseRecordField(name: "Sell", value: "\(item.sell)z")
             }
@@ -45,12 +45,8 @@ struct ItemDetailView: View {
         .navigationTitle(item.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            itemPreview = await ClientResourceManager.shared.itemPreviewImage(item.itemID)
-            itemDescription = ClientScriptManager.shared.itemDescription(item.itemID)
+            itemPreview = await ClientResourceManager.shared.itemPreviewImage(item.id)
+            itemDescription = ClientScriptManager.shared.itemDescription(item.id)
         }
     }
-}
-
-#Preview {
-    ItemDetailView(item: RAItem())
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import rAthenaDatabase
 
 class ClientBundle {
     static let shared = ClientBundle()
@@ -25,8 +26,8 @@ class ClientBundle {
     }
 
     func itemUserInterfacePath(forResourceName resourceName: String) -> GRF.Path {
-        let path = GRF.Path(string: "data\\texture\\유저인터페이스\\collection\\\(resourceName).bmp")
-        return path
+        let bmpPath = GRF.Path(string: "data\\texture\\유저인터페이스\\collection\\\(resourceName).bmp")
+        return bmpPath
     }
 
     func monsterSpritePath(forResourceName resourceName: String) -> (spr: GRF.Path, act: GRF.Path) {
@@ -35,13 +36,21 @@ class ClientBundle {
         return (spr: sprPath, act: actPath)
     }
 
-    func bodySpritePath(forSexID sexID: Int, jobID: Int) -> (spr: GRF.Path, act: GRF.Path) {
-        let sexResourceName = SexID(rawValue: sexID).resourceName
-        let jobResourceName = JobID(rawValue: jobID).resourceName
-
-        let sprPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(sexResourceName)\\\(jobResourceName)_\(sexResourceName).spr")
-        let actPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(sexResourceName)\\\(jobResourceName)_\(sexResourceName).act")
+    func bodySpritePath(forGender gender: Gender, job: Job) -> (spr: GRF.Path, act: GRF.Path) {
+        let sprPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(gender.resourceName)\\\(job.resourceName)_\(gender.resourceName).spr")
+        let actPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(gender.resourceName)\\\(job.resourceName)_\(gender.resourceName).act")
         return (spr: sprPath, act: actPath)
+    }
+
+    func headSpritePath(forGender gender: Gender, hairID: Int) -> (spr: GRF.Path, act: GRF.Path) {
+        let sprPath = GRF.Path(string: "data\\sprite\\인간족\\머리통\\\(gender.resourceName)\\\(hairID)_\(gender.resourceName).spr")
+        let actPath = GRF.Path(string: "data\\sprite\\인간족\\머리통\\\(gender.resourceName)\\\(hairID)_\(gender.resourceName).act")
+        return (spr: sprPath, act: actPath)
+    }
+
+    func headPalettePath(forGender gender: Gender, hairID: Int, paletteID: Int) -> GRF.Path {
+        let palPath = GRF.Path(string: "data\\palette\\머리\\머리\(hairID)_\(gender.resourceName)_\(paletteID).pal")
+        return palPath
     }
 
     func skillSpritePath(forResourceName resourceName: String) -> (spr: GRF.Path, act: GRF.Path) {

@@ -7,20 +7,20 @@
 //
 
 import SwiftUI
-import rAthenaMap
+import rAthenaDatabase
 
 struct MonsterDetailView: View {
-    let monster: RAMonster
+    let monster: Monster
 
     var body: some View {
         List {
             DatabaseRecordImage {
-                await ClientResourceManager.shared.animatedMonsterImage(monster.monsterID)
+                await ClientResourceManager.shared.animatedMonsterImage(monster.id)
             }
             .frame(width: 150, height: 150)
 
             Section("Info") {
-                DatabaseRecordField(name: "ID", value: "#\(monster.monsterID)")
+                DatabaseRecordField(name: "ID", value: "#\(monster.id)")
                 DatabaseRecordField(name: "Aegis Name", value: monster.aegisName)
                 DatabaseRecordField(name: "Name", value: monster.name)
                 DatabaseRecordField(name: "Level", value: "\(monster.level)")
@@ -32,8 +32,4 @@ struct MonsterDetailView: View {
         .navigationTitle(monster.name)
         .navigationBarTitleDisplayMode(.inline)
     }
-}
-
-#Preview {
-    MonsterDetailView(monster: RAMonster())
 }
