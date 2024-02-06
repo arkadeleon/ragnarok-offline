@@ -10,7 +10,9 @@ import SwiftUI
 import rAthenaDatabase
 
 struct SkillList: View {
-    public var body: some View {
+    let database: Database
+
+    var body: some View {
         DatabaseRecordList {
             try await Database.renewal.fetchSkills()
         } filter: { skills, searchText in
@@ -19,9 +21,9 @@ struct SkillList: View {
             }
         } content: { skill in
             NavigationLink {
-                SkillDetailView(skill: skill)
+                SkillDetailView(database: database, skill: skill)
             } label: {
-                SkillListCell(skill: skill)
+                SkillListCell(database: database, skill: skill)
             }
         }
         .navigationTitle("Skills")
@@ -30,5 +32,5 @@ struct SkillList: View {
 }
 
 #Preview {
-    SkillList()
+    SkillList(database: .renewal)
 }

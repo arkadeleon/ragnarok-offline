@@ -10,19 +10,32 @@ import SwiftUI
 import rAthenaDatabase
 
 struct MonsterGridCell: View {
+    let database: Database
     let monster: Monster
 
     var body: some View {
-        VStack {
-            DatabaseRecordImage {
-                await ClientResourceManager.shared.monsterImage(monster.id)
-            }
-            .frame(width: 64, height: 64)
+        ZStack {
+            RoundedRectangle(cornerRadius: 4)
+                .stroke(Color(uiColor: .secondarySystemBackground))
 
-            Text(monster.name)
-                .lineLimit(2, reservesSpace: true)
-                .font(.subheadline)
-                .foregroundColor(.init(uiColor: .label))
+            VStack(spacing: 0) {
+                DatabaseRecordImage {
+                    await ClientResourceManager.shared.monsterImage(monster.id, size: CGSize(width: 80, height: 80))
+                }
+                .frame(width: 80, height: 80)
+                .padding(4)
+
+                ZStack {
+                    Color(uiColor: .secondarySystemBackground)
+                        .clipShape(.rect(bottomLeadingRadius: 4, bottomTrailingRadius: 4))
+
+                    Text(monster.name)
+                        .lineLimit(2, reservesSpace: true)
+                        .font(.subheadline)
+                        .foregroundColor(Color(uiColor: .label))
+                        .padding(4)
+                }
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ struct DatabaseRecordImage: View {
             case .empty:
                 EmptyView()
             case .success(let image):
-                image.resizable().scaledToFit()
+                image
             case .failure(let error):
                 EmptyView()
             @unknown default:

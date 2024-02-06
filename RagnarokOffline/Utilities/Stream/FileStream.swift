@@ -18,8 +18,11 @@ class FileStream: Stream {
     }
 
     init(url: URL) throws {
-        file = fopen(url.path.cString(using: .utf8), "rw+")
-        length = (try FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int) ?? 0
+        guard let file = fopen(url.path.cString(using: .utf8), "rw+") else {
+            throw StreamError.invalidURL
+        }
+        self.file = file
+        self.length = (try FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int) ?? 0
     }
 
     func close() {

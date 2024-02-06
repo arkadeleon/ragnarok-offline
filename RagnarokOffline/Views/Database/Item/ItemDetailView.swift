@@ -10,6 +10,7 @@ import SwiftUI
 import rAthenaDatabase
 
 struct ItemDetailView: View {
+    let database: Database
     let item: Item
 
     @State private var itemPreview: UIImage?
@@ -27,17 +28,38 @@ struct ItemDetailView: View {
             .frame(width: 150, height: 150, alignment: .center)
 
             Section("Info") {
-                DatabaseRecordField(name: "ID", value: "#\(item.id)")
-                DatabaseRecordField(name: "Aegis Name", value: item.aegisName)
-                DatabaseRecordField(name: "Name", value: item.name)
-                DatabaseRecordField(name: "Type", value: item.type.description)
-                DatabaseRecordField(name: "Buy", value: "\(item.buy)z")
-                DatabaseRecordField(name: "Sell", value: "\(item.sell)z")
+                LabeledContent("ID", value: "#\(item.id)")
+                LabeledContent("Aegis Name", value: item.aegisName)
+                LabeledContent("Name", value: item.name)
+                LabeledContent("Type", value: item.type.description)
+                LabeledContent("Buy", value: "\(item.buy)z")
+                LabeledContent("Sell", value: "\(item.sell)z")
             }
 
             if let itemDescription {
                 Section("Description") {
                     Text(itemDescription)
+                }
+            }
+
+            if let script = item.script {
+                Section("Script") {
+                    Text(script.trimmingCharacters(in: .whitespacesAndNewlines))
+                        .monospaced()
+                }
+            }
+
+            if let equipScript = item.equipScript {
+                Section("Equip Script") {
+                    Text(equipScript.trimmingCharacters(in: .whitespacesAndNewlines))
+                        .monospaced()
+                }
+            }
+
+            if let unEquipScript = item.unEquipScript {
+                Section("Unequip Script") {
+                    Text(unEquipScript.trimmingCharacters(in: .whitespacesAndNewlines))
+                        .monospaced()
                 }
             }
         }

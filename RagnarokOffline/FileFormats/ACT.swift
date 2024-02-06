@@ -108,7 +108,7 @@ extension ACT {
         var offset: simd_int2
         var spriteIndex: Int32
         var isMirrored: Int32
-        var color = Color(red: 255, green: 255, blue: 255, alpha: 255)
+        var color = RGBAColor(red: 255, green: 255, blue: 255, alpha: 255)
         var scale: simd_float2 = [1, 1]
         var rotationAngle: Int32 = 0
         var spriteType: Int32 = 0
@@ -121,7 +121,7 @@ extension ACT {
             isMirrored = try reader.readInt()
 
             if version >= "2.0" {
-                color = try Color(from: reader)
+                color = try RGBAColor(from: reader)
 
                 scale.x = try reader.readFloat()
                 scale.y = scale.x

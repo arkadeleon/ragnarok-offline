@@ -10,18 +10,20 @@ import SwiftUI
 import rAthenaDatabase
 
 struct JobGrid: View {
-    public var body: some View {
-        DatabaseRecordGrid(itemSize: 80, horizontalSpacing: 32, verticalSpacing: 16) {
-            try await Database.renewal.fetchJobs()
+    let database: Database
+
+    var body: some View {
+        DatabaseRecordGrid(itemSize: 80, horizontalSpacing: 16, verticalSpacing: 16) {
+            try await database.fetchJobs()
         } filter: { records, searchText in
             records.filter { record in
                 record.job.description.localizedCaseInsensitiveContains(searchText)
             }
         } content: { record in
             NavigationLink {
-                JobDetailView(jobStats: record)
+                JobDetailView(database: database, jobStats: record)
             } label: {
-                JobGridCell(job: record.job)
+                JobGridCell(database: database, job: record.job)
             }
         }
         .navigationTitle("Jobs")
@@ -30,5 +32,5 @@ struct JobGrid: View {
 }
 
 #Preview {
-    JobGrid()
+    JobGrid(database: .renewal)
 }

@@ -10,6 +10,7 @@ import SwiftUI
 import rAthenaDatabase
 
 struct ItemListCell: View {
+    let database: Database
     let item: Item
 
     @State private var localizedItemName: String?

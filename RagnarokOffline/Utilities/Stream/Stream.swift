@@ -7,6 +7,7 @@
 //
 
 enum StreamError: Error {
+    case invalidURL
     case invalidEncoding
     case invalidSeekOffset
 }

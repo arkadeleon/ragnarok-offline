@@ -1,12 +1,12 @@
 //
-//  Color.swift
+//  RGBAColor.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/12/7.
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
-struct Color: Equatable, Encodable {
+struct RGBAColor: Equatable, Encodable {
     var red: UInt8
     var green: UInt8
     var blue: UInt8

@@ -124,9 +124,3 @@ extension Job {
         }
     }
 }
-
-extension JobStats: Identifiable {
-    public var id: Int {
-        job.id
-    }
-}

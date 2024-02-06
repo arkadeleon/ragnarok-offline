@@ -7,12 +7,15 @@
 //
 
 import SwiftUI
+import rAthenaDatabase
 import rAthenaLogin
 import rAthenaChar
 import rAthenaMap
 import rAthenaWeb
 
 struct ContentView: View {
+    private let database = Database.renewal
+
     private let filesView = FilesView(file: .directory(ClientBundle.shared.url))
     private let serverViews: [ServerView] = [
         ServerView(server: RALoginServer.shared),
@@ -59,25 +62,25 @@ struct ContentView: View {
 
                 Section("Database") {
                     NavigationLink {
-                        ItemList()
+                        ItemList(database: database)
                     } label: {
                         Label("Items", systemImage: "leaf")
                     }
 
                     NavigationLink {
-                        MonsterGrid()
+                        MonsterGrid(database: database)
                     } label: {
                         Label("Monsters", systemImage: "pawprint")
                     }
 
                     NavigationLink {
-                        JobGrid()
+                        JobGrid(database: database)
                     } label: {
                         Label("Jobs", systemImage: "person")
                     }
 
                     NavigationLink {
-                        SkillList()
+                        SkillList(database: database)
                     } label: {
                         Label("Skills", systemImage: "arrow.up.heart")
                     }

@@ -10,6 +10,7 @@ import SwiftUI
 import rAthenaDatabase
 
 struct SkillListCell: View {
+    let database: Database
     let skill: Skill
 
     @State private var localizedSkillName: String?

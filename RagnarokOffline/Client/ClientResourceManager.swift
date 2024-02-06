@@ -49,7 +49,7 @@ class ClientResourceManager {
         }
     }
 
-    func monsterImage(_ monsterID: Int) async -> UIImage? {
+    func monsterImage(_ monsterID: Int, size: CGSize) async -> UIImage? {
         guard let resourceName = ClientScriptManager.shared.monsterResourceName(monsterID) else {
             return nil
         }
@@ -65,7 +65,11 @@ class ClientResourceManager {
                 return nil
             }
             let uiImage = UIImage(cgImage: image.image)
-            return uiImage
+            if uiImage.size.width > size.width || uiImage.size.height > size.height {
+                return uiImage.resize(size.width, size.height)
+            } else {
+                return uiImage
+            }
         } catch {
             return nil
         }
@@ -103,7 +107,7 @@ class ClientResourceManager {
         }
     }
 
-    func jobImage(gender: Gender, job: Job) async -> UIImage? {
+    func jobImage(gender: Gender, job: Job, size: CGSize) async -> UIImage? {
         let (bodySPRPath, bodyACTPath) = ClientBundle.shared.bodySpritePath(forGender: gender, job: job)
 
         do {
@@ -124,8 +128,14 @@ class ClientResourceManager {
             let animatedImage = act.animatedImage(forActionAt: 0, imagesForSpritesByType: imagesForSpritesByType)
             let images = animatedImage.images.map(UIImage.init)
             let duration = animatedImage.delay * CGFloat(animatedImage.images.count)
-            let uiImage = images.first
-            return uiImage
+            guard let uiImage = images.first else {
+                return nil
+            }
+            if uiImage.size.width > size.width || uiImage.size.height > size.height {
+                return uiImage.resize(size.width, size.height)
+            } else {
+                return uiImage
+            }
         } catch {
             return nil
         }

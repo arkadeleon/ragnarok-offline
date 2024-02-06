@@ -10,18 +10,20 @@ import SwiftUI
 import rAthenaDatabase
 
 struct ItemList: View {
-    public var body: some View {
+    let database: Database
+
+    var body: some View {
         DatabaseRecordList {
-            try await Database.renewal.fetchItems()
+            try await database.fetchItems()
         } filter: { items, searchText in
             items.filter { item in
                 item.name.localizedCaseInsensitiveContains(searchText)
             }
         } content: { item in
             NavigationLink {
-                ItemDetailView(item: item)
+                ItemDetailView(database: database, item: item)
             } label: {
-                ItemListCell(item: item)
+                ItemListCell(database: database, item: item)
             }
         }
         .navigationTitle("Items")
@@ -30,5 +32,5 @@ struct ItemList: View {
 }
 
 #Preview {
-    ItemList()
+    ItemList(database: .renewal)
 }

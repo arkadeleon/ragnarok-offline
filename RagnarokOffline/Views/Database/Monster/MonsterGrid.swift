@@ -10,18 +10,20 @@ import SwiftUI
 import rAthenaDatabase
 
 struct MonsterGrid: View {
-    public var body: some View {
-        DatabaseRecordGrid(itemSize: 80, horizontalSpacing: 32, verticalSpacing: 16) {
-            try await Database.renewal.fetchMonsters()
+    let database: Database
+
+    var body: some View {
+        DatabaseRecordGrid(itemSize: 80, horizontalSpacing: 16, verticalSpacing: 16) {
+            try await database.fetchMonsters()
         } filter: { monsters, searchText in
             monsters.filter { monster in
                 monster.name.localizedCaseInsensitiveContains(searchText)
             }
         } content: { monster in
             NavigationLink {
-                MonsterDetailView(monster: monster)
+                MonsterDetailView(database: database, monster: monster)
             } label: {
-                MonsterGridCell(monster: monster)
+                MonsterGridCell(database: database, monster: monster)
             }
         }
         .navigationTitle("Monsters")
@@ -30,5 +32,5 @@ struct MonsterGrid: View {
 }
 
 #Preview {
-    MonsterGrid()
+    MonsterGrid(database: .renewal)
 }

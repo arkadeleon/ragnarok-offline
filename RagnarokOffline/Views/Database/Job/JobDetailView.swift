@@ -10,15 +10,16 @@ import SwiftUI
 import rAthenaDatabase
 
 struct JobDetailView: View {
+    let database: Database
     let jobStats: JobStats
 
     var body: some View {
         List {
             Section("Info") {
-                DatabaseRecordField(name: "Max Weight", value: "#\(jobStats.maxWeight)")
-                DatabaseRecordField(name: "HP Factor", value: "\(jobStats.hpFactor)")
-                DatabaseRecordField(name: "HP Increase", value: "\(jobStats.hpIncrease)")
-                DatabaseRecordField(name: "SP Increase", value: "\(jobStats.spIncrease)")
+                LabeledContent("Max Weight", value: "#\(jobStats.maxWeight)")
+                LabeledContent("HP Factor", value: "\(jobStats.hpFactor)")
+                LabeledContent("HP Increase", value: "\(jobStats.hpIncrease)")
+                LabeledContent("SP Increase", value: "\(jobStats.spIncrease)")
             }
         }
         .listStyle(.plain)
