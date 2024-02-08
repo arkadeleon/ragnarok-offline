@@ -10,9 +10,6 @@ import SwiftUI
 import rAthenaDatabase
 
 struct DatabaseRecordGrid<Record, Content>: View where Record: Identifiable, Content: View {
-    let itemSize: CGFloat
-    let horizontalSpacing: CGFloat
-    let verticalSpacing: CGFloat
     let fetch: () async throws -> [Record]
     let filter: ([Record], String) -> [Record]
     let content: (Record) -> Content
@@ -37,12 +34,12 @@ struct DatabaseRecordGrid<Record, Content>: View where Record: Identifiable, Con
                 ProgressView()
             case .loaded:
                 ScrollView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: itemSize), spacing: horizontalSpacing)], spacing: verticalSpacing) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 16)], spacing: 32) {
                         ForEach(filteredRecords) { record in
                             content(record)
                         }
                     }
-                    .padding(EdgeInsets(top: verticalSpacing, leading: horizontalSpacing, bottom: verticalSpacing, trailing: horizontalSpacing))
+                    .padding(EdgeInsets(top: 32, leading: 16, bottom: 32, trailing: 16))
                 }
                 .searchable(text: $searchText)
                 .onSubmit(of: .search) {
@@ -60,10 +57,7 @@ struct DatabaseRecordGrid<Record, Content>: View where Record: Identifiable, Con
         }
     }
 
-    init(itemSize: CGFloat, horizontalSpacing: CGFloat, verticalSpacing: CGFloat, fetch: @escaping () async throws -> [Record], filter: @escaping ([Record], String) -> [Record], @ViewBuilder content: @escaping (Record) -> Content) {
-        self.itemSize = itemSize
-        self.horizontalSpacing = horizontalSpacing
-        self.verticalSpacing = verticalSpacing
+    init(fetch: @escaping () async throws -> [Record], filter: @escaping ([Record], String) -> [Record], @ViewBuilder content: @escaping (Record) -> Content) {
         self.fetch = fetch
         self.filter = filter
         self.content = content
@@ -99,7 +93,7 @@ struct DatabaseRecordGrid<Record, Content>: View where Record: Identifiable, Con
 }
 
 #Preview {
-    DatabaseRecordGrid(itemSize: 80, horizontalSpacing: 32, verticalSpacing: 16) {
+    DatabaseRecordGrid {
         Job.allCases
     } filter: { jobs, searchText in
         jobs.filter { job in

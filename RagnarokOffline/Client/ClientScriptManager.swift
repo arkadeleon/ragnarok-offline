@@ -13,7 +13,6 @@ class ClientScriptManager {
     static let shared = ClientScriptManager()
 
     private let context = LuaContext()
-    private let decompiler = LuaDecompiler()
 
     private var isItemScriptsLoaded = false
     private var isMonsterScriptsLoaded = false
@@ -136,9 +135,9 @@ class ClientScriptManager {
             return
         }
 
-        let iteminfoURL = ClientBundle.shared.url.appendingPathComponent("System/iteminfo.lua")
-        if let iteminfo = try? String(contentsOf: iteminfoURL, encoding: .ascii) {
-            try context.parse(iteminfo)
+        let iteminfoURL = ClientBundle.shared.url.appendingPathComponent("System/iteminfo.lub")
+        if let iteminfo = try? Data(contentsOf: iteminfoURL) {
+            try context.load(iteminfo)
         }
 
         try context.parse("""
@@ -230,17 +229,6 @@ class ClientScriptManager {
             return
         }
 
-        guard let decompiledData = decompiler.decompileData(data) else {
-            return
-        }
-
-        /// Drop first "function(...)", drop last "end"
-        guard let script = String(data: decompiledData, encoding: .ascii)?
-            .dropFirst(13)
-            .dropLast(4) else {
-            return
-        }
-
-        try context.parse(String(script))
+        try context.load(data)
     }
 }

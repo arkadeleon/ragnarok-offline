@@ -13,7 +13,7 @@ struct MonsterGrid: View {
     let database: Database
 
     var body: some View {
-        DatabaseRecordGrid(itemSize: 80, horizontalSpacing: 16, verticalSpacing: 16) {
+        DatabaseRecordGrid {
             try await database.fetchMonsters()
         } filter: { monsters, searchText in
             monsters.filter { monster in

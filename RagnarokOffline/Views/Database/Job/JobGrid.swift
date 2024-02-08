@@ -13,7 +13,7 @@ struct JobGrid: View {
     let database: Database
 
     var body: some View {
-        DatabaseRecordGrid(itemSize: 80, horizontalSpacing: 16, verticalSpacing: 16) {
+        DatabaseRecordGrid {
             try await database.fetchJobs()
         } filter: { records, searchText in
             records.filter { record in
