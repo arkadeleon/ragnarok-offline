@@ -17,11 +17,12 @@ struct ContentView: View {
     private let database = Database.renewal
 
     private let filesView = FilesView(file: .directory(ClientBundle.shared.url))
-    private let serverViews: [ServerView] = [
-        ServerView(server: RALoginServer.shared),
-        ServerView(server: RACharServer.shared),
-        ServerView(server: RAMapServer.shared),
-        ServerView(server: RAWebServer.shared),
+
+    private let servers: [RAServer] = [
+        RALoginServer.shared,
+        RACharServer.shared,
+        RAMapServer.shared,
+        RAWebServer.shared,
     ]
 
     var body: some View {
@@ -47,15 +48,12 @@ struct ContentView: View {
 //                    }
                 }
 
-                Section("Servers") {
-                    ForEach(serverViews, id: \.server.name) { serverView in
+                Section("Server") {
+                    ForEach(servers, id: \.name) { server in
                         NavigationLink {
-                            serverView
-                                .ignoresSafeArea()
-                                .navigationTitle(serverView.server.name)
-                                .navigationBarTitleDisplayMode(.inline)
+                            ServerView(server: server)
                         } label: {
-                            Label(serverView.server.name, systemImage: "macpro.gen3.server")
+                            Label(server.name, systemImage: "macpro.gen3.server")
                         }
                     }
                 }
