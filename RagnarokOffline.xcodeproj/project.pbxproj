@@ -43,6 +43,7 @@
 		3552D8782B3182A8004831D0 /* AnimatedImageActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */; };
 		3552D87A2B318323004831D0 /* StillImageActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8792B318323004831D0 /* StillImageActivityItem.swift */; };
 		3555E1122B71FC79007CE4BA /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555E1112B71FC79007CE4BA /* UIImage+Resize.swift */; };
+		3555E1152B74C864007CE4BA /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555E1142B74C864007CE4BA /* Entity.swift */; };
 		356363612B3DB17F00F7C249 /* rAthenaResource in Frameworks */ = {isa = PBXBuildFile; productRef = 356363602B3DB17F00F7C249 /* rAthenaResource */; };
 		356363642B3EAE3400F7C249 /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 356363632B3EAE3400F7C249 /* Lua */; };
 		356363672B3F303F00F7C249 /* ClientScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356363662B3F303F00F7C249 /* ClientScriptManager.swift */; };
@@ -211,6 +212,7 @@
 		3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImageActivityItem.swift; sourceTree = "<group>"; };
 		3552D8792B318323004831D0 /* StillImageActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillImageActivityItem.swift; sourceTree = "<group>"; };
 		3555E1112B71FC79007CE4BA /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
+		3555E1142B74C864007CE4BA /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		356363662B3F303F00F7C249 /* ClientScriptManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientScriptManager.swift; sourceTree = "<group>"; };
 		356508C52B104AD400543562 /* EffectShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EffectShaderTypes.h; sourceTree = "<group>"; };
 		356508C62B104C9500543562 /* EffectShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = EffectShaders.metal; sourceTree = "<group>"; };
@@ -426,6 +428,14 @@
 				353B4F1D2B451FBC00605E92 /* DatabaseRecordImage.swift */,
 			);
 			path = Database;
+			sourceTree = "<group>";
+		};
+		3555E1132B74C850007CE4BA /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				3555E1142B74C864007CE4BA /* Entity.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		356363652B3F301C00F7C249 /* Client */ = {
@@ -688,6 +698,7 @@
 			children = (
 				35B695ED2A307553006F1904 /* Core */,
 				356508C42B104AB200543562 /* Effect */,
+				3555E1132B74C850007CE4BA /* Entity */,
 				356508C12B104A4900543562 /* Ground */,
 				356508C22B104A5400543562 /* Model */,
 				356508C32B104A5E00543562 /* Water */,
@@ -890,6 +901,7 @@
 				35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */,
 				3514BF862B4801EB0065ED89 /* JobDetailView.swift in Sources */,
 				353B4F0C2B43A9AC00605E92 /* ClientResourceManager.swift in Sources */,
+				3555E1152B74C864007CE4BA /* Entity.swift in Sources */,
 				3552D8742B315D8F004831D0 /* TextFilePreviewViewController.swift in Sources */,
 				35B3B9E82A08C01600B4540B /* GAT.swift in Sources */,
 				356508C72B104C9500543562 /* EffectShaders.metal in Sources */,
