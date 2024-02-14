@@ -1,0 +1,3 @@
+[submodule "swift-rathena"]
+	path = swift-rathena
+	url = https://github.com/arkadeleon/swift-rathena.git

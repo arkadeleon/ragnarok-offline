@@ -19,15 +19,6 @@
       }
     },
     {
-      "identity" : "swift-rathena",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/arkadeleon/swift-rathena.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "c4dd762a7c294fc0c523cd89046893ea466e5696"
-      }
-    },
-    {
       "identity" : "terminal",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/dnpp73/Terminal.git",
