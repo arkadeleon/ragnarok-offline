@@ -13,9 +13,7 @@ struct SkillList: View {
     let database: Database
 
     var body: some View {
-        DatabaseRecordList {
-            try await Database.renewal.fetchSkills()
-        } filter: { skills, searchText in
+        DatabaseRecordList(partitions: database.fetchSkills()) { skills, searchText in
             skills.filter { skill in
                 skill.name.localizedCaseInsensitiveContains(searchText)
             }

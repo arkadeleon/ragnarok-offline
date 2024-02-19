@@ -13,11 +13,9 @@ struct JobGrid: View {
     let database: Database
 
     var body: some View {
-        DatabaseRecordGrid {
-            try await database.fetchJobs()
-        } filter: { records, searchText in
-            records.filter { record in
-                record.job.description.localizedCaseInsensitiveContains(searchText)
+        DatabaseRecordGrid(partitions: database.fetchJobs()) { jobs, searchText in
+            jobs.filter { jobStats in
+                jobStats.job.description.localizedCaseInsensitiveContains(searchText)
             }
         } content: { record in
             NavigationLink {

@@ -10,7 +10,7 @@ import SwiftUI
 import rAthenaDatabase
 
 struct DatabaseRecordList<Record, Content>: View where Record: Identifiable, Content: View {
-    let fetch: () async throws -> [Record]
+    let partitions: AsyncDatabaseRecordPartitions<Record>
     let filter: ([Record], String) -> [Record]
     let content: (Record) -> Content
 
@@ -53,8 +53,8 @@ struct DatabaseRecordList<Record, Content>: View where Record: Identifiable, Con
         }
     }
 
-    init(fetch: @escaping () async throws -> [Record], filter: @escaping ([Record], String) -> [Record], @ViewBuilder content: @escaping (Record) -> Content) {
-        self.fetch = fetch
+    init(partitions: AsyncDatabaseRecordPartitions<Record>, filter: @escaping ([Record], String) -> [Record], @ViewBuilder content: @escaping (Record) -> Content) {
+        self.partitions = partitions
         self.filter = filter
         self.content = content
     }
@@ -67,9 +67,16 @@ struct DatabaseRecordList<Record, Content>: View where Record: Identifiable, Con
         status = .loading
 
         do {
-            let records = try await fetch()
-            status = .loaded(records)
-            filterRecords()
+            for try await partition in partitions {
+                switch status {
+                case .loaded(let records):
+                    status = .loaded(records + partition.records)
+                    filterRecords()
+                default:
+                    status = .loaded(partition.records)
+                    filterRecords()
+                }
+            }
         } catch {
             status = .failed(error)
         }
@@ -85,17 +92,5 @@ struct DatabaseRecordList<Record, Content>: View where Record: Identifiable, Con
         } else {
             filteredRecords = filter(records, searchText)
         }
-    }
-}
-
-#Preview {
-    DatabaseRecordList {
-        Job.allCases
-    } filter: { jobs, searchText in
-        jobs.filter { job in
-            job.description.localizedCaseInsensitiveContains(searchText)
-        }
-    } content: { job in
-        Text(job.description)
     }
 }

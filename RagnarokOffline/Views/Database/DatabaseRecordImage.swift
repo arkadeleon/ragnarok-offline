@@ -35,7 +35,3 @@ struct DatabaseRecordImage: View {
         }
     }
 }
-
-#Preview {
-    DatabaseRecordImage(loader: { nil })
-}

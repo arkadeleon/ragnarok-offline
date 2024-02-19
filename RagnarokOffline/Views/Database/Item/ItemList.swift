@@ -13,9 +13,7 @@ struct ItemList: View {
     let database: Database
 
     var body: some View {
-        DatabaseRecordList {
-            try await database.fetchItems()
-        } filter: { items, searchText in
+        DatabaseRecordList(partitions: database.fetchItems()) { items, searchText in
             items.filter { item in
                 item.name.localizedCaseInsensitiveContains(searchText)
             }
