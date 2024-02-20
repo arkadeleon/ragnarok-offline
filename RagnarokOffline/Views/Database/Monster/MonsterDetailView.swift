@@ -18,6 +18,78 @@ struct MonsterDetailView: View {
     @State private var mvpDropItems: [DropItem] = []
     @State private var dropItems: [DropItem] = []
 
+    var fields: [DatabaseRecordField] {
+        var fields: [DatabaseRecordField] = []
+
+        fields.append(("ID", "#\(monster.id)"))
+        fields.append(("Aegis Name", monster.aegisName))
+        fields.append(("Name", monster.name))
+
+        fields.append(("Level", "\(monster.level)"))
+        fields.append(("HP", "\(monster.hp)"))
+        fields.append(("SP", "\(monster.sp)"))
+
+        fields.append(("Base Exp", "\(monster.baseExp)"))
+        fields.append(("Job Exp", "\(monster.jobExp)"))
+        fields.append(("MVP Exp", "\(monster.mvpExp)"))
+
+        if database.mode == .prerenewal {
+            fields.append(("Minimum Attack", "\(monster.attack)"))
+            fields.append(("Maximum Attack", "\(monster.attack2)"))
+        }
+
+        if database.mode == .renewal {
+            fields.append(("Base Attack", "\(monster.attack)"))
+            fields.append(("Base Magic Attack", "\(monster.attack2)"))
+        }
+
+        fields.append(("Defense", "\(monster.defense)"))
+        fields.append(("Magic Defense", "\(monster.magicDefense)"))
+
+        fields.append(("Resistance", "\(monster.resistance)"))
+        fields.append(("Magic Resistance", "\(monster.magicResistance)"))
+
+        fields.append(("Str", "\(monster.str)"))
+        fields.append(("Agi", "\(monster.agi)"))
+        fields.append(("Vit", "\(monster.vit)"))
+        fields.append(("Int", "\(monster.int)"))
+        fields.append(("Dex", "\(monster.dex)"))
+        fields.append(("Luk", "\(monster.luk)"))
+
+        fields.append(("Attack Range", "\(monster.attackRange)"))
+        fields.append(("Skill Cast Range", "\(monster.skillRange)"))
+        fields.append(("Chase Range", "\(monster.chaseRange)"))
+
+        fields.append(("Size", monster.size.description))
+        fields.append(("Race", monster.race.description))
+
+        fields.append(("Element", monster.element.description))
+        fields.append(("Element Level", "\(monster.elementLevel)"))
+
+        fields.append(("Walk Speed", "\(monster.walkSpeed.rawValue)"))
+        fields.append(("Attack Speed", "\(monster.attackDelay)"))
+        fields.append(("Attack Animation Speed", "\(monster.attackMotion)"))
+        fields.append(("Damage Animation Speed", "\(monster.damageMotion)"))
+        fields.append(("Damage Taken", "\(monster.damageTaken)"))
+
+        fields.append(("AI", monster.ai.description))
+        fields.append(("Class", monster.class.description))
+
+        return fields
+    }
+
+    var raceGroups: String? {
+        monster.raceGroups?
+            .map({ "- \($0.description)" })
+            .joined(separator: "\n")
+    }
+
+    var modes: String? {
+        monster.modes?
+            .map({ "- \($0.description)" })
+            .joined(separator: "\n")
+    }
+
     var body: some View {
         List {
             DatabaseRecordImage {
@@ -26,70 +98,20 @@ struct MonsterDetailView: View {
             .frame(width: 150, height: 150)
 
             Section("Info") {
-                LabeledContent("ID", value: "#\(monster.id)")
-                LabeledContent("Aegis Name", value: monster.aegisName)
-                LabeledContent("Name", value: monster.name)
-
-                LabeledContent("Level", value: "\(monster.level)")
-                LabeledContent("HP", value: "\(monster.hp)")
-                LabeledContent("SP", value: "\(monster.sp)")
-
-                LabeledContent("Base Exp", value: "\(monster.baseExp)")
-                LabeledContent("Job Exp", value: "\(monster.jobExp)")
-                LabeledContent("MVP Exp", value: "\(monster.mvpExp)")
-
-                if database.mode == .prerenewal {
-                    LabeledContent("Minimum Attack", value: "\(monster.attack)")
-                    LabeledContent("Maximum Attack", value: "\(monster.attack2)")
+                ForEach(fields, id: \.title) { field in
+                    LabeledContent(field.title, value: field.value)
                 }
-
-                if database.mode == .renewal {
-                    LabeledContent("Base Attack", value: "\(monster.attack)")
-                    LabeledContent("Base Magic Attack", value: "\(monster.attack2)")
-                }
-
-                LabeledContent("Defense", value: "\(monster.defense)")
-                LabeledContent("Magic Defense", value: "\(monster.magicDefense)")
-
-                LabeledContent("Resistance", value: "\(monster.resistance)")
-                LabeledContent("Magic Resistance", value: "\(monster.magicResistance)")
-
-                LabeledContent("Str", value: "\(monster.str)")
-                LabeledContent("Agi", value: "\(monster.agi)")
-                LabeledContent("Vit", value: "\(monster.vit)")
-                LabeledContent("Int", value: "\(monster.int)")
-                LabeledContent("Dex", value: "\(monster.dex)")
-                LabeledContent("Luk", value: "\(monster.luk)")
-
-                LabeledContent("Attack Range", value: "\(monster.attackRange)")
-                LabeledContent("Skill Cast Range", value: "\(monster.skillRange)")
-                LabeledContent("Chase Range", value: "\(monster.chaseRange)")
-
-                LabeledContent("Size", value: monster.size.description)
-                LabeledContent("Race", value: monster.race.description)
-
-                LabeledContent("Element", value: monster.element.description)
-                LabeledContent("Element Level", value: "\(monster.elementLevel)")
-
-                LabeledContent("Walk Speed", value: "\(monster.walkSpeed.rawValue)")
-                LabeledContent("Attack Speed", value: "\(monster.attackDelay)")
-                LabeledContent("Attack Animation Speed", value: "\(monster.attackMotion)")
-                LabeledContent("Damage Animation Speed", value: "\(monster.damageMotion)")
-                LabeledContent("Damage Taken", value: "\(monster.damageTaken)")
-
-                LabeledContent("AI", value: monster.ai.description)
-                LabeledContent("Class", value: monster.class.description)
             }
 
-            if let raceGroups = monster.raceGroups {
+            if let raceGroups {
                 Section("Race Groups") {
-                    Text(raceGroups.map({ "- \($0.description)" }).joined(separator: "\n"))
+                    Text(raceGroups)
                 }
             }
 
-            if let modes = monster.modes {
+            if let modes {
                 Section("Modes") {
-                    Text(modes.map({ "- \($0.description)" }).joined(separator: "\n"))
+                    Text(modes)
                 }
             }
 

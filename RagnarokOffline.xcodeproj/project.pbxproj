@@ -140,6 +140,7 @@
 		35D2CEB22B55064B00365E8E /* DatabaseRecordGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB12B55064B00365E8E /* DatabaseRecordGrid.swift */; };
 		35D2CEB42B553E1B00365E8E /* DatabaseRecordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB32B553E1B00365E8E /* DatabaseRecordList.swift */; };
 		35D2CEB62B553EDD00365E8E /* ItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemList.swift */; };
+		35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -306,6 +307,7 @@
 		35D2CEB12B55064B00365E8E /* DatabaseRecordGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordGrid.swift; sourceTree = "<group>"; };
 		35D2CEB32B553E1B00365E8E /* DatabaseRecordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordList.swift; sourceTree = "<group>"; };
 		35D2CEB52B553EDD00365E8E /* ItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemList.swift; sourceTree = "<group>"; };
+		35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -429,6 +431,7 @@
 				35D2CEB32B553E1B00365E8E /* DatabaseRecordList.swift */,
 				35D2CEB12B55064B00365E8E /* DatabaseRecordGrid.swift */,
 				353B4F1D2B451FBC00605E92 /* DatabaseRecordImage.swift */,
+				35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -971,6 +974,7 @@
 				3511C1D12B0A535A006DD639 /* GATPreviewViewController.swift in Sources */,
 				35B695EF2A30763A006F1904 /* Mesh.swift in Sources */,
 				353B4F1C2B451F1300605E92 /* ItemListCell.swift in Sources */,
+				35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */,
 				35774F6D2B21991400438311 /* RGBAColor.swift in Sources */,
 				356508CF2B108D1500543562 /* Effect.swift in Sources */,
 				3511C1CC2B0A4EAE006DD639 /* GAT+Image.swift in Sources */,

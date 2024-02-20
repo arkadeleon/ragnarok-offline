@@ -16,6 +16,97 @@ struct ItemDetailView: View {
     @State private var itemPreview: UIImage?
     @State private var itemDescription: String?
 
+    var fields: [DatabaseRecordField] {
+        var fields: [DatabaseRecordField] = []
+
+        fields.append(("ID", "#\(item.id)"))
+        fields.append(("Aegis Name", item.aegisName))
+        fields.append(("Name", item.name))
+        fields.append(("Type", item.type.description))
+
+        switch item.subType {
+        case .none:
+            break
+        case .weapon(let weaponType):
+            fields.append(("Weapon Type", weaponType.description))
+        case .ammo(let ammoType):
+            fields.append(("Ammo Type", ammoType.description))
+        case .card(let cardType):
+            fields.append(("Card Type", cardType.description))
+        }
+
+        fields.append(("Buy", "\(item.buy)z"))
+        fields.append(("Sell", "\(item.sell)z"))
+        fields.append(("Weight", "\(item.weight / 10)"))
+
+        switch item.type {
+        case .weapon:
+            fields.append(("Attack", "\(item.attack)"))
+            fields.append(("Magic Attack", "\(item.magicAttack)"))
+            fields.append(("Attack Range", "\(item.range)"))
+            fields.append(("Slots", "\(item.slots)"))
+        case .armor:
+            fields.append(("Defense", "\(item.defense)"))
+            fields.append(("Slots", "\(item.slots)"))
+        default:
+            break
+        }
+
+        fields.append(("Gender", item.gender.description))
+
+        switch item.type {
+        case .weapon:
+            fields.append(("Weapon Level", "\(item.weaponLevel)"))
+        case .armor:
+            fields.append(("Armor Level", "\(item.armorLevel)"))
+        default:
+            break
+        }
+
+        switch item.type {
+        case .weapon, .armor:
+            fields.append(("Minimum Level", "\(item.equipLevelMin)"))
+            fields.append(("Maximum Level", "\(item.equipLevelMax)"))
+            fields.append(("Refinable", item.refineable ? "Yes" : "No"))
+            fields.append(("Gradable", item.gradable ? "Yes" : "No"))
+            fields.append(("View", "\(item.view)"))
+        default:
+            break;
+        }
+
+        return fields
+    }
+
+    var jobs: String {
+        item.jobs
+            .map({ "- \($0.description)" })
+            .joined(separator: "\n")
+    }
+
+    var classes: String {
+        item.classes
+            .map({ "- \($0.description)" })
+            .joined(separator: "\n")
+    }
+
+    var locations: String {
+        item.locations
+            .map({ "- \($0.description)" })
+            .joined(separator: "\n")
+    }
+
+    var script: String? {
+        item.script?.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    var equipScript: String? {
+        item.equipScript?.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    var unEquipScript: String? {
+        item.unEquipScript?.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
     var body: some View {
         List {
             VStack(alignment: .center) {
@@ -28,12 +119,23 @@ struct ItemDetailView: View {
             .frame(width: 150, height: 150, alignment: .center)
 
             Section("Info") {
-                LabeledContent("ID", value: "#\(item.id)")
-                LabeledContent("Aegis Name", value: item.aegisName)
-                LabeledContent("Name", value: item.name)
-                LabeledContent("Type", value: item.type.description)
-                LabeledContent("Buy", value: "\(item.buy)z")
-                LabeledContent("Sell", value: "\(item.sell)z")
+                ForEach(fields, id: \.title) { field in
+                    LabeledContent(field.title, value: field.value)
+                }
+            }
+
+            if item.type == .weapon || item.type == .armor {
+                Section("Jobs") {
+                    Text(jobs)
+                }
+
+                Section("Classes") {
+                    Text(classes)
+                }
+
+                Section("Locations") {
+                    Text(locations)
+                }
             }
 
             if let itemDescription {
@@ -42,23 +144,23 @@ struct ItemDetailView: View {
                 }
             }
 
-            if let script = item.script {
+            if let script {
                 Section("Script") {
-                    Text(script.trimmingCharacters(in: .whitespacesAndNewlines))
+                    Text(script)
                         .monospaced()
                 }
             }
 
-            if let equipScript = item.equipScript {
+            if let equipScript {
                 Section("Equip Script") {
-                    Text(equipScript.trimmingCharacters(in: .whitespacesAndNewlines))
+                    Text(equipScript)
                         .monospaced()
                 }
             }
 
-            if let unEquipScript = item.unEquipScript {
+            if let unEquipScript {
                 Section("Unequip Script") {
-                    Text(unEquipScript.trimmingCharacters(in: .whitespacesAndNewlines))
+                    Text(unEquipScript)
                         .monospaced()
                 }
             }
