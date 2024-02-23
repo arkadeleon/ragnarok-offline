@@ -131,14 +131,14 @@ class RSWPreviewViewController: UIViewController {
         }
 
         let device = MTLCreateSystemDefaultDevice()!
-        let textureLoader = TextureLoader(device: device)
+        let textureLoader = MTKTextureLoader(device: device)
 
         let ground = Ground(gat: gat, gnd: gnd) { textureName in
             let path = GRF.Path(string: "data\\texture\\" + textureName)
             guard let data = try? grf.contentsOfEntry(at: path) else {
                 return nil
             }
-            let texture = textureLoader.newTexture(data: data)
+            let texture = textureLoader.newTexture(bmpData: data)
             return texture
         }
 
@@ -147,7 +147,7 @@ class RSWPreviewViewController: UIViewController {
             guard let data = try? grf.contentsOfEntry(at: path) else {
                 return nil
             }
-            let texture = textureLoader.newTexture(data: data)
+            let texture = textureLoader.newTexture(bmpData: data)
             return texture
         }
 
@@ -177,7 +177,7 @@ class RSWPreviewViewController: UIViewController {
                 guard let data = try? grf.contentsOfEntry(at: path) else {
                     return nil
                 }
-                let texture = textureLoader.newTexture(data: data)
+                let texture = textureLoader.newTexture(bmpData: data)
                 modelTextures[textureName] = texture
                 return texture
             }

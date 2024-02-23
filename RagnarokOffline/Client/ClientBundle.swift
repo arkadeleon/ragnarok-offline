@@ -25,7 +25,12 @@ class ClientBundle {
         return (spr: sprPath, act: actPath)
     }
 
-    func itemUserInterfacePath(forResourceName resourceName: String) -> GRF.Path {
+    func itemIconPath(forResourceName resourceName: String) -> GRF.Path {
+        let bmpPath = GRF.Path(string: "data\\texture\\유저인터페이스\\item\\\(resourceName).bmp")
+        return bmpPath
+    }
+
+    func itemPreviewPath(forResourceName resourceName: String) -> GRF.Path {
         let bmpPath = GRF.Path(string: "data\\texture\\유저인터페이스\\collection\\\(resourceName).bmp")
         return bmpPath
     }
@@ -57,5 +62,10 @@ class ClientBundle {
         let sprPath = GRF.Path(string: "data\\sprite\\아이템\\\(resourceName).spr")
         let actPath = GRF.Path(string: "data\\sprite\\아이템\\\(resourceName).act")
         return (spr: sprPath, act: actPath)
+    }
+
+    func skillIconPath(forResourceName resourceName: String) -> GRF.Path {
+        let bmpPath = GRF.Path(string: "data\\texture\\유저인터페이스\\item\\\(resourceName).bmp")
+        return bmpPath
     }
 }

@@ -1,25 +1,17 @@
 //
-//  TextureLoader.swift
+//  UIImage+BMP.swift
 //  RagnarokOffline
 //
-//  Created by Leon Li on 2020/6/16.
-//  Copyright © 2020 Leon & Vane. All rights reserved.
+//  Created by Leon Li on 2024/2/23.
+//  Copyright © 2024 Leon & Vane. All rights reserved.
 //
 
-import MetalKit
 import Accelerate
+import UIKit
 
-class TextureLoader: NSObject {
-
-    private let underlyingLoader: MTKTextureLoader
-
-    init(device: MTLDevice) {
-        underlyingLoader = MTKTextureLoader(device: device)
-        super.init()
-    }
-
-    func newTexture(data: Data) -> MTLTexture? {
-        guard let image = UIImage(data: data)?.cgImage else {
+extension UIImage {
+    convenience init?(bmpData: Data) {
+        guard let image = UIImage(data: bmpData)?.cgImage else {
             return nil
         }
 
@@ -62,7 +54,6 @@ class TextureLoader: NSObject {
             return nil
         }
 
-        let texture = try? underlyingLoader.newTexture(cgImage: decompressedImage, options: nil)
-        return texture
+        self.init(cgImage: decompressedImage)
     }
 }

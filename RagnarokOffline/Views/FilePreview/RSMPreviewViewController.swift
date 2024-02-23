@@ -96,7 +96,7 @@ class RSMPreviewViewController: UIViewController {
         }
 
         let device = MTLCreateSystemDefaultDevice()!
-        let textureLoader = TextureLoader(device: device)
+        let textureLoader = MTKTextureLoader(device: device)
 
         let instance = Model.createInstance(
             position: [0, 0, 0],
@@ -111,7 +111,7 @@ class RSMPreviewViewController: UIViewController {
             guard let data = try? grf.contentsOfEntry(at: path) else {
                 return nil
             }
-            let texture = textureLoader.newTexture(data: data)
+            let texture = textureLoader.newTexture(bmpData: data)
             return texture
         }
 

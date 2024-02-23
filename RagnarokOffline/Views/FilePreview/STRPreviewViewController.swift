@@ -96,7 +96,7 @@ class STRPreviewViewController: UIViewController {
         }
 
         let device = MTLCreateSystemDefaultDevice()!
-        let textureLoader = TextureLoader(device: device)
+        let textureLoader = MTKTextureLoader(device: device)
 
         var textures: [String : MTLTexture] = [:]
 
@@ -108,7 +108,7 @@ class STRPreviewViewController: UIViewController {
             guard let data = try? grf.contentsOfEntry(at: path) else {
                 return nil
             }
-            let texture = textureLoader.newTexture(data: data)
+            let texture = textureLoader.newTexture(bmpData: data)
             textures[textureName] = texture
             return texture
         }

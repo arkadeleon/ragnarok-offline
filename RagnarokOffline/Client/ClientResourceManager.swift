@@ -18,16 +18,12 @@ class ClientResourceManager {
             return nil
         }
 
-        let (path, _) = ClientBundle.shared.itemSpritePath(forResourceName: resourceName)
+        let path = ClientBundle.shared.itemIconPath(forResourceName: resourceName)
 
         do {
-            let sprData = try ClientBundle.shared.grf.contentsOfEntry(at: path)
-            let spr = try SPR(data: sprData)
-            guard let image = spr.image(forSpriteAt: 0) else {
-                return nil
-            }
-            let uiImage = UIImage(cgImage: image.image)
-            return uiImage
+            let bmpData = try ClientBundle.shared.grf.contentsOfEntry(at: path)
+            let image = UIImage(bmpData: bmpData)
+            return image
         } catch {
             return nil
         }
@@ -38,11 +34,11 @@ class ClientResourceManager {
             return nil
         }
 
-        let path = ClientBundle.shared.itemUserInterfacePath(forResourceName: resourceName)
+        let path = ClientBundle.shared.itemPreviewPath(forResourceName: resourceName)
 
         do {
             let bmpData = try ClientBundle.shared.grf.contentsOfEntry(at: path)
-            let image = UIImage(data: bmpData)
+            let image = UIImage(bmpData: bmpData)
             return image
         } catch {
             return nil
@@ -142,16 +138,12 @@ class ClientResourceManager {
     }
 
     func skillIconImage(_ skillName: String) async -> UIImage? {
-        let (path, _) = ClientBundle.shared.skillSpritePath(forResourceName: skillName)
+        let path = ClientBundle.shared.skillIconPath(forResourceName: skillName)
 
         do {
-            let sprData = try ClientBundle.shared.grf.contentsOfEntry(at: path)
-            let spr = try SPR(data: sprData)
-            guard let image = spr.image(forSpriteAt: 0) else {
-                return nil
-            }
-            let uiImage = UIImage(cgImage: image.image)
-            return uiImage
+            let bmpData = try ClientBundle.shared.grf.contentsOfEntry(at: path)
+            let image = UIImage(bmpData: bmpData)
+            return image
         } catch {
             return nil
         }
