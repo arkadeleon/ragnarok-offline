@@ -30,7 +30,7 @@ struct SkillListCell: View {
             }
         }
         .task {
-            localizedSkillName = ClientScriptManager.shared.skillName(skill.id)
+            localizedSkillName = ClientDatabaseManager.shared.skillName(skill.id)
         }
     }
 }

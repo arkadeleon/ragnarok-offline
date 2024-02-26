@@ -13,8 +13,11 @@ struct ItemDetailView: View {
     let database: Database
     let item: Item
 
+    typealias DroppingMonster = (monster: Monster, drop: Monster.Drop)
+
     @State private var itemPreview: UIImage?
     @State private var itemDescription: String?
+    @State private var droppingMonsters: [DroppingMonster] = []
 
     var fields: [DatabaseRecordField] {
         var fields: [DatabaseRecordField] = []
@@ -164,13 +167,45 @@ struct ItemDetailView: View {
                         .monospaced()
                 }
             }
+
+            if !droppingMonsters.isEmpty {
+                Section("Dropping Monsters") {
+                    ForEach(droppingMonsters, id: \.monster.id) { droppingMonster in
+                        NavigationLink {
+                            MonsterDetailView(database: database, monster: droppingMonster.monster)
+                        } label: {
+                            HStack {
+                                Text(droppingMonster.monster.name)
+
+                                Text("(\(NSNumber(value: Double(droppingMonster.drop.rate) / 100))%)")
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                }
+            }
         }
         .listStyle(.plain)
         .navigationTitle(item.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            itemPreview = await ClientResourceManager.shared.itemPreviewImage(item.id)
-            itemDescription = ClientScriptManager.shared.itemDescription(item.id)
+            Task {
+                itemPreview = await ClientResourceManager.shared.itemPreviewImage(item.id)
+                itemDescription = ClientDatabaseManager.shared.itemDescription(item.id)
+
+                var droppingMonsters: [DroppingMonster] = []
+                let monsters = try await database.monsters().joined()
+                for monster in monsters {
+                    let drops = (monster.mvpDrops ?? []) + (monster.drops ?? [])
+                    for drop in drops {
+                        if drop.item == item.aegisName {
+                            droppingMonsters.append((monster, drop))
+                            break
+                        }
+                    }
+                }
+                self.droppingMonsters = droppingMonsters
+            }
         }
     }
 }

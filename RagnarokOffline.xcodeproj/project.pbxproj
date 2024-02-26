@@ -58,7 +58,7 @@
 		3555E1402B7D2268007CE4BA /* rAthenaWeb in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E13F2B7D2268007CE4BA /* rAthenaWeb */; };
 		3555E1412B7D2268007CE4BA /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3555E13F2B7D2268007CE4BA /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		356363642B3EAE3400F7C249 /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 356363632B3EAE3400F7C249 /* Lua */; };
-		356363672B3F303F00F7C249 /* ClientScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356363662B3F303F00F7C249 /* ClientScriptManager.swift */; };
+		356363672B3F303F00F7C249 /* ClientDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356363662B3F303F00F7C249 /* ClientDatabaseManager.swift */; };
 		356508C72B104C9500543562 /* EffectShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 356508C62B104C9500543562 /* EffectShaders.metal */; };
 		356508C92B104DCC00543562 /* EffectRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508C82B104DCC00543562 /* EffectRenderer.swift */; };
 		356508CF2B108D1500543562 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508CE2B108D1500543562 /* Effect.swift */; };
@@ -218,7 +218,7 @@
 		3555E1142B74C864007CE4BA /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		3555E1162B7D12D9007CE4BA /* ServerTerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerTerminalView.swift; sourceTree = "<group>"; };
 		3555E12D2B7D2251007CE4BA /* swift-rathena */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "swift-rathena"; sourceTree = "<group>"; };
-		356363662B3F303F00F7C249 /* ClientScriptManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientScriptManager.swift; sourceTree = "<group>"; };
+		356363662B3F303F00F7C249 /* ClientDatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientDatabaseManager.swift; sourceTree = "<group>"; };
 		356508C52B104AD400543562 /* EffectShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EffectShaderTypes.h; sourceTree = "<group>"; };
 		356508C62B104C9500543562 /* EffectShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = EffectShaders.metal; sourceTree = "<group>"; };
 		356508C82B104DCC00543562 /* EffectRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectRenderer.swift; sourceTree = "<group>"; };
@@ -450,7 +450,7 @@
 			isa = PBXGroup;
 			children = (
 				353B4F0B2B43A9AC00605E92 /* ClientResourceManager.swift */,
-				356363662B3F303F00F7C249 /* ClientScriptManager.swift */,
+				356363662B3F303F00F7C249 /* ClientDatabaseManager.swift */,
 				3514BF482B4532C80065ED89 /* ClientConfiguration.swift */,
 				353B4F152B43F3BB00605E92 /* ClientBundle.swift */,
 				3514BF8C2B4BE93A0065ED89 /* Gender+ResourceName.swift */,
@@ -898,7 +898,7 @@
 				35B3B9E12A08C01600B4540B /* GRF.swift in Sources */,
 				35482AF12B2759DD0062DC4B /* File+JSON.swift in Sources */,
 				35B3B9E32A08C01600B4540B /* RSM.swift in Sources */,
-				356363672B3F303F00F7C249 /* ClientScriptManager.swift in Sources */,
+				356363672B3F303F00F7C249 /* ClientDatabaseManager.swift in Sources */,
 				353B4F162B43F3BB00605E92 /* ClientBundle.swift in Sources */,
 				3504AB8C2A2EFB900029AC46 /* Camera.swift in Sources */,
 				356508D42B10A02D00543562 /* STRPreviewViewController.swift in Sources */,

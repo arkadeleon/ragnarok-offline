@@ -1,5 +1,5 @@
 //
-//  ClientScriptManager.swift
+//  ClientDatabaseManager.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/12/30.
@@ -9,8 +9,8 @@
 import Foundation
 import Lua
 
-class ClientScriptManager {
-    static let shared = ClientScriptManager()
+class ClientDatabaseManager {
+    static let shared = ClientDatabaseManager()
 
     private let context = LuaContext()
 

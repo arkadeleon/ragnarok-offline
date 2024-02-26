@@ -13,7 +13,7 @@ struct MonsterGrid: View {
     let database: Database
 
     var body: some View {
-        DatabaseRecordGrid(partitions: database.fetchMonsters()) { monsters, searchText in
+        DatabaseRecordGrid(partitions: database.monsters()) { monsters, searchText in
             monsters.filter { monster in
                 monster.name.localizedCaseInsensitiveContains(searchText)
             }

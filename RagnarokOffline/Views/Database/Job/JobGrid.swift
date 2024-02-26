@@ -13,7 +13,7 @@ struct JobGrid: View {
     let database: Database
 
     var body: some View {
-        DatabaseRecordGrid(partitions: database.fetchJobs()) { jobs, searchText in
+        DatabaseRecordGrid(partitions: database.jobs()) { jobs, searchText in
             jobs.filter { jobStats in
                 jobStats.job.description.localizedCaseInsensitiveContains(searchText)
             }

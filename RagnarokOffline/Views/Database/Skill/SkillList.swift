@@ -13,7 +13,7 @@ struct SkillList: View {
     let database: Database
 
     var body: some View {
-        DatabaseRecordList(partitions: database.fetchSkills()) { skills, searchText in
+        DatabaseRecordList(partitions: database.skills()) { skills, searchText in
             skills.filter { skill in
                 skill.name.localizedCaseInsensitiveContains(searchText)
             }

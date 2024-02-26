@@ -14,7 +14,7 @@ class ClientResourceManager {
     static let shared = ClientResourceManager()
 
     func itemIconImage(_ itemID: Int) async -> UIImage? {
-        guard let resourceName = ClientScriptManager.shared.itemResourceName(itemID) else {
+        guard let resourceName = ClientDatabaseManager.shared.itemResourceName(itemID) else {
             return nil
         }
 
@@ -30,7 +30,7 @@ class ClientResourceManager {
     }
 
     func itemPreviewImage(_ itemID: Int) async -> UIImage? {
-        guard let resourceName = ClientScriptManager.shared.itemResourceName(itemID) else {
+        guard let resourceName = ClientDatabaseManager.shared.itemResourceName(itemID) else {
             return nil
         }
 
@@ -46,7 +46,7 @@ class ClientResourceManager {
     }
 
     func monsterImage(_ monsterID: Int, size: CGSize) async -> UIImage? {
-        guard let resourceName = ClientScriptManager.shared.monsterResourceName(monsterID) else {
+        guard let resourceName = ClientDatabaseManager.shared.monsterResourceName(monsterID) else {
             return nil
         }
 
@@ -72,7 +72,7 @@ class ClientResourceManager {
     }
 
     func animatedMonsterImage(_ monsterID: Int) async -> UIImage? {
-        guard let resourceName = ClientScriptManager.shared.monsterResourceName(monsterID) else {
+        guard let resourceName = ClientDatabaseManager.shared.monsterResourceName(monsterID) else {
             return nil
         }
 
