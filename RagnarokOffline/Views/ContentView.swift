@@ -14,8 +14,6 @@ import rAthenaMap
 import rAthenaWeb
 
 struct ContentView: View {
-    private let database = Database.renewal
-
     private let filesView = FilesView(file: .directory(ClientBundle.shared.url))
 
     private let servers: [RAServer] = [
@@ -24,6 +22,10 @@ struct ContentView: View {
         RAMapServer.shared,
         RAWebServer.shared,
     ]
+
+    private let database = Database.renewal
+
+    @State private var isSettingsPresented = false
 
     var body: some View {
         NavigationView {
@@ -85,6 +87,18 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Ragnarok Offline")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        isSettingsPresented.toggle()
+                    } label: {
+                        Image(systemName: "gearshape")
+                    }
+                }
+            }
+            .sheet(isPresented: $isSettingsPresented) {
+                SettingsView()
+            }
 
             filesView
                 .ignoresSafeArea()

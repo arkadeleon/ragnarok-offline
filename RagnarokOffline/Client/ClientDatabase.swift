@@ -1,5 +1,5 @@
 //
-//  ClientDatabaseManager.swift
+//  ClientDatabase.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/12/30.
@@ -9,8 +9,8 @@
 import Foundation
 import Lua
 
-class ClientDatabaseManager {
-    static let shared = ClientDatabaseManager()
+class ClientDatabase {
+    static let shared = ClientDatabase()
 
     private let context = LuaContext()
 
@@ -34,7 +34,7 @@ class ClientDatabaseManager {
             return nil
         }
 
-        let string = String(data: data, encoding: ClientConfiguration.shared.encoding)
+        let string = String(data: data, encoding: ClientSettings.shared.textEncoding.stringEncoding)
         return string
     }
 
@@ -74,7 +74,7 @@ class ClientDatabaseManager {
             return nil
         }
 
-        let string = String(data: data, encoding: ClientConfiguration.shared.encoding)
+        let string = String(data: data, encoding: ClientSettings.shared.textEncoding.stringEncoding)
         return string
     }
 
@@ -106,7 +106,7 @@ class ClientDatabaseManager {
             return nil
         }
 
-        let string = String(data: data, encoding: ClientConfiguration.shared.encoding)
+        let string = String(data: data, encoding: ClientSettings.shared.textEncoding.stringEncoding)
         return string
     }
 
@@ -126,7 +126,7 @@ class ClientDatabaseManager {
             return nil
         }
 
-        let string = String(data: data, encoding: ClientConfiguration.shared.encoding)
+        let string = String(data: data, encoding: ClientSettings.shared.textEncoding.stringEncoding)
         return string
     }
 

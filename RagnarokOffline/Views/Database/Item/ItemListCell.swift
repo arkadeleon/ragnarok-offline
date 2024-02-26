@@ -30,7 +30,7 @@ struct ItemListCell: View {
             }
         }
         .task {
-            localizedItemName = ClientDatabaseManager.shared.itemDisplayName(item.id)
+            localizedItemName = ClientDatabase.shared.itemDisplayName(item.id)
         }
     }
 }

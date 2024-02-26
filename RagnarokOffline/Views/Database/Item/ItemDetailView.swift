@@ -191,7 +191,7 @@ struct ItemDetailView: View {
         .task {
             Task {
                 itemPreview = await ClientResourceManager.shared.itemPreviewImage(item.id)
-                itemDescription = ClientDatabaseManager.shared.itemDescription(item.id)
+                itemDescription = ClientDatabase.shared.itemDescription(item.id)
 
                 var droppingMonsters: [DroppingMonster] = []
                 let monsters = try await database.monsters().joined()

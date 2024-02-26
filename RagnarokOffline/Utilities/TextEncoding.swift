@@ -1,5 +1,5 @@
 //
-//  Encoding.swift
+//  TextEncoding.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/4/8.
@@ -8,30 +8,21 @@
 
 import Foundation
 
-enum Encoding: CaseIterable {
-
-    case ascii
-    case gb_18030_2000
-    case euc_kr
-
-    var name: String {
-        switch self {
-        case .ascii:
-            return "ASCII"
-        case .gb_18030_2000:
-            return "GB 18030"
-        case .euc_kr:
-            return "EUC-KR"
-        }
-    }
+enum TextEncoding: String, CaseIterable {
+    case `default` = "Default"
+    case simplifiedChinese = "Simplified Chinese"
+    case japanese = "Japanese"
+    case korean = "Korean"
 
     var cfStringEncoding: CFStringEncoding {
         switch self {
-        case .ascii:
+        case .default:
             return CFStringBuiltInEncodings.ASCII.rawValue
-        case .gb_18030_2000:
+        case .simplifiedChinese:
             return CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue)
-        case .euc_kr:
+        case .japanese:
+            return CFStringEncoding(CFStringEncodings.shiftJIS.rawValue)
+        case .korean:
             return CFStringEncoding(CFStringEncodings.EUC_KR.rawValue)
         }
     }
@@ -40,13 +31,13 @@ enum Encoding: CaseIterable {
         CFStringConvertEncodingToNSStringEncoding(cfStringEncoding)
     }
 
-    var swiftStringEncoding: String.Encoding {
+    var stringEncoding: String.Encoding {
         String.Encoding(rawValue: nsStringEncoding)
     }
 }
 
 extension String.Encoding {
     static var koreanEUC: Self {
-        Encoding.euc_kr.swiftStringEncoding
+        TextEncoding.korean.stringEncoding
     }
 }

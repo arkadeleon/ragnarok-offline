@@ -36,7 +36,7 @@ struct SkillDetailView: View {
         .navigationTitle(skill.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            skillDescription = ClientDatabaseManager.shared.skillDescription(skill.id)
+            skillDescription = ClientDatabase.shared.skillDescription(skill.id)
         }
     }
 }
