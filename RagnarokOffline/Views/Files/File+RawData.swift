@@ -1,5 +1,5 @@
 //
-//  File+JSON.swift
+//  File+RawData.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/12/11.
@@ -9,7 +9,7 @@
 import Foundation
 
 extension File {
-    var jsonRepresentable: Bool {
+    var rawDataRepresentable: Bool {
         guard let type else {
             return false
         }
@@ -22,8 +22,8 @@ extension File {
         }
     }
 
-    var jsonRepresentation: String? {
-        guard jsonRepresentable else {
+    var rawData: Data? {
+        guard rawDataRepresentable else {
             return nil
         }
 
@@ -49,11 +49,7 @@ extension File {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
 
-        guard let jsonData = try? encoder.encode(value) else {
-            return nil
-        }
-
-        let jsonString = String(data: jsonData, encoding: .utf8)
-        return jsonString
+        let rawData = try? encoder.encode(value)
+        return rawData
     }
 }

@@ -14,7 +14,7 @@ import rAthenaMap
 import rAthenaWeb
 
 struct ContentView: View {
-    private let filesView = FilesView(file: .directory(ClientBundle.shared.url))
+    private let filesView = FilesView(title: "Files", directory: .directory(ClientBundle.shared.url))
 
     private let servers: [RAServer] = [
         RALoginServer.shared,
@@ -33,9 +33,6 @@ struct ContentView: View {
                 Section("Client") {
                     NavigationLink {
                         filesView
-                            .ignoresSafeArea()
-                            .navigationTitle("Files")
-                            .navigationBarTitleDisplayMode(.inline)
                     } label: {
                         Label("Files", systemImage: "folder")
                     }
@@ -101,9 +98,6 @@ struct ContentView: View {
             }
 
             filesView
-                .ignoresSafeArea()
-                .navigationTitle("Files")
-                .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

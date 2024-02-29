@@ -154,3 +154,9 @@ extension File: Hashable {
         url.hash(into: &hasher)
     }
 }
+
+extension File: Identifiable {
+    var id: URL {
+        url
+    }
+}

@@ -69,40 +69,40 @@ extension File {
 }
 
 extension File {
-    var icon: UIImage? {
+    var iconName: String {
         guard let type else {
-            return UIImage(systemName: "doc")
+            return "doc"
         }
 
         if type.conforms(to: .directory) {
-            return UIImage(systemName: "folder.fill")
+            return "folder.fill"
         }
 
         if type.conforms(to: .archive) {
-            return UIImage(systemName: "doc.zipper")
+            return "doc.zipper"
         }
 
         switch type {
         case let type where type.conforms(to: .text) || type == .lua || type == .lub:
-            return UIImage(systemName: "doc.text")
+            return "doc.text"
         case let type where type.conforms(to: .image) || type == .ebm || type == .pal:
-            return UIImage(systemName: "photo")
+            return "photo"
         case let type where type.conforms(to: .audio):
-            return UIImage(systemName: "waveform.circle")
+            return "waveform.circle"
         case .act:
-            return UIImage(systemName: "livephoto")
+            return "livephoto"
         case .gat:
-            return UIImage(systemName: "square.grid.3x3.middle.filled")
+            return "square.grid.3x3.middle.filled"
         case .rsm:
-            return UIImage(systemName: "square.stack.3d.up")
+            return "square.stack.3d.up"
         case .rsw:
-            return UIImage(systemName: "map")
+            return "map"
         case .spr:
-            return UIImage(systemName: "photo.stack")
+            return "photo.stack"
         case .str:
-            return UIImage(systemName: "sparkles.rectangle.stack")
+            return "sparkles.rectangle.stack"
         default:
-            return UIImage(systemName: "doc")
+            return "doc"
         }
     }
 }
