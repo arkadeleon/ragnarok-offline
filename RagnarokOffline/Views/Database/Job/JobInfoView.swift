@@ -1,5 +1,5 @@
 //
-//  JobDetailView.swift
+//  JobInfoView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/5.
@@ -9,7 +9,7 @@
 import SwiftUI
 import rAthenaDatabase
 
-struct JobDetailView: View {
+struct JobInfoView: View {
     let database: Database
     let jobStats: JobStats
 

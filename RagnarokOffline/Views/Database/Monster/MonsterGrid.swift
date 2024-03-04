@@ -19,7 +19,7 @@ struct MonsterGrid: View {
             }
         } content: { monster in
             NavigationLink {
-                MonsterDetailView(database: database, monster: monster)
+                MonsterInfoView(database: database, monster: monster)
             } label: {
                 MonsterGridCell(database: database, monster: monster)
             }

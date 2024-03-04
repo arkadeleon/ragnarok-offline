@@ -1,5 +1,5 @@
 //
-//  SkillDetailView.swift
+//  SkillInfoView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/3.
@@ -9,7 +9,7 @@
 import SwiftUI
 import rAthenaDatabase
 
-struct SkillDetailView: View {
+struct SkillInfoView: View {
     let database: Database
     let skill: Skill
 

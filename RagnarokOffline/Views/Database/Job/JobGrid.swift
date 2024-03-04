@@ -19,7 +19,7 @@ struct JobGrid: View {
             }
         } content: { record in
             NavigationLink {
-                JobDetailView(database: database, jobStats: record)
+                JobInfoView(database: database, jobStats: record)
             } label: {
                 JobGridCell(database: database, job: record.job)
             }

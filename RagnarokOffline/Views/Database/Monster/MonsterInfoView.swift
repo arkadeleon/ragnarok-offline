@@ -1,5 +1,5 @@
 //
-//  MonsterDetailView.swift
+//  MonsterInfoView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/3.
@@ -9,7 +9,7 @@
 import SwiftUI
 import rAthenaDatabase
 
-struct MonsterDetailView: View {
+struct MonsterInfoView: View {
     let database: Database
     let monster: Monster
 
@@ -119,7 +119,7 @@ struct MonsterDetailView: View {
                 Section("MVP Drops") {
                     ForEach(mvpDropItems, id: \.index) { dropItem in
                         NavigationLink {
-                            ItemDetailView(database: database, item: dropItem.item)
+                            ItemInfoView(database: database, item: dropItem.item)
                         } label: {
                             HStack {
                                 DatabaseRecordImage {
@@ -141,7 +141,7 @@ struct MonsterDetailView: View {
                 Section("Drops") {
                     ForEach(dropItems, id: \.index) { dropItem in
                         NavigationLink {
-                            ItemDetailView(database: database, item: dropItem.item)
+                            ItemInfoView(database: database, item: dropItem.item)
                         } label: {
                             HStack {
                                 DatabaseRecordImage {

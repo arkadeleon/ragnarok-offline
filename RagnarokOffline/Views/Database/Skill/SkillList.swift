@@ -19,7 +19,7 @@ struct SkillList: View {
             }
         } content: { skill in
             NavigationLink {
-                SkillDetailView(database: database, skill: skill)
+                SkillInfoView(database: database, skill: skill)
             } label: {
                 SkillListCell(database: database, skill: skill)
             }

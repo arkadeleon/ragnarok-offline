@@ -1,5 +1,5 @@
 //
-//  ItemDetailView.swift
+//  ItemInfoView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/3.
@@ -9,7 +9,7 @@
 import SwiftUI
 import rAthenaDatabase
 
-struct ItemDetailView: View {
+struct ItemInfoView: View {
     let database: Database
     let item: Item
 
@@ -172,7 +172,7 @@ struct ItemDetailView: View {
                 Section("Dropping Monsters") {
                     ForEach(droppingMonsters, id: \.monster.id) { droppingMonster in
                         NavigationLink {
-                            MonsterDetailView(database: database, monster: droppingMonster.monster)
+                            MonsterInfoView(database: database, monster: droppingMonster.monster)
                         } label: {
                             HStack {
                                 Text(droppingMonster.monster.name)

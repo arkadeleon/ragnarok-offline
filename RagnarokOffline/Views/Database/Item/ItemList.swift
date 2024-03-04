@@ -19,7 +19,7 @@ struct ItemList: View {
             }
         } content: { item in
             NavigationLink {
-                ItemDetailView(database: database, item: item)
+                ItemInfoView(database: database, item: item)
             } label: {
                 ItemListCell(database: database, item: item)
             }
