@@ -7,9 +7,7 @@
 //
 
 import SwiftUI
-
 import rAthenaCommon
-import rAthenaResource
 
 struct ServerView: View {
     let server: RAServer
@@ -55,15 +53,11 @@ struct ServerView: View {
             }
         }
         .task {
-            Task {
-                try ResourceManager.shared.copyResourceFilesToLibraryDirectory()
-
-                server.outputHandler = { data in
-                    if let data = String(data: data, encoding: .isoLatin1)?
-                        .replacingOccurrences(of: "\n", with: "\r\n")
-                        .data(using: .isoLatin1) {
-                        terminalView.appendBuffer(data)
-                    }
+            server.outputHandler = { data in
+                if let data = String(data: data, encoding: .isoLatin1)?
+                    .replacingOccurrences(of: "\n", with: "\r\n")
+                    .data(using: .isoLatin1) {
+                    terminalView.appendBuffer(data)
                 }
             }
         }

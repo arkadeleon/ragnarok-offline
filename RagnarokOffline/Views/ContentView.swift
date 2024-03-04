@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import rAthenaResource
 import rAthenaDatabase
 import rAthenaLogin
 import rAthenaChar
@@ -37,14 +38,16 @@ struct ContentView: View {
                         Label("Files", systemImage: "folder")
                     }
 
-//                    NavigationLink {
-//                        GameView()
-//                            .ignoresSafeArea()
-//                            .navigationTitle("Game")
-//                            .navigationBarTitleDisplayMode(.inline)
-//                    } label: {
-//                        Label("Game", systemImage: "gamecontroller")
-//                    }
+                    #if DEBUG
+                    NavigationLink {
+                        GameView()
+                            .ignoresSafeArea()
+                            .navigationTitle("Game")
+                            .navigationBarTitleDisplayMode(.inline)
+                    } label: {
+                        Label("Game", systemImage: "gamecontroller")
+                    }
+                    #endif
                 }
 
                 Section("Server") {
@@ -55,6 +58,14 @@ struct ContentView: View {
                             Label(server.name, systemImage: "macpro.gen3.server")
                         }
                     }
+
+                    #if DEBUG
+                    NavigationLink {
+                        FilesView(title: "Server Files", directory: .directory(ResourceBundle.shared.url))
+                    } label: {
+                        Label("Server Files", systemImage: "folder")
+                    }
+                    #endif
                 }
 
                 Section("Database") {
