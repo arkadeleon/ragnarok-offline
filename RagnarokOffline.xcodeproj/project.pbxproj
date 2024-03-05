@@ -25,6 +25,7 @@
 		3514BF862B4801EB0065ED89 /* JobInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF852B4801EB0065ED89 /* JobInfoView.swift */; };
 		3514BF892B48642B0065ED89 /* Terminal in Frameworks */ = {isa = PBXBuildFile; productRef = 3514BF882B48642B0065ED89 /* Terminal */; };
 		3514BF8D2B4BE93A0065ED89 /* Gender+ResourceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF8C2B4BE93A0065ED89 /* Gender+ResourceName.swift */; };
+		3523B57F2B97769D00CCE722 /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 3523B57E2B97769D00CCE722 /* Lua */; };
 		3530982E2B145D6A00F32B62 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982D2B145D6A00F32B62 /* Ground.swift */; };
 		353098302B1480A600F32B62 /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982F2B1480A600F32B62 /* Water.swift */; };
 		353098322B148E4100F32B62 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353098312B148E4100F32B62 /* Model.swift */; };
@@ -59,7 +60,6 @@
 		355BC18E2B8F2890002F0586 /* FileRawDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC18D2B8F2890002F0586 /* FileRawDataView.swift */; };
 		355BC1902B8F4E0D002F0586 /* json-viewer in Resources */ = {isa = PBXBuildFile; fileRef = 355BC18F2B8F4E0D002F0586 /* json-viewer */; };
 		355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC1912B9056E5002F0586 /* FileContextMenu.swift */; };
-		356363642B3EAE3400F7C249 /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 356363632B3EAE3400F7C249 /* Lua */; };
 		356363672B3F303F00F7C249 /* ClientDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356363662B3F303F00F7C249 /* ClientDatabase.swift */; };
 		356508C72B104C9500543562 /* EffectShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 356508C62B104C9500543562 /* EffectShaders.metal */; };
 		356508C92B104DCC00543562 /* EffectRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508C82B104DCC00543562 /* EffectRenderer.swift */; };
@@ -204,6 +204,7 @@
 		3514BF832B4801E20065ED89 /* JobGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobGridCell.swift; sourceTree = "<group>"; };
 		3514BF852B4801EB0065ED89 /* JobInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInfoView.swift; sourceTree = "<group>"; };
 		3514BF8C2B4BE93A0065ED89 /* Gender+ResourceName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gender+ResourceName.swift"; sourceTree = "<group>"; };
+		3523B57D2B97768A00CCE722 /* swift-lua */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "swift-lua"; sourceTree = "<group>"; };
 		35270D2B2A68F4610001A8BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3530982D2B145D6A00F32B62 /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
 		3530982F2B1480A600F32B62 /* Water.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Water.swift; sourceTree = "<group>"; };
@@ -336,7 +337,7 @@
 				3555E1402B7D2268007CE4BA /* rAthenaWeb in Frameworks */,
 				3555E12F2B7D2268007CE4BA /* rAthenaChar in Frameworks */,
 				3555E1362B7D2268007CE4BA /* rAthenaLogin in Frameworks */,
-				356363642B3EAE3400F7C249 /* Lua in Frameworks */,
+				3523B57F2B97769D00CCE722 /* Lua in Frameworks */,
 				3555E1392B7D2268007CE4BA /* rAthenaMap in Frameworks */,
 				3555E1322B7D2268007CE4BA /* rAthenaCommon in Frameworks */,
 				3555E1342B7D2268007CE4BA /* rAthenaDatabase in Frameworks */,
@@ -619,6 +620,7 @@
 		35B3B8CB2A08BEA600B4540B = {
 			isa = PBXGroup;
 			children = (
+				3523B57D2B97768A00CCE722 /* swift-lua */,
 				3555E12D2B7D2251007CE4BA /* swift-rathena */,
 				35B3B8D62A08BEA600B4540B /* RagnarokOffline */,
 				35B3B8E72A08BEA700B4540B /* RagnarokOfflineTests */,
@@ -800,7 +802,6 @@
 			name = RagnarokOffline;
 			packageProductDependencies = (
 				35B3BA402A08C45000B4540B /* DataCompression */,
-				356363632B3EAE3400F7C249 /* Lua */,
 				3514BF882B48642B0065ED89 /* Terminal */,
 				3555E12E2B7D2268007CE4BA /* rAthenaChar */,
 				3555E1312B7D2268007CE4BA /* rAthenaCommon */,
@@ -810,6 +811,7 @@
 				3555E13B2B7D2268007CE4BA /* rAthenaNetwork */,
 				3555E13D2B7D2268007CE4BA /* rAthenaResource */,
 				3555E13F2B7D2268007CE4BA /* rAthenaWeb */,
+				3523B57E2B97769D00CCE722 /* Lua */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -886,7 +888,6 @@
 			mainGroup = 35B3B8CB2A08BEA600B4540B;
 			packageReferences = (
 				35B3BA3F2A08C45000B4540B /* XCRemoteSwiftPackageReference "DataCompression" */,
-				356363622B3EAE3400F7C249 /* XCRemoteSwiftPackageReference "swift-lua" */,
 				3514BF872B48642B0065ED89 /* XCRemoteSwiftPackageReference "Terminal" */,
 			);
 			productRefGroup = 35B3B8D52A08BEA600B4540B /* Products */;
@@ -1398,14 +1399,6 @@
 				minimumVersion = 0.3.4;
 			};
 		};
-		356363622B3EAE3400F7C249 /* XCRemoteSwiftPackageReference "swift-lua" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/arkadeleon/swift-lua.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		35B3BA3F2A08C45000B4540B /* XCRemoteSwiftPackageReference "DataCompression" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mw99/DataCompression.git";
@@ -1421,6 +1414,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3514BF872B48642B0065ED89 /* XCRemoteSwiftPackageReference "Terminal" */;
 			productName = Terminal;
+		};
+		3523B57E2B97769D00CCE722 /* Lua */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Lua;
 		};
 		3555E12E2B7D2268007CE4BA /* rAthenaChar */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1453,11 +1450,6 @@
 		3555E13F2B7D2268007CE4BA /* rAthenaWeb */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = rAthenaWeb;
-		};
-		356363632B3EAE3400F7C249 /* Lua */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 356363622B3EAE3400F7C249 /* XCRemoteSwiftPackageReference "swift-lua" */;
-			productName = Lua;
 		};
 		35B3BA402A08C45000B4540B /* DataCompression */ = {
 			isa = XCSwiftPackageProductDependency;

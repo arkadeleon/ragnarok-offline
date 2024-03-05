@@ -10,15 +10,6 @@
       }
     },
     {
-      "identity" : "swift-lua",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/arkadeleon/swift-lua.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "6416e63455789b092c385af41de97965d8385dc5"
-      }
-    },
-    {
       "identity" : "terminal",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/dnpp73/Terminal.git",
