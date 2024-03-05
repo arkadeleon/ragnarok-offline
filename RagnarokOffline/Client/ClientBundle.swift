@@ -68,4 +68,9 @@ class ClientBundle {
         let bmpPath = GRF.Path(string: "data\\texture\\유저인터페이스\\item\\\(resourceName).bmp")
         return bmpPath
     }
+
+    func mapPreviewPath(forResourceName resourceName: String) -> GRF.Path {
+        let bmpPath = GRF.Path(string: "data\\texture\\유저인터페이스\\map\\\(resourceName).bmp")
+        return bmpPath
+    }
 }

@@ -92,6 +92,12 @@ struct ContentView: View {
                     } label: {
                         Label("Skills", systemImage: "arrow.up.heart")
                     }
+
+                    NavigationLink {
+                        MapList(database: database)
+                    } label: {
+                        Label("Maps", systemImage: "map")
+                    }
                 }
             }
             .navigationTitle("Ragnarok Offline")

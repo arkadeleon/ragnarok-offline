@@ -148,4 +148,16 @@ class ClientResourceManager {
             return nil
         }
     }
+
+    func mapPreviewImage(_ mapName: String, size: CGSize) async -> UIImage? {
+        let path = ClientBundle.shared.mapPreviewPath(forResourceName: mapName)
+
+        do {
+            let bmpData = try ClientBundle.shared.grf.contentsOfEntry(at: path)
+            let image = UIImage(bmpData: bmpData)
+            return image?.resize(size.width, size.height)
+        } catch {
+            return nil
+        }
+    }
 }

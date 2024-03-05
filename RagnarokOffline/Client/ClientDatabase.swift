@@ -14,9 +14,12 @@ class ClientDatabase {
 
     private let context = LuaContext()
 
+    private var mapNameTable: [String : String] = [:]
+
     private var isItemScriptsLoaded = false
     private var isMonsterScriptsLoaded = false
     private var isSkillScriptsLoaded = false
+    private var isMapNameTableLoaded = false
 
     func itemDisplayName(_ itemID: Int) -> String? {
         objc_sync_enter(self)
@@ -130,6 +133,12 @@ class ClientDatabase {
         return string
     }
 
+    func mapDisplayName(_ mapName: String) -> String? {
+        try? loadMapNameTableIfNeeded()
+
+        return mapNameTable[mapName]
+    }
+
     private func loadItemScriptsIfNeeded() throws {
         guard !isItemScriptsLoaded else {
             return
@@ -230,5 +239,34 @@ class ClientDatabase {
         }
 
         try context.load(data)
+    }
+
+    private func loadMapNameTableIfNeeded() throws {
+        guard !isMapNameTableLoaded else {
+            return
+        }
+
+        let path = GRF.Path(string: "data\\mapnametable.txt")
+        let data = try ClientBundle.shared.grf.contentsOfEntry(at: path)
+
+        guard let string = String(data: data, encoding: ClientSettings.shared.textEncoding.stringEncoding) else {
+            return
+        }
+
+        let lines = string.split(separator: "\r\n")
+        for line in lines {
+            if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
+                continue
+            }
+
+            let columns = line.split(separator: "#")
+            if columns.count >= 2 {
+                let mapName = String(columns[0]).replacingOccurrences(of: ".rsw", with: "")
+                let mapDisplayName = String(columns[1])
+                mapNameTable[mapName] = mapDisplayName
+            }
+        }
+
+        isMapNameTableLoaded = true
     }
 }
