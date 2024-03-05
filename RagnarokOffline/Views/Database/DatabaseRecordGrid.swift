@@ -10,6 +10,10 @@ import SwiftUI
 import rAthenaDatabase
 
 struct DatabaseRecordGrid<Record, Content>: View where Record: Identifiable, Content: View {
+    let columns: [GridItem]
+    let alignment: HorizontalAlignment
+    let spacing: CGFloat
+    let insets: EdgeInsets
     let partitions: AsyncDatabaseRecordPartitions<Record>
     let filter: ([Record], String) -> [Record]
     let content: (Record) -> Content
@@ -34,12 +38,12 @@ struct DatabaseRecordGrid<Record, Content>: View where Record: Identifiable, Con
                 ProgressView()
             case .loaded:
                 ScrollView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 16)], spacing: 32) {
+                    LazyVGrid(columns: columns, alignment: alignment, spacing: spacing) {
                         ForEach(filteredRecords) { record in
                             content(record)
                         }
                     }
-                    .padding(EdgeInsets(top: 32, leading: 16, bottom: 32, trailing: 16))
+                    .padding(insets)
                 }
                 .searchable(text: $searchText)
                 .onSubmit(of: .search) {
@@ -57,7 +61,17 @@ struct DatabaseRecordGrid<Record, Content>: View where Record: Identifiable, Con
         }
     }
 
-    init(partitions: AsyncDatabaseRecordPartitions<Record>, filter: @escaping ([Record], String) -> [Record], @ViewBuilder content: @escaping (Record) -> Content) {
+    init(columns: [GridItem], 
+         alignment: HorizontalAlignment,
+         spacing: CGFloat,
+         insets: EdgeInsets,
+         partitions: AsyncDatabaseRecordPartitions<Record>,
+         filter: @escaping ([Record], String) -> [Record],
+         @ViewBuilder content: @escaping (Record) -> Content) {
+        self.columns = columns
+        self.alignment = alignment
+        self.spacing = spacing
+        self.insets = insets
         self.partitions = partitions
         self.filter = filter
         self.content = content

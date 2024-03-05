@@ -13,7 +13,7 @@ import UIKit
 class ClientResourceManager {
     static let shared = ClientResourceManager()
 
-    func itemIconImage(_ itemID: Int) async -> UIImage? {
+    func itemIconImage(_ itemID: Int, size: CGSize) async -> UIImage? {
         guard let resourceName = ClientDatabase.shared.itemResourceName(itemID) else {
             return nil
         }
@@ -23,7 +23,7 @@ class ClientResourceManager {
         do {
             let bmpData = try ClientBundle.shared.grf.contentsOfEntry(at: path)
             let image = UIImage(bmpData: bmpData)
-            return image
+            return image?.resize(size.width, size.height)
         } catch {
             return nil
         }
@@ -137,13 +137,13 @@ class ClientResourceManager {
         }
     }
 
-    func skillIconImage(_ skillName: String) async -> UIImage? {
+    func skillIconImage(_ skillName: String, size: CGSize) async -> UIImage? {
         let path = ClientBundle.shared.skillIconPath(forResourceName: skillName)
 
         do {
             let bmpData = try ClientBundle.shared.grf.contentsOfEntry(at: path)
             let image = UIImage(bmpData: bmpData)
-            return image
+            return image?.resize(size.width, size.height)
         } catch {
             return nil
         }

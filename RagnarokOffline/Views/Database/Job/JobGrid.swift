@@ -13,19 +13,27 @@ struct JobGrid: View {
     let database: Database
 
     var body: some View {
-        DatabaseRecordGrid(partitions: database.jobs()) { jobs, searchText in
-            jobs.filter { jobStats in
-                jobStats.job.description.localizedCaseInsensitiveContains(searchText)
+        DatabaseRecordGrid(
+            columns: [GridItem(.adaptive(minimum: 80), spacing: 16)],
+            alignment: .center,
+            spacing: 32,
+            insets: EdgeInsets(top: 32, leading: 16, bottom: 32, trailing: 16),
+            partitions: database.jobs(),
+            filter: filter) { jobStats in
+                NavigationLink {
+                    JobInfoView(database: database, jobStats: jobStats)
+                } label: {
+                    JobGridCell(database: database, job: jobStats.job)
+                }
             }
-        } content: { record in
-            NavigationLink {
-                JobInfoView(database: database, jobStats: record)
-            } label: {
-                JobGridCell(database: database, job: record.job)
-            }
+            .navigationTitle("Jobs")
+            .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private func filter(jobs: [JobStats], searchText: String) -> [JobStats] {
+        jobs.filter { jobStats in
+            jobStats.job.description.localizedCaseInsensitiveContains(searchText)
         }
-        .navigationTitle("Jobs")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

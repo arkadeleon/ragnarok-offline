@@ -123,7 +123,7 @@ struct MonsterInfoView: View {
                         } label: {
                             HStack {
                                 DatabaseRecordImage {
-                                    await ClientResourceManager.shared.itemIconImage(dropItem.item.id)
+                                    await ClientResourceManager.shared.itemIconImage(dropItem.item.id, size: CGSize(width: 24, height: 24))
                                 }
                                 .frame(width: 24, height: 24)
 
@@ -145,7 +145,7 @@ struct MonsterInfoView: View {
                         } label: {
                             HStack {
                                 DatabaseRecordImage {
-                                    await ClientResourceManager.shared.itemIconImage(dropItem.item.id)
+                                    await ClientResourceManager.shared.itemIconImage(dropItem.item.id, size: CGSize(width: 24, height: 24))
                                 }
                                 .frame(width: 24, height: 24)
 

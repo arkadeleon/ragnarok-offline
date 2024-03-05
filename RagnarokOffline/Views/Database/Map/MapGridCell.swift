@@ -1,5 +1,5 @@
 //
-//  MapListCell.swift
+//  MapGridCell.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/3/4.
@@ -9,7 +9,7 @@
 import SwiftUI
 import rAthenaDatabase
 
-struct MapListCell: View {
+struct MapGridCell: View {
     let database: Database
     let map: Map
 
@@ -24,10 +24,14 @@ struct MapListCell: View {
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(map.name)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundColor(.primary)
+                    .lineLimit(1)
 
-                Text(localizedMapName ?? "")
+                Text(localizedMapName ?? map.name)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(.secondary)
-                    .lineLimit(1, reservesSpace: true)
+                    .lineLimit(1)
             }
         }
         .task {

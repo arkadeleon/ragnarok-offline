@@ -13,19 +13,27 @@ struct MonsterGrid: View {
     let database: Database
 
     var body: some View {
-        DatabaseRecordGrid(partitions: database.monsters()) { monsters, searchText in
-            monsters.filter { monster in
-                monster.name.localizedCaseInsensitiveContains(searchText)
+        DatabaseRecordGrid(
+            columns: [GridItem(.adaptive(minimum: 80), spacing: 16)],
+            alignment: .center,
+            spacing: 32,
+            insets: EdgeInsets(top: 32, leading: 16, bottom: 32, trailing: 16),
+            partitions: database.monsters(),
+            filter: filter) { monster in
+                NavigationLink {
+                    MonsterInfoView(database: database, monster: monster)
+                } label: {
+                    MonsterGridCell(database: database, monster: monster)
+                }
             }
-        } content: { monster in
-            NavigationLink {
-                MonsterInfoView(database: database, monster: monster)
-            } label: {
-                MonsterGridCell(database: database, monster: monster)
-            }
+            .navigationTitle("Monsters")
+            .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private func filter(monsters: [Monster], searchText: String) -> [Monster] {
+        monsters.filter { monster in
+            monster.name.localizedCaseInsensitiveContains(searchText)
         }
-        .navigationTitle("Monsters")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

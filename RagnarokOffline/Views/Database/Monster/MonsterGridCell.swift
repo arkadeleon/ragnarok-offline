@@ -21,9 +21,10 @@ struct MonsterGridCell: View {
             .frame(width: 80, height: 80)
 
             Text(monster.name)
-                .lineLimit(2, reservesSpace: true)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .foregroundColor(.primary)
                 .font(.subheadline)
-                .foregroundColor(Color(uiColor: .label))
+                .lineLimit(2, reservesSpace: true)
         }
     }
 }

@@ -16,9 +16,10 @@ struct FileGridCell: View {
             FileThumbnailView(file: file)
 
             Text(file.name)
-                .lineLimit(2, reservesSpace: true)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .foregroundColor(.primary)
                 .font(.subheadline)
-                .foregroundColor(.init(uiColor: .label))
+                .lineLimit(2, reservesSpace: true)
         }
     }
 }

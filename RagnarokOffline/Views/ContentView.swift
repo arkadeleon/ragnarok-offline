@@ -42,10 +42,10 @@ struct ContentView: View {
                     NavigationLink {
                         GameView()
                             .ignoresSafeArea()
-                            .navigationTitle("Game")
+                            .navigationTitle("Cube")
                             .navigationBarTitleDisplayMode(.inline)
                     } label: {
-                        Label("Game", systemImage: "gamecontroller")
+                        Label("Cube", systemImage: "cube")
                     }
                     #endif
                 }
@@ -70,7 +70,7 @@ struct ContentView: View {
 
                 Section("Database") {
                     NavigationLink {
-                        ItemList(database: database)
+                        ItemGrid(database: database)
                     } label: {
                         Label("Items", systemImage: "leaf")
                     }
@@ -88,13 +88,13 @@ struct ContentView: View {
                     }
 
                     NavigationLink {
-                        SkillList(database: database)
+                        SkillGrid(database: database)
                     } label: {
                         Label("Skills", systemImage: "arrow.up.heart")
                     }
 
                     NavigationLink {
-                        MapList(database: database)
+                        MapGrid(database: database)
                     } label: {
                         Label("Maps", systemImage: "map")
                     }

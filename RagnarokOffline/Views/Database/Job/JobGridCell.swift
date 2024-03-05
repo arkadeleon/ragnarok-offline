@@ -21,9 +21,10 @@ struct JobGridCell: View {
             .frame(width: 80, height: 80)
 
             Text(job.description)
-                .lineLimit(2, reservesSpace: true)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .foregroundColor(.primary)
                 .font(.subheadline)
-                .foregroundColor(Color(uiColor: .label))
+                .lineLimit(2, reservesSpace: true)
         }
     }
 }

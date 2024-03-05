@@ -15,7 +15,7 @@
 		3511C1D92B0B05B3006DD639 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D82B0B05B3006DD639 /* GameViewController.swift */; };
 		3514BF452B4526F40065ED89 /* ItemInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF442B4526F40065ED89 /* ItemInfoView.swift */; };
 		3514BF492B4532C80065ED89 /* ClientSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF482B4532C80065ED89 /* ClientSettings.swift */; };
-		3514BF5B2B454A040065ED89 /* SkillListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF5A2B454A040065ED89 /* SkillListCell.swift */; };
+		3514BF5B2B454A040065ED89 /* SkillGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF5A2B454A040065ED89 /* SkillGridCell.swift */; };
 		3514BF5E2B4557950065ED89 /* MonsterGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF5D2B4557950065ED89 /* MonsterGrid.swift */; };
 		3514BF602B455EF90065ED89 /* MonsterGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF5F2B455EF90065ED89 /* MonsterGridCell.swift */; };
 		3514BF622B4560730065ED89 /* MonsterInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF612B4560730065ED89 /* MonsterInfoView.swift */; };
@@ -29,10 +29,10 @@
 		353098302B1480A600F32B62 /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982F2B1480A600F32B62 /* Water.swift */; };
 		353098322B148E4100F32B62 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353098312B148E4100F32B62 /* Model.swift */; };
 		353B4F0C2B43A9AC00605E92 /* ClientResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0B2B43A9AC00605E92 /* ClientResourceManager.swift */; };
-		353B4F102B43AED300605E92 /* SkillList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0F2B43AED300605E92 /* SkillList.swift */; };
+		353B4F102B43AED300605E92 /* SkillGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0F2B43AED300605E92 /* SkillGrid.swift */; };
 		353B4F162B43F3BB00605E92 /* ClientBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F152B43F3BB00605E92 /* ClientBundle.swift */; };
 		353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F172B44FFE100605E92 /* SkillInfoView.swift */; };
-		353B4F1C2B451F1300605E92 /* ItemListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F1B2B451F1300605E92 /* ItemListCell.swift */; };
+		353B4F1C2B451F1300605E92 /* ItemGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F1B2B451F1300605E92 /* ItemGridCell.swift */; };
 		353B4F1E2B451FBC00605E92 /* DatabaseRecordImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F1D2B451FBC00605E92 /* DatabaseRecordImage.swift */; };
 		35482AF12B2759DD0062DC4B /* File+RawData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35482AF02B2759DD0062DC4B /* File+RawData.swift */; };
 		354CB4612B2AA70F001FC2A1 /* FileThumbnailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */; };
@@ -66,8 +66,8 @@
 		356508CF2B108D1500543562 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508CE2B108D1500543562 /* Effect.swift */; };
 		356508D22B10A02000543562 /* STRRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508D12B10A02000543562 /* STRRenderer.swift */; };
 		356508D42B10A02D00543562 /* STRPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508D32B10A02D00543562 /* STRPreviewViewController.swift */; };
-		35652B432B960D100075AD71 /* MapList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B422B960D100075AD71 /* MapList.swift */; };
-		35652B452B960D2D0075AD71 /* MapListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B442B960D2D0075AD71 /* MapListCell.swift */; };
+		35652B432B960D100075AD71 /* MapGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B422B960D100075AD71 /* MapGrid.swift */; };
+		35652B452B960D2D0075AD71 /* MapGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B442B960D2D0075AD71 /* MapGridCell.swift */; };
 		35652B472B960D370075AD71 /* MapInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B462B960D370075AD71 /* MapInfoView.swift */; };
 		356BF66F2AFC8964005B67F7 /* BinaryWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF66A2AFC8963005B67F7 /* BinaryWriter.swift */; };
 		356BF6702AFC8964005B67F7 /* FileStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF66B2AFC8963005B67F7 /* FileStream.swift */; };
@@ -148,7 +148,7 @@
 		35B695F32A3080D9006F1904 /* Object3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695F22A3080D9006F1904 /* Object3D.swift */; };
 		35D2CEB22B55064B00365E8E /* DatabaseRecordGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB12B55064B00365E8E /* DatabaseRecordGrid.swift */; };
 		35D2CEB42B553E1B00365E8E /* DatabaseRecordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB32B553E1B00365E8E /* DatabaseRecordList.swift */; };
-		35D2CEB62B553EDD00365E8E /* ItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemList.swift */; };
+		35D2CEB62B553EDD00365E8E /* ItemGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemGrid.swift */; };
 		35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */; };
 /* End PBXBuildFile section */
 
@@ -195,7 +195,7 @@
 		3511C1D82B0B05B3006DD639 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		3514BF442B4526F40065ED89 /* ItemInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemInfoView.swift; sourceTree = "<group>"; };
 		3514BF482B4532C80065ED89 /* ClientSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSettings.swift; sourceTree = "<group>"; };
-		3514BF5A2B454A040065ED89 /* SkillListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillListCell.swift; sourceTree = "<group>"; };
+		3514BF5A2B454A040065ED89 /* SkillGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillGridCell.swift; sourceTree = "<group>"; };
 		3514BF5D2B4557950065ED89 /* MonsterGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterGrid.swift; sourceTree = "<group>"; };
 		3514BF5F2B455EF90065ED89 /* MonsterGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterGridCell.swift; sourceTree = "<group>"; };
 		3514BF612B4560730065ED89 /* MonsterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterInfoView.swift; sourceTree = "<group>"; };
@@ -209,10 +209,10 @@
 		3530982F2B1480A600F32B62 /* Water.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Water.swift; sourceTree = "<group>"; };
 		353098312B148E4100F32B62 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		353B4F0B2B43A9AC00605E92 /* ClientResourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientResourceManager.swift; sourceTree = "<group>"; };
-		353B4F0F2B43AED300605E92 /* SkillList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillList.swift; sourceTree = "<group>"; };
+		353B4F0F2B43AED300605E92 /* SkillGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillGrid.swift; sourceTree = "<group>"; };
 		353B4F152B43F3BB00605E92 /* ClientBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientBundle.swift; sourceTree = "<group>"; };
 		353B4F172B44FFE100605E92 /* SkillInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillInfoView.swift; sourceTree = "<group>"; };
-		353B4F1B2B451F1300605E92 /* ItemListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListCell.swift; sourceTree = "<group>"; };
+		353B4F1B2B451F1300605E92 /* ItemGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemGridCell.swift; sourceTree = "<group>"; };
 		353B4F1D2B451FBC00605E92 /* DatabaseRecordImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordImage.swift; sourceTree = "<group>"; };
 		35482AF02B2759DD0062DC4B /* File+RawData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+RawData.swift"; sourceTree = "<group>"; };
 		354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnailManager.swift; sourceTree = "<group>"; };
@@ -235,8 +235,8 @@
 		356508CE2B108D1500543562 /* Effect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
 		356508D12B10A02000543562 /* STRRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRRenderer.swift; sourceTree = "<group>"; };
 		356508D32B10A02D00543562 /* STRPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRPreviewViewController.swift; sourceTree = "<group>"; };
-		35652B422B960D100075AD71 /* MapList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapList.swift; sourceTree = "<group>"; };
-		35652B442B960D2D0075AD71 /* MapListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapListCell.swift; sourceTree = "<group>"; };
+		35652B422B960D100075AD71 /* MapGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapGrid.swift; sourceTree = "<group>"; };
+		35652B442B960D2D0075AD71 /* MapGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapGridCell.swift; sourceTree = "<group>"; };
 		35652B462B960D370075AD71 /* MapInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInfoView.swift; sourceTree = "<group>"; };
 		356BF66A2AFC8963005B67F7 /* BinaryWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryWriter.swift; sourceTree = "<group>"; };
 		356BF66B2AFC8963005B67F7 /* FileStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileStream.swift; sourceTree = "<group>"; };
@@ -324,7 +324,7 @@
 		35B695F22A3080D9006F1904 /* Object3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Object3D.swift; sourceTree = "<group>"; };
 		35D2CEB12B55064B00365E8E /* DatabaseRecordGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordGrid.swift; sourceTree = "<group>"; };
 		35D2CEB32B553E1B00365E8E /* DatabaseRecordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordList.swift; sourceTree = "<group>"; };
-		35D2CEB52B553EDD00365E8E /* ItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemList.swift; sourceTree = "<group>"; };
+		35D2CEB52B553EDD00365E8E /* ItemGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemGrid.swift; sourceTree = "<group>"; };
 		35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -367,8 +367,8 @@
 		3514BF422B4526D00065ED89 /* Item */ = {
 			isa = PBXGroup;
 			children = (
-				35D2CEB52B553EDD00365E8E /* ItemList.swift */,
-				353B4F1B2B451F1300605E92 /* ItemListCell.swift */,
+				35D2CEB52B553EDD00365E8E /* ItemGrid.swift */,
+				353B4F1B2B451F1300605E92 /* ItemGridCell.swift */,
 				3514BF442B4526F40065ED89 /* ItemInfoView.swift */,
 			);
 			path = Item;
@@ -377,8 +377,8 @@
 		3514BF432B4526DE0065ED89 /* Skill */ = {
 			isa = PBXGroup;
 			children = (
-				353B4F0F2B43AED300605E92 /* SkillList.swift */,
-				3514BF5A2B454A040065ED89 /* SkillListCell.swift */,
+				353B4F0F2B43AED300605E92 /* SkillGrid.swift */,
+				3514BF5A2B454A040065ED89 /* SkillGridCell.swift */,
 				353B4F172B44FFE100605E92 /* SkillInfoView.swift */,
 			);
 			path = Skill;
@@ -532,8 +532,8 @@
 		35652B412B960CFC0075AD71 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				35652B422B960D100075AD71 /* MapList.swift */,
-				35652B442B960D2D0075AD71 /* MapListCell.swift */,
+				35652B422B960D100075AD71 /* MapGrid.swift */,
+				35652B442B960D2D0075AD71 /* MapGridCell.swift */,
 				35652B462B960D370075AD71 /* MapInfoView.swift */,
 			);
 			path = Map;
@@ -942,7 +942,7 @@
 				35B695EA2A305EF6006F1904 /* GameView.swift in Sources */,
 				355BC18E2B8F2890002F0586 /* FileRawDataView.swift in Sources */,
 				35774F7A2B231FAF00438311 /* FileActivityItem.swift in Sources */,
-				3514BF5B2B454A040065ED89 /* SkillListCell.swift in Sources */,
+				3514BF5B2B454A040065ED89 /* SkillGridCell.swift in Sources */,
 				35B3BA202A08C01600B4540B /* RSMRenderer.swift in Sources */,
 				35B3B9E12A08C01600B4540B /* GRF.swift in Sources */,
 				35482AF12B2759DD0062DC4B /* File+RawData.swift in Sources */,
@@ -979,7 +979,7 @@
 				35B3BA1B2A08C01600B4540B /* AudioFilePreviewViewController.swift in Sources */,
 				3552D8782B3182A8004831D0 /* AnimatedImageActivityItem.swift in Sources */,
 				356BF6772AFCCDD9005B67F7 /* GRFWrapper.swift in Sources */,
-				35652B452B960D2D0075AD71 /* MapListCell.swift in Sources */,
+				35652B452B960D2D0075AD71 /* MapGridCell.swift in Sources */,
 				353B4F1E2B451FBC00605E92 /* DatabaseRecordImage.swift in Sources */,
 				35B3BA222A08C01600B4540B /* WaterShaders.metal in Sources */,
 				35B3B9E22A08C01600B4540B /* INI.swift in Sources */,
@@ -994,7 +994,7 @@
 				3582FFC82B8DB73B00E746D7 /* FileThumbnailView.swift in Sources */,
 				35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */,
 				35B3BA252A08C01600B4540B /* GroundShaders.metal in Sources */,
-				35652B432B960D100075AD71 /* MapList.swift in Sources */,
+				35652B432B960D100075AD71 /* MapGrid.swift in Sources */,
 				353098322B148E4100F32B62 /* Model.swift in Sources */,
 				355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */,
 				3582FFC32B8898DD00E746D7 /* UIImage+BMP.swift in Sources */,
@@ -1017,7 +1017,7 @@
 				35B3B9E62A08C01600B4540B /* SPR.swift in Sources */,
 				35B3BA492A08DA0C00B4540B /* StillImage.swift in Sources */,
 				3514BF7F2B47D64F0065ED89 /* Job+ResourceName.swift in Sources */,
-				353B4F102B43AED300605E92 /* SkillList.swift in Sources */,
+				353B4F102B43AED300605E92 /* SkillGrid.swift in Sources */,
 				356BF67D2B0489CE005B67F7 /* SPR+Image.swift in Sources */,
 				35B3BA282A08C01600B4540B /* WaterRenderer.swift in Sources */,
 				356BF6712AFC8964005B67F7 /* BinaryReader.swift in Sources */,
@@ -1031,14 +1031,14 @@
 				355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */,
 				3511C1D12B0A535A006DD639 /* GATPreviewViewController.swift in Sources */,
 				35B695EF2A30763A006F1904 /* Mesh.swift in Sources */,
-				353B4F1C2B451F1300605E92 /* ItemListCell.swift in Sources */,
+				353B4F1C2B451F1300605E92 /* ItemGridCell.swift in Sources */,
 				35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */,
 				35774F6D2B21991400438311 /* RGBAColor.swift in Sources */,
 				356508CF2B108D1500543562 /* Effect.swift in Sources */,
 				3582FFCA2B8DB9FE00E746D7 /* FilePreviewPageView.swift in Sources */,
 				3511C1CC2B0A4EAE006DD639 /* GAT+Image.swift in Sources */,
 				356BF6842B04F569005B67F7 /* ImageCollectionViewCell.swift in Sources */,
-				35D2CEB62B553EDD00365E8E /* ItemList.swift in Sources */,
+				35D2CEB62B553EDD00365E8E /* ItemGrid.swift in Sources */,
 				353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */,
 				35B3B9E52A08C01600B4540B /* Document.swift in Sources */,
 				3514BF842B4801E20065ED89 /* JobGridCell.swift in Sources */,
