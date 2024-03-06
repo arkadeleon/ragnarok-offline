@@ -13,34 +13,6 @@ import UIKit
 class ClientResourceManager {
     static let shared = ClientResourceManager()
 
-    func itemIconImage(_ itemID: Int, size: CGSize) async -> UIImage? {
-        guard let resourceName = ClientDatabase.shared.itemResourceName(itemID) else {
-            return nil
-        }
-
-        let file = ClientResourceBundle.shared.itemIconFile(forResourceName: resourceName)
-        guard let bmpData = file.contents() else {
-            return nil
-        }
-
-        let image = UIImage(bmpData: bmpData)
-        return image?.resize(size.width, size.height)
-    }
-
-    func itemPreviewImage(_ itemID: Int) async -> UIImage? {
-        guard let resourceName = ClientDatabase.shared.itemResourceName(itemID) else {
-            return nil
-        }
-
-        let file = ClientResourceBundle.shared.itemPreviewFile(forResourceName: resourceName)
-        guard let bmpData = file.contents() else {
-            return nil
-        }
-
-        let image = UIImage(bmpData: bmpData)
-        return image
-    }
-
     func monsterImage(_ monsterID: Int, size: CGSize) async -> UIImage? {
         guard let resourceName = ClientDatabase.shared.monsterResourceName(monsterID) else {
             return nil
@@ -132,25 +104,5 @@ class ClientResourceManager {
         } catch {
             return nil
         }
-    }
-
-    func skillIconImage(_ skillName: String, size: CGSize) async -> UIImage? {
-        let file = ClientResourceBundle.shared.skillIconFile(forResourceName: skillName)
-        guard let bmpData = file.contents() else {
-            return nil
-        }
-
-        let image = UIImage(bmpData: bmpData)
-        return image?.resize(size.width, size.height)
-    }
-
-    func mapPreviewImage(_ mapName: String, size: CGSize) async -> UIImage? {
-        let file = ClientResourceBundle.shared.mapPreviewFile(forResourceName: mapName)
-        guard let bmpData = file.contents() else {
-            return nil
-        }
-
-        let image = UIImage(bmpData: bmpData)
-        return image?.resize(size.width, size.height)
     }
 }

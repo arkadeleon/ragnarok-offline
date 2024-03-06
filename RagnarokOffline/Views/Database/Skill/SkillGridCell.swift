@@ -13,28 +13,30 @@ struct SkillGridCell: View {
     let database: Database
     let skill: Skill
 
+    @State private var skillIconImage: UIImage?
     @State private var localizedSkillName: String?
 
     var body: some View {
         HStack {
-            DatabaseRecordImage {
-                await ClientResourceManager.shared.skillIconImage(skill.aegisName, size: CGSize(width: 40, height: 40))
-            }
-            .frame(width: 40, height: 40)
+            Image(uiImage: skillIconImage ?? UIImage())
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 40, height: 40)
+                .clipped()
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(skill.name)
-                    .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(.primary)
                     .lineLimit(1)
 
                 Text(localizedSkillName ?? skill.name)
-                    .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(.secondary)
                     .lineLimit(1)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .task {
+            skillIconImage = await ClientResourceBundle.shared.skillIconImage(forSkill: skill)
             localizedSkillName = ClientDatabase.shared.skillName(skill.id)
         }
     }

@@ -12,30 +12,49 @@ import rAthenaDatabase
 struct ItemGridCell: View {
     let database: Database
     let item: Item
+    let secondaryText: Text?
 
+    @State private var itemIconImage: UIImage?
     @State private var localizedItemName: String?
 
     var body: some View {
         HStack {
-            DatabaseRecordImage {
-                await ClientResourceManager.shared.itemIconImage(item.id, size: CGSize(width: 40, height: 40))
-            }
-            .frame(width: 40, height: 40)
+            Image(uiImage: itemIconImage ?? UIImage())
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 40, height: 40)
+                .clipped()
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(item.name)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .foregroundColor(.primary)
-                    .lineLimit(1)
+                HStack {
+                    Text(item.name)
+                        .foregroundColor(.primary)
+                        .lineLimit(1)
+
+                    secondaryText
+                }
 
                 Text(localizedItemName ?? item.name)
-                    .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(.secondary)
                     .lineLimit(1)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .task {
+            itemIconImage = await ClientResourceBundle.shared.itemIconImage(forItem: item)
             localizedItemName = ClientDatabase.shared.itemDisplayName(item.id)
         }
+    }
+
+    init(database: Database, item: Item) {
+        self.database = database
+        self.item = item
+        self.secondaryText = nil
+    }
+
+    init(database: Database, item: Item, @ViewBuilder secondaryText: () -> Text) {
+        self.database = database
+        self.item = item
+        self.secondaryText = secondaryText()
     }
 }

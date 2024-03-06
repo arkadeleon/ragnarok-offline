@@ -16,27 +16,38 @@ struct SkillInfoView: View {
     @State private var skillDescription: String?
 
     var body: some View {
-        List {
-            Section("Info") {
-                LabeledContent("ID", value: "#\(skill.id)")
-                LabeledContent("Aegis Name", value: skill.aegisName)
-                LabeledContent("Name", value: skill.name)
-                LabeledContent("Maximum Level", value: "\(skill.maxLevel)")
-                LabeledContent("Type", value: skill.type.description)
-                LabeledContent("Target Type", value: skill.targetType.description)
+        ScrollView {
+            DatabaseRecordInfoSection("Info") {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)]) {
+                    ForEach(fields, id: \.title) { field in
+                        LabeledContent(field.title, value: field.value)
+                    }
+                }
             }
 
             if let skillDescription {
-                Section("Description") {
+                DatabaseRecordInfoSection("Description") {
                     Text(skillDescription)
                 }
             }
         }
-        .listStyle(.plain)
         .navigationTitle(skill.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {
             skillDescription = ClientDatabase.shared.skillDescription(skill.id)
         }
+    }
+
+    private var fields: [DatabaseRecordField] {
+        var fields: [DatabaseRecordField] = []
+
+        fields.append(("ID", "#\(skill.id)"))
+        fields.append(("Aegis Name", skill.aegisName))
+        fields.append(("Name", skill.name))
+        fields.append(("Maximum Level", "\(skill.maxLevel)"))
+        fields.append(("Type", skill.type.description))
+        fields.append(("Target Type", skill.targetType.description))
+
+        return fields
     }
 }

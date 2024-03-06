@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import rAthenaDatabase
 
 class ClientResourceBundle {
@@ -15,6 +16,8 @@ class ClientResourceBundle {
     let url: URL
 
     let grf: GRFWrapper
+
+    private let cache = NSCache<NSString, UIImage>()
 
     init() {
         url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
@@ -91,27 +94,57 @@ class ClientResourceBundle {
 
     // MARK: - data\texture
 
-    func itemIconFile(forResourceName resourceName: String) -> File {
-        let bmpPath = GRF.Path(string: "data\\texture\\유저인터페이스\\item\\\(resourceName).bmp")
-        let bmpFile = File.grfEntry(grf, bmpPath)
-        return bmpFile
+    func itemIconImage(forItem item: Item) async -> UIImage? {
+        guard let resourceName = ClientDatabase.shared.itemResourceName(item.id) else {
+            return nil
+        }
+
+        let path = GRF.Path(string: "data\\texture\\유저인터페이스\\item\\\(resourceName).bmp")
+        let image = await image(forBMPPath: path)
+        return image
     }
 
-    func itemPreviewFile(forResourceName resourceName: String) -> File {
-        let bmpPath = GRF.Path(string: "data\\texture\\유저인터페이스\\collection\\\(resourceName).bmp")
-        let bmpFile = File.grfEntry(grf, bmpPath)
-        return bmpFile
+    func itemPreviewImage(forItem item: Item) async -> UIImage? {
+        guard let resourceName = ClientDatabase.shared.itemResourceName(item.id) else {
+            return nil
+        }
+
+        let path = GRF.Path(string: "data\\texture\\유저인터페이스\\collection\\\(resourceName).bmp")
+        let image = await image(forBMPPath: path)
+        return image
     }
 
-    func skillIconFile(forResourceName resourceName: String) -> File {
-        let bmpPath = GRF.Path(string: "data\\texture\\유저인터페이스\\item\\\(resourceName).bmp")
-        let bmpFile = File.grfEntry(grf, bmpPath)
-        return bmpFile
+    func skillIconImage(forSkill skill: Skill) async -> UIImage? {
+        let path = GRF.Path(string: "data\\texture\\유저인터페이스\\item\\\(skill.aegisName).bmp")
+        let image = await image(forBMPPath: path)
+        return image
     }
 
-    func mapPreviewFile(forResourceName resourceName: String) -> File {
-        let bmpPath = GRF.Path(string: "data\\texture\\유저인터페이스\\map\\\(resourceName).bmp")
-        let bmpFile = File.grfEntry(grf, bmpPath)
-        return bmpFile
+    func mapImage(forMap map: Map) async -> UIImage? {
+        let path = GRF.Path(string: "data\\texture\\유저인터페이스\\map\\\(map.name).bmp")
+        let image = await image(forBMPPath: path)
+        return image
+    }
+
+    // MARK: - Private
+
+    private func image(forBMPPath path: GRF.Path) async -> UIImage? {
+        if let image = cache.object(forKey: path.string as NSString) {
+            return image
+        }
+
+        let file = File.grfEntry(grf, path)
+
+        guard let data = file.contents() else {
+            return nil
+        }
+
+        let image = UIImage(bmpData: data)
+
+        if let image {
+            cache.setObject(image, forKey: path.string as NSString)
+        }
+
+        return image
     }
 }

@@ -16,7 +16,84 @@ struct JobInfoView: View {
     typealias BaseLevelStats = (level: Int, baseExp: Int, baseHp: Int, baseSp: Int)
     typealias JobLevelStats = (level: Int, jobExp: Int, bonusStats: String)
 
-    var baseASPD: [DatabaseRecordField] {
+    var body: some View {
+        ScrollView {
+            DatabaseRecordInfoSection("Info") {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)]) {
+                    LabeledContent("Max Weight", value: "\(jobStats.maxWeight)")
+                    LabeledContent("HP Factor", value: "\(jobStats.hpFactor)")
+                    LabeledContent("HP Increase", value: "\(jobStats.hpIncrease)")
+                    LabeledContent("SP Increase", value: "\(jobStats.spIncrease)")
+                }
+            }
+
+            DatabaseRecordInfoSection("Base ASPD") {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)]) {
+                    ForEach(baseASPD, id: \.title) { field in
+                        LabeledContent(field.title, value: field.value)
+                    }
+                }
+            }
+
+            DatabaseRecordInfoSection {
+                Grid(verticalSpacing: 8) {
+                    ForEach(baseLevels, id: \.level) { levelStats in
+                        GridRow {
+                            Text("\(levelStats.level + 1)")
+                            Text("\(levelStats.baseExp)")
+                                .foregroundColor(.secondary)
+                            Text("\(levelStats.baseHp)")
+                                .foregroundColor(.secondary)
+                            Text("\(levelStats.baseSp)")
+                                .foregroundColor(.secondary)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }
+            } header: {
+                Grid {
+                    GridRow {
+                        Text("Base Level")
+                        Text("Base Exp")
+                        Text("Base HP")
+                        Text("Base SP")
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+
+            DatabaseRecordInfoSection {
+                Grid(verticalSpacing: 8) {
+                    ForEach(jobLevels, id: \.level) { levelStats in
+                        GridRow {
+                            Text("\(levelStats.level + 1)")
+                            Text("\(levelStats.jobExp)")
+                                .foregroundColor(.secondary)
+                            Text(levelStats.bonusStats)
+                                .foregroundColor(.secondary)
+                            Text("")
+                                .foregroundColor(.secondary)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }
+            } header: {
+                Grid {
+                    GridRow {
+                        Text("Job Level")
+                        Text("Job Exp")
+                        Text("Bonus Stats")
+                        Text("")
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+        }
+        .navigationTitle(jobStats.job.description)
+        .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private var baseASPD: [DatabaseRecordField] {
         WeaponType.allCases.compactMap { weaponType in
             if let aspd = jobStats.baseASPD[weaponType] {
                 (weaponType.description, "\(aspd)")
@@ -26,13 +103,13 @@ struct JobInfoView: View {
         }
     }
 
-    var baseLevels: [BaseLevelStats] {
+    private var baseLevels: [BaseLevelStats] {
         (0..<jobStats.maxBaseLevel).map { level in
             (level, jobStats.baseExp[level], jobStats.baseHp[level], jobStats.baseSp[level])
         }
     }
 
-    var jobLevels: [JobLevelStats] {
+    private var jobLevels: [JobLevelStats] {
         (0..<jobStats.maxJobLevel).map { level in
             let bonusStats = Parameter.allCases.compactMap { parameter in
                 if let value = jobStats.bonusStats[level][parameter], value > 0 {
@@ -43,88 +120,5 @@ struct JobInfoView: View {
             }.joined(separator: " ")
             return (level, jobStats.jobExp[level], bonusStats)
         }
-    }
-
-    var body: some View {
-        List {
-            Section("Info") {
-                LabeledContent("Max Weight", value: "\(jobStats.maxWeight)")
-                LabeledContent("HP Factor", value: "\(jobStats.hpFactor)")
-                LabeledContent("HP Increase", value: "\(jobStats.hpIncrease)")
-                LabeledContent("SP Increase", value: "\(jobStats.spIncrease)")
-            }
-
-            Section("Base ASPD") {
-                ForEach(baseASPD, id: \.title) { field in
-                    LabeledContent(field.title, value: field.value)
-                }
-            }
-
-            Section {
-                ForEach(baseLevels, id: \.level) { levelStats in
-                    HStack {
-                        Text("\(levelStats.level + 1)")
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                        Text("\(levelStats.baseExp)")
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            .foregroundColor(.secondary)
-
-                        Text("\(levelStats.baseHp)")
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            .foregroundColor(.secondary)
-
-                        Text("\(levelStats.baseSp)")
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            .foregroundColor(.secondary)
-                    }
-                }
-            } header: {
-                HStack {
-                    Text("Base Level")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                    Text("Base Exp")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                    Text("Base HP")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                    Text("Base SP")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                }
-            }
-
-            Section {
-                ForEach(jobLevels, id: \.level) { levelStats in
-                    HStack {
-                        Text("\(levelStats.level + 1)")
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                        Text("\(levelStats.jobExp)")
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            .foregroundColor(.secondary)
-
-                        Text(levelStats.bonusStats)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            .foregroundColor(.secondary)
-                    }
-                }
-            } header: {
-                HStack {
-                    Text("Job Level")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                    Text("Job Exp")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                    Text("Bonus Stats")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                }
-            }
-        }
-        .listStyle(.plain)
-        .navigationTitle(jobStats.job.description)
-        .navigationBarTitleDisplayMode(.inline)
     }
 }

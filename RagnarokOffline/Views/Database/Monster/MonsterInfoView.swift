@@ -18,7 +18,93 @@ struct MonsterInfoView: View {
     @State private var mvpDropItems: [DropItem] = []
     @State private var dropItems: [DropItem] = []
 
-    var fields: [DatabaseRecordField] {
+    var body: some View {
+        ScrollView {
+            DatabaseRecordImage {
+                await ClientResourceManager.shared.animatedMonsterImage(monster.id)
+            }
+            .frame(width: 200, height: 200)
+
+            DatabaseRecordInfoSection("Info") {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)]) {
+                    ForEach(fields, id: \.title) { field in
+                        LabeledContent(field.title, value: field.value)
+                    }
+                }
+            }
+
+            if let raceGroups {
+                DatabaseRecordInfoSection("Race Groups") {
+                    Text(raceGroups)
+                }
+            }
+
+            if let modes {
+                DatabaseRecordInfoSection("Modes") {
+                    Text(modes)
+                }
+            }
+
+            if !mvpDropItems.isEmpty {
+                DatabaseRecordInfoSection("MVP Drops") {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)], alignment: .leading, spacing: 32) {
+                        ForEach(mvpDropItems, id: \.index) { dropItem in
+                            NavigationLink {
+                                ItemInfoView(database: database, item: dropItem.item)
+                            } label: {
+                                ItemGridCell(database: database, item: dropItem.item) {
+                                    Text("(\(NSNumber(value: Double(dropItem.drop.rate) / 100))%)")
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if !dropItems.isEmpty {
+                DatabaseRecordInfoSection("Drops") {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)], alignment: .leading, spacing: 32) {
+                        ForEach(dropItems, id: \.index) { dropItem in
+                            NavigationLink {
+                                ItemInfoView(database: database, item: dropItem.item)
+                            } label: {
+                                ItemGridCell(database: database, item: dropItem.item) {
+                                    Text("(\(NSNumber(value: Double(dropItem.drop.rate) / 100))%)")
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .navigationTitle(monster.name)
+        .navigationBarTitleDisplayMode(.inline)
+        .task {
+            Task {
+                if let mvpDrops = monster.mvpDrops {
+                    var mvpDropItems: [DropItem] = []
+                    for (index, drop) in mvpDrops.enumerated() {
+                        let item = try await database.item(for: drop.item)
+                        mvpDropItems.append((index, drop, item))
+                    }
+                    self.mvpDropItems = mvpDropItems
+                }
+
+                if let drops = monster.drops {
+                    var dropItems: [DropItem] = []
+                    for (index, drop) in drops.enumerated() {
+                        let item = try await database.item(for: drop.item)
+                        dropItems.append((index, drop, item))
+                    }
+                    self.dropItems = dropItems
+                }
+            }
+        }
+    }
+
+    private var fields: [DatabaseRecordField] {
         var fields: [DatabaseRecordField] = []
 
         fields.append(("ID", "#\(monster.id)"))
@@ -78,110 +164,15 @@ struct MonsterInfoView: View {
         return fields
     }
 
-    var raceGroups: String? {
+    private var raceGroups: String? {
         monster.raceGroups?
             .map({ "- \($0.description)" })
             .joined(separator: "\n")
     }
 
-    var modes: String? {
+    private var modes: String? {
         monster.modes?
             .map({ "- \($0.description)" })
             .joined(separator: "\n")
-    }
-
-    var body: some View {
-        List {
-            DatabaseRecordImage {
-                await ClientResourceManager.shared.animatedMonsterImage(monster.id)
-            }
-            .frame(width: 150, height: 150)
-
-            Section("Info") {
-                ForEach(fields, id: \.title) { field in
-                    LabeledContent(field.title, value: field.value)
-                }
-            }
-
-            if let raceGroups {
-                Section("Race Groups") {
-                    Text(raceGroups)
-                }
-            }
-
-            if let modes {
-                Section("Modes") {
-                    Text(modes)
-                }
-            }
-
-            if !mvpDropItems.isEmpty {
-                Section("MVP Drops") {
-                    ForEach(mvpDropItems, id: \.index) { dropItem in
-                        NavigationLink {
-                            ItemInfoView(database: database, item: dropItem.item)
-                        } label: {
-                            HStack {
-                                DatabaseRecordImage {
-                                    await ClientResourceManager.shared.itemIconImage(dropItem.item.id, size: CGSize(width: 24, height: 24))
-                                }
-                                .frame(width: 24, height: 24)
-
-                                Text(dropItem.item.name)
-
-                                Text("(\(NSNumber(value: Double(dropItem.drop.rate) / 100))%)")
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                    }
-                }
-            }
-
-            if !dropItems.isEmpty {
-                Section("Drops") {
-                    ForEach(dropItems, id: \.index) { dropItem in
-                        NavigationLink {
-                            ItemInfoView(database: database, item: dropItem.item)
-                        } label: {
-                            HStack {
-                                DatabaseRecordImage {
-                                    await ClientResourceManager.shared.itemIconImage(dropItem.item.id, size: CGSize(width: 24, height: 24))
-                                }
-                                .frame(width: 24, height: 24)
-
-                                Text(dropItem.item.name)
-
-                                Text("(\(NSNumber(value: Double(dropItem.drop.rate) / 100))%)")
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        .listStyle(.plain)
-        .navigationTitle(monster.name)
-        .navigationBarTitleDisplayMode(.inline)
-        .task {
-            Task {
-                if let mvpDrops = monster.mvpDrops {
-                    var mvpDropItems: [DropItem] = []
-                    for (index, drop) in mvpDrops.enumerated() {
-                        let item = try await database.item(for: drop.item)
-                        mvpDropItems.append((index, drop, item))
-                    }
-                    self.mvpDropItems = mvpDropItems
-                }
-
-                if let drops = monster.drops {
-                    var dropItems: [DropItem] = []
-                    for (index, drop) in drops.enumerated() {
-                        let item = try await database.item(for: drop.item)
-                        dropItems.append((index, drop, item))
-                    }
-                    self.dropItems = dropItems
-                }
-            }
-        }
     }
 }

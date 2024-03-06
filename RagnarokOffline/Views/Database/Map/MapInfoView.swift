@@ -13,30 +13,19 @@ struct MapInfoView: View {
     let database: Database
     let map: Map
 
-    @State private var mapPreview: UIImage?
+    @State private var mapImage: UIImage?
 
     var body: some View {
-        List {
-            VStack(alignment: .center) {
-                if let mapPreview {
-                    Image(uiImage: mapPreview)
-                } else {
-                    EmptyView()
-                }
-            }
-            .frame(width: 150, height: 150, alignment: .center)
+        ScrollView {
+            Image(uiImage: mapImage ?? UIImage())
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 200)
         }
-        .listStyle(.plain)
         .navigationTitle(map.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            Task {
-                mapPreview = await ClientResourceManager.shared.mapPreviewImage(map.name, size: CGSize(width: 150, height: 150))
-            }
+            mapImage = await ClientResourceBundle.shared.mapImage(forMap: map)
         }
     }
 }
-
-//#Preview {
-//    MapInfoView(database: .renewal, map: Database.renewal.maps().joined()[0])
-//}

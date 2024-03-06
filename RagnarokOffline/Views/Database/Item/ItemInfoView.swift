@@ -15,11 +15,107 @@ struct ItemInfoView: View {
 
     typealias DroppingMonster = (monster: Monster, drop: Monster.Drop)
 
-    @State private var itemPreview: UIImage?
+    @State private var itemPreviewImage: UIImage?
     @State private var itemDescription: String?
     @State private var droppingMonsters: [DroppingMonster] = []
 
-    var fields: [DatabaseRecordField] {
+    var body: some View {
+        ScrollView {
+            Image(uiImage: itemPreviewImage ?? UIImage())
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 200)
+
+            DatabaseRecordInfoSection("Info") {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)]) {
+                    ForEach(fields, id: \.title) { field in
+                        LabeledContent(field.title, value: field.value)
+                    }
+                }
+            }
+
+            if item.type == .weapon || item.type == .armor {
+                DatabaseRecordInfoSection("Jobs") {
+                    Text(jobs)
+                }
+
+                DatabaseRecordInfoSection("Classes") {
+                    Text(classes)
+                }
+
+                DatabaseRecordInfoSection("Locations") {
+                    Text(locations)
+                }
+            }
+
+            if let itemDescription {
+                DatabaseRecordInfoSection("Description") {
+                    Text(itemDescription)
+                }
+            }
+
+            if let script {
+                DatabaseRecordInfoSection("Script") {
+                    Text(script)
+                        .monospaced()
+                }
+            }
+
+            if let equipScript {
+                DatabaseRecordInfoSection("Equip Script") {
+                    Text(equipScript)
+                        .monospaced()
+                }
+            }
+
+            if let unEquipScript {
+                DatabaseRecordInfoSection("Unequip Script") {
+                    Text(unEquipScript)
+                        .monospaced()
+                }
+            }
+
+            if !droppingMonsters.isEmpty {
+                DatabaseRecordInfoSection("Dropping Monsters") {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 16)], alignment: .leading, spacing: 32) {
+                        ForEach(droppingMonsters, id: \.monster.id) { droppingMonster in
+                            NavigationLink {
+                                MonsterInfoView(database: database, monster: droppingMonster.monster)
+                            } label: {
+                                MonsterGridCell(database: database, monster: droppingMonster.monster) {
+                                    Text("(\(NSNumber(value: Double(droppingMonster.drop.rate) / 100))%)")
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .navigationTitle(item.name)
+        .navigationBarTitleDisplayMode(.inline)
+        .task {
+            Task {
+                itemPreviewImage = await ClientResourceBundle.shared.itemPreviewImage(forItem: item)
+                itemDescription = ClientDatabase.shared.itemDescription(item.id)
+
+                var droppingMonsters: [DroppingMonster] = []
+                let monsters = try await database.monsters().joined()
+                for monster in monsters {
+                    let drops = (monster.mvpDrops ?? []) + (monster.drops ?? [])
+                    for drop in drops {
+                        if drop.item == item.aegisName {
+                            droppingMonsters.append((monster, drop))
+                            break
+                        }
+                    }
+                }
+                self.droppingMonsters = droppingMonsters
+            }
+        }
+    }
+
+    private var fields: [DatabaseRecordField] {
         var fields: [DatabaseRecordField] = []
 
         fields.append(("ID", "#\(item.id)"))
@@ -80,132 +176,33 @@ struct ItemInfoView: View {
         return fields
     }
 
-    var jobs: String {
+    private var jobs: String {
         item.jobs
             .map({ "- \($0.description)" })
             .joined(separator: "\n")
     }
 
-    var classes: String {
+    private var classes: String {
         item.classes
             .map({ "- \($0.description)" })
             .joined(separator: "\n")
     }
 
-    var locations: String {
+    private var locations: String {
         item.locations
             .map({ "- \($0.description)" })
             .joined(separator: "\n")
     }
 
-    var script: String? {
+    private var script: String? {
         item.script?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    var equipScript: String? {
+    private var equipScript: String? {
         item.equipScript?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    var unEquipScript: String? {
+    private var unEquipScript: String? {
         item.unEquipScript?.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
-    var body: some View {
-        List {
-            VStack(alignment: .center) {
-                if let itemPreview {
-                    Image(uiImage: itemPreview)
-                } else {
-                    EmptyView()
-                }
-            }
-            .frame(width: 150, height: 150, alignment: .center)
-
-            Section("Info") {
-                ForEach(fields, id: \.title) { field in
-                    LabeledContent(field.title, value: field.value)
-                }
-            }
-
-            if item.type == .weapon || item.type == .armor {
-                Section("Jobs") {
-                    Text(jobs)
-                }
-
-                Section("Classes") {
-                    Text(classes)
-                }
-
-                Section("Locations") {
-                    Text(locations)
-                }
-            }
-
-            if let itemDescription {
-                Section("Description") {
-                    Text(itemDescription)
-                }
-            }
-
-            if let script {
-                Section("Script") {
-                    Text(script)
-                        .monospaced()
-                }
-            }
-
-            if let equipScript {
-                Section("Equip Script") {
-                    Text(equipScript)
-                        .monospaced()
-                }
-            }
-
-            if let unEquipScript {
-                Section("Unequip Script") {
-                    Text(unEquipScript)
-                        .monospaced()
-                }
-            }
-
-            if !droppingMonsters.isEmpty {
-                Section("Dropping Monsters") {
-                    ForEach(droppingMonsters, id: \.monster.id) { droppingMonster in
-                        NavigationLink {
-                            MonsterInfoView(database: database, monster: droppingMonster.monster)
-                        } label: {
-                            HStack {
-                                Text(droppingMonster.monster.name)
-
-                                Text("(\(NSNumber(value: Double(droppingMonster.drop.rate) / 100))%)")
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        .listStyle(.plain)
-        .navigationTitle(item.name)
-        .navigationBarTitleDisplayMode(.inline)
-        .task {
-            Task {
-                itemPreview = await ClientResourceManager.shared.itemPreviewImage(item.id)
-                itemDescription = ClientDatabase.shared.itemDescription(item.id)
-
-                var droppingMonsters: [DroppingMonster] = []
-                let monsters = try await database.monsters().joined()
-                for monster in monsters {
-                    let drops = (monster.mvpDrops ?? []) + (monster.drops ?? [])
-                    for drop in drops {
-                        if drop.item == item.aegisName {
-                            droppingMonsters.append((monster, drop))
-                            break
-                        }
-                    }
-                }
-                self.droppingMonsters = droppingMonsters
-            }
-        }
     }
 }
