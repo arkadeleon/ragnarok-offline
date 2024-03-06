@@ -87,7 +87,7 @@ class STRPreviewViewController: UIViewController {
     }
 
     nonisolated private func loadRenderer() async -> STRRenderer? {
-        guard case .grfEntry(let grf, let entry) = file, let data = file.contents() else {
+        guard case .grfEntry(let grf, let path) = file, let data = file.contents() else {
             return nil
         }
 
@@ -104,8 +104,8 @@ class STRPreviewViewController: UIViewController {
             if let texture = textures[textureName] {
                 return texture
             }
-            let path = GRF.Path(string: entry.path.parent.string + "\\" + textureName)
-            guard let data = try? grf.contentsOfEntry(at: path) else {
+            let texturePath = GRF.Path(string: path.parent.string + "\\" + textureName)
+            guard let data = try? grf.contentsOfEntry(at: texturePath) else {
                 return nil
             }
             let texture = textureLoader.newTexture(bmpData: data)

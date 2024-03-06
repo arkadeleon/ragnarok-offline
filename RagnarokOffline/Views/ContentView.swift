@@ -15,7 +15,7 @@ import rAthenaMap
 import rAthenaWeb
 
 struct ContentView: View {
-    private let filesView = FilesView(title: "Files", directory: .directory(ClientBundle.shared.url))
+    private let filesView = FilesView(title: "Files", directory: .directory(ClientResourceBundle.shared.url))
 
     private let servers: [RAServer] = [
         RALoginServer.shared,

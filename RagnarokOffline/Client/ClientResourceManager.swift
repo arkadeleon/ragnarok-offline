@@ -18,15 +18,13 @@ class ClientResourceManager {
             return nil
         }
 
-        let path = ClientBundle.shared.itemIconPath(forResourceName: resourceName)
-
-        do {
-            let bmpData = try ClientBundle.shared.grf.contentsOfEntry(at: path)
-            let image = UIImage(bmpData: bmpData)
-            return image?.resize(size.width, size.height)
-        } catch {
+        let file = ClientResourceBundle.shared.itemIconFile(forResourceName: resourceName)
+        guard let bmpData = file.contents() else {
             return nil
         }
+
+        let image = UIImage(bmpData: bmpData)
+        return image?.resize(size.width, size.height)
     }
 
     func itemPreviewImage(_ itemID: Int) async -> UIImage? {
@@ -34,15 +32,13 @@ class ClientResourceManager {
             return nil
         }
 
-        let path = ClientBundle.shared.itemPreviewPath(forResourceName: resourceName)
-
-        do {
-            let bmpData = try ClientBundle.shared.grf.contentsOfEntry(at: path)
-            let image = UIImage(bmpData: bmpData)
-            return image
-        } catch {
+        let file = ClientResourceBundle.shared.itemPreviewFile(forResourceName: resourceName)
+        guard let bmpData = file.contents() else {
             return nil
         }
+
+        let image = UIImage(bmpData: bmpData)
+        return image
     }
 
     func monsterImage(_ monsterID: Int, size: CGSize) async -> UIImage? {
@@ -50,12 +46,12 @@ class ClientResourceManager {
             return nil
         }
 
-        let (path, _) = ClientBundle.shared.monsterSpritePath(forResourceName: resourceName)
-
-        print("Load: " + path.string)
+        let (sprFile, _) = ClientResourceBundle.shared.monsterSpriteFile(forResourceName: resourceName)
+        guard let sprData = sprFile.contents() else {
+            return nil
+        }
 
         do {
-            let sprData = try ClientBundle.shared.grf.contentsOfEntry(at: path)
             let spr = try SPR(data: sprData)
             guard let image = spr.image(forSpriteAt: 0) else {
                 return nil
@@ -76,13 +72,13 @@ class ClientResourceManager {
             return nil
         }
 
-        let (sprPath, actPath) = ClientBundle.shared.monsterSpritePath(forResourceName: resourceName)
+        let (sprFile, actFile) = ClientResourceBundle.shared.monsterSpriteFile(forResourceName: resourceName)
+        guard let sprData = sprFile.contents(), let actData = actFile.contents() else {
+            return nil
+        }
 
         do {
-            let sprData = try ClientBundle.shared.grf.contentsOfEntry(at: sprPath)
             let spr = try SPR(data: sprData)
-
-            let actData = try ClientBundle.shared.grf.contentsOfEntry(at: actPath)
             let act = try ACT(data: actData)
 
             let sprites = spr.sprites.enumerated()
@@ -104,13 +100,14 @@ class ClientResourceManager {
     }
 
     func jobImage(gender: Gender, job: Job, size: CGSize) async -> UIImage? {
-        let (bodySPRPath, bodyACTPath) = ClientBundle.shared.bodySpritePath(forGender: gender, job: job)
+        let bodyFile = ClientResourceBundle.shared.bodySpriteFile(forGender: gender, job: job)
+
+        guard let sprData = bodyFile.spr.contents(), let actData = bodyFile.act.contents() else {
+            return nil
+        }
 
         do {
-            let sprData = try ClientBundle.shared.grf.contentsOfEntry(at: bodySPRPath)
             let spr = try SPR(data: sprData)
-
-            let actData = try ClientBundle.shared.grf.contentsOfEntry(at: bodyACTPath)
             let act = try ACT(data: actData)
 
             let sprites = spr.sprites.enumerated()
@@ -138,26 +135,22 @@ class ClientResourceManager {
     }
 
     func skillIconImage(_ skillName: String, size: CGSize) async -> UIImage? {
-        let path = ClientBundle.shared.skillIconPath(forResourceName: skillName)
-
-        do {
-            let bmpData = try ClientBundle.shared.grf.contentsOfEntry(at: path)
-            let image = UIImage(bmpData: bmpData)
-            return image?.resize(size.width, size.height)
-        } catch {
+        let file = ClientResourceBundle.shared.skillIconFile(forResourceName: skillName)
+        guard let bmpData = file.contents() else {
             return nil
         }
+
+        let image = UIImage(bmpData: bmpData)
+        return image?.resize(size.width, size.height)
     }
 
     func mapPreviewImage(_ mapName: String, size: CGSize) async -> UIImage? {
-        let path = ClientBundle.shared.mapPreviewPath(forResourceName: mapName)
-
-        do {
-            let bmpData = try ClientBundle.shared.grf.contentsOfEntry(at: path)
-            let image = UIImage(bmpData: bmpData)
-            return image?.resize(size.width, size.height)
-        } catch {
+        let file = ClientResourceBundle.shared.mapPreviewFile(forResourceName: mapName)
+        guard let bmpData = file.contents() else {
             return nil
         }
+
+        let image = UIImage(bmpData: bmpData)
+        return image?.resize(size.width, size.height)
     }
 }

@@ -31,7 +31,7 @@
 		353098322B148E4100F32B62 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353098312B148E4100F32B62 /* Model.swift */; };
 		353B4F0C2B43A9AC00605E92 /* ClientResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0B2B43A9AC00605E92 /* ClientResourceManager.swift */; };
 		353B4F102B43AED300605E92 /* SkillGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0F2B43AED300605E92 /* SkillGrid.swift */; };
-		353B4F162B43F3BB00605E92 /* ClientBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F152B43F3BB00605E92 /* ClientBundle.swift */; };
+		353B4F162B43F3BB00605E92 /* ClientResourceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F152B43F3BB00605E92 /* ClientResourceBundle.swift */; };
 		353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F172B44FFE100605E92 /* SkillInfoView.swift */; };
 		353B4F1C2B451F1300605E92 /* ItemGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F1B2B451F1300605E92 /* ItemGridCell.swift */; };
 		353B4F1E2B451FBC00605E92 /* DatabaseRecordImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F1D2B451FBC00605E92 /* DatabaseRecordImage.swift */; };
@@ -211,7 +211,7 @@
 		353098312B148E4100F32B62 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		353B4F0B2B43A9AC00605E92 /* ClientResourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientResourceManager.swift; sourceTree = "<group>"; };
 		353B4F0F2B43AED300605E92 /* SkillGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillGrid.swift; sourceTree = "<group>"; };
-		353B4F152B43F3BB00605E92 /* ClientBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientBundle.swift; sourceTree = "<group>"; };
+		353B4F152B43F3BB00605E92 /* ClientResourceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientResourceBundle.swift; sourceTree = "<group>"; };
 		353B4F172B44FFE100605E92 /* SkillInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillInfoView.swift; sourceTree = "<group>"; };
 		353B4F1B2B451F1300605E92 /* ItemGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemGridCell.swift; sourceTree = "<group>"; };
 		353B4F1D2B451FBC00605E92 /* DatabaseRecordImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordImage.swift; sourceTree = "<group>"; };
@@ -405,6 +405,22 @@
 			path = Job;
 			sourceTree = "<group>";
 		};
+		3523B5802B98479700CCE722 /* FileSystem */ = {
+			isa = PBXGroup;
+			children = (
+				35B3B98D2A08C01600B4540B /* File.swift */,
+				35B3B9952A08C01600B4540B /* File+Type.swift */,
+				3582FFCD2B8DC07E00E746D7 /* File+Actions.swift */,
+				35482AF02B2759DD0062DC4B /* File+RawData.swift */,
+				35774F792B231FAF00438311 /* FileActivityItem.swift */,
+				35B3B9962A08C01600B4540B /* FilePasteboard.swift */,
+				354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */,
+				35B3B98C2A08C01600B4540B /* FileThumbnailGenerator.swift */,
+				356BF6762AFCCDD9005B67F7 /* GRFWrapper.swift */,
+			);
+			path = FileSystem;
+			sourceTree = "<group>";
+		};
 		35270D252A5FE9470001A8BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -478,8 +494,8 @@
 			children = (
 				353B4F0B2B43A9AC00605E92 /* ClientResourceManager.swift */,
 				356363662B3F303F00F7C249 /* ClientDatabase.swift */,
+				353B4F152B43F3BB00605E92 /* ClientResourceBundle.swift */,
 				3514BF482B4532C80065ED89 /* ClientSettings.swift */,
-				353B4F152B43F3BB00605E92 /* ClientBundle.swift */,
 				3514BF8C2B4BE93A0065ED89 /* Gender+ResourceName.swift */,
 				3514BF7E2B47D64F0065ED89 /* Job+ResourceName.swift */,
 			);
@@ -645,8 +661,9 @@
 			children = (
 				35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */,
 				35774F692B20587900438311 /* Views */,
-				356363652B3F301C00F7C249 /* Client */,
 				35B3B9A42A08C01600B4540B /* Renderers */,
+				356363652B3F301C00F7C249 /* Client */,
+				3523B5802B98479700CCE722 /* FileSystem */,
 				35B3B9522A08C01600B4540B /* FileFormats */,
 				35B3B97E2A08C01600B4540B /* Utilities */,
 				35B3BA422A08C51000B4540B /* RagnarokOffline-Bridging-Header.h */,
@@ -692,7 +709,6 @@
 				3511C1CB2B0A4EAE006DD639 /* GAT+Image.swift */,
 				35B3B9532A08C01600B4540B /* GND.swift */,
 				35B3B9552A08C01600B4540B /* GRF.swift */,
-				356BF6762AFCCDD9005B67F7 /* GRFWrapper.swift */,
 				35B3B9562A08C01600B4540B /* INI.swift */,
 				35B3B9B02A08C01600B4540B /* PAL.swift */,
 				35774F6A2B2178D900438311 /* PAL+Image.swift */,
@@ -737,14 +753,6 @@
 		35B3B9892A08C01600B4540B /* Files */ = {
 			isa = PBXGroup;
 			children = (
-				35B3B98D2A08C01600B4540B /* File.swift */,
-				35B3B9952A08C01600B4540B /* File+Type.swift */,
-				3582FFCD2B8DC07E00E746D7 /* File+Actions.swift */,
-				35482AF02B2759DD0062DC4B /* File+RawData.swift */,
-				35774F792B231FAF00438311 /* FileActivityItem.swift */,
-				35B3B9962A08C01600B4540B /* FilePasteboard.swift */,
-				354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */,
-				35B3B98C2A08C01600B4540B /* FileThumbnailGenerator.swift */,
 				35B3B99A2A08C01600B4540B /* FilesView.swift */,
 				3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */,
 				3582FFC72B8DB73B00E746D7 /* FileThumbnailView.swift */,
@@ -949,7 +957,7 @@
 				35482AF12B2759DD0062DC4B /* File+RawData.swift in Sources */,
 				35B3B9E32A08C01600B4540B /* RSM.swift in Sources */,
 				356363672B3F303F00F7C249 /* ClientDatabase.swift in Sources */,
-				353B4F162B43F3BB00605E92 /* ClientBundle.swift in Sources */,
+				353B4F162B43F3BB00605E92 /* ClientResourceBundle.swift in Sources */,
 				3504AB8C2A2EFB900029AC46 /* Camera.swift in Sources */,
 				356508D42B10A02D00543562 /* STRPreviewViewController.swift in Sources */,
 				35774F702B219CF400438311 /* AmbientColor.swift in Sources */,

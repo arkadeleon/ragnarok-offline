@@ -144,7 +144,7 @@ class ClientDatabase {
             return
         }
 
-        let iteminfoURL = ClientBundle.shared.url.appendingPathComponent("System/iteminfo.lub")
+        let iteminfoURL = ClientResourceBundle.shared.url.appendingPathComponent("System/iteminfo.lub")
         if let iteminfo = try? Data(contentsOf: iteminfoURL) {
             try context.load(iteminfo)
         }
@@ -228,7 +228,7 @@ class ClientDatabase {
     private func loadScript(_ paths: [GRF.Path]) throws {
         var data: Data?
         for path in paths {
-            data = try? ClientBundle.shared.grf.contentsOfEntry(at: path)
+            data = try? ClientResourceBundle.shared.grf.contentsOfEntry(at: path)
             if data != nil {
                 break
             }
@@ -246,8 +246,10 @@ class ClientDatabase {
             return
         }
 
-        let path = GRF.Path(string: "data\\mapnametable.txt")
-        let data = try ClientBundle.shared.grf.contentsOfEntry(at: path)
+        let file = ClientResourceBundle.shared.mapNameTableFile()
+        guard let data = file.contents() else {
+            return
+        }
 
         guard let string = String(data: data, encoding: ClientSettings.shared.textEncoding.stringEncoding) else {
             return

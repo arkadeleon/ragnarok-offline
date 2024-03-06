@@ -13,7 +13,7 @@ enum File {
     case regularFile(URL)
     case grf(GRFWrapper)
     case grfDirectory(GRFWrapper, GRF.Path)
-    case grfEntry(GRFWrapper, GRF.Entry)
+    case grfEntry(GRFWrapper, GRF.Path)
 
     var url: URL {
         switch self {
@@ -27,9 +27,9 @@ enum File {
             return grf.url.appending(queryItems: [
                 URLQueryItem(name: "path", value: directory.string)
             ])
-        case .grfEntry(let grf, let entry):
+        case .grfEntry(let grf, let path):
             return grf.url.appending(queryItems: [
-                URLQueryItem(name: "path", value: entry.path.string)
+                URLQueryItem(name: "path", value: path.string)
             ])
         }
     }
@@ -44,8 +44,8 @@ enum File {
             return grf.url.lastPathComponent
         case .grfDirectory(_, let directory):
             return directory.lastComponent
-        case .grfEntry(_, let entry):
-            return entry.path.lastComponent
+        case .grfEntry(_, let path):
+            return path.lastComponent
         }
     }
 
@@ -61,8 +61,9 @@ enum File {
             return values?.fileSize
         case .grfDirectory:
             return nil
-        case .grfEntry(_, let entry):
-            return Int(entry.size)
+        case .grfEntry(let grf, let path):
+            let entry = grf.entry(at: path)
+            return entry.flatMap({ Int($0.size) })
         }
     }
 
@@ -76,8 +77,8 @@ enum File {
             return nil
         case .grfDirectory:
             return nil
-        case .grfEntry(let grf, let entry):
-            return try? grf.contentsOfEntry(entry)
+        case .grfEntry(let grf, let path):
+            return try? grf.contentsOfEntry(at: path)
         }
     }
 
@@ -113,7 +114,7 @@ enum File {
                 files.append(file)
             }
             for entry in entries {
-                let file = File.grfEntry(grf, entry)
+                let file = File.grfEntry(grf, entry.path)
                 files.append(file)
             }
             return files

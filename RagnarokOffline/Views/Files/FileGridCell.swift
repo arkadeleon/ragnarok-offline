@@ -25,5 +25,5 @@ struct FileGridCell: View {
 }
 
 #Preview {
-    FileGridCell(file: .directory(ClientBundle.shared.url))
+    FileGridCell(file: .directory(ClientResourceBundle.shared.url))
 }

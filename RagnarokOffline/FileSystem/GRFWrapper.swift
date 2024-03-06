@@ -74,7 +74,15 @@ class GRFWrapper {
         return (directories, entries)
     }
 
-    func contentsOfEntry(_ entry: GRF.Entry) throws -> Data {
+    func entry(at path: GRF.Path) -> GRF.Entry? {
+        entries[path.string.uppercased()]
+    }
+
+    func contentsOfEntry(at path: GRF.Path) throws -> Data {
+        guard let entry = entry(at: path) else {
+            throw DocumentError.invalidSource
+        }
+
         let stream = try FileStream(url: url)
         let reader = BinaryReader(stream: stream)
 
@@ -85,13 +93,5 @@ class GRFWrapper {
         let data = try entry.data(from: reader)
 
         return data
-    }
-
-    func contentsOfEntry(at path: GRF.Path) throws -> Data {
-        guard let entry = entries[path.string.uppercased()] else {
-            throw DocumentError.invalidSource
-        }
-
-        return try contentsOfEntry(entry)
     }
 }

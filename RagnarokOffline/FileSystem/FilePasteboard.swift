@@ -45,8 +45,8 @@ extension File {
             return nil
         case .grfDirectory:
             return nil
-        case .grfEntry(let grf, let entry):
-            guard let contents = try? grf.contentsOfEntry(entry) else {
+        case .grfEntry(let grf, let path):
+            guard let contents = try? grf.contentsOfEntry(at: path) else {
                 return nil
             }
             do {
