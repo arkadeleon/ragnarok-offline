@@ -15,6 +15,7 @@ struct MapGridCell: View {
 
     @State private var mapImage: UIImage?
     @State private var localizedMapName: String?
+    @State private var isPreviewPresented = false
 
     var body: some View {
         HStack {
@@ -34,6 +35,18 @@ struct MapGridCell: View {
                     .lineLimit(1)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
+
+            Spacer()
+
+            Button("View") {
+                isPreviewPresented.toggle()
+            }
+            .buttonStyle(.bordered)
+            .buttonBorderShape(.capsule)
+        }
+        .sheet(isPresented: $isPreviewPresented) {
+            let file = ClientResourceBundle.shared.rswFile(forMap: map)
+            FilePreviewPageView(file: file, files: [file])
         }
         .task {
             mapImage = await ClientResourceBundle.shared.mapImage(forMap: map)

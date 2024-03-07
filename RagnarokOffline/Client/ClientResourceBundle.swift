@@ -32,6 +32,12 @@ class ClientResourceBundle {
         return file
     }
 
+    func rswFile(forMap map: Map) -> File {
+        let path = GRF.Path(string: "data\\\(map.name).rsw")
+        let file = File.grfEntry(grf, path)
+        return file
+    }
+
     // MARK: - data\palette
 
     func headPaletteFile(forGender gender: Gender, hairID: Int, paletteID: Int) -> File {

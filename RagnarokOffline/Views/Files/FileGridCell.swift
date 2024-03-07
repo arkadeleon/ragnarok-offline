@@ -19,9 +19,8 @@ struct FileGridCell: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .foregroundColor(.primary)
                 .font(.subheadline)
-                .lineLimit(2)
+                .lineLimit(2, reservesSpace: true)
         }
-        .frame(maxHeight: .infinity, alignment: .top)
     }
 }
 

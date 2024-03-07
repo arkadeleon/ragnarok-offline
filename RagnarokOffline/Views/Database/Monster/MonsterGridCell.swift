@@ -25,11 +25,10 @@ struct MonsterGridCell: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .foregroundColor(.primary)
                 .font(.subheadline)
-                .lineLimit(2)
+                .lineLimit(2, reservesSpace: true)
 
             secondaryText
         }
-        .frame(maxHeight: .infinity, alignment: .top)
     }
 
     init(database: Database, monster: Monster) {
