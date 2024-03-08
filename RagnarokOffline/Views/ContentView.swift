@@ -55,7 +55,7 @@ struct ContentView: View {
                         NavigationLink {
                             ServerView(server: server)
                         } label: {
-                            Label(server.name, systemImage: "macpro.gen3.server")
+                            Label(server.name, systemImage: "terminal")
                         }
                     }
 

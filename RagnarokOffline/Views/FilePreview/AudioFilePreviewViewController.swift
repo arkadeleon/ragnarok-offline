@@ -12,6 +12,7 @@ import AVFoundation
 class AudioFilePreviewViewController: UIViewController {
     let file: File
 
+    private var playButton: UIButton!
     private var player: AVAudioPlayer?
 
     init(file: File) {
@@ -29,14 +30,54 @@ class AudioFilePreviewViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
 
-        Task {
-            guard let data = await loadAudio() else {
-                return
-            }
+        var configuration = UIButton.Configuration.plain()
+        configuration.image = UIImage(systemName: "play.circle")
+        configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 50)
 
-            player = try? AVAudioPlayer(data: data)
-            player?.play()
+        let playAction = UIAction { [weak self] _ in
+            Task {
+                try AVAudioSession.sharedInstance().setCategory(.playback)
+                try AVAudioSession.sharedInstance().setActive(true)
+
+                if self?.player == nil {
+                    guard let data = await self?.loadAudio() else {
+                        return
+                    }
+                    self?.player = try? AVAudioPlayer(data: data)
+                }
+
+                if self?.player?.isPlaying == false {
+                    self?.player?.play()
+                    configuration.image = UIImage(systemName: "pause.circle")
+                } else {
+                    self?.player?.pause()
+                    configuration.image = UIImage(systemName: "play.circle")
+                }
+
+                self?.playButton.configuration = configuration
+            }
         }
+
+        playButton = UIButton(configuration: configuration, primaryAction: playAction)
+        playButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(playButton)
+
+        NSLayoutConstraint.activate([
+            playButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            playButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        player?.stop()
+        player = nil
+
+        var configuration = UIButton.Configuration.plain()
+        configuration.image = UIImage(systemName: "play.circle")
+        configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 50)
+        playButton.configuration = configuration
     }
 
     nonisolated private func loadAudio() async -> Data? {
