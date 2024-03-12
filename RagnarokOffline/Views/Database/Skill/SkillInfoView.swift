@@ -18,7 +18,7 @@ struct SkillInfoView: View {
     var body: some View {
         ScrollView {
             DatabaseRecordInfoSection("Info") {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)]) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
                     ForEach(fields, id: \.title) { field in
                         LabeledContent(field.title, value: field.value)
                     }

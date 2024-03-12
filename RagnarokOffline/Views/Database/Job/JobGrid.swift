@@ -14,17 +14,13 @@ struct JobGrid: View {
 
     var body: some View {
         DatabaseRecordGrid(
-            columns: [GridItem(.adaptive(minimum: 80), spacing: 16)],
+            columns: [GridItem(.adaptive(minimum: 80), spacing: 20)],
             alignment: .center,
-            spacing: 32,
-            insets: EdgeInsets(top: 32, leading: 16, bottom: 32, trailing: 16),
+            spacing: 30,
+            insets: EdgeInsets(top: 30, leading: 20, bottom: 30, trailing: 20),
             partitions: database.jobs(),
             filter: filter) { jobStats in
-                NavigationLink {
-                    JobInfoView(database: database, jobStats: jobStats)
-                } label: {
-                    JobGridCell(database: database, job: jobStats.job)
-                }
+                JobGridCell(database: database, jobStats: jobStats)
             }
             .navigationTitle("Jobs")
             .navigationBarTitleDisplayMode(.inline)

@@ -19,24 +19,28 @@ struct MapGridCell: View {
 
     var body: some View {
         HStack {
-            Image(uiImage: mapImage ?? UIImage())
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 40, height: 40)
-                .clipped()
+            NavigationLink {
+                MapInfoView(database: database, map: map)
+            } label: {
+                HStack {
+                    Image(uiImage: mapImage ?? UIImage())
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 40, height: 40)
+                        .clipped()
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text(map.name)
-                    .foregroundColor(.primary)
-                    .lineLimit(1)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(map.name)
+                            .foregroundColor(.primary)
+                            .lineLimit(1)
 
-                Text(localizedMapName ?? map.name)
-                    .foregroundColor(.secondary)
-                    .lineLimit(1)
+                        Text(localizedMapName ?? map.name)
+                            .foregroundColor(.secondary)
+                            .lineLimit(1)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-
-            Spacer()
 
             Button("View") {
                 isPreviewPresented.toggle()

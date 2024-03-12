@@ -19,7 +19,7 @@ struct JobInfoView: View {
     var body: some View {
         ScrollView {
             DatabaseRecordInfoSection("Info") {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)]) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
                     LabeledContent("Max Weight", value: "\(jobStats.maxWeight)")
                     LabeledContent("HP Factor", value: "\(jobStats.hpFactor)")
                     LabeledContent("HP Increase", value: "\(jobStats.hpIncrease)")
@@ -28,7 +28,7 @@ struct JobInfoView: View {
             }
 
             DatabaseRecordInfoSection("Base ASPD") {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)]) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
                     ForEach(baseASPD, id: \.title) { field in
                         LabeledContent(field.title, value: field.value)
                     }
@@ -36,56 +36,76 @@ struct JobInfoView: View {
             }
 
             DatabaseRecordInfoSection {
-                Grid(verticalSpacing: 8) {
+                LazyVStack(spacing: 10) {
                     ForEach(baseLevels, id: \.level) { levelStats in
-                        GridRow {
+                        HStack {
                             Text("\(levelStats.level + 1)")
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
                             Text("\(levelStats.baseExp)")
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 .foregroundColor(.secondary)
+
                             Text("\(levelStats.baseHp)")
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 .foregroundColor(.secondary)
+
                             Text("\(levelStats.baseSp)")
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 .foregroundColor(.secondary)
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
             } header: {
-                Grid {
-                    GridRow {
-                        Text("Base Level")
-                        Text("Base Exp")
-                        Text("Base HP")
-                        Text("Base SP")
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                HStack {
+                    Text("Base Level")
+                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
+                    Text("Base Exp")
+                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
+                    Text("Base HP")
+                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
+                    Text("Base SP")
+                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                 }
             }
 
             DatabaseRecordInfoSection {
-                Grid(verticalSpacing: 8) {
+                LazyVStack(spacing: 10) {
                     ForEach(jobLevels, id: \.level) { levelStats in
-                        GridRow {
+                        HStack {
                             Text("\(levelStats.level + 1)")
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
                             Text("\(levelStats.jobExp)")
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 .foregroundColor(.secondary)
+
                             Text(levelStats.bonusStats)
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 .foregroundColor(.secondary)
+
                             Text("")
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 .foregroundColor(.secondary)
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
             } header: {
-                Grid {
-                    GridRow {
-                        Text("Job Level")
-                        Text("Job Exp")
-                        Text("Bonus Stats")
-                        Text("")
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                HStack {
+                    Text("Job Level")
+                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
+                    Text("Job Exp")
+                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
+                    Text("Bonus Stats")
+                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
+                    Text("")
+                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                 }
             }
         }

@@ -17,23 +17,27 @@ struct SkillGridCell: View {
     @State private var localizedSkillName: String?
 
     var body: some View {
-        HStack {
-            Image(uiImage: skillIconImage ?? UIImage())
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 40, height: 40)
-                .clipped()
+        NavigationLink {
+            SkillInfoView(database: database, skill: skill)
+        } label: {
+            HStack {
+                Image(uiImage: skillIconImage ?? UIImage())
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 40, height: 40)
+                    .clipped()
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text(skill.name)
-                    .foregroundColor(.primary)
-                    .lineLimit(1)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(skill.name)
+                        .foregroundColor(.primary)
+                        .lineLimit(1)
 
-                Text(localizedSkillName ?? skill.name)
-                    .foregroundColor(.secondary)
-                    .lineLimit(1)
+                    Text(localizedSkillName ?? skill.name)
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .task {
             skillIconImage = await ClientResourceBundle.shared.skillIconImage(forSkill: skill)

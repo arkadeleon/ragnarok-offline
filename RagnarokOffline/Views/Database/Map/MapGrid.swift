@@ -14,17 +14,13 @@ struct MapGrid: View {
 
     var body: some View {
         DatabaseRecordGrid(
-            columns: [GridItem(.adaptive(minimum: 240), spacing: 16)],
+            columns: [GridItem(.adaptive(minimum: 280), spacing: 20)],
             alignment: .leading,
-            spacing: 32,
-            insets: EdgeInsets(top: 32, leading: 16, bottom: 32, trailing: 16),
+            spacing: 20,
+            insets: EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20),
             partitions: database.maps(),
             filter: filter) { map in
-                NavigationLink {
-                    MapInfoView(database: database, map: map)
-                } label: {
-                    MapGridCell(database: database, map: map)
-                }
+                MapGridCell(database: database, map: map)
             }
             .navigationTitle("Maps")
             .navigationBarTitleDisplayMode(.inline)

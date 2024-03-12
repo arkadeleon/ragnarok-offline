@@ -18,27 +18,31 @@ struct ItemGridCell: View {
     @State private var localizedItemName: String?
 
     var body: some View {
-        HStack {
-            Image(uiImage: itemIconImage ?? UIImage())
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 40, height: 40)
-                .clipped()
+        NavigationLink {
+            ItemInfoView(database: database, item: item)
+        } label: {
+            HStack {
+                Image(uiImage: itemIconImage ?? UIImage())
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 40, height: 40)
+                    .clipped()
 
-            VStack(alignment: .leading, spacing: 2) {
-                HStack {
-                    Text(item.name)
-                        .foregroundColor(.primary)
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack {
+                        Text(item.name)
+                            .foregroundColor(.primary)
+                            .lineLimit(1)
+
+                        secondaryText
+                    }
+
+                    Text(localizedItemName ?? item.name)
+                        .foregroundColor(.secondary)
                         .lineLimit(1)
-
-                    secondaryText
                 }
-
-                Text(localizedItemName ?? item.name)
-                    .foregroundColor(.secondary)
-                    .lineLimit(1)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .task {
             itemIconImage = await ClientResourceBundle.shared.itemIconImage(forItem: item)

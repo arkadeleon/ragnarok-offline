@@ -27,7 +27,7 @@ struct ItemInfoView: View {
                 .frame(height: 200)
 
             DatabaseRecordInfoSection("Info") {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)]) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
                     ForEach(fields, id: \.title) { field in
                         LabeledContent(field.title, value: field.value)
                     }
@@ -76,19 +76,16 @@ struct ItemInfoView: View {
             }
 
             if !droppingMonsters.isEmpty {
-                DatabaseRecordInfoSection("Dropping Monsters") {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 16)], alignment: .leading, spacing: 32) {
+                DatabaseRecordInfoSection("Dropping Monsters", verticalSpacing: 0) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .leading, spacing: 30) {
                         ForEach(droppingMonsters, id: \.monster.id) { droppingMonster in
-                            NavigationLink {
-                                MonsterInfoView(database: database, monster: droppingMonster.monster)
-                            } label: {
-                                MonsterGridCell(database: database, monster: droppingMonster.monster) {
-                                    Text("(\(NSNumber(value: Double(droppingMonster.drop.rate) / 100))%)")
-                                        .foregroundColor(.secondary)
-                                }
+                            MonsterGridCell(database: database, monster: droppingMonster.monster) {
+                                Text("(\(NSNumber(value: Double(droppingMonster.drop.rate) / 100))%)")
+                                    .foregroundColor(.secondary)
                             }
                         }
                     }
+                    .padding(.vertical, 30)
                 }
             }
         }

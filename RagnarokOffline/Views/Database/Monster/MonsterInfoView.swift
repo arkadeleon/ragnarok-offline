@@ -26,7 +26,7 @@ struct MonsterInfoView: View {
             .frame(width: 200, height: 200)
 
             DatabaseRecordInfoSection("Info") {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)]) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
                     ForEach(fields, id: \.title) { field in
                         LabeledContent(field.title, value: field.value)
                     }
@@ -46,36 +46,30 @@ struct MonsterInfoView: View {
             }
 
             if !mvpDropItems.isEmpty {
-                DatabaseRecordInfoSection("MVP Drops") {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)], alignment: .leading, spacing: 32) {
+                DatabaseRecordInfoSection("MVP Drops", verticalSpacing: 0) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(mvpDropItems, id: \.index) { dropItem in
-                            NavigationLink {
-                                ItemInfoView(database: database, item: dropItem.item)
-                            } label: {
-                                ItemGridCell(database: database, item: dropItem.item) {
-                                    Text("(\(NSNumber(value: Double(dropItem.drop.rate) / 100))%)")
-                                        .foregroundColor(.secondary)
-                                }
+                            ItemGridCell(database: database, item: dropItem.item) {
+                                Text("(\(NSNumber(value: Double(dropItem.drop.rate) / 100))%)")
+                                    .foregroundColor(.secondary)
                             }
                         }
                     }
+                    .padding(.vertical, 20)
                 }
             }
 
             if !dropItems.isEmpty {
-                DatabaseRecordInfoSection("Drops") {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)], alignment: .leading, spacing: 32) {
+                DatabaseRecordInfoSection("Drops", verticalSpacing: 0) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(dropItems, id: \.index) { dropItem in
-                            NavigationLink {
-                                ItemInfoView(database: database, item: dropItem.item)
-                            } label: {
-                                ItemGridCell(database: database, item: dropItem.item) {
-                                    Text("(\(NSNumber(value: Double(dropItem.drop.rate) / 100))%)")
-                                        .foregroundColor(.secondary)
-                                }
+                            ItemGridCell(database: database, item: dropItem.item) {
+                                Text("(\(NSNumber(value: Double(dropItem.drop.rate) / 100))%)")
+                                    .foregroundColor(.secondary)
                             }
                         }
                     }
+                    .padding(.vertical, 20)
                 }
             }
         }
@@ -86,7 +80,7 @@ struct MonsterInfoView: View {
                 if let mvpDrops = monster.mvpDrops {
                     var mvpDropItems: [DropItem] = []
                     for (index, drop) in mvpDrops.enumerated() {
-                        let item = try await database.item(for: drop.item)
+                        let item = try await database.item(forAegisName: drop.item)
                         mvpDropItems.append((index, drop, item))
                     }
                     self.mvpDropItems = mvpDropItems
@@ -95,7 +89,7 @@ struct MonsterInfoView: View {
                 if let drops = monster.drops {
                     var dropItems: [DropItem] = []
                     for (index, drop) in drops.enumerated() {
-                        let item = try await database.item(for: drop.item)
+                        let item = try await database.item(forAegisName: drop.item)
                         dropItems.append((index, drop, item))
                     }
                     self.dropItems = dropItems

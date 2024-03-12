@@ -15,19 +15,38 @@ struct MonsterGridCell: View {
     let secondaryText: Text?
 
     var body: some View {
-        VStack {
-            DatabaseRecordImage {
-                await ClientResourceManager.shared.monsterImage(monster.id, size: CGSize(width: 80, height: 80))
+        NavigationLink {
+            MonsterInfoView(database: database, monster: monster)
+        } label: {
+            VStack {
+                DatabaseRecordImage {
+                    await ClientResourceManager.shared.monsterImage(monster.id, size: CGSize(width: 80, height: 80))
+                }
+                .frame(width: 80, height: 80)
+
+                ZStack(alignment: .top) {
+                    // This VStack is just for reserving space.
+                    VStack(spacing: 2) {
+                        Text("\n")
+                            .font(.subheadline)
+                            .lineLimit(2, reservesSpace: true)
+
+                        secondaryText
+                            .hidden()
+                    }
+
+                    VStack(spacing: 2) {
+                        Text(monster.name)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .foregroundColor(.primary)
+                            .font(.subheadline)
+                            .lineLimit(2, reservesSpace: false)
+
+                        secondaryText
+                    }
+                }
             }
-            .frame(width: 80, height: 80)
-
-            Text(monster.name)
-                .frame(maxWidth: .infinity, alignment: .center)
-                .foregroundColor(.primary)
-                .font(.subheadline)
-                .lineLimit(2, reservesSpace: true)
-
-            secondaryText
+            .frame(maxHeight: .infinity, alignment: .top)
         }
     }
 

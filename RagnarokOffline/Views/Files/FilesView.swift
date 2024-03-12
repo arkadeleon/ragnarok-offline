@@ -22,7 +22,7 @@ struct FilesView: View {
 
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: [.init(.adaptive(minimum: 80), spacing: 16)], spacing: 32) {
+            LazyVGrid(columns: [.init(.adaptive(minimum: 80), spacing: 20)], spacing: 30) {
                 ForEach(filteredFiles) { file in
                     if let type = file.type, type.conforms(to: .directory) || type.conforms(to: .archive) {
                         NavigationLink {
@@ -63,7 +63,8 @@ struct FilesView: View {
                     }
                 }
             }
-            .padding(32)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 30)
         }
         .overlay {
             if !isLoaded {
