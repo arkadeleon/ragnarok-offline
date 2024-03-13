@@ -14,9 +14,11 @@ struct MonsterInfoView: View {
     let monster: Monster
 
     typealias DropItem = (index: Int, drop: Monster.Drop, item: Item)
+    typealias SpawnMap = (map: Map, monsterSpawn: MonsterSpawn)
 
     @State private var mvpDropItems: [DropItem] = []
     @State private var dropItems: [DropItem] = []
+    @State private var spawnMaps: [SpawnMap] = []
 
     var body: some View {
         ScrollView {
@@ -72,29 +74,25 @@ struct MonsterInfoView: View {
                     .padding(.vertical, 20)
                 }
             }
+
+            if !spawnMaps.isEmpty {
+                DatabaseRecordInfoSection("Maps", verticalSpacing: 0) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                        ForEach(spawnMaps, id: \.map.index) { spawnMap in
+                            MapGridCell(database: database, map: spawnMap.map) {
+                                Text("\(spawnMap.monsterSpawn.amount)")
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                    .padding(.vertical, 20)
+                }
+            }
         }
         .navigationTitle(monster.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            Task {
-                if let mvpDrops = monster.mvpDrops {
-                    var mvpDropItems: [DropItem] = []
-                    for (index, drop) in mvpDrops.enumerated() {
-                        let item = try await database.item(forAegisName: drop.item)
-                        mvpDropItems.append((index, drop, item))
-                    }
-                    self.mvpDropItems = mvpDropItems
-                }
-
-                if let drops = monster.drops {
-                    var dropItems: [DropItem] = []
-                    for (index, drop) in drops.enumerated() {
-                        let item = try await database.item(forAegisName: drop.item)
-                        dropItems.append((index, drop, item))
-                    }
-                    self.dropItems = dropItems
-                }
-            }
+            await loadMonsterInfo()
         }
     }
 
@@ -168,5 +166,46 @@ struct MonsterInfoView: View {
         monster.modes?
             .map({ "- \($0.description)" })
             .joined(separator: "\n")
+    }
+
+    private func loadMonsterInfo() async {
+        do {
+            if let mvpDrops = monster.mvpDrops {
+                var mvpDropItems: [DropItem] = []
+                for (index, drop) in mvpDrops.enumerated() {
+                    let item = try await database.item(forAegisName: drop.item)
+                    mvpDropItems.append((index, drop, item))
+                }
+                self.mvpDropItems = mvpDropItems
+            }
+        } catch {
+        }
+
+        do {
+            if let drops = monster.drops {
+                var dropItems: [DropItem] = []
+                for (index, drop) in drops.enumerated() {
+                    let item = try await database.item(forAegisName: drop.item)
+                    dropItems.append((index, drop, item))
+                }
+                self.dropItems = dropItems
+            }
+        } catch {
+        }
+
+        do {
+            var spawnMaps: [SpawnMap] = []
+            let monsterSpawns = try await database.monsterSpawns().joined()
+            for monsterSpawn in monsterSpawns {
+                if monsterSpawn.monsterID == monster.id || monsterSpawn.monsterAegisName == monster.aegisName {
+                    let map = try await database.map(forName: monsterSpawn.mapName)
+                    if !spawnMaps.contains(where: { $0.map == map }) {
+                        spawnMaps.append((map, monsterSpawn))
+                    }
+                }
+            }
+            self.spawnMaps = spawnMaps
+        } catch {
+        }
     }
 }

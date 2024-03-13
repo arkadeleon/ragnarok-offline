@@ -42,30 +42,33 @@ struct MapInfoView: View {
         .navigationTitle(map.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            mapImage = await ClientResourceBundle.shared.mapImage(forMap: map)
+            await loadMapInfo()
+        }
+    }
 
+    private func loadMapInfo() async {
+        mapImage = await ClientResourceBundle.shared.mapImage(forMap: map)
+
+        do {
             var spawnMonsters: [SpawnMonster] = []
-            do {
-                let monsterSpawns = try await database.monsterSpawns().joined()
-                for monsterSpawn in monsterSpawns {
-                    if monsterSpawn.mapName == map.name {
-                        if let monsterID = monsterSpawn.monsterID {
-                            let monster = try await database.monster(forID: monsterID)
-                            if !spawnMonsters.contains(where: { $0.monster.id == monsterID }) {
-                                spawnMonsters.append((monster, monsterSpawn))
-                            }
-                        } else if let monsterAegisName = monsterSpawn.monsterAegisName {
-                            let monster = try await database.monster(forAegisName: monsterAegisName)
-                            if !spawnMonsters.contains(where: { $0.monster.aegisName == monsterAegisName }) {
-                                spawnMonsters.append((monster, monsterSpawn))
-                            }
+            let monsterSpawns = try await database.monsterSpawns().joined()
+            for monsterSpawn in monsterSpawns {
+                if monsterSpawn.mapName == map.name {
+                    if let monsterID = monsterSpawn.monsterID {
+                        let monster = try await database.monster(forID: monsterID)
+                        if !spawnMonsters.contains(where: { $0.monster.id == monsterID }) {
+                            spawnMonsters.append((monster, monsterSpawn))
+                        }
+                    } else if let monsterAegisName = monsterSpawn.monsterAegisName {
+                        let monster = try await database.monster(forAegisName: monsterAegisName)
+                        if !spawnMonsters.contains(where: { $0.monster.aegisName == monsterAegisName }) {
+                            spawnMonsters.append((monster, monsterSpawn))
                         }
                     }
                 }
-            } catch {
-
             }
             self.spawnMonsters = spawnMonsters
+        } catch {
         }
     }
 }

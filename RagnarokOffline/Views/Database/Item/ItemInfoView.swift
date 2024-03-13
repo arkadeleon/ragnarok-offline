@@ -92,23 +92,7 @@ struct ItemInfoView: View {
         .navigationTitle(item.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            Task {
-                itemPreviewImage = await ClientResourceBundle.shared.itemPreviewImage(forItem: item)
-                itemDescription = ClientDatabase.shared.itemDescription(item.id)
-
-                var droppingMonsters: [DroppingMonster] = []
-                let monsters = try await database.monsters().joined()
-                for monster in monsters {
-                    let drops = (monster.mvpDrops ?? []) + (monster.drops ?? [])
-                    for drop in drops {
-                        if drop.item == item.aegisName {
-                            droppingMonsters.append((monster, drop))
-                            break
-                        }
-                    }
-                }
-                self.droppingMonsters = droppingMonsters
-            }
+            await loadItemInfo()
         }
     }
 
@@ -201,5 +185,26 @@ struct ItemInfoView: View {
 
     private var unEquipScript: String? {
         item.unEquipScript?.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private func loadItemInfo() async {
+        itemPreviewImage = await ClientResourceBundle.shared.itemPreviewImage(forItem: item)
+        itemDescription = ClientDatabase.shared.itemDescription(item.id)
+
+        do {
+            var droppingMonsters: [DroppingMonster] = []
+            let monsters = try await database.monsters().joined()
+            for monster in monsters {
+                let drops = (monster.mvpDrops ?? []) + (monster.drops ?? [])
+                for drop in drops {
+                    if drop.item == item.aegisName {
+                        droppingMonsters.append((monster, drop))
+                        break
+                    }
+                }
+            }
+            self.droppingMonsters = droppingMonsters
+        } catch {
+        }
     }
 }

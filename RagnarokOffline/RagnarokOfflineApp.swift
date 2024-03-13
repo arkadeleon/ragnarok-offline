@@ -15,9 +15,7 @@ struct RagnarokOfflineApp: App {
         WindowGroup {
             ContentView()
                 .task {
-                    Task {
-                        try ResourceBundle.shared.load()
-                    }
+                    try? ResourceBundle.shared.load()
                 }
         }
     }

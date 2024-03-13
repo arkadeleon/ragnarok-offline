@@ -12,6 +12,7 @@ import rAthenaDatabase
 struct MapGridCell: View {
     let database: Database
     let map: Map
+    let secondaryText: Text?
 
     @State private var mapImage: UIImage?
     @State private var localizedMapName: String?
@@ -30,9 +31,13 @@ struct MapGridCell: View {
                         .clipped()
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(map.name)
-                            .foregroundColor(.primary)
-                            .lineLimit(1)
+                        HStack {
+                            Text(map.name)
+                                .foregroundColor(.primary)
+                                .lineLimit(1)
+
+                            secondaryText
+                        }
 
                         Text(localizedMapName ?? map.name)
                             .foregroundColor(.secondary)
@@ -56,5 +61,17 @@ struct MapGridCell: View {
             mapImage = await ClientResourceBundle.shared.mapImage(forMap: map)
             localizedMapName = ClientDatabase.shared.mapDisplayName(map.name)
         }
+    }
+
+    init(database: Database, map: Map) {
+        self.database = database
+        self.map = map
+        self.secondaryText = nil
+    }
+
+    init(database: Database, map: Map, @ViewBuilder secondaryText: () -> Text) {
+        self.database = database
+        self.map = map
+        self.secondaryText = secondaryText()
     }
 }

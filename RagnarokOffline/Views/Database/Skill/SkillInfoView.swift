@@ -34,7 +34,7 @@ struct SkillInfoView: View {
         .navigationTitle(skill.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            skillDescription = ClientDatabase.shared.skillDescription(skill.id)
+            await loadSkillInfo()
         }
     }
 
@@ -49,5 +49,9 @@ struct SkillInfoView: View {
         fields.append(("Target Type", skill.targetType.description))
 
         return fields
+    }
+
+    private func loadSkillInfo() async {
+        skillDescription = ClientDatabase.shared.skillDescription(skill.id)
     }
 }
