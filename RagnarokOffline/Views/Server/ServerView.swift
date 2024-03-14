@@ -19,50 +19,49 @@ struct ServerView: View {
     @State private var isServerRunning = false
 
     var body: some View {
-        ZStack {
-            terminalView
-        }
-        .navigationTitle(server.name)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                if !isServerRunning {
-                    Button {
-                        Task {
-                            await server.start()
+        terminalView
+            .ignoresSafeArea(edges: .bottom)
+            .navigationTitle(server.name)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    if !isServerRunning {
+                        Button {
+                            Task {
+                                await server.start()
+                            }
+                        } label: {
+                            Image(systemName: "play")
                         }
-                    } label: {
-                        Image(systemName: "play")
-                    }
-                } else {
-                    Button {
-                        Task {
-                            await server.stop()
+                    } else {
+                        Button {
+                            Task {
+                                await server.stop()
+                            }
+                        } label: {
+                            Image(systemName: "stop")
                         }
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        terminalView.clear()
                     } label: {
-                        Image(systemName: "stop")
+                        Image(systemName: "trash")
                     }
                 }
             }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    terminalView.clear()
-                } label: {
-                    Image(systemName: "trash")
+            .task {
+                server.outputHandler = { data in
+                    if let data = String(data: data, encoding: .isoLatin1)?
+                        .replacingOccurrences(of: "\n", with: "\r\n")
+                        .data(using: .isoLatin1) {
+                        terminalView.appendBuffer(data)
+                    }
                 }
             }
-        }
-        .task {
-            server.outputHandler = { data in
-                if let data = String(data: data, encoding: .isoLatin1)?
-                    .replacingOccurrences(of: "\n", with: "\r\n")
-                    .data(using: .isoLatin1) {
-                    terminalView.appendBuffer(data)
-                }
+            .onReceive(timer) { _ in
+                isServerRunning = server.status == .running
             }
-        }
-        .onReceive(timer) { _ in
-            isServerRunning = server.status == .running
-        }
     }
 }

@@ -10,7 +10,11 @@ import SwiftUI
 import Terminal
 
 struct ServerTerminalView: UIViewRepresentable {
-    private let terminalView = TerminalView()
+    private let terminalView: TerminalView = {
+        let terminalView = TerminalView()
+        terminalView.terminalFontSize = 12
+        return terminalView
+    }()
 
     func makeUIView(context: Context) -> TerminalView {
         return terminalView
