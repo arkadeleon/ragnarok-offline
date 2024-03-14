@@ -21,12 +21,18 @@ struct FileThumbnailView: View {
                     .scaledToFit()
                     .frame(width: 40, height: 40)
                     .clipped()
-            } else {
+            } else if file.isDirectory {
                 Image(systemName: file.iconName)
-                    .renderingMode(.original)
+                    .symbolRenderingMode(.multicolor)
                     .resizable()
                     .scaledToFit()
-                    .foregroundColor(Color(.label))
+                    .frame(width: 40, height: 40)
+            } else {
+                Image(systemName: file.iconName)
+                    .symbolRenderingMode(.monochrome)
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundStyle(Color.primary)
                     .frame(width: 40, height: 40)
             }
         }

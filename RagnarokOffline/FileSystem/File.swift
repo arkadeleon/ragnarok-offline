@@ -144,9 +144,9 @@ extension File: Comparable {
     }
 }
 
-extension File: Equatable {
-    static func == (lhs: File, rhs: File) -> Bool {
-        lhs.url == rhs.url
+extension File: Identifiable {
+    var id: URL {
+        url
     }
 }
 
@@ -156,8 +156,8 @@ extension File: Hashable {
     }
 }
 
-extension File: Identifiable {
-    var id: URL {
-        url
+extension File: Equatable {
+    static func == (lhs: File, rhs: File) -> Bool {
+        lhs.url == rhs.url
     }
 }

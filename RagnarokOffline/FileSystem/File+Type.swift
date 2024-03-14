@@ -66,6 +66,22 @@ extension File {
             return nil
         }
     }
+
+    var isDirectory: Bool {
+        if let type, type.conforms(to: .directory) {
+            true
+        } else {
+            false
+        }
+    }
+
+    var isArchive: Bool {
+        if let type, type.conforms(to: .archive) {
+            true
+        } else {
+            false
+        }
+    }
 }
 
 extension File {

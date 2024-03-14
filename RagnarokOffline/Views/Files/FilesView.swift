@@ -24,7 +24,7 @@ struct FilesView: View {
         ScrollView {
             LazyVGrid(columns: [.init(.adaptive(minimum: 80), spacing: 20)], spacing: 30) {
                 ForEach(filteredFiles) { file in
-                    if let type = file.type, type.conforms(to: .directory) || type.conforms(to: .archive) {
+                    if file.isDirectory || file.isArchive {
                         NavigationLink {
                             FilesView(title: file.name, directory: file)
                         } label: {
