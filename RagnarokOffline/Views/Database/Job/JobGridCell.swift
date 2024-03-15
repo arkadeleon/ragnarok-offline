@@ -13,13 +13,23 @@ struct JobGridCell: View {
     let database: Database
     let jobStats: JobStats
 
+    @State private var jobImage: CGImage?
+
     var body: some View {
         NavigationLink {
             JobInfoView(database: database, jobStats: jobStats)
         } label: {
             VStack {
-                DatabaseRecordImage {
-                    await ClientResourceManager.shared.jobImage(gender: .male, job: jobStats.job, size: CGSize(width: 80, height: 80))
+                ZStack {
+                    if let jobImage {
+                        if jobImage.width > 80 || jobImage.height > 80 {
+                            Image(jobImage, scale: 1, label: Text(jobStats.job.description))
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        } else {
+                            Image(jobImage, scale: 1, label: Text(jobStats.job.description))
+                        }
+                    }
                 }
                 .frame(width: 80, height: 80)
 
@@ -29,6 +39,9 @@ struct JobGridCell: View {
                     .font(.subheadline)
                     .lineLimit(2, reservesSpace: true)
             }
+        }
+        .task {
+            jobImage = await ClientResourceManager.shared.jobImage(gender: .male, job: jobStats.job)
         }
     }
 }

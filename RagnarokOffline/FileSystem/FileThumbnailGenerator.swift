@@ -6,12 +6,12 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
-import DataCompression
 import ImageIO
-import UIKit
+import Foundation
+import DataCompression
 
 class FileThumbnailGenerator {
-    func generateThumbnail(for file: File) -> UIImage? {
+    func generateThumbnail(for file: File, scale: CGFloat) -> CGImage? {
         guard let type = file.type else {
             return nil
         }
@@ -33,7 +33,6 @@ class FileThumbnailGenerator {
                 return nil
             }
 
-            let scale = UIScreen.main.scale
             let options: [CFString : Any] = [
                 kCGImageSourceCreateThumbnailFromImageIfAbsent: true,
                 kCGImageSourceCreateThumbnailWithTransform: true,
@@ -44,7 +43,7 @@ class FileThumbnailGenerator {
                 return nil
             }
 
-            return UIImage(cgImage: thumbnail)
+            return thumbnail
         case .gat:
             guard let data = file.contents() else {
                 return nil
@@ -64,12 +63,11 @@ class FileThumbnailGenerator {
                 return nil
             }
 
-            let scale = UIScreen.main.scale
             guard let image = pal.image(at: CGSize(width: 32 * scale, height: 32 * scale)) else {
                 return nil
             }
 
-            return UIImage(cgImage: image)
+            return image
         case .spr:
             guard let data = file.contents() else {
                 return nil
@@ -83,7 +81,7 @@ class FileThumbnailGenerator {
                 return nil
             }
 
-            return UIImage(cgImage: image.image)
+            return image.image
         default:
             return nil
         }

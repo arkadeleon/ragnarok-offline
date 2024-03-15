@@ -14,7 +14,7 @@ struct ItemGridCell: View {
     let item: Item
     let secondaryText: Text?
 
-    @State private var itemIconImage: UIImage?
+    @State private var itemIconImage: CGImage?
     @State private var localizedItemName: String?
 
     var body: some View {
@@ -22,11 +22,14 @@ struct ItemGridCell: View {
             ItemInfoView(database: database, item: item)
         } label: {
             HStack {
-                Image(uiImage: itemIconImage ?? UIImage())
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 40, height: 40)
-                    .clipped()
+                ZStack {
+                    if let itemIconImage {
+                        Image(itemIconImage, scale: 1, label: Text(item.name))
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    }
+                }
+                .frame(width: 40, height: 40)
 
                 VStack(alignment: .leading, spacing: 2) {
                     HStack {

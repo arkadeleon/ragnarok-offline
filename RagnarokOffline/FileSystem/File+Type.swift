@@ -6,7 +6,6 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
-import UIKit
 import UniformTypeIdentifiers
 
 extension File {

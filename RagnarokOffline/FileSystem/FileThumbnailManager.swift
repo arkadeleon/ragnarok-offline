@@ -6,15 +6,16 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
-import UIKit
+import CoreGraphics
+import Foundation
 
 class FileThumbnailManager {
     static let shared = FileThumbnailManager()
 
     private let generator = FileThumbnailGenerator()
-    private let cache = NSCache<NSURL, UIImage>()
+    private let cache = NSCache<NSURL, CGImage>()
 
-    func thumbnailTask(for file: File) -> Task<UIImage?, Error> {
+    func thumbnailTask(for file: File, scale: CGFloat) -> Task<CGImage?, Error> {
         Task {
             try Task.checkCancellation()
 
@@ -24,7 +25,7 @@ class FileThumbnailManager {
 
             try Task.checkCancellation()
 
-            let thumbnail = generator.generateThumbnail(for: file)
+            let thumbnail = generator.generateThumbnail(for: file, scale: scale)
 
             if let thumbnail {
                 cache.setObject(thumbnail, forKey: file.url as NSURL)

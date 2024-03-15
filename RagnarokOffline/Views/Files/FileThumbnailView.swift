@@ -9,14 +9,16 @@
 import SwiftUI
 
 struct FileThumbnailView: View {
+    @Environment(\.displayScale) var displayScale: CGFloat
+
     let file: File
 
-    @State private var thumbnail: UIImage?
+    @State private var thumbnail: CGImage?
 
     var body: some View {
         ZStack {
             if let thumbnail {
-                Image(uiImage: thumbnail)
+                Image(thumbnail, scale: 1, label: Text(file.name))
                     .resizable()
                     .scaledToFit()
                     .frame(width: 40, height: 40)
@@ -39,7 +41,7 @@ struct FileThumbnailView: View {
         .frame(width: 40, height: 40)
         .task {
             Task {
-                let thumbnail = try await FileThumbnailManager.shared.thumbnailTask(for: file).value
+                let thumbnail = try await FileThumbnailManager.shared.thumbnailTask(for: file, scale: displayScale).value
                 self.thumbnail = thumbnail
             }
         }

@@ -6,8 +6,8 @@
 //  Copyright © 2024 Leon & Vane. All rights reserved.
 //
 
+import CoreGraphics
 import Foundation
-import UIKit
 import rAthenaDatabase
 
 class ClientResourceBundle {
@@ -17,7 +17,7 @@ class ClientResourceBundle {
 
     let grf: GRFWrapper
 
-    private let cache = NSCache<NSString, UIImage>()
+    private let cache = NSCache<NSString, CGImage>()
 
     init() {
         url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
@@ -100,7 +100,7 @@ class ClientResourceBundle {
 
     // MARK: - data\texture
 
-    func itemIconImage(forItem item: Item) async -> UIImage? {
+    func itemIconImage(forItem item: Item) async -> CGImage? {
         guard let resourceName = ClientDatabase.shared.itemResourceName(item.id) else {
             return nil
         }
@@ -110,7 +110,7 @@ class ClientResourceBundle {
         return image
     }
 
-    func itemPreviewImage(forItem item: Item) async -> UIImage? {
+    func itemPreviewImage(forItem item: Item) async -> CGImage? {
         guard let resourceName = ClientDatabase.shared.itemResourceName(item.id) else {
             return nil
         }
@@ -120,13 +120,13 @@ class ClientResourceBundle {
         return image
     }
 
-    func skillIconImage(forSkill skill: Skill) async -> UIImage? {
+    func skillIconImage(forSkill skill: Skill) async -> CGImage? {
         let path = GRF.Path(string: "data\\texture\\유저인터페이스\\item\\\(skill.aegisName).bmp")
         let image = await image(forBMPPath: path)
         return image
     }
 
-    func mapImage(forMap map: Map) async -> UIImage? {
+    func mapImage(forMap map: Map) async -> CGImage? {
         let path = GRF.Path(string: "data\\texture\\유저인터페이스\\map\\\(map.name).bmp")
         let image = await image(forBMPPath: path)
         return image
@@ -134,7 +134,7 @@ class ClientResourceBundle {
 
     // MARK: - Private
 
-    private func image(forBMPPath path: GRF.Path) async -> UIImage? {
+    private func image(forBMPPath path: GRF.Path) async -> CGImage? {
         if let image = cache.object(forKey: path.string as NSString) {
             return image
         }
@@ -145,7 +145,7 @@ class ClientResourceBundle {
             return nil
         }
 
-        let image = UIImage(bmpData: data)
+        let image = CGImageCreateWithData(data)?.removingMagentaPixels()
 
         if let image {
             cache.setObject(image, forKey: path.string as NSString)

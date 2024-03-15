@@ -6,10 +6,11 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
-import UIKit
+import CoreGraphics
+import Foundation
 
 extension GAT {
-    func image() -> UIImage? {
+    func image() -> CGImage? {
         let width = Int(width)
         let height = Int(height)
 
@@ -23,21 +24,22 @@ extension GAT {
 
         for y in 0..<height {
             for x in 0..<width {
-                let index = x + y * width
+                let tileIndex = x + y * width
+                let pixelIndex = x + (height - 1 - y) * width
 
                 if x < 2 || x > width - 3 || y < 2 || y > height - 3 {
-                    data[index] = 153
+                    data[pixelIndex] = 153
                     continue
                 }
 
-                let tile = tiles[index]
+                let tile = tiles[tileIndex]
                 switch tile.type {
                 case .walkable, .walkable2, .unknown, .walkable3:
-                    data[index] = 25
+                    data[pixelIndex] = 25
                 case .noWalkable, .noWalkableNoSnipable:
-                    data[index] = 153
+                    data[pixelIndex] = 153
                 case .noWalkableSnipable:
-                    data[index] = 70
+                    data[pixelIndex] = 70
                 }
             }
         }
@@ -59,7 +61,7 @@ extension GAT {
             shouldInterpolate: true,
             intent: .defaultIntent
         )
-        return image.map({ UIImage(cgImage: $0, scale: 1, orientation: .downMirrored) })
+        return image
     }
 }
 

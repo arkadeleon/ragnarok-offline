@@ -14,13 +14,23 @@ struct MonsterGridCell: View {
     let monster: Monster
     let secondaryText: Text?
 
+    @State private var monsterImage: CGImage?
+
     var body: some View {
         NavigationLink {
             MonsterInfoView(database: database, monster: monster)
         } label: {
             VStack {
-                DatabaseRecordImage {
-                    await ClientResourceManager.shared.monsterImage(monster.id, size: CGSize(width: 80, height: 80))
+                ZStack {
+                    if let monsterImage {
+                        if monsterImage.width > 80 || monsterImage.height > 80 {
+                            Image(monsterImage, scale: 1, label: Text(monster.name))
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        } else {
+                            Image(monsterImage, scale: 1, label: Text(monster.name))
+                        }
+                    }
                 }
                 .frame(width: 80, height: 80)
 
@@ -47,6 +57,9 @@ struct MonsterGridCell: View {
                 }
             }
             .frame(maxHeight: .infinity, alignment: .top)
+        }
+        .task {
+            monsterImage = await ClientResourceManager.shared.monsterImage(monster.id)
         }
     }
 

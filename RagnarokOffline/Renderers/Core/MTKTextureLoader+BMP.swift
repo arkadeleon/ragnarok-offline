@@ -10,11 +10,11 @@ import MetalKit
 
 extension MTKTextureLoader {
     func newTexture(bmpData: Data) -> MTLTexture? {
-        guard let cgImage = UIImage(bmpData: bmpData)?.cgImage else {
+        guard let image = CGImageCreateWithData(bmpData)?.removingMagentaPixels() else {
             return nil
         }
 
-        let texture = try? newTexture(cgImage: cgImage, options: nil)
+        let texture = try? newTexture(cgImage: image, options: nil)
         return texture
     }
 }

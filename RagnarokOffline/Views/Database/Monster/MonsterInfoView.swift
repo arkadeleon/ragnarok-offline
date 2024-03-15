@@ -16,16 +16,25 @@ struct MonsterInfoView: View {
     typealias DropItem = (index: Int, drop: Monster.Drop, item: Item)
     typealias SpawnMap = (map: Map, monsterSpawn: MonsterSpawn)
 
+    @State private var monsterImage: CGImage?
     @State private var mvpDropItems: [DropItem] = []
     @State private var dropItems: [DropItem] = []
     @State private var spawnMaps: [SpawnMap] = []
 
     var body: some View {
         ScrollView {
-            DatabaseRecordImage {
-                await ClientResourceManager.shared.animatedMonsterImage(monster.id)
+            ZStack {
+                if let monsterImage {
+                    if monsterImage.height > 200 {
+                        Image(monsterImage, scale: 1, label: Text(monster.name))
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    } else {
+                        Image(monsterImage, scale: 1, label: Text(monster.name))
+                    }
+                }
             }
-            .frame(width: 200, height: 200)
+            .frame(height: 200)
 
             DatabaseRecordInfoSection("Info") {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
@@ -169,6 +178,8 @@ struct MonsterInfoView: View {
     }
 
     private func loadMonsterInfo() async {
+        monsterImage = await ClientResourceManager.shared.monsterImage(monster.id)
+
         do {
             if let mvpDrops = monster.mvpDrops {
                 var mvpDropItems: [DropItem] = []

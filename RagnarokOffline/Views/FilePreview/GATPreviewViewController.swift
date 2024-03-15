@@ -36,12 +36,13 @@ class GATPreviewViewController: UIViewController {
         imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
         Task {
-            let image = await loadImage()
-            imageView.image = image
+            if let image = await loadImage() {
+                imageView.image = UIImage(cgImage: image)
+            }
         }
     }
 
-    nonisolated private func loadImage() async -> UIImage? {
+    nonisolated private func loadImage() async -> CGImage? {
         guard let gatData = file.contents() else {
             return nil
         }

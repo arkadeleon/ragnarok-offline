@@ -15,15 +15,19 @@ struct MapInfoView: View {
 
     typealias SpawnMonster = (monster: Monster, spawn: MonsterSpawn)
 
-    @State private var mapImage: UIImage?
+    @State private var mapImage: CGImage?
     @State private var spawnMonsters: [SpawnMonster] = []
 
     var body: some View {
         ScrollView {
-            Image(uiImage: mapImage ?? UIImage())
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 200)
+            ZStack {
+                if let mapImage {
+                    Image(mapImage, scale: 1, label: Text(map.name))
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                }
+            }
+            .frame(height: 200)
 
             if !spawnMonsters.isEmpty {
                 DatabaseRecordInfoSection("Spawn Monsters", verticalSpacing: 0) {

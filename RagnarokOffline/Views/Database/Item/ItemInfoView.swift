@@ -15,16 +15,20 @@ struct ItemInfoView: View {
 
     typealias DroppingMonster = (monster: Monster, drop: Monster.Drop)
 
-    @State private var itemPreviewImage: UIImage?
+    @State private var itemPreviewImage: CGImage?
     @State private var itemDescription: String?
     @State private var droppingMonsters: [DroppingMonster] = []
 
     var body: some View {
         ScrollView {
-            Image(uiImage: itemPreviewImage ?? UIImage())
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 200)
+            ZStack {
+                if let itemPreviewImage {
+                    Image(itemPreviewImage, scale: 1, label: Text(item.name))
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                }
+            }
+            .frame(height: 200)
 
             DatabaseRecordInfoSection("Info") {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {

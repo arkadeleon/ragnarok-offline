@@ -14,7 +14,7 @@ struct MapGridCell: View {
     let map: Map
     let secondaryText: Text?
 
-    @State private var mapImage: UIImage?
+    @State private var mapImage: CGImage?
     @State private var localizedMapName: String?
     @State private var isPreviewPresented = false
 
@@ -24,11 +24,14 @@ struct MapGridCell: View {
                 MapInfoView(database: database, map: map)
             } label: {
                 HStack {
-                    Image(uiImage: mapImage ?? UIImage())
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 40, height: 40)
-                        .clipped()
+                    ZStack {
+                        if let mapImage {
+                            Image(mapImage, scale: 1, label: Text(map.name))
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        }
+                    }
+                    .frame(width: 40, height: 40)
 
                     VStack(alignment: .leading, spacing: 2) {
                         HStack {

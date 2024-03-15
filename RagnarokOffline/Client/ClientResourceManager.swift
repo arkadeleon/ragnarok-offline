@@ -6,40 +6,14 @@
 //  Copyright © 2024 Leon & Vane. All rights reserved.
 //
 
+import CoreGraphics
 import rAthenaCommon
 import rAthenaDatabase
-import UIKit
 
 class ClientResourceManager {
     static let shared = ClientResourceManager()
 
-    func monsterImage(_ monsterID: Int, size: CGSize) async -> UIImage? {
-        guard let resourceName = ClientDatabase.shared.monsterResourceName(monsterID) else {
-            return nil
-        }
-
-        let (sprFile, _) = ClientResourceBundle.shared.monsterSpriteFile(forResourceName: resourceName)
-        guard let sprData = sprFile.contents() else {
-            return nil
-        }
-
-        do {
-            let spr = try SPR(data: sprData)
-            guard let image = spr.image(forSpriteAt: 0) else {
-                return nil
-            }
-            let uiImage = UIImage(cgImage: image.image)
-            if uiImage.size.width > size.width || uiImage.size.height > size.height {
-                return uiImage.resize(size.width, size.height)
-            } else {
-                return uiImage
-            }
-        } catch {
-            return nil
-        }
-    }
-
-    func animatedMonsterImage(_ monsterID: Int) async -> UIImage? {
+    func monsterImage(_ monsterID: Int) async -> CGImage? {
         guard let resourceName = ClientDatabase.shared.monsterResourceName(monsterID) else {
             return nil
         }
@@ -62,16 +36,14 @@ class ClientResourceManager {
             }
 
             let animatedImage = act.animatedImage(forActionAt: 0, imagesForSpritesByType: imagesForSpritesByType)
-            let images = animatedImage.images.map(UIImage.init)
-            let duration = animatedImage.delay * CGFloat(animatedImage.images.count)
-            let uiImage = UIImage.animatedImage(with: images, duration: duration)
-            return uiImage
+            let image = animatedImage.images.first
+            return image
         } catch {
             return nil
         }
     }
 
-    func jobImage(gender: Gender, job: Job, size: CGSize) async -> UIImage? {
+    func jobImage(gender: Gender, job: Job) async -> CGImage? {
         let bodyFile = ClientResourceBundle.shared.bodySpriteFile(forGender: gender, job: job)
 
         guard let sprData = bodyFile.spr.contents(), let actData = bodyFile.act.contents() else {
@@ -91,16 +63,8 @@ class ClientResourceManager {
             }
 
             let animatedImage = act.animatedImage(forActionAt: 0, imagesForSpritesByType: imagesForSpritesByType)
-            let images = animatedImage.images.map(UIImage.init)
-            let duration = animatedImage.delay * CGFloat(animatedImage.images.count)
-            guard let uiImage = images.first else {
-                return nil
-            }
-            if uiImage.size.width > size.width || uiImage.size.height > size.height {
-                return uiImage.resize(size.width, size.height)
-            } else {
-                return uiImage
-            }
+            let image = animatedImage.images.first
+            return image
         } catch {
             return nil
         }

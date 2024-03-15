@@ -35,14 +35,12 @@
 		353B4F162B43F3BB00605E92 /* ClientResourceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F152B43F3BB00605E92 /* ClientResourceBundle.swift */; };
 		353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F172B44FFE100605E92 /* SkillInfoView.swift */; };
 		353B4F1C2B451F1300605E92 /* ItemGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F1B2B451F1300605E92 /* ItemGridCell.swift */; };
-		353B4F1E2B451FBC00605E92 /* DatabaseRecordImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F1D2B451FBC00605E92 /* DatabaseRecordImage.swift */; };
 		35482AF12B2759DD0062DC4B /* File+RawData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35482AF02B2759DD0062DC4B /* File+RawData.swift */; };
 		354CB4612B2AA70F001FC2A1 /* FileThumbnailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */; };
 		3552D8742B315D8F004831D0 /* TextFilePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8732B315D8F004831D0 /* TextFilePreviewViewController.swift */; };
 		3552D8762B316876004831D0 /* SPRPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8752B316876004831D0 /* SPRPreviewViewController.swift */; };
 		3552D8782B3182A8004831D0 /* AnimatedImageActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */; };
 		3552D87A2B318323004831D0 /* StillImageActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8792B318323004831D0 /* StillImageActivityItem.swift */; };
-		3555E1122B71FC79007CE4BA /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555E1112B71FC79007CE4BA /* UIImage+Resize.swift */; };
 		3555E1152B74C864007CE4BA /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555E1142B74C864007CE4BA /* Entity.swift */; };
 		3555E1172B7D12D9007CE4BA /* ServerTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555E1162B7D12D9007CE4BA /* ServerTerminalView.swift */; };
 		3555E12F2B7D2268007CE4BA /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E12E2B7D2268007CE4BA /* rAthenaChar */; };
@@ -89,7 +87,7 @@
 		35774F702B219CF400438311 /* AmbientColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35774F6F2B219CF400438311 /* AmbientColor.swift */; };
 		35774F722B219D4800438311 /* DiffuseColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35774F712B219D4800438311 /* DiffuseColor.swift */; };
 		35774F7A2B231FAF00438311 /* FileActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35774F792B231FAF00438311 /* FileActivityItem.swift */; };
-		3582FFC32B8898DD00E746D7 /* UIImage+BMP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC22B8898DD00E746D7 /* UIImage+BMP.swift */; };
+		3582FFC32B8898DD00E746D7 /* CGImage+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC22B8898DD00E746D7 /* CGImage+Data.swift */; };
 		3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC52B8C830D00E746D7 /* SettingsView.swift */; };
 		3582FFC82B8DB73B00E746D7 /* FileThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC72B8DB73B00E746D7 /* FileThumbnailView.swift */; };
 		3582FFCA2B8DB9FE00E746D7 /* FilePreviewPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC92B8DB9FE00E746D7 /* FilePreviewPageView.swift */; };
@@ -216,14 +214,12 @@
 		353B4F152B43F3BB00605E92 /* ClientResourceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientResourceBundle.swift; sourceTree = "<group>"; };
 		353B4F172B44FFE100605E92 /* SkillInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillInfoView.swift; sourceTree = "<group>"; };
 		353B4F1B2B451F1300605E92 /* ItemGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemGridCell.swift; sourceTree = "<group>"; };
-		353B4F1D2B451FBC00605E92 /* DatabaseRecordImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordImage.swift; sourceTree = "<group>"; };
 		35482AF02B2759DD0062DC4B /* File+RawData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+RawData.swift"; sourceTree = "<group>"; };
 		354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnailManager.swift; sourceTree = "<group>"; };
 		3552D8732B315D8F004831D0 /* TextFilePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFilePreviewViewController.swift; sourceTree = "<group>"; };
 		3552D8752B316876004831D0 /* SPRPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPRPreviewViewController.swift; sourceTree = "<group>"; };
 		3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImageActivityItem.swift; sourceTree = "<group>"; };
 		3552D8792B318323004831D0 /* StillImageActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillImageActivityItem.swift; sourceTree = "<group>"; };
-		3555E1112B71FC79007CE4BA /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		3555E1142B74C864007CE4BA /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		3555E1162B7D12D9007CE4BA /* ServerTerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerTerminalView.swift; sourceTree = "<group>"; };
 		3555E12D2B7D2251007CE4BA /* swift-rathena */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "swift-rathena"; sourceTree = "<group>"; };
@@ -260,7 +256,7 @@
 		35774F6F2B219CF400438311 /* AmbientColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbientColor.swift; sourceTree = "<group>"; };
 		35774F712B219D4800438311 /* DiffuseColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffuseColor.swift; sourceTree = "<group>"; };
 		35774F792B231FAF00438311 /* FileActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileActivityItem.swift; sourceTree = "<group>"; };
-		3582FFC22B8898DD00E746D7 /* UIImage+BMP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+BMP.swift"; sourceTree = "<group>"; };
+		3582FFC22B8898DD00E746D7 /* CGImage+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImage+Data.swift"; sourceTree = "<group>"; };
 		3582FFC52B8C830D00E746D7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3582FFC72B8DB73B00E746D7 /* FileThumbnailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileThumbnailView.swift; sourceTree = "<group>"; };
 		3582FFC92B8DB9FE00E746D7 /* FilePreviewPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePreviewPageView.swift; sourceTree = "<group>"; };
@@ -469,7 +465,6 @@
 				35652B412B960CFC0075AD71 /* Map */,
 				35D2CEB32B553E1B00365E8E /* DatabaseRecordList.swift */,
 				35D2CEB12B55064B00365E8E /* DatabaseRecordGrid.swift */,
-				353B4F1D2B451FBC00605E92 /* DatabaseRecordImage.swift */,
 				3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */,
 				35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */,
 			);
@@ -578,8 +573,7 @@
 				3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */,
 				35B3BA482A08DA0C00B4540B /* StillImage.swift */,
 				3552D8792B318323004831D0 /* StillImageActivityItem.swift */,
-				3582FFC22B8898DD00E746D7 /* UIImage+BMP.swift */,
-				3555E1112B71FC79007CE4BA /* UIImage+Resize.swift */,
+				3582FFC22B8898DD00E746D7 /* CGImage+Data.swift */,
 			);
 			path = Image;
 			sourceTree = "<group>";
@@ -992,7 +986,6 @@
 				3552D8782B3182A8004831D0 /* AnimatedImageActivityItem.swift in Sources */,
 				356BF6772AFCCDD9005B67F7 /* GRFWrapper.swift in Sources */,
 				35652B452B960D2D0075AD71 /* MapGridCell.swift in Sources */,
-				353B4F1E2B451FBC00605E92 /* DatabaseRecordImage.swift in Sources */,
 				35B3BA222A08C01600B4540B /* WaterShaders.metal in Sources */,
 				35B3B9E22A08C01600B4540B /* INI.swift in Sources */,
 				3514BF492B4532C80065ED89 /* ClientSettings.swift in Sources */,
@@ -1009,7 +1002,7 @@
 				35652B432B960D100075AD71 /* MapGrid.swift in Sources */,
 				353098322B148E4100F32B62 /* Model.swift in Sources */,
 				355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */,
-				3582FFC32B8898DD00E746D7 /* UIImage+BMP.swift in Sources */,
+				3582FFC32B8898DD00E746D7 /* CGImage+Data.swift in Sources */,
 				35B3BA0B2A08C01600B4540B /* SGLMath.swift in Sources */,
 				35B695F32A3080D9006F1904 /* Object3D.swift in Sources */,
 				354CB4612B2AA70F001FC2A1 /* FileThumbnailManager.swift in Sources */,
@@ -1061,7 +1054,6 @@
 				3511C1D32B0A6C5D006DD639 /* RSWPreviewViewController.swift in Sources */,
 				35B4990C2A1C50B400607EE6 /* Renderer.swift in Sources */,
 				3514BF602B455EF90065ED89 /* MonsterGridCell.swift in Sources */,
-				3555E1122B71FC79007CE4BA /* UIImage+Resize.swift in Sources */,
 				3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */,
 				35B3BA172A08C01600B4540B /* FilePasteboard.swift in Sources */,
 				3582FFCE2B8DC07E00E746D7 /* File+Actions.swift in Sources */,

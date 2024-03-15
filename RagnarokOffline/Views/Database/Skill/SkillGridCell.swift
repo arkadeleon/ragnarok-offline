@@ -13,7 +13,7 @@ struct SkillGridCell: View {
     let database: Database
     let skill: Skill
 
-    @State private var skillIconImage: UIImage?
+    @State private var skillIconImage: CGImage?
     @State private var localizedSkillName: String?
 
     var body: some View {
@@ -21,11 +21,14 @@ struct SkillGridCell: View {
             SkillInfoView(database: database, skill: skill)
         } label: {
             HStack {
-                Image(uiImage: skillIconImage ?? UIImage())
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 40, height: 40)
-                    .clipped()
+                ZStack {
+                    if let skillIconImage {
+                        Image(skillIconImage, scale: 1, label: Text(skill.name))
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    }
+                }
+                .frame(width: 40, height: 40)
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(skill.name)
