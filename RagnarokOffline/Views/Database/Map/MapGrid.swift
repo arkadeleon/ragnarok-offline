@@ -20,7 +20,7 @@ struct MapGrid: View {
             insets: EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20),
             partitions: database.maps(),
             filter: filter) { map in
-                MapGridCell(database: database, map: map)
+                MapGridCell(database: database, map: map, tertiaryText: nil)
             }
             .navigationTitle("Maps")
             .navigationBarTitleDisplayMode(.inline)

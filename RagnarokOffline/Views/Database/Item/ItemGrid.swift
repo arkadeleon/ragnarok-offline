@@ -20,7 +20,7 @@ struct ItemGrid: View {
             insets: EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20),
             partitions: database.items(),
             filter: filter) { item in
-                ItemGridCell(database: database, item: item)
+                ItemGridCell(database: database, item: item, tertiaryText: nil)
             }
             .navigationTitle("Items")
             .navigationBarTitleDisplayMode(.inline)

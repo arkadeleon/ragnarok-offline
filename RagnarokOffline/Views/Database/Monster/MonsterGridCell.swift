@@ -12,7 +12,7 @@ import rAthenaDatabase
 struct MonsterGridCell: View {
     let database: Database
     let monster: Monster
-    let secondaryText: Text?
+    let secondaryText: String?
 
     @State private var monsterImage: CGImage?
 
@@ -37,22 +37,26 @@ struct MonsterGridCell: View {
                 ZStack(alignment: .top) {
                     // This VStack is just for reserving space.
                     VStack(spacing: 2) {
-                        Text("\n")
+                        Text(" ")
                             .font(.subheadline)
                             .lineLimit(2, reservesSpace: true)
 
-                        secondaryText
-                            .hidden()
+                        Text(" ")
+                            .lineLimit(1, reservesSpace: true)
                     }
 
                     VStack(spacing: 2) {
-                        Text(monster.name)
+                        Text(primaryText)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .foregroundColor(.primary)
                             .font(.subheadline)
                             .lineLimit(2, reservesSpace: false)
 
-                        secondaryText
+                        if let secondaryText {
+                            Text(secondaryText)
+                                .foregroundColor(.secondary)
+                                .lineLimit(1)
+                        }
                     }
                 }
             }
@@ -63,15 +67,7 @@ struct MonsterGridCell: View {
         }
     }
 
-    init(database: Database, monster: Monster) {
-        self.database = database
-        self.monster = monster
-        self.secondaryText = nil
-    }
-
-    init(database: Database, monster: Monster, @ViewBuilder secondaryText: () -> Text) {
-        self.database = database
-        self.monster = monster
-        self.secondaryText = secondaryText()
+    private var primaryText: String {
+        monster.name
     }
 }

@@ -20,7 +20,7 @@ struct MonsterGrid: View {
             insets: EdgeInsets(top: 30, leading: 20, bottom: 30, trailing: 20),
             partitions: database.monsters(),
             filter: filter) { monster in
-                MonsterGridCell(database: database, monster: monster)
+                MonsterGridCell(database: database, monster: monster, secondaryText: nil)
             }
             .navigationTitle("Monsters")
             .navigationBarTitleDisplayMode(.inline)

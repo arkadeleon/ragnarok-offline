@@ -12,7 +12,7 @@ import rAthenaDatabase
 struct ItemGridCell: View {
     let database: Database
     let item: Item
-    let secondaryText: Text?
+    let tertiaryText: String?
 
     @State private var itemIconImage: CGImage?
     @State private var localizedItemName: String?
@@ -32,17 +32,19 @@ struct ItemGridCell: View {
                 .frame(width: 40, height: 40)
 
                 VStack(alignment: .leading, spacing: 2) {
-                    HStack {
-                        Text(item.name)
-                            .foregroundColor(.primary)
-                            .lineLimit(1)
+                    Text(primaryText)
+                        .foregroundColor(.primary)
+                        .lineLimit(1)
 
-                        secondaryText
-                    }
-
-                    Text(localizedItemName ?? item.name)
+                    Text(secondaryText)
                         .foregroundColor(.secondary)
                         .lineLimit(1)
+
+                    if let tertiaryText {
+                        Text(tertiaryText)
+                            .foregroundColor(.secondary)
+                            .lineLimit(1)
+                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -53,15 +55,11 @@ struct ItemGridCell: View {
         }
     }
 
-    init(database: Database, item: Item) {
-        self.database = database
-        self.item = item
-        self.secondaryText = nil
+    private var primaryText: String {
+        item.slots > 0 ? item.name + " [\(item.slots)]" : item.name
     }
 
-    init(database: Database, item: Item, @ViewBuilder secondaryText: () -> Text) {
-        self.database = database
-        self.item = item
-        self.secondaryText = secondaryText()
+    private var secondaryText: String {
+        localizedItemName ?? item.name
     }
 }

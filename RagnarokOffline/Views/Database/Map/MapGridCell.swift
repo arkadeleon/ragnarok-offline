@@ -12,53 +12,42 @@ import rAthenaDatabase
 struct MapGridCell: View {
     let database: Database
     let map: Map
-    let secondaryText: Text?
+    let tertiaryText: String?
 
     @State private var mapImage: CGImage?
     @State private var localizedMapName: String?
-    @State private var isPreviewPresented = false
 
     var body: some View {
-        HStack {
-            NavigationLink {
-                MapInfoView(database: database, map: map)
-            } label: {
-                HStack {
-                    ZStack {
-                        if let mapImage {
-                            Image(mapImage, scale: 1, label: Text(map.name))
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        }
+        NavigationLink {
+            MapInfoView(database: database, map: map)
+        } label: {
+            HStack {
+                ZStack {
+                    if let mapImage {
+                        Image(mapImage, scale: 1, label: Text(map.name))
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
                     }
-                    .frame(width: 40, height: 40)
+                }
+                .frame(width: 40, height: 40)
 
-                    VStack(alignment: .leading, spacing: 2) {
-                        HStack {
-                            Text(map.name)
-                                .foregroundColor(.primary)
-                                .lineLimit(1)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(primaryText)
+                        .foregroundColor(.primary)
+                        .lineLimit(1)
 
-                            secondaryText
-                        }
+                    Text(secondaryText)
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
 
-                        Text(localizedMapName ?? map.name)
+                    if let tertiaryText {
+                        Text(tertiaryText)
                             .foregroundColor(.secondary)
                             .lineLimit(1)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-
-            Button("View") {
-                isPreviewPresented.toggle()
-            }
-            .buttonStyle(.bordered)
-            .buttonBorderShape(.capsule)
-        }
-        .sheet(isPresented: $isPreviewPresented) {
-            let file = ClientResourceBundle.shared.rswFile(forMap: map)
-            FilePreviewPageView(file: file, files: [file])
         }
         .task {
             mapImage = await ClientResourceBundle.shared.mapImage(forMap: map)
@@ -66,15 +55,11 @@ struct MapGridCell: View {
         }
     }
 
-    init(database: Database, map: Map) {
-        self.database = database
-        self.map = map
-        self.secondaryText = nil
+    private var primaryText: String {
+        map.name
     }
 
-    init(database: Database, map: Map, @ViewBuilder secondaryText: () -> Text) {
-        self.database = database
-        self.map = map
-        self.secondaryText = secondaryText()
+    private var secondaryText: String {
+        localizedMapName ?? map.name
     }
 }

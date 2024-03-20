@@ -33,10 +33,7 @@ struct MapInfoView: View {
                 DatabaseRecordInfoSection("Spawn Monsters", verticalSpacing: 0) {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .leading, spacing: 30) {
                         ForEach(spawnMonsters, id: \.monster.id) { spawnMonster in
-                            MonsterGridCell(database: database, monster: spawnMonster.monster) {
-                                Text("\(spawnMonster.spawn.amount)")
-                                    .foregroundColor(.secondary)
-                            }
+                            MonsterGridCell(database: database, monster: spawnMonster.monster, secondaryText: "(\(spawnMonster.spawn.amount)x)")
                         }
                     }
                     .padding(.vertical, 30)

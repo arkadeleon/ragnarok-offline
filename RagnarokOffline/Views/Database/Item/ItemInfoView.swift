@@ -83,21 +83,22 @@ struct ItemInfoView: View {
                 DatabaseRecordInfoSection("Dropping Monsters", verticalSpacing: 0) {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .leading, spacing: 30) {
                         ForEach(droppingMonsters, id: \.monster.id) { droppingMonster in
-                            MonsterGridCell(database: database, monster: droppingMonster.monster) {
-                                Text("(\(NSNumber(value: Double(droppingMonster.drop.rate) / 100))%)")
-                                    .foregroundColor(.secondary)
-                            }
+                            MonsterGridCell(database: database, monster: droppingMonster.monster, secondaryText: "(\(NSNumber(value: Double(droppingMonster.drop.rate) / 100))%)")
                         }
                     }
                     .padding(.vertical, 30)
                 }
             }
         }
-        .navigationTitle(item.name)
+        .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await loadItemInfo()
         }
+    }
+
+    private var title: String {
+        item.slots > 0 ? item.name + " [\(item.slots)]" : item.name
     }
 
     private var fields: [DatabaseRecordField] {

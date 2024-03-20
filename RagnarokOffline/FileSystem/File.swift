@@ -124,6 +124,24 @@ enum File {
     }
 }
 
+extension File: Identifiable {
+    var id: URL {
+        url
+    }
+}
+
+extension File: Hashable {
+    func hash(into hasher: inout Hasher) {
+        url.hash(into: &hasher)
+    }
+}
+
+extension File: Equatable {
+    static func == (lhs: File, rhs: File) -> Bool {
+        lhs.url == rhs.url
+    }
+}
+
 extension File: Comparable {
     static func < (lhs: File, rhs: File) -> Bool {
         let lhsRank = switch lhs {
@@ -141,23 +159,5 @@ extension File: Comparable {
         } else {
             return lhsRank < rhsRank
         }
-    }
-}
-
-extension File: Identifiable {
-    var id: URL {
-        url
-    }
-}
-
-extension File: Hashable {
-    func hash(into hasher: inout Hasher) {
-        url.hash(into: &hasher)
-    }
-}
-
-extension File: Equatable {
-    static func == (lhs: File, rhs: File) -> Bool {
-        lhs.url == rhs.url
     }
 }
