@@ -122,7 +122,7 @@ struct ItemInfoView: View {
 
         fields.append(("Buy", "\(item.buy)z"))
         fields.append(("Sell", "\(item.sell)z"))
-        fields.append(("Weight", "\(item.weight / 10)"))
+        fields.append(("Weight", "\(NSNumber(value: Double(item.weight) / 10))"))
 
         switch item.type {
         case .weapon:
