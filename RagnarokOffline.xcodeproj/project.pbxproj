@@ -146,8 +146,8 @@
 		35B695F12A30775E006F1904 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695F02A30775E006F1904 /* Submesh.swift */; };
 		35B695F32A3080D9006F1904 /* Object3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695F22A3080D9006F1904 /* Object3D.swift */; };
 		35D2CEB22B55064B00365E8E /* DatabaseRecordGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB12B55064B00365E8E /* DatabaseRecordGrid.swift */; };
-		35D2CEB42B553E1B00365E8E /* DatabaseRecordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB32B553E1B00365E8E /* DatabaseRecordList.swift */; };
 		35D2CEB62B553EDD00365E8E /* ItemGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemGrid.swift */; };
+		35E013622BAAE19300242F45 /* AsyncContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E013612BAAE19300242F45 /* AsyncContentView.swift */; };
 		35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */; };
 /* End PBXBuildFile section */
 
@@ -322,8 +322,8 @@
 		35B695F02A30775E006F1904 /* Submesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
 		35B695F22A3080D9006F1904 /* Object3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Object3D.swift; sourceTree = "<group>"; };
 		35D2CEB12B55064B00365E8E /* DatabaseRecordGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordGrid.swift; sourceTree = "<group>"; };
-		35D2CEB32B553E1B00365E8E /* DatabaseRecordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordList.swift; sourceTree = "<group>"; };
 		35D2CEB52B553EDD00365E8E /* ItemGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemGrid.swift; sourceTree = "<group>"; };
+		35E013612BAAE19300242F45 /* AsyncContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentView.swift; sourceTree = "<group>"; };
 		35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -463,7 +463,6 @@
 				3514BF802B4801C30065ED89 /* Job */,
 				3514BF432B4526DE0065ED89 /* Skill */,
 				35652B412B960CFC0075AD71 /* Map */,
-				35D2CEB32B553E1B00365E8E /* DatabaseRecordList.swift */,
 				35D2CEB12B55064B00365E8E /* DatabaseRecordGrid.swift */,
 				3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */,
 				35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */,
@@ -483,6 +482,7 @@
 			isa = PBXGroup;
 			children = (
 				355BC18B2B8F25C0002F0586 /* WebView.swift */,
+				35E013612BAAE19300242F45 /* AsyncContentView.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -974,7 +974,6 @@
 				3514BF8D2B4BE93A0065ED89 /* Gender+ResourceName.swift in Sources */,
 				3514BF822B4801D70065ED89 /* JobGrid.swift in Sources */,
 				356BF6752AFCCBF1005B67F7 /* DES.swift in Sources */,
-				35D2CEB42B553E1B00365E8E /* DatabaseRecordList.swift in Sources */,
 				3552D8762B316876004831D0 /* SPRPreviewViewController.swift in Sources */,
 				356BF6702AFC8964005B67F7 /* FileStream.swift in Sources */,
 				356BF6882B060243005B67F7 /* FilePreviewViewController.swift in Sources */,
@@ -1006,6 +1005,7 @@
 				35B3BA0B2A08C01600B4540B /* SGLMath.swift in Sources */,
 				35B695F32A3080D9006F1904 /* Object3D.swift in Sources */,
 				354CB4612B2AA70F001FC2A1 /* FileThumbnailManager.swift in Sources */,
+				35E013622BAAE19300242F45 /* AsyncContentView.swift in Sources */,
 				3555E1172B7D12D9007CE4BA /* ServerTerminalView.swift in Sources */,
 				35B3BA192A08C01600B4540B /* ImageFilePreviewViewController.swift in Sources */,
 				3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */,

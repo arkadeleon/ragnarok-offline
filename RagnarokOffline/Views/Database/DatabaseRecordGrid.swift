@@ -18,42 +18,26 @@ struct DatabaseRecordGrid<Record, Content>: View where Record: Identifiable, Con
     let filter: ([Record], String) -> [Record]
     let content: (Record) -> Content
 
-    private enum Status {
-        case notYetLoaded
-        case loading
-        case loaded([Record])
-        case failed(Error)
-    }
-
-    @State private var status: Status = .notYetLoaded
+    @State private var status: AsyncContentStatus<[Record]> = .notYetLoaded
     @State private var searchText = ""
     @State private var filteredRecords: [Record] = []
 
     var body: some View {
-        ZStack {
-            switch status {
-            case .notYetLoaded:
-                EmptyView()
-            case .loading:
-                ProgressView()
-            case .loaded:
-                ScrollView {
-                    LazyVGrid(columns: columns, alignment: alignment, spacing: spacing) {
-                        ForEach(filteredRecords) { record in
-                            content(record)
-                        }
+        AsyncContentView(status: status) { records in
+            ScrollView {
+                LazyVGrid(columns: columns, alignment: alignment, spacing: spacing) {
+                    ForEach(filteredRecords) { record in
+                        content(record)
                     }
-                    .padding(insets)
                 }
-                .searchable(text: $searchText)
-                .onSubmit(of: .search) {
-                    filterRecords()
-                }
-                .onChange(of: searchText) { _ in
-                    filterRecords()
-                }
-            case .failed(let error):
-                Text(error.localizedDescription)
+                .padding(insets)
+            }
+            .searchable(text: $searchText)
+            .onSubmit(of: .search) {
+                filterRecords()
+            }
+            .onChange(of: searchText) { _ in
+                filterRecords()
             }
         }
         .task {
