@@ -24,11 +24,7 @@ struct FileContextMenu: View {
                     Button {
                         previewAction?()
                     } label: {
-                        HStack {
-                            Text("Preview")
-                            Spacer()
-                            Image(systemName: "eye")
-                        }
+                        Label("Preview", systemImage: "eye")
                     }
                 }
 
@@ -36,11 +32,7 @@ struct FileContextMenu: View {
                     Button {
                         inspectRawDataAction?()
                     } label: {
-                        HStack {
-                            Text("Inspect Raw Data")
-                            Spacer()
-                            Image(systemName: "list.bullet.indent")
-                        }
+                        Label("Inspect Raw Data", systemImage: "list.bullet.indent")
                     }
                 }
             }
@@ -50,11 +42,7 @@ struct FileContextMenu: View {
                     Button {
                         copyAction?()
                     } label: {
-                        HStack {
-                            Text("Copy")
-                            Spacer()
-                            Image(systemName: "doc.on.doc")
-                        }
+                        Label("Copy", systemImage: "doc.on.doc")
                     }
                 }
 
@@ -68,11 +56,7 @@ struct FileContextMenu: View {
                     Button(role: .destructive) {
                         deleteAction?()
                     } label: {
-                        HStack {
-                            Text("Delete")
-                            Spacer()
-                            Image(systemName: "trash")
-                        }
+                        Label("Delete", image: "trash")
                     }
                 }
             }

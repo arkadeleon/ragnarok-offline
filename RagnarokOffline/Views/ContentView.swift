@@ -102,12 +102,26 @@ struct ContentView: View {
             }
             .navigationTitle("Ragnarok Offline")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    Button {
+                        Task {
+                            async let startLoginServer = RALoginServer.shared.start()
+                            async let startCharServer = RACharServer.shared.start()
+                            async let startMapServer = RAMapServer.shared.start()
+                            async let startWebServer = RAWebServer.shared.start()
+                            _ = await (startLoginServer, startCharServer, startMapServer, startWebServer)
+                        }
+                    } label: {
+                        Label("Start All Servers", systemImage: "play")
+                    }
+
                     Button {
                         isSettingsPresented.toggle()
                     } label: {
-                        Image(systemName: "gearshape")
+                        Label("Settings", systemImage: "gearshape")
                     }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
                 }
             }
             .sheet(isPresented: $isSettingsPresented) {

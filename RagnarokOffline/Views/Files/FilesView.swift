@@ -67,11 +67,7 @@ struct FilesView: View {
                     Button {
                         pasteFile()
                     } label: {
-                        HStack {
-                            Text("Paste")
-                            Spacer()
-                            Image(systemName: "doc.on.clipboard")
-                        }
+                        Label("Paste", systemImage: "doc.on.clipboard")
                     }
                     .disabled(!directory.canPaste)
                 } label: {
