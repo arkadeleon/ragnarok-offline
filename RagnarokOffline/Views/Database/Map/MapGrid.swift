@@ -18,12 +18,16 @@ struct MapGrid: View {
             alignment: .leading,
             spacing: 20,
             insets: EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20),
-            partitions: database.maps(),
+            partitions: partitions,
             filter: filter) { map in
                 MapGridCell(database: database, map: map, tertiaryText: nil)
             }
             .navigationTitle("Maps")
             .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private func partitions() async -> AsyncDatabaseRecordPartitions<Map> {
+        await database.maps()
     }
 
     private func filter(maps: [Map], searchText: String) -> [Map] {

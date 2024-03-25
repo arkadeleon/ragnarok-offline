@@ -18,12 +18,16 @@ struct MonsterGrid: View {
             alignment: .center,
             spacing: 30,
             insets: EdgeInsets(top: 30, leading: 20, bottom: 30, trailing: 20),
-            partitions: database.monsters(),
+            partitions: partitions,
             filter: filter) { monster in
                 MonsterGridCell(database: database, monster: monster, secondaryText: nil)
             }
             .navigationTitle("Monsters")
             .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private func partitions() async -> AsyncDatabaseRecordPartitions<Monster> {
+        await database.monsters()
     }
 
     private func filter(monsters: [Monster], searchText: String) -> [Monster] {

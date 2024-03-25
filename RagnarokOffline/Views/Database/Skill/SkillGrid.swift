@@ -18,12 +18,16 @@ struct SkillGrid: View {
             alignment: .leading,
             spacing: 20,
             insets: EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20),
-            partitions: database.skills(),
+            partitions: partitions,
             filter: filter) { skill in
                 SkillGridCell(database: database, skill: skill)
             }
             .navigationTitle("Skills")
             .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private func partitions() async -> AsyncDatabaseRecordPartitions<Skill> {
+        await database.skills()
     }
 
     private func filter(skills: [Skill], searchText: String) -> [Skill] {

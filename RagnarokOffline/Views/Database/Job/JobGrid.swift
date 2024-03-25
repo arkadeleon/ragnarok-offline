@@ -18,12 +18,16 @@ struct JobGrid: View {
             alignment: .center,
             spacing: 30,
             insets: EdgeInsets(top: 30, leading: 20, bottom: 30, trailing: 20),
-            partitions: database.jobs(),
+            partitions: partitions,
             filter: filter) { jobStats in
                 JobGridCell(database: database, jobStats: jobStats)
             }
             .navigationTitle("Jobs")
             .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private func partitions() async -> AsyncDatabaseRecordPartitions<JobStats> {
+        await database.jobs()
     }
 
     private func filter(jobs: [JobStats], searchText: String) -> [JobStats] {

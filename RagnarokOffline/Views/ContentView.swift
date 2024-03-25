@@ -17,14 +17,16 @@ import rAthenaWeb
 struct ContentView: View {
     private let filesView = FilesView(title: "Files", directory: .directory(ClientResourceBundle.shared.url))
 
-    private let servers: [RAServer] = [
-        RALoginServer.shared,
-        RACharServer.shared,
-        RAMapServer.shared,
-        RAWebServer.shared,
+    private let servers: [Server] = [
+        LoginServer.shared,
+        CharServer.shared,
+        MapServer.shared,
+        WebServer.shared,
     ]
 
     private let database = Database.renewal
+
+    @State private var serverStatuses: [String : ServerStatus] = [:]
 
     @State private var isSettingsPresented = false
 
@@ -55,7 +57,15 @@ struct ContentView: View {
                         NavigationLink {
                             ServerView(server: server)
                         } label: {
-                            Label(server.name, systemImage: "terminal")
+                            LabeledContent {
+                                Text(serverStatuses[server.name]?.description ?? "")
+                                    .font(.footnote)
+                            } label: {
+                                Label(server.name, systemImage: "terminal")
+                            }
+                        }
+                        .onReceive(server.publisher(for: \.status)) { status in
+                            serverStatuses[server.name] = status
                         }
                     }
 
@@ -105,10 +115,10 @@ struct ContentView: View {
                 Menu {
                     Button {
                         Task {
-                            async let startLoginServer = RALoginServer.shared.start()
-                            async let startCharServer = RACharServer.shared.start()
-                            async let startMapServer = RAMapServer.shared.start()
-                            async let startWebServer = RAWebServer.shared.start()
+                            async let startLoginServer = LoginServer.shared.start()
+                            async let startCharServer = CharServer.shared.start()
+                            async let startMapServer = MapServer.shared.start()
+                            async let startWebServer = WebServer.shared.start()
                             _ = await (startLoginServer, startCharServer, startMapServer, startWebServer)
                         }
                     } label: {

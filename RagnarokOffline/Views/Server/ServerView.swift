@@ -10,13 +10,11 @@ import SwiftUI
 import rAthenaCommon
 
 struct ServerView: View {
-    let server: RAServer
+    let server: Server
 
     private let terminalView = ServerTerminalView()
 
-    private let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
-
-    @State private var serverStatus: RAServerStatus = .notStarted
+    @State private var serverStatus: ServerStatus = .notStarted
 
     var body: some View {
         ZStack {
@@ -58,8 +56,8 @@ struct ServerView: View {
                 }
             }
         }
-        .onReceive(timer) { _ in
-            serverStatus = server.status
+        .onReceive(server.publisher(for: \.status)) { status in
+            serverStatus = status
         }
     }
 }

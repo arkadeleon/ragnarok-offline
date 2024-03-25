@@ -18,12 +18,16 @@ struct ItemGrid: View {
             alignment: .leading,
             spacing: 20,
             insets: EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20),
-            partitions: database.items(),
+            partitions: partitions,
             filter: filter) { item in
                 ItemGridCell(database: database, item: item, tertiaryText: nil)
             }
             .navigationTitle("Items")
             .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private func partitions() async -> AsyncDatabaseRecordPartitions<Item> {
+        await database.items()
     }
 
     private func filter(items: [Item], searchText: String) -> [Item] {

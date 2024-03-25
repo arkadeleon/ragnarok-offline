@@ -14,7 +14,7 @@ struct DatabaseRecordGrid<Record, Content>: View where Record: Identifiable, Con
     let alignment: HorizontalAlignment
     let spacing: CGFloat
     let insets: EdgeInsets
-    let partitions: AsyncDatabaseRecordPartitions<Record>
+    let partitions: () async -> AsyncDatabaseRecordPartitions<Record>
     let filter: ([Record], String) -> [Record]
     let content: (Record) -> Content
 
@@ -49,7 +49,7 @@ struct DatabaseRecordGrid<Record, Content>: View where Record: Identifiable, Con
          alignment: HorizontalAlignment,
          spacing: CGFloat,
          insets: EdgeInsets,
-         partitions: AsyncDatabaseRecordPartitions<Record>,
+         partitions: @escaping () async -> AsyncDatabaseRecordPartitions<Record>,
          filter: @escaping ([Record], String) -> [Record],
          @ViewBuilder content: @escaping (Record) -> Content) {
         self.columns = columns
@@ -69,6 +69,7 @@ struct DatabaseRecordGrid<Record, Content>: View where Record: Identifiable, Con
         status = .loading
 
         do {
+            let partitions = await partitions()
             for try await partition in partitions {
                 switch status {
                 case .loaded(let records):

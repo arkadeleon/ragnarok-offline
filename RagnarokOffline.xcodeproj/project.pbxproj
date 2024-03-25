@@ -148,6 +148,7 @@
 		35D2CEB22B55064B00365E8E /* DatabaseRecordGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB12B55064B00365E8E /* DatabaseRecordGrid.swift */; };
 		35D2CEB62B553EDD00365E8E /* ItemGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemGrid.swift */; };
 		35E013622BAAE19300242F45 /* AsyncContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E013612BAAE19300242F45 /* AsyncContentView.swift */; };
+		35E013642BB170E800242F45 /* ServerStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E013632BB170E800242F45 /* ServerStatus+CustomStringConvertible.swift */; };
 		35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */; };
 /* End PBXBuildFile section */
 
@@ -324,6 +325,7 @@
 		35D2CEB12B55064B00365E8E /* DatabaseRecordGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordGrid.swift; sourceTree = "<group>"; };
 		35D2CEB52B553EDD00365E8E /* ItemGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemGrid.swift; sourceTree = "<group>"; };
 		35E013612BAAE19300242F45 /* AsyncContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentView.swift; sourceTree = "<group>"; };
+		35E013632BB170E800242F45 /* ServerStatus+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServerStatus+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -626,6 +628,7 @@
 			children = (
 				35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */,
 				3555E1162B7D12D9007CE4BA /* ServerTerminalView.swift */,
+				35E013632BB170E800242F45 /* ServerStatus+CustomStringConvertible.swift */,
 			);
 			path = Server;
 			sourceTree = "<group>";
@@ -1002,6 +1005,7 @@
 				353098322B148E4100F32B62 /* Model.swift in Sources */,
 				355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */,
 				3582FFC32B8898DD00E746D7 /* CGImage+Data.swift in Sources */,
+				35E013642BB170E800242F45 /* ServerStatus+CustomStringConvertible.swift in Sources */,
 				35B3BA0B2A08C01600B4540B /* SGLMath.swift in Sources */,
 				35B695F32A3080D9006F1904 /* Object3D.swift in Sources */,
 				354CB4612B2AA70F001FC2A1 /* FileThumbnailManager.swift in Sources */,
