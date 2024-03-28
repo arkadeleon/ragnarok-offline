@@ -42,7 +42,7 @@
 		3552D8782B3182A8004831D0 /* AnimatedImageActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */; };
 		3552D87A2B318323004831D0 /* StillImageActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8792B318323004831D0 /* StillImageActivityItem.swift */; };
 		3555E1152B74C864007CE4BA /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555E1142B74C864007CE4BA /* Entity.swift */; };
-		3555E1172B7D12D9007CE4BA /* ServerTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555E1162B7D12D9007CE4BA /* ServerTerminalView.swift */; };
+		3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555E1162B7D12D9007CE4BA /* TerminalView.swift */; };
 		3555E12F2B7D2268007CE4BA /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E12E2B7D2268007CE4BA /* rAthenaChar */; };
 		3555E1302B7D2268007CE4BA /* rAthenaChar in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3555E12E2B7D2268007CE4BA /* rAthenaChar */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3555E1322B7D2268007CE4BA /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E1312B7D2268007CE4BA /* rAthenaCommon */; };
@@ -149,6 +149,8 @@
 		35D2CEB62B553EDD00365E8E /* ItemGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemGrid.swift */; };
 		35E013622BAAE19300242F45 /* AsyncContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E013612BAAE19300242F45 /* AsyncContentView.swift */; };
 		35E013642BB170E800242F45 /* ServerStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E013632BB170E800242F45 /* ServerStatus+CustomStringConvertible.swift */; };
+		35F50CC92BB3FD5000B36455 /* LoginClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CC82BB3FD5000B36455 /* LoginClient.swift */; };
+		35F50CCC2BB4615F00B36455 /* ConnectionTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CCB2BB4615F00B36455 /* ConnectionTestView.swift */; };
 		35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */; };
 /* End PBXBuildFile section */
 
@@ -222,7 +224,7 @@
 		3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImageActivityItem.swift; sourceTree = "<group>"; };
 		3552D8792B318323004831D0 /* StillImageActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillImageActivityItem.swift; sourceTree = "<group>"; };
 		3555E1142B74C864007CE4BA /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
-		3555E1162B7D12D9007CE4BA /* ServerTerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerTerminalView.swift; sourceTree = "<group>"; };
+		3555E1162B7D12D9007CE4BA /* TerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
 		3555E12D2B7D2251007CE4BA /* swift-rathena */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "swift-rathena"; sourceTree = "<group>"; };
 		355BC18B2B8F25C0002F0586 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		355BC18D2B8F2890002F0586 /* FileRawDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileRawDataView.swift; sourceTree = "<group>"; };
@@ -326,6 +328,8 @@
 		35D2CEB52B553EDD00365E8E /* ItemGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemGrid.swift; sourceTree = "<group>"; };
 		35E013612BAAE19300242F45 /* AsyncContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentView.swift; sourceTree = "<group>"; };
 		35E013632BB170E800242F45 /* ServerStatus+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServerStatus+CustomStringConvertible.swift"; sourceTree = "<group>"; };
+		35F50CC82BB3FD5000B36455 /* LoginClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginClient.swift; sourceTree = "<group>"; };
+		35F50CCB2BB4615F00B36455 /* ConnectionTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionTestView.swift; sourceTree = "<group>"; };
 		35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -483,8 +487,9 @@
 		355BC18A2B8F25A6002F0586 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				355BC18B2B8F25C0002F0586 /* WebView.swift */,
 				35E013612BAAE19300242F45 /* AsyncContentView.swift */,
+				3555E1162B7D12D9007CE4BA /* TerminalView.swift */,
+				355BC18B2B8F25C0002F0586 /* WebView.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -596,6 +601,7 @@
 				35B3B9892A08C01600B4540B /* Files */,
 				353098412B161C3800F32B62 /* FilePreview */,
 				353098332B14EAE600F32B62 /* FileRawData */,
+				35F50CCA2BB4614100B36455 /* ConnectionTest */,
 				35B3B96E2A08C01600B4540B /* Game */,
 				35A2ABBA2B3AC69F0026DAC2 /* Server */,
 				353B4F0E2B43AEC000605E92 /* Database */,
@@ -627,7 +633,6 @@
 			isa = PBXGroup;
 			children = (
 				35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */,
-				3555E1162B7D12D9007CE4BA /* ServerTerminalView.swift */,
 				35E013632BB170E800242F45 /* ServerStatus+CustomStringConvertible.swift */,
 			);
 			path = Server;
@@ -663,6 +668,7 @@
 				35774F692B20587900438311 /* Views */,
 				35B3B9A42A08C01600B4540B /* Renderers */,
 				356363652B3F301C00F7C249 /* Client */,
+				35F50CC72BB3FD1400B36455 /* Network */,
 				3523B5802B98479700CCE722 /* FileSystem */,
 				35B3B9522A08C01600B4540B /* FileFormats */,
 				35B3B97E2A08C01600B4540B /* Utilities */,
@@ -789,6 +795,22 @@
 				35B3B9812A08C01600B4540B /* MTKTextureLoader+BMP.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		35F50CC72BB3FD1400B36455 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				35F50CC82BB3FD5000B36455 /* LoginClient.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		35F50CCA2BB4614100B36455 /* ConnectionTest */ = {
+			isa = PBXGroup;
+			children = (
+				35F50CCB2BB4615F00B36455 /* ConnectionTestView.swift */,
+			);
+			path = ConnectionTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -956,6 +978,7 @@
 				35B3B9E12A08C01600B4540B /* GRF.swift in Sources */,
 				35482AF12B2759DD0062DC4B /* File+RawData.swift in Sources */,
 				35B3B9E32A08C01600B4540B /* RSM.swift in Sources */,
+				35F50CC92BB3FD5000B36455 /* LoginClient.swift in Sources */,
 				356363672B3F303F00F7C249 /* ClientDatabase.swift in Sources */,
 				353B4F162B43F3BB00605E92 /* ClientResourceBundle.swift in Sources */,
 				3504AB8C2A2EFB900029AC46 /* Camera.swift in Sources */,
@@ -1010,7 +1033,7 @@
 				35B695F32A3080D9006F1904 /* Object3D.swift in Sources */,
 				354CB4612B2AA70F001FC2A1 /* FileThumbnailManager.swift in Sources */,
 				35E013622BAAE19300242F45 /* AsyncContentView.swift in Sources */,
-				3555E1172B7D12D9007CE4BA /* ServerTerminalView.swift in Sources */,
+				3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */,
 				35B3BA192A08C01600B4540B /* ImageFilePreviewViewController.swift in Sources */,
 				3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */,
 				35B3BA032A08C01600B4540B /* TextEncoding.swift in Sources */,
@@ -1047,6 +1070,7 @@
 				3582FFCA2B8DB9FE00E746D7 /* FilePreviewPageView.swift in Sources */,
 				3511C1CC2B0A4EAE006DD639 /* GAT+Image.swift in Sources */,
 				356BF6842B04F569005B67F7 /* ImageCollectionViewCell.swift in Sources */,
+				35F50CCC2BB4615F00B36455 /* ConnectionTestView.swift in Sources */,
 				35D2CEB62B553EDD00365E8E /* ItemGrid.swift in Sources */,
 				353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */,
 				35B3B9E52A08C01600B4540B /* Document.swift in Sources */,

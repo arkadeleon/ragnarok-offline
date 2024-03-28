@@ -42,6 +42,12 @@ struct ContentView: View {
 
                     #if DEBUG
                     NavigationLink {
+                        ConnectionTestView()
+                    } label: {
+                        Label("Connection Test", systemImage: "link")
+                    }
+
+                    NavigationLink {
                         GameView()
                             .ignoresSafeArea()
                             .navigationTitle("Cube")
@@ -64,7 +70,7 @@ struct ContentView: View {
                                 Label(server.name, systemImage: "terminal")
                             }
                         }
-                        .onReceive(server.publisher(for: \.status)) { status in
+                        .onReceive(server.publisher(for: \.status).receive(on: RunLoop.main)) { status in
                             serverStatuses[server.name] = status
                         }
                     }

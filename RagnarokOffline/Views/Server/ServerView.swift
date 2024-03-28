@@ -12,7 +12,7 @@ import rAthenaCommon
 struct ServerView: View {
     let server: Server
 
-    private let terminalView = ServerTerminalView()
+    private let terminalView = TerminalView()
 
     @State private var serverStatus: ServerStatus = .notStarted
 
