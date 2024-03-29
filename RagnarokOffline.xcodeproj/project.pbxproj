@@ -115,7 +115,7 @@
 		35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9702A08C01600B4540B /* Shaders.metal */; };
 		35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9722A08C01600B4540B /* GameRenderer.swift */; };
 		35B3B9FA2A08C01600B4540B /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B9732A08C01600B4540B /* wall.jpg */; };
-		35B3BA032A08C01600B4540B /* TextEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B97F2A08C01600B4540B /* TextEncoding.swift */; };
+		35B3BA032A08C01600B4540B /* String.Encoding+KoreanEUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B97F2A08C01600B4540B /* String.Encoding+KoreanEUC.swift */; };
 		35B3BA042A08C01600B4540B /* SGLMath+Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9802A08C01600B4540B /* SGLMath+Calculate.swift */; };
 		35B3BA052A08C01600B4540B /* MTKTextureLoader+BMP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9812A08C01600B4540B /* MTKTextureLoader+BMP.swift */; };
 		35B3BA0B2A08C01600B4540B /* SGLMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9872A08C01600B4540B /* SGLMath.swift */; };
@@ -291,7 +291,7 @@
 		35B3B9712A08C01600B4540B /* ShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 		35B3B9722A08C01600B4540B /* GameRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameRenderer.swift; sourceTree = "<group>"; };
 		35B3B9732A08C01600B4540B /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
-		35B3B97F2A08C01600B4540B /* TextEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEncoding.swift; sourceTree = "<group>"; };
+		35B3B97F2A08C01600B4540B /* String.Encoding+KoreanEUC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String.Encoding+KoreanEUC.swift"; sourceTree = "<group>"; };
 		35B3B9802A08C01600B4540B /* SGLMath+Calculate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SGLMath+Calculate.swift"; sourceTree = "<group>"; };
 		35B3B9812A08C01600B4540B /* MTKTextureLoader+BMP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MTKTextureLoader+BMP.swift"; sourceTree = "<group>"; };
 		35B3B9872A08C01600B4540B /* SGLMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGLMath.swift; sourceTree = "<group>"; };
@@ -748,7 +748,7 @@
 				35774F672B20578A00438311 /* Crypto */,
 				35774F662B20566000438311 /* Image */,
 				35774F652B20562800438311 /* Stream */,
-				35B3B97F2A08C01600B4540B /* TextEncoding.swift */,
+				35B3B97F2A08C01600B4540B /* String.Encoding+KoreanEUC.swift */,
 				35B3B9872A08C01600B4540B /* SGLMath.swift */,
 				35B3B9802A08C01600B4540B /* SGLMath+Calculate.swift */,
 				359C6E112B187AE60077CB4C /* SIMD+Encodable.swift */,
@@ -1036,7 +1036,7 @@
 				3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */,
 				35B3BA192A08C01600B4540B /* ImageFilePreviewViewController.swift in Sources */,
 				3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */,
-				35B3BA032A08C01600B4540B /* TextEncoding.swift in Sources */,
+				35B3BA032A08C01600B4540B /* String.Encoding+KoreanEUC.swift in Sources */,
 				35B3BA112A08C01600B4540B /* RSWRenderer.swift in Sources */,
 				35B3BA162A08C01600B4540B /* File+Type.swift in Sources */,
 				35B3BA262A08C01600B4540B /* RendererCommon.swift in Sources */,

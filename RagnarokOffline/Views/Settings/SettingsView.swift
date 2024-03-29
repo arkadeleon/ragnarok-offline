@@ -9,22 +9,22 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @State private var textEncoding = ClientSettings.shared.textEncoding
+    @State private var serviceType = ClientSettings.shared.serviceType
 
     var body: some View {
-        let textEncodingBinding = Binding {
-            textEncoding
+        let serviceTypeBinding = Binding {
+            serviceType
         } set: {
-            self.textEncoding = $0
-            ClientSettings.shared.textEncoding = $0
+            self.serviceType = $0
+            ClientSettings.shared.serviceType = $0
         }
 
         return NavigationView {
             Form {
                 Section("Client") {
-                    Picker("Text Encoding", selection: textEncodingBinding) {
-                        ForEach(TextEncoding.allCases, id: \.rawValue) { textEncoding in
-                            Text(textEncoding.rawValue).tag(textEncoding)
+                    Picker("Service Type", selection: serviceTypeBinding) {
+                        ForEach(ClientSettings.ServiceType.allCases, id: \.rawValue) { serviceType in
+                            Text(serviceType.rawValue).tag(serviceType)
                         }
                     }
                 }

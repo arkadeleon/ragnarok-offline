@@ -37,7 +37,7 @@ class ClientDatabase {
             return nil
         }
 
-        let string = String(data: data, encoding: ClientSettings.shared.textEncoding.stringEncoding)
+        let string = String(data: data, encoding: ClientSettings.shared.serviceType.stringEncoding)
         return string
     }
 
@@ -77,7 +77,7 @@ class ClientDatabase {
             return nil
         }
 
-        let string = String(data: data, encoding: ClientSettings.shared.textEncoding.stringEncoding)
+        let string = String(data: data, encoding: ClientSettings.shared.serviceType.stringEncoding)
         return string
     }
 
@@ -109,7 +109,7 @@ class ClientDatabase {
             return nil
         }
 
-        let string = String(data: data, encoding: ClientSettings.shared.textEncoding.stringEncoding)
+        let string = String(data: data, encoding: ClientSettings.shared.serviceType.stringEncoding)
         return string
     }
 
@@ -129,7 +129,7 @@ class ClientDatabase {
             return nil
         }
 
-        let string = String(data: data, encoding: ClientSettings.shared.textEncoding.stringEncoding)
+        let string = String(data: data, encoding: ClientSettings.shared.serviceType.stringEncoding)
         return string
     }
 
@@ -251,7 +251,7 @@ class ClientDatabase {
             return
         }
 
-        guard let string = String(data: data, encoding: ClientSettings.shared.textEncoding.stringEncoding) else {
+        guard let string = String(data: data, encoding: ClientSettings.shared.serviceType.stringEncoding) else {
             return
         }
 
