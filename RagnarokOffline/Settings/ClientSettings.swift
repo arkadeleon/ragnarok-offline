@@ -11,40 +11,54 @@ import Foundation
 class ClientSettings {
     static let shared = ClientSettings()
 
-    private let serviceTypeKey = "client.service_type"
-
-    var serviceType: ServiceType {
-        didSet {
-            UserDefaults.standard.setValue(serviceType.rawValue, forKey: serviceTypeKey)
-        }
-    }
-
-    init() {
-        serviceType = UserDefaults.standard.string(forKey: serviceTypeKey).flatMap(ServiceType.init) ?? .korea
-    }
+    @SettingsItem("client.service_type", defaultValue: .korea) var serviceType: ServiceType
 }
 
 extension ClientSettings {
-    enum ServiceType: String, CaseIterable {
-        case korea = "Korea"
-        case america = "America"
-        case japan = "Japan"
-        case china = "China"
-        case taiwan = "Taiwan"
-        case thai = "Thai"
-        case indonesia = "Indonesia"
-        case philippine = "Philippine"
-        case malaysia = "Malaysia"
-        case singapore = "Singapore"
-        case germany = "Germany"
-        case india = "India"
-        case brazil = "Brazil"
-        case australia = "Australia"
-        case russia = "Russia"
-        case vietnam = "Vietnam"
-        case chile = "Chile"
-        case france = "France"
-        case uae = "UAE"
+    enum ServiceType: String, CaseIterable, CustomStringConvertible {
+        case korea
+        case america
+        case japan
+        case china
+        case taiwan
+        case thai
+        case indonesia
+        case philippine
+        case malaysia
+        case singapore
+        case germany
+        case india
+        case brazil
+        case australia
+        case russia
+        case vietnam
+        case chile
+        case france
+        case uae
+
+        var description: String {
+            switch self {
+            case .korea: "Korea"
+            case .america: "America"
+            case .japan: "Japan"
+            case .china: "China"
+            case .taiwan: "Taiwan"
+            case .thai: "Thai"
+            case .indonesia: "Indonesia"
+            case .philippine: "Philippine"
+            case .malaysia: "Malaysia"
+            case .singapore: "Singapore"
+            case .germany: "Germany"
+            case .india: "India"
+            case .brazil: "Brazil"
+            case .australia: "Australia"
+            case .russia: "Russia"
+            case .vietnam: "Vietnam"
+            case .chile: "Chile"
+            case .france: "France"
+            case .uae: "UAE"
+            }
+        }
 
         var stringEncoding: String.Encoding {
             let cfStringEncoding = switch self {

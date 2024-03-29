@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @Environment(\.dismiss) private var dismiss
+
     @State private var serviceType = ClientSettings.shared.serviceType
 
     var body: some View {
@@ -19,17 +21,24 @@ struct SettingsView: View {
             ClientSettings.shared.serviceType = $0
         }
 
-        return NavigationView {
+        NavigationView {
             Form {
                 Section("Client") {
                     Picker("Service Type", selection: serviceTypeBinding) {
                         ForEach(ClientSettings.ServiceType.allCases, id: \.rawValue) { serviceType in
-                            Text(serviceType.rawValue).tag(serviceType)
+                            Text(serviceType.description).tag(serviceType)
                         }
                     }
                 }
             }
             .navigationTitle("Settings")
+            .toolbar {
+                ToolbarItem {
+                    Button("Done") {
+                        dismiss()
+                    }
+                }
+            }
         }
     }
 }
