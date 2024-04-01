@@ -15,7 +15,7 @@ struct ItemGridCell: View {
     let tertiaryText: String?
 
     @State private var itemIconImage: CGImage?
-    @State private var localizedItemName: String?
+    @State private var itemDisplayName: String?
 
     var body: some View {
         NavigationLink {
@@ -51,7 +51,7 @@ struct ItemGridCell: View {
         }
         .task {
             itemIconImage = await ClientResourceBundle.shared.itemIconImage(forItem: item)
-            localizedItemName = ClientDatabase.shared.itemDisplayName(item.id)
+            itemDisplayName = ClientDatabase.shared.identifiedItemDisplayName(item.id)
         }
     }
 
@@ -60,6 +60,6 @@ struct ItemGridCell: View {
     }
 
     private var secondaryText: String {
-        localizedItemName ?? item.name
+        itemDisplayName ?? item.name
     }
 }

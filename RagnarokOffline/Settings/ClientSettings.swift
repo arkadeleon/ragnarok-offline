@@ -12,6 +12,7 @@ class ClientSettings {
     static let shared = ClientSettings()
 
     @SettingsItem("client.service_type", defaultValue: .korea) var serviceType: ServiceType
+    @SettingsItem("client.item_info_source", defaultValue: .lua) var itemInfoSource: ItemInfoSource
 }
 
 extension ClientSettings {
@@ -65,13 +66,13 @@ extension ClientSettings {
             case .america, .indonesia, .philippine, .malaysia, .singapore, .germany, .india, .brazil, .australia, .france:
                 CFStringConvertWindowsCodepageToEncoding(1252)
             case .korea:
-                CFStringEncoding(CFStringEncodings.EUC_KR.rawValue)
+                CFStringConvertWindowsCodepageToEncoding(949)
             case .japan:
-                CFStringEncoding(CFStringEncodings.shiftJIS.rawValue)
+                CFStringConvertWindowsCodepageToEncoding(932)
             case .china:
-                CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue)
+                CFStringConvertWindowsCodepageToEncoding(936)
             case .taiwan:
-                CFStringEncoding(CFStringEncodings.GB_2312_80.rawValue)
+                CFStringConvertWindowsCodepageToEncoding(950)
             case .thai:
                 CFStringConvertWindowsCodepageToEncoding(874)
             case .russia:
@@ -87,6 +88,20 @@ extension ClientSettings {
             let nsStringEncoding = CFStringConvertEncodingToNSStringEncoding(cfStringEncoding)
             let stringEncoding = String.Encoding(rawValue: nsStringEncoding)
             return stringEncoding
+        }
+    }
+}
+
+extension ClientSettings {
+    enum ItemInfoSource: String, CaseIterable, CustomStringConvertible {
+        case lua
+        case txt
+
+        var description: String {
+            switch self {
+            case .lua: "Lua"
+            case .txt: "Text"
+            }
         }
     }
 }

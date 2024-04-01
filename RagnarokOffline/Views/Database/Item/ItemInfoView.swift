@@ -194,7 +194,7 @@ struct ItemInfoView: View {
 
     private func loadItemInfo() async {
         itemPreviewImage = await ClientResourceBundle.shared.itemPreviewImage(forItem: item)
-        itemDescription = ClientDatabase.shared.itemDescription(item.id)
+        itemDescription = ClientDatabase.shared.identifiedItemDescription(item.id)
 
         do {
             var droppingMonsters: [DroppingMonster] = []

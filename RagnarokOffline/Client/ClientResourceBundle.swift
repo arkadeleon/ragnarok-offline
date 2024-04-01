@@ -32,6 +32,24 @@ class ClientResourceBundle {
         return file
     }
 
+    func identifiedItemDisplayNameTable() -> File {
+        let path = GRF.Path(string: "data\\idnum2itemdisplaynametable.txt")
+        let file = File.grfEntry(grf, path)
+        return file
+    }
+
+    func identifiedItemResourceNameTable() -> File {
+        let path = GRF.Path(string: "data\\idnum2itemresnametable.txt")
+        let file = File.grfEntry(grf, path)
+        return file
+    }
+
+    func identifiedItemDescriptionTable() -> File {
+        let path = GRF.Path(string: "data\\idnum2itemdesctable.txt")
+        let file = File.grfEntry(grf, path)
+        return file
+    }
+
     func rswFile(forMap map: Map) -> File {
         let path = GRF.Path(string: "data\\\(map.name).rsw")
         let file = File.grfEntry(grf, path)
@@ -101,7 +119,7 @@ class ClientResourceBundle {
     // MARK: - data\texture
 
     func itemIconImage(forItem item: Item) async -> CGImage? {
-        guard let resourceName = ClientDatabase.shared.itemResourceName(item.id) else {
+        guard let resourceName = ClientDatabase.shared.identifiedItemResourceName(item.id) else {
             return nil
         }
 
@@ -111,7 +129,7 @@ class ClientResourceBundle {
     }
 
     func itemPreviewImage(forItem item: Item) async -> CGImage? {
-        guard let resourceName = ClientDatabase.shared.itemResourceName(item.id) else {
+        guard let resourceName = ClientDatabase.shared.identifiedItemResourceName(item.id) else {
             return nil
         }
 

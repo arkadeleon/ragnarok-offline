@@ -14,7 +14,7 @@ struct SkillGridCell: View {
     let skill: Skill
 
     @State private var skillIconImage: CGImage?
-    @State private var localizedSkillName: String?
+    @State private var skillDisplayName: String?
 
     var body: some View {
         NavigationLink {
@@ -35,7 +35,7 @@ struct SkillGridCell: View {
                         .foregroundColor(.primary)
                         .lineLimit(1)
 
-                    Text(localizedSkillName ?? skill.name)
+                    Text(skillDisplayName ?? skill.name)
                         .foregroundColor(.secondary)
                         .lineLimit(1)
                 }
@@ -44,7 +44,7 @@ struct SkillGridCell: View {
         }
         .task {
             skillIconImage = await ClientResourceBundle.shared.skillIconImage(forSkill: skill)
-            localizedSkillName = ClientDatabase.shared.skillName(skill.id)
+            skillDisplayName = ClientDatabase.shared.skillDisplayName(skill.id)
         }
     }
 }

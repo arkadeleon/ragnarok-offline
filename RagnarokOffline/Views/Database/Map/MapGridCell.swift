@@ -15,7 +15,7 @@ struct MapGridCell: View {
     let tertiaryText: String?
 
     @State private var mapImage: CGImage?
-    @State private var localizedMapName: String?
+    @State private var mapDisplayName: String?
 
     var body: some View {
         NavigationLink {
@@ -51,7 +51,7 @@ struct MapGridCell: View {
         }
         .task {
             mapImage = await ClientResourceBundle.shared.mapImage(forMap: map)
-            localizedMapName = ClientDatabase.shared.mapDisplayName(map.name)
+            mapDisplayName = ClientDatabase.shared.mapDisplayName(map.name)
         }
     }
 
@@ -60,6 +60,6 @@ struct MapGridCell: View {
     }
 
     private var secondaryText: String {
-        localizedMapName ?? map.name
+        mapDisplayName ?? map.name
     }
 }

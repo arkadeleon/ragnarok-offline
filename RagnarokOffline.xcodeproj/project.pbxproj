@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3504AB8C2A2EFB900029AC46 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3504AB8B2A2EFB900029AC46 /* Camera.swift */; };
+		350971C92BBAE50100A366E1 /* Data+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350971C82BBAE50100A366E1 /* Data+String.swift */; };
 		3511C1CC2B0A4EAE006DD639 /* GAT+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1CB2B0A4EAE006DD639 /* GAT+Image.swift */; };
 		3511C1D12B0A535A006DD639 /* GATPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D02B0A535A006DD639 /* GATPreviewViewController.swift */; };
 		3511C1D32B0A6C5D006DD639 /* RSWPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */; };
@@ -191,6 +192,7 @@
 
 /* Begin PBXFileReference section */
 		3504AB8B2A2EFB900029AC46 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		350971C82BBAE50100A366E1 /* Data+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+String.swift"; sourceTree = "<group>"; };
 		3511C1CB2B0A4EAE006DD639 /* GAT+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GAT+Image.swift"; sourceTree = "<group>"; };
 		3511C1D02B0A535A006DD639 /* GATPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GATPreviewViewController.swift; sourceTree = "<group>"; };
 		3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWPreviewViewController.swift; sourceTree = "<group>"; };
@@ -760,6 +762,7 @@
 				35774F662B20566000438311 /* Image */,
 				35774F652B20562800438311 /* Stream */,
 				35B3B97F2A08C01600B4540B /* String.Encoding+KoreanEUC.swift */,
+				350971C82BBAE50100A366E1 /* Data+String.swift */,
 				35B3B9872A08C01600B4540B /* SGLMath.swift */,
 				35B3B9802A08C01600B4540B /* SGLMath+Calculate.swift */,
 				359C6E112B187AE60077CB4C /* SIMD+Encodable.swift */,
@@ -1072,6 +1075,7 @@
 				3530982E2B145D6A00F32B62 /* Ground.swift in Sources */,
 				35B3B9E72A08C01600B4540B /* ACT.swift in Sources */,
 				355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */,
+				350971C92BBAE50100A366E1 /* Data+String.swift in Sources */,
 				3511C1D12B0A535A006DD639 /* GATPreviewViewController.swift in Sources */,
 				35B695EF2A30763A006F1904 /* Mesh.swift in Sources */,
 				353B4F1C2B451F1300605E92 /* ItemGridCell.swift in Sources */,
