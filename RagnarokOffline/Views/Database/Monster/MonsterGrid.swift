@@ -32,7 +32,7 @@ struct MonsterGrid: View {
 
     private func filter(monsters: [Monster], searchText: String) -> [Monster] {
         monsters.filter { monster in
-            monster.name.localizedCaseInsensitiveContains(searchText)
+            monster.name.localizedStandardContains(searchText)
         }
     }
 }

@@ -32,7 +32,7 @@ struct SkillGrid: View {
 
     private func filter(skills: [Skill], searchText: String) -> [Skill] {
         skills.filter { skill in
-            skill.name.localizedCaseInsensitiveContains(searchText)
+            skill.name.localizedStandardContains(searchText)
         }
     }
 }

@@ -21,6 +21,7 @@ struct ContentView: View {
     @StateObject private var webServer = ObservableServer(server: WebServer.shared)
 
     private let database = Database.renewal
+    @StateObject private var itemDatabase = ObservableItemDatabase(database: .renewal)
 
     private let filesView = FilesView(title: "Files", directory: .directory(ClientResourceBundle.shared.url))
 
@@ -110,9 +111,9 @@ struct ContentView: View {
 
                 Section("Database") {
                     NavigationLink {
-                        ItemGrid(database: database)
+                        ItemDatabaseView(itemDatabase: itemDatabase)
                     } label: {
-                        Label("Items", systemImage: "leaf")
+                        Label("Item Database", systemImage: "leaf")
                     }
 
                     NavigationLink {

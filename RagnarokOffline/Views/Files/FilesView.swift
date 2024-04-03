@@ -116,7 +116,7 @@ struct FilesView: View {
             filteredFiles = files
         } else {
             filteredFiles = files.filter { file in
-                file.name.localizedCaseInsensitiveContains(searchText)
+                file.name.localizedStandardContains(searchText)
             }
         }
     }

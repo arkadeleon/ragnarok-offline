@@ -27,6 +27,8 @@
 		3514BF892B48642B0065ED89 /* Terminal in Frameworks */ = {isa = PBXBuildFile; productRef = 3514BF882B48642B0065ED89 /* Terminal */; };
 		3514BF8D2B4BE93A0065ED89 /* Gender+ResourceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF8C2B4BE93A0065ED89 /* Gender+ResourceName.swift */; };
 		35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */; };
+		35239DF52BBD7F8B0039F7D5 /* ObservableItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF42BBD7F8B0039F7D5 /* ObservableItemDatabase.swift */; };
+		35239DF72BBDA0760039F7D5 /* AsyncContentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF62BBDA0760039F7D5 /* AsyncContentStatus.swift */; };
 		3523B57F2B97769D00CCE722 /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 3523B57E2B97769D00CCE722 /* Lua */; };
 		3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */; };
 		3530982E2B145D6A00F32B62 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982D2B145D6A00F32B62 /* Ground.swift */; };
@@ -149,7 +151,7 @@
 		35B695F12A30775E006F1904 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695F02A30775E006F1904 /* Submesh.swift */; };
 		35B695F32A3080D9006F1904 /* Object3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695F22A3080D9006F1904 /* Object3D.swift */; };
 		35D2CEB22B55064B00365E8E /* DatabaseRecordGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB12B55064B00365E8E /* DatabaseRecordGrid.swift */; };
-		35D2CEB62B553EDD00365E8E /* ItemGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemGrid.swift */; };
+		35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */; };
 		35E013622BAAE19300242F45 /* AsyncContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E013612BAAE19300242F45 /* AsyncContentView.swift */; };
 		35F50CC92BB3FD5000B36455 /* LoginClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CC82BB3FD5000B36455 /* LoginClient.swift */; };
 		35F50CCC2BB4615F00B36455 /* ConnectionTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CCB2BB4615F00B36455 /* ConnectionTestView.swift */; };
@@ -210,6 +212,8 @@
 		3514BF852B4801EB0065ED89 /* JobInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInfoView.swift; sourceTree = "<group>"; };
 		3514BF8C2B4BE93A0065ED89 /* Gender+ResourceName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gender+ResourceName.swift"; sourceTree = "<group>"; };
 		35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableServer.swift; sourceTree = "<group>"; };
+		35239DF42BBD7F8B0039F7D5 /* ObservableItemDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableItemDatabase.swift; sourceTree = "<group>"; };
+		35239DF62BBDA0760039F7D5 /* AsyncContentStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentStatus.swift; sourceTree = "<group>"; };
 		3523B57D2B97768A00CCE722 /* swift-lua */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "swift-lua"; sourceTree = "<group>"; };
 		3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordInfoSection.swift; sourceTree = "<group>"; };
 		35270D2B2A68F4610001A8BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -330,7 +334,7 @@
 		35B695F02A30775E006F1904 /* Submesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
 		35B695F22A3080D9006F1904 /* Object3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Object3D.swift; sourceTree = "<group>"; };
 		35D2CEB12B55064B00365E8E /* DatabaseRecordGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordGrid.swift; sourceTree = "<group>"; };
-		35D2CEB52B553EDD00365E8E /* ItemGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemGrid.swift; sourceTree = "<group>"; };
+		35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabaseView.swift; sourceTree = "<group>"; };
 		35E013612BAAE19300242F45 /* AsyncContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentView.swift; sourceTree = "<group>"; };
 		35F50CC82BB3FD5000B36455 /* LoginClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginClient.swift; sourceTree = "<group>"; };
 		35F50CCB2BB4615F00B36455 /* ConnectionTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionTestView.swift; sourceTree = "<group>"; };
@@ -376,7 +380,7 @@
 		3514BF422B4526D00065ED89 /* Item */ = {
 			isa = PBXGroup;
 			children = (
-				35D2CEB52B553EDD00365E8E /* ItemGrid.swift */,
+				35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */,
 				353B4F1B2B451F1300605E92 /* ItemGridCell.swift */,
 				3514BF442B4526F40065ED89 /* ItemInfoView.swift */,
 			);
@@ -416,6 +420,8 @@
 		35239DF32BBD7D630039F7D5 /* ObservableObjects */ = {
 			isa = PBXGroup;
 			children = (
+				35239DF62BBDA0760039F7D5 /* AsyncContentStatus.swift */,
+				35239DF42BBD7F8B0039F7D5 /* ObservableItemDatabase.swift */,
 				35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */,
 			);
 			path = ObservableObjects;
@@ -1047,6 +1053,7 @@
 				3582FFC82B8DB73B00E746D7 /* FileThumbnailView.swift in Sources */,
 				35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */,
 				35B3BA252A08C01600B4540B /* GroundShaders.metal in Sources */,
+				35239DF72BBDA0760039F7D5 /* AsyncContentStatus.swift in Sources */,
 				35652B432B960D100075AD71 /* MapGrid.swift in Sources */,
 				353098322B148E4100F32B62 /* Model.swift in Sources */,
 				355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */,
@@ -1061,6 +1068,7 @@
 				35B3BA032A08C01600B4540B /* String.Encoding+KoreanEUC.swift in Sources */,
 				35B3BA112A08C01600B4540B /* RSWRenderer.swift in Sources */,
 				35B3BA162A08C01600B4540B /* File+Type.swift in Sources */,
+				35239DF52BBD7F8B0039F7D5 /* ObservableItemDatabase.swift in Sources */,
 				35B3BA262A08C01600B4540B /* RendererCommon.swift in Sources */,
 				356BF6732AFC8964005B67F7 /* Stream.swift in Sources */,
 				356BF67B2B037088005B67F7 /* ACT+AnimatedImage.swift in Sources */,
@@ -1094,7 +1102,7 @@
 				3511C1CC2B0A4EAE006DD639 /* GAT+Image.swift in Sources */,
 				356BF6842B04F569005B67F7 /* ImageCollectionViewCell.swift in Sources */,
 				35F50CCC2BB4615F00B36455 /* ConnectionTestView.swift in Sources */,
-				35D2CEB62B553EDD00365E8E /* ItemGrid.swift in Sources */,
+				35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */,
 				353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */,
 				35B3B9E52A08C01600B4540B /* Document.swift in Sources */,
 				3514BF842B4801E20065ED89 /* JobGridCell.swift in Sources */,

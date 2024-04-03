@@ -8,13 +8,6 @@
 
 import SwiftUI
 
-enum AsyncContentStatus<Value> {
-    case notYetLoaded
-    case loading
-    case loaded(Value)
-    case failed(Error)
-}
-
 struct AsyncContentView<Value, Content>: View where Content: View {
     let status: AsyncContentStatus<Value>
     let content: (Value) -> Content

@@ -32,7 +32,7 @@ struct JobGrid: View {
 
     private func filter(jobs: [JobStats], searchText: String) -> [JobStats] {
         jobs.filter { jobStats in
-            jobStats.job.description.localizedCaseInsensitiveContains(searchText)
+            jobStats.job.description.localizedStandardContains(searchText)
         }
     }
 }

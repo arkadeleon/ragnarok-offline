@@ -32,7 +32,7 @@ struct MapGrid: View {
 
     private func filter(maps: [Map], searchText: String) -> [Map] {
         maps.filter { map in
-            map.name.localizedCaseInsensitiveContains(searchText)
+            map.name.localizedStandardContains(searchText)
         }
     }
 }
