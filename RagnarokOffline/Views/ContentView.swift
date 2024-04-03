@@ -15,18 +15,14 @@ import rAthenaMap
 import rAthenaWeb
 
 struct ContentView: View {
-    private let filesView = FilesView(title: "Files", directory: .directory(ClientResourceBundle.shared.url))
-
-    private let servers: [Server] = [
-        LoginServer.shared,
-        CharServer.shared,
-        MapServer.shared,
-        WebServer.shared,
-    ]
+    @StateObject private var loginServer = ObservableServer(server: LoginServer.shared)
+    @StateObject private var charServer = ObservableServer(server: CharServer.shared)
+    @StateObject private var mapServer = ObservableServer(server: MapServer.shared)
+    @StateObject private var webServer = ObservableServer(server: WebServer.shared)
 
     private let database = Database.renewal
 
-    @State private var serverStatuses: [String : ServerStatus] = [:]
+    private let filesView = FilesView(title: "Files", directory: .directory(ClientResourceBundle.shared.url))
 
     @State private var isSettingsPresented = false
 
@@ -59,19 +55,47 @@ struct ContentView: View {
                 }
 
                 Section("Server") {
-                    ForEach(servers, id: \.name) { server in
-                        NavigationLink {
-                            ServerView(server: server)
+                    NavigationLink {
+                        ServerView(server: loginServer)
+                    } label: {
+                        LabeledContent {
+                            Text(loginServer.status.description)
+                                .font(.footnote)
                         } label: {
-                            LabeledContent {
-                                Text(serverStatuses[server.name]?.description ?? "")
-                                    .font(.footnote)
-                            } label: {
-                                Label(server.name, systemImage: "terminal")
-                            }
+                            Label(loginServer.name, systemImage: "terminal")
                         }
-                        .onReceive(server.publisher(for: \.status).receive(on: RunLoop.main)) { status in
-                            serverStatuses[server.name] = status
+                    }
+
+                    NavigationLink {
+                        ServerView(server: charServer)
+                    } label: {
+                        LabeledContent {
+                            Text(charServer.status.description)
+                                .font(.footnote)
+                        } label: {
+                            Label(charServer.name, systemImage: "terminal")
+                        }
+                    }
+
+                    NavigationLink {
+                        ServerView(server: mapServer)
+                    } label: {
+                        LabeledContent {
+                            Text(mapServer.status.description)
+                                .font(.footnote)
+                        } label: {
+                            Label(mapServer.name, systemImage: "terminal")
+                        }
+                    }
+
+                    NavigationLink {
+                        ServerView(server: webServer)
+                    } label: {
+                        LabeledContent {
+                            Text(webServer.status.description)
+                                .font(.footnote)
+                        } label: {
+                            Label(webServer.name, systemImage: "terminal")
                         }
                     }
 
@@ -120,13 +144,7 @@ struct ContentView: View {
             .toolbar {
                 Menu {
                     Button {
-                        Task {
-                            async let startLoginServer = LoginServer.shared.start()
-                            async let startCharServer = CharServer.shared.start()
-                            async let startMapServer = MapServer.shared.start()
-                            async let startWebServer = WebServer.shared.start()
-                            _ = await (startLoginServer, startCharServer, startMapServer, startWebServer)
-                        }
+                        startAllServers()
                     } label: {
                         Label("Start All Servers", systemImage: "play")
                     }
@@ -146,6 +164,13 @@ struct ContentView: View {
 
             filesView
         }
+    }
+
+    private func startAllServers() {
+        loginServer.start()
+        charServer.start()
+        mapServer.start()
+        webServer.start()
     }
 }
 

@@ -10,22 +10,16 @@ import SwiftUI
 import rAthenaCommon
 
 struct ServerView: View {
-    let server: Server
-
-    private let terminalView = TerminalView()
-
-    @State private var serverStatus: ServerStatus = .notStarted
+    @ObservedObject var server: ObservableServer
 
     var body: some View {
         ZStack {
-            terminalView
+            server.terminalView
                 .ignoresSafeArea(edges: .bottom)
 
-            if serverStatus == .notStarted {
+            if server.status == .notStarted {
                 Button {
-                    Task {
-                        await server.start()
-                    }
+                    server.start()
                 } label: {
                     Image(systemName: "play")
                         .font(.system(size: 40))
@@ -41,23 +35,11 @@ struct ServerView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    terminalView.clear()
+                    server.clearTerminal()
                 } label: {
                     Image(systemName: "trash")
                 }
             }
-        }
-        .task {
-            server.outputHandler = { data in
-                if let data = String(data: data, encoding: .isoLatin1)?
-                    .replacingOccurrences(of: "\n", with: "\r\n")
-                    .data(using: .isoLatin1) {
-                    terminalView.appendBuffer(data)
-                }
-            }
-        }
-        .onReceive(server.publisher(for: \.status)) { status in
-            serverStatus = status
         }
     }
 }

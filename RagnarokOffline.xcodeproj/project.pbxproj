@@ -26,6 +26,7 @@
 		3514BF862B4801EB0065ED89 /* JobInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF852B4801EB0065ED89 /* JobInfoView.swift */; };
 		3514BF892B48642B0065ED89 /* Terminal in Frameworks */ = {isa = PBXBuildFile; productRef = 3514BF882B48642B0065ED89 /* Terminal */; };
 		3514BF8D2B4BE93A0065ED89 /* Gender+ResourceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF8C2B4BE93A0065ED89 /* Gender+ResourceName.swift */; };
+		35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */; };
 		3523B57F2B97769D00CCE722 /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 3523B57E2B97769D00CCE722 /* Lua */; };
 		3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */; };
 		3530982E2B145D6A00F32B62 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982D2B145D6A00F32B62 /* Ground.swift */; };
@@ -209,6 +210,7 @@
 		3514BF832B4801E20065ED89 /* JobGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobGridCell.swift; sourceTree = "<group>"; };
 		3514BF852B4801EB0065ED89 /* JobInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInfoView.swift; sourceTree = "<group>"; };
 		3514BF8C2B4BE93A0065ED89 /* Gender+ResourceName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gender+ResourceName.swift"; sourceTree = "<group>"; };
+		35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableServer.swift; sourceTree = "<group>"; };
 		3523B57D2B97768A00CCE722 /* swift-lua */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "swift-lua"; sourceTree = "<group>"; };
 		3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordInfoSection.swift; sourceTree = "<group>"; };
 		35270D2B2A68F4610001A8BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -644,8 +646,9 @@
 		35A2ABBA2B3AC69F0026DAC2 /* Server */ = {
 			isa = PBXGroup;
 			children = (
-				35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */,
+				35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */,
 				35E013632BB170E800242F45 /* ServerStatus+CustomStringConvertible.swift */,
+				35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */,
 			);
 			path = Server;
 			sourceTree = "<group>";
@@ -1030,6 +1033,7 @@
 				3514BF492B4532C80065ED89 /* ClientSettings.swift in Sources */,
 				35B3BA0E2A08C01600B4540B /* FileThumbnailGenerator.swift in Sources */,
 				35D2CEB22B55064B00365E8E /* DatabaseRecordGrid.swift in Sources */,
+				35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */,
 				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,
 				3552D87A2B318323004831D0 /* StillImageActivityItem.swift in Sources */,
 				35B3BA042A08C01600B4540B /* SGLMath+Calculate.swift in Sources */,
