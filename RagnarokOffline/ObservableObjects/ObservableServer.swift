@@ -14,9 +14,10 @@ class ObservableServer: ObservableObject {
     private let server: Server
 
     let name: String
-    let terminalView = TerminalView()
-
     @Published var status: ServerStatus
+
+    private(set) var cachedOutput = Data()
+    var outputHandler: ServerOutputHandler?
 
     private var subscriptions = Set<AnyCancellable>()
 
@@ -31,7 +32,7 @@ class ObservableServer: ObservableObject {
             .assign(to: \.status, on: self)
             .store(in: &subscriptions)
 
-        server.outputHandler = outputHandler
+        server.outputHandler = handleOutput
     }
 
     func start() {
@@ -40,15 +41,25 @@ class ObservableServer: ObservableObject {
         }
     }
 
-    func clearTerminal() {
-        terminalView.clear()
-    }
-
-    private func outputHandler(_ data: Data) {
+    private func handleOutput(_ data: Data) {
         if let data = String(data: data, encoding: .isoLatin1)?
             .replacingOccurrences(of: "\n", with: "\r\n")
             .data(using: .isoLatin1) {
-            terminalView.appendBuffer(data)
+            cachedOutput.append(data)
+            outputHandler?(data)
+        }
+    }
+}
+
+extension ServerStatus: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .notStarted: "NOT STARTED"
+        case .starting: "STARTING"
+        case .running: "RUNNING"
+        case .stopping: "STOPPING"
+        case .stopped: "STOPPED"
+        @unknown default: ""
         }
     }
 }

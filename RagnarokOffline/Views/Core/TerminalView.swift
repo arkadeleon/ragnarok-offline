@@ -27,6 +27,10 @@ struct TerminalView: UIViewRepresentable {
         terminalView.appendBuffer(buffer)
     }
 
+    func scrollToEnd() {
+        terminalView.terminalScroll(.end)
+    }
+
     func clear() {
         terminalView.terminalClear(.reset)
     }
