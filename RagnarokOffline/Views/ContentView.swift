@@ -22,6 +22,7 @@ struct ContentView: View {
 
     private let database = Database.renewal
     @StateObject private var itemDatabase = ObservableItemDatabase(database: .renewal)
+    @StateObject private var monsterDatabase = ObservableMonsterDatabase(database: .renewal)
 
     private let filesView = FilesView(title: "Files", directory: .directory(ClientResourceBundle.shared.url))
 
@@ -117,9 +118,9 @@ struct ContentView: View {
                     }
 
                     NavigationLink {
-                        MonsterGrid(database: database)
+                        MonsterDatabaseView(monsterDatabase: monsterDatabase)
                     } label: {
-                        Label("Monsters", systemImage: "pawprint")
+                        Label("Monster Database", systemImage: "pawprint")
                     }
 
                     NavigationLink {
@@ -172,11 +173,5 @@ struct ContentView: View {
         charServer.start()
         mapServer.start()
         webServer.start()
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }

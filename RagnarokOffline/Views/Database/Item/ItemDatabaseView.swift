@@ -12,7 +12,7 @@ struct ItemDatabaseView: View {
     @ObservedObject var itemDatabase: ObservableItemDatabase
 
     var body: some View {
-        AsyncContentView(status: itemDatabase.status) { records in
+        AsyncContentView(status: itemDatabase.status) { items in
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                     ForEach(itemDatabase.filteredItems) { item in

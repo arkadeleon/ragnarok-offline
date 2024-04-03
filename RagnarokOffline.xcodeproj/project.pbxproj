@@ -17,7 +17,7 @@
 		3514BF452B4526F40065ED89 /* ItemInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF442B4526F40065ED89 /* ItemInfoView.swift */; };
 		3514BF492B4532C80065ED89 /* ClientSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF482B4532C80065ED89 /* ClientSettings.swift */; };
 		3514BF5B2B454A040065ED89 /* SkillGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF5A2B454A040065ED89 /* SkillGridCell.swift */; };
-		3514BF5E2B4557950065ED89 /* MonsterGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF5D2B4557950065ED89 /* MonsterGrid.swift */; };
+		3514BF5E2B4557950065ED89 /* MonsterDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF5D2B4557950065ED89 /* MonsterDatabaseView.swift */; };
 		3514BF602B455EF90065ED89 /* MonsterGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF5F2B455EF90065ED89 /* MonsterGridCell.swift */; };
 		3514BF622B4560730065ED89 /* MonsterInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF612B4560730065ED89 /* MonsterInfoView.swift */; };
 		3514BF7F2B47D64F0065ED89 /* Job+ResourceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF7E2B47D64F0065ED89 /* Job+ResourceName.swift */; };
@@ -29,6 +29,7 @@
 		35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */; };
 		35239DF52BBD7F8B0039F7D5 /* ObservableItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF42BBD7F8B0039F7D5 /* ObservableItemDatabase.swift */; };
 		35239DF72BBDA0760039F7D5 /* AsyncContentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF62BBDA0760039F7D5 /* AsyncContentStatus.swift */; };
+		35239DF92BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF82BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift */; };
 		3523B57F2B97769D00CCE722 /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 3523B57E2B97769D00CCE722 /* Lua */; };
 		3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */; };
 		3530982E2B145D6A00F32B62 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982D2B145D6A00F32B62 /* Ground.swift */; };
@@ -203,7 +204,7 @@
 		3514BF442B4526F40065ED89 /* ItemInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemInfoView.swift; sourceTree = "<group>"; };
 		3514BF482B4532C80065ED89 /* ClientSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSettings.swift; sourceTree = "<group>"; };
 		3514BF5A2B454A040065ED89 /* SkillGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillGridCell.swift; sourceTree = "<group>"; };
-		3514BF5D2B4557950065ED89 /* MonsterGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterGrid.swift; sourceTree = "<group>"; };
+		3514BF5D2B4557950065ED89 /* MonsterDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDatabaseView.swift; sourceTree = "<group>"; };
 		3514BF5F2B455EF90065ED89 /* MonsterGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterGridCell.swift; sourceTree = "<group>"; };
 		3514BF612B4560730065ED89 /* MonsterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterInfoView.swift; sourceTree = "<group>"; };
 		3514BF7E2B47D64F0065ED89 /* Job+ResourceName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Job+ResourceName.swift"; sourceTree = "<group>"; };
@@ -214,6 +215,7 @@
 		35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableServer.swift; sourceTree = "<group>"; };
 		35239DF42BBD7F8B0039F7D5 /* ObservableItemDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableItemDatabase.swift; sourceTree = "<group>"; };
 		35239DF62BBDA0760039F7D5 /* AsyncContentStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentStatus.swift; sourceTree = "<group>"; };
+		35239DF82BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMonsterDatabase.swift; sourceTree = "<group>"; };
 		3523B57D2B97768A00CCE722 /* swift-lua */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "swift-lua"; sourceTree = "<group>"; };
 		3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordInfoSection.swift; sourceTree = "<group>"; };
 		35270D2B2A68F4610001A8BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -400,7 +402,7 @@
 		3514BF5C2B4557870065ED89 /* Monster */ = {
 			isa = PBXGroup;
 			children = (
-				3514BF5D2B4557950065ED89 /* MonsterGrid.swift */,
+				3514BF5D2B4557950065ED89 /* MonsterDatabaseView.swift */,
 				3514BF5F2B455EF90065ED89 /* MonsterGridCell.swift */,
 				3514BF612B4560730065ED89 /* MonsterInfoView.swift */,
 			);
@@ -421,8 +423,9 @@
 			isa = PBXGroup;
 			children = (
 				35239DF62BBDA0760039F7D5 /* AsyncContentStatus.swift */,
-				35239DF42BBD7F8B0039F7D5 /* ObservableItemDatabase.swift */,
 				35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */,
+				35239DF42BBD7F8B0039F7D5 /* ObservableItemDatabase.swift */,
+				35239DF82BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift */,
 			);
 			path = ObservableObjects;
 			sourceTree = "<group>";
@@ -1033,7 +1036,7 @@
 				356BF6882B060243005B67F7 /* FilePreviewViewController.swift in Sources */,
 				35B3BA272A08C01600B4540B /* ModelRenderer.swift in Sources */,
 				3514BF622B4560730065ED89 /* MonsterInfoView.swift in Sources */,
-				3514BF5E2B4557950065ED89 /* MonsterGrid.swift in Sources */,
+				3514BF5E2B4557950065ED89 /* MonsterDatabaseView.swift in Sources */,
 				35B3B9E42A08C01600B4540B /* STR.swift in Sources */,
 				35B3BA1B2A08C01600B4540B /* AudioFilePreviewViewController.swift in Sources */,
 				3552D8782B3182A8004831D0 /* AnimatedImageActivityItem.swift in Sources */,
@@ -1116,6 +1119,7 @@
 				3514BF602B455EF90065ED89 /* MonsterGridCell.swift in Sources */,
 				3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */,
 				35B3BA172A08C01600B4540B /* FilePasteboard.swift in Sources */,
+				35239DF92BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift in Sources */,
 				3582FFCE2B8DC07E00E746D7 /* File+Actions.swift in Sources */,
 				356BF67F2B0495FA005B67F7 /* RLE.swift in Sources */,
 				359C6E122B187AE60077CB4C /* SIMD+Encodable.swift in Sources */,
