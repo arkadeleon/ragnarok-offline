@@ -197,13 +197,11 @@ struct MonsterInfoView: View {
 
         do {
             var spawnMaps: [SpawnMap] = []
-            let monsterSpawns = try await database.monsterSpawns().joined()
+            let monsterSpawns = try await database.monsterSpawns(forMonster: monster)
             for monsterSpawn in monsterSpawns {
-                if monsterSpawn.monsterID == monster.id || monsterSpawn.monsterAegisName == monster.aegisName {
-                    let map = try await database.map(forName: monsterSpawn.mapName)
-                    if !spawnMaps.contains(where: { $0.map == map }) {
-                        spawnMaps.append((map, monsterSpawn))
-                    }
+                let map = try await database.map(forName: monsterSpawn.mapName)
+                if !spawnMaps.contains(where: { $0.map == map }) {
+                    spawnMaps.append((map, monsterSpawn))
                 }
             }
             self.spawnMaps = spawnMaps

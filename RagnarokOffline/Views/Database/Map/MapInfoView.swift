@@ -52,19 +52,17 @@ struct MapInfoView: View {
 
         do {
             var spawnMonsters: [SpawnMonster] = []
-            let monsterSpawns = try await database.monsterSpawns().joined()
+            let monsterSpawns = try await database.monsterSpawns(forMap: map)
             for monsterSpawn in monsterSpawns {
-                if monsterSpawn.mapName == map.name {
-                    if let monsterID = monsterSpawn.monsterID {
-                        let monster = try await database.monster(forID: monsterID)
-                        if !spawnMonsters.contains(where: { $0.monster.id == monsterID }) {
-                            spawnMonsters.append((monster, monsterSpawn))
-                        }
-                    } else if let monsterAegisName = monsterSpawn.monsterAegisName {
-                        let monster = try await database.monster(forAegisName: monsterAegisName)
-                        if !spawnMonsters.contains(where: { $0.monster.aegisName == monsterAegisName }) {
-                            spawnMonsters.append((monster, monsterSpawn))
-                        }
+                if let monsterID = monsterSpawn.monsterID {
+                    let monster = try await database.monster(forID: monsterID)
+                    if !spawnMonsters.contains(where: { $0.monster.id == monsterID }) {
+                        spawnMonsters.append((monster, monsterSpawn))
+                    }
+                } else if let monsterAegisName = monsterSpawn.monsterAegisName {
+                    let monster = try await database.monster(forAegisName: monsterAegisName)
+                    if !spawnMonsters.contains(where: { $0.monster.aegisName == monsterAegisName }) {
+                        spawnMonsters.append((monster, monsterSpawn))
                     }
                 }
             }
