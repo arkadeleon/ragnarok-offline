@@ -24,6 +24,7 @@ struct ContentView: View {
     @StateObject private var itemDatabase = ObservableItemDatabase(database: .renewal)
     @StateObject private var monsterDatabase = ObservableMonsterDatabase(database: .renewal)
     @StateObject private var jobDatabase = ObservableJobDatabase(database: .renewal)
+    @StateObject private var skillDatabase = ObservableSkillDatabase(database: .renewal)
 
     private let filesView = FilesView(title: "Files", directory: .directory(ClientResourceBundle.shared.url))
 
@@ -133,9 +134,9 @@ struct ContentView: View {
                         }
 
                         NavigationLink {
-                            SkillGrid(database: database)
+                            SkillDatabaseView(skillDatabase: skillDatabase)
                         } label: {
-                            Label("Skills", systemImage: "arrow.up.heart")
+                            Label("Skill Database", systemImage: "arrow.up.heart")
                         }
 
                         NavigationLink {

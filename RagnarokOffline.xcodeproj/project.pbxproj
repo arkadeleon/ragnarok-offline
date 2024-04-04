@@ -31,13 +31,14 @@
 		35239DF72BBDA0760039F7D5 /* AsyncContentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF62BBDA0760039F7D5 /* AsyncContentStatus.swift */; };
 		35239DF92BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF82BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift */; };
 		35239DFB2BBEEF890039F7D5 /* ObservableJobDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DFA2BBEEF890039F7D5 /* ObservableJobDatabase.swift */; };
+		35239DFD2BBEF1C80039F7D5 /* ObservableSkillDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DFC2BBEF1C80039F7D5 /* ObservableSkillDatabase.swift */; };
 		3523B57F2B97769D00CCE722 /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 3523B57E2B97769D00CCE722 /* Lua */; };
 		3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */; };
 		3530982E2B145D6A00F32B62 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982D2B145D6A00F32B62 /* Ground.swift */; };
 		353098302B1480A600F32B62 /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982F2B1480A600F32B62 /* Water.swift */; };
 		353098322B148E4100F32B62 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353098312B148E4100F32B62 /* Model.swift */; };
 		353B4F0C2B43A9AC00605E92 /* ClientResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0B2B43A9AC00605E92 /* ClientResourceManager.swift */; };
-		353B4F102B43AED300605E92 /* SkillGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0F2B43AED300605E92 /* SkillGrid.swift */; };
+		353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */; };
 		353B4F162B43F3BB00605E92 /* ClientResourceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F152B43F3BB00605E92 /* ClientResourceBundle.swift */; };
 		353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F172B44FFE100605E92 /* SkillInfoView.swift */; };
 		353B4F1C2B451F1300605E92 /* ItemGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F1B2B451F1300605E92 /* ItemGridCell.swift */; };
@@ -218,6 +219,7 @@
 		35239DF62BBDA0760039F7D5 /* AsyncContentStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentStatus.swift; sourceTree = "<group>"; };
 		35239DF82BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMonsterDatabase.swift; sourceTree = "<group>"; };
 		35239DFA2BBEEF890039F7D5 /* ObservableJobDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableJobDatabase.swift; sourceTree = "<group>"; };
+		35239DFC2BBEF1C80039F7D5 /* ObservableSkillDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableSkillDatabase.swift; sourceTree = "<group>"; };
 		3523B57D2B97768A00CCE722 /* swift-lua */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "swift-lua"; sourceTree = "<group>"; };
 		3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordInfoSection.swift; sourceTree = "<group>"; };
 		35270D2B2A68F4610001A8BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -225,7 +227,7 @@
 		3530982F2B1480A600F32B62 /* Water.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Water.swift; sourceTree = "<group>"; };
 		353098312B148E4100F32B62 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		353B4F0B2B43A9AC00605E92 /* ClientResourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientResourceManager.swift; sourceTree = "<group>"; };
-		353B4F0F2B43AED300605E92 /* SkillGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillGrid.swift; sourceTree = "<group>"; };
+		353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillDatabaseView.swift; sourceTree = "<group>"; };
 		353B4F152B43F3BB00605E92 /* ClientResourceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientResourceBundle.swift; sourceTree = "<group>"; };
 		353B4F172B44FFE100605E92 /* SkillInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillInfoView.swift; sourceTree = "<group>"; };
 		353B4F1B2B451F1300605E92 /* ItemGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemGridCell.swift; sourceTree = "<group>"; };
@@ -394,7 +396,7 @@
 		3514BF432B4526DE0065ED89 /* Skill */ = {
 			isa = PBXGroup;
 			children = (
-				353B4F0F2B43AED300605E92 /* SkillGrid.swift */,
+				353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */,
 				3514BF5A2B454A040065ED89 /* SkillGridCell.swift */,
 				353B4F172B44FFE100605E92 /* SkillInfoView.swift */,
 			);
@@ -429,6 +431,7 @@
 				35239DF42BBD7F8B0039F7D5 /* ObservableItemDatabase.swift */,
 				35239DF82BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift */,
 				35239DFA2BBEEF890039F7D5 /* ObservableJobDatabase.swift */,
+				35239DFC2BBEF1C80039F7D5 /* ObservableSkillDatabase.swift */,
 			);
 			path = ObservableObjects;
 			sourceTree = "<group>";
@@ -1011,6 +1014,7 @@
 				35B3BA202A08C01600B4540B /* RSMRenderer.swift in Sources */,
 				35B3B9E12A08C01600B4540B /* GRF.swift in Sources */,
 				35482AF12B2759DD0062DC4B /* File+RawData.swift in Sources */,
+				35239DFD2BBEF1C80039F7D5 /* ObservableSkillDatabase.swift in Sources */,
 				35B3B9E32A08C01600B4540B /* RSM.swift in Sources */,
 				35F50CC92BB3FD5000B36455 /* LoginClient.swift in Sources */,
 				356363672B3F303F00F7C249 /* ClientDatabase.swift in Sources */,
@@ -1086,7 +1090,7 @@
 				35B3B9E62A08C01600B4540B /* SPR.swift in Sources */,
 				35B3BA492A08DA0C00B4540B /* StillImage.swift in Sources */,
 				3514BF7F2B47D64F0065ED89 /* Job+ResourceName.swift in Sources */,
-				353B4F102B43AED300605E92 /* SkillGrid.swift in Sources */,
+				353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */,
 				356BF67D2B0489CE005B67F7 /* SPR+Image.swift in Sources */,
 				35B3BA282A08C01600B4540B /* WaterRenderer.swift in Sources */,
 				356BF6712AFC8964005B67F7 /* BinaryReader.swift in Sources */,
