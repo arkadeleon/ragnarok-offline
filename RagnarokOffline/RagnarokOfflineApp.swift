@@ -7,16 +7,12 @@
 //
 
 import SwiftUI
-import rAthenaResource
 
 @main
 struct RagnarokOfflineApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .task {
-                    try? ResourceBundle.shared.load()
-                }
         }
     }
 }

@@ -9,6 +9,7 @@
 import Combine
 import rAthenaDatabase
 
+@MainActor
 class ObservableItemDatabase: ObservableObject {
     let database: Database
 
