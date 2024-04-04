@@ -20,11 +20,11 @@ struct ContentView: View {
     @StateObject private var mapServer = ObservableServer(server: MapServer.shared)
     @StateObject private var webServer = ObservableServer(server: WebServer.shared)
 
-    private let database = Database.renewal
     @StateObject private var itemDatabase = ObservableItemDatabase(database: .renewal)
     @StateObject private var monsterDatabase = ObservableMonsterDatabase(database: .renewal)
     @StateObject private var jobDatabase = ObservableJobDatabase(database: .renewal)
     @StateObject private var skillDatabase = ObservableSkillDatabase(database: .renewal)
+    @StateObject private var mapDatabase = ObservableMapDatabase(database: .renewal)
 
     private let filesView = FilesView(title: "Files", directory: .directory(ClientResourceBundle.shared.url))
 
@@ -140,9 +140,9 @@ struct ContentView: View {
                         }
 
                         NavigationLink {
-                            MapGrid(database: database)
+                            MapDatabaseView(mapDatabase: mapDatabase)
                         } label: {
-                            Label("Maps", systemImage: "map")
+                            Label("Map Database", systemImage: "map")
                         }
                     }
                 }
