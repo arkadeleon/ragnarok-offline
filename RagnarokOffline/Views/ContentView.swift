@@ -23,6 +23,7 @@ struct ContentView: View {
     private let database = Database.renewal
     @StateObject private var itemDatabase = ObservableItemDatabase(database: .renewal)
     @StateObject private var monsterDatabase = ObservableMonsterDatabase(database: .renewal)
+    @StateObject private var jobDatabase = ObservableJobDatabase(database: .renewal)
 
     private let filesView = FilesView(title: "Files", directory: .directory(ClientResourceBundle.shared.url))
 
@@ -126,9 +127,9 @@ struct ContentView: View {
                         }
 
                         NavigationLink {
-                            JobGrid(database: database)
+                            JobDatabaseView(jobDatabase: jobDatabase)
                         } label: {
-                            Label("Jobs", systemImage: "person")
+                            Label("Job Database", systemImage: "person")
                         }
 
                         NavigationLink {

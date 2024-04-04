@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import rAthenaDatabase
 
 struct MonsterDatabaseView: View {
     @ObservedObject var monsterDatabase: ObservableMonsterDatabase
