@@ -21,21 +21,19 @@ class ObservableSkillDatabase: ObservableObject {
         self.database = database
     }
 
-    func fetchSkills() {
+    func fetchSkills() async {
         guard case .notYetLoaded = status else {
             return
         }
 
         status = .loading
 
-        Task {
-            do {
-                let skills = try await database.skills().joined()
-                status = .loaded(skills)
-                filterSkills()
-            } catch {
-                status = .failed(error)
-            }
+        do {
+            let skills = try await database.skills()
+            status = .loaded(skills)
+            filterSkills()
+        } catch {
+            status = .failed(error)
         }
     }
 

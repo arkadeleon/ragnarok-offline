@@ -21,21 +21,19 @@ class ObservableMapDatabase: ObservableObject {
         self.database = database
     }
 
-    func fetchMaps() {
+    func fetchMaps() async {
         guard case .notYetLoaded = status else {
             return
         }
 
         status = .loading
 
-        Task {
-            do {
-                let maps = try await database.maps().joined()
-                status = .loaded(maps)
-                filterMaps()
-            } catch {
-                status = .failed(error)
-            }
+        do {
+            let maps = try await database.maps()
+            status = .loaded(maps)
+            filterMaps()
+        } catch {
+            status = .failed(error)
         }
     }
 

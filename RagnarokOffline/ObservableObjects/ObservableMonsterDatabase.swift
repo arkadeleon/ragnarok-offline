@@ -21,21 +21,19 @@ class ObservableMonsterDatabase: ObservableObject {
         self.database = database
     }
 
-    func fetchMonsters() {
+    func fetchMonsters() async {
         guard case .notYetLoaded = status else {
             return
         }
 
         status = .loading
 
-        Task {
-            do {
-                let monsters = try await database.monsters().joined()
-                status = .loaded(monsters)
-                filterMonsters()
-            } catch {
-                status = .failed(error)
-            }
+        do {
+            let monsters = try await database.monsters()
+            status = .loaded(monsters)
+            filterMonsters()
+        } catch {
+            status = .failed(error)
         }
     }
 

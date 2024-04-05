@@ -32,7 +32,7 @@ struct MapDatabaseView: View {
         .navigationTitle("Map Database")
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            mapDatabase.fetchMaps()
+            await mapDatabase.fetchMaps()
         }
     }
 }

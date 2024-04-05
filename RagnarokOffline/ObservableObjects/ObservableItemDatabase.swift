@@ -21,29 +21,27 @@ class ObservableItemDatabase: ObservableObject {
         self.database = database
     }
 
-    func fetchItems() {
+    func fetchItems() async {
         guard case .notYetLoaded = status else {
             return
         }
 
         status = .loading
 
-        Task {
-            do {
-                let partitions = await database.items()
-                for try await partition in partitions {
-                    switch status {
-                    case .loaded(let records):
-                        status = .loaded(records + partition.records)
-                        filterItems()
-                    default:
-                        status = .loaded(partition.records)
-                        filterItems()
-                    }
-                }
-            } catch {
-                status = .failed(error)
-            }
+        do {
+            let usableItems = try await database.usableItems()
+            status = .loaded(usableItems)
+            filterItems()
+
+            let equipItems = try await database.equipItems()
+            status = .loaded(usableItems + equipItems)
+            filterItems()
+
+            let etcItems = try await database.etcItems()
+            status = .loaded(usableItems + equipItems + etcItems)
+            filterItems()
+        } catch {
+            status = .failed(error)
         }
     }
 

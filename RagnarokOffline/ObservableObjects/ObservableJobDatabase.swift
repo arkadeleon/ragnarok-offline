@@ -21,21 +21,19 @@ class ObservableJobDatabase: ObservableObject {
         self.database = database
     }
 
-    func fetchJobs() {
+    func fetchJobs() async {
         guard case .notYetLoaded = status else {
             return
         }
 
         status = .loading
 
-        Task {
-            do {
-                let jobs = try await database.jobs().joined()
-                status = .loaded(jobs)
-                filterJobs()
-            } catch {
-                status = .failed(error)
-            }
+        do {
+            let jobs = try await database.jobs()
+            status = .loaded(jobs)
+            filterJobs()
+        } catch {
+            status = .failed(error)
         }
     }
 

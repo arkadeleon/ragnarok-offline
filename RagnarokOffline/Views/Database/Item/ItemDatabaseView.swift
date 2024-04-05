@@ -32,7 +32,7 @@ struct ItemDatabaseView: View {
         .navigationTitle("Item Database")
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            itemDatabase.fetchItems()
+            await itemDatabase.fetchItems()
         }
     }
 }

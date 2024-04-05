@@ -33,7 +33,7 @@ struct MonsterDatabaseView: View {
         .navigationTitle("Monster Database")
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            monsterDatabase.fetchMonsters()
+            await monsterDatabase.fetchMonsters()
         }
     }
 }

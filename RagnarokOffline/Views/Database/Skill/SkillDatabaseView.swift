@@ -32,7 +32,7 @@ struct SkillDatabaseView: View {
         .navigationTitle("Skill Database")
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            skillDatabase.fetchSkills()
+            await skillDatabase.fetchSkills()
         }
     }
 }

@@ -154,7 +154,6 @@
 		35B695EF2A30763A006F1904 /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695EE2A30763A006F1904 /* Mesh.swift */; };
 		35B695F12A30775E006F1904 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695F02A30775E006F1904 /* Submesh.swift */; };
 		35B695F32A3080D9006F1904 /* Object3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695F22A3080D9006F1904 /* Object3D.swift */; };
-		35D2CEB22B55064B00365E8E /* DatabaseRecordGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB12B55064B00365E8E /* DatabaseRecordGrid.swift */; };
 		35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */; };
 		35E013622BAAE19300242F45 /* AsyncContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E013612BAAE19300242F45 /* AsyncContentView.swift */; };
 		35F50CC92BB3FD5000B36455 /* LoginClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CC82BB3FD5000B36455 /* LoginClient.swift */; };
@@ -341,7 +340,6 @@
 		35B695EE2A30763A006F1904 /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
 		35B695F02A30775E006F1904 /* Submesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
 		35B695F22A3080D9006F1904 /* Object3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Object3D.swift; sourceTree = "<group>"; };
-		35D2CEB12B55064B00365E8E /* DatabaseRecordGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordGrid.swift; sourceTree = "<group>"; };
 		35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabaseView.swift; sourceTree = "<group>"; };
 		35E013612BAAE19300242F45 /* AsyncContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentView.swift; sourceTree = "<group>"; };
 		35F50CC82BB3FD5000B36455 /* LoginClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginClient.swift; sourceTree = "<group>"; };
@@ -499,7 +497,6 @@
 				3514BF802B4801C30065ED89 /* Job */,
 				3514BF432B4526DE0065ED89 /* Skill */,
 				35652B412B960CFC0075AD71 /* Map */,
-				35D2CEB12B55064B00365E8E /* DatabaseRecordGrid.swift */,
 				3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */,
 				35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */,
 			);
@@ -1056,7 +1053,6 @@
 				35B3B9E22A08C01600B4540B /* INI.swift in Sources */,
 				3514BF492B4532C80065ED89 /* ClientSettings.swift in Sources */,
 				35B3BA0E2A08C01600B4540B /* FileThumbnailGenerator.swift in Sources */,
-				35D2CEB22B55064B00365E8E /* DatabaseRecordGrid.swift in Sources */,
 				35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */,
 				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,
 				3552D87A2B318323004831D0 /* StillImageActivityItem.swift in Sources */,

@@ -33,7 +33,7 @@ struct JobDatabaseView: View {
         .navigationTitle("Job Database")
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            jobDatabase.fetchJobs()
+            await jobDatabase.fetchJobs()
         }
     }
 }
