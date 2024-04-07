@@ -21,16 +21,21 @@ struct SkillDatabaseView: View {
                 }
                 .padding(20)
             }
-            .searchable(text: $skillDatabase.searchText)
-            .onSubmit(of: .search) {
-                skillDatabase.filterSkills()
-            }
-            .onChange(of: skillDatabase.searchText) { _ in
-                skillDatabase.filterSkills()
+            .overlay {
+                if skillDatabase.filteredSkills.isEmpty {
+                    EmptyContentView("No Skills")
+                }
             }
         }
         .navigationTitle("Skill Database")
         .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $skillDatabase.searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .onSubmit(of: .search) {
+            skillDatabase.filterSkills()
+        }
+        .onChange(of: skillDatabase.searchText) { _ in
+            skillDatabase.filterSkills()
+        }
         .task {
             await skillDatabase.fetchSkills()
         }

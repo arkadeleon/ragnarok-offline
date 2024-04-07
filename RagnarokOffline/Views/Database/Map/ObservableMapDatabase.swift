@@ -45,10 +45,8 @@ class ObservableMapDatabase: ObservableObject {
         if searchText.isEmpty {
             filteredMaps = maps
         } else {
-            Task {
-                filteredMaps = maps.filter { map in
-                    map.name.localizedStandardContains(searchText)
-                }
+            filteredMaps = maps.filter { map in
+                map.name.localizedStandardContains(searchText)
             }
         }
     }

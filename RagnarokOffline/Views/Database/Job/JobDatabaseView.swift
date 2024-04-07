@@ -22,16 +22,21 @@ struct JobDatabaseView: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical, 30)
             }
-            .searchable(text: $jobDatabase.searchText)
-            .onSubmit(of: .search) {
-                jobDatabase.filterJobs()
-            }
-            .onChange(of: jobDatabase.searchText) { _ in
-                jobDatabase.filterJobs()
+            .overlay {
+                if jobDatabase.filteredJobs.isEmpty {
+                    EmptyContentView("No Jobs")
+                }
             }
         }
         .navigationTitle("Job Database")
         .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $jobDatabase.searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .onSubmit(of: .search) {
+            jobDatabase.filterJobs()
+        }
+        .onChange(of: jobDatabase.searchText) { _ in
+            jobDatabase.filterJobs()
+        }
         .task {
             await jobDatabase.fetchJobs()
         }

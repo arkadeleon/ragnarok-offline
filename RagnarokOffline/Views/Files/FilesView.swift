@@ -62,28 +62,33 @@ struct FilesView: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical, 30)
             }
-            .toolbar {
-                Menu {
-                    Button {
-                        pasteFile()
-                    } label: {
-                        Label("Paste", systemImage: "doc.on.clipboard")
-                    }
-                    .disabled(!directory.canPaste)
-                } label: {
-                    Image(systemName: "ellipsis.circle")
+            .overlay {
+                if filteredFiles.isEmpty {
+                    EmptyContentView("Empty Folder")
                 }
-            }
-            .searchable(text: $searchText)
-            .onSubmit(of: .search) {
-                filterFiles()
-            }
-            .onChange(of: searchText) { _ in
-                filterFiles()
             }
         }
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            Menu {
+                Button {
+                    pasteFile()
+                } label: {
+                    Label("Paste", systemImage: "doc.on.clipboard")
+                }
+                .disabled(!directory.canPaste)
+            } label: {
+                Image(systemName: "ellipsis.circle")
+            }
+        }
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .onSubmit(of: .search) {
+            filterFiles()
+        }
+        .onChange(of: searchText) { _ in
+            filterFiles()
+        }
         .sheet(item: $previewingFile) { file in
             FilePreviewPageView(file: file, files: filteredFiles.filter({ $0.canPreview }))
         }

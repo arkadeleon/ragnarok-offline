@@ -45,10 +45,8 @@ class ObservableSkillDatabase: ObservableObject {
         if searchText.isEmpty {
             filteredSkills = skills
         } else {
-            Task {
-                filteredSkills = skills.filter { skill in
-                    skill.name.localizedStandardContains(searchText)
-                }
+            filteredSkills = skills.filter { skill in
+                skill.name.localizedStandardContains(searchText)
             }
         }
     }

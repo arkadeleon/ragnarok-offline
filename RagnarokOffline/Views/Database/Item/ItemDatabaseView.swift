@@ -21,16 +21,21 @@ struct ItemDatabaseView: View {
                 }
                 .padding(20)
             }
-            .searchable(text: $itemDatabase.searchText)
-            .onSubmit(of: .search) {
-                itemDatabase.filterItems()
-            }
-            .onChange(of: itemDatabase.searchText) { _ in
-                itemDatabase.filterItems()
+            .overlay {
+                if itemDatabase.filteredItems.isEmpty {
+                    EmptyContentView("No Items")
+                }
             }
         }
         .navigationTitle("Item Database")
         .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $itemDatabase.searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .onSubmit(of: .search) {
+            itemDatabase.filterItems()
+        }
+        .onChange(of: itemDatabase.searchText) { _ in
+            itemDatabase.filterItems()
+        }
         .task {
             await itemDatabase.fetchItems()
         }

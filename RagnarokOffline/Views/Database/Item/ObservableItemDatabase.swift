@@ -53,10 +53,8 @@ class ObservableItemDatabase: ObservableObject {
         if searchText.isEmpty {
             filteredItems = items
         } else {
-            Task {
-                filteredItems = items.filter { item in
-                    item.name.localizedStandardContains(searchText)
-                }
+            filteredItems = items.filter { item in
+                item.name.localizedStandardContains(searchText)
             }
         }
     }

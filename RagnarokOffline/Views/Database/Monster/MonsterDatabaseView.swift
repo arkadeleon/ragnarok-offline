@@ -22,16 +22,21 @@ struct MonsterDatabaseView: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical, 30)
             }
-            .searchable(text: $monsterDatabase.searchText)
-            .onSubmit(of: .search) {
-                monsterDatabase.filterMonsters()
-            }
-            .onChange(of: monsterDatabase.searchText) { _ in
-                monsterDatabase.filterMonsters()
+            .overlay {
+                if monsterDatabase.filteredMonsters.isEmpty {
+                    EmptyContentView("No Monsters")
+                }
             }
         }
         .navigationTitle("Monster Database")
         .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $monsterDatabase.searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .onSubmit(of: .search) {
+            monsterDatabase.filterMonsters()
+        }
+        .onChange(of: monsterDatabase.searchText) { _ in
+            monsterDatabase.filterMonsters()
+        }
         .task {
             await monsterDatabase.fetchMonsters()
         }

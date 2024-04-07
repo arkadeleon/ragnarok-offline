@@ -45,10 +45,8 @@ class ObservableJobDatabase: ObservableObject {
         if searchText.isEmpty {
             filteredJobs = jobs
         } else {
-            Task {
-                filteredJobs = jobs.filter { jobStats in
-                    jobStats.job.description.localizedStandardContains(searchText)
-                }
+            filteredJobs = jobs.filter { jobStats in
+                jobStats.job.description.localizedStandardContains(searchText)
             }
         }
     }

@@ -45,10 +45,8 @@ class ObservableMonsterDatabase: ObservableObject {
         if searchText.isEmpty {
             filteredMonsters = monsters
         } else {
-            Task {
-                filteredMonsters = monsters.filter { monster in
-                    monster.name.localizedStandardContains(searchText)
-                }
+            filteredMonsters = monsters.filter { monster in
+                monster.name.localizedStandardContains(searchText)
             }
         }
     }

@@ -21,16 +21,21 @@ struct MapDatabaseView: View {
                 }
                 .padding(20)
             }
-            .searchable(text: $mapDatabase.searchText)
-            .onSubmit(of: .search) {
-                mapDatabase.filterMaps()
-            }
-            .onChange(of: mapDatabase.searchText) { _ in
-                mapDatabase.filterMaps()
+            .overlay {
+                if mapDatabase.filteredMaps.isEmpty {
+                    EmptyContentView("No Maps")
+                }
             }
         }
         .navigationTitle("Map Database")
         .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $mapDatabase.searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .onSubmit(of: .search) {
+            mapDatabase.filterMaps()
+        }
+        .onChange(of: mapDatabase.searchText) { _ in
+            mapDatabase.filterMaps()
+        }
         .task {
             await mapDatabase.fetchMaps()
         }
