@@ -12,25 +12,28 @@ struct JobDatabaseView: View {
     @ObservedObject var jobDatabase: ObservableJobDatabase
 
     var body: some View {
-        AsyncContentView(status: jobDatabase.status) { jobs in
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .center, spacing: 30) {
-                    ForEach(jobDatabase.filteredJobs) { jobStats in
-                        JobGridCell(database: jobDatabase.database, jobStats: jobStats)
-                    }
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .center, spacing: 30) {
+                ForEach(jobDatabase.filteredJobs) { jobStats in
+                    JobGridCell(database: jobDatabase.database, jobStats: jobStats)
                 }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 30)
             }
-            .overlay {
-                if jobDatabase.filteredJobs.isEmpty {
-                    EmptyContentView("No Jobs")
-                }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 30)
+        }
+        .overlay {
+            if jobDatabase.loadStatus == .loading {
+                ProgressView()
+            }
+        }
+        .overlay {
+            if jobDatabase.loadStatus == .loaded && jobDatabase.filteredJobs.isEmpty {
+                EmptyContentView("No Jobs")
             }
         }
         .navigationTitle("Job Database")
         .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $jobDatabase.searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .searchable(text: $jobDatabase.searchText)
         .onSubmit(of: .search) {
             jobDatabase.filterJobs()
         }

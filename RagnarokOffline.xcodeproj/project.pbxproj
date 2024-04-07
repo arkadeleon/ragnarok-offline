@@ -27,13 +27,14 @@
 		3514BF892B48642B0065ED89 /* Terminal in Frameworks */ = {isa = PBXBuildFile; productRef = 3514BF882B48642B0065ED89 /* Terminal */; };
 		3514BF8D2B4BE93A0065ED89 /* Gender+ResourceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF8C2B4BE93A0065ED89 /* Gender+ResourceName.swift */; };
 		35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */; };
-		35239DF72BBDA0760039F7D5 /* AsyncContentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF62BBDA0760039F7D5 /* AsyncContentStatus.swift */; };
+		35239DF72BBDA0760039F7D5 /* LoadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF62BBDA0760039F7D5 /* LoadStatus.swift */; };
 		35239DF92BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF82BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift */; };
 		35239DFB2BBEEF890039F7D5 /* ObservableJobDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DFA2BBEEF890039F7D5 /* ObservableJobDatabase.swift */; };
 		35239DFD2BBEF1C80039F7D5 /* ObservableSkillDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DFC2BBEF1C80039F7D5 /* ObservableSkillDatabase.swift */; };
 		35239DFF2BBEF4510039F7D5 /* ObservableMapDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DFE2BBEF4510039F7D5 /* ObservableMapDatabase.swift */; };
 		35239E012BC29A4E0039F7D5 /* ObservableItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239E002BC29A4E0039F7D5 /* ObservableItemDatabase.swift */; };
 		35239E032BC29F660039F7D5 /* EmptyContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239E022BC29F660039F7D5 /* EmptyContentView.swift */; };
+		35239E052BC2D5D60039F7D5 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */; };
 		3523B57F2B97769D00CCE722 /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 3523B57E2B97769D00CCE722 /* Lua */; };
 		3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */; };
 		3530982E2B145D6A00F32B62 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982D2B145D6A00F32B62 /* Ground.swift */; };
@@ -156,7 +157,6 @@
 		35B695F12A30775E006F1904 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695F02A30775E006F1904 /* Submesh.swift */; };
 		35B695F32A3080D9006F1904 /* Object3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695F22A3080D9006F1904 /* Object3D.swift */; };
 		35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */; };
-		35E013622BAAE19300242F45 /* AsyncContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E013612BAAE19300242F45 /* AsyncContentView.swift */; };
 		35F50CC92BB3FD5000B36455 /* LoginClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CC82BB3FD5000B36455 /* LoginClient.swift */; };
 		35F50CCC2BB4615F00B36455 /* ConnectionTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CCB2BB4615F00B36455 /* ConnectionTestView.swift */; };
 		35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */; };
@@ -216,13 +216,14 @@
 		3514BF852B4801EB0065ED89 /* JobInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInfoView.swift; sourceTree = "<group>"; };
 		3514BF8C2B4BE93A0065ED89 /* Gender+ResourceName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gender+ResourceName.swift"; sourceTree = "<group>"; };
 		35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableServer.swift; sourceTree = "<group>"; };
-		35239DF62BBDA0760039F7D5 /* AsyncContentStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentStatus.swift; sourceTree = "<group>"; };
+		35239DF62BBDA0760039F7D5 /* LoadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadStatus.swift; sourceTree = "<group>"; };
 		35239DF82BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMonsterDatabase.swift; sourceTree = "<group>"; };
 		35239DFA2BBEEF890039F7D5 /* ObservableJobDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableJobDatabase.swift; sourceTree = "<group>"; };
 		35239DFC2BBEF1C80039F7D5 /* ObservableSkillDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableSkillDatabase.swift; sourceTree = "<group>"; };
 		35239DFE2BBEF4510039F7D5 /* ObservableMapDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMapDatabase.swift; sourceTree = "<group>"; };
 		35239E002BC29A4E0039F7D5 /* ObservableItemDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableItemDatabase.swift; sourceTree = "<group>"; };
 		35239E022BC29F660039F7D5 /* EmptyContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyContentView.swift; sourceTree = "<group>"; };
+		35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
 		3523B57D2B97768A00CCE722 /* swift-lua */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "swift-lua"; sourceTree = "<group>"; };
 		3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordInfoSection.swift; sourceTree = "<group>"; };
 		35270D2B2A68F4610001A8BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -343,7 +344,6 @@
 		35B695F02A30775E006F1904 /* Submesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
 		35B695F22A3080D9006F1904 /* Object3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Object3D.swift; sourceTree = "<group>"; };
 		35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabaseView.swift; sourceTree = "<group>"; };
-		35E013612BAAE19300242F45 /* AsyncContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentView.swift; sourceTree = "<group>"; };
 		35F50CC82BB3FD5000B36455 /* LoginClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginClient.swift; sourceTree = "<group>"; };
 		35F50CCB2BB4615F00B36455 /* ConnectionTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionTestView.swift; sourceTree = "<group>"; };
 		35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordField.swift; sourceTree = "<group>"; };
@@ -506,9 +506,9 @@
 		355BC18A2B8F25A6002F0586 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				35239DF62BBDA0760039F7D5 /* AsyncContentStatus.swift */,
-				35E013612BAAE19300242F45 /* AsyncContentView.swift */,
 				35239E022BC29F660039F7D5 /* EmptyContentView.swift */,
+				35239DF62BBDA0760039F7D5 /* LoadStatus.swift */,
+				35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */,
 				3555E1162B7D12D9007CE4BA /* TerminalView.swift */,
 				355BC18B2B8F25C0002F0586 /* WebView.swift */,
 			);
@@ -1034,6 +1034,7 @@
 				3514BF822B4801D70065ED89 /* JobDatabaseView.swift in Sources */,
 				356BF6752AFCCBF1005B67F7 /* DES.swift in Sources */,
 				3552D8762B316876004831D0 /* SPRPreviewViewController.swift in Sources */,
+				35239E052BC2D5D60039F7D5 /* ProgressHUD.swift in Sources */,
 				356BF6702AFC8964005B67F7 /* FileStream.swift in Sources */,
 				356BF6882B060243005B67F7 /* FilePreviewViewController.swift in Sources */,
 				35B3BA272A08C01600B4540B /* ModelRenderer.swift in Sources */,
@@ -1059,7 +1060,7 @@
 				3582FFC82B8DB73B00E746D7 /* FileThumbnailView.swift in Sources */,
 				35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */,
 				35B3BA252A08C01600B4540B /* GroundShaders.metal in Sources */,
-				35239DF72BBDA0760039F7D5 /* AsyncContentStatus.swift in Sources */,
+				35239DF72BBDA0760039F7D5 /* LoadStatus.swift in Sources */,
 				35652B432B960D100075AD71 /* MapDatabaseView.swift in Sources */,
 				353098322B148E4100F32B62 /* Model.swift in Sources */,
 				355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */,
@@ -1067,7 +1068,6 @@
 				35B3BA0B2A08C01600B4540B /* SGLMath.swift in Sources */,
 				35B695F32A3080D9006F1904 /* Object3D.swift in Sources */,
 				354CB4612B2AA70F001FC2A1 /* FileThumbnailManager.swift in Sources */,
-				35E013622BAAE19300242F45 /* AsyncContentView.swift in Sources */,
 				3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */,
 				35B3BA192A08C01600B4540B /* ImageFilePreviewViewController.swift in Sources */,
 				3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */,

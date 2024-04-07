@@ -13,8 +13,9 @@ import rAthenaDatabase
 class ObservableMapDatabase: ObservableObject {
     let database: Database
 
-    @Published var status: AsyncContentStatus<[Map]> = .notYetLoaded
+    @Published var loadStatus: LoadStatus = .notYetLoaded
     @Published var searchText = ""
+    @Published var maps: [Map] = []
     @Published var filteredMaps: [Map] = []
 
     init(database: Database) {
@@ -22,26 +23,23 @@ class ObservableMapDatabase: ObservableObject {
     }
 
     func fetchMaps() async {
-        guard case .notYetLoaded = status else {
+        guard loadStatus == .notYetLoaded else {
             return
         }
 
-        status = .loading
+        loadStatus = .loading
 
         do {
-            let maps = try await database.maps()
-            status = .loaded(maps)
+            maps = try await database.maps()
             filterMaps()
+
+            loadStatus = .loaded
         } catch {
-            status = .failed(error)
+            loadStatus = .failed
         }
     }
 
     func filterMaps() {
-        guard case .loaded(let maps) = status else {
-            return
-        }
-
         if searchText.isEmpty {
             filteredMaps = maps
         } else {

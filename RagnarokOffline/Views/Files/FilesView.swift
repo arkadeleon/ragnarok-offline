@@ -12,60 +12,64 @@ struct FilesView: View {
     let title: String
     let directory: File
 
-    @State private var status: AsyncContentStatus<[File]> = .notYetLoaded
+    @State private var loadStatus: LoadStatus = .notYetLoaded
     @State private var searchText = ""
+    @State private var files: [File] = []
     @State private var filteredFiles: [File] = []
 
     @State private var previewingFile: File?
     @State private var inspectingRawDataFile: File?
 
     var body: some View {
-        AsyncContentView(status: status) { files in
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], spacing: 30) {
-                    ForEach(filteredFiles) { file in
-                        if file.isDirectory || file.isArchive {
-                            NavigationLink {
-                                FilesView(title: file.name, directory: file)
-                            } label: {
-                                FileGridCell(file: file)
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], spacing: 30) {
+                ForEach(filteredFiles) { file in
+                    if file.isDirectory || file.isArchive {
+                        NavigationLink {
+                            FilesView(title: file.name, directory: file)
+                        } label: {
+                            FileGridCell(file: file)
+                        }
+                        .contextMenu {
+                            FileContextMenu(file: file, copyAction: {
+                                directory.copy(file)
+                            }, deleteAction: {
+                                deleteFile(file)
+                            })
+                        }
+                    } else {
+                        Button {
+                            if file.canPreview {
+                                previewingFile = file
                             }
-                            .contextMenu {
-                                FileContextMenu(file: file, copyAction: {
-                                    directory.copy(file)
-                                }, deleteAction: {
-                                    deleteFile(file)
-                                })
-                            }
-                        } else {
-                            Button {
-                                if file.canPreview {
-                                    previewingFile = file
-                                }
-                            } label: {
-                                FileGridCell(file: file)
-                            }
-                            .contextMenu {
-                                FileContextMenu(file: file, previewAction: {
-                                    previewingFile = file
-                                }, inspectRawDataAction: {
-                                    inspectingRawDataFile = file
-                                }, copyAction: {
-                                    directory.copy(file)
-                                }, deleteAction: {
-                                    deleteFile(file)
-                                })
-                            }
+                        } label: {
+                            FileGridCell(file: file)
+                        }
+                        .contextMenu {
+                            FileContextMenu(file: file, previewAction: {
+                                previewingFile = file
+                            }, inspectRawDataAction: {
+                                inspectingRawDataFile = file
+                            }, copyAction: {
+                                directory.copy(file)
+                            }, deleteAction: {
+                                deleteFile(file)
+                            })
                         }
                     }
                 }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 30)
             }
-            .overlay {
-                if filteredFiles.isEmpty {
-                    EmptyContentView("Empty Folder")
-                }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 30)
+        }
+        .overlay {
+            if loadStatus == .loading {
+                ProgressView()
+            }
+        }
+        .overlay {
+            if loadStatus == .loaded && filteredFiles.isEmpty {
+                EmptyContentView("Empty Folder")
             }
         }
         .navigationTitle(title)
@@ -82,7 +86,7 @@ struct FilesView: View {
                 Image(systemName: "ellipsis.circle")
             }
         }
-        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .searchable(text: $searchText)
         .onSubmit(of: .search) {
             filterFiles()
         }
@@ -101,22 +105,19 @@ struct FilesView: View {
     }
 
     private func load() async {
-        guard case .notYetLoaded = status else {
+        guard loadStatus == .notYetLoaded else {
             return
         }
 
-        status = .loading
+        loadStatus = .loading
 
-        let files = directory.files().sorted()
-        status = .loaded(files)
+        files = directory.files().sorted()
         filterFiles()
+
+        loadStatus = .loaded
     }
 
     private func filterFiles() {
-        guard case .loaded(let files) = status else {
-            return
-        }
-
         if searchText.isEmpty {
             filteredFiles = files
         } else {
@@ -127,23 +128,17 @@ struct FilesView: View {
     }
 
     private func pasteFile() {
-        if let file = directory.pasteFromPasteboard(FilePasteboard.shared) {
-            if case .loaded(var files) = status {
-                files.append(file)
-                files.sort()
-                status = .loaded(files)
-                filterFiles()
-            }
+        if let file = directory.pasteFromPasteboard(FilePasteboard.shared), loadStatus == .loaded {
+            files.append(file)
+            files.sort()
+            filterFiles()
         }
     }
 
     private func deleteFile(_ file: File) {
         if directory.delete(file) {
-            if case .loaded(var files) = status {
-                files.removeAll(where: { $0 == file })
-                status = .loaded(files)
-                filterFiles()
-            }
+            files.removeAll(where: { $0 == file })
+            filterFiles()
         }
     }
 }

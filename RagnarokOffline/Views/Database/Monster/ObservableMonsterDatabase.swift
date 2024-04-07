@@ -13,8 +13,9 @@ import rAthenaDatabase
 class ObservableMonsterDatabase: ObservableObject {
     let database: Database
 
-    @Published var status: AsyncContentStatus<[Monster]> = .notYetLoaded
+    @Published var loadStatus: LoadStatus = .notYetLoaded
     @Published var searchText = ""
+    @Published var monsters: [Monster] = []
     @Published var filteredMonsters: [Monster] = []
 
     init(database: Database) {
@@ -22,26 +23,23 @@ class ObservableMonsterDatabase: ObservableObject {
     }
 
     func fetchMonsters() async {
-        guard case .notYetLoaded = status else {
+        guard loadStatus == .notYetLoaded else {
             return
         }
 
-        status = .loading
+        loadStatus = .loading
 
         do {
-            let monsters = try await database.monsters()
-            status = .loaded(monsters)
+            monsters = try await database.monsters()
             filterMonsters()
+
+            loadStatus = .loaded
         } catch {
-            status = .failed(error)
+            loadStatus = .failed
         }
     }
 
     func filterMonsters() {
-        guard case .loaded(let monsters) = status else {
-            return
-        }
-
         if searchText.isEmpty {
             filteredMonsters = monsters
         } else {

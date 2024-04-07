@@ -13,8 +13,9 @@ import rAthenaDatabase
 class ObservableSkillDatabase: ObservableObject {
     let database: Database
 
-    @Published var status: AsyncContentStatus<[Skill]> = .notYetLoaded
+    @Published var loadStatus: LoadStatus = .notYetLoaded
     @Published var searchText = ""
+    @Published var skills: [Skill] = []
     @Published var filteredSkills: [Skill] = []
 
     init(database: Database) {
@@ -22,26 +23,23 @@ class ObservableSkillDatabase: ObservableObject {
     }
 
     func fetchSkills() async {
-        guard case .notYetLoaded = status else {
+        guard loadStatus == .notYetLoaded else {
             return
         }
 
-        status = .loading
+        loadStatus = .loading
 
         do {
-            let skills = try await database.skills()
-            status = .loaded(skills)
+            skills = try await database.skills()
             filterSkills()
+
+            loadStatus = .loaded
         } catch {
-            status = .failed(error)
+            loadStatus = .failed
         }
     }
 
     func filterSkills() {
-        guard case .loaded(let skills) = status else {
-            return
-        }
-
         if searchText.isEmpty {
             filteredSkills = skills
         } else {

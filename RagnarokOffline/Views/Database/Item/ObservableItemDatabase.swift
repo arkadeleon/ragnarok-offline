@@ -13,8 +13,9 @@ import rAthenaDatabase
 class ObservableItemDatabase: ObservableObject {
     let database: Database
 
-    @Published var status: AsyncContentStatus<[Item]> = .notYetLoaded
+    @Published var loadStatus: LoadStatus = .notYetLoaded
     @Published var searchText = ""
+    @Published var items: [Item] = []
     @Published var filteredItems: [Item] = []
 
     init(database: Database) {
@@ -22,34 +23,32 @@ class ObservableItemDatabase: ObservableObject {
     }
 
     func fetchItems() async {
-        guard case .notYetLoaded = status else {
+        guard loadStatus == .notYetLoaded else {
             return
         }
 
-        status = .loading
+        loadStatus = .loading
 
         do {
             let usableItems = try await database.usableItems()
-            status = .loaded(usableItems)
+            items = usableItems
             filterItems()
 
+            loadStatus = .loaded
+
             let equipItems = try await database.equipItems()
-            status = .loaded(usableItems + equipItems)
+            items = usableItems + equipItems
             filterItems()
 
             let etcItems = try await database.etcItems()
-            status = .loaded(usableItems + equipItems + etcItems)
+            items = usableItems + equipItems + etcItems
             filterItems()
         } catch {
-            status = .failed(error)
+            loadStatus = .failed
         }
     }
 
     func filterItems() {
-        guard case .loaded(let items) = status else {
-            return
-        }
-
         if searchText.isEmpty {
             filteredItems = items
         } else {

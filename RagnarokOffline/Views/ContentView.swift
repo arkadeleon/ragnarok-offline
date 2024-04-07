@@ -28,148 +28,145 @@ struct ContentView: View {
 
     private let filesView = FilesView(title: "Files", directory: .directory(ClientResourceBundle.shared.url))
 
-    @State private var status: AsyncContentStatus<Void> = .notYetLoaded
     @State private var isSettingsPresented = false
 
     var body: some View {
-        AsyncContentView(status: status) {
-            NavigationView {
-                List {
-                    Section("Client") {
-                        NavigationLink {
-                            filesView
-                        } label: {
-                            Label("Files", systemImage: "folder")
-                        }
-
-                        #if DEBUG
-                        NavigationLink {
-                            ConnectionTestView()
-                        } label: {
-                            Label("Connection Test", systemImage: "link")
-                        }
-
-                        NavigationLink {
-                            GameView()
-                                .ignoresSafeArea()
-                                .navigationTitle("Cube")
-                                .navigationBarTitleDisplayMode(.inline)
-                        } label: {
-                            Label("Cube", systemImage: "cube")
-                        }
-                        #endif
-                    }
-
-                    Section("Server") {
-                        NavigationLink {
-                            ServerView(server: loginServer)
-                        } label: {
-                            LabeledContent {
-                                Text(loginServer.status.description)
-                                    .font(.footnote)
-                            } label: {
-                                Label(loginServer.name, systemImage: "terminal")
-                            }
-                        }
-
-                        NavigationLink {
-                            ServerView(server: charServer)
-                        } label: {
-                            LabeledContent {
-                                Text(charServer.status.description)
-                                    .font(.footnote)
-                            } label: {
-                                Label(charServer.name, systemImage: "terminal")
-                            }
-                        }
-
-                        NavigationLink {
-                            ServerView(server: mapServer)
-                        } label: {
-                            LabeledContent {
-                                Text(mapServer.status.description)
-                                    .font(.footnote)
-                            } label: {
-                                Label(mapServer.name, systemImage: "terminal")
-                            }
-                        }
-
-                        NavigationLink {
-                            ServerView(server: webServer)
-                        } label: {
-                            LabeledContent {
-                                Text(webServer.status.description)
-                                    .font(.footnote)
-                            } label: {
-                                Label(webServer.name, systemImage: "terminal")
-                            }
-                        }
-
-                        #if DEBUG
-                        NavigationLink {
-                            FilesView(title: "Server Files", directory: .directory(ResourceBundle.shared.url))
-                        } label: {
-                            Label("Server Files", systemImage: "folder")
-                        }
-                        #endif
-                    }
-
-                    Section("Database") {
-                        NavigationLink {
-                            ItemDatabaseView(itemDatabase: itemDatabase)
-                        } label: {
-                            Label("Item Database", systemImage: "leaf")
-                        }
-
-                        NavigationLink {
-                            MonsterDatabaseView(monsterDatabase: monsterDatabase)
-                        } label: {
-                            Label("Monster Database", systemImage: "pawprint")
-                        }
-
-                        NavigationLink {
-                            JobDatabaseView(jobDatabase: jobDatabase)
-                        } label: {
-                            Label("Job Database", systemImage: "person")
-                        }
-
-                        NavigationLink {
-                            SkillDatabaseView(skillDatabase: skillDatabase)
-                        } label: {
-                            Label("Skill Database", systemImage: "arrow.up.heart")
-                        }
-
-                        NavigationLink {
-                            MapDatabaseView(mapDatabase: mapDatabase)
-                        } label: {
-                            Label("Map Database", systemImage: "map")
-                        }
-                    }
-                }
-                .navigationTitle("Ragnarok Offline")
-                .toolbar {
-                    Menu {
-                        Button {
-                            startAllServers()
-                        } label: {
-                            Label("Start All Servers", systemImage: "play")
-                        }
-
-                        Button {
-                            isSettingsPresented.toggle()
-                        } label: {
-                            Label("Settings", systemImage: "gearshape")
-                        }
+        NavigationView {
+            List {
+                Section("Client") {
+                    NavigationLink {
+                        filesView
                     } label: {
-                        Image(systemName: "ellipsis.circle")
+                        Label("Files", systemImage: "folder")
                     }
-                }
-                .sheet(isPresented: $isSettingsPresented) {
-                    SettingsView()
+
+                    #if DEBUG
+                    NavigationLink {
+                        ConnectionTestView()
+                    } label: {
+                        Label("Connection Test", systemImage: "link")
+                    }
+
+                    NavigationLink {
+                        GameView()
+                            .ignoresSafeArea()
+                            .navigationTitle("Cube")
+                            .navigationBarTitleDisplayMode(.inline)
+                    } label: {
+                        Label("Cube", systemImage: "cube")
+                    }
+                    #endif
                 }
 
-                filesView
+                Section("Server") {
+                    NavigationLink {
+                        ServerView(server: loginServer)
+                    } label: {
+                        LabeledContent {
+                            Text(loginServer.status.description)
+                                .font(.footnote)
+                        } label: {
+                            Label(loginServer.name, systemImage: "terminal")
+                        }
+                    }
+
+                    NavigationLink {
+                        ServerView(server: charServer)
+                    } label: {
+                        LabeledContent {
+                            Text(charServer.status.description)
+                                .font(.footnote)
+                        } label: {
+                            Label(charServer.name, systemImage: "terminal")
+                        }
+                    }
+
+                    NavigationLink {
+                        ServerView(server: mapServer)
+                    } label: {
+                        LabeledContent {
+                            Text(mapServer.status.description)
+                                .font(.footnote)
+                        } label: {
+                            Label(mapServer.name, systemImage: "terminal")
+                        }
+                    }
+
+                    NavigationLink {
+                        ServerView(server: webServer)
+                    } label: {
+                        LabeledContent {
+                            Text(webServer.status.description)
+                                .font(.footnote)
+                        } label: {
+                            Label(webServer.name, systemImage: "terminal")
+                        }
+                    }
+
+                    #if DEBUG
+                    NavigationLink {
+                        FilesView(title: "Server Files", directory: .directory(ResourceBundle.shared.url))
+                    } label: {
+                        Label("Server Files", systemImage: "folder")
+                    }
+                    #endif
+                }
+
+                Section("Database") {
+                    NavigationLink {
+                        ItemDatabaseView(itemDatabase: itemDatabase)
+                    } label: {
+                        Label("Item Database", systemImage: "leaf")
+                    }
+
+                    NavigationLink {
+                        MonsterDatabaseView(monsterDatabase: monsterDatabase)
+                    } label: {
+                        Label("Monster Database", systemImage: "pawprint")
+                    }
+
+                    NavigationLink {
+                        JobDatabaseView(jobDatabase: jobDatabase)
+                    } label: {
+                        Label("Job Database", systemImage: "person")
+                    }
+
+                    NavigationLink {
+                        SkillDatabaseView(skillDatabase: skillDatabase)
+                    } label: {
+                        Label("Skill Database", systemImage: "arrow.up.heart")
+                    }
+
+                    NavigationLink {
+                        MapDatabaseView(mapDatabase: mapDatabase)
+                    } label: {
+                        Label("Map Database", systemImage: "map")
+                    }
+                }
             }
+            .navigationTitle("Ragnarok Offline")
+            .toolbar {
+                Menu {
+                    Button {
+                        startAllServers()
+                    } label: {
+                        Label("Start All Servers", systemImage: "play")
+                    }
+
+                    Button {
+                        isSettingsPresented.toggle()
+                    } label: {
+                        Label("Settings", systemImage: "gearshape")
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                }
+            }
+
+            filesView
+        }
+        .sheet(isPresented: $isSettingsPresented) {
+            SettingsView()
         }
         .task {
             await load()
@@ -177,18 +174,7 @@ struct ContentView: View {
     }
 
     private func load() async {
-        guard case .notYetLoaded = status else {
-            return
-        }
-
-        status = .loading
-
-        do {
-            try await ResourceBundle.shared.load()
-            status = .loaded(())
-        } catch {
-            status = .failed(error)
-        }
+        try? await ResourceBundle.shared.load()
     }
 
     private func startAllServers() {

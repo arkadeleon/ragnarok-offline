@@ -12,24 +12,27 @@ struct ItemDatabaseView: View {
     @ObservedObject var itemDatabase: ObservableItemDatabase
 
     var body: some View {
-        AsyncContentView(status: itemDatabase.status) { items in
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                    ForEach(itemDatabase.filteredItems) { item in
-                        ItemGridCell(database: itemDatabase.database, item: item, tertiaryText: nil)
-                    }
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                ForEach(itemDatabase.filteredItems) { item in
+                    ItemGridCell(database: itemDatabase.database, item: item, tertiaryText: nil)
                 }
-                .padding(20)
             }
-            .overlay {
-                if itemDatabase.filteredItems.isEmpty {
-                    EmptyContentView("No Items")
-                }
+            .padding(20)
+        }
+        .overlay {
+            if itemDatabase.loadStatus == .loading {
+                ProgressView()
+            }
+        }
+        .overlay {
+            if itemDatabase.loadStatus == .loaded && itemDatabase.filteredItems.isEmpty {
+                EmptyContentView("No Items")
             }
         }
         .navigationTitle("Item Database")
         .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $itemDatabase.searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .searchable(text: $itemDatabase.searchText)
         .onSubmit(of: .search) {
             itemDatabase.filterItems()
         }
