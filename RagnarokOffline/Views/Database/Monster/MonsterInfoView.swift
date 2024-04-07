@@ -32,6 +32,10 @@ struct MonsterInfoView: View {
                     } else {
                         Image(monsterImage, scale: 1, label: Text(monster.name))
                     }
+                } else {
+                    Image(systemName: "pawprint")
+                        .foregroundStyle(.tertiary)
+                        .font(.system(size: 100))
                 }
             }
             .frame(height: 200)

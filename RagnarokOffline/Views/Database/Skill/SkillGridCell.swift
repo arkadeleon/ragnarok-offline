@@ -26,6 +26,10 @@ struct SkillGridCell: View {
                         Image(skillIconImage, scale: 1, label: Text(skill.name))
                             .resizable()
                             .aspectRatio(contentMode: .fit)
+                    } else {
+                        Image(systemName: "arrow.up.heart")
+                            .foregroundStyle(.tertiary)
+                            .font(.system(size: 25))
                     }
                 }
                 .frame(width: 40, height: 40)

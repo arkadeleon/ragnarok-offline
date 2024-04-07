@@ -25,6 +25,10 @@ struct MapInfoView: View {
                     Image(mapImage, scale: 1, label: Text(map.name))
                         .resizable()
                         .aspectRatio(contentMode: .fit)
+                } else {
+                    Image(systemName: "map")
+                        .foregroundStyle(.tertiary)
+                        .font(.system(size: 100))
                 }
             }
             .frame(height: 200)

@@ -29,6 +29,10 @@ struct JobGridCell: View {
                         } else {
                             Image(jobImage, scale: 1, label: Text(jobStats.job.description))
                         }
+                    } else {
+                        Image(systemName: "person")
+                            .foregroundStyle(.tertiary)
+                            .font(.system(size: 35))
                     }
                 }
                 .frame(width: 80, height: 80)

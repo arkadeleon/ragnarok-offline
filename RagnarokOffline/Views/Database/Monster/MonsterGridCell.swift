@@ -30,6 +30,10 @@ struct MonsterGridCell: View {
                         } else {
                             Image(monsterImage, scale: 1, label: Text(monster.name))
                         }
+                    } else {
+                        Image(systemName: "pawprint")
+                            .foregroundStyle(.tertiary)
+                            .font(.system(size: 35))
                     }
                 }
                 .frame(width: 80, height: 80)

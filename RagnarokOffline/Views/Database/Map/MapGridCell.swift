@@ -27,6 +27,10 @@ struct MapGridCell: View {
                         Image(mapImage, scale: 1, label: Text(map.name))
                             .resizable()
                             .aspectRatio(contentMode: .fit)
+                    } else {
+                        Image(systemName: "map")
+                            .foregroundStyle(.tertiary)
+                            .font(.system(size: 25))
                     }
                 }
                 .frame(width: 40, height: 40)

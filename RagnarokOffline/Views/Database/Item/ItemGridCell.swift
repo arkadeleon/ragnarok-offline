@@ -27,6 +27,10 @@ struct ItemGridCell: View {
                         Image(itemIconImage, scale: 1, label: Text(item.name))
                             .resizable()
                             .aspectRatio(contentMode: .fit)
+                    } else {
+                        Image(systemName: "leaf")
+                            .foregroundStyle(.tertiary)
+                            .font(.system(size: 25))
                     }
                 }
                 .frame(width: 40, height: 40)
