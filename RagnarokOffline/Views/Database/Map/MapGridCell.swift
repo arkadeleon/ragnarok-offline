@@ -12,7 +12,7 @@ import rAthenaDatabase
 struct MapGridCell: View {
     let database: Database
     let map: Map
-    let tertiaryText: String?
+    let secondaryText: String?
 
     @State private var mapImage: CGImage?
     @State private var mapDisplayName: String?
@@ -32,19 +32,13 @@ struct MapGridCell: View {
                 .frame(width: 40, height: 40)
 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(primaryText)
+                    Text(mapDisplayName ?? map.name)
                         .foregroundColor(.primary)
                         .lineLimit(1)
 
-                    Text(secondaryText)
+                    Text(secondaryText ?? map.name)
                         .foregroundColor(.secondary)
                         .lineLimit(1)
-
-                    if let tertiaryText {
-                        Text(tertiaryText)
-                            .foregroundColor(.secondary)
-                            .lineLimit(1)
-                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -53,13 +47,5 @@ struct MapGridCell: View {
             mapImage = await ClientResourceBundle.shared.mapImage(forMap: map)
             mapDisplayName = ClientDatabase.shared.mapDisplayName(map.name)
         }
-    }
-
-    private var primaryText: String {
-        map.name
-    }
-
-    private var secondaryText: String {
-        mapDisplayName ?? map.name
     }
 }

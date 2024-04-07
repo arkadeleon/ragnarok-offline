@@ -15,7 +15,7 @@ struct MapDatabaseView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                 ForEach(mapDatabase.filteredMaps) { map in
-                    MapGridCell(database: mapDatabase.database, map: map, tertiaryText: nil)
+                    MapGridCell(database: mapDatabase.database, map: map, secondaryText: nil)
                 }
             }
             .padding(20)

@@ -31,11 +31,11 @@ struct SkillGridCell: View {
                 .frame(width: 40, height: 40)
 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(skill.name)
+                    Text(skillDisplayName ?? skill.name)
                         .foregroundColor(.primary)
                         .lineLimit(1)
 
-                    Text(skillDisplayName ?? skill.name)
+                    Text(skill.aegisName)
                         .foregroundColor(.secondary)
                         .lineLimit(1)
                 }

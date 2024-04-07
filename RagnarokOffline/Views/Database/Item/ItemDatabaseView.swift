@@ -15,7 +15,7 @@ struct ItemDatabaseView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                 ForEach(itemDatabase.filteredItems) { item in
-                    ItemGridCell(database: itemDatabase.database, item: item, tertiaryText: nil)
+                    ItemGridCell(database: itemDatabase.database, item: item, secondaryText: nil)
                 }
             }
             .padding(20)

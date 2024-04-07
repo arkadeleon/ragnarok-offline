@@ -46,7 +46,7 @@ struct MonsterGridCell: View {
                     }
 
                     VStack(spacing: 2) {
-                        Text(primaryText)
+                        Text(monster.name)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .foregroundColor(.primary)
                             .font(.subheadline)
@@ -65,9 +65,5 @@ struct MonsterGridCell: View {
         .task {
             monsterImage = await ClientResourceManager.shared.monsterImage(monster.id)
         }
-    }
-
-    private var primaryText: String {
-        monster.name
     }
 }

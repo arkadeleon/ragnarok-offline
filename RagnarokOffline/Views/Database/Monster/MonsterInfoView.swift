@@ -60,7 +60,7 @@ struct MonsterInfoView: View {
                 DatabaseRecordInfoSection("MVP Drops", verticalSpacing: 0) {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(mvpDropItems, id: \.index) { dropItem in
-                            ItemGridCell(database: database, item: dropItem.item, tertiaryText: "(\(NSNumber(value: Double(dropItem.drop.rate) / 100))%)")
+                            ItemGridCell(database: database, item: dropItem.item, secondaryText: "(\(NSNumber(value: Double(dropItem.drop.rate) / 100))%)")
                         }
                     }
                     .padding(.vertical, 20)
@@ -71,7 +71,7 @@ struct MonsterInfoView: View {
                 DatabaseRecordInfoSection("Drops", verticalSpacing: 0) {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(dropItems, id: \.index) { dropItem in
-                            ItemGridCell(database: database, item: dropItem.item, tertiaryText: "(\(NSNumber(value: Double(dropItem.drop.rate) / 100))%)")
+                            ItemGridCell(database: database, item: dropItem.item, secondaryText: "(\(NSNumber(value: Double(dropItem.drop.rate) / 100))%)")
                         }
                     }
                     .padding(.vertical, 20)
@@ -82,7 +82,7 @@ struct MonsterInfoView: View {
                 DatabaseRecordInfoSection("Maps", verticalSpacing: 0) {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(spawnMaps, id: \.map.index) { spawnMap in
-                            MapGridCell(database: database, map: spawnMap.map, tertiaryText: "(\(spawnMap.monsterSpawn.amount)x)")
+                            MapGridCell(database: database, map: spawnMap.map, secondaryText: "(\(spawnMap.monsterSpawn.amount)x)")
                         }
                     }
                     .padding(.vertical, 20)

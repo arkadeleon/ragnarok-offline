@@ -12,7 +12,7 @@ import rAthenaDatabase
 struct ItemGridCell: View {
     let database: Database
     let item: Item
-    let tertiaryText: String?
+    let secondaryText: String?
 
     @State private var itemIconImage: CGImage?
     @State private var itemDisplayName: String?
@@ -36,15 +36,9 @@ struct ItemGridCell: View {
                         .foregroundColor(.primary)
                         .lineLimit(1)
 
-                    Text(secondaryText)
+                    Text(secondaryText ?? item.aegisName)
                         .foregroundColor(.secondary)
                         .lineLimit(1)
-
-                    if let tertiaryText {
-                        Text(tertiaryText)
-                            .foregroundColor(.secondary)
-                            .lineLimit(1)
-                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -56,10 +50,7 @@ struct ItemGridCell: View {
     }
 
     private var primaryText: String {
-        item.slots > 0 ? item.name + " [\(item.slots)]" : item.name
-    }
-
-    private var secondaryText: String {
-        itemDisplayName ?? item.name
+        let name = itemDisplayName ?? item.name
+        return item.slots > 0 ? name + " [\(item.slots)]" : name
     }
 }
