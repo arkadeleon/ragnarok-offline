@@ -9,8 +9,8 @@
 import CoreGraphics
 import UIKit
 import RagnarokOfflineFileFormats
-import RagnarokOfflineGraphics
 import RagnarokOfflineFileSystem
+import RagnarokOfflineGraphics
 
 class SPRPreviewViewController: UIViewController {
     struct Sprite: Hashable {

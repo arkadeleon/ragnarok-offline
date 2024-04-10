@@ -9,6 +9,7 @@
 import Foundation
 import Lua
 import RagnarokOfflineFileFormats
+import RagnarokOfflineSettings
 
 class ClientDatabase {
     static let shared = ClientDatabase()

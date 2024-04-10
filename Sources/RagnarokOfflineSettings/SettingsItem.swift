@@ -9,11 +9,11 @@
 import Foundation
 
 @propertyWrapper
-struct SettingsItem<Value> {
-    let key: String
-    let defaultValue: Value
+public struct SettingsItem<Value> {
+    public let key: String
+    public let defaultValue: Value
 
-    var wrappedValue: Value {
+    public var wrappedValue: Value {
         get {
             value()
         }
@@ -22,7 +22,7 @@ struct SettingsItem<Value> {
         }
     }
 
-    init(_ key: String, defaultValue: Value) {
+    public init(_ key: String, defaultValue: Value) {
         self.key = key
         self.defaultValue = defaultValue
     }

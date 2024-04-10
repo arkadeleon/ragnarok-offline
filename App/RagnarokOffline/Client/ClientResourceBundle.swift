@@ -10,8 +10,8 @@ import CoreGraphics
 import Foundation
 import rAthenaDatabase
 import RagnarokOfflineFileFormats
-import RagnarokOfflineGraphics
 import RagnarokOfflineFileSystem
+import RagnarokOfflineGraphics
 
 class ClientResourceBundle {
     static let shared = ClientResourceBundle()
