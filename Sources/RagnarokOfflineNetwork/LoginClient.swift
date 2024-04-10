@@ -20,27 +20,27 @@ import rAthenaCommon
 /// - PACKET_AC_ACCEPT_LOGIN
 /// - PACKET_AC_REFUSE_LOGIN
 /// - PACKET_SC_NOTIFY_BAN
-class LoginClient {
-    let packetVersion = PacketVersion(number: RA_PACKETVER)
+public class LoginClient {
+    public let packetVersion = PacketVersion(number: RA_PACKETVER)
 
-    var onAcceptLogin: (() -> Void)?
-    var onRefuseLogin: (() -> Void)?
-    var onNotifyBan: (() -> Void)?
-    var onError: ((Error) -> Void)?
+    public var onAcceptLogin: (() -> Void)?
+    public var onRefuseLogin: (() -> Void)?
+    public var onNotifyBan: (() -> Void)?
+    public var onError: ((Error) -> Void)?
 
     private let encoder: PacketEncoder
     private let decoder: PacketDecoder
 
     private let connection: NWConnection
 
-    init() {
+    public init() {
         encoder = PacketEncoder()
         decoder = PacketDecoder(packetVersion: packetVersion)
 
         connection = NWConnection(host: .ipv4(.loopback), port: 6900, using: .tcp)
     }
 
-    func connect() {
+    public func connect() {
         let queue = DispatchQueue(label: "")
         connection.start(queue: queue)
 
@@ -51,7 +51,7 @@ class LoginClient {
         receiveNext()
     }
 
-    func login(username: String, password: String) throws {
+    public func login(username: String, password: String) throws {
         var login = PACKET.CA.LOGIN(packetVersion: packetVersion)
         login.username = username
         login.password = password

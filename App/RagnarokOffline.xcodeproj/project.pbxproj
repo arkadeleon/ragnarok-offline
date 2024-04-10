@@ -32,7 +32,6 @@
 		35239E012BC29A4E0039F7D5 /* ObservableItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239E002BC29A4E0039F7D5 /* ObservableItemDatabase.swift */; };
 		35239E032BC29F660039F7D5 /* EmptyContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239E022BC29F660039F7D5 /* EmptyContentView.swift */; };
 		35239E052BC2D5D60039F7D5 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */; };
-		3523B57F2B97769D00CCE722 /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 3523B57E2B97769D00CCE722 /* Lua */; };
 		3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */; };
 		353B4F0C2B43A9AC00605E92 /* ClientResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0B2B43A9AC00605E92 /* ClientResourceManager.swift */; };
 		353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */; };
@@ -51,40 +50,6 @@
 		3555D64F2BC6929700709871 /* RagnarokOfflineShaders in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D64E2BC6929700709871 /* RagnarokOfflineShaders */; };
 		3555D6512BC6C10700709871 /* RagnarokOfflineFileSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D6502BC6C10700709871 /* RagnarokOfflineFileSystem */; };
 		3555D6532BC6D32600709871 /* RagnarokOfflineSettings in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D6522BC6D32600709871 /* RagnarokOfflineSettings */; };
-		3555D65C2BC6D54800709871 /* BinaryEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6542BC6D54800709871 /* BinaryEncoder.swift */; };
-		3555D65D2BC6D54800709871 /* PacketEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6552BC6D54800709871 /* PacketEncoder.swift */; };
-		3555D65E2BC6D54800709871 /* PacketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6562BC6D54800709871 /* PacketProtocol.swift */; };
-		3555D65F2BC6D54800709871 /* PacketVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6572BC6D54800709871 /* PacketVersion.swift */; };
-		3555D6602BC6D54800709871 /* PacketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6582BC6D54800709871 /* PacketManager.swift */; };
-		3555D6612BC6D54800709871 /* PacketDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6592BC6D54800709871 /* PacketDecoder.swift */; };
-		3555D6622BC6D54800709871 /* BinaryDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D65A2BC6D54800709871 /* BinaryDecoder.swift */; };
-		3555D6862BC6D59800709871 /* PACKET.AC.ACCEPT_LOGIN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6642BC6D59800709871 /* PACKET.AC.ACCEPT_LOGIN.swift */; };
-		3555D6872BC6D59800709871 /* PACKET.AC.REFUSE_LOGIN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6652BC6D59800709871 /* PACKET.AC.REFUSE_LOGIN.swift */; };
-		3555D6882BC6D59800709871 /* PACKET.CA.CONNECT_INFO_CHANGE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6672BC6D59800709871 /* PACKET.CA.CONNECT_INFO_CHANGE.swift */; };
-		3555D6892BC6D59800709871 /* PACKET.CA.EXE_HASHCHECK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6682BC6D59800709871 /* PACKET.CA.EXE_HASHCHECK.swift */; };
-		3555D68A2BC6D59800709871 /* PACKET.CA.LOGIN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6692BC6D59800709871 /* PACKET.CA.LOGIN.swift */; };
-		3555D68B2BC6D59800709871 /* PACKET.CH.DELETE_CHAR_CANCEL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D66B2BC6D59800709871 /* PACKET.CH.DELETE_CHAR_CANCEL.swift */; };
-		3555D68C2BC6D59800709871 /* PACKET.CH.DELETE_CHAR_RESERVED.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D66C2BC6D59800709871 /* PACKET.CH.DELETE_CHAR_RESERVED.swift */; };
-		3555D68D2BC6D59800709871 /* PACKET.CH.DELETE_CHAR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D66D2BC6D59800709871 /* PACKET.CH.DELETE_CHAR.swift */; };
-		3555D68E2BC6D59800709871 /* PACKET.CH.ENTER.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D66E2BC6D59800709871 /* PACKET.CH.ENTER.swift */; };
-		3555D68F2BC6D59800709871 /* PACKET.CH.EXE_HASHCHECK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D66F2BC6D59800709871 /* PACKET.CH.EXE_HASHCHECK.swift */; };
-		3555D6902BC6D59800709871 /* PACKET.CH.MAKE_CHAR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6702BC6D59800709871 /* PACKET.CH.MAKE_CHAR.swift */; };
-		3555D6912BC6D59800709871 /* PACKET.CH.SELECT_ACCESSIBLE_MAPNAME.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6712BC6D59800709871 /* PACKET.CH.SELECT_ACCESSIBLE_MAPNAME.swift */; };
-		3555D6922BC6D59800709871 /* PACKET.CH.SELECT_CHAR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6722BC6D59800709871 /* PACKET.CH.SELECT_CHAR.swift */; };
-		3555D6932BC6D59800709871 /* PACKET.CZ.EXE_HASHCHECK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6742BC6D59800709871 /* PACKET.CZ.EXE_HASHCHECK.swift */; };
-		3555D6942BC6D59800709871 /* PACKET.CZ.PING.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6752BC6D59800709871 /* PACKET.CZ.PING.swift */; };
-		3555D6952BC6D59800709871 /* PACKET.HC.ACCEPT_DELETECHAR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6772BC6D59800709871 /* PACKET.HC.ACCEPT_DELETECHAR.swift */; };
-		3555D6962BC6D59800709871 /* PACKET.HC.ACCEPT_ENTER_NEO_UNION.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6782BC6D59800709871 /* PACKET.HC.ACCEPT_ENTER_NEO_UNION.swift */; };
-		3555D6972BC6D59800709871 /* PACKET.HC.ACCEPT_MAKECHAR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6792BC6D59800709871 /* PACKET.HC.ACCEPT_MAKECHAR.swift */; };
-		3555D6982BC6D59800709871 /* PACKET.HC.DELETE_CHAR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D67A2BC6D59800709871 /* PACKET.HC.DELETE_CHAR.swift */; };
-		3555D6992BC6D59800709871 /* PACKET.HC.NOTIFY_ACCESSIBLE_MAPNAME.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D67B2BC6D59800709871 /* PACKET.HC.NOTIFY_ACCESSIBLE_MAPNAME.swift */; };
-		3555D69A2BC6D59800709871 /* PACKET.HC.NOTIFY_ZONESVR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D67C2BC6D59800709871 /* PACKET.HC.NOTIFY_ZONESVR.swift */; };
-		3555D69B2BC6D59800709871 /* PACKET.HC.REFUSE_DELETECHAR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D67D2BC6D59800709871 /* PACKET.HC.REFUSE_DELETECHAR.swift */; };
-		3555D69C2BC6D59800709871 /* PACKET.HC.REFUSE_ENTER.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D67E2BC6D59800709871 /* PACKET.HC.REFUSE_ENTER.swift */; };
-		3555D69D2BC6D59800709871 /* PACKET.HC.REFUSE_MAKECHAR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D67F2BC6D59800709871 /* PACKET.HC.REFUSE_MAKECHAR.swift */; };
-		3555D69E2BC6D59800709871 /* PACKET.SC.NOTIFY_BAN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6812BC6D59800709871 /* PACKET.SC.NOTIFY_BAN.swift */; };
-		3555D69F2BC6D59800709871 /* CharInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6832BC6D59800709871 /* CharInfo.swift */; };
-		3555D6A02BC6D59800709871 /* PACKET.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6842BC6D59800709871 /* PACKET.swift */; };
 		3555D6E62BC6DDE500709871 /* ItemCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6A12BC6DDE500709871 /* ItemCache.swift */; };
 		3555D6E72BC6DDE500709871 /* JobCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6A22BC6DDE500709871 /* JobCache.swift */; };
 		3555D6E82BC6DDE500709871 /* MapCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6A32BC6DDE500709871 /* MapCache.swift */; };
@@ -174,6 +139,8 @@
 		3582FFC82B8DB73B00E746D7 /* FileThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC72B8DB73B00E746D7 /* FileThumbnailView.swift */; };
 		3582FFCA2B8DB9FE00E746D7 /* FilePreviewPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC92B8DB9FE00E746D7 /* FilePreviewPageView.swift */; };
 		3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */; };
+		358D4C612BC6EBB500FAF45D /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C602BC6EBB500FAF45D /* Lua */; };
+		358D4C632BC6EC2200FAF45D /* RagnarokOfflineNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C622BC6EC2200FAF45D /* RagnarokOfflineNetwork */; };
 		35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */; };
 		35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */; };
 		35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D92A08BEA600B4540B /* ContentView.swift */; };
@@ -191,7 +158,6 @@
 		35B695EA2A305EF6006F1904 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695E92A305EF6006F1904 /* GameView.swift */; };
 		35B695EC2A307164006F1904 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695EB2A307164006F1904 /* GameScene.swift */; };
 		35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */; };
-		35F50CC92BB3FD5000B36455 /* LoginClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CC82BB3FD5000B36455 /* LoginClient.swift */; };
 		35F50CCC2BB4615F00B36455 /* ConnectionTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CCB2BB4615F00B36455 /* ConnectionTestView.swift */; };
 		35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */; };
 /* End PBXBuildFile section */
@@ -255,7 +221,6 @@
 		35239E002BC29A4E0039F7D5 /* ObservableItemDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableItemDatabase.swift; sourceTree = "<group>"; };
 		35239E022BC29F660039F7D5 /* EmptyContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyContentView.swift; sourceTree = "<group>"; };
 		35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
-		3523B57D2B97768A00CCE722 /* swift-lua */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-lua"; path = "../swift-lua"; sourceTree = "<group>"; };
 		3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordInfoSection.swift; sourceTree = "<group>"; };
 		35270D2B2A68F4610001A8BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		353B4F0B2B43A9AC00605E92 /* ClientResourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientResourceManager.swift; sourceTree = "<group>"; };
@@ -268,40 +233,6 @@
 		3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImageActivityItem.swift; sourceTree = "<group>"; };
 		3552D8792B318323004831D0 /* StillImageActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillImageActivityItem.swift; sourceTree = "<group>"; };
 		3555D6352BC65ACB00709871 /* ragnarok-offline */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "ragnarok-offline"; path = ..; sourceTree = "<group>"; };
-		3555D6542BC6D54800709871 /* BinaryEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryEncoder.swift; sourceTree = "<group>"; };
-		3555D6552BC6D54800709871 /* PacketEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PacketEncoder.swift; sourceTree = "<group>"; };
-		3555D6562BC6D54800709871 /* PacketProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PacketProtocol.swift; sourceTree = "<group>"; };
-		3555D6572BC6D54800709871 /* PacketVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PacketVersion.swift; sourceTree = "<group>"; };
-		3555D6582BC6D54800709871 /* PacketManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PacketManager.swift; sourceTree = "<group>"; };
-		3555D6592BC6D54800709871 /* PacketDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PacketDecoder.swift; sourceTree = "<group>"; };
-		3555D65A2BC6D54800709871 /* BinaryDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDecoder.swift; sourceTree = "<group>"; };
-		3555D6642BC6D59800709871 /* PACKET.AC.ACCEPT_LOGIN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.AC.ACCEPT_LOGIN.swift; sourceTree = "<group>"; };
-		3555D6652BC6D59800709871 /* PACKET.AC.REFUSE_LOGIN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.AC.REFUSE_LOGIN.swift; sourceTree = "<group>"; };
-		3555D6672BC6D59800709871 /* PACKET.CA.CONNECT_INFO_CHANGE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.CA.CONNECT_INFO_CHANGE.swift; sourceTree = "<group>"; };
-		3555D6682BC6D59800709871 /* PACKET.CA.EXE_HASHCHECK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.CA.EXE_HASHCHECK.swift; sourceTree = "<group>"; };
-		3555D6692BC6D59800709871 /* PACKET.CA.LOGIN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.CA.LOGIN.swift; sourceTree = "<group>"; };
-		3555D66B2BC6D59800709871 /* PACKET.CH.DELETE_CHAR_CANCEL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.CH.DELETE_CHAR_CANCEL.swift; sourceTree = "<group>"; };
-		3555D66C2BC6D59800709871 /* PACKET.CH.DELETE_CHAR_RESERVED.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.CH.DELETE_CHAR_RESERVED.swift; sourceTree = "<group>"; };
-		3555D66D2BC6D59800709871 /* PACKET.CH.DELETE_CHAR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.CH.DELETE_CHAR.swift; sourceTree = "<group>"; };
-		3555D66E2BC6D59800709871 /* PACKET.CH.ENTER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.CH.ENTER.swift; sourceTree = "<group>"; };
-		3555D66F2BC6D59800709871 /* PACKET.CH.EXE_HASHCHECK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.CH.EXE_HASHCHECK.swift; sourceTree = "<group>"; };
-		3555D6702BC6D59800709871 /* PACKET.CH.MAKE_CHAR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.CH.MAKE_CHAR.swift; sourceTree = "<group>"; };
-		3555D6712BC6D59800709871 /* PACKET.CH.SELECT_ACCESSIBLE_MAPNAME.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.CH.SELECT_ACCESSIBLE_MAPNAME.swift; sourceTree = "<group>"; };
-		3555D6722BC6D59800709871 /* PACKET.CH.SELECT_CHAR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.CH.SELECT_CHAR.swift; sourceTree = "<group>"; };
-		3555D6742BC6D59800709871 /* PACKET.CZ.EXE_HASHCHECK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.CZ.EXE_HASHCHECK.swift; sourceTree = "<group>"; };
-		3555D6752BC6D59800709871 /* PACKET.CZ.PING.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.CZ.PING.swift; sourceTree = "<group>"; };
-		3555D6772BC6D59800709871 /* PACKET.HC.ACCEPT_DELETECHAR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.HC.ACCEPT_DELETECHAR.swift; sourceTree = "<group>"; };
-		3555D6782BC6D59800709871 /* PACKET.HC.ACCEPT_ENTER_NEO_UNION.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.HC.ACCEPT_ENTER_NEO_UNION.swift; sourceTree = "<group>"; };
-		3555D6792BC6D59800709871 /* PACKET.HC.ACCEPT_MAKECHAR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.HC.ACCEPT_MAKECHAR.swift; sourceTree = "<group>"; };
-		3555D67A2BC6D59800709871 /* PACKET.HC.DELETE_CHAR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.HC.DELETE_CHAR.swift; sourceTree = "<group>"; };
-		3555D67B2BC6D59800709871 /* PACKET.HC.NOTIFY_ACCESSIBLE_MAPNAME.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.HC.NOTIFY_ACCESSIBLE_MAPNAME.swift; sourceTree = "<group>"; };
-		3555D67C2BC6D59800709871 /* PACKET.HC.NOTIFY_ZONESVR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.HC.NOTIFY_ZONESVR.swift; sourceTree = "<group>"; };
-		3555D67D2BC6D59800709871 /* PACKET.HC.REFUSE_DELETECHAR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.HC.REFUSE_DELETECHAR.swift; sourceTree = "<group>"; };
-		3555D67E2BC6D59800709871 /* PACKET.HC.REFUSE_ENTER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.HC.REFUSE_ENTER.swift; sourceTree = "<group>"; };
-		3555D67F2BC6D59800709871 /* PACKET.HC.REFUSE_MAKECHAR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.HC.REFUSE_MAKECHAR.swift; sourceTree = "<group>"; };
-		3555D6812BC6D59800709871 /* PACKET.SC.NOTIFY_BAN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.SC.NOTIFY_BAN.swift; sourceTree = "<group>"; };
-		3555D6832BC6D59800709871 /* CharInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharInfo.swift; sourceTree = "<group>"; };
-		3555D6842BC6D59800709871 /* PACKET.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.swift; sourceTree = "<group>"; };
 		3555D6A12BC6DDE500709871 /* ItemCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCache.swift; sourceTree = "<group>"; };
 		3555D6A22BC6DDE500709871 /* JobCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobCache.swift; sourceTree = "<group>"; };
 		3555D6A32BC6DDE500709871 /* MapCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCache.swift; sourceTree = "<group>"; };
@@ -361,6 +292,7 @@
 		3555D6E12BC6DDE500709871 /* SkillUnitTargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillUnitTargetType.swift; sourceTree = "<group>"; };
 		3555D6E32BC6DDE500709871 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		3555D6E42BC6DDE500709871 /* ServerMode+DBPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ServerMode+DBPath.swift"; sourceTree = "<group>"; };
+		3555D7232BC6EB9500709871 /* swift-lua */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-lua"; path = "../swift-lua"; sourceTree = "<group>"; };
 		3555E1162B7D12D9007CE4BA /* TerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
 		3555E12D2B7D2251007CE4BA /* swift-rathena */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-rathena"; path = "../swift-rathena"; sourceTree = "<group>"; };
 		355BC18B2B8F25C0002F0586 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
@@ -403,7 +335,6 @@
 		35B695E92A305EF6006F1904 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		35B695EB2A307164006F1904 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabaseView.swift; sourceTree = "<group>"; };
-		35F50CC82BB3FD5000B36455 /* LoginClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginClient.swift; sourceTree = "<group>"; };
 		35F50CCB2BB4615F00B36455 /* ConnectionTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionTestView.swift; sourceTree = "<group>"; };
 		35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -417,9 +348,9 @@
 				3555D7222BC6DE6600709871 /* rAthenaRyml in Frameworks */,
 				3555D6512BC6C10700709871 /* RagnarokOfflineFileSystem in Frameworks */,
 				3555E12F2B7D2268007CE4BA /* rAthenaChar in Frameworks */,
+				358D4C632BC6EC2200FAF45D /* RagnarokOfflineNetwork in Frameworks */,
 				3555E1362B7D2268007CE4BA /* rAthenaLogin in Frameworks */,
 				3555D6532BC6D32600709871 /* RagnarokOfflineSettings in Frameworks */,
-				3523B57F2B97769D00CCE722 /* Lua in Frameworks */,
 				3555E1392B7D2268007CE4BA /* rAthenaMap in Frameworks */,
 				3555E1322B7D2268007CE4BA /* rAthenaCommon in Frameworks */,
 				3555D64B2BC6827000709871 /* RagnarokOfflineGraphics in Frameworks */,
@@ -429,6 +360,7 @@
 				3514BF892B48642B0065ED89 /* Terminal in Frameworks */,
 				3555E13E2B7D2268007CE4BA /* rAthenaResource in Frameworks */,
 				3555D6452BC665F600709871 /* RagnarokOfflineCrypto in Frameworks */,
+				358D4C612BC6EBB500FAF45D /* Lua in Frameworks */,
 				3555D64D2BC68A0900709871 /* RagnarokOfflineRenderers in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -552,88 +484,6 @@
 				3552D8792B318323004831D0 /* StillImageActivityItem.swift */,
 			);
 			path = ActivityItems;
-			sourceTree = "<group>";
-		};
-		3555D6662BC6D59800709871 /* AC */ = {
-			isa = PBXGroup;
-			children = (
-				3555D6642BC6D59800709871 /* PACKET.AC.ACCEPT_LOGIN.swift */,
-				3555D6652BC6D59800709871 /* PACKET.AC.REFUSE_LOGIN.swift */,
-			);
-			path = AC;
-			sourceTree = "<group>";
-		};
-		3555D66A2BC6D59800709871 /* CA */ = {
-			isa = PBXGroup;
-			children = (
-				3555D6672BC6D59800709871 /* PACKET.CA.CONNECT_INFO_CHANGE.swift */,
-				3555D6682BC6D59800709871 /* PACKET.CA.EXE_HASHCHECK.swift */,
-				3555D6692BC6D59800709871 /* PACKET.CA.LOGIN.swift */,
-			);
-			path = CA;
-			sourceTree = "<group>";
-		};
-		3555D6732BC6D59800709871 /* CH */ = {
-			isa = PBXGroup;
-			children = (
-				3555D66B2BC6D59800709871 /* PACKET.CH.DELETE_CHAR_CANCEL.swift */,
-				3555D66C2BC6D59800709871 /* PACKET.CH.DELETE_CHAR_RESERVED.swift */,
-				3555D66D2BC6D59800709871 /* PACKET.CH.DELETE_CHAR.swift */,
-				3555D66E2BC6D59800709871 /* PACKET.CH.ENTER.swift */,
-				3555D66F2BC6D59800709871 /* PACKET.CH.EXE_HASHCHECK.swift */,
-				3555D6702BC6D59800709871 /* PACKET.CH.MAKE_CHAR.swift */,
-				3555D6712BC6D59800709871 /* PACKET.CH.SELECT_ACCESSIBLE_MAPNAME.swift */,
-				3555D6722BC6D59800709871 /* PACKET.CH.SELECT_CHAR.swift */,
-			);
-			path = CH;
-			sourceTree = "<group>";
-		};
-		3555D6762BC6D59800709871 /* CZ */ = {
-			isa = PBXGroup;
-			children = (
-				3555D6742BC6D59800709871 /* PACKET.CZ.EXE_HASHCHECK.swift */,
-				3555D6752BC6D59800709871 /* PACKET.CZ.PING.swift */,
-			);
-			path = CZ;
-			sourceTree = "<group>";
-		};
-		3555D6802BC6D59800709871 /* HC */ = {
-			isa = PBXGroup;
-			children = (
-				3555D6772BC6D59800709871 /* PACKET.HC.ACCEPT_DELETECHAR.swift */,
-				3555D6782BC6D59800709871 /* PACKET.HC.ACCEPT_ENTER_NEO_UNION.swift */,
-				3555D6792BC6D59800709871 /* PACKET.HC.ACCEPT_MAKECHAR.swift */,
-				3555D67A2BC6D59800709871 /* PACKET.HC.DELETE_CHAR.swift */,
-				3555D67B2BC6D59800709871 /* PACKET.HC.NOTIFY_ACCESSIBLE_MAPNAME.swift */,
-				3555D67C2BC6D59800709871 /* PACKET.HC.NOTIFY_ZONESVR.swift */,
-				3555D67D2BC6D59800709871 /* PACKET.HC.REFUSE_DELETECHAR.swift */,
-				3555D67E2BC6D59800709871 /* PACKET.HC.REFUSE_ENTER.swift */,
-				3555D67F2BC6D59800709871 /* PACKET.HC.REFUSE_MAKECHAR.swift */,
-			);
-			path = HC;
-			sourceTree = "<group>";
-		};
-		3555D6822BC6D59800709871 /* SC */ = {
-			isa = PBXGroup;
-			children = (
-				3555D6812BC6D59800709871 /* PACKET.SC.NOTIFY_BAN.swift */,
-			);
-			path = SC;
-			sourceTree = "<group>";
-		};
-		3555D6852BC6D59800709871 /* Packets */ = {
-			isa = PBXGroup;
-			children = (
-				3555D6662BC6D59800709871 /* AC */,
-				3555D66A2BC6D59800709871 /* CA */,
-				3555D6732BC6D59800709871 /* CH */,
-				3555D6762BC6D59800709871 /* CZ */,
-				3555D6802BC6D59800709871 /* HC */,
-				3555D6822BC6D59800709871 /* SC */,
-				3555D6832BC6D59800709871 /* CharInfo.swift */,
-				3555D6842BC6D59800709871 /* PACKET.swift */,
-			);
-			path = Packets;
 			sourceTree = "<group>";
 		};
 		3555D6A82BC6DDE500709871 /* Cache */ = {
@@ -846,7 +696,7 @@
 		35B3B8CB2A08BEA600B4540B = {
 			isa = PBXGroup;
 			children = (
-				3523B57D2B97768A00CCE722 /* swift-lua */,
+				3555D7232BC6EB9500709871 /* swift-lua */,
 				3555E12D2B7D2251007CE4BA /* swift-rathena */,
 				3555D6352BC65ACB00709871 /* ragnarok-offline */,
 				35B3B8D62A08BEA600B4540B /* RagnarokOffline */,
@@ -875,7 +725,6 @@
 				3555D6492BC66CF000709871 /* ActivityItems */,
 				356363652B3F301C00F7C249 /* Client */,
 				3555D6E52BC6DDE500709871 /* Database */,
-				35F50CC72BB3FD1400B36455 /* Network */,
 				35B3B97E2A08C01600B4540B /* Utilities */,
 				35B3BA422A08C51000B4540B /* RagnarokOffline-Bridging-Header.h */,
 				35270D2B2A68F4610001A8BD /* Info.plist */,
@@ -943,22 +792,6 @@
 			path = Files;
 			sourceTree = "<group>";
 		};
-		35F50CC72BB3FD1400B36455 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				3555D6852BC6D59800709871 /* Packets */,
-				3555D65A2BC6D54800709871 /* BinaryDecoder.swift */,
-				3555D6542BC6D54800709871 /* BinaryEncoder.swift */,
-				35F50CC82BB3FD5000B36455 /* LoginClient.swift */,
-				3555D6592BC6D54800709871 /* PacketDecoder.swift */,
-				3555D6552BC6D54800709871 /* PacketEncoder.swift */,
-				3555D6582BC6D54800709871 /* PacketManager.swift */,
-				3555D6562BC6D54800709871 /* PacketProtocol.swift */,
-				3555D6572BC6D54800709871 /* PacketVersion.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
 		35F50CCA2BB4614100B36455 /* ConnectionTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -992,7 +825,6 @@
 				3555E1382B7D2268007CE4BA /* rAthenaMap */,
 				3555E13D2B7D2268007CE4BA /* rAthenaResource */,
 				3555E13F2B7D2268007CE4BA /* rAthenaWeb */,
-				3523B57E2B97769D00CCE722 /* Lua */,
 				3555D6362BC65B7000709871 /* RagnarokOfflineFileFormats */,
 				3555D6442BC665F600709871 /* RagnarokOfflineCrypto */,
 				3555D6472BC66B3700709871 /* RagnarokOfflineStream */,
@@ -1002,6 +834,8 @@
 				3555D6502BC6C10700709871 /* RagnarokOfflineFileSystem */,
 				3555D6522BC6D32600709871 /* RagnarokOfflineSettings */,
 				3555D7212BC6DE6600709871 /* rAthenaRyml */,
+				358D4C602BC6EBB500FAF45D /* Lua */,
+				358D4C622BC6EC2200FAF45D /* RagnarokOfflineNetwork */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -1123,16 +957,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3555D6622BC6D54800709871 /* BinaryDecoder.swift in Sources */,
 				3511C1D52B0AF9B1006DD639 /* RSMPreviewViewController.swift in Sources */,
 				3555D7122BC6DDE500709871 /* Skill.swift in Sources */,
 				356BF6862B05FF59005B67F7 /* FilePreviewPageViewController.swift in Sources */,
 				35B695EA2A305EF6006F1904 /* GameView.swift in Sources */,
 				355BC18E2B8F2890002F0586 /* FileRawDataView.swift in Sources */,
-				3555D65F2BC6D54800709871 /* PacketVersion.swift in Sources */,
-				3555D6872BC6D59800709871 /* PACKET.AC.REFUSE_LOGIN.swift in Sources */,
 				3555D6EC2BC6DDE500709871 /* SkillTreeCache.swift in Sources */,
-				3555D69A2BC6D59800709871 /* PACKET.HC.NOTIFY_ZONESVR.swift in Sources */,
 				3555D70F2BC6DDE500709871 /* NPC.swift in Sources */,
 				3555D71D2BC6DDE500709871 /* SkillUnitFlag.swift in Sources */,
 				3555D6EB2BC6DDE500709871 /* SkillCache.swift in Sources */,
@@ -1141,45 +971,28 @@
 				3555D6F72BC6DDE500709871 /* ItemClass.swift in Sources */,
 				3555D6E92BC6DDE500709871 /* MonsterCache.swift in Sources */,
 				3514BF5B2B454A040065ED89 /* SkillGridCell.swift in Sources */,
-				3555D69F2BC6D59800709871 /* CharInfo.swift in Sources */,
-				3555D6A02BC6D59800709871 /* PACKET.swift in Sources */,
 				3555D6FB2BC6DDE500709871 /* ItemType.swift in Sources */,
 				3555D6F52BC6DDE500709871 /* WeaponType.swift in Sources */,
 				35239DFD2BBEF1C80039F7D5 /* ObservableSkillDatabase.swift in Sources */,
 				3555D7012BC6DDE500709871 /* JobStats.swift in Sources */,
-				3555D65C2BC6D54800709871 /* BinaryEncoder.swift in Sources */,
-				35F50CC92BB3FD5000B36455 /* LoginClient.swift in Sources */,
 				3555D6E82BC6DDE500709871 /* MapCache.swift in Sources */,
-				3555D68D2BC6D59800709871 /* PACKET.CH.DELETE_CHAR.swift in Sources */,
 				3555D70D2BC6DDE500709871 /* MapFlag.swift in Sources */,
 				356363672B3F303F00F7C249 /* ClientDatabase.swift in Sources */,
-				3555D68C2BC6D59800709871 /* PACKET.CH.DELETE_CHAR_RESERVED.swift in Sources */,
 				353B4F162B43F3BB00605E92 /* ClientResourceBundle.swift in Sources */,
-				3555D6612BC6D54800709871 /* PacketDecoder.swift in Sources */,
-				3555D6952BC6D59800709871 /* PACKET.HC.ACCEPT_DELETECHAR.swift in Sources */,
 				3555D7002BC6DDE500709871 /* JobExpStats.swift in Sources */,
 				356508D42B10A02D00543562 /* STRPreviewViewController.swift in Sources */,
 				3555D6F82BC6DDE500709871 /* ItemJob.swift in Sources */,
 				3555D6E72BC6DDE500709871 /* JobCache.swift in Sources */,
-				3555D69D2BC6D59800709871 /* PACKET.HC.REFUSE_MAKECHAR.swift in Sources */,
-				3555D6922BC6D59800709871 /* PACKET.CH.SELECT_CHAR.swift in Sources */,
 				35B695EC2A307164006F1904 /* GameScene.swift in Sources */,
 				35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */,
 				3514BF862B4801EB0065ED89 /* JobInfoView.swift in Sources */,
 				353B4F0C2B43A9AC00605E92 /* ClientResourceManager.swift in Sources */,
-				3555D6882BC6D59800709871 /* PACKET.CA.CONNECT_INFO_CHANGE.swift in Sources */,
-				3555D6992BC6D59800709871 /* PACKET.HC.NOTIFY_ACCESSIBLE_MAPNAME.swift in Sources */,
-				3555D68E2BC6D59800709871 /* PACKET.CH.ENTER.swift in Sources */,
 				3552D8742B315D8F004831D0 /* TextFilePreviewViewController.swift in Sources */,
 				3555D71C2BC6DDE500709871 /* SkillType.swift in Sources */,
-				3555D69C2BC6D59800709871 /* PACKET.HC.REFUSE_ENTER.swift in Sources */,
 				356BF6822B04F54A005B67F7 /* ACTPreviewViewController.swift in Sources */,
-				3555D65D2BC6D54800709871 /* PacketEncoder.swift in Sources */,
-				3555D6972BC6D59800709871 /* PACKET.HC.ACCEPT_MAKECHAR.swift in Sources */,
 				3514BF8D2B4BE93A0065ED89 /* Gender+ResourceName.swift in Sources */,
 				3514BF822B4801D70065ED89 /* JobDatabaseView.swift in Sources */,
 				3552D8762B316876004831D0 /* SPRPreviewViewController.swift in Sources */,
-				3555D68B2BC6D59800709871 /* PACKET.CH.DELETE_CHAR_CANCEL.swift in Sources */,
 				3555D6F62BC6DDE500709871 /* Item.swift in Sources */,
 				35239E052BC2D5D60039F7D5 /* ProgressHUD.swift in Sources */,
 				356BF6882B060243005B67F7 /* FilePreviewViewController.swift in Sources */,
@@ -1188,7 +1001,6 @@
 				3555D7082BC6DDE500709871 /* ListNode.swift in Sources */,
 				35B3BA1B2A08C01600B4540B /* AudioFilePreviewViewController.swift in Sources */,
 				3552D8782B3182A8004831D0 /* AnimatedImageActivityItem.swift in Sources */,
-				3555D6942BC6D59800709871 /* PACKET.CZ.PING.swift in Sources */,
 				3555D7052BC6DDE500709871 /* MonsterClass.swift in Sources */,
 				3555D71E2BC6DDE500709871 /* SkillUnitTargetType.swift in Sources */,
 				3555D6FE2BC6DDE500709871 /* JobBasePointsStats.swift in Sources */,
@@ -1198,14 +1010,12 @@
 				3555D6ED2BC6DDE500709871 /* AmmoType.swift in Sources */,
 				3555D7102BC6DDE500709871 /* ShopNPC.swift in Sources */,
 				35652B452B960D2D0075AD71 /* MapGridCell.swift in Sources */,
-				3555D6932BC6D59800709871 /* PACKET.CZ.EXE_HASHCHECK.swift in Sources */,
 				3555D6EA2BC6DDE500709871 /* ScriptCache.swift in Sources */,
 				3555D6FA2BC6DDE500709871 /* ItemSubType.swift in Sources */,
 				3555D71B2BC6DDE500709871 /* SkillTree.swift in Sources */,
 				35239E012BC29A4E0039F7D5 /* ObservableItemDatabase.swift in Sources */,
 				35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */,
 				3555D7162BC6DDE500709871 /* SkillFlag.swift in Sources */,
-				3555D6982BC6D59800709871 /* PACKET.HC.DELETE_CHAR.swift in Sources */,
 				3555D6F02BC6DDE500709871 /* Gender.swift in Sources */,
 				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,
 				3555D7042BC6DDE500709871 /* MonsterAI.swift in Sources */,
@@ -1214,13 +1024,10 @@
 				35239DFB2BBEEF890039F7D5 /* ObservableJobDatabase.swift in Sources */,
 				35B3BA1A2A08C01600B4540B /* FilesView.swift in Sources */,
 				3555D6EE2BC6DDE500709871 /* CardType.swift in Sources */,
-				3555D6602BC6D54800709871 /* PacketManager.swift in Sources */,
 				3582FFC82B8DB73B00E746D7 /* FileThumbnailView.swift in Sources */,
 				3555D7192BC6DDE500709871 /* SkillRequirement.swift in Sources */,
-				3555D69B2BC6D59800709871 /* PACKET.HC.REFUSE_DELETECHAR.swift in Sources */,
 				3555D7132BC6DDE500709871 /* SkillCastFlag.swift in Sources */,
 				3555D6F22BC6DDE500709871 /* Race.swift in Sources */,
-				3555D65E2BC6D54800709871 /* PacketProtocol.swift in Sources */,
 				35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */,
 				35239DF72BBDA0760039F7D5 /* LoadStatus.swift in Sources */,
 				35652B432B960D100075AD71 /* MapDatabaseView.swift in Sources */,
@@ -1230,21 +1037,17 @@
 				3555D6F12BC6DDE500709871 /* Parameter.swift in Sources */,
 				35B3BA192A08C01600B4540B /* ImageFilePreviewViewController.swift in Sources */,
 				3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */,
-				3555D68F2BC6D59800709871 /* PACKET.CH.EXE_HASHCHECK.swift in Sources */,
 				3555D7032BC6DDE500709871 /* Monster.swift in Sources */,
 				3555D70C2BC6DDE500709871 /* Function.swift in Sources */,
 				35239E032BC29F660039F7D5 /* EmptyContentView.swift in Sources */,
 				35652B472B960D370075AD71 /* MapInfoView.swift in Sources */,
-				3555D69E2BC6D59800709871 /* PACKET.SC.NOTIFY_BAN.swift in Sources */,
 				3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */,
 				3514BF7F2B47D64F0065ED89 /* Job+ResourceName.swift in Sources */,
 				3555D7072BC6DDE500709871 /* EitherNode.swift in Sources */,
 				353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */,
-				3555D6862BC6D59800709871 /* PACKET.AC.ACCEPT_LOGIN.swift in Sources */,
 				3514BF452B4526F40065ED89 /* ItemInfoView.swift in Sources */,
 				3555D6FD2BC6DDE500709871 /* JobASPDStats.swift in Sources */,
 				3555D6F92BC6DDE500709871 /* ItemLocation.swift in Sources */,
-				3555D6892BC6D59800709871 /* PACKET.CA.EXE_HASHCHECK.swift in Sources */,
 				3555D6FC2BC6DDE500709871 /* Job.swift in Sources */,
 				3555D70B2BC6DDE500709871 /* FloatingNPC.swift in Sources */,
 				3555D7062BC6DDE500709871 /* MonsterMode.swift in Sources */,
@@ -1255,7 +1058,6 @@
 				3555D7022BC6DDE500709871 /* Map.swift in Sources */,
 				355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */,
 				3555D70A2BC6DDE500709871 /* Duplicate.swift in Sources */,
-				3555D68A2BC6D59800709871 /* PACKET.CA.LOGIN.swift in Sources */,
 				350971C92BBAE50100A366E1 /* Data+String.swift in Sources */,
 				3511C1D12B0A535A006DD639 /* GATPreviewViewController.swift in Sources */,
 				3555D6FF2BC6DDE500709871 /* JobBasicStats.swift in Sources */,
@@ -1264,9 +1066,7 @@
 				353B4F1C2B451F1300605E92 /* ItemGridCell.swift in Sources */,
 				35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */,
 				3582FFCA2B8DB9FE00E746D7 /* FilePreviewPageView.swift in Sources */,
-				3555D6912BC6D59800709871 /* PACKET.CH.SELECT_ACCESSIBLE_MAPNAME.swift in Sources */,
 				356BF6842B04F569005B67F7 /* ImageCollectionViewCell.swift in Sources */,
-				3555D6962BC6D59800709871 /* PACKET.HC.ACCEPT_ENTER_NEO_UNION.swift in Sources */,
 				3555D6F32BC6DDE500709871 /* RaceGroup.swift in Sources */,
 				3555D71A2BC6DDE500709871 /* SkillTargetType.swift in Sources */,
 				3555D71F2BC6DDE500709871 /* Database.swift in Sources */,
@@ -1275,7 +1075,6 @@
 				35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */,
 				3555D7152BC6DDE500709871 /* SkillDamageFlag.swift in Sources */,
 				353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */,
-				3555D6902BC6D59800709871 /* PACKET.CH.MAKE_CHAR.swift in Sources */,
 				3514BF842B4801E20065ED89 /* JobGridCell.swift in Sources */,
 				3511C1D32B0A6C5D006DD639 /* RSWPreviewViewController.swift in Sources */,
 				3514BF602B455EF90065ED89 /* MonsterGridCell.swift in Sources */,
@@ -1634,10 +1433,6 @@
 			package = 3514BF872B48642B0065ED89 /* XCRemoteSwiftPackageReference "Terminal" */;
 			productName = Terminal;
 		};
-		3523B57E2B97769D00CCE722 /* Lua */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Lua;
-		};
 		3555D6362BC65B7000709871 /* RagnarokOfflineFileFormats */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RagnarokOfflineFileFormats;
@@ -1697,6 +1492,14 @@
 		3555E13F2B7D2268007CE4BA /* rAthenaWeb */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = rAthenaWeb;
+		};
+		358D4C602BC6EBB500FAF45D /* Lua */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Lua;
+		};
+		358D4C622BC6EC2200FAF45D /* RagnarokOfflineNetwork */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RagnarokOfflineNetwork;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

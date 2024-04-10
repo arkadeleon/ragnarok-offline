@@ -26,6 +26,9 @@ let package = Package(
             name: "RagnarokOfflineGraphics",
             targets: ["RagnarokOfflineGraphics"]),
         .library(
+            name: "RagnarokOfflineNetwork",
+            targets: ["RagnarokOfflineNetwork"]),
+        .library(
             name: "RagnarokOfflineFileFormats",
             targets: ["RagnarokOfflineFileFormats"]),
         .library(
@@ -37,6 +40,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/mw99/DataCompression.git", from: "3.8.0"),
+        .package(path: "swift-rathena"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -70,6 +74,11 @@ let package = Package(
             name: "RagnarokOfflineGraphics",
             dependencies: [
                 "RagnarokOfflineFileFormats",
+            ]),
+        .target(
+            name: "RagnarokOfflineNetwork",
+            dependencies: [
+                .product(name: "rAthenaCommon", package: "swift-rathena"),
             ]),
         .target(
             name: "RagnarokOfflineFileFormats",
