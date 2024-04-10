@@ -8,7 +8,6 @@
 
 import Network
 import rAthenaCommon
-import rAthenaNetwork
 
 /// Login client.
 ///
