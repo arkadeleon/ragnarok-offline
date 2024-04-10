@@ -8,6 +8,7 @@
 
 import Metal
 import simd
+import RagnarokOfflineShaders
 
 class EffectRenderer {
     let renderPipelineState: MTLRenderPipelineState

@@ -8,16 +8,17 @@
 
 import Metal
 import RagnarokOfflineFileFormats
+import RagnarokOfflineShaders
 
-struct WaterMesh {
-    var vertices: [WaterVertex] = []
-    var textures: [MTLTexture?] = []
+public struct WaterMesh {
+    public var vertices: [WaterVertex] = []
+    public var textures: [MTLTexture?] = []
 }
 
-struct Water {
-    var mesh: WaterMesh
+public struct Water {
+    public var mesh: WaterMesh
 
-    init(gnd: GND, rsw: RSW, textureProvider: (String) -> MTLTexture?) {
+    public init(gnd: GND, rsw: RSW, textureProvider: (String) -> MTLTexture?) {
         var vertices: [WaterVertex] = []
 
         let width = Int(gnd.width)

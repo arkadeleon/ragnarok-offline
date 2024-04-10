@@ -8,10 +8,10 @@
 
 import Metal
 
-class Object3D {
-    let meshes: [Mesh]
+public class Object3D {
+    public let meshes: [Mesh]
 
-    init(meshes: [Mesh]) {
+    public init(meshes: [Mesh]) {
         self.meshes = meshes
     }
 }

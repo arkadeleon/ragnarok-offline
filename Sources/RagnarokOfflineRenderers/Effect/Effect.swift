@@ -9,12 +9,13 @@
 import Metal
 import simd
 import RagnarokOfflineFileFormats
+import RagnarokOfflineShaders
 
-struct Effect {
-    var fps: Int
-    var frames: [Frame] = []
+public struct Effect {
+    public var fps: Int
+    public var frames: [Frame] = []
 
-    init(str: STR, textureProvider: (String) -> MTLTexture?) {
+    public init(str: STR, textureProvider: (String) -> MTLTexture?) {
         fps = Int(str.fps)
 
         let frameCount = str.maxKeyframeIndex + 1
@@ -119,19 +120,19 @@ struct Effect {
 }
 
 extension Effect {
-    struct Frame {
-        var sprites: [Sprite] = []
+    public struct Frame {
+        public var sprites: [Sprite] = []
     }
 }
 
 extension Effect {
-    struct Sprite {
-        var vertices: [EffectVertex] = []
-        var texture: MTLTexture?
+    public struct Sprite {
+        public var vertices: [EffectVertex] = []
+        public var texture: MTLTexture?
 
-        var position: simd_float2
-        var angle: Float
-        var color: simd_float4
+        public var position: simd_float2
+        public var angle: Float
+        public var color: simd_float4
 
         init(uv: simd_float8, xy: simd_float8, texture: MTLTexture?, position: simd_float2, angle: Float, color: simd_float4) {
             let v0 = EffectVertex(

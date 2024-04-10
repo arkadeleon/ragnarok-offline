@@ -102,7 +102,7 @@ public func lookAt(_ eye: simd_float3, _ center: simd_float3, _ up: simd_float3)
 }
 
 extension simd_float3x3 {
-    init(_ m: simd_float4x4) {
+    public init(_ m: simd_float4x4) {
         self.init(
             [m[0, 0], m[0, 1], m[0, 2]],
             [m[1, 0], m[1, 1], m[1, 2]],
@@ -112,7 +112,7 @@ extension simd_float3x3 {
 }
 
 extension simd_float4x4 {
-    init(_ m: simd_float3x3) {
+    public init(_ m: simd_float3x3) {
         self.init(
             [m[0, 0], m[0, 1], m[0, 2], 0.0],
             [m[1, 0], m[1, 1], m[1, 2], 0.0],
@@ -123,7 +123,7 @@ extension simd_float4x4 {
 }
 
 extension simd_float4x4 {
-    init(translation: simd_float3) {
+    public init(translation: simd_float3) {
         self = simd_float4x4(
             [            1,             0,             0, 0],
             [            0,             1,             0, 0],
@@ -132,7 +132,7 @@ extension simd_float4x4 {
         )
     }
 
-    init(rotationX angle: Float) {
+    public init(rotationX angle: Float) {
         self = simd_float4x4(
             [1,           0,          0, 0],
             [0,  cos(angle), sin(angle), 0],
@@ -141,7 +141,7 @@ extension simd_float4x4 {
         )
     }
 
-    init(rotationY angle: Float) {
+    public init(rotationY angle: Float) {
         self = simd_float4x4(
             [cos(angle), 0, -sin(angle), 0],
             [         0, 1,           0, 0],
@@ -150,7 +150,7 @@ extension simd_float4x4 {
         )
     }
 
-    init(rotationZ angle: Float) {
+    public init(rotationZ angle: Float) {
         self = simd_float4x4(
             [ cos(angle), sin(angle), 0, 0],
             [-sin(angle), cos(angle), 0, 0],
@@ -159,7 +159,7 @@ extension simd_float4x4 {
         )
     }
 
-    init(rotationXYZ angle: simd_float3) {
+    public init(rotationXYZ angle: simd_float3) {
         let rotationX = simd_float4x4(rotationX: angle.x)
         let rotationY = simd_float4x4(rotationY: angle.y)
         let rotationZ = simd_float4x4(rotationZ: angle.z)

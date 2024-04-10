@@ -9,20 +9,21 @@
 import Metal
 import simd
 import RagnarokOfflineFileFormats
+import RagnarokOfflineShaders
 
-struct GroundMesh {
-    var vertices: [GroundVertex] = []
-    var texture: MTLTexture?
+public struct GroundMesh {
+    public var vertices: [GroundVertex] = []
+    public var texture: MTLTexture?
 }
 
-struct Ground {
-    var width: Int
-    var height: Int
-    var altitude: Float
+public struct Ground {
+    public var width: Int
+    public var height: Int
+    public var altitude: Float
 
-    var meshes: [GroundMesh] = []
+    public var meshes: [GroundMesh] = []
 
-    init(gat: GAT, gnd: GND, textureProvider: (String) -> MTLTexture?) {
+    public init(gat: GAT, gnd: GND, textureProvider: (String) -> MTLTexture?) {
         width = Int(gat.width)
         height = Int(gat.height)
         altitude = gat.altitude(forTileAtX: width / 2, y: height / 2)

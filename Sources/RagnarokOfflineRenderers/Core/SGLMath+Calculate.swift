@@ -6,6 +6,8 @@
 //  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
+import simd
+
 func calcNormal(_ a: simd_float3, _ b: simd_float3, _ c: simd_float3) -> simd_float3 {
     let v1 = c - b
     let v2 = a - b

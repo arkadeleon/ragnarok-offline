@@ -1,5 +1,5 @@
 //
-//  RSWRenderer.swift
+//  RSMRenderer.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/7/15.
@@ -8,41 +8,32 @@
 
 import Metal
 import MetalKit
+import RagnarokOfflineShaders
 
-class RSWRenderer: NSObject, Renderer {
-    let device: MTLDevice
+public class RSMRenderer: NSObject, Renderer {
+    public let device: MTLDevice
     let commandQueue: MTLCommandQueue
 
-    let groundRenderer: GroundRenderer
-    let waterRenderer: WaterRenderer
     let modelRenderer: ModelRenderer
 
-    let camera: Camera
+    public let camera = Camera()
 
-    init(device: MTLDevice, ground: Ground, water: Water, models: [Model]) throws {
+    public init(device: MTLDevice, model: Model) throws {
         self.device = device
 
         commandQueue = device.makeCommandQueue()!
 
-        let library = device.makeDefaultLibrary()!
-        groundRenderer = try GroundRenderer(device: device, library: library, ground: ground)
-        waterRenderer = try WaterRenderer(device: device, library: library, water: water)
-        modelRenderer = try ModelRenderer(device: device, library: library, models: models)
-
-        camera = Camera()
-        camera.defaultDistance = -ground.altitude / 5 + 200
-        camera.minimumDistance = camera.defaultDistance - 190
-        camera.maximumDistance = camera.defaultDistance + 200
-        camera.farZ = 500
+        let library = RagnarokOfflineCreateShadersLibrary(device)!
+        modelRenderer = try ModelRenderer(device: device, library: library, models: [model])
 
         super.init()
     }
 
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+    public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
 
     }
 
-    func draw(in view: MTKView) {
+    public func draw(in view: MTKView) {
         guard let commandBuffer = commandQueue.makeCommandBuffer() else {
             return
         }
@@ -59,14 +50,15 @@ class RSWRenderer: NSObject, Renderer {
 
         let time = CACurrentMediaTime()
 
-        let ground = groundRenderer.ground
+        let model = modelRenderer.models[0]
+        let scale = 2 / model.boundingBox.range.max()
 
         camera.update(size: view.bounds.size)
 
         var modelMatrix = matrix_identity_float4x4
-        modelMatrix = matrix_scale(modelMatrix, [1, -1, 1])
-        modelMatrix = matrix_rotate(modelMatrix, radians(90), [1, 0, 0])
-        modelMatrix = matrix_translate(modelMatrix, [-Float(ground.width / 2), 0, -Float(ground.height / 2)])
+        modelMatrix = matrix_scale(modelMatrix, [scale, scale, scale])
+        modelMatrix = matrix_rotate(modelMatrix, radians(-15), [1, 0, 0])
+        modelMatrix = matrix_rotate(modelMatrix, Float(radians(time.truncatingRemainder(dividingBy: 8) * 360 / 8)), [0, 1, 0])
 
         let viewMatrix = camera.viewMatrix
         let projectionMatrix = camera.projectionMatrix
@@ -76,23 +68,6 @@ class RSWRenderer: NSObject, Renderer {
         guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
         }
-
-        groundRenderer.render(
-            atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix,
-            normalMatrix: normalMatrix
-        )
-
-        waterRenderer.render(
-            atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix
-        )
 
         modelRenderer.render(
             atTime: time,

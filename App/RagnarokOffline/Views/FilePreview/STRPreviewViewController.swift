@@ -9,6 +9,7 @@
 import MetalKit
 import UIKit
 import RagnarokOfflineFileFormats
+import RagnarokOfflineRenderers
 
 class STRPreviewViewController: UIViewController {
     let file: File

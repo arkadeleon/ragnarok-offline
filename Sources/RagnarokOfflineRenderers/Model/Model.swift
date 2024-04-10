@@ -9,30 +9,31 @@
 import Metal
 import simd
 import RagnarokOfflineFileFormats
+import RagnarokOfflineShaders
 
-struct ModelMesh {
-    var vertices: [ModelVertex] = []
-    var texture: MTLTexture?
+public struct ModelMesh {
+    public var vertices: [ModelVertex] = []
+    public var texture: MTLTexture?
 }
 
-struct ModelBoundingBox {
-    var min: simd_float3 = [.infinity, .infinity, .infinity]
-    var max: simd_float3 = [-.infinity, -.infinity, -.infinity]
+public struct ModelBoundingBox {
+    public var min: simd_float3 = [.infinity, .infinity, .infinity]
+    public var max: simd_float3 = [-.infinity, -.infinity, -.infinity]
 
-    var range: simd_float3 {
+    public var range: simd_float3 {
         (max - min) / 2
     }
 
-    var center: simd_float3 {
+    public var center: simd_float3 {
         (min + max) / 2
     }
 }
 
-struct Model {
-    var meshes: [ModelMesh] = []
-    var boundingBox: ModelBoundingBox
+public struct Model {
+    public var meshes: [ModelMesh] = []
+    public var boundingBox: ModelBoundingBox
 
-    init(rsm: RSM, instance: simd_float4x4, textureProvider: (String) -> MTLTexture?) {
+    public init(rsm: RSM, instance: simd_float4x4, textureProvider: (String) -> MTLTexture?) {
         boundingBox = ModelBoundingBox()
 
         let wrappers = rsm.nodes.map(ModelNodeWrapper.init)
@@ -67,7 +68,7 @@ struct Model {
         }
     }
 
-    static func createInstance(position: simd_float3, rotation: simd_float3, scale: simd_float3, width: Float, height: Float) -> simd_float4x4 {
+    public static func createInstance(position: simd_float3, rotation: simd_float3, scale: simd_float3, width: Float, height: Float) -> simd_float4x4 {
         var matrix = matrix_identity_float4x4
         matrix = matrix_translate(matrix, [position[0] + width, position[1], position[2] + height])
         matrix = matrix_rotate(matrix, radians(rotation[2]), [0, 0, 1])  // rotateZ

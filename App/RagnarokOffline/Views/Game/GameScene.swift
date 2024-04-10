@@ -8,6 +8,7 @@
 
 import Metal
 import MetalKit
+import RagnarokOfflineRenderers
 
 struct GameScene {
     let device: MTLDevice

@@ -10,7 +10,7 @@ import MetalKit
 import RagnarokOfflineGraphics
 
 extension MTKTextureLoader {
-    func newTexture(bmpData: Data) -> MTLTexture? {
+    public func newTexture(bmpData: Data) -> MTLTexture? {
         guard let image = CGImageCreateWithData(bmpData)?.removingMagentaPixels() else {
             return nil
         }

@@ -8,18 +8,18 @@
 
 import MetalKit
 
-protocol Renderer: MTKViewDelegate {
+public protocol Renderer: MTKViewDelegate {
     var device: MTLDevice { get }
     var colorPixelFormat: MTLPixelFormat { get }
     var depthStencilPixelFormat: MTLPixelFormat { get }
 }
 
 extension Renderer {
-    var colorPixelFormat: MTLPixelFormat {
+    public var colorPixelFormat: MTLPixelFormat {
         .bgra8Unorm
     }
 
-    var depthStencilPixelFormat: MTLPixelFormat {
+    public var depthStencilPixelFormat: MTLPixelFormat {
         .depth32Float
     }
 }
