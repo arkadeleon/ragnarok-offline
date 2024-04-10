@@ -1,0 +1,1424 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3504AB8C2A2EFB900029AC46 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3504AB8B2A2EFB900029AC46 /* Camera.swift */; };
+		350971C92BBAE50100A366E1 /* Data+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350971C82BBAE50100A366E1 /* Data+String.swift */; };
+		3511C1D12B0A535A006DD639 /* GATPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D02B0A535A006DD639 /* GATPreviewViewController.swift */; };
+		3511C1D32B0A6C5D006DD639 /* RSWPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */; };
+		3511C1D52B0AF9B1006DD639 /* RSMPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D42B0AF9B1006DD639 /* RSMPreviewViewController.swift */; };
+		3511C1D92B0B05B3006DD639 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D82B0B05B3006DD639 /* GameViewController.swift */; };
+		3514BF452B4526F40065ED89 /* ItemInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF442B4526F40065ED89 /* ItemInfoView.swift */; };
+		3514BF492B4532C80065ED89 /* ClientSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF482B4532C80065ED89 /* ClientSettings.swift */; };
+		3514BF5B2B454A040065ED89 /* SkillGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF5A2B454A040065ED89 /* SkillGridCell.swift */; };
+		3514BF5E2B4557950065ED89 /* MonsterDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF5D2B4557950065ED89 /* MonsterDatabaseView.swift */; };
+		3514BF602B455EF90065ED89 /* MonsterGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF5F2B455EF90065ED89 /* MonsterGridCell.swift */; };
+		3514BF622B4560730065ED89 /* MonsterInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF612B4560730065ED89 /* MonsterInfoView.swift */; };
+		3514BF7F2B47D64F0065ED89 /* Job+ResourceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF7E2B47D64F0065ED89 /* Job+ResourceName.swift */; };
+		3514BF822B4801D70065ED89 /* JobDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF812B4801D70065ED89 /* JobDatabaseView.swift */; };
+		3514BF842B4801E20065ED89 /* JobGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF832B4801E20065ED89 /* JobGridCell.swift */; };
+		3514BF862B4801EB0065ED89 /* JobInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF852B4801EB0065ED89 /* JobInfoView.swift */; };
+		3514BF892B48642B0065ED89 /* Terminal in Frameworks */ = {isa = PBXBuildFile; productRef = 3514BF882B48642B0065ED89 /* Terminal */; };
+		3514BF8D2B4BE93A0065ED89 /* Gender+ResourceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF8C2B4BE93A0065ED89 /* Gender+ResourceName.swift */; };
+		35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */; };
+		35239DF72BBDA0760039F7D5 /* LoadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF62BBDA0760039F7D5 /* LoadStatus.swift */; };
+		35239DF92BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF82BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift */; };
+		35239DFB2BBEEF890039F7D5 /* ObservableJobDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DFA2BBEEF890039F7D5 /* ObservableJobDatabase.swift */; };
+		35239DFD2BBEF1C80039F7D5 /* ObservableSkillDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DFC2BBEF1C80039F7D5 /* ObservableSkillDatabase.swift */; };
+		35239DFF2BBEF4510039F7D5 /* ObservableMapDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DFE2BBEF4510039F7D5 /* ObservableMapDatabase.swift */; };
+		35239E012BC29A4E0039F7D5 /* ObservableItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239E002BC29A4E0039F7D5 /* ObservableItemDatabase.swift */; };
+		35239E032BC29F660039F7D5 /* EmptyContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239E022BC29F660039F7D5 /* EmptyContentView.swift */; };
+		35239E052BC2D5D60039F7D5 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */; };
+		3523B57F2B97769D00CCE722 /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 3523B57E2B97769D00CCE722 /* Lua */; };
+		3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */; };
+		3530982E2B145D6A00F32B62 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982D2B145D6A00F32B62 /* Ground.swift */; };
+		353098302B1480A600F32B62 /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530982F2B1480A600F32B62 /* Water.swift */; };
+		353098322B148E4100F32B62 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353098312B148E4100F32B62 /* Model.swift */; };
+		353B4F0C2B43A9AC00605E92 /* ClientResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0B2B43A9AC00605E92 /* ClientResourceManager.swift */; };
+		353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */; };
+		353B4F162B43F3BB00605E92 /* ClientResourceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F152B43F3BB00605E92 /* ClientResourceBundle.swift */; };
+		353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F172B44FFE100605E92 /* SkillInfoView.swift */; };
+		353B4F1C2B451F1300605E92 /* ItemGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F1B2B451F1300605E92 /* ItemGridCell.swift */; };
+		35482AF12B2759DD0062DC4B /* File+RawData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35482AF02B2759DD0062DC4B /* File+RawData.swift */; };
+		354CB4612B2AA70F001FC2A1 /* FileThumbnailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */; };
+		3552D8742B315D8F004831D0 /* TextFilePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8732B315D8F004831D0 /* TextFilePreviewViewController.swift */; };
+		3552D8762B316876004831D0 /* SPRPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8752B316876004831D0 /* SPRPreviewViewController.swift */; };
+		3552D8782B3182A8004831D0 /* AnimatedImageActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */; };
+		3552D87A2B318323004831D0 /* StillImageActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8792B318323004831D0 /* StillImageActivityItem.swift */; };
+		3555D6372BC65B7000709871 /* RagnarokOfflineFileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D6362BC65B7000709871 /* RagnarokOfflineFileFormats */; };
+		3555D6392BC663E600709871 /* ACT+AnimatedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6382BC663E600709871 /* ACT+AnimatedImage.swift */; };
+		3555D63B2BC663F100709871 /* GAT+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D63A2BC663F100709871 /* GAT+Image.swift */; };
+		3555D63D2BC663FF00709871 /* PAL+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D63C2BC663FF00709871 /* PAL+Image.swift */; };
+		3555D63F2BC6640800709871 /* SPR+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D63E2BC6640700709871 /* SPR+Image.swift */; };
+		3555D6422BC6644300709871 /* StillImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6412BC6644300709871 /* StillImage.swift */; };
+		3555D6432BC6644300709871 /* AnimatedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6402BC6644300709871 /* AnimatedImage.swift */; };
+		3555D6452BC665F600709871 /* RagnarokOfflineCrypto in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D6442BC665F600709871 /* RagnarokOfflineCrypto */; };
+		3555D6482BC66B3700709871 /* RagnarokOfflineStream in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D6472BC66B3700709871 /* RagnarokOfflineStream */; };
+		3555E1152B74C864007CE4BA /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555E1142B74C864007CE4BA /* Entity.swift */; };
+		3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555E1162B7D12D9007CE4BA /* TerminalView.swift */; };
+		3555E12F2B7D2268007CE4BA /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E12E2B7D2268007CE4BA /* rAthenaChar */; };
+		3555E1302B7D2268007CE4BA /* rAthenaChar in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3555E12E2B7D2268007CE4BA /* rAthenaChar */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3555E1322B7D2268007CE4BA /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E1312B7D2268007CE4BA /* rAthenaCommon */; };
+		3555E1342B7D2268007CE4BA /* rAthenaDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E1332B7D2268007CE4BA /* rAthenaDatabase */; };
+		3555E1362B7D2268007CE4BA /* rAthenaLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E1352B7D2268007CE4BA /* rAthenaLogin */; };
+		3555E1372B7D2268007CE4BA /* rAthenaLogin in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3555E1352B7D2268007CE4BA /* rAthenaLogin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3555E1392B7D2268007CE4BA /* rAthenaMap in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E1382B7D2268007CE4BA /* rAthenaMap */; };
+		3555E13A2B7D2268007CE4BA /* rAthenaMap in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3555E1382B7D2268007CE4BA /* rAthenaMap */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3555E13C2B7D2268007CE4BA /* rAthenaNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E13B2B7D2268007CE4BA /* rAthenaNetwork */; };
+		3555E13E2B7D2268007CE4BA /* rAthenaResource in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E13D2B7D2268007CE4BA /* rAthenaResource */; };
+		3555E1402B7D2268007CE4BA /* rAthenaWeb in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E13F2B7D2268007CE4BA /* rAthenaWeb */; };
+		3555E1412B7D2268007CE4BA /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3555E13F2B7D2268007CE4BA /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC18B2B8F25C0002F0586 /* WebView.swift */; };
+		355BC18E2B8F2890002F0586 /* FileRawDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC18D2B8F2890002F0586 /* FileRawDataView.swift */; };
+		355BC1902B8F4E0D002F0586 /* json-viewer in Resources */ = {isa = PBXBuildFile; fileRef = 355BC18F2B8F4E0D002F0586 /* json-viewer */; };
+		355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC1912B9056E5002F0586 /* FileContextMenu.swift */; };
+		356049D22BB6956F0060DF81 /* SettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356049D12BB6956F0060DF81 /* SettingsItem.swift */; };
+		356363672B3F303F00F7C249 /* ClientDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356363662B3F303F00F7C249 /* ClientDatabase.swift */; };
+		356508C72B104C9500543562 /* EffectShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 356508C62B104C9500543562 /* EffectShaders.metal */; };
+		356508C92B104DCC00543562 /* EffectRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508C82B104DCC00543562 /* EffectRenderer.swift */; };
+		356508CF2B108D1500543562 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508CE2B108D1500543562 /* Effect.swift */; };
+		356508D22B10A02000543562 /* STRRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508D12B10A02000543562 /* STRRenderer.swift */; };
+		356508D42B10A02D00543562 /* STRPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356508D32B10A02D00543562 /* STRPreviewViewController.swift */; };
+		35652B432B960D100075AD71 /* MapDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B422B960D100075AD71 /* MapDatabaseView.swift */; };
+		35652B452B960D2D0075AD71 /* MapGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B442B960D2D0075AD71 /* MapGridCell.swift */; };
+		35652B472B960D370075AD71 /* MapInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B462B960D370075AD71 /* MapInfoView.swift */; };
+		356BF6772AFCCDD9005B67F7 /* GRFWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6762AFCCDD9005B67F7 /* GRFWrapper.swift */; };
+		356BF6822B04F54A005B67F7 /* ACTPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6812B04F54A005B67F7 /* ACTPreviewViewController.swift */; };
+		356BF6842B04F569005B67F7 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6832B04F569005B67F7 /* ImageCollectionViewCell.swift */; };
+		356BF6862B05FF59005B67F7 /* FilePreviewPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6852B05FF59005B67F7 /* FilePreviewPageViewController.swift */; };
+		356BF6882B060243005B67F7 /* FilePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6872B060243005B67F7 /* FilePreviewViewController.swift */; };
+		35774F7A2B231FAF00438311 /* FileActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35774F792B231FAF00438311 /* FileActivityItem.swift */; };
+		3582FFC32B8898DD00E746D7 /* CGImage+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC22B8898DD00E746D7 /* CGImage+Data.swift */; };
+		3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC52B8C830D00E746D7 /* SettingsView.swift */; };
+		3582FFC82B8DB73B00E746D7 /* FileThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC72B8DB73B00E746D7 /* FileThumbnailView.swift */; };
+		3582FFCA2B8DB9FE00E746D7 /* FilePreviewPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC92B8DB9FE00E746D7 /* FilePreviewPageView.swift */; };
+		3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */; };
+		3582FFCE2B8DC07E00E746D7 /* File+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFCD2B8DC07E00E746D7 /* File+Actions.swift */; };
+		35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */; };
+		35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */; };
+		35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D92A08BEA600B4540B /* ContentView.swift */; };
+		35B3B8DC2A08BEA700B4540B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B8DB2A08BEA700B4540B /* Assets.xcassets */; };
+		35B3B8DF2A08BEA700B4540B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B8DE2A08BEA700B4540B /* Preview Assets.xcassets */; };
+		35B3B8E92A08BEA700B4540B /* RagnarokOfflineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8E82A08BEA700B4540B /* RagnarokOfflineTests.swift */; };
+		35B3B8F32A08BEA700B4540B /* RagnarokOfflineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8F22A08BEA700B4540B /* RagnarokOfflineUITests.swift */; };
+		35B3B8F52A08BEA700B4540B /* RagnarokOfflineUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8F42A08BEA700B4540B /* RagnarokOfflineUITestsLaunchTests.swift */; };
+		35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9702A08C01600B4540B /* Shaders.metal */; };
+		35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9722A08C01600B4540B /* GameRenderer.swift */; };
+		35B3B9FA2A08C01600B4540B /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B9732A08C01600B4540B /* wall.jpg */; };
+		35B3BA042A08C01600B4540B /* SGLMath+Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9802A08C01600B4540B /* SGLMath+Calculate.swift */; };
+		35B3BA052A08C01600B4540B /* MTKTextureLoader+BMP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9812A08C01600B4540B /* MTKTextureLoader+BMP.swift */; };
+		35B3BA0B2A08C01600B4540B /* SGLMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9872A08C01600B4540B /* SGLMath.swift */; };
+		35B3BA0E2A08C01600B4540B /* FileThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98C2A08C01600B4540B /* FileThumbnailGenerator.swift */; };
+		35B3BA0F2A08C01600B4540B /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98D2A08C01600B4540B /* File.swift */; };
+		35B3BA112A08C01600B4540B /* RSWRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9902A08C01600B4540B /* RSWRenderer.swift */; };
+		35B3BA162A08C01600B4540B /* File+Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9952A08C01600B4540B /* File+Type.swift */; };
+		35B3BA172A08C01600B4540B /* FilePasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9962A08C01600B4540B /* FilePasteboard.swift */; };
+		35B3BA192A08C01600B4540B /* ImageFilePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9992A08C01600B4540B /* ImageFilePreviewViewController.swift */; };
+		35B3BA1A2A08C01600B4540B /* FilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99A2A08C01600B4540B /* FilesView.swift */; };
+		35B3BA1B2A08C01600B4540B /* AudioFilePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99C2A08C01600B4540B /* AudioFilePreviewViewController.swift */; };
+		35B3BA202A08C01600B4540B /* RSMRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A22A08C01600B4540B /* RSMRenderer.swift */; };
+		35B3BA222A08C01600B4540B /* WaterShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A52A08C01600B4540B /* WaterShaders.metal */; };
+		35B3BA232A08C01600B4540B /* GroundRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A82A08C01600B4540B /* GroundRenderer.swift */; };
+		35B3BA242A08C01600B4540B /* ModelShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9A92A08C01600B4540B /* ModelShaders.metal */; };
+		35B3BA252A08C01600B4540B /* GroundShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9AA2A08C01600B4540B /* GroundShaders.metal */; };
+		35B3BA262A08C01600B4540B /* RendererCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9AC2A08C01600B4540B /* RendererCommon.swift */; };
+		35B3BA272A08C01600B4540B /* ModelRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9AD2A08C01600B4540B /* ModelRenderer.swift */; };
+		35B3BA282A08C01600B4540B /* WaterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9AE2A08C01600B4540B /* WaterRenderer.swift */; };
+		35B4990C2A1C50B400607EE6 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B4990B2A1C50B400607EE6 /* Renderer.swift */; };
+		35B695EA2A305EF6006F1904 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695E92A305EF6006F1904 /* GameView.swift */; };
+		35B695EC2A307164006F1904 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695EB2A307164006F1904 /* GameScene.swift */; };
+		35B695EF2A30763A006F1904 /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695EE2A30763A006F1904 /* Mesh.swift */; };
+		35B695F12A30775E006F1904 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695F02A30775E006F1904 /* Submesh.swift */; };
+		35B695F32A3080D9006F1904 /* Object3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695F22A3080D9006F1904 /* Object3D.swift */; };
+		35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */; };
+		35F50CC92BB3FD5000B36455 /* LoginClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CC82BB3FD5000B36455 /* LoginClient.swift */; };
+		35F50CCC2BB4615F00B36455 /* ConnectionTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CCB2BB4615F00B36455 /* ConnectionTestView.swift */; };
+		35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		35B3B8E52A08BEA700B4540B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 35B3B8CC2A08BEA600B4540B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 35B3B8D32A08BEA600B4540B;
+			remoteInfo = RagnarokOffline;
+		};
+		35B3B8EF2A08BEA700B4540B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 35B3B8CC2A08BEA600B4540B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 35B3B8D32A08BEA600B4540B;
+			remoteInfo = RagnarokOffline;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		35B3BA442A08C74700B4540B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3555E13A2B7D2268007CE4BA /* rAthenaMap in Embed Frameworks */,
+				3555E1372B7D2268007CE4BA /* rAthenaLogin in Embed Frameworks */,
+				3555E1302B7D2268007CE4BA /* rAthenaChar in Embed Frameworks */,
+				3555E1412B7D2268007CE4BA /* rAthenaWeb in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		3504AB8B2A2EFB900029AC46 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		350971C82BBAE50100A366E1 /* Data+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+String.swift"; sourceTree = "<group>"; };
+		3511C1D02B0A535A006DD639 /* GATPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GATPreviewViewController.swift; sourceTree = "<group>"; };
+		3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWPreviewViewController.swift; sourceTree = "<group>"; };
+		3511C1D42B0AF9B1006DD639 /* RSMPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSMPreviewViewController.swift; sourceTree = "<group>"; };
+		3511C1D82B0B05B3006DD639 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		3514BF442B4526F40065ED89 /* ItemInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemInfoView.swift; sourceTree = "<group>"; };
+		3514BF482B4532C80065ED89 /* ClientSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSettings.swift; sourceTree = "<group>"; };
+		3514BF5A2B454A040065ED89 /* SkillGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillGridCell.swift; sourceTree = "<group>"; };
+		3514BF5D2B4557950065ED89 /* MonsterDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDatabaseView.swift; sourceTree = "<group>"; };
+		3514BF5F2B455EF90065ED89 /* MonsterGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterGridCell.swift; sourceTree = "<group>"; };
+		3514BF612B4560730065ED89 /* MonsterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterInfoView.swift; sourceTree = "<group>"; };
+		3514BF7E2B47D64F0065ED89 /* Job+ResourceName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Job+ResourceName.swift"; sourceTree = "<group>"; };
+		3514BF812B4801D70065ED89 /* JobDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDatabaseView.swift; sourceTree = "<group>"; };
+		3514BF832B4801E20065ED89 /* JobGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobGridCell.swift; sourceTree = "<group>"; };
+		3514BF852B4801EB0065ED89 /* JobInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInfoView.swift; sourceTree = "<group>"; };
+		3514BF8C2B4BE93A0065ED89 /* Gender+ResourceName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gender+ResourceName.swift"; sourceTree = "<group>"; };
+		35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableServer.swift; sourceTree = "<group>"; };
+		35239DF62BBDA0760039F7D5 /* LoadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadStatus.swift; sourceTree = "<group>"; };
+		35239DF82BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMonsterDatabase.swift; sourceTree = "<group>"; };
+		35239DFA2BBEEF890039F7D5 /* ObservableJobDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableJobDatabase.swift; sourceTree = "<group>"; };
+		35239DFC2BBEF1C80039F7D5 /* ObservableSkillDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableSkillDatabase.swift; sourceTree = "<group>"; };
+		35239DFE2BBEF4510039F7D5 /* ObservableMapDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMapDatabase.swift; sourceTree = "<group>"; };
+		35239E002BC29A4E0039F7D5 /* ObservableItemDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableItemDatabase.swift; sourceTree = "<group>"; };
+		35239E022BC29F660039F7D5 /* EmptyContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyContentView.swift; sourceTree = "<group>"; };
+		35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
+		3523B57D2B97768A00CCE722 /* swift-lua */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-lua"; path = "../swift-lua"; sourceTree = "<group>"; };
+		3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordInfoSection.swift; sourceTree = "<group>"; };
+		35270D2B2A68F4610001A8BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3530982D2B145D6A00F32B62 /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
+		3530982F2B1480A600F32B62 /* Water.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Water.swift; sourceTree = "<group>"; };
+		353098312B148E4100F32B62 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		353B4F0B2B43A9AC00605E92 /* ClientResourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientResourceManager.swift; sourceTree = "<group>"; };
+		353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillDatabaseView.swift; sourceTree = "<group>"; };
+		353B4F152B43F3BB00605E92 /* ClientResourceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientResourceBundle.swift; sourceTree = "<group>"; };
+		353B4F172B44FFE100605E92 /* SkillInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillInfoView.swift; sourceTree = "<group>"; };
+		353B4F1B2B451F1300605E92 /* ItemGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemGridCell.swift; sourceTree = "<group>"; };
+		35482AF02B2759DD0062DC4B /* File+RawData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+RawData.swift"; sourceTree = "<group>"; };
+		354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnailManager.swift; sourceTree = "<group>"; };
+		3552D8732B315D8F004831D0 /* TextFilePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFilePreviewViewController.swift; sourceTree = "<group>"; };
+		3552D8752B316876004831D0 /* SPRPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPRPreviewViewController.swift; sourceTree = "<group>"; };
+		3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImageActivityItem.swift; sourceTree = "<group>"; };
+		3552D8792B318323004831D0 /* StillImageActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillImageActivityItem.swift; sourceTree = "<group>"; };
+		3555D6352BC65ACB00709871 /* ragnarok-offline */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "ragnarok-offline"; path = ..; sourceTree = "<group>"; };
+		3555D6382BC663E600709871 /* ACT+AnimatedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ACT+AnimatedImage.swift"; sourceTree = "<group>"; };
+		3555D63A2BC663F100709871 /* GAT+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GAT+Image.swift"; sourceTree = "<group>"; };
+		3555D63C2BC663FF00709871 /* PAL+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PAL+Image.swift"; sourceTree = "<group>"; };
+		3555D63E2BC6640700709871 /* SPR+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SPR+Image.swift"; sourceTree = "<group>"; };
+		3555D6402BC6644300709871 /* AnimatedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImage.swift; sourceTree = "<group>"; };
+		3555D6412BC6644300709871 /* StillImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillImage.swift; sourceTree = "<group>"; };
+		3555E1142B74C864007CE4BA /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		3555E1162B7D12D9007CE4BA /* TerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
+		3555E12D2B7D2251007CE4BA /* swift-rathena */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-rathena"; path = "../swift-rathena"; sourceTree = "<group>"; };
+		355BC18B2B8F25C0002F0586 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		355BC18D2B8F2890002F0586 /* FileRawDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileRawDataView.swift; sourceTree = "<group>"; };
+		355BC18F2B8F4E0D002F0586 /* json-viewer */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "json-viewer"; sourceTree = "<group>"; };
+		355BC1912B9056E5002F0586 /* FileContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileContextMenu.swift; sourceTree = "<group>"; };
+		356049D12BB6956F0060DF81 /* SettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsItem.swift; sourceTree = "<group>"; };
+		356363662B3F303F00F7C249 /* ClientDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientDatabase.swift; sourceTree = "<group>"; };
+		356508C52B104AD400543562 /* EffectShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EffectShaderTypes.h; sourceTree = "<group>"; };
+		356508C62B104C9500543562 /* EffectShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = EffectShaders.metal; sourceTree = "<group>"; };
+		356508C82B104DCC00543562 /* EffectRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectRenderer.swift; sourceTree = "<group>"; };
+		356508CE2B108D1500543562 /* Effect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
+		356508D12B10A02000543562 /* STRRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRRenderer.swift; sourceTree = "<group>"; };
+		356508D32B10A02D00543562 /* STRPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRPreviewViewController.swift; sourceTree = "<group>"; };
+		35652B422B960D100075AD71 /* MapDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDatabaseView.swift; sourceTree = "<group>"; };
+		35652B442B960D2D0075AD71 /* MapGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapGridCell.swift; sourceTree = "<group>"; };
+		35652B462B960D370075AD71 /* MapInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInfoView.swift; sourceTree = "<group>"; };
+		356BF6762AFCCDD9005B67F7 /* GRFWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GRFWrapper.swift; sourceTree = "<group>"; };
+		356BF6812B04F54A005B67F7 /* ACTPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACTPreviewViewController.swift; sourceTree = "<group>"; };
+		356BF6832B04F569005B67F7 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		356BF6852B05FF59005B67F7 /* FilePreviewPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePreviewPageViewController.swift; sourceTree = "<group>"; };
+		356BF6872B060243005B67F7 /* FilePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePreviewViewController.swift; sourceTree = "<group>"; };
+		35774F792B231FAF00438311 /* FileActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileActivityItem.swift; sourceTree = "<group>"; };
+		3582FFC22B8898DD00E746D7 /* CGImage+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImage+Data.swift"; sourceTree = "<group>"; };
+		3582FFC52B8C830D00E746D7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		3582FFC72B8DB73B00E746D7 /* FileThumbnailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileThumbnailView.swift; sourceTree = "<group>"; };
+		3582FFC92B8DB9FE00E746D7 /* FilePreviewPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePreviewPageView.swift; sourceTree = "<group>"; };
+		3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileGridCell.swift; sourceTree = "<group>"; };
+		3582FFCD2B8DC07E00E746D7 /* File+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+Actions.swift"; sourceTree = "<group>"; };
+		35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerView.swift; sourceTree = "<group>"; };
+		35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOffline.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagnarokOfflineApp.swift; sourceTree = "<group>"; };
+		35B3B8D92A08BEA600B4540B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		35B3B8DB2A08BEA700B4540B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		35B3B8DE2A08BEA700B4540B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		35B3B8E42A08BEA700B4540B /* RagnarokOfflineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RagnarokOfflineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		35B3B8E82A08BEA700B4540B /* RagnarokOfflineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagnarokOfflineTests.swift; sourceTree = "<group>"; };
+		35B3B8EE2A08BEA700B4540B /* RagnarokOfflineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RagnarokOfflineUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		35B3B8F22A08BEA700B4540B /* RagnarokOfflineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagnarokOfflineUITests.swift; sourceTree = "<group>"; };
+		35B3B8F42A08BEA700B4540B /* RagnarokOfflineUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagnarokOfflineUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		35B3B9702A08C01600B4540B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		35B3B9712A08C01600B4540B /* ShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
+		35B3B9722A08C01600B4540B /* GameRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameRenderer.swift; sourceTree = "<group>"; };
+		35B3B9732A08C01600B4540B /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
+		35B3B9802A08C01600B4540B /* SGLMath+Calculate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SGLMath+Calculate.swift"; sourceTree = "<group>"; };
+		35B3B9812A08C01600B4540B /* MTKTextureLoader+BMP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MTKTextureLoader+BMP.swift"; sourceTree = "<group>"; };
+		35B3B9872A08C01600B4540B /* SGLMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGLMath.swift; sourceTree = "<group>"; };
+		35B3B98C2A08C01600B4540B /* FileThumbnailGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileThumbnailGenerator.swift; sourceTree = "<group>"; };
+		35B3B98D2A08C01600B4540B /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		35B3B9902A08C01600B4540B /* RSWRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSWRenderer.swift; sourceTree = "<group>"; };
+		35B3B9952A08C01600B4540B /* File+Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "File+Type.swift"; sourceTree = "<group>"; };
+		35B3B9962A08C01600B4540B /* FilePasteboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePasteboard.swift; sourceTree = "<group>"; };
+		35B3B9992A08C01600B4540B /* ImageFilePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageFilePreviewViewController.swift; sourceTree = "<group>"; };
+		35B3B99A2A08C01600B4540B /* FilesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesView.swift; sourceTree = "<group>"; };
+		35B3B99C2A08C01600B4540B /* AudioFilePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFilePreviewViewController.swift; sourceTree = "<group>"; };
+		35B3B9A22A08C01600B4540B /* RSMRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSMRenderer.swift; sourceTree = "<group>"; };
+		35B3B9A52A08C01600B4540B /* WaterShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = WaterShaders.metal; sourceTree = "<group>"; };
+		35B3B9A62A08C01600B4540B /* ModelShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelShaderTypes.h; sourceTree = "<group>"; };
+		35B3B9A72A08C01600B4540B /* GroundShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroundShaderTypes.h; sourceTree = "<group>"; };
+		35B3B9A82A08C01600B4540B /* GroundRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroundRenderer.swift; sourceTree = "<group>"; };
+		35B3B9A92A08C01600B4540B /* ModelShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = ModelShaders.metal; sourceTree = "<group>"; };
+		35B3B9AA2A08C01600B4540B /* GroundShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = GroundShaders.metal; sourceTree = "<group>"; };
+		35B3B9AB2A08C01600B4540B /* WaterShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterShaderTypes.h; sourceTree = "<group>"; };
+		35B3B9AC2A08C01600B4540B /* RendererCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererCommon.swift; sourceTree = "<group>"; };
+		35B3B9AD2A08C01600B4540B /* ModelRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelRenderer.swift; sourceTree = "<group>"; };
+		35B3B9AE2A08C01600B4540B /* WaterRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterRenderer.swift; sourceTree = "<group>"; };
+		35B3BA422A08C51000B4540B /* RagnarokOffline-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RagnarokOffline-Bridging-Header.h"; sourceTree = "<group>"; };
+		35B4990B2A1C50B400607EE6 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		35B695E92A305EF6006F1904 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		35B695EB2A307164006F1904 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		35B695EE2A30763A006F1904 /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
+		35B695F02A30775E006F1904 /* Submesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
+		35B695F22A3080D9006F1904 /* Object3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Object3D.swift; sourceTree = "<group>"; };
+		35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabaseView.swift; sourceTree = "<group>"; };
+		35F50CC82BB3FD5000B36455 /* LoginClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginClient.swift; sourceTree = "<group>"; };
+		35F50CCB2BB4615F00B36455 /* ConnectionTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionTestView.swift; sourceTree = "<group>"; };
+		35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordField.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		35B3B8D12A08BEA600B4540B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3555E1402B7D2268007CE4BA /* rAthenaWeb in Frameworks */,
+				3555E12F2B7D2268007CE4BA /* rAthenaChar in Frameworks */,
+				3555E1362B7D2268007CE4BA /* rAthenaLogin in Frameworks */,
+				3523B57F2B97769D00CCE722 /* Lua in Frameworks */,
+				3555E1392B7D2268007CE4BA /* rAthenaMap in Frameworks */,
+				3555E1322B7D2268007CE4BA /* rAthenaCommon in Frameworks */,
+				3555D6482BC66B3700709871 /* RagnarokOfflineStream in Frameworks */,
+				3555D6372BC65B7000709871 /* RagnarokOfflineFileFormats in Frameworks */,
+				3555E1342B7D2268007CE4BA /* rAthenaDatabase in Frameworks */,
+				3514BF892B48642B0065ED89 /* Terminal in Frameworks */,
+				3555E13C2B7D2268007CE4BA /* rAthenaNetwork in Frameworks */,
+				3555E13E2B7D2268007CE4BA /* rAthenaResource in Frameworks */,
+				3555D6452BC665F600709871 /* RagnarokOfflineCrypto in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		35B3B8E12A08BEA700B4540B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		35B3B8EB2A08BEA700B4540B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3514BF422B4526D00065ED89 /* Item */ = {
+			isa = PBXGroup;
+			children = (
+				35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */,
+				353B4F1B2B451F1300605E92 /* ItemGridCell.swift */,
+				3514BF442B4526F40065ED89 /* ItemInfoView.swift */,
+				35239E002BC29A4E0039F7D5 /* ObservableItemDatabase.swift */,
+			);
+			path = Item;
+			sourceTree = "<group>";
+		};
+		3514BF432B4526DE0065ED89 /* Skill */ = {
+			isa = PBXGroup;
+			children = (
+				353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */,
+				3514BF5A2B454A040065ED89 /* SkillGridCell.swift */,
+				353B4F172B44FFE100605E92 /* SkillInfoView.swift */,
+				35239DFC2BBEF1C80039F7D5 /* ObservableSkillDatabase.swift */,
+			);
+			path = Skill;
+			sourceTree = "<group>";
+		};
+		3514BF5C2B4557870065ED89 /* Monster */ = {
+			isa = PBXGroup;
+			children = (
+				3514BF5D2B4557950065ED89 /* MonsterDatabaseView.swift */,
+				3514BF5F2B455EF90065ED89 /* MonsterGridCell.swift */,
+				3514BF612B4560730065ED89 /* MonsterInfoView.swift */,
+				35239DF82BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift */,
+			);
+			path = Monster;
+			sourceTree = "<group>";
+		};
+		3514BF802B4801C30065ED89 /* Job */ = {
+			isa = PBXGroup;
+			children = (
+				3514BF812B4801D70065ED89 /* JobDatabaseView.swift */,
+				3514BF832B4801E20065ED89 /* JobGridCell.swift */,
+				3514BF852B4801EB0065ED89 /* JobInfoView.swift */,
+				35239DFA2BBEEF890039F7D5 /* ObservableJobDatabase.swift */,
+			);
+			path = Job;
+			sourceTree = "<group>";
+		};
+		3523B5802B98479700CCE722 /* FileSystem */ = {
+			isa = PBXGroup;
+			children = (
+				35B3B98D2A08C01600B4540B /* File.swift */,
+				35B3B9952A08C01600B4540B /* File+Type.swift */,
+				3582FFCD2B8DC07E00E746D7 /* File+Actions.swift */,
+				35482AF02B2759DD0062DC4B /* File+RawData.swift */,
+				35B3B9962A08C01600B4540B /* FilePasteboard.swift */,
+				354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */,
+				35B3B98C2A08C01600B4540B /* FileThumbnailGenerator.swift */,
+				356BF6762AFCCDD9005B67F7 /* GRFWrapper.swift */,
+			);
+			path = FileSystem;
+			sourceTree = "<group>";
+		};
+		35270D252A5FE9470001A8BD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		353098332B14EAE600F32B62 /* FileRawData */ = {
+			isa = PBXGroup;
+			children = (
+				355BC18F2B8F4E0D002F0586 /* json-viewer */,
+				355BC18D2B8F2890002F0586 /* FileRawDataView.swift */,
+			);
+			path = FileRawData;
+			sourceTree = "<group>";
+		};
+		353098412B161C3800F32B62 /* FilePreview */ = {
+			isa = PBXGroup;
+			children = (
+				3582FFC92B8DB9FE00E746D7 /* FilePreviewPageView.swift */,
+				356BF6852B05FF59005B67F7 /* FilePreviewPageViewController.swift */,
+				356BF6872B060243005B67F7 /* FilePreviewViewController.swift */,
+				3552D8732B315D8F004831D0 /* TextFilePreviewViewController.swift */,
+				35B3B9992A08C01600B4540B /* ImageFilePreviewViewController.swift */,
+				35B3B99C2A08C01600B4540B /* AudioFilePreviewViewController.swift */,
+				356BF6812B04F54A005B67F7 /* ACTPreviewViewController.swift */,
+				3511C1D02B0A535A006DD639 /* GATPreviewViewController.swift */,
+				3552D8752B316876004831D0 /* SPRPreviewViewController.swift */,
+				3511C1D42B0AF9B1006DD639 /* RSMPreviewViewController.swift */,
+				3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */,
+				356508D32B10A02D00543562 /* STRPreviewViewController.swift */,
+				356BF6832B04F569005B67F7 /* ImageCollectionViewCell.swift */,
+			);
+			path = FilePreview;
+			sourceTree = "<group>";
+		};
+		353B4F0E2B43AEC000605E92 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				3514BF422B4526D00065ED89 /* Item */,
+				3514BF5C2B4557870065ED89 /* Monster */,
+				3514BF802B4801C30065ED89 /* Job */,
+				3514BF432B4526DE0065ED89 /* Skill */,
+				35652B412B960CFC0075AD71 /* Map */,
+				3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */,
+				35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		3555D6462BC6666C00709871 /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				3555D6382BC663E600709871 /* ACT+AnimatedImage.swift */,
+				3555D6402BC6644300709871 /* AnimatedImage.swift */,
+				3582FFC22B8898DD00E746D7 /* CGImage+Data.swift */,
+				3555D63A2BC663F100709871 /* GAT+Image.swift */,
+				3555D63C2BC663FF00709871 /* PAL+Image.swift */,
+				3555D63E2BC6640700709871 /* SPR+Image.swift */,
+				3555D6412BC6644300709871 /* StillImage.swift */,
+			);
+			path = Graphics;
+			sourceTree = "<group>";
+		};
+		3555D6492BC66CF000709871 /* ActivityItems */ = {
+			isa = PBXGroup;
+			children = (
+				3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */,
+				35774F792B231FAF00438311 /* FileActivityItem.swift */,
+				3552D8792B318323004831D0 /* StillImageActivityItem.swift */,
+			);
+			path = ActivityItems;
+			sourceTree = "<group>";
+		};
+		3555E1132B74C850007CE4BA /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				3555E1142B74C864007CE4BA /* Entity.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		355BC18A2B8F25A6002F0586 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				35239E022BC29F660039F7D5 /* EmptyContentView.swift */,
+				35239DF62BBDA0760039F7D5 /* LoadStatus.swift */,
+				35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */,
+				3555E1162B7D12D9007CE4BA /* TerminalView.swift */,
+				355BC18B2B8F25C0002F0586 /* WebView.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		356049D02BB695400060DF81 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				3514BF482B4532C80065ED89 /* ClientSettings.swift */,
+				356049D12BB6956F0060DF81 /* SettingsItem.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		356363652B3F301C00F7C249 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				353B4F0B2B43A9AC00605E92 /* ClientResourceManager.swift */,
+				356363662B3F303F00F7C249 /* ClientDatabase.swift */,
+				353B4F152B43F3BB00605E92 /* ClientResourceBundle.swift */,
+				3514BF8C2B4BE93A0065ED89 /* Gender+ResourceName.swift */,
+				3514BF7E2B47D64F0065ED89 /* Job+ResourceName.swift */,
+			);
+			path = Client;
+			sourceTree = "<group>";
+		};
+		356508C12B104A4900543562 /* Ground */ = {
+			isa = PBXGroup;
+			children = (
+				3530982D2B145D6A00F32B62 /* Ground.swift */,
+				35B3B9A82A08C01600B4540B /* GroundRenderer.swift */,
+				35B3B9AA2A08C01600B4540B /* GroundShaders.metal */,
+				35B3B9A72A08C01600B4540B /* GroundShaderTypes.h */,
+			);
+			path = Ground;
+			sourceTree = "<group>";
+		};
+		356508C22B104A5400543562 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				353098312B148E4100F32B62 /* Model.swift */,
+				35B3B9AD2A08C01600B4540B /* ModelRenderer.swift */,
+				35B3B9A92A08C01600B4540B /* ModelShaders.metal */,
+				35B3B9A62A08C01600B4540B /* ModelShaderTypes.h */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		356508C32B104A5E00543562 /* Water */ = {
+			isa = PBXGroup;
+			children = (
+				3530982F2B1480A600F32B62 /* Water.swift */,
+				35B3B9AE2A08C01600B4540B /* WaterRenderer.swift */,
+				35B3B9A52A08C01600B4540B /* WaterShaders.metal */,
+				35B3B9AB2A08C01600B4540B /* WaterShaderTypes.h */,
+			);
+			path = Water;
+			sourceTree = "<group>";
+		};
+		356508C42B104AB200543562 /* Effect */ = {
+			isa = PBXGroup;
+			children = (
+				356508CE2B108D1500543562 /* Effect.swift */,
+				356508C82B104DCC00543562 /* EffectRenderer.swift */,
+				356508C62B104C9500543562 /* EffectShaders.metal */,
+				356508C52B104AD400543562 /* EffectShaderTypes.h */,
+			);
+			path = Effect;
+			sourceTree = "<group>";
+		};
+		35652B412B960CFC0075AD71 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				35652B422B960D100075AD71 /* MapDatabaseView.swift */,
+				35652B442B960D2D0075AD71 /* MapGridCell.swift */,
+				35652B462B960D370075AD71 /* MapInfoView.swift */,
+				35239DFE2BBEF4510039F7D5 /* ObservableMapDatabase.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		35774F692B20587900438311 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				355BC18A2B8F25A6002F0586 /* Core */,
+				35B3B9892A08C01600B4540B /* Files */,
+				353098412B161C3800F32B62 /* FilePreview */,
+				353098332B14EAE600F32B62 /* FileRawData */,
+				35F50CCA2BB4614100B36455 /* ConnectionTest */,
+				35B3B96E2A08C01600B4540B /* Game */,
+				35A2ABBA2B3AC69F0026DAC2 /* Server */,
+				353B4F0E2B43AEC000605E92 /* Database */,
+				3582FFC42B8C820E00E746D7 /* Settings */,
+				35B3B8D92A08BEA600B4540B /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3582FFC42B8C820E00E746D7 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				3582FFC52B8C830D00E746D7 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		35A2ABBA2B3AC69F0026DAC2 /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */,
+				35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */,
+			);
+			path = Server;
+			sourceTree = "<group>";
+		};
+		35B3B8CB2A08BEA600B4540B = {
+			isa = PBXGroup;
+			children = (
+				3523B57D2B97768A00CCE722 /* swift-lua */,
+				3555E12D2B7D2251007CE4BA /* swift-rathena */,
+				3555D6352BC65ACB00709871 /* ragnarok-offline */,
+				35B3B8D62A08BEA600B4540B /* RagnarokOffline */,
+				35B3B8E72A08BEA700B4540B /* RagnarokOfflineTests */,
+				35B3B8F12A08BEA700B4540B /* RagnarokOfflineUITests */,
+				35B3B8D52A08BEA600B4540B /* Products */,
+				35270D252A5FE9470001A8BD /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		35B3B8D52A08BEA600B4540B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */,
+				35B3B8E42A08BEA700B4540B /* RagnarokOfflineTests.xctest */,
+				35B3B8EE2A08BEA700B4540B /* RagnarokOfflineUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		35B3B8D62A08BEA600B4540B /* RagnarokOffline */ = {
+			isa = PBXGroup;
+			children = (
+				35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */,
+				35774F692B20587900438311 /* Views */,
+				3555D6492BC66CF000709871 /* ActivityItems */,
+				35B3B9A42A08C01600B4540B /* Renderers */,
+				356363652B3F301C00F7C249 /* Client */,
+				35F50CC72BB3FD1400B36455 /* Network */,
+				356049D02BB695400060DF81 /* Settings */,
+				3523B5802B98479700CCE722 /* FileSystem */,
+				3555D6462BC6666C00709871 /* Graphics */,
+				35B3B97E2A08C01600B4540B /* Utilities */,
+				35B3BA422A08C51000B4540B /* RagnarokOffline-Bridging-Header.h */,
+				35270D2B2A68F4610001A8BD /* Info.plist */,
+				35B3B8DB2A08BEA700B4540B /* Assets.xcassets */,
+				35B3B8DD2A08BEA700B4540B /* Preview Content */,
+			);
+			path = RagnarokOffline;
+			sourceTree = "<group>";
+		};
+		35B3B8DD2A08BEA700B4540B /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				35B3B8DE2A08BEA700B4540B /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		35B3B8E72A08BEA700B4540B /* RagnarokOfflineTests */ = {
+			isa = PBXGroup;
+			children = (
+				35B3B8E82A08BEA700B4540B /* RagnarokOfflineTests.swift */,
+			);
+			path = RagnarokOfflineTests;
+			sourceTree = "<group>";
+		};
+		35B3B8F12A08BEA700B4540B /* RagnarokOfflineUITests */ = {
+			isa = PBXGroup;
+			children = (
+				35B3B8F22A08BEA700B4540B /* RagnarokOfflineUITests.swift */,
+				35B3B8F42A08BEA700B4540B /* RagnarokOfflineUITestsLaunchTests.swift */,
+			);
+			path = RagnarokOfflineUITests;
+			sourceTree = "<group>";
+		};
+		35B3B96E2A08C01600B4540B /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				35B3B9722A08C01600B4540B /* GameRenderer.swift */,
+				35B695EB2A307164006F1904 /* GameScene.swift */,
+				35B695E92A305EF6006F1904 /* GameView.swift */,
+				3511C1D82B0B05B3006DD639 /* GameViewController.swift */,
+				35B3B9702A08C01600B4540B /* Shaders.metal */,
+				35B3B9712A08C01600B4540B /* ShaderTypes.h */,
+				35B3B9732A08C01600B4540B /* wall.jpg */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		35B3B97E2A08C01600B4540B /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				350971C82BBAE50100A366E1 /* Data+String.swift */,
+				35B3B9872A08C01600B4540B /* SGLMath.swift */,
+				35B3B9802A08C01600B4540B /* SGLMath+Calculate.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		35B3B9892A08C01600B4540B /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				35B3B99A2A08C01600B4540B /* FilesView.swift */,
+				3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */,
+				3582FFC72B8DB73B00E746D7 /* FileThumbnailView.swift */,
+				355BC1912B9056E5002F0586 /* FileContextMenu.swift */,
+			);
+			path = Files;
+			sourceTree = "<group>";
+		};
+		35B3B9A42A08C01600B4540B /* Renderers */ = {
+			isa = PBXGroup;
+			children = (
+				35B695ED2A307553006F1904 /* Core */,
+				356508C42B104AB200543562 /* Effect */,
+				3555E1132B74C850007CE4BA /* Entity */,
+				356508C12B104A4900543562 /* Ground */,
+				356508C22B104A5400543562 /* Model */,
+				356508C32B104A5E00543562 /* Water */,
+				35B3B9AC2A08C01600B4540B /* RendererCommon.swift */,
+				35B3B9A22A08C01600B4540B /* RSMRenderer.swift */,
+				35B3B9902A08C01600B4540B /* RSWRenderer.swift */,
+				356508D12B10A02000543562 /* STRRenderer.swift */,
+			);
+			path = Renderers;
+			sourceTree = "<group>";
+		};
+		35B695ED2A307553006F1904 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				3504AB8B2A2EFB900029AC46 /* Camera.swift */,
+				35B695EE2A30763A006F1904 /* Mesh.swift */,
+				35B695F22A3080D9006F1904 /* Object3D.swift */,
+				35B4990B2A1C50B400607EE6 /* Renderer.swift */,
+				35B695F02A30775E006F1904 /* Submesh.swift */,
+				35B3B9812A08C01600B4540B /* MTKTextureLoader+BMP.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		35F50CC72BB3FD1400B36455 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				35F50CC82BB3FD5000B36455 /* LoginClient.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		35F50CCA2BB4614100B36455 /* ConnectionTest */ = {
+			isa = PBXGroup;
+			children = (
+				35F50CCB2BB4615F00B36455 /* ConnectionTestView.swift */,
+			);
+			path = ConnectionTest;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		35B3B8D32A08BEA600B4540B /* RagnarokOffline */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 35B3B8F82A08BEA700B4540B /* Build configuration list for PBXNativeTarget "RagnarokOffline" */;
+			buildPhases = (
+				35B3B8D02A08BEA600B4540B /* Sources */,
+				35B3B8D12A08BEA600B4540B /* Frameworks */,
+				35B3B8D22A08BEA600B4540B /* Resources */,
+				35B3BA442A08C74700B4540B /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RagnarokOffline;
+			packageProductDependencies = (
+				3514BF882B48642B0065ED89 /* Terminal */,
+				3555E12E2B7D2268007CE4BA /* rAthenaChar */,
+				3555E1312B7D2268007CE4BA /* rAthenaCommon */,
+				3555E1332B7D2268007CE4BA /* rAthenaDatabase */,
+				3555E1352B7D2268007CE4BA /* rAthenaLogin */,
+				3555E1382B7D2268007CE4BA /* rAthenaMap */,
+				3555E13B2B7D2268007CE4BA /* rAthenaNetwork */,
+				3555E13D2B7D2268007CE4BA /* rAthenaResource */,
+				3555E13F2B7D2268007CE4BA /* rAthenaWeb */,
+				3523B57E2B97769D00CCE722 /* Lua */,
+				3555D6362BC65B7000709871 /* RagnarokOfflineFileFormats */,
+				3555D6442BC665F600709871 /* RagnarokOfflineCrypto */,
+				3555D6472BC66B3700709871 /* RagnarokOfflineStream */,
+			);
+			productName = RagnarokOffline;
+			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
+			productType = "com.apple.product-type.application";
+		};
+		35B3B8E32A08BEA700B4540B /* RagnarokOfflineTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 35B3B8FB2A08BEA700B4540B /* Build configuration list for PBXNativeTarget "RagnarokOfflineTests" */;
+			buildPhases = (
+				35B3B8E02A08BEA700B4540B /* Sources */,
+				35B3B8E12A08BEA700B4540B /* Frameworks */,
+				35B3B8E22A08BEA700B4540B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				35B3B8E62A08BEA700B4540B /* PBXTargetDependency */,
+			);
+			name = RagnarokOfflineTests;
+			productName = RagnarokOfflineTests;
+			productReference = 35B3B8E42A08BEA700B4540B /* RagnarokOfflineTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		35B3B8ED2A08BEA700B4540B /* RagnarokOfflineUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 35B3B8FE2A08BEA700B4540B /* Build configuration list for PBXNativeTarget "RagnarokOfflineUITests" */;
+			buildPhases = (
+				35B3B8EA2A08BEA700B4540B /* Sources */,
+				35B3B8EB2A08BEA700B4540B /* Frameworks */,
+				35B3B8EC2A08BEA700B4540B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				35B3B8F02A08BEA700B4540B /* PBXTargetDependency */,
+			);
+			name = RagnarokOfflineUITests;
+			productName = RagnarokOfflineUITests;
+			productReference = 35B3B8EE2A08BEA700B4540B /* RagnarokOfflineUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		35B3B8CC2A08BEA600B4540B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1510;
+				ORGANIZATIONNAME = "Leon & Vane";
+				TargetAttributes = {
+					35B3B8D32A08BEA600B4540B = {
+						CreatedOnToolsVersion = 14.3;
+					};
+					35B3B8E32A08BEA700B4540B = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = 35B3B8D32A08BEA600B4540B;
+					};
+					35B3B8ED2A08BEA700B4540B = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = 35B3B8D32A08BEA600B4540B;
+					};
+				};
+			};
+			buildConfigurationList = 35B3B8CF2A08BEA600B4540B /* Build configuration list for PBXProject "RagnarokOffline" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 35B3B8CB2A08BEA600B4540B;
+			packageReferences = (
+				3514BF872B48642B0065ED89 /* XCRemoteSwiftPackageReference "Terminal" */,
+			);
+			productRefGroup = 35B3B8D52A08BEA600B4540B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				35B3B8D32A08BEA600B4540B /* RagnarokOffline */,
+				35B3B8E32A08BEA700B4540B /* RagnarokOfflineTests */,
+				35B3B8ED2A08BEA700B4540B /* RagnarokOfflineUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		35B3B8D22A08BEA600B4540B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35B3B8DF2A08BEA700B4540B /* Preview Assets.xcassets in Resources */,
+				35B3B9FA2A08C01600B4540B /* wall.jpg in Resources */,
+				35B3B8DC2A08BEA700B4540B /* Assets.xcassets in Resources */,
+				355BC1902B8F4E0D002F0586 /* json-viewer in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		35B3B8E22A08BEA700B4540B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		35B3B8EC2A08BEA700B4540B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		35B3B8D02A08BEA600B4540B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35B3BA232A08C01600B4540B /* GroundRenderer.swift in Sources */,
+				3511C1D52B0AF9B1006DD639 /* RSMPreviewViewController.swift in Sources */,
+				356508D22B10A02000543562 /* STRRenderer.swift in Sources */,
+				356BF6862B05FF59005B67F7 /* FilePreviewPageViewController.swift in Sources */,
+				35B695EA2A305EF6006F1904 /* GameView.swift in Sources */,
+				355BC18E2B8F2890002F0586 /* FileRawDataView.swift in Sources */,
+				35774F7A2B231FAF00438311 /* FileActivityItem.swift in Sources */,
+				3514BF5B2B454A040065ED89 /* SkillGridCell.swift in Sources */,
+				35B3BA202A08C01600B4540B /* RSMRenderer.swift in Sources */,
+				35482AF12B2759DD0062DC4B /* File+RawData.swift in Sources */,
+				35239DFD2BBEF1C80039F7D5 /* ObservableSkillDatabase.swift in Sources */,
+				35F50CC92BB3FD5000B36455 /* LoginClient.swift in Sources */,
+				356363672B3F303F00F7C249 /* ClientDatabase.swift in Sources */,
+				353B4F162B43F3BB00605E92 /* ClientResourceBundle.swift in Sources */,
+				3504AB8C2A2EFB900029AC46 /* Camera.swift in Sources */,
+				356508D42B10A02D00543562 /* STRPreviewViewController.swift in Sources */,
+				35B695EC2A307164006F1904 /* GameScene.swift in Sources */,
+				356508C92B104DCC00543562 /* EffectRenderer.swift in Sources */,
+				35B3BA242A08C01600B4540B /* ModelShaders.metal in Sources */,
+				35B3BA052A08C01600B4540B /* MTKTextureLoader+BMP.swift in Sources */,
+				35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */,
+				3514BF862B4801EB0065ED89 /* JobInfoView.swift in Sources */,
+				353B4F0C2B43A9AC00605E92 /* ClientResourceManager.swift in Sources */,
+				3555D6422BC6644300709871 /* StillImage.swift in Sources */,
+				3555E1152B74C864007CE4BA /* Entity.swift in Sources */,
+				3552D8742B315D8F004831D0 /* TextFilePreviewViewController.swift in Sources */,
+				356508C72B104C9500543562 /* EffectShaders.metal in Sources */,
+				356BF6822B04F54A005B67F7 /* ACTPreviewViewController.swift in Sources */,
+				3514BF8D2B4BE93A0065ED89 /* Gender+ResourceName.swift in Sources */,
+				3514BF822B4801D70065ED89 /* JobDatabaseView.swift in Sources */,
+				3555D63F2BC6640800709871 /* SPR+Image.swift in Sources */,
+				3552D8762B316876004831D0 /* SPRPreviewViewController.swift in Sources */,
+				35239E052BC2D5D60039F7D5 /* ProgressHUD.swift in Sources */,
+				356BF6882B060243005B67F7 /* FilePreviewViewController.swift in Sources */,
+				35B3BA272A08C01600B4540B /* ModelRenderer.swift in Sources */,
+				3514BF622B4560730065ED89 /* MonsterInfoView.swift in Sources */,
+				3514BF5E2B4557950065ED89 /* MonsterDatabaseView.swift in Sources */,
+				35B3BA1B2A08C01600B4540B /* AudioFilePreviewViewController.swift in Sources */,
+				3552D8782B3182A8004831D0 /* AnimatedImageActivityItem.swift in Sources */,
+				356BF6772AFCCDD9005B67F7 /* GRFWrapper.swift in Sources */,
+				35652B452B960D2D0075AD71 /* MapGridCell.swift in Sources */,
+				35239E012BC29A4E0039F7D5 /* ObservableItemDatabase.swift in Sources */,
+				35B3BA222A08C01600B4540B /* WaterShaders.metal in Sources */,
+				3514BF492B4532C80065ED89 /* ClientSettings.swift in Sources */,
+				3555D6432BC6644300709871 /* AnimatedImage.swift in Sources */,
+				35B3BA0E2A08C01600B4540B /* FileThumbnailGenerator.swift in Sources */,
+				35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */,
+				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,
+				3552D87A2B318323004831D0 /* StillImageActivityItem.swift in Sources */,
+				35B3BA042A08C01600B4540B /* SGLMath+Calculate.swift in Sources */,
+				35B3BA0F2A08C01600B4540B /* File.swift in Sources */,
+				35239DFB2BBEEF890039F7D5 /* ObservableJobDatabase.swift in Sources */,
+				35B3BA1A2A08C01600B4540B /* FilesView.swift in Sources */,
+				3582FFC82B8DB73B00E746D7 /* FileThumbnailView.swift in Sources */,
+				35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */,
+				35B3BA252A08C01600B4540B /* GroundShaders.metal in Sources */,
+				35239DF72BBDA0760039F7D5 /* LoadStatus.swift in Sources */,
+				35652B432B960D100075AD71 /* MapDatabaseView.swift in Sources */,
+				353098322B148E4100F32B62 /* Model.swift in Sources */,
+				355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */,
+				3582FFC32B8898DD00E746D7 /* CGImage+Data.swift in Sources */,
+				35B3BA0B2A08C01600B4540B /* SGLMath.swift in Sources */,
+				35B695F32A3080D9006F1904 /* Object3D.swift in Sources */,
+				3555D6392BC663E600709871 /* ACT+AnimatedImage.swift in Sources */,
+				354CB4612B2AA70F001FC2A1 /* FileThumbnailManager.swift in Sources */,
+				3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */,
+				35B3BA192A08C01600B4540B /* ImageFilePreviewViewController.swift in Sources */,
+				3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */,
+				3555D63D2BC663FF00709871 /* PAL+Image.swift in Sources */,
+				35B3BA112A08C01600B4540B /* RSWRenderer.swift in Sources */,
+				35B3BA162A08C01600B4540B /* File+Type.swift in Sources */,
+				35B3BA262A08C01600B4540B /* RendererCommon.swift in Sources */,
+				35239E032BC29F660039F7D5 /* EmptyContentView.swift in Sources */,
+				35652B472B960D370075AD71 /* MapInfoView.swift in Sources */,
+				3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */,
+				3514BF7F2B47D64F0065ED89 /* Job+ResourceName.swift in Sources */,
+				353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */,
+				35B3BA282A08C01600B4540B /* WaterRenderer.swift in Sources */,
+				3514BF452B4526F40065ED89 /* ItemInfoView.swift in Sources */,
+				3511C1D92B0B05B3006DD639 /* GameViewController.swift in Sources */,
+				35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */,
+				35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */,
+				35239DFF2BBEF4510039F7D5 /* ObservableMapDatabase.swift in Sources */,
+				3530982E2B145D6A00F32B62 /* Ground.swift in Sources */,
+				355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */,
+				350971C92BBAE50100A366E1 /* Data+String.swift in Sources */,
+				3511C1D12B0A535A006DD639 /* GATPreviewViewController.swift in Sources */,
+				35B695EF2A30763A006F1904 /* Mesh.swift in Sources */,
+				353B4F1C2B451F1300605E92 /* ItemGridCell.swift in Sources */,
+				35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */,
+				356508CF2B108D1500543562 /* Effect.swift in Sources */,
+				3582FFCA2B8DB9FE00E746D7 /* FilePreviewPageView.swift in Sources */,
+				356BF6842B04F569005B67F7 /* ImageCollectionViewCell.swift in Sources */,
+				35F50CCC2BB4615F00B36455 /* ConnectionTestView.swift in Sources */,
+				35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */,
+				353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */,
+				3514BF842B4801E20065ED89 /* JobGridCell.swift in Sources */,
+				353098302B1480A600F32B62 /* Water.swift in Sources */,
+				356049D22BB6956F0060DF81 /* SettingsItem.swift in Sources */,
+				35B695F12A30775E006F1904 /* Submesh.swift in Sources */,
+				3511C1D32B0A6C5D006DD639 /* RSWPreviewViewController.swift in Sources */,
+				35B4990C2A1C50B400607EE6 /* Renderer.swift in Sources */,
+				3514BF602B455EF90065ED89 /* MonsterGridCell.swift in Sources */,
+				3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */,
+				3555D63B2BC663F100709871 /* GAT+Image.swift in Sources */,
+				35B3BA172A08C01600B4540B /* FilePasteboard.swift in Sources */,
+				35239DF92BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift in Sources */,
+				3582FFCE2B8DC07E00E746D7 /* File+Actions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		35B3B8E02A08BEA700B4540B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35B3B8E92A08BEA700B4540B /* RagnarokOfflineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		35B3B8EA2A08BEA700B4540B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35B3B8F32A08BEA700B4540B /* RagnarokOfflineUITests.swift in Sources */,
+				35B3B8F52A08BEA700B4540B /* RagnarokOfflineUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		35B3B8E62A08BEA700B4540B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 35B3B8D32A08BEA600B4540B /* RagnarokOffline */;
+			targetProxy = 35B3B8E52A08BEA700B4540B /* PBXContainerItemProxy */;
+		};
+		35B3B8F02A08BEA700B4540B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 35B3B8D32A08BEA600B4540B /* RagnarokOffline */;
+			targetProxy = 35B3B8EF2A08BEA700B4540B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		35B3B8F62A08BEA700B4540B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		35B3B8F72A08BEA700B4540B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		35B3B8F92A08BEA700B4540B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_ASSET_PATHS = "\"RagnarokOffline/Preview Content\"";
+				DEVELOPMENT_TEAM = GG76KD534U;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RagnarokOffline/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Ragnarok Offline";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				OTHER_SWIFT_FLAGS = "-cxx-interoperability-mode=default";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.arkadeleon.ragnarok-offline";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "RagnarokOffline/RagnarokOffline-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		35B3B8FA2A08BEA700B4540B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_ASSET_PATHS = "\"RagnarokOffline/Preview Content\"";
+				DEVELOPMENT_TEAM = GG76KD534U;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RagnarokOffline/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Ragnarok Offline";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				OTHER_SWIFT_FLAGS = "-cxx-interoperability-mode=default";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.arkadeleon.ragnarok-offline";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "RagnarokOffline/RagnarokOffline-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		35B3B8FC2A08BEA700B4540B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GG76KD534U;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.arkadeleon.RagnarokOfflineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RagnarokOffline.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RagnarokOffline";
+			};
+			name = Debug;
+		};
+		35B3B8FD2A08BEA700B4540B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GG76KD534U;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.arkadeleon.RagnarokOfflineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RagnarokOffline.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RagnarokOffline";
+			};
+			name = Release;
+		};
+		35B3B8FF2A08BEA700B4540B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GG76KD534U;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.arkadeleon.RagnarokOfflineUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = RagnarokOffline;
+			};
+			name = Debug;
+		};
+		35B3B9002A08BEA700B4540B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GG76KD534U;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.arkadeleon.RagnarokOfflineUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = RagnarokOffline;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		35B3B8CF2A08BEA600B4540B /* Build configuration list for PBXProject "RagnarokOffline" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				35B3B8F62A08BEA700B4540B /* Debug */,
+				35B3B8F72A08BEA700B4540B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		35B3B8F82A08BEA700B4540B /* Build configuration list for PBXNativeTarget "RagnarokOffline" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				35B3B8F92A08BEA700B4540B /* Debug */,
+				35B3B8FA2A08BEA700B4540B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		35B3B8FB2A08BEA700B4540B /* Build configuration list for PBXNativeTarget "RagnarokOfflineTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				35B3B8FC2A08BEA700B4540B /* Debug */,
+				35B3B8FD2A08BEA700B4540B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		35B3B8FE2A08BEA700B4540B /* Build configuration list for PBXNativeTarget "RagnarokOfflineUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				35B3B8FF2A08BEA700B4540B /* Debug */,
+				35B3B9002A08BEA700B4540B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3514BF872B48642B0065ED89 /* XCRemoteSwiftPackageReference "Terminal" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dnpp73/Terminal.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3514BF882B48642B0065ED89 /* Terminal */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3514BF872B48642B0065ED89 /* XCRemoteSwiftPackageReference "Terminal" */;
+			productName = Terminal;
+		};
+		3523B57E2B97769D00CCE722 /* Lua */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Lua;
+		};
+		3555D6362BC65B7000709871 /* RagnarokOfflineFileFormats */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RagnarokOfflineFileFormats;
+		};
+		3555D6442BC665F600709871 /* RagnarokOfflineCrypto */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RagnarokOfflineCrypto;
+		};
+		3555D6472BC66B3700709871 /* RagnarokOfflineStream */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RagnarokOfflineStream;
+		};
+		3555E12E2B7D2268007CE4BA /* rAthenaChar */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = rAthenaChar;
+		};
+		3555E1312B7D2268007CE4BA /* rAthenaCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = rAthenaCommon;
+		};
+		3555E1332B7D2268007CE4BA /* rAthenaDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = rAthenaDatabase;
+		};
+		3555E1352B7D2268007CE4BA /* rAthenaLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = rAthenaLogin;
+		};
+		3555E1382B7D2268007CE4BA /* rAthenaMap */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = rAthenaMap;
+		};
+		3555E13B2B7D2268007CE4BA /* rAthenaNetwork */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = rAthenaNetwork;
+		};
+		3555E13D2B7D2268007CE4BA /* rAthenaResource */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = rAthenaResource;
+		};
+		3555E13F2B7D2268007CE4BA /* rAthenaWeb */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = rAthenaWeb;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 35B3B8CC2A08BEA600B4540B /* Project object */;
+}

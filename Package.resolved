@@ -1,0 +1,15 @@
+{
+  "originHash" : "445b1714adc9ca0ef860bb3c06318da57ba5451860099a192000b6f50df8b5e6",
+  "pins" : [
+    {
+      "identity" : "datacompression",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mw99/DataCompression.git",
+      "state" : {
+        "revision" : "5ab15951321b08b74511601cbd0497667649d70b",
+        "version" : "3.8.0"
+      }
+    }
+  ],
+  "version" : 3
+}
