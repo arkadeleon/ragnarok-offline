@@ -9,6 +9,7 @@
 import CoreGraphics
 import UIKit
 import RagnarokOfflineFileFormats
+import RagnarokOfflineGraphics
 
 class ACTPreviewViewController: UIViewController {
     struct ActionSection: Hashable {

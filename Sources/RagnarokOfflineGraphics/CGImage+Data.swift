@@ -11,7 +11,7 @@ import AVFoundation
 import CoreGraphics
 import ImageIO
 
-func CGImageCreateWithData(_ data: Data) -> CGImage? {
+public func CGImageCreateWithData(_ data: Data) -> CGImage? {
     guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil) else {
         return nil
     }
@@ -21,7 +21,7 @@ func CGImageCreateWithData(_ data: Data) -> CGImage? {
 }
 
 extension CGImage {
-    func resizing(_ size: CGSize) -> CGImage? {
+    public func resizing(_ size: CGSize) -> CGImage? {
         let availableRect = AVMakeRect(
             aspectRatio: CGSize(width: width, height: height),
             insideRect: CGRect(origin: .zero, size: size)
@@ -52,7 +52,7 @@ extension CGImage {
 }
 
 extension CGImage {
-    func removingMagentaPixels() -> CGImage? {
+    public func removingMagentaPixels() -> CGImage? {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bitmapInfo = CGImageAlphaInfo.premultipliedFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
 

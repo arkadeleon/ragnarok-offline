@@ -12,7 +12,7 @@ import RagnarokOfflineCrypto
 import RagnarokOfflineFileFormats
 
 extension SPR {
-    func image(forSpriteAt index: Int) -> StillImage? {
+    public func image(forSpriteAt index: Int) -> StillImage? {
         let sprite = sprites[index]
         let width = Int(sprite.width)
         let height = Int(sprite.height)

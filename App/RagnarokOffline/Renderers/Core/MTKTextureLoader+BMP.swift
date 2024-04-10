@@ -7,6 +7,7 @@
 //
 
 import MetalKit
+import RagnarokOfflineGraphics
 
 extension MTKTextureLoader {
     func newTexture(bmpData: Data) -> MTLTexture? {

@@ -11,7 +11,7 @@ import Foundation
 import RagnarokOfflineFileFormats
 
 extension GAT {
-    func image() -> CGImage? {
+    public func image() -> CGImage? {
         let width = Int(width)
         let height = Int(height)
 
@@ -67,7 +67,7 @@ extension GAT {
 }
 
 extension GAT {
-    func altitude(forTileAtX x: Int, y: Int) -> Float {
+    public func altitude(forTileAtX x: Int, y: Int) -> Float {
         let index = x + y * Int(width)
         let tile = tiles[index]
         let bottomLeft = tile.bottomLeft

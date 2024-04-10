@@ -10,11 +10,11 @@ import CoreGraphics
 import ImageIO
 import UniformTypeIdentifiers
 
-struct AnimatedImage: Hashable {
-    var images: [CGImage]
-    var delay: CGFloat
+public struct AnimatedImage: Hashable {
+    public var images: [CGImage]
+    public var delay: CGFloat
 
-    var size: CGSize {
+    public var size: CGSize {
         images.reduce(CGSize.zero) { size, image in
             CGSize(
                 width: max(size.width, CGFloat(image.width)),
@@ -23,7 +23,7 @@ struct AnimatedImage: Hashable {
         }
     }
 
-    func pngData() -> Data? {
+    public func pngData() -> Data? {
         guard let data = CFDataCreateMutable(kCFAllocatorDefault, 0) else {
             return nil
         }

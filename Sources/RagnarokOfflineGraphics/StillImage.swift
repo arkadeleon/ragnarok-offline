@@ -10,10 +10,10 @@ import CoreGraphics
 import ImageIO
 import UniformTypeIdentifiers
 
-struct StillImage: Hashable {
-    var image: CGImage
+public struct StillImage: Hashable {
+    public var image: CGImage
 
-    func pngData() -> Data? {
+    public func pngData() -> Data? {
         guard let data = CFDataCreateMutable(kCFAllocatorDefault, 0) else {
             return nil
         }

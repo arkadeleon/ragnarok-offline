@@ -11,7 +11,7 @@ import UIKit
 import RagnarokOfflineFileFormats
 
 extension ACT {
-    func animatedImage(forActionAt index: Int, imagesForSpritesByType: [SPR.SpriteType : [CGImage?]]) -> AnimatedImage {
+    public func animatedImage(forActionAt index: Int, imagesForSpritesByType: [SPR.SpriteType : [CGImage?]]) -> AnimatedImage {
         let action = actions[index]
 
         var bounds: CGRect = .zero

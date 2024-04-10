@@ -10,7 +10,7 @@ import CoreGraphics
 import RagnarokOfflineFileFormats
 
 extension PAL {
-    func image(at size: CGSize) -> CGImage? {
+    public func image(at size: CGSize) -> CGImage? {
         let width = Int(size.width)
         let height = Int(size.height)
         guard let context = CGContext(
