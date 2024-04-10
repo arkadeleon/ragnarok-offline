@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import RagnarokOfflineFileSystem
 
 struct FileRawDataView: View {
     let file: File

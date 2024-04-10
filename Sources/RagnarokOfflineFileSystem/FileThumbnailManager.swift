@@ -9,13 +9,13 @@
 import CoreGraphics
 import Foundation
 
-class FileThumbnailManager {
-    static let shared = FileThumbnailManager()
+public class FileThumbnailManager {
+    public static let shared = FileThumbnailManager()
 
     private let generator = FileThumbnailGenerator()
     private let cache = NSCache<NSURL, CGImage>()
 
-    func thumbnailTask(for file: File, scale: CGFloat) -> Task<CGImage?, Error> {
+    public func thumbnailTask(for file: File, scale: CGFloat) -> Task<CGImage?, Error> {
         Task {
             try Task.checkCancellation()
 

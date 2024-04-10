@@ -10,7 +10,7 @@ import Foundation
 import RagnarokOfflineFileFormats
 
 extension File {
-    var rawDataRepresentable: Bool {
+    public var rawDataRepresentable: Bool {
         guard let type else {
             return false
         }
@@ -23,7 +23,7 @@ extension File {
         }
     }
 
-    var rawData: Data? {
+    public var rawData: Data? {
         guard rawDataRepresentable else {
             return nil
         }

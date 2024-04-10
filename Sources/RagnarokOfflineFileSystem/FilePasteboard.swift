@@ -8,20 +8,20 @@
 
 import Foundation
 
-class FilePasteboard {
-    static let shared = FilePasteboard()
+public class FilePasteboard {
+    public static let shared = FilePasteboard()
 
-    var file: File?
-    var hasFile = false
+    public var file: File?
+    public var hasFile = false
 
-    func copy(_ file: File) {
+    public func copy(_ file: File) {
         self.file = file
         hasFile = true
     }
 }
 
 extension File {
-    func pasteFromPasteboard(_ pasteboard: FilePasteboard) -> File? {
+    public func pasteFromPasteboard(_ pasteboard: FilePasteboard) -> File? {
         guard let sourceFile = pasteboard.file else {
             return nil
         }

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import RagnarokOfflineFileSystem
 
 struct FileThumbnailView: View {
     @Environment(\.displayScale) var displayScale: CGFloat

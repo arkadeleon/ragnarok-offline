@@ -10,7 +10,7 @@ import CoreTransferable
 import Foundation
 
 extension File {
-    var canPreview: Bool {
+    public var canPreview: Bool {
         guard let type else {
             return false
         }
@@ -24,39 +24,39 @@ extension File {
         }
     }
 
-    var canShare: Bool {
+    public var canShare: Bool {
         switch self {
         case .directory, .grfDirectory: false
         default: true
         }
     }
 
-    var canCopy: Bool {
+    public var canCopy: Bool {
         switch self {
         case .regularFile, .grf, .grfEntry: true
         default: false
         }
     }
 
-    var canPaste: Bool {
+    public var canPaste: Bool {
         switch self {
         case .directory where FilePasteboard.shared.hasFile: true
         default: false
         }
     }
 
-    var canDelete: Bool {
+    public var canDelete: Bool {
         switch self {
         case .regularFile, .grf: true
         default: false
         }
     }
 
-    func copy(_ file: File) {
+    public func copy(_ file: File) {
         FilePasteboard.shared.copy(file)
     }
 
-    func delete(_ file: File) -> Bool {
+    public func delete(_ file: File) -> Bool {
         guard case .regularFile(let url) = file else {
             return false
         }
@@ -71,7 +71,7 @@ extension File {
 }
 
 extension File: Transferable {
-    static var transferRepresentation: some TransferRepresentation {
+    public static var transferRepresentation: some TransferRepresentation {
         ProxyRepresentation { file in
             file.shareURL ?? file.url
         }

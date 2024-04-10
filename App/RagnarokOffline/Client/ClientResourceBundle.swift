@@ -11,6 +11,7 @@ import Foundation
 import rAthenaDatabase
 import RagnarokOfflineFileFormats
 import RagnarokOfflineGraphics
+import RagnarokOfflineFileSystem
 
 class ClientResourceBundle {
     static let shared = ClientResourceBundle()

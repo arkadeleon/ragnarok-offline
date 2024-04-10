@@ -10,6 +10,7 @@ import UIKit
 import DataCompression
 import RagnarokOfflineFileFormats
 import RagnarokOfflineGraphics
+import RagnarokOfflineFileSystem
 
 class ImageFilePreviewViewController: UIViewController {
     let file: File

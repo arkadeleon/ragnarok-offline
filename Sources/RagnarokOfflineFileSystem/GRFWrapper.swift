@@ -10,7 +10,7 @@ import Foundation
 import RagnarokOfflineFileFormats
 import RagnarokOfflineStream
 
-class GRFWrapper {
+public class GRFWrapper {
     let url: URL
 
     private lazy var grf = {
@@ -51,11 +51,11 @@ class GRFWrapper {
         return entries
     }()
 
-    init(url: URL) {
+    public init(url: URL) {
         self.url = url
     }
 
-    func contentsOfDirectory(_ directory: GRF.Path) -> ([GRF.Path], [GRF.Entry]) {
+    public func contentsOfDirectory(_ directory: GRF.Path) -> ([GRF.Path], [GRF.Entry]) {
         guard let grf else {
             return ([], [])
         }
@@ -76,11 +76,11 @@ class GRFWrapper {
         return (directories, entries)
     }
 
-    func entry(at path: GRF.Path) -> GRF.Entry? {
+    public func entry(at path: GRF.Path) -> GRF.Entry? {
         entries[path.string.uppercased()]
     }
 
-    func contentsOfEntry(at path: GRF.Path) throws -> Data {
+    public func contentsOfEntry(at path: GRF.Path) throws -> Data {
         guard let entry = entry(at: path) else {
             throw DocumentError.invalidSource
         }

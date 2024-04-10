@@ -17,6 +17,9 @@ let package = Package(
             name: "RagnarokOfflineShaders",
             targets: ["RagnarokOfflineShaders"]),
         .library(
+            name: "RagnarokOfflineFileSystem",
+            targets: ["RagnarokOfflineFileSystem"]),
+        .library(
             name: "RagnarokOfflineGraphics",
             targets: ["RagnarokOfflineGraphics"]),
         .library(
@@ -51,6 +54,12 @@ let package = Package(
                 .process("Ground/GroundShaders.metal"),
                 .process("Model/ModelShaders.metal"),
                 .process("Water/WaterShaders.metal"),
+            ]),
+        .target(
+            name: "RagnarokOfflineFileSystem",
+            dependencies: [
+                "RagnarokOfflineFileFormats",
+                "RagnarokOfflineGraphics",
             ]),
         .target(
             name: "RagnarokOfflineGraphics",

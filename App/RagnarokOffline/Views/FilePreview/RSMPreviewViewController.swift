@@ -9,6 +9,7 @@
 import MetalKit
 import UIKit
 import RagnarokOfflineFileFormats
+import RagnarokOfflineFileSystem
 import RagnarokOfflineRenderers
 
 class RSMPreviewViewController: UIViewController {

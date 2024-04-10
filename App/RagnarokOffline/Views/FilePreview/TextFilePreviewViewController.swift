@@ -9,6 +9,7 @@
 import Lua
 import UIKit
 import WebKit
+import RagnarokOfflineFileSystem
 
 class TextFilePreviewViewController: UIViewController {
     let file: File

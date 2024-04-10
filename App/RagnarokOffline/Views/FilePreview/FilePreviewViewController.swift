@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RagnarokOfflineFileSystem
 
 class FilePreviewViewController: UIViewController {
     let file: File

@@ -40,8 +40,6 @@
 		353B4F162B43F3BB00605E92 /* ClientResourceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F152B43F3BB00605E92 /* ClientResourceBundle.swift */; };
 		353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F172B44FFE100605E92 /* SkillInfoView.swift */; };
 		353B4F1C2B451F1300605E92 /* ItemGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F1B2B451F1300605E92 /* ItemGridCell.swift */; };
-		35482AF12B2759DD0062DC4B /* File+RawData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35482AF02B2759DD0062DC4B /* File+RawData.swift */; };
-		354CB4612B2AA70F001FC2A1 /* FileThumbnailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */; };
 		3552D8742B315D8F004831D0 /* TextFilePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8732B315D8F004831D0 /* TextFilePreviewViewController.swift */; };
 		3552D8762B316876004831D0 /* SPRPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8752B316876004831D0 /* SPRPreviewViewController.swift */; };
 		3552D8782B3182A8004831D0 /* AnimatedImageActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */; };
@@ -52,6 +50,7 @@
 		3555D64B2BC6827000709871 /* RagnarokOfflineGraphics in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D64A2BC6827000709871 /* RagnarokOfflineGraphics */; };
 		3555D64D2BC68A0900709871 /* RagnarokOfflineRenderers in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D64C2BC68A0900709871 /* RagnarokOfflineRenderers */; };
 		3555D64F2BC6929700709871 /* RagnarokOfflineShaders in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D64E2BC6929700709871 /* RagnarokOfflineShaders */; };
+		3555D6512BC6C10700709871 /* RagnarokOfflineFileSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D6502BC6C10700709871 /* RagnarokOfflineFileSystem */; };
 		3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555E1162B7D12D9007CE4BA /* TerminalView.swift */; };
 		3555E12F2B7D2268007CE4BA /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E12E2B7D2268007CE4BA /* rAthenaChar */; };
 		3555E1302B7D2268007CE4BA /* rAthenaChar in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3555E12E2B7D2268007CE4BA /* rAthenaChar */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -75,7 +74,6 @@
 		35652B432B960D100075AD71 /* MapDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B422B960D100075AD71 /* MapDatabaseView.swift */; };
 		35652B452B960D2D0075AD71 /* MapGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B442B960D2D0075AD71 /* MapGridCell.swift */; };
 		35652B472B960D370075AD71 /* MapInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B462B960D370075AD71 /* MapInfoView.swift */; };
-		356BF6772AFCCDD9005B67F7 /* GRFWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6762AFCCDD9005B67F7 /* GRFWrapper.swift */; };
 		356BF6822B04F54A005B67F7 /* ACTPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6812B04F54A005B67F7 /* ACTPreviewViewController.swift */; };
 		356BF6842B04F569005B67F7 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6832B04F569005B67F7 /* ImageCollectionViewCell.swift */; };
 		356BF6862B05FF59005B67F7 /* FilePreviewPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6852B05FF59005B67F7 /* FilePreviewPageViewController.swift */; };
@@ -85,7 +83,6 @@
 		3582FFC82B8DB73B00E746D7 /* FileThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC72B8DB73B00E746D7 /* FileThumbnailView.swift */; };
 		3582FFCA2B8DB9FE00E746D7 /* FilePreviewPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC92B8DB9FE00E746D7 /* FilePreviewPageView.swift */; };
 		3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */; };
-		3582FFCE2B8DC07E00E746D7 /* File+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFCD2B8DC07E00E746D7 /* File+Actions.swift */; };
 		35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */; };
 		35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */; };
 		35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D92A08BEA600B4540B /* ContentView.swift */; };
@@ -97,10 +94,6 @@
 		35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9702A08C01600B4540B /* Shaders.metal */; };
 		35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9722A08C01600B4540B /* GameRenderer.swift */; };
 		35B3B9FA2A08C01600B4540B /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B9732A08C01600B4540B /* wall.jpg */; };
-		35B3BA0E2A08C01600B4540B /* FileThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98C2A08C01600B4540B /* FileThumbnailGenerator.swift */; };
-		35B3BA0F2A08C01600B4540B /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B98D2A08C01600B4540B /* File.swift */; };
-		35B3BA162A08C01600B4540B /* File+Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9952A08C01600B4540B /* File+Type.swift */; };
-		35B3BA172A08C01600B4540B /* FilePasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9962A08C01600B4540B /* FilePasteboard.swift */; };
 		35B3BA192A08C01600B4540B /* ImageFilePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9992A08C01600B4540B /* ImageFilePreviewViewController.swift */; };
 		35B3BA1A2A08C01600B4540B /* FilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99A2A08C01600B4540B /* FilesView.swift */; };
 		35B3BA1B2A08C01600B4540B /* AudioFilePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99C2A08C01600B4540B /* AudioFilePreviewViewController.swift */; };
@@ -180,8 +173,6 @@
 		353B4F152B43F3BB00605E92 /* ClientResourceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientResourceBundle.swift; sourceTree = "<group>"; };
 		353B4F172B44FFE100605E92 /* SkillInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillInfoView.swift; sourceTree = "<group>"; };
 		353B4F1B2B451F1300605E92 /* ItemGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemGridCell.swift; sourceTree = "<group>"; };
-		35482AF02B2759DD0062DC4B /* File+RawData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+RawData.swift"; sourceTree = "<group>"; };
-		354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnailManager.swift; sourceTree = "<group>"; };
 		3552D8732B315D8F004831D0 /* TextFilePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFilePreviewViewController.swift; sourceTree = "<group>"; };
 		3552D8752B316876004831D0 /* SPRPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPRPreviewViewController.swift; sourceTree = "<group>"; };
 		3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImageActivityItem.swift; sourceTree = "<group>"; };
@@ -199,7 +190,6 @@
 		35652B422B960D100075AD71 /* MapDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDatabaseView.swift; sourceTree = "<group>"; };
 		35652B442B960D2D0075AD71 /* MapGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapGridCell.swift; sourceTree = "<group>"; };
 		35652B462B960D370075AD71 /* MapInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInfoView.swift; sourceTree = "<group>"; };
-		356BF6762AFCCDD9005B67F7 /* GRFWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GRFWrapper.swift; sourceTree = "<group>"; };
 		356BF6812B04F54A005B67F7 /* ACTPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACTPreviewViewController.swift; sourceTree = "<group>"; };
 		356BF6832B04F569005B67F7 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		356BF6852B05FF59005B67F7 /* FilePreviewPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePreviewPageViewController.swift; sourceTree = "<group>"; };
@@ -209,7 +199,6 @@
 		3582FFC72B8DB73B00E746D7 /* FileThumbnailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileThumbnailView.swift; sourceTree = "<group>"; };
 		3582FFC92B8DB9FE00E746D7 /* FilePreviewPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePreviewPageView.swift; sourceTree = "<group>"; };
 		3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileGridCell.swift; sourceTree = "<group>"; };
-		3582FFCD2B8DC07E00E746D7 /* File+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+Actions.swift"; sourceTree = "<group>"; };
 		35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerView.swift; sourceTree = "<group>"; };
 		35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOffline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagnarokOfflineApp.swift; sourceTree = "<group>"; };
@@ -225,10 +214,6 @@
 		35B3B9712A08C01600B4540B /* ShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 		35B3B9722A08C01600B4540B /* GameRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameRenderer.swift; sourceTree = "<group>"; };
 		35B3B9732A08C01600B4540B /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
-		35B3B98C2A08C01600B4540B /* FileThumbnailGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileThumbnailGenerator.swift; sourceTree = "<group>"; };
-		35B3B98D2A08C01600B4540B /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		35B3B9952A08C01600B4540B /* File+Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "File+Type.swift"; sourceTree = "<group>"; };
-		35B3B9962A08C01600B4540B /* FilePasteboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePasteboard.swift; sourceTree = "<group>"; };
 		35B3B9992A08C01600B4540B /* ImageFilePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageFilePreviewViewController.swift; sourceTree = "<group>"; };
 		35B3B99A2A08C01600B4540B /* FilesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesView.swift; sourceTree = "<group>"; };
 		35B3B99C2A08C01600B4540B /* AudioFilePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFilePreviewViewController.swift; sourceTree = "<group>"; };
@@ -247,6 +232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3555E1402B7D2268007CE4BA /* rAthenaWeb in Frameworks */,
+				3555D6512BC6C10700709871 /* RagnarokOfflineFileSystem in Frameworks */,
 				3555E12F2B7D2268007CE4BA /* rAthenaChar in Frameworks */,
 				3555E1362B7D2268007CE4BA /* rAthenaLogin in Frameworks */,
 				3523B57F2B97769D00CCE722 /* Lua in Frameworks */,
@@ -324,21 +310,6 @@
 				35239DFA2BBEEF890039F7D5 /* ObservableJobDatabase.swift */,
 			);
 			path = Job;
-			sourceTree = "<group>";
-		};
-		3523B5802B98479700CCE722 /* FileSystem */ = {
-			isa = PBXGroup;
-			children = (
-				35B3B98D2A08C01600B4540B /* File.swift */,
-				35B3B9952A08C01600B4540B /* File+Type.swift */,
-				3582FFCD2B8DC07E00E746D7 /* File+Actions.swift */,
-				35482AF02B2759DD0062DC4B /* File+RawData.swift */,
-				35B3B9962A08C01600B4540B /* FilePasteboard.swift */,
-				354CB4602B2AA70F001FC2A1 /* FileThumbnailManager.swift */,
-				35B3B98C2A08C01600B4540B /* FileThumbnailGenerator.swift */,
-				356BF6762AFCCDD9005B67F7 /* GRFWrapper.swift */,
-			);
-			path = FileSystem;
 			sourceTree = "<group>";
 		};
 		35270D252A5FE9470001A8BD /* Frameworks */ = {
@@ -512,7 +483,6 @@
 				356363652B3F301C00F7C249 /* Client */,
 				356049D02BB695400060DF81 /* Settings */,
 				35F50CC72BB3FD1400B36455 /* Network */,
-				3523B5802B98479700CCE722 /* FileSystem */,
 				35B3B97E2A08C01600B4540B /* Utilities */,
 				35B3BA422A08C51000B4540B /* RagnarokOffline-Bridging-Header.h */,
 				35270D2B2A68F4610001A8BD /* Info.plist */,
@@ -630,6 +600,7 @@
 				3555D64A2BC6827000709871 /* RagnarokOfflineGraphics */,
 				3555D64C2BC68A0900709871 /* RagnarokOfflineRenderers */,
 				3555D64E2BC6929700709871 /* RagnarokOfflineShaders */,
+				3555D6502BC6C10700709871 /* RagnarokOfflineFileSystem */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -757,7 +728,6 @@
 				355BC18E2B8F2890002F0586 /* FileRawDataView.swift in Sources */,
 				35774F7A2B231FAF00438311 /* FileActivityItem.swift in Sources */,
 				3514BF5B2B454A040065ED89 /* SkillGridCell.swift in Sources */,
-				35482AF12B2759DD0062DC4B /* File+RawData.swift in Sources */,
 				35239DFD2BBEF1C80039F7D5 /* ObservableSkillDatabase.swift in Sources */,
 				35F50CC92BB3FD5000B36455 /* LoginClient.swift in Sources */,
 				356363672B3F303F00F7C249 /* ClientDatabase.swift in Sources */,
@@ -778,15 +748,12 @@
 				3514BF5E2B4557950065ED89 /* MonsterDatabaseView.swift in Sources */,
 				35B3BA1B2A08C01600B4540B /* AudioFilePreviewViewController.swift in Sources */,
 				3552D8782B3182A8004831D0 /* AnimatedImageActivityItem.swift in Sources */,
-				356BF6772AFCCDD9005B67F7 /* GRFWrapper.swift in Sources */,
 				35652B452B960D2D0075AD71 /* MapGridCell.swift in Sources */,
 				35239E012BC29A4E0039F7D5 /* ObservableItemDatabase.swift in Sources */,
 				3514BF492B4532C80065ED89 /* ClientSettings.swift in Sources */,
-				35B3BA0E2A08C01600B4540B /* FileThumbnailGenerator.swift in Sources */,
 				35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */,
 				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,
 				3552D87A2B318323004831D0 /* StillImageActivityItem.swift in Sources */,
-				35B3BA0F2A08C01600B4540B /* File.swift in Sources */,
 				35239DFB2BBEEF890039F7D5 /* ObservableJobDatabase.swift in Sources */,
 				35B3BA1A2A08C01600B4540B /* FilesView.swift in Sources */,
 				3582FFC82B8DB73B00E746D7 /* FileThumbnailView.swift in Sources */,
@@ -794,11 +761,9 @@
 				35239DF72BBDA0760039F7D5 /* LoadStatus.swift in Sources */,
 				35652B432B960D100075AD71 /* MapDatabaseView.swift in Sources */,
 				355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */,
-				354CB4612B2AA70F001FC2A1 /* FileThumbnailManager.swift in Sources */,
 				3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */,
 				35B3BA192A08C01600B4540B /* ImageFilePreviewViewController.swift in Sources */,
 				3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */,
-				35B3BA162A08C01600B4540B /* File+Type.swift in Sources */,
 				35239E032BC29F660039F7D5 /* EmptyContentView.swift in Sources */,
 				35652B472B960D370075AD71 /* MapInfoView.swift in Sources */,
 				3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */,
@@ -824,9 +789,7 @@
 				3511C1D32B0A6C5D006DD639 /* RSWPreviewViewController.swift in Sources */,
 				3514BF602B455EF90065ED89 /* MonsterGridCell.swift in Sources */,
 				3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */,
-				35B3BA172A08C01600B4540B /* FilePasteboard.swift in Sources */,
 				35239DF92BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift in Sources */,
-				3582FFCE2B8DC07E00E746D7 /* File+Actions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1206,6 +1169,10 @@
 		3555D64E2BC6929700709871 /* RagnarokOfflineShaders */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RagnarokOfflineShaders;
+		};
+		3555D6502BC6C10700709871 /* RagnarokOfflineFileSystem */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RagnarokOfflineFileSystem;
 		};
 		3555E12E2B7D2268007CE4BA /* rAthenaChar */ = {
 			isa = XCSwiftPackageProductDependency;

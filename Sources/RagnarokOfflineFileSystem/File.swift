@@ -9,14 +9,14 @@
 import Foundation
 import RagnarokOfflineFileFormats
 
-enum File {
+public enum File {
     case directory(URL)
     case regularFile(URL)
     case grf(GRFWrapper)
     case grfDirectory(GRFWrapper, GRF.Path)
     case grfEntry(GRFWrapper, GRF.Path)
 
-    var url: URL {
+    public var url: URL {
         switch self {
         case .directory(let url):
             return url
@@ -35,7 +35,7 @@ enum File {
         }
     }
 
-    var name: String {
+    public var name: String {
         switch self {
         case .directory(let url):
             return url.lastPathComponent
@@ -50,7 +50,7 @@ enum File {
         }
     }
 
-    var size: Int? {
+    public var size: Int? {
         switch self {
         case .directory:
             return nil
@@ -68,7 +68,7 @@ enum File {
         }
     }
 
-    func contents() -> Data? {
+    public func contents() -> Data? {
         switch self {
         case .directory:
             return nil
@@ -83,7 +83,7 @@ enum File {
         }
     }
 
-    func files() -> [File] {
+    public func files() -> [File] {
         switch self {
         case .directory(let url):
             let urls = (try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [])) ?? []
@@ -126,25 +126,25 @@ enum File {
 }
 
 extension File: Identifiable {
-    var id: URL {
+    public var id: URL {
         url
     }
 }
 
 extension File: Hashable {
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         url.hash(into: &hasher)
     }
 }
 
 extension File: Equatable {
-    static func == (lhs: File, rhs: File) -> Bool {
+    public static func == (lhs: File, rhs: File) -> Bool {
         lhs.url == rhs.url
     }
 }
 
 extension File: Comparable {
-    static func < (lhs: File, rhs: File) -> Bool {
+    public static func < (lhs: File, rhs: File) -> Bool {
         let lhsRank = switch lhs {
         case .directory, .grfDirectory: 0
         default: 1

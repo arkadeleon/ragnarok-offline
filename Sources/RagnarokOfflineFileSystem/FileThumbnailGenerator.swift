@@ -10,9 +10,10 @@ import ImageIO
 import Foundation
 import DataCompression
 import RagnarokOfflineFileFormats
+import RagnarokOfflineGraphics
 
-class FileThumbnailGenerator {
-    func generateThumbnail(for file: File, scale: CGFloat) -> CGImage? {
+public class FileThumbnailGenerator {
+    public func generateThumbnail(for file: File, scale: CGFloat) -> CGImage? {
         guard let type = file.type else {
             return nil
         }
