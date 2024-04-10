@@ -10,8 +10,19 @@ import Network
 import rAthenaCommon
 import rAthenaNetwork
 
+/// Login client.
+///
+/// Sendable packets:
+/// - PACKET.CA.LOGIN
+/// - PACKET_CA_CONNECT_INFO_CHANGED
+/// - PACKET_CA_EXE_HASHCHECK
+///
+/// Receivable packets:
+/// - PACKET_AC_ACCEPT_LOGIN
+/// - PACKET_AC_REFUSE_LOGIN
+/// - PACKET_SC_NOTIFY_BAN
 class LoginClient {
-    let packetVersion = RA_PACKETVER
+    let packetVersion = PacketVersion(number: RA_PACKETVER)
 
     var onAcceptLogin: (() -> Void)?
     var onRefuseLogin: (() -> Void)?
@@ -24,7 +35,7 @@ class LoginClient {
     private let connection: NWConnection
 
     init() {
-        encoder = PacketEncoder(packetVersion: packetVersion)
+        encoder = PacketEncoder()
         decoder = PacketDecoder(packetVersion: packetVersion)
 
         connection = NWConnection(host: .ipv4(.loopback), port: 6900, using: .tcp)
@@ -42,11 +53,11 @@ class LoginClient {
     }
 
     func login(username: String, password: String) throws {
-        var packet = Packets.CA.Login(packetVersion: packetVersion)
-        packet.username = username
-        packet.password = password
+        var login = PACKET.CA.LOGIN(packetVersion: packetVersion)
+        login.username = username
+        login.password = password
 
-        let data = try encoder.encode(packet)
+        let data = try encoder.encode(login)
         connection.send(content: data, completion: .contentProcessed({ error in
             if let error {
                 self.onError?(error)
@@ -60,11 +71,11 @@ class LoginClient {
                 do {
                     let packet = try decoder.decode(from: content)
                     switch packet {
-                    case let acceptLogin as Packets.AC.AcceptLogin:
+                    case let acceptLogin as PACKET.AC.ACCEPT_LOGIN:
                         onAcceptLogin?()
-                    case let refuseLogin as Packets.AC.RefuseLogin:
+                    case let refuseLogin as PACKET.AC.REFUSE_LOGIN:
                         onRefuseLogin?()
-                    case let notifyBan as Packets.SC.NotifyBan:
+                    case let notifyBan as PACKET.SC.NOTIFY_BAN:
                         onNotifyBan?()
                     default:
                         break
