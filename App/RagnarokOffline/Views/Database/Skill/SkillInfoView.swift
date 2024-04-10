@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import rAthenaDatabase
 
 struct SkillInfoView: View {
     let database: Database

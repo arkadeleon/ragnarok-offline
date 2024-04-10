@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import rAthenaDatabase
 
 struct MapInfoView: View {
     let database: Database

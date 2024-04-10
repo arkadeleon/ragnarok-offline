@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import rAthenaDatabase
 
 struct ItemInfoView: View {
     let database: Database

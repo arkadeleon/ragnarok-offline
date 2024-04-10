@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import rAthenaDatabase
 
 struct MonsterInfoView: View {
     let database: Database

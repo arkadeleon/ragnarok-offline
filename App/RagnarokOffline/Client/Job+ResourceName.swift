@@ -6,8 +6,6 @@
 //  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
-import rAthenaDatabase
-
 extension Job {
     var resourceName: String {
         switch self {

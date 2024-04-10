@@ -8,7 +8,6 @@
 
 import CoreGraphics
 import rAthenaCommon
-import rAthenaDatabase
 import RagnarokOfflineFileFormats
 
 class ClientResourceManager {

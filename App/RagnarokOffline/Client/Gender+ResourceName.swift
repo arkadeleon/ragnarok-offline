@@ -6,8 +6,6 @@
 //  Copyright © 2024 Leon & Vane. All rights reserved.
 //
 
-import rAthenaDatabase
-
 extension Gender {
     var resourceName: String {
         switch self {

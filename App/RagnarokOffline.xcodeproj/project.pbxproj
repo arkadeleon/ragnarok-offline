@@ -85,11 +85,70 @@
 		3555D69E2BC6D59800709871 /* PACKET.SC.NOTIFY_BAN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6812BC6D59800709871 /* PACKET.SC.NOTIFY_BAN.swift */; };
 		3555D69F2BC6D59800709871 /* CharInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6832BC6D59800709871 /* CharInfo.swift */; };
 		3555D6A02BC6D59800709871 /* PACKET.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6842BC6D59800709871 /* PACKET.swift */; };
+		3555D6E62BC6DDE500709871 /* ItemCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6A12BC6DDE500709871 /* ItemCache.swift */; };
+		3555D6E72BC6DDE500709871 /* JobCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6A22BC6DDE500709871 /* JobCache.swift */; };
+		3555D6E82BC6DDE500709871 /* MapCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6A32BC6DDE500709871 /* MapCache.swift */; };
+		3555D6E92BC6DDE500709871 /* MonsterCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6A42BC6DDE500709871 /* MonsterCache.swift */; };
+		3555D6EA2BC6DDE500709871 /* ScriptCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6A52BC6DDE500709871 /* ScriptCache.swift */; };
+		3555D6EB2BC6DDE500709871 /* SkillCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6A62BC6DDE500709871 /* SkillCache.swift */; };
+		3555D6EC2BC6DDE500709871 /* SkillTreeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6A72BC6DDE500709871 /* SkillTreeCache.swift */; };
+		3555D6ED2BC6DDE500709871 /* AmmoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6A92BC6DDE500709871 /* AmmoType.swift */; };
+		3555D6EE2BC6DDE500709871 /* CardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6AA2BC6DDE500709871 /* CardType.swift */; };
+		3555D6EF2BC6DDE500709871 /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6AB2BC6DDE500709871 /* Element.swift */; };
+		3555D6F02BC6DDE500709871 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6AC2BC6DDE500709871 /* Gender.swift */; };
+		3555D6F12BC6DDE500709871 /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6AD2BC6DDE500709871 /* Parameter.swift */; };
+		3555D6F22BC6DDE500709871 /* Race.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6AE2BC6DDE500709871 /* Race.swift */; };
+		3555D6F32BC6DDE500709871 /* RaceGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6AF2BC6DDE500709871 /* RaceGroup.swift */; };
+		3555D6F42BC6DDE500709871 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6B02BC6DDE500709871 /* Size.swift */; };
+		3555D6F52BC6DDE500709871 /* WeaponType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6B12BC6DDE500709871 /* WeaponType.swift */; };
+		3555D6F62BC6DDE500709871 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6B32BC6DDE500709871 /* Item.swift */; };
+		3555D6F72BC6DDE500709871 /* ItemClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6B42BC6DDE500709871 /* ItemClass.swift */; };
+		3555D6F82BC6DDE500709871 /* ItemJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6B52BC6DDE500709871 /* ItemJob.swift */; };
+		3555D6F92BC6DDE500709871 /* ItemLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6B62BC6DDE500709871 /* ItemLocation.swift */; };
+		3555D6FA2BC6DDE500709871 /* ItemSubType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6B72BC6DDE500709871 /* ItemSubType.swift */; };
+		3555D6FB2BC6DDE500709871 /* ItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6B82BC6DDE500709871 /* ItemType.swift */; };
+		3555D6FC2BC6DDE500709871 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6BA2BC6DDE500709871 /* Job.swift */; };
+		3555D6FD2BC6DDE500709871 /* JobASPDStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6BB2BC6DDE500709871 /* JobASPDStats.swift */; };
+		3555D6FE2BC6DDE500709871 /* JobBasePointsStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6BC2BC6DDE500709871 /* JobBasePointsStats.swift */; };
+		3555D6FF2BC6DDE500709871 /* JobBasicStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6BD2BC6DDE500709871 /* JobBasicStats.swift */; };
+		3555D7002BC6DDE500709871 /* JobExpStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6BE2BC6DDE500709871 /* JobExpStats.swift */; };
+		3555D7012BC6DDE500709871 /* JobStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6BF2BC6DDE500709871 /* JobStats.swift */; };
+		3555D7022BC6DDE500709871 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6C12BC6DDE500709871 /* Map.swift */; };
+		3555D7032BC6DDE500709871 /* Monster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6C32BC6DDE500709871 /* Monster.swift */; };
+		3555D7042BC6DDE500709871 /* MonsterAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6C42BC6DDE500709871 /* MonsterAI.swift */; };
+		3555D7052BC6DDE500709871 /* MonsterClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6C52BC6DDE500709871 /* MonsterClass.swift */; };
+		3555D7062BC6DDE500709871 /* MonsterMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6C62BC6DDE500709871 /* MonsterMode.swift */; };
+		3555D7072BC6DDE500709871 /* EitherNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6C82BC6DDE500709871 /* EitherNode.swift */; };
+		3555D7082BC6DDE500709871 /* ListNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6C92BC6DDE500709871 /* ListNode.swift */; };
+		3555D7092BC6DDE500709871 /* PairsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6CA2BC6DDE500709871 /* PairsNode.swift */; };
+		3555D70A2BC6DDE500709871 /* Duplicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6CC2BC6DDE500709871 /* Duplicate.swift */; };
+		3555D70B2BC6DDE500709871 /* FloatingNPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6CD2BC6DDE500709871 /* FloatingNPC.swift */; };
+		3555D70C2BC6DDE500709871 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6CE2BC6DDE500709871 /* Function.swift */; };
+		3555D70D2BC6DDE500709871 /* MapFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6CF2BC6DDE500709871 /* MapFlag.swift */; };
+		3555D70E2BC6DDE500709871 /* MonsterSpawn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6D02BC6DDE500709871 /* MonsterSpawn.swift */; };
+		3555D70F2BC6DDE500709871 /* NPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6D12BC6DDE500709871 /* NPC.swift */; };
+		3555D7102BC6DDE500709871 /* ShopNPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6D22BC6DDE500709871 /* ShopNPC.swift */; };
+		3555D7112BC6DDE500709871 /* WarpPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6D32BC6DDE500709871 /* WarpPoint.swift */; };
+		3555D7122BC6DDE500709871 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6D52BC6DDE500709871 /* Skill.swift */; };
+		3555D7132BC6DDE500709871 /* SkillCastFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6D62BC6DDE500709871 /* SkillCastFlag.swift */; };
+		3555D7142BC6DDE500709871 /* SkillCopyableOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6D72BC6DDE500709871 /* SkillCopyableOption.swift */; };
+		3555D7152BC6DDE500709871 /* SkillDamageFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6D82BC6DDE500709871 /* SkillDamageFlag.swift */; };
+		3555D7162BC6DDE500709871 /* SkillFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6D92BC6DDE500709871 /* SkillFlag.swift */; };
+		3555D7172BC6DDE500709871 /* SkillHitType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6DA2BC6DDE500709871 /* SkillHitType.swift */; };
+		3555D7182BC6DDE500709871 /* SkillNoNearNPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6DB2BC6DDE500709871 /* SkillNoNearNPC.swift */; };
+		3555D7192BC6DDE500709871 /* SkillRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6DC2BC6DDE500709871 /* SkillRequirement.swift */; };
+		3555D71A2BC6DDE500709871 /* SkillTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6DD2BC6DDE500709871 /* SkillTargetType.swift */; };
+		3555D71B2BC6DDE500709871 /* SkillTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6DE2BC6DDE500709871 /* SkillTree.swift */; };
+		3555D71C2BC6DDE500709871 /* SkillType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6DF2BC6DDE500709871 /* SkillType.swift */; };
+		3555D71D2BC6DDE500709871 /* SkillUnitFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6E02BC6DDE500709871 /* SkillUnitFlag.swift */; };
+		3555D71E2BC6DDE500709871 /* SkillUnitTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6E12BC6DDE500709871 /* SkillUnitTargetType.swift */; };
+		3555D71F2BC6DDE500709871 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6E32BC6DDE500709871 /* Database.swift */; };
+		3555D7202BC6DDE500709871 /* ServerMode+DBPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6E42BC6DDE500709871 /* ServerMode+DBPath.swift */; };
+		3555D7222BC6DE6600709871 /* rAthenaRyml in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D7212BC6DE6600709871 /* rAthenaRyml */; };
 		3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555E1162B7D12D9007CE4BA /* TerminalView.swift */; };
 		3555E12F2B7D2268007CE4BA /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E12E2B7D2268007CE4BA /* rAthenaChar */; };
 		3555E1302B7D2268007CE4BA /* rAthenaChar in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3555E12E2B7D2268007CE4BA /* rAthenaChar */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3555E1322B7D2268007CE4BA /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E1312B7D2268007CE4BA /* rAthenaCommon */; };
-		3555E1342B7D2268007CE4BA /* rAthenaDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E1332B7D2268007CE4BA /* rAthenaDatabase */; };
 		3555E1362B7D2268007CE4BA /* rAthenaLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E1352B7D2268007CE4BA /* rAthenaLogin */; };
 		3555E1372B7D2268007CE4BA /* rAthenaLogin in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3555E1352B7D2268007CE4BA /* rAthenaLogin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3555E1392B7D2268007CE4BA /* rAthenaMap in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E1382B7D2268007CE4BA /* rAthenaMap */; };
@@ -243,6 +302,65 @@
 		3555D6812BC6D59800709871 /* PACKET.SC.NOTIFY_BAN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.SC.NOTIFY_BAN.swift; sourceTree = "<group>"; };
 		3555D6832BC6D59800709871 /* CharInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharInfo.swift; sourceTree = "<group>"; };
 		3555D6842BC6D59800709871 /* PACKET.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACKET.swift; sourceTree = "<group>"; };
+		3555D6A12BC6DDE500709871 /* ItemCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCache.swift; sourceTree = "<group>"; };
+		3555D6A22BC6DDE500709871 /* JobCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobCache.swift; sourceTree = "<group>"; };
+		3555D6A32BC6DDE500709871 /* MapCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCache.swift; sourceTree = "<group>"; };
+		3555D6A42BC6DDE500709871 /* MonsterCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonsterCache.swift; sourceTree = "<group>"; };
+		3555D6A52BC6DDE500709871 /* ScriptCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptCache.swift; sourceTree = "<group>"; };
+		3555D6A62BC6DDE500709871 /* SkillCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillCache.swift; sourceTree = "<group>"; };
+		3555D6A72BC6DDE500709871 /* SkillTreeCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillTreeCache.swift; sourceTree = "<group>"; };
+		3555D6A92BC6DDE500709871 /* AmmoType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmmoType.swift; sourceTree = "<group>"; };
+		3555D6AA2BC6DDE500709871 /* CardType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardType.swift; sourceTree = "<group>"; };
+		3555D6AB2BC6DDE500709871 /* Element.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
+		3555D6AC2BC6DDE500709871 /* Gender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
+		3555D6AD2BC6DDE500709871 /* Parameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameter.swift; sourceTree = "<group>"; };
+		3555D6AE2BC6DDE500709871 /* Race.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Race.swift; sourceTree = "<group>"; };
+		3555D6AF2BC6DDE500709871 /* RaceGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RaceGroup.swift; sourceTree = "<group>"; };
+		3555D6B02BC6DDE500709871 /* Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
+		3555D6B12BC6DDE500709871 /* WeaponType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponType.swift; sourceTree = "<group>"; };
+		3555D6B32BC6DDE500709871 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		3555D6B42BC6DDE500709871 /* ItemClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemClass.swift; sourceTree = "<group>"; };
+		3555D6B52BC6DDE500709871 /* ItemJob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemJob.swift; sourceTree = "<group>"; };
+		3555D6B62BC6DDE500709871 /* ItemLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemLocation.swift; sourceTree = "<group>"; };
+		3555D6B72BC6DDE500709871 /* ItemSubType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemSubType.swift; sourceTree = "<group>"; };
+		3555D6B82BC6DDE500709871 /* ItemType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemType.swift; sourceTree = "<group>"; };
+		3555D6BA2BC6DDE500709871 /* Job.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
+		3555D6BB2BC6DDE500709871 /* JobASPDStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobASPDStats.swift; sourceTree = "<group>"; };
+		3555D6BC2BC6DDE500709871 /* JobBasePointsStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobBasePointsStats.swift; sourceTree = "<group>"; };
+		3555D6BD2BC6DDE500709871 /* JobBasicStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobBasicStats.swift; sourceTree = "<group>"; };
+		3555D6BE2BC6DDE500709871 /* JobExpStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobExpStats.swift; sourceTree = "<group>"; };
+		3555D6BF2BC6DDE500709871 /* JobStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobStats.swift; sourceTree = "<group>"; };
+		3555D6C12BC6DDE500709871 /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		3555D6C32BC6DDE500709871 /* Monster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Monster.swift; sourceTree = "<group>"; };
+		3555D6C42BC6DDE500709871 /* MonsterAI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonsterAI.swift; sourceTree = "<group>"; };
+		3555D6C52BC6DDE500709871 /* MonsterClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonsterClass.swift; sourceTree = "<group>"; };
+		3555D6C62BC6DDE500709871 /* MonsterMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonsterMode.swift; sourceTree = "<group>"; };
+		3555D6C82BC6DDE500709871 /* EitherNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EitherNode.swift; sourceTree = "<group>"; };
+		3555D6C92BC6DDE500709871 /* ListNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListNode.swift; sourceTree = "<group>"; };
+		3555D6CA2BC6DDE500709871 /* PairsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairsNode.swift; sourceTree = "<group>"; };
+		3555D6CC2BC6DDE500709871 /* Duplicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Duplicate.swift; sourceTree = "<group>"; };
+		3555D6CD2BC6DDE500709871 /* FloatingNPC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingNPC.swift; sourceTree = "<group>"; };
+		3555D6CE2BC6DDE500709871 /* Function.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
+		3555D6CF2BC6DDE500709871 /* MapFlag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFlag.swift; sourceTree = "<group>"; };
+		3555D6D02BC6DDE500709871 /* MonsterSpawn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonsterSpawn.swift; sourceTree = "<group>"; };
+		3555D6D12BC6DDE500709871 /* NPC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NPC.swift; sourceTree = "<group>"; };
+		3555D6D22BC6DDE500709871 /* ShopNPC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopNPC.swift; sourceTree = "<group>"; };
+		3555D6D32BC6DDE500709871 /* WarpPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarpPoint.swift; sourceTree = "<group>"; };
+		3555D6D52BC6DDE500709871 /* Skill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skill.swift; sourceTree = "<group>"; };
+		3555D6D62BC6DDE500709871 /* SkillCastFlag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillCastFlag.swift; sourceTree = "<group>"; };
+		3555D6D72BC6DDE500709871 /* SkillCopyableOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillCopyableOption.swift; sourceTree = "<group>"; };
+		3555D6D82BC6DDE500709871 /* SkillDamageFlag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillDamageFlag.swift; sourceTree = "<group>"; };
+		3555D6D92BC6DDE500709871 /* SkillFlag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillFlag.swift; sourceTree = "<group>"; };
+		3555D6DA2BC6DDE500709871 /* SkillHitType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillHitType.swift; sourceTree = "<group>"; };
+		3555D6DB2BC6DDE500709871 /* SkillNoNearNPC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillNoNearNPC.swift; sourceTree = "<group>"; };
+		3555D6DC2BC6DDE500709871 /* SkillRequirement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillRequirement.swift; sourceTree = "<group>"; };
+		3555D6DD2BC6DDE500709871 /* SkillTargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillTargetType.swift; sourceTree = "<group>"; };
+		3555D6DE2BC6DDE500709871 /* SkillTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillTree.swift; sourceTree = "<group>"; };
+		3555D6DF2BC6DDE500709871 /* SkillType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillType.swift; sourceTree = "<group>"; };
+		3555D6E02BC6DDE500709871 /* SkillUnitFlag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillUnitFlag.swift; sourceTree = "<group>"; };
+		3555D6E12BC6DDE500709871 /* SkillUnitTargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillUnitTargetType.swift; sourceTree = "<group>"; };
+		3555D6E32BC6DDE500709871 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		3555D6E42BC6DDE500709871 /* ServerMode+DBPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ServerMode+DBPath.swift"; sourceTree = "<group>"; };
 		3555E1162B7D12D9007CE4BA /* TerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
 		3555E12D2B7D2251007CE4BA /* swift-rathena */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-rathena"; path = "../swift-rathena"; sourceTree = "<group>"; };
 		355BC18B2B8F25C0002F0586 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
@@ -296,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3555E1402B7D2268007CE4BA /* rAthenaWeb in Frameworks */,
+				3555D7222BC6DE6600709871 /* rAthenaRyml in Frameworks */,
 				3555D6512BC6C10700709871 /* RagnarokOfflineFileSystem in Frameworks */,
 				3555E12F2B7D2268007CE4BA /* rAthenaChar in Frameworks */,
 				3555E1362B7D2268007CE4BA /* rAthenaLogin in Frameworks */,
@@ -307,7 +426,6 @@
 				3555D6482BC66B3700709871 /* RagnarokOfflineStream in Frameworks */,
 				3555D64F2BC6929700709871 /* RagnarokOfflineShaders in Frameworks */,
 				3555D6372BC65B7000709871 /* RagnarokOfflineFileFormats in Frameworks */,
-				3555E1342B7D2268007CE4BA /* rAthenaDatabase in Frameworks */,
 				3514BF892B48642B0065ED89 /* Terminal in Frameworks */,
 				3555E13E2B7D2268007CE4BA /* rAthenaResource in Frameworks */,
 				3555D6452BC665F600709871 /* RagnarokOfflineCrypto in Frameworks */,
@@ -518,6 +636,144 @@
 			path = Packets;
 			sourceTree = "<group>";
 		};
+		3555D6A82BC6DDE500709871 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				3555D6A12BC6DDE500709871 /* ItemCache.swift */,
+				3555D6A22BC6DDE500709871 /* JobCache.swift */,
+				3555D6A32BC6DDE500709871 /* MapCache.swift */,
+				3555D6A42BC6DDE500709871 /* MonsterCache.swift */,
+				3555D6A52BC6DDE500709871 /* ScriptCache.swift */,
+				3555D6A62BC6DDE500709871 /* SkillCache.swift */,
+				3555D6A72BC6DDE500709871 /* SkillTreeCache.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
+		3555D6B22BC6DDE500709871 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				3555D6A92BC6DDE500709871 /* AmmoType.swift */,
+				3555D6AA2BC6DDE500709871 /* CardType.swift */,
+				3555D6AB2BC6DDE500709871 /* Element.swift */,
+				3555D6AC2BC6DDE500709871 /* Gender.swift */,
+				3555D6AD2BC6DDE500709871 /* Parameter.swift */,
+				3555D6AE2BC6DDE500709871 /* Race.swift */,
+				3555D6AF2BC6DDE500709871 /* RaceGroup.swift */,
+				3555D6B02BC6DDE500709871 /* Size.swift */,
+				3555D6B12BC6DDE500709871 /* WeaponType.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		3555D6B92BC6DDE500709871 /* Item */ = {
+			isa = PBXGroup;
+			children = (
+				3555D6B32BC6DDE500709871 /* Item.swift */,
+				3555D6B42BC6DDE500709871 /* ItemClass.swift */,
+				3555D6B52BC6DDE500709871 /* ItemJob.swift */,
+				3555D6B62BC6DDE500709871 /* ItemLocation.swift */,
+				3555D6B72BC6DDE500709871 /* ItemSubType.swift */,
+				3555D6B82BC6DDE500709871 /* ItemType.swift */,
+			);
+			path = Item;
+			sourceTree = "<group>";
+		};
+		3555D6C02BC6DDE500709871 /* Job */ = {
+			isa = PBXGroup;
+			children = (
+				3555D6BA2BC6DDE500709871 /* Job.swift */,
+				3555D6BB2BC6DDE500709871 /* JobASPDStats.swift */,
+				3555D6BC2BC6DDE500709871 /* JobBasePointsStats.swift */,
+				3555D6BD2BC6DDE500709871 /* JobBasicStats.swift */,
+				3555D6BE2BC6DDE500709871 /* JobExpStats.swift */,
+				3555D6BF2BC6DDE500709871 /* JobStats.swift */,
+			);
+			path = Job;
+			sourceTree = "<group>";
+		};
+		3555D6C22BC6DDE500709871 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				3555D6C12BC6DDE500709871 /* Map.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		3555D6C72BC6DDE500709871 /* Monster */ = {
+			isa = PBXGroup;
+			children = (
+				3555D6C32BC6DDE500709871 /* Monster.swift */,
+				3555D6C42BC6DDE500709871 /* MonsterAI.swift */,
+				3555D6C52BC6DDE500709871 /* MonsterClass.swift */,
+				3555D6C62BC6DDE500709871 /* MonsterMode.swift */,
+			);
+			path = Monster;
+			sourceTree = "<group>";
+		};
+		3555D6CB2BC6DDE500709871 /* Node */ = {
+			isa = PBXGroup;
+			children = (
+				3555D6C82BC6DDE500709871 /* EitherNode.swift */,
+				3555D6C92BC6DDE500709871 /* ListNode.swift */,
+				3555D6CA2BC6DDE500709871 /* PairsNode.swift */,
+			);
+			path = Node;
+			sourceTree = "<group>";
+		};
+		3555D6D42BC6DDE500709871 /* Script */ = {
+			isa = PBXGroup;
+			children = (
+				3555D6CC2BC6DDE500709871 /* Duplicate.swift */,
+				3555D6CD2BC6DDE500709871 /* FloatingNPC.swift */,
+				3555D6CE2BC6DDE500709871 /* Function.swift */,
+				3555D6CF2BC6DDE500709871 /* MapFlag.swift */,
+				3555D6D02BC6DDE500709871 /* MonsterSpawn.swift */,
+				3555D6D12BC6DDE500709871 /* NPC.swift */,
+				3555D6D22BC6DDE500709871 /* ShopNPC.swift */,
+				3555D6D32BC6DDE500709871 /* WarpPoint.swift */,
+			);
+			path = Script;
+			sourceTree = "<group>";
+		};
+		3555D6E22BC6DDE500709871 /* Skill */ = {
+			isa = PBXGroup;
+			children = (
+				3555D6D52BC6DDE500709871 /* Skill.swift */,
+				3555D6D62BC6DDE500709871 /* SkillCastFlag.swift */,
+				3555D6D72BC6DDE500709871 /* SkillCopyableOption.swift */,
+				3555D6D82BC6DDE500709871 /* SkillDamageFlag.swift */,
+				3555D6D92BC6DDE500709871 /* SkillFlag.swift */,
+				3555D6DA2BC6DDE500709871 /* SkillHitType.swift */,
+				3555D6DB2BC6DDE500709871 /* SkillNoNearNPC.swift */,
+				3555D6DC2BC6DDE500709871 /* SkillRequirement.swift */,
+				3555D6DD2BC6DDE500709871 /* SkillTargetType.swift */,
+				3555D6DE2BC6DDE500709871 /* SkillTree.swift */,
+				3555D6DF2BC6DDE500709871 /* SkillType.swift */,
+				3555D6E02BC6DDE500709871 /* SkillUnitFlag.swift */,
+				3555D6E12BC6DDE500709871 /* SkillUnitTargetType.swift */,
+			);
+			path = Skill;
+			sourceTree = "<group>";
+		};
+		3555D6E52BC6DDE500709871 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				3555D6A82BC6DDE500709871 /* Cache */,
+				3555D6B22BC6DDE500709871 /* Common */,
+				3555D6B92BC6DDE500709871 /* Item */,
+				3555D6C02BC6DDE500709871 /* Job */,
+				3555D6C22BC6DDE500709871 /* Map */,
+				3555D6C72BC6DDE500709871 /* Monster */,
+				3555D6CB2BC6DDE500709871 /* Node */,
+				3555D6D42BC6DDE500709871 /* Script */,
+				3555D6E22BC6DDE500709871 /* Skill */,
+				3555D6E32BC6DDE500709871 /* Database.swift */,
+				3555D6E42BC6DDE500709871 /* ServerMode+DBPath.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 		355BC18A2B8F25A6002F0586 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -618,6 +874,7 @@
 				35774F692B20587900438311 /* Views */,
 				3555D6492BC66CF000709871 /* ActivityItems */,
 				356363652B3F301C00F7C249 /* Client */,
+				3555D6E52BC6DDE500709871 /* Database */,
 				35F50CC72BB3FD1400B36455 /* Network */,
 				35B3B97E2A08C01600B4540B /* Utilities */,
 				35B3BA422A08C51000B4540B /* RagnarokOffline-Bridging-Header.h */,
@@ -731,7 +988,6 @@
 				3514BF882B48642B0065ED89 /* Terminal */,
 				3555E12E2B7D2268007CE4BA /* rAthenaChar */,
 				3555E1312B7D2268007CE4BA /* rAthenaCommon */,
-				3555E1332B7D2268007CE4BA /* rAthenaDatabase */,
 				3555E1352B7D2268007CE4BA /* rAthenaLogin */,
 				3555E1382B7D2268007CE4BA /* rAthenaMap */,
 				3555E13D2B7D2268007CE4BA /* rAthenaResource */,
@@ -745,6 +1001,7 @@
 				3555D64E2BC6929700709871 /* RagnarokOfflineShaders */,
 				3555D6502BC6C10700709871 /* RagnarokOfflineFileSystem */,
 				3555D6522BC6D32600709871 /* RagnarokOfflineSettings */,
+				3555D7212BC6DE6600709871 /* rAthenaRyml */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -868,26 +1125,42 @@
 			files = (
 				3555D6622BC6D54800709871 /* BinaryDecoder.swift in Sources */,
 				3511C1D52B0AF9B1006DD639 /* RSMPreviewViewController.swift in Sources */,
+				3555D7122BC6DDE500709871 /* Skill.swift in Sources */,
 				356BF6862B05FF59005B67F7 /* FilePreviewPageViewController.swift in Sources */,
 				35B695EA2A305EF6006F1904 /* GameView.swift in Sources */,
 				355BC18E2B8F2890002F0586 /* FileRawDataView.swift in Sources */,
 				3555D65F2BC6D54800709871 /* PacketVersion.swift in Sources */,
 				3555D6872BC6D59800709871 /* PACKET.AC.REFUSE_LOGIN.swift in Sources */,
+				3555D6EC2BC6DDE500709871 /* SkillTreeCache.swift in Sources */,
 				3555D69A2BC6D59800709871 /* PACKET.HC.NOTIFY_ZONESVR.swift in Sources */,
+				3555D70F2BC6DDE500709871 /* NPC.swift in Sources */,
+				3555D71D2BC6DDE500709871 /* SkillUnitFlag.swift in Sources */,
+				3555D6EB2BC6DDE500709871 /* SkillCache.swift in Sources */,
+				3555D70E2BC6DDE500709871 /* MonsterSpawn.swift in Sources */,
 				35774F7A2B231FAF00438311 /* FileActivityItem.swift in Sources */,
+				3555D6F72BC6DDE500709871 /* ItemClass.swift in Sources */,
+				3555D6E92BC6DDE500709871 /* MonsterCache.swift in Sources */,
 				3514BF5B2B454A040065ED89 /* SkillGridCell.swift in Sources */,
 				3555D69F2BC6D59800709871 /* CharInfo.swift in Sources */,
 				3555D6A02BC6D59800709871 /* PACKET.swift in Sources */,
+				3555D6FB2BC6DDE500709871 /* ItemType.swift in Sources */,
+				3555D6F52BC6DDE500709871 /* WeaponType.swift in Sources */,
 				35239DFD2BBEF1C80039F7D5 /* ObservableSkillDatabase.swift in Sources */,
+				3555D7012BC6DDE500709871 /* JobStats.swift in Sources */,
 				3555D65C2BC6D54800709871 /* BinaryEncoder.swift in Sources */,
 				35F50CC92BB3FD5000B36455 /* LoginClient.swift in Sources */,
+				3555D6E82BC6DDE500709871 /* MapCache.swift in Sources */,
 				3555D68D2BC6D59800709871 /* PACKET.CH.DELETE_CHAR.swift in Sources */,
+				3555D70D2BC6DDE500709871 /* MapFlag.swift in Sources */,
 				356363672B3F303F00F7C249 /* ClientDatabase.swift in Sources */,
 				3555D68C2BC6D59800709871 /* PACKET.CH.DELETE_CHAR_RESERVED.swift in Sources */,
 				353B4F162B43F3BB00605E92 /* ClientResourceBundle.swift in Sources */,
 				3555D6612BC6D54800709871 /* PacketDecoder.swift in Sources */,
 				3555D6952BC6D59800709871 /* PACKET.HC.ACCEPT_DELETECHAR.swift in Sources */,
+				3555D7002BC6DDE500709871 /* JobExpStats.swift in Sources */,
 				356508D42B10A02D00543562 /* STRPreviewViewController.swift in Sources */,
+				3555D6F82BC6DDE500709871 /* ItemJob.swift in Sources */,
+				3555D6E72BC6DDE500709871 /* JobCache.swift in Sources */,
 				3555D69D2BC6D59800709871 /* PACKET.HC.REFUSE_MAKECHAR.swift in Sources */,
 				3555D6922BC6D59800709871 /* PACKET.CH.SELECT_CHAR.swift in Sources */,
 				35B695EC2A307164006F1904 /* GameScene.swift in Sources */,
@@ -898,6 +1171,7 @@
 				3555D6992BC6D59800709871 /* PACKET.HC.NOTIFY_ACCESSIBLE_MAPNAME.swift in Sources */,
 				3555D68E2BC6D59800709871 /* PACKET.CH.ENTER.swift in Sources */,
 				3552D8742B315D8F004831D0 /* TextFilePreviewViewController.swift in Sources */,
+				3555D71C2BC6DDE500709871 /* SkillType.swift in Sources */,
 				3555D69C2BC6D59800709871 /* PACKET.HC.REFUSE_ENTER.swift in Sources */,
 				356BF6822B04F54A005B67F7 /* ACTPreviewViewController.swift in Sources */,
 				3555D65D2BC6D54800709871 /* PacketEncoder.swift in Sources */,
@@ -906,59 +1180,100 @@
 				3514BF822B4801D70065ED89 /* JobDatabaseView.swift in Sources */,
 				3552D8762B316876004831D0 /* SPRPreviewViewController.swift in Sources */,
 				3555D68B2BC6D59800709871 /* PACKET.CH.DELETE_CHAR_CANCEL.swift in Sources */,
+				3555D6F62BC6DDE500709871 /* Item.swift in Sources */,
 				35239E052BC2D5D60039F7D5 /* ProgressHUD.swift in Sources */,
 				356BF6882B060243005B67F7 /* FilePreviewViewController.swift in Sources */,
 				3514BF622B4560730065ED89 /* MonsterInfoView.swift in Sources */,
 				3514BF5E2B4557950065ED89 /* MonsterDatabaseView.swift in Sources */,
+				3555D7082BC6DDE500709871 /* ListNode.swift in Sources */,
 				35B3BA1B2A08C01600B4540B /* AudioFilePreviewViewController.swift in Sources */,
 				3552D8782B3182A8004831D0 /* AnimatedImageActivityItem.swift in Sources */,
 				3555D6942BC6D59800709871 /* PACKET.CZ.PING.swift in Sources */,
+				3555D7052BC6DDE500709871 /* MonsterClass.swift in Sources */,
+				3555D71E2BC6DDE500709871 /* SkillUnitTargetType.swift in Sources */,
+				3555D6FE2BC6DDE500709871 /* JobBasePointsStats.swift in Sources */,
+				3555D6E62BC6DDE500709871 /* ItemCache.swift in Sources */,
+				3555D7172BC6DDE500709871 /* SkillHitType.swift in Sources */,
+				3555D7182BC6DDE500709871 /* SkillNoNearNPC.swift in Sources */,
+				3555D6ED2BC6DDE500709871 /* AmmoType.swift in Sources */,
+				3555D7102BC6DDE500709871 /* ShopNPC.swift in Sources */,
 				35652B452B960D2D0075AD71 /* MapGridCell.swift in Sources */,
 				3555D6932BC6D59800709871 /* PACKET.CZ.EXE_HASHCHECK.swift in Sources */,
+				3555D6EA2BC6DDE500709871 /* ScriptCache.swift in Sources */,
+				3555D6FA2BC6DDE500709871 /* ItemSubType.swift in Sources */,
+				3555D71B2BC6DDE500709871 /* SkillTree.swift in Sources */,
 				35239E012BC29A4E0039F7D5 /* ObservableItemDatabase.swift in Sources */,
 				35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */,
+				3555D7162BC6DDE500709871 /* SkillFlag.swift in Sources */,
 				3555D6982BC6D59800709871 /* PACKET.HC.DELETE_CHAR.swift in Sources */,
+				3555D6F02BC6DDE500709871 /* Gender.swift in Sources */,
 				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,
+				3555D7042BC6DDE500709871 /* MonsterAI.swift in Sources */,
+				3555D7142BC6DDE500709871 /* SkillCopyableOption.swift in Sources */,
 				3552D87A2B318323004831D0 /* StillImageActivityItem.swift in Sources */,
 				35239DFB2BBEEF890039F7D5 /* ObservableJobDatabase.swift in Sources */,
 				35B3BA1A2A08C01600B4540B /* FilesView.swift in Sources */,
+				3555D6EE2BC6DDE500709871 /* CardType.swift in Sources */,
 				3555D6602BC6D54800709871 /* PacketManager.swift in Sources */,
 				3582FFC82B8DB73B00E746D7 /* FileThumbnailView.swift in Sources */,
+				3555D7192BC6DDE500709871 /* SkillRequirement.swift in Sources */,
 				3555D69B2BC6D59800709871 /* PACKET.HC.REFUSE_DELETECHAR.swift in Sources */,
+				3555D7132BC6DDE500709871 /* SkillCastFlag.swift in Sources */,
+				3555D6F22BC6DDE500709871 /* Race.swift in Sources */,
 				3555D65E2BC6D54800709871 /* PacketProtocol.swift in Sources */,
 				35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */,
 				35239DF72BBDA0760039F7D5 /* LoadStatus.swift in Sources */,
 				35652B432B960D100075AD71 /* MapDatabaseView.swift in Sources */,
 				355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */,
 				3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */,
+				3555D6F42BC6DDE500709871 /* Size.swift in Sources */,
+				3555D6F12BC6DDE500709871 /* Parameter.swift in Sources */,
 				35B3BA192A08C01600B4540B /* ImageFilePreviewViewController.swift in Sources */,
 				3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */,
 				3555D68F2BC6D59800709871 /* PACKET.CH.EXE_HASHCHECK.swift in Sources */,
+				3555D7032BC6DDE500709871 /* Monster.swift in Sources */,
+				3555D70C2BC6DDE500709871 /* Function.swift in Sources */,
 				35239E032BC29F660039F7D5 /* EmptyContentView.swift in Sources */,
 				35652B472B960D370075AD71 /* MapInfoView.swift in Sources */,
 				3555D69E2BC6D59800709871 /* PACKET.SC.NOTIFY_BAN.swift in Sources */,
 				3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */,
 				3514BF7F2B47D64F0065ED89 /* Job+ResourceName.swift in Sources */,
+				3555D7072BC6DDE500709871 /* EitherNode.swift in Sources */,
 				353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */,
 				3555D6862BC6D59800709871 /* PACKET.AC.ACCEPT_LOGIN.swift in Sources */,
 				3514BF452B4526F40065ED89 /* ItemInfoView.swift in Sources */,
+				3555D6FD2BC6DDE500709871 /* JobASPDStats.swift in Sources */,
+				3555D6F92BC6DDE500709871 /* ItemLocation.swift in Sources */,
 				3555D6892BC6D59800709871 /* PACKET.CA.EXE_HASHCHECK.swift in Sources */,
+				3555D6FC2BC6DDE500709871 /* Job.swift in Sources */,
+				3555D70B2BC6DDE500709871 /* FloatingNPC.swift in Sources */,
+				3555D7062BC6DDE500709871 /* MonsterMode.swift in Sources */,
 				3511C1D92B0B05B3006DD639 /* GameViewController.swift in Sources */,
 				35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */,
 				35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */,
 				35239DFF2BBEF4510039F7D5 /* ObservableMapDatabase.swift in Sources */,
+				3555D7022BC6DDE500709871 /* Map.swift in Sources */,
 				355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */,
+				3555D70A2BC6DDE500709871 /* Duplicate.swift in Sources */,
 				3555D68A2BC6D59800709871 /* PACKET.CA.LOGIN.swift in Sources */,
 				350971C92BBAE50100A366E1 /* Data+String.swift in Sources */,
 				3511C1D12B0A535A006DD639 /* GATPreviewViewController.swift in Sources */,
+				3555D6FF2BC6DDE500709871 /* JobBasicStats.swift in Sources */,
+				3555D6EF2BC6DDE500709871 /* Element.swift in Sources */,
+				3555D7112BC6DDE500709871 /* WarpPoint.swift in Sources */,
 				353B4F1C2B451F1300605E92 /* ItemGridCell.swift in Sources */,
 				35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */,
 				3582FFCA2B8DB9FE00E746D7 /* FilePreviewPageView.swift in Sources */,
 				3555D6912BC6D59800709871 /* PACKET.CH.SELECT_ACCESSIBLE_MAPNAME.swift in Sources */,
 				356BF6842B04F569005B67F7 /* ImageCollectionViewCell.swift in Sources */,
 				3555D6962BC6D59800709871 /* PACKET.HC.ACCEPT_ENTER_NEO_UNION.swift in Sources */,
+				3555D6F32BC6DDE500709871 /* RaceGroup.swift in Sources */,
+				3555D71A2BC6DDE500709871 /* SkillTargetType.swift in Sources */,
+				3555D71F2BC6DDE500709871 /* Database.swift in Sources */,
 				35F50CCC2BB4615F00B36455 /* ConnectionTestView.swift in Sources */,
+				3555D7092BC6DDE500709871 /* PairsNode.swift in Sources */,
 				35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */,
+				3555D7152BC6DDE500709871 /* SkillDamageFlag.swift in Sources */,
 				353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */,
 				3555D6902BC6D59800709871 /* PACKET.CH.MAKE_CHAR.swift in Sources */,
 				3514BF842B4801E20065ED89 /* JobGridCell.swift in Sources */,
@@ -966,6 +1281,7 @@
 				3514BF602B455EF90065ED89 /* MonsterGridCell.swift in Sources */,
 				3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */,
 				35239DF92BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift in Sources */,
+				3555D7202BC6DDE500709871 /* ServerMode+DBPath.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1354,6 +1670,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = RagnarokOfflineSettings;
 		};
+		3555D7212BC6DE6600709871 /* rAthenaRyml */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = rAthenaRyml;
+		};
 		3555E12E2B7D2268007CE4BA /* rAthenaChar */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = rAthenaChar;
@@ -1361,10 +1681,6 @@
 		3555E1312B7D2268007CE4BA /* rAthenaCommon */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = rAthenaCommon;
-		};
-		3555E1332B7D2268007CE4BA /* rAthenaDatabase */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = rAthenaDatabase;
 		};
 		3555E1352B7D2268007CE4BA /* rAthenaLogin */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -7,7 +7,6 @@
 //
 
 import Combine
-import rAthenaDatabase
 
 @MainActor
 class ObservableJobDatabase: ObservableObject {

@@ -8,7 +8,6 @@
 
 import CoreGraphics
 import Foundation
-import rAthenaDatabase
 import RagnarokOfflineFileFormats
 import RagnarokOfflineFileSystem
 import RagnarokOfflineGraphics

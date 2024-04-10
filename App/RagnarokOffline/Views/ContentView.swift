@@ -8,7 +8,6 @@
 
 import SwiftUI
 import rAthenaResource
-import rAthenaDatabase
 import rAthenaLogin
 import rAthenaChar
 import rAthenaMap
