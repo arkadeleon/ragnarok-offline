@@ -20,6 +20,19 @@
 		3514BF842B4801E20065ED89 /* JobGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF832B4801E20065ED89 /* JobGridCell.swift */; };
 		3514BF862B4801EB0065ED89 /* JobInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF852B4801EB0065ED89 /* JobInfoView.swift */; };
 		3514BF892B48642B0065ED89 /* Terminal in Frameworks */ = {isa = PBXBuildFile; productRef = 3514BF882B48642B0065ED89 /* Terminal */; };
+		3519900E2BC837000082EB0E /* ragnarok-offline in Resources */ = {isa = PBXBuildFile; fileRef = 3519900A2BC837000082EB0E /* ragnarok-offline */; };
+		3519900F2BC837000082EB0E /* swift-lua in Resources */ = {isa = PBXBuildFile; fileRef = 3519900B2BC837000082EB0E /* swift-lua */; };
+		351990102BC837000082EB0E /* swift-rathena in Resources */ = {isa = PBXBuildFile; fileRef = 3519900C2BC837000082EB0E /* swift-rathena */; };
+		351990122BC837320082EB0E /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 351990112BC837320082EB0E /* rAthenaChar */; };
+		351990132BC837320082EB0E /* rAthenaChar in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 351990112BC837320082EB0E /* rAthenaChar */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		351990152BC837320082EB0E /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 351990142BC837320082EB0E /* rAthenaCommon */; };
+		351990172BC837320082EB0E /* rAthenaLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 351990162BC837320082EB0E /* rAthenaLogin */; };
+		351990182BC837320082EB0E /* rAthenaLogin in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 351990162BC837320082EB0E /* rAthenaLogin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3519901A2BC837320082EB0E /* rAthenaMap in Frameworks */ = {isa = PBXBuildFile; productRef = 351990192BC837320082EB0E /* rAthenaMap */; };
+		3519901B2BC837320082EB0E /* rAthenaMap in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 351990192BC837320082EB0E /* rAthenaMap */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3519901D2BC837320082EB0E /* rAthenaResource in Frameworks */ = {isa = PBXBuildFile; productRef = 3519901C2BC837320082EB0E /* rAthenaResource */; };
+		3519901F2BC837320082EB0E /* rAthenaWeb in Frameworks */ = {isa = PBXBuildFile; productRef = 3519901E2BC837320082EB0E /* rAthenaWeb */; };
+		351990202BC837320082EB0E /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3519901E2BC837320082EB0E /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */; };
 		35239DF72BBDA0760039F7D5 /* LoadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF62BBDA0760039F7D5 /* LoadStatus.swift */; };
 		35239DF92BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF82BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift */; };
@@ -40,16 +53,6 @@
 		3552D87A2B318323004831D0 /* StillImageActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8792B318323004831D0 /* StillImageActivityItem.swift */; };
 		3555D7222BC6DE6600709871 /* rAthenaRyml in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D7212BC6DE6600709871 /* rAthenaRyml */; };
 		3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555E1162B7D12D9007CE4BA /* TerminalView.swift */; };
-		3555E12F2B7D2268007CE4BA /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E12E2B7D2268007CE4BA /* rAthenaChar */; };
-		3555E1302B7D2268007CE4BA /* rAthenaChar in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3555E12E2B7D2268007CE4BA /* rAthenaChar */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		3555E1322B7D2268007CE4BA /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E1312B7D2268007CE4BA /* rAthenaCommon */; };
-		3555E1362B7D2268007CE4BA /* rAthenaLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E1352B7D2268007CE4BA /* rAthenaLogin */; };
-		3555E1372B7D2268007CE4BA /* rAthenaLogin in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3555E1352B7D2268007CE4BA /* rAthenaLogin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		3555E1392B7D2268007CE4BA /* rAthenaMap in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E1382B7D2268007CE4BA /* rAthenaMap */; };
-		3555E13A2B7D2268007CE4BA /* rAthenaMap in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3555E1382B7D2268007CE4BA /* rAthenaMap */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		3555E13E2B7D2268007CE4BA /* rAthenaResource in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E13D2B7D2268007CE4BA /* rAthenaResource */; };
-		3555E1402B7D2268007CE4BA /* rAthenaWeb in Frameworks */ = {isa = PBXBuildFile; productRef = 3555E13F2B7D2268007CE4BA /* rAthenaWeb */; };
-		3555E1412B7D2268007CE4BA /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3555E13F2B7D2268007CE4BA /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC18B2B8F25C0002F0586 /* WebView.swift */; };
 		355BC18E2B8F2890002F0586 /* FileRawDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC18D2B8F2890002F0586 /* FileRawDataView.swift */; };
 		355BC1902B8F4E0D002F0586 /* json-viewer in Resources */ = {isa = PBXBuildFile; fileRef = 355BC18F2B8F4E0D002F0586 /* json-viewer */; };
@@ -102,10 +105,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3555E13A2B7D2268007CE4BA /* rAthenaMap in Embed Frameworks */,
-				3555E1372B7D2268007CE4BA /* rAthenaLogin in Embed Frameworks */,
-				3555E1302B7D2268007CE4BA /* rAthenaChar in Embed Frameworks */,
-				3555E1412B7D2268007CE4BA /* rAthenaWeb in Embed Frameworks */,
+				3519901B2BC837320082EB0E /* rAthenaMap in Embed Frameworks */,
+				351990182BC837320082EB0E /* rAthenaLogin in Embed Frameworks */,
+				351990132BC837320082EB0E /* rAthenaChar in Embed Frameworks */,
+				351990202BC837320082EB0E /* rAthenaWeb in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -125,6 +128,9 @@
 		3514BF812B4801D70065ED89 /* JobDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDatabaseView.swift; sourceTree = "<group>"; };
 		3514BF832B4801E20065ED89 /* JobGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobGridCell.swift; sourceTree = "<group>"; };
 		3514BF852B4801EB0065ED89 /* JobInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInfoView.swift; sourceTree = "<group>"; };
+		3519900A2BC837000082EB0E /* ragnarok-offline */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "ragnarok-offline"; sourceTree = "<group>"; };
+		3519900B2BC837000082EB0E /* swift-lua */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "swift-lua"; sourceTree = "<group>"; };
+		3519900C2BC837000082EB0E /* swift-rathena */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "swift-rathena"; sourceTree = "<group>"; };
 		35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableServer.swift; sourceTree = "<group>"; };
 		35239DF62BBDA0760039F7D5 /* LoadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadStatus.swift; sourceTree = "<group>"; };
 		35239DF82BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMonsterDatabase.swift; sourceTree = "<group>"; };
@@ -143,10 +149,7 @@
 		3552D8752B316876004831D0 /* SPRPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPRPreviewViewController.swift; sourceTree = "<group>"; };
 		3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImageActivityItem.swift; sourceTree = "<group>"; };
 		3552D8792B318323004831D0 /* StillImageActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillImageActivityItem.swift; sourceTree = "<group>"; };
-		3555D6352BC65ACB00709871 /* ragnarok-offline */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "ragnarok-offline"; path = ..; sourceTree = "<group>"; };
-		3555D7232BC6EB9500709871 /* swift-lua */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-lua"; path = "../swift-lua"; sourceTree = "<group>"; };
 		3555E1162B7D12D9007CE4BA /* TerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
-		3555E12D2B7D2251007CE4BA /* swift-rathena */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-rathena"; path = "../swift-rathena"; sourceTree = "<group>"; };
 		355BC18B2B8F25C0002F0586 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		355BC18D2B8F2890002F0586 /* FileRawDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileRawDataView.swift; sourceTree = "<group>"; };
 		355BC18F2B8F4E0D002F0586 /* json-viewer */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "json-viewer"; sourceTree = "<group>"; };
@@ -190,24 +193,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3519901F2BC837320082EB0E /* rAthenaWeb in Frameworks */,
+				351990122BC837320082EB0E /* rAthenaChar in Frameworks */,
 				358D4C732BC7707400FAF45D /* ROShaders in Frameworks */,
-				3555E1402B7D2268007CE4BA /* rAthenaWeb in Frameworks */,
 				3555D7222BC6DE6600709871 /* rAthenaRyml in Frameworks */,
 				358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */,
 				358D4C6B2BC7707400FAF45D /* ROGraphics in Frameworks */,
 				358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */,
 				358D4C652BC7707400FAF45D /* ROCrypto in Frameworks */,
-				3555E12F2B7D2268007CE4BA /* rAthenaChar in Frameworks */,
-				3555E1362B7D2268007CE4BA /* rAthenaLogin in Frameworks */,
+				351990152BC837320082EB0E /* rAthenaCommon in Frameworks */,
+				351990172BC837320082EB0E /* rAthenaLogin in Frameworks */,
 				358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */,
 				358D4C692BC7707400FAF45D /* ROFileSystem in Frameworks */,
-				3555E1392B7D2268007CE4BA /* rAthenaMap in Frameworks */,
-				3555E1322B7D2268007CE4BA /* rAthenaCommon in Frameworks */,
 				353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */,
 				358D4C712BC7707400FAF45D /* ROSettings in Frameworks */,
+				3519901A2BC837320082EB0E /* rAthenaMap in Frameworks */,
+				3519901D2BC837320082EB0E /* rAthenaResource in Frameworks */,
 				3514BF892B48642B0065ED89 /* Terminal in Frameworks */,
 				358D4C752BC7707400FAF45D /* ROStream in Frameworks */,
-				3555E13E2B7D2268007CE4BA /* rAthenaResource in Frameworks */,
 				358D4C612BC6EBB500FAF45D /* Lua in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -257,6 +260,16 @@
 				35239DFA2BBEEF890039F7D5 /* ObservableJobDatabase.swift */,
 			);
 			path = Job;
+			sourceTree = "<group>";
+		};
+		3519900D2BC837000082EB0E /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				3519900A2BC837000082EB0E /* ragnarok-offline */,
+				3519900B2BC837000082EB0E /* swift-lua */,
+				3519900C2BC837000082EB0E /* swift-rathena */,
+			);
+			path = Packages;
 			sourceTree = "<group>";
 		};
 		35270D252A5FE9470001A8BD /* Frameworks */ = {
@@ -362,10 +375,8 @@
 		35B3B8CB2A08BEA600B4540B = {
 			isa = PBXGroup;
 			children = (
-				3555D7232BC6EB9500709871 /* swift-lua */,
-				3555E12D2B7D2251007CE4BA /* swift-rathena */,
-				3555D6352BC65ACB00709871 /* ragnarok-offline */,
 				35B3B8D62A08BEA600B4540B /* RagnarokOffline */,
+				3519900D2BC837000082EB0E /* Packages */,
 				35B3B8D52A08BEA600B4540B /* Products */,
 				35270D252A5FE9470001A8BD /* Frameworks */,
 			);
@@ -462,12 +473,6 @@
 			name = RagnarokOffline;
 			packageProductDependencies = (
 				3514BF882B48642B0065ED89 /* Terminal */,
-				3555E12E2B7D2268007CE4BA /* rAthenaChar */,
-				3555E1312B7D2268007CE4BA /* rAthenaCommon */,
-				3555E1352B7D2268007CE4BA /* rAthenaLogin */,
-				3555E1382B7D2268007CE4BA /* rAthenaMap */,
-				3555E13D2B7D2268007CE4BA /* rAthenaResource */,
-				3555E13F2B7D2268007CE4BA /* rAthenaWeb */,
 				3555D7212BC6DE6600709871 /* rAthenaRyml */,
 				358D4C602BC6EBB500FAF45D /* Lua */,
 				358D4C642BC7707400FAF45D /* ROCrypto */,
@@ -480,6 +485,12 @@
 				358D4C722BC7707400FAF45D /* ROShaders */,
 				358D4C742BC7707400FAF45D /* ROStream */,
 				353AFBDB2BC779BE00F613A8 /* RODatabase */,
+				351990112BC837320082EB0E /* rAthenaChar */,
+				351990142BC837320082EB0E /* rAthenaCommon */,
+				351990162BC837320082EB0E /* rAthenaLogin */,
+				351990192BC837320082EB0E /* rAthenaMap */,
+				3519901C2BC837320082EB0E /* rAthenaResource */,
+				3519901E2BC837320082EB0E /* rAthenaWeb */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -528,9 +539,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				35B3B8DF2A08BEA700B4540B /* Preview Assets.xcassets in Resources */,
+				3519900F2BC837000082EB0E /* swift-lua in Resources */,
 				35B3B9FA2A08C01600B4540B /* wall.jpg in Resources */,
 				35B3B8DC2A08BEA700B4540B /* Assets.xcassets in Resources */,
 				355BC1902B8F4E0D002F0586 /* json-viewer in Resources */,
+				351990102BC837000082EB0E /* swift-rathena in Resources */,
+				3519900E2BC837000082EB0E /* ragnarok-offline in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -828,6 +842,30 @@
 			package = 3514BF872B48642B0065ED89 /* XCRemoteSwiftPackageReference "Terminal" */;
 			productName = Terminal;
 		};
+		351990112BC837320082EB0E /* rAthenaChar */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = rAthenaChar;
+		};
+		351990142BC837320082EB0E /* rAthenaCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = rAthenaCommon;
+		};
+		351990162BC837320082EB0E /* rAthenaLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = rAthenaLogin;
+		};
+		351990192BC837320082EB0E /* rAthenaMap */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = rAthenaMap;
+		};
+		3519901C2BC837320082EB0E /* rAthenaResource */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = rAthenaResource;
+		};
+		3519901E2BC837320082EB0E /* rAthenaWeb */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = rAthenaWeb;
+		};
 		353AFBDB2BC779BE00F613A8 /* RODatabase */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RODatabase;
@@ -835,30 +873,6 @@
 		3555D7212BC6DE6600709871 /* rAthenaRyml */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = rAthenaRyml;
-		};
-		3555E12E2B7D2268007CE4BA /* rAthenaChar */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = rAthenaChar;
-		};
-		3555E1312B7D2268007CE4BA /* rAthenaCommon */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = rAthenaCommon;
-		};
-		3555E1352B7D2268007CE4BA /* rAthenaLogin */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = rAthenaLogin;
-		};
-		3555E1382B7D2268007CE4BA /* rAthenaMap */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = rAthenaMap;
-		};
-		3555E13D2B7D2268007CE4BA /* rAthenaResource */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = rAthenaResource;
-		};
-		3555E13F2B7D2268007CE4BA /* rAthenaWeb */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = rAthenaWeb;
 		};
 		358D4C602BC6EBB500FAF45D /* Lua */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -1,6 +1,6 @@
-[submodule "swift-lua"]
-	path = swift-lua
+[submodule "Packages/swift-lua"]
+	path = Packages/swift-lua
 	url = https://github.com/arkadeleon/swift-lua.git
-[submodule "swift-rathena"]
-	path = swift-rathena
+[submodule "Packages/swift-rathena"]
+	path = Packages/swift-rathena
 	url = https://github.com/arkadeleon/swift-rathena.git
