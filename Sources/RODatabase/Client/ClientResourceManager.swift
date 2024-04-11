@@ -10,10 +10,10 @@ import CoreGraphics
 import rAthenaCommon
 import ROFileFormats
 
-class ClientResourceManager {
-    static let shared = ClientResourceManager()
+public class ClientResourceManager {
+    public static let shared = ClientResourceManager()
 
-    func monsterImage(_ monsterID: Int) async -> CGImage? {
+    public func monsterImage(_ monsterID: Int) async -> CGImage? {
         guard let resourceName = ClientDatabase.shared.monsterResourceName(monsterID) else {
             return nil
         }
@@ -43,7 +43,7 @@ class ClientResourceManager {
         }
     }
 
-    func jobImage(gender: Gender, job: Job) async -> CGImage? {
+    public func jobImage(gender: Gender, job: Job) async -> CGImage? {
         let bodyFile = ClientResourceBundle.shared.bodySpriteFile(forGender: gender, job: job)
 
         guard let sprData = bodyFile.spr.contents(), let actData = bodyFile.act.contents() else {

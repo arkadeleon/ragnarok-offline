@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import RODatabase
 
 struct SkillGridCell: View {
     let database: Database

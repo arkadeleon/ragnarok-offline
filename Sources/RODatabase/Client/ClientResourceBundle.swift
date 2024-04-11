@@ -12,47 +12,47 @@ import ROFileFormats
 import ROFileSystem
 import ROGraphics
 
-class ClientResourceBundle {
-    static let shared = ClientResourceBundle()
+public class ClientResourceBundle {
+    public static let shared = ClientResourceBundle()
 
-    let url: URL
+    public let url: URL
 
-    let grf: GRFWrapper
+    public let grf: GRFWrapper
 
     private let cache = NSCache<NSString, CGImage>()
 
-    init() {
+    public init() {
         url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         grf = GRFWrapper(url: url.appendingPathComponent("data.grf"))
     }
 
     // MARK: - data
 
-    func mapNameTableFile() -> File {
+    public func mapNameTableFile() -> File {
         let path = GRF.Path(string: "data\\mapnametable.txt")
         let file = File.grfEntry(grf, path)
         return file
     }
 
-    func identifiedItemDisplayNameTable() -> File {
+    public func identifiedItemDisplayNameTable() -> File {
         let path = GRF.Path(string: "data\\idnum2itemdisplaynametable.txt")
         let file = File.grfEntry(grf, path)
         return file
     }
 
-    func identifiedItemResourceNameTable() -> File {
+    public func identifiedItemResourceNameTable() -> File {
         let path = GRF.Path(string: "data\\idnum2itemresnametable.txt")
         let file = File.grfEntry(grf, path)
         return file
     }
 
-    func identifiedItemDescriptionTable() -> File {
+    public func identifiedItemDescriptionTable() -> File {
         let path = GRF.Path(string: "data\\idnum2itemdesctable.txt")
         let file = File.grfEntry(grf, path)
         return file
     }
 
-    func rswFile(forMap map: Map) -> File {
+    public func rswFile(forMap map: Map) -> File {
         let path = GRF.Path(string: "data\\\(map.name).rsw")
         let file = File.grfEntry(grf, path)
         return file
@@ -60,7 +60,7 @@ class ClientResourceBundle {
 
     // MARK: - data\palette
 
-    func headPaletteFile(forGender gender: Gender, hairID: Int, paletteID: Int) -> File {
+    public func headPaletteFile(forGender gender: Gender, hairID: Int, paletteID: Int) -> File {
         let palPath = GRF.Path(string: "data\\palette\\머리\\머리\(hairID)_\(gender.resourceName)_\(paletteID).pal")
         let palFile = File.grfEntry(grf, palPath)
         return palFile
@@ -68,7 +68,7 @@ class ClientResourceBundle {
 
     // MARK: - data\sprite
 
-    func itemSpriteFile(forResourceName resourceName: String) -> (spr: File, act: File) {
+    public func itemSpriteFile(forResourceName resourceName: String) -> (spr: File, act: File) {
         let sprPath = GRF.Path(string: "data\\sprite\\아이템\\\(resourceName).spr")
         let sprFile = File.grfEntry(grf, sprPath)
 
@@ -78,7 +78,7 @@ class ClientResourceBundle {
         return (spr: sprFile, act: actFile)
     }
 
-    func monsterSpriteFile(forResourceName resourceName: String) -> (spr: File, act: File) {
+    public func monsterSpriteFile(forResourceName resourceName: String) -> (spr: File, act: File) {
         let sprPath = GRF.Path(string: "data\\sprite\\몬스터\\\(resourceName).spr")
         let sprFile = File.grfEntry(grf, sprPath)
 
@@ -88,7 +88,7 @@ class ClientResourceBundle {
         return (spr: sprFile, act: actFile)
     }
 
-    func bodySpriteFile(forGender gender: Gender, job: Job) -> (spr: File, act: File) {
+    public func bodySpriteFile(forGender gender: Gender, job: Job) -> (spr: File, act: File) {
         let sprPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(gender.resourceName)\\\(job.resourceName)_\(gender.resourceName).spr")
         let sprFile = File.grfEntry(grf, sprPath)
 
@@ -98,7 +98,7 @@ class ClientResourceBundle {
         return (spr: sprFile, act: actFile)
     }
 
-    func headSpriteFile(forGender gender: Gender, hairID: Int) -> (spr: File, act: File) {
+    public func headSpriteFile(forGender gender: Gender, hairID: Int) -> (spr: File, act: File) {
         let sprPath = GRF.Path(string: "data\\sprite\\인간족\\머리통\\\(gender.resourceName)\\\(hairID)_\(gender.resourceName).spr")
         let sprFile = File.grfEntry(grf, sprPath)
 
@@ -108,7 +108,7 @@ class ClientResourceBundle {
         return (spr: sprFile, act: actFile)
     }
 
-    func skillSpriteFile(forResourceName resourceName: String) -> (spr: File, act: File) {
+    public func skillSpriteFile(forResourceName resourceName: String) -> (spr: File, act: File) {
         let sprPath = GRF.Path(string: "data\\sprite\\아이템\\\(resourceName).spr")
         let sprFile = File.grfEntry(grf, sprPath)
 
@@ -120,7 +120,7 @@ class ClientResourceBundle {
 
     // MARK: - data\texture
 
-    func itemIconImage(forItem item: Item) async -> CGImage? {
+    public func itemIconImage(forItem item: Item) async -> CGImage? {
         guard let resourceName = ClientDatabase.shared.identifiedItemResourceName(item.id) else {
             return nil
         }
@@ -130,7 +130,7 @@ class ClientResourceBundle {
         return image
     }
 
-    func itemPreviewImage(forItem item: Item) async -> CGImage? {
+    public func itemPreviewImage(forItem item: Item) async -> CGImage? {
         guard let resourceName = ClientDatabase.shared.identifiedItemResourceName(item.id) else {
             return nil
         }
@@ -140,13 +140,13 @@ class ClientResourceBundle {
         return image
     }
 
-    func skillIconImage(forSkill skill: Skill) async -> CGImage? {
+    public func skillIconImage(forSkill skill: Skill) async -> CGImage? {
         let path = GRF.Path(string: "data\\texture\\유저인터페이스\\item\\\(skill.aegisName).bmp")
         let image = await image(forBMPPath: path)
         return image
     }
 
-    func mapImage(forMap map: Map) async -> CGImage? {
+    public func mapImage(forMap map: Map) async -> CGImage? {
         let path = GRF.Path(string: "data\\texture\\유저인터페이스\\map\\\(map.name).bmp")
         let image = await image(forBMPPath: path)
         return image

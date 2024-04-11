@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import RODatabase
 
 struct MapGridCell: View {
     let database: Database

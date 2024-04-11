@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import RODatabase
 
 struct ItemGridCell: View {
     let database: Database

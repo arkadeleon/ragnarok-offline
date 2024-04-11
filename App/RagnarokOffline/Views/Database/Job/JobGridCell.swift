@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import RODatabase
 
 struct JobGridCell: View {
     let database: Database

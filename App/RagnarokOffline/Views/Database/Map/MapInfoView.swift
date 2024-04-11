@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import RODatabase
 
 struct MapInfoView: View {
     let database: Database

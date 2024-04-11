@@ -13,6 +13,9 @@ let package = Package(
             name: "ROCrypto",
             targets: ["ROCrypto"]),
         .library(
+            name: "RODatabase",
+            targets: ["RODatabase"]),
+        .library(
             name: "ROFileFormats",
             targets: ["ROFileFormats"]),
         .library(
@@ -39,11 +42,27 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/mw99/DataCompression.git", from: "3.8.0"),
+        .package(path: "swift-lua"),
         .package(path: "swift-rathena"),
     ],
     targets: [
         .target(
             name: "ROCrypto"),
+        .target(
+            name: "RODatabase",
+            dependencies: [
+                .product(name: "Lua", package: "swift-lua"),
+                .product(name: "rAthenaCommon", package: "swift-rathena"),
+                .product(name: "rAthenaResource", package: "swift-rathena"),
+                .product(name: "rAthenaRyml", package: "swift-rathena"),
+                "ROFileFormats",
+                "ROFileSystem",
+                "ROGraphics",
+                "ROSettings",
+            ],
+            swiftSettings: [
+                .interoperabilityMode(.Cxx),
+            ]),
         .target(
             name: "ROFileFormats",
             dependencies: [

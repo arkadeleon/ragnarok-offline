@@ -24,7 +24,3 @@ struct FileGridCell: View {
         }
     }
 }
-
-#Preview {
-    FileGridCell(file: .directory(ClientResourceBundle.shared.url))
-}

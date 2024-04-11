@@ -11,8 +11,8 @@ import Lua
 import ROFileFormats
 import ROSettings
 
-class ClientDatabase {
-    static let shared = ClientDatabase()
+public class ClientDatabase {
+    public static let shared = ClientDatabase()
 
     private let context = LuaContext()
 
@@ -32,7 +32,7 @@ class ClientDatabase {
 
     // MARK: - Item
 
-    func identifiedItemDisplayName(_ itemID: Int) -> String? {
+    public func identifiedItemDisplayName(_ itemID: Int) -> String? {
         objc_sync_enter(self)
         defer {
             objc_sync_exit(self)
@@ -58,7 +58,7 @@ class ClientDatabase {
         }
     }
 
-    func identifiedItemResourceName(_ itemID: Int) -> String? {
+    public func identifiedItemResourceName(_ itemID: Int) -> String? {
         objc_sync_enter(self)
         defer {
             objc_sync_exit(self)
@@ -82,7 +82,7 @@ class ClientDatabase {
         }
     }
 
-    func identifiedItemDescription(_ itemID: Int) -> String? {
+    public func identifiedItemDescription(_ itemID: Int) -> String? {
         objc_sync_enter(self)
         defer {
             objc_sync_exit(self)
@@ -246,7 +246,7 @@ class ClientDatabase {
 
     // MARK: - Monster
 
-    func monsterResourceName(_ monsterID: Int) -> String? {
+    public func monsterResourceName(_ monsterID: Int) -> String? {
         objc_sync_enter(self)
         defer {
             objc_sync_exit(self)
@@ -284,7 +284,7 @@ class ClientDatabase {
 
     // MARK: - Skill
 
-    func skillDisplayName(_ skillID: Int) -> String? {
+    public func skillDisplayName(_ skillID: Int) -> String? {
         objc_sync_enter(self)
         defer {
             objc_sync_exit(self)
@@ -301,7 +301,7 @@ class ClientDatabase {
         return skillName
     }
 
-    func skillDescription(_ skillID: Int) -> String? {
+    public func skillDescription(_ skillID: Int) -> String? {
         objc_sync_enter(self)
         defer {
             objc_sync_exit(self)
@@ -361,7 +361,7 @@ class ClientDatabase {
 
     // MARK: - Map
 
-    func mapDisplayName(_ mapName: String) -> String? {
+    public func mapDisplayName(_ mapName: String) -> String? {
         try? loadMapNameTableIfNeeded()
 
         let encoding = ClientSettings.shared.serviceType.stringEncoding

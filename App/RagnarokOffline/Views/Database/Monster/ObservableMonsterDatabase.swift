@@ -7,6 +7,7 @@
 //
 
 import Combine
+import RODatabase
 
 @MainActor
 class ObservableMonsterDatabase: ObservableObject {

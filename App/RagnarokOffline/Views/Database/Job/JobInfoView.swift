@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import RODatabase
 
 struct JobInfoView: View {
     let database: Database

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import RODatabase
 
 struct ItemInfoView: View {
     let database: Database

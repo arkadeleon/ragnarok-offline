@@ -12,6 +12,7 @@ import rAthenaLogin
 import rAthenaChar
 import rAthenaMap
 import rAthenaWeb
+import RODatabase
 
 struct ContentView: View {
     @StateObject private var loginServer = ObservableServer(server: LoginServer.shared)
