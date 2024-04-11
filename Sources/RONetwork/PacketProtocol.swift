@@ -8,13 +8,11 @@
 public protocol PacketProtocol {
     static var packetType: UInt16 { get }
 
-    var packetName: String { get }
-
     var packetLength: UInt16 { get }
 }
 
 extension PacketProtocol {
-    var packetType: UInt16 {
+    public var packetType: UInt16 {
         Self.packetType
     }
 }

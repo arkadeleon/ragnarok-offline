@@ -48,7 +48,7 @@ public class LoginClient {
     }
 
     public func login(username: String, password: String) throws {
-        var login = PACKET.CA.LOGIN()
+        var login = PACKET_CA_LOGIN()
         login.username = username
         login.password = password
 
@@ -66,11 +66,11 @@ public class LoginClient {
                 do {
                     let packet = try decoder.decode(from: content)
                     switch packet {
-                    case let acceptLogin as PACKET.AC.ACCEPT_LOGIN:
+                    case let acceptLogin as PACKET_AC_ACCEPT_LOGIN:
                         onAcceptLogin?()
-                    case let refuseLogin as PACKET.AC.REFUSE_LOGIN:
+                    case let refuseLogin as PACKET_AC_REFUSE_LOGIN:
                         onRefuseLogin?()
-                    case let notifyBan as PACKET.SC.NOTIFY_BAN:
+                    case let notifyBan as PACKET_SC_NOTIFY_BAN:
                         onNotifyBan?()
                     default:
                         break

@@ -9,37 +9,45 @@ public class PacketManager {
     public static let shared = PacketManager()
 
     public let decodablePackets: [any DecodablePacket.Type] = [
-        PACKET.AC.ACCEPT_LOGIN.self,                // 0x69, 0xac4
-        PACKET.AC.REFUSE_LOGIN.self,                // 0x6a, 0x83e
+        /// Login Server -> Client
+        PACKET_AC_ACCEPT_LOGIN.self,                // 0x69, 0xac4
+        PACKET_AC_REFUSE_LOGIN.self,                // 0x6a, 0x83e
 
-        PACKET.HC.ACCEPT_ENTER_NEO_UNION.self,      // 0x6b
-        PACKET.HC.REFUSE_ENTER.self,                // 0x6c
-        PACKET.HC.ACCEPT_MAKECHAR.self,             // 0b6d
-        PACKET.HC.REFUSE_MAKECHAR.self,             // 0x6e
-        PACKET.HC.ACCEPT_DELETECHAR.self,           // 0x6f
-        PACKET.HC.REFUSE_DELETECHAR.self,           // 0x70
-        PACKET.HC.NOTIFY_ZONESVR.self,              // 0x71, 0xac5
-        PACKET.HC.DELETE_CHAR.self,                 // 0x82a
-        PACKET.HC.NOTIFY_ACCESSIBLE_MAPNAME.self,   // 0x840
+        /// Char Server -> Client
+        PACKET_HC_ACCEPT_ENTER_NEO_UNION.self,      // 0x6b
+        PACKET_HC_REFUSE_ENTER.self,                // 0x6c
+        PACKET_HC_ACCEPT_MAKECHAR_NEO_UNION.self,             // 0b6d
+        PACKET_HC_REFUSE_MAKECHAR.self,             // 0x6e
+        PACKET_HC_ACCEPT_DELETECHAR.self,           // 0x6f
+        PACKET_HC_REFUSE_DELETECHAR.self,           // 0x70
+        PACKET_HC_NOTIFY_ZONESVR.self,              // 0x71, 0xac5
+        PACKET_HC_DELETE_CHAR.self,                 // 0x82a
+        PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self,   // 0x840
 
-        PACKET.SC.NOTIFY_BAN.self,                  // 0x81
+        /// Map Server -> Client
+
+        /// All Servers -> Client
+        PACKET_SC_NOTIFY_BAN.self,                  // 0x81
     ]
 
     public let encodablePackets: [any EncodablePacket.Type] = [
-        PACKET.CA.LOGIN.self,                       // 0x64
-        PACKET.CA.CONNECT_INFO_CHANGE.self,         // 0x200
-        PACKET.CA.EXE_HASHCHECK.self,               // 0x204
+        /// Client -> Login Server
+        PACKET_CA_LOGIN.self,                       // 0x64
+        PACKET_CA_CONNECT_INFO_CHANGED.self,        // 0x200
+        PACKET_CA_EXE_HASHCHECK.self,               // 0x204
 
-        PACKET.CH.ENTER.self,                       // 0x65
-        PACKET.CH.SELECT_CHAR.self,                 // 0x66
-        PACKET.CH.MAKE_CHAR.self,                   // 0x67, 0x970, 0xa39
-        PACKET.CH.DELETE_CHAR.self,                 // 0x68, 0x1fb
-        PACKET.CH.EXE_HASHCHECK.self,               // 0x20b
-        PACKET.CH.DELETE_CHAR_RESERVED.self,        // 0x827
-        PACKET.CH.DELETE_CHAR_CANCEL.self,          // 0x82b
-        PACKET.CH.SELECT_ACCESSIBLE_MAPNAME.self,   // 0x841
+        /// Client -> Char Server
+        PACKET_CH_ENTER.self,                       // 0x65
+        PACKET_CH_SELECT_CHAR.self,                 // 0x66
+        PACKET_CH_MAKE_CHAR.self,                   // 0x67, 0x970, 0xa39
+        PACKET_CH_DELETE_CHAR.self,                 // 0x68, 0x1fb
+        PACKET_CH_DELETE_CHAR_RESERVED.self,        // 0x827
+        PACKET_CH_DELETE_CHAR_CANCEL.self,          // 0x82b
+        PACKET_CH_SELECT_ACCESSIBLE_MAPNAME.self,   // 0x841
 
-        PACKET.CZ.PING.self,                        // 0x187
-        PACKET.CZ.EXE_HASHCHECK.self,               // 0x20c
+        /// Client -> Map Server
+        PACKET_CZ_PING.self,                        // 0x187
+
+        /// Client -> All Servers
     ]
 }
