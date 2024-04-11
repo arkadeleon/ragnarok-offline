@@ -3,7 +3,6 @@
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/8.
-//  Copyright © 2024 Leon & Vane. All rights reserved.
 //
 
 extension Gender {

@@ -381,23 +381,6 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
-		35774F692B20587900438311 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				355BC18A2B8F25A6002F0586 /* Core */,
-				35B3B9892A08C01600B4540B /* Files */,
-				353098412B161C3800F32B62 /* FilePreview */,
-				353098332B14EAE600F32B62 /* FileRawData */,
-				35F50CCA2BB4614100B36455 /* ConnectionTest */,
-				35B3B96E2A08C01600B4540B /* Game */,
-				35A2ABBA2B3AC69F0026DAC2 /* Server */,
-				353B4F0E2B43AEC000605E92 /* Database */,
-				3582FFC42B8C820E00E746D7 /* Settings */,
-				35B3B8D92A08BEA600B4540B /* ContentView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		3582FFC42B8C820E00E746D7 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -443,7 +426,16 @@
 			isa = PBXGroup;
 			children = (
 				35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */,
-				35774F692B20587900438311 /* Views */,
+				35B3B8D92A08BEA600B4540B /* ContentView.swift */,
+				355BC18A2B8F25A6002F0586 /* Core */,
+				35B3B9892A08C01600B4540B /* Files */,
+				353098412B161C3800F32B62 /* FilePreview */,
+				353098332B14EAE600F32B62 /* FileRawData */,
+				35F50CCA2BB4614100B36455 /* ConnectionTest */,
+				35B3B96E2A08C01600B4540B /* Game */,
+				35A2ABBA2B3AC69F0026DAC2 /* Server */,
+				353B4F0E2B43AEC000605E92 /* Database */,
+				3582FFC42B8C820E00E746D7 /* Settings */,
 				3555D6492BC66CF000709871 /* ActivityItems */,
 				35B3BA422A08C51000B4540B /* RagnarokOffline-Bridging-Header.h */,
 				35270D2B2A68F4610001A8BD /* Info.plist */,
@@ -598,7 +590,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1510;
-				ORGANIZATIONNAME = "Leon & Vane";
+				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					35B3B8D32A08BEA600B4540B = {
 						CreatedOnToolsVersion = 14.3;

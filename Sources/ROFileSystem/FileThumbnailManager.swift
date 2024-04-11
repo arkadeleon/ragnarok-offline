@@ -3,7 +3,6 @@
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/12/14.
-//  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
 import CoreGraphics

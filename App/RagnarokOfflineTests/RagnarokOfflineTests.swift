@@ -3,7 +3,6 @@
 //  RagnarokOfflineTests
 //
 //  Created by Leon Li on 2023/5/8.
-//  Copyright © 2023 Leon & Vane. All rights reserved.
 //
 
 import XCTest

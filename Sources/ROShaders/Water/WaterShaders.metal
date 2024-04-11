@@ -3,7 +3,6 @@
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/6/28.
-//  Copyright © 2020 Leon & Vane. All rights reserved.
 //
 
 #include <metal_stdlib>
