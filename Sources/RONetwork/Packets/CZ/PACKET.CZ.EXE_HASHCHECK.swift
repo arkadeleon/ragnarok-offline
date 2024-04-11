@@ -6,12 +6,15 @@
 //
 
 extension PACKET.CZ {
-    public struct EXE_HASHCHECK: PacketProtocol {
+    public struct EXE_HASHCHECK: EncodablePacket {
         public enum PacketType: UInt16, PacketTypeProtocol {
             case x020c = 0x020c
         }
 
-        public let packetType: PacketType
+        public static var packetType: PacketType {
+            .x020c
+        }
+
         public var clientType: UInt8 = 0
         public var hashValue = [UInt8](repeating: 0, count: 16)
 
@@ -21,16 +24,6 @@ extension PACKET.CZ {
 
         public var packetLength: UInt16 {
             2 + 1 + 16
-        }
-
-        public init(packetVersion: PacketVersion) {
-            packetType = .x020c
-        }
-
-        public init(from decoder: BinaryDecoder) throws {
-            packetType = try decoder.decode(PacketType.self)
-            clientType = try decoder.decode(UInt8.self)
-            hashValue = try decoder.decode([UInt8].self, length: 16)
         }
 
         public func encode(to encoder: BinaryEncoder) throws {

@@ -6,12 +6,15 @@
 //
 
 extension PACKET.CA {
-    public struct CONNECT_INFO_CHANGE: PacketProtocol {
+    public struct CONNECT_INFO_CHANGE: EncodablePacket {
         public enum PacketType: UInt16, PacketTypeProtocol {
             case x0200 = 0x0200
         }
 
-        public let packetType: PacketType
+        public static var packetType: PacketType {
+            .x0200
+        }
+
         public var name = ""
 
         public var packetName: String {
@@ -20,15 +23,6 @@ extension PACKET.CA {
 
         public var packetLength: UInt16 {
             2 + 24
-        }
-
-        public init(packetVersion: PacketVersion) {
-            packetType = .x0200
-        }
-
-        public init(from decoder: BinaryDecoder) throws {
-            packetType = try decoder.decode(PacketType.self)
-            name = try decoder.decode(String.self, length: 24)
         }
 
         public func encode(to encoder: BinaryEncoder) throws {

@@ -6,13 +6,16 @@
 //
 
 extension PACKET.SC {
-    public struct NOTIFY_BAN: PacketProtocol {
+    public struct NOTIFY_BAN: DecodablePacket {
         public enum PacketType: UInt16, PacketTypeProtocol {
             case x0081 = 0x0081
         }
 
-        public let packetType: PacketType
-        public var errorCode: UInt8 = 0
+        public static var packetType: PacketType {
+            .x0081
+        }
+
+        public var errorCode: UInt8
 
         public var packetName: String {
             "PACKET_SC_NOTIFY_BAN"
@@ -22,18 +25,9 @@ extension PACKET.SC {
             2 + 1
         }
 
-        public init(packetVersion: PacketVersion) {
-            packetType = .x0081
-        }
-
         public init(from decoder: BinaryDecoder) throws {
-            packetType = try decoder.decode(PacketType.self)
+            let packetType = try decoder.decode(PacketType.self)
             errorCode = try decoder.decode(UInt8.self)
-        }
-
-        public func encode(to encoder: BinaryEncoder) throws {
-            try encoder.encode(packetType)
-            try encoder.encode(errorCode)
         }
     }
 }

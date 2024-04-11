@@ -6,13 +6,20 @@
 //
 
 extension PACKET.CH {
-    public struct DELETE_CHAR: PacketProtocol {
+    public struct DELETE_CHAR: EncodablePacket {
         public enum PacketType: UInt16, PacketTypeProtocol {
             case x0068 = 0x0068
             case x01fb = 0x01fb
         }
 
-        public let packetType: PacketType
+        public static var packetType: PacketType {
+            if PACKET_VERSION <= 20100803 {
+                .x0068
+            } else {
+                .x01fb
+            }
+        }
+
         public var gid: UInt32 = 0
         public var key = ""
 
@@ -22,30 +29,10 @@ extension PACKET.CH {
 
         public var packetLength: UInt16 {
             switch packetType {
-            case .x0068: 
+            case .x0068:
                 2 + 4 + 40
             case .x01fb: 
                 2 + 4 + 50
-            }
-        }
-
-        public init(packetVersion: PacketVersion) {
-            if packetVersion.number <= 20100803 {
-                packetType = .x0068
-            } else {
-                packetType = .x01fb
-            }
-        }
-
-        public init(from decoder: BinaryDecoder) throws {
-            packetType = try decoder.decode(PacketType.self)
-            gid = try decoder.decode(UInt32.self)
-
-            switch packetType {
-            case .x0068:
-                key = try decoder.decode(String.self, length: 40)
-            case .x01fb:
-                key = try decoder.decode(String.self, length: 50)
             }
         }
 

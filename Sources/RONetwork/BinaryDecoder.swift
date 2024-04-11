@@ -17,11 +17,9 @@ public enum BinaryDecodingError: Error {
 
 public class BinaryDecoder {
     internal var data: Data
-    internal let userInfo: [CodingUserInfoKey : Any]
 
-    internal init(data: Data, userInfo: [CodingUserInfoKey : Any] = [:]) {
+    internal init(data: Data) {
         self.data = data
-        self.userInfo = userInfo
     }
 
     public func decode<T: FixedWidthInteger>(_ type: T.Type) throws -> T {
@@ -78,7 +76,7 @@ public class BinaryDecoder {
 
         self.data.removeFirst(length)
 
-        let decoder = BinaryDecoder(data: data, userInfo: userInfo)
+        let decoder = BinaryDecoder(data: data)
         let value = try type.init(from: decoder)
         return value
     }

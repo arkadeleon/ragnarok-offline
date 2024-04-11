@@ -6,13 +6,20 @@
 //
 
 extension PACKET.AC {
-    public struct REFUSE_LOGIN: PacketProtocol {
+    public struct REFUSE_LOGIN: DecodablePacket {
         public enum PacketType: UInt16, PacketTypeProtocol {
             case x006a = 0x006a
             case x083e = 0x083e
         }
 
-        public let packetType: PacketType
+        public static var packetType: PacketType {
+            if PACKET_VERSION < 20120000 {
+                .x006a
+            } else {
+                .x083e
+            }
+        }
+
         public var errorCode: UInt32 = 0
         public var blockDate = ""
 
@@ -21,19 +28,16 @@ extension PACKET.AC {
         }
 
         public var packetLength: UInt16 {
-            2 + 1 + 20
-        }
-
-        public init(packetVersion: PacketVersion) {
-            if packetVersion.number < 20120000 {
-                packetType = .x006a
-            } else {
-                packetType = .x083e
+            switch packetType {
+            case .x006a:
+                2 + 1 + 20
+            case .x083e:
+                2 + 4 + 20
             }
         }
 
         public init(from decoder: BinaryDecoder) throws {
-            packetType = try decoder.decode(PacketType.self)
+            let packetType = try decoder.decode(PacketType.self)
 
             switch packetType {
             case .x006a:
@@ -43,19 +47,6 @@ extension PACKET.AC {
             }
 
             blockDate = try decoder.decode(String.self, length: 20)
-        }
-
-        public func encode(to encoder: BinaryEncoder) throws {
-            try encoder.encode(packetType)
-
-            switch packetType {
-            case .x006a:
-                try encoder.encode(UInt8(errorCode))
-            case .x083e:
-                try encoder.encode(errorCode)
-            }
-
-            try encoder.encode(blockDate, length: 20)
         }
     }
 }

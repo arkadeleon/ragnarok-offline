@@ -5,16 +5,26 @@
 //  Created by Leon Li on 2021/7/5.
 //
 
-public protocol PacketProtocol: BinaryDecodable, BinaryEncodable {
+public protocol PacketProtocol {
     associatedtype PacketType: PacketTypeProtocol
 
-    var packetType: PacketType { get }
+    static var packetType: PacketType { get }
 
     var packetName: String { get }
 
     var packetLength: UInt16 { get }
+}
 
-    init(packetVersion: PacketVersion)
+extension PacketProtocol {
+    var packetType: PacketType {
+        Self.packetType
+    }
+}
+
+public protocol DecodablePacket: PacketProtocol, BinaryDecodable {
+}
+
+public protocol EncodablePacket: PacketProtocol, BinaryEncodable {
 }
 
 public protocol PacketTypeProtocol: BinaryDecodable, BinaryEncodable {

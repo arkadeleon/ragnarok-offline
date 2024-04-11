@@ -6,14 +6,20 @@
 //
 
 extension PACKET.HC {
-    public struct ACCEPT_MAKECHAR: PacketProtocol {
+    public struct ACCEPT_MAKECHAR: DecodablePacket {
         public enum PacketType: UInt16, PacketTypeProtocol {
             case x006d = 0x006d
             case x0b6f = 0x0b6f
         }
 
-        public let packetVersion: PacketVersion
-        public let packetType: PacketType
+        public static var packetType: PacketType {
+            if PACKET_VERSION_MAIN_NUMBER >= 20201007 || PACKET_VERSION_RE_NUMBER >= 20211103 {
+                .x0b6f
+            } else {
+                .x006d
+            }
+        }
+
         public var charInfo: CharInfo
 
         public var packetName: String {
@@ -21,28 +27,12 @@ extension PACKET.HC {
         }
 
         public var packetLength: UInt16 {
-            2 + CharInfo.size(for: packetVersion)
-        }
-
-        public init(packetVersion: PacketVersion) {
-            self.packetVersion = packetVersion
-            if packetVersion.mainNumber >= 20201007 || packetVersion.reNumber >= 20211103 {
-                packetType = .x0b6f
-            } else {
-                packetType = .x006d
-            }
-            charInfo = CharInfo(packetVersion: packetVersion)
+            2 + CharInfo.size
         }
 
         public init(from decoder: BinaryDecoder) throws {
-            packetVersion = decoder.userInfo[.packetVersionKey] as! PacketVersion
-            packetType = try decoder.decode(PacketType.self)
+            let packetType = try decoder.decode(PacketType.self)
             charInfo = try decoder.decode(CharInfo.self)
-        }
-
-        public func encode(to encoder: BinaryEncoder) throws {
-            try encoder.encode(packetType)
-            try encoder.encode(charInfo)
         }
     }
 }
