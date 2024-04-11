@@ -1,31 +1,31 @@
 //
-//  PacketProtocol.swift
+//  Packet.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2021/7/5.
 //
 
-public protocol PacketProtocol {
+public protocol Packet {
     static var packetType: UInt16 { get }
 
     var packetLength: UInt16 { get }
 }
 
-extension PacketProtocol {
+extension Packet {
     public var packetType: UInt16 {
         Self.packetType
     }
 }
 
-public protocol DecodablePacket: PacketProtocol, BinaryDecodable {
+public protocol DecodablePacket: Packet, BinaryDecodable {
 }
 
-public protocol EncodablePacket: PacketProtocol, BinaryEncodable {
+public protocol EncodablePacket: Packet, BinaryEncodable {
 }
 
 extension BinaryDecoder {
     @discardableResult
-    public func decodePacketType<P>(_ type: P.Type) throws -> UInt16 where P: PacketProtocol {
+    public func decodePacketType<P>(_ type: P.Type) throws -> UInt16 where P: Packet {
         let packetType = try decode(UInt16.self)
         guard packetType == type.packetType else {
             throw PacketDecodingError.packetMismatch(packetType)
