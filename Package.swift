@@ -108,7 +108,21 @@ let package = Package(
         .target(
             name: "ROStream"),
         .testTarget(
+            name: "RODatabaseTests",
+            dependencies: [
+                "RODatabase",
+            ],
+            swiftSettings: [
+                .interoperabilityMode(.Cxx),
+            ]),
+        .testTarget(
             name: "ROFileFormatsTests",
-            dependencies: ["ROFileFormats"]),
+            dependencies: [
+                "ROFileFormats"
+            ],
+            resources: [
+                .copy("test.grf"),
+                .copy("data"),
+            ]),
     ]
 )
