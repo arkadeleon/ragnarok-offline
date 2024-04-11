@@ -42,14 +42,6 @@
 		3552D8762B316876004831D0 /* SPRPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8752B316876004831D0 /* SPRPreviewViewController.swift */; };
 		3552D8782B3182A8004831D0 /* AnimatedImageActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */; };
 		3552D87A2B318323004831D0 /* StillImageActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8792B318323004831D0 /* StillImageActivityItem.swift */; };
-		3555D6372BC65B7000709871 /* RagnarokOfflineFileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D6362BC65B7000709871 /* RagnarokOfflineFileFormats */; };
-		3555D6452BC665F600709871 /* RagnarokOfflineCrypto in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D6442BC665F600709871 /* RagnarokOfflineCrypto */; };
-		3555D6482BC66B3700709871 /* RagnarokOfflineStream in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D6472BC66B3700709871 /* RagnarokOfflineStream */; };
-		3555D64B2BC6827000709871 /* RagnarokOfflineGraphics in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D64A2BC6827000709871 /* RagnarokOfflineGraphics */; };
-		3555D64D2BC68A0900709871 /* RagnarokOfflineRenderers in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D64C2BC68A0900709871 /* RagnarokOfflineRenderers */; };
-		3555D64F2BC6929700709871 /* RagnarokOfflineShaders in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D64E2BC6929700709871 /* RagnarokOfflineShaders */; };
-		3555D6512BC6C10700709871 /* RagnarokOfflineFileSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D6502BC6C10700709871 /* RagnarokOfflineFileSystem */; };
-		3555D6532BC6D32600709871 /* RagnarokOfflineSettings in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D6522BC6D32600709871 /* RagnarokOfflineSettings */; };
 		3555D6E62BC6DDE500709871 /* ItemCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6A12BC6DDE500709871 /* ItemCache.swift */; };
 		3555D6E72BC6DDE500709871 /* JobCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6A22BC6DDE500709871 /* JobCache.swift */; };
 		3555D6E82BC6DDE500709871 /* MapCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555D6A32BC6DDE500709871 /* MapCache.swift */; };
@@ -140,7 +132,15 @@
 		3582FFCA2B8DB9FE00E746D7 /* FilePreviewPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC92B8DB9FE00E746D7 /* FilePreviewPageView.swift */; };
 		3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */; };
 		358D4C612BC6EBB500FAF45D /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C602BC6EBB500FAF45D /* Lua */; };
-		358D4C632BC6EC2200FAF45D /* RagnarokOfflineNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C622BC6EC2200FAF45D /* RagnarokOfflineNetwork */; };
+		358D4C652BC7707400FAF45D /* ROCrypto in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C642BC7707400FAF45D /* ROCrypto */; };
+		358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C662BC7707400FAF45D /* ROFileFormats */; };
+		358D4C692BC7707400FAF45D /* ROFileSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C682BC7707400FAF45D /* ROFileSystem */; };
+		358D4C6B2BC7707400FAF45D /* ROGraphics in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6A2BC7707400FAF45D /* ROGraphics */; };
+		358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6C2BC7707400FAF45D /* RONetwork */; };
+		358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6E2BC7707400FAF45D /* RORenderers */; };
+		358D4C712BC7707400FAF45D /* ROSettings in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C702BC7707400FAF45D /* ROSettings */; };
+		358D4C732BC7707400FAF45D /* ROShaders in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C722BC7707400FAF45D /* ROShaders */; };
+		358D4C752BC7707400FAF45D /* ROStream in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C742BC7707400FAF45D /* ROStream */; };
 		35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */; };
 		35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */; };
 		35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D92A08BEA600B4540B /* ContentView.swift */; };
@@ -344,24 +344,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				358D4C732BC7707400FAF45D /* ROShaders in Frameworks */,
 				3555E1402B7D2268007CE4BA /* rAthenaWeb in Frameworks */,
 				3555D7222BC6DE6600709871 /* rAthenaRyml in Frameworks */,
-				3555D6512BC6C10700709871 /* RagnarokOfflineFileSystem in Frameworks */,
+				358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */,
+				358D4C6B2BC7707400FAF45D /* ROGraphics in Frameworks */,
+				358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */,
+				358D4C652BC7707400FAF45D /* ROCrypto in Frameworks */,
 				3555E12F2B7D2268007CE4BA /* rAthenaChar in Frameworks */,
-				358D4C632BC6EC2200FAF45D /* RagnarokOfflineNetwork in Frameworks */,
 				3555E1362B7D2268007CE4BA /* rAthenaLogin in Frameworks */,
-				3555D6532BC6D32600709871 /* RagnarokOfflineSettings in Frameworks */,
+				358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */,
+				358D4C692BC7707400FAF45D /* ROFileSystem in Frameworks */,
 				3555E1392B7D2268007CE4BA /* rAthenaMap in Frameworks */,
 				3555E1322B7D2268007CE4BA /* rAthenaCommon in Frameworks */,
-				3555D64B2BC6827000709871 /* RagnarokOfflineGraphics in Frameworks */,
-				3555D6482BC66B3700709871 /* RagnarokOfflineStream in Frameworks */,
-				3555D64F2BC6929700709871 /* RagnarokOfflineShaders in Frameworks */,
-				3555D6372BC65B7000709871 /* RagnarokOfflineFileFormats in Frameworks */,
+				358D4C712BC7707400FAF45D /* ROSettings in Frameworks */,
 				3514BF892B48642B0065ED89 /* Terminal in Frameworks */,
+				358D4C752BC7707400FAF45D /* ROStream in Frameworks */,
 				3555E13E2B7D2268007CE4BA /* rAthenaResource in Frameworks */,
-				3555D6452BC665F600709871 /* RagnarokOfflineCrypto in Frameworks */,
 				358D4C612BC6EBB500FAF45D /* Lua in Frameworks */,
-				3555D64D2BC68A0900709871 /* RagnarokOfflineRenderers in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -825,17 +825,17 @@
 				3555E1382B7D2268007CE4BA /* rAthenaMap */,
 				3555E13D2B7D2268007CE4BA /* rAthenaResource */,
 				3555E13F2B7D2268007CE4BA /* rAthenaWeb */,
-				3555D6362BC65B7000709871 /* RagnarokOfflineFileFormats */,
-				3555D6442BC665F600709871 /* RagnarokOfflineCrypto */,
-				3555D6472BC66B3700709871 /* RagnarokOfflineStream */,
-				3555D64A2BC6827000709871 /* RagnarokOfflineGraphics */,
-				3555D64C2BC68A0900709871 /* RagnarokOfflineRenderers */,
-				3555D64E2BC6929700709871 /* RagnarokOfflineShaders */,
-				3555D6502BC6C10700709871 /* RagnarokOfflineFileSystem */,
-				3555D6522BC6D32600709871 /* RagnarokOfflineSettings */,
 				3555D7212BC6DE6600709871 /* rAthenaRyml */,
 				358D4C602BC6EBB500FAF45D /* Lua */,
-				358D4C622BC6EC2200FAF45D /* RagnarokOfflineNetwork */,
+				358D4C642BC7707400FAF45D /* ROCrypto */,
+				358D4C662BC7707400FAF45D /* ROFileFormats */,
+				358D4C682BC7707400FAF45D /* ROFileSystem */,
+				358D4C6A2BC7707400FAF45D /* ROGraphics */,
+				358D4C6C2BC7707400FAF45D /* RONetwork */,
+				358D4C6E2BC7707400FAF45D /* RORenderers */,
+				358D4C702BC7707400FAF45D /* ROSettings */,
+				358D4C722BC7707400FAF45D /* ROShaders */,
+				358D4C742BC7707400FAF45D /* ROStream */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -1433,38 +1433,6 @@
 			package = 3514BF872B48642B0065ED89 /* XCRemoteSwiftPackageReference "Terminal" */;
 			productName = Terminal;
 		};
-		3555D6362BC65B7000709871 /* RagnarokOfflineFileFormats */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RagnarokOfflineFileFormats;
-		};
-		3555D6442BC665F600709871 /* RagnarokOfflineCrypto */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RagnarokOfflineCrypto;
-		};
-		3555D6472BC66B3700709871 /* RagnarokOfflineStream */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RagnarokOfflineStream;
-		};
-		3555D64A2BC6827000709871 /* RagnarokOfflineGraphics */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RagnarokOfflineGraphics;
-		};
-		3555D64C2BC68A0900709871 /* RagnarokOfflineRenderers */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RagnarokOfflineRenderers;
-		};
-		3555D64E2BC6929700709871 /* RagnarokOfflineShaders */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RagnarokOfflineShaders;
-		};
-		3555D6502BC6C10700709871 /* RagnarokOfflineFileSystem */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RagnarokOfflineFileSystem;
-		};
-		3555D6522BC6D32600709871 /* RagnarokOfflineSettings */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RagnarokOfflineSettings;
-		};
 		3555D7212BC6DE6600709871 /* rAthenaRyml */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = rAthenaRyml;
@@ -1497,9 +1465,41 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Lua;
 		};
-		358D4C622BC6EC2200FAF45D /* RagnarokOfflineNetwork */ = {
+		358D4C642BC7707400FAF45D /* ROCrypto */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = RagnarokOfflineNetwork;
+			productName = ROCrypto;
+		};
+		358D4C662BC7707400FAF45D /* ROFileFormats */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ROFileFormats;
+		};
+		358D4C682BC7707400FAF45D /* ROFileSystem */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ROFileSystem;
+		};
+		358D4C6A2BC7707400FAF45D /* ROGraphics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ROGraphics;
+		};
+		358D4C6C2BC7707400FAF45D /* RONetwork */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RONetwork;
+		};
+		358D4C6E2BC7707400FAF45D /* RORenderers */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RORenderers;
+		};
+		358D4C702BC7707400FAF45D /* ROSettings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ROSettings;
+		};
+		358D4C722BC7707400FAF45D /* ROShaders */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ROShaders;
+		};
+		358D4C742BC7707400FAF45D /* ROStream */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ROStream;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

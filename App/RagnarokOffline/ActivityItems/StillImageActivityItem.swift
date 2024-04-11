@@ -9,7 +9,7 @@
 import LinkPresentation
 import UIKit
 import UniformTypeIdentifiers
-import RagnarokOfflineGraphics
+import ROGraphics
 
 class StillImageActivityItem: NSObject, UIActivityItemSource {
     let stillImage: StillImage

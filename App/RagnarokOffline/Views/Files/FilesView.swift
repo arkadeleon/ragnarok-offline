@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import RagnarokOfflineFileSystem
+import ROFileSystem
 
 struct FilesView: View {
     let title: String

@@ -9,53 +9,77 @@ let package = Package(
         .iOS(.v16),
     ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "RagnarokOfflineRenderers",
-            targets: ["RagnarokOfflineRenderers"]),
+            name: "ROCrypto",
+            targets: ["ROCrypto"]),
         .library(
-            name: "RagnarokOfflineShaders",
-            targets: ["RagnarokOfflineShaders"]),
+            name: "ROFileFormats",
+            targets: ["ROFileFormats"]),
         .library(
-            name: "RagnarokOfflineSettings",
-            targets: ["RagnarokOfflineSettings"]),
+            name: "ROFileSystem",
+            targets: ["ROFileSystem"]),
         .library(
-            name: "RagnarokOfflineFileSystem",
-            targets: ["RagnarokOfflineFileSystem"]),
+            name: "ROGraphics",
+            targets: ["ROGraphics"]),
         .library(
-            name: "RagnarokOfflineGraphics",
-            targets: ["RagnarokOfflineGraphics"]),
+            name: "RONetwork",
+            targets: ["RONetwork"]),
         .library(
-            name: "RagnarokOfflineNetwork",
-            targets: ["RagnarokOfflineNetwork"]),
+            name: "RORenderers",
+            targets: ["RORenderers"]),
         .library(
-            name: "RagnarokOfflineFileFormats",
-            targets: ["RagnarokOfflineFileFormats"]),
+            name: "ROSettings",
+            targets: ["ROSettings"]),
         .library(
-            name: "RagnarokOfflineCrypto",
-            targets: ["RagnarokOfflineCrypto"]),
+            name: "ROShaders",
+            targets: ["ROShaders"]),
         .library(
-            name: "RagnarokOfflineStream",
-            targets: ["RagnarokOfflineStream"]),
+            name: "ROStream",
+            targets: ["ROStream"]),
     ],
     dependencies: [
         .package(url: "https://github.com/mw99/DataCompression.git", from: "3.8.0"),
         .package(path: "swift-rathena"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "RagnarokOfflineRenderers",
+            name: "ROCrypto"),
+        .target(
+            name: "ROFileFormats",
             dependencies: [
-                "RagnarokOfflineGraphics",
-                "RagnarokOfflineShaders",
+                "DataCompression",
+                "ROCrypto",
+                "ROStream",
+            ]),
+        .target(
+            name: "ROFileSystem",
+            dependencies: [
+                "ROFileFormats",
+                "ROGraphics",
+            ]),
+        .target(
+            name: "ROGraphics",
+            dependencies: [
+                "ROFileFormats",
+            ]),
+        .target(
+            name: "RONetwork",
+            dependencies: [
+                .product(name: "rAthenaCommon", package: "swift-rathena"),
+            ]),
+        .target(
+            name: "RORenderers",
+            dependencies: [
+                "ROGraphics",
+                "ROShaders",
             ],
             exclude: [
                 "Entity/Entity.swift",
             ]),
         .target(
-            name: "RagnarokOfflineShaders",
+            name: "ROSettings"),
+        .target(
+            name: "ROShaders",
             resources: [
                 .process("Effect/EffectShaders.metal"),
                 .process("Ground/GroundShaders.metal"),
@@ -63,36 +87,9 @@ let package = Package(
                 .process("Water/WaterShaders.metal"),
             ]),
         .target(
-            name: "RagnarokOfflineSettings"),
-        .target(
-            name: "RagnarokOfflineFileSystem",
-            dependencies: [
-                "RagnarokOfflineFileFormats",
-                "RagnarokOfflineGraphics",
-            ]),
-        .target(
-            name: "RagnarokOfflineGraphics",
-            dependencies: [
-                "RagnarokOfflineFileFormats",
-            ]),
-        .target(
-            name: "RagnarokOfflineNetwork",
-            dependencies: [
-                .product(name: "rAthenaCommon", package: "swift-rathena"),
-            ]),
-        .target(
-            name: "RagnarokOfflineFileFormats",
-            dependencies: [
-                "DataCompression",
-                "RagnarokOfflineCrypto",
-                "RagnarokOfflineStream",
-            ]),
-        .target(
-            name: "RagnarokOfflineCrypto"),
-        .target(
-            name: "RagnarokOfflineStream"),
+            name: "ROStream"),
         .testTarget(
-            name: "RagnarokOfflineFileFormatsTests",
-            dependencies: ["RagnarokOfflineFileFormats"]),
+            name: "ROFileFormatsTests",
+            dependencies: ["ROFileFormats"]),
     ]
 )

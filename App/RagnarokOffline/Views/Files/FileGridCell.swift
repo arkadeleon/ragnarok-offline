@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import RagnarokOfflineFileSystem
+import ROFileSystem
 
 struct FileGridCell: View {
     let file: File

@@ -8,8 +8,8 @@
 
 import Foundation
 import Lua
-import RagnarokOfflineFileFormats
-import RagnarokOfflineSettings
+import ROFileFormats
+import ROSettings
 
 class ClientDatabase {
     static let shared = ClientDatabase()

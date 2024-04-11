@@ -8,7 +8,7 @@
 
 import LinkPresentation
 import UIKit
-import RagnarokOfflineFileSystem
+import ROFileSystem
 
 class FileActivityItem: NSObject, UIActivityItemSource {
     let file: File

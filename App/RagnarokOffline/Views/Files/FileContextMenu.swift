@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import RagnarokOfflineFileSystem
+import ROFileSystem
 
 struct FileContextMenu: View {
     typealias Action = () -> Void

@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import RagnarokOfflineSettings
+import ROSettings
 
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss

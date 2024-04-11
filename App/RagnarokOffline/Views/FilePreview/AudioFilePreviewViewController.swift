@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-import RagnarokOfflineFileSystem
+import ROFileSystem
 
 class AudioFilePreviewViewController: UIViewController {
     let file: File

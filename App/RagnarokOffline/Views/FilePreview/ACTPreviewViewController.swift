@@ -8,9 +8,9 @@
 
 import CoreGraphics
 import UIKit
-import RagnarokOfflineFileFormats
-import RagnarokOfflineFileSystem
-import RagnarokOfflineGraphics
+import ROFileFormats
+import ROFileSystem
+import ROGraphics
 
 class ACTPreviewViewController: UIViewController {
     struct ActionSection: Hashable {

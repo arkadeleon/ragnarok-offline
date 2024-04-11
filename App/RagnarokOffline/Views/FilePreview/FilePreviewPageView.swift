@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import RagnarokOfflineFileSystem
+import ROFileSystem
 
 struct FilePreviewPageView: UIViewControllerRepresentable {
     let file: File

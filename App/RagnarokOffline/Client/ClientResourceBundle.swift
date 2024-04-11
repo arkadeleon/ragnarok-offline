@@ -8,9 +8,9 @@
 
 import CoreGraphics
 import Foundation
-import RagnarokOfflineFileFormats
-import RagnarokOfflineFileSystem
-import RagnarokOfflineGraphics
+import ROFileFormats
+import ROFileSystem
+import ROGraphics
 
 class ClientResourceBundle {
     static let shared = ClientResourceBundle()

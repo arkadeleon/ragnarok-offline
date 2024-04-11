@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import RagnarokOfflineFileFormats
-import RagnarokOfflineFileSystem
+import ROFileFormats
+import ROFileSystem
 
 class GATPreviewViewController: UIViewController {
     let file: File

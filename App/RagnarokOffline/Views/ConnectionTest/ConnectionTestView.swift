@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import RagnarokOfflineNetwork
+import RONetwork
 
 struct ConnectionTestView: View {
     private let loginClient = LoginClient()

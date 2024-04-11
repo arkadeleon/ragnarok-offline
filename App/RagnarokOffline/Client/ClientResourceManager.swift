@@ -8,7 +8,7 @@
 
 import CoreGraphics
 import rAthenaCommon
-import RagnarokOfflineFileFormats
+import ROFileFormats
 
 class ClientResourceManager {
     static let shared = ClientResourceManager()

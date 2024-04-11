@@ -9,7 +9,7 @@
 import LinkPresentation
 import UIKit
 import UniformTypeIdentifiers
-import RagnarokOfflineGraphics
+import ROGraphics
 
 class AnimatedImageActivityItem: NSObject, UIActivityItemSource {
     let animatedImage: AnimatedImage

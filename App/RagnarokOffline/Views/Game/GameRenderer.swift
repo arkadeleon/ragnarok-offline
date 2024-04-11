@@ -8,7 +8,7 @@
 
 import Metal
 import MetalKit
-import RagnarokOfflineRenderers
+import RORenderers
 
 class GameRenderer: NSObject, Renderer {
     let device: MTLDevice
