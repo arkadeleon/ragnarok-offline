@@ -7,12 +7,8 @@
 
 extension PACKET.HC {
     public struct REFUSE_DELETECHAR: DecodablePacket {
-        public enum PacketType: UInt16, PacketTypeProtocol {
-            case x0070 = 0x0070
-        }
-
-        public static var packetType: PacketType {
-            .x0070
+        public static var packetType: UInt16 {
+            0x70
         }
 
         public var errorCode: UInt8
@@ -26,7 +22,7 @@ extension PACKET.HC {
         }
 
         public init(from decoder: BinaryDecoder) throws {
-            let packetType = try decoder.decode(PacketType.self)
+            try decoder.decodePacketType(Self.self)
             errorCode = try decoder.decode(UInt8.self)
         }
     }

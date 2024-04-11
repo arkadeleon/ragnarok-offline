@@ -7,12 +7,8 @@
 
 extension PACKET.CZ {
     public struct PING: EncodablePacket {
-        public enum PacketType: UInt16, PacketTypeProtocol {
-            case x0187 = 0x0187
-        }
-
-        public static var packetType: PacketType {
-            .x0187
+        public static var packetType: UInt16 {
+            0x187
         }
 
         public var aid: UInt32 = 0

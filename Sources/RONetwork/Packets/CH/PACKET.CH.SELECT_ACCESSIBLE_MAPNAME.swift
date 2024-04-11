@@ -7,12 +7,8 @@
 
 extension PACKET.CH {
     public struct SELECT_ACCESSIBLE_MAPNAME: EncodablePacket {
-        public enum PacketType: UInt16, PacketTypeProtocol {
-            case x0841 = 0x0841
-        }
-
-        public static var packetType: PacketType {
-            .x0841
+        public static var packetType: UInt16 {
+            0x841
         }
 
         public var slot: UInt8 = 0

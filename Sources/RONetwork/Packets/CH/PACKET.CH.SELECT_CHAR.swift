@@ -7,12 +7,8 @@
 
 extension PACKET.CH {
     public struct SELECT_CHAR: EncodablePacket {
-        public enum PacketType: UInt16, PacketTypeProtocol {
-            case x0066 = 0x0066
-        }
-
-        public static var packetType: PacketType {
-            .x0066
+        public static var packetType: UInt16 {
+            0x66
         }
 
         public var charNum: UInt8 = 0

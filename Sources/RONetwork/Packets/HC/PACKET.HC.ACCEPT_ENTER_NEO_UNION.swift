@@ -7,12 +7,8 @@
 
 extension PACKET.HC {
     public struct ACCEPT_ENTER_NEO_UNION: DecodablePacket {
-        public enum PacketType: UInt16, PacketTypeProtocol {
-            case x006b = 0x006b
-        }
-
-        public static var packetType: PacketType {
-            .x006b
+        public static var packetType: UInt16 {
+            0x6b
         }
 
         public var totalSlotNum: UInt8
@@ -35,7 +31,7 @@ extension PACKET.HC {
         }
 
         public init(from decoder: BinaryDecoder) throws {
-            let packetType = try decoder.decode(PacketType.self)
+            try decoder.decodePacketType(Self.self)
 
             let packetLength = try decoder.decode(UInt16.self)
 

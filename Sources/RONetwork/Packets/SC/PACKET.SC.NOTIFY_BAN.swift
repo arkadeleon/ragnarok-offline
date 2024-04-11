@@ -7,12 +7,8 @@
 
 extension PACKET.SC {
     public struct NOTIFY_BAN: DecodablePacket {
-        public enum PacketType: UInt16, PacketTypeProtocol {
-            case x0081 = 0x0081
-        }
-
-        public static var packetType: PacketType {
-            .x0081
+        public static var packetType: UInt16 {
+            0x81
         }
 
         public var errorCode: UInt8
@@ -26,7 +22,7 @@ extension PACKET.SC {
         }
 
         public init(from decoder: BinaryDecoder) throws {
-            let packetType = try decoder.decode(PacketType.self)
+            try decoder.decodePacketType(Self.self)
             errorCode = try decoder.decode(UInt8.self)
         }
     }

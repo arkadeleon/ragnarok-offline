@@ -7,16 +7,11 @@
 
 extension PACKET.AC {
     public struct ACCEPT_LOGIN: DecodablePacket {
-        public enum PacketType: UInt16, PacketTypeProtocol {
-            case x0069 = 0x0069
-            case x0ac4 = 0x0ac4
-        }
-
-        public static var packetType: PacketType {
-            if PACKET_VERSION < 20170315 {
-                .x0069
+        public static var packetType: UInt16 {
+            if PACKET_VERSION >= 20170315 {
+                0xac4
             } else {
-                .x0ac4
+                0x69
             }
         }
 
@@ -38,7 +33,7 @@ extension PACKET.AC {
         }
 
         public init(from decoder: BinaryDecoder) throws {
-            let packetType = try decoder.decode(PacketType.self)
+            try decoder.decodePacketType(Self.self)
 
             let packetLength = try decoder.decode(UInt16.self)
             let serverCount = (packetLength - 2 - 2 - 4 - 4 - 4 - 4 - 26 - 1) / ServerInfo.size
@@ -50,7 +45,7 @@ extension PACKET.AC {
             lastLoginTime = try decoder.decode(String.self, length: 26)
             sex = try decoder.decode(UInt8.self)
 
-            if packetType == .x0ac4 {
+            if PACKET_VERSION >= 20170315 {
                 token = try decoder.decode([UInt8].self, length: 17)
             } else {
                 token = []
@@ -68,9 +63,10 @@ extension PACKET.AC {
 extension PACKET.AC.ACCEPT_LOGIN {
     public struct ServerInfo: BinaryDecodable {
         public static var size: UInt16 {
-            switch PACKET.AC.ACCEPT_LOGIN.packetType {
-            case .x0069: 32
-            case .x0ac4: 32 + 128
+            if PACKET_VERSION >= 20170315 {
+                32 + 128
+            } else {
+                32
             }
         }
 
@@ -89,7 +85,7 @@ extension PACKET.AC.ACCEPT_LOGIN {
             state = try decoder.decode(UInt16.self)
             property = try decoder.decode(UInt16.self)
 
-            if PACKET.AC.ACCEPT_LOGIN.packetType == .x0ac4 {
+            if PACKET_VERSION >= 20170315 {
                 _ = try decoder.decode([UInt8].self, length: 128)
             }
         }

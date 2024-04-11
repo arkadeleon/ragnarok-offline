@@ -7,12 +7,8 @@
 
 extension PACKET.CH {
     public struct DELETE_CHAR_CANCEL: EncodablePacket {
-        public enum PacketType: UInt16, PacketTypeProtocol {
-            case x082b = 0x082b
-        }
-
-        public static var packetType: PacketType {
-            .x082b
+        public static var packetType: UInt16 {
+            0x82b
         }
 
         public var gid: UInt32 = 0

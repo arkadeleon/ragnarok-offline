@@ -16,7 +16,7 @@ public class PacketDecoder {
     private let packets: [UInt16 : any DecodablePacket.Type]
 
     public init() {
-        self.packets = Dictionary(uniqueKeysWithValues: PacketManager.shared.decodablePackets.map({ ($0.packetType.rawValue, $0) }))
+        self.packets = Dictionary(uniqueKeysWithValues: PacketManager.shared.decodablePackets.map({ ($0.packetType, $0) }))
     }
 
     public func decode(from data: Data) throws -> any DecodablePacket {

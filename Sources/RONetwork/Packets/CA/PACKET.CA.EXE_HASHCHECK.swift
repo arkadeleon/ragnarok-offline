@@ -7,12 +7,8 @@
 
 extension PACKET.CA {
     public struct EXE_HASHCHECK: EncodablePacket {
-        public enum PacketType: UInt16, PacketTypeProtocol {
-            case x0204 = 0x0204
-        }
-
-        public static var packetType: PacketType {
-            .x0204
+        public static var packetType: UInt16 {
+            0x204
         }
 
         public var hashValue = [UInt8](repeating: 0, count: 16)

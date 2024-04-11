@@ -7,16 +7,11 @@
 
 extension PACKET.HC {
     public struct NOTIFY_ZONESVR: DecodablePacket {
-        public enum PacketType: UInt16, PacketTypeProtocol {
-            case x0071 = 0x0071
-            case x0ac5 = 0x0ac5
-        }
-
-        public static var packetType: PacketType {
-            if PACKET_VERSION < 20170315 {
-                .x0071
+        public static var packetType: UInt16 {
+            if PACKET_VERSION >= 20170315 {
+                0xac5
             } else {
-                .x0ac5
+                0x71
             }
         }
 
@@ -29,22 +24,21 @@ extension PACKET.HC {
         }
 
         public var packetLength: UInt16 {
-            switch packetType {
-            case .x0071:
-                2 + 4 + 16 + 4 + 2
-            case .x0ac5:
+            if PACKET_VERSION >= 20170315 {
                 2 + 4 + 16 + 4 + 2 + 128
+            } else {
+                2 + 4 + 16 + 4 + 2
             }
         }
 
         public init(from decoder: BinaryDecoder) throws {
-            let packetType = try decoder.decode(PacketType.self)
+            try decoder.decodePacketType(Self.self)
 
             gid = try decoder.decode(UInt32.self)
             mapName = try decoder.decode(String.self, length: 16)
             serverInfo = try decoder.decode(ServerInfo.self)
 
-            if packetType == .x0ac5 {
+            if PACKET_VERSION >= 20170315 {
                 _ = try decoder.decode([UInt8].self, length: 128)
             }
         }

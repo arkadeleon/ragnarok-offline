@@ -7,16 +7,11 @@
 
 extension PACKET.HC {
     public struct ACCEPT_MAKECHAR: DecodablePacket {
-        public enum PacketType: UInt16, PacketTypeProtocol {
-            case x006d = 0x006d
-            case x0b6f = 0x0b6f
-        }
-
-        public static var packetType: PacketType {
+        public static var packetType: UInt16 {
             if PACKET_VERSION_MAIN_NUMBER >= 20201007 || PACKET_VERSION_RE_NUMBER >= 20211103 {
-                .x0b6f
+                0xb6f
             } else {
-                .x006d
+                0x6d
             }
         }
 
@@ -31,7 +26,7 @@ extension PACKET.HC {
         }
 
         public init(from decoder: BinaryDecoder) throws {
-            let packetType = try decoder.decode(PacketType.self)
+            try decoder.decodePacketType(Self.self)
             charInfo = try decoder.decode(CharInfo.self)
         }
     }

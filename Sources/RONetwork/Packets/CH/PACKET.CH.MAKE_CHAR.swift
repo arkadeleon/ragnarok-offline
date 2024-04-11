@@ -7,19 +7,13 @@
 
 extension PACKET.CH {
     public struct MAKE_CHAR: EncodablePacket {
-        public enum PacketType: UInt16, PacketTypeProtocol {
-            case x0067 = 0x0067
-            case x0970 = 0x0970
-            case x0a39 = 0x0a39
-        }
-
-        public static var packetType: PacketType {
-            if PACKET_VERSION < 20120307 {
-                .x0067
-            } else if PACKET_VERSION < 20151001 {
-                .x0970
+        public static var packetType: UInt16 {
+            if PACKET_VERSION >= 20151001 {
+                0xa39
+            } else if PACKET_VERSION >= 20120307 {
+                0x970
             } else {
-                .x0a39
+                0x67
             }
         }
 
@@ -41,13 +35,12 @@ extension PACKET.CH {
         }
 
         public var packetLength: UInt16 {
-            switch packetType {
-            case .x0067:
-                2 + 24 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 2 + 2
-            case .x0970:
-                2 + 24 + 1 + 2 + 2
-            case .x0a39:
+            if PACKET_VERSION >= 20151001 {
                 2 + 24 + 1 + 2 + 2 + 2 + 1 + 1 + 1
+            } else if PACKET_VERSION >= 20120307 {
+                2 + 24 + 1 + 2 + 2
+            } else {
+                2 + 24 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 2 + 2
             }
         }
 
@@ -56,7 +49,7 @@ extension PACKET.CH {
 
             try encoder.encode(name, length: 24)
 
-            if packetType == .x0067 {
+            if PACKET_VERSION < 20120307 {
                 try encoder.encode(str)
                 try encoder.encode(agi)
                 try encoder.encode(vit)
@@ -69,7 +62,7 @@ extension PACKET.CH {
             try encoder.encode(headPal)
             try encoder.encode(head)
 
-            if packetType == .x0a39 {
+            if PACKET_VERSION >= 20151001 {
                 try encoder.encode(job)
                 try encoder.encode(0 as UInt8)
                 try encoder.encode(0 as UInt8)

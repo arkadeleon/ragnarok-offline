@@ -7,12 +7,8 @@
 
 extension PACKET.HC {
     public struct NOTIFY_ACCESSIBLE_MAPNAME: DecodablePacket {
-        public enum PacketType: UInt16, PacketTypeProtocol {
-            case x0840 = 0x0840
-        }
-
-        public static var packetType: PacketType {
-            .x0840
+        public static var packetType: UInt16 {
+            0x840
         }
 
         public var maps: [MapInfo]
@@ -26,7 +22,7 @@ extension PACKET.HC {
         }
 
         public init(from decoder: BinaryDecoder) throws {
-            let packetType = try decoder.decode(PacketType.self)
+            try decoder.decodePacketType(Self.self)
 
             let packetLength = try decoder.decode(UInt16.self)
 

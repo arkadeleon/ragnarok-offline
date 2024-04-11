@@ -6,9 +6,7 @@
 //
 
 public protocol PacketProtocol {
-    associatedtype PacketType: PacketTypeProtocol
-
-    static var packetType: PacketType { get }
+    static var packetType: UInt16 { get }
 
     var packetName: String { get }
 
@@ -16,7 +14,7 @@ public protocol PacketProtocol {
 }
 
 extension PacketProtocol {
-    var packetType: PacketType {
+    var packetType: UInt16 {
         Self.packetType
     }
 }
@@ -27,21 +25,13 @@ public protocol DecodablePacket: PacketProtocol, BinaryDecodable {
 public protocol EncodablePacket: PacketProtocol, BinaryEncodable {
 }
 
-public protocol PacketTypeProtocol: BinaryDecodable, BinaryEncodable {
-    var rawValue: UInt16 { get }
-}
-
-extension RawRepresentable where Self: PacketTypeProtocol, RawValue == UInt16 {
-    public init(from decoder: BinaryDecoder) throws {
-        let rawValue = try decoder.decode(UInt16.self)
-        if let packetType = Self(rawValue: rawValue) {
-            self = packetType
-        } else {
-            throw PacketDecodingError.packetMismatch(rawValue)
+extension BinaryDecoder {
+    @discardableResult
+    public func decodePacketType<P>(_ type: P.Type) throws -> UInt16 where P: PacketProtocol {
+        let packetType = try decode(UInt16.self)
+        guard packetType == type.packetType else {
+            throw PacketDecodingError.packetMismatch(packetType)
         }
-    }
-
-    public func encode(to encoder: BinaryEncoder) throws {
-        try encoder.encode(rawValue)
+        return packetType
     }
 }

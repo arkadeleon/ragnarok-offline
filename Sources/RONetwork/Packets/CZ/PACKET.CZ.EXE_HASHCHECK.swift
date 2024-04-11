@@ -7,12 +7,8 @@
 
 extension PACKET.CZ {
     public struct EXE_HASHCHECK: EncodablePacket {
-        public enum PacketType: UInt16, PacketTypeProtocol {
-            case x020c = 0x020c
-        }
-
-        public static var packetType: PacketType {
-            .x020c
+        public static var packetType: UInt16 {
+            0x20c
         }
 
         public var clientType: UInt8 = 0

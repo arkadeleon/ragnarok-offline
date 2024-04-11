@@ -7,12 +7,8 @@
 
 extension PACKET.CA {
     public struct CONNECT_INFO_CHANGE: EncodablePacket {
-        public enum PacketType: UInt16, PacketTypeProtocol {
-            case x0200 = 0x0200
-        }
-
-        public static var packetType: PacketType {
-            .x0200
+        public static var packetType: UInt16 {
+            0x200
         }
 
         public var name = ""

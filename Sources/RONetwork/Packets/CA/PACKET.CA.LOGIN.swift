@@ -7,12 +7,8 @@
 
 extension PACKET.CA {
     public struct LOGIN: EncodablePacket {
-        public enum PacketType: UInt16, PacketTypeProtocol {
-            case x0064 = 0x0064
-        }
-
-        public static var packetType: PacketType {
-            .x0064
+        public static var packetType: UInt16 {
+            0x64
         }
 
         public var version: UInt32 = 0
