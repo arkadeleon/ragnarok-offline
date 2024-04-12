@@ -24,7 +24,7 @@ public struct SPR: Encodable {
 
         header = try reader.readString(2)
         guard header == "SP" else {
-            throw DocumentError.invalidContents
+            throw FileFormatError.invalidHeader(header)
         }
 
         let minor: UInt8 = try reader.readInt()

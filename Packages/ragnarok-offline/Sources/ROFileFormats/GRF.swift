@@ -11,6 +11,12 @@ import DataCompression
 import ROCrypto
 import ROStream
 
+public enum GRFError: Error {
+    case invalidVersion(UInt32)
+    case invalidPath(GRF.Path)
+    case dataCorrupted(Data)
+}
+
 public struct GRF {
     public var header: Header
     public var table: Table
@@ -45,7 +51,7 @@ extension GRF {
         init(from reader: BinaryReader) throws {
             magic = try reader.readString(15)
             guard magic == "Master of Magic" else {
-                throw DocumentError.invalidContents
+                throw FileFormatError.invalidHeader(magic)
             }
 
             key = try reader.readBytes(15)
@@ -71,14 +77,14 @@ extension GRF {
         init(from reader: BinaryReader, header: Header) throws {
             switch header.version {
             case 0x102, 0x103:
-                throw DocumentError.invalidContents
+                throw GRFError.invalidVersion(header.version)
             case 0x200:
                 tableSizeCompressed = try reader.readInt()
                 tableSize = try reader.readInt()
 
                 let compressedData = try reader.readBytes(Int(tableSizeCompressed))
                 guard let data = Data(compressedData).unzip() else {
-                    throw DocumentError.invalidContents
+                    throw GRFError.dataCorrupted(Data(compressedData))
                 }
 
                 var position = 0
@@ -92,7 +98,7 @@ extension GRF {
                     entries.append(entry)
                 }
             default:
-                throw DocumentError.invalidContents
+                throw GRFError.invalidVersion(header.version)
             }
         }
     }
@@ -121,7 +127,7 @@ extension GRF {
 
         init(data: Data, position: inout Int) throws {
             guard let index = data[position...].firstIndex(of: 0) else {
-                throw DocumentError.invalidContents
+                throw GRFError.dataCorrupted(data)
             }
 
             let name = String(data: data[position..<index], encoding: .koreanEUC) ?? ""
@@ -152,7 +158,7 @@ extension GRF {
             }
 
             guard let data = Data(bytes).unzip() else {
-                throw DocumentError.invalidContents
+                throw GRFError.dataCorrupted(Data(bytes))
             }
             return data
         }

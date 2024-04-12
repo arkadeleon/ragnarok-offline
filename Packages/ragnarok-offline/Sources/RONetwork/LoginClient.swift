@@ -10,14 +10,14 @@ import Network
 /// Login client.
 ///
 /// Sendable packets:
-/// - PACKET.CA.LOGIN
-/// - PACKET_CA_CONNECT_INFO_CHANGED
-/// - PACKET_CA_EXE_HASHCHECK
+/// - ``PACKET_CA_LOGIN``
+/// - ``PACKET_CA_CONNECT_INFO_CHANGED``
+/// - ``PACKET_CA_EXE_HASHCHECK``
 ///
 /// Receivable packets:
-/// - PACKET_AC_ACCEPT_LOGIN
-/// - PACKET_AC_REFUSE_LOGIN
-/// - PACKET_SC_NOTIFY_BAN
+/// - ``PACKET_AC_ACCEPT_LOGIN``
+/// - ``PACKET_AC_REFUSE_LOGIN``
+/// - ``PACKET_SC_NOTIFY_BAN``
 public class LoginClient {
     public var onAcceptLogin: (() -> Void)?
     public var onRefuseLogin: (() -> Void)?
@@ -73,7 +73,7 @@ public class LoginClient {
                     case let notifyBan as PACKET_SC_NOTIFY_BAN:
                         onNotifyBan?()
                     default:
-                        break
+                        onError?(PacketDecodingError.unknownPacket(packet.packetType))
                     }
                 } catch {
                     onError?(error)

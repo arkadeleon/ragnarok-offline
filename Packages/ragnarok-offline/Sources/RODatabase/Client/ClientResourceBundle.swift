@@ -16,13 +16,13 @@ public class ClientResourceBundle {
 
     public let url: URL
 
-    public let grf: GRFWrapper
+    public let grf: GRFReference
 
     private let cache = NSCache<NSString, CGImage>()
 
     public init() {
         url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        grf = GRFWrapper(url: url.appendingPathComponent("data.grf"))
+        grf = GRFReference(url: url.appendingPathComponent("data.grf"))
     }
 
     // MARK: - data

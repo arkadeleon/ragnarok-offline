@@ -1,16 +1,15 @@
 //
-//  GRFWrapper.swift
+//  GRFReference.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/8/17.
 //
 
 import Foundation
-import ROFileFormats
 import ROStream
 
-public class GRFWrapper {
-    let url: URL
+public class GRFReference {
+    public let url: URL
 
     private lazy var grf = {
         let start = Date()
@@ -81,7 +80,7 @@ public class GRFWrapper {
 
     public func contentsOfEntry(at path: GRF.Path) throws -> Data {
         guard let entry = entry(at: path) else {
-            throw DocumentError.invalidSource
+            throw GRFError.invalidPath(path)
         }
 
         let stream = try FileStream(url: url)

@@ -11,9 +11,9 @@ import ROFileFormats
 public enum File {
     case directory(URL)
     case regularFile(URL)
-    case grf(GRFWrapper)
-    case grfDirectory(GRFWrapper, GRF.Path)
-    case grfEntry(GRFWrapper, GRF.Path)
+    case grf(GRFReference)
+    case grfDirectory(GRFReference, GRF.Path)
+    case grfEntry(GRFReference, GRF.Path)
 
     public var url: URL {
         switch self {
@@ -89,7 +89,7 @@ public enum File {
             let files = urls.map({ $0.resolvingSymlinksInPath() }).map { url -> File in
                 switch url.pathExtension.lowercased() {
                 case "grf":
-                    let grf = GRFWrapper(url: url)
+                    let grf = GRFReference(url: url)
                     return .grf(grf)
                 default:
                     let values = try? url.resourceValues(forKeys: [.isDirectoryKey])
