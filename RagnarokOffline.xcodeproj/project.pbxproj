@@ -20,9 +20,6 @@
 		3514BF842B4801E20065ED89 /* JobGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF832B4801E20065ED89 /* JobGridCell.swift */; };
 		3514BF862B4801EB0065ED89 /* JobInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF852B4801EB0065ED89 /* JobInfoView.swift */; };
 		3514BF892B48642B0065ED89 /* Terminal in Frameworks */ = {isa = PBXBuildFile; productRef = 3514BF882B48642B0065ED89 /* Terminal */; };
-		3519900E2BC837000082EB0E /* ragnarok-offline in Resources */ = {isa = PBXBuildFile; fileRef = 3519900A2BC837000082EB0E /* ragnarok-offline */; };
-		3519900F2BC837000082EB0E /* swift-lua in Resources */ = {isa = PBXBuildFile; fileRef = 3519900B2BC837000082EB0E /* swift-lua */; };
-		351990102BC837000082EB0E /* swift-rathena in Resources */ = {isa = PBXBuildFile; fileRef = 3519900C2BC837000082EB0E /* swift-rathena */; };
 		351990122BC837320082EB0E /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 351990112BC837320082EB0E /* rAthenaChar */; };
 		351990132BC837320082EB0E /* rAthenaChar in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 351990112BC837320082EB0E /* rAthenaChar */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		351990152BC837320082EB0E /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 351990142BC837320082EB0E /* rAthenaCommon */; };
@@ -130,9 +127,6 @@
 		3514BF812B4801D70065ED89 /* JobDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDatabaseView.swift; sourceTree = "<group>"; };
 		3514BF832B4801E20065ED89 /* JobGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobGridCell.swift; sourceTree = "<group>"; };
 		3514BF852B4801EB0065ED89 /* JobInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInfoView.swift; sourceTree = "<group>"; };
-		3519900A2BC837000082EB0E /* ragnarok-offline */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "ragnarok-offline"; sourceTree = "<group>"; };
-		3519900B2BC837000082EB0E /* swift-lua */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "swift-lua"; sourceTree = "<group>"; };
-		3519900C2BC837000082EB0E /* swift-rathena */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "swift-rathena"; sourceTree = "<group>"; };
 		35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableServer.swift; sourceTree = "<group>"; };
 		35239DF62BBDA0760039F7D5 /* LoadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadStatus.swift; sourceTree = "<group>"; };
 		35239DF82BBDB7B50039F7D5 /* ObservableMonsterDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMonsterDatabase.swift; sourceTree = "<group>"; };
@@ -188,6 +182,9 @@
 		35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabaseView.swift; sourceTree = "<group>"; };
 		35E27A822BC96AC800C11076 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		35E27A842BC96B3000C11076 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		35E27A8D2BCC112200C11076 /* swift-lua */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-lua"; path = "Packages/swift-lua"; sourceTree = "<group>"; };
+		35E27A8E2BCC112200C11076 /* swift-rathena */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-rathena"; path = "Packages/swift-rathena"; sourceTree = "<group>"; };
+		35E27A8F2BCC112200C11076 /* ragnarok-offline */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "ragnarok-offline"; path = "Packages/ragnarok-offline"; sourceTree = "<group>"; };
 		35F50CCB2BB4615F00B36455 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -264,16 +261,6 @@
 				35239DFA2BBEEF890039F7D5 /* ObservableJobDatabase.swift */,
 			);
 			path = Job;
-			sourceTree = "<group>";
-		};
-		3519900D2BC837000082EB0E /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				3519900A2BC837000082EB0E /* ragnarok-offline */,
-				3519900B2BC837000082EB0E /* swift-lua */,
-				3519900C2BC837000082EB0E /* swift-rathena */,
-			);
-			path = Packages;
 			sourceTree = "<group>";
 		};
 		35270D252A5FE9470001A8BD /* Frameworks */ = {
@@ -380,7 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				35B3B8D62A08BEA600B4540B /* RagnarokOffline */,
-				3519900D2BC837000082EB0E /* Packages */,
+				35E27A8C2BCC111400C11076 /* Packages */,
 				35B3B8D52A08BEA600B4540B /* Products */,
 				35270D252A5FE9470001A8BD /* Frameworks */,
 			);
@@ -448,6 +435,16 @@
 				355BC1912B9056E5002F0586 /* FileContextMenu.swift */,
 			);
 			path = Files;
+			sourceTree = "<group>";
+		};
+		35E27A8C2BCC111400C11076 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				35E27A8F2BCC112200C11076 /* ragnarok-offline */,
+				35E27A8D2BCC112200C11076 /* swift-lua */,
+				35E27A8E2BCC112200C11076 /* swift-rathena */,
+			);
+			name = Packages;
 			sourceTree = "<group>";
 		};
 		35F50CCA2BB4614100B36455 /* Messages */ = {
@@ -545,12 +542,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				35B3B8DF2A08BEA700B4540B /* Preview Assets.xcassets in Resources */,
-				3519900F2BC837000082EB0E /* swift-lua in Resources */,
 				35B3B9FA2A08C01600B4540B /* wall.jpg in Resources */,
 				35B3B8DC2A08BEA700B4540B /* Assets.xcassets in Resources */,
 				355BC1902B8F4E0D002F0586 /* json-viewer in Resources */,
-				351990102BC837000082EB0E /* swift-rathena in Resources */,
-				3519900E2BC837000082EB0E /* ragnarok-offline in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -748,7 +742,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"RagnarokOffline/Preview Content\"";
 				DEVELOPMENT_TEAM = GG76KD534U;
 				ENABLE_PREVIEWS = YES;
@@ -765,7 +759,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				OTHER_SWIFT_FLAGS = "-cxx-interoperability-mode=default";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.arkadeleon.ragnarok-offline";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -782,7 +776,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"RagnarokOffline/Preview Content\"";
 				DEVELOPMENT_TEAM = GG76KD534U;
 				ENABLE_PREVIEWS = YES;
@@ -799,7 +793,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				OTHER_SWIFT_FLAGS = "-cxx-interoperability-mode=default";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.arkadeleon.ragnarok-offline";
 				PRODUCT_NAME = "$(TARGET_NAME)";
