@@ -45,4 +45,8 @@ final class GRFTests: XCTestCase {
 
         stream.close()
     }
+
+    static var allTests = [
+        ("testGRF", testGRF),
+    ]
 }

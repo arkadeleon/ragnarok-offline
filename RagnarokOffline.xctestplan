@@ -1,0 +1,31 @@
+{
+  "configurations" : [
+    {
+      "id" : "79847BDF-E700-476F-9103-09D76A6FA3C3",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/ragnarok-offline",
+        "identifier" : "RODatabaseTests",
+        "name" : "RODatabaseTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/ragnarok-offline",
+        "identifier" : "ROFileFormatsTests",
+        "name" : "ROFileFormatsTests"
+      }
+    }
+  ],
+  "version" : 1
+}
