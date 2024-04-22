@@ -15,8 +15,7 @@ class ObservableServer: ObservableObject {
     let name: String
     @Published var status: ServerStatus
 
-    private(set) var cachedOutput = Data()
-    var outputHandler: ServerOutputHandler?
+    let terminalView: TerminalView
 
     private var subscriptions = Set<AnyCancellable>()
 
@@ -24,14 +23,26 @@ class ObservableServer: ObservableObject {
         self.server = server
 
         name = server.name
-
         status = server.status
-        server.publisher(for: \.status)
+
+        terminalView = TerminalView(frame: CGRect(x: 0, y: 0, width: 1024, height: 768))
+        terminalView.terminalFontSize = 12
+
+        server.statusPublisher
             .receive(on: RunLoop.main)
             .assign(to: \.status, on: self)
             .store(in: &subscriptions)
 
-        server.outputHandler = handleOutput
+        server.outputDataPublisher
+            .compactMap { data in
+                String(data: data, encoding: .isoLatin1)?
+                    .replacingOccurrences(of: "\n", with: "\r\n")
+            }
+            .collect(.byTime(RunLoop.main, .milliseconds(500)))
+            .sink { [weak self] texts in
+                self?.terminalView.feed(text: texts.joined())
+            }
+            .store(in: &subscriptions)
     }
 
     func start() {
@@ -39,14 +50,18 @@ class ObservableServer: ObservableObject {
             await server.start()
         }
     }
+}
 
-    private func handleOutput(_ data: Data) {
-        if let data = String(data: data, encoding: .isoLatin1)?
-            .replacingOccurrences(of: "\n", with: "\r\n")
-            .data(using: .isoLatin1) {
-            cachedOutput.append(data)
-            outputHandler?(data)
-        }
+extension Server {
+    public var statusPublisher: AnyPublisher<ServerStatus, Never> {
+        publisher(for: \.status)
+            .eraseToAnyPublisher()
+    }
+
+    public var outputDataPublisher: AnyPublisher<Data, Never> {
+        NotificationCenter.default.publisher(for: .ServerDidOutputData, object: self)
+            .map { $0.userInfo![ServerOutputDataKey] as! Data }
+            .eraseToAnyPublisher()
     }
 }
 

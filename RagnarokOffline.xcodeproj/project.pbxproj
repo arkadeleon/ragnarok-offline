@@ -19,7 +19,6 @@
 		3514BF822B4801D70065ED89 /* JobDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF812B4801D70065ED89 /* JobDatabaseView.swift */; };
 		3514BF842B4801E20065ED89 /* JobGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF832B4801E20065ED89 /* JobGridCell.swift */; };
 		3514BF862B4801EB0065ED89 /* JobInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF852B4801EB0065ED89 /* JobInfoView.swift */; };
-		3514BF892B48642B0065ED89 /* Terminal in Frameworks */ = {isa = PBXBuildFile; productRef = 3514BF882B48642B0065ED89 /* Terminal */; };
 		351990122BC837320082EB0E /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 351990112BC837320082EB0E /* rAthenaChar */; };
 		351990132BC837320082EB0E /* rAthenaChar in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 351990112BC837320082EB0E /* rAthenaChar */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		351990152BC837320082EB0E /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 351990142BC837320082EB0E /* rAthenaCommon */; };
@@ -67,6 +66,7 @@
 		3582FFC82B8DB73B00E746D7 /* FileThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC72B8DB73B00E746D7 /* FileThumbnailView.swift */; };
 		3582FFCA2B8DB9FE00E746D7 /* FilePreviewPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC92B8DB9FE00E746D7 /* FilePreviewPageView.swift */; };
 		3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */; };
+		358362CD2BD55D4000821500 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = 358362CC2BD55D4000821500 /* SwiftTerm */; };
 		358D4C612BC6EBB500FAF45D /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C602BC6EBB500FAF45D /* Lua */; };
 		358D4C652BC7707400FAF45D /* ROCrypto in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C642BC7707400FAF45D /* ROCrypto */; };
 		358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C662BC7707400FAF45D /* ROFileFormats */; };
@@ -78,6 +78,7 @@
 		358D4C732BC7707400FAF45D /* ROShaders in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C722BC7707400FAF45D /* ROShaders */; };
 		358D4C752BC7707400FAF45D /* ROStream in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C742BC7707400FAF45D /* ROStream */; };
 		35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */; };
+		35B367452BD6AE700018ED27 /* Terminal in Frameworks */ = {isa = PBXBuildFile; productRef = 35B367442BD6AE700018ED27 /* Terminal */; };
 		35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */; };
 		35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D92A08BEA600B4540B /* ContentView.swift */; };
 		35B3B8DC2A08BEA700B4540B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B8DB2A08BEA700B4540B /* Assets.xcassets */; };
@@ -201,7 +202,9 @@
 				3555D7222BC6DE6600709871 /* rAthenaRyml in Frameworks */,
 				358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */,
 				358D4C6B2BC7707400FAF45D /* ROGraphics in Frameworks */,
+				358362CD2BD55D4000821500 /* SwiftTerm in Frameworks */,
 				358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */,
+				35B367452BD6AE700018ED27 /* Terminal in Frameworks */,
 				358D4C652BC7707400FAF45D /* ROCrypto in Frameworks */,
 				351990152BC837320082EB0E /* rAthenaCommon in Frameworks */,
 				351990172BC837320082EB0E /* rAthenaLogin in Frameworks */,
@@ -211,7 +214,6 @@
 				358D4C712BC7707400FAF45D /* ROSettings in Frameworks */,
 				3519901A2BC837320082EB0E /* rAthenaMap in Frameworks */,
 				3519901D2BC837320082EB0E /* rAthenaResource in Frameworks */,
-				3514BF892B48642B0065ED89 /* Terminal in Frameworks */,
 				358D4C752BC7707400FAF45D /* ROStream in Frameworks */,
 				358D4C612BC6EBB500FAF45D /* Lua in Frameworks */,
 			);
@@ -477,7 +479,6 @@
 			);
 			name = RagnarokOffline;
 			packageProductDependencies = (
-				3514BF882B48642B0065ED89 /* Terminal */,
 				3555D7212BC6DE6600709871 /* rAthenaRyml */,
 				358D4C602BC6EBB500FAF45D /* Lua */,
 				358D4C642BC7707400FAF45D /* ROCrypto */,
@@ -496,6 +497,8 @@
 				351990192BC837320082EB0E /* rAthenaMap */,
 				3519901C2BC837320082EB0E /* rAthenaResource */,
 				3519901E2BC837320082EB0E /* rAthenaWeb */,
+				358362CC2BD55D4000821500 /* SwiftTerm */,
+				35B367442BD6AE700018ED27 /* Terminal */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -527,7 +530,8 @@
 			);
 			mainGroup = 35B3B8CB2A08BEA600B4540B;
 			packageReferences = (
-				3514BF872B48642B0065ED89 /* XCRemoteSwiftPackageReference "Terminal" */,
+				358362CB2BD55D4000821500 /* XCRemoteSwiftPackageReference "SwiftTerm" */,
+				35B367432BD6AE700018ED27 /* XCRemoteSwiftPackageReference "Terminal" */,
 			);
 			productRefGroup = 35B3B8D52A08BEA600B4540B /* Products */;
 			projectDirPath = "";
@@ -830,7 +834,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3514BF872B48642B0065ED89 /* XCRemoteSwiftPackageReference "Terminal" */ = {
+		358362CB2BD55D4000821500 /* XCRemoteSwiftPackageReference "SwiftTerm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/migueldeicaza/SwiftTerm.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.2.1;
+			};
+		};
+		35B367432BD6AE700018ED27 /* XCRemoteSwiftPackageReference "Terminal" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dnpp73/Terminal.git";
 			requirement = {
@@ -841,11 +853,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3514BF882B48642B0065ED89 /* Terminal */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3514BF872B48642B0065ED89 /* XCRemoteSwiftPackageReference "Terminal" */;
-			productName = Terminal;
-		};
 		351990112BC837320082EB0E /* rAthenaChar */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = rAthenaChar;
@@ -877,6 +884,11 @@
 		3555D7212BC6DE6600709871 /* rAthenaRyml */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = rAthenaRyml;
+		};
+		358362CC2BD55D4000821500 /* SwiftTerm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 358362CB2BD55D4000821500 /* XCRemoteSwiftPackageReference "SwiftTerm" */;
+			productName = SwiftTerm;
 		};
 		358D4C602BC6EBB500FAF45D /* Lua */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -917,6 +929,11 @@
 		358D4C742BC7707400FAF45D /* ROStream */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ROStream;
+		};
+		35B367442BD6AE700018ED27 /* Terminal */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35B367432BD6AE700018ED27 /* XCRemoteSwiftPackageReference "Terminal" */;
+			productName = Terminal;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

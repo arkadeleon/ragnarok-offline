@@ -11,11 +11,9 @@ import rAthenaCommon
 struct ServerView: View {
     @ObservedObject var server: ObservableServer
 
-    private let terminalView = TerminalView()
-
     var body: some View {
         ZStack {
-            terminalView
+            SwiftUITerminalView(terminalView: server.terminalView)
                 .ignoresSafeArea(edges: .bottom)
 
             if server.status == .notStarted {
@@ -36,21 +34,14 @@ struct ServerView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    terminalView.clear()
+                    // Clear entire display: ^[[2J
+                    // Position cursor on top line: ^[[1;1H
+                    let escape = "\u{001B}"
+                    server.terminalView.feed(text: escape + "[2J" + escape + "[1;1H")
                 } label: {
                     Image(systemName: "trash")
                 }
             }
-        }
-        .onAppear {
-            terminalView.appendBuffer(server.cachedOutput)
-            terminalView.scrollToEnd()
-            server.outputHandler = { data in
-                terminalView.appendBuffer(data)
-            }
-        }
-        .onDisappear {
-            server.outputHandler = nil
         }
     }
 }

@@ -6,31 +6,38 @@
 //
 
 import SwiftUI
+
+struct SwiftUITerminalView: UIViewRepresentable {
+    let terminalView: TerminalView
+
+    func makeUIView(context: Context) -> TerminalView {
+        return terminalView
+    }
+
+    func updateUIView(_ uiView: UIViewType, context: Context) {
+    }
+}
+
+//import SwiftTerm
+//
+//class TerminalView: SwiftTerm.TerminalView {
+//    override var canBecomeFirstResponder: Bool {
+//        false
+//    }
+//
+//    override var canBecomeFocused: Bool {
+//        false
+//    }
+//}
+
 import Terminal
 
-struct TerminalView: UIViewRepresentable {
-    private let terminalView: Terminal.TerminalView = {
-        let terminalView = Terminal.TerminalView()
-        terminalView.terminalFontSize = 12
-        return terminalView
-    }()
+typealias TerminalView = Terminal.TerminalView
 
-    func makeUIView(context: Context) -> Terminal.TerminalView {
-        return terminalView
-    }
-
-    func updateUIView(_ terminalView: Terminal.TerminalView, context: Context) {
-    }
-
-    func appendBuffer(_ buffer: Data) {
-        terminalView.appendBuffer(buffer)
-    }
-
-    func scrollToEnd() {
-        terminalView.terminalScroll(.end)
-    }
-
-    func clear() {
-        terminalView.terminalClear(.reset)
+extension Terminal.TerminalView {
+    func feed(text: String) {
+        if let data = text.data(using: .utf8) {
+            appendBuffer(data)
+        }
     }
 }
