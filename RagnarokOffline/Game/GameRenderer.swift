@@ -95,7 +95,7 @@ class GameRenderer: NSObject, Renderer {
         scene.camera.update(size: size)
 
         let modelMatrix = matrix_rotate(matrix_identity_float4x4, Float(radians(time.truncatingRemainder(dividingBy: 8) * 360 / 8)), [0.5, 1, 0])
-        let normal = simd_float3x3(modelMatrix.inverse.transpose)
+        let normal = float3x3(modelMatrix.inverse.transpose)
         let viewMatrix = scene.camera.viewMatrix
         let projectionMatrix = scene.camera.projectionMatrix
 

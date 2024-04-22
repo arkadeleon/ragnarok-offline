@@ -9,7 +9,7 @@ import Foundation
 import ROStream
 
 public struct PAL: Encodable {
-    public var colors: [RGBAColor] = []
+    public var colors: [Color] = []
 
     public init(data: Data) throws {
         let stream = MemoryStream(data: data)
@@ -20,7 +20,7 @@ public struct PAL: Encodable {
         }
 
         for _ in 0..<256 {
-            let color = try RGBAColor(from: reader)
+            let color = try Color(from: reader)
             colors.append(color)
         }
     }

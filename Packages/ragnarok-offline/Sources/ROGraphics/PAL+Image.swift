@@ -48,7 +48,7 @@ extension PAL {
         return image
     }
 
-    func cgColor(for color: RGBAColor) -> CGColor {
+    func cgColor(for color: Color) -> CGColor {
         var red = color.red
         var green = color.green
         var blue = color.blue

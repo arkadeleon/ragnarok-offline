@@ -153,14 +153,14 @@ extension RSM {
         public var textures: [String] = []
         public var textureIndexes: [Int32] = []
 
-        public var transformationMatrix: simd_float3x3
-        public var offset: simd_float3
-        public var position: simd_float3
+        public var transformationMatrix: float3x3
+        public var offset: SIMD3<Float>
+        public var position: SIMD3<Float>
         public var rotationAngle: Float
-        public var rotationAxis: simd_float3
-        public var scale: simd_float3
+        public var rotationAxis: SIMD3<Float>
+        public var scale: SIMD3<Float>
 
-        public var vertices: [simd_float3] = []
+        public var vertices: [SIMD3<Float>] = []
         public var tvertices: [TextureVertex] = []
 
         public var faces: [Face] = []
@@ -197,7 +197,7 @@ extension RSM {
                 }
             }
 
-            transformationMatrix = try simd_float3x3(
+            transformationMatrix = try float3x3(
                 [reader.readFloat(), reader.readFloat(), reader.readFloat()],
                 [reader.readFloat(), reader.readFloat(), reader.readFloat()],
                 [reader.readFloat(), reader.readFloat(), reader.readFloat()]
@@ -219,7 +219,7 @@ extension RSM {
 
             let vertexCount: Int32 = try reader.readInt()
             for _ in 0..<vertexCount {
-                let vertex: simd_float3 = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
+                let vertex: float3 = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
                 vertices.append(vertex)
             }
 
@@ -291,12 +291,12 @@ extension RSM {
 
 extension RSM {
     public struct Face: Encodable {
-        public var vertidx: simd_ushort3
-        public var tvertidx: simd_ushort3
+        public var vertidx: SIMD3<UInt16>
+        public var tvertidx: SIMD3<UInt16>
         public var textureIndex: UInt16
         public var padding: UInt16
         public var twoSide: Int32
-        public var smoothGroup: simd_int3
+        public var smoothGroup: SIMD3<Int32>
 
         init(from reader: BinaryReader, version: String) throws {
             var length: Int32 = -1
@@ -351,7 +351,7 @@ extension RSM {
 
     public struct RotationKeyframe: Encodable {
         public var frame: Int32
-        public var quaternion: simd_float4
+        public var quaternion: SIMD4<Float>
 
         init(from reader: BinaryReader) throws {
             frame = try reader.readInt()
@@ -383,9 +383,9 @@ extension RSM {
 
 extension RSM {
     public struct VolumeBox: Encodable {
-        public var size: simd_float3
-        public var position: simd_float3
-        public var rotation: simd_float3
+        public var size: SIMD3<Float>
+        public var position: SIMD3<Float>
+        public var rotation: SIMD3<Float>
         public var flag: Int32
 
         init(from reader: BinaryReader, version: String) throws {

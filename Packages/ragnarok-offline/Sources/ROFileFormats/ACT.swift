@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import simd
 import ROStream
 
 public struct ACT: Encodable {
@@ -106,11 +105,11 @@ extension ACT {
 
 extension ACT {
     public struct Layer: Encodable {
-        public var offset: simd_int2
+        public var offset: SIMD2<Int32>
         public var spriteIndex: Int32
         public var isMirrored: Int32
-        public var color = RGBAColor(red: 255, green: 255, blue: 255, alpha: 255)
-        public var scale: simd_float2 = [1, 1]
+        public var color = Color(red: 255, green: 255, blue: 255, alpha: 255)
+        public var scale: SIMD2<Float> = [1, 1]
         public var rotationAngle: Int32 = 0
         public var spriteType: Int32 = 0
         public var width: Int32 = 0
@@ -122,7 +121,7 @@ extension ACT {
             isMirrored = try reader.readInt()
 
             if version >= "2.0" {
-                color = try RGBAColor(from: reader)
+                color = try Color(from: reader)
 
                 scale.x = try reader.readFloat()
                 scale.y = scale.x

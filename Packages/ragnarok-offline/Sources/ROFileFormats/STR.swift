@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import simd
 import ROStream
 
 public struct STR: Encodable {
@@ -74,14 +73,14 @@ extension STR {
     public struct Keyframe: Encodable {
         public var frameIndex: Int32
         public var type: Int32
-        public var position: simd_float2
-        public var uv: simd_float8
-        public var xy: simd_float8
+        public var position: SIMD2<Float>
+        public var uv: SIMD8<Float>
+        public var xy: SIMD8<Float>
         public var textureIndex: Float
         public var animationType: Int32
         public var delay: Float
         public var angle: Float
-        public var color: simd_float4
+        public var color: SIMD4<Float>
         public var sourceAlpha: Int32
         public var destinationAlpha: Int32
         public var multiTexturePreset: Int32

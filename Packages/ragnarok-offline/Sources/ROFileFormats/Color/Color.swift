@@ -1,5 +1,5 @@
 //
-//  RGBAColor.swift
+//  Color.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/12/7.
@@ -7,7 +7,7 @@
 
 import ROStream
 
-public struct RGBAColor: Equatable, Encodable {
+public struct Color: Equatable, Encodable {
     public var red: UInt8
     public var green: UInt8
     public var blue: UInt8

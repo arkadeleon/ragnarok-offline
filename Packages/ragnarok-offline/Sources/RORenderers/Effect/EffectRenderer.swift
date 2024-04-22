@@ -52,9 +52,9 @@ class EffectRenderer {
 
     func render(atTime time: CFTimeInterval,
                 renderCommandEncoder: MTLRenderCommandEncoder,
-                modelMatrix: simd_float4x4,
-                viewMatrix: simd_float4x4,
-                projectionMatrix: simd_float4x4) {
+                modelMatrix: float4x4,
+                viewMatrix: float4x4,
+                projectionMatrix: float4x4) {
 
         let device = renderCommandEncoder.device
 

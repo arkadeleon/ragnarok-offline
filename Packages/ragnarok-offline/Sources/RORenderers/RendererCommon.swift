@@ -14,14 +14,14 @@ struct Fog {
     var far: Float
     var near: Float
     var factor: Float
-    var color: simd_float3
+    var color: SIMD3<Float>
 }
 
 struct Light {
     var opacity: Float
-    var ambient: simd_float3
-    var diffuse: simd_float3
-    var direction: simd_float3
+    var ambient: SIMD3<Float>
+    var diffuse: SIMD3<Float>
+    var direction: SIMD3<Float>
 }
 
 enum Formats {

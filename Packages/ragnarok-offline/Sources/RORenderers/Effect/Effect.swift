@@ -6,7 +6,6 @@
 //
 
 import Metal
-import simd
 import ROFileFormats
 import ROShaders
 
@@ -129,11 +128,11 @@ extension Effect {
         public var vertices: [EffectVertex] = []
         public var texture: MTLTexture?
 
-        public var position: simd_float2
+        public var position: SIMD2<Float>
         public var angle: Float
-        public var color: simd_float4
+        public var color: SIMD4<Float>
 
-        init(uv: simd_float8, xy: simd_float8, texture: MTLTexture?, position: simd_float2, angle: Float, color: simd_float4) {
+        init(uv: SIMD8<Float>, xy: SIMD8<Float>, texture: MTLTexture?, position: SIMD2<Float>, angle: Float, color: SIMD4<Float>) {
             let v0 = EffectVertex(
                 position: [xy[0], xy[4]],
                 textureCoordinate: [0, 0]   // [uv[0], uv[1]]

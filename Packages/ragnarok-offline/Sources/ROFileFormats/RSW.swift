@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import simd
 import ROStream
 
 public struct RSW: Encodable {
@@ -219,9 +218,9 @@ extension RSW {
             public var blockType: Int32
             public var modelName: String
             public var nodeName: String
-            public var position: simd_float3
-            public var rotation: simd_float3
-            public var scale: simd_float3
+            public var position: SIMD3<Float>
+            public var rotation: SIMD3<Float>
+            public var scale: SIMD3<Float>
 
             init(from reader: BinaryReader, version: String) throws {
                 if version >= "1.3" {
@@ -246,7 +245,7 @@ extension RSW {
 
         public struct Light: Encodable {
             public var name: String
-            public var position: simd_float3
+            public var position: SIMD3<Float>
             public var diffuse: DiffuseColor
             public var range: Float
 
@@ -261,7 +260,7 @@ extension RSW {
         public struct Sound: Encodable {
             public var name: String
             public var waveName: String
-            public var position: simd_float3
+            public var position: SIMD3<Float>
             public var volume: Float
             public var width: Int32
             public var height: Int32
@@ -282,10 +281,10 @@ extension RSW {
 
         public struct Effect: Encodable {
             public var name: String
-            public var position: simd_float3
+            public var position: SIMD3<Float>
             public var id: Int32
             public var delay: Float
-            public var parameters: simd_float4
+            public var parameters: SIMD4<Float>
 
             init(from reader: BinaryReader, version: String) throws {
                 name = try reader.readString(80, encoding: .koreanEUC)

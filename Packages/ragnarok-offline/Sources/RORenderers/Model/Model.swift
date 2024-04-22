@@ -16,14 +16,14 @@ public struct ModelMesh {
 }
 
 public struct ModelBoundingBox {
-    public var min: simd_float3 = [.infinity, .infinity, .infinity]
-    public var max: simd_float3 = [-.infinity, -.infinity, -.infinity]
+    public var min: SIMD3<Float> = [.infinity, .infinity, .infinity]
+    public var max: SIMD3<Float> = [-.infinity, -.infinity, -.infinity]
 
-    public var range: simd_float3 {
+    public var range: SIMD3<Float> {
         (max - min) / 2
     }
 
-    public var center: simd_float3 {
+    public var center: SIMD3<Float> {
         (min + max) / 2
     }
 }
@@ -32,7 +32,7 @@ public struct Model {
     public var meshes: [ModelMesh] = []
     public var boundingBox: ModelBoundingBox
 
-    public init(rsm: RSM, instance: simd_float4x4, textureProvider: (String) -> MTLTexture?) {
+    public init(rsm: RSM, instance: float4x4, textureProvider: (String) -> MTLTexture?) {
         boundingBox = ModelBoundingBox()
 
         let wrappers = rsm.nodes.map(ModelNodeWrapper.init)
@@ -67,7 +67,7 @@ public struct Model {
         }
     }
 
-    public static func createInstance(position: simd_float3, rotation: simd_float3, scale: simd_float3, width: Float, height: Float) -> simd_float4x4 {
+    public static func createInstance(position: SIMD3<Float>, rotation: SIMD3<Float>, scale: SIMD3<Float>, width: Float, height: Float) -> float4x4 {
         var matrix = matrix_identity_float4x4
         matrix = matrix_translate(matrix, [position[0] + width, position[1], position[2] + height])
         matrix = matrix_rotate(matrix, radians(rotation[2]), [0, 0, 1])  // rotateZ
@@ -88,7 +88,7 @@ class ModelNodeWrapper {
 
     var transformForChildren = matrix_identity_float4x4
 
-    var worldTransformForChildren: simd_float4x4 {
+    var worldTransformForChildren: float4x4 {
         if let parent {
             return parent.worldTransformForChildren * transformForChildren
         } else {
@@ -98,7 +98,7 @@ class ModelNodeWrapper {
 
     var transform = matrix_identity_float4x4
 
-    var worldTransform: simd_float4x4 {
+    var worldTransform: float4x4 {
         if let parent {
             return parent.worldTransformForChildren * transform
         } else {
@@ -133,11 +133,11 @@ class ModelNodeWrapper {
             transform = matrix_translate(transform, node.offset)
 //        }
 
-        transform = transform * simd_float4x4(node.transformationMatrix)
+        transform = transform * float4x4(node.transformationMatrix)
 
         let matrix = worldTransform
         for vertex in node.vertices {
-            let vertex = matrix * simd_float4(vertex, 1)
+            let vertex = matrix * SIMD4<Float>(vertex, 1)
 
             for j in 0..<3 {
                 box.min[j] = min(vertex[j], box.min[j])
@@ -150,8 +150,8 @@ class ModelNodeWrapper {
         }
     }
 
-    func compile(rsm: RSM, instance_matrix: simd_float4x4, boundingBox: ModelBoundingBox) -> [[ModelVertex]] {
-        var shadeGroup = [[simd_float3]](repeating: [], count: 32)
+    func compile(rsm: RSM, instance_matrix: float4x4, boundingBox: ModelBoundingBox) -> [[ModelVertex]] {
+        var shadeGroup = [[SIMD3<Float>]](repeating: [], count: 32)
         var shadeGroupUsed = [Bool](repeating: false, count: 32)
 
         var matrix = matrix_identity_float4x4
@@ -162,19 +162,19 @@ class ModelNodeWrapper {
 //            matrix = matrix_translate(matrix, node.offset)
 //        }
 //
-//        matrix = matrix * simd_float4x4(node.transformationMatrix)
+//        matrix = matrix * float4x4(node.transformationMatrix)
 
         // modelMatrix = instance * translate * worldTransform
         let modelViewMat = instance_matrix * matrix
         let normalMat = extractRotation(modelViewMat)
 
-        var vertices: [simd_float3] = []
+        var vertices: [SIMD3<Float>] = []
         for vertex in node.vertices {
-            let v = modelViewMat * simd_float4(vertex, 1)
+            let v = modelViewMat * SIMD4<Float>(vertex, 1)
             vertices.append([v.x, v.y, v.z])
         }
 
-        var face_normal = [simd_float3](repeating: .zero, count: node.faces.count)
+        var face_normal = [SIMD3<Float>](repeating: .zero, count: node.faces.count)
 
         let maxTexture = node.textureIndexes.max() ?? 0
         var mesh = [[ModelVertex]](repeating: [], count: Int(maxTexture) + 1)
@@ -197,13 +197,13 @@ class ModelNodeWrapper {
         return mesh
     }
 
-    func calcNormal_NONE(out: inout [simd_float3]) {
+    func calcNormal_NONE(out: inout [SIMD3<Float>]) {
         for i in 0..<out.count {
             out[i].y = -1
         }
     }
 
-    func calcNormal_FLAT(out: inout [simd_float3], normalMat: simd_float4x4, groupUsed: inout [Bool]) {
+    func calcNormal_FLAT(out: inout [SIMD3<Float>], normalMat: float4x4, groupUsed: inout [Bool]) {
         var j = 0
         for face in node.faces {
             let temp_vec = calcNormal(
@@ -212,7 +212,7 @@ class ModelNodeWrapper {
                 node.vertices[Int(face.vertidx[2])]
             )
 
-            let n = normalMat * simd_float4(temp_vec, 1)
+            let n = normalMat * SIMD4<Float>(temp_vec, 1)
             out[j] = [n.x, n.y, n.z]
 
             groupUsed[Int(face.smoothGroup[0])] = true
@@ -221,13 +221,13 @@ class ModelNodeWrapper {
         }
     }
 
-    func calcNormal_SMOOTH(normal: [simd_float3], groupUsed: [Bool], group: inout [[simd_float3]]) {
+    func calcNormal_SMOOTH(normal: [SIMD3<Float>], groupUsed: [Bool], group: inout [[SIMD3<Float>]]) {
         for j in 0..<32 {
             if groupUsed[j] == false {
                 continue
             }
 
-            group[j] = [simd_float3](repeating: .zero, count: node.vertices.count)
+            group[j] = [SIMD3<Float>](repeating: .zero, count: node.vertices.count)
             var norm = group[j]
 
             var l = 0
@@ -257,7 +257,7 @@ class ModelNodeWrapper {
         }
     }
 
-    func generate_mesh_FLAT(vert: [simd_float3], norm: [simd_float3], alpha: UInt8, mesh: inout [[ModelVertex]]) {
+    func generate_mesh_FLAT(vert: [SIMD3<Float>], norm: [SIMD3<Float>], alpha: UInt8, mesh: inout [[ModelVertex]]) {
         var k = 0
         for face in node.faces {
             let idx = face.vertidx
@@ -285,7 +285,7 @@ class ModelNodeWrapper {
         }
     }
 
-    func generate_mesh_SMOOTH(vert: [simd_float3], shadeGroup: [[simd_float3]], alpha: UInt8, mesh: inout [[ModelVertex]]) {
+    func generate_mesh_SMOOTH(vert: [SIMD3<Float>], shadeGroup: [[SIMD3<Float>]], alpha: UInt8, mesh: inout [[ModelVertex]]) {
         for face in node.faces {
             let norm = shadeGroup[Int(face.smoothGroup[0])]
             let idx = face.vertidx

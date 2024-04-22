@@ -59,10 +59,10 @@ class ModelRenderer {
 
     func render(atTime time: CFTimeInterval,
                 renderCommandEncoder: MTLRenderCommandEncoder,
-                modelMatrix: simd_float4x4,
-                viewMatrix: simd_float4x4,
-                projectionMatrix: simd_float4x4,
-                normalMatrix: simd_float3x3) {
+                modelMatrix: float4x4,
+                viewMatrix: float4x4,
+                projectionMatrix: float4x4,
+                normalMatrix: float3x3) {
 
         let device = renderCommandEncoder.device
 

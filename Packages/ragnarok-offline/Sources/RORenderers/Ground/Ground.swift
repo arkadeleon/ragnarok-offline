@@ -317,22 +317,22 @@ public struct Ground {
         return out
     }
 
-    private func getSmoothNormal(gnd: GND) -> [[simd_float3]] {
+    private func getSmoothNormal(gnd: GND) -> [[SIMD3<Float>]] {
         let width = Int(gnd.width)
         let height = Int(gnd.height)
 
         let count = width * height
-        var tmp: [simd_float3] = Array(repeating: simd_float3(), count: count)
+        var tmp: [SIMD3<Float>] = Array(repeating: SIMD3<Float>(), count: count)
 
-        let vec_in_tmp: ((Int) -> simd_float3) = { i -> simd_float3 in
+        let vec_in_tmp: ((Int) -> SIMD3<Float>) = { i -> SIMD3<Float> in
             if i >= 0 && i < tmp.count {
                 return tmp[i]
             } else {
-                return simd_float3()
+                return SIMD3<Float>()
             }
         }
 
-        let normal = Array(repeating: simd_float3(), count: 4)
+        let normal = Array(repeating: SIMD3<Float>(), count: 4)
         var normals = Array(repeating: normal, count: count)
 
         for y in 0..<height {
@@ -340,22 +340,22 @@ public struct Ground {
                 let cube = gnd.cubes[Int(x + y * width)]
 
                 if cube.topSurface > -1 /*&& surfaces[Int(cube.topSurface)].textureIndex > -1*/ {
-                    let a: simd_float3 = [
+                    let a: SIMD3<Float> = [
                         (Float(x) + 0) * 2,
                         cube.bottomLeft / 5,
                         (Float(y) + 0) * 2
                     ]
-                    let b: simd_float3 = [
+                    let b: SIMD3<Float> = [
                         (Float(x) + 1) * 2,
                         cube.bottomRight / 5,
                         (Float(y) + 0) * 2
                     ]
-                    let c: simd_float3 = [
+                    let c: SIMD3<Float> = [
                         (Float(x) + 1) * 2,
                         cube.topLeft / 5,
                         (Float(y) + 1) * 2
                     ]
-                    let d: simd_float3 = [
+                    let d: SIMD3<Float> = [
                         (Float(x) + 0) * 2,
                         cube.topRight / 5,
                         (Float(y) + 1) * 2
