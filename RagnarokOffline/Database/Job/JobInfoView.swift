@@ -15,8 +15,22 @@ struct JobInfoView: View {
     typealias BaseLevelStats = (level: Int, baseExp: Int, baseHp: Int, baseSp: Int)
     typealias JobLevelStats = (level: Int, jobExp: Int, bonusStats: String)
 
+    @State private var jobImage: CGImage?
+    @State private var skills: [Skill] = []
+
     var body: some View {
         ScrollView {
+            ZStack {
+                if let jobImage {
+                    Image(jobImage, scale: 1, label: Text(jobStats.job.description))
+                } else {
+                    Image(systemName: "person")
+                        .foregroundStyle(.tertiary)
+                        .font(.system(size: 100))
+                }
+            }
+            .frame(height: 200)
+
             DatabaseRecordInfoSection("Info") {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
                     LabeledContent("Max Weight", value: "\(jobStats.maxWeight)")
@@ -31,6 +45,17 @@ struct JobInfoView: View {
                     ForEach(baseASPD, id: \.title) { field in
                         LabeledContent(field.title, value: field.value)
                     }
+                }
+            }
+
+            if !skills.isEmpty {
+                DatabaseRecordInfoSection("Skills", verticalSpacing: 0) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                        ForEach(skills) { skill in
+                            SkillGridCell(database: database, skill: skill)
+                        }
+                    }
+                    .padding(.vertical, 20)
                 }
             }
 
@@ -110,6 +135,9 @@ struct JobInfoView: View {
         }
         .navigationTitle(jobStats.job.description)
         .navigationBarTitleDisplayMode(.inline)
+        .task {
+            await loadJobInfo()
+        }
     }
 
     private var baseASPD: [DatabaseRecordField] {
@@ -138,6 +166,21 @@ struct JobInfoView: View {
                 }
             }.joined(separator: " ")
             return (level, jobStats.jobExp[level], bonusStats)
+        }
+    }
+
+    private func loadJobInfo() async {
+        jobImage = await ClientResourceManager.shared.jobImage(gender: .male, job: jobStats.job)
+
+        do {
+            var skills: [Skill] = []
+            let skillTree = try await database.skillTree(forJobID: jobStats.job.id)
+            for s in skillTree.tree ?? [] {
+                let skill = try await database.skill(forAegisName: s.name)
+                skills.append(skill)
+            }
+            self.skills = skills
+        } catch {
         }
     }
 }

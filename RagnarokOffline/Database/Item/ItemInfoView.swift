@@ -140,7 +140,12 @@ struct ItemInfoView: View {
             break
         }
 
-        fields.append(("Gender", item.gender.description))
+        switch item.type {
+        case .weapon, .armor:
+            fields.append(("Gender", item.gender.description))
+        default:
+            break
+        }
 
         switch item.type {
         case .weapon:

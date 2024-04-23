@@ -25,7 +25,7 @@ class ObservableServer: ObservableObject {
         name = server.name
         status = server.status
 
-        terminalView = TerminalView(frame: CGRect(x: 0, y: 0, width: 1024, height: 768))
+        terminalView = TerminalView()
         terminalView.terminalFontSize = 12
 
         server.statusPublisher
