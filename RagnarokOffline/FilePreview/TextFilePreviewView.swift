@@ -9,35 +9,35 @@ import SwiftUI
 import Lua
 import ROFileSystem
 
+enum TextFilePreviewError: Error {
+    case invalidTextFile
+}
+
 struct TextFilePreviewView: View {
     let file: File
 
-    @State private var loadStatus: LoadStatus = .notYetLoaded
-    @State private var htmlString = ""
+    @State private var status: AsyncContentStatus<String> = .notYetLoaded
 
     var body: some View {
-        WebView(htmlString: htmlString, baseURL: nil)
-            .overlay {
-                if loadStatus == .loading {
-                    ProgressView()
-                }
-            }
-            .navigationTitle(file.name)
-            .navigationBarTitleDisplayMode(.inline)
-            .task {
-                await loadText()
-            }
+        AsyncContentView(status: status) { htmlString in
+            WebView(htmlString: htmlString, baseURL: nil)
+        }
+        .navigationTitle(file.name)
+        .navigationBarTitleDisplayMode(.inline)
+        .task {
+            await loadText()
+        }
     }
 
     private func loadText() async {
-        guard loadStatus == .notYetLoaded else {
+        guard case .notYetLoaded = status else {
             return
         }
 
-        loadStatus = .loading
+        status = .loading
 
         guard let type = file.type, var data = file.contents() else {
-            loadStatus = .failed
+            status = .failed(TextFilePreviewError.invalidTextFile)
             return
         }
 
@@ -54,29 +54,27 @@ struct TextFilePreviewView: View {
         var convertedString: NSString? = nil
         NSString.stringEncoding(for: data, convertedString: &convertedString, usedLossyConversion: nil)
 
-        guard let convertedString else {
-            loadStatus = .failed
-            return
+        if let convertedString {
+            let htmlString = """
+            <!doctype html>
+            <meta charset="utf-8">
+            <meta name="viewport" content="height=device-height, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+            <style>
+                code {
+                    word-wrap: break-word;
+                    white-space: -moz-pre-wrap;
+                    white-space: pre-wrap;
+                }
+            </style>
+            <pre><code>\(convertedString)</code></pre>
+            """
+            status = .loaded(htmlString)
+        } else {
+            status = .failed(TextFilePreviewError.invalidTextFile)
         }
-
-        htmlString = """
-        <!doctype html>
-        <meta charset="utf-8">
-        <meta name="viewport" content="height=device-height, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-        <style>
-            code {
-                word-wrap: break-word;
-                white-space: -moz-pre-wrap;
-                white-space: pre-wrap;
-            }
-        </style>
-        <pre><code>\(convertedString)</code></pre>
-        """
-
-        loadStatus = .loaded
     }
 }
 
 //#Preview {
-//    TextFilePreviewView(file: .regularFile(<#T##URL#>))
+//    TextFilePreviewView(file: <#T##File#>)
 //}
