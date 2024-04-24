@@ -34,7 +34,7 @@ class FilePreviewViewController: UIViewController {
         case let type where type.conforms(to: .image) || type == .ebm || type == .pal:
             UIHostingController(rootView: ImageFilePreviewView(file: file))
         case let type where type.conforms(to: .audio):
-            AudioFilePreviewViewController(file: file)
+            UIHostingController(rootView: AudioFilePreviewView(file: file))
         case .act:
             ACTPreviewViewController(file: file)
         case .gat:
