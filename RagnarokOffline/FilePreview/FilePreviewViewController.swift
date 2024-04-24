@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2023/11/16.
 //
 
+import SwiftUI
 import UIKit
 import ROFileSystem
 
@@ -29,7 +30,7 @@ class FilePreviewViewController: UIViewController {
 
         let contentViewController = switch type {
         case let type where type.conforms(to: .text) || type == .lua || type == .lub:
-            TextFilePreviewViewController(file: file)
+            UIHostingController(rootView: TextFilePreviewView(file: file))
         case let type where type.conforms(to: .image) || type == .ebm || type == .pal:
             ImageFilePreviewViewController(file: file)
         case let type where type.conforms(to: .audio):
