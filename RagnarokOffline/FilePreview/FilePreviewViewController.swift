@@ -46,7 +46,7 @@ class FilePreviewViewController: UIViewController {
         case .spr:
             UIHostingController(rootView: SPRFilePreviewView(file: file))
         case .str:
-            STRPreviewViewController(file: file)
+            UIHostingController(rootView: STRFilePreviewView(file: file))
         default:
             UIViewController()
         }
