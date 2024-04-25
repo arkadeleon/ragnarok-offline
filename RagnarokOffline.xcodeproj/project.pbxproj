@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3511C1D12B0A535A006DD639 /* GATPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D02B0A535A006DD639 /* GATPreviewViewController.swift */; };
 		3511C1D32B0A6C5D006DD639 /* RSWPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */; };
 		3511C1D52B0AF9B1006DD639 /* RSMPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D42B0AF9B1006DD639 /* RSMPreviewViewController.swift */; };
 		3511C1D92B0B05B3006DD639 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D82B0B05B3006DD639 /* GameViewController.swift */; };
@@ -93,6 +92,7 @@
 		35BE55312BD94D79003715C3 /* AudioFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55302BD94D79003715C3 /* AudioFilePreviewView.swift */; };
 		35BE55332BD9547F003715C3 /* ACTFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55322BD9547F003715C3 /* ACTFilePreviewView.swift */; };
 		35BE55352BD9574E003715C3 /* AnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55342BD9574E003715C3 /* AnimatedImageView.swift */; };
+		35BE55582BDA9FD8003715C3 /* GATFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55572BDA9FD8003715C3 /* GATFilePreviewView.swift */; };
 		35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */; };
 		35E27A832BC96AC800C11076 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A822BC96AC800C11076 /* Message.swift */; };
 		35E27A852BC96B3000C11076 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A842BC96B3000C11076 /* MessageCell.swift */; };
@@ -118,7 +118,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3511C1D02B0A535A006DD639 /* GATPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GATPreviewViewController.swift; sourceTree = "<group>"; };
 		3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWPreviewViewController.swift; sourceTree = "<group>"; };
 		3511C1D42B0AF9B1006DD639 /* RSMPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSMPreviewViewController.swift; sourceTree = "<group>"; };
 		3511C1D82B0B05B3006DD639 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -185,6 +184,7 @@
 		35BE55302BD94D79003715C3 /* AudioFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFilePreviewView.swift; sourceTree = "<group>"; };
 		35BE55322BD9547F003715C3 /* ACTFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACTFilePreviewView.swift; sourceTree = "<group>"; };
 		35BE55342BD9574E003715C3 /* AnimatedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImageView.swift; sourceTree = "<group>"; };
+		35BE55572BDA9FD8003715C3 /* GATFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GATFilePreviewView.swift; sourceTree = "<group>"; };
 		35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabaseView.swift; sourceTree = "<group>"; };
 		35E27A822BC96AC800C11076 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		35E27A842BC96B3000C11076 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
@@ -296,7 +296,7 @@
 				35BE552C2BD939AA003715C3 /* ImageFilePreviewView.swift */,
 				35BE55302BD94D79003715C3 /* AudioFilePreviewView.swift */,
 				35BE55322BD9547F003715C3 /* ACTFilePreviewView.swift */,
-				3511C1D02B0A535A006DD639 /* GATPreviewViewController.swift */,
+				35BE55572BDA9FD8003715C3 /* GATFilePreviewView.swift */,
 				3552D8752B316876004831D0 /* SPRPreviewViewController.swift */,
 				3511C1D42B0AF9B1006DD639 /* RSMPreviewViewController.swift */,
 				3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */,
@@ -575,6 +575,7 @@
 				3514BF5B2B454A040065ED89 /* SkillGridCell.swift in Sources */,
 				35239DFD2BBEF1C80039F7D5 /* ObservableSkillDatabase.swift in Sources */,
 				356508D42B10A02D00543562 /* STRPreviewViewController.swift in Sources */,
+				35BE55582BDA9FD8003715C3 /* GATFilePreviewView.swift in Sources */,
 				35B695EC2A307164006F1904 /* GameScene.swift in Sources */,
 				35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */,
 				3514BF862B4801EB0065ED89 /* JobInfoView.swift in Sources */,
@@ -613,7 +614,6 @@
 				35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */,
 				35239DFF2BBEF4510039F7D5 /* ObservableMapDatabase.swift in Sources */,
 				355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */,
-				3511C1D12B0A535A006DD639 /* GATPreviewViewController.swift in Sources */,
 				35BE55332BD9547F003715C3 /* ACTFilePreviewView.swift in Sources */,
 				353B4F1C2B451F1300605E92 /* ItemGridCell.swift in Sources */,
 				35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */,

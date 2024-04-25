@@ -38,7 +38,7 @@ class FilePreviewViewController: UIViewController {
         case .act:
             UIHostingController(rootView: ACTFilePreviewView(file: file))
         case .gat:
-            GATPreviewViewController(file: file)
+            UIHostingController(rootView: GATFilePreviewView(file: file))
         case .rsm:
             RSMPreviewViewController(file: file)
         case .rsw:

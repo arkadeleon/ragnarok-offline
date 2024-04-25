@@ -27,7 +27,6 @@ struct ACTFilePreviewView: View {
 
     struct Action: Hashable {
         var index: Int
-        var size: CGSize
         var animatedImage: AnimatedImage
 
         func hash(into hasher: inout Hasher) {
@@ -62,11 +61,11 @@ struct ACTFilePreviewView: View {
         .navigationTitle(file.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            await loadActionSections()
+            await loadACTFile()
         }
     }
 
-    private func loadActionSections() async {
+    private func loadACTFile() async {
         guard case .notYetLoaded = status else {
             return
         }
@@ -124,7 +123,7 @@ struct ACTFilePreviewView: View {
                 )
             }
             let actions = animatedImages.enumerated().map { (index, animatedImage) in
-                Action(index: index, size: size, animatedImage: animatedImage)
+                Action(index: index, animatedImage: animatedImage)
             }
             let actionSection = ActionSection(index: 0, actionSize: size, actions: actions)
             status = .loaded([actionSection])
@@ -141,7 +140,7 @@ struct ACTFilePreviewView: View {
                     )
                 }
                 let actions = animatedImages.enumerated().map { (index, animatedImage) in
-                    Action(index: startIndex + index, size: size, animatedImage: animatedImage)
+                    Action(index: startIndex + index, animatedImage: animatedImage)
                 }
                 let actionSection = ActionSection(index: sectionIndex, actionSize: size, actions: actions)
                 return actionSection
