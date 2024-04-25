@@ -15,23 +15,15 @@ enum ACTFilePreviewError: Error {
 }
 
 struct ACTFilePreviewView: View {
-    struct ActionSection: Hashable {
+    struct ActionSection {
         var index: Int
         var actionSize: CGSize
         var actions: [Action]
-
-        func hash(into hasher: inout Hasher) {
-            index.hash(into: &hasher)
-        }
     }
 
-    struct Action: Hashable {
+    struct Action {
         var index: Int
         var animatedImage: AnimatedImage
-
-        func hash(into hasher: inout Hasher) {
-            index.hash(into: &hasher)
-        }
     }
 
     let file: File

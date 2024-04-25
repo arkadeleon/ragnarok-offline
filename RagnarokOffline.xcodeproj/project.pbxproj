@@ -42,7 +42,6 @@
 		353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */; };
 		353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F172B44FFE100605E92 /* SkillInfoView.swift */; };
 		353B4F1C2B451F1300605E92 /* ItemGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F1B2B451F1300605E92 /* ItemGridCell.swift */; };
-		3552D8762B316876004831D0 /* SPRPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8752B316876004831D0 /* SPRPreviewViewController.swift */; };
 		3552D8782B3182A8004831D0 /* AnimatedImageActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */; };
 		3552D87A2B318323004831D0 /* StillImageActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3552D8792B318323004831D0 /* StillImageActivityItem.swift */; };
 		3555D7222BC6DE6600709871 /* rAthenaRyml in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D7212BC6DE6600709871 /* rAthenaRyml */; };
@@ -93,6 +92,7 @@
 		35BE55332BD9547F003715C3 /* ACTFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55322BD9547F003715C3 /* ACTFilePreviewView.swift */; };
 		35BE55352BD9574E003715C3 /* AnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55342BD9574E003715C3 /* AnimatedImageView.swift */; };
 		35BE55582BDA9FD8003715C3 /* GATFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55572BDA9FD8003715C3 /* GATFilePreviewView.swift */; };
+		35BE555A2BDAA929003715C3 /* SPRFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55592BDAA929003715C3 /* SPRFilePreviewView.swift */; };
 		35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */; };
 		35E27A832BC96AC800C11076 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A822BC96AC800C11076 /* Message.swift */; };
 		35E27A852BC96B3000C11076 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A842BC96B3000C11076 /* MessageCell.swift */; };
@@ -143,7 +143,6 @@
 		353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillDatabaseView.swift; sourceTree = "<group>"; };
 		353B4F172B44FFE100605E92 /* SkillInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillInfoView.swift; sourceTree = "<group>"; };
 		353B4F1B2B451F1300605E92 /* ItemGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemGridCell.swift; sourceTree = "<group>"; };
-		3552D8752B316876004831D0 /* SPRPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPRPreviewViewController.swift; sourceTree = "<group>"; };
 		3552D8772B3182A8004831D0 /* AnimatedImageActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImageActivityItem.swift; sourceTree = "<group>"; };
 		3552D8792B318323004831D0 /* StillImageActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillImageActivityItem.swift; sourceTree = "<group>"; };
 		3555E1162B7D12D9007CE4BA /* TerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
@@ -185,6 +184,7 @@
 		35BE55322BD9547F003715C3 /* ACTFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACTFilePreviewView.swift; sourceTree = "<group>"; };
 		35BE55342BD9574E003715C3 /* AnimatedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImageView.swift; sourceTree = "<group>"; };
 		35BE55572BDA9FD8003715C3 /* GATFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GATFilePreviewView.swift; sourceTree = "<group>"; };
+		35BE55592BDAA929003715C3 /* SPRFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPRFilePreviewView.swift; sourceTree = "<group>"; };
 		35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabaseView.swift; sourceTree = "<group>"; };
 		35E27A822BC96AC800C11076 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		35E27A842BC96B3000C11076 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
@@ -297,9 +297,9 @@
 				35BE55302BD94D79003715C3 /* AudioFilePreviewView.swift */,
 				35BE55322BD9547F003715C3 /* ACTFilePreviewView.swift */,
 				35BE55572BDA9FD8003715C3 /* GATFilePreviewView.swift */,
-				3552D8752B316876004831D0 /* SPRPreviewViewController.swift */,
 				3511C1D42B0AF9B1006DD639 /* RSMPreviewViewController.swift */,
 				3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */,
+				35BE55592BDAA929003715C3 /* SPRFilePreviewView.swift */,
 				356508D32B10A02D00543562 /* STRPreviewViewController.swift */,
 				356BF6832B04F569005B67F7 /* ImageCollectionViewCell.swift */,
 			);
@@ -580,7 +580,6 @@
 				35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */,
 				3514BF862B4801EB0065ED89 /* JobInfoView.swift in Sources */,
 				3514BF822B4801D70065ED89 /* JobDatabaseView.swift in Sources */,
-				3552D8762B316876004831D0 /* SPRPreviewViewController.swift in Sources */,
 				35239E052BC2D5D60039F7D5 /* ProgressHUD.swift in Sources */,
 				356BF6882B060243005B67F7 /* FilePreviewViewController.swift in Sources */,
 				35BE552F2BD94053003715C3 /* AsyncContentView.swift in Sources */,
@@ -604,6 +603,7 @@
 				355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */,
 				3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */,
 				3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */,
+				35BE555A2BDAA929003715C3 /* SPRFilePreviewView.swift in Sources */,
 				35239E032BC29F660039F7D5 /* EmptyContentView.swift in Sources */,
 				35652B472B960D370075AD71 /* MapInfoView.swift in Sources */,
 				3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */,
