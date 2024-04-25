@@ -56,7 +56,6 @@
 		35652B432B960D100075AD71 /* MapDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B422B960D100075AD71 /* MapDatabaseView.swift */; };
 		35652B452B960D2D0075AD71 /* MapGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B442B960D2D0075AD71 /* MapGridCell.swift */; };
 		35652B472B960D370075AD71 /* MapInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B462B960D370075AD71 /* MapInfoView.swift */; };
-		356BF6822B04F54A005B67F7 /* ACTPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6812B04F54A005B67F7 /* ACTPreviewViewController.swift */; };
 		356BF6842B04F569005B67F7 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6832B04F569005B67F7 /* ImageCollectionViewCell.swift */; };
 		356BF6862B05FF59005B67F7 /* FilePreviewPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6852B05FF59005B67F7 /* FilePreviewPageViewController.swift */; };
 		356BF6882B060243005B67F7 /* FilePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6872B060243005B67F7 /* FilePreviewViewController.swift */; };
@@ -92,6 +91,8 @@
 		35BE552D2BD939AA003715C3 /* ImageFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE552C2BD939AA003715C3 /* ImageFilePreviewView.swift */; };
 		35BE552F2BD94053003715C3 /* AsyncContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE552E2BD94053003715C3 /* AsyncContentView.swift */; };
 		35BE55312BD94D79003715C3 /* AudioFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55302BD94D79003715C3 /* AudioFilePreviewView.swift */; };
+		35BE55332BD9547F003715C3 /* ACTFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55322BD9547F003715C3 /* ACTFilePreviewView.swift */; };
+		35BE55352BD9574E003715C3 /* AnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55342BD9574E003715C3 /* AnimatedImageView.swift */; };
 		35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */; };
 		35E27A832BC96AC800C11076 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A822BC96AC800C11076 /* Message.swift */; };
 		35E27A852BC96B3000C11076 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A842BC96B3000C11076 /* MessageCell.swift */; };
@@ -155,7 +156,6 @@
 		35652B422B960D100075AD71 /* MapDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDatabaseView.swift; sourceTree = "<group>"; };
 		35652B442B960D2D0075AD71 /* MapGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapGridCell.swift; sourceTree = "<group>"; };
 		35652B462B960D370075AD71 /* MapInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInfoView.swift; sourceTree = "<group>"; };
-		356BF6812B04F54A005B67F7 /* ACTPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACTPreviewViewController.swift; sourceTree = "<group>"; };
 		356BF6832B04F569005B67F7 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		356BF6852B05FF59005B67F7 /* FilePreviewPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePreviewPageViewController.swift; sourceTree = "<group>"; };
 		356BF6872B060243005B67F7 /* FilePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePreviewViewController.swift; sourceTree = "<group>"; };
@@ -183,6 +183,8 @@
 		35BE552C2BD939AA003715C3 /* ImageFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilePreviewView.swift; sourceTree = "<group>"; };
 		35BE552E2BD94053003715C3 /* AsyncContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentView.swift; sourceTree = "<group>"; };
 		35BE55302BD94D79003715C3 /* AudioFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFilePreviewView.swift; sourceTree = "<group>"; };
+		35BE55322BD9547F003715C3 /* ACTFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACTFilePreviewView.swift; sourceTree = "<group>"; };
+		35BE55342BD9574E003715C3 /* AnimatedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImageView.swift; sourceTree = "<group>"; };
 		35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabaseView.swift; sourceTree = "<group>"; };
 		35E27A822BC96AC800C11076 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		35E27A842BC96B3000C11076 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
@@ -293,7 +295,7 @@
 				35BE55282BD92D52003715C3 /* TextFilePreviewView.swift */,
 				35BE552C2BD939AA003715C3 /* ImageFilePreviewView.swift */,
 				35BE55302BD94D79003715C3 /* AudioFilePreviewView.swift */,
-				356BF6812B04F54A005B67F7 /* ACTPreviewViewController.swift */,
+				35BE55322BD9547F003715C3 /* ACTFilePreviewView.swift */,
 				3511C1D02B0A535A006DD639 /* GATPreviewViewController.swift */,
 				3552D8752B316876004831D0 /* SPRPreviewViewController.swift */,
 				3511C1D42B0AF9B1006DD639 /* RSMPreviewViewController.swift */,
@@ -337,6 +339,7 @@
 				35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */,
 				3555E1162B7D12D9007CE4BA /* TerminalView.swift */,
 				355BC18B2B8F25C0002F0586 /* WebView.swift */,
+				35BE55342BD9574E003715C3 /* AnimatedImageView.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -575,7 +578,6 @@
 				35B695EC2A307164006F1904 /* GameScene.swift in Sources */,
 				35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */,
 				3514BF862B4801EB0065ED89 /* JobInfoView.swift in Sources */,
-				356BF6822B04F54A005B67F7 /* ACTPreviewViewController.swift in Sources */,
 				3514BF822B4801D70065ED89 /* JobDatabaseView.swift in Sources */,
 				3552D8762B316876004831D0 /* SPRPreviewViewController.swift in Sources */,
 				35239E052BC2D5D60039F7D5 /* ProgressHUD.swift in Sources */,
@@ -583,6 +585,7 @@
 				35BE552F2BD94053003715C3 /* AsyncContentView.swift in Sources */,
 				3514BF622B4560730065ED89 /* MonsterInfoView.swift in Sources */,
 				3514BF5E2B4557950065ED89 /* MonsterDatabaseView.swift in Sources */,
+				35BE55352BD9574E003715C3 /* AnimatedImageView.swift in Sources */,
 				3552D8782B3182A8004831D0 /* AnimatedImageActivityItem.swift in Sources */,
 				35652B452B960D2D0075AD71 /* MapGridCell.swift in Sources */,
 				35BE55312BD94D79003715C3 /* AudioFilePreviewView.swift in Sources */,
@@ -611,6 +614,7 @@
 				35239DFF2BBEF4510039F7D5 /* ObservableMapDatabase.swift in Sources */,
 				355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */,
 				3511C1D12B0A535A006DD639 /* GATPreviewViewController.swift in Sources */,
+				35BE55332BD9547F003715C3 /* ACTFilePreviewView.swift in Sources */,
 				353B4F1C2B451F1300605E92 /* ItemGridCell.swift in Sources */,
 				35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */,
 				3582FFCA2B8DB9FE00E746D7 /* FilePreviewPageView.swift in Sources */,

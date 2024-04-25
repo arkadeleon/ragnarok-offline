@@ -6,6 +6,7 @@
 //
 
 import CoreGraphics
+import CoreTransferable
 import ImageIO
 import UniformTypeIdentifiers
 
@@ -25,5 +26,43 @@ public struct StillImage: Hashable {
         CGImageDestinationFinalize(imageDestination)
 
         return data as Data
+    }
+}
+
+extension StillImage: Transferable {
+    public static var transferRepresentation: some TransferRepresentation {
+        DataRepresentation(exportedContentType: .png) { stillImage in
+            guard let data = stillImage.pngData() else {
+                throw NSError(domain: kCFErrorDomainCGImageMetadata as String, code: Int(CGImageMetadataErrors.unknown.rawValue))
+            }
+            return data
+        }
+    }
+}
+
+extension StillImage {
+    public struct Named: Hashable {
+        var name: String
+        var image: StillImage
+    }
+
+    public func named(_ name: String) -> Named {
+        Named(name: name, image: self)
+    }
+}
+
+extension StillImage.Named: Transferable {
+    public static var transferRepresentation: some TransferRepresentation {
+        FileRepresentation(exportedContentType: .png) { namedStillImage in
+            guard let data = namedStillImage.image.pngData() else {
+                throw NSError(domain: kCFErrorDomainCGImageMetadata as String, code: Int(CGImageMetadataErrors.unknown.rawValue))
+            }
+
+            let url = FileManager.default.temporaryDirectory.appending(path: namedStillImage.name)
+            try data.write(to: url)
+
+            let file = SentTransferredFile(url)
+            return file
+        }
     }
 }
