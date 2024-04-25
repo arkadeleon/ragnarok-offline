@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3511C1D32B0A6C5D006DD639 /* RSWPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */; };
 		3511C1D92B0B05B3006DD639 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D82B0B05B3006DD639 /* GameViewController.swift */; };
 		3514BF452B4526F40065ED89 /* ItemInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF442B4526F40065ED89 /* ItemInfoView.swift */; };
 		3514BF5B2B454A040065ED89 /* SkillGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF5A2B454A040065ED89 /* SkillGridCell.swift */; };
@@ -93,6 +92,7 @@
 		35BE555A2BDAA929003715C3 /* SPRFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55592BDAA929003715C3 /* SPRFilePreviewView.swift */; };
 		35BE555C2BDAAFBF003715C3 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE555B2BDAAFBF003715C3 /* MetalView.swift */; };
 		35BE555E2BDAAFFF003715C3 /* RSMFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE555D2BDAAFFF003715C3 /* RSMFilePreviewView.swift */; };
+		35BE55602BDAB2A7003715C3 /* RSWFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE555F2BDAB2A7003715C3 /* RSWFilePreviewView.swift */; };
 		35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */; };
 		35E27A832BC96AC800C11076 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A822BC96AC800C11076 /* Message.swift */; };
 		35E27A852BC96B3000C11076 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A842BC96B3000C11076 /* MessageCell.swift */; };
@@ -118,7 +118,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWPreviewViewController.swift; sourceTree = "<group>"; };
 		3511C1D82B0B05B3006DD639 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		3514BF442B4526F40065ED89 /* ItemInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemInfoView.swift; sourceTree = "<group>"; };
 		3514BF5A2B454A040065ED89 /* SkillGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillGridCell.swift; sourceTree = "<group>"; };
@@ -185,6 +184,7 @@
 		35BE55592BDAA929003715C3 /* SPRFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPRFilePreviewView.swift; sourceTree = "<group>"; };
 		35BE555B2BDAAFBF003715C3 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
 		35BE555D2BDAAFFF003715C3 /* RSMFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSMFilePreviewView.swift; sourceTree = "<group>"; };
+		35BE555F2BDAB2A7003715C3 /* RSWFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSWFilePreviewView.swift; sourceTree = "<group>"; };
 		35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabaseView.swift; sourceTree = "<group>"; };
 		35E27A822BC96AC800C11076 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		35E27A842BC96B3000C11076 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
@@ -298,7 +298,7 @@
 				35BE55322BD9547F003715C3 /* ACTFilePreviewView.swift */,
 				35BE55572BDA9FD8003715C3 /* GATFilePreviewView.swift */,
 				35BE555D2BDAAFFF003715C3 /* RSMFilePreviewView.swift */,
-				3511C1D22B0A6C5D006DD639 /* RSWPreviewViewController.swift */,
+				35BE555F2BDAB2A7003715C3 /* RSWFilePreviewView.swift */,
 				35BE55592BDAA929003715C3 /* SPRFilePreviewView.swift */,
 				356508D32B10A02D00543562 /* STRPreviewViewController.swift */,
 			);
@@ -611,6 +611,7 @@
 				3514BF452B4526F40065ED89 /* ItemInfoView.swift in Sources */,
 				3511C1D92B0B05B3006DD639 /* GameViewController.swift in Sources */,
 				35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */,
+				35BE55602BDAB2A7003715C3 /* RSWFilePreviewView.swift in Sources */,
 				35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */,
 				35239DFF2BBEF4510039F7D5 /* ObservableMapDatabase.swift in Sources */,
 				355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */,
@@ -624,7 +625,6 @@
 				3514BF842B4801E20065ED89 /* JobGridCell.swift in Sources */,
 				35BE555C2BDAAFBF003715C3 /* MetalView.swift in Sources */,
 				35BE552D2BD939AA003715C3 /* ImageFilePreviewView.swift in Sources */,
-				3511C1D32B0A6C5D006DD639 /* RSWPreviewViewController.swift in Sources */,
 				3514BF602B455EF90065ED89 /* MonsterGridCell.swift in Sources */,
 				35E27A832BC96AC800C11076 /* Message.swift in Sources */,
 				3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */,

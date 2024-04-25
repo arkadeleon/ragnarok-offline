@@ -42,7 +42,7 @@ class FilePreviewViewController: UIViewController {
         case .rsm:
             UIHostingController(rootView: RSMFilePreviewView(file: file))
         case .rsw:
-            RSWPreviewViewController(file: file)
+            UIHostingController(rootView: RSWFilePreviewView(file: file))
         case .spr:
             UIHostingController(rootView: SPRFilePreviewView(file: file))
         case .str:
