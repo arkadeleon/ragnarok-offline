@@ -22,8 +22,6 @@ struct TextFilePreviewView: View {
         AsyncContentView(status: status) { htmlString in
             WebView(htmlString: htmlString, baseURL: nil)
         }
-        .navigationTitle(file.name)
-        .navigationBarTitleDisplayMode(.inline)
         .task {
             await loadText()
         }

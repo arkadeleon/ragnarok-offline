@@ -39,8 +39,6 @@ struct AudioFilePreviewView: View {
                 }
             }
         }
-        .navigationTitle(file.name)
-        .navigationBarTitleDisplayMode(.inline)
         .task {
             try? AVAudioSession.sharedInstance().setCategory(.playback)
             try? AVAudioSession.sharedInstance().setActive(true)

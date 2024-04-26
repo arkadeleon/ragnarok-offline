@@ -30,8 +30,6 @@ struct STRFilePreviewView: View {
                         }
                 )
         }
-        .navigationTitle(file.name)
-        .navigationBarTitleDisplayMode(.inline)
         .task {
             await loadSTRFile()
         }

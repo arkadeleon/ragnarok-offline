@@ -50,8 +50,6 @@ struct ACTFilePreviewView: View {
                 }
             }
         }
-        .navigationTitle(file.name)
-        .navigationBarTitleDisplayMode(.inline)
         .task {
             await loadACTFile()
         }

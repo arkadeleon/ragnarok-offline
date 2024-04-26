@@ -47,8 +47,6 @@ struct SPRFilePreviewView: View {
                 .padding(32)
             }
         }
-        .navigationTitle(file.name)
-        .navigationBarTitleDisplayMode(.inline)
         .task {
             await loadSPRFile()
         }

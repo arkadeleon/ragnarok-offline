@@ -30,8 +30,6 @@ struct RSMFilePreviewView: View {
                         }
                 )
         }
-        .navigationTitle(file.name)
-        .navigationBarTitleDisplayMode(.inline)
         .task {
             await loadRSMFile()
         }

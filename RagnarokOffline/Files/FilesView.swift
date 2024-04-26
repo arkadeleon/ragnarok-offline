@@ -94,7 +94,7 @@ struct FilesView: View {
             filterFiles()
         }
         .sheet(item: $previewingFile) { file in
-            FilePreviewPageView(file: file, files: filteredFiles.filter({ $0.canPreview }))
+            FilePreviewTabView(files: filteredFiles.filter({ $0.canPreview }), currentFile: file)
         }
         .sheet(item: $inspectingRawDataFile) { file in
             FileRawDataView(file: file)

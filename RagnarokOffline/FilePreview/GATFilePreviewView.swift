@@ -24,8 +24,6 @@ struct GATFilePreviewView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
         }
-        .navigationTitle(file.name)
-        .navigationBarTitleDisplayMode(.inline)
         .task {
             await loadGATFile()
         }
