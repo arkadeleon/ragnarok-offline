@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3511C1D92B0B05B3006DD639 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3511C1D82B0B05B3006DD639 /* GameViewController.swift */; };
 		3514BF452B4526F40065ED89 /* ItemInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF442B4526F40065ED89 /* ItemInfoView.swift */; };
 		3514BF5B2B454A040065ED89 /* SkillGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF5A2B454A040065ED89 /* SkillGridCell.swift */; };
 		3514BF5E2B4557950065ED89 /* MonsterDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF5D2B4557950065ED89 /* MonsterDatabaseView.swift */; };
@@ -114,7 +113,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3511C1D82B0B05B3006DD639 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		3514BF442B4526F40065ED89 /* ItemInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemInfoView.swift; sourceTree = "<group>"; };
 		3514BF5A2B454A040065ED89 /* SkillGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillGridCell.swift; sourceTree = "<group>"; };
 		3514BF5D2B4557950065ED89 /* MonsterDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDatabaseView.swift; sourceTree = "<group>"; };
@@ -408,7 +406,6 @@
 				35B3B9722A08C01600B4540B /* GameRenderer.swift */,
 				35B695EB2A307164006F1904 /* GameScene.swift */,
 				35B695E92A305EF6006F1904 /* GameView.swift */,
-				3511C1D82B0B05B3006DD639 /* GameViewController.swift */,
 				35B3B9702A08C01600B4540B /* Shaders.metal */,
 				35B3B9712A08C01600B4540B /* ShaderTypes.h */,
 				35B3B9732A08C01600B4540B /* wall.jpg */,
@@ -584,7 +581,6 @@
 				353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */,
 				35BE55622BDAB6EC003715C3 /* STRFilePreviewView.swift in Sources */,
 				3514BF452B4526F40065ED89 /* ItemInfoView.swift in Sources */,
-				3511C1D92B0B05B3006DD639 /* GameViewController.swift in Sources */,
 				35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */,
 				35BE55602BDAB2A7003715C3 /* RSWFilePreviewView.swift in Sources */,
 				35BE55642BDAB834003715C3 /* FilePreviewView.swift in Sources */,

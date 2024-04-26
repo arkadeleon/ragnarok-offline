@@ -55,9 +55,6 @@ struct ContentView: View {
 
                 NavigationLink {
                     GameView()
-                        .ignoresSafeArea()
-                        .navigationTitle("Cube")
-                        .navigationBarTitleDisplayMode(.inline)
                 } label: {
                     Label("Cube", systemImage: "cube")
                 }
