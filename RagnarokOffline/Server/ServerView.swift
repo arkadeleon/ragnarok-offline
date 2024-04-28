@@ -30,7 +30,6 @@ struct ServerView: View {
             }
         }
         .navigationTitle(server.name)
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {

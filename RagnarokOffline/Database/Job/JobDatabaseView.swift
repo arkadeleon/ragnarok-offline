@@ -34,7 +34,6 @@ struct JobDatabaseView: View {
         }
         .databaseNavigationDestinations(database: jobDatabase.database)
         .navigationTitle("Job Database")
-        .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $jobDatabase.searchText)
         .onSubmit(of: .search) {
             jobDatabase.filterJobs()

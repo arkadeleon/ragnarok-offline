@@ -46,7 +46,6 @@ struct MapInfoView: View {
             }
         }
         .navigationTitle(map.name)
-        .navigationBarTitleDisplayMode(.inline)
         .task {
             await loadMapInfo()
         }

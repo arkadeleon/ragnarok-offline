@@ -33,7 +33,6 @@ struct SkillDatabaseView: View {
         }
         .databaseNavigationDestinations(database: skillDatabase.database)
         .navigationTitle("Skill Database")
-        .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $skillDatabase.searchText)
         .onSubmit(of: .search) {
             skillDatabase.filterSkills()

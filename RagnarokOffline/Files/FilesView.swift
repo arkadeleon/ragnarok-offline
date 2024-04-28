@@ -74,7 +74,6 @@ struct FilesView: View {
             FilesView(title: file.name, directory: file)
         }
         .navigationTitle(title)
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             Menu {
                 Button {

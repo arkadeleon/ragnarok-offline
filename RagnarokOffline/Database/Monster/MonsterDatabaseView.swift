@@ -34,7 +34,6 @@ struct MonsterDatabaseView: View {
         }
         .databaseNavigationDestinations(database: monsterDatabase.database)
         .navigationTitle("Monster Database")
-        .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $monsterDatabase.searchText)
         .onSubmit(of: .search) {
             monsterDatabase.filterMonsters()

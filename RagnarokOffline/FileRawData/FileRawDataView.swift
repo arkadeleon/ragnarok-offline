@@ -47,7 +47,9 @@ struct FileRawDataView: View {
             WebView(htmlString: htmlString, baseURL: baseURL)
                 .ignoresSafeArea()
                 .navigationTitle("Raw Data")
+                #if !os(macOS)
                 .navigationBarTitleDisplayMode(.inline)
+                #endif
         }
     }
 }

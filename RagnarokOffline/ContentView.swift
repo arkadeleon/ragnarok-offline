@@ -62,6 +62,9 @@ struct ContentView: View {
                 if let item = selectedItem {
                     NavigationStack {
                         detail(for: item)
+                            #if !os(macOS)
+                            .navigationBarTitleDisplayMode(.inline)
+                            #endif
                     }
                 }
             }
@@ -77,6 +80,9 @@ struct ContentView: View {
                 }
                 .navigationDestination(for: Item.self) { item in
                     detail(for: item)
+                        #if !os(macOS)
+                        .navigationBarTitleDisplayMode(.inline)
+                        #endif
                 }
                 .navigationTitle("Ragnarok Offline")
                 .toolbar {

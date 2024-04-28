@@ -99,7 +99,6 @@ struct MonsterInfoView: View {
             }
         }
         .navigationTitle(monster.name)
-        .navigationBarTitleDisplayMode(.inline)
         .task {
             await loadMonsterInfo()
         }

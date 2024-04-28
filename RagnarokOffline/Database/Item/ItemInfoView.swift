@@ -96,7 +96,6 @@ struct ItemInfoView: View {
             }
         }
         .navigationTitle(title)
-        .navigationBarTitleDisplayMode(.inline)
         .task {
             await loadItemInfo()
         }

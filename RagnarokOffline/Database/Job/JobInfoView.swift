@@ -136,7 +136,6 @@ struct JobInfoView: View {
             }
         }
         .navigationTitle(jobStats.job.description)
-        .navigationBarTitleDisplayMode(.inline)
         .task {
             await loadJobInfo()
         }

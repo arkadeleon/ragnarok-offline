@@ -24,7 +24,9 @@ struct FilePreviewTabView: View {
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             .navigationTitle(currentFile.name)
+            #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {

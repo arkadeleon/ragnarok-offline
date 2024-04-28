@@ -42,7 +42,6 @@ struct MessagesView: View {
             .padding()
         }
         .navigationTitle("Messages")
-        .navigationBarTitleDisplayMode(.inline)
         .alert("", isPresented: $isLoginAlertPresented) {
             TextField("Username", text: $username)
             TextField("Password", text: $password)

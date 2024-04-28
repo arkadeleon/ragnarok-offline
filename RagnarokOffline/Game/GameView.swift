@@ -40,6 +40,5 @@ struct GameView: View {
                     }
             )
             .navigationTitle("Cube")
-            .navigationBarTitleDisplayMode(.inline)
     }
 }

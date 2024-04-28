@@ -31,7 +31,6 @@ struct SkillInfoView: View {
             }
         }
         .navigationTitle(skill.name)
-        .navigationBarTitleDisplayMode(.inline)
         .task {
             await loadSkillInfo()
         }
