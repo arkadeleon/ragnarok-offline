@@ -9,62 +9,57 @@ import SwiftUI
 import RODatabase
 
 struct MonsterGridCell: View {
-    let database: Database
     let monster: Monster
     let secondaryText: String?
 
     @State private var monsterImage: CGImage?
 
     var body: some View {
-        NavigationLink {
-            MonsterInfoView(database: database, monster: monster)
-        } label: {
-            VStack {
-                ZStack {
-                    if let monsterImage {
-                        if monsterImage.width > 80 || monsterImage.height > 80 {
-                            Image(monsterImage, scale: 1, label: Text(monster.name))
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        } else {
-                            Image(monsterImage, scale: 1, label: Text(monster.name))
-                        }
+        VStack {
+            ZStack {
+                if let monsterImage {
+                    if monsterImage.width > 80 || monsterImage.height > 80 {
+                        Image(monsterImage, scale: 1, label: Text(monster.name))
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
                     } else {
-                        Image(systemName: "pawprint")
-                            .foregroundStyle(.tertiary)
-                            .font(.system(size: 35))
+                        Image(monsterImage, scale: 1, label: Text(monster.name))
                     }
+                } else {
+                    Image(systemName: "pawprint")
+                        .foregroundStyle(.tertiary)
+                        .font(.system(size: 35))
                 }
-                .frame(width: 80, height: 80)
+            }
+            .frame(width: 80, height: 80)
 
-                ZStack(alignment: .top) {
-                    // This VStack is just for reserving space.
-                    VStack(spacing: 2) {
-                        Text(" ")
-                            .font(.subheadline)
-                            .lineLimit(2, reservesSpace: true)
+            ZStack(alignment: .top) {
+                // This VStack is just for reserving space.
+                VStack(spacing: 2) {
+                    Text(" ")
+                        .font(.subheadline)
+                        .lineLimit(2, reservesSpace: true)
 
-                        Text(" ")
-                            .lineLimit(1, reservesSpace: true)
-                    }
+                    Text(" ")
+                        .lineLimit(1, reservesSpace: true)
+                }
 
-                    VStack(spacing: 2) {
-                        Text(monster.name)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .foregroundColor(.primary)
-                            .font(.subheadline)
-                            .lineLimit(2, reservesSpace: false)
+                VStack(spacing: 2) {
+                    Text(monster.name)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .foregroundColor(.primary)
+                        .font(.subheadline)
+                        .lineLimit(2, reservesSpace: false)
 
-                        if let secondaryText {
-                            Text(secondaryText)
-                                .foregroundColor(.secondary)
-                                .lineLimit(1)
-                        }
+                    if let secondaryText {
+                        Text(secondaryText)
+                            .foregroundColor(.secondary)
+                            .lineLimit(1)
                     }
                 }
             }
-            .frame(maxHeight: .infinity, alignment: .top)
         }
+        .frame(maxHeight: .infinity, alignment: .top)
         .task {
             monsterImage = await ClientResourceManager.shared.monsterImage(monster.id)
         }

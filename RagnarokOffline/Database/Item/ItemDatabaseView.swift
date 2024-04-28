@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RODatabase
 
 struct ItemDatabaseView: View {
     @ObservedObject var itemDatabase: ObservableItemDatabase
@@ -14,7 +15,9 @@ struct ItemDatabaseView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                 ForEach(itemDatabase.filteredItems) { item in
-                    ItemGridCell(database: itemDatabase.database, item: item, secondaryText: nil)
+                    NavigationLink(value: item) {
+                        ItemGridCell(item: item, secondaryText: nil)
+                    }
                 }
             }
             .padding(20)
@@ -29,6 +32,7 @@ struct ItemDatabaseView: View {
                 EmptyContentView("No Items")
             }
         }
+        .databaseNavigationDestinations(database: itemDatabase.database)
         .navigationTitle("Item Database")
         .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $itemDatabase.searchText)

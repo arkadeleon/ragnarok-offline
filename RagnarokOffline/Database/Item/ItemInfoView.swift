@@ -86,7 +86,9 @@ struct ItemInfoView: View {
                 DatabaseRecordInfoSection("Dropping Monsters", verticalSpacing: 0) {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .leading, spacing: 30) {
                         ForEach(droppingMonsters, id: \.monster.id) { droppingMonster in
-                            MonsterGridCell(database: database, monster: droppingMonster.monster, secondaryText: "(\(NSNumber(value: Double(droppingMonster.drop.rate) / 100))%)")
+                            NavigationLink(value: droppingMonster.monster) {
+                                MonsterGridCell(monster: droppingMonster.monster, secondaryText: "(\(NSNumber(value: Double(droppingMonster.drop.rate) / 100))%)")
+                            }
                         }
                     }
                     .padding(.vertical, 30)

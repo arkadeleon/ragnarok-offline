@@ -14,7 +14,9 @@ struct SkillDatabaseView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                 ForEach(skillDatabase.filteredSkills) { skill in
-                    SkillGridCell(database: skillDatabase.database, skill: skill)
+                    NavigationLink(value: skill) {
+                        SkillGridCell(skill: skill)
+                    }
                 }
             }
             .padding(20)
@@ -29,6 +31,7 @@ struct SkillDatabaseView: View {
                 EmptyContentView("No Skills")
             }
         }
+        .databaseNavigationDestinations(database: skillDatabase.database)
         .navigationTitle("Skill Database")
         .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $skillDatabase.searchText)

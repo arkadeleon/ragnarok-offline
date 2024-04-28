@@ -14,7 +14,9 @@ struct MonsterDatabaseView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .center, spacing: 30) {
                 ForEach(monsterDatabase.filteredMonsters) { monster in
-                    MonsterGridCell(database: monsterDatabase.database, monster: monster, secondaryText: nil)
+                    NavigationLink(value: monster) {
+                        MonsterGridCell(monster: monster, secondaryText: nil)
+                    }
                 }
             }
             .padding(.horizontal, 20)
@@ -30,6 +32,7 @@ struct MonsterDatabaseView: View {
                 EmptyContentView("No Monsters")
             }
         }
+        .databaseNavigationDestinations(database: monsterDatabase.database)
         .navigationTitle("Monster Database")
         .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $monsterDatabase.searchText)

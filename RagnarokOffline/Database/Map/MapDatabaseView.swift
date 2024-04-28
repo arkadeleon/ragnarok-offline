@@ -14,7 +14,9 @@ struct MapDatabaseView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                 ForEach(mapDatabase.filteredMaps) { map in
-                    MapGridCell(database: mapDatabase.database, map: map, secondaryText: nil)
+                    NavigationLink(value: map) {
+                        MapGridCell(map: map, secondaryText: nil)
+                    }
                 }
             }
             .padding(20)
@@ -29,6 +31,7 @@ struct MapDatabaseView: View {
                 EmptyContentView("No Maps")
             }
         }
+        .databaseNavigationDestinations(database: mapDatabase.database)
         .navigationTitle("Map Database")
         .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $mapDatabase.searchText)

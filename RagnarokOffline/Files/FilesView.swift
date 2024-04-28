@@ -25,9 +25,7 @@ struct FilesView: View {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], spacing: 30) {
                 ForEach(filteredFiles) { file in
                     if file.isDirectory || file.isArchive {
-                        NavigationLink {
-                            FilesView(title: file.name, directory: file)
-                        } label: {
+                        NavigationLink(value: file) {
                             FileGridCell(file: file)
                         }
                         .contextMenu {
@@ -71,6 +69,9 @@ struct FilesView: View {
             if loadStatus == .loaded && filteredFiles.isEmpty {
                 EmptyContentView("Empty Folder")
             }
+        }
+        .navigationDestination(for: File.self) { file in
+            FilesView(title: file.name, directory: file)
         }
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)

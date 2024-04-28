@@ -130,12 +130,6 @@ extension File: Identifiable {
     }
 }
 
-extension File: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        url.hash(into: &hasher)
-    }
-}
-
 extension File: Equatable {
     public static func == (lhs: File, rhs: File) -> Bool {
         lhs.url == rhs.url
@@ -159,5 +153,11 @@ extension File: Comparable {
         } else {
             return lhsRank < rhsRank
         }
+    }
+}
+
+extension File: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        url.hash(into: &hasher)
     }
 }

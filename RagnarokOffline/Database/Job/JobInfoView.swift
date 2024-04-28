@@ -52,7 +52,9 @@ struct JobInfoView: View {
                 DatabaseRecordInfoSection("Skills", verticalSpacing: 0) {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(skills) { skill in
-                            SkillGridCell(database: database, skill: skill)
+                            NavigationLink(value: skill) {
+                                SkillGridCell(skill: skill)
+                            }
                         }
                     }
                     .padding(.vertical, 20)

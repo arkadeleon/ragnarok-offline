@@ -63,6 +63,7 @@
 		358D4C712BC7707400FAF45D /* ROSettings in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C702BC7707400FAF45D /* ROSettings */; };
 		358D4C732BC7707400FAF45D /* ROShaders in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C722BC7707400FAF45D /* ROShaders */; };
 		358D4C752BC7707400FAF45D /* ROStream in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C742BC7707400FAF45D /* ROStream */; };
+		3590570E2BDDF2760046AE87 /* DatabaseNavigationDestinations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3590570D2BDDF2760046AE87 /* DatabaseNavigationDestinations.swift */; };
 		35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */; };
 		35B367452BD6AE700018ED27 /* Terminal in Frameworks */ = {isa = PBXBuildFile; productRef = 35B367442BD6AE700018ED27 /* Terminal */; };
 		35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */; };
@@ -148,6 +149,7 @@
 		3582FFC92B8DB9FE00E746D7 /* FilePreviewTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePreviewTabView.swift; sourceTree = "<group>"; };
 		3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileGridCell.swift; sourceTree = "<group>"; };
 		358362CA2BD558DC00821500 /* RagnarokOffline.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = RagnarokOffline.xctestplan; sourceTree = "<group>"; };
+		3590570D2BDDF2760046AE87 /* DatabaseNavigationDestinations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseNavigationDestinations.swift; sourceTree = "<group>"; };
 		35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerView.swift; sourceTree = "<group>"; };
 		35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOffline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagnarokOfflineApp.swift; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 				3514BF802B4801C30065ED89 /* Job */,
 				3514BF432B4526DE0065ED89 /* Skill */,
 				35652B412B960CFC0075AD71 /* Map */,
+				3590570D2BDDF2760046AE87 /* DatabaseNavigationDestinations.swift */,
 				3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */,
 				35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */,
 			);
@@ -563,6 +566,7 @@
 				35BE55312BD94D79003715C3 /* AudioFilePreviewView.swift in Sources */,
 				35239E012BC29A4E0039F7D5 /* ObservableItemDatabase.swift in Sources */,
 				35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */,
+				3590570E2BDDF2760046AE87 /* DatabaseNavigationDestinations.swift in Sources */,
 				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,
 				35239DFB2BBEEF890039F7D5 /* ObservableJobDatabase.swift in Sources */,
 				35B3BA1A2A08C01600B4540B /* FilesView.swift in Sources */,

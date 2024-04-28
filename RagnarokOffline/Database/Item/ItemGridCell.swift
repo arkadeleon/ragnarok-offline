@@ -9,7 +9,6 @@ import SwiftUI
 import RODatabase
 
 struct ItemGridCell: View {
-    let database: Database
     let item: Item
     let secondaryText: String?
 
@@ -17,34 +16,30 @@ struct ItemGridCell: View {
     @State private var itemDisplayName: String?
 
     var body: some View {
-        NavigationLink {
-            ItemInfoView(database: database, item: item)
-        } label: {
-            HStack {
-                ZStack {
-                    if let itemIconImage {
-                        Image(itemIconImage, scale: 1, label: Text(item.name))
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    } else {
-                        Image(systemName: "leaf")
-                            .foregroundStyle(.tertiary)
-                            .font(.system(size: 25))
-                    }
+        HStack {
+            ZStack {
+                if let itemIconImage {
+                    Image(itemIconImage, scale: 1, label: Text(item.name))
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                } else {
+                    Image(systemName: "leaf")
+                        .foregroundStyle(.tertiary)
+                        .font(.system(size: 25))
                 }
-                .frame(width: 40, height: 40)
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(primaryText)
-                        .foregroundColor(.primary)
-                        .lineLimit(1)
-
-                    Text(secondaryText ?? item.aegisName)
-                        .foregroundColor(.secondary)
-                        .lineLimit(1)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .frame(width: 40, height: 40)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(primaryText)
+                    .foregroundColor(.primary)
+                    .lineLimit(1)
+
+                Text(secondaryText ?? item.aegisName)
+                    .foregroundColor(.secondary)
+                    .lineLimit(1)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .task {
             itemIconImage = await ClientResourceBundle.shared.itemIconImage(forItem: item)

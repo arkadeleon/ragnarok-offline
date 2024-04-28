@@ -31,3 +31,9 @@ extension Map: Comparable {
         lhs.index < rhs.index
     }
 }
+
+extension Map: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        index.hash(into: &hasher)
+    }
+}

@@ -749,3 +749,9 @@ extension Skill: Comparable {
         lhs.id < rhs.id
     }
 }
+
+extension Skill: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        id.hash(into: &hasher)
+    }
+}

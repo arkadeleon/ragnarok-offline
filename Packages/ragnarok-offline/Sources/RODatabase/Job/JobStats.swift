@@ -127,3 +127,9 @@ extension JobStats: Comparable {
         lhs.job.id < rhs.job.id
     }
 }
+
+extension JobStats: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        job.id.hash(into: &hasher)
+    }
+}

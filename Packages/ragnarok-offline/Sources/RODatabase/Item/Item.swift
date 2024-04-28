@@ -424,3 +424,9 @@ extension Item: Comparable {
         lhs.id < rhs.id
     }
 }
+
+extension Item: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        id.hash(into: &hasher)
+    }
+}

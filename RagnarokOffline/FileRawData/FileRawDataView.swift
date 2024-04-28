@@ -43,7 +43,7 @@ struct FileRawDataView: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             WebView(htmlString: htmlString, baseURL: baseURL)
                 .ignoresSafeArea()
                 .navigationTitle("Raw Data")

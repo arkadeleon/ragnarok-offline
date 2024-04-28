@@ -29,7 +29,7 @@ struct SettingsView: View {
             ClientSettings.shared.itemInfoSource = $0
         }
 
-        NavigationView {
+        NavigationStack {
             Form {
                 Section("Client") {
                     Picker("Service Type", selection: serviceTypeBinding) {

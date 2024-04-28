@@ -14,7 +14,9 @@ struct JobDatabaseView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .center, spacing: 30) {
                 ForEach(jobDatabase.filteredJobs) { jobStats in
-                    JobGridCell(database: jobDatabase.database, jobStats: jobStats)
+                    NavigationLink(value: jobStats) {
+                        JobGridCell(jobStats: jobStats)
+                    }
                 }
             }
             .padding(.horizontal, 20)
@@ -30,6 +32,7 @@ struct JobDatabaseView: View {
                 EmptyContentView("No Jobs")
             }
         }
+        .databaseNavigationDestinations(database: jobDatabase.database)
         .navigationTitle("Job Database")
         .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $jobDatabase.searchText)

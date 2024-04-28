@@ -292,3 +292,9 @@ extension Monster: Comparable {
         lhs.id < rhs.id
     }
 }
+
+extension Monster: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        id.hash(into: &hasher)
+    }
+}
