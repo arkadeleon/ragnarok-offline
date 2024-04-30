@@ -6,12 +6,10 @@
 //
 
 import Metal
-import MetalKit
 import ROShaders
 
-public class RSWRenderer: NSObject, Renderer {
+public class RSWRenderer: Renderer {
     public let device: MTLDevice
-    let commandQueue: MTLCommandQueue
 
     let groundRenderer: GroundRenderer
     let waterRenderer: WaterRenderer
@@ -21,8 +19,6 @@ public class RSWRenderer: NSObject, Renderer {
 
     public init(device: MTLDevice, ground: Ground, water: Water, models: [Model]) throws {
         self.device = device
-
-        commandQueue = device.makeCommandQueue()!
 
         let library = ROCreateShadersLibrary(device)!
         groundRenderer = try GroundRenderer(device: device, library: library, ground: ground)
@@ -34,22 +30,9 @@ public class RSWRenderer: NSObject, Renderer {
         camera.minimumDistance = camera.defaultDistance - 190
         camera.maximumDistance = camera.defaultDistance + 200
         camera.farZ = 500
-
-        super.init()
     }
 
-    public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-
-    }
-
-    public func draw(in view: MTKView) {
-        guard let commandBuffer = commandQueue.makeCommandBuffer() else {
-            return
-        }
-
-        guard let renderPassDescriptor = view.currentRenderPassDescriptor else {
-            return
-        }
+    public func render(atTime time: CFTimeInterval, viewport: CGRect, commandBuffer: any MTLCommandBuffer, renderPassDescriptor: MTLRenderPassDescriptor) {
 
 //        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
@@ -57,11 +40,9 @@ public class RSWRenderer: NSObject, Renderer {
 
         renderPassDescriptor.depthAttachment.clearDepth = 1
 
-        let time = CACurrentMediaTime()
-
         let ground = groundRenderer.ground
 
-        camera.update(size: view.bounds.size)
+        camera.update(size: viewport.size)
 
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_scale(modelMatrix, [1, -1, 1])
@@ -104,8 +85,5 @@ public class RSWRenderer: NSObject, Renderer {
         )
 
         renderCommandEncoder.endEncoding()
-
-        commandBuffer.present(view.currentDrawable!)
-        commandBuffer.commit()
     }
 }

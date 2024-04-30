@@ -6,12 +6,10 @@
 //
 
 import Metal
-import MetalKit
 import ROShaders
 
-public class STRRenderer: NSObject, Renderer {
+public class STRRenderer: Renderer {
     public let device: MTLDevice
-    let commandQueue: MTLCommandQueue
 
     let effectRenderer: EffectRenderer
 
@@ -20,26 +18,11 @@ public class STRRenderer: NSObject, Renderer {
     public init(device: MTLDevice, effect: Effect) throws {
         self.device = device
 
-        commandQueue = device.makeCommandQueue()!
-
         let library = ROCreateShadersLibrary(device)!
         effectRenderer = try EffectRenderer(device: device, library: library, effect: effect)
-
-        super.init()
     }
 
-    public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-
-    }
-
-    public func draw(in view: MTKView) {
-        guard let commandBuffer = commandQueue.makeCommandBuffer() else {
-            return
-        }
-
-        guard let renderPassDescriptor = view.currentRenderPassDescriptor else {
-            return
-        }
+    public func render(atTime time: CFTimeInterval, viewport: CGRect, commandBuffer: any MTLCommandBuffer, renderPassDescriptor: MTLRenderPassDescriptor) {
 
 //        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
@@ -47,9 +30,7 @@ public class STRRenderer: NSObject, Renderer {
 
         renderPassDescriptor.depthAttachment.clearDepth = 1
 
-        let time = CACurrentMediaTime()
-
-        camera.update(size: view.bounds.size)
+        camera.update(size: viewport.size)
 
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_translate(modelMatrix, [-10, 10, 20])
@@ -71,8 +52,5 @@ public class STRRenderer: NSObject, Renderer {
         )
 
         renderCommandEncoder.endEncoding()
-
-        commandBuffer.present(view.currentDrawable!)
-        commandBuffer.commit()
     }
 }

@@ -19,7 +19,7 @@ struct RSMFilePreviewView: View {
 
     var body: some View {
         AsyncContentView(status: status) { renderer in
-            MetalView(renderer: renderer)
+            MetalViewContainer(renderer: renderer)
                 .gesture(
                     MagnificationGesture()
                         .onChanged { value in

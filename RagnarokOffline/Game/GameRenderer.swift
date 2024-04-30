@@ -6,12 +6,10 @@
 //
 
 import Metal
-import MetalKit
 import RORenderers
 
-class GameRenderer: NSObject, Renderer {
+class GameRenderer: Renderer {
     let device: MTLDevice
-    let commandQueue: MTLCommandQueue
     let colorPixelFormat: MTLPixelFormat
     let depthStencilPixelFormat: MTLPixelFormat
     let renderPipelineState: MTLRenderPipelineState
@@ -21,8 +19,6 @@ class GameRenderer: NSObject, Renderer {
 
     init(device: MTLDevice) {
         self.device = device
-
-        commandQueue = device.makeCommandQueue()!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
@@ -49,22 +45,9 @@ class GameRenderer: NSObject, Renderer {
         depthStencilDescriptor.isDepthWriteEnabled = true
 
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)!
-
-        super.init()
     }
 
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-
-    }
-
-    func draw(in view: MTKView) {
-        guard let commandBuffer = commandQueue.makeCommandBuffer() else {
-            return
-        }
-
-        guard let renderPassDescriptor = view.currentRenderPassDescriptor else {
-            return
-        }
+    func render(atTime time: CFTimeInterval, viewport: CGRect, commandBuffer: any MTLCommandBuffer, renderPassDescriptor: MTLRenderPassDescriptor) {
 
         renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
@@ -80,18 +63,13 @@ class GameRenderer: NSObject, Renderer {
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
         for object in scene.objects {
-            render(object, encoder: renderCommandEncoder, size: view.bounds.size)
+            render(object, atTime: time, encoder: renderCommandEncoder, size: viewport.size)
         }
 
         renderCommandEncoder.endEncoding()
-
-        commandBuffer.present(view.currentDrawable!)
-        commandBuffer.commit()
     }
 
-    func render(_ object: Object3D, encoder: MTLRenderCommandEncoder, size: CGSize) {
-        let time = CACurrentMediaTime()
-
+    func render(_ object: Object3D, atTime time: CFTimeInterval, encoder: MTLRenderCommandEncoder, size: CGSize) {
         scene.camera.update(size: size)
 
         let modelMatrix = matrix_rotate(matrix_identity_float4x4, Float(radians(time.truncatingRemainder(dividingBy: 8) * 360 / 8)), [0.5, 1, 0])

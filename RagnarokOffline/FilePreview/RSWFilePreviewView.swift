@@ -20,7 +20,7 @@ struct RSWFilePreviewView: View {
 
     var body: some View {
         AsyncContentView(status: status) { renderer in
-            MetalView(renderer: renderer)
+            MetalViewContainer(renderer: renderer)
                 .gesture(
                     DragGesture()
                         .onChanged { value in

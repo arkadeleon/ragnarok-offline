@@ -6,12 +6,10 @@
 //
 
 import Metal
-import MetalKit
 import ROShaders
 
-public class RSMRenderer: NSObject, Renderer {
+public class RSMRenderer: Renderer {
     public let device: MTLDevice
-    let commandQueue: MTLCommandQueue
 
     let modelRenderer: ModelRenderer
 
@@ -20,26 +18,11 @@ public class RSMRenderer: NSObject, Renderer {
     public init(device: MTLDevice, model: Model) throws {
         self.device = device
 
-        commandQueue = device.makeCommandQueue()!
-
         let library = ROCreateShadersLibrary(device)!
         modelRenderer = try ModelRenderer(device: device, library: library, models: [model])
-
-        super.init()
     }
 
-    public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-
-    }
-
-    public func draw(in view: MTKView) {
-        guard let commandBuffer = commandQueue.makeCommandBuffer() else {
-            return
-        }
-
-        guard let renderPassDescriptor = view.currentRenderPassDescriptor else {
-            return
-        }
+    public func render(atTime time: CFTimeInterval, viewport: CGRect, commandBuffer: MTLCommandBuffer, renderPassDescriptor: MTLRenderPassDescriptor) {
 
 //        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
@@ -47,12 +30,10 @@ public class RSMRenderer: NSObject, Renderer {
 
         renderPassDescriptor.depthAttachment.clearDepth = 1
 
-        let time = CACurrentMediaTime()
-
         let model = modelRenderer.models[0]
         let scale = 2 / model.boundingBox.range.max()
 
-        camera.update(size: view.bounds.size)
+        camera.update(size: viewport.size)
 
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_scale(modelMatrix, [scale, scale, scale])
@@ -78,8 +59,5 @@ public class RSMRenderer: NSObject, Renderer {
         )
 
         renderCommandEncoder.endEncoding()
-
-        commandBuffer.present(view.currentDrawable!)
-        commandBuffer.commit()
     }
 }

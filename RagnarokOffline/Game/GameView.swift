@@ -18,7 +18,7 @@ struct GameView: View {
     @State private var magnification: CGFloat = 1
 
     var body: some View {
-        MetalView(renderer: renderer)
+        MetalViewContainer(renderer: renderer)
             .gesture(
                 DragGesture()
                     .onChanged { value in
