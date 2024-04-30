@@ -35,7 +35,7 @@ public struct RSM: Encodable {
 
         header = try reader.readString(4)
         guard header == "GRSM" else {
-            throw FileFormatError.invalidHeader(header)
+            throw FileFormatError.invalidHeader(header, expected: "GRSM")
         }
 
         let major: UInt8 = try reader.readInt()

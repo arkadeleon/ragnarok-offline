@@ -8,5 +8,5 @@
 import Foundation
 
 public enum FileFormatError: Error {
-    case invalidHeader(String)
+    case invalidHeader(String, expected: String)
 }

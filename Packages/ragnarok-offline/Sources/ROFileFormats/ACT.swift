@@ -24,7 +24,7 @@ public struct ACT: Encodable {
 
         header = try reader.readString(2)
         guard header == "AC" else {
-            throw FileFormatError.invalidHeader(header)
+            throw FileFormatError.invalidHeader(header, expected: "AC")
         }
 
         let minor: UInt8 = try reader.readInt()

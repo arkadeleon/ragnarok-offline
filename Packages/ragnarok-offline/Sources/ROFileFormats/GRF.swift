@@ -51,7 +51,7 @@ extension GRF {
         init(from reader: BinaryReader) throws {
             magic = try reader.readString(15)
             guard magic == "Master of Magic" else {
-                throw FileFormatError.invalidHeader(magic)
+                throw FileFormatError.invalidHeader(magic, expected: "Master of Magic")
             }
 
             key = try reader.readBytes(15)

@@ -33,7 +33,7 @@ public struct GND: Encodable {
 
         header = try reader.readString(4)
         guard header == "GRGN" else {
-            throw FileFormatError.invalidHeader(header)
+            throw FileFormatError.invalidHeader(header, expected: "GRGN")
         }
 
         let major: UInt8 = try reader.readInt()

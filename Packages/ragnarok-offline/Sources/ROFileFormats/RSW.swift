@@ -30,7 +30,7 @@ public struct RSW: Encodable {
 
         header = try reader.readString(4)
         guard header == "GRSW" else {
-            throw FileFormatError.invalidHeader(header)
+            throw FileFormatError.invalidHeader(header, expected: "GRSW")
         }
 
         let major: UInt8 = try reader.readInt()

@@ -25,7 +25,7 @@ public struct STR: Encodable {
 
         header = try reader.readString(4)
         guard header == "STRM" else {
-            throw FileFormatError.invalidHeader(header)
+            throw FileFormatError.invalidHeader(header, expected: "STRM")
         }
 
         let major: UInt8 = try reader.readInt()
