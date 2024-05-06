@@ -64,19 +64,3 @@ extension GAT {
         return image
     }
 }
-
-extension GAT {
-    public func altitude(forTileAtX x: Int, y: Int) -> Float {
-        let index = x + y * Int(width)
-        let tile = tiles[index]
-        let bottomLeft = tile.bottomLeft
-        let bottomRight = tile.bottomRight
-        let topLeft = tile.topLeft
-        let topRight = tile.topRight
-
-        let x1 = bottomLeft + (bottomRight - bottomLeft) / 2
-        let x2 = topLeft + (topRight - topLeft) / 2
-
-        return x1 + (x2 - x1) / 2
-    }
-}

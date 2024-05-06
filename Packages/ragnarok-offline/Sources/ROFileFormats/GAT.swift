@@ -54,18 +54,32 @@ extension GAT {
     }
 
     public struct Tile: Encodable {
-        public var bottomLeft: Float
-        public var bottomRight: Float
-        public var topLeft: Float
-        public var topRight: Float
+        public var bottomLeftAltitude: Float
+        public var bottomRightAltitude: Float
+        public var topLeftAltitude: Float
+        public var topRightAltitude: Float
         public var type: TileType
 
         init(from reader: BinaryReader) throws {
-            bottomLeft = try reader.readFloat()
-            bottomRight = try reader.readFloat()
-            topLeft = try reader.readFloat()
-            topRight = try reader.readFloat()
+            bottomLeftAltitude = try reader.readFloat()
+            bottomRightAltitude = try reader.readFloat()
+            topLeftAltitude = try reader.readFloat()
+            topRightAltitude = try reader.readFloat()
             type = try TileType(rawValue: reader.readInt()) ?? .walkable
         }
+    }
+}
+
+extension GAT {
+    public func tile(atX x: Int, y: Int) -> GAT.Tile {
+        let index = x + y * Int(width)
+        let tile = tiles[index]
+        return tile
+    }
+}
+
+extension GAT.Tile {
+    public var averageAltitude: Float {
+        (bottomLeftAltitude + bottomRightAltitude + topLeftAltitude + topRightAltitude) / 4
     }
 }

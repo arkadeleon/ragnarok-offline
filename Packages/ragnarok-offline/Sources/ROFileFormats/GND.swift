@@ -88,27 +88,25 @@ extension GND {
 
 extension GND {
     public struct Surface: Encodable {
-        public var u1: Float
-        public var u2: Float
-        public var u3: Float
-        public var u4: Float
-        public var v1: Float
-        public var v2: Float
-        public var v3: Float
-        public var v4: Float
+        public var u: SIMD4<Float>
+        public var v: SIMD4<Float>
         public var textureIndex: Int16
-        public var lightmapIndex: UInt16
+        public var lightmapIndex: Int16
         public var color: Color
 
         init(from reader: BinaryReader) throws {
-            u1 = try reader.readFloat()
-            u2 = try reader.readFloat()
-            u3 = try reader.readFloat()
-            u4 = try reader.readFloat()
-            v1 = try reader.readFloat()
-            v2 = try reader.readFloat()
-            v3 = try reader.readFloat()
-            v4 = try reader.readFloat()
+            u = try [
+                reader.readFloat(),
+                reader.readFloat(),
+                reader.readFloat(),
+                reader.readFloat()
+            ]
+            v = try [
+                reader.readFloat(),
+                reader.readFloat(),
+                reader.readFloat(),
+                reader.readFloat()
+            ]
 
             textureIndex = try reader.readInt()
             lightmapIndex = try reader.readInt()
@@ -124,24 +122,30 @@ extension GND {
 
 extension GND {
     public struct Cube: Encodable {
-        public var bottomLeft: Float
-        public var bottomRight: Float
-        public var topLeft: Float
-        public var topRight: Float
+        public var bottomLeftAltitude: Float
+        public var bottomRightAltitude: Float
+        public var topLeftAltitude: Float
+        public var topRightAltitude: Float
 
-        public var topSurface: Int32
-        public var frontSurface: Int32
-        public var rightSurface: Int32
+        public var topSurfaceIndex: Int32
+        public var frontSurfaceIndex: Int32
+        public var rightSurfaceIndex: Int32
 
         init(from reader: BinaryReader) throws {
-            bottomLeft = try reader.readFloat()
-            bottomRight = try reader.readFloat()
-            topLeft = try reader.readFloat()
-            topRight = try reader.readFloat()
+            bottomLeftAltitude = try reader.readFloat()
+            bottomRightAltitude = try reader.readFloat()
+            topLeftAltitude = try reader.readFloat()
+            topRightAltitude = try reader.readFloat()
 
-            topSurface = try reader.readInt()
-            frontSurface = try reader.readInt()
-            rightSurface = try reader.readInt()
+            topSurfaceIndex = try reader.readInt()
+            frontSurfaceIndex = try reader.readInt()
+            rightSurfaceIndex = try reader.readInt()
         }
+    }
+}
+
+extension GND.Cube {
+    public var lowestAltitude: Float {
+        [bottomLeftAltitude, bottomRightAltitude, topLeftAltitude, topRightAltitude].min()!
     }
 }
