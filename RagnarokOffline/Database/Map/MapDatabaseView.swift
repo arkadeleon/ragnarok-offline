@@ -33,6 +33,9 @@ struct MapDatabaseView: View {
         }
         .databaseNavigationDestinations(database: mapDatabase.database)
         .navigationTitle("Map Database")
+        #if !os(macOS)
+        .navigationBarTitleDisplayMode(.inline)
+        #endif
         .searchable(text: $mapDatabase.searchText)
         .onSubmit(of: .search) {
             mapDatabase.filterMaps()

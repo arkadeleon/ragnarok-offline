@@ -34,6 +34,9 @@ struct ItemDatabaseView: View {
         }
         .databaseNavigationDestinations(database: itemDatabase.database)
         .navigationTitle("Item Database")
+        #if !os(macOS)
+        .navigationBarTitleDisplayMode(.inline)
+        #endif
         .searchable(text: $itemDatabase.searchText)
         .onSubmit(of: .search) {
             itemDatabase.filterItems()

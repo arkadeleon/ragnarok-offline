@@ -15,31 +15,29 @@ struct FilePreviewTabView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationStack {
-            TabView(selection: $currentFile) {
-                ForEach(files) { file in
-                    FilePreviewView(file: file)
-                        .tag(file)
+        TabView(selection: $currentFile) {
+            ForEach(files) { file in
+                FilePreviewView(file: file)
+                    .tag(file)
+            }
+        }
+        .tabViewStyle(.page(indexDisplayMode: .never))
+        .navigationTitle(currentFile.name)
+        #if !os(macOS)
+        .navigationBarTitleDisplayMode(.inline)
+        #endif
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
                 }
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .navigationTitle(currentFile.name)
-            #if !os(macOS)
-            .navigationBarTitleDisplayMode(.inline)
-            #endif
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "chevron.left")
-                    }
-                }
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    ShareLink(item: currentFile, preview: SharePreview(currentFile.name))
-                }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                ShareLink(item: currentFile, preview: SharePreview(currentFile.name))
             }
         }
     }

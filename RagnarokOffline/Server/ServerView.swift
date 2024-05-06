@@ -2,45 +2,77 @@
 //  ServerView.swift
 //  RagnarokOffline
 //
-//  Created by Leon Li on 2023/12/26.
+//  Created by Leon Li on 2024/5/6.
 //
 
 import SwiftUI
-import rAthenaCommon
+import rAthenaLogin
+import rAthenaChar
+import rAthenaMap
+import rAthenaWeb
 
 struct ServerView: View {
-    @ObservedObject var server: ObservableServer
+    @StateObject private var loginServer = ObservableServer(server: LoginServer.shared)
+    @StateObject private var charServer = ObservableServer(server: CharServer.shared)
+    @StateObject private var mapServer = ObservableServer(server: MapServer.shared)
+    @StateObject private var webServer = ObservableServer(server: WebServer.shared)
 
     var body: some View {
-        ZStack {
-            SwiftUITerminalView(terminalView: server.terminalView)
-                .ignoresSafeArea(edges: .bottom)
+        List {
+            NavigationLink(value: MenuItem.loginServer) {
+                LabeledContent {
+                    Text(loginServer.status.description)
+                        .font(.footnote)
+                } label: {
+                    Label(loginServer.name, systemImage: "terminal")
+                }
+            }
 
-            if server.status == .notStarted {
-                Button {
-                    server.start()
+            NavigationLink(value: MenuItem.charServer) {
+                LabeledContent {
+                    Text(charServer.status.description)
+                        .font(.footnote)
                 } label: {
-                    Image(systemName: "play")
-                        .font(.system(size: 40))
-                        .padding(.horizontal, 15)
-                        .padding(.vertical, 10)
-                }
-                .buttonStyle(.bordered)
-                .buttonBorderShape(.roundedRectangle)
-            }
-        }
-        .navigationTitle(server.name)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    // Clear entire display: ^[[2J
-                    // Position cursor on top line: ^[[1;1H
-                    let escape = "\u{001B}"
-                    server.terminalView.feed(text: escape + "[2J" + escape + "[1;1H")
-                } label: {
-                    Image(systemName: "trash")
+                    Label(charServer.name, systemImage: "terminal")
                 }
             }
+
+            NavigationLink(value: MenuItem.mapServer) {
+                LabeledContent {
+                    Text(mapServer.status.description)
+                        .font(.footnote)
+                } label: {
+                    Label(mapServer.name, systemImage: "terminal")
+                }
+            }
+
+            NavigationLink(value: MenuItem.webServer) {
+                LabeledContent {
+                    Text(webServer.status.description)
+                        .font(.footnote)
+                } label: {
+                    Label(webServer.name, systemImage: "terminal")
+                }
+            }
         }
+        .navigationDestination(for: MenuItem.self) { item in
+            switch item {
+            case .loginServer:
+                ServerTerminalView(server: loginServer)
+            case .charServer:
+                ServerTerminalView(server: charServer)
+            case .mapServer:
+                ServerTerminalView(server: mapServer)
+            case .webServer:
+                ServerTerminalView(server: webServer)
+            default:
+                EmptyView()
+            }
+        }
+        .navigationTitle("Server")
     }
+}
+
+#Preview {
+    ServerView()
 }

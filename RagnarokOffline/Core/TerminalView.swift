@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SwiftUITerminalView: UIViewRepresentable {
+struct TerminalViewContainer: UIViewRepresentable {
     let terminalView: TerminalView
 
     func makeUIView(context: Context) -> TerminalView {

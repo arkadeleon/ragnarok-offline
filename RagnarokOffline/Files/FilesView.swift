@@ -72,6 +72,9 @@ struct FilesView: View {
         }
         .navigationDestination(for: File.self) { file in
             FilesView(title: file.name, directory: file)
+                #if !os(macOS)
+                .navigationBarTitleDisplayMode(.inline)
+                #endif
         }
         .navigationTitle(title)
         .toolbar {
@@ -94,10 +97,14 @@ struct FilesView: View {
             filterFiles()
         }
         .sheet(item: $previewingFile) { file in
-            FilePreviewTabView(files: filteredFiles.filter({ $0.canPreview }), currentFile: file)
+            NavigationStack {
+                FilePreviewTabView(files: filteredFiles.filter({ $0.canPreview }), currentFile: file)
+            }
         }
         .sheet(item: $inspectingRawDataFile) { file in
-            FileRawDataView(file: file)
+            NavigationStack {
+                FileRawDataView(file: file)
+            }
         }
         .task {
             await load()

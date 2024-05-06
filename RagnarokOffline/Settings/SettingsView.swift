@@ -9,8 +9,6 @@ import SwiftUI
 import ROSettings
 
 struct SettingsView: View {
-    @Environment(\.dismiss) private var dismiss
-
     @State private var serviceType = ClientSettings.shared.serviceType
     @State private var itemInfoSource = ClientSettings.shared.itemInfoSource
 
@@ -29,33 +27,24 @@ struct SettingsView: View {
             ClientSettings.shared.itemInfoSource = $0
         }
 
-        NavigationStack {
-            Form {
-                Section("Client") {
-                    Picker("Service Type", selection: serviceTypeBinding) {
-                        ForEach(ClientSettings.ServiceType.allCases, id: \.rawValue) { serviceType in
-                            Text(serviceType.description)
-                                .tag(serviceType)
-                        }
-                    }
-
-                    Picker("Item Info Source", selection: itemInfoSourceBinding) {
-                        ForEach(ClientSettings.ItemInfoSource.allCases, id: \.rawValue) { itemInfoSource in
-                            Text(itemInfoSource.description)
-                                .tag(itemInfoSource)
-                        }
+        Form {
+            Section("Client") {
+                Picker("Service Type", selection: serviceTypeBinding) {
+                    ForEach(ClientSettings.ServiceType.allCases, id: \.rawValue) { serviceType in
+                        Text(serviceType.description)
+                            .tag(serviceType)
                     }
                 }
-            }
-            .navigationTitle("Settings")
-            .toolbar {
-                ToolbarItem {
-                    Button("Done") {
-                        dismiss()
+
+                Picker("Item Info Source", selection: itemInfoSourceBinding) {
+                    ForEach(ClientSettings.ItemInfoSource.allCases, id: \.rawValue) { itemInfoSource in
+                        Text(itemInfoSource.description)
+                            .tag(itemInfoSource)
                     }
                 }
             }
         }
+        .navigationTitle("Settings")
     }
 }
 

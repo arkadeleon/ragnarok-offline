@@ -43,13 +43,11 @@ struct FileRawDataView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            WebView(htmlString: htmlString, baseURL: baseURL)
-                .ignoresSafeArea()
-                .navigationTitle("Raw Data")
-                #if !os(macOS)
-                .navigationBarTitleDisplayMode(.inline)
-                #endif
-        }
+        WebView(htmlString: htmlString, baseURL: baseURL)
+            .ignoresSafeArea()
+            .navigationTitle("Raw Data")
+            #if !os(macOS)
+            .navigationBarTitleDisplayMode(.inline)
+            #endif
     }
 }
