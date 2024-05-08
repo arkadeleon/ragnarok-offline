@@ -6,7 +6,7 @@
 //
 
 import CoreGraphics
-import rAthenaCommon
+import RODatabase
 import ROFileFormats
 
 public class ClientResourceManager {

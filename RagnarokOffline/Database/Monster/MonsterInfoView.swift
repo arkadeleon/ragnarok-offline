@@ -7,6 +7,7 @@
 
 import SwiftUI
 import RODatabase
+import ROResources
 
 struct MonsterInfoView: View {
     let database: Database

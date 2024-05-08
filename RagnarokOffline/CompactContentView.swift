@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import RODatabase
+import ROResources
 
 struct CompactContentView: View {
     var body: some View {

@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/1/8.
 //
 
+import RODatabase
+
 extension Gender {
     var resourceName: String {
         switch self {

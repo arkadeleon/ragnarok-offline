@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2023/12/22.
 //
 
+import RODatabase
+
 extension Job {
     var resourceName: String {
         switch self {

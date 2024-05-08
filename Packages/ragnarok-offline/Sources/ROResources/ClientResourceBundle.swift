@@ -7,6 +7,7 @@
 
 import CoreGraphics
 import Foundation
+import RODatabase
 import ROFileFormats
 import ROFileSystem
 import ROGraphics

@@ -78,6 +78,7 @@
 		35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9722A08C01600B4540B /* GameRenderer.swift */; };
 		35B3B9FA2A08C01600B4540B /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B9732A08C01600B4540B /* wall.jpg */; };
 		35B3BA1A2A08C01600B4540B /* FilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99A2A08C01600B4540B /* FilesView.swift */; };
+		35B422B12BEB277900681AA2 /* ROResources in Frameworks */ = {isa = PBXBuildFile; productRef = 35B422B02BEB277900681AA2 /* ROResources */; };
 		35B695EA2A305EF6006F1904 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695E92A305EF6006F1904 /* GameView.swift */; };
 		35B695EC2A307164006F1904 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695EB2A307164006F1904 /* GameScene.swift */; };
 		35BE55292BD92D52003715C3 /* TextFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55282BD92D52003715C3 /* TextFilePreviewView.swift */; };
@@ -214,6 +215,7 @@
 				351990172BC837320082EB0E /* rAthenaLogin in Frameworks */,
 				358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */,
 				358D4C692BC7707400FAF45D /* ROFileSystem in Frameworks */,
+				35B422B12BEB277900681AA2 /* ROResources in Frameworks */,
 				353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */,
 				358D4C712BC7707400FAF45D /* ROSettings in Frameworks */,
 				3519901A2BC837320082EB0E /* rAthenaMap in Frameworks */,
@@ -497,6 +499,7 @@
 				3519901E2BC837320082EB0E /* rAthenaWeb */,
 				358362CC2BD55D4000821500 /* SwiftTerm */,
 				35B367442BD6AE700018ED27 /* Terminal */,
+				35B422B02BEB277900681AA2 /* ROResources */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -934,6 +937,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 35B367432BD6AE700018ED27 /* XCRemoteSwiftPackageReference "Terminal" */;
 			productName = Terminal;
+		};
+		35B422B02BEB277900681AA2 /* ROResources */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ROResources;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -31,6 +31,9 @@ let package = Package(
             name: "RORenderers",
             targets: ["RORenderers"]),
         .library(
+            name: "ROResources",
+            targets: ["ROResources"]),
+        .library(
             name: "ROSettings",
             targets: ["ROSettings"]),
         .library(
@@ -51,14 +54,9 @@ let package = Package(
         .target(
             name: "RODatabase",
             dependencies: [
-                .product(name: "Lua", package: "swift-lua"),
                 .product(name: "rAthenaCommon", package: "swift-rathena"),
                 .product(name: "rAthenaResource", package: "swift-rathena"),
                 .product(name: "rAthenaRyml", package: "swift-rathena"),
-                "ROFileFormats",
-                "ROFileSystem",
-                "ROGraphics",
-                "ROSettings",
             ],
             swiftSettings: [
                 .interoperabilityMode(.Cxx),
@@ -94,6 +92,19 @@ let package = Package(
             ],
             exclude: [
                 "Entity/Entity.swift",
+            ]),
+        .target(
+            name: "ROResources",
+            dependencies: [
+                .product(name: "Lua", package: "swift-lua"),
+                "RODatabase",
+                "ROFileFormats",
+                "ROFileSystem",
+                "ROGraphics",
+                "ROSettings",
+            ],
+            swiftSettings: [
+                .interoperabilityMode(.Cxx),
             ]),
         .target(
             name: "ROSettings"),
