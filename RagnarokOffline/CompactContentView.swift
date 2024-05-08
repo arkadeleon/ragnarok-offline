@@ -6,9 +6,25 @@
 //
 
 import SwiftUI
+import rAthenaResource
+import rAthenaLogin
+import rAthenaChar
+import rAthenaMap
+import rAthenaWeb
 import ROResources
 
 struct CompactContentView: View {
+    @StateObject private var loginServer = ObservableServer(server: LoginServer.shared)
+    @StateObject private var charServer = ObservableServer(server: CharServer.shared)
+    @StateObject private var mapServer = ObservableServer(server: MapServer.shared)
+    @StateObject private var webServer = ObservableServer(server: WebServer.shared)
+
+    @StateObject private var itemDatabase = ObservableItemDatabase(database: .renewal)
+    @StateObject private var monsterDatabase = ObservableMonsterDatabase(database: .renewal)
+    @StateObject private var jobDatabase = ObservableJobDatabase(database: .renewal)
+    @StateObject private var skillDatabase = ObservableSkillDatabase(database: .renewal)
+    @StateObject private var mapDatabase = ObservableMapDatabase(database: .renewal)
+
     var body: some View {
         TabView {
             NavigationStack {
@@ -19,14 +35,14 @@ struct CompactContentView: View {
             }
 
             NavigationStack {
-                ServerView()
+                serverView
             }
             .tabItem {
                 Label("Server", systemImage: "apple.terminal.fill")
             }
 
             NavigationStack {
-                DatabaseView()
+                databaseView
             }
             .tabItem {
                 Label("Database", systemImage: "tablecells.fill")
@@ -39,6 +55,102 @@ struct CompactContentView: View {
                 Label("Settings", systemImage: "gearshape.fill")
             }
         }
+    }
+
+    private var serverView: some View {
+        List {
+            NavigationLink(value: MenuItem.loginServer) {
+                LabeledContent {
+                    Text(loginServer.status.description)
+                        .font(.footnote)
+                } label: {
+                    Label(loginServer.name, systemImage: "terminal")
+                }
+            }
+
+            NavigationLink(value: MenuItem.charServer) {
+                LabeledContent {
+                    Text(charServer.status.description)
+                        .font(.footnote)
+                } label: {
+                    Label(charServer.name, systemImage: "terminal")
+                }
+            }
+
+            NavigationLink(value: MenuItem.mapServer) {
+                LabeledContent {
+                    Text(mapServer.status.description)
+                        .font(.footnote)
+                } label: {
+                    Label(mapServer.name, systemImage: "terminal")
+                }
+            }
+
+            NavigationLink(value: MenuItem.webServer) {
+                LabeledContent {
+                    Text(webServer.status.description)
+                        .font(.footnote)
+                } label: {
+                    Label(webServer.name, systemImage: "terminal")
+                }
+            }
+        }
+        .navigationDestination(for: MenuItem.self) { item in
+            switch item {
+            case .loginServer:
+                ServerTerminalView(server: loginServer)
+            case .charServer:
+                ServerTerminalView(server: charServer)
+            case .mapServer:
+                ServerTerminalView(server: mapServer)
+            case .webServer:
+                ServerTerminalView(server: webServer)
+            default:
+                EmptyView()
+            }
+        }
+        .navigationTitle("Server")
+    }
+
+    private var databaseView: some View {
+        List {
+            NavigationLink(value: MenuItem.itemDatabase) {
+                Label("Item Database", systemImage: "leaf")
+            }
+
+            NavigationLink(value: MenuItem.monsterDatabase) {
+                Label("Monster Database", systemImage: "pawprint")
+            }
+
+            NavigationLink(value: MenuItem.jobDatabase) {
+                Label("Job Database", systemImage: "person")
+            }
+
+            NavigationLink(value: MenuItem.skillDatabase) {
+                Label("Skill Database", systemImage: "arrow.up.heart")
+            }
+
+            NavigationLink(value: MenuItem.mapDatabase) {
+                Label("Map Database", systemImage: "map")
+            }
+        }
+        .navigationDestination(for: MenuItem.self) { item in
+            switch item {
+            case .itemDatabase:
+                ItemDatabaseView(itemDatabase: itemDatabase)
+            case .monsterDatabase:
+                MonsterDatabaseView(monsterDatabase: monsterDatabase)
+            case .jobDatabase:
+                JobDatabaseView(jobDatabase: jobDatabase)
+            case .skillDatabase:
+                SkillDatabaseView(skillDatabase: skillDatabase)
+            case .mapDatabase:
+                MapDatabaseView(mapDatabase: mapDatabase)
+            default:
+                EmptyView()
+            }
+        }
+        .navigationTitle("Database")
     }
 }
 
