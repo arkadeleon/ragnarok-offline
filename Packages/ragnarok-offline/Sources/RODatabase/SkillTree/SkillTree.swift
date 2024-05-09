@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/1/16.
 //
 
-public struct SkillTree: Decodable {
+public struct SkillTree: Decodable, Equatable, Hashable {
 
     /// Job name.
     public var job: Job
@@ -33,7 +33,7 @@ public struct SkillTree: Decodable {
 
 extension SkillTree {
 
-    public struct Skill: Decodable {
+    public struct Skill: Decodable, Equatable, Hashable {
 
         /// Skill name.
         public var name: String
@@ -76,7 +76,7 @@ extension SkillTree {
 
 extension SkillTree {
 
-    public struct PrerequisiteSkill: Decodable {
+    public struct PrerequisiteSkill: Decodable, Equatable, Hashable {
 
         /// Skill name.
         public var name: String
@@ -94,12 +94,6 @@ extension SkillTree {
 extension SkillTree: Identifiable {
     public var id: Int {
         job.id
-    }
-}
-
-extension SkillTree: Equatable {
-    public static func == (lhs: SkillTree, rhs: SkillTree) -> Bool {
-        lhs.job.id == rhs.job.id
     }
 }
 

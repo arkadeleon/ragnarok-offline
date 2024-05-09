@@ -140,12 +140,6 @@ extension Pet {
             case target = "Target"
             case itemRequirements = "ItemRequirements"
         }
-
-        public init(from decoder: any Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.target = try container.decode(String.self, forKey: .target)
-            self.itemRequirements = try container.decode([ItemRequirement].self, forKey: .itemRequirements)
-        }
     }
 }
 
@@ -163,12 +157,6 @@ extension Pet.Evolution {
         enum CodingKeys: String, CodingKey {
             case item = "Item"
             case amount = "Amount"
-        }
-
-        public init(from decoder: any Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.item = try container.decode(String.self, forKey: .item)
-            self.amount = try container.decode(Int.self, forKey: .amount)
         }
     }
 }

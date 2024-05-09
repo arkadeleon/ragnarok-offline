@@ -21,13 +21,6 @@ public struct MonsterSummon: Decodable, Equatable, Hashable {
         case `default` = "Default"
         case summon = "Summon"
     }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.group = try container.decode(String.self, forKey: .group)
-        self.default = try container.decode(String.self, forKey: .default)
-        self.summon = try container.decode([Summon].self, forKey: .summon)
-    }
 }
 
 extension MonsterSummon {
@@ -44,12 +37,6 @@ extension MonsterSummon {
         enum CodingKeys: String, CodingKey {
             case monster = "Mob"
             case rate = "Rate"
-        }
-
-        public init(from decoder: any Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.monster = try container.decode(String.self, forKey: .monster)
-            self.rate = try container.decode(Int.self, forKey: .rate)
         }
     }
 }

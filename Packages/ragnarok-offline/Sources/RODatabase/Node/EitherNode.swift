@@ -31,14 +31,7 @@ public enum EitherNode<Left, Right>: Decodable where Left: Decodable, Right: Dec
 }
 
 extension EitherNode: Equatable where Left: Equatable, Right: Equatable {
-    public static func == (lhs: EitherNode<Left, Right>, rhs: EitherNode<Left, Right>) -> Bool {
-        switch (lhs, rhs) {
-        case (.left(let l), .left(let r)):
-            l == r
-        case (.right(let l), .right(let r)):
-            l == r
-        default:
-            false
-        }
-    }
+}
+
+extension EitherNode: Hashable where Left: Hashable, Right: Hashable {
 }

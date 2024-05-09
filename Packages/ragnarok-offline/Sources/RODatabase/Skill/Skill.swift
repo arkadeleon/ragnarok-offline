@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/1/11.
 //
 
-public struct Skill: Decodable {
+public struct Skill: Decodable, Equatable, Hashable, Identifiable {
 
     /// Unique skill ID.
     public var id: Int
@@ -362,7 +362,7 @@ extension Skill {
 
 extension Skill {
 
-    public struct CopyFlags: Decodable {
+    public struct CopyFlags: Decodable, Equatable, Hashable {
 
         /// Type of skill that can copy.
         public var skill: [SkillCopyableOption]
@@ -385,7 +385,7 @@ extension Skill {
 
 extension Skill {
 
-    public struct NoNearNPC: Decodable {
+    public struct NoNearNPC: Decodable, Equatable, Hashable {
 
         /// Number of cells from an NPC where the skill can be cast.
         /// If zero this will read the splash range value.
@@ -410,7 +410,7 @@ extension Skill {
 
 extension Skill {
 
-    public struct Requires: Decodable {
+    public struct Requires: Decodable, Equatable, Hashable {
 
         /// HP required to cast. (Default: 0)
         public var hpCost: EitherNode<Int, [Int?]>
@@ -600,7 +600,7 @@ extension Skill {
             }
         }
 
-        public struct LevelItemCost: Decodable {
+        public struct LevelItemCost: Decodable, Equatable, Hashable {
 
             /// Item name.
             var item: String
@@ -661,7 +661,7 @@ extension Skill {
 
 extension Skill {
 
-    public struct Unit: Decodable {
+    public struct Unit: Decodable, Equatable, Hashable {
 
         /// Skill unit ID.
         public var id: String
@@ -735,23 +735,8 @@ extension Skill {
     }
 }
 
-extension Skill: Identifiable {
-}
-
-extension Skill: Equatable {
-    public static func == (lhs: Skill, rhs: Skill) -> Bool {
-        lhs.id == rhs.id
-    }
-}
-
 extension Skill: Comparable {
     public static func < (lhs: Skill, rhs: Skill) -> Bool {
         lhs.id < rhs.id
-    }
-}
-
-extension Skill: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        id.hash(into: &hasher)
     }
 }

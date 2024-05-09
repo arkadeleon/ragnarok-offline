@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/3/4.
 //
 
-public struct Map {
+public struct Map: Equatable, Hashable {
 
     /// Map name.
     public var name: String
@@ -20,20 +20,8 @@ extension Map: Identifiable {
     }
 }
 
-extension Map: Equatable {
-    public static func == (lhs: Map, rhs: Map) -> Bool {
-        lhs.index == rhs.index
-    }
-}
-
 extension Map: Comparable {
     public static func < (lhs: Map, rhs: Map) -> Bool {
         lhs.index < rhs.index
-    }
-}
-
-extension Map: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        index.hash(into: &hasher)
     }
 }

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2023/1/18.
 //
 
-public struct Item: Decodable {
+public struct Item: Decodable, Equatable, Hashable, Identifiable {
 
     /// Item ID.
     public var id: Int
@@ -208,7 +208,7 @@ public struct Item: Decodable {
 extension Item {
 
     /// Item flags.
-    public struct Flags: Decodable {
+    public struct Flags: Decodable, Equatable, Hashable {
 
         /// If the item is available for Buyingstores. (Default: false)
         public var buyingStore: Bool
@@ -262,7 +262,7 @@ extension Item {
 extension Item {
 
     /// Item use delay.
-    public struct Delay: Decodable {
+    public struct Delay: Decodable, Equatable, Hashable {
 
         /// Duration of delay in seconds.
         public var duration: Int
@@ -286,7 +286,7 @@ extension Item {
 extension Item {
 
     /// Item stack amount.
-    public struct Stack: Decodable {
+    public struct Stack: Decodable, Equatable, Hashable {
 
         /// Maximum amount that can be stacked.
         public var amount: Int
@@ -325,7 +325,7 @@ extension Item {
 extension Item {
 
     /// Conditions when the item is unusable.
-    public struct NoUse: Decodable {
+    public struct NoUse: Decodable, Equatable, Hashable {
 
         /// Group level to override these conditions. (Default: 100)
         public var override: Int
@@ -349,7 +349,7 @@ extension Item {
 extension Item {
 
     /// Trade restrictions.
-    public struct Trade: Decodable {
+    public struct Trade: Decodable, Equatable, Hashable {
 
         /// Group level to override these conditions. (Default: 100)
         public var override: Int
@@ -410,23 +410,8 @@ extension Item {
     }
 }
 
-extension Item: Identifiable {
-}
-
-extension Item: Equatable {
-    public static func == (lhs: Item, rhs: Item) -> Bool {
-        lhs.id == rhs.id
-    }
-}
-
 extension Item: Comparable {
     public static func < (lhs: Item, rhs: Item) -> Bool {
         lhs.id < rhs.id
-    }
-}
-
-extension Item: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        id.hash(into: &hasher)
     }
 }

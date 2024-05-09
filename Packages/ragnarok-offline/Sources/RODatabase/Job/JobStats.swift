@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/1/11.
 //
 
-public struct JobStats {
+public struct JobStats: Equatable, Hashable {
 
     /// Job.
     public var job: Job
@@ -116,20 +116,8 @@ extension JobStats: Identifiable {
     }
 }
 
-extension JobStats: Equatable {
-    public static func == (lhs: JobStats, rhs: JobStats) -> Bool {
-        lhs.job.id == rhs.job.id
-    }
-}
-
 extension JobStats: Comparable {
     public static func < (lhs: JobStats, rhs: JobStats) -> Bool {
         lhs.job.id < rhs.job.id
-    }
-}
-
-extension JobStats: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        job.id.hash(into: &hasher)
     }
 }
