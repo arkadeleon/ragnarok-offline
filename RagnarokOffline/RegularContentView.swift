@@ -22,7 +22,7 @@ struct RegularContentView: View {
     @StateObject private var mapServer = ObservableServer(server: MapServer.shared)
     @StateObject private var webServer = ObservableServer(server: WebServer.shared)
 
-    @StateObject private var itemDatabase = ObservableItemDatabase(database: .renewal)
+    @StateObject private var itemDatabase = ObservableItemDatabase(mode: .renewal)
     @StateObject private var jobDatabase = ObservableJobDatabase(database: .renewal)
     @StateObject private var mapDatabase = ObservableMapDatabase(database: .renewal)
     @StateObject private var monsterDatabase = ObservableMonsterDatabase(mode: .renewal)

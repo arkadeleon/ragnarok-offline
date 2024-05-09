@@ -180,11 +180,13 @@ struct MonsterInfoView: View {
     private func loadMonsterInfo() async {
         monsterImage = await ClientResourceManager.shared.monsterImage(monster.id)
 
+        let itemDatabase = ItemDatabase.database(for: database.mode)
+
         do {
             if let mvpDrops = monster.mvpDrops {
                 var mvpDropItems: [DropItem] = []
                 for (index, drop) in mvpDrops.enumerated() {
-                    let item = try await database.item(forAegisName: drop.item)
+                    let item = try await itemDatabase.item(forAegisName: drop.item)
                     mvpDropItems.append((index, drop, item))
                 }
                 self.mvpDropItems = mvpDropItems
@@ -196,7 +198,7 @@ struct MonsterInfoView: View {
             if let drops = monster.drops {
                 var dropItems: [DropItem] = []
                 for (index, drop) in drops.enumerated() {
-                    let item = try await database.item(forAegisName: drop.item)
+                    let item = try await itemDatabase.item(forAegisName: drop.item)
                     dropItems.append((index, drop, item))
                 }
                 self.dropItems = dropItems

@@ -29,9 +29,10 @@ class ObservableMonsterDatabase: ObservableObject {
 
         loadStatus = .loading
 
+        let database = MonsterDatabase.database(for: mode)
+
         do {
-            let database = MonsterDatabase.database(for: mode)
-            monsters = try await database.allMonsters()
+            monsters = try await database.monsters()
             filterMonsters()
 
             loadStatus = .loaded

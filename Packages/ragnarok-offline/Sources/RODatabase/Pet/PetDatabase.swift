@@ -23,34 +23,34 @@ public actor PetDatabase {
 
     public let mode: ServerMode
 
-    private var pets: [Pet] = []
-    private var petsByAegisNames: [String : Pet] = [:]
+    private var cachedPets: [Pet] = []
+    private var cachedPetsByAegisNames: [String : Pet] = [:]
 
     private init(mode: ServerMode) {
         self.mode = mode
     }
 
-    public func allPets() throws -> [Pet] {
-        if pets.isEmpty {
+    public func pets() throws -> [Pet] {
+        if cachedPets.isEmpty {
             let decoder = YAMLDecoder()
 
             let url = ResourceBundle.shared.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("pet_db.yml")
             let data = try Data(contentsOf: url)
-            pets = try decoder.decode(ListNode<Pet>.self, from: data).body
+            cachedPets = try decoder.decode(ListNode<Pet>.self, from: data).body
         }
 
-        return pets
+        return cachedPets
     }
 
-    public func pet(forAegisName aegisName: String) async throws -> Pet {
-        if petsByAegisNames.isEmpty {
-            let pets = try allPets()
-            petsByAegisNames = Dictionary(pets.map({ ($0.monster.uppercased(), $0) }), uniquingKeysWith: { (first, _) in first })
+    public func pet(forAegisName aegisName: String) throws -> Pet {
+        if cachedPetsByAegisNames.isEmpty {
+            let pets = try pets()
+            cachedPetsByAegisNames = Dictionary(pets.map({ ($0.monster.uppercased(), $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        if let pet = petsByAegisNames[aegisName.uppercased()] {
+        if let pet = cachedPetsByAegisNames[aegisName.uppercased()] {
             return pet
         } else {
             throw DatabaseError.recordNotFound

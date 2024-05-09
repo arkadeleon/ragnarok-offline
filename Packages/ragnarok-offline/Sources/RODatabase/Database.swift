@@ -24,7 +24,6 @@ public final class Database: Sendable {
 
     public let mode: ServerMode
 
-    private let itemCache: ItemCache
     private let jobCache: JobCache
     private let skillCache: SkillCache
     private let skillTreeCache: SkillTreeCache
@@ -34,47 +33,11 @@ public final class Database: Sendable {
     private init(mode: ServerMode) {
         self.mode = mode
 
-        itemCache = ItemCache(mode: mode)
         jobCache = JobCache(mode: mode)
         skillCache = SkillCache(mode: mode)
         skillTreeCache = SkillTreeCache(mode: mode)
         mapCache = MapCache(mode: mode)
         scriptCache = ScriptCache(mode: mode)
-    }
-
-    // MARK: - Item
-
-    public func usableItems() async throws -> [Item] {
-        try await itemCache.restoreUsableItems()
-        let usableItems = await itemCache.usableItems
-        return usableItems
-    }
-
-    public func equipItems() async throws -> [Item] {
-        try await itemCache.restoreEquipItems()
-        let equipItems = await itemCache.equipItems
-        return equipItems
-    }
-
-    public func etcItems() async throws -> [Item] {
-        try await itemCache.restoreEtcItems()
-        let etcItems = await itemCache.etcItems
-        return etcItems
-    }
-
-    public func items() async throws -> [Item] {
-        try await itemCache.restoreItems()
-        let items = await itemCache.items
-        return items
-    }
-
-    public func item(forAegisName aegisName: String) async throws -> Item {
-        try await itemCache.restoreItems()
-        if let item = await itemCache.itemsByAegisNames[aegisName] {
-            return item
-        } else {
-            throw DatabaseError.recordNotFound
-        }
     }
 
     // MARK: - Job

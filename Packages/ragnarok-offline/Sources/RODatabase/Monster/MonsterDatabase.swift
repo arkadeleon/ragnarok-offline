@@ -23,48 +23,48 @@ public actor MonsterDatabase {
 
     public let mode: ServerMode
 
-    private var monsters: [Monster] = []
-    private var monstersByIDs: [Int : Monster] = [:]
-    private var monstersByAegisNames: [String : Monster] = [:]
+    private var cachedMonsters: [Monster] = []
+    private var cachedMonstersByIDs: [Int : Monster] = [:]
+    private var cachedMonstersByAegisNames: [String : Monster] = [:]
 
     private init(mode: ServerMode) {
         self.mode = mode
     }
 
-    public func allMonsters() throws -> [Monster] {
-        if monsters.isEmpty {
+    public func monsters() throws -> [Monster] {
+        if cachedMonsters.isEmpty {
             let decoder = YAMLDecoder()
 
             let url = ResourceBundle.shared.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("mob_db.yml")
             let data = try Data(contentsOf: url)
-            monsters = try decoder.decode(ListNode<Monster>.self, from: data).body
+            cachedMonsters = try decoder.decode(ListNode<Monster>.self, from: data).body
         }
 
-        return monsters
+        return cachedMonsters
     }
 
-    public func monster(forID id: Int) async throws -> Monster {
-        if monstersByIDs.isEmpty {
-            let monsters = try allMonsters()
-            monstersByIDs = Dictionary(monsters.map({ ($0.id, $0) }), uniquingKeysWith: { (first, _) in first })
+    public func monster(forID id: Int) throws -> Monster {
+        if cachedMonstersByIDs.isEmpty {
+            let monsters = try monsters()
+            cachedMonstersByIDs = Dictionary(monsters.map({ ($0.id, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        if let monster = monstersByIDs[id] {
+        if let monster = cachedMonstersByIDs[id] {
             return monster
         } else {
             throw DatabaseError.recordNotFound
         }
     }
 
-    public func monster(forAegisName aegisName: String) async throws -> Monster {
-        if monstersByAegisNames.isEmpty {
-            let monsters = try allMonsters()
-            monstersByAegisNames = Dictionary(monsters.map({ ($0.aegisName, $0) }), uniquingKeysWith: { (first, _) in first })
+    public func monster(forAegisName aegisName: String) throws -> Monster {
+        if cachedMonstersByAegisNames.isEmpty {
+            let monsters = try monsters()
+            cachedMonstersByAegisNames = Dictionary(monsters.map({ ($0.aegisName, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        if let monster = monstersByAegisNames[aegisName] {
+        if let monster = cachedMonstersByAegisNames[aegisName] {
             return monster
         } else {
             throw DatabaseError.recordNotFound

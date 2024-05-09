@@ -210,7 +210,7 @@ struct ItemInfoView: View {
 
         do {
             var droppingMonsters: [DroppingMonster] = []
-            let monsters = try await monsterDatabase.allMonsters()
+            let monsters = try await monsterDatabase.monsters()
             for monster in monsters {
                 let drops = (monster.mvpDrops ?? []) + (monster.drops ?? [])
                 for drop in drops {

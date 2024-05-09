@@ -33,10 +33,10 @@ class ObservablePetDatabase: ObservableObject {
         let monsterDatabase = MonsterDatabase.database(for: mode)
 
         do {
-            let allPets = try await petDatabase.allPets()
+            let ps = try await petDatabase.pets()
 
             var pets: [ObservablePet] = []
-            for p in allPets {
+            for p in ps {
                 let monster = try await monsterDatabase.monster(forAegisName: p.monster)
                 let pet = ObservablePet(mode: mode, pet: p, monster: monster)
                 pets.append(pet)

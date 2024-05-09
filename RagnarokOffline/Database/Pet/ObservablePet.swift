@@ -50,25 +50,25 @@ class ObservablePet: ObservableObject {
     }
 
     func fetchPetInfo() async {
-        let database = Database.database(for: mode)
+        let itemDatabase = ItemDatabase.database(for: mode)
 
         if let tameItem = pet.tameItem {
             do {
-                let item = try await database.item(forAegisName: tameItem)
+                let item = try await itemDatabase.item(forAegisName: tameItem)
                 self.tameItem = item
             } catch {
             }
         }
 
         do {
-            let item = try await database.item(forAegisName: pet.eggItem)
+            let item = try await itemDatabase.item(forAegisName: pet.eggItem)
             self.eggItem = item
         } catch {
         }
 
         if let equipItem = pet.equipItem {
             do {
-                let item = try await database.item(forAegisName: equipItem)
+                let item = try await itemDatabase.item(forAegisName: equipItem)
                 self.equipItem = item
             } catch {
             }
@@ -76,7 +76,7 @@ class ObservablePet: ObservableObject {
 
         if let foodItem = pet.foodItem {
             do {
-                let item = try await database.item(forAegisName: foodItem)
+                let item = try await itemDatabase.item(forAegisName: foodItem)
                 self.foodItem = item
             } catch {
             }

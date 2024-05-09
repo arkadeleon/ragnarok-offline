@@ -6,19 +6,20 @@
 //
 
 import Combine
+import rAthenaCommon
 import RODatabase
 
 @MainActor
 class ObservableItemDatabase: ObservableObject {
-    let database: Database
+    let mode: ServerMode
 
     @Published var loadStatus: LoadStatus = .notYetLoaded
     @Published var searchText = ""
     @Published var items: [Item] = []
     @Published var filteredItems: [Item] = []
 
-    init(database: Database) {
-        self.database = database
+    init(mode: ServerMode) {
+        self.mode = mode
     }
 
     func fetchItems() async {
@@ -27,6 +28,8 @@ class ObservableItemDatabase: ObservableObject {
         }
 
         loadStatus = .loading
+
+        let database = ItemDatabase.database(for: mode)
 
         do {
             let usableItems = try await database.usableItems()

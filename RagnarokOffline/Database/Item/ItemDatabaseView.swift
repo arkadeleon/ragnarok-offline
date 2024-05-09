@@ -32,7 +32,7 @@ struct ItemDatabaseView: View {
                 EmptyContentView("No Items")
             }
         }
-        .databaseNavigationDestinations(mode: itemDatabase.database.mode)
+        .databaseNavigationDestinations(mode: itemDatabase.mode)
         .navigationTitle("Item Database")
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)

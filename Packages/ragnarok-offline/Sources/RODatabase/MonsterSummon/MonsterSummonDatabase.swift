@@ -23,34 +23,34 @@ public actor MonsterSummonDatabase {
 
     public let mode: ServerMode
 
-    private var monsterSummons: [MonsterSummon] = []
-    private var monsterSummonsByGroups: [String : MonsterSummon] = [:]
+    private var cachedMonsterSummons: [MonsterSummon] = []
+    private var cachedMonsterSummonsByGroups: [String : MonsterSummon] = [:]
 
     private init(mode: ServerMode) {
         self.mode = mode
     }
 
-    public func allMonsterSummons() throws -> [MonsterSummon] {
-        if monsterSummons.isEmpty {
+    public func monsterSummons() throws -> [MonsterSummon] {
+        if cachedMonsterSummons.isEmpty {
             let decoder = YAMLDecoder()
 
             let url = ResourceBundle.shared.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("mob_summon.yml")
             let data = try Data(contentsOf: url)
-            monsterSummons = try decoder.decode(ListNode<MonsterSummon>.self, from: data).body
+            cachedMonsterSummons = try decoder.decode(ListNode<MonsterSummon>.self, from: data).body
         }
 
-        return monsterSummons
+        return cachedMonsterSummons
     }
 
-    public func monsterSummon(forGroup group: String) async throws -> MonsterSummon {
-        if monsterSummonsByGroups.isEmpty {
-            let monsterSummons = try allMonsterSummons()
-            monsterSummonsByGroups = Dictionary(monsterSummons.map({ ($0.group, $0) }), uniquingKeysWith: { (first, _) in first })
+    public func monsterSummon(forGroup group: String) throws -> MonsterSummon {
+        if cachedMonsterSummonsByGroups.isEmpty {
+            let monsterSummons = try monsterSummons()
+            cachedMonsterSummonsByGroups = Dictionary(monsterSummons.map({ ($0.group, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        if let monsterSummon = monsterSummonsByGroups[group] {
+        if let monsterSummon = cachedMonsterSummonsByGroups[group] {
             return monsterSummon
         } else {
             throw DatabaseError.recordNotFound

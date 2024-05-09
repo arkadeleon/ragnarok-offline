@@ -31,10 +31,10 @@ class ObservableMonsterSummonDatabase: ObservableObject {
         let monsterSummonDatabase = MonsterSummonDatabase.database(for: mode)
 
         do {
-            let allMonsterSummon = try await monsterSummonDatabase.allMonsterSummons()
+            let mss = try await monsterSummonDatabase.monsterSummons()
 
             var monsterSummons: [ObservableMonsterSummon] = []
-            for ms in allMonsterSummon {
+            for ms in mss {
                 let monsterSummon = ObservableMonsterSummon(mode: mode, monsterSummon: ms)
                 monsterSummons.append(monsterSummon)
             }
