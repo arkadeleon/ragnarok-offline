@@ -55,17 +55,19 @@ struct MapInfoView: View {
     private func loadMapInfo() async {
         mapImage = await ClientResourceBundle.shared.mapImage(forMap: map)
 
+        let monsterDatabase = MonsterDatabase.database(for: database.mode)
+
         do {
             var spawnMonsters: [SpawnMonster] = []
             let monsterSpawns = try await database.monsterSpawns(forMap: map)
             for monsterSpawn in monsterSpawns {
                 if let monsterID = monsterSpawn.monsterID {
-                    let monster = try await database.monster(forID: monsterID)
+                    let monster = try await monsterDatabase.monster(forID: monsterID)
                     if !spawnMonsters.contains(where: { $0.monster.id == monsterID }) {
                         spawnMonsters.append((monster, monsterSpawn))
                     }
                 } else if let monsterAegisName = monsterSpawn.monsterAegisName {
-                    let monster = try await database.monster(forAegisName: monsterAegisName)
+                    let monster = try await monsterDatabase.monster(forAegisName: monsterAegisName)
                     if !spawnMonsters.contains(where: { $0.monster.aegisName == monsterAegisName }) {
                         spawnMonsters.append((monster, monsterSpawn))
                     }

@@ -6,19 +6,20 @@
 //
 
 import Combine
+import rAthenaCommon
 import RODatabase
 
 @MainActor
 class ObservableMonsterDatabase: ObservableObject {
-    let database: Database
+    let mode: ServerMode
 
     @Published var loadStatus: LoadStatus = .notYetLoaded
     @Published var searchText = ""
     @Published var monsters: [Monster] = []
     @Published var filteredMonsters: [Monster] = []
 
-    init(database: Database) {
-        self.database = database
+    init(mode: ServerMode) {
+        self.mode = mode
     }
 
     func fetchMonsters() async {
@@ -29,7 +30,8 @@ class ObservableMonsterDatabase: ObservableObject {
         loadStatus = .loading
 
         do {
-            monsters = try await database.monsters()
+            let database = MonsterDatabase.database(for: mode)
+            monsters = try await database.allMonsters()
             filterMonsters()
 
             loadStatus = .loaded

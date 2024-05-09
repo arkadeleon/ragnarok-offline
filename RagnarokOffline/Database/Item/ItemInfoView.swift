@@ -206,9 +206,11 @@ struct ItemInfoView: View {
         itemPreviewImage = await ClientResourceBundle.shared.itemPreviewImage(forItem: item)
         itemDescription = ClientDatabase.shared.identifiedItemDescription(item.id)
 
+        let monsterDatabase = MonsterDatabase.database(for: database.mode)
+
         do {
             var droppingMonsters: [DroppingMonster] = []
-            let monsters = try await database.monsters()
+            let monsters = try await monsterDatabase.allMonsters()
             for monster in monsters {
                 let drops = (monster.mvpDrops ?? []) + (monster.drops ?? [])
                 for drop in drops {

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/1/9.
 //
 
-public struct Monster: Decodable {
+public struct Monster: Decodable, Equatable, Hashable, Identifiable {
 
     /// Monster ID.
     public var id: Int
@@ -218,7 +218,7 @@ public struct Monster: Decodable {
 extension Monster {
 
     /// Walk speed.
-    public struct WalkSpeed: RawRepresentable, Decodable {
+    public struct WalkSpeed: RawRepresentable, Decodable, Equatable, Hashable {
 
         public var rawValue: Int
 
@@ -240,7 +240,7 @@ extension Monster {
 extension Monster {
 
     /// Item of the monster drop.
-    public struct Drop: Decodable {
+    public struct Drop: Decodable, Equatable, Hashable {
 
         /// Item name.
         public var item: String
@@ -276,23 +276,8 @@ extension Monster {
     }
 }
 
-extension Monster: Identifiable {
-}
-
-extension Monster: Equatable {
-    public static func == (lhs: Monster, rhs: Monster) -> Bool {
-        lhs.id == rhs.id
-    }
-}
-
 extension Monster: Comparable {
     public static func < (lhs: Monster, rhs: Monster) -> Bool {
         lhs.id < rhs.id
-    }
-}
-
-extension Monster: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        id.hash(into: &hasher)
     }
 }

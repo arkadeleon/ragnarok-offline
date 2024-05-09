@@ -25,7 +25,6 @@ public final class Database: Sendable {
     public let mode: ServerMode
 
     private let itemCache: ItemCache
-    private let monsterCache: MonsterCache
     private let jobCache: JobCache
     private let skillCache: SkillCache
     private let skillTreeCache: SkillTreeCache
@@ -36,7 +35,6 @@ public final class Database: Sendable {
         self.mode = mode
 
         itemCache = ItemCache(mode: mode)
-        monsterCache = MonsterCache(mode: mode)
         jobCache = JobCache(mode: mode)
         skillCache = SkillCache(mode: mode)
         skillTreeCache = SkillTreeCache(mode: mode)
@@ -74,32 +72,6 @@ public final class Database: Sendable {
         try await itemCache.restoreItems()
         if let item = await itemCache.itemsByAegisNames[aegisName] {
             return item
-        } else {
-            throw DatabaseError.recordNotFound
-        }
-    }
-
-    // MARK: - Monster
-
-    public func monsters() async throws -> [Monster] {
-        try await monsterCache.restoreMonsters()
-        let monsters = await monsterCache.monsters
-        return monsters
-    }
-
-    public func monster(forID id: Int) async throws -> Monster {
-        try await monsterCache.restoreMonsters()
-        if let monster = await monsterCache.monstersByIDs[id] {
-            return monster
-        } else {
-            throw DatabaseError.recordNotFound
-        }
-    }
-
-    public func monster(forAegisName aegisName: String) async throws -> Monster {
-        try await monsterCache.restoreMonsters()
-        if let monster = await monsterCache.monstersByAegisNames[aegisName] {
-            return monster
         } else {
             throw DatabaseError.recordNotFound
         }

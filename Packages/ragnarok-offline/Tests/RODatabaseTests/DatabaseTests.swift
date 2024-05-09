@@ -128,81 +128,6 @@ final class DatabaseTests: XCTestCase {
         XCTAssertEqual(poringCard.script, "bonus bLuk,2;\nbonus bFlee2,1;\n")
     }
 
-    func testMonsterDatabase() async throws {
-        let monsters = try await database.monsters()
-
-        let poring = try await database.monster(forAegisName: "PORING")
-        XCTAssertEqual(poring.aegisName, "PORING")
-        XCTAssertEqual(poring.name, "Poring")
-        XCTAssertEqual(poring.level, 1)
-        XCTAssertEqual(poring.hp, 60)
-        XCTAssertEqual(poring.baseExp, 150)
-        XCTAssertEqual(poring.jobExp, 40)
-        XCTAssertEqual(poring.attack, 8)
-        XCTAssertEqual(poring.attack2, 1)
-        XCTAssertEqual(poring.defense, 2)
-        XCTAssertEqual(poring.magicDefense, 5)
-        XCTAssertEqual(poring.str, 6)
-        XCTAssertEqual(poring.agi, 1)
-        XCTAssertEqual(poring.vit, 1)
-        XCTAssertEqual(poring.int, 1)
-        XCTAssertEqual(poring.dex, 6)
-        XCTAssertEqual(poring.luk, 5)
-        XCTAssertEqual(poring.attackRange, 1)
-        XCTAssertEqual(poring.skillRange, 10)
-        XCTAssertEqual(poring.chaseRange, 12)
-        XCTAssertEqual(poring.size, .medium)
-        XCTAssertEqual(poring.race, .plant)
-        XCTAssertEqual(poring.element, .water)
-        XCTAssertEqual(poring.elementLevel, 1)
-        XCTAssertEqual(poring.walkSpeed.rawValue, 400)
-        XCTAssertEqual(poring.attackDelay, 1872)
-        XCTAssertEqual(poring.attackMotion, 672)
-        XCTAssertEqual(poring.damageMotion, 480)
-        XCTAssertEqual(poring.ai, .ai02)
-        XCTAssertEqual(poring.class, .normal)
-        XCTAssertEqual(poring.drops?.count, 8)
-
-        let archerSkeleton = try await database.monster(forAegisName: "ARCHER_SKELETON")
-        XCTAssertEqual(archerSkeleton.aegisName, "ARCHER_SKELETON")
-        XCTAssertEqual(archerSkeleton.name, "Archer Skeleton")
-        XCTAssertEqual(archerSkeleton.level, 50)
-        XCTAssertEqual(archerSkeleton.hp, 1646)
-        XCTAssertEqual(archerSkeleton.baseExp, 436)
-        XCTAssertEqual(archerSkeleton.jobExp, 327)
-        XCTAssertEqual(archerSkeleton.attack, 95)
-        XCTAssertEqual(archerSkeleton.attack2, 23)
-        XCTAssertEqual(archerSkeleton.defense, 47)
-        XCTAssertEqual(archerSkeleton.magicDefense, 10)
-        XCTAssertEqual(archerSkeleton.str, 30)
-        XCTAssertEqual(archerSkeleton.agi, 29)
-        XCTAssertEqual(archerSkeleton.vit, 20)
-        XCTAssertEqual(archerSkeleton.int, 10)
-        XCTAssertEqual(archerSkeleton.dex, 35)
-        XCTAssertEqual(archerSkeleton.luk, 5)
-        XCTAssertEqual(archerSkeleton.attackRange, 9)
-        XCTAssertEqual(archerSkeleton.skillRange, 10)
-        XCTAssertEqual(archerSkeleton.chaseRange, 12)
-        XCTAssertEqual(archerSkeleton.size, .medium)
-        XCTAssertEqual(archerSkeleton.race, .undead)
-        XCTAssertEqual(archerSkeleton.raceGroups, [.clocktower])
-        XCTAssertEqual(archerSkeleton.element, .undead)
-        XCTAssertEqual(archerSkeleton.elementLevel, 1)
-        XCTAssertEqual(archerSkeleton.walkSpeed.rawValue, 300)
-        XCTAssertEqual(archerSkeleton.attackDelay, 2864)
-        XCTAssertEqual(archerSkeleton.attackMotion, 864)
-        XCTAssertEqual(archerSkeleton.damageMotion, 576)
-        XCTAssertEqual(archerSkeleton.ai, .ai05)
-        XCTAssertEqual(archerSkeleton.class, .normal)
-        XCTAssertEqual(archerSkeleton.drops?.count, 8)
-
-        let osiris = try await database.monster(forAegisName: "OSIRIS")
-        XCTAssertEqual(osiris.ai, .ai21)
-        XCTAssertEqual(osiris.class, .boss)
-        XCTAssertEqual(osiris.modes, [.mvp])
-        XCTAssertEqual(osiris.mvpDrops?.count, 3)
-    }
-
     func testJobDatabase() async throws {
         let jobs = try await database.jobs()
     }
@@ -255,7 +180,7 @@ final class DatabaseTests: XCTestCase {
     }
 
     func testMonsterSpawnDatabase() async throws {
-        let poring = try await database.monster(forAegisName: "PORING")
+        let poring = try await MonsterDatabase.renewal.monster(forAegisName: "PORING")
         let poringMonsterSpawns = try await database.monsterSpawns(forMonster: poring)
         XCTAssertEqual(poringMonsterSpawns.count, 15)
 
@@ -263,14 +188,4 @@ final class DatabaseTests: XCTestCase {
         let prtfild08MonsterSpawns = try await database.monsterSpawns(forMap: prtfild08)
         XCTAssertEqual(prtfild08MonsterSpawns.count, 6)
     }
-
-    static var allTests = [
-        ("testItemDatabase", testItemDatabase),
-        ("testMonsterDatabase", testMonsterDatabase),
-        ("testJobDatabase", testJobDatabase),
-        ("testSkillDatabase", testSkillDatabase),
-        ("testSkillTreeDatabase", testSkillTreeDatabase),
-        ("testMapDatabase", testMapDatabase),
-        ("testMonsterSpawnDatabase", testMonsterSpawnDatabase),
-    ]
 }
