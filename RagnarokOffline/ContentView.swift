@@ -18,11 +18,11 @@ enum MenuItem: Hashable {
     case webServer
     case serverFiles
     case itemDatabase
+    case jobDatabase
+    case mapDatabase
     case monsterDatabase
     case petDatabase
-    case jobDatabase
     case skillDatabase
-    case mapDatabase
 }
 
 struct ContentView: View {

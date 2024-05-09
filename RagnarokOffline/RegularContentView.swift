@@ -23,11 +23,11 @@ struct RegularContentView: View {
     @StateObject private var webServer = ObservableServer(server: WebServer.shared)
 
     @StateObject private var itemDatabase = ObservableItemDatabase(database: .renewal)
+    @StateObject private var jobDatabase = ObservableJobDatabase(database: .renewal)
+    @StateObject private var mapDatabase = ObservableMapDatabase(database: .renewal)
     @StateObject private var monsterDatabase = ObservableMonsterDatabase(mode: .renewal)
     @StateObject private var petDatabase = ObservablePetDatabase(mode: .renewal)
-    @StateObject private var jobDatabase = ObservableJobDatabase(database: .renewal)
     @StateObject private var skillDatabase = ObservableSkillDatabase(database: .renewal)
-    @StateObject private var mapDatabase = ObservableMapDatabase(database: .renewal)
 
     var body: some View {
         NavigationSplitView {
@@ -97,24 +97,24 @@ struct RegularContentView: View {
                         Label("Item Database", systemImage: "leaf")
                     }
 
+                    NavigationLink(value: MenuItem.jobDatabase) {
+                        Label("Job Database", systemImage: "person")
+                    }
+
                     NavigationLink(value: MenuItem.monsterDatabase) {
                         Label("Monster Database", systemImage: "pawprint")
+                    }
+
+                    NavigationLink(value: MenuItem.mapDatabase) {
+                        Label("Map Database", systemImage: "map")
                     }
 
                     NavigationLink(value: MenuItem.petDatabase) {
                         Label("Pet Database", systemImage: "pawprint")
                     }
 
-                    NavigationLink(value: MenuItem.jobDatabase) {
-                        Label("Job Database", systemImage: "person")
-                    }
-
                     NavigationLink(value: MenuItem.skillDatabase) {
                         Label("Skill Database", systemImage: "arrow.up.heart")
-                    }
-
-                    NavigationLink(value: MenuItem.mapDatabase) {
-                        Label("Map Database", systemImage: "map")
                     }
                 }
             }
@@ -181,16 +181,16 @@ struct RegularContentView: View {
                 FilesView(title: "Server Files", directory: .directory(ResourceBundle.shared.url))
             case .itemDatabase:
                 ItemDatabaseView(itemDatabase: itemDatabase)
+            case .jobDatabase:
+                JobDatabaseView(jobDatabase: jobDatabase)
+            case .mapDatabase:
+                MapDatabaseView(mapDatabase: mapDatabase)
             case .monsterDatabase:
                 MonsterDatabaseView(monsterDatabase: monsterDatabase)
             case .petDatabase:
                 PetDatabaseView(petDatabase: petDatabase)
-            case .jobDatabase:
-                JobDatabaseView(jobDatabase: jobDatabase)
             case .skillDatabase:
                 SkillDatabaseView(skillDatabase: skillDatabase)
-            case .mapDatabase:
-                MapDatabaseView(mapDatabase: mapDatabase)
             }
         }
     }

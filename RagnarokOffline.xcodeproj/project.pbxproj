@@ -314,14 +314,14 @@
 			isa = PBXGroup;
 			children = (
 				3514BF422B4526D00065ED89 /* Item */,
+				3514BF802B4801C30065ED89 /* Job */,
+				35652B412B960CFC0075AD71 /* Map */,
 				3514BF5C2B4557870065ED89 /* Monster */,
 				35B422CE2BEB68C500681AA2 /* Pet */,
-				3514BF802B4801C30065ED89 /* Job */,
 				3514BF432B4526DE0065ED89 /* Skill */,
-				35652B412B960CFC0075AD71 /* Map */,
 				3590570D2BDDF2760046AE87 /* DatabaseNavigationDestinations.swift */,
-				3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */,
 				35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */,
+				3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
