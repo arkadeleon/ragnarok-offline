@@ -15,6 +15,13 @@ public final class Database: Sendable {
     public static let prerenewal = Database(mode: .prerenewal)
     public static let renewal = Database(mode: .renewal)
 
+    public static func database(for mode: ServerMode) -> Database {
+        switch mode {
+        case .prerenewal: .prerenewal
+        case .renewal: .renewal
+        }
+    }
+
     public let mode: ServerMode
 
     private let itemCache: ItemCache

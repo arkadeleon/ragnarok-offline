@@ -19,6 +19,7 @@ enum MenuItem: Hashable {
     case serverFiles
     case itemDatabase
     case monsterDatabase
+    case petDatabase
     case jobDatabase
     case skillDatabase
     case mapDatabase

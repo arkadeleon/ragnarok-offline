@@ -31,7 +31,7 @@ struct MapDatabaseView: View {
                 EmptyContentView("No Maps")
             }
         }
-        .databaseNavigationDestinations(database: mapDatabase.database)
+        .databaseNavigationDestinations(mode: mapDatabase.database.mode)
         .navigationTitle("Map Database")
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)

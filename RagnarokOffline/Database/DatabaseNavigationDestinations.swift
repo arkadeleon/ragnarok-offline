@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
+import rAthenaCommon
 import RODatabase
 
 struct DatabaseNavigationDestinations: ViewModifier {
-    let database: Database
+    let mode: ServerMode
+
+    var database: Database {
+        .database(for: mode)
+    }
 
     func body(content: Content) -> some View {
         content
@@ -18,6 +23,9 @@ struct DatabaseNavigationDestinations: ViewModifier {
             }
             .navigationDestination(for: Monster.self) { monster in
                 MonsterInfoView(database: database, monster: monster)
+            }
+            .navigationDestination(for: ObservablePet.self) { pet in
+                PetInfoView(pet: pet)
             }
             .navigationDestination(for: JobStats.self) { jobStats in
                 JobInfoView(database: database, jobStats: jobStats)
@@ -32,7 +40,7 @@ struct DatabaseNavigationDestinations: ViewModifier {
 }
 
 extension View {
-    func databaseNavigationDestinations(database: Database) -> some View {
-        modifier(DatabaseNavigationDestinations(database: database))
+    func databaseNavigationDestinations(mode: ServerMode) -> some View {
+        modifier(DatabaseNavigationDestinations(mode: mode))
     }
 }

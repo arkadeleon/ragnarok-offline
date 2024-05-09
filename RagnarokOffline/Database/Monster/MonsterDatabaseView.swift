@@ -32,7 +32,7 @@ struct MonsterDatabaseView: View {
                 EmptyContentView("No Monsters")
             }
         }
-        .databaseNavigationDestinations(database: monsterDatabase.database)
+        .databaseNavigationDestinations(mode: monsterDatabase.database.mode)
         .navigationTitle("Monster Database")
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)

@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2024/1/9.
 //
 
-import rAthenaCommon
-
 public struct Monster: Decodable {
 
     /// Monster ID.
