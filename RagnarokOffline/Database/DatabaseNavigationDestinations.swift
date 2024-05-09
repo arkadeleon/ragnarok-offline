@@ -24,6 +24,9 @@ struct DatabaseNavigationDestinations: ViewModifier {
             .navigationDestination(for: Monster.self) { monster in
                 MonsterInfoView(database: database, monster: monster)
             }
+            .navigationDestination(for: ObservableMonsterSummon.self) { monsterSummon in
+                MonsterSummonInfoView(monsterSummon: monsterSummon)
+            }
             .navigationDestination(for: ObservablePet.self) { pet in
                 PetInfoView(pet: pet)
             }

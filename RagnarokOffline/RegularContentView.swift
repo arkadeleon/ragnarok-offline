@@ -26,6 +26,7 @@ struct RegularContentView: View {
     @StateObject private var jobDatabase = ObservableJobDatabase(database: .renewal)
     @StateObject private var mapDatabase = ObservableMapDatabase(database: .renewal)
     @StateObject private var monsterDatabase = ObservableMonsterDatabase(mode: .renewal)
+    @StateObject private var monsterSummonDatabase = ObservableMonsterSummonDatabase(mode: .renewal)
     @StateObject private var petDatabase = ObservablePetDatabase(mode: .renewal)
     @StateObject private var skillDatabase = ObservableSkillDatabase(database: .renewal)
 
@@ -103,6 +104,10 @@ struct RegularContentView: View {
 
                     NavigationLink(value: MenuItem.monsterDatabase) {
                         Label("Monster Database", systemImage: "pawprint")
+                    }
+
+                    NavigationLink(value: MenuItem.monsterSummonDatabase) {
+                        Label("Monster Summon Database", systemImage: "pawprint")
                     }
 
                     NavigationLink(value: MenuItem.mapDatabase) {
@@ -187,6 +192,8 @@ struct RegularContentView: View {
                 MapDatabaseView(mapDatabase: mapDatabase)
             case .monsterDatabase:
                 MonsterDatabaseView(monsterDatabase: monsterDatabase)
+            case .monsterSummonDatabase:
+                MonsterSummonDatabaseView(monsterSummonDatabase: monsterSummonDatabase)
             case .petDatabase:
                 PetDatabaseView(petDatabase: petDatabase)
             case .skillDatabase:

@@ -47,10 +47,10 @@ public actor PetDatabase {
     public func pet(forAegisName aegisName: String) async throws -> Pet {
         if petsByAegisNames.isEmpty {
             let pets = try allPets()
-            petsByAegisNames = Dictionary(pets.map({ ($0.monster, $0) }), uniquingKeysWith: { (first, _) in first })
+            petsByAegisNames = Dictionary(pets.map({ ($0.monster.uppercased(), $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        if let pet = petsByAegisNames[aegisName] {
+        if let pet = petsByAegisNames[aegisName.uppercased()] {
             return pet
         } else {
             throw DatabaseError.recordNotFound

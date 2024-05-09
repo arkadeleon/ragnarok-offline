@@ -81,6 +81,10 @@
 		35B422D22BEB6C7C00681AA2 /* PetDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422D12BEB6C7C00681AA2 /* PetDatabaseView.swift */; };
 		35B422D42BEB785500681AA2 /* ObservablePet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422D32BEB785500681AA2 /* ObservablePet.swift */; };
 		35B422D62BEB7ED800681AA2 /* PetInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422D52BEB7ED800681AA2 /* PetInfoView.swift */; };
+		35B422DA2BECA87400681AA2 /* ObservableMonsterSummon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422D92BECA87400681AA2 /* ObservableMonsterSummon.swift */; };
+		35B422DC2BECAA1800681AA2 /* ObservableMonsterSummonDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422DB2BECAA1800681AA2 /* ObservableMonsterSummonDatabase.swift */; };
+		35B422DE2BECAB6100681AA2 /* MonsterSummonDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422DD2BECAB6100681AA2 /* MonsterSummonDatabaseView.swift */; };
+		35B422E02BECAB6E00681AA2 /* MonsterSummonInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422DF2BECAB6E00681AA2 /* MonsterSummonInfoView.swift */; };
 		35B695EA2A305EF6006F1904 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695E92A305EF6006F1904 /* GameView.swift */; };
 		35B695EC2A307164006F1904 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695EB2A307164006F1904 /* GameScene.swift */; };
 		35BE55292BD92D52003715C3 /* TextFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55282BD92D52003715C3 /* TextFilePreviewView.swift */; };
@@ -175,6 +179,10 @@
 		35B422D12BEB6C7C00681AA2 /* PetDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDatabaseView.swift; sourceTree = "<group>"; };
 		35B422D32BEB785500681AA2 /* ObservablePet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePet.swift; sourceTree = "<group>"; };
 		35B422D52BEB7ED800681AA2 /* PetInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetInfoView.swift; sourceTree = "<group>"; };
+		35B422D92BECA87400681AA2 /* ObservableMonsterSummon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMonsterSummon.swift; sourceTree = "<group>"; };
+		35B422DB2BECAA1800681AA2 /* ObservableMonsterSummonDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMonsterSummonDatabase.swift; sourceTree = "<group>"; };
+		35B422DD2BECAB6100681AA2 /* MonsterSummonDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterSummonDatabaseView.swift; sourceTree = "<group>"; };
+		35B422DF2BECAB6E00681AA2 /* MonsterSummonInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterSummonInfoView.swift; sourceTree = "<group>"; };
 		35B695E92A305EF6006F1904 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		35B695EB2A307164006F1904 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		35BE55282BD92D52003715C3 /* TextFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFilePreviewView.swift; sourceTree = "<group>"; };
@@ -317,6 +325,7 @@
 				3514BF802B4801C30065ED89 /* Job */,
 				35652B412B960CFC0075AD71 /* Map */,
 				3514BF5C2B4557870065ED89 /* Monster */,
+				35B422D82BECA84200681AA2 /* MonsterSummon */,
 				35B422CE2BEB68C500681AA2 /* Pet */,
 				3514BF432B4526DE0065ED89 /* Skill */,
 				3590570D2BDDF2760046AE87 /* DatabaseNavigationDestinations.swift */,
@@ -453,6 +462,17 @@
 				35B422D32BEB785500681AA2 /* ObservablePet.swift */,
 			);
 			path = Pet;
+			sourceTree = "<group>";
+		};
+		35B422D82BECA84200681AA2 /* MonsterSummon */ = {
+			isa = PBXGroup;
+			children = (
+				35B422DD2BECAB6100681AA2 /* MonsterSummonDatabaseView.swift */,
+				35B422DF2BECAB6E00681AA2 /* MonsterSummonInfoView.swift */,
+				35B422DB2BECAA1800681AA2 /* ObservableMonsterSummonDatabase.swift */,
+				35B422D92BECA87400681AA2 /* ObservableMonsterSummon.swift */,
+			);
+			path = MonsterSummon;
 			sourceTree = "<group>";
 		};
 		35E27A8C2BCC111400C11076 /* Packages */ = {
@@ -610,6 +630,7 @@
 				355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */,
 				3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */,
 				3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */,
+				35B422E02BECAB6E00681AA2 /* MonsterSummonInfoView.swift in Sources */,
 				35BE555A2BDAA929003715C3 /* SPRFilePreviewView.swift in Sources */,
 				35239E032BC29F660039F7D5 /* EmptyContentView.swift in Sources */,
 				35652B472B960D370075AD71 /* MapInfoView.swift in Sources */,
@@ -623,15 +644,18 @@
 				35BE55642BDAB834003715C3 /* FilePreviewView.swift in Sources */,
 				35B422D62BEB7ED800681AA2 /* PetInfoView.swift in Sources */,
 				35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */,
+				35B422DC2BECAA1800681AA2 /* ObservableMonsterSummonDatabase.swift in Sources */,
 				35239DFF2BBEF4510039F7D5 /* ObservableMapDatabase.swift in Sources */,
 				355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */,
 				35BE55332BD9547F003715C3 /* ACTFilePreviewView.swift in Sources */,
 				353B4F1C2B451F1300605E92 /* ItemGridCell.swift in Sources */,
 				35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */,
+				35B422DE2BECAB6100681AA2 /* MonsterSummonDatabaseView.swift in Sources */,
 				3582FFCA2B8DB9FE00E746D7 /* FilePreviewTabView.swift in Sources */,
 				35F50CCC2BB4615F00B36455 /* MessagesView.swift in Sources */,
 				35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */,
 				353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */,
+				35B422DA2BECA87400681AA2 /* ObservableMonsterSummon.swift in Sources */,
 				3514BF842B4801E20065ED89 /* JobGridCell.swift in Sources */,
 				35BE555C2BDAAFBF003715C3 /* MetalView.swift in Sources */,
 				35BE552D2BD939AA003715C3 /* ImageFilePreviewView.swift in Sources */,
