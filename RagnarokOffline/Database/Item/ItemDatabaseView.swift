@@ -12,15 +12,26 @@ struct ItemDatabaseView: View {
     @ObservedObject var itemDatabase: ObservableItemDatabase
 
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                ForEach(itemDatabase.filteredItems) { item in
-                    NavigationLink(value: item) {
-                        ItemGridCell(item: item, secondaryText: nil)
-                    }
+        ResponsiveView {
+            List(itemDatabase.filteredItems) { item in
+                NavigationLink(value: item) {
+                    ItemCell(item: item, secondaryText: nil)
                 }
             }
-            .padding(20)
+            .listStyle(.plain)
+            .searchable(text: $itemDatabase.searchText, placement: .navigationBarDrawer(displayMode: .always))
+        } regular: {
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                    ForEach(itemDatabase.filteredItems) { item in
+                        NavigationLink(value: item) {
+                            ItemCell(item: item, secondaryText: nil)
+                        }
+                    }
+                }
+                .padding(20)
+            }
+            .searchable(text: $itemDatabase.searchText)
         }
         .overlay {
             if itemDatabase.loadStatus == .loading {
@@ -37,7 +48,6 @@ struct ItemDatabaseView: View {
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
-        .searchable(text: $itemDatabase.searchText)
         .onSubmit(of: .search) {
             itemDatabase.filterItems()
         }

@@ -11,15 +11,26 @@ struct MapDatabaseView: View {
     @ObservedObject var mapDatabase: ObservableMapDatabase
 
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                ForEach(mapDatabase.filteredMaps) { map in
-                    NavigationLink(value: map) {
-                        MapGridCell(map: map, secondaryText: nil)
-                    }
+        ResponsiveView {
+            List(mapDatabase.filteredMaps) { map in
+                NavigationLink(value: map) {
+                    MapCell(map: map, secondaryText: nil)
                 }
             }
-            .padding(20)
+            .listStyle(.plain)
+            .searchable(text: $mapDatabase.searchText, placement: .navigationBarDrawer(displayMode: .always))
+        } regular: {
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                    ForEach(mapDatabase.filteredMaps) { map in
+                        NavigationLink(value: map) {
+                            MapCell(map: map, secondaryText: nil)
+                        }
+                    }
+                }
+                .padding(20)
+            }
+            .searchable(text: $mapDatabase.searchText)
         }
         .overlay {
             if mapDatabase.loadStatus == .loading {
@@ -36,7 +47,6 @@ struct MapDatabaseView: View {
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
-        .searchable(text: $mapDatabase.searchText)
         .onSubmit(of: .search) {
             mapDatabase.filterMaps()
         }

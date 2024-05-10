@@ -11,15 +11,26 @@ struct SkillDatabaseView: View {
     @ObservedObject var skillDatabase: ObservableSkillDatabase
 
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                ForEach(skillDatabase.filteredSkills) { skill in
-                    NavigationLink(value: skill) {
-                        SkillGridCell(skill: skill)
-                    }
+        ResponsiveView {
+            List(skillDatabase.filteredSkills) { skill in
+                NavigationLink(value: skill) {
+                    SkillCell(skill: skill)
                 }
             }
-            .padding(20)
+            .listStyle(.plain)
+            .searchable(text: $skillDatabase.searchText, placement: .navigationBarDrawer(displayMode: .always))
+        } regular: {
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                    ForEach(skillDatabase.filteredSkills) { skill in
+                        NavigationLink(value: skill) {
+                            SkillCell(skill: skill)
+                        }
+                    }
+                }
+                .padding(20)
+            }
+            .searchable(text: $skillDatabase.searchText)
         }
         .overlay {
             if skillDatabase.loadStatus == .loading {
@@ -36,7 +47,6 @@ struct SkillDatabaseView: View {
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
-        .searchable(text: $skillDatabase.searchText)
         .onSubmit(of: .search) {
             skillDatabase.filterSkills()
         }

@@ -1,30 +1,29 @@
 //
-//  MapGridCell.swift
+//  SkillCell.swift
 //  RagnarokOffline
 //
-//  Created by Leon Li on 2024/3/4.
+//  Created by Leon Li on 2024/1/3.
 //
 
 import SwiftUI
 import RODatabase
 import ROResources
 
-struct MapGridCell: View {
-    let map: Map
-    let secondaryText: String?
+struct SkillCell: View {
+    let skill: Skill
 
-    @State private var mapImage: CGImage?
-    @State private var mapDisplayName: String?
+    @State private var skillIconImage: CGImage?
+    @State private var skillDisplayName: String?
 
     var body: some View {
         HStack {
             ZStack {
-                if let mapImage {
-                    Image(mapImage, scale: 1, label: Text(map.name))
+                if let skillIconImage {
+                    Image(skillIconImage, scale: 1, label: Text(skill.name))
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 } else {
-                    Image(systemName: "map")
+                    Image(systemName: "arrow.up.heart")
                         .foregroundStyle(.tertiary)
                         .font(.system(size: 25))
                 }
@@ -32,19 +31,19 @@ struct MapGridCell: View {
             .frame(width: 40, height: 40)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(mapDisplayName ?? map.name)
+                Text(skillDisplayName ?? skill.name)
                     .foregroundColor(.primary)
                     .lineLimit(1)
 
-                Text(secondaryText ?? map.name)
+                Text(skill.aegisName)
                     .foregroundColor(.secondary)
                     .lineLimit(1)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .task {
-            mapImage = await ClientResourceBundle.shared.mapImage(forMap: map)
-            mapDisplayName = ClientDatabase.shared.mapDisplayName(map.name)
+            skillIconImage = await ClientResourceBundle.shared.skillIconImage(forSkill: skill)
+            skillDisplayName = ClientDatabase.shared.skillDisplayName(skill.id)
         }
     }
 }

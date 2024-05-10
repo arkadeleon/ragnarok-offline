@@ -1,5 +1,5 @@
 //
-//  SkillGridCell.swift
+//  ItemCell.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/3.
@@ -9,21 +9,22 @@ import SwiftUI
 import RODatabase
 import ROResources
 
-struct SkillGridCell: View {
-    let skill: Skill
+struct ItemCell: View {
+    let item: Item
+    let secondaryText: String?
 
-    @State private var skillIconImage: CGImage?
-    @State private var skillDisplayName: String?
+    @State private var itemIconImage: CGImage?
+    @State private var itemDisplayName: String?
 
     var body: some View {
         HStack {
             ZStack {
-                if let skillIconImage {
-                    Image(skillIconImage, scale: 1, label: Text(skill.name))
+                if let itemIconImage {
+                    Image(itemIconImage, scale: 1, label: Text(item.name))
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 } else {
-                    Image(systemName: "arrow.up.heart")
+                    Image(systemName: "leaf")
                         .foregroundStyle(.tertiary)
                         .font(.system(size: 25))
                 }
@@ -31,19 +32,24 @@ struct SkillGridCell: View {
             .frame(width: 40, height: 40)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(skillDisplayName ?? skill.name)
+                Text(primaryText)
                     .foregroundColor(.primary)
                     .lineLimit(1)
 
-                Text(skill.aegisName)
+                Text(secondaryText ?? item.aegisName)
                     .foregroundColor(.secondary)
                     .lineLimit(1)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .task {
-            skillIconImage = await ClientResourceBundle.shared.skillIconImage(forSkill: skill)
-            skillDisplayName = ClientDatabase.shared.skillDisplayName(skill.id)
+            itemIconImage = await ClientResourceBundle.shared.itemIconImage(forItem: item)
+            itemDisplayName = ClientDatabase.shared.identifiedItemDisplayName(item.id)
         }
+    }
+
+    private var primaryText: String {
+        let name = itemDisplayName ?? item.name
+        return item.slots > 0 ? name + " [\(item.slots)]" : name
     }
 }

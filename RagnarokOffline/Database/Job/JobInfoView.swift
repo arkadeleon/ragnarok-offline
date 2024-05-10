@@ -55,7 +55,7 @@ struct JobInfoView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(skills) { skill in
                             NavigationLink(value: skill) {
-                                SkillGridCell(skill: skill)
+                                SkillCell(skill: skill)
                             }
                         }
                     }

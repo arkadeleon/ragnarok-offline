@@ -1,30 +1,30 @@
 //
-//  ItemGridCell.swift
+//  MapCell.swift
 //  RagnarokOffline
 //
-//  Created by Leon Li on 2024/1/3.
+//  Created by Leon Li on 2024/3/4.
 //
 
 import SwiftUI
 import RODatabase
 import ROResources
 
-struct ItemGridCell: View {
-    let item: Item
+struct MapCell: View {
+    let map: Map
     let secondaryText: String?
 
-    @State private var itemIconImage: CGImage?
-    @State private var itemDisplayName: String?
+    @State private var mapImage: CGImage?
+    @State private var mapDisplayName: String?
 
     var body: some View {
         HStack {
             ZStack {
-                if let itemIconImage {
-                    Image(itemIconImage, scale: 1, label: Text(item.name))
+                if let mapImage {
+                    Image(mapImage, scale: 1, label: Text(map.name))
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 } else {
-                    Image(systemName: "leaf")
+                    Image(systemName: "map")
                         .foregroundStyle(.tertiary)
                         .font(.system(size: 25))
                 }
@@ -32,24 +32,19 @@ struct ItemGridCell: View {
             .frame(width: 40, height: 40)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(primaryText)
+                Text(mapDisplayName ?? map.name)
                     .foregroundColor(.primary)
                     .lineLimit(1)
 
-                Text(secondaryText ?? item.aegisName)
+                Text(secondaryText ?? map.name)
                     .foregroundColor(.secondary)
                     .lineLimit(1)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .task {
-            itemIconImage = await ClientResourceBundle.shared.itemIconImage(forItem: item)
-            itemDisplayName = ClientDatabase.shared.identifiedItemDisplayName(item.id)
+            mapImage = await ClientResourceBundle.shared.mapImage(forMap: map)
+            mapDisplayName = ClientDatabase.shared.mapDisplayName(map.name)
         }
-    }
-
-    private var primaryText: String {
-        let name = itemDisplayName ?? item.name
-        return item.slots > 0 ? name + " [\(item.slots)]" : name
     }
 }
