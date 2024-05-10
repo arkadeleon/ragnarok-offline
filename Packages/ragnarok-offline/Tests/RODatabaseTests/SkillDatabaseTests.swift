@@ -17,7 +17,7 @@ final class SkillDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
         let database = SkillDatabase.prerenewal
 
-        let napalmBeat = try await database.skill(forAegisName: "MG_NAPALMBEAT")
+        let napalmBeat = try await database.skill(forAegisName: "MG_NAPALMBEAT")!
         XCTAssertEqual(napalmBeat.id, 11)
         XCTAssertEqual(napalmBeat.aegisName, "MG_NAPALMBEAT")
         XCTAssertEqual(napalmBeat.name, "Napalm Beat")
@@ -28,7 +28,7 @@ final class SkillDatabaseTests: XCTestCase {
         XCTAssertEqual(napalmBeat.flags, [.isAutoShadowSpell, .targetTrap])
         XCTAssertEqual(napalmBeat.range, .left(9))
 
-        let spearBoomerang = try await database.skill(forAegisName: "KN_SPEARBOOMERANG")
+        let spearBoomerang = try await database.skill(forAegisName: "KN_SPEARBOOMERANG")!
         XCTAssertEqual(spearBoomerang.id, 59)
         XCTAssertEqual(spearBoomerang.aegisName, "KN_SPEARBOOMERANG")
         XCTAssertEqual(spearBoomerang.name, "Spear Boomerang")
@@ -37,7 +37,7 @@ final class SkillDatabaseTests: XCTestCase {
         XCTAssertEqual(spearBoomerang.targetType, .attack)
         XCTAssertEqual(spearBoomerang.range, .right([3, 5, 7, 9, 11]))
 
-        let sightrasher = try await database.skill(forAegisName: "WZ_SIGHTRASHER")
+        let sightrasher = try await database.skill(forAegisName: "WZ_SIGHTRASHER")!
         XCTAssertEqual(sightrasher.id, 81)
         XCTAssertEqual(sightrasher.requires?.status, ["Sight"])
     }
@@ -45,7 +45,7 @@ final class SkillDatabaseTests: XCTestCase {
     func testRenewal() async throws {
         let database = SkillDatabase.renewal
 
-        let napalmBeat = try await database.skill(forAegisName: "MG_NAPALMBEAT")
+        let napalmBeat = try await database.skill(forAegisName: "MG_NAPALMBEAT")!
         XCTAssertEqual(napalmBeat.id, 11)
         XCTAssertEqual(napalmBeat.aegisName, "MG_NAPALMBEAT")
         XCTAssertEqual(napalmBeat.name, "Napalm Beat")
@@ -56,7 +56,7 @@ final class SkillDatabaseTests: XCTestCase {
         XCTAssertEqual(napalmBeat.flags, [.isAutoShadowSpell, .targetTrap])
         XCTAssertEqual(napalmBeat.range, .left(9))
 
-        let spearBoomerang = try await database.skill(forAegisName: "KN_SPEARBOOMERANG")
+        let spearBoomerang = try await database.skill(forAegisName: "KN_SPEARBOOMERANG")!
         XCTAssertEqual(spearBoomerang.id, 59)
         XCTAssertEqual(spearBoomerang.aegisName, "KN_SPEARBOOMERANG")
         XCTAssertEqual(spearBoomerang.name, "Spear Boomerang")
@@ -65,7 +65,7 @@ final class SkillDatabaseTests: XCTestCase {
         XCTAssertEqual(spearBoomerang.targetType, .attack)
         XCTAssertEqual(spearBoomerang.range, .right([3, 5, 7, 9, 11]))
 
-        let sightrasher = try await database.skill(forAegisName: "WZ_SIGHTRASHER")
+        let sightrasher = try await database.skill(forAegisName: "WZ_SIGHTRASHER")!
         XCTAssertEqual(sightrasher.id, 81)
         XCTAssertEqual(sightrasher.requires?.status, ["Sight"])
     }

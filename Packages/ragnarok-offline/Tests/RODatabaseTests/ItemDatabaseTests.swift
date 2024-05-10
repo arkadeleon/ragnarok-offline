@@ -17,7 +17,7 @@ final class ItemDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
         let database = ItemDatabase.prerenewal
 
-        let redPotion = try await database.item(forAegisName: "Red_Potion")
+        let redPotion = try await database.item(forAegisName: "Red_Potion")!
         XCTAssertEqual(redPotion.id, 501)
         XCTAssertEqual(redPotion.aegisName, "Red_Potion")
         XCTAssertEqual(redPotion.name, "Red Potion")
@@ -26,7 +26,7 @@ final class ItemDatabaseTests: XCTestCase {
         XCTAssertEqual(redPotion.weight, 70)
         XCTAssertEqual(redPotion.script, "itemheal rand(45,65),0;\n")
 
-        let flyWing = try await database.item(forAegisName: "Wing_Of_Fly")
+        let flyWing = try await database.item(forAegisName: "Wing_Of_Fly")!
         XCTAssertEqual(flyWing.id, 601)
         XCTAssertEqual(flyWing.aegisName, "Wing_Of_Fly")
         XCTAssertEqual(flyWing.name, "Fly Wing")
@@ -36,7 +36,7 @@ final class ItemDatabaseTests: XCTestCase {
         XCTAssertEqual(flyWing.flags?.buyingStore, true)
         XCTAssertEqual(flyWing.script, "itemskill \"AL_TELEPORT\",1;\n")
 
-        let deadBranch = try await database.item(forAegisName: "Branch_Of_Dead_Tree")
+        let deadBranch = try await database.item(forAegisName: "Branch_Of_Dead_Tree")!
         XCTAssertEqual(deadBranch.id, 604)
         XCTAssertEqual(deadBranch.aegisName, "Branch_Of_Dead_Tree")
         XCTAssertEqual(deadBranch.name, "Dead Branch")
@@ -47,7 +47,7 @@ final class ItemDatabaseTests: XCTestCase {
         XCTAssertEqual(deadBranch.flags?.deadBranch, true)
         XCTAssertEqual(deadBranch.script, "monster \"this\",-1,-1,\"--ja--\",-1-MOBG_BRANCH_OF_DEAD_TREE,1,\"\";\n")
 
-        let sword = try await database.item(forAegisName: "Sword")
+        let sword = try await database.item(forAegisName: "Sword")!
         XCTAssertEqual(sword.id, 1101)
         XCTAssertEqual(sword.aegisName, "Sword")
         XCTAssertEqual(sword.name, "Sword")
@@ -64,7 +64,7 @@ final class ItemDatabaseTests: XCTestCase {
         XCTAssertEqual(sword.equipLevelMin, 2)
         XCTAssertEqual(sword.refineable, true)
 
-        let eraser = try await database.item(forAegisName: "Eraser")
+        let eraser = try await database.item(forAegisName: "Eraser")!
         XCTAssertEqual(eraser.id, 1637)
         XCTAssertEqual(eraser.aegisName, "Eraser")
         XCTAssertEqual(eraser.name, "Eraser")
@@ -81,7 +81,7 @@ final class ItemDatabaseTests: XCTestCase {
         XCTAssertEqual(eraser.equipLevelMin, 70)
         XCTAssertEqual(eraser.refineable, true)
 
-        let sheild = try await database.item(forAegisName: "Shield")
+        let sheild = try await database.item(forAegisName: "Shield")!
         XCTAssertEqual(sheild.id, 2105)
         XCTAssertEqual(sheild.aegisName, "Shield")
         XCTAssertEqual(sheild.name, "Shield")
@@ -94,7 +94,7 @@ final class ItemDatabaseTests: XCTestCase {
         XCTAssertEqual(sheild.armorLevel, 1)
         XCTAssertEqual(sheild.refineable, true)
 
-        let turban = try await database.item(forAegisName: "Turban")
+        let turban = try await database.item(forAegisName: "Turban")!
         XCTAssertEqual(turban.id, 2222)
         XCTAssertEqual(turban.aegisName, "Turban")
         XCTAssertEqual(turban.name, "Turban")
@@ -108,7 +108,7 @@ final class ItemDatabaseTests: XCTestCase {
         XCTAssertEqual(turban.refineable, true)
         XCTAssertEqual(turban.view, 7)
 
-        let poringCard = try await database.item(forAegisName: "Poring_Card")
+        let poringCard = try await database.item(forAegisName: "Poring_Card")!
         XCTAssertEqual(poringCard.id, 4001)
         XCTAssertEqual(poringCard.aegisName, "Poring_Card")
         XCTAssertEqual(poringCard.name, "Poring Card")
@@ -123,7 +123,7 @@ final class ItemDatabaseTests: XCTestCase {
     func testRenewal() async throws {
         let database = ItemDatabase.renewal
 
-        let redPotion = try await database.item(forAegisName: "Red_Potion")
+        let redPotion = try await database.item(forAegisName: "Red_Potion")!
         XCTAssertEqual(redPotion.id, 501)
         XCTAssertEqual(redPotion.aegisName, "Red_Potion")
         XCTAssertEqual(redPotion.name, "Red Potion")
@@ -132,7 +132,7 @@ final class ItemDatabaseTests: XCTestCase {
         XCTAssertEqual(redPotion.weight, 70)
         XCTAssertEqual(redPotion.script, "itemheal rand(45,65),0;\n")
 
-        let flyWing = try await database.item(forAegisName: "Wing_Of_Fly")
+        let flyWing = try await database.item(forAegisName: "Wing_Of_Fly")!
         XCTAssertEqual(flyWing.id, 601)
         XCTAssertEqual(flyWing.aegisName, "Wing_Of_Fly")
         XCTAssertEqual(flyWing.name, "Fly Wing")
@@ -142,7 +142,7 @@ final class ItemDatabaseTests: XCTestCase {
         XCTAssertEqual(flyWing.flags?.buyingStore, true)
         XCTAssertEqual(flyWing.script, "itemskill \"AL_TELEPORT\",1;\n")
 
-        let deadBranch = try await database.item(forAegisName: "Branch_Of_Dead_Tree")
+        let deadBranch = try await database.item(forAegisName: "Branch_Of_Dead_Tree")!
         XCTAssertEqual(deadBranch.id, 604)
         XCTAssertEqual(deadBranch.aegisName, "Branch_Of_Dead_Tree")
         XCTAssertEqual(deadBranch.name, "Dead Branch")
@@ -153,7 +153,7 @@ final class ItemDatabaseTests: XCTestCase {
         XCTAssertEqual(deadBranch.flags?.deadBranch, true)
         XCTAssertEqual(deadBranch.script, "monster \"this\",-1,-1,\"--ja--\",-1-MOBG_BRANCH_OF_DEAD_TREE,1,\"\";\n")
 
-        let sword = try await database.item(forAegisName: "Sword")
+        let sword = try await database.item(forAegisName: "Sword")!
         XCTAssertEqual(sword.id, 1101)
         XCTAssertEqual(sword.aegisName, "Sword")
         XCTAssertEqual(sword.name, "Sword")
@@ -170,7 +170,7 @@ final class ItemDatabaseTests: XCTestCase {
         XCTAssertEqual(sword.equipLevelMin, 2)
         XCTAssertEqual(sword.refineable, true)
 
-        let eraser = try await database.item(forAegisName: "Eraser")
+        let eraser = try await database.item(forAegisName: "Eraser")!
         XCTAssertEqual(eraser.id, 1637)
         XCTAssertEqual(eraser.aegisName, "Eraser")
         XCTAssertEqual(eraser.name, "Eraser")
@@ -188,7 +188,7 @@ final class ItemDatabaseTests: XCTestCase {
         XCTAssertEqual(eraser.equipLevelMin, 70)
         XCTAssertEqual(eraser.refineable, true)
 
-        let sheild = try await database.item(forAegisName: "Shield")
+        let sheild = try await database.item(forAegisName: "Shield")!
         XCTAssertEqual(sheild.id, 2105)
         XCTAssertEqual(sheild.aegisName, "Shield")
         XCTAssertEqual(sheild.name, "Shield")
@@ -201,7 +201,7 @@ final class ItemDatabaseTests: XCTestCase {
         XCTAssertEqual(sheild.armorLevel, 1)
         XCTAssertEqual(sheild.refineable, true)
 
-        let turban = try await database.item(forAegisName: "Turban")
+        let turban = try await database.item(forAegisName: "Turban")!
         XCTAssertEqual(turban.id, 2222)
         XCTAssertEqual(turban.aegisName, "Turban")
         XCTAssertEqual(turban.name, "Turban")
@@ -215,7 +215,7 @@ final class ItemDatabaseTests: XCTestCase {
         XCTAssertEqual(turban.refineable, true)
         XCTAssertEqual(turban.view, 7)
 
-        let poringCard = try await database.item(forAegisName: "Poring_Card")
+        let poringCard = try await database.item(forAegisName: "Poring_Card")!
         XCTAssertEqual(poringCard.id, 4001)
         XCTAssertEqual(poringCard.aegisName, "Poring_Card")
         XCTAssertEqual(poringCard.name, "Poring Card")
