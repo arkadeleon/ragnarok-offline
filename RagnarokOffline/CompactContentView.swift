@@ -25,7 +25,7 @@ struct CompactContentView: View {
     @StateObject private var monsterDatabase = ObservableMonsterDatabase(mode: .renewal)
     @StateObject private var monsterSummonDatabase = ObservableMonsterSummonDatabase(mode: .renewal)
     @StateObject private var petDatabase = ObservablePetDatabase(mode: .renewal)
-    @StateObject private var skillDatabase = ObservableSkillDatabase(database: .renewal)
+    @StateObject private var skillDatabase = ObservableSkillDatabase(mode: .renewal)
 
     var body: some View {
         TabView {

@@ -23,8 +23,8 @@ public actor SkillTreeDatabase {
 
     public let mode: ServerMode
 
-    private(set) var cachedSkillTrees: [SkillTree] = []
-    private(set) var cachedSkillTreesByJobIDs: [Int : SkillTree] = [:]
+    private var cachedSkillTrees: [SkillTree] = []
+    private var cachedSkillTreesByJobIDs: [Int : SkillTree] = [:]
 
     private init(mode: ServerMode) {
         self.mode = mode

@@ -174,13 +174,14 @@ struct JobInfoView: View {
     private func loadJobInfo() async {
         jobImage = await ClientResourceManager.shared.jobImage(gender: .male, job: jobStats.job)
 
+        let skillDatabase = SkillDatabase.database(for: database.mode)
         let skillTreeDatabase = SkillTreeDatabase.database(for: database.mode)
 
         do {
             var skills: [Skill] = []
             let skillTree = try await skillTreeDatabase.skillTree(forJobID: jobStats.job.id)
             for s in skillTree.tree ?? [] {
-                let skill = try await database.skill(forAegisName: s.name)
+                let skill = try await skillDatabase.skill(forAegisName: s.name)
                 skills.append(skill)
             }
             self.skills = skills

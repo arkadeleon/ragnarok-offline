@@ -25,7 +25,6 @@ public final class Database: Sendable {
     public let mode: ServerMode
 
     private let jobCache: JobCache
-    private let skillCache: SkillCache
     private let mapCache: MapCache
     private let scriptCache: ScriptCache
 
@@ -33,7 +32,6 @@ public final class Database: Sendable {
         self.mode = mode
 
         jobCache = JobCache(mode: mode)
-        skillCache = SkillCache(mode: mode)
         mapCache = MapCache(mode: mode)
         scriptCache = ScriptCache(mode: mode)
     }
@@ -44,23 +42,6 @@ public final class Database: Sendable {
         try await jobCache.restoreJobs()
         let jobs = await jobCache.jobs
         return jobs
-    }
-
-    // MARK: - Skill
-
-    public func skills() async throws -> [Skill] {
-        try await skillCache.restoreSkills()
-        let skills = await skillCache.skills
-        return skills
-    }
-
-    public func skill(forAegisName aegisName: String) async throws -> Skill {
-        try await skillCache.restoreSkills()
-        if let skill = await skillCache.skillsByAegisNames[aegisName] {
-            return skill
-        } else {
-            throw DatabaseError.recordNotFound
-        }
     }
 
     // MARK: - Map

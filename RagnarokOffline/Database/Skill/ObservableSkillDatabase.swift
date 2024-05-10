@@ -6,19 +6,20 @@
 //
 
 import Combine
+import rAthenaCommon
 import RODatabase
 
 @MainActor
 class ObservableSkillDatabase: ObservableObject {
-    let database: Database
+    let mode: ServerMode
 
     @Published var loadStatus: LoadStatus = .notYetLoaded
     @Published var searchText = ""
     @Published var skills: [Skill] = []
     @Published var filteredSkills: [Skill] = []
 
-    init(database: Database) {
-        self.database = database
+    init(mode: ServerMode) {
+        self.mode = mode
     }
 
     func fetchSkills() async {
@@ -27,6 +28,8 @@ class ObservableSkillDatabase: ObservableObject {
         }
 
         loadStatus = .loading
+
+        let database = SkillDatabase.database(for: mode)
 
         do {
             skills = try await database.skills()

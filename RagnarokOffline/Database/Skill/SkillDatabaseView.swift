@@ -31,7 +31,7 @@ struct SkillDatabaseView: View {
                 EmptyContentView("No Skills")
             }
         }
-        .databaseNavigationDestinations(mode: skillDatabase.database.mode)
+        .databaseNavigationDestinations(mode: skillDatabase.mode)
         .navigationTitle("Skill Database")
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)
