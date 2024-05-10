@@ -47,3 +47,9 @@ extension ObservableMonsterSummon {
         }
     }
 }
+
+extension ObservableMonsterSummon: Identifiable {
+    var id: String {
+        monsterSummon.group
+    }
+}

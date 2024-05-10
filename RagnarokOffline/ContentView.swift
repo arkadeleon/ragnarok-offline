@@ -30,16 +30,13 @@ struct ContentView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
-        if horizontalSizeClass == .regular {
-            RegularContentView()
-                .task {
-                    await load()
-                }
-        } else {
+        ResponsiveView {
             CompactContentView()
-                .task {
-                    await load()
-                }
+        } regular: {
+            RegularContentView()
+        }
+        .task {
+            await load()
         }
     }
 

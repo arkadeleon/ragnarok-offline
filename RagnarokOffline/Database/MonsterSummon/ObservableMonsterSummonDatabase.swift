@@ -9,6 +9,7 @@ import Combine
 import rAthenaCommon
 import RODatabase
 
+@MainActor
 class ObservableMonsterSummonDatabase: ObservableObject {
     let mode: ServerMode
 

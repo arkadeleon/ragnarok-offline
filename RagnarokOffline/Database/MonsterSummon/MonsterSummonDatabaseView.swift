@@ -11,24 +11,21 @@ struct MonsterSummonDatabaseView: View {
     @ObservedObject var monsterSummonDatabase: ObservableMonsterSummonDatabase
 
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                ForEach(monsterSummonDatabase.filteredMonsterSummons, id: \.monsterSummon) { monsterSummon in
+        ResponsiveView {
+            List(monsterSummonDatabase.filteredMonsterSummons) { monsterSummon in
+                NavigationLink(monsterSummon.monsterSummon.group, value: monsterSummon)
+            }
+            .listStyle(.plain)
+        } regular: {
+            Table(monsterSummonDatabase.filteredMonsterSummons) {
+                TableColumn("Group", value: \.monsterSummon.group)
+                TableColumn("Default", value: \.monsterSummon.default)
+                TableColumn("Info") { monsterSummon in
                     NavigationLink(value: monsterSummon) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(monsterSummon.monsterSummon.group)
-                                .foregroundColor(.primary)
-                                .lineLimit(1)
-
-                            Text("\(monsterSummon.monsterSummon.summon.count)")
-                                .foregroundColor(.secondary)
-                                .lineLimit(1)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        Image(systemName: "info.circle")
                     }
                 }
             }
-            .padding(20)
         }
         .overlay {
             if monsterSummonDatabase.loadStatus == .loading {
