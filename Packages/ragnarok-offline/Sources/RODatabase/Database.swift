@@ -24,31 +24,12 @@ public final class Database: Sendable {
 
     public let mode: ServerMode
 
-    private let mapCache: MapCache
     private let scriptCache: ScriptCache
 
     private init(mode: ServerMode) {
         self.mode = mode
 
-        mapCache = MapCache(mode: mode)
         scriptCache = ScriptCache(mode: mode)
-    }
-
-    // MARK: - Map
-
-    public func maps() async throws -> [Map] {
-        try await mapCache.restoreMaps()
-        let maps = await mapCache.maps
-        return maps
-    }
-
-    public func map(forName name: String) async throws -> Map {
-        try await mapCache.restoreMaps()
-        if let map = await mapCache.mapsByNames[name] {
-            return map
-        } else {
-            throw DatabaseError.recordNotFound
-        }
     }
 
     // MARK: - Script

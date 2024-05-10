@@ -24,7 +24,7 @@ struct RegularContentView: View {
 
     @StateObject private var itemDatabase = ObservableItemDatabase(mode: .renewal)
     @StateObject private var jobDatabase = ObservableJobDatabase(mode: .renewal)
-    @StateObject private var mapDatabase = ObservableMapDatabase(database: .renewal)
+    @StateObject private var mapDatabase = ObservableMapDatabase(mode: .renewal)
     @StateObject private var monsterDatabase = ObservableMonsterDatabase(mode: .renewal)
     @StateObject private var monsterSummonDatabase = ObservableMonsterSummonDatabase(mode: .renewal)
     @StateObject private var petDatabase = ObservablePetDatabase(mode: .renewal)

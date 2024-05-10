@@ -6,19 +6,20 @@
 //
 
 import Combine
+import rAthenaCommon
 import RODatabase
 
 @MainActor
 class ObservableMapDatabase: ObservableObject {
-    let database: Database
+    let mode: ServerMode
 
     @Published var loadStatus: LoadStatus = .notYetLoaded
     @Published var searchText = ""
     @Published var maps: [Map] = []
     @Published var filteredMaps: [Map] = []
 
-    init(database: Database) {
-        self.database = database
+    init(mode: ServerMode) {
+        self.mode = mode
     }
 
     func fetchMaps() async {
@@ -27,6 +28,8 @@ class ObservableMapDatabase: ObservableObject {
         }
 
         loadStatus = .loading
+
+        let database = MapDatabase.database(for: mode)
 
         do {
             maps = try await database.maps()

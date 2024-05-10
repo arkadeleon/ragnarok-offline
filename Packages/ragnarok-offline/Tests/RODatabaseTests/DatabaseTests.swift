@@ -16,17 +16,12 @@ final class DatabaseTests: XCTestCase {
         try await ResourceBundle.shared.load()
     }
 
-    func testMapDatabase() async throws {
-        let maps = try await database.maps()
-        XCTAssertEqual(maps.count, 1219)
-    }
-
     func testMonsterSpawnDatabase() async throws {
         let poring = try await MonsterDatabase.renewal.monster(forAegisName: "PORING")
         let poringMonsterSpawns = try await database.monsterSpawns(forMonster: poring)
         XCTAssertEqual(poringMonsterSpawns.count, 15)
 
-        let prtfild08 = try await database.map(forName: "prt_fild08")
+        let prtfild08 = try await MapDatabase.renewal.map(forName: "prt_fild08")
         let prtfild08MonsterSpawns = try await database.monsterSpawns(forMap: prtfild08)
         XCTAssertEqual(prtfild08MonsterSpawns.count, 6)
     }

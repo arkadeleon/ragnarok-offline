@@ -181,6 +181,7 @@ struct MonsterInfoView: View {
         monsterImage = await ClientResourceManager.shared.monsterImage(monster.id)
 
         let itemDatabase = ItemDatabase.database(for: database.mode)
+        let mapDatabase = MapDatabase.database(for: database.mode)
 
         do {
             if let mvpDrops = monster.mvpDrops {
@@ -210,7 +211,7 @@ struct MonsterInfoView: View {
             var spawnMaps: [SpawnMap] = []
             let monsterSpawns = try await database.monsterSpawns(forMonster: monster)
             for monsterSpawn in monsterSpawns {
-                let map = try await database.map(forName: monsterSpawn.mapName)
+                let map = try await mapDatabase.map(forName: monsterSpawn.mapName)
                 if !spawnMaps.contains(where: { $0.map == map }) {
                     spawnMaps.append((map, monsterSpawn))
                 }
