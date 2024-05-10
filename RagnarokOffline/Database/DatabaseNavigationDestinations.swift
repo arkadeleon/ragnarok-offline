@@ -12,17 +12,13 @@ import RODatabase
 struct DatabaseNavigationDestinations: ViewModifier {
     let mode: ServerMode
 
-    var database: Database {
-        .database(for: mode)
-    }
-
     func body(content: Content) -> some View {
         content
             .navigationDestination(for: Item.self) { item in
-                ItemInfoView(database: database, item: item)
+                ItemInfoView(mode: mode, item: item)
             }
             .navigationDestination(for: Monster.self) { monster in
-                MonsterInfoView(database: database, monster: monster)
+                MonsterInfoView(mode: mode, monster: monster)
             }
             .navigationDestination(for: ObservableMonsterSummon.self) { monsterSummon in
                 MonsterSummonInfoView(monsterSummon: monsterSummon)
@@ -31,13 +27,13 @@ struct DatabaseNavigationDestinations: ViewModifier {
                 PetInfoView(pet: pet)
             }
             .navigationDestination(for: JobStats.self) { jobStats in
-                JobInfoView(database: database, jobStats: jobStats)
+                JobInfoView(mode: mode, jobStats: jobStats)
             }
             .navigationDestination(for: Skill.self) { skill in
-                SkillInfoView(database: database, skill: skill)
+                SkillInfoView(mode: mode, skill: skill)
             }
             .navigationDestination(for: Map.self) { map in
-                MapInfoView(database: database, map: map)
+                MapInfoView(mode: mode, map: map)
             }
     }
 }

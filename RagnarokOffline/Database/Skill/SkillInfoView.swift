@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import rAthenaCommon
 import RODatabase
 import ROResources
 
 struct SkillInfoView: View {
-    let database: Database
+    let mode: ServerMode
     let skill: Skill
 
     @State private var skillDescription: String?

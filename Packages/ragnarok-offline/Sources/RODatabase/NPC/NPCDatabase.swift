@@ -1,5 +1,5 @@
 //
-//  ScriptCache.swift
+//  NPCDatabase.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/3/11.
@@ -9,35 +9,61 @@ import Foundation
 import rAthenaCommon
 import rAthenaResource
 
-actor ScriptCache {
-    let mode: ServerMode
+public actor NPCDatabase {
+    public static let prerenewal = NPCDatabase(mode: .prerenewal)
+    public static let renewal = NPCDatabase(mode: .renewal)
 
-    private(set) var mapFlags: [MapFlag] = []
-    private(set) var monsterSpawns: [MonsterSpawn] = []
-    private(set) var warpPoints: [WarpPoint] = []
-    private(set) var npcs: [NPC] = []
-    private(set) var floatingNPCs: [FloatingNPC] = []
-    private(set) var shopNPCs: [ShopNPC] = []
-    private(set) var duplicates: [Duplicate] = []
-    private(set) var functions: [Function] = []
+    public static func database(for mode: ServerMode) -> NPCDatabase {
+        switch mode {
+        case .prerenewal: .prerenewal
+        case .renewal: .renewal
+        }
+    }
 
-    private var isRestored = false
+    public let mode: ServerMode
 
-    init(mode: ServerMode) {
+    private var mapFlags: [MapFlag] = []
+    private var monsterSpawns: [MonsterSpawn] = []
+    private var warpPoints: [WarpPoint] = []
+    private var npcs: [NPC] = []
+    private var floatingNPCs: [FloatingNPC] = []
+    private var shopNPCs: [ShopNPC] = []
+    private var duplicates: [Duplicate] = []
+    private var functions: [Function] = []
+
+    private var isCached = false
+
+    private init(mode: ServerMode) {
         self.mode = mode
     }
 
-    func restoreScripts() throws {
-        guard !isRestored else {
-            return
+    public func monsterSpawns(forMonster monster: Monster) throws -> [MonsterSpawn] {
+        try restoreScripts()
+
+        let monsterSpawns = monsterSpawns.filter { monsterSpawn in
+            monsterSpawn.monsterID == monster.id || monsterSpawn.monsterAegisName == monster.aegisName
         }
+        return monsterSpawns
+    }
 
-        let url = ResourceBundle.shared.npcURL
-            .appendingPathComponent(mode.dbPath)
-            .appendingPathComponent("scripts_main.conf")
-        try import_conf_file(url: url)
+    public func monsterSpawns(forMap map: Map) throws -> [MonsterSpawn] {
+        try restoreScripts()
 
-        isRestored = true
+        let monsterSpawns = monsterSpawns.filter { monsterSpawn in
+            monsterSpawn.mapName == map.name
+        }
+        return monsterSpawns
+    }
+
+    private func restoreScripts() throws {
+        if !isCached {
+            let url = ResourceBundle.shared.npcURL
+                .appendingPathComponent(mode.dbPath)
+                .appendingPathComponent("scripts_main.conf")
+            try import_conf_file(url: url)
+
+            isCached = true
+        }
     }
 
     private func import_conf_file(url: URL) throws {

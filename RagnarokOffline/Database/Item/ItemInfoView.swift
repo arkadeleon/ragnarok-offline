@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import rAthenaCommon
 import RODatabase
 import ROResources
 
 struct ItemInfoView: View {
-    let database: Database
+    let mode: ServerMode
     let item: Item
 
     typealias DroppingMonster = (monster: Monster, drop: Monster.Drop)
@@ -206,7 +207,7 @@ struct ItemInfoView: View {
         itemPreviewImage = await ClientResourceBundle.shared.itemPreviewImage(forItem: item)
         itemDescription = ClientDatabase.shared.identifiedItemDescription(item.id)
 
-        let monsterDatabase = MonsterDatabase.database(for: database.mode)
+        let monsterDatabase = MonsterDatabase.database(for: mode)
 
         do {
             var droppingMonsters: [DroppingMonster] = []

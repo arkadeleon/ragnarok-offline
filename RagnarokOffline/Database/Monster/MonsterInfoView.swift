@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import rAthenaCommon
 import RODatabase
 import ROResources
 
 struct MonsterInfoView: View {
-    let database: Database
+    let mode: ServerMode
     let monster: Monster
 
     typealias DropItem = (index: Int, drop: Monster.Drop, item: Item)
@@ -120,12 +121,12 @@ struct MonsterInfoView: View {
         fields.append(("Job Exp", "\(monster.jobExp)"))
         fields.append(("MVP Exp", "\(monster.mvpExp)"))
 
-        if database.mode == .prerenewal {
+        if mode == .prerenewal {
             fields.append(("Minimum Attack", "\(monster.attack)"))
             fields.append(("Maximum Attack", "\(monster.attack2)"))
         }
 
-        if database.mode == .renewal {
+        if mode == .renewal {
             fields.append(("Base Attack", "\(monster.attack)"))
             fields.append(("Base Magic Attack", "\(monster.attack2)"))
         }
@@ -180,8 +181,9 @@ struct MonsterInfoView: View {
     private func loadMonsterInfo() async {
         monsterImage = await ClientResourceManager.shared.monsterImage(monster.id)
 
-        let itemDatabase = ItemDatabase.database(for: database.mode)
-        let mapDatabase = MapDatabase.database(for: database.mode)
+        let itemDatabase = ItemDatabase.database(for: mode)
+        let mapDatabase = MapDatabase.database(for: mode)
+        let npcDatabase = NPCDatabase.database(for: mode)
 
         do {
             if let mvpDrops = monster.mvpDrops {
@@ -209,7 +211,7 @@ struct MonsterInfoView: View {
 
         do {
             var spawnMaps: [SpawnMap] = []
-            let monsterSpawns = try await database.monsterSpawns(forMonster: monster)
+            let monsterSpawns = try await npcDatabase.monsterSpawns(forMonster: monster)
             for monsterSpawn in monsterSpawns {
                 let map = try await mapDatabase.map(forName: monsterSpawn.mapName)
                 if !spawnMaps.contains(where: { $0.map == map }) {

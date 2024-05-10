@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import rAthenaCommon
 import RODatabase
 import ROResources
 
 struct JobInfoView: View {
-    let database: Database
+    let mode: ServerMode
     let jobStats: JobStats
 
     typealias BaseLevelStats = (level: Int, baseExp: Int, baseHp: Int, baseSp: Int)
@@ -174,8 +175,8 @@ struct JobInfoView: View {
     private func loadJobInfo() async {
         jobImage = await ClientResourceManager.shared.jobImage(gender: .male, job: jobStats.job)
 
-        let skillDatabase = SkillDatabase.database(for: database.mode)
-        let skillTreeDatabase = SkillTreeDatabase.database(for: database.mode)
+        let skillDatabase = SkillDatabase.database(for: mode)
+        let skillTreeDatabase = SkillTreeDatabase.database(for: mode)
 
         do {
             var skills: [Skill] = []

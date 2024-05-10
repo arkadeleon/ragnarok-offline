@@ -1,22 +1,27 @@
 //
-//  DatabaseTests.swift
+//  NPCDatabaseTests.swift
 //  RagnarokOfflineTests
 //
-//  Created by Leon Li on 2024/1/9.
+//  Created by Leon Li on 2024/5/10.
 //
 
 import XCTest
 import rAthenaResource
 @testable import RODatabase
 
-final class DatabaseTests: XCTestCase {
-    let database = Database.renewal
-
+final class NPCDatabaseTests: XCTestCase {
     override func setUp() async throws {
         try await ResourceBundle.shared.load()
     }
 
-    func testMonsterSpawnDatabase() async throws {
+    func testPrerenewal() async throws {
+        let database = NPCDatabase.prerenewal
+
+    }
+
+    func testRenewal() async throws {
+        let database = NPCDatabase.renewal
+
         let poring = try await MonsterDatabase.renewal.monster(forAegisName: "PORING")
         let poringMonsterSpawns = try await database.monsterSpawns(forMonster: poring)
         XCTAssertEqual(poringMonsterSpawns.count, 15)

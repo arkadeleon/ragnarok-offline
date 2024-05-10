@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import rAthenaCommon
 import RODatabase
 import ROResources
 
 struct MapInfoView: View {
-    let database: Database
+    let mode: ServerMode
     let map: Map
 
     typealias SpawnMonster = (monster: Monster, spawn: MonsterSpawn)
@@ -55,11 +56,12 @@ struct MapInfoView: View {
     private func loadMapInfo() async {
         mapImage = await ClientResourceBundle.shared.mapImage(forMap: map)
 
-        let monsterDatabase = MonsterDatabase.database(for: database.mode)
+        let monsterDatabase = MonsterDatabase.database(for: mode)
+        let npcDatabase = NPCDatabase.database(for: mode)
 
         do {
             var spawnMonsters: [SpawnMonster] = []
-            let monsterSpawns = try await database.monsterSpawns(forMap: map)
+            let monsterSpawns = try await npcDatabase.monsterSpawns(forMap: map)
             for monsterSpawn in monsterSpawns {
                 if let monsterID = monsterSpawn.monsterID {
                     let monster = try await monsterDatabase.monster(forID: monsterID)
