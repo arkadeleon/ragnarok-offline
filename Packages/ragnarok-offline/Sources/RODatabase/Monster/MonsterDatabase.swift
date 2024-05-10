@@ -45,29 +45,23 @@ public actor MonsterDatabase {
         return cachedMonsters
     }
 
-    public func monster(forID id: Int) throws -> Monster {
+    public func monster(forID id: Int) throws -> Monster? {
         if cachedMonstersByIDs.isEmpty {
             let monsters = try monsters()
             cachedMonstersByIDs = Dictionary(monsters.map({ ($0.id, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        if let monster = cachedMonstersByIDs[id] {
-            return monster
-        } else {
-            throw DatabaseError.recordNotFound
-        }
+        let monster = cachedMonstersByIDs[id]
+        return monster
     }
 
-    public func monster(forAegisName aegisName: String) throws -> Monster {
+    public func monster(forAegisName aegisName: String) throws -> Monster? {
         if cachedMonstersByAegisNames.isEmpty {
             let monsters = try monsters()
             cachedMonstersByAegisNames = Dictionary(monsters.map({ ($0.aegisName, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        if let monster = cachedMonstersByAegisNames[aegisName] {
-            return monster
-        } else {
-            throw DatabaseError.recordNotFound
-        }
+        let monster = cachedMonstersByAegisNames[aegisName]
+        return monster
     }
 }

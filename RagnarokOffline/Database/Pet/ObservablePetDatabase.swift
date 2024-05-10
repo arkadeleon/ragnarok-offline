@@ -37,9 +37,10 @@ class ObservablePetDatabase: ObservableObject {
 
             var pets: [ObservablePet] = []
             for p in ps {
-                let monster = try await monsterDatabase.monster(forAegisName: p.monster)
-                let pet = ObservablePet(mode: mode, pet: p, monster: monster)
-                pets.append(pet)
+                if let monster = try? await monsterDatabase.monster(forAegisName: p.monster) {
+                    let pet = ObservablePet(mode: mode, pet: p, monster: monster)
+                    pets.append(pet)
+                }
             }
             self.pets = pets
 

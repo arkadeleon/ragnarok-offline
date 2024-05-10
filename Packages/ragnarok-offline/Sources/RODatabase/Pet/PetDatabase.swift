@@ -44,16 +44,13 @@ public actor PetDatabase {
         return cachedPets
     }
 
-    public func pet(forAegisName aegisName: String) throws -> Pet {
+    public func pet(forAegisName aegisName: String) throws -> Pet? {
         if cachedPetsByAegisNames.isEmpty {
             let pets = try pets()
-            cachedPetsByAegisNames = Dictionary(pets.map({ ($0.monster.uppercased(), $0) }), uniquingKeysWith: { (first, _) in first })
+            cachedPetsByAegisNames = Dictionary(pets.map({ ($0.monster, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        if let pet = cachedPetsByAegisNames[aegisName.uppercased()] {
-            return pet
-        } else {
-            throw DatabaseError.recordNotFound
-        }
+        let pet = cachedPetsByAegisNames[aegisName]
+        return pet
     }
 }

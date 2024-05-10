@@ -53,32 +53,24 @@ class ObservablePet: ObservableObject {
         let itemDatabase = ItemDatabase.database(for: mode)
 
         if let tameItem = pet.tameItem {
-            do {
-                let item = try await itemDatabase.item(forAegisName: tameItem)
+            if let item = try? await itemDatabase.item(forAegisName: tameItem) {
                 self.tameItem = item
-            } catch {
             }
         }
 
-        do {
-            let item = try await itemDatabase.item(forAegisName: pet.eggItem)
+        if let item = try? await itemDatabase.item(forAegisName: pet.eggItem) {
             self.eggItem = item
-        } catch {
         }
 
         if let equipItem = pet.equipItem {
-            do {
-                let item = try await itemDatabase.item(forAegisName: equipItem)
+            if let item = try? await itemDatabase.item(forAegisName: equipItem) {
                 self.equipItem = item
-            } catch {
             }
         }
 
         if let foodItem = pet.foodItem {
-            do {
-                let item = try await itemDatabase.item(forAegisName: foodItem)
+            if let item = try? await itemDatabase.item(forAegisName: foodItem) {
                 self.foodItem = item
-            } catch {
             }
         }
     }

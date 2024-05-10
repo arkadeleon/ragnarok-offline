@@ -59,24 +59,24 @@ struct MapInfoView: View {
         let monsterDatabase = MonsterDatabase.database(for: mode)
         let npcDatabase = NPCDatabase.database(for: mode)
 
-        do {
+        if let monsterSpawns = try? await npcDatabase.monsterSpawns(forMap: map) {
             var spawnMonsters: [SpawnMonster] = []
-            let monsterSpawns = try await npcDatabase.monsterSpawns(forMap: map)
             for monsterSpawn in monsterSpawns {
                 if let monsterID = monsterSpawn.monsterID {
-                    let monster = try await monsterDatabase.monster(forID: monsterID)
-                    if !spawnMonsters.contains(where: { $0.monster.id == monsterID }) {
-                        spawnMonsters.append((monster, monsterSpawn))
+                    if let monster = try? await monsterDatabase.monster(forID: monsterID) {
+                        if !spawnMonsters.contains(where: { $0.monster.id == monsterID }) {
+                            spawnMonsters.append((monster, monsterSpawn))
+                        }
                     }
                 } else if let monsterAegisName = monsterSpawn.monsterAegisName {
-                    let monster = try await monsterDatabase.monster(forAegisName: monsterAegisName)
-                    if !spawnMonsters.contains(where: { $0.monster.aegisName == monsterAegisName }) {
-                        spawnMonsters.append((monster, monsterSpawn))
+                    if let monster = try? await monsterDatabase.monster(forAegisName: monsterAegisName) {
+                        if !spawnMonsters.contains(where: { $0.monster.aegisName == monsterAegisName }) {
+                            spawnMonsters.append((monster, monsterSpawn))
+                        }
                     }
                 }
             }
             self.spawnMonsters = spawnMonsters
-        } catch {
         }
     }
 }

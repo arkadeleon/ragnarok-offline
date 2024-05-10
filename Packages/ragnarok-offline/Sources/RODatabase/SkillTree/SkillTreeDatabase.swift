@@ -44,16 +44,13 @@ public actor SkillTreeDatabase {
         return cachedSkillTrees
     }
 
-    public func skillTree(forJobID jobID: Int) throws -> SkillTree {
+    public func skillTree(forJobID jobID: Int) throws -> SkillTree? {
         if cachedSkillTreesByJobIDs.isEmpty {
             let skillTrees = try skillTrees()
             cachedSkillTreesByJobIDs = Dictionary(skillTrees.map({ ($0.job.id, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        if let skillTree = cachedSkillTreesByJobIDs[jobID] {
-            return skillTree
-        } else {
-            throw DatabaseError.recordNotFound
-        }
+        let skillTree = cachedSkillTreesByJobIDs[jobID]
+        return skillTree
     }
 }

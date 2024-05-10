@@ -57,16 +57,13 @@ public actor MapDatabase {
         return cachedMaps
     }
 
-    public func map(forName name: String) throws -> Map {
+    public func map(forName name: String) throws -> Map? {
         if cachedMapsByNames.isEmpty {
             let maps = try maps()
             cachedMapsByNames = Dictionary(maps.map({ ($0.name, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        if let map = cachedMapsByNames[name] {
-            return map
-        } else {
-            throw DatabaseError.recordNotFound
-        }
+        let map = cachedMapsByNames[name]
+        return map
     }
 }

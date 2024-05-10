@@ -88,29 +88,23 @@ public actor ItemDatabase {
         return cachedItems
     }
 
-    public func item(forID id: Int) throws -> Item {
+    public func item(forID id: Int) throws -> Item? {
         if cachedItemsByIDs.isEmpty {
             let items = try items()
             cachedItemsByIDs = Dictionary(items.map({ ($0.id, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        if let item = cachedItemsByIDs[id] {
-            return item
-        } else {
-            throw DatabaseError.recordNotFound
-        }
+        let item = cachedItemsByIDs[id]
+        return item
     }
 
-    public func item(forAegisName aegisName: String) throws -> Item {
+    public func item(forAegisName aegisName: String) throws -> Item? {
         if cachedItemsByAegisNames.isEmpty {
             let items = try items()
             cachedItemsByAegisNames = Dictionary(items.map({ ($0.aegisName, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        if let item = cachedItemsByAegisNames[aegisName] {
-            return item
-        } else {
-            throw DatabaseError.recordNotFound
-        }
+        let item = cachedItemsByAegisNames[aegisName]
+        return item
     }
 }

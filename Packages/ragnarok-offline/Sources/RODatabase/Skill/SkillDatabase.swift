@@ -45,29 +45,23 @@ public actor SkillDatabase {
         return cachedSkills
     }
 
-    public func skill(forID id: Int) throws -> Skill {
+    public func skill(forID id: Int) throws -> Skill? {
         if cachedSkillsByIDs.isEmpty {
             let skills = try skills()
             cachedSkillsByIDs = Dictionary(skills.map({ ($0.id, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        if let skillTree = cachedSkillsByIDs[id] {
-            return skillTree
-        } else {
-            throw DatabaseError.recordNotFound
-        }
+        let skillTree = cachedSkillsByIDs[id]
+        return skillTree
     }
 
-    public func skill(forAegisName aegisName: String) throws -> Skill {
+    public func skill(forAegisName aegisName: String) throws -> Skill? {
         if cachedSkillsByAegisNames.isEmpty {
             let skills = try skills()
             cachedSkillsByAegisNames = Dictionary(skills.map({ ($0.aegisName, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        if let skill = cachedSkillsByAegisNames[aegisName] {
-            return skill
-        } else {
-            throw DatabaseError.recordNotFound
-        }
+        let skill = cachedSkillsByAegisNames[aegisName]
+        return skill
     }
 }

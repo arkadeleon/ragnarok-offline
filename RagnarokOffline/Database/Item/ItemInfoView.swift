@@ -209,9 +209,8 @@ struct ItemInfoView: View {
 
         let monsterDatabase = MonsterDatabase.database(for: mode)
 
-        do {
+        if let monsters = try? await monsterDatabase.monsters() {
             var droppingMonsters: [DroppingMonster] = []
-            let monsters = try await monsterDatabase.monsters()
             for monster in monsters {
                 let drops = (monster.mvpDrops ?? []) + (monster.drops ?? [])
                 for drop in drops {
@@ -222,7 +221,6 @@ struct ItemInfoView: View {
                 }
             }
             self.droppingMonsters = droppingMonsters
-        } catch {
         }
     }
 }

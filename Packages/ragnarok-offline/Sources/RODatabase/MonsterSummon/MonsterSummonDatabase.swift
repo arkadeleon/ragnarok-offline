@@ -44,16 +44,13 @@ public actor MonsterSummonDatabase {
         return cachedMonsterSummons
     }
 
-    public func monsterSummon(forGroup group: String) throws -> MonsterSummon {
+    public func monsterSummon(forGroup group: String) throws -> MonsterSummon? {
         if cachedMonsterSummonsByGroups.isEmpty {
             let monsterSummons = try monsterSummons()
             cachedMonsterSummonsByGroups = Dictionary(monsterSummons.map({ ($0.group, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        if let monsterSummon = cachedMonsterSummonsByGroups[group] {
-            return monsterSummon
-        } else {
-            throw DatabaseError.recordNotFound
-        }
+        let monsterSummon = cachedMonsterSummonsByGroups[group]
+        return monsterSummon
     }
 }
