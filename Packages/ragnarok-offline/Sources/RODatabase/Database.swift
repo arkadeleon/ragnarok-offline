@@ -26,7 +26,6 @@ public final class Database: Sendable {
 
     private let jobCache: JobCache
     private let skillCache: SkillCache
-    private let skillTreeCache: SkillTreeCache
     private let mapCache: MapCache
     private let scriptCache: ScriptCache
 
@@ -35,7 +34,6 @@ public final class Database: Sendable {
 
         jobCache = JobCache(mode: mode)
         skillCache = SkillCache(mode: mode)
-        skillTreeCache = SkillTreeCache(mode: mode)
         mapCache = MapCache(mode: mode)
         scriptCache = ScriptCache(mode: mode)
     }
@@ -60,23 +58,6 @@ public final class Database: Sendable {
         try await skillCache.restoreSkills()
         if let skill = await skillCache.skillsByAegisNames[aegisName] {
             return skill
-        } else {
-            throw DatabaseError.recordNotFound
-        }
-    }
-
-    // MARK: - Skill Tree
-
-    public func skillTrees() async throws -> [SkillTree] {
-        try await skillTreeCache.restoreSkillTrees()
-        let skillTrees = await skillTreeCache.skillTrees
-        return skillTrees
-    }
-
-    public func skillTree(forJobID jobID: Int) async throws -> SkillTree {
-        try await skillTreeCache.restoreSkillTrees()
-        if let skillTree = await skillTreeCache.skillTreesByJobIDs[jobID] {
-            return skillTree
         } else {
             throw DatabaseError.recordNotFound
         }

@@ -48,20 +48,6 @@ final class DatabaseTests: XCTestCase {
         XCTAssertEqual(sightrasher.requires?.status, ["Sight"])
     }
 
-    func testSkillTreeDatabase() async throws {
-        let skillTrees = try await database.skillTrees()
-
-        let acolyte = try await database.skillTree(forJobID: Job.acolyte.id)
-        XCTAssertEqual(acolyte.job, .acolyte)
-        XCTAssertEqual(acolyte.inherit, [.novice])
-        XCTAssertEqual(acolyte.tree?.count, 15)
-
-        let archBishop = try await database.skillTree(forJobID: Job.archBishop.id)
-        XCTAssertEqual(archBishop.job, .archBishop)
-        XCTAssertEqual(archBishop.inherit, [.novice, .acolyte, .priest])
-        XCTAssertEqual(archBishop.tree?.count, 22)
-    }
-
     func testMapDatabase() async throws {
         let maps = try await database.maps()
         XCTAssertEqual(maps.count, 1219)
