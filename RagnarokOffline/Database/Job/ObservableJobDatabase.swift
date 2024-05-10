@@ -6,19 +6,20 @@
 //
 
 import Combine
+import rAthenaCommon
 import RODatabase
 
 @MainActor
 class ObservableJobDatabase: ObservableObject {
-    let database: Database
+    let mode: ServerMode
 
     @Published var loadStatus: LoadStatus = .notYetLoaded
     @Published var searchText = ""
     @Published var jobs: [JobStats] = []
     @Published var filteredJobs: [JobStats] = []
 
-    init(database: Database) {
-        self.database = database
+    init(mode: ServerMode) {
+        self.mode = mode
     }
 
     func fetchJobs() async {
@@ -27,6 +28,8 @@ class ObservableJobDatabase: ObservableObject {
         }
 
         loadStatus = .loading
+
+        let database = JobDatabase.database(for: mode)
 
         do {
             jobs = try await database.jobs()

@@ -16,10 +16,6 @@ final class DatabaseTests: XCTestCase {
         try await ResourceBundle.shared.load()
     }
 
-    func testJobDatabase() async throws {
-        let jobs = try await database.jobs()
-    }
-
     func testMapDatabase() async throws {
         let maps = try await database.maps()
         XCTAssertEqual(maps.count, 1219)

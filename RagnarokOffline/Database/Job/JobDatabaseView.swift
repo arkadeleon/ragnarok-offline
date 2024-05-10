@@ -32,7 +32,7 @@ struct JobDatabaseView: View {
                 EmptyContentView("No Jobs")
             }
         }
-        .databaseNavigationDestinations(mode: jobDatabase.database.mode)
+        .databaseNavigationDestinations(mode: jobDatabase.mode)
         .navigationTitle("Job Database")
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)

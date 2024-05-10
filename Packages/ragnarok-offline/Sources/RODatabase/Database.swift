@@ -24,24 +24,14 @@ public final class Database: Sendable {
 
     public let mode: ServerMode
 
-    private let jobCache: JobCache
     private let mapCache: MapCache
     private let scriptCache: ScriptCache
 
     private init(mode: ServerMode) {
         self.mode = mode
 
-        jobCache = JobCache(mode: mode)
         mapCache = MapCache(mode: mode)
         scriptCache = ScriptCache(mode: mode)
-    }
-
-    // MARK: - Job
-
-    public func jobs() async throws -> [JobStats] {
-        try await jobCache.restoreJobs()
-        let jobs = await jobCache.jobs
-        return jobs
     }
 
     // MARK: - Map
