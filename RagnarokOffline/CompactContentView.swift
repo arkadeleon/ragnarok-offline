@@ -19,13 +19,13 @@ struct CompactContentView: View {
     @StateObject private var mapServer = ObservableServer(server: MapServer.shared)
     @StateObject private var webServer = ObservableServer(server: WebServer.shared)
 
-    @StateObject private var itemDatabase = ObservableItemDatabase(mode: .renewal)
-    @StateObject private var jobDatabase = ObservableJobDatabase(mode: .renewal)
-    @StateObject private var mapDatabase = ObservableMapDatabase(mode: .renewal)
-    @StateObject private var monsterDatabase = ObservableMonsterDatabase(mode: .renewal)
-    @StateObject private var monsterSummonDatabase = ObservableMonsterSummonDatabase(mode: .renewal)
-    @StateObject private var petDatabase = ObservablePetDatabase(mode: .renewal)
-    @StateObject private var skillDatabase = ObservableSkillDatabase(mode: .renewal)
+    @StateObject private var itemDatabase = ObservableDatabase(mode: .renewal, recordProvider: .item)
+    @StateObject private var jobDatabase = ObservableDatabase(mode: .renewal, recordProvider: .job)
+    @StateObject private var mapDatabase = ObservableDatabase(mode: .renewal, recordProvider: .map)
+    @StateObject private var monsterDatabase = ObservableDatabase(mode: .renewal, recordProvider: .monster)
+    @StateObject private var monsterSummonDatabase = ObservableDatabase(mode: .renewal, recordProvider: .monsterSummon)
+    @StateObject private var petDatabase = ObservableDatabase(mode: .renewal, recordProvider: .pet)
+    @StateObject private var skillDatabase = ObservableDatabase(mode: .renewal, recordProvider: .skill)
 
     var body: some View {
         TabView {
@@ -147,19 +147,19 @@ struct CompactContentView: View {
         .navigationDestination(for: MenuItem.self) { item in
             switch item {
             case .itemDatabase:
-                ItemDatabaseView(itemDatabase: itemDatabase)
+                ItemDatabaseView(database: itemDatabase)
             case .jobDatabase:
-                JobDatabaseView(jobDatabase: jobDatabase)
+                JobDatabaseView(database: jobDatabase)
             case .mapDatabase:
-                MapDatabaseView(mapDatabase: mapDatabase)
+                MapDatabaseView(database: mapDatabase)
             case .monsterDatabase:
-                MonsterDatabaseView(monsterDatabase: monsterDatabase)
+                MonsterDatabaseView(database: monsterDatabase)
             case .monsterSummonDatabase:
-                MonsterSummonDatabaseView(monsterSummonDatabase: monsterSummonDatabase)
+                MonsterSummonDatabaseView(database: monsterSummonDatabase)
             case .petDatabase:
-                PetDatabaseView(petDatabase: petDatabase)
+                PetDatabaseView(database: petDatabase)
             case .skillDatabase:
-                SkillDatabaseView(skillDatabase: skillDatabase)
+                SkillDatabaseView(database: skillDatabase)
             default:
                 EmptyView()
             }

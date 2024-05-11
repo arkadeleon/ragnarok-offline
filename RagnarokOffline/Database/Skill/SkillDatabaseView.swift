@@ -8,53 +8,34 @@
 import SwiftUI
 
 struct SkillDatabaseView: View {
-    @ObservedObject var skillDatabase: ObservableSkillDatabase
+    @ObservedObject var database: ObservableDatabase<SkillProvider>
 
     var body: some View {
-        ResponsiveView {
-            List(skillDatabase.filteredSkills) { skill in
-                NavigationLink(value: skill) {
-                    SkillCell(skill: skill)
-                }
-            }
-            .listStyle(.plain)
-            .searchable(text: $skillDatabase.searchText, placement: .navigationBarDrawer(displayMode: .always))
-        } regular: {
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                    ForEach(skillDatabase.filteredSkills) { skill in
-                        NavigationLink(value: skill) {
-                            SkillCell(skill: skill)
-                        }
+        DatabaseView(database: database) { skills in
+            ResponsiveView {
+                List(skills) { skill in
+                    NavigationLink(value: skill) {
+                        SkillCell(skill: skill)
                     }
                 }
-                .padding(20)
+                .listStyle(.plain)
+            } regular: {
+                ScrollView {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                        ForEach(skills) { skill in
+                            NavigationLink(value: skill) {
+                                SkillCell(skill: skill)
+                            }
+                        }
+                    }
+                    .padding(20)
+                }
             }
-            .searchable(text: $skillDatabase.searchText)
         }
-        .overlay {
-            if skillDatabase.loadStatus == .loading {
-                ProgressView()
-            }
-        }
-        .overlay {
-            if skillDatabase.loadStatus == .loaded && skillDatabase.filteredSkills.isEmpty {
-                EmptyContentView("No Skills")
-            }
-        }
-        .databaseNavigationDestinations(mode: skillDatabase.mode)
         .navigationTitle("Skill Database")
-        #if !os(macOS)
-        .navigationBarTitleDisplayMode(.inline)
-        #endif
-        .onSubmit(of: .search) {
-            skillDatabase.filterSkills()
-        }
-        .onChange(of: skillDatabase.searchText) { _ in
-            skillDatabase.filterSkills()
-        }
-        .task {
-            await skillDatabase.fetchSkills()
-        }
     }
+}
+
+#Preview {
+    SkillDatabaseView(database: .init(mode: .renewal, recordProvider: .skill))
 }

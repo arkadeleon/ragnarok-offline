@@ -8,44 +8,26 @@
 import SwiftUI
 
 struct JobDatabaseView: View {
-    @ObservedObject var jobDatabase: ObservableJobDatabase
+    @ObservedObject var database: ObservableDatabase<JobProvider>
 
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .center, spacing: 30) {
-                ForEach(jobDatabase.filteredJobs) { jobStats in
-                    NavigationLink(value: jobStats) {
-                        JobGridCell(jobStats: jobStats)
+        DatabaseView(database: database) { jobs in
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .center, spacing: 30) {
+                    ForEach(jobs) { jobStats in
+                        NavigationLink(value: jobStats) {
+                            JobGridCell(jobStats: jobStats)
+                        }
                     }
                 }
-            }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 30)
-        }
-        .overlay {
-            if jobDatabase.loadStatus == .loading {
-                ProgressView()
+                .padding(.horizontal, 20)
+                .padding(.vertical, 30)
             }
         }
-        .overlay {
-            if jobDatabase.loadStatus == .loaded && jobDatabase.filteredJobs.isEmpty {
-                EmptyContentView("No Jobs")
-            }
-        }
-        .databaseNavigationDestinations(mode: jobDatabase.mode)
         .navigationTitle("Job Database")
-        #if !os(macOS)
-        .navigationBarTitleDisplayMode(.inline)
-        #endif
-        .searchable(text: $jobDatabase.searchText)
-        .onSubmit(of: .search) {
-            jobDatabase.filterJobs()
-        }
-        .onChange(of: jobDatabase.searchText) { _ in
-            jobDatabase.filterJobs()
-        }
-        .task {
-            await jobDatabase.fetchJobs()
-        }
     }
+}
+
+#Preview {
+    JobDatabaseView(database: .init(mode: .renewal, recordProvider: .job))
 }
