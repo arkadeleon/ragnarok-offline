@@ -16,7 +16,7 @@ protocol DatabaseRecordProvider {
 }
 
 @MainActor
-class ObservableDatabase<RecordProvider>: ObservableObject where RecordProvider: DatabaseRecordProvider {
+class ObservableDatabase<RecordProvider>: NSObject, ObservableObject where RecordProvider: DatabaseRecordProvider {
     let mode: ServerMode
     let recordProvider: RecordProvider
 
