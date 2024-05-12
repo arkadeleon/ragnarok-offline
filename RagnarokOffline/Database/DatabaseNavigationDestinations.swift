@@ -17,6 +17,12 @@ struct DatabaseNavigationDestinations: ViewModifier {
             .navigationDestination(for: Item.self) { item in
                 ItemInfoView(mode: mode, item: item)
             }
+            .navigationDestination(for: JobStats.self) { jobStats in
+                JobInfoView(mode: mode, jobStats: jobStats)
+            }
+            .navigationDestination(for: Map.self) { map in
+                MapInfoView(mode: mode, map: map)
+            }
             .navigationDestination(for: Monster.self) { monster in
                 MonsterInfoView(mode: mode, monster: monster)
             }
@@ -26,14 +32,11 @@ struct DatabaseNavigationDestinations: ViewModifier {
             .navigationDestination(for: ObservablePet.self) { pet in
                 PetInfoView(pet: pet)
             }
-            .navigationDestination(for: JobStats.self) { jobStats in
-                JobInfoView(mode: mode, jobStats: jobStats)
-            }
             .navigationDestination(for: Skill.self) { skill in
                 SkillInfoView(mode: mode, skill: skill)
             }
-            .navigationDestination(for: Map.self) { map in
-                MapInfoView(mode: mode, map: map)
+            .navigationDestination(for: StatusChange.self) { statusChange in
+                DatabaseRecordDetailView(mode: mode, record: statusChange)
             }
     }
 }

@@ -27,9 +27,3 @@ extension DatabaseRecordProvider where Self == StatusChangeProvider {
         StatusChangeProvider()
     }
 }
-
-extension StatusChange: Identifiable {
-    public var id: String {
-        status
-    }
-}

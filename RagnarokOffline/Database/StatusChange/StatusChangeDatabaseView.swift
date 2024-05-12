@@ -21,7 +21,14 @@ struct StatusChangeDatabaseView: View {
                 .listStyle(.plain)
             } regular: {
                 Table(statusChanges) {
-                    TableColumn("Status", value: \.status)
+                    TableColumn("Status") { statusChange in
+                        HStack {
+                            Text(statusChange.status)
+                            NavigationLink(value: statusChange) {
+                                Image(systemName: "info.circle")
+                            }
+                        }
+                    }
                     TableColumn("Icon", value: \.icon)
                 }
             }
