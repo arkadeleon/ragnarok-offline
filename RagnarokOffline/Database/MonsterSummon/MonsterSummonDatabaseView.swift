@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RODatabase
 
 struct MonsterSummonDatabaseView: View {
     @ObservedObject var database: ObservableDatabase<MonsterSummonProvider>
@@ -19,15 +20,17 @@ struct MonsterSummonDatabaseView: View {
                 .listStyle(.plain)
             } regular: {
                 Table(monsterSummons) {
-                    TableColumn("Group") { monsterSummon in
-                        HStack {
-                            Text(monsterSummon.monsterSummon.group)
-                            NavigationLink(value: monsterSummon) {
-                                Image(systemName: "info.circle")
-                            }
+                    TableColumn("Group", value: \.monsterSummon.group)
+                    TableColumn("Default", value: \.monsterSummon.default)
+                    TableColumn("Summon") { monsterSummon in
+                        Text("\(monsterSummon.monsterSummon.summon.count) monsters")
+                    }
+                    TableColumn("") { monsterSummon in
+                        NavigationLink(value: monsterSummon) {
+                            Image(systemName: "info.circle")
                         }
                     }
-                    TableColumn("Default", value: \.monsterSummon.default)
+                    .width(24)
                 }
             }
         }
