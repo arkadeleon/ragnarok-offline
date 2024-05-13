@@ -12,7 +12,15 @@ protocol DatabaseRecordProvider {
     associatedtype Record
 
     func records(for mode: ServerMode) async throws -> [Record]
+    func moreRecords(for mode: ServerMode) async throws -> [Record]
+
     func records(matching searchText: String, in records: [Record]) -> [Record]
+}
+
+extension DatabaseRecordProvider {
+    func moreRecords(for mode: ServerMode) async throws -> [Record] {
+        []
+    }
 }
 
 @Observable class ObservableDatabase<RecordProvider> where RecordProvider: DatabaseRecordProvider {
@@ -44,6 +52,10 @@ protocol DatabaseRecordProvider {
             loadStatus = .loaded
         } catch {
             loadStatus = .failed
+        }
+
+        if !records.isEmpty, let moreRecords = try? await recordProvider.moreRecords(for: mode) {
+            records += moreRecords
         }
     }
 

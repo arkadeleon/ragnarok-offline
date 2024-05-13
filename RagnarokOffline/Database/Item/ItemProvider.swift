@@ -11,19 +11,15 @@ import RODatabase
 struct ItemProvider: DatabaseRecordProvider {
     func records(for mode: ServerMode) async throws -> [Item] {
         let database = ItemDatabase.database(for: mode)
-
-        var items: [Item] = []
-
         let usableItems = try await database.usableItems()
-        items = usableItems
+        return usableItems
+    }
 
+    func moreRecords(for mode: ServerMode) async throws -> [Item] {
+        let database = ItemDatabase.database(for: mode)
         let equipItems = try await database.equipItems()
-        items = usableItems + equipItems
-
         let etcItems = try await database.etcItems()
-        items = usableItems + equipItems + etcItems
-
-        return items
+        return equipItems + etcItems
     }
 
     func records(matching searchText: String, in items: [Item]) -> [Item] {
