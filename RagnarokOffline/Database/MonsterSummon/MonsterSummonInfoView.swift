@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MonsterSummonInfoView: View {
-    @ObservedObject var monsterSummon: ObservableMonsterSummon
+    var monsterSummon: ObservableMonsterSummon
 
     var body: some View {
         ScrollView {

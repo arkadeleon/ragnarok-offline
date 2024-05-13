@@ -5,20 +5,19 @@
 //  Created by Leon Li on 2024/5/8.
 //
 
-import Combine
+import Observation
 import rAthenaCommon
 import RODatabase
-import ROResources
 
-class ObservablePet: ObservableObject {
+@Observable class ObservablePet {
     let mode: ServerMode
     let pet: Pet
     let monster: Monster
 
-    @Published var tameItem: Item?
-    @Published var eggItem: Item?
-    @Published var equipItem: Item?
-    @Published var foodItem: Item?
+    var tameItem: Item?
+    var eggItem: Item?
+    var equipItem: Item?
+    var foodItem: Item?
 
     var fields: [DatabaseRecordField] {
         var fields: [DatabaseRecordField] = []

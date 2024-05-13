@@ -7,17 +7,18 @@
 
 import Combine
 import Foundation
+import Observation
 import rAthenaCommon
 
-class ObservableServer: ObservableObject {
+@Observable class ObservableServer {
     private let server: Server
 
     let name: String
-    @Published var status: ServerStatus
+    var status: ServerStatus
 
     let terminalView: TerminalView
 
-    private var subscriptions = Set<AnyCancellable>()
+    @ObservationIgnored private var subscriptions = Set<AnyCancellable>()
 
     init(server: Server) {
         self.server = server

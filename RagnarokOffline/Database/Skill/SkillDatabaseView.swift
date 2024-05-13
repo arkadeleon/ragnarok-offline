@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct SkillDatabaseView: View {
-    @ObservedObject var database: ObservableDatabase<SkillProvider>
+    @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .skill)
 
     var body: some View {
-        DatabaseView(database: database) { skills in
+        DatabaseView(database: $database) { skills in
             ResponsiveView {
                 List(skills) { skill in
                     NavigationLink(value: skill) {
@@ -37,5 +37,5 @@ struct SkillDatabaseView: View {
 }
 
 #Preview {
-    SkillDatabaseView(database: .init(mode: .renewal, recordProvider: .skill))
+    SkillDatabaseView()
 }

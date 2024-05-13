@@ -9,7 +9,7 @@ import SwiftUI
 import rAthenaCommon
 
 struct ServerTerminalView: View {
-    @ObservedObject var server: ObservableServer
+    var server: ObservableServer
 
     var body: some View {
         ZStack {

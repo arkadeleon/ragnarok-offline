@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct JobDatabaseView: View {
-    @ObservedObject var database: ObservableDatabase<JobProvider>
+    @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .job)
 
     var body: some View {
-        DatabaseView(database: database) { jobs in
+        DatabaseView(database: $database) { jobs in
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .center, spacing: 30) {
                     ForEach(jobs) { jobStats in
@@ -29,5 +29,5 @@ struct JobDatabaseView: View {
 }
 
 #Preview {
-    JobDatabaseView(database: .init(mode: .renewal, recordProvider: .job))
+    JobDatabaseView()
 }

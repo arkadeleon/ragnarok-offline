@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct MapDatabaseView: View {
-    @ObservedObject var database: ObservableDatabase<MapProvider>
+    @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .map)
 
     var body: some View {
-        DatabaseView(database: database) { maps in
+        DatabaseView(database: $database) { maps in
             ResponsiveView {
                 List(maps) { map in
                     NavigationLink(value: map) {
@@ -37,5 +37,5 @@ struct MapDatabaseView: View {
 }
 
 #Preview {
-    MapDatabaseView(database: .init(mode: .renewal, recordProvider: .map))
+    MapDatabaseView()
 }

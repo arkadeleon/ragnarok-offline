@@ -5,16 +5,16 @@
 //  Created by Leon Li on 2024/5/9.
 //
 
-import Combine
+import Observation
 import rAthenaCommon
 import RODatabase
 
-class ObservableMonsterSummon: NSObject, ObservableObject {
+@Observable class ObservableMonsterSummon {
     let mode: ServerMode
     let monsterSummon: MonsterSummon
 
-    @Published var defaultMonster: Monster?
-    @Published var summonMonsters: [Summon]?
+    var defaultMonster: Monster?
+    var summonMonsters: [Summon]?
 
     init(mode: ServerMode, monsterSummon: MonsterSummon) {
         self.mode = mode
@@ -51,5 +51,17 @@ extension ObservableMonsterSummon {
 extension ObservableMonsterSummon: Identifiable {
     var id: String {
         monsterSummon.group
+    }
+}
+
+extension ObservableMonsterSummon: Hashable {
+    func hash(into hasher: inout Hasher) {
+        monsterSummon.hash(into: &hasher)
+    }
+}
+
+extension ObservableMonsterSummon: Equatable {
+    static func == (lhs: ObservableMonsterSummon, rhs: ObservableMonsterSummon) -> Bool {
+        lhs.monsterSummon == rhs.monsterSummon
     }
 }

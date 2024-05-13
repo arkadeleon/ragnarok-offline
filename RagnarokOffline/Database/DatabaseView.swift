@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct DatabaseView<RecordProvider, Content>: View where RecordProvider: DatabaseRecordProvider, Content: View {
-    @ObservedObject var database: ObservableDatabase<RecordProvider>
-    let content: ([RecordProvider.Record]) -> Content
+    @Binding var database: ObservableDatabase<RecordProvider>
+    var content: ([RecordProvider.Record]) -> Content
 
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
@@ -41,7 +41,7 @@ struct DatabaseView<RecordProvider, Content>: View where RecordProvider: Databas
             .onSubmit(of: .search) {
                 database.filterRecords()
             }
-            .onChange(of: database.searchText) { _ in
+            .onChange(of: database.searchText) {
                 database.filterRecords()
             }
             .task {
@@ -49,14 +49,14 @@ struct DatabaseView<RecordProvider, Content>: View where RecordProvider: Databas
             }
     }
 
-    init(database: ObservableDatabase<RecordProvider>, @ViewBuilder content: @escaping ([RecordProvider.Record]) -> Content) {
-        self.database = database
+    init(database: Binding<ObservableDatabase<RecordProvider>>, @ViewBuilder content: @escaping ([RecordProvider.Record]) -> Content) {
+        _database = database
         self.content = content
     }
 }
 
 #Preview {
-    DatabaseView(database: .init(mode: .renewal, recordProvider: .monsterSummon)) { records in
+    DatabaseView(database: .constant(.init(mode: .renewal, recordProvider: .monsterSummon))) { records in
         List(records) { record in
             Text(record.monsterSummon.group)
         }

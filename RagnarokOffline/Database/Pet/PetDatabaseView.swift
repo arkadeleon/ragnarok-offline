@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct PetDatabaseView: View {
-    @ObservedObject var database: ObservableDatabase<PetProvider>
+    @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .pet)
 
     var body: some View {
-        DatabaseView(database: database) { pets in
+        DatabaseView(database: $database) { pets in
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .center, spacing: 30) {
                     ForEach(pets) { pet in
@@ -29,5 +29,5 @@ struct PetDatabaseView: View {
 }
 
 #Preview {
-    PetDatabaseView(database: .init(mode: .renewal, recordProvider: .pet))
+    PetDatabaseView()
 }

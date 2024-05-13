@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PetInfoView: View {
-    @ObservedObject var pet: ObservablePet
+    var pet: ObservablePet
 
     var body: some View {
         ScrollView {

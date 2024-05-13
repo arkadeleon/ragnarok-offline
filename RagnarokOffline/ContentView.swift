@@ -33,19 +33,10 @@ enum SidebarItem: Hashable {
 }
 
 struct ContentView: View {
-    @StateObject private var loginServer = ObservableServer(server: LoginServer.shared)
-    @StateObject private var charServer = ObservableServer(server: CharServer.shared)
-    @StateObject private var mapServer = ObservableServer(server: MapServer.shared)
-    @StateObject private var webServer = ObservableServer(server: WebServer.shared)
-
-    @StateObject private var itemDatabase = ObservableDatabase(mode: .renewal, recordProvider: .item)
-    @StateObject private var jobDatabase = ObservableDatabase(mode: .renewal, recordProvider: .job)
-    @StateObject private var mapDatabase = ObservableDatabase(mode: .renewal, recordProvider: .map)
-    @StateObject private var monsterDatabase = ObservableDatabase(mode: .renewal, recordProvider: .monster)
-    @StateObject private var monsterSummonDatabase = ObservableDatabase(mode: .renewal, recordProvider: .monsterSummon)
-    @StateObject private var petDatabase = ObservableDatabase(mode: .renewal, recordProvider: .pet)
-    @StateObject private var skillDatabase = ObservableDatabase(mode: .renewal, recordProvider: .skill)
-    @StateObject private var statusChangeDatabase = ObservableDatabase(mode: .renewal, recordProvider: .statusChange)
+    @State private var loginServer = ObservableServer(server: LoginServer.shared)
+    @State private var charServer = ObservableServer(server: CharServer.shared)
+    @State private var mapServer = ObservableServer(server: MapServer.shared)
+    @State private var webServer = ObservableServer(server: WebServer.shared)
 
     @State private var selectedItem: SidebarItem? = .files
     @State private var isSettingsPresented = false
@@ -157,54 +148,52 @@ struct ContentView: View {
 
     private var databaseView: some View {
         List {
-            NavigationLink(value: itemDatabase) {
+            NavigationLink(value: SidebarItem.itemDatabase) {
                 Label("Item Database", systemImage: "leaf")
             }
-            NavigationLink(value: jobDatabase) {
+            NavigationLink(value: SidebarItem.jobDatabase) {
                 Label("Job Database", systemImage: "person")
             }
-            NavigationLink(value: mapDatabase) {
+            NavigationLink(value: SidebarItem.mapDatabase) {
                 Label("Map Database", systemImage: "map")
             }
-            NavigationLink(value: monsterDatabase) {
+            NavigationLink(value: SidebarItem.monsterDatabase) {
                 Label("Monster Database", systemImage: "pawprint")
             }
-            NavigationLink(value: monsterSummonDatabase) {
+            NavigationLink(value: SidebarItem.monsterSummonDatabase) {
                 Label("Monster Summon Database", systemImage: "pawprint")
             }
-            NavigationLink(value: petDatabase) {
+            NavigationLink(value: SidebarItem.petDatabase) {
                 Label("Pet Database", systemImage: "pawprint")
             }
-            NavigationLink(value: skillDatabase) {
+            NavigationLink(value: SidebarItem.skillDatabase) {
                 Label("Skill Database", systemImage: "arrow.up.heart")
             }
-            NavigationLink(value: statusChangeDatabase) {
+            NavigationLink(value: SidebarItem.statusChangeDatabase) {
                 Label("Status Change Database", systemImage: "zzz")
             }
         }
-        .navigationDestination(for: ObservableDatabase<ItemProvider>.self) { database in
-            ItemDatabaseView(database: database)
-        }
-        .navigationDestination(for: ObservableDatabase<JobProvider>.self) { database in
-            JobDatabaseView(database: database)
-        }
-        .navigationDestination(for: ObservableDatabase<MapProvider>.self) { database in
-            MapDatabaseView(database: database)
-        }
-        .navigationDestination(for: ObservableDatabase<MonsterProvider>.self) { database in
-            MonsterDatabaseView(database: database)
-        }
-        .navigationDestination(for: ObservableDatabase<MonsterSummonProvider>.self) { database in
-            MonsterSummonDatabaseView(database: database)
-        }
-        .navigationDestination(for: ObservableDatabase<PetProvider>.self) { database in
-            PetDatabaseView(database: database)
-        }
-        .navigationDestination(for: ObservableDatabase<SkillProvider>.self) { database in
-            SkillDatabaseView(database: database)
-        }
-        .navigationDestination(for: ObservableDatabase<StatusChangeProvider>.self) { database in
-            StatusChangeDatabaseView(database: database)
+        .navigationDestination(for: SidebarItem.self) { item in
+            switch item {
+            case .itemDatabase:
+                ItemDatabaseView()
+            case .jobDatabase:
+                JobDatabaseView()
+            case .mapDatabase:
+                MapDatabaseView()
+            case .monsterDatabase:
+                MonsterDatabaseView()
+            case .monsterSummonDatabase:
+                MonsterSummonDatabaseView()
+            case .petDatabase:
+                PetDatabaseView()
+            case .skillDatabase:
+                SkillDatabaseView()
+            case .statusChangeDatabase:
+                StatusChangeDatabaseView()
+            default:
+                EmptyView()
+            }
         }
         .navigationTitle("Database")
     }
@@ -350,21 +339,21 @@ struct ContentView: View {
             case .serverFiles:
                 FilesView(title: "Server Files", directory: .directory(ResourceBundle.shared.url))
             case .itemDatabase:
-                ItemDatabaseView(database: itemDatabase)
+                ItemDatabaseView()
             case .jobDatabase:
-                JobDatabaseView(database: jobDatabase)
+                JobDatabaseView()
             case .mapDatabase:
-                MapDatabaseView(database: mapDatabase)
+                MapDatabaseView()
             case .monsterDatabase:
-                MonsterDatabaseView(database: monsterDatabase)
+                MonsterDatabaseView()
             case .monsterSummonDatabase:
-                MonsterSummonDatabaseView(database: monsterSummonDatabase)
+                MonsterSummonDatabaseView()
             case .petDatabase:
-                PetDatabaseView(database: petDatabase)
+                PetDatabaseView()
             case .skillDatabase:
-                SkillDatabaseView(database: skillDatabase)
+                SkillDatabaseView()
             case .statusChangeDatabase:
-                StatusChangeDatabaseView(database: statusChangeDatabase)
+                StatusChangeDatabaseView()
             }
         }
     }

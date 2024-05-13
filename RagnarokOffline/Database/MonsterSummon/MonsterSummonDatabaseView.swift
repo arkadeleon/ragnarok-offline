@@ -9,10 +9,10 @@ import SwiftUI
 import RODatabase
 
 struct MonsterSummonDatabaseView: View {
-    @ObservedObject var database: ObservableDatabase<MonsterSummonProvider>
+    @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .monsterSummon)
 
     var body: some View {
-        DatabaseView(database: database) { monsterSummons in
+        DatabaseView(database: $database) { monsterSummons in
             ResponsiveView {
                 List(monsterSummons) { monsterSummon in
                     NavigationLink(monsterSummon.monsterSummon.group, value: monsterSummon)
@@ -39,5 +39,5 @@ struct MonsterSummonDatabaseView: View {
 }
 
 #Preview {
-    MonsterSummonDatabaseView(database: .init(mode: .renewal, recordProvider: .monsterSummon))
+    MonsterSummonDatabaseView()
 }

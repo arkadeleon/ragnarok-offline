@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct StatusChangeDatabaseView: View {
-    @ObservedObject var database: ObservableDatabase<StatusChangeProvider>
+    @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .statusChange)
 
     var body: some View {
-        DatabaseView(database: database) { statusChanges in
+        DatabaseView(database: $database) { statusChanges in
             ResponsiveView {
                 List(statusChanges) { statusChange in
                     NavigationLink(value: statusChange) {
@@ -37,5 +37,5 @@ struct StatusChangeDatabaseView: View {
 }
 
 #Preview {
-    StatusChangeDatabaseView(database: .init(mode: .renewal, recordProvider: .statusChange))
+    StatusChangeDatabaseView()
 }

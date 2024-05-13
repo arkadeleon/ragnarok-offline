@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/5/11.
 //
 
-import Combine
+import Observation
 import rAthenaCommon
 
 protocol DatabaseRecordProvider {
@@ -15,15 +15,14 @@ protocol DatabaseRecordProvider {
     func records(matching searchText: String, in records: [Record]) -> [Record]
 }
 
-@MainActor
-class ObservableDatabase<RecordProvider>: NSObject, ObservableObject where RecordProvider: DatabaseRecordProvider {
+@Observable class ObservableDatabase<RecordProvider> where RecordProvider: DatabaseRecordProvider {
     let mode: ServerMode
     let recordProvider: RecordProvider
 
-    @Published var loadStatus: LoadStatus = .notYetLoaded
-    @Published var searchText = ""
-    @Published var records: [RecordProvider.Record] = []
-    @Published var filteredRecords: [RecordProvider.Record] = []
+    var loadStatus: LoadStatus = .notYetLoaded
+    var searchText = ""
+    var records: [RecordProvider.Record] = []
+    var filteredRecords: [RecordProvider.Record] = []
 
     init(mode: ServerMode, recordProvider: RecordProvider) {
         self.mode = mode

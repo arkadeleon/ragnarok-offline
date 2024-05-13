@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct MonsterDatabaseView: View {
-    @ObservedObject var database: ObservableDatabase<MonsterProvider>
+    @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .monster)
 
     var body: some View {
-        DatabaseView(database: database) { monsters in
+        DatabaseView(database: $database) { monsters in
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .center, spacing: 30) {
                     ForEach(monsters) { monster in
@@ -29,5 +29,5 @@ struct MonsterDatabaseView: View {
 }
 
 #Preview {
-    MonsterDatabaseView(database: .init(mode: .renewal, recordProvider: .monster))
+    MonsterDatabaseView()
 }

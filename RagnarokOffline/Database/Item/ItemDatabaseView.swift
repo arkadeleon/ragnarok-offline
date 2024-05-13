@@ -9,10 +9,10 @@ import SwiftUI
 import RODatabase
 
 struct ItemDatabaseView: View {
-    @ObservedObject var database: ObservableDatabase<ItemProvider>
+    @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .item)
 
     var body: some View {
-        DatabaseView(database: database) { items in
+        DatabaseView(database: $database) { items in
             ResponsiveView {
                 List(items) { item in
                     NavigationLink(value: item) {
@@ -38,5 +38,5 @@ struct ItemDatabaseView: View {
 }
 
 #Preview {
-    ItemDatabaseView(database: .init(mode: .renewal, recordProvider: .item))
+    ItemDatabaseView()
 }
