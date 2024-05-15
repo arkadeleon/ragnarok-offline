@@ -13,11 +13,11 @@ extension StatusChange: DatabaseRecord {
         status
     }
 
-    var localizedName: String {
+    var recordName: String {
         status
     }
 
-    func detail(for mode: ServerMode) async throws -> DatabaseRecordDetail {
+    func recordDetail(for mode: ServerMode) async throws -> DatabaseRecordDetail {
         let statusChangeDatabase = StatusChangeDatabase.database(for: mode)
 
         var sections: [DatabaseRecordDetail.Section] = []

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RODatabase
 
 struct DatabaseView<RecordProvider, Content>: View where RecordProvider: DatabaseRecordProvider, Content: View {
     @Binding var database: ObservableDatabase<RecordProvider>
@@ -33,7 +34,30 @@ struct DatabaseView<RecordProvider, Content>: View where RecordProvider: Databas
                     EmptyContentView("No Records")
                 }
             }
-            .databaseNavigationDestinations(mode: database.mode)
+            .navigationDestination(for: Item.self) { item in
+                ItemInfoView(mode: database.mode, item: item)
+            }
+            .navigationDestination(for: JobStats.self) { jobStats in
+                JobInfoView(mode: database.mode, jobStats: jobStats)
+            }
+            .navigationDestination(for: Map.self) { map in
+                MapInfoView(mode: database.mode, map: map)
+            }
+            .navigationDestination(for: Monster.self) { monster in
+                MonsterInfoView(mode: database.mode, monster: monster)
+            }
+            .navigationDestination(for: ObservableMonsterSummon.self) { monsterSummon in
+                MonsterSummonInfoView(monsterSummon: monsterSummon)
+            }
+            .navigationDestination(for: ObservablePet.self) { pet in
+                PetInfoView(pet: pet)
+            }
+            .navigationDestination(for: Skill.self) { skill in
+                SkillInfoView(mode: database.mode, skill: skill)
+            }
+            .navigationDestination(for: StatusChange.self) { statusChange in
+                DatabaseRecordDetailView(mode: database.mode, record: statusChange)
+            }
             #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif

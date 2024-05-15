@@ -9,12 +9,12 @@ import SwiftUI
 
 struct DatabaseRecordInfoSection<Header, Content>: View where Header: View, Content: View {
     let verticalSpacing: CGFloat
-    let header: Header
-    let content: Content
+    let header: () -> Header
+    let content: () -> Content
 
     var body: some View {
         VStack(spacing: 0) {
-            header
+            header()
                 .font(.subheadline)
                 .bold()
                 .foregroundColor(.secondary)
@@ -24,7 +24,7 @@ struct DatabaseRecordInfoSection<Header, Content>: View where Header: View, Cont
 
             Divider()
 
-            content
+            content()
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.vertical, verticalSpacing)
 
@@ -33,15 +33,15 @@ struct DatabaseRecordInfoSection<Header, Content>: View where Header: View, Cont
         .padding(.horizontal, 20)
     }
 
-    init(_ title: String, verticalSpacing: CGFloat = 10, @ViewBuilder content: () -> Content) where Header == Text {
+    init(_ title: String, verticalSpacing: CGFloat = 10, @ViewBuilder content: @escaping () -> Content) where Header == Text {
         self.verticalSpacing = verticalSpacing
-        self.header = Text(title)
-        self.content = content()
+        self.header = { Text(title) }
+        self.content = content
     }
 
-    init(verticalSpacing: CGFloat = 10, @ViewBuilder content: () -> Content, @ViewBuilder header: () -> Header) {
+    init(verticalSpacing: CGFloat = 10, @ViewBuilder content: @escaping () -> Content, @ViewBuilder header: @escaping () -> Header) {
         self.verticalSpacing = verticalSpacing
-        self.header = header()
-        self.content = content()
+        self.header = header
+        self.content = content
     }
 }

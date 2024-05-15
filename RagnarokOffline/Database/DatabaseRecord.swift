@@ -5,8 +5,9 @@
 //  Created by Leon Li on 2024/5/11.
 //
 
-import Combine
 import rAthenaCommon
+
+typealias DatabaseRecordField = (title: String, value: String)
 
 struct DatabaseRecordDetail {
     enum Section: Identifiable {
@@ -47,9 +48,9 @@ struct DatabaseRecordDetail {
 protocol DatabaseRecord: Hashable, Identifiable {
     var recordID: String { get }
 
-    var localizedName: String { get }
+    var recordName: String { get }
 
-    func detail(for mode: ServerMode) async throws -> DatabaseRecordDetail
+    func recordDetail(for mode: ServerMode) async throws -> DatabaseRecordDetail
 }
 
 extension DatabaseRecord {

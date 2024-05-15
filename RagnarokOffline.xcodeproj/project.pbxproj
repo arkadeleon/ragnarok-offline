@@ -63,7 +63,6 @@
 		358D4C712BC7707400FAF45D /* ROSettings in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C702BC7707400FAF45D /* ROSettings */; };
 		358D4C732BC7707400FAF45D /* ROShaders in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C722BC7707400FAF45D /* ROShaders */; };
 		358D4C752BC7707400FAF45D /* ROStream in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C742BC7707400FAF45D /* ROStream */; };
-		3590570E2BDDF2760046AE87 /* DatabaseNavigationDestinations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3590570D2BDDF2760046AE87 /* DatabaseNavigationDestinations.swift */; };
 		35A2ABBE2B3ACB0A0026DAC2 /* ServerTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBD2B3ACB0A0026DAC2 /* ServerTerminalView.swift */; };
 		35B33BA22BF3BDCE00EF28F5 /* CubeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA12BF3BDCE00EF28F5 /* CubeViewController.swift */; };
 		35B33BA52BF465E700EF28F5 /* CubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA42BF465E700EF28F5 /* CubeView.swift */; };
@@ -112,7 +111,6 @@
 		35E27A832BC96AC800C11076 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A822BC96AC800C11076 /* Message.swift */; };
 		35E27A852BC96B3000C11076 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A842BC96B3000C11076 /* MessageCell.swift */; };
 		35F50CCC2BB4615F00B36455 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CCB2BB4615F00B36455 /* MessagesView.swift */; };
-		35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -168,7 +166,6 @@
 		3582FFC92B8DB9FE00E746D7 /* FilePreviewTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePreviewTabView.swift; sourceTree = "<group>"; };
 		3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileGridCell.swift; sourceTree = "<group>"; };
 		358362CA2BD558DC00821500 /* RagnarokOffline.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = RagnarokOffline.xctestplan; sourceTree = "<group>"; };
-		3590570D2BDDF2760046AE87 /* DatabaseNavigationDestinations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseNavigationDestinations.swift; sourceTree = "<group>"; };
 		35A2ABBD2B3ACB0A0026DAC2 /* ServerTerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerTerminalView.swift; sourceTree = "<group>"; };
 		35B33BA12BF3BDCE00EF28F5 /* CubeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeViewController.swift; sourceTree = "<group>"; };
 		35B33BA42BF465E700EF28F5 /* CubeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeView.swift; sourceTree = "<group>"; };
@@ -221,7 +218,6 @@
 		35E27A8E2BCC112200C11076 /* swift-rathena */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-rathena"; path = "Packages/swift-rathena"; sourceTree = "<group>"; };
 		35E27A8F2BCC112200C11076 /* ragnarok-offline */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "ragnarok-offline"; path = "Packages/ragnarok-offline"; sourceTree = "<group>"; };
 		35F50CCB2BB4615F00B36455 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
-		35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -345,13 +341,10 @@
 				35B422CE2BEB68C500681AA2 /* Pet */,
 				3514BF432B4526DE0065ED89 /* Skill */,
 				35B422F02BEF5EEB00681AA2 /* StatusChange */,
-				3590570D2BDDF2760046AE87 /* DatabaseNavigationDestinations.swift */,
-				35FD2BE72B844296006BD67A /* DatabaseRecordField.swift */,
-				3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */,
+				35B33BA62BF467C600EF28F5 /* DatabaseRecordDetail */,
 				35B422EC2BEF07C100681AA2 /* DatabaseView.swift */,
 				35B422EE2BEF091F00681AA2 /* ObservableDatabase.swift */,
 				35B422F52BEF76F700681AA2 /* DatabaseRecord.swift */,
-				35B422F72BEFA35400681AA2 /* DatabaseRecordDetailView.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -407,6 +400,15 @@
 				35B33BA12BF3BDCE00EF28F5 /* CubeViewController.swift */,
 			);
 			path = Cube;
+			sourceTree = "<group>";
+		};
+		35B33BA62BF467C600EF28F5 /* DatabaseRecordDetail */ = {
+			isa = PBXGroup;
+			children = (
+				35B422F72BEFA35400681AA2 /* DatabaseRecordDetailView.swift */,
+				3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */,
+			);
+			path = DatabaseRecordDetail;
 			sourceTree = "<group>";
 		};
 		35B3B8CB2A08BEA600B4540B = {
@@ -660,7 +662,6 @@
 				35B422F62BEF76F700681AA2 /* DatabaseRecord.swift in Sources */,
 				35239E012BC29A4E0039F7D5 /* ItemProvider.swift in Sources */,
 				35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */,
-				3590570E2BDDF2760046AE87 /* DatabaseNavigationDestinations.swift in Sources */,
 				35B422EF2BEF091F00681AA2 /* ObservableDatabase.swift in Sources */,
 				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,
 				35239DFB2BBEEF890039F7D5 /* JobProvider.swift in Sources */,
@@ -694,7 +695,6 @@
 				355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */,
 				35BE55332BD9547F003715C3 /* ACTFilePreviewView.swift in Sources */,
 				353B4F1C2B451F1300605E92 /* ItemCell.swift in Sources */,
-				35FD2BE82B844296006BD67A /* DatabaseRecordField.swift in Sources */,
 				35B422DE2BECAB6100681AA2 /* MonsterSummonDatabaseView.swift in Sources */,
 				3582FFCA2B8DB9FE00E746D7 /* FilePreviewTabView.swift in Sources */,
 				35F50CCC2BB4615F00B36455 /* MessagesView.swift in Sources */,
