@@ -65,6 +65,8 @@
 		358D4C752BC7707400FAF45D /* ROStream in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C742BC7707400FAF45D /* ROStream */; };
 		3590570E2BDDF2760046AE87 /* DatabaseNavigationDestinations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3590570D2BDDF2760046AE87 /* DatabaseNavigationDestinations.swift */; };
 		35A2ABBE2B3ACB0A0026DAC2 /* ServerTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBD2B3ACB0A0026DAC2 /* ServerTerminalView.swift */; };
+		35B33BA22BF3BDCE00EF28F5 /* CubeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA12BF3BDCE00EF28F5 /* CubeViewController.swift */; };
+		35B33BA52BF465E700EF28F5 /* CubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA42BF465E700EF28F5 /* CubeView.swift */; };
 		35B367452BD6AE700018ED27 /* Terminal in Frameworks */ = {isa = PBXBuildFile; productRef = 35B367442BD6AE700018ED27 /* Terminal */; };
 		35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */; };
 		35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D92A08BEA600B4540B /* ContentView.swift */; };
@@ -168,6 +170,8 @@
 		358362CA2BD558DC00821500 /* RagnarokOffline.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = RagnarokOffline.xctestplan; sourceTree = "<group>"; };
 		3590570D2BDDF2760046AE87 /* DatabaseNavigationDestinations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseNavigationDestinations.swift; sourceTree = "<group>"; };
 		35A2ABBD2B3ACB0A0026DAC2 /* ServerTerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerTerminalView.swift; sourceTree = "<group>"; };
+		35B33BA12BF3BDCE00EF28F5 /* CubeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeViewController.swift; sourceTree = "<group>"; };
+		35B33BA42BF465E700EF28F5 /* CubeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeView.swift; sourceTree = "<group>"; };
 		35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOffline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagnarokOfflineApp.swift; sourceTree = "<group>"; };
 		35B3B8D92A08BEA600B4540B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -396,6 +400,15 @@
 			path = Server;
 			sourceTree = "<group>";
 		};
+		35B33BA32BF465D500EF28F5 /* Cube */ = {
+			isa = PBXGroup;
+			children = (
+				35B33BA42BF465E700EF28F5 /* CubeView.swift */,
+				35B33BA12BF3BDCE00EF28F5 /* CubeViewController.swift */,
+			);
+			path = Cube;
+			sourceTree = "<group>";
+		};
 		35B3B8CB2A08BEA600B4540B = {
 			isa = PBXGroup;
 			children = (
@@ -425,6 +438,7 @@
 				353098412B161C3800F32B62 /* FilePreview */,
 				353098332B14EAE600F32B62 /* FileRawData */,
 				35F50CCA2BB4614100B36455 /* Messages */,
+				35B33BA32BF465D500EF28F5 /* Cube */,
 				35B3B96E2A08C01600B4540B /* Game */,
 				35A2ABBA2B3AC69F0026DAC2 /* Server */,
 				353B4F0E2B43AEC000605E92 /* Database */,
@@ -630,6 +644,7 @@
 				35B695EC2A307164006F1904 /* GameScene.swift in Sources */,
 				35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */,
 				3514BF862B4801EB0065ED89 /* JobInfoView.swift in Sources */,
+				35B33BA22BF3BDCE00EF28F5 /* CubeViewController.swift in Sources */,
 				35BE555E2BDAAFFF003715C3 /* RSMFilePreviewView.swift in Sources */,
 				3514BF822B4801D70065ED89 /* JobDatabaseView.swift in Sources */,
 				35239E052BC2D5D60039F7D5 /* ProgressHUD.swift in Sources */,
@@ -663,6 +678,7 @@
 				35B422E02BECAB6E00681AA2 /* MonsterSummonInfoView.swift in Sources */,
 				35BE555A2BDAA929003715C3 /* SPRFilePreviewView.swift in Sources */,
 				35239E032BC29F660039F7D5 /* EmptyContentView.swift in Sources */,
+				35B33BA52BF465E700EF28F5 /* CubeView.swift in Sources */,
 				35652B472B960D370075AD71 /* MapInfoView.swift in Sources */,
 				3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */,
 				353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */,

@@ -51,6 +51,15 @@ struct ContentView: View {
                     Label("Client", systemImage: "folder.fill")
                 }
 
+                #if DEBUG
+                NavigationStack {
+                    CubeView()
+                }
+                .tabItem {
+                    Label("Cube", systemImage: "cube")
+                }
+                #endif
+
                 NavigationStack {
                     serverView
                 }
@@ -327,7 +336,7 @@ struct ContentView: View {
             case .messages:
                 MessagesView()
             case .cube:
-                GameView()
+                CubeView()
             case .loginServer:
                 ServerTerminalView(server: loginServer)
             case .charServer:
