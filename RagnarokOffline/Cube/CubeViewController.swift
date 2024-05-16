@@ -17,25 +17,158 @@ class CubeViewController: UIViewController {
         arView.environment.background = .color(.systemBackground)
         view.addSubview(arView)
 
+        let cubeAnchor = AnchorEntity(world: .zero)
+
         let texture = try! MaterialParameters.Texture(.load(named: "wall.jpg"))
-        var material = PhysicallyBasedMaterial()
-        material.baseColor = .init(texture: texture)
+        var material = SimpleMaterial()
+        material.color = .init(texture: texture)
 
-        let boxEntity = ModelEntity(mesh: .generateBox(size: 1), materials: [material])
+        let cubeEntity = ModelEntity(mesh: generateCube(), materials: [material])
+        cubeAnchor.addChild(cubeEntity)
 
-        let boxAnchor = AnchorEntity(world: .zero)
-        boxAnchor.addChild(boxEntity)
-        arView.scene.addAnchor(boxAnchor)
+        let lightEntity = DirectionalLight()
+        lightEntity.light.color = .white
+        lightEntity.light.intensity = 0.2
+        lightEntity.look(at: .zero, from: [0, 5, 5], relativeTo: nil)
+        cubeAnchor.addChild(lightEntity)
+
+        arView.scene.addAnchor(cubeAnchor)
 
         let cameraEntity = PerspectiveCamera()
-        cameraEntity.camera.fieldOfViewInDegrees = 60
-        cameraEntity.look(at: .zero, from: [0, 3, 0], relativeTo: nil)
+        cameraEntity.camera.fieldOfViewInDegrees = 70
+        cameraEntity.look(at: .zero, from: [0, 2.5, 0], relativeTo: nil)
 
         let cameraAnchor = AnchorEntity(world: .zero)
         cameraAnchor.addChild(cameraEntity)
         arView.scene.addAnchor(cameraAnchor)
 
-        boxEntity.generateCollisionShapes(recursive: false)
-        arView.installGestures([.all], for: boxEntity)
+        cubeEntity.generateCollisionShapes(recursive: false)
+        arView.installGestures([.all], for: cubeEntity)
+    }
+
+    private func generateCube() -> MeshResource {
+        var descriptor = MeshDescriptor()
+
+        descriptor.positions = MeshBuffer([
+            [-0.5, -0.5, -0.5],
+            [ 0.5, -0.5, -0.5],
+            [ 0.5,  0.5, -0.5],
+            [ 0.5,  0.5, -0.5],
+            [-0.5,  0.5, -0.5],
+            [-0.5, -0.5, -0.5],
+            [-0.5, -0.5,  0.5],
+            [ 0.5, -0.5,  0.5],
+            [ 0.5,  0.5,  0.5],
+            [ 0.5,  0.5,  0.5],
+            [-0.5,  0.5,  0.5],
+            [-0.5, -0.5,  0.5],
+            [-0.5,  0.5,  0.5],
+            [-0.5,  0.5, -0.5],
+            [-0.5, -0.5, -0.5],
+            [-0.5, -0.5, -0.5],
+            [-0.5, -0.5,  0.5],
+            [-0.5,  0.5,  0.5],
+            [ 0.5,  0.5,  0.5],
+            [ 0.5,  0.5, -0.5],
+            [ 0.5, -0.5, -0.5],
+            [ 0.5, -0.5, -0.5],
+            [ 0.5, -0.5,  0.5],
+            [ 0.5,  0.5,  0.5],
+            [-0.5, -0.5, -0.5],
+            [ 0.5, -0.5, -0.5],
+            [ 0.5, -0.5,  0.5],
+            [ 0.5, -0.5,  0.5],
+            [-0.5, -0.5,  0.5],
+            [-0.5, -0.5, -0.5],
+            [-0.5,  0.5, -0.5],
+            [ 0.5,  0.5, -0.5],
+            [ 0.5,  0.5,  0.5],
+            [ 0.5,  0.5,  0.5],
+            [-0.5,  0.5,  0.5],
+            [-0.5,  0.5, -0.5],
+        ])
+
+        descriptor.normals = MeshBuffer([
+            [0.0,  0.0, -1.0],
+            [0.0,  0.0, -1.0],
+            [0.0,  0.0, -1.0],
+            [0.0,  0.0, -1.0],
+            [0.0,  0.0, -1.0],
+            [0.0,  0.0, -1.0],
+            [0.0,  0.0,  1.0],
+            [0.0,  0.0,  1.0],
+            [0.0,  0.0,  1.0],
+            [0.0,  0.0,  1.0],
+            [0.0,  0.0,  1.0],
+            [0.0,  0.0,  1.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [0.0, -1.0,  0.0],
+            [0.0, -1.0,  0.0],
+            [0.0, -1.0,  0.0],
+            [0.0, -1.0,  0.0],
+            [0.0, -1.0,  0.0],
+            [0.0, -1.0,  0.0],
+            [0.0,  1.0,  0.0],
+            [0.0,  1.0,  0.0],
+            [0.0,  1.0,  0.0],
+            [0.0,  1.0,  0.0],
+            [0.0,  1.0,  0.0],
+            [0.0,  1.0,  0.0],
+        ])
+
+        descriptor.textureCoordinates = MeshBuffer([
+            [0.0, 0.0],
+            [1.0, 0.0],
+            [1.0, 1.0],
+            [1.0, 1.0],
+            [0.0, 1.0],
+            [0.0, 0.0],
+            [0.0, 0.0],
+            [1.0, 0.0],
+            [1.0, 1.0],
+            [1.0, 1.0],
+            [0.0, 1.0],
+            [0.0, 0.0],
+            [1.0, 0.0],
+            [1.0, 1.0],
+            [0.0, 1.0],
+            [0.0, 1.0],
+            [0.0, 0.0],
+            [1.0, 0.0],
+            [1.0, 0.0],
+            [1.0, 1.0],
+            [0.0, 1.0],
+            [0.0, 1.0],
+            [0.0, 0.0],
+            [1.0, 0.0],
+            [0.0, 1.0],
+            [1.0, 1.0],
+            [1.0, 0.0],
+            [1.0, 0.0],
+            [0.0, 0.0],
+            [0.0, 1.0],
+            [0.0, 1.0],
+            [1.0, 1.0],
+            [1.0, 0.0],
+            [1.0, 0.0],
+            [0.0, 0.0],
+            [0.0, 1.0],
+        ])
+
+        let indices = (0..<descriptor.positions.count).map({ UInt32($0) })
+        descriptor.primitives = .triangles(indices + indices.reversed())
+
+        return try! MeshResource.generate(from: [descriptor])
     }
 }

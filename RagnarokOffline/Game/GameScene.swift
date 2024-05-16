@@ -57,8 +57,7 @@ struct GameScene {
         let indexBuffer = device.makeBuffer(bytes: indices, length: MemoryLayout<UInt16>.size * indices.count)!
 
         let textureLoader = MTKTextureLoader(device: device)
-        let image = UIImage(named: "wall.jpg")!
-        let texture = try! textureLoader.newTexture(cgImage: image.cgImage!, options: nil)
+        let texture = try! textureLoader.newTexture(name: "wall.jpg", scaleFactor: 1, bundle: nil)
 
         let submesh = Submesh(
             primitiveType: .triangle,
