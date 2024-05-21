@@ -18,7 +18,7 @@ extension File {
         case let type where type.conforms(to: .text) || type == .lua || type == .lub: true
         case let type where type.conforms(to: .image) || type == .ebm || type == .pal: true
         case let type where type.conforms(to: .audio): true
-        case .act, .gat, .rsm, .rsw, .spr, .str: true
+        case .act, .gat, .gnd, .rsm, .rsw, .spr, .str: true
         default: false
         }
     }

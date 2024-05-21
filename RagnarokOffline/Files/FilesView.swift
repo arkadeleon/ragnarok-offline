@@ -93,7 +93,7 @@ struct FilesView: View {
         .onSubmit(of: .search) {
             filterFiles()
         }
-        .onChange(of: searchText) { _ in
+        .onChange(of: searchText) {
             filterFiles()
         }
         .sheet(item: $previewingFile) { file in

@@ -56,7 +56,9 @@ public struct Model {
         }
 
         meshes = rsm.textures.map { textureName in
-            ModelMesh(texture: textureProvider(textureName))
+            let texture = textureProvider(textureName)
+            let mesh = ModelMesh(texture: texture)
+            return mesh
         }
 
         for wrapper in wrappers {

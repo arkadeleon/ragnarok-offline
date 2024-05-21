@@ -27,8 +27,10 @@ public struct Ground {
         height = Int(gat.height)
         altitude = gat.tile(atX: width / 2, y: height / 2).averageAltitude
 
-        meshes = gnd.textures.map { texture in
-            GroundMesh(texture: textureProvider(texture))
+        meshes = gnd.textures.map { textureName in
+            let texture = textureProvider(textureName)
+            let mesh = GroundMesh(texture: texture)
+            return mesh
         }
 
         let width = Int(gnd.width)

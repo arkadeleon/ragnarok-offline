@@ -25,6 +25,8 @@ struct FilePreviewView: View {
                     ACTFilePreviewView(file: file)
                 case .gat:
                     GATFilePreviewView(file: file)
+                case .gnd:
+                    GNDFilePreviewView(file: file)
                 case .rsm:
                     RSMFilePreviewView(file: file)
                 case .rsw:

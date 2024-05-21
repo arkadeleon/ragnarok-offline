@@ -53,7 +53,7 @@ struct GameScene {
         ]
         let vertexBuffer = device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<VertexIn>.stride)!
 
-        let indices: [UInt16] = (0..<vertices.count).map({ UInt16($0) })
+        let indices: [UInt16] = (0..<vertices.count).map(UInt16.init)
         let indexBuffer = device.makeBuffer(bytes: indices, length: MemoryLayout<UInt16>.size * indices.count)!
 
         let textureLoader = MTKTextureLoader(device: device)

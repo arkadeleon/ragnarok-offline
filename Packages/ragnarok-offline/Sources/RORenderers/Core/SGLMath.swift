@@ -164,4 +164,13 @@ extension simd_float4x4 {
         let rotationZ = simd_float4x4(rotationZ: angle.z)
         self = rotationX * rotationY * rotationZ
     }
+
+    public init(scale: SIMD3<Float>) {
+        self.init(
+            [scale.x,       0,       0, 0],
+            [      0, scale.y,       0, 0],
+            [      0,       0, scale.z, 0],
+            [      0,       0,       0, 1]
+        )
+    }
 }

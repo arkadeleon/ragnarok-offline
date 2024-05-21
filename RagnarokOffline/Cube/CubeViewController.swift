@@ -166,7 +166,7 @@ class CubeViewController: UIViewController {
             [0.0, 1.0],
         ])
 
-        let indices = (0..<descriptor.positions.count).map({ UInt32($0) })
+        let indices = (0..<descriptor.positions.count).map(UInt32.init)
         descriptor.primitives = .triangles(indices + indices.reversed())
 
         return try! MeshResource.generate(from: [descriptor])

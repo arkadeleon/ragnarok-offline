@@ -89,9 +89,6 @@ let package = Package(
             dependencies: [
                 "ROGraphics",
                 "ROShaders",
-            ],
-            exclude: [
-                "Entity/Entity.swift",
             ]),
         .target(
             name: "ROResources",

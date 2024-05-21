@@ -29,7 +29,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:RagnarokOffline.xctestplan"
+            reference = "container:RagnarokOffline/RagnarokOffline.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>
