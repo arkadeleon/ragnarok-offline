@@ -29,9 +29,6 @@ struct ServerTerminalView: View {
             }
         }
         .navigationTitle(server.name)
-        #if !os(macOS)
-        .navigationBarTitleDisplayMode(.inline)
-        #endif
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {

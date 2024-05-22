@@ -39,51 +39,26 @@ struct ContentView: View {
     @State private var webServer = ObservableServer(server: WebServer.shared)
 
     @State private var selectedItem: SidebarItem? = .files
+    @State private var isClientSectionExpanded = true
+    @State private var isServerSectionExpanded = true
+    @State private var isDatabaseSectionExpanded = true
+
     @State private var isSettingsPresented = false
 
     var body: some View {
         ResponsiveView {
-            TabView {
-                NavigationStack {
-                    FilesView(title: "Client", directory: .directory(ClientResourceBundle.shared.url))
-                }
-                .tabItem {
-                    Label("Client", systemImage: "folder.fill")
-                }
-
-                #if DEBUG
-                NavigationStack {
-                    CubeView()
-                }
-                .tabItem {
-                    Label("Cube", systemImage: "cube")
-                }
-                #endif
-
-                NavigationStack {
-                    serverView
-                }
-                .tabItem {
-                    Label("Server", systemImage: "apple.terminal.fill")
-                }
-
-                NavigationStack {
-                    databaseView
-                }
-                .tabItem {
-                    Label("Database", systemImage: "tablecells.fill")
-                }
-
-                NavigationStack {
-                    SettingsView()
-                }
-                .tabItem {
-                    Label("Settings", systemImage: "gearshape.fill")
-                }
+            NavigationStack {
+                sidebar(selection: nil)
+                    .navigationDestination(for: SidebarItem.self) { item in
+                        detail(for: item)
+                            #if !os(macOS)
+                            .navigationBarTitleDisplayMode(.inline)
+                            #endif
+                    }
             }
         } regular: {
             NavigationSplitView {
-                sidebar
+                sidebar(selection: $selectedItem)
             } detail: {
                 if let item = selectedItem {
                     NavigationStack {
@@ -100,116 +75,9 @@ struct ContentView: View {
         }
     }
 
-    private var serverView: some View {
-        List {
-            NavigationLink(value: SidebarItem.loginServer) {
-                LabeledContent {
-                    Text(loginServer.status.description)
-                        .font(.footnote)
-                } label: {
-                    Label(loginServer.name, systemImage: "terminal")
-                }
-            }
-
-            NavigationLink(value: SidebarItem.charServer) {
-                LabeledContent {
-                    Text(charServer.status.description)
-                        .font(.footnote)
-                } label: {
-                    Label(charServer.name, systemImage: "terminal")
-                }
-            }
-
-            NavigationLink(value: SidebarItem.mapServer) {
-                LabeledContent {
-                    Text(mapServer.status.description)
-                        .font(.footnote)
-                } label: {
-                    Label(mapServer.name, systemImage: "terminal")
-                }
-            }
-
-            NavigationLink(value: SidebarItem.webServer) {
-                LabeledContent {
-                    Text(webServer.status.description)
-                        .font(.footnote)
-                } label: {
-                    Label(webServer.name, systemImage: "terminal")
-                }
-            }
-        }
-        .navigationDestination(for: SidebarItem.self) { item in
-            switch item {
-            case .loginServer:
-                ServerTerminalView(server: loginServer)
-            case .charServer:
-                ServerTerminalView(server: charServer)
-            case .mapServer:
-                ServerTerminalView(server: mapServer)
-            case .webServer:
-                ServerTerminalView(server: webServer)
-            default:
-                EmptyView()
-            }
-        }
-        .navigationTitle("Server")
-    }
-
-    private var databaseView: some View {
-        List {
-            NavigationLink(value: SidebarItem.itemDatabase) {
-                Label("Item Database", systemImage: "leaf")
-            }
-            NavigationLink(value: SidebarItem.jobDatabase) {
-                Label("Job Database", systemImage: "person")
-            }
-            NavigationLink(value: SidebarItem.mapDatabase) {
-                Label("Map Database", systemImage: "map")
-            }
-            NavigationLink(value: SidebarItem.monsterDatabase) {
-                Label("Monster Database", systemImage: "pawprint")
-            }
-            NavigationLink(value: SidebarItem.monsterSummonDatabase) {
-                Label("Monster Summon Database", systemImage: "pawprint")
-            }
-            NavigationLink(value: SidebarItem.petDatabase) {
-                Label("Pet Database", systemImage: "pawprint")
-            }
-            NavigationLink(value: SidebarItem.skillDatabase) {
-                Label("Skill Database", systemImage: "arrow.up.heart")
-            }
-            NavigationLink(value: SidebarItem.statusChangeDatabase) {
-                Label("Status Change Database", systemImage: "zzz")
-            }
-        }
-        .navigationDestination(for: SidebarItem.self) { item in
-            switch item {
-            case .itemDatabase:
-                ItemDatabaseView()
-            case .jobDatabase:
-                JobDatabaseView()
-            case .mapDatabase:
-                MapDatabaseView()
-            case .monsterDatabase:
-                MonsterDatabaseView()
-            case .monsterSummonDatabase:
-                MonsterSummonDatabaseView()
-            case .petDatabase:
-                PetDatabaseView()
-            case .skillDatabase:
-                SkillDatabaseView()
-            case .statusChangeDatabase:
-                StatusChangeDatabaseView()
-            default:
-                EmptyView()
-            }
-        }
-        .navigationTitle("Database")
-    }
-
-    private var sidebar: some View {
-        List(selection: $selectedItem) {
-            Section("Client") {
+    private func sidebar(selection: Binding<SidebarItem?>?) -> some View {
+        List(selection: selection) {
+            Section("Client", isExpanded: $isClientSectionExpanded) {
                 NavigationLink(value: SidebarItem.files) {
                     Label("Files", systemImage: "folder")
                 }
@@ -225,7 +93,7 @@ struct ContentView: View {
                 #endif
             }
 
-            Section("Server") {
+            Section("Server", isExpanded: $isServerSectionExpanded) {
                 NavigationLink(value: SidebarItem.loginServer) {
                     LabeledContent {
                         Text(loginServer.status.description)
@@ -269,33 +137,41 @@ struct ContentView: View {
                 #endif
             }
 
-            Section("Database") {
+            Section("Database", isExpanded: $isDatabaseSectionExpanded) {
                 NavigationLink(value: SidebarItem.itemDatabase) {
                     Label("Item Database", systemImage: "leaf")
                 }
+
                 NavigationLink(value: SidebarItem.jobDatabase) {
                     Label("Job Database", systemImage: "person")
                 }
+
                 NavigationLink(value: SidebarItem.monsterDatabase) {
                     Label("Monster Database", systemImage: "pawprint")
                 }
+
                 NavigationLink(value: SidebarItem.monsterSummonDatabase) {
                     Label("Monster Summon Database", systemImage: "pawprint")
                 }
+
                 NavigationLink(value: SidebarItem.mapDatabase) {
                     Label("Map Database", systemImage: "map")
                 }
+
                 NavigationLink(value: SidebarItem.petDatabase) {
                     Label("Pet Database", systemImage: "pawprint")
                 }
+
                 NavigationLink(value: SidebarItem.skillDatabase) {
                     Label("Skill Database", systemImage: "arrow.up.heart")
                 }
+
                 NavigationLink(value: SidebarItem.statusChangeDatabase) {
                     Label("Status Change Database", systemImage: "zzz")
                 }
             }
         }
+        .listStyle(.sidebar)
         .navigationTitle("Ragnarok Offline")
         .toolbar {
             Menu {

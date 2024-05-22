@@ -58,9 +58,6 @@ struct DatabaseView<RecordProvider, Content>: View where RecordProvider: Databas
             .navigationDestination(for: StatusChange.self) { statusChange in
                 DatabaseRecordDetailView(mode: database.mode, record: statusChange)
             }
-            #if !os(macOS)
-            .navigationBarTitleDisplayMode(.inline)
-            #endif
             .searchable(text: $database.searchText, placement: searchFieldPlacement)
             .onSubmit(of: .search) {
                 database.filterRecords()

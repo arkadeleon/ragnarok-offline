@@ -72,9 +72,6 @@ struct FilesView: View {
         }
         .navigationDestination(for: File.self) { file in
             FilesView(title: file.name, directory: file)
-                #if !os(macOS)
-                .navigationBarTitleDisplayMode(.inline)
-                #endif
         }
         .navigationTitle(title)
         .toolbar {
