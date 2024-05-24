@@ -26,7 +26,7 @@ struct FilesView: View {
                 ForEach(filteredFiles) { file in
                     if file.file.isDirectory || file.file.isArchive {
                         NavigationLink(value: file) {
-                            FileGridCell(file: file)
+                            FileCell(file: file)
                         }
                         .contextMenu {
                             FileContextMenu(file: file, copyAction: {
@@ -41,7 +41,7 @@ struct FilesView: View {
                                 previewingFile = file
                             }
                         } label: {
-                            FileGridCell(file: file)
+                            FileCell(file: file)
                         }
                         .contextMenu {
                             FileContextMenu(file: file, previewAction: {

@@ -11,9 +11,11 @@ import DataCompression
 import ROFileFormats
 import ROGraphics
 
-public class FileThumbnailGenerator {
-    public func generateThumbnail(for file: File, scale: CGFloat) -> CGImage? {
-        guard let type = file.type else {
+class FileThumbnailGenerator {
+    static let shared = FileThumbnailGenerator()
+
+    func generateThumbnail(for request: FileThumbnailRequest) async throws -> FileThumbnail? {
+        guard let type = request.file.type else {
             return nil
         }
 
@@ -21,9 +23,9 @@ public class FileThumbnailGenerator {
         case let type where type.conforms(to: .image) || type == .ebm:
             let data: Data?
             if type == .ebm {
-                data = file.contents()?.unzip()
+                data = request.file.contents()?.unzip()
             } else {
-                data = file.contents()
+                data = request.file.contents()
             }
 
             guard let data else {
@@ -38,51 +40,49 @@ public class FileThumbnailGenerator {
                 kCGImageSourceCreateThumbnailFromImageIfAbsent: true,
                 kCGImageSourceCreateThumbnailWithTransform: true,
                 kCGImageSourceShouldCacheImmediately: true,
-                kCGImageSourceThumbnailMaxPixelSize: 40 * scale
+                kCGImageSourceThumbnailMaxPixelSize: 40 * request.scale
             ]
             guard let thumbnail = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary) else {
                 return nil
             }
 
-            return thumbnail
+            return FileThumbnail(cgImage: thumbnail)
         case .gat:
-            guard let data = file.contents() else {
+            guard let data = request.file.contents() else {
                 return nil
             }
 
-            guard let gat = try? GAT(data: data) else {
+            let gat = try GAT(data: data)
+
+            guard let image = gat.image() else {
                 return nil
             }
 
-            return gat.image()
+            return FileThumbnail(cgImage: image)
         case .pal:
-            guard let data = file.contents() else {
+            guard let data = request.file.contents() else {
                 return nil
             }
 
-            guard let pal = try? PAL(data: data) else {
+            let pal = try PAL(data: data)
+
+            guard let image = pal.image(at: CGSize(width: 32 * request.scale, height: 32 * request.scale)) else {
                 return nil
             }
 
-            guard let image = pal.image(at: CGSize(width: 32 * scale, height: 32 * scale)) else {
-                return nil
-            }
-
-            return image
+            return FileThumbnail(cgImage: image)
         case .spr:
-            guard let data = file.contents() else {
+            guard let data = request.file.contents() else {
                 return nil
             }
 
-            guard let spr = try? SPR(data: data) else {
-                return nil
-            }
+            let spr = try SPR(data: data)
 
             guard let image = spr.image(forSpriteAt: 0) else {
                 return nil
             }
 
-            return image.image
+            return FileThumbnail(cgImage: image.image)
         default:
             return nil
         }
