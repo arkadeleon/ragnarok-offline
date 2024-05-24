@@ -115,7 +115,7 @@ struct FilesView: View {
 
         loadStatus = .loading
 
-        files = directory.file.files().sorted().map(ObservableFile.init)
+        files = directory.file.files().map(ObservableFile.init).sorted()
         filterFiles()
 
         loadStatus = .loaded

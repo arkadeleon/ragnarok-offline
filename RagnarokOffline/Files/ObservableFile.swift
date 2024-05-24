@@ -8,6 +8,7 @@
 import CoreTransferable
 import Foundation
 import Observation
+import ROFileFormats
 import ROFileSystem
 
 @Observable class ObservableFile {
@@ -113,15 +114,73 @@ extension ObservableFile {
     }
 }
 
+extension ObservableFile {
+    var rawDataRepresentable: Bool {
+        switch file.info.type {
+        case .act, .gat, .gnd, .rsm, .rsw, .spr, .str:
+            return true
+        default:
+            return false
+        }
+    }
+
+    var rawData: Data? {
+        guard rawDataRepresentable else {
+            return nil
+        }
+
+        guard let data = file.contents() else {
+            return nil
+        }
+
+        let value: Encodable? = switch file.info.type {
+        case .act: try? ACT(data: data)
+        case .gat: try? GAT(data: data)
+        case .gnd: try? GND(data: data)
+        case .rsm: try? RSM(data: data)
+        case .rsw: try? RSW(data: data)
+        case .spr: try? SPR(data: data)
+        case .str: try? STR(data: data)
+        default: nil
+        }
+
+        guard let value else {
+            return nil
+        }
+
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+
+        let rawData = try? encoder.encode(value)
+        return rawData
+    }
+}
+
 extension ObservableFile: Equatable {
     static func == (lhs: ObservableFile, rhs: ObservableFile) -> Bool {
-        lhs.file == rhs.file
+        lhs.file.url == rhs.file.url
     }
 }
 
 extension ObservableFile: Comparable {
     static func < (lhs: ObservableFile, rhs: ObservableFile) -> Bool {
-        lhs.file < rhs.file
+        let lhsRank = switch lhs.file {
+        case .directory, .grfDirectory: 0
+        case .grf: 1
+        default: 2
+        }
+
+        let rhsRank = switch rhs.file {
+        case .directory, .grfDirectory: 0
+        case .grf: 1
+        default: 2
+        }
+
+        if lhsRank == rhsRank {
+            return lhs.file.name.lowercased() < rhs.file.name.lowercased()
+        } else {
+            return lhsRank < rhsRank
+        }
     }
 }
 
@@ -133,7 +192,7 @@ extension ObservableFile: Identifiable {
 
 extension ObservableFile: Hashable {
     func hash(into hasher: inout Hasher) {
-        file.hash(into: &hasher)
+        file.url.hash(into: &hasher)
     }
 }
 

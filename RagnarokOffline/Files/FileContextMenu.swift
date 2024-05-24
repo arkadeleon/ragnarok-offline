@@ -27,7 +27,7 @@ struct FileContextMenu: View {
                     }
                 }
 
-                if file.file.rawDataRepresentable {
+                if file.rawDataRepresentable {
                     Button {
                         inspectRawDataAction?()
                     } label: {
