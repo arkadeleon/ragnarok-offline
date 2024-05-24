@@ -33,6 +33,9 @@ enum SidebarItem: Hashable {
 }
 
 struct ContentView: View {
+    @State private var clientDirectory = ObservableFile(file: .directory(ClientResourceBundle.shared.url))
+    @State private var serverDirectory = ObservableFile(file: .directory(ResourceBundle.shared.url))
+
     @State private var loginServer = ObservableServer(server: LoginServer.shared)
     @State private var charServer = ObservableServer(server: CharServer.shared)
     @State private var mapServer = ObservableServer(server: MapServer.shared)
@@ -208,7 +211,7 @@ struct ContentView: View {
         ZStack {
             switch item {
             case .files:
-                FilesView(title: "Files", directory: .directory(ClientResourceBundle.shared.url))
+                FilesView(title: "Files", directory: clientDirectory)
             case .messages:
                 MessagesView()
             case .cube:
@@ -222,7 +225,7 @@ struct ContentView: View {
             case .webServer:
                 ServerTerminalView(server: webServer)
             case .serverFiles:
-                FilesView(title: "Server Files", directory: .directory(ResourceBundle.shared.url))
+                FilesView(title: "Server Files", directory: serverDirectory)
             case .itemDatabase:
                 ItemDatabaseView()
             case .jobDatabase:

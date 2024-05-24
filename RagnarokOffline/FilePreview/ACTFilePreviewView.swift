@@ -7,7 +7,6 @@
 
 import SwiftUI
 import ROFileFormats
-import ROFileSystem
 import ROGraphics
 
 enum ACTFilePreviewError: Error {
@@ -26,7 +25,7 @@ struct ACTFilePreviewView: View {
         var animatedImage: AnimatedImage
     }
 
-    let file: File
+    var file: ObservableFile
 
     @State private var status: AsyncContentStatus<[ActionSection]> = .notYetLoaded
 
@@ -40,8 +39,8 @@ struct ACTFilePreviewView: View {
                                 .frame(width: section.actionSize.width, height: section.actionSize.height)
                                 .contextMenu {
                                     ShareLink(
-                                        item: action.animatedImage.named(String(format: "%@.%03d.png", file.name, action.index)),
-                                        preview: SharePreview(file.name, image: Image(action.animatedImage.images[0], scale: 1, label: Text("")))
+                                        item: action.animatedImage.named(String(format: "%@.%03d.png", file.file.name, action.index)),
+                                        preview: SharePreview(file.file.name, image: Image(action.animatedImage.images[0], scale: 1, label: Text("")))
                                     )
                                 }
                         }
@@ -62,13 +61,13 @@ struct ACTFilePreviewView: View {
 
         status = .loading
 
-        guard let actData = file.contents() else {
+        guard let actData = file.file.contents() else {
             status = .failed(ACTFilePreviewError.invalidACTFile)
             return
         }
 
         let sprData: Data?
-        switch file {
+        switch file.file {
         case .regularFile(let url):
             let sprPath = url.deletingPathExtension().path().appending(".spr")
             sprData = try? Data(contentsOf: URL(filePath: sprPath))

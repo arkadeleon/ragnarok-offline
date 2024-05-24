@@ -8,11 +8,10 @@
 import MetalKit
 import SwiftUI
 import ROFileFormats
-import ROFileSystem
 import RORenderers
 
 struct RSWFilePreviewView: View {
-    let file: File
+    var file: ObservableFile
 
     @State private var status: AsyncContentStatus<RSWRenderer> = .notYetLoaded
     @State private var translation: CGSize = .zero
@@ -54,7 +53,7 @@ struct RSWFilePreviewView: View {
 
         status = .loading
 
-        guard case .grfEntry(let grf, _) = file, let data = file.contents() else {
+        guard case .grfEntry(let grf, _) = file.file, let data = file.file.contents() else {
             return
         }
 

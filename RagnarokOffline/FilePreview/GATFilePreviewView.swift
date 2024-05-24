@@ -7,20 +7,19 @@
 
 import SwiftUI
 import ROFileFormats
-import ROFileSystem
 
 enum GATFilePreviewError: Error {
     case invalidGATFile
 }
 
 struct GATFilePreviewView: View {
-    let file: File
+    var file: ObservableFile
 
     @State private var status: AsyncContentStatus<CGImage> = .notYetLoaded
 
     var body: some View {
         AsyncContentView(status: status) { image in
-            Image(image, scale: 1, label: Text(file.name))
+            Image(image, scale: 1, label: Text(file.file.name))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
         }
@@ -36,7 +35,7 @@ struct GATFilePreviewView: View {
 
         status = .loading
 
-        guard let gatData = file.contents() else {
+        guard let gatData = file.file.contents() else {
             status = .failed(GATFilePreviewError.invalidGATFile)
             return
         }

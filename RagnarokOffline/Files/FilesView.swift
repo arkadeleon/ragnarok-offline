@@ -9,35 +9,35 @@ import SwiftUI
 import ROFileSystem
 
 struct FilesView: View {
-    let title: String
-    let directory: File
+    var title: String
+    var directory: ObservableFile
 
     @State private var loadStatus: LoadStatus = .notYetLoaded
     @State private var searchText = ""
-    @State private var files: [File] = []
-    @State private var filteredFiles: [File] = []
+    @State private var files: [ObservableFile] = []
+    @State private var filteredFiles: [ObservableFile] = []
 
-    @State private var previewingFile: File?
-    @State private var inspectingRawDataFile: File?
+    @State private var previewingFile: ObservableFile?
+    @State private var inspectingRawDataFile: ObservableFile?
 
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], spacing: 30) {
                 ForEach(filteredFiles) { file in
-                    if file.isDirectory || file.isArchive {
+                    if file.file.isDirectory || file.file.isArchive {
                         NavigationLink(value: file) {
                             FileGridCell(file: file)
                         }
                         .contextMenu {
                             FileContextMenu(file: file, copyAction: {
-                                directory.copy(file)
+                                directory.file.copy(file.file)
                             }, deleteAction: {
                                 deleteFile(file)
                             })
                         }
                     } else {
                         Button {
-                            if file.canPreview {
+                            if file.file.canPreview {
                                 previewingFile = file
                             }
                         } label: {
@@ -49,7 +49,7 @@ struct FilesView: View {
                             }, inspectRawDataAction: {
                                 inspectingRawDataFile = file
                             }, copyAction: {
-                                directory.copy(file)
+                                directory.file.copy(file.file)
                             }, deleteAction: {
                                 deleteFile(file)
                             })
@@ -70,8 +70,8 @@ struct FilesView: View {
                 EmptyContentView("Empty Folder")
             }
         }
-        .navigationDestination(for: File.self) { file in
-            FilesView(title: file.name, directory: file)
+        .navigationDestination(for: ObservableFile.self) { file in
+            FilesView(title: file.file.name, directory: file)
         }
         .navigationTitle(title)
         .toolbar {
@@ -81,7 +81,7 @@ struct FilesView: View {
                 } label: {
                     Label("Paste", systemImage: "doc.on.clipboard")
                 }
-                .disabled(!directory.canPaste)
+                .disabled(!directory.file.canPaste)
             } label: {
                 Image(systemName: "ellipsis.circle")
             }
@@ -95,7 +95,7 @@ struct FilesView: View {
         }
         .sheet(item: $previewingFile) { file in
             NavigationStack {
-                FilePreviewTabView(files: filteredFiles.filter({ $0.canPreview }), currentFile: file)
+                FilePreviewTabView(files: filteredFiles.filter({ $0.file.canPreview }), currentFile: file)
             }
         }
         .sheet(item: $inspectingRawDataFile) { file in
@@ -115,7 +115,7 @@ struct FilesView: View {
 
         loadStatus = .loading
 
-        files = directory.files().sorted()
+        files = directory.file.files().sorted().map(ObservableFile.init)
         filterFiles()
 
         loadStatus = .loaded
@@ -126,21 +126,21 @@ struct FilesView: View {
             filteredFiles = files
         } else {
             filteredFiles = files.filter { file in
-                file.name.localizedStandardContains(searchText)
+                file.file.name.localizedStandardContains(searchText)
             }
         }
     }
 
     private func pasteFile() {
-        if let file = directory.pasteFromPasteboard(FilePasteboard.shared), loadStatus == .loaded {
-            files.append(file)
+        if let file = directory.file.pasteFromPasteboard(FilePasteboard.shared), loadStatus == .loaded {
+            files.append(ObservableFile(file: file))
             files.sort()
             filterFiles()
         }
     }
 
-    private func deleteFile(_ file: File) {
-        if directory.delete(file) {
+    private func deleteFile(_ file: ObservableFile) {
+        if directory.file.delete(file.file) {
             files.removeAll(where: { $0 == file })
             filterFiles()
         }

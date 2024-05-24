@@ -9,8 +9,8 @@ import SwiftUI
 import ROFileSystem
 
 struct FilePreviewTabView: View {
-    let files: [File]
-    @State var currentFile: File
+    var files: [ObservableFile]
+    @State var currentFile: ObservableFile
 
     @Environment(\.dismiss) private var dismiss
 
@@ -22,7 +22,7 @@ struct FilePreviewTabView: View {
             }
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
-        .navigationTitle(currentFile.name)
+        .navigationTitle(currentFile.file.name)
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
@@ -37,7 +37,7 @@ struct FilePreviewTabView: View {
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                ShareLink(item: currentFile, preview: SharePreview(currentFile.name))
+                ShareLink(item: currentFile.file, preview: SharePreview(currentFile.file.name))
             }
         }
     }

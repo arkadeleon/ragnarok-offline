@@ -6,16 +6,15 @@
 //
 
 import SwiftUI
-import ROFileSystem
 
 struct FileGridCell: View {
-    let file: File
+    var file: ObservableFile
 
     var body: some View {
         VStack {
             FileThumbnailView(file: file)
 
-            Text(file.name)
+            Text(file.file.name)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .foregroundColor(.primary)
                 .font(.subheadline)

@@ -7,14 +7,13 @@
 
 import AVFoundation
 import SwiftUI
-import ROFileSystem
 
 enum AudioFilePreviewError: Error {
     case invalidAudioFile
 }
 
 struct AudioFilePreviewView: View {
-    let file: File
+    var file: ObservableFile
 
     @State private var status: AsyncContentStatus<AVAudioPlayer> = .notYetLoaded
     @State private var isPlaying = false
@@ -59,7 +58,7 @@ struct AudioFilePreviewView: View {
 
         status = .loading
 
-        if let data = self.file.contents(), let player = try? AVAudioPlayer(data: data) {
+        if let data = file.file.contents(), let player = try? AVAudioPlayer(data: data) {
             status = .loaded(player)
         } else {
             status = .failed(AudioFilePreviewError.invalidAudioFile)

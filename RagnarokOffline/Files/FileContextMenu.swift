@@ -6,21 +6,20 @@
 //
 
 import SwiftUI
-import ROFileSystem
 
 struct FileContextMenu: View {
     typealias Action = () -> Void
 
-    let file: File
-    let previewAction: Action?
-    let inspectRawDataAction: Action?
-    let copyAction: Action?
-    let deleteAction: Action?
+    var file: ObservableFile
+    var previewAction: Action?
+    var inspectRawDataAction: Action?
+    var copyAction: Action?
+    var deleteAction: Action?
 
     var body: some View {
         Group {
             Section {
-                if file.canPreview {
+                if file.file.canPreview {
                     Button {
                         previewAction?()
                     } label: {
@@ -28,7 +27,7 @@ struct FileContextMenu: View {
                     }
                 }
 
-                if file.rawDataRepresentable {
+                if file.file.rawDataRepresentable {
                     Button {
                         inspectRawDataAction?()
                     } label: {
@@ -38,7 +37,7 @@ struct FileContextMenu: View {
             }
 
             Section {
-                if file.canCopy {
+                if file.file.canCopy {
                     Button {
                         copyAction?()
                     } label: {
@@ -46,13 +45,13 @@ struct FileContextMenu: View {
                     }
                 }
 
-                if file.canShare {
-                    ShareLink("Share", item: file, preview: SharePreview(file.name))
+                if file.file.canShare {
+                    ShareLink("Share", item: file.file, preview: SharePreview(file.file.name))
                 }
             }
 
             Section {
-                if file.canDelete {
+                if file.file.canDelete {
                     Button(role: .destructive) {
                         deleteAction?()
                     } label: {
@@ -63,7 +62,7 @@ struct FileContextMenu: View {
         }
     }
 
-    init(file: File, previewAction: Action? = nil, inspectRawDataAction: Action? = nil, copyAction: Action? = nil, deleteAction: Action? = nil) {
+    init(file: ObservableFile, previewAction: Action? = nil, inspectRawDataAction: Action? = nil, copyAction: Action? = nil, deleteAction: Action? = nil) {
         self.file = file
         self.previewAction = previewAction
         self.inspectRawDataAction = inspectRawDataAction

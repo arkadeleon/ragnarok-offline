@@ -6,14 +6,13 @@
 //
 
 import SwiftUI
-import ROFileSystem
 
 struct FilePreviewView: View {
-    let file: File
+    var file: ObservableFile
 
     var body: some View {
         ZStack {
-            if let type = file.type {
+            if let type = file.file.type {
                 switch type {
                 case let type where type.conforms(to: .text) || type == .lua || type == .lub:
                     TextFilePreviewView(file: file)

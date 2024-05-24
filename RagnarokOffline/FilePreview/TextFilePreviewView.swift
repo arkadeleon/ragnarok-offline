@@ -7,14 +7,13 @@
 
 import SwiftUI
 import Lua
-import ROFileSystem
 
 enum TextFilePreviewError: Error {
     case invalidTextFile
 }
 
 struct TextFilePreviewView: View {
-    let file: File
+    var file: ObservableFile
 
     @State private var status: AsyncContentStatus<String> = .notYetLoaded
 
@@ -34,7 +33,7 @@ struct TextFilePreviewView: View {
 
         status = .loading
 
-        guard let type = file.type, var data = file.contents() else {
+        guard let type = file.file.type, var data = file.file.contents() else {
             status = .failed(TextFilePreviewError.invalidTextFile)
             return
         }

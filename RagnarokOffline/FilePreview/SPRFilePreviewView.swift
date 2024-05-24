@@ -7,7 +7,6 @@
 
 import SwiftUI
 import ROFileFormats
-import ROFileSystem
 import ROGraphics
 
 enum SPRFilePreviewError: Error {
@@ -25,7 +24,7 @@ struct SPRFilePreviewView: View {
         var image: StillImage
     }
 
-    let file: File
+    var file: ObservableFile
 
     @State private var status: AsyncContentStatus<SpriteSection> = .notYetLoaded
 
@@ -38,8 +37,8 @@ struct SPRFilePreviewView: View {
                             .frame(width: section.spriteSize.width, height: section.spriteSize.height)
                             .contextMenu {
                                 ShareLink(
-                                    item: sprite.image.named(String(format: "%@.%03d.png", file.name, sprite.index)),
-                                    preview: SharePreview(file.name, image: Image(sprite.image.image, scale: 1, label: Text("")))
+                                    item: sprite.image.named(String(format: "%@.%03d.png", file.file.name, sprite.index)),
+                                    preview: SharePreview(file.file.name, image: Image(sprite.image.image, scale: 1, label: Text("")))
                                 )
                             }
                     }
@@ -59,7 +58,7 @@ struct SPRFilePreviewView: View {
 
         status = .loading
 
-        guard let data = file.contents() else {
+        guard let data = file.file.contents() else {
             status = .failed(SPRFilePreviewError.invalidSPRFile)
             return
         }

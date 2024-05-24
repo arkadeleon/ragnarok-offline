@@ -7,20 +7,19 @@
 
 import SwiftUI
 import ROFileFormats
-import ROFileSystem
 
 enum ImageFilePreviewError: Error {
     case invalidImageFile
 }
 
 struct ImageFilePreviewView: View {
-    let file: File
+    var file: ObservableFile
 
     @State private var status: AsyncContentStatus<CGImage> = .notYetLoaded
 
     var body: some View {
         AsyncContentView(status: status) { image in
-            Image(image, scale: 1, label: Text(file.name))
+            Image(image, scale: 1, label: Text(file.file.name))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
         }
@@ -36,7 +35,7 @@ struct ImageFilePreviewView: View {
 
         status = .loading
 
-        guard let type = file.type, let data = file.contents() else {
+        guard let type = file.file.type, let data = file.file.contents() else {
             status = .failed(ImageFilePreviewError.invalidImageFile)
             return
         }

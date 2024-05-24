@@ -9,28 +9,27 @@ import SwiftUI
 import ROFileSystem
 
 struct FileThumbnailView: View {
-    @Environment(\.displayScale) var displayScale: CGFloat
+    var file: ObservableFile
 
-    let file: File
-
+    @Environment(\.displayScale) private var displayScale: CGFloat
     @State private var thumbnail: CGImage?
 
     var body: some View {
         ZStack {
             if let thumbnail {
-                Image(thumbnail, scale: 1, label: Text(file.name))
+                Image(thumbnail, scale: 1, label: Text(file.file.name))
                     .resizable()
                     .scaledToFit()
                     .frame(width: 40, height: 40)
                     .clipped()
-            } else if file.isDirectory {
-                Image(systemName: file.iconName)
+            } else if file.file.isDirectory {
+                Image(systemName: file.file.iconName)
                     .symbolRenderingMode(.multicolor)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 40, height: 40)
             } else {
-                Image(systemName: file.iconName)
+                Image(systemName: file.file.iconName)
                     .symbolRenderingMode(.monochrome)
                     .resizable()
                     .scaledToFit()
@@ -41,7 +40,7 @@ struct FileThumbnailView: View {
         .frame(width: 40, height: 40)
         .task {
             Task {
-                let thumbnail = try await FileThumbnailManager.shared.thumbnailTask(for: file, scale: displayScale).value
+                let thumbnail = try await FileThumbnailManager.shared.thumbnailTask(for: file.file, scale: displayScale).value
                 self.thumbnail = thumbnail
             }
         }

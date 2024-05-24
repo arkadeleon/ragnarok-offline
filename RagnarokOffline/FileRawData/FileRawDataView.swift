@@ -9,10 +9,10 @@ import SwiftUI
 import ROFileSystem
 
 struct FileRawDataView: View {
-    let file: File
+    var file: ObservableFile
 
     private var htmlString: String {
-        guard let rawData = file.rawData, let json = String(data: rawData, encoding: .utf8) else {
+        guard let rawData = file.file.rawData, let json = String(data: rawData, encoding: .utf8) else {
             return ""
         }
 

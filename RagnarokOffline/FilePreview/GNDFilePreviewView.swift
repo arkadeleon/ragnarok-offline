@@ -7,12 +7,11 @@
 
 import RealityKit
 import ROFileFormats
-import ROFileSystem
 import ROGraphics
 import SwiftUI
 
 struct GNDFilePreviewView: View {
-    let file: File
+    var file: ObservableFile
 
     @State private var status: AsyncContentStatus<Entity> = .notYetLoaded
 
@@ -32,7 +31,7 @@ struct GNDFilePreviewView: View {
 
         status = .loading
 
-        guard case .grfEntry(let grf, let path) = file, let data = file.contents() else {
+        guard case .grfEntry(let grf, let path) = file.file, let data = file.file.contents() else {
             return
         }
 
