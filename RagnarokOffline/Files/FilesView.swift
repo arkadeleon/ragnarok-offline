@@ -30,14 +30,14 @@ struct FilesView: View {
                         }
                         .contextMenu {
                             FileContextMenu(file: file, copyAction: {
-                                directory.file.copy(file.file)
+                                FileSystem.shared.copy(file.file)
                             }, deleteAction: {
                                 deleteFile(file)
                             })
                         }
                     } else {
                         Button {
-                            if file.file.canPreview {
+                            if file.canPreview {
                                 previewingFile = file
                             }
                         } label: {
@@ -49,7 +49,7 @@ struct FilesView: View {
                             }, inspectRawDataAction: {
                                 inspectingRawDataFile = file
                             }, copyAction: {
-                                directory.file.copy(file.file)
+                                FileSystem.shared.copy(file.file)
                             }, deleteAction: {
                                 deleteFile(file)
                             })
@@ -81,7 +81,7 @@ struct FilesView: View {
                 } label: {
                     Label("Paste", systemImage: "doc.on.clipboard")
                 }
-                .disabled(!directory.file.canPaste)
+                .disabled(!directory.canPaste)
             } label: {
                 Image(systemName: "ellipsis.circle")
             }
@@ -95,7 +95,7 @@ struct FilesView: View {
         }
         .sheet(item: $previewingFile) { file in
             NavigationStack {
-                FilePreviewTabView(files: filteredFiles.filter({ $0.file.canPreview }), currentFile: file)
+                FilePreviewTabView(files: filteredFiles.filter({ $0.canPreview }), currentFile: file)
             }
         }
         .sheet(item: $inspectingRawDataFile) { file in
@@ -132,7 +132,7 @@ struct FilesView: View {
     }
 
     private func pasteFile() {
-        if let file = directory.file.pasteFromPasteboard(FilePasteboard.shared), loadStatus == .loaded {
+        if let file = FileSystem.shared.paste(to: directory.file), loadStatus == .loaded {
             files.append(ObservableFile(file: file))
             files.sort()
             filterFiles()
@@ -140,7 +140,7 @@ struct FilesView: View {
     }
 
     private func deleteFile(_ file: ObservableFile) {
-        if directory.file.delete(file.file) {
+        if FileSystem.shared.remove(file.file) {
             files.removeAll(where: { $0 == file })
             filterFiles()
         }

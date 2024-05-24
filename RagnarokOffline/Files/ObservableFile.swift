@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/5/24.
 //
 
+import CoreTransferable
 import Foundation
 import Observation
 import ROFileSystem
@@ -59,6 +60,59 @@ extension ObservableFile {
     }
 }
 
+extension ObservableFile {
+    var canPreview: Bool {
+        switch file.info.type {
+        case .text, .lua, .lub:
+            true
+        case .image, .ebm, .pal:
+            true
+        case .audio:
+            true
+        case .act, .gat, .gnd, .rsm, .rsw, .spr, .str:
+            true
+        default:
+            false
+        }
+    }
+
+    var canShare: Bool {
+        switch file {
+        case .directory, .grfDirectory: 
+            false
+        default: 
+            true
+        }
+    }
+
+    var canCopy: Bool {
+        switch file {
+        case .regularFile, .grf, .grfEntry:
+            true
+        default:
+            false
+        }
+    }
+
+    var canPaste: Bool {
+        switch file {
+        case .directory where FilePasteboard.shared.hasFile:
+            true
+        default: 
+            false
+        }
+    }
+
+    var canDelete: Bool {
+        switch file {
+        case .regularFile, .grf:
+            true
+        default:
+            false
+        }
+    }
+}
+
 extension ObservableFile: Equatable {
     static func == (lhs: ObservableFile, rhs: ObservableFile) -> Bool {
         lhs.file == rhs.file
@@ -80,5 +134,33 @@ extension ObservableFile: Identifiable {
 extension ObservableFile: Hashable {
     func hash(into hasher: inout Hasher) {
         file.hash(into: &hasher)
+    }
+}
+
+extension ObservableFile: Transferable {
+    static var transferRepresentation: some TransferRepresentation {
+        ProxyRepresentation { file in
+            file.shareURL ?? file.file.url
+        }
+    }
+
+    var shareURL: URL? {
+        switch file {
+        case .directory, .grfDirectory:
+            return nil
+        case .regularFile, .grf:
+            return file.url
+        case .grfEntry:
+            guard let data = file.contents() else {
+                return nil
+            }
+            do {
+                let temporaryURL = FileManager.default.temporaryDirectory.appending(path: file.name)
+                try data.write(to: temporaryURL)
+                return temporaryURL
+            } catch {
+                return nil
+            }
+        }
     }
 }

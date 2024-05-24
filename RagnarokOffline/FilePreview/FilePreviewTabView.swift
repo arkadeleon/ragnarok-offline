@@ -37,7 +37,7 @@ struct FilePreviewTabView: View {
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                ShareLink(item: currentFile.file, preview: SharePreview(currentFile.file.name))
+                ShareLink(item: currentFile, preview: SharePreview(currentFile.file.name))
             }
         }
     }

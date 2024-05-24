@@ -19,7 +19,7 @@ struct FileContextMenu: View {
     var body: some View {
         Group {
             Section {
-                if file.file.canPreview {
+                if file.canPreview {
                     Button {
                         previewAction?()
                     } label: {
@@ -37,7 +37,7 @@ struct FileContextMenu: View {
             }
 
             Section {
-                if file.file.canCopy {
+                if file.canCopy {
                     Button {
                         copyAction?()
                     } label: {
@@ -45,13 +45,13 @@ struct FileContextMenu: View {
                     }
                 }
 
-                if file.file.canShare {
-                    ShareLink("Share", item: file.file, preview: SharePreview(file.file.name))
+                if file.canShare {
+                    ShareLink("Share", item: file, preview: SharePreview(file.file.name))
                 }
             }
 
             Section {
-                if file.file.canDelete {
+                if file.canDelete {
                     Button(role: .destructive) {
                         deleteAction?()
                     } label: {
