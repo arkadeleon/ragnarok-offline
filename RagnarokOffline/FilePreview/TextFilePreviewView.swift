@@ -33,12 +33,12 @@ struct TextFilePreviewView: View {
 
         status = .loading
 
-        guard let type = file.file.type, var data = file.file.contents() else {
+        guard var data = file.file.contents() else {
             status = .failed(TextFilePreviewError.invalidTextFile)
             return
         }
 
-        switch type {
+        switch file.file.info.type {
         case .lub:
             let decompiler = LuaDecompiler()
             if let decompiledData = decompiler.decompileData(data) {

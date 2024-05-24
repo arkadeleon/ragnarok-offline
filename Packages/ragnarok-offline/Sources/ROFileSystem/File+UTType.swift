@@ -1,5 +1,5 @@
 //
-//  File+Type.swift
+//  File+UTType.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/8/19.
@@ -8,7 +8,7 @@
 import UniformTypeIdentifiers
 
 extension File {
-    public var type: UTType? {
+    public var utType: UTType? {
         if case .directory = self {
             return .folder
         }
@@ -66,7 +66,7 @@ extension File {
     }
 
     public var isDirectory: Bool {
-        if let type, type.conforms(to: .directory) {
+        if let utType, utType.conforms(to: .directory) {
             true
         } else {
             false
@@ -74,7 +74,7 @@ extension File {
     }
 
     public var isArchive: Bool {
-        if let type, type.conforms(to: .archive) {
+        if let utType, utType.conforms(to: .archive) {
             true
         } else {
             false
@@ -82,46 +82,10 @@ extension File {
     }
 }
 
-extension File {
-    public var iconName: String {
-        guard let type else {
-            return "doc"
-        }
-
-        if type.conforms(to: .directory) {
-            return "folder.fill"
-        }
-
-        if type.conforms(to: .archive) {
-            return "doc.zipper"
-        }
-
-        switch type {
-        case let type where type.conforms(to: .text) || type == .lua || type == .lub:
-            return "doc.text"
-        case let type where type.conforms(to: .image) || type == .ebm || type == .pal:
-            return "photo"
-        case let type where type.conforms(to: .audio):
-            return "waveform.circle"
-        case .act:
-            return "livephoto"
-        case .gat:
-            return "square.grid.3x3.middle.filled"
-        case .rsm:
-            return "square.stack.3d.up"
-        case .rsw:
-            return "map"
-        case .spr:
-            return "photo.stack"
-        case .str:
-            return "sparkles.rectangle.stack"
-        default:
-            return "doc"
-        }
-    }
-}
-
 extension UTType {
+    public static let lua = UTType(importedAs: "public.x-lua")
+    public static let lub = UTType(importedAs: "public.x-lua-bytecode")
+
     public static let grf = UTType(exportedAs: "kr.co.gravity.grf")
     public static let act = UTType(exportedAs: "kr.co.gravity.act")
     public static let ebm = UTType(exportedAs: "kr.co.gravity.ebm")
@@ -132,7 +96,4 @@ extension UTType {
     public static let rsw = UTType(exportedAs: "kr.co.gravity.rsw")
     public static let spr = UTType(exportedAs: "kr.co.gravity.spr")
     public static let str = UTType(exportedAs: "kr.co.gravity.str")
-
-    public static let lua = UTType(importedAs: "public.x-lua")
-    public static let lub = UTType(importedAs: "public.x-lua-bytecode")
 }

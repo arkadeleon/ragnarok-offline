@@ -49,21 +49,28 @@ public enum File {
         }
     }
 
-    public var size: Int? {
+    public var info: FileInfo {
         switch self {
         case .directory:
-            return nil
+            let info = FileInfo(type: .directory, size: 0)
+            return info
         case .regularFile(let url):
-            let values = try? url.resourceValues(forKeys: [.fileSizeKey])
-            return values?.fileSize
+            let type = FileType(url.pathExtension)
+            let size = (try? url.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
+            let info = FileInfo(type: type, size: Int64(size))
+            return info
         case .grf(let grf):
-            let values = try? grf.url.resourceValues(forKeys: [.fileSizeKey])
-            return values?.fileSize
+            let size = (try? grf.url.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
+            let info = FileInfo(type: .grf, size: Int64(size))
+            return info
         case .grfDirectory:
-            return nil
+            let info = FileInfo(type: .directory, size: 0)
+            return info
         case .grfEntry(let grf, let path):
-            let entry = grf.entry(at: path)
-            return entry.flatMap({ Int($0.size) })
+            let type = FileType(path.extension)
+            let size = grf.entry(at: path)?.size ?? 0
+            let info = FileInfo(type: type, size: Int64(size))
+            return info
         }
     }
 

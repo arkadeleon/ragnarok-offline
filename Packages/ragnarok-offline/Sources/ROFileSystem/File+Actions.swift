@@ -10,16 +10,17 @@ import Foundation
 
 extension File {
     public var canPreview: Bool {
-        guard let type else {
-            return false
-        }
-
-        return switch type {
-        case let type where type.conforms(to: .text) || type == .lua || type == .lub: true
-        case let type where type.conforms(to: .image) || type == .ebm || type == .pal: true
-        case let type where type.conforms(to: .audio): true
-        case .act, .gat, .gnd, .rsm, .rsw, .spr, .str: true
-        default: false
+        switch info.type {
+        case .text, .lua, .lub:
+            true
+        case .image, .ebm, .pal:
+            true
+        case .audio:
+            true
+        case .act, .gat, .gnd, .rsm, .rsw, .spr, .str:
+            true
+        default:
+            false
         }
     }
 

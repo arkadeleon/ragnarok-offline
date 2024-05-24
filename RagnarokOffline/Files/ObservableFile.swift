@@ -26,6 +26,39 @@ import ROFileSystem
     }
 }
 
+extension ObservableFile {
+    var iconName: String {
+        switch file.info.type {
+        case .directory:
+            "folder.fill"
+        case .text, .lua, .lub:
+            "doc.text"
+        case .image, .ebm, .pal:
+            "photo"
+        case .audio:
+            "waveform.circle"
+        case .grf:
+            "doc.zipper"
+        case .act:
+            "livephoto"
+        case .gat:
+            "square.grid.3x3.middle.filled"
+        case .gnd:
+            "mountain.2"
+        case .rsm:
+            "square.stack.3d.up"
+        case .rsw:
+            "map"
+        case .spr:
+            "photo.stack"
+        case .str:
+            "sparkles.rectangle.stack"
+        case .unknown:
+            "doc"
+        }
+    }
+}
+
 extension ObservableFile: Equatable {
     static func == (lhs: ObservableFile, rhs: ObservableFile) -> Bool {
         lhs.file == rhs.file

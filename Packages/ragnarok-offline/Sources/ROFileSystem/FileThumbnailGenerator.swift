@@ -15,14 +15,10 @@ class FileThumbnailGenerator {
     static let shared = FileThumbnailGenerator()
 
     func generateThumbnail(for request: FileThumbnailRequest) async throws -> FileThumbnail? {
-        guard let type = request.file.type else {
-            return nil
-        }
-
-        switch type {
-        case let type where type.conforms(to: .image) || type == .ebm:
+        switch request.file.info.type {
+        case .image, .ebm:
             let data: Data?
-            if type == .ebm {
+            if request.file.info.type == .ebm {
                 data = request.file.contents()?.unzip()
             } else {
                 data = request.file.contents()

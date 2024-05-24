@@ -12,32 +12,28 @@ struct FilePreviewView: View {
 
     var body: some View {
         ZStack {
-            if let type = file.file.type {
-                switch type {
-                case let type where type.conforms(to: .text) || type == .lua || type == .lub:
-                    TextFilePreviewView(file: file)
-                case let type where type.conforms(to: .image) || type == .ebm || type == .pal:
-                    ImageFilePreviewView(file: file)
-                case let type where type.conforms(to: .audio):
-                    AudioFilePreviewView(file: file)
-                case .act:
-                    ACTFilePreviewView(file: file)
-                case .gat:
-                    GATFilePreviewView(file: file)
-                case .gnd:
-                    GNDFilePreviewView(file: file)
-                case .rsm:
-                    RSMFilePreviewView(file: file)
-                case .rsw:
-                    RSWFilePreviewView(file: file)
-                case .spr:
-                    SPRFilePreviewView(file: file)
-                case .str:
-                    STRFilePreviewView(file: file)
-                default:
-                    EmptyView()
-                }
-            } else {
+            switch file.file.info.type {
+            case .text, .lua, .lub:
+                TextFilePreviewView(file: file)
+            case .image, .ebm, .pal:
+                ImageFilePreviewView(file: file)
+            case .audio:
+                AudioFilePreviewView(file: file)
+            case .act:
+                ACTFilePreviewView(file: file)
+            case .gat:
+                GATFilePreviewView(file: file)
+            case .gnd:
+                GNDFilePreviewView(file: file)
+            case .rsm:
+                RSMFilePreviewView(file: file)
+            case .rsw:
+                RSWFilePreviewView(file: file)
+            case .spr:
+                SPRFilePreviewView(file: file)
+            case .str:
+                STRFilePreviewView(file: file)
+            default:
                 EmptyView()
             }
         }

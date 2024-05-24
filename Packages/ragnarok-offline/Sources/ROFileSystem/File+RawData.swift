@@ -10,11 +10,7 @@ import ROFileFormats
 
 extension File {
     public var rawDataRepresentable: Bool {
-        guard let type else {
-            return false
-        }
-
-        switch type {
+        switch info.type {
         case .act, .gat, .gnd, .rsm, .rsw, .spr, .str:
             return true
         default:
@@ -27,11 +23,11 @@ extension File {
             return nil
         }
 
-        guard let type, let data = contents() else {
+        guard let data = contents() else {
             return nil
         }
 
-        let value: Encodable? = switch type {
+        let value: Encodable? = switch info.type {
         case .act: try? ACT(data: data)
         case .gat: try? GAT(data: data)
         case .gnd: try? GND(data: data)

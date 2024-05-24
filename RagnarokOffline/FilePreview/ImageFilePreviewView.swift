@@ -35,13 +35,13 @@ struct ImageFilePreviewView: View {
 
         status = .loading
 
-        guard let type = file.file.type, let data = file.file.contents() else {
+        guard let data = file.file.contents() else {
             status = .failed(ImageFilePreviewError.invalidImageFile)
             return
         }
 
         var image: CGImage?
-        switch type {
+        switch file.file.info.type {
         case .ebm:
             guard let decompressedData = data.unzip() else {
                 return

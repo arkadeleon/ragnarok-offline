@@ -21,14 +21,14 @@ struct FileCell: View {
                         .scaledToFit()
                         .frame(width: 40, height: 40)
                         .clipped()
-                } else if file.file.isDirectory {
-                    Image(systemName: file.file.iconName)
+                } else if file.file.info.type == .directory {
+                    Image(systemName: file.iconName)
                         .symbolRenderingMode(.multicolor)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 40, height: 40)
                 } else {
-                    Image(systemName: file.file.iconName)
+                    Image(systemName: file.iconName)
                         .symbolRenderingMode(.monochrome)
                         .resizable()
                         .scaledToFit()
