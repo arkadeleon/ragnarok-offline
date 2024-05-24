@@ -134,6 +134,7 @@
 
 /* Begin PBXFileReference section */
 		3506D11B2C00526A00903A47 /* ObservableFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableFile.swift; sourceTree = "<group>"; };
+		3506D11D2C00887700903A47 /* swift-ro */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-ro"; path = "Packages/swift-ro"; sourceTree = "<group>"; };
 		3514BF442B4526F40065ED89 /* ItemInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemInfoView.swift; sourceTree = "<group>"; };
 		3514BF5A2B454A040065ED89 /* SkillCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillCell.swift; sourceTree = "<group>"; };
 		3514BF5D2B4557950065ED89 /* MonsterDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDatabaseView.swift; sourceTree = "<group>"; };
@@ -220,7 +221,6 @@
 		35E27A842BC96B3000C11076 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		35E27A8D2BCC112200C11076 /* swift-lua */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-lua"; path = "Packages/swift-lua"; sourceTree = "<group>"; };
 		35E27A8E2BCC112200C11076 /* swift-rathena */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-rathena"; path = "Packages/swift-rathena"; sourceTree = "<group>"; };
-		35E27A8F2BCC112200C11076 /* ragnarok-offline */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "ragnarok-offline"; path = "Packages/ragnarok-offline"; sourceTree = "<group>"; };
 		35F50CCB2BB4615F00B36455 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -518,9 +518,9 @@
 		35E27A8C2BCC111400C11076 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				35E27A8F2BCC112200C11076 /* ragnarok-offline */,
 				35E27A8D2BCC112200C11076 /* swift-lua */,
 				35E27A8E2BCC112200C11076 /* swift-rathena */,
+				3506D11D2C00887700903A47 /* swift-ro */,
 			);
 			name = Packages;
 			sourceTree = "<group>";

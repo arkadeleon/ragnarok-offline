@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "ragnarok-offline",
+    name: "swift-ro",
     platforms: [
         .iOS(.v16),
     ],
