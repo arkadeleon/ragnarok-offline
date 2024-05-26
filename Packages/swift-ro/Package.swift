@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "swift-ro",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v16),
     ],
@@ -99,6 +100,9 @@ let package = Package(
                 "ROFileSystem",
                 "ROGraphics",
                 "ROSettings",
+            ],
+            resources: [
+                .process("Resources"),
             ],
             swiftSettings: [
                 .interoperabilityMode(.Cxx),

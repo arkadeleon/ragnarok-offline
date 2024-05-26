@@ -19,7 +19,7 @@ public class ClientDatabase {
     private var identifiedItemResourceNameTable: [Int : Data] = [:]
     private var identifiedItemDescriptionTable: [Int : Data] = [:]
 
-    private var mapNameTable: [String : Data] = [:]
+    private var mapNameTable: [String : String] = [:]
 
     private var isItemScriptsLoaded = false
     private var isIdentifiedItemDisplayNameTableLoaded = false
@@ -363,8 +363,7 @@ public class ClientDatabase {
     public func mapDisplayName(_ mapName: String) -> String? {
         try? loadMapNameTableIfNeeded()
 
-        let encoding = ClientSettings.shared.serviceType.stringEncoding
-        let mapName = mapNameTable[mapName]?.string(using: encoding)
+        let mapName = mapNameTable[mapName]
         return mapName
     }
 
@@ -373,12 +372,14 @@ public class ClientDatabase {
             return
         }
 
-        let file = ClientResourceBundle.shared.mapNameTableFile()
-        guard let data = file.contents() else {
+        guard let url = Bundle.module.url(forResource: "mapnametable", withExtension: "txt") else {
             return
         }
 
-        guard let string = String(data: data, encoding: .isoLatin1) else {
+        let data = try Data(contentsOf: url)
+
+        let encoding = Locale.current.stringEncoding
+        guard let string = String(data: data, encoding: encoding) else {
             return
         }
 
@@ -392,7 +393,7 @@ public class ClientDatabase {
             if columns.count >= 2 {
                 let mapName = String(columns[0]).replacingOccurrences(of: ".rsw", with: "")
                 let mapDisplayName = String(columns[1])
-                mapNameTable[mapName] = mapDisplayName.data(using: .isoLatin1)
+                mapNameTable[mapName] = mapDisplayName
             }
         }
 

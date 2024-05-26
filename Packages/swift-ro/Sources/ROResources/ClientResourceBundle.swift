@@ -28,12 +28,6 @@ public class ClientResourceBundle {
 
     // MARK: - data
 
-    public func mapNameTableFile() -> File {
-        let path = GRF.Path(string: "data\\mapnametable.txt")
-        let file = File.grfEntry(grf, path)
-        return file
-    }
-
     public func identifiedItemDisplayNameTable() -> File {
         let path = GRF.Path(string: "data\\idnum2itemdisplaynametable.txt")
         let file = File.grfEntry(grf, path)
