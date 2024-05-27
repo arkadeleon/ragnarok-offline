@@ -14,16 +14,23 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:Packages\/ragnarok-offline",
+        "containerPath" : "container:Packages\/swift-ro",
         "identifier" : "RODatabaseTests",
         "name" : "RODatabaseTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:Packages\/ragnarok-offline",
+        "containerPath" : "container:Packages\/swift-ro",
         "identifier" : "ROFileFormatsTests",
         "name" : "ROFileFormatsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/swift-ro",
+        "identifier" : "ROResourcesTests",
+        "name" : "ROResourcesTests"
       }
     }
   ],

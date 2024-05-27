@@ -19,15 +19,12 @@ public class ClientDatabase {
     private var identifiedItemResourceNameTable: [Int : Data] = [:]
     private var identifiedItemDescriptionTable: [Int : Data] = [:]
 
-    private var mapNameTable: [String : String] = [:]
-
     private var isItemScriptsLoaded = false
     private var isIdentifiedItemDisplayNameTableLoaded = false
     private var isIdentifiedItemResourceNameTableLoaded = false
     private var isIdentifiedItemDescriptionTableLoaded = false
     private var isMonsterScriptsLoaded = false
     private var isSkillScriptsLoaded = false
-    private var isMapNameTableLoaded = false
 
     // MARK: - Item
 
@@ -356,48 +353,6 @@ public class ClientDatabase {
         """)
 
         isSkillScriptsLoaded = true
-    }
-
-    // MARK: - Map
-
-    public func mapDisplayName(_ mapName: String) -> String? {
-        try? loadMapNameTableIfNeeded()
-
-        let mapName = mapNameTable[mapName]
-        return mapName
-    }
-
-    private func loadMapNameTableIfNeeded() throws {
-        guard !isMapNameTableLoaded else {
-            return
-        }
-
-        guard let url = Bundle.module.url(forResource: "mapnametable", withExtension: "txt") else {
-            return
-        }
-
-        let data = try Data(contentsOf: url)
-
-        let encoding = Locale.current.stringEncoding
-        guard let string = String(data: data, encoding: encoding) else {
-            return
-        }
-
-        let lines = string.split(separator: "\r\n")
-        for line in lines {
-            if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
-                continue
-            }
-
-            let columns = line.split(separator: "#")
-            if columns.count >= 2 {
-                let mapName = String(columns[0]).replacingOccurrences(of: ".rsw", with: "")
-                let mapDisplayName = String(columns[1])
-                mapNameTable[mapName] = mapDisplayName
-            }
-        }
-
-        isMapNameTableLoaded = true
     }
 
     // MARK: -

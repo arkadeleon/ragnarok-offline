@@ -43,8 +43,8 @@ struct ItemCell: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .task {
-            itemIconImage = await ClientResourceBundle.shared.itemIconImage(forItem: item)
             itemDisplayName = ClientDatabase.shared.identifiedItemDisplayName(item.id)
+            itemIconImage = await ClientResourceBundle.shared.itemIconImage(forItem: item)
         }
     }
 

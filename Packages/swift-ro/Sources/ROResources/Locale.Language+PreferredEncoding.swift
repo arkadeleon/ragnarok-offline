@@ -1,0 +1,33 @@
+//
+//  Locale.Language+PreferredEncoding.swift
+//  RagnarokOffline
+//
+//  Created by Leon Li on 2024/5/26.
+//
+
+import Foundation
+
+extension Locale.Language {
+    var preferredEncoding: String.Encoding {
+        let cfEncoding = switch languageCode {
+        case .chinese where script == .hanSimplified:
+            CFStringConvertWindowsCodepageToEncoding(936)
+        case .chinese where script == .hanTraditional:
+            CFStringConvertWindowsCodepageToEncoding(950)
+        case .japanese:
+            CFStringConvertWindowsCodepageToEncoding(932)
+        case .korean:
+            CFStringConvertWindowsCodepageToEncoding(949)
+        case .russian:
+            CFStringConvertWindowsCodepageToEncoding(1251)
+        case .thai:
+            CFStringConvertWindowsCodepageToEncoding(874)
+        default:
+            CFStringConvertWindowsCodepageToEncoding(1252)
+        }
+
+        let nsEncoding = CFStringConvertEncodingToNSStringEncoding(cfEncoding)
+        let encoding = String.Encoding(rawValue: nsEncoding)
+        return encoding
+    }
+}

@@ -136,5 +136,13 @@ let package = Package(
                 .copy("test.grf"),
                 .copy("data"),
             ]),
+        .testTarget(
+            name: "ROResourcesTests",
+            dependencies: [
+                "ROResources",
+            ],
+            swiftSettings: [
+                .interoperabilityMode(.Cxx),
+            ]),
     ]
 )
