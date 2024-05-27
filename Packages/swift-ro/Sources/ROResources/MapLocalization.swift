@@ -10,12 +10,7 @@ import Foundation
 public actor MapLocalization  {
     public static let shared = MapLocalization(locale: .current)
 
-    public var locale: Locale {
-        didSet {
-            mapNameTable.removeAll()
-            isMapNameTableLoaded = false
-        }
-    }
+    let locale: Locale
 
     var mapNameTable: [String : String] = [:]
     var isMapNameTableLoaded = false
@@ -24,7 +19,7 @@ public actor MapLocalization  {
         self.locale = locale
     }
 
-    public func localizedName(forMapName mapName: String) -> String? {
+    public func localizedName(for mapName: String) -> String? {
         try? loadMapNameTableIfNeeded()
 
         let mapName = mapNameTable[mapName]

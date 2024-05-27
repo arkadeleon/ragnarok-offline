@@ -43,7 +43,7 @@ struct MapCell: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .task {
-            mapDisplayName = await MapLocalization.shared.localizedName(forMapName: map.name)
+            mapDisplayName = await MapLocalization.shared.localizedName(for: map.name)
             mapImage = await ClientResourceBundle.shared.mapImage(forMap: map)
         }
     }

@@ -24,7 +24,6 @@ public class ClientDatabase {
     private var isIdentifiedItemResourceNameTableLoaded = false
     private var isIdentifiedItemDescriptionTableLoaded = false
     private var isMonsterScriptsLoaded = false
-    private var isSkillScriptsLoaded = false
 
     // MARK: - Item
 
@@ -276,83 +275,6 @@ public class ClientDatabase {
         """)
 
         isMonsterScriptsLoaded = true
-    }
-
-    // MARK: - Skill
-
-    public func skillDisplayName(_ skillID: Int) -> String? {
-        objc_sync_enter(self)
-        defer {
-            objc_sync_exit(self)
-        }
-
-        try? loadSkillScriptsIfNeeded()
-
-        guard let result = try? context.call("skillName", with: [skillID]) as? String else {
-            return nil
-        }
-
-        let encoding = ClientSettings.shared.serviceType.stringEncoding
-        let skillName = result.data(using: .isoLatin1)?.string(using: encoding)
-        return skillName
-    }
-
-    public func skillDescription(_ skillID: Int) -> String? {
-        objc_sync_enter(self)
-        defer {
-            objc_sync_exit(self)
-        }
-
-        try? loadSkillScriptsIfNeeded()
-
-        guard let result = try? context.call("skillDescription", with: [skillID]) as? [String] else {
-            return nil
-        }
-
-        let encoding = ClientSettings.shared.serviceType.stringEncoding
-        let skillDescription = result.joined(separator: "\n").data(using: .isoLatin1)?.string(using: encoding)
-        return skillDescription
-    }
-
-    private func loadSkillScriptsIfNeeded() throws {
-        guard !isSkillScriptsLoaded else {
-            return
-        }
-
-        try loadScript([
-            GRF.Path(string: "data\\lua files\\skillinfoz\\jobinheritlist.lub"),
-            GRF.Path(string: "data\\luafiles514\\lua files\\skillinfoz\\jobinheritlist.lub"),
-            GRF.Path(string: "data\\LuaFiles514\\Lua Files\\skillinfoz\\JobInheritList.lub"),
-        ])
-
-        try loadScript([
-            GRF.Path(string: "data\\lua files\\skillinfoz\\skillid.lub"),
-            GRF.Path(string: "data\\luafiles514\\lua files\\skillinfoz\\skillid.lub"),
-            GRF.Path(string: "data\\LuaFiles514\\Lua Files\\skillinfoz\\SkillID.lub"),
-        ])
-
-        try loadScript([
-            GRF.Path(string: "data\\lua files\\skillinfoz\\skillinfolist.lub"),
-            GRF.Path(string: "data\\luafiles514\\lua files\\skillinfoz\\skillinfolist.lub"),
-            GRF.Path(string: "data\\LuaFiles514\\Lua Files\\skillinfoz\\SkillInfoList.lub"),
-        ])
-
-        try loadScript([
-            GRF.Path(string: "data\\lua files\\skillinfoz\\skilldescript.lub"),
-            GRF.Path(string: "data\\luafiles514\\lua files\\skillinfoz\\skilldescript.lub"),
-            GRF.Path(string: "data\\LuaFiles514\\Lua Files\\skillinfoz\\SkillDescript.lub"),
-        ])
-
-        try context.parse("""
-        function skillName(skillID)
-            return SKILL_INFO_LIST[skillID]["SkillName"]
-        end
-        function skillDescription(skillID)
-            return SKILL_DESCRIPT[skillID]
-        end
-        """)
-
-        isSkillScriptsLoaded = true
     }
 
     // MARK: -

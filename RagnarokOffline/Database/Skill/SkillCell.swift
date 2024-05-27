@@ -42,7 +42,7 @@ struct SkillCell: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .task {
-            skillDisplayName = ClientDatabase.shared.skillDisplayName(skill.id)
+            skillDisplayName = await SkillLocalization.shared.localizedName(for: skill.id)
             skillIconImage = await ClientResourceBundle.shared.skillIconImage(forSkill: skill)
         }
     }
