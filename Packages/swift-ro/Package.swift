@@ -14,8 +14,8 @@ let package = Package(
             name: "ROClient",
             targets: ["ROClient"]),
         .library(
-            name: "ROCrypto",
-            targets: ["ROCrypto"]),
+            name: "ROCore",
+            targets: ["ROCore"]),
         .library(
             name: "RODatabase",
             targets: ["RODatabase"]),
@@ -25,9 +25,6 @@ let package = Package(
         .library(
             name: "ROFileSystem",
             targets: ["ROFileSystem"]),
-        .library(
-            name: "ROGraphics",
-            targets: ["ROGraphics"]),
         .library(
             name: "RONetwork",
             targets: ["RONetwork"]),
@@ -40,9 +37,6 @@ let package = Package(
         .library(
             name: "ROShaders",
             targets: ["ROShaders"]),
-        .library(
-            name: "ROStream",
-            targets: ["ROStream"]),
     ],
     dependencies: [
         .package(url: "https://github.com/mw99/DataCompression.git", from: "3.8.0"),
@@ -53,17 +47,17 @@ let package = Package(
         .target(
             name: "ROClient",
             dependencies: [
+                "ROCore",
                 "RODatabase",
                 "ROFileFormats",
                 "ROFileSystem",
-                "ROGraphics",
                 "ROResources",
             ],
             swiftSettings: [
                 .interoperabilityMode(.Cxx),
             ]),
         .target(
-            name: "ROCrypto"),
+            name: "ROCore"),
         .target(
             name: "RODatabase",
             dependencies: [
@@ -78,18 +72,12 @@ let package = Package(
             name: "ROFileFormats",
             dependencies: [
                 "DataCompression",
-                "ROCrypto",
-                "ROStream",
+                "ROCore",
             ]),
         .target(
             name: "ROFileSystem",
             dependencies: [
-                "ROFileFormats",
-                "ROGraphics",
-            ]),
-        .target(
-            name: "ROGraphics",
-            dependencies: [
+                "ROCore",
                 "ROFileFormats",
             ]),
         .target(
@@ -100,7 +88,8 @@ let package = Package(
         .target(
             name: "RORenderers",
             dependencies: [
-                "ROGraphics",
+                "ROCore",
+                "ROFileFormats",
                 "ROShaders",
             ]),
         .target(
@@ -123,8 +112,6 @@ let package = Package(
                 .process("Model/ModelShaders.metal"),
                 .process("Water/WaterShaders.metal"),
             ]),
-        .target(
-            name: "ROStream"),
         .testTarget(
             name: "RODatabaseTests",
             dependencies: [

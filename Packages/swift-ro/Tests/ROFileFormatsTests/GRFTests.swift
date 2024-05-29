@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import ROStream
+import ROCore
 @testable import ROFileFormats
 
 final class GRFTests: XCTestCase {

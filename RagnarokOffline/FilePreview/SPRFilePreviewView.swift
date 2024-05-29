@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
+import ROCore
 import ROFileFormats
-import ROGraphics
 
 enum SPRFilePreviewError: Error {
     case invalidSPRFile
@@ -21,7 +21,7 @@ struct SPRFilePreviewView: View {
 
     struct Sprite {
         var index: Int
-        var image: StillImage
+        var image: CGImage
     }
 
     var file: ObservableFile
@@ -33,12 +33,12 @@ struct SPRFilePreviewView: View {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: section.spriteSize.width), spacing: 16)], spacing: 32) {
                     ForEach(section.sprites, id: \.index) { sprite in
-                        Image(sprite.image.image, scale: 1, label: Text(""))
+                        Image(sprite.image, scale: 1, label: Text(""))
                             .frame(width: section.spriteSize.width, height: section.spriteSize.height)
                             .contextMenu {
                                 ShareLink(
-                                    item: sprite.image.named(String(format: "%@.%03d.png", file.file.name, sprite.index)),
-                                    preview: SharePreview(file.file.name, image: Image(sprite.image.image, scale: 1, label: Text("")))
+                                    item: TransferableImage(name: String(format: "%@.%03d.png", file.file.name, sprite.index), image: sprite.image),
+                                    preview: SharePreview(file.file.name, image: Image(sprite.image, scale: 1, label: Text("")))
                                 )
                             }
                     }
@@ -74,8 +74,8 @@ struct SPRFilePreviewView: View {
 
         let size = images.reduce(CGSize(width: 80, height: 80)) { size, image in
             CGSize(
-                width: max(size.width, CGFloat(image.image.width)),
-                height: max(size.height, CGFloat(image.image.height))
+                width: max(size.width, CGFloat(image.width)),
+                height: max(size.height, CGFloat(image.height))
             )
         }
 

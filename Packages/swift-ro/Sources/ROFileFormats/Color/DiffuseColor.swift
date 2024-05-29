@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2023/12/7.
 //
 
-import ROStream
+import ROCore
 
 public struct DiffuseColor: Encodable {
     public var red: Float

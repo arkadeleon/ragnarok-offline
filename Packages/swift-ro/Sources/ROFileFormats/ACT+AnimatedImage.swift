@@ -7,7 +7,7 @@
 
 import CoreImage.CIFilterBuiltins
 import UIKit
-import ROFileFormats
+import ROCore
 
 extension ACT {
     public func animatedImage(forActionAt index: Int, imagesForSpritesByType: [SPR.SpriteType : [CGImage?]]) -> AnimatedImage {

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ROStream
+import ROCore
 
 public struct PAL: Encodable {
     public var colors: [Color] = []

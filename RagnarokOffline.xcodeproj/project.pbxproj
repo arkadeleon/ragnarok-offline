@@ -28,6 +28,8 @@
 		3519901F2BC837320082EB0E /* rAthenaWeb in Frameworks */ = {isa = PBXBuildFile; productRef = 3519901E2BC837320082EB0E /* rAthenaWeb */; };
 		351990202BC837320082EB0E /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3519901E2BC837320082EB0E /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		351EE2F52C06F7A90012BC9E /* ROClient in Frameworks */ = {isa = PBXBuildFile; productRef = 351EE2F42C06F7A90012BC9E /* ROClient */; };
+		351EE2F82C0735390012BC9E /* TransferableAnimatedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2F72C0735390012BC9E /* TransferableAnimatedImage.swift */; };
+		351EE2F92C0735390012BC9E /* TransferableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2F62C0735390012BC9E /* TransferableImage.swift */; };
 		35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */; };
 		35239DF72BBDA0760039F7D5 /* LoadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF62BBDA0760039F7D5 /* LoadStatus.swift */; };
 		35239DF92BBDB7B50039F7D5 /* MonsterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF82BBDB7B50039F7D5 /* MonsterProvider.swift */; };
@@ -57,7 +59,6 @@
 		358D4C612BC6EBB500FAF45D /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C602BC6EBB500FAF45D /* Lua */; };
 		358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C662BC7707400FAF45D /* ROFileFormats */; };
 		358D4C692BC7707400FAF45D /* ROFileSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C682BC7707400FAF45D /* ROFileSystem */; };
-		358D4C6B2BC7707400FAF45D /* ROGraphics in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6A2BC7707400FAF45D /* ROGraphics */; };
 		358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6C2BC7707400FAF45D /* RONetwork */; };
 		358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6E2BC7707400FAF45D /* RORenderers */; };
 		3594DD552BF5FB6E00575F3D /* GNDFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3594DD542BF5FB6E00575F3D /* GNDFilePreviewView.swift */; };
@@ -141,6 +142,8 @@
 		3514BF812B4801D70065ED89 /* JobDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDatabaseView.swift; sourceTree = "<group>"; };
 		3514BF832B4801E20065ED89 /* JobGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobGridCell.swift; sourceTree = "<group>"; };
 		3514BF852B4801EB0065ED89 /* JobInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInfoView.swift; sourceTree = "<group>"; };
+		351EE2F62C0735390012BC9E /* TransferableImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferableImage.swift; sourceTree = "<group>"; };
+		351EE2F72C0735390012BC9E /* TransferableAnimatedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferableAnimatedImage.swift; sourceTree = "<group>"; };
 		35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableServer.swift; sourceTree = "<group>"; };
 		35239DF62BBDA0760039F7D5 /* LoadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadStatus.swift; sourceTree = "<group>"; };
 		35239DF82BBDB7B50039F7D5 /* MonsterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterProvider.swift; sourceTree = "<group>"; };
@@ -230,7 +233,6 @@
 				3519901F2BC837320082EB0E /* rAthenaWeb in Frameworks */,
 				351990122BC837320082EB0E /* rAthenaChar in Frameworks */,
 				358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */,
-				358D4C6B2BC7707400FAF45D /* ROGraphics in Frameworks */,
 				358362CD2BD55D4000821500 /* SwiftTerm in Frameworks */,
 				358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */,
 				35B367452BD6AE700018ED27 /* Terminal in Frameworks */,
@@ -360,6 +362,8 @@
 				35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */,
 				35B422E12BEDEBD000681AA2 /* ResponsiveView.swift */,
 				3555E1162B7D12D9007CE4BA /* TerminalView.swift */,
+				351EE2F72C0735390012BC9E /* TransferableAnimatedImage.swift */,
+				351EE2F62C0735390012BC9E /* TransferableImage.swift */,
 				355BC18B2B8F25C0002F0586 /* WebView.swift */,
 			);
 			path = Core;
@@ -559,7 +563,6 @@
 				358D4C602BC6EBB500FAF45D /* Lua */,
 				358D4C662BC7707400FAF45D /* ROFileFormats */,
 				358D4C682BC7707400FAF45D /* ROFileSystem */,
-				358D4C6A2BC7707400FAF45D /* ROGraphics */,
 				358D4C6C2BC7707400FAF45D /* RONetwork */,
 				358D4C6E2BC7707400FAF45D /* RORenderers */,
 				353AFBDB2BC779BE00F613A8 /* RODatabase */,
@@ -660,6 +663,7 @@
 				35B33BA22BF3BDCE00EF28F5 /* CubeViewController.swift in Sources */,
 				35BE555E2BDAAFFF003715C3 /* RSMFilePreviewView.swift in Sources */,
 				3514BF822B4801D70065ED89 /* JobDatabaseView.swift in Sources */,
+				351EE2F92C0735390012BC9E /* TransferableImage.swift in Sources */,
 				35239E052BC2D5D60039F7D5 /* ProgressHUD.swift in Sources */,
 				35BE552F2BD94053003715C3 /* AsyncContentView.swift in Sources */,
 				3594DD552BF5FB6E00575F3D /* GNDFilePreviewView.swift in Sources */,
@@ -726,6 +730,7 @@
 				35239DF92BBDB7B50039F7D5 /* MonsterProvider.swift in Sources */,
 				35B422E22BEDEBD000681AA2 /* ResponsiveView.swift in Sources */,
 				35B422D02BEB68F600681AA2 /* PetProvider.swift in Sources */,
+				351EE2F82C0735390012BC9E /* TransferableAnimatedImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1005,10 +1010,6 @@
 		358D4C682BC7707400FAF45D /* ROFileSystem */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ROFileSystem;
-		};
-		358D4C6A2BC7707400FAF45D /* ROGraphics */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ROGraphics;
 		};
 		358D4C6C2BC7707400FAF45D /* RONetwork */ = {
 			isa = XCSwiftPackageProductDependency;

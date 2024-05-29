@@ -7,10 +7,10 @@
 
 import CoreGraphics
 import Foundation
+import ROCore
 import RODatabase
 import ROFileFormats
 import ROFileSystem
-import ROGraphics
 import ROResources
 
 public class ClientResourceBundle {

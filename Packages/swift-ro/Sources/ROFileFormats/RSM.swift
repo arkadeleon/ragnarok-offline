@@ -7,7 +7,7 @@
 
 import Foundation
 import simd
-import ROStream
+import ROCore
 
 public struct RSM: Encodable {
     public var header: String

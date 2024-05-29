@@ -31,7 +31,7 @@ public class ClientResourceManager {
             let spritesByType = Dictionary(grouping: sprites, by: { $0.element.type })
             let imagesForSpritesByType = spritesByType.mapValues { sprites in
                 sprites.map { sprite in
-                    spr.image(forSpriteAt: sprite.offset)?.image
+                    spr.image(forSpriteAt: sprite.offset)
                 }
             }
 
@@ -58,7 +58,7 @@ public class ClientResourceManager {
             let spritesByType = Dictionary(grouping: sprites, by: { $0.element.type })
             let imagesForSpritesByType = spritesByType.mapValues { sprites in
                 sprites.map { sprite in
-                    spr.image(forSpriteAt: sprite.offset)?.image
+                    spr.image(forSpriteAt: sprite.offset)
                 }
             }
 

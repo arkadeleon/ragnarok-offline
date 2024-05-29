@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ROStream
+import ROCore
 
 public class GRFReference {
     public let url: URL

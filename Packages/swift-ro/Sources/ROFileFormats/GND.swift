@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ROStream
+import ROCore
 
 public struct GND: Encodable {
     public var header: String

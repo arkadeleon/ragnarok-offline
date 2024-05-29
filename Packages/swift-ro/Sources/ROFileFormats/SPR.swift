@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ROStream
+import ROCore
 
 public struct SPR: Encodable {
     public var header: String

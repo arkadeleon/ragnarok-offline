@@ -6,8 +6,8 @@
 //
 
 import RealityKit
+import ROCore
 import ROFileFormats
-import ROGraphics
 import SwiftUI
 
 struct GNDFilePreviewView: View {

@@ -8,8 +8,8 @@
 import ImageIO
 import Foundation
 import DataCompression
+import ROCore
 import ROFileFormats
-import ROGraphics
 
 class FileThumbnailGenerator {
     static let shared = FileThumbnailGenerator()
@@ -78,7 +78,7 @@ class FileThumbnailGenerator {
                 return nil
             }
 
-            return FileThumbnail(cgImage: image.image)
+            return FileThumbnail(cgImage: image)
         default:
             return nil
         }

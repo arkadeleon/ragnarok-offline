@@ -7,11 +7,10 @@
 
 import CoreGraphics
 import Foundation
-import ROCrypto
-import ROFileFormats
+import ROCore
 
 extension SPR {
-    public func image(forSpriteAt index: Int) -> StillImage? {
+    public func image(forSpriteAt index: Int) -> CGImage? {
         let sprite = sprites[index]
         let width = Int(sprite.width)
         let height = Int(sprite.height)
@@ -56,7 +55,7 @@ extension SPR {
                 shouldInterpolate: true,
                 intent: .defaultIntent
             )
-            return image.map(StillImage.init)
+            return image
         case .rgba:
             let byteOrder = CGBitmapInfo.byteOrder32Little
             let alphaInfo = CGImageAlphaInfo.last
@@ -101,7 +100,7 @@ extension SPR {
             context.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
 
             let downMirroredImage = context.makeImage()
-            return downMirroredImage.map(StillImage.init)
+            return downMirroredImage
         }
     }
 }

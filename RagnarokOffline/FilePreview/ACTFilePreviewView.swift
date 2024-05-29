@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
+import ROCore
 import ROFileFormats
-import ROGraphics
 
 enum ACTFilePreviewError: Error {
     case invalidACTFile
@@ -39,7 +39,7 @@ struct ACTFilePreviewView: View {
                                 .frame(width: section.actionSize.width, height: section.actionSize.height)
                                 .contextMenu {
                                     ShareLink(
-                                        item: action.animatedImage.named(String(format: "%@.%03d.png", file.file.name, action.index)),
+                                        item: TransferableAnimatedImage(name: String(format: "%@.%03d.png", file.file.name, action.index), image: action.animatedImage),
                                         preview: SharePreview(file.file.name, image: Image(action.animatedImage.images[0], scale: 1, label: Text("")))
                                     )
                                 }
@@ -94,7 +94,7 @@ struct ACTFilePreviewView: View {
         let spritesByType = Dictionary(grouping: sprites, by: { $0.element.type })
         let imagesForSpritesByType = spritesByType.mapValues { sprites in
             sprites.map { sprite in
-                spr.image(forSpriteAt: sprite.offset)?.image
+                spr.image(forSpriteAt: sprite.offset)
             }
         }
 

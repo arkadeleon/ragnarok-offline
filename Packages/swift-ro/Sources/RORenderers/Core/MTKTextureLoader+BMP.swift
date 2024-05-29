@@ -6,7 +6,7 @@
 //
 
 import MetalKit
-import ROGraphics
+import ROCore
 
 extension MTKTextureLoader {
     public func newTexture(bmpData: Data) -> MTLTexture? {

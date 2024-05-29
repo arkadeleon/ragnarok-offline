@@ -7,7 +7,6 @@
 
 import CoreGraphics
 import Foundation
-import ROFileFormats
 
 extension GAT {
     public func image() -> CGImage? {

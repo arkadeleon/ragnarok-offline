@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import ROGraphics
+import ROCore
 
 struct AnimatedImageView: UIViewRepresentable {
     let animatedImage: AnimatedImage

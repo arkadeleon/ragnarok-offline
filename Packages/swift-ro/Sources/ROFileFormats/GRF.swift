@@ -8,8 +8,7 @@
 import Foundation
 import CoreFoundation
 import DataCompression
-import ROCrypto
-import ROStream
+import ROCore
 
 public enum GRFError: Error {
     case invalidVersion(UInt32)

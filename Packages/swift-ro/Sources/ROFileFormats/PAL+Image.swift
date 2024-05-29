@@ -6,7 +6,6 @@
 //
 
 import CoreGraphics
-import ROFileFormats
 
 extension PAL {
     public func image(at size: CGSize) -> CGImage? {

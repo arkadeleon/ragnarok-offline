@@ -6,7 +6,6 @@
 //
 
 import CoreGraphics
-import CoreTransferable
 import ImageIO
 import UniformTypeIdentifiers
 
@@ -21,6 +20,11 @@ public struct AnimatedImage: Hashable {
                 height: max(size.height, CGFloat(image.height))
             )
         }
+    }
+
+    public init(images: [CGImage], delay: CGFloat) {
+        self.images = images
+        self.delay = delay
     }
 
     public func pngData() -> Data? {
@@ -43,43 +47,5 @@ public struct AnimatedImage: Hashable {
         CGImageDestinationFinalize(imageDestination)
 
         return data as Data
-    }
-}
-
-extension AnimatedImage: Transferable {
-    public static var transferRepresentation: some TransferRepresentation {
-        DataRepresentation(exportedContentType: .png) { animatedImage in
-            guard let data = animatedImage.pngData() else {
-                throw NSError(domain: kCFErrorDomainCGImageMetadata as String, code: Int(CGImageMetadataErrors.unknown.rawValue))
-            }
-            return data
-        }
-    }
-}
-
-extension AnimatedImage {
-    public struct Named: Hashable {
-        var name: String
-        var image: AnimatedImage
-    }
-
-    public func named(_ name: String) -> Named {
-        Named(name: name, image: self)
-    }
-}
-
-extension AnimatedImage.Named: Transferable {
-    public static var transferRepresentation: some TransferRepresentation {
-        FileRepresentation(exportedContentType: .png) { namedAnimatedImage in
-            guard let data = namedAnimatedImage.image.pngData() else {
-                throw NSError(domain: kCFErrorDomainCGImageMetadata as String, code: Int(CGImageMetadataErrors.unknown.rawValue))
-            }
-
-            let url = FileManager.default.temporaryDirectory.appending(path: namedAnimatedImage.name)
-            try data.write(to: url)
-
-            let file = SentTransferredFile(url)
-            return file
-        }
     }
 }
