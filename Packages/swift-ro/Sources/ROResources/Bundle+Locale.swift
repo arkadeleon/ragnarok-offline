@@ -9,10 +9,6 @@ import Foundation
 
 extension Bundle {
     func url(forResource name: String?, withExtension ext: String?, locale: Locale) -> URL? {
-        if locale == .current {
-            return url(forResource: name, withExtension: ext)
-        }
-
         let localization = preferredLocalization(for: locale)
         return url(forResource: name, withExtension: ext, subdirectory: nil, localization: localization)
     }

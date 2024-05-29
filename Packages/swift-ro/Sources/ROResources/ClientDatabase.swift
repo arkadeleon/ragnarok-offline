@@ -7,100 +7,26 @@
 
 import Foundation
 import Lua
-import ROFileFormats
-import ROSettings
 
-public class ClientDatabase {
+public actor ClientDatabase {
     public static let shared = ClientDatabase()
 
-    private let context = LuaContext()
+    let context = LuaContext()
 
-    private var identifiedItemDisplayNameTable: [Int : Data] = [:]
-    private var identifiedItemResourceNameTable: [Int : Data] = [:]
-    private var identifiedItemDescriptionTable: [Int : Data] = [:]
-
-    private var isItemScriptsLoaded = false
-    private var isIdentifiedItemDisplayNameTableLoaded = false
-    private var isIdentifiedItemResourceNameTableLoaded = false
-    private var isIdentifiedItemDescriptionTableLoaded = false
-    private var isMonsterScriptsLoaded = false
+    var isItemScriptsLoaded = false
+    var isMonsterScriptsLoaded = false
 
     // MARK: - Item
 
-    public func identifiedItemDisplayName(_ itemID: Int) -> String? {
-        objc_sync_enter(self)
-        defer {
-            objc_sync_exit(self)
+    public func identifiedItemResourceName(for itemID: Int) -> String? {
+        try? loadItemScriptsIfNeeded()
+
+        guard let result = try? context.call("identifiedItemResourceName", with: [itemID]) as? String else {
+            return nil
         }
 
-        switch ClientSettings.shared.itemInfoSource {
-        case .lua:
-            try? loadItemScriptsIfNeeded()
-
-            guard let result = try? context.call("identifiedItemDisplayName", with: [itemID]) as? String else {
-                return nil
-            }
-
-            let encoding = ClientSettings.shared.serviceType.stringEncoding
-            let itemDisplayName = result.data(using: .isoLatin1)?.string(using: encoding)
-            return itemDisplayName
-        case .txt:
-            try? loadIdentifiedItemDisplayNameTableIfNeeded()
-
-            let encoding = ClientSettings.shared.serviceType.stringEncoding
-            let itemDisplayName = identifiedItemDisplayNameTable[itemID]?.string(using: encoding)
-            return itemDisplayName
-        }
-    }
-
-    public func identifiedItemResourceName(_ itemID: Int) -> String? {
-        objc_sync_enter(self)
-        defer {
-            objc_sync_exit(self)
-        }
-
-        switch ClientSettings.shared.itemInfoSource {
-        case .lua:
-            try? loadItemScriptsIfNeeded()
-
-            guard let result = try? context.call("identifiedItemResourceName", with: [itemID]) as? String else {
-                return nil
-            }
-
-            let itemResourceName = result.data(using: .isoLatin1)?.string(using: .koreanEUC)
-            return itemResourceName
-        case .txt:
-            try? loadIdentifiedItemResourceNameTableIfNeeded()
-
-            let itemResourceName = identifiedItemResourceNameTable[itemID]?.string(using: .koreanEUC)
-            return itemResourceName
-        }
-    }
-
-    public func identifiedItemDescription(_ itemID: Int) -> String? {
-        objc_sync_enter(self)
-        defer {
-            objc_sync_exit(self)
-        }
-
-        switch ClientSettings.shared.itemInfoSource {
-        case .lua:
-            try? loadItemScriptsIfNeeded()
-
-            guard let result = try? context.call("identifiedItemDescription", with: [itemID]) as? [String] else {
-                return nil
-            }
-
-            let encoding = ClientSettings.shared.serviceType.stringEncoding
-            let itemDescription = result.joined(separator: "\n").data(using: .isoLatin1)?.string(using: encoding)
-            return itemDescription
-        case .txt:
-            try? loadIdentifiedItemDescriptionTableIfNeeded()
-
-            let encoding = ClientSettings.shared.serviceType.stringEncoding
-            let itemDescription = identifiedItemDescriptionTable[itemID]?.string(using: encoding)
-            return itemDescription
-        }
+        let itemResourceName = result.data(using: .isoLatin1)?.string(using: .koreanEUC)
+        return itemResourceName
     }
 
     private func loadItemScriptsIfNeeded() throws {
@@ -108,29 +34,20 @@ public class ClientDatabase {
             return
         }
 
-        let iteminfoURL = ClientResourceBundle.shared.url.appendingPathComponent("System/iteminfo.lub")
-        if let iteminfo = try? Data(contentsOf: iteminfoURL) {
-            try context.load(iteminfo)
+        let locale = Locale(languageCode: .korean)
+        guard let url = Bundle.module.url(forResource: "itemInfo", withExtension: "lub", locale: locale) else {
+            return
         }
 
+        let iteminfo = try Data(contentsOf: url)
+        try context.load(iteminfo)
+
         try context.parse("""
-        function unidentifiedItemDisplayName(itemID)
-            return tbl[itemID]["unidentifiedDisplayName"]
-        end
         function unidentifiedItemResourceName(itemID)
             return tbl[itemID]["unidentifiedResourceName"]
         end
-        function unidentifiedItemDescription(itemID)
-            return tbl[itemID]["unidentifiedDescriptionName"]
-        end
-        function identifiedItemDisplayName(itemID)
-            return tbl[itemID]["identifiedDisplayName"]
-        end
         function identifiedItemResourceName(itemID)
             return tbl[itemID]["identifiedResourceName"]
-        end
-        function identifiedItemDescription(itemID)
-            return tbl[itemID]["identifiedDescriptionName"]
         end
         function itemSlotCount(itemID)
             return tbl[itemID]["slotCount"]
@@ -140,113 +57,9 @@ public class ClientDatabase {
         isItemScriptsLoaded = true
     }
 
-    private func loadIdentifiedItemDisplayNameTableIfNeeded() throws {
-        guard !isIdentifiedItemDisplayNameTableLoaded else {
-            return
-        }
-
-        let file = ClientResourceBundle.shared.identifiedItemDisplayNameTable()
-        guard let data = file.contents() else {
-            return
-        }
-
-        guard let string = String(data: data, encoding: .isoLatin1) else {
-            return
-        }
-
-        let lines = string.split(separator: "\r\n")
-        for line in lines {
-            if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
-                continue
-            }
-
-            let columns = line.split(separator: "#")
-            if columns.count >= 2 {
-                let itemID = Int(columns[0])
-                let itemDisplayName = String(columns[1])
-                if let itemID {
-                    identifiedItemDisplayNameTable[itemID] = itemDisplayName.data(using: .isoLatin1)
-                }
-            }
-        }
-
-        isIdentifiedItemDisplayNameTableLoaded = true
-    }
-
-    private func loadIdentifiedItemResourceNameTableIfNeeded() throws {
-        guard !isIdentifiedItemResourceNameTableLoaded else {
-            return
-        }
-
-        let file = ClientResourceBundle.shared.identifiedItemResourceNameTable()
-        guard let data = file.contents() else {
-            return
-        }
-
-        guard let string = String(data: data, encoding: .isoLatin1) else {
-            return
-        }
-
-        let lines = string.split(separator: "\r\n")
-        for line in lines {
-            if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
-                continue
-            }
-
-            let columns = line.split(separator: "#")
-            if columns.count >= 2 {
-                let itemID = Int(columns[0])
-                let itemResourceName = String(columns[1])
-                if let itemID {
-                    identifiedItemResourceNameTable[itemID] = itemResourceName.data(using: .isoLatin1)
-                }
-            }
-        }
-
-        isIdentifiedItemResourceNameTableLoaded = true
-    }
-
-    private func loadIdentifiedItemDescriptionTableIfNeeded() throws {
-        guard !isIdentifiedItemDescriptionTableLoaded else {
-            return
-        }
-
-        let file = ClientResourceBundle.shared.identifiedItemDescriptionTable()
-        guard let data = file.contents() else {
-            return
-        }
-
-        guard let string = String(data: data, encoding: .isoLatin1) else {
-            return
-        }
-
-        let lines = string.split(separator: "\r\n#\r\n")
-        for line in lines {
-            if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
-                continue
-            }
-
-            let columns = line.split(separator: "#")
-            if columns.count >= 2 {
-                let itemID = Int(columns[0])
-                let itemDescription = String(columns[1]).trimmingCharacters(in: .whitespacesAndNewlines)
-                if let itemID {
-                    identifiedItemDescriptionTable[itemID] = itemDescription.data(using: .isoLatin1)
-                }
-            }
-        }
-
-        isIdentifiedItemDescriptionTableLoaded = true
-    }
-
     // MARK: - Monster
 
-    public func monsterResourceName(_ monsterID: Int) -> String? {
-        objc_sync_enter(self)
-        defer {
-            objc_sync_exit(self)
-        }
-
+    public func monsterResourceName(for monsterID: Int) -> String? {
         try? loadMonsterScriptsIfNeeded()
 
         let result = try? context.call("monsterResourceName", with: [monsterID]) as? String
@@ -258,15 +71,15 @@ public class ClientDatabase {
             return
         }
 
-        try loadScript([
-            GRF.Path(string: "data\\luafiles514\\lua files\\datainfo\\npcidentity.lub"),
-            GRF.Path(string: "data\\LuaFiles514\\Lua Files\\Datainfo\\NPCIdentity.lub"),
-        ])
+        if let url = Bundle.module.url(forResource: "npcidentity", withExtension: "lub") {
+            let data = try Data(contentsOf: url)
+            try context.load(data)
+        }
 
-        try loadScript([
-            GRF.Path(string: "data\\luafiles514\\lua files\\datainfo\\jobname.lub"),
-            GRF.Path(string: "data\\LuaFiles514\\Lua Files\\Datainfo\\jobName.lub"),
-        ])
+        if let url = Bundle.module.url(forResource: "jobname", withExtension: "lub") {
+            let data = try Data(contentsOf: url)
+            try context.load(data)
+        }
 
         try context.parse("""
         function monsterResourceName(monsterID)
@@ -275,23 +88,5 @@ public class ClientDatabase {
         """)
 
         isMonsterScriptsLoaded = true
-    }
-
-    // MARK: -
-
-    private func loadScript(_ paths: [GRF.Path]) throws {
-        var data: Data?
-        for path in paths {
-            data = try? ClientResourceBundle.shared.grf.contentsOfEntry(at: path)
-            if data != nil {
-                break
-            }
-        }
-
-        guard let data else {
-            return
-        }
-
-        try context.load(data)
     }
 }

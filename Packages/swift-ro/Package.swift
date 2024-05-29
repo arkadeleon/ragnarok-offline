@@ -99,7 +99,6 @@ let package = Package(
                 "ROFileFormats",
                 "ROFileSystem",
                 "ROGraphics",
-                "ROSettings",
             ],
             resources: [
                 .process("Resources"),

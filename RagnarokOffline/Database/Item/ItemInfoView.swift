@@ -204,7 +204,7 @@ struct ItemInfoView: View {
     }
 
     private func loadItemInfo() async {
-        itemDescription = ClientDatabase.shared.identifiedItemDescription(item.id)
+        itemDescription = await ItemLocalization.shared.localizedDescription(for: item.id)
         itemPreviewImage = await ClientResourceBundle.shared.itemPreviewImage(forItem: item)
 
         let monsterDatabase = MonsterDatabase.database(for: mode)

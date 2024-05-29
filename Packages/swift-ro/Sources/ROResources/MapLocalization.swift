@@ -37,12 +37,13 @@ public actor MapLocalization  {
 
         let data = try Data(contentsOf: url)
 
-        let encoding = locale.language.preferredEncoding
-        guard let string = String(data: data, encoding: encoding) else {
+        guard let string = String(data: data, encoding: .isoLatin1) else {
             return
         }
 
         let lines = string.split(separator: "\r\n")
+        let encoding = locale.language.preferredEncoding
+
         for line in lines {
             if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
                 continue
@@ -51,7 +52,7 @@ public actor MapLocalization  {
             let columns = line.split(separator: "#")
             if columns.count >= 2 {
                 let mapName = String(columns[0]).replacingOccurrences(of: ".rsw", with: "")
-                let mapDisplayName = String(columns[1])
+                let mapDisplayName = String(columns[1]).trimmingCharacters(in: .whitespaces).data(using: .isoLatin1)?.string(using: encoding)
                 mapNameTable[mapName] = mapDisplayName
             }
         }

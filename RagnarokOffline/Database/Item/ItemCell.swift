@@ -43,7 +43,7 @@ struct ItemCell: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .task {
-            itemDisplayName = ClientDatabase.shared.identifiedItemDisplayName(item.id)
+            itemDisplayName = await ItemLocalization.shared.localizedName(for: item.id)
             itemIconImage = await ClientResourceBundle.shared.itemIconImage(forItem: item)
         }
     }
