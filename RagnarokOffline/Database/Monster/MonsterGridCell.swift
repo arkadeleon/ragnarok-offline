@@ -8,11 +8,13 @@
 import SwiftUI
 import ROClient
 import RODatabase
+import ROResources
 
 struct MonsterGridCell: View {
     let monster: Monster
     let secondaryText: String?
 
+    @State private var localizedMonsterName: String?
     @State private var monsterImage: CGImage?
 
     var body: some View {
@@ -46,7 +48,7 @@ struct MonsterGridCell: View {
                 }
 
                 VStack(spacing: 2) {
-                    Text(monster.name)
+                    Text(localizedMonsterName ?? monster.name)
                         .frame(maxWidth: .infinity, alignment: .center)
                         .foregroundColor(.primary)
                         .font(.subheadline)
@@ -62,6 +64,7 @@ struct MonsterGridCell: View {
         }
         .frame(maxHeight: .infinity, alignment: .top)
         .task {
+            localizedMonsterName = await MonsterLocalization.shared.localizedName(for: monster.id)
             monsterImage = await ClientResourceManager.shared.monsterImage(monster.id)
         }
     }
