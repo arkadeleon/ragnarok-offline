@@ -8,7 +8,7 @@
 import RODatabase
 
 extension Gender {
-    var resourceName: String {
+    public var resourceName: String {
         switch self {
         case .female: "여"
         case .male: "남"

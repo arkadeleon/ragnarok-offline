@@ -27,6 +27,7 @@
 		3519901D2BC837320082EB0E /* rAthenaResource in Frameworks */ = {isa = PBXBuildFile; productRef = 3519901C2BC837320082EB0E /* rAthenaResource */; };
 		3519901F2BC837320082EB0E /* rAthenaWeb in Frameworks */ = {isa = PBXBuildFile; productRef = 3519901E2BC837320082EB0E /* rAthenaWeb */; };
 		351990202BC837320082EB0E /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3519901E2BC837320082EB0E /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		351EE2F52C06F7A90012BC9E /* ROClient in Frameworks */ = {isa = PBXBuildFile; productRef = 351EE2F42C06F7A90012BC9E /* ROClient */; };
 		35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */; };
 		35239DF72BBDA0760039F7D5 /* LoadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF62BBDA0760039F7D5 /* LoadStatus.swift */; };
 		35239DF92BBDB7B50039F7D5 /* MonsterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF82BBDB7B50039F7D5 /* MonsterProvider.swift */; };
@@ -41,7 +42,6 @@
 		353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */; };
 		353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F172B44FFE100605E92 /* SkillInfoView.swift */; };
 		353B4F1C2B451F1300605E92 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F1B2B451F1300605E92 /* ItemCell.swift */; };
-		3555D7222BC6DE6600709871 /* rAthenaRyml in Frameworks */ = {isa = PBXBuildFile; productRef = 3555D7212BC6DE6600709871 /* rAthenaRyml */; };
 		3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555E1162B7D12D9007CE4BA /* TerminalView.swift */; };
 		355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC18B2B8F25C0002F0586 /* WebView.swift */; };
 		355BC18E2B8F2890002F0586 /* FileRawDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC18D2B8F2890002F0586 /* FileRawDataView.swift */; };
@@ -55,15 +55,11 @@
 		3582FFCC2B8DBD3300E746D7 /* FileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFCB2B8DBD3300E746D7 /* FileCell.swift */; };
 		358362CD2BD55D4000821500 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = 358362CC2BD55D4000821500 /* SwiftTerm */; };
 		358D4C612BC6EBB500FAF45D /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C602BC6EBB500FAF45D /* Lua */; };
-		358D4C652BC7707400FAF45D /* ROCrypto in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C642BC7707400FAF45D /* ROCrypto */; };
 		358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C662BC7707400FAF45D /* ROFileFormats */; };
 		358D4C692BC7707400FAF45D /* ROFileSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C682BC7707400FAF45D /* ROFileSystem */; };
 		358D4C6B2BC7707400FAF45D /* ROGraphics in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6A2BC7707400FAF45D /* ROGraphics */; };
 		358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6C2BC7707400FAF45D /* RONetwork */; };
 		358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6E2BC7707400FAF45D /* RORenderers */; };
-		358D4C712BC7707400FAF45D /* ROSettings in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C702BC7707400FAF45D /* ROSettings */; };
-		358D4C732BC7707400FAF45D /* ROShaders in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C722BC7707400FAF45D /* ROShaders */; };
-		358D4C752BC7707400FAF45D /* ROStream in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C742BC7707400FAF45D /* ROStream */; };
 		3594DD552BF5FB6E00575F3D /* GNDFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3594DD542BF5FB6E00575F3D /* GNDFilePreviewView.swift */; };
 		3594DD572BF5FCB600575F3D /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3594DD562BF5FCB600575F3D /* ARViewContainer.swift */; };
 		35A2ABBE2B3ACB0A0026DAC2 /* ServerTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBD2B3ACB0A0026DAC2 /* ServerTerminalView.swift */; };
@@ -233,24 +229,20 @@
 			files = (
 				3519901F2BC837320082EB0E /* rAthenaWeb in Frameworks */,
 				351990122BC837320082EB0E /* rAthenaChar in Frameworks */,
-				358D4C732BC7707400FAF45D /* ROShaders in Frameworks */,
-				3555D7222BC6DE6600709871 /* rAthenaRyml in Frameworks */,
 				358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */,
 				358D4C6B2BC7707400FAF45D /* ROGraphics in Frameworks */,
 				358362CD2BD55D4000821500 /* SwiftTerm in Frameworks */,
 				358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */,
 				35B367452BD6AE700018ED27 /* Terminal in Frameworks */,
-				358D4C652BC7707400FAF45D /* ROCrypto in Frameworks */,
 				351990152BC837320082EB0E /* rAthenaCommon in Frameworks */,
 				351990172BC837320082EB0E /* rAthenaLogin in Frameworks */,
+				351EE2F52C06F7A90012BC9E /* ROClient in Frameworks */,
 				358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */,
 				358D4C692BC7707400FAF45D /* ROFileSystem in Frameworks */,
 				35B422B12BEB277900681AA2 /* ROResources in Frameworks */,
 				353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */,
-				358D4C712BC7707400FAF45D /* ROSettings in Frameworks */,
 				3519901A2BC837320082EB0E /* rAthenaMap in Frameworks */,
 				3519901D2BC837320082EB0E /* rAthenaResource in Frameworks */,
-				358D4C752BC7707400FAF45D /* ROStream in Frameworks */,
 				358D4C612BC6EBB500FAF45D /* Lua in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,6 +292,13 @@
 				35239DFA2BBEEF890039F7D5 /* JobProvider.swift */,
 			);
 			path = Job;
+			sourceTree = "<group>";
+		};
+		351EE2F32C06F7A90012BC9E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		353098332B14EAE600F32B62 /* FileRawData */ = {
@@ -418,6 +417,7 @@
 				35B3B8D62A08BEA600B4540B /* RagnarokOffline */,
 				35E27A8C2BCC111400C11076 /* Packages */,
 				35B3B8D52A08BEA600B4540B /* Products */,
+				351EE2F32C06F7A90012BC9E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -556,17 +556,12 @@
 			);
 			name = RagnarokOffline;
 			packageProductDependencies = (
-				3555D7212BC6DE6600709871 /* rAthenaRyml */,
 				358D4C602BC6EBB500FAF45D /* Lua */,
-				358D4C642BC7707400FAF45D /* ROCrypto */,
 				358D4C662BC7707400FAF45D /* ROFileFormats */,
 				358D4C682BC7707400FAF45D /* ROFileSystem */,
 				358D4C6A2BC7707400FAF45D /* ROGraphics */,
 				358D4C6C2BC7707400FAF45D /* RONetwork */,
 				358D4C6E2BC7707400FAF45D /* RORenderers */,
-				358D4C702BC7707400FAF45D /* ROSettings */,
-				358D4C722BC7707400FAF45D /* ROShaders */,
-				358D4C742BC7707400FAF45D /* ROStream */,
 				353AFBDB2BC779BE00F613A8 /* RODatabase */,
 				351990112BC837320082EB0E /* rAthenaChar */,
 				351990142BC837320082EB0E /* rAthenaCommon */,
@@ -577,6 +572,7 @@
 				358362CC2BD55D4000821500 /* SwiftTerm */,
 				35B367442BD6AE700018ED27 /* Terminal */,
 				35B422B02BEB277900681AA2 /* ROResources */,
+				351EE2F42C06F7A90012BC9E /* ROClient */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -985,13 +981,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = rAthenaWeb;
 		};
+		351EE2F42C06F7A90012BC9E /* ROClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ROClient;
+		};
 		353AFBDB2BC779BE00F613A8 /* RODatabase */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RODatabase;
-		};
-		3555D7212BC6DE6600709871 /* rAthenaRyml */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = rAthenaRyml;
 		};
 		358362CC2BD55D4000821500 /* SwiftTerm */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1001,10 +997,6 @@
 		358D4C602BC6EBB500FAF45D /* Lua */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Lua;
-		};
-		358D4C642BC7707400FAF45D /* ROCrypto */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ROCrypto;
 		};
 		358D4C662BC7707400FAF45D /* ROFileFormats */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1025,18 +1017,6 @@
 		358D4C6E2BC7707400FAF45D /* RORenderers */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RORenderers;
-		};
-		358D4C702BC7707400FAF45D /* ROSettings */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ROSettings;
-		};
-		358D4C722BC7707400FAF45D /* ROShaders */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ROShaders;
-		};
-		358D4C742BC7707400FAF45D /* ROStream */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ROStream;
 		};
 		35B367442BD6AE700018ED27 /* Terminal */ = {
 			isa = XCSwiftPackageProductDependency;

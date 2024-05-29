@@ -7,8 +7,8 @@
 
 import SwiftUI
 import rAthenaCommon
+import ROClient
 import RODatabase
-import ROResources
 
 struct MapInfoView: View {
     let mode: ServerMode

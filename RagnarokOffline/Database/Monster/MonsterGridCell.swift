@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
+import ROClient
 import RODatabase
-import ROResources
 
 struct MonsterGridCell: View {
     let monster: Monster

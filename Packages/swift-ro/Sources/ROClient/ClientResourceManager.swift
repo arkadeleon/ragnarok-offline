@@ -8,12 +8,13 @@
 import CoreGraphics
 import RODatabase
 import ROFileFormats
+import ROResources
 
 public class ClientResourceManager {
     public static let shared = ClientResourceManager()
 
     public func monsterImage(_ monsterID: Int) async -> CGImage? {
-        guard let resourceName = await ClientDatabase.shared.monsterResourceName(for: monsterID) else {
+        guard let resourceName = await DatabaseResource.shared.monsterResourceName(for: monsterID) else {
             return nil
         }
 

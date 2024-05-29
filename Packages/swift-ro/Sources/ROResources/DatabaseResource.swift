@@ -1,5 +1,5 @@
 //
-//  ClientDatabase.swift
+//  DatabaseResource.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/12/30.
@@ -8,8 +8,8 @@
 import Foundation
 import Lua
 
-public actor ClientDatabase {
-    public static let shared = ClientDatabase()
+public actor DatabaseResource {
+    public static let shared = DatabaseResource()
 
     let context = LuaContext()
 
@@ -25,7 +25,9 @@ public actor ClientDatabase {
             return nil
         }
 
-        let itemResourceName = result.data(using: .isoLatin1)?.string(using: .koreanEUC)
+        let locale = Locale(languageCode: .korean)
+        let encoding = locale.language.preferredEncoding
+        let itemResourceName = result.data(using: .isoLatin1)?.string(using: encoding)
         return itemResourceName
     }
 

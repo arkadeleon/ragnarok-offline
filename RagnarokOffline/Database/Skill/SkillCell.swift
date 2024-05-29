@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ROClient
 import RODatabase
 import ROResources
 

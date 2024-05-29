@@ -11,6 +11,9 @@ let package = Package(
     ],
     products: [
         .library(
+            name: "ROClient",
+            targets: ["ROClient"]),
+        .library(
             name: "ROCrypto",
             targets: ["ROCrypto"]),
         .library(
@@ -35,9 +38,6 @@ let package = Package(
             name: "ROResources",
             targets: ["ROResources"]),
         .library(
-            name: "ROSettings",
-            targets: ["ROSettings"]),
-        .library(
             name: "ROShaders",
             targets: ["ROShaders"]),
         .library(
@@ -50,6 +50,18 @@ let package = Package(
         .package(path: "swift-rathena"),
     ],
     targets: [
+        .target(
+            name: "ROClient",
+            dependencies: [
+                "RODatabase",
+                "ROFileFormats",
+                "ROFileSystem",
+                "ROGraphics",
+                "ROResources",
+            ],
+            swiftSettings: [
+                .interoperabilityMode(.Cxx),
+            ]),
         .target(
             name: "ROCrypto"),
         .target(
@@ -96,9 +108,6 @@ let package = Package(
             dependencies: [
                 .product(name: "Lua", package: "swift-lua"),
                 "RODatabase",
-                "ROFileFormats",
-                "ROFileSystem",
-                "ROGraphics",
             ],
             resources: [
                 .process("Resources"),
@@ -106,8 +115,6 @@ let package = Package(
             swiftSettings: [
                 .interoperabilityMode(.Cxx),
             ]),
-        .target(
-            name: "ROSettings"),
         .target(
             name: "ROShaders",
             resources: [

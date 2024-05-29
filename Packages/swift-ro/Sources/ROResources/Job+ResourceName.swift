@@ -8,7 +8,7 @@
 import RODatabase
 
 extension Job {
-    var resourceName: String {
+    public var resourceName: String {
         switch self {
         case .novice, .noviceHigh, .baby: "초보자"
 

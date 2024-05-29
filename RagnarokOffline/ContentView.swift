@@ -11,7 +11,7 @@ import rAthenaLogin
 import rAthenaChar
 import rAthenaMap
 import rAthenaWeb
-import ROResources
+import ROClient
 
 enum SidebarItem: Hashable {
     case files

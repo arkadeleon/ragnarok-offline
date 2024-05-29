@@ -11,6 +11,7 @@ import RODatabase
 import ROFileFormats
 import ROFileSystem
 import ROGraphics
+import ROResources
 
 public class ClientResourceBundle {
     public static let shared = ClientResourceBundle()
@@ -97,7 +98,7 @@ public class ClientResourceBundle {
     // MARK: - data\texture
 
     public func itemIconImage(forItem item: Item) async -> CGImage? {
-        guard let resourceName = await ClientDatabase.shared.identifiedItemResourceName(for: item.id) else {
+        guard let resourceName = await DatabaseResource.shared.identifiedItemResourceName(for: item.id) else {
             return nil
         }
 
@@ -107,7 +108,7 @@ public class ClientResourceBundle {
     }
 
     public func itemPreviewImage(forItem item: Item) async -> CGImage? {
-        guard let resourceName = await ClientDatabase.shared.identifiedItemResourceName(for: item.id) else {
+        guard let resourceName = await DatabaseResource.shared.identifiedItemResourceName(for: item.id) else {
             return nil
         }
 
