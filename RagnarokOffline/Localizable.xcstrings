@@ -7,10 +7,16 @@
     " " : {
 
     },
+    "%@" : {
+
+    },
     "%lld" : {
 
     },
     "%lld monsters" : {
+
+    },
+    "%lldz" : {
 
     },
     "Base Exp" : {
@@ -26,6 +32,9 @@
 
     },
     "Bonus Stats" : {
+
+    },
+    "Buy" : {
 
     },
     "Client" : {
@@ -203,6 +212,9 @@
     "Raw Data" : {
 
     },
+    "Sell" : {
+
+    },
     "Server" : {
 
     },
@@ -236,7 +248,13 @@
     "Summon" : {
 
     },
+    "Type" : {
+
+    },
     "Username" : {
+
+    },
+    "Weight" : {
 
     }
   },

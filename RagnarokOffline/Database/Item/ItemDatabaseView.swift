@@ -16,20 +16,37 @@ struct ItemDatabaseView: View {
             ResponsiveView {
                 List(items) { item in
                     NavigationLink(value: item) {
-                        ItemCell(item: item, secondaryText: nil)
+                        ItemCell(item: item)
                     }
                 }
                 .listStyle(.plain)
             } regular: {
-                ScrollView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        ForEach(items) { item in
-                            NavigationLink(value: item) {
-                                ItemCell(item: item, secondaryText: nil)
-                            }
+                Table(items) {
+                    TableColumn("") { item in
+                        ItemIconView(item: item)
+                    }
+                    .width(40)
+                    TableColumn("Name") { item in
+                        NavigationLink(value: item) {
+                            ItemNameView(item: item)
                         }
                     }
-                    .padding(20)
+                    TableColumn("Type") { item in
+                        Text(item.type.description)
+                    }
+                    .width(200)
+                    TableColumn("Buy") { item in
+                        Text("\(item.buy)z")
+                    }
+                    .width(150)
+                    TableColumn("Sell") { item in
+                        Text("\(item.sell)z")
+                    }
+                    .width(150)
+                    TableColumn("Weight") { item in
+                        Text("\(NSNumber(value: Double(item.weight) / 10))")
+                    }
+                    .width(100)
                 }
             }
         }

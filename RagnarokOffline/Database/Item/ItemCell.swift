@@ -5,35 +5,19 @@
 //  Created by Leon Li on 2024/1/3.
 //
 
-import SwiftUI
-import ROClient
 import RODatabase
-import ROResources
+import SwiftUI
 
 struct ItemCell: View {
-    let item: Item
-    let secondaryText: String?
-
-    @State private var itemIconImage: CGImage?
-    @State private var itemDisplayName: String?
+    var item: Item
+    var secondaryText: String?
 
     var body: some View {
         HStack {
-            ZStack {
-                if let itemIconImage {
-                    Image(itemIconImage, scale: 1, label: Text(item.name))
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                } else {
-                    Image(systemName: "leaf")
-                        .foregroundStyle(.tertiary)
-                        .font(.system(size: 25))
-                }
-            }
-            .frame(width: 40, height: 40)
+            ItemIconView(item: item)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(primaryText)
+                ItemNameView(item: item)
                     .foregroundColor(.primary)
                     .lineLimit(1)
 
@@ -43,14 +27,5 @@ struct ItemCell: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .task {
-            itemDisplayName = await ItemLocalization.shared.localizedName(for: item.id)
-            itemIconImage = await ClientResourceBundle.shared.itemIconImage(forItem: item)
-        }
-    }
-
-    private var primaryText: String {
-        let name = itemDisplayName ?? item.name
-        return item.slots > 0 ? name + " [\(item.slots)]" : name
     }
 }
