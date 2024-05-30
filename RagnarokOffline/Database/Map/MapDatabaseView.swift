@@ -15,20 +15,22 @@ struct MapDatabaseView: View {
             ResponsiveView {
                 List(maps) { map in
                     NavigationLink(value: map) {
-                        MapCell(map: map, secondaryText: nil)
+                        MapCell(map: map)
                     }
                 }
                 .listStyle(.plain)
             } regular: {
-                ScrollView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        ForEach(maps) { map in
-                            NavigationLink(value: map) {
-                                MapCell(map: map, secondaryText: nil)
-                            }
+                Table(maps) {
+                    TableColumn("") { map in
+                        MapImageView(map: map)
+                    }
+                    .width(40)
+                    TableColumn("Name") { map in
+                        NavigationLink(value: map) {
+                            MapNameView(map: map)
                         }
                     }
-                    .padding(20)
+                    TableColumn("ID", value: \.name)
                 }
             }
         }

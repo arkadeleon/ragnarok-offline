@@ -1,5 +1,5 @@
 //
-//  SkillIconView.swift
+//  MapImageView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/5/30.
@@ -9,30 +9,30 @@ import ROClient
 import RODatabase
 import SwiftUI
 
-struct SkillIconView: View {
-    var skill: Skill
+struct MapImageView: View {
+    var map: Map
 
-    @State private var skillIcon: CGImage?
+    @State private var mapImage: CGImage?
 
     var body: some View {
         ZStack {
-            if let skillIcon {
-                Image(skillIcon, scale: 1, label: Text(skill.name))
+            if let mapImage {
+                Image(mapImage, scale: 1, label: Text(map.name))
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             } else {
-                Image(systemName: "arrow.up.heart")
+                Image(systemName: "map")
                     .foregroundStyle(.tertiary)
                     .font(.system(size: 25))
             }
         }
         .frame(width: 40, height: 40)
         .task {
-            skillIcon = await ClientResourceBundle.shared.skillIconImage(forSkill: skill)
+            mapImage = await ClientResourceBundle.shared.mapImage(forMap: map)
         }
     }
 }
 
 //#Preview {
-//    SkillIconView()
+//    MapImageView()
 //}

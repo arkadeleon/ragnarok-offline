@@ -5,35 +5,19 @@
 //  Created by Leon Li on 2024/3/4.
 //
 
-import SwiftUI
-import ROClient
 import RODatabase
-import ROResources
+import SwiftUI
 
 struct MapCell: View {
-    let map: Map
-    let secondaryText: String?
-
-    @State private var mapImage: CGImage?
-    @State private var mapDisplayName: String?
+    var map: Map
+    var secondaryText: String?
 
     var body: some View {
         HStack {
-            ZStack {
-                if let mapImage {
-                    Image(mapImage, scale: 1, label: Text(map.name))
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                } else {
-                    Image(systemName: "map")
-                        .foregroundStyle(.tertiary)
-                        .font(.system(size: 25))
-                }
-            }
-            .frame(width: 40, height: 40)
+            MapImageView(map: map)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(mapDisplayName ?? map.name)
+                MapNameView(map: map)
                     .foregroundColor(.primary)
                     .lineLimit(1)
 
@@ -42,10 +26,6 @@ struct MapCell: View {
                     .lineLimit(1)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-        }
-        .task {
-            mapDisplayName = await MapLocalization.shared.localizedName(for: map.name)
-            mapImage = await ClientResourceBundle.shared.mapImage(forMap: map)
         }
     }
 }

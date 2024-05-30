@@ -169,16 +169,16 @@ struct ContentView: View {
                     Label("Job Database", systemImage: "person")
                 }
 
+                NavigationLink(value: SidebarItem.mapDatabase) {
+                    Label("Map Database", systemImage: "map")
+                }
+
                 NavigationLink(value: SidebarItem.monsterDatabase) {
                     Label("Monster Database", systemImage: "pawprint")
                 }
 
                 NavigationLink(value: SidebarItem.monsterSummonDatabase) {
                     Label("Monster Summon Database", systemImage: "pawprint")
-                }
-
-                NavigationLink(value: SidebarItem.mapDatabase) {
-                    Label("Map Database", systemImage: "map")
                 }
 
                 NavigationLink(value: SidebarItem.petDatabase) {

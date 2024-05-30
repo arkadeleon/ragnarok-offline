@@ -14,7 +14,17 @@ struct SkillCell: View {
     var body: some View {
         HStack {
             SkillIconView(skill: skill)
-            SkillNameView(skill: skill)
+
+            VStack(alignment: .leading, spacing: 2) {
+                SkillNameView(skill: skill)
+                    .foregroundColor(.primary)
+                    .lineLimit(1)
+
+                Text(skill.aegisName)
+                    .foregroundColor(.secondary)
+                    .lineLimit(1)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }
