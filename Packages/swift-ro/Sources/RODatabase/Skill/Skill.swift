@@ -32,28 +32,28 @@ public struct Skill: Decodable, Equatable, Hashable, Identifiable {
     public var flags: [SkillFlag]
 
     /// Skill range. (Default: 0)
-    public var range: EitherNode<Int, [Int?]>
+    public var range: EitherNode<Int, [Int]>
 
     /// Skill hit type. (Default: Normal)
     public var hitType: SkillHitType
 
     /// Skill hit count. (Default: 0)
-    public var hitCount: EitherNode<Int, [Int?]>
+    public var hitCount: EitherNode<Int, [Int]>
 
     /// Skill element. (Default: Neutral)
-    public var element: EitherNode<Element, [Element?]>
+    public var element: EitherNode<Element, [Element]>
 
     /// Skill splash area of effect. (Default: 0)
-    public var splashArea: EitherNode<Int, [Int?]>
+    public var splashArea: EitherNode<Int, [Int]>
 
     /// Maximum amount of active skill instances that can be on the ground. (Default: 0)
-    public var activeInstance: EitherNode<Int, [Int?]>
+    public var activeInstance: EitherNode<Int, [Int]>
 
     /// Amount of tiles the skill knockbacks. (Default: 0)
-    public var knockback: EitherNode<Int, [Int?]>
+    public var knockback: EitherNode<Int, [Int]>
 
     /// Gives AP on successful skill cast. (Default: 0)
-    public var giveAp: EitherNode<Int, [Int?]>
+    public var giveAp: EitherNode<Int, [Int]>
 
     /// Determines if the skill is copyable. (Optional)
     public var copyFlags: CopyFlags?
@@ -68,25 +68,25 @@ public struct Skill: Decodable, Equatable, Hashable, Identifiable {
     public var castDefenseReduction: Int
 
     /// Time to cast the skill in milliseconds. (Default: 0)
-    public var castTime: EitherNode<Int, [Int?]>
+    public var castTime: EitherNode<Int, [Int]>
 
     /// Time the character cannot use skills in milliseconds. (Default: 0)
-    public var afterCastActDelay: EitherNode<Int, [Int?]>
+    public var afterCastActDelay: EitherNode<Int, [Int]>
 
     /// Time before the character can move again in milliseconds. (Default: 0)
-    public var afterCastWalkDelay: EitherNode<Int, [Int?]>
+    public var afterCastWalkDelay: EitherNode<Int, [Int]>
 
     /// Duration of the skill in milliseconds. (Default: 0)
-    public var duration1: EitherNode<Int, [Int?]>
+    public var duration1: EitherNode<Int, [Int]>
 
     /// Duration of the skill in milliseconds. (Default: 0)
-    public var duration2: EitherNode<Int, [Int?]>
+    public var duration2: EitherNode<Int, [Int]>
 
     /// Time before the character can use the same skill again in milliseconds. (Default: 0)
-    public var cooldown: EitherNode<Int, [Int?]>
+    public var cooldown: EitherNode<Int, [Int]>
 
     /// Time that is fixed during cast of the skill in milliseconds. (Default: 0)
-    public var fixedCastTime: EitherNode<Int, [Int?]>
+    public var fixedCastTime: EitherNode<Int, [Int]>
 
     /// Effects of the skill's cast time. (Optional)
     public var castTimeFlags: [SkillCastFlag]?
@@ -413,28 +413,28 @@ extension Skill {
     public struct Requires: Decodable, Equatable, Hashable {
 
         /// HP required to cast. (Default: 0)
-        public var hpCost: EitherNode<Int, [Int?]>
+        public var hpCost: EitherNode<Int, [Int]>
 
         /// SP required to cast. (Default: 0)
-        public var spCost: EitherNode<Int, [Int?]>
+        public var spCost: EitherNode<Int, [Int]>
 
         /// AP required to cast. (Default: 0)
-        public var apCost: EitherNode<Int, [Int?]>
+        public var apCost: EitherNode<Int, [Int]>
 
         /// HP rate required to cast. If positive, uses current HP, else uses Max HP. (Default: 0)
-        public var hpRateCost: EitherNode<Int, [Int?]>
+        public var hpRateCost: EitherNode<Int, [Int]>
 
         /// SP rate required to cast. If positive, uses current SP, else uses Max SP. (Default: 0)
-        public var spRateCost: EitherNode<Int, [Int?]>
+        public var spRateCost: EitherNode<Int, [Int]>
 
         /// AP rate required to cast. If positive, uses current AP, else uses Max AP. (Default: 0)
-        public var apRateCost: EitherNode<Int, [Int?]>
+        public var apRateCost: EitherNode<Int, [Int]>
 
         /// Maximum amount of HP to cast the skill. (Default: 0)
-        public var maxHpTrigger: EitherNode<Int, [Int?]>
+        public var maxHpTrigger: EitherNode<Int, [Int]>
 
         /// Zeny required to cast. (Default: 0)
-        public var zenyCost: EitherNode<Int, [Int?]>
+        public var zenyCost: EitherNode<Int, [Int]>
 
         /// Weapon required to cast. (Default: All)
         public var weapon: [WeaponType]
@@ -443,7 +443,7 @@ extension Skill {
         public var ammo: [AmmoType]
 
         /// Ammo amount required to cast. (Default: 0)
-        public var ammoAmount: EitherNode<Int, [Int?]>
+        public var ammoAmount: EitherNode<Int, [Int]>
 
         /// Special state required to cast. (Default: None)
         public var state: String?
@@ -452,7 +452,7 @@ extension Skill {
         public var status: [String]
 
         /// Spirit sphere required to cast. (Default: 0)
-        public var spiritSphereCost: EitherNode<Int, [Int?]>
+        public var spiritSphereCost: EitherNode<Int, [Int]>
 
         /// Item required to cast. (Default: 0)
         public var itemCost: [LevelItemCost]
@@ -670,10 +670,10 @@ extension Skill {
         public var alternateId: String?
 
         /// Skill unit layout. (Default: 0)
-        public var layout: EitherNode<Int, [Int?]>
+        public var layout: EitherNode<Int, [Int]>
 
         /// Skill unit range. (Default: 0)
-        public var range: EitherNode<Int, [Int?]>
+        public var range: EitherNode<Int, [Int]>
 
         /// Skill unit interval in milliseconds. (Default: 0)
         public var interval: Int

@@ -20,12 +20,30 @@ public enum EitherNode<Left, Right>: Decodable where Left: Decodable, Right: Dec
         }
     }
 
+    public func map<T>(left: (Left) -> T, right: (Right) -> T) -> T {
+        switch self {
+        case .left(let l):
+            left(l)
+        case .right(let r):
+            right(r)
+        }
+    }
+
+    public func mapLeft<L>(_ transform: (Left) -> L) -> EitherNode<L, Right> {
+        switch self {
+        case .left(let l):
+            .left(transform(l))
+        case .right(let r):
+            .right(r)
+        }
+    }
+
     public func mapRight<R>(_ transform: (Right) -> R) -> EitherNode<Left, R> {
         switch self {
-        case .left(let left):
-            .left(left)
-        case .right(let right):
-            .right(transform(right))
+        case .left(let l):
+            .left(l)
+        case .right(let r):
+            .right(transform(r))
         }
     }
 }

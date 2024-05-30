@@ -164,6 +164,9 @@
     "Map Database" : {
 
     },
+    "Max Level" : {
+
+    },
     "Max Weight" : {
 
     },
@@ -213,6 +216,9 @@
 
     },
     "Skill Database" : {
+
+    },
+    "SP Cost" : {
 
     },
     "SP Increase" : {

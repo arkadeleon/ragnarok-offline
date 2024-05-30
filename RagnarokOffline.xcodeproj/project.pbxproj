@@ -30,6 +30,8 @@
 		351EE2F52C06F7A90012BC9E /* ROClient in Frameworks */ = {isa = PBXBuildFile; productRef = 351EE2F42C06F7A90012BC9E /* ROClient */; };
 		351EE2F82C0735390012BC9E /* TransferableAnimatedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2F72C0735390012BC9E /* TransferableAnimatedImage.swift */; };
 		351EE2F92C0735390012BC9E /* TransferableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2F62C0735390012BC9E /* TransferableImage.swift */; };
+		351EE2FD2C0880A00012BC9E /* SkillIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2FC2C0880A00012BC9E /* SkillIconView.swift */; };
+		351EE2FF2C08896F0012BC9E /* SkillNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2FE2C08896F0012BC9E /* SkillNameView.swift */; };
 		35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */; };
 		35239DF72BBDA0760039F7D5 /* LoadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF62BBDA0760039F7D5 /* LoadStatus.swift */; };
 		35239DF92BBDB7B50039F7D5 /* MonsterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF82BBDB7B50039F7D5 /* MonsterProvider.swift */; };
@@ -144,6 +146,8 @@
 		3514BF852B4801EB0065ED89 /* JobInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInfoView.swift; sourceTree = "<group>"; };
 		351EE2F62C0735390012BC9E /* TransferableImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferableImage.swift; sourceTree = "<group>"; };
 		351EE2F72C0735390012BC9E /* TransferableAnimatedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferableAnimatedImage.swift; sourceTree = "<group>"; };
+		351EE2FC2C0880A00012BC9E /* SkillIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillIconView.swift; sourceTree = "<group>"; };
+		351EE2FE2C08896F0012BC9E /* SkillNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillNameView.swift; sourceTree = "<group>"; };
 		35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableServer.swift; sourceTree = "<group>"; };
 		35239DF62BBDA0760039F7D5 /* LoadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadStatus.swift; sourceTree = "<group>"; };
 		35239DF82BBDB7B50039F7D5 /* MonsterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterProvider.swift; sourceTree = "<group>"; };
@@ -268,6 +272,8 @@
 			children = (
 				353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */,
 				3514BF5A2B454A040065ED89 /* SkillCell.swift */,
+				351EE2FC2C0880A00012BC9E /* SkillIconView.swift */,
+				351EE2FE2C08896F0012BC9E /* SkillNameView.swift */,
 				353B4F172B44FFE100605E92 /* SkillInfoView.swift */,
 				35239DFC2BBEF1C80039F7D5 /* SkillProvider.swift */,
 			);
@@ -669,6 +675,7 @@
 				3594DD552BF5FB6E00575F3D /* GNDFilePreviewView.swift in Sources */,
 				3514BF622B4560730065ED89 /* MonsterInfoView.swift in Sources */,
 				3514BF5E2B4557950065ED89 /* MonsterDatabaseView.swift in Sources */,
+				351EE2FD2C0880A00012BC9E /* SkillIconView.swift in Sources */,
 				35B422ED2BEF07C100681AA2 /* DatabaseView.swift in Sources */,
 				35B422F42BEF602500681AA2 /* StatusChangeDatabaseView.swift in Sources */,
 				35B422F82BEFA35400681AA2 /* DatabaseRecordDetailView.swift in Sources */,
@@ -722,6 +729,7 @@
 				3514BF842B4801E20065ED89 /* JobGridCell.swift in Sources */,
 				35BE555C2BDAAFBF003715C3 /* MetalView.swift in Sources */,
 				35BE552D2BD939AA003715C3 /* ImageFilePreviewView.swift in Sources */,
+				351EE2FF2C08896F0012BC9E /* SkillNameView.swift in Sources */,
 				35B422FC2BEFBC8F00681AA2 /* StatusChange+DatabaseRecord.swift in Sources */,
 				3514BF602B455EF90065ED89 /* MonsterGridCell.swift in Sources */,
 				35E27A832BC96AC800C11076 /* Message.swift in Sources */,

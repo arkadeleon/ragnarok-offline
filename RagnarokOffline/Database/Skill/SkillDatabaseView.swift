@@ -20,15 +20,27 @@ struct SkillDatabaseView: View {
                 }
                 .listStyle(.plain)
             } regular: {
-                ScrollView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        ForEach(skills) { skill in
-                            NavigationLink(value: skill) {
-                                SkillCell(skill: skill)
-                            }
+                Table(skills) {
+                    TableColumn("") { skill in
+                        SkillIconView(skill: skill)
+                    }
+                    .width(40)
+                    TableColumn("Name") { skill in
+                        NavigationLink(value: skill) {
+                            SkillNameView(skill: skill)
                         }
                     }
-                    .padding(20)
+                    TableColumn("Max Level") { skill in
+                        Text("\(skill.maxLevel)")
+                    }
+                    .width(100)
+                    TableColumn("SP Cost") { skill in
+                        skill.requires?.spCost.map { spCost in
+                            Text("\(spCost)")
+                        } right: { spCost in
+                            Text(spCost.compactMap(String.init).joined(separator: " / "))
+                        }
+                    }
                 }
             }
         }
