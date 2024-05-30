@@ -176,6 +176,9 @@
     "Monster Summon Database" : {
 
     },
+    "Name" : {
+
+    },
     "Password" : {
 
     },
@@ -216,9 +219,6 @@
 
     },
     "Start All" : {
-
-    },
-    "Status" : {
 
     },
     "Status Change Database" : {

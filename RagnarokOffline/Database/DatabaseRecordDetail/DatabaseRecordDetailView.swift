@@ -52,6 +52,7 @@ struct DatabaseRecordDetailView: View {
                 }
             }
         }
+        .navigationTitle(record.recordName)
         .task {
             await fetchDetail()
         }

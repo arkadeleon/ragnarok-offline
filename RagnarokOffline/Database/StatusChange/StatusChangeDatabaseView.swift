@@ -21,14 +21,12 @@ struct StatusChangeDatabaseView: View {
                 .listStyle(.plain)
             } regular: {
                 Table(statusChanges) {
-                    TableColumn("Status", value: \.status)
-                    TableColumn("Icon", value: \.icon)
-                    TableColumn("") { statusChange in
+                    TableColumn("Name") { statusChange in
                         NavigationLink(value: statusChange) {
-                            Image(systemName: "info.circle")
+                            Text(statusChange.status)
                         }
                     }
-                    .width(24)
+                    TableColumn("Icon", value: \.icon)
                 }
             }
         }

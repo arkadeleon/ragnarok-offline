@@ -20,17 +20,15 @@ struct MonsterSummonDatabaseView: View {
                 .listStyle(.plain)
             } regular: {
                 Table(monsterSummons) {
-                    TableColumn("Group", value: \.monsterSummon.group)
+                    TableColumn("Group") { monsterSummon in
+                        NavigationLink(value: monsterSummon) {
+                            Text(monsterSummon.monsterSummon.group)
+                        }
+                    }
                     TableColumn("Default", value: \.monsterSummon.default)
                     TableColumn("Summon") { monsterSummon in
                         Text("\(monsterSummon.monsterSummon.summon.count) monsters")
                     }
-                    TableColumn("") { monsterSummon in
-                        NavigationLink(value: monsterSummon) {
-                            Image(systemName: "info.circle")
-                        }
-                    }
-                    .width(24)
                 }
             }
         }

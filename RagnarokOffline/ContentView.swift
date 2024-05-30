@@ -94,6 +94,7 @@ struct ContentView: View {
                 #endif
             } header: {
                 Text("Client")
+                    .foregroundStyle(Color(uiColor: .label))
                     .font(.title2)
                     .bold()
                     .textCase(nil)
@@ -144,6 +145,7 @@ struct ContentView: View {
             } header: {
                 HStack {
                     Text("Server")
+                        .foregroundStyle(Color(uiColor: .label))
                         .font(.title2)
                         .bold()
 
@@ -192,6 +194,7 @@ struct ContentView: View {
                 }
             } header: {
                 Text("Database")
+                    .foregroundStyle(Color(uiColor: .label))
                     .font(.title2)
                     .bold()
                     .textCase(nil)
@@ -199,7 +202,7 @@ struct ContentView: View {
         }
         .listStyle(.sidebar)
         .navigationTitle("Ragnarok Offline")
-        .toolbar {
+//        .toolbar {
 //            Menu {
 //                Button {
 //                    isSettingsPresented.toggle()
@@ -221,7 +224,7 @@ struct ContentView: View {
 //                        }
 //                }
 //            }
-        }
+//        }
     }
 
     private func detail(for item: SidebarItem) -> some View {
