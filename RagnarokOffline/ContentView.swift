@@ -42,8 +42,6 @@ struct ContentView: View {
     @State private var webServer = ObservableServer(server: WebServer.shared)
 
     @State private var selectedItem: SidebarItem? = .files
-    @State private var isClientSectionExpanded = true
-    @State private var isServerSectionExpanded = true
     @State private var isDatabaseSectionExpanded = true
 
     @State private var isSettingsPresented = false
@@ -80,7 +78,7 @@ struct ContentView: View {
 
     private func sidebar(selection: Binding<SidebarItem?>?) -> some View {
         List(selection: selection) {
-            Section("Client", isExpanded: $isClientSectionExpanded) {
+            Section {
                 NavigationLink(value: SidebarItem.files) {
                     Label("Files", systemImage: "folder")
                 }
@@ -94,9 +92,14 @@ struct ContentView: View {
                     Label("Cube", systemImage: "cube")
                 }
                 #endif
+            } header: {
+                Text("Client")
+                    .font(.title2)
+                    .bold()
+                    .textCase(nil)
             }
 
-            Section("Server", isExpanded: $isServerSectionExpanded) {
+            Section {
                 NavigationLink(value: SidebarItem.loginServer) {
                     LabeledContent {
                         Text(loginServer.status.description)
@@ -138,9 +141,24 @@ struct ContentView: View {
                     Label("Server Files", systemImage: "folder")
                 }
                 #endif
+            } header: {
+                HStack {
+                    Text("Server")
+                        .font(.title2)
+                        .bold()
+
+                    Spacer()
+
+                    Button {
+                        startAllServers()
+                    } label: {
+                        Label("Start All", systemImage: "play")
+                    }
+                }
+                .textCase(nil)
             }
 
-            Section("Database", isExpanded: $isDatabaseSectionExpanded) {
+            Section(isExpanded: $isDatabaseSectionExpanded) {
                 NavigationLink(value: SidebarItem.itemDatabase) {
                     Label("Item Database", systemImage: "leaf")
                 }
@@ -172,38 +190,37 @@ struct ContentView: View {
                 NavigationLink(value: SidebarItem.statusChangeDatabase) {
                     Label("Status Change Database", systemImage: "zzz")
                 }
+            } header: {
+                Text("Database")
+                    .font(.title2)
+                    .bold()
+                    .textCase(nil)
             }
         }
         .listStyle(.sidebar)
         .navigationTitle("Ragnarok Offline")
         .toolbar {
-            Menu {
-                Button {
-                    startAllServers()
-                } label: {
-                    Label("Start All Servers", systemImage: "play")
-                }
-
-                Button {
-                    isSettingsPresented.toggle()
-                } label: {
-                    Label("Settings", systemImage: "gearshape")
-                }
-            } label: {
-                Image(systemName: "ellipsis.circle")
-            }
-            .sheet(isPresented: $isSettingsPresented) {
-                NavigationStack {
-                    SettingsView()
-                        .toolbar {
-                            ToolbarItem(placement: .confirmationAction) {
-                                Button("Done") {
-                                    isSettingsPresented.toggle()
-                                }
-                            }
-                        }
-                }
-            }
+//            Menu {
+//                Button {
+//                    isSettingsPresented.toggle()
+//                } label: {
+//                    Label("Settings", systemImage: "gearshape")
+//                }
+//            } label: {
+//                Image(systemName: "ellipsis.circle")
+//            }
+//            .sheet(isPresented: $isSettingsPresented) {
+//                NavigationStack {
+//                    SettingsView()
+//                        .toolbar {
+//                            ToolbarItem(placement: .confirmationAction) {
+//                                Button("Done") {
+//                                    isSettingsPresented.toggle()
+//                                }
+//                            }
+//                        }
+//                }
+//            }
         }
     }
 

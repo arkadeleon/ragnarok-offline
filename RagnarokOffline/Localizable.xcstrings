@@ -46,9 +46,6 @@
     "Delete" : {
 
     },
-    "Done" : {
-
-    },
     "Files" : {
       "localizations" : {
         "de" : {
@@ -218,7 +215,7 @@
     "SP Increase" : {
 
     },
-    "Start All Servers" : {
+    "Start All" : {
 
     },
     "Status" : {

@@ -10,6 +10,8 @@ import Foundation
 extension Locale.Language {
     var preferredEncoding: String.Encoding {
         let cfEncoding = switch languageCode {
+        case .arabic:
+            CFStringConvertWindowsCodepageToEncoding(1256)
         case .chinese where script == .hanSimplified:
             CFStringConvertWindowsCodepageToEncoding(936)
         case .chinese where script == .hanTraditional:
@@ -20,8 +22,12 @@ extension Locale.Language {
             CFStringConvertWindowsCodepageToEncoding(949)
         case .russian:
             CFStringConvertWindowsCodepageToEncoding(1251)
+        case .spanish where region == .latinAmerica:
+            CFStringConvertWindowsCodepageToEncoding(1145)
         case .thai:
             CFStringConvertWindowsCodepageToEncoding(874)
+        case .vietnamese:
+            CFStringConvertWindowsCodepageToEncoding(1258)
         default:
             CFStringConvertWindowsCodepageToEncoding(1252)
         }
