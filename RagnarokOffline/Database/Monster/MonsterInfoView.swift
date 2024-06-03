@@ -145,7 +145,7 @@ struct MonsterInfoView: View {
         fields.append(("Luk", "\(monster.luk)"))
 
         fields.append(("Attack Range", "\(monster.attackRange)"))
-        fields.append(("Skill Cast Range", "\(monster.skillRange)"))
+        fields.append(("Skill Range", "\(monster.skillRange)"))
         fields.append(("Chase Range", "\(monster.chaseRange)"))
 
         fields.append(("Size", monster.size.description))
@@ -155,9 +155,10 @@ struct MonsterInfoView: View {
         fields.append(("Element Level", "\(monster.elementLevel)"))
 
         fields.append(("Walk Speed", "\(monster.walkSpeed.rawValue)"))
-        fields.append(("Attack Speed", "\(monster.attackDelay)"))
-        fields.append(("Attack Animation Speed", "\(monster.attackMotion)"))
-        fields.append(("Damage Animation Speed", "\(monster.damageMotion)"))
+        fields.append(("Attack Delay", "\(monster.attackDelay)"))
+        fields.append(("Attack Motion", "\(monster.attackMotion)"))
+        fields.append(("Client Attack Motion", "\(monster.clientAttackMotion)"))
+        fields.append(("Damage Motion", "\(monster.damageMotion)"))
         fields.append(("Damage Taken", "\(monster.damageTaken)"))
 
         fields.append(("AI", monster.ai.description))

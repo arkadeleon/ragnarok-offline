@@ -106,6 +106,9 @@ public struct Monster: Decodable, Equatable, Hashable, Identifiable {
     /// Attack animation speed. (Default: 0)
     public var attackMotion: Int
 
+    /// Client attack speed. (Default: AttackMotion)
+    public var clientAttackMotion: Int
+
     /// Damage animation speed. (Default: 0)
     public var damageMotion: Int
 
@@ -161,6 +164,7 @@ public struct Monster: Decodable, Equatable, Hashable, Identifiable {
         case walkSpeed = "WalkSpeed"
         case attackDelay = "AttackDelay"
         case attackMotion = "AttackMotion"
+        case clientAttackMotion = "ClientAttackMotion"
         case damageMotion = "DamageMotion"
         case damageTaken = "DamageTaken"
         case ai = "Ai"
@@ -205,6 +209,7 @@ public struct Monster: Decodable, Equatable, Hashable, Identifiable {
         self.walkSpeed = try container.decodeIfPresent(WalkSpeed.self, forKey: .walkSpeed) ?? .default
         self.attackDelay = try container.decodeIfPresent(Int.self, forKey: .attackDelay) ?? 0
         self.attackMotion = try container.decodeIfPresent(Int.self, forKey: .attackMotion) ?? 0
+        self.clientAttackMotion = try container.decodeIfPresent(Int.self, forKey: .clientAttackMotion) ?? self.attackMotion
         self.damageMotion = try container.decodeIfPresent(Int.self, forKey: .damageMotion) ?? 0
         self.damageTaken = try container.decodeIfPresent(Int.self, forKey: .damageTaken) ?? 100
         self.ai = try container.decodeIfPresent(MonsterAI.self, forKey: .ai) ?? .ai06
