@@ -189,9 +189,9 @@ struct ContentView: View {
                     Label("Skill Database", systemImage: "arrow.up.heart")
                 }
 
-                NavigationLink(value: SidebarItem.statusChangeDatabase) {
-                    Label("Status Change Database", systemImage: "zzz")
-                }
+//                NavigationLink(value: SidebarItem.statusChangeDatabase) {
+//                    Label("Status Change Database", systemImage: "zzz")
+//                }
             } header: {
                 Text("Database")
                     .foregroundStyle(Color(uiColor: .label))
