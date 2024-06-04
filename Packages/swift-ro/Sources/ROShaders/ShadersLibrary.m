@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NSBundle *ROShaders_SWIFTPM_MODULE_BUNDLE() {
-    NSString *bundleName = @"ragnarok-offline_ROShaders";
+    NSString *bundleName = @"swift-ro_ROShaders";
 
     NSArray<NSURL *> *candidates = @[
         NSBundle.mainBundle.resourceURL,
