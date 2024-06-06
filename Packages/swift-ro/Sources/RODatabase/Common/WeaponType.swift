@@ -65,8 +65,8 @@ extension WeaponType: Identifiable {
     }
 }
 
-extension WeaponType: CustomStringConvertible {
-    public var description: String {
+extension WeaponType: CustomLocalizedStringResourceConvertible {
+    public var localizedStringResource: LocalizedStringResource {
         switch self {
         case .fist: "Fist"
         case .dagger: "Dagger"

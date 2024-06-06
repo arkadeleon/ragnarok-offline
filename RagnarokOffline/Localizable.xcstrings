@@ -7,16 +7,46 @@
     " " : {
 
     },
-    "%@" : {
-
-    },
-    "%lld" : {
-
-    },
     "%lld monsters" : {
 
     },
-    "%lldz" : {
+    "Aegis Name" : {
+
+    },
+    "Agi" : {
+
+    },
+    "AI" : {
+
+    },
+    "Allow Auto Feed" : {
+
+    },
+    "Ammo Type" : {
+
+    },
+    "Armor Level" : {
+
+    },
+    "Attack" : {
+
+    },
+    "Attack Delay" : {
+
+    },
+    "Attack Motion" : {
+
+    },
+    "Attack Range" : {
+
+    },
+    "Attack Rate" : {
+
+    },
+    "Base ASPD" : {
+
+    },
+    "Base Attack" : {
 
     },
     "Base Exp" : {
@@ -28,6 +58,9 @@
     "Base Level" : {
 
     },
+    "Base Magic Attack" : {
+
+    },
     "Base SP" : {
 
     },
@@ -37,7 +70,28 @@
     "Buy" : {
 
     },
+    "Capture Rate" : {
+
+    },
+    "Card Type" : {
+
+    },
+    "Change Target Rate" : {
+
+    },
+    "Chase Range" : {
+
+    },
+    "Class" : {
+
+    },
+    "Classes" : {
+
+    },
     "Client" : {
+
+    },
+    "Client Attack Motion" : {
 
     },
     "Copy" : {
@@ -46,13 +100,61 @@
     "Cube" : {
 
     },
+    "Damage Motion" : {
+
+    },
+    "Damage Taken" : {
+
+    },
     "Database" : {
 
     },
     "Default" : {
 
     },
+    "Defense" : {
+
+    },
     "Delete" : {
+
+    },
+    "Description" : {
+
+    },
+    "Dex" : {
+
+    },
+    "Dropping Monsters" : {
+
+    },
+    "Drops" : {
+
+    },
+    "Element" : {
+
+    },
+    "Element Level" : {
+
+    },
+    "Empty Content" : {
+
+    },
+    "Empty Folder" : {
+
+    },
+    "End On End" : {
+
+    },
+    "End On Start" : {
+
+    },
+    "End Return" : {
+
+    },
+    "Equip Script" : {
+
+    },
+    "Fail" : {
 
     },
     "Files" : {
@@ -137,7 +239,19 @@
         }
       }
     },
+    "Fullness" : {
+
+    },
+    "Gender" : {
+
+    },
+    "Gradable" : {
+
+    },
     "Group" : {
+
+    },
+    "HP" : {
 
     },
     "HP Factor" : {
@@ -146,19 +260,49 @@
     "HP Increase" : {
 
     },
+    "Hunger Increase" : {
+
+    },
+    "Hungry Delay" : {
+
+    },
     "Icon" : {
 
     },
     "ID" : {
 
     },
+    "Info" : {
+
+    },
     "Inspect Raw Data" : {
+
+    },
+    "Int" : {
+
+    },
+    "Intimacy Fed" : {
+
+    },
+    "Intimacy Hungry" : {
+
+    },
+    "Intimacy Overfed" : {
+
+    },
+    "Intimacy OwnerDie" : {
+
+    },
+    "Intimacy Start" : {
 
     },
     "Item Database" : {
 
     },
     "Item Info Source" : {
+
+    },
+    "Items" : {
 
     },
     "Job Database" : {
@@ -170,10 +314,34 @@
     "Job Level" : {
 
     },
+    "Jobs" : {
+
+    },
+    "Level" : {
+
+    },
+    "Locations" : {
+
+    },
     "Login" : {
 
     },
+    "Luk" : {
+
+    },
+    "Magic Attack" : {
+
+    },
+    "Magic Defense" : {
+
+    },
+    "Magic Resistance" : {
+
+    },
     "Map Database" : {
+
+    },
+    "Maps" : {
 
     },
     "Max Level" : {
@@ -182,7 +350,25 @@
     "Max Weight" : {
 
     },
+    "Maximum Attack" : {
+
+    },
+    "Maximum Level" : {
+
+    },
     "Messages" : {
+
+    },
+    "Minimum Attack" : {
+
+    },
+    "Minimum Level" : {
+
+    },
+    "Modes" : {
+
+    },
+    "Monster" : {
 
     },
     "Monster Database" : {
@@ -191,7 +377,19 @@
     "Monster Summon Database" : {
 
     },
+    "MVP Drops" : {
+
+    },
+    "MVP Exp" : {
+
+    },
     "Name" : {
+
+    },
+    "No Records" : {
+
+    },
+    "NOT STARTED" : {
 
     },
     "Password" : {
@@ -206,16 +404,40 @@
     "Preview" : {
 
     },
+    "Race" : {
+
+    },
+    "Race Groups" : {
+
+    },
     "Ragnarok Offline" : {
 
     },
     "Raw Data" : {
 
     },
+    "Refinable" : {
+
+    },
+    "Resistance" : {
+
+    },
+    "Retaliate Rate" : {
+
+    },
+    "RUNNING" : {
+
+    },
+    "Script" : {
+
+    },
     "Sell" : {
 
     },
     "Server" : {
+
+    },
+    "Server Files" : {
 
     },
     "Service Type" : {
@@ -227,7 +449,22 @@
     "Share" : {
 
     },
+    "Size" : {
+
+    },
     "Skill Database" : {
+
+    },
+    "Skill Range" : {
+
+    },
+    "Skills" : {
+
+    },
+    "Slots" : {
+
+    },
+    "SP" : {
 
     },
     "SP Cost" : {
@@ -236,19 +473,64 @@
     "SP Increase" : {
 
     },
+    "Spawn Monsters" : {
+
+    },
+    "Special Performance" : {
+
+    },
     "Start All" : {
+
+    },
+    "STARTING" : {
+
+    },
+    "Status" : {
 
     },
     "Status Change Database" : {
 
     },
+    "STOPPED" : {
+
+    },
+    "STOPPING" : {
+
+    },
+    "Str" : {
+
+    },
     "Summon" : {
+
+    },
+    "Support Script" : {
+
+    },
+    "Target Type" : {
 
     },
     "Type" : {
 
     },
+    "Unequip Script" : {
+
+    },
     "Username" : {
+
+    },
+    "View" : {
+
+    },
+    "Vit" : {
+
+    },
+    "Walk Speed" : {
+
+    },
+    "Weapon Level" : {
+
+    },
+    "Weapon Type" : {
 
     },
     "Weight" : {

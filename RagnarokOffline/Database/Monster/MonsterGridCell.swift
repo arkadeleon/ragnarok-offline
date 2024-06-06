@@ -11,8 +11,8 @@ import RODatabase
 import ROResources
 
 struct MonsterGridCell: View {
-    let monster: Monster
-    let secondaryText: String?
+    var monster: Monster
+    var secondaryText: String?
 
     @State private var localizedMonsterName: String?
     @State private var monsterImage: CGImage?

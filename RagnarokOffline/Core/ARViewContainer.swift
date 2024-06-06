@@ -9,7 +9,7 @@ import RealityKit
 import SwiftUI
 
 struct ARViewContainer: UIViewRepresentable {
-    let entity: Entity
+    var entity: Entity
 
     func makeUIView(context: Context) -> ARView {
         let arView = ARView(frame: .zero, cameraMode: .nonAR, automaticallyConfigureSession: false)

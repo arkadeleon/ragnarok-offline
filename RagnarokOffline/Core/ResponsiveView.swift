@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ResponsiveView<Compact, Regular>: View where Compact: View, Regular: View {
-    let compact: () -> Compact
-    let regular: () -> Regular
+    var compact: () -> Compact
+    var regular: () -> Regular
 
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 

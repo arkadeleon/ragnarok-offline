@@ -11,8 +11,8 @@ import ROClient
 import RODatabase
 
 struct JobInfoView: View {
-    let mode: ServerMode
-    let jobStats: JobStats
+    var mode: ServerMode
+    var jobStats: JobStats
 
     typealias BaseLevelStats = (level: Int, baseExp: Int, baseHp: Int, baseSp: Int)
     typealias JobLevelStats = (level: Int, jobExp: Int, bonusStats: String)
@@ -35,17 +35,21 @@ struct JobInfoView: View {
 
             DatabaseRecordInfoSection("Info") {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                    LabeledContent("Max Weight", value: "\(jobStats.maxWeight)")
-                    LabeledContent("HP Factor", value: "\(jobStats.hpFactor)")
-                    LabeledContent("HP Increase", value: "\(jobStats.hpIncrease)")
-                    LabeledContent("SP Increase", value: "\(jobStats.spIncrease)")
+                    LabeledContent("Max Weight", value: jobStats.maxWeight.formatted())
+                    LabeledContent("HP Factor", value: jobStats.hpFactor.formatted())
+                    LabeledContent("HP Increase", value: jobStats.hpIncrease.formatted())
+                    LabeledContent("SP Increase", value: jobStats.spIncrease.formatted())
                 }
             }
 
             DatabaseRecordInfoSection("Base ASPD") {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                    ForEach(baseASPD, id: \.title) { field in
-                        LabeledContent(field.title, value: field.value)
+                    ForEach(baseASPD, id: \.title.key) { field in
+                        LabeledContent {
+                            Text(field.value)
+                        } label: {
+                            Text(field.title)
+                        }
                     }
                 }
             }
@@ -67,18 +71,18 @@ struct JobInfoView: View {
                 LazyVStack(spacing: 10) {
                     ForEach(baseLevels, id: \.level) { levelStats in
                         HStack {
-                            Text("\(levelStats.level + 1)")
+                            Text((levelStats.level + 1).formatted())
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
-                            Text("\(levelStats.baseExp)")
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundColor(.secondary)
-
-                            Text("\(levelStats.baseHp)")
+                            Text(levelStats.baseExp.formatted())
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 .foregroundColor(.secondary)
 
-                            Text("\(levelStats.baseSp)")
+                            Text(levelStats.baseHp.formatted())
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                .foregroundColor(.secondary)
+
+                            Text(levelStats.baseSp.formatted())
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 .foregroundColor(.secondary)
                         }
@@ -104,10 +108,10 @@ struct JobInfoView: View {
                 LazyVStack(spacing: 10) {
                     ForEach(jobLevels, id: \.level) { levelStats in
                         HStack {
-                            Text("\(levelStats.level + 1)")
+                            Text((levelStats.level + 1).formatted())
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
-                            Text("\(levelStats.jobExp)")
+                            Text(levelStats.jobExp.formatted())
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 .foregroundColor(.secondary)
 
@@ -146,7 +150,7 @@ struct JobInfoView: View {
     private var baseASPD: [DatabaseRecordField] {
         WeaponType.allCases.compactMap { weaponType in
             if let aspd = jobStats.baseASPD[weaponType] {
-                (weaponType.description, "\(aspd)")
+                (weaponType.localizedStringResource, aspd.formatted())
             } else {
                 nil
             }

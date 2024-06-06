@@ -36,15 +36,15 @@ struct ItemDatabaseView: View {
                     }
                     .width(200)
                     TableColumn("Buy") { item in
-                        Text("\(item.buy)z")
+                        Text(item.buy.formatted() + "z")
                     }
                     .width(150)
                     TableColumn("Sell") { item in
-                        Text("\(item.sell)z")
+                        Text(item.sell.formatted() + "z")
                     }
                     .width(150)
                     TableColumn("Weight") { item in
-                        Text("\(NSNumber(value: Double(item.weight) / 10))")
+                        Text((Double(item.weight) / 10).formatted())
                     }
                     .width(100)
                 }

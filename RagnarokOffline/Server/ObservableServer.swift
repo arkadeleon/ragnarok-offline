@@ -66,8 +66,8 @@ extension Server {
     }
 }
 
-extension ServerStatus: CustomStringConvertible {
-    public var description: String {
+extension ServerStatus: CustomLocalizedStringResourceConvertible {
+    public var localizedStringResource: LocalizedStringResource {
         switch self {
         case .notStarted: "NOT STARTED"
         case .starting: "STARTING"

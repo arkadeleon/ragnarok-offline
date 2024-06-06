@@ -49,8 +49,12 @@ struct PetInfoView: View {
 
             DatabaseRecordInfoSection("Info") {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                    ForEach(pet.fields, id: \.title) { field in
-                        LabeledContent(field.title, value: field.value)
+                    ForEach(pet.fields, id: \.title.key) { field in
+                        LabeledContent {
+                            Text(field.value)
+                        } label: {
+                            Text(field.title)
+                        }
                     }
                 }
             }

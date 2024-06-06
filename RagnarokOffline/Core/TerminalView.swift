@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TerminalViewContainer: UIViewRepresentable {
-    let terminalView: TerminalView
+    var terminalView: TerminalView
 
     func makeUIView(context: Context) -> TerminalView {
         return terminalView

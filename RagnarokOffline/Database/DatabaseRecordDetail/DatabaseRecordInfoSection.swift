@@ -33,9 +33,9 @@ struct DatabaseRecordInfoSection<Header, Content>: View where Header: View, Cont
         .padding(.horizontal, 20)
     }
 
-    init(_ title: String, verticalSpacing: CGFloat = 10, @ViewBuilder content: @escaping () -> Content) where Header == Text {
+    init(_ titleKey: LocalizedStringKey, verticalSpacing: CGFloat = 10, @ViewBuilder content: @escaping () -> Content) where Header == Text {
         self.verticalSpacing = verticalSpacing
-        self.header = { Text(title) }
+        self.header = { Text(titleKey) }
         self.content = content
     }
 

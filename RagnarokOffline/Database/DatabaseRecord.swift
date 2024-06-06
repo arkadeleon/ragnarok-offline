@@ -5,40 +5,41 @@
 //  Created by Leon Li on 2024/5/11.
 //
 
+import CoreGraphics
 import rAthenaCommon
 
-typealias DatabaseRecordField = (title: String, value: String)
+typealias DatabaseRecordField = (title: LocalizedStringResource, value: String)
 
 struct DatabaseRecordDetail {
     enum Section: Identifiable {
-        case image(String)
-        case attributes(String, [Attribute])
-        case description(String, String)
-        case script(String, String)
-        case references(String, [any DatabaseRecord])
+        case image(LocalizedStringResource, CGImage)
+        case attributes(LocalizedStringResource, [Attribute])
+        case description(LocalizedStringResource, String)
+        case script(LocalizedStringResource, String)
+        case references(LocalizedStringResource, [any DatabaseRecord])
 
         var id: String {
             switch self {
-            case .image(let title):
-                title
+            case .image(let title, _):
+                title.key
             case .attributes(let title, _):
-                title
+                title.key
             case .description(let title, _):
-                title
+                title.key
             case .script(let title, _):
-                title
+                title.key
             case .references(let title, _):
-                title
+                title.key
             }
         }
     }
 
     struct Attribute: Identifiable {
-        var name: String
+        var name: LocalizedStringResource
         var value: String
 
         var id: String {
-            name
+            name.key
         }
     }
 

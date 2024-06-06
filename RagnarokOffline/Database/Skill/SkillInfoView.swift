@@ -11,8 +11,8 @@ import RODatabase
 import ROResources
 
 struct SkillInfoView: View {
-    let mode: ServerMode
-    let skill: Skill
+    var mode: ServerMode
+    var skill: Skill
 
     @State private var skillDescription: String?
 
@@ -20,8 +20,12 @@ struct SkillInfoView: View {
         ScrollView {
             DatabaseRecordInfoSection("Info") {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                    ForEach(fields, id: \.title) { field in
-                        LabeledContent(field.title, value: field.value)
+                    ForEach(fields, id: \.title.key) { field in
+                        LabeledContent {
+                            Text(field.value)
+                        } label: {
+                            Text(field.title)
+                        }
                     }
                 }
             }
@@ -44,7 +48,7 @@ struct SkillInfoView: View {
         fields.append(("ID", "#\(skill.id)"))
         fields.append(("Aegis Name", skill.aegisName))
         fields.append(("Name", skill.name))
-        fields.append(("Maximum Level", "\(skill.maxLevel)"))
+        fields.append(("Maximum Level", skill.maxLevel.formatted()))
         fields.append(("Type", skill.type.description))
         fields.append(("Target Type", skill.targetType.description))
 

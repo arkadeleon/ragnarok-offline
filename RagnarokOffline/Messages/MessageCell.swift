@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MessageCell: View {
-    let message: Message
+    var message: Message
 
     private var foregroundColor: Color {
         switch message.sender {

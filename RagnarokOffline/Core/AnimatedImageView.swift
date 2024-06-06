@@ -9,7 +9,7 @@ import SwiftUI
 import ROCore
 
 struct AnimatedImageView: UIViewRepresentable {
-    let animatedImage: AnimatedImage
+    var animatedImage: AnimatedImage
 
     func makeUIView(context: Context) -> UIImageView {
         let imageView = UIImageView()

@@ -12,8 +12,8 @@ import RODatabase
 import ROResources
 
 struct ItemInfoView: View {
-    let mode: ServerMode
-    let item: Item
+    var mode: ServerMode
+    var item: Item
 
     typealias DroppingMonster = (monster: Monster, drop: Monster.Drop)
 
@@ -38,8 +38,12 @@ struct ItemInfoView: View {
 
             DatabaseRecordInfoSection("Info") {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                    ForEach(fields, id: \.title) { field in
-                        LabeledContent(field.title, value: field.value)
+                    ForEach(fields, id: \.title.key) { field in
+                        LabeledContent {
+                            Text(field.value)
+                        } label: {
+                            Text(field.title)
+                        }
                     }
                 }
             }
@@ -111,7 +115,7 @@ struct ItemInfoView: View {
     private var fields: [DatabaseRecordField] {
         var fields: [DatabaseRecordField] = []
 
-        fields.append(("ID", "#\(item.id)"))
+        fields.append(("ID", "#" + String(item.id)))
         fields.append(("Aegis Name", item.aegisName))
         fields.append(("Name", item.name))
         fields.append(("Type", item.type.description))
@@ -120,16 +124,16 @@ struct ItemInfoView: View {
         case .none:
             break
         case .weapon(let weaponType):
-            fields.append(("Weapon Type", weaponType.description))
+            fields.append(("Weapon Type", String(localized: weaponType.localizedStringResource)))
         case .ammo(let ammoType):
             fields.append(("Ammo Type", ammoType.description))
         case .card(let cardType):
             fields.append(("Card Type", cardType.description))
         }
 
-        fields.append(("Buy", "\(item.buy)z"))
-        fields.append(("Sell", "\(item.sell)z"))
-        fields.append(("Weight", "\(NSNumber(value: Double(item.weight) / 10))"))
+        fields.append(("Buy", item.buy.formatted() + "z"))
+        fields.append(("Sell", item.sell.formatted() + "z"))
+        fields.append(("Weight", (Double(item.weight) / 10).formatted()))
 
         switch item.type {
         case .weapon:

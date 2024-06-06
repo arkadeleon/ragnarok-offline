@@ -103,7 +103,7 @@ struct ContentView: View {
             Section {
                 NavigationLink(value: SidebarItem.loginServer) {
                     LabeledContent {
-                        Text(loginServer.status.description)
+                        Text(loginServer.status.localizedStringResource)
                             .font(.footnote)
                     } label: {
                         Label(loginServer.name, systemImage: "terminal")
@@ -112,7 +112,7 @@ struct ContentView: View {
 
                 NavigationLink(value: SidebarItem.charServer) {
                     LabeledContent {
-                        Text(charServer.status.description)
+                        Text(charServer.status.localizedStringResource)
                             .font(.footnote)
                     } label: {
                         Label(charServer.name, systemImage: "terminal")
@@ -121,7 +121,7 @@ struct ContentView: View {
 
                 NavigationLink(value: SidebarItem.mapServer) {
                     LabeledContent {
-                        Text(mapServer.status.description)
+                        Text(mapServer.status.localizedStringResource)
                             .font(.footnote)
                     } label: {
                         Label(mapServer.name, systemImage: "terminal")
@@ -130,7 +130,7 @@ struct ContentView: View {
 
                 NavigationLink(value: SidebarItem.webServer) {
                     LabeledContent {
-                        Text(webServer.status.description)
+                        Text(webServer.status.localizedStringResource)
                             .font(.footnote)
                     } label: {
                         Label(webServer.name, systemImage: "terminal")

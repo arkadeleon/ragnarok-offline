@@ -15,8 +15,8 @@ enum AsyncContentStatus<Value> {
 }
 
 struct AsyncContentView<Value, Content>: View where Content: View {
-    let status: AsyncContentStatus<Value>
-    let content: (Value) -> Content
+    var status: AsyncContentStatus<Value>
+    var content: (Value) -> Content
 
     var body: some View {
         ZStack {

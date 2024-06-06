@@ -9,7 +9,7 @@ import SwiftUI
 import RONetwork
 
 struct MessagesView: View {
-    private let loginClient = LoginClient()
+    @State private var loginClient = LoginClient()
 
     @State private var messages: [Message] = []
     @State private var editingMessageContent = ""

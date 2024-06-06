@@ -10,7 +10,7 @@ import RODatabase
 import ROClient
 
 struct JobGridCell: View {
-    let jobStats: JobStats
+    var jobStats: JobStats
 
     @State private var jobImage: CGImage?
 

@@ -10,7 +10,7 @@ import SwiftUI
 import RORenderers
 
 struct MetalViewContainer: UIViewRepresentable {
-    let renderer: any Renderer
+    var renderer: any Renderer
 
     func makeUIView(context: Context) -> MetalView {
         MetalView(renderer: renderer)

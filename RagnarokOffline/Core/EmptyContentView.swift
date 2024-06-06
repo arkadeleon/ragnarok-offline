@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct EmptyContentView: View {
-    let title: String
+    var titleKey: LocalizedStringKey
 
     var body: some View {
-        Text(title)
+        Text(titleKey)
             .font(.title2)
             .bold()
             .foregroundStyle(.secondary)
     }
 
-    init(_ title: String) {
-        self.title = title
+    init(_ titleKey: LocalizedStringKey) {
+        self.titleKey = titleKey
     }
 }
 

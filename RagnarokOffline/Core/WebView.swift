@@ -9,8 +9,8 @@ import SwiftUI
 import WebKit
 
 struct WebView: UIViewRepresentable {
-    let htmlString: String
-    let baseURL: URL?
+    var htmlString: String
+    var baseURL: URL?
 
     func makeUIView(context: Context) -> WKWebView {
         WKWebView()

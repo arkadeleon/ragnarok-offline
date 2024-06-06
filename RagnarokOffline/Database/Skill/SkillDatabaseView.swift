@@ -31,12 +31,12 @@ struct SkillDatabaseView: View {
                         }
                     }
                     TableColumn("Max Level") { skill in
-                        Text("\(skill.maxLevel)")
+                        Text(skill.maxLevel.formatted())
                     }
                     .width(100)
                     TableColumn("SP Cost") { skill in
                         skill.requires?.spCost.map { spCost in
-                            Text("\(spCost)")
+                            Text(spCost.formatted())
                         } right: { spCost in
                             Text(spCost.compactMap(String.init).joined(separator: " / "))
                         }

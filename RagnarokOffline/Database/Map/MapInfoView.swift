@@ -11,8 +11,8 @@ import ROClient
 import RODatabase
 
 struct MapInfoView: View {
-    let mode: ServerMode
-    let map: Map
+    var mode: ServerMode
+    var map: Map
 
     typealias SpawnMonster = (monster: Monster, spawn: MonsterSpawn)
 

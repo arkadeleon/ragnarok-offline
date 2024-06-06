@@ -9,8 +9,8 @@ import SwiftUI
 import rAthenaCommon
 
 struct DatabaseRecordDetailView: View {
-    let mode: ServerMode
-    let record: any DatabaseRecord
+    var mode: ServerMode
+    var record: any DatabaseRecord
 
     @State private var loadStatus: LoadStatus = .notYetLoaded
     @State private var recordDetail = DatabaseRecordDetail(sections: [])
@@ -19,35 +19,49 @@ struct DatabaseRecordDetailView: View {
         ScrollView {
             ForEach(recordDetail.sections) { section in
                 switch section {
-                case .image:
-                    DatabaseRecordInfoSection("") {
-
+                case .image(let title, let image):
+                    DatabaseRecordInfoSection {
+                        Image(image, scale: 1, label: Text(title))
+                    } header: {
+                        Text(title)
                     }
                 case .attributes(let title, let attributes):
-                    DatabaseRecordInfoSection(title) {
+                    DatabaseRecordInfoSection {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
                             ForEach(attributes) { attribute in
-                                LabeledContent(attribute.name, value: attribute.value)
+                                LabeledContent {
+                                    Text(attribute.value)
+                                } label: {
+                                    Text(attribute.name)
+                                }
                             }
                         }
+                    } header: {
+                        Text(title)
                     }
                 case .description(let title, let description):
-                    DatabaseRecordInfoSection(title) {
+                    DatabaseRecordInfoSection {
                         Text(description)
+                    } header: {
+                        Text(title)
                     }
                 case .script(let title, let script):
-                    DatabaseRecordInfoSection(title) {
+                    DatabaseRecordInfoSection {
                         Text(script)
                             .monospaced()
+                    } header: {
+                        Text(title)
                     }
                 case .references(let title, let references):
-                    DatabaseRecordInfoSection(title) {
+                    DatabaseRecordInfoSection {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                             ForEach(references, id: \.id) { reference in
                                 NavigationLink(reference.recordName, value: reference)
                             }
                         }
                         .padding(.vertical, 20)
+                    } header: {
+                        Text(title)
                     }
                 }
             }

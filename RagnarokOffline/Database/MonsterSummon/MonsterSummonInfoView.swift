@@ -28,7 +28,7 @@ struct MonsterSummonInfoView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .leading, spacing: 30) {
                         ForEach(summonMonsters) { summonMonster in
                             NavigationLink(value: summonMonster.monster) {
-                                MonsterGridCell(monster: summonMonster.monster, secondaryText: "\(summonMonster.rate)")
+                                MonsterGridCell(monster: summonMonster.monster, secondaryText: summonMonster.rate.formatted())
                             }
                         }
                     }

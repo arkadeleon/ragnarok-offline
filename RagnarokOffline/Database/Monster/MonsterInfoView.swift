@@ -11,8 +11,8 @@ import ROClient
 import RODatabase
 
 struct MonsterInfoView: View {
-    let mode: ServerMode
-    let monster: Monster
+    var mode: ServerMode
+    var monster: Monster
 
     typealias DropItem = (index: Int, drop: Monster.Drop, item: Item)
     typealias SpawnMap = (map: Map, monsterSpawn: MonsterSpawn)
@@ -43,8 +43,12 @@ struct MonsterInfoView: View {
 
             DatabaseRecordInfoSection("Info") {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                    ForEach(fields, id: \.title) { field in
-                        LabeledContent(field.title, value: field.value)
+                    ForEach(fields, id: \.title.key) { field in
+                        LabeledContent {
+                            Text(field.value)
+                        } label: {
+                            Text(field.title)
+                        }
                     }
                 }
             }
