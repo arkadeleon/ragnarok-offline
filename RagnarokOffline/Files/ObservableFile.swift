@@ -118,9 +118,9 @@ extension ObservableFile {
     var rawDataRepresentable: Bool {
         switch file.info.type {
         case .act, .gat, .gnd, .rsm, .rsw, .spr, .str:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 
@@ -153,6 +153,35 @@ extension ObservableFile {
 
         let rawData = try? encoder.encode(value)
         return rawData
+    }
+}
+
+extension ObservableFile {
+    var hasReferences: Bool {
+        switch file.info.type {
+        case .gnd:
+            true
+        default:
+            false
+        }
+    }
+
+    func referenceFiles() throws -> [ObservableFile] {
+        switch file.info.type {
+        case .gnd:
+            guard case .grfEntry(let grf, _) = file, let data = file.contents() else {
+                return []
+            }
+            let gnd = try GND(data: data)
+            let referenceFiles = gnd.textures.map { textureName in
+                let path = GRF.Path(string: "data\\texture\\" + textureName)
+                let file = File.grfEntry(grf, path)
+                return ObservableFile(file: file)
+            }
+            return referenceFiles
+        default:
+            return []
+        }
     }
 }
 

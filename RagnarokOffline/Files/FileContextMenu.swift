@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct FileContextMenu: View {
-    typealias Action = () -> Void
-
     var file: ObservableFile
     var previewAction: Action?
-    var inspectRawDataAction: Action?
+    var showRawDataAction: Action?
+    var showReferencesAction: Action?
     var copyAction: Action?
     var deleteAction: Action?
+
+    typealias Action = () -> Void
 
     var body: some View {
         Group {
@@ -29,9 +30,17 @@ struct FileContextMenu: View {
 
                 if file.rawDataRepresentable {
                     Button {
-                        inspectRawDataAction?()
+                        showRawDataAction?()
                     } label: {
-                        Label("Inspect Raw Data", systemImage: "list.bullet.indent")
+                        Label("Raw Data", systemImage: "list.bullet.indent")
+                    }
+                }
+
+                if file.hasReferences {
+                    Button {
+                        showReferencesAction?()
+                    } label: {
+                        Label("References", systemImage: "link")
                     }
                 }
             }
@@ -62,10 +71,11 @@ struct FileContextMenu: View {
         }
     }
 
-    init(file: ObservableFile, previewAction: Action? = nil, inspectRawDataAction: Action? = nil, copyAction: Action? = nil, deleteAction: Action? = nil) {
+    init(file: ObservableFile, previewAction: Action? = nil, showRawDataAction: Action? = nil, showReferencesAction: Action? = nil, copyAction: Action? = nil, deleteAction: Action? = nil) {
         self.file = file
         self.previewAction = previewAction
-        self.inspectRawDataAction = inspectRawDataAction
+        self.showRawDataAction = showRawDataAction
+        self.showReferencesAction = showReferencesAction
         self.copyAction = copyAction
         self.deleteAction = deleteAction
     }

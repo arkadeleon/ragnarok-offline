@@ -17,8 +17,9 @@ struct FilesView: View {
     @State private var files: [ObservableFile] = []
     @State private var filteredFiles: [ObservableFile] = []
 
-    @State private var previewingFile: ObservableFile?
-    @State private var inspectingRawDataFile: ObservableFile?
+    @State private var fileToPreview: ObservableFile?
+    @State private var fileToShowRawData: ObservableFile?
+    @State private var fileToShowReferences: ObservableFile?
 
     var body: some View {
         ScrollView {
@@ -38,16 +39,18 @@ struct FilesView: View {
                     } else {
                         Button {
                             if file.canPreview {
-                                previewingFile = file
+                                fileToPreview = file
                             }
                         } label: {
                             FileCell(file: file)
                         }
                         .contextMenu {
                             FileContextMenu(file: file, previewAction: {
-                                previewingFile = file
-                            }, inspectRawDataAction: {
-                                inspectingRawDataFile = file
+                                fileToPreview = file
+                            }, showRawDataAction: {
+                                fileToShowRawData = file
+                            }, showReferencesAction: {
+                                fileToShowReferences = file
                             }, copyAction: {
                                 FileSystem.shared.copy(file.file)
                             }, deleteAction: {
@@ -93,14 +96,19 @@ struct FilesView: View {
         .onChange(of: searchText) {
             filterFiles()
         }
-        .sheet(item: $previewingFile) { file in
+        .sheet(item: $fileToPreview) { file in
             NavigationStack {
                 FilePreviewTabView(files: filteredFiles.filter({ $0.canPreview }), currentFile: file)
             }
         }
-        .sheet(item: $inspectingRawDataFile) { file in
+        .sheet(item: $fileToShowRawData) { file in
             NavigationStack {
                 FileRawDataView(file: file)
+            }
+        }
+        .sheet(item: $fileToShowReferences) { file in
+            NavigationStack {
+                FileReferencesView(file: file)
             }
         }
         .task {

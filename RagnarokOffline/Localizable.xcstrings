@@ -275,9 +275,6 @@
     "Info" : {
 
     },
-    "Inspect Raw Data" : {
-
-    },
     "Int" : {
 
     },
@@ -414,6 +411,9 @@
 
     },
     "Raw Data" : {
+
+    },
+    "References" : {
 
     },
     "Refinable" : {
