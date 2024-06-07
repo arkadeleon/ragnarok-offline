@@ -42,16 +42,16 @@ extension Entity {
         }
         let mesh = try MeshResource.generate(from: meshDescriptors)
 
-        let entity = ModelEntity(mesh: mesh, materials: materials)
+        let groundEntity = ModelEntity(mesh: mesh, materials: materials)
 
         let translation = float4x4(translation: [-Float(gat.width / 2), 0, -Float(gat.height / 2)])
-        let rotation = float4x4(rotationX: radians(90))
+        let rotation = float4x4(rotationX: radians(-90))
         let scaleFactor = 1 / Float(max(gat.width, gat.height))
-        let scale = float4x4(scale: [scaleFactor, -scaleFactor, scaleFactor])
+        let scale = float4x4(scale: [scaleFactor, scaleFactor, scaleFactor])
+        groundEntity.transform.matrix = scale * rotation * translation
 
-        entity.transform.matrix = scale * rotation * translation
-
-        entity.generateCollisionShapes(recursive: false)
+        let entity = Entity()
+        entity.addChild(groundEntity)
 
         return entity
     }
