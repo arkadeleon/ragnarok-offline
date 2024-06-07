@@ -17,7 +17,7 @@ struct GNDFilePreviewView: View {
 
     var body: some View {
         AsyncContentView(status: status) { entity in
-            ARViewContainer(entity: entity)
+            ModelViewer(model: entity)
         }
         .task {
             await loadGNDFile()

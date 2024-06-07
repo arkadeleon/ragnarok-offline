@@ -5,14 +5,145 @@
 //  Created by Leon Li on 2024/5/15.
 //
 
+import RealityKit
 import SwiftUI
 
-struct CubeView: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> CubeViewController {
-        CubeViewController()
+struct CubeView: View {
+    var body: some View {
+        ModelViewer(model: cube)
     }
 
-    func updateUIViewController(_ cubeViewController: CubeViewController, context: Context) {
+    private var cube: Entity {
+        var descriptor = MeshDescriptor()
+
+        descriptor.positions = MeshBuffer([
+            [-0.5, -0.5, -0.5],
+            [ 0.5, -0.5, -0.5],
+            [ 0.5,  0.5, -0.5],
+            [ 0.5,  0.5, -0.5],
+            [-0.5,  0.5, -0.5],
+            [-0.5, -0.5, -0.5],
+            [-0.5, -0.5,  0.5],
+            [ 0.5, -0.5,  0.5],
+            [ 0.5,  0.5,  0.5],
+            [ 0.5,  0.5,  0.5],
+            [-0.5,  0.5,  0.5],
+            [-0.5, -0.5,  0.5],
+            [-0.5,  0.5,  0.5],
+            [-0.5,  0.5, -0.5],
+            [-0.5, -0.5, -0.5],
+            [-0.5, -0.5, -0.5],
+            [-0.5, -0.5,  0.5],
+            [-0.5,  0.5,  0.5],
+            [ 0.5,  0.5,  0.5],
+            [ 0.5,  0.5, -0.5],
+            [ 0.5, -0.5, -0.5],
+            [ 0.5, -0.5, -0.5],
+            [ 0.5, -0.5,  0.5],
+            [ 0.5,  0.5,  0.5],
+            [-0.5, -0.5, -0.5],
+            [ 0.5, -0.5, -0.5],
+            [ 0.5, -0.5,  0.5],
+            [ 0.5, -0.5,  0.5],
+            [-0.5, -0.5,  0.5],
+            [-0.5, -0.5, -0.5],
+            [-0.5,  0.5, -0.5],
+            [ 0.5,  0.5, -0.5],
+            [ 0.5,  0.5,  0.5],
+            [ 0.5,  0.5,  0.5],
+            [-0.5,  0.5,  0.5],
+            [-0.5,  0.5, -0.5],
+        ])
+
+        descriptor.normals = MeshBuffer([
+            [0.0,  0.0, -1.0],
+            [0.0,  0.0, -1.0],
+            [0.0,  0.0, -1.0],
+            [0.0,  0.0, -1.0],
+            [0.0,  0.0, -1.0],
+            [0.0,  0.0, -1.0],
+            [0.0,  0.0,  1.0],
+            [0.0,  0.0,  1.0],
+            [0.0,  0.0,  1.0],
+            [0.0,  0.0,  1.0],
+            [0.0,  0.0,  1.0],
+            [0.0,  0.0,  1.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [1.0,  0.0,  0.0],
+            [0.0, -1.0,  0.0],
+            [0.0, -1.0,  0.0],
+            [0.0, -1.0,  0.0],
+            [0.0, -1.0,  0.0],
+            [0.0, -1.0,  0.0],
+            [0.0, -1.0,  0.0],
+            [0.0,  1.0,  0.0],
+            [0.0,  1.0,  0.0],
+            [0.0,  1.0,  0.0],
+            [0.0,  1.0,  0.0],
+            [0.0,  1.0,  0.0],
+            [0.0,  1.0,  0.0],
+        ])
+
+        descriptor.textureCoordinates = MeshBuffer([
+            [0.0, 0.0],
+            [1.0, 0.0],
+            [1.0, 1.0],
+            [1.0, 1.0],
+            [0.0, 1.0],
+            [0.0, 0.0],
+            [0.0, 0.0],
+            [1.0, 0.0],
+            [1.0, 1.0],
+            [1.0, 1.0],
+            [0.0, 1.0],
+            [0.0, 0.0],
+            [1.0, 0.0],
+            [1.0, 1.0],
+            [0.0, 1.0],
+            [0.0, 1.0],
+            [0.0, 0.0],
+            [1.0, 0.0],
+            [1.0, 0.0],
+            [1.0, 1.0],
+            [0.0, 1.0],
+            [0.0, 1.0],
+            [0.0, 0.0],
+            [1.0, 0.0],
+            [0.0, 1.0],
+            [1.0, 1.0],
+            [1.0, 0.0],
+            [1.0, 0.0],
+            [0.0, 0.0],
+            [0.0, 1.0],
+            [0.0, 1.0],
+            [1.0, 1.0],
+            [1.0, 0.0],
+            [1.0, 0.0],
+            [0.0, 0.0],
+            [0.0, 1.0],
+        ])
+
+        let indices = (0..<descriptor.positions.count).map(UInt32.init)
+        descriptor.primitives = .triangles(indices + indices.reversed())
+
+        let mesh = try! MeshResource.generate(from: [descriptor])
+
+        let texture = try! MaterialParameters.Texture(.load(named: "wall.jpg"))
+        var material = SimpleMaterial()
+        material.color = .init(texture: texture)
+
+        let cube = ModelEntity(mesh: mesh, materials: [material])
+        return cube
     }
 }
 

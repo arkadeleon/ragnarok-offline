@@ -69,7 +69,7 @@
 		358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6C2BC7707400FAF45D /* RONetwork */; };
 		358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6E2BC7707400FAF45D /* RORenderers */; };
 		3594DD552BF5FB6E00575F3D /* GNDFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3594DD542BF5FB6E00575F3D /* GNDFilePreviewView.swift */; };
-		3594DD572BF5FCB600575F3D /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3594DD562BF5FCB600575F3D /* ARViewContainer.swift */; };
+		3594DD572BF5FCB600575F3D /* ModelViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3594DD562BF5FCB600575F3D /* ModelViewer.swift */; };
 		35A2ABBE2B3ACB0A0026DAC2 /* ServerTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBD2B3ACB0A0026DAC2 /* ServerTerminalView.swift */; };
 		35B33BA22BF3BDCE00EF28F5 /* CubeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA12BF3BDCE00EF28F5 /* CubeViewController.swift */; };
 		35B33BA52BF465E700EF28F5 /* CubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA42BF465E700EF28F5 /* CubeView.swift */; };
@@ -185,7 +185,7 @@
 		3582FFCB2B8DBD3300E746D7 /* FileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCell.swift; sourceTree = "<group>"; };
 		358362CA2BD558DC00821500 /* RagnarokOffline.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = RagnarokOffline.xctestplan; sourceTree = "<group>"; };
 		3594DD542BF5FB6E00575F3D /* GNDFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNDFilePreviewView.swift; sourceTree = "<group>"; };
-		3594DD562BF5FCB600575F3D /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
+		3594DD562BF5FCB600575F3D /* ModelViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelViewer.swift; sourceTree = "<group>"; };
 		35A2ABBD2B3ACB0A0026DAC2 /* ServerTerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerTerminalView.swift; sourceTree = "<group>"; };
 		35B33BA12BF3BDCE00EF28F5 /* CubeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeViewController.swift; sourceTree = "<group>"; };
 		35B33BA42BF465E700EF28F5 /* CubeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeView.swift; sourceTree = "<group>"; };
@@ -372,7 +372,7 @@
 			isa = PBXGroup;
 			children = (
 				35BE55342BD9574E003715C3 /* AnimatedImageView.swift */,
-				3594DD562BF5FCB600575F3D /* ARViewContainer.swift */,
+				3594DD562BF5FCB600575F3D /* ModelViewer.swift */,
 				35BE552E2BD94053003715C3 /* AsyncContentView.swift */,
 				35239E022BC29F660039F7D5 /* EmptyContentView.swift */,
 				35239DF62BBDA0760039F7D5 /* LoadStatus.swift */,
@@ -701,7 +701,7 @@
 				35B422F62BEF76F700681AA2 /* DatabaseRecord.swift in Sources */,
 				351EE3012C08B86A0012BC9E /* MapImageView.swift in Sources */,
 				35239E012BC29A4E0039F7D5 /* ItemProvider.swift in Sources */,
-				3594DD572BF5FCB600575F3D /* ARViewContainer.swift in Sources */,
+				3594DD572BF5FCB600575F3D /* ModelViewer.swift in Sources */,
 				35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */,
 				35B422EF2BEF091F00681AA2 /* ObservableDatabase.swift in Sources */,
 				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,
