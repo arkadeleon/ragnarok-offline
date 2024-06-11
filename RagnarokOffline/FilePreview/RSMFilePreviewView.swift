@@ -5,29 +5,20 @@
 //  Created by Leon Li on 2024/4/25.
 //
 
-import MetalKit
-import SwiftUI
+import RealityKit
+import ROCore
 import ROFileFormats
 import RORenderers
+import SwiftUI
 
 struct RSMFilePreviewView: View {
     var file: ObservableFile
 
-    @State private var status: AsyncContentStatus<RSMRenderer> = .notYetLoaded
-    @State private var magnification: CGFloat = 1
+    @State private var status: AsyncContentStatus<Entity> = .notYetLoaded
 
     var body: some View {
-        AsyncContentView(status: status) { renderer in
-            MetalViewContainer(renderer: renderer)
-                .gesture(
-                    MagnificationGesture()
-                        .onChanged { value in
-                            renderer.camera.update(magnification: magnification * value, dragTranslation: .zero)
-                        }
-                        .onEnded { value in
-                            magnification *= value
-                        }
-                )
+        AsyncContentView(status: status) { entity in
+            ModelViewer(entity: entity)
         }
         .task {
             await loadRSMFile()
@@ -49,9 +40,6 @@ struct RSMFilePreviewView: View {
             return
         }
 
-        let device = MTLCreateSystemDefaultDevice()!
-        let textureLoader = MTKTextureLoader(device: device)
-
         let instance = Model.createInstance(
             position: [0, 0, 0],
             rotation: [0, 0, 0],
@@ -60,20 +48,18 @@ struct RSMFilePreviewView: View {
             height: 0
         )
 
-        let model = Model(rsm: rsm, instance: instance) { textureName in
+        let entity = try? await Entity.loadModel(rsm: rsm, instance: instance) { textureName in
             let path = GRF.Path(string: "data\\texture\\" + textureName)
             guard let data = try? grf.contentsOfEntry(at: path) else {
                 return nil
             }
-            let texture = textureLoader.newTexture(bmpData: data)
-            return texture
+            let texture = CGImageCreateWithData(data)
+            return texture?.removingMagentaPixels()
         }
 
-        guard let renderer = try? RSMRenderer(device: device, model: model) else {
-            return
+        if let entity {
+            status = .loaded(entity)
         }
-
-        status = .loaded(renderer)
     }
 }
 
