@@ -159,7 +159,7 @@ extension ObservableFile {
 extension ObservableFile {
     var hasReferences: Bool {
         switch file.info.type {
-        case .gnd:
+        case .gnd, .rsw:
             true
         default:
             false
@@ -177,6 +177,20 @@ extension ObservableFile {
                 let path = GRF.Path(string: "data\\texture\\" + textureName)
                 let file = File.grfEntry(grf, path)
                 return ObservableFile(file: file)
+            }
+            return referenceFiles
+        case .rsw:
+            guard case .grfEntry(let grf, _) = file, let data = file.contents() else {
+                return []
+            }
+            let rsw = try RSW(data: data)
+            var referenceFiles: [ObservableFile] = []
+            for model in rsw.models {
+                let path = GRF.Path(string: "data\\model\\" + model.modelName)
+                let file = ObservableFile(file: .grfEntry(grf, path))
+                if !referenceFiles.contains(file) {
+                    referenceFiles.append(file)
+                }
             }
             return referenceFiles
         default:
