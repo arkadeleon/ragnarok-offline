@@ -5,48 +5,34 @@
 //  Created by Leon Li on 2024/4/25.
 //
 
-import MetalKit
-import SwiftUI
+import RealityKit
+import ROCore
 import ROFileFormats
 import RORenderers
+import SwiftUI
 
 struct RSWFilePreviewView: View {
     var file: ObservableFile
 
-    @State private var status: AsyncContentStatus<RSWRenderer> = .notYetLoaded
+    @State private var status: AsyncContentStatus<Entity> = .notYetLoaded
     @State private var translation: CGSize = .zero
     @State private var magnification: CGFloat = 1
 
     var body: some View {
-        AsyncContentView(status: status) { renderer in
-            MetalViewContainer(renderer: renderer)
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            let offset = CGPoint(x: translation.width + value.translation.width, y: translation.height - value.translation.height)
-                            renderer.camera.move(offset: offset)
-                        }
-                        .onEnded { value in
-                            translation.width += value.translation.width
-                            translation.height -= value.translation.height
-                        }
-                )
-                .gesture(
-                    MagnificationGesture()
-                        .onChanged { value in
-                            renderer.camera.update(magnification: magnification * value, dragTranslation: .zero)
-                        }
-                        .onEnded { value in
-                            magnification *= value
-                        }
-                )
+        AsyncContentView(status: status) { entity in
+            ModelViewer(entity: entity)
         }
         .task {
-            await loadRSWFile()
+            do {
+                try await loadRSWFile()
+            } catch {
+
+            }
         }
     }
 
-    private func loadRSWFile() async {
+    @MainActor
+    private func loadRSWFile() async throws {
         guard case .notYetLoaded = status else {
             return
         }
@@ -57,84 +43,86 @@ struct RSWFilePreviewView: View {
             return
         }
 
-        guard let rsw = try? RSW(data: data) else {
-            return
-        }
+        let rsw = try RSW(data: data)
 
         let gatPath = GRF.Path(string: "data\\" + rsw.files.gat)
-        guard let gatData = try? grf.contentsOfEntry(at: gatPath),
-              let gat = try? GAT(data: gatData)
-        else {
-            return
-        }
+        let gatData = try grf.contentsOfEntry(at: gatPath)
+        let gat = try GAT(data: gatData)
 
         let gndPath = GRF.Path(string: "data\\" + rsw.files.gnd)
-        guard let gndData = try? grf.contentsOfEntry(at: gndPath),
-              let gnd = try? GND(data: gndData)
-        else {
-            return
-        }
+        let gndData = try grf.contentsOfEntry(at: gndPath)
+        let gnd = try GND(data: gndData)
 
-        let device = MTLCreateSystemDefaultDevice()!
-        let textureLoader = MTKTextureLoader(device: device)
-
-        let ground = Ground(gat: gat, gnd: gnd) { textureName in
+        let groundEntity = try await Entity.loadGround(gat: gat, gnd: gnd) { textureName in
             let path = GRF.Path(string: "data\\texture\\" + textureName)
             guard let data = try? grf.contentsOfEntry(at: path) else {
                 return nil
             }
-            let texture = textureLoader.newTexture(bmpData: data)
+            let texture = CGImageCreateWithData(data)
             return texture
         }
 
-        let water = Water(gnd: gnd, rsw: rsw) { textureName in
-            let path = GRF.Path(string: "data\\texture\\" + textureName)
-            guard let data = try? grf.contentsOfEntry(at: path) else {
-                return nil
-            }
-            let texture = textureLoader.newTexture(bmpData: data)
-            return texture
-        }
+//        let water = Water(gnd: gnd, rsw: rsw) { textureName in
+//            let path = GRF.Path(string: "data\\texture\\" + textureName)
+//            guard let data = try? grf.contentsOfEntry(at: path) else {
+//                return nil
+//            }
+//            let texture = textureLoader.newTexture(bmpData: data)
+//            return texture
+//        }
 
-        var models: [Model] = []
-        var modelTextures: [String : MTLTexture] = [:]
+        var modelEntities: [String : Entity] = [:]
 
         for model in rsw.models {
-            let path = GRF.Path(string: "data\\model\\" + model.modelName)
-            guard let data = try? grf.contentsOfEntry(at: path),
-                  let rsm = try? RSM(data: data) else {
-                continue
+            if !modelEntities.contains(where: { $0.key == model.modelName }) {
+                let path = GRF.Path(string: "data\\model\\" + model.modelName)
+                let data = try grf.contentsOfEntry(at: path)
+                let rsm = try RSM(data: data)
+
+                let instance = Model.createInstance(
+                    position: .zero,
+                    rotation: .zero,
+                    scale: .one,
+                    width: 0,
+                    height: 0
+                )
+
+                let modelEntity = try await Entity.loadModel(rsm: rsm, instance: instance) { textureName in
+                    let path = GRF.Path(string: "data\\texture\\" + textureName)
+                    guard let data = try? grf.contentsOfEntry(at: path) else {
+                        return nil
+                    }
+                    let texture = CGImageCreateWithData(data)
+                    return texture?.removingMagentaPixels()
+                }
+
+                modelEntities[model.modelName] = modelEntity
             }
 
-            let instance = Model.createInstance(
-                position: model.position,
-                rotation: model.rotation,
-                scale: model.scale,
-                width: Float(gnd.width),
-                height: Float(gnd.height)
-            )
+            let modelEntity = modelEntities[model.modelName]!
+            let modelEntityClone = modelEntity.clone(recursive: true)
 
-            let model = Model(rsm: rsm, instance: instance) { textureName in
-                if let texture = modelTextures[textureName] {
-                    return texture
-                }
-                let path = GRF.Path(string: "data\\texture\\" + textureName)
-                guard let data = try? grf.contentsOfEntry(at: path) else {
-                    return nil
-                }
-                let texture = textureLoader.newTexture(bmpData: data)
-                modelTextures[textureName] = texture
-                return texture
-            }
+            modelEntityClone.position = [
+                model.position.x + Float(gnd.width),
+                model.position.y,
+                model.position.z + Float(gnd.height),
+            ]
+            modelEntityClone.orientation = simd_quatf(angle: radians(model.rotation.z), axis: [0, 0, 1]) * simd_quatf(angle: radians(model.rotation.x), axis: [1, 0, 0]) * simd_quatf(angle: radians(model.rotation.y), axis: [0, 1, 0])
+            modelEntityClone.scale = model.scale
 
-            models.append(model)
+            groundEntity.addChild(modelEntityClone)
         }
 
-        guard let renderer = try? RSWRenderer(device: device, ground: ground, water: water, models: models) else {
-            return
-        }
+        let translation = float4x4(translation: [-Float(gat.width / 2), 0, -Float(gat.height / 2)])
+        let rotation = float4x4(rotationX: radians(-90))
+        let scaleFactor = 1 / Float(max(gat.width, gat.height))
+        let scale = float4x4(scale: [scaleFactor, scaleFactor, scaleFactor])
+        groundEntity.transform.matrix = scale * rotation * translation
 
-        status = .loaded(renderer)
+        let entity = Entity()
+        entity.addChild(groundEntity)
+
+        status = .loaded(entity)
     }
 }
 

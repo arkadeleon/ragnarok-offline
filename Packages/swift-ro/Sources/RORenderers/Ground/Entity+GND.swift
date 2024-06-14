@@ -10,7 +10,7 @@ import RealityKit
 import ROFileFormats
 
 extension Entity {
-    public static func loadGround(gat: GAT, gnd: GND, textureProvider: (String) -> CGImage?) throws -> Entity {
+    public static func loadGround(gat: GAT, gnd: GND, textureProvider: (String) -> CGImage?) async throws -> Entity {
         var materials: [any Material] = []
         let ground = Ground(gat: gat, gnd: gnd) { textureName in
             guard let cgImage = textureProvider(textureName) else {
@@ -20,8 +20,8 @@ extension Entity {
                 return nil
             }
 
-            var material = SimpleMaterial()
-            material.color = .init(texture: .init(textureResource))
+            var material = PhysicallyBasedMaterial()
+            material.baseColor = .init(texture: .init(textureResource))
             materials.append(material)
 
             return nil
@@ -31,7 +31,7 @@ extension Entity {
             var meshDescriptor = MeshDescriptor()
             meshDescriptor.positions = MeshBuffer(mesh.vertices.map({ $0.position }))
             meshDescriptor.normals = MeshBuffer(mesh.vertices.map({ $0.normal }))
-            meshDescriptor.textureCoordinates = MeshBuffer(mesh.vertices.map({ $0.textureCoordinate }))
+            meshDescriptor.textureCoordinates = MeshBuffer(mesh.vertices.map({ SIMD2($0.textureCoordinate.x, 1.0 - $0.textureCoordinate.y) }))
 
             let indices = (0..<meshDescriptor.positions.count).map(UInt32.init)
             meshDescriptor.primitives = .triangles(indices + indices.reversed())
@@ -43,17 +43,7 @@ extension Entity {
         let mesh = try MeshResource.generate(from: meshDescriptors)
 
         let groundEntity = ModelEntity(mesh: mesh, materials: materials)
-
-        let translation = float4x4(translation: [-Float(gat.width / 2), 0, -Float(gat.height / 2)])
-        let rotation = float4x4(rotationX: radians(-90))
-        let scaleFactor = 1 / Float(max(gat.width, gat.height))
-        let scale = float4x4(scale: [scaleFactor, scaleFactor, scaleFactor])
-        groundEntity.transform.matrix = scale * rotation * translation
-
-        let entity = Entity()
-        entity.addChild(groundEntity)
-
-        return entity
+        return groundEntity
     }
 }
 

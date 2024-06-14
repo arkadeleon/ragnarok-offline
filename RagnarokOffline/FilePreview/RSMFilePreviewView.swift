@@ -41,8 +41,8 @@ struct RSMFilePreviewView: View {
         }
 
         let instance = Model.createInstance(
-            position: [0, 0, 0],
-            rotation: [0, 0, 0],
+            position: .zero,
+            rotation: .zero,
             scale: [-0.25, -0.25, -0.25],
             width: 0,
             height: 0
