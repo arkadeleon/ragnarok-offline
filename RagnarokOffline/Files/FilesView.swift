@@ -29,6 +29,7 @@ struct FilesView: View {
                         NavigationLink(value: file) {
                             FileCell(file: file)
                         }
+                        .buttonStyle(.plain)
                         .contextMenu {
                             FileContextMenu(file: file, copyAction: {
                                 FileSystem.shared.copy(file.file)
@@ -44,6 +45,7 @@ struct FilesView: View {
                         } label: {
                             FileCell(file: file)
                         }
+                        .buttonStyle(.plain)
                         .contextMenu {
                             FileContextMenu(file: file, previewAction: {
                                 fileToPreview = file

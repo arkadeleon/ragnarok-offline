@@ -18,26 +18,45 @@ struct TerminalViewContainer: UIViewRepresentable {
     }
 }
 
-//import SwiftTerm
-//
-//class TerminalView: SwiftTerm.TerminalView {
-//    override var canBecomeFirstResponder: Bool {
-//        false
-//    }
-//
-//    override var canBecomeFocused: Bool {
-//        false
-//    }
-//}
+#if os(iOS)
 
 import Terminal
 
-typealias TerminalView = Terminal.TerminalView
+class TerminalView: UIView {
+    var terminalView: Terminal.TerminalView!
 
-extension Terminal.TerminalView {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        terminalView = Terminal.TerminalView(frame: bounds)
+        terminalView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        terminalView.terminalFontSize = 12
+        addSubview(terminalView)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     func feed(text: String) {
         if let data = text.data(using: .utf8) {
-            appendBuffer(data)
+            terminalView.appendBuffer(data)
         }
     }
 }
+
+#else
+
+import SwiftTerm
+
+class TerminalView: SwiftTerm.TerminalView {
+    override var canBecomeFirstResponder: Bool {
+        false
+    }
+
+    override var canBecomeFocused: Bool {
+        false
+    }
+}
+
+#endif

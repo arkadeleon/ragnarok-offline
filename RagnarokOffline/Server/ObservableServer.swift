@@ -27,7 +27,6 @@ import rAthenaCommon
         status = server.status
 
         terminalView = TerminalView()
-        terminalView.terminalFontSize = 12
 
         server.statusPublisher
             .receive(on: RunLoop.main)

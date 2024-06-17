@@ -17,6 +17,9 @@ struct STRFilePreviewView: View {
     @State private var magnification: CGFloat = 1
 
     var body: some View {
+        #if os(visionOS)
+        EmptyView()
+        #else
         AsyncContentView(status: status) { renderer in
             MetalViewContainer(renderer: renderer)
                 .gesture(
@@ -32,6 +35,7 @@ struct STRFilePreviewView: View {
         .task {
             await loadSTRFile()
         }
+        #endif
     }
 
     private func loadSTRFile() async {

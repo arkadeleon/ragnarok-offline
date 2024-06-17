@@ -96,6 +96,7 @@ struct ItemInfoView: View {
                             NavigationLink(value: droppingMonster.monster) {
                                 MonsterGridCell(monster: droppingMonster.monster, secondaryText: "(\(NSNumber(value: Double(droppingMonster.drop.rate) / 100))%)")
                             }
+                            .buttonStyle(.plain)
                         }
                     }
                     .padding(.vertical, 30)

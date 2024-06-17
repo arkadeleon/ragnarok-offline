@@ -18,6 +18,7 @@ struct MonsterSummonInfoView: View {
                         NavigationLink(value: defaultMonster) {
                             MonsterGridCell(monster: defaultMonster, secondaryText: nil)
                         }
+                        .buttonStyle(.plain)
                     }
                     .padding(.vertical, 30)
                 }
@@ -30,6 +31,7 @@ struct MonsterSummonInfoView: View {
                             NavigationLink(value: summonMonster.monster) {
                                 MonsterGridCell(monster: summonMonster.monster, secondaryText: summonMonster.rate.formatted())
                             }
+                            .buttonStyle(.plain)
                         }
                     }
                     .padding(.vertical, 30)

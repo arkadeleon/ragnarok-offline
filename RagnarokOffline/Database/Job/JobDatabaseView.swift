@@ -18,6 +18,7 @@ struct JobDatabaseView: View {
                         NavigationLink(value: jobStats) {
                             JobGridCell(jobStats: jobStats)
                         }
+                        .buttonStyle(.plain)
                     }
                 }
                 .padding(.horizontal, 20)

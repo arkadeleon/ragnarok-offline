@@ -62,7 +62,7 @@
 		3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC52B8C830D00E746D7 /* SettingsView.swift */; };
 		3582FFCA2B8DB9FE00E746D7 /* FilePreviewTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC92B8DB9FE00E746D7 /* FilePreviewTabView.swift */; };
 		3582FFCC2B8DBD3300E746D7 /* FileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFCB2B8DBD3300E746D7 /* FileCell.swift */; };
-		358362CD2BD55D4000821500 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = 358362CC2BD55D4000821500 /* SwiftTerm */; };
+		358362CD2BD55D4000821500 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; platformFilters = (xros, ); productRef = 358362CC2BD55D4000821500 /* SwiftTerm */; };
 		358D4C612BC6EBB500FAF45D /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C602BC6EBB500FAF45D /* Lua */; };
 		358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C662BC7707400FAF45D /* ROFileFormats */; };
 		358D4C692BC7707400FAF45D /* ROFileSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C682BC7707400FAF45D /* ROFileSystem */; };
@@ -73,7 +73,7 @@
 		35A2ABBE2B3ACB0A0026DAC2 /* ServerTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBD2B3ACB0A0026DAC2 /* ServerTerminalView.swift */; };
 		35B33BA22BF3BDCE00EF28F5 /* CubeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA12BF3BDCE00EF28F5 /* CubeViewController.swift */; };
 		35B33BA52BF465E700EF28F5 /* CubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA42BF465E700EF28F5 /* CubeView.swift */; };
-		35B367452BD6AE700018ED27 /* Terminal in Frameworks */ = {isa = PBXBuildFile; productRef = 35B367442BD6AE700018ED27 /* Terminal */; };
+		35B367452BD6AE700018ED27 /* Terminal in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 35B367442BD6AE700018ED27 /* Terminal */; };
 		35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */; };
 		35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D92A08BEA600B4540B /* ContentView.swift */; };
 		35B3B8DC2A08BEA700B4540B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B8DB2A08BEA700B4540B /* Assets.xcassets */; };
@@ -822,6 +822,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				XROS_DEPLOYMENT_TARGET = 1.0;
 			};
 			name = Debug;
 		};
@@ -876,6 +877,7 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
+				XROS_DEPLOYMENT_TARGET = 1.0;
 			};
 			name = Release;
 		};
@@ -906,10 +908,13 @@
 				OTHER_SWIFT_FLAGS = "-cxx-interoperability-mode=default";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.arkadeleon.ragnarok-offline";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "RagnarokOffline/RagnarokOffline-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
@@ -940,10 +945,13 @@
 				OTHER_SWIFT_FLAGS = "-cxx-interoperability-mode=default";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.arkadeleon.ragnarok-offline";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "RagnarokOffline/RagnarokOffline-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
 		};
@@ -975,8 +983,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/migueldeicaza/SwiftTerm.git";
 			requirement = {
-				kind = exactVersion;
-				version = 1.2.1;
+				branch = main;
+				kind = branch;
 			};
 		};
 		35B367432BD6AE700018ED27 /* XCRemoteSwiftPackageReference "Terminal" */ = {

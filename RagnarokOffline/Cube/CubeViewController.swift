@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/5/14.
 //
 
+#if os(iOS)
+
 import RealityKit
 import UIKit
 
@@ -172,3 +174,5 @@ class CubeViewController: UIViewController {
         return try! MeshResource.generate(from: [descriptor])
     }
 }
+
+#endif

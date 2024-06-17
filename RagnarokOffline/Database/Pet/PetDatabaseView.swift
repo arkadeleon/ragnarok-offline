@@ -18,6 +18,7 @@ struct PetDatabaseView: View {
                         NavigationLink(value: pet) {
                             MonsterGridCell(monster: pet.monster, secondaryText: nil)
                         }
+                        .buttonStyle(.plain)
                     }
                 }
                 .padding(.horizontal, 20)

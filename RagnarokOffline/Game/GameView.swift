@@ -18,6 +18,9 @@ struct GameView: View {
     @State private var magnification: CGFloat = 1
 
     var body: some View {
+        #if os(visionOS)
+        EmptyView()
+        #else
         MetalViewContainer(renderer: renderer)
             .gesture(
                 DragGesture()
@@ -40,5 +43,6 @@ struct GameView: View {
                     }
             )
             .navigationTitle("Cube")
+        #endif
     }
 }

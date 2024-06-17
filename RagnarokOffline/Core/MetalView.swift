@@ -5,9 +5,11 @@
 //  Created by Leon Li on 2024/4/25.
 //
 
+#if !os(visionOS)
+
 import MetalKit
-import SwiftUI
 import RORenderers
+import SwiftUI
 
 struct MetalViewContainer: UIViewRepresentable {
     var renderer: any Renderer
@@ -70,3 +72,5 @@ class MetalView: UIView, MTKViewDelegate {
         commandBuffer.commit()
     }
 }
+
+#endif

@@ -8,6 +8,20 @@
 import RealityKit
 import SwiftUI
 
+#if os(visionOS)
+
+struct ModelViewer: View {
+    var entity: Entity
+
+    var body: some View {
+        RealityView { content in
+            content.add(entity)
+        }
+    }
+}
+
+#else
+
 struct ModelViewer: UIViewControllerRepresentable {
     var entity: Entity
 
@@ -119,6 +133,8 @@ class ModelViewerController: UIViewController {
         }
     }
 }
+
+#endif
 
 #Preview {
     ModelViewer(entity: Entity())

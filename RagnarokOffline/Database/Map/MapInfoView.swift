@@ -41,6 +41,7 @@ struct MapInfoView: View {
                             NavigationLink(value: spawnMonster.monster) {
                                 MonsterGridCell(monster: spawnMonster.monster, secondaryText: "(\(spawnMonster.spawn.amount)x)")
                             }
+                            .buttonStyle(.plain)
                         }
                     }
                     .padding(.vertical, 30)

@@ -18,6 +18,7 @@ struct MonsterDatabaseView: View {
                         NavigationLink(value: monster) {
                             MonsterGridCell(monster: monster, secondaryText: nil)
                         }
+                        .buttonStyle(.plain)
                     }
                 }
                 .padding(.horizontal, 20)
