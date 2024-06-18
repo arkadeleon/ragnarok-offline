@@ -42,6 +42,8 @@ struct SkillDatabaseView: View {
                 }
                 .listStyle(.plain)
             }
+        } empty: {
+            ContentUnavailableView("No Skills", systemImage: "arrow.up.heart.fill")
         }
         .navigationTitle("Skill Database")
     }

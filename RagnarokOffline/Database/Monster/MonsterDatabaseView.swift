@@ -24,6 +24,8 @@ struct MonsterDatabaseView: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical, 30)
             }
+        } empty: {
+            ContentUnavailableView("No Monsters", systemImage: "pawprint.fill")
         }
         .navigationTitle("Monster Database")
     }

@@ -24,6 +24,8 @@ struct PetDatabaseView: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical, 30)
             }
+        } empty: {
+            ContentUnavailableView("No Pets", systemImage: "pawprint.fill")
         }
         .navigationTitle("Pet Database")
     }

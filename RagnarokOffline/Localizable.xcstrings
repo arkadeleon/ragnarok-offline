@@ -139,9 +139,6 @@
     "Empty Content" : {
 
     },
-    "Empty Folder" : {
-
-    },
     "End On End" : {
 
     },
@@ -377,7 +374,31 @@
     "Name" : {
 
     },
-    "No Records" : {
+    "No Files" : {
+
+    },
+    "No Items" : {
+
+    },
+    "No Jobs" : {
+
+    },
+    "No Maps" : {
+
+    },
+    "No Monster Summons" : {
+
+    },
+    "No Monsters" : {
+
+    },
+    "No Pets" : {
+
+    },
+    "No Skills" : {
+
+    },
+    "No Status Changes" : {
 
     },
     "NOT STARTED" : {

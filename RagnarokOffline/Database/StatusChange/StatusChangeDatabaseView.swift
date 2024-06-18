@@ -33,6 +33,8 @@ struct StatusChangeDatabaseView: View {
                 }
                 .listStyle(.plain)
             }
+        } empty: {
+            ContentUnavailableView("No Status Changes", systemImage: "moon.zzz.fill")
         }
         .navigationTitle("Status Change Database")
     }

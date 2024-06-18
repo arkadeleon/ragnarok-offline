@@ -96,7 +96,7 @@ struct ContentView: View {
                 Text("Client")
                     .foregroundStyle(Color(uiColor: .label))
                     .font(.title2)
-                    .bold()
+                    .fontWeight(.semibold)
                     .textCase(nil)
             }
 
@@ -147,7 +147,7 @@ struct ContentView: View {
                     Text("Server")
                         .foregroundStyle(Color(uiColor: .label))
                         .font(.title2)
-                        .bold()
+                        .fontWeight(.semibold)
 
                     Spacer()
 
@@ -189,14 +189,16 @@ struct ContentView: View {
                     Label("Skill Database", systemImage: "arrow.up.heart")
                 }
 
-//                NavigationLink(value: SidebarItem.statusChangeDatabase) {
-//                    Label("Status Change Database", systemImage: "zzz")
-//                }
+                #if DEBUG
+                NavigationLink(value: SidebarItem.statusChangeDatabase) {
+                    Label("Status Change Database", systemImage: "moon.zzz")
+                }
+                #endif
             } header: {
                 Text("Database")
                     .foregroundStyle(Color(uiColor: .label))
                     .font(.title2)
-                    .bold()
+                    .fontWeight(.semibold)
                     .textCase(nil)
             }
         }

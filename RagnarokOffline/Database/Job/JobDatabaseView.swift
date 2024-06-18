@@ -24,6 +24,8 @@ struct JobDatabaseView: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical, 30)
             }
+        } empty: {
+            ContentUnavailableView("No Jobs", systemImage: "person.fill")
         }
         .navigationTitle("Job Database")
     }

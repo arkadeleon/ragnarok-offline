@@ -35,6 +35,8 @@ struct MonsterSummonDatabaseView: View {
                 }
                 .listStyle(.plain)
             }
+        } empty: {
+            ContentUnavailableView("No Monster Summons", systemImage: "pawprint.fill")
         }
         .navigationTitle("Monster Summon Database")
     }

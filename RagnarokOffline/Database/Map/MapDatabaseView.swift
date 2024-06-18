@@ -35,6 +35,8 @@ struct MapDatabaseView: View {
                 }
                 .listStyle(.plain)
             }
+        } empty: {
+            ContentUnavailableView("No Maps", systemImage: "map.fill")
         }
         .navigationTitle("Map Database")
     }

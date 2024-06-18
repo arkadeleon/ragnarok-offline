@@ -72,7 +72,7 @@ struct FilesView: View {
         }
         .overlay {
             if loadStatus == .loaded && filteredFiles.isEmpty {
-                EmptyContentView("Empty Folder")
+                ContentUnavailableView("No Files", systemImage: "folder.fill")
             }
         }
         .navigationDestination(for: ObservableFile.self) { file in

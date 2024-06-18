@@ -45,6 +45,8 @@ struct ItemDatabaseView: View {
                 }
                 .listStyle(.plain)
             }
+        } empty: {
+            ContentUnavailableView("No Items", systemImage: "leaf.fill")
         }
         .navigationTitle("Item Database")
     }

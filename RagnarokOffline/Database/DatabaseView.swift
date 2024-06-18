@@ -8,9 +8,10 @@
 import SwiftUI
 import RODatabase
 
-struct DatabaseView<RecordProvider, Content>: View where RecordProvider: DatabaseRecordProvider, Content: View {
+struct DatabaseView<RecordProvider, Content, Empty>: View where RecordProvider: DatabaseRecordProvider, Content: View, Empty: View {
     @Binding var database: ObservableDatabase<RecordProvider>
     var content: ([RecordProvider.Record]) -> Content
+    var empty: () -> Empty
 
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
@@ -31,7 +32,7 @@ struct DatabaseView<RecordProvider, Content>: View where RecordProvider: Databas
             }
             .overlay {
                 if database.loadStatus == .loaded && database.filteredRecords.isEmpty {
-                    EmptyContentView("No Records")
+                    empty()
                 }
             }
             .navigationDestination(for: Item.self) { item in
@@ -70,9 +71,10 @@ struct DatabaseView<RecordProvider, Content>: View where RecordProvider: Databas
             }
     }
 
-    init(database: Binding<ObservableDatabase<RecordProvider>>, @ViewBuilder content: @escaping ([RecordProvider.Record]) -> Content) {
+    init(database: Binding<ObservableDatabase<RecordProvider>>, @ViewBuilder content: @escaping ([RecordProvider.Record]) -> Content, @ViewBuilder empty: @escaping () -> Empty) {
         _database = database
         self.content = content
+        self.empty = empty
     }
 }
 
@@ -81,5 +83,7 @@ struct DatabaseView<RecordProvider, Content>: View where RecordProvider: Databas
         List(records) { record in
             Text(record.monsterSummon.group)
         }
+    } empty: {
+        ContentUnavailableView("", systemImage: "")
     }
 }
