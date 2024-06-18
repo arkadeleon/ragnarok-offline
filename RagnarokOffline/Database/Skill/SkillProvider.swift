@@ -15,7 +15,7 @@ struct SkillProvider: DatabaseRecordProvider {
         return skills
     }
 
-    func records(matching searchText: String, in skills: [Skill]) -> [Skill] {
+    func records(matching searchText: String, in skills: [Skill]) async -> [Skill] {
         skills.filter { skill in
             skill.name.localizedStandardContains(searchText)
         }

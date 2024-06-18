@@ -26,7 +26,7 @@ struct PetProvider: DatabaseRecordProvider {
         return pets
     }
 
-    func records(matching searchText: String, in pets: [ObservablePet]) -> [ObservablePet] {
+    func records(matching searchText: String, in pets: [ObservablePet]) async -> [ObservablePet] {
         pets.filter { pet in
             pet.monster.name.localizedStandardContains(searchText)
         }

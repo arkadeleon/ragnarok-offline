@@ -14,7 +14,7 @@ protocol DatabaseRecordProvider {
     func records(for mode: ServerMode) async throws -> [Record]
     func moreRecords(for mode: ServerMode) async throws -> [Record]
 
-    func records(matching searchText: String, in records: [Record]) -> [Record]
+    func records(matching searchText: String, in records: [Record]) async -> [Record]
 }
 
 extension DatabaseRecordProvider {
@@ -47,7 +47,7 @@ extension DatabaseRecordProvider {
         do {
             records = try await recordProvider.records(for: mode)
 
-            filterRecords()
+            await filterRecords()
 
             loadStatus = .loaded
         } catch {
@@ -59,11 +59,11 @@ extension DatabaseRecordProvider {
         }
     }
 
-    func filterRecords() {
+    func filterRecords() async {
         if searchText.isEmpty {
             filteredRecords = records
         } else {
-            filteredRecords = recordProvider.records(matching: searchText, in: records)
+            filteredRecords = await recordProvider.records(matching: searchText, in: records)
         }
     }
 }

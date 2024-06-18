@@ -15,7 +15,7 @@ struct MonsterProvider: DatabaseRecordProvider {
         return monsters
     }
 
-    func records(matching searchText: String, in monsters: [Monster]) -> [Monster] {
+    func records(matching searchText: String, in monsters: [Monster]) async -> [Monster] {
         monsters.filter { monster in
             monster.name.localizedStandardContains(searchText)
         }

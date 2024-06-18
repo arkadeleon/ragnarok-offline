@@ -15,7 +15,7 @@ struct StatusChangeProvider: DatabaseRecordProvider {
         return statusChanges
     }
 
-    func records(matching searchText: String, in statusChanges: [StatusChange]) -> [StatusChange] {
+    func records(matching searchText: String, in statusChanges: [StatusChange]) async -> [StatusChange] {
         statusChanges.filter { statusChange in
             statusChange.status.localizedStandardContains(searchText)
         }

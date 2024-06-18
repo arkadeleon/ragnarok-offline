@@ -15,7 +15,7 @@ struct MapProvider: DatabaseRecordProvider {
         return maps
     }
 
-    func records(matching searchText: String, in maps: [Map]) -> [Map] {
+    func records(matching searchText: String, in maps: [Map]) async -> [Map] {
         maps.filter { map in
             map.name.localizedStandardContains(searchText)
         }

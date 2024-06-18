@@ -61,10 +61,14 @@ struct DatabaseView<RecordProvider, Content, Empty>: View where RecordProvider: 
             }
             .searchable(text: $database.searchText, placement: searchFieldPlacement)
             .onSubmit(of: .search) {
-                database.filterRecords()
+                Task {
+                    await database.filterRecords()
+                }
             }
             .onChange(of: database.searchText) {
-                database.filterRecords()
+                Task {
+                    await database.filterRecords()
+                }
             }
             .task {
                 await database.fetchRecords()

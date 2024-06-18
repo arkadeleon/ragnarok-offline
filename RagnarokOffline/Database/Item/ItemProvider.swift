@@ -22,7 +22,7 @@ struct ItemProvider: DatabaseRecordProvider {
         return equipItems + etcItems
     }
 
-    func records(matching searchText: String, in items: [Item]) -> [Item] {
+    func records(matching searchText: String, in items: [Item]) async -> [Item] {
         items.filter { item in
             item.name.localizedStandardContains(searchText)
         }

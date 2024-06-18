@@ -23,7 +23,7 @@ struct MonsterSummonProvider: DatabaseRecordProvider {
         return monsterSummons
     }
 
-    func records(matching searchText: String, in monsterSummons: [ObservableMonsterSummon]) -> [ObservableMonsterSummon] {
+    func records(matching searchText: String, in monsterSummons: [ObservableMonsterSummon]) async -> [ObservableMonsterSummon] {
         monsterSummons.filter { monsterSummon in
             monsterSummon.monsterSummon.group.localizedStandardContains(searchText)
         }

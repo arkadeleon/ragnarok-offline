@@ -15,7 +15,7 @@ struct JobProvider: DatabaseRecordProvider {
         return jobs
     }
 
-    func records(matching searchText: String, in jobs: [JobStats]) -> [JobStats] {
+    func records(matching searchText: String, in jobs: [JobStats]) async -> [JobStats] {
         jobs.filter { jobStats in
             jobStats.job.description.localizedStandardContains(searchText)
         }
