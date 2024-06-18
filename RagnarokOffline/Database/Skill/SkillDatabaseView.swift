@@ -20,28 +20,27 @@ struct SkillDatabaseView: View {
                 }
                 .listStyle(.plain)
             } regular: {
-                Table(skills) {
-                    TableColumn("") { skill in
-                        SkillIconView(skill: skill)
-                    }
-                    .width(40)
-                    TableColumn("Name") { skill in
-                        NavigationLink(value: skill) {
+                List(skills) { skill in
+                    NavigationLink(value: skill) {
+                        HStack {
+                            SkillIconView(skill: skill)
+                                .frame(width: 40)
                             SkillNameView(skill: skill)
-                        }
-                    }
-                    TableColumn("Max Level") { skill in
-                        Text(skill.maxLevel.formatted())
-                    }
-                    .width(100)
-                    TableColumn("SP Cost") { skill in
-                        skill.requires?.spCost.map { spCost in
-                            Text(spCost.formatted())
-                        } right: { spCost in
-                            Text(spCost.compactMap(String.init).joined(separator: " / "))
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            Text(skill.maxLevel.formatted())
+                                .frame(width: 80, alignment: .leading)
+                                .foregroundStyle(.secondary)
+                            Text(skill.requires?.spCost.map { spCost in
+                                spCost.formatted()
+                            } right: { spCost in
+                                spCost.compactMap(String.init).joined(separator: " / ")
+                            } ?? "")
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .foregroundStyle(.secondary)
                         }
                     }
                 }
+                .listStyle(.plain)
             }
         }
         .navigationTitle("Skill Database")

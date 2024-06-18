@@ -19,17 +19,21 @@ struct MonsterSummonDatabaseView: View {
                 }
                 .listStyle(.plain)
             } regular: {
-                Table(monsterSummons) {
-                    TableColumn("Group") { monsterSummon in
-                        NavigationLink(value: monsterSummon) {
+                List(monsterSummons) { monsterSummon in
+                    NavigationLink(value: monsterSummon) {
+                        HStack {
                             Text(monsterSummon.monsterSummon.group)
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            Text(monsterSummon.monsterSummon.default)
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                .foregroundStyle(.secondary)
+                            Text("\(monsterSummon.monsterSummon.summon.count) monsters")
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                .foregroundStyle(.secondary)
                         }
                     }
-                    TableColumn("Default", value: \.monsterSummon.default)
-                    TableColumn("Summon") { monsterSummon in
-                        Text("\(monsterSummon.monsterSummon.summon.count) monsters")
-                    }
                 }
+                .listStyle(.plain)
             }
         }
         .navigationTitle("Monster Summon Database")

@@ -20,14 +20,18 @@ struct StatusChangeDatabaseView: View {
                 }
                 .listStyle(.plain)
             } regular: {
-                Table(statusChanges) {
-                    TableColumn("Name") { statusChange in
-                        NavigationLink(value: statusChange) {
+                List(statusChanges) { statusChange in
+                    NavigationLink(value: statusChange) {
+                        HStack {
                             Text(statusChange.status)
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            Text(statusChange.icon)
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                .foregroundStyle(.secondary)
                         }
                     }
-                    TableColumn("Icon", value: \.icon)
                 }
+                .listStyle(.plain)
             }
         }
         .navigationTitle("Status Change Database")

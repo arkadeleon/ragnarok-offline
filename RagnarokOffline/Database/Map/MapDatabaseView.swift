@@ -20,18 +20,20 @@ struct MapDatabaseView: View {
                 }
                 .listStyle(.plain)
             } regular: {
-                Table(maps) {
-                    TableColumn("") { map in
-                        MapImageView(map: map)
-                    }
-                    .width(40)
-                    TableColumn("Name") { map in
-                        NavigationLink(value: map) {
+                List(maps) { map in
+                    NavigationLink(value: map) {
+                        HStack {
+                            MapImageView(map: map)
+                                .frame(width: 40)
                             MapNameView(map: map)
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            Text(map.name)
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                .foregroundStyle(.secondary)
                         }
                     }
-                    TableColumn("ID", value: \.name)
                 }
+                .listStyle(.plain)
             }
         }
         .navigationTitle("Map Database")

@@ -21,33 +21,29 @@ struct ItemDatabaseView: View {
                 }
                 .listStyle(.plain)
             } regular: {
-                Table(items) {
-                    TableColumn("") { item in
-                        ItemIconView(item: item)
-                    }
-                    .width(40)
-                    TableColumn("Name") { item in
-                        NavigationLink(value: item) {
+                List(items) { item in
+                    NavigationLink(value: item) {
+                        HStack {
+                            ItemIconView(item: item)
+                                .frame(width: 40)
                             ItemNameView(item: item)
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            Text(item.type.description)
+                                .frame(width: 160, alignment: .leading)
+                                .foregroundStyle(.secondary)
+                            Text(item.buy.formatted() + "z")
+                                .frame(width: 120, alignment: .leading)
+                                .foregroundStyle(.secondary)
+                            Text(item.sell.formatted() + "z")
+                                .frame(width: 120, alignment: .leading)
+                                .foregroundStyle(.secondary)
+                            Text((Double(item.weight) / 10).formatted())
+                                .frame(width: 80, alignment: .leading)
+                                .foregroundStyle(.secondary)
                         }
                     }
-                    TableColumn("Type") { item in
-                        Text(item.type.description)
-                    }
-                    .width(200)
-                    TableColumn("Buy") { item in
-                        Text(item.buy.formatted() + "z")
-                    }
-                    .width(150)
-                    TableColumn("Sell") { item in
-                        Text(item.sell.formatted() + "z")
-                    }
-                    .width(150)
-                    TableColumn("Weight") { item in
-                        Text((Double(item.weight) / 10).formatted())
-                    }
-                    .width(100)
                 }
+                .listStyle(.plain)
             }
         }
         .navigationTitle("Item Database")
