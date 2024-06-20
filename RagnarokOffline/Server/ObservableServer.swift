@@ -10,7 +10,8 @@ import Foundation
 import Observation
 import rAthenaCommon
 
-@Observable class ObservableServer {
+@Observable 
+class ObservableServer {
     private let server: Server
 
     let name: String

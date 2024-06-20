@@ -9,10 +9,12 @@ import Observation
 import rAthenaCommon
 import RODatabase
 
-@Observable class ObservablePet {
+@Observable 
+class ObservablePet {
     let mode: ServerMode
     let pet: Pet
-    let monster: Monster
+
+    let monster: ObservableMonster
 
     var tameItem: Item?
     var eggItem: Item?
@@ -42,10 +44,16 @@ import RODatabase
         return attributes
     }
 
-    init(mode: ServerMode, pet: Pet, monster: Monster) {
+    init(mode: ServerMode, pet: Pet) async throws {
         self.mode = mode
         self.pet = pet
-        self.monster = monster
+
+        let monsterDatabase = MonsterDatabase.database(for: mode)
+        if let monster = try await monsterDatabase.monster(forAegisName: pet.monster) {
+            self.monster = await ObservableMonster(mode: mode, monster: monster)
+        } else {
+            throw NSError()
+        }
     }
 
     func fetchPetInfo() async {

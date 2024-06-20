@@ -11,7 +11,8 @@ import Observation
 import ROFileFormats
 import ROFileSystem
 
-@Observable class ObservableFile {
+@Observable 
+class ObservableFile {
     let file: File
 
     var thumbnail: FileThumbnail?

@@ -11,7 +11,6 @@ import RODatabase
 struct MonsterSummonProvider: DatabaseRecordProvider {
     func records(for mode: ServerMode) async throws -> [ObservableMonsterSummon] {
         let monsterSummonDatabase = MonsterSummonDatabase.database(for: mode)
-
         let mss = try await monsterSummonDatabase.monsterSummons()
 
         var monsterSummons: [ObservableMonsterSummon] = []
@@ -19,13 +18,12 @@ struct MonsterSummonProvider: DatabaseRecordProvider {
             let monsterSummon = ObservableMonsterSummon(mode: mode, monsterSummon: ms)
             monsterSummons.append(monsterSummon)
         }
-
         return monsterSummons
     }
 
     func records(matching searchText: String, in monsterSummons: [ObservableMonsterSummon]) async -> [ObservableMonsterSummon] {
         monsterSummons.filter { monsterSummon in
-            monsterSummon.monsterSummon.group.localizedStandardContains(searchText)
+            monsterSummon.group.localizedStandardContains(searchText)
         }
     }
 }

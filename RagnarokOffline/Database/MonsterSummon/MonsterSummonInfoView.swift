@@ -38,9 +38,9 @@ struct MonsterSummonInfoView: View {
                 }
             }
         }
-        .navigationTitle(monsterSummon.monsterSummon.group)
+        .navigationTitle(monsterSummon.group)
         .task {
-            await monsterSummon.fetchMonsterSummonInfo()
+            try? await monsterSummon.fetchDetail()
         }
     }
 }

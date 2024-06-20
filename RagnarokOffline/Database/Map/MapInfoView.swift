@@ -14,7 +14,7 @@ struct MapInfoView: View {
     var mode: ServerMode
     var map: Map
 
-    typealias SpawnMonster = (monster: Monster, spawn: MonsterSpawn)
+    typealias SpawnMonster = (monster: ObservableMonster, spawn: MonsterSpawn)
 
     @State private var mapImage: CGImage?
     @State private var spawnMonsters: [SpawnMonster] = []
@@ -62,16 +62,21 @@ struct MapInfoView: View {
 
         if let monsterSpawns = try? await npcDatabase.monsterSpawns(forMap: map) {
             var spawnMonsters: [SpawnMonster] = []
+            var monsters: [Monster] = []
             for monsterSpawn in monsterSpawns {
                 if let monsterID = monsterSpawn.monsterID {
                     if let monster = try? await monsterDatabase.monster(forID: monsterID) {
-                        if !spawnMonsters.contains(where: { $0.monster.id == monsterID }) {
+                        if !monsters.contains(monster) {
+                            monsters.append(monster)
+                            let monster = await ObservableMonster(mode: mode, monster: monster)
                             spawnMonsters.append((monster, monsterSpawn))
                         }
                     }
                 } else if let monsterAegisName = monsterSpawn.monsterAegisName {
                     if let monster = try? await monsterDatabase.monster(forAegisName: monsterAegisName) {
-                        if !spawnMonsters.contains(where: { $0.monster.aegisName == monsterAegisName }) {
+                        if !monsters.contains(monster) {
+                            monsters.append(monster)
+                            let monster = await ObservableMonster(mode: mode, monster: monster)
                             spawnMonsters.append((monster, monsterSpawn))
                         }
                     }

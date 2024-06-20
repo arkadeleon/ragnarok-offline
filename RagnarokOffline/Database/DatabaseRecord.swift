@@ -78,6 +78,10 @@ protocol DatabaseRecord: Hashable, Identifiable {
 }
 
 extension DatabaseRecord {
+    static func == (lhs: any DatabaseRecord, rhs: any DatabaseRecord) -> Bool {
+        lhs.recordID == rhs.recordID
+    }
+
     public var id: String {
         recordID
     }

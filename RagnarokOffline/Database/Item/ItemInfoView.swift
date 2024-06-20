@@ -15,7 +15,7 @@ struct ItemInfoView: View {
     var mode: ServerMode
     var item: Item
 
-    typealias DroppingMonster = (monster: Monster, drop: Monster.Drop)
+    typealias DroppingMonster = (monster: ObservableMonster, drop: Monster.Drop)
 
     @State private var itemPreviewImage: CGImage?
     @State private var itemDescription: String?
@@ -94,7 +94,7 @@ struct ItemInfoView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .leading, spacing: 30) {
                         ForEach(droppingMonsters, id: \.monster.id) { droppingMonster in
                             NavigationLink(value: droppingMonster.monster) {
-                                MonsterGridCell(monster: droppingMonster.monster, secondaryText: "(\(NSNumber(value: Double(droppingMonster.drop.rate) / 100))%)")
+                                MonsterGridCell(monster: droppingMonster.monster, secondaryText: "(" + (Double(droppingMonster.drop.rate) / 100).formatted() + "%)")
                             }
                             .buttonStyle(.plain)
                         }
@@ -221,7 +221,8 @@ struct ItemInfoView: View {
                 let drops = (monster.mvpDrops ?? []) + (monster.drops ?? [])
                 for drop in drops {
                     if drop.item == item.aegisName {
-                        droppingMonsters.append((monster, drop))
+                        let observableMonster = await ObservableMonster(mode: mode, monster: monster)
+                        droppingMonsters.append((observableMonster, drop))
                         break
                     }
                 }

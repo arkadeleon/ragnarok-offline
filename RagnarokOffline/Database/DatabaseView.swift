@@ -44,8 +44,8 @@ struct DatabaseView<RecordProvider, Content, Empty>: View where RecordProvider: 
             .navigationDestination(for: Map.self) { map in
                 MapInfoView(mode: database.mode, map: map)
             }
-            .navigationDestination(for: Monster.self) { monster in
-                MonsterInfoView(mode: database.mode, monster: monster)
+            .navigationDestination(for: ObservableMonster.self) { monster in
+                MonsterInfoView(monster: monster)
             }
             .navigationDestination(for: ObservableMonsterSummon.self) { monsterSummon in
                 MonsterSummonInfoView(monsterSummon: monsterSummon)
@@ -85,7 +85,7 @@ struct DatabaseView<RecordProvider, Content, Empty>: View where RecordProvider: 
 #Preview {
     DatabaseView(database: .constant(.init(mode: .renewal, recordProvider: .monsterSummon))) { records in
         List(records) { record in
-            Text(record.monsterSummon.group)
+            Text(record.group)
         }
     } empty: {
         ContentUnavailableView("", systemImage: "")

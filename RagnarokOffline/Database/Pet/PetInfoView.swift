@@ -74,7 +74,7 @@ struct PetInfoView: View {
                 }
             }
         }
-        .navigationTitle(pet.monster.name)
+        .navigationTitle(pet.monster.localizedName)
         .task {
             await pet.fetchPetInfo()
         }

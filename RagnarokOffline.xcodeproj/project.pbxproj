@@ -47,6 +47,7 @@
 		35239E032BC29F660039F7D5 /* EmptyContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239E022BC29F660039F7D5 /* EmptyContentView.swift */; };
 		35239E052BC2D5D60039F7D5 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */; };
 		3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */; };
+		352B140F2C22DCA40097E643 /* ObservableMonster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B140E2C22DCA40097E643 /* ObservableMonster.swift */; };
 		353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 353AFBDB2BC779BE00F613A8 /* RODatabase */; };
 		353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */; };
 		353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F172B44FFE100605E92 /* SkillInfoView.swift */; };
@@ -169,6 +170,7 @@
 		35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
 		3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordInfoSection.swift; sourceTree = "<group>"; };
 		35270D2B2A68F4610001A8BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		352B140E2C22DCA40097E643 /* ObservableMonster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMonster.swift; sourceTree = "<group>"; };
 		353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillDatabaseView.swift; sourceTree = "<group>"; };
 		353B4F172B44FFE100605E92 /* SkillInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillInfoView.swift; sourceTree = "<group>"; };
 		353B4F1B2B451F1300605E92 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				3514BF5F2B455EF90065ED89 /* MonsterGridCell.swift */,
 				3514BF612B4560730065ED89 /* MonsterInfoView.swift */,
 				35239DF82BBDB7B50039F7D5 /* MonsterProvider.swift */,
+				352B140E2C22DCA40097E643 /* ObservableMonster.swift */,
 			);
 			path = Monster;
 			sourceTree = "<group>";
@@ -719,6 +722,7 @@
 				35B422E02BECAB6E00681AA2 /* MonsterSummonInfoView.swift in Sources */,
 				35BE555A2BDAA929003715C3 /* SPRFilePreviewView.swift in Sources */,
 				35239E032BC29F660039F7D5 /* EmptyContentView.swift in Sources */,
+				352B140F2C22DCA40097E643 /* ObservableMonster.swift in Sources */,
 				35B33BA52BF465E700EF28F5 /* CubeView.swift in Sources */,
 				35652B472B960D370075AD71 /* MapInfoView.swift in Sources */,
 				3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */,

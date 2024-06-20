@@ -9,15 +9,21 @@ import rAthenaCommon
 import RODatabase
 
 struct MonsterProvider: DatabaseRecordProvider {
-    func records(for mode: ServerMode) async throws -> [Monster] {
+    func records(for mode: ServerMode) async throws -> [ObservableMonster] {
         let database = MonsterDatabase.database(for: mode)
         let monsters = try await database.monsters()
-        return monsters
+
+        var observableMonsters: [ObservableMonster] = []
+        for monster in monsters {
+            let observableMonster = await ObservableMonster(mode: mode, monster: monster)
+            observableMonsters.append(observableMonster)
+        }
+        return observableMonsters
     }
 
-    func records(matching searchText: String, in monsters: [Monster]) async -> [Monster] {
+    func records(matching searchText: String, in monsters: [ObservableMonster]) async -> [ObservableMonster] {
         monsters.filter { monster in
-            monster.name.localizedStandardContains(searchText)
+            monster.localizedName.localizedStandardContains(searchText)
         }
     }
 }

@@ -9,11 +9,13 @@ import Observation
 import rAthenaCommon
 import RODatabase
 
-@Observable class ObservableMonsterSummon {
-    let mode: ServerMode
-    let monsterSummon: MonsterSummon
+@Observable
+@dynamicMemberLookup
+class ObservableMonsterSummon {
+    private let mode: ServerMode
+    private let monsterSummon: MonsterSummon
 
-    var defaultMonster: Monster?
+    var defaultMonster: ObservableMonster?
     var summonMonsters: [Summon]?
 
     init(mode: ServerMode, monsterSummon: MonsterSummon) {
@@ -21,15 +23,22 @@ import RODatabase
         self.monsterSummon = monsterSummon
     }
 
-    func fetchMonsterSummonInfo() async {
+    subscript<Value>(dynamicMember keyPath: KeyPath<MonsterSummon, Value>) -> Value {
+        monsterSummon[keyPath: keyPath]
+    }
+
+    func fetchDetail() async throws {
         let monsterDatabase = MonsterDatabase.database(for: mode)
 
-        defaultMonster = try? await monsterDatabase.monster(forAegisName: monsterSummon.default)
+        if let monster = try await monsterDatabase.monster(forAegisName: monsterSummon.default) {
+            defaultMonster = await ObservableMonster(mode: mode, monster: monster)
+        }
 
         var summonMonsters: [Summon] = []
-        for s in monsterSummon.summon {
-            if let monster = try? await monsterDatabase.monster(forAegisName: s.monster) {
-                let summon = Summon(monster: monster, rate: s.rate)
+        for summon in monsterSummon.summon {
+            if let monster = try await monsterDatabase.monster(forAegisName: summon.monster) {
+                let monster = await ObservableMonster(mode: mode, monster: monster)
+                let summon = Summon(monster: monster, rate: summon.rate)
                 summonMonsters.append(summon)
             }
         }
@@ -39,7 +48,7 @@ import RODatabase
 
 extension ObservableMonsterSummon {
     struct Summon: Identifiable {
-        var monster: Monster
+        var monster: ObservableMonster
         var rate: Int
 
         var id: Int {
@@ -48,9 +57,9 @@ extension ObservableMonsterSummon {
     }
 }
 
-extension ObservableMonsterSummon: Identifiable {
-    var id: String {
-        monsterSummon.group
+extension ObservableMonsterSummon: Equatable {
+    static func == (lhs: ObservableMonsterSummon, rhs: ObservableMonsterSummon) -> Bool {
+        lhs.monsterSummon == rhs.monsterSummon
     }
 }
 
@@ -60,8 +69,8 @@ extension ObservableMonsterSummon: Hashable {
     }
 }
 
-extension ObservableMonsterSummon: Equatable {
-    static func == (lhs: ObservableMonsterSummon, rhs: ObservableMonsterSummon) -> Bool {
-        lhs.monsterSummon == rhs.monsterSummon
+extension ObservableMonsterSummon: Identifiable {
+    var id: String {
+        monsterSummon.group
     }
 }

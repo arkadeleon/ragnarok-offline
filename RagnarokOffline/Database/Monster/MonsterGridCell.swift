@@ -6,27 +6,21 @@
 //
 
 import SwiftUI
-import ROClient
-import RODatabase
-import ROResources
 
 struct MonsterGridCell: View {
-    var monster: Monster
+    var monster: ObservableMonster
     var secondaryText: String?
-
-    @State private var localizedMonsterName: String?
-    @State private var monsterImage: CGImage?
 
     var body: some View {
         VStack {
             ZStack {
-                if let monsterImage {
+                if let monsterImage = monster.image {
                     if monsterImage.width > 80 || monsterImage.height > 80 {
-                        Image(monsterImage, scale: 1, label: Text(monster.name))
+                        Image(monsterImage, scale: 1, label: Text(monster.localizedName))
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                     } else {
-                        Image(monsterImage, scale: 1, label: Text(monster.name))
+                        Image(monsterImage, scale: 1, label: Text(monster.localizedName))
                     }
                 } else {
                     Image(systemName: "pawprint")
@@ -48,7 +42,7 @@ struct MonsterGridCell: View {
                 }
 
                 VStack(spacing: 2) {
-                    Text(localizedMonsterName ?? monster.name)
+                    Text(monster.localizedName)
                         .frame(maxWidth: .infinity, alignment: .center)
                         .foregroundColor(.primary)
                         .font(.subheadline)
@@ -64,8 +58,7 @@ struct MonsterGridCell: View {
         }
         .frame(maxHeight: .infinity, alignment: .top)
         .task {
-            localizedMonsterName = await MonsterLocalization.shared.localizedName(for: monster.id)
-            monsterImage = await ClientResourceManager.shared.monsterImage(monster.id)
+            await monster.fetchImage()
         }
     }
 }

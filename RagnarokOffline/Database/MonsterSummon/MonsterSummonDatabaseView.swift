@@ -15,19 +15,19 @@ struct MonsterSummonDatabaseView: View {
         DatabaseView(database: $database) { monsterSummons in
             ResponsiveView {
                 List(monsterSummons) { monsterSummon in
-                    NavigationLink(monsterSummon.monsterSummon.group, value: monsterSummon)
+                    NavigationLink(monsterSummon.group, value: monsterSummon)
                 }
                 .listStyle(.plain)
             } regular: {
                 List(monsterSummons) { monsterSummon in
                     NavigationLink(value: monsterSummon) {
                         HStack {
-                            Text(monsterSummon.monsterSummon.group)
+                            Text(monsterSummon.group)
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            Text(monsterSummon.monsterSummon.default)
+                            Text(monsterSummon.default)
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 .foregroundStyle(.secondary)
-                            Text("\(monsterSummon.monsterSummon.summon.count) monsters")
+                            Text("\(monsterSummon.summon.count) monsters")
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 .foregroundStyle(.secondary)
                         }

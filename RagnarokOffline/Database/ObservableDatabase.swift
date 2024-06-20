@@ -23,7 +23,8 @@ extension DatabaseRecordProvider {
     }
 }
 
-@Observable class ObservableDatabase<RecordProvider> where RecordProvider: DatabaseRecordProvider {
+@Observable 
+class ObservableDatabase<RecordProvider> where RecordProvider: DatabaseRecordProvider {
     let mode: ServerMode
     let recordProvider: RecordProvider
 
