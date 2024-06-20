@@ -7,8 +7,8 @@
 
 import Foundation
 import rAthenaCommon
-import rAthenaResource
-import rAthenaRyml
+import rAthenaResources
+import rAthenaYAML
 
 public actor ItemDatabase {
     public static let prerenewal = ItemDatabase(mode: .prerenewal)
@@ -38,7 +38,7 @@ public actor ItemDatabase {
         if cachedUsableItems.isEmpty {
             let decoder = YAMLDecoder()
 
-            let usableItemURL = ResourceBundle.shared.dbURL
+            let usableItemURL = ServerResourceBundle.shared.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("item_db_usable.yml")
             let usableItemData = try Data(contentsOf: usableItemURL)
@@ -52,7 +52,7 @@ public actor ItemDatabase {
         if cachedEquipItems.isEmpty {
             let decoder = YAMLDecoder()
 
-            let equipItemURL = ResourceBundle.shared.dbURL
+            let equipItemURL = ServerResourceBundle.shared.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("item_db_equip.yml")
             let equipItemData = try Data(contentsOf: equipItemURL)
@@ -66,7 +66,7 @@ public actor ItemDatabase {
         if cachedEtcItems.isEmpty {
             let decoder = YAMLDecoder()
 
-            let etcItemURL = ResourceBundle.shared.dbURL
+            let etcItemURL = ServerResourceBundle.shared.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("item_db_etc.yml")
             let etcItemData = try Data(contentsOf: etcItemURL)

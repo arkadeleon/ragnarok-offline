@@ -7,8 +7,8 @@
 
 import Foundation
 import rAthenaCommon
-import rAthenaResource
-import rAthenaRyml
+import rAthenaResources
+import rAthenaYAML
 
 public actor StatusChangeDatabase {
     public static let prerenewal = StatusChangeDatabase(mode: .prerenewal)
@@ -34,7 +34,7 @@ public actor StatusChangeDatabase {
         if cachedStatusChanges.isEmpty {
             let decoder = YAMLDecoder()
 
-            let url = ResourceBundle.shared.dbURL
+            let url = ServerResourceBundle.shared.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("status.yml")
             let data = try Data(contentsOf: url)

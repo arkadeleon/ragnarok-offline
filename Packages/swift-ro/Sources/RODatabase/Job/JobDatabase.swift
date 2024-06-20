@@ -7,8 +7,8 @@
 
 import Foundation
 import rAthenaCommon
-import rAthenaResource
-import rAthenaRyml
+import rAthenaResources
+import rAthenaYAML
 
 public actor JobDatabase {
     public static let prerenewal = JobDatabase(mode: .prerenewal)
@@ -33,25 +33,25 @@ public actor JobDatabase {
         if cachedJobs.isEmpty {
             let decoder = YAMLDecoder()
 
-            let basicStatsURL = ResourceBundle.shared.dbURL
+            let basicStatsURL = ServerResourceBundle.shared.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("job_stats.yml")
             let basicStatsData = try Data(contentsOf: basicStatsURL)
             let basicStatsList = try decoder.decode(ListNode<JobBasicStats>.self, from: basicStatsData).body
 
-            let aspdStatsURL = ResourceBundle.shared.dbURL
+            let aspdStatsURL = ServerResourceBundle.shared.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("job_aspd.yml")
             let aspdStatsData = try Data(contentsOf: aspdStatsURL)
             let aspdStatsList = try decoder.decode(ListNode<JobASPDStats>.self, from: aspdStatsData).body
 
-            let expStatsURL = ResourceBundle.shared.dbURL
+            let expStatsURL = ServerResourceBundle.shared.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("job_exp.yml")
             let expStatsData = try Data(contentsOf: expStatsURL)
             let expStatsList = try decoder.decode(ListNode<JobExpStats>.self, from: expStatsData).body
 
-            let basePointsStatsURL = ResourceBundle.shared.dbURL
+            let basePointsStatsURL = ServerResourceBundle.shared.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("job_basepoints.yml")
             let basePointsStatsData = try Data(contentsOf: basePointsStatsURL)

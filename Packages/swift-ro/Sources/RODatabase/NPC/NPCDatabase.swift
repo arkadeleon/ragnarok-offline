@@ -7,7 +7,7 @@
 
 import Foundation
 import rAthenaCommon
-import rAthenaResource
+import rAthenaResources
 
 public actor NPCDatabase {
     public static let prerenewal = NPCDatabase(mode: .prerenewal)
@@ -57,7 +57,7 @@ public actor NPCDatabase {
 
     private func restoreScripts() throws {
         if !isCached {
-            let url = ResourceBundle.shared.npcURL
+            let url = ServerResourceBundle.shared.npcURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("scripts_main.conf")
             try import_conf_file(url: url)
@@ -83,7 +83,7 @@ public actor NPCDatabase {
 
             let w1 = words[0]
             let w2 = words[1]
-            let url = ResourceBundle.shared.url.appendingPathComponent(w2)
+            let url = ServerResourceBundle.shared.url.appendingPathComponent(w2)
 
             switch w1 {
             case "npc":

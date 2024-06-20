@@ -25,7 +25,6 @@
 		351990182BC837320082EB0E /* rAthenaLogin in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 351990162BC837320082EB0E /* rAthenaLogin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3519901A2BC837320082EB0E /* rAthenaMap in Frameworks */ = {isa = PBXBuildFile; productRef = 351990192BC837320082EB0E /* rAthenaMap */; };
 		3519901B2BC837320082EB0E /* rAthenaMap in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 351990192BC837320082EB0E /* rAthenaMap */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		3519901D2BC837320082EB0E /* rAthenaResource in Frameworks */ = {isa = PBXBuildFile; productRef = 3519901C2BC837320082EB0E /* rAthenaResource */; };
 		3519901F2BC837320082EB0E /* rAthenaWeb in Frameworks */ = {isa = PBXBuildFile; productRef = 3519901E2BC837320082EB0E /* rAthenaWeb */; };
 		351990202BC837320082EB0E /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3519901E2BC837320082EB0E /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		351EE2F52C06F7A90012BC9E /* ROClient in Frameworks */ = {isa = PBXBuildFile; productRef = 351EE2F42C06F7A90012BC9E /* ROClient */; };
@@ -48,6 +47,7 @@
 		35239E052BC2D5D60039F7D5 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */; };
 		3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */; };
 		352B140F2C22DCA40097E643 /* ObservableMonster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B140E2C22DCA40097E643 /* ObservableMonster.swift */; };
+		352B14112C2433A20097E643 /* rAthenaResources in Frameworks */ = {isa = PBXBuildFile; productRef = 352B14102C2433A20097E643 /* rAthenaResources */; };
 		353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 353AFBDB2BC779BE00F613A8 /* RODatabase */; };
 		353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */; };
 		353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F172B44FFE100605E92 /* SkillInfoView.swift */; };
@@ -260,7 +260,7 @@
 				35B422B12BEB277900681AA2 /* ROResources in Frameworks */,
 				353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */,
 				3519901A2BC837320082EB0E /* rAthenaMap in Frameworks */,
-				3519901D2BC837320082EB0E /* rAthenaResource in Frameworks */,
+				352B14112C2433A20097E643 /* rAthenaResources in Frameworks */,
 				358D4C612BC6EBB500FAF45D /* Lua in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -594,12 +594,12 @@
 				351990142BC837320082EB0E /* rAthenaCommon */,
 				351990162BC837320082EB0E /* rAthenaLogin */,
 				351990192BC837320082EB0E /* rAthenaMap */,
-				3519901C2BC837320082EB0E /* rAthenaResource */,
 				3519901E2BC837320082EB0E /* rAthenaWeb */,
 				358362CC2BD55D4000821500 /* SwiftTerm */,
 				35B367442BD6AE700018ED27 /* Terminal */,
 				35B422B02BEB277900681AA2 /* ROResources */,
 				351EE2F42C06F7A90012BC9E /* ROClient */,
+				352B14102C2433A20097E643 /* rAthenaResources */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -1018,10 +1018,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = rAthenaMap;
 		};
-		3519901C2BC837320082EB0E /* rAthenaResource */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = rAthenaResource;
-		};
 		3519901E2BC837320082EB0E /* rAthenaWeb */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = rAthenaWeb;
@@ -1029,6 +1025,10 @@
 		351EE2F42C06F7A90012BC9E /* ROClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ROClient;
+		};
+		352B14102C2433A20097E643 /* rAthenaResources */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = rAthenaResources;
 		};
 		353AFBDB2BC779BE00F613A8 /* RODatabase */ = {
 			isa = XCSwiftPackageProductDependency;

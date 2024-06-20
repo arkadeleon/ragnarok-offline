@@ -6,12 +6,12 @@
 //
 
 import XCTest
-import rAthenaResource
+import rAthenaResources
 @testable import RODatabase
 
 final class MonsterDatabaseTests: XCTestCase {
     override func setUp() async throws {
-        try await ResourceBundle.shared.load()
+        try await ServerResourceBundle.shared.load()
     }
 
     func testPrerenewal() async throws {

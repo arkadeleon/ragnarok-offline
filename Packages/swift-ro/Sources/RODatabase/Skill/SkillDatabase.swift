@@ -7,8 +7,8 @@
 
 import Foundation
 import rAthenaCommon
-import rAthenaResource
-import rAthenaRyml
+import rAthenaResources
+import rAthenaYAML
 
 public actor SkillDatabase {
     public static let prerenewal = SkillDatabase(mode: .prerenewal)
@@ -35,7 +35,7 @@ public actor SkillDatabase {
         if cachedSkills.isEmpty {
             let decoder = YAMLDecoder()
 
-            let url = ResourceBundle.shared.dbURL
+            let url = ServerResourceBundle.shared.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("skill_db.yml")
             let data = try Data(contentsOf: url)

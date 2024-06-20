@@ -7,7 +7,7 @@
 
 import Foundation
 import rAthenaCommon
-import rAthenaResource
+import rAthenaResources
 
 public actor MapDatabase {
     public static let prerenewal = MapDatabase(mode: .prerenewal)
@@ -31,7 +31,7 @@ public actor MapDatabase {
 
     public func maps() throws -> [Map] {
         if cachedMaps.isEmpty {
-            let url = ResourceBundle.shared.dbURL.appendingPathComponent("map_index.txt")
+            let url = ServerResourceBundle.shared.dbURL.appendingPathComponent("map_index.txt")
             let string = try String(contentsOf: url)
 
             var index = 0

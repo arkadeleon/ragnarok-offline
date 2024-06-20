@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import rAthenaResource
+import rAthenaResources
 import rAthenaLogin
 import rAthenaChar
 import rAthenaMap
@@ -34,7 +34,7 @@ enum SidebarItem: Hashable {
 
 struct ContentView: View {
     @State private var clientDirectory = ObservableFile(file: .directory(ClientResourceBundle.shared.url))
-    @State private var serverDirectory = ObservableFile(file: .directory(ResourceBundle.shared.url))
+    @State private var serverDirectory = ObservableFile(file: .directory(ServerResourceBundle.shared.url))
 
     @State private var loginServer = ObservableServer(server: LoginServer.shared)
     @State private var charServer = ObservableServer(server: CharServer.shared)
@@ -269,7 +269,7 @@ struct ContentView: View {
     }
 
     private func load() async {
-        try? await ResourceBundle.shared.load()
+        try? await ServerResourceBundle.shared.load()
     }
 
     private func startAllServers() {

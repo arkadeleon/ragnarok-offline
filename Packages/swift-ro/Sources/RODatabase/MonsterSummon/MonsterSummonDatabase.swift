@@ -7,8 +7,8 @@
 
 import Foundation
 import rAthenaCommon
-import rAthenaResource
-import rAthenaRyml
+import rAthenaResources
+import rAthenaYAML
 
 public actor MonsterSummonDatabase {
     public static let prerenewal = MonsterSummonDatabase(mode: .prerenewal)
@@ -34,7 +34,7 @@ public actor MonsterSummonDatabase {
         if cachedMonsterSummons.isEmpty {
             let decoder = YAMLDecoder()
 
-            let url = ResourceBundle.shared.dbURL
+            let url = ServerResourceBundle.shared.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("mob_summon.yml")
             let data = try Data(contentsOf: url)

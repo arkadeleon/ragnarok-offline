@@ -62,8 +62,8 @@ let package = Package(
             name: "RODatabase",
             dependencies: [
                 .product(name: "rAthenaCommon", package: "swift-rathena"),
-                .product(name: "rAthenaResource", package: "swift-rathena"),
-                .product(name: "rAthenaRyml", package: "swift-rathena"),
+                .product(name: "rAthenaResources", package: "swift-rathena"),
+                .product(name: "rAthenaYAML", package: "swift-rathena"),
             ],
             swiftSettings: [
                 .interoperabilityMode(.Cxx),
