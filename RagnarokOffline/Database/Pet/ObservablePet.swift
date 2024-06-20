@@ -19,27 +19,27 @@ import RODatabase
     var equipItem: Item?
     var foodItem: Item?
 
-    var fields: [DatabaseRecordField] {
-        var fields: [DatabaseRecordField] = []
+    var attributes: [DatabaseRecordAttribute] {
+        var attributes: [DatabaseRecordAttribute] = []
 
-        fields.append(("Fullness", "\(pet.fullness)"))
-        fields.append(("Hungry Delay", "\(pet.hungryDelay)"))
-        fields.append(("Hunger Increase", "\(pet.hungerIncrease)"))
+        attributes.append(.init(name: "Fullness", value: pet.fullness))
+        attributes.append(.init(name: "Hungry Delay", value: pet.hungryDelay))
+        attributes.append(.init(name: "Hunger Increase", value: pet.hungerIncrease))
 
-        fields.append(("Intimacy Start", "\(pet.intimacyStart)"))
-        fields.append(("Intimacy Fed", "\(pet.intimacyFed)"))
-        fields.append(("Intimacy Overfed", "\(pet.intimacyOverfed)"))
-        fields.append(("Intimacy Hungry", "\(pet.intimacyHungry)"))
-        fields.append(("Intimacy OwnerDie", "\(pet.intimacyOwnerDie)"))
+        attributes.append(.init(name: "Intimacy Start", value: pet.intimacyStart))
+        attributes.append(.init(name: "Intimacy Fed", value: pet.intimacyFed))
+        attributes.append(.init(name: "Intimacy Overfed", value: pet.intimacyOverfed))
+        attributes.append(.init(name: "Intimacy Hungry", value: pet.intimacyHungry))
+        attributes.append(.init(name: "Intimacy OwnerDie", value: pet.intimacyOwnerDie))
 
-        fields.append(("Capture Rate", "\(pet.captureRate)"))
-        fields.append(("Special Performance", "\(pet.specialPerformance)"))
-        fields.append(("Attack Rate", "\(pet.attackRate)"))
-        fields.append(("Retaliate Rate", "\(pet.retaliateRate)"))
-        fields.append(("Change Target Rate", "\(pet.changeTargetRate)"))
-        fields.append(("Allow Auto Feed", "\(pet.allowAutoFeed)"))
+        attributes.append(.init(name: "Capture Rate", value: pet.captureRate))
+        attributes.append(.init(name: "Special Performance", value: pet.specialPerformance))
+        attributes.append(.init(name: "Attack Rate", value: pet.attackRate))
+        attributes.append(.init(name: "Retaliate Rate", value: pet.retaliateRate))
+        attributes.append(.init(name: "Change Target Rate", value: pet.changeTargetRate))
+        attributes.append(.init(name: "Allow Auto Feed", value: pet.allowAutoFeed))
 
-        return fields
+        return attributes
     }
 
     init(mode: ServerMode, pet: Pet, monster: Monster) {

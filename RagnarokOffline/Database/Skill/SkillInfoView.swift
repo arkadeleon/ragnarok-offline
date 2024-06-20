@@ -20,11 +20,11 @@ struct SkillInfoView: View {
         ScrollView {
             DatabaseRecordInfoSection("Info") {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                    ForEach(fields, id: \.title.key) { field in
+                    ForEach(attributes) { attribute in
                         LabeledContent {
-                            Text(field.value)
+                            Text(attribute.value)
                         } label: {
-                            Text(field.title)
+                            Text(attribute.name)
                         }
                     }
                 }
@@ -42,17 +42,17 @@ struct SkillInfoView: View {
         }
     }
 
-    private var fields: [DatabaseRecordField] {
-        var fields: [DatabaseRecordField] = []
+    private var attributes: [DatabaseRecordAttribute] {
+        var attributes: [DatabaseRecordAttribute] = []
 
-        fields.append(("ID", "#\(skill.id)"))
-        fields.append(("Aegis Name", skill.aegisName))
-        fields.append(("Name", skill.name))
-        fields.append(("Maximum Level", skill.maxLevel.formatted()))
-        fields.append(("Type", skill.type.description))
-        fields.append(("Target Type", skill.targetType.description))
+        attributes.append(.init(name: "ID", value: "#\(skill.id)"))
+        attributes.append(.init(name: "Aegis Name", value: skill.aegisName))
+        attributes.append(.init(name: "Name", value: skill.name))
+        attributes.append(.init(name: "Maximum Level", value: skill.maxLevel))
+        attributes.append(.init(name: "Type", value: skill.type.description))
+        attributes.append(.init(name: "Target Type", value: skill.targetType.description))
 
-        return fields
+        return attributes
     }
 
     private func loadSkillInfo() async {

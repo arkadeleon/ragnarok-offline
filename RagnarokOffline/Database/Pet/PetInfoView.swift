@@ -50,11 +50,11 @@ struct PetInfoView: View {
 
             DatabaseRecordInfoSection("Info") {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                    ForEach(pet.fields, id: \.title.key) { field in
+                    ForEach(pet.attributes) { attribute in
                         LabeledContent {
-                            Text(field.value)
+                            Text(attribute.value)
                         } label: {
-                            Text(field.title)
+                            Text(attribute.name)
                         }
                     }
                 }

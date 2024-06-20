@@ -43,11 +43,11 @@ struct MonsterInfoView: View {
 
             DatabaseRecordInfoSection("Info") {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                    ForEach(fields, id: \.title.key) { field in
+                    ForEach(attributes) { attribute in
                         LabeledContent {
-                            Text(field.value)
+                            Text(attribute.value)
                         } label: {
-                            Text(field.title)
+                            Text(attribute.name)
                         }
                     }
                 }
@@ -110,65 +110,65 @@ struct MonsterInfoView: View {
         }
     }
 
-    private var fields: [DatabaseRecordField] {
-        var fields: [DatabaseRecordField] = []
+    private var attributes: [DatabaseRecordAttribute] {
+        var attributes: [DatabaseRecordAttribute] = []
 
-        fields.append(("ID", "#\(monster.id)"))
-        fields.append(("Aegis Name", monster.aegisName))
-        fields.append(("Name", monster.name))
+        attributes.append(.init(name: "ID", value: "#\(monster.id)"))
+        attributes.append(.init(name: "Aegis Name", value: monster.aegisName))
+        attributes.append(.init(name: "Name", value: monster.name))
 
-        fields.append(("Level", "\(monster.level)"))
-        fields.append(("HP", "\(monster.hp)"))
-        fields.append(("SP", "\(monster.sp)"))
+        attributes.append(.init(name: "Level", value: monster.level))
+        attributes.append(.init(name: "HP", value: monster.hp))
+        attributes.append(.init(name: "SP", value: monster.sp))
 
-        fields.append(("Base Exp", "\(monster.baseExp)"))
-        fields.append(("Job Exp", "\(monster.jobExp)"))
-        fields.append(("MVP Exp", "\(monster.mvpExp)"))
+        attributes.append(.init(name: "Base Exp", value: monster.baseExp))
+        attributes.append(.init(name: "Job Exp", value: monster.jobExp))
+        attributes.append(.init(name: "MVP Exp", value: monster.mvpExp))
 
         if mode == .prerenewal {
-            fields.append(("Minimum Attack", "\(monster.attack)"))
-            fields.append(("Maximum Attack", "\(monster.attack2)"))
+            attributes.append(.init(name: "Minimum Attack", value: monster.attack))
+            attributes.append(.init(name: "Maximum Attack", value: monster.attack2))
         }
 
         if mode == .renewal {
-            fields.append(("Base Attack", "\(monster.attack)"))
-            fields.append(("Base Magic Attack", "\(monster.attack2)"))
+            attributes.append(.init(name: "Base Attack", value: monster.attack))
+            attributes.append(.init(name: "Base Magic Attack", value: monster.attack2))
         }
 
-        fields.append(("Defense", "\(monster.defense)"))
-        fields.append(("Magic Defense", "\(monster.magicDefense)"))
+        attributes.append(.init(name: "Defense", value: monster.defense))
+        attributes.append(.init(name: "Magic Defense", value: monster.magicDefense))
 
-        fields.append(("Resistance", "\(monster.resistance)"))
-        fields.append(("Magic Resistance", "\(monster.magicResistance)"))
+        attributes.append(.init(name: "Resistance", value: monster.resistance))
+        attributes.append(.init(name: "Magic Resistance", value: monster.magicResistance))
 
-        fields.append(("Str", "\(monster.str)"))
-        fields.append(("Agi", "\(monster.agi)"))
-        fields.append(("Vit", "\(monster.vit)"))
-        fields.append(("Int", "\(monster.int)"))
-        fields.append(("Dex", "\(monster.dex)"))
-        fields.append(("Luk", "\(monster.luk)"))
+        attributes.append(.init(name: "Str", value: monster.str))
+        attributes.append(.init(name: "Agi", value: monster.agi))
+        attributes.append(.init(name: "Vit", value: monster.vit))
+        attributes.append(.init(name: "Int", value: monster.int))
+        attributes.append(.init(name: "Dex", value: monster.dex))
+        attributes.append(.init(name: "Luk", value: monster.luk))
 
-        fields.append(("Attack Range", "\(monster.attackRange)"))
-        fields.append(("Skill Range", "\(monster.skillRange)"))
-        fields.append(("Chase Range", "\(monster.chaseRange)"))
+        attributes.append(.init(name: "Attack Range", value: monster.attackRange))
+        attributes.append(.init(name: "Skill Range", value: monster.skillRange))
+        attributes.append(.init(name: "Chase Range", value: monster.chaseRange))
 
-        fields.append(("Size", monster.size.description))
-        fields.append(("Race", monster.race.description))
+        attributes.append(.init(name: "Size", value: monster.size.description))
+        attributes.append(.init(name: "Race", value: monster.race.description))
 
-        fields.append(("Element", monster.element.description))
-        fields.append(("Element Level", "\(monster.elementLevel)"))
+        attributes.append(.init(name: "Element", value: monster.element.description))
+        attributes.append(.init(name: "Element Level", value: monster.elementLevel))
 
-        fields.append(("Walk Speed", "\(monster.walkSpeed.rawValue)"))
-        fields.append(("Attack Delay", "\(monster.attackDelay)"))
-        fields.append(("Attack Motion", "\(monster.attackMotion)"))
-        fields.append(("Client Attack Motion", "\(monster.clientAttackMotion)"))
-        fields.append(("Damage Motion", "\(monster.damageMotion)"))
-        fields.append(("Damage Taken", "\(monster.damageTaken)"))
+        attributes.append(.init(name: "Walk Speed", value: monster.walkSpeed.rawValue))
+        attributes.append(.init(name: "Attack Delay", value: monster.attackDelay))
+        attributes.append(.init(name: "Attack Motion", value: monster.attackMotion))
+        attributes.append(.init(name: "Client Attack Motion", value: monster.clientAttackMotion))
+        attributes.append(.init(name: "Damage Motion", value: monster.damageMotion))
+        attributes.append(.init(name: "Damage Taken", value: monster.damageTaken))
 
-        fields.append(("AI", monster.ai.description))
-        fields.append(("Class", monster.class.description))
+        attributes.append(.init(name: "AI", value: monster.ai.description))
+        attributes.append(.init(name: "Class", value: monster.class.description))
 
-        return fields
+        return attributes
     }
 
     private var raceGroups: String? {

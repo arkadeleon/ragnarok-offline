@@ -22,7 +22,7 @@ extension StatusChange: DatabaseRecord {
 
         var sections: [DatabaseRecordDetail.Section] = []
 
-        let info: [DatabaseRecordDetail.Attribute] = [
+        let info: [DatabaseRecordAttribute] = [
             .init(name: "Status", value: status),
             .init(name: "Icon", value: icon),
         ]

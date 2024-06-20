@@ -8,12 +8,10 @@
 import CoreGraphics
 import rAthenaCommon
 
-typealias DatabaseRecordField = (title: LocalizedStringResource, value: String)
-
 struct DatabaseRecordDetail {
     enum Section: Identifiable {
         case image(LocalizedStringResource, CGImage)
-        case attributes(LocalizedStringResource, [Attribute])
+        case attributes(LocalizedStringResource, [DatabaseRecordAttribute])
         case description(LocalizedStringResource, String)
         case script(LocalizedStringResource, String)
         case references(LocalizedStringResource, [any DatabaseRecord])
@@ -34,16 +32,41 @@ struct DatabaseRecordDetail {
         }
     }
 
-    struct Attribute: Identifiable {
-        var name: LocalizedStringResource
-        var value: String
+    var sections: [Section]
+}
 
-        var id: String {
-            name.key
-        }
+struct DatabaseRecordAttribute: Identifiable {
+    var name: LocalizedStringResource
+    var value: String
+
+    var id: String {
+        name.key
     }
 
-    var sections: [Section]
+    init(name: LocalizedStringResource, value: String) {
+        self.name = name
+        self.value = value
+    }
+
+    init(name: LocalizedStringResource, value: Bool) {
+        self.name = name
+        self.value = value ? String(localized: "Yes") : String(localized: "No")
+    }
+
+    init(name: LocalizedStringResource, value: Int) {
+        self.name = name
+        self.value = value.formatted()
+    }
+
+    init(name: LocalizedStringResource, value: Double) {
+        self.name = name
+        self.value = value.formatted()
+    }
+
+    init(name: LocalizedStringResource, value resource: LocalizedStringResource) {
+        self.name = name
+        self.value = String(localized: resource)
+    }
 }
 
 protocol DatabaseRecord: Hashable, Identifiable {

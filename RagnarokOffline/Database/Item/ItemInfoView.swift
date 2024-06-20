@@ -38,11 +38,11 @@ struct ItemInfoView: View {
 
             DatabaseRecordInfoSection("Info") {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                    ForEach(fields, id: \.title.key) { field in
+                    ForEach(attributes) { attribute in
                         LabeledContent {
-                            Text(field.value)
+                            Text(attribute.value)
                         } label: {
-                            Text(field.title)
+                            Text(attribute.name)
                         }
                     }
                 }
@@ -113,70 +113,70 @@ struct ItemInfoView: View {
         item.slots > 0 ? item.name + " [\(item.slots)]" : item.name
     }
 
-    private var fields: [DatabaseRecordField] {
-        var fields: [DatabaseRecordField] = []
+    private var attributes: [DatabaseRecordAttribute] {
+        var attributes: [DatabaseRecordAttribute] = []
 
-        fields.append(("ID", "#" + String(item.id)))
-        fields.append(("Aegis Name", item.aegisName))
-        fields.append(("Name", item.name))
-        fields.append(("Type", item.type.description))
+        attributes.append(.init(name: "ID", value: "#\(item.id)"))
+        attributes.append(.init(name: "Aegis Name", value: item.aegisName))
+        attributes.append(.init(name: "Name", value: item.name))
+        attributes.append(.init(name: "Type", value: item.type.description))
 
         switch item.subType {
         case .none:
             break
         case .weapon(let weaponType):
-            fields.append(("Weapon Type", String(localized: weaponType.localizedStringResource)))
+            attributes.append(.init(name: "Weapon Type", value: weaponType.localizedStringResource))
         case .ammo(let ammoType):
-            fields.append(("Ammo Type", ammoType.description))
+            attributes.append(.init(name: "Ammo Type", value: ammoType.description))
         case .card(let cardType):
-            fields.append(("Card Type", cardType.description))
+            attributes.append(.init(name: "Card Type", value: cardType.description))
         }
 
-        fields.append(("Buy", item.buy.formatted() + "z"))
-        fields.append(("Sell", item.sell.formatted() + "z"))
-        fields.append(("Weight", (Double(item.weight) / 10).formatted()))
+        attributes.append(.init(name: "Buy", value: item.buy.formatted() + "z"))
+        attributes.append(.init(name: "Sell", value: item.sell.formatted() + "z"))
+        attributes.append(.init(name: "Weight", value: Double(item.weight) / 10))
 
         switch item.type {
         case .weapon:
-            fields.append(("Attack", "\(item.attack)"))
-            fields.append(("Magic Attack", "\(item.magicAttack)"))
-            fields.append(("Attack Range", "\(item.range)"))
-            fields.append(("Slots", "\(item.slots)"))
+            attributes.append(.init(name: "Attack", value: item.attack))
+            attributes.append(.init(name: "Magic Attack", value: item.magicAttack))
+            attributes.append(.init(name: "Attack Range", value: item.range))
+            attributes.append(.init(name: "Slots", value: item.slots))
         case .armor:
-            fields.append(("Defense", "\(item.defense)"))
-            fields.append(("Slots", "\(item.slots)"))
+            attributes.append(.init(name: "Defense", value: item.defense))
+            attributes.append(.init(name: "Slots", value: item.slots))
         default:
             break
         }
 
         switch item.type {
         case .weapon, .armor:
-            fields.append(("Gender", item.gender.description))
+            attributes.append(.init(name: "Gender", value: item.gender.description))
         default:
             break
         }
 
         switch item.type {
         case .weapon:
-            fields.append(("Weapon Level", "\(item.weaponLevel)"))
+            attributes.append(.init(name: "Weapon Level", value: item.weaponLevel))
         case .armor:
-            fields.append(("Armor Level", "\(item.armorLevel)"))
+            attributes.append(.init(name: "Armor Level", value: item.armorLevel))
         default:
             break
         }
 
         switch item.type {
         case .weapon, .armor:
-            fields.append(("Minimum Level", "\(item.equipLevelMin)"))
-            fields.append(("Maximum Level", "\(item.equipLevelMax)"))
-            fields.append(("Refinable", item.refineable ? "Yes" : "No"))
-            fields.append(("Gradable", item.gradable ? "Yes" : "No"))
-            fields.append(("View", "\(item.view)"))
+            attributes.append(.init(name: "Minimum Level", value: item.equipLevelMin))
+            attributes.append(.init(name: "Maximum Level", value: item.equipLevelMax))
+            attributes.append(.init(name: "Refinable", value: item.refineable))
+            attributes.append(.init(name: "Gradable", value: item.gradable))
+            attributes.append(.init(name: "View", value: item.view))
         default:
             break;
         }
 
-        return fields
+        return attributes
     }
 
     private var jobs: String {

@@ -35,20 +35,23 @@ struct JobInfoView: View {
 
             DatabaseRecordInfoSection("Info") {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                    LabeledContent("Max Weight", value: jobStats.maxWeight.formatted())
-                    LabeledContent("HP Factor", value: jobStats.hpFactor.formatted())
-                    LabeledContent("HP Increase", value: jobStats.hpIncrease.formatted())
-                    LabeledContent("SP Increase", value: jobStats.spIncrease.formatted())
+                    ForEach(attributes) { attribute in
+                        LabeledContent {
+                            Text(attribute.value)
+                        } label: {
+                            Text(attribute.name)
+                        }
+                    }
                 }
             }
 
             DatabaseRecordInfoSection("Base ASPD") {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                    ForEach(baseASPD, id: \.title.key) { field in
+                    ForEach(baseASPD) { baseASPD in
                         LabeledContent {
-                            Text(field.value)
+                            Text(baseASPD.value)
                         } label: {
-                            Text(field.title)
+                            Text(baseASPD.name)
                         }
                     }
                 }
@@ -147,10 +150,21 @@ struct JobInfoView: View {
         }
     }
 
-    private var baseASPD: [DatabaseRecordField] {
+    private var attributes: [DatabaseRecordAttribute] {
+        var attributes: [DatabaseRecordAttribute] = []
+
+        attributes.append(.init(name: "Max Weight", value: jobStats.maxWeight))
+        attributes.append(.init(name: "HP Factor", value: jobStats.hpFactor))
+        attributes.append(.init(name: "HP Increase", value: jobStats.hpIncrease))
+        attributes.append(.init(name: "SP Increase", value: jobStats.spIncrease))
+
+        return attributes
+    }
+
+    private var baseASPD: [DatabaseRecordAttribute] {
         WeaponType.allCases.compactMap { weaponType in
             if let aspd = jobStats.baseASPD[weaponType] {
-                (weaponType.localizedStringResource, aspd.formatted())
+                DatabaseRecordAttribute(name: weaponType.localizedStringResource, value: aspd)
             } else {
                 nil
             }
