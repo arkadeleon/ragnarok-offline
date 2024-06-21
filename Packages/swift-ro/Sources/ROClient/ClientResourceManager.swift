@@ -19,7 +19,7 @@ public class ClientResourceManager {
         }
 
         let (sprFile, actFile) = ClientResourceBundle.shared.monsterSpriteFile(forResourceName: resourceName)
-        guard let sprData = sprFile.contents(), let actData = actFile.contents() else {
+        guard let sprFile, let sprData = sprFile.contents(), let actFile, let actData = actFile.contents() else {
             return nil
         }
 
@@ -44,9 +44,9 @@ public class ClientResourceManager {
     }
 
     public func jobImage(gender: Gender, job: Job) async -> CGImage? {
-        let bodyFile = ClientResourceBundle.shared.bodySpriteFile(forGender: gender, job: job)
+        let (sprFile, actFile) = ClientResourceBundle.shared.bodySpriteFile(forGender: gender, job: job)
 
-        guard let sprData = bodyFile.spr.contents(), let actData = bodyFile.act.contents() else {
+        guard let sprFile, let sprData = sprFile.contents(), let actFile, let actData = actFile.contents() else {
             return nil
         }
 

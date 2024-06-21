@@ -5,9 +5,9 @@
 //  Created by Leon Li on 2020/5/1.
 //
 
-import Foundation
 import CoreFoundation
 import DataCompression
+import Foundation
 import ROCore
 
 public enum GRFError: Error {

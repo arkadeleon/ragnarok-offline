@@ -18,79 +18,82 @@ public class ClientResourceBundle {
 
     public let url: URL
 
-    public let grf: GRFReference
+    let grfs: [GRFReference]
 
-    private let cache = NSCache<NSString, CGImage>()
+    let cache = NSCache<NSString, CGImage>()
 
     public init() {
         url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        grf = GRFReference(url: url.appendingPathComponent("data.grf"))
+        grfs = [
+            GRFReference(url: url.appendingPathComponent("rdata.grf")),
+            GRFReference(url: url.appendingPathComponent("data.grf")),
+        ]
     }
 
     // MARK: - data
 
-    public func rswFile(forMap map: Map) -> File {
+    public func rswFile(forMap map: Map) -> File? {
         let path = GRF.Path(string: "data\\\(map.name).rsw")
-        let file = File.grfEntry(grf, path)
+        let file = grfEntryFile(at: path)
         return file
     }
 
     // MARK: - data\palette
 
-    public func headPaletteFile(forGender gender: Gender, hairID: Int, paletteID: Int) -> File {
-        let palPath = GRF.Path(string: "data\\palette\\머리\\머리\(hairID)_\(gender.resourceName)_\(paletteID).pal")
-        let palFile = File.grfEntry(grf, palPath)
-        return palFile
+    public func headPaletteFile(forGender gender: Gender, hairID: Int, paletteID: Int) -> File? {
+        let path = GRF.Path(string: "data\\palette\\머리\\머리\(hairID)_\(gender.resourceName)_\(paletteID).pal")
+        let file = grfEntryFile(at: path)
+        return file
     }
 
     // MARK: - data\sprite
 
-    public func itemSpriteFile(forResourceName resourceName: String) -> (spr: File, act: File) {
+    public func itemSpriteFile(forResourceName resourceName: String) -> (spr: File?, act: File?) {
         let sprPath = GRF.Path(string: "data\\sprite\\아이템\\\(resourceName).spr")
-        let sprFile = File.grfEntry(grf, sprPath)
+        let sprFile = grfEntryFile(at: sprPath)
 
         let actPath = GRF.Path(string: "data\\sprite\\아이템\\\(resourceName).act")
-        let actFile = File.grfEntry(grf, actPath)
+        let actFile = grfEntryFile(at: actPath)
 
         return (spr: sprFile, act: actFile)
     }
 
-    public func monsterSpriteFile(forResourceName resourceName: String) -> (spr: File, act: File) {
+    public func monsterSpriteFile(forResourceName resourceName: String) -> (spr: File?, act: File?) {
         let sprPath = GRF.Path(string: "data\\sprite\\몬스터\\\(resourceName).spr")
-        let sprFile = File.grfEntry(grf, sprPath)
+        let sprFile = grfEntryFile(at: sprPath)
 
         let actPath = GRF.Path(string: "data\\sprite\\몬스터\\\(resourceName).act")
-        let actFile = File.grfEntry(grf, actPath)
+        let actFile = grfEntryFile(at: actPath)
 
         return (spr: sprFile, act: actFile)
     }
 
-    public func bodySpriteFile(forGender gender: Gender, job: Job) -> (spr: File, act: File) {
+    public func bodySpriteFile(forGender gender: Gender, job: Job) -> (spr: File?, act: File?) {
         let sprPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(gender.resourceName)\\\(job.resourceName)_\(gender.resourceName).spr")
-        let sprFile = File.grfEntry(grf, sprPath)
+        let sprFile = grfEntryFile(at: sprPath)
 
         let actPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(gender.resourceName)\\\(job.resourceName)_\(gender.resourceName).act")
-        let actFile = File.grfEntry(grf, actPath)
+        let actFile = grfEntryFile(at: actPath)
 
         return (spr: sprFile, act: actFile)
     }
 
-    public func headSpriteFile(forGender gender: Gender, hairID: Int) -> (spr: File, act: File) {
+    public func headSpriteFile(forGender gender: Gender, hairID: Int) -> (spr: File?, act: File?) {
         let sprPath = GRF.Path(string: "data\\sprite\\인간족\\머리통\\\(gender.resourceName)\\\(hairID)_\(gender.resourceName).spr")
-        let sprFile = File.grfEntry(grf, sprPath)
+        let sprFile = grfEntryFile(at: sprPath)
 
         let actPath = GRF.Path(string: "data\\sprite\\인간족\\머리통\\\(gender.resourceName)\\\(hairID)_\(gender.resourceName).act")
-        let actFile = File.grfEntry(grf, actPath)
+        let actFile = grfEntryFile(at: actPath)
 
         return (spr: sprFile, act: actFile)
     }
 
-    public func skillSpriteFile(forResourceName resourceName: String) -> (spr: File, act: File) {
+    public func skillSpriteFile(forResourceName resourceName: String) -> (spr: File?, act: File?) {
         let sprPath = GRF.Path(string: "data\\sprite\\아이템\\\(resourceName).spr")
-        let sprFile = File.grfEntry(grf, sprPath)
+        let sprFile = grfEntryFile(at: sprPath)
 
         let actPath = GRF.Path(string: "data\\sprite\\아이템\\\(resourceName).act")
-        let actFile = File.grfEntry(grf, actPath)
+        let actFile = grfEntryFile(at: actPath)
 
         return (spr: sprFile, act: actFile)
     }
@@ -136,7 +139,9 @@ public class ClientResourceBundle {
             return image
         }
 
-        let file = File.grfEntry(grf, path)
+        guard let file = grfEntryFile(at: path) else {
+            return nil
+        }
 
         guard let data = file.contents() else {
             return nil
@@ -149,5 +154,14 @@ public class ClientResourceBundle {
         }
 
         return image
+    }
+
+    private func grfEntryFile(at path: GRF.Path) -> File? {
+        for grf in grfs {
+            if grf.entry(at: path) != nil {
+                return .grfEntry(grf, path)
+            }
+        }
+        return nil
     }
 }
