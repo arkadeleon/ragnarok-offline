@@ -8,7 +8,6 @@
 import Foundation
 import rAthenaCommon
 import rAthenaResources
-import rAthenaYAML
 
 public actor JobDatabase {
     public static let prerenewal = JobDatabase(mode: .prerenewal)

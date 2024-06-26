@@ -8,7 +8,6 @@
 import Foundation
 import rAthenaCommon
 import rAthenaResources
-import rAthenaYAML
 
 public actor PetDatabase {
     public static let prerenewal = PetDatabase(mode: .prerenewal)

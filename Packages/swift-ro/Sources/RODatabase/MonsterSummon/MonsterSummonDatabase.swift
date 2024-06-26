@@ -8,7 +8,6 @@
 import Foundation
 import rAthenaCommon
 import rAthenaResources
-import rAthenaYAML
 
 public actor MonsterSummonDatabase {
     public static let prerenewal = MonsterSummonDatabase(mode: .prerenewal)

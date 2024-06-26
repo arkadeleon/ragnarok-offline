@@ -8,7 +8,6 @@
 import Foundation
 import rAthenaCommon
 import rAthenaResources
-import rAthenaYAML
 
 public actor SkillDatabase {
     public static let prerenewal = SkillDatabase(mode: .prerenewal)

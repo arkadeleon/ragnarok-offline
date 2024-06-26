@@ -8,7 +8,6 @@
 import Foundation
 import rAthenaCommon
 import rAthenaResources
-import rAthenaYAML
 
 public actor SkillTreeDatabase {
     public static let prerenewal = SkillTreeDatabase(mode: .prerenewal)
