@@ -7,13 +7,13 @@
 
 import rAthenaCommon
 
-public enum SkillType: CaseIterable, CodingKey, Decodable {
+public enum SkillType: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case none
     case weapon
     case magic
     case misc
 
-    public var intValue: Int {
+    public var rawValue: Int {
         switch self {
         case .none: RA_BF_NONE
         case .weapon: RA_BF_WEAPON

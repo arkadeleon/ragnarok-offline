@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum ItemType: CaseIterable, CodingKey, Decodable {
+public enum ItemType: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case healing
     case usable
     case etc
@@ -21,7 +21,7 @@ public enum ItemType: CaseIterable, CodingKey, Decodable {
     case shadowGear
     case cash
 
-    public var intValue: Int {
+    public var rawValue: Int {
         switch self {
         case .healing: RA_IT_HEALING
         case .usable: RA_IT_USABLE
@@ -54,25 +54,6 @@ public enum ItemType: CaseIterable, CodingKey, Decodable {
         case .cash: "Cash"
         }
     }
-
-//    public init?(stringValue: String) {
-//        if let itemType = ItemType.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
-//            self = itemType
-//        } else {
-//            return nil
-//        }
-//    }
-//
-//    public init(from decoder: Decoder) throws {
-//        let container = try decoder.singleValueContainer()
-//        let stringValue = try container.decode(String.self)
-//        if let itemType = ItemType(stringValue: stringValue) {
-//            self = itemType
-//        } else {
-//            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Item type does not exist.")
-//            throw DecodingError.valueNotFound(ItemType.self, context)
-//        }
-//    }
 }
 
 extension ItemType: CustomLocalizedStringResourceConvertible {

@@ -46,7 +46,7 @@ public actor SkillTreeDatabase {
     public func skillTree(forJobID jobID: Int) throws -> SkillTree? {
         if cachedSkillTreesByJobIDs.isEmpty {
             let skillTrees = try skillTrees()
-            cachedSkillTreesByJobIDs = Dictionary(skillTrees.map({ ($0.job.intValue, $0) }), uniquingKeysWith: { (first, _) in first })
+            cachedSkillTreesByJobIDs = Dictionary(skillTrees.map({ ($0.job.rawValue, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
         let skillTree = cachedSkillTreesByJobIDs[jobID]

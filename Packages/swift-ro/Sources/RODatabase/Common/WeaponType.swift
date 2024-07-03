@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum WeaponType: CaseIterable, CodingKey, Decodable {
+public enum WeaponType: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case fist
     case dagger
     case oneHandedSword
@@ -33,7 +33,7 @@ public enum WeaponType: CaseIterable, CodingKey, Decodable {
     case huuma
     case twoHandedStaff
 
-    public var intValue: Int {
+    public var rawValue: Int {
         switch self {
         case .fist: RA_W_FIST
         case .dagger: RA_W_DAGGER
@@ -88,25 +88,6 @@ public enum WeaponType: CaseIterable, CodingKey, Decodable {
         case .grenade: "Grenade"
         case .huuma: "Huuma"
         case .twoHandedStaff: "2hStaff"
-        }
-    }
-
-    public init?(stringValue: String) {
-        if let weaponType = WeaponType.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
-            self = weaponType
-        } else {
-            return nil
-        }
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let stringValue = try container.decode(String.self)
-        if let weaponType = WeaponType(stringValue: stringValue) {
-            self = weaponType
-        } else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Weapon type does not exist.")
-            throw DecodingError.valueNotFound(WeaponType.self, context)
         }
     }
 }

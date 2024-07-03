@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum SkillUnitFlag: CaseIterable, CodingKey, Decodable {
+public enum SkillUnitFlag: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case none
     case noEnemy
     case noReiteration
@@ -28,7 +28,7 @@ public enum SkillUnitFlag: CaseIterable, CodingKey, Decodable {
     case knockbackGroup
     case hiddenTrap
 
-    public var intValue: Int {
+    public var rawValue: Int {
         switch self {
         case .none: 0
         case .noEnemy: RA_UF_NOENEMY

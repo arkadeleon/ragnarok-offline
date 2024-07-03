@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum ItemLocation: CaseIterable, CodingKey, Decodable {
+public enum ItemLocation: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case headTop
     case headMid
     case headLow
@@ -32,7 +32,7 @@ public enum ItemLocation: CaseIterable, CodingKey, Decodable {
     case bothHand
     case bothAccessory
 
-    public var intValue: Int {
+    public var rawValue: Int {
         switch self {
         case .headTop: RA_EQP_HEAD_TOP
         case .headMid: RA_EQP_HEAD_MID
@@ -85,25 +85,6 @@ public enum ItemLocation: CaseIterable, CodingKey, Decodable {
         case .shadowLeftAccessory: "Shadow_Left_Accessory"
         case .bothHand: "Both_Hand"
         case .bothAccessory: "Both_Accessory"
-        }
-    }
-
-    public init?(stringValue: String) {
-        if let itemLocation = ItemLocation.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
-            self = itemLocation
-        } else {
-            return nil
-        }
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let stringValue = try container.decode(String.self)
-        if let itemLocation = ItemLocation(stringValue: stringValue) {
-            self = itemLocation
-        } else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Item location does not exist.")
-            throw DecodingError.valueNotFound(ItemLocation.self, context)
         }
     }
 }

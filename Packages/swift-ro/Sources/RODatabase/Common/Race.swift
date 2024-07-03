@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum Race: CaseIterable, CodingKey, Decodable {
+public enum Race: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case formless
     case undead
     case brute
@@ -19,7 +19,7 @@ public enum Race: CaseIterable, CodingKey, Decodable {
     case angel
     case dragon
 
-    public var intValue: Int {
+    public var rawValue: Int {
         switch self {
         case .formless: RA_RC_FORMLESS
         case .undead: RA_RC_UNDEAD
@@ -46,25 +46,6 @@ public enum Race: CaseIterable, CodingKey, Decodable {
         case .demihuman: "Demihuman"
         case .angel: "Angel"
         case .dragon: "Dragon"
-        }
-    }
-
-    public init?(stringValue: String) {
-        if let race = Race.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
-            self = race
-        } else {
-            return nil
-        }
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let stringValue = try container.decode(String.self)
-        if let race = Race(stringValue: stringValue) {
-            self = race
-        } else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Race does not exist.")
-            throw DecodingError.valueNotFound(Race.self, context)
         }
     }
 }

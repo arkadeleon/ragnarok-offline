@@ -1,17 +1,27 @@
 //
-//  CodingKey+CaseIterable.swift
+//  CaseIterable+RawValue.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/7/3.
 //
 
-extension CodingKey where Self: CaseIterable {
-    public init?(intValue: Int) {
-        if let value = Self.allCases.first(where: { $0.intValue == intValue }) {
+extension RawRepresentable where RawValue == Int, Self: CaseIterable {
+    public init?(rawValue: Int) {
+        if let value = Self.allCases.first(where: { $0.rawValue == rawValue }) {
             self = value
         } else {
             return nil
         }
+    }
+}
+
+extension CodingKey where Self: CaseIterable, Self: RawRepresentable, Self.RawValue == Int {
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
     }
 
     public init?(stringValue: String) {
@@ -23,7 +33,7 @@ extension CodingKey where Self: CaseIterable {
     }
 }
 
-extension Decodable where Self: CodingKey {
+extension Decodable where Self: CaseIterable, Self: RawRepresentable, Self.RawValue == Int, Self: CodingKey {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

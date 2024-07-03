@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum Parameter: CaseIterable, CodingKey, Decodable {
+public enum Parameter: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case str
     case agi
     case vit
@@ -21,7 +21,7 @@ public enum Parameter: CaseIterable, CodingKey, Decodable {
     case con
     case crt
 
-    public var intValue: Int {
+    public var rawValue: Int {
         switch self {
         case .str: RA_PARAM_STR
         case .agi: RA_PARAM_AGI
@@ -52,25 +52,6 @@ public enum Parameter: CaseIterable, CodingKey, Decodable {
         case .spl: "Spl"
         case .con: "Con"
         case .crt: "Crt"
-        }
-    }
-
-    public init?(stringValue: String) {
-        if let parameter = Parameter.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
-            self = parameter
-        } else {
-            return nil
-        }
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let stringValue = try container.decode(String.self)
-        if let parameter = Parameter(stringValue: stringValue) {
-            self = parameter
-        } else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Parameter does not exist.")
-            throw DecodingError.valueNotFound(Parameter.self, context)
         }
     }
 }

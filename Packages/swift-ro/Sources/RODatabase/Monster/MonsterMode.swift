@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum MonsterMode: CaseIterable, CodingKey, Decodable {
+public enum MonsterMode: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case canMove
     case looter
     case aggressive
@@ -35,7 +35,7 @@ public enum MonsterMode: CaseIterable, CodingKey, Decodable {
     case statusImmune
     case skillImmune
 
-    public var intValue: Int {
+    public var rawValue: Int {
         switch self {
         case .canMove: RA_MD_CANMOVE
         case .looter: RA_MD_LOOTER
@@ -94,25 +94,6 @@ public enum MonsterMode: CaseIterable, CodingKey, Decodable {
         case .detector: "Detector"
         case .statusImmune: "StatusImmune"
         case .skillImmune: "SkillImmune"
-        }
-    }
-
-    public init?(stringValue: String) {
-        if let monsterMode = MonsterMode.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
-            self = monsterMode
-        } else {
-            return nil
-        }
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let stringValue = try container.decode(String.self)
-        if let monsterMode = MonsterMode(stringValue: stringValue) {
-            self = monsterMode
-        } else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Monster mode does not exist.")
-            throw DecodingError.valueNotFound(MonsterMode.self, context)
         }
     }
 }

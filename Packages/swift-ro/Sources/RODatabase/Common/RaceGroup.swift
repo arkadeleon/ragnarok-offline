@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum RaceGroup: CaseIterable, CodingKey, Decodable {
+public enum RaceGroup: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case goblin
     case kobold
     case orc
@@ -40,7 +40,7 @@ public enum RaceGroup: CaseIterable, CodingKey, Decodable {
     case ep172Beta
     case ep172Bath
 
-    public var intValue: Int {
+    public var rawValue: Int {
         switch self {
         case .goblin: RA_RC2_GOBLIN
         case .kobold: RA_RC2_KOBOLD
@@ -109,25 +109,6 @@ public enum RaceGroup: CaseIterable, CodingKey, Decodable {
         case .ep172Alpha: "EP172ALPHA"
         case .ep172Beta: "EP172BETA"
         case .ep172Bath: "EP172BATH"
-        }
-    }
-
-    public init?(stringValue: String) {
-        if let raceGroup = RaceGroup.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
-            self = raceGroup
-        } else {
-            return nil
-        }
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let stringValue = try container.decode(String.self)
-        if let raceGroup = RaceGroup(stringValue: stringValue) {
-            self = raceGroup
-        } else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Race group does not exist.")
-            throw DecodingError.valueNotFound(RaceGroup.self, context)
         }
     }
 }

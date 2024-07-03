@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum SkillDamageFlag: CaseIterable, CodingKey, Decodable {
+public enum SkillDamageFlag: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case noDamage
     case splash
     case splashSplit
@@ -19,7 +19,7 @@ public enum SkillDamageFlag: CaseIterable, CodingKey, Decodable {
     case ignoreLongCard
     case critical
 
-    public var intValue: Int {
+    public var rawValue: Int {
         switch self {
         case .noDamage: RA_NK_NODAMAGE
         case .splash: RA_NK_SPLASH
@@ -46,25 +46,6 @@ public enum SkillDamageFlag: CaseIterable, CodingKey, Decodable {
         case .ignoreDefCard: "IgnoreDefCard"
         case .ignoreLongCard: "IgnoreLongCard"
         case .critical: "Critical"
-        }
-    }
-
-    public init?(stringValue: String) {
-        if let skillDamageFlag = SkillDamageFlag.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
-            self = skillDamageFlag
-        } else {
-            return nil
-        }
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let stringValue = try container.decode(String.self)
-        if let skillDamageFlag = SkillDamageFlag(stringValue: stringValue) {
-            self = skillDamageFlag
-        } else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Skill damage flag does not exist.")
-            throw DecodingError.valueNotFound(SkillDamageFlag.self, context)
         }
     }
 }

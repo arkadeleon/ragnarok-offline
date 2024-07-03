@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum ItemClass: CaseIterable, CodingKey, Decodable {
+public enum ItemClass: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case all
     case normal
     case upper
@@ -20,7 +20,7 @@ public enum ItemClass: CaseIterable, CodingKey, Decodable {
     case allBaby
     case allThird
 
-    public var intValue: Int {
+    public var rawValue: Int {
         switch self {
         case .all:
             switch CurrentServerMode {
@@ -55,25 +55,6 @@ public enum ItemClass: CaseIterable, CodingKey, Decodable {
         case .allUpper: "All_Upper"
         case .allBaby: "All_Baby"
         case .allThird: "All_Third"
-        }
-    }
-
-    public init?(stringValue: String) {
-        if let itemClass = ItemClass.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
-            self = itemClass
-        } else {
-            return nil
-        }
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let stringValue = try container.decode(String.self)
-        if let itemClass = ItemClass(stringValue: stringValue) {
-            self = itemClass
-        } else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Item class does not exist.")
-            throw DecodingError.valueNotFound(ItemClass.self, context)
         }
     }
 }

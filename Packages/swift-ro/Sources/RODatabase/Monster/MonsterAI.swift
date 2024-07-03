@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum MonsterAI: CaseIterable, CodingKey, Decodable {
+public enum MonsterAI: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case ai01
     case ai02
     case ai03
@@ -30,7 +30,7 @@ public enum MonsterAI: CaseIterable, CodingKey, Decodable {
     case ai26
     case ai27
 
-    public var intValue: Int {
+    public var rawValue: Int {
         switch self {
         case .ai01: RA_MONSTER_TYPE_01
         case .ai02: RA_MONSTER_TYPE_02
@@ -79,25 +79,6 @@ public enum MonsterAI: CaseIterable, CodingKey, Decodable {
         case .ai25: "25"
         case .ai26: "26"
         case .ai27: "27"
-        }
-    }
-
-    public init?(stringValue: String) {
-        if let monsterAI = MonsterAI.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
-            self = monsterAI
-        } else {
-            return nil
-        }
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let stringValue = try container.decode(String.self)
-        if let monsterAI = MonsterAI(stringValue: stringValue) {
-            self = monsterAI
-        } else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Monster AI does not exist.")
-            throw DecodingError.valueNotFound(MonsterAI.self, context)
         }
     }
 }

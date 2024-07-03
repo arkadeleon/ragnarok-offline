@@ -7,12 +7,12 @@
 
 import rAthenaCommon
 
-public enum SkillCastFlag: CaseIterable, CodingKey, Decodable {
+public enum SkillCastFlag: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case ignoreDex
     case ignoreStatus
     case ignoreItemBonus
 
-    public var intValue: Int {
+    public var rawValue: Int {
         switch self {
         case .ignoreDex: RA_SKILL_CAST_IGNOREDEX
         case .ignoreStatus: RA_SKILL_CAST_IGNORESTATUS
@@ -25,25 +25,6 @@ public enum SkillCastFlag: CaseIterable, CodingKey, Decodable {
         case .ignoreDex: "IgnoreDex"
         case .ignoreStatus: "IgnoreStatus"
         case .ignoreItemBonus: "IgnoreItemBonus"
-        }
-    }
-
-    public init?(stringValue: String) {
-        if let skillCastFlag = SkillCastFlag.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
-            self = skillCastFlag
-        } else {
-            return nil
-        }
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let stringValue = try container.decode(String.self)
-        if let skillCastFlag = SkillCastFlag(stringValue: stringValue) {
-            self = skillCastFlag
-        } else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Skill cast flag does not exist.")
-            throw DecodingError.valueNotFound(SkillCastFlag.self, context)
         }
     }
 }

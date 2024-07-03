@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum Job: CaseIterable, CodingKey, Decodable {
+public enum Job: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case novice
     case swordman
     case mage
@@ -190,7 +190,7 @@ public enum Job: CaseIterable, CodingKey, Decodable {
     case spiritHandler
     case skyEmperor2
 
-    public var intValue: Int {
+    public var rawValue: Int {
         switch self {
         case .novice: RA_JOB_NOVICE
         case .swordman: RA_JOB_SWORDMAN
@@ -559,25 +559,6 @@ public enum Job: CaseIterable, CodingKey, Decodable {
         case .hyperNovice: "Hyper_Novice"
         case .spiritHandler: "Spirit_Handler"
         case .skyEmperor2: "Sky_Emperor2"
-        }
-    }
-
-    public init?(stringValue: String) {
-        if let job = Job.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
-            self = job
-        } else {
-            return nil
-        }
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let stringValue = try container.decode(String.self)
-        if let job = Job(stringValue: stringValue) {
-            self = job
-        } else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Job does not exist.")
-            throw DecodingError.valueNotFound(Job.self, context)
         }
     }
 }

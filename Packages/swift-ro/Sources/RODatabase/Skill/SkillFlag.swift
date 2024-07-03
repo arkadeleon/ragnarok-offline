@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum SkillFlag: CaseIterable, CodingKey, Decodable {
+public enum SkillFlag: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case isQuest
     case isNpc
     case isWedding
@@ -50,7 +50,7 @@ public enum SkillFlag: CaseIterable, CodingKey, Decodable {
     case ignoreGtb
     case toggleable
 
-    public var intValue: Int {
+    public var rawValue: Int {
         switch self {
         case .isQuest: RA_INF2_ISQUEST
         case .isNpc: RA_INF2_ISNPC
@@ -139,25 +139,6 @@ public enum SkillFlag: CaseIterable, CodingKey, Decodable {
         case .showScale: "ShowScale"
         case .ignoreGtb: "IgnoreGtb"
         case .toggleable: "Toggleable"
-        }
-    }
-
-    public init?(stringValue: String) {
-        if let skillFlag = SkillFlag.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
-            self = skillFlag
-        } else {
-            return nil
-        }
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let stringValue = try container.decode(String.self)
-        if let skillFlag = SkillFlag(stringValue: stringValue) {
-            self = skillFlag
-        } else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Skill flag does not exist.")
-            throw DecodingError.valueNotFound(SkillFlag.self, context)
         }
     }
 }
