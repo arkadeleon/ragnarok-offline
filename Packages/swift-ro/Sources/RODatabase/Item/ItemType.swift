@@ -7,54 +7,21 @@
 
 import rAthenaCommon
 
-public enum ItemType: String, CaseIterable, CodingKey, Decodable {
+public enum ItemType: CaseIterable, CodingKey, Decodable {
+    case healing
+    case usable
+    case etc
+    case armor
+    case weapon
+    case card
+    case petEgg
+    case petArmor
+    case ammo
+    case delayConsume
+    case shadowGear
+    case cash
 
-    /// Healing item.
-    case healing = "Healing"
-
-    /// Usable item.
-    case usable = "Usable"
-
-    /// Etc item.
-    case etc = "Etc"
-
-    /// Armor/Garment/Boots/Headgear/Accessory item.
-    case armor = "Armor"
-
-    /// Weapon item.
-    case weapon = "Weapon"
-
-    /// Card item.
-    case card = "Card"
-
-    /// Pet egg item.
-    case petEgg = "PetEgg"
-
-    /// Pet equipment item.
-    case petArmor = "PetArmor"
-
-    /// Ammo (Arrows/Bullets/etc) item.
-    case ammo = "Ammo"
-
-    /// Usable with delayed consumption (intended for 'itemskill').
-    /// Items using the 'itemskill' script command are consumed after selecting a target. Any other command will NOT consume the item.
-    case delayConsume = "DelayConsume"
-
-    /// Shadow Equipment item.
-    case shadowGear = "ShadowGear"
-
-    /// Another delayed consume that requires user confirmation before using the item.
-    case cash = "Cash"
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self)
-        self = ItemType.allCases.first(where: { $0.rawValue.caseInsensitiveCompare(rawValue) == .orderedSame }) ?? .etc
-    }
-}
-
-extension ItemType: Identifiable {
-    public var id: Int {
+    public var intValue: Int {
         switch self {
         case .healing: RA_IT_HEALING
         case .usable: RA_IT_USABLE
@@ -70,10 +37,46 @@ extension ItemType: Identifiable {
         case .cash: RA_IT_CASH
         }
     }
+
+    public var stringValue: String {
+        switch self {
+        case .healing: "Healing"
+        case .usable: "Usable"
+        case .etc: "Etc"
+        case .armor: "Armor"
+        case .weapon: "Weapon"
+        case .card: "Card"
+        case .petEgg: "PetEgg"
+        case .petArmor: "PetArmor"
+        case .ammo: "Ammo"
+        case .delayConsume: "DelayConsume"
+        case .shadowGear: "ShadowGear"
+        case .cash: "Cash"
+        }
+    }
+
+//    public init?(stringValue: String) {
+//        if let itemType = ItemType.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
+//            self = itemType
+//        } else {
+//            return nil
+//        }
+//    }
+//
+//    public init(from decoder: Decoder) throws {
+//        let container = try decoder.singleValueContainer()
+//        let stringValue = try container.decode(String.self)
+//        if let itemType = ItemType(stringValue: stringValue) {
+//            self = itemType
+//        } else {
+//            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Item type does not exist.")
+//            throw DecodingError.valueNotFound(ItemType.self, context)
+//        }
+//    }
 }
 
-extension ItemType: CustomStringConvertible {
-    public var description: String {
+extension ItemType: CustomLocalizedStringResourceConvertible {
+    public var localizedStringResource: LocalizedStringResource {
         switch self {
         case .healing: "Healing"
         case .usable: "Usable"

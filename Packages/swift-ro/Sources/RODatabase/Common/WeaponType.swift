@@ -7,35 +7,33 @@
 
 import rAthenaCommon
 
-public enum WeaponType: String, CaseIterable, CodingKey, Decodable {
-    case fist = "Fist"
-    case dagger = "Dagger"
-    case oneHandedSword = "1hSword"
-    case twoHandedSword = "2hSword"
-    case oneHandedSpear = "1hSpear"
-    case twoHandedSpear = "2hSpear"
-    case oneHandedAxe = "1hAxe"
-    case twoHandedAxe = "2hAxe"
-    case mace = "Mace"
-    case twoHandedMace = "2hMace"
-    case staff = "Staff"
-    case bow = "Bow"
-    case knuckle = "Knuckle"
-    case musical = "Musical"
-    case whip = "Whip"
-    case book = "Book"
-    case katar = "Katar"
-    case revolver = "Revolver"
-    case rifle = "Rifle"
-    case gatling = "Gatling"
-    case shotgun = "Shotgun"
-    case grenade = "Grenade"
-    case huuma = "Huuma"
-    case twoHandedStaff = "2hStaff"
-}
+public enum WeaponType: CaseIterable, CodingKey, Decodable {
+    case fist
+    case dagger
+    case oneHandedSword
+    case twoHandedSword
+    case oneHandedSpear
+    case twoHandedSpear
+    case oneHandedAxe
+    case twoHandedAxe
+    case mace
+    case twoHandedMace
+    case staff
+    case bow
+    case knuckle
+    case musical
+    case whip
+    case book
+    case katar
+    case revolver
+    case rifle
+    case gatling
+    case shotgun
+    case grenade
+    case huuma
+    case twoHandedStaff
 
-extension WeaponType: Identifiable {
-    public var id: Int {
+    public var intValue: Int {
         switch self {
         case .fist: RA_W_FIST
         case .dagger: RA_W_DAGGER
@@ -61,6 +59,54 @@ extension WeaponType: Identifiable {
         case .grenade: RA_W_GRENADE
         case .huuma: RA_W_HUUMA
         case .twoHandedStaff: RA_W_2HSTAFF
+        }
+    }
+
+    public var stringValue: String {
+        switch self {
+        case .fist: "Fist"
+        case .dagger: "Dagger"
+        case .oneHandedSword: "1hSword"
+        case .twoHandedSword: "2hSword"
+        case .oneHandedSpear: "1hSpear"
+        case .twoHandedSpear: "2hSpear"
+        case .oneHandedAxe: "1hAxe"
+        case .twoHandedAxe: "2hAxe"
+        case .mace: "Mace"
+        case .twoHandedMace: "2hMace"
+        case .staff: "Staff"
+        case .bow: "Bow"
+        case .knuckle: "Knuckle"
+        case .musical: "Musical"
+        case .whip: "Whip"
+        case .book: "Book"
+        case .katar: "Katar"
+        case .revolver: "Revolver"
+        case .rifle: "Rifle"
+        case .gatling: "Gatling"
+        case .shotgun: "Shotgun"
+        case .grenade: "Grenade"
+        case .huuma: "Huuma"
+        case .twoHandedStaff: "2hStaff"
+        }
+    }
+
+    public init?(stringValue: String) {
+        if let weaponType = WeaponType.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
+            self = weaponType
+        } else {
+            return nil
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String.self)
+        if let weaponType = WeaponType(stringValue: stringValue) {
+            self = weaponType
+        } else {
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Weapon type does not exist.")
+            throw DecodingError.valueNotFound(WeaponType.self, context)
         }
     }
 }

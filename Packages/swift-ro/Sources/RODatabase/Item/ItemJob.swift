@@ -7,40 +7,38 @@
 
 import rAthenaCommon
 
-public enum ItemJob: String, CaseIterable, CodingKey, Decodable {
-    case all = "All"
-    case acolyte = "Acolyte"
-    case alchemist = "Alchemist"
-    case archer = "Archer"
-    case assassin = "Assassin"
-    case bardDancer = "BardDancer"
-    case blacksmith = "Blacksmith"
-    case crusader = "Crusader"
-    case gunslinger = "Gunslinger"
-    case hunter = "Hunter"
-    case kagerouOboro = "KagerouOboro"
-    case knight = "Knight"
-    case mage = "Mage"
-    case merchant = "Merchant"
-    case monk = "Monk"
-    case ninja = "Ninja"
-    case novice = "Novice"
-    case priest = "Priest"
-    case rebellion = "Rebellion"
-    case rogue = "Rogue"
-    case sage = "Sage"
-    case soulLinker = "SoulLinker"
-    case starGladiator = "StarGladiator"
-    case summoner = "Summoner"
-    case superNovice = "SuperNovice"
-    case swordman = "Swordman"
-    case taekwon = "Taekwon"
-    case thief = "Thief"
-    case wizard = "Wizard"
-}
+public enum ItemJob: CaseIterable, CodingKey, Decodable {
+    case all
+    case acolyte
+    case alchemist
+    case archer
+    case assassin
+    case bardDancer
+    case blacksmith
+    case crusader
+    case gunslinger
+    case hunter
+    case kagerouOboro
+    case knight
+    case mage
+    case merchant
+    case monk
+    case ninja
+    case novice
+    case priest
+    case rebellion
+    case rogue
+    case sage
+    case soulLinker
+    case starGladiator
+    case summoner
+    case superNovice
+    case swordman
+    case taekwon
+    case thief
+    case wizard
 
-extension ItemJob: Identifiable {
-    public var id: Int {
+    public var intValue: Int {
         switch self {
         case .all: .max
         case .acolyte: RA_MAPID_ACOLYTE
@@ -73,10 +71,57 @@ extension ItemJob: Identifiable {
         case .wizard: RA_MAPID_WIZARD
         }
     }
-}
 
-extension ItemJob: CustomStringConvertible {
-    public var description: String {
-        stringValue
+    public var stringValue: String {
+        switch self {
+        case .all: "All"
+        case .acolyte: "Acolyte"
+        case .alchemist: "Alchemist"
+        case .archer: "Archer"
+        case .assassin: "Assassin"
+        case .bardDancer: "BardDancer"
+        case .blacksmith: "Blacksmith"
+        case .crusader: "Crusader"
+        case .gunslinger: "Gunslinger"
+        case .hunter: "Hunter"
+        case .kagerouOboro: "KagerouOboro"
+        case .knight: "Knight"
+        case .mage: "Mage"
+        case .merchant: "Merchant"
+        case .monk: "Monk"
+        case .ninja: "Ninja"
+        case .novice: "Novice"
+        case .priest: "Priest"
+        case .rebellion: "Rebellion"
+        case .rogue: "Rogue"
+        case .sage: "Sage"
+        case .soulLinker: "SoulLinker"
+        case .starGladiator: "StarGladiator"
+        case .summoner: "Summoner"
+        case .superNovice: "SuperNovice"
+        case .swordman: "Swordman"
+        case .taekwon: "Taekwon"
+        case .thief: "Thief"
+        case .wizard: "Wizard"
+        }
+    }
+
+    public init?(stringValue: String) {
+        if let itemJob = ItemJob.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
+            self = itemJob
+        } else {
+            return nil
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String.self)
+        if let itemJob = ItemJob(stringValue: stringValue) {
+            self = itemJob
+        } else {
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Item job does not exist.")
+            throw DecodingError.valueNotFound(ItemJob.self, context)
+        }
     }
 }

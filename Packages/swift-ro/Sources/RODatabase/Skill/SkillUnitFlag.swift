@@ -7,30 +7,28 @@
 
 import rAthenaCommon
 
-public enum SkillUnitFlag: String, CaseIterable, CodingKey, Decodable {
-    case none = "None"
-    case noEnemy = "NoEnemy"
-    case noReiteration = "NoReiteration"
-    case noFootSet = "NoFootSet"
-    case noOverlap = "NoOverlap"
-    case pathCheck = "PathCheck"
-    case noPc = "NoPc"
-    case noMob = "NoMob"
-    case skill = "Skill"
-    case dance = "Dance"
-    case ensemble = "Ensemble"
-    case song = "Song"
-    case dualMode = "DualMode"
-    case noKnockback = "NoKnockback"
-    case rangedSingleUnit = "RangedSingleUnit"
-    case crazyWeedImmune = "CrazyWeedImmune"
-    case removedByFireRain = "RemovedByFireRain"
-    case knockbackGroup = "KnockbackGroup"
-    case hiddenTrap = "HiddenTrap"
-}
+public enum SkillUnitFlag: CaseIterable, CodingKey, Decodable {
+    case none
+    case noEnemy
+    case noReiteration
+    case noFootSet
+    case noOverlap
+    case pathCheck
+    case noPc
+    case noMob
+    case skill
+    case dance
+    case ensemble
+    case song
+    case dualMode
+    case noKnockback
+    case rangedSingleUnit
+    case crazyWeedImmune
+    case removedByFireRain
+    case knockbackGroup
+    case hiddenTrap
 
-extension SkillUnitFlag: Identifiable {
-    public var id: Int {
+    public var intValue: Int {
         switch self {
         case .none: 0
         case .noEnemy: RA_UF_NOENEMY
@@ -53,10 +51,34 @@ extension SkillUnitFlag: Identifiable {
         case .hiddenTrap: RA_UF_HIDDENTRAP
         }
     }
+
+    public var stringValue: String {
+        switch self {
+        case .none: "None"
+        case .noEnemy: "NoEnemy"
+        case .noReiteration: "NoReiteration"
+        case .noFootSet: "NoFootSet"
+        case .noOverlap: "NoOverlap"
+        case .pathCheck: "PathCheck"
+        case .noPc: "NoPc"
+        case .noMob: "NoMob"
+        case .skill: "Skill"
+        case .dance: "Dance"
+        case .ensemble: "Ensemble"
+        case .song: "Song"
+        case .dualMode: "DualMode"
+        case .noKnockback: "NoKnockback"
+        case .rangedSingleUnit: "RangedSingleUnit"
+        case .crazyWeedImmune: "CrazyWeedImmune"
+        case .removedByFireRain: "RemovedByFireRain"
+        case .knockbackGroup: "KnockbackGroup"
+        case .hiddenTrap: "HiddenTrap"
+        }
+    }
 }
 
-extension SkillUnitFlag: CustomStringConvertible {
-    public var description: String {
+extension SkillUnitFlag: CustomLocalizedStringResourceConvertible {
+    public var localizedStringResource: LocalizedStringResource {
         switch self {
         case .none: "None"
         case .noEnemy: "No Enemy"

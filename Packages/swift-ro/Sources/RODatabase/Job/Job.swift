@@ -7,192 +7,190 @@
 
 import rAthenaCommon
 
-public enum Job: String, CaseIterable, CodingKey, Decodable {
-    case novice = "Novice"
-    case swordman = "Swordman"
-    case mage = "Mage"
-    case archer = "Archer"
-    case acolyte = "Acolyte"
-    case merchant = "Merchant"
-    case thief = "Thief"
-    case knight = "Knight"
-    case priest = "Priest"
-    case wizard = "Wizard"
-    case blacksmith = "Blacksmith"
-    case hunter = "Hunter"
-    case assassin = "Assassin"
-    case knight2 = "Knight2"
-    case crusader = "Crusader"
-    case monk = "Monk"
-    case sage = "Sage"
-    case rogue = "Rogue"
-    case alchemist = "Alchemist"
-    case bard = "Bard"
-    case dancer = "Dancer"
-    case crusader2 = "Crusader2"
-    case wedding = "Wedding"
-    case superNovice = "Supernovice"
-    case gunslinger = "Gunslinger"
-    case ninja = "Ninja"
-    case christmas = "Christmas"
-    case summer = "Summer"
-    case hanbok = "Hanbok"
-    case oktoberfest = "Oktoberfest"
-    case summer2 = "Summer2"
-    case noviceHigh = "Novice_High"
-    case swordmanHigh = "Swordman_High"
-    case mageHigh = "Mage_High"
-    case archerHigh = "Archer_High"
-    case acolyteHigh = "Acolyte_High"
-    case merchantHigh = "Merchant_High"
-    case thiefHigh = "Thief_High"
-    case lordKnight = "Lord_Knight"
-    case highPriest = "High_Priest"
-    case highWizard = "High_Wizard"
-    case whitesmith = "Whitesmith"
-    case sniper = "Sniper"
-    case assassinCross = "Assassin_Cross"
-    case lordKnight2 = "Lord_Knight2"
-    case paladin = "Paladin"
-    case champion = "Champion"
-    case professor = "Professor"
-    case stalker = "Stalker"
-    case creator = "Creator"
-    case clown = "Clown"
-    case gypsy = "Gypsy"
-    case paladin2 = "Paladin2"
-    case baby = "Baby"
-    case babySwordman = "Baby_Swordman"
-    case babyMage = "Baby_Mage"
-    case babyArcher = "Baby_Archer"
-    case babyAcolyte = "Baby_Acolyte"
-    case babyMerchant = "Baby_Merchant"
-    case babyThief = "Baby_Thief"
-    case babyKnight = "Baby_Knight"
-    case babyPriest = "Baby_Priest"
-    case babyWizard = "Baby_Wizard"
-    case babyBlacksmith = "Baby_Blacksmith"
-    case babyHunter = "Baby_Hunter"
-    case babyAssassin = "Baby_Assassin"
-    case babyKnight2 = "Baby_Knight2"
-    case babyCrusader = "Baby_Crusader"
-    case babyMonk = "Baby_Monk"
-    case babySage = "Baby_Sage"
-    case babyRogue = "Baby_Rogue"
-    case babyAlchemist = "Baby_Alchemist"
-    case babyBard = "Baby_Bard"
-    case babyDancer = "Baby_Dancer"
-    case babyCrusader2 = "Baby_Crusader2"
-    case superBaby = "Super_Baby"
-    case taekwon = "Taekwon"
-    case starGladiator = "Star_Gladiator"
-    case starGladiator2 = "Star_Gladiator2"
-    case soulLinker = "Soul_Linker"
-    case gangsi = "Gangsi"
-    case deathKnight = "Death_Knight"
-    case darkCollector = "Dark_Collector"
-    case runeKnight = "Rune_Knight"
-    case warlock = "Warlock"
-    case ranger = "Ranger"
-    case archBishop = "Arch_Bishop"
-    case mechanic = "Mechanic"
-    case guillotineCross = "Guillotine_Cross"
-    case runeKnightT = "Rune_Knight_T"
-    case warlockT = "Warlock_T"
-    case rangerT = "Ranger_T"
-    case archBishopT = "Arch_Bishop_T"
-    case mechanicT = "Mechanic_T"
-    case guillotineCrossT = "Guillotine_Cross_T"
-    case royalGuard = "Royal_Guard"
-    case sorcerer = "Sorcerer"
-    case minstrel = "Minstrel"
-    case wanderer = "Wanderer"
-    case sura = "Sura"
-    case genetic = "Genetic"
-    case shadowChaser = "Shadow_Chaser"
-    case royalGuardT = "Royal_Guard_T"
-    case sorcererT = "Sorcerer_T"
-    case minstrelT = "Minstrel_T"
-    case wandererT = "Wanderer_T"
-    case suraT = "Sura_T"
-    case geneticT = "Genetic_T"
-    case shadowChaserT = "Shadow_Chaser_T"
-    case runeKnight2 = "Rune_Knight2"
-    case runeKnightT2 = "Rune_Knight_T2"
-    case royalGuard2 = "Royal_Guard2"
-    case royalGuardT2 = "Royal_Guard_T2"
-    case ranger2 = "Ranger2"
-    case rangerT2 = "Ranger_T2"
-    case mechanic2 = "Mechanic2"
-    case mechanicT2 = "Mechanic_T2"
-    case babyRuneKnight = "Baby_Rune_Knight"
-    case babyWarlock = "Baby_Warlock"
-    case babyRanger = "Baby_Ranger"
-    case babyArchBishop = "Baby_Arch_Bishop"
-    case babyMechanic = "Baby_Mechanic"
-    case babyGuillotineCross = "Baby_Guillotine_Cross"
-    case babyRoyalGuard = "Baby_Royal_Guard"
-    case babySorcerer = "Baby_Sorcerer"
-    case babyMinstrel = "Baby_Minstrel"
-    case babyWanderer = "Baby_Wanderer"
-    case babySura = "Baby_Sura"
-    case babyGenetic = "Baby_Genetic"
-    case babyShadowChaser = "Baby_Shadow_Chaser"
-    case babyRuneKnight2 = "Baby_Rune_Knight2"
-    case babyRoyalGuard2 = "Baby_Royal_Guard2"
-    case babyRanger2 = "Baby_Ranger2"
-    case babyMechanic2 = "Baby_Mechanic2"
-    case superNoviceE = "Super_Novice_E"
-    case superBabyE = "Super_Baby_E"
-    case kagerou = "Kagerou"
-    case oboro = "Oboro"
-    case rebellion = "Rebellion"
-    case summoner = "Summoner"
-    case babySummoner = "Baby_Summoner"
-    case babyNinja = "Baby_Ninja"
-    case babyKagerou = "Baby_Kagerou"
-    case babyOboro = "Baby_Oboro"
-    case babyTaekwon = "Baby_Taekwon"
-    case babyStarGladiator = "Baby_Star_Gladiator"
-    case babySoulLinker = "Baby_Soul_Linker"
-    case babyGunslinger = "Baby_Gunslinger"
-    case babyRebellion = "Baby_Rebellion"
-    case babyStarGladiator2 = "Baby_Star_Gladiator2"
-    case starEmperor = "Star_Emperor"
-    case soulReaper = "Soul_Reaper"
-    case babyStarEmperor = "Baby_Star_Emperor"
-    case babySoulReaper = "Baby_Soul_Reaper"
-    case starEmperor2 = "Star_Emperor2"
-    case babyStarEmperor2 = "Baby_Star_Emperor2"
-    case dragonKnight = "Dragon_Knight"
-    case meister = "Meister"
-    case shadowCross = "Shadow_Cross"
-    case archMage = "Arch_Mage"
-    case cardinal = "Cardinal"
-    case windhawk = "Windhawk"
-    case imperialGuard = "Imperial_Guard"
-    case biolo = "Biolo"
-    case abyssChaser = "Abyss_Chaser"
-    case elementalMaster = "Elemental_Master"
-    case inquisitor = "Inquisitor"
-    case troubadour = "Troubadour"
-    case trouvere = "Trouvere"
-    case windhawk2 = "Windhawk2"
-    case meister2 = "Meister2"
-    case dragonKnight2 = "Dragon_Knight2"
-    case imperialGuard2 = "Imperial_Guard2"
-    case skyEmperor = "Sky_Emperor"
-    case soulAscetic = "Soul_Ascetic"
-    case shinkiro = "Shinkiro"
-    case shiranui = "Shiranui"
-    case nightWatch = "Night_Watch"
-    case hyperNovice = "Hyper_Novice"
-    case spiritHandler = "Spirit_Handler"
-    case skyEmperor2 = "Sky_Emperor2"
-}
+public enum Job: CaseIterable, CodingKey, Decodable {
+    case novice
+    case swordman
+    case mage
+    case archer
+    case acolyte
+    case merchant
+    case thief
+    case knight
+    case priest
+    case wizard
+    case blacksmith
+    case hunter
+    case assassin
+    case knight2
+    case crusader
+    case monk
+    case sage
+    case rogue
+    case alchemist
+    case bard
+    case dancer
+    case crusader2
+    case wedding
+    case superNovice
+    case gunslinger
+    case ninja
+    case christmas
+    case summer
+    case hanbok
+    case oktoberfest
+    case summer2
+    case noviceHigh
+    case swordmanHigh
+    case mageHigh
+    case archerHigh
+    case acolyteHigh
+    case merchantHigh
+    case thiefHigh
+    case lordKnight
+    case highPriest
+    case highWizard
+    case whitesmith
+    case sniper
+    case assassinCross
+    case lordKnight2
+    case paladin
+    case champion
+    case professor
+    case stalker
+    case creator
+    case clown
+    case gypsy
+    case paladin2
+    case baby
+    case babySwordman
+    case babyMage
+    case babyArcher
+    case babyAcolyte
+    case babyMerchant
+    case babyThief
+    case babyKnight
+    case babyPriest
+    case babyWizard
+    case babyBlacksmith
+    case babyHunter
+    case babyAssassin
+    case babyKnight2
+    case babyCrusader
+    case babyMonk
+    case babySage
+    case babyRogue
+    case babyAlchemist
+    case babyBard
+    case babyDancer
+    case babyCrusader2
+    case superBaby
+    case taekwon
+    case starGladiator
+    case starGladiator2
+    case soulLinker
+    case gangsi
+    case deathKnight
+    case darkCollector
+    case runeKnight
+    case warlock
+    case ranger
+    case archBishop
+    case mechanic
+    case guillotineCross
+    case runeKnightT
+    case warlockT
+    case rangerT
+    case archBishopT
+    case mechanicT
+    case guillotineCrossT
+    case royalGuard
+    case sorcerer
+    case minstrel
+    case wanderer
+    case sura
+    case genetic
+    case shadowChaser
+    case royalGuardT
+    case sorcererT
+    case minstrelT
+    case wandererT
+    case suraT
+    case geneticT
+    case shadowChaserT
+    case runeKnight2
+    case runeKnightT2
+    case royalGuard2
+    case royalGuardT2
+    case ranger2
+    case rangerT2
+    case mechanic2
+    case mechanicT2
+    case babyRuneKnight
+    case babyWarlock
+    case babyRanger
+    case babyArchBishop
+    case babyMechanic
+    case babyGuillotineCross
+    case babyRoyalGuard
+    case babySorcerer
+    case babyMinstrel
+    case babyWanderer
+    case babySura
+    case babyGenetic
+    case babyShadowChaser
+    case babyRuneKnight2
+    case babyRoyalGuard2
+    case babyRanger2
+    case babyMechanic2
+    case superNoviceE
+    case superBabyE
+    case kagerou
+    case oboro
+    case rebellion
+    case summoner
+    case babySummoner
+    case babyNinja
+    case babyKagerou
+    case babyOboro
+    case babyTaekwon
+    case babyStarGladiator
+    case babySoulLinker
+    case babyGunslinger
+    case babyRebellion
+    case babyStarGladiator2
+    case starEmperor
+    case soulReaper
+    case babyStarEmperor
+    case babySoulReaper
+    case starEmperor2
+    case babyStarEmperor2
+    case dragonKnight
+    case meister
+    case shadowCross
+    case archMage
+    case cardinal
+    case windhawk
+    case imperialGuard
+    case biolo
+    case abyssChaser
+    case elementalMaster
+    case inquisitor
+    case troubadour
+    case trouvere
+    case windhawk2
+    case meister2
+    case dragonKnight2
+    case imperialGuard2
+    case skyEmperor
+    case soulAscetic
+    case shinkiro
+    case shiranui
+    case nightWatch
+    case hyperNovice
+    case spiritHandler
+    case skyEmperor2
 
-extension Job: Identifiable {
-    public var id: Int {
+    public var intValue: Int {
         switch self {
         case .novice: RA_JOB_NOVICE
         case .swordman: RA_JOB_SWORDMAN
@@ -377,10 +375,209 @@ extension Job: Identifiable {
         case .skyEmperor2: RA_JOB_SKY_EMPEROR2
         }
     }
-}
 
-extension Job: CustomStringConvertible {
-    public var description: String {
-        stringValue
+    public var stringValue: String {
+        switch self {
+        case .novice: "Novice"
+        case .swordman: "Swordman"
+        case .mage: "Mage"
+        case .archer: "Archer"
+        case .acolyte: "Acolyte"
+        case .merchant: "Merchant"
+        case .thief: "Thief"
+        case .knight: "Knight"
+        case .priest: "Priest"
+        case .wizard: "Wizard"
+        case .blacksmith: "Blacksmith"
+        case .hunter: "Hunter"
+        case .assassin: "Assassin"
+        case .knight2: "Knight2"
+        case .crusader: "Crusader"
+        case .monk: "Monk"
+        case .sage: "Sage"
+        case .rogue: "Rogue"
+        case .alchemist: "Alchemist"
+        case .bard: "Bard"
+        case .dancer: "Dancer"
+        case .crusader2: "Crusader2"
+        case .wedding: "Wedding"
+        case .superNovice: "Supernovice"
+        case .gunslinger: "Gunslinger"
+        case .ninja: "Ninja"
+        case .christmas: "Christmas"
+        case .summer: "Summer"
+        case .hanbok: "Hanbok"
+        case .oktoberfest: "Oktoberfest"
+        case .summer2: "Summer2"
+        case .noviceHigh: "Novice_High"
+        case .swordmanHigh: "Swordman_High"
+        case .mageHigh: "Mage_High"
+        case .archerHigh: "Archer_High"
+        case .acolyteHigh: "Acolyte_High"
+        case .merchantHigh: "Merchant_High"
+        case .thiefHigh: "Thief_High"
+        case .lordKnight: "Lord_Knight"
+        case .highPriest: "High_Priest"
+        case .highWizard: "High_Wizard"
+        case .whitesmith: "Whitesmith"
+        case .sniper: "Sniper"
+        case .assassinCross: "Assassin_Cross"
+        case .lordKnight2: "Lord_Knight2"
+        case .paladin: "Paladin"
+        case .champion: "Champion"
+        case .professor: "Professor"
+        case .stalker: "Stalker"
+        case .creator: "Creator"
+        case .clown: "Clown"
+        case .gypsy: "Gypsy"
+        case .paladin2: "Paladin2"
+        case .baby: "Baby"
+        case .babySwordman: "Baby_Swordman"
+        case .babyMage: "Baby_Mage"
+        case .babyArcher: "Baby_Archer"
+        case .babyAcolyte: "Baby_Acolyte"
+        case .babyMerchant: "Baby_Merchant"
+        case .babyThief: "Baby_Thief"
+        case .babyKnight: "Baby_Knight"
+        case .babyPriest: "Baby_Priest"
+        case .babyWizard: "Baby_Wizard"
+        case .babyBlacksmith: "Baby_Blacksmith"
+        case .babyHunter: "Baby_Hunter"
+        case .babyAssassin: "Baby_Assassin"
+        case .babyKnight2: "Baby_Knight2"
+        case .babyCrusader: "Baby_Crusader"
+        case .babyMonk: "Baby_Monk"
+        case .babySage: "Baby_Sage"
+        case .babyRogue: "Baby_Rogue"
+        case .babyAlchemist: "Baby_Alchemist"
+        case .babyBard: "Baby_Bard"
+        case .babyDancer: "Baby_Dancer"
+        case .babyCrusader2: "Baby_Crusader2"
+        case .superBaby: "Super_Baby"
+        case .taekwon: "Taekwon"
+        case .starGladiator: "Star_Gladiator"
+        case .starGladiator2: "Star_Gladiator2"
+        case .soulLinker: "Soul_Linker"
+        case .gangsi: "Gangsi"
+        case .deathKnight: "Death_Knight"
+        case .darkCollector: "Dark_Collector"
+        case .runeKnight: "Rune_Knight"
+        case .warlock: "Warlock"
+        case .ranger: "Ranger"
+        case .archBishop: "Arch_Bishop"
+        case .mechanic: "Mechanic"
+        case .guillotineCross: "Guillotine_Cross"
+        case .runeKnightT: "Rune_Knight_T"
+        case .warlockT: "Warlock_T"
+        case .rangerT: "Ranger_T"
+        case .archBishopT: "Arch_Bishop_T"
+        case .mechanicT: "Mechanic_T"
+        case .guillotineCrossT: "Guillotine_Cross_T"
+        case .royalGuard: "Royal_Guard"
+        case .sorcerer: "Sorcerer"
+        case .minstrel: "Minstrel"
+        case .wanderer: "Wanderer"
+        case .sura: "Sura"
+        case .genetic: "Genetic"
+        case .shadowChaser: "Shadow_Chaser"
+        case .royalGuardT: "Royal_Guard_T"
+        case .sorcererT: "Sorcerer_T"
+        case .minstrelT: "Minstrel_T"
+        case .wandererT: "Wanderer_T"
+        case .suraT: "Sura_T"
+        case .geneticT: "Genetic_T"
+        case .shadowChaserT: "Shadow_Chaser_T"
+        case .runeKnight2: "Rune_Knight2"
+        case .runeKnightT2: "Rune_Knight_T2"
+        case .royalGuard2: "Royal_Guard2"
+        case .royalGuardT2: "Royal_Guard_T2"
+        case .ranger2: "Ranger2"
+        case .rangerT2: "Ranger_T2"
+        case .mechanic2: "Mechanic2"
+        case .mechanicT2: "Mechanic_T2"
+        case .babyRuneKnight: "Baby_Rune_Knight"
+        case .babyWarlock: "Baby_Warlock"
+        case .babyRanger: "Baby_Ranger"
+        case .babyArchBishop: "Baby_Arch_Bishop"
+        case .babyMechanic: "Baby_Mechanic"
+        case .babyGuillotineCross: "Baby_Guillotine_Cross"
+        case .babyRoyalGuard: "Baby_Royal_Guard"
+        case .babySorcerer: "Baby_Sorcerer"
+        case .babyMinstrel: "Baby_Minstrel"
+        case .babyWanderer: "Baby_Wanderer"
+        case .babySura: "Baby_Sura"
+        case .babyGenetic: "Baby_Genetic"
+        case .babyShadowChaser: "Baby_Shadow_Chaser"
+        case .babyRuneKnight2: "Baby_Rune_Knight2"
+        case .babyRoyalGuard2: "Baby_Royal_Guard2"
+        case .babyRanger2: "Baby_Ranger2"
+        case .babyMechanic2: "Baby_Mechanic2"
+        case .superNoviceE: "Super_Novice_E"
+        case .superBabyE: "Super_Baby_E"
+        case .kagerou: "Kagerou"
+        case .oboro: "Oboro"
+        case .rebellion: "Rebellion"
+        case .summoner: "Summoner"
+        case .babySummoner: "Baby_Summoner"
+        case .babyNinja: "Baby_Ninja"
+        case .babyKagerou: "Baby_Kagerou"
+        case .babyOboro: "Baby_Oboro"
+        case .babyTaekwon: "Baby_Taekwon"
+        case .babyStarGladiator: "Baby_Star_Gladiator"
+        case .babySoulLinker: "Baby_Soul_Linker"
+        case .babyGunslinger: "Baby_Gunslinger"
+        case .babyRebellion: "Baby_Rebellion"
+        case .babyStarGladiator2: "Baby_Star_Gladiator2"
+        case .starEmperor: "Star_Emperor"
+        case .soulReaper: "Soul_Reaper"
+        case .babyStarEmperor: "Baby_Star_Emperor"
+        case .babySoulReaper: "Baby_Soul_Reaper"
+        case .starEmperor2: "Star_Emperor2"
+        case .babyStarEmperor2: "Baby_Star_Emperor2"
+        case .dragonKnight: "Dragon_Knight"
+        case .meister: "Meister"
+        case .shadowCross: "Shadow_Cross"
+        case .archMage: "Arch_Mage"
+        case .cardinal: "Cardinal"
+        case .windhawk: "Windhawk"
+        case .imperialGuard: "Imperial_Guard"
+        case .biolo: "Biolo"
+        case .abyssChaser: "Abyss_Chaser"
+        case .elementalMaster: "Elemental_Master"
+        case .inquisitor: "Inquisitor"
+        case .troubadour: "Troubadour"
+        case .trouvere: "Trouvere"
+        case .windhawk2: "Windhawk2"
+        case .meister2: "Meister2"
+        case .dragonKnight2: "Dragon_Knight2"
+        case .imperialGuard2: "Imperial_Guard2"
+        case .skyEmperor: "Sky_Emperor"
+        case .soulAscetic: "Soul_Ascetic"
+        case .shinkiro: "Shinkiro"
+        case .shiranui: "Shiranui"
+        case .nightWatch: "Night_Watch"
+        case .hyperNovice: "Hyper_Novice"
+        case .spiritHandler: "Spirit_Handler"
+        case .skyEmperor2: "Sky_Emperor2"
+        }
+    }
+
+    public init?(stringValue: String) {
+        if let job = Job.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
+            self = job
+        } else {
+            return nil
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String.self)
+        if let job = Job(stringValue: stringValue) {
+            self = job
+        } else {
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Job does not exist.")
+            throw DecodingError.valueNotFound(Job.self, context)
+        }
     }
 }

@@ -7,15 +7,13 @@
 
 import rAthenaCommon
 
-public enum SkillNoNearNPC: String, CaseIterable, CodingKey, Decodable {
-    case warpPortal = "WarpPortal"
-    case shop = "Shop"
-    case npc = "Npc"
-    case tomb = "Tomb"
-}
+public enum SkillNoNearNPC: CaseIterable, CodingKey, Decodable {
+    case warpPortal
+    case shop
+    case npc
+    case tomb
 
-extension SkillNoNearNPC: Identifiable {
-    public var id: Int {
+    public var intValue: Int {
         switch self {
         case .warpPortal: RA_SKILL_NONEAR_WARPPORTAL
         case .shop: RA_SKILL_NONEAR_SHOP
@@ -23,10 +21,32 @@ extension SkillNoNearNPC: Identifiable {
         case .tomb: RA_SKILL_NONEAR_TOMB
         }
     }
-}
 
-extension SkillNoNearNPC: CustomStringConvertible {
-    public var description: String {
-        stringValue
+    public var stringValue: String {
+        switch self {
+        case .warpPortal: "WarpPortal"
+        case .shop: "Shop"
+        case .npc: "Npc"
+        case .tomb: "Tomb"
+        }
+    }
+
+    public init?(stringValue: String) {
+        if let skillNoNearNPC = SkillNoNearNPC.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
+            self = skillNoNearNPC
+        } else {
+            return nil
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String.self)
+        if let skillNoNearNPC = SkillNoNearNPC(stringValue: stringValue) {
+            self = skillNoNearNPC
+        } else {
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Skill no near NPC does not exist.")
+            throw DecodingError.valueNotFound(SkillNoNearNPC.self, context)
+        }
     }
 }

@@ -19,11 +19,11 @@ struct JobGridCell: View {
             ZStack {
                 if let jobImage {
                     if jobImage.width > 80 || jobImage.height > 80 {
-                        Image(jobImage, scale: 1, label: Text(jobStats.job.description))
+                        Image(jobImage, scale: 1, label: Text(jobStats.job.stringValue))
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                     } else {
-                        Image(jobImage, scale: 1, label: Text(jobStats.job.description))
+                        Image(jobImage, scale: 1, label: Text(jobStats.job.stringValue))
                     }
                 } else {
                     Image(systemName: "person")
@@ -33,7 +33,7 @@ struct JobGridCell: View {
             }
             .frame(width: 80, height: 80)
 
-            Text(jobStats.job.description)
+            Text(jobStats.job.stringValue)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .foregroundColor(.primary)
                 .font(.subheadline)

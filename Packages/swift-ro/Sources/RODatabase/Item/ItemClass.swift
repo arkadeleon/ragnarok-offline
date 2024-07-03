@@ -7,44 +7,20 @@
 
 import rAthenaCommon
 
-public enum ItemClass: String, CaseIterable, CodingKey, Decodable {
+public enum ItemClass: CaseIterable, CodingKey, Decodable {
+    case all
+    case normal
+    case upper
+    case baby
+    case third
+    case thirdUpper
+    case thirdBaby
+    case fourth
+    case allUpper
+    case allBaby
+    case allThird
 
-    /// Applies to all classes.
-    case all = "All"
-
-    /// Normal classes (no Baby/Transcendent/Third classes).
-    case normal = "Normal"
-
-    /// Transcedent classes (no Transcedent-Third classes).
-    case upper = "Upper"
-
-    /// Baby classes (no Third-Baby classes).
-    case baby = "Baby"
-
-    /// Third classes (no Transcedent-Third or Third-Baby classes).
-    case third = "Third"
-
-    /// Transcedent-Third classes.
-    case thirdUpper = "Third_Upper"
-
-    /// Third-Baby classes.
-    case thirdBaby = "Third_Baby"
-
-    /// Fourth classes.
-    case fourth = "Fourth"
-
-    /// All Transcedent classes
-    case allUpper = "All_Upper"
-
-    /// All baby classes
-    case allBaby = "All_Baby"
-
-    /// Applies to all Third classes.
-    case allThird = "All_Third"
-}
-
-extension ItemClass: Identifiable {
-    public var id: Int {
+    public var intValue: Int {
         switch self {
         case .all:
             switch CurrentServerMode {
@@ -65,10 +41,39 @@ extension ItemClass: Identifiable {
         case .allThird: RA_ITEMJ_ALL_THIRD
         }
     }
-}
 
-extension ItemClass: CustomStringConvertible {
-    public var description: String {
-        stringValue
+    public var stringValue: String {
+        switch self {
+        case .all: "All"
+        case .normal: "Normal"
+        case .upper: "Upper"
+        case .baby: "Baby"
+        case .third: "Third"
+        case .thirdUpper: "Third_Upper"
+        case .thirdBaby: "Third_Baby"
+        case .fourth: "Fourth"
+        case .allUpper: "All_Upper"
+        case .allBaby: "All_Baby"
+        case .allThird: "All_Third"
+        }
+    }
+
+    public init?(stringValue: String) {
+        if let itemClass = ItemClass.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
+            self = itemClass
+        } else {
+            return nil
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String.self)
+        if let itemClass = ItemClass(stringValue: stringValue) {
+            self = itemClass
+        } else {
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Item class does not exist.")
+            throw DecodingError.valueNotFound(ItemClass.self, context)
+        }
     }
 }

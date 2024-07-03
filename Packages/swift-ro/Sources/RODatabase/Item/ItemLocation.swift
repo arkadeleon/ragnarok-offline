@@ -7,80 +7,32 @@
 
 import rAthenaCommon
 
-public enum ItemLocation: String, CaseIterable, CodingKey, Decodable {
+public enum ItemLocation: CaseIterable, CodingKey, Decodable {
+    case headTop
+    case headMid
+    case headLow
+    case armor
+    case rightHand
+    case leftHand
+    case garment
+    case shoes
+    case rightAccessory
+    case leftAccessory
+    case costumeHeadTop
+    case costumeHeadMid
+    case costumeHeadLow
+    case costumeGarment
+    case ammo
+    case shadowArmor
+    case shadowWeapon
+    case shadowShield
+    case shadowShoes
+    case shadowRightAccessory
+    case shadowLeftAccessory
+    case bothHand
+    case bothAccessory
 
-    /// Upper Headgear
-    case headTop = "Head_Top"
-
-    /// Middle Headgear
-    case headMid = "Head_Mid"
-
-    /// Lower Headgear
-    case headLow = "Head_Low"
-
-    /// Armor
-    case armor = "Armor"
-
-    /// Weapon
-    case rightHand = "Right_Hand"
-
-    /// Shield
-    case leftHand = "Left_Hand"
-
-    /// Garment/Robe
-    case garment = "Garment"
-
-    /// Shoes
-    case shoes = "Shoes"
-
-    /// Accessory Right
-    case rightAccessory = "Right_Accessory"
-
-    /// Accessory Left
-    case leftAccessory = "Left_Accessory"
-
-    /// Costume Top Headgear
-    case costumeHeadTop = "Costume_Head_Top"
-
-    /// Costume Mid Headgear
-    case costumeHeadMid = "Costume_Head_Mid"
-
-    /// Costume Low Headgear
-    case costumeHeadLow = "Costume_Head_Low"
-
-    /// Costume Garment/Robe
-    case costumeGarment = "Costume_Garment"
-
-    /// Ammo
-    case ammo = "Ammo"
-
-    /// Shadow Armor
-    case shadowArmor = "Shadow_Armor"
-
-    /// Shadow Weapon
-    case shadowWeapon = "Shadow_Weapon"
-
-    /// Shadow Shield
-    case shadowShield = "Shadow_Shield"
-
-    /// Shadow Shoes
-    case shadowShoes = "Shadow_Shoes"
-
-    /// Shadow Accessory Right (Earring)
-    case shadowRightAccessory = "Shadow_Right_Accessory"
-
-    /// Shadow Accessory Left (Pendant)
-    case shadowLeftAccessory = "Shadow_Left_Accessory"
-
-    /// Right_Hand + Left_Hand
-    case bothHand = "Both_Hand"
-
-    /// Right_Accessory + Left_Accessory
-    case bothAccessory = "Both_Accessory"
-}
-
-extension ItemLocation: Identifiable {
-    public var id: Int {
+    public var intValue: Int {
         switch self {
         case .headTop: RA_EQP_HEAD_TOP
         case .headMid: RA_EQP_HEAD_MID
@@ -107,10 +59,51 @@ extension ItemLocation: Identifiable {
         case .bothAccessory: RA_EQP_ACC_RL
         }
     }
-}
 
-extension ItemLocation: CustomStringConvertible {
-    public var description: String {
-        stringValue
+    public var stringValue: String {
+        switch self {
+        case .headTop: "Head_Top"
+        case .headMid: "Head_Mid"
+        case .headLow: "Head_Low"
+        case .armor: "Armor"
+        case .rightHand: "Right_Hand"
+        case .leftHand: "Left_Hand"
+        case .garment: "Garment"
+        case .shoes: "Shoes"
+        case .rightAccessory: "Right_Accessory"
+        case .leftAccessory: "Left_Accessory"
+        case .costumeHeadTop: "Costume_Head_Top"
+        case .costumeHeadMid: "Costume_Head_Mid"
+        case .costumeHeadLow: "Costume_Head_Low"
+        case .costumeGarment: "Costume_Garment"
+        case .ammo: "Ammo"
+        case .shadowArmor: "Shadow_Armor"
+        case .shadowWeapon: "Shadow_Weapon"
+        case .shadowShield: "Shadow_Shield"
+        case .shadowShoes: "Shadow_Shoes"
+        case .shadowRightAccessory: "Shadow_Right_Accessory"
+        case .shadowLeftAccessory: "Shadow_Left_Accessory"
+        case .bothHand: "Both_Hand"
+        case .bothAccessory: "Both_Accessory"
+        }
+    }
+
+    public init?(stringValue: String) {
+        if let itemLocation = ItemLocation.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
+            self = itemLocation
+        } else {
+            return nil
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String.self)
+        if let itemLocation = ItemLocation(stringValue: stringValue) {
+            self = itemLocation
+        } else {
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Item location does not exist.")
+            throw DecodingError.valueNotFound(ItemLocation.self, context)
+        }
     }
 }

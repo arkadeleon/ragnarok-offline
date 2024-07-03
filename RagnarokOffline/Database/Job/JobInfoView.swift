@@ -24,7 +24,7 @@ struct JobInfoView: View {
         ScrollView {
             ZStack {
                 if let jobImage {
-                    Image(jobImage, scale: 1, label: Text(jobStats.job.description))
+                    Image(jobImage, scale: 1, label: Text(jobStats.job.stringValue))
                 } else {
                     Image(systemName: "person")
                         .foregroundStyle(.tertiary)
@@ -144,7 +144,7 @@ struct JobInfoView: View {
                 }
             }
         }
-        .navigationTitle(jobStats.job.description)
+        .navigationTitle(jobStats.job.stringValue)
         .task {
             await loadJobInfo()
         }
@@ -181,7 +181,7 @@ struct JobInfoView: View {
         (0..<jobStats.maxJobLevel).map { level in
             let bonusStats = Parameter.allCases.compactMap { parameter in
                 if let value = jobStats.bonusStats[level][parameter], value > 0 {
-                    return "\(parameter.description)(+\(value))"
+                    return "\(parameter.stringValue)(+\(value))"
                 } else {
                     return nil
                 }
@@ -196,7 +196,7 @@ struct JobInfoView: View {
         let skillDatabase = SkillDatabase.database(for: mode)
         let skillTreeDatabase = SkillTreeDatabase.database(for: mode)
 
-        if let skillTree = try? await skillTreeDatabase.skillTree(forJobID: jobStats.job.id)?.tree {
+        if let skillTree = try? await skillTreeDatabase.skillTree(forJobID: jobStats.job.intValue)?.tree {
             var skills: [Skill] = []
             for s in skillTree {
                 if let skill = try? await skillDatabase.skill(forAegisName: s.name) {

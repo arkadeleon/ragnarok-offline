@@ -7,15 +7,13 @@
 
 import rAthenaCommon
 
-public enum SkillType: String, CaseIterable, CodingKey, Decodable {
-    case none = "None"
-    case weapon = "Weapon"
-    case magic = "Magic"
-    case misc = "Misc"
-}
+public enum SkillType: CaseIterable, CodingKey, Decodable {
+    case none
+    case weapon
+    case magic
+    case misc
 
-extension SkillType: Identifiable {
-    public var id: Int {
+    public var intValue: Int {
         switch self {
         case .none: RA_BF_NONE
         case .weapon: RA_BF_WEAPON
@@ -23,10 +21,13 @@ extension SkillType: Identifiable {
         case .misc: RA_BF_MISC
         }
     }
-}
 
-extension SkillType: CustomStringConvertible {
-    public var description: String {
-        stringValue
+    public var stringValue: String {
+        switch self {
+        case .none: "None"
+        case .weapon: "Weapon"
+        case .magic: "Magic"
+        case .misc: "Misc"
+        }
     }
 }

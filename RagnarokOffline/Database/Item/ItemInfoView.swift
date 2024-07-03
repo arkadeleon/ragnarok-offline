@@ -119,7 +119,7 @@ struct ItemInfoView: View {
         attributes.append(.init(name: "ID", value: "#\(item.id)"))
         attributes.append(.init(name: "Aegis Name", value: item.aegisName))
         attributes.append(.init(name: "Name", value: item.name))
-        attributes.append(.init(name: "Type", value: item.type.description))
+        attributes.append(.init(name: "Type", value: item.type.localizedStringResource))
 
         switch item.subType {
         case .none:
@@ -127,9 +127,9 @@ struct ItemInfoView: View {
         case .weapon(let weaponType):
             attributes.append(.init(name: "Weapon Type", value: weaponType.localizedStringResource))
         case .ammo(let ammoType):
-            attributes.append(.init(name: "Ammo Type", value: ammoType.description))
+            attributes.append(.init(name: "Ammo Type", value: ammoType.stringValue))
         case .card(let cardType):
-            attributes.append(.init(name: "Card Type", value: cardType.description))
+            attributes.append(.init(name: "Card Type", value: cardType.stringValue))
         }
 
         attributes.append(.init(name: "Buy", value: item.buy.formatted() + "z"))
@@ -151,7 +151,7 @@ struct ItemInfoView: View {
 
         switch item.type {
         case .weapon, .armor:
-            attributes.append(.init(name: "Gender", value: item.gender.description))
+            attributes.append(.init(name: "Gender", value: item.gender.stringValue))
         default:
             break
         }
@@ -181,19 +181,19 @@ struct ItemInfoView: View {
 
     private var jobs: String {
         item.jobs
-            .map({ "- \($0.description)" })
+            .map({ "- \($0.stringValue)" })
             .joined(separator: "\n")
     }
 
     private var classes: String {
         item.classes
-            .map({ "- \($0.description)" })
+            .map({ "- \($0.stringValue)" })
             .joined(separator: "\n")
     }
 
     private var locations: String {
         item.locations
-            .map({ "- \($0.description)" })
+            .map({ "- \($0.stringValue)" })
             .joined(separator: "\n")
     }
 

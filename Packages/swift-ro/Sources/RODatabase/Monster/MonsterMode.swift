@@ -7,37 +7,35 @@
 
 import rAthenaCommon
 
-public enum MonsterMode: String, CaseIterable, CodingKey, Decodable {
-    case canMove = "CanMove"
-    case looter = "Looter"
-    case aggressive = "Aggressive"
-    case assist = "Assist"
-    case castSensorIdle = "CastSensorIdle"
-    case noRandomWalk = "NoRandomWalk"
-    case noCast = "NoCast"
-    case canAttack = "CanAttack"
-    case castSensorChase = "CastSensorChase"
-    case changeChase = "ChangeChase"
-    case angry = "Angry"
-    case changeTargetMelee = "ChangeTargetMelee"
-    case changeTargetChase = "ChangeTargetChase"
-    case targetWeak = "TargetWeak"
-    case randomTarget = "RandomTarget"
-    case ignoreMelee = "IgnoreMelee"
-    case ignoreMagic = "IgnoreMagic"
-    case ignoreRanged = "IgnoreRanged"
-    case mvp = "Mvp"
-    case ignoreMisc = "IgnoreMisc"
-    case knockBackImmune = "KnockBackImmune"
-    case teleportBlock = "TeleportBlock"
-    case fixedItemDrop = "FixedItemDrop"
-    case detector = "Detector"
-    case statusImmune = "StatusImmune"
-    case skillImmune = "SkillImmune"
-}
+public enum MonsterMode: CaseIterable, CodingKey, Decodable {
+    case canMove
+    case looter
+    case aggressive
+    case assist
+    case castSensorIdle
+    case noRandomWalk
+    case noCast
+    case canAttack
+    case castSensorChase
+    case changeChase
+    case angry
+    case changeTargetMelee
+    case changeTargetChase
+    case targetWeak
+    case randomTarget
+    case ignoreMelee
+    case ignoreMagic
+    case ignoreRanged
+    case mvp
+    case ignoreMisc
+    case knockBackImmune
+    case teleportBlock
+    case fixedItemDrop
+    case detector
+    case statusImmune
+    case skillImmune
 
-extension MonsterMode: Identifiable {
-    public var id: Int {
+    public var intValue: Int {
         switch self {
         case .canMove: RA_MD_CANMOVE
         case .looter: RA_MD_LOOTER
@@ -67,10 +65,60 @@ extension MonsterMode: Identifiable {
         case .skillImmune: RA_MD_SKILLIMMUNE
         }
     }
+
+    public var stringValue: String {
+        switch self {
+        case .canMove: "CanMove"
+        case .looter: "Looter"
+        case .aggressive: "Aggressive"
+        case .assist: "Assist"
+        case .castSensorIdle: "CastSensorIdle"
+        case .noRandomWalk: "NoRandomWalk"
+        case .noCast: "NoCast"
+        case .canAttack: "CanAttack"
+        case .castSensorChase: "CastSensorChase"
+        case .changeChase: "ChangeChase"
+        case .angry: "Angry"
+        case .changeTargetMelee: "ChangeTargetMelee"
+        case .changeTargetChase: "ChangeTargetChase"
+        case .targetWeak: "TargetWeak"
+        case .randomTarget: "RandomTarget"
+        case .ignoreMelee: "IgnoreMelee"
+        case .ignoreMagic: "IgnoreMagic"
+        case .ignoreRanged: "IgnoreRanged"
+        case .mvp: "Mvp"
+        case .ignoreMisc: "IgnoreMisc"
+        case .knockBackImmune: "KnockBackImmune"
+        case .teleportBlock: "TeleportBlock"
+        case .fixedItemDrop: "FixedItemDrop"
+        case .detector: "Detector"
+        case .statusImmune: "StatusImmune"
+        case .skillImmune: "SkillImmune"
+        }
+    }
+
+    public init?(stringValue: String) {
+        if let monsterMode = MonsterMode.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
+            self = monsterMode
+        } else {
+            return nil
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String.self)
+        if let monsterMode = MonsterMode(stringValue: stringValue) {
+            self = monsterMode
+        } else {
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Monster mode does not exist.")
+            throw DecodingError.valueNotFound(MonsterMode.self, context)
+        }
+    }
 }
 
-extension MonsterMode: CustomStringConvertible {
-    public var description: String {
+extension MonsterMode: CustomLocalizedStringResourceConvertible {
+    public var localizedStringResource: LocalizedStringResource {
         switch self {
         case .canMove: "Can Move"
         case .looter: "Looter"

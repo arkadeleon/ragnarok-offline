@@ -7,28 +7,43 @@
 
 import rAthenaCommon
 
-public enum SkillCastFlag: String, CaseIterable, CodingKey, Decodable {
-    case ignoreDex = "IgnoreDex"
-    case ignoreStatus = "IgnoreStatus"
-    case ignoreItemBonus = "IgnoreItemBonus"
-}
+public enum SkillCastFlag: CaseIterable, CodingKey, Decodable {
+    case ignoreDex
+    case ignoreStatus
+    case ignoreItemBonus
 
-extension SkillCastFlag: Identifiable {
-    public var id: Int {
+    public var intValue: Int {
         switch self {
         case .ignoreDex: RA_SKILL_CAST_IGNOREDEX
         case .ignoreStatus: RA_SKILL_CAST_IGNORESTATUS
         case .ignoreItemBonus: RA_SKILL_CAST_IGNOREITEMBONUS
         }
     }
-}
 
-extension SkillCastFlag: CustomStringConvertible {
-    public var description: String {
+    public var stringValue: String {
         switch self {
-        case .ignoreDex: "Ignore Dex"
-        case .ignoreStatus: "Ignore Status"
-        case .ignoreItemBonus: "Ignore Item Bonus"
+        case .ignoreDex: "IgnoreDex"
+        case .ignoreStatus: "IgnoreStatus"
+        case .ignoreItemBonus: "IgnoreItemBonus"
+        }
+    }
+
+    public init?(stringValue: String) {
+        if let skillCastFlag = SkillCastFlag.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
+            self = skillCastFlag
+        } else {
+            return nil
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String.self)
+        if let skillCastFlag = SkillCastFlag(stringValue: stringValue) {
+            self = skillCastFlag
+        } else {
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Skill cast flag does not exist.")
+            throw DecodingError.valueNotFound(SkillCastFlag.self, context)
         }
     }
 }

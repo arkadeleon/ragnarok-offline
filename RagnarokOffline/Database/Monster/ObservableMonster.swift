@@ -66,10 +66,10 @@ class ObservableMonster {
         attributes.append(.init(name: "Skill Range", value: monster.skillRange))
         attributes.append(.init(name: "Chase Range", value: monster.chaseRange))
 
-        attributes.append(.init(name: "Size", value: monster.size.description))
-        attributes.append(.init(name: "Race", value: monster.race.description))
+        attributes.append(.init(name: "Size", value: monster.size.stringValue))
+        attributes.append(.init(name: "Race", value: monster.race.localizedStringResource))
 
-        attributes.append(.init(name: "Element", value: monster.element.description))
+        attributes.append(.init(name: "Element", value: monster.element.stringValue))
         attributes.append(.init(name: "Element Level", value: monster.elementLevel))
 
         attributes.append(.init(name: "Walk Speed", value: monster.walkSpeed.rawValue))
@@ -79,21 +79,21 @@ class ObservableMonster {
         attributes.append(.init(name: "Damage Motion", value: monster.damageMotion))
         attributes.append(.init(name: "Damage Taken", value: monster.damageTaken))
 
-        attributes.append(.init(name: "AI", value: monster.ai.description))
-        attributes.append(.init(name: "Class", value: monster.class.description))
+        attributes.append(.init(name: "AI", value: monster.ai.stringValue))
+        attributes.append(.init(name: "Class", value: monster.class.stringValue))
 
         return attributes
     }
 
     var raceGroups: String? {
         monster.raceGroups?
-            .map({ "- \($0.description)" })
+            .map({ "- \($0.stringValue)" })
             .joined(separator: "\n")
     }
 
     var modes: String? {
         monster.modes?
-            .map({ "- \($0.description)" })
+            .map({ "- " + String(localized: $0.localizedStringResource) })
             .joined(separator: "\n")
     }
 

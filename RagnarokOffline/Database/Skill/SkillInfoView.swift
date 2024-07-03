@@ -49,8 +49,8 @@ struct SkillInfoView: View {
         attributes.append(.init(name: "Aegis Name", value: skill.aegisName))
         attributes.append(.init(name: "Name", value: skill.name))
         attributes.append(.init(name: "Maximum Level", value: skill.maxLevel))
-        attributes.append(.init(name: "Type", value: skill.type.description))
-        attributes.append(.init(name: "Target Type", value: skill.targetType.description))
+        attributes.append(.init(name: "Type", value: skill.type.stringValue))
+        attributes.append(.init(name: "Target Type", value: skill.targetType.stringValue))
 
         return attributes
     }

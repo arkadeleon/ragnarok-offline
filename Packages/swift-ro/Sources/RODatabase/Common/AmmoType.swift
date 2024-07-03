@@ -7,26 +7,18 @@
 
 import rAthenaCommon
 
-public enum AmmoType: String, CaseIterable, CodingKey, Decodable {
-    case arrow = "Arrow"
-    case dagger = "Dagger"
-    case bullet = "Bullet"
-    case shell = "Shell"
-    case grenade = "Grenade"
-    case shuriken = "Shuriken"
-    case kunai = "Kunai"
-    case cannonball = "Cannonball"
-    case throwweapon = "Throwweapon"
+public enum AmmoType: CaseIterable, CodingKey, Decodable {
+    case arrow
+    case dagger
+    case bullet
+    case shell
+    case grenade
+    case shuriken
+    case kunai
+    case cannonball
+    case throwweapon
 
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self)
-        self = AmmoType.allCases.first(where: { $0.rawValue.caseInsensitiveCompare(rawValue) == .orderedSame }) ?? .arrow
-    }
-}
-
-extension AmmoType: Identifiable {
-    public var id: Int {
+    public var intValue: Int {
         switch self {
         case .arrow: RA_AMMO_ARROW
         case .dagger: RA_AMMO_DAGGER
@@ -39,10 +31,8 @@ extension AmmoType: Identifiable {
         case .throwweapon: RA_AMMO_THROWWEAPON
         }
     }
-}
 
-extension AmmoType: CustomStringConvertible {
-    public var description: String {
+    public var stringValue: String {
         switch self {
         case .arrow: "Arrow"
         case .dagger: "Dagger"
@@ -51,8 +41,27 @@ extension AmmoType: CustomStringConvertible {
         case .grenade: "Grenade"
         case .shuriken: "Shuriken"
         case .kunai: "Kunai"
-        case .cannonball: "Cannon Ball"
-        case .throwweapon: "Throw Weapon"
+        case .cannonball: "Cannonball"
+        case .throwweapon: "Throwweapon"
+        }
+    }
+
+    public init?(stringValue: String) {
+        if let ammoType = AmmoType.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
+            self = ammoType
+        } else {
+            return nil
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String.self)
+        if let ammoType = AmmoType(stringValue: stringValue) {
+            self = ammoType
+        } else {
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Ammo type does not exist.")
+            throw DecodingError.valueNotFound(AmmoType.self, context)
         }
     }
 }

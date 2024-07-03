@@ -7,21 +7,19 @@
 
 import rAthenaCommon
 
-public enum Race: String, CaseIterable, CodingKey, Decodable {
-    case formless = "Formless"
-    case undead = "Undead"
-    case brute = "Brute"
-    case plant = "Plant"
-    case insect = "Insect"
-    case fish = "Fish"
-    case demon = "Demon"
-    case demihuman = "Demihuman"
-    case angel = "Angel"
-    case dragon = "Dragon"
-}
+public enum Race: CaseIterable, CodingKey, Decodable {
+    case formless
+    case undead
+    case brute
+    case plant
+    case insect
+    case fish
+    case demon
+    case demihuman
+    case angel
+    case dragon
 
-extension Race: Identifiable {
-    public var id: Int {
+    public var intValue: Int {
         switch self {
         case .formless: RA_RC_FORMLESS
         case .undead: RA_RC_UNDEAD
@@ -35,10 +33,44 @@ extension Race: Identifiable {
         case .dragon: RA_RC_DRAGON
         }
     }
+
+    public var stringValue: String {
+        switch self {
+        case .formless: "Formless"
+        case .undead: "Undead"
+        case .brute: "Brute"
+        case .plant: "Plant"
+        case .insect: "Insect"
+        case .fish: "Fish"
+        case .demon: "Demon"
+        case .demihuman: "Demihuman"
+        case .angel: "Angel"
+        case .dragon: "Dragon"
+        }
+    }
+
+    public init?(stringValue: String) {
+        if let race = Race.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
+            self = race
+        } else {
+            return nil
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String.self)
+        if let race = Race(stringValue: stringValue) {
+            self = race
+        } else {
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Race does not exist.")
+            throw DecodingError.valueNotFound(Race.self, context)
+        }
+    }
 }
 
-extension Race: CustomStringConvertible {
-    public var description: String {
+extension Race: CustomLocalizedStringResourceConvertible {
+    public var localizedStringResource: LocalizedStringResource {
         switch self {
         case .formless: "Formless"
         case .undead: "Undead"

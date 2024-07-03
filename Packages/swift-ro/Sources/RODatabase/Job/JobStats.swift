@@ -57,7 +57,7 @@ public struct JobStats: Equatable, Hashable {
               let baseHpPointsStats = basePointsStatsList.first(where: { $0.jobs.contains(job) && !$0.baseHp.isEmpty }),
               let baseSpPointsStats = basePointsStatsList.first(where: { $0.jobs.contains(job) && !$0.baseSp.isEmpty })
         else {
-            print("Failed to init JobStats for \(job.description)")
+            print("Failed to init JobStats for \(job.stringValue)")
             return nil
         }
 
@@ -112,12 +112,12 @@ public struct JobStats: Equatable, Hashable {
 
 extension JobStats: Identifiable {
     public var id: Int {
-        job.id
+        job.intValue
     }
 }
 
 extension JobStats: Comparable {
     public static func < (lhs: JobStats, rhs: JobStats) -> Bool {
-        lhs.job.id < rhs.job.id
+        lhs.job.intValue < rhs.job.intValue
     }
 }

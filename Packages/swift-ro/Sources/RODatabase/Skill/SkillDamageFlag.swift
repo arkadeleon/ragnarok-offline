@@ -7,21 +7,19 @@
 
 import rAthenaCommon
 
-public enum SkillDamageFlag: String, CaseIterable, CodingKey, Decodable {
-    case noDamage = "NoDamage"
-    case splash = "Splash"
-    case splashSplit = "SplashSplit"
-    case ignoreAtkCard = "IgnoreAtkCard"
-    case ignoreElement = "IgnoreElement"
-    case ignoreDefense = "IgnoreDefense"
-    case ignoreFlee = "IgnoreFlee"
-    case ignoreDefCard = "IgnoreDefCard"
-    case ignoreLongCard = "IgnoreLongCard"
-    case critical = "Critical"
-}
+public enum SkillDamageFlag: CaseIterable, CodingKey, Decodable {
+    case noDamage
+    case splash
+    case splashSplit
+    case ignoreAtkCard
+    case ignoreElement
+    case ignoreDefense
+    case ignoreFlee
+    case ignoreDefCard
+    case ignoreLongCard
+    case critical
 
-extension SkillDamageFlag: Identifiable {
-    public var id: Int {
+    public var intValue: Int {
         switch self {
         case .noDamage: RA_NK_NODAMAGE
         case .splash: RA_NK_SPLASH
@@ -35,10 +33,38 @@ extension SkillDamageFlag: Identifiable {
         case .critical: RA_NK_CRITICAL
         }
     }
-}
 
-extension SkillDamageFlag: CustomStringConvertible {
-    public var description: String {
-        stringValue
+    public var stringValue: String {
+        switch self {
+        case .noDamage: "NoDamage"
+        case .splash: "Splash"
+        case .splashSplit: "SplashSplit"
+        case .ignoreAtkCard: "IgnoreAtkCard"
+        case .ignoreElement: "IgnoreElement"
+        case .ignoreDefense: "IgnoreDefense"
+        case .ignoreFlee: "IgnoreFlee"
+        case .ignoreDefCard: "IgnoreDefCard"
+        case .ignoreLongCard: "IgnoreLongCard"
+        case .critical: "Critical"
+        }
+    }
+
+    public init?(stringValue: String) {
+        if let skillDamageFlag = SkillDamageFlag.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
+            self = skillDamageFlag
+        } else {
+            return nil
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String.self)
+        if let skillDamageFlag = SkillDamageFlag(stringValue: stringValue) {
+            self = skillDamageFlag
+        } else {
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Skill damage flag does not exist.")
+            throw DecodingError.valueNotFound(SkillDamageFlag.self, context)
+        }
     }
 }

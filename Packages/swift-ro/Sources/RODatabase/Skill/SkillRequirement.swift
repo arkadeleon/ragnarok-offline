@@ -7,26 +7,24 @@
 
 import rAthenaCommon
 
-public enum SkillRequirement: String, CaseIterable, CodingKey, Decodable {
-    case hpCost = "HpCost"
-    case spCost = "SpCost"
-    case hpRateCost = "HpRateCost"
-    case spRateCost = "SpRateCost"
-    case maxHpTrigger = "MaxHpTrigger"
-    case zenyCost = "ZenyCost"
-    case weapon = "Weapon"
-    case ammo = "Ammo"
-    case state = "State"
-    case status = "Status"
-    case spiritSphereCost = "SpiritSphereCost"
-    case itemCost = "ItemCost"
-    case equipment = "Equipment"
-    case apCost = "ApCost"
-    case apRateCost = "ApRateCost"
-}
+public enum SkillRequirement: CaseIterable, CodingKey, Decodable {
+    case hpCost
+    case spCost
+    case hpRateCost
+    case spRateCost
+    case maxHpTrigger
+    case zenyCost
+    case weapon
+    case ammo
+    case state
+    case status
+    case spiritSphereCost
+    case itemCost
+    case equipment
+    case apCost
+    case apRateCost
 
-extension SkillRequirement: Identifiable {
-    public var id: Int {
+    public var intValue: Int {
         switch self {
         case .hpCost: RA_SKILL_REQ_HPCOST
         case .spCost: RA_SKILL_REQ_SPCOST
@@ -45,10 +43,43 @@ extension SkillRequirement: Identifiable {
         case .apRateCost: RA_SKILL_REQ_APRATECOST
         }
     }
-}
 
-extension SkillRequirement: CustomStringConvertible {
-    public var description: String {
-        stringValue
+    public var stringValue: String {
+        switch self {
+        case .hpCost: "HpCost"
+        case .spCost: "SpCost"
+        case .hpRateCost: "HpRateCost"
+        case .spRateCost: "SpRateCost"
+        case .maxHpTrigger: "MaxHpTrigger"
+        case .zenyCost: "ZenyCost"
+        case .weapon: "Weapon"
+        case .ammo: "Ammo"
+        case .state: "State"
+        case .status: "Status"
+        case .spiritSphereCost: "SpiritSphereCost"
+        case .itemCost: "ItemCost"
+        case .equipment: "Equipment"
+        case .apCost: "ApCost"
+        case .apRateCost: "ApRateCost"
+        }
+    }
+
+    public init?(stringValue: String) {
+        if let skillRequirement = SkillRequirement.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
+            self = skillRequirement
+        } else {
+            return nil
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String.self)
+        if let skillRequirement = SkillRequirement(stringValue: stringValue) {
+            self = skillRequirement
+        } else {
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Skill flag does not exist.")
+            throw DecodingError.valueNotFound(SkillFlag.self, context)
+        }
     }
 }

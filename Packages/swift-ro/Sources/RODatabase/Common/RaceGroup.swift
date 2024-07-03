@@ -7,42 +7,40 @@
 
 import rAthenaCommon
 
-public enum RaceGroup: String, CaseIterable, CodingKey, Decodable {
-    case goblin = "Goblin"
-    case kobold = "Kobold"
-    case orc = "Orc"
-    case golem = "Golem"
-    case guardian = "Guardian"
-    case ninja = "Ninja"
-    case gvg = "Gvg"
-    case battlefield = "Battlefield"
-    case treasure = "Treasure"
-    case biolab = "Biolab"
-    case manuk = "Manuk"
-    case splendide = "Splendide"
-    case scaraba = "Scaraba"
-    case oghAtkDef = "Ogh_Atk_Def"
-    case oghHidden = "Ogh_Hidden"
-    case bio5SwordmanThief = "Bio5_Swordman_Thief"
-    case bio5AcolyteMerchant = "Bio5_Acolyte_Merchant"
-    case bio5MageArcher = "Bio5_Mage_Archer"
-    case bio5Mvp = "Bio5_Mvp"
-    case clocktower = "Clocktower"
-    case thanatos = "Thanatos"
-    case faceworm = "Faceworm"
-    case hearthunter = "Hearthunter"
-    case rockridge = "Rockridge"
-    case wernerLab = "Werner_Lab"
-    case templeDemon = "Temple_Demon"
-    case illusionVampire = "Illusion_Vampire"
-    case malangdo = "Malangdo"
-    case ep172Alpha = "EP172ALPHA"
-    case ep172Beta = "EP172BETA"
-    case ep172Bath = "EP172BATH"
-}
+public enum RaceGroup: CaseIterable, CodingKey, Decodable {
+    case goblin
+    case kobold
+    case orc
+    case golem
+    case guardian
+    case ninja
+    case gvg
+    case battlefield
+    case treasure
+    case biolab
+    case manuk
+    case splendide
+    case scaraba
+    case oghAtkDef
+    case oghHidden
+    case bio5SwordmanThief
+    case bio5AcolyteMerchant
+    case bio5MageArcher
+    case bio5Mvp
+    case clocktower
+    case thanatos
+    case faceworm
+    case hearthunter
+    case rockridge
+    case wernerLab
+    case templeDemon
+    case illusionVampire
+    case malangdo
+    case ep172Alpha
+    case ep172Beta
+    case ep172Bath
 
-extension RaceGroup: Identifiable {
-    public var id: Int {
+    public var intValue: Int {
         switch self {
         case .goblin: RA_RC2_GOBLIN
         case .kobold: RA_RC2_KOBOLD
@@ -77,10 +75,59 @@ extension RaceGroup: Identifiable {
         case .ep172Bath: RA_RC2_EP172BATH
         }
     }
-}
 
-extension RaceGroup: CustomStringConvertible {
-    public var description: String {
-        stringValue
+    public var stringValue: String {
+        switch self {
+        case .goblin: "Goblin"
+        case .kobold: "Kobold"
+        case .orc: "Orc"
+        case .golem: "Golem"
+        case .guardian: "Guardian"
+        case .ninja: "Ninja"
+        case .gvg: "Gvg"
+        case .battlefield: "Battlefield"
+        case .treasure: "Treasure"
+        case .biolab: "Biolab"
+        case .manuk: "Manuk"
+        case .splendide: "Splendide"
+        case .scaraba: "Scaraba"
+        case .oghAtkDef: "Ogh_Atk_Def"
+        case .oghHidden: "Ogh_Hidden"
+        case .bio5SwordmanThief: "Bio5_Swordman_Thief"
+        case .bio5AcolyteMerchant: "Bio5_Acolyte_Merchant"
+        case .bio5MageArcher: "Bio5_Mage_Archer"
+        case .bio5Mvp: "Bio5_Mvp"
+        case .clocktower: "Clocktower"
+        case .thanatos: "Thanatos"
+        case .faceworm: "Faceworm"
+        case .hearthunter: "Hearthunter"
+        case .rockridge: "Rockridge"
+        case .wernerLab: "Werner_Lab"
+        case .templeDemon: "Temple_Demon"
+        case .illusionVampire: "Illusion_Vampire"
+        case .malangdo: "Malangdo"
+        case .ep172Alpha: "EP172ALPHA"
+        case .ep172Beta: "EP172BETA"
+        case .ep172Bath: "EP172BATH"
+        }
+    }
+
+    public init?(stringValue: String) {
+        if let raceGroup = RaceGroup.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
+            self = raceGroup
+        } else {
+            return nil
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String.self)
+        if let raceGroup = RaceGroup(stringValue: stringValue) {
+            self = raceGroup
+        } else {
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Race group does not exist.")
+            throw DecodingError.valueNotFound(RaceGroup.self, context)
+        }
     }
 }

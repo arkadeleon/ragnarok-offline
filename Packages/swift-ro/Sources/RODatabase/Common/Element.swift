@@ -7,24 +7,22 @@
 
 import rAthenaCommon
 
-public enum Element: String, CaseIterable, CodingKey, Decodable {
-    case neutral = "Neutral"
-    case water = "Water"
-    case earth = "Earth"
-    case fire = "Fire"
-    case wind = "Wind"
-    case poison = "Poison"
-    case holy = "Holy"
-    case dark = "Dark"
-    case ghost = "Ghost"
-    case undead = "Undead"
-    case weapon = "Weapon"
-    case endowed = "Endowed"
-    case random = "Random"
-}
+public enum Element: CaseIterable, CodingKey, Decodable {
+    case neutral
+    case water
+    case earth
+    case fire
+    case wind
+    case poison
+    case holy
+    case dark
+    case ghost
+    case undead
+    case weapon
+    case endowed
+    case random
 
-extension Element: Identifiable {
-    public var id: Int {
+    public var intValue: Int {
         switch self {
         case .neutral: RA_ELE_NEUTRAL
         case .water: RA_ELE_WATER
@@ -41,10 +39,41 @@ extension Element: Identifiable {
         case .random: RA_ELE_RANDOM
         }
     }
-}
 
-extension Element: CustomStringConvertible {
-    public var description: String {
-        stringValue
+    public var stringValue: String {
+        switch self {
+        case .neutral: "Neutral"
+        case .water: "Water"
+        case .earth: "Earth"
+        case .fire: "Fire"
+        case .wind: "Wind"
+        case .poison: "Poison"
+        case .holy: "Holy"
+        case .dark: "Dark"
+        case .ghost: "Ghost"
+        case .undead: "Undead"
+        case .weapon: "Weapon"
+        case .endowed: "Endowed"
+        case .random: "Random"
+        }
+    }
+
+    public init?(stringValue: String) {
+        if let element = Element.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
+            self = element
+        } else {
+            return nil
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String.self)
+        if let element = Element(stringValue: stringValue) {
+            self = element
+        } else {
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Element does not exist.")
+            throw DecodingError.valueNotFound(Element.self, context)
+        }
     }
 }
