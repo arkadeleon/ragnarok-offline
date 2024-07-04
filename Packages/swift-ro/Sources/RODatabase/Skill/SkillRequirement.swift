@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum SkillRequirement: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum SkillRequirement: Option {
     case hpCost
     case spCost
     case hpRateCost
@@ -24,7 +24,7 @@ public enum SkillRequirement: CaseIterable, RawRepresentable, CodingKey, Decodab
     case apCost
     case apRateCost
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .hpCost: RA_SKILL_REQ_HPCOST
         case .spCost: RA_SKILL_REQ_SPCOST

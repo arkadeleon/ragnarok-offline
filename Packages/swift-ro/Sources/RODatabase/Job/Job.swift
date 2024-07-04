@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum Job: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum Job: Option {
     case novice
     case swordman
     case mage
@@ -190,7 +190,7 @@ public enum Job: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case spiritHandler
     case skyEmperor2
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .novice: RA_JOB_NOVICE
         case .swordman: RA_JOB_SWORDMAN

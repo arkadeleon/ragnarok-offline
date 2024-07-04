@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum AmmoType: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum AmmoType: Option {
     case arrow
     case dagger
     case bullet
@@ -18,7 +18,7 @@ public enum AmmoType: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case cannonball
     case throwweapon
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .arrow: RA_AMMO_ARROW
         case .dagger: RA_AMMO_DAGGER

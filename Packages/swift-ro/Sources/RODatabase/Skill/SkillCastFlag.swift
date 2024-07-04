@@ -7,12 +7,12 @@
 
 import rAthenaCommon
 
-public enum SkillCastFlag: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum SkillCastFlag: Option {
     case ignoreDex
     case ignoreStatus
     case ignoreItemBonus
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .ignoreDex: RA_SKILL_CAST_IGNOREDEX
         case .ignoreStatus: RA_SKILL_CAST_IGNORESTATUS

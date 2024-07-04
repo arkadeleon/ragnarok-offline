@@ -8,7 +8,7 @@
 struct JobBasePointsStats: Decodable {
 
     /// List of jobs associated to group.
-    var jobs: [Job]
+    var jobs: Set<Job>
 
     /// Base HP per base level.
     var baseHp: [LevelBaseHp]
@@ -28,7 +28,10 @@ struct JobBasePointsStats: Decodable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.jobs = try container.decode(PairsNode<Job, Bool>.self, forKey: .jobs).keys
+
+        let jobs = try container.decode([String : Bool].self, forKey: .jobs)
+        self.jobs = Set<Job>(from: jobs)
+
         self.baseHp = try container.decodeIfPresent([LevelBaseHp].self, forKey: .baseHp) ?? []
         self.baseSp = try container.decodeIfPresent([LevelBaseSp].self, forKey: .baseSp) ?? []
         self.baseAp = try container.decodeIfPresent([LevelBaseAp].self, forKey: .baseAp) ?? []

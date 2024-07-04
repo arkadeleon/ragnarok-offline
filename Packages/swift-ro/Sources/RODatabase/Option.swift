@@ -43,3 +43,27 @@ extension Option {
         }
     }
 }
+
+extension Set where Element: Option {
+    public static var all: Set<Element> {
+        Set(Element.allCases)
+    }
+
+    public init(from dictionary: [String : Bool]) {
+        self = []
+
+        if dictionary.keys.contains("All") {
+            formUnion(Element.allCases)
+        }
+
+        for (key, value) in dictionary {
+            if let option = Element(stringValue: key) {
+                if value {
+                    insert(option)
+                } else {
+                    remove(option)
+                }
+            }
+        }
+    }
+}

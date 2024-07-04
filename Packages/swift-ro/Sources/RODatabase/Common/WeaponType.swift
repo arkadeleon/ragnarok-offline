@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum WeaponType: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum WeaponType: Option {
     case fist
     case dagger
     case oneHandedSword
@@ -33,7 +33,7 @@ public enum WeaponType: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case huuma
     case twoHandedStaff
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .fist: RA_W_FIST
         case .dagger: RA_W_DAGGER

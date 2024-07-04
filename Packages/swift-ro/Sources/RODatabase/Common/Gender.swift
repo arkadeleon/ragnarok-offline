@@ -7,12 +7,12 @@
 
 import rAthenaCommon
 
-public enum Gender: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum Gender: Option {
     case female
     case male
     case both
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .female: RA_SEX_FEMALE
         case .male: RA_SEX_MALE

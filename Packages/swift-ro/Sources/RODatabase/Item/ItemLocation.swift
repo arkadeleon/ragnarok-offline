@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum ItemLocation: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum ItemLocation: Option {
     case headTop
     case headMid
     case headLow
@@ -29,10 +29,8 @@ public enum ItemLocation: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case shadowShoes
     case shadowRightAccessory
     case shadowLeftAccessory
-    case bothHand
-    case bothAccessory
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .headTop: RA_EQP_HEAD_TOP
         case .headMid: RA_EQP_HEAD_MID
@@ -55,8 +53,6 @@ public enum ItemLocation: CaseIterable, RawRepresentable, CodingKey, Decodable {
         case .shadowShoes: RA_EQP_SHADOW_SHOES
         case .shadowRightAccessory: RA_EQP_ACC_R
         case .shadowLeftAccessory: RA_EQP_ACC_L
-        case .bothHand: RA_EQP_HAND_R | RA_EQP_HAND_L
-        case .bothAccessory: RA_EQP_ACC_RL
         }
     }
 
@@ -83,8 +79,35 @@ public enum ItemLocation: CaseIterable, RawRepresentable, CodingKey, Decodable {
         case .shadowShoes: "Shadow_Shoes"
         case .shadowRightAccessory: "Shadow_Right_Accessory"
         case .shadowLeftAccessory: "Shadow_Left_Accessory"
-        case .bothHand: "Both_Hand"
-        case .bothAccessory: "Both_Accessory"
+        }
+    }
+}
+
+extension Set where Element == ItemLocation {
+    public static let bothHand: Set<ItemLocation> = [.rightHand, .leftHand]
+    public static let bothAccessory: Set<ItemLocation> = [.rightAccessory, .leftAccessory]
+
+    public init(from dictionary: [String : Bool]) {
+        self = []
+
+        if dictionary.keys.contains("All") {
+            formUnion(ItemLocation.allCases)
+        }
+        if dictionary.keys.contains("Both_Hand") {
+            formUnion(Set<ItemLocation>.bothHand)
+        }
+        if dictionary.keys.contains("Both_Accessory") {
+            formUnion(Set<ItemLocation>.bothAccessory)
+        }
+
+        for (key, value) in dictionary {
+            if let itemLocation = ItemLocation(stringValue: key) {
+                if value {
+                    insert(itemLocation)
+                } else {
+                    remove(itemLocation)
+                }
+            }
         }
     }
 }

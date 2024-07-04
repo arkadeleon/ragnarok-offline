@@ -26,10 +26,10 @@ public struct Skill: Decodable, Equatable, Hashable, Identifiable {
     public var targetType: SkillTargetType
 
     /// Skill damage properties.
-    public var damageFlags: [SkillDamageFlag]
+    public var damageFlags: Set<SkillDamageFlag>
 
     /// Skill information flags.
-    public var flags: [SkillFlag]
+    public var flags: Set<SkillFlag>
 
     /// Skill range. (Default: 0)
     public var range: EitherNode<Int, [Int]>
@@ -89,10 +89,10 @@ public struct Skill: Decodable, Equatable, Hashable, Identifiable {
     public var fixedCastTime: EitherNode<Int, [Int]>
 
     /// Effects of the skill's cast time. (Optional)
-    public var castTimeFlags: [SkillCastFlag]?
+    public var castTimeFlags: Set<SkillCastFlag>?
 
     /// Effects of the skill's delay. (Optional)
-    public var castDelayFlags: [SkillCastFlag]?
+    public var castDelayFlags: Set<SkillCastFlag>?
 
     /// List of requirements to cast the skill. (Optional)
     public var requires: Requires?
@@ -146,8 +146,8 @@ public struct Skill: Decodable, Equatable, Hashable, Identifiable {
         self.maxLevel = try container.decode(Int.self, forKey: .maxLevel)
         self.type = try container.decodeIfPresent(SkillType.self, forKey: .type) ?? .none
         self.targetType = try container.decodeIfPresent(SkillTargetType.self, forKey: .targetType) ?? .passive
-        self.damageFlags = try container.decodeIfPresent(PairsNode<SkillDamageFlag, Bool>.self, forKey: .damageFlags)?.keys ?? []
-        self.flags = try container.decodeIfPresent(PairsNode<SkillFlag, Bool>.self, forKey: .flags)?.keys ?? []
+        self.damageFlags = try container.decodeIfPresent([String : Bool].self, forKey: .damageFlags).map(Set<SkillDamageFlag>.init) ?? []
+        self.flags = try container.decodeIfPresent([String : Bool].self, forKey: .flags).map(Set<SkillFlag>.init) ?? []
         self.range = try container.decodeIfPresent(EitherNode<Int, [LevelRange]>.self, forKey: .range)?.mapRight { $0.map { $0.range } } ?? .left(0)
         self.hitType = try container.decodeIfPresent(SkillHitType.self, forKey: .hitType) ?? .normal
         self.hitCount = try container.decodeIfPresent(EitherNode<Int, [LevelHitCount]>.self, forKey: .hitCount)?.mapRight { $0.map { $0.hitCount } } ?? .left(0)
@@ -167,8 +167,8 @@ public struct Skill: Decodable, Equatable, Hashable, Identifiable {
         self.duration2 = try container.decodeIfPresent(EitherNode<Int, [LevelDuration]>.self, forKey: .duration2)?.mapRight { $0.map { $0.duration } } ?? .left(0)
         self.cooldown = try container.decodeIfPresent(EitherNode<Int, [LevelCooldown]>.self, forKey: .cooldown)?.mapRight { $0.map { $0.cooldown } } ?? .left(0)
         self.fixedCastTime = try container.decodeIfPresent(EitherNode<Int, [LevelFixedCastTime]>.self, forKey: .fixedCastTime)?.mapRight { $0.map { $0.fixedCastTime } } ?? .left(0)
-        self.castTimeFlags = try container.decodeIfPresent(PairsNode<SkillCastFlag, Bool>.self, forKey: .castTimeFlags)?.keys
-        self.castDelayFlags = try container.decodeIfPresent(PairsNode<SkillCastFlag, Bool>.self, forKey: .castDelayFlags)?.keys
+        self.castTimeFlags = try container.decodeIfPresent([String : Bool].self, forKey: .castTimeFlags).map(Set<SkillCastFlag>.init)
+        self.castDelayFlags = try container.decodeIfPresent([String : Bool].self, forKey: .castDelayFlags).map(Set<SkillCastFlag>.init)
         self.requires = try container.decodeIfPresent(Requires.self, forKey: .requires)
         self.unit = try container.decodeIfPresent(Unit.self, forKey: .unit)
         self.status = try container.decodeIfPresent(String.self, forKey: .status)
@@ -365,10 +365,10 @@ extension Skill {
     public struct CopyFlags: Decodable, Equatable, Hashable {
 
         /// Type of skill that can copy.
-        public var skill: [SkillCopyableOption]
+        public var skill: Set<SkillCopyableOption>
 
         /// Remove a requirement type. (Optional)
-        public var removeRequirement: [SkillRequirement]?
+        public var removeRequirement: Set<SkillRequirement>?
 
         enum CodingKeys: String, CodingKey {
             case skill = "Skill"
@@ -377,8 +377,8 @@ extension Skill {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.skill = try container.decode(PairsNode<SkillCopyableOption, Bool>.self, forKey: .skill).keys
-            self.removeRequirement = try container.decodeIfPresent(PairsNode<SkillRequirement, Bool>.self, forKey: .removeRequirement)?.keys
+            self.skill = try container.decodeIfPresent([String : Bool].self, forKey: .skill).map(Set<SkillCopyableOption>.init) ?? []
+            self.removeRequirement = try container.decodeIfPresent([String : Bool].self, forKey: .removeRequirement).map(Set<SkillRequirement>.init)
         }
     }
 }
@@ -393,7 +393,7 @@ extension Skill {
         public var additionalRange: Int?
 
         /// Type of NPC that will block the skill.
-        public var type: [SkillNoNearNPC]
+        public var type: Set<SkillNoNearNPC>
 
         enum CodingKeys: String, CodingKey {
             case additionalRange = "AdditionalRange"
@@ -403,7 +403,7 @@ extension Skill {
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.additionalRange = try container.decodeIfPresent(Int.self, forKey: .additionalRange)
-            self.type = try container.decode(PairsNode<SkillNoNearNPC, Bool>.self, forKey: .type).keys
+            self.type = try container.decodeIfPresent([String : Bool].self, forKey: .type).map(Set<SkillNoNearNPC>.init) ?? []
         }
     }
 }
@@ -437,10 +437,10 @@ extension Skill {
         public var zenyCost: EitherNode<Int, [Int]>
 
         /// Weapon required to cast. (Default: All)
-        public var weapon: [WeaponType]
+        public var weapon: Set<WeaponType>
 
         /// Ammo required to cast. (Default: None)
-        public var ammo: [AmmoType]
+        public var ammo: Set<AmmoType>
 
         /// Ammo amount required to cast. (Default: 0)
         public var ammoAmount: EitherNode<Int, [Int]>
@@ -647,8 +647,8 @@ extension Skill {
             self.apRateCost = try container.decodeIfPresent(EitherNode<Int, [LevelApRateCost]>.self, forKey: .apRateCost)?.mapRight { $0.map { $0.apRateCost } } ?? .left(0)
             self.maxHpTrigger = try container.decodeIfPresent(EitherNode<Int, [LevelMaxHpTrigger]>.self, forKey: .maxHpTrigger)?.mapRight { $0.map { $0.maxHpTrigger } } ?? .left(0)
             self.zenyCost = try container.decodeIfPresent(EitherNode<Int, [LevelZenyCost]>.self, forKey: .zenyCost)?.mapRight { $0.map { $0.zenyCost } } ?? .left(0)
-            self.weapon = try container.decodeIfPresent(PairsNode<WeaponType, Bool>.self, forKey: .weapon)?.keys ?? []
-            self.ammo = try container.decodeIfPresent(PairsNode<AmmoType, Bool>.self, forKey: .ammo)?.keys ?? []
+            self.weapon = try container.decodeIfPresent([String : Bool].self, forKey: .weapon).map(Set<WeaponType>.init) ?? []
+            self.ammo = try container.decodeIfPresent([String : Bool].self, forKey: .ammo).map(Set<AmmoType>.init) ?? []
             self.ammoAmount = try container.decodeIfPresent(EitherNode<Int, [LevelAmmoAmount]>.self, forKey: .ammoAmount)?.mapRight { $0.map { $0.ammoAmount } } ?? .left(0)
             self.state = try container.decodeIfPresent(String.self, forKey: .state)
             self.status = try container.decodeIfPresent([String : Bool].self, forKey: .status)?.keys.map({ $0 }) ?? []
@@ -682,7 +682,7 @@ extension Skill {
         public var target: SkillUnitTargetType
 
         /// Skill unit flags. (Default: None)
-        public var flag: [SkillUnitFlag]
+        public var flag: Set<SkillUnitFlag>
 
         struct LevelLayout: Decodable {
 
@@ -730,7 +730,7 @@ extension Skill {
             self.range = try container.decodeIfPresent(EitherNode<Int, [LevelRange]>.self, forKey: .range)?.mapRight { $0.map { $0.range } } ?? .left(0)
             self.interval = try container.decodeIfPresent(Int.self, forKey: .interval) ?? 0
             self.target = try container.decodeIfPresent(SkillUnitTargetType.self, forKey: .target) ?? .all
-            self.flag = try container.decodeIfPresent(PairsNode<SkillUnitFlag, Bool>.self, forKey: .flag)?.keys ?? [.none]
+            self.flag = try container.decodeIfPresent([String : Bool].self, forKey: .flag).map(Set<SkillUnitFlag>.init) ?? []
         }
     }
 }

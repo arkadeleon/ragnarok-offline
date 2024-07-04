@@ -181,19 +181,22 @@ struct ItemInfoView: View {
 
     private var jobs: String {
         item.jobs
-            .map({ "- \($0.stringValue)" })
+            .sorted()
+            .map { "- \($0.stringValue)" }
             .joined(separator: "\n")
     }
 
     private var classes: String {
-        item.classes.sorted()
-            .map({ "- \($0.stringValue)" })
+        item.classes
+            .sorted()
+            .map { "- \($0.stringValue)" }
             .joined(separator: "\n")
     }
 
     private var locations: String {
         item.locations
-            .map({ "- \($0.stringValue)" })
+            .sorted()
+            .map { "- \($0.stringValue)" }
             .joined(separator: "\n")
     }
 

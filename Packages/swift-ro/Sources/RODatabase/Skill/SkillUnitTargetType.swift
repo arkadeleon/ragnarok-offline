@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum SkillUnitTargetType: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum SkillUnitTargetType: Option {
     case friend
     case party
     case ally
@@ -17,7 +17,7 @@ public enum SkillUnitTargetType: CaseIterable, RawRepresentable, CodingKey, Deco
     case `self`
     case sameGuild
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .friend: RA_BCT_FRIEND
         case .party: RA_BCT_PARTY

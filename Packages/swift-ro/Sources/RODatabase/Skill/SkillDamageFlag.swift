@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum SkillDamageFlag: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum SkillDamageFlag: Option {
     case noDamage
     case splash
     case splashSplit
@@ -19,7 +19,7 @@ public enum SkillDamageFlag: CaseIterable, RawRepresentable, CodingKey, Decodabl
     case ignoreLongCard
     case critical
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .noDamage: RA_NK_NODAMAGE
         case .splash: RA_NK_SPLASH

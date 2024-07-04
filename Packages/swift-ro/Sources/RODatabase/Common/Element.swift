@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum Element: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum Element: Option {
     case neutral
     case water
     case earth
@@ -22,7 +22,7 @@ public enum Element: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case endowed
     case random
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .neutral: RA_ELE_NEUTRAL
         case .water: RA_ELE_WATER

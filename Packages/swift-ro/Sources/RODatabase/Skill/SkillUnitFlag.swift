@@ -7,8 +7,7 @@
 
 import rAthenaCommon
 
-public enum SkillUnitFlag: CaseIterable, RawRepresentable, CodingKey, Decodable {
-    case none
+public enum SkillUnitFlag: Option {
     case noEnemy
     case noReiteration
     case noFootSet
@@ -28,9 +27,8 @@ public enum SkillUnitFlag: CaseIterable, RawRepresentable, CodingKey, Decodable 
     case knockbackGroup
     case hiddenTrap
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
-        case .none: 0
         case .noEnemy: RA_UF_NOENEMY
         case .noReiteration: RA_UF_NOREITERATION
         case .noFootSet: RA_UF_NOFOOTSET
@@ -54,7 +52,6 @@ public enum SkillUnitFlag: CaseIterable, RawRepresentable, CodingKey, Decodable 
 
     public var stringValue: String {
         switch self {
-        case .none: "None"
         case .noEnemy: "NoEnemy"
         case .noReiteration: "NoReiteration"
         case .noFootSet: "NoFootSet"
@@ -80,7 +77,6 @@ public enum SkillUnitFlag: CaseIterable, RawRepresentable, CodingKey, Decodable 
 extension SkillUnitFlag: CustomLocalizedStringResourceConvertible {
     public var localizedStringResource: LocalizedStringResource {
         switch self {
-        case .none: "None"
         case .noEnemy: "No Enemy"
         case .noReiteration: "No Reiteration"
         case .noFootSet: "No Foot Set"

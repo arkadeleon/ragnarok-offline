@@ -8,7 +8,7 @@
 struct JobBasicStats: Decodable {
 
     /// List of jobs associated to group.
-    var jobs: [Job]
+    var jobs: Set<Job>
 
     /// Base maximum weight. (Default: 20000)
     var maxWeight: Int
@@ -36,7 +36,10 @@ struct JobBasicStats: Decodable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.jobs = try container.decode(PairsNode<Job, Bool>.self, forKey: .jobs).keys
+
+        let jobs = try container.decode([String : Bool].self, forKey: .jobs)
+        self.jobs = Set<Job>(from: jobs)
+
         self.maxWeight = try container.decodeIfPresent(Int.self, forKey: .maxWeight) ?? 20000
         self.hpFactor = try container.decodeIfPresent(Int.self, forKey: .hpFactor) ?? 0
         self.hpIncrease = try container.decodeIfPresent(Int.self, forKey: .hpIncrease) ?? 500

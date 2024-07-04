@@ -7,12 +7,12 @@
 
 import rAthenaCommon
 
-public enum SkillHitType: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum SkillHitType: Option {
     case normal
     case single
     case multiHit
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .normal: 0
         case .single: RA_DMG_SINGLE

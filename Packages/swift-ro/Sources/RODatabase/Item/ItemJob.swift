@@ -7,8 +7,7 @@
 
 import rAthenaCommon
 
-public enum ItemJob: CaseIterable, RawRepresentable, CodingKey, Decodable {
-    case all
+public enum ItemJob: Option {
     case acolyte
     case alchemist
     case archer
@@ -38,9 +37,8 @@ public enum ItemJob: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case thief
     case wizard
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
-        case .all: .max
         case .acolyte: RA_MAPID_ACOLYTE
         case .alchemist: RA_MAPID_ALCHEMIST
         case .archer: RA_MAPID_ARCHER
@@ -74,7 +72,6 @@ public enum ItemJob: CaseIterable, RawRepresentable, CodingKey, Decodable {
 
     public var stringValue: String {
         switch self {
-        case .all: "All"
         case .acolyte: "Acolyte"
         case .alchemist: "Alchemist"
         case .archer: "Archer"

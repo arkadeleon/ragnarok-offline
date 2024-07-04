@@ -8,7 +8,7 @@
 struct JobASPDStats: Decodable {
 
     /// List of jobs associated to group.
-    var jobs: [Job]
+    var jobs: Set<Job>
 
     /// Base ASPD for each weapon type. (Default: 2000)
     var baseASPD: [WeaponType : Int]
@@ -20,7 +20,16 @@ struct JobASPDStats: Decodable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.jobs = try container.decode(PairsNode<Job, Bool>.self, forKey: .jobs).keys
-        self.baseASPD = try container.decode(PairsNode<WeaponType, Int>.self, forKey: .baseASPD).dictionary
+
+        let jobs = try container.decode([String : Bool].self, forKey: .jobs)
+        self.jobs = Set<Job>(from: jobs)
+
+        self.baseASPD = [:]
+        let baseASPD = try container.decode([String : Int].self, forKey: .baseASPD)
+        for (weaponType, aspd) in baseASPD {
+            if let weaponType = WeaponType(stringValue: weaponType) {
+                self.baseASPD[weaponType] = aspd
+            }
+        }
     }
 }

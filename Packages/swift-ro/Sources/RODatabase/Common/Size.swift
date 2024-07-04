@@ -7,12 +7,12 @@
 
 import rAthenaCommon
 
-public enum Size: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum Size: Option {
     case small
     case medium
     case large
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .small: RA_SZ_SMALL
         case .medium: RA_SZ_MEDIUM

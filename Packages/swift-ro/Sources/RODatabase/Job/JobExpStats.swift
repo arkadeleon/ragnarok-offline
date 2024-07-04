@@ -10,7 +10,7 @@ import rAthenaCommon
 struct JobExpStats: Decodable {
 
     /// List of jobs associated to group.
-    var jobs: [Job]
+    var jobs: Set<Job>
 
     /// Maximum base level. (Default: MAX_LEVEL)
     var maxBaseLevel: Int
@@ -34,7 +34,10 @@ struct JobExpStats: Decodable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.jobs = try container.decode(PairsNode<Job, Bool>.self, forKey: .jobs).keys
+
+        let jobs = try container.decode([String : Bool].self, forKey: .jobs)
+        self.jobs = Set<Job>(from: jobs)
+
         self.maxBaseLevel = try container.decodeIfPresent(Int.self, forKey: .maxBaseLevel) ?? RA_MAX_LEVEL
         self.baseExp = try container.decodeIfPresent([JobExpStats.LevelExp].self, forKey: .baseExp) ?? []
         self.maxJobLevel = try container.decodeIfPresent(Int.self, forKey: .maxJobLevel) ?? RA_MAX_LEVEL

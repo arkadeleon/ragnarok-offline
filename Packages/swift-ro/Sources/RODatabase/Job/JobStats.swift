@@ -112,12 +112,12 @@ public struct JobStats: Equatable, Hashable {
 
 extension JobStats: Identifiable {
     public var id: Int {
-        job.rawValue
+        job.intValue
     }
 }
 
 extension JobStats: Comparable {
     public static func < (lhs: JobStats, rhs: JobStats) -> Bool {
-        lhs.job.rawValue < rhs.job.rawValue
+        lhs.job < rhs.job
     }
 }

@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum RaceGroup: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum RaceGroup: Option {
     case goblin
     case kobold
     case orc
@@ -40,7 +40,7 @@ public enum RaceGroup: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case ep172Beta
     case ep172Bath
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .goblin: RA_RC2_GOBLIN
         case .kobold: RA_RC2_KOBOLD

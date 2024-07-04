@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum ItemType: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum ItemType: Option {
     case healing
     case usable
     case etc
@@ -21,7 +21,7 @@ public enum ItemType: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case shadowGear
     case cash
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .healing: RA_IT_HEALING
         case .usable: RA_IT_USABLE

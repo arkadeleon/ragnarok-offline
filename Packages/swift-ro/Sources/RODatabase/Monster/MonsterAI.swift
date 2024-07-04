@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum MonsterAI: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum MonsterAI: Option {
     case ai01
     case ai02
     case ai03
@@ -30,7 +30,7 @@ public enum MonsterAI: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case ai26
     case ai27
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .ai01: RA_MONSTER_TYPE_01
         case .ai02: RA_MONSTER_TYPE_02

@@ -23,7 +23,7 @@ public actor SkillTreeDatabase {
     public let mode: ServerMode
 
     private var cachedSkillTrees: [SkillTree] = []
-    private var cachedSkillTreesByJobIDs: [Int : SkillTree] = [:]
+    private var cachedSkillTreesByJobs: [Job : SkillTree] = [:]
 
     private init(mode: ServerMode) {
         self.mode = mode
@@ -43,13 +43,13 @@ public actor SkillTreeDatabase {
         return cachedSkillTrees
     }
 
-    public func skillTree(forJobID jobID: Int) throws -> SkillTree? {
-        if cachedSkillTreesByJobIDs.isEmpty {
+    public func skillTree(forJob job: Job) throws -> SkillTree? {
+        if cachedSkillTreesByJobs.isEmpty {
             let skillTrees = try skillTrees()
-            cachedSkillTreesByJobIDs = Dictionary(skillTrees.map({ ($0.job.rawValue, $0) }), uniquingKeysWith: { (first, _) in first })
+            cachedSkillTreesByJobs = Dictionary(skillTrees.map({ ($0.job, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        let skillTree = cachedSkillTreesByJobIDs[jobID]
+        let skillTree = cachedSkillTreesByJobs[job]
         return skillTree
     }
 }

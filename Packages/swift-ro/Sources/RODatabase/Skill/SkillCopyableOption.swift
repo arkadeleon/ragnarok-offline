@@ -7,11 +7,11 @@
 
 import rAthenaCommon
 
-public enum SkillCopyableOption: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum SkillCopyableOption: Option {
     case plagiarism
     case reproduce
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .plagiarism: 0x1
         case .reproduce: 0x2

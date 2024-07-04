@@ -7,13 +7,13 @@
 
 import rAthenaCommon
 
-public enum SkillNoNearNPC: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum SkillNoNearNPC: Option {
     case warpPortal
     case shop
     case npc
     case tomb
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .warpPortal: RA_SKILL_NONEAR_WARPPORTAL
         case .shop: RA_SKILL_NONEAR_SHOP

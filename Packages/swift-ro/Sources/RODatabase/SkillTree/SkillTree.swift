@@ -12,7 +12,7 @@ public struct SkillTree: Decodable, Equatable, Hashable {
 
     /// Map of job name from which Job will inherit the skill tree. (Default: null)
     /// Note that Job doesn't inherit the child skills, it only inherits the skills defined in Tree of the given job name.
-    public var inherit: [Job]?
+    public var inherit: Set<Job>?
 
     /// List of skills available for the job. (Default: null)
     public var tree: [Skill]?
@@ -26,7 +26,7 @@ public struct SkillTree: Decodable, Equatable, Hashable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.job = try container.decode(Job.self, forKey: .job)
-        self.inherit = try container.decodeIfPresent(PairsNode<Job, Bool>.self, forKey: .inherit)?.keys
+        self.inherit = try container.decodeIfPresent([String : Bool].self, forKey: .inherit).map(Set<Job>.init)
         self.tree = try container.decodeIfPresent([Skill].self, forKey: .tree)
     }
 }
@@ -93,12 +93,12 @@ extension SkillTree {
 
 extension SkillTree: Identifiable {
     public var id: Int {
-        job.rawValue
+        job.intValue
     }
 }
 
 extension SkillTree: Comparable {
     public static func < (lhs: SkillTree, rhs: SkillTree) -> Bool {
-        lhs.job.rawValue < rhs.job.rawValue
+        lhs.job < rhs.job
     }
 }

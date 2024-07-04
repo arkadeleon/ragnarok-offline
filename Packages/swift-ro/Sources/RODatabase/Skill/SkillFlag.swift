@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum SkillFlag: CaseIterable, RawRepresentable, CodingKey, Decodable {
+public enum SkillFlag: Option {
     case isQuest
     case isNpc
     case isWedding
@@ -50,7 +50,7 @@ public enum SkillFlag: CaseIterable, RawRepresentable, CodingKey, Decodable {
     case ignoreGtb
     case toggleable
 
-    public var rawValue: Int {
+    public var intValue: Int {
         switch self {
         case .isQuest: RA_INF2_ISQUEST
         case .isNpc: RA_INF2_ISNPC

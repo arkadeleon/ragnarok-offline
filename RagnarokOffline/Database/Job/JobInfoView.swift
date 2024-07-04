@@ -196,7 +196,7 @@ struct JobInfoView: View {
         let skillDatabase = SkillDatabase.database(for: mode)
         let skillTreeDatabase = SkillTreeDatabase.database(for: mode)
 
-        if let skillTree = try? await skillTreeDatabase.skillTree(forJobID: jobStats.job.rawValue)?.tree {
+        if let skillTree = try? await skillTreeDatabase.skillTree(forJob: jobStats.job)?.tree {
             var skills: [Skill] = []
             for s in skillTree {
                 if let skill = try? await skillDatabase.skill(forAegisName: s.name) {
