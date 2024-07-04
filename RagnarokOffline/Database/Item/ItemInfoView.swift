@@ -186,7 +186,7 @@ struct ItemInfoView: View {
     }
 
     private var classes: String {
-        item.classes
+        item.classes.sorted()
             .map({ "- \($0.stringValue)" })
             .joined(separator: "\n")
     }

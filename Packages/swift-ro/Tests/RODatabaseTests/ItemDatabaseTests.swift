@@ -190,7 +190,7 @@ final class ItemDatabaseTests: XCTestCase {
         XCTAssertEqual(eraser.magicAttack, 170)
         XCTAssertEqual(eraser.range, 1)
         XCTAssertEqual(eraser.jobs, [.acolyte, .mage, .monk, .priest, .sage, .wizard])
-        XCTAssertEqual(eraser.classes, [.allUpper])
+        XCTAssertEqual(eraser.classes, .allUpper)
         XCTAssertEqual(eraser.locations, [.rightHand])
         XCTAssertEqual(eraser.weaponLevel, 4)
         XCTAssertEqual(eraser.equipLevelMin, 70)
