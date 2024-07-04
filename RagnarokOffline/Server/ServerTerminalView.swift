@@ -21,11 +21,10 @@ struct ServerTerminalView: View {
                 } label: {
                     Image(systemName: "play")
                         .font(.system(size: 40))
-                        .padding(.horizontal, 15)
-                        .padding(.vertical, 10)
+                        .padding(15)
                 }
                 .buttonStyle(.bordered)
-                .buttonBorderShape(.roundedRectangle)
+                .buttonBorderShape(.circle)
             }
         }
         .navigationTitle(server.name)

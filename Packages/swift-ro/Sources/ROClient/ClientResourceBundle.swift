@@ -13,10 +13,10 @@ import ROFileFormats
 import ROFileSystem
 import ROResources
 
-public class ClientResourceBundle {
+public actor ClientResourceBundle {
     public static let shared = ClientResourceBundle()
 
-    public let url: URL
+    nonisolated public let url: URL
 
     let grfs: [GRFReference]
 
