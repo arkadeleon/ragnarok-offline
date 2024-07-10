@@ -11,10 +11,12 @@ struct MonsterGridCell: View {
     var monster: ObservableMonster
     var secondaryText: String?
 
+    @State private var monsterImage: CGImage?
+
     var body: some View {
         VStack {
             ZStack {
-                if let monsterImage = monster.image {
+                if let monsterImage {
                     if monsterImage.width > 80 || monsterImage.height > 80 {
                         Image(monsterImage, scale: 1, label: Text(monster.localizedName))
                             .resizable()
@@ -58,7 +60,7 @@ struct MonsterGridCell: View {
         }
         .frame(maxHeight: .infinity, alignment: .top)
         .task {
-            await monster.fetchImage()
+            monsterImage = await monster.fetchImage()
         }
     }
 }

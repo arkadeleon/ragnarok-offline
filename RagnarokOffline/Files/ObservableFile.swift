@@ -15,17 +15,14 @@ import ROFileSystem
 class ObservableFile {
     let file: File
 
-    var thumbnail: FileThumbnail?
-
     init(file: File) {
         self.file = file
     }
 
-    func fetchThumbnail(size: CGSize, scale: CGFloat) async throws {
-        if thumbnail == nil {
-            let request = FileThumbnailRequest(file: file, size: size, scale: scale)
-            thumbnail = try await FileSystem.shared.thumbnail(for: request)
-        }
+    func fetchThumbnail(size: CGSize, scale: CGFloat) async throws -> FileThumbnail? {
+        let request = FileThumbnailRequest(file: file, size: size, scale: scale)
+        let thumbnail = try await FileSystem.shared.thumbnail(for: request)
+        return thumbnail
     }
 }
 

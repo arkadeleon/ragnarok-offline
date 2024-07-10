@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/2/27.
 //
 
+import ROFileSystem
 import SwiftUI
 
 struct FileCell: View {
@@ -12,10 +13,12 @@ struct FileCell: View {
 
     @Environment(\.displayScale) private var displayScale: CGFloat
 
+    @State private var thumbnail: FileThumbnail?
+
     var body: some View {
         VStack {
             ZStack {
-                if let thumbnail = file.thumbnail {
+                if let thumbnail {
                     Image(thumbnail.cgImage, scale: displayScale, label: Text(file.file.name))
                         .resizable()
                         .scaledToFit()
@@ -46,7 +49,7 @@ struct FileCell: View {
         }
         .task {
             do {
-                try await file.fetchThumbnail(size: CGSize(width: 40, height: 40), scale: displayScale)
+                thumbnail = try await file.fetchThumbnail(size: CGSize(width: 40, height: 40), scale: displayScale)
             } catch {
                 print(error)
             }

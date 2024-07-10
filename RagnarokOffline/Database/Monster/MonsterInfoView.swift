@@ -10,10 +10,12 @@ import SwiftUI
 struct MonsterInfoView: View {
     var monster: ObservableMonster
 
+    @State private var monsterImage: CGImage?
+
     var body: some View {
         ScrollView {
             ZStack {
-                if let monsterImage = monster.image {
+                if let monsterImage {
                     if monsterImage.height > 200 {
                         Image(monsterImage, scale: 1, label: Text(monster.localizedName))
                             .resizable()
@@ -94,7 +96,7 @@ struct MonsterInfoView: View {
         }
         .navigationTitle(monster.localizedName)
         .task {
-            await monster.fetchImage()
+            monsterImage = await monster.fetchImage()
             try? await monster.fetchDetail()
         }
     }

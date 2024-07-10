@@ -19,7 +19,6 @@ class ObservableMonster {
 
     let localizedName: String
 
-    var image: CGImage?
     var mvpDropItems: [DropItem] = []
     var dropItems: [DropItem] = []
     var spawnMaps: [SpawnMap] = []
@@ -107,10 +106,8 @@ class ObservableMonster {
         self.localizedName = localizedName ?? monster.name
     }
 
-    func fetchImage() async {
-        if image == nil {
-            image = await ClientResourceManager.shared.monsterImage(monster.id)
-        }
+    func fetchImage() async -> CGImage? {
+        await ClientResourceManager.shared.monsterImage(monster.id)
     }
 
     func fetchDetail() async throws {
