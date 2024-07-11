@@ -126,6 +126,6 @@ struct RSWFilePreviewView: View {
     }
 }
 
-//#Preview {
-//    RSWFilePreviewView(file: <#T##File#>)
-//}
+#Preview {
+    RSWFilePreviewView(file: PreviewFiles.rswFile)
+}

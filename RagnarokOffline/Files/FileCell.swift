@@ -56,3 +56,7 @@ struct FileCell: View {
         }
     }
 }
+
+#Preview {
+    FileCell(file: PreviewFiles.sprFile)
+}

@@ -80,3 +80,10 @@ struct FileContextMenu: View {
         self.deleteAction = deleteAction
     }
 }
+
+#Preview {
+    Text(PreviewFiles.rswFile.file.name)
+        .contextMenu {
+            FileContextMenu(file: PreviewFiles.rswFile)
+        }
+}

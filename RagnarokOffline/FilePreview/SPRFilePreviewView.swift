@@ -88,6 +88,6 @@ struct SPRFilePreviewView: View {
     }
 }
 
-//#Preview {
-//    SPRFilePreviewView(file: <#T##File#>)
-//}
+#Preview {
+    SPRFilePreviewView(file: PreviewFiles.sprFile)
+}

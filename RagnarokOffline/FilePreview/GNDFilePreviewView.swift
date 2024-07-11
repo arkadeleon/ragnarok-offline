@@ -69,6 +69,6 @@ struct GNDFilePreviewView: View {
     }
 }
 
-//#Preview {
-//    GNDFilePreviewView()
-//}
+#Preview {
+    GNDFilePreviewView(file: PreviewFiles.gndFile)
+}

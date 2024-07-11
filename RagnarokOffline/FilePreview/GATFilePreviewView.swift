@@ -53,6 +53,6 @@ struct GATFilePreviewView: View {
     }
 }
 
-//#Preview {
-//    GATFilePreviewView(file: <#T##File#>)
-//}
+#Preview {
+    GATFilePreviewView(file: PreviewFiles.gatFile)
+}

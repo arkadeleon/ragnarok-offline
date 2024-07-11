@@ -44,6 +44,6 @@ struct FileReferencesView: View {
     }
 }
 
-//#Preview {
-//    FileReferencesView(file: <#T##ObservableFile#>)
-//}
+#Preview {
+    FileReferencesView(file: PreviewFiles.gndFile)
+}

@@ -63,6 +63,6 @@ struct RSMFilePreviewView: View {
     }
 }
 
-//#Preview {
-//    RSMFilePreviewView(file: <#T##File#>)
-//}
+#Preview {
+    RSMFilePreviewView(file: PreviewFiles.rmsFile)
+}

@@ -139,6 +139,6 @@ struct ACTFilePreviewView: View {
     }
 }
 
-//#Preview {
-//    ACTFilePreviewView(file: <#T##File#>)
-//}
+#Preview {
+    ACTFilePreviewView(file: PreviewFiles.actFile)
+}

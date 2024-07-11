@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import ROFileSystem
 
 struct FileRawDataView: View {
     var file: ObservableFile
@@ -50,4 +49,8 @@ struct FileRawDataView: View {
             .navigationBarTitleDisplayMode(.inline)
             #endif
     }
+}
+
+#Preview {
+    FileRawDataView(file: PreviewFiles.rswFile)
 }
