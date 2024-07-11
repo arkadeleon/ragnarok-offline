@@ -73,6 +73,7 @@
 		3594DD572BF5FCB600575F3D /* ModelViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3594DD562BF5FCB600575F3D /* ModelViewer.swift */; };
 		3599BD4A2C3F90250010DBE7 /* PreviewFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3599BD492C3F90250010DBE7 /* PreviewFiles.swift */; };
 		3599BD552C3FA4E90010DBE7 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 3599BD542C3FA4E90010DBE7 /* data */; };
+		3599BD572C3FB5020010DBE7 /* FileThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3599BD562C3FB5020010DBE7 /* FileThumbnailView.swift */; };
 		35A2ABBE2B3ACB0A0026DAC2 /* ServerTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBD2B3ACB0A0026DAC2 /* ServerTerminalView.swift */; };
 		35B33BA22BF3BDCE00EF28F5 /* CubeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA12BF3BDCE00EF28F5 /* CubeViewController.swift */; };
 		35B33BA52BF465E700EF28F5 /* CubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA42BF465E700EF28F5 /* CubeView.swift */; };
@@ -192,6 +193,7 @@
 		3594DD562BF5FCB600575F3D /* ModelViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelViewer.swift; sourceTree = "<group>"; };
 		3599BD492C3F90250010DBE7 /* PreviewFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewFiles.swift; sourceTree = "<group>"; };
 		3599BD542C3FA4E90010DBE7 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
+		3599BD562C3FB5020010DBE7 /* FileThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnailView.swift; sourceTree = "<group>"; };
 		35A2ABBD2B3ACB0A0026DAC2 /* ServerTerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerTerminalView.swift; sourceTree = "<group>"; };
 		35B33BA12BF3BDCE00EF28F5 /* CubeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeViewController.swift; sourceTree = "<group>"; };
 		35B33BA42BF465E700EF28F5 /* CubeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeView.swift; sourceTree = "<group>"; };
@@ -513,6 +515,7 @@
 			children = (
 				35B3B99A2A08C01600B4540B /* FilesView.swift */,
 				3582FFCB2B8DBD3300E746D7 /* FileCell.swift */,
+				3599BD562C3FB5020010DBE7 /* FileThumbnailView.swift */,
 				355BC1912B9056E5002F0586 /* FileContextMenu.swift */,
 				351426C32C11BF9600B076BE /* FileReferencesView.swift */,
 				3506D11B2C00526A00903A47 /* ObservableFile.swift */,
@@ -766,6 +769,7 @@
 				3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */,
 				351426C42C11BF9600B076BE /* FileReferencesView.swift in Sources */,
 				35BE55292BD92D52003715C3 /* TextFilePreviewView.swift in Sources */,
+				3599BD572C3FB5020010DBE7 /* FileThumbnailView.swift in Sources */,
 				35239DF92BBDB7B50039F7D5 /* MonsterProvider.swift in Sources */,
 				35B422E22BEDEBD000681AA2 /* ResponsiveView.swift in Sources */,
 				35B422D02BEB68F600681AA2 /* PetProvider.swift in Sources */,
