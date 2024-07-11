@@ -27,7 +27,7 @@ struct FilesView: View {
                 ForEach(filteredFiles) { file in
                     if file.file.info.type == .directory || file.file.info.type == .grf {
                         NavigationLink(value: file) {
-                            FileCell(file: file)
+                            FileGridCell(file: file)
                         }
                         .buttonStyle(.plain)
                         .contextMenu {
@@ -43,7 +43,7 @@ struct FilesView: View {
                                 fileToPreview = file
                             }
                         } label: {
-                            FileCell(file: file)
+                            FileGridCell(file: file)
                         }
                         .buttonStyle(.plain)
                         .contextMenu {

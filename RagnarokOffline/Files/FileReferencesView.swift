@@ -22,7 +22,7 @@ struct FileReferencesView: View {
                             fileToPreview = file
                         }
                     } label: {
-                        FileCell(file: file)
+                        FileGridCell(file: file)
                     }
                 }
             }

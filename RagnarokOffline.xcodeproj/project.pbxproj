@@ -62,7 +62,7 @@
 		35652B472B960D370075AD71 /* MapInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B462B960D370075AD71 /* MapInfoView.swift */; };
 		3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC52B8C830D00E746D7 /* SettingsView.swift */; };
 		3582FFCA2B8DB9FE00E746D7 /* FilePreviewTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC92B8DB9FE00E746D7 /* FilePreviewTabView.swift */; };
-		3582FFCC2B8DBD3300E746D7 /* FileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFCB2B8DBD3300E746D7 /* FileCell.swift */; };
+		3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */; };
 		358362CD2BD55D4000821500 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; platformFilters = (xros, ); productRef = 358362CC2BD55D4000821500 /* SwiftTerm */; };
 		358D4C612BC6EBB500FAF45D /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C602BC6EBB500FAF45D /* Lua */; };
 		358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C662BC7707400FAF45D /* ROFileFormats */; };
@@ -74,6 +74,7 @@
 		3599BD4A2C3F90250010DBE7 /* PreviewFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3599BD492C3F90250010DBE7 /* PreviewFiles.swift */; };
 		3599BD552C3FA4E90010DBE7 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 3599BD542C3FA4E90010DBE7 /* data */; };
 		3599BD572C3FB5020010DBE7 /* FileThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3599BD562C3FB5020010DBE7 /* FileThumbnailView.swift */; };
+		3599BD592C3FCE7A0010DBE7 /* ImageGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3599BD582C3FCE7A0010DBE7 /* ImageGridCell.swift */; };
 		35A2ABBE2B3ACB0A0026DAC2 /* ServerTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBD2B3ACB0A0026DAC2 /* ServerTerminalView.swift */; };
 		35B33BA22BF3BDCE00EF28F5 /* CubeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA12BF3BDCE00EF28F5 /* CubeViewController.swift */; };
 		35B33BA52BF465E700EF28F5 /* CubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA42BF465E700EF28F5 /* CubeView.swift */; };
@@ -187,13 +188,14 @@
 		35652B462B960D370075AD71 /* MapInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInfoView.swift; sourceTree = "<group>"; };
 		3582FFC52B8C830D00E746D7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3582FFC92B8DB9FE00E746D7 /* FilePreviewTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePreviewTabView.swift; sourceTree = "<group>"; };
-		3582FFCB2B8DBD3300E746D7 /* FileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCell.swift; sourceTree = "<group>"; };
+		3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileGridCell.swift; sourceTree = "<group>"; };
 		358362CA2BD558DC00821500 /* RagnarokOffline.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = RagnarokOffline.xctestplan; sourceTree = "<group>"; };
 		3594DD542BF5FB6E00575F3D /* GNDFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNDFilePreviewView.swift; sourceTree = "<group>"; };
 		3594DD562BF5FCB600575F3D /* ModelViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelViewer.swift; sourceTree = "<group>"; };
 		3599BD492C3F90250010DBE7 /* PreviewFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewFiles.swift; sourceTree = "<group>"; };
 		3599BD542C3FA4E90010DBE7 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
 		3599BD562C3FB5020010DBE7 /* FileThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnailView.swift; sourceTree = "<group>"; };
+		3599BD582C3FCE7A0010DBE7 /* ImageGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGridCell.swift; sourceTree = "<group>"; };
 		35A2ABBD2B3ACB0A0026DAC2 /* ServerTerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerTerminalView.swift; sourceTree = "<group>"; };
 		35B33BA12BF3BDCE00EF28F5 /* CubeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeViewController.swift; sourceTree = "<group>"; };
 		35B33BA42BF465E700EF28F5 /* CubeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeView.swift; sourceTree = "<group>"; };
@@ -381,11 +383,12 @@
 			isa = PBXGroup;
 			children = (
 				35BE55342BD9574E003715C3 /* AnimatedImageView.swift */,
-				3594DD562BF5FCB600575F3D /* ModelViewer.swift */,
 				35BE552E2BD94053003715C3 /* AsyncContentView.swift */,
 				35239E022BC29F660039F7D5 /* EmptyContentView.swift */,
+				3599BD582C3FCE7A0010DBE7 /* ImageGridCell.swift */,
 				35239DF62BBDA0760039F7D5 /* LoadStatus.swift */,
 				35BE555B2BDAAFBF003715C3 /* MetalView.swift */,
+				3594DD562BF5FCB600575F3D /* ModelViewer.swift */,
 				35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */,
 				35B422E12BEDEBD000681AA2 /* ResponsiveView.swift */,
 				3555E1162B7D12D9007CE4BA /* TerminalView.swift */,
@@ -514,7 +517,7 @@
 			isa = PBXGroup;
 			children = (
 				35B3B99A2A08C01600B4540B /* FilesView.swift */,
-				3582FFCB2B8DBD3300E746D7 /* FileCell.swift */,
+				3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */,
 				3599BD562C3FB5020010DBE7 /* FileThumbnailView.swift */,
 				355BC1912B9056E5002F0586 /* FileContextMenu.swift */,
 				351426C32C11BF9600B076BE /* FileReferencesView.swift */,
@@ -728,7 +731,7 @@
 				35E27A852BC96B3000C11076 /* MessageCell.swift in Sources */,
 				355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */,
 				3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */,
-				3582FFCC2B8DBD3300E746D7 /* FileCell.swift in Sources */,
+				3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */,
 				35B422E02BECAB6E00681AA2 /* MonsterSummonInfoView.swift in Sources */,
 				35BE555A2BDAA929003715C3 /* SPRFilePreviewView.swift in Sources */,
 				35239E032BC29F660039F7D5 /* EmptyContentView.swift in Sources */,
@@ -745,6 +748,7 @@
 				35B422D62BEB7ED800681AA2 /* PetInfoView.swift in Sources */,
 				35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */,
 				35B422DC2BECAA1800681AA2 /* MonsterSummonProvider.swift in Sources */,
+				3599BD592C3FCE7A0010DBE7 /* ImageGridCell.swift in Sources */,
 				35239DFF2BBEF4510039F7D5 /* MapProvider.swift in Sources */,
 				3506D11C2C00526A00903A47 /* ObservableFile.swift in Sources */,
 				355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */,
