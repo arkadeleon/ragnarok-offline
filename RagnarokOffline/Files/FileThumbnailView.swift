@@ -22,15 +22,24 @@ struct FileThumbnailView: View {
                     .resizable()
                     .scaledToFit()
                     .clipShape(RoundedRectangle(cornerRadius: 4))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(.tertiary, lineWidth: 1)
+                    }
             } else if file.file.info.type == .directory {
                 Image(systemName: file.iconName)
                     .font(.system(size: 50))
                     .symbolRenderingMode(.multicolor)
             } else {
                 Image(systemName: file.iconName)
-                    .font(.system(size: 50, weight: .light))
+                    .font(.system(size: 30, weight: .light))
                     .foregroundStyle(.tertiary)
                     .symbolRenderingMode(.monochrome)
+                    .frame(width: 60, height: 80)
+                    .background {
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(.tertiary, lineWidth: 1)
+                    }
             }
         }
         .task {
@@ -45,5 +54,6 @@ struct FileThumbnailView: View {
         FileThumbnailView(file: PreviewFiles.gatFile)
         FileThumbnailView(file: PreviewFiles.gndFile)
         FileThumbnailView(file: PreviewFiles.rswFile)
+        FileThumbnailView(file: PreviewFiles.sprFile)
     }
 }
