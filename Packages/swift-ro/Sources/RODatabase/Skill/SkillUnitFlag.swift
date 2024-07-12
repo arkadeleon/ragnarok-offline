@@ -73,28 +73,3 @@ public enum SkillUnitFlag: Option {
         }
     }
 }
-
-extension SkillUnitFlag: CustomLocalizedStringResourceConvertible {
-    public var localizedStringResource: LocalizedStringResource {
-        switch self {
-        case .noEnemy: "No Enemy"
-        case .noReiteration: "No Reiteration"
-        case .noFootSet: "No Foot Set"
-        case .noOverlap: "No Overlap"
-        case .pathCheck: "Path Check"
-        case .noPc: "No Pc"
-        case .noMob: "No Mob"
-        case .skill: "Skill"
-        case .dance: "Dance"
-        case .ensemble: "Ensemble"
-        case .song: "Song"
-        case .dualMode: "Dual Mode"
-        case .noKnockback: "No Knockback"
-        case .rangedSingleUnit: "Ranged Single Unit"
-        case .crazyWeedImmune: "Crazy Weed Immune"
-        case .removedByFireRain: "Removed By Fire Rain"
-        case .knockbackGroup: "Knockback Group"
-        case .hiddenTrap: "Hidden Trap"
-        }
-    }
-}

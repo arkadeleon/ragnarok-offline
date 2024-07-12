@@ -28,13 +28,3 @@ public enum SkillHitType: Option {
         }
     }
 }
-
-extension SkillHitType: CustomLocalizedStringResourceConvertible {
-    public var localizedStringResource: LocalizedStringResource {
-        switch self {
-        case .normal: "Normal"
-        case .single: "Single Hit"
-        case .multiHit: "Multiple Hit"
-        }
-    }
-}

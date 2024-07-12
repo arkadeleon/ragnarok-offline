@@ -87,14 +87,14 @@ class ObservableMonster {
     var raceGroups: String? {
         monster.raceGroups?
             .sorted()
-            .map { "- \($0.stringValue)" }
+            .map { "- " + $0.stringValue }
             .joined(separator: "\n")
     }
 
     var modes: String? {
         monster.modes?
             .sorted()
-            .map { "- " + String(localized: $0.localizedStringResource) }
+            .map { "- " + $0.stringValue }
             .joined(separator: "\n")
     }
 

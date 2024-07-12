@@ -53,16 +53,16 @@ public enum Race: Option {
 extension Race: CustomLocalizedStringResourceConvertible {
     public var localizedStringResource: LocalizedStringResource {
         switch self {
-        case .formless: "Formless"
-        case .undead: "Undead"
-        case .brute: "Brute"
-        case .plant: "Plant"
-        case .insect: "Insect"
-        case .fish: "Fish"
-        case .demon: "Demon"
-        case .demihuman: "Demi-Human"
-        case .angel: "Angel"
-        case .dragon: "Dragon"
+        case .formless: .init("Formless", bundle: .module)
+        case .undead: .init("Undead", bundle: .module)
+        case .brute: .init("Brute", bundle: .module)
+        case .plant: .init("Plant", bundle: .module)
+        case .insect: .init("Insect", bundle: .module)
+        case .fish: .init("Fish", bundle: .module)
+        case .demon: .init("Demon", bundle: .module)
+        case .demihuman: .init("Demi-Human", bundle: .module)
+        case .angel: .init("Angel", bundle: .module)
+        case .dragon: .init("Dragon", bundle: .module)
         }
     }
 }

@@ -95,30 +95,30 @@ public enum WeaponType: Option {
 extension WeaponType: CustomLocalizedStringResourceConvertible {
     public var localizedStringResource: LocalizedStringResource {
         switch self {
-        case .fist: "Fist"
-        case .dagger: "Dagger"
-        case .oneHandedSword: "One-Handed Sword"
-        case .twoHandedSword: "Two-Handed Sword"
-        case .oneHandedSpear: "One-Handed Spear"
-        case .twoHandedSpear: "Two-Handed Spear"
-        case .oneHandedAxe: "One-Handed Axe"
-        case .twoHandedAxe: "Two-Handed Axe"
-        case .mace: "Mace"
-        case .twoHandedMace: "Two-Handed Mace"
-        case .staff: "Staff"
-        case .bow: "Bow"
-        case .knuckle: "Knuckle"
-        case .musical: "Musical"
-        case .whip: "Whip"
-        case .book: "Book"
-        case .katar: "Katar"
-        case .revolver: "Revolver"
-        case .rifle: "Rifle"
-        case .gatling: "Gatling"
-        case .shotgun: "Shotgun"
-        case .grenade: "Grenade"
-        case .huuma: "Huuma"
-        case .twoHandedStaff: "Two-Handed Staff"
+        case .fist: .init("Fist", bundle: .module)
+        case .dagger: .init("Dagger", bundle: .module)
+        case .oneHandedSword: .init("One-Handed Sword", bundle: .module)
+        case .twoHandedSword: .init("Two-Handed Sword", bundle: .module)
+        case .oneHandedSpear: .init("One-Handed Spear", bundle: .module)
+        case .twoHandedSpear: .init("Two-Handed Spear", bundle: .module)
+        case .oneHandedAxe: .init("One-Handed Axe", bundle: .module)
+        case .twoHandedAxe: .init("Two-Handed Axe", bundle: .module)
+        case .mace: .init("Mace", bundle: .module)
+        case .twoHandedMace: .init("Two-Handed Mace", bundle: .module)
+        case .staff: .init("Staff", bundle: .module)
+        case .bow: .init("Bow", bundle: .module)
+        case .knuckle: .init("Knuckle", bundle: .module)
+        case .musical: .init("Musical", bundle: .module)
+        case .whip: .init("Whip", bundle: .module)
+        case .book: .init("Book", bundle: .module)
+        case .katar: .init("Katar", bundle: .module)
+        case .revolver: .init("Revolver", bundle: .module)
+        case .rifle: .init("Rifle", bundle: .module)
+        case .gatling: .init("Gatling", bundle: .module)
+        case .shotgun: .init("Shotgun", bundle: .module)
+        case .grenade: .init("Grenade", bundle: .module)
+        case .huuma: .init("Huuma", bundle: .module)
+        case .twoHandedStaff: .init("Two-Handed Staff", bundle: .module)
         }
     }
 }

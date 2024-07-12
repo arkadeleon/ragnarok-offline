@@ -97,36 +97,3 @@ public enum MonsterMode: Option {
         }
     }
 }
-
-extension MonsterMode: CustomLocalizedStringResourceConvertible {
-    public var localizedStringResource: LocalizedStringResource {
-        switch self {
-        case .canMove: "Can Move"
-        case .looter: "Looter"
-        case .aggressive: "Aggressive"
-        case .assist: "Assist"
-        case .castSensorIdle: "Cast Sensor Idle"
-        case .noRandomWalk: "No Random Walk"
-        case .noCast: "No Cast"
-        case .canAttack: "Can Attack"
-        case .castSensorChase: "Cast Sensor Chase"
-        case .changeChase: "Change Chase"
-        case .angry: "Angry"
-        case .changeTargetMelee: "Change Target Melee"
-        case .changeTargetChase: "Change Target Chase"
-        case .targetWeak: "Target Weak"
-        case .randomTarget: "Random Target"
-        case .ignoreMelee: "Ignore Melee"
-        case .ignoreMagic: "Ignore Magic"
-        case .ignoreRanged: "Ignore Ranged"
-        case .mvp: "Mvp"
-        case .ignoreMisc: "Ignore Misc"
-        case .knockBackImmune: "Knock Back Immune"
-        case .teleportBlock: "Teleport Block"
-        case .fixedItemDrop: "Fixed Item Drop"
-        case .detector: "Detector"
-        case .statusImmune: "Status Immune"
-        case .skillImmune: "Skill Immune"
-        }
-    }
-}

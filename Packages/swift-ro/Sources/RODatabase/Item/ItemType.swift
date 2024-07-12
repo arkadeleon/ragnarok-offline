@@ -59,18 +59,18 @@ public enum ItemType: Option {
 extension ItemType: CustomLocalizedStringResourceConvertible {
     public var localizedStringResource: LocalizedStringResource {
         switch self {
-        case .healing: "Healing"
-        case .usable: "Usable"
-        case .etc: "Etc"
-        case .armor: "Armor"
-        case .weapon: "Weapon"
-        case .card: "Card"
-        case .petEgg: "Pet Egg"
-        case .petArmor: "Pet Armor"
-        case .ammo: "Ammo"
-        case .delayConsume: "Delay Consume"
-        case .shadowGear: "Shadow Gear"
-        case .cash: "Cash"
+        case .healing: .init("Healing", bundle: .module)
+        case .usable: .init("Usable", bundle: .module)
+        case .etc: .init("Etc", bundle: .module)
+        case .armor: .init("Armor", bundle: .module)
+        case .weapon: .init("Weapon", bundle: .module)
+        case .card: .init("Card", bundle: .module)
+        case .petEgg: .init("Pet Egg", bundle: .module)
+        case .petArmor: .init("Pet Armor", bundle: .module)
+        case .ammo: .init("Ammo", bundle: .module)
+        case .delayConsume: .init("Delay Consume", bundle: .module)
+        case .shadowGear: .init("Shadow Gear", bundle: .module)
+        case .cash: .init("Cash", bundle: .module)
         }
     }
 }
