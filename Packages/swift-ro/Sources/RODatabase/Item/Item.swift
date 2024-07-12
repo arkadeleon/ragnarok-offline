@@ -142,7 +142,7 @@ public struct Item: Decodable, Equatable, Hashable, Identifiable {
         case unEquipScript = "UnEquipScript"
     }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
         self.aegisName = try container.decode(String.self, forKey: .aegisName)
@@ -245,7 +245,7 @@ extension Item {
             case dropEffect = "DropEffect"
         }
 
-        public init(from decoder: Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.buyingStore = try container.decodeIfPresent(Bool.self, forKey: .buyingStore) ?? false
             self.deadBranch = try container.decodeIfPresent(Bool.self, forKey: .deadBranch) ?? false
@@ -275,7 +275,7 @@ extension Item {
             case status = "Status"
         }
 
-        public init(from decoder: Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.duration = try container.decode(Int.self, forKey: .duration)
             self.status = try container.decodeIfPresent(String.self, forKey: .status)
@@ -311,7 +311,7 @@ extension Item {
             case guildStorage = "GuildStorage"
         }
 
-        public init(from decoder: Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.amount = try container.decode(Int.self, forKey: .amount)
             self.inventory = try container.decodeIfPresent(Bool.self, forKey: .inventory) ?? true
@@ -338,7 +338,7 @@ extension Item {
             case sitting = "Sitting"
         }
 
-        public init(from decoder: Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.override = try container.decodeIfPresent(Int.self, forKey: .override) ?? 100
             self.sitting = try container.decodeIfPresent(Bool.self, forKey: .sitting) ?? false
@@ -394,7 +394,7 @@ extension Item {
             case noAuction = "NoAuction"
         }
 
-        public init(from decoder: Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.override = try container.decodeIfPresent(Int.self, forKey: .override) ?? 100
             self.noDrop = try container.decodeIfPresent(Bool.self, forKey: .noDrop) ?? false

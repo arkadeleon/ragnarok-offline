@@ -9,13 +9,13 @@ import Metal
 import ROShaders
 
 public class STRRenderer: Renderer {
-    public let device: MTLDevice
+    public let device: any MTLDevice
 
     let effectRenderer: EffectRenderer
 
     public let camera = Camera()
 
-    public init(device: MTLDevice, effect: Effect) throws {
+    public init(device: any MTLDevice, effect: Effect) throws {
         self.device = device
 
         let library = ROCreateShadersLibrary(device)!

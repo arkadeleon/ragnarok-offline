@@ -10,7 +10,7 @@ import MetalKit
 import RORenderers
 
 struct GameScene {
-    let device: MTLDevice
+    let device: any MTLDevice
 
     lazy var objects: [Object3D] = {
         let vertices = [

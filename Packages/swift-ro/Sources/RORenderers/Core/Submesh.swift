@@ -10,11 +10,11 @@ import Metal
 public struct Submesh {
     public let primitiveType: MTLPrimitiveType
     public let indexType: MTLIndexType
-    public let indexBuffer: MTLBuffer
+    public let indexBuffer: any MTLBuffer
     public let indexCount: Int
-    public let texture: MTLTexture?
+    public let texture: (any MTLTexture)?
 
-    public init(primitiveType: MTLPrimitiveType, indexType: MTLIndexType, indexBuffer: MTLBuffer, indexCount: Int, texture: MTLTexture?) {
+    public init(primitiveType: MTLPrimitiveType, indexType: MTLIndexType, indexBuffer: any MTLBuffer, indexCount: Int, texture: (any MTLTexture)?) {
         self.primitiveType = primitiveType
         self.indexType = indexType
         self.indexBuffer = indexBuffer

@@ -138,7 +138,7 @@ public struct Skill: Decodable, Equatable, Hashable, Identifiable {
         case status = "Status"
     }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
         self.aegisName = try container.decode(String.self, forKey: .aegisName)
@@ -375,7 +375,7 @@ extension Skill {
             case removeRequirement = "RemoveRequirement"
         }
 
-        public init(from decoder: Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.skill = try container.decodeIfPresent([String : Bool].self, forKey: .skill).map(Set<SkillCopyableOption>.init) ?? []
             self.removeRequirement = try container.decodeIfPresent([String : Bool].self, forKey: .removeRequirement).map(Set<SkillRequirement>.init)
@@ -400,7 +400,7 @@ extension Skill {
             case type = "Type"
         }
 
-        public init(from decoder: Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.additionalRange = try container.decodeIfPresent(Int.self, forKey: .additionalRange)
             self.type = try container.decodeIfPresent([String : Bool].self, forKey: .type).map(Set<SkillNoNearNPC>.init) ?? []
@@ -637,7 +637,7 @@ extension Skill {
             case equipment = "Equipment"
         }
 
-        public init(from decoder: Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.hpCost = try container.decodeIfPresent(EitherNode<Int, [LevelHpCost]>.self, forKey: .hpCost)?.mapRight { $0.map { $0.hpCost } } ?? .left(0)
             self.spCost = try container.decodeIfPresent(EitherNode<Int, [LevelSpCost]>.self, forKey: .spCost)?.mapRight { $0.map { $0.spCost } } ?? .left(0)
@@ -722,7 +722,7 @@ extension Skill {
             case flag = "Flag"
         }
 
-        public init(from decoder: Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.id = try container.decode(String.self, forKey: .id)
             self.alternateId = try container.decodeIfPresent(String.self, forKey: .alternateId)

@@ -9,15 +9,15 @@ import Metal
 import RORenderers
 
 class GameRenderer: Renderer {
-    let device: MTLDevice
+    let device: any MTLDevice
     let colorPixelFormat: MTLPixelFormat
     let depthStencilPixelFormat: MTLPixelFormat
-    let renderPipelineState: MTLRenderPipelineState
-    let depthStencilState: MTLDepthStencilState
+    let renderPipelineState: any MTLRenderPipelineState
+    let depthStencilState: any MTLDepthStencilState
 
     lazy var scene = GameScene(device: device)
 
-    init(device: MTLDevice) {
+    init(device: any MTLDevice) {
         self.device = device
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
@@ -69,7 +69,7 @@ class GameRenderer: Renderer {
         renderCommandEncoder.endEncoding()
     }
 
-    func render(_ object: Object3D, atTime time: CFTimeInterval, encoder: MTLRenderCommandEncoder, size: CGSize) {
+    func render(_ object: Object3D, atTime time: CFTimeInterval, encoder: any MTLRenderCommandEncoder, size: CGSize) {
         scene.camera.update(size: size)
 
         let modelMatrix = matrix_rotate(matrix_identity_float4x4, Float(radians(time.truncatingRemainder(dividingBy: 8) * 360 / 8)), [0.5, 1, 0])

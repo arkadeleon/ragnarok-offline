@@ -11,13 +11,13 @@ import ROShaders
 
 public struct WaterMesh {
     public var vertices: [WaterVertex] = []
-    public var textures: [MTLTexture?] = []
+    public var textures: [(any MTLTexture)?] = []
 }
 
 public struct Water {
     public var mesh: WaterMesh
 
-    public init(gnd: GND, rsw: RSW, textureProvider: (String) -> MTLTexture?) {
+    public init(gnd: GND, rsw: RSW, textureProvider: (String) -> (any MTLTexture)?) {
         var vertices: [WaterVertex] = []
 
         let width = Int(gnd.width)
@@ -73,7 +73,7 @@ public struct Water {
             }
         }
 
-        var textures: [MTLTexture?] = []
+        var textures: [(any MTLTexture)?] = []
         for i in 0..<32 {
             let textureName = String(format: "워터\\water%03d.jpg", i)
             let texture = textureProvider(textureName)

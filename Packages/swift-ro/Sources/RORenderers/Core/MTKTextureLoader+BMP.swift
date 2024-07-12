@@ -9,7 +9,7 @@ import MetalKit
 import ROCore
 
 extension MTKTextureLoader {
-    public func newTexture(bmpData: Data) -> MTLTexture? {
+    public func newTexture(bmpData: Data) -> (any MTLTexture)? {
         guard let image = CGImageCreateWithData(bmpData)?.removingMagentaPixels() else {
             return nil
         }

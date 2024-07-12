@@ -174,7 +174,7 @@ public struct Monster: Decodable, Equatable, Hashable, Identifiable {
         case drops = "Drops"
     }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
         self.aegisName = try container.decode(String.self, forKey: .aegisName)
@@ -270,7 +270,7 @@ extension Monster {
             case index = "Index"
         }
 
-        public init(from decoder: Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.item = try container.decode(String.self, forKey: .item)
             self.rate = try container.decode(Int.self, forKey: .rate)

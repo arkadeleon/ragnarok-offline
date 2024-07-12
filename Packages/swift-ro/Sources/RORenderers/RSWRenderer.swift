@@ -9,7 +9,7 @@ import Metal
 import ROShaders
 
 public class RSWRenderer: Renderer {
-    public let device: MTLDevice
+    public let device: any MTLDevice
 
     let groundRenderer: GroundRenderer
     let waterRenderer: WaterRenderer
@@ -17,7 +17,7 @@ public class RSWRenderer: Renderer {
 
     public let camera: Camera
 
-    public init(device: MTLDevice, ground: Ground, water: Water, models: [Model]) throws {
+    public init(device: any MTLDevice, ground: Ground, water: Water, models: [Model]) throws {
         self.device = device
 
         let library = ROCreateShadersLibrary(device)!

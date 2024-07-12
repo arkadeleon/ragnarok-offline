@@ -9,20 +9,20 @@ import Metal
 import ROShaders
 
 public class RSMRenderer: Renderer {
-    public let device: MTLDevice
+    public let device: any MTLDevice
 
     let modelRenderer: ModelRenderer
 
     public let camera = Camera()
 
-    public init(device: MTLDevice, model: Model) throws {
+    public init(device: any MTLDevice, model: Model) throws {
         self.device = device
 
         let library = ROCreateShadersLibrary(device)!
         modelRenderer = try ModelRenderer(device: device, library: library, models: [model])
     }
 
-    public func render(atTime time: CFTimeInterval, viewport: CGRect, commandBuffer: MTLCommandBuffer, renderPassDescriptor: MTLRenderPassDescriptor) {
+    public func render(atTime time: CFTimeInterval, viewport: CGRect, commandBuffer: any MTLCommandBuffer, renderPassDescriptor: MTLRenderPassDescriptor) {
 
 //        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
         renderPassDescriptor.colorAttachments[0].loadAction = .clear

@@ -10,8 +10,8 @@ import simd
 import ROShaders
 
 class WaterRenderer {
-    let renderPipelineState: MTLRenderPipelineState
-    let depthStencilState: MTLDepthStencilState?
+    let renderPipelineState: any MTLRenderPipelineState
+    let depthStencilState: (any MTLDepthStencilState)?
 
     let water: Water
 
@@ -38,7 +38,7 @@ class WaterRenderer {
         direction: [0, 1, 0]
     )
 
-    init(device: MTLDevice, library: MTLLibrary, water: Water) throws {
+    init(device: any MTLDevice, library: any MTLLibrary, water: Water) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "waterVertexShader")
@@ -65,7 +65,7 @@ class WaterRenderer {
     }
 
     func render(atTime time: CFTimeInterval,
-                renderCommandEncoder: MTLRenderCommandEncoder,
+                renderCommandEncoder: any MTLRenderCommandEncoder,
                 modelMatrix: float4x4,
                 viewMatrix: float4x4,
                 projectionMatrix: float4x4) {

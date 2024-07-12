@@ -34,7 +34,7 @@ struct JobBasicStats: Decodable {
         case bonusStats = "BonusStats"
     }
 
-    init(from decoder: Decoder) throws {
+    init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         let jobs = try container.decode([String : Bool].self, forKey: .jobs)
@@ -107,7 +107,7 @@ extension JobBasicStats {
             case crt = "Crt"
         }
 
-        init(from decoder: Decoder) throws {
+        init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.level = try container.decode(Int.self, forKey: .level)
             self.str = try container.decodeIfPresent(Int.self, forKey: .str) ?? 0

@@ -84,7 +84,7 @@ private struct _YAMLDecoder: Decoder {
 
     fileprivate let node: YAMLNode
 
-    init(referencing node: YAMLNode, userInfo: [CodingUserInfoKey: Any], codingPath: [CodingKey] = []) {
+    init(referencing node: YAMLNode, userInfo: [CodingUserInfoKey: Any], codingPath: [any CodingKey] = []) {
         self.node = node
         self.userInfo = userInfo
         self.codingPath = codingPath
@@ -92,7 +92,7 @@ private struct _YAMLDecoder: Decoder {
 
     // MARK: - Swift.Decoder Methods
 
-    let codingPath: [CodingKey]
+    let codingPath: [any CodingKey]
     let userInfo: [CodingUserInfoKey: Any]
 
     func container<Key>(keyedBy type: Key.Type) throws -> KeyedDecodingContainer<Key> {
@@ -102,21 +102,21 @@ private struct _YAMLDecoder: Decoder {
         return .init(_YAMLKeyedDecodingContainer<Key>(decoder: self, wrapping: map))
     }
 
-    func unkeyedContainer() throws -> UnkeyedDecodingContainer {
+    func unkeyedContainer() throws -> any UnkeyedDecodingContainer {
         guard case .sequence(let sequence) = node else {
             throw _typeMismatch(at: codingPath, expectation: YAMLNode.self, reality: node)
         }
         return _YAMLUnkeyedDecodingContainer(decoder: self, wrapping: sequence)
     }
 
-    func singleValueContainer() throws -> SingleValueDecodingContainer {
+    func singleValueContainer() throws -> any SingleValueDecodingContainer {
         return self
     }
 
     // MARK: -
 
     /// create a new `_Decoder` instance referencing `node` as `key` inheriting `userInfo`
-    func decoder(referencing node: YAMLNode, `as` key: CodingKey) -> _YAMLDecoder {
+    func decoder(referencing node: YAMLNode, `as` key: any CodingKey) -> _YAMLDecoder {
         return .init(referencing: node, userInfo: userInfo, codingPath: codingPath + [key])
     }
 }
@@ -260,7 +260,7 @@ private struct _YAMLKeyedDecodingContainer<Key: CodingKey>: KeyedDecodingContain
 
     // MARK: - Swift.KeyedDecodingContainerProtocol Methods
 
-    var codingPath: [CodingKey] { return decoder.codingPath }
+    var codingPath: [any CodingKey] { return decoder.codingPath }
 
     var allKeys: [Key] {
         nodes.keys.compactMap({ Key.init(stringValue: $0) })
@@ -283,23 +283,23 @@ private struct _YAMLKeyedDecodingContainer<Key: CodingKey>: KeyedDecodingContain
         return try decoder(for: key).container(keyedBy: type)
     }
 
-    func nestedUnkeyedContainer(forKey key: Key) throws -> UnkeyedDecodingContainer {
+    func nestedUnkeyedContainer(forKey key: Key) throws -> any UnkeyedDecodingContainer {
         return try decoder(for: key).unkeyedContainer()
     }
 
-    func superDecoder() throws -> Decoder { return try decoder(for: _YAMLCodingKey.super) }
-    func superDecoder(forKey key: Key) throws -> Decoder { return try decoder(for: key) }
+    func superDecoder() throws -> any Decoder { return try decoder(for: _YAMLCodingKey.super) }
+    func superDecoder(forKey key: Key) throws -> any Decoder { return try decoder(for: key) }
 
     // MARK: -
 
-    private func node(for key: CodingKey) throws -> YAMLNode {
+    private func node(for key: any CodingKey) throws -> YAMLNode {
         guard let node = nodes[key.stringValue] else {
             throw _keyNotFound(at: codingPath, key, "No value associated with key \(key) (\"\(key.stringValue)\").")
         }
         return node
     }
 
-    private func decoder(for key: CodingKey) throws -> _YAMLDecoder {
+    private func decoder(for key: any CodingKey) throws -> _YAMLDecoder {
         return decoder.decoder(referencing: try node(for: key), as: key)
     }
 }
@@ -317,7 +317,7 @@ private struct _YAMLUnkeyedDecodingContainer: UnkeyedDecodingContainer {
 
     // MARK: - Swift.UnkeyedDecodingContainer Methods
 
-    var codingPath: [CodingKey] { return decoder.codingPath }
+    var codingPath: [any CodingKey] { return decoder.codingPath }
     var count: Int? { return nodes.count }
     var isAtEnd: Bool { return currentIndex >= nodes.count }
     var currentIndex: Int
@@ -335,15 +335,15 @@ private struct _YAMLUnkeyedDecodingContainer: UnkeyedDecodingContainer {
         return try currentDecoder { try $0.container(keyedBy: type) }
     }
 
-    mutating func nestedUnkeyedContainer() throws -> UnkeyedDecodingContainer {
+    mutating func nestedUnkeyedContainer() throws -> any UnkeyedDecodingContainer {
         return try currentDecoder { try $0.unkeyedContainer() }
     }
 
-    mutating func superDecoder() throws -> Decoder { return try currentDecoder { $0 } }
+    mutating func superDecoder() throws -> any Decoder { return try currentDecoder { $0 } }
 
     // MARK: -
 
-    private var currentKey: CodingKey { return _YAMLCodingKey(index: currentIndex) }
+    private var currentKey: any CodingKey { return _YAMLCodingKey(index: currentIndex) }
     private var currentNode: YAMLNode { return nodes[currentIndex] }
 
     private func throwErrorIfAtEnd<T>(_ type: T.Type) throws {
@@ -384,17 +384,17 @@ struct _YAMLCodingKey: CodingKey { // swiftlint:disable:this type_name
 
 // MARK: - DecodingError helpers
 
-private func _keyNotFound(at codingPath: [CodingKey], _ key: CodingKey, _ description: String) -> DecodingError {
+private func _keyNotFound(at codingPath: [any CodingKey], _ key: any CodingKey, _ description: String) -> DecodingError {
     let context = DecodingError.Context(codingPath: codingPath, debugDescription: description)
     return.keyNotFound(key, context)
 }
 
-private func _valueNotFound(at codingPath: [CodingKey], _ type: Any.Type, _ description: String) -> DecodingError {
+private func _valueNotFound(at codingPath: [any CodingKey], _ type: Any.Type, _ description: String) -> DecodingError {
     let context = DecodingError.Context(codingPath: codingPath, debugDescription: description)
     return .valueNotFound(type, context)
 }
 
-private func _typeMismatch(at codingPath: [CodingKey], expectation: Any.Type, reality: Any) -> DecodingError {
+private func _typeMismatch(at codingPath: [any CodingKey], expectation: Any.Type, reality: Any) -> DecodingError {
     let description = "Expected to decode \(expectation) but found \(type(of: reality)) instead."
     let context = DecodingError.Context(codingPath: codingPath, debugDescription: description)
     return .typeMismatch(expectation, context)

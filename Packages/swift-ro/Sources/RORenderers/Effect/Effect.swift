@@ -13,7 +13,7 @@ public struct Effect {
     public var fps: Int
     public var frames: [Frame] = []
 
-    public init(str: STR, textureProvider: (String) -> MTLTexture?) {
+    public init(str: STR, textureProvider: (String) -> (any MTLTexture)?) {
         fps = Int(str.fps)
 
         let frameCount = str.maxKeyframeIndex + 1
@@ -126,13 +126,13 @@ extension Effect {
 extension Effect {
     public struct Sprite {
         public var vertices: [EffectVertex] = []
-        public var texture: MTLTexture?
+        public var texture: (any MTLTexture)?
 
         public var position: SIMD2<Float>
         public var angle: Float
         public var color: SIMD4<Float>
 
-        init(uv: SIMD8<Float>, xy: SIMD8<Float>, texture: MTLTexture?, position: SIMD2<Float>, angle: Float, color: SIMD4<Float>) {
+        init(uv: SIMD8<Float>, xy: SIMD8<Float>, texture: (any MTLTexture)?, position: SIMD2<Float>, angle: Float, color: SIMD4<Float>) {
             let v0 = EffectVertex(
                 position: [xy[0], xy[4]],
                 textureCoordinate: [0, 0]   // [uv[0], uv[1]]

@@ -8,9 +8,9 @@
 import Foundation
 
 public class BinaryWriter {
-    public let stream: Stream
+    public let stream: any Stream
 
-    public init(stream: Stream) {
+    public init(stream: any Stream) {
         self.stream = stream
     }
 

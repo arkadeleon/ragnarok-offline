@@ -32,7 +32,7 @@ struct JobExpStats: Decodable {
         case jobExp = "JobExp"
     }
 
-    init(from decoder: Decoder) throws {
+    init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         let jobs = try container.decode([String : Bool].self, forKey: .jobs)

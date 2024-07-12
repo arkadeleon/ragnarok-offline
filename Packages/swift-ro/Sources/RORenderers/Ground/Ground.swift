@@ -12,7 +12,7 @@ import ROShaders
 
 public struct GroundMesh {
     public var vertices: [GroundVertex] = []
-    public var texture: MTLTexture?
+    public var texture: (any MTLTexture)?
 }
 
 public struct Ground {
@@ -22,7 +22,7 @@ public struct Ground {
 
     public var meshes: [GroundMesh] = []
 
-    public init(gat: GAT, gnd: GND, textureProvider: (String) -> MTLTexture?) {
+    public init(gat: GAT, gnd: GND, textureProvider: (String) -> (any MTLTexture)?) {
         width = Int(gat.width)
         height = Int(gat.height)
         altitude = gat.tile(atX: width / 2, y: height / 2).averageAltitude

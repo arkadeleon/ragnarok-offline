@@ -8,11 +8,11 @@
 import Metal
 
 public protocol Renderer {
-    var device: MTLDevice { get }
+    var device: any MTLDevice { get }
     var colorPixelFormat: MTLPixelFormat { get }
     var depthStencilPixelFormat: MTLPixelFormat { get }
 
-    func render(atTime time: CFTimeInterval, viewport: CGRect, commandBuffer: MTLCommandBuffer, renderPassDescriptor: MTLRenderPassDescriptor)
+    func render(atTime time: CFTimeInterval, viewport: CGRect, commandBuffer: any MTLCommandBuffer, renderPassDescriptor: MTLRenderPassDescriptor)
 }
 
 extension Renderer {

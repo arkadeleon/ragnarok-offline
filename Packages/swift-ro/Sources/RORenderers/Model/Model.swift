@@ -12,7 +12,7 @@ import ROShaders
 
 public struct ModelMesh {
     public var vertices: [ModelVertex] = []
-    public var texture: MTLTexture?
+    public var texture: (any MTLTexture)?
 }
 
 public struct ModelBoundingBox {
@@ -32,7 +32,7 @@ public struct Model {
     public var meshes: [ModelMesh] = []
     public var boundingBox: ModelBoundingBox
 
-    public init(rsm: RSM, instance: float4x4, textureProvider: (String) -> MTLTexture?) {
+    public init(rsm: RSM, instance: float4x4, textureProvider: (String) -> (any MTLTexture)?) {
         boundingBox = ModelBoundingBox()
 
         let wrappers = rsm.nodes.map(ModelNodeWrapper.init)

@@ -8,12 +8,12 @@
 import Metal
 
 public struct Mesh {
-    public let vertexBuffers: [MTLBuffer]
+    public let vertexBuffers: [any MTLBuffer]
     public let vertexDescriptor: MTLVertexDescriptor
     public let submeshes: [Submesh]
     public let vertexCount: Int
 
-    public init(vertexBuffers: [MTLBuffer], vertexDescriptor: MTLVertexDescriptor, submeshes: [Submesh], vertexCount: Int) {
+    public init(vertexBuffers: [any MTLBuffer], vertexDescriptor: MTLVertexDescriptor, submeshes: [Submesh], vertexCount: Int) {
         self.vertexBuffers = vertexBuffers
         self.vertexDescriptor = vertexDescriptor
         self.submeshes = submeshes

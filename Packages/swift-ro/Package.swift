@@ -54,10 +54,14 @@ let package = Package(
                 "ROResources",
             ],
             swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
                 .interoperabilityMode(.Cxx),
             ]),
         .target(
-            name: "ROCore"),
+            name: "ROCore",
+            swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
+            ]),
         .target(
             name: "RODatabase",
             dependencies: [
@@ -66,6 +70,7 @@ let package = Package(
                 .product(name: "ryml", package: "swift-rathena"),
             ],
             swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
                 .interoperabilityMode(.Cxx),
             ]),
         .target(
@@ -73,17 +78,26 @@ let package = Package(
             dependencies: [
                 "DataCompression",
                 "ROCore",
+            ],
+            swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
             ]),
         .target(
             name: "ROFileSystem",
             dependencies: [
                 "ROCore",
                 "ROFileFormats",
+            ],
+            swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
             ]),
         .target(
             name: "RONetwork",
             dependencies: [
                 .product(name: "rAthenaCommon", package: "swift-rathena"),
+            ],
+            swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
             ]),
         .target(
             name: "RORenderers",
@@ -91,6 +105,9 @@ let package = Package(
                 "ROCore",
                 "ROFileFormats",
                 "ROShaders",
+            ],
+            swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
             ]),
         .target(
             name: "ROResources",
@@ -102,6 +119,7 @@ let package = Package(
                 .process("Resources"),
             ],
             swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
                 .interoperabilityMode(.Cxx),
             ]),
         .target(
@@ -111,6 +129,9 @@ let package = Package(
                 .process("Ground/GroundShaders.metal"),
                 .process("Model/ModelShaders.metal"),
                 .process("Water/WaterShaders.metal"),
+            ],
+            swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
             ]),
         .testTarget(
             name: "RODatabaseTests",
@@ -118,6 +139,7 @@ let package = Package(
                 "RODatabase",
             ],
             swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
                 .interoperabilityMode(.Cxx),
             ]),
         .testTarget(
@@ -128,6 +150,9 @@ let package = Package(
             resources: [
                 .copy("test.grf"),
                 .copy("data"),
+            ],
+            swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
             ]),
         .testTarget(
             name: "ROResourcesTests",
@@ -135,6 +160,7 @@ let package = Package(
                 "ROResources",
             ],
             swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
                 .interoperabilityMode(.Cxx),
             ]),
     ]

@@ -22,7 +22,7 @@ public class LoginClient {
     public var onAcceptLogin: (() -> Void)?
     public var onRefuseLogin: (() -> Void)?
     public var onNotifyBan: (() -> Void)?
-    public var onError: ((Error) -> Void)?
+    public var onError: ((any Error) -> Void)?
 
     private let encoder: PacketEncoder
     private let decoder: PacketDecoder

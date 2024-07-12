@@ -9,7 +9,7 @@ public enum EitherNode<Left, Right>: Decodable where Left: Decodable, Right: Dec
     case left(Left)
     case right(Right)
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let left = try? container.decode(Left.self) {
             self = .left(left)

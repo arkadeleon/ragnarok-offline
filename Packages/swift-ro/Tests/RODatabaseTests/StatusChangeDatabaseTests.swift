@@ -41,7 +41,7 @@ final class StatusChangeDatabaseTests: XCTestCase {
         XCTAssertEqual(stone.calcFlags, ["Def_Ele", "Def", "Mdef"])
         XCTAssertEqual(stone.opt1, "Stone")
         XCTAssertEqual(stone.flags, ["SendOption", "BossResist", "StopAttacking", "StopCasting", "RemoveOnDamaged"])
-        XCTAssertEqual(stone.fail, ["Refresh", "Inspiration", "Power_Of_Gaia", "Gvg_Stone", "Whiteimprison", "Freeze", "Stun", "Sleep", "Burning"])
+        XCTAssertEqual(stone.fail, ["Refresh", "Inspiration", "Power_Of_Gaia", "Gvg_Stone", "Whiteimprison", "Freeze", "Stun", "Sleep", "Burning", "Protection"])
         XCTAssertEqual(stone.endOnStart, ["Aeterna"])
         XCTAssertEqual(stone.endReturn, ["StoneWait", "Stone"])
     }

@@ -8,7 +8,7 @@
 struct PairsNode<Key, Value>: Sequence, Decodable where Key: CaseIterable, Key: CodingKey, Value: Decodable {
     private var children: [(Key, Value)]
 
-    init(from decoder: Decoder) throws {
+    init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: Key.self)
         self.children = try Key.allCases.compactMap { key in
             if let value = try container.decodeIfPresent(Value.self, forKey: key) {

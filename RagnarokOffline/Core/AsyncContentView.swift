@@ -11,7 +11,7 @@ enum AsyncContentStatus<Value> {
     case notYetLoaded
     case loading
     case loaded(Value)
-    case failed(Error)
+    case failed(any Error)
 }
 
 struct AsyncContentView<Value, Content>: View where Content: View {

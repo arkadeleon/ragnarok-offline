@@ -131,7 +131,7 @@ extension ObservableFile {
             return nil
         }
 
-        let value: Encodable? = switch file.info.type {
+        let value: (any Encodable)? = switch file.info.type {
         case .act: try? ACT(data: data)
         case .gat: try? GAT(data: data)
         case .gnd: try? GND(data: data)

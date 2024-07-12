@@ -34,7 +34,7 @@ extension CodingKey where Self: CaseIterable, Self: RawRepresentable, Self.RawVa
 }
 
 extension Decodable where Self: CaseIterable, Self: RawRepresentable, Self.RawValue == Int, Self: CodingKey {
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)
         if let value = Self.init(stringValue: stringValue) {

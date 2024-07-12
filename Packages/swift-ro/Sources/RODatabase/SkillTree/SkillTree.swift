@@ -23,7 +23,7 @@ public struct SkillTree: Decodable, Equatable, Hashable {
         case tree = "Tree"
     }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.job = try container.decode(Job.self, forKey: .job)
         self.inherit = try container.decodeIfPresent([String : Bool].self, forKey: .inherit).map(Set<Job>.init)
@@ -62,7 +62,7 @@ extension SkillTree {
             case requires = "Requires"
         }
 
-        public init(from decoder: Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.name = try container.decode(String.self, forKey: .name)
             self.maxLevel = try container.decode(Int.self, forKey: .maxLevel)

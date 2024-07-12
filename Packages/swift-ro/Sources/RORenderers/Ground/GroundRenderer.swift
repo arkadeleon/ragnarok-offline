@@ -10,8 +10,8 @@ import simd
 import ROShaders
 
 class GroundRenderer {
-    let renderPipelineState: MTLRenderPipelineState
-    let depthStencilState: MTLDepthStencilState?
+    let renderPipelineState: any MTLRenderPipelineState
+    let depthStencilState: (any MTLDepthStencilState)?
 
     let ground: Ground
 
@@ -31,7 +31,7 @@ class GroundRenderer {
         direction: [0, 1, 0]
     )
 
-    init(device: MTLDevice, library: MTLLibrary, ground: Ground) throws {
+    init(device: any MTLDevice, library: any MTLLibrary, ground: Ground) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "groundVertexShader")
@@ -58,7 +58,7 @@ class GroundRenderer {
     }
 
     func render(atTime time: CFTimeInterval,
-                renderCommandEncoder: MTLRenderCommandEncoder,
+                renderCommandEncoder: any MTLRenderCommandEncoder,
                 modelMatrix: float4x4,
                 viewMatrix: float4x4,
                 projectionMatrix: float4x4,

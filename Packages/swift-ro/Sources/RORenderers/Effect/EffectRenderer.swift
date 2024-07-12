@@ -10,8 +10,8 @@ import simd
 import ROShaders
 
 class EffectRenderer {
-    let renderPipelineState: MTLRenderPipelineState
-    let depthStencilState: MTLDepthStencilState?
+    let renderPipelineState: any MTLRenderPipelineState
+    let depthStencilState: (any MTLDepthStencilState)?
 
     let effect: Effect
 
@@ -24,7 +24,7 @@ class EffectRenderer {
         color: [1, 1, 1]
     )
 
-    init(device: MTLDevice, library: MTLLibrary, effect: Effect) throws {
+    init(device: any MTLDevice, library: any MTLLibrary, effect: Effect) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "effectVertexShader")
@@ -51,7 +51,7 @@ class EffectRenderer {
     }
 
     func render(atTime time: CFTimeInterval,
-                renderCommandEncoder: MTLRenderCommandEncoder,
+                renderCommandEncoder: any MTLRenderCommandEncoder,
                 modelMatrix: float4x4,
                 viewMatrix: float4x4,
                 projectionMatrix: float4x4) {

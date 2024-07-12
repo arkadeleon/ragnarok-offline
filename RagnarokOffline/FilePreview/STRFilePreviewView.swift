@@ -56,7 +56,7 @@ struct STRFilePreviewView: View {
         let device = MTLCreateSystemDefaultDevice()!
         let textureLoader = MTKTextureLoader(device: device)
 
-        var textures: [String : MTLTexture] = [:]
+        var textures: [String : any MTLTexture] = [:]
 
         let effect = Effect(str: str) { textureName in
             if let texture = textures[textureName] {
