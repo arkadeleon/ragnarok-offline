@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/7/4.
 //
 
-public protocol Option: CaseIterable, Comparable, Decodable {
+public protocol Option: CaseIterable, Comparable, Decodable, Sendable {
     var intValue: Int { get }
 
     var stringValue: String { get }

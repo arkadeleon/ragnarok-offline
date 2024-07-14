@@ -10,7 +10,7 @@ import RODatabase
 import ROFileFormats
 import ROResources
 
-public class ClientResourceManager {
+public actor ClientResourceManager {
     public static let shared = ClientResourceManager()
 
     public func monsterImage(_ monsterID: Int) async -> CGImage? {

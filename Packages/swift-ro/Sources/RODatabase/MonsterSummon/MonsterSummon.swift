@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/5/9.
 //
 
-public struct MonsterSummon: Decodable, Equatable, Hashable {
+public struct MonsterSummon: Decodable, Equatable, Hashable, Sendable {
 
     /// Monster random group name. "MOBG_" is appended to the name during the parsing.
     public var group: String
@@ -26,7 +26,7 @@ public struct MonsterSummon: Decodable, Equatable, Hashable {
 extension MonsterSummon {
 
     /// Summonable Monster.
-    public struct Summon: Decodable, Equatable, Hashable {
+    public struct Summon: Decodable, Equatable, Hashable, Sendable {
 
         /// Monster AegisName.
         public var monster: String

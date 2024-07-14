@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/1/9.
 //
 
-public struct Monster: Decodable, Equatable, Hashable, Identifiable {
+public struct Monster: Decodable, Equatable, Hashable, Identifiable, Sendable {
 
     /// Monster ID.
     public var id: Int
@@ -223,7 +223,7 @@ public struct Monster: Decodable, Equatable, Hashable, Identifiable {
 extension Monster {
 
     /// Walk speed.
-    public struct WalkSpeed: RawRepresentable, Decodable, Equatable, Hashable {
+    public struct WalkSpeed: RawRepresentable, Decodable, Equatable, Hashable, Sendable {
 
         public var rawValue: Int
 
@@ -245,7 +245,7 @@ extension Monster {
 extension Monster {
 
     /// Item of the monster drop.
-    public struct Drop: Decodable, Equatable, Hashable {
+    public struct Drop: Decodable, Equatable, Hashable, Sendable {
 
         /// Item name.
         public var item: String

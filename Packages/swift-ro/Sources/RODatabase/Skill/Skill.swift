@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/1/11.
 //
 
-public struct Skill: Decodable, Equatable, Hashable, Identifiable {
+public struct Skill: Decodable, Equatable, Hashable, Identifiable, Sendable {
 
     /// Unique skill ID.
     public var id: Int
@@ -362,7 +362,7 @@ extension Skill {
 
 extension Skill {
 
-    public struct CopyFlags: Decodable, Equatable, Hashable {
+    public struct CopyFlags: Decodable, Equatable, Hashable, Sendable {
 
         /// Type of skill that can copy.
         public var skill: Set<SkillCopyableOption>
@@ -385,7 +385,7 @@ extension Skill {
 
 extension Skill {
 
-    public struct NoNearNPC: Decodable, Equatable, Hashable {
+    public struct NoNearNPC: Decodable, Equatable, Hashable, Sendable {
 
         /// Number of cells from an NPC where the skill can be cast.
         /// If zero this will read the splash range value.
@@ -410,7 +410,7 @@ extension Skill {
 
 extension Skill {
 
-    public struct Requires: Decodable, Equatable, Hashable {
+    public struct Requires: Decodable, Equatable, Hashable, Sendable {
 
         /// HP required to cast. (Default: 0)
         public var hpCost: EitherNode<Int, [Int]>
@@ -600,7 +600,7 @@ extension Skill {
             }
         }
 
-        public struct LevelItemCost: Decodable, Equatable, Hashable {
+        public struct LevelItemCost: Decodable, Equatable, Hashable, Sendable {
 
             /// Item name.
             var item: String
@@ -661,7 +661,7 @@ extension Skill {
 
 extension Skill {
 
-    public struct Unit: Decodable, Equatable, Hashable {
+    public struct Unit: Decodable, Equatable, Hashable, Sendable {
 
         /// Skill unit ID.
         public var id: String

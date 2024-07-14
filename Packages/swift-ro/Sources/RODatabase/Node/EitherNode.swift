@@ -53,3 +53,6 @@ extension EitherNode: Equatable where Left: Equatable, Right: Equatable {
 
 extension EitherNode: Hashable where Left: Hashable, Right: Hashable {
 }
+
+extension EitherNode: Sendable where Left: Sendable, Right: Sendable {
+}

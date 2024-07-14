@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/5/8.
 //
 
-public struct Pet: Decodable, Equatable, Hashable {
+public struct Pet: Decodable, Equatable, Hashable, Sendable {
 
     /// Monster that can be used as pet.
     public var monster: String
@@ -128,7 +128,7 @@ public struct Pet: Decodable, Equatable, Hashable {
 extension Pet {
 
     /// Pet evolution settings.
-    public struct Evolution: Decodable, Equatable, Hashable {
+    public struct Evolution: Decodable, Equatable, Hashable, Sendable {
 
         /// Mob this pet can evolve to.
         public var target: String
@@ -146,7 +146,7 @@ extension Pet {
 extension Pet.Evolution {
 
     /// Item requirement.
-    public struct ItemRequirement: Decodable, Equatable, Hashable {
+    public struct ItemRequirement: Decodable, Equatable, Hashable, Sendable {
 
         /// Item.
         public var item: String

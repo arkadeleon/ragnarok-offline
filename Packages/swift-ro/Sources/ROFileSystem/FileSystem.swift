@@ -7,16 +7,17 @@
 
 import Foundation
 
-public class FileSystem {
+public actor FileSystem {
     public static let shared = FileSystem()
 
-    let cache = NSCache<NSURL, FileThumbnail>()
+    let thumbnailGenerator = FileThumbnailGenerator()
+    let thumbnailCache = NSCache<NSURL, FileThumbnail>()
 
-    public func copy(_ file: File) {
+    nonisolated public func copy(_ file: File) {
         FilePasteboard.shared.copy(file)
     }
 
-    public func paste(to file: File) -> File? {
+    nonisolated public func paste(to file: File) -> File? {
         guard let sourceFile = FilePasteboard.shared.file else {
             return nil
         }
@@ -53,7 +54,7 @@ public class FileSystem {
         }
     }
 
-    public func remove(_ file: File) -> Bool {
+    nonisolated public func remove(_ file: File) -> Bool {
         guard case .regularFile(let url) = file else {
             return false
         }
@@ -69,16 +70,16 @@ public class FileSystem {
     public func thumbnail(for request: FileThumbnailRequest) async throws -> FileThumbnail? {
         try Task.checkCancellation()
 
-        if let thumbnail = cache.object(forKey: request.file.url as NSURL) {
+        if let thumbnail = thumbnailCache.object(forKey: request.file.url as NSURL) {
             return thumbnail
         }
 
         try Task.checkCancellation()
 
-        let thumbnail = try await FileThumbnailGenerator.shared.generateThumbnail(for: request)
+        let thumbnail = try await thumbnailGenerator.generateThumbnail(for: request)
 
         if let thumbnail {
-            cache.setObject(thumbnail, forKey: request.file.url as NSURL)
+            thumbnailCache.setObject(thumbnail, forKey: request.file.url as NSURL)
         }
 
         try Task.checkCancellation()

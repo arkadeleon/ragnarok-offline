@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/3/4.
 //
 
-public struct Map: Equatable, Hashable {
+public struct Map: Equatable, Hashable, Sendable {
 
     /// Map name.
     public var name: String

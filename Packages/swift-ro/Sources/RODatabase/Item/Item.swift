@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2023/1/18.
 //
 
-public struct Item: Decodable, Equatable, Hashable, Identifiable {
+public struct Item: Decodable, Equatable, Hashable, Identifiable, Sendable {
 
     /// Item ID.
     public var id: Int
@@ -208,7 +208,7 @@ public struct Item: Decodable, Equatable, Hashable, Identifiable {
 extension Item {
 
     /// Item flags.
-    public struct Flags: Decodable, Equatable, Hashable {
+    public struct Flags: Decodable, Equatable, Hashable, Sendable {
 
         /// If the item is available for Buyingstores. (Default: false)
         public var buyingStore: Bool
@@ -262,7 +262,7 @@ extension Item {
 extension Item {
 
     /// Item use delay.
-    public struct Delay: Decodable, Equatable, Hashable {
+    public struct Delay: Decodable, Equatable, Hashable, Sendable {
 
         /// Duration of delay in seconds.
         public var duration: Int
@@ -286,7 +286,7 @@ extension Item {
 extension Item {
 
     /// Item stack amount.
-    public struct Stack: Decodable, Equatable, Hashable {
+    public struct Stack: Decodable, Equatable, Hashable, Sendable {
 
         /// Maximum amount that can be stacked.
         public var amount: Int
@@ -325,7 +325,7 @@ extension Item {
 extension Item {
 
     /// Conditions when the item is unusable.
-    public struct NoUse: Decodable, Equatable, Hashable {
+    public struct NoUse: Decodable, Equatable, Hashable, Sendable {
 
         /// Group level to override these conditions. (Default: 100)
         public var override: Int
@@ -349,7 +349,7 @@ extension Item {
 extension Item {
 
     /// Trade restrictions.
-    public struct Trade: Decodable, Equatable, Hashable {
+    public struct Trade: Decodable, Equatable, Hashable, Sendable {
 
         /// Group level to override these conditions. (Default: 100)
         public var override: Int

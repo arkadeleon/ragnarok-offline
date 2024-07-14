@@ -7,7 +7,7 @@ let package = Package(
     name: "swift-ro",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v16),
+        .iOS(.v17),
     ],
     products: [
         .library(
@@ -55,12 +55,14 @@ let package = Package(
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
+                .enableUpcomingFeature("GlobalConcurrency"),
                 .interoperabilityMode(.Cxx),
             ]),
         .target(
             name: "ROCore",
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
+                .enableUpcomingFeature("GlobalConcurrency"),
             ]),
         .target(
             name: "RODatabase",
@@ -71,6 +73,7 @@ let package = Package(
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
+                .enableUpcomingFeature("GlobalConcurrency"),
                 .interoperabilityMode(.Cxx),
             ]),
         .target(
@@ -81,6 +84,7 @@ let package = Package(
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
+                .enableUpcomingFeature("GlobalConcurrency"),
             ]),
         .target(
             name: "ROFileSystem",
@@ -90,6 +94,7 @@ let package = Package(
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
+                .enableUpcomingFeature("GlobalConcurrency"),
             ]),
         .target(
             name: "RONetwork",
@@ -98,6 +103,7 @@ let package = Package(
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
+                .enableUpcomingFeature("GlobalConcurrency"),
             ]),
         .target(
             name: "RORenderers",
@@ -108,6 +114,7 @@ let package = Package(
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
+                .enableUpcomingFeature("GlobalConcurrency"),
             ]),
         .target(
             name: "ROResources",
@@ -120,6 +127,7 @@ let package = Package(
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
+                .enableUpcomingFeature("GlobalConcurrency"),
                 .interoperabilityMode(.Cxx),
             ]),
         .target(
@@ -132,6 +140,7 @@ let package = Package(
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
+                .enableUpcomingFeature("GlobalConcurrency"),
             ]),
         .testTarget(
             name: "RODatabaseTests",
@@ -140,6 +149,7 @@ let package = Package(
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
+                .enableUpcomingFeature("GlobalConcurrency"),
                 .interoperabilityMode(.Cxx),
             ]),
         .testTarget(
@@ -153,6 +163,7 @@ let package = Package(
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
+                .enableUpcomingFeature("GlobalConcurrency"),
             ]),
         .testTarget(
             name: "ROResourcesTests",
@@ -161,6 +172,7 @@ let package = Package(
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
+                .enableUpcomingFeature("GlobalConcurrency"),
                 .interoperabilityMode(.Cxx),
             ]),
     ]

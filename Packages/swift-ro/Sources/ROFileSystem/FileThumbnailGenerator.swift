@@ -12,8 +12,6 @@ import ROCore
 import ROFileFormats
 
 class FileThumbnailGenerator {
-    static let shared = FileThumbnailGenerator()
-
     func generateThumbnail(for request: FileThumbnailRequest) async throws -> FileThumbnail? {
         switch request.file.info.type {
         case .image, .ebm:

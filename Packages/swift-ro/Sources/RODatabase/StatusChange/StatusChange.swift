@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/5/10.
 //
 
-public struct StatusChange: Decodable, Equatable, Hashable {
+public struct StatusChange: Decodable, Equatable, Hashable, Sendable {
 
     /// Status change name.
     public var status: String

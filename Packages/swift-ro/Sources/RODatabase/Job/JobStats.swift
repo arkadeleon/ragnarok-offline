@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/1/11.
 //
 
-public struct JobStats: Equatable, Hashable {
+public struct JobStats: Equatable, Hashable, Sendable {
 
     /// Job.
     public var job: Job
