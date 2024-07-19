@@ -12,17 +12,13 @@ struct MonsterDatabaseView: View {
 
     var body: some View {
         DatabaseView(database: $database) { monsters in
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .center, spacing: 30) {
-                    ForEach(monsters) { monster in
-                        NavigationLink(value: monster) {
-                            MonsterGridCell(monster: monster, secondaryText: nil)
-                        }
-                        .buttonStyle(.plain)
+            ImageGrid {
+                ForEach(monsters) { monster in
+                    NavigationLink(value: monster) {
+                        MonsterGridCell(monster: monster, secondaryText: nil)
                     }
+                    .buttonStyle(.plain)
                 }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 30)
             }
         } empty: {
             ContentUnavailableView("No Monsters", systemImage: "pawprint.fill")

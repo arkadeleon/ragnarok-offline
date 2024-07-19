@@ -22,48 +22,44 @@ struct FilesView: View {
     @State private var fileToShowReferences: ObservableFile?
 
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], spacing: 30) {
-                ForEach(filteredFiles) { file in
-                    if file.file.info.type == .directory || file.file.info.type == .grf {
-                        NavigationLink(value: file) {
-                            FileGridCell(file: file)
+        ImageGrid {
+            ForEach(filteredFiles) { file in
+                if file.file.info.type == .directory || file.file.info.type == .grf {
+                    NavigationLink(value: file) {
+                        FileGridCell(file: file)
+                    }
+                    .buttonStyle(.plain)
+                    .contextMenu {
+                        FileContextMenu(file: file, copyAction: {
+                            FileSystem.shared.copy(file.file)
+                        }, deleteAction: {
+                            deleteFile(file)
+                        })
+                    }
+                } else {
+                    Button {
+                        if file.canPreview {
+                            fileToPreview = file
                         }
-                        .buttonStyle(.plain)
-                        .contextMenu {
-                            FileContextMenu(file: file, copyAction: {
-                                FileSystem.shared.copy(file.file)
-                            }, deleteAction: {
-                                deleteFile(file)
-                            })
-                        }
-                    } else {
-                        Button {
-                            if file.canPreview {
-                                fileToPreview = file
-                            }
-                        } label: {
-                            FileGridCell(file: file)
-                        }
-                        .buttonStyle(.plain)
-                        .contextMenu {
-                            FileContextMenu(file: file, previewAction: {
-                                fileToPreview = file
-                            }, showRawDataAction: {
-                                fileToShowRawData = file
-                            }, showReferencesAction: {
-                                fileToShowReferences = file
-                            }, copyAction: {
-                                FileSystem.shared.copy(file.file)
-                            }, deleteAction: {
-                                deleteFile(file)
-                            })
-                        }
+                    } label: {
+                        FileGridCell(file: file)
+                    }
+                    .buttonStyle(.plain)
+                    .contextMenu {
+                        FileContextMenu(file: file, previewAction: {
+                            fileToPreview = file
+                        }, showRawDataAction: {
+                            fileToShowRawData = file
+                        }, showReferencesAction: {
+                            fileToShowReferences = file
+                        }, copyAction: {
+                            FileSystem.shared.copy(file.file)
+                        }, deleteAction: {
+                            deleteFile(file)
+                        })
                     }
                 }
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 30)
         }
         .overlay {
             if loadStatus == .loading {

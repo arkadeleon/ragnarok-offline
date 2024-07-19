@@ -14,20 +14,16 @@ struct FileReferencesView: View {
     @State private var fileToPreview: ObservableFile?
 
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], spacing: 30) {
-                ForEach(referenceFiles) { file in
-                    Button {
-                        if file.canPreview {
-                            fileToPreview = file
-                        }
-                    } label: {
-                        FileGridCell(file: file)
+        ImageGrid {
+            ForEach(referenceFiles) { file in
+                Button {
+                    if file.canPreview {
+                        fileToPreview = file
                     }
+                } label: {
+                    FileGridCell(file: file)
                 }
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 30)
         }
         .navigationTitle("References")
         .sheet(item: $fileToPreview) { file in
