@@ -1,14 +1,14 @@
 //
-//  ServerTerminalView.swift
+//  ServerView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/12/26.
 //
 
-import SwiftUI
 import rAthenaCommon
+import SwiftUI
 
-struct ServerTerminalView: View {
+struct ServerView: View {
     var server: ObservableServer
 
     var body: some View {

@@ -102,39 +102,19 @@ struct ContentView: View {
 
             Section {
                 NavigationLink(value: SidebarItem.loginServer) {
-                    LabeledContent {
-                        Text(loginServer.status.localizedStringResource)
-                            .font(.footnote)
-                    } label: {
-                        Label(loginServer.name, systemImage: "terminal")
-                    }
+                    ServerCell(server: loginServer)
                 }
 
                 NavigationLink(value: SidebarItem.charServer) {
-                    LabeledContent {
-                        Text(charServer.status.localizedStringResource)
-                            .font(.footnote)
-                    } label: {
-                        Label(charServer.name, systemImage: "terminal")
-                    }
+                    ServerCell(server: charServer)
                 }
 
                 NavigationLink(value: SidebarItem.mapServer) {
-                    LabeledContent {
-                        Text(mapServer.status.localizedStringResource)
-                            .font(.footnote)
-                    } label: {
-                        Label(mapServer.name, systemImage: "terminal")
-                    }
+                    ServerCell(server: mapServer)
                 }
 
                 NavigationLink(value: SidebarItem.webServer) {
-                    LabeledContent {
-                        Text(webServer.status.localizedStringResource)
-                            .font(.footnote)
-                    } label: {
-                        Label(webServer.name, systemImage: "terminal")
-                    }
+                    ServerCell(server: webServer)
                 }
 
                 #if DEBUG
@@ -239,13 +219,13 @@ struct ContentView: View {
             case .cube:
                 CubeView()
             case .loginServer:
-                ServerTerminalView(server: loginServer)
+                LoginServerView(loginServer: loginServer)
             case .charServer:
-                ServerTerminalView(server: charServer)
+                CharServerView(charServer: charServer)
             case .mapServer:
-                ServerTerminalView(server: mapServer)
+                MapServerView(mapServer: mapServer)
             case .webServer:
-                ServerTerminalView(server: webServer)
+                WebServerView(webServer: webServer)
             case .serverFiles:
                 FilesView(title: "Server Files", directory: serverDirectory)
             case .itemDatabase:
