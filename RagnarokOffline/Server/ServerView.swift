@@ -29,7 +29,7 @@ struct ServerView: View {
         }
         .navigationTitle(server.name)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     // Clear entire display: ^[[2J
                     // Position cursor on top line: ^[[1;1H

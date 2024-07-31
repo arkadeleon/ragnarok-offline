@@ -27,7 +27,7 @@ struct FilePreviewTabView: View {
         .navigationBarTitleDisplayMode(.inline)
         #endif
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
+            ToolbarItem(placement: .topBarLeading) {
                 Button {
                     dismiss()
                 } label: {
@@ -36,7 +36,7 @@ struct FilePreviewTabView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .topBarTrailing) {
                 ShareLink(item: currentFile, preview: SharePreview(currentFile.file.name))
             }
         }
