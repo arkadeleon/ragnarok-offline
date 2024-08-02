@@ -39,8 +39,11 @@ struct AudioFilePreviewView: View {
             }
         }
         .task {
+            #if !os(macOS)
             try? AVAudioSession.sharedInstance().setCategory(.playback)
             try? AVAudioSession.sharedInstance().setActive(true)
+            #endif
+
             await loadAudio()
         }
         .onDisappear {
