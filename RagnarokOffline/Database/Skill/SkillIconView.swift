@@ -22,8 +22,8 @@ struct SkillIconView: View {
                     .aspectRatio(contentMode: .fit)
             } else {
                 Image(systemName: "arrow.up.heart")
-                    .foregroundStyle(.tertiary)
-                    .font(.system(size: 25))
+                    .font(.system(size: 25, weight: .thin))
+                    .foregroundStyle(Color.secondary)
             }
         }
         .frame(width: 40, height: 40)

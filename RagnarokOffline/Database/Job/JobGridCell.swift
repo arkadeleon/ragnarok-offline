@@ -26,8 +26,8 @@ struct JobGridCell: View {
                 }
             } else {
                 Image(systemName: "person")
-                    .font(.system(size: 50, weight: .light))
-                    .foregroundStyle(.tertiary)
+                    .font(.system(size: 50, weight: .thin))
+                    .foregroundStyle(Color.secondary)
             }
         }
         .task {

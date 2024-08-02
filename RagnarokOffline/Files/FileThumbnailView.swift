@@ -24,7 +24,7 @@ struct FileThumbnailView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 4))
                     .overlay {
                         RoundedRectangle(cornerRadius: 4)
-                            .stroke(.tertiary, lineWidth: 1)
+                            .stroke(Color.secondary, lineWidth: 1)
                     }
             } else if file.file.info.type == .directory {
                 Image(systemName: file.iconName)
@@ -32,13 +32,13 @@ struct FileThumbnailView: View {
                     .symbolRenderingMode(.multicolor)
             } else {
                 Image(systemName: file.iconName)
-                    .font(.system(size: 30, weight: .light))
-                    .foregroundStyle(.tertiary)
+                    .font(.system(size: 30, weight: .thin))
+                    .foregroundStyle(Color.secondary)
                     .symbolRenderingMode(.monochrome)
                     .frame(width: 60, height: 80)
                     .background {
                         RoundedRectangle(cornerRadius: 4)
-                            .stroke(.tertiary, lineWidth: 1)
+                            .stroke(Color.secondary, lineWidth: 1)
                     }
             }
         }

@@ -28,8 +28,8 @@ struct MapInfoView: View {
                         .aspectRatio(contentMode: .fit)
                 } else {
                     Image(systemName: "map")
-                        .foregroundStyle(.tertiary)
-                        .font(.system(size: 100))
+                        .font(.system(size: 100, weight: .thin))
+                        .foregroundStyle(Color.secondary)
                 }
             }
             .frame(height: 200)

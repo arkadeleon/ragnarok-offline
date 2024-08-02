@@ -18,11 +18,11 @@ struct ItemCell: View {
 
             VStack(alignment: .leading, spacing: 2) {
                 ItemNameView(item: item)
-                    .foregroundColor(.primary)
+                    .foregroundStyle(Color.primary)
                     .lineLimit(1)
 
                 Text(secondaryText ?? item.aegisName)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .lineLimit(1)
             }
             .frame(maxWidth: .infinity, alignment: .leading)

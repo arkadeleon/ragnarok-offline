@@ -30,16 +30,16 @@ struct ItemDatabaseView: View {
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                             Text(item.type.localizedStringResource)
                                 .frame(width: 160, alignment: .leading)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                             Text(item.buy.formatted() + "z")
                                 .frame(width: 120, alignment: .leading)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                             Text(item.sell.formatted() + "z")
                                 .frame(width: 120, alignment: .leading)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                             Text((Double(item.weight) / 10).formatted())
                                 .frame(width: 80, alignment: .leading)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     }
                 }

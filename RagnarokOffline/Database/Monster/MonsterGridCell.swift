@@ -25,8 +25,8 @@ struct MonsterGridCell: View {
                 }
             } else {
                 Image(systemName: "pawprint")
-                    .font(.system(size: 50, weight: .light))
-                    .foregroundStyle(.tertiary)
+                    .font(.system(size: 50, weight: .thin))
+                    .foregroundStyle(Color.secondary)
             }
         }
         .task {

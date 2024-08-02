@@ -18,11 +18,11 @@ struct MapCell: View {
 
             VStack(alignment: .leading, spacing: 2) {
                 MapNameView(map: map)
-                    .foregroundColor(.primary)
+                    .foregroundStyle(Color.primary)
                     .lineLimit(1)
 
                 Text(secondaryText ?? map.name)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .lineLimit(1)
             }
             .frame(maxWidth: .infinity, alignment: .leading)

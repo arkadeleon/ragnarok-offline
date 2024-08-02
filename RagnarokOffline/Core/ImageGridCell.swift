@@ -24,28 +24,28 @@ struct ImageGridCell<Image>: View where Image: View {
                 // This VStack is just for reserving space.
                 VStack(spacing: 2) {
                     Text(" ")
-                        .lineLimit(2, reservesSpace: true)
                         .font(.body)
+                        .lineLimit(2, reservesSpace: true)
 
                     Text(" ")
-                        .lineLimit(1, reservesSpace: true)
                         .font(.footnote)
+                        .lineLimit(1, reservesSpace: true)
                 }
 
                 VStack(spacing: 2) {
                     Text(title)
-                        .frame(maxWidth: .infinity)
+                        .font(.body)
+                        .foregroundStyle(Color.primary)
                         .multilineTextAlignment(.center)
                         .lineLimit(2, reservesSpace: false)
-                        .foregroundStyle(.primary)
-                        .font(.body)
+                        .frame(maxWidth: .infinity)
 
                     if let subtitle {
                         Text(subtitle)
-                            .frame(maxWidth: .infinity)
-                            .lineLimit(1, reservesSpace: false)
-                            .foregroundStyle(.secondary)
                             .font(.footnote)
+                            .foregroundStyle(Color.secondary)
+                            .lineLimit(1, reservesSpace: false)
+                            .frame(maxWidth: .infinity)
                     }
                 }
             }
@@ -63,7 +63,7 @@ struct ImageGridCell<Image>: View where Image: View {
 #Preview {
     ImageGridCell(title: "Title", subtitle: "Subtitle") {
         Image(systemName: "folder")
-            .font(.system(size: 50, weight: .light))
-            .foregroundStyle(.tertiary)
+            .font(.system(size: 50, weight: .thin))
+            .foregroundStyle(Color.accentColor)
     }
 }

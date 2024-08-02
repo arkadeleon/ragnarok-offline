@@ -27,8 +27,8 @@ struct JobInfoView: View {
                     Image(jobImage, scale: 1, label: Text(jobStats.job.stringValue))
                 } else {
                     Image(systemName: "person")
-                        .foregroundStyle(.tertiary)
-                        .font(.system(size: 100))
+                        .font(.system(size: 100, weight: .thin))
+                        .foregroundStyle(Color.secondary)
                 }
             }
             .frame(height: 200)
@@ -79,15 +79,15 @@ struct JobInfoView: View {
 
                             Text(levelStats.baseExp.formatted())
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(Color.secondary)
 
                             Text(levelStats.baseHp.formatted())
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(Color.secondary)
 
                             Text(levelStats.baseSp.formatted())
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     }
                 }
@@ -116,15 +116,15 @@ struct JobInfoView: View {
 
                             Text(levelStats.jobExp.formatted())
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(Color.secondary)
 
                             Text(levelStats.bonusStats)
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(Color.secondary)
 
                             Text("")
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     }
                 }

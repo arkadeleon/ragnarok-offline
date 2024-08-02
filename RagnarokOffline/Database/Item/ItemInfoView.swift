@@ -30,8 +30,8 @@ struct ItemInfoView: View {
                         .aspectRatio(contentMode: .fit)
                 } else {
                     Image(systemName: "leaf")
-                        .foregroundStyle(.tertiary)
-                        .font(.system(size: 100))
+                        .font(.system(size: 100, weight: .thin))
+                        .foregroundStyle(Color.secondary)
                 }
             }
             .frame(height: 200)

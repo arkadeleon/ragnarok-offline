@@ -27,7 +27,7 @@ struct StatusChangeDatabaseView: View {
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                             Text(statusChange.icon)
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     }
                 }

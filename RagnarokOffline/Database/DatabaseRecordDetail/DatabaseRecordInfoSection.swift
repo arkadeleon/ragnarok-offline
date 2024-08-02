@@ -17,7 +17,7 @@ struct DatabaseRecordInfoSection<Header, Content>: View where Header: View, Cont
             header()
                 .font(.subheadline)
                 .bold()
-                .foregroundColor(.secondary)
+                .foregroundStyle(Color.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 20)
                 .padding(.bottom, 5)

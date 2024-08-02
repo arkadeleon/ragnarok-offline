@@ -29,14 +29,14 @@ struct SkillDatabaseView: View {
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                             Text(skill.maxLevel.formatted())
                                 .frame(width: 80, alignment: .leading)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                             Text(skill.requires?.spCost.map { spCost in
                                 spCost.formatted()
                             } right: { spCost in
                                 spCost.compactMap(String.init).joined(separator: " / ")
                             } ?? "")
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                         }
                     }
                 }

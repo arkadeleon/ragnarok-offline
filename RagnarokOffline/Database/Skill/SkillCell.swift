@@ -17,11 +17,11 @@ struct SkillCell: View {
 
             VStack(alignment: .leading, spacing: 2) {
                 SkillNameView(skill: skill)
-                    .foregroundColor(.primary)
+                    .foregroundStyle(Color.primary)
                     .lineLimit(1)
 
                 Text(skill.aegisName)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .lineLimit(1)
             }
             .frame(maxWidth: .infinity, alignment: .leading)

@@ -14,7 +14,7 @@ struct EmptyContentView: View {
         Text(titleKey)
             .font(.title2)
             .bold()
-            .foregroundStyle(.secondary)
+            .foregroundStyle(Color.secondary)
     }
 
     init(_ titleKey: LocalizedStringKey) {

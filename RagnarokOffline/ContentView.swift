@@ -94,9 +94,9 @@ struct ContentView: View {
                 #endif
             } header: {
                 Text("Client")
-                    .foregroundStyle(Color(uiColor: .label))
                     .font(.title3)
                     .fontWeight(.semibold)
+                    .foregroundStyle(Color.primary)
                     .textCase(nil)
             }
 
@@ -125,9 +125,9 @@ struct ContentView: View {
             } header: {
                 HStack {
                     Text("Server")
-                        .foregroundStyle(Color(uiColor: .label))
                         .font(.title3)
                         .fontWeight(.semibold)
+                        .foregroundStyle(Color.primary)
 
                     Spacer()
 
@@ -176,9 +176,9 @@ struct ContentView: View {
                 #endif
             } header: {
                 Text("Database")
-                    .foregroundStyle(Color(uiColor: .label))
                     .font(.title3)
                     .fontWeight(.semibold)
+                    .foregroundStyle(Color.primary)
                     .textCase(nil)
             }
         }
