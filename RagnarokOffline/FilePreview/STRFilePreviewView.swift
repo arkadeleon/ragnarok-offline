@@ -6,21 +6,20 @@
 //
 
 import MetalKit
-import SwiftUI
 import ROFileFormats
 import RORenderers
+import SwiftUI
 
 struct STRFilePreviewView: View {
     var file: ObservableFile
 
-    @State private var status: AsyncContentStatus<STRRenderer> = .notYetLoaded
     @State private var magnification: CGFloat = 1
 
     var body: some View {
-        #if os(visionOS)
-        EmptyView()
-        #else
-        AsyncContentView(status: status) { renderer in
+        AsyncContentView(load: loadSTRFile) { renderer in
+            #if os(visionOS)
+            EmptyView()
+            #else
             MetalViewContainer(renderer: renderer)
                 .gesture(
                     MagnificationGesture()
@@ -31,27 +30,16 @@ struct STRFilePreviewView: View {
                             magnification *= value
                         }
                 )
+            #endif
         }
-        .task {
-            await loadSTRFile()
-        }
-        #endif
     }
 
-    private func loadSTRFile() async {
-        guard case .notYetLoaded = status else {
-            return
-        }
-
-        status = .loading
-
+    nonisolated private func loadSTRFile() async throws -> STRRenderer {
         guard case .grfEntry(let grf, let path) = file.file, let data = file.file.contents() else {
-            return
+            throw FilePreviewError.invalidSTRFile
         }
 
-        guard let str = try? STR(data: data) else {
-            return
-        }
+        let str = try STR(data: data)
 
         let device = MTLCreateSystemDefaultDevice()!
         let textureLoader = MTKTextureLoader(device: device)
@@ -71,11 +59,8 @@ struct STRFilePreviewView: View {
             return texture
         }
 
-        guard let renderer = try? STRRenderer(device: device, effect: effect) else {
-            return
-        }
-
-        status = .loaded(renderer)
+        let renderer = try STRRenderer(device: device, effect: effect)
+        return renderer
     }
 }
 

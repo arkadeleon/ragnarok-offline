@@ -5,13 +5,9 @@
 //  Created by Leon Li on 2024/4/25.
 //
 
-import SwiftUI
 import ROCore
 import ROFileFormats
-
-enum SPRFilePreviewError: Error {
-    case invalidSPRFile
-}
+import SwiftUI
 
 struct SPRFilePreviewView: View {
     struct SpriteSection {
@@ -26,10 +22,8 @@ struct SPRFilePreviewView: View {
 
     var file: ObservableFile
 
-    @State private var status: AsyncContentStatus<SpriteSection> = .notYetLoaded
-
     var body: some View {
-        AsyncContentView(status: status) { section in
+        AsyncContentView(load: loadSPRFile) { section in
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: section.spriteSize.width), spacing: 16)], spacing: 32) {
                     ForEach(section.sprites, id: \.index) { sprite in
@@ -46,27 +40,14 @@ struct SPRFilePreviewView: View {
                 .padding(32)
             }
         }
-        .task {
-            await loadSPRFile()
-        }
     }
 
-    private func loadSPRFile() async {
-        guard case .notYetLoaded = status else {
-            return
-        }
-
-        status = .loading
-
+    nonisolated private func loadSPRFile() async throws -> SpriteSection {
         guard let data = file.file.contents() else {
-            status = .failed(SPRFilePreviewError.invalidSPRFile)
-            return
+            throw FilePreviewError.invalidSPRFile
         }
 
-        guard let spr = try? SPR(data: data) else {
-            status = .failed(SPRFilePreviewError.invalidSPRFile)
-            return
-        }
+        let spr = try SPR(data: data)
 
         let images = (0..<spr.sprites.count).compactMap { index in
             spr.image(forSpriteAt: index)
@@ -84,7 +65,7 @@ struct SPRFilePreviewView: View {
         }
 
         let section = SpriteSection(spriteSize: size, sprites: sprites)
-        status = .loaded(section)
+        return section
     }
 }
 

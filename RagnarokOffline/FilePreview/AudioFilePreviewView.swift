@@ -8,18 +8,14 @@
 import AVFoundation
 import SwiftUI
 
-enum AudioFilePreviewError: Error {
-    case invalidAudioFile
-}
-
 struct AudioFilePreviewView: View {
     var file: ObservableFile
 
-    @State private var status: AsyncContentStatus<AVAudioPlayer> = .notYetLoaded
+    @State private var player: AVAudioPlayer?
     @State private var isPlaying = false
 
     var body: some View {
-        AsyncContentView(status: status) { player in
+        AsyncContentView(load: loadAudioFile) { player in
             if !isPlaying {
                 Button {
                     player.play()
@@ -43,29 +39,25 @@ struct AudioFilePreviewView: View {
             try? AVAudioSession.sharedInstance().setCategory(.playback)
             try? AVAudioSession.sharedInstance().setActive(true)
             #endif
-
-            await loadAudio()
         }
         .onDisappear {
-            if case .loaded(let player) = status {
+            if let player {
                 player.stop()
                 isPlaying = false
             }
         }
     }
 
-    private func loadAudio() async {
-        guard case .notYetLoaded = status else {
-            return
+    nonisolated private func loadAudioFile() async throws -> AVAudioPlayer {
+        guard let data = file.file.contents() else {
+            throw FilePreviewError.invalidAudioFile
         }
 
-        status = .loading
+        let player = try AVAudioPlayer(data: data)
 
-        if let data = file.file.contents(), let player = try? AVAudioPlayer(data: data) {
-            status = .loaded(player)
-        } else {
-            status = .failed(AudioFilePreviewError.invalidAudioFile)
-        }
+        self.player = player
+
+        return player
     }
 }
 

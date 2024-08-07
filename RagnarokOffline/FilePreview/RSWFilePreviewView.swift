@@ -14,33 +14,18 @@ import SwiftUI
 struct RSWFilePreviewView: View {
     var file: ObservableFile
 
-    @State private var status: AsyncContentStatus<Entity> = .notYetLoaded
     @State private var translation: CGSize = .zero
     @State private var magnification: CGFloat = 1
 
     var body: some View {
-        AsyncContentView(status: status) { entity in
+        AsyncContentView(load: loadRSWFile) { entity in
             ModelViewer(entity: entity)
-        }
-        .task {
-            do {
-                try await loadRSWFile()
-            } catch {
-
-            }
         }
     }
 
-    @MainActor
-    private func loadRSWFile() async throws {
-        guard case .notYetLoaded = status else {
-            return
-        }
-
-        status = .loading
-
+    nonisolated private func loadRSWFile() async throws -> Entity {
         guard case .grfEntry(let grf, _) = file.file, let data = file.file.contents() else {
-            return
+            throw FilePreviewError.invalidRSWFile
         }
 
         let rsw = try RSW(data: data)
@@ -100,29 +85,34 @@ struct RSWFilePreviewView: View {
             }
 
             let modelEntity = modelEntities[model.modelName]!
-            let modelEntityClone = modelEntity.clone(recursive: true)
+            let modelEntityClone = await modelEntity.clone(recursive: true)
 
-            modelEntityClone.position = [
-                model.position.x + Float(gnd.width),
-                model.position.y,
-                model.position.z + Float(gnd.height),
-            ]
-            modelEntityClone.orientation = simd_quatf(angle: radians(model.rotation.z), axis: [0, 0, 1]) * simd_quatf(angle: radians(model.rotation.x), axis: [1, 0, 0]) * simd_quatf(angle: radians(model.rotation.y), axis: [0, 1, 0])
-            modelEntityClone.scale = model.scale
+            await MainActor.run {
+                modelEntityClone.position = [
+                    model.position.x + Float(gnd.width),
+                    model.position.y,
+                    model.position.z + Float(gnd.height),
+                ]
+                modelEntityClone.orientation = simd_quatf(angle: radians(model.rotation.z), axis: [0, 0, 1]) * simd_quatf(angle: radians(model.rotation.x), axis: [1, 0, 0]) * simd_quatf(angle: radians(model.rotation.y), axis: [0, 1, 0])
+                modelEntityClone.scale = model.scale
+            }
 
-            groundEntity.addChild(modelEntityClone)
+            await groundEntity.addChild(modelEntityClone)
         }
 
         let translation = float4x4(translation: [-Float(gat.width / 2), 0, -Float(gat.height / 2)])
         let rotation = float4x4(rotationX: radians(-90))
         let scaleFactor = 1 / Float(max(gat.width, gat.height))
         let scale = float4x4(scale: [scaleFactor, scaleFactor, scaleFactor])
-        groundEntity.transform.matrix = scale * rotation * translation
 
-        let entity = Entity()
-        entity.addChild(groundEntity)
+        await MainActor.run {
+            groundEntity.transform.matrix = scale * rotation * translation
+        }
 
-        status = .loaded(entity)
+        let entity = await Entity()
+        await entity.addChild(groundEntity)
+
+        return entity
     }
 }
 

@@ -14,31 +14,15 @@ import SwiftUI
 struct GNDFilePreviewView: View {
     var file: ObservableFile
 
-    @State private var status: AsyncContentStatus<Entity> = .notYetLoaded
-
     var body: some View {
-        AsyncContentView(status: status) { entity in
+        AsyncContentView(load: loadGNDFile) { entity in
             ModelViewer(entity: entity)
-        }
-        .task {
-            do {
-                try await loadGNDFile()
-            } catch {
-
-            }
         }
     }
 
-    @MainActor
-    private func loadGNDFile() async throws {
-        guard case .notYetLoaded = status else {
-            return
-        }
-
-        status = .loading
-
+    nonisolated private func loadGNDFile() async throws -> Entity {
         guard case .grfEntry(let grf, let path) = file.file, let data = file.file.contents() else {
-            return
+            throw FilePreviewError.invalidGNDFile
         }
 
         let gnd = try GND(data: data)
@@ -60,12 +44,15 @@ struct GNDFilePreviewView: View {
         let rotation = float4x4(rotationX: radians(-90))
         let scaleFactor = 1 / Float(max(gat.width, gat.height))
         let scale = float4x4(scale: [scaleFactor, scaleFactor, scaleFactor])
-        groundEntity.transform.matrix = scale * rotation * translation
 
-        let entity = Entity()
-        entity.addChild(groundEntity)
+        await MainActor.run {
+            groundEntity.transform.matrix = scale * rotation * translation
+        }
 
-        status = .loaded(entity)
+        let entity = await Entity()
+        await entity.addChild(groundEntity)
+
+        return entity
     }
 }
 

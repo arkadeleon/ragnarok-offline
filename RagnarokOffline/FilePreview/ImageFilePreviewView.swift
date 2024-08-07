@@ -5,65 +5,51 @@
 //  Created by Leon Li on 2024/4/24.
 //
 
-import SwiftUI
 import ROFileFormats
-
-enum ImageFilePreviewError: Error {
-    case invalidImageFile
-}
+import SwiftUI
 
 struct ImageFilePreviewView: View {
     var file: ObservableFile
 
-    @State private var status: AsyncContentStatus<CGImage> = .notYetLoaded
-
     var body: some View {
-        AsyncContentView(status: status) { image in
+        AsyncContentView(load: loadImageFile) { image in
             Image(image, scale: 1, label: Text(file.file.name))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
         }
-        .task {
-            await loadImage()
-        }
     }
 
-    private func loadImage() async {
-        guard case .notYetLoaded = status else {
-            return
-        }
-
-        status = .loading
-
+    nonisolated private func loadImageFile() async throws -> CGImage {
         guard let data = file.file.contents() else {
-            status = .failed(ImageFilePreviewError.invalidImageFile)
-            return
+            throw FilePreviewError.invalidImageFile
         }
 
-        var image: CGImage?
         switch file.file.info.type {
         case .ebm:
             guard let decompressedData = data.unzip() else {
-                return
+                throw FilePreviewError.invalidImageFile
             }
             guard let imageSource = CGImageSourceCreateWithData(decompressedData as CFData, nil) else {
-                return
+                throw FilePreviewError.invalidImageFile
             }
-            image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil)
+            guard let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil) else {
+                throw FilePreviewError.invalidImageFile
+            }
+            return image
         case .pal:
-            let pal = try? PAL(data: data)
-            image = pal?.image(at: CGSize(width: 256, height: 256))
+            let pal = try PAL(data: data)
+            guard let image = pal.image(at: CGSize(width: 256, height: 256)) else {
+                throw FilePreviewError.invalidImageFile
+            }
+            return image
         default:
             guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil) else {
-                return
+                throw FilePreviewError.invalidImageFile
             }
-            image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil)
-        }
-
-        if let image {
-            status = .loaded(image)
-        } else {
-            status = .failed(ImageFilePreviewError.invalidImageFile)
+            guard let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil) else {
+                throw FilePreviewError.invalidImageFile
+            }
+            return image
         }
     }
 }

@@ -5,13 +5,9 @@
 //  Created by Leon Li on 2024/4/24.
 //
 
-import SwiftUI
 import ROCore
 import ROFileFormats
-
-enum ACTFilePreviewError: Error {
-    case invalidACTFile
-}
+import SwiftUI
 
 struct ACTFilePreviewView: View {
     struct ActionSection {
@@ -27,10 +23,8 @@ struct ACTFilePreviewView: View {
 
     var file: ObservableFile
 
-    @State private var status: AsyncContentStatus<[ActionSection]> = .notYetLoaded
-
     var body: some View {
-        AsyncContentView(status: status) { sections in
+        AsyncContentView(load: loadACTFile) { sections in
             ScrollView {
                 ForEach(sections, id: \.index) { section in
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: section.actionSize.width), spacing: 16)], spacing: 32) {
@@ -49,46 +43,27 @@ struct ACTFilePreviewView: View {
                 }
             }
         }
-        .task {
-            await loadACTFile()
-        }
     }
 
-    private func loadACTFile() async {
-        guard case .notYetLoaded = status else {
-            return
-        }
-
-        status = .loading
-
+    nonisolated private func loadACTFile() async throws -> [ActionSection] {
         guard let actData = file.file.contents() else {
-            status = .failed(ACTFilePreviewError.invalidACTFile)
-            return
+            throw FilePreviewError.invalidACTFile
         }
 
-        let sprData: Data?
+        let sprData: Data
         switch file.file {
         case .regularFile(let url):
             let sprPath = url.deletingPathExtension().path().appending(".spr")
-            sprData = try? Data(contentsOf: URL(filePath: sprPath))
+            sprData = try Data(contentsOf: URL(filePath: sprPath))
         case .grfEntry(let grf, let path):
             let sprPath = path.replacingExtension("spr")
-            sprData = try? grf.contentsOfEntry(at: sprPath)
+            sprData = try grf.contentsOfEntry(at: sprPath)
         default:
-            sprData = nil
+            throw FilePreviewError.invalidACTFile
         }
 
-        guard let sprData else {
-            status = .failed(ACTFilePreviewError.invalidACTFile)
-            return
-        }
-
-        guard let act = try? ACT(data: actData),
-              let spr = try? SPR(data: sprData)
-        else {
-            status = .failed(ACTFilePreviewError.invalidACTFile)
-            return
-        }
+        let act = try ACT(data: actData)
+        let spr = try SPR(data: sprData)
 
         let sprites = spr.sprites.enumerated()
         let spritesByType = Dictionary(grouping: sprites, by: { $0.element.type })
@@ -115,7 +90,7 @@ struct ACTFilePreviewView: View {
                 Action(index: index, animatedImage: animatedImage)
             }
             let actionSection = ActionSection(index: 0, actionSize: size, actions: actions)
-            status = .loaded([actionSection])
+            return [actionSection]
         } else {
             let sectionCount = animatedImages.count / 8
             let actionSections = (0..<sectionCount).map { sectionIndex in
@@ -134,7 +109,7 @@ struct ACTFilePreviewView: View {
                 let actionSection = ActionSection(index: sectionIndex, actionSize: size, actions: actions)
                 return actionSection
             }
-            status = .loaded(actionSections)
+            return actionSections
         }
     }
 }

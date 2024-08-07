@@ -14,31 +14,18 @@ import SwiftUI
 struct RSMFilePreviewView: View {
     var file: ObservableFile
 
-    @State private var status: AsyncContentStatus<Entity> = .notYetLoaded
-
     var body: some View {
-        AsyncContentView(status: status) { entity in
+        AsyncContentView(load: loadRSMFile) { entity in
             ModelViewer(entity: entity)
-        }
-        .task {
-            await loadRSMFile()
         }
     }
 
-    private func loadRSMFile() async {
-        guard case .notYetLoaded = status else {
-            return
-        }
-
-        status = .loading
-
+    nonisolated private func loadRSMFile() async throws -> Entity {
         guard case .grfEntry(let grf, _) = file.file, let data = file.file.contents() else {
-            return
+            throw FilePreviewError.invalidRSMFile
         }
 
-        guard let rsm = try? RSM(data: data) else {
-            return
-        }
+        let rsm = try RSM(data: data)
 
         let instance = Model.createInstance(
             position: .zero,
@@ -48,7 +35,7 @@ struct RSMFilePreviewView: View {
             height: 0
         )
 
-        let entity = try? await Entity.loadModel(rsm: rsm, instance: instance) { textureName in
+        let entity = try await Entity.loadModel(rsm: rsm, instance: instance) { textureName in
             let path = GRF.Path(string: "data\\texture\\" + textureName)
             guard let data = try? grf.contentsOfEntry(at: path) else {
                 return nil
@@ -57,9 +44,7 @@ struct RSMFilePreviewView: View {
             return texture?.removingMagentaPixels()
         }
 
-        if let entity {
-            status = .loaded(entity)
-        }
+        return entity
     }
 }
 

@@ -15,8 +15,10 @@ enum AsyncContentStatus<Value> {
 }
 
 struct AsyncContentView<Value, Content>: View where Content: View {
-    var status: AsyncContentStatus<Value>
+    var load: () async throws -> Value
     var content: (Value) -> Content
+
+    @State private var status: AsyncContentStatus<Value> = .notYetLoaded
 
     var body: some View {
         ZStack {
@@ -29,18 +31,31 @@ struct AsyncContentView<Value, Content>: View where Content: View {
                 content(value)
             case .failed(let error):
                 Text(error.localizedDescription)
+                    .multilineTextAlignment(.center)
+            }
+        }
+        .task {
+            status = .loading
+
+            do {
+                let value = try await load()
+                status = .loaded(value)
+            } catch {
+                status = .failed(error)
             }
         }
     }
 
-    init(status: AsyncContentStatus<Value>, @ViewBuilder content: @escaping (Value) -> Content) {
-        self.status = status
+    init(load: @escaping () async throws -> Value, @ViewBuilder content: @escaping (Value) -> Content) {
+        self.load = load
         self.content = content
     }
 }
 
 #Preview {
-    AsyncContentView(status: .loaded("")) { text in
+    AsyncContentView {
+        "Content"
+    } content: { text in
         Text(text)
     }
 }
