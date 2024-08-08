@@ -20,7 +20,7 @@ import RONetwork
 /// - ``PACKET_AC_REFUSE_LOGIN``
 /// - ``PACKET_SC_NOTIFY_BAN``
 public class LoginClient {
-    public var onAcceptLogin: (() -> Void)?
+    public var onAcceptLogin: ((PACKET_AC_ACCEPT_LOGIN) -> Void)?
     public var onRefuseLogin: (() -> Void)?
     public var onNotifyBan: (() -> Void)?
     public var onError: ((any Error) -> Void)?
@@ -67,8 +67,8 @@ public class LoginClient {
                 do {
                     let packet = try decoder.decode(from: content)
                     switch packet {
-                    case let acceptLogin as PACKET_AC_ACCEPT_LOGIN:
-                        onAcceptLogin?()
+                    case let acceptLoginPacket as PACKET_AC_ACCEPT_LOGIN:
+                        onAcceptLogin?(acceptLoginPacket)
                     case let refuseLogin as PACKET_AC_REFUSE_LOGIN:
                         onRefuseLogin?()
                     case let notifyBan as PACKET_SC_NOTIFY_BAN:

@@ -15,6 +15,13 @@
     {
       "target" : {
         "containerPath" : "container:Packages\/swift-ro",
+        "identifier" : "ROClientTests",
+        "name" : "ROClientTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/swift-ro",
         "identifier" : "RODatabaseTests",
         "name" : "RODatabaseTests"
       }

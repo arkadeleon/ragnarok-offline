@@ -144,6 +144,19 @@ let package = Package(
                 .enableUpcomingFeature("GlobalConcurrency"),
             ]),
         .testTarget(
+            name: "ROClientTests",
+            dependencies: [
+                .product(name: "rAthenaResources", package: "swift-rathena"),
+                .product(name: "rAthenaLogin", package: "swift-rathena"),
+                .product(name: "rAthenaChar", package: "swift-rathena"),
+                "ROClient",
+            ],
+            swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
+                .enableUpcomingFeature("GlobalConcurrency"),
+                .interoperabilityMode(.Cxx),
+            ]),
+        .testTarget(
             name: "RODatabaseTests",
             dependencies: [
                 "RODatabase",

@@ -51,7 +51,7 @@ struct MessagesView: View {
             }
         }
         .task {
-            loginClient.onAcceptLogin = {
+            loginClient.onAcceptLogin = { packet in
                 let message = Message(sender: .server, content: "ACCEPT_LOGIN")
                 messages.append(message)
             }
