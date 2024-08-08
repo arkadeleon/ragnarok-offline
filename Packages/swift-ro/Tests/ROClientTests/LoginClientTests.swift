@@ -56,15 +56,15 @@ final class LoginClientTests: XCTestCase {
             XCTAssert(packet.serverList.count == 1)
             expectation.fulfill()
         }
-        loginClient.onRefuseLogin = {
+        loginClient.onRefuseLogin = { message in
             XCTAssert(false)
             expectation.fulfill()
         }
-        loginClient.onNotifyBan = {
+        loginClient.onNotifyBan = { message in
             XCTAssert(false)
             expectation.fulfill()
         }
-        loginClient.onError = { _ in
+        loginClient.onError = { error in
             XCTAssert(false)
             expectation.fulfill()
         }

@@ -55,11 +55,11 @@ struct MessagesView: View {
                 let message = Message(sender: .server, content: "ACCEPT_LOGIN")
                 messages.append(message)
             }
-            loginClient.onRefuseLogin = {
+            loginClient.onRefuseLogin = { message in
                 let message = Message(sender: .server, content: "REFUSE_LOGIN")
                 messages.append(message)
             }
-            loginClient.onNotifyBan = {
+            loginClient.onNotifyBan = { message in
                 let message = Message(sender: .server, content: "NOTIFY_BAN")
                 messages.append(message)
             }

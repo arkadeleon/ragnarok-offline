@@ -19,7 +19,7 @@ public actor MessageLocalization {
         self.locale = locale
     }
 
-    public func localizedMessage(at index: Int) -> String? {
+    public func localizedMessage(at index: Int) -> String {
         try? loadMessageStringTableIfNeeded()
 
         let message = messageStringTable[index]
