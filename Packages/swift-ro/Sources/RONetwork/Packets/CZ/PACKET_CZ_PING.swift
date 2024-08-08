@@ -16,6 +16,9 @@ public struct PACKET_CZ_PING: EncodablePacket {
 
     public var aid: UInt32 = 0
 
+    public init() {
+    }
+
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(aid)

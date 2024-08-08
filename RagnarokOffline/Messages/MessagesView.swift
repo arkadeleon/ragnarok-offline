@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import RONetwork
+import ROClient
 
 struct MessagesView: View {
     @State private var loginClient = LoginClient()

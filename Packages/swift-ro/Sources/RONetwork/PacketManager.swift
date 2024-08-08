@@ -16,7 +16,7 @@ public class PacketManager {
         /// Char Server -> Client
         PACKET_HC_ACCEPT_ENTER_NEO_UNION.self,      // 0x6b
         PACKET_HC_REFUSE_ENTER.self,                // 0x6c
-        PACKET_HC_ACCEPT_MAKECHAR_NEO_UNION.self,             // 0b6d
+        PACKET_HC_ACCEPT_MAKECHAR_NEO_UNION.self,   // 0b6d
         PACKET_HC_REFUSE_MAKECHAR.self,             // 0x6e
         PACKET_HC_ACCEPT_DELETECHAR.self,           // 0x6f
         PACKET_HC_REFUSE_DELETECHAR.self,           // 0x70

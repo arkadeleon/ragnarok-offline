@@ -16,6 +16,9 @@ public struct PACKET_CH_DELETE_CHAR_RESERVED: EncodablePacket {
 
     public var gid: UInt32 = 0
 
+    public init() {
+    }
+
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(gid)

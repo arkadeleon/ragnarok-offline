@@ -20,6 +20,9 @@ public struct PACKET_CH_ENTER: EncodablePacket {
     public var clientType: UInt16 = 0
     public var sex: UInt8 = 0
 
+    public init() {
+    }
+
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(aid)

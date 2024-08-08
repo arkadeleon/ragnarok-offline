@@ -51,6 +51,7 @@ let package = Package(
                 "RODatabase",
                 "ROFileFormats",
                 "ROFileSystem",
+                "RONetwork",
                 "ROResources",
             ],
             swiftSettings: [

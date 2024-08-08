@@ -17,6 +17,9 @@ public struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME: EncodablePacket {
     public var slot: UInt8 = 0
     public var mapNumber: UInt8 = 0
 
+    public init() {
+    }
+
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(slot)

@@ -39,6 +39,9 @@ public struct PACKET_CH_MAKE_CHAR: EncodablePacket {
     public var job: UInt16 = 0
     public var sex: UInt8 = 0
 
+    public init() {
+    }
+
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
 

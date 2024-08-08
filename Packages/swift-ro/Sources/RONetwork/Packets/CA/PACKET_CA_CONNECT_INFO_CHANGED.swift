@@ -16,6 +16,9 @@ public struct PACKET_CA_CONNECT_INFO_CHANGED: EncodablePacket {
 
     public var name = ""
 
+    public init() {
+    }
+
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(name, length: 24)

@@ -16,6 +16,9 @@ public struct PACKET_CH_SELECT_CHAR: EncodablePacket {
 
     public var charNum: UInt8 = 0
 
+    public init() {
+    }
+
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(charNum)

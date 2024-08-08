@@ -19,6 +19,9 @@ public struct PACKET_CA_LOGIN: EncodablePacket {
     public var password = ""
     public var clientType: UInt8 = 0
 
+    public init() {
+    }
+
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(version)
