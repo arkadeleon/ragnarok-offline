@@ -24,14 +24,8 @@ struct DetailView: View {
                 MessagesView()
             case .cube:
                 CubeView()
-            case .loginServer(let loginServer):
-                LoginServerView(loginServer: loginServer)
-            case .charServer(let charServer):
-                CharServerView(charServer: charServer)
-            case .mapServer(let mapServer):
-                MapServerView(mapServer: mapServer)
-            case .webServer(let webServer):
-                WebServerView(webServer: webServer)
+            case .server(let server):
+                ServerView(server: server)
             case .serverFiles:
                 FilesView(title: "Server Files", directory: serverDirectory)
             case .itemDatabase:

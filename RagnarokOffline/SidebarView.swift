@@ -15,10 +15,7 @@ enum SidebarItem: Hashable {
     case files
     case messages
     case cube
-    case loginServer(ObservableServer)
-    case charServer(ObservableServer)
-    case mapServer(ObservableServer)
-    case webServer(ObservableServer)
+    case server(ObservableServer)
     case serverFiles
     case itemDatabase
     case jobDatabase
@@ -66,19 +63,19 @@ struct SidebarView: View {
             }
 
             Section {
-                NavigationLink(value: SidebarItem.loginServer(loginServer)) {
+                NavigationLink(value: SidebarItem.server(loginServer)) {
                     ServerCell(server: loginServer)
                 }
 
-                NavigationLink(value: SidebarItem.charServer(charServer)) {
+                NavigationLink(value: SidebarItem.server(charServer)) {
                     ServerCell(server: charServer)
                 }
 
-                NavigationLink(value: SidebarItem.mapServer(mapServer)) {
+                NavigationLink(value: SidebarItem.server(mapServer)) {
                     ServerCell(server: mapServer)
                 }
 
-                NavigationLink(value: SidebarItem.webServer(webServer)) {
+                NavigationLink(value: SidebarItem.server(webServer)) {
                     ServerCell(server: webServer)
                 }
 
