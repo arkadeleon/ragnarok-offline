@@ -53,6 +53,18 @@ class ObservableServer {
     }
 }
 
+extension ObservableServer: Equatable {
+    static func == (lhs: ObservableServer, rhs: ObservableServer) -> Bool {
+        lhs.server == rhs.server
+    }
+}
+
+extension ObservableServer: Hashable {
+    func hash(into hasher: inout Hasher) {
+        server.hash(into: &hasher)
+    }
+}
+
 extension Server {
     public var statusPublisher: AnyPublisher<ServerStatus, Never> {
         publisher(for: \.status)
