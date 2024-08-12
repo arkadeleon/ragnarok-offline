@@ -1,5 +1,5 @@
 //
-//  LoginClientTests.swift
+//  ClientTests.swift
 //  RagnarokOfflineTests
 //
 //  Created by Leon Li on 2024/8/8.
@@ -11,9 +11,10 @@ import OSLog
 import rAthenaResources
 import rAthenaLogin
 import rAthenaChar
+import RONetwork
 @testable import ROClient
 
-final class LoginClientTests: XCTestCase {
+final class ClientTests: XCTestCase {
 
     let logger = Logger(subsystem: "ROClientTests", category: "LoginClientTests")
 
@@ -32,7 +33,7 @@ final class LoginClientTests: XCTestCase {
                     .replacingOccurrences(of: "\n", with: "\r\n")
             }
             .sink { [weak self] string in
-                self?.logger.info("\(string)")
+//                self?.logger.info("\(string)")
             }
 
         await LoginServer.shared.start()
@@ -47,34 +48,64 @@ final class LoginClientTests: XCTestCase {
 //        await CharServer.shared.stop()
     }
 
-    func testLogin() async throws {
+    func testClient() async throws {
+        let loginExpectation = expectation(description: "Login")
+        let charExpectation = expectation(description: "Char")
+
+        var _state = ClientState()
+        var _serverInfo: ServerInfo?
+
         let loginClient = LoginClient()
+        loginClient.onAcceptLogin = { state, serverInfoList in
+            XCTAssert(serverInfoList.count == 1)
 
-        let expectation = expectation(description: "Login")
+            _state = state
+            _serverInfo = serverInfoList[0]
 
-        loginClient.onAcceptLogin = { packet in
-            XCTAssert(packet.serverList.count == 1)
-            expectation.fulfill()
+            loginExpectation.fulfill()
         }
         loginClient.onRefuseLogin = { message in
             XCTAssert(false)
-            expectation.fulfill()
+            loginExpectation.fulfill()
         }
         loginClient.onNotifyBan = { message in
             XCTAssert(false)
-            expectation.fulfill()
+            loginExpectation.fulfill()
         }
         loginClient.onError = { error in
-            XCTAssert(false)
-            expectation.fulfill()
+            self.logger.error("\(error)")
         }
 
         loginClient.connect()
 
         let username = "ragnarok_m"
         let password = "ragnarok"
-        try loginClient.login(username: username, password: password)
+        loginClient.login(username: username, password: password)
 
-        await fulfillment(of: [expectation])
+        await fulfillment(of: [loginExpectation])
+
+        guard let _serverInfo else {
+            return
+        }
+
+        let charClient = CharClient(state: _state, serverInfo: _serverInfo)
+        charClient.onAcceptEnter = { charList in
+            XCTAssert(charList.count == 0)
+
+            charExpectation.fulfill()
+        }
+        charClient.onRefuseEnter = {
+            XCTAssert(false)
+            charExpectation.fulfill()
+        }
+        charClient.onError = { error in
+            self.logger.error("\(error)")
+        }
+
+        charClient.connect()
+
+        charClient.enter()
+
+        await fulfillment(of: [charExpectation])
     }
 }

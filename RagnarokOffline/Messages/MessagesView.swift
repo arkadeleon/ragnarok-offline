@@ -47,11 +47,11 @@ struct MessagesView: View {
             TextField("Password", text: $password)
             Button("Login") {
                 loginClient.connect()
-                try? loginClient.login(username: username, password: password)
+                loginClient.login(username: username, password: password)
             }
         }
         .task {
-            loginClient.onAcceptLogin = { packet in
+            loginClient.onAcceptLogin = { state, serverList in
                 let message = Message(sender: .server, content: "ACCEPT_LOGIN")
                 messages.append(message)
             }

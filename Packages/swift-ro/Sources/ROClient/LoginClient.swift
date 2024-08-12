@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Network
 import RONetwork
 import ROResources
 
@@ -22,45 +21,44 @@ import ROResources
 /// - ``PACKET_AC_REFUSE_LOGIN``
 /// - ``PACKET_SC_NOTIFY_BAN``
 public class LoginClient {
-    public var onAcceptLogin: ((PACKET_AC_ACCEPT_LOGIN) -> Void)?
+    public var onAcceptLogin: ((ClientState, [ServerInfo]) -> Void)?
     public var onRefuseLogin: ((String) -> Void)?
     public var onNotifyBan: ((String) -> Void)?
     public var onError: ((any Error) -> Void)?
 
-    private let encoder: PacketEncoder
-    private let decoder: PacketDecoder
-
-    private let connection: NWConnection
+    private let connection: ClientConnection
 
     public init() {
-        encoder = PacketEncoder()
-        decoder = PacketDecoder()
-
-        connection = NWConnection(host: .ipv4(.loopback), port: 6900, using: .tcp)
+        connection = ClientConnection(port: 6900)
     }
 
     public func connect() {
-        let queue = DispatchQueue(label: "")
-        connection.start(queue: queue)
-
-        connection.stateUpdateHandler = { state in
-            print(state)
+        connection.packetReceiveHandler = { packet in
+            self.receivePacket(packet)
+            self.connection.receivePacket()
+        }
+        connection.errorHandler = { error in
+            self.onError?(error)
         }
 
-        receiveNext()
+        connection.start()
     }
 
-    public func login(username: String, password: String) throws {
-        var login = PACKET_CA_LOGIN()
-        login.username = username
-        login.password = password
+    public func disconnect() {
+        connection.packetReceiveHandler = nil
+        connection.errorHandler = nil
 
-        let data = try encoder.encode(login)
-        connection.send(content: data, completion: .contentProcessed({ error in
-            if let error {
-                self.onError?(error)
-            }
-        }))
+        connection.cancel()
+    }
+
+    public func login(username: String, password: String) {
+        var packet = PACKET_CA_LOGIN()
+        packet.username = username
+        packet.password = password
+
+        connection.sendPacket(packet)
+
+        connection.receivePacket()
     }
 
     public func keepAlive(username: String) {
@@ -68,43 +66,35 @@ public class LoginClient {
             var packet = PACKET_CA_CONNECT_INFO_CHANGED()
             packet.name = username
 
-            let data = try? self.encoder.encode(packet)
-            self.connection.send(content: data, completion: .contentProcessed({ error in
-                if let error {
-                    self.onError?(error)
-                }
-            }))
+            self.connection.sendPacket(packet)
         }
     }
 
-    private func receiveNext() {
-        connection.receive(minimumIncompleteLength: 2, maximumLength: 1000) { [weak self] content, contentContext, isComplete, error in
-            if let content, let self {
-                do {
-                    let packet = try decoder.decode(from: content)
-                    switch packet {
-                    case let acceptLoginPacket as PACKET_AC_ACCEPT_LOGIN:
-                        onAcceptLogin?(acceptLoginPacket)
-                    case let refuseLoginPacket as PACKET_AC_REFUSE_LOGIN:
-                        onReceiveRefuseLoginPacket(refuseLoginPacket)
-                    case let notifyBanPacket as PACKET_SC_NOTIFY_BAN:
-                        onReceiveNotifyBanPacket(notifyBanPacket)
-                    default:
-                        onError?(PacketDecodingError.unknownPacket(packet.packetType))
-                    }
-                } catch {
-                    onError?(error)
-                }
-            }
-            if let error {
-                self?.onError?(error)
-            }
-
-            self?.receiveNext()
+    private func receivePacket(_ packet: any DecodablePacket) {
+        switch packet {
+        case let packet as PACKET_AC_ACCEPT_LOGIN:
+            receiveAcceptLoginPacket(packet)
+        case let packet as PACKET_AC_REFUSE_LOGIN:
+            receiveRefuseLoginPacket(packet)
+        case let packet as PACKET_SC_NOTIFY_BAN:
+            receiveNotifyBanPacket(packet)
+        default:
+            break
         }
     }
 
-    private func onReceiveRefuseLoginPacket(_ packet: PACKET_AC_REFUSE_LOGIN) {
+    private func receiveAcceptLoginPacket(_ packet: PACKET_AC_ACCEPT_LOGIN) {
+        let state = ClientState()
+        state.authCode = packet.authCode
+        state.aid = packet.aid
+        state.userLevel = packet.userLevel
+        state.sex = packet.sex
+        state.langType = 1
+
+        onAcceptLogin?(state, packet.serverList)
+    }
+
+    private func receiveRefuseLoginPacket(_ packet: PACKET_AC_REFUSE_LOGIN) {
         let messageCode = switch packet.errorCode {
         case   0: 6     // Unregistered ID
         case   1: 7     // Incorrect Password
@@ -138,7 +128,7 @@ public class LoginClient {
         }
     }
 
-    private func onReceiveNotifyBanPacket(_ packet: PACKET_SC_NOTIFY_BAN) {
+    private func receiveNotifyBanPacket(_ packet: PACKET_SC_NOTIFY_BAN) {
         let messageCode = switch packet.errorCode {
         case   0: 3     // Server closed
         case   1: 4     // Server closed
