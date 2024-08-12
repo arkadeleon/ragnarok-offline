@@ -23,8 +23,8 @@ public actor MonsterDatabase {
     public let mode: ServerMode
 
     private var cachedMonsters: [Monster] = []
-    private var cachedMonstersByIDs: [Int : Monster] = [:]
-    private var cachedMonstersByAegisNames: [String : Monster] = [:]
+    private var cachedMonstersByID: [Int : Monster] = [:]
+    private var cachedMonstersByAegisName: [String : Monster] = [:]
 
     private init(mode: ServerMode) {
         self.mode = mode
@@ -45,22 +45,22 @@ public actor MonsterDatabase {
     }
 
     public func monster(forID id: Int) throws -> Monster? {
-        if cachedMonstersByIDs.isEmpty {
+        if cachedMonstersByID.isEmpty {
             let monsters = try monsters()
-            cachedMonstersByIDs = Dictionary(monsters.map({ ($0.id, $0) }), uniquingKeysWith: { (first, _) in first })
+            cachedMonstersByID = Dictionary(monsters.map({ ($0.id, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        let monster = cachedMonstersByIDs[id]
+        let monster = cachedMonstersByID[id]
         return monster
     }
 
     public func monster(forAegisName aegisName: String) throws -> Monster? {
-        if cachedMonstersByAegisNames.isEmpty {
+        if cachedMonstersByAegisName.isEmpty {
             let monsters = try monsters()
-            cachedMonstersByAegisNames = Dictionary(monsters.map({ ($0.aegisName, $0) }), uniquingKeysWith: { (first, _) in first })
+            cachedMonstersByAegisName = Dictionary(monsters.map({ ($0.aegisName, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        let monster = cachedMonstersByAegisNames[aegisName]
+        let monster = cachedMonstersByAegisName[aegisName]
         return monster
     }
 }

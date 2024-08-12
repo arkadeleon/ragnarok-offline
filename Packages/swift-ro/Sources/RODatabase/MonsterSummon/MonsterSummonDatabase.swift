@@ -23,7 +23,7 @@ public actor MonsterSummonDatabase {
     public let mode: ServerMode
 
     private var cachedMonsterSummons: [MonsterSummon] = []
-    private var cachedMonsterSummonsByGroups: [String : MonsterSummon] = [:]
+    private var cachedMonsterSummonsByGroup: [String : MonsterSummon] = [:]
 
     private init(mode: ServerMode) {
         self.mode = mode
@@ -44,12 +44,12 @@ public actor MonsterSummonDatabase {
     }
 
     public func monsterSummon(forGroup group: String) throws -> MonsterSummon? {
-        if cachedMonsterSummonsByGroups.isEmpty {
+        if cachedMonsterSummonsByGroup.isEmpty {
             let monsterSummons = try monsterSummons()
-            cachedMonsterSummonsByGroups = Dictionary(monsterSummons.map({ ($0.group, $0) }), uniquingKeysWith: { (first, _) in first })
+            cachedMonsterSummonsByGroup = Dictionary(monsterSummons.map({ ($0.group, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        let monsterSummon = cachedMonsterSummonsByGroups[group]
+        let monsterSummon = cachedMonsterSummonsByGroup[group]
         return monsterSummon
     }
 }

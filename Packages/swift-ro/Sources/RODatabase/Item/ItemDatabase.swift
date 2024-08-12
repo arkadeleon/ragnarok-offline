@@ -26,8 +26,8 @@ public actor ItemDatabase {
     private var cachedEquipItems: [Item] = []
     private var cachedEtcItems: [Item] = []
     private var cachedItems: [Item] = []
-    private var cachedItemsByIDs: [Int : Item] = [:]
-    private var cachedItemsByAegisNames: [String : Item] = [:]
+    private var cachedItemsByID: [Int : Item] = [:]
+    private var cachedItemsByAegisName: [String : Item] = [:]
 
     private init(mode: ServerMode) {
         self.mode = mode
@@ -88,22 +88,22 @@ public actor ItemDatabase {
     }
 
     public func item(forID id: Int) throws -> Item? {
-        if cachedItemsByIDs.isEmpty {
+        if cachedItemsByID.isEmpty {
             let items = try items()
-            cachedItemsByIDs = Dictionary(items.map({ ($0.id, $0) }), uniquingKeysWith: { (first, _) in first })
+            cachedItemsByID = Dictionary(items.map({ ($0.id, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        let item = cachedItemsByIDs[id]
+        let item = cachedItemsByID[id]
         return item
     }
 
     public func item(forAegisName aegisName: String) throws -> Item? {
-        if cachedItemsByAegisNames.isEmpty {
+        if cachedItemsByAegisName.isEmpty {
             let items = try items()
-            cachedItemsByAegisNames = Dictionary(items.map({ ($0.aegisName, $0) }), uniquingKeysWith: { (first, _) in first })
+            cachedItemsByAegisName = Dictionary(items.map({ ($0.aegisName, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        let item = cachedItemsByAegisNames[aegisName]
+        let item = cachedItemsByAegisName[aegisName]
         return item
     }
 }

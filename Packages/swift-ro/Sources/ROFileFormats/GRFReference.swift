@@ -39,7 +39,7 @@ public class GRFReference {
         return directories
     }()
 
-    private lazy var entries: [String : GRF.Entry] = {
+    private lazy var entriesByPath: [String : GRF.Entry] = {
         guard let grf else {
             return [:]
         }
@@ -75,7 +75,7 @@ public class GRFReference {
     }
 
     public func entry(at path: GRF.Path) -> GRF.Entry? {
-        entries[path.string.uppercased()]
+        entriesByPath[path.string.uppercased()]
     }
 
     public func contentsOfEntry(at path: GRF.Path) throws -> Data {

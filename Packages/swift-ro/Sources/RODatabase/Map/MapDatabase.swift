@@ -23,7 +23,7 @@ public actor MapDatabase {
     public let mode: ServerMode
 
     private var cachedMaps: [Map] = []
-    private var cachedMapsByNames: [String : Map] = [:]
+    private var cachedMapsByName: [String : Map] = [:]
 
     private init(mode: ServerMode) {
         self.mode = mode
@@ -58,12 +58,12 @@ public actor MapDatabase {
     }
 
     public func map(forName name: String) throws -> Map? {
-        if cachedMapsByNames.isEmpty {
+        if cachedMapsByName.isEmpty {
             let maps = try maps()
-            cachedMapsByNames = Dictionary(maps.map({ ($0.name, $0) }), uniquingKeysWith: { (first, _) in first })
+            cachedMapsByName = Dictionary(maps.map({ ($0.name, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        let map = cachedMapsByNames[name]
+        let map = cachedMapsByName[name]
         return map
     }
 }

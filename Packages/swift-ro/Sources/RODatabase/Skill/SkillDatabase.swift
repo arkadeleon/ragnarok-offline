@@ -23,8 +23,8 @@ public actor SkillDatabase {
     public let mode: ServerMode
 
     private var cachedSkills: [Skill] = []
-    private var cachedSkillsByIDs: [Int : Skill] = [:]
-    private var cachedSkillsByAegisNames: [String : Skill] = [:]
+    private var cachedSkillsByID: [Int : Skill] = [:]
+    private var cachedSkillsByAegisName: [String : Skill] = [:]
 
     private init(mode: ServerMode) {
         self.mode = mode
@@ -45,22 +45,22 @@ public actor SkillDatabase {
     }
 
     public func skill(forID id: Int) throws -> Skill? {
-        if cachedSkillsByIDs.isEmpty {
+        if cachedSkillsByID.isEmpty {
             let skills = try skills()
-            cachedSkillsByIDs = Dictionary(skills.map({ ($0.id, $0) }), uniquingKeysWith: { (first, _) in first })
+            cachedSkillsByID = Dictionary(skills.map({ ($0.id, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        let skillTree = cachedSkillsByIDs[id]
+        let skillTree = cachedSkillsByID[id]
         return skillTree
     }
 
     public func skill(forAegisName aegisName: String) throws -> Skill? {
-        if cachedSkillsByAegisNames.isEmpty {
+        if cachedSkillsByAegisName.isEmpty {
             let skills = try skills()
-            cachedSkillsByAegisNames = Dictionary(skills.map({ ($0.aegisName, $0) }), uniquingKeysWith: { (first, _) in first })
+            cachedSkillsByAegisName = Dictionary(skills.map({ ($0.aegisName, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        let skill = cachedSkillsByAegisNames[aegisName]
+        let skill = cachedSkillsByAegisName[aegisName]
         return skill
     }
 }

@@ -23,7 +23,7 @@ public actor StatusChangeDatabase {
     public let mode: ServerMode
 
     private var cachedStatusChanges: [StatusChange] = []
-    private var cachedStatusChangesByNames: [String : StatusChange] = [:]
+    private var cachedStatusChangesByName: [String : StatusChange] = [:]
 
     private init(mode: ServerMode) {
         self.mode = mode
@@ -44,12 +44,12 @@ public actor StatusChangeDatabase {
     }
 
     public func statusChange(forName name: String) throws -> StatusChange? {
-        if cachedStatusChangesByNames.isEmpty {
+        if cachedStatusChangesByName.isEmpty {
             let statusChanges = try statusChanges()
-            cachedStatusChangesByNames = Dictionary(statusChanges.map({ ($0.status, $0) }), uniquingKeysWith: { (first, _) in first })
+            cachedStatusChangesByName = Dictionary(statusChanges.map({ ($0.status, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        let statusChange = cachedStatusChangesByNames[name]
+        let statusChange = cachedStatusChangesByName[name]
         return statusChange
     }
 }

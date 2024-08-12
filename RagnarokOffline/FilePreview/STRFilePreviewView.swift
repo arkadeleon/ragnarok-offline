@@ -44,10 +44,10 @@ struct STRFilePreviewView: View {
         let device = MTLCreateSystemDefaultDevice()!
         let textureLoader = MTKTextureLoader(device: device)
 
-        var textures: [String : any MTLTexture] = [:]
+        var texturesByName: [String : any MTLTexture] = [:]
 
         let effect = Effect(str: str) { textureName in
-            if let texture = textures[textureName] {
+            if let texture = texturesByName[textureName] {
                 return texture
             }
             let texturePath = GRF.Path(string: path.parent.string + "\\" + textureName)
@@ -55,7 +55,7 @@ struct STRFilePreviewView: View {
                 return nil
             }
             let texture = textureLoader.newTexture(bmpData: data)
-            textures[textureName] = texture
+            texturesByName[textureName] = texture
             return texture
         }
 

@@ -23,7 +23,7 @@ public actor PetDatabase {
     public let mode: ServerMode
 
     private var cachedPets: [Pet] = []
-    private var cachedPetsByAegisNames: [String : Pet] = [:]
+    private var cachedPetsByAegisName: [String : Pet] = [:]
 
     private init(mode: ServerMode) {
         self.mode = mode
@@ -44,12 +44,12 @@ public actor PetDatabase {
     }
 
     public func pet(forAegisName aegisName: String) throws -> Pet? {
-        if cachedPetsByAegisNames.isEmpty {
+        if cachedPetsByAegisName.isEmpty {
             let pets = try pets()
-            cachedPetsByAegisNames = Dictionary(pets.map({ ($0.monster, $0) }), uniquingKeysWith: { (first, _) in first })
+            cachedPetsByAegisName = Dictionary(pets.map({ ($0.monster, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        let pet = cachedPetsByAegisNames[aegisName]
+        let pet = cachedPetsByAegisName[aegisName]
         return pet
     }
 }

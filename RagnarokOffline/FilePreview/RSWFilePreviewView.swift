@@ -56,10 +56,10 @@ struct RSWFilePreviewView: View {
 //            return texture
 //        }
 
-        var modelEntities: [String : Entity] = [:]
+        var modelEntitiesByName: [String : Entity] = [:]
 
         for model in rsw.models {
-            if !modelEntities.contains(where: { $0.key == model.modelName }) {
+            if !modelEntitiesByName.contains(where: { $0.key == model.modelName }) {
                 let path = GRF.Path(string: "data\\model\\" + model.modelName)
                 let data = try grf.contentsOfEntry(at: path)
                 let rsm = try RSM(data: data)
@@ -81,10 +81,10 @@ struct RSWFilePreviewView: View {
                     return texture?.removingMagentaPixels()
                 }
 
-                modelEntities[model.modelName] = modelEntity
+                modelEntitiesByName[model.modelName] = modelEntity
             }
 
-            let modelEntity = modelEntities[model.modelName]!
+            let modelEntity = modelEntitiesByName[model.modelName]!
             let modelEntityClone = await modelEntity.clone(recursive: true)
 
             await MainActor.run {
