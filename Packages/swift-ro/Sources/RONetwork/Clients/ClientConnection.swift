@@ -7,7 +7,6 @@
 
 import Foundation
 import Network
-import RONetwork
 
 class ClientConnection {
     let connection: NWConnection

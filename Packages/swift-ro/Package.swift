@@ -51,7 +51,6 @@ let package = Package(
                 "RODatabase",
                 "ROFileFormats",
                 "ROFileSystem",
-                "RONetwork",
                 "ROResources",
             ],
             swiftSettings: [
@@ -101,10 +100,12 @@ let package = Package(
             name: "RONetwork",
             dependencies: [
                 .product(name: "rAthenaCommon", package: "swift-rathena"),
+                "ROResources",
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
                 .enableUpcomingFeature("GlobalConcurrency"),
+                .interoperabilityMode(.Cxx),
             ]),
         .target(
             name: "RORenderers",
@@ -144,20 +145,6 @@ let package = Package(
                 .enableUpcomingFeature("GlobalConcurrency"),
             ]),
         .testTarget(
-            name: "ROClientTests",
-            dependencies: [
-                .product(name: "rAthenaResources", package: "swift-rathena"),
-                .product(name: "rAthenaLogin", package: "swift-rathena"),
-                .product(name: "rAthenaChar", package: "swift-rathena"),
-                .product(name: "rAthenaMap", package: "swift-rathena"),
-                "ROClient",
-            ],
-            swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("GlobalConcurrency"),
-                .interoperabilityMode(.Cxx),
-            ]),
-        .testTarget(
             name: "RODatabaseTests",
             dependencies: [
                 "RODatabase",
@@ -179,6 +166,20 @@ let package = Package(
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
                 .enableUpcomingFeature("GlobalConcurrency"),
+            ]),
+        .testTarget(
+            name: "RONetworkTests",
+            dependencies: [
+                .product(name: "rAthenaResources", package: "swift-rathena"),
+                .product(name: "rAthenaLogin", package: "swift-rathena"),
+                .product(name: "rAthenaChar", package: "swift-rathena"),
+                .product(name: "rAthenaMap", package: "swift-rathena"),
+                "RONetwork",
+            ],
+            swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
+                .enableUpcomingFeature("GlobalConcurrency"),
+                .interoperabilityMode(.Cxx),
             ]),
         .testTarget(
             name: "ROResourcesTests",

@@ -12,8 +12,7 @@ import rAthenaResources
 import rAthenaLogin
 import rAthenaChar
 import rAthenaMap
-import RONetwork
-@testable import ROClient
+@testable import RONetwork
 
 final class ClientTests: XCTestCase {
 

@@ -15,13 +15,6 @@
     {
       "target" : {
         "containerPath" : "container:Packages\/swift-ro",
-        "identifier" : "ROClientTests",
-        "name" : "ROClientTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/swift-ro",
         "identifier" : "RODatabaseTests",
         "name" : "RODatabaseTests"
       }
@@ -38,6 +31,13 @@
         "containerPath" : "container:Packages\/swift-ro",
         "identifier" : "ROResourcesTests",
         "name" : "ROResourcesTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/swift-ro",
+        "identifier" : "RONetworkTests",
+        "name" : "RONetworkTests"
       }
     }
   ],

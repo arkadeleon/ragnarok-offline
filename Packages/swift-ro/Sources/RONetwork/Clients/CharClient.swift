@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import RONetwork
 
 public class CharClient {
     public let state: ClientState
