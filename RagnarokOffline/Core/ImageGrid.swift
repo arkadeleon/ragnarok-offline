@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ImageGrid<Content>: View where Content: View {
-    var content: () -> Content
+    @ViewBuilder var content: () -> Content
 
     var body: some View {
         ScrollView {
@@ -22,10 +22,6 @@ struct ImageGrid<Content>: View where Content: View {
                     .padding(.vertical, 60)
             }
         }
-    }
-
-    init(@ViewBuilder content: @escaping () -> Content) {
-        self.content = content
     }
 }
 

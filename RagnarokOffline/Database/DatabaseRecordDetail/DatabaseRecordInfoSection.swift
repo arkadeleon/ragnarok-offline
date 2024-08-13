@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct DatabaseRecordInfoSection<Header, Content>: View where Header: View, Content: View {
-    let verticalSpacing: CGFloat
-    let header: () -> Header
-    let content: () -> Content
+struct DatabaseRecordInfoSection<Content, Header>: View where Content: View, Header: View {
+    var verticalSpacing: CGFloat?
+    @ViewBuilder var content: () -> Content
+    @ViewBuilder var header: () -> Header
 
     var body: some View {
         VStack(spacing: 0) {
@@ -26,22 +26,24 @@ struct DatabaseRecordInfoSection<Header, Content>: View where Header: View, Cont
 
             content()
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.vertical, verticalSpacing)
+                .padding(.vertical, verticalSpacing ?? 10)
 
             Divider()
         }
         .padding(.horizontal, 20)
     }
 
-    init(_ titleKey: LocalizedStringKey, verticalSpacing: CGFloat = 10, @ViewBuilder content: @escaping () -> Content) where Header == Text {
+    init(_ titleKey: LocalizedStringKey, verticalSpacing: CGFloat? = nil, @ViewBuilder content: @escaping () -> Content) where Header == Text {
         self.verticalSpacing = verticalSpacing
-        self.header = { Text(titleKey) }
         self.content = content
+        self.header = {
+            Text(titleKey)
+        }
     }
 
-    init(verticalSpacing: CGFloat = 10, @ViewBuilder content: @escaping () -> Content, @ViewBuilder header: @escaping () -> Header) {
+    init(verticalSpacing: CGFloat? = nil, @ViewBuilder content: @escaping () -> Content, @ViewBuilder header: @escaping () -> Header) {
         self.verticalSpacing = verticalSpacing
-        self.header = header
         self.content = content
+        self.header = header
     }
 }

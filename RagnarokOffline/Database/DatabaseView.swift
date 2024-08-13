@@ -10,8 +10,8 @@ import RODatabase
 
 struct DatabaseView<RecordProvider, Content, Empty>: View where RecordProvider: DatabaseRecordProvider, Content: View, Empty: View {
     @Binding var database: ObservableDatabase<RecordProvider>
-    var content: ([RecordProvider.Record]) -> Content
-    var empty: () -> Empty
+    @ViewBuilder var content: ([RecordProvider.Record]) -> Content
+    @ViewBuilder var empty: () -> Empty
 
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
@@ -73,12 +73,6 @@ struct DatabaseView<RecordProvider, Content, Empty>: View where RecordProvider: 
             .task {
                 await database.fetchRecords()
             }
-    }
-
-    init(database: Binding<ObservableDatabase<RecordProvider>>, @ViewBuilder content: @escaping ([RecordProvider.Record]) -> Content, @ViewBuilder empty: @escaping () -> Empty) {
-        _database = database
-        self.content = content
-        self.empty = empty
     }
 }
 

@@ -10,6 +10,15 @@ import SwiftUI
 struct FileRawDataView: View {
     var file: ObservableFile
 
+    var body: some View {
+        WebView(htmlString: htmlString, baseURL: baseURL)
+            .ignoresSafeArea()
+            .navigationTitle("Raw Data")
+            #if !os(macOS)
+            .navigationBarTitleDisplayMode(.inline)
+            #endif
+    }
+
     private var htmlString: String {
         guard let rawData = file.rawData, let json = String(data: rawData, encoding: .utf8) else {
             return ""
@@ -39,15 +48,6 @@ struct FileRawDataView: View {
 
     private var baseURL: URL? {
         Bundle.main.resourceURL?.appendingPathComponent("json-viewer")
-    }
-
-    var body: some View {
-        WebView(htmlString: htmlString, baseURL: baseURL)
-            .ignoresSafeArea()
-            .navigationTitle("Raw Data")
-            #if !os(macOS)
-            .navigationBarTitleDisplayMode(.inline)
-            #endif
     }
 }
 

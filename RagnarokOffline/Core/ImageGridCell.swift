@@ -10,7 +10,7 @@ import SwiftUI
 struct ImageGridCell<Image>: View where Image: View {
     var title: String
     var subtitle: String?
-    var image: () -> Image
+    @ViewBuilder var image: () -> Image
 
     var body: some View {
         VStack {
@@ -51,12 +51,6 @@ struct ImageGridCell<Image>: View where Image: View {
             }
         }
         .frame(maxHeight: .infinity, alignment: .top)
-    }
-
-    init(title: String, subtitle: String? = nil, @ViewBuilder image: @escaping () -> Image) {
-        self.title = title
-        self.subtitle = subtitle
-        self.image = image
     }
 }
 

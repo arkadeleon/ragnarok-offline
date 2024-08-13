@@ -16,7 +16,7 @@ enum AsyncContentStatus<Value> {
 
 struct AsyncContentView<Value, Content>: View where Content: View {
     var load: () async throws -> Value
-    var content: (Value) -> Content
+    @ViewBuilder var content: (Value) -> Content
 
     @State private var status: AsyncContentStatus<Value> = .notYetLoaded
 
@@ -44,11 +44,6 @@ struct AsyncContentView<Value, Content>: View where Content: View {
                 status = .failed(error)
             }
         }
-    }
-
-    init(load: @escaping () async throws -> Value, @ViewBuilder content: @escaping (Value) -> Content) {
-        self.load = load
-        self.content = content
     }
 }
 
