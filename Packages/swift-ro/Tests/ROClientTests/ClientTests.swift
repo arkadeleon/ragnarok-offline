@@ -11,6 +11,7 @@ import OSLog
 import rAthenaResources
 import rAthenaLogin
 import rAthenaChar
+import rAthenaMap
 import RONetwork
 @testable import ROClient
 
@@ -38,6 +39,7 @@ final class ClientTests: XCTestCase {
 
         await LoginServer.shared.start()
         await CharServer.shared.start()
+        await MapServer.shared.start()
 
         // Wait char server connect to login server.
         try await Task.sleep(nanoseconds: NSEC_PER_SEC)
@@ -46,11 +48,14 @@ final class ClientTests: XCTestCase {
     override func tearDown() async throws {
 //        await LoginServer.shared.stop()
 //        await CharServer.shared.stop()
+//        await MapServer.shared.stop()
     }
 
     func testClient() async throws {
         let loginExpectation = expectation(description: "Login")
-        let charExpectation = expectation(description: "Char")
+        let enterCharExpectation = expectation(description: "EnterChar")
+        let makeCharExpectation = expectation(description: "MakeChar")
+        let selectCharExpectation = expectation(description: "SelectChar")
 
         var _state = ClientState()
         var _serverInfo: ServerInfo?
@@ -84,19 +89,15 @@ final class ClientTests: XCTestCase {
 
         await fulfillment(of: [loginExpectation])
 
-        guard let _serverInfo else {
-            return
-        }
-
-        let charClient = CharClient(state: _state, serverInfo: _serverInfo)
+        let charClient = CharClient(state: _state, serverInfo: _serverInfo!)
         charClient.onAcceptEnter = { charList in
             XCTAssert(charList.count == 0)
 
-            charExpectation.fulfill()
+            enterCharExpectation.fulfill()
         }
         charClient.onRefuseEnter = {
             XCTAssert(false)
-            charExpectation.fulfill()
+            enterCharExpectation.fulfill()
         }
         charClient.onError = { error in
             self.logger.error("\(error)")
@@ -106,6 +107,26 @@ final class ClientTests: XCTestCase {
 
         charClient.enter()
 
-        await fulfillment(of: [charExpectation])
+        await fulfillment(of: [enterCharExpectation])
+
+        charClient.onAcceptMakeChar = {
+            makeCharExpectation.fulfill()
+        }
+        charClient.onRefuseMakeChar = {
+            XCTAssert(false)
+            makeCharExpectation.fulfill()
+        }
+
+        charClient.makeChar(name: "Leon", str: 1, agi: 1, vit: 1, int: 1, dex: 1, luk: 1)
+
+        await fulfillment(of: [makeCharExpectation])
+
+        charClient.onNotifyZoneServer = { mapName, ip, port in
+            selectCharExpectation.fulfill()
+        }
+
+        charClient.selectChar(charNum: 0)
+
+        await fulfillment(of: [selectCharExpectation])
     }
 }

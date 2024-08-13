@@ -16,6 +16,9 @@ public class CharClient {
     public var onAcceptEnterHeader: (() -> Void)?
     public var onAcceptEnter: (([CharInfo]) -> Void)?
     public var onRefuseEnter: (() -> Void)?
+    public var onAcceptMakeChar: (() -> Void)?
+    public var onRefuseMakeChar: (() -> Void)?
+    public var onNotifyZoneServer: ((String, UInt32, UInt16) -> Void)?
     public var onError: ((any Error) -> Void)?
 
     public init(state: ClientState, serverInfo: ServerInfo) {
@@ -60,6 +63,26 @@ public class CharClient {
         }
     }
 
+    public func makeChar(name: String, str: UInt8, agi: UInt8, vit: UInt8, int: UInt8, dex: UInt8, luk: UInt8) {
+        var packet = PACKET_CH_MAKE_CHAR()
+        packet.name = name
+        packet.str = str
+        packet.agi = agi
+        packet.vit = vit
+        packet.int = int
+        packet.dex = dex
+        packet.luk = luk
+
+        connection.sendPacket(packet)
+    }
+
+    public func selectChar(charNum: UInt8) {
+        var packet = PACKET_CH_SELECT_CHAR()
+        packet.charNum = charNum
+
+        connection.sendPacket(packet)
+    }
+
     public func keepAlive() {
         Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { _ in
             var packet = PACKET_CZ_PING()
@@ -81,6 +104,8 @@ public class CharClient {
             receiveAcceptMakeCharPacket(packet)
         case let packet as PACKET_HC_REFUSE_MAKECHAR:
             receiveRefuseMakeCharPacket(packet)
+        case let packet as PACKET_HC_NOTIFY_ZONESVR:
+            onNotifyZoneServer?(packet.mapName, packet.serverInfo.ip, packet.serverInfo.port)
         default:
             break
         }
@@ -99,8 +124,10 @@ public class CharClient {
     }
 
     private func receiveAcceptMakeCharPacket(_ packet: PACKET_HC_ACCEPT_MAKECHAR_NEO_UNION) {
+        onAcceptMakeChar?()
     }
 
     private func receiveRefuseMakeCharPacket(_ packet: PACKET_HC_REFUSE_MAKECHAR) {
+        onRefuseMakeChar?()
     }
 }

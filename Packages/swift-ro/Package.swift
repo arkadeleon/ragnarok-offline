@@ -149,6 +149,7 @@ let package = Package(
                 .product(name: "rAthenaResources", package: "swift-rathena"),
                 .product(name: "rAthenaLogin", package: "swift-rathena"),
                 .product(name: "rAthenaChar", package: "swift-rathena"),
+                .product(name: "rAthenaMap", package: "swift-rathena"),
                 "ROClient",
             ],
             swiftSettings: [
