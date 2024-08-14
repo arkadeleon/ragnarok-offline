@@ -14,9 +14,10 @@ public struct PACKET_CA_CONNECT_INFO_CHANGED: EncodablePacket {
         2 + 24
     }
 
-    public var name = ""
+    public var name: String
 
     public init() {
+        name = ""
     }
 
     public func encode(to encoder: BinaryEncoder) throws {

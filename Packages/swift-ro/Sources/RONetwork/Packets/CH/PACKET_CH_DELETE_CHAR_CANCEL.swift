@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/4/8.
 //
 
+/// See `chclif_parse_char_delete2_cancel`
 public struct PACKET_CH_DELETE_CHAR_CANCEL: EncodablePacket {
     public static var packetType: UInt16 {
         0x82b
@@ -14,9 +15,10 @@ public struct PACKET_CH_DELETE_CHAR_CANCEL: EncodablePacket {
         2 + 4
     }
 
-    public var gid: UInt32 = 0
+    public var gid: UInt32
 
     public init() {
+        gid = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {

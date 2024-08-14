@@ -50,6 +50,9 @@ public class LoginClient {
         connection.cancel()
     }
 
+    /// Send ``PACKET_CA_LOGIN``
+    /// Receive ``PACKET_AC_ACCEPT_LOGIN`` on success
+    /// Receive ``PACKET_AC_REFUSE_LOGIN`` on failure
     public func login(username: String, password: String) {
         var packet = PACKET_CA_LOGIN()
         packet.username = username
@@ -60,6 +63,7 @@ public class LoginClient {
         connection.receivePacket()
     }
 
+    /// Send ``PACKET_CA_CONNECT_INFO_CHANGED`` every 10 seconds
     public func keepAlive(username: String) {
         Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { _ in
             var packet = PACKET_CA_CONNECT_INFO_CHANGED()

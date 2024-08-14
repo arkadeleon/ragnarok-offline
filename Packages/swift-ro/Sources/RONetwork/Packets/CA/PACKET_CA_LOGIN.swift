@@ -14,12 +14,16 @@ public struct PACKET_CA_LOGIN: EncodablePacket {
         2 + 4 + 24 + 24 + 1
     }
 
-    public var version: UInt32 = 0
-    public var username = ""
-    public var password = ""
-    public var clientType: UInt8 = 0
+    public var version: UInt32
+    public var username: String
+    public var password: String
+    public var clientType: UInt8
 
     public init() {
+        version = 0
+        username = ""
+        password = ""
+        clientType = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {

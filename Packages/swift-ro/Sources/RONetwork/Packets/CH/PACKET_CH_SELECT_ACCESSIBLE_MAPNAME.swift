@@ -14,10 +14,12 @@ public struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME: EncodablePacket {
         2 + 1 + 1
     }
 
-    public var slot: UInt8 = 0
-    public var mapNumber: UInt8 = 0
+    public var slot: UInt8
+    public var mapNumber: UInt8
 
     public init() {
+        slot = 0
+        mapNumber = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {

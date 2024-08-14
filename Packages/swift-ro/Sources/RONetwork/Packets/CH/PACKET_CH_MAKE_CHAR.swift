@@ -26,20 +26,32 @@ public struct PACKET_CH_MAKE_CHAR: EncodablePacket {
         }
     }
 
-    public var name = ""
-    public var str: UInt8 = 0
-    public var agi: UInt8 = 0
-    public var vit: UInt8 = 0
-    public var int: UInt8 = 0
-    public var dex: UInt8 = 0
-    public var luk: UInt8 = 0
-    public var charNum: UInt8 = 0
-    public var headPal: UInt16 = 0
-    public var head: UInt16 = 0
-    public var job: UInt16 = 0
-    public var sex: UInt8 = 0
+    public var name: String
+    public var str: UInt8
+    public var agi: UInt8
+    public var vit: UInt8
+    public var int: UInt8
+    public var dex: UInt8
+    public var luk: UInt8
+    public var charNum: UInt8
+    public var headPal: UInt16
+    public var head: UInt16
+    public var job: UInt16
+    public var sex: UInt8
 
     public init() {
+        name = ""
+        str = 0
+        agi = 0
+        vit = 0
+        int = 0
+        dex = 0
+        luk = 0
+        charNum = 0
+        headPal = 0
+        head = 0
+        job = 0
+        sex = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {

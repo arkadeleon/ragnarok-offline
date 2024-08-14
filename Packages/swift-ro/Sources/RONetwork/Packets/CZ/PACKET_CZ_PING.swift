@@ -14,9 +14,10 @@ public struct PACKET_CZ_PING: EncodablePacket {
         2 + 4
     }
 
-    public var aid: UInt32 = 0
+    public var aid: UInt32
 
     public init() {
+        aid = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {

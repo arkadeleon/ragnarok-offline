@@ -14,9 +14,10 @@ public struct PACKET_CH_SELECT_CHAR: EncodablePacket {
         2 + 1
     }
 
-    public var charNum: UInt8 = 0
+    public var charNum: UInt8
 
     public init() {
+        charNum = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {

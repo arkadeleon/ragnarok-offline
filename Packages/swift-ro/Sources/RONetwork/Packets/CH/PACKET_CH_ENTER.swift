@@ -14,13 +14,18 @@ public struct PACKET_CH_ENTER: EncodablePacket {
         2 + 4 + 4 + 4 + 2 + 1
     }
 
-    public var aid: UInt32 = 0
-    public var authCode: UInt32 = 0
-    public var userLevel: UInt32 = 0
-    public var clientType: UInt16 = 0
-    public var sex: UInt8 = 0
+    public var aid: UInt32
+    public var authCode: UInt32
+    public var userLevel: UInt32
+    public var clientType: UInt16
+    public var sex: UInt8
 
     public init() {
+        aid = 0
+        authCode = 0
+        userLevel = 0
+        clientType = 0
+        sex = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {

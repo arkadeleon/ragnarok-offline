@@ -18,6 +18,7 @@ public struct PACKET_SC_NOTIFY_BAN: DecodablePacket {
 
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
+
         errorCode = try decoder.decode(UInt8.self)
     }
 }

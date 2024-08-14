@@ -18,6 +18,7 @@ public struct PACKET_HC_REFUSE_ENTER: DecodablePacket {
 
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
+
         errorCode = try decoder.decode(UInt8.self)
     }
 }

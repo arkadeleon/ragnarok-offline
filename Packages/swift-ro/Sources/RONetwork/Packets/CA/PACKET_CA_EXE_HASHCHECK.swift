@@ -14,9 +14,10 @@ public struct PACKET_CA_EXE_HASHCHECK: EncodablePacket {
         2 + 16
     }
 
-    public var hashValue = [UInt8](repeating: 0, count: 16)
+    public var hashValue: [UInt8]
 
     public init() {
+        hashValue = [UInt8](repeating: 0, count: 16)
     }
 
     public func encode(to encoder: BinaryEncoder) throws {
