@@ -6,24 +6,23 @@
 //
 
 import SwiftUI
-import RONetwork
 
 struct MessagesView: View {
-    @State private var loginClient = LoginClient()
+    @State private var conversation = Conversation()
 
-    @State private var messages: [Message] = []
     @State private var editingMessageContent = ""
 
-    @State private var isLoginAlertPresented = false
-    @State private var username = ""
-    @State private var password = ""
+    @State private var pendingCommand: MessageCommand?
+    @State private var commandArguments: [String] = []
+
+    @State private var isArgumentsAlertPresented = false
 
     var body: some View {
         VStack {
             ScrollViewReader { proxy in
                 ScrollView {
                     LazyVStack {
-                        ForEach(messages) { message in
+                        ForEach(conversation.messages) { message in
                             MessageCell(message: message)
                         }
                     }
@@ -31,8 +30,9 @@ struct MessagesView: View {
             }
 
             HStack {
-                TextField("", text: $editingMessageContent)
+                TextField("Command", text: $editingMessageContent)
                     .textFieldStyle(.roundedBorder)
+
                 Button {
                     sendMessage()
                 } label: {
@@ -42,30 +42,25 @@ struct MessagesView: View {
             .padding()
         }
         .navigationTitle("Messages")
-        .alert("", isPresented: $isLoginAlertPresented) {
-            TextField("Username", text: $username)
-            TextField("Password", text: $password)
-            Button("Login") {
-                loginClient.connect()
-                loginClient.login(username: username, password: password)
+        .toolbar {
+            Menu {
+                ForEach(MessageCommand.allCases) { command in
+                    Button(command.rawValue) {
+                        executeCommand(command)
+                    }
+                }
+            } label: {
+                Image(systemName: "ellipsis.circle")
             }
         }
-        .task {
-            loginClient.onAcceptLogin = { state, serverList in
-                let message = Message(sender: .server, content: "ACCEPT_LOGIN")
-                messages.append(message)
+        .alert(pendingCommand?.rawValue ?? "", isPresented: $isArgumentsAlertPresented) {
+            ForEach(0..<(pendingCommand?.arguments.count ?? 0), id: \.self) { index in
+                TextField(pendingCommand?.arguments[index] ?? "", text: $commandArguments[index])
             }
-            loginClient.onRefuseLogin = { message in
-                let message = Message(sender: .server, content: "REFUSE_LOGIN")
-                messages.append(message)
-            }
-            loginClient.onNotifyBan = { message in
-                let message = Message(sender: .server, content: "NOTIFY_BAN")
-                messages.append(message)
-            }
-            loginClient.onError = { error in
-                let message = Message(sender: .server, content: error.localizedDescription)
-                messages.append(message)
+
+            Button("Done") {
+                conversation.executeCommand(pendingCommand!, arguments: commandArguments)
+                pendingCommand = nil
             }
         }
     }
@@ -75,17 +70,26 @@ struct MessagesView: View {
             return
         }
 
-        let message = Message(sender: .client, content: editingMessageContent)
-        messages.append(message)
-
-        switch editingMessageContent.lowercased() {
-        case "login":
-            isLoginAlertPresented.toggle()
-        default:
-            break
+        if let command = MessageCommand(rawValue: editingMessageContent) {
+            executeCommand(command)
+        } else {
+            let message = Message(sender: .client, content: editingMessageContent)
+            conversation.messages.append(message)
         }
 
         editingMessageContent = ""
+    }
+
+    private func executeCommand(_ command: MessageCommand) {
+        conversation.showCommand(command)
+
+        if command.arguments.isEmpty {
+            conversation.executeCommand(command)
+        } else {
+            pendingCommand = command
+            commandArguments = .init(repeating: "", count: command.arguments.count)
+            isArgumentsAlertPresented.toggle()
+        }
     }
 }
 
