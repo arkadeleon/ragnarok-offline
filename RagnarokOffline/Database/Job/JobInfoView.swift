@@ -122,7 +122,7 @@ struct JobInfoView: View {
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 .foregroundStyle(Color.secondary)
 
-                            Text("")
+                            Text(verbatim: "")
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 .foregroundStyle(Color.secondary)
                         }
@@ -139,7 +139,7 @@ struct JobInfoView: View {
                     Text("Bonus Stats")
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
-                    Text("")
+                    Text(verbatim: "")
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                 }
             }

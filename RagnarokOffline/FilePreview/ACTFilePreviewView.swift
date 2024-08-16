@@ -34,7 +34,7 @@ struct ACTFilePreviewView: View {
                                 .contextMenu {
                                     ShareLink(
                                         item: TransferableAnimatedImage(name: String(format: "%@.%03d.png", file.file.name, action.index), image: action.animatedImage),
-                                        preview: SharePreview(file.file.name, image: Image(action.animatedImage.images[0], scale: 1, label: Text("")))
+                                        preview: SharePreview(file.file.name, image: Image(action.animatedImage.images[0], scale: 1, label: Text(verbatim: "")))
                                     )
                                 }
                         }

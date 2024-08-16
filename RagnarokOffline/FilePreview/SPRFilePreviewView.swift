@@ -27,12 +27,12 @@ struct SPRFilePreviewView: View {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: section.spriteSize.width), spacing: 16)], spacing: 32) {
                     ForEach(section.sprites, id: \.index) { sprite in
-                        Image(sprite.image, scale: 1, label: Text(""))
+                        Image(sprite.image, scale: 1, label: Text(verbatim: ""))
                             .frame(width: section.spriteSize.width, height: section.spriteSize.height)
                             .contextMenu {
                                 ShareLink(
                                     item: TransferableImage(name: String(format: "%@.%03d.png", file.file.name, sprite.index), image: sprite.image),
-                                    preview: SharePreview(file.file.name, image: Image(sprite.image, scale: 1, label: Text("")))
+                                    preview: SharePreview(file.file.name, image: Image(sprite.image, scale: 1, label: Text(verbatim: "")))
                                 )
                             }
                     }

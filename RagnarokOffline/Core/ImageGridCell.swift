@@ -23,11 +23,11 @@ struct ImageGridCell<Image>: View where Image: View {
             ZStack(alignment: .top) {
                 // This VStack is just for reserving space.
                 VStack(spacing: 2) {
-                    Text(" ")
+                    Text(verbatim: " ")
                         .font(.body)
                         .lineLimit(2, reservesSpace: true)
 
-                    Text(" ")
+                    Text(verbatim: " ")
                         .font(.footnote)
                         .lineLimit(1, reservesSpace: true)
                 }

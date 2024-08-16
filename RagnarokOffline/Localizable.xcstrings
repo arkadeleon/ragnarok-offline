@@ -1,12 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-
-    },
-    " " : {
-
-    },
     "%lld monsters" : {
 
     },
@@ -140,9 +134,6 @@
 
     },
     "Element Level" : {
-
-    },
-    "Empty Content" : {
 
     },
     "End On End" : {

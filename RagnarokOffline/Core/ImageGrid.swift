@@ -27,6 +27,12 @@ struct ImageGrid<Content>: View where Content: View {
 
 #Preview {
     ImageGrid {
-        Text("")
+        Image(systemName: "folder")
+        Image(systemName: "folder")
+        Image(systemName: "folder")
+        Image(systemName: "folder")
+        Image(systemName: "folder")
+        Image(systemName: "folder")
     }
+    .font(.system(size: 30))
 }

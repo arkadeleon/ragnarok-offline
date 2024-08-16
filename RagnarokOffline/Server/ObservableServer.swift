@@ -86,7 +86,8 @@ extension ServerStatus: CustomLocalizedStringResourceConvertible {
         case .running: "RUNNING"
         case .stopping: "STOPPING"
         case .stopped: "STOPPED"
-        @unknown default: ""
+        @unknown default:
+            fatalError()
         }
     }
 }
