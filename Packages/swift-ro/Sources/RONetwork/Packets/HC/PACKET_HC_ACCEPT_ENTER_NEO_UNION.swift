@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2021/7/7.
 //
 
+/// See `chclif_mmo_send006b`
 public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION: DecodablePacket {
     public static var packetType: UInt16 {
         0x6b

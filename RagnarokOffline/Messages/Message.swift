@@ -13,6 +13,14 @@ struct Message: Identifiable {
         case server
     }
 
+    static func client(_ content: String) -> Message {
+        Message(sender: .client, content: content)
+    }
+
+    static func server(_ content: String) -> Message {
+        Message(sender: .server, content: content)
+    }
+
     var id = UUID()
     var sender: Sender
     var content: String
@@ -33,8 +41,14 @@ enum MessageCommand: String, CaseIterable, Identifiable {
         switch self {
         case .login:
             ["Username", "Password"]
-        default:
-            []
+        case .enterChar:
+            ["Server Number"]
+        case .makeChar:
+            ["Name", "Str", "Agi", "Vit", "Int", "Dex", "Luk"]
+        case .deleteChar:
+            ["Char ID"]
+        case .selectChar:
+            ["Char Number"]
         }
     }
 }

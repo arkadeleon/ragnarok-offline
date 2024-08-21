@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MessagesView: View {
-    @State private var conversation = Conversation()
+    @Environment(\.conversation) private var conversation
 
     @State private var editingMessageContent = ""
 
@@ -18,44 +18,47 @@ struct MessagesView: View {
     @State private var isArgumentsAlertPresented = false
 
     var body: some View {
-        VStack {
-            ScrollViewReader { proxy in
-                ScrollView {
-                    LazyVStack {
-                        ForEach(conversation.messages) { message in
-                            MessageCell(message: message)
-                        }
+        ScrollViewReader { proxy in
+            ScrollView {
+                LazyVStack {
+                    ForEach(conversation.messages) { message in
+                        MessageCell(message: message)
                     }
                 }
             }
-
-            HStack {
-                TextField("Command", text: $editingMessageContent)
+        }
+        .safeAreaInset(edge: .bottom) {
+            HStack(spacing: 16) {
+                TextField("Message", text: $editingMessageContent)
                     .textFieldStyle(.roundedBorder)
 
                 Button {
                     sendMessage()
                 } label: {
                     Image(systemName: "paperplane")
+                        .font(.system(size: 20))
+                }
+
+                Menu {
+                    ForEach(MessageCommand.allCases) { command in
+                        Button(command.rawValue) {
+                            executeCommand(command)
+                        }
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                        .font(.system(size: 20))
                 }
             }
             .padding()
+            .background(.bar)
         }
         .navigationTitle("Messages")
-        .toolbar {
-            Menu {
-                ForEach(MessageCommand.allCases) { command in
-                    Button(command.rawValue) {
-                        executeCommand(command)
-                    }
-                }
-            } label: {
-                Image(systemName: "ellipsis.circle")
-            }
-        }
         .alert(pendingCommand?.rawValue ?? "", isPresented: $isArgumentsAlertPresented) {
             ForEach(0..<(pendingCommand?.arguments.count ?? 0), id: \.self) { index in
                 TextField(pendingCommand?.arguments[index] ?? "", text: $commandArguments[index])
+                    .textInputAutocapitalization(.never)
+                    .disableAutocorrection(true)
             }
 
             Button("Done") {
@@ -81,8 +84,6 @@ struct MessagesView: View {
     }
 
     private func executeCommand(_ command: MessageCommand) {
-        conversation.showCommand(command)
-
         if command.arguments.isEmpty {
             conversation.executeCommand(command)
         } else {

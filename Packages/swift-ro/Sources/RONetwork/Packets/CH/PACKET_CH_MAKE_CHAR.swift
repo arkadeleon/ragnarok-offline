@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2021/7/6.
 //
 
+/// See `chclif_parse_createnewchar`
 public struct PACKET_CH_MAKE_CHAR: EncodablePacket {
     public static var packetType: UInt16 {
         if PACKET_VERSION >= 20151001 {

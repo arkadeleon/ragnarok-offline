@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/4/9.
 //
 
+/// See `chclif_accessible_maps`
 public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME: DecodablePacket {
     public static var packetType: UInt16 {
         0x840

@@ -15,3 +15,7 @@ struct RagnarokOfflineApp: App {
         }
     }
 }
+
+extension EnvironmentValues {
+    @Entry var conversation = Conversation()
+}

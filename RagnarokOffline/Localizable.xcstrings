@@ -88,9 +88,6 @@
     "Client Attack Motion" : {
 
     },
-    "Command" : {
-
-    },
     "Copy" : {
 
     },
@@ -339,6 +336,9 @@
 
     },
     "Maximum Level" : {
+
+    },
+    "Message" : {
 
     },
     "Messages" : {

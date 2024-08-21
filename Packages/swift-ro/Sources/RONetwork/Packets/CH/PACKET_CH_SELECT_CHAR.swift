@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2021/7/6.
 //
 
+/// See `chclif_parse_charselect`
 public struct PACKET_CH_SELECT_CHAR: EncodablePacket {
     public static var packetType: UInt16 {
         0x66

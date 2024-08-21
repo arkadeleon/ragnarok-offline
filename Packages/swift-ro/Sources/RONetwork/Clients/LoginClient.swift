@@ -8,17 +8,6 @@
 import Foundation
 import ROResources
 
-/// Login client.
-///
-/// Sendable packets:
-/// - ``PACKET_CA_LOGIN``
-/// - ``PACKET_CA_CONNECT_INFO_CHANGED``
-/// - ``PACKET_CA_EXE_HASHCHECK``
-///
-/// Receivable packets:
-/// - ``PACKET_AC_ACCEPT_LOGIN``
-/// - ``PACKET_AC_REFUSE_LOGIN``
-/// - ``PACKET_SC_NOTIFY_BAN``
 public class LoginClient {
     public var onAcceptLogin: ((ClientState, [ServerInfo]) -> Void)?
     public var onRefuseLogin: ((String) -> Void)?
@@ -50,9 +39,13 @@ public class LoginClient {
         connection.cancel()
     }
 
+    /// Login.
+    ///
     /// Send ``PACKET_CA_LOGIN``
-    /// Receive ``PACKET_AC_ACCEPT_LOGIN`` on success
-    /// Receive ``PACKET_AC_REFUSE_LOGIN`` on failure
+    ///
+    /// Receive ``PACKET_AC_ACCEPT_LOGIN`` or
+    ///         ``PACKET_AC_REFUSE_LOGIN`` or
+    ///         ``PACKET_SC_NOTIFY_BAN``
     public func login(username: String, password: String) {
         var packet = PACKET_CA_LOGIN()
         packet.username = username
@@ -63,7 +56,9 @@ public class LoginClient {
         connection.receivePacket()
     }
 
-    /// Send ``PACKET_CA_CONNECT_INFO_CHANGED`` every 10 seconds
+    /// Keep alive.
+    ///
+    /// Send ``PACKET_CA_CONNECT_INFO_CHANGED`` every 10 seconds.
     public func keepAlive(username: String) {
         Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { _ in
             var packet = PACKET_CA_CONNECT_INFO_CHANGED()

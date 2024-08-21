@@ -45,14 +45,18 @@ public class CharClient {
         connection.cancel()
     }
 
+    /// Enter.
+    ///
     /// Send ``PACKET_CH_ENTER``
+    ///
     /// Receive Account ID
-    /// Receive ``PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER``
-    /// Receive ``PACKET_HC_ACCEPT_ENTER_NEO_UNION``
-    /// Receive ``PACKET_HC_CHARLIST_NOTIFY``
-    /// Receive ``PACKET_HC_BLOCK_CHARACTER``
-    /// Receive ``PACKET_HC_SECOND_PASSWD_LOGIN``
-    /// Receive ``PACKET_HC_REFUSE_ENTER`` on failure
+    ///
+    /// Receive ``PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER`` +
+    ///         ``PACKET_HC_ACCEPT_ENTER_NEO_UNION`` +
+    ///         ``PACKET_HC_CHARLIST_NOTIFY`` +
+    ///         ``PACKET_HC_BLOCK_CHARACTER`` +
+    ///         ``PACKET_HC_SECOND_PASSWD_LOGIN`` or
+    ///         ``PACKET_HC_REFUSE_ENTER``
     public func enter() {
         var packet = PACKET_CH_ENTER()
         packet.aid = state.aid
@@ -70,9 +74,12 @@ public class CharClient {
         }
     }
 
+    /// Make char.
+    ///
     /// Send ``PACKET_CH_MAKE_CHAR``
-    /// Receive ``PACKET_HC_ACCEPT_MAKECHAR_NEO_UNION``
-    /// Receive ``PACKET_HC_REFUSE_MAKECHAR``
+    ///
+    /// Receive ``PACKET_HC_ACCEPT_MAKECHAR`` or
+    ///         ``PACKET_HC_REFUSE_MAKECHAR``
     public func makeChar(name: String, str: UInt8, agi: UInt8, vit: UInt8, int: UInt8, dex: UInt8, luk: UInt8) {
         var packet = PACKET_CH_MAKE_CHAR()
         packet.name = name
@@ -86,10 +93,22 @@ public class CharClient {
         connection.sendPacket(packet)
     }
 
+    /// Delete char.
+    ///
     /// Send ``PACKET_CH_DELETE_CHAR``
-    /// Receive ``PACKET_HC_ACCEPT_DELETECHAR``
-    /// Receive ``PACKET_HC_REFUSE_DELETECHAR``
-    /// Receive ``PACKET_HC_DELETE_CHAR``
+    ///
+    /// if ``PACKET_VERSION`` > 20100803
+    ///
+    /// Receive ``PACKET_HC_ACCEPT_DELETECHAR`` or
+    ///         ``PACKET_HC_REFUSE_DELETECHAR``
+    ///
+    /// else
+    ///
+    /// Receive ``PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER`` +
+    ///         ``PACKET_HC_ACCEPT_ENTER_NEO_UNION`` +
+    ///         ``PACKET_HC_CHARLIST_NOTIFY`` +
+    ///         ``PACKET_HC_BLOCK_CHARACTER`` +
+    ///         ``PACKET_HC_DELETE_CHAR``
     public func deleteChar(charID: UInt32) {
         var packet = PACKET_CH_DELETE_CHAR()
         packet.gid = charID
@@ -97,7 +116,10 @@ public class CharClient {
         connection.sendPacket(packet)
     }
 
+    /// Request deletion date.
+    ///
     /// Send ``PACKET_CH_DELETE_CHAR_RESERVED``
+    ///
     /// Receive ``PACKET_HC_DELETE_CHAR_RESERVED``
     public func requestDeletionDate(charID: UInt32) {
         var packet = PACKET_CH_DELETE_CHAR_RESERVED()
@@ -106,7 +128,10 @@ public class CharClient {
         connection.sendPacket(packet)
     }
 
+    /// Cancel delete.
+    ///
     /// Send ``PACKET_CH_DELETE_CHAR_CANCEL``
+    ///
     /// Receive ``PACKET_HC_DELETE_CHAR_CANCEL``
     public func cancelDelete(charID: UInt32) {
         var packet = PACKET_CH_DELETE_CHAR_CANCEL()
@@ -115,8 +140,17 @@ public class CharClient {
         connection.sendPacket(packet)
     }
 
+    /// Select char.
+    ///
     /// Send ``PACKET_CH_SELECT_CHAR``
-    /// Receive ``PACKET_HC_NOTIFY_ZONESVR``
+    ///
+    /// Receive (
+    ///     ``PACKET_VERSION`` >= 20100714 ? ``PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME`` : ``PACKET_SC_NOTIFY_BAN``
+    /// ) when map server is not available.
+    ///
+    /// Receive ``PACKET_HC_REFUSE_ENTER`` when refused.
+    ///
+    /// Receive ``PACKET_HC_NOTIFY_ZONESVR`` when accepted.
     public func selectChar(charNum: UInt8) {
         var packet = PACKET_CH_SELECT_CHAR()
         packet.charNum = charNum
@@ -124,7 +158,9 @@ public class CharClient {
         connection.sendPacket(packet)
     }
 
-    /// Send ``PACKET_CZ_PING`` every 12 seconds
+    /// Keep alive.
+    ///
+    /// Send ``PACKET_CZ_PING`` every 12 seconds.
     public func keepAlive() {
         Timer.scheduledTimer(withTimeInterval: 12, repeats: true) { _ in
             var packet = PACKET_CZ_PING()
@@ -137,39 +173,19 @@ public class CharClient {
     private func receivePacket(_ packet: any DecodablePacket) {
         switch packet {
         case let packet as PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER:
-            receiveAcceptEnterHeaderPacket(packet)
+            onAcceptEnterHeader?()
         case let packet as PACKET_HC_ACCEPT_ENTER_NEO_UNION:
-            receiveAcceptEnterPacket(packet)
+            onAcceptEnter?(packet.charList)
         case let packet as PACKET_HC_REFUSE_ENTER:
-            receiveRefuseEnterPacket(packet)
+            onRefuseEnter?()
         case let packet as PACKET_HC_ACCEPT_MAKECHAR:
-            receiveAcceptMakeCharPacket(packet)
+            onAcceptMakeChar?()
         case let packet as PACKET_HC_REFUSE_MAKECHAR:
-            receiveRefuseMakeCharPacket(packet)
+            onRefuseMakeChar?()
         case let packet as PACKET_HC_NOTIFY_ZONESVR:
             onNotifyZoneServer?(packet.mapName, packet.serverInfo.ip, packet.serverInfo.port)
         default:
             break
         }
-    }
-
-    private func receiveAcceptEnterHeaderPacket(_ packet: PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER) {
-        onAcceptEnterHeader?()
-    }
-
-    private func receiveAcceptEnterPacket(_ packet: PACKET_HC_ACCEPT_ENTER_NEO_UNION) {
-        onAcceptEnter?(packet.charList)
-    }
-
-    private func receiveRefuseEnterPacket(_ packet: PACKET_HC_REFUSE_ENTER) {
-        onRefuseEnter?()
-    }
-
-    private func receiveAcceptMakeCharPacket(_ packet: PACKET_HC_ACCEPT_MAKECHAR) {
-        onAcceptMakeChar?()
-    }
-
-    private func receiveRefuseMakeCharPacket(_ packet: PACKET_HC_REFUSE_MAKECHAR) {
-        onRefuseMakeChar?()
     }
 }

@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/8/12.
 //
 
+/// See `chclif_mmo_send082d`
 public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER: DecodablePacket {
     public static var packetType: UInt16 {
         0x82d
