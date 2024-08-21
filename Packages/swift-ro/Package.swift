@@ -40,8 +40,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/mw99/DataCompression.git", from: "3.8.0"),
-        .package(path: "swift-lua"),
-        .package(path: "swift-rathena"),
+        .package(path: "../swift-lua"),
+        .package(path: "../swift-rathena"),
     ],
     targets: [
         .target(
@@ -191,5 +191,13 @@ let package = Package(
                 .enableUpcomingFeature("GlobalConcurrency"),
                 .interoperabilityMode(.Cxx),
             ]),
+        .plugin(
+            name: "RONetworkPlugin",
+            capability: .command(
+                intent: .custom(verb: "convert-packetdb", description: ""),
+                permissions: [
+                    .writeToPackageDirectory(reason: ""),
+                ]
+            )),
     ]
 )
