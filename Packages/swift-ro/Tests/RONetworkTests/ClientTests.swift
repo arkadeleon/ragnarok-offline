@@ -51,15 +51,19 @@ final class ClientTests: XCTestCase {
     }
 
     func testClient() async throws {
-        let loginExpectation = expectation(description: "Login")
-        let enterCharExpectation = expectation(description: "EnterChar")
-        let makeCharExpectation = expectation(description: "MakeChar")
-        let selectCharExpectation = expectation(description: "SelectChar")
-
         var _state = ClientState()
         var _serverInfo: ServerInfo?
+        var _mapIP: UInt32?
+        var _mapPort: UInt16?
+
+        // MARK: - Login
+
+        let loginExpectation = expectation(description: "Login")
 
         let loginClient = LoginClient()
+
+        loginClient.connect()
+
         loginClient.onAcceptLogin = { state, serverInfoList in
             XCTAssert(serverInfoList.count == 1)
 
@@ -68,19 +72,18 @@ final class ClientTests: XCTestCase {
 
             loginExpectation.fulfill()
         }
+
         loginClient.onRefuseLogin = { message in
             XCTAssert(false)
-            loginExpectation.fulfill()
         }
+
         loginClient.onNotifyBan = { message in
             XCTAssert(false)
-            loginExpectation.fulfill()
         }
+
         loginClient.onError = { error in
             self.logger.error("\(error)")
         }
-
-        loginClient.connect()
 
         let username = "ragnarok_m"
         let password = "ragnarok"
@@ -88,44 +91,77 @@ final class ClientTests: XCTestCase {
 
         await fulfillment(of: [loginExpectation])
 
+        // MARK: - Enter Char
+
+        let enterCharExpectation = expectation(description: "EnterChar")
+
         let charClient = CharClient(state: _state, serverInfo: _serverInfo!)
+
+        charClient.connect()
+
         charClient.onAcceptEnter = { charList in
             XCTAssert(charList.count == 0)
 
             enterCharExpectation.fulfill()
         }
+
         charClient.onRefuseEnter = {
             XCTAssert(false)
-            enterCharExpectation.fulfill()
         }
+
         charClient.onError = { error in
             self.logger.error("\(error)")
         }
-
-        charClient.connect()
 
         charClient.enter()
 
         await fulfillment(of: [enterCharExpectation])
 
+        // MARK: - Make Char
+
+        let makeCharExpectation = expectation(description: "MakeChar")
+
         charClient.onAcceptMakeChar = {
             makeCharExpectation.fulfill()
         }
+
         charClient.onRefuseMakeChar = {
             XCTAssert(false)
-            makeCharExpectation.fulfill()
         }
 
         charClient.makeChar(name: "Leon", str: 1, agi: 1, vit: 1, int: 1, dex: 1, luk: 1)
 
         await fulfillment(of: [makeCharExpectation])
 
+        // MARK: - Select Char
+
+        let selectCharExpectation = expectation(description: "SelectChar")
+
         charClient.onNotifyZoneServer = { mapName, ip, port in
+            _mapIP = ip
+            _mapPort = port
+
             selectCharExpectation.fulfill()
         }
 
         charClient.selectChar(charNum: 0)
 
         await fulfillment(of: [selectCharExpectation])
+
+        // MARK: - Enter Map
+
+        let enterMapExpectation = expectation(description: "EnterMap")
+
+        let mapClient = MapClient(state: _state, ip: _mapIP!, port: _mapPort!)
+
+        mapClient.connect()
+
+        mapClient.onAcceptEnter = {
+            enterMapExpectation.fulfill()
+        }
+
+        mapClient.enter()
+
+        await fulfillment(of: [enterMapExpectation])
     }
 }

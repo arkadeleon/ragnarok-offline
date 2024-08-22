@@ -183,6 +183,7 @@ public class CharClient {
         case let packet as PACKET_HC_REFUSE_MAKECHAR:
             onRefuseMakeChar?()
         case let packet as PACKET_HC_NOTIFY_ZONESVR:
+            state.gid = packet.gid
             onNotifyZoneServer?(packet.mapName, packet.serverInfo.ip, packet.serverInfo.port)
         default:
             break

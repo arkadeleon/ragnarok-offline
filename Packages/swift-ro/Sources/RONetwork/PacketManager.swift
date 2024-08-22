@@ -31,6 +31,11 @@ public class PacketManager {
         PACKET_HC_CHARLIST_NOTIFY.self,                 // 0x9a0
 
         /// Map Server -> Client
+        PACKET_ZC_AID.self,                             // 0x283
+        PACKET_ZC_ACCEPT_ENTER.self,
+        PACKET_ZC_EXTEND_BODYITEM_SIZE.self,
+        PACKET_ZC_FRIENDS_LIST.self,
+        PACKET_ZC_PAR_CHANGE.self,
 
         /// All Servers -> Client
         PACKET_SC_NOTIFY_BAN.self,                      // 0x81

@@ -73,9 +73,11 @@ class ClientConnection {
                     while !remainingContent.isEmpty {
                         let (packet, remaining) = try self.decodeContent(remainingContent)
                         remainingContent = remaining
+                        print(packet)
                         self.packetReceiveHandler?(packet)
                     }
                 } catch {
+                    print(error)
                     self.errorHandler?(error)
                 }
             } else if let error {
