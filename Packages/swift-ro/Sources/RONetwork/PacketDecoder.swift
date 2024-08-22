@@ -13,19 +13,28 @@ public enum PacketDecodingError: Error {
 }
 
 public class PacketDecoder {
-    private let packetsByType: [UInt16 : any DecodablePacket.Type]
+    public let decodablePackets: [any DecodablePacket.Type]
 
-    public init() {
-        self.packetsByType = Dictionary(uniqueKeysWithValues: PacketManager.shared.decodablePackets.map({ ($0.packetType, $0) }))
+    private let decodablePacketsByType: [UInt16 : any DecodablePacket.Type]
+
+    public init(decodablePackets: [any DecodablePacket.Type]) {
+        self.decodablePackets = decodablePackets
+        self.decodablePacketsByType = Dictionary(uniqueKeysWithValues: decodablePackets.map({ ($0.packetType, $0) }))
     }
 
-    public func decode(from data: Data) throws -> any DecodablePacket {
-        let packetTypeDecoder = BinaryDecoder(data: data)
-        let packetType = try packetTypeDecoder.decode(UInt16.self)
-        guard let packet = packetsByType[packetType] else {
-            throw PacketDecodingError.unknownPacket(packetType)
-        }
+    public func decode(from data: Data) throws -> [any DecodablePacket] {
+        var packets: [any DecodablePacket] = []
+
         let decoder = BinaryDecoder(data: data)
-        return try packet.init(from: decoder)
+        while decoder.data.count >= 2 {
+            let packetType = decoder.data.prefix(2).withUnsafeBytes({ $0.bindMemory(to: UInt16.self) })[0]
+            guard let decodablePacket = decodablePacketsByType[packetType] else {
+                throw PacketDecodingError.unknownPacket(packetType)
+            }
+            let packet = try decodablePacket.init(from: decoder)
+            packets.append(packet)
+        }
+
+        return packets
     }
 }

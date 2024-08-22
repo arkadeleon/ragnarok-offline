@@ -18,7 +18,17 @@ public class MapClient {
     public init(state: ClientState, ip: UInt32, port: UInt16) {
         self.state = state
 
-        connection = ClientConnection(port: port)
+        let decodablePackets: [any DecodablePacket.Type] = [
+            PACKET_ZC_ACCEPT_ENTER.self,                    // 0x73, 0x2eb, 0xa18
+            PACKET_ZC_NOTIFY_PLAYERCHAT.self,               // 0x8e
+            PACKET_ZC_NPCACK_MAPMOVE.self,                  // 0x91
+            PACKET_ZC_PAR_CHANGE.self,                      // 0xb0
+            PACKET_ZC_FRIENDS_LIST.self,                    // 0x201
+            PACKET_ZC_AID.self,                             // 0x283
+            PACKET_ZC_EXTEND_BODYITEM_SIZE.self,            // 0xb18
+        ]
+
+        connection = ClientConnection(port: port, decodablePackets: decodablePackets)
     }
 
     public func connect() {

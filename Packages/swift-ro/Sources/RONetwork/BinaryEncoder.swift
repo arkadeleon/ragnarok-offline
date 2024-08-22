@@ -16,7 +16,7 @@ public enum BinaryEncodingError: Error {
 }
 
 public class BinaryEncoder {
-    internal var data = Data()
+    var data = Data()
 
     public func encode<T: FixedWidthInteger>(_ value: T) throws {
         let bytes = withUnsafeBytes(of: value, [UInt8].init)

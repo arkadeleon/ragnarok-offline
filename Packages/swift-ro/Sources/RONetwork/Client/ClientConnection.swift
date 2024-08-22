@@ -13,18 +13,22 @@ class ClientConnection {
 
     private let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client-connection")
 
-    private let packetEncoder = PacketEncoder()
-    private let packetDecoder = PacketDecoder()
+    private let packetEncoder: PacketEncoder
+    private let packetDecoder: PacketDecoder
 
     var packetReceiveHandler: (@Sendable (any DecodablePacket) -> Void)?
     var errorHandler: (@Sendable (any Error) -> Void)?
 
-    init(port: UInt16) {
+    init(port: UInt16, decodablePackets: [any DecodablePacket.Type]) {
         connection = NWConnection(
             host: .ipv4(.loopback),
             port: .init(rawValue: port)!,
             using: .tcp
         )
+
+        packetEncoder = PacketEncoder()
+
+        packetDecoder = PacketDecoder(decodablePackets: decodablePackets)
     }
 
     func start() {
@@ -68,11 +72,9 @@ class ClientConnection {
     func receivePacket() {
         connection.receive(minimumIncompleteLength: 2, maximumLength: 65536) { content, _, _, error in
             if let content {
-                var remainingContent = content
                 do {
-                    while !remainingContent.isEmpty {
-                        let (packet, remaining) = try self.decodeContent(remainingContent)
-                        remainingContent = remaining
+                    let packets = try self.packetDecoder.decode(from: content)
+                    for packet in packets {
                         print(packet)
                         self.packetReceiveHandler?(packet)
                     }
@@ -84,11 +86,5 @@ class ClientConnection {
                 self.errorHandler?(error)
             }
         }
-    }
-
-    private func decodeContent(_ content: Data) throws -> (any DecodablePacket, Data) {
-        let packet = try packetDecoder.decode(from: content)
-        let remainingContent = Data(content[packet.packetLength...])
-        return (packet, remainingContent)
     }
 }

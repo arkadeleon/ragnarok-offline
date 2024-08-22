@@ -16,9 +16,9 @@ public enum BinaryDecodingError: Error {
 }
 
 public class BinaryDecoder {
-    internal var data: Data
+    var data: Data
 
-    internal init(data: Data) {
+    init(data: Data) {
         self.data = data
     }
 

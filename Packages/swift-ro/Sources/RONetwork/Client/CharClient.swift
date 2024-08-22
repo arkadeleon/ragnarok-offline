@@ -23,7 +23,25 @@ public class CharClient {
     public init(state: ClientState, serverInfo: ServerInfo) {
         self.state = state
 
-        connection = ClientConnection(port: serverInfo.port)
+        let decodablePackets: [any DecodablePacket.Type] = [
+            PACKET_HC_ACCEPT_ENTER_NEO_UNION.self,          // 0x6b
+            PACKET_HC_REFUSE_ENTER.self,                    // 0x6c
+            PACKET_HC_ACCEPT_MAKECHAR.self,                 // 0b6d
+            PACKET_HC_REFUSE_MAKECHAR.self,                 // 0x6e
+            PACKET_HC_ACCEPT_DELETECHAR.self,               // 0x6f
+            PACKET_HC_REFUSE_DELETECHAR.self,               // 0x70
+            PACKET_HC_NOTIFY_ZONESVR.self,                  // 0x71, 0xac5
+            PACKET_HC_BLOCK_CHARACTER.self,                 // 0x20d
+            PACKET_HC_DELETE_CHAR_RESERVED.self,            // 0x828
+            PACKET_HC_DELETE_CHAR.self,                     // 0x82a
+            PACKET_HC_DELETE_CHAR_CANCEL.self,              // 0x82c
+            PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.self,   // 0x82d
+            PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self,       // 0x840
+            PACKET_HC_SECOND_PASSWD_LOGIN.self,             // 0x8b9
+            PACKET_HC_CHARLIST_NOTIFY.self,                 // 0x9a0
+        ]
+
+        connection = ClientConnection(port: serverInfo.port, decodablePackets: decodablePackets)
     }
 
     public func connect() {

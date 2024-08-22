@@ -17,7 +17,13 @@ public class LoginClient {
     private let connection: ClientConnection
 
     public init() {
-        connection = ClientConnection(port: 6900)
+        let decodablePackets: [any DecodablePacket.Type] = [
+            PACKET_AC_ACCEPT_LOGIN.self,                    // 0x69, 0xac4
+            PACKET_AC_REFUSE_LOGIN.self,                    // 0x6a, 0x83e
+            PACKET_SC_NOTIFY_BAN.self,                      // 0x81
+        ]
+
+        connection = ClientConnection(port: 6900, decodablePackets: decodablePackets)
     }
 
     public func connect() {
