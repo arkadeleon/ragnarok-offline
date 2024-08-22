@@ -6,11 +6,11 @@
 //
 
 public struct PACKET_CA_CONNECT_INFO_CHANGED: EncodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         0x200
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         2 + 24
     }
 

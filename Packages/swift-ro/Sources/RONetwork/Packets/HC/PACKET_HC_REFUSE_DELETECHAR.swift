@@ -6,11 +6,11 @@
 //
 
 public struct PACKET_HC_REFUSE_DELETECHAR: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         0x70
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         2 + 1
     }
 

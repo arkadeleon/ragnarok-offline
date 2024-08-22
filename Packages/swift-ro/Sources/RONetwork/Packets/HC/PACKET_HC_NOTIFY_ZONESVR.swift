@@ -6,7 +6,7 @@
 //
 
 public struct PACKET_HC_NOTIFY_ZONESVR: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         if PACKET_VERSION >= 20170315 {
             0xac5
         } else {
@@ -14,7 +14,7 @@ public struct PACKET_HC_NOTIFY_ZONESVR: DecodablePacket {
         }
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         if PACKET_VERSION >= 20170315 {
             2 + 4 + 16 + 4 + 2 + 128
         } else {

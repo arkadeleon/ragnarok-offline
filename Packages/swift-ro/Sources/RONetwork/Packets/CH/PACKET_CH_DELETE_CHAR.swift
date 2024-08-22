@@ -7,7 +7,7 @@
 
 /// See `chclif_parse_delchar` and `chclif_parse_char_delete2_accept`
 public struct PACKET_CH_DELETE_CHAR: EncodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         if PACKET_VERSION > 20100803 {
             0x829
         } else if PACKET_VERSION == 20040419 {
@@ -17,7 +17,7 @@ public struct PACKET_CH_DELETE_CHAR: EncodablePacket {
         }
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         if PACKET_VERSION > 20100803 {
             2 + 4 + 6
         } else if PACKET_VERSION == 20040419 {

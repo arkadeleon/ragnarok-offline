@@ -6,7 +6,7 @@
 //
 
 public struct PACKET_AC_REFUSE_LOGIN: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         if PACKET_VERSION >= 20120000 {
             0x83e
         } else {
@@ -14,7 +14,7 @@ public struct PACKET_AC_REFUSE_LOGIN: DecodablePacket {
         }
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         if PACKET_VERSION >= 20120000 {
             2 + 4 + 20
         } else {

@@ -7,12 +7,12 @@
 
 /// See `chclif_accessible_maps`
 public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         0x840
     }
 
-    public var packetLength: UInt16 {
-        2 + 2 + (4 + 16) * UInt16(maps.count)
+    public var packetLength: Int16 {
+        2 + 2 + (4 + 16) * Int16(maps.count)
     }
 
     public var maps: [MapInfo]
@@ -20,7 +20,7 @@ public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME: DecodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
 
-        let packetLength = try decoder.decode(UInt16.self)
+        let packetLength = try decoder.decode(Int16.self)
 
         let mapCount = (packetLength - 4) / (4 + 16)
 

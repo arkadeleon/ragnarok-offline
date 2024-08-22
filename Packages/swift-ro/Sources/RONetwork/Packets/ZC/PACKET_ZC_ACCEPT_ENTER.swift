@@ -6,7 +6,7 @@
 //
 
 public struct PACKET_ZC_ACCEPT_ENTER: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         if PACKET_VERSION < 20080102 {
             0x73
         } else if PACKET_VERSION < 20141022 || PACKET_VERSION >= 20160330 {
@@ -16,7 +16,7 @@ public struct PACKET_ZC_ACCEPT_ENTER: DecodablePacket {
         }
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         if PACKET_VERSION < 20080102 {
             11
         } else if PACKET_VERSION < 20141022 || PACKET_VERSION >= 20160330 {

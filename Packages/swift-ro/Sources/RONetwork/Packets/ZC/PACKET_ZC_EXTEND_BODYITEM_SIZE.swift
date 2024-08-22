@@ -6,11 +6,11 @@
 //
 
 public struct PACKET_ZC_EXTEND_BODYITEM_SIZE: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         0xb18
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         4
     }
 

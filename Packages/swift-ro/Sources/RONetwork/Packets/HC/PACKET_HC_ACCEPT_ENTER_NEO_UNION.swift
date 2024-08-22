@@ -7,17 +7,17 @@
 
 /// See `chclif_mmo_send006b`
 public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         0x6b
     }
 
-    public var packetLength: UInt16 {
-        var packetLength: UInt16 = 2 + 2
+    public var packetLength: Int16 {
+        var packetLength: Int16 = 2 + 2
         if PACKET_VERSION >= 20100413 {
             packetLength += 1 + 1 + 1
         }
         packetLength += 20
-        packetLength += CharInfo.size * UInt16(charList.count)
+        packetLength += CharInfo.size * Int16(charList.count)
         return packetLength
     }
 
@@ -29,9 +29,9 @@ public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION: DecodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
 
-        let packetLength = try decoder.decode(UInt16.self)
+        let packetLength = try decoder.decode(Int16.self)
 
-        let charCount: UInt16
+        let charCount: Int16
         if PACKET_VERSION >= 20100413 {
             charCount = (packetLength - 27) / CharInfo.size
         } else {

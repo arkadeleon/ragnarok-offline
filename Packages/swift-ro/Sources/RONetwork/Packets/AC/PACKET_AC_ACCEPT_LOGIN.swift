@@ -6,7 +6,7 @@
 //
 
 public struct PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         if PACKET_VERSION >= 20170315 {
             0xac4
         } else {
@@ -14,11 +14,11 @@ public struct PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
         }
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         if PACKET_VERSION >= 20170315 {
-            2 + 2 + 4 + 4 + 4 + 4 + 26 + 1 + 17 + ServerInfo.size * UInt16(serverList.count)
+            2 + 2 + 4 + 4 + 4 + 4 + 26 + 1 + 17 + ServerInfo.size * Int16(serverList.count)
         } else {
-            2 + 2 + 4 + 4 + 4 + 4 + 26 + 1 + ServerInfo.size * UInt16(serverList.count)
+            2 + 2 + 4 + 4 + 4 + 4 + 26 + 1 + ServerInfo.size * Int16(serverList.count)
         }
     }
 
@@ -34,7 +34,7 @@ public struct PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
 
-        let packetLength = try decoder.decode(UInt16.self)
+        let packetLength = try decoder.decode(Int16.self)
         let serverCount = (packetLength - 2 - 2 - 4 - 4 - 4 - 4 - 26 - 1) / ServerInfo.size
 
         authCode = try decoder.decode(UInt32.self)

@@ -9,12 +9,12 @@
 public struct PACKET_CZ_ENTER: EncodablePacket {
     static let entry = packetDatabase.entries(forFunctionName: "clif_parse_WantToConnection")[0]
 
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         entry.packetType
     }
 
-    public var packetLength: UInt16 {
-        UInt16(Self.entry.packetLength)
+    public var packetLength: Int16 {
+        Self.entry.packetLength
     }
 
     public var aid: UInt32

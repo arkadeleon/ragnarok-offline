@@ -6,13 +6,13 @@
 //
 
 public protocol Packet {
-    static var packetType: UInt16 { get }
+    static var packetType: Int16 { get }
 
-    var packetLength: UInt16 { get }
+    var packetLength: Int16 { get }
 }
 
 extension Packet {
-    public var packetType: UInt16 {
+    public var packetType: Int16 {
         Self.packetType
     }
 }
@@ -25,8 +25,8 @@ public protocol EncodablePacket: Packet, BinaryEncodable {
 
 extension BinaryDecoder {
     @discardableResult
-    public func decodePacketType<P>(_ type: P.Type) throws -> UInt16 where P: Packet {
-        let packetType = try decode(UInt16.self)
+    public func decodePacketType<P>(_ type: P.Type) throws -> Int16 where P: Packet {
+        let packetType = try decode(Int16.self)
         guard packetType == type.packetType else {
             throw PacketDecodingError.packetMismatch(packetType)
         }

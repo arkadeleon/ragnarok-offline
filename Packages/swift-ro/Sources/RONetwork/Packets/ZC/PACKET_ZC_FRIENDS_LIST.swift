@@ -6,12 +6,12 @@
 //
 
 public struct PACKET_ZC_FRIENDS_LIST: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         0x201
     }
 
-    public var packetLength: UInt16 {
-        4 + FriendInfo.size * UInt16(friends.count)
+    public var packetLength: Int16 {
+        4 + FriendInfo.size * Int16(friends.count)
     }
 
     public var friends: [FriendInfo]
@@ -19,7 +19,7 @@ public struct PACKET_ZC_FRIENDS_LIST: DecodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
 
-        let packetLength = try decoder.decode(UInt16.self)
+        let packetLength = try decoder.decode(Int16.self)
         let friendCount = (packetLength - 4) / FriendInfo.size
 
         friends = []
@@ -32,7 +32,7 @@ public struct PACKET_ZC_FRIENDS_LIST: DecodablePacket {
 
 extension PACKET_ZC_FRIENDS_LIST {
     public struct FriendInfo: BinaryDecodable {
-        public static var size: UInt16 {
+        public static var size: Int16 {
             if hasName {
                 8 + 24
             } else {

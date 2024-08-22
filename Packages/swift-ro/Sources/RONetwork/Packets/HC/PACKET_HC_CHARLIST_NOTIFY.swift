@@ -7,11 +7,11 @@
 
 /// See `chclif_charlist_notify`
 public struct PACKET_HC_CHARLIST_NOTIFY: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         0x9a0
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         if PACKET_VERSION_RE && PACKET_VERSION >= 20151001 && PACKET_VERSION < 20180103 {
             10
         } else {

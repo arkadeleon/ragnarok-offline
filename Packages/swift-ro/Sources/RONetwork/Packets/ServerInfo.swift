@@ -6,7 +6,7 @@
 //
 
 public struct ServerInfo: BinaryDecodable {
-    public static var size: UInt16 {
+    public static var size: Int16 {
         if PACKET_VERSION >= 20170315 {
             32 + 128
         } else {

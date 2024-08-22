@@ -9,7 +9,7 @@ let packetDatabase = PacketDatabase()
 
 class PacketDatabase {
     struct Entry: Comparable {
-        var packetType: UInt16
+        var packetType: Int16
         var packetLength: Int16
         var functionName: String?
         var offsets: [Int] = []
@@ -19,19 +19,19 @@ class PacketDatabase {
         }
     }
 
-    var entriesByPacketType: [UInt16 : Entry] = [:]
+    var entriesByPacketType: [Int16 : Entry] = [:]
 
     init() {
         add_from_clif_packetdb()
         add_from_clif_shuffle()
     }
 
-    func add(_ packetType: UInt16, _ packetLength: Int16) {
+    func add(_ packetType: Int16, _ packetLength: Int16) {
         let entry = Entry(packetType: packetType, packetLength: packetLength)
         entriesByPacketType[packetType] = entry
     }
 
-    func add(_ packetType: UInt16, _ packetLength: Int16, _ functionName: String?, _ offsets: [Int]) {
+    func add(_ packetType: Int16, _ packetLength: Int16, _ functionName: String?, _ offsets: [Int]) {
         let entry = Entry(packetType: packetType, packetLength: packetLength, functionName: functionName, offsets: offsets)
         entriesByPacketType[packetType] = entry
     }

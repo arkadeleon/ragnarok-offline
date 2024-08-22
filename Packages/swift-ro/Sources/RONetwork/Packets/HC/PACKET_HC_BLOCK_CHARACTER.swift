@@ -7,12 +7,12 @@
 
 /// See `chclif_block_character`
 public struct PACKET_HC_BLOCK_CHARACTER: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         0x20d
     }
 
-    public var packetLength: UInt16 {
-        4 + 24 * UInt16(characterList.count)
+    public var packetLength: Int16 {
+        4 + 24 * Int16(characterList.count)
     }
 
     public var characterList: [CharacterInfo]
@@ -20,7 +20,7 @@ public struct PACKET_HC_BLOCK_CHARACTER: DecodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
 
-        let packetLength = try decoder.decode(UInt16.self)
+        let packetLength = try decoder.decode(Int16.self)
 
         let characterCount = (packetLength - 4) / 24
 

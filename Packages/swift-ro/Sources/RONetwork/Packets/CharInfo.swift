@@ -51,10 +51,10 @@ public struct CharInfo: BinaryDecodable, BinaryEncodable {
     public var charNameChangeCount: UInt32 = 0
     public var sex: UInt8 = 0
 
-    public static var size: UInt16 {
+    public static var size: Int16 {
         let encoder = BinaryEncoder()
         try? encoder.encode(CharInfo())
-        let size = UInt16(encoder.data.count)
+        let size = Int16(encoder.data.count)
         return size
     }
 

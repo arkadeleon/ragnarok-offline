@@ -6,11 +6,11 @@
 //
 
 public struct PACKET_CH_ENTER: EncodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         0x65
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         2 + 4 + 4 + 4 + 2 + 1
     }
 

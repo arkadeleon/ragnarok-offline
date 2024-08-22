@@ -9,11 +9,11 @@ import CoreFoundation
 
 /// See `chclif_char_delete2_ack` in `char_clif.cpp`
 public struct PACKET_HC_DELETE_CHAR_RESERVED: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         0x828
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         14
     }
 

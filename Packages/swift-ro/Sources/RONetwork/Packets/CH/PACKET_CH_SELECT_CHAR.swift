@@ -7,11 +7,11 @@
 
 /// See `chclif_parse_charselect`
 public struct PACKET_CH_SELECT_CHAR: EncodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         0x66
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         2 + 1
     }
 

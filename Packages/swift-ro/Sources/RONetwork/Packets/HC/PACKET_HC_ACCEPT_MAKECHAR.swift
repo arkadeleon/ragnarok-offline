@@ -6,7 +6,7 @@
 //
 
 public struct PACKET_HC_ACCEPT_MAKECHAR: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         if PACKET_VERSION_MAIN_NUMBER >= 20201007 || PACKET_VERSION_RE_NUMBER >= 20211103 {
             0xb6f
         } else {
@@ -14,7 +14,7 @@ public struct PACKET_HC_ACCEPT_MAKECHAR: DecodablePacket {
         }
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         2 + CharInfo.size
     }
 

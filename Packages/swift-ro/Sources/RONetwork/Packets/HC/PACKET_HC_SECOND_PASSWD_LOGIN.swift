@@ -6,11 +6,11 @@
 //
 
 public struct PACKET_HC_SECOND_PASSWD_LOGIN: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         0x8b9
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         12
     }
 

@@ -7,11 +7,11 @@
 
 /// See `chclif_char_delete2_cancel_ack`
 public struct PACKET_HC_DELETE_CHAR_CANCEL: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         0x82c
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         10
     }
 

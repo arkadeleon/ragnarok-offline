@@ -6,11 +6,11 @@
 //
 
 public struct PACKET_ZC_PAR_CHANGE: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         0xb0
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         8
     }
 

@@ -6,11 +6,11 @@
 //
 
 public struct PACKET_SC_NOTIFY_BAN: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         0x81
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         2 + 1
     }
 

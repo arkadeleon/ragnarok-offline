@@ -6,11 +6,11 @@
 //
 
 public struct PACKET_ZC_NPCACK_MAPMOVE: DecodablePacket {
-    public static var packetType: UInt16 {
+    public static var packetType: Int16 {
         0x91
     }
 
-    public var packetLength: UInt16 {
+    public var packetLength: Int16 {
         22
     }
 
