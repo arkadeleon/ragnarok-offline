@@ -45,6 +45,7 @@ struct NetworkPlugin: CommandPlugin {
 
     private func output(for input: Path) throws -> [String] {
         var output: [String] = []
+        var indentationLevel = 0
 
         let contents = try String(contentsOfFile: input.string, encoding: .utf8)
         let lines = contents.split(separator: "\n")
@@ -54,6 +55,7 @@ struct NetworkPlugin: CommandPlugin {
             if line.hasPrefix("//") {
                 continue
             }
+
             if line.hasPrefix("packet(") {
                 let open = line.firstIndex(of: "(")!
                 let close = line.lastIndex(of: ")")!
@@ -64,10 +66,13 @@ struct NetworkPlugin: CommandPlugin {
                     .map({ $0.trimmingCharacters(in: .whitespaces) })
                 let packetType = parameters[0]
                 let packetLength = parameters[1]
+
+                let indentation = Array(repeating: " ", count: indentationLevel * 4).joined()
+                let statement = "add(\(packetType), \(packetLength))"
                 if packetType.hasPrefix("0x") && Int(packetLength) != nil {
-                    output.append("add(\(packetType), \(packetLength))")
+                    output.append(indentation + statement)
                 } else {
-                    output.append("// add(\(packetType), \(packetLength))")
+                    output.append(indentation + "// " + statement)
                 }
             } else if line.hasPrefix("parseable_packet(") {
                 let open = line.firstIndex(of: "(")!
@@ -81,23 +86,36 @@ struct NetworkPlugin: CommandPlugin {
                 let packetLength = parameters[1]
                 let functionName = parameters[2] == "nullptr" ? "nil" : "\"\(parameters[2])\""
                 let offsets = parameters[3...].joined(separator: ", ")
+
+                let indentation = Array(repeating: " ", count: indentationLevel * 4).joined()
+                let statement = "add(\(packetType), \(packetLength), \(functionName), [\(offsets)])"
                 if packetType.hasPrefix("0x") && Int(packetLength) != nil {
-                    output.append("add(\(packetType), \(packetLength), \(functionName), [\(offsets)])")
+                    output.append(indentation + statement)
                 } else {
-                    output.append("// add(\(packetType), \(packetLength), \(functionName), [\(offsets)])")
+                    output.append(indentation + "// " + statement)
                 }
             } else if line.hasPrefix("#if ") {
+                indentationLevel += 1
+
+                let indentation = Array(repeating: " ", count: (indentationLevel - 1) * 4).joined()
                 let statement = line
                     .replacingOccurrences(of: "#if ", with: "")
                     .replacingPacketVersion()
-                output.append("if \(statement) {")
+                output.append(indentation + "if " + statement + " {")
             } else if line.hasPrefix("#elif") {
+                let indentation = Array(repeating: " ", count: (indentationLevel - 1) * 4).joined()
                 let statement = line
                     .replacingOccurrences(of: "#elif ", with: "")
                     .replacingPacketVersion()
-                output.append("} else if \(statement) {")
+                output.append(indentation + "} else if " + statement + " {")
+            } else if line == "#else" {
+                let indentation = Array(repeating: " ", count: (indentationLevel - 1) * 4).joined()
+                output.append(indentation + "} else {")
             } else if line == "#endif" {
-                output.append("}")
+                let indentation = Array(repeating: " ", count: (indentationLevel - 1) * 4).joined()
+                output.append(indentation + "}")
+
+                indentationLevel -= 1
             }
         }
 

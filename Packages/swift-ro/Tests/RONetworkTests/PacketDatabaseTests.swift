@@ -10,7 +10,6 @@ import XCTest
 
 final class PacketDatabaseTests: XCTestCase {
     func testPacketDatabase() async throws {
-        let entries = packetDatabase.entries(forFunctionName: "clif_parse_WantToConnection")
-        XCTAssertEqual(entries.count, 5)
+        XCTAssertEqual(packetDatabase.entryForEnter.packetType, 0x436)
     }
 }

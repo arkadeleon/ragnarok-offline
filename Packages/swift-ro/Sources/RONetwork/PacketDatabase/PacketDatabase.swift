@@ -32,11 +32,17 @@ class PacketDatabase {
     }
 
     func add(_ packetType: Int16, _ packetLength: Int16, _ functionName: String?, _ offsets: [Int]) {
+        if let functionName {
+            if let key = entriesByPacketType.first(where: { $0.value.functionName == functionName })?.key {
+                entriesByPacketType.removeValue(forKey: key)
+            }
+        }
+
         let entry = Entry(packetType: packetType, packetLength: packetLength, functionName: functionName, offsets: offsets)
         entriesByPacketType[packetType] = entry
     }
 
-    func entries(forFunctionName functionName: String) -> [Entry] {
-        entriesByPacketType.filter({ $0.value.functionName == functionName }).values.sorted()
+    func entry(forFunctionName functionName: String) -> Entry? {
+        entriesByPacketType.first(where: { $0.value.functionName == functionName })?.value
     }
 }

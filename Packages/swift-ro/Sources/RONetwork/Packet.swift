@@ -33,3 +33,11 @@ extension BinaryDecoder {
         return packetType
     }
 }
+
+extension Array where Element == UInt8 {
+    @inlinable mutating func replaceSubrange(from lowerBound: Int, with integer: some FixedWidthInteger) {
+        let subrange = lowerBound..<(lowerBound + integer.bitWidth / 8)
+        let bytes = Swift.withUnsafeBytes(of: integer, [UInt8].init)
+        replaceSubrange(subrange, with: bytes)
+    }
+}
