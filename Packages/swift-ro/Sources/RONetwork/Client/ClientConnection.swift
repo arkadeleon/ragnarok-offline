@@ -59,6 +59,8 @@ class ClientConnection {
                 self.errorHandler?(error)
             }
         }))
+
+        print("Sent packet: \(packet)")
     }
 
     func receiveData(completion: @escaping @Sendable (_ data: Data) -> Void) {
@@ -75,7 +77,7 @@ class ClientConnection {
                 do {
                     let packets = try self.packetDecoder.decode(from: content)
                     for packet in packets {
-                        print(packet)
+                        print("Received packet: \(packet)")
                         self.packetReceiveHandler?(packet)
                     }
                 } catch {

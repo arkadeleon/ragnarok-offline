@@ -16,6 +16,8 @@ public class LoginClient {
 
     private let connection: ClientConnection
 
+    private var keepAliveTimer: Timer?
+
     public init() {
         let decodablePackets: [any DecodablePacket.Type] = [
             PACKET_AC_ACCEPT_LOGIN.self,                    // 0x69, 0xac4
@@ -66,12 +68,18 @@ public class LoginClient {
     ///
     /// Send ``PACKET_CA_CONNECT_INFO_CHANGED`` every 10 seconds.
     public func keepAlive(username: String) {
-        Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { _ in
+        keepAliveTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { [weak self] timer in
+            guard let self else {
+                timer.invalidate()
+                return
+            }
+
             var packet = PACKET_CA_CONNECT_INFO_CHANGED()
             packet.name = username
 
             self.connection.sendPacket(packet)
         }
+        keepAliveTimer?.fire()
     }
 
     private func receivePacket(_ packet: any DecodablePacket) {

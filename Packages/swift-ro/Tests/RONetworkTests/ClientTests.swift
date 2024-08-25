@@ -18,6 +18,10 @@ final class ClientTests: XCTestCase {
 
     let logger = Logger(subsystem: "ROClientTests", category: "LoginClientTests")
 
+    var loginClient: LoginClient!
+    var charClient: CharClient!
+    var mapClient: MapClient!
+
     var subscription: AnyCancellable?
 
     override func setUp() async throws {
@@ -41,7 +45,7 @@ final class ClientTests: XCTestCase {
         await MapServer.shared.start()
 
         // Wait char server connect to login server.
-        try await Task.sleep(nanoseconds: NSEC_PER_SEC)
+        try await Task.sleep(for: .seconds(1))
     }
 
     override func tearDown() async throws {
@@ -60,7 +64,7 @@ final class ClientTests: XCTestCase {
 
         let loginExpectation = expectation(description: "Login")
 
-        let loginClient = LoginClient()
+        loginClient = LoginClient()
 
         loginClient.connect()
 
@@ -95,7 +99,7 @@ final class ClientTests: XCTestCase {
 
         let enterCharExpectation = expectation(description: "EnterChar")
 
-        let charClient = CharClient(state: _state, serverInfo: _serverInfo!)
+        charClient = CharClient(state: _state, serverInfo: _serverInfo!)
 
         charClient.connect()
 
@@ -152,7 +156,7 @@ final class ClientTests: XCTestCase {
 
         let enterMapExpectation = expectation(description: "EnterMap")
 
-        let mapClient = MapClient(state: _state, ip: _mapIP!, port: _mapPort!)
+        mapClient = MapClient(state: _state, ip: _mapIP!, port: _mapPort!)
 
         mapClient.connect()
 
@@ -162,6 +166,27 @@ final class ClientTests: XCTestCase {
 
         mapClient.enter()
 
+        mapClient.keepAlive()
+
         await fulfillment(of: [enterMapExpectation])
+
+        // MARK: - Request Move
+
+        try await Task.sleep(for: .seconds(1))
+
+        let requestMoveExpectation = expectation(description: "RequestMove")
+
+        mapClient.onNotifyPlayerMove = { moveData in
+            XCTAssertEqual(moveData.x0, 18)
+            XCTAssertEqual(moveData.y0, 26)
+            XCTAssertEqual(moveData.x1, 10)
+            XCTAssertEqual(moveData.y1, 26)
+
+            requestMoveExpectation.fulfill()
+        }
+
+        mapClient.requestMove(x: 10, y: 26)
+
+        await fulfillment(of: [requestMoveExpectation])
     }
 }

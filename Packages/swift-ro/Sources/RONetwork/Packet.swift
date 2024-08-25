@@ -40,4 +40,9 @@ extension Array where Element == UInt8 {
         let bytes = Swift.withUnsafeBytes(of: integer, [UInt8].init)
         replaceSubrange(subrange, with: bytes)
     }
+
+    @inlinable mutating func replaceSubrange(from lowerBound: Int, with bytes: [UInt8]) {
+        let subrange = lowerBound..<(lowerBound + bytes.count)
+        replaceSubrange(subrange, with: bytes)
+    }
 }

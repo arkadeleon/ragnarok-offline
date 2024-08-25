@@ -10,8 +10,6 @@ import Foundation
 public class CharClient {
     public let state: ClientState
 
-    private let connection: ClientConnection
-
     public var onAcceptEnterHeader: (() -> Void)?
     public var onAcceptEnter: (([CharInfo]) -> Void)?
     public var onRefuseEnter: (() -> Void)?
@@ -19,6 +17,10 @@ public class CharClient {
     public var onRefuseMakeChar: (() -> Void)?
     public var onNotifyZoneServer: ((String, UInt32, UInt16) -> Void)?
     public var onError: ((any Error) -> Void)?
+
+    private let connection: ClientConnection
+
+    private var keepAliveTimer: Timer?
 
     public init(state: ClientState, serverInfo: ServerInfo) {
         self.state = state
@@ -90,6 +92,24 @@ public class CharClient {
 
             self.connection.receivePacket()
         }
+    }
+
+    /// Keep alive.
+    ///
+    /// Send ``PACKET_CZ_PING`` every 12 seconds.
+    public func keepAlive() {
+        keepAliveTimer = Timer.scheduledTimer(withTimeInterval: 12, repeats: true) { [weak self] timer in
+            guard let self else {
+                timer.invalidate()
+                return
+            }
+
+            var packet = PACKET_CZ_PING()
+            packet.aid = self.state.aid
+
+            self.connection.sendPacket(packet)
+        }
+        keepAliveTimer?.fire()
     }
 
     /// Make char.
@@ -174,18 +194,6 @@ public class CharClient {
         packet.charNum = charNum
 
         connection.sendPacket(packet)
-    }
-
-    /// Keep alive.
-    ///
-    /// Send ``PACKET_CZ_PING`` every 12 seconds.
-    public func keepAlive() {
-        Timer.scheduledTimer(withTimeInterval: 12, repeats: true) { _ in
-            var packet = PACKET_CZ_PING()
-            packet.aid = self.state.aid
-
-            self.connection.sendPacket(packet)
-        }
     }
 
     private func receivePacket(_ packet: any DecodablePacket) {
