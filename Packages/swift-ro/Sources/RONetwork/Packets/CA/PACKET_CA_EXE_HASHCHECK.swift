@@ -6,7 +6,7 @@
 //
 
 public struct PACKET_CA_EXE_HASHCHECK: EncodablePacket {
-    public static var packetType: Int16 {
+    public var packetType: Int16 {
         0x204
     }
 

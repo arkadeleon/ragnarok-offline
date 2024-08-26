@@ -7,7 +7,7 @@
 
 /// See `chclif_parse_createnewchar`
 public struct PACKET_CH_MAKE_CHAR: EncodablePacket {
-    public static var packetType: Int16 {
+    public var packetType: Int16 {
         if PACKET_VERSION >= 20151001 {
             0xa39
         } else if PACKET_VERSION >= 20120307 {

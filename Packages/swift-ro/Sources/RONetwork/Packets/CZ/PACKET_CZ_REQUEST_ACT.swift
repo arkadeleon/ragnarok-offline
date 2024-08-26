@@ -7,7 +7,7 @@
 
 /// See `clif_parse_ActionRequest`
 public struct PACKET_CZ_REQUEST_ACT: EncodablePacket {
-    public static var packetType: Int16 {
+    public var packetType: Int16 {
         packetDatabase.entryForRequestAction.packetType
     }
 

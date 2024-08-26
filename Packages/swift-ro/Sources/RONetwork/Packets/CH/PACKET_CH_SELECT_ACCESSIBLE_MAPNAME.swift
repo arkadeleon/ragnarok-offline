@@ -6,7 +6,7 @@
 //
 
 public struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME: EncodablePacket {
-    public static var packetType: Int16 {
+    public var packetType: Int16 {
         0x841
     }
 

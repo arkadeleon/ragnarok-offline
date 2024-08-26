@@ -7,7 +7,7 @@
 
 /// See `clif_parse_WalkToXY`
 public struct PACKET_CZ_REQUEST_MOVE: EncodablePacket {
-    public static var packetType: Int16 {
+    public var packetType: Int16 {
         packetDatabase.entryForRequestMove.packetType
     }
 

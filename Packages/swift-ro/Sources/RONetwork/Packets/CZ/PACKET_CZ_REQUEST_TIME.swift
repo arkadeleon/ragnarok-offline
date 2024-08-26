@@ -7,7 +7,7 @@
 
 /// See `clif_parse_TickSend`
 public struct PACKET_CZ_REQUEST_TIME: EncodablePacket {
-    public static var packetType: Int16 {
+    public var packetType: Int16 {
         packetDatabase.entryForRequestTime.packetType
     }
 

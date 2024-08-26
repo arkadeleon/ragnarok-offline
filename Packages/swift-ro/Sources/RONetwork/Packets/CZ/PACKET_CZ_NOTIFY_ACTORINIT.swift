@@ -7,7 +7,7 @@
 
 /// See `clif_parse_LoadEndAck`
 public struct PACKET_CZ_NOTIFY_ACTORINIT: EncodablePacket {
-    public static var packetType: Int16 {
+    public var packetType: Int16 {
         0x7d
     }
 

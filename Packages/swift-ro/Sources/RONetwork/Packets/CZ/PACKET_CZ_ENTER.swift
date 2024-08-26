@@ -7,7 +7,7 @@
 
 /// See `clif_parse_WantToConnection`
 public struct PACKET_CZ_ENTER: EncodablePacket {
-    public static var packetType: Int16 {
+    public var packetType: Int16 {
         packetDatabase.entryForEnter.packetType
     }
 

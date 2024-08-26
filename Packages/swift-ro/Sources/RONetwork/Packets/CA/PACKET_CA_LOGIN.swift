@@ -6,7 +6,7 @@
 //
 
 public struct PACKET_CA_LOGIN: EncodablePacket {
-    public static var packetType: Int16 {
+    public var packetType: Int16 {
         0x64
     }
 

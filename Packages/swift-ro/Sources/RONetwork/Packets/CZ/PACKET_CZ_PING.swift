@@ -6,7 +6,7 @@
 //
 
 public struct PACKET_CZ_PING: EncodablePacket {
-    public static var packetType: Int16 {
+    public var packetType: Int16 {
         0x187
     }
 

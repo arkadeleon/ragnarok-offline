@@ -7,7 +7,7 @@
 
 /// See `clif_parse_ChangeDir`
 public struct PACKET_CZ_CHANGE_DIRECTION: EncodablePacket {
-    public static var packetType: Int16 {
+    public var packetType: Int16 {
         packetDatabase.entryForChangeDirection.packetType
     }
 

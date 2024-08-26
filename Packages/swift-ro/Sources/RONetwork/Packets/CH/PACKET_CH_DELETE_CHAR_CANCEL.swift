@@ -7,7 +7,7 @@
 
 /// See `chclif_parse_char_delete2_cancel`
 public struct PACKET_CH_DELETE_CHAR_CANCEL: EncodablePacket {
-    public static var packetType: Int16 {
+    public var packetType: Int16 {
         0x82b
     }
 
