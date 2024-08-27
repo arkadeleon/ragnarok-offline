@@ -12,7 +12,7 @@ public struct PACKET_ZC_EXTEND_BODYITEM_SIZE: DecodablePacket {
     }
 
     public var packetLength: Int16 {
-        4
+        2 + 2
     }
 
     public var expansionSize: UInt16

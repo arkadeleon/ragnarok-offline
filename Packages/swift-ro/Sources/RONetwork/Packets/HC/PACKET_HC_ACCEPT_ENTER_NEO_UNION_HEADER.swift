@@ -12,7 +12,7 @@ public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER: DecodablePacket {
     }
 
     public var packetLength: Int16 {
-        29
+        2 + 2 + 1 + 1 + 1 + 1 + 1 + 20
     }
 
     public var totalSlot: UInt16

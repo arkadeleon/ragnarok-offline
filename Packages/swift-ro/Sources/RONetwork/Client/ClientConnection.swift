@@ -82,6 +82,7 @@ class ClientConnection {
             }
 
             if let content {
+                print("Received \(content.count) bytes")
                 do {
                     let packets = try self.packetDecoder.decode(from: content)
                     for packet in packets {

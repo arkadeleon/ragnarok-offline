@@ -12,7 +12,7 @@ public struct PACKET_HC_BLOCK_CHARACTER: DecodablePacket {
     }
 
     public var packetLength: Int16 {
-        4 + 24 * Int16(chars.count)
+        2 + 2 + CharBlockInfo.size * Int16(chars.count)
     }
 
     public var chars: [CharBlockInfo]
@@ -22,7 +22,7 @@ public struct PACKET_HC_BLOCK_CHARACTER: DecodablePacket {
 
         let packetLength = try decoder.decode(Int16.self)
 
-        let characterCount = (packetLength - 4) / 24
+        let characterCount = (packetLength - 2 - 2) / CharBlockInfo.size
 
         chars = []
         for _ in 0..<characterCount {
@@ -34,6 +34,10 @@ public struct PACKET_HC_BLOCK_CHARACTER: DecodablePacket {
 
 extension PACKET_HC_BLOCK_CHARACTER {
     public struct CharBlockInfo: BinaryDecodable {
+        public static var size: Int16 {
+            4 + 20
+        }
+
         public var charID: UInt32
         public var szExpireDate: String
 

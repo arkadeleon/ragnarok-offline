@@ -12,7 +12,7 @@ public struct PACKET_ZC_FRIENDS_LIST: DecodablePacket {
     }
 
     public var packetLength: Int16 {
-        4 + FriendInfo.size * Int16(friends.count)
+        2 + 2 + FriendInfo.size * Int16(friends.count)
     }
 
     public var friends: [FriendInfo]
@@ -22,7 +22,7 @@ public struct PACKET_ZC_FRIENDS_LIST: DecodablePacket {
 
         let packetLength = try decoder.decode(Int16.self)
 
-        let friendCount = (packetLength - 4) / FriendInfo.size
+        let friendCount = (packetLength - 2 - 2) / FriendInfo.size
 
         friends = []
         for _ in 0..<friendCount {

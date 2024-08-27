@@ -13,9 +13,9 @@ public struct PACKET_HC_CHARLIST_NOTIFY: DecodablePacket {
 
     public var packetLength: Int16 {
         if PACKET_VERSION_RE && PACKET_VERSION >= 20151001 && PACKET_VERSION < 20180103 {
-            10
+            2 + 4 + 4
         } else {
-            6
+            2 + 4
         }
     }
 

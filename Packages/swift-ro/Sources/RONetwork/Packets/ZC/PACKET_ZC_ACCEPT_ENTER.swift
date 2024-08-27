@@ -19,11 +19,11 @@ public struct PACKET_ZC_ACCEPT_ENTER: DecodablePacket {
 
     public var packetLength: Int16 {
         if PACKET_VERSION < 20080102 {
-            11
+            2 + 4 + 3 + 1 + 1
         } else if PACKET_VERSION < 20141022 || PACKET_VERSION >= 20160330 {
-            13
+            2 + 4 + 3 + 1 + 1 + 2
         } else {
-            14
+            2 + 4 + 3 + 1 + 1 + 2 + 1
         }
     }
 

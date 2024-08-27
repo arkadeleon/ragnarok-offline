@@ -60,10 +60,6 @@ public class MapClient {
             self?.onChangeDirection?(packet.headDirection, packet.direction)
         }
 
-        // 0xb0
-        connection.registerPacket(PACKET_ZC_PAR_CHANGE.self) { [weak self] packet in
-        }
-
         // 0x201
         connection.registerPacket(PACKET_ZC_FRIENDS_LIST.self) { [weak self] packet in
         }
@@ -81,6 +77,38 @@ public class MapClient {
         connection.registerPacket(PACKET_ZC_PING_LIVE.self) { [weak self] packet in
             let packet = PACKET_CZ_PING_LIVE()
             self?.connection.sendPacket(packet)
+        }
+
+        registerStatusPackets()
+    }
+
+    private func registerStatusPackets() {
+        // 0xb0
+        connection.registerPacket(PACKET_ZC_PAR_CHANGE.self) { [weak self] packet in
+        }
+
+        // 0xb1
+        connection.registerPacket(PACKET_ZC_LONGPAR_CHANGE.self) { [weak self] packet in
+        }
+
+        // 0xbe
+        connection.registerPacket(PACKET_ZC_STATUS_CHANGE.self) { [weak self] packet in
+        }
+
+        // 0x121
+        connection.registerPacket(PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO.self) { [weak self] packet in
+        }
+
+        // 0x13a
+        connection.registerPacket(PACKET_ZC_ATTACK_RANGE.self) { [weak self] packet in
+        }
+
+        // 0x141
+        connection.registerPacket(PACKET_ZC_COUPLESTATUS.self) { [weak self] packet in
+        }
+
+        // 0xacb
+        connection.registerPacket(PACKET_ZC_LONGLONGPAR_CHANGE.self) { [weak self] packet in
         }
     }
 
