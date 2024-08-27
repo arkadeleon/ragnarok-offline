@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2021/7/5.
 //
 
+/// See `logclif_parse_reqauth_raw`
 public struct PACKET_CA_LOGIN: EncodablePacket {
     public var packetType: Int16 {
         0x64

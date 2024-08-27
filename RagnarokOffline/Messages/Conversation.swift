@@ -16,7 +16,7 @@ class Conversation {
     private var charClient: CharClient?
 
     private var state: ClientState?
-    private var serverList: [ServerInfo] = []
+    private var charServers: [CharServer] = []
 
     func executeCommand(_ command: MessageCommand, arguments: [String] = []) {
         let message = Message(sender: .client, content: command.rawValue)
@@ -35,16 +35,16 @@ class Conversation {
         switch command {
         case .login:
             loginClient = LoginClient()
-            loginClient.onAcceptLogin = { [weak self] state, serverList in
+            loginClient.onAcceptLogin = { [weak self] state, charServers in
                 self?.state = state
-                self?.serverList = serverList
+                self?.charServers = charServers
 
                 self?.messages.append(.server("Accepted"))
 
-                let serverListMessage = serverList.enumerated()
+                let serversMessage = charServers.enumerated()
                     .map({ "(\($0.offset + 1)) \($0.element.name)" })
                     .joined(separator: "\n")
-                self?.messages.append(.server(serverListMessage))
+                self?.messages.append(.server(serversMessage))
             }
             loginClient.onRefuseLogin = { [weak self] message in
                 self?.messages.append(.server("Refused"))
@@ -66,18 +66,18 @@ class Conversation {
         case .enterChar:
             guard let state,
                   let serverNumber = Int(arguments[0]),
-                  (serverNumber - 1) < serverList.count else {
+                  (serverNumber - 1) < charServers.count else {
                 break
             }
 
-            let serverInfo = serverList[serverNumber - 1]
-            charClient = CharClient(state: state, serverInfo: serverInfo)
-            charClient?.onAcceptEnter = { [weak self] charList in
+            let charServer = charServers[serverNumber - 1]
+            charClient = CharClient(state: state, charServer: charServer)
+            charClient?.onAcceptEnter = { [weak self] chars in
                 self?.messages.append(.server("Accepted"))
 
-                for charInfo in charList {
+                for charInfo in chars {
                     let message = """
-                    Char ID: \(charInfo.gid)
+                    Char ID: \(charInfo.charID)
                     Name: \(charInfo.name)
                     Str: \(charInfo.str)
                     Agi: \(charInfo.agi)
@@ -85,7 +85,7 @@ class Conversation {
                     Int: \(charInfo.int)
                     Dex: \(charInfo.dex)
                     Luk: \(charInfo.luk)
-                    Char Number: \(charInfo.charNum)
+                    Char Number: \(charInfo.slot)
                     """
                     self?.messages.append(.server(message))
                 }
@@ -99,7 +99,7 @@ class Conversation {
             charClient?.onRefuseMakeChar = { [weak self] in
                 self?.messages.append(.server("Refused"))
             }
-            charClient?.onNotifyZoneServer = { [weak self] mapName, ip, port in
+            charClient?.onNotifyZoneServer = { [weak self] mapName, mapServer in
                 self?.messages.append(.server("Entered map: \(mapName)"))
             }
 
@@ -123,7 +123,7 @@ class Conversation {
                 break
             }
 
-            charClient?.selectChar(charNum: charNum)
+            charClient?.selectChar(slot: charNum)
         }
     }
 }

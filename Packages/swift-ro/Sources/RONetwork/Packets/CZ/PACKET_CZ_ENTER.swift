@@ -15,16 +15,16 @@ public struct PACKET_CZ_ENTER: EncodablePacket {
         packetDatabase.entryForEnter.packetLength
     }
 
-    public var aid: UInt32
-    public var gid: UInt32
-    public var authCode: UInt32
+    public var accountID: UInt32
+    public var charID: UInt32
+    public var loginID1: UInt32
     public var clientTime: UInt32
     public var sex: UInt8
 
     public init() {
-        aid = 0
-        gid = 0
-        authCode = 0
+        accountID = 0
+        charID = 0
+        loginID1 = 0
         clientTime = 0
         sex = 0
     }
@@ -34,9 +34,9 @@ public struct PACKET_CZ_ENTER: EncodablePacket {
 
         var data = [UInt8](repeating: 0, count: Int(packetLength))
         data.replaceSubrange(from: 0, with: packetType)
-        data.replaceSubrange(from: offsets[0], with: aid)
-        data.replaceSubrange(from: offsets[1], with: gid)
-        data.replaceSubrange(from: offsets[2], with: authCode)
+        data.replaceSubrange(from: offsets[0], with: accountID)
+        data.replaceSubrange(from: offsets[1], with: charID)
+        data.replaceSubrange(from: offsets[2], with: loginID1)
         data.replaceSubrange(from: offsets[3], with: clientTime)
         data.replaceSubrange(from: offsets[4], with: sex)
 

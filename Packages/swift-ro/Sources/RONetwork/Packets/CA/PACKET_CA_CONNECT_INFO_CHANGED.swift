@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/4/8.
 //
 
+/// See `logclif_parse_keepalive`
 public struct PACKET_CA_CONNECT_INFO_CHANGED: EncodablePacket {
     public var packetType: Int16 {
         0x200

@@ -15,11 +15,11 @@ public struct PACKET_CZ_REQUEST_ACT: EncodablePacket {
         packetDatabase.entryForRequestAction.packetLength
     }
 
-    public var targetGID: UInt32
+    public var targetID: UInt32
     public var action: UInt8
 
     public init() {
-        targetGID = 0
+        targetID = 0
         action = 0
     }
 
@@ -28,7 +28,7 @@ public struct PACKET_CZ_REQUEST_ACT: EncodablePacket {
 
         var data = [UInt8](repeating: 0, count: Int(packetLength))
         data.replaceSubrange(from: 0, with: packetType)
-        data.replaceSubrange(from: offsets[0], with: targetGID)
+        data.replaceSubrange(from: offsets[0], with: targetID)
         data.replaceSubrange(from: offsets[1], with: action)
 
         try encoder.encode(data)

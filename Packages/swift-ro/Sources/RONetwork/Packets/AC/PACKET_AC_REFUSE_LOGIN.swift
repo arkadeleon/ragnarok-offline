@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2021/7/6.
 //
 
+/// See `logclif_auth_failed`
 public struct PACKET_AC_REFUSE_LOGIN: DecodablePacket {
     public static var packetType: Int16 {
         if PACKET_VERSION >= 20120000 {
@@ -22,18 +23,18 @@ public struct PACKET_AC_REFUSE_LOGIN: DecodablePacket {
         }
     }
 
-    public var errorCode: UInt32
-    public var blockDate: String
+    public var result: UInt32
+    public var unblockTime: String
 
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
 
         if PACKET_VERSION >= 20120000 {
-            errorCode = try decoder.decode(UInt32.self)
+            result = try decoder.decode(UInt32.self)
         } else {
-            errorCode = try UInt32(decoder.decode(UInt8.self))
+            result = UInt32(try decoder.decode(UInt8.self))
         }
 
-        blockDate = try decoder.decode(String.self, length: 20)
+        unblockTime = try decoder.decode(String.self, length: 20)
     }
 }

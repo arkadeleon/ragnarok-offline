@@ -12,7 +12,7 @@ public struct PACKET_ZC_NOTIFY_PLAYERMOVE: DecodablePacket {
     }
 
     public var packetLength: Int16 {
-        12
+        2 + 2 + MoveData.size
     }
 
     public var moveStartTime: UInt32

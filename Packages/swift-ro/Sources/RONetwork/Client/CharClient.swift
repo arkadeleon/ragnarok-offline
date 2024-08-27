@@ -15,14 +15,14 @@ public class CharClient {
     public var onRefuseEnter: (() -> Void)?
     public var onAcceptMakeChar: (() -> Void)?
     public var onRefuseMakeChar: (() -> Void)?
-    public var onNotifyZoneServer: ((String, UInt32, UInt16) -> Void)?
+    public var onNotifyZoneServer: ((String, MapServer) -> Void)?
     public var onError: ((any Error) -> Void)?
 
     private let connection: ClientConnection
 
     private var keepAliveTimer: Timer?
 
-    public init(state: ClientState, serverInfo: ServerInfo) {
+    public init(state: ClientState, charServer: CharServer) {
         self.state = state
 
         let decodablePackets: [any DecodablePacket.Type] = [
@@ -43,7 +43,7 @@ public class CharClient {
             PACKET_HC_CHARLIST_NOTIFY.self,                 // 0x9a0
         ]
 
-        connection = ClientConnection(port: serverInfo.port, decodablePackets: decodablePackets)
+        connection = ClientConnection(port: charServer.port, decodablePackets: decodablePackets)
     }
 
     public func connect() {
@@ -79,16 +79,16 @@ public class CharClient {
     ///         ``PACKET_HC_REFUSE_ENTER``
     public func enter() {
         var packet = PACKET_CH_ENTER()
-        packet.aid = state.aid
-        packet.authCode = state.authCode
-        packet.userLevel = state.userLevel
-        packet.sex = state.sex
+        packet.accountID = state.accountID
+        packet.loginID1 = state.loginID1
+        packet.loginID2 = state.loginID2
         packet.clientType = state.langType
+        packet.sex = state.sex
 
         connection.sendPacket(packet)
 
         connection.receiveData { data in
-            self.state.aid = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
+            self.state.accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
 
             self.connection.receivePacket()
         }
@@ -105,7 +105,7 @@ public class CharClient {
             }
 
             var packet = PACKET_CZ_PING()
-            packet.aid = self.state.aid
+            packet.accountID = self.state.accountID
 
             self.connection.sendPacket(packet)
         }
@@ -149,7 +149,7 @@ public class CharClient {
     ///         ``PACKET_HC_DELETE_CHAR``
     public func deleteChar(charID: UInt32) {
         var packet = PACKET_CH_DELETE_CHAR()
-        packet.gid = charID
+        packet.charID = charID
 
         connection.sendPacket(packet)
     }
@@ -161,7 +161,7 @@ public class CharClient {
     /// Receive ``PACKET_HC_DELETE_CHAR_RESERVED``
     public func requestDeletionDate(charID: UInt32) {
         var packet = PACKET_CH_DELETE_CHAR_RESERVED()
-        packet.gid = charID
+        packet.charID = charID
 
         connection.sendPacket(packet)
     }
@@ -173,7 +173,7 @@ public class CharClient {
     /// Receive ``PACKET_HC_DELETE_CHAR_CANCEL``
     public func cancelDelete(charID: UInt32) {
         var packet = PACKET_CH_DELETE_CHAR_CANCEL()
-        packet.gid = charID
+        packet.charID = charID
 
         connection.sendPacket(packet)
     }
@@ -189,9 +189,9 @@ public class CharClient {
     /// Receive ``PACKET_HC_REFUSE_ENTER`` when refused.
     ///
     /// Receive ``PACKET_HC_NOTIFY_ZONESVR`` when accepted.
-    public func selectChar(charNum: UInt8) {
+    public func selectChar(slot: UInt8) {
         var packet = PACKET_CH_SELECT_CHAR()
-        packet.charNum = charNum
+        packet.slot = slot
 
         connection.sendPacket(packet)
     }
@@ -201,7 +201,7 @@ public class CharClient {
         case let packet as PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER:
             onAcceptEnterHeader?()
         case let packet as PACKET_HC_ACCEPT_ENTER_NEO_UNION:
-            onAcceptEnter?(packet.charList)
+            onAcceptEnter?(packet.chars)
         case let packet as PACKET_HC_REFUSE_ENTER:
             onRefuseEnter?()
         case let packet as PACKET_HC_ACCEPT_MAKECHAR:
@@ -209,8 +209,8 @@ public class CharClient {
         case let packet as PACKET_HC_REFUSE_MAKECHAR:
             onRefuseMakeChar?()
         case let packet as PACKET_HC_NOTIFY_ZONESVR:
-            state.gid = packet.gid
-            onNotifyZoneServer?(packet.mapName, packet.serverInfo.ip, packet.serverInfo.port)
+            state.charID = packet.charID
+            onNotifyZoneServer?(packet.mapName, packet.mapServer)
         default:
             break
         }

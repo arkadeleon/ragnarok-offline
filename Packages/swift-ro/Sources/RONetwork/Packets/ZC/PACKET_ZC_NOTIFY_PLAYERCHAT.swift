@@ -5,13 +5,14 @@
 //  Created by Leon Li on 2024/8/22.
 //
 
+/// See `clif_displaymessage`
 public struct PACKET_ZC_NOTIFY_PLAYERCHAT: DecodablePacket {
     public static var packetType: Int16 {
         0x8e
     }
 
     public var packetLength: Int16 {
-        4 + Int16(message.count)
+        2 + 2 + Int16(message.count)
     }
 
     public var message: [UInt8]
@@ -21,6 +22,6 @@ public struct PACKET_ZC_NOTIFY_PLAYERCHAT: DecodablePacket {
 
         let packetLength = try decoder.decode(Int16.self)
 
-        message = try decoder.decode([UInt8].self, length: Int(packetLength - 4))
+        message = try decoder.decode([UInt8].self, length: Int(packetLength - 2 - 2))
     }
 }

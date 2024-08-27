@@ -15,12 +15,12 @@ public struct PACKET_CZ_CHANGE_DIRECTION: EncodablePacket {
         packetDatabase.entryForChangeDirection.packetLength
     }
 
-    public var headDir: UInt16
-    public var dir: UInt8
+    public var headDirection: UInt16
+    public var direction: UInt8
 
     public init() {
-        headDir = 0
-        dir = 0
+        headDirection = 0
+        direction = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {
@@ -28,8 +28,8 @@ public struct PACKET_CZ_CHANGE_DIRECTION: EncodablePacket {
 
         var data = [UInt8](repeating: 0, count: Int(packetLength))
         data.replaceSubrange(from: 0, with: packetType)
-        data.replaceSubrange(from: offsets[0], with: headDir)
-        data.replaceSubrange(from: offsets[1], with: dir)
+        data.replaceSubrange(from: offsets[0], with: headDirection)
+        data.replaceSubrange(from: offsets[1], with: direction)
 
         try encoder.encode(data)
     }

@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/8/22.
 //
 
+/// See `clif_par_change`
 public struct PACKET_ZC_PAR_CHANGE: DecodablePacket {
     public static var packetType: Int16 {
         0xb0

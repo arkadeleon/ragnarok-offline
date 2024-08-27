@@ -11,14 +11,14 @@ public struct PACKET_ZC_AID: DecodablePacket {
     }
 
     public var packetLength: Int16 {
-        6
+        2 + 4
     }
 
-    public var aid: UInt32
+    public var accountID: UInt32
 
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
 
-        aid = try decoder.decode(UInt32.self)
+        accountID = try decoder.decode(UInt32.self)
     }
 }

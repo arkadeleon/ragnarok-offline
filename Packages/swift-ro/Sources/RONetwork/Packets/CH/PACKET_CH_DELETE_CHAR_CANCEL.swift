@@ -15,14 +15,14 @@ public struct PACKET_CH_DELETE_CHAR_CANCEL: EncodablePacket {
         2 + 4
     }
 
-    public var gid: UInt32
+    public var charID: UInt32
 
     public init() {
-        gid = 0
+        charID = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(gid)
+        try encoder.encode(charID)
     }
 }

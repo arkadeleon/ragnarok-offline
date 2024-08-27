@@ -15,14 +15,14 @@ public struct PACKET_CH_SELECT_CHAR: EncodablePacket {
         2 + 1
     }
 
-    public var charNum: UInt8
+    public var slot: UInt8
 
     public init() {
-        charNum = 0
+        slot = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(charNum)
+        try encoder.encode(slot)
     }
 }

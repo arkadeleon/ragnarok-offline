@@ -17,14 +17,14 @@ public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION: DecodablePacket {
             packetLength += 1 + 1 + 1
         }
         packetLength += 20
-        packetLength += CharInfo.size * Int16(charList.count)
+        packetLength += CharInfo.size * Int16(chars.count)
         return packetLength
     }
 
-    public var totalSlotNum: UInt8
-    public var premiumStartSlot: UInt8
-    public var premiumEndSlot: UInt8
-    public var charList: [CharInfo]
+    public var maxSlots: UInt8
+    public var availableSlots: UInt8
+    public var premiumSlots: UInt8
+    public var chars: [CharInfo]
 
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
@@ -39,21 +39,21 @@ public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION: DecodablePacket {
         }
 
         if PACKET_VERSION >= 20100413 {
-            totalSlotNum = try decoder.decode(UInt8.self)
-            premiumStartSlot = try decoder.decode(UInt8.self)
-            premiumEndSlot = try decoder.decode(UInt8.self)
+            maxSlots = try decoder.decode(UInt8.self)
+            availableSlots = try decoder.decode(UInt8.self)
+            premiumSlots = try decoder.decode(UInt8.self)
         } else {
-            totalSlotNum = 0
-            premiumStartSlot = 0
-            premiumEndSlot = 0
+            maxSlots = 0
+            availableSlots = 0
+            premiumSlots = 0
         }
 
         _ = try decoder.decode(String.self, length: 20)
 
-        charList = []
+        chars = []
         for _ in 0..<charCount {
             let charInfo = try decoder.decode(CharInfo.self)
-            charList.append(charInfo)
+            chars.append(charInfo)
         }
     }
 }

@@ -27,19 +27,19 @@ public struct PACKET_CH_DELETE_CHAR: EncodablePacket {
         }
     }
 
-    public var gid: UInt32
+    public var charID: UInt32
     public var email: String
     public var birthdate: String
 
     public init() {
-        gid = 0
+        charID = 0
         email = ""
         birthdate = ""
     }
 
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(gid)
+        try encoder.encode(charID)
 
         if PACKET_VERSION > 20100803 {
             try encoder.encode(birthdate, length: 6)

@@ -9,7 +9,7 @@ import Foundation
 import ROResources
 
 public class LoginClient {
-    public var onAcceptLogin: ((ClientState, [ServerInfo]) -> Void)?
+    public var onAcceptLogin: ((ClientState, [CharServer]) -> Void)?
     public var onRefuseLogin: ((String) -> Void)?
     public var onNotifyBan: ((String) -> Void)?
     public var onError: ((any Error) -> Void)?
@@ -97,17 +97,17 @@ public class LoginClient {
 
     private func receiveAcceptLoginPacket(_ packet: PACKET_AC_ACCEPT_LOGIN) {
         let state = ClientState()
-        state.authCode = packet.authCode
-        state.aid = packet.aid
-        state.userLevel = packet.userLevel
+        state.loginID1 = packet.loginID1
+        state.accountID = packet.accountID
+        state.loginID2 = packet.loginID2
         state.sex = packet.sex
         state.langType = 1
 
-        onAcceptLogin?(state, packet.serverList)
+        onAcceptLogin?(state, packet.charServers)
     }
 
     private func receiveRefuseLoginPacket(_ packet: PACKET_AC_REFUSE_LOGIN) {
-        let messageCode = switch packet.errorCode {
+        let messageCode = switch packet.result {
         case   0: 6     // Unregistered ID
         case   1: 7     // Incorrect Password
         case   2: 8     // This ID is expired
@@ -135,13 +135,13 @@ public class LoginClient {
 
         Task {
             var message = await MessageLocalization.shared.localizedMessage(at: messageCode)
-            message = message.replacingOccurrences(of: "%s", with: packet.blockDate)
+            message = message.replacingOccurrences(of: "%s", with: packet.unblockTime)
             onRefuseLogin?(message)
         }
     }
 
     private func receiveNotifyBanPacket(_ packet: PACKET_SC_NOTIFY_BAN) {
-        let messageCode = switch packet.errorCode {
+        let messageCode = switch packet.result {
         case   0: 3     // Server closed
         case   1: 4     // Server closed
         case   2: 5     // Someone has already logged in with this id

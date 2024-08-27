@@ -19,7 +19,7 @@ public class MapClient {
 
     private var keepAliveTimer: Timer?
 
-    public init(state: ClientState, ip: UInt32, port: UInt16) {
+    public init(state: ClientState, mapServer: MapServer) {
         self.state = state
 
         let decodablePackets: [any DecodablePacket.Type] = [
@@ -35,7 +35,7 @@ public class MapClient {
             PACKET_ZC_PING_LIVE.self,                       // 0xb1d
         ]
 
-        connection = ClientConnection(port: port, decodablePackets: decodablePackets)
+        connection = ClientConnection(port: mapServer.port, decodablePackets: decodablePackets)
     }
 
     public func connect() {
@@ -66,9 +66,9 @@ public class MapClient {
     ///         ``PACKET_ZC_ACCEPT_ENTER``
     public func enter() {
         var packet = PACKET_CZ_ENTER()
-        packet.aid = state.aid
-        packet.gid = state.gid
-        packet.authCode = state.authCode
+        packet.accountID = state.accountID
+        packet.charID = state.charID
+        packet.loginID1 = state.loginID1
         packet.clientTime = UInt32(Date.now.timeIntervalSince1970)
         packet.sex = state.sex
 
@@ -76,7 +76,7 @@ public class MapClient {
 
         if PACKET_VERSION < 20070521 {
             connection.receiveData { data in
-                self.state.aid = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
+                self.state.accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
 
                 self.connection.receivePacket()
             }
@@ -115,10 +115,10 @@ public class MapClient {
     /// Send ``PACKET_CZ_CHANGE_DIRECTION``
     ///
     /// Receive ``PACKET_ZC_CHANGE_DIRECTION``
-    public func changeDirection(headDir: UInt16, dir: UInt8) {
+    public func changeDirection(headDirection: UInt16, direction: UInt8) {
         var packet = PACKET_CZ_CHANGE_DIRECTION()
-        packet.headDir = headDir
-        packet.dir = dir
+        packet.headDirection = headDirection
+        packet.direction = direction
 
         connection.sendPacket(packet)
     }
@@ -144,7 +144,7 @@ public class MapClient {
             break
         case let packet as PACKET_ZC_NPCACK_MAPMOVE:
             var packet = PACKET_CZ_REQUEST_ACT()
-            packet.targetGID = 0
+            packet.targetID = 0
             packet.action = 3
 
             connection.sendPacket(packet)
@@ -153,13 +153,13 @@ public class MapClient {
 
             notifyMapLoaded()
         case let packet as PACKET_ZC_CHANGE_DIRECTION:
-            onChangeDirection?(packet.headDir, packet.dir)
+            onChangeDirection?(packet.headDirection, packet.direction)
         case let packet as PACKET_ZC_PAR_CHANGE:
             break
         case let packet as PACKET_ZC_FRIENDS_LIST:
             break
         case let packet as PACKET_ZC_AID:
-            state.aid = packet.aid
+            state.accountID = packet.accountID
         case let packet as PACKET_ZC_EXTEND_BODYITEM_SIZE:
             break
         case is PACKET_ZC_PING_LIVE:

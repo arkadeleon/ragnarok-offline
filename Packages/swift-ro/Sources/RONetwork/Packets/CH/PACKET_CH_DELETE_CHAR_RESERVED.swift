@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/4/8.
 //
 
-/// See `chclif_parse_char_delete2_req` in `char_clif.cpp`
+/// See `chclif_parse_char_delete2_req`
 public struct PACKET_CH_DELETE_CHAR_RESERVED: EncodablePacket {
     public var packetType: Int16 {
         0x827
@@ -15,14 +15,14 @@ public struct PACKET_CH_DELETE_CHAR_RESERVED: EncodablePacket {
         2 + 4
     }
 
-    public var gid: UInt32
+    public var charID: UInt32
 
     public init() {
-        gid = 0
+        charID = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(gid)
+        try encoder.encode(charID)
     }
 }

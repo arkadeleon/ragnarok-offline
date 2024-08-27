@@ -16,7 +16,7 @@ import rAthenaMap
 
 final class ClientTests: XCTestCase {
 
-    let logger = Logger(subsystem: "ROClientTests", category: "LoginClientTests")
+    let logger = Logger(subsystem: "RONetworkTests", category: "ClientTests")
 
     var loginClient: LoginClient!
     var charClient: CharClient!
@@ -55,10 +55,9 @@ final class ClientTests: XCTestCase {
     }
 
     func testClient() async throws {
-        var _state = ClientState()
-        var _serverInfo: ServerInfo?
-        var _mapIP: UInt32?
-        var _mapPort: UInt16?
+        var _state: ClientState?
+        var _charServer: RONetwork.CharServer?
+        var _mapServer: RONetwork.MapServer?
 
         // MARK: - Login
 
@@ -68,11 +67,11 @@ final class ClientTests: XCTestCase {
 
         loginClient.connect()
 
-        loginClient.onAcceptLogin = { state, serverInfoList in
-            XCTAssert(serverInfoList.count == 1)
+        loginClient.onAcceptLogin = { state, charServers in
+            XCTAssert(charServers.count == 1)
 
             _state = state
-            _serverInfo = serverInfoList[0]
+            _charServer = charServers[0]
 
             loginExpectation.fulfill()
         }
@@ -99,12 +98,12 @@ final class ClientTests: XCTestCase {
 
         let enterCharExpectation = expectation(description: "EnterChar")
 
-        charClient = CharClient(state: _state, serverInfo: _serverInfo!)
+        charClient = CharClient(state: _state!, charServer: _charServer!)
 
         charClient.connect()
 
-        charClient.onAcceptEnter = { charList in
-            XCTAssert(charList.count == 0)
+        charClient.onAcceptEnter = { charServers in
+            XCTAssert(charServers.count == 0)
 
             enterCharExpectation.fulfill()
         }
@@ -141,14 +140,13 @@ final class ClientTests: XCTestCase {
 
         let selectCharExpectation = expectation(description: "SelectChar")
 
-        charClient.onNotifyZoneServer = { mapName, ip, port in
-            _mapIP = ip
-            _mapPort = port
+        charClient.onNotifyZoneServer = { mapName, mapServer in
+            _mapServer = mapServer
 
             selectCharExpectation.fulfill()
         }
 
-        charClient.selectChar(charNum: 0)
+        charClient.selectChar(slot: 0)
 
         await fulfillment(of: [selectCharExpectation])
 
@@ -156,7 +154,7 @@ final class ClientTests: XCTestCase {
 
         let enterMapExpectation = expectation(description: "EnterMap")
 
-        mapClient = MapClient(state: _state, ip: _mapIP!, port: _mapPort!)
+        mapClient = MapClient(state: _state!, mapServer: _mapServer!)
 
         mapClient.connect()
 

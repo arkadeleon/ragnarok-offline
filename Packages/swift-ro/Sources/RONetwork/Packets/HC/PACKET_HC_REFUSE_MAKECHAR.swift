@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/4/8.
 //
 
+/// See `chclif_parse_createnewchar`
 public struct PACKET_HC_REFUSE_MAKECHAR: DecodablePacket {
     public static var packetType: Int16 {
         0x6e

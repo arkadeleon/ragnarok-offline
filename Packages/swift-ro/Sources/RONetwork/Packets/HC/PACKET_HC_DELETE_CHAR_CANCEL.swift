@@ -12,16 +12,16 @@ public struct PACKET_HC_DELETE_CHAR_CANCEL: DecodablePacket {
     }
 
     public var packetLength: Int16 {
-        10
+        2 + 4 + 4
     }
 
-    public var gid: UInt32
+    public var charID: UInt32
     public var result: UInt32
 
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
 
-        gid = try decoder.decode(UInt32.self)
+        charID = try decoder.decode(UInt32.self)
         result = try decoder.decode(UInt32.self)
     }
 }

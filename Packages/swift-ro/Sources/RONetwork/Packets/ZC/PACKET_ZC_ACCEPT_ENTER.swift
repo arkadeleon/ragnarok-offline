@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/8/22.
 //
 
+/// See `clif_authok`
 public struct PACKET_ZC_ACCEPT_ENTER: DecodablePacket {
     public static var packetType: Int16 {
         if PACKET_VERSION < 20080102 {
@@ -27,7 +28,7 @@ public struct PACKET_ZC_ACCEPT_ENTER: DecodablePacket {
     }
 
     public var startTime: UInt32
-    public var posDir: [UInt8]
+    public var positionAndDirection: [UInt8]
     public var xSize: UInt8
     public var ySize: UInt8
     public var font: UInt16
@@ -37,7 +38,7 @@ public struct PACKET_ZC_ACCEPT_ENTER: DecodablePacket {
         try decoder.decodePacketType(Self.self)
 
         startTime = try decoder.decode(UInt32.self)
-        posDir = try decoder.decode([UInt8].self, length: 3)
+        positionAndDirection = try decoder.decode([UInt8].self, length: 3)
         xSize = try decoder.decode(UInt8.self)
         ySize = try decoder.decode(UInt8.self)
 

@@ -19,13 +19,13 @@ public struct PACKET_HC_CHARLIST_NOTIFY: DecodablePacket {
         }
     }
 
-    public var totalCnt: UInt32
+    public var totalCount: UInt32
     public var charSlots: UInt32
 
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
 
-        totalCnt = try decoder.decode(UInt32.self)
+        totalCount = try decoder.decode(UInt32.self)
 
         if PACKET_VERSION_RE && PACKET_VERSION >= 20151001 && PACKET_VERSION < 20180103 {
             charSlots = try decoder.decode(UInt32.self)

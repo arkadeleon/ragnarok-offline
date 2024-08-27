@@ -34,9 +34,9 @@ public struct PACKET_CH_MAKE_CHAR: EncodablePacket {
     public var int: UInt8
     public var dex: UInt8
     public var luk: UInt8
-    public var charNum: UInt8
-    public var headPal: UInt16
-    public var head: UInt16
+    public var slot: UInt8
+    public var hairColor: UInt16
+    public var hairStyle: UInt16
     public var job: UInt16
     public var sex: UInt8
 
@@ -48,9 +48,9 @@ public struct PACKET_CH_MAKE_CHAR: EncodablePacket {
         int = 0
         dex = 0
         luk = 0
-        charNum = 0
-        headPal = 0
-        head = 0
+        slot = 0
+        hairColor = 0
+        hairStyle = 0
         job = 0
         sex = 0
     }
@@ -69,9 +69,9 @@ public struct PACKET_CH_MAKE_CHAR: EncodablePacket {
             try encoder.encode(luk)
         }
 
-        try encoder.encode(charNum)
-        try encoder.encode(headPal)
-        try encoder.encode(head)
+        try encoder.encode(slot)
+        try encoder.encode(hairColor)
+        try encoder.encode(hairStyle)
 
         if PACKET_VERSION >= 20151001 {
             try encoder.encode(job)

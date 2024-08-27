@@ -6,12 +6,13 @@
 //
 
 public class ClientState {
-    public var authCode: UInt32 = 0
-    public var aid: UInt32 = 0
-    public var gid: UInt32 = 0
-    public var userLevel: UInt32 = 0
-    public var sex: UInt8 = 0
+    public var accountID: UInt32 = 0
+    public var loginID1: UInt32 = 0
+    public var loginID2: UInt32 = 0
     public var langType: UInt16 = 0
+    public var sex: UInt8 = 0
+
+    public var charID: UInt32 = 0
 
     public init() {
     }

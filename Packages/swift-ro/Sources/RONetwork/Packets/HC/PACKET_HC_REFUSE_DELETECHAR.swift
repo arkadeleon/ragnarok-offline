@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/4/8.
 //
 
+/// See `chclif_refuse_delchar`
 public struct PACKET_HC_REFUSE_DELETECHAR: DecodablePacket {
     public static var packetType: Int16 {
         0x70
