@@ -15,7 +15,6 @@ import rAthenaMap
 @testable import RONetwork
 
 final class ClientTests: XCTestCase {
-
     let logger = Logger(subsystem: "RONetworkTests", category: "ClientTests")
 
     var loginClient: LoginClient!

@@ -19,31 +19,40 @@ public class LoginClient {
     private var keepAliveTimer: Timer?
 
     public init() {
-        let decodablePackets: [any DecodablePacket.Type] = [
-            PACKET_AC_ACCEPT_LOGIN.self,                    // 0x69, 0xac4
-            PACKET_AC_REFUSE_LOGIN.self,                    // 0x6a, 0x83e
-            PACKET_SC_NOTIFY_BAN.self,                      // 0x81
-        ]
+        connection = ClientConnection(port: 6900)
 
-        connection = ClientConnection(port: 6900, decodablePackets: decodablePackets)
+        connection.errorHandler = { [weak self] error in
+            self?.onError?(error)
+        }
+
+        // 0x69, 0xac4
+        connection.registerPacket(PACKET_AC_ACCEPT_LOGIN.self) { [weak self] packet in
+            let state = ClientState()
+            state.accountID = packet.accountID
+            state.loginID1 = packet.loginID1
+            state.loginID2 = packet.loginID2
+            state.langType = 1
+            state.sex = packet.sex
+
+            self?.onAcceptLogin?(state, packet.charServers)
+        }
+
+        // 0x6a, 0x83e
+        connection.registerPacket(PACKET_AC_REFUSE_LOGIN.self) { [weak self] packet in
+            self?.handleRefuseLoginPacket(packet)
+        }
+
+        // 0x81
+        connection.registerPacket(PACKET_SC_NOTIFY_BAN.self) { [weak self] packet in
+            self?.handleNotifyBanPacket(packet)
+        }
     }
 
     public func connect() {
-        connection.packetReceiveHandler = { packet in
-            self.receivePacket(packet)
-            self.connection.receivePacket()
-        }
-        connection.errorHandler = { error in
-            self.onError?(error)
-        }
-
         connection.start()
     }
 
     public func disconnect() {
-        connection.packetReceiveHandler = nil
-        connection.errorHandler = nil
-
         connection.cancel()
     }
 
@@ -82,31 +91,7 @@ public class LoginClient {
         keepAliveTimer?.fire()
     }
 
-    private func receivePacket(_ packet: any DecodablePacket) {
-        switch packet {
-        case let packet as PACKET_AC_ACCEPT_LOGIN:
-            receiveAcceptLoginPacket(packet)
-        case let packet as PACKET_AC_REFUSE_LOGIN:
-            receiveRefuseLoginPacket(packet)
-        case let packet as PACKET_SC_NOTIFY_BAN:
-            receiveNotifyBanPacket(packet)
-        default:
-            break
-        }
-    }
-
-    private func receiveAcceptLoginPacket(_ packet: PACKET_AC_ACCEPT_LOGIN) {
-        let state = ClientState()
-        state.loginID1 = packet.loginID1
-        state.accountID = packet.accountID
-        state.loginID2 = packet.loginID2
-        state.sex = packet.sex
-        state.langType = 1
-
-        onAcceptLogin?(state, packet.charServers)
-    }
-
-    private func receiveRefuseLoginPacket(_ packet: PACKET_AC_REFUSE_LOGIN) {
+    private func handleRefuseLoginPacket(_ packet: PACKET_AC_REFUSE_LOGIN) {
         let messageCode = switch packet.result {
         case   0: 6     // Unregistered ID
         case   1: 7     // Incorrect Password
@@ -140,7 +125,7 @@ public class LoginClient {
         }
     }
 
-    private func receiveNotifyBanPacket(_ packet: PACKET_SC_NOTIFY_BAN) {
+    private func handleNotifyBanPacket(_ packet: PACKET_SC_NOTIFY_BAN) {
         let messageCode = switch packet.result {
         case   0: 3     // Server closed
         case   1: 4     // Server closed

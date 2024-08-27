@@ -25,43 +25,85 @@ public class CharClient {
     public init(state: ClientState, charServer: CharServer) {
         self.state = state
 
-        let decodablePackets: [any DecodablePacket.Type] = [
-            PACKET_HC_ACCEPT_ENTER_NEO_UNION.self,          // 0x6b
-            PACKET_HC_REFUSE_ENTER.self,                    // 0x6c
-            PACKET_HC_ACCEPT_MAKECHAR.self,                 // 0b6d
-            PACKET_HC_REFUSE_MAKECHAR.self,                 // 0x6e
-            PACKET_HC_ACCEPT_DELETECHAR.self,               // 0x6f
-            PACKET_HC_REFUSE_DELETECHAR.self,               // 0x70
-            PACKET_HC_NOTIFY_ZONESVR.self,                  // 0x71, 0xac5
-            PACKET_HC_BLOCK_CHARACTER.self,                 // 0x20d
-            PACKET_HC_DELETE_CHAR_RESERVED.self,            // 0x828
-            PACKET_HC_DELETE_CHAR.self,                     // 0x82a
-            PACKET_HC_DELETE_CHAR_CANCEL.self,              // 0x82c
-            PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.self,   // 0x82d
-            PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self,       // 0x840
-            PACKET_HC_SECOND_PASSWD_LOGIN.self,             // 0x8b9
-            PACKET_HC_CHARLIST_NOTIFY.self,                 // 0x9a0
-        ]
+        connection = ClientConnection(port: charServer.port)
 
-        connection = ClientConnection(port: charServer.port, decodablePackets: decodablePackets)
+        connection.errorHandler = { [weak self] error in
+            self?.onError?(error)
+        }
+
+        // 0x6b
+        connection.registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION.self) { [weak self] packet in
+            self?.onAcceptEnter?(packet.chars)
+        }
+
+        // 0x6c
+        connection.registerPacket(PACKET_HC_REFUSE_ENTER.self) { [weak self] packet in
+            self?.onRefuseEnter?()
+        }
+
+        // 0x6d
+        connection.registerPacket(PACKET_HC_ACCEPT_MAKECHAR.self) { [weak self] packet in
+            self?.onAcceptMakeChar?()
+        }
+
+        // 0x6e
+        connection.registerPacket(PACKET_HC_REFUSE_MAKECHAR.self) { [weak self] packet in
+            self?.onRefuseMakeChar?()
+        }
+
+        // 0x6f
+        connection.registerPacket(PACKET_HC_ACCEPT_DELETECHAR.self) { [weak self] packet in
+        }
+
+        // 0x70
+        connection.registerPacket(PACKET_HC_REFUSE_DELETECHAR.self) { [weak self] packet in
+        }
+
+        // 0x71, 0xac5
+        connection.registerPacket(PACKET_HC_NOTIFY_ZONESVR.self) { [weak self] packet in
+            self?.state.charID = packet.charID
+            self?.onNotifyZoneServer?(packet.mapName, packet.mapServer)
+        }
+
+        // 0x20d
+        connection.registerPacket(PACKET_HC_BLOCK_CHARACTER.self) { [weak self] packet in
+        }
+
+        // 0x828
+        connection.registerPacket(PACKET_HC_DELETE_CHAR_RESERVED.self) { [weak self] packet in
+        }
+
+        // 0x82a
+        connection.registerPacket(PACKET_HC_DELETE_CHAR.self) { [weak self] packet in
+        }
+
+        // 0x82c
+        connection.registerPacket(PACKET_HC_DELETE_CHAR_CANCEL.self) { [weak self] packet in
+        }
+
+        // 0x82d
+        connection.registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.self) { [weak self] packet in
+            self?.onAcceptEnterHeader?()
+        }
+
+        // 0x840
+        connection.registerPacket(PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self) { [weak self] packet in
+        }
+
+        // 0x8b9
+        connection.registerPacket(PACKET_HC_SECOND_PASSWD_LOGIN.self) { [weak self] packet in
+        }
+
+        // 0x9a0
+        connection.registerPacket(PACKET_HC_CHARLIST_NOTIFY.self) { [weak self] packet in
+        }
     }
 
     public func connect() {
-        connection.packetReceiveHandler = { packet in
-            self.receivePacket(packet)
-            self.connection.receivePacket()
-        }
-        connection.errorHandler = { error in
-            self.onError?(error)
-        }
-
         connection.start()
     }
 
     public func disconnect() {
-        connection.packetReceiveHandler = nil
-        connection.errorHandler = nil
-
         connection.cancel()
     }
 
@@ -194,25 +236,5 @@ public class CharClient {
         packet.slot = slot
 
         connection.sendPacket(packet)
-    }
-
-    private func receivePacket(_ packet: any DecodablePacket) {
-        switch packet {
-        case let packet as PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER:
-            onAcceptEnterHeader?()
-        case let packet as PACKET_HC_ACCEPT_ENTER_NEO_UNION:
-            onAcceptEnter?(packet.chars)
-        case let packet as PACKET_HC_REFUSE_ENTER:
-            onRefuseEnter?()
-        case let packet as PACKET_HC_ACCEPT_MAKECHAR:
-            onAcceptMakeChar?()
-        case let packet as PACKET_HC_REFUSE_MAKECHAR:
-            onRefuseMakeChar?()
-        case let packet as PACKET_HC_NOTIFY_ZONESVR:
-            state.charID = packet.charID
-            onNotifyZoneServer?(packet.mapName, packet.mapServer)
-        default:
-            break
-        }
     }
 }

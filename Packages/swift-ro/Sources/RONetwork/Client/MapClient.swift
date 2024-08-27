@@ -22,38 +22,73 @@ public class MapClient {
     public init(state: ClientState, mapServer: MapServer) {
         self.state = state
 
-        let decodablePackets: [any DecodablePacket.Type] = [
-            PACKET_ZC_ACCEPT_ENTER.self,                    // 0x73, 0x2eb, 0xa18
-            PACKET_ZC_NOTIFY_PLAYERMOVE.self,               // 0x87
-            PACKET_ZC_NOTIFY_PLAYERCHAT.self,               // 0x8e
-            PACKET_ZC_NPCACK_MAPMOVE.self,                  // 0x91
-            PACKET_ZC_CHANGE_DIRECTION.self,                // 0x9c
-            PACKET_ZC_PAR_CHANGE.self,                      // 0xb0
-            PACKET_ZC_FRIENDS_LIST.self,                    // 0x201
-            PACKET_ZC_AID.self,                             // 0x283
-            PACKET_ZC_EXTEND_BODYITEM_SIZE.self,            // 0xb18
-            PACKET_ZC_PING_LIVE.self,                       // 0xb1d
-        ]
+        connection = ClientConnection(port: mapServer.port)
 
-        connection = ClientConnection(port: mapServer.port, decodablePackets: decodablePackets)
+        connection.errorHandler = { [weak self] error in
+            self?.onError?(error)
+        }
+
+        // 0x73, 0x2eb, 0xa18
+        connection.registerPacket(PACKET_ZC_ACCEPT_ENTER.self) { [weak self] packet in
+            self?.onAcceptEnter?()
+        }
+
+        // 0x87
+        connection.registerPacket(PACKET_ZC_NOTIFY_PLAYERMOVE.self) { [weak self] packet in
+            self?.onNotifyPlayerMove?(packet.moveData)
+        }
+
+        // 0x8e
+        connection.registerPacket(PACKET_ZC_NOTIFY_PLAYERCHAT.self) { [weak self] packet in
+        }
+
+        // 0x91
+        connection.registerPacket(PACKET_ZC_NPCACK_MAPMOVE.self) { [weak self] packet in
+            var packet = PACKET_CZ_REQUEST_ACT()
+            packet.targetID = 0
+            packet.action = 3
+
+            self?.connection.sendPacket(packet)
+
+            // Load map.
+
+            self?.notifyMapLoaded()
+        }
+
+        // 0x9c
+        connection.registerPacket(PACKET_ZC_CHANGE_DIRECTION.self) { [weak self] packet in
+            self?.onChangeDirection?(packet.headDirection, packet.direction)
+        }
+
+        // 0xb0
+        connection.registerPacket(PACKET_ZC_PAR_CHANGE.self) { [weak self] packet in
+        }
+
+        // 0x201
+        connection.registerPacket(PACKET_ZC_FRIENDS_LIST.self) { [weak self] packet in
+        }
+
+        // 0x283
+        connection.registerPacket(PACKET_ZC_AID.self) { [weak self] packet in
+            self?.state.accountID = packet.accountID
+        }
+
+        // 0xb18
+        connection.registerPacket(PACKET_ZC_EXTEND_BODYITEM_SIZE.self) { [weak self] packet in
+        }
+
+        // 0xb1d
+        connection.registerPacket(PACKET_ZC_PING_LIVE.self) { [weak self] packet in
+            let packet = PACKET_CZ_PING_LIVE()
+            self?.connection.sendPacket(packet)
+        }
     }
 
     public func connect() {
-        connection.packetReceiveHandler = { packet in
-            self.receivePacket(packet)
-            self.connection.receivePacket()
-        }
-        connection.errorHandler = { error in
-            self.onError?(error)
-        }
-
         connection.start()
     }
 
     public func disconnect() {
-        connection.packetReceiveHandler = nil
-        connection.errorHandler = nil
-
         connection.cancel()
     }
 
@@ -132,41 +167,5 @@ public class MapClient {
         packet.y = y
 
         connection.sendPacket(packet)
-    }
-
-    private func receivePacket(_ packet: any DecodablePacket) {
-        switch packet {
-        case let packet as PACKET_ZC_ACCEPT_ENTER:
-            onAcceptEnter?()
-        case let packet as PACKET_ZC_NOTIFY_PLAYERMOVE:
-            onNotifyPlayerMove?(packet.moveData)
-        case let packet as PACKET_ZC_NOTIFY_PLAYERCHAT:
-            break
-        case let packet as PACKET_ZC_NPCACK_MAPMOVE:
-            var packet = PACKET_CZ_REQUEST_ACT()
-            packet.targetID = 0
-            packet.action = 3
-
-            connection.sendPacket(packet)
-
-            // Load map.
-
-            notifyMapLoaded()
-        case let packet as PACKET_ZC_CHANGE_DIRECTION:
-            onChangeDirection?(packet.headDirection, packet.direction)
-        case let packet as PACKET_ZC_PAR_CHANGE:
-            break
-        case let packet as PACKET_ZC_FRIENDS_LIST:
-            break
-        case let packet as PACKET_ZC_AID:
-            state.accountID = packet.accountID
-        case let packet as PACKET_ZC_EXTEND_BODYITEM_SIZE:
-            break
-        case is PACKET_ZC_PING_LIVE:
-            let packet = PACKET_CZ_PING_LIVE()
-            connection.sendPacket(packet)
-        default:
-            break
-        }
     }
 }

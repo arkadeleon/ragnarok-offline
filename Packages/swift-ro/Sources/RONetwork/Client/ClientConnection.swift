@@ -9,26 +9,23 @@ import Foundation
 import Network
 
 class ClientConnection {
-    let connection: NWConnection
+    private let connection: NWConnection
 
     private let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client-connection")
 
-    private let packetEncoder: PacketEncoder
-    private let packetDecoder: PacketDecoder
+    private let packetEncoder = PacketEncoder()
+    private let packetDecoder = PacketDecoder()
 
-    var packetReceiveHandler: (@Sendable (any DecodablePacket) -> Void)?
+    private var packetRegistrations: [any PacketRegistration] = []
+
     var errorHandler: (@Sendable (any Error) -> Void)?
 
-    init(port: UInt16, decodablePackets: [any DecodablePacket.Type]) {
+    init(port: UInt16) {
         connection = NWConnection(
             host: .ipv4(.loopback),
             port: .init(rawValue: port)!,
             using: .tcp
         )
-
-        packetEncoder = PacketEncoder()
-
-        packetDecoder = PacketDecoder(decodablePackets: decodablePackets)
     }
 
     func start() {
@@ -43,6 +40,13 @@ class ClientConnection {
         connection.stateUpdateHandler = nil
 
         connection.cancel()
+    }
+
+    func registerPacket<P>(_ type: P.Type, receiveHandler: @escaping (P) -> Void) where P: DecodablePacket {
+        packetDecoder.registerPacket(type)
+
+        let registration = _PacketRegistration(packetType: type.packetType, handler: receiveHandler)
+        packetRegistrations.append(registration)
     }
 
     func sendPacket(_ packet: some EncodablePacket) {
@@ -72,13 +76,19 @@ class ClientConnection {
     }
 
     func receivePacket() {
-        connection.receive(minimumIncompleteLength: 2, maximumLength: 65536) { content, _, _, error in
+        connection.receive(minimumIncompleteLength: 2, maximumLength: 65536) { [weak self] content, _, _, error in
+            guard let self else {
+                return
+            }
+
             if let content {
                 do {
                     let packets = try self.packetDecoder.decode(from: content)
                     for packet in packets {
                         print("Received packet: \(packet)")
-                        self.packetReceiveHandler?(packet)
+                        if let registration = self.packetRegistrations.first(where: { $0.packetType == packet.packetType }) {
+                            registration.handlePacket(packet)
+                        }
                     }
                 } catch {
                     print(error)
@@ -87,6 +97,8 @@ class ClientConnection {
             } else if let error {
                 self.errorHandler?(error)
             }
+
+            self.receivePacket()
         }
     }
 }
