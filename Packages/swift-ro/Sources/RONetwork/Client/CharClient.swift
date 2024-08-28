@@ -15,14 +15,14 @@ public class CharClient {
     public var onRefuseEnter: (() -> Void)?
     public var onAcceptMakeChar: (() -> Void)?
     public var onRefuseMakeChar: (() -> Void)?
-    public var onNotifyZoneServer: ((String, MapServer) -> Void)?
+    public var onNotifyZoneServer: ((String, MapServerInfo) -> Void)?
     public var onError: ((any Error) -> Void)?
 
     private let connection: ClientConnection
 
     private var keepAliveTimer: Timer?
 
-    public init(state: ClientState, charServer: CharServer) {
+    public init(state: ClientState, charServer: CharServerInfo) {
         self.state = state
 
         connection = ClientConnection(port: charServer.port)

@@ -17,7 +17,7 @@ public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION: DecodablePacket {
             packetLength += 1 + 1 + 1
         }
         packetLength += 20
-        packetLength += CharInfo.size * Int16(chars.count)
+        packetLength += CharInfo.decodedLength * Int16(chars.count)
         return packetLength
     }
 
@@ -33,9 +33,9 @@ public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION: DecodablePacket {
 
         let charCount: Int16
         if PACKET_VERSION >= 20100413 {
-            charCount = (packetLength - 27) / CharInfo.size
+            charCount = (packetLength - 27) / CharInfo.decodedLength
         } else {
-            charCount = (packetLength - 24) / CharInfo.size
+            charCount = (packetLength - 24) / CharInfo.decodedLength
         }
 
         if PACKET_VERSION >= 20100413 {
@@ -52,8 +52,8 @@ public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION: DecodablePacket {
 
         chars = []
         for _ in 0..<charCount {
-            let charInfo = try decoder.decode(CharInfo.self)
-            chars.append(charInfo)
+            let char = try decoder.decode(CharInfo.self)
+            chars.append(char)
         }
     }
 }

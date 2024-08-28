@@ -55,8 +55,8 @@ final class ClientTests: XCTestCase {
 
     func testClient() async throws {
         var _state: ClientState?
-        var _charServer: RONetwork.CharServer?
-        var _mapServer: RONetwork.MapServer?
+        var _charServer: CharServerInfo?
+        var _mapServer: MapServerInfo?
 
         // MARK: - Login
 

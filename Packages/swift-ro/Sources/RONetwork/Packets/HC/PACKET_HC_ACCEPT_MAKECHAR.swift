@@ -16,7 +16,7 @@ public struct PACKET_HC_ACCEPT_MAKECHAR: DecodablePacket {
     }
 
     public var packetLength: Int16 {
-        2 + CharInfo.size
+        2 + CharInfo.decodedLength
     }
 
     public var char: CharInfo

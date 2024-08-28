@@ -1,11 +1,11 @@
 //
-//  MapServer.swift
+//  MapServerInfo.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/8/26.
 //
 
-public struct MapServer: BinaryDecodable {
+public struct MapServerInfo: BinaryDecodable {
     public var ip: UInt32
     public var port: UInt16
 

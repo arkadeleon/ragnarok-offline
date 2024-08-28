@@ -17,9 +17,9 @@ public struct PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
 
     public var packetLength: Int16 {
         if PACKET_VERSION >= 20170315 {
-            2 + 2 + 4 + 4 + 4 + 4 + 26 + 1 + 17 + CharServer.size * Int16(charServers.count)
+            2 + 2 + 4 + 4 + 4 + 4 + 26 + 1 + 17 + CharServerInfo.decodedLength * Int16(charServers.count)
         } else {
-            2 + 2 + 4 + 4 + 4 + 4 + 26 + 1 + CharServer.size * Int16(charServers.count)
+            2 + 2 + 4 + 4 + 4 + 4 + 26 + 1 + CharServerInfo.decodedLength * Int16(charServers.count)
         }
     }
 
@@ -30,7 +30,7 @@ public struct PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
     public var lastLoginTime: String
     public var sex: UInt8
     public var token: [UInt8]
-    public var charServers: [CharServer]
+    public var charServers: [CharServerInfo]
 
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
@@ -39,9 +39,9 @@ public struct PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
 
         let charServerCount: Int16
         if PACKET_VERSION >= 20170315 {
-            charServerCount = (packetLength - 2 - 2 - 4 - 4 - 4 - 4 - 26 - 1 - 17) / CharServer.size
+            charServerCount = (packetLength - 2 - 2 - 4 - 4 - 4 - 4 - 26 - 1 - 17) / CharServerInfo.decodedLength
         } else {
-            charServerCount = (packetLength - 2 - 2 - 4 - 4 - 4 - 4 - 26 - 1) / CharServer.size
+            charServerCount = (packetLength - 2 - 2 - 4 - 4 - 4 - 4 - 26 - 1) / CharServerInfo.decodedLength
         }
 
         loginID1 = try decoder.decode(UInt32.self)
@@ -59,7 +59,7 @@ public struct PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
 
         charServers = []
         for _ in 0..<charServerCount {
-            let charServer = try decoder.decode(CharServer.self)
+            let charServer = try decoder.decode(CharServerInfo.self)
             charServers.append(charServer)
         }
     }

@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2021/7/5.
 //
 
+import Foundation
+
 public protocol Packet {
     var packetType: Int16 { get }
 
@@ -25,9 +27,19 @@ extension DecodablePacket {
     }
 }
 
+extension BinaryDecodable {
+    static var decodedLength: Int16 {
+        let data = Data(count: Int(Int16.max))
+        let decoder = BinaryDecoder(data: data)
+        _ = try? Self.init(from: decoder)
+        let length = Int16.max - Int16(decoder.data.count)
+        return length
+    }
+}
+
 extension BinaryDecoder {
     @discardableResult
-    public func decodePacketType<P>(_ type: P.Type) throws -> Int16 where P: DecodablePacket {
+    func decodePacketType<P>(_ type: P.Type) throws -> Int16 where P: DecodablePacket {
         let packetType = try decode(Int16.self)
         guard packetType == type.packetType else {
             throw PacketDecodingError.packetMismatch(packetType)

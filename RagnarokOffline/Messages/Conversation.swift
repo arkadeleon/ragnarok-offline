@@ -16,7 +16,7 @@ class Conversation {
     private var charClient: CharClient?
 
     private var state: ClientState?
-    private var charServers: [CharServer] = []
+    private var charServers: [CharServerInfo] = []
 
     func executeCommand(_ command: MessageCommand, arguments: [String] = []) {
         let message = Message(sender: .client, content: command.rawValue)

@@ -6,10 +6,6 @@
 //
 
 public struct MoveData: BinaryDecodable {
-    public static var size: Int16 {
-        6
-    }
-
     public var x0: Int16
     public var y0: Int16
     public var x1: Int16

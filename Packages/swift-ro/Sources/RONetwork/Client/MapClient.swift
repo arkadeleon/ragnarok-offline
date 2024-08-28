@@ -20,7 +20,7 @@ public class MapClient {
 
     private var keepAliveTimer: Timer?
 
-    public init(state: ClientState, mapServer: MapServer) {
+    public init(state: ClientState, mapServer: MapServerInfo) {
         self.state = state
 
         connection = ClientConnection(port: mapServer.port)

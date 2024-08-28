@@ -9,7 +9,7 @@ import Foundation
 import ROResources
 
 public class LoginClient {
-    public var onAcceptLogin: ((ClientState, [CharServer]) -> Void)?
+    public var onAcceptLogin: ((ClientState, [CharServerInfo]) -> Void)?
     public var onRefuseLogin: ((String) -> Void)?
     public var onNotifyBan: ((String) -> Void)?
     public var onError: ((any Error) -> Void)?

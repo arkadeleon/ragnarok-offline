@@ -1,19 +1,11 @@
 //
-//  CharServer.swift
+//  CharServerInfo.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/8/12.
 //
 
-public struct CharServer: BinaryDecodable {
-    public static var size: Int16 {
-        if PACKET_VERSION >= 20170315 {
-            32 + 128
-        } else {
-            32
-        }
-    }
-
+public struct CharServerInfo: BinaryDecodable {
     public var ip: UInt32
     public var port: UInt16
     public var name: String
