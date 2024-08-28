@@ -192,9 +192,9 @@ let package = Package(
                 .interoperabilityMode(.Cxx),
             ]),
         .plugin(
-            name: "RONetworkPlugin",
+            name: "RONetworkGenerator",
             capability: .command(
-                intent: .custom(verb: "convert-packetdb", description: ""),
+                intent: .custom(verb: "generate-network", description: ""),
                 permissions: [
                     .writeToPackageDirectory(reason: ""),
                 ]

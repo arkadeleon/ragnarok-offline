@@ -11,6 +11,7 @@ public class MapClient {
     public let state: ClientState
 
     public var onAcceptEnter: (() -> Void)?
+    public var onParameterChanged: ((StatusProperty, Int64) -> Void)?
     public var onNotifyPlayerMove: ((MoveData) -> Void)?
     public var onChangeDirection: ((UInt16, UInt8) -> Void)?
     public var onError: ((any Error) -> Void)?
@@ -85,10 +86,16 @@ public class MapClient {
     private func registerStatusPackets() {
         // 0xb0
         connection.registerPacket(PACKET_ZC_PAR_CHANGE.self) { [weak self] packet in
+            if let statusProperty = StatusProperty(rawValue: Int(packet.varID)) {
+                self?.onParameterChanged?(statusProperty, Int64(packet.count))
+            }
         }
 
         // 0xb1
         connection.registerPacket(PACKET_ZC_LONGPAR_CHANGE.self) { [weak self] packet in
+            if let statusProperty = StatusProperty(rawValue: Int(packet.varID)) {
+                self?.onParameterChanged?(statusProperty, Int64(packet.amount))
+            }
         }
 
         // 0xbe
@@ -109,6 +116,9 @@ public class MapClient {
 
         // 0xacb
         connection.registerPacket(PACKET_ZC_LONGLONGPAR_CHANGE.self) { [weak self] packet in
+            if let statusProperty = StatusProperty(rawValue: Int(packet.varID)) {
+                self?.onParameterChanged?(statusProperty, packet.amount)
+            }
         }
     }
 
