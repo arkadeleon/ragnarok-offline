@@ -61,6 +61,10 @@ public class MapClient {
             self?.onChangeDirection?(packet.headDirection, packet.direction)
         }
 
+        // 0xc3, 0x1d7
+        connection.registerPacket(PACKET_ZC_SPRITE_CHANGE.self) { [weak self] packet in
+        }
+
         // 0x201
         connection.registerPacket(PACKET_ZC_FRIENDS_LIST.self) { [weak self] packet in
         }
@@ -81,6 +85,9 @@ public class MapClient {
         }
 
         registerStatusPackets()
+        registerInventoryPackets()
+        registerMailPackets()
+        registerAchievementPackets()
     }
 
     private func registerStatusPackets() {
@@ -119,6 +126,44 @@ public class MapClient {
             if let statusProperty = StatusProperty(rawValue: Int(packet.varID)) {
                 self?.onParameterChanged?(statusProperty, packet.amount)
             }
+        }
+    }
+
+    private func registerInventoryPackets() {
+        // 0xb08
+        connection.registerPacket(PACKET_ZC_INVENTORY_START.self) { [weak self] packet in
+        }
+
+        // 0xa3, 0x1ee, 0x2e8, 0x991, 0xb09
+        connection.registerPacket(PACKET_ZC_ITEMLIST_NORMAL.self) { [weak self] packet in
+        }
+
+        // 0xa4, 0x295, 0x2d0, 0x992, 0xa0d, 0xb0a, 0xb39
+        connection.registerPacket(PACKET_ZC_ITEMLIST_EQUIP.self) { [weak self] packet in
+        }
+
+        // 0xb0b
+        connection.registerPacket(PACKET_ZC_INVENTORY_END.self) { [weak self] packet in
+        }
+    }
+
+    private func registerMailPackets() {
+        // 0x24a
+        connection.registerPacket(PACKET_ZC_MAIL_RECEIVE.self) { [weak self] packet in
+        }
+
+        // 0x9e7
+        connection.registerPacket(PACKET_ZC_NOTIFY_UNREADMAIL.self) { [weak self] packet in
+        }
+    }
+
+    private func registerAchievementPackets() {
+        // 0xa23
+        connection.registerPacket(PACKET_ZC_ALL_ACH_LIST.self) { [weak self] packet in
+        }
+
+        // 0xa24
+        connection.registerPacket(PACKET_ZC_ACH_UPDATE.self) { [weak self] packet in
         }
     }
 

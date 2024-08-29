@@ -28,11 +28,23 @@ public class PacketDecoder {
         let decoder = BinaryDecoder(data: data)
         while decoder.data.count >= 2 {
             let packetType = decoder.data.prefix(2).withUnsafeBytes({ $0.bindMemory(to: Int16.self) })[0]
-            guard let decodablePacket = packetsByType[packetType] else {
+            if let decodablePacket = packetsByType[packetType] {
+                let packet = try decodablePacket.init(from: decoder)
+                packets.append(packet)
+                print("Decoded packet: \(packet)")
+            } else if let entry = packetDatabase.entriesByPacketType[packetType] {
+                if entry.packetLength == -1 {
+                    let packetType = try decoder.decode(Int16.self)
+                    let packetLength = try decoder.decode(Int16.self)
+                    _ = try decoder.decode([UInt8].self, length: Int(packetLength - 2 - 2))
+                    print("Unimplemented packet: 0x" + String(packetType, radix: 16) + ", length: \(packetLength)")
+                } else {
+                    _ = try decoder.decode([UInt8].self, length: Int(entry.packetLength))
+                    print("Unimplemented packet: 0x" + String(entry.packetType, radix: 16) + ", length: \(entry.packetLength)")
+                }
+            } else {
                 throw PacketDecodingError.unknownPacket(packetType)
             }
-            let packet = try decodablePacket.init(from: decoder)
-            packets.append(packet)
         }
 
         return packets

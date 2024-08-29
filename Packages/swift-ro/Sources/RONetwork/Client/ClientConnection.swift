@@ -86,7 +86,6 @@ class ClientConnection {
                 do {
                     let packets = try self.packetDecoder.decode(from: content)
                     for packet in packets {
-                        print("Received packet: \(packet)")
                         if let registration = self.packetRegistrations.first(where: { $0.packetType == packet.packetType }) {
                             registration.handlePacket(packet)
                         }
