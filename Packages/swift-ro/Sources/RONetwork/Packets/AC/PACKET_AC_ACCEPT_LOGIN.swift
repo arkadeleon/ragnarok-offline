@@ -16,11 +16,7 @@ public struct PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
     }
 
     public var packetLength: Int16 {
-        if PACKET_VERSION >= 20170315 {
-            2 + 2 + 4 + 4 + 4 + 4 + 26 + 1 + 17 + CharServerInfo.decodedLength * Int16(charServers.count)
-        } else {
-            2 + 2 + 4 + 4 + 4 + 4 + 26 + 1 + CharServerInfo.decodedLength * Int16(charServers.count)
-        }
+        -1
     }
 
     public var loginID1: UInt32
@@ -39,9 +35,9 @@ public struct PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
 
         let charServerCount: Int16
         if PACKET_VERSION >= 20170315 {
-            charServerCount = (packetLength - 2 - 2 - 4 - 4 - 4 - 4 - 26 - 1 - 17) / CharServerInfo.decodedLength
+            charServerCount = (packetLength - 64) / CharServerInfo.decodedLength
         } else {
-            charServerCount = (packetLength - 2 - 2 - 4 - 4 - 4 - 4 - 26 - 1) / CharServerInfo.decodedLength
+            charServerCount = (packetLength - 47) / CharServerInfo.decodedLength
         }
 
         loginID1 = try decoder.decode(UInt32.self)

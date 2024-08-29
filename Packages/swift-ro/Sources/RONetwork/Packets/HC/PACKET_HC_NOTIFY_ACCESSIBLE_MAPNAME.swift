@@ -12,7 +12,7 @@ public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME: DecodablePacket {
     }
 
     public var packetLength: Int16 {
-        2 + 2 + MapInfo.size * Int16(maps.count)
+        -1
     }
 
     public var maps: [MapInfo]
@@ -22,7 +22,7 @@ public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME: DecodablePacket {
 
         let packetLength = try decoder.decode(Int16.self)
 
-        let mapCount = (packetLength - 2 - 2) / MapInfo.size
+        let mapCount = (packetLength - 4) / MapInfo.decodedLength
 
         maps = []
         for _ in 0..<mapCount {
@@ -34,10 +34,6 @@ public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME: DecodablePacket {
 
 extension PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME {
     public struct MapInfo: BinaryDecodable {
-        public static var size: Int16 {
-            4 + 16
-        }
-
         public var status: UInt32
         public var mapName: String
 

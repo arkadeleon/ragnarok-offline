@@ -12,13 +12,7 @@ public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION: DecodablePacket {
     }
 
     public var packetLength: Int16 {
-        var packetLength: Int16 = 2 + 2
-        if PACKET_VERSION >= 20100413 {
-            packetLength += 1 + 1 + 1
-        }
-        packetLength += 20
-        packetLength += CharInfo.decodedLength * Int16(chars.count)
-        return packetLength
+        -1
     }
 
     public var maxSlots: UInt8
