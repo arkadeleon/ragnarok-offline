@@ -77,6 +77,10 @@ final public class MapClient {
             self?.state.accountID = packet.accountID
         }
 
+        // 0x2b9, 0x7d9, 0xa00, 0xb20
+        connection.registerPacket(PACKET_ZC_SHORTCUT_KEY_LIST.self) { [weak self] packet in
+        }
+
         // 0xb18
         connection.registerPacket(PACKET_ZC_EXTEND_BODYITEM_SIZE.self) { [weak self] packet in
         }
