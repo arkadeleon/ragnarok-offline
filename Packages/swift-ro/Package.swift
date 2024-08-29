@@ -105,7 +105,6 @@ let package = Package(
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
                 .enableUpcomingFeature("GlobalConcurrency"),
-                .interoperabilityMode(.Cxx),
             ]),
         .target(
             name: "RORenderers",
@@ -122,7 +121,6 @@ let package = Package(
             name: "ROResources",
             dependencies: [
                 .product(name: "Lua", package: "swift-lua"),
-                "RODatabase",
             ],
             resources: [
                 .process("Resources"),
@@ -130,7 +128,6 @@ let package = Package(
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
                 .enableUpcomingFeature("GlobalConcurrency"),
-                .interoperabilityMode(.Cxx),
             ]),
         .target(
             name: "ROShaders",
@@ -179,7 +176,6 @@ let package = Package(
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
                 .enableUpcomingFeature("GlobalConcurrency"),
-                .interoperabilityMode(.Cxx),
             ]),
         .testTarget(
             name: "ROResourcesTests",
@@ -189,7 +185,6 @@ let package = Package(
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
                 .enableUpcomingFeature("GlobalConcurrency"),
-                .interoperabilityMode(.Cxx),
             ]),
         .plugin(
             name: "RONetworkGenerator",
