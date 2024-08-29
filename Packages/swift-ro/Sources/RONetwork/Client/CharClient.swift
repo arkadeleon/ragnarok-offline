@@ -7,16 +7,16 @@
 
 import Foundation
 
-public class CharClient {
+final public class CharClient {
     public let state: ClientState
 
     public var onAcceptEnterHeader: (() -> Void)?
-    public var onAcceptEnter: (([CharInfo]) -> Void)?
+    public var onAcceptEnter: ((_ chars: [CharInfo]) -> Void)?
     public var onRefuseEnter: (() -> Void)?
     public var onAcceptMakeChar: (() -> Void)?
     public var onRefuseMakeChar: (() -> Void)?
-    public var onNotifyZoneServer: ((String, MapServerInfo) -> Void)?
-    public var onError: ((any Error) -> Void)?
+    public var onNotifyZoneServer: ((_ mapName: String, _ mapServer: MapServerInfo) -> Void)?
+    public var onError: ((_ error: any Error) -> Void)?
 
     private let connection: ClientConnection
 

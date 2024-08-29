@@ -161,6 +161,16 @@ final class ClientTests: XCTestCase {
             enterMapExpectation.fulfill()
         }
 
+        mapClient.onStatusPropertyChanged = { sp, value, value2 in
+            print("Status property changed: \(sp), \(value)")
+            switch sp {
+            case .str, .agi, .vit, .int, .dex, .luk:
+                XCTAssertEqual(value, 1)
+            default:
+                break
+            }
+        }
+
         mapClient.enter()
 
         mapClient.keepAlive()

@@ -8,7 +8,7 @@
 import Foundation
 import Network
 
-class ClientConnection {
+final class ClientConnection {
     private let connection: NWConnection
 
     private let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client-connection")
@@ -18,7 +18,7 @@ class ClientConnection {
 
     private var packetRegistrations: [any PacketRegistration] = []
 
-    var errorHandler: (@Sendable (any Error) -> Void)?
+    var errorHandler: (@Sendable (_ error: any Error) -> Void)?
 
     init(port: UInt16) {
         connection = NWConnection(

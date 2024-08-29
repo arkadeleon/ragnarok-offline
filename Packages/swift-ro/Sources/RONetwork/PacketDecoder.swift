@@ -12,14 +12,14 @@ public enum PacketDecodingError: Error {
     case unknownPacket(Int16)
 }
 
-public class PacketDecoder {
-    private var packetsByType: [Int16 : any DecodablePacket.Type] = [:]
+final public class PacketDecoder {
+    var registeredPackets: [Int16 : any DecodablePacket.Type] = [:]
 
     public init() {
     }
 
     public func registerPacket<P>(_ type: P.Type) where P: DecodablePacket {
-        packetsByType[type.packetType] = type
+        registeredPackets[type.packetType] = type
     }
 
     public func decode(from data: Data) throws -> [any DecodablePacket] {
@@ -28,8 +28,8 @@ public class PacketDecoder {
         let decoder = BinaryDecoder(data: data)
         while decoder.data.count >= 2 {
             let packetType = decoder.data.prefix(2).withUnsafeBytes({ $0.bindMemory(to: Int16.self) })[0]
-            if let decodablePacket = packetsByType[packetType] {
-                let packet = try decodablePacket.init(from: decoder)
+            if let registeredPacket = registeredPackets[packetType] {
+                let packet = try registeredPacket.init(from: decoder)
                 packets.append(packet)
                 print("Decoded packet: \(packet)")
             } else if let entry = packetDatabase.entriesByPacketType[packetType] {
@@ -43,7 +43,8 @@ public class PacketDecoder {
                     print("Unimplemented packet: 0x" + String(entry.packetType, radix: 16) + ", length: \(entry.packetLength)")
                 }
             } else {
-                throw PacketDecodingError.unknownPacket(packetType)
+                print("Unknown packet: 0x" + String(packetType, radix: 16) + ", remaining bytes: \(decoder.data.count)")
+                break
             }
         }
 

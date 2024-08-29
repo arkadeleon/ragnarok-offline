@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class PacketEncoder {
+final public class PacketEncoder {
     public init() {
     }
 

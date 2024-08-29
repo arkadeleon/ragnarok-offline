@@ -7,14 +7,17 @@
 
 import Foundation
 
-public class MapClient {
+final public class MapClient {
     public let state: ClientState
 
     public var onAcceptEnter: (() -> Void)?
-    public var onParameterChanged: ((StatusProperty, Int64) -> Void)?
-    public var onNotifyPlayerMove: ((MoveData) -> Void)?
-    public var onChangeDirection: ((UInt16, UInt8) -> Void)?
-    public var onError: ((any Error) -> Void)?
+
+    public var onStatusPropertyChanged: ((_ sp: StatusProperty, _ value: Int, _ value2: Int) -> Void)?
+    public var onAttackRangeChanged: ((_ attackRange: Int) -> Void)?
+
+    public var onNotifyPlayerMove: ((_ moveData: MoveData) -> Void)?
+    public var onChangeDirection: ((_ headDirection: UInt16, _ direction: UInt8) -> Void)?
+    public var onError: ((_ error: any Error) -> Void)?
 
     private let connection: ClientConnection
 
@@ -93,20 +96,23 @@ public class MapClient {
     private func registerStatusPackets() {
         // 0xb0
         connection.registerPacket(PACKET_ZC_PAR_CHANGE.self) { [weak self] packet in
-            if let statusProperty = StatusProperty(rawValue: Int(packet.varID)) {
-                self?.onParameterChanged?(statusProperty, Int64(packet.count))
+            if let sp = StatusProperty(rawValue: Int(packet.varID)) {
+                self?.onStatusPropertyChanged?(sp, Int(packet.count), 0)
             }
         }
 
         // 0xb1
         connection.registerPacket(PACKET_ZC_LONGPAR_CHANGE.self) { [weak self] packet in
-            if let statusProperty = StatusProperty(rawValue: Int(packet.varID)) {
-                self?.onParameterChanged?(statusProperty, Int64(packet.amount))
+            if let sp = StatusProperty(rawValue: Int(packet.varID)) {
+                self?.onStatusPropertyChanged?(sp, Int(packet.amount), 0)
             }
         }
 
         // 0xbe
         connection.registerPacket(PACKET_ZC_STATUS_CHANGE.self) { [weak self] packet in
+            if let sp = StatusProperty(rawValue: Int(packet.statusID)) {
+                self?.onStatusPropertyChanged?(sp, Int(packet.value), 0)
+            }
         }
 
         // 0x121
@@ -115,16 +121,20 @@ public class MapClient {
 
         // 0x13a
         connection.registerPacket(PACKET_ZC_ATTACK_RANGE.self) { [weak self] packet in
+            self?.onAttackRangeChanged?(Int(packet.currentAttackRange))
         }
 
         // 0x141
         connection.registerPacket(PACKET_ZC_COUPLESTATUS.self) { [weak self] packet in
+            if let sp = StatusProperty(rawValue: Int(packet.statusType)) {
+                self?.onStatusPropertyChanged?(sp, Int(packet.defaultStatus), Int(packet.plusStatus))
+            }
         }
 
         // 0xacb
         connection.registerPacket(PACKET_ZC_LONGLONGPAR_CHANGE.self) { [weak self] packet in
-            if let statusProperty = StatusProperty(rawValue: Int(packet.varID)) {
-                self?.onParameterChanged?(statusProperty, packet.amount)
+            if let sp = StatusProperty(rawValue: Int(packet.varID)) {
+                self?.onStatusPropertyChanged?(sp, Int(packet.amount), 0)
             }
         }
     }

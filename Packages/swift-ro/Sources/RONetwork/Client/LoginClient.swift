@@ -8,11 +8,11 @@
 import Foundation
 import ROResources
 
-public class LoginClient {
-    public var onAcceptLogin: ((ClientState, [CharServerInfo]) -> Void)?
-    public var onRefuseLogin: ((String) -> Void)?
-    public var onNotifyBan: ((String) -> Void)?
-    public var onError: ((any Error) -> Void)?
+final public class LoginClient {
+    public var onAcceptLogin: ((_ state: ClientState, _ charServers: [CharServerInfo]) -> Void)?
+    public var onRefuseLogin: ((_ message: String) -> Void)?
+    public var onNotifyBan: ((_ message: String) -> Void)?
+    public var onError: ((_ error: any Error) -> Void)?
 
     private let connection: ClientConnection
 
