@@ -30,7 +30,6 @@ extension PacketDatabase {
         add(0x0084, 2)
         add(0x0085, 5, "clif_parse_WalkToXY", [2])
         add(0x0089, 7, "clif_parse_ActionRequest", [2, 6])
-        add(0x008a, 29)
         add(0x008b, 2)
         add(0x008c, -1, "clif_parse_GlobalMessage", [2, 4])
         add(0x008d, -1)
@@ -42,7 +41,6 @@ extension PacketDatabase {
         add(0x0099, -1, "clif_parse_Broadcast", [2, 4])
         add(0x009a, -1)
         add(0x009b, 5, "clif_parse_ChangeDir", [2, 4])
-        add(0x009c, 9)
         // add(HEADER_ZC_ITEM_ENTRY, sizeof( struct PACKET_ZC_ITEM_ENTRY ))
         add(0x009e, 17)
         add(0x009f, 6, "clif_parse_TakeItem", [2])
@@ -65,7 +63,6 @@ extension PacketDatabase {
         add(0x00bf, 3, "clif_parse_Emotion", [2])
         add(0x00c0, 7)
         add(0x00c1, 2, "clif_parse_HowManyConnections", [0])
-        add(0x00c2, 6)
         add(0x00c3, 8)
         add(0x00c5, 7, "clif_parse_NpcBuySellSelected", [2, 6])
         add(0x00c6, -1)
@@ -308,7 +305,6 @@ extension PacketDatabase {
         add(0x01fb, 56)
         add(0x01fc, -1)
         // add(HEADER_CZ_REQ_ITEMREPAIR1, sizeof( struct PACKET_CZ_REQ_ITEMREPAIR1 ), "clif_parse_RepairItem", [0])
-        add(0x01ff, 10)
         add(0x0200, 26)
         add(0x0201, -1)
         add(0x0202, 26, "clif_parse_FriendsListAdd", [2])
@@ -895,9 +891,6 @@ extension PacketDatabase {
             add(0x007c, 42)
             add(0x022c, 65)
             add(0x029b, 80)
-        }
-        if PACKET_VERSION >= 20071113 {
-            add(0x02e1, 33)
         }
         if PACKET_VERSION >= 20071120 {
             add(0x02e2, 14)
@@ -1547,7 +1540,6 @@ extension PacketDatabase {
             add(0x0998, 8, "clif_parse_EquipItem", [2, 4])
             add(0x099a, 9)
             add(0x099b, 8)
-            add(0x08C8, 34)
             add(0x08ff, 24)
             add(0x0984, 28)
             add(0x099f, 22)

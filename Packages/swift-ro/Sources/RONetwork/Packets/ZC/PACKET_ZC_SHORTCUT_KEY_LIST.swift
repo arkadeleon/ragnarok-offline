@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/8/29.
 //
 
+/// See `clif_hotkeys_send`
 public struct PACKET_ZC_SHORTCUT_KEY_LIST: DecodablePacket {
     public static var packetType: Int16 {
         if PACKET_VERSION_MAIN_NUMBER >= 20190522 || PACKET_VERSION_RE_NUMBER >= 20190508 || PACKET_VERSION_ZERO_NUMBER >= 20190605 {

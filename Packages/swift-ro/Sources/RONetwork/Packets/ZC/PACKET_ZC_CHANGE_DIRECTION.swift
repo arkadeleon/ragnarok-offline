@@ -15,14 +15,14 @@ public struct PACKET_ZC_CHANGE_DIRECTION: DecodablePacket {
         2 + 4 + 2 + 1
     }
 
-    public var accountID: UInt32
+    public var sourceID: UInt32
     public var headDirection: UInt16
     public var direction: UInt8
 
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
 
-        accountID = try decoder.decode(UInt32.self)
+        sourceID = try decoder.decode(UInt32.self)
         headDirection = try decoder.decode(UInt16.self)
         direction = try decoder.decode(UInt8.self)
     }

@@ -91,55 +91,20 @@ final public class MapClient {
             self?.connection.sendPacket(packet)
         }
 
-        registerStatusPackets()
+        registerAchievementPackets()
         registerInventoryPackets()
         registerMailPackets()
-        registerAchievementPackets()
+        registerPartyPackets()
+        registerStatusPackets()
     }
 
-    private func registerStatusPackets() {
-        // 0xb0
-        connection.registerPacket(PACKET_ZC_PAR_CHANGE.self) { [weak self] packet in
-            if let sp = StatusProperty(rawValue: Int(packet.varID)) {
-                self?.onStatusPropertyChanged?(sp, Int(packet.count), 0)
-            }
+    private func registerAchievementPackets() {
+        // 0xa23
+        connection.registerPacket(PACKET_ZC_ALL_ACH_LIST.self) { [weak self] packet in
         }
 
-        // 0xb1
-        connection.registerPacket(PACKET_ZC_LONGPAR_CHANGE.self) { [weak self] packet in
-            if let sp = StatusProperty(rawValue: Int(packet.varID)) {
-                self?.onStatusPropertyChanged?(sp, Int(packet.amount), 0)
-            }
-        }
-
-        // 0xbe
-        connection.registerPacket(PACKET_ZC_STATUS_CHANGE.self) { [weak self] packet in
-            if let sp = StatusProperty(rawValue: Int(packet.statusID)) {
-                self?.onStatusPropertyChanged?(sp, Int(packet.value), 0)
-            }
-        }
-
-        // 0x121
-        connection.registerPacket(PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO.self) { [weak self] packet in
-        }
-
-        // 0x13a
-        connection.registerPacket(PACKET_ZC_ATTACK_RANGE.self) { [weak self] packet in
-            self?.onAttackRangeChanged?(Int(packet.currentAttackRange))
-        }
-
-        // 0x141
-        connection.registerPacket(PACKET_ZC_COUPLESTATUS.self) { [weak self] packet in
-            if let sp = StatusProperty(rawValue: Int(packet.statusType)) {
-                self?.onStatusPropertyChanged?(sp, Int(packet.defaultStatus), Int(packet.plusStatus))
-            }
-        }
-
-        // 0xacb
-        connection.registerPacket(PACKET_ZC_LONGLONGPAR_CHANGE.self) { [weak self] packet in
-            if let sp = StatusProperty(rawValue: Int(packet.varID)) {
-                self?.onStatusPropertyChanged?(sp, Int(packet.amount), 0)
-            }
+        // 0xa24
+        connection.registerPacket(PACKET_ZC_ACH_UPDATE.self) { [weak self] packet in
         }
     }
 
@@ -171,13 +136,59 @@ final public class MapClient {
         }
     }
 
-    private func registerAchievementPackets() {
-        // 0xa23
-        connection.registerPacket(PACKET_ZC_ALL_ACH_LIST.self) { [weak self] packet in
+    private func registerPartyPackets() {
+        // 0x2c9
+        connection.registerPacket(PACKET_ZC_PARTY_CONFIG.self) { [weak self] packet in
+        }
+    }
+
+    private func registerStatusPackets() {
+        // 0xb0
+        connection.registerPacket(PACKET_ZC_PAR_CHANGE.self) { [weak self] packet in
+            if let sp = StatusProperty(rawValue: Int(packet.varID)) {
+                self?.onStatusPropertyChanged?(sp, Int(packet.count), 0)
+            }
         }
 
-        // 0xa24
-        connection.registerPacket(PACKET_ZC_ACH_UPDATE.self) { [weak self] packet in
+        // 0xb1
+        connection.registerPacket(PACKET_ZC_LONGPAR_CHANGE.self) { [weak self] packet in
+            if let sp = StatusProperty(rawValue: Int(packet.varID)) {
+                self?.onStatusPropertyChanged?(sp, Int(packet.amount), 0)
+            }
+        }
+
+        // 0xbd
+        connection.registerPacket(PACKET_ZC_STATUS.self) { [weak self] packet in
+        }
+
+        // 0xbe
+        connection.registerPacket(PACKET_ZC_STATUS_CHANGE.self) { [weak self] packet in
+            if let sp = StatusProperty(rawValue: Int(packet.statusID)) {
+                self?.onStatusPropertyChanged?(sp, Int(packet.value), 0)
+            }
+        }
+
+        // 0x121
+        connection.registerPacket(PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO.self) { [weak self] packet in
+        }
+
+        // 0x13a
+        connection.registerPacket(PACKET_ZC_ATTACK_RANGE.self) { [weak self] packet in
+            self?.onAttackRangeChanged?(Int(packet.currentAttackRange))
+        }
+
+        // 0x141
+        connection.registerPacket(PACKET_ZC_COUPLESTATUS.self) { [weak self] packet in
+            if let sp = StatusProperty(rawValue: Int(packet.statusType)) {
+                self?.onStatusPropertyChanged?(sp, Int(packet.defaultStatus), Int(packet.plusStatus))
+            }
+        }
+
+        // 0xacb
+        connection.registerPacket(PACKET_ZC_LONGLONGPAR_CHANGE.self) { [weak self] packet in
+            if let sp = StatusProperty(rawValue: Int(packet.varID)) {
+                self?.onStatusPropertyChanged?(sp, Int(packet.amount), 0)
+            }
         }
     }
 

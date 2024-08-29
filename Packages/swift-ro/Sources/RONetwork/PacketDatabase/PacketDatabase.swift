@@ -24,6 +24,15 @@ class PacketDatabase {
     init() {
         add_from_clif_packetdb()
         add_from_clif_shuffle()
+
+        /// PACKET_ZC_REPUTE_INFO
+        add(0x0b8d, -1)
+
+        /// See `clif_navigateTo`
+        add(0x08e2, 27)
+
+        /// PACKET_ZC_CLOSE_DIALOG
+        add(0x00b6, 6)
     }
 
     func add(_ packetType: Int16, _ packetLength: Int16) {
