@@ -6,6 +6,10 @@
 //
 
 import SwiftUI
+import rAthenaLogin
+import rAthenaChar
+import rAthenaMap
+import rAthenaWeb
 
 @main
 struct RagnarokOfflineApp: App {
@@ -18,4 +22,9 @@ struct RagnarokOfflineApp: App {
 
 extension EnvironmentValues {
     @Entry var conversation = Conversation()
+
+    @Entry var loginServer = ObservableServer(server: LoginServer.shared)
+    @Entry var charServer = ObservableServer(server: CharServer.shared)
+    @Entry var mapServer = ObservableServer(server: MapServer.shared)
+    @Entry var webServer = ObservableServer(server: WebServer.shared)
 }

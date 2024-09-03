@@ -5,17 +5,16 @@
 //  Created by Leon Li on 2024/8/9.
 //
 
-import rAthenaLogin
-import rAthenaChar
-import rAthenaMap
-import rAthenaWeb
 import SwiftUI
 
 enum SidebarItem: Hashable {
     case files
     case messages
     case cube
-    case server(ObservableServer)
+    case loginServer
+    case charServer
+    case mapServer
+    case webServer
     case serverFiles
     case itemDatabase
     case jobDatabase
@@ -30,10 +29,10 @@ enum SidebarItem: Hashable {
 struct SidebarView: View {
     var selection: Binding<SidebarItem?>?
 
-    @State private var loginServer = ObservableServer(server: LoginServer.shared)
-    @State private var charServer = ObservableServer(server: CharServer.shared)
-    @State private var mapServer = ObservableServer(server: MapServer.shared)
-    @State private var webServer = ObservableServer(server: WebServer.shared)
+    @Environment(\.loginServer) private var loginServer
+    @Environment(\.charServer) private var charServer
+    @Environment(\.mapServer) private var mapServer
+    @Environment(\.webServer) private var webServer
 
     @State private var isDatabaseSectionExpanded = true
     @State private var isSettingsPresented = false
@@ -63,19 +62,19 @@ struct SidebarView: View {
             }
 
             Section {
-                NavigationLink(value: SidebarItem.server(loginServer)) {
+                NavigationLink(value: SidebarItem.loginServer) {
                     ServerCell(server: loginServer)
                 }
 
-                NavigationLink(value: SidebarItem.server(charServer)) {
+                NavigationLink(value: SidebarItem.charServer) {
                     ServerCell(server: charServer)
                 }
 
-                NavigationLink(value: SidebarItem.server(mapServer)) {
+                NavigationLink(value: SidebarItem.mapServer) {
                     ServerCell(server: mapServer)
                 }
 
-                NavigationLink(value: SidebarItem.server(webServer)) {
+                NavigationLink(value: SidebarItem.webServer) {
                     ServerCell(server: webServer)
                 }
 

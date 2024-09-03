@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2023/1/13.
 //
 
-import rAthenaResources
 import SwiftUI
+import rAthenaResources
 
 struct ContentView: View {
     @State private var selectedItem: SidebarItem? = .files

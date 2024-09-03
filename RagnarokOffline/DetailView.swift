@@ -5,12 +5,17 @@
 //  Created by Leon Li on 2024/8/9.
 //
 
-import rAthenaResources
 import ROClient
 import SwiftUI
+import rAthenaResources
 
 struct DetailView: View {
     var item: SidebarItem
+
+    @Environment(\.loginServer) private var loginServer
+    @Environment(\.charServer) private var charServer
+    @Environment(\.mapServer) private var mapServer
+    @Environment(\.webServer) private var webServer
 
     @State private var clientDirectory = ObservableFile(file: .directory(ClientResourceBundle.shared.url))
     @State private var serverDirectory = ObservableFile(file: .directory(ServerResourceBundle.shared.url))
@@ -24,8 +29,14 @@ struct DetailView: View {
                 MessagesView()
             case .cube:
                 CubeView()
-            case .server(let server):
-                ServerView(server: server)
+            case .loginServer:
+                ServerView(server: loginServer)
+            case .charServer:
+                ServerView(server: charServer)
+            case .mapServer:
+                ServerView(server: mapServer)
+            case .webServer:
+                ServerView(server: webServer)
             case .serverFiles:
                 FilesView(title: "Server Files", directory: serverDirectory)
             case .itemDatabase:
