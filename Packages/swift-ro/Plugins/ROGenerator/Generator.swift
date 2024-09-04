@@ -1,5 +1,5 @@
 //
-//  NetworkGenerator.swift
+//  Generator.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/8/21.
@@ -34,31 +34,27 @@ struct NetworkGenerator: CommandPlugin {
         let shuffle = context.package.directory.appending(["..", "swift-rathena", "src", "map", "clif_shuffle.hpp"])
 
         let packetdb_lines = try output(for: packetdb)
-            .map({ "        \($0)" })
+            .map({ "    \($0)" })
             .joined(separator: "\n")
         let packetdb_output = """
-        extension PacketDatabase {
-            func add_from_clif_packetdb() {
+        public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (Int16, Int16, String?, [Int]) -> Void, PACKETVER: Int, PACKETVER_MAIN_NUM: Int, PACKETVER_RE_NUM: Int, PACKETVER_ZERO_NUM: Int) {
         \(packetdb_lines)
-            }
         }
         """
 
         let shuffle_lines = try output(for: shuffle)
-            .map({ "        \($0)" })
+            .map({ "    \($0)" })
             .joined(separator: "\n")
         let shuffle_output = """
-        extension PacketDatabase {
-            func add_from_clif_shuffle() {
+        public func add_packets_shuffle(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (Int16, Int16, String?, [Int]) -> Void, PACKETVER: Int, PACKETVER_MAIN_NUM: Int, PACKETVER_RE_NUM: Int, PACKETVER_ZERO_NUM: Int) {
         \(shuffle_lines)
-            }
         }
         """
 
-        let packetdb_output_path = context.package.directory.appending(["Sources", "RONetwork", "PacketDatabase", "clif_packetdb_converted.swift"])
+        let packetdb_output_path = context.package.directory.appending(["Sources", "ROGenerated", "packets.swift"])
         try packetdb_output.write(toFile: packetdb_output_path.string, atomically: true, encoding: .utf8)
 
-        let shuffle_output_path = context.package.directory.appending(["Sources", "RONetwork", "PacketDatabase", "clif_shuffle_converted.swift"])
+        let shuffle_output_path = context.package.directory.appending(["Sources", "ROGenerated", "packets_shuffle.swift"])
         try shuffle_output.write(toFile: shuffle_output_path.string, atomically: true, encoding: .utf8)
     }
 
@@ -87,7 +83,7 @@ struct NetworkGenerator: CommandPlugin {
                 let packetLength = parameters[1]
 
                 let indentation = Array(repeating: " ", count: indentationLevel * 4).joined()
-                let statement = "add(\(packetType), \(packetLength))"
+                let statement = "packet(\(packetType), \(packetLength))"
                 if packetType.hasPrefix("0x") && Int(packetLength) != nil {
                     output.append(indentation + statement)
                 } else {
@@ -107,7 +103,7 @@ struct NetworkGenerator: CommandPlugin {
                 let offsets = parameters[3...].joined(separator: ", ")
 
                 let indentation = Array(repeating: " ", count: indentationLevel * 4).joined()
-                let statement = "add(\(packetType), \(packetLength), \(functionName), [\(offsets)])"
+                let statement = "parseable_packet(\(packetType), \(packetLength), \(functionName), [\(offsets)])"
                 if packetType.hasPrefix("0x") && Int(packetLength) != nil {
                     output.append(indentation + statement)
                 } else {
@@ -228,17 +224,13 @@ struct NetworkGenerator: CommandPlugin {
         }
         """
 
-        let outputPath = context.package.directory.appending(["Sources", "RONetwork", "Generated", "\(configuration.exportedType).swift"])
+        let outputPath = context.package.directory.appending(["Sources", "ROGenerated", "\(configuration.exportedType).swift"])
         try outputContents.write(toFile: outputPath.string, atomically: true, encoding: .utf8)
     }
 }
 
 extension String {
     func replacingPacketVersion() -> String {
-        replacingOccurrences(of: "defined(PACKETVER_ZERO)", with: "PACKET_VERSION_ZERO_NUMBER != nil")
-            .replacingOccurrences(of: "PACKETVER_ZERO_NUM", with: "PACKET_VERSION_ZERO_NUMBER")
-            .replacingOccurrences(of: "PACKETVER_MAIN_NUM", with: "PACKET_VERSION_MAIN_NUMBER")
-            .replacingOccurrences(of: "PACKETVER_RE_NUM", with: "PACKET_VERSION_RE_NUMBER")
-            .replacingOccurrences(of: "PACKETVER", with: "PACKET_VERSION")
+        replacingOccurrences(of: "defined(PACKETVER_ZERO)", with: "PACKETVER_ZERO_NUM != 0")
     }
 }

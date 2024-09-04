@@ -97,9 +97,16 @@ let package = Package(
                 .enableUpcomingFeature("GlobalConcurrency"),
             ]),
         .target(
+            name: "ROGenerated",
+            swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
+                .enableUpcomingFeature("GlobalConcurrency"),
+            ]),
+        .target(
             name: "RONetwork",
             dependencies: [
                 .product(name: "rAthenaCommon", package: "swift-rathena"),
+                "ROGenerated",
                 "ROResources",
             ],
             swiftSettings: [
@@ -187,9 +194,9 @@ let package = Package(
                 .enableUpcomingFeature("GlobalConcurrency"),
             ]),
         .plugin(
-            name: "RONetworkGenerator",
+            name: "ROGenerator",
             capability: .command(
-                intent: .custom(verb: "generate-network", description: ""),
+                intent: .custom(verb: "generate", description: ""),
                 permissions: [
                     .writeToPackageDirectory(reason: ""),
                 ]

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ROGenerated
 
 final public class MapClient {
     public let state: ClientState
