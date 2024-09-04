@@ -8,11 +8,11 @@
 /// See `clif_parse_ChangeDir`
 public struct PACKET_CZ_CHANGE_DIRECTION: EncodablePacket {
     public var packetType: Int16 {
-        packetDatabase.entryForChangeDirection.packetType
+        PacketDatabase.Entry.CZ_CHANGE_DIRECTION.packetType
     }
 
     public var packetLength: Int16 {
-        packetDatabase.entryForChangeDirection.packetLength
+        PacketDatabase.Entry.CZ_CHANGE_DIRECTION.packetLength
     }
 
     public var headDirection: UInt16
@@ -24,7 +24,7 @@ public struct PACKET_CZ_CHANGE_DIRECTION: EncodablePacket {
     }
 
     public func encode(to encoder: BinaryEncoder) throws {
-        let offsets = packetDatabase.entryForChangeDirection.offsets
+        let offsets = PacketDatabase.Entry.CZ_CHANGE_DIRECTION.offsets
 
         var data = [UInt8](repeating: 0, count: Int(packetLength))
         data.replaceSubrange(from: 0, with: packetType)
@@ -35,8 +35,6 @@ public struct PACKET_CZ_CHANGE_DIRECTION: EncodablePacket {
     }
 }
 
-extension PacketDatabase {
-    var entryForChangeDirection: Entry {
-        entry(forFunctionName: "clif_parse_ChangeDir")!
-    }
+extension PacketDatabase.Entry {
+    public static let CZ_CHANGE_DIRECTION = packetDatabase.entry(forFunctionName: "clif_parse_ChangeDir")!
 }

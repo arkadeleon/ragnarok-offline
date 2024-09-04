@@ -8,11 +8,11 @@
 /// See `clif_parse_WalkToXY`
 public struct PACKET_CZ_REQUEST_MOVE: EncodablePacket {
     public var packetType: Int16 {
-        packetDatabase.entryForRequestMove.packetType
+        PacketDatabase.Entry.CZ_REQUEST_MOVE.packetType
     }
 
     public var packetLength: Int16 {
-        packetDatabase.entryForRequestMove.packetLength
+        PacketDatabase.Entry.CZ_REQUEST_MOVE.packetLength
     }
 
     public var x: Int16
@@ -24,7 +24,7 @@ public struct PACKET_CZ_REQUEST_MOVE: EncodablePacket {
     }
 
     public func encode(to encoder: BinaryEncoder) throws {
-        let offsets = packetDatabase.entryForRequestMove.offsets
+        let offsets = PacketDatabase.Entry.CZ_REQUEST_MOVE.offsets
 
         var data = [UInt8](repeating: 0, count: Int(packetLength))
         data.replaceSubrange(from: 0, with: packetType)
@@ -38,8 +38,6 @@ public struct PACKET_CZ_REQUEST_MOVE: EncodablePacket {
     }
 }
 
-extension PacketDatabase {
-    var entryForRequestMove: Entry {
-        entry(forFunctionName: "clif_parse_WalkToXY")!
-    }
+extension PacketDatabase.Entry {
+    public static let CZ_REQUEST_MOVE = packetDatabase.entry(forFunctionName: "clif_parse_WalkToXY")!
 }

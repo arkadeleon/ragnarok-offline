@@ -8,11 +8,11 @@
 /// See `clif_parse_TickSend`
 public struct PACKET_CZ_REQUEST_TIME: EncodablePacket {
     public var packetType: Int16 {
-        packetDatabase.entryForRequestTime.packetType
+        PacketDatabase.Entry.CZ_REQUEST_TIME.packetType
     }
 
     public var packetLength: Int16 {
-        packetDatabase.entryForRequestTime.packetLength
+        PacketDatabase.Entry.CZ_REQUEST_TIME.packetLength
     }
 
     public var clientTime: UInt32
@@ -22,7 +22,7 @@ public struct PACKET_CZ_REQUEST_TIME: EncodablePacket {
     }
 
     public func encode(to encoder: BinaryEncoder) throws {
-        let offsets = packetDatabase.entryForRequestTime.offsets
+        let offsets = PacketDatabase.Entry.CZ_REQUEST_TIME.offsets
 
         var data = [UInt8](repeating: 0, count: Int(packetLength))
         data.replaceSubrange(from: 0, with: packetType)
@@ -32,8 +32,6 @@ public struct PACKET_CZ_REQUEST_TIME: EncodablePacket {
     }
 }
 
-extension PacketDatabase {
-    var entryForRequestTime: Entry {
-        entry(forFunctionName: "clif_parse_TickSend")!
-    }
+extension PacketDatabase.Entry {
+    public static let CZ_REQUEST_TIME = packetDatabase.entry(forFunctionName: "clif_parse_TickSend")!
 }

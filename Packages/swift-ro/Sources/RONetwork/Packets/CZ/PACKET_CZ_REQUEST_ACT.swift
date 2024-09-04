@@ -8,11 +8,11 @@
 /// See `clif_parse_ActionRequest`
 public struct PACKET_CZ_REQUEST_ACT: EncodablePacket {
     public var packetType: Int16 {
-        packetDatabase.entryForRequestAction.packetType
+        PacketDatabase.Entry.CZ_REQUEST_ACT.packetType
     }
 
     public var packetLength: Int16 {
-        packetDatabase.entryForRequestAction.packetLength
+        PacketDatabase.Entry.CZ_REQUEST_ACT.packetLength
     }
 
     public var targetID: UInt32
@@ -24,7 +24,7 @@ public struct PACKET_CZ_REQUEST_ACT: EncodablePacket {
     }
 
     public func encode(to encoder: BinaryEncoder) throws {
-        let offsets = packetDatabase.entryForRequestAction.offsets
+        let offsets = PacketDatabase.Entry.CZ_REQUEST_ACT.offsets
 
         var data = [UInt8](repeating: 0, count: Int(packetLength))
         data.replaceSubrange(from: 0, with: packetType)
@@ -35,8 +35,6 @@ public struct PACKET_CZ_REQUEST_ACT: EncodablePacket {
     }
 }
 
-extension PacketDatabase {
-    var entryForRequestAction: Entry {
-        entry(forFunctionName: "clif_parse_ActionRequest")!
-    }
+extension PacketDatabase.Entry {
+    public static let CZ_REQUEST_ACT = packetDatabase.entry(forFunctionName: "clif_parse_ActionRequest")!
 }
