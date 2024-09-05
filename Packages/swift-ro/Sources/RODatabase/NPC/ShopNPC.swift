@@ -20,7 +20,7 @@
 /// `<map name>,<x>,<y>,<facing>%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}`
 ///
 /// `<map name>,<x>,<y>,<facing>%TAB%marketshop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>:<stock>{,<itemid>:<price>:<stock>...}`
-public struct ShopNPC {
+public struct ShopNPC: Sendable {
 
     init(_ w1: String, _ w2: String, _ w3: String, _ w4: String) {
     }

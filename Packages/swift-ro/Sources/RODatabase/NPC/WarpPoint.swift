@@ -11,7 +11,7 @@
 /// `<from mapname>,<fromX>,<fromY>,<facing>%TAB%warp2%TAB%<warp name>%TAB%<spanx>,<spany>,<to mapname>,<toX>,<toY>`
 /// `<from mapname>,<fromX>,<fromY>,<facing>%TAB%warp(<state>)%TAB%<warp name>%TAB%<spanx>,<spany>,<to mapname>,<toX>,<toY>`
 /// `<from mapname>,<fromX>,<fromY>,<facing>%TAB%warp2(<state>)%TAB%<warp name>%TAB%<spanx>,<spany>,<to mapname>,<toX>,<toY>`
-public struct WarpPoint {
+public struct WarpPoint: Sendable {
 
     public var fromMapName: String
 

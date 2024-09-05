@@ -8,7 +8,7 @@
 /// Define a map flag.
 ///
 /// `<map name>%TAB%mapflag%TAB%<flag>`
-public struct MapFlag {
+public struct MapFlag: Sendable {
 
     /// Map name.
     public var mapName: String

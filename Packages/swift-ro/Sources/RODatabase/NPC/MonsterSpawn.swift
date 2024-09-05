@@ -8,7 +8,7 @@
 /// Define a permanent monster spawn.
 ///
 /// `<map name>{,<x>{,<y>{,<xs>{,<ys>}}}}%TAB%monster%TAB%<monster name>{,<monster level>}%TAB%<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}`
-public struct MonsterSpawn {
+public struct MonsterSpawn: Sendable {
 
     /// The name of the map the monsters will spawn on.
     public var mapName: String

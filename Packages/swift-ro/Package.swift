@@ -1,4 +1,4 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -54,16 +54,11 @@ let package = Package(
                 "ROResources",
             ],
             swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("GlobalConcurrency"),
                 .interoperabilityMode(.Cxx),
+                .swiftLanguageMode(.v5),
             ]),
         .target(
-            name: "ROCore",
-            swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("GlobalConcurrency"),
-            ]),
+            name: "ROCore"),
         .target(
             name: "RODatabase",
             dependencies: [
@@ -72,8 +67,6 @@ let package = Package(
                 .product(name: "ryml", package: "swift-rathena"),
             ],
             swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("GlobalConcurrency"),
                 .interoperabilityMode(.Cxx),
             ]),
         .target(
@@ -83,8 +76,7 @@ let package = Package(
                 "ROCore",
             ],
             swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("GlobalConcurrency"),
+                .swiftLanguageMode(.v5),
             ]),
         .target(
             name: "ROFileSystem",
@@ -93,15 +85,10 @@ let package = Package(
                 "ROFileFormats",
             ],
             swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("GlobalConcurrency"),
+                .swiftLanguageMode(.v5),
             ]),
         .target(
-            name: "ROGenerated",
-            swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("GlobalConcurrency"),
-            ]),
+            name: "ROGenerated"),
         .target(
             name: "RONetwork",
             dependencies: [
@@ -109,8 +96,7 @@ let package = Package(
                 "ROResources",
             ],
             swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("GlobalConcurrency"),
+                .swiftLanguageMode(.v5),
             ]),
         .target(
             name: "RORenderers",
@@ -118,10 +104,6 @@ let package = Package(
                 "ROCore",
                 "ROFileFormats",
                 "ROShaders",
-            ],
-            swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("GlobalConcurrency"),
             ]),
         .target(
             name: "ROResources",
@@ -130,10 +112,6 @@ let package = Package(
             ],
             resources: [
                 .process("Resources"),
-            ],
-            swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("GlobalConcurrency"),
             ]),
         .target(
             name: "ROShaders",
@@ -142,10 +120,6 @@ let package = Package(
                 .process("Ground/GroundShaders.metal"),
                 .process("Model/ModelShaders.metal"),
                 .process("Water/WaterShaders.metal"),
-            ],
-            swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("GlobalConcurrency"),
             ]),
         .testTarget(
             name: "RODatabaseTests",
@@ -153,8 +127,6 @@ let package = Package(
                 "RODatabase",
             ],
             swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("GlobalConcurrency"),
                 .interoperabilityMode(.Cxx),
             ]),
         .testTarget(
@@ -165,10 +137,6 @@ let package = Package(
             resources: [
                 .copy("test.grf"),
                 .copy("data"),
-            ],
-            swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("GlobalConcurrency"),
             ]),
         .testTarget(
             name: "RONetworkTests",
@@ -179,19 +147,11 @@ let package = Package(
                 .product(name: "rAthenaMap", package: "swift-rathena"),
                 .product(name: "rAthenaResources", package: "swift-rathena"),
                 "RONetwork",
-            ],
-            swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("GlobalConcurrency"),
             ]),
         .testTarget(
             name: "ROResourcesTests",
             dependencies: [
                 "ROResources",
-            ],
-            swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("GlobalConcurrency"),
             ]),
         .plugin(
             name: "ROGenerator",

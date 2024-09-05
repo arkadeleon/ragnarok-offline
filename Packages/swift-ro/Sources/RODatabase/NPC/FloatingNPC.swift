@@ -8,7 +8,7 @@
 /// Define a floating NPC object.
 ///
 /// `-%TAB%script%TAB%<NPC Name>%TAB%-1,{<code>}`
-public struct FloatingNPC {
+public struct FloatingNPC: Sendable {
 
     public var npcName: String
 

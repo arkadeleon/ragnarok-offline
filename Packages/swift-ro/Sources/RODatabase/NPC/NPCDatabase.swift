@@ -67,7 +67,7 @@ public actor NPCDatabase {
     }
 
     private func import_conf_file(url: URL) throws {
-        let string = try String(contentsOf: url, encoding: .ascii)
+        let string = try String(contentsOf: url, encoding: .isoLatin1)
         let lines = string.split(separator: "\n")
 
         for line in lines {
@@ -99,7 +99,7 @@ public actor NPCDatabase {
     }
 
     private func add_npc_file(url: URL) throws {
-        let string = try String(contentsOf: url, encoding: .ascii)
+        let string = try String(contentsOf: url, encoding: .isoLatin1)
         let scanner = Scanner(string: string)
         scanner.charactersToBeSkipped = nil
 

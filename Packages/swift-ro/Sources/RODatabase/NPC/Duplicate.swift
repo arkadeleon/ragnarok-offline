@@ -16,7 +16,7 @@ import Foundation
 ///
 /// `npc: -%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>`
 /// `npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>`
-public struct Duplicate {
+public struct Duplicate: Sendable {
 
     public var label: String
 

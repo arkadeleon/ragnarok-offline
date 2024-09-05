@@ -8,7 +8,7 @@
 /// Define a function object.
 ///
 /// `function%TAB%script%TAB%<function name>%TAB%{<code>}`
-public struct Function {
+public struct Function: Sendable {
 
     public var functionName: String
 
