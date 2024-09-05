@@ -8,10 +8,10 @@
 import XCTest
 import Combine
 import OSLog
-import rAthenaResources
 import rAthenaLogin
 import rAthenaChar
 import rAthenaMap
+import rAthenaResources
 @testable import RONetwork
 
 final class ClientTests: XCTestCase {

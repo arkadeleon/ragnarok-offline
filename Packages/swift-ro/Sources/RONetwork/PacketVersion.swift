@@ -5,10 +5,8 @@
 //  Created by Leon Li on 2024/4/8.
 //
 
-import rAthenaCommon
-
 /// See ``PACKETVER``
-public let PACKET_VERSION = RA_PACKETVER
+public let PACKET_VERSION = 20211103
 
 /// See ``PACKETVER_RE``
 public let PACKET_VERSION_RE = (PACKET_VERSION > 20151104 && PACKET_VERSION < 20180704) || (PACKET_VERSION >= 20200902 && PACKET_VERSION <= 20211118)
