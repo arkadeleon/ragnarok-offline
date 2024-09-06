@@ -7,6 +7,7 @@
 
 import Foundation
 @preconcurrency import Lua
+import ROCore
 
 final public class ItemInfoTable: Sendable {
     public static let shared = ItemInfoTable(locale: .current)
@@ -54,14 +55,19 @@ final public class ItemInfoTable: Sendable {
             context = nil
 
             identifiedNameTable = {
-                guard let string = Bundle.module.string(forResource: "idnum2itemdisplaynametable", withExtension: "txt", encoding: .isoLatin1, locale: locale) else {
+                guard let url = Bundle.module.url(forResource: "idnum2itemdisplaynametable", withExtension: "txt", locale: locale),
+                      let stream = try? FileStream(url: url) else {
                     return [:]
+                }
+
+                let reader = StreamReader(stream: stream, delimiter: "\r\n")
+                defer {
+                    reader.close()
                 }
 
                 var nameTable: [Int : Data] = [:]
 
-                let lines = string.split(separator: "\r\n")
-                for line in lines {
+                while let line = reader.readLine() {
                     if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
                         continue
                     }
@@ -80,14 +86,19 @@ final public class ItemInfoTable: Sendable {
             }()
 
             identifiedDescriptionTable = {
-                guard let string = Bundle.module.string(forResource: "idnum2itemdesctable", withExtension: "txt", encoding: .isoLatin1, locale: locale) else {
+                guard let url = Bundle.module.url(forResource: "idnum2itemdesctable", withExtension: "txt", locale: locale),
+                      let stream = try? FileStream(url: url) else {
                     return [:]
+                }
+
+                let reader = StreamReader(stream: stream, delimiter: "\r\n#\r\n")
+                defer {
+                    reader.close()
                 }
 
                 var descriptionTable: [Int : Data] = [:]
 
-                let lines = string.split(separator: "\r\n#\r\n")
-                for line in lines {
+                while let line = reader.readLine() {
                     if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
                         continue
                     }

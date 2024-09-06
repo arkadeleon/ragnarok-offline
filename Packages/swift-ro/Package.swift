@@ -109,6 +109,7 @@ let package = Package(
             name: "ROResources",
             dependencies: [
                 .product(name: "Lua", package: "swift-lua"),
+                "ROCore",
             ],
             resources: [
                 .process("Resources"),
