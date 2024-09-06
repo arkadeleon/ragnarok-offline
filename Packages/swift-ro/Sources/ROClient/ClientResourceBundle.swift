@@ -101,7 +101,7 @@ public actor ClientResourceBundle {
     // MARK: - data\texture
 
     public func itemIconImage(forItem item: Item) async -> CGImage? {
-        guard let resourceName = await DatabaseResource.shared.identifiedItemResourceName(for: item.id) else {
+        guard let resourceName = ResourceNameTable.shared.identifiedItemResourceName(for: item.id) else {
             return nil
         }
 
@@ -111,7 +111,7 @@ public actor ClientResourceBundle {
     }
 
     public func itemPreviewImage(forItem item: Item) async -> CGImage? {
-        guard let resourceName = await DatabaseResource.shared.identifiedItemResourceName(for: item.id) else {
+        guard let resourceName = ResourceNameTable.shared.identifiedItemResourceName(for: item.id) else {
             return nil
         }
 

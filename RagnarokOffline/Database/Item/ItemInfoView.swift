@@ -18,7 +18,7 @@ struct ItemInfoView: View {
     typealias DroppingMonster = (monster: ObservableMonster, drop: Monster.Drop)
 
     @State private var itemPreviewImage: CGImage?
-    @State private var itemDescription: String?
+    @State private var localizedItemDescription: String?
     @State private var droppingMonsters: [DroppingMonster] = []
 
     var body: some View {
@@ -62,9 +62,9 @@ struct ItemInfoView: View {
                 }
             }
 
-            if let itemDescription {
+            if let localizedItemDescription {
                 DatabaseRecordInfoSection("Description") {
-                    Text(itemDescription)
+                    Text(localizedItemDescription)
                 }
             }
 
@@ -213,7 +213,7 @@ struct ItemInfoView: View {
     }
 
     private func loadItemInfo() async {
-        itemDescription = await ItemLocalization.shared.localizedDescription(for: item.id)
+        localizedItemDescription = ItemInfoTable.shared.localizedIdentifiedItemDescription(for: item.id)
         itemPreviewImage = await ClientResourceBundle.shared.itemPreviewImage(forItem: item)
 
         let monsterDatabase = MonsterDatabase.database(for: mode)

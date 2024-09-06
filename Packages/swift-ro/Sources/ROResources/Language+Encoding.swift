@@ -1,5 +1,5 @@
 //
-//  Locale.Language+PreferredEncoding.swift
+//  Language+Encoding.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/5/26.

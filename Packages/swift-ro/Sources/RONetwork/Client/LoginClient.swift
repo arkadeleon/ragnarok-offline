@@ -118,11 +118,9 @@ final public class LoginClient {
         default : 9
         }
 
-        Task {
-            var message = await MessageLocalization.shared.localizedMessage(at: messageCode)
-            message = message.replacingOccurrences(of: "%s", with: packet.unblockTime)
-            onRefuseLogin?(message)
-        }
+        var message = MessageStringTable.shared.localizedMessageString(at: messageCode)
+        message = message.replacingOccurrences(of: "%s", with: packet.unblockTime)
+        onRefuseLogin?(message)
     }
 
     private func handleNotifyBanPacket(_ packet: PACKET_SC_NOTIFY_BAN) {
@@ -143,9 +141,7 @@ final public class LoginClient {
         default : 3
         }
 
-        Task {
-            let message = await MessageLocalization.shared.localizedMessage(at: messageCode)
-            onNotifyBan?(message)
-        }
+        let message = MessageStringTable.shared.localizedMessageString(at: messageCode)
+        onNotifyBan?(message)
     }
 }

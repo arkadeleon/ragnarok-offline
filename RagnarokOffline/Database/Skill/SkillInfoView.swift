@@ -56,6 +56,6 @@ struct SkillInfoView: View {
     }
 
     private func loadSkillInfo() async {
-        skillDescription = await SkillLocalization.shared.localizedDescription(for: skill.id)
+        skillDescription = SkillInfoTable.shared.localizedSkillDescription(for: skill.id)
     }
 }

@@ -14,7 +14,7 @@ public actor ClientResourceManager {
     public static let shared = ClientResourceManager()
 
     public func monsterImage(_ monsterID: Int) async -> CGImage? {
-        guard let resourceName = await DatabaseResource.shared.monsterResourceName(for: monsterID) else {
+        guard let resourceName = ResourceNameTable.shared.monsterResourceName(for: monsterID) else {
             return nil
         }
 
