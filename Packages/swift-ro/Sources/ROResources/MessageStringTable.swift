@@ -17,7 +17,7 @@ final public class MessageStringTable: Sendable {
         self.locale = locale
 
         messageTable = {
-            guard let string = Bundle.module.string(forResource: "msgstringtable", withExtension: "txt", encoding: .isoLatin1, locale: locale) else {
+            guard let string = resourceBundle.string(forResource: "msgstringtable", withExtension: "txt", encoding: .isoLatin1, locale: locale) else {
                 return []
             }
 

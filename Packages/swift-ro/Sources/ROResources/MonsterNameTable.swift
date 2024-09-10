@@ -17,7 +17,7 @@ final public class MonsterNameTable: Sendable {
         self.locale = locale
 
         nameTable = {
-            guard let string = Bundle.module.string(forResource: "mobname", withExtension: "txt", encoding: .utf8, locale: locale) else {
+            guard let string = resourceBundle.string(forResource: "mobname", withExtension: "txt", encoding: .utf8, locale: locale) else {
                 return [:]
             }
 

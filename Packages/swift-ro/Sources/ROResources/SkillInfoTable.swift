@@ -21,19 +21,19 @@ final public class SkillInfoTable: Sendable {
             let context = LuaContext()
 
             do {
-                if let data = Bundle.module.data(forResource: "jobinheritlist", withExtension: "lub", locale: locale) {
+                if let data = resourceBundle.data(forResource: "jobinheritlist", withExtension: "lub", locale: locale) {
                     try context.load(data)
                 }
 
-                if let data = Bundle.module.data(forResource: "skillid", withExtension: "lub", locale: locale) {
+                if let data = resourceBundle.data(forResource: "skillid", withExtension: "lub", locale: locale) {
                     try context.load(data)
                 }
 
-                if let data = Bundle.module.data(forResource: "skillinfolist", withExtension: "lub", locale: locale) {
+                if let data = resourceBundle.data(forResource: "skillinfolist", withExtension: "lub", locale: locale) {
                     try context.load(data)
                 }
 
-                if let data = Bundle.module.data(forResource: "skilldescript", withExtension: "lub", locale: locale) {
+                if let data = resourceBundle.data(forResource: "skilldescript", withExtension: "lub", locale: locale) {
                     try context.load(data)
                 }
 
