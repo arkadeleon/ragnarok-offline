@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		350458162C89787E003FF3D6 /* ROGame in Frameworks */ = {isa = PBXBuildFile; productRef = 350458152C89787E003FF3D6 /* ROGame */; };
 		3506D11C2C00526A00903A47 /* ObservableFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3506D11B2C00526A00903A47 /* ObservableFile.swift */; };
 		3506D11F2C00EF5400903A47 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3506D11E2C00EF5400903A47 /* Localizable.xcstrings */; };
 		351426C42C11BF9600B076BE /* FileReferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351426C32C11BF9600B076BE /* FileReferencesView.swift */; };
@@ -270,6 +271,7 @@
 				358362CD2BD55D4000821500 /* SwiftTerm in Frameworks */,
 				358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */,
 				35B367452BD6AE700018ED27 /* Terminal in Frameworks */,
+				350458162C89787E003FF3D6 /* ROGame in Frameworks */,
 				351990152BC837320082EB0E /* rAthenaCommon in Frameworks */,
 				351990172BC837320082EB0E /* rAthenaLogin in Frameworks */,
 				351EE2F52C06F7A90012BC9E /* ROClient in Frameworks */,
@@ -627,6 +629,7 @@
 				35B422B02BEB277900681AA2 /* ROResources */,
 				351EE2F42C06F7A90012BC9E /* ROClient */,
 				352B14102C2433A20097E643 /* rAthenaResources */,
+				350458152C89787E003FF3D6 /* ROGame */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -1038,6 +1041,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		350458152C89787E003FF3D6 /* ROGame */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ROGame;
+		};
 		351990112BC837320082EB0E /* rAthenaChar */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = rAthenaChar;

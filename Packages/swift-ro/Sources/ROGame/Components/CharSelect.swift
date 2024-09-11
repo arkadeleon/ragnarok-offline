@@ -1,0 +1,152 @@
+//
+//  CharSelect.swift
+//  RagnarokOffline
+//
+//  Created by Leon Li on 2024/9/10.
+//
+
+import RONetwork
+import SwiftUI
+
+struct CharSelect: View {
+    var chars: [CharInfo]
+
+    @Environment(\.gameSession) private var gameSession
+
+    @State private var slot1: CharInfo?
+    @State private var slot2: CharInfo?
+    @State private var slot3: CharInfo?
+
+    @State private var selectedSlot: UInt8?
+
+    private var selectedChar: CharInfo? {
+        guard let selectedSlot else {
+            return nil
+        }
+
+        switch selectedSlot {
+        case 0:
+            return slot1
+        case 1:
+            return slot2
+        case 2:
+            return slot3
+        default:
+            return nil
+        }
+    }
+
+    var body: some View {
+        ScrollView([.horizontal, .vertical]) {
+            ZStack(alignment: .topLeading) {
+                ROImage("win_select")
+
+                Button {
+                    selectedSlot = 0
+                } label: {
+                    Text(slot1?.name ?? "Empty")
+                }
+                .frame(width: 139, height: 144)
+                .offset(x: 60, y: 44)
+
+                Button {
+                    selectedSlot = 1
+                } label: {
+                    Text(slot2?.name ?? "Empty")
+                }
+                .frame(width: 139, height: 144)
+                .offset(x: 224, y: 44)
+
+                Button {
+                    selectedSlot = 2
+                } label: {
+                    Text(slot3?.name ?? "Empty")
+                }
+                .frame(width: 139, height: 144)
+                .offset(x: 386, y: 44)
+
+                if let selectedChar {
+                    VStack(spacing: 1) {
+                        Group {
+                            Text(selectedChar.name)
+                            Text(selectedChar.job.formatted())
+                            Text(selectedChar.baseLevel.formatted())
+                            Text(selectedChar.baseExp.formatted())
+                            Text(selectedChar.hp.formatted())
+                            Text(selectedChar.sp.formatted())
+                        }
+                        .frame(width: 95, height: 15)
+                    }
+                    .offset(x: 65, y: 204)
+
+                    VStack(spacing: 1) {
+                        Group {
+                            Text(selectedChar.str.formatted())
+                            Text(selectedChar.agi.formatted())
+                            Text(selectedChar.vit.formatted())
+                            Text(selectedChar.int.formatted())
+                            Text(selectedChar.dex.formatted())
+                            Text(selectedChar.luk.formatted())
+                        }
+                        .frame(width: 95, height: 15)
+                    }
+                    .offset(x: 209, y: 204)
+                }
+
+                VStack {
+                    Spacer()
+
+                    HStack(spacing: 3) {
+                        if let selectedChar {
+                            ROButton("btn_del") {
+                            }
+                        }
+
+                        Spacer()
+
+                        if let selectedSlot, selectedChar == nil {
+                            ROButton("btn_make") {
+                                gameSession.phase = .charMake(selectedSlot)
+                            }
+                        }
+
+                        if let selectedChar {
+                            ROButton("btn_ok") {
+                                gameSession.selectChar(slot: selectedChar.slot)
+                            }
+                        }
+
+                        ROButton("btn_cancel") {
+                        }
+                    }
+                    .padding(.horizontal, 5)
+                    .padding(.vertical, 4)
+                }
+            }
+            .frame(width: 576, height: 342)
+        }
+        .task {
+            slot1 = chars.count > 0 ? chars[0] : nil
+            slot2 = chars.count > 1 ? chars[1] : nil
+            slot3 = chars.count > 2 ? chars[2] : nil
+        }
+    }
+}
+
+#Preview {
+    let char = {
+        var char = CharInfo()
+        char.name = "Leon"
+        char.str = 1
+        char.agi = 1
+        char.vit = 1
+        char.int = 1
+        char.dex = 1
+        char.luk = 1
+        return char
+    }()
+
+    CharSelect(chars: [
+        char
+    ])
+}

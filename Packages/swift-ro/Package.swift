@@ -26,6 +26,9 @@ let package = Package(
             name: "ROFileSystem",
             targets: ["ROFileSystem"]),
         .library(
+            name: "ROGame",
+            targets: ["ROGame"]),
+        .library(
             name: "RONetwork",
             targets: ["RONetwork"]),
         .library(
@@ -39,9 +42,9 @@ let package = Package(
             targets: ["ROShaders"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/mw99/DataCompression.git", from: "3.8.0"),
         .package(path: "../swift-lua"),
         .package(path: "../swift-rathena"),
+        .package(url: "https://github.com/mw99/DataCompression.git", from: "3.8.0"),
     ],
     targets: [
         .target(
@@ -88,6 +91,15 @@ let package = Package(
                 .swiftLanguageMode(.v5),
             ]),
         .target(
+            name: "ROGame",
+            dependencies: [
+                "RONetwork",
+                "ROResources",
+            ],
+            swiftSettings: [
+                .swiftLanguageMode(.v5),
+            ]),
+        .target(
             name: "ROGenerated"),
         .target(
             name: "RONetwork",
@@ -112,6 +124,7 @@ let package = Package(
                 "ROCore",
             ],
             resources: [
+                .process("Images"),
                 .process("Resources"),
             ]),
         .target(

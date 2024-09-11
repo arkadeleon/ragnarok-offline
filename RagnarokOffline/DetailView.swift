@@ -6,6 +6,7 @@
 //
 
 import ROClient
+import ROGame
 import SwiftUI
 import rAthenaResources
 
@@ -25,6 +26,8 @@ struct DetailView: View {
             switch item {
             case .files:
                 FilesView(title: "Files", directory: clientDirectory)
+            case .game:
+                ROGame.GameView()
             case .messages:
                 MessagesView()
             case .cube:
