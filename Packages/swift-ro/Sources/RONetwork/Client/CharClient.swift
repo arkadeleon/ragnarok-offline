@@ -13,7 +13,7 @@ final public class CharClient {
     public var onAcceptEnterHeader: (() -> Void)?
     public var onAcceptEnter: ((_ chars: [CharInfo]) -> Void)?
     public var onRefuseEnter: (() -> Void)?
-    public var onAcceptMakeChar: (() -> Void)?
+    public var onAcceptMakeChar: ((_ char: CharInfo) -> Void)?
     public var onRefuseMakeChar: (() -> Void)?
     public var onNotifyZoneServer: ((_ mapName: String, _ mapServer: MapServerInfo) -> Void)?
     public var onError: ((_ error: any Error) -> Void)?
@@ -43,7 +43,7 @@ final public class CharClient {
 
         // 0x6d
         connection.registerPacket(PACKET_HC_ACCEPT_MAKECHAR.self) { [weak self] packet in
-            self?.onAcceptMakeChar?()
+            self?.onAcceptMakeChar?(packet.char)
         }
 
         // 0x6e
@@ -160,15 +160,20 @@ final public class CharClient {
     ///
     /// Receive ``PACKET_HC_ACCEPT_MAKECHAR`` or
     ///         ``PACKET_HC_REFUSE_MAKECHAR``
-    public func makeChar(name: String, str: UInt8, agi: UInt8, vit: UInt8, int: UInt8, dex: UInt8, luk: UInt8) {
+    public func makeChar(char: CharInfo) {
         var packet = PACKET_CH_MAKE_CHAR()
-        packet.name = name
-        packet.str = str
-        packet.agi = agi
-        packet.vit = vit
-        packet.int = int
-        packet.dex = dex
-        packet.luk = luk
+        packet.name = char.name
+        packet.str = char.str
+        packet.agi = char.agi
+        packet.vit = char.vit
+        packet.int = char.int
+        packet.dex = char.dex
+        packet.luk = char.luk
+        packet.slot = char.slot
+        packet.hairColor = char.hairColor
+        packet.hairStyle = char.hair
+        packet.job = char.job
+        packet.sex = char.sex
 
         connection.sendPacket(packet)
     }

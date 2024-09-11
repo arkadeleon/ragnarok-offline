@@ -93,7 +93,7 @@ class Conversation {
             charClient?.onRefuseEnter = { [weak self] in
                 self?.messages.append(.server("Refused"))
             }
-            charClient?.onAcceptMakeChar = { [weak self] in
+            charClient?.onAcceptMakeChar = { [weak self] char in
                 self?.messages.append(.server("Accepted"))
             }
             charClient?.onRefuseMakeChar = { [weak self] in
@@ -107,23 +107,24 @@ class Conversation {
 
             charClient?.enter()
         case .makeChar:
-            let name = arguments[0]
-            let str = UInt8(arguments[1]) ?? 1
-            let agi = UInt8(arguments[2]) ?? 1
-            let vit = UInt8(arguments[3]) ?? 1
-            let int = UInt8(arguments[4]) ?? 1
-            let dex = UInt8(arguments[5]) ?? 1
-            let luk = UInt8(arguments[6]) ?? 1
+            var char = CharInfo()
+            char.name = arguments[0]
+            char.str = UInt8(arguments[1]) ?? 1
+            char.agi = UInt8(arguments[2]) ?? 1
+            char.vit = UInt8(arguments[3]) ?? 1
+            char.int = UInt8(arguments[4]) ?? 1
+            char.dex = UInt8(arguments[5]) ?? 1
+            char.luk = UInt8(arguments[6]) ?? 1
 
-            charClient?.makeChar(name: name, str: str, agi: agi, vit: vit, int: int, dex: dex, luk: luk)
+            charClient?.makeChar(char: char)
         case .deleteChar:
             break
         case .selectChar:
-            guard let charNum = UInt8(arguments[0]) else {
+            guard let slot = UInt8(arguments[0]) else {
                 break
             }
 
-            charClient?.selectChar(slot: charNum)
+            charClient?.selectChar(slot: slot)
         }
     }
 }

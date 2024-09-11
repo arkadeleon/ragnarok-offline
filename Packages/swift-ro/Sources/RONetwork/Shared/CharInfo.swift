@@ -51,6 +51,53 @@ public struct CharInfo: BinaryDecodable {
     public var charNameChangeCount: UInt32
     public var sex: UInt8
 
+    public init() {
+        charID = 0
+        baseExp = 0
+        zeny = 0
+        jobExp = 0
+        jobLevel = 0
+        bodyState = 0
+        healthState = 0
+        effectState = 0
+        karma = 0
+        manner = 0
+        statusPoint = 0
+        hp = 0
+        maxHp = 0
+        sp = 0
+        maxSp = 0
+        speed = 0
+        job = 0
+        hair = 0
+        body = 0
+        weapon = 0
+        baseLevel = 0
+        skillPoint = 0
+        headBottom = 0
+        shield = 0
+        headTop = 0
+        headMiddle = 0
+        hairColor = 0
+        clothesColor = 0
+        name = ""
+        str = 0
+        agi = 0
+        vit = 0
+        int = 0
+        dex = 0
+        luk = 0
+        slot = 0
+        hairColor2 = 0
+        isRenamed = 0
+        mapName = ""
+        deletionDate = 0
+        robe = 0
+        charSlotChangeCount = 0
+        charNameChangeCount = 0
+        sex = 0
+    }
+
     public init(from decoder: BinaryDecoder) throws {
         charID = try decoder.decode(UInt32.self)
 

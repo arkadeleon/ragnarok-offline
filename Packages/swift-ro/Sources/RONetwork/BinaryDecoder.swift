@@ -57,7 +57,8 @@ public class BinaryDecoder {
 
         self.data.removeFirst(length)
 
-        guard let string = String(data: data, encoding: .utf8) else {
+        let endIndex = data.firstIndex(of: 0) ?? data.endIndex
+        guard let string = String(data: data[..<endIndex], encoding: .utf8) else {
             throw BinaryDecodingError.dataCorrupted
         }
         return string

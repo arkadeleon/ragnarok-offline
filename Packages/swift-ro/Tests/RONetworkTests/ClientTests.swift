@@ -123,7 +123,9 @@ final class ClientTests: XCTestCase {
 
         let makeCharExpectation = expectation(description: "MakeChar")
 
-        charClient.onAcceptMakeChar = {
+        charClient.onAcceptMakeChar = { char in
+            XCTAssertEqual(char.name, "Leon")
+
             makeCharExpectation.fulfill()
         }
 
@@ -131,7 +133,15 @@ final class ClientTests: XCTestCase {
             XCTAssert(false)
         }
 
-        charClient.makeChar(name: "Leon", str: 1, agi: 1, vit: 1, int: 1, dex: 1, luk: 1)
+        var char = CharInfo()
+        char.name = "Leon"
+        char.str = 1
+        char.agi = 1
+        char.vit = 1
+        char.int = 1
+        char.dex = 1
+        char.luk = 1
+        charClient.makeChar(char: char)
 
         await fulfillment(of: [makeCharExpectation])
 
