@@ -31,7 +31,7 @@ public actor MapDatabase {
 
     public func maps() throws -> [Map] {
         if cachedMaps.isEmpty {
-            let url = ServerResourceBundle.shared.dbURL.appendingPathComponent("map_index.txt")
+            let url = ServerResourceManager.default.dbURL.appendingPathComponent("map_index.txt")
             let string = try String(contentsOf: url)
 
             var index = 0

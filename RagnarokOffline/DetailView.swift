@@ -19,7 +19,7 @@ struct DetailView: View {
     @Environment(\.webServer) private var webServer
 
     @State private var clientDirectory = ObservableFile(file: .directory(ClientResourceBundle.shared.url))
-    @State private var serverDirectory = ObservableFile(file: .directory(ServerResourceBundle.shared.url))
+    @State private var serverDirectory = ObservableFile(file: .directory(ServerResourceManager.default.baseURL))
 
     var body: some View {
         ZStack {

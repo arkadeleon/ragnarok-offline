@@ -24,10 +24,10 @@ final class ClientTests: XCTestCase {
     var subscription: AnyCancellable?
 
     override func setUp() async throws {
-        let url = ServerResourceBundle.shared.url
+        let url = ServerResourceManager.default.baseURL
         try FileManager.default.removeItem(at: url)
 
-        try await ServerResourceBundle.shared.load()
+        try ServerResourceManager.default.prepareForServers()
 
         subscription = NotificationCenter.default.publisher(for: .ServerDidOutputData, object: nil)
             .map { $0.userInfo![ServerOutputDataKey] as! Data }

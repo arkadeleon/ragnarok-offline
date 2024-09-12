@@ -35,6 +35,6 @@ struct ContentView: View {
     }
 
     private func load() async throws {
-        try await ServerResourceBundle.shared.load()
+        try ServerResourceManager.default.prepareForServers()
     }
 }

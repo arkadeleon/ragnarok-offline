@@ -33,7 +33,7 @@ public actor MonsterSummonDatabase {
         if cachedMonsterSummons.isEmpty {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceBundle.shared.dbURL
+            let url = ServerResourceManager.default.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("mob_summon.yml")
             let data = try Data(contentsOf: url)

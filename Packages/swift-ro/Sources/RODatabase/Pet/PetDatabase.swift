@@ -33,7 +33,7 @@ public actor PetDatabase {
         if cachedPets.isEmpty {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceBundle.shared.dbURL
+            let url = ServerResourceManager.default.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("pet_db.yml")
             let data = try Data(contentsOf: url)

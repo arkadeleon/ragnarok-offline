@@ -33,7 +33,7 @@ public actor SkillTreeDatabase {
         if cachedSkillTrees.isEmpty {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceBundle.shared.dbURL
+            let url = ServerResourceManager.default.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("skill_tree.yml")
             let data = try Data(contentsOf: url)

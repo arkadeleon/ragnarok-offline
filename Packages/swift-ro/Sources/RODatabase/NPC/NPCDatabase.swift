@@ -57,7 +57,7 @@ public actor NPCDatabase {
 
     private func restoreScripts() throws {
         if !isCached {
-            let url = ServerResourceBundle.shared.npcURL
+            let url = ServerResourceManager.default.npcURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("scripts_main.conf")
             try import_conf_file(url: url)
@@ -83,7 +83,7 @@ public actor NPCDatabase {
 
             let w1 = words[0]
             let w2 = words[1]
-            let url = ServerResourceBundle.shared.url.appendingPathComponent(w2)
+            let url = ServerResourceManager.default.baseURL.appendingPathComponent(w2)
 
             switch w1 {
             case "npc":

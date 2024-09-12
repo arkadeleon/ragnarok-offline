@@ -34,7 +34,7 @@ public actor MonsterDatabase {
         if cachedMonsters.isEmpty {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceBundle.shared.dbURL
+            let url = ServerResourceManager.default.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("mob_db.yml")
             let data = try Data(contentsOf: url)

@@ -33,7 +33,7 @@ public actor StatusChangeDatabase {
         if cachedStatusChanges.isEmpty {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceBundle.shared.dbURL
+            let url = ServerResourceManager.default.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("status.yml")
             let data = try Data(contentsOf: url)

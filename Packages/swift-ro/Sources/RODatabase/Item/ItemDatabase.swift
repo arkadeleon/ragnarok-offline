@@ -37,7 +37,7 @@ public actor ItemDatabase {
         if cachedUsableItems.isEmpty {
             let decoder = YAMLDecoder()
 
-            let usableItemURL = ServerResourceBundle.shared.dbURL
+            let usableItemURL = ServerResourceManager.default.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("item_db_usable.yml")
             let usableItemData = try Data(contentsOf: usableItemURL)
@@ -51,7 +51,7 @@ public actor ItemDatabase {
         if cachedEquipItems.isEmpty {
             let decoder = YAMLDecoder()
 
-            let equipItemURL = ServerResourceBundle.shared.dbURL
+            let equipItemURL = ServerResourceManager.default.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("item_db_equip.yml")
             let equipItemData = try Data(contentsOf: equipItemURL)
@@ -65,7 +65,7 @@ public actor ItemDatabase {
         if cachedEtcItems.isEmpty {
             let decoder = YAMLDecoder()
 
-            let etcItemURL = ServerResourceBundle.shared.dbURL
+            let etcItemURL = ServerResourceManager.default.dbURL
                 .appendingPathComponent(mode.dbPath)
                 .appendingPathComponent("item_db_etc.yml")
             let etcItemData = try Data(contentsOf: etcItemURL)

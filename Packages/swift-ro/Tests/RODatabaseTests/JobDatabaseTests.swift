@@ -11,7 +11,7 @@ import rAthenaResources
 
 final class JobDatabaseTests: XCTestCase {
     override func setUp() async throws {
-        try await ServerResourceBundle.shared.load()
+        try ServerResourceManager.default.prepareForServers()
     }
 
     func testPrerenewal() async throws {
