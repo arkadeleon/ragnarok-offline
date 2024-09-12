@@ -15,15 +15,17 @@ struct Login: View {
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            ROImage("win_login")
+            GameImage("login_interface/win_login.bmp")
 
             TextField("", text: $username)
+                .font(.system(size: 12))
                 .textInputAutocapitalization(.never)
                 .disableAutocorrection(true)
                 .frame(width: 127, height: 18)
                 .offset(x: 91, y: 29)
 
             TextField("", text: $password)
+                .font(.system(size: 12))
                 .textInputAutocapitalization(.never)
                 .disableAutocorrection(true)
                 .frame(width: 127, height: 18)
@@ -31,7 +33,7 @@ struct Login: View {
 
             Button {
             } label: {
-                ROImage("chk_saveoff")
+                GameImage("login_interface/chk_saveoff.bmp")
             }
             .frame(width: 38, height: 10)
             .offset(x: 232, y: 32)
@@ -42,11 +44,11 @@ struct Login: View {
                 HStack(spacing: 3) {
                     Spacer()
 
-                    ROButton("btn_connect") {
+                    GameButton("login_interface/btn_connect.bmp") {
                         gameSession.login(username: username, password: password)
                     }
 
-                    ROButton("btn_exit") {
+                    GameButton("login_interface/btn_exit.bmp") {
                     }
                 }
                 .padding(.horizontal, 5)

@@ -96,6 +96,9 @@ let package = Package(
                 "RONetwork",
                 "ROResources",
             ],
+            resources: [
+                .copy("Resources/Images/"),
+            ],
             swiftSettings: [
                 .swiftLanguageMode(.v5),
             ]),
@@ -124,7 +127,6 @@ let package = Package(
                 "ROCore",
             ],
             resources: [
-                .process("Images"),
                 .process("Resources"),
             ]),
         .target(

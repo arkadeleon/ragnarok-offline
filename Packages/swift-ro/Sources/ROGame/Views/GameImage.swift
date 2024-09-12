@@ -1,14 +1,14 @@
 //
-//  ROImage.swift
+//  GameImage.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/9/9.
 //
 
-import ROResources
+import ROCore
 import SwiftUI
 
-struct ROImage: View {
+struct GameImage: View {
     var name: String
 
     @State private var image: CGImage?
@@ -20,7 +20,10 @@ struct ROImage: View {
             }
         }
         .task {
-            image = resourceBundle.image(forResource: name, withExtension: "bmp", locale: .current)
+            if let url = Bundle.module.resourceURL?.appending(path: "Images/\(name)"),
+               let data = try? Data(contentsOf: url) {
+                image = CGImageCreateWithData(data)?.removingMagentaPixels()
+            }
         }
     }
 
@@ -30,5 +33,5 @@ struct ROImage: View {
 }
 
 #Preview {
-    ROImage("win_msgbox")
+    GameImage("win_msgbox.bmp")
 }

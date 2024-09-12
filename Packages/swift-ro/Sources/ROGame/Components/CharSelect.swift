@@ -39,7 +39,7 @@ struct CharSelect: View {
     var body: some View {
         ScrollView([.horizontal, .vertical]) {
             ZStack(alignment: .topLeading) {
-                ROImage("win_select")
+                GameImage("login_interface/win_select.bmp")
 
                 Button {
                     selectedSlot = 0
@@ -75,6 +75,7 @@ struct CharSelect: View {
                             Text(selectedChar.hp.formatted())
                             Text(selectedChar.sp.formatted())
                         }
+                        .font(.system(size: 12))
                         .frame(width: 95, height: 15)
                     }
                     .offset(x: 65, y: 204)
@@ -88,6 +89,7 @@ struct CharSelect: View {
                             Text(selectedChar.dex.formatted())
                             Text(selectedChar.luk.formatted())
                         }
+                        .font(.system(size: 12))
                         .frame(width: 95, height: 15)
                     }
                     .offset(x: 209, y: 204)
@@ -98,25 +100,25 @@ struct CharSelect: View {
 
                     HStack(spacing: 3) {
                         if let selectedChar {
-                            ROButton("btn_del") {
+                            GameButton("btn_del.bmp") {
                             }
                         }
 
                         Spacer()
 
                         if let selectedSlot, selectedChar == nil {
-                            ROButton("btn_make") {
+                            GameButton("btn_make.bmp") {
                                 gameSession.phase = .charMake(selectedSlot)
                             }
                         }
 
                         if let selectedChar {
-                            ROButton("btn_ok") {
+                            GameButton("btn_ok.bmp") {
                                 gameSession.selectChar(slot: selectedChar.slot)
                             }
                         }
 
-                        ROButton("btn_cancel") {
+                        GameButton("btn_cancel.bmp") {
                         }
                     }
                     .padding(.horizontal, 5)

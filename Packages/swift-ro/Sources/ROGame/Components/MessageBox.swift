@@ -13,9 +13,10 @@ struct MessageBox: View {
 
     var body: some View {
         ZStack {
-            ROImage("win_msgbox")
+            GameImage("win_msgbox.bmp")
 
             Text(message)
+                .font(.system(size: 12))
         }
         .frame(width: 280, height: 120)
     }

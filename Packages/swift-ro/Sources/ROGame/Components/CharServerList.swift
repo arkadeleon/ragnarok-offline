@@ -15,10 +15,11 @@ struct CharServerList: View {
 
     var body: some View {
         ZStack {
-            ROImage("win_service")
+            GameImage("login_interface/win_service.bmp")
 
             ForEach(charServers, id: \.name) { charServer in
                 Text(charServer.name)
+                    .font(.system(size: 12))
             }
 
             VStack {
@@ -27,11 +28,11 @@ struct CharServerList: View {
                 HStack(spacing: 3) {
                     Spacer()
 
-                    ROButton("btn_ok") {
+                    GameButton("btn_ok.bmp") {
                         gameSession.selectCharServer(charServers[0])
                     }
 
-                    ROButton("btn_cancel") {
+                    GameButton("btn_cancel.bmp") {
                     }
                 }
                 .padding(.horizontal, 5)

@@ -24,9 +24,10 @@ struct CharMake: View {
     var body: some View {
         ScrollView([.horizontal, .vertical]) {
             ZStack(alignment: .topLeading) {
-                ROImage("win_make")
+                GameImage("login_interface/win_make.bmp")
 
                 TextField("", text: $name)
+                    .font(.system(size: 12))
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
                     .frame(width: 101, height: 18)
@@ -38,7 +39,7 @@ struct CharMake: View {
                     HStack(spacing: 3) {
                         Spacer()
 
-                        ROButton("btn_make") {
+                        GameButton("btn_make.bmp") {
                             var char = CharInfo()
                             char.name = name
                             char.str = str
@@ -52,7 +53,7 @@ struct CharMake: View {
                             gameSession.makeChar(char: char)
                         }
 
-                        ROButton("btn_cancel") {
+                        GameButton("btn_cancel.bmp") {
                         }
                     }
                     .padding(.horizontal, 5)
