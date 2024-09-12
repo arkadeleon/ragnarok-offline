@@ -54,6 +54,7 @@ let package = Package(
                 "RODatabase",
                 "ROFileFormats",
                 "ROFileSystem",
+                "ROGenerated",
                 "ROResources",
             ],
             swiftSettings: [
@@ -68,6 +69,7 @@ let package = Package(
                 .product(name: "rAthenaCommon", package: "swift-rathena"),
                 .product(name: "rAthenaResources", package: "swift-rathena"),
                 .product(name: "ryml", package: "swift-rathena"),
+                "ROGenerated",
             ],
             swiftSettings: [
                 .interoperabilityMode(.Cxx),

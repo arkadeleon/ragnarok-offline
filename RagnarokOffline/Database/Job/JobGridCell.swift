@@ -31,7 +31,7 @@ struct JobGridCell: View {
             }
         }
         .task {
-            jobImage = await ClientResourceManager.default.jobImage(gender: .male, job: jobStats.job)
+            jobImage = await ClientResourceManager.default.jobImage(sex: .male, job: jobStats.job)
         }
     }
 }

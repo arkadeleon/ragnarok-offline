@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2023/1/18.
 //
 
+import ROGenerated
+
 public struct Item: Decodable, Equatable, Hashable, Identifiable, Sendable {
 
     /// Item ID.
@@ -53,7 +55,7 @@ public struct Item: Decodable, Equatable, Hashable, Identifiable, Sendable {
     public var classes: Set<ItemClass>
 
     /// Gender that can equip the item. (Default: Both)
-    public var gender: Gender
+    public var gender: Sex
 
     /// Equipment's placement. (Default: None)
     public var locations: Set<ItemLocation>
@@ -184,7 +186,7 @@ public struct Item: Decodable, Equatable, Hashable, Identifiable, Sendable {
         self.slots = try container.decodeIfPresent(Int.self, forKey: .slots) ?? 0
         self.jobs = try container.decodeIfPresent([String : Bool].self, forKey: .jobs).map(Set<ItemJob>.init) ?? .all
         self.classes = try container.decodeIfPresent([String : Bool].self, forKey: .classes).map(Set<ItemClass>.init) ?? .all
-        self.gender = try container.decodeIfPresent(Gender.self, forKey: .gender) ?? .both
+        self.gender = try container.decodeIfPresent(Sex.self, forKey: .gender) ?? .both
         self.locations = try container.decodeIfPresent([String : Bool].self, forKey: .locations).map(Set<ItemLocation>.init) ?? []
         self.weaponLevel = try container.decodeIfPresent(Int.self, forKey: .weaponLevel) ?? 1
         self.armorLevel = try container.decodeIfPresent(Int.self, forKey: .armorLevel) ?? 1

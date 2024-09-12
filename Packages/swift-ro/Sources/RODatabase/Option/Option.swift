@@ -15,7 +15,17 @@ public protocol Option: CaseIterable, Comparable, Decodable, Sendable {
     init?(stringValue: String)
 }
 
+extension Option where Self: RawRepresentable, Self.RawValue == Int {
+    public var intValue: Int {
+        rawValue
+    }
+}
+
 extension Option {
+    public static func < (lhs: Self, rhs: Self) -> Bool {
+        lhs.intValue < rhs.intValue
+    }
+
     public init?(intValue: Int) {
         if let value = Self.allCases.first(where: { $0.intValue == intValue }) {
             self = value

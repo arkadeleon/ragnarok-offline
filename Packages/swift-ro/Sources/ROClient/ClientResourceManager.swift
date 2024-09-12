@@ -11,6 +11,7 @@ import ROCore
 import RODatabase
 import ROFileFormats
 import ROFileSystem
+import ROGenerated
 import ROResources
 
 public actor ClientResourceManager {
@@ -60,8 +61,8 @@ public actor ClientResourceManager {
         }
     }
 
-    public func jobImage(gender: Gender, job: Job) async -> CGImage? {
-        let (sprFile, actFile) = bodySpriteFile(forGender: gender, job: job)
+    public func jobImage(sex: Sex, job: RODatabase.Job) async -> CGImage? {
+        let (sprFile, actFile) = bodySpriteFile(sex: sex, job: job)
 
         guard let sprFile, let sprData = sprFile.contents(), let actFile, let actData = actFile.contents() else {
             return nil
@@ -97,8 +98,8 @@ public actor ClientResourceManager {
 
     // MARK: - data\palette
 
-    public func headPaletteFile(forGender gender: Gender, hairID: Int, paletteID: Int) -> File? {
-        let path = GRF.Path(string: "data\\palette\\머리\\머리\(hairID)_\(gender.resourceName)_\(paletteID).pal")
+    public func headPaletteFile(sex: Sex, hairID: Int, paletteID: Int) -> File? {
+        let path = GRF.Path(string: "data\\palette\\머리\\머리\(hairID)_\(sex.resourceName)_\(paletteID).pal")
         let file = grfEntryFile(at: path)
         return file
     }
@@ -125,21 +126,21 @@ public actor ClientResourceManager {
         return (spr: sprFile, act: actFile)
     }
 
-    public func bodySpriteFile(forGender gender: Gender, job: Job) -> (spr: File?, act: File?) {
-        let sprPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(gender.resourceName)\\\(job.resourceName)_\(gender.resourceName).spr")
+    public func bodySpriteFile(sex: Sex, job: RODatabase.Job) -> (spr: File?, act: File?) {
+        let sprPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(sex.resourceName)\\\(job.resourceName)_\(sex.resourceName).spr")
         let sprFile = grfEntryFile(at: sprPath)
 
-        let actPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(gender.resourceName)\\\(job.resourceName)_\(gender.resourceName).act")
+        let actPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(sex.resourceName)\\\(job.resourceName)_\(sex.resourceName).act")
         let actFile = grfEntryFile(at: actPath)
 
         return (spr: sprFile, act: actFile)
     }
 
-    public func headSpriteFile(forGender gender: Gender, hairID: Int) -> (spr: File?, act: File?) {
-        let sprPath = GRF.Path(string: "data\\sprite\\인간족\\머리통\\\(gender.resourceName)\\\(hairID)_\(gender.resourceName).spr")
+    public func headSpriteFile(sex: Sex, hairID: Int) -> (spr: File?, act: File?) {
+        let sprPath = GRF.Path(string: "data\\sprite\\인간족\\머리통\\\(sex.resourceName)\\\(hairID)_\(sex.resourceName).spr")
         let sprFile = grfEntryFile(at: sprPath)
 
-        let actPath = GRF.Path(string: "data\\sprite\\인간족\\머리통\\\(gender.resourceName)\\\(hairID)_\(gender.resourceName).act")
+        let actPath = GRF.Path(string: "data\\sprite\\인간족\\머리통\\\(sex.resourceName)\\\(hairID)_\(sex.resourceName).act")
         let actFile = grfEntryFile(at: actPath)
 
         return (spr: sprFile, act: actFile)
