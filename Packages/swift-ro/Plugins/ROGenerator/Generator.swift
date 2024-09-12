@@ -14,7 +14,7 @@ struct Case {
 }
 
 struct Configuration {
-    var path: [String]
+    var path: String
     var type: String
     var prefix: String
     var exportedType: String
@@ -22,47 +22,47 @@ struct Configuration {
 
 @main
 struct Generator: CommandPlugin {
-    func performCommand(context: PackagePlugin.PluginContext, arguments: [String]) async throws {
+    func performCommand(context: PluginContext, arguments: [String]) async throws {
         try generatePackets(context: context)
         try generateEnums(context: context)
     }
 
     // MARK: - Generate Packet Database
 
-    private func generatePackets(context: PackagePlugin.PluginContext) throws {
-        let packetdb = context.package.directory.appending(["..", "swift-rathena", "src", "map", "clif_packetdb.hpp"])
-        let shuffle = context.package.directory.appending(["..", "swift-rathena", "src", "map", "clif_shuffle.hpp"])
+    private func generatePackets(context: PluginContext) throws {
+        let packetdbURL = context.package.directoryURL.appending(path: "../swift-rathena/src/map/clif_packetdb.hpp")
+        let shuffleURL = context.package.directoryURL.appending(path: "../swift-rathena/src/map/clif_shuffle.hpp")
 
-        let packetdb_lines = try output(for: packetdb)
+        let packetdbLines = try outputLines(for: packetdbURL)
             .map({ "    \($0)" })
             .joined(separator: "\n")
-        let packetdb_output = """
+        let packetdbOutputContents = """
         public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (Int16, Int16, String?, [Int]) -> Void, PACKETVER: Int, PACKETVER_MAIN_NUM: Int, PACKETVER_RE_NUM: Int, PACKETVER_ZERO_NUM: Int) {
-        \(packetdb_lines)
+        \(packetdbLines)
         }
         """
 
-        let shuffle_lines = try output(for: shuffle)
+        let shuffleLine = try outputLines(for: shuffleURL)
             .map({ "    \($0)" })
             .joined(separator: "\n")
-        let shuffle_output = """
+        let shuffleOutputContents = """
         public func add_packets_shuffle(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (Int16, Int16, String?, [Int]) -> Void, PACKETVER: Int, PACKETVER_MAIN_NUM: Int, PACKETVER_RE_NUM: Int, PACKETVER_ZERO_NUM: Int) {
-        \(shuffle_lines)
+        \(shuffleLine)
         }
         """
 
-        let packetdb_output_path = context.package.directory.appending(["Sources", "ROGenerated", "packets.swift"])
-        try packetdb_output.write(toFile: packetdb_output_path.string, atomically: true, encoding: .utf8)
+        let packetdbOutputURL = context.package.directoryURL.appending(path: "Sources/ROGenerated/packets.swift")
+        try packetdbOutputContents.write(to: packetdbOutputURL, atomically: true, encoding: .utf8)
 
-        let shuffle_output_path = context.package.directory.appending(["Sources", "ROGenerated", "packets_shuffle.swift"])
-        try shuffle_output.write(toFile: shuffle_output_path.string, atomically: true, encoding: .utf8)
+        let shuffleOutputURL = context.package.directoryURL.appending(path: "Sources/ROGenerated/packets_shuffle.swift")
+        try shuffleOutputContents.write(to: shuffleOutputURL, atomically: true, encoding: .utf8)
     }
 
-    private func output(for input: Path) throws -> [String] {
+    private func outputLines(for inputURL: URL) throws -> [String] {
         var output: [String] = []
         var indentationLevel = 0
 
-        let contents = try String(contentsOfFile: input.string, encoding: .utf8)
+        let contents = try String(contentsOf: inputURL, encoding: .utf8)
         let lines = contents.split(separator: "\n")
 
         for line in lines {
@@ -139,9 +139,9 @@ struct Generator: CommandPlugin {
 
     // MARK: - Generate Enums
 
-    func generateEnums(context: PackagePlugin.PluginContext) throws {
+    func generateEnums(context: PluginContext) throws {
         let configurations: [Configuration] = [
-            .init(path: ["map", "map.hpp"], type: "_sp", prefix: "SP_", exportedType: "StatusProperty"),
+            .init(path: "map/map.hpp", type: "_sp", prefix: "SP_", exportedType: "StatusProperty"),
         ]
 
         for configuration in configurations {
@@ -149,12 +149,12 @@ struct Generator: CommandPlugin {
         }
     }
 
-    private func generateEnum(context: PackagePlugin.PluginContext, configuration: Configuration) throws {
+    private func generateEnum(context: PluginContext, configuration: Configuration) throws {
         var cases: [Case] = []
         var typeFound = false
 
-        let path = context.package.directory.appending(["..", "swift-rathena", "src"] + configuration.path)
-        let inputContents = try String(contentsOfFile: path.string, encoding: .utf8)
+        let inputURL = context.package.directoryURL.appending(path: "../swift-rathena/src").appending(path: configuration.path)
+        let inputContents = try String(contentsOf: inputURL, encoding: .utf8)
         let lines = inputContents.split(separator: "\n")
         for line in lines {
             let line = line.trimmingCharacters(in: .whitespaces)
@@ -224,8 +224,8 @@ struct Generator: CommandPlugin {
         }
         """
 
-        let outputPath = context.package.directory.appending(["Sources", "ROGenerated", "\(configuration.exportedType).swift"])
-        try outputContents.write(toFile: outputPath.string, atomically: true, encoding: .utf8)
+        let outputURL = context.package.directoryURL.appending(path: "Sources/ROGenerated/\(configuration.exportedType).swift")
+        try outputContents.write(to: outputURL, atomically: true, encoding: .utf8)
     }
 }
 
