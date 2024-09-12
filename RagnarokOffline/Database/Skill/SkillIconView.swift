@@ -28,7 +28,7 @@ struct SkillIconView: View {
         }
         .frame(width: 40, height: 40)
         .task {
-            skillIcon = await ClientResourceBundle.shared.skillIconImage(forSkill: skill)
+            skillIcon = await ClientResourceManager.default.skillIconImage(forSkill: skill)
         }
     }
 }

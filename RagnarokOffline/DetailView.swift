@@ -18,7 +18,7 @@ struct DetailView: View {
     @Environment(\.mapServer) private var mapServer
     @Environment(\.webServer) private var webServer
 
-    @State private var clientDirectory = ObservableFile(file: .directory(ClientResourceBundle.shared.url))
+    @State private var clientDirectory = ObservableFile(file: .directory(ClientResourceManager.default.baseURL))
     @State private var serverDirectory = ObservableFile(file: .directory(ServerResourceManager.default.baseURL))
 
     var body: some View {

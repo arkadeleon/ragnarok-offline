@@ -107,7 +107,7 @@ class ObservableMonster {
     }
 
     func fetchImage() async -> CGImage? {
-        await ClientResourceManager.shared.monsterImage(monster.id)
+        await ClientResourceManager.default.monsterImage(monster.id)
     }
 
     func fetchDetail() async throws {

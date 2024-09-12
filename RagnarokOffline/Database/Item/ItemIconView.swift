@@ -28,7 +28,7 @@ struct ItemIconView: View {
         }
         .frame(width: 40, height: 40)
         .task {
-            itemIcon = await ClientResourceBundle.shared.itemIconImage(forItem: item)
+            itemIcon = await ClientResourceManager.default.itemIconImage(forItem: item)
         }
     }
 }

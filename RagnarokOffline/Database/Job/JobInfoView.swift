@@ -191,7 +191,7 @@ struct JobInfoView: View {
     }
 
     private func loadJobInfo() async {
-        jobImage = await ClientResourceManager.shared.jobImage(gender: .male, job: jobStats.job)
+        jobImage = await ClientResourceManager.default.jobImage(gender: .male, job: jobStats.job)
 
         let skillDatabase = SkillDatabase.database(for: mode)
         let skillTreeDatabase = SkillTreeDatabase.database(for: mode)
