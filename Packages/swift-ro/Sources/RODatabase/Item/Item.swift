@@ -186,7 +186,7 @@ public struct Item: Decodable, Equatable, Hashable, Identifiable, Sendable {
         self.slots = try container.decodeIfPresent(Int.self, forKey: .slots) ?? 0
         self.jobs = try container.decodeIfPresent([String : Bool].self, forKey: .jobs).map(Set<ItemJob>.init) ?? .all
         self.classes = try container.decodeIfPresent([String : Bool].self, forKey: .classes).map(Set<ItemClass>.init) ?? .all
-        self.gender = try container.decodeIfPresent(DecodableValueNode<Sex>.self, forKey: .gender)?.value ?? .both
+        self.gender = try container.decodeIfPresent(ValueNode<Sex>.self, forKey: .gender)?.value ?? .both
         self.locations = try container.decodeIfPresent([String : Bool].self, forKey: .locations).map(Set<ItemLocation>.init) ?? []
         self.weaponLevel = try container.decodeIfPresent(Int.self, forKey: .weaponLevel) ?? 1
         self.armorLevel = try container.decodeIfPresent(Int.self, forKey: .armorLevel) ?? 1

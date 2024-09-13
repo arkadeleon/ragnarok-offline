@@ -1,5 +1,5 @@
 //
-//  Sex+ValueNode.swift
+//  Sex+.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/10.
@@ -7,7 +7,7 @@
 
 import ROGenerated
 
-extension Sex: ValueNode {
+extension Sex: CodingValue {
     public var stringValue: String {
         switch self {
         case .female: "Female"
