@@ -5,27 +5,16 @@
 //  Created by Leon Li on 2024/1/12.
 //
 
-public enum EitherNode<Left, Right>: Decodable where Left: Decodable, Right: Decodable {
+public enum EitherNode<Left, Right> {
     case left(Left)
     case right(Right)
 
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let left = try? container.decode(Left.self) {
-            self = .left(left)
-        } else if let right = try? container.decode(Right.self) {
-            self = .right(right)
-        } else {
-            throw DecodingError.typeMismatch(EitherNode<Left, Right>.self, DecodingError.Context.init(codingPath: container.codingPath, debugDescription: "Invalid type.", underlyingError: nil))
-        }
-    }
-
-    public func map<T>(left: (Left) -> T, right: (Right) -> T) -> T {
+    public func map<L, R>(left: (Left) -> L, right: (Right) -> R) -> EitherNode<L, R> {
         switch self {
         case .left(let l):
-            left(l)
+            .left(left(l))
         case .right(let r):
-            right(r)
+            .right(right(r))
         }
     }
 
@@ -44,6 +33,19 @@ public enum EitherNode<Left, Right>: Decodable where Left: Decodable, Right: Dec
             .left(l)
         case .right(let r):
             .right(transform(r))
+        }
+    }
+}
+
+extension EitherNode: Decodable where Left: Decodable, Right: Decodable {
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let left = try? container.decode(Left.self) {
+            self = .left(left)
+        } else if let right = try? container.decode(Right.self) {
+            self = .right(right)
+        } else {
+            throw DecodingError.typeMismatch(EitherNode<Left, Right>.self, DecodingError.Context.init(codingPath: container.codingPath, debugDescription: "Invalid type.", underlyingError: nil))
         }
     }
 }
