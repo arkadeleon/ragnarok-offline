@@ -181,21 +181,21 @@ struct ItemInfoView: View {
 
     private var jobs: String {
         item.jobs
-            .sorted()
+            .sorted(using: KeyPathComparator(\.intValue))
             .map { "- \($0.stringValue)" }
             .joined(separator: "\n")
     }
 
     private var classes: String {
         item.classes
-            .sorted()
+            .sorted(using: KeyPathComparator(\.intValue))
             .map { "- \($0.stringValue)" }
             .joined(separator: "\n")
     }
 
     private var locations: String {
         item.locations
-            .sorted()
+            .sorted(using: KeyPathComparator(\.intValue))
             .map { "- \($0.stringValue)" }
             .joined(separator: "\n")
     }

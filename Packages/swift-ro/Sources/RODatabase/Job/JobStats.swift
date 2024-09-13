@@ -118,6 +118,6 @@ extension JobStats: Identifiable {
 
 extension JobStats: Comparable {
     public static func < (lhs: JobStats, rhs: JobStats) -> Bool {
-        lhs.job < rhs.job
+        lhs.job.intValue < rhs.job.intValue
     }
 }

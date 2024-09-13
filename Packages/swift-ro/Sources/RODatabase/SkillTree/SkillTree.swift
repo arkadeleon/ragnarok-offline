@@ -99,6 +99,6 @@ extension SkillTree: Identifiable {
 
 extension SkillTree: Comparable {
     public static func < (lhs: SkillTree, rhs: SkillTree) -> Bool {
-        lhs.job < rhs.job
+        lhs.job.intValue < rhs.job.intValue
     }
 }

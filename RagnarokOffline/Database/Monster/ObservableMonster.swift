@@ -86,14 +86,14 @@ class ObservableMonster {
 
     var raceGroups: String? {
         monster.raceGroups?
-            .sorted()
+            .sorted(using: KeyPathComparator(\.intValue))
             .map { "- " + $0.stringValue }
             .joined(separator: "\n")
     }
 
     var modes: String? {
         monster.modes?
-            .sorted()
+            .sorted(using: KeyPathComparator(\.intValue))
             .map { "- " + $0.stringValue }
             .joined(separator: "\n")
     }

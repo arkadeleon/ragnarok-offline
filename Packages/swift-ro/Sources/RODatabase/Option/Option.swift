@@ -5,35 +5,13 @@
 //  Created by Leon Li on 2024/7/4.
 //
 
-public protocol Option: CaseIterable, Comparable, Decodable, Sendable {
-    var intValue: Int { get }
-
+public protocol Option: CaseIterable, Decodable, Sendable {
     var stringValue: String { get }
-
-    init?(intValue: Int)
 
     init?(stringValue: String)
 }
 
-extension Option where Self: RawRepresentable, Self.RawValue == Int {
-    public var intValue: Int {
-        rawValue
-    }
-}
-
 extension Option {
-    public static func < (lhs: Self, rhs: Self) -> Bool {
-        lhs.intValue < rhs.intValue
-    }
-
-    public init?(intValue: Int) {
-        if let value = Self.allCases.first(where: { $0.intValue == intValue }) {
-            self = value
-        } else {
-            return nil
-        }
-    }
-
     public init?(stringValue: String) {
         if let value = Self.allCases.first(where: { $0.stringValue.caseInsensitiveCompare(stringValue) == .orderedSame }) {
             self = value
