@@ -8,10 +8,10 @@
 import ryml
 
 enum YAMLNode {
-    case map([String : YAMLNode])
-    case sequence([YAMLNode])
-    case value(String)
     case null
+    case scalar(String)
+    case sequence([YAMLNode])
+    case mapping([String : YAMLNode])
 
     init(from node: c4.yml.NodeRef) {
         if node.is_map() {
@@ -20,7 +20,7 @@ enum YAMLNode {
                 let child = node.child(pos)
                 nodes[child.key().string] = YAMLNode(from: child)
             }
-            self = .map(nodes)
+            self = .mapping(nodes)
         } else if node.is_seq() {
             var nodes: [YAMLNode] = []
             for pos in 0..<node.num_children() {
@@ -29,15 +29,15 @@ enum YAMLNode {
             }
             self = .sequence(nodes)
         } else if node.is_keyval() && !node.val_is_null() {
-            self = .value(node.val().string)
+            self = .scalar(node.val().string)
         } else {
             self = .null
         }
     }
 
     func value() -> String? {
-        if case .value(let string) = self {
-            return string
+        if case .scalar(let value) = self {
+            return value
         } else {
             return nil
         }

@@ -96,10 +96,10 @@ private struct _YAMLDecoder: Decoder {
     let userInfo: [CodingUserInfoKey: Any]
 
     func container<Key>(keyedBy type: Key.Type) throws -> KeyedDecodingContainer<Key> {
-        guard case .map(let map) = node else {
+        guard case .mapping(let nodes) = node else {
             throw _typeMismatch(at: codingPath, expectation: YAMLNode.self, reality: node)
         }
-        return .init(_YAMLKeyedDecodingContainer<Key>(decoder: self, wrapping: map))
+        return .init(_YAMLKeyedDecodingContainer<Key>(decoder: self, wrapping: nodes))
     }
 
     func unkeyedContainer() throws -> any UnkeyedDecodingContainer {
