@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ROGenerated
 import rAthenaCommon
 import rAthenaResources
 

@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/1/16.
 //
 
+import ROGenerated
+
 public struct SkillTree: Decodable, Equatable, Hashable, Sendable {
 
     /// Job name.
@@ -26,7 +28,7 @@ public struct SkillTree: Decodable, Equatable, Hashable, Sendable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.job = try container.decode(Job.self, forKey: .job)
-        self.inherit = try container.decodeIfPresent([String : Bool].self, forKey: .inherit).map(Set<Job>.init)
+        self.inherit = try container.decodeIfPresent([Job : Bool].self, forKey: .inherit).map({ Set($0.keys) })
         self.tree = try container.decodeIfPresent([Skill].self, forKey: .tree)
     }
 }
@@ -93,12 +95,12 @@ extension SkillTree {
 
 extension SkillTree: Identifiable {
     public var id: Int {
-        job.intValue
+        job.rawValue
     }
 }
 
 extension SkillTree: Comparable {
     public static func < (lhs: SkillTree, rhs: SkillTree) -> Bool {
-        lhs.job.intValue < rhs.job.intValue
+        lhs.job.rawValue < rhs.job.rawValue
     }
 }

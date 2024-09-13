@@ -31,8 +31,8 @@ final class SkillTreeDatabaseTests: XCTestCase {
         XCTAssertEqual(acolyte.inherit, [.novice])
         XCTAssertEqual(acolyte.tree?.count, 15)
 
-        let archBishop = try await database.skillTree(forJob: .archBishop)!
-        XCTAssertEqual(archBishop.job, .archBishop)
+        let archBishop = try await database.skillTree(forJob: .arch_bishop)!
+        XCTAssertEqual(archBishop.job, .arch_bishop)
         XCTAssertEqual(archBishop.inherit, [.novice, .acolyte, .priest])
         XCTAssertEqual(archBishop.tree?.count, 22)
     }

@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/1/10.
 //
 
+import ROGenerated
+
 struct JobBasePointsStats: Decodable {
 
     /// List of jobs associated to group.
@@ -29,9 +31,7 @@ struct JobBasePointsStats: Decodable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        let jobs = try container.decode([String : Bool].self, forKey: .jobs)
-        self.jobs = Set<Job>(from: jobs)
-
+        self.jobs = Set(try container.decode([Job : Bool].self, forKey: .jobs).map({ $0.key }))
         self.baseHp = try container.decodeIfPresent([LevelBaseHp].self, forKey: .baseHp) ?? []
         self.baseSp = try container.decodeIfPresent([LevelBaseSp].self, forKey: .baseSp) ?? []
         self.baseAp = try container.decodeIfPresent([LevelBaseAp].self, forKey: .baseAp) ?? []
