@@ -7,7 +7,7 @@
 
 import rAthenaCommon
 
-public enum WeaponType: Option {
+public enum WeaponType: Option, CodingKeyRepresentable {
     case fist
     case dagger
     case oneHandedSword
@@ -32,6 +32,7 @@ public enum WeaponType: Option {
     case grenade
     case huuma
     case twoHandedStaff
+    case shield
 
     public var intValue: Int {
         switch self {
@@ -59,6 +60,7 @@ public enum WeaponType: Option {
         case .grenade: RA_W_GRENADE
         case .huuma: RA_W_HUUMA
         case .twoHandedStaff: RA_W_2HSTAFF
+        case .shield: RA_W_SHIELD
         }
     }
 
@@ -88,7 +90,16 @@ public enum WeaponType: Option {
         case .grenade: "Grenade"
         case .huuma: "Huuma"
         case .twoHandedStaff: "2hStaff"
+        case .shield: "Shield"
         }
+    }
+
+    public var codingKey: any CodingKey {
+        AnyCodingKey(stringValue: stringValue)
+    }
+
+    public init?<T>(codingKey: T) where T: CodingKey {
+        self.init(stringValue: codingKey.stringValue)
     }
 }
 
@@ -119,6 +130,7 @@ extension WeaponType: CustomLocalizedStringResourceConvertible {
         case .grenade: .init("Grenade", bundle: .module)
         case .huuma: .init("Huuma", bundle: .module)
         case .twoHandedStaff: .init("Two-Handed Staff", bundle: .module)
+        case .shield: .init("Shield", bundle: .module)
         }
     }
 }

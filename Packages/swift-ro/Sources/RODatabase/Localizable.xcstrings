@@ -351,6 +351,16 @@
         }
       }
     },
+    "Shield" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "盾牌"
+          }
+        }
+      }
+    },
     "Shotgun" : {
       "localizations" : {
         "zh-Hans" : {

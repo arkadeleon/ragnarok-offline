@@ -24,12 +24,6 @@ struct JobASPDStats: Decodable {
         let jobs = try container.decode([String : Bool].self, forKey: .jobs)
         self.jobs = Set<Job>(from: jobs)
 
-        self.baseASPD = [:]
-        let baseASPD = try container.decode([String : Int].self, forKey: .baseASPD)
-        for (weaponType, aspd) in baseASPD {
-            if let weaponType = WeaponType(stringValue: weaponType) {
-                self.baseASPD[weaponType] = aspd
-            }
-        }
+        self.baseASPD = try container.decode([WeaponType : Int].self, forKey: .baseASPD)
     }
 }
