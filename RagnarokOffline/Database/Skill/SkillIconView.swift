@@ -28,7 +28,7 @@ struct SkillIconView: View {
         }
         .frame(width: 40, height: 40)
         .task {
-            skillIcon = await ClientResourceManager.default.skillIconImage(forSkill: skill)
+            skillIcon = await ClientResourceManager.default.skillIconImage(forSkillAegisName: skill.aegisName)
         }
     }
 }

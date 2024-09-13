@@ -55,7 +55,7 @@ struct MapInfoView: View {
     }
 
     private func loadMapInfo() async {
-        mapImage = await ClientResourceManager.default.mapImage(forMap: map)
+        mapImage = await ClientResourceManager.default.mapImage(forMapName: map.name)
 
         let monsterDatabase = MonsterDatabase.database(for: mode)
         let npcDatabase = NPCDatabase.database(for: mode)

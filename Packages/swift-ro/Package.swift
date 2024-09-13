@@ -51,7 +51,6 @@ let package = Package(
             name: "ROClient",
             dependencies: [
                 "ROCore",
-                "RODatabase",
                 "ROFileFormats",
                 "ROFileSystem",
                 "ROGenerated",

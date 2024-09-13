@@ -28,7 +28,7 @@ struct MapImageView: View {
         }
         .frame(width: 40, height: 40)
         .task {
-            mapImage = await ClientResourceManager.default.mapImage(forMap: map)
+            mapImage = await ClientResourceManager.default.mapImage(forMapName: map.name)
         }
     }
 }

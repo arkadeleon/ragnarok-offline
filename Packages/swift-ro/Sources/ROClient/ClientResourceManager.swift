@@ -8,7 +8,6 @@
 import CoreGraphics
 import Foundation
 import ROCore
-import RODatabase
 import ROFileFormats
 import ROFileSystem
 import ROGenerated
@@ -90,8 +89,8 @@ public actor ClientResourceManager {
 
     // MARK: - data
 
-    public func rswFile(forMap map: Map) -> File? {
-        let path = GRF.Path(string: "data\\\(map.name).rsw")
+    public func rswFile(forMapName mapName: String) -> File? {
+        let path = GRF.Path(string: "data\\\(mapName).rsw")
         let file = grfEntryFile(at: path)
         return file
     }
@@ -158,8 +157,8 @@ public actor ClientResourceManager {
 
     // MARK: - data\texture
 
-    public func itemIconImage(forItem item: Item) async -> CGImage? {
-        guard let resourceName = ResourceNameTable.shared.identifiedItemResourceName(for: item.id) else {
+    public func itemIconImage(forItemID itemID: Int) async -> CGImage? {
+        guard let resourceName = ResourceNameTable.shared.identifiedItemResourceName(for: itemID) else {
             return nil
         }
 
@@ -168,8 +167,8 @@ public actor ClientResourceManager {
         return image
     }
 
-    public func itemPreviewImage(forItem item: Item) async -> CGImage? {
-        guard let resourceName = ResourceNameTable.shared.identifiedItemResourceName(for: item.id) else {
+    public func itemPreviewImage(forItemID itemID: Int) async -> CGImage? {
+        guard let resourceName = ResourceNameTable.shared.identifiedItemResourceName(for: itemID) else {
             return nil
         }
 
@@ -178,14 +177,14 @@ public actor ClientResourceManager {
         return image
     }
 
-    public func skillIconImage(forSkill skill: Skill) async -> CGImage? {
-        let path = GRF.Path(string: "data\\texture\\유저인터페이스\\item\\\(skill.aegisName).bmp")
+    public func skillIconImage(forSkillAegisName skillAegisName: String) async -> CGImage? {
+        let path = GRF.Path(string: "data\\texture\\유저인터페이스\\item\\\(skillAegisName).bmp")
         let image = await image(forBMPPath: path)
         return image
     }
 
-    public func mapImage(forMap map: Map) async -> CGImage? {
-        let path = GRF.Path(string: "data\\texture\\유저인터페이스\\map\\\(map.name).bmp")
+    public func mapImage(forMapName mapName: String) async -> CGImage? {
+        let path = GRF.Path(string: "data\\texture\\유저인터페이스\\map\\\(mapName).bmp")
         let image = await image(forBMPPath: path)
         return image
     }
