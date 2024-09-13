@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import ROGenerated
 import rAthenaResources
 @testable import RODatabase
 
@@ -15,8 +16,8 @@ final class ItemDatabaseTests: XCTestCase {
     }
 
     func testItemType() {
-//        let weapon = ItemType(intValue: 5)
-//        XCTAssertEqual(weapon, ItemType.weapon)
+        let weapon = ItemType(rawValue: 5)
+        XCTAssertEqual(weapon, ItemType.weapon)
 
         let armor = ItemType(stringValue: "Armor")
         XCTAssertEqual(armor, ItemType.armor)
@@ -38,7 +39,7 @@ final class ItemDatabaseTests: XCTestCase {
         XCTAssertEqual(flyWing.id, 601)
         XCTAssertEqual(flyWing.aegisName, "Wing_Of_Fly")
         XCTAssertEqual(flyWing.name, "Fly Wing")
-        XCTAssertEqual(flyWing.type, .delayConsume)
+        XCTAssertEqual(flyWing.type, .delayconsume)
         XCTAssertEqual(flyWing.buy, 60)
         XCTAssertEqual(flyWing.weight, 50)
         XCTAssertEqual(flyWing.flags?.buyingStore, true)
@@ -144,7 +145,7 @@ final class ItemDatabaseTests: XCTestCase {
         XCTAssertEqual(flyWing.id, 601)
         XCTAssertEqual(flyWing.aegisName, "Wing_Of_Fly")
         XCTAssertEqual(flyWing.name, "Fly Wing")
-        XCTAssertEqual(flyWing.type, .delayConsume)
+        XCTAssertEqual(flyWing.type, .delayconsume)
         XCTAssertEqual(flyWing.buy, 250)
         XCTAssertEqual(flyWing.weight, 50)
         XCTAssertEqual(flyWing.flags?.buyingStore, true)

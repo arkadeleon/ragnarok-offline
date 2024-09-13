@@ -129,8 +129,9 @@ struct Generator: CommandPlugin {
 
     struct Case {
         var name: String
-        var intValue: String?
+        var intValue: Int
         var stringValues: [String]
+        var isExcluded: Bool
     }
 
     struct Configuration {
@@ -144,6 +145,7 @@ struct Generator: CommandPlugin {
 
     func generateEnums(context: PluginContext) throws {
         let configurations: [Configuration] = [
+            .init(path: "common/mmo.hpp", type: "item_types", prefix: "IT_", excludes: ["IT_UNKNOWN", "IT_UNKNOWN2", "IT_MAX"], exportedType: "ItemType", isDecodable: true),
 //            .init(path: "common/mmo.hpp", type: "e_job", prefix: "JOB_", excludes: ["JOB_MAX"], exportedType: "Job"),
             .init(path: "map/map.hpp", type: "_sp", prefix: "SP_", excludes: [], exportedType: "StatusProperty", isDecodable: false),
             .init(path: "common/mmo.hpp", type: "e_sex", prefix: "SEX_", excludes: ["SEX_SERVER"], exportedType: "Sex", isDecodable: true),
@@ -183,9 +185,6 @@ struct Generator: CommandPlugin {
                     if nameAndValue.count > 0 {
                         let name = nameAndValue[0]
                             .trimmingCharacters(in: .whitespaces)
-                        if configuration.excludes.contains(name) {
-                            continue
-                        }
                         let nameWithoutPrefix = name.dropFirst(configuration.prefix.count)
                         var caseName = nameWithoutPrefix.lowercased()
                         let digits = try Regex("[0-9]+")
@@ -194,12 +193,14 @@ struct Generator: CommandPlugin {
                         } else if caseName == "class" {
                             caseName = "_" + caseName
                         }
-                        let intValue = if nameAndValue.count > 1 {
-                            nameAndValue[1].trimmingCharacters(in: .whitespaces)
+                        let intValue: Int? = if nameAndValue.count > 1 {
+                            Int(nameAndValue[1].trimmingCharacters(in: .whitespaces))
+                        } else if let lastIntValue = cases.last?.intValue {
+                            lastIntValue + 1
                         } else {
-                            String?.none
+                            nil
                         }
-                        cases.append(.init(name: String(caseName), intValue: intValue, stringValues: [String(nameWithoutPrefix)]))
+                        cases.append(.init(name: String(caseName), intValue: intValue ?? 0, stringValues: [String(nameWithoutPrefix)], isExcluded: configuration.excludes.contains(name)))
                     }
                 }
             }
@@ -208,17 +209,18 @@ struct Generator: CommandPlugin {
             }
         }
 
-        let casesContents = cases
+        let outputCases = cases
+            .filter {
+                !$0.isExcluded
+            }
+
+        let casesContents = outputCases
             .map {
-                if let intValue = $0.intValue {
-                    "    case \($0.name) = \(intValue)"
-                } else {
-                    "    case \($0.name)"
-                }
+                "    case \($0.name) = \($0.intValue)"
             }
             .joined(separator: "\n")
 
-        let stringValueContents = cases
+        let stringValueContents = outputCases
             .map {
                 "        case " + $0.stringValues.map({ "\"\($0)\"" }).joined(separator: ", ") + ": self = .\($0.name)"
             }

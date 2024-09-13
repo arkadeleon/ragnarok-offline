@@ -7,8 +7,8 @@
 
 public enum Sex: Int, CodingKey, CodingKeyRepresentable, Decodable, Sendable {
     case female = 0
-    case male
-    case both
+    case male = 1
+    case both = 2
 
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
