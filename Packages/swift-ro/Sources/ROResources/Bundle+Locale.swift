@@ -1,15 +1,11 @@
 //
-//  ResourceBundle.swift
+//  Bundle+Locale.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/5/27.
 //
 
-import CoreGraphics
 import Foundation
-import ROCore
-
-public let resourceBundle = Bundle.module
 
 extension Bundle {
     public func url(forResource name: String?, withExtension ext: String?, locale: Locale) -> URL? {
@@ -33,14 +29,5 @@ extension Bundle {
 
         let string = try? String(contentsOf: url, encoding: enc)
         return string
-    }
-
-    public func image(forResource name: String?, withExtension ext: String?, locale: Locale) -> CGImage? {
-        guard let data = data(forResource: name, withExtension: ext, locale: locale) else {
-            return nil
-        }
-
-        let image = CGImageCreateWithData(data)?.removingMagentaPixels()
-        return image
     }
 }

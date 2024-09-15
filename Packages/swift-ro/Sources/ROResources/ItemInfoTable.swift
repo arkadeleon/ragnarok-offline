@@ -20,7 +20,7 @@ final public class ItemInfoTable: Sendable {
     init(locale: Locale) {
         self.locale = locale
 
-        if let url = resourceBundle.url(forResource: "itemInfo", withExtension: "lub", locale: locale) {
+        if let url = Bundle.module.url(forResource: "itemInfo", withExtension: "lub", locale: locale) {
             context = {
                 let context = LuaContext()
 
@@ -55,7 +55,7 @@ final public class ItemInfoTable: Sendable {
             context = nil
 
             identifiedNameTable = {
-                guard let url = resourceBundle.url(forResource: "idnum2itemdisplaynametable", withExtension: "txt", locale: locale),
+                guard let url = Bundle.module.url(forResource: "idnum2itemdisplaynametable", withExtension: "txt", locale: locale),
                       let stream = try? FileStream(url: url) else {
                     return [:]
                 }
@@ -86,7 +86,7 @@ final public class ItemInfoTable: Sendable {
             }()
 
             identifiedDescriptionTable = {
-                guard let url = resourceBundle.url(forResource: "idnum2itemdesctable", withExtension: "txt", locale: locale),
+                guard let url = Bundle.module.url(forResource: "idnum2itemdesctable", withExtension: "txt", locale: locale),
                       let stream = try? FileStream(url: url) else {
                     return [:]
                 }

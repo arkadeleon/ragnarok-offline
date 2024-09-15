@@ -17,7 +17,7 @@ final public class MapNameTable: Sendable {
         self.locale = locale
 
         nameTable = {
-            guard let string = resourceBundle.string(forResource: "mapnametable", withExtension: "txt", encoding: .isoLatin1, locale: locale) else {
+            guard let string = Bundle.module.string(forResource: "mapnametable", withExtension: "txt", encoding: .isoLatin1, locale: locale) else {
                 return [:]
             }
 

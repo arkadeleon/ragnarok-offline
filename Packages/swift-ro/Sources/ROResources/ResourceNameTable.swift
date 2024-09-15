@@ -19,7 +19,7 @@ final public class ResourceNameTable: Sendable {
 
             do {
                 let locale = Locale(languageCode: .korean)
-                if let data = resourceBundle.data(forResource: "itemInfo", withExtension: "lub", locale: locale) {
+                if let data = Bundle.module.data(forResource: "itemInfo", withExtension: "lub", locale: locale) {
                     try context.load(data)
                 }
 
@@ -35,12 +35,12 @@ final public class ResourceNameTable: Sendable {
                 end
                 """)
 
-                if let url = resourceBundle.url(forResource: "npcidentity", withExtension: "lub") {
+                if let url = Bundle.module.url(forResource: "npcidentity", withExtension: "lub") {
                     let data = try Data(contentsOf: url)
                     try context.load(data)
                 }
 
-                if let url = resourceBundle.url(forResource: "jobname", withExtension: "lub") {
+                if let url = Bundle.module.url(forResource: "jobname", withExtension: "lub") {
                     let data = try Data(contentsOf: url)
                     try context.load(data)
                 }

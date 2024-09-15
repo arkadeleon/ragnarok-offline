@@ -18,13 +18,13 @@ final class JobDatabaseTests: XCTestCase {
         let database = JobDatabase.prerenewal
 
         let jobs = try await database.jobs()
-        XCTAssertEqual(jobs.count, 73)
+        XCTAssertEqual(jobs.count, 74)
     }
 
     func testRenewal() async throws {
         let database = JobDatabase.renewal
 
         let jobs = try await database.jobs()
-        XCTAssertEqual(jobs.count, 170)
+        XCTAssertEqual(jobs.count, 171)
     }
 }
