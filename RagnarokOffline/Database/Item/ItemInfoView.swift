@@ -213,7 +213,7 @@ struct ItemInfoView: View {
     }
 
     private func loadItemInfo() async {
-        localizedItemDescription = ItemInfoTable.shared.localizedIdentifiedItemDescription(for: item.id)
+        localizedItemDescription = ItemInfoTable.shared.localizedIdentifiedItemDescription(forItemID: item.id)
         itemPreviewImage = await ClientResourceManager.default.itemPreviewImage(forItemID: item.id)
 
         let monsterDatabase = MonsterDatabase.database(for: mode)
@@ -224,7 +224,7 @@ struct ItemInfoView: View {
                 let drops = (monster.mvpDrops ?? []) + (monster.drops ?? [])
                 for drop in drops {
                     if drop.item == item.aegisName {
-                        let observableMonster = await ObservableMonster(mode: mode, monster: monster)
+                        let observableMonster = ObservableMonster(mode: mode, monster: monster)
                         droppingMonsters.append((observableMonster, drop))
                         break
                     }

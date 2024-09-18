@@ -53,7 +53,7 @@ final public class SkillInfoTable: Sendable {
         }()
     }
 
-    public func localizedSkillName(for skillID: Int) -> String? {
+    public func localizedSkillName(forSkillID skillID: Int) -> String? {
         guard let result = try? context.call("skillName", with: [skillID]) as? String else {
             return nil
         }
@@ -63,7 +63,7 @@ final public class SkillInfoTable: Sendable {
         return skillName
     }
 
-    public func localizedSkillDescription(for skillID: Int) -> String? {
+    public func localizedSkillDescription(forSkillID skillID: Int) -> String? {
         guard let result = try? context.call("skillDescription", with: [skillID]) as? [String] else {
             return nil
         }

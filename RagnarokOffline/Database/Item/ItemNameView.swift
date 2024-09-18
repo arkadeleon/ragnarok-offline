@@ -22,7 +22,7 @@ struct ItemNameView: View {
     var body: some View {
         Text(itemDisplayName)
             .task {
-                localizedItemName = ItemInfoTable.shared.localizedIdentifiedItemName(for: item.id)
+                localizedItemName = ItemInfoTable.shared.localizedIdentifiedItemName(forItemID: item.id)
             }
     }
 }

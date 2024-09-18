@@ -50,7 +50,7 @@ class ObservablePet {
 
         let monsterDatabase = MonsterDatabase.database(for: mode)
         if let monster = try await monsterDatabase.monster(forAegisName: pet.monster) {
-            self.monster = await ObservableMonster(mode: mode, monster: monster)
+            self.monster = ObservableMonster(mode: mode, monster: monster)
         } else {
             throw NSError()
         }

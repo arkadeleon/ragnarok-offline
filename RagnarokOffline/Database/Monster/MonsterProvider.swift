@@ -15,7 +15,7 @@ struct MonsterProvider: DatabaseRecordProvider {
 
         var observableMonsters: [ObservableMonster] = []
         for monster in monsters {
-            let observableMonster = await ObservableMonster(mode: mode, monster: monster)
+            let observableMonster = ObservableMonster(mode: mode, monster: monster)
             observableMonsters.append(observableMonster)
         }
         return observableMonsters

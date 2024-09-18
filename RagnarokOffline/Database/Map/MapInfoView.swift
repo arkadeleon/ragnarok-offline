@@ -68,7 +68,7 @@ struct MapInfoView: View {
                     if let monster = try? await monsterDatabase.monster(forID: monsterID) {
                         if !monsters.contains(monster) {
                             monsters.append(monster)
-                            let monster = await ObservableMonster(mode: mode, monster: monster)
+                            let monster = ObservableMonster(mode: mode, monster: monster)
                             spawnMonsters.append((monster, monsterSpawn))
                         }
                     }
@@ -76,7 +76,7 @@ struct MapInfoView: View {
                     if let monster = try? await monsterDatabase.monster(forAegisName: monsterAegisName) {
                         if !monsters.contains(monster) {
                             monsters.append(monster)
-                            let monster = await ObservableMonster(mode: mode, monster: monster)
+                            let monster = ObservableMonster(mode: mode, monster: monster)
                             spawnMonsters.append((monster, monsterSpawn))
                         }
                     }

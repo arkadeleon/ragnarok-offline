@@ -119,7 +119,7 @@ final public class ItemInfoTable: Sendable {
         }
     }
 
-    public func localizedIdentifiedItemName(for itemID: Int) -> String? {
+    public func localizedIdentifiedItemName(forItemID itemID: Int) -> String? {
         if let context {
             guard let result = try? context.call("identifiedItemDisplayName", with: [itemID]) as? String else {
                 return nil
@@ -136,7 +136,7 @@ final public class ItemInfoTable: Sendable {
         }
     }
 
-    public func localizedIdentifiedItemDescription(for itemID: Int) -> String? {
+    public func localizedIdentifiedItemDescription(forItemID itemID: Int) -> String? {
         if let context {
             guard let result = try? context.call("identifiedItemDescription", with: [itemID]) as? [String] else {
                 return nil

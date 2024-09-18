@@ -98,11 +98,11 @@ class ObservableMonster {
             .joined(separator: "\n")
     }
 
-    init(mode: ServerMode, monster: Monster) async {
+    init(mode: ServerMode, monster: Monster) {
         self.mode = mode
         self.monster = monster
 
-        let localizedName = MonsterNameTable.shared.localizedMonsterName(for: monster.id)
+        let localizedName = MonsterNameTable.shared.localizedMonsterName(forMonsterID: monster.id)
         self.localizedName = localizedName ?? monster.name
     }
 

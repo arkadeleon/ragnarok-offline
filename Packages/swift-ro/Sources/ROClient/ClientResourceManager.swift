@@ -31,7 +31,7 @@ public actor ClientResourceManager {
     }
 
     public func monsterImage(_ monsterID: Int) async -> CGImage? {
-        guard let resourceName = ResourceNameTable.shared.monsterResourceName(for: monsterID) else {
+        guard let resourceName = ResourceNameTable.shared.monsterResourceName(forMonsterID: monsterID) else {
             return nil
         }
 
@@ -158,7 +158,7 @@ public actor ClientResourceManager {
     // MARK: - data\texture
 
     public func itemIconImage(forItemID itemID: Int) async -> CGImage? {
-        guard let resourceName = ResourceNameTable.shared.identifiedItemResourceName(for: itemID) else {
+        guard let resourceName = ResourceNameTable.shared.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
 
@@ -168,7 +168,7 @@ public actor ClientResourceManager {
     }
 
     public func itemPreviewImage(forItemID itemID: Int) async -> CGImage? {
-        guard let resourceName = ResourceNameTable.shared.identifiedItemResourceName(for: itemID) else {
+        guard let resourceName = ResourceNameTable.shared.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
 

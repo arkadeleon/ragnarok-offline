@@ -31,13 +31,13 @@ class ObservableMonsterSummon {
         let monsterDatabase = MonsterDatabase.database(for: mode)
 
         if let monster = try await monsterDatabase.monster(forAegisName: monsterSummon.default) {
-            defaultMonster = await ObservableMonster(mode: mode, monster: monster)
+            defaultMonster = ObservableMonster(mode: mode, monster: monster)
         }
 
         var summonMonsters: [Summon] = []
         for summon in monsterSummon.summon {
             if let monster = try await monsterDatabase.monster(forAegisName: summon.monster) {
-                let monster = await ObservableMonster(mode: mode, monster: monster)
+                let monster = ObservableMonster(mode: mode, monster: monster)
                 let summon = Summon(monster: monster, rate: summon.rate)
                 summonMonsters.append(summon)
             }

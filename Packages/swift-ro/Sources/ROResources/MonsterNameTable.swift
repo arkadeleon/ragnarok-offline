@@ -42,7 +42,7 @@ final public class MonsterNameTable: Sendable {
         }()
     }
 
-    public func localizedMonsterName(for monsterID: Int) -> String? {
+    public func localizedMonsterName(forMonsterID monsterID: Int) -> String? {
         nameTable[monsterID]
     }
 }

@@ -38,7 +38,7 @@ struct SkillInfoView: View {
         }
         .navigationTitle(skill.name)
         .task {
-            await loadSkillInfo()
+            loadSkillInfo()
         }
     }
 
@@ -55,7 +55,7 @@ struct SkillInfoView: View {
         return attributes
     }
 
-    private func loadSkillInfo() async {
-        skillDescription = SkillInfoTable.shared.localizedSkillDescription(for: skill.id)
+    private func loadSkillInfo() {
+        skillDescription = SkillInfoTable.shared.localizedSkillDescription(forSkillID: skill.id)
     }
 }

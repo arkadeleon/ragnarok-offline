@@ -46,7 +46,7 @@ final public class MapNameTable: Sendable {
         }()
     }
 
-    public func localizedMapName(for mapName: String) -> String? {
+    public func localizedMapName(forMapName mapName: String) -> String? {
         nameTable[mapName]
     }
 }

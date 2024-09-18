@@ -17,7 +17,7 @@ struct SkillNameView: View {
     var body: some View {
         Text(localizedSkillName ?? skill.name)
             .task {
-                localizedSkillName = SkillInfoTable.shared.localizedSkillName(for: skill.id)
+                localizedSkillName = SkillInfoTable.shared.localizedSkillName(forSkillID: skill.id)
             }
     }
 }

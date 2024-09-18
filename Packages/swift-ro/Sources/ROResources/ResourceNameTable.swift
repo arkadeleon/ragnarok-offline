@@ -60,7 +60,7 @@ final public class ResourceNameTable: Sendable {
 
     // MARK: - Item
 
-    public func identifiedItemResourceName(for itemID: Int) -> String? {
+    public func identifiedItemResourceName(forItemID itemID: Int) -> String? {
         guard let result = try? context.call("identifiedItemResourceName", with: [itemID]) as? String else {
             return nil
         }
@@ -73,7 +73,7 @@ final public class ResourceNameTable: Sendable {
 
     // MARK: - Monster
 
-    public func monsterResourceName(for monsterID: Int) -> String? {
+    public func monsterResourceName(forMonsterID monsterID: Int) -> String? {
         let result = try? context.call("monsterResourceName", with: [monsterID]) as? String
         return result
     }

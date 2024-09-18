@@ -17,7 +17,7 @@ struct MapNameView: View {
     var body: some View {
         Text(localizedMapName ?? map.name)
             .task {
-                localizedMapName = MapNameTable.shared.localizedMapName(for: map.name)
+                localizedMapName = MapNameTable.shared.localizedMapName(forMapName: map.name)
             }
     }
 }
