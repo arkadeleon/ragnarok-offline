@@ -38,7 +38,6 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     parseable_packet(0x0094, 6, "clif_parse_GetCharNameRequest", [2])
     parseable_packet(0x0096, -1, "clif_parse_WisMessage", [2, 4, 28])
     parseable_packet(0x0099, -1, "clif_parse_Broadcast", [2, 4])
-    packet(0x009a, -1)
     parseable_packet(0x009b, 5, "clif_parse_ChangeDir", [2, 4])
     // packet(HEADER_ZC_ITEM_ENTRY, sizeof( struct PACKET_ZC_ITEM_ENTRY ))
     packet(0x009e, 17)
@@ -52,7 +51,6 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     // packet(useItemAckType, sizeof( struct PACKET_ZC_USE_ITEM_ACK ))
     parseable_packet(0x00a9, 6, "clif_parse_EquipItem", [2, 4])
     parseable_packet(0x00ab, 4, "clif_parse_UnequipItem", [2])
-    packet(0x00ac, 7)
     packet(0x00ae, -1)
     parseable_packet(0x00b2, 3, "clif_parse_Restart", [2])
     parseable_packet(0x00b8, 7, "clif_parse_NpcSelectMenu", [2, 6])
@@ -80,13 +78,10 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     packet(0x00d4, -1)
     parseable_packet(0x00d5, -1, "clif_parse_CreateChatRoom", [2, 4, 6, 7, 15])
     packet(0x00d7, -1)
-    packet(0x00d8, 6)
     parseable_packet(0x00d9, 14, "clif_parse_ChatAddMember", [2, 6])
-    packet(0x00db, -1)
     packet(0x00dc, 28)
     packet(0x00dd, 29)
     parseable_packet(0x00de, -1, "clif_parse_ChatRoomStatusChange", [2, 4, 6, 7, 15])
-    packet(0x00df, -1)
     parseable_packet(0x00e0, 30, "clif_parse_ChangeChatOwner", [2, 6])
     packet(0x00e1, 30)
     parseable_packet(0x00e2, 26, "clif_parse_KickFromChat", [2])
@@ -94,7 +89,6 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     parseable_packet(0x00e4, 6, "clif_parse_TradeRequest", [2])
     packet(0x00e5, 26)
     parseable_packet(0x00e6, 3, "clif_parse_TradeAck", [2])
-    packet(0x00e7, 3)
     parseable_packet(0x00e8, 8, "clif_parse_TradeAddItem", [2, 4])
     packet(0x00ea, 5)
     parseable_packet(0x00eb, 2, "clif_parse_TradeOk", [0])
@@ -131,9 +125,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     packet(0x0117, 18)
     parseable_packet(0x0118, 2, "clif_parse_StopAttack", [0])
     packet(0x0119, 13)
-    packet(0x011a, 15)
     parseable_packet(0x011b, 20, "clif_parse_UseSkillMap", [2, 4])
-    packet(0x011c, 68)
     parseable_packet(0x011d, 2, "clif_parse_RequestMemo", [0])
     packet(0x011f, 16)
     // packet(cartlistequipType, -1)
@@ -159,9 +151,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     parseable_packet(0x0149, 9, "clif_parse_GMReqNoChat", [2, 6, 7])
     packet(0x014a, 6)
     packet(0x014b, 27)
-    packet(0x014c, -1)
     parseable_packet(0x014d, 2, "clif_parse_GuildCheckMaster", [0])
-    packet(0x014e, 6)
     parseable_packet(0x014f, 6, "clif_parse_GuildRequestInfo", [2])
     packet(0x0150, 110)
     parseable_packet(0x0151, 6, "clif_parse_GuildRequestEmblem", [2])
@@ -176,9 +166,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     // parseable_packet(HEADER_CZ_REQ_BAN_GUILD, sizeof( PACKET_CZ_REQ_BAN_GUILD ), "clif_parse_GuildExpulsion", [0])
     // parseable_packet(HEADER_CZ_REQ_DISORGANIZE_GUILD, sizeof( PACKET_CZ_REQ_DISORGANIZE_GUILD ), "clif_parse_GuildBreak", [0])
     packet(0x015f, 42)
-    packet(0x0160, -1)
     parseable_packet(0x0161, -1, "clif_parse_GuildChangePositionInfo", [2, 4])
-    packet(0x0163, -1)
     packet(0x0164, -1)
     parseable_packet(0x0165, 30, "clif_parse_CreateGuild", [2, 6])
     packet(0x0166, -1)
@@ -188,9 +176,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     packet(0x016d, 14)
     parseable_packet(0x016e, 186, "clif_parse_GuildChangeNotice", [2, 6, 66])
     parseable_packet(0x0170, 14, "clif_parse_GuildRequestAlliance", [2, 6, 10])
-    packet(0x0171, 30)
     parseable_packet(0x0172, 10, "clif_parse_GuildReplyAlliance", [2, 6])
-    packet(0x0173, 3)
     packet(0x0174, -1)
     packet(0x0175, 6)
     packet(0x0176, 106)
@@ -200,12 +186,9 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     packet(0x017b, -1)
     parseable_packet(0x017c, 6, "clif_parse_InsertCard", [2, 4])
     parseable_packet(0x017e, -1, "clif_parse_GuildMessage", [2, 4])
-    packet(0x017f, -1)
     parseable_packet(0x0180, 6, "clif_parse_GuildOpposition", [2])
-    packet(0x0181, 3)
     packet(0x0182, 106)
     parseable_packet(0x0183, 10, "clif_parse_GuildDelAlliance", [2, 6])
-    packet(0x0184, 10)
     packet(0x0185, 34)
     packet(0x0187, 6)
     parseable_packet(0x018a, 4, "clif_parse_QuitGame", [2])
@@ -294,8 +277,6 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     packet(0x01f1, -1)
     packet(0x01f2, 20)
     packet(0x01f3, 10)
-    packet(0x01f4, 32)
-    packet(0x01f5, 9)
     packet(0x01f6, 34)
     parseable_packet(0x01f7, 14, "clif_parse_Adopt_reply", [2, 6, 10])
     packet(0x01f8, 2)
@@ -1087,7 +1068,6 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     }
     if PACKETVER >= 20081126 {
         packet(0x01a2, 37)
-        packet(0x0441, 4)
     }
     if PACKETVER >= 20081210 {
         // parseable_packet(HEADER_CZ_SKILL_SELECT_RESPONSE, sizeof( PACKET_CZ_SKILL_SELECT_RESPONSE ), "clif_parse_SkillSelectMenu", [0])
@@ -1151,14 +1131,6 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     if PACKETVER >= 20090121 {
         packet(0x043f, 25)
     }
-    if PACKETVER >= 20090218 {
-    }
-    if PACKETVER >= 20090226 {
-    }
-    if PACKETVER >= 20090401 {
-    }
-    if PACKETVER >= 20090514 {
-    }
     if PACKETVER >= 20090520 {
         parseable_packet(0x0447, 2, "clif_parse_blocking_playcancel", [0])
     }
@@ -1168,14 +1140,8 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x07d9, 254)
         parseable_packet(0x07da, 6, "clif_parse_PartyChangeLeader", [2])
     }
-    if PACKETVER >= 20090610 {
-    }
     if PACKETVER >= 20090617 {
         packet(0x07d9, 268)
-    }
-    if PACKETVER >= 20090701 {
-    }
-    if PACKETVER >= 20090708 {
     }
     if PACKETVER >= 20090715 {
         packet(0x07e1, 15)
@@ -1197,10 +1163,6 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x07e7, 32)
         packet(0x07e8, -1)
         packet(0x07e9, 5)
-    }
-    if PACKETVER >= 20090929 {
-    }
-    if PACKETVER >= 20091006 {
     }
     if PACKETVER >= 20091027 {
         parseable_packet(0x07f5, 6, "clif_parse_GMFullStrip", [2])
@@ -1237,10 +1199,6 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     if PACKETVER >= 20100105 {
         // parseable_packet(HEADER_CZ_PC_PURCHASE_ITEMLIST_FROMMC2, -1, "clif_parse_PurchaseReq2", [0])
     }
-    if PACKETVER >= 20100126 {
-    }
-    if PACKETVER >= 20100209 {
-    }
     if PACKETVER >= 20100303 {
         packet(0x0810, 3)
         parseable_packet(0x0811, -1, "clif_parse_ReqOpenBuyingStore", [2, 4, 8, 9, 89])
@@ -1248,14 +1206,8 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     if PACKETVER >= 20100309 {
         packet(0x081d, 22)
     }
-    if PACKETVER >= 20100323 {
-    }
-    if PACKETVER >= 20100406 {
-    }
     if PACKETVER >= 20100413 {
         packet(0x0820, 11)
-    }
-    if PACKETVER >= 20100414 {
     }
     if PACKETVER >= 20100420 {
         packet(0x0812, 8)
@@ -1272,19 +1224,9 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         parseable_packet(0x083B, 2, "clif_parse_CloseSearchStoreInfo", [0])
         // parseable_packet(HEADER_CZ_SSILIST_ITEM_CLICK, sizeof( struct PACKET_CZ_SSILIST_ITEM_CLICK ), "clif_parse_SearchStoreInfoListItemClick", [0])
     }
-    if PACKETVER >= 20100615 {
-    }
-    if PACKETVER >= 20100622 {
-    }
-    if PACKETVER >= 20100629 {
-    }
     if PACKETVER_MAIN_NUM >= 20100817 || PACKETVER_RE_NUM >= 20100706 || PACKETVER_ZERO_NUM != 0 {
         parseable_packet(0x0835, -1, "clif_parse_SearchStoreInfo", [2, 4, 5, 9, 13, 14, 15])
         // packet(HEADER_ZC_SEARCH_STORE_INFO_ACK, -1)
-    }
-    if PACKETVER >= 20100713 {
-    }
-    if PACKETVER >= 20100714 {
     }
     if PACKETVER >= 20100803 {
         parseable_packet(0x0842, 6, "clif_parse_GMRecall2", [2])
@@ -1325,7 +1267,6 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         parseable_packet(0x0838, 6, "clif_parse_SolveCharName", [2])
         parseable_packet(0x0439, 8, "clif_parse_UseItem", [2, 4])
         packet(0x08d2, 10)
-        packet(0x08d1, 7)
     }
     if PACKETVER >= 20111102 {
         parseable_packet(0x0436, 26, "clif_parse_FriendsListAdd", [2])
@@ -1537,7 +1478,6 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         parseable_packet(0x0978, 6, "clif_parse_reqworldinfo", [2])
         packet(0x0979, 50)
         parseable_packet(0x0998, 8, "clif_parse_EquipItem", [2, 4])
-        packet(0x099a, 9)
         packet(0x099b, 8)
         packet(0x08ff, 24)
         packet(0x0984, 28)
@@ -1559,7 +1499,6 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     }
     if PACKETVER >= 20130731 {
         packet(0x09ca, 23)
-        packet(0x09cb, 17)
     }
     if PACKETVER >= 20130807 {
         parseable_packet(0x0974, 2, "clif_parse_merge_item_cancel", [0])
@@ -1699,8 +1638,8 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         // parseable_packet(HEADER_CZ_RANDOM_COMBINE_ITEM_UI_CLOSE, sizeof( struct PACKET_CZ_RANDOM_COMBINE_ITEM_UI_CLOSE ), "clif_parse_laphine_synthesis_close", [0])
         // parseable_packet(HEADER_CZ_REQ_RANDOM_COMBINE_ITEM, -1, "clif_parse_laphine_synthesis", [0])
     }
-    if PACKETVER >= 20160622 {
-        packet(0x0A84, 94)
+    if PACKETVER_MAIN_NUM >= 20160622 || PACKETVER_RE_NUM >= 20160622 || PACKETVER_ZERO_NUM != 0 {
+        // parseable_packet(HEADER_CZ_CMD_RESETCOOLTIME, sizeof( PACKET_CZ_CMD_RESETCOOLTIME ), "clif_parse_gm_resetcooltime", [0])
     }
     if PACKETVER >= 20161012 {
         // parseable_packet(HEADER_CZ_REFINING_SELECT_ITEM, sizeof( struct PACKET_CZ_REFINING_SELECT_ITEM ), "clif_parse_refineui_add", [0])
