@@ -8,7 +8,7 @@
 import SwiftUI
 import rAthenaCommon
 import RODatabase
-import ROResources
+import ROLocalizations
 
 struct SkillInfoView: View {
     var mode: ServerMode

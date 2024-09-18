@@ -29,14 +29,14 @@ let package = Package(
             name: "ROGame",
             targets: ["ROGame"]),
         .library(
+            name: "ROLocalizations",
+            targets: ["ROLocalizations"]),
+        .library(
             name: "RONetwork",
             targets: ["RONetwork"]),
         .library(
             name: "RORenderers",
             targets: ["RORenderers"]),
-        .library(
-            name: "ROResources",
-            targets: ["ROResources"]),
         .library(
             name: "ROShaders",
             targets: ["ROShaders"]),
@@ -55,7 +55,7 @@ let package = Package(
                 "ROFileFormats",
                 "ROFileSystem",
                 "ROGenerated",
-                "ROResources",
+                "ROLocalizations",
             ],
             resources: [
                 .process("Resources"),
@@ -77,6 +77,14 @@ let package = Package(
             swiftSettings: [
                 .interoperabilityMode(.Cxx),
             ]),
+        .testTarget(
+            name: "RODatabaseTests",
+            dependencies: [
+                "RODatabase",
+            ],
+            swiftSettings: [
+                .interoperabilityMode(.Cxx),
+            ]),
         .target(
             name: "ROFileFormats",
             dependencies: [
@@ -85,6 +93,15 @@ let package = Package(
             ],
             swiftSettings: [
                 .swiftLanguageMode(.v5),
+            ]),
+        .testTarget(
+            name: "ROFileFormatsTests",
+            dependencies: [
+                "ROFileFormats"
+            ],
+            resources: [
+                .copy("test.grf"),
+                .copy("data"),
             ]),
         .target(
             name: "ROFileSystem",
@@ -98,8 +115,8 @@ let package = Package(
         .target(
             name: "ROGame",
             dependencies: [
+                "ROLocalizations",
                 "RONetwork",
-                "ROResources",
             ],
             resources: [
                 .copy("Resources/Images/"),
@@ -110,23 +127,7 @@ let package = Package(
         .target(
             name: "ROGenerated"),
         .target(
-            name: "RONetwork",
-            dependencies: [
-                "ROGenerated",
-                "ROResources",
-            ],
-            swiftSettings: [
-                .swiftLanguageMode(.v5),
-            ]),
-        .target(
-            name: "RORenderers",
-            dependencies: [
-                "ROCore",
-                "ROFileFormats",
-                "ROShaders",
-            ]),
-        .target(
-            name: "ROResources",
+            name: "ROLocalizations",
             dependencies: [
                 .product(name: "Lua", package: "swift-lua"),
                 "ROCore",
@@ -134,30 +135,19 @@ let package = Package(
             resources: [
                 .process("Resources"),
             ]),
-        .target(
-            name: "ROShaders",
-            resources: [
-                .process("Effect/EffectShaders.metal"),
-                .process("Ground/GroundShaders.metal"),
-                .process("Model/ModelShaders.metal"),
-                .process("Water/WaterShaders.metal"),
-            ]),
         .testTarget(
-            name: "RODatabaseTests",
+            name: "ROLocalizationsTests",
             dependencies: [
-                "RODatabase",
+                "ROLocalizations",
+            ]),
+        .target(
+            name: "RONetwork",
+            dependencies: [
+                "ROGenerated",
+                "ROLocalizations",
             ],
             swiftSettings: [
-                .interoperabilityMode(.Cxx),
-            ]),
-        .testTarget(
-            name: "ROFileFormatsTests",
-            dependencies: [
-                "ROFileFormats"
-            ],
-            resources: [
-                .copy("test.grf"),
-                .copy("data"),
+                .swiftLanguageMode(.v5),
             ]),
         .testTarget(
             name: "RONetworkTests",
@@ -169,10 +159,20 @@ let package = Package(
                 .product(name: "rAthenaResources", package: "swift-rathena"),
                 "RONetwork",
             ]),
-        .testTarget(
-            name: "ROResourcesTests",
+        .target(
+            name: "RORenderers",
             dependencies: [
-                "ROResources",
+                "ROCore",
+                "ROFileFormats",
+                "ROShaders",
+            ]),
+        .target(
+            name: "ROShaders",
+            resources: [
+                .process("Effect/EffectShaders.metal"),
+                .process("Ground/GroundShaders.metal"),
+                .process("Model/ModelShaders.metal"),
+                .process("Water/WaterShaders.metal"),
             ]),
         .plugin(
             name: "ROGenerator",

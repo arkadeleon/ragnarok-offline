@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ROResources
+import ROLocalizations
 
 final public class LoginClient {
     public var onAcceptLogin: ((_ state: ClientState, _ charServers: [CharServerInfo]) -> Void)?

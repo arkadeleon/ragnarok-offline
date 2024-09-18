@@ -10,7 +10,7 @@ import Observation
 import rAthenaCommon
 import ROClient
 import RODatabase
-import ROResources
+import ROLocalizations
 
 @Observable
 class ObservableMonster {

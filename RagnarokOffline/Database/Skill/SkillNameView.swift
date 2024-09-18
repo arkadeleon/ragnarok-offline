@@ -6,7 +6,7 @@
 //
 
 import RODatabase
-import ROResources
+import ROLocalizations
 import SwiftUI
 
 struct SkillNameView: View {

@@ -91,7 +91,6 @@
 		35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B9722A08C01600B4540B /* GameRenderer.swift */; };
 		35B3B9FA2A08C01600B4540B /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B9732A08C01600B4540B /* wall.jpg */; };
 		35B3BA1A2A08C01600B4540B /* FilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B99A2A08C01600B4540B /* FilesView.swift */; };
-		35B422B12BEB277900681AA2 /* ROResources in Frameworks */ = {isa = PBXBuildFile; productRef = 35B422B02BEB277900681AA2 /* ROResources */; };
 		35B422D02BEB68F600681AA2 /* PetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422CF2BEB68F600681AA2 /* PetProvider.swift */; };
 		35B422D22BEB6C7C00681AA2 /* PetDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422D12BEB6C7C00681AA2 /* PetDatabaseView.swift */; };
 		35B422D42BEB785500681AA2 /* ObservablePet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422D32BEB785500681AA2 /* ObservablePet.swift */; };
@@ -110,6 +109,7 @@
 		35B422FC2BEFBC8F00681AA2 /* StatusChange+DatabaseRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422FB2BEFBC8F00681AA2 /* StatusChange+DatabaseRecord.swift */; };
 		35B695EA2A305EF6006F1904 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695E92A305EF6006F1904 /* GameView.swift */; };
 		35B695EC2A307164006F1904 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695EB2A307164006F1904 /* GameScene.swift */; };
+		35BDF7022C9B080000CCAB8F /* ROLocalizations in Frameworks */ = {isa = PBXBuildFile; productRef = 35BDF7012C9B080000CCAB8F /* ROLocalizations */; };
 		35BE55292BD92D52003715C3 /* TextFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55282BD92D52003715C3 /* TextFilePreviewView.swift */; };
 		35BE552D2BD939AA003715C3 /* ImageFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE552C2BD939AA003715C3 /* ImageFilePreviewView.swift */; };
 		35BE552F2BD94053003715C3 /* AsyncContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE552E2BD94053003715C3 /* AsyncContentView.swift */; };
@@ -269,6 +269,7 @@
 				351990122BC837320082EB0E /* rAthenaChar in Frameworks */,
 				358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */,
 				358362CD2BD55D4000821500 /* SwiftTerm in Frameworks */,
+				35BDF7022C9B080000CCAB8F /* ROLocalizations in Frameworks */,
 				358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */,
 				35B367452BD6AE700018ED27 /* Terminal in Frameworks */,
 				350458162C89787E003FF3D6 /* ROGame in Frameworks */,
@@ -277,7 +278,6 @@
 				351EE2F52C06F7A90012BC9E /* ROClient in Frameworks */,
 				358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */,
 				358D4C692BC7707400FAF45D /* ROFileSystem in Frameworks */,
-				35B422B12BEB277900681AA2 /* ROResources in Frameworks */,
 				353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */,
 				3519901A2BC837320082EB0E /* rAthenaMap in Frameworks */,
 				352B14112C2433A20097E643 /* rAthenaResources in Frameworks */,
@@ -626,10 +626,10 @@
 				3519901E2BC837320082EB0E /* rAthenaWeb */,
 				358362CC2BD55D4000821500 /* SwiftTerm */,
 				35B367442BD6AE700018ED27 /* Terminal */,
-				35B422B02BEB277900681AA2 /* ROResources */,
 				351EE2F42C06F7A90012BC9E /* ROClient */,
 				352B14102C2433A20097E643 /* rAthenaResources */,
 				350458152C89787E003FF3D6 /* ROGame */,
+				35BDF7012C9B080000CCAB8F /* ROLocalizations */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -1107,9 +1107,9 @@
 			package = 35B367432BD6AE700018ED27 /* XCRemoteSwiftPackageReference "Terminal" */;
 			productName = Terminal;
 		};
-		35B422B02BEB277900681AA2 /* ROResources */ = {
+		35BDF7012C9B080000CCAB8F /* ROLocalizations */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = ROResources;
+			productName = ROLocalizations;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
