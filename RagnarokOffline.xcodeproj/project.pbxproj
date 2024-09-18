@@ -29,7 +29,6 @@
 		3519901B2BC837320082EB0E /* rAthenaMap in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 351990192BC837320082EB0E /* rAthenaMap */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3519901F2BC837320082EB0E /* rAthenaWeb in Frameworks */ = {isa = PBXBuildFile; productRef = 3519901E2BC837320082EB0E /* rAthenaWeb */; };
 		351990202BC837320082EB0E /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3519901E2BC837320082EB0E /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		351EE2F52C06F7A90012BC9E /* ROClient in Frameworks */ = {isa = PBXBuildFile; productRef = 351EE2F42C06F7A90012BC9E /* ROClient */; };
 		351EE2F82C0735390012BC9E /* TransferableAnimatedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2F72C0735390012BC9E /* TransferableAnimatedImage.swift */; };
 		351EE2F92C0735390012BC9E /* TransferableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2F62C0735390012BC9E /* TransferableImage.swift */; };
 		351EE2FD2C0880A00012BC9E /* SkillIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2FC2C0880A00012BC9E /* SkillIconView.swift */; };
@@ -110,6 +109,9 @@
 		35B695EA2A305EF6006F1904 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695E92A305EF6006F1904 /* GameView.swift */; };
 		35B695EC2A307164006F1904 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695EB2A307164006F1904 /* GameScene.swift */; };
 		35BDF7022C9B080000CCAB8F /* ROLocalizations in Frameworks */ = {isa = PBXBuildFile; productRef = 35BDF7012C9B080000CCAB8F /* ROLocalizations */; };
+		35BDF7042C9B0AED00CCAB8F /* ClientSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF7032C9B0AED00CCAB8F /* ClientSettings.swift */; };
+		35BDF7062C9B0AF200CCAB8F /* SettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF7052C9B0AF200CCAB8F /* SettingsItem.swift */; };
+		35BDF7082C9B16E100CCAB8F /* ROClientResources in Frameworks */ = {isa = PBXBuildFile; productRef = 35BDF7072C9B16E100CCAB8F /* ROClientResources */; };
 		35BE55292BD92D52003715C3 /* TextFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55282BD92D52003715C3 /* TextFilePreviewView.swift */; };
 		35BE552D2BD939AA003715C3 /* ImageFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE552C2BD939AA003715C3 /* ImageFilePreviewView.swift */; };
 		35BE552F2BD94053003715C3 /* AsyncContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE552E2BD94053003715C3 /* AsyncContentView.swift */; };
@@ -237,6 +239,8 @@
 		35B422FB2BEFBC8F00681AA2 /* StatusChange+DatabaseRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusChange+DatabaseRecord.swift"; sourceTree = "<group>"; };
 		35B695E92A305EF6006F1904 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		35B695EB2A307164006F1904 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		35BDF7032C9B0AED00CCAB8F /* ClientSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSettings.swift; sourceTree = "<group>"; };
+		35BDF7052C9B0AF200CCAB8F /* SettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsItem.swift; sourceTree = "<group>"; };
 		35BE55282BD92D52003715C3 /* TextFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFilePreviewView.swift; sourceTree = "<group>"; };
 		35BE552C2BD939AA003715C3 /* ImageFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilePreviewView.swift; sourceTree = "<group>"; };
 		35BE552E2BD94053003715C3 /* AsyncContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentView.swift; sourceTree = "<group>"; };
@@ -275,9 +279,9 @@
 				350458162C89787E003FF3D6 /* ROGame in Frameworks */,
 				351990152BC837320082EB0E /* rAthenaCommon in Frameworks */,
 				351990172BC837320082EB0E /* rAthenaLogin in Frameworks */,
-				351EE2F52C06F7A90012BC9E /* ROClient in Frameworks */,
 				358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */,
 				358D4C692BC7707400FAF45D /* ROFileSystem in Frameworks */,
+				35BDF7082C9B16E100CCAB8F /* ROClientResources in Frameworks */,
 				353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */,
 				3519901A2BC837320082EB0E /* rAthenaMap in Frameworks */,
 				352B14112C2433A20097E643 /* rAthenaResources in Frameworks */,
@@ -428,6 +432,8 @@
 		3582FFC42B8C820E00E746D7 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				35BDF7052C9B0AF200CCAB8F /* SettingsItem.swift */,
+				35BDF7032C9B0AED00CCAB8F /* ClientSettings.swift */,
 				3582FFC52B8C830D00E746D7 /* SettingsView.swift */,
 			);
 			path = Settings;
@@ -626,10 +632,10 @@
 				3519901E2BC837320082EB0E /* rAthenaWeb */,
 				358362CC2BD55D4000821500 /* SwiftTerm */,
 				35B367442BD6AE700018ED27 /* Terminal */,
-				351EE2F42C06F7A90012BC9E /* ROClient */,
 				352B14102C2433A20097E643 /* rAthenaResources */,
 				350458152C89787E003FF3D6 /* ROGame */,
 				35BDF7012C9B080000CCAB8F /* ROLocalizations */,
+				35BDF7072C9B16E100CCAB8F /* ROClientResources */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -720,6 +726,7 @@
 				3514BF822B4801D70065ED89 /* JobDatabaseView.swift in Sources */,
 				351EE2F92C0735390012BC9E /* TransferableImage.swift in Sources */,
 				35239E052BC2D5D60039F7D5 /* ProgressHUD.swift in Sources */,
+				35BDF7062C9B0AF200CCAB8F /* SettingsItem.swift in Sources */,
 				351468DD2C50F53A0061D7F9 /* ServerCell.swift in Sources */,
 				35BE552F2BD94053003715C3 /* AsyncContentView.swift in Sources */,
 				3594DD552BF5FB6E00575F3D /* GNDFilePreviewView.swift in Sources */,
@@ -770,6 +777,7 @@
 				35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */,
 				35B422DC2BECAA1800681AA2 /* MonsterSummonProvider.swift in Sources */,
 				3599BD592C3FCE7A0010DBE7 /* ImageGridCell.swift in Sources */,
+				35BDF7042C9B0AED00CCAB8F /* ClientSettings.swift in Sources */,
 				35239DFF2BBEF4510039F7D5 /* MapProvider.swift in Sources */,
 				3506D11C2C00526A00903A47 /* ObservableFile.swift in Sources */,
 				355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */,
@@ -1065,10 +1073,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = rAthenaWeb;
 		};
-		351EE2F42C06F7A90012BC9E /* ROClient */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ROClient;
-		};
 		352B14102C2433A20097E643 /* rAthenaResources */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = rAthenaResources;
@@ -1110,6 +1114,10 @@
 		35BDF7012C9B080000CCAB8F /* ROLocalizations */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ROLocalizations;
+		};
+		35BDF7072C9B16E100CCAB8F /* ROClientResources */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ROClientResources;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

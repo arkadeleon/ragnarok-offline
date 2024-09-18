@@ -7,7 +7,7 @@
 
 import SwiftUI
 import RODatabase
-import ROClient
+import ROClientResources
 
 struct JobGridCell: View {
     var jobStats: JobStats

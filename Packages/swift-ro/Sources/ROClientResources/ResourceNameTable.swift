@@ -9,9 +9,7 @@ import Foundation
 @preconcurrency import Lua
 import ROCore
 
-final public class ResourceNameTable: Sendable {
-    public static let shared = ResourceNameTable()
-
+final class ResourceNameTable: Sendable {
     let context: LuaContext
 
     init() {
@@ -65,7 +63,7 @@ final public class ResourceNameTable: Sendable {
 
     // MARK: - Item
 
-    public func identifiedItemResourceName(forItemID itemID: Int) -> String? {
+    func identifiedItemResourceName(forItemID itemID: Int) -> String? {
         guard let result = try? context.call("identifiedItemResourceName", with: [itemID]) as? String else {
             return nil
         }
@@ -78,7 +76,7 @@ final public class ResourceNameTable: Sendable {
 
     // MARK: - Monster
 
-    public func monsterResourceName(forMonsterID monsterID: Int) -> String? {
+    func monsterResourceName(forMonsterID monsterID: Int) -> String? {
         let result = try? context.call("monsterResourceName", with: [monsterID]) as? String
         return result
     }

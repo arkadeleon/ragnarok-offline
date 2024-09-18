@@ -15,8 +15,8 @@
     {
       "target" : {
         "containerPath" : "container:Packages\/swift-ro",
-        "identifier" : "RODatabaseTests",
-        "name" : "RODatabaseTests"
+        "identifier" : "ROLocalizationsTests",
+        "name" : "ROLocalizationsTests"
       }
     },
     {
@@ -29,8 +29,8 @@
     {
       "target" : {
         "containerPath" : "container:Packages\/swift-ro",
-        "identifier" : "ROResourcesTests",
-        "name" : "ROResourcesTests"
+        "identifier" : "RODatabaseTests",
+        "name" : "RODatabaseTests"
       }
     },
     {

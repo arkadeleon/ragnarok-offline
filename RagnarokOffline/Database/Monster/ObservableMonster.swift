@@ -8,7 +8,7 @@
 import CoreGraphics
 import Observation
 import rAthenaCommon
-import ROClient
+import ROClientResources
 import RODatabase
 import ROLocalizations
 

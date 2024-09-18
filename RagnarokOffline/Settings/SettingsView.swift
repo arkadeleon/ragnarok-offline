@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import ROClient
 
 struct SettingsView: View {
     @State private var serviceType = ClientSettings.shared.serviceType

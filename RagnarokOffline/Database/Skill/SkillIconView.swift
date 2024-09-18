@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/5/30.
 //
 
-import ROClient
+import ROClientResources
 import RODatabase
 import SwiftUI
 

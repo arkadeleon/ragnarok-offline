@@ -19,7 +19,8 @@ public actor ClientResourceManager {
 
     let grfs: [GRFReference]
 
-    let cache = NSCache<NSString, CGImage>()
+    private let resourceNameTable = ResourceNameTable()
+    private let cache = NSCache<NSString, CGImage>()
 
     public init() {
         baseURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
@@ -30,7 +31,7 @@ public actor ClientResourceManager {
     }
 
     public func monsterImage(_ monsterID: Int) async -> CGImage? {
-        guard let resourceName = ResourceNameTable.shared.monsterResourceName(forMonsterID: monsterID) else {
+        guard let resourceName = resourceNameTable.monsterResourceName(forMonsterID: monsterID) else {
             return nil
         }
 
@@ -157,7 +158,7 @@ public actor ClientResourceManager {
     // MARK: - data\texture
 
     public func itemIconImage(forItemID itemID: Int) async -> CGImage? {
-        guard let resourceName = ResourceNameTable.shared.identifiedItemResourceName(forItemID: itemID) else {
+        guard let resourceName = resourceNameTable.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
 
@@ -167,7 +168,7 @@ public actor ClientResourceManager {
     }
 
     public func itemPreviewImage(forItemID itemID: Int) async -> CGImage? {
-        guard let resourceName = ResourceNameTable.shared.identifiedItemResourceName(forItemID: itemID) else {
+        guard let resourceName = resourceNameTable.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
 

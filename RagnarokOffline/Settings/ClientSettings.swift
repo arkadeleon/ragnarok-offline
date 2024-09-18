@@ -7,15 +7,15 @@
 
 import Foundation
 
-public class ClientSettings {
-    public static let shared = ClientSettings()
+class ClientSettings {
+    static let shared = ClientSettings()
 
-    @SettingsItem("client.service_type", defaultValue: .korea) public var serviceType: ServiceType
-    @SettingsItem("client.item_info_source", defaultValue: .lua) public var itemInfoSource: ItemInfoSource
+    @SettingsItem("client.service_type", defaultValue: .korea) var serviceType: ServiceType
+    @SettingsItem("client.item_info_source", defaultValue: .lua) var itemInfoSource: ItemInfoSource
 }
 
 extension ClientSettings {
-    public enum ServiceType: String, CaseIterable, CustomStringConvertible {
+    enum ServiceType: String, CaseIterable, CustomStringConvertible {
         case korea
         case america
         case japan
@@ -36,7 +36,7 @@ extension ClientSettings {
         case france
         case uae
 
-        public var description: String {
+        var description: String {
             switch self {
             case .korea: "Korea"
             case .america: "America"
@@ -60,7 +60,7 @@ extension ClientSettings {
             }
         }
 
-        public var stringEncoding: String.Encoding {
+        var stringEncoding: String.Encoding {
             let cfStringEncoding = switch self {
             case .america, .indonesia, .philippine, .malaysia, .singapore, .germany, .india, .brazil, .australia, .france:
                 CFStringConvertWindowsCodepageToEncoding(1252)
@@ -92,11 +92,11 @@ extension ClientSettings {
 }
 
 extension ClientSettings {
-    public enum ItemInfoSource: String, CaseIterable, CustomStringConvertible {
+    enum ItemInfoSource: String, CaseIterable, CustomStringConvertible {
         case lua
         case txt
 
-        public var description: String {
+        var description: String {
             switch self {
             case .lua: "Lua"
             case .txt: "Text"

@@ -11,8 +11,8 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "ROClient",
-            targets: ["ROClient"]),
+            name: "ROClientResources",
+            targets: ["ROClientResources"]),
         .library(
             name: "ROCore",
             targets: ["ROCore"]),
@@ -48,21 +48,19 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "ROClient",
+            name: "ROClientResources",
             dependencies: [
                 .product(name: "Lua", package: "swift-lua"),
                 "ROCore",
                 "ROFileFormats",
                 "ROFileSystem",
                 "ROGenerated",
-                "ROLocalizations",
             ],
             resources: [
                 .process("Resources"),
             ],
             swiftSettings: [
                 .interoperabilityMode(.Cxx),
-                .swiftLanguageMode(.v5),
             ]),
         .target(
             name: "ROCore"),

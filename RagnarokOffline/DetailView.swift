@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/9.
 //
 
-import ROClient
+import ROClientResources
 import ROGame
 import SwiftUI
 import rAthenaResources

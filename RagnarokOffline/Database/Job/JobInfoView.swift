@@ -7,7 +7,7 @@
 
 import SwiftUI
 import rAthenaCommon
-import ROClient
+import ROClientResources
 import RODatabase
 
 struct JobInfoView: View {
