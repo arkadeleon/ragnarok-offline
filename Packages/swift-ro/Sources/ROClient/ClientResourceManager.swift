@@ -11,7 +11,6 @@ import ROCore
 import ROFileFormats
 import ROFileSystem
 import ROGenerated
-import ROResources
 
 public actor ClientResourceManager {
     public static let `default` = ClientResourceManager()

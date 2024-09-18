@@ -50,11 +50,15 @@ let package = Package(
         .target(
             name: "ROClient",
             dependencies: [
+                .product(name: "Lua", package: "swift-lua"),
                 "ROCore",
                 "ROFileFormats",
                 "ROFileSystem",
                 "ROGenerated",
                 "ROResources",
+            ],
+            resources: [
+                .process("Resources"),
             ],
             swiftSettings: [
                 .interoperabilityMode(.Cxx),

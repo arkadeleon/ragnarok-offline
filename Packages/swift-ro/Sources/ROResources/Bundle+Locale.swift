@@ -13,15 +13,6 @@ extension Bundle {
         return url(forResource: name, withExtension: ext, subdirectory: nil, localization: localization)
     }
 
-    public func data(forResource name: String?, withExtension ext: String?, locale: Locale) -> Data? {
-        guard let url = url(forResource: name, withExtension: ext, locale: locale) else {
-            return nil
-        }
-
-        let data = try? Data(contentsOf: url)
-        return data
-    }
-
     public func string(forResource name: String?, withExtension ext: String?, encoding enc: String.Encoding, locale: Locale) -> String? {
         guard let url = url(forResource: name, withExtension: ext, locale: locale) else {
             return nil

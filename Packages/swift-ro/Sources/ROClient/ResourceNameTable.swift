@@ -7,6 +7,7 @@
 
 import Foundation
 @preconcurrency import Lua
+import ROCore
 
 final public class ResourceNameTable: Sendable {
     public static let shared = ResourceNameTable()
@@ -18,8 +19,8 @@ final public class ResourceNameTable: Sendable {
             let context = LuaContext()
 
             do {
-                let locale = Locale(languageCode: .korean)
-                if let data = Bundle.module.data(forResource: "itemInfo", withExtension: "lub", locale: locale) {
+                if let url = Bundle.module.url(forResource: "itemInfo", withExtension: "lub") {
+                    let data = try Data(contentsOf: url)
                     try context.load(data)
                 }
 
@@ -34,7 +35,11 @@ final public class ResourceNameTable: Sendable {
                     return tbl[itemID]["slotCount"]
                 end
                 """)
+            } catch {
+                print(error)
+            }
 
+            do {
                 if let url = Bundle.module.url(forResource: "npcidentity", withExtension: "lub") {
                     let data = try Data(contentsOf: url)
                     try context.load(data)

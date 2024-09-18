@@ -8,7 +8,7 @@
 import Foundation
 
 extension Locale.Language {
-    var preferredEncoding: String.Encoding {
+    public var preferredEncoding: String.Encoding {
         let cfEncoding = switch languageCode {
         case .arabic:
             CFStringConvertWindowsCodepageToEncoding(1256)
