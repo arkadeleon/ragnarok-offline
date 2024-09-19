@@ -7,11 +7,8 @@
 
 import Foundation
 
-final public class PacketEncoder {
-    public init() {
-    }
-
-    public func encode(_ packet: some EncodablePacket) throws -> Data {
+final class PacketEncoder {
+    func encode(_ packet: some EncodablePacket) throws -> Data {
         let encoder = BinaryEncoder()
         try packet.encode(to: encoder)
         return encoder.data

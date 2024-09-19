@@ -8,18 +8,18 @@
 protocol PacketRegistration {
     associatedtype Packet: DecodablePacket
 
-    var packetType: Int16 { get }
+    var type: Packet.Type { get }
     var handler: (Packet) -> Void { get }
 
     func handlePacket(_ packet: any DecodablePacket)
 }
 
-struct _PacketRegistration<P>: PacketRegistration where P: DecodablePacket {
-    var packetType: Int16
-    var handler: (P) -> Void
+struct _PacketRegistration<Packet>: PacketRegistration where Packet: DecodablePacket {
+    var type: Packet.Type
+    var handler: (Packet) -> Void
 
     func handlePacket(_ packet: any DecodablePacket) {
-        if let packet = packet as? P {
+        if let packet = packet as? Packet {
             handler(packet)
         }
     }

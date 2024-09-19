@@ -13,9 +13,6 @@ final class ClientConnection {
 
     private let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client-connection")
 
-    private let packetEncoder = PacketEncoder()
-    private let packetDecoder = PacketDecoder()
-
     private var packetRegistrations: [any PacketRegistration] = []
 
     var errorHandler: (@Sendable (_ error: any Error) -> Void)?
@@ -43,28 +40,25 @@ final class ClientConnection {
     }
 
     func registerPacket<P>(_ type: P.Type, receiveHandler: @escaping (P) -> Void) where P: DecodablePacket {
-        packetDecoder.registerPacket(type)
-
-        let registration = _PacketRegistration(packetType: type.packetType, handler: receiveHandler)
+        let registration = _PacketRegistration(type: type, handler: receiveHandler)
         packetRegistrations.append(registration)
     }
 
     func sendPacket(_ packet: some EncodablePacket) {
-        let data: Data
         do {
-            data = try packetEncoder.encode(packet)
+            let encoder = PacketEncoder()
+            let data = try encoder.encode(packet)
+
+            connection.send(content: data, completion: .contentProcessed({ error in
+                if let error {
+                    self.errorHandler?(error)
+                }
+            }))
+
+            print("Sent packet: \(packet)")
         } catch {
             errorHandler?(error)
-            return
         }
-
-        connection.send(content: data, completion: .contentProcessed({ error in
-            if let error {
-                self.errorHandler?(error)
-            }
-        }))
-
-        print("Sent packet: \(packet)")
     }
 
     func receiveData(completion: @escaping @Sendable (_ data: Data) -> Void) {
@@ -84,9 +78,10 @@ final class ClientConnection {
             if let content {
                 print("Received \(content.count) bytes")
                 do {
-                    let packets = try self.packetDecoder.decode(from: content)
+                    let decoder = PacketDecoder(registrations: packetRegistrations)
+                    let packets = try decoder.decode(from: content)
                     for packet in packets {
-                        if let registration = self.packetRegistrations.first(where: { $0.packetType == packet.packetType }) {
+                        if let registration = self.packetRegistrations.first(where: { $0.type.packetType == packet.packetType }) {
                             registration.handlePacket(packet)
                         }
                     }

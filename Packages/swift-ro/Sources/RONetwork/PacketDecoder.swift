@@ -7,29 +7,26 @@
 
 import Foundation
 
-public enum PacketDecodingError: Error {
+enum PacketDecodingError: Error {
     case packetMismatch(Int16)
     case unknownPacket(Int16)
 }
 
-final public class PacketDecoder {
-    var registeredPackets: [Int16 : any DecodablePacket.Type] = [:]
+final class PacketDecoder {
+    let registrations: [any PacketRegistration]
 
-    public init() {
+    init(registrations: [any PacketRegistration]) {
+        self.registrations = registrations
     }
 
-    public func registerPacket<P>(_ type: P.Type) where P: DecodablePacket {
-        registeredPackets[type.packetType] = type
-    }
-
-    public func decode(from data: Data) throws -> [any DecodablePacket] {
+    func decode(from data: Data) throws -> [any DecodablePacket] {
         var packets: [any DecodablePacket] = []
 
         let decoder = BinaryDecoder(data: data)
         while decoder.data.count >= 2 {
             let packetType = decoder.data.prefix(2).withUnsafeBytes({ $0.bindMemory(to: Int16.self) })[0]
-            if let registeredPacket = registeredPackets[packetType] {
-                let packet = try registeredPacket.init(from: decoder)
+            if let registration = registrations.first(where: { $0.type.packetType == packetType }) {
+                let packet = try registration.type.init(from: decoder)
                 packets.append(packet)
                 print("Decoded packet: \(packet)")
             } else if let entry = packetDatabase.entriesByPacketType[packetType] {
