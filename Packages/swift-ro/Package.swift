@@ -58,9 +58,6 @@ let package = Package(
             ],
             resources: [
                 .process("Resources"),
-            ],
-            swiftSettings: [
-                .interoperabilityMode(.Cxx),
             ]),
         .target(
             name: "ROCore"),

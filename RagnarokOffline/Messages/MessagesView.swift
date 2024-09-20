@@ -10,8 +10,6 @@ import SwiftUI
 struct MessagesView: View {
     @Environment(\.conversation) private var conversation
 
-    @State private var editingMessageContent = ""
-
     @State private var pendingCommand: MessageCommand?
     @State private var commandArguments: [String] = []
 
@@ -29,16 +27,6 @@ struct MessagesView: View {
         }
         .safeAreaInset(edge: .bottom) {
             HStack(spacing: 16) {
-                TextField("Message", text: $editingMessageContent)
-                    .textFieldStyle(.roundedBorder)
-
-                Button {
-                    sendMessage()
-                } label: {
-                    Image(systemName: "paperplane")
-                        .font(.system(size: 20))
-                }
-
                 Menu {
                     ForEach(MessageCommand.allCases) { command in
                         Button(command.rawValue) {
@@ -46,10 +34,12 @@ struct MessagesView: View {
                         }
                     }
                 } label: {
-                    Image(systemName: "ellipsis.circle")
-                        .font(.system(size: 20))
+                    Image(systemName: "paperplane")
                 }
+                .buttonStyle(.bordered)
+                .buttonBorderShape(.circle)
             }
+            .frame(maxWidth: .infinity)
             .padding()
             .background(.bar)
         }
@@ -66,21 +56,6 @@ struct MessagesView: View {
                 pendingCommand = nil
             }
         }
-    }
-
-    private func sendMessage() {
-        guard !editingMessageContent.isEmpty else {
-            return
-        }
-
-        if let command = MessageCommand(rawValue: editingMessageContent) {
-            executeCommand(command)
-        } else {
-            let message = Message(sender: .client, content: editingMessageContent)
-            conversation.messages.append(message)
-        }
-
-        editingMessageContent = ""
     }
 
     private func executeCommand(_ command: MessageCommand) {

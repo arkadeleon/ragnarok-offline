@@ -63,7 +63,7 @@ class Conversation {
             let username = arguments[0]
             let password = arguments[1]
             loginClient.login(username: username, password: password)
-        case .enterChar:
+        case .selectCharServer:
             guard let state,
                   let serverNumber = Int(arguments[0]),
                   (serverNumber - 1) < charServers.count else {
@@ -85,7 +85,7 @@ class Conversation {
                     Int: \(charInfo.int)
                     Dex: \(charInfo.dex)
                     Luk: \(charInfo.luk)
-                    Char Number: \(charInfo.slot)
+                    Slot: \(charInfo.slot)
                     """
                     self?.messages.append(.server(message))
                 }
@@ -115,14 +115,13 @@ class Conversation {
             char.int = UInt8(arguments[4]) ?? 1
             char.dex = UInt8(arguments[5]) ?? 1
             char.luk = UInt8(arguments[6]) ?? 1
+            char.slot = UInt8(arguments[7]) ?? 0
 
             charClient?.makeChar(char: char)
         case .deleteChar:
             break
         case .selectChar:
-            guard let slot = UInt8(arguments[0]) else {
-                break
-            }
+            let slot = UInt8(arguments[0]) ?? 0
 
             charClient?.selectChar(slot: slot)
         }

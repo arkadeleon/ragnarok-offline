@@ -28,7 +28,7 @@ struct Message: Identifiable {
 
 enum MessageCommand: String, CaseIterable, Identifiable {
     case login = "Login"
-    case enterChar = "Enter Char"
+    case selectCharServer = "Select Char Server"
     case makeChar = "Make Char"
     case deleteChar = "Delete Char"
     case selectChar = "Select Char"
@@ -41,14 +41,14 @@ enum MessageCommand: String, CaseIterable, Identifiable {
         switch self {
         case .login:
             ["Username", "Password"]
-        case .enterChar:
+        case .selectCharServer:
             ["Server Number"]
         case .makeChar:
-            ["Name", "Str", "Agi", "Vit", "Int", "Dex", "Luk"]
+            ["Name", "Str", "Agi", "Vit", "Int", "Dex", "Luk", "Slot"]
         case .deleteChar:
             ["Char ID"]
         case .selectChar:
-            ["Char Number"]
+            ["Slot"]
         }
     }
 }
