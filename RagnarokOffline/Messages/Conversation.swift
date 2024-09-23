@@ -19,18 +19,14 @@ class Conversation {
     private var charServers: [CharServerInfo] = []
 
     func executeCommand(_ command: MessageCommand, arguments: [String] = []) {
-        let message = Message(sender: .client, content: command.rawValue)
-        messages.append(message)
-
-        if !arguments.isEmpty {
-            let messageContent = command.arguments.enumerated()
-                .map {
-                    "\($0.element): \(arguments[$0.offset])"
-                }
-                .joined(separator: "\n")
-            let message = Message(sender: .client, content: messageContent)
-            messages.append(message)
+        var content = command.rawValue
+        for (index, argument) in command.arguments.enumerated() {
+            content.append("\n")
+            content.append("\(argument) \(arguments[index])")
         }
+
+        let message = Message(sender: .client, content: content)
+        messages.append(message)
 
         switch command {
         case .login:

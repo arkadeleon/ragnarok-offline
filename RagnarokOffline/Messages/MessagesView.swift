@@ -55,6 +55,9 @@ struct MessagesView: View {
                 conversation.executeCommand(pendingCommand!, arguments: commandArguments)
                 pendingCommand = nil
             }
+
+            Button("Cancel") {
+            }
         }
     }
 

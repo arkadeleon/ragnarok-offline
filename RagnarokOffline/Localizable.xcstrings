@@ -64,6 +64,9 @@
     "Buy" : {
 
     },
+    "Cancel" : {
+
+    },
     "Capture Rate" : {
 
     },
@@ -311,9 +314,6 @@
     "Locations" : {
 
     },
-    "Login" : {
-
-    },
     "Luk" : {
 
     },
@@ -402,9 +402,6 @@
 
     },
     "NOT STARTED" : {
-
-    },
-    "Password" : {
 
     },
     "Paste" : {
@@ -525,9 +522,6 @@
 
     },
     "Unequip Script" : {
-
-    },
-    "Username" : {
 
     },
     "View" : {

@@ -27,11 +27,11 @@ struct Message: Identifiable {
 }
 
 enum MessageCommand: String, CaseIterable, Identifiable {
-    case login = "Login"
-    case selectCharServer = "Select Char Server"
-    case makeChar = "Make Char"
-    case deleteChar = "Delete Char"
-    case selectChar = "Select Char"
+    case login = "login"
+    case selectCharServer = "select-char-server"
+    case makeChar = "make-char"
+    case deleteChar = "delete-char"
+    case selectChar = "select-char"
 
     var id: String {
         rawValue
@@ -40,15 +40,15 @@ enum MessageCommand: String, CaseIterable, Identifiable {
     var arguments: [String] {
         switch self {
         case .login:
-            ["Username", "Password"]
+            ["--username", "--password"]
         case .selectCharServer:
-            ["Server Number"]
+            ["--server-number"]
         case .makeChar:
-            ["Name", "Str", "Agi", "Vit", "Int", "Dex", "Luk", "Slot"]
+            ["--name", "--str", "--agi", "--vit", "--int", "--dex", "--luk", "--slot"]
         case .deleteChar:
-            ["Char ID"]
+            ["--char-id"]
         case .selectChar:
-            ["Slot"]
+            ["--slot"]
         }
     }
 }
