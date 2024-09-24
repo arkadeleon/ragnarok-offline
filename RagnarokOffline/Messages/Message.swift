@@ -26,7 +26,7 @@ struct Message: Identifiable {
     var content: String
 }
 
-enum MessageCommand: String, CaseIterable, Identifiable {
+enum MessageCommand: String, Identifiable {
     case login = "login"
     case selectCharServer = "select-char-server"
     case makeChar = "make-char"

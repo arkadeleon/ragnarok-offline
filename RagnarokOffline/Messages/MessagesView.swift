@@ -26,21 +26,20 @@ struct MessagesView: View {
             }
         }
         .safeAreaInset(edge: .bottom) {
-            HStack(spacing: 16) {
-                Menu {
-                    ForEach(MessageCommand.allCases) { command in
+            ScrollView(.horizontal) {
+                HStack(spacing: 16) {
+                    ForEach(conversation.availableCommands) { command in
                         Button(command.rawValue) {
                             executeCommand(command)
                         }
+                        .buttonStyle(.bordered)
+                        .buttonBorderShape(.capsule)
                     }
-                } label: {
-                    Image(systemName: "paperplane")
                 }
-                .buttonStyle(.bordered)
-                .buttonBorderShape(.circle)
+                .frame(maxWidth: .infinity)
+                .padding()
             }
-            .frame(maxWidth: .infinity)
-            .padding()
+            .scrollIndicators(.never)
             .background(.bar)
         }
         .navigationTitle("Messages")
@@ -51,12 +50,12 @@ struct MessagesView: View {
                     .disableAutocorrection(true)
             }
 
-            Button("Done") {
-                conversation.executeCommand(pendingCommand!, arguments: commandArguments)
-                pendingCommand = nil
+            Button("Cancel") {
             }
 
-            Button("Cancel") {
+            Button("Send") {
+                conversation.executeCommand(pendingCommand!, arguments: commandArguments)
+                pendingCommand = nil
             }
         }
     }

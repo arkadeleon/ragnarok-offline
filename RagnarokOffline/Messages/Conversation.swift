@@ -8,9 +8,31 @@
 import Observation
 import RONetwork
 
+enum ConversationScene {
+    case login
+    case selectCharServer
+    case selectChar
+    case map
+}
+
 @Observable
 class Conversation {
     var messages: [Message] = []
+
+    var scene: ConversationScene = .login
+
+    var availableCommands: [MessageCommand] {
+        switch scene {
+        case .login:
+            [.login]
+        case .selectCharServer:
+            [.selectCharServer]
+        case .selectChar:
+            [.makeChar, .deleteChar, .selectChar]
+        case .map:
+            []
+        }
+    }
 
     private var loginClient: LoginClient!
     private var charClient: CharClient?
@@ -34,6 +56,8 @@ class Conversation {
             loginClient.onAcceptLogin = { [weak self] state, charServers in
                 self?.state = state
                 self?.charServers = charServers
+
+                self?.scene = .selectCharServer
 
                 self?.messages.append(.server("Accepted"))
 
@@ -69,6 +93,8 @@ class Conversation {
             let charServer = charServers[serverNumber - 1]
             charClient = CharClient(state: state, charServer: charServer)
             charClient?.onAcceptEnter = { [weak self] chars in
+                self?.scene = .selectChar
+
                 self?.messages.append(.server("Accepted"))
 
                 for charInfo in chars {
@@ -96,6 +122,8 @@ class Conversation {
                 self?.messages.append(.server("Refused"))
             }
             charClient?.onNotifyZoneServer = { [weak self] mapName, mapServer in
+                self?.scene = .map
+
                 self?.messages.append(.server("Entered map: \(mapName)"))
             }
 
