@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/12.
 //
 
-public struct CharServerInfo: BinaryDecodable {
+public struct CharServerInfo: BinaryDecodable, Sendable {
     public var ip: UInt32
     public var port: UInt16
     public var name: String

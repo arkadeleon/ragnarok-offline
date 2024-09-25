@@ -5,20 +5,16 @@
 //  Created by Leon Li on 2024/8/8.
 //
 
+import Combine
 import Foundation
 
 final public class CharClient {
     public let state: ClientState
 
-    public var onAcceptEnterHeader: (() -> Void)?
-    public var onAcceptEnter: ((_ chars: [CharInfo]) -> Void)?
-    public var onRefuseEnter: (() -> Void)?
-    public var onAcceptMakeChar: ((_ char: CharInfo) -> Void)?
-    public var onRefuseMakeChar: (() -> Void)?
-    public var onNotifyZoneServer: ((_ mapName: String, _ mapServer: MapServerInfo) -> Void)?
-    public var onError: ((_ error: any Error) -> Void)?
-
     private let connection: ClientConnection
+
+    private let eventSubject = PassthroughSubject<any Event, Never>()
+    private var subscriptions = Set<AnyCancellable>()
 
     private var keepAliveTimer: Timer?
 
@@ -28,75 +24,139 @@ final public class CharClient {
         connection = ClientConnection(port: charServer.port)
 
         connection.errorHandler = { [weak self] error in
-            self?.onError?(error)
+            let event = ConnectionEvents.ErrorOccurred(error: error)
+            self?.eventSubject.send(event)
         }
 
-        // 0x6b
-        connection.registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION.self) { [weak self] packet in
-            self?.onAcceptEnter?(packet.chars)
-        }
-
-        // 0x6c
-        connection.registerPacket(PACKET_HC_REFUSE_ENTER.self) { [weak self] packet in
-            self?.onRefuseEnter?()
-        }
-
-        // 0x6d
-        connection.registerPacket(PACKET_HC_ACCEPT_MAKECHAR.self) { [weak self] packet in
-            self?.onAcceptMakeChar?(packet.char)
-        }
-
-        // 0x6e
-        connection.registerPacket(PACKET_HC_REFUSE_MAKECHAR.self) { [weak self] packet in
-            self?.onRefuseMakeChar?()
-        }
-
-        // 0x6f
-        connection.registerPacket(PACKET_HC_ACCEPT_DELETECHAR.self) { [weak self] packet in
-        }
-
-        // 0x70
-        connection.registerPacket(PACKET_HC_REFUSE_DELETECHAR.self) { [weak self] packet in
-        }
-
-        // 0x71, 0xac5
-        connection.registerPacket(PACKET_HC_NOTIFY_ZONESVR.self) { [weak self] packet in
-            self?.state.charID = packet.charID
-            self?.onNotifyZoneServer?(packet.mapName, packet.mapServer)
-        }
-
-        // 0x20d
-        connection.registerPacket(PACKET_HC_BLOCK_CHARACTER.self) { [weak self] packet in
-        }
-
-        // 0x828
-        connection.registerPacket(PACKET_HC_DELETE_CHAR_RESERVED.self) { [weak self] packet in
-        }
-
-        // 0x82a
-        connection.registerPacket(PACKET_HC_DELETE_CHAR.self) { [weak self] packet in
-        }
-
-        // 0x82c
-        connection.registerPacket(PACKET_HC_DELETE_CHAR_CANCEL.self) { [weak self] packet in
-        }
+        registerCharServerPackets()
+        registerCharPackets()
 
         // 0x82d
-        connection.registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.self) { [weak self] packet in
-            self?.onAcceptEnterHeader?()
-        }
-
-        // 0x840
-        connection.registerPacket(PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self) { [weak self] packet in
-        }
+        connection.registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.self)
 
         // 0x8b9
-        connection.registerPacket(PACKET_HC_SECOND_PASSWD_LOGIN.self) { [weak self] packet in
-        }
+        connection.registerPacket(PACKET_HC_SECOND_PASSWD_LOGIN.self)
 
         // 0x9a0
-        connection.registerPacket(PACKET_HC_CHARLIST_NOTIFY.self) { [weak self] packet in
-        }
+        connection.registerPacket(PACKET_HC_CHARLIST_NOTIFY.self)
+
+        // 0x20d
+        connection.registerPacket(PACKET_HC_BLOCK_CHARACTER.self)
+
+        // 0x81
+        connection.registerPacket(PACKET_SC_NOTIFY_BAN.self)
+            .map { packet in
+                AuthenticationEvents.Banned(errorCode: packet.errorCode)
+            }
+            .subscribe(eventSubject)
+            .store(in: &subscriptions)
+    }
+
+    private func registerCharServerPackets() {
+        // 0x6b
+        connection.registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION.self)
+            .map { packet in
+                CharServerEvents.Accepted(chars: packet.chars)
+            }
+            .subscribe(eventSubject)
+            .store(in: &subscriptions)
+
+        // 0x6c
+        connection.registerPacket(PACKET_HC_REFUSE_ENTER.self)
+            .map { packet in
+                CharServerEvents.Refused()
+            }
+            .subscribe(eventSubject)
+            .store(in: &subscriptions)
+
+        // 0x71, 0xac5
+        connection.registerPacket(PACKET_HC_NOTIFY_ZONESVR.self)
+            .map { packet in
+                CharServerEvents.NotifyMapServer(charID: packet.charID, mapName: packet.mapName, mapServer: packet.mapServer)
+            }
+            .subscribe(eventSubject)
+            .store(in: &subscriptions)
+
+        // 0x840
+        connection.registerPacket(PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self)
+            .map { packet in
+                CharServerEvents.NotifyAccessibleMaps(accessibleMaps: packet.accessibleMaps)
+            }
+            .subscribe(eventSubject)
+            .store(in: &subscriptions)
+    }
+
+    private func registerCharPackets() {
+        // 0x6d
+        connection.registerPacket(PACKET_HC_ACCEPT_MAKECHAR.self)
+            .map { packet in
+                CharEvents.MakeAccepted(char: packet.char)
+            }
+            .subscribe(eventSubject)
+            .store(in: &subscriptions)
+
+        // 0x6e
+        connection.registerPacket(PACKET_HC_REFUSE_MAKECHAR.self)
+            .map { packet in
+                CharEvents.MakeRefused()
+            }
+            .subscribe(eventSubject)
+            .store(in: &subscriptions)
+
+        // 0x6f
+        connection.registerPacket(PACKET_HC_ACCEPT_DELETECHAR.self)
+            .map { packet in
+                CharEvents.DeleteAccepted()
+            }
+            .subscribe(eventSubject)
+            .store(in: &subscriptions)
+
+        // 0x70
+        connection.registerPacket(PACKET_HC_REFUSE_DELETECHAR.self)
+            .map { packet in
+                CharEvents.DeleteRefused(errorCode: UInt32(packet.errorCode))
+            }
+            .subscribe(eventSubject)
+            .store(in: &subscriptions)
+
+        // 0x82a
+        connection.registerPacket(PACKET_HC_DELETE_CHAR.self)
+            .map { packet in
+                if packet.result == 1 {
+                    CharEvents.DeleteAccepted()
+                } else {
+                    CharEvents.DeleteRefused(errorCode: packet.result)
+                }
+            }
+            .subscribe(eventSubject)
+            .store(in: &subscriptions)
+
+        // 0x82c
+        connection.registerPacket(PACKET_HC_DELETE_CHAR_CANCEL.self)
+            .map { packet in
+                CharEvents.DeleteCancelled()
+            }
+            .subscribe(eventSubject)
+            .store(in: &subscriptions)
+
+        // 0x828
+        connection.registerPacket(PACKET_HC_DELETE_CHAR_RESERVED.self)
+            .map { packet in
+                CharEvents.DeletionDateResponse(deletionDate: packet.deletionDate)
+            }
+            .subscribe(eventSubject)
+            .store(in: &subscriptions)
+    }
+
+    public func subscribe<E>(to event: E.Type, _ handler: @escaping (E) -> Void) -> any Cancellable where E: Event {
+        let cancellable = eventSubject
+            .compactMap { event in
+                event as? E
+            }
+            .sink { event in
+                handler(event)
+            }
+        return cancellable
     }
 
     public func connect() {

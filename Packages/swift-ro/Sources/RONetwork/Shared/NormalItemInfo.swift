@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/28.
 //
 
-public struct NormalItemInfo: BinaryDecodable {
+public struct NormalItemInfo: BinaryDecodable, Sendable {
     public var index: Int16
     public var itemID: UInt32
     public var type: UInt8

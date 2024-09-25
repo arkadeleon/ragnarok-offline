@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/8/12.
 //
 
+import Combine
 import Foundation
 import Network
 
@@ -13,7 +14,9 @@ final class ClientConnection {
 
     private let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client-connection")
 
-    private var packetRegistrations: [any PacketRegistration] = []
+    private let packetSubject = PassthroughSubject<any DecodablePacket, Never>()
+
+    private var registeredPackets: [Int16 : any DecodablePacket.Type] = [:]
 
     var errorHandler: (@Sendable (_ error: any Error) -> Void)?
 
@@ -39,9 +42,15 @@ final class ClientConnection {
         connection.cancel()
     }
 
-    func registerPacket<P>(_ type: P.Type, receiveHandler: @escaping (P) -> Void) where P: DecodablePacket {
-        let registration = _PacketRegistration(type: type, handler: receiveHandler)
-        packetRegistrations.append(registration)
+    func registerPacket<P>(_ type: P.Type) -> AnyPublisher<P, Never> where P: DecodablePacket {
+        registeredPackets[type.packetType] = type
+
+        let publisher = packetSubject
+            .compactMap { packet in
+                packet as? P
+            }
+            .eraseToAnyPublisher()
+        return publisher
     }
 
     func sendPacket(_ packet: some EncodablePacket) {
@@ -78,12 +87,10 @@ final class ClientConnection {
             if let content {
                 print("Received \(content.count) bytes")
                 do {
-                    let decoder = PacketDecoder(registrations: packetRegistrations)
+                    let decoder = PacketDecoder(registeredPackets: registeredPackets)
                     let packets = try decoder.decode(from: content)
                     for packet in packets {
-                        if let registration = self.packetRegistrations.first(where: { $0.type.packetType == packet.packetType }) {
-                            registration.handlePacket(packet)
-                        }
+                        packetSubject.send(packet)
                     }
                 } catch {
                     print(error)

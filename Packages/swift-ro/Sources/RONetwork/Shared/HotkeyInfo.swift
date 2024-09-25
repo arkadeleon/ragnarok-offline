@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/29.
 //
 
-public struct HotkeyInfo: BinaryDecodable {
+public struct HotkeyInfo: BinaryDecodable, Sendable {
 
     /// 0: Item, 1: Skill
     public var isSkill: Int8

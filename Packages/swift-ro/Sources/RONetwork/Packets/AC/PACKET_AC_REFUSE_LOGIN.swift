@@ -23,16 +23,16 @@ public struct PACKET_AC_REFUSE_LOGIN: DecodablePacket {
         }
     }
 
-    public var result: UInt32
+    public var errorCode: UInt32
     public var unblockTime: String
 
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
 
         if PACKET_VERSION >= 20120000 {
-            result = try decoder.decode(UInt32.self)
+            errorCode = try decoder.decode(UInt32.self)
         } else {
-            result = UInt32(try decoder.decode(UInt8.self))
+            errorCode = UInt32(try decoder.decode(UInt8.self))
         }
 
         unblockTime = try decoder.decode(String.self, length: 20)

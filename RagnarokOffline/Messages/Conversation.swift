@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/8/15.
 //
 
+import Combine
 import Observation
 import RONetwork
 
@@ -37,7 +38,9 @@ class Conversation {
     private var loginClient: LoginClient!
     private var charClient: CharClient?
 
-    private var state: ClientState?
+    private var subscriptions = Set<AnyCancellable>()
+
+    private var state = ClientState()
     private var charServers: [CharServerInfo] = []
 
     func executeCommand(_ command: MessageCommand, arguments: [String] = []) {
@@ -53,30 +56,13 @@ class Conversation {
         switch command {
         case .login:
             loginClient = LoginClient()
-            loginClient.onAcceptLogin = { [weak self] state, charServers in
-                self?.state = state
-                self?.charServers = charServers
 
-                self?.scene = .selectCharServer
+            loginClient.subscribe(to: LoginEvents.Accepted.self, onLoginAccepted).store(in: &subscriptions)
+            loginClient.subscribe(to: LoginEvents.Refused.self, onLoginRefused).store(in: &subscriptions)
 
-                self?.messages.append(.server("Accepted"))
+            loginClient.subscribe(to: AuthenticationEvents.Banned.self, onAuthenticationBanned).store(in: &subscriptions)
 
-                let serversMessage = charServers.enumerated()
-                    .map({ "(\($0.offset + 1)) \($0.element.name)" })
-                    .joined(separator: "\n")
-                self?.messages.append(.server(serversMessage))
-            }
-            loginClient.onRefuseLogin = { [weak self] message in
-                self?.messages.append(.server("Refused"))
-                self?.messages.append(.server(message))
-            }
-            loginClient.onNotifyBan = { [weak self] message in
-                self?.messages.append(.server("Banned"))
-                self?.messages.append(.server(message))
-            }
-            loginClient.onError = { [weak self] error in
-                self?.messages.append(.server(error.localizedDescription))
-            }
+            loginClient.subscribe(to: ConnectionEvents.ErrorOccurred.self, onConnectionErrorOccurred).store(in: &subscriptions)
 
             loginClient.connect()
 
@@ -84,52 +70,31 @@ class Conversation {
             let password = arguments[1]
             loginClient.login(username: username, password: password)
         case .selectCharServer:
-            guard let state,
-                  let serverNumber = Int(arguments[0]),
-                  (serverNumber - 1) < charServers.count else {
+            guard let serverNumber = Int(arguments[0]),
+                  serverNumber - 1 < charServers.count else {
                 break
             }
 
             let charServer = charServers[serverNumber - 1]
-            charClient = CharClient(state: state, charServer: charServer)
-            charClient?.onAcceptEnter = { [weak self] chars in
-                self?.scene = .selectChar
+            let charClient = CharClient(state: state, charServer: charServer)
 
-                self?.messages.append(.server("Accepted"))
+            charClient.subscribe(to: CharServerEvents.Accepted.self, onCharServerAccepted).store(in: &subscriptions)
+            charClient.subscribe(to: CharServerEvents.Refused.self, onCharServerRefused).store(in: &subscriptions)
+            charClient.subscribe(to: CharServerEvents.NotifyMapServer.self, onCharServerNotifyMapServer).store(in: &subscriptions)
+            charClient.subscribe(to: CharServerEvents.NotifyAccessibleMaps.self, onCharServerNotifyAccessibleMaps).store(in: &subscriptions)
 
-                for charInfo in chars {
-                    let message = """
-                    Char ID: \(charInfo.charID)
-                    Name: \(charInfo.name)
-                    Str: \(charInfo.str)
-                    Agi: \(charInfo.agi)
-                    Vit: \(charInfo.vit)
-                    Int: \(charInfo.int)
-                    Dex: \(charInfo.dex)
-                    Luk: \(charInfo.luk)
-                    Slot: \(charInfo.slot)
-                    """
-                    self?.messages.append(.server(message))
-                }
-            }
-            charClient?.onRefuseEnter = { [weak self] in
-                self?.messages.append(.server("Refused"))
-            }
-            charClient?.onAcceptMakeChar = { [weak self] char in
-                self?.messages.append(.server("Accepted"))
-            }
-            charClient?.onRefuseMakeChar = { [weak self] in
-                self?.messages.append(.server("Refused"))
-            }
-            charClient?.onNotifyZoneServer = { [weak self] mapName, mapServer in
-                self?.scene = .map
+            charClient.subscribe(to: CharEvents.MakeAccepted.self, onCharMakeAccepted).store(in: &subscriptions)
+            charClient.subscribe(to: CharEvents.MakeRefused.self, onCharMakeRefused).store(in: &subscriptions)
 
-                self?.messages.append(.server("Entered map: \(mapName)"))
-            }
+            charClient.subscribe(to: AuthenticationEvents.Banned.self, onAuthenticationBanned).store(in: &subscriptions)
 
-            charClient?.connect()
+            charClient.subscribe(to: ConnectionEvents.ErrorOccurred.self, onConnectionErrorOccurred).store(in: &subscriptions)
 
-            charClient?.enter()
+            charClient.connect()
+
+            charClient.enter()
+
+            self.charClient = charClient
         case .makeChar:
             var char = CharInfo()
             char.name = arguments[0]
@@ -149,5 +114,90 @@ class Conversation {
 
             charClient?.selectChar(slot: slot)
         }
+    }
+
+    // MARK: - Login Events
+
+    private func onLoginAccepted(_ event: LoginEvents.Accepted) {
+        state.accountID = event.accountID
+        state.loginID1 = event.loginID1
+        state.loginID2 = event.loginID2
+        state.sex = event.sex
+        charServers = event.charServers
+
+        scene = .selectCharServer
+
+        messages.append(.server("Accepted"))
+
+        let serversMessage = charServers.enumerated()
+            .map({ "(\($0.offset + 1)) \($0.element.name)" })
+            .joined(separator: "\n")
+        messages.append(.server(serversMessage))
+    }
+
+    private func onLoginRefused(_ event: LoginEvents.Refused) {
+        messages.append(.server("Refused"))
+        messages.append(.server(event.message))
+    }
+
+    // MARK: - Char Server Events
+
+    private func onCharServerAccepted(_ event: CharServerEvents.Accepted) {
+        scene = .selectChar
+
+        messages.append(.server("Accepted"))
+
+        for char in event.chars {
+            let message = """
+            Char ID: \(char.charID)
+            Name: \(char.name)
+            Str: \(char.str)
+            Agi: \(char.agi)
+            Vit: \(char.vit)
+            Int: \(char.int)
+            Dex: \(char.dex)
+            Luk: \(char.luk)
+            Slot: \(char.slot)
+            """
+            messages.append(.server(message))
+        }
+    }
+
+    private func onCharServerRefused(_ event: CharServerEvents.Refused) {
+        messages.append(.server("Refused"))
+    }
+
+    private func onCharServerNotifyMapServer(_ event: CharServerEvents.NotifyMapServer) {
+        state.charID = event.charID
+
+        scene = .map
+
+        messages.append(.server("Entered map: \(event.mapName)"))
+    }
+
+    private func onCharServerNotifyAccessibleMaps(_ event: CharServerEvents.NotifyAccessibleMaps) {
+    }
+
+    // MARK: - Char Events
+
+    private func onCharMakeAccepted(_ event: CharEvents.MakeAccepted) {
+        messages.append(.server("Accepted"))
+    }
+
+    private func onCharMakeRefused(_ event: CharEvents.MakeRefused) {
+        messages.append(.server("Refused"))
+    }
+
+    // MARK: - Authentication Events
+
+    private func onAuthenticationBanned(_ event: AuthenticationEvents.Banned) {
+        messages.append(.server("Banned"))
+        messages.append(.server(event.message))
+    }
+
+    // MARK: - Connection Events
+
+    private func onConnectionErrorOccurred(_ event: ConnectionEvents.ErrorOccurred) {
+        messages.append(.server(event.error.localizedDescription))
     }
 }

@@ -15,31 +15,19 @@ public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME: DecodablePacket {
         -1
     }
 
-    public var maps: [MapInfo]
+    public var accessibleMaps: [AccessibleMapInfo]
 
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
 
         let packetLength = try decoder.decode(Int16.self)
 
-        let mapCount = (packetLength - 4) / MapInfo.decodedLength
+        let accessibleMapCount = (packetLength - 4) / AccessibleMapInfo.decodedLength
 
-        maps = []
-        for _ in 0..<mapCount {
-            let mapInfo = try MapInfo(from: decoder)
-            maps.append(mapInfo)
-        }
-    }
-}
-
-extension PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME {
-    public struct MapInfo: BinaryDecodable {
-        public var status: UInt32
-        public var mapName: String
-
-        public init(from decoder: BinaryDecoder) throws {
-            status = try decoder.decode(UInt32.self)
-            mapName = try decoder.decode(String.self, length: 16)
+        accessibleMaps = []
+        for _ in 0..<accessibleMapCount {
+            let accessibleMap = try AccessibleMapInfo(from: decoder)
+            accessibleMaps.append(accessibleMap)
         }
     }
 }

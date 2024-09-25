@@ -21,7 +21,7 @@ final class ClientTests: XCTestCase {
     var charClient: CharClient!
     var mapClient: MapClient!
 
-    var subscription: AnyCancellable?
+    var subscriptions = Set<AnyCancellable>()
 
     override func setUp() async throws {
         let url = ServerResourceManager.default.baseURL
@@ -29,7 +29,7 @@ final class ClientTests: XCTestCase {
 
         try ServerResourceManager.default.prepareForServers()
 
-        subscription = NotificationCenter.default.publisher(for: .ServerDidOutputData, object: nil)
+        NotificationCenter.default.publisher(for: .ServerDidOutputData, object: nil)
             .map { $0.userInfo![ServerOutputDataKey] as! Data }
             .compactMap { data in
                 String(data: data, encoding: .isoLatin1)?
@@ -38,6 +38,7 @@ final class ClientTests: XCTestCase {
             .sink { [weak self] string in
 //                self?.logger.info("\(string)")
             }
+            .store(in: &subscriptions)
 
         await LoginServer.shared.start()
         await CharServer.shared.start()
@@ -54,9 +55,9 @@ final class ClientTests: XCTestCase {
     }
 
     func testClient() async throws {
-        var _state: ClientState?
-        var _charServer: CharServerInfo?
-        var _mapServer: MapServerInfo?
+        var state = ClientState()
+        var charServer: CharServerInfo?
+        var mapServer: MapServerInfo?
 
         // MARK: - Login
 
@@ -64,28 +65,36 @@ final class ClientTests: XCTestCase {
 
         loginClient = LoginClient()
 
-        loginClient.connect()
+        loginClient.subscribe(to: LoginEvents.Accepted.self) { event in
+            XCTAssertEqual(event.charServers.count, 1)
 
-        loginClient.onAcceptLogin = { state, charServers in
-            XCTAssert(charServers.count == 1)
+            state.accountID = event.accountID
+            state.loginID1 = event.loginID1
+            state.loginID2 = event.loginID2
+            state.sex = event.sex
 
-            _state = state
-            _charServer = charServers[0]
+            charServer = event.charServers[0]
 
             loginExpectation.fulfill()
         }
+        .store(in: &subscriptions)
 
-        loginClient.onRefuseLogin = { message in
+        loginClient.subscribe(to: LoginEvents.Refused.self) { _ in
             XCTAssert(false)
         }
+        .store(in: &subscriptions)
 
-        loginClient.onNotifyBan = { message in
+        loginClient.subscribe(to: AuthenticationEvents.Banned.self) { _ in
             XCTAssert(false)
         }
+        .store(in: &subscriptions)
 
-        loginClient.onError = { error in
-            self.logger.error("\(error)")
+        loginClient.subscribe(to: ConnectionEvents.ErrorOccurred.self) { event in
+            self.logger.error("\(event.error)")
         }
+        .store(in: &subscriptions)
+
+        loginClient.connect()
 
         let username = "ragnarok_m"
         let password = "ragnarok"
@@ -97,23 +106,31 @@ final class ClientTests: XCTestCase {
 
         let enterCharExpectation = expectation(description: "EnterChar")
 
-        charClient = CharClient(state: _state!, charServer: _charServer!)
+        charClient = CharClient(state: state, charServer: charServer!)
 
-        charClient.connect()
-
-        charClient.onAcceptEnter = { charServers in
-            XCTAssert(charServers.count == 0)
+        charClient.subscribe(to: CharServerEvents.Accepted.self) { event in
+            XCTAssertEqual(event.chars.count, 0)
 
             enterCharExpectation.fulfill()
         }
+        .store(in: &subscriptions)
 
-        charClient.onRefuseEnter = {
+        charClient.subscribe(to: CharServerEvents.Refused.self) { _ in
             XCTAssert(false)
         }
+        .store(in: &subscriptions)
 
-        charClient.onError = { error in
-            self.logger.error("\(error)")
+        charClient.subscribe(to: AuthenticationEvents.Banned.self) { _ in
+            XCTAssert(false)
         }
+        .store(in: &subscriptions)
+
+        charClient.subscribe(to: ConnectionEvents.ErrorOccurred.self) { event in
+            self.logger.error("\(event.error)")
+        }
+        .store(in: &subscriptions)
+
+        charClient.connect()
 
         charClient.enter()
 
@@ -123,15 +140,17 @@ final class ClientTests: XCTestCase {
 
         let makeCharExpectation = expectation(description: "MakeChar")
 
-        charClient.onAcceptMakeChar = { char in
-            XCTAssertEqual(char.name, "Leon")
+        charClient.subscribe(to: CharEvents.MakeAccepted.self) { event in
+            XCTAssertEqual(event.char.name, "Leon")
 
             makeCharExpectation.fulfill()
         }
+        .store(in: &subscriptions)
 
-        charClient.onRefuseMakeChar = {
+        charClient.subscribe(to: CharEvents.MakeRefused.self) { _ in
             XCTAssert(false)
         }
+        .store(in: &subscriptions)
 
         var char = CharInfo()
         char.name = "Leon"
@@ -149,11 +168,14 @@ final class ClientTests: XCTestCase {
 
         let selectCharExpectation = expectation(description: "SelectChar")
 
-        charClient.onNotifyZoneServer = { mapName, mapServer in
-            _mapServer = mapServer
+        charClient.subscribe(to: CharServerEvents.NotifyMapServer.self) { event in
+            state.charID = event.charID
+
+            mapServer = event.mapServer
 
             selectCharExpectation.fulfill()
         }
+        .store(in: &subscriptions)
 
         charClient.selectChar(slot: 0)
 
@@ -163,23 +185,25 @@ final class ClientTests: XCTestCase {
 
         let enterMapExpectation = expectation(description: "EnterMap")
 
-        mapClient = MapClient(state: _state!, mapServer: _mapServer!)
+        mapClient = MapClient(state: state, mapServer: mapServer!)
 
-        mapClient.connect()
-
-        mapClient.onAcceptEnter = {
+        mapClient.subscribe(to: MapServerEvents.Accepted.self) { _ in
             enterMapExpectation.fulfill()
         }
+        .store(in: &subscriptions)
 
-        mapClient.onStatusPropertyChanged = { sp, value, value2 in
-            print("Status property changed: \(sp), \(value)")
-            switch sp {
+        mapClient.subscribe(to: PlayerEvents.StatusPropertyChanged.self) { event in
+            print("Status property changed: \(event.sp), \(event.value)")
+            switch event.sp {
             case .str, .agi, .vit, .int, .dex, .luk:
-                XCTAssertEqual(value, 1)
+                XCTAssertEqual(event.value, 1)
             default:
                 break
             }
         }
+        .store(in: &subscriptions)
+
+        mapClient.connect()
 
         mapClient.enter()
 
@@ -193,14 +217,15 @@ final class ClientTests: XCTestCase {
 
         let requestMoveExpectation = expectation(description: "RequestMove")
 
-        mapClient.onNotifyPlayerMove = { moveData in
-            XCTAssertEqual(moveData.x0, 18)
-            XCTAssertEqual(moveData.y0, 26)
-            XCTAssertEqual(moveData.x1, 10)
-            XCTAssertEqual(moveData.y1, 26)
+        mapClient.subscribe(to: PlayerEvents.Moved.self) { event in
+            XCTAssertEqual(event.moveData.x0, 18)
+            XCTAssertEqual(event.moveData.y0, 26)
+            XCTAssertEqual(event.moveData.x1, 10)
+            XCTAssertEqual(event.moveData.y1, 26)
 
             requestMoveExpectation.fulfill()
         }
+        .store(in: &subscriptions)
 
         mapClient.requestMove(x: 10, y: 26)
 

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/24.
 //
 
-public struct MoveData: BinaryDecodable {
+public struct MoveData: BinaryDecodable, Sendable {
     public var x0: Int16
     public var y0: Int16
     public var x1: Int16

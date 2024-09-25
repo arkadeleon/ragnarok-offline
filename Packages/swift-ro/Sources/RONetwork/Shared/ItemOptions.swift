@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/28.
 //
 
-public struct ItemOptions: BinaryDecodable {
+public struct ItemOptions: BinaryDecodable, Sendable {
     public var index: Int16
     public var value: Int16
     public var param: UInt8

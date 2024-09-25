@@ -13,10 +13,10 @@ enum PacketDecodingError: Error {
 }
 
 final class PacketDecoder {
-    let registrations: [any PacketRegistration]
+    let registeredPackets: [Int16 : any DecodablePacket.Type]
 
-    init(registrations: [any PacketRegistration]) {
-        self.registrations = registrations
+    init(registeredPackets: [Int16 : any DecodablePacket.Type]) {
+        self.registeredPackets = registeredPackets
     }
 
     func decode(from data: Data) throws -> [any DecodablePacket] {
@@ -25,8 +25,8 @@ final class PacketDecoder {
         let decoder = BinaryDecoder(data: data)
         while decoder.data.count >= 2 {
             let packetType = decoder.data.prefix(2).withUnsafeBytes({ $0.bindMemory(to: Int16.self) })[0]
-            if let registration = registrations.first(where: { $0.type.packetType == packetType }) {
-                let packet = try registration.type.init(from: decoder)
+            if let registeredPacket = registeredPackets[packetType] {
+                let packet = try registeredPacket.init(from: decoder)
                 packets.append(packet)
                 print("Decoded packet: \(packet)")
             } else if let entry = packetDatabase.entriesByPacketType[packetType] {

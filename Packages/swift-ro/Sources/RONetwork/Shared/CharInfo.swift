@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/3/27.
 //
 
-public struct CharInfo: BinaryDecodable {
+public struct CharInfo: BinaryDecodable, Sendable {
     public var charID: UInt32
     public var baseExp: UInt64
     public var zeny: UInt32
