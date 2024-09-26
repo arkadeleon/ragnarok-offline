@@ -21,7 +21,17 @@ struct MessagesView: View {
                 LazyVStack {
                     ForEach(conversation.messages) { message in
                         MessageCell(message: message)
+                            .id(message.id)
                     }
+                }
+                .padding()
+            }
+            .onAppear {
+                proxy.scrollTo(conversation.messages.last?.id)
+            }
+            .onChange(of: conversation.messages.count) {
+                withAnimation {
+                    proxy.scrollTo(conversation.messages.last?.id)
                 }
             }
         }

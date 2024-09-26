@@ -16,8 +16,6 @@ final public class CharClient {
     private let eventSubject = PassthroughSubject<any Event, Never>()
     private var subscriptions = Set<AnyCancellable>()
 
-    private var keepAliveTimer: Timer?
-
     public init(state: ClientState, charServer: CharServerInfo) {
         self.state = state
 
@@ -200,18 +198,17 @@ final public class CharClient {
     ///
     /// Send ``PACKET_CZ_PING`` every 12 seconds.
     public func keepAlive() {
-        keepAliveTimer = Timer.scheduledTimer(withTimeInterval: 12, repeats: true) { [weak self] timer in
-            guard let self else {
-                timer.invalidate()
-                return
+        let accountID = state.accountID
+
+        Timer.publish(every: 12, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                var packet = PACKET_CZ_PING()
+                packet.accountID = accountID
+
+                self?.connection.sendPacket(packet)
             }
-
-            var packet = PACKET_CZ_PING()
-            packet.accountID = self.state.accountID
-
-            self.connection.sendPacket(packet)
-        }
-        keepAliveTimer?.fire()
+            .store(in: &subscriptions)
     }
 
     /// Make char.

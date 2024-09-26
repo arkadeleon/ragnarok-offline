@@ -14,8 +14,6 @@ final public class LoginClient {
     private let eventSubject = PassthroughSubject<any Event, Never>()
     private var subscriptions = Set<AnyCancellable>()
 
-    private var keepAliveTimer: Timer?
-
     public init() {
         connection = ClientConnection(port: 6900)
 
@@ -96,17 +94,14 @@ final public class LoginClient {
     ///
     /// Send ``PACKET_CA_CONNECT_INFO_CHANGED`` every 10 seconds.
     public func keepAlive(username: String) {
-        keepAliveTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { [weak self] timer in
-            guard let self else {
-                timer.invalidate()
-                return
+        Timer.publish(every: 10, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                var packet = PACKET_CA_CONNECT_INFO_CHANGED()
+                packet.name = username
+
+                self?.connection.sendPacket(packet)
             }
-
-            var packet = PACKET_CA_CONNECT_INFO_CHANGED()
-            packet.name = username
-
-            self.connection.sendPacket(packet)
-        }
-        keepAliveTimer?.fire()
+            .store(in: &subscriptions)
     }
 }

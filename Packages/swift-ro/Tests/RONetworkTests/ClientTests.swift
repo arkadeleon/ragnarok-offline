@@ -187,7 +187,14 @@ final class ClientTests: XCTestCase {
 
         mapClient = MapClient(state: state, mapServer: mapServer!)
 
-        mapClient.subscribe(to: MapServerEvents.Accepted.self) { _ in
+        mapClient.subscribe(to: MapEvents.Changed.self) { event in
+            XCTAssertEqual(event.position, [18, 26])
+
+            // Load map.
+            sleep(1)
+
+            self.mapClient.notifyMapLoaded()
+
             enterMapExpectation.fulfill()
         }
         .store(in: &subscriptions)
@@ -212,8 +219,6 @@ final class ClientTests: XCTestCase {
         await fulfillment(of: [enterMapExpectation])
 
         // MARK: - Request Move
-
-        try await Task.sleep(for: .seconds(1))
 
         let requestMoveExpectation = expectation(description: "RequestMove")
 

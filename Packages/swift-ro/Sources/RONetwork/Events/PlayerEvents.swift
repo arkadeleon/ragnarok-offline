@@ -12,6 +12,14 @@ public enum PlayerEvents {
         public let moveData: MoveData
     }
 
+    public struct MessageDisplay: Event {
+        public let message: String
+
+        init(message: [UInt8]) {
+            self.message = String(bytes: message, encoding: .isoLatin1) ?? ""
+        }
+    }
+
     public struct StatusPropertyChanged: Event {
         public let sp: StatusProperty
         public let value: Int
@@ -20,9 +28,5 @@ public enum PlayerEvents {
 
     public struct AttackRangeChanged: Event {
         public let value: Int
-    }
-
-    public struct MessageDisplay: Event {
-        public let message: String
     }
 }

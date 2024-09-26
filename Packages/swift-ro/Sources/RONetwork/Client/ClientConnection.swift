@@ -96,11 +96,13 @@ final class ClientConnection {
                     print(error)
                     self.errorHandler?(error)
                 }
-            } else if let error {
-                self.errorHandler?(error)
             }
 
-            self.receivePacket()
+            if let error {
+                self.errorHandler?(error)
+            } else {
+                self.receivePacket()
+            }
         }
     }
 }

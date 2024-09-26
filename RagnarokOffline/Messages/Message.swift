@@ -32,6 +32,10 @@ enum MessageCommand: String, Identifiable {
     case makeChar = "make-char"
     case deleteChar = "delete-char"
     case selectChar = "select-char"
+    case moveUp = "move-up"
+    case moveDown = "move-down"
+    case moveLeft = "move-left"
+    case moveRight = "move-right"
 
     var id: String {
         rawValue
@@ -40,15 +44,17 @@ enum MessageCommand: String, Identifiable {
     var arguments: [String] {
         switch self {
         case .login:
-            ["--username", "--password"]
+            ["username", "password"]
         case .selectCharServer:
-            ["--server-number"]
+            ["server-number"]
         case .makeChar:
-            ["--name", "--str", "--agi", "--vit", "--int", "--dex", "--luk", "--slot"]
+            ["name", "str", "agi", "vit", "int", "dex", "luk", "slot"]
         case .deleteChar:
-            ["--char-id"]
+            ["char-id"]
         case .selectChar:
-            ["--slot"]
+            ["slot"]
+        case .moveUp, .moveDown, .moveLeft, .moveRight:
+            []
         }
     }
 }

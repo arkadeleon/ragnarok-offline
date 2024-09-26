@@ -17,8 +17,6 @@ final public class MapClient {
     private let eventSubject = PassthroughSubject<any Event, Never>()
     private var subscriptions = Set<AnyCancellable>()
 
-    private var keepAliveTimer: Timer?
-
     public init(state: ClientState, mapServer: MapServerInfo) {
         self.state = state
 
@@ -28,40 +26,6 @@ final public class MapClient {
             let event = ConnectionEvents.ErrorOccurred(error: error)
             self?.eventSubject.send(event)
         }
-
-        // 0x73, 0x2eb, 0xa18
-        connection.registerPacket(PACKET_ZC_ACCEPT_ENTER.self)
-            .map { packet in
-                MapServerEvents.Accepted()
-            }
-            .subscribe(eventSubject)
-            .store(in: &subscriptions)
-
-        // 0x87
-        connection.registerPacket(PACKET_ZC_NOTIFY_PLAYERMOVE.self)
-            .map { packet in
-                PlayerEvents.Moved(moveData: packet.moveData)
-            }
-            .subscribe(eventSubject)
-            .store(in: &subscriptions)
-
-        // 0x8e
-        connection.registerPacket(PACKET_ZC_NOTIFY_PLAYERCHAT.self)
-
-        // 0x91
-        connection.registerPacket(PACKET_ZC_NPCACK_MAPMOVE.self)
-            .sink { [weak self] packet in
-                var packet = PACKET_CZ_REQUEST_ACT()
-                packet.targetID = 0
-                packet.action = 3
-
-                self?.connection.sendPacket(packet)
-
-                // Load map.
-
-                self?.notifyMapLoaded()
-            }
-            .store(in: &subscriptions)
 
         // 0x9c
         connection.registerPacket(PACKET_ZC_CHANGE_DIRECTION.self)
@@ -98,11 +62,52 @@ final public class MapClient {
             }
             .store(in: &subscriptions)
 
+        registerMapConnectionPackets()
+        registerMapPackets()
+        registerPlayerPackets()
         registerAchievementPackets()
         registerInventoryPackets()
         registerMailPackets()
         registerPartyPackets()
         registerStatusPackets()
+    }
+
+    private func registerMapConnectionPackets() {
+        // 0x73, 0x2eb, 0xa18
+        connection.registerPacket(PACKET_ZC_ACCEPT_ENTER.self)
+            .map { packet in
+                MapConnectionEvents.Accepted()
+            }
+            .subscribe(eventSubject)
+            .store(in: &subscriptions)
+    }
+
+    private func registerMapPackets() {
+        // 0x91
+        connection.registerPacket(PACKET_ZC_NPCACK_MAPMOVE.self)
+            .map { packet in
+                MapEvents.Changed(mapName: packet.mapName, position: [packet.x, packet.y])
+            }
+            .subscribe(eventSubject)
+            .store(in: &subscriptions)
+    }
+
+    private func registerPlayerPackets() {
+        // 0x87
+        connection.registerPacket(PACKET_ZC_NOTIFY_PLAYERMOVE.self)
+            .map { packet in
+                PlayerEvents.Moved(moveData: packet.moveData)
+            }
+            .subscribe(eventSubject)
+            .store(in: &subscriptions)
+
+        // 0x8e
+        connection.registerPacket(PACKET_ZC_NOTIFY_PLAYERCHAT.self)
+            .map { packet in
+                PlayerEvents.MessageDisplay(message: packet.message)
+            }
+            .subscribe(eventSubject)
+            .store(in: &subscriptions)
     }
 
     private func registerAchievementPackets() {
@@ -278,18 +283,16 @@ final public class MapClient {
     /// Send ``PACKET_CZ_REQUEST_TIME`` every 10 seconds.
     public func keepAlive() {
         let startTime = Date.now
-        keepAliveTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
-            guard let self else {
-                timer.invalidate()
-                return
+
+        Timer.publish(every: 10, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                var packet = PACKET_CZ_REQUEST_TIME()
+                packet.clientTime = UInt32(Date.now.timeIntervalSince(startTime))
+
+                self?.connection.sendPacket(packet)
             }
-
-            var packet = PACKET_CZ_REQUEST_TIME()
-            packet.clientTime = UInt32(Date.now.timeIntervalSince(startTime))
-
-            self.connection.sendPacket(packet)
-        }
-        keepAliveTimer?.fire()
+            .store(in: &subscriptions)
     }
 
     public func notifyMapLoaded() {
@@ -311,10 +314,20 @@ final public class MapClient {
         connection.sendPacket(packet)
     }
 
+    /// Request action.
+    ///
+    /// Send ``PACKET_CZ_REQUEST_ACT``
+    public func requestAction(action: UInt8) {
+        var packet = PACKET_CZ_REQUEST_ACT()
+        packet.action = action
+
+        connection.sendPacket(packet)
+    }
+
     /// Request move.
     ///
     /// Send ``PACKET_CZ_REQUEST_MOVE``
-    public func requestMove(x: Int16, y: Int16) {
+    public func requestMove(x: UInt16, y: UInt16) {
         var packet = PACKET_CZ_REQUEST_MOVE()
         packet.x = x
         packet.y = y

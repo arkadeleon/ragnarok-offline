@@ -8,6 +8,7 @@
 import Combine
 import Observation
 import RONetwork
+import SwiftUI
 
 enum ConversationScene {
     case login
@@ -31,23 +32,25 @@ class Conversation {
         case .selectChar:
             [.makeChar, .deleteChar, .selectChar]
         case .map:
-            []
+            [.moveUp, .moveDown, .moveLeft, .moveRight]
         }
     }
 
-    private var loginClient: LoginClient!
+    private var loginClient: LoginClient?
     private var charClient: CharClient?
+    private var mapClient: MapClient?
 
     private var subscriptions = Set<AnyCancellable>()
 
     private var state = ClientState()
     private var charServers: [CharServerInfo] = []
+    private var position: SIMD2<UInt16> = [0, 0]
 
     func executeCommand(_ command: MessageCommand, arguments: [String] = []) {
-        var content = command.rawValue
+        var content = "$" + command.rawValue
         for (index, argument) in command.arguments.enumerated() {
             content.append("\n")
-            content.append("\(argument) \(arguments[index])")
+            content.append("--\(argument) \(arguments[index])")
         }
 
         let message = Message(sender: .client, content: content)
@@ -55,7 +58,7 @@ class Conversation {
 
         switch command {
         case .login:
-            loginClient = LoginClient()
+            let loginClient = LoginClient()
 
             loginClient.subscribe(to: LoginEvents.Accepted.self, onLoginAccepted).store(in: &subscriptions)
             loginClient.subscribe(to: LoginEvents.Refused.self, onLoginRefused).store(in: &subscriptions)
@@ -69,6 +72,8 @@ class Conversation {
             let username = arguments[0]
             let password = arguments[1]
             loginClient.login(username: username, password: password)
+
+            self.loginClient = loginClient
         case .selectCharServer:
             guard let serverNumber = Int(arguments[0]),
                   serverNumber - 1 < charServers.count else {
@@ -113,6 +118,14 @@ class Conversation {
             let slot = UInt8(arguments[0]) ?? 0
 
             charClient?.selectChar(slot: slot)
+        case .moveUp:
+            mapClient?.requestMove(x: position.x, y: position.y + 1)
+        case .moveDown:
+            mapClient?.requestMove(x: position.x, y: position.y - 1)
+        case .moveLeft:
+            mapClient?.requestMove(x: position.x - 1, y: position.y)
+        case .moveRight:
+            mapClient?.requestMove(x: position.x + 1, y: position.y)
         }
     }
 
@@ -123,6 +136,7 @@ class Conversation {
         state.loginID1 = event.loginID1
         state.loginID2 = event.loginID2
         state.sex = event.sex
+
         charServers = event.charServers
 
         scene = .selectCharServer
@@ -173,6 +187,21 @@ class Conversation {
         scene = .map
 
         messages.append(.server("Entered map: \(event.mapName)"))
+
+        let mapClient = MapClient(state: state, mapServer: event.mapServer)
+
+        mapClient.subscribe(to: MapEvents.Changed.self, onMapChanged).store(in: &subscriptions)
+
+        mapClient.subscribe(to: PlayerEvents.Moved.self, onPlayerMoved).store(in: &subscriptions)
+        mapClient.subscribe(to: PlayerEvents.MessageDisplay.self, onPlayerMessageDisplay).store(in: &subscriptions)
+
+        mapClient.connect()
+
+        mapClient.enter()
+
+        mapClient.keepAlive()
+
+        self.mapClient = mapClient
     }
 
     private func onCharServerNotifyAccessibleMaps(_ event: CharServerEvents.NotifyAccessibleMaps) {
@@ -188,6 +217,30 @@ class Conversation {
         messages.append(.server("Refused"))
     }
 
+    // MARK: - Map Events
+
+    private func onMapChanged(_ event: MapEvents.Changed) {
+        position = event.position
+
+        messages.append(.server("Map changed: \(event.mapName), position: (\(event.position.x), \(event.position.y))"))
+
+        // Load map.
+
+        mapClient?.notifyMapLoaded()
+    }
+
+    // MARK: - Player Events
+
+    private func onPlayerMoved(_ event: PlayerEvents.Moved) {
+        position = [event.moveData.x1, event.moveData.y1]
+
+        messages.append(.server("Player moved from (\(event.moveData.x0), \(event.moveData.y0)) to (\(event.moveData.x1), \(event.moveData.y1))"))
+    }
+
+    private func onPlayerMessageDisplay(_ event: PlayerEvents.MessageDisplay) {
+        messages.append(.server("Player message display: \(event.message)"))
+    }
+
     // MARK: - Authentication Events
 
     private func onAuthenticationBanned(_ event: AuthenticationEvents.Banned) {
@@ -200,4 +253,8 @@ class Conversation {
     private func onConnectionErrorOccurred(_ event: ConnectionEvents.ErrorOccurred) {
         messages.append(.server(event.error.localizedDescription))
     }
+}
+
+extension EnvironmentValues {
+    @Entry var conversation = Conversation()
 }

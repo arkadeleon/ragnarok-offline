@@ -40,7 +40,6 @@ struct MessageCell: View {
                 Spacer()
             }
         }
-        .padding()
     }
 }
 
@@ -49,4 +48,5 @@ struct MessageCell: View {
         MessageCell(message: Message(sender: .client, content: "Login"))
         MessageCell(message: Message(sender: .server, content: "Accept Login"))
     }
+    .padding()
 }

@@ -24,6 +24,7 @@ final class GameSession {
 
     private var loginClient: LoginClient?
     private var charClient: CharClient?
+    private var mapClient: MapClient?
 
     private var subscriptions = Set<AnyCancellable>()
 
@@ -85,6 +86,7 @@ final class GameSession {
         state.loginID1 = event.loginID1
         state.loginID2 = event.loginID2
         state.sex = event.sex
+
         charServers = event.charServers
 
         phase = .charServerList(charServers)
@@ -108,6 +110,21 @@ final class GameSession {
         state.charID = event.charID
 
         phase = .map(event.mapName)
+
+        let mapClient = MapClient(state: state, mapServer: event.mapServer)
+
+        mapClient.subscribe(to: MapEvents.Changed.self, onMapChanged).store(in: &subscriptions)
+
+        mapClient.subscribe(to: PlayerEvents.Moved.self, onPlayerMoved).store(in: &subscriptions)
+        mapClient.subscribe(to: PlayerEvents.MessageDisplay.self, onPlayerMessageDisplay).store(in: &subscriptions)
+
+        mapClient.connect()
+
+        mapClient.enter()
+
+        mapClient.keepAlive()
+
+        self.mapClient = mapClient
     }
 
     private func onCharServerNotifyAccessibleMaps(_ event: CharServerEvents.NotifyAccessibleMaps) {
@@ -122,6 +139,22 @@ final class GameSession {
     }
 
     private func onCharMakeRefused(_ event: CharEvents.MakeRefused) {
+    }
+
+    // MARK: - Map Events
+
+    private func onMapChanged(_ event: MapEvents.Changed) {
+        // Load map.
+
+        mapClient?.notifyMapLoaded()
+    }
+
+    // MARK: - Player Events
+
+    private func onPlayerMoved(_ event: PlayerEvents.Moved) {
+    }
+
+    private func onPlayerMessageDisplay(_ event: PlayerEvents.MessageDisplay) {
     }
 
     // MARK: - Authentication Events

@@ -26,10 +26,10 @@ struct DetailView: View {
             switch item {
             case .files:
                 FilesView(title: "Files", directory: clientDirectory)
-            case .game:
-                ROGame.GameView()
             case .messages:
                 MessagesView()
+            case .game:
+                ROGame.GameView()
             case .cube:
                 CubeView()
             case .loginServer:
