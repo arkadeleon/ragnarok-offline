@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
-import rAthenaCommon
 import ROClientResources
 import RODatabase
+import ROGenerated
+import rAthenaCommon
 
 struct JobInfoView: View {
     var mode: ServerMode

@@ -129,54 +129,13 @@ struct Generator: CommandPlugin {
 
     struct Case {
         var name: String
+        var exportedName: String
         var intValue: Int
         var stringValues: [String]
         var isExcluded: Bool
     }
 
-    struct Configuration {
-        var path: String
-        var type: String
-        var prefix: String
-        var compatibles: [String : [String]] = [:]
-        var excludes: [String] = []
-        var exportedType: String
-        var isDecodable = true
-    }
-
     func generateEnums(context: PluginContext) throws {
-        let configurations: [Configuration] = [
-            .init(
-                path: "common/mmo.hpp",
-                type: "item_types",
-                prefix: "IT_",
-                excludes: ["IT_UNKNOWN", "IT_UNKNOWN2", "IT_MAX"],
-                exportedType: "ItemType"
-            ),
-            .init(
-                path: "common/mmo.hpp",
-                type: "e_job",
-                prefix: "JOB_",
-                compatibles: ["JOB_SUPER_NOVICE": ["JOB_SUPERNOVICE"]],
-                excludes: ["JOB_MAX_BASIC", "JOB_MAX"],
-                exportedType: "Job"
-            ),
-            .init(
-                path: "map/map.hpp",
-                type: "_sp",
-                prefix: "SP_",
-                exportedType: "StatusProperty",
-                isDecodable: false
-            ),
-            .init(
-                path: "common/mmo.hpp",
-                type: "e_sex",
-                prefix: "SEX_",
-                excludes: ["SEX_SERVER"],
-                exportedType: "Sex"
-            ),
-        ]
-
         for configuration in configurations {
             try generateEnum(context: context, configuration: configuration)
         }
@@ -198,7 +157,10 @@ struct Generator: CommandPlugin {
                 typeFound = true
                 continue
             }
-            if typeFound, line.starts(with: configuration.prefix) {
+            if typeFound, line == "};" {
+                break
+            }
+            if typeFound {
                 let components = line.split(separator: ",")
                 for component in components {
                     let component = component
@@ -211,30 +173,39 @@ struct Generator: CommandPlugin {
                     if nameAndValue.count > 0 {
                         let name = nameAndValue[0]
                             .trimmingCharacters(in: .whitespaces)
-                        let nameWithoutPrefix = name.dropFirst(configuration.prefix.count)
-                        var caseName = nameWithoutPrefix.lowercased()
+
+                        var exportedName = name
+                        if exportedName.starts(with: configuration.prefix) {
+                            exportedName = String(exportedName.dropFirst(configuration.prefix.count))
+                        }
                         let digits = try Regex("[0-9]+")
-                        if caseName.starts(with: digits) {
-                            caseName = "_" + caseName
-                        } else if caseName == "class" {
-                            caseName = "_" + caseName
+                        if exportedName.starts(with: digits) {
+                            exportedName = "_" + exportedName
+                        } else if exportedName.lowercased() == "class" {
+                            exportedName = "_" + exportedName
                         }
-                        let intValue: Int? = if nameAndValue.count > 1 {
-                            Int(nameAndValue[1].trimmingCharacters(in: .whitespaces))
+                        exportedName = exportedName.lowercased()
+
+                        var intValue: Int? = nil
+                        if nameAndValue.count > 1 {
+                            let value = nameAndValue[1].trimmingCharacters(in: .whitespaces)
+                            if let v = Int(value) {
+                                intValue = v
+                            } else if let v = cases.first(where: { $0.name == value })?.intValue {
+                                intValue = v
+                            }
                         } else if let lastIntValue = cases.last?.intValue {
-                            lastIntValue + 1
-                        } else {
-                            nil
+                            intValue = lastIntValue + 1
                         }
-                        var stringValues = [String(nameWithoutPrefix)]
+
+                        var stringValues = [name]
                         if let compatibles = configuration.compatibles[name] {
-                            let compatibles = compatibles
-                                .map({ $0.dropFirst(configuration.prefix.count) })
-                                .map(String.init)
                             stringValues.append(contentsOf: compatibles)
                         }
+
                         let c = Case(
-                            name: String(caseName),
+                            name: name,
+                            exportedName: exportedName,
                             intValue: intValue ?? 0,
                             stringValues: stringValues,
                             isExcluded: configuration.excludes.contains(name)
@@ -242,9 +213,6 @@ struct Generator: CommandPlugin {
                         cases.append(c)
                     }
                 }
-            }
-            if typeFound, line == "};" {
-                break
             }
         }
 
@@ -255,13 +223,25 @@ struct Generator: CommandPlugin {
 
         let casesContents = outputCases
             .map {
-                "    case \($0.name) = \($0.intValue)"
+                "    case \($0.exportedName) = \($0.intValue)"
             }
             .joined(separator: "\n")
 
         let stringValueContents = outputCases
             .map {
-                "        case " + $0.stringValues.map({ "\"\($0)\"" }).joined(separator: ", ") + ": self = .\($0.name)"
+                let stringValues = $0.stringValues
+                    .map {
+                        var stringValue = $0
+
+                        if stringValue.starts(with: configuration.prefix) {
+                            stringValue = String(stringValue.dropFirst(configuration.prefix.count))
+                        }
+
+                        return "\"\(stringValue)\""
+                    }
+                    .joined(separator: ", ")
+
+                return "        case " + stringValues + ": self = .\($0.exportedName)"
             }
             .joined(separator: "\n")
 

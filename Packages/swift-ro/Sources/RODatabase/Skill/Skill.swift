@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/1/11.
 //
 
+import ROGenerated
+
 public struct Skill: Decodable, Equatable, Hashable, Identifiable, Sendable {
 
     /// Unique skill ID.
@@ -647,8 +649,8 @@ extension Skill {
             self.apRateCost = try container.decodeIfPresent(EitherNode<Int, [LevelApRateCost]>.self, forKey: .apRateCost)?.mapRight { $0.map { $0.apRateCost } } ?? .left(0)
             self.maxHpTrigger = try container.decodeIfPresent(EitherNode<Int, [LevelMaxHpTrigger]>.self, forKey: .maxHpTrigger)?.mapRight { $0.map { $0.maxHpTrigger } } ?? .left(0)
             self.zenyCost = try container.decodeIfPresent(EitherNode<Int, [LevelZenyCost]>.self, forKey: .zenyCost)?.mapRight { $0.map { $0.zenyCost } } ?? .left(0)
-            self.weapon = try container.decodeIfPresent([String : Bool].self, forKey: .weapon).map(Set<WeaponType>.init) ?? []
-            self.ammo = try container.decodeIfPresent([String : Bool].self, forKey: .ammo).map(Set<AmmoType>.init) ?? []
+            self.weapon = try container.decodeIfPresent([WeaponType : Bool].self, forKey: .weapon).map({ Set($0.keys) }) ?? []
+            self.ammo = try container.decodeIfPresent([AmmoType : Bool].self, forKey: .ammo).map({ Set($0.keys) }) ?? []
             self.ammoAmount = try container.decodeIfPresent(EitherNode<Int, [LevelAmmoAmount]>.self, forKey: .ammoAmount)?.mapRight { $0.map { $0.ammoAmount } } ?? .left(0)
             self.state = try container.decodeIfPresent(String.self, forKey: .state)
             self.status = try container.decodeIfPresent([String : Bool].self, forKey: .status)?.keys.map({ $0 }) ?? []
