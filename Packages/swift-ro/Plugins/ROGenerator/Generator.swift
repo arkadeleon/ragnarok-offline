@@ -8,6 +8,8 @@
 import Foundation
 import PackagePlugin
 
+let PACKETVER = 20211103
+
 @main
 struct Generator: CommandPlugin {
     func performCommand(context: PluginContext, arguments: [String]) async throws {
@@ -143,77 +145,63 @@ struct Generator: CommandPlugin {
 
     private func generateEnum(context: PluginContext, configuration: Configuration) throws {
         var cases: [Case] = []
-        var typeFound = false
 
         let inputURL = context.package.directoryURL.appending(path: "../swift-rathena/src").appending(path: configuration.path)
-        let inputContents = try String(contentsOf: inputURL, encoding: .utf8)
-        let lines = inputContents.split(separator: "\n")
-        for line in lines {
-            let line = line.trimmingCharacters(in: .whitespaces)
-            if line.hasPrefix("//") {
-                continue
-            }
-            if line.hasPrefix("enum " + configuration.type) {
-                typeFound = true
-                continue
-            }
-            if typeFound, line == "};" {
-                break
-            }
-            if typeFound {
-                let components = line.split(separator: ",")
-                for component in components {
-                    let component = component
-                        .trimmingCharacters(in: .whitespaces)
-                    if component.hasPrefix("//") {
-                        continue
-                    }
-                    let nameAndValue = component
-                        .split(separator: "=")
-                    if nameAndValue.count > 0 {
-                        let name = nameAndValue[0]
-                            .trimmingCharacters(in: .whitespaces)
 
-                        var exportedName = name
-                        if exportedName.starts(with: configuration.prefix) {
-                            exportedName = String(exportedName.dropFirst(configuration.prefix.count))
-                        }
-                        let digits = try Regex("[0-9]+")
-                        if exportedName.starts(with: digits) {
-                            exportedName = "_" + exportedName
-                        } else if exportedName.lowercased() == "class" {
-                            exportedName = "_" + exportedName
-                        }
-                        exportedName = exportedName.lowercased()
+        let process = Process()
+        process.executableURL = try context.tool(named: "clang").url
+        process.arguments = ["-cc1", "-ast-dump=json", "-DPACKETVER=\(PACKETVER)", inputURL.path()]
 
-                        var intValue: Int? = nil
-                        if nameAndValue.count > 1 {
-                            let value = nameAndValue[1].trimmingCharacters(in: .whitespaces)
-                            if let v = Int(value) {
-                                intValue = v
-                            } else if let v = cases.first(where: { $0.name == value })?.intValue {
-                                intValue = v
-                            }
-                        } else if let lastIntValue = cases.last?.intValue {
-                            intValue = lastIntValue + 1
-                        }
+        let pipe = Pipe()
+        process.standardOutput = pipe
 
-                        var stringValues = [name]
-                        if let compatibles = configuration.compatibles[name] {
-                            stringValues.append(contentsOf: compatibles)
-                        }
+        try process.run()
+//        process.waitUntilExit()
 
-                        let c = Case(
-                            name: name,
-                            exportedName: exportedName,
-                            intValue: intValue ?? 0,
-                            stringValues: stringValues,
-                            isExcluded: configuration.excludes.contains(name)
-                        )
-                        cases.append(c)
-                    }
-                }
+        let data = try pipe.fileHandleForReading.readToEnd()!
+
+        let decoder = JSONDecoder()
+        let root = try! decoder.decode(ASTNode.self, from: data)
+
+        let enumDecl = root.findEnumDecl(named: configuration.type)!
+        let enumConstantDecls = enumDecl.findEnumConstantDecls()
+
+        for enumConstantDecl in enumConstantDecls {
+            let name = enumConstantDecl.name!
+
+            var exportedName = name
+            if exportedName.starts(with: configuration.prefix) {
+                exportedName = String(exportedName.dropFirst(configuration.prefix.count))
             }
+            let digits = try Regex("[0-9]+")
+            if exportedName.starts(with: digits) {
+                exportedName = "_" + exportedName
+            } else if exportedName.lowercased() == "class" {
+                exportedName = "_" + exportedName
+            }
+            exportedName = exportedName.lowercased()
+
+            var intValue: Int? = if let intValue = enumConstantDecl.findConstantExpr()?.value {
+                intValue
+            } else if let lastIntValue = cases.last?.intValue {
+                lastIntValue + 1
+            } else {
+                nil
+            }
+
+            var stringValues = [name]
+            if let compatibles = configuration.compatibles[name] {
+                stringValues.append(contentsOf: compatibles)
+            }
+
+            let c = Case(
+                name: name,
+                exportedName: exportedName,
+                intValue: intValue ?? 0,
+                stringValues: stringValues,
+                isExcluded: configuration.excludes.contains(name)
+            )
+            cases.append(c)
         }
 
         let outputCases = cases
