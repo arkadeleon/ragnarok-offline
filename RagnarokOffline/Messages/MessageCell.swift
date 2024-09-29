@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MessageCell: View {
-    var message: Message
+    var message: any Message
 
     private var foregroundColor: Color {
         switch message.sender {
@@ -45,8 +45,8 @@ struct MessageCell: View {
 
 #Preview {
     LazyVStack {
-        MessageCell(message: Message(sender: .client, content: "Login"))
-        MessageCell(message: Message(sender: .server, content: "Accept Login"))
+        MessageCell(message: .clientText("Login"))
+        MessageCell(message: .serverText("Login accepted"))
     }
     .padding()
 }
