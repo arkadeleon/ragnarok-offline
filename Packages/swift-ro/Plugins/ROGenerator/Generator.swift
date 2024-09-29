@@ -8,11 +8,13 @@
 import Foundation
 import PackagePlugin
 
-let PACKETVER = 20211103
-
 @main
 struct Generator: CommandPlugin {
     func performCommand(context: PluginContext, arguments: [String]) async throws {
+        let url = context.package.directoryURL.appending(path: "Sources/ROGenerated")
+        try FileManager.default.removeItem(at: url)
+        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+
         try generatePackets(context: context)
         try generateEnums(context: context)
     }
@@ -146,11 +148,12 @@ struct Generator: CommandPlugin {
     private func generateEnum(context: PluginContext, configuration: Configuration) throws {
         var cases: [Case] = []
 
-        let inputURL = context.package.directoryURL.appending(path: "../swift-rathena/src").appending(path: configuration.path)
+        let srcURL = context.package.directoryURL.appending(path: "../swift-rathena/src")
+        let inputURL = srcURL.appending(path: configuration.path)
 
         let process = Process()
         process.executableURL = try context.tool(named: "clang").url
-        process.arguments = ["-cc1", "-ast-dump=json", "-DPACKETVER=\(PACKETVER)", inputURL.path()]
+        process.arguments = ["-Xclang", "-ast-dump=json", "-I" + srcURL.path(), inputURL.path()]
 
         let pipe = Pipe()
         process.standardOutput = pipe
@@ -283,7 +286,10 @@ struct Generator: CommandPlugin {
             """
         }
 
-        let outputURL = context.package.directoryURL.appending(path: "Sources/ROGenerated/\(configuration.exportedType).swift")
+        let outputDirectory = context.package.directoryURL.appending(path: "Sources/ROGenerated/Constants")
+        try FileManager.default.createDirectory(at: outputDirectory, withIntermediateDirectories: true)
+
+        let outputURL = outputDirectory.appending(path: "\(configuration.exportedType).swift")
         try outputContents.write(to: outputURL, atomically: true, encoding: .utf8)
     }
 }
