@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/1/9.
 //
 
+import ROGenerated
+
 public struct Monster: Decodable, Equatable, Hashable, Identifiable, Sendable {
 
     /// Monster ID.
@@ -214,7 +216,7 @@ public struct Monster: Decodable, Equatable, Hashable, Identifiable, Sendable {
         self.damageTaken = try container.decodeIfPresent(Int.self, forKey: .damageTaken) ?? 100
         self.ai = try container.decodeIfPresent(MonsterAI.self, forKey: .ai) ?? .ai06
         self.class = try container.decodeIfPresent(MonsterClass.self, forKey: .class) ?? .normal
-        self.modes = try container.decodeIfPresent([String : Bool].self, forKey: .modes).map(Set<MonsterMode>.init)
+        self.modes = try container.decodeIfPresent([MonsterMode : Bool].self, forKey: .modes).map({ Set($0.keys) })
         self.mvpDrops = try container.decodeIfPresent([Monster.Drop].self, forKey: .mvpDrops)
         self.drops = try container.decodeIfPresent([Monster.Drop].self, forKey: .drops)
     }

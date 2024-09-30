@@ -6,7 +6,6 @@
 //
 
 public enum AmmoType: Int, CaseIterable, CodingKey, CodingKeyRepresentable, Decodable, Sendable {
-    case none = 0
     case arrow = 1
     case dagger = 2
     case bullet = 3
@@ -19,7 +18,6 @@ public enum AmmoType: Int, CaseIterable, CodingKey, CodingKeyRepresentable, Deco
 
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
-        case "NONE": self = .none
         case "ARROW": self = .arrow
         case "DAGGER": self = .dagger
         case "BULLET": self = .bullet
