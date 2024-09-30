@@ -149,7 +149,7 @@ struct Generator: CommandPlugin {
         var cases: [Case] = []
 
         let srcURL = context.package.directoryURL.appending(path: "../swift-rathena/src")
-        let inputURL = srcURL.appending(path: configuration.path)
+        let inputURL = srcURL.appending(path: configuration.source)
 
         let process = Process()
         process.executableURL = try context.tool(named: "clang").url
@@ -192,17 +192,14 @@ struct Generator: CommandPlugin {
                 nil
             }
 
-            var stringValues = [name]
-            if let compatibles = configuration.compatibles[name] {
-                stringValues.append(contentsOf: compatibles)
-            }
+            let stringValues = configuration.outputStringValues[name] ?? [name]
 
             let c = Case(
                 name: name,
                 outputName: outputName,
                 intValue: intValue ?? 0,
                 stringValues: stringValues,
-                isExcluded: configuration.excludes.contains(name)
+                isExcluded: configuration.exclude.contains(name)
             )
             cases.append(c)
         }
@@ -243,7 +240,7 @@ struct Generator: CommandPlugin {
             .joined(separator: "\n")
 
         let outputContents: String
-        if configuration.isDecodable {
+        if configuration.settings[.isDecodable] == true {
             outputContents = """
             //
             //  \(configuration.outputType).swift

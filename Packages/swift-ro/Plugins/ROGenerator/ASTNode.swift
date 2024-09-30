@@ -40,7 +40,7 @@ struct ASTNode: Decodable {
 
     func findEnumDecl(named name: String) -> ASTNode? {
         findNode { node in
-            node.kind == "EnumDecl" && node.isReferenced != true && node.name == name
+            node.kind == "EnumDecl" && node.name == name && node.inner != nil
         }
     }
 

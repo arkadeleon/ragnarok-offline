@@ -91,7 +91,7 @@ public struct Monster: Decodable, Equatable, Hashable, Identifiable, Sendable {
     public var race: Race
 
     /// List of secondary groups the monster may be part of. (Optional)
-    public var raceGroups: Set<RaceGroup>?
+    public var raceGroups: Set<Race2>?
 
     /// Element. (Default: Neutral)
     public var element: Element
@@ -205,7 +205,7 @@ public struct Monster: Decodable, Equatable, Hashable, Identifiable, Sendable {
         self.chaseRange = try container.decodeIfPresent(Int.self, forKey: .chaseRange) ?? 0
         self.size = try container.decodeIfPresent(Size.self, forKey: .size) ?? .small
         self.race = try container.decodeIfPresent(Race.self, forKey: .race) ?? .formless
-        self.raceGroups = try container.decodeIfPresent([String : Bool].self, forKey: .raceGroups).map(Set<RaceGroup>.init)
+        self.raceGroups = try container.decodeIfPresent([Race2 : Bool].self, forKey: .raceGroups).map({ Set($0.keys) })
         self.element = try container.decodeIfPresent(Element.self, forKey: .element) ?? .neutral
         self.elementLevel = try container.decodeIfPresent(Int.self, forKey: .elementLevel) ?? 1
         self.walkSpeed = try container.decodeIfPresent(WalkSpeed.self, forKey: .walkSpeed) ?? .default

@@ -7,53 +7,126 @@
 
 let configurations: [Configuration] = [
     .enum(
-        path: "map/map.hpp",
-        type: "_sp",
-        prefix: "SP_",
-        outputType: "StatusProperty"
-    ),
-    .decodable(
-        path: "common/mmo.hpp",
+        source: "common/mmo.hpp",
         type: "item_types",
         prefix: "IT_",
-        excludes: [
+        exclude: [
             "IT_UNKNOWN",
             "IT_UNKNOWN2",
             "IT_MAX",
         ],
-        outputType: "ItemType"
+        outputType: "ItemType",
+        settings: [
+            .isDecodable: true,
+        ]
     ),
-    .decodable(
-        path: "common/mmo.hpp",
+    .enum(
+        source: "common/mmo.hpp",
         type: "e_mode",
         prefix: "MD_",
-        excludes: ["MD_NONE"],
+        exclude: ["MD_NONE"],
         outputType: "MonsterMode",
-        outputFormat: .hex
+        outputFormat: .hex,
+        settings: [
+            .isDecodable: true,
+        ]
     ),
-    .decodable(
-        path: "common/mmo.hpp",
+    .enum(
+        source: "common/mmo.hpp",
         type: "e_job",
         prefix: "JOB_",
-        compatibles: ["JOB_SUPER_NOVICE": ["JOB_SUPERNOVICE"]],
-        excludes: [
+        exclude: [
             "JOB_MAX_BASIC",
             "JOB_MAX",
         ],
-        outputType: "Job"
+        outputType: "Job",
+        outputStringValues: [
+            "JOB_SUPER_NOVICE": ["JOB_SUPER_NOVICE", "JOB_SUPERNOVICE"],
+        ],
+        settings: [
+            .isDecodable: true,
+        ]
     ),
-    .decodable(
-        path: "common/mmo.hpp",
+    .enum(
+        source: "common/mmo.hpp",
         type: "e_sex",
         prefix: "SEX_",
-        excludes: ["SEX_SERVER"],
-        outputType: "Sex"
+        exclude: ["SEX_SERVER"],
+        outputType: "Sex",
+        settings: [
+            .isDecodable: true,
+        ]
     ),
-    .decodable(
-        path: "map/pc.hpp",
+    .enum(
+        source: "map/map.hpp",
+        type: "e_mapid",
+        prefix: "MAPID_",
+        exclude: ["MAPID_ALL"],
+        outputType: "FirstJob",
+        outputFormat: .hex,
+        outputStringValues: [
+            "MAPID_SUPER_NOVICE": ["MAPID_SUPER_NOVICE", "MAPID_SUPERNOVICE"]
+        ],
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
+    // TODO: bl_type
+    // TODO: npc_subtype
+    .enum(
+        source: "map/map.hpp",
+        type: "e_race",
+        prefix: "RC_",
+        exclude: [
+            "RC_NONE_",
+            "RC_PLAYER_HUMAN",
+            "RC_PLAYER_DORAM",
+            "RC_ALL",
+            "RC_MAX",
+        ],
+        outputType: "Race",
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
+    .enum(
+        source: "map/map.hpp",
+        type: "e_race2",
+        prefix: "RC2_",
+        exclude: [
+            "RC2_NONE",
+            "RC2_MAX",
+        ],
+        outputType: "Race2",
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
+    .enum(
+        source: "map/map.hpp",
+        type: "e_element",
+        prefix: "ELE_",
+        exclude: [
+            "ELE_NONE",
+            "ELE_ALL",
+            "ELE_MAX",
+        ],
+        outputType: "Element",
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
+    .enum(
+        source: "map/map.hpp",
+        type: "_sp",
+        prefix: "SP_",
+        outputType: "StatusProperty"
+    ),
+    .enum(
+        source: "map/pc.hpp",
         type: "weapon_type",
         prefix: "W_",
-        excludes: [
+        exclude: [
             "MAX_WEAPON_TYPE",
             "W_DOUBLE_DD",
             "W_DOUBLE_SS",
@@ -63,24 +136,33 @@ let configurations: [Configuration] = [
             "W_DOUBLE_SA",
             "MAX_WEAPON_TYPE_ALL",
         ],
-        outputType: "WeaponType"
+        outputType: "WeaponType",
+        settings: [
+            .isDecodable: true,
+        ]
     ),
-    .decodable(
-        path: "map/pc.hpp",
+    .enum(
+        source: "map/pc.hpp",
         type: "e_ammo_type",
         prefix: "AMMO_",
-        excludes: [
+        exclude: [
             "AMMO_NONE",
             "MAX_AMMO_TYPE",
         ],
-        outputType: "AmmoType"
+        outputType: "AmmoType",
+        settings: [
+            .isDecodable: true,
+        ]
     ),
-    .decodable(
-        path: "map/pc.hpp",
+    .enum(
+        source: "map/pc.hpp",
         type: "e_card_type",
         prefix: "CARD_",
-        excludes: ["MAX_CARD_TYPE"],
-        outputType: "CardType"
+        exclude: ["MAX_CARD_TYPE"],
+        outputType: "CardType",
+        settings: [
+            .isDecodable: true,
+        ]
     ),
 ]
 
@@ -90,54 +172,40 @@ struct Configuration {
         case hex
     }
 
-    var path: String
-    var type: String
-    var prefix: String
-    var excludes: [String] = []
-    var compatibles: [String : [String]] = [:]
-    var outputType: String
-    var outputFormat: OutputFormat
-    var isDecodable = true
-
-    static func `enum`(
-        path: String,
-        type: String,
-        prefix: String,
-        compatibles: [String : [String]] = [:],
-        excludes: [String] = [],
-        outputType: String,
-        outputFormat: OutputFormat = .decimal
-    ) -> Configuration {
-        Configuration(
-            path: path,
-            type: type,
-            prefix: prefix,
-            excludes: excludes,
-            compatibles: compatibles,
-            outputType: outputType,
-            outputFormat: outputFormat,
-            isDecodable: false
-        )
+    enum Setting {
+        case isDecodable
     }
 
-    static func decodable(
-        path: String,
+    var source: String
+    var kind: String
+    var type: String
+    var prefix: String
+    var exclude: [String]
+    var outputType: String
+    var outputFormat: OutputFormat
+    var outputStringValues: [String : [String]]
+    var settings: [Setting : Bool]
+
+    static func `enum`(
+        source: String,
         type: String,
         prefix: String,
-        compatibles: [String : [String]] = [:],
-        excludes: [String] = [],
+        exclude: [String] = [],
         outputType: String,
-        outputFormat: OutputFormat = .decimal
+        outputFormat: OutputFormat = .decimal,
+        outputStringValues: [String : [String]] = [:],
+        settings: [Setting : Bool] = [:]
     ) -> Configuration {
         Configuration(
-            path: path,
+            source: source,
+            kind: "enum",
             type: type,
             prefix: prefix,
-            excludes: excludes,
-            compatibles: compatibles,
+            exclude: exclude,
             outputType: outputType,
             outputFormat: outputFormat,
-            isDecodable: true
+            outputStringValues: outputStringValues,
+            settings: settings
         )
     }
 }
