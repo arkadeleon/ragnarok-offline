@@ -16,7 +16,6 @@ public enum StatusProperty: Int, CaseIterable, Sendable {
     case sp = 7
     case maxsp = 8
     case statuspoint = 9
-    case _0a = 10
     case baselevel = 11
     case skillpoint = 12
     case str = 13
@@ -32,21 +31,12 @@ public enum StatusProperty: Int, CaseIterable, Sendable {
     case nextjobexp = 23
     case weight = 24
     case maxweight = 25
-    case _1a = 26
-    case _1b = 27
-    case _1c = 28
-    case _1d = 29
-    case _1e = 30
-    case _1f = 31
     case ustr = 32
     case uagi = 33
     case uvit = 34
     case uint = 35
     case udex = 36
     case uluk = 37
-    case _26 = 38
-    case _27 = 39
-    case _28 = 40
     case atk1 = 41
     case atk2 = 42
     case matk1 = 43
@@ -60,7 +50,6 @@ public enum StatusProperty: Int, CaseIterable, Sendable {
     case flee2 = 51
     case critical = 52
     case aspd = 53
-    case _36 = 54
     case joblevel = 55
     case upper = 56
     case partner = 57

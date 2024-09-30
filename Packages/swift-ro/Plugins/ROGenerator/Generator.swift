@@ -176,6 +176,9 @@ struct Generator: CommandPlugin {
             if outputName.starts(with: configuration.prefix) {
                 outputName = String(outputName.dropFirst(configuration.prefix.count))
             }
+            if let outputPrefix = configuration.outputPrefix {
+                outputName = outputPrefix + outputName
+            }
             let digits = try Regex("[0-9]+")
             if outputName.starts(with: digits) {
                 outputName = "_" + outputName

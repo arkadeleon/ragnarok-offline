@@ -120,6 +120,19 @@ let configurations: [Configuration] = [
         source: "map/map.hpp",
         type: "_sp",
         prefix: "SP_",
+        exclude: [
+            "SP_0a",
+            "SP_1a",
+            "SP_1b",
+            "SP_1c",
+            "SP_1d",
+            "SP_1e",
+            "SP_1f",
+            "SP_26",
+            "SP_27",
+            "SP_28",
+            "SP_36",
+        ],
         outputType: "StatusProperty"
     ),
     .enum(
@@ -137,6 +150,7 @@ let configurations: [Configuration] = [
             "MAX_WEAPON_TYPE_ALL",
         ],
         outputType: "WeaponType",
+        outputPrefix: "w_",
         settings: [
             .isDecodable: true,
         ]
@@ -182,6 +196,7 @@ struct Configuration {
     var prefix: String
     var exclude: [String]
     var outputType: String
+    var outputPrefix: String?
     var outputFormat: OutputFormat
     var outputStringValues: [String : [String]]
     var settings: [Setting : Bool]
@@ -192,6 +207,7 @@ struct Configuration {
         prefix: String,
         exclude: [String] = [],
         outputType: String,
+        outputPrefix: String? = nil,
         outputFormat: OutputFormat = .decimal,
         outputStringValues: [String : [String]] = [:],
         settings: [Setting : Bool] = [:]
@@ -203,6 +219,7 @@ struct Configuration {
             prefix: prefix,
             exclude: exclude,
             outputType: outputType,
+            outputPrefix: outputPrefix,
             outputFormat: outputFormat,
             outputStringValues: outputStringValues,
             settings: settings

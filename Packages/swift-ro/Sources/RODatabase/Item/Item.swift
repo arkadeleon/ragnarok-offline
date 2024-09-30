@@ -153,7 +153,7 @@ public struct Item: Decodable, Equatable, Hashable, Identifiable, Sendable {
 
         switch type {
         case .weapon:
-            let weaponType = try container.decodeIfPresent(WeaponType.self, forKey: .subType) ?? .fist
+            let weaponType = try container.decodeIfPresent(WeaponType.self, forKey: .subType) ?? .w_fist
             self.subType = .weapon(weaponType)
         case .ammo:
             let ammoType = try container.decodeIfPresent(AmmoType.self, forKey: .subType) ?? .arrow
