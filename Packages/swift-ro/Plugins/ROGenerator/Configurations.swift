@@ -62,7 +62,7 @@ let configurations: [Configuration] = [
         type: "e_mapid",
         prefix: "MAPID_",
         exclude: ["MAPID_ALL"],
-        outputType: "FirstJob",
+        outputType: "EAJob",
         outputFormat: .hex,
         outputStringValues: [
             "MAPID_SUPER_NOVICE": ["MAPID_SUPER_NOVICE", "MAPID_SUPERNOVICE"]
