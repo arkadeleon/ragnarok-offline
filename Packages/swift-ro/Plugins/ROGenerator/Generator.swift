@@ -170,7 +170,10 @@ struct Generator: CommandPlugin {
         let enumConstantDecls = enumDecl.findEnumConstantDecls()
 
         for enumConstantDecl in enumConstantDecls {
-            let name = enumConstantDecl.name!
+            var name = enumConstantDecl.name!
+            if let replace = configuration.replace[name] {
+                name = replace
+            }
 
             var outputName = name
             if outputName.starts(with: configuration.prefix) {
@@ -195,7 +198,10 @@ struct Generator: CommandPlugin {
                 nil
             }
 
-            let stringValues = configuration.outputStringValues[name] ?? [name]
+            var stringValues = [name]
+            if let compatible = configuration.compatible[name] {
+                stringValues.append(contentsOf: compatible)
+            }
 
             let c = Case(
                 name: name,

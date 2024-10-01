@@ -6,6 +6,7 @@
 //
 
 let configurations: [Configuration] = [
+    // MARK: - common/mmo.hpp
     .enum(
         source: "common/mmo.hpp",
         type: "item_types",
@@ -39,10 +40,10 @@ let configurations: [Configuration] = [
             "JOB_MAX_BASIC",
             "JOB_MAX",
         ],
-        outputType: "Job",
-        outputStringValues: [
-            "JOB_SUPER_NOVICE": ["JOB_SUPER_NOVICE", "JOB_SUPERNOVICE"],
+        compatible: [
+            "JOB_SUPER_NOVICE": ["JOB_SUPERNOVICE"],
         ],
+        outputType: "Job",
         settings: [
             .isDecodable: true,
         ]
@@ -57,16 +58,17 @@ let configurations: [Configuration] = [
             .isDecodable: true,
         ]
     ),
+    // MARK: - map/map.hpp
     .enum(
         source: "map/map.hpp",
         type: "e_mapid",
         prefix: "MAPID_",
         exclude: ["MAPID_ALL"],
+        compatible: [
+            "MAPID_SUPER_NOVICE": ["MAPID_SUPERNOVICE"],
+        ],
         outputType: "EAJob",
         outputFormat: .hex,
-        outputStringValues: [
-            "MAPID_SUPER_NOVICE": ["MAPID_SUPER_NOVICE", "MAPID_SUPERNOVICE"]
-        ],
         settings: [
             .isDecodable: true,
         ]
@@ -135,6 +137,49 @@ let configurations: [Configuration] = [
         ],
         outputType: "StatusProperty"
     ),
+    // MARK: - map/mob.hpp
+    .enum(
+        source: "map/mob.hpp",
+        type: "e_size",
+        prefix: "SZ_",
+        exclude: [
+            "SZ_ALL",
+            "SZ_MAX",
+        ],
+        replace: [
+            "SZ_BIG": "SZ_LARGE",
+        ],
+        outputType: "Size",
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
+    .enum(
+        source: "map/mob.hpp",
+        type: "e_aegis_monstertype",
+        prefix: "MONSTER_TYPE_",
+        outputType: "MonsterAI",
+        outputPrefix: "ai",
+        outputFormat: .hex,
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
+    .enum(
+        source: "map/mob.hpp",
+        type: "e_aegis_monsterclass",
+        prefix: "CLASS_",
+        exclude: [
+            "CLASS_NONE",
+            "CLASS_ALL",
+            "CLASS_MAX",
+        ],
+        outputType: "MonsterClass",
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
+    // MARK: - map/pc.hpp
     .enum(
         source: "map/pc.hpp",
         type: "weapon_type",
@@ -195,10 +240,11 @@ struct Configuration {
     var type: String
     var prefix: String
     var exclude: [String]
+    var replace: [String : String]
+    var compatible: [String : [String]]
     var outputType: String
     var outputPrefix: String?
     var outputFormat: OutputFormat
-    var outputStringValues: [String : [String]]
     var settings: [Setting : Bool]
 
     static func `enum`(
@@ -206,10 +252,11 @@ struct Configuration {
         type: String,
         prefix: String,
         exclude: [String] = [],
+        replace: [String : String] = [:],
+        compatible: [String : [String]] = [:],
         outputType: String,
         outputPrefix: String? = nil,
         outputFormat: OutputFormat = .decimal,
-        outputStringValues: [String : [String]] = [:],
         settings: [Setting : Bool] = [:]
     ) -> Configuration {
         Configuration(
@@ -218,10 +265,11 @@ struct Configuration {
             type: type,
             prefix: prefix,
             exclude: exclude,
+            replace: replace,
+            compatible: compatible,
             outputType: outputType,
             outputPrefix: outputPrefix,
             outputFormat: outputFormat,
-            outputStringValues: outputStringValues,
             settings: settings
         )
     }
