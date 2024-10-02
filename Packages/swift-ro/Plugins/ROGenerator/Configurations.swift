@@ -58,6 +58,32 @@ let configurations: [Configuration] = [
             .isDecodable: true,
         ]
     ),
+    // MARK: - map/battle.hpp
+    .enum(
+        source: "map/battle.hpp",
+        type: "e_battle_flag",
+        prefix: "BF_",
+        exclude: [
+            "BF_WEAPONMASK",
+            "BF_RANGEMASK",
+            "BF_SKILLMASK",
+        ],
+        outputType: "BattleFlag",
+        outputFormat: .hex,
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
+    .enum(
+        source: "map/battle.hpp",
+        type: "e_battle_check_target",
+        prefix: "BCT_",
+        outputType: "BattleCheckTarget",
+        outputFormat: .hex,
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
     // MARK: - map/map.hpp
     .enum(
         source: "map/map.hpp",
@@ -179,6 +205,91 @@ let configurations: [Configuration] = [
             .isDecodable: true,
         ]
     ),
+    // MARK: - map/skill.hpp
+    .enum(
+        source: "map/skill.hpp",
+        type: "e_skill_nk",
+        prefix: "NK_",
+        exclude: ["NK_MAX"],
+        outputType: "SkillDamageFlag",
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
+    .enum(
+        source: "map/skill.hpp",
+        type: "e_skill_inf",
+        prefix: "INF_",
+        suffix: "_SKILL",
+        outputType: "SkillInfoFlag",
+        outputFormat: .hex,
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
+    .enum(
+        source: "map/skill.hpp",
+        type: "e_skill_inf2",
+        prefix: "INF2_",
+        exclude: ["INF2_MAX"],
+        outputType: "SkillInfoFlag2",
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
+    .enum(
+        source: "map/skill.hpp",
+        type: "e_skill_require",
+        prefix: "SKILL_REQ_",
+        outputType: "SkillRequirement",
+        outputFormat: .hex,
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
+    .enum(
+        source: "map/skill.hpp",
+        type: "e_skill_nonear_npc",
+        prefix: "SKILL_NONEAR_",
+        outputType: "SkillNoNearNPC",
+        outputFormat: .hex,
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
+    .enum(
+        source: "map/skill.hpp",
+        type: "e_skill_cast_flags",
+        prefix: "SKILL_CAST_",
+        outputType: "SkillCastFlag",
+        outputFormat: .hex,
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
+    .enum(
+        source: "map/skill.hpp",
+        type: "e_skill_copyable_option",
+        prefix: "SKILL_COPY_",
+        outputType: "SkillCopyableOption",
+        outputFormat: .hex,
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
+    .enum(
+        source: "map/skill.hpp",
+        type: "e_skill_unit_flag",
+        prefix: "UF_",
+        exclude: [
+            "UF_NONE",
+            "UF_MAX",
+        ],
+        outputType: "SkillUnitFlag",
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
     // MARK: - map/pc.hpp
     .enum(
         source: "map/pc.hpp",
@@ -239,6 +350,7 @@ struct Configuration {
     var kind: String
     var type: String
     var prefix: String
+    var suffix: String
     var exclude: [String]
     var replace: [String : String]
     var compatible: [String : [String]]
@@ -251,6 +363,7 @@ struct Configuration {
         source: String,
         type: String,
         prefix: String,
+        suffix: String = "",
         exclude: [String] = [],
         replace: [String : String] = [:],
         compatible: [String : [String]] = [:],
@@ -264,6 +377,7 @@ struct Configuration {
             kind: "enum",
             type: type,
             prefix: prefix,
+            suffix: suffix,
             exclude: exclude,
             replace: replace,
             compatible: compatible,

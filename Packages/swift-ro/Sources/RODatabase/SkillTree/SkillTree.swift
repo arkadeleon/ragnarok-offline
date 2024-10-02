@@ -28,7 +28,7 @@ public struct SkillTree: Decodable, Equatable, Hashable, Sendable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.job = try container.decode(Job.self, forKey: .job)
-        self.inherit = try container.decodeIfPresent([Job : Bool].self, forKey: .inherit).map({ Set($0.keys) })
+        self.inherit = try container.decodeIfPresent([Job : Bool].self, forKey: .inherit)?.unorderedKeys
         self.tree = try container.decodeIfPresent([Skill].self, forKey: .tree)
     }
 }

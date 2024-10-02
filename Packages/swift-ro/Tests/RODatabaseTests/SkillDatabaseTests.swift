@@ -24,8 +24,8 @@ final class SkillDatabaseTests: XCTestCase {
         XCTAssertEqual(napalmBeat.maxLevel, 10)
         XCTAssertEqual(napalmBeat.type, .magic)
         XCTAssertEqual(napalmBeat.targetType, .attack)
-        XCTAssertEqual(napalmBeat.damageFlags, [.splash, .splashSplit])
-        XCTAssertEqual(napalmBeat.flags, [.isAutoShadowSpell, .targetTrap])
+        XCTAssertEqual(napalmBeat.damageFlags, [.splash, .splashsplit])
+        XCTAssertEqual(napalmBeat.flags, [.isautoshadowspell, .targettrap])
         XCTAssertEqual(napalmBeat.range, .left(9))
 
         let spearBoomerang = try await database.skill(forAegisName: "KN_SPEARBOOMERANG")!
@@ -52,8 +52,8 @@ final class SkillDatabaseTests: XCTestCase {
         XCTAssertEqual(napalmBeat.maxLevel, 10)
         XCTAssertEqual(napalmBeat.type, .magic)
         XCTAssertEqual(napalmBeat.targetType, .attack)
-        XCTAssertEqual(napalmBeat.damageFlags, [.splash, .splashSplit])
-        XCTAssertEqual(napalmBeat.flags, [.isAutoShadowSpell, .targetTrap])
+        XCTAssertEqual(napalmBeat.damageFlags, [.splash, .splashsplit])
+        XCTAssertEqual(napalmBeat.flags, [.isautoshadowspell, .targettrap])
         XCTAssertEqual(napalmBeat.range, .left(9))
 
         let spearBoomerang = try await database.skill(forAegisName: "KN_SPEARBOOMERANG")!

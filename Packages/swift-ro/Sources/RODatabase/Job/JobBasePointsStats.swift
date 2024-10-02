@@ -31,7 +31,7 @@ struct JobBasePointsStats: Decodable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.jobs = Set(try container.decode([Job : Bool].self, forKey: .jobs).map({ $0.key }))
+        self.jobs = try container.decode([Job : Bool].self, forKey: .jobs).unorderedKeys
         self.baseHp = try container.decodeIfPresent([LevelBaseHp].self, forKey: .baseHp) ?? []
         self.baseSp = try container.decodeIfPresent([LevelBaseSp].self, forKey: .baseSp) ?? []
         self.baseAp = try container.decodeIfPresent([LevelBaseAp].self, forKey: .baseAp) ?? []

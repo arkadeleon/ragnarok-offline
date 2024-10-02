@@ -205,7 +205,7 @@ public struct Monster: Decodable, Equatable, Hashable, Identifiable, Sendable {
         self.chaseRange = try container.decodeIfPresent(Int.self, forKey: .chaseRange) ?? 0
         self.size = try container.decodeIfPresent(Size.self, forKey: .size) ?? .small
         self.race = try container.decodeIfPresent(Race.self, forKey: .race) ?? .formless
-        self.raceGroups = try container.decodeIfPresent([Race2 : Bool].self, forKey: .raceGroups).map({ Set($0.keys) })
+        self.raceGroups = try container.decodeIfPresent([Race2 : Bool].self, forKey: .raceGroups)?.unorderedKeys
         self.element = try container.decodeIfPresent(Element.self, forKey: .element) ?? .neutral
         self.elementLevel = try container.decodeIfPresent(Int.self, forKey: .elementLevel) ?? 1
         self.walkSpeed = try container.decodeIfPresent(WalkSpeed.self, forKey: .walkSpeed) ?? .default
@@ -216,7 +216,7 @@ public struct Monster: Decodable, Equatable, Hashable, Identifiable, Sendable {
         self.damageTaken = try container.decodeIfPresent(Int.self, forKey: .damageTaken) ?? 100
         self.ai = try container.decodeIfPresent(MonsterAI.self, forKey: .ai) ?? .ai06
         self.class = try container.decodeIfPresent(MonsterClass.self, forKey: .class) ?? .normal
-        self.modes = try container.decodeIfPresent([MonsterMode : Bool].self, forKey: .modes).map({ Set($0.keys) })
+        self.modes = try container.decodeIfPresent([MonsterMode : Bool].self, forKey: .modes)?.unorderedKeys
         self.mvpDrops = try container.decodeIfPresent([Monster.Drop].self, forKey: .mvpDrops)
         self.drops = try container.decodeIfPresent([Monster.Drop].self, forKey: .drops)
     }

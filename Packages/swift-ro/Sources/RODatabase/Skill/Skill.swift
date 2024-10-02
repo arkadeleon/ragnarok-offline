@@ -22,16 +22,16 @@ public struct Skill: Decodable, Equatable, Hashable, Identifiable, Sendable {
     public var maxLevel: Int
 
     /// Skill type. (Default: None)
-    public var type: SkillType
+    public var type: BattleFlag
 
     /// Skill target type. (Default: Passive)
-    public var targetType: SkillTargetType
+    public var targetType: SkillInfoFlag
 
     /// Skill damage properties.
     public var damageFlags: Set<SkillDamageFlag>
 
     /// Skill information flags.
-    public var flags: Set<SkillFlag>
+    public var flags: Set<SkillInfoFlag2>
 
     /// Skill range. (Default: 0)
     public var range: EitherNode<Int, [Int]>
@@ -146,10 +146,10 @@ public struct Skill: Decodable, Equatable, Hashable, Identifiable, Sendable {
         self.aegisName = try container.decode(String.self, forKey: .aegisName)
         self.name = try container.decode(String.self, forKey: .name)
         self.maxLevel = try container.decode(Int.self, forKey: .maxLevel)
-        self.type = try container.decodeIfPresent(SkillType.self, forKey: .type) ?? .none
-        self.targetType = try container.decodeIfPresent(SkillTargetType.self, forKey: .targetType) ?? .passive
-        self.damageFlags = try container.decodeIfPresent([String : Bool].self, forKey: .damageFlags).map(Set<SkillDamageFlag>.init) ?? []
-        self.flags = try container.decodeIfPresent([String : Bool].self, forKey: .flags).map(Set<SkillFlag>.init) ?? []
+        self.type = try container.decodeIfPresent(BattleFlag.self, forKey: .type) ?? .none
+        self.targetType = try container.decodeIfPresent(SkillInfoFlag.self, forKey: .targetType) ?? .passive
+        self.damageFlags = try container.decodeIfPresent([SkillDamageFlag : Bool].self, forKey: .damageFlags)?.unorderedKeys ?? []
+        self.flags = try container.decodeIfPresent([SkillInfoFlag2 : Bool].self, forKey: .flags)?.unorderedKeys ?? []
         self.range = try container.decodeIfPresent(EitherNode<Int, [LevelRange]>.self, forKey: .range)?.mapRight { $0.map { $0.range } } ?? .left(0)
         self.hitType = try container.decodeIfPresent(SkillHitType.self, forKey: .hitType) ?? .normal
         self.hitCount = try container.decodeIfPresent(EitherNode<Int, [LevelHitCount]>.self, forKey: .hitCount)?.mapRight { $0.map { $0.hitCount } } ?? .left(0)
@@ -169,8 +169,8 @@ public struct Skill: Decodable, Equatable, Hashable, Identifiable, Sendable {
         self.duration2 = try container.decodeIfPresent(EitherNode<Int, [LevelDuration]>.self, forKey: .duration2)?.mapRight { $0.map { $0.duration } } ?? .left(0)
         self.cooldown = try container.decodeIfPresent(EitherNode<Int, [LevelCooldown]>.self, forKey: .cooldown)?.mapRight { $0.map { $0.cooldown } } ?? .left(0)
         self.fixedCastTime = try container.decodeIfPresent(EitherNode<Int, [LevelFixedCastTime]>.self, forKey: .fixedCastTime)?.mapRight { $0.map { $0.fixedCastTime } } ?? .left(0)
-        self.castTimeFlags = try container.decodeIfPresent([String : Bool].self, forKey: .castTimeFlags).map(Set<SkillCastFlag>.init)
-        self.castDelayFlags = try container.decodeIfPresent([String : Bool].self, forKey: .castDelayFlags).map(Set<SkillCastFlag>.init)
+        self.castTimeFlags = try container.decodeIfPresent([SkillCastFlag : Bool].self, forKey: .castTimeFlags)?.unorderedKeys
+        self.castDelayFlags = try container.decodeIfPresent([SkillCastFlag : Bool].self, forKey: .castDelayFlags)?.unorderedKeys
         self.requires = try container.decodeIfPresent(Requires.self, forKey: .requires)
         self.unit = try container.decodeIfPresent(Unit.self, forKey: .unit)
         self.status = try container.decodeIfPresent(String.self, forKey: .status)
@@ -379,8 +379,8 @@ extension Skill {
 
         public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.skill = try container.decodeIfPresent([String : Bool].self, forKey: .skill).map(Set<SkillCopyableOption>.init) ?? []
-            self.removeRequirement = try container.decodeIfPresent([String : Bool].self, forKey: .removeRequirement).map(Set<SkillRequirement>.init)
+            self.skill = try container.decodeIfPresent([SkillCopyableOption : Bool].self, forKey: .skill)?.unorderedKeys ?? []
+            self.removeRequirement = try container.decodeIfPresent([SkillRequirement : Bool].self, forKey: .removeRequirement)?.unorderedKeys
         }
     }
 }
@@ -405,7 +405,7 @@ extension Skill {
         public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.additionalRange = try container.decodeIfPresent(Int.self, forKey: .additionalRange)
-            self.type = try container.decodeIfPresent([String : Bool].self, forKey: .type).map(Set<SkillNoNearNPC>.init) ?? []
+            self.type = try container.decodeIfPresent([SkillNoNearNPC : Bool].self, forKey: .type)?.unorderedKeys ?? []
         }
     }
 }
@@ -649,8 +649,8 @@ extension Skill {
             self.apRateCost = try container.decodeIfPresent(EitherNode<Int, [LevelApRateCost]>.self, forKey: .apRateCost)?.mapRight { $0.map { $0.apRateCost } } ?? .left(0)
             self.maxHpTrigger = try container.decodeIfPresent(EitherNode<Int, [LevelMaxHpTrigger]>.self, forKey: .maxHpTrigger)?.mapRight { $0.map { $0.maxHpTrigger } } ?? .left(0)
             self.zenyCost = try container.decodeIfPresent(EitherNode<Int, [LevelZenyCost]>.self, forKey: .zenyCost)?.mapRight { $0.map { $0.zenyCost } } ?? .left(0)
-            self.weapon = try container.decodeIfPresent([WeaponType : Bool].self, forKey: .weapon).map({ Set($0.keys) }) ?? []
-            self.ammo = try container.decodeIfPresent([AmmoType : Bool].self, forKey: .ammo).map({ Set($0.keys) }) ?? []
+            self.weapon = try container.decodeIfPresent([WeaponType : Bool].self, forKey: .weapon)?.unorderedKeys ?? []
+            self.ammo = try container.decodeIfPresent([AmmoType : Bool].self, forKey: .ammo)?.unorderedKeys ?? []
             self.ammoAmount = try container.decodeIfPresent(EitherNode<Int, [LevelAmmoAmount]>.self, forKey: .ammoAmount)?.mapRight { $0.map { $0.ammoAmount } } ?? .left(0)
             self.state = try container.decodeIfPresent(String.self, forKey: .state)
             self.status = try container.decodeIfPresent([String : Bool].self, forKey: .status)?.keys.map({ $0 }) ?? []
@@ -681,7 +681,7 @@ extension Skill {
         public var interval: Int
 
         /// Skill unit target type. (Default: All)
-        public var target: SkillUnitTargetType
+        public var target: BattleCheckTarget
 
         /// Skill unit flags. (Default: None)
         public var flag: Set<SkillUnitFlag>
@@ -731,8 +731,8 @@ extension Skill {
             self.layout = try container.decodeIfPresent(EitherNode<Int, [LevelLayout]>.self, forKey: .layout)?.mapRight { $0.map { $0.layout } } ?? .left(0)
             self.range = try container.decodeIfPresent(EitherNode<Int, [LevelRange]>.self, forKey: .range)?.mapRight { $0.map { $0.range } } ?? .left(0)
             self.interval = try container.decodeIfPresent(Int.self, forKey: .interval) ?? 0
-            self.target = try container.decodeIfPresent(SkillUnitTargetType.self, forKey: .target) ?? .all
-            self.flag = try container.decodeIfPresent([String : Bool].self, forKey: .flag).map(Set<SkillUnitFlag>.init) ?? []
+            self.target = try container.decodeIfPresent(BattleCheckTarget.self, forKey: .target) ?? .all
+            self.flag = try container.decodeIfPresent([SkillUnitFlag : Bool].self, forKey: .flag)?.unorderedKeys ?? []
         }
     }
 }

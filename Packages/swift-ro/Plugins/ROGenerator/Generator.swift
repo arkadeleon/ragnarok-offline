@@ -176,19 +176,22 @@ struct Generator: CommandPlugin {
             }
 
             var outputName = name
-            if outputName.starts(with: configuration.prefix) {
+            if outputName.hasPrefix(configuration.prefix) {
                 outputName = String(outputName.dropFirst(configuration.prefix.count))
+            }
+            if outputName.hasSuffix(configuration.suffix) {
+                outputName = String(outputName.dropLast(configuration.suffix.count))
             }
             if let outputPrefix = configuration.outputPrefix {
                 outputName = outputPrefix + outputName
             }
+            outputName = outputName.lowercased()
             let digits = try Regex("[0-9]+")
             if outputName.starts(with: digits) {
                 outputName = "_" + outputName
-            } else if outputName.lowercased() == "class" {
+            } else if outputName == "class" || outputName == "self" {
                 outputName = "_" + outputName
             }
-            outputName = outputName.lowercased()
 
             let intValue: Int? = if let intValue = enumConstantDecl.findConstantExpr()?.value {
                 intValue
@@ -254,8 +257,11 @@ struct Generator: CommandPlugin {
                     .map {
                         var stringValue = $0
 
-                        if stringValue.starts(with: configuration.prefix) {
+                        if stringValue.hasPrefix(configuration.prefix) {
                             stringValue = String(stringValue.dropFirst(configuration.prefix.count))
+                        }
+                        if stringValue.hasSuffix(configuration.suffix) {
+                            stringValue = String(stringValue.dropLast(configuration.suffix.count))
                         }
 
                         return "\"\(stringValue)\""

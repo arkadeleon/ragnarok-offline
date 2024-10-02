@@ -36,7 +36,7 @@ struct JobExpStats: Decodable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.jobs = Set(try container.decode([Job : Bool].self, forKey: .jobs).map({ $0.key }))
+        self.jobs = try container.decode([Job : Bool].self, forKey: .jobs).unorderedKeys
         self.maxBaseLevel = try container.decodeIfPresent(Int.self, forKey: .maxBaseLevel) ?? RA_MAX_LEVEL
         self.baseExp = try container.decodeIfPresent([JobExpStats.LevelExp].self, forKey: .baseExp) ?? []
         self.maxJobLevel = try container.decodeIfPresent(Int.self, forKey: .maxJobLevel) ?? RA_MAX_LEVEL
