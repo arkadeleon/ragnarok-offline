@@ -19,22 +19,22 @@ public struct StatusChange: Decodable, Equatable, Hashable, Sendable {
     public var durationLookup: String?
 
     /// Status change state to determine player states. (Default: None)
-    public var states: Set<String>?
+    public var states: Set<StatusChangeStateFlag>?
 
     /// Status change calculation to indicate which stat is adjusted. (Default: None)
     public var calcFlags: Set<String>?
 
     /// Special effect when a status change is active. Non-stackable. (Default: None)
-    public var opt1: String?
+    public var opt1: StatusChangeOption1?
 
     /// Special options/client effects when a status change is active. (Default: None)
-    public var opt2: Set<String>?
+    public var opt2: Set<StatusChangeOption2>?
 
     /// Special options/client effects when a status change is active. (Default: Normal)
-    public var opt3: Set<String>?
+    public var opt3: Set<StatusChangeOption3>?
 
     /// Special options/client effects when a status change is active. (Default: Nothing)
-    public var options: Set<String>?
+    public var options: Set<StatusChangeOption>?
 
     /// Special flags which trigger during certain events.  (Default: None)
     public var flags: Set<String>?
@@ -81,12 +81,12 @@ public struct StatusChange: Decodable, Equatable, Hashable, Sendable {
         self.status = try container.decode(StatusChangeID.self, forKey: .status)
         self.icon = try container.decodeIfPresent(OfficialStatusChangeID.self, forKey: .icon) ?? .efst_blank
         self.durationLookup = try container.decodeIfPresent(String.self, forKey: .durationLookup)
-        self.states = try container.decodeIfPresent([String : Bool].self, forKey: .states).flatMap({ Set<String>($0.keys) })
+        self.states = try container.decodeIfPresent([StatusChangeStateFlag : Bool].self, forKey: .states)?.unorderedKeys
         self.calcFlags = try container.decodeIfPresent([String : Bool].self, forKey: .calcFlags).flatMap({ Set<String>($0.keys) })
-        self.opt1 = try container.decodeIfPresent(String.self, forKey: .opt1)
-        self.opt2 = try container.decodeIfPresent([String : Bool].self, forKey: .opt2).flatMap({ Set<String>($0.keys) })
-        self.opt3 = try container.decodeIfPresent([String : Bool].self, forKey: .opt3).flatMap({ Set<String>($0.keys) })
-        self.options = try container.decodeIfPresent([String : Bool].self, forKey: .options).flatMap({ Set<String>($0.keys) })
+        self.opt1 = try container.decodeIfPresent(StatusChangeOption1.self, forKey: .opt1)
+        self.opt2 = try container.decodeIfPresent([StatusChangeOption2 : Bool].self, forKey: .opt2)?.unorderedKeys
+        self.opt3 = try container.decodeIfPresent([StatusChangeOption3 : Bool].self, forKey: .opt3)?.unorderedKeys
+        self.options = try container.decodeIfPresent([StatusChangeOption : Bool].self, forKey: .options)?.unorderedKeys
         self.flags = try container.decodeIfPresent([String : Bool].self, forKey: .flags).flatMap({ Set<String>($0.keys) })
         self.minRate = try container.decodeIfPresent(Int.self, forKey: .minRate) ?? 0
         self.minDuration = try container.decodeIfPresent(Int.self, forKey: .minDuration) ?? 1

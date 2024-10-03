@@ -309,6 +309,79 @@ let configurations: [Configuration] = [
         outputType: "OfficialStatusChangeID",
         extensions: [.decodable]
     ),
+    .enum(
+        source: "map/status.hpp",
+        type: "e_sc_opt1",
+        prefix: "OPT1_",
+        exclude: [
+            "OPT1_MAX",
+        ],
+        outputType: "StatusChangeOption1",
+        extensions: [.decodable]
+    ),
+    .enum(
+        source: "map/status.hpp",
+        type: "e_sc_opt2",
+        prefix: "OPT2_",
+        exclude: [
+            "OPT2_MAX",
+        ],
+        outputType: "StatusChangeOption2",
+        outputFormat: .hex,
+        extensions: [.decodable]
+    ),
+    .enum(
+        source: "map/status.hpp",
+        type: "e_sc_opt3",
+        prefix: "OPT3_",
+        exclude: [
+            "OPT3_MAX",
+        ],
+        outputType: "StatusChangeOption3",
+        outputFormat: .hex,
+        extensions: [.decodable]
+    ),
+    .enum(
+        source: "map/status.hpp",
+        type: "e_option",
+        prefix: "OPTION_",
+        exclude: [
+            "OPTION_MAX",
+        ],
+        outputType: "StatusChangeOption",
+        outputFormat: .hex,
+        extensions: [.decodable]
+    ),
+    .enum(
+        source: "map/status.hpp",
+        type: "e_scs_flag",
+        prefix: "SCS_",
+        exclude: [
+            "SCS_MAX",
+        ],
+        outputType: "StatusChangeStateFlag",
+        extensions: [.decodable]
+    ),
+    .enum(
+        source: "map/status.hpp",
+        type: "e_scb_flag",
+        prefix: "SCB_",
+        exclude: [
+            "SCB_MAX",
+        ],
+        outputType: "StatusChangeBlockFlag",
+        extensions: [.decodable]
+    ),
+    .enum(
+        source: "map/status.hpp",
+        type: "e_status_change_flag",
+        prefix: "SCF_",
+        exclude: [
+            "SCF_MAX",
+        ],
+        outputType: "StatusChangeFlag",
+        extensions: [.decodable]
+    ),
 ]
 
 struct Configuration {

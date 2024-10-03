@@ -140,33 +140,42 @@ struct Generator: CommandPlugin {
     }
 
     func generateEnums(context: PluginContext) throws {
+        var asts: [String : ASTNode] = [:]
+
         for configuration in configurations {
-            try generateEnum(context: context, configuration: configuration)
+            try generateEnum(context: context, configuration: configuration, asts: &asts)
         }
     }
 
-    private func generateEnum(context: PluginContext, configuration: Configuration) throws {
+    private func generateEnum(context: PluginContext, configuration: Configuration, asts: inout [String : ASTNode]) throws {
+        let ast: ASTNode
+        if let cachedAST = asts[configuration.source] {
+            ast = cachedAST
+        } else {
+            let srcURL = context.package.directoryURL.appending(path: "../swift-rathena/src")
+            let inputURL = srcURL.appending(path: configuration.source)
+
+            let process = Process()
+            process.executableURL = try context.tool(named: "clang").url
+            process.arguments = ["-Xclang", "-ast-dump=json", "-I" + srcURL.path(), inputURL.path()]
+
+            let pipe = Pipe()
+            process.standardOutput = pipe
+
+            try process.run()
+//            process.waitUntilExit()
+
+            let data = try pipe.fileHandleForReading.readToEnd()!
+
+            let decoder = JSONDecoder()
+            ast = try! decoder.decode(ASTNode.self, from: data)
+
+            asts[configuration.source] = ast
+        }
+
         var cases: [Case] = []
 
-        let srcURL = context.package.directoryURL.appending(path: "../swift-rathena/src")
-        let inputURL = srcURL.appending(path: configuration.source)
-
-        let process = Process()
-        process.executableURL = try context.tool(named: "clang").url
-        process.arguments = ["-Xclang", "-ast-dump=json", "-I" + srcURL.path(), inputURL.path()]
-
-        let pipe = Pipe()
-        process.standardOutput = pipe
-
-        try process.run()
-//        process.waitUntilExit()
-
-        let data = try pipe.fileHandleForReading.readToEnd()!
-
-        let decoder = JSONDecoder()
-        let root = try! decoder.decode(ASTNode.self, from: data)
-
-        let enumDecl = root.findEnumDecl(named: configuration.type)!
+        let enumDecl = ast.findEnumDecl(named: configuration.type)!
         let enumConstantDecls = enumDecl.findEnumConstantDecls()
 
         for enumConstantDecl in enumConstantDecls {
