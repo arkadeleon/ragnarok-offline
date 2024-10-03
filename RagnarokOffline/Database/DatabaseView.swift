@@ -38,8 +38,8 @@ struct DatabaseView<RecordProvider, Content, Empty>: View where RecordProvider: 
             .navigationDestination(for: Item.self) { item in
                 ItemInfoView(mode: database.mode, item: item)
             }
-            .navigationDestination(for: JobStats.self) { jobStats in
-                JobInfoView(mode: database.mode, jobStats: jobStats)
+            .navigationDestination(for: Job.self) { job in
+                JobInfoView(mode: database.mode, job: job)
             }
             .navigationDestination(for: Map.self) { map in
                 MapInfoView(mode: database.mode, map: map)

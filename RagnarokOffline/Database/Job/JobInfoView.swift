@@ -13,7 +13,7 @@ import rAthenaCommon
 
 struct JobInfoView: View {
     var mode: ServerMode
-    var jobStats: JobStats
+    var job: Job
 
     typealias BaseLevelStats = (level: Int, baseExp: Int, baseHp: Int, baseSp: Int)
     typealias JobLevelStats = (level: Int, jobExp: Int, bonusStats: String)
@@ -25,7 +25,7 @@ struct JobInfoView: View {
         ScrollView {
             ZStack {
                 if let jobImage {
-                    Image(jobImage, scale: 1, label: Text(jobStats.job.stringValue))
+                    Image(jobImage, scale: 1, label: Text(job.id.stringValue))
                 } else {
                     Image(systemName: "person")
                         .font(.system(size: 100, weight: .thin))
@@ -145,7 +145,7 @@ struct JobInfoView: View {
                 }
             }
         }
-        .navigationTitle(jobStats.job.stringValue)
+        .navigationTitle(job.id.stringValue)
         .task {
             await loadJobInfo()
         }
@@ -154,17 +154,17 @@ struct JobInfoView: View {
     private var attributes: [DatabaseRecordAttribute] {
         var attributes: [DatabaseRecordAttribute] = []
 
-        attributes.append(.init(name: "Max Weight", value: jobStats.maxWeight))
-        attributes.append(.init(name: "HP Factor", value: jobStats.hpFactor))
-        attributes.append(.init(name: "HP Increase", value: jobStats.hpIncrease))
-        attributes.append(.init(name: "SP Increase", value: jobStats.spIncrease))
+        attributes.append(.init(name: "Max Weight", value: job.maxWeight))
+        attributes.append(.init(name: "HP Factor", value: job.hpFactor))
+        attributes.append(.init(name: "HP Increase", value: job.hpIncrease))
+        attributes.append(.init(name: "SP Increase", value: job.spIncrease))
 
         return attributes
     }
 
     private var baseASPD: [DatabaseRecordAttribute] {
         WeaponType.allCases.compactMap { weaponType in
-            if let aspd = jobStats.baseASPD[weaponType] {
+            if let aspd = job.baseASPD[weaponType] {
                 DatabaseRecordAttribute(name: weaponType.localizedStringResource, value: aspd)
             } else {
                 nil
@@ -173,31 +173,31 @@ struct JobInfoView: View {
     }
 
     private var baseLevels: [BaseLevelStats] {
-        (0..<jobStats.maxBaseLevel).map { level in
-            (level, jobStats.baseExp[level], jobStats.baseHp[level], jobStats.baseSp[level])
+        (0..<job.maxBaseLevel).map { level in
+            (level, job.baseExp[level], job.baseHp[level], job.baseSp[level])
         }
     }
 
     private var jobLevels: [JobLevelStats] {
-        (0..<jobStats.maxJobLevel).map { level in
+        (0..<job.maxJobLevel).map { level in
             let bonusStats = Parameter.allCases.compactMap { parameter in
-                if let value = jobStats.bonusStats[level][parameter], value > 0 {
+                if let value = job.bonusStats[level][parameter], value > 0 {
                     return "\(parameter.stringValue)(+\(value))"
                 } else {
                     return nil
                 }
             }.joined(separator: " ")
-            return (level, jobStats.jobExp[level], bonusStats)
+            return (level, job.jobExp[level], bonusStats)
         }
     }
 
     private func loadJobInfo() async {
-        jobImage = await ClientResourceManager.default.jobImage(sex: .male, job: jobStats.job)
+        jobImage = await ClientResourceManager.default.jobImage(sex: .male, jobID: job.id)
 
         let skillDatabase = SkillDatabase.database(for: mode)
         let skillTreeDatabase = SkillTreeDatabase.database(for: mode)
 
-        if let skillTree = try? await skillTreeDatabase.skillTree(forJob: jobStats.job)?.tree {
+        if let skillTree = try? await skillTreeDatabase.skillTree(forJobID: job.id)?.tree {
             var skills: [Skill] = []
             for s in skillTree {
                 if let skill = try? await skillDatabase.skill(forAegisName: s.name) {

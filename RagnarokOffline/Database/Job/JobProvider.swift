@@ -9,15 +9,15 @@ import rAthenaCommon
 import RODatabase
 
 struct JobProvider: DatabaseRecordProvider {
-    func records(for mode: ServerMode) async throws -> [JobStats] {
+    func records(for mode: ServerMode) async throws -> [Job] {
         let database = JobDatabase.database(for: mode)
         let jobs = try await database.jobs()
         return jobs
     }
 
-    func records(matching searchText: String, in jobs: [JobStats]) async -> [JobStats] {
-        jobs.filter { jobStats in
-            jobStats.job.stringValue.localizedStandardContains(searchText)
+    func records(matching searchText: String, in jobs: [Job]) async -> [Job] {
+        jobs.filter { job in
+            job.id.stringValue.localizedStandardContains(searchText)
         }
     }
 }

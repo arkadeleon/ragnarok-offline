@@ -10,19 +10,19 @@ import RODatabase
 import ROClientResources
 
 struct JobGridCell: View {
-    var jobStats: JobStats
+    var job: Job
 
     @State private var jobImage: CGImage?
 
     var body: some View {
-        ImageGridCell(title: jobStats.job.stringValue) {
+        ImageGridCell(title: job.id.stringValue) {
             if let jobImage {
                 if jobImage.width > 80 || jobImage.height > 80 {
-                    Image(jobImage, scale: 1, label: Text(jobStats.job.stringValue))
+                    Image(jobImage, scale: 1, label: Text(job.id.stringValue))
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 } else {
-                    Image(jobImage, scale: 1, label: Text(jobStats.job.stringValue))
+                    Image(jobImage, scale: 1, label: Text(job.id.stringValue))
                 }
             } else {
                 Image(systemName: "person")
@@ -31,7 +31,7 @@ struct JobGridCell: View {
             }
         }
         .task {
-            jobImage = await ClientResourceManager.default.jobImage(sex: .male, job: jobStats.job)
+            jobImage = await ClientResourceManager.default.jobImage(sex: .male, jobID: job.id)
         }
     }
 }

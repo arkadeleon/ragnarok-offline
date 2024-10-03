@@ -60,8 +60,8 @@ public actor ClientResourceManager {
         }
     }
 
-    public func jobImage(sex: Sex, job: Job) async -> CGImage? {
-        let (sprFile, actFile) = bodySpriteFile(sex: sex, job: job)
+    public func jobImage(sex: Sex, jobID: JobID) async -> CGImage? {
+        let (sprFile, actFile) = bodySpriteFile(sex: sex, jobID: jobID)
 
         guard let sprFile, let sprData = sprFile.contents(), let actFile, let actData = actFile.contents() else {
             return nil
@@ -125,11 +125,11 @@ public actor ClientResourceManager {
         return (spr: sprFile, act: actFile)
     }
 
-    public func bodySpriteFile(sex: Sex, job: Job) -> (spr: File?, act: File?) {
-        let sprPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(sex.resourceName)\\\(job.resourceName)_\(sex.resourceName).spr")
+    public func bodySpriteFile(sex: Sex, jobID: JobID) -> (spr: File?, act: File?) {
+        let sprPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(sex.resourceName)\\\(jobID.resourceName)_\(sex.resourceName).spr")
         let sprFile = grfEntryFile(at: sprPath)
 
-        let actPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(sex.resourceName)\\\(job.resourceName)_\(sex.resourceName).act")
+        let actPath = GRF.Path(string: "data\\sprite\\인간족\\몸통\\\(sex.resourceName)\\\(jobID.resourceName)_\(sex.resourceName).act")
         let actFile = grfEntryFile(at: actPath)
 
         return (spr: sprFile, act: actFile)

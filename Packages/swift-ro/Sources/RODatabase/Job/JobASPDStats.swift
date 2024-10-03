@@ -10,7 +10,7 @@ import ROGenerated
 struct JobASPDStats: Decodable {
 
     /// List of jobs associated to group.
-    var jobs: Set<Job>
+    var jobs: Set<JobID>
 
     /// Base ASPD for each weapon type. (Default: 2000)
     var baseASPD: [WeaponType : Int]
@@ -23,7 +23,7 @@ struct JobASPDStats: Decodable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.jobs = try container.decode([Job : Bool].self, forKey: .jobs).unorderedKeys
+        self.jobs = try container.decode([JobID : Bool].self, forKey: .jobs).unorderedKeys
         self.baseASPD = try container.decode([WeaponType : Int].self, forKey: .baseASPD)
     }
 }

@@ -43,7 +43,7 @@ let configurations: [Configuration] = [
         compatible: [
             "JOB_SUPER_NOVICE": ["JOB_SUPERNOVICE"],
         ],
-        outputType: "Job",
+        outputType: "JobID",
         settings: [
             .isDecodable: true,
         ]
@@ -93,7 +93,7 @@ let configurations: [Configuration] = [
         compatible: [
             "MAPID_SUPER_NOVICE": ["MAPID_SUPERNOVICE"],
         ],
-        outputType: "EAJob",
+        outputType: "EAJobID",
         outputFormat: .hex,
         settings: [
             .isDecodable: true,

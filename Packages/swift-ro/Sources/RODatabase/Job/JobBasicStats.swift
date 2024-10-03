@@ -10,7 +10,7 @@ import ROGenerated
 struct JobBasicStats: Decodable {
 
     /// List of jobs associated to group.
-    var jobs: Set<Job>
+    var jobs: Set<JobID>
 
     /// Base maximum weight. (Default: 20000)
     var maxWeight: Int
@@ -39,7 +39,7 @@ struct JobBasicStats: Decodable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.jobs = try container.decode([Job : Bool].self, forKey: .jobs).unorderedKeys
+        self.jobs = try container.decode([JobID : Bool].self, forKey: .jobs).unorderedKeys
         self.maxWeight = try container.decodeIfPresent(Int.self, forKey: .maxWeight) ?? 20000
         self.hpFactor = try container.decodeIfPresent(Int.self, forKey: .hpFactor) ?? 0
         self.hpIncrease = try container.decodeIfPresent(Int.self, forKey: .hpIncrease) ?? 500

@@ -23,13 +23,13 @@ public actor JobDatabase {
 
     public let mode: ServerMode
 
-    private var cachedJobs: [JobStats] = []
+    private var cachedJobs: [Job] = []
 
     private init(mode: ServerMode) {
         self.mode = mode
     }
 
-    public func jobs() throws -> [JobStats] {
+    public func jobs() throws -> [Job] {
         if cachedJobs.isEmpty {
             let decoder = YAMLDecoder()
 
@@ -57,9 +57,9 @@ public actor JobDatabase {
             let basePointsStatsData = try Data(contentsOf: basePointsStatsURL)
             let basePointsStatsList = try decoder.decode(ListNode<JobBasePointsStats>.self, from: basePointsStatsData).body
 
-            cachedJobs = Job.allCases.compactMap { job in
-                JobStats(
-                    job: job,
+            cachedJobs = JobID.allCases.compactMap { jobID in
+                Job(
+                    jobID: jobID,
                     basicStatsList: basicStatsList,
                     aspdStatsList: aspdStatsList,
                     expStatsList: expStatsList,

@@ -1,5 +1,5 @@
 //
-//  Job+ResourceName.swift
+//  JobID+ResourceName.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/12/22.
@@ -7,7 +7,7 @@
 
 import ROGenerated
 
-extension Job {
+extension JobID {
     var resourceName: String {
         switch self {
         case .novice, .novice_high, .baby: "초보자"

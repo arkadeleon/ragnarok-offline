@@ -13,9 +13,9 @@ struct JobDatabaseView: View {
     var body: some View {
         DatabaseView(database: $database) { jobs in
             ImageGrid {
-                ForEach(jobs) { jobStats in
-                    NavigationLink(value: jobStats) {
-                        JobGridCell(jobStats: jobStats)
+                ForEach(jobs) { job in
+                    NavigationLink(value: job) {
+                        JobGridCell(job: job)
                     }
                     .buttonStyle(.plain)
                 }

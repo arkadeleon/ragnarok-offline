@@ -10,11 +10,11 @@ import ROGenerated
 public struct SkillTree: Decodable, Equatable, Hashable, Sendable {
 
     /// Job name.
-    public var job: Job
+    public var job: JobID
 
     /// Map of job name from which Job will inherit the skill tree. (Default: null)
     /// Note that Job doesn't inherit the child skills, it only inherits the skills defined in Tree of the given job name.
-    public var inherit: Set<Job>?
+    public var inherit: Set<JobID>?
 
     /// List of skills available for the job. (Default: null)
     public var tree: [Skill]?
@@ -27,8 +27,8 @@ public struct SkillTree: Decodable, Equatable, Hashable, Sendable {
 
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.job = try container.decode(Job.self, forKey: .job)
-        self.inherit = try container.decodeIfPresent([Job : Bool].self, forKey: .inherit)?.unorderedKeys
+        self.job = try container.decode(JobID.self, forKey: .job)
+        self.inherit = try container.decodeIfPresent([JobID : Bool].self, forKey: .inherit)?.unorderedKeys
         self.tree = try container.decodeIfPresent([Skill].self, forKey: .tree)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  JobStats.swift
+//  Job.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/11.
@@ -7,10 +7,10 @@
 
 import ROGenerated
 
-public struct JobStats: Equatable, Hashable, Sendable {
+public struct Job: Equatable, Hashable, Identifiable, Sendable {
 
-    /// Job.
-    public var job: Job
+    /// Job ID.
+    public var id: JobID
 
     /// Base maximum weight. (Default: 20000)
     public var maxWeight: Int
@@ -51,19 +51,19 @@ public struct JobStats: Equatable, Hashable, Sendable {
     /// Base AP per base level.
     public var baseAp: [Int]
 
-    init?(job: Job, basicStatsList: [JobBasicStats], aspdStatsList: [JobASPDStats], expStatsList: [JobExpStats], basePointsStatsList: [JobBasePointsStats]) {
-        guard let basicStats = basicStatsList.first(where: { $0.jobs.contains(job) }),
-              let aspdStats = aspdStatsList.first(where: { $0.jobs.contains(job) }),
-              let baseExpStats = expStatsList.first(where: { $0.jobs.contains(job) && !$0.baseExp.isEmpty }),
-              let jobExpStats = expStatsList.first(where: { $0.jobs.contains(job) && !$0.jobExp.isEmpty }),
-              let baseHpPointsStats = basePointsStatsList.first(where: { $0.jobs.contains(job) && !$0.baseHp.isEmpty }),
-              let baseSpPointsStats = basePointsStatsList.first(where: { $0.jobs.contains(job) && !$0.baseSp.isEmpty })
+    init?(jobID: JobID, basicStatsList: [JobBasicStats], aspdStatsList: [JobASPDStats], expStatsList: [JobExpStats], basePointsStatsList: [JobBasePointsStats]) {
+        guard let basicStats = basicStatsList.first(where: { $0.jobs.contains(jobID) }),
+              let aspdStats = aspdStatsList.first(where: { $0.jobs.contains(jobID) }),
+              let baseExpStats = expStatsList.first(where: { $0.jobs.contains(jobID) && !$0.baseExp.isEmpty }),
+              let jobExpStats = expStatsList.first(where: { $0.jobs.contains(jobID) && !$0.jobExp.isEmpty }),
+              let baseHpPointsStats = basePointsStatsList.first(where: { $0.jobs.contains(jobID) && !$0.baseHp.isEmpty }),
+              let baseSpPointsStats = basePointsStatsList.first(where: { $0.jobs.contains(jobID) && !$0.baseSp.isEmpty })
         else {
-            print("Failed to init JobStats for \(job.stringValue)")
+            print("Failed to init Job for \(jobID.stringValue)")
             return nil
         }
 
-        self.job = job
+        self.id = jobID
 
         self.maxWeight = basicStats.maxWeight
         self.hpFactor = basicStats.hpFactor
@@ -112,14 +112,8 @@ public struct JobStats: Equatable, Hashable, Sendable {
     }
 }
 
-extension JobStats: Identifiable {
-    public var id: Int {
-        job.rawValue
-    }
-}
-
-extension JobStats: Comparable {
-    public static func < (lhs: JobStats, rhs: JobStats) -> Bool {
-        lhs.job.rawValue < rhs.job.rawValue
+extension Job: Comparable {
+    public static func < (lhs: Job, rhs: Job) -> Bool {
+        lhs.id.rawValue < rhs.id.rawValue
     }
 }
