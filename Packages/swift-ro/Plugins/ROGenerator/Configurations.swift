@@ -182,6 +182,13 @@ let configurations: [Configuration] = [
     // MARK: - map/pc.hpp
     .enum(
         source: "map/pc.hpp",
+        type: "e_params",
+        prefix: "PARAM_",
+        outputType: "Parameter",
+        extensions: [.decodable]
+    ),
+    .enum(
+        source: "map/pc.hpp",
         type: "weapon_type",
         prefix: "W_",
         exclude: [
