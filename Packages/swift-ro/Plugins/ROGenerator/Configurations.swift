@@ -205,6 +205,50 @@ let configurations: [Configuration] = [
             .isDecodable: true,
         ]
     ),
+    // MARK: - map/pc.hpp
+    .enum(
+        source: "map/pc.hpp",
+        type: "weapon_type",
+        prefix: "W_",
+        exclude: [
+            "MAX_WEAPON_TYPE",
+            "W_DOUBLE_DD",
+            "W_DOUBLE_SS",
+            "W_DOUBLE_AA",
+            "W_DOUBLE_DS",
+            "W_DOUBLE_DA",
+            "W_DOUBLE_SA",
+            "MAX_WEAPON_TYPE_ALL",
+        ],
+        outputType: "WeaponType",
+        outputPrefix: "w_",
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
+    .enum(
+        source: "map/pc.hpp",
+        type: "e_ammo_type",
+        prefix: "AMMO_",
+        exclude: [
+            "AMMO_NONE",
+            "MAX_AMMO_TYPE",
+        ],
+        outputType: "AmmoType",
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
+    .enum(
+        source: "map/pc.hpp",
+        type: "e_card_type",
+        prefix: "CARD_",
+        exclude: ["MAX_CARD_TYPE"],
+        outputType: "CardType",
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
     // MARK: - map/skill.hpp
     .enum(
         source: "map/skill.hpp",
@@ -290,46 +334,18 @@ let configurations: [Configuration] = [
             .isDecodable: true,
         ]
     ),
-    // MARK: - map/pc.hpp
+    // MARK: - map/status.hpp
     .enum(
-        source: "map/pc.hpp",
-        type: "weapon_type",
-        prefix: "W_",
+        source: "map/status.hpp",
+        type: "sc_type",
+        prefix: "SC_",
         exclude: [
-            "MAX_WEAPON_TYPE",
-            "W_DOUBLE_DD",
-            "W_DOUBLE_SS",
-            "W_DOUBLE_AA",
-            "W_DOUBLE_DS",
-            "W_DOUBLE_DA",
-            "W_DOUBLE_SA",
-            "MAX_WEAPON_TYPE_ALL",
+            "SC_NONE",
+            "SC_COMMON_MIN",
+            "SC_COMMON_MAX",
+            "SC_MAX",
         ],
-        outputType: "WeaponType",
-        outputPrefix: "w_",
-        settings: [
-            .isDecodable: true,
-        ]
-    ),
-    .enum(
-        source: "map/pc.hpp",
-        type: "e_ammo_type",
-        prefix: "AMMO_",
-        exclude: [
-            "AMMO_NONE",
-            "MAX_AMMO_TYPE",
-        ],
-        outputType: "AmmoType",
-        settings: [
-            .isDecodable: true,
-        ]
-    ),
-    .enum(
-        source: "map/pc.hpp",
-        type: "e_card_type",
-        prefix: "CARD_",
-        exclude: ["MAX_CARD_TYPE"],
-        outputType: "CardType",
+        outputType: "StatusChangeID",
         settings: [
             .isDecodable: true,
         ]

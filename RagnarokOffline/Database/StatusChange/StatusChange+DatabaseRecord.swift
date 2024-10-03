@@ -10,11 +10,11 @@ import RODatabase
 
 extension StatusChange: DatabaseRecord {
     var recordID: String {
-        status
+        status.stringValue
     }
 
     var recordName: String {
-        status
+        status.stringValue
     }
 
     func recordDetail(for mode: ServerMode) async throws -> DatabaseRecordDetail {
@@ -23,7 +23,7 @@ extension StatusChange: DatabaseRecord {
         var sections: [DatabaseRecordDetail.Section] = []
 
         let info: [DatabaseRecordAttribute] = [
-            .init(name: "Status", value: status),
+            .init(name: "Status", value: status.stringValue),
             .init(name: "Icon", value: icon),
         ]
         sections.append(.attributes("Info", info))
@@ -31,7 +31,7 @@ extension StatusChange: DatabaseRecord {
         if let fail {
             var failStatusChanges: [StatusChange] = []
             for name in fail {
-                if let statusChange = try? await statusChangeDatabase.statusChange(forName: name) {
+                if let statusChange = try? await statusChangeDatabase.statusChange(forID: name) {
                     failStatusChanges.append(statusChange)
                 }
             }
@@ -41,7 +41,7 @@ extension StatusChange: DatabaseRecord {
         if let endOnStart {
             var endOnStartStatusChanges: [StatusChange] = []
             for name in endOnStart {
-                if let statusChange = try? await statusChangeDatabase.statusChange(forName: name) {
+                if let statusChange = try? await statusChangeDatabase.statusChange(forID: name) {
                     endOnStartStatusChanges.append(statusChange)
                 }
             }
@@ -51,7 +51,7 @@ extension StatusChange: DatabaseRecord {
         if let endReturn {
             var endReturnStatusChanges: [StatusChange] = []
             for name in endReturn {
-                if let statusChange = try? await statusChangeDatabase.statusChange(forName: name) {
+                if let statusChange = try? await statusChangeDatabase.statusChange(forID: name) {
                     endReturnStatusChanges.append(statusChange)
                 }
             }
@@ -61,7 +61,7 @@ extension StatusChange: DatabaseRecord {
         if let endOnEnd {
             var endOnEndStatusChanges: [StatusChange] = []
             for name in endOnEnd {
-                if let statusChange = try? await statusChangeDatabase.statusChange(forName: name) {
+                if let statusChange = try? await statusChangeDatabase.statusChange(forID: name) {
                     endOnEndStatusChanges.append(statusChange)
                 }
             }

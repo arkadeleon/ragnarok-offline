@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ROGenerated
 import rAthenaCommon
 import rAthenaResources
 
@@ -23,7 +24,7 @@ public actor StatusChangeDatabase {
     public let mode: ServerMode
 
     private var cachedStatusChanges: [StatusChange] = []
-    private var cachedStatusChangesByName: [String : StatusChange] = [:]
+    private var cachedStatusChangesByID: [StatusChangeID : StatusChange] = [:]
 
     private init(mode: ServerMode) {
         self.mode = mode
@@ -43,13 +44,13 @@ public actor StatusChangeDatabase {
         return cachedStatusChanges
     }
 
-    public func statusChange(forName name: String) throws -> StatusChange? {
-        if cachedStatusChangesByName.isEmpty {
+    public func statusChange(forID statusChangeID: StatusChangeID) throws -> StatusChange? {
+        if cachedStatusChangesByID.isEmpty {
             let statusChanges = try statusChanges()
-            cachedStatusChangesByName = Dictionary(statusChanges.map({ ($0.status, $0) }), uniquingKeysWith: { (first, _) in first })
+            cachedStatusChangesByID = Dictionary(statusChanges.map({ ($0.status, $0) }), uniquingKeysWith: { (first, _) in first })
         }
 
-        let statusChange = cachedStatusChangesByName[name]
+        let statusChange = cachedStatusChangesByID[statusChangeID]
         return statusChange
     }
 }

@@ -5,10 +5,12 @@
 //  Created by Leon Li on 2024/5/10.
 //
 
+import ROGenerated
+
 public struct StatusChange: Decodable, Equatable, Hashable, Sendable {
 
     /// Status change name.
-    public var status: String
+    public var status: StatusChangeID
 
     /// Status change icon. (Default: EFST_BLANK)
     public var icon: String
@@ -44,16 +46,16 @@ public struct StatusChange: Decodable, Equatable, Hashable, Sendable {
     public var minDuration: Int
 
     /// List of Status Changes that causes the status to fail to activate. (Optional)
-    public var fail: Set<String>?
+    public var fail: Set<StatusChangeID>?
 
     /// List of Status Changes that will end when the status activates. (Optional)
-    public var endOnStart: Set<String>?
+    public var endOnStart: Set<StatusChangeID>?
 
     /// List of Status Changes that will end when the status activates and won't give its effect. (Optional)
-    public var endReturn: Set<String>?
+    public var endReturn: Set<StatusChangeID>?
 
     /// List of Status Changes that will end when the status becomes inactive. (Optional)
-    public var endOnEnd: Set<String>?
+    public var endOnEnd: Set<StatusChangeID>?
 
     enum CodingKeys: String, CodingKey {
         case status = "Status"
@@ -76,7 +78,7 @@ public struct StatusChange: Decodable, Equatable, Hashable, Sendable {
 
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.status = try container.decode(String.self, forKey: .status)
+        self.status = try container.decode(StatusChangeID.self, forKey: .status)
         self.icon = try container.decodeIfPresent(String.self, forKey: .icon) ?? "EFST_BLANK"
         self.durationLookup = try container.decodeIfPresent(String.self, forKey: .durationLookup)
         self.states = try container.decodeIfPresent([String : Bool].self, forKey: .states).flatMap({ Set<String>($0.keys) })
@@ -88,9 +90,9 @@ public struct StatusChange: Decodable, Equatable, Hashable, Sendable {
         self.flags = try container.decodeIfPresent([String : Bool].self, forKey: .flags).flatMap({ Set<String>($0.keys) })
         self.minRate = try container.decodeIfPresent(Int.self, forKey: .minRate) ?? 0
         self.minDuration = try container.decodeIfPresent(Int.self, forKey: .minDuration) ?? 1
-        self.fail = try container.decodeIfPresent([String : Bool].self, forKey: .fail).flatMap({ Set<String>($0.keys) })
-        self.endOnStart = try container.decodeIfPresent([String : Bool].self, forKey: .endOnStart).flatMap({ Set<String>($0.keys) })
-        self.endReturn = try container.decodeIfPresent([String : Bool].self, forKey: .endReturn).flatMap({ Set<String>($0.keys) })
-        self.endOnEnd = try container.decodeIfPresent([String : Bool].self, forKey: .endOnEnd).flatMap({ Set<String>($0.keys) })
+        self.fail = try container.decodeIfPresent([StatusChangeID : Bool].self, forKey: .fail)?.unorderedKeys
+        self.endOnStart = try container.decodeIfPresent([StatusChangeID : Bool].self, forKey: .endOnStart)?.unorderedKeys
+        self.endReturn = try container.decodeIfPresent([StatusChangeID : Bool].self, forKey: .endReturn)?.unorderedKeys
+        self.endOnEnd = try container.decodeIfPresent([StatusChangeID : Bool].self, forKey: .endOnEnd)?.unorderedKeys
     }
 }
