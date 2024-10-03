@@ -19,7 +19,7 @@ final class StatusChangeDatabaseTests: XCTestCase {
 
         let stone = try await database.statusChange(forID: .stone)!
         XCTAssertEqual(stone.status, .stone)
-        XCTAssertEqual(stone.icon, "EFST_BLANK")
+        XCTAssertEqual(stone.icon, .efst_blank)
         XCTAssertEqual(stone.durationLookup, "NPC_PETRIFYATTACK")
         XCTAssertEqual(stone.states, ["NoMove", "NoCast", "NoAttack"])
         XCTAssertEqual(stone.calcFlags, ["Def_Ele", "Def", "Mdef"])
@@ -35,7 +35,7 @@ final class StatusChangeDatabaseTests: XCTestCase {
 
         let stone = try await database.statusChange(forID: .stone)!
         XCTAssertEqual(stone.status, .stone)
-        XCTAssertEqual(stone.icon, "EFST_BLANK")
+        XCTAssertEqual(stone.icon, .efst_blank)
         XCTAssertEqual(stone.durationLookup, "NPC_PETRIFYATTACK")
         XCTAssertEqual(stone.states, ["NoMove", "NoCast", "NoAttack"])
         XCTAssertEqual(stone.calcFlags, ["Def_Ele", "Def", "Mdef"])

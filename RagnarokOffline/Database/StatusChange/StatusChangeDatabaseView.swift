@@ -25,7 +25,7 @@ struct StatusChangeDatabaseView: View {
                         HStack {
                             Text(statusChange.status.stringValue)
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            Text(statusChange.icon)
+                            Text(statusChange.icon.stringValue)
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 .foregroundStyle(Color.secondary)
                         }

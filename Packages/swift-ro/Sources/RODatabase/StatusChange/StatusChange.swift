@@ -13,7 +13,7 @@ public struct StatusChange: Decodable, Equatable, Hashable, Sendable {
     public var status: StatusChangeID
 
     /// Status change icon. (Default: EFST_BLANK)
-    public var icon: String
+    public var icon: OfficialStatusChangeID
 
     /// Default status change duration. (Default: 0)
     public var durationLookup: String?
@@ -79,7 +79,7 @@ public struct StatusChange: Decodable, Equatable, Hashable, Sendable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.status = try container.decode(StatusChangeID.self, forKey: .status)
-        self.icon = try container.decodeIfPresent(String.self, forKey: .icon) ?? "EFST_BLANK"
+        self.icon = try container.decodeIfPresent(OfficialStatusChangeID.self, forKey: .icon) ?? .efst_blank
         self.durationLookup = try container.decodeIfPresent(String.self, forKey: .durationLookup)
         self.states = try container.decodeIfPresent([String : Bool].self, forKey: .states).flatMap({ Set<String>($0.keys) })
         self.calcFlags = try container.decodeIfPresent([String : Bool].self, forKey: .calcFlags).flatMap({ Set<String>($0.keys) })

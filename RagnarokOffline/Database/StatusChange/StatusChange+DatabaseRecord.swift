@@ -24,7 +24,7 @@ extension StatusChange: DatabaseRecord {
 
         let info: [DatabaseRecordAttribute] = [
             .init(name: "Status", value: status.stringValue),
-            .init(name: "Icon", value: icon),
+            .init(name: "Icon", value: icon.stringValue),
         ]
         sections.append(.attributes("Info", info))
 

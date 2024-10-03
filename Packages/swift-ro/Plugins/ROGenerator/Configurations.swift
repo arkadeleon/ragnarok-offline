@@ -350,6 +350,17 @@ let configurations: [Configuration] = [
             .isDecodable: true,
         ]
     ),
+    .enum(
+        source: "map/status.hpp",
+        type: "efst_type",
+        exclude: [
+            "EFST_MAX",
+        ],
+        outputType: "OfficialStatusChangeID",
+        settings: [
+            .isDecodable: true,
+        ]
+    ),
 ]
 
 struct Configuration {
@@ -378,7 +389,7 @@ struct Configuration {
     static func `enum`(
         source: String,
         type: String,
-        prefix: String,
+        prefix: String = "",
         suffix: String = "",
         exclude: [String] = [],
         replace: [String : String] = [:],
