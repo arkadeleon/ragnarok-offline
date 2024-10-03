@@ -17,9 +17,7 @@ let configurations: [Configuration] = [
             "IT_MAX",
         ],
         outputType: "ItemType",
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "common/mmo.hpp",
@@ -28,9 +26,7 @@ let configurations: [Configuration] = [
         exclude: ["MD_NONE"],
         outputType: "MonsterMode",
         outputFormat: .hex,
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "common/mmo.hpp",
@@ -44,9 +40,7 @@ let configurations: [Configuration] = [
             "JOB_SUPER_NOVICE": ["JOB_SUPERNOVICE"],
         ],
         outputType: "JobID",
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "common/mmo.hpp",
@@ -54,9 +48,7 @@ let configurations: [Configuration] = [
         prefix: "SEX_",
         exclude: ["SEX_SERVER"],
         outputType: "Sex",
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     // MARK: - map/battle.hpp
     .enum(
@@ -70,9 +62,7 @@ let configurations: [Configuration] = [
         ],
         outputType: "BattleFlag",
         outputFormat: .hex,
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "map/battle.hpp",
@@ -80,9 +70,7 @@ let configurations: [Configuration] = [
         prefix: "BCT_",
         outputType: "BattleCheckTarget",
         outputFormat: .hex,
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     // MARK: - map/map.hpp
     .enum(
@@ -95,9 +83,7 @@ let configurations: [Configuration] = [
         ],
         outputType: "EAJobID",
         outputFormat: .hex,
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     // TODO: bl_type
     // TODO: npc_subtype
@@ -113,9 +99,7 @@ let configurations: [Configuration] = [
             "RC_MAX",
         ],
         outputType: "Race",
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "map/map.hpp",
@@ -126,9 +110,7 @@ let configurations: [Configuration] = [
             "RC2_MAX",
         ],
         outputType: "Race2",
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "map/map.hpp",
@@ -140,9 +122,7 @@ let configurations: [Configuration] = [
             "ELE_MAX",
         ],
         outputType: "Element",
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "map/map.hpp",
@@ -176,9 +156,7 @@ let configurations: [Configuration] = [
             "SZ_BIG": "SZ_LARGE",
         ],
         outputType: "Size",
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "map/mob.hpp",
@@ -187,9 +165,7 @@ let configurations: [Configuration] = [
         outputType: "MonsterAI",
         outputPrefix: "ai",
         outputFormat: .hex,
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "map/mob.hpp",
@@ -201,9 +177,7 @@ let configurations: [Configuration] = [
             "CLASS_MAX",
         ],
         outputType: "MonsterClass",
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     // MARK: - map/pc.hpp
     .enum(
@@ -222,9 +196,7 @@ let configurations: [Configuration] = [
         ],
         outputType: "WeaponType",
         outputPrefix: "w_",
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "map/pc.hpp",
@@ -235,9 +207,7 @@ let configurations: [Configuration] = [
             "MAX_AMMO_TYPE",
         ],
         outputType: "AmmoType",
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "map/pc.hpp",
@@ -245,9 +215,7 @@ let configurations: [Configuration] = [
         prefix: "CARD_",
         exclude: ["MAX_CARD_TYPE"],
         outputType: "CardType",
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     // MARK: - map/skill.hpp
     .enum(
@@ -256,9 +224,7 @@ let configurations: [Configuration] = [
         prefix: "NK_",
         exclude: ["NK_MAX"],
         outputType: "SkillDamageFlag",
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "map/skill.hpp",
@@ -267,9 +233,7 @@ let configurations: [Configuration] = [
         suffix: "_SKILL",
         outputType: "SkillInfoFlag",
         outputFormat: .hex,
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "map/skill.hpp",
@@ -277,9 +241,7 @@ let configurations: [Configuration] = [
         prefix: "INF2_",
         exclude: ["INF2_MAX"],
         outputType: "SkillInfoFlag2",
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "map/skill.hpp",
@@ -287,9 +249,7 @@ let configurations: [Configuration] = [
         prefix: "SKILL_REQ_",
         outputType: "SkillRequirement",
         outputFormat: .hex,
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "map/skill.hpp",
@@ -297,9 +257,7 @@ let configurations: [Configuration] = [
         prefix: "SKILL_NONEAR_",
         outputType: "SkillNoNearNPC",
         outputFormat: .hex,
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "map/skill.hpp",
@@ -307,9 +265,7 @@ let configurations: [Configuration] = [
         prefix: "SKILL_CAST_",
         outputType: "SkillCastFlag",
         outputFormat: .hex,
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "map/skill.hpp",
@@ -317,9 +273,7 @@ let configurations: [Configuration] = [
         prefix: "SKILL_COPY_",
         outputType: "SkillCopyableOption",
         outputFormat: .hex,
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "map/skill.hpp",
@@ -330,9 +284,7 @@ let configurations: [Configuration] = [
             "UF_MAX",
         ],
         outputType: "SkillUnitFlag",
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     // MARK: - map/status.hpp
     .enum(
@@ -346,9 +298,7 @@ let configurations: [Configuration] = [
             "SC_MAX",
         ],
         outputType: "StatusChangeID",
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
     .enum(
         source: "map/status.hpp",
@@ -357,9 +307,7 @@ let configurations: [Configuration] = [
             "EFST_MAX",
         ],
         outputType: "OfficialStatusChangeID",
-        settings: [
-            .isDecodable: true,
-        ]
+        extensions: [.decodable]
     ),
 ]
 
@@ -369,8 +317,8 @@ struct Configuration {
         case hex
     }
 
-    enum Setting {
-        case isDecodable
+    enum Extension {
+        case decodable
     }
 
     var source: String
@@ -384,7 +332,7 @@ struct Configuration {
     var outputType: String
     var outputPrefix: String?
     var outputFormat: OutputFormat
-    var settings: [Setting : Bool]
+    var extensions: [Extension]
 
     static func `enum`(
         source: String,
@@ -397,7 +345,7 @@ struct Configuration {
         outputType: String,
         outputPrefix: String? = nil,
         outputFormat: OutputFormat = .decimal,
-        settings: [Setting : Bool] = [:]
+        extensions: [Extension] = []
     ) -> Configuration {
         Configuration(
             source: source,
@@ -411,7 +359,7 @@ struct Configuration {
             outputType: outputType,
             outputPrefix: outputPrefix,
             outputFormat: outputFormat,
-            settings: settings
+            extensions: extensions
         )
     }
 }

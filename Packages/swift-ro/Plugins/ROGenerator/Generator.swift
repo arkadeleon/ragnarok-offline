@@ -300,7 +300,7 @@ struct Generator: CommandPlugin {
 
         """
 
-        if configuration.settings[.isDecodable] == true {
+        if configuration.extensions.contains(.decodable) {
             outputContents.append("""
 
             extension \(configuration.outputType): CodingKey, CodingKeyRepresentable, Decodable {
