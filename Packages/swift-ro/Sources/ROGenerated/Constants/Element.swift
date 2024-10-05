@@ -6,60 +6,41 @@
 //
 
 /// Converted from `e_element` in `map/map.hpp`.
-public enum Element: CaseIterable, RawRepresentable, Sendable {
-    case neutral
-    case water
-    case earth
-    case fire
-    case wind
-    case poison
-    case holy
-    case dark
-    case ghost
-    case undead
-    case weapon
-    case endowed
-    case random
-
-    public var rawValue: Int {
-        switch self {
-        case .neutral: 0
-        case .water: 1
-        case .earth: 2
-        case .fire: 3
-        case .wind: 4
-        case .poison: 5
-        case .holy: 6
-        case .dark: 7
-        case .ghost: 8
-        case .undead: 9
-        case .weapon: 12
-        case .endowed: 13
-        case .random: 14
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .neutral
-        case 1: self = .water
-        case 2: self = .earth
-        case 3: self = .fire
-        case 4: self = .wind
-        case 5: self = .poison
-        case 6: self = .holy
-        case 7: self = .dark
-        case 8: self = .ghost
-        case 9: self = .undead
-        case 12: self = .weapon
-        case 13: self = .endowed
-        case 14: self = .random
-        default: return nil
-        }
-    }
+public enum Element: Int, CaseIterable, Sendable {
+    case neutral = 0
+    case water = 1
+    case earth = 2
+    case fire = 3
+    case wind = 4
+    case poison = 5
+    case holy = 6
+    case dark = 7
+    case ghost = 8
+    case undead = 9
+    case weapon = 12
+    case endowed = 13
+    case random = 14
 }
 
-extension Element: CodingKey, CodingKeyRepresentable, Decodable {
+extension Element: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .neutral: "NEUTRAL"
+        case .water: "WATER"
+        case .earth: "EARTH"
+        case .fire: "FIRE"
+        case .wind: "WIND"
+        case .poison: "POISON"
+        case .holy: "HOLY"
+        case .dark: "DARK"
+        case .ghost: "GHOST"
+        case .undead: "UNDEAD"
+        case .weapon: "WEAPON"
+        case .endowed: "ENDOWED"
+        case .random: "RANDOM"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "NEUTRAL": self = .neutral
@@ -79,10 +60,26 @@ extension Element: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension Element: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension Element: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

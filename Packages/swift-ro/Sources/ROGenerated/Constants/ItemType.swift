@@ -6,57 +6,39 @@
 //
 
 /// Converted from `item_types` in `common/mmo.hpp`.
-public enum ItemType: CaseIterable, RawRepresentable, Sendable {
-    case healing
-    case usable
-    case etc
-    case armor
-    case weapon
-    case card
-    case petegg
-    case petarmor
-    case ammo
-    case delayconsume
-    case shadowgear
-    case cash
-
-    public var rawValue: Int {
-        switch self {
-        case .healing: 0
-        case .usable: 2
-        case .etc: 3
-        case .armor: 4
-        case .weapon: 5
-        case .card: 6
-        case .petegg: 7
-        case .petarmor: 8
-        case .ammo: 10
-        case .delayconsume: 11
-        case .shadowgear: 12
-        case .cash: 18
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .healing
-        case 2: self = .usable
-        case 3: self = .etc
-        case 4: self = .armor
-        case 5: self = .weapon
-        case 6: self = .card
-        case 7: self = .petegg
-        case 8: self = .petarmor
-        case 10: self = .ammo
-        case 11: self = .delayconsume
-        case 12: self = .shadowgear
-        case 18: self = .cash
-        default: return nil
-        }
-    }
+public enum ItemType: Int, CaseIterable, Sendable {
+    case healing = 0
+    case usable = 2
+    case etc = 3
+    case armor = 4
+    case weapon = 5
+    case card = 6
+    case petegg = 7
+    case petarmor = 8
+    case ammo = 10
+    case delayconsume = 11
+    case shadowgear = 12
+    case cash = 18
 }
 
-extension ItemType: CodingKey, CodingKeyRepresentable, Decodable {
+extension ItemType: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .healing: "HEALING"
+        case .usable: "USABLE"
+        case .etc: "ETC"
+        case .armor: "ARMOR"
+        case .weapon: "WEAPON"
+        case .card: "CARD"
+        case .petegg: "PETEGG"
+        case .petarmor: "PETARMOR"
+        case .ammo: "AMMO"
+        case .delayconsume: "DELAYCONSUME"
+        case .shadowgear: "SHADOWGEAR"
+        case .cash: "CASH"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "HEALING": self = .healing
@@ -75,10 +57,26 @@ extension ItemType: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension ItemType: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension ItemType: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

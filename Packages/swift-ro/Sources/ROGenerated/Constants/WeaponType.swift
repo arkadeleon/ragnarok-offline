@@ -6,96 +6,65 @@
 //
 
 /// Converted from `weapon_type` in `map/pc.hpp`.
-public enum WeaponType: CaseIterable, RawRepresentable, Sendable {
-    case w_fist
-    case w_dagger
-    case w_1hsword
-    case w_2hsword
-    case w_1hspear
-    case w_2hspear
-    case w_1haxe
-    case w_2haxe
-    case w_mace
-    case w_2hmace
-    case w_staff
-    case w_bow
-    case w_knuckle
-    case w_musical
-    case w_whip
-    case w_book
-    case w_katar
-    case w_revolver
-    case w_rifle
-    case w_gatling
-    case w_shotgun
-    case w_grenade
-    case w_huuma
-    case w_2hstaff
-    case w_shield
-
-    public var rawValue: Int {
-        switch self {
-        case .w_fist: 0
-        case .w_dagger: 1
-        case .w_1hsword: 2
-        case .w_2hsword: 3
-        case .w_1hspear: 4
-        case .w_2hspear: 5
-        case .w_1haxe: 6
-        case .w_2haxe: 7
-        case .w_mace: 8
-        case .w_2hmace: 9
-        case .w_staff: 10
-        case .w_bow: 11
-        case .w_knuckle: 12
-        case .w_musical: 13
-        case .w_whip: 14
-        case .w_book: 15
-        case .w_katar: 16
-        case .w_revolver: 17
-        case .w_rifle: 18
-        case .w_gatling: 19
-        case .w_shotgun: 20
-        case .w_grenade: 21
-        case .w_huuma: 22
-        case .w_2hstaff: 23
-        case .w_shield: 24
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .w_fist
-        case 1: self = .w_dagger
-        case 2: self = .w_1hsword
-        case 3: self = .w_2hsword
-        case 4: self = .w_1hspear
-        case 5: self = .w_2hspear
-        case 6: self = .w_1haxe
-        case 7: self = .w_2haxe
-        case 8: self = .w_mace
-        case 9: self = .w_2hmace
-        case 10: self = .w_staff
-        case 11: self = .w_bow
-        case 12: self = .w_knuckle
-        case 13: self = .w_musical
-        case 14: self = .w_whip
-        case 15: self = .w_book
-        case 16: self = .w_katar
-        case 17: self = .w_revolver
-        case 18: self = .w_rifle
-        case 19: self = .w_gatling
-        case 20: self = .w_shotgun
-        case 21: self = .w_grenade
-        case 22: self = .w_huuma
-        case 23: self = .w_2hstaff
-        case 24: self = .w_shield
-        default: return nil
-        }
-    }
+public enum WeaponType: Int, CaseIterable, Sendable {
+    case w_fist = 0
+    case w_dagger = 1
+    case w_1hsword = 2
+    case w_2hsword = 3
+    case w_1hspear = 4
+    case w_2hspear = 5
+    case w_1haxe = 6
+    case w_2haxe = 7
+    case w_mace = 8
+    case w_2hmace = 9
+    case w_staff = 10
+    case w_bow = 11
+    case w_knuckle = 12
+    case w_musical = 13
+    case w_whip = 14
+    case w_book = 15
+    case w_katar = 16
+    case w_revolver = 17
+    case w_rifle = 18
+    case w_gatling = 19
+    case w_shotgun = 20
+    case w_grenade = 21
+    case w_huuma = 22
+    case w_2hstaff = 23
+    case w_shield = 24
 }
 
-extension WeaponType: CodingKey, CodingKeyRepresentable, Decodable {
+extension WeaponType: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .w_fist: "FIST"
+        case .w_dagger: "DAGGER"
+        case .w_1hsword: "1HSWORD"
+        case .w_2hsword: "2HSWORD"
+        case .w_1hspear: "1HSPEAR"
+        case .w_2hspear: "2HSPEAR"
+        case .w_1haxe: "1HAXE"
+        case .w_2haxe: "2HAXE"
+        case .w_mace: "MACE"
+        case .w_2hmace: "2HMACE"
+        case .w_staff: "STAFF"
+        case .w_bow: "BOW"
+        case .w_knuckle: "KNUCKLE"
+        case .w_musical: "MUSICAL"
+        case .w_whip: "WHIP"
+        case .w_book: "BOOK"
+        case .w_katar: "KATAR"
+        case .w_revolver: "REVOLVER"
+        case .w_rifle: "RIFLE"
+        case .w_gatling: "GATLING"
+        case .w_shotgun: "SHOTGUN"
+        case .w_grenade: "GRENADE"
+        case .w_huuma: "HUUMA"
+        case .w_2hstaff: "2HSTAFF"
+        case .w_shield: "SHIELD"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "FIST": self = .w_fist
@@ -127,10 +96,26 @@ extension WeaponType: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension WeaponType: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension WeaponType: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

@@ -6,453 +6,303 @@
 //
 
 /// Converted from `e_mapid` in `map/map.hpp`.
-public enum EAJobID: CaseIterable, RawRepresentable, Sendable {
-    case novice
-    case swordman
-    case mage
-    case archer
-    case acolyte
-    case merchant
-    case thief
-    case taekwon
-    case wedding
-    case gunslinger
-    case ninja
-    case xmas
-    case summer
-    case hanbok
-    case gangsi
-    case oktoberfest
-    case summoner
-    case summer2
-    case super_novice
-    case knight
-    case wizard
-    case hunter
-    case priest
-    case blacksmith
-    case assassin
-    case star_gladiator
-    case rebellion
-    case kagerouoboro
-    case death_knight
-    case crusader
-    case sage
-    case barddancer
-    case monk
-    case alchemist
-    case rogue
-    case soul_linker
-    case dark_collector
-    case novice_high
-    case swordman_high
-    case mage_high
-    case archer_high
-    case acolyte_high
-    case merchant_high
-    case thief_high
-    case lord_knight
-    case high_wizard
-    case sniper
-    case high_priest
-    case whitesmith
-    case assassin_cross
-    case paladin
-    case professor
-    case clowngypsy
-    case champion
-    case creator
-    case stalker
-    case baby
-    case baby_swordman
-    case baby_mage
-    case baby_archer
-    case baby_acolyte
-    case baby_merchant
-    case baby_thief
-    case baby_taekwon
-    case baby_gunslinger
-    case baby_ninja
-    case baby_summoner
-    case super_baby
-    case baby_knight
-    case baby_wizard
-    case baby_hunter
-    case baby_priest
-    case baby_blacksmith
-    case baby_assassin
-    case baby_star_gladiator
-    case baby_rebellion
-    case baby_kagerouoboro
-    case baby_crusader
-    case baby_sage
-    case baby_barddancer
-    case baby_monk
-    case baby_alchemist
-    case baby_rogue
-    case baby_soul_linker
-    case super_novice_e
-    case rune_knight
-    case warlock
-    case ranger
-    case arch_bishop
-    case mechanic
-    case guillotine_cross
-    case star_emperor
-    case royal_guard
-    case sorcerer
-    case minstrelwanderer
-    case sura
-    case genetic
-    case shadow_chaser
-    case soul_reaper
-    case rune_knight_t
-    case warlock_t
-    case ranger_t
-    case arch_bishop_t
-    case mechanic_t
-    case guillotine_cross_t
-    case royal_guard_t
-    case sorcerer_t
-    case minstrelwanderer_t
-    case sura_t
-    case genetic_t
-    case shadow_chaser_t
-    case super_baby_e
-    case baby_rune_knight
-    case baby_warlock
-    case baby_ranger
-    case baby_arch_bishop
-    case baby_mechanic
-    case baby_guillotine_cross
-    case baby_star_emperor
-    case baby_royal_guard
-    case baby_sorcerer
-    case baby_minstrelwanderer
-    case baby_sura
-    case baby_genetic
-    case baby_shadow_chaser
-    case baby_soul_reaper
-    case hyper_novice
-    case dragon_knight
-    case arch_mage
-    case windhawk
-    case cardinal
-    case meister
-    case shadow_cross
-    case sky_emperor
-    case night_watch
-    case shinkiro_shiranui
-    case spirit_handler
-    case imperial_guard
-    case elemental_master
-    case troubadourtrouvere
-    case inquisitor
-    case biolo
-    case abyss_chaser
-    case soul_ascetic
-
-    public var rawValue: Int {
-        switch self {
-        case .novice: 0x0
-        case .swordman: 0x1
-        case .mage: 0x2
-        case .archer: 0x3
-        case .acolyte: 0x4
-        case .merchant: 0x5
-        case .thief: 0x6
-        case .taekwon: 0x7
-        case .wedding: 0x8
-        case .gunslinger: 0x9
-        case .ninja: 0xa
-        case .xmas: 0xb
-        case .summer: 0xc
-        case .hanbok: 0xd
-        case .gangsi: 0xe
-        case .oktoberfest: 0xf
-        case .summoner: 0x10
-        case .summer2: 0x11
-        case .super_novice: 0x100
-        case .knight: 0x101
-        case .wizard: 0x102
-        case .hunter: 0x103
-        case .priest: 0x104
-        case .blacksmith: 0x105
-        case .assassin: 0x106
-        case .star_gladiator: 0x107
-        case .rebellion: 0x109
-        case .kagerouoboro: 0x10a
-        case .death_knight: 0x10e
-        case .crusader: 0x201
-        case .sage: 0x202
-        case .barddancer: 0x203
-        case .monk: 0x204
-        case .alchemist: 0x205
-        case .rogue: 0x206
-        case .soul_linker: 0x207
-        case .dark_collector: 0x20e
-        case .novice_high: 0x1000
-        case .swordman_high: 0x1001
-        case .mage_high: 0x1002
-        case .archer_high: 0x1003
-        case .acolyte_high: 0x1004
-        case .merchant_high: 0x1005
-        case .thief_high: 0x1006
-        case .lord_knight: 0x1101
-        case .high_wizard: 0x1102
-        case .sniper: 0x1103
-        case .high_priest: 0x1104
-        case .whitesmith: 0x1105
-        case .assassin_cross: 0x1106
-        case .paladin: 0x1201
-        case .professor: 0x1202
-        case .clowngypsy: 0x1203
-        case .champion: 0x1204
-        case .creator: 0x1205
-        case .stalker: 0x1206
-        case .baby: 0x2000
-        case .baby_swordman: 0x2001
-        case .baby_mage: 0x2002
-        case .baby_archer: 0x2003
-        case .baby_acolyte: 0x2004
-        case .baby_merchant: 0x2005
-        case .baby_thief: 0x2006
-        case .baby_taekwon: 0x2007
-        case .baby_gunslinger: 0x2009
-        case .baby_ninja: 0x200a
-        case .baby_summoner: 0x2010
-        case .super_baby: 0x2100
-        case .baby_knight: 0x2101
-        case .baby_wizard: 0x2102
-        case .baby_hunter: 0x2103
-        case .baby_priest: 0x2104
-        case .baby_blacksmith: 0x2105
-        case .baby_assassin: 0x2106
-        case .baby_star_gladiator: 0x2107
-        case .baby_rebellion: 0x2109
-        case .baby_kagerouoboro: 0x210a
-        case .baby_crusader: 0x2201
-        case .baby_sage: 0x2202
-        case .baby_barddancer: 0x2203
-        case .baby_monk: 0x2204
-        case .baby_alchemist: 0x2205
-        case .baby_rogue: 0x2206
-        case .baby_soul_linker: 0x2207
-        case .super_novice_e: 0x4100
-        case .rune_knight: 0x4101
-        case .warlock: 0x4102
-        case .ranger: 0x4103
-        case .arch_bishop: 0x4104
-        case .mechanic: 0x4105
-        case .guillotine_cross: 0x4106
-        case .star_emperor: 0x4107
-        case .royal_guard: 0x4201
-        case .sorcerer: 0x4202
-        case .minstrelwanderer: 0x4203
-        case .sura: 0x4204
-        case .genetic: 0x4205
-        case .shadow_chaser: 0x4206
-        case .soul_reaper: 0x4207
-        case .rune_knight_t: 0x5101
-        case .warlock_t: 0x5102
-        case .ranger_t: 0x5103
-        case .arch_bishop_t: 0x5104
-        case .mechanic_t: 0x5105
-        case .guillotine_cross_t: 0x5106
-        case .royal_guard_t: 0x5201
-        case .sorcerer_t: 0x5202
-        case .minstrelwanderer_t: 0x5203
-        case .sura_t: 0x5204
-        case .genetic_t: 0x5205
-        case .shadow_chaser_t: 0x5206
-        case .super_baby_e: 0x6100
-        case .baby_rune_knight: 0x6101
-        case .baby_warlock: 0x6102
-        case .baby_ranger: 0x6103
-        case .baby_arch_bishop: 0x6104
-        case .baby_mechanic: 0x6105
-        case .baby_guillotine_cross: 0x6106
-        case .baby_star_emperor: 0x6107
-        case .baby_royal_guard: 0x6201
-        case .baby_sorcerer: 0x6202
-        case .baby_minstrelwanderer: 0x6203
-        case .baby_sura: 0x6204
-        case .baby_genetic: 0x6205
-        case .baby_shadow_chaser: 0x6206
-        case .baby_soul_reaper: 0x6207
-        case .hyper_novice: 0xd100
-        case .dragon_knight: 0xd101
-        case .arch_mage: 0xd102
-        case .windhawk: 0xd103
-        case .cardinal: 0xd104
-        case .meister: 0xd105
-        case .shadow_cross: 0xd106
-        case .sky_emperor: 0xd107
-        case .night_watch: 0xd109
-        case .shinkiro_shiranui: 0xd10a
-        case .spirit_handler: 0xd110
-        case .imperial_guard: 0xd201
-        case .elemental_master: 0xd202
-        case .troubadourtrouvere: 0xd203
-        case .inquisitor: 0xd204
-        case .biolo: 0xd205
-        case .abyss_chaser: 0xd206
-        case .soul_ascetic: 0xd207
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0x0: self = .novice
-        case 0x1: self = .swordman
-        case 0x2: self = .mage
-        case 0x3: self = .archer
-        case 0x4: self = .acolyte
-        case 0x5: self = .merchant
-        case 0x6: self = .thief
-        case 0x7: self = .taekwon
-        case 0x8: self = .wedding
-        case 0x9: self = .gunslinger
-        case 0xa: self = .ninja
-        case 0xb: self = .xmas
-        case 0xc: self = .summer
-        case 0xd: self = .hanbok
-        case 0xe: self = .gangsi
-        case 0xf: self = .oktoberfest
-        case 0x10: self = .summoner
-        case 0x11: self = .summer2
-        case 0x100: self = .super_novice
-        case 0x101: self = .knight
-        case 0x102: self = .wizard
-        case 0x103: self = .hunter
-        case 0x104: self = .priest
-        case 0x105: self = .blacksmith
-        case 0x106: self = .assassin
-        case 0x107: self = .star_gladiator
-        case 0x109: self = .rebellion
-        case 0x10a: self = .kagerouoboro
-        case 0x10e: self = .death_knight
-        case 0x201: self = .crusader
-        case 0x202: self = .sage
-        case 0x203: self = .barddancer
-        case 0x204: self = .monk
-        case 0x205: self = .alchemist
-        case 0x206: self = .rogue
-        case 0x207: self = .soul_linker
-        case 0x20e: self = .dark_collector
-        case 0x1000: self = .novice_high
-        case 0x1001: self = .swordman_high
-        case 0x1002: self = .mage_high
-        case 0x1003: self = .archer_high
-        case 0x1004: self = .acolyte_high
-        case 0x1005: self = .merchant_high
-        case 0x1006: self = .thief_high
-        case 0x1101: self = .lord_knight
-        case 0x1102: self = .high_wizard
-        case 0x1103: self = .sniper
-        case 0x1104: self = .high_priest
-        case 0x1105: self = .whitesmith
-        case 0x1106: self = .assassin_cross
-        case 0x1201: self = .paladin
-        case 0x1202: self = .professor
-        case 0x1203: self = .clowngypsy
-        case 0x1204: self = .champion
-        case 0x1205: self = .creator
-        case 0x1206: self = .stalker
-        case 0x2000: self = .baby
-        case 0x2001: self = .baby_swordman
-        case 0x2002: self = .baby_mage
-        case 0x2003: self = .baby_archer
-        case 0x2004: self = .baby_acolyte
-        case 0x2005: self = .baby_merchant
-        case 0x2006: self = .baby_thief
-        case 0x2007: self = .baby_taekwon
-        case 0x2009: self = .baby_gunslinger
-        case 0x200a: self = .baby_ninja
-        case 0x2010: self = .baby_summoner
-        case 0x2100: self = .super_baby
-        case 0x2101: self = .baby_knight
-        case 0x2102: self = .baby_wizard
-        case 0x2103: self = .baby_hunter
-        case 0x2104: self = .baby_priest
-        case 0x2105: self = .baby_blacksmith
-        case 0x2106: self = .baby_assassin
-        case 0x2107: self = .baby_star_gladiator
-        case 0x2109: self = .baby_rebellion
-        case 0x210a: self = .baby_kagerouoboro
-        case 0x2201: self = .baby_crusader
-        case 0x2202: self = .baby_sage
-        case 0x2203: self = .baby_barddancer
-        case 0x2204: self = .baby_monk
-        case 0x2205: self = .baby_alchemist
-        case 0x2206: self = .baby_rogue
-        case 0x2207: self = .baby_soul_linker
-        case 0x4100: self = .super_novice_e
-        case 0x4101: self = .rune_knight
-        case 0x4102: self = .warlock
-        case 0x4103: self = .ranger
-        case 0x4104: self = .arch_bishop
-        case 0x4105: self = .mechanic
-        case 0x4106: self = .guillotine_cross
-        case 0x4107: self = .star_emperor
-        case 0x4201: self = .royal_guard
-        case 0x4202: self = .sorcerer
-        case 0x4203: self = .minstrelwanderer
-        case 0x4204: self = .sura
-        case 0x4205: self = .genetic
-        case 0x4206: self = .shadow_chaser
-        case 0x4207: self = .soul_reaper
-        case 0x5101: self = .rune_knight_t
-        case 0x5102: self = .warlock_t
-        case 0x5103: self = .ranger_t
-        case 0x5104: self = .arch_bishop_t
-        case 0x5105: self = .mechanic_t
-        case 0x5106: self = .guillotine_cross_t
-        case 0x5201: self = .royal_guard_t
-        case 0x5202: self = .sorcerer_t
-        case 0x5203: self = .minstrelwanderer_t
-        case 0x5204: self = .sura_t
-        case 0x5205: self = .genetic_t
-        case 0x5206: self = .shadow_chaser_t
-        case 0x6100: self = .super_baby_e
-        case 0x6101: self = .baby_rune_knight
-        case 0x6102: self = .baby_warlock
-        case 0x6103: self = .baby_ranger
-        case 0x6104: self = .baby_arch_bishop
-        case 0x6105: self = .baby_mechanic
-        case 0x6106: self = .baby_guillotine_cross
-        case 0x6107: self = .baby_star_emperor
-        case 0x6201: self = .baby_royal_guard
-        case 0x6202: self = .baby_sorcerer
-        case 0x6203: self = .baby_minstrelwanderer
-        case 0x6204: self = .baby_sura
-        case 0x6205: self = .baby_genetic
-        case 0x6206: self = .baby_shadow_chaser
-        case 0x6207: self = .baby_soul_reaper
-        case 0xd100: self = .hyper_novice
-        case 0xd101: self = .dragon_knight
-        case 0xd102: self = .arch_mage
-        case 0xd103: self = .windhawk
-        case 0xd104: self = .cardinal
-        case 0xd105: self = .meister
-        case 0xd106: self = .shadow_cross
-        case 0xd107: self = .sky_emperor
-        case 0xd109: self = .night_watch
-        case 0xd10a: self = .shinkiro_shiranui
-        case 0xd110: self = .spirit_handler
-        case 0xd201: self = .imperial_guard
-        case 0xd202: self = .elemental_master
-        case 0xd203: self = .troubadourtrouvere
-        case 0xd204: self = .inquisitor
-        case 0xd205: self = .biolo
-        case 0xd206: self = .abyss_chaser
-        case 0xd207: self = .soul_ascetic
-        default: return nil
-        }
-    }
+public enum EAJobID: Int, CaseIterable, Sendable {
+    case novice = 0x0
+    case swordman = 0x1
+    case mage = 0x2
+    case archer = 0x3
+    case acolyte = 0x4
+    case merchant = 0x5
+    case thief = 0x6
+    case taekwon = 0x7
+    case wedding = 0x8
+    case gunslinger = 0x9
+    case ninja = 0xa
+    case xmas = 0xb
+    case summer = 0xc
+    case hanbok = 0xd
+    case gangsi = 0xe
+    case oktoberfest = 0xf
+    case summoner = 0x10
+    case summer2 = 0x11
+    case super_novice = 0x100
+    case knight = 0x101
+    case wizard = 0x102
+    case hunter = 0x103
+    case priest = 0x104
+    case blacksmith = 0x105
+    case assassin = 0x106
+    case star_gladiator = 0x107
+    case rebellion = 0x109
+    case kagerouoboro = 0x10a
+    case death_knight = 0x10e
+    case crusader = 0x201
+    case sage = 0x202
+    case barddancer = 0x203
+    case monk = 0x204
+    case alchemist = 0x205
+    case rogue = 0x206
+    case soul_linker = 0x207
+    case dark_collector = 0x20e
+    case novice_high = 0x1000
+    case swordman_high = 0x1001
+    case mage_high = 0x1002
+    case archer_high = 0x1003
+    case acolyte_high = 0x1004
+    case merchant_high = 0x1005
+    case thief_high = 0x1006
+    case lord_knight = 0x1101
+    case high_wizard = 0x1102
+    case sniper = 0x1103
+    case high_priest = 0x1104
+    case whitesmith = 0x1105
+    case assassin_cross = 0x1106
+    case paladin = 0x1201
+    case professor = 0x1202
+    case clowngypsy = 0x1203
+    case champion = 0x1204
+    case creator = 0x1205
+    case stalker = 0x1206
+    case baby = 0x2000
+    case baby_swordman = 0x2001
+    case baby_mage = 0x2002
+    case baby_archer = 0x2003
+    case baby_acolyte = 0x2004
+    case baby_merchant = 0x2005
+    case baby_thief = 0x2006
+    case baby_taekwon = 0x2007
+    case baby_gunslinger = 0x2009
+    case baby_ninja = 0x200a
+    case baby_summoner = 0x2010
+    case super_baby = 0x2100
+    case baby_knight = 0x2101
+    case baby_wizard = 0x2102
+    case baby_hunter = 0x2103
+    case baby_priest = 0x2104
+    case baby_blacksmith = 0x2105
+    case baby_assassin = 0x2106
+    case baby_star_gladiator = 0x2107
+    case baby_rebellion = 0x2109
+    case baby_kagerouoboro = 0x210a
+    case baby_crusader = 0x2201
+    case baby_sage = 0x2202
+    case baby_barddancer = 0x2203
+    case baby_monk = 0x2204
+    case baby_alchemist = 0x2205
+    case baby_rogue = 0x2206
+    case baby_soul_linker = 0x2207
+    case super_novice_e = 0x4100
+    case rune_knight = 0x4101
+    case warlock = 0x4102
+    case ranger = 0x4103
+    case arch_bishop = 0x4104
+    case mechanic = 0x4105
+    case guillotine_cross = 0x4106
+    case star_emperor = 0x4107
+    case royal_guard = 0x4201
+    case sorcerer = 0x4202
+    case minstrelwanderer = 0x4203
+    case sura = 0x4204
+    case genetic = 0x4205
+    case shadow_chaser = 0x4206
+    case soul_reaper = 0x4207
+    case rune_knight_t = 0x5101
+    case warlock_t = 0x5102
+    case ranger_t = 0x5103
+    case arch_bishop_t = 0x5104
+    case mechanic_t = 0x5105
+    case guillotine_cross_t = 0x5106
+    case royal_guard_t = 0x5201
+    case sorcerer_t = 0x5202
+    case minstrelwanderer_t = 0x5203
+    case sura_t = 0x5204
+    case genetic_t = 0x5205
+    case shadow_chaser_t = 0x5206
+    case super_baby_e = 0x6100
+    case baby_rune_knight = 0x6101
+    case baby_warlock = 0x6102
+    case baby_ranger = 0x6103
+    case baby_arch_bishop = 0x6104
+    case baby_mechanic = 0x6105
+    case baby_guillotine_cross = 0x6106
+    case baby_star_emperor = 0x6107
+    case baby_royal_guard = 0x6201
+    case baby_sorcerer = 0x6202
+    case baby_minstrelwanderer = 0x6203
+    case baby_sura = 0x6204
+    case baby_genetic = 0x6205
+    case baby_shadow_chaser = 0x6206
+    case baby_soul_reaper = 0x6207
+    case hyper_novice = 0xd100
+    case dragon_knight = 0xd101
+    case arch_mage = 0xd102
+    case windhawk = 0xd103
+    case cardinal = 0xd104
+    case meister = 0xd105
+    case shadow_cross = 0xd106
+    case sky_emperor = 0xd107
+    case night_watch = 0xd109
+    case shinkiro_shiranui = 0xd10a
+    case spirit_handler = 0xd110
+    case imperial_guard = 0xd201
+    case elemental_master = 0xd202
+    case troubadourtrouvere = 0xd203
+    case inquisitor = 0xd204
+    case biolo = 0xd205
+    case abyss_chaser = 0xd206
+    case soul_ascetic = 0xd207
 }
 
-extension EAJobID: CodingKey, CodingKeyRepresentable, Decodable {
+extension EAJobID: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .novice: "NOVICE"
+        case .swordman: "SWORDMAN"
+        case .mage: "MAGE"
+        case .archer: "ARCHER"
+        case .acolyte: "ACOLYTE"
+        case .merchant: "MERCHANT"
+        case .thief: "THIEF"
+        case .taekwon: "TAEKWON"
+        case .wedding: "WEDDING"
+        case .gunslinger: "GUNSLINGER"
+        case .ninja: "NINJA"
+        case .xmas: "XMAS"
+        case .summer: "SUMMER"
+        case .hanbok: "HANBOK"
+        case .gangsi: "GANGSI"
+        case .oktoberfest: "OKTOBERFEST"
+        case .summoner: "SUMMONER"
+        case .summer2: "SUMMER2"
+        case .super_novice: "SUPER_NOVICE"
+        case .knight: "KNIGHT"
+        case .wizard: "WIZARD"
+        case .hunter: "HUNTER"
+        case .priest: "PRIEST"
+        case .blacksmith: "BLACKSMITH"
+        case .assassin: "ASSASSIN"
+        case .star_gladiator: "STAR_GLADIATOR"
+        case .rebellion: "REBELLION"
+        case .kagerouoboro: "KAGEROUOBORO"
+        case .death_knight: "DEATH_KNIGHT"
+        case .crusader: "CRUSADER"
+        case .sage: "SAGE"
+        case .barddancer: "BARDDANCER"
+        case .monk: "MONK"
+        case .alchemist: "ALCHEMIST"
+        case .rogue: "ROGUE"
+        case .soul_linker: "SOUL_LINKER"
+        case .dark_collector: "DARK_COLLECTOR"
+        case .novice_high: "NOVICE_HIGH"
+        case .swordman_high: "SWORDMAN_HIGH"
+        case .mage_high: "MAGE_HIGH"
+        case .archer_high: "ARCHER_HIGH"
+        case .acolyte_high: "ACOLYTE_HIGH"
+        case .merchant_high: "MERCHANT_HIGH"
+        case .thief_high: "THIEF_HIGH"
+        case .lord_knight: "LORD_KNIGHT"
+        case .high_wizard: "HIGH_WIZARD"
+        case .sniper: "SNIPER"
+        case .high_priest: "HIGH_PRIEST"
+        case .whitesmith: "WHITESMITH"
+        case .assassin_cross: "ASSASSIN_CROSS"
+        case .paladin: "PALADIN"
+        case .professor: "PROFESSOR"
+        case .clowngypsy: "CLOWNGYPSY"
+        case .champion: "CHAMPION"
+        case .creator: "CREATOR"
+        case .stalker: "STALKER"
+        case .baby: "BABY"
+        case .baby_swordman: "BABY_SWORDMAN"
+        case .baby_mage: "BABY_MAGE"
+        case .baby_archer: "BABY_ARCHER"
+        case .baby_acolyte: "BABY_ACOLYTE"
+        case .baby_merchant: "BABY_MERCHANT"
+        case .baby_thief: "BABY_THIEF"
+        case .baby_taekwon: "BABY_TAEKWON"
+        case .baby_gunslinger: "BABY_GUNSLINGER"
+        case .baby_ninja: "BABY_NINJA"
+        case .baby_summoner: "BABY_SUMMONER"
+        case .super_baby: "SUPER_BABY"
+        case .baby_knight: "BABY_KNIGHT"
+        case .baby_wizard: "BABY_WIZARD"
+        case .baby_hunter: "BABY_HUNTER"
+        case .baby_priest: "BABY_PRIEST"
+        case .baby_blacksmith: "BABY_BLACKSMITH"
+        case .baby_assassin: "BABY_ASSASSIN"
+        case .baby_star_gladiator: "BABY_STAR_GLADIATOR"
+        case .baby_rebellion: "BABY_REBELLION"
+        case .baby_kagerouoboro: "BABY_KAGEROUOBORO"
+        case .baby_crusader: "BABY_CRUSADER"
+        case .baby_sage: "BABY_SAGE"
+        case .baby_barddancer: "BABY_BARDDANCER"
+        case .baby_monk: "BABY_MONK"
+        case .baby_alchemist: "BABY_ALCHEMIST"
+        case .baby_rogue: "BABY_ROGUE"
+        case .baby_soul_linker: "BABY_SOUL_LINKER"
+        case .super_novice_e: "SUPER_NOVICE_E"
+        case .rune_knight: "RUNE_KNIGHT"
+        case .warlock: "WARLOCK"
+        case .ranger: "RANGER"
+        case .arch_bishop: "ARCH_BISHOP"
+        case .mechanic: "MECHANIC"
+        case .guillotine_cross: "GUILLOTINE_CROSS"
+        case .star_emperor: "STAR_EMPEROR"
+        case .royal_guard: "ROYAL_GUARD"
+        case .sorcerer: "SORCERER"
+        case .minstrelwanderer: "MINSTRELWANDERER"
+        case .sura: "SURA"
+        case .genetic: "GENETIC"
+        case .shadow_chaser: "SHADOW_CHASER"
+        case .soul_reaper: "SOUL_REAPER"
+        case .rune_knight_t: "RUNE_KNIGHT_T"
+        case .warlock_t: "WARLOCK_T"
+        case .ranger_t: "RANGER_T"
+        case .arch_bishop_t: "ARCH_BISHOP_T"
+        case .mechanic_t: "MECHANIC_T"
+        case .guillotine_cross_t: "GUILLOTINE_CROSS_T"
+        case .royal_guard_t: "ROYAL_GUARD_T"
+        case .sorcerer_t: "SORCERER_T"
+        case .minstrelwanderer_t: "MINSTRELWANDERER_T"
+        case .sura_t: "SURA_T"
+        case .genetic_t: "GENETIC_T"
+        case .shadow_chaser_t: "SHADOW_CHASER_T"
+        case .super_baby_e: "SUPER_BABY_E"
+        case .baby_rune_knight: "BABY_RUNE_KNIGHT"
+        case .baby_warlock: "BABY_WARLOCK"
+        case .baby_ranger: "BABY_RANGER"
+        case .baby_arch_bishop: "BABY_ARCH_BISHOP"
+        case .baby_mechanic: "BABY_MECHANIC"
+        case .baby_guillotine_cross: "BABY_GUILLOTINE_CROSS"
+        case .baby_star_emperor: "BABY_STAR_EMPEROR"
+        case .baby_royal_guard: "BABY_ROYAL_GUARD"
+        case .baby_sorcerer: "BABY_SORCERER"
+        case .baby_minstrelwanderer: "BABY_MINSTRELWANDERER"
+        case .baby_sura: "BABY_SURA"
+        case .baby_genetic: "BABY_GENETIC"
+        case .baby_shadow_chaser: "BABY_SHADOW_CHASER"
+        case .baby_soul_reaper: "BABY_SOUL_REAPER"
+        case .hyper_novice: "HYPER_NOVICE"
+        case .dragon_knight: "DRAGON_KNIGHT"
+        case .arch_mage: "ARCH_MAGE"
+        case .windhawk: "WINDHAWK"
+        case .cardinal: "CARDINAL"
+        case .meister: "MEISTER"
+        case .shadow_cross: "SHADOW_CROSS"
+        case .sky_emperor: "SKY_EMPEROR"
+        case .night_watch: "NIGHT_WATCH"
+        case .shinkiro_shiranui: "SHINKIRO_SHIRANUI"
+        case .spirit_handler: "SPIRIT_HANDLER"
+        case .imperial_guard: "IMPERIAL_GUARD"
+        case .elemental_master: "ELEMENTAL_MASTER"
+        case .troubadourtrouvere: "TROUBADOURTROUVERE"
+        case .inquisitor: "INQUISITOR"
+        case .biolo: "BIOLO"
+        case .abyss_chaser: "ABYSS_CHASER"
+        case .soul_ascetic: "SOUL_ASCETIC"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "NOVICE": self = .novice
@@ -603,10 +453,26 @@ extension EAJobID: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension EAJobID: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension EAJobID: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

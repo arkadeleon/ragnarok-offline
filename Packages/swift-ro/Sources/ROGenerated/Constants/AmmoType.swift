@@ -6,48 +6,33 @@
 //
 
 /// Converted from `e_ammo_type` in `map/pc.hpp`.
-public enum AmmoType: CaseIterable, RawRepresentable, Sendable {
-    case arrow
-    case dagger
-    case bullet
-    case shell
-    case grenade
-    case shuriken
-    case kunai
-    case cannonball
-    case throwweapon
-
-    public var rawValue: Int {
-        switch self {
-        case .arrow: 1
-        case .dagger: 2
-        case .bullet: 3
-        case .shell: 4
-        case .grenade: 5
-        case .shuriken: 6
-        case .kunai: 7
-        case .cannonball: 8
-        case .throwweapon: 9
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 1: self = .arrow
-        case 2: self = .dagger
-        case 3: self = .bullet
-        case 4: self = .shell
-        case 5: self = .grenade
-        case 6: self = .shuriken
-        case 7: self = .kunai
-        case 8: self = .cannonball
-        case 9: self = .throwweapon
-        default: return nil
-        }
-    }
+public enum AmmoType: Int, CaseIterable, Sendable {
+    case arrow = 1
+    case dagger = 2
+    case bullet = 3
+    case shell = 4
+    case grenade = 5
+    case shuriken = 6
+    case kunai = 7
+    case cannonball = 8
+    case throwweapon = 9
 }
 
-extension AmmoType: CodingKey, CodingKeyRepresentable, Decodable {
+extension AmmoType: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .arrow: "ARROW"
+        case .dagger: "DAGGER"
+        case .bullet: "BULLET"
+        case .shell: "SHELL"
+        case .grenade: "GRENADE"
+        case .shuriken: "SHURIKEN"
+        case .kunai: "KUNAI"
+        case .cannonball: "CANNONBALL"
+        case .throwweapon: "THROWWEAPON"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "ARROW": self = .arrow
@@ -63,10 +48,26 @@ extension AmmoType: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension AmmoType: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension AmmoType: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

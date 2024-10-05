@@ -6,36 +6,25 @@
 //
 
 /// Converted from `e_aegis_monsterclass` in `map/mob.hpp`.
-public enum MonsterClass: CaseIterable, RawRepresentable, Sendable {
-    case normal
-    case boss
-    case guardian
-    case battlefield
-    case event
-
-    public var rawValue: Int {
-        switch self {
-        case .normal: 0
-        case .boss: 1
-        case .guardian: 2
-        case .battlefield: 4
-        case .event: 5
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .normal
-        case 1: self = .boss
-        case 2: self = .guardian
-        case 4: self = .battlefield
-        case 5: self = .event
-        default: return nil
-        }
-    }
+public enum MonsterClass: Int, CaseIterable, Sendable {
+    case normal = 0
+    case boss = 1
+    case guardian = 2
+    case battlefield = 4
+    case event = 5
 }
 
-extension MonsterClass: CodingKey, CodingKeyRepresentable, Decodable {
+extension MonsterClass: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .normal: "NORMAL"
+        case .boss: "BOSS"
+        case .guardian: "GUARDIAN"
+        case .battlefield: "BATTLEFIELD"
+        case .event: "EVENT"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "NORMAL": self = .normal
@@ -47,10 +36,26 @@ extension MonsterClass: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension MonsterClass: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension MonsterClass: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

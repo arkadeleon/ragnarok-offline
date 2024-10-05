@@ -6,60 +6,41 @@
 //
 
 /// Converted from `e_params` in `map/pc.hpp`.
-public enum Parameter: CaseIterable, RawRepresentable, Sendable {
-    case str
-    case agi
-    case vit
-    case int
-    case dex
-    case luk
-    case pow
-    case sta
-    case wis
-    case spl
-    case con
-    case crt
-    case max
-
-    public var rawValue: Int {
-        switch self {
-        case .str: 0
-        case .agi: 1
-        case .vit: 2
-        case .int: 3
-        case .dex: 4
-        case .luk: 5
-        case .pow: 6
-        case .sta: 7
-        case .wis: 8
-        case .spl: 9
-        case .con: 10
-        case .crt: 11
-        case .max: 12
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .str
-        case 1: self = .agi
-        case 2: self = .vit
-        case 3: self = .int
-        case 4: self = .dex
-        case 5: self = .luk
-        case 6: self = .pow
-        case 7: self = .sta
-        case 8: self = .wis
-        case 9: self = .spl
-        case 10: self = .con
-        case 11: self = .crt
-        case 12: self = .max
-        default: return nil
-        }
-    }
+public enum Parameter: Int, CaseIterable, Sendable {
+    case str = 0
+    case agi = 1
+    case vit = 2
+    case int = 3
+    case dex = 4
+    case luk = 5
+    case pow = 6
+    case sta = 7
+    case wis = 8
+    case spl = 9
+    case con = 10
+    case crt = 11
+    case max = 12
 }
 
-extension Parameter: CodingKey, CodingKeyRepresentable, Decodable {
+extension Parameter: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .str: "STR"
+        case .agi: "AGI"
+        case .vit: "VIT"
+        case .int: "INT"
+        case .dex: "DEX"
+        case .luk: "LUK"
+        case .pow: "POW"
+        case .sta: "STA"
+        case .wis: "WIS"
+        case .spl: "SPL"
+        case .con: "CON"
+        case .crt: "CRT"
+        case .max: "MAX"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "STR": self = .str
@@ -79,10 +60,26 @@ extension Parameter: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension Parameter: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension Parameter: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

@@ -6,30 +6,21 @@
 //
 
 /// Converted from `e_skill_cast_flags` in `map/skill.hpp`.
-public enum SkillCastFlag: CaseIterable, RawRepresentable, Sendable {
-    case ignoredex
-    case ignorestatus
-    case ignoreitembonus
-
-    public var rawValue: Int {
-        switch self {
-        case .ignoredex: 0x1
-        case .ignorestatus: 0x2
-        case .ignoreitembonus: 0x4
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0x1: self = .ignoredex
-        case 0x2: self = .ignorestatus
-        case 0x4: self = .ignoreitembonus
-        default: return nil
-        }
-    }
+public enum SkillCastFlag: Int, CaseIterable, Sendable {
+    case ignoredex = 0x1
+    case ignorestatus = 0x2
+    case ignoreitembonus = 0x4
 }
 
-extension SkillCastFlag: CodingKey, CodingKeyRepresentable, Decodable {
+extension SkillCastFlag: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .ignoredex: "IGNOREDEX"
+        case .ignorestatus: "IGNORESTATUS"
+        case .ignoreitembonus: "IGNOREITEMBONUS"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "IGNOREDEX": self = .ignoredex
@@ -39,10 +30,26 @@ extension SkillCastFlag: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension SkillCastFlag: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension SkillCastFlag: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

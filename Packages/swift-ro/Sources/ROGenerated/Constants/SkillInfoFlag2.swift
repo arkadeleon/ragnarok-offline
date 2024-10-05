@@ -6,144 +6,97 @@
 //
 
 /// Converted from `e_skill_inf2` in `map/skill.hpp`.
-public enum SkillInfoFlag2: CaseIterable, RawRepresentable, Sendable {
-    case isquest
-    case isnpc
-    case iswedding
-    case isspirit
-    case isguild
-    case issong
-    case isensemble
-    case istrap
-    case targetself
-    case notargetself
-    case partyonly
-    case guildonly
-    case notargetenemy
-    case isautoshadowspell
-    case ischorus
-    case ignorebgreduction
-    case ignoregvgreduction
-    case disablenearnpc
-    case targettrap
-    case ignorelandprotector
-    case allowwhenhidden
-    case allowwhenperforming
-    case targetemperium
-    case ignorekagehumi
-    case alterrangevulture
-    case alterrangesnakeeye
-    case alterrangeshadowjump
-    case alterrangeradius
-    case alterrangeresearchtrap
-    case ignorehovering
-    case allowonwarg
-    case allowonmado
-    case targetmanhole
-    case targethidden
-    case increasedancewithwugdamage
-    case ignorewugbite
-    case ignoreautoguard
-    case ignorecicada
-    case showscale
-    case ignoregtb
-    case toggleable
-
-    public var rawValue: Int {
-        switch self {
-        case .isquest: 0
-        case .isnpc: 1
-        case .iswedding: 2
-        case .isspirit: 3
-        case .isguild: 4
-        case .issong: 5
-        case .isensemble: 6
-        case .istrap: 7
-        case .targetself: 8
-        case .notargetself: 9
-        case .partyonly: 10
-        case .guildonly: 11
-        case .notargetenemy: 12
-        case .isautoshadowspell: 13
-        case .ischorus: 14
-        case .ignorebgreduction: 15
-        case .ignoregvgreduction: 16
-        case .disablenearnpc: 17
-        case .targettrap: 18
-        case .ignorelandprotector: 19
-        case .allowwhenhidden: 20
-        case .allowwhenperforming: 21
-        case .targetemperium: 22
-        case .ignorekagehumi: 23
-        case .alterrangevulture: 24
-        case .alterrangesnakeeye: 25
-        case .alterrangeshadowjump: 26
-        case .alterrangeradius: 27
-        case .alterrangeresearchtrap: 28
-        case .ignorehovering: 29
-        case .allowonwarg: 30
-        case .allowonmado: 31
-        case .targetmanhole: 32
-        case .targethidden: 33
-        case .increasedancewithwugdamage: 34
-        case .ignorewugbite: 35
-        case .ignoreautoguard: 36
-        case .ignorecicada: 37
-        case .showscale: 38
-        case .ignoregtb: 39
-        case .toggleable: 40
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .isquest
-        case 1: self = .isnpc
-        case 2: self = .iswedding
-        case 3: self = .isspirit
-        case 4: self = .isguild
-        case 5: self = .issong
-        case 6: self = .isensemble
-        case 7: self = .istrap
-        case 8: self = .targetself
-        case 9: self = .notargetself
-        case 10: self = .partyonly
-        case 11: self = .guildonly
-        case 12: self = .notargetenemy
-        case 13: self = .isautoshadowspell
-        case 14: self = .ischorus
-        case 15: self = .ignorebgreduction
-        case 16: self = .ignoregvgreduction
-        case 17: self = .disablenearnpc
-        case 18: self = .targettrap
-        case 19: self = .ignorelandprotector
-        case 20: self = .allowwhenhidden
-        case 21: self = .allowwhenperforming
-        case 22: self = .targetemperium
-        case 23: self = .ignorekagehumi
-        case 24: self = .alterrangevulture
-        case 25: self = .alterrangesnakeeye
-        case 26: self = .alterrangeshadowjump
-        case 27: self = .alterrangeradius
-        case 28: self = .alterrangeresearchtrap
-        case 29: self = .ignorehovering
-        case 30: self = .allowonwarg
-        case 31: self = .allowonmado
-        case 32: self = .targetmanhole
-        case 33: self = .targethidden
-        case 34: self = .increasedancewithwugdamage
-        case 35: self = .ignorewugbite
-        case 36: self = .ignoreautoguard
-        case 37: self = .ignorecicada
-        case 38: self = .showscale
-        case 39: self = .ignoregtb
-        case 40: self = .toggleable
-        default: return nil
-        }
-    }
+public enum SkillInfoFlag2: Int, CaseIterable, Sendable {
+    case isquest = 0
+    case isnpc = 1
+    case iswedding = 2
+    case isspirit = 3
+    case isguild = 4
+    case issong = 5
+    case isensemble = 6
+    case istrap = 7
+    case targetself = 8
+    case notargetself = 9
+    case partyonly = 10
+    case guildonly = 11
+    case notargetenemy = 12
+    case isautoshadowspell = 13
+    case ischorus = 14
+    case ignorebgreduction = 15
+    case ignoregvgreduction = 16
+    case disablenearnpc = 17
+    case targettrap = 18
+    case ignorelandprotector = 19
+    case allowwhenhidden = 20
+    case allowwhenperforming = 21
+    case targetemperium = 22
+    case ignorekagehumi = 23
+    case alterrangevulture = 24
+    case alterrangesnakeeye = 25
+    case alterrangeshadowjump = 26
+    case alterrangeradius = 27
+    case alterrangeresearchtrap = 28
+    case ignorehovering = 29
+    case allowonwarg = 30
+    case allowonmado = 31
+    case targetmanhole = 32
+    case targethidden = 33
+    case increasedancewithwugdamage = 34
+    case ignorewugbite = 35
+    case ignoreautoguard = 36
+    case ignorecicada = 37
+    case showscale = 38
+    case ignoregtb = 39
+    case toggleable = 40
 }
 
-extension SkillInfoFlag2: CodingKey, CodingKeyRepresentable, Decodable {
+extension SkillInfoFlag2: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .isquest: "ISQUEST"
+        case .isnpc: "ISNPC"
+        case .iswedding: "ISWEDDING"
+        case .isspirit: "ISSPIRIT"
+        case .isguild: "ISGUILD"
+        case .issong: "ISSONG"
+        case .isensemble: "ISENSEMBLE"
+        case .istrap: "ISTRAP"
+        case .targetself: "TARGETSELF"
+        case .notargetself: "NOTARGETSELF"
+        case .partyonly: "PARTYONLY"
+        case .guildonly: "GUILDONLY"
+        case .notargetenemy: "NOTARGETENEMY"
+        case .isautoshadowspell: "ISAUTOSHADOWSPELL"
+        case .ischorus: "ISCHORUS"
+        case .ignorebgreduction: "IGNOREBGREDUCTION"
+        case .ignoregvgreduction: "IGNOREGVGREDUCTION"
+        case .disablenearnpc: "DISABLENEARNPC"
+        case .targettrap: "TARGETTRAP"
+        case .ignorelandprotector: "IGNORELANDPROTECTOR"
+        case .allowwhenhidden: "ALLOWWHENHIDDEN"
+        case .allowwhenperforming: "ALLOWWHENPERFORMING"
+        case .targetemperium: "TARGETEMPERIUM"
+        case .ignorekagehumi: "IGNOREKAGEHUMI"
+        case .alterrangevulture: "ALTERRANGEVULTURE"
+        case .alterrangesnakeeye: "ALTERRANGESNAKEEYE"
+        case .alterrangeshadowjump: "ALTERRANGESHADOWJUMP"
+        case .alterrangeradius: "ALTERRANGERADIUS"
+        case .alterrangeresearchtrap: "ALTERRANGERESEARCHTRAP"
+        case .ignorehovering: "IGNOREHOVERING"
+        case .allowonwarg: "ALLOWONWARG"
+        case .allowonmado: "ALLOWONMADO"
+        case .targetmanhole: "TARGETMANHOLE"
+        case .targethidden: "TARGETHIDDEN"
+        case .increasedancewithwugdamage: "INCREASEDANCEWITHWUGDAMAGE"
+        case .ignorewugbite: "IGNOREWUGBITE"
+        case .ignoreautoguard: "IGNOREAUTOGUARD"
+        case .ignorecicada: "IGNORECICADA"
+        case .showscale: "SHOWSCALE"
+        case .ignoregtb: "IGNOREGTB"
+        case .toggleable: "TOGGLEABLE"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "ISQUEST": self = .isquest
@@ -191,10 +144,26 @@ extension SkillInfoFlag2: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension SkillInfoFlag2: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension SkillInfoFlag2: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

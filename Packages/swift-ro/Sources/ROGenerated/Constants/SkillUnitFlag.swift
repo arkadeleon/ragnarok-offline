@@ -6,75 +6,51 @@
 //
 
 /// Converted from `e_skill_unit_flag` in `map/skill.hpp`.
-public enum SkillUnitFlag: CaseIterable, RawRepresentable, Sendable {
-    case noenemy
-    case noreiteration
-    case nofootset
-    case nooverlap
-    case pathcheck
-    case nopc
-    case nomob
-    case skill
-    case dance
-    case ensemble
-    case song
-    case dualmode
-    case noknockback
-    case rangedsingleunit
-    case crazyweedimmune
-    case removedbyfirerain
-    case knockbackgroup
-    case hiddentrap
-
-    public var rawValue: Int {
-        switch self {
-        case .noenemy: 1
-        case .noreiteration: 2
-        case .nofootset: 3
-        case .nooverlap: 4
-        case .pathcheck: 5
-        case .nopc: 6
-        case .nomob: 7
-        case .skill: 8
-        case .dance: 9
-        case .ensemble: 10
-        case .song: 11
-        case .dualmode: 12
-        case .noknockback: 13
-        case .rangedsingleunit: 14
-        case .crazyweedimmune: 15
-        case .removedbyfirerain: 16
-        case .knockbackgroup: 17
-        case .hiddentrap: 18
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 1: self = .noenemy
-        case 2: self = .noreiteration
-        case 3: self = .nofootset
-        case 4: self = .nooverlap
-        case 5: self = .pathcheck
-        case 6: self = .nopc
-        case 7: self = .nomob
-        case 8: self = .skill
-        case 9: self = .dance
-        case 10: self = .ensemble
-        case 11: self = .song
-        case 12: self = .dualmode
-        case 13: self = .noknockback
-        case 14: self = .rangedsingleunit
-        case 15: self = .crazyweedimmune
-        case 16: self = .removedbyfirerain
-        case 17: self = .knockbackgroup
-        case 18: self = .hiddentrap
-        default: return nil
-        }
-    }
+public enum SkillUnitFlag: Int, CaseIterable, Sendable {
+    case noenemy = 1
+    case noreiteration = 2
+    case nofootset = 3
+    case nooverlap = 4
+    case pathcheck = 5
+    case nopc = 6
+    case nomob = 7
+    case skill = 8
+    case dance = 9
+    case ensemble = 10
+    case song = 11
+    case dualmode = 12
+    case noknockback = 13
+    case rangedsingleunit = 14
+    case crazyweedimmune = 15
+    case removedbyfirerain = 16
+    case knockbackgroup = 17
+    case hiddentrap = 18
 }
 
-extension SkillUnitFlag: CodingKey, CodingKeyRepresentable, Decodable {
+extension SkillUnitFlag: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .noenemy: "NOENEMY"
+        case .noreiteration: "NOREITERATION"
+        case .nofootset: "NOFOOTSET"
+        case .nooverlap: "NOOVERLAP"
+        case .pathcheck: "PATHCHECK"
+        case .nopc: "NOPC"
+        case .nomob: "NOMOB"
+        case .skill: "SKILL"
+        case .dance: "DANCE"
+        case .ensemble: "ENSEMBLE"
+        case .song: "SONG"
+        case .dualmode: "DUALMODE"
+        case .noknockback: "NOKNOCKBACK"
+        case .rangedsingleunit: "RANGEDSINGLEUNIT"
+        case .crazyweedimmune: "CRAZYWEEDIMMUNE"
+        case .removedbyfirerain: "REMOVEDBYFIRERAIN"
+        case .knockbackgroup: "KNOCKBACKGROUP"
+        case .hiddentrap: "HIDDENTRAP"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "NOENEMY": self = .noenemy
@@ -99,10 +75,26 @@ extension SkillUnitFlag: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension SkillUnitFlag: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension SkillUnitFlag: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

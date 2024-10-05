@@ -6,30 +6,21 @@
 //
 
 /// Converted from `e_size` in `map/mob.hpp`.
-public enum Size: CaseIterable, RawRepresentable, Sendable {
-    case small
-    case medium
-    case large
-
-    public var rawValue: Int {
-        switch self {
-        case .small: 0
-        case .medium: 1
-        case .large: 2
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .small
-        case 1: self = .medium
-        case 2: self = .large
-        default: return nil
-        }
-    }
+public enum Size: Int, CaseIterable, Sendable {
+    case small = 0
+    case medium = 1
+    case large = 2
 }
 
-extension Size: CodingKey, CodingKeyRepresentable, Decodable {
+extension Size: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .small: "SMALL"
+        case .medium: "MEDIUM"
+        case .large: "LARGE"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "SMALL": self = .small
@@ -39,10 +30,26 @@ extension Size: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension Size: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension Size: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

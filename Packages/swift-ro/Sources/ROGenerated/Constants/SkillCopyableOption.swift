@@ -6,27 +6,19 @@
 //
 
 /// Converted from `e_skill_copyable_option` in `map/skill.hpp`.
-public enum SkillCopyableOption: CaseIterable, RawRepresentable, Sendable {
-    case plagiarism
-    case reproduce
-
-    public var rawValue: Int {
-        switch self {
-        case .plagiarism: 0x1
-        case .reproduce: 0x2
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0x1: self = .plagiarism
-        case 0x2: self = .reproduce
-        default: return nil
-        }
-    }
+public enum SkillCopyableOption: Int, CaseIterable, Sendable {
+    case plagiarism = 0x1
+    case reproduce = 0x2
 }
 
-extension SkillCopyableOption: CodingKey, CodingKeyRepresentable, Decodable {
+extension SkillCopyableOption: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .plagiarism: "PLAGIARISM"
+        case .reproduce: "REPRODUCE"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "PLAGIARISM": self = .plagiarism
@@ -35,10 +27,26 @@ extension SkillCopyableOption: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension SkillCopyableOption: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension SkillCopyableOption: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

@@ -6,99 +6,67 @@
 //
 
 /// Converted from `e_mode` in `common/mmo.hpp`.
-public enum MonsterMode: CaseIterable, RawRepresentable, Sendable {
-    case canmove
-    case looter
-    case aggressive
-    case assist
-    case castsensoridle
-    case norandomwalk
-    case nocast
-    case canattack
-    case castsensorchase
-    case changechase
-    case angry
-    case changetargetmelee
-    case changetargetchase
-    case targetweak
-    case randomtarget
-    case ignoremelee
-    case ignoremagic
-    case ignoreranged
-    case mvp
-    case ignoremisc
-    case knockbackimmune
-    case teleportblock
-    case fixeditemdrop
-    case detector
-    case statusimmune
-    case skillimmune
-
-    public var rawValue: Int {
-        switch self {
-        case .canmove: 0x1
-        case .looter: 0x2
-        case .aggressive: 0x4
-        case .assist: 0x8
-        case .castsensoridle: 0x10
-        case .norandomwalk: 0x20
-        case .nocast: 0x40
-        case .canattack: 0x80
-        case .castsensorchase: 0x200
-        case .changechase: 0x400
-        case .angry: 0x800
-        case .changetargetmelee: 0x1000
-        case .changetargetchase: 0x2000
-        case .targetweak: 0x4000
-        case .randomtarget: 0x8000
-        case .ignoremelee: 0x10000
-        case .ignoremagic: 0x20000
-        case .ignoreranged: 0x40000
-        case .mvp: 0x80000
-        case .ignoremisc: 0x100000
-        case .knockbackimmune: 0x200000
-        case .teleportblock: 0x400000
-        case .fixeditemdrop: 0x1000000
-        case .detector: 0x2000000
-        case .statusimmune: 0x4000000
-        case .skillimmune: 0x8000000
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0x1: self = .canmove
-        case 0x2: self = .looter
-        case 0x4: self = .aggressive
-        case 0x8: self = .assist
-        case 0x10: self = .castsensoridle
-        case 0x20: self = .norandomwalk
-        case 0x40: self = .nocast
-        case 0x80: self = .canattack
-        case 0x200: self = .castsensorchase
-        case 0x400: self = .changechase
-        case 0x800: self = .angry
-        case 0x1000: self = .changetargetmelee
-        case 0x2000: self = .changetargetchase
-        case 0x4000: self = .targetweak
-        case 0x8000: self = .randomtarget
-        case 0x10000: self = .ignoremelee
-        case 0x20000: self = .ignoremagic
-        case 0x40000: self = .ignoreranged
-        case 0x80000: self = .mvp
-        case 0x100000: self = .ignoremisc
-        case 0x200000: self = .knockbackimmune
-        case 0x400000: self = .teleportblock
-        case 0x1000000: self = .fixeditemdrop
-        case 0x2000000: self = .detector
-        case 0x4000000: self = .statusimmune
-        case 0x8000000: self = .skillimmune
-        default: return nil
-        }
-    }
+public enum MonsterMode: Int, CaseIterable, Sendable {
+    case canmove = 0x1
+    case looter = 0x2
+    case aggressive = 0x4
+    case assist = 0x8
+    case castsensoridle = 0x10
+    case norandomwalk = 0x20
+    case nocast = 0x40
+    case canattack = 0x80
+    case castsensorchase = 0x200
+    case changechase = 0x400
+    case angry = 0x800
+    case changetargetmelee = 0x1000
+    case changetargetchase = 0x2000
+    case targetweak = 0x4000
+    case randomtarget = 0x8000
+    case ignoremelee = 0x10000
+    case ignoremagic = 0x20000
+    case ignoreranged = 0x40000
+    case mvp = 0x80000
+    case ignoremisc = 0x100000
+    case knockbackimmune = 0x200000
+    case teleportblock = 0x400000
+    case fixeditemdrop = 0x1000000
+    case detector = 0x2000000
+    case statusimmune = 0x4000000
+    case skillimmune = 0x8000000
 }
 
-extension MonsterMode: CodingKey, CodingKeyRepresentable, Decodable {
+extension MonsterMode: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .canmove: "CANMOVE"
+        case .looter: "LOOTER"
+        case .aggressive: "AGGRESSIVE"
+        case .assist: "ASSIST"
+        case .castsensoridle: "CASTSENSORIDLE"
+        case .norandomwalk: "NORANDOMWALK"
+        case .nocast: "NOCAST"
+        case .canattack: "CANATTACK"
+        case .castsensorchase: "CASTSENSORCHASE"
+        case .changechase: "CHANGECHASE"
+        case .angry: "ANGRY"
+        case .changetargetmelee: "CHANGETARGETMELEE"
+        case .changetargetchase: "CHANGETARGETCHASE"
+        case .targetweak: "TARGETWEAK"
+        case .randomtarget: "RANDOMTARGET"
+        case .ignoremelee: "IGNOREMELEE"
+        case .ignoremagic: "IGNOREMAGIC"
+        case .ignoreranged: "IGNORERANGED"
+        case .mvp: "MVP"
+        case .ignoremisc: "IGNOREMISC"
+        case .knockbackimmune: "KNOCKBACKIMMUNE"
+        case .teleportblock: "TELEPORTBLOCK"
+        case .fixeditemdrop: "FIXEDITEMDROP"
+        case .detector: "DETECTOR"
+        case .statusimmune: "STATUSIMMUNE"
+        case .skillimmune: "SKILLIMMUNE"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "CANMOVE": self = .canmove
@@ -131,10 +99,26 @@ extension MonsterMode: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension MonsterMode: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension MonsterMode: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

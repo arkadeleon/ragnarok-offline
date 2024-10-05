@@ -6,39 +6,27 @@
 //
 
 /// Converted from `e_skill_inf` in `map/skill.hpp`.
-public enum SkillInfoFlag: CaseIterable, RawRepresentable, Sendable {
-    case passive
-    case attack
-    case ground
-    case _self
-    case support
-    case trap
-
-    public var rawValue: Int {
-        switch self {
-        case .passive: 0x0
-        case .attack: 0x1
-        case .ground: 0x2
-        case ._self: 0x4
-        case .support: 0x10
-        case .trap: 0x20
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0x0: self = .passive
-        case 0x1: self = .attack
-        case 0x2: self = .ground
-        case 0x4: self = ._self
-        case 0x10: self = .support
-        case 0x20: self = .trap
-        default: return nil
-        }
-    }
+public enum SkillInfoFlag: Int, CaseIterable, Sendable {
+    case passive = 0x0
+    case attack = 0x1
+    case ground = 0x2
+    case _self = 0x4
+    case support = 0x10
+    case trap = 0x20
 }
 
-extension SkillInfoFlag: CodingKey, CodingKeyRepresentable, Decodable {
+extension SkillInfoFlag: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .passive: "PASSIVE"
+        case .attack: "ATTACK"
+        case .ground: "GROUND"
+        case ._self: "SELF"
+        case .support: "SUPPORT"
+        case .trap: "TRAP"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "PASSIVE": self = .passive
@@ -51,10 +39,26 @@ extension SkillInfoFlag: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension SkillInfoFlag: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension SkillInfoFlag: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

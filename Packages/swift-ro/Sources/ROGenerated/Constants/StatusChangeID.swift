@@ -6,2823 +6,1883 @@
 //
 
 /// Converted from `sc_type` in `map/status.hpp`.
-public enum StatusChangeID: CaseIterable, RawRepresentable, Sendable {
-    case stone
-    case freeze
-    case stun
-    case sleep
-    case poison
-    case curse
-    case silence
-    case confusion
-    case blind
-    case bleeding
-    case dpoison
-    case stonewait
-    case provoke
-    case endure
-    case twohandquicken
-    case concentrate
-    case hiding
-    case cloaking
-    case encpoison
-    case poisonreact
-    case quagmire
-    case angelus
-    case blessing
-    case signumcrucis
-    case increaseagi
-    case decreaseagi
-    case slowpoison
-    case impositio
-    case suffragium
-    case aspersio
-    case benedictio
-    case kyrie
-    case magnificat
-    case gloria
-    case aeterna
-    case adrenaline
-    case weaponperfection
-    case overthrust
-    case maximizepower
-    case trickdead
-    case loud
-    case energycoat
-    case brokenarmor
-    case brokenweapon
-    case hallucination
-    case weight50
-    case weight90
-    case aspdpotion0
-    case aspdpotion1
-    case aspdpotion2
-    case aspdpotion3
-    case speedup0
-    case speedup1
-    case atkpotion
-    case matkpotion
-    case wedding
-    case slowdown
-    case ankle
-    case keeping
-    case barrier
-    case stripweapon
-    case stripshield
-    case striparmor
-    case striphelm
-    case cp_weapon
-    case cp_shield
-    case cp_armor
-    case cp_helm
-    case autoguard
-    case reflectshield
-    case splasher
-    case providence
-    case defender
-    case magicrod
-    case spellbreaker
-    case autospell
-    case sighttrasher
-    case autoberserk
-    case spearquicken
-    case autocounter
-    case sight
-    case safetywall
-    case ruwach
-    case extremityfist
-    case explosionspirits
-    case combo
-    case bladestop_wait
-    case bladestop
-    case fireweapon
-    case waterweapon
-    case windweapon
-    case earthweapon
-    case volcano
-    case deluge
-    case violentgale
-    case watk_element
-    case armor
-    case armor_element_water
-    case nochat
-    case protectexp
-    case aurablade
-    case parrying
-    case concentration
-    case tensionrelax
-    case berserk
-    case fury
-    case gospel
-    case assumptio
-    case basilica
-    case guildaura
-    case magicpower
-    case edp
-    case truesight
-    case windwalk
-    case meltdown
-    case cartboost
-    case chasewalk
-    case rejectsword
-    case marionette
-    case marionette2
-    case changeundead
-    case jointbeat
-    case mindbreaker
-    case memorize
-    case fogwall
-    case spiderweb
-    case devotion
-    case sacrifice
-    case steelbody
-    case orcish
-    case readystorm
-    case readydown
-    case readyturn
-    case readycounter
-    case dodge
-    case run
-    case shadowweapon
-    case adrenaline2
-    case ghostweapon
-    case kaizel
-    case kaahi
-    case kaupe
-    case onehand
-    case preserve
-    case battleorders
-    case regeneration
-    case doublecast
-    case gravitation
-    case maxoverthrust
-    case longing
-    case hermode
-    case shrink
-    case sightblaster
-    case winkcharm
-    case closeconfine
-    case closeconfine2
-    case dancing
-    case elementalchange
-    case richmankim
-    case eternalchaos
-    case drumbattle
-    case nibelungen
-    case rokisweil
-    case intoabyss
-    case siegfried
-    case whistle
-    case assncros
-    case poembragi
-    case appleidun
-    case modechange
-    case humming
-    case dontforgetme
-    case fortune
-    case service4u
-    case stop
-    case spurt
-    case spirit
-    case coma
-    case intravision
-    case incallstatus
-    case incstr
-    case incagi
-    case incvit
-    case incint
-    case incdex
-    case incluk
-    case inchit
-    case inchitrate
-    case incflee
-    case incfleerate
-    case incmhprate
-    case incmsprate
-    case incatkrate
-    case incmatkrate
-    case incdefrate
-    case strfood
-    case agifood
-    case vitfood
-    case intfood
-    case dexfood
-    case lukfood
-    case hitfood
-    case fleefood
-    case batkfood
-    case watkfood
-    case matkfood
-    case scresist
-    case xmas
-    case warm
-    case sun_comfort
-    case moon_comfort
-    case star_comfort
-    case fusion
-    case skillrate_up
-    case ske
-    case kaite
-    case swoo
-    case ska
-    case earthscroll
-    case miracle
-    case madnesscancel
-    case adjustment
-    case increasing
-    case gatlingfever
-    case tatamigaeshi
-    case utsusemi
-    case bunsinjyutsu
-    case kaensin
-    case suiton
-    case nen
-    case knowledge
-    case sma
-    case fling
-    case avoid
-    case change
-    case bloodlust
-    case fleet
-    case speed
-    case defence
-    case incaspdrate
-    case incflee2
-    case jailed
-    case enchantarms
-    case magicalattack
-    case armorchange
-    case criticalwound
-    case magicmirror
-    case slowcast
-    case summer
-    case expboost
-    case itemboost
-    case bossmapinfo
-    case lifeinsurance
-    case inccri
-    case mdef_rate
-    case inchealrate
-    case pneuma
-    case autotrade
-    case ksprotected
-    case armor_resist
-    case spcost_rate
-    case commonsc_resist
-    case sevenwind
-    case def_rate
-    case walkspeed
-    case merc_fleeup
-    case merc_atkup
-    case merc_hpup
-    case merc_spup
-    case merc_hitup
-    case merc_quicken
-    case rebirth
-    case itemscript
-    case s_lifepotion
-    case l_lifepotion
-    case jexpboost
-    case hellpower
-    case invincible
-    case manu_atk
-    case manu_def
-    case spl_atk
-    case spl_def
-    case manu_matk
-    case spl_matk
-    case food_str_cash
-    case food_agi_cash
-    case food_vit_cash
-    case food_dex_cash
-    case food_int_cash
-    case food_luk_cash
-    case fear
-    case burning
-    case freezing
-    case enchantblade
-    case deathbound
-    case millenniumshield
-    case crushstrike
-    case refresh
-    case reuse_refresh
-    case giantgrowth
-    case stonehardskin
-    case vitalityactivation
-    case stormblast
-    case fightingspirit
-    case abundance
-    case adoramus
-    case epiclesis
-    case oratio
-    case laudaagnus
-    case laudaramus
-    case renovatio
-    case expiatio
-    case duplelight
-    case secrament
-    case whiteimprison
-    case marshofabyss
-    case recognizedspell
-    case stasis
-    case sphere_1
-    case sphere_2
-    case sphere_3
-    case sphere_4
-    case sphere_5
-    case reading_sb
-    case freeze_sp
-    case fearbreeze
-    case electricshocker
-    case wugdash
-    case bite
-    case camouflage
-    case acceleration
-    case hovering
-    case shapeshift
-    case infraredscan
-    case analyze
-    case magneticfield
-    case neutralbarrier
-    case neutralbarrier_master
-    case stealthfield
-    case stealthfield_master
-    case overheat
-    case overheat_limitpoint
-    case venomimpress
-    case poisoningweapon
-    case weaponblocking
-    case cloakingexceed
-    case hallucinationwalk
-    case hallucinationwalk_postdelay
-    case rollingcutter
-    case toxin
-    case paralyse
-    case venombleed
-    case magicmushroom
-    case deathhurt
-    case pyrexia
-    case oblivioncurse
-    case leechesend
-    case reflectdamage
-    case forceofvanguard
-    case shieldspell_hp
-    case shieldspell_sp
-    case shieldspell_atk
-    case exeedbreak
-    case prestige
-    case banding
-    case banding_defence
-    case earthdrive
-    case inspiration
-    case spellfist
-    case crystalize
-    case striking
-    case warmer
-    case vacuum_extreme
-    case propertywalk
-    case swingdance
-    case symphonyoflover
-    case moonlitserenade
-    case rushwindmill
-    case echosong
-    case harmonize
-    case voiceofsiren
-    case deepsleep
-    case sircleofnature
-    case gloomyday
-    case gloomyday_sk
-    case songofmana
-    case dancewithwug
-    case saturdaynightfever
-    case leradsdew
-    case melodyofsink
-    case beyondofwarcry
-    case unlimitedhummingvoice
-    case sitdown_force
-    case netherworld
-    case crescentelbow
-    case cursedcircle_atker
-    case cursedcircle_target
-    case lightningwalk
-    case raisingdragon
-    case gt_energygain
-    case gt_change
-    case gt_revitalize
-    case gn_cartboost
-    case thornstrap
-    case bloodsucker
-    case smokepowder
-    case teargas
-    case mandragora
-    case stomachache
-    case mysterious_powder
-    case melon_bomb
-    case banana_bomb
-    case banana_bomb_sitdown
-    case savage_steak
-    case cocktail_warg_blood
-    case minor_bbq
-    case siroma_ice_tea
-    case drocera_herb_steamed
-    case putti_tails_noodles
-    case boost500
-    case full_swing_k
-    case mana_plus
-    case mustle_m
-    case life_force_f
-    case extract_white_potion_z
-    case vitata_500
-    case extract_salamine_juice
-    case _reproduce
-    case _autoshadowspell
-    case _shadowform
-    case _bodypaint
-    case _invisibility
-    case _deadlyinfect
-    case _enervation
-    case _groomy
-    case _ignorance
-    case _laziness
-    case _unlucky
-    case _weakness
-    case _stripaccessory
-    case _manhole
-    case _bloodylust
-    case circle_of_fire
-    case circle_of_fire_option
-    case fire_cloak
-    case fire_cloak_option
-    case water_screen
-    case water_screen_option
-    case water_drop
-    case water_drop_option
-    case water_barrier
-    case wind_step
-    case wind_step_option
-    case wind_curtain
-    case wind_curtain_option
-    case zephyr
-    case solid_skin
-    case solid_skin_option
-    case stone_shield
-    case stone_shield_option
-    case power_of_gaia
-    case pyrotechnic
-    case pyrotechnic_option
-    case heater
-    case heater_option
-    case tropic
-    case tropic_option
-    case aquaplay
-    case aquaplay_option
-    case cooler
-    case cooler_option
-    case chilly_air
-    case chilly_air_option
-    case gust
-    case gust_option
-    case blast
-    case blast_option
-    case wild_storm
-    case wild_storm_option
-    case petrology
-    case petrology_option
-    case cursed_soil
-    case cursed_soil_option
-    case upheaval
-    case upheaval_option
-    case tidal_weapon
-    case tidal_weapon_option
-    case rock_crusher
-    case rock_crusher_atk
-    case leadership
-    case glorywounds
-    case soulcold
-    case hawkeyes
-    case odins_power
-    case raid
-    case fire_insignia
-    case water_insignia
-    case wind_insignia
-    case earth_insignia
-    case push_cart
-    case spellbook1
-    case spellbook2
-    case spellbook3
-    case spellbook4
-    case spellbook5
-    case spellbook6
-    case maxspellbook
-    case incmhp
-    case incmsp
-    case partyflee
-    case meikyousisui
-    case jyumonjikiri
-    case kyougaku
-    case izayoi
-    case zenkai
-    case kagehumi
-    case kyomu
-    case kagemusya
-    case zangetsu
-    case gensou
-    case akaitsuki
-    case style_change
-    case tinder_breaker
-    case tinder_breaker2
-    case cbc
-    case eqc
-    case goldene_ferse
-    case angriffs_modus
-    case overed_boost
-    case light_of_regene
-    case ash
-    case granitic_armor
-    case magma_flow
-    case pyroclastic
-    case paralysis
-    case pain_killer
-    case hanbok
-    case defset
-    case mdefset
-    case darkcrow
-    case full_throttle
-    case rebound
-    case unlimit
-    case kings_grace
-    case telekinesis_intense
-    case offertorium
-    case frigg_song
-    case monster_transform
-    case angel_protect
-    case illusiondoping
-    case flashcombo
-    case moonstar
-    case super_star
-    case heat_barrel
-    case magicalbullet
-    case p_alter
-    case e_chain
-    case c_marker
-    case anti_m_blast
-    case b_trap
-    case h_mine
-    case qd_shot_ready
-    case mtf_aspd
-    case mtf_rangeatk
-    case mtf_matk
-    case mtf_mleatked
-    case mtf_cridamage
-    case oktoberfest
-    case strangelights
-    case decoration_of_music
-    case quest_buff1
-    case quest_buff2
-    case quest_buff3
-    case all_riding
-    case teargas_sob
-    case _feintbomb
-    case _chaos
-    case chasewalk2
-    case vacuum_extreme_postdelay
-    case mtf_aspd2
-    case mtf_rangeatk2
-    case mtf_matk2
-    case _2011rwc_scroll
-    case jp_event04
-    case mtf_mhp
-    case mtf_msp
-    case mtf_pumpkin
-    case mtf_hitflee
-    case crifood
-    case atthaste_cash
-    case reuse_limit_a
-    case reuse_limit_b
-    case reuse_limit_c
-    case reuse_limit_d
-    case reuse_limit_e
-    case reuse_limit_f
-    case reuse_limit_g
-    case reuse_limit_h
-    case reuse_limit_mtf
-    case reuse_limit_aspd_potion
-    case reuse_millenniumshield
-    case reuse_crushstrike
-    case reuse_stormblast
-    case all_riding_reuse_limit
-    case reuse_limit_ecl
-    case reuse_limit_recall
-    case promote_health_reserch
-    case energy_drink_reserch
-    case norecover_state
-    case suhide
-    case su_stoop
-    case spritemable
-    case catnippowder
-    case sv_roottwist
-    case bitescar
-    case arclousedash
-    case tunaparty
-    case shrimp
-    case freshshrimp
-    case active_monster_transform
-    case cloud_kill
-    case ljosalfar
-    case mermaid_longing
-    case hat_effect
-    case flowersmoke
-    case fstone
-    case happiness_star
-    case maple_falls
-    case time_accessory
-    case magical_feather
-    case gvg_giant
-    case gvg_golem
-    case gvg_stun
-    case gvg_stone
-    case gvg_freez
-    case gvg_sleep
-    case gvg_curse
-    case gvg_silence
-    case gvg_blind
-    case clan_info
-    case swordclan
-    case arcwandclan
-    case goldenmaceclan
-    case crossbowclan
-    case jumpingclan
-    case tarotcard
-    case geffen_magic1
-    case geffen_magic2
-    case geffen_magic3
-    case maxpain
-    case armor_element_earth
-    case armor_element_fire
-    case armor_element_wind
-    case dailysendmailcnt
-    case doram_buf_01
-    case doram_buf_02
-    case hiss
-    case nyanggrass
-    case grooming
-    case shrimpblessing
-    case chattering
-    case doram_walkspeed
-    case doram_matk
-    case doram_flee2
-    case doram_svsp
-    case fallen_angel
-    case cheerup
-    case dressup
-    case glastheim_atk
-    case glastheim_def
-    case glastheim_heal
-    case glastheim_hidden
-    case glastheim_state
-    case glastheim_itemdef
-    case glastheim_hpsp
-    case lhz_dun_n1
-    case lhz_dun_n2
-    case lhz_dun_n3
-    case lhz_dun_n4
-    case ancilla
-    case earthshaker
-    case weaponblock_on
-    case spore_explosion
-    case adaptation
-    case basilica_cell
-    case entry_queue_apply_delay
-    case entry_queue_notify_admission_time_out
-    case lightofmoon
-    case lightofsun
-    case lightofstar
-    case lunarstance
-    case universestance
-    case sunstance
-    case flashkick
-    case newmoon
-    case starstance
-    case dimension
-    case dimension1
-    case dimension2
-    case creatingstar
-    case fallingstar
-    case novaexplosing
-    case gravitycontrol
-    case soulcollect
-    case soulreaper
-    case soulunity
-    case soulshadow
-    case soulfairy
-    case soulfalcon
-    case soulgolem
-    case souldivision
-    case soulenergy
-    case use_skill_sp_spa
-    case use_skill_sp_sha
-    case sp_sha
-    case soulcurse
-    case hells_plant
-    case increase_maxhp
-    case increase_maxsp
-    case ref_t_potion
-    case add_atk_damage
-    case add_matk_damage
-    case helpangel
-    case soundofdestruction
-    case luxanima
-    case reuse_limit_luxanima
-    case ensemblefatigue
-    case misty_frost
-    case magic_poison
-    case ep16_2_buff_ss
-    case ep16_2_buff_sc
-    case ep16_2_buff_ac
-    case overbrandready
-    case poison_mist
-    case stone_wall
-    case cloud_poison
-    case homun_time
-    case emergency_move
-    case madogear
-    case npc_hallucinationwalk
-    case packing_envelope1
-    case packing_envelope2
-    case packing_envelope3
-    case packing_envelope4
-    case packing_envelope5
-    case packing_envelope6
-    case packing_envelope7
-    case packing_envelope8
-    case packing_envelope9
-    case packing_envelope10
-    case soulattack
-    case wideweb
-    case burnt
-    case chill
-    case handicapstate_deepblind
-    case handicapstate_deepsilence
-    case handicapstate_lassitude
-    case handicapstate_frostbite
-    case handicapstate_swooning
-    case handicapstate_lightningstrike
-    case handicapstate_crystallization
-    case handicapstate_conflagration
-    case handicapstate_misfortune
-    case handicapstate_deadlypoison
-    case handicapstate_depression
-    case handicapstate_holyflame
-    case servantweapon
-    case servant_sign
-    case chargingpierce
-    case chargingpierce_count
-    case dragonic_aura
-    case vigor
-    case deadly_defeasance
-    case climax_des_hu
-    case climax
-    case climax_earth
-    case climax_bloom
-    case climax_cryimp
-    case windsign
-    case crescivebolt
-    case calamitygale
-    case mediale
-    case a_vita
-    case a_telum
-    case pre_acies
-    case competentia
-    case religio
-    case benedictum
-    case axe_stomp
-    case a_machine
-    case d_machine
-    case abr_battle_warior
-    case abr_dual_cannon
-    case abr_mother_net
-    case abr_infinity
-    case shadow_exceed
-    case dancing_knife
-    case potent_venom
-    case shadow_scar
-    case e_slash_count
-    case shadow_weapon
-    case guard_stance
-    case attack_stance
-    case guardian_s
-    case rebound_s
-    case holy_s
-    case ultimate_s
-    case spear_scar
-    case shield_power
-    case spell_enchanting
-    case summon_elemental_ardor
-    case summon_elemental_diluvio
-    case summon_elemental_procella
-    case summon_elemental_terremotus
-    case summon_elemental_serpens
-    case elemental_veil
-    case mystic_symphony
-    case kvasir_sonata
-    case soundblend
-    case gef_nocturn
-    case ain_rhapsody
-    case musical_interlude
-    case jawaii_serenade
-    case pron_march
-    case roseblossom
-    case powerful_faith
-    case sincere_faith
-    case firm_faith
-    case holy_oil
-    case first_brand
-    case second_brand
-    case second_judge
-    case third_exor_flame
-    case first_faith_power
-    case massive_f_blaster
-    case protectshadowequip
-    case researchreport
-    case bo_hell_dusty
-    case bionic_woodenwarrior
-    case bionic_wooden_fairy
-    case bionic_creeper
-    case bionic_helltree
-    case shadow_strip
-    case abyss_dagger
-    case abyssforceweapon
-    case abyss_slayer
-    case flametechnic
-    case flametechnic_option
-    case flamearmor
-    case flamearmor_option
-    case cold_force
-    case cold_force_option
-    case crystal_armor
-    case crystal_armor_option
-    case grace_breeze
-    case grace_breeze_option
-    case eyes_of_storm
-    case eyes_of_storm_option
-    case earth_care
-    case earth_care_option
-    case strong_protection
-    case strong_protection_option
-    case deep_poisoning
-    case deep_poisoning_option
-    case poison_shield
-    case poison_shield_option
-    case sub_weaponproperty
-    case m_lifepotion
-    case s_manapotion
-    case almighty
-    case ultimatecook
-    case m_defscroll
-    case infinity_drink
-    case mental_potion
-    case limit_power_booster
-    case combat_pill
-    case combat_pill2
-    case mysticpowder
-    case sparkcandy
-    case magiccandy
-    case acaraje
-    case popecookie
-    case vitalize_potion
-    case cup_of_boza
-    case skf_matk
-    case skf_atk
-    case skf_aspd
-    case skf_cast
-    case beef_rib_stew
-    case pork_rib_stew
-    case weaponbreaker
-    case toxin_of_mandara
-    case goldene_tone
-    case tempering
-    case gradual_gravity
-    case all_stat_down
-    case killing_aura
-    case damage_heal
-    case immune_property_nothing
-    case immune_property_water
-    case immune_property_ground
-    case immune_property_fire
-    case immune_property_wind
-    case immune_property_poison
-    case immune_property_saint
-    case immune_property_darkness
-    case immune_property_telekinesis
-    case immune_property_undead
-    case relieve_on
-    case relieve_off
-    case rush_quake1
-    case rush_quake2
-    case g_lifepotion
-    case hnnoweapon
-    case shieldchainrush
-    case mistyfrost
-    case groundgravity
-    case breakinglimit
-    case rulebreak
-    case intensive_aim
-    case intensive_aim_count
-    case grenade_fragment_1
-    case grenade_fragment_2
-    case grenade_fragment_3
-    case grenade_fragment_4
-    case grenade_fragment_5
-    case grenade_fragment_6
-    case auto_firing_launcher
-    case hidden_card
-    case period_receiveitem_2nd
-    case period_plusexp_2nd
-    case powerup
-    case agiup
-    case protection
-
-    public var rawValue: Int {
-        switch self {
-        case .stone: 0
-        case .freeze: 1
-        case .stun: 2
-        case .sleep: 3
-        case .poison: 4
-        case .curse: 5
-        case .silence: 6
-        case .confusion: 7
-        case .blind: 8
-        case .bleeding: 9
-        case .dpoison: 10
-        case .stonewait: 11
-        case .provoke: 20
-        case .endure: 21
-        case .twohandquicken: 22
-        case .concentrate: 23
-        case .hiding: 24
-        case .cloaking: 25
-        case .encpoison: 26
-        case .poisonreact: 27
-        case .quagmire: 28
-        case .angelus: 29
-        case .blessing: 30
-        case .signumcrucis: 31
-        case .increaseagi: 32
-        case .decreaseagi: 33
-        case .slowpoison: 34
-        case .impositio: 35
-        case .suffragium: 36
-        case .aspersio: 37
-        case .benedictio: 38
-        case .kyrie: 39
-        case .magnificat: 40
-        case .gloria: 41
-        case .aeterna: 42
-        case .adrenaline: 43
-        case .weaponperfection: 44
-        case .overthrust: 45
-        case .maximizepower: 46
-        case .trickdead: 47
-        case .loud: 48
-        case .energycoat: 49
-        case .brokenarmor: 50
-        case .brokenweapon: 51
-        case .hallucination: 52
-        case .weight50: 53
-        case .weight90: 54
-        case .aspdpotion0: 55
-        case .aspdpotion1: 56
-        case .aspdpotion2: 57
-        case .aspdpotion3: 58
-        case .speedup0: 59
-        case .speedup1: 60
-        case .atkpotion: 61
-        case .matkpotion: 62
-        case .wedding: 63
-        case .slowdown: 64
-        case .ankle: 65
-        case .keeping: 66
-        case .barrier: 67
-        case .stripweapon: 68
-        case .stripshield: 69
-        case .striparmor: 70
-        case .striphelm: 71
-        case .cp_weapon: 72
-        case .cp_shield: 73
-        case .cp_armor: 74
-        case .cp_helm: 75
-        case .autoguard: 76
-        case .reflectshield: 77
-        case .splasher: 78
-        case .providence: 79
-        case .defender: 80
-        case .magicrod: 81
-        case .spellbreaker: 82
-        case .autospell: 83
-        case .sighttrasher: 84
-        case .autoberserk: 85
-        case .spearquicken: 86
-        case .autocounter: 87
-        case .sight: 88
-        case .safetywall: 89
-        case .ruwach: 90
-        case .extremityfist: 91
-        case .explosionspirits: 92
-        case .combo: 93
-        case .bladestop_wait: 94
-        case .bladestop: 95
-        case .fireweapon: 96
-        case .waterweapon: 97
-        case .windweapon: 98
-        case .earthweapon: 99
-        case .volcano: 100
-        case .deluge: 101
-        case .violentgale: 102
-        case .watk_element: 103
-        case .armor: 104
-        case .armor_element_water: 105
-        case .nochat: 106
-        case .protectexp: 107
-        case .aurablade: 108
-        case .parrying: 109
-        case .concentration: 110
-        case .tensionrelax: 111
-        case .berserk: 112
-        case .fury: 113
-        case .gospel: 114
-        case .assumptio: 115
-        case .basilica: 116
-        case .guildaura: 117
-        case .magicpower: 118
-        case .edp: 119
-        case .truesight: 120
-        case .windwalk: 121
-        case .meltdown: 122
-        case .cartboost: 123
-        case .chasewalk: 124
-        case .rejectsword: 125
-        case .marionette: 126
-        case .marionette2: 127
-        case .changeundead: 128
-        case .jointbeat: 129
-        case .mindbreaker: 130
-        case .memorize: 131
-        case .fogwall: 132
-        case .spiderweb: 133
-        case .devotion: 134
-        case .sacrifice: 135
-        case .steelbody: 136
-        case .orcish: 137
-        case .readystorm: 138
-        case .readydown: 139
-        case .readyturn: 140
-        case .readycounter: 141
-        case .dodge: 142
-        case .run: 143
-        case .shadowweapon: 144
-        case .adrenaline2: 145
-        case .ghostweapon: 146
-        case .kaizel: 147
-        case .kaahi: 148
-        case .kaupe: 149
-        case .onehand: 150
-        case .preserve: 151
-        case .battleorders: 152
-        case .regeneration: 153
-        case .doublecast: 154
-        case .gravitation: 155
-        case .maxoverthrust: 156
-        case .longing: 157
-        case .hermode: 158
-        case .shrink: 159
-        case .sightblaster: 160
-        case .winkcharm: 161
-        case .closeconfine: 162
-        case .closeconfine2: 163
-        case .dancing: 164
-        case .elementalchange: 165
-        case .richmankim: 166
-        case .eternalchaos: 167
-        case .drumbattle: 168
-        case .nibelungen: 169
-        case .rokisweil: 170
-        case .intoabyss: 171
-        case .siegfried: 172
-        case .whistle: 173
-        case .assncros: 174
-        case .poembragi: 175
-        case .appleidun: 176
-        case .modechange: 177
-        case .humming: 178
-        case .dontforgetme: 179
-        case .fortune: 180
-        case .service4u: 181
-        case .stop: 182
-        case .spurt: 183
-        case .spirit: 184
-        case .coma: 185
-        case .intravision: 186
-        case .incallstatus: 187
-        case .incstr: 188
-        case .incagi: 189
-        case .incvit: 190
-        case .incint: 191
-        case .incdex: 192
-        case .incluk: 193
-        case .inchit: 194
-        case .inchitrate: 195
-        case .incflee: 196
-        case .incfleerate: 197
-        case .incmhprate: 198
-        case .incmsprate: 199
-        case .incatkrate: 200
-        case .incmatkrate: 201
-        case .incdefrate: 202
-        case .strfood: 203
-        case .agifood: 204
-        case .vitfood: 205
-        case .intfood: 206
-        case .dexfood: 207
-        case .lukfood: 208
-        case .hitfood: 209
-        case .fleefood: 210
-        case .batkfood: 211
-        case .watkfood: 212
-        case .matkfood: 213
-        case .scresist: 214
-        case .xmas: 215
-        case .warm: 216
-        case .sun_comfort: 217
-        case .moon_comfort: 218
-        case .star_comfort: 219
-        case .fusion: 220
-        case .skillrate_up: 221
-        case .ske: 222
-        case .kaite: 223
-        case .swoo: 224
-        case .ska: 225
-        case .earthscroll: 226
-        case .miracle: 227
-        case .madnesscancel: 228
-        case .adjustment: 229
-        case .increasing: 230
-        case .gatlingfever: 231
-        case .tatamigaeshi: 232
-        case .utsusemi: 233
-        case .bunsinjyutsu: 234
-        case .kaensin: 235
-        case .suiton: 236
-        case .nen: 237
-        case .knowledge: 238
-        case .sma: 239
-        case .fling: 240
-        case .avoid: 241
-        case .change: 242
-        case .bloodlust: 243
-        case .fleet: 244
-        case .speed: 245
-        case .defence: 246
-        case .incaspdrate: 247
-        case .incflee2: 248
-        case .jailed: 249
-        case .enchantarms: 250
-        case .magicalattack: 251
-        case .armorchange: 252
-        case .criticalwound: 253
-        case .magicmirror: 254
-        case .slowcast: 255
-        case .summer: 256
-        case .expboost: 257
-        case .itemboost: 258
-        case .bossmapinfo: 259
-        case .lifeinsurance: 260
-        case .inccri: 261
-        case .mdef_rate: 265
-        case .inchealrate: 267
-        case .pneuma: 268
-        case .autotrade: 269
-        case .ksprotected: 270
-        case .armor_resist: 271
-        case .spcost_rate: 272
-        case .commonsc_resist: 273
-        case .sevenwind: 274
-        case .def_rate: 275
-        case .walkspeed: 277
-        case .merc_fleeup: 278
-        case .merc_atkup: 279
-        case .merc_hpup: 280
-        case .merc_spup: 281
-        case .merc_hitup: 282
-        case .merc_quicken: 283
-        case .rebirth: 284
-        case .itemscript: 289
-        case .s_lifepotion: 290
-        case .l_lifepotion: 291
-        case .jexpboost: 292
-        case .hellpower: 294
-        case .invincible: 295
-        case .manu_atk: 297
-        case .manu_def: 298
-        case .spl_atk: 299
-        case .spl_def: 300
-        case .manu_matk: 301
-        case .spl_matk: 302
-        case .food_str_cash: 303
-        case .food_agi_cash: 304
-        case .food_vit_cash: 305
-        case .food_dex_cash: 306
-        case .food_int_cash: 307
-        case .food_luk_cash: 308
-        case .fear: 309
-        case .burning: 310
-        case .freezing: 311
-        case .enchantblade: 312
-        case .deathbound: 313
-        case .millenniumshield: 314
-        case .crushstrike: 315
-        case .refresh: 316
-        case .reuse_refresh: 317
-        case .giantgrowth: 318
-        case .stonehardskin: 319
-        case .vitalityactivation: 320
-        case .stormblast: 321
-        case .fightingspirit: 322
-        case .abundance: 323
-        case .adoramus: 324
-        case .epiclesis: 325
-        case .oratio: 326
-        case .laudaagnus: 327
-        case .laudaramus: 328
-        case .renovatio: 329
-        case .expiatio: 330
-        case .duplelight: 331
-        case .secrament: 332
-        case .whiteimprison: 333
-        case .marshofabyss: 334
-        case .recognizedspell: 335
-        case .stasis: 336
-        case .sphere_1: 337
-        case .sphere_2: 338
-        case .sphere_3: 339
-        case .sphere_4: 340
-        case .sphere_5: 341
-        case .reading_sb: 342
-        case .freeze_sp: 343
-        case .fearbreeze: 344
-        case .electricshocker: 345
-        case .wugdash: 346
-        case .bite: 347
-        case .camouflage: 348
-        case .acceleration: 349
-        case .hovering: 350
-        case .shapeshift: 351
-        case .infraredscan: 352
-        case .analyze: 353
-        case .magneticfield: 354
-        case .neutralbarrier: 355
-        case .neutralbarrier_master: 356
-        case .stealthfield: 357
-        case .stealthfield_master: 358
-        case .overheat: 359
-        case .overheat_limitpoint: 360
-        case .venomimpress: 361
-        case .poisoningweapon: 362
-        case .weaponblocking: 363
-        case .cloakingexceed: 364
-        case .hallucinationwalk: 365
-        case .hallucinationwalk_postdelay: 366
-        case .rollingcutter: 367
-        case .toxin: 368
-        case .paralyse: 369
-        case .venombleed: 370
-        case .magicmushroom: 371
-        case .deathhurt: 372
-        case .pyrexia: 373
-        case .oblivioncurse: 374
-        case .leechesend: 375
-        case .reflectdamage: 376
-        case .forceofvanguard: 377
-        case .shieldspell_hp: 378
-        case .shieldspell_sp: 379
-        case .shieldspell_atk: 380
-        case .exeedbreak: 381
-        case .prestige: 382
-        case .banding: 383
-        case .banding_defence: 384
-        case .earthdrive: 385
-        case .inspiration: 386
-        case .spellfist: 387
-        case .crystalize: 388
-        case .striking: 389
-        case .warmer: 390
-        case .vacuum_extreme: 391
-        case .propertywalk: 392
-        case .swingdance: 393
-        case .symphonyoflover: 394
-        case .moonlitserenade: 395
-        case .rushwindmill: 396
-        case .echosong: 397
-        case .harmonize: 398
-        case .voiceofsiren: 399
-        case .deepsleep: 400
-        case .sircleofnature: 401
-        case .gloomyday: 402
-        case .gloomyday_sk: 403
-        case .songofmana: 404
-        case .dancewithwug: 405
-        case .saturdaynightfever: 406
-        case .leradsdew: 407
-        case .melodyofsink: 408
-        case .beyondofwarcry: 409
-        case .unlimitedhummingvoice: 410
-        case .sitdown_force: 411
-        case .netherworld: 412
-        case .crescentelbow: 413
-        case .cursedcircle_atker: 414
-        case .cursedcircle_target: 415
-        case .lightningwalk: 416
-        case .raisingdragon: 417
-        case .gt_energygain: 418
-        case .gt_change: 419
-        case .gt_revitalize: 420
-        case .gn_cartboost: 421
-        case .thornstrap: 422
-        case .bloodsucker: 423
-        case .smokepowder: 424
-        case .teargas: 425
-        case .mandragora: 426
-        case .stomachache: 427
-        case .mysterious_powder: 428
-        case .melon_bomb: 429
-        case .banana_bomb: 430
-        case .banana_bomb_sitdown: 431
-        case .savage_steak: 432
-        case .cocktail_warg_blood: 433
-        case .minor_bbq: 434
-        case .siroma_ice_tea: 435
-        case .drocera_herb_steamed: 436
-        case .putti_tails_noodles: 437
-        case .boost500: 438
-        case .full_swing_k: 439
-        case .mana_plus: 440
-        case .mustle_m: 441
-        case .life_force_f: 442
-        case .extract_white_potion_z: 443
-        case .vitata_500: 444
-        case .extract_salamine_juice: 445
-        case ._reproduce: 446
-        case ._autoshadowspell: 447
-        case ._shadowform: 448
-        case ._bodypaint: 449
-        case ._invisibility: 450
-        case ._deadlyinfect: 451
-        case ._enervation: 452
-        case ._groomy: 453
-        case ._ignorance: 454
-        case ._laziness: 455
-        case ._unlucky: 456
-        case ._weakness: 457
-        case ._stripaccessory: 458
-        case ._manhole: 459
-        case ._bloodylust: 460
-        case .circle_of_fire: 461
-        case .circle_of_fire_option: 462
-        case .fire_cloak: 463
-        case .fire_cloak_option: 464
-        case .water_screen: 465
-        case .water_screen_option: 466
-        case .water_drop: 467
-        case .water_drop_option: 468
-        case .water_barrier: 469
-        case .wind_step: 470
-        case .wind_step_option: 471
-        case .wind_curtain: 472
-        case .wind_curtain_option: 473
-        case .zephyr: 474
-        case .solid_skin: 475
-        case .solid_skin_option: 476
-        case .stone_shield: 477
-        case .stone_shield_option: 478
-        case .power_of_gaia: 479
-        case .pyrotechnic: 480
-        case .pyrotechnic_option: 481
-        case .heater: 482
-        case .heater_option: 483
-        case .tropic: 484
-        case .tropic_option: 485
-        case .aquaplay: 486
-        case .aquaplay_option: 487
-        case .cooler: 488
-        case .cooler_option: 489
-        case .chilly_air: 490
-        case .chilly_air_option: 491
-        case .gust: 492
-        case .gust_option: 493
-        case .blast: 494
-        case .blast_option: 495
-        case .wild_storm: 496
-        case .wild_storm_option: 497
-        case .petrology: 498
-        case .petrology_option: 499
-        case .cursed_soil: 500
-        case .cursed_soil_option: 501
-        case .upheaval: 502
-        case .upheaval_option: 503
-        case .tidal_weapon: 504
-        case .tidal_weapon_option: 505
-        case .rock_crusher: 506
-        case .rock_crusher_atk: 507
-        case .leadership: 508
-        case .glorywounds: 509
-        case .soulcold: 510
-        case .hawkeyes: 511
-        case .odins_power: 512
-        case .raid: 513
-        case .fire_insignia: 514
-        case .water_insignia: 515
-        case .wind_insignia: 516
-        case .earth_insignia: 517
-        case .push_cart: 518
-        case .spellbook1: 519
-        case .spellbook2: 520
-        case .spellbook3: 521
-        case .spellbook4: 522
-        case .spellbook5: 523
-        case .spellbook6: 524
-        case .maxspellbook: 525
-        case .incmhp: 526
-        case .incmsp: 527
-        case .partyflee: 528
-        case .meikyousisui: 529
-        case .jyumonjikiri: 530
-        case .kyougaku: 531
-        case .izayoi: 532
-        case .zenkai: 533
-        case .kagehumi: 534
-        case .kyomu: 535
-        case .kagemusya: 536
-        case .zangetsu: 537
-        case .gensou: 538
-        case .akaitsuki: 539
-        case .style_change: 540
-        case .tinder_breaker: 541
-        case .tinder_breaker2: 542
-        case .cbc: 543
-        case .eqc: 544
-        case .goldene_ferse: 545
-        case .angriffs_modus: 546
-        case .overed_boost: 547
-        case .light_of_regene: 548
-        case .ash: 549
-        case .granitic_armor: 550
-        case .magma_flow: 551
-        case .pyroclastic: 552
-        case .paralysis: 553
-        case .pain_killer: 554
-        case .hanbok: 555
-        case .defset: 556
-        case .mdefset: 557
-        case .darkcrow: 558
-        case .full_throttle: 559
-        case .rebound: 560
-        case .unlimit: 561
-        case .kings_grace: 562
-        case .telekinesis_intense: 563
-        case .offertorium: 564
-        case .frigg_song: 565
-        case .monster_transform: 566
-        case .angel_protect: 567
-        case .illusiondoping: 568
-        case .flashcombo: 569
-        case .moonstar: 570
-        case .super_star: 571
-        case .heat_barrel: 572
-        case .magicalbullet: 573
-        case .p_alter: 574
-        case .e_chain: 575
-        case .c_marker: 576
-        case .anti_m_blast: 577
-        case .b_trap: 578
-        case .h_mine: 579
-        case .qd_shot_ready: 580
-        case .mtf_aspd: 581
-        case .mtf_rangeatk: 582
-        case .mtf_matk: 583
-        case .mtf_mleatked: 584
-        case .mtf_cridamage: 585
-        case .oktoberfest: 586
-        case .strangelights: 587
-        case .decoration_of_music: 588
-        case .quest_buff1: 589
-        case .quest_buff2: 590
-        case .quest_buff3: 591
-        case .all_riding: 592
-        case .teargas_sob: 593
-        case ._feintbomb: 594
-        case ._chaos: 595
-        case .chasewalk2: 596
-        case .vacuum_extreme_postdelay: 597
-        case .mtf_aspd2: 598
-        case .mtf_rangeatk2: 599
-        case .mtf_matk2: 600
-        case ._2011rwc_scroll: 601
-        case .jp_event04: 602
-        case .mtf_mhp: 603
-        case .mtf_msp: 604
-        case .mtf_pumpkin: 605
-        case .mtf_hitflee: 606
-        case .crifood: 607
-        case .atthaste_cash: 608
-        case .reuse_limit_a: 609
-        case .reuse_limit_b: 610
-        case .reuse_limit_c: 611
-        case .reuse_limit_d: 612
-        case .reuse_limit_e: 613
-        case .reuse_limit_f: 614
-        case .reuse_limit_g: 615
-        case .reuse_limit_h: 616
-        case .reuse_limit_mtf: 617
-        case .reuse_limit_aspd_potion: 618
-        case .reuse_millenniumshield: 619
-        case .reuse_crushstrike: 620
-        case .reuse_stormblast: 621
-        case .all_riding_reuse_limit: 622
-        case .reuse_limit_ecl: 623
-        case .reuse_limit_recall: 624
-        case .promote_health_reserch: 625
-        case .energy_drink_reserch: 626
-        case .norecover_state: 627
-        case .suhide: 628
-        case .su_stoop: 629
-        case .spritemable: 630
-        case .catnippowder: 631
-        case .sv_roottwist: 632
-        case .bitescar: 633
-        case .arclousedash: 634
-        case .tunaparty: 635
-        case .shrimp: 636
-        case .freshshrimp: 637
-        case .active_monster_transform: 638
-        case .cloud_kill: 639
-        case .ljosalfar: 640
-        case .mermaid_longing: 641
-        case .hat_effect: 642
-        case .flowersmoke: 643
-        case .fstone: 644
-        case .happiness_star: 645
-        case .maple_falls: 646
-        case .time_accessory: 647
-        case .magical_feather: 648
-        case .gvg_giant: 649
-        case .gvg_golem: 650
-        case .gvg_stun: 651
-        case .gvg_stone: 652
-        case .gvg_freez: 653
-        case .gvg_sleep: 654
-        case .gvg_curse: 655
-        case .gvg_silence: 656
-        case .gvg_blind: 657
-        case .clan_info: 658
-        case .swordclan: 659
-        case .arcwandclan: 660
-        case .goldenmaceclan: 661
-        case .crossbowclan: 662
-        case .jumpingclan: 663
-        case .tarotcard: 664
-        case .geffen_magic1: 665
-        case .geffen_magic2: 666
-        case .geffen_magic3: 667
-        case .maxpain: 668
-        case .armor_element_earth: 669
-        case .armor_element_fire: 670
-        case .armor_element_wind: 671
-        case .dailysendmailcnt: 672
-        case .doram_buf_01: 673
-        case .doram_buf_02: 674
-        case .hiss: 675
-        case .nyanggrass: 676
-        case .grooming: 677
-        case .shrimpblessing: 678
-        case .chattering: 679
-        case .doram_walkspeed: 680
-        case .doram_matk: 681
-        case .doram_flee2: 682
-        case .doram_svsp: 683
-        case .fallen_angel: 684
-        case .cheerup: 685
-        case .dressup: 686
-        case .glastheim_atk: 687
-        case .glastheim_def: 688
-        case .glastheim_heal: 689
-        case .glastheim_hidden: 690
-        case .glastheim_state: 691
-        case .glastheim_itemdef: 692
-        case .glastheim_hpsp: 693
-        case .lhz_dun_n1: 694
-        case .lhz_dun_n2: 695
-        case .lhz_dun_n3: 696
-        case .lhz_dun_n4: 697
-        case .ancilla: 698
-        case .earthshaker: 699
-        case .weaponblock_on: 700
-        case .spore_explosion: 701
-        case .adaptation: 702
-        case .basilica_cell: 703
-        case .entry_queue_apply_delay: 704
-        case .entry_queue_notify_admission_time_out: 705
-        case .lightofmoon: 706
-        case .lightofsun: 707
-        case .lightofstar: 708
-        case .lunarstance: 709
-        case .universestance: 710
-        case .sunstance: 711
-        case .flashkick: 712
-        case .newmoon: 713
-        case .starstance: 714
-        case .dimension: 715
-        case .dimension1: 716
-        case .dimension2: 717
-        case .creatingstar: 718
-        case .fallingstar: 719
-        case .novaexplosing: 720
-        case .gravitycontrol: 721
-        case .soulcollect: 722
-        case .soulreaper: 723
-        case .soulunity: 724
-        case .soulshadow: 725
-        case .soulfairy: 726
-        case .soulfalcon: 727
-        case .soulgolem: 728
-        case .souldivision: 729
-        case .soulenergy: 730
-        case .use_skill_sp_spa: 731
-        case .use_skill_sp_sha: 732
-        case .sp_sha: 733
-        case .soulcurse: 734
-        case .hells_plant: 735
-        case .increase_maxhp: 736
-        case .increase_maxsp: 737
-        case .ref_t_potion: 738
-        case .add_atk_damage: 739
-        case .add_matk_damage: 740
-        case .helpangel: 741
-        case .soundofdestruction: 742
-        case .luxanima: 743
-        case .reuse_limit_luxanima: 744
-        case .ensemblefatigue: 745
-        case .misty_frost: 746
-        case .magic_poison: 747
-        case .ep16_2_buff_ss: 748
-        case .ep16_2_buff_sc: 749
-        case .ep16_2_buff_ac: 750
-        case .overbrandready: 751
-        case .poison_mist: 752
-        case .stone_wall: 753
-        case .cloud_poison: 754
-        case .homun_time: 755
-        case .emergency_move: 756
-        case .madogear: 757
-        case .npc_hallucinationwalk: 758
-        case .packing_envelope1: 759
-        case .packing_envelope2: 760
-        case .packing_envelope3: 761
-        case .packing_envelope4: 762
-        case .packing_envelope5: 763
-        case .packing_envelope6: 764
-        case .packing_envelope7: 765
-        case .packing_envelope8: 766
-        case .packing_envelope9: 767
-        case .packing_envelope10: 768
-        case .soulattack: 769
-        case .wideweb: 770
-        case .burnt: 771
-        case .chill: 772
-        case .handicapstate_deepblind: 773
-        case .handicapstate_deepsilence: 774
-        case .handicapstate_lassitude: 775
-        case .handicapstate_frostbite: 776
-        case .handicapstate_swooning: 777
-        case .handicapstate_lightningstrike: 778
-        case .handicapstate_crystallization: 779
-        case .handicapstate_conflagration: 780
-        case .handicapstate_misfortune: 781
-        case .handicapstate_deadlypoison: 782
-        case .handicapstate_depression: 783
-        case .handicapstate_holyflame: 784
-        case .servantweapon: 785
-        case .servant_sign: 786
-        case .chargingpierce: 787
-        case .chargingpierce_count: 788
-        case .dragonic_aura: 789
-        case .vigor: 790
-        case .deadly_defeasance: 791
-        case .climax_des_hu: 792
-        case .climax: 793
-        case .climax_earth: 794
-        case .climax_bloom: 795
-        case .climax_cryimp: 796
-        case .windsign: 797
-        case .crescivebolt: 798
-        case .calamitygale: 799
-        case .mediale: 800
-        case .a_vita: 801
-        case .a_telum: 802
-        case .pre_acies: 803
-        case .competentia: 804
-        case .religio: 805
-        case .benedictum: 806
-        case .axe_stomp: 807
-        case .a_machine: 808
-        case .d_machine: 809
-        case .abr_battle_warior: 810
-        case .abr_dual_cannon: 811
-        case .abr_mother_net: 812
-        case .abr_infinity: 813
-        case .shadow_exceed: 814
-        case .dancing_knife: 815
-        case .potent_venom: 816
-        case .shadow_scar: 817
-        case .e_slash_count: 818
-        case .shadow_weapon: 819
-        case .guard_stance: 820
-        case .attack_stance: 821
-        case .guardian_s: 822
-        case .rebound_s: 823
-        case .holy_s: 824
-        case .ultimate_s: 825
-        case .spear_scar: 826
-        case .shield_power: 827
-        case .spell_enchanting: 828
-        case .summon_elemental_ardor: 829
-        case .summon_elemental_diluvio: 830
-        case .summon_elemental_procella: 831
-        case .summon_elemental_terremotus: 832
-        case .summon_elemental_serpens: 833
-        case .elemental_veil: 834
-        case .mystic_symphony: 835
-        case .kvasir_sonata: 836
-        case .soundblend: 837
-        case .gef_nocturn: 838
-        case .ain_rhapsody: 839
-        case .musical_interlude: 840
-        case .jawaii_serenade: 841
-        case .pron_march: 842
-        case .roseblossom: 843
-        case .powerful_faith: 844
-        case .sincere_faith: 845
-        case .firm_faith: 846
-        case .holy_oil: 847
-        case .first_brand: 848
-        case .second_brand: 849
-        case .second_judge: 850
-        case .third_exor_flame: 851
-        case .first_faith_power: 852
-        case .massive_f_blaster: 853
-        case .protectshadowequip: 854
-        case .researchreport: 855
-        case .bo_hell_dusty: 856
-        case .bionic_woodenwarrior: 857
-        case .bionic_wooden_fairy: 858
-        case .bionic_creeper: 859
-        case .bionic_helltree: 860
-        case .shadow_strip: 861
-        case .abyss_dagger: 862
-        case .abyssforceweapon: 863
-        case .abyss_slayer: 864
-        case .flametechnic: 865
-        case .flametechnic_option: 866
-        case .flamearmor: 867
-        case .flamearmor_option: 868
-        case .cold_force: 869
-        case .cold_force_option: 870
-        case .crystal_armor: 871
-        case .crystal_armor_option: 872
-        case .grace_breeze: 873
-        case .grace_breeze_option: 874
-        case .eyes_of_storm: 875
-        case .eyes_of_storm_option: 876
-        case .earth_care: 877
-        case .earth_care_option: 878
-        case .strong_protection: 879
-        case .strong_protection_option: 880
-        case .deep_poisoning: 881
-        case .deep_poisoning_option: 882
-        case .poison_shield: 883
-        case .poison_shield_option: 884
-        case .sub_weaponproperty: 885
-        case .m_lifepotion: 886
-        case .s_manapotion: 887
-        case .almighty: 888
-        case .ultimatecook: 889
-        case .m_defscroll: 890
-        case .infinity_drink: 891
-        case .mental_potion: 892
-        case .limit_power_booster: 893
-        case .combat_pill: 894
-        case .combat_pill2: 895
-        case .mysticpowder: 896
-        case .sparkcandy: 897
-        case .magiccandy: 898
-        case .acaraje: 899
-        case .popecookie: 900
-        case .vitalize_potion: 901
-        case .cup_of_boza: 902
-        case .skf_matk: 903
-        case .skf_atk: 904
-        case .skf_aspd: 905
-        case .skf_cast: 906
-        case .beef_rib_stew: 907
-        case .pork_rib_stew: 908
-        case .weaponbreaker: 909
-        case .toxin_of_mandara: 910
-        case .goldene_tone: 911
-        case .tempering: 912
-        case .gradual_gravity: 913
-        case .all_stat_down: 914
-        case .killing_aura: 915
-        case .damage_heal: 916
-        case .immune_property_nothing: 917
-        case .immune_property_water: 918
-        case .immune_property_ground: 919
-        case .immune_property_fire: 920
-        case .immune_property_wind: 921
-        case .immune_property_poison: 922
-        case .immune_property_saint: 923
-        case .immune_property_darkness: 924
-        case .immune_property_telekinesis: 925
-        case .immune_property_undead: 926
-        case .relieve_on: 927
-        case .relieve_off: 928
-        case .rush_quake1: 929
-        case .rush_quake2: 930
-        case .g_lifepotion: 931
-        case .hnnoweapon: 932
-        case .shieldchainrush: 933
-        case .mistyfrost: 934
-        case .groundgravity: 935
-        case .breakinglimit: 936
-        case .rulebreak: 937
-        case .intensive_aim: 938
-        case .intensive_aim_count: 939
-        case .grenade_fragment_1: 940
-        case .grenade_fragment_2: 941
-        case .grenade_fragment_3: 942
-        case .grenade_fragment_4: 943
-        case .grenade_fragment_5: 944
-        case .grenade_fragment_6: 945
-        case .auto_firing_launcher: 946
-        case .hidden_card: 947
-        case .period_receiveitem_2nd: 948
-        case .period_plusexp_2nd: 949
-        case .powerup: 951
-        case .agiup: 952
-        case .protection: 953
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .stone
-        case 1: self = .freeze
-        case 2: self = .stun
-        case 3: self = .sleep
-        case 4: self = .poison
-        case 5: self = .curse
-        case 6: self = .silence
-        case 7: self = .confusion
-        case 8: self = .blind
-        case 9: self = .bleeding
-        case 10: self = .dpoison
-        case 11: self = .stonewait
-        case 20: self = .provoke
-        case 21: self = .endure
-        case 22: self = .twohandquicken
-        case 23: self = .concentrate
-        case 24: self = .hiding
-        case 25: self = .cloaking
-        case 26: self = .encpoison
-        case 27: self = .poisonreact
-        case 28: self = .quagmire
-        case 29: self = .angelus
-        case 30: self = .blessing
-        case 31: self = .signumcrucis
-        case 32: self = .increaseagi
-        case 33: self = .decreaseagi
-        case 34: self = .slowpoison
-        case 35: self = .impositio
-        case 36: self = .suffragium
-        case 37: self = .aspersio
-        case 38: self = .benedictio
-        case 39: self = .kyrie
-        case 40: self = .magnificat
-        case 41: self = .gloria
-        case 42: self = .aeterna
-        case 43: self = .adrenaline
-        case 44: self = .weaponperfection
-        case 45: self = .overthrust
-        case 46: self = .maximizepower
-        case 47: self = .trickdead
-        case 48: self = .loud
-        case 49: self = .energycoat
-        case 50: self = .brokenarmor
-        case 51: self = .brokenweapon
-        case 52: self = .hallucination
-        case 53: self = .weight50
-        case 54: self = .weight90
-        case 55: self = .aspdpotion0
-        case 56: self = .aspdpotion1
-        case 57: self = .aspdpotion2
-        case 58: self = .aspdpotion3
-        case 59: self = .speedup0
-        case 60: self = .speedup1
-        case 61: self = .atkpotion
-        case 62: self = .matkpotion
-        case 63: self = .wedding
-        case 64: self = .slowdown
-        case 65: self = .ankle
-        case 66: self = .keeping
-        case 67: self = .barrier
-        case 68: self = .stripweapon
-        case 69: self = .stripshield
-        case 70: self = .striparmor
-        case 71: self = .striphelm
-        case 72: self = .cp_weapon
-        case 73: self = .cp_shield
-        case 74: self = .cp_armor
-        case 75: self = .cp_helm
-        case 76: self = .autoguard
-        case 77: self = .reflectshield
-        case 78: self = .splasher
-        case 79: self = .providence
-        case 80: self = .defender
-        case 81: self = .magicrod
-        case 82: self = .spellbreaker
-        case 83: self = .autospell
-        case 84: self = .sighttrasher
-        case 85: self = .autoberserk
-        case 86: self = .spearquicken
-        case 87: self = .autocounter
-        case 88: self = .sight
-        case 89: self = .safetywall
-        case 90: self = .ruwach
-        case 91: self = .extremityfist
-        case 92: self = .explosionspirits
-        case 93: self = .combo
-        case 94: self = .bladestop_wait
-        case 95: self = .bladestop
-        case 96: self = .fireweapon
-        case 97: self = .waterweapon
-        case 98: self = .windweapon
-        case 99: self = .earthweapon
-        case 100: self = .volcano
-        case 101: self = .deluge
-        case 102: self = .violentgale
-        case 103: self = .watk_element
-        case 104: self = .armor
-        case 105: self = .armor_element_water
-        case 106: self = .nochat
-        case 107: self = .protectexp
-        case 108: self = .aurablade
-        case 109: self = .parrying
-        case 110: self = .concentration
-        case 111: self = .tensionrelax
-        case 112: self = .berserk
-        case 113: self = .fury
-        case 114: self = .gospel
-        case 115: self = .assumptio
-        case 116: self = .basilica
-        case 117: self = .guildaura
-        case 118: self = .magicpower
-        case 119: self = .edp
-        case 120: self = .truesight
-        case 121: self = .windwalk
-        case 122: self = .meltdown
-        case 123: self = .cartboost
-        case 124: self = .chasewalk
-        case 125: self = .rejectsword
-        case 126: self = .marionette
-        case 127: self = .marionette2
-        case 128: self = .changeundead
-        case 129: self = .jointbeat
-        case 130: self = .mindbreaker
-        case 131: self = .memorize
-        case 132: self = .fogwall
-        case 133: self = .spiderweb
-        case 134: self = .devotion
-        case 135: self = .sacrifice
-        case 136: self = .steelbody
-        case 137: self = .orcish
-        case 138: self = .readystorm
-        case 139: self = .readydown
-        case 140: self = .readyturn
-        case 141: self = .readycounter
-        case 142: self = .dodge
-        case 143: self = .run
-        case 144: self = .shadowweapon
-        case 145: self = .adrenaline2
-        case 146: self = .ghostweapon
-        case 147: self = .kaizel
-        case 148: self = .kaahi
-        case 149: self = .kaupe
-        case 150: self = .onehand
-        case 151: self = .preserve
-        case 152: self = .battleorders
-        case 153: self = .regeneration
-        case 154: self = .doublecast
-        case 155: self = .gravitation
-        case 156: self = .maxoverthrust
-        case 157: self = .longing
-        case 158: self = .hermode
-        case 159: self = .shrink
-        case 160: self = .sightblaster
-        case 161: self = .winkcharm
-        case 162: self = .closeconfine
-        case 163: self = .closeconfine2
-        case 164: self = .dancing
-        case 165: self = .elementalchange
-        case 166: self = .richmankim
-        case 167: self = .eternalchaos
-        case 168: self = .drumbattle
-        case 169: self = .nibelungen
-        case 170: self = .rokisweil
-        case 171: self = .intoabyss
-        case 172: self = .siegfried
-        case 173: self = .whistle
-        case 174: self = .assncros
-        case 175: self = .poembragi
-        case 176: self = .appleidun
-        case 177: self = .modechange
-        case 178: self = .humming
-        case 179: self = .dontforgetme
-        case 180: self = .fortune
-        case 181: self = .service4u
-        case 182: self = .stop
-        case 183: self = .spurt
-        case 184: self = .spirit
-        case 185: self = .coma
-        case 186: self = .intravision
-        case 187: self = .incallstatus
-        case 188: self = .incstr
-        case 189: self = .incagi
-        case 190: self = .incvit
-        case 191: self = .incint
-        case 192: self = .incdex
-        case 193: self = .incluk
-        case 194: self = .inchit
-        case 195: self = .inchitrate
-        case 196: self = .incflee
-        case 197: self = .incfleerate
-        case 198: self = .incmhprate
-        case 199: self = .incmsprate
-        case 200: self = .incatkrate
-        case 201: self = .incmatkrate
-        case 202: self = .incdefrate
-        case 203: self = .strfood
-        case 204: self = .agifood
-        case 205: self = .vitfood
-        case 206: self = .intfood
-        case 207: self = .dexfood
-        case 208: self = .lukfood
-        case 209: self = .hitfood
-        case 210: self = .fleefood
-        case 211: self = .batkfood
-        case 212: self = .watkfood
-        case 213: self = .matkfood
-        case 214: self = .scresist
-        case 215: self = .xmas
-        case 216: self = .warm
-        case 217: self = .sun_comfort
-        case 218: self = .moon_comfort
-        case 219: self = .star_comfort
-        case 220: self = .fusion
-        case 221: self = .skillrate_up
-        case 222: self = .ske
-        case 223: self = .kaite
-        case 224: self = .swoo
-        case 225: self = .ska
-        case 226: self = .earthscroll
-        case 227: self = .miracle
-        case 228: self = .madnesscancel
-        case 229: self = .adjustment
-        case 230: self = .increasing
-        case 231: self = .gatlingfever
-        case 232: self = .tatamigaeshi
-        case 233: self = .utsusemi
-        case 234: self = .bunsinjyutsu
-        case 235: self = .kaensin
-        case 236: self = .suiton
-        case 237: self = .nen
-        case 238: self = .knowledge
-        case 239: self = .sma
-        case 240: self = .fling
-        case 241: self = .avoid
-        case 242: self = .change
-        case 243: self = .bloodlust
-        case 244: self = .fleet
-        case 245: self = .speed
-        case 246: self = .defence
-        case 247: self = .incaspdrate
-        case 248: self = .incflee2
-        case 249: self = .jailed
-        case 250: self = .enchantarms
-        case 251: self = .magicalattack
-        case 252: self = .armorchange
-        case 253: self = .criticalwound
-        case 254: self = .magicmirror
-        case 255: self = .slowcast
-        case 256: self = .summer
-        case 257: self = .expboost
-        case 258: self = .itemboost
-        case 259: self = .bossmapinfo
-        case 260: self = .lifeinsurance
-        case 261: self = .inccri
-        case 265: self = .mdef_rate
-        case 267: self = .inchealrate
-        case 268: self = .pneuma
-        case 269: self = .autotrade
-        case 270: self = .ksprotected
-        case 271: self = .armor_resist
-        case 272: self = .spcost_rate
-        case 273: self = .commonsc_resist
-        case 274: self = .sevenwind
-        case 275: self = .def_rate
-        case 277: self = .walkspeed
-        case 278: self = .merc_fleeup
-        case 279: self = .merc_atkup
-        case 280: self = .merc_hpup
-        case 281: self = .merc_spup
-        case 282: self = .merc_hitup
-        case 283: self = .merc_quicken
-        case 284: self = .rebirth
-        case 289: self = .itemscript
-        case 290: self = .s_lifepotion
-        case 291: self = .l_lifepotion
-        case 292: self = .jexpboost
-        case 294: self = .hellpower
-        case 295: self = .invincible
-        case 297: self = .manu_atk
-        case 298: self = .manu_def
-        case 299: self = .spl_atk
-        case 300: self = .spl_def
-        case 301: self = .manu_matk
-        case 302: self = .spl_matk
-        case 303: self = .food_str_cash
-        case 304: self = .food_agi_cash
-        case 305: self = .food_vit_cash
-        case 306: self = .food_dex_cash
-        case 307: self = .food_int_cash
-        case 308: self = .food_luk_cash
-        case 309: self = .fear
-        case 310: self = .burning
-        case 311: self = .freezing
-        case 312: self = .enchantblade
-        case 313: self = .deathbound
-        case 314: self = .millenniumshield
-        case 315: self = .crushstrike
-        case 316: self = .refresh
-        case 317: self = .reuse_refresh
-        case 318: self = .giantgrowth
-        case 319: self = .stonehardskin
-        case 320: self = .vitalityactivation
-        case 321: self = .stormblast
-        case 322: self = .fightingspirit
-        case 323: self = .abundance
-        case 324: self = .adoramus
-        case 325: self = .epiclesis
-        case 326: self = .oratio
-        case 327: self = .laudaagnus
-        case 328: self = .laudaramus
-        case 329: self = .renovatio
-        case 330: self = .expiatio
-        case 331: self = .duplelight
-        case 332: self = .secrament
-        case 333: self = .whiteimprison
-        case 334: self = .marshofabyss
-        case 335: self = .recognizedspell
-        case 336: self = .stasis
-        case 337: self = .sphere_1
-        case 338: self = .sphere_2
-        case 339: self = .sphere_3
-        case 340: self = .sphere_4
-        case 341: self = .sphere_5
-        case 342: self = .reading_sb
-        case 343: self = .freeze_sp
-        case 344: self = .fearbreeze
-        case 345: self = .electricshocker
-        case 346: self = .wugdash
-        case 347: self = .bite
-        case 348: self = .camouflage
-        case 349: self = .acceleration
-        case 350: self = .hovering
-        case 351: self = .shapeshift
-        case 352: self = .infraredscan
-        case 353: self = .analyze
-        case 354: self = .magneticfield
-        case 355: self = .neutralbarrier
-        case 356: self = .neutralbarrier_master
-        case 357: self = .stealthfield
-        case 358: self = .stealthfield_master
-        case 359: self = .overheat
-        case 360: self = .overheat_limitpoint
-        case 361: self = .venomimpress
-        case 362: self = .poisoningweapon
-        case 363: self = .weaponblocking
-        case 364: self = .cloakingexceed
-        case 365: self = .hallucinationwalk
-        case 366: self = .hallucinationwalk_postdelay
-        case 367: self = .rollingcutter
-        case 368: self = .toxin
-        case 369: self = .paralyse
-        case 370: self = .venombleed
-        case 371: self = .magicmushroom
-        case 372: self = .deathhurt
-        case 373: self = .pyrexia
-        case 374: self = .oblivioncurse
-        case 375: self = .leechesend
-        case 376: self = .reflectdamage
-        case 377: self = .forceofvanguard
-        case 378: self = .shieldspell_hp
-        case 379: self = .shieldspell_sp
-        case 380: self = .shieldspell_atk
-        case 381: self = .exeedbreak
-        case 382: self = .prestige
-        case 383: self = .banding
-        case 384: self = .banding_defence
-        case 385: self = .earthdrive
-        case 386: self = .inspiration
-        case 387: self = .spellfist
-        case 388: self = .crystalize
-        case 389: self = .striking
-        case 390: self = .warmer
-        case 391: self = .vacuum_extreme
-        case 392: self = .propertywalk
-        case 393: self = .swingdance
-        case 394: self = .symphonyoflover
-        case 395: self = .moonlitserenade
-        case 396: self = .rushwindmill
-        case 397: self = .echosong
-        case 398: self = .harmonize
-        case 399: self = .voiceofsiren
-        case 400: self = .deepsleep
-        case 401: self = .sircleofnature
-        case 402: self = .gloomyday
-        case 403: self = .gloomyday_sk
-        case 404: self = .songofmana
-        case 405: self = .dancewithwug
-        case 406: self = .saturdaynightfever
-        case 407: self = .leradsdew
-        case 408: self = .melodyofsink
-        case 409: self = .beyondofwarcry
-        case 410: self = .unlimitedhummingvoice
-        case 411: self = .sitdown_force
-        case 412: self = .netherworld
-        case 413: self = .crescentelbow
-        case 414: self = .cursedcircle_atker
-        case 415: self = .cursedcircle_target
-        case 416: self = .lightningwalk
-        case 417: self = .raisingdragon
-        case 418: self = .gt_energygain
-        case 419: self = .gt_change
-        case 420: self = .gt_revitalize
-        case 421: self = .gn_cartboost
-        case 422: self = .thornstrap
-        case 423: self = .bloodsucker
-        case 424: self = .smokepowder
-        case 425: self = .teargas
-        case 426: self = .mandragora
-        case 427: self = .stomachache
-        case 428: self = .mysterious_powder
-        case 429: self = .melon_bomb
-        case 430: self = .banana_bomb
-        case 431: self = .banana_bomb_sitdown
-        case 432: self = .savage_steak
-        case 433: self = .cocktail_warg_blood
-        case 434: self = .minor_bbq
-        case 435: self = .siroma_ice_tea
-        case 436: self = .drocera_herb_steamed
-        case 437: self = .putti_tails_noodles
-        case 438: self = .boost500
-        case 439: self = .full_swing_k
-        case 440: self = .mana_plus
-        case 441: self = .mustle_m
-        case 442: self = .life_force_f
-        case 443: self = .extract_white_potion_z
-        case 444: self = .vitata_500
-        case 445: self = .extract_salamine_juice
-        case 446: self = ._reproduce
-        case 447: self = ._autoshadowspell
-        case 448: self = ._shadowform
-        case 449: self = ._bodypaint
-        case 450: self = ._invisibility
-        case 451: self = ._deadlyinfect
-        case 452: self = ._enervation
-        case 453: self = ._groomy
-        case 454: self = ._ignorance
-        case 455: self = ._laziness
-        case 456: self = ._unlucky
-        case 457: self = ._weakness
-        case 458: self = ._stripaccessory
-        case 459: self = ._manhole
-        case 460: self = ._bloodylust
-        case 461: self = .circle_of_fire
-        case 462: self = .circle_of_fire_option
-        case 463: self = .fire_cloak
-        case 464: self = .fire_cloak_option
-        case 465: self = .water_screen
-        case 466: self = .water_screen_option
-        case 467: self = .water_drop
-        case 468: self = .water_drop_option
-        case 469: self = .water_barrier
-        case 470: self = .wind_step
-        case 471: self = .wind_step_option
-        case 472: self = .wind_curtain
-        case 473: self = .wind_curtain_option
-        case 474: self = .zephyr
-        case 475: self = .solid_skin
-        case 476: self = .solid_skin_option
-        case 477: self = .stone_shield
-        case 478: self = .stone_shield_option
-        case 479: self = .power_of_gaia
-        case 480: self = .pyrotechnic
-        case 481: self = .pyrotechnic_option
-        case 482: self = .heater
-        case 483: self = .heater_option
-        case 484: self = .tropic
-        case 485: self = .tropic_option
-        case 486: self = .aquaplay
-        case 487: self = .aquaplay_option
-        case 488: self = .cooler
-        case 489: self = .cooler_option
-        case 490: self = .chilly_air
-        case 491: self = .chilly_air_option
-        case 492: self = .gust
-        case 493: self = .gust_option
-        case 494: self = .blast
-        case 495: self = .blast_option
-        case 496: self = .wild_storm
-        case 497: self = .wild_storm_option
-        case 498: self = .petrology
-        case 499: self = .petrology_option
-        case 500: self = .cursed_soil
-        case 501: self = .cursed_soil_option
-        case 502: self = .upheaval
-        case 503: self = .upheaval_option
-        case 504: self = .tidal_weapon
-        case 505: self = .tidal_weapon_option
-        case 506: self = .rock_crusher
-        case 507: self = .rock_crusher_atk
-        case 508: self = .leadership
-        case 509: self = .glorywounds
-        case 510: self = .soulcold
-        case 511: self = .hawkeyes
-        case 512: self = .odins_power
-        case 513: self = .raid
-        case 514: self = .fire_insignia
-        case 515: self = .water_insignia
-        case 516: self = .wind_insignia
-        case 517: self = .earth_insignia
-        case 518: self = .push_cart
-        case 519: self = .spellbook1
-        case 520: self = .spellbook2
-        case 521: self = .spellbook3
-        case 522: self = .spellbook4
-        case 523: self = .spellbook5
-        case 524: self = .spellbook6
-        case 525: self = .maxspellbook
-        case 526: self = .incmhp
-        case 527: self = .incmsp
-        case 528: self = .partyflee
-        case 529: self = .meikyousisui
-        case 530: self = .jyumonjikiri
-        case 531: self = .kyougaku
-        case 532: self = .izayoi
-        case 533: self = .zenkai
-        case 534: self = .kagehumi
-        case 535: self = .kyomu
-        case 536: self = .kagemusya
-        case 537: self = .zangetsu
-        case 538: self = .gensou
-        case 539: self = .akaitsuki
-        case 540: self = .style_change
-        case 541: self = .tinder_breaker
-        case 542: self = .tinder_breaker2
-        case 543: self = .cbc
-        case 544: self = .eqc
-        case 545: self = .goldene_ferse
-        case 546: self = .angriffs_modus
-        case 547: self = .overed_boost
-        case 548: self = .light_of_regene
-        case 549: self = .ash
-        case 550: self = .granitic_armor
-        case 551: self = .magma_flow
-        case 552: self = .pyroclastic
-        case 553: self = .paralysis
-        case 554: self = .pain_killer
-        case 555: self = .hanbok
-        case 556: self = .defset
-        case 557: self = .mdefset
-        case 558: self = .darkcrow
-        case 559: self = .full_throttle
-        case 560: self = .rebound
-        case 561: self = .unlimit
-        case 562: self = .kings_grace
-        case 563: self = .telekinesis_intense
-        case 564: self = .offertorium
-        case 565: self = .frigg_song
-        case 566: self = .monster_transform
-        case 567: self = .angel_protect
-        case 568: self = .illusiondoping
-        case 569: self = .flashcombo
-        case 570: self = .moonstar
-        case 571: self = .super_star
-        case 572: self = .heat_barrel
-        case 573: self = .magicalbullet
-        case 574: self = .p_alter
-        case 575: self = .e_chain
-        case 576: self = .c_marker
-        case 577: self = .anti_m_blast
-        case 578: self = .b_trap
-        case 579: self = .h_mine
-        case 580: self = .qd_shot_ready
-        case 581: self = .mtf_aspd
-        case 582: self = .mtf_rangeatk
-        case 583: self = .mtf_matk
-        case 584: self = .mtf_mleatked
-        case 585: self = .mtf_cridamage
-        case 586: self = .oktoberfest
-        case 587: self = .strangelights
-        case 588: self = .decoration_of_music
-        case 589: self = .quest_buff1
-        case 590: self = .quest_buff2
-        case 591: self = .quest_buff3
-        case 592: self = .all_riding
-        case 593: self = .teargas_sob
-        case 594: self = ._feintbomb
-        case 595: self = ._chaos
-        case 596: self = .chasewalk2
-        case 597: self = .vacuum_extreme_postdelay
-        case 598: self = .mtf_aspd2
-        case 599: self = .mtf_rangeatk2
-        case 600: self = .mtf_matk2
-        case 601: self = ._2011rwc_scroll
-        case 602: self = .jp_event04
-        case 603: self = .mtf_mhp
-        case 604: self = .mtf_msp
-        case 605: self = .mtf_pumpkin
-        case 606: self = .mtf_hitflee
-        case 607: self = .crifood
-        case 608: self = .atthaste_cash
-        case 609: self = .reuse_limit_a
-        case 610: self = .reuse_limit_b
-        case 611: self = .reuse_limit_c
-        case 612: self = .reuse_limit_d
-        case 613: self = .reuse_limit_e
-        case 614: self = .reuse_limit_f
-        case 615: self = .reuse_limit_g
-        case 616: self = .reuse_limit_h
-        case 617: self = .reuse_limit_mtf
-        case 618: self = .reuse_limit_aspd_potion
-        case 619: self = .reuse_millenniumshield
-        case 620: self = .reuse_crushstrike
-        case 621: self = .reuse_stormblast
-        case 622: self = .all_riding_reuse_limit
-        case 623: self = .reuse_limit_ecl
-        case 624: self = .reuse_limit_recall
-        case 625: self = .promote_health_reserch
-        case 626: self = .energy_drink_reserch
-        case 627: self = .norecover_state
-        case 628: self = .suhide
-        case 629: self = .su_stoop
-        case 630: self = .spritemable
-        case 631: self = .catnippowder
-        case 632: self = .sv_roottwist
-        case 633: self = .bitescar
-        case 634: self = .arclousedash
-        case 635: self = .tunaparty
-        case 636: self = .shrimp
-        case 637: self = .freshshrimp
-        case 638: self = .active_monster_transform
-        case 639: self = .cloud_kill
-        case 640: self = .ljosalfar
-        case 641: self = .mermaid_longing
-        case 642: self = .hat_effect
-        case 643: self = .flowersmoke
-        case 644: self = .fstone
-        case 645: self = .happiness_star
-        case 646: self = .maple_falls
-        case 647: self = .time_accessory
-        case 648: self = .magical_feather
-        case 649: self = .gvg_giant
-        case 650: self = .gvg_golem
-        case 651: self = .gvg_stun
-        case 652: self = .gvg_stone
-        case 653: self = .gvg_freez
-        case 654: self = .gvg_sleep
-        case 655: self = .gvg_curse
-        case 656: self = .gvg_silence
-        case 657: self = .gvg_blind
-        case 658: self = .clan_info
-        case 659: self = .swordclan
-        case 660: self = .arcwandclan
-        case 661: self = .goldenmaceclan
-        case 662: self = .crossbowclan
-        case 663: self = .jumpingclan
-        case 664: self = .tarotcard
-        case 665: self = .geffen_magic1
-        case 666: self = .geffen_magic2
-        case 667: self = .geffen_magic3
-        case 668: self = .maxpain
-        case 669: self = .armor_element_earth
-        case 670: self = .armor_element_fire
-        case 671: self = .armor_element_wind
-        case 672: self = .dailysendmailcnt
-        case 673: self = .doram_buf_01
-        case 674: self = .doram_buf_02
-        case 675: self = .hiss
-        case 676: self = .nyanggrass
-        case 677: self = .grooming
-        case 678: self = .shrimpblessing
-        case 679: self = .chattering
-        case 680: self = .doram_walkspeed
-        case 681: self = .doram_matk
-        case 682: self = .doram_flee2
-        case 683: self = .doram_svsp
-        case 684: self = .fallen_angel
-        case 685: self = .cheerup
-        case 686: self = .dressup
-        case 687: self = .glastheim_atk
-        case 688: self = .glastheim_def
-        case 689: self = .glastheim_heal
-        case 690: self = .glastheim_hidden
-        case 691: self = .glastheim_state
-        case 692: self = .glastheim_itemdef
-        case 693: self = .glastheim_hpsp
-        case 694: self = .lhz_dun_n1
-        case 695: self = .lhz_dun_n2
-        case 696: self = .lhz_dun_n3
-        case 697: self = .lhz_dun_n4
-        case 698: self = .ancilla
-        case 699: self = .earthshaker
-        case 700: self = .weaponblock_on
-        case 701: self = .spore_explosion
-        case 702: self = .adaptation
-        case 703: self = .basilica_cell
-        case 704: self = .entry_queue_apply_delay
-        case 705: self = .entry_queue_notify_admission_time_out
-        case 706: self = .lightofmoon
-        case 707: self = .lightofsun
-        case 708: self = .lightofstar
-        case 709: self = .lunarstance
-        case 710: self = .universestance
-        case 711: self = .sunstance
-        case 712: self = .flashkick
-        case 713: self = .newmoon
-        case 714: self = .starstance
-        case 715: self = .dimension
-        case 716: self = .dimension1
-        case 717: self = .dimension2
-        case 718: self = .creatingstar
-        case 719: self = .fallingstar
-        case 720: self = .novaexplosing
-        case 721: self = .gravitycontrol
-        case 722: self = .soulcollect
-        case 723: self = .soulreaper
-        case 724: self = .soulunity
-        case 725: self = .soulshadow
-        case 726: self = .soulfairy
-        case 727: self = .soulfalcon
-        case 728: self = .soulgolem
-        case 729: self = .souldivision
-        case 730: self = .soulenergy
-        case 731: self = .use_skill_sp_spa
-        case 732: self = .use_skill_sp_sha
-        case 733: self = .sp_sha
-        case 734: self = .soulcurse
-        case 735: self = .hells_plant
-        case 736: self = .increase_maxhp
-        case 737: self = .increase_maxsp
-        case 738: self = .ref_t_potion
-        case 739: self = .add_atk_damage
-        case 740: self = .add_matk_damage
-        case 741: self = .helpangel
-        case 742: self = .soundofdestruction
-        case 743: self = .luxanima
-        case 744: self = .reuse_limit_luxanima
-        case 745: self = .ensemblefatigue
-        case 746: self = .misty_frost
-        case 747: self = .magic_poison
-        case 748: self = .ep16_2_buff_ss
-        case 749: self = .ep16_2_buff_sc
-        case 750: self = .ep16_2_buff_ac
-        case 751: self = .overbrandready
-        case 752: self = .poison_mist
-        case 753: self = .stone_wall
-        case 754: self = .cloud_poison
-        case 755: self = .homun_time
-        case 756: self = .emergency_move
-        case 757: self = .madogear
-        case 758: self = .npc_hallucinationwalk
-        case 759: self = .packing_envelope1
-        case 760: self = .packing_envelope2
-        case 761: self = .packing_envelope3
-        case 762: self = .packing_envelope4
-        case 763: self = .packing_envelope5
-        case 764: self = .packing_envelope6
-        case 765: self = .packing_envelope7
-        case 766: self = .packing_envelope8
-        case 767: self = .packing_envelope9
-        case 768: self = .packing_envelope10
-        case 769: self = .soulattack
-        case 770: self = .wideweb
-        case 771: self = .burnt
-        case 772: self = .chill
-        case 773: self = .handicapstate_deepblind
-        case 774: self = .handicapstate_deepsilence
-        case 775: self = .handicapstate_lassitude
-        case 776: self = .handicapstate_frostbite
-        case 777: self = .handicapstate_swooning
-        case 778: self = .handicapstate_lightningstrike
-        case 779: self = .handicapstate_crystallization
-        case 780: self = .handicapstate_conflagration
-        case 781: self = .handicapstate_misfortune
-        case 782: self = .handicapstate_deadlypoison
-        case 783: self = .handicapstate_depression
-        case 784: self = .handicapstate_holyflame
-        case 785: self = .servantweapon
-        case 786: self = .servant_sign
-        case 787: self = .chargingpierce
-        case 788: self = .chargingpierce_count
-        case 789: self = .dragonic_aura
-        case 790: self = .vigor
-        case 791: self = .deadly_defeasance
-        case 792: self = .climax_des_hu
-        case 793: self = .climax
-        case 794: self = .climax_earth
-        case 795: self = .climax_bloom
-        case 796: self = .climax_cryimp
-        case 797: self = .windsign
-        case 798: self = .crescivebolt
-        case 799: self = .calamitygale
-        case 800: self = .mediale
-        case 801: self = .a_vita
-        case 802: self = .a_telum
-        case 803: self = .pre_acies
-        case 804: self = .competentia
-        case 805: self = .religio
-        case 806: self = .benedictum
-        case 807: self = .axe_stomp
-        case 808: self = .a_machine
-        case 809: self = .d_machine
-        case 810: self = .abr_battle_warior
-        case 811: self = .abr_dual_cannon
-        case 812: self = .abr_mother_net
-        case 813: self = .abr_infinity
-        case 814: self = .shadow_exceed
-        case 815: self = .dancing_knife
-        case 816: self = .potent_venom
-        case 817: self = .shadow_scar
-        case 818: self = .e_slash_count
-        case 819: self = .shadow_weapon
-        case 820: self = .guard_stance
-        case 821: self = .attack_stance
-        case 822: self = .guardian_s
-        case 823: self = .rebound_s
-        case 824: self = .holy_s
-        case 825: self = .ultimate_s
-        case 826: self = .spear_scar
-        case 827: self = .shield_power
-        case 828: self = .spell_enchanting
-        case 829: self = .summon_elemental_ardor
-        case 830: self = .summon_elemental_diluvio
-        case 831: self = .summon_elemental_procella
-        case 832: self = .summon_elemental_terremotus
-        case 833: self = .summon_elemental_serpens
-        case 834: self = .elemental_veil
-        case 835: self = .mystic_symphony
-        case 836: self = .kvasir_sonata
-        case 837: self = .soundblend
-        case 838: self = .gef_nocturn
-        case 839: self = .ain_rhapsody
-        case 840: self = .musical_interlude
-        case 841: self = .jawaii_serenade
-        case 842: self = .pron_march
-        case 843: self = .roseblossom
-        case 844: self = .powerful_faith
-        case 845: self = .sincere_faith
-        case 846: self = .firm_faith
-        case 847: self = .holy_oil
-        case 848: self = .first_brand
-        case 849: self = .second_brand
-        case 850: self = .second_judge
-        case 851: self = .third_exor_flame
-        case 852: self = .first_faith_power
-        case 853: self = .massive_f_blaster
-        case 854: self = .protectshadowequip
-        case 855: self = .researchreport
-        case 856: self = .bo_hell_dusty
-        case 857: self = .bionic_woodenwarrior
-        case 858: self = .bionic_wooden_fairy
-        case 859: self = .bionic_creeper
-        case 860: self = .bionic_helltree
-        case 861: self = .shadow_strip
-        case 862: self = .abyss_dagger
-        case 863: self = .abyssforceweapon
-        case 864: self = .abyss_slayer
-        case 865: self = .flametechnic
-        case 866: self = .flametechnic_option
-        case 867: self = .flamearmor
-        case 868: self = .flamearmor_option
-        case 869: self = .cold_force
-        case 870: self = .cold_force_option
-        case 871: self = .crystal_armor
-        case 872: self = .crystal_armor_option
-        case 873: self = .grace_breeze
-        case 874: self = .grace_breeze_option
-        case 875: self = .eyes_of_storm
-        case 876: self = .eyes_of_storm_option
-        case 877: self = .earth_care
-        case 878: self = .earth_care_option
-        case 879: self = .strong_protection
-        case 880: self = .strong_protection_option
-        case 881: self = .deep_poisoning
-        case 882: self = .deep_poisoning_option
-        case 883: self = .poison_shield
-        case 884: self = .poison_shield_option
-        case 885: self = .sub_weaponproperty
-        case 886: self = .m_lifepotion
-        case 887: self = .s_manapotion
-        case 888: self = .almighty
-        case 889: self = .ultimatecook
-        case 890: self = .m_defscroll
-        case 891: self = .infinity_drink
-        case 892: self = .mental_potion
-        case 893: self = .limit_power_booster
-        case 894: self = .combat_pill
-        case 895: self = .combat_pill2
-        case 896: self = .mysticpowder
-        case 897: self = .sparkcandy
-        case 898: self = .magiccandy
-        case 899: self = .acaraje
-        case 900: self = .popecookie
-        case 901: self = .vitalize_potion
-        case 902: self = .cup_of_boza
-        case 903: self = .skf_matk
-        case 904: self = .skf_atk
-        case 905: self = .skf_aspd
-        case 906: self = .skf_cast
-        case 907: self = .beef_rib_stew
-        case 908: self = .pork_rib_stew
-        case 909: self = .weaponbreaker
-        case 910: self = .toxin_of_mandara
-        case 911: self = .goldene_tone
-        case 912: self = .tempering
-        case 913: self = .gradual_gravity
-        case 914: self = .all_stat_down
-        case 915: self = .killing_aura
-        case 916: self = .damage_heal
-        case 917: self = .immune_property_nothing
-        case 918: self = .immune_property_water
-        case 919: self = .immune_property_ground
-        case 920: self = .immune_property_fire
-        case 921: self = .immune_property_wind
-        case 922: self = .immune_property_poison
-        case 923: self = .immune_property_saint
-        case 924: self = .immune_property_darkness
-        case 925: self = .immune_property_telekinesis
-        case 926: self = .immune_property_undead
-        case 927: self = .relieve_on
-        case 928: self = .relieve_off
-        case 929: self = .rush_quake1
-        case 930: self = .rush_quake2
-        case 931: self = .g_lifepotion
-        case 932: self = .hnnoweapon
-        case 933: self = .shieldchainrush
-        case 934: self = .mistyfrost
-        case 935: self = .groundgravity
-        case 936: self = .breakinglimit
-        case 937: self = .rulebreak
-        case 938: self = .intensive_aim
-        case 939: self = .intensive_aim_count
-        case 940: self = .grenade_fragment_1
-        case 941: self = .grenade_fragment_2
-        case 942: self = .grenade_fragment_3
-        case 943: self = .grenade_fragment_4
-        case 944: self = .grenade_fragment_5
-        case 945: self = .grenade_fragment_6
-        case 946: self = .auto_firing_launcher
-        case 947: self = .hidden_card
-        case 948: self = .period_receiveitem_2nd
-        case 949: self = .period_plusexp_2nd
-        case 951: self = .powerup
-        case 952: self = .agiup
-        case 953: self = .protection
-        default: return nil
-        }
-    }
+public enum StatusChangeID: Int, CaseIterable, Sendable {
+    case stone = 0
+    case freeze = 1
+    case stun = 2
+    case sleep = 3
+    case poison = 4
+    case curse = 5
+    case silence = 6
+    case confusion = 7
+    case blind = 8
+    case bleeding = 9
+    case dpoison = 10
+    case stonewait = 11
+    case provoke = 20
+    case endure = 21
+    case twohandquicken = 22
+    case concentrate = 23
+    case hiding = 24
+    case cloaking = 25
+    case encpoison = 26
+    case poisonreact = 27
+    case quagmire = 28
+    case angelus = 29
+    case blessing = 30
+    case signumcrucis = 31
+    case increaseagi = 32
+    case decreaseagi = 33
+    case slowpoison = 34
+    case impositio = 35
+    case suffragium = 36
+    case aspersio = 37
+    case benedictio = 38
+    case kyrie = 39
+    case magnificat = 40
+    case gloria = 41
+    case aeterna = 42
+    case adrenaline = 43
+    case weaponperfection = 44
+    case overthrust = 45
+    case maximizepower = 46
+    case trickdead = 47
+    case loud = 48
+    case energycoat = 49
+    case brokenarmor = 50
+    case brokenweapon = 51
+    case hallucination = 52
+    case weight50 = 53
+    case weight90 = 54
+    case aspdpotion0 = 55
+    case aspdpotion1 = 56
+    case aspdpotion2 = 57
+    case aspdpotion3 = 58
+    case speedup0 = 59
+    case speedup1 = 60
+    case atkpotion = 61
+    case matkpotion = 62
+    case wedding = 63
+    case slowdown = 64
+    case ankle = 65
+    case keeping = 66
+    case barrier = 67
+    case stripweapon = 68
+    case stripshield = 69
+    case striparmor = 70
+    case striphelm = 71
+    case cp_weapon = 72
+    case cp_shield = 73
+    case cp_armor = 74
+    case cp_helm = 75
+    case autoguard = 76
+    case reflectshield = 77
+    case splasher = 78
+    case providence = 79
+    case defender = 80
+    case magicrod = 81
+    case spellbreaker = 82
+    case autospell = 83
+    case sighttrasher = 84
+    case autoberserk = 85
+    case spearquicken = 86
+    case autocounter = 87
+    case sight = 88
+    case safetywall = 89
+    case ruwach = 90
+    case extremityfist = 91
+    case explosionspirits = 92
+    case combo = 93
+    case bladestop_wait = 94
+    case bladestop = 95
+    case fireweapon = 96
+    case waterweapon = 97
+    case windweapon = 98
+    case earthweapon = 99
+    case volcano = 100
+    case deluge = 101
+    case violentgale = 102
+    case watk_element = 103
+    case armor = 104
+    case armor_element_water = 105
+    case nochat = 106
+    case protectexp = 107
+    case aurablade = 108
+    case parrying = 109
+    case concentration = 110
+    case tensionrelax = 111
+    case berserk = 112
+    case fury = 113
+    case gospel = 114
+    case assumptio = 115
+    case basilica = 116
+    case guildaura = 117
+    case magicpower = 118
+    case edp = 119
+    case truesight = 120
+    case windwalk = 121
+    case meltdown = 122
+    case cartboost = 123
+    case chasewalk = 124
+    case rejectsword = 125
+    case marionette = 126
+    case marionette2 = 127
+    case changeundead = 128
+    case jointbeat = 129
+    case mindbreaker = 130
+    case memorize = 131
+    case fogwall = 132
+    case spiderweb = 133
+    case devotion = 134
+    case sacrifice = 135
+    case steelbody = 136
+    case orcish = 137
+    case readystorm = 138
+    case readydown = 139
+    case readyturn = 140
+    case readycounter = 141
+    case dodge = 142
+    case run = 143
+    case shadowweapon = 144
+    case adrenaline2 = 145
+    case ghostweapon = 146
+    case kaizel = 147
+    case kaahi = 148
+    case kaupe = 149
+    case onehand = 150
+    case preserve = 151
+    case battleorders = 152
+    case regeneration = 153
+    case doublecast = 154
+    case gravitation = 155
+    case maxoverthrust = 156
+    case longing = 157
+    case hermode = 158
+    case shrink = 159
+    case sightblaster = 160
+    case winkcharm = 161
+    case closeconfine = 162
+    case closeconfine2 = 163
+    case dancing = 164
+    case elementalchange = 165
+    case richmankim = 166
+    case eternalchaos = 167
+    case drumbattle = 168
+    case nibelungen = 169
+    case rokisweil = 170
+    case intoabyss = 171
+    case siegfried = 172
+    case whistle = 173
+    case assncros = 174
+    case poembragi = 175
+    case appleidun = 176
+    case modechange = 177
+    case humming = 178
+    case dontforgetme = 179
+    case fortune = 180
+    case service4u = 181
+    case stop = 182
+    case spurt = 183
+    case spirit = 184
+    case coma = 185
+    case intravision = 186
+    case incallstatus = 187
+    case incstr = 188
+    case incagi = 189
+    case incvit = 190
+    case incint = 191
+    case incdex = 192
+    case incluk = 193
+    case inchit = 194
+    case inchitrate = 195
+    case incflee = 196
+    case incfleerate = 197
+    case incmhprate = 198
+    case incmsprate = 199
+    case incatkrate = 200
+    case incmatkrate = 201
+    case incdefrate = 202
+    case strfood = 203
+    case agifood = 204
+    case vitfood = 205
+    case intfood = 206
+    case dexfood = 207
+    case lukfood = 208
+    case hitfood = 209
+    case fleefood = 210
+    case batkfood = 211
+    case watkfood = 212
+    case matkfood = 213
+    case scresist = 214
+    case xmas = 215
+    case warm = 216
+    case sun_comfort = 217
+    case moon_comfort = 218
+    case star_comfort = 219
+    case fusion = 220
+    case skillrate_up = 221
+    case ske = 222
+    case kaite = 223
+    case swoo = 224
+    case ska = 225
+    case earthscroll = 226
+    case miracle = 227
+    case madnesscancel = 228
+    case adjustment = 229
+    case increasing = 230
+    case gatlingfever = 231
+    case tatamigaeshi = 232
+    case utsusemi = 233
+    case bunsinjyutsu = 234
+    case kaensin = 235
+    case suiton = 236
+    case nen = 237
+    case knowledge = 238
+    case sma = 239
+    case fling = 240
+    case avoid = 241
+    case change = 242
+    case bloodlust = 243
+    case fleet = 244
+    case speed = 245
+    case defence = 246
+    case incaspdrate = 247
+    case incflee2 = 248
+    case jailed = 249
+    case enchantarms = 250
+    case magicalattack = 251
+    case armorchange = 252
+    case criticalwound = 253
+    case magicmirror = 254
+    case slowcast = 255
+    case summer = 256
+    case expboost = 257
+    case itemboost = 258
+    case bossmapinfo = 259
+    case lifeinsurance = 260
+    case inccri = 261
+    case mdef_rate = 265
+    case inchealrate = 267
+    case pneuma = 268
+    case autotrade = 269
+    case ksprotected = 270
+    case armor_resist = 271
+    case spcost_rate = 272
+    case commonsc_resist = 273
+    case sevenwind = 274
+    case def_rate = 275
+    case walkspeed = 277
+    case merc_fleeup = 278
+    case merc_atkup = 279
+    case merc_hpup = 280
+    case merc_spup = 281
+    case merc_hitup = 282
+    case merc_quicken = 283
+    case rebirth = 284
+    case itemscript = 289
+    case s_lifepotion = 290
+    case l_lifepotion = 291
+    case jexpboost = 292
+    case hellpower = 294
+    case invincible = 295
+    case manu_atk = 297
+    case manu_def = 298
+    case spl_atk = 299
+    case spl_def = 300
+    case manu_matk = 301
+    case spl_matk = 302
+    case food_str_cash = 303
+    case food_agi_cash = 304
+    case food_vit_cash = 305
+    case food_dex_cash = 306
+    case food_int_cash = 307
+    case food_luk_cash = 308
+    case fear = 309
+    case burning = 310
+    case freezing = 311
+    case enchantblade = 312
+    case deathbound = 313
+    case millenniumshield = 314
+    case crushstrike = 315
+    case refresh = 316
+    case reuse_refresh = 317
+    case giantgrowth = 318
+    case stonehardskin = 319
+    case vitalityactivation = 320
+    case stormblast = 321
+    case fightingspirit = 322
+    case abundance = 323
+    case adoramus = 324
+    case epiclesis = 325
+    case oratio = 326
+    case laudaagnus = 327
+    case laudaramus = 328
+    case renovatio = 329
+    case expiatio = 330
+    case duplelight = 331
+    case secrament = 332
+    case whiteimprison = 333
+    case marshofabyss = 334
+    case recognizedspell = 335
+    case stasis = 336
+    case sphere_1 = 337
+    case sphere_2 = 338
+    case sphere_3 = 339
+    case sphere_4 = 340
+    case sphere_5 = 341
+    case reading_sb = 342
+    case freeze_sp = 343
+    case fearbreeze = 344
+    case electricshocker = 345
+    case wugdash = 346
+    case bite = 347
+    case camouflage = 348
+    case acceleration = 349
+    case hovering = 350
+    case shapeshift = 351
+    case infraredscan = 352
+    case analyze = 353
+    case magneticfield = 354
+    case neutralbarrier = 355
+    case neutralbarrier_master = 356
+    case stealthfield = 357
+    case stealthfield_master = 358
+    case overheat = 359
+    case overheat_limitpoint = 360
+    case venomimpress = 361
+    case poisoningweapon = 362
+    case weaponblocking = 363
+    case cloakingexceed = 364
+    case hallucinationwalk = 365
+    case hallucinationwalk_postdelay = 366
+    case rollingcutter = 367
+    case toxin = 368
+    case paralyse = 369
+    case venombleed = 370
+    case magicmushroom = 371
+    case deathhurt = 372
+    case pyrexia = 373
+    case oblivioncurse = 374
+    case leechesend = 375
+    case reflectdamage = 376
+    case forceofvanguard = 377
+    case shieldspell_hp = 378
+    case shieldspell_sp = 379
+    case shieldspell_atk = 380
+    case exeedbreak = 381
+    case prestige = 382
+    case banding = 383
+    case banding_defence = 384
+    case earthdrive = 385
+    case inspiration = 386
+    case spellfist = 387
+    case crystalize = 388
+    case striking = 389
+    case warmer = 390
+    case vacuum_extreme = 391
+    case propertywalk = 392
+    case swingdance = 393
+    case symphonyoflover = 394
+    case moonlitserenade = 395
+    case rushwindmill = 396
+    case echosong = 397
+    case harmonize = 398
+    case voiceofsiren = 399
+    case deepsleep = 400
+    case sircleofnature = 401
+    case gloomyday = 402
+    case gloomyday_sk = 403
+    case songofmana = 404
+    case dancewithwug = 405
+    case saturdaynightfever = 406
+    case leradsdew = 407
+    case melodyofsink = 408
+    case beyondofwarcry = 409
+    case unlimitedhummingvoice = 410
+    case sitdown_force = 411
+    case netherworld = 412
+    case crescentelbow = 413
+    case cursedcircle_atker = 414
+    case cursedcircle_target = 415
+    case lightningwalk = 416
+    case raisingdragon = 417
+    case gt_energygain = 418
+    case gt_change = 419
+    case gt_revitalize = 420
+    case gn_cartboost = 421
+    case thornstrap = 422
+    case bloodsucker = 423
+    case smokepowder = 424
+    case teargas = 425
+    case mandragora = 426
+    case stomachache = 427
+    case mysterious_powder = 428
+    case melon_bomb = 429
+    case banana_bomb = 430
+    case banana_bomb_sitdown = 431
+    case savage_steak = 432
+    case cocktail_warg_blood = 433
+    case minor_bbq = 434
+    case siroma_ice_tea = 435
+    case drocera_herb_steamed = 436
+    case putti_tails_noodles = 437
+    case boost500 = 438
+    case full_swing_k = 439
+    case mana_plus = 440
+    case mustle_m = 441
+    case life_force_f = 442
+    case extract_white_potion_z = 443
+    case vitata_500 = 444
+    case extract_salamine_juice = 445
+    case _reproduce = 446
+    case _autoshadowspell = 447
+    case _shadowform = 448
+    case _bodypaint = 449
+    case _invisibility = 450
+    case _deadlyinfect = 451
+    case _enervation = 452
+    case _groomy = 453
+    case _ignorance = 454
+    case _laziness = 455
+    case _unlucky = 456
+    case _weakness = 457
+    case _stripaccessory = 458
+    case _manhole = 459
+    case _bloodylust = 460
+    case circle_of_fire = 461
+    case circle_of_fire_option = 462
+    case fire_cloak = 463
+    case fire_cloak_option = 464
+    case water_screen = 465
+    case water_screen_option = 466
+    case water_drop = 467
+    case water_drop_option = 468
+    case water_barrier = 469
+    case wind_step = 470
+    case wind_step_option = 471
+    case wind_curtain = 472
+    case wind_curtain_option = 473
+    case zephyr = 474
+    case solid_skin = 475
+    case solid_skin_option = 476
+    case stone_shield = 477
+    case stone_shield_option = 478
+    case power_of_gaia = 479
+    case pyrotechnic = 480
+    case pyrotechnic_option = 481
+    case heater = 482
+    case heater_option = 483
+    case tropic = 484
+    case tropic_option = 485
+    case aquaplay = 486
+    case aquaplay_option = 487
+    case cooler = 488
+    case cooler_option = 489
+    case chilly_air = 490
+    case chilly_air_option = 491
+    case gust = 492
+    case gust_option = 493
+    case blast = 494
+    case blast_option = 495
+    case wild_storm = 496
+    case wild_storm_option = 497
+    case petrology = 498
+    case petrology_option = 499
+    case cursed_soil = 500
+    case cursed_soil_option = 501
+    case upheaval = 502
+    case upheaval_option = 503
+    case tidal_weapon = 504
+    case tidal_weapon_option = 505
+    case rock_crusher = 506
+    case rock_crusher_atk = 507
+    case leadership = 508
+    case glorywounds = 509
+    case soulcold = 510
+    case hawkeyes = 511
+    case odins_power = 512
+    case raid = 513
+    case fire_insignia = 514
+    case water_insignia = 515
+    case wind_insignia = 516
+    case earth_insignia = 517
+    case push_cart = 518
+    case spellbook1 = 519
+    case spellbook2 = 520
+    case spellbook3 = 521
+    case spellbook4 = 522
+    case spellbook5 = 523
+    case spellbook6 = 524
+    case maxspellbook = 525
+    case incmhp = 526
+    case incmsp = 527
+    case partyflee = 528
+    case meikyousisui = 529
+    case jyumonjikiri = 530
+    case kyougaku = 531
+    case izayoi = 532
+    case zenkai = 533
+    case kagehumi = 534
+    case kyomu = 535
+    case kagemusya = 536
+    case zangetsu = 537
+    case gensou = 538
+    case akaitsuki = 539
+    case style_change = 540
+    case tinder_breaker = 541
+    case tinder_breaker2 = 542
+    case cbc = 543
+    case eqc = 544
+    case goldene_ferse = 545
+    case angriffs_modus = 546
+    case overed_boost = 547
+    case light_of_regene = 548
+    case ash = 549
+    case granitic_armor = 550
+    case magma_flow = 551
+    case pyroclastic = 552
+    case paralysis = 553
+    case pain_killer = 554
+    case hanbok = 555
+    case defset = 556
+    case mdefset = 557
+    case darkcrow = 558
+    case full_throttle = 559
+    case rebound = 560
+    case unlimit = 561
+    case kings_grace = 562
+    case telekinesis_intense = 563
+    case offertorium = 564
+    case frigg_song = 565
+    case monster_transform = 566
+    case angel_protect = 567
+    case illusiondoping = 568
+    case flashcombo = 569
+    case moonstar = 570
+    case super_star = 571
+    case heat_barrel = 572
+    case magicalbullet = 573
+    case p_alter = 574
+    case e_chain = 575
+    case c_marker = 576
+    case anti_m_blast = 577
+    case b_trap = 578
+    case h_mine = 579
+    case qd_shot_ready = 580
+    case mtf_aspd = 581
+    case mtf_rangeatk = 582
+    case mtf_matk = 583
+    case mtf_mleatked = 584
+    case mtf_cridamage = 585
+    case oktoberfest = 586
+    case strangelights = 587
+    case decoration_of_music = 588
+    case quest_buff1 = 589
+    case quest_buff2 = 590
+    case quest_buff3 = 591
+    case all_riding = 592
+    case teargas_sob = 593
+    case _feintbomb = 594
+    case _chaos = 595
+    case chasewalk2 = 596
+    case vacuum_extreme_postdelay = 597
+    case mtf_aspd2 = 598
+    case mtf_rangeatk2 = 599
+    case mtf_matk2 = 600
+    case _2011rwc_scroll = 601
+    case jp_event04 = 602
+    case mtf_mhp = 603
+    case mtf_msp = 604
+    case mtf_pumpkin = 605
+    case mtf_hitflee = 606
+    case crifood = 607
+    case atthaste_cash = 608
+    case reuse_limit_a = 609
+    case reuse_limit_b = 610
+    case reuse_limit_c = 611
+    case reuse_limit_d = 612
+    case reuse_limit_e = 613
+    case reuse_limit_f = 614
+    case reuse_limit_g = 615
+    case reuse_limit_h = 616
+    case reuse_limit_mtf = 617
+    case reuse_limit_aspd_potion = 618
+    case reuse_millenniumshield = 619
+    case reuse_crushstrike = 620
+    case reuse_stormblast = 621
+    case all_riding_reuse_limit = 622
+    case reuse_limit_ecl = 623
+    case reuse_limit_recall = 624
+    case promote_health_reserch = 625
+    case energy_drink_reserch = 626
+    case norecover_state = 627
+    case suhide = 628
+    case su_stoop = 629
+    case spritemable = 630
+    case catnippowder = 631
+    case sv_roottwist = 632
+    case bitescar = 633
+    case arclousedash = 634
+    case tunaparty = 635
+    case shrimp = 636
+    case freshshrimp = 637
+    case active_monster_transform = 638
+    case cloud_kill = 639
+    case ljosalfar = 640
+    case mermaid_longing = 641
+    case hat_effect = 642
+    case flowersmoke = 643
+    case fstone = 644
+    case happiness_star = 645
+    case maple_falls = 646
+    case time_accessory = 647
+    case magical_feather = 648
+    case gvg_giant = 649
+    case gvg_golem = 650
+    case gvg_stun = 651
+    case gvg_stone = 652
+    case gvg_freez = 653
+    case gvg_sleep = 654
+    case gvg_curse = 655
+    case gvg_silence = 656
+    case gvg_blind = 657
+    case clan_info = 658
+    case swordclan = 659
+    case arcwandclan = 660
+    case goldenmaceclan = 661
+    case crossbowclan = 662
+    case jumpingclan = 663
+    case tarotcard = 664
+    case geffen_magic1 = 665
+    case geffen_magic2 = 666
+    case geffen_magic3 = 667
+    case maxpain = 668
+    case armor_element_earth = 669
+    case armor_element_fire = 670
+    case armor_element_wind = 671
+    case dailysendmailcnt = 672
+    case doram_buf_01 = 673
+    case doram_buf_02 = 674
+    case hiss = 675
+    case nyanggrass = 676
+    case grooming = 677
+    case shrimpblessing = 678
+    case chattering = 679
+    case doram_walkspeed = 680
+    case doram_matk = 681
+    case doram_flee2 = 682
+    case doram_svsp = 683
+    case fallen_angel = 684
+    case cheerup = 685
+    case dressup = 686
+    case glastheim_atk = 687
+    case glastheim_def = 688
+    case glastheim_heal = 689
+    case glastheim_hidden = 690
+    case glastheim_state = 691
+    case glastheim_itemdef = 692
+    case glastheim_hpsp = 693
+    case lhz_dun_n1 = 694
+    case lhz_dun_n2 = 695
+    case lhz_dun_n3 = 696
+    case lhz_dun_n4 = 697
+    case ancilla = 698
+    case earthshaker = 699
+    case weaponblock_on = 700
+    case spore_explosion = 701
+    case adaptation = 702
+    case basilica_cell = 703
+    case entry_queue_apply_delay = 704
+    case entry_queue_notify_admission_time_out = 705
+    case lightofmoon = 706
+    case lightofsun = 707
+    case lightofstar = 708
+    case lunarstance = 709
+    case universestance = 710
+    case sunstance = 711
+    case flashkick = 712
+    case newmoon = 713
+    case starstance = 714
+    case dimension = 715
+    case dimension1 = 716
+    case dimension2 = 717
+    case creatingstar = 718
+    case fallingstar = 719
+    case novaexplosing = 720
+    case gravitycontrol = 721
+    case soulcollect = 722
+    case soulreaper = 723
+    case soulunity = 724
+    case soulshadow = 725
+    case soulfairy = 726
+    case soulfalcon = 727
+    case soulgolem = 728
+    case souldivision = 729
+    case soulenergy = 730
+    case use_skill_sp_spa = 731
+    case use_skill_sp_sha = 732
+    case sp_sha = 733
+    case soulcurse = 734
+    case hells_plant = 735
+    case increase_maxhp = 736
+    case increase_maxsp = 737
+    case ref_t_potion = 738
+    case add_atk_damage = 739
+    case add_matk_damage = 740
+    case helpangel = 741
+    case soundofdestruction = 742
+    case luxanima = 743
+    case reuse_limit_luxanima = 744
+    case ensemblefatigue = 745
+    case misty_frost = 746
+    case magic_poison = 747
+    case ep16_2_buff_ss = 748
+    case ep16_2_buff_sc = 749
+    case ep16_2_buff_ac = 750
+    case overbrandready = 751
+    case poison_mist = 752
+    case stone_wall = 753
+    case cloud_poison = 754
+    case homun_time = 755
+    case emergency_move = 756
+    case madogear = 757
+    case npc_hallucinationwalk = 758
+    case packing_envelope1 = 759
+    case packing_envelope2 = 760
+    case packing_envelope3 = 761
+    case packing_envelope4 = 762
+    case packing_envelope5 = 763
+    case packing_envelope6 = 764
+    case packing_envelope7 = 765
+    case packing_envelope8 = 766
+    case packing_envelope9 = 767
+    case packing_envelope10 = 768
+    case soulattack = 769
+    case wideweb = 770
+    case burnt = 771
+    case chill = 772
+    case handicapstate_deepblind = 773
+    case handicapstate_deepsilence = 774
+    case handicapstate_lassitude = 775
+    case handicapstate_frostbite = 776
+    case handicapstate_swooning = 777
+    case handicapstate_lightningstrike = 778
+    case handicapstate_crystallization = 779
+    case handicapstate_conflagration = 780
+    case handicapstate_misfortune = 781
+    case handicapstate_deadlypoison = 782
+    case handicapstate_depression = 783
+    case handicapstate_holyflame = 784
+    case servantweapon = 785
+    case servant_sign = 786
+    case chargingpierce = 787
+    case chargingpierce_count = 788
+    case dragonic_aura = 789
+    case vigor = 790
+    case deadly_defeasance = 791
+    case climax_des_hu = 792
+    case climax = 793
+    case climax_earth = 794
+    case climax_bloom = 795
+    case climax_cryimp = 796
+    case windsign = 797
+    case crescivebolt = 798
+    case calamitygale = 799
+    case mediale = 800
+    case a_vita = 801
+    case a_telum = 802
+    case pre_acies = 803
+    case competentia = 804
+    case religio = 805
+    case benedictum = 806
+    case axe_stomp = 807
+    case a_machine = 808
+    case d_machine = 809
+    case abr_battle_warior = 810
+    case abr_dual_cannon = 811
+    case abr_mother_net = 812
+    case abr_infinity = 813
+    case shadow_exceed = 814
+    case dancing_knife = 815
+    case potent_venom = 816
+    case shadow_scar = 817
+    case e_slash_count = 818
+    case shadow_weapon = 819
+    case guard_stance = 820
+    case attack_stance = 821
+    case guardian_s = 822
+    case rebound_s = 823
+    case holy_s = 824
+    case ultimate_s = 825
+    case spear_scar = 826
+    case shield_power = 827
+    case spell_enchanting = 828
+    case summon_elemental_ardor = 829
+    case summon_elemental_diluvio = 830
+    case summon_elemental_procella = 831
+    case summon_elemental_terremotus = 832
+    case summon_elemental_serpens = 833
+    case elemental_veil = 834
+    case mystic_symphony = 835
+    case kvasir_sonata = 836
+    case soundblend = 837
+    case gef_nocturn = 838
+    case ain_rhapsody = 839
+    case musical_interlude = 840
+    case jawaii_serenade = 841
+    case pron_march = 842
+    case roseblossom = 843
+    case powerful_faith = 844
+    case sincere_faith = 845
+    case firm_faith = 846
+    case holy_oil = 847
+    case first_brand = 848
+    case second_brand = 849
+    case second_judge = 850
+    case third_exor_flame = 851
+    case first_faith_power = 852
+    case massive_f_blaster = 853
+    case protectshadowequip = 854
+    case researchreport = 855
+    case bo_hell_dusty = 856
+    case bionic_woodenwarrior = 857
+    case bionic_wooden_fairy = 858
+    case bionic_creeper = 859
+    case bionic_helltree = 860
+    case shadow_strip = 861
+    case abyss_dagger = 862
+    case abyssforceweapon = 863
+    case abyss_slayer = 864
+    case flametechnic = 865
+    case flametechnic_option = 866
+    case flamearmor = 867
+    case flamearmor_option = 868
+    case cold_force = 869
+    case cold_force_option = 870
+    case crystal_armor = 871
+    case crystal_armor_option = 872
+    case grace_breeze = 873
+    case grace_breeze_option = 874
+    case eyes_of_storm = 875
+    case eyes_of_storm_option = 876
+    case earth_care = 877
+    case earth_care_option = 878
+    case strong_protection = 879
+    case strong_protection_option = 880
+    case deep_poisoning = 881
+    case deep_poisoning_option = 882
+    case poison_shield = 883
+    case poison_shield_option = 884
+    case sub_weaponproperty = 885
+    case m_lifepotion = 886
+    case s_manapotion = 887
+    case almighty = 888
+    case ultimatecook = 889
+    case m_defscroll = 890
+    case infinity_drink = 891
+    case mental_potion = 892
+    case limit_power_booster = 893
+    case combat_pill = 894
+    case combat_pill2 = 895
+    case mysticpowder = 896
+    case sparkcandy = 897
+    case magiccandy = 898
+    case acaraje = 899
+    case popecookie = 900
+    case vitalize_potion = 901
+    case cup_of_boza = 902
+    case skf_matk = 903
+    case skf_atk = 904
+    case skf_aspd = 905
+    case skf_cast = 906
+    case beef_rib_stew = 907
+    case pork_rib_stew = 908
+    case weaponbreaker = 909
+    case toxin_of_mandara = 910
+    case goldene_tone = 911
+    case tempering = 912
+    case gradual_gravity = 913
+    case all_stat_down = 914
+    case killing_aura = 915
+    case damage_heal = 916
+    case immune_property_nothing = 917
+    case immune_property_water = 918
+    case immune_property_ground = 919
+    case immune_property_fire = 920
+    case immune_property_wind = 921
+    case immune_property_poison = 922
+    case immune_property_saint = 923
+    case immune_property_darkness = 924
+    case immune_property_telekinesis = 925
+    case immune_property_undead = 926
+    case relieve_on = 927
+    case relieve_off = 928
+    case rush_quake1 = 929
+    case rush_quake2 = 930
+    case g_lifepotion = 931
+    case hnnoweapon = 932
+    case shieldchainrush = 933
+    case mistyfrost = 934
+    case groundgravity = 935
+    case breakinglimit = 936
+    case rulebreak = 937
+    case intensive_aim = 938
+    case intensive_aim_count = 939
+    case grenade_fragment_1 = 940
+    case grenade_fragment_2 = 941
+    case grenade_fragment_3 = 942
+    case grenade_fragment_4 = 943
+    case grenade_fragment_5 = 944
+    case grenade_fragment_6 = 945
+    case auto_firing_launcher = 946
+    case hidden_card = 947
+    case period_receiveitem_2nd = 948
+    case period_plusexp_2nd = 949
+    case powerup = 951
+    case agiup = 952
+    case protection = 953
 }
 
-extension StatusChangeID: CodingKey, CodingKeyRepresentable, Decodable {
+extension StatusChangeID: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .stone: "STONE"
+        case .freeze: "FREEZE"
+        case .stun: "STUN"
+        case .sleep: "SLEEP"
+        case .poison: "POISON"
+        case .curse: "CURSE"
+        case .silence: "SILENCE"
+        case .confusion: "CONFUSION"
+        case .blind: "BLIND"
+        case .bleeding: "BLEEDING"
+        case .dpoison: "DPOISON"
+        case .stonewait: "STONEWAIT"
+        case .provoke: "PROVOKE"
+        case .endure: "ENDURE"
+        case .twohandquicken: "TWOHANDQUICKEN"
+        case .concentrate: "CONCENTRATE"
+        case .hiding: "HIDING"
+        case .cloaking: "CLOAKING"
+        case .encpoison: "ENCPOISON"
+        case .poisonreact: "POISONREACT"
+        case .quagmire: "QUAGMIRE"
+        case .angelus: "ANGELUS"
+        case .blessing: "BLESSING"
+        case .signumcrucis: "SIGNUMCRUCIS"
+        case .increaseagi: "INCREASEAGI"
+        case .decreaseagi: "DECREASEAGI"
+        case .slowpoison: "SLOWPOISON"
+        case .impositio: "IMPOSITIO"
+        case .suffragium: "SUFFRAGIUM"
+        case .aspersio: "ASPERSIO"
+        case .benedictio: "BENEDICTIO"
+        case .kyrie: "KYRIE"
+        case .magnificat: "MAGNIFICAT"
+        case .gloria: "GLORIA"
+        case .aeterna: "AETERNA"
+        case .adrenaline: "ADRENALINE"
+        case .weaponperfection: "WEAPONPERFECTION"
+        case .overthrust: "OVERTHRUST"
+        case .maximizepower: "MAXIMIZEPOWER"
+        case .trickdead: "TRICKDEAD"
+        case .loud: "LOUD"
+        case .energycoat: "ENERGYCOAT"
+        case .brokenarmor: "BROKENARMOR"
+        case .brokenweapon: "BROKENWEAPON"
+        case .hallucination: "HALLUCINATION"
+        case .weight50: "WEIGHT50"
+        case .weight90: "WEIGHT90"
+        case .aspdpotion0: "ASPDPOTION0"
+        case .aspdpotion1: "ASPDPOTION1"
+        case .aspdpotion2: "ASPDPOTION2"
+        case .aspdpotion3: "ASPDPOTION3"
+        case .speedup0: "SPEEDUP0"
+        case .speedup1: "SPEEDUP1"
+        case .atkpotion: "ATKPOTION"
+        case .matkpotion: "MATKPOTION"
+        case .wedding: "WEDDING"
+        case .slowdown: "SLOWDOWN"
+        case .ankle: "ANKLE"
+        case .keeping: "KEEPING"
+        case .barrier: "BARRIER"
+        case .stripweapon: "STRIPWEAPON"
+        case .stripshield: "STRIPSHIELD"
+        case .striparmor: "STRIPARMOR"
+        case .striphelm: "STRIPHELM"
+        case .cp_weapon: "CP_WEAPON"
+        case .cp_shield: "CP_SHIELD"
+        case .cp_armor: "CP_ARMOR"
+        case .cp_helm: "CP_HELM"
+        case .autoguard: "AUTOGUARD"
+        case .reflectshield: "REFLECTSHIELD"
+        case .splasher: "SPLASHER"
+        case .providence: "PROVIDENCE"
+        case .defender: "DEFENDER"
+        case .magicrod: "MAGICROD"
+        case .spellbreaker: "SPELLBREAKER"
+        case .autospell: "AUTOSPELL"
+        case .sighttrasher: "SIGHTTRASHER"
+        case .autoberserk: "AUTOBERSERK"
+        case .spearquicken: "SPEARQUICKEN"
+        case .autocounter: "AUTOCOUNTER"
+        case .sight: "SIGHT"
+        case .safetywall: "SAFETYWALL"
+        case .ruwach: "RUWACH"
+        case .extremityfist: "EXTREMITYFIST"
+        case .explosionspirits: "EXPLOSIONSPIRITS"
+        case .combo: "COMBO"
+        case .bladestop_wait: "BLADESTOP_WAIT"
+        case .bladestop: "BLADESTOP"
+        case .fireweapon: "FIREWEAPON"
+        case .waterweapon: "WATERWEAPON"
+        case .windweapon: "WINDWEAPON"
+        case .earthweapon: "EARTHWEAPON"
+        case .volcano: "VOLCANO"
+        case .deluge: "DELUGE"
+        case .violentgale: "VIOLENTGALE"
+        case .watk_element: "WATK_ELEMENT"
+        case .armor: "ARMOR"
+        case .armor_element_water: "ARMOR_ELEMENT_WATER"
+        case .nochat: "NOCHAT"
+        case .protectexp: "PROTECTEXP"
+        case .aurablade: "AURABLADE"
+        case .parrying: "PARRYING"
+        case .concentration: "CONCENTRATION"
+        case .tensionrelax: "TENSIONRELAX"
+        case .berserk: "BERSERK"
+        case .fury: "FURY"
+        case .gospel: "GOSPEL"
+        case .assumptio: "ASSUMPTIO"
+        case .basilica: "BASILICA"
+        case .guildaura: "GUILDAURA"
+        case .magicpower: "MAGICPOWER"
+        case .edp: "EDP"
+        case .truesight: "TRUESIGHT"
+        case .windwalk: "WINDWALK"
+        case .meltdown: "MELTDOWN"
+        case .cartboost: "CARTBOOST"
+        case .chasewalk: "CHASEWALK"
+        case .rejectsword: "REJECTSWORD"
+        case .marionette: "MARIONETTE"
+        case .marionette2: "MARIONETTE2"
+        case .changeundead: "CHANGEUNDEAD"
+        case .jointbeat: "JOINTBEAT"
+        case .mindbreaker: "MINDBREAKER"
+        case .memorize: "MEMORIZE"
+        case .fogwall: "FOGWALL"
+        case .spiderweb: "SPIDERWEB"
+        case .devotion: "DEVOTION"
+        case .sacrifice: "SACRIFICE"
+        case .steelbody: "STEELBODY"
+        case .orcish: "ORCISH"
+        case .readystorm: "READYSTORM"
+        case .readydown: "READYDOWN"
+        case .readyturn: "READYTURN"
+        case .readycounter: "READYCOUNTER"
+        case .dodge: "DODGE"
+        case .run: "RUN"
+        case .shadowweapon: "SHADOWWEAPON"
+        case .adrenaline2: "ADRENALINE2"
+        case .ghostweapon: "GHOSTWEAPON"
+        case .kaizel: "KAIZEL"
+        case .kaahi: "KAAHI"
+        case .kaupe: "KAUPE"
+        case .onehand: "ONEHAND"
+        case .preserve: "PRESERVE"
+        case .battleorders: "BATTLEORDERS"
+        case .regeneration: "REGENERATION"
+        case .doublecast: "DOUBLECAST"
+        case .gravitation: "GRAVITATION"
+        case .maxoverthrust: "MAXOVERTHRUST"
+        case .longing: "LONGING"
+        case .hermode: "HERMODE"
+        case .shrink: "SHRINK"
+        case .sightblaster: "SIGHTBLASTER"
+        case .winkcharm: "WINKCHARM"
+        case .closeconfine: "CLOSECONFINE"
+        case .closeconfine2: "CLOSECONFINE2"
+        case .dancing: "DANCING"
+        case .elementalchange: "ELEMENTALCHANGE"
+        case .richmankim: "RICHMANKIM"
+        case .eternalchaos: "ETERNALCHAOS"
+        case .drumbattle: "DRUMBATTLE"
+        case .nibelungen: "NIBELUNGEN"
+        case .rokisweil: "ROKISWEIL"
+        case .intoabyss: "INTOABYSS"
+        case .siegfried: "SIEGFRIED"
+        case .whistle: "WHISTLE"
+        case .assncros: "ASSNCROS"
+        case .poembragi: "POEMBRAGI"
+        case .appleidun: "APPLEIDUN"
+        case .modechange: "MODECHANGE"
+        case .humming: "HUMMING"
+        case .dontforgetme: "DONTFORGETME"
+        case .fortune: "FORTUNE"
+        case .service4u: "SERVICE4U"
+        case .stop: "STOP"
+        case .spurt: "SPURT"
+        case .spirit: "SPIRIT"
+        case .coma: "COMA"
+        case .intravision: "INTRAVISION"
+        case .incallstatus: "INCALLSTATUS"
+        case .incstr: "INCSTR"
+        case .incagi: "INCAGI"
+        case .incvit: "INCVIT"
+        case .incint: "INCINT"
+        case .incdex: "INCDEX"
+        case .incluk: "INCLUK"
+        case .inchit: "INCHIT"
+        case .inchitrate: "INCHITRATE"
+        case .incflee: "INCFLEE"
+        case .incfleerate: "INCFLEERATE"
+        case .incmhprate: "INCMHPRATE"
+        case .incmsprate: "INCMSPRATE"
+        case .incatkrate: "INCATKRATE"
+        case .incmatkrate: "INCMATKRATE"
+        case .incdefrate: "INCDEFRATE"
+        case .strfood: "STRFOOD"
+        case .agifood: "AGIFOOD"
+        case .vitfood: "VITFOOD"
+        case .intfood: "INTFOOD"
+        case .dexfood: "DEXFOOD"
+        case .lukfood: "LUKFOOD"
+        case .hitfood: "HITFOOD"
+        case .fleefood: "FLEEFOOD"
+        case .batkfood: "BATKFOOD"
+        case .watkfood: "WATKFOOD"
+        case .matkfood: "MATKFOOD"
+        case .scresist: "SCRESIST"
+        case .xmas: "XMAS"
+        case .warm: "WARM"
+        case .sun_comfort: "SUN_COMFORT"
+        case .moon_comfort: "MOON_COMFORT"
+        case .star_comfort: "STAR_COMFORT"
+        case .fusion: "FUSION"
+        case .skillrate_up: "SKILLRATE_UP"
+        case .ske: "SKE"
+        case .kaite: "KAITE"
+        case .swoo: "SWOO"
+        case .ska: "SKA"
+        case .earthscroll: "EARTHSCROLL"
+        case .miracle: "MIRACLE"
+        case .madnesscancel: "MADNESSCANCEL"
+        case .adjustment: "ADJUSTMENT"
+        case .increasing: "INCREASING"
+        case .gatlingfever: "GATLINGFEVER"
+        case .tatamigaeshi: "TATAMIGAESHI"
+        case .utsusemi: "UTSUSEMI"
+        case .bunsinjyutsu: "BUNSINJYUTSU"
+        case .kaensin: "KAENSIN"
+        case .suiton: "SUITON"
+        case .nen: "NEN"
+        case .knowledge: "KNOWLEDGE"
+        case .sma: "SMA"
+        case .fling: "FLING"
+        case .avoid: "AVOID"
+        case .change: "CHANGE"
+        case .bloodlust: "BLOODLUST"
+        case .fleet: "FLEET"
+        case .speed: "SPEED"
+        case .defence: "DEFENCE"
+        case .incaspdrate: "INCASPDRATE"
+        case .incflee2: "INCFLEE2"
+        case .jailed: "JAILED"
+        case .enchantarms: "ENCHANTARMS"
+        case .magicalattack: "MAGICALATTACK"
+        case .armorchange: "ARMORCHANGE"
+        case .criticalwound: "CRITICALWOUND"
+        case .magicmirror: "MAGICMIRROR"
+        case .slowcast: "SLOWCAST"
+        case .summer: "SUMMER"
+        case .expboost: "EXPBOOST"
+        case .itemboost: "ITEMBOOST"
+        case .bossmapinfo: "BOSSMAPINFO"
+        case .lifeinsurance: "LIFEINSURANCE"
+        case .inccri: "INCCRI"
+        case .mdef_rate: "MDEF_RATE"
+        case .inchealrate: "INCHEALRATE"
+        case .pneuma: "PNEUMA"
+        case .autotrade: "AUTOTRADE"
+        case .ksprotected: "KSPROTECTED"
+        case .armor_resist: "ARMOR_RESIST"
+        case .spcost_rate: "SPCOST_RATE"
+        case .commonsc_resist: "COMMONSC_RESIST"
+        case .sevenwind: "SEVENWIND"
+        case .def_rate: "DEF_RATE"
+        case .walkspeed: "WALKSPEED"
+        case .merc_fleeup: "MERC_FLEEUP"
+        case .merc_atkup: "MERC_ATKUP"
+        case .merc_hpup: "MERC_HPUP"
+        case .merc_spup: "MERC_SPUP"
+        case .merc_hitup: "MERC_HITUP"
+        case .merc_quicken: "MERC_QUICKEN"
+        case .rebirth: "REBIRTH"
+        case .itemscript: "ITEMSCRIPT"
+        case .s_lifepotion: "S_LIFEPOTION"
+        case .l_lifepotion: "L_LIFEPOTION"
+        case .jexpboost: "JEXPBOOST"
+        case .hellpower: "HELLPOWER"
+        case .invincible: "INVINCIBLE"
+        case .manu_atk: "MANU_ATK"
+        case .manu_def: "MANU_DEF"
+        case .spl_atk: "SPL_ATK"
+        case .spl_def: "SPL_DEF"
+        case .manu_matk: "MANU_MATK"
+        case .spl_matk: "SPL_MATK"
+        case .food_str_cash: "FOOD_STR_CASH"
+        case .food_agi_cash: "FOOD_AGI_CASH"
+        case .food_vit_cash: "FOOD_VIT_CASH"
+        case .food_dex_cash: "FOOD_DEX_CASH"
+        case .food_int_cash: "FOOD_INT_CASH"
+        case .food_luk_cash: "FOOD_LUK_CASH"
+        case .fear: "FEAR"
+        case .burning: "BURNING"
+        case .freezing: "FREEZING"
+        case .enchantblade: "ENCHANTBLADE"
+        case .deathbound: "DEATHBOUND"
+        case .millenniumshield: "MILLENNIUMSHIELD"
+        case .crushstrike: "CRUSHSTRIKE"
+        case .refresh: "REFRESH"
+        case .reuse_refresh: "REUSE_REFRESH"
+        case .giantgrowth: "GIANTGROWTH"
+        case .stonehardskin: "STONEHARDSKIN"
+        case .vitalityactivation: "VITALITYACTIVATION"
+        case .stormblast: "STORMBLAST"
+        case .fightingspirit: "FIGHTINGSPIRIT"
+        case .abundance: "ABUNDANCE"
+        case .adoramus: "ADORAMUS"
+        case .epiclesis: "EPICLESIS"
+        case .oratio: "ORATIO"
+        case .laudaagnus: "LAUDAAGNUS"
+        case .laudaramus: "LAUDARAMUS"
+        case .renovatio: "RENOVATIO"
+        case .expiatio: "EXPIATIO"
+        case .duplelight: "DUPLELIGHT"
+        case .secrament: "SECRAMENT"
+        case .whiteimprison: "WHITEIMPRISON"
+        case .marshofabyss: "MARSHOFABYSS"
+        case .recognizedspell: "RECOGNIZEDSPELL"
+        case .stasis: "STASIS"
+        case .sphere_1: "SPHERE_1"
+        case .sphere_2: "SPHERE_2"
+        case .sphere_3: "SPHERE_3"
+        case .sphere_4: "SPHERE_4"
+        case .sphere_5: "SPHERE_5"
+        case .reading_sb: "READING_SB"
+        case .freeze_sp: "FREEZE_SP"
+        case .fearbreeze: "FEARBREEZE"
+        case .electricshocker: "ELECTRICSHOCKER"
+        case .wugdash: "WUGDASH"
+        case .bite: "BITE"
+        case .camouflage: "CAMOUFLAGE"
+        case .acceleration: "ACCELERATION"
+        case .hovering: "HOVERING"
+        case .shapeshift: "SHAPESHIFT"
+        case .infraredscan: "INFRAREDSCAN"
+        case .analyze: "ANALYZE"
+        case .magneticfield: "MAGNETICFIELD"
+        case .neutralbarrier: "NEUTRALBARRIER"
+        case .neutralbarrier_master: "NEUTRALBARRIER_MASTER"
+        case .stealthfield: "STEALTHFIELD"
+        case .stealthfield_master: "STEALTHFIELD_MASTER"
+        case .overheat: "OVERHEAT"
+        case .overheat_limitpoint: "OVERHEAT_LIMITPOINT"
+        case .venomimpress: "VENOMIMPRESS"
+        case .poisoningweapon: "POISONINGWEAPON"
+        case .weaponblocking: "WEAPONBLOCKING"
+        case .cloakingexceed: "CLOAKINGEXCEED"
+        case .hallucinationwalk: "HALLUCINATIONWALK"
+        case .hallucinationwalk_postdelay: "HALLUCINATIONWALK_POSTDELAY"
+        case .rollingcutter: "ROLLINGCUTTER"
+        case .toxin: "TOXIN"
+        case .paralyse: "PARALYSE"
+        case .venombleed: "VENOMBLEED"
+        case .magicmushroom: "MAGICMUSHROOM"
+        case .deathhurt: "DEATHHURT"
+        case .pyrexia: "PYREXIA"
+        case .oblivioncurse: "OBLIVIONCURSE"
+        case .leechesend: "LEECHESEND"
+        case .reflectdamage: "REFLECTDAMAGE"
+        case .forceofvanguard: "FORCEOFVANGUARD"
+        case .shieldspell_hp: "SHIELDSPELL_HP"
+        case .shieldspell_sp: "SHIELDSPELL_SP"
+        case .shieldspell_atk: "SHIELDSPELL_ATK"
+        case .exeedbreak: "EXEEDBREAK"
+        case .prestige: "PRESTIGE"
+        case .banding: "BANDING"
+        case .banding_defence: "BANDING_DEFENCE"
+        case .earthdrive: "EARTHDRIVE"
+        case .inspiration: "INSPIRATION"
+        case .spellfist: "SPELLFIST"
+        case .crystalize: "CRYSTALIZE"
+        case .striking: "STRIKING"
+        case .warmer: "WARMER"
+        case .vacuum_extreme: "VACUUM_EXTREME"
+        case .propertywalk: "PROPERTYWALK"
+        case .swingdance: "SWINGDANCE"
+        case .symphonyoflover: "SYMPHONYOFLOVER"
+        case .moonlitserenade: "MOONLITSERENADE"
+        case .rushwindmill: "RUSHWINDMILL"
+        case .echosong: "ECHOSONG"
+        case .harmonize: "HARMONIZE"
+        case .voiceofsiren: "VOICEOFSIREN"
+        case .deepsleep: "DEEPSLEEP"
+        case .sircleofnature: "SIRCLEOFNATURE"
+        case .gloomyday: "GLOOMYDAY"
+        case .gloomyday_sk: "GLOOMYDAY_SK"
+        case .songofmana: "SONGOFMANA"
+        case .dancewithwug: "DANCEWITHWUG"
+        case .saturdaynightfever: "SATURDAYNIGHTFEVER"
+        case .leradsdew: "LERADSDEW"
+        case .melodyofsink: "MELODYOFSINK"
+        case .beyondofwarcry: "BEYONDOFWARCRY"
+        case .unlimitedhummingvoice: "UNLIMITEDHUMMINGVOICE"
+        case .sitdown_force: "SITDOWN_FORCE"
+        case .netherworld: "NETHERWORLD"
+        case .crescentelbow: "CRESCENTELBOW"
+        case .cursedcircle_atker: "CURSEDCIRCLE_ATKER"
+        case .cursedcircle_target: "CURSEDCIRCLE_TARGET"
+        case .lightningwalk: "LIGHTNINGWALK"
+        case .raisingdragon: "RAISINGDRAGON"
+        case .gt_energygain: "GT_ENERGYGAIN"
+        case .gt_change: "GT_CHANGE"
+        case .gt_revitalize: "GT_REVITALIZE"
+        case .gn_cartboost: "GN_CARTBOOST"
+        case .thornstrap: "THORNSTRAP"
+        case .bloodsucker: "BLOODSUCKER"
+        case .smokepowder: "SMOKEPOWDER"
+        case .teargas: "TEARGAS"
+        case .mandragora: "MANDRAGORA"
+        case .stomachache: "STOMACHACHE"
+        case .mysterious_powder: "MYSTERIOUS_POWDER"
+        case .melon_bomb: "MELON_BOMB"
+        case .banana_bomb: "BANANA_BOMB"
+        case .banana_bomb_sitdown: "BANANA_BOMB_SITDOWN"
+        case .savage_steak: "SAVAGE_STEAK"
+        case .cocktail_warg_blood: "COCKTAIL_WARG_BLOOD"
+        case .minor_bbq: "MINOR_BBQ"
+        case .siroma_ice_tea: "SIROMA_ICE_TEA"
+        case .drocera_herb_steamed: "DROCERA_HERB_STEAMED"
+        case .putti_tails_noodles: "PUTTI_TAILS_NOODLES"
+        case .boost500: "BOOST500"
+        case .full_swing_k: "FULL_SWING_K"
+        case .mana_plus: "MANA_PLUS"
+        case .mustle_m: "MUSTLE_M"
+        case .life_force_f: "LIFE_FORCE_F"
+        case .extract_white_potion_z: "EXTRACT_WHITE_POTION_Z"
+        case .vitata_500: "VITATA_500"
+        case .extract_salamine_juice: "EXTRACT_SALAMINE_JUICE"
+        case ._reproduce: "_REPRODUCE"
+        case ._autoshadowspell: "_AUTOSHADOWSPELL"
+        case ._shadowform: "_SHADOWFORM"
+        case ._bodypaint: "_BODYPAINT"
+        case ._invisibility: "_INVISIBILITY"
+        case ._deadlyinfect: "_DEADLYINFECT"
+        case ._enervation: "_ENERVATION"
+        case ._groomy: "_GROOMY"
+        case ._ignorance: "_IGNORANCE"
+        case ._laziness: "_LAZINESS"
+        case ._unlucky: "_UNLUCKY"
+        case ._weakness: "_WEAKNESS"
+        case ._stripaccessory: "_STRIPACCESSORY"
+        case ._manhole: "_MANHOLE"
+        case ._bloodylust: "_BLOODYLUST"
+        case .circle_of_fire: "CIRCLE_OF_FIRE"
+        case .circle_of_fire_option: "CIRCLE_OF_FIRE_OPTION"
+        case .fire_cloak: "FIRE_CLOAK"
+        case .fire_cloak_option: "FIRE_CLOAK_OPTION"
+        case .water_screen: "WATER_SCREEN"
+        case .water_screen_option: "WATER_SCREEN_OPTION"
+        case .water_drop: "WATER_DROP"
+        case .water_drop_option: "WATER_DROP_OPTION"
+        case .water_barrier: "WATER_BARRIER"
+        case .wind_step: "WIND_STEP"
+        case .wind_step_option: "WIND_STEP_OPTION"
+        case .wind_curtain: "WIND_CURTAIN"
+        case .wind_curtain_option: "WIND_CURTAIN_OPTION"
+        case .zephyr: "ZEPHYR"
+        case .solid_skin: "SOLID_SKIN"
+        case .solid_skin_option: "SOLID_SKIN_OPTION"
+        case .stone_shield: "STONE_SHIELD"
+        case .stone_shield_option: "STONE_SHIELD_OPTION"
+        case .power_of_gaia: "POWER_OF_GAIA"
+        case .pyrotechnic: "PYROTECHNIC"
+        case .pyrotechnic_option: "PYROTECHNIC_OPTION"
+        case .heater: "HEATER"
+        case .heater_option: "HEATER_OPTION"
+        case .tropic: "TROPIC"
+        case .tropic_option: "TROPIC_OPTION"
+        case .aquaplay: "AQUAPLAY"
+        case .aquaplay_option: "AQUAPLAY_OPTION"
+        case .cooler: "COOLER"
+        case .cooler_option: "COOLER_OPTION"
+        case .chilly_air: "CHILLY_AIR"
+        case .chilly_air_option: "CHILLY_AIR_OPTION"
+        case .gust: "GUST"
+        case .gust_option: "GUST_OPTION"
+        case .blast: "BLAST"
+        case .blast_option: "BLAST_OPTION"
+        case .wild_storm: "WILD_STORM"
+        case .wild_storm_option: "WILD_STORM_OPTION"
+        case .petrology: "PETROLOGY"
+        case .petrology_option: "PETROLOGY_OPTION"
+        case .cursed_soil: "CURSED_SOIL"
+        case .cursed_soil_option: "CURSED_SOIL_OPTION"
+        case .upheaval: "UPHEAVAL"
+        case .upheaval_option: "UPHEAVAL_OPTION"
+        case .tidal_weapon: "TIDAL_WEAPON"
+        case .tidal_weapon_option: "TIDAL_WEAPON_OPTION"
+        case .rock_crusher: "ROCK_CRUSHER"
+        case .rock_crusher_atk: "ROCK_CRUSHER_ATK"
+        case .leadership: "LEADERSHIP"
+        case .glorywounds: "GLORYWOUNDS"
+        case .soulcold: "SOULCOLD"
+        case .hawkeyes: "HAWKEYES"
+        case .odins_power: "ODINS_POWER"
+        case .raid: "RAID"
+        case .fire_insignia: "FIRE_INSIGNIA"
+        case .water_insignia: "WATER_INSIGNIA"
+        case .wind_insignia: "WIND_INSIGNIA"
+        case .earth_insignia: "EARTH_INSIGNIA"
+        case .push_cart: "PUSH_CART"
+        case .spellbook1: "SPELLBOOK1"
+        case .spellbook2: "SPELLBOOK2"
+        case .spellbook3: "SPELLBOOK3"
+        case .spellbook4: "SPELLBOOK4"
+        case .spellbook5: "SPELLBOOK5"
+        case .spellbook6: "SPELLBOOK6"
+        case .maxspellbook: "MAXSPELLBOOK"
+        case .incmhp: "INCMHP"
+        case .incmsp: "INCMSP"
+        case .partyflee: "PARTYFLEE"
+        case .meikyousisui: "MEIKYOUSISUI"
+        case .jyumonjikiri: "JYUMONJIKIRI"
+        case .kyougaku: "KYOUGAKU"
+        case .izayoi: "IZAYOI"
+        case .zenkai: "ZENKAI"
+        case .kagehumi: "KAGEHUMI"
+        case .kyomu: "KYOMU"
+        case .kagemusya: "KAGEMUSYA"
+        case .zangetsu: "ZANGETSU"
+        case .gensou: "GENSOU"
+        case .akaitsuki: "AKAITSUKI"
+        case .style_change: "STYLE_CHANGE"
+        case .tinder_breaker: "TINDER_BREAKER"
+        case .tinder_breaker2: "TINDER_BREAKER2"
+        case .cbc: "CBC"
+        case .eqc: "EQC"
+        case .goldene_ferse: "GOLDENE_FERSE"
+        case .angriffs_modus: "ANGRIFFS_MODUS"
+        case .overed_boost: "OVERED_BOOST"
+        case .light_of_regene: "LIGHT_OF_REGENE"
+        case .ash: "ASH"
+        case .granitic_armor: "GRANITIC_ARMOR"
+        case .magma_flow: "MAGMA_FLOW"
+        case .pyroclastic: "PYROCLASTIC"
+        case .paralysis: "PARALYSIS"
+        case .pain_killer: "PAIN_KILLER"
+        case .hanbok: "HANBOK"
+        case .defset: "DEFSET"
+        case .mdefset: "MDEFSET"
+        case .darkcrow: "DARKCROW"
+        case .full_throttle: "FULL_THROTTLE"
+        case .rebound: "REBOUND"
+        case .unlimit: "UNLIMIT"
+        case .kings_grace: "KINGS_GRACE"
+        case .telekinesis_intense: "TELEKINESIS_INTENSE"
+        case .offertorium: "OFFERTORIUM"
+        case .frigg_song: "FRIGG_SONG"
+        case .monster_transform: "MONSTER_TRANSFORM"
+        case .angel_protect: "ANGEL_PROTECT"
+        case .illusiondoping: "ILLUSIONDOPING"
+        case .flashcombo: "FLASHCOMBO"
+        case .moonstar: "MOONSTAR"
+        case .super_star: "SUPER_STAR"
+        case .heat_barrel: "HEAT_BARREL"
+        case .magicalbullet: "MAGICALBULLET"
+        case .p_alter: "P_ALTER"
+        case .e_chain: "E_CHAIN"
+        case .c_marker: "C_MARKER"
+        case .anti_m_blast: "ANTI_M_BLAST"
+        case .b_trap: "B_TRAP"
+        case .h_mine: "H_MINE"
+        case .qd_shot_ready: "QD_SHOT_READY"
+        case .mtf_aspd: "MTF_ASPD"
+        case .mtf_rangeatk: "MTF_RANGEATK"
+        case .mtf_matk: "MTF_MATK"
+        case .mtf_mleatked: "MTF_MLEATKED"
+        case .mtf_cridamage: "MTF_CRIDAMAGE"
+        case .oktoberfest: "OKTOBERFEST"
+        case .strangelights: "STRANGELIGHTS"
+        case .decoration_of_music: "DECORATION_OF_MUSIC"
+        case .quest_buff1: "QUEST_BUFF1"
+        case .quest_buff2: "QUEST_BUFF2"
+        case .quest_buff3: "QUEST_BUFF3"
+        case .all_riding: "ALL_RIDING"
+        case .teargas_sob: "TEARGAS_SOB"
+        case ._feintbomb: "_FEINTBOMB"
+        case ._chaos: "_CHAOS"
+        case .chasewalk2: "CHASEWALK2"
+        case .vacuum_extreme_postdelay: "VACUUM_EXTREME_POSTDELAY"
+        case .mtf_aspd2: "MTF_ASPD2"
+        case .mtf_rangeatk2: "MTF_RANGEATK2"
+        case .mtf_matk2: "MTF_MATK2"
+        case ._2011rwc_scroll: "2011RWC_SCROLL"
+        case .jp_event04: "JP_EVENT04"
+        case .mtf_mhp: "MTF_MHP"
+        case .mtf_msp: "MTF_MSP"
+        case .mtf_pumpkin: "MTF_PUMPKIN"
+        case .mtf_hitflee: "MTF_HITFLEE"
+        case .crifood: "CRIFOOD"
+        case .atthaste_cash: "ATTHASTE_CASH"
+        case .reuse_limit_a: "REUSE_LIMIT_A"
+        case .reuse_limit_b: "REUSE_LIMIT_B"
+        case .reuse_limit_c: "REUSE_LIMIT_C"
+        case .reuse_limit_d: "REUSE_LIMIT_D"
+        case .reuse_limit_e: "REUSE_LIMIT_E"
+        case .reuse_limit_f: "REUSE_LIMIT_F"
+        case .reuse_limit_g: "REUSE_LIMIT_G"
+        case .reuse_limit_h: "REUSE_LIMIT_H"
+        case .reuse_limit_mtf: "REUSE_LIMIT_MTF"
+        case .reuse_limit_aspd_potion: "REUSE_LIMIT_ASPD_POTION"
+        case .reuse_millenniumshield: "REUSE_MILLENNIUMSHIELD"
+        case .reuse_crushstrike: "REUSE_CRUSHSTRIKE"
+        case .reuse_stormblast: "REUSE_STORMBLAST"
+        case .all_riding_reuse_limit: "ALL_RIDING_REUSE_LIMIT"
+        case .reuse_limit_ecl: "REUSE_LIMIT_ECL"
+        case .reuse_limit_recall: "REUSE_LIMIT_RECALL"
+        case .promote_health_reserch: "PROMOTE_HEALTH_RESERCH"
+        case .energy_drink_reserch: "ENERGY_DRINK_RESERCH"
+        case .norecover_state: "NORECOVER_STATE"
+        case .suhide: "SUHIDE"
+        case .su_stoop: "SU_STOOP"
+        case .spritemable: "SPRITEMABLE"
+        case .catnippowder: "CATNIPPOWDER"
+        case .sv_roottwist: "SV_ROOTTWIST"
+        case .bitescar: "BITESCAR"
+        case .arclousedash: "ARCLOUSEDASH"
+        case .tunaparty: "TUNAPARTY"
+        case .shrimp: "SHRIMP"
+        case .freshshrimp: "FRESHSHRIMP"
+        case .active_monster_transform: "ACTIVE_MONSTER_TRANSFORM"
+        case .cloud_kill: "CLOUD_KILL"
+        case .ljosalfar: "LJOSALFAR"
+        case .mermaid_longing: "MERMAID_LONGING"
+        case .hat_effect: "HAT_EFFECT"
+        case .flowersmoke: "FLOWERSMOKE"
+        case .fstone: "FSTONE"
+        case .happiness_star: "HAPPINESS_STAR"
+        case .maple_falls: "MAPLE_FALLS"
+        case .time_accessory: "TIME_ACCESSORY"
+        case .magical_feather: "MAGICAL_FEATHER"
+        case .gvg_giant: "GVG_GIANT"
+        case .gvg_golem: "GVG_GOLEM"
+        case .gvg_stun: "GVG_STUN"
+        case .gvg_stone: "GVG_STONE"
+        case .gvg_freez: "GVG_FREEZ"
+        case .gvg_sleep: "GVG_SLEEP"
+        case .gvg_curse: "GVG_CURSE"
+        case .gvg_silence: "GVG_SILENCE"
+        case .gvg_blind: "GVG_BLIND"
+        case .clan_info: "CLAN_INFO"
+        case .swordclan: "SWORDCLAN"
+        case .arcwandclan: "ARCWANDCLAN"
+        case .goldenmaceclan: "GOLDENMACECLAN"
+        case .crossbowclan: "CROSSBOWCLAN"
+        case .jumpingclan: "JUMPINGCLAN"
+        case .tarotcard: "TAROTCARD"
+        case .geffen_magic1: "GEFFEN_MAGIC1"
+        case .geffen_magic2: "GEFFEN_MAGIC2"
+        case .geffen_magic3: "GEFFEN_MAGIC3"
+        case .maxpain: "MAXPAIN"
+        case .armor_element_earth: "ARMOR_ELEMENT_EARTH"
+        case .armor_element_fire: "ARMOR_ELEMENT_FIRE"
+        case .armor_element_wind: "ARMOR_ELEMENT_WIND"
+        case .dailysendmailcnt: "DAILYSENDMAILCNT"
+        case .doram_buf_01: "DORAM_BUF_01"
+        case .doram_buf_02: "DORAM_BUF_02"
+        case .hiss: "HISS"
+        case .nyanggrass: "NYANGGRASS"
+        case .grooming: "GROOMING"
+        case .shrimpblessing: "SHRIMPBLESSING"
+        case .chattering: "CHATTERING"
+        case .doram_walkspeed: "DORAM_WALKSPEED"
+        case .doram_matk: "DORAM_MATK"
+        case .doram_flee2: "DORAM_FLEE2"
+        case .doram_svsp: "DORAM_SVSP"
+        case .fallen_angel: "FALLEN_ANGEL"
+        case .cheerup: "CHEERUP"
+        case .dressup: "DRESSUP"
+        case .glastheim_atk: "GLASTHEIM_ATK"
+        case .glastheim_def: "GLASTHEIM_DEF"
+        case .glastheim_heal: "GLASTHEIM_HEAL"
+        case .glastheim_hidden: "GLASTHEIM_HIDDEN"
+        case .glastheim_state: "GLASTHEIM_STATE"
+        case .glastheim_itemdef: "GLASTHEIM_ITEMDEF"
+        case .glastheim_hpsp: "GLASTHEIM_HPSP"
+        case .lhz_dun_n1: "LHZ_DUN_N1"
+        case .lhz_dun_n2: "LHZ_DUN_N2"
+        case .lhz_dun_n3: "LHZ_DUN_N3"
+        case .lhz_dun_n4: "LHZ_DUN_N4"
+        case .ancilla: "ANCILLA"
+        case .earthshaker: "EARTHSHAKER"
+        case .weaponblock_on: "WEAPONBLOCK_ON"
+        case .spore_explosion: "SPORE_EXPLOSION"
+        case .adaptation: "ADAPTATION"
+        case .basilica_cell: "BASILICA_CELL"
+        case .entry_queue_apply_delay: "ENTRY_QUEUE_APPLY_DELAY"
+        case .entry_queue_notify_admission_time_out: "ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT"
+        case .lightofmoon: "LIGHTOFMOON"
+        case .lightofsun: "LIGHTOFSUN"
+        case .lightofstar: "LIGHTOFSTAR"
+        case .lunarstance: "LUNARSTANCE"
+        case .universestance: "UNIVERSESTANCE"
+        case .sunstance: "SUNSTANCE"
+        case .flashkick: "FLASHKICK"
+        case .newmoon: "NEWMOON"
+        case .starstance: "STARSTANCE"
+        case .dimension: "DIMENSION"
+        case .dimension1: "DIMENSION1"
+        case .dimension2: "DIMENSION2"
+        case .creatingstar: "CREATINGSTAR"
+        case .fallingstar: "FALLINGSTAR"
+        case .novaexplosing: "NOVAEXPLOSING"
+        case .gravitycontrol: "GRAVITYCONTROL"
+        case .soulcollect: "SOULCOLLECT"
+        case .soulreaper: "SOULREAPER"
+        case .soulunity: "SOULUNITY"
+        case .soulshadow: "SOULSHADOW"
+        case .soulfairy: "SOULFAIRY"
+        case .soulfalcon: "SOULFALCON"
+        case .soulgolem: "SOULGOLEM"
+        case .souldivision: "SOULDIVISION"
+        case .soulenergy: "SOULENERGY"
+        case .use_skill_sp_spa: "USE_SKILL_SP_SPA"
+        case .use_skill_sp_sha: "USE_SKILL_SP_SHA"
+        case .sp_sha: "SP_SHA"
+        case .soulcurse: "SOULCURSE"
+        case .hells_plant: "HELLS_PLANT"
+        case .increase_maxhp: "INCREASE_MAXHP"
+        case .increase_maxsp: "INCREASE_MAXSP"
+        case .ref_t_potion: "REF_T_POTION"
+        case .add_atk_damage: "ADD_ATK_DAMAGE"
+        case .add_matk_damage: "ADD_MATK_DAMAGE"
+        case .helpangel: "HELPANGEL"
+        case .soundofdestruction: "SOUNDOFDESTRUCTION"
+        case .luxanima: "LUXANIMA"
+        case .reuse_limit_luxanima: "REUSE_LIMIT_LUXANIMA"
+        case .ensemblefatigue: "ENSEMBLEFATIGUE"
+        case .misty_frost: "MISTY_FROST"
+        case .magic_poison: "MAGIC_POISON"
+        case .ep16_2_buff_ss: "EP16_2_BUFF_SS"
+        case .ep16_2_buff_sc: "EP16_2_BUFF_SC"
+        case .ep16_2_buff_ac: "EP16_2_BUFF_AC"
+        case .overbrandready: "OVERBRANDREADY"
+        case .poison_mist: "POISON_MIST"
+        case .stone_wall: "STONE_WALL"
+        case .cloud_poison: "CLOUD_POISON"
+        case .homun_time: "HOMUN_TIME"
+        case .emergency_move: "EMERGENCY_MOVE"
+        case .madogear: "MADOGEAR"
+        case .npc_hallucinationwalk: "NPC_HALLUCINATIONWALK"
+        case .packing_envelope1: "PACKING_ENVELOPE1"
+        case .packing_envelope2: "PACKING_ENVELOPE2"
+        case .packing_envelope3: "PACKING_ENVELOPE3"
+        case .packing_envelope4: "PACKING_ENVELOPE4"
+        case .packing_envelope5: "PACKING_ENVELOPE5"
+        case .packing_envelope6: "PACKING_ENVELOPE6"
+        case .packing_envelope7: "PACKING_ENVELOPE7"
+        case .packing_envelope8: "PACKING_ENVELOPE8"
+        case .packing_envelope9: "PACKING_ENVELOPE9"
+        case .packing_envelope10: "PACKING_ENVELOPE10"
+        case .soulattack: "SOULATTACK"
+        case .wideweb: "WIDEWEB"
+        case .burnt: "BURNT"
+        case .chill: "CHILL"
+        case .handicapstate_deepblind: "HANDICAPSTATE_DEEPBLIND"
+        case .handicapstate_deepsilence: "HANDICAPSTATE_DEEPSILENCE"
+        case .handicapstate_lassitude: "HANDICAPSTATE_LASSITUDE"
+        case .handicapstate_frostbite: "HANDICAPSTATE_FROSTBITE"
+        case .handicapstate_swooning: "HANDICAPSTATE_SWOONING"
+        case .handicapstate_lightningstrike: "HANDICAPSTATE_LIGHTNINGSTRIKE"
+        case .handicapstate_crystallization: "HANDICAPSTATE_CRYSTALLIZATION"
+        case .handicapstate_conflagration: "HANDICAPSTATE_CONFLAGRATION"
+        case .handicapstate_misfortune: "HANDICAPSTATE_MISFORTUNE"
+        case .handicapstate_deadlypoison: "HANDICAPSTATE_DEADLYPOISON"
+        case .handicapstate_depression: "HANDICAPSTATE_DEPRESSION"
+        case .handicapstate_holyflame: "HANDICAPSTATE_HOLYFLAME"
+        case .servantweapon: "SERVANTWEAPON"
+        case .servant_sign: "SERVANT_SIGN"
+        case .chargingpierce: "CHARGINGPIERCE"
+        case .chargingpierce_count: "CHARGINGPIERCE_COUNT"
+        case .dragonic_aura: "DRAGONIC_AURA"
+        case .vigor: "VIGOR"
+        case .deadly_defeasance: "DEADLY_DEFEASANCE"
+        case .climax_des_hu: "CLIMAX_DES_HU"
+        case .climax: "CLIMAX"
+        case .climax_earth: "CLIMAX_EARTH"
+        case .climax_bloom: "CLIMAX_BLOOM"
+        case .climax_cryimp: "CLIMAX_CRYIMP"
+        case .windsign: "WINDSIGN"
+        case .crescivebolt: "CRESCIVEBOLT"
+        case .calamitygale: "CALAMITYGALE"
+        case .mediale: "MEDIALE"
+        case .a_vita: "A_VITA"
+        case .a_telum: "A_TELUM"
+        case .pre_acies: "PRE_ACIES"
+        case .competentia: "COMPETENTIA"
+        case .religio: "RELIGIO"
+        case .benedictum: "BENEDICTUM"
+        case .axe_stomp: "AXE_STOMP"
+        case .a_machine: "A_MACHINE"
+        case .d_machine: "D_MACHINE"
+        case .abr_battle_warior: "ABR_BATTLE_WARIOR"
+        case .abr_dual_cannon: "ABR_DUAL_CANNON"
+        case .abr_mother_net: "ABR_MOTHER_NET"
+        case .abr_infinity: "ABR_INFINITY"
+        case .shadow_exceed: "SHADOW_EXCEED"
+        case .dancing_knife: "DANCING_KNIFE"
+        case .potent_venom: "POTENT_VENOM"
+        case .shadow_scar: "SHADOW_SCAR"
+        case .e_slash_count: "E_SLASH_COUNT"
+        case .shadow_weapon: "SHADOW_WEAPON"
+        case .guard_stance: "GUARD_STANCE"
+        case .attack_stance: "ATTACK_STANCE"
+        case .guardian_s: "GUARDIAN_S"
+        case .rebound_s: "REBOUND_S"
+        case .holy_s: "HOLY_S"
+        case .ultimate_s: "ULTIMATE_S"
+        case .spear_scar: "SPEAR_SCAR"
+        case .shield_power: "SHIELD_POWER"
+        case .spell_enchanting: "SPELL_ENCHANTING"
+        case .summon_elemental_ardor: "SUMMON_ELEMENTAL_ARDOR"
+        case .summon_elemental_diluvio: "SUMMON_ELEMENTAL_DILUVIO"
+        case .summon_elemental_procella: "SUMMON_ELEMENTAL_PROCELLA"
+        case .summon_elemental_terremotus: "SUMMON_ELEMENTAL_TERREMOTUS"
+        case .summon_elemental_serpens: "SUMMON_ELEMENTAL_SERPENS"
+        case .elemental_veil: "ELEMENTAL_VEIL"
+        case .mystic_symphony: "MYSTIC_SYMPHONY"
+        case .kvasir_sonata: "KVASIR_SONATA"
+        case .soundblend: "SOUNDBLEND"
+        case .gef_nocturn: "GEF_NOCTURN"
+        case .ain_rhapsody: "AIN_RHAPSODY"
+        case .musical_interlude: "MUSICAL_INTERLUDE"
+        case .jawaii_serenade: "JAWAII_SERENADE"
+        case .pron_march: "PRON_MARCH"
+        case .roseblossom: "ROSEBLOSSOM"
+        case .powerful_faith: "POWERFUL_FAITH"
+        case .sincere_faith: "SINCERE_FAITH"
+        case .firm_faith: "FIRM_FAITH"
+        case .holy_oil: "HOLY_OIL"
+        case .first_brand: "FIRST_BRAND"
+        case .second_brand: "SECOND_BRAND"
+        case .second_judge: "SECOND_JUDGE"
+        case .third_exor_flame: "THIRD_EXOR_FLAME"
+        case .first_faith_power: "FIRST_FAITH_POWER"
+        case .massive_f_blaster: "MASSIVE_F_BLASTER"
+        case .protectshadowequip: "PROTECTSHADOWEQUIP"
+        case .researchreport: "RESEARCHREPORT"
+        case .bo_hell_dusty: "BO_HELL_DUSTY"
+        case .bionic_woodenwarrior: "BIONIC_WOODENWARRIOR"
+        case .bionic_wooden_fairy: "BIONIC_WOODEN_FAIRY"
+        case .bionic_creeper: "BIONIC_CREEPER"
+        case .bionic_helltree: "BIONIC_HELLTREE"
+        case .shadow_strip: "SHADOW_STRIP"
+        case .abyss_dagger: "ABYSS_DAGGER"
+        case .abyssforceweapon: "ABYSSFORCEWEAPON"
+        case .abyss_slayer: "ABYSS_SLAYER"
+        case .flametechnic: "FLAMETECHNIC"
+        case .flametechnic_option: "FLAMETECHNIC_OPTION"
+        case .flamearmor: "FLAMEARMOR"
+        case .flamearmor_option: "FLAMEARMOR_OPTION"
+        case .cold_force: "COLD_FORCE"
+        case .cold_force_option: "COLD_FORCE_OPTION"
+        case .crystal_armor: "CRYSTAL_ARMOR"
+        case .crystal_armor_option: "CRYSTAL_ARMOR_OPTION"
+        case .grace_breeze: "GRACE_BREEZE"
+        case .grace_breeze_option: "GRACE_BREEZE_OPTION"
+        case .eyes_of_storm: "EYES_OF_STORM"
+        case .eyes_of_storm_option: "EYES_OF_STORM_OPTION"
+        case .earth_care: "EARTH_CARE"
+        case .earth_care_option: "EARTH_CARE_OPTION"
+        case .strong_protection: "STRONG_PROTECTION"
+        case .strong_protection_option: "STRONG_PROTECTION_OPTION"
+        case .deep_poisoning: "DEEP_POISONING"
+        case .deep_poisoning_option: "DEEP_POISONING_OPTION"
+        case .poison_shield: "POISON_SHIELD"
+        case .poison_shield_option: "POISON_SHIELD_OPTION"
+        case .sub_weaponproperty: "SUB_WEAPONPROPERTY"
+        case .m_lifepotion: "M_LIFEPOTION"
+        case .s_manapotion: "S_MANAPOTION"
+        case .almighty: "ALMIGHTY"
+        case .ultimatecook: "ULTIMATECOOK"
+        case .m_defscroll: "M_DEFSCROLL"
+        case .infinity_drink: "INFINITY_DRINK"
+        case .mental_potion: "MENTAL_POTION"
+        case .limit_power_booster: "LIMIT_POWER_BOOSTER"
+        case .combat_pill: "COMBAT_PILL"
+        case .combat_pill2: "COMBAT_PILL2"
+        case .mysticpowder: "MYSTICPOWDER"
+        case .sparkcandy: "SPARKCANDY"
+        case .magiccandy: "MAGICCANDY"
+        case .acaraje: "ACARAJE"
+        case .popecookie: "POPECOOKIE"
+        case .vitalize_potion: "VITALIZE_POTION"
+        case .cup_of_boza: "CUP_OF_BOZA"
+        case .skf_matk: "SKF_MATK"
+        case .skf_atk: "SKF_ATK"
+        case .skf_aspd: "SKF_ASPD"
+        case .skf_cast: "SKF_CAST"
+        case .beef_rib_stew: "BEEF_RIB_STEW"
+        case .pork_rib_stew: "PORK_RIB_STEW"
+        case .weaponbreaker: "WEAPONBREAKER"
+        case .toxin_of_mandara: "TOXIN_OF_MANDARA"
+        case .goldene_tone: "GOLDENE_TONE"
+        case .tempering: "TEMPERING"
+        case .gradual_gravity: "GRADUAL_GRAVITY"
+        case .all_stat_down: "ALL_STAT_DOWN"
+        case .killing_aura: "KILLING_AURA"
+        case .damage_heal: "DAMAGE_HEAL"
+        case .immune_property_nothing: "IMMUNE_PROPERTY_NOTHING"
+        case .immune_property_water: "IMMUNE_PROPERTY_WATER"
+        case .immune_property_ground: "IMMUNE_PROPERTY_GROUND"
+        case .immune_property_fire: "IMMUNE_PROPERTY_FIRE"
+        case .immune_property_wind: "IMMUNE_PROPERTY_WIND"
+        case .immune_property_poison: "IMMUNE_PROPERTY_POISON"
+        case .immune_property_saint: "IMMUNE_PROPERTY_SAINT"
+        case .immune_property_darkness: "IMMUNE_PROPERTY_DARKNESS"
+        case .immune_property_telekinesis: "IMMUNE_PROPERTY_TELEKINESIS"
+        case .immune_property_undead: "IMMUNE_PROPERTY_UNDEAD"
+        case .relieve_on: "RELIEVE_ON"
+        case .relieve_off: "RELIEVE_OFF"
+        case .rush_quake1: "RUSH_QUAKE1"
+        case .rush_quake2: "RUSH_QUAKE2"
+        case .g_lifepotion: "G_LIFEPOTION"
+        case .hnnoweapon: "HNNOWEAPON"
+        case .shieldchainrush: "SHIELDCHAINRUSH"
+        case .mistyfrost: "MISTYFROST"
+        case .groundgravity: "GROUNDGRAVITY"
+        case .breakinglimit: "BREAKINGLIMIT"
+        case .rulebreak: "RULEBREAK"
+        case .intensive_aim: "INTENSIVE_AIM"
+        case .intensive_aim_count: "INTENSIVE_AIM_COUNT"
+        case .grenade_fragment_1: "GRENADE_FRAGMENT_1"
+        case .grenade_fragment_2: "GRENADE_FRAGMENT_2"
+        case .grenade_fragment_3: "GRENADE_FRAGMENT_3"
+        case .grenade_fragment_4: "GRENADE_FRAGMENT_4"
+        case .grenade_fragment_5: "GRENADE_FRAGMENT_5"
+        case .grenade_fragment_6: "GRENADE_FRAGMENT_6"
+        case .auto_firing_launcher: "AUTO_FIRING_LAUNCHER"
+        case .hidden_card: "HIDDEN_CARD"
+        case .period_receiveitem_2nd: "PERIOD_RECEIVEITEM_2ND"
+        case .period_plusexp_2nd: "PERIOD_PLUSEXP_2ND"
+        case .powerup: "POWERUP"
+        case .agiup: "AGIUP"
+        case .protection: "PROTECTION"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "STONE": self = .stone
@@ -3763,10 +2823,26 @@ extension StatusChangeID: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension StatusChangeID: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension StatusChangeID: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

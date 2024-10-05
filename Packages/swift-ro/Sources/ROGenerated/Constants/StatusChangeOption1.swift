@@ -6,45 +6,31 @@
 //
 
 /// Converted from `e_sc_opt1` in `map/status.hpp`.
-public enum StatusChangeOption1: CaseIterable, RawRepresentable, Sendable {
-    case none
-    case stone
-    case freeze
-    case stun
-    case sleep
-    case stonewait
-    case burning
-    case imprison
-
-    public var rawValue: Int {
-        switch self {
-        case .none: 0
-        case .stone: 1
-        case .freeze: 2
-        case .stun: 3
-        case .sleep: 4
-        case .stonewait: 6
-        case .burning: 7
-        case .imprison: 8
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .none
-        case 1: self = .stone
-        case 2: self = .freeze
-        case 3: self = .stun
-        case 4: self = .sleep
-        case 6: self = .stonewait
-        case 7: self = .burning
-        case 8: self = .imprison
-        default: return nil
-        }
-    }
+public enum StatusChangeOption1: Int, CaseIterable, Sendable {
+    case none = 0
+    case stone = 1
+    case freeze = 2
+    case stun = 3
+    case sleep = 4
+    case stonewait = 6
+    case burning = 7
+    case imprison = 8
 }
 
-extension StatusChangeOption1: CodingKey, CodingKeyRepresentable, Decodable {
+extension StatusChangeOption1: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .none: "NONE"
+        case .stone: "STONE"
+        case .freeze: "FREEZE"
+        case .stun: "STUN"
+        case .sleep: "SLEEP"
+        case .stonewait: "STONEWAIT"
+        case .burning: "BURNING"
+        case .imprison: "IMPRISON"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "NONE": self = .none
@@ -59,10 +45,26 @@ extension StatusChangeOption1: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension StatusChangeOption1: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension StatusChangeOption1: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

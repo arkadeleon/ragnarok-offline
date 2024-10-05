@@ -6,30 +6,21 @@
 //
 
 /// Converted from `e_sex` in `common/mmo.hpp`.
-public enum Sex: CaseIterable, RawRepresentable, Sendable {
-    case female
-    case male
-    case both
-
-    public var rawValue: Int {
-        switch self {
-        case .female: 0
-        case .male: 1
-        case .both: 2
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .female
-        case 1: self = .male
-        case 2: self = .both
-        default: return nil
-        }
-    }
+public enum Sex: Int, CaseIterable, Sendable {
+    case female = 0
+    case male = 1
+    case both = 2
 }
 
-extension Sex: CodingKey, CodingKeyRepresentable, Decodable {
+extension Sex: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .female: "FEMALE"
+        case .male: "MALE"
+        case .both: "BOTH"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "FEMALE": self = .female
@@ -39,10 +30,26 @@ extension Sex: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension Sex: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension Sex: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

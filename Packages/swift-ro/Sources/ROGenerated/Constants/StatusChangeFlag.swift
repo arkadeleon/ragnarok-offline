@@ -6,180 +6,121 @@
 //
 
 /// Converted from `e_status_change_flag` in `map/status.hpp`.
-public enum StatusChangeFlag: CaseIterable, RawRepresentable, Sendable {
-    case none
-    case bleffect
-    case displaypc
-    case noclearbuff
-    case noremoveondead
-    case nodispell
-    case noclearance
-    case nobanishingbuster
-    case nosave
-    case nosaveinfinite
-    case removeondamaged
-    case removeonrefresh
-    case removeonluxanima
-    case stopattacking
-    case stopcasting
-    case stopwalking
-    case bossresist
-    case mvpresist
-    case setstand
-    case failedmado
-    case debuff
-    case removeonchangemap
-    case removeonmapwarp
-    case removechemicalprotect
-    case overlapignorelevel
-    case sendoption
-    case ontouch
-    case unitmove
-    case nonplayer
-    case sendlook
-    case displaynpc
-    case requireweapon
-    case requireshield
-    case moblosetarget
-    case removeelementaloption
-    case supernoviceangel
-    case taekwonangel
-    case madocancel
-    case madoendcancel
-    case restartonmapwarp
-    case spreadeffect
-    case sendval1
-    case sendval2
-    case sendval3
-    case noforcedend
-    case nowarning
-    case removeonunequip
-    case removeonunequipweapon
-    case removeonunequiparmor
-    case removeonhermode
-    case requirenoweapon
-    case removefromhomonwarp
-    case removefromhomonmapwarp
-
-    public var rawValue: Int {
-        switch self {
-        case .none: 0
-        case .bleffect: 1
-        case .displaypc: 2
-        case .noclearbuff: 3
-        case .noremoveondead: 4
-        case .nodispell: 5
-        case .noclearance: 6
-        case .nobanishingbuster: 7
-        case .nosave: 8
-        case .nosaveinfinite: 9
-        case .removeondamaged: 10
-        case .removeonrefresh: 11
-        case .removeonluxanima: 12
-        case .stopattacking: 13
-        case .stopcasting: 14
-        case .stopwalking: 15
-        case .bossresist: 16
-        case .mvpresist: 17
-        case .setstand: 18
-        case .failedmado: 19
-        case .debuff: 20
-        case .removeonchangemap: 21
-        case .removeonmapwarp: 22
-        case .removechemicalprotect: 23
-        case .overlapignorelevel: 24
-        case .sendoption: 25
-        case .ontouch: 26
-        case .unitmove: 27
-        case .nonplayer: 28
-        case .sendlook: 29
-        case .displaynpc: 30
-        case .requireweapon: 31
-        case .requireshield: 32
-        case .moblosetarget: 33
-        case .removeelementaloption: 34
-        case .supernoviceangel: 35
-        case .taekwonangel: 36
-        case .madocancel: 37
-        case .madoendcancel: 38
-        case .restartonmapwarp: 39
-        case .spreadeffect: 40
-        case .sendval1: 41
-        case .sendval2: 42
-        case .sendval3: 43
-        case .noforcedend: 44
-        case .nowarning: 45
-        case .removeonunequip: 46
-        case .removeonunequipweapon: 47
-        case .removeonunequiparmor: 48
-        case .removeonhermode: 49
-        case .requirenoweapon: 50
-        case .removefromhomonwarp: 51
-        case .removefromhomonmapwarp: 52
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .none
-        case 1: self = .bleffect
-        case 2: self = .displaypc
-        case 3: self = .noclearbuff
-        case 4: self = .noremoveondead
-        case 5: self = .nodispell
-        case 6: self = .noclearance
-        case 7: self = .nobanishingbuster
-        case 8: self = .nosave
-        case 9: self = .nosaveinfinite
-        case 10: self = .removeondamaged
-        case 11: self = .removeonrefresh
-        case 12: self = .removeonluxanima
-        case 13: self = .stopattacking
-        case 14: self = .stopcasting
-        case 15: self = .stopwalking
-        case 16: self = .bossresist
-        case 17: self = .mvpresist
-        case 18: self = .setstand
-        case 19: self = .failedmado
-        case 20: self = .debuff
-        case 21: self = .removeonchangemap
-        case 22: self = .removeonmapwarp
-        case 23: self = .removechemicalprotect
-        case 24: self = .overlapignorelevel
-        case 25: self = .sendoption
-        case 26: self = .ontouch
-        case 27: self = .unitmove
-        case 28: self = .nonplayer
-        case 29: self = .sendlook
-        case 30: self = .displaynpc
-        case 31: self = .requireweapon
-        case 32: self = .requireshield
-        case 33: self = .moblosetarget
-        case 34: self = .removeelementaloption
-        case 35: self = .supernoviceangel
-        case 36: self = .taekwonangel
-        case 37: self = .madocancel
-        case 38: self = .madoendcancel
-        case 39: self = .restartonmapwarp
-        case 40: self = .spreadeffect
-        case 41: self = .sendval1
-        case 42: self = .sendval2
-        case 43: self = .sendval3
-        case 44: self = .noforcedend
-        case 45: self = .nowarning
-        case 46: self = .removeonunequip
-        case 47: self = .removeonunequipweapon
-        case 48: self = .removeonunequiparmor
-        case 49: self = .removeonhermode
-        case 50: self = .requirenoweapon
-        case 51: self = .removefromhomonwarp
-        case 52: self = .removefromhomonmapwarp
-        default: return nil
-        }
-    }
+public enum StatusChangeFlag: Int, CaseIterable, Sendable {
+    case none = 0
+    case bleffect = 1
+    case displaypc = 2
+    case noclearbuff = 3
+    case noremoveondead = 4
+    case nodispell = 5
+    case noclearance = 6
+    case nobanishingbuster = 7
+    case nosave = 8
+    case nosaveinfinite = 9
+    case removeondamaged = 10
+    case removeonrefresh = 11
+    case removeonluxanima = 12
+    case stopattacking = 13
+    case stopcasting = 14
+    case stopwalking = 15
+    case bossresist = 16
+    case mvpresist = 17
+    case setstand = 18
+    case failedmado = 19
+    case debuff = 20
+    case removeonchangemap = 21
+    case removeonmapwarp = 22
+    case removechemicalprotect = 23
+    case overlapignorelevel = 24
+    case sendoption = 25
+    case ontouch = 26
+    case unitmove = 27
+    case nonplayer = 28
+    case sendlook = 29
+    case displaynpc = 30
+    case requireweapon = 31
+    case requireshield = 32
+    case moblosetarget = 33
+    case removeelementaloption = 34
+    case supernoviceangel = 35
+    case taekwonangel = 36
+    case madocancel = 37
+    case madoendcancel = 38
+    case restartonmapwarp = 39
+    case spreadeffect = 40
+    case sendval1 = 41
+    case sendval2 = 42
+    case sendval3 = 43
+    case noforcedend = 44
+    case nowarning = 45
+    case removeonunequip = 46
+    case removeonunequipweapon = 47
+    case removeonunequiparmor = 48
+    case removeonhermode = 49
+    case requirenoweapon = 50
+    case removefromhomonwarp = 51
+    case removefromhomonmapwarp = 52
 }
 
-extension StatusChangeFlag: CodingKey, CodingKeyRepresentable, Decodable {
+extension StatusChangeFlag: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .none: "NONE"
+        case .bleffect: "BLEFFECT"
+        case .displaypc: "DISPLAYPC"
+        case .noclearbuff: "NOCLEARBUFF"
+        case .noremoveondead: "NOREMOVEONDEAD"
+        case .nodispell: "NODISPELL"
+        case .noclearance: "NOCLEARANCE"
+        case .nobanishingbuster: "NOBANISHINGBUSTER"
+        case .nosave: "NOSAVE"
+        case .nosaveinfinite: "NOSAVEINFINITE"
+        case .removeondamaged: "REMOVEONDAMAGED"
+        case .removeonrefresh: "REMOVEONREFRESH"
+        case .removeonluxanima: "REMOVEONLUXANIMA"
+        case .stopattacking: "STOPATTACKING"
+        case .stopcasting: "STOPCASTING"
+        case .stopwalking: "STOPWALKING"
+        case .bossresist: "BOSSRESIST"
+        case .mvpresist: "MVPRESIST"
+        case .setstand: "SETSTAND"
+        case .failedmado: "FAILEDMADO"
+        case .debuff: "DEBUFF"
+        case .removeonchangemap: "REMOVEONCHANGEMAP"
+        case .removeonmapwarp: "REMOVEONMAPWARP"
+        case .removechemicalprotect: "REMOVECHEMICALPROTECT"
+        case .overlapignorelevel: "OVERLAPIGNORELEVEL"
+        case .sendoption: "SENDOPTION"
+        case .ontouch: "ONTOUCH"
+        case .unitmove: "UNITMOVE"
+        case .nonplayer: "NONPLAYER"
+        case .sendlook: "SENDLOOK"
+        case .displaynpc: "DISPLAYNPC"
+        case .requireweapon: "REQUIREWEAPON"
+        case .requireshield: "REQUIRESHIELD"
+        case .moblosetarget: "MOBLOSETARGET"
+        case .removeelementaloption: "REMOVEELEMENTALOPTION"
+        case .supernoviceangel: "SUPERNOVICEANGEL"
+        case .taekwonangel: "TAEKWONANGEL"
+        case .madocancel: "MADOCANCEL"
+        case .madoendcancel: "MADOENDCANCEL"
+        case .restartonmapwarp: "RESTARTONMAPWARP"
+        case .spreadeffect: "SPREADEFFECT"
+        case .sendval1: "SENDVAL1"
+        case .sendval2: "SENDVAL2"
+        case .sendval3: "SENDVAL3"
+        case .noforcedend: "NOFORCEDEND"
+        case .nowarning: "NOWARNING"
+        case .removeonunequip: "REMOVEONUNEQUIP"
+        case .removeonunequipweapon: "REMOVEONUNEQUIPWEAPON"
+        case .removeonunequiparmor: "REMOVEONUNEQUIPARMOR"
+        case .removeonhermode: "REMOVEONHERMODE"
+        case .requirenoweapon: "REQUIRENOWEAPON"
+        case .removefromhomonwarp: "REMOVEFROMHOMONWARP"
+        case .removefromhomonmapwarp: "REMOVEFROMHOMONMAPWARP"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "NONE": self = .none
@@ -239,10 +180,26 @@ extension StatusChangeFlag: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension StatusChangeFlag: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension StatusChangeFlag: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

@@ -6,51 +6,35 @@
 //
 
 /// Converted from `e_race` in `map/map.hpp`.
-public enum Race: CaseIterable, RawRepresentable, Sendable {
-    case formless
-    case undead
-    case brute
-    case plant
-    case insect
-    case fish
-    case demon
-    case demihuman
-    case angel
-    case dragon
-
-    public var rawValue: Int {
-        switch self {
-        case .formless: 0
-        case .undead: 1
-        case .brute: 2
-        case .plant: 3
-        case .insect: 4
-        case .fish: 5
-        case .demon: 6
-        case .demihuman: 7
-        case .angel: 8
-        case .dragon: 9
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .formless
-        case 1: self = .undead
-        case 2: self = .brute
-        case 3: self = .plant
-        case 4: self = .insect
-        case 5: self = .fish
-        case 6: self = .demon
-        case 7: self = .demihuman
-        case 8: self = .angel
-        case 9: self = .dragon
-        default: return nil
-        }
-    }
+public enum Race: Int, CaseIterable, Sendable {
+    case formless = 0
+    case undead = 1
+    case brute = 2
+    case plant = 3
+    case insect = 4
+    case fish = 5
+    case demon = 6
+    case demihuman = 7
+    case angel = 8
+    case dragon = 9
 }
 
-extension Race: CodingKey, CodingKeyRepresentable, Decodable {
+extension Race: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .formless: "FORMLESS"
+        case .undead: "UNDEAD"
+        case .brute: "BRUTE"
+        case .plant: "PLANT"
+        case .insect: "INSECT"
+        case .fish: "FISH"
+        case .demon: "DEMON"
+        case .demihuman: "DEMIHUMAN"
+        case .angel: "ANGEL"
+        case .dragon: "DRAGON"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "FORMLESS": self = .formless
@@ -67,10 +51,26 @@ extension Race: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension Race: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension Race: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

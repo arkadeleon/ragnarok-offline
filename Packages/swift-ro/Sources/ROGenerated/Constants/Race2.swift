@@ -6,129 +6,87 @@
 //
 
 /// Converted from `e_race2` in `map/map.hpp`.
-public enum Race2: CaseIterable, RawRepresentable, Sendable {
-    case goblin
-    case kobold
-    case orc
-    case golem
-    case guardian
-    case ninja
-    case gvg
-    case battlefield
-    case treasure
-    case biolab
-    case manuk
-    case splendide
-    case scaraba
-    case ogh_atk_def
-    case ogh_hidden
-    case bio5_swordman_thief
-    case bio5_acolyte_merchant
-    case bio5_mage_archer
-    case bio5_mvp
-    case clocktower
-    case thanatos
-    case faceworm
-    case hearthunter
-    case rockridge
-    case werner_lab
-    case temple_demon
-    case illusion_vampire
-    case malangdo
-    case ep172alpha
-    case ep172beta
-    case ep172bath
-    case illusion_turtle
-    case rachel_sanctuary
-    case illusion_luanda
-    case illusion_frozen
-    case illusion_moonlight
-
-    public var rawValue: Int {
-        switch self {
-        case .goblin: 1
-        case .kobold: 2
-        case .orc: 3
-        case .golem: 4
-        case .guardian: 5
-        case .ninja: 6
-        case .gvg: 7
-        case .battlefield: 8
-        case .treasure: 9
-        case .biolab: 10
-        case .manuk: 11
-        case .splendide: 12
-        case .scaraba: 13
-        case .ogh_atk_def: 14
-        case .ogh_hidden: 15
-        case .bio5_swordman_thief: 16
-        case .bio5_acolyte_merchant: 17
-        case .bio5_mage_archer: 18
-        case .bio5_mvp: 19
-        case .clocktower: 20
-        case .thanatos: 21
-        case .faceworm: 22
-        case .hearthunter: 23
-        case .rockridge: 24
-        case .werner_lab: 25
-        case .temple_demon: 26
-        case .illusion_vampire: 27
-        case .malangdo: 28
-        case .ep172alpha: 29
-        case .ep172beta: 30
-        case .ep172bath: 31
-        case .illusion_turtle: 32
-        case .rachel_sanctuary: 33
-        case .illusion_luanda: 34
-        case .illusion_frozen: 35
-        case .illusion_moonlight: 36
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 1: self = .goblin
-        case 2: self = .kobold
-        case 3: self = .orc
-        case 4: self = .golem
-        case 5: self = .guardian
-        case 6: self = .ninja
-        case 7: self = .gvg
-        case 8: self = .battlefield
-        case 9: self = .treasure
-        case 10: self = .biolab
-        case 11: self = .manuk
-        case 12: self = .splendide
-        case 13: self = .scaraba
-        case 14: self = .ogh_atk_def
-        case 15: self = .ogh_hidden
-        case 16: self = .bio5_swordman_thief
-        case 17: self = .bio5_acolyte_merchant
-        case 18: self = .bio5_mage_archer
-        case 19: self = .bio5_mvp
-        case 20: self = .clocktower
-        case 21: self = .thanatos
-        case 22: self = .faceworm
-        case 23: self = .hearthunter
-        case 24: self = .rockridge
-        case 25: self = .werner_lab
-        case 26: self = .temple_demon
-        case 27: self = .illusion_vampire
-        case 28: self = .malangdo
-        case 29: self = .ep172alpha
-        case 30: self = .ep172beta
-        case 31: self = .ep172bath
-        case 32: self = .illusion_turtle
-        case 33: self = .rachel_sanctuary
-        case 34: self = .illusion_luanda
-        case 35: self = .illusion_frozen
-        case 36: self = .illusion_moonlight
-        default: return nil
-        }
-    }
+public enum Race2: Int, CaseIterable, Sendable {
+    case goblin = 1
+    case kobold = 2
+    case orc = 3
+    case golem = 4
+    case guardian = 5
+    case ninja = 6
+    case gvg = 7
+    case battlefield = 8
+    case treasure = 9
+    case biolab = 10
+    case manuk = 11
+    case splendide = 12
+    case scaraba = 13
+    case ogh_atk_def = 14
+    case ogh_hidden = 15
+    case bio5_swordman_thief = 16
+    case bio5_acolyte_merchant = 17
+    case bio5_mage_archer = 18
+    case bio5_mvp = 19
+    case clocktower = 20
+    case thanatos = 21
+    case faceworm = 22
+    case hearthunter = 23
+    case rockridge = 24
+    case werner_lab = 25
+    case temple_demon = 26
+    case illusion_vampire = 27
+    case malangdo = 28
+    case ep172alpha = 29
+    case ep172beta = 30
+    case ep172bath = 31
+    case illusion_turtle = 32
+    case rachel_sanctuary = 33
+    case illusion_luanda = 34
+    case illusion_frozen = 35
+    case illusion_moonlight = 36
 }
 
-extension Race2: CodingKey, CodingKeyRepresentable, Decodable {
+extension Race2: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .goblin: "GOBLIN"
+        case .kobold: "KOBOLD"
+        case .orc: "ORC"
+        case .golem: "GOLEM"
+        case .guardian: "GUARDIAN"
+        case .ninja: "NINJA"
+        case .gvg: "GVG"
+        case .battlefield: "BATTLEFIELD"
+        case .treasure: "TREASURE"
+        case .biolab: "BIOLAB"
+        case .manuk: "MANUK"
+        case .splendide: "SPLENDIDE"
+        case .scaraba: "SCARABA"
+        case .ogh_atk_def: "OGH_ATK_DEF"
+        case .ogh_hidden: "OGH_HIDDEN"
+        case .bio5_swordman_thief: "BIO5_SWORDMAN_THIEF"
+        case .bio5_acolyte_merchant: "BIO5_ACOLYTE_MERCHANT"
+        case .bio5_mage_archer: "BIO5_MAGE_ARCHER"
+        case .bio5_mvp: "BIO5_MVP"
+        case .clocktower: "CLOCKTOWER"
+        case .thanatos: "THANATOS"
+        case .faceworm: "FACEWORM"
+        case .hearthunter: "HEARTHUNTER"
+        case .rockridge: "ROCKRIDGE"
+        case .werner_lab: "WERNER_LAB"
+        case .temple_demon: "TEMPLE_DEMON"
+        case .illusion_vampire: "ILLUSION_VAMPIRE"
+        case .malangdo: "MALANGDO"
+        case .ep172alpha: "EP172ALPHA"
+        case .ep172beta: "EP172BETA"
+        case .ep172bath: "EP172BATH"
+        case .illusion_turtle: "ILLUSION_TURTLE"
+        case .rachel_sanctuary: "RACHEL_SANCTUARY"
+        case .illusion_luanda: "ILLUSION_LUANDA"
+        case .illusion_frozen: "ILLUSION_FROZEN"
+        case .illusion_moonlight: "ILLUSION_MOONLIGHT"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "GOBLIN": self = .goblin
@@ -171,10 +129,26 @@ extension Race2: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension Race2: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension Race2: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

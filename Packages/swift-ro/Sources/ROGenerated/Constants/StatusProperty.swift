@@ -6,913 +6,304 @@
 //
 
 /// Converted from `_sp` in `map/map.hpp`.
-public enum StatusProperty: CaseIterable, RawRepresentable, Sendable {
-    case speed
-    case baseexp
-    case jobexp
-    case karma
-    case manner
-    case hp
-    case maxhp
-    case sp
-    case maxsp
-    case statuspoint
-    case baselevel
-    case skillpoint
-    case str
-    case agi
-    case vit
-    case int
-    case dex
-    case luk
-    case _class
-    case zeny
-    case sex
-    case nextbaseexp
-    case nextjobexp
-    case weight
-    case maxweight
-    case ustr
-    case uagi
-    case uvit
-    case uint
-    case udex
-    case uluk
-    case atk1
-    case atk2
-    case matk1
-    case matk2
-    case def1
-    case def2
-    case mdef1
-    case mdef2
-    case hit
-    case flee1
-    case flee2
-    case critical
-    case aspd
-    case joblevel
-    case upper
-    case partner
-    case cart
-    case fame
-    case unbreakable
-    case cartinfo
-    case killedgid
-    case basejob
-    case baseclass
-    case killerrid
-    case killedrid
-    case sitting
-    case charmove
-    case charrename
-    case charfont
-    case bank_vault
-    case roulette_bronze
-    case roulette_silver
-    case roulette_gold
-    case cashpoints
-    case kafrapoints
-    case pcdiecounter
-    case cookmastery
-    case achievement_level
-    case mercflee
-    case merckills
-    case mercfaith
-    case pow
-    case sta
-    case wis
-    case spl
-    case con
-    case crt
-    case patk
-    case smatk
-    case res
-    case mres
-    case hplus
-    case crate
-    case traitpoint
-    case ap
-    case maxap
-    case upow
-    case usta
-    case uwis
-    case uspl
-    case ucon
-    case ucrt
-    case attackrange
-    case atkele
-    case defele
-    case castrate
-    case maxhprate
-    case maxsprate
-    case sprate
-    case addele
-    case addrace
-    case addsize
-    case subele
-    case subrace
-    case addeff
-    case reseff
-    case base_atk
-    case aspd_rate
-    case hp_recov_rate
-    case sp_recov_rate
-    case speed_rate
-    case critical_def
-    case near_atk_def
-    case long_atk_def
-    case double_rate
-    case double_add_rate
-    case skill_heal
-    case matk_rate
-    case ignore_def_ele
-    case ignore_def_race
-    case atk_rate
-    case speed_addrate
-    case sp_regen_rate
-    case magic_atk_def
-    case misc_atk_def
-    case ignore_mdef_ele
-    case ignore_mdef_race
-    case magic_addele
-    case magic_addrace
-    case magic_addsize
-    case perfect_hit_rate
-    case perfect_hit_add_rate
-    case critical_rate
-    case get_zeny_num
-    case add_get_zeny_num
-    case add_damage_class
-    case add_magic_damage_class
-    case add_def_monster
-    case add_mdef_monster
-    case add_monster_drop_item
-    case def_ratio_atk_ele
-    case def_ratio_atk_race
-    case unbreakable_garment
-    case hit_rate
-    case flee_rate
-    case flee2_rate
-    case def_rate
-    case def2_rate
-    case mdef_rate
-    case mdef2_rate
-    case splash_range
-    case splash_add_range
-    case autospell
-    case hp_drain_rate
-    case sp_drain_rate
-    case short_weapon_damage_return
-    case long_weapon_damage_return
-    case weapon_coma_ele
-    case weapon_coma_race
-    case addeff2
-    case break_weapon_rate
-    case break_armor_rate
-    case add_steal_rate
-    case magic_damage_return
-    case all_stats
-    case agi_vit
-    case agi_dex_str
-    case perfect_hide
-    case no_knockback
-    case classchange
-    case hp_drain_value
-    case sp_drain_value
-    case weapon_atk
-    case weapon_damage_rate
-    case delayrate
-    case hp_drain_value_race
-    case sp_drain_value_race
-    case ignore_mdef_race_rate
-    case ignore_def_race_rate
-    case skill_heal2
-    case addeff_onskill
-    case add_heal_rate
-    case add_heal2_rate
-    case equip_atk
-    case patk_rate
-    case smatk_rate
-    case res_rate
-    case mres_rate
-    case hplus_rate
-    case crate_rate
-    case all_trait_stats
-    case maxaprate
-    case restart_full_recover
-    case no_castcancel
-    case no_sizefix
-    case no_magic_damage
-    case no_weapon_damage
-    case no_gemstone
-    case no_castcancel2
-    case no_misc_damage
-    case unbreakable_weapon
-    case unbreakable_armor
-    case unbreakable_helm
-    case unbreakable_shield
-    case long_atk_rate
-    case crit_atk_rate
-    case critical_addrace
-    case no_regen
-    case addeff_whenhit
-    case autospell_whenhit
-    case skill_atk
-    case unstripable
-    case autospell_onskill
-    case sp_gain_value
-    case hp_regen_rate
-    case hp_loss_rate
-    case addrace2
-    case hp_gain_value
-    case subsize
-    case hp_drain_value_class
-    case add_item_heal_rate
-    case sp_drain_value_class
-    case exp_addrace
-    case sp_gain_race
-    case subrace2
-    case unbreakable_shoes
-    case unstripable_weapon
-    case unstripable_armor
-    case unstripable_helm
-    case unstripable_shield
-    case intravision
-    case add_monster_drop_itemgroup
-    case sp_loss_rate
-    case add_skill_blow
-    case sp_vanish_rate
-    case magic_sp_gain_value
-    case magic_hp_gain_value
-    case add_monster_id_drop_item
-    case ematk
-    case coma_class
-    case coma_race
-    case skill_use_sp_rate
-    case skill_cooldown
-    case skill_fixedcast
-    case skill_variablecast
-    case fixcastrate
-    case varcastrate
-    case skill_use_sp
-    case magic_atk_ele
-    case add_fixedcast
-    case add_variablecast
-    case set_def_race
-    case set_mdef_race
-    case hp_vanish_rate
-    case ignore_def_class
-    case def_ratio_atk_class
-    case addclass
-    case subclass
-    case magic_addclass
-    case weapon_coma_class
-    case ignore_mdef_class_rate
-    case exp_addclass
-    case add_class_drop_item
-    case add_class_drop_itemgroup
-    case addmaxweight
-    case add_itemgroup_heal_rate
-    case hp_vanish_race_rate
-    case sp_vanish_race_rate
-    case absorb_dmg_maxhp
-    case sub_skill
-    case subdef_ele
-    case state_norecover_race
-    case critical_rangeatk
-    case magic_addrace2
-    case ignore_mdef_race2_rate
-    case weapon_atk_rate
-    case weapon_matk_rate
-    case drop_addrace
-    case drop_addclass
-    case no_mado_fuel
-    case ignore_def_class_rate
-    case regen_percent_hp
-    case regen_percent_sp
-    case skill_delay
-    case no_walk_delay
-    case long_sp_gain_value
-    case long_hp_gain_value
-    case short_atk_rate
-    case magic_subsize
-    case crit_def_rate
-    case magic_subdef_ele
-    case reduce_damage_return
-    case add_item_spheal_rate
-    case add_itemgroup_spheal_rate
-    case weapon_subsize
-    case absorb_dmg_maxhp2
-    case sp_ignore_res_race_rate
-    case sp_ignore_mres_race_rate
-
-    public var rawValue: Int {
-        switch self {
-        case .speed: 0
-        case .baseexp: 1
-        case .jobexp: 2
-        case .karma: 3
-        case .manner: 4
-        case .hp: 5
-        case .maxhp: 6
-        case .sp: 7
-        case .maxsp: 8
-        case .statuspoint: 9
-        case .baselevel: 11
-        case .skillpoint: 12
-        case .str: 13
-        case .agi: 14
-        case .vit: 15
-        case .int: 16
-        case .dex: 17
-        case .luk: 18
-        case ._class: 19
-        case .zeny: 20
-        case .sex: 21
-        case .nextbaseexp: 22
-        case .nextjobexp: 23
-        case .weight: 24
-        case .maxweight: 25
-        case .ustr: 32
-        case .uagi: 33
-        case .uvit: 34
-        case .uint: 35
-        case .udex: 36
-        case .uluk: 37
-        case .atk1: 41
-        case .atk2: 42
-        case .matk1: 43
-        case .matk2: 44
-        case .def1: 45
-        case .def2: 46
-        case .mdef1: 47
-        case .mdef2: 48
-        case .hit: 49
-        case .flee1: 50
-        case .flee2: 51
-        case .critical: 52
-        case .aspd: 53
-        case .joblevel: 55
-        case .upper: 56
-        case .partner: 57
-        case .cart: 58
-        case .fame: 59
-        case .unbreakable: 60
-        case .cartinfo: 99
-        case .killedgid: 118
-        case .basejob: 119
-        case .baseclass: 120
-        case .killerrid: 121
-        case .killedrid: 122
-        case .sitting: 123
-        case .charmove: 124
-        case .charrename: 125
-        case .charfont: 126
-        case .bank_vault: 127
-        case .roulette_bronze: 128
-        case .roulette_silver: 129
-        case .roulette_gold: 130
-        case .cashpoints: 131
-        case .kafrapoints: 132
-        case .pcdiecounter: 133
-        case .cookmastery: 134
-        case .achievement_level: 135
-        case .mercflee: 165
-        case .merckills: 189
-        case .mercfaith: 190
-        case .pow: 219
-        case .sta: 220
-        case .wis: 221
-        case .spl: 222
-        case .con: 223
-        case .crt: 224
-        case .patk: 225
-        case .smatk: 226
-        case .res: 227
-        case .mres: 228
-        case .hplus: 229
-        case .crate: 230
-        case .traitpoint: 231
-        case .ap: 232
-        case .maxap: 233
-        case .upow: 247
-        case .usta: 248
-        case .uwis: 249
-        case .uspl: 250
-        case .ucon: 251
-        case .ucrt: 252
-        case .attackrange: 1000
-        case .atkele: 1001
-        case .defele: 1002
-        case .castrate: 1003
-        case .maxhprate: 1004
-        case .maxsprate: 1005
-        case .sprate: 1006
-        case .addele: 1007
-        case .addrace: 1008
-        case .addsize: 1009
-        case .subele: 1010
-        case .subrace: 1011
-        case .addeff: 1012
-        case .reseff: 1013
-        case .base_atk: 1014
-        case .aspd_rate: 1015
-        case .hp_recov_rate: 1016
-        case .sp_recov_rate: 1017
-        case .speed_rate: 1018
-        case .critical_def: 1019
-        case .near_atk_def: 1020
-        case .long_atk_def: 1021
-        case .double_rate: 1022
-        case .double_add_rate: 1023
-        case .skill_heal: 1024
-        case .matk_rate: 1025
-        case .ignore_def_ele: 1026
-        case .ignore_def_race: 1027
-        case .atk_rate: 1028
-        case .speed_addrate: 1029
-        case .sp_regen_rate: 1030
-        case .magic_atk_def: 1031
-        case .misc_atk_def: 1032
-        case .ignore_mdef_ele: 1033
-        case .ignore_mdef_race: 1034
-        case .magic_addele: 1035
-        case .magic_addrace: 1036
-        case .magic_addsize: 1037
-        case .perfect_hit_rate: 1038
-        case .perfect_hit_add_rate: 1039
-        case .critical_rate: 1040
-        case .get_zeny_num: 1041
-        case .add_get_zeny_num: 1042
-        case .add_damage_class: 1043
-        case .add_magic_damage_class: 1044
-        case .add_def_monster: 1045
-        case .add_mdef_monster: 1046
-        case .add_monster_drop_item: 1047
-        case .def_ratio_atk_ele: 1048
-        case .def_ratio_atk_race: 1049
-        case .unbreakable_garment: 1050
-        case .hit_rate: 1051
-        case .flee_rate: 1052
-        case .flee2_rate: 1053
-        case .def_rate: 1054
-        case .def2_rate: 1055
-        case .mdef_rate: 1056
-        case .mdef2_rate: 1057
-        case .splash_range: 1058
-        case .splash_add_range: 1059
-        case .autospell: 1060
-        case .hp_drain_rate: 1061
-        case .sp_drain_rate: 1062
-        case .short_weapon_damage_return: 1063
-        case .long_weapon_damage_return: 1064
-        case .weapon_coma_ele: 1065
-        case .weapon_coma_race: 1066
-        case .addeff2: 1067
-        case .break_weapon_rate: 1068
-        case .break_armor_rate: 1069
-        case .add_steal_rate: 1070
-        case .magic_damage_return: 1071
-        case .all_stats: 1073
-        case .agi_vit: 1074
-        case .agi_dex_str: 1075
-        case .perfect_hide: 1076
-        case .no_knockback: 1077
-        case .classchange: 1078
-        case .hp_drain_value: 1079
-        case .sp_drain_value: 1080
-        case .weapon_atk: 1081
-        case .weapon_damage_rate: 1082
-        case .delayrate: 1083
-        case .hp_drain_value_race: 1084
-        case .sp_drain_value_race: 1085
-        case .ignore_mdef_race_rate: 1086
-        case .ignore_def_race_rate: 1087
-        case .skill_heal2: 1088
-        case .addeff_onskill: 1089
-        case .add_heal_rate: 1090
-        case .add_heal2_rate: 1091
-        case .equip_atk: 1092
-        case .patk_rate: 1093
-        case .smatk_rate: 1094
-        case .res_rate: 1095
-        case .mres_rate: 1096
-        case .hplus_rate: 1097
-        case .crate_rate: 1098
-        case .all_trait_stats: 1099
-        case .maxaprate: 1100
-        case .restart_full_recover: 2000
-        case .no_castcancel: 2001
-        case .no_sizefix: 2002
-        case .no_magic_damage: 2003
-        case .no_weapon_damage: 2004
-        case .no_gemstone: 2005
-        case .no_castcancel2: 2006
-        case .no_misc_damage: 2007
-        case .unbreakable_weapon: 2008
-        case .unbreakable_armor: 2009
-        case .unbreakable_helm: 2010
-        case .unbreakable_shield: 2011
-        case .long_atk_rate: 2012
-        case .crit_atk_rate: 2013
-        case .critical_addrace: 2014
-        case .no_regen: 2015
-        case .addeff_whenhit: 2016
-        case .autospell_whenhit: 2017
-        case .skill_atk: 2018
-        case .unstripable: 2019
-        case .autospell_onskill: 2020
-        case .sp_gain_value: 2021
-        case .hp_regen_rate: 2022
-        case .hp_loss_rate: 2023
-        case .addrace2: 2024
-        case .hp_gain_value: 2025
-        case .subsize: 2026
-        case .hp_drain_value_class: 2027
-        case .add_item_heal_rate: 2028
-        case .sp_drain_value_class: 2029
-        case .exp_addrace: 2030
-        case .sp_gain_race: 2031
-        case .subrace2: 2032
-        case .unbreakable_shoes: 2033
-        case .unstripable_weapon: 2034
-        case .unstripable_armor: 2035
-        case .unstripable_helm: 2036
-        case .unstripable_shield: 2037
-        case .intravision: 2038
-        case .add_monster_drop_itemgroup: 2039
-        case .sp_loss_rate: 2040
-        case .add_skill_blow: 2041
-        case .sp_vanish_rate: 2042
-        case .magic_sp_gain_value: 2043
-        case .magic_hp_gain_value: 2044
-        case .add_monster_id_drop_item: 2045
-        case .ematk: 2046
-        case .coma_class: 2047
-        case .coma_race: 2048
-        case .skill_use_sp_rate: 2049
-        case .skill_cooldown: 2050
-        case .skill_fixedcast: 2051
-        case .skill_variablecast: 2052
-        case .fixcastrate: 2053
-        case .varcastrate: 2054
-        case .skill_use_sp: 2055
-        case .magic_atk_ele: 2056
-        case .add_fixedcast: 2057
-        case .add_variablecast: 2058
-        case .set_def_race: 2059
-        case .set_mdef_race: 2060
-        case .hp_vanish_rate: 2061
-        case .ignore_def_class: 2062
-        case .def_ratio_atk_class: 2063
-        case .addclass: 2064
-        case .subclass: 2065
-        case .magic_addclass: 2066
-        case .weapon_coma_class: 2067
-        case .ignore_mdef_class_rate: 2068
-        case .exp_addclass: 2069
-        case .add_class_drop_item: 2070
-        case .add_class_drop_itemgroup: 2071
-        case .addmaxweight: 2072
-        case .add_itemgroup_heal_rate: 2073
-        case .hp_vanish_race_rate: 2074
-        case .sp_vanish_race_rate: 2075
-        case .absorb_dmg_maxhp: 2076
-        case .sub_skill: 2077
-        case .subdef_ele: 2078
-        case .state_norecover_race: 2079
-        case .critical_rangeatk: 2080
-        case .magic_addrace2: 2081
-        case .ignore_mdef_race2_rate: 2082
-        case .weapon_atk_rate: 2083
-        case .weapon_matk_rate: 2084
-        case .drop_addrace: 2085
-        case .drop_addclass: 2086
-        case .no_mado_fuel: 2087
-        case .ignore_def_class_rate: 2088
-        case .regen_percent_hp: 2089
-        case .regen_percent_sp: 2090
-        case .skill_delay: 2091
-        case .no_walk_delay: 2092
-        case .long_sp_gain_value: 2093
-        case .long_hp_gain_value: 2094
-        case .short_atk_rate: 2095
-        case .magic_subsize: 2096
-        case .crit_def_rate: 2097
-        case .magic_subdef_ele: 2098
-        case .reduce_damage_return: 2099
-        case .add_item_spheal_rate: 2100
-        case .add_itemgroup_spheal_rate: 2101
-        case .weapon_subsize: 2102
-        case .absorb_dmg_maxhp2: 2103
-        case .sp_ignore_res_race_rate: 2104
-        case .sp_ignore_mres_race_rate: 2105
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .speed
-        case 1: self = .baseexp
-        case 2: self = .jobexp
-        case 3: self = .karma
-        case 4: self = .manner
-        case 5: self = .hp
-        case 6: self = .maxhp
-        case 7: self = .sp
-        case 8: self = .maxsp
-        case 9: self = .statuspoint
-        case 11: self = .baselevel
-        case 12: self = .skillpoint
-        case 13: self = .str
-        case 14: self = .agi
-        case 15: self = .vit
-        case 16: self = .int
-        case 17: self = .dex
-        case 18: self = .luk
-        case 19: self = ._class
-        case 20: self = .zeny
-        case 21: self = .sex
-        case 22: self = .nextbaseexp
-        case 23: self = .nextjobexp
-        case 24: self = .weight
-        case 25: self = .maxweight
-        case 32: self = .ustr
-        case 33: self = .uagi
-        case 34: self = .uvit
-        case 35: self = .uint
-        case 36: self = .udex
-        case 37: self = .uluk
-        case 41: self = .atk1
-        case 42: self = .atk2
-        case 43: self = .matk1
-        case 44: self = .matk2
-        case 45: self = .def1
-        case 46: self = .def2
-        case 47: self = .mdef1
-        case 48: self = .mdef2
-        case 49: self = .hit
-        case 50: self = .flee1
-        case 51: self = .flee2
-        case 52: self = .critical
-        case 53: self = .aspd
-        case 55: self = .joblevel
-        case 56: self = .upper
-        case 57: self = .partner
-        case 58: self = .cart
-        case 59: self = .fame
-        case 60: self = .unbreakable
-        case 99: self = .cartinfo
-        case 118: self = .killedgid
-        case 119: self = .basejob
-        case 120: self = .baseclass
-        case 121: self = .killerrid
-        case 122: self = .killedrid
-        case 123: self = .sitting
-        case 124: self = .charmove
-        case 125: self = .charrename
-        case 126: self = .charfont
-        case 127: self = .bank_vault
-        case 128: self = .roulette_bronze
-        case 129: self = .roulette_silver
-        case 130: self = .roulette_gold
-        case 131: self = .cashpoints
-        case 132: self = .kafrapoints
-        case 133: self = .pcdiecounter
-        case 134: self = .cookmastery
-        case 135: self = .achievement_level
-        case 165: self = .mercflee
-        case 189: self = .merckills
-        case 190: self = .mercfaith
-        case 219: self = .pow
-        case 220: self = .sta
-        case 221: self = .wis
-        case 222: self = .spl
-        case 223: self = .con
-        case 224: self = .crt
-        case 225: self = .patk
-        case 226: self = .smatk
-        case 227: self = .res
-        case 228: self = .mres
-        case 229: self = .hplus
-        case 230: self = .crate
-        case 231: self = .traitpoint
-        case 232: self = .ap
-        case 233: self = .maxap
-        case 247: self = .upow
-        case 248: self = .usta
-        case 249: self = .uwis
-        case 250: self = .uspl
-        case 251: self = .ucon
-        case 252: self = .ucrt
-        case 1000: self = .attackrange
-        case 1001: self = .atkele
-        case 1002: self = .defele
-        case 1003: self = .castrate
-        case 1004: self = .maxhprate
-        case 1005: self = .maxsprate
-        case 1006: self = .sprate
-        case 1007: self = .addele
-        case 1008: self = .addrace
-        case 1009: self = .addsize
-        case 1010: self = .subele
-        case 1011: self = .subrace
-        case 1012: self = .addeff
-        case 1013: self = .reseff
-        case 1014: self = .base_atk
-        case 1015: self = .aspd_rate
-        case 1016: self = .hp_recov_rate
-        case 1017: self = .sp_recov_rate
-        case 1018: self = .speed_rate
-        case 1019: self = .critical_def
-        case 1020: self = .near_atk_def
-        case 1021: self = .long_atk_def
-        case 1022: self = .double_rate
-        case 1023: self = .double_add_rate
-        case 1024: self = .skill_heal
-        case 1025: self = .matk_rate
-        case 1026: self = .ignore_def_ele
-        case 1027: self = .ignore_def_race
-        case 1028: self = .atk_rate
-        case 1029: self = .speed_addrate
-        case 1030: self = .sp_regen_rate
-        case 1031: self = .magic_atk_def
-        case 1032: self = .misc_atk_def
-        case 1033: self = .ignore_mdef_ele
-        case 1034: self = .ignore_mdef_race
-        case 1035: self = .magic_addele
-        case 1036: self = .magic_addrace
-        case 1037: self = .magic_addsize
-        case 1038: self = .perfect_hit_rate
-        case 1039: self = .perfect_hit_add_rate
-        case 1040: self = .critical_rate
-        case 1041: self = .get_zeny_num
-        case 1042: self = .add_get_zeny_num
-        case 1043: self = .add_damage_class
-        case 1044: self = .add_magic_damage_class
-        case 1045: self = .add_def_monster
-        case 1046: self = .add_mdef_monster
-        case 1047: self = .add_monster_drop_item
-        case 1048: self = .def_ratio_atk_ele
-        case 1049: self = .def_ratio_atk_race
-        case 1050: self = .unbreakable_garment
-        case 1051: self = .hit_rate
-        case 1052: self = .flee_rate
-        case 1053: self = .flee2_rate
-        case 1054: self = .def_rate
-        case 1055: self = .def2_rate
-        case 1056: self = .mdef_rate
-        case 1057: self = .mdef2_rate
-        case 1058: self = .splash_range
-        case 1059: self = .splash_add_range
-        case 1060: self = .autospell
-        case 1061: self = .hp_drain_rate
-        case 1062: self = .sp_drain_rate
-        case 1063: self = .short_weapon_damage_return
-        case 1064: self = .long_weapon_damage_return
-        case 1065: self = .weapon_coma_ele
-        case 1066: self = .weapon_coma_race
-        case 1067: self = .addeff2
-        case 1068: self = .break_weapon_rate
-        case 1069: self = .break_armor_rate
-        case 1070: self = .add_steal_rate
-        case 1071: self = .magic_damage_return
-        case 1073: self = .all_stats
-        case 1074: self = .agi_vit
-        case 1075: self = .agi_dex_str
-        case 1076: self = .perfect_hide
-        case 1077: self = .no_knockback
-        case 1078: self = .classchange
-        case 1079: self = .hp_drain_value
-        case 1080: self = .sp_drain_value
-        case 1081: self = .weapon_atk
-        case 1082: self = .weapon_damage_rate
-        case 1083: self = .delayrate
-        case 1084: self = .hp_drain_value_race
-        case 1085: self = .sp_drain_value_race
-        case 1086: self = .ignore_mdef_race_rate
-        case 1087: self = .ignore_def_race_rate
-        case 1088: self = .skill_heal2
-        case 1089: self = .addeff_onskill
-        case 1090: self = .add_heal_rate
-        case 1091: self = .add_heal2_rate
-        case 1092: self = .equip_atk
-        case 1093: self = .patk_rate
-        case 1094: self = .smatk_rate
-        case 1095: self = .res_rate
-        case 1096: self = .mres_rate
-        case 1097: self = .hplus_rate
-        case 1098: self = .crate_rate
-        case 1099: self = .all_trait_stats
-        case 1100: self = .maxaprate
-        case 2000: self = .restart_full_recover
-        case 2001: self = .no_castcancel
-        case 2002: self = .no_sizefix
-        case 2003: self = .no_magic_damage
-        case 2004: self = .no_weapon_damage
-        case 2005: self = .no_gemstone
-        case 2006: self = .no_castcancel2
-        case 2007: self = .no_misc_damage
-        case 2008: self = .unbreakable_weapon
-        case 2009: self = .unbreakable_armor
-        case 2010: self = .unbreakable_helm
-        case 2011: self = .unbreakable_shield
-        case 2012: self = .long_atk_rate
-        case 2013: self = .crit_atk_rate
-        case 2014: self = .critical_addrace
-        case 2015: self = .no_regen
-        case 2016: self = .addeff_whenhit
-        case 2017: self = .autospell_whenhit
-        case 2018: self = .skill_atk
-        case 2019: self = .unstripable
-        case 2020: self = .autospell_onskill
-        case 2021: self = .sp_gain_value
-        case 2022: self = .hp_regen_rate
-        case 2023: self = .hp_loss_rate
-        case 2024: self = .addrace2
-        case 2025: self = .hp_gain_value
-        case 2026: self = .subsize
-        case 2027: self = .hp_drain_value_class
-        case 2028: self = .add_item_heal_rate
-        case 2029: self = .sp_drain_value_class
-        case 2030: self = .exp_addrace
-        case 2031: self = .sp_gain_race
-        case 2032: self = .subrace2
-        case 2033: self = .unbreakable_shoes
-        case 2034: self = .unstripable_weapon
-        case 2035: self = .unstripable_armor
-        case 2036: self = .unstripable_helm
-        case 2037: self = .unstripable_shield
-        case 2038: self = .intravision
-        case 2039: self = .add_monster_drop_itemgroup
-        case 2040: self = .sp_loss_rate
-        case 2041: self = .add_skill_blow
-        case 2042: self = .sp_vanish_rate
-        case 2043: self = .magic_sp_gain_value
-        case 2044: self = .magic_hp_gain_value
-        case 2045: self = .add_monster_id_drop_item
-        case 2046: self = .ematk
-        case 2047: self = .coma_class
-        case 2048: self = .coma_race
-        case 2049: self = .skill_use_sp_rate
-        case 2050: self = .skill_cooldown
-        case 2051: self = .skill_fixedcast
-        case 2052: self = .skill_variablecast
-        case 2053: self = .fixcastrate
-        case 2054: self = .varcastrate
-        case 2055: self = .skill_use_sp
-        case 2056: self = .magic_atk_ele
-        case 2057: self = .add_fixedcast
-        case 2058: self = .add_variablecast
-        case 2059: self = .set_def_race
-        case 2060: self = .set_mdef_race
-        case 2061: self = .hp_vanish_rate
-        case 2062: self = .ignore_def_class
-        case 2063: self = .def_ratio_atk_class
-        case 2064: self = .addclass
-        case 2065: self = .subclass
-        case 2066: self = .magic_addclass
-        case 2067: self = .weapon_coma_class
-        case 2068: self = .ignore_mdef_class_rate
-        case 2069: self = .exp_addclass
-        case 2070: self = .add_class_drop_item
-        case 2071: self = .add_class_drop_itemgroup
-        case 2072: self = .addmaxweight
-        case 2073: self = .add_itemgroup_heal_rate
-        case 2074: self = .hp_vanish_race_rate
-        case 2075: self = .sp_vanish_race_rate
-        case 2076: self = .absorb_dmg_maxhp
-        case 2077: self = .sub_skill
-        case 2078: self = .subdef_ele
-        case 2079: self = .state_norecover_race
-        case 2080: self = .critical_rangeatk
-        case 2081: self = .magic_addrace2
-        case 2082: self = .ignore_mdef_race2_rate
-        case 2083: self = .weapon_atk_rate
-        case 2084: self = .weapon_matk_rate
-        case 2085: self = .drop_addrace
-        case 2086: self = .drop_addclass
-        case 2087: self = .no_mado_fuel
-        case 2088: self = .ignore_def_class_rate
-        case 2089: self = .regen_percent_hp
-        case 2090: self = .regen_percent_sp
-        case 2091: self = .skill_delay
-        case 2092: self = .no_walk_delay
-        case 2093: self = .long_sp_gain_value
-        case 2094: self = .long_hp_gain_value
-        case 2095: self = .short_atk_rate
-        case 2096: self = .magic_subsize
-        case 2097: self = .crit_def_rate
-        case 2098: self = .magic_subdef_ele
-        case 2099: self = .reduce_damage_return
-        case 2100: self = .add_item_spheal_rate
-        case 2101: self = .add_itemgroup_spheal_rate
-        case 2102: self = .weapon_subsize
-        case 2103: self = .absorb_dmg_maxhp2
-        case 2104: self = .sp_ignore_res_race_rate
-        case 2105: self = .sp_ignore_mres_race_rate
-        default: return nil
-        }
-    }
+public enum StatusProperty: Int, CaseIterable, Sendable {
+    case speed = 0
+    case baseexp = 1
+    case jobexp = 2
+    case karma = 3
+    case manner = 4
+    case hp = 5
+    case maxhp = 6
+    case sp = 7
+    case maxsp = 8
+    case statuspoint = 9
+    case baselevel = 11
+    case skillpoint = 12
+    case str = 13
+    case agi = 14
+    case vit = 15
+    case int = 16
+    case dex = 17
+    case luk = 18
+    case _class = 19
+    case zeny = 20
+    case sex = 21
+    case nextbaseexp = 22
+    case nextjobexp = 23
+    case weight = 24
+    case maxweight = 25
+    case ustr = 32
+    case uagi = 33
+    case uvit = 34
+    case uint = 35
+    case udex = 36
+    case uluk = 37
+    case atk1 = 41
+    case atk2 = 42
+    case matk1 = 43
+    case matk2 = 44
+    case def1 = 45
+    case def2 = 46
+    case mdef1 = 47
+    case mdef2 = 48
+    case hit = 49
+    case flee1 = 50
+    case flee2 = 51
+    case critical = 52
+    case aspd = 53
+    case joblevel = 55
+    case upper = 56
+    case partner = 57
+    case cart = 58
+    case fame = 59
+    case unbreakable = 60
+    case cartinfo = 99
+    case killedgid = 118
+    case basejob = 119
+    case baseclass = 120
+    case killerrid = 121
+    case killedrid = 122
+    case sitting = 123
+    case charmove = 124
+    case charrename = 125
+    case charfont = 126
+    case bank_vault = 127
+    case roulette_bronze = 128
+    case roulette_silver = 129
+    case roulette_gold = 130
+    case cashpoints = 131
+    case kafrapoints = 132
+    case pcdiecounter = 133
+    case cookmastery = 134
+    case achievement_level = 135
+    case mercflee = 165
+    case merckills = 189
+    case mercfaith = 190
+    case pow = 219
+    case sta = 220
+    case wis = 221
+    case spl = 222
+    case con = 223
+    case crt = 224
+    case patk = 225
+    case smatk = 226
+    case res = 227
+    case mres = 228
+    case hplus = 229
+    case crate = 230
+    case traitpoint = 231
+    case ap = 232
+    case maxap = 233
+    case upow = 247
+    case usta = 248
+    case uwis = 249
+    case uspl = 250
+    case ucon = 251
+    case ucrt = 252
+    case attackrange = 1000
+    case atkele = 1001
+    case defele = 1002
+    case castrate = 1003
+    case maxhprate = 1004
+    case maxsprate = 1005
+    case sprate = 1006
+    case addele = 1007
+    case addrace = 1008
+    case addsize = 1009
+    case subele = 1010
+    case subrace = 1011
+    case addeff = 1012
+    case reseff = 1013
+    case base_atk = 1014
+    case aspd_rate = 1015
+    case hp_recov_rate = 1016
+    case sp_recov_rate = 1017
+    case speed_rate = 1018
+    case critical_def = 1019
+    case near_atk_def = 1020
+    case long_atk_def = 1021
+    case double_rate = 1022
+    case double_add_rate = 1023
+    case skill_heal = 1024
+    case matk_rate = 1025
+    case ignore_def_ele = 1026
+    case ignore_def_race = 1027
+    case atk_rate = 1028
+    case speed_addrate = 1029
+    case sp_regen_rate = 1030
+    case magic_atk_def = 1031
+    case misc_atk_def = 1032
+    case ignore_mdef_ele = 1033
+    case ignore_mdef_race = 1034
+    case magic_addele = 1035
+    case magic_addrace = 1036
+    case magic_addsize = 1037
+    case perfect_hit_rate = 1038
+    case perfect_hit_add_rate = 1039
+    case critical_rate = 1040
+    case get_zeny_num = 1041
+    case add_get_zeny_num = 1042
+    case add_damage_class = 1043
+    case add_magic_damage_class = 1044
+    case add_def_monster = 1045
+    case add_mdef_monster = 1046
+    case add_monster_drop_item = 1047
+    case def_ratio_atk_ele = 1048
+    case def_ratio_atk_race = 1049
+    case unbreakable_garment = 1050
+    case hit_rate = 1051
+    case flee_rate = 1052
+    case flee2_rate = 1053
+    case def_rate = 1054
+    case def2_rate = 1055
+    case mdef_rate = 1056
+    case mdef2_rate = 1057
+    case splash_range = 1058
+    case splash_add_range = 1059
+    case autospell = 1060
+    case hp_drain_rate = 1061
+    case sp_drain_rate = 1062
+    case short_weapon_damage_return = 1063
+    case long_weapon_damage_return = 1064
+    case weapon_coma_ele = 1065
+    case weapon_coma_race = 1066
+    case addeff2 = 1067
+    case break_weapon_rate = 1068
+    case break_armor_rate = 1069
+    case add_steal_rate = 1070
+    case magic_damage_return = 1071
+    case all_stats = 1073
+    case agi_vit = 1074
+    case agi_dex_str = 1075
+    case perfect_hide = 1076
+    case no_knockback = 1077
+    case classchange = 1078
+    case hp_drain_value = 1079
+    case sp_drain_value = 1080
+    case weapon_atk = 1081
+    case weapon_damage_rate = 1082
+    case delayrate = 1083
+    case hp_drain_value_race = 1084
+    case sp_drain_value_race = 1085
+    case ignore_mdef_race_rate = 1086
+    case ignore_def_race_rate = 1087
+    case skill_heal2 = 1088
+    case addeff_onskill = 1089
+    case add_heal_rate = 1090
+    case add_heal2_rate = 1091
+    case equip_atk = 1092
+    case patk_rate = 1093
+    case smatk_rate = 1094
+    case res_rate = 1095
+    case mres_rate = 1096
+    case hplus_rate = 1097
+    case crate_rate = 1098
+    case all_trait_stats = 1099
+    case maxaprate = 1100
+    case restart_full_recover = 2000
+    case no_castcancel = 2001
+    case no_sizefix = 2002
+    case no_magic_damage = 2003
+    case no_weapon_damage = 2004
+    case no_gemstone = 2005
+    case no_castcancel2 = 2006
+    case no_misc_damage = 2007
+    case unbreakable_weapon = 2008
+    case unbreakable_armor = 2009
+    case unbreakable_helm = 2010
+    case unbreakable_shield = 2011
+    case long_atk_rate = 2012
+    case crit_atk_rate = 2013
+    case critical_addrace = 2014
+    case no_regen = 2015
+    case addeff_whenhit = 2016
+    case autospell_whenhit = 2017
+    case skill_atk = 2018
+    case unstripable = 2019
+    case autospell_onskill = 2020
+    case sp_gain_value = 2021
+    case hp_regen_rate = 2022
+    case hp_loss_rate = 2023
+    case addrace2 = 2024
+    case hp_gain_value = 2025
+    case subsize = 2026
+    case hp_drain_value_class = 2027
+    case add_item_heal_rate = 2028
+    case sp_drain_value_class = 2029
+    case exp_addrace = 2030
+    case sp_gain_race = 2031
+    case subrace2 = 2032
+    case unbreakable_shoes = 2033
+    case unstripable_weapon = 2034
+    case unstripable_armor = 2035
+    case unstripable_helm = 2036
+    case unstripable_shield = 2037
+    case intravision = 2038
+    case add_monster_drop_itemgroup = 2039
+    case sp_loss_rate = 2040
+    case add_skill_blow = 2041
+    case sp_vanish_rate = 2042
+    case magic_sp_gain_value = 2043
+    case magic_hp_gain_value = 2044
+    case add_monster_id_drop_item = 2045
+    case ematk = 2046
+    case coma_class = 2047
+    case coma_race = 2048
+    case skill_use_sp_rate = 2049
+    case skill_cooldown = 2050
+    case skill_fixedcast = 2051
+    case skill_variablecast = 2052
+    case fixcastrate = 2053
+    case varcastrate = 2054
+    case skill_use_sp = 2055
+    case magic_atk_ele = 2056
+    case add_fixedcast = 2057
+    case add_variablecast = 2058
+    case set_def_race = 2059
+    case set_mdef_race = 2060
+    case hp_vanish_rate = 2061
+    case ignore_def_class = 2062
+    case def_ratio_atk_class = 2063
+    case addclass = 2064
+    case subclass = 2065
+    case magic_addclass = 2066
+    case weapon_coma_class = 2067
+    case ignore_mdef_class_rate = 2068
+    case exp_addclass = 2069
+    case add_class_drop_item = 2070
+    case add_class_drop_itemgroup = 2071
+    case addmaxweight = 2072
+    case add_itemgroup_heal_rate = 2073
+    case hp_vanish_race_rate = 2074
+    case sp_vanish_race_rate = 2075
+    case absorb_dmg_maxhp = 2076
+    case sub_skill = 2077
+    case subdef_ele = 2078
+    case state_norecover_race = 2079
+    case critical_rangeatk = 2080
+    case magic_addrace2 = 2081
+    case ignore_mdef_race2_rate = 2082
+    case weapon_atk_rate = 2083
+    case weapon_matk_rate = 2084
+    case drop_addrace = 2085
+    case drop_addclass = 2086
+    case no_mado_fuel = 2087
+    case ignore_def_class_rate = 2088
+    case regen_percent_hp = 2089
+    case regen_percent_sp = 2090
+    case skill_delay = 2091
+    case no_walk_delay = 2092
+    case long_sp_gain_value = 2093
+    case long_hp_gain_value = 2094
+    case short_atk_rate = 2095
+    case magic_subsize = 2096
+    case crit_def_rate = 2097
+    case magic_subdef_ele = 2098
+    case reduce_damage_return = 2099
+    case add_item_spheal_rate = 2100
+    case add_itemgroup_spheal_rate = 2101
+    case weapon_subsize = 2102
+    case absorb_dmg_maxhp2 = 2103
+    case sp_ignore_res_race_rate = 2104
+    case sp_ignore_mres_race_rate = 2105
 }

@@ -6,123 +6,83 @@
 //
 
 /// Converted from `e_option` in `map/status.hpp`.
-public enum StatusChangeOption: CaseIterable, RawRepresentable, Sendable {
-    case nothing
-    case sight
-    case hide
-    case cloak
-    case cart1
-    case falcon
-    case riding
-    case invisible
-    case cart2
-    case cart3
-    case cart4
-    case cart5
-    case orcish
-    case wedding
-    case ruwach
-    case chasewalk
-    case flying
-    case xmas
-    case transform
-    case summer
-    case dragon1
-    case wug
-    case wugrider
-    case madogear
-    case dragon2
-    case dragon3
-    case dragon4
-    case dragon5
-    case hanbok
-    case oktoberfest
-    case summer2
-    case cart
-    case dragon
-    case costume
-
-    public var rawValue: Int {
-        switch self {
-        case .nothing: 0x0
-        case .sight: 0x1
-        case .hide: 0x2
-        case .cloak: 0x4
-        case .cart1: 0x8
-        case .falcon: 0x10
-        case .riding: 0x20
-        case .invisible: 0x40
-        case .cart2: 0x80
-        case .cart3: 0x100
-        case .cart4: 0x200
-        case .cart5: 0x400
-        case .orcish: 0x800
-        case .wedding: 0x1000
-        case .ruwach: 0x2000
-        case .chasewalk: 0x4000
-        case .flying: 0x8000
-        case .xmas: 0x10000
-        case .transform: 0x20000
-        case .summer: 0x40000
-        case .dragon1: 0x80000
-        case .wug: 0x100000
-        case .wugrider: 0x200000
-        case .madogear: 0x400000
-        case .dragon2: 0x800000
-        case .dragon3: 0x1000000
-        case .dragon4: 0x2000000
-        case .dragon5: 0x4000000
-        case .hanbok: 0x8000000
-        case .oktoberfest: 0x10000000
-        case .summer2: 0x20000000
-        case .cart: 0x788
-        case .dragon: 0x7880000
-        case .costume: 0x38051000
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0x0: self = .nothing
-        case 0x1: self = .sight
-        case 0x2: self = .hide
-        case 0x4: self = .cloak
-        case 0x8: self = .cart1
-        case 0x10: self = .falcon
-        case 0x20: self = .riding
-        case 0x40: self = .invisible
-        case 0x80: self = .cart2
-        case 0x100: self = .cart3
-        case 0x200: self = .cart4
-        case 0x400: self = .cart5
-        case 0x800: self = .orcish
-        case 0x1000: self = .wedding
-        case 0x2000: self = .ruwach
-        case 0x4000: self = .chasewalk
-        case 0x8000: self = .flying
-        case 0x10000: self = .xmas
-        case 0x20000: self = .transform
-        case 0x40000: self = .summer
-        case 0x80000: self = .dragon1
-        case 0x100000: self = .wug
-        case 0x200000: self = .wugrider
-        case 0x400000: self = .madogear
-        case 0x800000: self = .dragon2
-        case 0x1000000: self = .dragon3
-        case 0x2000000: self = .dragon4
-        case 0x4000000: self = .dragon5
-        case 0x8000000: self = .hanbok
-        case 0x10000000: self = .oktoberfest
-        case 0x20000000: self = .summer2
-        case 0x788: self = .cart
-        case 0x7880000: self = .dragon
-        case 0x38051000: self = .costume
-        default: return nil
-        }
-    }
+public enum StatusChangeOption: Int, CaseIterable, Sendable {
+    case nothing = 0x0
+    case sight = 0x1
+    case hide = 0x2
+    case cloak = 0x4
+    case cart1 = 0x8
+    case falcon = 0x10
+    case riding = 0x20
+    case invisible = 0x40
+    case cart2 = 0x80
+    case cart3 = 0x100
+    case cart4 = 0x200
+    case cart5 = 0x400
+    case orcish = 0x800
+    case wedding = 0x1000
+    case ruwach = 0x2000
+    case chasewalk = 0x4000
+    case flying = 0x8000
+    case xmas = 0x10000
+    case transform = 0x20000
+    case summer = 0x40000
+    case dragon1 = 0x80000
+    case wug = 0x100000
+    case wugrider = 0x200000
+    case madogear = 0x400000
+    case dragon2 = 0x800000
+    case dragon3 = 0x1000000
+    case dragon4 = 0x2000000
+    case dragon5 = 0x4000000
+    case hanbok = 0x8000000
+    case oktoberfest = 0x10000000
+    case summer2 = 0x20000000
+    case cart = 0x788
+    case dragon = 0x7880000
+    case costume = 0x38051000
 }
 
-extension StatusChangeOption: CodingKey, CodingKeyRepresentable, Decodable {
+extension StatusChangeOption: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .nothing: "NOTHING"
+        case .sight: "SIGHT"
+        case .hide: "HIDE"
+        case .cloak: "CLOAK"
+        case .cart1: "CART1"
+        case .falcon: "FALCON"
+        case .riding: "RIDING"
+        case .invisible: "INVISIBLE"
+        case .cart2: "CART2"
+        case .cart3: "CART3"
+        case .cart4: "CART4"
+        case .cart5: "CART5"
+        case .orcish: "ORCISH"
+        case .wedding: "WEDDING"
+        case .ruwach: "RUWACH"
+        case .chasewalk: "CHASEWALK"
+        case .flying: "FLYING"
+        case .xmas: "XMAS"
+        case .transform: "TRANSFORM"
+        case .summer: "SUMMER"
+        case .dragon1: "DRAGON1"
+        case .wug: "WUG"
+        case .wugrider: "WUGRIDER"
+        case .madogear: "MADOGEAR"
+        case .dragon2: "DRAGON2"
+        case .dragon3: "DRAGON3"
+        case .dragon4: "DRAGON4"
+        case .dragon5: "DRAGON5"
+        case .hanbok: "HANBOK"
+        case .oktoberfest: "OKTOBERFEST"
+        case .summer2: "SUMMER2"
+        case .cart: "CART"
+        case .dragon: "DRAGON"
+        case .costume: "COSTUME"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "NOTHING": self = .nothing
@@ -163,10 +123,26 @@ extension StatusChangeOption: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension StatusChangeOption: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension StatusChangeOption: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

@@ -6,96 +6,65 @@
 //
 
 /// Converted from `e_scs_flag` in `map/status.hpp`.
-public enum StatusChangeStateFlag: CaseIterable, RawRepresentable, Sendable {
-    case none
-    case nomovecond
-    case nomove
-    case nopickitemcond
-    case nopickitem
-    case nodropitemcond
-    case nodropitem
-    case nocastcond
-    case nocast
-    case nochat
-    case nochatcond
-    case noequipitem
-    case noequipitemcond
-    case nounequipitem
-    case nounequipitemcond
-    case noconsumeitem
-    case noconsumeitemcond
-    case noattack
-    case noattackcond
-    case nowarp
-    case nowarpcond
-    case nodeathpenalty
-    case nodeathpenaltycond
-    case nointeract
-    case nointeractcond
-
-    public var rawValue: Int {
-        switch self {
-        case .none: 0
-        case .nomovecond: 1
-        case .nomove: 2
-        case .nopickitemcond: 3
-        case .nopickitem: 4
-        case .nodropitemcond: 5
-        case .nodropitem: 6
-        case .nocastcond: 7
-        case .nocast: 8
-        case .nochat: 9
-        case .nochatcond: 10
-        case .noequipitem: 11
-        case .noequipitemcond: 12
-        case .nounequipitem: 13
-        case .nounequipitemcond: 14
-        case .noconsumeitem: 15
-        case .noconsumeitemcond: 16
-        case .noattack: 17
-        case .noattackcond: 18
-        case .nowarp: 19
-        case .nowarpcond: 20
-        case .nodeathpenalty: 21
-        case .nodeathpenaltycond: 22
-        case .nointeract: 23
-        case .nointeractcond: 24
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .none
-        case 1: self = .nomovecond
-        case 2: self = .nomove
-        case 3: self = .nopickitemcond
-        case 4: self = .nopickitem
-        case 5: self = .nodropitemcond
-        case 6: self = .nodropitem
-        case 7: self = .nocastcond
-        case 8: self = .nocast
-        case 9: self = .nochat
-        case 10: self = .nochatcond
-        case 11: self = .noequipitem
-        case 12: self = .noequipitemcond
-        case 13: self = .nounequipitem
-        case 14: self = .nounequipitemcond
-        case 15: self = .noconsumeitem
-        case 16: self = .noconsumeitemcond
-        case 17: self = .noattack
-        case 18: self = .noattackcond
-        case 19: self = .nowarp
-        case 20: self = .nowarpcond
-        case 21: self = .nodeathpenalty
-        case 22: self = .nodeathpenaltycond
-        case 23: self = .nointeract
-        case 24: self = .nointeractcond
-        default: return nil
-        }
-    }
+public enum StatusChangeStateFlag: Int, CaseIterable, Sendable {
+    case none = 0
+    case nomovecond = 1
+    case nomove = 2
+    case nopickitemcond = 3
+    case nopickitem = 4
+    case nodropitemcond = 5
+    case nodropitem = 6
+    case nocastcond = 7
+    case nocast = 8
+    case nochat = 9
+    case nochatcond = 10
+    case noequipitem = 11
+    case noequipitemcond = 12
+    case nounequipitem = 13
+    case nounequipitemcond = 14
+    case noconsumeitem = 15
+    case noconsumeitemcond = 16
+    case noattack = 17
+    case noattackcond = 18
+    case nowarp = 19
+    case nowarpcond = 20
+    case nodeathpenalty = 21
+    case nodeathpenaltycond = 22
+    case nointeract = 23
+    case nointeractcond = 24
 }
 
-extension StatusChangeStateFlag: CodingKey, CodingKeyRepresentable, Decodable {
+extension StatusChangeStateFlag: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .none: "NONE"
+        case .nomovecond: "NOMOVECOND"
+        case .nomove: "NOMOVE"
+        case .nopickitemcond: "NOPICKITEMCOND"
+        case .nopickitem: "NOPICKITEM"
+        case .nodropitemcond: "NODROPITEMCOND"
+        case .nodropitem: "NODROPITEM"
+        case .nocastcond: "NOCASTCOND"
+        case .nocast: "NOCAST"
+        case .nochat: "NOCHAT"
+        case .nochatcond: "NOCHATCOND"
+        case .noequipitem: "NOEQUIPITEM"
+        case .noequipitemcond: "NOEQUIPITEMCOND"
+        case .nounequipitem: "NOUNEQUIPITEM"
+        case .nounequipitemcond: "NOUNEQUIPITEMCOND"
+        case .noconsumeitem: "NOCONSUMEITEM"
+        case .noconsumeitemcond: "NOCONSUMEITEMCOND"
+        case .noattack: "NOATTACK"
+        case .noattackcond: "NOATTACKCOND"
+        case .nowarp: "NOWARP"
+        case .nowarpcond: "NOWARPCOND"
+        case .nodeathpenalty: "NODEATHPENALTY"
+        case .nodeathpenaltycond: "NODEATHPENALTYCOND"
+        case .nointeract: "NOINTERACT"
+        case .nointeractcond: "NOINTERACTCOND"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "NONE": self = .none
@@ -127,10 +96,26 @@ extension StatusChangeStateFlag: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension StatusChangeStateFlag: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension StatusChangeStateFlag: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

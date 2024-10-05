@@ -6,54 +6,37 @@
 //
 
 /// Converted from `e_skill_nk` in `map/skill.hpp`.
-public enum SkillDamageFlag: CaseIterable, RawRepresentable, Sendable {
-    case nodamage
-    case splash
-    case splashsplit
-    case ignoreatkcard
-    case ignoreelement
-    case ignoredefense
-    case ignoreflee
-    case ignoredefcard
-    case critical
-    case ignorelongcard
-    case simpledefense
-
-    public var rawValue: Int {
-        switch self {
-        case .nodamage: 0
-        case .splash: 1
-        case .splashsplit: 2
-        case .ignoreatkcard: 3
-        case .ignoreelement: 4
-        case .ignoredefense: 5
-        case .ignoreflee: 6
-        case .ignoredefcard: 7
-        case .critical: 8
-        case .ignorelongcard: 9
-        case .simpledefense: 10
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .nodamage
-        case 1: self = .splash
-        case 2: self = .splashsplit
-        case 3: self = .ignoreatkcard
-        case 4: self = .ignoreelement
-        case 5: self = .ignoredefense
-        case 6: self = .ignoreflee
-        case 7: self = .ignoredefcard
-        case 8: self = .critical
-        case 9: self = .ignorelongcard
-        case 10: self = .simpledefense
-        default: return nil
-        }
-    }
+public enum SkillDamageFlag: Int, CaseIterable, Sendable {
+    case nodamage = 0
+    case splash = 1
+    case splashsplit = 2
+    case ignoreatkcard = 3
+    case ignoreelement = 4
+    case ignoredefense = 5
+    case ignoreflee = 6
+    case ignoredefcard = 7
+    case critical = 8
+    case ignorelongcard = 9
+    case simpledefense = 10
 }
 
-extension SkillDamageFlag: CodingKey, CodingKeyRepresentable, Decodable {
+extension SkillDamageFlag: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .nodamage: "NODAMAGE"
+        case .splash: "SPLASH"
+        case .splashsplit: "SPLASHSPLIT"
+        case .ignoreatkcard: "IGNOREATKCARD"
+        case .ignoreelement: "IGNOREELEMENT"
+        case .ignoredefense: "IGNOREDEFENSE"
+        case .ignoreflee: "IGNOREFLEE"
+        case .ignoredefcard: "IGNOREDEFCARD"
+        case .critical: "CRITICAL"
+        case .ignorelongcard: "IGNORELONGCARD"
+        case .simpledefense: "SIMPLEDEFENSE"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "NODAMAGE": self = .nodamage
@@ -71,10 +54,26 @@ extension SkillDamageFlag: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension SkillDamageFlag: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension SkillDamageFlag: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

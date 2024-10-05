@@ -6,27 +6,19 @@
 //
 
 /// Converted from `e_card_type` in `map/pc.hpp`.
-public enum CardType: CaseIterable, RawRepresentable, Sendable {
-    case normal
-    case enchant
-
-    public var rawValue: Int {
-        switch self {
-        case .normal: 0
-        case .enchant: 1
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .normal
-        case 1: self = .enchant
-        default: return nil
-        }
-    }
+public enum CardType: Int, CaseIterable, Sendable {
+    case normal = 0
+    case enchant = 1
 }
 
-extension CardType: CodingKey, CodingKeyRepresentable, Decodable {
+extension CardType: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .normal: "NORMAL"
+        case .enchant: "ENCHANT"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "NORMAL": self = .normal
@@ -35,10 +27,26 @@ extension CardType: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension CardType: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension CardType: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

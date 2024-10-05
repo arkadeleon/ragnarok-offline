@@ -70,7 +70,7 @@ let configurations: [Configuration] = [
         prefix: "BCT_",
         outputType: "BattleCheckTarget",
         outputFormat: .hex,
-        extensions: [.decodable]
+        extensions: [.rawRepresentable, .decodable]
     ),
     // MARK: - map/map.hpp
     .enum(
@@ -165,7 +165,7 @@ let configurations: [Configuration] = [
         outputType: "MonsterAI",
         outputPrefix: "ai",
         outputFormat: .hex,
-        extensions: [.decodable]
+        extensions: [.rawRepresentable, .decodable]
     ),
     .enum(
         source: "map/mob.hpp",
@@ -398,6 +398,7 @@ struct Configuration {
     }
 
     enum Extension {
+        case rawRepresentable
         case decodable
     }
 

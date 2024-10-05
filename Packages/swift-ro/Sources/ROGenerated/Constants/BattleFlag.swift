@@ -6,45 +6,31 @@
 //
 
 /// Converted from `e_battle_flag` in `map/battle.hpp`.
-public enum BattleFlag: CaseIterable, RawRepresentable, Sendable {
-    case none
-    case weapon
-    case magic
-    case misc
-    case short
-    case long
-    case skill
-    case normal
-
-    public var rawValue: Int {
-        switch self {
-        case .none: 0x0
-        case .weapon: 0x1
-        case .magic: 0x2
-        case .misc: 0x4
-        case .short: 0x10
-        case .long: 0x40
-        case .skill: 0x100
-        case .normal: 0x200
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0x0: self = .none
-        case 0x1: self = .weapon
-        case 0x2: self = .magic
-        case 0x4: self = .misc
-        case 0x10: self = .short
-        case 0x40: self = .long
-        case 0x100: self = .skill
-        case 0x200: self = .normal
-        default: return nil
-        }
-    }
+public enum BattleFlag: Int, CaseIterable, Sendable {
+    case none = 0x0
+    case weapon = 0x1
+    case magic = 0x2
+    case misc = 0x4
+    case short = 0x10
+    case long = 0x40
+    case skill = 0x100
+    case normal = 0x200
 }
 
-extension BattleFlag: CodingKey, CodingKeyRepresentable, Decodable {
+extension BattleFlag: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .none: "NONE"
+        case .weapon: "WEAPON"
+        case .magic: "MAGIC"
+        case .misc: "MISC"
+        case .short: "SHORT"
+        case .long: "LONG"
+        case .skill: "SKILL"
+        case .normal: "NORMAL"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "NONE": self = .none
@@ -59,10 +45,26 @@ extension BattleFlag: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension BattleFlag: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension BattleFlag: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

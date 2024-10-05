@@ -6,156 +6,105 @@
 //
 
 /// Converted from `e_scb_flag` in `map/status.hpp`.
-public enum StatusChangeBlockFlag: CaseIterable, RawRepresentable, Sendable {
-    case none
-    case base
-    case maxhp
-    case maxsp
-    case str
-    case agi
-    case vit
-    case int
-    case dex
-    case luk
-    case batk
-    case watk
-    case matk
-    case hit
-    case flee
-    case def
-    case def2
-    case mdef
-    case mdef2
-    case speed
-    case aspd
-    case dspd
-    case cri
-    case flee2
-    case atk_ele
-    case def_ele
-    case mode
-    case size
-    case race
-    case range
-    case regen
-    case maxap
-    case pow
-    case sta
-    case wis
-    case spl
-    case con
-    case crt
-    case patk
-    case smatk
-    case res
-    case mres
-    case hplus
-    case crate
-    case dye
-
-    public var rawValue: Int {
-        switch self {
-        case .none: 0
-        case .base: 1
-        case .maxhp: 2
-        case .maxsp: 3
-        case .str: 4
-        case .agi: 5
-        case .vit: 6
-        case .int: 7
-        case .dex: 8
-        case .luk: 9
-        case .batk: 10
-        case .watk: 11
-        case .matk: 12
-        case .hit: 13
-        case .flee: 14
-        case .def: 15
-        case .def2: 16
-        case .mdef: 17
-        case .mdef2: 18
-        case .speed: 19
-        case .aspd: 20
-        case .dspd: 21
-        case .cri: 22
-        case .flee2: 23
-        case .atk_ele: 24
-        case .def_ele: 25
-        case .mode: 26
-        case .size: 27
-        case .race: 28
-        case .range: 29
-        case .regen: 30
-        case .maxap: 31
-        case .pow: 32
-        case .sta: 33
-        case .wis: 34
-        case .spl: 35
-        case .con: 36
-        case .crt: 37
-        case .patk: 38
-        case .smatk: 39
-        case .res: 40
-        case .mres: 41
-        case .hplus: 42
-        case .crate: 43
-        case .dye: 44
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .none
-        case 1: self = .base
-        case 2: self = .maxhp
-        case 3: self = .maxsp
-        case 4: self = .str
-        case 5: self = .agi
-        case 6: self = .vit
-        case 7: self = .int
-        case 8: self = .dex
-        case 9: self = .luk
-        case 10: self = .batk
-        case 11: self = .watk
-        case 12: self = .matk
-        case 13: self = .hit
-        case 14: self = .flee
-        case 15: self = .def
-        case 16: self = .def2
-        case 17: self = .mdef
-        case 18: self = .mdef2
-        case 19: self = .speed
-        case 20: self = .aspd
-        case 21: self = .dspd
-        case 22: self = .cri
-        case 23: self = .flee2
-        case 24: self = .atk_ele
-        case 25: self = .def_ele
-        case 26: self = .mode
-        case 27: self = .size
-        case 28: self = .race
-        case 29: self = .range
-        case 30: self = .regen
-        case 31: self = .maxap
-        case 32: self = .pow
-        case 33: self = .sta
-        case 34: self = .wis
-        case 35: self = .spl
-        case 36: self = .con
-        case 37: self = .crt
-        case 38: self = .patk
-        case 39: self = .smatk
-        case 40: self = .res
-        case 41: self = .mres
-        case 42: self = .hplus
-        case 43: self = .crate
-        case 44: self = .dye
-        default: return nil
-        }
-    }
+public enum StatusChangeBlockFlag: Int, CaseIterable, Sendable {
+    case none = 0
+    case base = 1
+    case maxhp = 2
+    case maxsp = 3
+    case str = 4
+    case agi = 5
+    case vit = 6
+    case int = 7
+    case dex = 8
+    case luk = 9
+    case batk = 10
+    case watk = 11
+    case matk = 12
+    case hit = 13
+    case flee = 14
+    case def = 15
+    case def2 = 16
+    case mdef = 17
+    case mdef2 = 18
+    case speed = 19
+    case aspd = 20
+    case dspd = 21
+    case cri = 22
+    case flee2 = 23
+    case atk_ele = 24
+    case def_ele = 25
+    case mode = 26
+    case size = 27
+    case race = 28
+    case range = 29
+    case regen = 30
+    case maxap = 31
+    case pow = 32
+    case sta = 33
+    case wis = 34
+    case spl = 35
+    case con = 36
+    case crt = 37
+    case patk = 38
+    case smatk = 39
+    case res = 40
+    case mres = 41
+    case hplus = 42
+    case crate = 43
+    case dye = 44
 }
 
-extension StatusChangeBlockFlag: CodingKey, CodingKeyRepresentable, Decodable {
+extension StatusChangeBlockFlag: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .none: "NONE"
+        case .base: "BASE"
+        case .maxhp: "MAXHP"
+        case .maxsp: "MAXSP"
+        case .str: "STR"
+        case .agi: "AGI"
+        case .vit: "VIT"
+        case .int: "INT"
+        case .dex: "DEX"
+        case .luk: "LUK"
+        case .batk: "BATK"
+        case .watk: "WATK"
+        case .matk: "MATK"
+        case .hit: "HIT"
+        case .flee: "FLEE"
+        case .def: "DEF"
+        case .def2: "DEF2"
+        case .mdef: "MDEF"
+        case .mdef2: "MDEF2"
+        case .speed: "SPEED"
+        case .aspd: "ASPD"
+        case .dspd: "DSPD"
+        case .cri: "CRI"
+        case .flee2: "FLEE2"
+        case .atk_ele: "ATK_ELE"
+        case .def_ele: "DEF_ELE"
+        case .mode: "MODE"
+        case .size: "SIZE"
+        case .race: "RACE"
+        case .range: "RANGE"
+        case .regen: "REGEN"
+        case .maxap: "MAXAP"
+        case .pow: "POW"
+        case .sta: "STA"
+        case .wis: "WIS"
+        case .spl: "SPL"
+        case .con: "CON"
+        case .crt: "CRT"
+        case .patk: "PATK"
+        case .smatk: "SMATK"
+        case .res: "RES"
+        case .mres: "MRES"
+        case .hplus: "HPLUS"
+        case .crate: "CRATE"
+        case .dye: "DYE"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "NONE": self = .none
@@ -207,10 +156,26 @@ extension StatusChangeBlockFlag: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension StatusChangeBlockFlag: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension StatusChangeBlockFlag: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

@@ -6,7 +6,7 @@
 //
 
 /// Converted from `e_aegis_monstertype` in `map/mob.hpp`.
-public enum MonsterAI: CaseIterable, RawRepresentable, Sendable {
+public enum MonsterAI: CaseIterable, Sendable {
     case ai01
     case ai02
     case ai03
@@ -28,7 +28,9 @@ public enum MonsterAI: CaseIterable, RawRepresentable, Sendable {
     case ai25
     case ai26
     case ai27
+}
 
+extension MonsterAI: RawRepresentable {
     public var rawValue: Int {
         switch self {
         case .ai01: 0x81
@@ -83,7 +85,33 @@ public enum MonsterAI: CaseIterable, RawRepresentable, Sendable {
     }
 }
 
-extension MonsterAI: CodingKey, CodingKeyRepresentable, Decodable {
+extension MonsterAI: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .ai01: "01"
+        case .ai02: "02"
+        case .ai03: "03"
+        case .ai04: "04"
+        case .ai05: "05"
+        case .ai06: "06"
+        case .ai07: "07"
+        case .ai08: "08"
+        case .ai09: "09"
+        case .ai10: "10"
+        case .ai11: "11"
+        case .ai12: "12"
+        case .ai13: "13"
+        case .ai17: "17"
+        case .ai19: "19"
+        case .ai20: "20"
+        case .ai21: "21"
+        case .ai24: "24"
+        case .ai25: "25"
+        case .ai26: "26"
+        case .ai27: "27"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "01": self = .ai01
@@ -111,10 +139,26 @@ extension MonsterAI: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension MonsterAI: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension MonsterAI: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

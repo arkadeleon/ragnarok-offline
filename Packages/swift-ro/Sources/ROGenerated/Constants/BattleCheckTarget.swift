@@ -6,7 +6,7 @@
 //
 
 /// Converted from `e_battle_check_target` in `map/battle.hpp`.
-public enum BattleCheckTarget: CaseIterable, RawRepresentable, Sendable {
+public enum BattleCheckTarget: CaseIterable, Sendable {
     case noone
     case _self
     case enemy
@@ -22,7 +22,9 @@ public enum BattleCheckTarget: CaseIterable, RawRepresentable, Sendable {
     case noenemy
     case ally
     case friend
+}
 
+extension BattleCheckTarget: RawRepresentable {
     public var rawValue: Int {
         switch self {
         case .noone: 0x0
@@ -65,7 +67,27 @@ public enum BattleCheckTarget: CaseIterable, RawRepresentable, Sendable {
     }
 }
 
-extension BattleCheckTarget: CodingKey, CodingKeyRepresentable, Decodable {
+extension BattleCheckTarget: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .noone: "NOONE"
+        case ._self: "SELF"
+        case .enemy: "ENEMY"
+        case .party: "PARTY"
+        case .guildally: "GUILDALLY"
+        case .neutral: "NEUTRAL"
+        case .sameguild: "SAMEGUILD"
+        case .all: "ALL"
+        case .wos: "WOS"
+        case .guild: "GUILD"
+        case .noguild: "NOGUILD"
+        case .noparty: "NOPARTY"
+        case .noenemy: "NOENEMY"
+        case .ally: "ALLY"
+        case .friend: "FRIEND"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "NOONE": self = .noone
@@ -87,10 +109,26 @@ extension BattleCheckTarget: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension BattleCheckTarget: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension BattleCheckTarget: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

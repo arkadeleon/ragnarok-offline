@@ -6,78 +6,53 @@
 //
 
 /// Converted from `e_sc_opt3` in `map/status.hpp`.
-public enum StatusChangeOption3: CaseIterable, RawRepresentable, Sendable {
-    case normal
-    case quicken
-    case overthrust
-    case energycoat
-    case explosionspirits
-    case steelbody
-    case bladestop
-    case aurablade
-    case berserk
-    case lightblade
-    case moonlit
-    case marionette
-    case assumptio
-    case warm
-    case kaite
-    case bunsin
-    case soullink
-    case undead
-    case contract
-
-    public var rawValue: Int {
-        switch self {
-        case .normal: 0x0
-        case .quicken: 0x1
-        case .overthrust: 0x2
-        case .energycoat: 0x4
-        case .explosionspirits: 0x8
-        case .steelbody: 0x10
-        case .bladestop: 0x20
-        case .aurablade: 0x40
-        case .berserk: 0x80
-        case .lightblade: 0x100
-        case .moonlit: 0x200
-        case .marionette: 0x400
-        case .assumptio: 0x800
-        case .warm: 0x1000
-        case .kaite: 0x2000
-        case .bunsin: 0x4000
-        case .soullink: 0x8000
-        case .undead: 0x10000
-        case .contract: 0x20000
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0x0: self = .normal
-        case 0x1: self = .quicken
-        case 0x2: self = .overthrust
-        case 0x4: self = .energycoat
-        case 0x8: self = .explosionspirits
-        case 0x10: self = .steelbody
-        case 0x20: self = .bladestop
-        case 0x40: self = .aurablade
-        case 0x80: self = .berserk
-        case 0x100: self = .lightblade
-        case 0x200: self = .moonlit
-        case 0x400: self = .marionette
-        case 0x800: self = .assumptio
-        case 0x1000: self = .warm
-        case 0x2000: self = .kaite
-        case 0x4000: self = .bunsin
-        case 0x8000: self = .soullink
-        case 0x10000: self = .undead
-        case 0x20000: self = .contract
-        default: return nil
-        }
-    }
+public enum StatusChangeOption3: Int, CaseIterable, Sendable {
+    case normal = 0x0
+    case quicken = 0x1
+    case overthrust = 0x2
+    case energycoat = 0x4
+    case explosionspirits = 0x8
+    case steelbody = 0x10
+    case bladestop = 0x20
+    case aurablade = 0x40
+    case berserk = 0x80
+    case lightblade = 0x100
+    case moonlit = 0x200
+    case marionette = 0x400
+    case assumptio = 0x800
+    case warm = 0x1000
+    case kaite = 0x2000
+    case bunsin = 0x4000
+    case soullink = 0x8000
+    case undead = 0x10000
+    case contract = 0x20000
 }
 
-extension StatusChangeOption3: CodingKey, CodingKeyRepresentable, Decodable {
+extension StatusChangeOption3: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .normal: "NORMAL"
+        case .quicken: "QUICKEN"
+        case .overthrust: "OVERTHRUST"
+        case .energycoat: "ENERGYCOAT"
+        case .explosionspirits: "EXPLOSIONSPIRITS"
+        case .steelbody: "STEELBODY"
+        case .bladestop: "BLADESTOP"
+        case .aurablade: "AURABLADE"
+        case .berserk: "BERSERK"
+        case .lightblade: "LIGHTBLADE"
+        case .moonlit: "MOONLIT"
+        case .marionette: "MARIONETTE"
+        case .assumptio: "ASSUMPTIO"
+        case .warm: "WARM"
+        case .kaite: "KAITE"
+        case .bunsin: "BUNSIN"
+        case .soullink: "SOULLINK"
+        case .undead: "UNDEAD"
+        case .contract: "CONTRACT"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "NORMAL": self = .normal
@@ -103,10 +78,26 @@ extension StatusChangeOption3: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension StatusChangeOption3: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension StatusChangeOption3: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

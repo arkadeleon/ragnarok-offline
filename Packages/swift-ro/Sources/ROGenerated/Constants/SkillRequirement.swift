@@ -6,66 +6,45 @@
 //
 
 /// Converted from `e_skill_require` in `map/skill.hpp`.
-public enum SkillRequirement: CaseIterable, RawRepresentable, Sendable {
-    case hpcost
-    case spcost
-    case hpratecost
-    case spratecost
-    case maxhptrigger
-    case zenycost
-    case weapon
-    case ammo
-    case state
-    case status
-    case spiritspherecost
-    case itemcost
-    case equipment
-    case apcost
-    case apratecost
-
-    public var rawValue: Int {
-        switch self {
-        case .hpcost: 0x1
-        case .spcost: 0x2
-        case .hpratecost: 0x4
-        case .spratecost: 0x8
-        case .maxhptrigger: 0x10
-        case .zenycost: 0x20
-        case .weapon: 0x40
-        case .ammo: 0x80
-        case .state: 0x100
-        case .status: 0x200
-        case .spiritspherecost: 0x400
-        case .itemcost: 0x800
-        case .equipment: 0x1000
-        case .apcost: 0x2000
-        case .apratecost: 0x4000
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0x1: self = .hpcost
-        case 0x2: self = .spcost
-        case 0x4: self = .hpratecost
-        case 0x8: self = .spratecost
-        case 0x10: self = .maxhptrigger
-        case 0x20: self = .zenycost
-        case 0x40: self = .weapon
-        case 0x80: self = .ammo
-        case 0x100: self = .state
-        case 0x200: self = .status
-        case 0x400: self = .spiritspherecost
-        case 0x800: self = .itemcost
-        case 0x1000: self = .equipment
-        case 0x2000: self = .apcost
-        case 0x4000: self = .apratecost
-        default: return nil
-        }
-    }
+public enum SkillRequirement: Int, CaseIterable, Sendable {
+    case hpcost = 0x1
+    case spcost = 0x2
+    case hpratecost = 0x4
+    case spratecost = 0x8
+    case maxhptrigger = 0x10
+    case zenycost = 0x20
+    case weapon = 0x40
+    case ammo = 0x80
+    case state = 0x100
+    case status = 0x200
+    case spiritspherecost = 0x400
+    case itemcost = 0x800
+    case equipment = 0x1000
+    case apcost = 0x2000
+    case apratecost = 0x4000
 }
 
-extension SkillRequirement: CodingKey, CodingKeyRepresentable, Decodable {
+extension SkillRequirement: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .hpcost: "HPCOST"
+        case .spcost: "SPCOST"
+        case .hpratecost: "HPRATECOST"
+        case .spratecost: "SPRATECOST"
+        case .maxhptrigger: "MAXHPTRIGGER"
+        case .zenycost: "ZENYCOST"
+        case .weapon: "WEAPON"
+        case .ammo: "AMMO"
+        case .state: "STATE"
+        case .status: "STATUS"
+        case .spiritspherecost: "SPIRITSPHERECOST"
+        case .itemcost: "ITEMCOST"
+        case .equipment: "EQUIPMENT"
+        case .apcost: "APCOST"
+        case .apratecost: "APRATECOST"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "HPCOST": self = .hpcost
@@ -87,10 +66,26 @@ extension SkillRequirement: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension SkillRequirement: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension SkillRequirement: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

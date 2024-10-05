@@ -6,4350 +6,2901 @@
 //
 
 /// Converted from `efst_type` in `map/status.hpp`.
-public enum OfficialStatusChangeID: CaseIterable, RawRepresentable, Sendable {
-    case efst_blank
-    case efst_provoke
-    case efst_endure
-    case efst_twohandquicken
-    case efst_concentration
-    case efst_hiding
-    case efst_cloaking
-    case efst_enchantpoison
-    case efst_poisonreact
-    case efst_quagmire
-    case efst_angelus
-    case efst_blessing
-    case efst_crucis
-    case efst_inc_agi
-    case efst_dec_agi
-    case efst_slowpoison
-    case efst_impositio
-    case efst_suffragium
-    case efst_aspersio
-    case efst_benedictio
-    case efst_kyrie
-    case efst_magnificat
-    case efst_gloria
-    case efst_lexaeterna
-    case efst_adrenaline
-    case efst_weaponperfect
-    case efst_overthrust
-    case efst_maximize
-    case efst_riding
-    case efst_falcon
-    case efst_trickdead
-    case efst_shout
-    case efst_energycoat
-    case efst_brokenarmor
-    case efst_brokenweapon
-    case efst_illusion
-    case efst_weightover50
-    case efst_weightover90
-    case efst_atthaste_potion1
-    case efst_atthaste_potion2
-    case efst_atthaste_potion3
-    case efst_atthaste_infinity
-    case efst_movhaste_potion
-    case efst_movhaste_infinity
-    case efst_autocounter
-    case efst_splasher
-    case efst_anklesnare
-    case efst_postdelay
-    case efst_noaction
-    case efst_impossiblepickup
-    case efst_barrier
-    case efst_noequipweapon
-    case efst_noequipshield
-    case efst_noequiparmor
-    case efst_noequiphelm
-    case efst_protectweapon
-    case efst_protectshield
-    case efst_protectarmor
-    case efst_protecthelm
-    case efst_autoguard
-    case efst_reflectshield
-    case efst_devotion
-    case efst_providence
-    case efst_defender
-    case efst_magicrod
-    case efst_weaponproperty
-    case efst_autospell
-    case efst_specialzone
-    case efst_mask
-    case efst_spearquicken
-    case efst_bdplaying
-    case efst_whistle
-    case efst_assassincross
-    case efst_poembragi
-    case efst_appleidun
-    case efst_humming
-    case efst_dontforgetme
-    case efst_fortunekiss
-    case efst_serviceforyou
-    case efst_richmankim
-    case efst_eternalchaos
-    case efst_drumbattlefield
-    case efst_ringnibelungen
-    case efst_rokisweil
-    case efst_intoabyss
-    case efst_siegfried
-    case efst_bladestop
-    case efst_explosionspirits
-    case efst_steelbody
-    case efst_extremityfist
-    case efst_comboattack
-    case efst_propertyfire
-    case efst_propertywater
-    case efst_propertywind
-    case efst_propertyground
-    case efst_magicattack
-    case efst_stop
-    case efst_weaponbraker
-    case efst_propertyundead
-    case efst_powerup
-    case efst_agiup
-    case efst_siegemode
-    case efst_invisible
-    case efst_statusone
-    case efst_aurablade
-    case efst_parrying
-    case efst_lkconcentration
-    case efst_tensionrelax
-    case efst_berserk
-    case efst_sacrifice
-    case efst_gospel
-    case efst_assumptio
-    case efst_basilica
-    case efst_groundmagic
-    case efst_magicpower
-    case efst_edp
-    case efst_truesight
-    case efst_windwalk
-    case efst_meltdown
-    case efst_cartboost
-    case efst_chasewalk
-    case efst_swordreject
-    case efst_marionette_master
-    case efst_marionette
-    case efst_moon
-    case efst_blooding
-    case efst_jointbeat
-    case efst_mindbreaker
-    case efst_memorize
-    case efst_fogwall
-    case efst_spiderweb
-    case efst_protectexp
-    case efst_sub_weaponproperty
-    case efst_autoberserk
-    case efst_run
-    case efst_ting
-    case efst_stormkick_on
-    case efst_stormkick_ready
-    case efst_downkick_on
-    case efst_downkick_ready
-    case efst_turnkick_on
-    case efst_turnkick_ready
-    case efst_counter_on
-    case efst_counter_ready
-    case efst_dodge_on
-    case efst_dodge_ready
-    case efst_strup
-    case efst_propertydark
-    case efst_adrenaline2
-    case efst_propertytelekinesis
-    case efst_soullink
-    case efst_plusattackpower
-    case efst_plusmagicpower
-    case efst_devil1
-    case efst_kaite
-    case efst_swoo
-    case efst_star2
-    case efst_kaizel
-    case efst_kaahi
-    case efst_kaupe
-    case efst_sma_ready
-    case efst_ske
-    case efst_onehandquicken
-    case efst_friend
-    case efst_friendup
-    case efst_sg_warm
-    case efst_sg_sun_warm
-    case efst_sg_moon_warm
-    case efst_sg_star_warm
-    case efst_emotion
-    case efst_sun_comfort
-    case efst_moon_comfort
-    case efst_star_comfort
-    case efst_expup
-    case efst_gdskill_battleorder
-    case efst_gdskill_regeneration
-    case efst_gdskill_postdelay
-    case efst_resisthandicap
-    case efst_maxhppercent
-    case efst_maxsppercent
-    case efst_defence
-    case efst_slowdown
-    case efst_preserve
-    case efst_chasewalk2
-    case efst_not_extremityfist
-    case efst_clairvoyance
-    case efst_moveslow_potion
-    case efst_doublecasting
-    case efst_gravitation
-    case efst_overthrustmax
-    case efst_longing
-    case efst_hermode
-    case efst_tarotcard
-    case efst_hlif_avoid
-    case efst_hfli_fleet
-    case efst_hfli_speed
-    case efst_hlif_change
-    case efst_hami_bloodlust
-    case efst_cr_shrink
-    case efst_wz_sightblaster
-    case efst_dc_winkcharm
-    case efst_rg_cconfine_m
-    case efst_rg_cconfine_s
-    case efst_disablemove
-    case efst_gs_madnesscancel
-    case efst_gs_gatlingfever
-    case efst_earthscroll
-    case efst_nj_utsusemi
-    case efst_nj_bunsinjyutsu
-    case efst_nj_nen
-    case efst_gs_adjustment
-    case efst_gs_accuracy
-    case efst_nj_suiton
-    case efst_pet
-    case efst_mental
-    case efst_expmemory
-    case efst_performance
-    case efst_gain
-    case efst_griffon
-    case efst_drift
-    case efst_wallshift
-    case efst_reincarnation
-    case efst_pattack
-    case efst_pspeed
-    case efst_pdefense
-    case efst_pcritical
-    case efst_ranking
-    case efst_ptriple
-    case efst_denergy
-    case efst_wave1
-    case efst_wave2
-    case efst_wave3
-    case efst_wave4
-    case efst_daura
-    case efst_dfreezer
-    case efst_dpunish
-    case efst_dbarrier
-    case efst_dwarning
-    case efst_mousewheel
-    case efst_dgauge
-    case efst_daccel
-    case efst_dblock
-    case efst_food_str
-    case efst_food_agi
-    case efst_food_vit
-    case efst_food_dex
-    case efst_food_int
-    case efst_food_luk
-    case efst_food_basicavoidance
-    case efst_food_basichit
-    case efst_food_criticalsuccessvalue
-    case efst_cash_plusexp
-    case efst_cash_deathpenalty
-    case efst_cash_receiveitem
-    case efst_cash_boss_alarm
-    case efst_da_energy
-    case efst_da_firstslot
-    case efst_da_headdef
-    case efst_da_space
-    case efst_da_transform
-    case efst_da_itemrebuild
-    case efst_da_illusion
-    case efst_da_darkpower
-    case efst_da_earplug
-    case efst_da_contract
-    case efst_da_black
-    case efst_da_magiccart
-    case efst_crystal
-    case efst_da_rebuild
-    case efst_da_edarkness
-    case efst_da_eguardian
-    case efst_da_timeout
-    case efst_food_str_cash
-    case efst_food_agi_cash
-    case efst_food_vit_cash
-    case efst_food_dex_cash
-    case efst_food_int_cash
-    case efst_food_luk_cash
-    case efst_mer_flee
-    case efst_mer_atk
-    case efst_mer_hp
-    case efst_mer_sp
-    case efst_mer_hit
-    case efst_slowcast
-    case efst_magicmirror
-    case efst_stoneskin
-    case efst_antimagic
-    case efst_criticalwound
-    case efst_npc_defender
-    case efst_noaction_wait
-    case efst_movhaste_horse
-    case efst_protect_def
-    case efst_protect_mdef
-    case efst_healplus
-    case efst_s_lifepotion
-    case efst_l_lifepotion
-    case efst_criticalpercent
-    case efst_plusavoidvalue
-    case efst_atker_aspd
-    case efst_target_aspd
-    case efst_atker_movespeed
-    case efst_atker_blood
-    case efst_target_blood
-    case efst_armor_property
-    case efst_reuse_limit_a
-    case efst_hellpower
-    case efst_steampack
-    case efst_reuse_limit_b
-    case efst_reuse_limit_c
-    case efst_reuse_limit_d
-    case efst_reuse_limit_e
-    case efst_reuse_limit_f
-    case efst_invincible
-    case efst_cash_plusonlyjobexp
-    case efst_partyflee
-    case efst_angel_protect
-    case efst_endure_mdef
-    case efst_enchantblade
-    case efst_deathbound
-    case efst_refresh
-    case efst_giantgrowth
-    case efst_stonehardskin
-    case efst_vitalityactivation
-    case efst_fightingspirit
-    case efst_abundance
-    case efst_reuse_millenniumshield
-    case efst_reuse_crushstrike
-    case efst_reuse_refresh
-    case efst_reuse_stormblast
-    case efst_venomimpress
-    case efst_epiclesis
-    case efst_oratio
-    case efst_laudaagnus
-    case efst_laudaramus
-    case efst_cloakingexceed
-    case efst_hallucinationwalk
-    case efst_hallucinationwalk_postdelay
-    case efst_renovatio
-    case efst_weaponblocking
-    case efst_weaponblocking_postdelay
-    case efst_rollingcutter
-    case efst_expiatio
-    case efst_poisoningweapon
-    case efst_toxin
-    case efst_paralyse
-    case efst_venombleed
-    case efst_magicmushroom
-    case efst_deathhurt
-    case efst_pyrexia
-    case efst_oblivioncurse
-    case efst_leechesend
-    case efst_duplelight
-    case efst_frostmisty
-    case efst_fearbreeze
-    case efst_electricshocker
-    case efst_marshofabyss
-    case efst_recognizedspell
-    case efst_stasis
-    case efst_wugrider
-    case efst_wugdash
-    case efst_wugbite
-    case efst_camouflage
-    case efst_acceleration
-    case efst_hovering
-    case efst_summon1
-    case efst_summon2
-    case efst_summon3
-    case efst_summon4
-    case efst_summon5
-    case efst_mvpcard_taogunka
-    case efst_mvpcard_mistress
-    case efst_mvpcard_orchero
-    case efst_mvpcard_orclord
-    case efst_overheat_limitpoint
-    case efst_overheat
-    case efst_shapeshift
-    case efst_infraredscan
-    case efst_magneticfield
-    case efst_neutralbarrier
-    case efst_neutralbarrier_master
-    case efst_stealthfield
-    case efst_stealthfield_master
-    case efst_manu_atk
-    case efst_manu_def
-    case efst_spl_atk
-    case efst_spl_def
-    case efst_reproduce
-    case efst_manu_matk
-    case efst_spl_matk
-    case efst_str_scroll
-    case efst_int_scroll
-    case efst_lg_reflectdamage
-    case efst_forceofvanguard
-    case efst_buchedenoel
-    case efst_autoshadowspell
-    case efst_shadowform
-    case efst_raid
-    case efst_shieldspell_def
-    case efst_shieldspell_mdef
-    case efst_shieldspell_ref
-    case efst_bodypaint
-    case efst_exeedbreak
-    case efst_adoramus
-    case efst_prestige
-    case efst_invisibility
-    case efst_deadlyinfect
-    case efst_banding
-    case efst_earthdrive
-    case efst_inspiration
-    case efst_enervation
-    case efst_groomy
-    case efst_raisingdragon
-    case efst_ignorance
-    case efst_laziness
-    case efst_lightningwalk
-    case efst_acaraje
-    case efst_unlucky
-    case efst_cursedcircle_atker
-    case efst_cursedcircle_target
-    case efst_weakness
-    case efst_crescentelbow
-    case efst_noequipaccessary
-    case efst_stripaccessary
-    case efst_manhole
-    case efst_popecookie
-    case efst_fallenempire
-    case efst_gentletouch_energygain
-    case efst_gentletouch_change
-    case efst_gentletouch_revitalize
-    case efst_bloodylust
-    case efst_swing
-    case efst_symphony_love
-    case efst_propertywalk
-    case efst_spellfist
-    case efst_netherworld
-    case efst_siren
-    case efst_deep_sleep
-    case efst_sircleofnature
-    case efst_cold
-    case efst_gloomyday
-    case efst_song_of_mana
-    case efst_cloud_kill
-    case efst_dance_with_wug
-    case efst_rush_windmill
-    case efst_echosong
-    case efst_harmonize
-    case efst_striking
-    case efst_warmer
-    case efst_moonlit_serenade
-    case efst_saturday_night_fever
-    case efst_sitdown_force
-    case efst_analyze
-    case efst_lerads_dew
-    case efst_melodyofsink
-    case efst_beyond_of_warcry
-    case efst_unlimited_humming_voice
-    case efst_spellbook1
-    case efst_spellbook2
-    case efst_spellbook3
-    case efst_freeze_sp
-    case efst_gn_training_sword
-    case efst_gn_remodeling_cart
-    case efst_gn_cartboost
-    case efst_fixedcastingtm_reduce
-    case efst_thorns_trap
-    case efst_blood_sucker
-    case efst_spore_explosion
-    case efst_demonic_fire
-    case efst_fire_expansion_smoke_powder
-    case efst_fire_expansion_tear_gas
-    case efst_blocking_play
-    case efst_mandragora
-    case efst_activate
-    case efst_ab_secrament
-    case efst_assumptio2
-    case efst_tk_sevenwind
-    case efst_limit_odins_recall
-    case efst_stomachache
-    case efst_mysterious_powder
-    case efst_melon_bomb
-    case efst_banana_bomb_sitdown_postdelay
-    case efst_promote_health_reserch
-    case efst_energy_drink_reserch
-    case efst_extract_white_potion_z
-    case efst_vitata_500
-    case efst_extract_salamine_juice
-    case efst_boost500
-    case efst_full_swing_k
-    case efst_mana_plus
-    case efst_mustle_m
-    case efst_life_force_f
-    case efst_vacuum_extreme
-    case efst_savage_steak
-    case efst_cocktail_warg_blood
-    case efst_minor_bbq
-    case efst_siroma_ice_tea
-    case efst_drocera_herb_steamed
-    case efst_putti_tails_noodles
-    case efst_banana_bomb
-    case efst_summon_agni
-    case efst_spellbook4
-    case efst_spellbook5
-    case efst_spellbook6
-    case efst_spellbook7
-    case efst_elemental_aggressive
-    case efst_return_to_eldicastes
-    case efst_banding_defence
-    case efst_skelscroll
-    case efst_distructionscroll
-    case efst_royalscroll
-    case efst_immunityscroll
-    case efst_mysticscroll
-    case efst_battlescroll
-    case efst_armorscroll
-    case efst_freyjascroll
-    case efst_soulscroll
-    case efst_circle_of_fire
-    case efst_circle_of_fire_option
-    case efst_fire_cloak
-    case efst_fire_cloak_option
-    case efst_water_screen
-    case efst_water_screen_option
-    case efst_water_drop
-    case efst_water_drop_option
-    case efst_wind_step
-    case efst_wind_step_option
-    case efst_wind_curtain
-    case efst_wind_curtain_option
-    case efst_water_barrier
-    case efst_zephyr
-    case efst_solid_skin
-    case efst_solid_skin_option
-    case efst_stone_shield
-    case efst_stone_shield_option
-    case efst_power_of_gaia
-    case efst_el_wait
-    case efst_el_passive
-    case efst_el_defensive
-    case efst_el_offensive
-    case efst_el_cost
-    case efst_pyrotechnic
-    case efst_pyrotechnic_option
-    case efst_heater
-    case efst_heater_option
-    case efst_tropic
-    case efst_tropic_option
-    case efst_aquaplay
-    case efst_aquaplay_option
-    case efst_cooler
-    case efst_cooler_option
-    case efst_chilly_air
-    case efst_chilly_air_option
-    case efst_gust
-    case efst_gust_option
-    case efst_blast
-    case efst_blast_option
-    case efst_wild_storm
-    case efst_wild_storm_option
-    case efst_petrology
-    case efst_petrology_option
-    case efst_cursed_soil
-    case efst_cursed_soil_option
-    case efst_upheaval
-    case efst_upheaval_option
-    case efst_tidal_weapon
-    case efst_tidal_weapon_option
-    case efst_rock_crusher
-    case efst_rock_crusher_atk
-    case efst_fire_insignia
-    case efst_water_insignia
-    case efst_wind_insignia
-    case efst_earth_insignia
-    case efst_equiped_floor
-    case efst_guardian_recall
-    case efst_mora_buff
-    case efst_reuse_limit_g
-    case efst_reuse_limit_h
-    case efst_needle_of_paralyze
-    case efst_pain_killer
-    case efst_g_lifepotion
-    case efst_vitalize_potion
-    case efst_light_of_regene
-    case efst_overed_boost
-    case efst_silent_breeze
-    case efst_odins_power
-    case efst_style_change
-    case efst_sonic_claw_postdelay
-    case efst_silvervein_rush_postdelay
-    case efst_midnight_frenzy_postdelay
-    case efst_goldene_ferse
-    case efst_angriffs_modus
-    case efst_tinder_breaker
-    case efst_tinder_breaker_postdelay
-    case efst_cbc
-    case efst_cbc_postdelay
-    case efst_eqc
-    case efst_magma_flow
-    case efst_granitic_armor
-    case efst_pyroclastic
-    case efst_volcanic_ash
-    case efst_spirits_saveinfo1
-    case efst_spirits_saveinfo2
-    case efst_magic_candy
-    case efst_search_store_info
-    case efst_all_riding
-    case efst_all_riding_reuse_limit
-    case efst_macro
-    case efst_macro_postdelay
-    case efst_beer_bottle_cap
-    case efst_overlapexpup
-    case efst_pc_iz_dun05
-    case efst_crushstrike
-    case efst_monster_transform
-    case efst_sit
-    case efst_onair
-    case efst_mtf_aspd
-    case efst_mtf_rangeatk
-    case efst_mtf_matk
-    case efst_mtf_mleatked
-    case efst_mtf_cridamage
-    case efst_reuse_limit_mtf
-    case efst_macro_permit
-    case efst_macro_play
-    case efst_skf_cast
-    case efst_skf_aspd
-    case efst_skf_atk
-    case efst_skf_matk
-    case efst_reward_plusonlyjobexp
-    case efst_handicapstate_norecover
-    case efst_set_num_def
-    case efst_set_num_mdef
-    case efst_set_per_def
-    case efst_set_per_mdef
-    case efst_partybooking_search_dealy
-    case efst_partybooking_register_dealy
-    case efst_period_time_check_detect_skill
-    case efst_ko_jyumonjikiri
-    case efst_meikyousisui
-    case efst_atthaste_cash
-    case efst_equipped_divine_armor
-    case efst_equipped_holy_armor
-    case efst_2011rwc
-    case efst_kyougaku
-    case efst_izayoi
-    case efst_zenkai
-    case efst_kg_kagehumi
-    case efst_kyomu
-    case efst_kagemusya
-    case efst_zangetsu
-    case efst_phi_demon
-    case efst_gensou
-    case efst_akaitsuki
-    case efst_tetany
-    case efst_gm_battle
-    case efst_gm_battle2
-    case efst_2011rwc_scroll
-    case efst_active_monster_transform
-    case efst_mysticpowder
-    case efst_eclage_recall
-    case efst_entry_queue_apply_delay
-    case efst_reuse_limit_ecl
-    case efst_m_lifepotion
-    case efst_entry_queue_notify_admission_time_out
-    case efst_unknown_name
-    case efst_on_push_cart
-    case efst_hat_effect
-    case efst_flower_leaf
-    case efst_ray_of_protection
-    case efst_glastheim_atk
-    case efst_glastheim_def
-    case efst_glastheim_heal
-    case efst_glastheim_hidden
-    case efst_glastheim_state
-    case efst_glastheim_itemdef
-    case efst_glastheim_hpsp
-    case efst_homun_skill_postdelay
-    case efst_almighty
-    case efst_gvg_giant
-    case efst_gvg_golem
-    case efst_gvg_stun
-    case efst_gvg_stone
-    case efst_gvg_freez
-    case efst_gvg_sleep
-    case efst_gvg_curse
-    case efst_gvg_silence
-    case efst_gvg_blind
-    case efst_client_only_equip_arrow
-    case efst_clan_info
-    case efst_jp_event01
-    case efst_jp_event02
-    case efst_jp_event03
-    case efst_jp_event04
-    case efst_teleport_fixedcastingdelay
-    case efst_geffen_magic1
-    case efst_geffen_magic2
-    case efst_geffen_magic3
-    case efst_quest_buff1
-    case efst_quest_buff2
-    case efst_quest_buff3
-    case efst_reuse_limit_recall
-    case efst_saveposition
-    case efst_handicapstate_iceexplo
-    case efst_fenrir_card
-    case efst_reuse_limit_aspd_potion
-    case efst_maxpain
-    case efst_pc_stop
-    case efst_frigg_song
-    case efst_offertorium
-    case efst_telekinesis_intense
-    case efst_moonstar
-    case efst_strangelights
-    case efst_full_throttle
-    case efst_rebound
-    case efst_unlimit
-    case efst_kings_grace
-    case efst_item_atkmax
-    case efst_item_atkmin
-    case efst_item_matkmax
-    case efst_item_matkmin
-    case efst_super_star
-    case efst_high_ranker
-    case efst_darkcrow
-    case efst_2013_valentine1
-    case efst_2013_valentine2
-    case efst_2013_valentine3
-    case efst_illusiondoping
-    case efst_wideweb
-    case efst_chill
-    case efst_burnt
-    case efst_pccafe_play_time
-    case efst_twisted_time
-    case efst_flashcombo
-    case efst_jitter_buff1
-    case efst_jitter_buff2
-    case efst_jitter_buff3
-    case efst_jitter_buff4
-    case efst_jitter_buff5
-    case efst_jitter_buff6
-    case efst_jitter_buff7
-    case efst_jitter_buff8
-    case efst_jitter_buff9
-    case efst_jitter_buff10
-    case efst_cup_of_boza
-    case efst_b_trap
-    case efst_e_chain
-    case efst_e_qd_shot_ready
-    case efst_c_marker
-    case efst_h_mine
-    case efst_h_mine_splash
-    case efst_p_alter
-    case efst_heat_barrel
-    case efst_anti_m_blast
-    case efst_slugshot
-    case efst_swordclan
-    case efst_arcwandclan
-    case efst_goldenmaceclan
-    case efst_crossbowclan
-    case efst_packing_envelope1
-    case efst_packing_envelope2
-    case efst_packing_envelope3
-    case efst_packing_envelope4
-    case efst_packing_envelope5
-    case efst_packing_envelope6
-    case efst_packing_envelope7
-    case efst_packing_envelope8
-    case efst_packing_envelope9
-    case efst_packing_envelope10
-    case efst_glastheim_trans
-    case efst_zongzi_pouch_trans
-    case efst_heat_barrel_after
-    case efst_decoration_of_music
-    case efst_overseaexpup
-    case efst_clown_n_gypsy_card
-    case efst_open_npc_market
-    case efst_beef_rib_stew
-    case efst_pork_rib_stew
-    case efst_chuseok_monday
-    case efst_chuseok_tuesday
-    case efst_chuseok_wednesday
-    case efst_chuseok_thursday
-    case efst_chuseok_friday
-    case efst_chuseok_weekend
-    case efst_all_lightguard
-    case efst_all_lightguard_cool_time
-    case efst_mtf_mhp
-    case efst_mtf_msp
-    case efst_mtf_pumpkin
-    case efst_mtf_hitflee
-    case efst_mtf_cridamage2
-    case efst_mtf_spdrain
-    case efst_acuo_mint_gum
-    case efst_s_healpotion
-    case efst_reuse_limit_s_heal_potion
-    case efst_playtime_statistics
-    case efst_gn_changematerial_operator
-    case efst_gn_mix_cooking_operator
-    case efst_gn_makebomb_operator
-    case efst_gn_s_pharmacy_operator
-    case efst_so_el_analysis_disassembly_operator
-    case efst_so_el_analysis_combination_operator
-    case efst_nc_magicdecoy_operator
-    case efst_guild_storage
-    case efst_gc_poisoningweapon_operator
-    case efst_ws_weaponrefine_operator
-    case efst_bs_repairweapon_operator
-    case efst_get_mailbox
-    case efst_jumpingclan
-    case efst_jp_otp
-    case efst_handicaptolerance_levelgap
-    case efst_mtf_rangeatk2
-    case efst_mtf_aspd2
-    case efst_mtf_matk2
-    case efst_show_npchpbar
-    case efst_flowersmoke
-    case efst_fstone
-    case efst_dailysendmailcnt
-    case efst_qscaraba
-    case efst_ljosalfar
-    case efst_pad_reader_knight
-    case efst_pad_reader_crusader
-    case efst_pad_reader_blacksmith
-    case efst_pad_reader_alchemist
-    case efst_pad_reader_assassin
-    case efst_pad_reader_rogue
-    case efst_pad_reader_wizard
-    case efst_pad_reader_sage
-    case efst_pad_reader_priest
-    case efst_pad_reader_monk
-    case efst_pad_reader_hunter
-    case efst_pad_reader_bard
-    case efst_pad_reader_dancer
-    case efst_pad_reader_taekwon
-    case efst_pad_reader_ninja
-    case efst_pad_reader_gunslinger
-    case efst_pad_reader_supernovice
-    case efst_essence_of_time
-    case efst_minigame_roulette
-    case efst_minigame_gold_point
-    case efst_minigame_silver_point
-    case efst_minigame_bronze_point
-    case efst_happiness_star
-    case efst_summerevent01
-    case efst_summerevent02
-    case efst_summerevent03
-    case efst_summerevent04
-    case efst_summerevent05
-    case efst_minigame_roulette_bonus_item
-    case efst_dress_up
-    case efst_maple_falls
-    case efst_all_niflheim_recall
-    case efst_marking_use_changemonster
-    case efst_mtf_marionette
-    case efst_mtf_lude
-    case efst_mtf_cruiser
-    case efst_mermaid_longing
-    case efst_magical_feather
-    case efst_dracula_card
-    case efst_all_prontera_recall
-    case efst_limit_power_booster
-    case efst_gift_of_snow
-    case efst_npc_hallucinationwalk
-    case efst_npc_hallucinationwalk_postdelay
-    case efst_npc_xxxwalk
-    case efst_time_accessory
-    case efst_ep16_def
-    case efst_normal_atked_sp
-    case efst_bodystate_stonecurse
-    case efst_bodystate_freezing
-    case efst_bodystate_stun
-    case efst_bodystate_sleep
-    case efst_bodystate_undead
-    case efst_bodystate_stonecurse_ing
-    case efst_bodystate_burnning
-    case efst_bodystate_imprison
-    case efst_healthstate_poison
-    case efst_healthstate_curse
-    case efst_healthstate_silence
-    case efst_healthstate_confusion
-    case efst_healthstate_blind
-    case efst_healthstate_angelus
-    case efst_healthstate_blooding
-    case efst_healthstate_heavypoison
-    case efst_healthstate_fear
-    case efst_cherry_blossom_cake
-    case efst_su_stoop
-    case efst_catnippowder
-    case efst_head_equipment_effect
-    case efst_sv_roottwist
-    case efst_attack_property_nothing
-    case efst_attack_property_water
-    case efst_attack_property_ground
-    case efst_attack_property_fire
-    case efst_attack_property_wind
-    case efst_attack_property_poison
-    case efst_attack_property_saint
-    case efst_attack_property_darkness
-    case efst_attack_property_telekinesis
-    case efst_attack_property_undead
-    case efst_resist_property_nothing
-    case efst_resist_property_water
-    case efst_resist_property_ground
-    case efst_resist_property_fire
-    case efst_resist_property_wind
-    case efst_resist_property_poison
-    case efst_resist_property_saint
-    case efst_resist_property_darkness
-    case efst_resist_property_telekinesis
-    case efst_resist_property_undead
-    case efst_bitescar
-    case efst_arclousedash
-    case efst_tunaparty
-    case efst_shrimp
-    case efst_freshshrimp
-    case efst_period_receiveitem
-    case efst_period_plusexp
-    case efst_period_plusjobexp
-    case efst_runehelm
-    case efst_helm_verkana
-    case efst_helm_rhydo
-    case efst_helm_turisus
-    case efst_helm_hagalas
-    case efst_helm_isia
-    case efst_helm_asir
-    case efst_helm_urj
-    case efst_suhide
-    case efst_reuse_limit_mg
-    case efst_doram_buf_01
-    case efst_doram_buf_02
-    case efst_spritemable
-    case efst_aid_period_receiveitem
-    case efst_aid_period_plusexp
-    case efst_aid_period_plusjobexp
-    case efst_aid_period_deadpenalty
-    case efst_aid_period_addstoreitemcount
-    case efst_all_glastheim_recall
-    case efst_reuse_limit_pepo_md
-    case efst_all_thanatos_recall
-    case efst_kafra_store
-    case efst_reuse_abbys
-    case efst_magicstone_of_grace_set
-    case efst_private_airplane
-    case efst_hiss
-    case efst_hiss_avoid
-    case efst_nyanggrass
-    case efst_chattering
-    case efst_chattering_opt_atk_matk
-    case efst_chattering_opt_haste
-    case efst_spiritofland_stemspear
-    case efst_spiritofland_roottwist
-    case efst_spiritofland_powdering
-    case efst_spiritofland_meteor
-    case efst_spiritofland_nyanggrass
-    case efst_grooming
-    case efst_protectionofshrimp
-    case efst_ep16_2_buff_ss
-    case efst_ep16_2_buff_sc
-    case efst_ep16_2_buff_ac
-    case efst_gs_magical_bullet
-    case efst_fallen_angel
-    case efst_reuse_limit_movepoint
-    case efst_macro_detector_answer_waiting
-    case efst_blaze_bead
-    case efst_frozen_bead
-    case efst_breeze_bead
-    case efst_soulattack
-    case efst_aid_period_receiveitem_2nd
-    case efst_aid_period_plusexp_2nd
-    case efst_aid_period_plusjobexp_2nd
-    case efst_prontera_jp
-    case efst_assistant_vending
-    case efst_gloom_card
-    case efst_pharaoh_card
-    case efst_kiel_card
-    case efst_assistant_buying
-    case efst_cheerup
-    case efst_get_cnt_unread_rodex_chardb
-    case efst_get_cnt_unread_rodex_globaldb
-    case efst_s_manapotion
-    case efst_m_defscroll
-    case efst_open_refining_ui
-    case efst_all_lighthalzen_recall
-    case efst_swap_equipitem
-    case efst_as_ragged_golem_card
-    case efst_lhz_dun_n1
-    case efst_lhz_dun_n2
-    case efst_lhz_dun_n3
-    case efst_lhz_dun_n4
-    case efst_taekwon_mission
-    case efst_sun_place
-    case efst_moon_place
-    case efst_star_place
-    case efst_sun_monster
-    case efst_moon_monster
-    case efst_star_monster
-    case efst_al_warp_addslot
-    case efst_all_stat_down
-    case efst_gradual_gravity
-    case efst_damage_heal
-    case efst_immune_property_nothing
-    case efst_immune_property_water
-    case efst_immune_property_ground
-    case efst_immune_property_fire
-    case efst_immune_property_wind
-    case efst_immune_property_poison
-    case efst_immune_property_saint
-    case efst_immune_property_darkness
-    case efst_immune_property_telekinesis
-    case efst_immune_property_undead
-    case efst_reuse_limit_np
-    case efst_specialcookie
-    case efst_damage_heal2
-    case efst_damage_heal3
-    case efst_glory_of_return
-    case efst_atk_popcorn
-    case efst_matk_popcorn
-    case efst_aspd_popcorn
-    case efst_ultimatecook
-    case efst_lightofmoon
-    case efst_lightofsun
-    case efst_lightofstar
-    case efst_lunarstance
-    case efst_universestance
-    case efst_sunstance
-    case efst_flashkick
-    case efst_newmoon
-    case efst_starstance
-    case efst_dimension
-    case efst_dimension1
-    case efst_dimension2
-    case efst_creatingstar
-    case efst_fallingstar
-    case efst_novaexplosing
-    case efst_gravitycontrol
-    case xxx_efst_worldstore_active
-    case efst_worldstore_itemmoveinfo_sendcomplete
-    case efst_soulcollect
-    case efst_soulreaper
-    case efst_soulunity
-    case efst_soulshadow
-    case efst_soulfairy
-    case efst_soulfalcon
-    case efst_soulgolem
-    case efst_souldivision
-    case efst_soulenergy
-    case efst_use_skill_sp_spa
-    case efst_use_skill_sp_sha
-    case efst_sp_sha
-    case efst_infinity_drink
-    case efst_abyss_001
-    case efst_abyss_002
-    case efst_abyss_003
-    case efst_abyss_004
-    case efst_abyss_005
-    case efst_abyss_006
-    case efst_abyss_007
-    case efst_abyss_008
-    case efst_reuse_limit_thm
-    case efst_reuse_limit_tli
-    case efst_reuse_limit_tkc
-    case efst_reuse_limit_trp
-    case efst_reuse_limit_tbg
-    case efst_reuse_limit_tbm
-    case efst_yggdrasil_bless
-    case efst_use_skill_sp_swhoo
-    case efst_hunting_event
-    case efst_period_receiveitem_2nd
-    case efst_period_plusexp_2nd
-    case efst_expdropup
-    case efst_tw_newyear_event
-    case efst_ensemblefatigue
-    case efst_adaptation
-    case efst_dancinglesson
-    case efst_musicallesson
-    case efst_reuse_limit_rc
-    case efst_dancinglesson_equipped
-    case efst_musicallesson_equipped
-    case efst_ancilla
-    case efst_reuse_limit_potion_a
-    case efst_reuse_limit_potion_b
-    case efst_reuse_limit_potion_c
-    case efst_reuse_limit_potion_d
-    case efst_reuse_limit_potion_e
-    case efst_reuse_limit_potion_f
-    case efst_braveset
-    case efst_macemastery_equipped
-    case efst_festive_energy
-    case efst_test_kr01
-    case efst_starfish_jp
-    case efst_weaponblock_on
-    case efst_cri_damage
-    case efst_def_power
-    case efst_def_ignore
-    case efst_bow_atk_power
-    case efst_red_org_potion
-    case efst_cast_time
-    case efst_bladestopready
-    case efst_teleport_br
-    case efst_sa_weapon_property
-    case efst_leapimpaired
-    case efst_sending_itemlist
-    case efst_exclusive_receiveitem
-    case efst_exclusive_plusexp
-    case efst_assumptio_buff
-    case efst_basilica_buff
-    case efst_overlapexpup2
-    case efst_stopmove_immediately
-    case efst_soulcurse
-    case efst_sound_of_destruction
-    case efst_df_manaplus
-    case efst_df_fullswingk
-    case efst_nv_breakthrough
-    case efst_helpangel
-    case efst_nv_transcendence
-    case efst_sweetsfair_atk
-    case efst_sweetsfair_matk
-    case efst_reuse_skill
-    case efst_flower_leaf2
-    case efst_flower_leaf3
-    case efst_flower_leaf4
-    case efst_charm_boost
-    case efst_earthshaker
-    case efst_period_use_worldmap
-    case efst_misty_frost
-    case efst_magic_poison
-    case efst_move_agit
-    case efst_reuse_jpnonly_limit_i
-    case efst_reuse_jpnonly_limit_j
-    case efst_reuse_jpnonly_limit_k
-    case efst_jpnonly_tactics
-    case efst_prison
-    case efst_madogear_type
-    case efst_deadly_defeasance
-    case efst_climax_des_hu
-    case efst_climax
-    case efst_feintbomb
-    case efst_luxanima
-    case efst_bath_foam_a
-    case efst_bath_foam_b
-    case efst_bath_foam_c
-    case efst_aroma_oil
-    case efst_reuse_limit_luxanima
-    case efst_powerful_faith
-    case efst_sincere_faith
-    case efst_firm_faith
-    case efst_airship_pipe
-    case efst_pieces_of_shadow
-    case efst_hells_plant_armor
-    case efst_relieve_damage
-    case efst_lockon_laser
-    case efst_grade_enchant_ui_open
-    case efst_ref_t_potion
-    case efst_add_atk_damage
-    case efst_add_matk_damage
-    case efst_servantweapon
-    case efst_servant_sign
-    case efst_chargingpierce
-    case efst_chargingpierce_count
-    case efst_dragonic_aura
-    case efst_big_scar
-    case efst_vigor
-    case efst_will_of_faith
-    case efst_pressure
-    case efst_sa_dragonology
-    case efst_climax_earth
-    case efst_climax_bloom
-    case efst_climax_cryimp
-    case efst_md_me_potion
-    case efst_md_ma_potion
-    case efst_md_ta_potion
-    case efst_md_ra_potion
-    case efst_reuse_megaphone
-    case efst_holy_oil
-    case efst_crystal_impact
-    case efst_shadow_exceed
-    case efst_dancing_knife
-    case efst_potent_venom
-    case efst_shadow_scar
-    case efst_e_slash_count
-    case efst_mediale
-    case efst_a_vita
-    case efst_a_telum
-    case efst_pre_acies
-    case efst_competentia
-    case efst_guard_stance
-    case efst_attack_stance
-    case efst_guardian_s
-    case efst_handicapstate_deepblind
-    case efst_handicapstate_deepsilence
-    case efst_handicapstate_lassitude
-    case efst_handicapstate_frostbite
-    case efst_handicapstate_swooning
-    case efst_handicapstate_lightningstrike
-    case efst_handicapstate_crystallization
-    case efst_handicapstate_conflagration
-    case efst_handicapstate_misfortune
-    case efst_handicapstate_deadlypoison
-    case efst_handicapstate_depression
-    case efst_handicapstate_holyflame
-    case efst_rebound_s
-    case efst_shield_mastery
-    case efst_spear_sword_m
-    case efst_holy_s
-    case efst_ultimate_s
-    case efst_spear_scar
-    case efst_shield_power
-    case efst_fidus_animus
-    case efst_mace_book_m
-    case efst_shadow_weapon
-    case efst_religio
-    case efst_benedictum
-    case efst_mvpcard_kiel
-    case efst_first_brand
-    case efst_second_brand
-    case efst_second_judge
-    case efst_third_exor_flame
-    case efst_first_faith_power
-    case efst_axe_stomp
-    case efst_a_machine
-    case efst_d_machine
-    case efst_mt_m_machine_operator
-    case efst_twoaxedef
-    case efst_dagger_and_bow_m
-    case efst_magic_sword_m
-    case efst_shadow_strip
-    case efst_abyss_dagger
-    case efst_abyssforceweapon
-    case efst_abyss_slayer
-    case efst_twohanddef
-    case efst_protectshadowequip
-    case efst_researchreport
-    case efst_bo_hell_dusty
-    case efst_windsign
-    case efst_crescivebolt
-    case efst_calamitygale
-    case efst_crescivebolt3
-    case efst_stage_manner
-    case efst_retrospection
-    case efst_mystic_symphony
-    case efst_kvasir_sonata
-    case efst_soundblend
-    case efst_gef_nocturn
-    case efst_ain_rhapsody
-    case efst_musical_interlude
-    case efst_jawaii_serenade
-    case efst_pron_march
-    case efst_roseblossom
-    case efst_bo_bionic_pharmacy_operator
-    case efst_acidified_zone_water
-    case efst_acidified_zone_ground
-    case efst_acidified_zone_wind
-    case efst_acidified_zone_fire
-    case efst_magic_book_m
-    case efst_spell_enchanting
-    case efst_summon_elemental_ardor
-    case efst_summon_elemental_diluvio
-    case efst_summon_elemental_procella
-    case efst_summon_elemental_terremotus
-    case efst_summon_elemental_serpens
-    case efst_flametechnic
-    case efst_flametechnic_option
-    case efst_flamearmor
-    case efst_flamearmor_option
-    case efst_cold_force
-    case efst_cold_force_option
-    case efst_crystal_armor
-    case efst_crystal_armor_option
-    case efst_grace_breeze
-    case efst_grace_breeze_option
-    case efst_eyes_of_storm
-    case efst_eyes_of_storm_option
-    case efst_earth_care
-    case efst_earth_care_option
-    case efst_strong_protection
-    case efst_strong_protection_option
-    case efst_deep_poisoning
-    case efst_deep_poisoning_option
-    case efst_poison_shield
-    case efst_poison_shield_option
-    case efst_abr_battle_warior
-    case efst_abr_dual_cannon
-    case efst_abr_mother_net
-    case efst_abr_infinity
-    case efst_elemental_veil
-    case efst_renovatio_ext
-    case efst_homun_time
-    case efst_power_acceleration
-    case efst_max_hp_sp_avoid
-    case efst_add_all_state
-    case efst_aid_period_power_acceleration
-    case efst_aid_period_max_hp_sp_avoid
-    case efst_aid_period_add_all_state
-    case efst_poison_mist
-    case efst_hackandslasher
-    case efst_get_cnt_unread_return_rodex_chardb
-    case efst_stone_wall
-    case efst_reuse_limit_i
-    case efst_overbrandready
-    case efst_shieldspell
-    case efst_autoshadowspell_check2
-    case efst_cloud_poison
-    case efst_spore_explosion_debuff
-    case efst_defscroll
-    case efst_massive_f_blaster
-    case efst_noequipweapon2
-    case efst_noequiparmor2
-    case efst_noequipshield2
-    case efst_noequipshoes2
-    case efst_noequippendant2
-    case efst_noequipearing2
-    case efst_noequipfull2
-    case efst_curse_r_cube
-    case efst_curse_b_cube
-    case efst_killing_aura
-    case efst_toxin_of_mandara
-    case efst_goldene_tone
-    case efst_tempering
-    case efst_nw_p_f_i
-    case efst_intensive_aim
-    case efst_intensive_aim_count
-    case efst_grenade_fragment_1
-    case efst_grenade_fragment_2
-    case efst_grenade_fragment_3
-    case efst_grenade_fragment_4
-    case efst_grenade_fragment_5
-    case efst_grenade_fragment_6
-    case efst_auto_firing_launcherefst
-    case efst_hidden_card
-    case efst_nw_grenade_mastery
-    case efst_talisman_of_protection
-    case efst_talisman_of_warrior
-    case efst_talisman_of_magician
-    case efst_talisman_of_five_elements
-    case efst_t_first_god
-    case efst_t_second_god
-    case efst_t_third_god
-    case efst_t_fourth_god
-    case efst_t_fiveth_god
-    case efst_heaven_and_earth
-    case efst_hogogong
-    case efst_marine_festival
-    case efst_sandy_festival
-    case efst_ki_sul_rampage
-    case efst_colors_of_hyun_rok_1
-    case efst_colors_of_hyun_rok_2
-    case efst_colors_of_hyun_rok_3
-    case efst_colors_of_hyun_rok_4
-    case efst_colors_of_hyun_rok_5
-    case efst_colors_of_hyun_rok_6
-    case efst_colors_of_hyun_rok_buff
-    case efst_temporary_communion
-    case efst_blessing_of_m_creatures
-    case efst_blessing_of_m_c_debuff
-    case efst_shieldchainrush
-    case efst_mistyfrost
-    case efst_groundgravity
-    case efst_breakinglimit
-    case efst_rulebreak
-    case efst_rising_sun
-    case efst_noon_sun
-    case efst_sunset_sun
-    case efst_rising_moon
-    case efst_midnight_moon
-    case efst_dawn_moon
-    case efst_star_burst
-    case efst_sky_enchant
-    case efst_shadow_clock
-    case efst_shinkirou_call
-    case efst_nightmare
-    case efst_noodle_fes_1
-    case efst_noodle_fes_2
-    case efst_noodle_fes_3
-    case efst_noodle_fes_4
-    case efst_noodle_fes_5
-    case efst_rush_quake1
-    case efst_rush_quake2
-    case efst_sbunshin
-    case efst_mtp_w_potion_100
-    case efst_change_size
-    case efst_change_size_monster
-    case efst_show_effect1
-    case efst_show_effect2
-    case efst_show_effect3
-    case efst_vr_speed
-    case efst_vr_aspd
-    case efst_vr_mhp
-    case efst_vr_msp
-    case efst_vr_hit
-    case efst_vr_def
-    case efst_vr_mdef
-    case efst_vr_book001
-    case efst_vr_book002
-    case efst_vr_book003
-    case efst_vr_book004
-    case efst_reuse_limit_vr_book
-    case efst_vr_book005
-    case efst_vr_book006
-    case efst_vr_book007
-    case efst_vr_book008
-    case efst_vr_book009
-    case efst_all_t_stat
-    case efst_p_atk_plus
-    case efst_s_matk_plus
-    case efst_c_rate_plus
-    case efst_resist_plus
-    case efst_pvp_dun_buff
-    case efst_target_marker
-    case efst_block_seal
-    case efst_frost_storm
-    case efst_groggy
-    case efst_warm_shield
-    case efst_contents_1
-    case efst_contents_2
-    case efst_contents_3
-    case efst_contents_4
-    case efst_contents_5
-    case efst_contents_6
-    case efst_contents_7
-    case efst_contents_8
-    case efst_contents_9
-    case efst_contents_10
-    case efst_contents_11
-    case efst_contents_12
-    case efst_contents_13
-    case efst_contents_14
-    case efst_contents_15
-    case efst_contents_16
-    case efst_contents_17
-    case efst_contents_18
-    case efst_contents_19
-    case efst_contents_20
-    case efst_contents_21
-    case efst_contents_22
-    case efst_contents_23
-    case efst_contents_24
-    case efst_contents_25
-    case efst_c_buff_1
-    case efst_c_buff_2
-    case efst_chasing
-    case efst_mystery_powder
-    case efst_fire_charm_power
-    case efst_water_charm_power
-    case efst_wind_charm_power
-    case efst_ground_charm_power
-
-    public var rawValue: Int {
-        switch self {
-        case .efst_blank: -1
-        case .efst_provoke: 0
-        case .efst_endure: 1
-        case .efst_twohandquicken: 2
-        case .efst_concentration: 3
-        case .efst_hiding: 4
-        case .efst_cloaking: 5
-        case .efst_enchantpoison: 6
-        case .efst_poisonreact: 7
-        case .efst_quagmire: 8
-        case .efst_angelus: 9
-        case .efst_blessing: 10
-        case .efst_crucis: 11
-        case .efst_inc_agi: 12
-        case .efst_dec_agi: 13
-        case .efst_slowpoison: 14
-        case .efst_impositio: 15
-        case .efst_suffragium: 16
-        case .efst_aspersio: 17
-        case .efst_benedictio: 18
-        case .efst_kyrie: 19
-        case .efst_magnificat: 20
-        case .efst_gloria: 21
-        case .efst_lexaeterna: 22
-        case .efst_adrenaline: 23
-        case .efst_weaponperfect: 24
-        case .efst_overthrust: 25
-        case .efst_maximize: 26
-        case .efst_riding: 27
-        case .efst_falcon: 28
-        case .efst_trickdead: 29
-        case .efst_shout: 30
-        case .efst_energycoat: 31
-        case .efst_brokenarmor: 32
-        case .efst_brokenweapon: 33
-        case .efst_illusion: 34
-        case .efst_weightover50: 35
-        case .efst_weightover90: 36
-        case .efst_atthaste_potion1: 37
-        case .efst_atthaste_potion2: 38
-        case .efst_atthaste_potion3: 39
-        case .efst_atthaste_infinity: 40
-        case .efst_movhaste_potion: 41
-        case .efst_movhaste_infinity: 42
-        case .efst_autocounter: 43
-        case .efst_splasher: 44
-        case .efst_anklesnare: 45
-        case .efst_postdelay: 46
-        case .efst_noaction: 47
-        case .efst_impossiblepickup: 48
-        case .efst_barrier: 49
-        case .efst_noequipweapon: 50
-        case .efst_noequipshield: 51
-        case .efst_noequiparmor: 52
-        case .efst_noequiphelm: 53
-        case .efst_protectweapon: 54
-        case .efst_protectshield: 55
-        case .efst_protectarmor: 56
-        case .efst_protecthelm: 57
-        case .efst_autoguard: 58
-        case .efst_reflectshield: 59
-        case .efst_devotion: 60
-        case .efst_providence: 61
-        case .efst_defender: 62
-        case .efst_magicrod: 63
-        case .efst_weaponproperty: 64
-        case .efst_autospell: 65
-        case .efst_specialzone: 66
-        case .efst_mask: 67
-        case .efst_spearquicken: 68
-        case .efst_bdplaying: 69
-        case .efst_whistle: 70
-        case .efst_assassincross: 71
-        case .efst_poembragi: 72
-        case .efst_appleidun: 73
-        case .efst_humming: 74
-        case .efst_dontforgetme: 75
-        case .efst_fortunekiss: 76
-        case .efst_serviceforyou: 77
-        case .efst_richmankim: 78
-        case .efst_eternalchaos: 79
-        case .efst_drumbattlefield: 80
-        case .efst_ringnibelungen: 81
-        case .efst_rokisweil: 82
-        case .efst_intoabyss: 83
-        case .efst_siegfried: 84
-        case .efst_bladestop: 85
-        case .efst_explosionspirits: 86
-        case .efst_steelbody: 87
-        case .efst_extremityfist: 88
-        case .efst_comboattack: 89
-        case .efst_propertyfire: 90
-        case .efst_propertywater: 91
-        case .efst_propertywind: 92
-        case .efst_propertyground: 93
-        case .efst_magicattack: 94
-        case .efst_stop: 95
-        case .efst_weaponbraker: 96
-        case .efst_propertyundead: 97
-        case .efst_powerup: 98
-        case .efst_agiup: 99
-        case .efst_siegemode: 100
-        case .efst_invisible: 101
-        case .efst_statusone: 102
-        case .efst_aurablade: 103
-        case .efst_parrying: 104
-        case .efst_lkconcentration: 105
-        case .efst_tensionrelax: 106
-        case .efst_berserk: 107
-        case .efst_sacrifice: 108
-        case .efst_gospel: 109
-        case .efst_assumptio: 110
-        case .efst_basilica: 111
-        case .efst_groundmagic: 112
-        case .efst_magicpower: 113
-        case .efst_edp: 114
-        case .efst_truesight: 115
-        case .efst_windwalk: 116
-        case .efst_meltdown: 117
-        case .efst_cartboost: 118
-        case .efst_chasewalk: 119
-        case .efst_swordreject: 120
-        case .efst_marionette_master: 121
-        case .efst_marionette: 122
-        case .efst_moon: 123
-        case .efst_blooding: 124
-        case .efst_jointbeat: 125
-        case .efst_mindbreaker: 126
-        case .efst_memorize: 127
-        case .efst_fogwall: 128
-        case .efst_spiderweb: 129
-        case .efst_protectexp: 130
-        case .efst_sub_weaponproperty: 131
-        case .efst_autoberserk: 132
-        case .efst_run: 133
-        case .efst_ting: 134
-        case .efst_stormkick_on: 135
-        case .efst_stormkick_ready: 136
-        case .efst_downkick_on: 137
-        case .efst_downkick_ready: 138
-        case .efst_turnkick_on: 139
-        case .efst_turnkick_ready: 140
-        case .efst_counter_on: 141
-        case .efst_counter_ready: 142
-        case .efst_dodge_on: 143
-        case .efst_dodge_ready: 144
-        case .efst_strup: 145
-        case .efst_propertydark: 146
-        case .efst_adrenaline2: 147
-        case .efst_propertytelekinesis: 148
-        case .efst_soullink: 149
-        case .efst_plusattackpower: 150
-        case .efst_plusmagicpower: 151
-        case .efst_devil1: 152
-        case .efst_kaite: 153
-        case .efst_swoo: 154
-        case .efst_star2: 155
-        case .efst_kaizel: 156
-        case .efst_kaahi: 157
-        case .efst_kaupe: 158
-        case .efst_sma_ready: 159
-        case .efst_ske: 160
-        case .efst_onehandquicken: 161
-        case .efst_friend: 162
-        case .efst_friendup: 163
-        case .efst_sg_warm: 164
-        case .efst_sg_sun_warm: 165
-        case .efst_sg_moon_warm: 166
-        case .efst_sg_star_warm: 167
-        case .efst_emotion: 168
-        case .efst_sun_comfort: 169
-        case .efst_moon_comfort: 170
-        case .efst_star_comfort: 171
-        case .efst_expup: 172
-        case .efst_gdskill_battleorder: 173
-        case .efst_gdskill_regeneration: 174
-        case .efst_gdskill_postdelay: 175
-        case .efst_resisthandicap: 176
-        case .efst_maxhppercent: 177
-        case .efst_maxsppercent: 178
-        case .efst_defence: 179
-        case .efst_slowdown: 180
-        case .efst_preserve: 181
-        case .efst_chasewalk2: 182
-        case .efst_not_extremityfist: 183
-        case .efst_clairvoyance: 184
-        case .efst_moveslow_potion: 185
-        case .efst_doublecasting: 186
-        case .efst_gravitation: 187
-        case .efst_overthrustmax: 188
-        case .efst_longing: 189
-        case .efst_hermode: 190
-        case .efst_tarotcard: 191
-        case .efst_hlif_avoid: 192
-        case .efst_hfli_fleet: 193
-        case .efst_hfli_speed: 194
-        case .efst_hlif_change: 195
-        case .efst_hami_bloodlust: 196
-        case .efst_cr_shrink: 197
-        case .efst_wz_sightblaster: 198
-        case .efst_dc_winkcharm: 199
-        case .efst_rg_cconfine_m: 200
-        case .efst_rg_cconfine_s: 201
-        case .efst_disablemove: 202
-        case .efst_gs_madnesscancel: 203
-        case .efst_gs_gatlingfever: 204
-        case .efst_earthscroll: 205
-        case .efst_nj_utsusemi: 206
-        case .efst_nj_bunsinjyutsu: 207
-        case .efst_nj_nen: 208
-        case .efst_gs_adjustment: 209
-        case .efst_gs_accuracy: 210
-        case .efst_nj_suiton: 211
-        case .efst_pet: 212
-        case .efst_mental: 213
-        case .efst_expmemory: 214
-        case .efst_performance: 215
-        case .efst_gain: 216
-        case .efst_griffon: 217
-        case .efst_drift: 218
-        case .efst_wallshift: 219
-        case .efst_reincarnation: 220
-        case .efst_pattack: 221
-        case .efst_pspeed: 222
-        case .efst_pdefense: 223
-        case .efst_pcritical: 224
-        case .efst_ranking: 225
-        case .efst_ptriple: 226
-        case .efst_denergy: 227
-        case .efst_wave1: 228
-        case .efst_wave2: 229
-        case .efst_wave3: 230
-        case .efst_wave4: 231
-        case .efst_daura: 232
-        case .efst_dfreezer: 233
-        case .efst_dpunish: 234
-        case .efst_dbarrier: 235
-        case .efst_dwarning: 236
-        case .efst_mousewheel: 237
-        case .efst_dgauge: 238
-        case .efst_daccel: 239
-        case .efst_dblock: 240
-        case .efst_food_str: 241
-        case .efst_food_agi: 242
-        case .efst_food_vit: 243
-        case .efst_food_dex: 244
-        case .efst_food_int: 245
-        case .efst_food_luk: 246
-        case .efst_food_basicavoidance: 247
-        case .efst_food_basichit: 248
-        case .efst_food_criticalsuccessvalue: 249
-        case .efst_cash_plusexp: 250
-        case .efst_cash_deathpenalty: 251
-        case .efst_cash_receiveitem: 252
-        case .efst_cash_boss_alarm: 253
-        case .efst_da_energy: 254
-        case .efst_da_firstslot: 255
-        case .efst_da_headdef: 256
-        case .efst_da_space: 257
-        case .efst_da_transform: 258
-        case .efst_da_itemrebuild: 259
-        case .efst_da_illusion: 260
-        case .efst_da_darkpower: 261
-        case .efst_da_earplug: 262
-        case .efst_da_contract: 263
-        case .efst_da_black: 264
-        case .efst_da_magiccart: 265
-        case .efst_crystal: 266
-        case .efst_da_rebuild: 267
-        case .efst_da_edarkness: 268
-        case .efst_da_eguardian: 269
-        case .efst_da_timeout: 270
-        case .efst_food_str_cash: 271
-        case .efst_food_agi_cash: 272
-        case .efst_food_vit_cash: 273
-        case .efst_food_dex_cash: 274
-        case .efst_food_int_cash: 275
-        case .efst_food_luk_cash: 276
-        case .efst_mer_flee: 277
-        case .efst_mer_atk: 278
-        case .efst_mer_hp: 279
-        case .efst_mer_sp: 280
-        case .efst_mer_hit: 281
-        case .efst_slowcast: 282
-        case .efst_magicmirror: 283
-        case .efst_stoneskin: 284
-        case .efst_antimagic: 285
-        case .efst_criticalwound: 286
-        case .efst_npc_defender: 287
-        case .efst_noaction_wait: 288
-        case .efst_movhaste_horse: 289
-        case .efst_protect_def: 290
-        case .efst_protect_mdef: 291
-        case .efst_healplus: 292
-        case .efst_s_lifepotion: 293
-        case .efst_l_lifepotion: 294
-        case .efst_criticalpercent: 295
-        case .efst_plusavoidvalue: 296
-        case .efst_atker_aspd: 297
-        case .efst_target_aspd: 298
-        case .efst_atker_movespeed: 299
-        case .efst_atker_blood: 300
-        case .efst_target_blood: 301
-        case .efst_armor_property: 302
-        case .efst_reuse_limit_a: 303
-        case .efst_hellpower: 304
-        case .efst_steampack: 305
-        case .efst_reuse_limit_b: 306
-        case .efst_reuse_limit_c: 307
-        case .efst_reuse_limit_d: 308
-        case .efst_reuse_limit_e: 309
-        case .efst_reuse_limit_f: 310
-        case .efst_invincible: 311
-        case .efst_cash_plusonlyjobexp: 312
-        case .efst_partyflee: 313
-        case .efst_angel_protect: 314
-        case .efst_endure_mdef: 315
-        case .efst_enchantblade: 316
-        case .efst_deathbound: 317
-        case .efst_refresh: 318
-        case .efst_giantgrowth: 319
-        case .efst_stonehardskin: 320
-        case .efst_vitalityactivation: 321
-        case .efst_fightingspirit: 322
-        case .efst_abundance: 323
-        case .efst_reuse_millenniumshield: 324
-        case .efst_reuse_crushstrike: 325
-        case .efst_reuse_refresh: 326
-        case .efst_reuse_stormblast: 327
-        case .efst_venomimpress: 328
-        case .efst_epiclesis: 329
-        case .efst_oratio: 330
-        case .efst_laudaagnus: 331
-        case .efst_laudaramus: 332
-        case .efst_cloakingexceed: 333
-        case .efst_hallucinationwalk: 334
-        case .efst_hallucinationwalk_postdelay: 335
-        case .efst_renovatio: 336
-        case .efst_weaponblocking: 337
-        case .efst_weaponblocking_postdelay: 338
-        case .efst_rollingcutter: 339
-        case .efst_expiatio: 340
-        case .efst_poisoningweapon: 341
-        case .efst_toxin: 342
-        case .efst_paralyse: 343
-        case .efst_venombleed: 344
-        case .efst_magicmushroom: 345
-        case .efst_deathhurt: 346
-        case .efst_pyrexia: 347
-        case .efst_oblivioncurse: 348
-        case .efst_leechesend: 349
-        case .efst_duplelight: 350
-        case .efst_frostmisty: 351
-        case .efst_fearbreeze: 352
-        case .efst_electricshocker: 353
-        case .efst_marshofabyss: 354
-        case .efst_recognizedspell: 355
-        case .efst_stasis: 356
-        case .efst_wugrider: 357
-        case .efst_wugdash: 358
-        case .efst_wugbite: 359
-        case .efst_camouflage: 360
-        case .efst_acceleration: 361
-        case .efst_hovering: 362
-        case .efst_summon1: 363
-        case .efst_summon2: 364
-        case .efst_summon3: 365
-        case .efst_summon4: 366
-        case .efst_summon5: 367
-        case .efst_mvpcard_taogunka: 368
-        case .efst_mvpcard_mistress: 369
-        case .efst_mvpcard_orchero: 370
-        case .efst_mvpcard_orclord: 371
-        case .efst_overheat_limitpoint: 372
-        case .efst_overheat: 373
-        case .efst_shapeshift: 374
-        case .efst_infraredscan: 375
-        case .efst_magneticfield: 376
-        case .efst_neutralbarrier: 377
-        case .efst_neutralbarrier_master: 378
-        case .efst_stealthfield: 379
-        case .efst_stealthfield_master: 380
-        case .efst_manu_atk: 381
-        case .efst_manu_def: 382
-        case .efst_spl_atk: 383
-        case .efst_spl_def: 384
-        case .efst_reproduce: 385
-        case .efst_manu_matk: 386
-        case .efst_spl_matk: 387
-        case .efst_str_scroll: 388
-        case .efst_int_scroll: 389
-        case .efst_lg_reflectdamage: 390
-        case .efst_forceofvanguard: 391
-        case .efst_buchedenoel: 392
-        case .efst_autoshadowspell: 393
-        case .efst_shadowform: 394
-        case .efst_raid: 395
-        case .efst_shieldspell_def: 396
-        case .efst_shieldspell_mdef: 397
-        case .efst_shieldspell_ref: 398
-        case .efst_bodypaint: 399
-        case .efst_exeedbreak: 400
-        case .efst_adoramus: 401
-        case .efst_prestige: 402
-        case .efst_invisibility: 403
-        case .efst_deadlyinfect: 404
-        case .efst_banding: 405
-        case .efst_earthdrive: 406
-        case .efst_inspiration: 407
-        case .efst_enervation: 408
-        case .efst_groomy: 409
-        case .efst_raisingdragon: 410
-        case .efst_ignorance: 411
-        case .efst_laziness: 412
-        case .efst_lightningwalk: 413
-        case .efst_acaraje: 414
-        case .efst_unlucky: 415
-        case .efst_cursedcircle_atker: 416
-        case .efst_cursedcircle_target: 417
-        case .efst_weakness: 418
-        case .efst_crescentelbow: 419
-        case .efst_noequipaccessary: 420
-        case .efst_stripaccessary: 421
-        case .efst_manhole: 422
-        case .efst_popecookie: 423
-        case .efst_fallenempire: 424
-        case .efst_gentletouch_energygain: 425
-        case .efst_gentletouch_change: 426
-        case .efst_gentletouch_revitalize: 427
-        case .efst_bloodylust: 428
-        case .efst_swing: 429
-        case .efst_symphony_love: 430
-        case .efst_propertywalk: 431
-        case .efst_spellfist: 432
-        case .efst_netherworld: 433
-        case .efst_siren: 434
-        case .efst_deep_sleep: 435
-        case .efst_sircleofnature: 436
-        case .efst_cold: 437
-        case .efst_gloomyday: 438
-        case .efst_song_of_mana: 439
-        case .efst_cloud_kill: 440
-        case .efst_dance_with_wug: 441
-        case .efst_rush_windmill: 442
-        case .efst_echosong: 443
-        case .efst_harmonize: 444
-        case .efst_striking: 445
-        case .efst_warmer: 446
-        case .efst_moonlit_serenade: 447
-        case .efst_saturday_night_fever: 448
-        case .efst_sitdown_force: 449
-        case .efst_analyze: 450
-        case .efst_lerads_dew: 451
-        case .efst_melodyofsink: 452
-        case .efst_beyond_of_warcry: 453
-        case .efst_unlimited_humming_voice: 454
-        case .efst_spellbook1: 455
-        case .efst_spellbook2: 456
-        case .efst_spellbook3: 457
-        case .efst_freeze_sp: 458
-        case .efst_gn_training_sword: 459
-        case .efst_gn_remodeling_cart: 460
-        case .efst_gn_cartboost: 461
-        case .efst_fixedcastingtm_reduce: 462
-        case .efst_thorns_trap: 463
-        case .efst_blood_sucker: 464
-        case .efst_spore_explosion: 465
-        case .efst_demonic_fire: 466
-        case .efst_fire_expansion_smoke_powder: 467
-        case .efst_fire_expansion_tear_gas: 468
-        case .efst_blocking_play: 469
-        case .efst_mandragora: 470
-        case .efst_activate: 471
-        case .efst_ab_secrament: 472
-        case .efst_assumptio2: 473
-        case .efst_tk_sevenwind: 474
-        case .efst_limit_odins_recall: 475
-        case .efst_stomachache: 476
-        case .efst_mysterious_powder: 477
-        case .efst_melon_bomb: 478
-        case .efst_banana_bomb_sitdown_postdelay: 479
-        case .efst_promote_health_reserch: 480
-        case .efst_energy_drink_reserch: 481
-        case .efst_extract_white_potion_z: 482
-        case .efst_vitata_500: 483
-        case .efst_extract_salamine_juice: 484
-        case .efst_boost500: 485
-        case .efst_full_swing_k: 486
-        case .efst_mana_plus: 487
-        case .efst_mustle_m: 488
-        case .efst_life_force_f: 489
-        case .efst_vacuum_extreme: 490
-        case .efst_savage_steak: 491
-        case .efst_cocktail_warg_blood: 492
-        case .efst_minor_bbq: 493
-        case .efst_siroma_ice_tea: 494
-        case .efst_drocera_herb_steamed: 495
-        case .efst_putti_tails_noodles: 496
-        case .efst_banana_bomb: 497
-        case .efst_summon_agni: 498
-        case .efst_spellbook4: 499
-        case .efst_spellbook5: 500
-        case .efst_spellbook6: 501
-        case .efst_spellbook7: 502
-        case .efst_elemental_aggressive: 503
-        case .efst_return_to_eldicastes: 504
-        case .efst_banding_defence: 505
-        case .efst_skelscroll: 506
-        case .efst_distructionscroll: 507
-        case .efst_royalscroll: 508
-        case .efst_immunityscroll: 509
-        case .efst_mysticscroll: 510
-        case .efst_battlescroll: 511
-        case .efst_armorscroll: 512
-        case .efst_freyjascroll: 513
-        case .efst_soulscroll: 514
-        case .efst_circle_of_fire: 515
-        case .efst_circle_of_fire_option: 516
-        case .efst_fire_cloak: 517
-        case .efst_fire_cloak_option: 518
-        case .efst_water_screen: 519
-        case .efst_water_screen_option: 520
-        case .efst_water_drop: 521
-        case .efst_water_drop_option: 522
-        case .efst_wind_step: 523
-        case .efst_wind_step_option: 524
-        case .efst_wind_curtain: 525
-        case .efst_wind_curtain_option: 526
-        case .efst_water_barrier: 527
-        case .efst_zephyr: 528
-        case .efst_solid_skin: 529
-        case .efst_solid_skin_option: 530
-        case .efst_stone_shield: 531
-        case .efst_stone_shield_option: 532
-        case .efst_power_of_gaia: 533
-        case .efst_el_wait: 534
-        case .efst_el_passive: 535
-        case .efst_el_defensive: 536
-        case .efst_el_offensive: 537
-        case .efst_el_cost: 538
-        case .efst_pyrotechnic: 539
-        case .efst_pyrotechnic_option: 540
-        case .efst_heater: 541
-        case .efst_heater_option: 542
-        case .efst_tropic: 543
-        case .efst_tropic_option: 544
-        case .efst_aquaplay: 545
-        case .efst_aquaplay_option: 546
-        case .efst_cooler: 547
-        case .efst_cooler_option: 548
-        case .efst_chilly_air: 549
-        case .efst_chilly_air_option: 550
-        case .efst_gust: 551
-        case .efst_gust_option: 552
-        case .efst_blast: 553
-        case .efst_blast_option: 554
-        case .efst_wild_storm: 555
-        case .efst_wild_storm_option: 556
-        case .efst_petrology: 557
-        case .efst_petrology_option: 558
-        case .efst_cursed_soil: 559
-        case .efst_cursed_soil_option: 560
-        case .efst_upheaval: 561
-        case .efst_upheaval_option: 562
-        case .efst_tidal_weapon: 563
-        case .efst_tidal_weapon_option: 564
-        case .efst_rock_crusher: 565
-        case .efst_rock_crusher_atk: 566
-        case .efst_fire_insignia: 567
-        case .efst_water_insignia: 568
-        case .efst_wind_insignia: 569
-        case .efst_earth_insignia: 570
-        case .efst_equiped_floor: 571
-        case .efst_guardian_recall: 572
-        case .efst_mora_buff: 573
-        case .efst_reuse_limit_g: 574
-        case .efst_reuse_limit_h: 575
-        case .efst_needle_of_paralyze: 576
-        case .efst_pain_killer: 577
-        case .efst_g_lifepotion: 578
-        case .efst_vitalize_potion: 579
-        case .efst_light_of_regene: 580
-        case .efst_overed_boost: 581
-        case .efst_silent_breeze: 582
-        case .efst_odins_power: 583
-        case .efst_style_change: 584
-        case .efst_sonic_claw_postdelay: 585
-        case .efst_silvervein_rush_postdelay: 596
-        case .efst_midnight_frenzy_postdelay: 597
-        case .efst_goldene_ferse: 598
-        case .efst_angriffs_modus: 599
-        case .efst_tinder_breaker: 600
-        case .efst_tinder_breaker_postdelay: 601
-        case .efst_cbc: 602
-        case .efst_cbc_postdelay: 603
-        case .efst_eqc: 604
-        case .efst_magma_flow: 605
-        case .efst_granitic_armor: 606
-        case .efst_pyroclastic: 607
-        case .efst_volcanic_ash: 608
-        case .efst_spirits_saveinfo1: 609
-        case .efst_spirits_saveinfo2: 610
-        case .efst_magic_candy: 611
-        case .efst_search_store_info: 612
-        case .efst_all_riding: 613
-        case .efst_all_riding_reuse_limit: 614
-        case .efst_macro: 615
-        case .efst_macro_postdelay: 616
-        case .efst_beer_bottle_cap: 617
-        case .efst_overlapexpup: 618
-        case .efst_pc_iz_dun05: 619
-        case .efst_crushstrike: 620
-        case .efst_monster_transform: 621
-        case .efst_sit: 622
-        case .efst_onair: 623
-        case .efst_mtf_aspd: 624
-        case .efst_mtf_rangeatk: 625
-        case .efst_mtf_matk: 626
-        case .efst_mtf_mleatked: 627
-        case .efst_mtf_cridamage: 628
-        case .efst_reuse_limit_mtf: 629
-        case .efst_macro_permit: 630
-        case .efst_macro_play: 631
-        case .efst_skf_cast: 632
-        case .efst_skf_aspd: 633
-        case .efst_skf_atk: 634
-        case .efst_skf_matk: 635
-        case .efst_reward_plusonlyjobexp: 636
-        case .efst_handicapstate_norecover: 637
-        case .efst_set_num_def: 638
-        case .efst_set_num_mdef: 639
-        case .efst_set_per_def: 640
-        case .efst_set_per_mdef: 641
-        case .efst_partybooking_search_dealy: 642
-        case .efst_partybooking_register_dealy: 643
-        case .efst_period_time_check_detect_skill: 644
-        case .efst_ko_jyumonjikiri: 645
-        case .efst_meikyousisui: 646
-        case .efst_atthaste_cash: 647
-        case .efst_equipped_divine_armor: 648
-        case .efst_equipped_holy_armor: 649
-        case .efst_2011rwc: 650
-        case .efst_kyougaku: 651
-        case .efst_izayoi: 652
-        case .efst_zenkai: 653
-        case .efst_kg_kagehumi: 654
-        case .efst_kyomu: 655
-        case .efst_kagemusya: 656
-        case .efst_zangetsu: 657
-        case .efst_phi_demon: 658
-        case .efst_gensou: 659
-        case .efst_akaitsuki: 660
-        case .efst_tetany: 661
-        case .efst_gm_battle: 662
-        case .efst_gm_battle2: 663
-        case .efst_2011rwc_scroll: 664
-        case .efst_active_monster_transform: 665
-        case .efst_mysticpowder: 666
-        case .efst_eclage_recall: 667
-        case .efst_entry_queue_apply_delay: 668
-        case .efst_reuse_limit_ecl: 669
-        case .efst_m_lifepotion: 670
-        case .efst_entry_queue_notify_admission_time_out: 671
-        case .efst_unknown_name: 672
-        case .efst_on_push_cart: 673
-        case .efst_hat_effect: 674
-        case .efst_flower_leaf: 675
-        case .efst_ray_of_protection: 676
-        case .efst_glastheim_atk: 677
-        case .efst_glastheim_def: 678
-        case .efst_glastheim_heal: 679
-        case .efst_glastheim_hidden: 680
-        case .efst_glastheim_state: 681
-        case .efst_glastheim_itemdef: 682
-        case .efst_glastheim_hpsp: 683
-        case .efst_homun_skill_postdelay: 684
-        case .efst_almighty: 685
-        case .efst_gvg_giant: 686
-        case .efst_gvg_golem: 687
-        case .efst_gvg_stun: 688
-        case .efst_gvg_stone: 689
-        case .efst_gvg_freez: 690
-        case .efst_gvg_sleep: 691
-        case .efst_gvg_curse: 692
-        case .efst_gvg_silence: 693
-        case .efst_gvg_blind: 694
-        case .efst_client_only_equip_arrow: 695
-        case .efst_clan_info: 696
-        case .efst_jp_event01: 697
-        case .efst_jp_event02: 698
-        case .efst_jp_event03: 699
-        case .efst_jp_event04: 700
-        case .efst_teleport_fixedcastingdelay: 701
-        case .efst_geffen_magic1: 702
-        case .efst_geffen_magic2: 703
-        case .efst_geffen_magic3: 704
-        case .efst_quest_buff1: 705
-        case .efst_quest_buff2: 706
-        case .efst_quest_buff3: 707
-        case .efst_reuse_limit_recall: 708
-        case .efst_saveposition: 709
-        case .efst_handicapstate_iceexplo: 710
-        case .efst_fenrir_card: 711
-        case .efst_reuse_limit_aspd_potion: 712
-        case .efst_maxpain: 713
-        case .efst_pc_stop: 714
-        case .efst_frigg_song: 715
-        case .efst_offertorium: 716
-        case .efst_telekinesis_intense: 717
-        case .efst_moonstar: 718
-        case .efst_strangelights: 719
-        case .efst_full_throttle: 720
-        case .efst_rebound: 721
-        case .efst_unlimit: 722
-        case .efst_kings_grace: 723
-        case .efst_item_atkmax: 724
-        case .efst_item_atkmin: 725
-        case .efst_item_matkmax: 726
-        case .efst_item_matkmin: 727
-        case .efst_super_star: 728
-        case .efst_high_ranker: 729
-        case .efst_darkcrow: 730
-        case .efst_2013_valentine1: 731
-        case .efst_2013_valentine2: 732
-        case .efst_2013_valentine3: 733
-        case .efst_illusiondoping: 734
-        case .efst_wideweb: 735
-        case .efst_chill: 736
-        case .efst_burnt: 737
-        case .efst_pccafe_play_time: 738
-        case .efst_twisted_time: 739
-        case .efst_flashcombo: 740
-        case .efst_jitter_buff1: 741
-        case .efst_jitter_buff2: 742
-        case .efst_jitter_buff3: 743
-        case .efst_jitter_buff4: 744
-        case .efst_jitter_buff5: 745
-        case .efst_jitter_buff6: 746
-        case .efst_jitter_buff7: 747
-        case .efst_jitter_buff8: 748
-        case .efst_jitter_buff9: 749
-        case .efst_jitter_buff10: 750
-        case .efst_cup_of_boza: 751
-        case .efst_b_trap: 752
-        case .efst_e_chain: 753
-        case .efst_e_qd_shot_ready: 754
-        case .efst_c_marker: 755
-        case .efst_h_mine: 756
-        case .efst_h_mine_splash: 757
-        case .efst_p_alter: 758
-        case .efst_heat_barrel: 759
-        case .efst_anti_m_blast: 760
-        case .efst_slugshot: 761
-        case .efst_swordclan: 762
-        case .efst_arcwandclan: 763
-        case .efst_goldenmaceclan: 764
-        case .efst_crossbowclan: 765
-        case .efst_packing_envelope1: 766
-        case .efst_packing_envelope2: 767
-        case .efst_packing_envelope3: 768
-        case .efst_packing_envelope4: 769
-        case .efst_packing_envelope5: 770
-        case .efst_packing_envelope6: 771
-        case .efst_packing_envelope7: 772
-        case .efst_packing_envelope8: 773
-        case .efst_packing_envelope9: 774
-        case .efst_packing_envelope10: 775
-        case .efst_glastheim_trans: 776
-        case .efst_zongzi_pouch_trans: 777
-        case .efst_heat_barrel_after: 778
-        case .efst_decoration_of_music: 779
-        case .efst_overseaexpup: 780
-        case .efst_clown_n_gypsy_card: 781
-        case .efst_open_npc_market: 782
-        case .efst_beef_rib_stew: 783
-        case .efst_pork_rib_stew: 784
-        case .efst_chuseok_monday: 785
-        case .efst_chuseok_tuesday: 786
-        case .efst_chuseok_wednesday: 787
-        case .efst_chuseok_thursday: 788
-        case .efst_chuseok_friday: 789
-        case .efst_chuseok_weekend: 790
-        case .efst_all_lightguard: 791
-        case .efst_all_lightguard_cool_time: 792
-        case .efst_mtf_mhp: 793
-        case .efst_mtf_msp: 794
-        case .efst_mtf_pumpkin: 795
-        case .efst_mtf_hitflee: 796
-        case .efst_mtf_cridamage2: 797
-        case .efst_mtf_spdrain: 798
-        case .efst_acuo_mint_gum: 799
-        case .efst_s_healpotion: 800
-        case .efst_reuse_limit_s_heal_potion: 801
-        case .efst_playtime_statistics: 802
-        case .efst_gn_changematerial_operator: 803
-        case .efst_gn_mix_cooking_operator: 804
-        case .efst_gn_makebomb_operator: 805
-        case .efst_gn_s_pharmacy_operator: 806
-        case .efst_so_el_analysis_disassembly_operator: 807
-        case .efst_so_el_analysis_combination_operator: 808
-        case .efst_nc_magicdecoy_operator: 809
-        case .efst_guild_storage: 810
-        case .efst_gc_poisoningweapon_operator: 811
-        case .efst_ws_weaponrefine_operator: 812
-        case .efst_bs_repairweapon_operator: 813
-        case .efst_get_mailbox: 814
-        case .efst_jumpingclan: 815
-        case .efst_jp_otp: 816
-        case .efst_handicaptolerance_levelgap: 817
-        case .efst_mtf_rangeatk2: 818
-        case .efst_mtf_aspd2: 819
-        case .efst_mtf_matk2: 820
-        case .efst_show_npchpbar: 821
-        case .efst_flowersmoke: 822
-        case .efst_fstone: 823
-        case .efst_dailysendmailcnt: 824
-        case .efst_qscaraba: 825
-        case .efst_ljosalfar: 826
-        case .efst_pad_reader_knight: 827
-        case .efst_pad_reader_crusader: 828
-        case .efst_pad_reader_blacksmith: 829
-        case .efst_pad_reader_alchemist: 830
-        case .efst_pad_reader_assassin: 831
-        case .efst_pad_reader_rogue: 832
-        case .efst_pad_reader_wizard: 833
-        case .efst_pad_reader_sage: 834
-        case .efst_pad_reader_priest: 835
-        case .efst_pad_reader_monk: 836
-        case .efst_pad_reader_hunter: 837
-        case .efst_pad_reader_bard: 838
-        case .efst_pad_reader_dancer: 839
-        case .efst_pad_reader_taekwon: 840
-        case .efst_pad_reader_ninja: 841
-        case .efst_pad_reader_gunslinger: 842
-        case .efst_pad_reader_supernovice: 843
-        case .efst_essence_of_time: 844
-        case .efst_minigame_roulette: 845
-        case .efst_minigame_gold_point: 846
-        case .efst_minigame_silver_point: 847
-        case .efst_minigame_bronze_point: 848
-        case .efst_happiness_star: 849
-        case .efst_summerevent01: 850
-        case .efst_summerevent02: 851
-        case .efst_summerevent03: 852
-        case .efst_summerevent04: 853
-        case .efst_summerevent05: 854
-        case .efst_minigame_roulette_bonus_item: 855
-        case .efst_dress_up: 856
-        case .efst_maple_falls: 857
-        case .efst_all_niflheim_recall: 858
-        case .efst_marking_use_changemonster: 859
-        case .efst_mtf_marionette: 860
-        case .efst_mtf_lude: 861
-        case .efst_mtf_cruiser: 862
-        case .efst_mermaid_longing: 863
-        case .efst_magical_feather: 864
-        case .efst_dracula_card: 865
-        case .efst_all_prontera_recall: 866
-        case .efst_limit_power_booster: 867
-        case .efst_gift_of_snow: 868
-        case .efst_npc_hallucinationwalk: 869
-        case .efst_npc_hallucinationwalk_postdelay: 870
-        case .efst_npc_xxxwalk: 871
-        case .efst_time_accessory: 872
-        case .efst_ep16_def: 873
-        case .efst_normal_atked_sp: 874
-        case .efst_bodystate_stonecurse: 875
-        case .efst_bodystate_freezing: 876
-        case .efst_bodystate_stun: 877
-        case .efst_bodystate_sleep: 878
-        case .efst_bodystate_undead: 879
-        case .efst_bodystate_stonecurse_ing: 880
-        case .efst_bodystate_burnning: 881
-        case .efst_bodystate_imprison: 882
-        case .efst_healthstate_poison: 883
-        case .efst_healthstate_curse: 884
-        case .efst_healthstate_silence: 885
-        case .efst_healthstate_confusion: 886
-        case .efst_healthstate_blind: 887
-        case .efst_healthstate_angelus: 888
-        case .efst_healthstate_blooding: 889
-        case .efst_healthstate_heavypoison: 890
-        case .efst_healthstate_fear: 891
-        case .efst_cherry_blossom_cake: 892
-        case .efst_su_stoop: 893
-        case .efst_catnippowder: 894
-        case .efst_head_equipment_effect: 895
-        case .efst_sv_roottwist: 896
-        case .efst_attack_property_nothing: 897
-        case .efst_attack_property_water: 898
-        case .efst_attack_property_ground: 899
-        case .efst_attack_property_fire: 900
-        case .efst_attack_property_wind: 901
-        case .efst_attack_property_poison: 902
-        case .efst_attack_property_saint: 903
-        case .efst_attack_property_darkness: 904
-        case .efst_attack_property_telekinesis: 905
-        case .efst_attack_property_undead: 906
-        case .efst_resist_property_nothing: 907
-        case .efst_resist_property_water: 908
-        case .efst_resist_property_ground: 909
-        case .efst_resist_property_fire: 910
-        case .efst_resist_property_wind: 911
-        case .efst_resist_property_poison: 912
-        case .efst_resist_property_saint: 913
-        case .efst_resist_property_darkness: 914
-        case .efst_resist_property_telekinesis: 915
-        case .efst_resist_property_undead: 916
-        case .efst_bitescar: 917
-        case .efst_arclousedash: 918
-        case .efst_tunaparty: 919
-        case .efst_shrimp: 920
-        case .efst_freshshrimp: 921
-        case .efst_period_receiveitem: 922
-        case .efst_period_plusexp: 923
-        case .efst_period_plusjobexp: 924
-        case .efst_runehelm: 925
-        case .efst_helm_verkana: 926
-        case .efst_helm_rhydo: 927
-        case .efst_helm_turisus: 928
-        case .efst_helm_hagalas: 929
-        case .efst_helm_isia: 930
-        case .efst_helm_asir: 931
-        case .efst_helm_urj: 932
-        case .efst_suhide: 933
-        case .efst_reuse_limit_mg: 934
-        case .efst_doram_buf_01: 935
-        case .efst_doram_buf_02: 936
-        case .efst_spritemable: 937
-        case .efst_aid_period_receiveitem: 938
-        case .efst_aid_period_plusexp: 939
-        case .efst_aid_period_plusjobexp: 940
-        case .efst_aid_period_deadpenalty: 941
-        case .efst_aid_period_addstoreitemcount: 942
-        case .efst_all_glastheim_recall: 943
-        case .efst_reuse_limit_pepo_md: 944
-        case .efst_all_thanatos_recall: 945
-        case .efst_kafra_store: 946
-        case .efst_reuse_abbys: 947
-        case .efst_magicstone_of_grace_set: 948
-        case .efst_private_airplane: 949
-        case .efst_hiss: 950
-        case .efst_hiss_avoid: 951
-        case .efst_nyanggrass: 952
-        case .efst_chattering: 953
-        case .efst_chattering_opt_atk_matk: 954
-        case .efst_chattering_opt_haste: 955
-        case .efst_spiritofland_stemspear: 956
-        case .efst_spiritofland_roottwist: 957
-        case .efst_spiritofland_powdering: 958
-        case .efst_spiritofland_meteor: 959
-        case .efst_spiritofland_nyanggrass: 960
-        case .efst_grooming: 961
-        case .efst_protectionofshrimp: 962
-        case .efst_ep16_2_buff_ss: 963
-        case .efst_ep16_2_buff_sc: 964
-        case .efst_ep16_2_buff_ac: 965
-        case .efst_gs_magical_bullet: 966
-        case .efst_fallen_angel: 976
-        case .efst_reuse_limit_movepoint: 977
-        case .efst_macro_detector_answer_waiting: 978
-        case .efst_blaze_bead: 979
-        case .efst_frozen_bead: 980
-        case .efst_breeze_bead: 981
-        case .efst_soulattack: 982
-        case .efst_aid_period_receiveitem_2nd: 983
-        case .efst_aid_period_plusexp_2nd: 984
-        case .efst_aid_period_plusjobexp_2nd: 985
-        case .efst_prontera_jp: 986
-        case .efst_assistant_vending: 987
-        case .efst_gloom_card: 988
-        case .efst_pharaoh_card: 989
-        case .efst_kiel_card: 990
-        case .efst_assistant_buying: 991
-        case .efst_cheerup: 992
-        case .efst_get_cnt_unread_rodex_chardb: 993
-        case .efst_get_cnt_unread_rodex_globaldb: 994
-        case .efst_s_manapotion: 995
-        case .efst_m_defscroll: 996
-        case .efst_open_refining_ui: 997
-        case .efst_all_lighthalzen_recall: 998
-        case .efst_swap_equipitem: 999
-        case .efst_as_ragged_golem_card: 1000
-        case .efst_lhz_dun_n1: 1001
-        case .efst_lhz_dun_n2: 1002
-        case .efst_lhz_dun_n3: 1003
-        case .efst_lhz_dun_n4: 1004
-        case .efst_taekwon_mission: 1005
-        case .efst_sun_place: 1006
-        case .efst_moon_place: 1007
-        case .efst_star_place: 1008
-        case .efst_sun_monster: 1009
-        case .efst_moon_monster: 1010
-        case .efst_star_monster: 1011
-        case .efst_al_warp_addslot: 1012
-        case .efst_all_stat_down: 1013
-        case .efst_gradual_gravity: 1014
-        case .efst_damage_heal: 1015
-        case .efst_immune_property_nothing: 1016
-        case .efst_immune_property_water: 1017
-        case .efst_immune_property_ground: 1018
-        case .efst_immune_property_fire: 1019
-        case .efst_immune_property_wind: 1020
-        case .efst_immune_property_poison: 1021
-        case .efst_immune_property_saint: 1022
-        case .efst_immune_property_darkness: 1023
-        case .efst_immune_property_telekinesis: 1024
-        case .efst_immune_property_undead: 1025
-        case .efst_reuse_limit_np: 1026
-        case .efst_specialcookie: 1027
-        case .efst_damage_heal2: 1028
-        case .efst_damage_heal3: 1029
-        case .efst_glory_of_return: 1030
-        case .efst_atk_popcorn: 1031
-        case .efst_matk_popcorn: 1032
-        case .efst_aspd_popcorn: 1033
-        case .efst_ultimatecook: 1034
-        case .efst_lightofmoon: 1035
-        case .efst_lightofsun: 1036
-        case .efst_lightofstar: 1037
-        case .efst_lunarstance: 1038
-        case .efst_universestance: 1039
-        case .efst_sunstance: 1040
-        case .efst_flashkick: 1041
-        case .efst_newmoon: 1042
-        case .efst_starstance: 1043
-        case .efst_dimension: 1044
-        case .efst_dimension1: 1045
-        case .efst_dimension2: 1046
-        case .efst_creatingstar: 1047
-        case .efst_fallingstar: 1048
-        case .efst_novaexplosing: 1049
-        case .efst_gravitycontrol: 1050
-        case .xxx_efst_worldstore_active: 1051
-        case .efst_worldstore_itemmoveinfo_sendcomplete: 1052
-        case .efst_soulcollect: 1053
-        case .efst_soulreaper: 1054
-        case .efst_soulunity: 1055
-        case .efst_soulshadow: 1056
-        case .efst_soulfairy: 1057
-        case .efst_soulfalcon: 1058
-        case .efst_soulgolem: 1059
-        case .efst_souldivision: 1060
-        case .efst_soulenergy: 1061
-        case .efst_use_skill_sp_spa: 1062
-        case .efst_use_skill_sp_sha: 1063
-        case .efst_sp_sha: 1064
-        case .efst_infinity_drink: 1065
-        case .efst_abyss_001: 1066
-        case .efst_abyss_002: 1067
-        case .efst_abyss_003: 1068
-        case .efst_abyss_004: 1069
-        case .efst_abyss_005: 1070
-        case .efst_abyss_006: 1071
-        case .efst_abyss_007: 1072
-        case .efst_abyss_008: 1073
-        case .efst_reuse_limit_thm: 1075
-        case .efst_reuse_limit_tli: 1076
-        case .efst_reuse_limit_tkc: 1077
-        case .efst_reuse_limit_trp: 1078
-        case .efst_reuse_limit_tbg: 1079
-        case .efst_reuse_limit_tbm: 1080
-        case .efst_yggdrasil_bless: 1081
-        case .efst_use_skill_sp_swhoo: 1082
-        case .efst_hunting_event: 1083
-        case .efst_period_receiveitem_2nd: 1084
-        case .efst_period_plusexp_2nd: 1085
-        case .efst_expdropup: 1086
-        case .efst_tw_newyear_event: 1087
-        case .efst_ensemblefatigue: 1088
-        case .efst_adaptation: 1089
-        case .efst_dancinglesson: 1090
-        case .efst_musicallesson: 1091
-        case .efst_reuse_limit_rc: 1092
-        case .efst_dancinglesson_equipped: 1093
-        case .efst_musicallesson_equipped: 1094
-        case .efst_ancilla: 1095
-        case .efst_reuse_limit_potion_a: 1096
-        case .efst_reuse_limit_potion_b: 1097
-        case .efst_reuse_limit_potion_c: 1098
-        case .efst_reuse_limit_potion_d: 1099
-        case .efst_reuse_limit_potion_e: 1100
-        case .efst_reuse_limit_potion_f: 1101
-        case .efst_braveset: 1102
-        case .efst_macemastery_equipped: 1103
-        case .efst_festive_energy: 1104
-        case .efst_test_kr01: 1105
-        case .efst_starfish_jp: 1106
-        case .efst_weaponblock_on: 1107
-        case .efst_cri_damage: 1108
-        case .efst_def_power: 1109
-        case .efst_def_ignore: 1110
-        case .efst_bow_atk_power: 1111
-        case .efst_red_org_potion: 1112
-        case .efst_cast_time: 1113
-        case .efst_bladestopready: 1114
-        case .efst_teleport_br: 1115
-        case .efst_sa_weapon_property: 1116
-        case .efst_leapimpaired: 1117
-        case .efst_sending_itemlist: 1118
-        case .efst_exclusive_receiveitem: 1119
-        case .efst_exclusive_plusexp: 1120
-        case .efst_assumptio_buff: 1121
-        case .efst_basilica_buff: 1122
-        case .efst_overlapexpup2: 1123
-        case .efst_stopmove_immediately: 1124
-        case .efst_soulcurse: 1125
-        case .efst_sound_of_destruction: 1126
-        case .efst_df_manaplus: 1127
-        case .efst_df_fullswingk: 1128
-        case .efst_nv_breakthrough: 1129
-        case .efst_helpangel: 1130
-        case .efst_nv_transcendence: 1131
-        case .efst_sweetsfair_atk: 1132
-        case .efst_sweetsfair_matk: 1133
-        case .efst_reuse_skill: 1134
-        case .efst_flower_leaf2: 1135
-        case .efst_flower_leaf3: 1136
-        case .efst_flower_leaf4: 1137
-        case .efst_charm_boost: 1138
-        case .efst_earthshaker: 1139
-        case .efst_period_use_worldmap: 1140
-        case .efst_misty_frost: 1141
-        case .efst_magic_poison: 1142
-        case .efst_move_agit: 1143
-        case .efst_reuse_jpnonly_limit_i: 1144
-        case .efst_reuse_jpnonly_limit_j: 1145
-        case .efst_reuse_jpnonly_limit_k: 1146
-        case .efst_jpnonly_tactics: 1147
-        case .efst_prison: 1148
-        case .efst_madogear_type: 1149
-        case .efst_deadly_defeasance: 1150
-        case .efst_climax_des_hu: 1151
-        case .efst_climax: 1152
-        case .efst_feintbomb: 1153
-        case .efst_luxanima: 1154
-        case .efst_bath_foam_a: 1155
-        case .efst_bath_foam_b: 1156
-        case .efst_bath_foam_c: 1157
-        case .efst_aroma_oil: 1158
-        case .efst_reuse_limit_luxanima: 1159
-        case .efst_powerful_faith: 1160
-        case .efst_sincere_faith: 1161
-        case .efst_firm_faith: 1162
-        case .efst_airship_pipe: 1163
-        case .efst_pieces_of_shadow: 1164
-        case .efst_hells_plant_armor: 1165
-        case .efst_relieve_damage: 1166
-        case .efst_lockon_laser: 1167
-        case .efst_grade_enchant_ui_open: 1168
-        case .efst_ref_t_potion: 1169
-        case .efst_add_atk_damage: 1170
-        case .efst_add_matk_damage: 1171
-        case .efst_servantweapon: 1172
-        case .efst_servant_sign: 1173
-        case .efst_chargingpierce: 1174
-        case .efst_chargingpierce_count: 1175
-        case .efst_dragonic_aura: 1176
-        case .efst_big_scar: 1177
-        case .efst_vigor: 1178
-        case .efst_will_of_faith: 1179
-        case .efst_pressure: 1180
-        case .efst_sa_dragonology: 1181
-        case .efst_climax_earth: 1182
-        case .efst_climax_bloom: 1183
-        case .efst_climax_cryimp: 1184
-        case .efst_md_me_potion: 1185
-        case .efst_md_ma_potion: 1186
-        case .efst_md_ta_potion: 1187
-        case .efst_md_ra_potion: 1188
-        case .efst_reuse_megaphone: 1189
-        case .efst_holy_oil: 1190
-        case .efst_crystal_impact: 1191
-        case .efst_shadow_exceed: 1192
-        case .efst_dancing_knife: 1193
-        case .efst_potent_venom: 1194
-        case .efst_shadow_scar: 1195
-        case .efst_e_slash_count: 1196
-        case .efst_mediale: 1197
-        case .efst_a_vita: 1198
-        case .efst_a_telum: 1199
-        case .efst_pre_acies: 1200
-        case .efst_competentia: 1201
-        case .efst_guard_stance: 1202
-        case .efst_attack_stance: 1203
-        case .efst_guardian_s: 1204
-        case .efst_handicapstate_deepblind: 1205
-        case .efst_handicapstate_deepsilence: 1206
-        case .efst_handicapstate_lassitude: 1207
-        case .efst_handicapstate_frostbite: 1208
-        case .efst_handicapstate_swooning: 1209
-        case .efst_handicapstate_lightningstrike: 1210
-        case .efst_handicapstate_crystallization: 1211
-        case .efst_handicapstate_conflagration: 1212
-        case .efst_handicapstate_misfortune: 1213
-        case .efst_handicapstate_deadlypoison: 1214
-        case .efst_handicapstate_depression: 1215
-        case .efst_handicapstate_holyflame: 1216
-        case .efst_rebound_s: 1217
-        case .efst_shield_mastery: 1218
-        case .efst_spear_sword_m: 1219
-        case .efst_holy_s: 1220
-        case .efst_ultimate_s: 1221
-        case .efst_spear_scar: 1222
-        case .efst_shield_power: 1223
-        case .efst_fidus_animus: 1224
-        case .efst_mace_book_m: 1225
-        case .efst_shadow_weapon: 1226
-        case .efst_religio: 1227
-        case .efst_benedictum: 1228
-        case .efst_mvpcard_kiel: 1229
-        case .efst_first_brand: 1230
-        case .efst_second_brand: 1231
-        case .efst_second_judge: 1232
-        case .efst_third_exor_flame: 1233
-        case .efst_first_faith_power: 1234
-        case .efst_axe_stomp: 1235
-        case .efst_a_machine: 1236
-        case .efst_d_machine: 1237
-        case .efst_mt_m_machine_operator: 1238
-        case .efst_twoaxedef: 1239
-        case .efst_dagger_and_bow_m: 1240
-        case .efst_magic_sword_m: 1241
-        case .efst_shadow_strip: 1242
-        case .efst_abyss_dagger: 1243
-        case .efst_abyssforceweapon: 1244
-        case .efst_abyss_slayer: 1245
-        case .efst_twohanddef: 1246
-        case .efst_protectshadowequip: 1247
-        case .efst_researchreport: 1248
-        case .efst_bo_hell_dusty: 1249
-        case .efst_windsign: 1250
-        case .efst_crescivebolt: 1251
-        case .efst_calamitygale: 1252
-        case .efst_crescivebolt3: 1253
-        case .efst_stage_manner: 1254
-        case .efst_retrospection: 1255
-        case .efst_mystic_symphony: 1256
-        case .efst_kvasir_sonata: 1257
-        case .efst_soundblend: 1258
-        case .efst_gef_nocturn: 1259
-        case .efst_ain_rhapsody: 1260
-        case .efst_musical_interlude: 1261
-        case .efst_jawaii_serenade: 1262
-        case .efst_pron_march: 1263
-        case .efst_roseblossom: 1264
-        case .efst_bo_bionic_pharmacy_operator: 1265
-        case .efst_acidified_zone_water: 1266
-        case .efst_acidified_zone_ground: 1267
-        case .efst_acidified_zone_wind: 1268
-        case .efst_acidified_zone_fire: 1269
-        case .efst_magic_book_m: 1270
-        case .efst_spell_enchanting: 1271
-        case .efst_summon_elemental_ardor: 1272
-        case .efst_summon_elemental_diluvio: 1273
-        case .efst_summon_elemental_procella: 1274
-        case .efst_summon_elemental_terremotus: 1275
-        case .efst_summon_elemental_serpens: 1276
-        case .efst_flametechnic: 1277
-        case .efst_flametechnic_option: 1278
-        case .efst_flamearmor: 1279
-        case .efst_flamearmor_option: 1280
-        case .efst_cold_force: 1281
-        case .efst_cold_force_option: 1282
-        case .efst_crystal_armor: 1283
-        case .efst_crystal_armor_option: 1284
-        case .efst_grace_breeze: 1285
-        case .efst_grace_breeze_option: 1286
-        case .efst_eyes_of_storm: 1287
-        case .efst_eyes_of_storm_option: 1288
-        case .efst_earth_care: 1289
-        case .efst_earth_care_option: 1290
-        case .efst_strong_protection: 1291
-        case .efst_strong_protection_option: 1292
-        case .efst_deep_poisoning: 1293
-        case .efst_deep_poisoning_option: 1294
-        case .efst_poison_shield: 1295
-        case .efst_poison_shield_option: 1296
-        case .efst_abr_battle_warior: 1297
-        case .efst_abr_dual_cannon: 1298
-        case .efst_abr_mother_net: 1299
-        case .efst_abr_infinity: 1300
-        case .efst_elemental_veil: 1301
-        case .efst_renovatio_ext: 1302
-        case .efst_homun_time: 1303
-        case .efst_power_acceleration: 1304
-        case .efst_max_hp_sp_avoid: 1305
-        case .efst_add_all_state: 1306
-        case .efst_aid_period_power_acceleration: 1307
-        case .efst_aid_period_max_hp_sp_avoid: 1308
-        case .efst_aid_period_add_all_state: 1309
-        case .efst_poison_mist: 1310
-        case .efst_hackandslasher: 1311
-        case .efst_get_cnt_unread_return_rodex_chardb: 1312
-        case .efst_stone_wall: 1313
-        case .efst_reuse_limit_i: 1314
-        case .efst_overbrandready: 1315
-        case .efst_shieldspell: 1316
-        case .efst_autoshadowspell_check2: 1317
-        case .efst_cloud_poison: 1318
-        case .efst_spore_explosion_debuff: 1319
-        case .efst_defscroll: 1321
-        case .efst_massive_f_blaster: 1326
-        case .efst_noequipweapon2: 1330
-        case .efst_noequiparmor2: 1331
-        case .efst_noequipshield2: 1332
-        case .efst_noequipshoes2: 1333
-        case .efst_noequippendant2: 1334
-        case .efst_noequipearing2: 1335
-        case .efst_noequipfull2: 1336
-        case .efst_curse_r_cube: 1337
-        case .efst_curse_b_cube: 1338
-        case .efst_killing_aura: 1339
-        case .efst_toxin_of_mandara: 1341
-        case .efst_goldene_tone: 1342
-        case .efst_tempering: 1343
-        case .efst_nw_p_f_i: 1344
-        case .efst_intensive_aim: 1345
-        case .efst_intensive_aim_count: 1346
-        case .efst_grenade_fragment_1: 1347
-        case .efst_grenade_fragment_2: 1348
-        case .efst_grenade_fragment_3: 1349
-        case .efst_grenade_fragment_4: 1350
-        case .efst_grenade_fragment_5: 1351
-        case .efst_grenade_fragment_6: 1352
-        case .efst_auto_firing_launcherefst: 1353
-        case .efst_hidden_card: 1354
-        case .efst_nw_grenade_mastery: 1355
-        case .efst_talisman_of_protection: 1356
-        case .efst_talisman_of_warrior: 1357
-        case .efst_talisman_of_magician: 1358
-        case .efst_talisman_of_five_elements: 1359
-        case .efst_t_first_god: 1360
-        case .efst_t_second_god: 1361
-        case .efst_t_third_god: 1362
-        case .efst_t_fourth_god: 1363
-        case .efst_t_fiveth_god: 1364
-        case .efst_heaven_and_earth: 1365
-        case .efst_hogogong: 1366
-        case .efst_marine_festival: 1367
-        case .efst_sandy_festival: 1368
-        case .efst_ki_sul_rampage: 1369
-        case .efst_colors_of_hyun_rok_1: 1370
-        case .efst_colors_of_hyun_rok_2: 1371
-        case .efst_colors_of_hyun_rok_3: 1372
-        case .efst_colors_of_hyun_rok_4: 1373
-        case .efst_colors_of_hyun_rok_5: 1374
-        case .efst_colors_of_hyun_rok_6: 1375
-        case .efst_colors_of_hyun_rok_buff: 1376
-        case .efst_temporary_communion: 1377
-        case .efst_blessing_of_m_creatures: 1378
-        case .efst_blessing_of_m_c_debuff: 1379
-        case .efst_shieldchainrush: 1380
-        case .efst_mistyfrost: 1381
-        case .efst_groundgravity: 1382
-        case .efst_breakinglimit: 1383
-        case .efst_rulebreak: 1384
-        case .efst_rising_sun: 1385
-        case .efst_noon_sun: 1386
-        case .efst_sunset_sun: 1387
-        case .efst_rising_moon: 1388
-        case .efst_midnight_moon: 1389
-        case .efst_dawn_moon: 1390
-        case .efst_star_burst: 1391
-        case .efst_sky_enchant: 1392
-        case .efst_shadow_clock: 1393
-        case .efst_shinkirou_call: 1394
-        case .efst_nightmare: 1395
-        case .efst_noodle_fes_1: 1396
-        case .efst_noodle_fes_2: 1397
-        case .efst_noodle_fes_3: 1398
-        case .efst_noodle_fes_4: 1399
-        case .efst_noodle_fes_5: 1400
-        case .efst_rush_quake1: 1402
-        case .efst_rush_quake2: 1403
-        case .efst_sbunshin: 1415
-        case .efst_mtp_w_potion_100: 1418
-        case .efst_change_size: 1420
-        case .efst_change_size_monster: 1421
-        case .efst_show_effect1: 1422
-        case .efst_show_effect2: 1423
-        case .efst_show_effect3: 1424
-        case .efst_vr_speed: 1425
-        case .efst_vr_aspd: 1426
-        case .efst_vr_mhp: 1427
-        case .efst_vr_msp: 1428
-        case .efst_vr_hit: 1429
-        case .efst_vr_def: 1430
-        case .efst_vr_mdef: 1431
-        case .efst_vr_book001: 1432
-        case .efst_vr_book002: 1433
-        case .efst_vr_book003: 1434
-        case .efst_vr_book004: 1435
-        case .efst_reuse_limit_vr_book: 1436
-        case .efst_vr_book005: 1439
-        case .efst_vr_book006: 1440
-        case .efst_vr_book007: 1441
-        case .efst_vr_book008: 1442
-        case .efst_vr_book009: 1443
-        case .efst_all_t_stat: 1444
-        case .efst_p_atk_plus: 1445
-        case .efst_s_matk_plus: 1446
-        case .efst_c_rate_plus: 1447
-        case .efst_resist_plus: 1448
-        case .efst_pvp_dun_buff: 1449
-        case .efst_target_marker: 1453
-        case .efst_block_seal: 1454
-        case .efst_frost_storm: 1455
-        case .efst_groggy: 1456
-        case .efst_warm_shield: 1457
-        case .efst_contents_1: 1459
-        case .efst_contents_2: 1460
-        case .efst_contents_3: 1461
-        case .efst_contents_4: 1462
-        case .efst_contents_5: 1463
-        case .efst_contents_6: 1464
-        case .efst_contents_7: 1465
-        case .efst_contents_8: 1466
-        case .efst_contents_9: 1467
-        case .efst_contents_10: 1468
-        case .efst_contents_11: 1469
-        case .efst_contents_12: 1470
-        case .efst_contents_13: 1471
-        case .efst_contents_14: 1472
-        case .efst_contents_15: 1473
-        case .efst_contents_16: 1474
-        case .efst_contents_17: 1475
-        case .efst_contents_18: 1476
-        case .efst_contents_19: 1477
-        case .efst_contents_20: 1478
-        case .efst_contents_21: 1479
-        case .efst_contents_22: 1480
-        case .efst_contents_23: 1481
-        case .efst_contents_24: 1482
-        case .efst_contents_25: 1483
-        case .efst_c_buff_1: 1509
-        case .efst_c_buff_2: 1510
-        case .efst_chasing: 1560
-        case .efst_mystery_powder: 1665
-        case .efst_fire_charm_power: 1667
-        case .efst_water_charm_power: 1668
-        case .efst_wind_charm_power: 1669
-        case .efst_ground_charm_power: 1670
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case -1: self = .efst_blank
-        case 0: self = .efst_provoke
-        case 1: self = .efst_endure
-        case 2: self = .efst_twohandquicken
-        case 3: self = .efst_concentration
-        case 4: self = .efst_hiding
-        case 5: self = .efst_cloaking
-        case 6: self = .efst_enchantpoison
-        case 7: self = .efst_poisonreact
-        case 8: self = .efst_quagmire
-        case 9: self = .efst_angelus
-        case 10: self = .efst_blessing
-        case 11: self = .efst_crucis
-        case 12: self = .efst_inc_agi
-        case 13: self = .efst_dec_agi
-        case 14: self = .efst_slowpoison
-        case 15: self = .efst_impositio
-        case 16: self = .efst_suffragium
-        case 17: self = .efst_aspersio
-        case 18: self = .efst_benedictio
-        case 19: self = .efst_kyrie
-        case 20: self = .efst_magnificat
-        case 21: self = .efst_gloria
-        case 22: self = .efst_lexaeterna
-        case 23: self = .efst_adrenaline
-        case 24: self = .efst_weaponperfect
-        case 25: self = .efst_overthrust
-        case 26: self = .efst_maximize
-        case 27: self = .efst_riding
-        case 28: self = .efst_falcon
-        case 29: self = .efst_trickdead
-        case 30: self = .efst_shout
-        case 31: self = .efst_energycoat
-        case 32: self = .efst_brokenarmor
-        case 33: self = .efst_brokenweapon
-        case 34: self = .efst_illusion
-        case 35: self = .efst_weightover50
-        case 36: self = .efst_weightover90
-        case 37: self = .efst_atthaste_potion1
-        case 38: self = .efst_atthaste_potion2
-        case 39: self = .efst_atthaste_potion3
-        case 40: self = .efst_atthaste_infinity
-        case 41: self = .efst_movhaste_potion
-        case 42: self = .efst_movhaste_infinity
-        case 43: self = .efst_autocounter
-        case 44: self = .efst_splasher
-        case 45: self = .efst_anklesnare
-        case 46: self = .efst_postdelay
-        case 47: self = .efst_noaction
-        case 48: self = .efst_impossiblepickup
-        case 49: self = .efst_barrier
-        case 50: self = .efst_noequipweapon
-        case 51: self = .efst_noequipshield
-        case 52: self = .efst_noequiparmor
-        case 53: self = .efst_noequiphelm
-        case 54: self = .efst_protectweapon
-        case 55: self = .efst_protectshield
-        case 56: self = .efst_protectarmor
-        case 57: self = .efst_protecthelm
-        case 58: self = .efst_autoguard
-        case 59: self = .efst_reflectshield
-        case 60: self = .efst_devotion
-        case 61: self = .efst_providence
-        case 62: self = .efst_defender
-        case 63: self = .efst_magicrod
-        case 64: self = .efst_weaponproperty
-        case 65: self = .efst_autospell
-        case 66: self = .efst_specialzone
-        case 67: self = .efst_mask
-        case 68: self = .efst_spearquicken
-        case 69: self = .efst_bdplaying
-        case 70: self = .efst_whistle
-        case 71: self = .efst_assassincross
-        case 72: self = .efst_poembragi
-        case 73: self = .efst_appleidun
-        case 74: self = .efst_humming
-        case 75: self = .efst_dontforgetme
-        case 76: self = .efst_fortunekiss
-        case 77: self = .efst_serviceforyou
-        case 78: self = .efst_richmankim
-        case 79: self = .efst_eternalchaos
-        case 80: self = .efst_drumbattlefield
-        case 81: self = .efst_ringnibelungen
-        case 82: self = .efst_rokisweil
-        case 83: self = .efst_intoabyss
-        case 84: self = .efst_siegfried
-        case 85: self = .efst_bladestop
-        case 86: self = .efst_explosionspirits
-        case 87: self = .efst_steelbody
-        case 88: self = .efst_extremityfist
-        case 89: self = .efst_comboattack
-        case 90: self = .efst_propertyfire
-        case 91: self = .efst_propertywater
-        case 92: self = .efst_propertywind
-        case 93: self = .efst_propertyground
-        case 94: self = .efst_magicattack
-        case 95: self = .efst_stop
-        case 96: self = .efst_weaponbraker
-        case 97: self = .efst_propertyundead
-        case 98: self = .efst_powerup
-        case 99: self = .efst_agiup
-        case 100: self = .efst_siegemode
-        case 101: self = .efst_invisible
-        case 102: self = .efst_statusone
-        case 103: self = .efst_aurablade
-        case 104: self = .efst_parrying
-        case 105: self = .efst_lkconcentration
-        case 106: self = .efst_tensionrelax
-        case 107: self = .efst_berserk
-        case 108: self = .efst_sacrifice
-        case 109: self = .efst_gospel
-        case 110: self = .efst_assumptio
-        case 111: self = .efst_basilica
-        case 112: self = .efst_groundmagic
-        case 113: self = .efst_magicpower
-        case 114: self = .efst_edp
-        case 115: self = .efst_truesight
-        case 116: self = .efst_windwalk
-        case 117: self = .efst_meltdown
-        case 118: self = .efst_cartboost
-        case 119: self = .efst_chasewalk
-        case 120: self = .efst_swordreject
-        case 121: self = .efst_marionette_master
-        case 122: self = .efst_marionette
-        case 123: self = .efst_moon
-        case 124: self = .efst_blooding
-        case 125: self = .efst_jointbeat
-        case 126: self = .efst_mindbreaker
-        case 127: self = .efst_memorize
-        case 128: self = .efst_fogwall
-        case 129: self = .efst_spiderweb
-        case 130: self = .efst_protectexp
-        case 131: self = .efst_sub_weaponproperty
-        case 132: self = .efst_autoberserk
-        case 133: self = .efst_run
-        case 134: self = .efst_ting
-        case 135: self = .efst_stormkick_on
-        case 136: self = .efst_stormkick_ready
-        case 137: self = .efst_downkick_on
-        case 138: self = .efst_downkick_ready
-        case 139: self = .efst_turnkick_on
-        case 140: self = .efst_turnkick_ready
-        case 141: self = .efst_counter_on
-        case 142: self = .efst_counter_ready
-        case 143: self = .efst_dodge_on
-        case 144: self = .efst_dodge_ready
-        case 145: self = .efst_strup
-        case 146: self = .efst_propertydark
-        case 147: self = .efst_adrenaline2
-        case 148: self = .efst_propertytelekinesis
-        case 149: self = .efst_soullink
-        case 150: self = .efst_plusattackpower
-        case 151: self = .efst_plusmagicpower
-        case 152: self = .efst_devil1
-        case 153: self = .efst_kaite
-        case 154: self = .efst_swoo
-        case 155: self = .efst_star2
-        case 156: self = .efst_kaizel
-        case 157: self = .efst_kaahi
-        case 158: self = .efst_kaupe
-        case 159: self = .efst_sma_ready
-        case 160: self = .efst_ske
-        case 161: self = .efst_onehandquicken
-        case 162: self = .efst_friend
-        case 163: self = .efst_friendup
-        case 164: self = .efst_sg_warm
-        case 165: self = .efst_sg_sun_warm
-        case 166: self = .efst_sg_moon_warm
-        case 167: self = .efst_sg_star_warm
-        case 168: self = .efst_emotion
-        case 169: self = .efst_sun_comfort
-        case 170: self = .efst_moon_comfort
-        case 171: self = .efst_star_comfort
-        case 172: self = .efst_expup
-        case 173: self = .efst_gdskill_battleorder
-        case 174: self = .efst_gdskill_regeneration
-        case 175: self = .efst_gdskill_postdelay
-        case 176: self = .efst_resisthandicap
-        case 177: self = .efst_maxhppercent
-        case 178: self = .efst_maxsppercent
-        case 179: self = .efst_defence
-        case 180: self = .efst_slowdown
-        case 181: self = .efst_preserve
-        case 182: self = .efst_chasewalk2
-        case 183: self = .efst_not_extremityfist
-        case 184: self = .efst_clairvoyance
-        case 185: self = .efst_moveslow_potion
-        case 186: self = .efst_doublecasting
-        case 187: self = .efst_gravitation
-        case 188: self = .efst_overthrustmax
-        case 189: self = .efst_longing
-        case 190: self = .efst_hermode
-        case 191: self = .efst_tarotcard
-        case 192: self = .efst_hlif_avoid
-        case 193: self = .efst_hfli_fleet
-        case 194: self = .efst_hfli_speed
-        case 195: self = .efst_hlif_change
-        case 196: self = .efst_hami_bloodlust
-        case 197: self = .efst_cr_shrink
-        case 198: self = .efst_wz_sightblaster
-        case 199: self = .efst_dc_winkcharm
-        case 200: self = .efst_rg_cconfine_m
-        case 201: self = .efst_rg_cconfine_s
-        case 202: self = .efst_disablemove
-        case 203: self = .efst_gs_madnesscancel
-        case 204: self = .efst_gs_gatlingfever
-        case 205: self = .efst_earthscroll
-        case 206: self = .efst_nj_utsusemi
-        case 207: self = .efst_nj_bunsinjyutsu
-        case 208: self = .efst_nj_nen
-        case 209: self = .efst_gs_adjustment
-        case 210: self = .efst_gs_accuracy
-        case 211: self = .efst_nj_suiton
-        case 212: self = .efst_pet
-        case 213: self = .efst_mental
-        case 214: self = .efst_expmemory
-        case 215: self = .efst_performance
-        case 216: self = .efst_gain
-        case 217: self = .efst_griffon
-        case 218: self = .efst_drift
-        case 219: self = .efst_wallshift
-        case 220: self = .efst_reincarnation
-        case 221: self = .efst_pattack
-        case 222: self = .efst_pspeed
-        case 223: self = .efst_pdefense
-        case 224: self = .efst_pcritical
-        case 225: self = .efst_ranking
-        case 226: self = .efst_ptriple
-        case 227: self = .efst_denergy
-        case 228: self = .efst_wave1
-        case 229: self = .efst_wave2
-        case 230: self = .efst_wave3
-        case 231: self = .efst_wave4
-        case 232: self = .efst_daura
-        case 233: self = .efst_dfreezer
-        case 234: self = .efst_dpunish
-        case 235: self = .efst_dbarrier
-        case 236: self = .efst_dwarning
-        case 237: self = .efst_mousewheel
-        case 238: self = .efst_dgauge
-        case 239: self = .efst_daccel
-        case 240: self = .efst_dblock
-        case 241: self = .efst_food_str
-        case 242: self = .efst_food_agi
-        case 243: self = .efst_food_vit
-        case 244: self = .efst_food_dex
-        case 245: self = .efst_food_int
-        case 246: self = .efst_food_luk
-        case 247: self = .efst_food_basicavoidance
-        case 248: self = .efst_food_basichit
-        case 249: self = .efst_food_criticalsuccessvalue
-        case 250: self = .efst_cash_plusexp
-        case 251: self = .efst_cash_deathpenalty
-        case 252: self = .efst_cash_receiveitem
-        case 253: self = .efst_cash_boss_alarm
-        case 254: self = .efst_da_energy
-        case 255: self = .efst_da_firstslot
-        case 256: self = .efst_da_headdef
-        case 257: self = .efst_da_space
-        case 258: self = .efst_da_transform
-        case 259: self = .efst_da_itemrebuild
-        case 260: self = .efst_da_illusion
-        case 261: self = .efst_da_darkpower
-        case 262: self = .efst_da_earplug
-        case 263: self = .efst_da_contract
-        case 264: self = .efst_da_black
-        case 265: self = .efst_da_magiccart
-        case 266: self = .efst_crystal
-        case 267: self = .efst_da_rebuild
-        case 268: self = .efst_da_edarkness
-        case 269: self = .efst_da_eguardian
-        case 270: self = .efst_da_timeout
-        case 271: self = .efst_food_str_cash
-        case 272: self = .efst_food_agi_cash
-        case 273: self = .efst_food_vit_cash
-        case 274: self = .efst_food_dex_cash
-        case 275: self = .efst_food_int_cash
-        case 276: self = .efst_food_luk_cash
-        case 277: self = .efst_mer_flee
-        case 278: self = .efst_mer_atk
-        case 279: self = .efst_mer_hp
-        case 280: self = .efst_mer_sp
-        case 281: self = .efst_mer_hit
-        case 282: self = .efst_slowcast
-        case 283: self = .efst_magicmirror
-        case 284: self = .efst_stoneskin
-        case 285: self = .efst_antimagic
-        case 286: self = .efst_criticalwound
-        case 287: self = .efst_npc_defender
-        case 288: self = .efst_noaction_wait
-        case 289: self = .efst_movhaste_horse
-        case 290: self = .efst_protect_def
-        case 291: self = .efst_protect_mdef
-        case 292: self = .efst_healplus
-        case 293: self = .efst_s_lifepotion
-        case 294: self = .efst_l_lifepotion
-        case 295: self = .efst_criticalpercent
-        case 296: self = .efst_plusavoidvalue
-        case 297: self = .efst_atker_aspd
-        case 298: self = .efst_target_aspd
-        case 299: self = .efst_atker_movespeed
-        case 300: self = .efst_atker_blood
-        case 301: self = .efst_target_blood
-        case 302: self = .efst_armor_property
-        case 303: self = .efst_reuse_limit_a
-        case 304: self = .efst_hellpower
-        case 305: self = .efst_steampack
-        case 306: self = .efst_reuse_limit_b
-        case 307: self = .efst_reuse_limit_c
-        case 308: self = .efst_reuse_limit_d
-        case 309: self = .efst_reuse_limit_e
-        case 310: self = .efst_reuse_limit_f
-        case 311: self = .efst_invincible
-        case 312: self = .efst_cash_plusonlyjobexp
-        case 313: self = .efst_partyflee
-        case 314: self = .efst_angel_protect
-        case 315: self = .efst_endure_mdef
-        case 316: self = .efst_enchantblade
-        case 317: self = .efst_deathbound
-        case 318: self = .efst_refresh
-        case 319: self = .efst_giantgrowth
-        case 320: self = .efst_stonehardskin
-        case 321: self = .efst_vitalityactivation
-        case 322: self = .efst_fightingspirit
-        case 323: self = .efst_abundance
-        case 324: self = .efst_reuse_millenniumshield
-        case 325: self = .efst_reuse_crushstrike
-        case 326: self = .efst_reuse_refresh
-        case 327: self = .efst_reuse_stormblast
-        case 328: self = .efst_venomimpress
-        case 329: self = .efst_epiclesis
-        case 330: self = .efst_oratio
-        case 331: self = .efst_laudaagnus
-        case 332: self = .efst_laudaramus
-        case 333: self = .efst_cloakingexceed
-        case 334: self = .efst_hallucinationwalk
-        case 335: self = .efst_hallucinationwalk_postdelay
-        case 336: self = .efst_renovatio
-        case 337: self = .efst_weaponblocking
-        case 338: self = .efst_weaponblocking_postdelay
-        case 339: self = .efst_rollingcutter
-        case 340: self = .efst_expiatio
-        case 341: self = .efst_poisoningweapon
-        case 342: self = .efst_toxin
-        case 343: self = .efst_paralyse
-        case 344: self = .efst_venombleed
-        case 345: self = .efst_magicmushroom
-        case 346: self = .efst_deathhurt
-        case 347: self = .efst_pyrexia
-        case 348: self = .efst_oblivioncurse
-        case 349: self = .efst_leechesend
-        case 350: self = .efst_duplelight
-        case 351: self = .efst_frostmisty
-        case 352: self = .efst_fearbreeze
-        case 353: self = .efst_electricshocker
-        case 354: self = .efst_marshofabyss
-        case 355: self = .efst_recognizedspell
-        case 356: self = .efst_stasis
-        case 357: self = .efst_wugrider
-        case 358: self = .efst_wugdash
-        case 359: self = .efst_wugbite
-        case 360: self = .efst_camouflage
-        case 361: self = .efst_acceleration
-        case 362: self = .efst_hovering
-        case 363: self = .efst_summon1
-        case 364: self = .efst_summon2
-        case 365: self = .efst_summon3
-        case 366: self = .efst_summon4
-        case 367: self = .efst_summon5
-        case 368: self = .efst_mvpcard_taogunka
-        case 369: self = .efst_mvpcard_mistress
-        case 370: self = .efst_mvpcard_orchero
-        case 371: self = .efst_mvpcard_orclord
-        case 372: self = .efst_overheat_limitpoint
-        case 373: self = .efst_overheat
-        case 374: self = .efst_shapeshift
-        case 375: self = .efst_infraredscan
-        case 376: self = .efst_magneticfield
-        case 377: self = .efst_neutralbarrier
-        case 378: self = .efst_neutralbarrier_master
-        case 379: self = .efst_stealthfield
-        case 380: self = .efst_stealthfield_master
-        case 381: self = .efst_manu_atk
-        case 382: self = .efst_manu_def
-        case 383: self = .efst_spl_atk
-        case 384: self = .efst_spl_def
-        case 385: self = .efst_reproduce
-        case 386: self = .efst_manu_matk
-        case 387: self = .efst_spl_matk
-        case 388: self = .efst_str_scroll
-        case 389: self = .efst_int_scroll
-        case 390: self = .efst_lg_reflectdamage
-        case 391: self = .efst_forceofvanguard
-        case 392: self = .efst_buchedenoel
-        case 393: self = .efst_autoshadowspell
-        case 394: self = .efst_shadowform
-        case 395: self = .efst_raid
-        case 396: self = .efst_shieldspell_def
-        case 397: self = .efst_shieldspell_mdef
-        case 398: self = .efst_shieldspell_ref
-        case 399: self = .efst_bodypaint
-        case 400: self = .efst_exeedbreak
-        case 401: self = .efst_adoramus
-        case 402: self = .efst_prestige
-        case 403: self = .efst_invisibility
-        case 404: self = .efst_deadlyinfect
-        case 405: self = .efst_banding
-        case 406: self = .efst_earthdrive
-        case 407: self = .efst_inspiration
-        case 408: self = .efst_enervation
-        case 409: self = .efst_groomy
-        case 410: self = .efst_raisingdragon
-        case 411: self = .efst_ignorance
-        case 412: self = .efst_laziness
-        case 413: self = .efst_lightningwalk
-        case 414: self = .efst_acaraje
-        case 415: self = .efst_unlucky
-        case 416: self = .efst_cursedcircle_atker
-        case 417: self = .efst_cursedcircle_target
-        case 418: self = .efst_weakness
-        case 419: self = .efst_crescentelbow
-        case 420: self = .efst_noequipaccessary
-        case 421: self = .efst_stripaccessary
-        case 422: self = .efst_manhole
-        case 423: self = .efst_popecookie
-        case 424: self = .efst_fallenempire
-        case 425: self = .efst_gentletouch_energygain
-        case 426: self = .efst_gentletouch_change
-        case 427: self = .efst_gentletouch_revitalize
-        case 428: self = .efst_bloodylust
-        case 429: self = .efst_swing
-        case 430: self = .efst_symphony_love
-        case 431: self = .efst_propertywalk
-        case 432: self = .efst_spellfist
-        case 433: self = .efst_netherworld
-        case 434: self = .efst_siren
-        case 435: self = .efst_deep_sleep
-        case 436: self = .efst_sircleofnature
-        case 437: self = .efst_cold
-        case 438: self = .efst_gloomyday
-        case 439: self = .efst_song_of_mana
-        case 440: self = .efst_cloud_kill
-        case 441: self = .efst_dance_with_wug
-        case 442: self = .efst_rush_windmill
-        case 443: self = .efst_echosong
-        case 444: self = .efst_harmonize
-        case 445: self = .efst_striking
-        case 446: self = .efst_warmer
-        case 447: self = .efst_moonlit_serenade
-        case 448: self = .efst_saturday_night_fever
-        case 449: self = .efst_sitdown_force
-        case 450: self = .efst_analyze
-        case 451: self = .efst_lerads_dew
-        case 452: self = .efst_melodyofsink
-        case 453: self = .efst_beyond_of_warcry
-        case 454: self = .efst_unlimited_humming_voice
-        case 455: self = .efst_spellbook1
-        case 456: self = .efst_spellbook2
-        case 457: self = .efst_spellbook3
-        case 458: self = .efst_freeze_sp
-        case 459: self = .efst_gn_training_sword
-        case 460: self = .efst_gn_remodeling_cart
-        case 461: self = .efst_gn_cartboost
-        case 462: self = .efst_fixedcastingtm_reduce
-        case 463: self = .efst_thorns_trap
-        case 464: self = .efst_blood_sucker
-        case 465: self = .efst_spore_explosion
-        case 466: self = .efst_demonic_fire
-        case 467: self = .efst_fire_expansion_smoke_powder
-        case 468: self = .efst_fire_expansion_tear_gas
-        case 469: self = .efst_blocking_play
-        case 470: self = .efst_mandragora
-        case 471: self = .efst_activate
-        case 472: self = .efst_ab_secrament
-        case 473: self = .efst_assumptio2
-        case 474: self = .efst_tk_sevenwind
-        case 475: self = .efst_limit_odins_recall
-        case 476: self = .efst_stomachache
-        case 477: self = .efst_mysterious_powder
-        case 478: self = .efst_melon_bomb
-        case 479: self = .efst_banana_bomb_sitdown_postdelay
-        case 480: self = .efst_promote_health_reserch
-        case 481: self = .efst_energy_drink_reserch
-        case 482: self = .efst_extract_white_potion_z
-        case 483: self = .efst_vitata_500
-        case 484: self = .efst_extract_salamine_juice
-        case 485: self = .efst_boost500
-        case 486: self = .efst_full_swing_k
-        case 487: self = .efst_mana_plus
-        case 488: self = .efst_mustle_m
-        case 489: self = .efst_life_force_f
-        case 490: self = .efst_vacuum_extreme
-        case 491: self = .efst_savage_steak
-        case 492: self = .efst_cocktail_warg_blood
-        case 493: self = .efst_minor_bbq
-        case 494: self = .efst_siroma_ice_tea
-        case 495: self = .efst_drocera_herb_steamed
-        case 496: self = .efst_putti_tails_noodles
-        case 497: self = .efst_banana_bomb
-        case 498: self = .efst_summon_agni
-        case 499: self = .efst_spellbook4
-        case 500: self = .efst_spellbook5
-        case 501: self = .efst_spellbook6
-        case 502: self = .efst_spellbook7
-        case 503: self = .efst_elemental_aggressive
-        case 504: self = .efst_return_to_eldicastes
-        case 505: self = .efst_banding_defence
-        case 506: self = .efst_skelscroll
-        case 507: self = .efst_distructionscroll
-        case 508: self = .efst_royalscroll
-        case 509: self = .efst_immunityscroll
-        case 510: self = .efst_mysticscroll
-        case 511: self = .efst_battlescroll
-        case 512: self = .efst_armorscroll
-        case 513: self = .efst_freyjascroll
-        case 514: self = .efst_soulscroll
-        case 515: self = .efst_circle_of_fire
-        case 516: self = .efst_circle_of_fire_option
-        case 517: self = .efst_fire_cloak
-        case 518: self = .efst_fire_cloak_option
-        case 519: self = .efst_water_screen
-        case 520: self = .efst_water_screen_option
-        case 521: self = .efst_water_drop
-        case 522: self = .efst_water_drop_option
-        case 523: self = .efst_wind_step
-        case 524: self = .efst_wind_step_option
-        case 525: self = .efst_wind_curtain
-        case 526: self = .efst_wind_curtain_option
-        case 527: self = .efst_water_barrier
-        case 528: self = .efst_zephyr
-        case 529: self = .efst_solid_skin
-        case 530: self = .efst_solid_skin_option
-        case 531: self = .efst_stone_shield
-        case 532: self = .efst_stone_shield_option
-        case 533: self = .efst_power_of_gaia
-        case 534: self = .efst_el_wait
-        case 535: self = .efst_el_passive
-        case 536: self = .efst_el_defensive
-        case 537: self = .efst_el_offensive
-        case 538: self = .efst_el_cost
-        case 539: self = .efst_pyrotechnic
-        case 540: self = .efst_pyrotechnic_option
-        case 541: self = .efst_heater
-        case 542: self = .efst_heater_option
-        case 543: self = .efst_tropic
-        case 544: self = .efst_tropic_option
-        case 545: self = .efst_aquaplay
-        case 546: self = .efst_aquaplay_option
-        case 547: self = .efst_cooler
-        case 548: self = .efst_cooler_option
-        case 549: self = .efst_chilly_air
-        case 550: self = .efst_chilly_air_option
-        case 551: self = .efst_gust
-        case 552: self = .efst_gust_option
-        case 553: self = .efst_blast
-        case 554: self = .efst_blast_option
-        case 555: self = .efst_wild_storm
-        case 556: self = .efst_wild_storm_option
-        case 557: self = .efst_petrology
-        case 558: self = .efst_petrology_option
-        case 559: self = .efst_cursed_soil
-        case 560: self = .efst_cursed_soil_option
-        case 561: self = .efst_upheaval
-        case 562: self = .efst_upheaval_option
-        case 563: self = .efst_tidal_weapon
-        case 564: self = .efst_tidal_weapon_option
-        case 565: self = .efst_rock_crusher
-        case 566: self = .efst_rock_crusher_atk
-        case 567: self = .efst_fire_insignia
-        case 568: self = .efst_water_insignia
-        case 569: self = .efst_wind_insignia
-        case 570: self = .efst_earth_insignia
-        case 571: self = .efst_equiped_floor
-        case 572: self = .efst_guardian_recall
-        case 573: self = .efst_mora_buff
-        case 574: self = .efst_reuse_limit_g
-        case 575: self = .efst_reuse_limit_h
-        case 576: self = .efst_needle_of_paralyze
-        case 577: self = .efst_pain_killer
-        case 578: self = .efst_g_lifepotion
-        case 579: self = .efst_vitalize_potion
-        case 580: self = .efst_light_of_regene
-        case 581: self = .efst_overed_boost
-        case 582: self = .efst_silent_breeze
-        case 583: self = .efst_odins_power
-        case 584: self = .efst_style_change
-        case 585: self = .efst_sonic_claw_postdelay
-        case 596: self = .efst_silvervein_rush_postdelay
-        case 597: self = .efst_midnight_frenzy_postdelay
-        case 598: self = .efst_goldene_ferse
-        case 599: self = .efst_angriffs_modus
-        case 600: self = .efst_tinder_breaker
-        case 601: self = .efst_tinder_breaker_postdelay
-        case 602: self = .efst_cbc
-        case 603: self = .efst_cbc_postdelay
-        case 604: self = .efst_eqc
-        case 605: self = .efst_magma_flow
-        case 606: self = .efst_granitic_armor
-        case 607: self = .efst_pyroclastic
-        case 608: self = .efst_volcanic_ash
-        case 609: self = .efst_spirits_saveinfo1
-        case 610: self = .efst_spirits_saveinfo2
-        case 611: self = .efst_magic_candy
-        case 612: self = .efst_search_store_info
-        case 613: self = .efst_all_riding
-        case 614: self = .efst_all_riding_reuse_limit
-        case 615: self = .efst_macro
-        case 616: self = .efst_macro_postdelay
-        case 617: self = .efst_beer_bottle_cap
-        case 618: self = .efst_overlapexpup
-        case 619: self = .efst_pc_iz_dun05
-        case 620: self = .efst_crushstrike
-        case 621: self = .efst_monster_transform
-        case 622: self = .efst_sit
-        case 623: self = .efst_onair
-        case 624: self = .efst_mtf_aspd
-        case 625: self = .efst_mtf_rangeatk
-        case 626: self = .efst_mtf_matk
-        case 627: self = .efst_mtf_mleatked
-        case 628: self = .efst_mtf_cridamage
-        case 629: self = .efst_reuse_limit_mtf
-        case 630: self = .efst_macro_permit
-        case 631: self = .efst_macro_play
-        case 632: self = .efst_skf_cast
-        case 633: self = .efst_skf_aspd
-        case 634: self = .efst_skf_atk
-        case 635: self = .efst_skf_matk
-        case 636: self = .efst_reward_plusonlyjobexp
-        case 637: self = .efst_handicapstate_norecover
-        case 638: self = .efst_set_num_def
-        case 639: self = .efst_set_num_mdef
-        case 640: self = .efst_set_per_def
-        case 641: self = .efst_set_per_mdef
-        case 642: self = .efst_partybooking_search_dealy
-        case 643: self = .efst_partybooking_register_dealy
-        case 644: self = .efst_period_time_check_detect_skill
-        case 645: self = .efst_ko_jyumonjikiri
-        case 646: self = .efst_meikyousisui
-        case 647: self = .efst_atthaste_cash
-        case 648: self = .efst_equipped_divine_armor
-        case 649: self = .efst_equipped_holy_armor
-        case 650: self = .efst_2011rwc
-        case 651: self = .efst_kyougaku
-        case 652: self = .efst_izayoi
-        case 653: self = .efst_zenkai
-        case 654: self = .efst_kg_kagehumi
-        case 655: self = .efst_kyomu
-        case 656: self = .efst_kagemusya
-        case 657: self = .efst_zangetsu
-        case 658: self = .efst_phi_demon
-        case 659: self = .efst_gensou
-        case 660: self = .efst_akaitsuki
-        case 661: self = .efst_tetany
-        case 662: self = .efst_gm_battle
-        case 663: self = .efst_gm_battle2
-        case 664: self = .efst_2011rwc_scroll
-        case 665: self = .efst_active_monster_transform
-        case 666: self = .efst_mysticpowder
-        case 667: self = .efst_eclage_recall
-        case 668: self = .efst_entry_queue_apply_delay
-        case 669: self = .efst_reuse_limit_ecl
-        case 670: self = .efst_m_lifepotion
-        case 671: self = .efst_entry_queue_notify_admission_time_out
-        case 672: self = .efst_unknown_name
-        case 673: self = .efst_on_push_cart
-        case 674: self = .efst_hat_effect
-        case 675: self = .efst_flower_leaf
-        case 676: self = .efst_ray_of_protection
-        case 677: self = .efst_glastheim_atk
-        case 678: self = .efst_glastheim_def
-        case 679: self = .efst_glastheim_heal
-        case 680: self = .efst_glastheim_hidden
-        case 681: self = .efst_glastheim_state
-        case 682: self = .efst_glastheim_itemdef
-        case 683: self = .efst_glastheim_hpsp
-        case 684: self = .efst_homun_skill_postdelay
-        case 685: self = .efst_almighty
-        case 686: self = .efst_gvg_giant
-        case 687: self = .efst_gvg_golem
-        case 688: self = .efst_gvg_stun
-        case 689: self = .efst_gvg_stone
-        case 690: self = .efst_gvg_freez
-        case 691: self = .efst_gvg_sleep
-        case 692: self = .efst_gvg_curse
-        case 693: self = .efst_gvg_silence
-        case 694: self = .efst_gvg_blind
-        case 695: self = .efst_client_only_equip_arrow
-        case 696: self = .efst_clan_info
-        case 697: self = .efst_jp_event01
-        case 698: self = .efst_jp_event02
-        case 699: self = .efst_jp_event03
-        case 700: self = .efst_jp_event04
-        case 701: self = .efst_teleport_fixedcastingdelay
-        case 702: self = .efst_geffen_magic1
-        case 703: self = .efst_geffen_magic2
-        case 704: self = .efst_geffen_magic3
-        case 705: self = .efst_quest_buff1
-        case 706: self = .efst_quest_buff2
-        case 707: self = .efst_quest_buff3
-        case 708: self = .efst_reuse_limit_recall
-        case 709: self = .efst_saveposition
-        case 710: self = .efst_handicapstate_iceexplo
-        case 711: self = .efst_fenrir_card
-        case 712: self = .efst_reuse_limit_aspd_potion
-        case 713: self = .efst_maxpain
-        case 714: self = .efst_pc_stop
-        case 715: self = .efst_frigg_song
-        case 716: self = .efst_offertorium
-        case 717: self = .efst_telekinesis_intense
-        case 718: self = .efst_moonstar
-        case 719: self = .efst_strangelights
-        case 720: self = .efst_full_throttle
-        case 721: self = .efst_rebound
-        case 722: self = .efst_unlimit
-        case 723: self = .efst_kings_grace
-        case 724: self = .efst_item_atkmax
-        case 725: self = .efst_item_atkmin
-        case 726: self = .efst_item_matkmax
-        case 727: self = .efst_item_matkmin
-        case 728: self = .efst_super_star
-        case 729: self = .efst_high_ranker
-        case 730: self = .efst_darkcrow
-        case 731: self = .efst_2013_valentine1
-        case 732: self = .efst_2013_valentine2
-        case 733: self = .efst_2013_valentine3
-        case 734: self = .efst_illusiondoping
-        case 735: self = .efst_wideweb
-        case 736: self = .efst_chill
-        case 737: self = .efst_burnt
-        case 738: self = .efst_pccafe_play_time
-        case 739: self = .efst_twisted_time
-        case 740: self = .efst_flashcombo
-        case 741: self = .efst_jitter_buff1
-        case 742: self = .efst_jitter_buff2
-        case 743: self = .efst_jitter_buff3
-        case 744: self = .efst_jitter_buff4
-        case 745: self = .efst_jitter_buff5
-        case 746: self = .efst_jitter_buff6
-        case 747: self = .efst_jitter_buff7
-        case 748: self = .efst_jitter_buff8
-        case 749: self = .efst_jitter_buff9
-        case 750: self = .efst_jitter_buff10
-        case 751: self = .efst_cup_of_boza
-        case 752: self = .efst_b_trap
-        case 753: self = .efst_e_chain
-        case 754: self = .efst_e_qd_shot_ready
-        case 755: self = .efst_c_marker
-        case 756: self = .efst_h_mine
-        case 757: self = .efst_h_mine_splash
-        case 758: self = .efst_p_alter
-        case 759: self = .efst_heat_barrel
-        case 760: self = .efst_anti_m_blast
-        case 761: self = .efst_slugshot
-        case 762: self = .efst_swordclan
-        case 763: self = .efst_arcwandclan
-        case 764: self = .efst_goldenmaceclan
-        case 765: self = .efst_crossbowclan
-        case 766: self = .efst_packing_envelope1
-        case 767: self = .efst_packing_envelope2
-        case 768: self = .efst_packing_envelope3
-        case 769: self = .efst_packing_envelope4
-        case 770: self = .efst_packing_envelope5
-        case 771: self = .efst_packing_envelope6
-        case 772: self = .efst_packing_envelope7
-        case 773: self = .efst_packing_envelope8
-        case 774: self = .efst_packing_envelope9
-        case 775: self = .efst_packing_envelope10
-        case 776: self = .efst_glastheim_trans
-        case 777: self = .efst_zongzi_pouch_trans
-        case 778: self = .efst_heat_barrel_after
-        case 779: self = .efst_decoration_of_music
-        case 780: self = .efst_overseaexpup
-        case 781: self = .efst_clown_n_gypsy_card
-        case 782: self = .efst_open_npc_market
-        case 783: self = .efst_beef_rib_stew
-        case 784: self = .efst_pork_rib_stew
-        case 785: self = .efst_chuseok_monday
-        case 786: self = .efst_chuseok_tuesday
-        case 787: self = .efst_chuseok_wednesday
-        case 788: self = .efst_chuseok_thursday
-        case 789: self = .efst_chuseok_friday
-        case 790: self = .efst_chuseok_weekend
-        case 791: self = .efst_all_lightguard
-        case 792: self = .efst_all_lightguard_cool_time
-        case 793: self = .efst_mtf_mhp
-        case 794: self = .efst_mtf_msp
-        case 795: self = .efst_mtf_pumpkin
-        case 796: self = .efst_mtf_hitflee
-        case 797: self = .efst_mtf_cridamage2
-        case 798: self = .efst_mtf_spdrain
-        case 799: self = .efst_acuo_mint_gum
-        case 800: self = .efst_s_healpotion
-        case 801: self = .efst_reuse_limit_s_heal_potion
-        case 802: self = .efst_playtime_statistics
-        case 803: self = .efst_gn_changematerial_operator
-        case 804: self = .efst_gn_mix_cooking_operator
-        case 805: self = .efst_gn_makebomb_operator
-        case 806: self = .efst_gn_s_pharmacy_operator
-        case 807: self = .efst_so_el_analysis_disassembly_operator
-        case 808: self = .efst_so_el_analysis_combination_operator
-        case 809: self = .efst_nc_magicdecoy_operator
-        case 810: self = .efst_guild_storage
-        case 811: self = .efst_gc_poisoningweapon_operator
-        case 812: self = .efst_ws_weaponrefine_operator
-        case 813: self = .efst_bs_repairweapon_operator
-        case 814: self = .efst_get_mailbox
-        case 815: self = .efst_jumpingclan
-        case 816: self = .efst_jp_otp
-        case 817: self = .efst_handicaptolerance_levelgap
-        case 818: self = .efst_mtf_rangeatk2
-        case 819: self = .efst_mtf_aspd2
-        case 820: self = .efst_mtf_matk2
-        case 821: self = .efst_show_npchpbar
-        case 822: self = .efst_flowersmoke
-        case 823: self = .efst_fstone
-        case 824: self = .efst_dailysendmailcnt
-        case 825: self = .efst_qscaraba
-        case 826: self = .efst_ljosalfar
-        case 827: self = .efst_pad_reader_knight
-        case 828: self = .efst_pad_reader_crusader
-        case 829: self = .efst_pad_reader_blacksmith
-        case 830: self = .efst_pad_reader_alchemist
-        case 831: self = .efst_pad_reader_assassin
-        case 832: self = .efst_pad_reader_rogue
-        case 833: self = .efst_pad_reader_wizard
-        case 834: self = .efst_pad_reader_sage
-        case 835: self = .efst_pad_reader_priest
-        case 836: self = .efst_pad_reader_monk
-        case 837: self = .efst_pad_reader_hunter
-        case 838: self = .efst_pad_reader_bard
-        case 839: self = .efst_pad_reader_dancer
-        case 840: self = .efst_pad_reader_taekwon
-        case 841: self = .efst_pad_reader_ninja
-        case 842: self = .efst_pad_reader_gunslinger
-        case 843: self = .efst_pad_reader_supernovice
-        case 844: self = .efst_essence_of_time
-        case 845: self = .efst_minigame_roulette
-        case 846: self = .efst_minigame_gold_point
-        case 847: self = .efst_minigame_silver_point
-        case 848: self = .efst_minigame_bronze_point
-        case 849: self = .efst_happiness_star
-        case 850: self = .efst_summerevent01
-        case 851: self = .efst_summerevent02
-        case 852: self = .efst_summerevent03
-        case 853: self = .efst_summerevent04
-        case 854: self = .efst_summerevent05
-        case 855: self = .efst_minigame_roulette_bonus_item
-        case 856: self = .efst_dress_up
-        case 857: self = .efst_maple_falls
-        case 858: self = .efst_all_niflheim_recall
-        case 859: self = .efst_marking_use_changemonster
-        case 860: self = .efst_mtf_marionette
-        case 861: self = .efst_mtf_lude
-        case 862: self = .efst_mtf_cruiser
-        case 863: self = .efst_mermaid_longing
-        case 864: self = .efst_magical_feather
-        case 865: self = .efst_dracula_card
-        case 866: self = .efst_all_prontera_recall
-        case 867: self = .efst_limit_power_booster
-        case 868: self = .efst_gift_of_snow
-        case 869: self = .efst_npc_hallucinationwalk
-        case 870: self = .efst_npc_hallucinationwalk_postdelay
-        case 871: self = .efst_npc_xxxwalk
-        case 872: self = .efst_time_accessory
-        case 873: self = .efst_ep16_def
-        case 874: self = .efst_normal_atked_sp
-        case 875: self = .efst_bodystate_stonecurse
-        case 876: self = .efst_bodystate_freezing
-        case 877: self = .efst_bodystate_stun
-        case 878: self = .efst_bodystate_sleep
-        case 879: self = .efst_bodystate_undead
-        case 880: self = .efst_bodystate_stonecurse_ing
-        case 881: self = .efst_bodystate_burnning
-        case 882: self = .efst_bodystate_imprison
-        case 883: self = .efst_healthstate_poison
-        case 884: self = .efst_healthstate_curse
-        case 885: self = .efst_healthstate_silence
-        case 886: self = .efst_healthstate_confusion
-        case 887: self = .efst_healthstate_blind
-        case 888: self = .efst_healthstate_angelus
-        case 889: self = .efst_healthstate_blooding
-        case 890: self = .efst_healthstate_heavypoison
-        case 891: self = .efst_healthstate_fear
-        case 892: self = .efst_cherry_blossom_cake
-        case 893: self = .efst_su_stoop
-        case 894: self = .efst_catnippowder
-        case 895: self = .efst_head_equipment_effect
-        case 896: self = .efst_sv_roottwist
-        case 897: self = .efst_attack_property_nothing
-        case 898: self = .efst_attack_property_water
-        case 899: self = .efst_attack_property_ground
-        case 900: self = .efst_attack_property_fire
-        case 901: self = .efst_attack_property_wind
-        case 902: self = .efst_attack_property_poison
-        case 903: self = .efst_attack_property_saint
-        case 904: self = .efst_attack_property_darkness
-        case 905: self = .efst_attack_property_telekinesis
-        case 906: self = .efst_attack_property_undead
-        case 907: self = .efst_resist_property_nothing
-        case 908: self = .efst_resist_property_water
-        case 909: self = .efst_resist_property_ground
-        case 910: self = .efst_resist_property_fire
-        case 911: self = .efst_resist_property_wind
-        case 912: self = .efst_resist_property_poison
-        case 913: self = .efst_resist_property_saint
-        case 914: self = .efst_resist_property_darkness
-        case 915: self = .efst_resist_property_telekinesis
-        case 916: self = .efst_resist_property_undead
-        case 917: self = .efst_bitescar
-        case 918: self = .efst_arclousedash
-        case 919: self = .efst_tunaparty
-        case 920: self = .efst_shrimp
-        case 921: self = .efst_freshshrimp
-        case 922: self = .efst_period_receiveitem
-        case 923: self = .efst_period_plusexp
-        case 924: self = .efst_period_plusjobexp
-        case 925: self = .efst_runehelm
-        case 926: self = .efst_helm_verkana
-        case 927: self = .efst_helm_rhydo
-        case 928: self = .efst_helm_turisus
-        case 929: self = .efst_helm_hagalas
-        case 930: self = .efst_helm_isia
-        case 931: self = .efst_helm_asir
-        case 932: self = .efst_helm_urj
-        case 933: self = .efst_suhide
-        case 934: self = .efst_reuse_limit_mg
-        case 935: self = .efst_doram_buf_01
-        case 936: self = .efst_doram_buf_02
-        case 937: self = .efst_spritemable
-        case 938: self = .efst_aid_period_receiveitem
-        case 939: self = .efst_aid_period_plusexp
-        case 940: self = .efst_aid_period_plusjobexp
-        case 941: self = .efst_aid_period_deadpenalty
-        case 942: self = .efst_aid_period_addstoreitemcount
-        case 943: self = .efst_all_glastheim_recall
-        case 944: self = .efst_reuse_limit_pepo_md
-        case 945: self = .efst_all_thanatos_recall
-        case 946: self = .efst_kafra_store
-        case 947: self = .efst_reuse_abbys
-        case 948: self = .efst_magicstone_of_grace_set
-        case 949: self = .efst_private_airplane
-        case 950: self = .efst_hiss
-        case 951: self = .efst_hiss_avoid
-        case 952: self = .efst_nyanggrass
-        case 953: self = .efst_chattering
-        case 954: self = .efst_chattering_opt_atk_matk
-        case 955: self = .efst_chattering_opt_haste
-        case 956: self = .efst_spiritofland_stemspear
-        case 957: self = .efst_spiritofland_roottwist
-        case 958: self = .efst_spiritofland_powdering
-        case 959: self = .efst_spiritofland_meteor
-        case 960: self = .efst_spiritofland_nyanggrass
-        case 961: self = .efst_grooming
-        case 962: self = .efst_protectionofshrimp
-        case 963: self = .efst_ep16_2_buff_ss
-        case 964: self = .efst_ep16_2_buff_sc
-        case 965: self = .efst_ep16_2_buff_ac
-        case 966: self = .efst_gs_magical_bullet
-        case 976: self = .efst_fallen_angel
-        case 977: self = .efst_reuse_limit_movepoint
-        case 978: self = .efst_macro_detector_answer_waiting
-        case 979: self = .efst_blaze_bead
-        case 980: self = .efst_frozen_bead
-        case 981: self = .efst_breeze_bead
-        case 982: self = .efst_soulattack
-        case 983: self = .efst_aid_period_receiveitem_2nd
-        case 984: self = .efst_aid_period_plusexp_2nd
-        case 985: self = .efst_aid_period_plusjobexp_2nd
-        case 986: self = .efst_prontera_jp
-        case 987: self = .efst_assistant_vending
-        case 988: self = .efst_gloom_card
-        case 989: self = .efst_pharaoh_card
-        case 990: self = .efst_kiel_card
-        case 991: self = .efst_assistant_buying
-        case 992: self = .efst_cheerup
-        case 993: self = .efst_get_cnt_unread_rodex_chardb
-        case 994: self = .efst_get_cnt_unread_rodex_globaldb
-        case 995: self = .efst_s_manapotion
-        case 996: self = .efst_m_defscroll
-        case 997: self = .efst_open_refining_ui
-        case 998: self = .efst_all_lighthalzen_recall
-        case 999: self = .efst_swap_equipitem
-        case 1000: self = .efst_as_ragged_golem_card
-        case 1001: self = .efst_lhz_dun_n1
-        case 1002: self = .efst_lhz_dun_n2
-        case 1003: self = .efst_lhz_dun_n3
-        case 1004: self = .efst_lhz_dun_n4
-        case 1005: self = .efst_taekwon_mission
-        case 1006: self = .efst_sun_place
-        case 1007: self = .efst_moon_place
-        case 1008: self = .efst_star_place
-        case 1009: self = .efst_sun_monster
-        case 1010: self = .efst_moon_monster
-        case 1011: self = .efst_star_monster
-        case 1012: self = .efst_al_warp_addslot
-        case 1013: self = .efst_all_stat_down
-        case 1014: self = .efst_gradual_gravity
-        case 1015: self = .efst_damage_heal
-        case 1016: self = .efst_immune_property_nothing
-        case 1017: self = .efst_immune_property_water
-        case 1018: self = .efst_immune_property_ground
-        case 1019: self = .efst_immune_property_fire
-        case 1020: self = .efst_immune_property_wind
-        case 1021: self = .efst_immune_property_poison
-        case 1022: self = .efst_immune_property_saint
-        case 1023: self = .efst_immune_property_darkness
-        case 1024: self = .efst_immune_property_telekinesis
-        case 1025: self = .efst_immune_property_undead
-        case 1026: self = .efst_reuse_limit_np
-        case 1027: self = .efst_specialcookie
-        case 1028: self = .efst_damage_heal2
-        case 1029: self = .efst_damage_heal3
-        case 1030: self = .efst_glory_of_return
-        case 1031: self = .efst_atk_popcorn
-        case 1032: self = .efst_matk_popcorn
-        case 1033: self = .efst_aspd_popcorn
-        case 1034: self = .efst_ultimatecook
-        case 1035: self = .efst_lightofmoon
-        case 1036: self = .efst_lightofsun
-        case 1037: self = .efst_lightofstar
-        case 1038: self = .efst_lunarstance
-        case 1039: self = .efst_universestance
-        case 1040: self = .efst_sunstance
-        case 1041: self = .efst_flashkick
-        case 1042: self = .efst_newmoon
-        case 1043: self = .efst_starstance
-        case 1044: self = .efst_dimension
-        case 1045: self = .efst_dimension1
-        case 1046: self = .efst_dimension2
-        case 1047: self = .efst_creatingstar
-        case 1048: self = .efst_fallingstar
-        case 1049: self = .efst_novaexplosing
-        case 1050: self = .efst_gravitycontrol
-        case 1051: self = .xxx_efst_worldstore_active
-        case 1052: self = .efst_worldstore_itemmoveinfo_sendcomplete
-        case 1053: self = .efst_soulcollect
-        case 1054: self = .efst_soulreaper
-        case 1055: self = .efst_soulunity
-        case 1056: self = .efst_soulshadow
-        case 1057: self = .efst_soulfairy
-        case 1058: self = .efst_soulfalcon
-        case 1059: self = .efst_soulgolem
-        case 1060: self = .efst_souldivision
-        case 1061: self = .efst_soulenergy
-        case 1062: self = .efst_use_skill_sp_spa
-        case 1063: self = .efst_use_skill_sp_sha
-        case 1064: self = .efst_sp_sha
-        case 1065: self = .efst_infinity_drink
-        case 1066: self = .efst_abyss_001
-        case 1067: self = .efst_abyss_002
-        case 1068: self = .efst_abyss_003
-        case 1069: self = .efst_abyss_004
-        case 1070: self = .efst_abyss_005
-        case 1071: self = .efst_abyss_006
-        case 1072: self = .efst_abyss_007
-        case 1073: self = .efst_abyss_008
-        case 1075: self = .efst_reuse_limit_thm
-        case 1076: self = .efst_reuse_limit_tli
-        case 1077: self = .efst_reuse_limit_tkc
-        case 1078: self = .efst_reuse_limit_trp
-        case 1079: self = .efst_reuse_limit_tbg
-        case 1080: self = .efst_reuse_limit_tbm
-        case 1081: self = .efst_yggdrasil_bless
-        case 1082: self = .efst_use_skill_sp_swhoo
-        case 1083: self = .efst_hunting_event
-        case 1084: self = .efst_period_receiveitem_2nd
-        case 1085: self = .efst_period_plusexp_2nd
-        case 1086: self = .efst_expdropup
-        case 1087: self = .efst_tw_newyear_event
-        case 1088: self = .efst_ensemblefatigue
-        case 1089: self = .efst_adaptation
-        case 1090: self = .efst_dancinglesson
-        case 1091: self = .efst_musicallesson
-        case 1092: self = .efst_reuse_limit_rc
-        case 1093: self = .efst_dancinglesson_equipped
-        case 1094: self = .efst_musicallesson_equipped
-        case 1095: self = .efst_ancilla
-        case 1096: self = .efst_reuse_limit_potion_a
-        case 1097: self = .efst_reuse_limit_potion_b
-        case 1098: self = .efst_reuse_limit_potion_c
-        case 1099: self = .efst_reuse_limit_potion_d
-        case 1100: self = .efst_reuse_limit_potion_e
-        case 1101: self = .efst_reuse_limit_potion_f
-        case 1102: self = .efst_braveset
-        case 1103: self = .efst_macemastery_equipped
-        case 1104: self = .efst_festive_energy
-        case 1105: self = .efst_test_kr01
-        case 1106: self = .efst_starfish_jp
-        case 1107: self = .efst_weaponblock_on
-        case 1108: self = .efst_cri_damage
-        case 1109: self = .efst_def_power
-        case 1110: self = .efst_def_ignore
-        case 1111: self = .efst_bow_atk_power
-        case 1112: self = .efst_red_org_potion
-        case 1113: self = .efst_cast_time
-        case 1114: self = .efst_bladestopready
-        case 1115: self = .efst_teleport_br
-        case 1116: self = .efst_sa_weapon_property
-        case 1117: self = .efst_leapimpaired
-        case 1118: self = .efst_sending_itemlist
-        case 1119: self = .efst_exclusive_receiveitem
-        case 1120: self = .efst_exclusive_plusexp
-        case 1121: self = .efst_assumptio_buff
-        case 1122: self = .efst_basilica_buff
-        case 1123: self = .efst_overlapexpup2
-        case 1124: self = .efst_stopmove_immediately
-        case 1125: self = .efst_soulcurse
-        case 1126: self = .efst_sound_of_destruction
-        case 1127: self = .efst_df_manaplus
-        case 1128: self = .efst_df_fullswingk
-        case 1129: self = .efst_nv_breakthrough
-        case 1130: self = .efst_helpangel
-        case 1131: self = .efst_nv_transcendence
-        case 1132: self = .efst_sweetsfair_atk
-        case 1133: self = .efst_sweetsfair_matk
-        case 1134: self = .efst_reuse_skill
-        case 1135: self = .efst_flower_leaf2
-        case 1136: self = .efst_flower_leaf3
-        case 1137: self = .efst_flower_leaf4
-        case 1138: self = .efst_charm_boost
-        case 1139: self = .efst_earthshaker
-        case 1140: self = .efst_period_use_worldmap
-        case 1141: self = .efst_misty_frost
-        case 1142: self = .efst_magic_poison
-        case 1143: self = .efst_move_agit
-        case 1144: self = .efst_reuse_jpnonly_limit_i
-        case 1145: self = .efst_reuse_jpnonly_limit_j
-        case 1146: self = .efst_reuse_jpnonly_limit_k
-        case 1147: self = .efst_jpnonly_tactics
-        case 1148: self = .efst_prison
-        case 1149: self = .efst_madogear_type
-        case 1150: self = .efst_deadly_defeasance
-        case 1151: self = .efst_climax_des_hu
-        case 1152: self = .efst_climax
-        case 1153: self = .efst_feintbomb
-        case 1154: self = .efst_luxanima
-        case 1155: self = .efst_bath_foam_a
-        case 1156: self = .efst_bath_foam_b
-        case 1157: self = .efst_bath_foam_c
-        case 1158: self = .efst_aroma_oil
-        case 1159: self = .efst_reuse_limit_luxanima
-        case 1160: self = .efst_powerful_faith
-        case 1161: self = .efst_sincere_faith
-        case 1162: self = .efst_firm_faith
-        case 1163: self = .efst_airship_pipe
-        case 1164: self = .efst_pieces_of_shadow
-        case 1165: self = .efst_hells_plant_armor
-        case 1166: self = .efst_relieve_damage
-        case 1167: self = .efst_lockon_laser
-        case 1168: self = .efst_grade_enchant_ui_open
-        case 1169: self = .efst_ref_t_potion
-        case 1170: self = .efst_add_atk_damage
-        case 1171: self = .efst_add_matk_damage
-        case 1172: self = .efst_servantweapon
-        case 1173: self = .efst_servant_sign
-        case 1174: self = .efst_chargingpierce
-        case 1175: self = .efst_chargingpierce_count
-        case 1176: self = .efst_dragonic_aura
-        case 1177: self = .efst_big_scar
-        case 1178: self = .efst_vigor
-        case 1179: self = .efst_will_of_faith
-        case 1180: self = .efst_pressure
-        case 1181: self = .efst_sa_dragonology
-        case 1182: self = .efst_climax_earth
-        case 1183: self = .efst_climax_bloom
-        case 1184: self = .efst_climax_cryimp
-        case 1185: self = .efst_md_me_potion
-        case 1186: self = .efst_md_ma_potion
-        case 1187: self = .efst_md_ta_potion
-        case 1188: self = .efst_md_ra_potion
-        case 1189: self = .efst_reuse_megaphone
-        case 1190: self = .efst_holy_oil
-        case 1191: self = .efst_crystal_impact
-        case 1192: self = .efst_shadow_exceed
-        case 1193: self = .efst_dancing_knife
-        case 1194: self = .efst_potent_venom
-        case 1195: self = .efst_shadow_scar
-        case 1196: self = .efst_e_slash_count
-        case 1197: self = .efst_mediale
-        case 1198: self = .efst_a_vita
-        case 1199: self = .efst_a_telum
-        case 1200: self = .efst_pre_acies
-        case 1201: self = .efst_competentia
-        case 1202: self = .efst_guard_stance
-        case 1203: self = .efst_attack_stance
-        case 1204: self = .efst_guardian_s
-        case 1205: self = .efst_handicapstate_deepblind
-        case 1206: self = .efst_handicapstate_deepsilence
-        case 1207: self = .efst_handicapstate_lassitude
-        case 1208: self = .efst_handicapstate_frostbite
-        case 1209: self = .efst_handicapstate_swooning
-        case 1210: self = .efst_handicapstate_lightningstrike
-        case 1211: self = .efst_handicapstate_crystallization
-        case 1212: self = .efst_handicapstate_conflagration
-        case 1213: self = .efst_handicapstate_misfortune
-        case 1214: self = .efst_handicapstate_deadlypoison
-        case 1215: self = .efst_handicapstate_depression
-        case 1216: self = .efst_handicapstate_holyflame
-        case 1217: self = .efst_rebound_s
-        case 1218: self = .efst_shield_mastery
-        case 1219: self = .efst_spear_sword_m
-        case 1220: self = .efst_holy_s
-        case 1221: self = .efst_ultimate_s
-        case 1222: self = .efst_spear_scar
-        case 1223: self = .efst_shield_power
-        case 1224: self = .efst_fidus_animus
-        case 1225: self = .efst_mace_book_m
-        case 1226: self = .efst_shadow_weapon
-        case 1227: self = .efst_religio
-        case 1228: self = .efst_benedictum
-        case 1229: self = .efst_mvpcard_kiel
-        case 1230: self = .efst_first_brand
-        case 1231: self = .efst_second_brand
-        case 1232: self = .efst_second_judge
-        case 1233: self = .efst_third_exor_flame
-        case 1234: self = .efst_first_faith_power
-        case 1235: self = .efst_axe_stomp
-        case 1236: self = .efst_a_machine
-        case 1237: self = .efst_d_machine
-        case 1238: self = .efst_mt_m_machine_operator
-        case 1239: self = .efst_twoaxedef
-        case 1240: self = .efst_dagger_and_bow_m
-        case 1241: self = .efst_magic_sword_m
-        case 1242: self = .efst_shadow_strip
-        case 1243: self = .efst_abyss_dagger
-        case 1244: self = .efst_abyssforceweapon
-        case 1245: self = .efst_abyss_slayer
-        case 1246: self = .efst_twohanddef
-        case 1247: self = .efst_protectshadowequip
-        case 1248: self = .efst_researchreport
-        case 1249: self = .efst_bo_hell_dusty
-        case 1250: self = .efst_windsign
-        case 1251: self = .efst_crescivebolt
-        case 1252: self = .efst_calamitygale
-        case 1253: self = .efst_crescivebolt3
-        case 1254: self = .efst_stage_manner
-        case 1255: self = .efst_retrospection
-        case 1256: self = .efst_mystic_symphony
-        case 1257: self = .efst_kvasir_sonata
-        case 1258: self = .efst_soundblend
-        case 1259: self = .efst_gef_nocturn
-        case 1260: self = .efst_ain_rhapsody
-        case 1261: self = .efst_musical_interlude
-        case 1262: self = .efst_jawaii_serenade
-        case 1263: self = .efst_pron_march
-        case 1264: self = .efst_roseblossom
-        case 1265: self = .efst_bo_bionic_pharmacy_operator
-        case 1266: self = .efst_acidified_zone_water
-        case 1267: self = .efst_acidified_zone_ground
-        case 1268: self = .efst_acidified_zone_wind
-        case 1269: self = .efst_acidified_zone_fire
-        case 1270: self = .efst_magic_book_m
-        case 1271: self = .efst_spell_enchanting
-        case 1272: self = .efst_summon_elemental_ardor
-        case 1273: self = .efst_summon_elemental_diluvio
-        case 1274: self = .efst_summon_elemental_procella
-        case 1275: self = .efst_summon_elemental_terremotus
-        case 1276: self = .efst_summon_elemental_serpens
-        case 1277: self = .efst_flametechnic
-        case 1278: self = .efst_flametechnic_option
-        case 1279: self = .efst_flamearmor
-        case 1280: self = .efst_flamearmor_option
-        case 1281: self = .efst_cold_force
-        case 1282: self = .efst_cold_force_option
-        case 1283: self = .efst_crystal_armor
-        case 1284: self = .efst_crystal_armor_option
-        case 1285: self = .efst_grace_breeze
-        case 1286: self = .efst_grace_breeze_option
-        case 1287: self = .efst_eyes_of_storm
-        case 1288: self = .efst_eyes_of_storm_option
-        case 1289: self = .efst_earth_care
-        case 1290: self = .efst_earth_care_option
-        case 1291: self = .efst_strong_protection
-        case 1292: self = .efst_strong_protection_option
-        case 1293: self = .efst_deep_poisoning
-        case 1294: self = .efst_deep_poisoning_option
-        case 1295: self = .efst_poison_shield
-        case 1296: self = .efst_poison_shield_option
-        case 1297: self = .efst_abr_battle_warior
-        case 1298: self = .efst_abr_dual_cannon
-        case 1299: self = .efst_abr_mother_net
-        case 1300: self = .efst_abr_infinity
-        case 1301: self = .efst_elemental_veil
-        case 1302: self = .efst_renovatio_ext
-        case 1303: self = .efst_homun_time
-        case 1304: self = .efst_power_acceleration
-        case 1305: self = .efst_max_hp_sp_avoid
-        case 1306: self = .efst_add_all_state
-        case 1307: self = .efst_aid_period_power_acceleration
-        case 1308: self = .efst_aid_period_max_hp_sp_avoid
-        case 1309: self = .efst_aid_period_add_all_state
-        case 1310: self = .efst_poison_mist
-        case 1311: self = .efst_hackandslasher
-        case 1312: self = .efst_get_cnt_unread_return_rodex_chardb
-        case 1313: self = .efst_stone_wall
-        case 1314: self = .efst_reuse_limit_i
-        case 1315: self = .efst_overbrandready
-        case 1316: self = .efst_shieldspell
-        case 1317: self = .efst_autoshadowspell_check2
-        case 1318: self = .efst_cloud_poison
-        case 1319: self = .efst_spore_explosion_debuff
-        case 1321: self = .efst_defscroll
-        case 1326: self = .efst_massive_f_blaster
-        case 1330: self = .efst_noequipweapon2
-        case 1331: self = .efst_noequiparmor2
-        case 1332: self = .efst_noequipshield2
-        case 1333: self = .efst_noequipshoes2
-        case 1334: self = .efst_noequippendant2
-        case 1335: self = .efst_noequipearing2
-        case 1336: self = .efst_noequipfull2
-        case 1337: self = .efst_curse_r_cube
-        case 1338: self = .efst_curse_b_cube
-        case 1339: self = .efst_killing_aura
-        case 1341: self = .efst_toxin_of_mandara
-        case 1342: self = .efst_goldene_tone
-        case 1343: self = .efst_tempering
-        case 1344: self = .efst_nw_p_f_i
-        case 1345: self = .efst_intensive_aim
-        case 1346: self = .efst_intensive_aim_count
-        case 1347: self = .efst_grenade_fragment_1
-        case 1348: self = .efst_grenade_fragment_2
-        case 1349: self = .efst_grenade_fragment_3
-        case 1350: self = .efst_grenade_fragment_4
-        case 1351: self = .efst_grenade_fragment_5
-        case 1352: self = .efst_grenade_fragment_6
-        case 1353: self = .efst_auto_firing_launcherefst
-        case 1354: self = .efst_hidden_card
-        case 1355: self = .efst_nw_grenade_mastery
-        case 1356: self = .efst_talisman_of_protection
-        case 1357: self = .efst_talisman_of_warrior
-        case 1358: self = .efst_talisman_of_magician
-        case 1359: self = .efst_talisman_of_five_elements
-        case 1360: self = .efst_t_first_god
-        case 1361: self = .efst_t_second_god
-        case 1362: self = .efst_t_third_god
-        case 1363: self = .efst_t_fourth_god
-        case 1364: self = .efst_t_fiveth_god
-        case 1365: self = .efst_heaven_and_earth
-        case 1366: self = .efst_hogogong
-        case 1367: self = .efst_marine_festival
-        case 1368: self = .efst_sandy_festival
-        case 1369: self = .efst_ki_sul_rampage
-        case 1370: self = .efst_colors_of_hyun_rok_1
-        case 1371: self = .efst_colors_of_hyun_rok_2
-        case 1372: self = .efst_colors_of_hyun_rok_3
-        case 1373: self = .efst_colors_of_hyun_rok_4
-        case 1374: self = .efst_colors_of_hyun_rok_5
-        case 1375: self = .efst_colors_of_hyun_rok_6
-        case 1376: self = .efst_colors_of_hyun_rok_buff
-        case 1377: self = .efst_temporary_communion
-        case 1378: self = .efst_blessing_of_m_creatures
-        case 1379: self = .efst_blessing_of_m_c_debuff
-        case 1380: self = .efst_shieldchainrush
-        case 1381: self = .efst_mistyfrost
-        case 1382: self = .efst_groundgravity
-        case 1383: self = .efst_breakinglimit
-        case 1384: self = .efst_rulebreak
-        case 1385: self = .efst_rising_sun
-        case 1386: self = .efst_noon_sun
-        case 1387: self = .efst_sunset_sun
-        case 1388: self = .efst_rising_moon
-        case 1389: self = .efst_midnight_moon
-        case 1390: self = .efst_dawn_moon
-        case 1391: self = .efst_star_burst
-        case 1392: self = .efst_sky_enchant
-        case 1393: self = .efst_shadow_clock
-        case 1394: self = .efst_shinkirou_call
-        case 1395: self = .efst_nightmare
-        case 1396: self = .efst_noodle_fes_1
-        case 1397: self = .efst_noodle_fes_2
-        case 1398: self = .efst_noodle_fes_3
-        case 1399: self = .efst_noodle_fes_4
-        case 1400: self = .efst_noodle_fes_5
-        case 1402: self = .efst_rush_quake1
-        case 1403: self = .efst_rush_quake2
-        case 1415: self = .efst_sbunshin
-        case 1418: self = .efst_mtp_w_potion_100
-        case 1420: self = .efst_change_size
-        case 1421: self = .efst_change_size_monster
-        case 1422: self = .efst_show_effect1
-        case 1423: self = .efst_show_effect2
-        case 1424: self = .efst_show_effect3
-        case 1425: self = .efst_vr_speed
-        case 1426: self = .efst_vr_aspd
-        case 1427: self = .efst_vr_mhp
-        case 1428: self = .efst_vr_msp
-        case 1429: self = .efst_vr_hit
-        case 1430: self = .efst_vr_def
-        case 1431: self = .efst_vr_mdef
-        case 1432: self = .efst_vr_book001
-        case 1433: self = .efst_vr_book002
-        case 1434: self = .efst_vr_book003
-        case 1435: self = .efst_vr_book004
-        case 1436: self = .efst_reuse_limit_vr_book
-        case 1439: self = .efst_vr_book005
-        case 1440: self = .efst_vr_book006
-        case 1441: self = .efst_vr_book007
-        case 1442: self = .efst_vr_book008
-        case 1443: self = .efst_vr_book009
-        case 1444: self = .efst_all_t_stat
-        case 1445: self = .efst_p_atk_plus
-        case 1446: self = .efst_s_matk_plus
-        case 1447: self = .efst_c_rate_plus
-        case 1448: self = .efst_resist_plus
-        case 1449: self = .efst_pvp_dun_buff
-        case 1453: self = .efst_target_marker
-        case 1454: self = .efst_block_seal
-        case 1455: self = .efst_frost_storm
-        case 1456: self = .efst_groggy
-        case 1457: self = .efst_warm_shield
-        case 1459: self = .efst_contents_1
-        case 1460: self = .efst_contents_2
-        case 1461: self = .efst_contents_3
-        case 1462: self = .efst_contents_4
-        case 1463: self = .efst_contents_5
-        case 1464: self = .efst_contents_6
-        case 1465: self = .efst_contents_7
-        case 1466: self = .efst_contents_8
-        case 1467: self = .efst_contents_9
-        case 1468: self = .efst_contents_10
-        case 1469: self = .efst_contents_11
-        case 1470: self = .efst_contents_12
-        case 1471: self = .efst_contents_13
-        case 1472: self = .efst_contents_14
-        case 1473: self = .efst_contents_15
-        case 1474: self = .efst_contents_16
-        case 1475: self = .efst_contents_17
-        case 1476: self = .efst_contents_18
-        case 1477: self = .efst_contents_19
-        case 1478: self = .efst_contents_20
-        case 1479: self = .efst_contents_21
-        case 1480: self = .efst_contents_22
-        case 1481: self = .efst_contents_23
-        case 1482: self = .efst_contents_24
-        case 1483: self = .efst_contents_25
-        case 1509: self = .efst_c_buff_1
-        case 1510: self = .efst_c_buff_2
-        case 1560: self = .efst_chasing
-        case 1665: self = .efst_mystery_powder
-        case 1667: self = .efst_fire_charm_power
-        case 1668: self = .efst_water_charm_power
-        case 1669: self = .efst_wind_charm_power
-        case 1670: self = .efst_ground_charm_power
-        default: return nil
-        }
-    }
+public enum OfficialStatusChangeID: Int, CaseIterable, Sendable {
+    case efst_blank = -1
+    case efst_provoke = 0
+    case efst_endure = 1
+    case efst_twohandquicken = 2
+    case efst_concentration = 3
+    case efst_hiding = 4
+    case efst_cloaking = 5
+    case efst_enchantpoison = 6
+    case efst_poisonreact = 7
+    case efst_quagmire = 8
+    case efst_angelus = 9
+    case efst_blessing = 10
+    case efst_crucis = 11
+    case efst_inc_agi = 12
+    case efst_dec_agi = 13
+    case efst_slowpoison = 14
+    case efst_impositio = 15
+    case efst_suffragium = 16
+    case efst_aspersio = 17
+    case efst_benedictio = 18
+    case efst_kyrie = 19
+    case efst_magnificat = 20
+    case efst_gloria = 21
+    case efst_lexaeterna = 22
+    case efst_adrenaline = 23
+    case efst_weaponperfect = 24
+    case efst_overthrust = 25
+    case efst_maximize = 26
+    case efst_riding = 27
+    case efst_falcon = 28
+    case efst_trickdead = 29
+    case efst_shout = 30
+    case efst_energycoat = 31
+    case efst_brokenarmor = 32
+    case efst_brokenweapon = 33
+    case efst_illusion = 34
+    case efst_weightover50 = 35
+    case efst_weightover90 = 36
+    case efst_atthaste_potion1 = 37
+    case efst_atthaste_potion2 = 38
+    case efst_atthaste_potion3 = 39
+    case efst_atthaste_infinity = 40
+    case efst_movhaste_potion = 41
+    case efst_movhaste_infinity = 42
+    case efst_autocounter = 43
+    case efst_splasher = 44
+    case efst_anklesnare = 45
+    case efst_postdelay = 46
+    case efst_noaction = 47
+    case efst_impossiblepickup = 48
+    case efst_barrier = 49
+    case efst_noequipweapon = 50
+    case efst_noequipshield = 51
+    case efst_noequiparmor = 52
+    case efst_noequiphelm = 53
+    case efst_protectweapon = 54
+    case efst_protectshield = 55
+    case efst_protectarmor = 56
+    case efst_protecthelm = 57
+    case efst_autoguard = 58
+    case efst_reflectshield = 59
+    case efst_devotion = 60
+    case efst_providence = 61
+    case efst_defender = 62
+    case efst_magicrod = 63
+    case efst_weaponproperty = 64
+    case efst_autospell = 65
+    case efst_specialzone = 66
+    case efst_mask = 67
+    case efst_spearquicken = 68
+    case efst_bdplaying = 69
+    case efst_whistle = 70
+    case efst_assassincross = 71
+    case efst_poembragi = 72
+    case efst_appleidun = 73
+    case efst_humming = 74
+    case efst_dontforgetme = 75
+    case efst_fortunekiss = 76
+    case efst_serviceforyou = 77
+    case efst_richmankim = 78
+    case efst_eternalchaos = 79
+    case efst_drumbattlefield = 80
+    case efst_ringnibelungen = 81
+    case efst_rokisweil = 82
+    case efst_intoabyss = 83
+    case efst_siegfried = 84
+    case efst_bladestop = 85
+    case efst_explosionspirits = 86
+    case efst_steelbody = 87
+    case efst_extremityfist = 88
+    case efst_comboattack = 89
+    case efst_propertyfire = 90
+    case efst_propertywater = 91
+    case efst_propertywind = 92
+    case efst_propertyground = 93
+    case efst_magicattack = 94
+    case efst_stop = 95
+    case efst_weaponbraker = 96
+    case efst_propertyundead = 97
+    case efst_powerup = 98
+    case efst_agiup = 99
+    case efst_siegemode = 100
+    case efst_invisible = 101
+    case efst_statusone = 102
+    case efst_aurablade = 103
+    case efst_parrying = 104
+    case efst_lkconcentration = 105
+    case efst_tensionrelax = 106
+    case efst_berserk = 107
+    case efst_sacrifice = 108
+    case efst_gospel = 109
+    case efst_assumptio = 110
+    case efst_basilica = 111
+    case efst_groundmagic = 112
+    case efst_magicpower = 113
+    case efst_edp = 114
+    case efst_truesight = 115
+    case efst_windwalk = 116
+    case efst_meltdown = 117
+    case efst_cartboost = 118
+    case efst_chasewalk = 119
+    case efst_swordreject = 120
+    case efst_marionette_master = 121
+    case efst_marionette = 122
+    case efst_moon = 123
+    case efst_blooding = 124
+    case efst_jointbeat = 125
+    case efst_mindbreaker = 126
+    case efst_memorize = 127
+    case efst_fogwall = 128
+    case efst_spiderweb = 129
+    case efst_protectexp = 130
+    case efst_sub_weaponproperty = 131
+    case efst_autoberserk = 132
+    case efst_run = 133
+    case efst_ting = 134
+    case efst_stormkick_on = 135
+    case efst_stormkick_ready = 136
+    case efst_downkick_on = 137
+    case efst_downkick_ready = 138
+    case efst_turnkick_on = 139
+    case efst_turnkick_ready = 140
+    case efst_counter_on = 141
+    case efst_counter_ready = 142
+    case efst_dodge_on = 143
+    case efst_dodge_ready = 144
+    case efst_strup = 145
+    case efst_propertydark = 146
+    case efst_adrenaline2 = 147
+    case efst_propertytelekinesis = 148
+    case efst_soullink = 149
+    case efst_plusattackpower = 150
+    case efst_plusmagicpower = 151
+    case efst_devil1 = 152
+    case efst_kaite = 153
+    case efst_swoo = 154
+    case efst_star2 = 155
+    case efst_kaizel = 156
+    case efst_kaahi = 157
+    case efst_kaupe = 158
+    case efst_sma_ready = 159
+    case efst_ske = 160
+    case efst_onehandquicken = 161
+    case efst_friend = 162
+    case efst_friendup = 163
+    case efst_sg_warm = 164
+    case efst_sg_sun_warm = 165
+    case efst_sg_moon_warm = 166
+    case efst_sg_star_warm = 167
+    case efst_emotion = 168
+    case efst_sun_comfort = 169
+    case efst_moon_comfort = 170
+    case efst_star_comfort = 171
+    case efst_expup = 172
+    case efst_gdskill_battleorder = 173
+    case efst_gdskill_regeneration = 174
+    case efst_gdskill_postdelay = 175
+    case efst_resisthandicap = 176
+    case efst_maxhppercent = 177
+    case efst_maxsppercent = 178
+    case efst_defence = 179
+    case efst_slowdown = 180
+    case efst_preserve = 181
+    case efst_chasewalk2 = 182
+    case efst_not_extremityfist = 183
+    case efst_clairvoyance = 184
+    case efst_moveslow_potion = 185
+    case efst_doublecasting = 186
+    case efst_gravitation = 187
+    case efst_overthrustmax = 188
+    case efst_longing = 189
+    case efst_hermode = 190
+    case efst_tarotcard = 191
+    case efst_hlif_avoid = 192
+    case efst_hfli_fleet = 193
+    case efst_hfli_speed = 194
+    case efst_hlif_change = 195
+    case efst_hami_bloodlust = 196
+    case efst_cr_shrink = 197
+    case efst_wz_sightblaster = 198
+    case efst_dc_winkcharm = 199
+    case efst_rg_cconfine_m = 200
+    case efst_rg_cconfine_s = 201
+    case efst_disablemove = 202
+    case efst_gs_madnesscancel = 203
+    case efst_gs_gatlingfever = 204
+    case efst_earthscroll = 205
+    case efst_nj_utsusemi = 206
+    case efst_nj_bunsinjyutsu = 207
+    case efst_nj_nen = 208
+    case efst_gs_adjustment = 209
+    case efst_gs_accuracy = 210
+    case efst_nj_suiton = 211
+    case efst_pet = 212
+    case efst_mental = 213
+    case efst_expmemory = 214
+    case efst_performance = 215
+    case efst_gain = 216
+    case efst_griffon = 217
+    case efst_drift = 218
+    case efst_wallshift = 219
+    case efst_reincarnation = 220
+    case efst_pattack = 221
+    case efst_pspeed = 222
+    case efst_pdefense = 223
+    case efst_pcritical = 224
+    case efst_ranking = 225
+    case efst_ptriple = 226
+    case efst_denergy = 227
+    case efst_wave1 = 228
+    case efst_wave2 = 229
+    case efst_wave3 = 230
+    case efst_wave4 = 231
+    case efst_daura = 232
+    case efst_dfreezer = 233
+    case efst_dpunish = 234
+    case efst_dbarrier = 235
+    case efst_dwarning = 236
+    case efst_mousewheel = 237
+    case efst_dgauge = 238
+    case efst_daccel = 239
+    case efst_dblock = 240
+    case efst_food_str = 241
+    case efst_food_agi = 242
+    case efst_food_vit = 243
+    case efst_food_dex = 244
+    case efst_food_int = 245
+    case efst_food_luk = 246
+    case efst_food_basicavoidance = 247
+    case efst_food_basichit = 248
+    case efst_food_criticalsuccessvalue = 249
+    case efst_cash_plusexp = 250
+    case efst_cash_deathpenalty = 251
+    case efst_cash_receiveitem = 252
+    case efst_cash_boss_alarm = 253
+    case efst_da_energy = 254
+    case efst_da_firstslot = 255
+    case efst_da_headdef = 256
+    case efst_da_space = 257
+    case efst_da_transform = 258
+    case efst_da_itemrebuild = 259
+    case efst_da_illusion = 260
+    case efst_da_darkpower = 261
+    case efst_da_earplug = 262
+    case efst_da_contract = 263
+    case efst_da_black = 264
+    case efst_da_magiccart = 265
+    case efst_crystal = 266
+    case efst_da_rebuild = 267
+    case efst_da_edarkness = 268
+    case efst_da_eguardian = 269
+    case efst_da_timeout = 270
+    case efst_food_str_cash = 271
+    case efst_food_agi_cash = 272
+    case efst_food_vit_cash = 273
+    case efst_food_dex_cash = 274
+    case efst_food_int_cash = 275
+    case efst_food_luk_cash = 276
+    case efst_mer_flee = 277
+    case efst_mer_atk = 278
+    case efst_mer_hp = 279
+    case efst_mer_sp = 280
+    case efst_mer_hit = 281
+    case efst_slowcast = 282
+    case efst_magicmirror = 283
+    case efst_stoneskin = 284
+    case efst_antimagic = 285
+    case efst_criticalwound = 286
+    case efst_npc_defender = 287
+    case efst_noaction_wait = 288
+    case efst_movhaste_horse = 289
+    case efst_protect_def = 290
+    case efst_protect_mdef = 291
+    case efst_healplus = 292
+    case efst_s_lifepotion = 293
+    case efst_l_lifepotion = 294
+    case efst_criticalpercent = 295
+    case efst_plusavoidvalue = 296
+    case efst_atker_aspd = 297
+    case efst_target_aspd = 298
+    case efst_atker_movespeed = 299
+    case efst_atker_blood = 300
+    case efst_target_blood = 301
+    case efst_armor_property = 302
+    case efst_reuse_limit_a = 303
+    case efst_hellpower = 304
+    case efst_steampack = 305
+    case efst_reuse_limit_b = 306
+    case efst_reuse_limit_c = 307
+    case efst_reuse_limit_d = 308
+    case efst_reuse_limit_e = 309
+    case efst_reuse_limit_f = 310
+    case efst_invincible = 311
+    case efst_cash_plusonlyjobexp = 312
+    case efst_partyflee = 313
+    case efst_angel_protect = 314
+    case efst_endure_mdef = 315
+    case efst_enchantblade = 316
+    case efst_deathbound = 317
+    case efst_refresh = 318
+    case efst_giantgrowth = 319
+    case efst_stonehardskin = 320
+    case efst_vitalityactivation = 321
+    case efst_fightingspirit = 322
+    case efst_abundance = 323
+    case efst_reuse_millenniumshield = 324
+    case efst_reuse_crushstrike = 325
+    case efst_reuse_refresh = 326
+    case efst_reuse_stormblast = 327
+    case efst_venomimpress = 328
+    case efst_epiclesis = 329
+    case efst_oratio = 330
+    case efst_laudaagnus = 331
+    case efst_laudaramus = 332
+    case efst_cloakingexceed = 333
+    case efst_hallucinationwalk = 334
+    case efst_hallucinationwalk_postdelay = 335
+    case efst_renovatio = 336
+    case efst_weaponblocking = 337
+    case efst_weaponblocking_postdelay = 338
+    case efst_rollingcutter = 339
+    case efst_expiatio = 340
+    case efst_poisoningweapon = 341
+    case efst_toxin = 342
+    case efst_paralyse = 343
+    case efst_venombleed = 344
+    case efst_magicmushroom = 345
+    case efst_deathhurt = 346
+    case efst_pyrexia = 347
+    case efst_oblivioncurse = 348
+    case efst_leechesend = 349
+    case efst_duplelight = 350
+    case efst_frostmisty = 351
+    case efst_fearbreeze = 352
+    case efst_electricshocker = 353
+    case efst_marshofabyss = 354
+    case efst_recognizedspell = 355
+    case efst_stasis = 356
+    case efst_wugrider = 357
+    case efst_wugdash = 358
+    case efst_wugbite = 359
+    case efst_camouflage = 360
+    case efst_acceleration = 361
+    case efst_hovering = 362
+    case efst_summon1 = 363
+    case efst_summon2 = 364
+    case efst_summon3 = 365
+    case efst_summon4 = 366
+    case efst_summon5 = 367
+    case efst_mvpcard_taogunka = 368
+    case efst_mvpcard_mistress = 369
+    case efst_mvpcard_orchero = 370
+    case efst_mvpcard_orclord = 371
+    case efst_overheat_limitpoint = 372
+    case efst_overheat = 373
+    case efst_shapeshift = 374
+    case efst_infraredscan = 375
+    case efst_magneticfield = 376
+    case efst_neutralbarrier = 377
+    case efst_neutralbarrier_master = 378
+    case efst_stealthfield = 379
+    case efst_stealthfield_master = 380
+    case efst_manu_atk = 381
+    case efst_manu_def = 382
+    case efst_spl_atk = 383
+    case efst_spl_def = 384
+    case efst_reproduce = 385
+    case efst_manu_matk = 386
+    case efst_spl_matk = 387
+    case efst_str_scroll = 388
+    case efst_int_scroll = 389
+    case efst_lg_reflectdamage = 390
+    case efst_forceofvanguard = 391
+    case efst_buchedenoel = 392
+    case efst_autoshadowspell = 393
+    case efst_shadowform = 394
+    case efst_raid = 395
+    case efst_shieldspell_def = 396
+    case efst_shieldspell_mdef = 397
+    case efst_shieldspell_ref = 398
+    case efst_bodypaint = 399
+    case efst_exeedbreak = 400
+    case efst_adoramus = 401
+    case efst_prestige = 402
+    case efst_invisibility = 403
+    case efst_deadlyinfect = 404
+    case efst_banding = 405
+    case efst_earthdrive = 406
+    case efst_inspiration = 407
+    case efst_enervation = 408
+    case efst_groomy = 409
+    case efst_raisingdragon = 410
+    case efst_ignorance = 411
+    case efst_laziness = 412
+    case efst_lightningwalk = 413
+    case efst_acaraje = 414
+    case efst_unlucky = 415
+    case efst_cursedcircle_atker = 416
+    case efst_cursedcircle_target = 417
+    case efst_weakness = 418
+    case efst_crescentelbow = 419
+    case efst_noequipaccessary = 420
+    case efst_stripaccessary = 421
+    case efst_manhole = 422
+    case efst_popecookie = 423
+    case efst_fallenempire = 424
+    case efst_gentletouch_energygain = 425
+    case efst_gentletouch_change = 426
+    case efst_gentletouch_revitalize = 427
+    case efst_bloodylust = 428
+    case efst_swing = 429
+    case efst_symphony_love = 430
+    case efst_propertywalk = 431
+    case efst_spellfist = 432
+    case efst_netherworld = 433
+    case efst_siren = 434
+    case efst_deep_sleep = 435
+    case efst_sircleofnature = 436
+    case efst_cold = 437
+    case efst_gloomyday = 438
+    case efst_song_of_mana = 439
+    case efst_cloud_kill = 440
+    case efst_dance_with_wug = 441
+    case efst_rush_windmill = 442
+    case efst_echosong = 443
+    case efst_harmonize = 444
+    case efst_striking = 445
+    case efst_warmer = 446
+    case efst_moonlit_serenade = 447
+    case efst_saturday_night_fever = 448
+    case efst_sitdown_force = 449
+    case efst_analyze = 450
+    case efst_lerads_dew = 451
+    case efst_melodyofsink = 452
+    case efst_beyond_of_warcry = 453
+    case efst_unlimited_humming_voice = 454
+    case efst_spellbook1 = 455
+    case efst_spellbook2 = 456
+    case efst_spellbook3 = 457
+    case efst_freeze_sp = 458
+    case efst_gn_training_sword = 459
+    case efst_gn_remodeling_cart = 460
+    case efst_gn_cartboost = 461
+    case efst_fixedcastingtm_reduce = 462
+    case efst_thorns_trap = 463
+    case efst_blood_sucker = 464
+    case efst_spore_explosion = 465
+    case efst_demonic_fire = 466
+    case efst_fire_expansion_smoke_powder = 467
+    case efst_fire_expansion_tear_gas = 468
+    case efst_blocking_play = 469
+    case efst_mandragora = 470
+    case efst_activate = 471
+    case efst_ab_secrament = 472
+    case efst_assumptio2 = 473
+    case efst_tk_sevenwind = 474
+    case efst_limit_odins_recall = 475
+    case efst_stomachache = 476
+    case efst_mysterious_powder = 477
+    case efst_melon_bomb = 478
+    case efst_banana_bomb_sitdown_postdelay = 479
+    case efst_promote_health_reserch = 480
+    case efst_energy_drink_reserch = 481
+    case efst_extract_white_potion_z = 482
+    case efst_vitata_500 = 483
+    case efst_extract_salamine_juice = 484
+    case efst_boost500 = 485
+    case efst_full_swing_k = 486
+    case efst_mana_plus = 487
+    case efst_mustle_m = 488
+    case efst_life_force_f = 489
+    case efst_vacuum_extreme = 490
+    case efst_savage_steak = 491
+    case efst_cocktail_warg_blood = 492
+    case efst_minor_bbq = 493
+    case efst_siroma_ice_tea = 494
+    case efst_drocera_herb_steamed = 495
+    case efst_putti_tails_noodles = 496
+    case efst_banana_bomb = 497
+    case efst_summon_agni = 498
+    case efst_spellbook4 = 499
+    case efst_spellbook5 = 500
+    case efst_spellbook6 = 501
+    case efst_spellbook7 = 502
+    case efst_elemental_aggressive = 503
+    case efst_return_to_eldicastes = 504
+    case efst_banding_defence = 505
+    case efst_skelscroll = 506
+    case efst_distructionscroll = 507
+    case efst_royalscroll = 508
+    case efst_immunityscroll = 509
+    case efst_mysticscroll = 510
+    case efst_battlescroll = 511
+    case efst_armorscroll = 512
+    case efst_freyjascroll = 513
+    case efst_soulscroll = 514
+    case efst_circle_of_fire = 515
+    case efst_circle_of_fire_option = 516
+    case efst_fire_cloak = 517
+    case efst_fire_cloak_option = 518
+    case efst_water_screen = 519
+    case efst_water_screen_option = 520
+    case efst_water_drop = 521
+    case efst_water_drop_option = 522
+    case efst_wind_step = 523
+    case efst_wind_step_option = 524
+    case efst_wind_curtain = 525
+    case efst_wind_curtain_option = 526
+    case efst_water_barrier = 527
+    case efst_zephyr = 528
+    case efst_solid_skin = 529
+    case efst_solid_skin_option = 530
+    case efst_stone_shield = 531
+    case efst_stone_shield_option = 532
+    case efst_power_of_gaia = 533
+    case efst_el_wait = 534
+    case efst_el_passive = 535
+    case efst_el_defensive = 536
+    case efst_el_offensive = 537
+    case efst_el_cost = 538
+    case efst_pyrotechnic = 539
+    case efst_pyrotechnic_option = 540
+    case efst_heater = 541
+    case efst_heater_option = 542
+    case efst_tropic = 543
+    case efst_tropic_option = 544
+    case efst_aquaplay = 545
+    case efst_aquaplay_option = 546
+    case efst_cooler = 547
+    case efst_cooler_option = 548
+    case efst_chilly_air = 549
+    case efst_chilly_air_option = 550
+    case efst_gust = 551
+    case efst_gust_option = 552
+    case efst_blast = 553
+    case efst_blast_option = 554
+    case efst_wild_storm = 555
+    case efst_wild_storm_option = 556
+    case efst_petrology = 557
+    case efst_petrology_option = 558
+    case efst_cursed_soil = 559
+    case efst_cursed_soil_option = 560
+    case efst_upheaval = 561
+    case efst_upheaval_option = 562
+    case efst_tidal_weapon = 563
+    case efst_tidal_weapon_option = 564
+    case efst_rock_crusher = 565
+    case efst_rock_crusher_atk = 566
+    case efst_fire_insignia = 567
+    case efst_water_insignia = 568
+    case efst_wind_insignia = 569
+    case efst_earth_insignia = 570
+    case efst_equiped_floor = 571
+    case efst_guardian_recall = 572
+    case efst_mora_buff = 573
+    case efst_reuse_limit_g = 574
+    case efst_reuse_limit_h = 575
+    case efst_needle_of_paralyze = 576
+    case efst_pain_killer = 577
+    case efst_g_lifepotion = 578
+    case efst_vitalize_potion = 579
+    case efst_light_of_regene = 580
+    case efst_overed_boost = 581
+    case efst_silent_breeze = 582
+    case efst_odins_power = 583
+    case efst_style_change = 584
+    case efst_sonic_claw_postdelay = 585
+    case efst_silvervein_rush_postdelay = 596
+    case efst_midnight_frenzy_postdelay = 597
+    case efst_goldene_ferse = 598
+    case efst_angriffs_modus = 599
+    case efst_tinder_breaker = 600
+    case efst_tinder_breaker_postdelay = 601
+    case efst_cbc = 602
+    case efst_cbc_postdelay = 603
+    case efst_eqc = 604
+    case efst_magma_flow = 605
+    case efst_granitic_armor = 606
+    case efst_pyroclastic = 607
+    case efst_volcanic_ash = 608
+    case efst_spirits_saveinfo1 = 609
+    case efst_spirits_saveinfo2 = 610
+    case efst_magic_candy = 611
+    case efst_search_store_info = 612
+    case efst_all_riding = 613
+    case efst_all_riding_reuse_limit = 614
+    case efst_macro = 615
+    case efst_macro_postdelay = 616
+    case efst_beer_bottle_cap = 617
+    case efst_overlapexpup = 618
+    case efst_pc_iz_dun05 = 619
+    case efst_crushstrike = 620
+    case efst_monster_transform = 621
+    case efst_sit = 622
+    case efst_onair = 623
+    case efst_mtf_aspd = 624
+    case efst_mtf_rangeatk = 625
+    case efst_mtf_matk = 626
+    case efst_mtf_mleatked = 627
+    case efst_mtf_cridamage = 628
+    case efst_reuse_limit_mtf = 629
+    case efst_macro_permit = 630
+    case efst_macro_play = 631
+    case efst_skf_cast = 632
+    case efst_skf_aspd = 633
+    case efst_skf_atk = 634
+    case efst_skf_matk = 635
+    case efst_reward_plusonlyjobexp = 636
+    case efst_handicapstate_norecover = 637
+    case efst_set_num_def = 638
+    case efst_set_num_mdef = 639
+    case efst_set_per_def = 640
+    case efst_set_per_mdef = 641
+    case efst_partybooking_search_dealy = 642
+    case efst_partybooking_register_dealy = 643
+    case efst_period_time_check_detect_skill = 644
+    case efst_ko_jyumonjikiri = 645
+    case efst_meikyousisui = 646
+    case efst_atthaste_cash = 647
+    case efst_equipped_divine_armor = 648
+    case efst_equipped_holy_armor = 649
+    case efst_2011rwc = 650
+    case efst_kyougaku = 651
+    case efst_izayoi = 652
+    case efst_zenkai = 653
+    case efst_kg_kagehumi = 654
+    case efst_kyomu = 655
+    case efst_kagemusya = 656
+    case efst_zangetsu = 657
+    case efst_phi_demon = 658
+    case efst_gensou = 659
+    case efst_akaitsuki = 660
+    case efst_tetany = 661
+    case efst_gm_battle = 662
+    case efst_gm_battle2 = 663
+    case efst_2011rwc_scroll = 664
+    case efst_active_monster_transform = 665
+    case efst_mysticpowder = 666
+    case efst_eclage_recall = 667
+    case efst_entry_queue_apply_delay = 668
+    case efst_reuse_limit_ecl = 669
+    case efst_m_lifepotion = 670
+    case efst_entry_queue_notify_admission_time_out = 671
+    case efst_unknown_name = 672
+    case efst_on_push_cart = 673
+    case efst_hat_effect = 674
+    case efst_flower_leaf = 675
+    case efst_ray_of_protection = 676
+    case efst_glastheim_atk = 677
+    case efst_glastheim_def = 678
+    case efst_glastheim_heal = 679
+    case efst_glastheim_hidden = 680
+    case efst_glastheim_state = 681
+    case efst_glastheim_itemdef = 682
+    case efst_glastheim_hpsp = 683
+    case efst_homun_skill_postdelay = 684
+    case efst_almighty = 685
+    case efst_gvg_giant = 686
+    case efst_gvg_golem = 687
+    case efst_gvg_stun = 688
+    case efst_gvg_stone = 689
+    case efst_gvg_freez = 690
+    case efst_gvg_sleep = 691
+    case efst_gvg_curse = 692
+    case efst_gvg_silence = 693
+    case efst_gvg_blind = 694
+    case efst_client_only_equip_arrow = 695
+    case efst_clan_info = 696
+    case efst_jp_event01 = 697
+    case efst_jp_event02 = 698
+    case efst_jp_event03 = 699
+    case efst_jp_event04 = 700
+    case efst_teleport_fixedcastingdelay = 701
+    case efst_geffen_magic1 = 702
+    case efst_geffen_magic2 = 703
+    case efst_geffen_magic3 = 704
+    case efst_quest_buff1 = 705
+    case efst_quest_buff2 = 706
+    case efst_quest_buff3 = 707
+    case efst_reuse_limit_recall = 708
+    case efst_saveposition = 709
+    case efst_handicapstate_iceexplo = 710
+    case efst_fenrir_card = 711
+    case efst_reuse_limit_aspd_potion = 712
+    case efst_maxpain = 713
+    case efst_pc_stop = 714
+    case efst_frigg_song = 715
+    case efst_offertorium = 716
+    case efst_telekinesis_intense = 717
+    case efst_moonstar = 718
+    case efst_strangelights = 719
+    case efst_full_throttle = 720
+    case efst_rebound = 721
+    case efst_unlimit = 722
+    case efst_kings_grace = 723
+    case efst_item_atkmax = 724
+    case efst_item_atkmin = 725
+    case efst_item_matkmax = 726
+    case efst_item_matkmin = 727
+    case efst_super_star = 728
+    case efst_high_ranker = 729
+    case efst_darkcrow = 730
+    case efst_2013_valentine1 = 731
+    case efst_2013_valentine2 = 732
+    case efst_2013_valentine3 = 733
+    case efst_illusiondoping = 734
+    case efst_wideweb = 735
+    case efst_chill = 736
+    case efst_burnt = 737
+    case efst_pccafe_play_time = 738
+    case efst_twisted_time = 739
+    case efst_flashcombo = 740
+    case efst_jitter_buff1 = 741
+    case efst_jitter_buff2 = 742
+    case efst_jitter_buff3 = 743
+    case efst_jitter_buff4 = 744
+    case efst_jitter_buff5 = 745
+    case efst_jitter_buff6 = 746
+    case efst_jitter_buff7 = 747
+    case efst_jitter_buff8 = 748
+    case efst_jitter_buff9 = 749
+    case efst_jitter_buff10 = 750
+    case efst_cup_of_boza = 751
+    case efst_b_trap = 752
+    case efst_e_chain = 753
+    case efst_e_qd_shot_ready = 754
+    case efst_c_marker = 755
+    case efst_h_mine = 756
+    case efst_h_mine_splash = 757
+    case efst_p_alter = 758
+    case efst_heat_barrel = 759
+    case efst_anti_m_blast = 760
+    case efst_slugshot = 761
+    case efst_swordclan = 762
+    case efst_arcwandclan = 763
+    case efst_goldenmaceclan = 764
+    case efst_crossbowclan = 765
+    case efst_packing_envelope1 = 766
+    case efst_packing_envelope2 = 767
+    case efst_packing_envelope3 = 768
+    case efst_packing_envelope4 = 769
+    case efst_packing_envelope5 = 770
+    case efst_packing_envelope6 = 771
+    case efst_packing_envelope7 = 772
+    case efst_packing_envelope8 = 773
+    case efst_packing_envelope9 = 774
+    case efst_packing_envelope10 = 775
+    case efst_glastheim_trans = 776
+    case efst_zongzi_pouch_trans = 777
+    case efst_heat_barrel_after = 778
+    case efst_decoration_of_music = 779
+    case efst_overseaexpup = 780
+    case efst_clown_n_gypsy_card = 781
+    case efst_open_npc_market = 782
+    case efst_beef_rib_stew = 783
+    case efst_pork_rib_stew = 784
+    case efst_chuseok_monday = 785
+    case efst_chuseok_tuesday = 786
+    case efst_chuseok_wednesday = 787
+    case efst_chuseok_thursday = 788
+    case efst_chuseok_friday = 789
+    case efst_chuseok_weekend = 790
+    case efst_all_lightguard = 791
+    case efst_all_lightguard_cool_time = 792
+    case efst_mtf_mhp = 793
+    case efst_mtf_msp = 794
+    case efst_mtf_pumpkin = 795
+    case efst_mtf_hitflee = 796
+    case efst_mtf_cridamage2 = 797
+    case efst_mtf_spdrain = 798
+    case efst_acuo_mint_gum = 799
+    case efst_s_healpotion = 800
+    case efst_reuse_limit_s_heal_potion = 801
+    case efst_playtime_statistics = 802
+    case efst_gn_changematerial_operator = 803
+    case efst_gn_mix_cooking_operator = 804
+    case efst_gn_makebomb_operator = 805
+    case efst_gn_s_pharmacy_operator = 806
+    case efst_so_el_analysis_disassembly_operator = 807
+    case efst_so_el_analysis_combination_operator = 808
+    case efst_nc_magicdecoy_operator = 809
+    case efst_guild_storage = 810
+    case efst_gc_poisoningweapon_operator = 811
+    case efst_ws_weaponrefine_operator = 812
+    case efst_bs_repairweapon_operator = 813
+    case efst_get_mailbox = 814
+    case efst_jumpingclan = 815
+    case efst_jp_otp = 816
+    case efst_handicaptolerance_levelgap = 817
+    case efst_mtf_rangeatk2 = 818
+    case efst_mtf_aspd2 = 819
+    case efst_mtf_matk2 = 820
+    case efst_show_npchpbar = 821
+    case efst_flowersmoke = 822
+    case efst_fstone = 823
+    case efst_dailysendmailcnt = 824
+    case efst_qscaraba = 825
+    case efst_ljosalfar = 826
+    case efst_pad_reader_knight = 827
+    case efst_pad_reader_crusader = 828
+    case efst_pad_reader_blacksmith = 829
+    case efst_pad_reader_alchemist = 830
+    case efst_pad_reader_assassin = 831
+    case efst_pad_reader_rogue = 832
+    case efst_pad_reader_wizard = 833
+    case efst_pad_reader_sage = 834
+    case efst_pad_reader_priest = 835
+    case efst_pad_reader_monk = 836
+    case efst_pad_reader_hunter = 837
+    case efst_pad_reader_bard = 838
+    case efst_pad_reader_dancer = 839
+    case efst_pad_reader_taekwon = 840
+    case efst_pad_reader_ninja = 841
+    case efst_pad_reader_gunslinger = 842
+    case efst_pad_reader_supernovice = 843
+    case efst_essence_of_time = 844
+    case efst_minigame_roulette = 845
+    case efst_minigame_gold_point = 846
+    case efst_minigame_silver_point = 847
+    case efst_minigame_bronze_point = 848
+    case efst_happiness_star = 849
+    case efst_summerevent01 = 850
+    case efst_summerevent02 = 851
+    case efst_summerevent03 = 852
+    case efst_summerevent04 = 853
+    case efst_summerevent05 = 854
+    case efst_minigame_roulette_bonus_item = 855
+    case efst_dress_up = 856
+    case efst_maple_falls = 857
+    case efst_all_niflheim_recall = 858
+    case efst_marking_use_changemonster = 859
+    case efst_mtf_marionette = 860
+    case efst_mtf_lude = 861
+    case efst_mtf_cruiser = 862
+    case efst_mermaid_longing = 863
+    case efst_magical_feather = 864
+    case efst_dracula_card = 865
+    case efst_all_prontera_recall = 866
+    case efst_limit_power_booster = 867
+    case efst_gift_of_snow = 868
+    case efst_npc_hallucinationwalk = 869
+    case efst_npc_hallucinationwalk_postdelay = 870
+    case efst_npc_xxxwalk = 871
+    case efst_time_accessory = 872
+    case efst_ep16_def = 873
+    case efst_normal_atked_sp = 874
+    case efst_bodystate_stonecurse = 875
+    case efst_bodystate_freezing = 876
+    case efst_bodystate_stun = 877
+    case efst_bodystate_sleep = 878
+    case efst_bodystate_undead = 879
+    case efst_bodystate_stonecurse_ing = 880
+    case efst_bodystate_burnning = 881
+    case efst_bodystate_imprison = 882
+    case efst_healthstate_poison = 883
+    case efst_healthstate_curse = 884
+    case efst_healthstate_silence = 885
+    case efst_healthstate_confusion = 886
+    case efst_healthstate_blind = 887
+    case efst_healthstate_angelus = 888
+    case efst_healthstate_blooding = 889
+    case efst_healthstate_heavypoison = 890
+    case efst_healthstate_fear = 891
+    case efst_cherry_blossom_cake = 892
+    case efst_su_stoop = 893
+    case efst_catnippowder = 894
+    case efst_head_equipment_effect = 895
+    case efst_sv_roottwist = 896
+    case efst_attack_property_nothing = 897
+    case efst_attack_property_water = 898
+    case efst_attack_property_ground = 899
+    case efst_attack_property_fire = 900
+    case efst_attack_property_wind = 901
+    case efst_attack_property_poison = 902
+    case efst_attack_property_saint = 903
+    case efst_attack_property_darkness = 904
+    case efst_attack_property_telekinesis = 905
+    case efst_attack_property_undead = 906
+    case efst_resist_property_nothing = 907
+    case efst_resist_property_water = 908
+    case efst_resist_property_ground = 909
+    case efst_resist_property_fire = 910
+    case efst_resist_property_wind = 911
+    case efst_resist_property_poison = 912
+    case efst_resist_property_saint = 913
+    case efst_resist_property_darkness = 914
+    case efst_resist_property_telekinesis = 915
+    case efst_resist_property_undead = 916
+    case efst_bitescar = 917
+    case efst_arclousedash = 918
+    case efst_tunaparty = 919
+    case efst_shrimp = 920
+    case efst_freshshrimp = 921
+    case efst_period_receiveitem = 922
+    case efst_period_plusexp = 923
+    case efst_period_plusjobexp = 924
+    case efst_runehelm = 925
+    case efst_helm_verkana = 926
+    case efst_helm_rhydo = 927
+    case efst_helm_turisus = 928
+    case efst_helm_hagalas = 929
+    case efst_helm_isia = 930
+    case efst_helm_asir = 931
+    case efst_helm_urj = 932
+    case efst_suhide = 933
+    case efst_reuse_limit_mg = 934
+    case efst_doram_buf_01 = 935
+    case efst_doram_buf_02 = 936
+    case efst_spritemable = 937
+    case efst_aid_period_receiveitem = 938
+    case efst_aid_period_plusexp = 939
+    case efst_aid_period_plusjobexp = 940
+    case efst_aid_period_deadpenalty = 941
+    case efst_aid_period_addstoreitemcount = 942
+    case efst_all_glastheim_recall = 943
+    case efst_reuse_limit_pepo_md = 944
+    case efst_all_thanatos_recall = 945
+    case efst_kafra_store = 946
+    case efst_reuse_abbys = 947
+    case efst_magicstone_of_grace_set = 948
+    case efst_private_airplane = 949
+    case efst_hiss = 950
+    case efst_hiss_avoid = 951
+    case efst_nyanggrass = 952
+    case efst_chattering = 953
+    case efst_chattering_opt_atk_matk = 954
+    case efst_chattering_opt_haste = 955
+    case efst_spiritofland_stemspear = 956
+    case efst_spiritofland_roottwist = 957
+    case efst_spiritofland_powdering = 958
+    case efst_spiritofland_meteor = 959
+    case efst_spiritofland_nyanggrass = 960
+    case efst_grooming = 961
+    case efst_protectionofshrimp = 962
+    case efst_ep16_2_buff_ss = 963
+    case efst_ep16_2_buff_sc = 964
+    case efst_ep16_2_buff_ac = 965
+    case efst_gs_magical_bullet = 966
+    case efst_fallen_angel = 976
+    case efst_reuse_limit_movepoint = 977
+    case efst_macro_detector_answer_waiting = 978
+    case efst_blaze_bead = 979
+    case efst_frozen_bead = 980
+    case efst_breeze_bead = 981
+    case efst_soulattack = 982
+    case efst_aid_period_receiveitem_2nd = 983
+    case efst_aid_period_plusexp_2nd = 984
+    case efst_aid_period_plusjobexp_2nd = 985
+    case efst_prontera_jp = 986
+    case efst_assistant_vending = 987
+    case efst_gloom_card = 988
+    case efst_pharaoh_card = 989
+    case efst_kiel_card = 990
+    case efst_assistant_buying = 991
+    case efst_cheerup = 992
+    case efst_get_cnt_unread_rodex_chardb = 993
+    case efst_get_cnt_unread_rodex_globaldb = 994
+    case efst_s_manapotion = 995
+    case efst_m_defscroll = 996
+    case efst_open_refining_ui = 997
+    case efst_all_lighthalzen_recall = 998
+    case efst_swap_equipitem = 999
+    case efst_as_ragged_golem_card = 1000
+    case efst_lhz_dun_n1 = 1001
+    case efst_lhz_dun_n2 = 1002
+    case efst_lhz_dun_n3 = 1003
+    case efst_lhz_dun_n4 = 1004
+    case efst_taekwon_mission = 1005
+    case efst_sun_place = 1006
+    case efst_moon_place = 1007
+    case efst_star_place = 1008
+    case efst_sun_monster = 1009
+    case efst_moon_monster = 1010
+    case efst_star_monster = 1011
+    case efst_al_warp_addslot = 1012
+    case efst_all_stat_down = 1013
+    case efst_gradual_gravity = 1014
+    case efst_damage_heal = 1015
+    case efst_immune_property_nothing = 1016
+    case efst_immune_property_water = 1017
+    case efst_immune_property_ground = 1018
+    case efst_immune_property_fire = 1019
+    case efst_immune_property_wind = 1020
+    case efst_immune_property_poison = 1021
+    case efst_immune_property_saint = 1022
+    case efst_immune_property_darkness = 1023
+    case efst_immune_property_telekinesis = 1024
+    case efst_immune_property_undead = 1025
+    case efst_reuse_limit_np = 1026
+    case efst_specialcookie = 1027
+    case efst_damage_heal2 = 1028
+    case efst_damage_heal3 = 1029
+    case efst_glory_of_return = 1030
+    case efst_atk_popcorn = 1031
+    case efst_matk_popcorn = 1032
+    case efst_aspd_popcorn = 1033
+    case efst_ultimatecook = 1034
+    case efst_lightofmoon = 1035
+    case efst_lightofsun = 1036
+    case efst_lightofstar = 1037
+    case efst_lunarstance = 1038
+    case efst_universestance = 1039
+    case efst_sunstance = 1040
+    case efst_flashkick = 1041
+    case efst_newmoon = 1042
+    case efst_starstance = 1043
+    case efst_dimension = 1044
+    case efst_dimension1 = 1045
+    case efst_dimension2 = 1046
+    case efst_creatingstar = 1047
+    case efst_fallingstar = 1048
+    case efst_novaexplosing = 1049
+    case efst_gravitycontrol = 1050
+    case xxx_efst_worldstore_active = 1051
+    case efst_worldstore_itemmoveinfo_sendcomplete = 1052
+    case efst_soulcollect = 1053
+    case efst_soulreaper = 1054
+    case efst_soulunity = 1055
+    case efst_soulshadow = 1056
+    case efst_soulfairy = 1057
+    case efst_soulfalcon = 1058
+    case efst_soulgolem = 1059
+    case efst_souldivision = 1060
+    case efst_soulenergy = 1061
+    case efst_use_skill_sp_spa = 1062
+    case efst_use_skill_sp_sha = 1063
+    case efst_sp_sha = 1064
+    case efst_infinity_drink = 1065
+    case efst_abyss_001 = 1066
+    case efst_abyss_002 = 1067
+    case efst_abyss_003 = 1068
+    case efst_abyss_004 = 1069
+    case efst_abyss_005 = 1070
+    case efst_abyss_006 = 1071
+    case efst_abyss_007 = 1072
+    case efst_abyss_008 = 1073
+    case efst_reuse_limit_thm = 1075
+    case efst_reuse_limit_tli = 1076
+    case efst_reuse_limit_tkc = 1077
+    case efst_reuse_limit_trp = 1078
+    case efst_reuse_limit_tbg = 1079
+    case efst_reuse_limit_tbm = 1080
+    case efst_yggdrasil_bless = 1081
+    case efst_use_skill_sp_swhoo = 1082
+    case efst_hunting_event = 1083
+    case efst_period_receiveitem_2nd = 1084
+    case efst_period_plusexp_2nd = 1085
+    case efst_expdropup = 1086
+    case efst_tw_newyear_event = 1087
+    case efst_ensemblefatigue = 1088
+    case efst_adaptation = 1089
+    case efst_dancinglesson = 1090
+    case efst_musicallesson = 1091
+    case efst_reuse_limit_rc = 1092
+    case efst_dancinglesson_equipped = 1093
+    case efst_musicallesson_equipped = 1094
+    case efst_ancilla = 1095
+    case efst_reuse_limit_potion_a = 1096
+    case efst_reuse_limit_potion_b = 1097
+    case efst_reuse_limit_potion_c = 1098
+    case efst_reuse_limit_potion_d = 1099
+    case efst_reuse_limit_potion_e = 1100
+    case efst_reuse_limit_potion_f = 1101
+    case efst_braveset = 1102
+    case efst_macemastery_equipped = 1103
+    case efst_festive_energy = 1104
+    case efst_test_kr01 = 1105
+    case efst_starfish_jp = 1106
+    case efst_weaponblock_on = 1107
+    case efst_cri_damage = 1108
+    case efst_def_power = 1109
+    case efst_def_ignore = 1110
+    case efst_bow_atk_power = 1111
+    case efst_red_org_potion = 1112
+    case efst_cast_time = 1113
+    case efst_bladestopready = 1114
+    case efst_teleport_br = 1115
+    case efst_sa_weapon_property = 1116
+    case efst_leapimpaired = 1117
+    case efst_sending_itemlist = 1118
+    case efst_exclusive_receiveitem = 1119
+    case efst_exclusive_plusexp = 1120
+    case efst_assumptio_buff = 1121
+    case efst_basilica_buff = 1122
+    case efst_overlapexpup2 = 1123
+    case efst_stopmove_immediately = 1124
+    case efst_soulcurse = 1125
+    case efst_sound_of_destruction = 1126
+    case efst_df_manaplus = 1127
+    case efst_df_fullswingk = 1128
+    case efst_nv_breakthrough = 1129
+    case efst_helpangel = 1130
+    case efst_nv_transcendence = 1131
+    case efst_sweetsfair_atk = 1132
+    case efst_sweetsfair_matk = 1133
+    case efst_reuse_skill = 1134
+    case efst_flower_leaf2 = 1135
+    case efst_flower_leaf3 = 1136
+    case efst_flower_leaf4 = 1137
+    case efst_charm_boost = 1138
+    case efst_earthshaker = 1139
+    case efst_period_use_worldmap = 1140
+    case efst_misty_frost = 1141
+    case efst_magic_poison = 1142
+    case efst_move_agit = 1143
+    case efst_reuse_jpnonly_limit_i = 1144
+    case efst_reuse_jpnonly_limit_j = 1145
+    case efst_reuse_jpnonly_limit_k = 1146
+    case efst_jpnonly_tactics = 1147
+    case efst_prison = 1148
+    case efst_madogear_type = 1149
+    case efst_deadly_defeasance = 1150
+    case efst_climax_des_hu = 1151
+    case efst_climax = 1152
+    case efst_feintbomb = 1153
+    case efst_luxanima = 1154
+    case efst_bath_foam_a = 1155
+    case efst_bath_foam_b = 1156
+    case efst_bath_foam_c = 1157
+    case efst_aroma_oil = 1158
+    case efst_reuse_limit_luxanima = 1159
+    case efst_powerful_faith = 1160
+    case efst_sincere_faith = 1161
+    case efst_firm_faith = 1162
+    case efst_airship_pipe = 1163
+    case efst_pieces_of_shadow = 1164
+    case efst_hells_plant_armor = 1165
+    case efst_relieve_damage = 1166
+    case efst_lockon_laser = 1167
+    case efst_grade_enchant_ui_open = 1168
+    case efst_ref_t_potion = 1169
+    case efst_add_atk_damage = 1170
+    case efst_add_matk_damage = 1171
+    case efst_servantweapon = 1172
+    case efst_servant_sign = 1173
+    case efst_chargingpierce = 1174
+    case efst_chargingpierce_count = 1175
+    case efst_dragonic_aura = 1176
+    case efst_big_scar = 1177
+    case efst_vigor = 1178
+    case efst_will_of_faith = 1179
+    case efst_pressure = 1180
+    case efst_sa_dragonology = 1181
+    case efst_climax_earth = 1182
+    case efst_climax_bloom = 1183
+    case efst_climax_cryimp = 1184
+    case efst_md_me_potion = 1185
+    case efst_md_ma_potion = 1186
+    case efst_md_ta_potion = 1187
+    case efst_md_ra_potion = 1188
+    case efst_reuse_megaphone = 1189
+    case efst_holy_oil = 1190
+    case efst_crystal_impact = 1191
+    case efst_shadow_exceed = 1192
+    case efst_dancing_knife = 1193
+    case efst_potent_venom = 1194
+    case efst_shadow_scar = 1195
+    case efst_e_slash_count = 1196
+    case efst_mediale = 1197
+    case efst_a_vita = 1198
+    case efst_a_telum = 1199
+    case efst_pre_acies = 1200
+    case efst_competentia = 1201
+    case efst_guard_stance = 1202
+    case efst_attack_stance = 1203
+    case efst_guardian_s = 1204
+    case efst_handicapstate_deepblind = 1205
+    case efst_handicapstate_deepsilence = 1206
+    case efst_handicapstate_lassitude = 1207
+    case efst_handicapstate_frostbite = 1208
+    case efst_handicapstate_swooning = 1209
+    case efst_handicapstate_lightningstrike = 1210
+    case efst_handicapstate_crystallization = 1211
+    case efst_handicapstate_conflagration = 1212
+    case efst_handicapstate_misfortune = 1213
+    case efst_handicapstate_deadlypoison = 1214
+    case efst_handicapstate_depression = 1215
+    case efst_handicapstate_holyflame = 1216
+    case efst_rebound_s = 1217
+    case efst_shield_mastery = 1218
+    case efst_spear_sword_m = 1219
+    case efst_holy_s = 1220
+    case efst_ultimate_s = 1221
+    case efst_spear_scar = 1222
+    case efst_shield_power = 1223
+    case efst_fidus_animus = 1224
+    case efst_mace_book_m = 1225
+    case efst_shadow_weapon = 1226
+    case efst_religio = 1227
+    case efst_benedictum = 1228
+    case efst_mvpcard_kiel = 1229
+    case efst_first_brand = 1230
+    case efst_second_brand = 1231
+    case efst_second_judge = 1232
+    case efst_third_exor_flame = 1233
+    case efst_first_faith_power = 1234
+    case efst_axe_stomp = 1235
+    case efst_a_machine = 1236
+    case efst_d_machine = 1237
+    case efst_mt_m_machine_operator = 1238
+    case efst_twoaxedef = 1239
+    case efst_dagger_and_bow_m = 1240
+    case efst_magic_sword_m = 1241
+    case efst_shadow_strip = 1242
+    case efst_abyss_dagger = 1243
+    case efst_abyssforceweapon = 1244
+    case efst_abyss_slayer = 1245
+    case efst_twohanddef = 1246
+    case efst_protectshadowequip = 1247
+    case efst_researchreport = 1248
+    case efst_bo_hell_dusty = 1249
+    case efst_windsign = 1250
+    case efst_crescivebolt = 1251
+    case efst_calamitygale = 1252
+    case efst_crescivebolt3 = 1253
+    case efst_stage_manner = 1254
+    case efst_retrospection = 1255
+    case efst_mystic_symphony = 1256
+    case efst_kvasir_sonata = 1257
+    case efst_soundblend = 1258
+    case efst_gef_nocturn = 1259
+    case efst_ain_rhapsody = 1260
+    case efst_musical_interlude = 1261
+    case efst_jawaii_serenade = 1262
+    case efst_pron_march = 1263
+    case efst_roseblossom = 1264
+    case efst_bo_bionic_pharmacy_operator = 1265
+    case efst_acidified_zone_water = 1266
+    case efst_acidified_zone_ground = 1267
+    case efst_acidified_zone_wind = 1268
+    case efst_acidified_zone_fire = 1269
+    case efst_magic_book_m = 1270
+    case efst_spell_enchanting = 1271
+    case efst_summon_elemental_ardor = 1272
+    case efst_summon_elemental_diluvio = 1273
+    case efst_summon_elemental_procella = 1274
+    case efst_summon_elemental_terremotus = 1275
+    case efst_summon_elemental_serpens = 1276
+    case efst_flametechnic = 1277
+    case efst_flametechnic_option = 1278
+    case efst_flamearmor = 1279
+    case efst_flamearmor_option = 1280
+    case efst_cold_force = 1281
+    case efst_cold_force_option = 1282
+    case efst_crystal_armor = 1283
+    case efst_crystal_armor_option = 1284
+    case efst_grace_breeze = 1285
+    case efst_grace_breeze_option = 1286
+    case efst_eyes_of_storm = 1287
+    case efst_eyes_of_storm_option = 1288
+    case efst_earth_care = 1289
+    case efst_earth_care_option = 1290
+    case efst_strong_protection = 1291
+    case efst_strong_protection_option = 1292
+    case efst_deep_poisoning = 1293
+    case efst_deep_poisoning_option = 1294
+    case efst_poison_shield = 1295
+    case efst_poison_shield_option = 1296
+    case efst_abr_battle_warior = 1297
+    case efst_abr_dual_cannon = 1298
+    case efst_abr_mother_net = 1299
+    case efst_abr_infinity = 1300
+    case efst_elemental_veil = 1301
+    case efst_renovatio_ext = 1302
+    case efst_homun_time = 1303
+    case efst_power_acceleration = 1304
+    case efst_max_hp_sp_avoid = 1305
+    case efst_add_all_state = 1306
+    case efst_aid_period_power_acceleration = 1307
+    case efst_aid_period_max_hp_sp_avoid = 1308
+    case efst_aid_period_add_all_state = 1309
+    case efst_poison_mist = 1310
+    case efst_hackandslasher = 1311
+    case efst_get_cnt_unread_return_rodex_chardb = 1312
+    case efst_stone_wall = 1313
+    case efst_reuse_limit_i = 1314
+    case efst_overbrandready = 1315
+    case efst_shieldspell = 1316
+    case efst_autoshadowspell_check2 = 1317
+    case efst_cloud_poison = 1318
+    case efst_spore_explosion_debuff = 1319
+    case efst_defscroll = 1321
+    case efst_massive_f_blaster = 1326
+    case efst_noequipweapon2 = 1330
+    case efst_noequiparmor2 = 1331
+    case efst_noequipshield2 = 1332
+    case efst_noequipshoes2 = 1333
+    case efst_noequippendant2 = 1334
+    case efst_noequipearing2 = 1335
+    case efst_noequipfull2 = 1336
+    case efst_curse_r_cube = 1337
+    case efst_curse_b_cube = 1338
+    case efst_killing_aura = 1339
+    case efst_toxin_of_mandara = 1341
+    case efst_goldene_tone = 1342
+    case efst_tempering = 1343
+    case efst_nw_p_f_i = 1344
+    case efst_intensive_aim = 1345
+    case efst_intensive_aim_count = 1346
+    case efst_grenade_fragment_1 = 1347
+    case efst_grenade_fragment_2 = 1348
+    case efst_grenade_fragment_3 = 1349
+    case efst_grenade_fragment_4 = 1350
+    case efst_grenade_fragment_5 = 1351
+    case efst_grenade_fragment_6 = 1352
+    case efst_auto_firing_launcherefst = 1353
+    case efst_hidden_card = 1354
+    case efst_nw_grenade_mastery = 1355
+    case efst_talisman_of_protection = 1356
+    case efst_talisman_of_warrior = 1357
+    case efst_talisman_of_magician = 1358
+    case efst_talisman_of_five_elements = 1359
+    case efst_t_first_god = 1360
+    case efst_t_second_god = 1361
+    case efst_t_third_god = 1362
+    case efst_t_fourth_god = 1363
+    case efst_t_fiveth_god = 1364
+    case efst_heaven_and_earth = 1365
+    case efst_hogogong = 1366
+    case efst_marine_festival = 1367
+    case efst_sandy_festival = 1368
+    case efst_ki_sul_rampage = 1369
+    case efst_colors_of_hyun_rok_1 = 1370
+    case efst_colors_of_hyun_rok_2 = 1371
+    case efst_colors_of_hyun_rok_3 = 1372
+    case efst_colors_of_hyun_rok_4 = 1373
+    case efst_colors_of_hyun_rok_5 = 1374
+    case efst_colors_of_hyun_rok_6 = 1375
+    case efst_colors_of_hyun_rok_buff = 1376
+    case efst_temporary_communion = 1377
+    case efst_blessing_of_m_creatures = 1378
+    case efst_blessing_of_m_c_debuff = 1379
+    case efst_shieldchainrush = 1380
+    case efst_mistyfrost = 1381
+    case efst_groundgravity = 1382
+    case efst_breakinglimit = 1383
+    case efst_rulebreak = 1384
+    case efst_rising_sun = 1385
+    case efst_noon_sun = 1386
+    case efst_sunset_sun = 1387
+    case efst_rising_moon = 1388
+    case efst_midnight_moon = 1389
+    case efst_dawn_moon = 1390
+    case efst_star_burst = 1391
+    case efst_sky_enchant = 1392
+    case efst_shadow_clock = 1393
+    case efst_shinkirou_call = 1394
+    case efst_nightmare = 1395
+    case efst_noodle_fes_1 = 1396
+    case efst_noodle_fes_2 = 1397
+    case efst_noodle_fes_3 = 1398
+    case efst_noodle_fes_4 = 1399
+    case efst_noodle_fes_5 = 1400
+    case efst_rush_quake1 = 1402
+    case efst_rush_quake2 = 1403
+    case efst_sbunshin = 1415
+    case efst_mtp_w_potion_100 = 1418
+    case efst_change_size = 1420
+    case efst_change_size_monster = 1421
+    case efst_show_effect1 = 1422
+    case efst_show_effect2 = 1423
+    case efst_show_effect3 = 1424
+    case efst_vr_speed = 1425
+    case efst_vr_aspd = 1426
+    case efst_vr_mhp = 1427
+    case efst_vr_msp = 1428
+    case efst_vr_hit = 1429
+    case efst_vr_def = 1430
+    case efst_vr_mdef = 1431
+    case efst_vr_book001 = 1432
+    case efst_vr_book002 = 1433
+    case efst_vr_book003 = 1434
+    case efst_vr_book004 = 1435
+    case efst_reuse_limit_vr_book = 1436
+    case efst_vr_book005 = 1439
+    case efst_vr_book006 = 1440
+    case efst_vr_book007 = 1441
+    case efst_vr_book008 = 1442
+    case efst_vr_book009 = 1443
+    case efst_all_t_stat = 1444
+    case efst_p_atk_plus = 1445
+    case efst_s_matk_plus = 1446
+    case efst_c_rate_plus = 1447
+    case efst_resist_plus = 1448
+    case efst_pvp_dun_buff = 1449
+    case efst_target_marker = 1453
+    case efst_block_seal = 1454
+    case efst_frost_storm = 1455
+    case efst_groggy = 1456
+    case efst_warm_shield = 1457
+    case efst_contents_1 = 1459
+    case efst_contents_2 = 1460
+    case efst_contents_3 = 1461
+    case efst_contents_4 = 1462
+    case efst_contents_5 = 1463
+    case efst_contents_6 = 1464
+    case efst_contents_7 = 1465
+    case efst_contents_8 = 1466
+    case efst_contents_9 = 1467
+    case efst_contents_10 = 1468
+    case efst_contents_11 = 1469
+    case efst_contents_12 = 1470
+    case efst_contents_13 = 1471
+    case efst_contents_14 = 1472
+    case efst_contents_15 = 1473
+    case efst_contents_16 = 1474
+    case efst_contents_17 = 1475
+    case efst_contents_18 = 1476
+    case efst_contents_19 = 1477
+    case efst_contents_20 = 1478
+    case efst_contents_21 = 1479
+    case efst_contents_22 = 1480
+    case efst_contents_23 = 1481
+    case efst_contents_24 = 1482
+    case efst_contents_25 = 1483
+    case efst_c_buff_1 = 1509
+    case efst_c_buff_2 = 1510
+    case efst_chasing = 1560
+    case efst_mystery_powder = 1665
+    case efst_fire_charm_power = 1667
+    case efst_water_charm_power = 1668
+    case efst_wind_charm_power = 1669
+    case efst_ground_charm_power = 1670
 }
 
-extension OfficialStatusChangeID: CodingKey, CodingKeyRepresentable, Decodable {
+extension OfficialStatusChangeID: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .efst_blank: "EFST_BLANK"
+        case .efst_provoke: "EFST_PROVOKE"
+        case .efst_endure: "EFST_ENDURE"
+        case .efst_twohandquicken: "EFST_TWOHANDQUICKEN"
+        case .efst_concentration: "EFST_CONCENTRATION"
+        case .efst_hiding: "EFST_HIDING"
+        case .efst_cloaking: "EFST_CLOAKING"
+        case .efst_enchantpoison: "EFST_ENCHANTPOISON"
+        case .efst_poisonreact: "EFST_POISONREACT"
+        case .efst_quagmire: "EFST_QUAGMIRE"
+        case .efst_angelus: "EFST_ANGELUS"
+        case .efst_blessing: "EFST_BLESSING"
+        case .efst_crucis: "EFST_CRUCIS"
+        case .efst_inc_agi: "EFST_INC_AGI"
+        case .efst_dec_agi: "EFST_DEC_AGI"
+        case .efst_slowpoison: "EFST_SLOWPOISON"
+        case .efst_impositio: "EFST_IMPOSITIO"
+        case .efst_suffragium: "EFST_SUFFRAGIUM"
+        case .efst_aspersio: "EFST_ASPERSIO"
+        case .efst_benedictio: "EFST_BENEDICTIO"
+        case .efst_kyrie: "EFST_KYRIE"
+        case .efst_magnificat: "EFST_MAGNIFICAT"
+        case .efst_gloria: "EFST_GLORIA"
+        case .efst_lexaeterna: "EFST_LEXAETERNA"
+        case .efst_adrenaline: "EFST_ADRENALINE"
+        case .efst_weaponperfect: "EFST_WEAPONPERFECT"
+        case .efst_overthrust: "EFST_OVERTHRUST"
+        case .efst_maximize: "EFST_MAXIMIZE"
+        case .efst_riding: "EFST_RIDING"
+        case .efst_falcon: "EFST_FALCON"
+        case .efst_trickdead: "EFST_TRICKDEAD"
+        case .efst_shout: "EFST_SHOUT"
+        case .efst_energycoat: "EFST_ENERGYCOAT"
+        case .efst_brokenarmor: "EFST_BROKENARMOR"
+        case .efst_brokenweapon: "EFST_BROKENWEAPON"
+        case .efst_illusion: "EFST_ILLUSION"
+        case .efst_weightover50: "EFST_WEIGHTOVER50"
+        case .efst_weightover90: "EFST_WEIGHTOVER90"
+        case .efst_atthaste_potion1: "EFST_ATTHASTE_POTION1"
+        case .efst_atthaste_potion2: "EFST_ATTHASTE_POTION2"
+        case .efst_atthaste_potion3: "EFST_ATTHASTE_POTION3"
+        case .efst_atthaste_infinity: "EFST_ATTHASTE_INFINITY"
+        case .efst_movhaste_potion: "EFST_MOVHASTE_POTION"
+        case .efst_movhaste_infinity: "EFST_MOVHASTE_INFINITY"
+        case .efst_autocounter: "EFST_AUTOCOUNTER"
+        case .efst_splasher: "EFST_SPLASHER"
+        case .efst_anklesnare: "EFST_ANKLESNARE"
+        case .efst_postdelay: "EFST_POSTDELAY"
+        case .efst_noaction: "EFST_NOACTION"
+        case .efst_impossiblepickup: "EFST_IMPOSSIBLEPICKUP"
+        case .efst_barrier: "EFST_BARRIER"
+        case .efst_noequipweapon: "EFST_NOEQUIPWEAPON"
+        case .efst_noequipshield: "EFST_NOEQUIPSHIELD"
+        case .efst_noequiparmor: "EFST_NOEQUIPARMOR"
+        case .efst_noequiphelm: "EFST_NOEQUIPHELM"
+        case .efst_protectweapon: "EFST_PROTECTWEAPON"
+        case .efst_protectshield: "EFST_PROTECTSHIELD"
+        case .efst_protectarmor: "EFST_PROTECTARMOR"
+        case .efst_protecthelm: "EFST_PROTECTHELM"
+        case .efst_autoguard: "EFST_AUTOGUARD"
+        case .efst_reflectshield: "EFST_REFLECTSHIELD"
+        case .efst_devotion: "EFST_DEVOTION"
+        case .efst_providence: "EFST_PROVIDENCE"
+        case .efst_defender: "EFST_DEFENDER"
+        case .efst_magicrod: "EFST_MAGICROD"
+        case .efst_weaponproperty: "EFST_WEAPONPROPERTY"
+        case .efst_autospell: "EFST_AUTOSPELL"
+        case .efst_specialzone: "EFST_SPECIALZONE"
+        case .efst_mask: "EFST_MASK"
+        case .efst_spearquicken: "EFST_SPEARQUICKEN"
+        case .efst_bdplaying: "EFST_BDPLAYING"
+        case .efst_whistle: "EFST_WHISTLE"
+        case .efst_assassincross: "EFST_ASSASSINCROSS"
+        case .efst_poembragi: "EFST_POEMBRAGI"
+        case .efst_appleidun: "EFST_APPLEIDUN"
+        case .efst_humming: "EFST_HUMMING"
+        case .efst_dontforgetme: "EFST_DONTFORGETME"
+        case .efst_fortunekiss: "EFST_FORTUNEKISS"
+        case .efst_serviceforyou: "EFST_SERVICEFORYOU"
+        case .efst_richmankim: "EFST_RICHMANKIM"
+        case .efst_eternalchaos: "EFST_ETERNALCHAOS"
+        case .efst_drumbattlefield: "EFST_DRUMBATTLEFIELD"
+        case .efst_ringnibelungen: "EFST_RINGNIBELUNGEN"
+        case .efst_rokisweil: "EFST_ROKISWEIL"
+        case .efst_intoabyss: "EFST_INTOABYSS"
+        case .efst_siegfried: "EFST_SIEGFRIED"
+        case .efst_bladestop: "EFST_BLADESTOP"
+        case .efst_explosionspirits: "EFST_EXPLOSIONSPIRITS"
+        case .efst_steelbody: "EFST_STEELBODY"
+        case .efst_extremityfist: "EFST_EXTREMITYFIST"
+        case .efst_comboattack: "EFST_COMBOATTACK"
+        case .efst_propertyfire: "EFST_PROPERTYFIRE"
+        case .efst_propertywater: "EFST_PROPERTYWATER"
+        case .efst_propertywind: "EFST_PROPERTYWIND"
+        case .efst_propertyground: "EFST_PROPERTYGROUND"
+        case .efst_magicattack: "EFST_MAGICATTACK"
+        case .efst_stop: "EFST_STOP"
+        case .efst_weaponbraker: "EFST_WEAPONBRAKER"
+        case .efst_propertyundead: "EFST_PROPERTYUNDEAD"
+        case .efst_powerup: "EFST_POWERUP"
+        case .efst_agiup: "EFST_AGIUP"
+        case .efst_siegemode: "EFST_SIEGEMODE"
+        case .efst_invisible: "EFST_INVISIBLE"
+        case .efst_statusone: "EFST_STATUSONE"
+        case .efst_aurablade: "EFST_AURABLADE"
+        case .efst_parrying: "EFST_PARRYING"
+        case .efst_lkconcentration: "EFST_LKCONCENTRATION"
+        case .efst_tensionrelax: "EFST_TENSIONRELAX"
+        case .efst_berserk: "EFST_BERSERK"
+        case .efst_sacrifice: "EFST_SACRIFICE"
+        case .efst_gospel: "EFST_GOSPEL"
+        case .efst_assumptio: "EFST_ASSUMPTIO"
+        case .efst_basilica: "EFST_BASILICA"
+        case .efst_groundmagic: "EFST_GROUNDMAGIC"
+        case .efst_magicpower: "EFST_MAGICPOWER"
+        case .efst_edp: "EFST_EDP"
+        case .efst_truesight: "EFST_TRUESIGHT"
+        case .efst_windwalk: "EFST_WINDWALK"
+        case .efst_meltdown: "EFST_MELTDOWN"
+        case .efst_cartboost: "EFST_CARTBOOST"
+        case .efst_chasewalk: "EFST_CHASEWALK"
+        case .efst_swordreject: "EFST_SWORDREJECT"
+        case .efst_marionette_master: "EFST_MARIONETTE_MASTER"
+        case .efst_marionette: "EFST_MARIONETTE"
+        case .efst_moon: "EFST_MOON"
+        case .efst_blooding: "EFST_BLOODING"
+        case .efst_jointbeat: "EFST_JOINTBEAT"
+        case .efst_mindbreaker: "EFST_MINDBREAKER"
+        case .efst_memorize: "EFST_MEMORIZE"
+        case .efst_fogwall: "EFST_FOGWALL"
+        case .efst_spiderweb: "EFST_SPIDERWEB"
+        case .efst_protectexp: "EFST_PROTECTEXP"
+        case .efst_sub_weaponproperty: "EFST_SUB_WEAPONPROPERTY"
+        case .efst_autoberserk: "EFST_AUTOBERSERK"
+        case .efst_run: "EFST_RUN"
+        case .efst_ting: "EFST_TING"
+        case .efst_stormkick_on: "EFST_STORMKICK_ON"
+        case .efst_stormkick_ready: "EFST_STORMKICK_READY"
+        case .efst_downkick_on: "EFST_DOWNKICK_ON"
+        case .efst_downkick_ready: "EFST_DOWNKICK_READY"
+        case .efst_turnkick_on: "EFST_TURNKICK_ON"
+        case .efst_turnkick_ready: "EFST_TURNKICK_READY"
+        case .efst_counter_on: "EFST_COUNTER_ON"
+        case .efst_counter_ready: "EFST_COUNTER_READY"
+        case .efst_dodge_on: "EFST_DODGE_ON"
+        case .efst_dodge_ready: "EFST_DODGE_READY"
+        case .efst_strup: "EFST_STRUP"
+        case .efst_propertydark: "EFST_PROPERTYDARK"
+        case .efst_adrenaline2: "EFST_ADRENALINE2"
+        case .efst_propertytelekinesis: "EFST_PROPERTYTELEKINESIS"
+        case .efst_soullink: "EFST_SOULLINK"
+        case .efst_plusattackpower: "EFST_PLUSATTACKPOWER"
+        case .efst_plusmagicpower: "EFST_PLUSMAGICPOWER"
+        case .efst_devil1: "EFST_DEVIL1"
+        case .efst_kaite: "EFST_KAITE"
+        case .efst_swoo: "EFST_SWOO"
+        case .efst_star2: "EFST_STAR2"
+        case .efst_kaizel: "EFST_KAIZEL"
+        case .efst_kaahi: "EFST_KAAHI"
+        case .efst_kaupe: "EFST_KAUPE"
+        case .efst_sma_ready: "EFST_SMA_READY"
+        case .efst_ske: "EFST_SKE"
+        case .efst_onehandquicken: "EFST_ONEHANDQUICKEN"
+        case .efst_friend: "EFST_FRIEND"
+        case .efst_friendup: "EFST_FRIENDUP"
+        case .efst_sg_warm: "EFST_SG_WARM"
+        case .efst_sg_sun_warm: "EFST_SG_SUN_WARM"
+        case .efst_sg_moon_warm: "EFST_SG_MOON_WARM"
+        case .efst_sg_star_warm: "EFST_SG_STAR_WARM"
+        case .efst_emotion: "EFST_EMOTION"
+        case .efst_sun_comfort: "EFST_SUN_COMFORT"
+        case .efst_moon_comfort: "EFST_MOON_COMFORT"
+        case .efst_star_comfort: "EFST_STAR_COMFORT"
+        case .efst_expup: "EFST_EXPUP"
+        case .efst_gdskill_battleorder: "EFST_GDSKILL_BATTLEORDER"
+        case .efst_gdskill_regeneration: "EFST_GDSKILL_REGENERATION"
+        case .efst_gdskill_postdelay: "EFST_GDSKILL_POSTDELAY"
+        case .efst_resisthandicap: "EFST_RESISTHANDICAP"
+        case .efst_maxhppercent: "EFST_MAXHPPERCENT"
+        case .efst_maxsppercent: "EFST_MAXSPPERCENT"
+        case .efst_defence: "EFST_DEFENCE"
+        case .efst_slowdown: "EFST_SLOWDOWN"
+        case .efst_preserve: "EFST_PRESERVE"
+        case .efst_chasewalk2: "EFST_CHASEWALK2"
+        case .efst_not_extremityfist: "EFST_NOT_EXTREMITYFIST"
+        case .efst_clairvoyance: "EFST_CLAIRVOYANCE"
+        case .efst_moveslow_potion: "EFST_MOVESLOW_POTION"
+        case .efst_doublecasting: "EFST_DOUBLECASTING"
+        case .efst_gravitation: "EFST_GRAVITATION"
+        case .efst_overthrustmax: "EFST_OVERTHRUSTMAX"
+        case .efst_longing: "EFST_LONGING"
+        case .efst_hermode: "EFST_HERMODE"
+        case .efst_tarotcard: "EFST_TAROTCARD"
+        case .efst_hlif_avoid: "EFST_HLIF_AVOID"
+        case .efst_hfli_fleet: "EFST_HFLI_FLEET"
+        case .efst_hfli_speed: "EFST_HFLI_SPEED"
+        case .efst_hlif_change: "EFST_HLIF_CHANGE"
+        case .efst_hami_bloodlust: "EFST_HAMI_BLOODLUST"
+        case .efst_cr_shrink: "EFST_CR_SHRINK"
+        case .efst_wz_sightblaster: "EFST_WZ_SIGHTBLASTER"
+        case .efst_dc_winkcharm: "EFST_DC_WINKCHARM"
+        case .efst_rg_cconfine_m: "EFST_RG_CCONFINE_M"
+        case .efst_rg_cconfine_s: "EFST_RG_CCONFINE_S"
+        case .efst_disablemove: "EFST_DISABLEMOVE"
+        case .efst_gs_madnesscancel: "EFST_GS_MADNESSCANCEL"
+        case .efst_gs_gatlingfever: "EFST_GS_GATLINGFEVER"
+        case .efst_earthscroll: "EFST_EARTHSCROLL"
+        case .efst_nj_utsusemi: "EFST_NJ_UTSUSEMI"
+        case .efst_nj_bunsinjyutsu: "EFST_NJ_BUNSINJYUTSU"
+        case .efst_nj_nen: "EFST_NJ_NEN"
+        case .efst_gs_adjustment: "EFST_GS_ADJUSTMENT"
+        case .efst_gs_accuracy: "EFST_GS_ACCURACY"
+        case .efst_nj_suiton: "EFST_NJ_SUITON"
+        case .efst_pet: "EFST_PET"
+        case .efst_mental: "EFST_MENTAL"
+        case .efst_expmemory: "EFST_EXPMEMORY"
+        case .efst_performance: "EFST_PERFORMANCE"
+        case .efst_gain: "EFST_GAIN"
+        case .efst_griffon: "EFST_GRIFFON"
+        case .efst_drift: "EFST_DRIFT"
+        case .efst_wallshift: "EFST_WALLSHIFT"
+        case .efst_reincarnation: "EFST_REINCARNATION"
+        case .efst_pattack: "EFST_PATTACK"
+        case .efst_pspeed: "EFST_PSPEED"
+        case .efst_pdefense: "EFST_PDEFENSE"
+        case .efst_pcritical: "EFST_PCRITICAL"
+        case .efst_ranking: "EFST_RANKING"
+        case .efst_ptriple: "EFST_PTRIPLE"
+        case .efst_denergy: "EFST_DENERGY"
+        case .efst_wave1: "EFST_WAVE1"
+        case .efst_wave2: "EFST_WAVE2"
+        case .efst_wave3: "EFST_WAVE3"
+        case .efst_wave4: "EFST_WAVE4"
+        case .efst_daura: "EFST_DAURA"
+        case .efst_dfreezer: "EFST_DFREEZER"
+        case .efst_dpunish: "EFST_DPUNISH"
+        case .efst_dbarrier: "EFST_DBARRIER"
+        case .efst_dwarning: "EFST_DWARNING"
+        case .efst_mousewheel: "EFST_MOUSEWHEEL"
+        case .efst_dgauge: "EFST_DGAUGE"
+        case .efst_daccel: "EFST_DACCEL"
+        case .efst_dblock: "EFST_DBLOCK"
+        case .efst_food_str: "EFST_FOOD_STR"
+        case .efst_food_agi: "EFST_FOOD_AGI"
+        case .efst_food_vit: "EFST_FOOD_VIT"
+        case .efst_food_dex: "EFST_FOOD_DEX"
+        case .efst_food_int: "EFST_FOOD_INT"
+        case .efst_food_luk: "EFST_FOOD_LUK"
+        case .efst_food_basicavoidance: "EFST_FOOD_BASICAVOIDANCE"
+        case .efst_food_basichit: "EFST_FOOD_BASICHIT"
+        case .efst_food_criticalsuccessvalue: "EFST_FOOD_CRITICALSUCCESSVALUE"
+        case .efst_cash_plusexp: "EFST_CASH_PLUSEXP"
+        case .efst_cash_deathpenalty: "EFST_CASH_DEATHPENALTY"
+        case .efst_cash_receiveitem: "EFST_CASH_RECEIVEITEM"
+        case .efst_cash_boss_alarm: "EFST_CASH_BOSS_ALARM"
+        case .efst_da_energy: "EFST_DA_ENERGY"
+        case .efst_da_firstslot: "EFST_DA_FIRSTSLOT"
+        case .efst_da_headdef: "EFST_DA_HEADDEF"
+        case .efst_da_space: "EFST_DA_SPACE"
+        case .efst_da_transform: "EFST_DA_TRANSFORM"
+        case .efst_da_itemrebuild: "EFST_DA_ITEMREBUILD"
+        case .efst_da_illusion: "EFST_DA_ILLUSION"
+        case .efst_da_darkpower: "EFST_DA_DARKPOWER"
+        case .efst_da_earplug: "EFST_DA_EARPLUG"
+        case .efst_da_contract: "EFST_DA_CONTRACT"
+        case .efst_da_black: "EFST_DA_BLACK"
+        case .efst_da_magiccart: "EFST_DA_MAGICCART"
+        case .efst_crystal: "EFST_CRYSTAL"
+        case .efst_da_rebuild: "EFST_DA_REBUILD"
+        case .efst_da_edarkness: "EFST_DA_EDARKNESS"
+        case .efst_da_eguardian: "EFST_DA_EGUARDIAN"
+        case .efst_da_timeout: "EFST_DA_TIMEOUT"
+        case .efst_food_str_cash: "EFST_FOOD_STR_CASH"
+        case .efst_food_agi_cash: "EFST_FOOD_AGI_CASH"
+        case .efst_food_vit_cash: "EFST_FOOD_VIT_CASH"
+        case .efst_food_dex_cash: "EFST_FOOD_DEX_CASH"
+        case .efst_food_int_cash: "EFST_FOOD_INT_CASH"
+        case .efst_food_luk_cash: "EFST_FOOD_LUK_CASH"
+        case .efst_mer_flee: "EFST_MER_FLEE"
+        case .efst_mer_atk: "EFST_MER_ATK"
+        case .efst_mer_hp: "EFST_MER_HP"
+        case .efst_mer_sp: "EFST_MER_SP"
+        case .efst_mer_hit: "EFST_MER_HIT"
+        case .efst_slowcast: "EFST_SLOWCAST"
+        case .efst_magicmirror: "EFST_MAGICMIRROR"
+        case .efst_stoneskin: "EFST_STONESKIN"
+        case .efst_antimagic: "EFST_ANTIMAGIC"
+        case .efst_criticalwound: "EFST_CRITICALWOUND"
+        case .efst_npc_defender: "EFST_NPC_DEFENDER"
+        case .efst_noaction_wait: "EFST_NOACTION_WAIT"
+        case .efst_movhaste_horse: "EFST_MOVHASTE_HORSE"
+        case .efst_protect_def: "EFST_PROTECT_DEF"
+        case .efst_protect_mdef: "EFST_PROTECT_MDEF"
+        case .efst_healplus: "EFST_HEALPLUS"
+        case .efst_s_lifepotion: "EFST_S_LIFEPOTION"
+        case .efst_l_lifepotion: "EFST_L_LIFEPOTION"
+        case .efst_criticalpercent: "EFST_CRITICALPERCENT"
+        case .efst_plusavoidvalue: "EFST_PLUSAVOIDVALUE"
+        case .efst_atker_aspd: "EFST_ATKER_ASPD"
+        case .efst_target_aspd: "EFST_TARGET_ASPD"
+        case .efst_atker_movespeed: "EFST_ATKER_MOVESPEED"
+        case .efst_atker_blood: "EFST_ATKER_BLOOD"
+        case .efst_target_blood: "EFST_TARGET_BLOOD"
+        case .efst_armor_property: "EFST_ARMOR_PROPERTY"
+        case .efst_reuse_limit_a: "EFST_REUSE_LIMIT_A"
+        case .efst_hellpower: "EFST_HELLPOWER"
+        case .efst_steampack: "EFST_STEAMPACK"
+        case .efst_reuse_limit_b: "EFST_REUSE_LIMIT_B"
+        case .efst_reuse_limit_c: "EFST_REUSE_LIMIT_C"
+        case .efst_reuse_limit_d: "EFST_REUSE_LIMIT_D"
+        case .efst_reuse_limit_e: "EFST_REUSE_LIMIT_E"
+        case .efst_reuse_limit_f: "EFST_REUSE_LIMIT_F"
+        case .efst_invincible: "EFST_INVINCIBLE"
+        case .efst_cash_plusonlyjobexp: "EFST_CASH_PLUSONLYJOBEXP"
+        case .efst_partyflee: "EFST_PARTYFLEE"
+        case .efst_angel_protect: "EFST_ANGEL_PROTECT"
+        case .efst_endure_mdef: "EFST_ENDURE_MDEF"
+        case .efst_enchantblade: "EFST_ENCHANTBLADE"
+        case .efst_deathbound: "EFST_DEATHBOUND"
+        case .efst_refresh: "EFST_REFRESH"
+        case .efst_giantgrowth: "EFST_GIANTGROWTH"
+        case .efst_stonehardskin: "EFST_STONEHARDSKIN"
+        case .efst_vitalityactivation: "EFST_VITALITYACTIVATION"
+        case .efst_fightingspirit: "EFST_FIGHTINGSPIRIT"
+        case .efst_abundance: "EFST_ABUNDANCE"
+        case .efst_reuse_millenniumshield: "EFST_REUSE_MILLENNIUMSHIELD"
+        case .efst_reuse_crushstrike: "EFST_REUSE_CRUSHSTRIKE"
+        case .efst_reuse_refresh: "EFST_REUSE_REFRESH"
+        case .efst_reuse_stormblast: "EFST_REUSE_STORMBLAST"
+        case .efst_venomimpress: "EFST_VENOMIMPRESS"
+        case .efst_epiclesis: "EFST_EPICLESIS"
+        case .efst_oratio: "EFST_ORATIO"
+        case .efst_laudaagnus: "EFST_LAUDAAGNUS"
+        case .efst_laudaramus: "EFST_LAUDARAMUS"
+        case .efst_cloakingexceed: "EFST_CLOAKINGEXCEED"
+        case .efst_hallucinationwalk: "EFST_HALLUCINATIONWALK"
+        case .efst_hallucinationwalk_postdelay: "EFST_HALLUCINATIONWALK_POSTDELAY"
+        case .efst_renovatio: "EFST_RENOVATIO"
+        case .efst_weaponblocking: "EFST_WEAPONBLOCKING"
+        case .efst_weaponblocking_postdelay: "EFST_WEAPONBLOCKING_POSTDELAY"
+        case .efst_rollingcutter: "EFST_ROLLINGCUTTER"
+        case .efst_expiatio: "EFST_EXPIATIO"
+        case .efst_poisoningweapon: "EFST_POISONINGWEAPON"
+        case .efst_toxin: "EFST_TOXIN"
+        case .efst_paralyse: "EFST_PARALYSE"
+        case .efst_venombleed: "EFST_VENOMBLEED"
+        case .efst_magicmushroom: "EFST_MAGICMUSHROOM"
+        case .efst_deathhurt: "EFST_DEATHHURT"
+        case .efst_pyrexia: "EFST_PYREXIA"
+        case .efst_oblivioncurse: "EFST_OBLIVIONCURSE"
+        case .efst_leechesend: "EFST_LEECHESEND"
+        case .efst_duplelight: "EFST_DUPLELIGHT"
+        case .efst_frostmisty: "EFST_FROSTMISTY"
+        case .efst_fearbreeze: "EFST_FEARBREEZE"
+        case .efst_electricshocker: "EFST_ELECTRICSHOCKER"
+        case .efst_marshofabyss: "EFST_MARSHOFABYSS"
+        case .efst_recognizedspell: "EFST_RECOGNIZEDSPELL"
+        case .efst_stasis: "EFST_STASIS"
+        case .efst_wugrider: "EFST_WUGRIDER"
+        case .efst_wugdash: "EFST_WUGDASH"
+        case .efst_wugbite: "EFST_WUGBITE"
+        case .efst_camouflage: "EFST_CAMOUFLAGE"
+        case .efst_acceleration: "EFST_ACCELERATION"
+        case .efst_hovering: "EFST_HOVERING"
+        case .efst_summon1: "EFST_SUMMON1"
+        case .efst_summon2: "EFST_SUMMON2"
+        case .efst_summon3: "EFST_SUMMON3"
+        case .efst_summon4: "EFST_SUMMON4"
+        case .efst_summon5: "EFST_SUMMON5"
+        case .efst_mvpcard_taogunka: "EFST_MVPCARD_TAOGUNKA"
+        case .efst_mvpcard_mistress: "EFST_MVPCARD_MISTRESS"
+        case .efst_mvpcard_orchero: "EFST_MVPCARD_ORCHERO"
+        case .efst_mvpcard_orclord: "EFST_MVPCARD_ORCLORD"
+        case .efst_overheat_limitpoint: "EFST_OVERHEAT_LIMITPOINT"
+        case .efst_overheat: "EFST_OVERHEAT"
+        case .efst_shapeshift: "EFST_SHAPESHIFT"
+        case .efst_infraredscan: "EFST_INFRAREDSCAN"
+        case .efst_magneticfield: "EFST_MAGNETICFIELD"
+        case .efst_neutralbarrier: "EFST_NEUTRALBARRIER"
+        case .efst_neutralbarrier_master: "EFST_NEUTRALBARRIER_MASTER"
+        case .efst_stealthfield: "EFST_STEALTHFIELD"
+        case .efst_stealthfield_master: "EFST_STEALTHFIELD_MASTER"
+        case .efst_manu_atk: "EFST_MANU_ATK"
+        case .efst_manu_def: "EFST_MANU_DEF"
+        case .efst_spl_atk: "EFST_SPL_ATK"
+        case .efst_spl_def: "EFST_SPL_DEF"
+        case .efst_reproduce: "EFST_REPRODUCE"
+        case .efst_manu_matk: "EFST_MANU_MATK"
+        case .efst_spl_matk: "EFST_SPL_MATK"
+        case .efst_str_scroll: "EFST_STR_SCROLL"
+        case .efst_int_scroll: "EFST_INT_SCROLL"
+        case .efst_lg_reflectdamage: "EFST_LG_REFLECTDAMAGE"
+        case .efst_forceofvanguard: "EFST_FORCEOFVANGUARD"
+        case .efst_buchedenoel: "EFST_BUCHEDENOEL"
+        case .efst_autoshadowspell: "EFST_AUTOSHADOWSPELL"
+        case .efst_shadowform: "EFST_SHADOWFORM"
+        case .efst_raid: "EFST_RAID"
+        case .efst_shieldspell_def: "EFST_SHIELDSPELL_DEF"
+        case .efst_shieldspell_mdef: "EFST_SHIELDSPELL_MDEF"
+        case .efst_shieldspell_ref: "EFST_SHIELDSPELL_REF"
+        case .efst_bodypaint: "EFST_BODYPAINT"
+        case .efst_exeedbreak: "EFST_EXEEDBREAK"
+        case .efst_adoramus: "EFST_ADORAMUS"
+        case .efst_prestige: "EFST_PRESTIGE"
+        case .efst_invisibility: "EFST_INVISIBILITY"
+        case .efst_deadlyinfect: "EFST_DEADLYINFECT"
+        case .efst_banding: "EFST_BANDING"
+        case .efst_earthdrive: "EFST_EARTHDRIVE"
+        case .efst_inspiration: "EFST_INSPIRATION"
+        case .efst_enervation: "EFST_ENERVATION"
+        case .efst_groomy: "EFST_GROOMY"
+        case .efst_raisingdragon: "EFST_RAISINGDRAGON"
+        case .efst_ignorance: "EFST_IGNORANCE"
+        case .efst_laziness: "EFST_LAZINESS"
+        case .efst_lightningwalk: "EFST_LIGHTNINGWALK"
+        case .efst_acaraje: "EFST_ACARAJE"
+        case .efst_unlucky: "EFST_UNLUCKY"
+        case .efst_cursedcircle_atker: "EFST_CURSEDCIRCLE_ATKER"
+        case .efst_cursedcircle_target: "EFST_CURSEDCIRCLE_TARGET"
+        case .efst_weakness: "EFST_WEAKNESS"
+        case .efst_crescentelbow: "EFST_CRESCENTELBOW"
+        case .efst_noequipaccessary: "EFST_NOEQUIPACCESSARY"
+        case .efst_stripaccessary: "EFST_STRIPACCESSARY"
+        case .efst_manhole: "EFST_MANHOLE"
+        case .efst_popecookie: "EFST_POPECOOKIE"
+        case .efst_fallenempire: "EFST_FALLENEMPIRE"
+        case .efst_gentletouch_energygain: "EFST_GENTLETOUCH_ENERGYGAIN"
+        case .efst_gentletouch_change: "EFST_GENTLETOUCH_CHANGE"
+        case .efst_gentletouch_revitalize: "EFST_GENTLETOUCH_REVITALIZE"
+        case .efst_bloodylust: "EFST_BLOODYLUST"
+        case .efst_swing: "EFST_SWING"
+        case .efst_symphony_love: "EFST_SYMPHONY_LOVE"
+        case .efst_propertywalk: "EFST_PROPERTYWALK"
+        case .efst_spellfist: "EFST_SPELLFIST"
+        case .efst_netherworld: "EFST_NETHERWORLD"
+        case .efst_siren: "EFST_SIREN"
+        case .efst_deep_sleep: "EFST_DEEP_SLEEP"
+        case .efst_sircleofnature: "EFST_SIRCLEOFNATURE"
+        case .efst_cold: "EFST_COLD"
+        case .efst_gloomyday: "EFST_GLOOMYDAY"
+        case .efst_song_of_mana: "EFST_SONG_OF_MANA"
+        case .efst_cloud_kill: "EFST_CLOUD_KILL"
+        case .efst_dance_with_wug: "EFST_DANCE_WITH_WUG"
+        case .efst_rush_windmill: "EFST_RUSH_WINDMILL"
+        case .efst_echosong: "EFST_ECHOSONG"
+        case .efst_harmonize: "EFST_HARMONIZE"
+        case .efst_striking: "EFST_STRIKING"
+        case .efst_warmer: "EFST_WARMER"
+        case .efst_moonlit_serenade: "EFST_MOONLIT_SERENADE"
+        case .efst_saturday_night_fever: "EFST_SATURDAY_NIGHT_FEVER"
+        case .efst_sitdown_force: "EFST_SITDOWN_FORCE"
+        case .efst_analyze: "EFST_ANALYZE"
+        case .efst_lerads_dew: "EFST_LERADS_DEW"
+        case .efst_melodyofsink: "EFST_MELODYOFSINK"
+        case .efst_beyond_of_warcry: "EFST_BEYOND_OF_WARCRY"
+        case .efst_unlimited_humming_voice: "EFST_UNLIMITED_HUMMING_VOICE"
+        case .efst_spellbook1: "EFST_SPELLBOOK1"
+        case .efst_spellbook2: "EFST_SPELLBOOK2"
+        case .efst_spellbook3: "EFST_SPELLBOOK3"
+        case .efst_freeze_sp: "EFST_FREEZE_SP"
+        case .efst_gn_training_sword: "EFST_GN_TRAINING_SWORD"
+        case .efst_gn_remodeling_cart: "EFST_GN_REMODELING_CART"
+        case .efst_gn_cartboost: "EFST_GN_CARTBOOST"
+        case .efst_fixedcastingtm_reduce: "EFST_FIXEDCASTINGTM_REDUCE"
+        case .efst_thorns_trap: "EFST_THORNS_TRAP"
+        case .efst_blood_sucker: "EFST_BLOOD_SUCKER"
+        case .efst_spore_explosion: "EFST_SPORE_EXPLOSION"
+        case .efst_demonic_fire: "EFST_DEMONIC_FIRE"
+        case .efst_fire_expansion_smoke_powder: "EFST_FIRE_EXPANSION_SMOKE_POWDER"
+        case .efst_fire_expansion_tear_gas: "EFST_FIRE_EXPANSION_TEAR_GAS"
+        case .efst_blocking_play: "EFST_BLOCKING_PLAY"
+        case .efst_mandragora: "EFST_MANDRAGORA"
+        case .efst_activate: "EFST_ACTIVATE"
+        case .efst_ab_secrament: "EFST_AB_SECRAMENT"
+        case .efst_assumptio2: "EFST_ASSUMPTIO2"
+        case .efst_tk_sevenwind: "EFST_TK_SEVENWIND"
+        case .efst_limit_odins_recall: "EFST_LIMIT_ODINS_RECALL"
+        case .efst_stomachache: "EFST_STOMACHACHE"
+        case .efst_mysterious_powder: "EFST_MYSTERIOUS_POWDER"
+        case .efst_melon_bomb: "EFST_MELON_BOMB"
+        case .efst_banana_bomb_sitdown_postdelay: "EFST_BANANA_BOMB_SITDOWN_POSTDELAY"
+        case .efst_promote_health_reserch: "EFST_PROMOTE_HEALTH_RESERCH"
+        case .efst_energy_drink_reserch: "EFST_ENERGY_DRINK_RESERCH"
+        case .efst_extract_white_potion_z: "EFST_EXTRACT_WHITE_POTION_Z"
+        case .efst_vitata_500: "EFST_VITATA_500"
+        case .efst_extract_salamine_juice: "EFST_EXTRACT_SALAMINE_JUICE"
+        case .efst_boost500: "EFST_BOOST500"
+        case .efst_full_swing_k: "EFST_FULL_SWING_K"
+        case .efst_mana_plus: "EFST_MANA_PLUS"
+        case .efst_mustle_m: "EFST_MUSTLE_M"
+        case .efst_life_force_f: "EFST_LIFE_FORCE_F"
+        case .efst_vacuum_extreme: "EFST_VACUUM_EXTREME"
+        case .efst_savage_steak: "EFST_SAVAGE_STEAK"
+        case .efst_cocktail_warg_blood: "EFST_COCKTAIL_WARG_BLOOD"
+        case .efst_minor_bbq: "EFST_MINOR_BBQ"
+        case .efst_siroma_ice_tea: "EFST_SIROMA_ICE_TEA"
+        case .efst_drocera_herb_steamed: "EFST_DROCERA_HERB_STEAMED"
+        case .efst_putti_tails_noodles: "EFST_PUTTI_TAILS_NOODLES"
+        case .efst_banana_bomb: "EFST_BANANA_BOMB"
+        case .efst_summon_agni: "EFST_SUMMON_AGNI"
+        case .efst_spellbook4: "EFST_SPELLBOOK4"
+        case .efst_spellbook5: "EFST_SPELLBOOK5"
+        case .efst_spellbook6: "EFST_SPELLBOOK6"
+        case .efst_spellbook7: "EFST_SPELLBOOK7"
+        case .efst_elemental_aggressive: "EFST_ELEMENTAL_AGGRESSIVE"
+        case .efst_return_to_eldicastes: "EFST_RETURN_TO_ELDICASTES"
+        case .efst_banding_defence: "EFST_BANDING_DEFENCE"
+        case .efst_skelscroll: "EFST_SKELSCROLL"
+        case .efst_distructionscroll: "EFST_DISTRUCTIONSCROLL"
+        case .efst_royalscroll: "EFST_ROYALSCROLL"
+        case .efst_immunityscroll: "EFST_IMMUNITYSCROLL"
+        case .efst_mysticscroll: "EFST_MYSTICSCROLL"
+        case .efst_battlescroll: "EFST_BATTLESCROLL"
+        case .efst_armorscroll: "EFST_ARMORSCROLL"
+        case .efst_freyjascroll: "EFST_FREYJASCROLL"
+        case .efst_soulscroll: "EFST_SOULSCROLL"
+        case .efst_circle_of_fire: "EFST_CIRCLE_OF_FIRE"
+        case .efst_circle_of_fire_option: "EFST_CIRCLE_OF_FIRE_OPTION"
+        case .efst_fire_cloak: "EFST_FIRE_CLOAK"
+        case .efst_fire_cloak_option: "EFST_FIRE_CLOAK_OPTION"
+        case .efst_water_screen: "EFST_WATER_SCREEN"
+        case .efst_water_screen_option: "EFST_WATER_SCREEN_OPTION"
+        case .efst_water_drop: "EFST_WATER_DROP"
+        case .efst_water_drop_option: "EFST_WATER_DROP_OPTION"
+        case .efst_wind_step: "EFST_WIND_STEP"
+        case .efst_wind_step_option: "EFST_WIND_STEP_OPTION"
+        case .efst_wind_curtain: "EFST_WIND_CURTAIN"
+        case .efst_wind_curtain_option: "EFST_WIND_CURTAIN_OPTION"
+        case .efst_water_barrier: "EFST_WATER_BARRIER"
+        case .efst_zephyr: "EFST_ZEPHYR"
+        case .efst_solid_skin: "EFST_SOLID_SKIN"
+        case .efst_solid_skin_option: "EFST_SOLID_SKIN_OPTION"
+        case .efst_stone_shield: "EFST_STONE_SHIELD"
+        case .efst_stone_shield_option: "EFST_STONE_SHIELD_OPTION"
+        case .efst_power_of_gaia: "EFST_POWER_OF_GAIA"
+        case .efst_el_wait: "EFST_EL_WAIT"
+        case .efst_el_passive: "EFST_EL_PASSIVE"
+        case .efst_el_defensive: "EFST_EL_DEFENSIVE"
+        case .efst_el_offensive: "EFST_EL_OFFENSIVE"
+        case .efst_el_cost: "EFST_EL_COST"
+        case .efst_pyrotechnic: "EFST_PYROTECHNIC"
+        case .efst_pyrotechnic_option: "EFST_PYROTECHNIC_OPTION"
+        case .efst_heater: "EFST_HEATER"
+        case .efst_heater_option: "EFST_HEATER_OPTION"
+        case .efst_tropic: "EFST_TROPIC"
+        case .efst_tropic_option: "EFST_TROPIC_OPTION"
+        case .efst_aquaplay: "EFST_AQUAPLAY"
+        case .efst_aquaplay_option: "EFST_AQUAPLAY_OPTION"
+        case .efst_cooler: "EFST_COOLER"
+        case .efst_cooler_option: "EFST_COOLER_OPTION"
+        case .efst_chilly_air: "EFST_CHILLY_AIR"
+        case .efst_chilly_air_option: "EFST_CHILLY_AIR_OPTION"
+        case .efst_gust: "EFST_GUST"
+        case .efst_gust_option: "EFST_GUST_OPTION"
+        case .efst_blast: "EFST_BLAST"
+        case .efst_blast_option: "EFST_BLAST_OPTION"
+        case .efst_wild_storm: "EFST_WILD_STORM"
+        case .efst_wild_storm_option: "EFST_WILD_STORM_OPTION"
+        case .efst_petrology: "EFST_PETROLOGY"
+        case .efst_petrology_option: "EFST_PETROLOGY_OPTION"
+        case .efst_cursed_soil: "EFST_CURSED_SOIL"
+        case .efst_cursed_soil_option: "EFST_CURSED_SOIL_OPTION"
+        case .efst_upheaval: "EFST_UPHEAVAL"
+        case .efst_upheaval_option: "EFST_UPHEAVAL_OPTION"
+        case .efst_tidal_weapon: "EFST_TIDAL_WEAPON"
+        case .efst_tidal_weapon_option: "EFST_TIDAL_WEAPON_OPTION"
+        case .efst_rock_crusher: "EFST_ROCK_CRUSHER"
+        case .efst_rock_crusher_atk: "EFST_ROCK_CRUSHER_ATK"
+        case .efst_fire_insignia: "EFST_FIRE_INSIGNIA"
+        case .efst_water_insignia: "EFST_WATER_INSIGNIA"
+        case .efst_wind_insignia: "EFST_WIND_INSIGNIA"
+        case .efst_earth_insignia: "EFST_EARTH_INSIGNIA"
+        case .efst_equiped_floor: "EFST_EQUIPED_FLOOR"
+        case .efst_guardian_recall: "EFST_GUARDIAN_RECALL"
+        case .efst_mora_buff: "EFST_MORA_BUFF"
+        case .efst_reuse_limit_g: "EFST_REUSE_LIMIT_G"
+        case .efst_reuse_limit_h: "EFST_REUSE_LIMIT_H"
+        case .efst_needle_of_paralyze: "EFST_NEEDLE_OF_PARALYZE"
+        case .efst_pain_killer: "EFST_PAIN_KILLER"
+        case .efst_g_lifepotion: "EFST_G_LIFEPOTION"
+        case .efst_vitalize_potion: "EFST_VITALIZE_POTION"
+        case .efst_light_of_regene: "EFST_LIGHT_OF_REGENE"
+        case .efst_overed_boost: "EFST_OVERED_BOOST"
+        case .efst_silent_breeze: "EFST_SILENT_BREEZE"
+        case .efst_odins_power: "EFST_ODINS_POWER"
+        case .efst_style_change: "EFST_STYLE_CHANGE"
+        case .efst_sonic_claw_postdelay: "EFST_SONIC_CLAW_POSTDELAY"
+        case .efst_silvervein_rush_postdelay: "EFST_SILVERVEIN_RUSH_POSTDELAY"
+        case .efst_midnight_frenzy_postdelay: "EFST_MIDNIGHT_FRENZY_POSTDELAY"
+        case .efst_goldene_ferse: "EFST_GOLDENE_FERSE"
+        case .efst_angriffs_modus: "EFST_ANGRIFFS_MODUS"
+        case .efst_tinder_breaker: "EFST_TINDER_BREAKER"
+        case .efst_tinder_breaker_postdelay: "EFST_TINDER_BREAKER_POSTDELAY"
+        case .efst_cbc: "EFST_CBC"
+        case .efst_cbc_postdelay: "EFST_CBC_POSTDELAY"
+        case .efst_eqc: "EFST_EQC"
+        case .efst_magma_flow: "EFST_MAGMA_FLOW"
+        case .efst_granitic_armor: "EFST_GRANITIC_ARMOR"
+        case .efst_pyroclastic: "EFST_PYROCLASTIC"
+        case .efst_volcanic_ash: "EFST_VOLCANIC_ASH"
+        case .efst_spirits_saveinfo1: "EFST_SPIRITS_SAVEINFO1"
+        case .efst_spirits_saveinfo2: "EFST_SPIRITS_SAVEINFO2"
+        case .efst_magic_candy: "EFST_MAGIC_CANDY"
+        case .efst_search_store_info: "EFST_SEARCH_STORE_INFO"
+        case .efst_all_riding: "EFST_ALL_RIDING"
+        case .efst_all_riding_reuse_limit: "EFST_ALL_RIDING_REUSE_LIMIT"
+        case .efst_macro: "EFST_MACRO"
+        case .efst_macro_postdelay: "EFST_MACRO_POSTDELAY"
+        case .efst_beer_bottle_cap: "EFST_BEER_BOTTLE_CAP"
+        case .efst_overlapexpup: "EFST_OVERLAPEXPUP"
+        case .efst_pc_iz_dun05: "EFST_PC_IZ_DUN05"
+        case .efst_crushstrike: "EFST_CRUSHSTRIKE"
+        case .efst_monster_transform: "EFST_MONSTER_TRANSFORM"
+        case .efst_sit: "EFST_SIT"
+        case .efst_onair: "EFST_ONAIR"
+        case .efst_mtf_aspd: "EFST_MTF_ASPD"
+        case .efst_mtf_rangeatk: "EFST_MTF_RANGEATK"
+        case .efst_mtf_matk: "EFST_MTF_MATK"
+        case .efst_mtf_mleatked: "EFST_MTF_MLEATKED"
+        case .efst_mtf_cridamage: "EFST_MTF_CRIDAMAGE"
+        case .efst_reuse_limit_mtf: "EFST_REUSE_LIMIT_MTF"
+        case .efst_macro_permit: "EFST_MACRO_PERMIT"
+        case .efst_macro_play: "EFST_MACRO_PLAY"
+        case .efst_skf_cast: "EFST_SKF_CAST"
+        case .efst_skf_aspd: "EFST_SKF_ASPD"
+        case .efst_skf_atk: "EFST_SKF_ATK"
+        case .efst_skf_matk: "EFST_SKF_MATK"
+        case .efst_reward_plusonlyjobexp: "EFST_REWARD_PLUSONLYJOBEXP"
+        case .efst_handicapstate_norecover: "EFST_HANDICAPSTATE_NORECOVER"
+        case .efst_set_num_def: "EFST_SET_NUM_DEF"
+        case .efst_set_num_mdef: "EFST_SET_NUM_MDEF"
+        case .efst_set_per_def: "EFST_SET_PER_DEF"
+        case .efst_set_per_mdef: "EFST_SET_PER_MDEF"
+        case .efst_partybooking_search_dealy: "EFST_PARTYBOOKING_SEARCH_DEALY"
+        case .efst_partybooking_register_dealy: "EFST_PARTYBOOKING_REGISTER_DEALY"
+        case .efst_period_time_check_detect_skill: "EFST_PERIOD_TIME_CHECK_DETECT_SKILL"
+        case .efst_ko_jyumonjikiri: "EFST_KO_JYUMONJIKIRI"
+        case .efst_meikyousisui: "EFST_MEIKYOUSISUI"
+        case .efst_atthaste_cash: "EFST_ATTHASTE_CASH"
+        case .efst_equipped_divine_armor: "EFST_EQUIPPED_DIVINE_ARMOR"
+        case .efst_equipped_holy_armor: "EFST_EQUIPPED_HOLY_ARMOR"
+        case .efst_2011rwc: "EFST_2011RWC"
+        case .efst_kyougaku: "EFST_KYOUGAKU"
+        case .efst_izayoi: "EFST_IZAYOI"
+        case .efst_zenkai: "EFST_ZENKAI"
+        case .efst_kg_kagehumi: "EFST_KG_KAGEHUMI"
+        case .efst_kyomu: "EFST_KYOMU"
+        case .efst_kagemusya: "EFST_KAGEMUSYA"
+        case .efst_zangetsu: "EFST_ZANGETSU"
+        case .efst_phi_demon: "EFST_PHI_DEMON"
+        case .efst_gensou: "EFST_GENSOU"
+        case .efst_akaitsuki: "EFST_AKAITSUKI"
+        case .efst_tetany: "EFST_TETANY"
+        case .efst_gm_battle: "EFST_GM_BATTLE"
+        case .efst_gm_battle2: "EFST_GM_BATTLE2"
+        case .efst_2011rwc_scroll: "EFST_2011RWC_SCROLL"
+        case .efst_active_monster_transform: "EFST_ACTIVE_MONSTER_TRANSFORM"
+        case .efst_mysticpowder: "EFST_MYSTICPOWDER"
+        case .efst_eclage_recall: "EFST_ECLAGE_RECALL"
+        case .efst_entry_queue_apply_delay: "EFST_ENTRY_QUEUE_APPLY_DELAY"
+        case .efst_reuse_limit_ecl: "EFST_REUSE_LIMIT_ECL"
+        case .efst_m_lifepotion: "EFST_M_LIFEPOTION"
+        case .efst_entry_queue_notify_admission_time_out: "EFST_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT"
+        case .efst_unknown_name: "EFST_UNKNOWN_NAME"
+        case .efst_on_push_cart: "EFST_ON_PUSH_CART"
+        case .efst_hat_effect: "EFST_HAT_EFFECT"
+        case .efst_flower_leaf: "EFST_FLOWER_LEAF"
+        case .efst_ray_of_protection: "EFST_RAY_OF_PROTECTION"
+        case .efst_glastheim_atk: "EFST_GLASTHEIM_ATK"
+        case .efst_glastheim_def: "EFST_GLASTHEIM_DEF"
+        case .efst_glastheim_heal: "EFST_GLASTHEIM_HEAL"
+        case .efst_glastheim_hidden: "EFST_GLASTHEIM_HIDDEN"
+        case .efst_glastheim_state: "EFST_GLASTHEIM_STATE"
+        case .efst_glastheim_itemdef: "EFST_GLASTHEIM_ITEMDEF"
+        case .efst_glastheim_hpsp: "EFST_GLASTHEIM_HPSP"
+        case .efst_homun_skill_postdelay: "EFST_HOMUN_SKILL_POSTDELAY"
+        case .efst_almighty: "EFST_ALMIGHTY"
+        case .efst_gvg_giant: "EFST_GVG_GIANT"
+        case .efst_gvg_golem: "EFST_GVG_GOLEM"
+        case .efst_gvg_stun: "EFST_GVG_STUN"
+        case .efst_gvg_stone: "EFST_GVG_STONE"
+        case .efst_gvg_freez: "EFST_GVG_FREEZ"
+        case .efst_gvg_sleep: "EFST_GVG_SLEEP"
+        case .efst_gvg_curse: "EFST_GVG_CURSE"
+        case .efst_gvg_silence: "EFST_GVG_SILENCE"
+        case .efst_gvg_blind: "EFST_GVG_BLIND"
+        case .efst_client_only_equip_arrow: "EFST_CLIENT_ONLY_EQUIP_ARROW"
+        case .efst_clan_info: "EFST_CLAN_INFO"
+        case .efst_jp_event01: "EFST_JP_EVENT01"
+        case .efst_jp_event02: "EFST_JP_EVENT02"
+        case .efst_jp_event03: "EFST_JP_EVENT03"
+        case .efst_jp_event04: "EFST_JP_EVENT04"
+        case .efst_teleport_fixedcastingdelay: "EFST_TELEPORT_FIXEDCASTINGDELAY"
+        case .efst_geffen_magic1: "EFST_GEFFEN_MAGIC1"
+        case .efst_geffen_magic2: "EFST_GEFFEN_MAGIC2"
+        case .efst_geffen_magic3: "EFST_GEFFEN_MAGIC3"
+        case .efst_quest_buff1: "EFST_QUEST_BUFF1"
+        case .efst_quest_buff2: "EFST_QUEST_BUFF2"
+        case .efst_quest_buff3: "EFST_QUEST_BUFF3"
+        case .efst_reuse_limit_recall: "EFST_REUSE_LIMIT_RECALL"
+        case .efst_saveposition: "EFST_SAVEPOSITION"
+        case .efst_handicapstate_iceexplo: "EFST_HANDICAPSTATE_ICEEXPLO"
+        case .efst_fenrir_card: "EFST_FENRIR_CARD"
+        case .efst_reuse_limit_aspd_potion: "EFST_REUSE_LIMIT_ASPD_POTION"
+        case .efst_maxpain: "EFST_MAXPAIN"
+        case .efst_pc_stop: "EFST_PC_STOP"
+        case .efst_frigg_song: "EFST_FRIGG_SONG"
+        case .efst_offertorium: "EFST_OFFERTORIUM"
+        case .efst_telekinesis_intense: "EFST_TELEKINESIS_INTENSE"
+        case .efst_moonstar: "EFST_MOONSTAR"
+        case .efst_strangelights: "EFST_STRANGELIGHTS"
+        case .efst_full_throttle: "EFST_FULL_THROTTLE"
+        case .efst_rebound: "EFST_REBOUND"
+        case .efst_unlimit: "EFST_UNLIMIT"
+        case .efst_kings_grace: "EFST_KINGS_GRACE"
+        case .efst_item_atkmax: "EFST_ITEM_ATKMAX"
+        case .efst_item_atkmin: "EFST_ITEM_ATKMIN"
+        case .efst_item_matkmax: "EFST_ITEM_MATKMAX"
+        case .efst_item_matkmin: "EFST_ITEM_MATKMIN"
+        case .efst_super_star: "EFST_SUPER_STAR"
+        case .efst_high_ranker: "EFST_HIGH_RANKER"
+        case .efst_darkcrow: "EFST_DARKCROW"
+        case .efst_2013_valentine1: "EFST_2013_VALENTINE1"
+        case .efst_2013_valentine2: "EFST_2013_VALENTINE2"
+        case .efst_2013_valentine3: "EFST_2013_VALENTINE3"
+        case .efst_illusiondoping: "EFST_ILLUSIONDOPING"
+        case .efst_wideweb: "EFST_WIDEWEB"
+        case .efst_chill: "EFST_CHILL"
+        case .efst_burnt: "EFST_BURNT"
+        case .efst_pccafe_play_time: "EFST_PCCAFE_PLAY_TIME"
+        case .efst_twisted_time: "EFST_TWISTED_TIME"
+        case .efst_flashcombo: "EFST_FLASHCOMBO"
+        case .efst_jitter_buff1: "EFST_JITTER_BUFF1"
+        case .efst_jitter_buff2: "EFST_JITTER_BUFF2"
+        case .efst_jitter_buff3: "EFST_JITTER_BUFF3"
+        case .efst_jitter_buff4: "EFST_JITTER_BUFF4"
+        case .efst_jitter_buff5: "EFST_JITTER_BUFF5"
+        case .efst_jitter_buff6: "EFST_JITTER_BUFF6"
+        case .efst_jitter_buff7: "EFST_JITTER_BUFF7"
+        case .efst_jitter_buff8: "EFST_JITTER_BUFF8"
+        case .efst_jitter_buff9: "EFST_JITTER_BUFF9"
+        case .efst_jitter_buff10: "EFST_JITTER_BUFF10"
+        case .efst_cup_of_boza: "EFST_CUP_OF_BOZA"
+        case .efst_b_trap: "EFST_B_TRAP"
+        case .efst_e_chain: "EFST_E_CHAIN"
+        case .efst_e_qd_shot_ready: "EFST_E_QD_SHOT_READY"
+        case .efst_c_marker: "EFST_C_MARKER"
+        case .efst_h_mine: "EFST_H_MINE"
+        case .efst_h_mine_splash: "EFST_H_MINE_SPLASH"
+        case .efst_p_alter: "EFST_P_ALTER"
+        case .efst_heat_barrel: "EFST_HEAT_BARREL"
+        case .efst_anti_m_blast: "EFST_ANTI_M_BLAST"
+        case .efst_slugshot: "EFST_SLUGSHOT"
+        case .efst_swordclan: "EFST_SWORDCLAN"
+        case .efst_arcwandclan: "EFST_ARCWANDCLAN"
+        case .efst_goldenmaceclan: "EFST_GOLDENMACECLAN"
+        case .efst_crossbowclan: "EFST_CROSSBOWCLAN"
+        case .efst_packing_envelope1: "EFST_PACKING_ENVELOPE1"
+        case .efst_packing_envelope2: "EFST_PACKING_ENVELOPE2"
+        case .efst_packing_envelope3: "EFST_PACKING_ENVELOPE3"
+        case .efst_packing_envelope4: "EFST_PACKING_ENVELOPE4"
+        case .efst_packing_envelope5: "EFST_PACKING_ENVELOPE5"
+        case .efst_packing_envelope6: "EFST_PACKING_ENVELOPE6"
+        case .efst_packing_envelope7: "EFST_PACKING_ENVELOPE7"
+        case .efst_packing_envelope8: "EFST_PACKING_ENVELOPE8"
+        case .efst_packing_envelope9: "EFST_PACKING_ENVELOPE9"
+        case .efst_packing_envelope10: "EFST_PACKING_ENVELOPE10"
+        case .efst_glastheim_trans: "EFST_GLASTHEIM_TRANS"
+        case .efst_zongzi_pouch_trans: "EFST_ZONGZI_POUCH_TRANS"
+        case .efst_heat_barrel_after: "EFST_HEAT_BARREL_AFTER"
+        case .efst_decoration_of_music: "EFST_DECORATION_OF_MUSIC"
+        case .efst_overseaexpup: "EFST_OVERSEAEXPUP"
+        case .efst_clown_n_gypsy_card: "EFST_CLOWN_N_GYPSY_CARD"
+        case .efst_open_npc_market: "EFST_OPEN_NPC_MARKET"
+        case .efst_beef_rib_stew: "EFST_BEEF_RIB_STEW"
+        case .efst_pork_rib_stew: "EFST_PORK_RIB_STEW"
+        case .efst_chuseok_monday: "EFST_CHUSEOK_MONDAY"
+        case .efst_chuseok_tuesday: "EFST_CHUSEOK_TUESDAY"
+        case .efst_chuseok_wednesday: "EFST_CHUSEOK_WEDNESDAY"
+        case .efst_chuseok_thursday: "EFST_CHUSEOK_THURSDAY"
+        case .efst_chuseok_friday: "EFST_CHUSEOK_FRIDAY"
+        case .efst_chuseok_weekend: "EFST_CHUSEOK_WEEKEND"
+        case .efst_all_lightguard: "EFST_ALL_LIGHTGUARD"
+        case .efst_all_lightguard_cool_time: "EFST_ALL_LIGHTGUARD_COOL_TIME"
+        case .efst_mtf_mhp: "EFST_MTF_MHP"
+        case .efst_mtf_msp: "EFST_MTF_MSP"
+        case .efst_mtf_pumpkin: "EFST_MTF_PUMPKIN"
+        case .efst_mtf_hitflee: "EFST_MTF_HITFLEE"
+        case .efst_mtf_cridamage2: "EFST_MTF_CRIDAMAGE2"
+        case .efst_mtf_spdrain: "EFST_MTF_SPDRAIN"
+        case .efst_acuo_mint_gum: "EFST_ACUO_MINT_GUM"
+        case .efst_s_healpotion: "EFST_S_HEALPOTION"
+        case .efst_reuse_limit_s_heal_potion: "EFST_REUSE_LIMIT_S_HEAL_POTION"
+        case .efst_playtime_statistics: "EFST_PLAYTIME_STATISTICS"
+        case .efst_gn_changematerial_operator: "EFST_GN_CHANGEMATERIAL_OPERATOR"
+        case .efst_gn_mix_cooking_operator: "EFST_GN_MIX_COOKING_OPERATOR"
+        case .efst_gn_makebomb_operator: "EFST_GN_MAKEBOMB_OPERATOR"
+        case .efst_gn_s_pharmacy_operator: "EFST_GN_S_PHARMACY_OPERATOR"
+        case .efst_so_el_analysis_disassembly_operator: "EFST_SO_EL_ANALYSIS_DISASSEMBLY_OPERATOR"
+        case .efst_so_el_analysis_combination_operator: "EFST_SO_EL_ANALYSIS_COMBINATION_OPERATOR"
+        case .efst_nc_magicdecoy_operator: "EFST_NC_MAGICDECOY_OPERATOR"
+        case .efst_guild_storage: "EFST_GUILD_STORAGE"
+        case .efst_gc_poisoningweapon_operator: "EFST_GC_POISONINGWEAPON_OPERATOR"
+        case .efst_ws_weaponrefine_operator: "EFST_WS_WEAPONREFINE_OPERATOR"
+        case .efst_bs_repairweapon_operator: "EFST_BS_REPAIRWEAPON_OPERATOR"
+        case .efst_get_mailbox: "EFST_GET_MAILBOX"
+        case .efst_jumpingclan: "EFST_JUMPINGCLAN"
+        case .efst_jp_otp: "EFST_JP_OTP"
+        case .efst_handicaptolerance_levelgap: "EFST_HANDICAPTOLERANCE_LEVELGAP"
+        case .efst_mtf_rangeatk2: "EFST_MTF_RANGEATK2"
+        case .efst_mtf_aspd2: "EFST_MTF_ASPD2"
+        case .efst_mtf_matk2: "EFST_MTF_MATK2"
+        case .efst_show_npchpbar: "EFST_SHOW_NPCHPBAR"
+        case .efst_flowersmoke: "EFST_FLOWERSMOKE"
+        case .efst_fstone: "EFST_FSTONE"
+        case .efst_dailysendmailcnt: "EFST_DAILYSENDMAILCNT"
+        case .efst_qscaraba: "EFST_QSCARABA"
+        case .efst_ljosalfar: "EFST_LJOSALFAR"
+        case .efst_pad_reader_knight: "EFST_PAD_READER_KNIGHT"
+        case .efst_pad_reader_crusader: "EFST_PAD_READER_CRUSADER"
+        case .efst_pad_reader_blacksmith: "EFST_PAD_READER_BLACKSMITH"
+        case .efst_pad_reader_alchemist: "EFST_PAD_READER_ALCHEMIST"
+        case .efst_pad_reader_assassin: "EFST_PAD_READER_ASSASSIN"
+        case .efst_pad_reader_rogue: "EFST_PAD_READER_ROGUE"
+        case .efst_pad_reader_wizard: "EFST_PAD_READER_WIZARD"
+        case .efst_pad_reader_sage: "EFST_PAD_READER_SAGE"
+        case .efst_pad_reader_priest: "EFST_PAD_READER_PRIEST"
+        case .efst_pad_reader_monk: "EFST_PAD_READER_MONK"
+        case .efst_pad_reader_hunter: "EFST_PAD_READER_HUNTER"
+        case .efst_pad_reader_bard: "EFST_PAD_READER_BARD"
+        case .efst_pad_reader_dancer: "EFST_PAD_READER_DANCER"
+        case .efst_pad_reader_taekwon: "EFST_PAD_READER_TAEKWON"
+        case .efst_pad_reader_ninja: "EFST_PAD_READER_NINJA"
+        case .efst_pad_reader_gunslinger: "EFST_PAD_READER_GUNSLINGER"
+        case .efst_pad_reader_supernovice: "EFST_PAD_READER_SUPERNOVICE"
+        case .efst_essence_of_time: "EFST_ESSENCE_OF_TIME"
+        case .efst_minigame_roulette: "EFST_MINIGAME_ROULETTE"
+        case .efst_minigame_gold_point: "EFST_MINIGAME_GOLD_POINT"
+        case .efst_minigame_silver_point: "EFST_MINIGAME_SILVER_POINT"
+        case .efst_minigame_bronze_point: "EFST_MINIGAME_BRONZE_POINT"
+        case .efst_happiness_star: "EFST_HAPPINESS_STAR"
+        case .efst_summerevent01: "EFST_SUMMEREVENT01"
+        case .efst_summerevent02: "EFST_SUMMEREVENT02"
+        case .efst_summerevent03: "EFST_SUMMEREVENT03"
+        case .efst_summerevent04: "EFST_SUMMEREVENT04"
+        case .efst_summerevent05: "EFST_SUMMEREVENT05"
+        case .efst_minigame_roulette_bonus_item: "EFST_MINIGAME_ROULETTE_BONUS_ITEM"
+        case .efst_dress_up: "EFST_DRESS_UP"
+        case .efst_maple_falls: "EFST_MAPLE_FALLS"
+        case .efst_all_niflheim_recall: "EFST_ALL_NIFLHEIM_RECALL"
+        case .efst_marking_use_changemonster: "EFST_MARKING_USE_CHANGEMONSTER"
+        case .efst_mtf_marionette: "EFST_MTF_MARIONETTE"
+        case .efst_mtf_lude: "EFST_MTF_LUDE"
+        case .efst_mtf_cruiser: "EFST_MTF_CRUISER"
+        case .efst_mermaid_longing: "EFST_MERMAID_LONGING"
+        case .efst_magical_feather: "EFST_MAGICAL_FEATHER"
+        case .efst_dracula_card: "EFST_DRACULA_CARD"
+        case .efst_all_prontera_recall: "EFST_ALL_PRONTERA_RECALL"
+        case .efst_limit_power_booster: "EFST_LIMIT_POWER_BOOSTER"
+        case .efst_gift_of_snow: "EFST_GIFT_OF_SNOW"
+        case .efst_npc_hallucinationwalk: "EFST_NPC_HALLUCINATIONWALK"
+        case .efst_npc_hallucinationwalk_postdelay: "EFST_NPC_HALLUCINATIONWALK_POSTDELAY"
+        case .efst_npc_xxxwalk: "EFST_NPC_XXXWALK"
+        case .efst_time_accessory: "EFST_TIME_ACCESSORY"
+        case .efst_ep16_def: "EFST_EP16_DEF"
+        case .efst_normal_atked_sp: "EFST_NORMAL_ATKED_SP"
+        case .efst_bodystate_stonecurse: "EFST_BODYSTATE_STONECURSE"
+        case .efst_bodystate_freezing: "EFST_BODYSTATE_FREEZING"
+        case .efst_bodystate_stun: "EFST_BODYSTATE_STUN"
+        case .efst_bodystate_sleep: "EFST_BODYSTATE_SLEEP"
+        case .efst_bodystate_undead: "EFST_BODYSTATE_UNDEAD"
+        case .efst_bodystate_stonecurse_ing: "EFST_BODYSTATE_STONECURSE_ING"
+        case .efst_bodystate_burnning: "EFST_BODYSTATE_BURNNING"
+        case .efst_bodystate_imprison: "EFST_BODYSTATE_IMPRISON"
+        case .efst_healthstate_poison: "EFST_HEALTHSTATE_POISON"
+        case .efst_healthstate_curse: "EFST_HEALTHSTATE_CURSE"
+        case .efst_healthstate_silence: "EFST_HEALTHSTATE_SILENCE"
+        case .efst_healthstate_confusion: "EFST_HEALTHSTATE_CONFUSION"
+        case .efst_healthstate_blind: "EFST_HEALTHSTATE_BLIND"
+        case .efst_healthstate_angelus: "EFST_HEALTHSTATE_ANGELUS"
+        case .efst_healthstate_blooding: "EFST_HEALTHSTATE_BLOODING"
+        case .efst_healthstate_heavypoison: "EFST_HEALTHSTATE_HEAVYPOISON"
+        case .efst_healthstate_fear: "EFST_HEALTHSTATE_FEAR"
+        case .efst_cherry_blossom_cake: "EFST_CHERRY_BLOSSOM_CAKE"
+        case .efst_su_stoop: "EFST_SU_STOOP"
+        case .efst_catnippowder: "EFST_CATNIPPOWDER"
+        case .efst_head_equipment_effect: "EFST_HEAD_EQUIPMENT_EFFECT"
+        case .efst_sv_roottwist: "EFST_SV_ROOTTWIST"
+        case .efst_attack_property_nothing: "EFST_ATTACK_PROPERTY_NOTHING"
+        case .efst_attack_property_water: "EFST_ATTACK_PROPERTY_WATER"
+        case .efst_attack_property_ground: "EFST_ATTACK_PROPERTY_GROUND"
+        case .efst_attack_property_fire: "EFST_ATTACK_PROPERTY_FIRE"
+        case .efst_attack_property_wind: "EFST_ATTACK_PROPERTY_WIND"
+        case .efst_attack_property_poison: "EFST_ATTACK_PROPERTY_POISON"
+        case .efst_attack_property_saint: "EFST_ATTACK_PROPERTY_SAINT"
+        case .efst_attack_property_darkness: "EFST_ATTACK_PROPERTY_DARKNESS"
+        case .efst_attack_property_telekinesis: "EFST_ATTACK_PROPERTY_TELEKINESIS"
+        case .efst_attack_property_undead: "EFST_ATTACK_PROPERTY_UNDEAD"
+        case .efst_resist_property_nothing: "EFST_RESIST_PROPERTY_NOTHING"
+        case .efst_resist_property_water: "EFST_RESIST_PROPERTY_WATER"
+        case .efst_resist_property_ground: "EFST_RESIST_PROPERTY_GROUND"
+        case .efst_resist_property_fire: "EFST_RESIST_PROPERTY_FIRE"
+        case .efst_resist_property_wind: "EFST_RESIST_PROPERTY_WIND"
+        case .efst_resist_property_poison: "EFST_RESIST_PROPERTY_POISON"
+        case .efst_resist_property_saint: "EFST_RESIST_PROPERTY_SAINT"
+        case .efst_resist_property_darkness: "EFST_RESIST_PROPERTY_DARKNESS"
+        case .efst_resist_property_telekinesis: "EFST_RESIST_PROPERTY_TELEKINESIS"
+        case .efst_resist_property_undead: "EFST_RESIST_PROPERTY_UNDEAD"
+        case .efst_bitescar: "EFST_BITESCAR"
+        case .efst_arclousedash: "EFST_ARCLOUSEDASH"
+        case .efst_tunaparty: "EFST_TUNAPARTY"
+        case .efst_shrimp: "EFST_SHRIMP"
+        case .efst_freshshrimp: "EFST_FRESHSHRIMP"
+        case .efst_period_receiveitem: "EFST_PERIOD_RECEIVEITEM"
+        case .efst_period_plusexp: "EFST_PERIOD_PLUSEXP"
+        case .efst_period_plusjobexp: "EFST_PERIOD_PLUSJOBEXP"
+        case .efst_runehelm: "EFST_RUNEHELM"
+        case .efst_helm_verkana: "EFST_HELM_VERKANA"
+        case .efst_helm_rhydo: "EFST_HELM_RHYDO"
+        case .efst_helm_turisus: "EFST_HELM_TURISUS"
+        case .efst_helm_hagalas: "EFST_HELM_HAGALAS"
+        case .efst_helm_isia: "EFST_HELM_ISIA"
+        case .efst_helm_asir: "EFST_HELM_ASIR"
+        case .efst_helm_urj: "EFST_HELM_URJ"
+        case .efst_suhide: "EFST_SUHIDE"
+        case .efst_reuse_limit_mg: "EFST_REUSE_LIMIT_MG"
+        case .efst_doram_buf_01: "EFST_DORAM_BUF_01"
+        case .efst_doram_buf_02: "EFST_DORAM_BUF_02"
+        case .efst_spritemable: "EFST_SPRITEMABLE"
+        case .efst_aid_period_receiveitem: "EFST_AID_PERIOD_RECEIVEITEM"
+        case .efst_aid_period_plusexp: "EFST_AID_PERIOD_PLUSEXP"
+        case .efst_aid_period_plusjobexp: "EFST_AID_PERIOD_PLUSJOBEXP"
+        case .efst_aid_period_deadpenalty: "EFST_AID_PERIOD_DEADPENALTY"
+        case .efst_aid_period_addstoreitemcount: "EFST_AID_PERIOD_ADDSTOREITEMCOUNT"
+        case .efst_all_glastheim_recall: "EFST_ALL_GLASTHEIM_RECALL"
+        case .efst_reuse_limit_pepo_md: "EFST_REUSE_LIMIT_PEPO_MD"
+        case .efst_all_thanatos_recall: "EFST_ALL_THANATOS_RECALL"
+        case .efst_kafra_store: "EFST_KAFRA_STORE"
+        case .efst_reuse_abbys: "EFST_REUSE_ABBYS"
+        case .efst_magicstone_of_grace_set: "EFST_MAGICSTONE_OF_GRACE_SET"
+        case .efst_private_airplane: "EFST_PRIVATE_AIRPLANE"
+        case .efst_hiss: "EFST_HISS"
+        case .efst_hiss_avoid: "EFST_HISS_AVOID"
+        case .efst_nyanggrass: "EFST_NYANGGRASS"
+        case .efst_chattering: "EFST_CHATTERING"
+        case .efst_chattering_opt_atk_matk: "EFST_CHATTERING_OPT_ATK_MATK"
+        case .efst_chattering_opt_haste: "EFST_CHATTERING_OPT_HASTE"
+        case .efst_spiritofland_stemspear: "EFST_SPIRITOFLAND_STEMSPEAR"
+        case .efst_spiritofland_roottwist: "EFST_SPIRITOFLAND_ROOTTWIST"
+        case .efst_spiritofland_powdering: "EFST_SPIRITOFLAND_POWDERING"
+        case .efst_spiritofland_meteor: "EFST_SPIRITOFLAND_METEOR"
+        case .efst_spiritofland_nyanggrass: "EFST_SPIRITOFLAND_NYANGGRASS"
+        case .efst_grooming: "EFST_GROOMING"
+        case .efst_protectionofshrimp: "EFST_PROTECTIONOFSHRIMP"
+        case .efst_ep16_2_buff_ss: "EFST_EP16_2_BUFF_SS"
+        case .efst_ep16_2_buff_sc: "EFST_EP16_2_BUFF_SC"
+        case .efst_ep16_2_buff_ac: "EFST_EP16_2_BUFF_AC"
+        case .efst_gs_magical_bullet: "EFST_GS_MAGICAL_BULLET"
+        case .efst_fallen_angel: "EFST_FALLEN_ANGEL"
+        case .efst_reuse_limit_movepoint: "EFST_REUSE_LIMIT_MOVEPOINT"
+        case .efst_macro_detector_answer_waiting: "EFST_MACRO_DETECTOR_ANSWER_WAITING"
+        case .efst_blaze_bead: "EFST_BLAZE_BEAD"
+        case .efst_frozen_bead: "EFST_FROZEN_BEAD"
+        case .efst_breeze_bead: "EFST_BREEZE_BEAD"
+        case .efst_soulattack: "EFST_SOULATTACK"
+        case .efst_aid_period_receiveitem_2nd: "EFST_AID_PERIOD_RECEIVEITEM_2ND"
+        case .efst_aid_period_plusexp_2nd: "EFST_AID_PERIOD_PLUSEXP_2ND"
+        case .efst_aid_period_plusjobexp_2nd: "EFST_AID_PERIOD_PLUSJOBEXP_2ND"
+        case .efst_prontera_jp: "EFST_PRONTERA_JP"
+        case .efst_assistant_vending: "EFST_ASSISTANT_VENDING"
+        case .efst_gloom_card: "EFST_GLOOM_CARD"
+        case .efst_pharaoh_card: "EFST_PHARAOH_CARD"
+        case .efst_kiel_card: "EFST_KIEL_CARD"
+        case .efst_assistant_buying: "EFST_ASSISTANT_BUYING"
+        case .efst_cheerup: "EFST_CHEERUP"
+        case .efst_get_cnt_unread_rodex_chardb: "EFST_GET_CNT_UNREAD_RODEX_CHARDB"
+        case .efst_get_cnt_unread_rodex_globaldb: "EFST_GET_CNT_UNREAD_RODEX_GLOBALDB"
+        case .efst_s_manapotion: "EFST_S_MANAPOTION"
+        case .efst_m_defscroll: "EFST_M_DEFSCROLL"
+        case .efst_open_refining_ui: "EFST_OPEN_REFINING_UI"
+        case .efst_all_lighthalzen_recall: "EFST_ALL_LIGHTHALZEN_RECALL"
+        case .efst_swap_equipitem: "EFST_SWAP_EQUIPITEM"
+        case .efst_as_ragged_golem_card: "EFST_AS_RAGGED_GOLEM_CARD"
+        case .efst_lhz_dun_n1: "EFST_LHZ_DUN_N1"
+        case .efst_lhz_dun_n2: "EFST_LHZ_DUN_N2"
+        case .efst_lhz_dun_n3: "EFST_LHZ_DUN_N3"
+        case .efst_lhz_dun_n4: "EFST_LHZ_DUN_N4"
+        case .efst_taekwon_mission: "EFST_TAEKWON_MISSION"
+        case .efst_sun_place: "EFST_SUN_PLACE"
+        case .efst_moon_place: "EFST_MOON_PLACE"
+        case .efst_star_place: "EFST_STAR_PLACE"
+        case .efst_sun_monster: "EFST_SUN_MONSTER"
+        case .efst_moon_monster: "EFST_MOON_MONSTER"
+        case .efst_star_monster: "EFST_STAR_MONSTER"
+        case .efst_al_warp_addslot: "EFST_AL_WARP_ADDSLOT"
+        case .efst_all_stat_down: "EFST_ALL_STAT_DOWN"
+        case .efst_gradual_gravity: "EFST_GRADUAL_GRAVITY"
+        case .efst_damage_heal: "EFST_DAMAGE_HEAL"
+        case .efst_immune_property_nothing: "EFST_IMMUNE_PROPERTY_NOTHING"
+        case .efst_immune_property_water: "EFST_IMMUNE_PROPERTY_WATER"
+        case .efst_immune_property_ground: "EFST_IMMUNE_PROPERTY_GROUND"
+        case .efst_immune_property_fire: "EFST_IMMUNE_PROPERTY_FIRE"
+        case .efst_immune_property_wind: "EFST_IMMUNE_PROPERTY_WIND"
+        case .efst_immune_property_poison: "EFST_IMMUNE_PROPERTY_POISON"
+        case .efst_immune_property_saint: "EFST_IMMUNE_PROPERTY_SAINT"
+        case .efst_immune_property_darkness: "EFST_IMMUNE_PROPERTY_DARKNESS"
+        case .efst_immune_property_telekinesis: "EFST_IMMUNE_PROPERTY_TELEKINESIS"
+        case .efst_immune_property_undead: "EFST_IMMUNE_PROPERTY_UNDEAD"
+        case .efst_reuse_limit_np: "EFST_REUSE_LIMIT_NP"
+        case .efst_specialcookie: "EFST_SPECIALCOOKIE"
+        case .efst_damage_heal2: "EFST_DAMAGE_HEAL2"
+        case .efst_damage_heal3: "EFST_DAMAGE_HEAL3"
+        case .efst_glory_of_return: "EFST_GLORY_OF_RETURN"
+        case .efst_atk_popcorn: "EFST_ATK_POPCORN"
+        case .efst_matk_popcorn: "EFST_MATK_POPCORN"
+        case .efst_aspd_popcorn: "EFST_ASPD_POPCORN"
+        case .efst_ultimatecook: "EFST_ULTIMATECOOK"
+        case .efst_lightofmoon: "EFST_LIGHTOFMOON"
+        case .efst_lightofsun: "EFST_LIGHTOFSUN"
+        case .efst_lightofstar: "EFST_LIGHTOFSTAR"
+        case .efst_lunarstance: "EFST_LUNARSTANCE"
+        case .efst_universestance: "EFST_UNIVERSESTANCE"
+        case .efst_sunstance: "EFST_SUNSTANCE"
+        case .efst_flashkick: "EFST_FLASHKICK"
+        case .efst_newmoon: "EFST_NEWMOON"
+        case .efst_starstance: "EFST_STARSTANCE"
+        case .efst_dimension: "EFST_DIMENSION"
+        case .efst_dimension1: "EFST_DIMENSION1"
+        case .efst_dimension2: "EFST_DIMENSION2"
+        case .efst_creatingstar: "EFST_CREATINGSTAR"
+        case .efst_fallingstar: "EFST_FALLINGSTAR"
+        case .efst_novaexplosing: "EFST_NOVAEXPLOSING"
+        case .efst_gravitycontrol: "EFST_GRAVITYCONTROL"
+        case .xxx_efst_worldstore_active: "XXX_EFST_WORLDSTORE_ACTIVE"
+        case .efst_worldstore_itemmoveinfo_sendcomplete: "EFST_WORLDSTORE_ITEMMOVEINFO_SENDCOMPLETE"
+        case .efst_soulcollect: "EFST_SOULCOLLECT"
+        case .efst_soulreaper: "EFST_SOULREAPER"
+        case .efst_soulunity: "EFST_SOULUNITY"
+        case .efst_soulshadow: "EFST_SOULSHADOW"
+        case .efst_soulfairy: "EFST_SOULFAIRY"
+        case .efst_soulfalcon: "EFST_SOULFALCON"
+        case .efst_soulgolem: "EFST_SOULGOLEM"
+        case .efst_souldivision: "EFST_SOULDIVISION"
+        case .efst_soulenergy: "EFST_SOULENERGY"
+        case .efst_use_skill_sp_spa: "EFST_USE_SKILL_SP_SPA"
+        case .efst_use_skill_sp_sha: "EFST_USE_SKILL_SP_SHA"
+        case .efst_sp_sha: "EFST_SP_SHA"
+        case .efst_infinity_drink: "EFST_INFINITY_DRINK"
+        case .efst_abyss_001: "EFST_ABYSS_001"
+        case .efst_abyss_002: "EFST_ABYSS_002"
+        case .efst_abyss_003: "EFST_ABYSS_003"
+        case .efst_abyss_004: "EFST_ABYSS_004"
+        case .efst_abyss_005: "EFST_ABYSS_005"
+        case .efst_abyss_006: "EFST_ABYSS_006"
+        case .efst_abyss_007: "EFST_ABYSS_007"
+        case .efst_abyss_008: "EFST_ABYSS_008"
+        case .efst_reuse_limit_thm: "EFST_REUSE_LIMIT_THM"
+        case .efst_reuse_limit_tli: "EFST_REUSE_LIMIT_TLI"
+        case .efst_reuse_limit_tkc: "EFST_REUSE_LIMIT_TKC"
+        case .efst_reuse_limit_trp: "EFST_REUSE_LIMIT_TRP"
+        case .efst_reuse_limit_tbg: "EFST_REUSE_LIMIT_TBG"
+        case .efst_reuse_limit_tbm: "EFST_REUSE_LIMIT_TBM"
+        case .efst_yggdrasil_bless: "EFST_YGGDRASIL_BLESS"
+        case .efst_use_skill_sp_swhoo: "EFST_USE_SKILL_SP_SWHOO"
+        case .efst_hunting_event: "EFST_HUNTING_EVENT"
+        case .efst_period_receiveitem_2nd: "EFST_PERIOD_RECEIVEITEM_2ND"
+        case .efst_period_plusexp_2nd: "EFST_PERIOD_PLUSEXP_2ND"
+        case .efst_expdropup: "EFST_EXPDROPUP"
+        case .efst_tw_newyear_event: "EFST_TW_NEWYEAR_EVENT"
+        case .efst_ensemblefatigue: "EFST_ENSEMBLEFATIGUE"
+        case .efst_adaptation: "EFST_ADAPTATION"
+        case .efst_dancinglesson: "EFST_DANCINGLESSON"
+        case .efst_musicallesson: "EFST_MUSICALLESSON"
+        case .efst_reuse_limit_rc: "EFST_REUSE_LIMIT_RC"
+        case .efst_dancinglesson_equipped: "EFST_DANCINGLESSON_EQUIPPED"
+        case .efst_musicallesson_equipped: "EFST_MUSICALLESSON_EQUIPPED"
+        case .efst_ancilla: "EFST_ANCILLA"
+        case .efst_reuse_limit_potion_a: "EFST_REUSE_LIMIT_POTION_A"
+        case .efst_reuse_limit_potion_b: "EFST_REUSE_LIMIT_POTION_B"
+        case .efst_reuse_limit_potion_c: "EFST_REUSE_LIMIT_POTION_C"
+        case .efst_reuse_limit_potion_d: "EFST_REUSE_LIMIT_POTION_D"
+        case .efst_reuse_limit_potion_e: "EFST_REUSE_LIMIT_POTION_E"
+        case .efst_reuse_limit_potion_f: "EFST_REUSE_LIMIT_POTION_F"
+        case .efst_braveset: "EFST_BRAVESET"
+        case .efst_macemastery_equipped: "EFST_MACEMASTERY_EQUIPPED"
+        case .efst_festive_energy: "EFST_FESTIVE_ENERGY"
+        case .efst_test_kr01: "EFST_TEST_KR01"
+        case .efst_starfish_jp: "EFST_STARFISH_JP"
+        case .efst_weaponblock_on: "EFST_WEAPONBLOCK_ON"
+        case .efst_cri_damage: "EFST_CRI_DAMAGE"
+        case .efst_def_power: "EFST_DEF_POWER"
+        case .efst_def_ignore: "EFST_DEF_IGNORE"
+        case .efst_bow_atk_power: "EFST_BOW_ATK_POWER"
+        case .efst_red_org_potion: "EFST_RED_ORG_POTION"
+        case .efst_cast_time: "EFST_CAST_TIME"
+        case .efst_bladestopready: "EFST_BLADESTOPREADY"
+        case .efst_teleport_br: "EFST_TELEPORT_BR"
+        case .efst_sa_weapon_property: "EFST_SA_WEAPON_PROPERTY"
+        case .efst_leapimpaired: "EFST_LEAPIMPAIRED"
+        case .efst_sending_itemlist: "EFST_SENDING_ITEMLIST"
+        case .efst_exclusive_receiveitem: "EFST_EXCLUSIVE_RECEIVEITEM"
+        case .efst_exclusive_plusexp: "EFST_EXCLUSIVE_PLUSEXP"
+        case .efst_assumptio_buff: "EFST_ASSUMPTIO_BUFF"
+        case .efst_basilica_buff: "EFST_BASILICA_BUFF"
+        case .efst_overlapexpup2: "EFST_OVERLAPEXPUP2"
+        case .efst_stopmove_immediately: "EFST_STOPMOVE_IMMEDIATELY"
+        case .efst_soulcurse: "EFST_SOULCURSE"
+        case .efst_sound_of_destruction: "EFST_SOUND_OF_DESTRUCTION"
+        case .efst_df_manaplus: "EFST_DF_MANAPLUS"
+        case .efst_df_fullswingk: "EFST_DF_FULLSWINGK"
+        case .efst_nv_breakthrough: "EFST_NV_BREAKTHROUGH"
+        case .efst_helpangel: "EFST_HELPANGEL"
+        case .efst_nv_transcendence: "EFST_NV_TRANSCENDENCE"
+        case .efst_sweetsfair_atk: "EFST_SWEETSFAIR_ATK"
+        case .efst_sweetsfair_matk: "EFST_SWEETSFAIR_MATK"
+        case .efst_reuse_skill: "EFST_REUSE_SKILL"
+        case .efst_flower_leaf2: "EFST_FLOWER_LEAF2"
+        case .efst_flower_leaf3: "EFST_FLOWER_LEAF3"
+        case .efst_flower_leaf4: "EFST_FLOWER_LEAF4"
+        case .efst_charm_boost: "EFST_CHARM_BOOST"
+        case .efst_earthshaker: "EFST_EARTHSHAKER"
+        case .efst_period_use_worldmap: "EFST_PERIOD_USE_WORLDMAP"
+        case .efst_misty_frost: "EFST_MISTY_FROST"
+        case .efst_magic_poison: "EFST_MAGIC_POISON"
+        case .efst_move_agit: "EFST_MOVE_AGIT"
+        case .efst_reuse_jpnonly_limit_i: "EFST_REUSE_JPNONLY_LIMIT_I"
+        case .efst_reuse_jpnonly_limit_j: "EFST_REUSE_JPNONLY_LIMIT_J"
+        case .efst_reuse_jpnonly_limit_k: "EFST_REUSE_JPNONLY_LIMIT_K"
+        case .efst_jpnonly_tactics: "EFST_JPNONLY_TACTICS"
+        case .efst_prison: "EFST_PRISON"
+        case .efst_madogear_type: "EFST_MADOGEAR_TYPE"
+        case .efst_deadly_defeasance: "EFST_DEADLY_DEFEASANCE"
+        case .efst_climax_des_hu: "EFST_CLIMAX_DES_HU"
+        case .efst_climax: "EFST_CLIMAX"
+        case .efst_feintbomb: "EFST_FEINTBOMB"
+        case .efst_luxanima: "EFST_LUXANIMA"
+        case .efst_bath_foam_a: "EFST_BATH_FOAM_A"
+        case .efst_bath_foam_b: "EFST_BATH_FOAM_B"
+        case .efst_bath_foam_c: "EFST_BATH_FOAM_C"
+        case .efst_aroma_oil: "EFST_AROMA_OIL"
+        case .efst_reuse_limit_luxanima: "EFST_REUSE_LIMIT_LUXANIMA"
+        case .efst_powerful_faith: "EFST_POWERFUL_FAITH"
+        case .efst_sincere_faith: "EFST_SINCERE_FAITH"
+        case .efst_firm_faith: "EFST_FIRM_FAITH"
+        case .efst_airship_pipe: "EFST_AIRSHIP_PIPE"
+        case .efst_pieces_of_shadow: "EFST_PIECES_OF_SHADOW"
+        case .efst_hells_plant_armor: "EFST_HELLS_PLANT_ARMOR"
+        case .efst_relieve_damage: "EFST_RELIEVE_DAMAGE"
+        case .efst_lockon_laser: "EFST_LOCKON_LASER"
+        case .efst_grade_enchant_ui_open: "EFST_GRADE_ENCHANT_UI_OPEN"
+        case .efst_ref_t_potion: "EFST_REF_T_POTION"
+        case .efst_add_atk_damage: "EFST_ADD_ATK_DAMAGE"
+        case .efst_add_matk_damage: "EFST_ADD_MATK_DAMAGE"
+        case .efst_servantweapon: "EFST_SERVANTWEAPON"
+        case .efst_servant_sign: "EFST_SERVANT_SIGN"
+        case .efst_chargingpierce: "EFST_CHARGINGPIERCE"
+        case .efst_chargingpierce_count: "EFST_CHARGINGPIERCE_COUNT"
+        case .efst_dragonic_aura: "EFST_DRAGONIC_AURA"
+        case .efst_big_scar: "EFST_BIG_SCAR"
+        case .efst_vigor: "EFST_VIGOR"
+        case .efst_will_of_faith: "EFST_WILL_OF_FAITH"
+        case .efst_pressure: "EFST_PRESSURE"
+        case .efst_sa_dragonology: "EFST_SA_DRAGONOLOGY"
+        case .efst_climax_earth: "EFST_CLIMAX_EARTH"
+        case .efst_climax_bloom: "EFST_CLIMAX_BLOOM"
+        case .efst_climax_cryimp: "EFST_CLIMAX_CRYIMP"
+        case .efst_md_me_potion: "EFST_MD_ME_POTION"
+        case .efst_md_ma_potion: "EFST_MD_MA_POTION"
+        case .efst_md_ta_potion: "EFST_MD_TA_POTION"
+        case .efst_md_ra_potion: "EFST_MD_RA_POTION"
+        case .efst_reuse_megaphone: "EFST_REUSE_MEGAPHONE"
+        case .efst_holy_oil: "EFST_HOLY_OIL"
+        case .efst_crystal_impact: "EFST_CRYSTAL_IMPACT"
+        case .efst_shadow_exceed: "EFST_SHADOW_EXCEED"
+        case .efst_dancing_knife: "EFST_DANCING_KNIFE"
+        case .efst_potent_venom: "EFST_POTENT_VENOM"
+        case .efst_shadow_scar: "EFST_SHADOW_SCAR"
+        case .efst_e_slash_count: "EFST_E_SLASH_COUNT"
+        case .efst_mediale: "EFST_MEDIALE"
+        case .efst_a_vita: "EFST_A_VITA"
+        case .efst_a_telum: "EFST_A_TELUM"
+        case .efst_pre_acies: "EFST_PRE_ACIES"
+        case .efst_competentia: "EFST_COMPETENTIA"
+        case .efst_guard_stance: "EFST_GUARD_STANCE"
+        case .efst_attack_stance: "EFST_ATTACK_STANCE"
+        case .efst_guardian_s: "EFST_GUARDIAN_S"
+        case .efst_handicapstate_deepblind: "EFST_HANDICAPSTATE_DEEPBLIND"
+        case .efst_handicapstate_deepsilence: "EFST_HANDICAPSTATE_DEEPSILENCE"
+        case .efst_handicapstate_lassitude: "EFST_HANDICAPSTATE_LASSITUDE"
+        case .efst_handicapstate_frostbite: "EFST_HANDICAPSTATE_FROSTBITE"
+        case .efst_handicapstate_swooning: "EFST_HANDICAPSTATE_SWOONING"
+        case .efst_handicapstate_lightningstrike: "EFST_HANDICAPSTATE_LIGHTNINGSTRIKE"
+        case .efst_handicapstate_crystallization: "EFST_HANDICAPSTATE_CRYSTALLIZATION"
+        case .efst_handicapstate_conflagration: "EFST_HANDICAPSTATE_CONFLAGRATION"
+        case .efst_handicapstate_misfortune: "EFST_HANDICAPSTATE_MISFORTUNE"
+        case .efst_handicapstate_deadlypoison: "EFST_HANDICAPSTATE_DEADLYPOISON"
+        case .efst_handicapstate_depression: "EFST_HANDICAPSTATE_DEPRESSION"
+        case .efst_handicapstate_holyflame: "EFST_HANDICAPSTATE_HOLYFLAME"
+        case .efst_rebound_s: "EFST_REBOUND_S"
+        case .efst_shield_mastery: "EFST_SHIELD_MASTERY"
+        case .efst_spear_sword_m: "EFST_SPEAR_SWORD_M"
+        case .efst_holy_s: "EFST_HOLY_S"
+        case .efst_ultimate_s: "EFST_ULTIMATE_S"
+        case .efst_spear_scar: "EFST_SPEAR_SCAR"
+        case .efst_shield_power: "EFST_SHIELD_POWER"
+        case .efst_fidus_animus: "EFST_FIDUS_ANIMUS"
+        case .efst_mace_book_m: "EFST_MACE_BOOK_M"
+        case .efst_shadow_weapon: "EFST_SHADOW_WEAPON"
+        case .efst_religio: "EFST_RELIGIO"
+        case .efst_benedictum: "EFST_BENEDICTUM"
+        case .efst_mvpcard_kiel: "EFST_MVPCARD_KIEL"
+        case .efst_first_brand: "EFST_FIRST_BRAND"
+        case .efst_second_brand: "EFST_SECOND_BRAND"
+        case .efst_second_judge: "EFST_SECOND_JUDGE"
+        case .efst_third_exor_flame: "EFST_THIRD_EXOR_FLAME"
+        case .efst_first_faith_power: "EFST_FIRST_FAITH_POWER"
+        case .efst_axe_stomp: "EFST_AXE_STOMP"
+        case .efst_a_machine: "EFST_A_MACHINE"
+        case .efst_d_machine: "EFST_D_MACHINE"
+        case .efst_mt_m_machine_operator: "EFST_MT_M_MACHINE_OPERATOR"
+        case .efst_twoaxedef: "EFST_TWOAXEDEF"
+        case .efst_dagger_and_bow_m: "EFST_DAGGER_AND_BOW_M"
+        case .efst_magic_sword_m: "EFST_MAGIC_SWORD_M"
+        case .efst_shadow_strip: "EFST_SHADOW_STRIP"
+        case .efst_abyss_dagger: "EFST_ABYSS_DAGGER"
+        case .efst_abyssforceweapon: "EFST_ABYSSFORCEWEAPON"
+        case .efst_abyss_slayer: "EFST_ABYSS_SLAYER"
+        case .efst_twohanddef: "EFST_TWOHANDDEF"
+        case .efst_protectshadowequip: "EFST_PROTECTSHADOWEQUIP"
+        case .efst_researchreport: "EFST_RESEARCHREPORT"
+        case .efst_bo_hell_dusty: "EFST_BO_HELL_DUSTY"
+        case .efst_windsign: "EFST_WINDSIGN"
+        case .efst_crescivebolt: "EFST_CRESCIVEBOLT"
+        case .efst_calamitygale: "EFST_CALAMITYGALE"
+        case .efst_crescivebolt3: "EFST_CRESCIVEBOLT3"
+        case .efst_stage_manner: "EFST_STAGE_MANNER"
+        case .efst_retrospection: "EFST_RETROSPECTION"
+        case .efst_mystic_symphony: "EFST_MYSTIC_SYMPHONY"
+        case .efst_kvasir_sonata: "EFST_KVASIR_SONATA"
+        case .efst_soundblend: "EFST_SOUNDBLEND"
+        case .efst_gef_nocturn: "EFST_GEF_NOCTURN"
+        case .efst_ain_rhapsody: "EFST_AIN_RHAPSODY"
+        case .efst_musical_interlude: "EFST_MUSICAL_INTERLUDE"
+        case .efst_jawaii_serenade: "EFST_JAWAII_SERENADE"
+        case .efst_pron_march: "EFST_PRON_MARCH"
+        case .efst_roseblossom: "EFST_ROSEBLOSSOM"
+        case .efst_bo_bionic_pharmacy_operator: "EFST_BO_BIONIC_PHARMACY_OPERATOR"
+        case .efst_acidified_zone_water: "EFST_ACIDIFIED_ZONE_WATER"
+        case .efst_acidified_zone_ground: "EFST_ACIDIFIED_ZONE_GROUND"
+        case .efst_acidified_zone_wind: "EFST_ACIDIFIED_ZONE_WIND"
+        case .efst_acidified_zone_fire: "EFST_ACIDIFIED_ZONE_FIRE"
+        case .efst_magic_book_m: "EFST_MAGIC_BOOK_M"
+        case .efst_spell_enchanting: "EFST_SPELL_ENCHANTING"
+        case .efst_summon_elemental_ardor: "EFST_SUMMON_ELEMENTAL_ARDOR"
+        case .efst_summon_elemental_diluvio: "EFST_SUMMON_ELEMENTAL_DILUVIO"
+        case .efst_summon_elemental_procella: "EFST_SUMMON_ELEMENTAL_PROCELLA"
+        case .efst_summon_elemental_terremotus: "EFST_SUMMON_ELEMENTAL_TERREMOTUS"
+        case .efst_summon_elemental_serpens: "EFST_SUMMON_ELEMENTAL_SERPENS"
+        case .efst_flametechnic: "EFST_FLAMETECHNIC"
+        case .efst_flametechnic_option: "EFST_FLAMETECHNIC_OPTION"
+        case .efst_flamearmor: "EFST_FLAMEARMOR"
+        case .efst_flamearmor_option: "EFST_FLAMEARMOR_OPTION"
+        case .efst_cold_force: "EFST_COLD_FORCE"
+        case .efst_cold_force_option: "EFST_COLD_FORCE_OPTION"
+        case .efst_crystal_armor: "EFST_CRYSTAL_ARMOR"
+        case .efst_crystal_armor_option: "EFST_CRYSTAL_ARMOR_OPTION"
+        case .efst_grace_breeze: "EFST_GRACE_BREEZE"
+        case .efst_grace_breeze_option: "EFST_GRACE_BREEZE_OPTION"
+        case .efst_eyes_of_storm: "EFST_EYES_OF_STORM"
+        case .efst_eyes_of_storm_option: "EFST_EYES_OF_STORM_OPTION"
+        case .efst_earth_care: "EFST_EARTH_CARE"
+        case .efst_earth_care_option: "EFST_EARTH_CARE_OPTION"
+        case .efst_strong_protection: "EFST_STRONG_PROTECTION"
+        case .efst_strong_protection_option: "EFST_STRONG_PROTECTION_OPTION"
+        case .efst_deep_poisoning: "EFST_DEEP_POISONING"
+        case .efst_deep_poisoning_option: "EFST_DEEP_POISONING_OPTION"
+        case .efst_poison_shield: "EFST_POISON_SHIELD"
+        case .efst_poison_shield_option: "EFST_POISON_SHIELD_OPTION"
+        case .efst_abr_battle_warior: "EFST_ABR_BATTLE_WARIOR"
+        case .efst_abr_dual_cannon: "EFST_ABR_DUAL_CANNON"
+        case .efst_abr_mother_net: "EFST_ABR_MOTHER_NET"
+        case .efst_abr_infinity: "EFST_ABR_INFINITY"
+        case .efst_elemental_veil: "EFST_ELEMENTAL_VEIL"
+        case .efst_renovatio_ext: "EFST_RENOVATIO_EXT"
+        case .efst_homun_time: "EFST_HOMUN_TIME"
+        case .efst_power_acceleration: "EFST_POWER_ACCELERATION"
+        case .efst_max_hp_sp_avoid: "EFST_MAX_HP_SP_AVOID"
+        case .efst_add_all_state: "EFST_ADD_ALL_STATE"
+        case .efst_aid_period_power_acceleration: "EFST_AID_PERIOD_POWER_ACCELERATION"
+        case .efst_aid_period_max_hp_sp_avoid: "EFST_AID_PERIOD_MAX_HP_SP_AVOID"
+        case .efst_aid_period_add_all_state: "EFST_AID_PERIOD_ADD_ALL_STATE"
+        case .efst_poison_mist: "EFST_POISON_MIST"
+        case .efst_hackandslasher: "EFST_HACKANDSLASHER"
+        case .efst_get_cnt_unread_return_rodex_chardb: "EFST_GET_CNT_UNREAD_RETURN_RODEX_CHARDB"
+        case .efst_stone_wall: "EFST_STONE_WALL"
+        case .efst_reuse_limit_i: "EFST_REUSE_LIMIT_I"
+        case .efst_overbrandready: "EFST_OVERBRANDREADY"
+        case .efst_shieldspell: "EFST_SHIELDSPELL"
+        case .efst_autoshadowspell_check2: "EFST_AUTOSHADOWSPELL_CHECK2"
+        case .efst_cloud_poison: "EFST_CLOUD_POISON"
+        case .efst_spore_explosion_debuff: "EFST_SPORE_EXPLOSION_DEBUFF"
+        case .efst_defscroll: "EFST_DEFSCROLL"
+        case .efst_massive_f_blaster: "EFST_MASSIVE_F_BLASTER"
+        case .efst_noequipweapon2: "EFST_NOEQUIPWEAPON2"
+        case .efst_noequiparmor2: "EFST_NOEQUIPARMOR2"
+        case .efst_noequipshield2: "EFST_NOEQUIPSHIELD2"
+        case .efst_noequipshoes2: "EFST_NOEQUIPSHOES2"
+        case .efst_noequippendant2: "EFST_NOEQUIPPENDANT2"
+        case .efst_noequipearing2: "EFST_NOEQUIPEARING2"
+        case .efst_noequipfull2: "EFST_NOEQUIPFULL2"
+        case .efst_curse_r_cube: "EFST_CURSE_R_CUBE"
+        case .efst_curse_b_cube: "EFST_CURSE_B_CUBE"
+        case .efst_killing_aura: "EFST_KILLING_AURA"
+        case .efst_toxin_of_mandara: "EFST_TOXIN_OF_MANDARA"
+        case .efst_goldene_tone: "EFST_GOLDENE_TONE"
+        case .efst_tempering: "EFST_TEMPERING"
+        case .efst_nw_p_f_i: "EFST_NW_P_F_I"
+        case .efst_intensive_aim: "EFST_INTENSIVE_AIM"
+        case .efst_intensive_aim_count: "EFST_INTENSIVE_AIM_COUNT"
+        case .efst_grenade_fragment_1: "EFST_GRENADE_FRAGMENT_1"
+        case .efst_grenade_fragment_2: "EFST_GRENADE_FRAGMENT_2"
+        case .efst_grenade_fragment_3: "EFST_GRENADE_FRAGMENT_3"
+        case .efst_grenade_fragment_4: "EFST_GRENADE_FRAGMENT_4"
+        case .efst_grenade_fragment_5: "EFST_GRENADE_FRAGMENT_5"
+        case .efst_grenade_fragment_6: "EFST_GRENADE_FRAGMENT_6"
+        case .efst_auto_firing_launcherefst: "EFST_AUTO_FIRING_LAUNCHEREFST"
+        case .efst_hidden_card: "EFST_HIDDEN_CARD"
+        case .efst_nw_grenade_mastery: "EFST_NW_GRENADE_MASTERY"
+        case .efst_talisman_of_protection: "EFST_TALISMAN_OF_PROTECTION"
+        case .efst_talisman_of_warrior: "EFST_TALISMAN_OF_WARRIOR"
+        case .efst_talisman_of_magician: "EFST_TALISMAN_OF_MAGICIAN"
+        case .efst_talisman_of_five_elements: "EFST_TALISMAN_OF_FIVE_ELEMENTS"
+        case .efst_t_first_god: "EFST_T_FIRST_GOD"
+        case .efst_t_second_god: "EFST_T_SECOND_GOD"
+        case .efst_t_third_god: "EFST_T_THIRD_GOD"
+        case .efst_t_fourth_god: "EFST_T_FOURTH_GOD"
+        case .efst_t_fiveth_god: "EFST_T_FIVETH_GOD"
+        case .efst_heaven_and_earth: "EFST_HEAVEN_AND_EARTH"
+        case .efst_hogogong: "EFST_HOGOGONG"
+        case .efst_marine_festival: "EFST_MARINE_FESTIVAL"
+        case .efst_sandy_festival: "EFST_SANDY_FESTIVAL"
+        case .efst_ki_sul_rampage: "EFST_KI_SUL_RAMPAGE"
+        case .efst_colors_of_hyun_rok_1: "EFST_COLORS_OF_HYUN_ROK_1"
+        case .efst_colors_of_hyun_rok_2: "EFST_COLORS_OF_HYUN_ROK_2"
+        case .efst_colors_of_hyun_rok_3: "EFST_COLORS_OF_HYUN_ROK_3"
+        case .efst_colors_of_hyun_rok_4: "EFST_COLORS_OF_HYUN_ROK_4"
+        case .efst_colors_of_hyun_rok_5: "EFST_COLORS_OF_HYUN_ROK_5"
+        case .efst_colors_of_hyun_rok_6: "EFST_COLORS_OF_HYUN_ROK_6"
+        case .efst_colors_of_hyun_rok_buff: "EFST_COLORS_OF_HYUN_ROK_BUFF"
+        case .efst_temporary_communion: "EFST_TEMPORARY_COMMUNION"
+        case .efst_blessing_of_m_creatures: "EFST_BLESSING_OF_M_CREATURES"
+        case .efst_blessing_of_m_c_debuff: "EFST_BLESSING_OF_M_C_DEBUFF"
+        case .efst_shieldchainrush: "EFST_SHIELDCHAINRUSH"
+        case .efst_mistyfrost: "EFST_MISTYFROST"
+        case .efst_groundgravity: "EFST_GROUNDGRAVITY"
+        case .efst_breakinglimit: "EFST_BREAKINGLIMIT"
+        case .efst_rulebreak: "EFST_RULEBREAK"
+        case .efst_rising_sun: "EFST_RISING_SUN"
+        case .efst_noon_sun: "EFST_NOON_SUN"
+        case .efst_sunset_sun: "EFST_SUNSET_SUN"
+        case .efst_rising_moon: "EFST_RISING_MOON"
+        case .efst_midnight_moon: "EFST_MIDNIGHT_MOON"
+        case .efst_dawn_moon: "EFST_DAWN_MOON"
+        case .efst_star_burst: "EFST_STAR_BURST"
+        case .efst_sky_enchant: "EFST_SKY_ENCHANT"
+        case .efst_shadow_clock: "EFST_SHADOW_CLOCK"
+        case .efst_shinkirou_call: "EFST_SHINKIROU_CALL"
+        case .efst_nightmare: "EFST_NIGHTMARE"
+        case .efst_noodle_fes_1: "EFST_NOODLE_FES_1"
+        case .efst_noodle_fes_2: "EFST_NOODLE_FES_2"
+        case .efst_noodle_fes_3: "EFST_NOODLE_FES_3"
+        case .efst_noodle_fes_4: "EFST_NOODLE_FES_4"
+        case .efst_noodle_fes_5: "EFST_NOODLE_FES_5"
+        case .efst_rush_quake1: "EFST_RUSH_QUAKE1"
+        case .efst_rush_quake2: "EFST_RUSH_QUAKE2"
+        case .efst_sbunshin: "EFST_SBUNSHIN"
+        case .efst_mtp_w_potion_100: "EFST_MTP_W_POTION_100"
+        case .efst_change_size: "EFST_CHANGE_SIZE"
+        case .efst_change_size_monster: "EFST_CHANGE_SIZE_MONSTER"
+        case .efst_show_effect1: "EFST_SHOW_EFFECT1"
+        case .efst_show_effect2: "EFST_SHOW_EFFECT2"
+        case .efst_show_effect3: "EFST_SHOW_EFFECT3"
+        case .efst_vr_speed: "EFST_VR_SPEED"
+        case .efst_vr_aspd: "EFST_VR_ASPD"
+        case .efst_vr_mhp: "EFST_VR_MHP"
+        case .efst_vr_msp: "EFST_VR_MSP"
+        case .efst_vr_hit: "EFST_VR_HIT"
+        case .efst_vr_def: "EFST_VR_DEF"
+        case .efst_vr_mdef: "EFST_VR_MDEF"
+        case .efst_vr_book001: "EFST_VR_BOOK001"
+        case .efst_vr_book002: "EFST_VR_BOOK002"
+        case .efst_vr_book003: "EFST_VR_BOOK003"
+        case .efst_vr_book004: "EFST_VR_BOOK004"
+        case .efst_reuse_limit_vr_book: "EFST_REUSE_LIMIT_VR_BOOK"
+        case .efst_vr_book005: "EFST_VR_BOOK005"
+        case .efst_vr_book006: "EFST_VR_BOOK006"
+        case .efst_vr_book007: "EFST_VR_BOOK007"
+        case .efst_vr_book008: "EFST_VR_BOOK008"
+        case .efst_vr_book009: "EFST_VR_BOOK009"
+        case .efst_all_t_stat: "EFST_ALL_T_STAT"
+        case .efst_p_atk_plus: "EFST_P_ATK_PLUS"
+        case .efst_s_matk_plus: "EFST_S_MATK_PLUS"
+        case .efst_c_rate_plus: "EFST_C_RATE_PLUS"
+        case .efst_resist_plus: "EFST_RESIST_PLUS"
+        case .efst_pvp_dun_buff: "EFST_PVP_DUN_BUFF"
+        case .efst_target_marker: "EFST_TARGET_MARKER"
+        case .efst_block_seal: "EFST_BLOCK_SEAL"
+        case .efst_frost_storm: "EFST_FROST_STORM"
+        case .efst_groggy: "EFST_GROGGY"
+        case .efst_warm_shield: "EFST_WARM_SHIELD"
+        case .efst_contents_1: "EFST_CONTENTS_1"
+        case .efst_contents_2: "EFST_CONTENTS_2"
+        case .efst_contents_3: "EFST_CONTENTS_3"
+        case .efst_contents_4: "EFST_CONTENTS_4"
+        case .efst_contents_5: "EFST_CONTENTS_5"
+        case .efst_contents_6: "EFST_CONTENTS_6"
+        case .efst_contents_7: "EFST_CONTENTS_7"
+        case .efst_contents_8: "EFST_CONTENTS_8"
+        case .efst_contents_9: "EFST_CONTENTS_9"
+        case .efst_contents_10: "EFST_CONTENTS_10"
+        case .efst_contents_11: "EFST_CONTENTS_11"
+        case .efst_contents_12: "EFST_CONTENTS_12"
+        case .efst_contents_13: "EFST_CONTENTS_13"
+        case .efst_contents_14: "EFST_CONTENTS_14"
+        case .efst_contents_15: "EFST_CONTENTS_15"
+        case .efst_contents_16: "EFST_CONTENTS_16"
+        case .efst_contents_17: "EFST_CONTENTS_17"
+        case .efst_contents_18: "EFST_CONTENTS_18"
+        case .efst_contents_19: "EFST_CONTENTS_19"
+        case .efst_contents_20: "EFST_CONTENTS_20"
+        case .efst_contents_21: "EFST_CONTENTS_21"
+        case .efst_contents_22: "EFST_CONTENTS_22"
+        case .efst_contents_23: "EFST_CONTENTS_23"
+        case .efst_contents_24: "EFST_CONTENTS_24"
+        case .efst_contents_25: "EFST_CONTENTS_25"
+        case .efst_c_buff_1: "EFST_C_BUFF_1"
+        case .efst_c_buff_2: "EFST_C_BUFF_2"
+        case .efst_chasing: "EFST_CHASING"
+        case .efst_mystery_powder: "EFST_MYSTERY_POWDER"
+        case .efst_fire_charm_power: "EFST_FIRE_CHARM_POWER"
+        case .efst_water_charm_power: "EFST_WATER_CHARM_POWER"
+        case .efst_wind_charm_power: "EFST_WIND_CHARM_POWER"
+        case .efst_ground_charm_power: "EFST_GROUND_CHARM_POWER"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "EFST_BLANK": self = .efst_blank
@@ -5799,10 +4350,26 @@ extension OfficialStatusChangeID: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension OfficialStatusChangeID: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension OfficialStatusChangeID: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)

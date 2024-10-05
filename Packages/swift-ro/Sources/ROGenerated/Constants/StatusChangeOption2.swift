@@ -6,51 +6,35 @@
 //
 
 /// Converted from `e_sc_opt2` in `map/status.hpp`.
-public enum StatusChangeOption2: CaseIterable, RawRepresentable, Sendable {
-    case none
-    case poison
-    case curse
-    case silence
-    case signumcrucis
-    case blind
-    case angelus
-    case bleeding
-    case dpoison
-    case fear
-
-    public var rawValue: Int {
-        switch self {
-        case .none: 0x0
-        case .poison: 0x1
-        case .curse: 0x2
-        case .silence: 0x4
-        case .signumcrucis: 0x8
-        case .blind: 0x10
-        case .angelus: 0x20
-        case .bleeding: 0x40
-        case .dpoison: 0x80
-        case .fear: 0x100
-        }
-    }
-
-    public init?(rawValue: Int) {
-        switch rawValue {
-        case 0x0: self = .none
-        case 0x1: self = .poison
-        case 0x2: self = .curse
-        case 0x4: self = .silence
-        case 0x8: self = .signumcrucis
-        case 0x10: self = .blind
-        case 0x20: self = .angelus
-        case 0x40: self = .bleeding
-        case 0x80: self = .dpoison
-        case 0x100: self = .fear
-        default: return nil
-        }
-    }
+public enum StatusChangeOption2: Int, CaseIterable, Sendable {
+    case none = 0x0
+    case poison = 0x1
+    case curse = 0x2
+    case silence = 0x4
+    case signumcrucis = 0x8
+    case blind = 0x10
+    case angelus = 0x20
+    case bleeding = 0x40
+    case dpoison = 0x80
+    case fear = 0x100
 }
 
-extension StatusChangeOption2: CodingKey, CodingKeyRepresentable, Decodable {
+extension StatusChangeOption2: CodingKey {
+    public var stringValue: String {
+        switch self {
+        case .none: "NONE"
+        case .poison: "POISON"
+        case .curse: "CURSE"
+        case .silence: "SILENCE"
+        case .signumcrucis: "SIGNUMCRUCIS"
+        case .blind: "BLIND"
+        case .angelus: "ANGELUS"
+        case .bleeding: "BLEEDING"
+        case .dpoison: "DPOISON"
+        case .fear: "FEAR"
+        }
+    }
+
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
         case "NONE": self = .none
@@ -67,10 +51,26 @@ extension StatusChangeOption2: CodingKey, CodingKeyRepresentable, Decodable {
         }
     }
 
+    public var intValue: Int? {
+        rawValue
+    }
+
+    public init?(intValue: Int) {
+        self.init(rawValue: intValue)
+    }
+}
+
+extension StatusChangeOption2: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        self
+    }
+
     public init?<T>(codingKey: T) where T: CodingKey {
         self.init(stringValue: codingKey.stringValue)
     }
+}
 
+extension StatusChangeOption2: Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)
