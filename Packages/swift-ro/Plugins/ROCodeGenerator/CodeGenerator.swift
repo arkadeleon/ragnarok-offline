@@ -1,5 +1,5 @@
 //
-//  Generator.swift
+//  CodeGenerator.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/8/21.
@@ -9,7 +9,7 @@ import Foundation
 import PackagePlugin
 
 @main
-struct Generator: CommandPlugin {
+struct CodeGenerator: CommandPlugin {
     func performCommand(context: PluginContext, arguments: [String]) async throws {
         let url = context.package.directoryURL.appending(path: "Sources/ROGenerated")
         try FileManager.default.removeItem(at: url)

@@ -170,9 +170,9 @@ let package = Package(
                 .process("Water/WaterShaders.metal"),
             ]),
         .plugin(
-            name: "ROGenerator",
+            name: "ROCodeGenerator",
             capability: .command(
-                intent: .custom(verb: "generate", description: ""),
+                intent: .custom(verb: "generate-code", description: ""),
                 permissions: [
                     .writeToPackageDirectory(reason: ""),
                 ]
