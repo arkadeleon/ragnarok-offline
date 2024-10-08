@@ -58,7 +58,7 @@ public struct Item: Decodable, Equatable, Hashable, Identifiable, Sendable {
     public var gender: Sex
 
     /// Equipment's placement. (Default: None)
-    public var locations: Set<ItemLocation>
+    public var locations: EquipPositions
 
     /// Weapon level. (Default: 1 for Weapons)
     public var weaponLevel: Int
@@ -187,7 +187,7 @@ public struct Item: Decodable, Equatable, Hashable, Identifiable, Sendable {
         self.jobs = try container.decodeIfPresent([String : Bool].self, forKey: .jobs).map(Set<ItemJob>.init) ?? .all
         self.classes = try container.decodeIfPresent(ItemClasses.self, forKey: .classes) ?? .all
         self.gender = try container.decodeIfPresent(Sex.self, forKey: .gender) ?? .both
-        self.locations = try container.decodeIfPresent([String : Bool].self, forKey: .locations).map(Set<ItemLocation>.init) ?? []
+        self.locations = try container.decodeIfPresent(EquipPositions.self, forKey: .locations) ?? []
         self.weaponLevel = try container.decodeIfPresent(Int.self, forKey: .weaponLevel) ?? 1
         self.armorLevel = try container.decodeIfPresent(Int.self, forKey: .armorLevel) ?? 1
         self.equipLevelMin = try container.decodeIfPresent(Int.self, forKey: .equipLevelMin) ?? 0

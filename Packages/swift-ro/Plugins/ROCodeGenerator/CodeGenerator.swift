@@ -131,8 +131,13 @@ struct CodeGenerator: CommandPlugin {
 
     // MARK: - Generate Enums
 
-    struct Case {
+    struct InputConstant {
         var name: String
+        var value: Int
+    }
+
+    struct OutputConstant {
+        var inputName: String
         var outputName: String
         var intValue: Int
         var stringValues: [String]
@@ -173,18 +178,37 @@ struct CodeGenerator: CommandPlugin {
             asts[configuration.source] = ast
         }
 
-        var cases: [Case] = []
-
         let enumDecl = ast.findEnumDecl(named: configuration.type)!
         let enumConstantDecls = enumDecl.findEnumConstantDecls()
 
+        var inputConstants: [InputConstant] = []
         for enumConstantDecl in enumConstantDecls {
             var name = enumConstantDecl.name!
             if let replace = configuration.replace[name] {
                 name = replace
             }
 
-            var outputName = name
+            let value: Int? = if let value = enumConstantDecl.findConstantExpr()?.value {
+                value
+            } else if let lastValue = inputConstants.last?.value {
+                lastValue + 1
+            } else {
+                nil
+            }
+
+            let constant = InputConstant(name: name, value: value ?? 0)
+            inputConstants.append(constant)
+        }
+        for insert in configuration.insert {
+            let constant = InputConstant(name: insert.0, value: insert.1)
+            inputConstants.append(constant)
+        }
+
+        var outputConstants: [OutputConstant] = []
+        for inputConstant in inputConstants {
+            let inputName = inputConstant.name
+
+            var outputName = inputName
             if outputName.hasPrefix(configuration.prefix) {
                 outputName = String(outputName.dropFirst(configuration.prefix.count))
             }
@@ -202,16 +226,8 @@ struct CodeGenerator: CommandPlugin {
                 outputName = "_" + outputName
             }
 
-            let intValue: Int? = if let intValue = enumConstantDecl.findConstantExpr()?.value {
-                intValue
-            } else if let lastIntValue = cases.last?.intValue {
-                lastIntValue + 1
-            } else {
-                nil
-            }
-
-            var stringValues = [name]
-            if let compatible = configuration.compatible[name] {
+            var stringValues = [inputName]
+            if let compatible = configuration.compatible[inputName] {
                 stringValues.append(contentsOf: compatible)
             }
             stringValues = stringValues.map {
@@ -225,20 +241,18 @@ struct CodeGenerator: CommandPlugin {
                 return stringValue
             }
 
-            let c = Case(
-                name: name,
+            let constant = OutputConstant(
+                inputName: inputName,
                 outputName: outputName,
-                intValue: intValue ?? 0,
+                intValue: inputConstant.value,
                 stringValues: stringValues,
-                isExcluded: configuration.exclude.contains(name)
+                isExcluded: configuration.exclude.contains(inputConstant.name)
             )
-            cases.append(c)
+            outputConstants.append(constant)
         }
-
-        let outputCases = cases
-            .filter {
-                !$0.isExcluded
-            }
+        outputConstants = outputConstants.filter {
+            !$0.isExcluded
+        }
 
         var outputContents = ""
 
@@ -257,13 +271,13 @@ struct CodeGenerator: CommandPlugin {
             """
 
             if configuration.extensions.contains(.rawRepresentable) {
-                let casesContents = outputCases
+                let casesContents = outputConstants
                     .map {
                         "    case \($0.outputName)"
                     }
                     .joined(separator: "\n")
 
-                let rawValueContents = outputCases
+                let rawValueContents = outputConstants
                     .map {
                         let value = switch configuration.outputFormat {
                         case .decimal:
@@ -275,7 +289,7 @@ struct CodeGenerator: CommandPlugin {
                     }
                     .joined(separator: "\n")
 
-                let initRawValueContents = outputCases
+                let initRawValueContents = outputConstants
                     .map {
                         let value = switch configuration.outputFormat {
                         case .decimal:
@@ -309,7 +323,7 @@ struct CodeGenerator: CommandPlugin {
                 
                 """)
             } else {
-                let casesContents = outputCases
+                let casesContents = outputConstants
                     .map {
                         let value = switch configuration.outputFormat {
                         case .decimal:
@@ -330,13 +344,13 @@ struct CodeGenerator: CommandPlugin {
             }
 
             if configuration.extensions.contains(.decodable) {
-                let stringValueContents = outputCases
+                let stringValueContents = outputConstants
                     .map {
                         "        case .\($0.outputName): \"\($0.stringValues[0])\""
                     }
                     .joined(separator: "\n")
 
-                let initStringValueContents = outputCases
+                let initStringValueContents = outputConstants
                     .map {
                         let stringValues = $0.stringValues
                             .map {
@@ -410,7 +424,7 @@ struct CodeGenerator: CommandPlugin {
             
             """
 
-            let casesContents = outputCases
+            let casesContents = outputConstants
                 .map {
                     let value = "0x" + String($0.intValue, radix: 16)
                     return "    public static let \($0.outputName) = \(configuration.outputType)(rawValue: \(value))"
@@ -431,13 +445,13 @@ struct CodeGenerator: CommandPlugin {
             """)
 
             if configuration.extensions.contains(.decodable) {
-                let stringValueContents = outputCases
+                let stringValueContents = outputConstants
                     .map {
                         "        case .\($0.outputName): \"\($0.stringValues[0])\""
                     }
                     .joined(separator: "\n")
 
-                let initStringValueContents = outputCases
+                let initStringValueContents = outputConstants
                     .map {
                         let stringValues = $0.stringValues
                             .map {
@@ -503,8 +517,6 @@ struct CodeGenerator: CommandPlugin {
                 """)
             }
         }
-
-
 
         let outputDirectory = context.package.directoryURL.appending(path: "Sources/ROGenerated/Constants")
         try FileManager.default.createDirectory(at: outputDirectory, withIntermediateDirectories: true)

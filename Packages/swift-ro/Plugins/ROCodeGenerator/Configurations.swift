@@ -30,6 +30,28 @@ let configurations: [Configuration] = [
         outputFormat: .hex,
         extensions: [.decodable]
     ),
+    .optionSet(
+        source: "common/mmo.hpp",
+        type: "equip_pos",
+        prefix: "EQP_",
+        insert: [
+            ("EQP_BOTH_HAND", 0x2 | 0x20)
+        ],
+        exclude: [
+            "EQP_SHADOW_ACC_RL",
+        ],
+        replace: [
+            "EQP_HAND_R": "EQP_RIGHT_HAND",
+            "EQP_HAND_L": "EQP_LEFT_HAND",
+            "EQP_ACC_R": "EQP_RIGHT_ACCESSORY",
+            "EQP_ACC_L": "EQP_LEFT_ACCESSORY",
+            "EQP_SHADOW_ACC_R": "EQP_SHADOW_RIGHT_ACCESSORY",
+            "EQP_SHADOW_ACC_L": "EQP_SHADOW_LEFT_ACCESSORY",
+            "EQP_ACC_RL": "EQP_BOTH_ACCESSORY",
+        ],
+        outputType: "EquipPositions",
+        extensions: [.decodable]
+    ),
     .cEnum(
         source: "common/mmo.hpp",
         type: "e_job",
@@ -439,6 +461,7 @@ struct Configuration {
     var type: String
     var prefix: String
     var suffix: String
+    var insert: [(String, Int)]
     var exclude: [String]
     var replace: [String : String]
     var compatible: [String : [String]]
@@ -452,6 +475,7 @@ struct Configuration {
         type: String,
         prefix: String = "",
         suffix: String = "",
+        insert: [(String, Int)] = [],
         exclude: [String] = [],
         replace: [String : String] = [:],
         compatible: [String : [String]] = [:],
@@ -466,6 +490,7 @@ struct Configuration {
             type: type,
             prefix: prefix,
             suffix: suffix,
+            insert: insert,
             exclude: exclude,
             replace: replace,
             compatible: compatible,
@@ -481,6 +506,7 @@ struct Configuration {
         type: String,
         prefix: String = "",
         suffix: String = "",
+        insert: [(String, Int)] = [],
         exclude: [String] = [],
         replace: [String : String] = [:],
         compatible: [String : [String]] = [:],
@@ -494,6 +520,7 @@ struct Configuration {
             type: type,
             prefix: prefix,
             suffix: suffix,
+            insert: insert,
             exclude: exclude,
             replace: replace,
             compatible: compatible,

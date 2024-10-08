@@ -195,8 +195,8 @@ struct ItemInfoView: View {
     }
 
     private var locations: String {
-        item.locations
-            .sorted(using: KeyPathComparator(\.intValue))
+        OptionSetSequence(item.locations)
+            .sorted(using: KeyPathComparator(\.rawValue))
             .map { "- \($0.stringValue)" }
             .joined(separator: "\n")
     }
