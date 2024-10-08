@@ -1,11 +1,11 @@
 //
-//  Configuration.swift
+//  ConstantConversion.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/9/27.
 //
 
-let configurations: [Configuration] = [
+let allConstantConversions: [ConstantConversion] = [
     // MARK: - common/mmo.hpp
     .cEnum(
         source: "common/mmo.hpp",
@@ -440,7 +440,7 @@ let configurations: [Configuration] = [
     ),
 ]
 
-struct Configuration {
+struct ConstantConversion {
     enum Kind {
         case cEnum
         case optionSet
@@ -483,8 +483,8 @@ struct Configuration {
         outputPrefix: String? = nil,
         outputFormat: OutputFormat = .decimal,
         extensions: [Extension] = []
-    ) -> Configuration {
-        Configuration(
+    ) -> ConstantConversion {
+        ConstantConversion(
             kind: .cEnum,
             source: source,
             type: type,
@@ -513,8 +513,8 @@ struct Configuration {
         outputType: String,
         outputPrefix: String? = nil,
         extensions: [Extension] = []
-    ) -> Configuration {
-        Configuration(
+    ) -> ConstantConversion {
+        ConstantConversion(
             kind: .optionSet,
             source: source,
             type: type,
