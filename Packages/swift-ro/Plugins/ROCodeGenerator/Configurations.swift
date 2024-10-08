@@ -7,7 +7,7 @@
 
 let configurations: [Configuration] = [
     // MARK: - common/mmo.hpp
-    .enum(
+    .cEnum(
         source: "common/mmo.hpp",
         type: "item_types",
         prefix: "IT_",
@@ -19,16 +19,18 @@ let configurations: [Configuration] = [
         outputType: "ItemType",
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "common/mmo.hpp",
         type: "e_mode",
         prefix: "MD_",
-        exclude: ["MD_NONE"],
+        exclude: [
+            "MD_NONE",
+        ],
         outputType: "MonsterMode",
         outputFormat: .hex,
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "common/mmo.hpp",
         type: "e_job",
         prefix: "JOB_",
@@ -42,16 +44,18 @@ let configurations: [Configuration] = [
         outputType: "JobID",
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "common/mmo.hpp",
         type: "e_sex",
         prefix: "SEX_",
-        exclude: ["SEX_SERVER"],
+        exclude: [
+            "SEX_SERVER",
+        ],
         outputType: "Sex",
         extensions: [.decodable]
     ),
     // MARK: - map/battle.hpp
-    .enum(
+    .cEnum(
         source: "map/battle.hpp",
         type: "e_battle_flag",
         prefix: "BF_",
@@ -64,7 +68,7 @@ let configurations: [Configuration] = [
         outputFormat: .hex,
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/battle.hpp",
         type: "e_battle_check_target",
         prefix: "BCT_",
@@ -72,12 +76,26 @@ let configurations: [Configuration] = [
         outputFormat: .hex,
         extensions: [.rawRepresentable, .decodable]
     ),
+    // MARK: - map/itemdb.hpp
+    .optionSet(
+        source: "map/itemdb.hpp",
+        type: "e_item_job",
+        prefix: "ITEMJ_",
+        exclude: [
+            "ITEMJ_NONE",
+            "ITEMJ_MAX",
+        ],
+        outputType: "ItemClasses",
+        extensions: [.decodable]
+    ),
     // MARK: - map/map.hpp
-    .enum(
+    .cEnum(
         source: "map/map.hpp",
         type: "e_mapid",
         prefix: "MAPID_",
-        exclude: ["MAPID_ALL"],
+        exclude: [
+            "MAPID_ALL",
+        ],
         compatible: [
             "MAPID_SUPER_NOVICE": ["MAPID_SUPERNOVICE"],
         ],
@@ -87,7 +105,7 @@ let configurations: [Configuration] = [
     ),
     // TODO: bl_type
     // TODO: npc_subtype
-    .enum(
+    .cEnum(
         source: "map/map.hpp",
         type: "e_race",
         prefix: "RC_",
@@ -101,7 +119,7 @@ let configurations: [Configuration] = [
         outputType: "Race",
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/map.hpp",
         type: "e_race2",
         prefix: "RC2_",
@@ -112,7 +130,7 @@ let configurations: [Configuration] = [
         outputType: "Race2",
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/map.hpp",
         type: "e_element",
         prefix: "ELE_",
@@ -124,7 +142,7 @@ let configurations: [Configuration] = [
         outputType: "Element",
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/map.hpp",
         type: "_sp",
         prefix: "SP_",
@@ -144,7 +162,7 @@ let configurations: [Configuration] = [
         outputType: "StatusProperty"
     ),
     // MARK: - map/mob.hpp
-    .enum(
+    .cEnum(
         source: "map/mob.hpp",
         type: "e_size",
         prefix: "SZ_",
@@ -158,7 +176,7 @@ let configurations: [Configuration] = [
         outputType: "Size",
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/mob.hpp",
         type: "e_aegis_monstertype",
         prefix: "MONSTER_TYPE_",
@@ -167,7 +185,7 @@ let configurations: [Configuration] = [
         outputFormat: .hex,
         extensions: [.rawRepresentable, .decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/mob.hpp",
         type: "e_aegis_monsterclass",
         prefix: "CLASS_",
@@ -180,14 +198,17 @@ let configurations: [Configuration] = [
         extensions: [.decodable]
     ),
     // MARK: - map/pc.hpp
-    .enum(
+    .cEnum(
         source: "map/pc.hpp",
         type: "e_params",
         prefix: "PARAM_",
+        exclude: [
+            "PARAM_MAX",
+        ],
         outputType: "Parameter",
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/pc.hpp",
         type: "weapon_type",
         prefix: "W_",
@@ -205,7 +226,7 @@ let configurations: [Configuration] = [
         outputPrefix: "w_",
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/pc.hpp",
         type: "e_ammo_type",
         prefix: "AMMO_",
@@ -216,24 +237,28 @@ let configurations: [Configuration] = [
         outputType: "AmmoType",
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/pc.hpp",
         type: "e_card_type",
         prefix: "CARD_",
-        exclude: ["MAX_CARD_TYPE"],
+        exclude: [
+            "MAX_CARD_TYPE",
+        ],
         outputType: "CardType",
         extensions: [.decodable]
     ),
     // MARK: - map/skill.hpp
-    .enum(
+    .cEnum(
         source: "map/skill.hpp",
         type: "e_skill_nk",
         prefix: "NK_",
-        exclude: ["NK_MAX"],
+        exclude: [
+            "NK_MAX",
+        ],
         outputType: "SkillDamageFlag",
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/skill.hpp",
         type: "e_skill_inf",
         prefix: "INF_",
@@ -242,15 +267,17 @@ let configurations: [Configuration] = [
         outputFormat: .hex,
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/skill.hpp",
         type: "e_skill_inf2",
         prefix: "INF2_",
-        exclude: ["INF2_MAX"],
+        exclude: [
+            "INF2_MAX",
+        ],
         outputType: "SkillInfoFlag2",
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/skill.hpp",
         type: "e_skill_require",
         prefix: "SKILL_REQ_",
@@ -258,7 +285,7 @@ let configurations: [Configuration] = [
         outputFormat: .hex,
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/skill.hpp",
         type: "e_skill_nonear_npc",
         prefix: "SKILL_NONEAR_",
@@ -266,7 +293,7 @@ let configurations: [Configuration] = [
         outputFormat: .hex,
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/skill.hpp",
         type: "e_skill_cast_flags",
         prefix: "SKILL_CAST_",
@@ -274,7 +301,7 @@ let configurations: [Configuration] = [
         outputFormat: .hex,
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/skill.hpp",
         type: "e_skill_copyable_option",
         prefix: "SKILL_COPY_",
@@ -282,7 +309,7 @@ let configurations: [Configuration] = [
         outputFormat: .hex,
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/skill.hpp",
         type: "e_skill_unit_flag",
         prefix: "UF_",
@@ -294,7 +321,7 @@ let configurations: [Configuration] = [
         extensions: [.decodable]
     ),
     // MARK: - map/status.hpp
-    .enum(
+    .cEnum(
         source: "map/status.hpp",
         type: "sc_type",
         prefix: "SC_",
@@ -307,7 +334,7 @@ let configurations: [Configuration] = [
         outputType: "StatusChangeID",
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/status.hpp",
         type: "efst_type",
         exclude: [
@@ -316,7 +343,7 @@ let configurations: [Configuration] = [
         outputType: "OfficialStatusChangeID",
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/status.hpp",
         type: "e_sc_opt1",
         prefix: "OPT1_",
@@ -326,7 +353,7 @@ let configurations: [Configuration] = [
         outputType: "StatusChangeOption1",
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/status.hpp",
         type: "e_sc_opt2",
         prefix: "OPT2_",
@@ -337,7 +364,7 @@ let configurations: [Configuration] = [
         outputFormat: .hex,
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/status.hpp",
         type: "e_sc_opt3",
         prefix: "OPT3_",
@@ -348,7 +375,7 @@ let configurations: [Configuration] = [
         outputFormat: .hex,
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/status.hpp",
         type: "e_option",
         prefix: "OPTION_",
@@ -359,7 +386,7 @@ let configurations: [Configuration] = [
         outputFormat: .hex,
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/status.hpp",
         type: "e_scs_flag",
         prefix: "SCS_",
@@ -369,7 +396,7 @@ let configurations: [Configuration] = [
         outputType: "StatusChangeStateFlag",
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/status.hpp",
         type: "e_scb_flag",
         prefix: "SCB_",
@@ -379,7 +406,7 @@ let configurations: [Configuration] = [
         outputType: "StatusChangeBlockFlag",
         extensions: [.decodable]
     ),
-    .enum(
+    .cEnum(
         source: "map/status.hpp",
         type: "e_status_change_flag",
         prefix: "SCF_",
@@ -392,6 +419,11 @@ let configurations: [Configuration] = [
 ]
 
 struct Configuration {
+    enum Kind {
+        case cEnum
+        case optionSet
+    }
+
     enum OutputFormat {
         case decimal
         case hex
@@ -402,8 +434,8 @@ struct Configuration {
         case decodable
     }
 
+    var kind: Kind
     var source: String
-    var kind: String
     var type: String
     var prefix: String
     var suffix: String
@@ -415,7 +447,7 @@ struct Configuration {
     var outputFormat: OutputFormat
     var extensions: [Extension]
 
-    static func `enum`(
+    static func cEnum(
         source: String,
         type: String,
         prefix: String = "",
@@ -429,8 +461,8 @@ struct Configuration {
         extensions: [Extension] = []
     ) -> Configuration {
         Configuration(
+            kind: .cEnum,
             source: source,
-            kind: "enum",
             type: type,
             prefix: prefix,
             suffix: suffix,
@@ -440,6 +472,34 @@ struct Configuration {
             outputType: outputType,
             outputPrefix: outputPrefix,
             outputFormat: outputFormat,
+            extensions: extensions
+        )
+    }
+
+    static func optionSet(
+        source: String,
+        type: String,
+        prefix: String = "",
+        suffix: String = "",
+        exclude: [String] = [],
+        replace: [String : String] = [:],
+        compatible: [String : [String]] = [:],
+        outputType: String,
+        outputPrefix: String? = nil,
+        extensions: [Extension] = []
+    ) -> Configuration {
+        Configuration(
+            kind: .optionSet,
+            source: source,
+            type: type,
+            prefix: prefix,
+            suffix: suffix,
+            exclude: exclude,
+            replace: replace,
+            compatible: compatible,
+            outputType: outputType,
+            outputPrefix: outputPrefix,
+            outputFormat: .hex,
             extensions: extensions
         )
     }

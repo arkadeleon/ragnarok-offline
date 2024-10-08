@@ -9,6 +9,7 @@ import SwiftUI
 import rAthenaCommon
 import ROClientResources
 import RODatabase
+import ROGenerated
 import ROLocalizations
 
 struct ItemInfoView: View {
@@ -187,8 +188,8 @@ struct ItemInfoView: View {
     }
 
     private var classes: String {
-        item.classes
-            .sorted(using: KeyPathComparator(\.intValue))
+        OptionSetSequence(item.classes)
+            .sorted(using: KeyPathComparator(\.rawValue))
             .map { "- \($0.stringValue)" }
             .joined(separator: "\n")
     }

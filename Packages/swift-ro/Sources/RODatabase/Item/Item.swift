@@ -52,7 +52,7 @@ public struct Item: Decodable, Equatable, Hashable, Identifiable, Sendable {
     public var jobs: Set<ItemJob>
 
     /// Upper class types that can equip the item. (Map default is 'All: true')
-    public var classes: Set<ItemClass>
+    public var classes: ItemClasses
 
     /// Gender that can equip the item. (Default: Both)
     public var gender: Sex
@@ -185,7 +185,7 @@ public struct Item: Decodable, Equatable, Hashable, Identifiable, Sendable {
         self.range = try container.decodeIfPresent(Int.self, forKey: .range) ?? 0
         self.slots = try container.decodeIfPresent(Int.self, forKey: .slots) ?? 0
         self.jobs = try container.decodeIfPresent([String : Bool].self, forKey: .jobs).map(Set<ItemJob>.init) ?? .all
-        self.classes = try container.decodeIfPresent([String : Bool].self, forKey: .classes).map(Set<ItemClass>.init) ?? .all
+        self.classes = try container.decodeIfPresent(ItemClasses.self, forKey: .classes) ?? .all
         self.gender = try container.decodeIfPresent(Sex.self, forKey: .gender) ?? .both
         self.locations = try container.decodeIfPresent([String : Bool].self, forKey: .locations).map(Set<ItemLocation>.init) ?? []
         self.weaponLevel = try container.decodeIfPresent(Int.self, forKey: .weaponLevel) ?? 1
