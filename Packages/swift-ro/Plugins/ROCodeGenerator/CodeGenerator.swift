@@ -17,6 +17,7 @@ struct CodeGenerator: CommandPlugin {
 
         try generatePackets(context: context)
         try convertConstants(context: context)
+//        try generatePacketDatabase(context: context)
     }
 
     // MARK: - Generate Packet Database
@@ -135,6 +136,37 @@ struct CodeGenerator: CommandPlugin {
         let converter = ConstantConverter()
         for conversion in allConstantConversions {
             try converter.convert(context: context, conversion: conversion)
+        }
+    }
+
+    // MARK: - Generate Packet Database
+
+    func generatePacketDatabase(context: PluginContext) throws {
+        let dumper = ASTDumper()
+        let ast = try dumper.dump(context: context, path: "map/clif.cpp")
+
+        let readdb = ast.findFunctionDecl(named: "packetdb_readdb")!
+        let addpackets = readdb.findCallExprs(fn: "packetdb_addpacket")
+        for addpacket in addpackets {
+            let packetType = addpacket.inner![1].findNode { node in
+                node.kind == "IntegerLiteral"
+            }
+            print(packetType?.value)
+
+            let packetLength = addpacket.inner![2].findNode { node in
+                node.kind == "IntegerLiteral"
+            }
+            print(packetLength?.value)
+
+            let functionName = addpacket.inner![3].findNode { node in
+                node.referencedDecl?.kind == "FunctionDecl"
+            }
+            print(functionName?.referencedDecl?.name)
+
+            let offsets = addpacket.inner![4...].map { node in
+                node.findNode(where: { $0.kind == "IntegerLiteral" })!.value!
+            }
+            print(offsets)
         }
     }
 }

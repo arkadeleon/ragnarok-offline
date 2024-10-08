@@ -6,11 +6,18 @@
 //
 
 struct ASTNode {
+    struct ReferencedDecl: Decodable {
+        var id: String?
+        var kind: String?
+        var name: String?
+    }
+
     var id: String?
     var kind: String?
     var isReferenced: Bool?
     var name: String?
     var value: Int?
+    var referencedDecl: ReferencedDecl?
     var inner: [ASTNode]?
 
     func findEnumDecl(named name: String) -> ASTNode? {
@@ -28,6 +35,24 @@ struct ASTNode {
     func findConstantExpr() -> ASTNode? {
         findNode { node in
             node.kind == "ConstantExpr"
+        }
+    }
+
+    func findFunctionDecl(named name: String) -> ASTNode? {
+        findNode { node in
+            node.kind == "FunctionDecl" && node.name == name
+        }
+    }
+
+    func findCallExprs(fn: String) -> [ASTNode] {
+        findNodes { node in
+            guard node.kind == "CallExpr" else { return false }
+            guard let first = node.inner?.first else { return false }
+
+            let declRefExpr = first.findNode { node in
+                node.kind == "DeclRefExpr" && node.referencedDecl?.name == fn
+            }
+            return declRefExpr != nil
         }
     }
 
@@ -72,6 +97,7 @@ extension ASTNode: Decodable {
         case isReferenced
         case name
         case value
+        case referencedDecl
         case inner
     }
 
@@ -88,6 +114,7 @@ extension ASTNode: Decodable {
         } else {
             nil
         }
+        self.referencedDecl = try container.decodeIfPresent(ReferencedDecl.self, forKey: .referencedDecl)
         self.inner = try container.decodeIfPresent([ASTNode].self, forKey: .inner)
     }
 }
