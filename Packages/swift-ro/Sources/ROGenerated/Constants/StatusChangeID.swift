@@ -941,6 +941,9 @@ public enum StatusChangeID: Int, CaseIterable, Sendable {
     case powerup = 951
     case agiup = 952
     case protection = 953
+    case bath_foam_a = 954
+    case bath_foam_b = 955
+    case bath_foam_c = 956
 }
 
 extension StatusChangeID: CodingKey {
@@ -1880,6 +1883,9 @@ extension StatusChangeID: CodingKey {
         case .powerup: "POWERUP"
         case .agiup: "AGIUP"
         case .protection: "PROTECTION"
+        case .bath_foam_a: "BATH_FOAM_A"
+        case .bath_foam_b: "BATH_FOAM_B"
+        case .bath_foam_c: "BATH_FOAM_C"
         }
     }
 
@@ -2819,6 +2825,9 @@ extension StatusChangeID: CodingKey {
         case "POWERUP": self = .powerup
         case "AGIUP": self = .agiup
         case "PROTECTION": self = .protection
+        case "BATH_FOAM_A": self = .bath_foam_a
+        case "BATH_FOAM_B": self = .bath_foam_b
+        case "BATH_FOAM_C": self = .bath_foam_c
         default: return nil
         }
     }
