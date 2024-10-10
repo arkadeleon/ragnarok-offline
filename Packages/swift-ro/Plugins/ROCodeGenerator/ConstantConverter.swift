@@ -44,7 +44,7 @@ class ConstantConverter {
                 name = replace
             }
 
-            let value: Int? = if let value = enumConstantDecl.findConstantExpr()?.value {
+            let value: Int? = if let value = enumConstantDecl.findConstantExpr()?.value?.intValue {
                 value
             } else if let lastValue = inputConstants.last?.value {
                 lastValue + 1

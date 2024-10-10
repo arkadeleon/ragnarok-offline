@@ -17,7 +17,9 @@ struct CodeGenerator: CommandPlugin {
 
         try generatePackets(context: context)
         try convertConstants(context: context)
+//        try generatePacketHeaders(context: context)
 //        try generatePacketDatabase(context: context)
+
     }
 
     // MARK: - Generate Packet Database
@@ -139,6 +141,33 @@ struct CodeGenerator: CommandPlugin {
         }
     }
 
+    // MARK: - Generate Packet Headers
+
+    func generatePacketHeaders(context: PluginContext) throws {
+        let dumper = ASTDumper()
+        let ast = try dumper.dump(context: context, path: "common/packets.hpp")
+
+        let headerNodes = ast.findNodes { node in
+            node.kind == "VarDecl" && node.name?.hasPrefix("HEADER_") == true
+        }
+        for node in headerNodes {
+            let name = node.name!
+            let value = node.findNode(where: { $0.kind == "IntegerLiteral" })!.value!.intValue!
+            print(name + " = 0x" + String(value, radix: 16))
+        }
+
+        let structNodes = ast.findNodes { node in
+            node.kind == "CXXRecordDecl" && node.name?.hasPrefix("PACKET_") == true && node.inner != nil
+        }
+        for node in structNodes {
+            let fields = node.findNodes { node in
+                node.kind == "FieldDecl"
+            }
+            let fs = fields.map({ $0.name! + ": " + $0.type!.qualType! }).joined(separator: ", ")
+            print(node.name! + " { " + fs + " }" )
+        }
+    }
+
     // MARK: - Generate Packet Database
 
     func generatePacketDatabase(context: PluginContext) throws {
@@ -151,12 +180,12 @@ struct CodeGenerator: CommandPlugin {
             let packetType = addpacket.inner![1].findNode { node in
                 node.kind == "IntegerLiteral"
             }
-            print(packetType?.value)
+            print(packetType?.value?.intValue)
 
             let packetLength = addpacket.inner![2].findNode { node in
                 node.kind == "IntegerLiteral"
             }
-            print(packetLength?.value)
+            print(packetLength?.value?.intValue)
 
             let functionName = addpacket.inner![3].findNode { node in
                 node.referencedDecl?.kind == "FunctionDecl"
@@ -164,7 +193,7 @@ struct CodeGenerator: CommandPlugin {
             print(functionName?.referencedDecl?.name)
 
             let offsets = addpacket.inner![4...].map { node in
-                node.findNode(where: { $0.kind == "IntegerLiteral" })!.value!
+                node.findNode(where: { $0.kind == "IntegerLiteral" })!.value!.intValue!
             }
             print(offsets)
         }

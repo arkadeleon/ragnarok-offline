@@ -5,7 +5,24 @@
 //  Created by Leon Li on 2024/9/29.
 //
 
-struct ASTNode {
+struct ASTNode: Decodable {
+    struct NodeType: Decodable {
+        var qualType: String?
+    }
+
+    struct NodeValue: Decodable {
+        var intValue: Int?
+
+        init(from decoder: any Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            if let intValue = try? container.decode(Int.self) {
+                self.intValue = intValue
+            } else if let stringValue = try? container.decode(String.self) {
+                self.intValue = Int(stringValue)
+            }
+        }
+    }
+
     struct ReferencedDecl: Decodable {
         var id: String?
         var kind: String?
@@ -16,8 +33,9 @@ struct ASTNode {
     var kind: String?
     var isReferenced: Bool?
     var name: String?
-    var value: Int?
-    var referencedDecl: ReferencedDecl?
+    var type: ASTNode.NodeType?
+    var value: ASTNode.NodeValue?
+    var referencedDecl: ASTNode.ReferencedDecl?
     var inner: [ASTNode]?
 
     func findEnumDecl(named name: String) -> ASTNode? {
@@ -87,34 +105,5 @@ struct ASTNode {
         }
 
         return nodes
-    }
-}
-
-extension ASTNode: Decodable {
-    enum CodingKeys: CodingKey {
-        case id
-        case kind
-        case isReferenced
-        case name
-        case value
-        case referencedDecl
-        case inner
-    }
-
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decodeIfPresent(String.self, forKey: .id)
-        self.kind = try container.decodeIfPresent(String.self, forKey: .kind)
-        self.isReferenced = try container.decodeIfPresent(Bool.self, forKey: .isReferenced)
-        self.name = try container.decodeIfPresent(String.self, forKey: .name)
-        self.value = if let intValue = try? container.decodeIfPresent(Int.self, forKey: .value) {
-            intValue
-        } else if let stringValue = try? container.decodeIfPresent(String.self, forKey: .value) {
-            Int(stringValue)
-        } else {
-            nil
-        }
-        self.referencedDecl = try container.decodeIfPresent(ReferencedDecl.self, forKey: .referencedDecl)
-        self.inner = try container.decodeIfPresent([ASTNode].self, forKey: .inner)
     }
 }
