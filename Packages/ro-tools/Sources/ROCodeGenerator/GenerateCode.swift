@@ -1,32 +1,36 @@
 //
-//  CodeGenerator.swift
-//  RagnarokOffline
+//  GenerateCode.swift
+//  ROCodeGenerator
 //
-//  Created by Leon Li on 2024/8/21.
+//  Created by Leon Li on 2024/10/10.
 //
 
+import ArgumentParser
 import Foundation
-import PackagePlugin
 
 @main
-struct CodeGenerator: CommandPlugin {
-    func performCommand(context: PluginContext, arguments: [String]) async throws {
-        let url = context.package.directoryURL.appending(path: "Sources/ROGenerated")
-        try FileManager.default.removeItem(at: url)
-        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+struct GenerateCode: ParsableCommand {
+    @Argument(transform: { URL(filePath: $0, directoryHint: .isDirectory) })
+    var rathenaDirectory: URL
 
-        try generatePackets(context: context)
-        try convertConstants(context: context)
-//        try generatePacketHeaders(context: context)
-//        try generatePacketDatabase(context: context)
+    @Argument(transform: { URL(filePath: $0, directoryHint: .isDirectory) })
+    var generatedDirectory: URL
 
+    mutating func run() throws {
+        try? FileManager.default.removeItem(at: generatedDirectory)
+        try? FileManager.default.createDirectory(at: generatedDirectory, withIntermediateDirectories: true)
+
+        try generatePackets()
+        try convertConstants()
+//        try generatePacketHeaders()
+//        try generatePacketDatabase()
     }
 
     // MARK: - Generate Packet Database
 
-    private func generatePackets(context: PluginContext) throws {
-        let packetdbURL = context.package.directoryURL.appending(path: "../swift-rathena/src/map/clif_packetdb.hpp")
-        let shuffleURL = context.package.directoryURL.appending(path: "../swift-rathena/src/map/clif_shuffle.hpp")
+    private func generatePackets() throws {
+        let packetdbURL = rathenaDirectory.appending(path: "src/map/clif_packetdb.hpp")
+        let shuffleURL = rathenaDirectory.appending(path: "src/map/clif_shuffle.hpp")
 
         let packetdbLines = try outputLines(for: packetdbURL)
             .map({ "    \($0)" })
@@ -46,10 +50,10 @@ struct CodeGenerator: CommandPlugin {
         }
         """
 
-        let packetdbOutputURL = context.package.directoryURL.appending(path: "Sources/ROGenerated/packets.swift")
+        let packetdbOutputURL = generatedDirectory.appending(path: "packets.swift")
         try packetdbOutputContents.write(to: packetdbOutputURL, atomically: true, encoding: .utf8)
 
-        let shuffleOutputURL = context.package.directoryURL.appending(path: "Sources/ROGenerated/packets_shuffle.swift")
+        let shuffleOutputURL = generatedDirectory.appending(path: "packets_shuffle.swift")
         try shuffleOutputContents.write(to: shuffleOutputURL, atomically: true, encoding: .utf8)
     }
 
@@ -134,18 +138,24 @@ struct CodeGenerator: CommandPlugin {
 
     // MARK: - Convert Constants
 
-    func convertConstants(context: PluginContext) throws {
-        let converter = ConstantConverter()
+    func convertConstants() throws {
+        let converter = ConstantConverter(rathenaDirectory: rathenaDirectory)
         for conversion in allConstantConversions {
-            try converter.convert(context: context, conversion: conversion)
+            let outputContents = try converter.convert(conversion: conversion)
+
+            let outputDirectory = generatedDirectory.appending(path: "Constants")
+            try FileManager.default.createDirectory(at: outputDirectory, withIntermediateDirectories: true)
+
+            let outputURL = outputDirectory.appending(path: "\(conversion.outputType).swift")
+            try outputContents.write(to: outputURL, atomically: true, encoding: .utf8)
         }
     }
 
     // MARK: - Generate Packet Headers
 
-    func generatePacketHeaders(context: PluginContext) throws {
-        let dumper = ASTDumper()
-        let ast = try dumper.dump(context: context, path: "common/packets.hpp")
+    func generatePacketHeaders() throws {
+        let dumper = ASTDumper(rathenaDirectory: rathenaDirectory)
+        let ast = try dumper.dump(path: "common/packets.hpp")
 
         let headerNodes = ast.findNodes { node in
             node.kind == "VarDecl" && node.name?.hasPrefix("HEADER_") == true
@@ -170,9 +180,9 @@ struct CodeGenerator: CommandPlugin {
 
     // MARK: - Generate Packet Database
 
-    func generatePacketDatabase(context: PluginContext) throws {
-        let dumper = ASTDumper()
-        let ast = try dumper.dump(context: context, path: "map/clif.cpp")
+    func generatePacketDatabase() throws {
+        let dumper = ASTDumper(rathenaDirectory: rathenaDirectory)
+        let ast = try dumper.dump(path: "map/clif.cpp")
 
         let readdb = ast.findFunctionDecl(named: "packetdb_readdb")!
         let addpackets = readdb.findCallExprs(fn: "packetdb_addpacket")

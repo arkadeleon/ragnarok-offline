@@ -1,12 +1,11 @@
 //
 //  ConstantConverter.swift
-//  RagnarokOffline
+//  ROCodeGenerator
 //
 //  Created by Leon Li on 2024/10/8.
 //
 
 import Foundation
-import PackagePlugin
 
 class ConstantConverter {
     struct InputConstant {
@@ -22,15 +21,21 @@ class ConstantConverter {
         var isExcluded: Bool
     }
 
+    let rathenaDirectory: URL
+
     var asts: [String : ASTNode] = [:]
 
-    func convert(context: PluginContext, conversion: ConstantConversion) throws {
+    init(rathenaDirectory: URL) {
+        self.rathenaDirectory = rathenaDirectory
+    }
+
+    func convert(conversion: ConstantConversion) throws -> String {
         let ast: ASTNode
         if let cachedAST = asts[conversion.source] {
             ast = cachedAST
         } else {
-            let dumper = ASTDumper()
-            ast = try dumper.dump(context: context, path: conversion.source)
+            let dumper = ASTDumper(rathenaDirectory: rathenaDirectory)
+            ast = try dumper.dump(path: conversion.source)
             asts[conversion.source] = ast
         }
 
@@ -374,10 +379,6 @@ class ConstantConverter {
             }
         }
 
-        let outputDirectory = context.package.directoryURL.appending(path: "Sources/ROGenerated/Constants")
-        try FileManager.default.createDirectory(at: outputDirectory, withIntermediateDirectories: true)
-
-        let outputURL = outputDirectory.appending(path: "\(conversion.outputType).swift")
-        try outputContents.write(to: outputURL, atomically: true, encoding: .utf8)
+        return outputContents
     }
 }
