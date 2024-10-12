@@ -7,6 +7,8 @@
 
 import ArgumentParser
 import Foundation
+import SwiftSyntax
+import SwiftSyntaxBuilder
 
 @main
 struct GenerateCode: ParsableCommand {
@@ -173,8 +175,24 @@ struct GenerateCode: ParsableCommand {
             let fields = node.findNodes { node in
                 node.kind == "FieldDecl"
             }
-            let fs = fields.map({ $0.name! + ": " + $0.type!.qualType! }).joined(separator: ", ")
-            print(node.name! + " { " + fs + " }" )
+
+            let modifiers = DeclModifierListSyntax(arrayLiteral: DeclModifierSyntax(name: "public"))
+            let inheritanceClause = InheritanceClauseSyntax {
+                InheritedTypeSyntax(type: IdentifierTypeSyntax(name: "Codable"))
+            }
+            let structDecl = StructDeclSyntax(modifiers: modifiers, name: "\(raw: node.name!)", inheritanceClause: inheritanceClause) {
+                fields.map { node in
+                    VariableDeclSyntax(modifiers: modifiers, bindingSpecifier: "var") {
+                        PatternBindingSyntax(
+                            pattern: IdentifierPatternSyntax(identifier: "\(raw: node.name!)"),
+                            typeAnnotation: TypeAnnotationSyntax(
+                                type: IdentifierTypeSyntax(name: "\(raw: node.type!.asSwiftType!)")
+                            )
+                        )
+                    }
+                }
+            }
+            print(structDecl.formatted().description)
         }
     }
 

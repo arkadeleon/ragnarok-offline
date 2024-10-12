@@ -107,3 +107,24 @@ struct ASTNode: Decodable {
         return nodes
     }
 }
+
+extension ASTNode.NodeType {
+    var asSwiftType: String? {
+        guard let qualType else {
+            return nil
+        }
+
+        let swiftType: String? = switch qualType {
+        case "int8": "Int8"
+        case "uint8": "UInt8"
+        case "int16": "Int16"
+        case "uint16": "UInt16"
+        case "int32": "Int32"
+        case "uint32": "UInt32"
+        case "char[]": "[UInt8]"
+        default: nil
+        }
+
+        return swiftType ?? qualType
+    }
+}
