@@ -95,8 +95,9 @@ let package = Package(
                 "ROFileFormats"
             ],
             resources: [
-                .copy("test.grf"),
-                .copy("data"),
+                .copy("Resources/data"),
+                .copy("Resources/test.grf"),
+                .copy("Resources/cursors.act"),
             ]),
         .target(
             name: "ROFileSystem",

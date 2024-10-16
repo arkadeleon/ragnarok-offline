@@ -11,8 +11,10 @@ import ROCore
 
 final class GRFTests: XCTestCase {
     func testGRF() throws {
-        let url = Bundle.module.resourceURL!.appending(path: "test.grf")
-        let grf = try GRF(url: url)
+        let resourceURL = Bundle.module.resourceURL!
+        let grfURL = resourceURL.appending(path: "test.grf")
+        let grf = try GRF(url: grfURL)
+
         XCTAssertEqual(grf.table.entries.count, 9)
         XCTAssertEqual(grf.table.entries[0].path.string, "data\\0_Tex1.bmp")
         XCTAssertEqual(grf.table.entries[1].path.string, "data\\11001.txt")
@@ -25,18 +27,18 @@ final class GRFTests: XCTestCase {
         XCTAssertEqual(grf.table.entries[8].path.string, "data\\t2_배경1-1.bmp")
 
         let files = [
-            Bundle.module.resourceURL!.appending(path: "data/0_Tex1.bmp"),
-            Bundle.module.resourceURL!.appending(path: "data/11001.txt"),
-            Bundle.module.resourceURL!.appending(path: "data/balls.wav"),
-            Bundle.module.resourceURL!.appending(path: "data/idnum2itemdesctable.txt"),
-            Bundle.module.resourceURL!.appending(path: "data/idnum2itemdisplaynametable.txt"),
-            Bundle.module.resourceURL!.appending(path: "data/loading00.jpg"),
-            Bundle.module.resourceURL!.appending(path: "data/monstertalktable.xml"),
-            Bundle.module.resourceURL!.appending(path: "data/resnametable.txt"),
-            Bundle.module.resourceURL!.appending(path: "data/t2_배경1-1.bmp")
+            resourceURL.appending(path: "data/0_Tex1.bmp"),
+            resourceURL.appending(path: "data/11001.txt"),
+            resourceURL.appending(path: "data/balls.wav"),
+            resourceURL.appending(path: "data/idnum2itemdesctable.txt"),
+            resourceURL.appending(path: "data/idnum2itemdisplaynametable.txt"),
+            resourceURL.appending(path: "data/loading00.jpg"),
+            resourceURL.appending(path: "data/monstertalktable.xml"),
+            resourceURL.appending(path: "data/resnametable.txt"),
+            resourceURL.appending(path: "data/t2_배경1-1.bmp"),
         ]
 
-        let stream = try FileStream(url: url)
+        let stream = try FileStream(url: grfURL)
         let reader = BinaryReader(stream: stream)
 
         for (i, entry) in grf.table.entries.enumerated() {
