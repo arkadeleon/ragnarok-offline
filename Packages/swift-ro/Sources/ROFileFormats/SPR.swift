@@ -8,7 +8,7 @@
 import Foundation
 import ROCore
 
-public struct SPR: Encodable {
+public struct SPR {
     public var header: String
     public var version: String
     public var sprites: [Sprite] = []
@@ -66,12 +66,12 @@ public struct SPR: Encodable {
 }
 
 extension SPR {
-    public enum SpriteType: Int, Encodable {
+    public enum SpriteType: Int {
         case indexed = 0
         case rgba = 1
     }
 
-    public struct Sprite: Encodable {
+    public struct Sprite {
         public var type: SpriteType
         public var width: UInt16
         public var height: UInt16

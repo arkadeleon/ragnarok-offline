@@ -8,7 +8,7 @@
 import Foundation
 import ROCore
 
-public struct PAL: Encodable {
+public struct PAL {
     public var colors: [Color] = []
 
     public init(data: Data) throws {

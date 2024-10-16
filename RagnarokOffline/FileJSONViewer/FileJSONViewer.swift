@@ -1,5 +1,5 @@
 //
-//  FileRawDataView.swift
+//  FileJSONViewer.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/2/28.
@@ -7,20 +7,20 @@
 
 import SwiftUI
 
-struct FileRawDataView: View {
+struct FileJSONViewer: View {
     var file: ObservableFile
 
     var body: some View {
         WebView(htmlString: htmlString, baseURL: baseURL)
             .ignoresSafeArea()
-            .navigationTitle("Raw Data")
+            .navigationTitle("JSON Viewer")
             #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
     }
 
     private var htmlString: String {
-        guard let rawData = file.rawData, let json = String(data: rawData, encoding: .utf8) else {
+        guard let json = file.json else {
             return ""
         }
 
@@ -52,5 +52,5 @@ struct FileRawDataView: View {
 }
 
 #Preview {
-    FileRawDataView(file: PreviewFiles.rswFile)
+    FileJSONViewer(file: PreviewFiles.rswFile)
 }

@@ -9,7 +9,7 @@ import Foundation
 import simd
 import ROCore
 
-public struct RSM: Encodable {
+public struct RSM {
     public var header: String
     public var version: String
     public var animationLength: Int32
@@ -140,8 +140,8 @@ extension RSM {
 }
 
 extension RSM {
-    public struct Node: Encodable {
-        public struct TextureVertex: Encodable {
+    public struct Node {
+        public struct TextureVertex {
             public var color: UInt32
             public var u: Float
             public var v: Float
@@ -290,7 +290,7 @@ extension RSM {
 }
 
 extension RSM {
-    public struct Face: Encodable {
+    public struct Face {
         public var vertidx: SIMD3<UInt16>
         public var tvertidx: SIMD3<UInt16>
         public var textureIndex: UInt16
@@ -333,7 +333,7 @@ extension RSM {
 }
 
 extension RSM {
-    public struct ScaleKeyframe: Encodable {
+    public struct ScaleKeyframe {
         public var frame: Int32
         public var sx: Float
         public var sy: Float
@@ -349,7 +349,7 @@ extension RSM {
         }
     }
 
-    public struct RotationKeyframe: Encodable {
+    public struct RotationKeyframe {
         public var frame: Int32
         public var quaternion: SIMD4<Float>
 
@@ -364,7 +364,7 @@ extension RSM {
         }
     }
 
-    public struct PositionKeyframe: Encodable {
+    public struct PositionKeyframe {
         public var frame: Int32
         public var px: Float
         public var py: Float
@@ -382,7 +382,7 @@ extension RSM {
 }
 
 extension RSM {
-    public struct VolumeBox: Encodable {
+    public struct VolumeBox {
         public var size: SIMD3<Float>
         public var position: SIMD3<Float>
         public var rotation: SIMD3<Float>

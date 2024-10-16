@@ -8,7 +8,7 @@
 import Foundation
 import ROCore
 
-public struct RSW: Encodable {
+public struct RSW {
     public var header: String
     public var version: String
     public var files: Files
@@ -80,7 +80,7 @@ public struct RSW: Encodable {
 }
 
 extension RSW {
-    public struct Files: Encodable {
+    public struct Files {
         public var ini: String
         public var gnd: String
         public var gat: String
@@ -103,7 +103,7 @@ extension RSW {
 }
 
 extension RSW {
-    public struct Water: Encodable {
+    public struct Water {
         public var level: Float
         public var type: Int32
         public var waveHeight: Float
@@ -150,7 +150,7 @@ extension RSW {
 }
 
 extension RSW {
-    public struct Light: Encodable {
+    public struct Light {
         public var longitude: Int32
         public var latitude: Int32
         public var diffuse: DiffuseColor
@@ -180,7 +180,7 @@ extension RSW {
 }
 
 extension RSW {
-    public struct BoundingBox: Encodable {
+    public struct BoundingBox {
         public var top: Int32
         public var bottom: Int32
         public var left: Int32
@@ -211,7 +211,7 @@ extension RSW {
             case effect = 4
         }
 
-        public struct Model: Encodable {
+        public struct Model {
             public var name: String
             public var animationType: Int32
             public var animationSpeed: Float
@@ -243,7 +243,7 @@ extension RSW {
             }
         }
 
-        public struct Light: Encodable {
+        public struct Light {
             public var name: String
             public var position: SIMD3<Float>
             public var diffuse: DiffuseColor
@@ -257,7 +257,7 @@ extension RSW {
             }
         }
 
-        public struct Sound: Encodable {
+        public struct Sound {
             public var name: String
             public var waveName: String
             public var position: SIMD3<Float>
@@ -279,7 +279,7 @@ extension RSW {
             }
         }
 
-        public struct Effect: Encodable {
+        public struct Effect {
             public var name: String
             public var position: SIMD3<Float>
             public var id: Int32

@@ -7,7 +7,7 @@
 
 import ROCore
 
-public struct AmbientColor: Encodable {
+public struct AmbientColor {
     public var red: Float
     public var green: Float
     public var blue: Float

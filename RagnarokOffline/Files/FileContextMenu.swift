@@ -28,11 +28,11 @@ struct FileContextMenu: View {
                     }
                 }
 
-                if file.rawDataRepresentable {
+                if file.jsonRepresentable {
                     Button {
                         showRawDataAction?()
                     } label: {
-                        Label("Raw Data", systemImage: "list.bullet.indent")
+                        Label("JSON Viewer", systemImage: "list.bullet.indent")
                     }
                 }
 

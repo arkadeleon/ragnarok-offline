@@ -7,7 +7,7 @@
 
 import ROCore
 
-public struct Color: Equatable, Encodable {
+public struct Color: Equatable {
     public var red: UInt8
     public var green: UInt8
     public var blue: UInt8

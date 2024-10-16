@@ -113,48 +113,6 @@ extension ObservableFile {
 }
 
 extension ObservableFile {
-    var rawDataRepresentable: Bool {
-        switch file.info.type {
-        case .act, .gat, .gnd, .rsm, .rsw, .spr, .str:
-            true
-        default:
-            false
-        }
-    }
-
-    var rawData: Data? {
-        guard rawDataRepresentable else {
-            return nil
-        }
-
-        guard let data = file.contents() else {
-            return nil
-        }
-
-        let value: (any Encodable)? = switch file.info.type {
-        case .act: try? ACT(data: data)
-        case .gat: try? GAT(data: data)
-        case .gnd: try? GND(data: data)
-        case .rsm: try? RSM(data: data)
-        case .rsw: try? RSW(data: data)
-        case .spr: try? SPR(data: data)
-        case .str: try? STR(data: data)
-        default: nil
-        }
-
-        guard let value else {
-            return nil
-        }
-
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
-
-        let rawData = try? encoder.encode(value)
-        return rawData
-    }
-}
-
-extension ObservableFile {
     var hasReferences: Bool {
         switch file.info.type {
         case .gnd, .rsw:

@@ -7,7 +7,7 @@
 
 import ROCore
 
-public struct DiffuseColor: Encodable {
+public struct DiffuseColor {
     public var red: Float
     public var green: Float
     public var blue: Float

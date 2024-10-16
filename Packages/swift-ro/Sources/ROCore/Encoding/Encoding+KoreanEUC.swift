@@ -1,5 +1,5 @@
 //
-//  String.Encoding+KoreanEUC.swift
+//  Encoding+KoreanEUC.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/4/8.

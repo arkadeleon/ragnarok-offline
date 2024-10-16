@@ -8,7 +8,7 @@
 import Foundation
 import ROCore
 
-public struct GAT: Encodable {
+public struct GAT {
     public var header: String
     public var version: String
     public var width: Int32
@@ -43,7 +43,7 @@ public struct GAT: Encodable {
 }
 
 extension GAT {
-    public enum TileType: Int32, Encodable {
+    public enum TileType: Int32 {
         case walkable = 0
         case noWalkable = 1
         case noWalkableNoSnipable = 2
@@ -53,7 +53,7 @@ extension GAT {
         case walkable3 = 6
     }
 
-    public struct Tile: Encodable {
+    public struct Tile {
         public var bottomLeftAltitude: Float
         public var bottomRightAltitude: Float
         public var topLeftAltitude: Float

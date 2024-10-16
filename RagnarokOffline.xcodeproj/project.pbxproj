@@ -58,8 +58,6 @@
 		3546C3D32C6D9DC9002A1321 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3546C3D22C6D9DC9002A1321 /* Conversation.swift */; };
 		3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555E1162B7D12D9007CE4BA /* TerminalView.swift */; };
 		355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC18B2B8F25C0002F0586 /* WebView.swift */; };
-		355BC18E2B8F2890002F0586 /* FileRawDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC18D2B8F2890002F0586 /* FileRawDataView.swift */; };
-		355BC1902B8F4E0D002F0586 /* json-viewer in Resources */ = {isa = PBXBuildFile; fileRef = 355BC18F2B8F4E0D002F0586 /* json-viewer */; };
 		355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC1912B9056E5002F0586 /* FileContextMenu.swift */; };
 		35652B432B960D100075AD71 /* MapDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B422B960D100075AD71 /* MapDatabaseView.swift */; };
 		35652B452B960D2D0075AD71 /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B442B960D2D0075AD71 /* MapCell.swift */; };
@@ -132,6 +130,17 @@
 		35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */; };
 		35E27A832BC96AC800C11076 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A822BC96AC800C11076 /* Message.swift */; };
 		35E27A852BC96B3000C11076 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A842BC96B3000C11076 /* MessageCell.swift */; };
+		35E67C6E2CBF6C1F006E42A3 /* GND+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C6B2CBF6C1F006E42A3 /* GND+JSON.swift */; };
+		35E67C6F2CBF6C1F006E42A3 /* GAT+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C6A2CBF6C1F006E42A3 /* GAT+JSON.swift */; };
+		35E67C702CBF6C1F006E42A3 /* ACT+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C682CBF6C1F006E42A3 /* ACT+JSON.swift */; };
+		35E67C712CBF6C1F006E42A3 /* ObservableFile+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C6C2CBF6C1F006E42A3 /* ObservableFile+JSON.swift */; };
+		35E67C722CBF6C1F006E42A3 /* FileJSONViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C692CBF6C1F006E42A3 /* FileJSONViewer.swift */; };
+		35E67C732CBF6C1F006E42A3 /* browser.js in Resources */ = {isa = PBXBuildFile; fileRef = 35E67C662CBF6C1F006E42A3 /* browser.js */; };
+		35E67C752CBF6E4F006E42A3 /* RSM+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C742CBF6E48006E42A3 /* RSM+JSON.swift */; };
+		35E67C772CBF6E57006E42A3 /* RSW+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C762CBF6E53006E42A3 /* RSW+JSON.swift */; };
+		35E67C792CBF6E60006E42A3 /* SPR+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C782CBF6E5B006E42A3 /* SPR+JSON.swift */; };
+		35E67C7B2CBF7F4F006E42A3 /* STR+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C7A2CBF7F4B006E42A3 /* STR+JSON.swift */; };
+		35E67C7D2CBF90C8006E42A3 /* Miscellaneous+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C7C2CBF909E006E42A3 /* Miscellaneous+JSON.swift */; };
 		35F50CCC2BB4615F00B36455 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CCB2BB4615F00B36455 /* MessagesView.swift */; };
 /* End PBXBuildFile section */
 
@@ -194,8 +203,6 @@
 		3546C3D22C6D9DC9002A1321 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		3555E1162B7D12D9007CE4BA /* TerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
 		355BC18B2B8F25C0002F0586 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
-		355BC18D2B8F2890002F0586 /* FileRawDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileRawDataView.swift; sourceTree = "<group>"; };
-		355BC18F2B8F4E0D002F0586 /* json-viewer */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "json-viewer"; sourceTree = "<group>"; };
 		355BC1912B9056E5002F0586 /* FileContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileContextMenu.swift; sourceTree = "<group>"; };
 		35652B422B960D100075AD71 /* MapDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDatabaseView.swift; sourceTree = "<group>"; };
 		35652B442B960D2D0075AD71 /* MapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
@@ -265,6 +272,17 @@
 		35E27A842BC96B3000C11076 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		35E27A8D2BCC112200C11076 /* swift-lua */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-lua"; path = "Packages/swift-lua"; sourceTree = "<group>"; };
 		35E27A8E2BCC112200C11076 /* swift-rathena */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-rathena"; path = "Packages/swift-rathena"; sourceTree = "<group>"; };
+		35E67C662CBF6C1F006E42A3 /* browser.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = browser.js; sourceTree = "<group>"; };
+		35E67C682CBF6C1F006E42A3 /* ACT+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ACT+JSON.swift"; sourceTree = "<group>"; };
+		35E67C692CBF6C1F006E42A3 /* FileJSONViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileJSONViewer.swift; sourceTree = "<group>"; };
+		35E67C6A2CBF6C1F006E42A3 /* GAT+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GAT+JSON.swift"; sourceTree = "<group>"; };
+		35E67C6B2CBF6C1F006E42A3 /* GND+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GND+JSON.swift"; sourceTree = "<group>"; };
+		35E67C6C2CBF6C1F006E42A3 /* ObservableFile+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableFile+JSON.swift"; sourceTree = "<group>"; };
+		35E67C742CBF6E48006E42A3 /* RSM+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSM+JSON.swift"; sourceTree = "<group>"; };
+		35E67C762CBF6E53006E42A3 /* RSW+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSW+JSON.swift"; sourceTree = "<group>"; };
+		35E67C782CBF6E5B006E42A3 /* SPR+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SPR+JSON.swift"; sourceTree = "<group>"; };
+		35E67C7A2CBF7F4B006E42A3 /* STR+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "STR+JSON.swift"; sourceTree = "<group>"; };
+		35E67C7C2CBF909E006E42A3 /* Miscellaneous+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Miscellaneous+JSON.swift"; sourceTree = "<group>"; };
 		35F50CCB2BB4615F00B36455 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -350,15 +368,6 @@
 			children = (
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		353098332B14EAE600F32B62 /* FileRawData */ = {
-			isa = PBXGroup;
-			children = (
-				355BC18F2B8F4E0D002F0586 /* json-viewer */,
-				355BC18D2B8F2890002F0586 /* FileRawDataView.swift */,
-			);
-			path = FileRawData;
 			sourceTree = "<group>";
 		};
 		353098412B161C3800F32B62 /* FilePreview */ = {
@@ -500,7 +509,7 @@
 				355BC18A2B8F25A6002F0586 /* Core */,
 				35B3B9892A08C01600B4540B /* Files */,
 				353098412B161C3800F32B62 /* FilePreview */,
-				353098332B14EAE600F32B62 /* FileRawData */,
+				35E67C6D2CBF6C1F006E42A3 /* FileJSONViewer */,
 				35F50CCA2BB4614100B36455 /* Messages */,
 				35B33BA32BF465D500EF28F5 /* Cube */,
 				35B3B96E2A08C01600B4540B /* Game */,
@@ -592,6 +601,32 @@
 				3506D11D2C00887700903A47 /* swift-ro */,
 			);
 			name = Packages;
+			sourceTree = "<group>";
+		};
+		35E67C672CBF6C1F006E42A3 /* json-viewer */ = {
+			isa = PBXGroup;
+			children = (
+				35E67C662CBF6C1F006E42A3 /* browser.js */,
+			);
+			path = "json-viewer";
+			sourceTree = "<group>";
+		};
+		35E67C6D2CBF6C1F006E42A3 /* FileJSONViewer */ = {
+			isa = PBXGroup;
+			children = (
+				35E67C672CBF6C1F006E42A3 /* json-viewer */,
+				35E67C692CBF6C1F006E42A3 /* FileJSONViewer.swift */,
+				35E67C6C2CBF6C1F006E42A3 /* ObservableFile+JSON.swift */,
+				35E67C7C2CBF909E006E42A3 /* Miscellaneous+JSON.swift */,
+				35E67C682CBF6C1F006E42A3 /* ACT+JSON.swift */,
+				35E67C6A2CBF6C1F006E42A3 /* GAT+JSON.swift */,
+				35E67C6B2CBF6C1F006E42A3 /* GND+JSON.swift */,
+				35E67C742CBF6E48006E42A3 /* RSM+JSON.swift */,
+				35E67C762CBF6E53006E42A3 /* RSW+JSON.swift */,
+				35E67C782CBF6E5B006E42A3 /* SPR+JSON.swift */,
+				35E67C7A2CBF7F4B006E42A3 /* STR+JSON.swift */,
+			);
+			path = FileJSONViewer;
 			sourceTree = "<group>";
 		};
 		35F50CCA2BB4614100B36455 /* Messages */ = {
@@ -704,11 +739,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				35B3B8DF2A08BEA700B4540B /* Preview Assets.xcassets in Resources */,
+				35E67C732CBF6C1F006E42A3 /* browser.js in Resources */,
 				3506D11F2C00EF5400903A47 /* Localizable.xcstrings in Resources */,
 				35B3B9FA2A08C01600B4540B /* wall.jpg in Resources */,
 				35B3B8DC2A08BEA700B4540B /* Assets.xcassets in Resources */,
 				3599BD552C3FA4E90010DBE7 /* data in Resources */,
-				355BC1902B8F4E0D002F0586 /* json-viewer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -720,7 +755,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				35B695EA2A305EF6006F1904 /* GameView.swift in Sources */,
-				355BC18E2B8F2890002F0586 /* FileRawDataView.swift in Sources */,
 				354668C72CA9344600CE2D11 /* CommandMessage.swift in Sources */,
 				3514BF5B2B454A040065ED89 /* SkillCell.swift in Sources */,
 				35239DFD2BBEF1C80039F7D5 /* SkillProvider.swift in Sources */,
@@ -750,8 +784,14 @@
 				35BE55312BD94D79003715C3 /* AudioFilePreviewView.swift in Sources */,
 				35B422F62BEF76F700681AA2 /* DatabaseRecord.swift in Sources */,
 				351EE3012C08B86A0012BC9E /* MapImageView.swift in Sources */,
+				35E67C7D2CBF90C8006E42A3 /* Miscellaneous+JSON.swift in Sources */,
 				35239E012BC29A4E0039F7D5 /* ItemProvider.swift in Sources */,
 				3594DD572BF5FCB600575F3D /* ModelViewer.swift in Sources */,
+				35E67C6E2CBF6C1F006E42A3 /* GND+JSON.swift in Sources */,
+				35E67C6F2CBF6C1F006E42A3 /* GAT+JSON.swift in Sources */,
+				35E67C702CBF6C1F006E42A3 /* ACT+JSON.swift in Sources */,
+				35E67C712CBF6C1F006E42A3 /* ObservableFile+JSON.swift in Sources */,
+				35E67C722CBF6C1F006E42A3 /* FileJSONViewer.swift in Sources */,
 				35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */,
 				35B422EF2BEF091F00681AA2 /* ObservableDatabase.swift in Sources */,
 				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,
@@ -764,7 +804,9 @@
 				35652B432B960D100075AD71 /* MapDatabaseView.swift in Sources */,
 				35E27A852BC96B3000C11076 /* MessageCell.swift in Sources */,
 				355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */,
+				35E67C792CBF6E60006E42A3 /* SPR+JSON.swift in Sources */,
 				3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */,
+				35E67C7B2CBF7F4F006E42A3 /* STR+JSON.swift in Sources */,
 				3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */,
 				35B422E02BECAB6E00681AA2 /* MonsterSummonInfoView.swift in Sources */,
 				35BE555A2BDAA929003715C3 /* SPRFilePreviewView.swift in Sources */,
@@ -776,6 +818,7 @@
 				3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */,
 				353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */,
 				35BE55622BDAB6EC003715C3 /* STRFilePreviewView.swift in Sources */,
+				35E67C772CBF6E57006E42A3 /* RSW+JSON.swift in Sources */,
 				3514BF452B4526F40065ED89 /* ItemInfoView.swift in Sources */,
 				35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */,
 				354668C52CA9338500CE2D11 /* TextMessage.swift in Sources */,
@@ -787,6 +830,7 @@
 				3599BD592C3FCE7A0010DBE7 /* ImageGridCell.swift in Sources */,
 				35BDF7042C9B0AED00CCAB8F /* ClientSettings.swift in Sources */,
 				35239DFF2BBEF4510039F7D5 /* MapProvider.swift in Sources */,
+				35E67C752CBF6E4F006E42A3 /* RSM+JSON.swift in Sources */,
 				3506D11C2C00526A00903A47 /* ObservableFile.swift in Sources */,
 				355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */,
 				351EE3052C08BF3A0012BC9E /* ItemIconView.swift in Sources */,

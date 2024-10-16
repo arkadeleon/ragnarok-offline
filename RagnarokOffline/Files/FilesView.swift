@@ -101,7 +101,7 @@ struct FilesView: View {
         }
         .sheet(item: $fileToShowRawData) { file in
             NavigationStack {
-                FileRawDataView(file: file)
+                FileJSONViewer(file: file)
             }
         }
         .sheet(item: $fileToShowReferences) { file in

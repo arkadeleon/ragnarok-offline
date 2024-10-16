@@ -8,7 +8,7 @@
 import Foundation
 import ROCore
 
-public struct ACT: Encodable {
+public struct ACT {
     public var header: String
     public var version: String
     public var actions: [Action] = []
@@ -58,7 +58,7 @@ public struct ACT: Encodable {
 }
 
 extension ACT {
-    public struct Action: Encodable {
+    public struct Action {
         public var frames: [Frame] = []
         public var animationSpeed: Float = 6
 
@@ -73,7 +73,7 @@ extension ACT {
 }
 
 extension ACT {
-    public struct Frame: Encodable {
+    public struct Frame {
         public var layers: [Layer] = []
         public var soundIndex: Int32 = -1
         public var anchorPoints: [AnchorPoint] = []
@@ -104,7 +104,7 @@ extension ACT {
 }
 
 extension ACT {
-    public struct Layer: Encodable {
+    public struct Layer {
         public var offset: SIMD2<Int32>
         public var spriteIndex: Int32
         public var isMirrored: Int32
@@ -144,7 +144,7 @@ extension ACT {
 }
 
 extension ACT {
-    public struct AnchorPoint: Encodable {
+    public struct AnchorPoint {
         public var x: Int32
         public var y: Int32
 

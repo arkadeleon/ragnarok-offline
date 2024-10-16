@@ -8,7 +8,7 @@
 import Foundation
 import ROCore
 
-public struct STR: Encodable {
+public struct STR {
     public var header: String
     public var version: String
     public var fps: Int32
@@ -49,7 +49,7 @@ public struct STR: Encodable {
 }
 
 extension STR {
-    public struct Layer: Encodable {
+    public struct Layer {
         public var textures: [String] = []
         public var keyframes: [Keyframe] = []
 
@@ -70,7 +70,7 @@ extension STR {
 }
 
 extension STR {
-    public struct Keyframe: Encodable {
+    public struct Keyframe {
         public var frameIndex: Int32
         public var type: Int32
         public var position: SIMD2<Float>
