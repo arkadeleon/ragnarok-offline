@@ -19,14 +19,18 @@ struct Login: View {
 
             TextField("", text: $username)
                 .font(.system(size: 12))
+                #if !os(macOS)
                 .textInputAutocapitalization(.never)
+                #endif
                 .disableAutocorrection(true)
                 .frame(width: 127, height: 18)
                 .offset(x: 91, y: 29)
 
             TextField("", text: $password)
                 .font(.system(size: 12))
+                #if !os(macOS)
                 .textInputAutocapitalization(.never)
+                #endif
                 .disableAutocorrection(true)
                 .frame(width: 127, height: 18)
                 .offset(x: 91, y: 61)

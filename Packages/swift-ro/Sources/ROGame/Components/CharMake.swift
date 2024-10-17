@@ -28,7 +28,9 @@ struct CharMake: View {
 
                 TextField("", text: $name)
                     .font(.system(size: 12))
+                    #if !os(macOS)
                     .textInputAutocapitalization(.never)
+                    #endif
                     .disableAutocorrection(true)
                     .frame(width: 101, height: 18)
                     .offset(x: 61, y: 244)
