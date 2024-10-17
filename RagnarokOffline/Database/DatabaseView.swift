@@ -29,6 +29,7 @@ struct DatabaseView<RecordProvider, Content, Empty>: View where RecordProvider: 
 
     var body: some View {
         content(database.filteredRecords)
+            .background(.background)
             .overlay {
                 if database.loadStatus == .loading {
                     ProgressView()

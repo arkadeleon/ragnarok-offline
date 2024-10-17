@@ -60,9 +60,7 @@ struct DetailView: View {
                 StatusChangeDatabaseView()
             }
         }
-        #if !os(macOS)
-        .navigationBarTitleDisplayMode(.inline)
-        #endif
+        .toolbarTitleDisplayMode(.inline)
     }
 }
 

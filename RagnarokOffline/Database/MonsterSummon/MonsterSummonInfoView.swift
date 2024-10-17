@@ -38,6 +38,7 @@ struct MonsterSummonInfoView: View {
                 }
             }
         }
+        .background(.background)
         .navigationTitle(monsterSummon.group)
         .task {
             try? await monsterSummon.fetchDetail()

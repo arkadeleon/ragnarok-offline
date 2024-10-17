@@ -46,6 +46,7 @@ struct CharSelect: View {
                 } label: {
                     Text(slot1?.name ?? "Empty")
                 }
+                .buttonStyle(.plain)
                 .frame(width: 139, height: 144)
                 .offset(x: 60, y: 44)
 
@@ -54,6 +55,7 @@ struct CharSelect: View {
                 } label: {
                     Text(slot2?.name ?? "Empty")
                 }
+                .buttonStyle(.plain)
                 .frame(width: 139, height: 144)
                 .offset(x: 224, y: 44)
 
@@ -62,6 +64,7 @@ struct CharSelect: View {
                 } label: {
                     Text(slot3?.name ?? "Empty")
                 }
+                .buttonStyle(.plain)
                 .frame(width: 139, height: 144)
                 .offset(x: 386, y: 44)
 

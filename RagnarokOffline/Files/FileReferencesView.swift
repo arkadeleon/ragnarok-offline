@@ -10,6 +10,8 @@ import SwiftUI
 struct FileReferencesView: View {
     var file: ObservableFile
 
+    @Environment(\.dismiss) private var dismiss
+
     @State private var referenceFiles: [ObservableFile] = []
     @State private var fileToPreview: ObservableFile?
 
@@ -23,9 +25,18 @@ struct FileReferencesView: View {
                 } label: {
                     FileGridCell(file: file)
                 }
+                .buttonStyle(.plain)
             }
         }
         .navigationTitle("References")
+        .toolbarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") {
+                    dismiss()
+                }
+            }
+        }
         .sheet(item: $fileToPreview) { file in
             NavigationStack {
                 FilePreviewTabView(files: referenceFiles.filter({ $0.canPreview }), currentFile: file)

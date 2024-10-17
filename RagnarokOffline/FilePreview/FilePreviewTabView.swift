@@ -17,7 +17,7 @@ struct FilePreviewTabView: View {
     var body: some View {
         #if os(macOS)
         FilePreviewView(file: currentFile)
-            .frame(width: 400, height: 400)
+            .frame(height: 400)
             .navigationTitle(currentFile.file.name)
             .toolbar {
                 ToolbarItem(placement: .automatic) {
@@ -38,7 +38,7 @@ struct FilePreviewTabView: View {
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
         .navigationTitle(currentFile.file.name)
-        .navigationBarTitleDisplayMode(.inline)
+        .toolbarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 ShareLink(item: currentFile, preview: SharePreview(currentFile.file.name))

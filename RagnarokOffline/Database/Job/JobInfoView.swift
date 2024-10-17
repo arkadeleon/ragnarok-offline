@@ -65,6 +65,7 @@ struct JobInfoView: View {
                             NavigationLink(value: skill) {
                                 SkillCell(skill: skill)
                             }
+                            .buttonStyle(.plain)
                         }
                     }
                     .padding(.vertical, 20)
@@ -145,6 +146,7 @@ struct JobInfoView: View {
                 }
             }
         }
+        .background(.background)
         .navigationTitle(job.id.stringValue)
         .task {
             await loadJobInfo()

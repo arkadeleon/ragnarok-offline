@@ -61,6 +61,7 @@ struct FilesView: View {
                 }
             }
         }
+        .background(.background)
         .overlay {
             if loadStatus == .loading {
                 ProgressView()
@@ -114,7 +115,7 @@ struct FilesView: View {
         }
     }
 
-    private func load() async {
+    nonisolated private func load() async {
         guard loadStatus == .notYetLoaded else {
             return
         }

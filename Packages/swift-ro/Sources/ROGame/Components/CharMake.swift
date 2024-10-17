@@ -27,6 +27,7 @@ struct CharMake: View {
                 GameImage("login_interface/win_make.bmp")
 
                 TextField("", text: $name)
+                    .textFieldStyle(.plain)
                     .font(.system(size: 12))
                     #if !os(macOS)
                     .textInputAutocapitalization(.never)

@@ -18,6 +18,7 @@ struct Login: View {
             GameImage("login_interface/win_login.bmp")
 
             TextField("", text: $username)
+                .textFieldStyle(.plain)
                 .font(.system(size: 12))
                 #if !os(macOS)
                 .textInputAutocapitalization(.never)
@@ -27,6 +28,7 @@ struct Login: View {
                 .offset(x: 91, y: 29)
 
             TextField("", text: $password)
+                .textFieldStyle(.plain)
                 .font(.system(size: 12))
                 #if !os(macOS)
                 .textInputAutocapitalization(.never)
@@ -39,6 +41,7 @@ struct Login: View {
             } label: {
                 GameImage("login_interface/chk_saveoff.bmp")
             }
+            .buttonStyle(.plain)
             .frame(width: 38, height: 10)
             .offset(x: 232, y: 32)
 

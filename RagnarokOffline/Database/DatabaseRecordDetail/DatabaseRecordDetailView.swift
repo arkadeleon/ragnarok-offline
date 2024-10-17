@@ -57,6 +57,7 @@ struct DatabaseRecordDetailView: View {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                             ForEach(references, id: \.id) { reference in
                                 NavigationLink(reference.recordName, value: reference)
+                                    .buttonStyle(.plain)
                             }
                         }
                         .padding(.vertical, 20)
@@ -66,6 +67,7 @@ struct DatabaseRecordDetailView: View {
                 }
             }
         }
+        .background(.background)
         .navigationTitle(record.recordName)
         .task {
             await fetchDetail()

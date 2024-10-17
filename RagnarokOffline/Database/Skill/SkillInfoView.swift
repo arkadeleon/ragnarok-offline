@@ -36,6 +36,7 @@ struct SkillInfoView: View {
                 }
             }
         }
+        .background(.background)
         .navigationTitle(skill.name)
         .task {
             loadSkillInfo()

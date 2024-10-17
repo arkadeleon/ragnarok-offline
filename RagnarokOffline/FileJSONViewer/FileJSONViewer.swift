@@ -10,13 +10,33 @@ import SwiftUI
 struct FileJSONViewer: View {
     var file: ObservableFile
 
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
+        #if os(macOS)
+        WebView(htmlString: htmlString, baseURL: baseURL)
+            .frame(height: 400)
+            .navigationTitle("JSON Viewer")
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                }
+            }
+        #else
         WebView(htmlString: htmlString, baseURL: baseURL)
             .ignoresSafeArea()
             .navigationTitle("JSON Viewer")
-            #if !os(macOS)
-            .navigationBarTitleDisplayMode(.inline)
-            #endif
+            .toolbarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                }
+            }
+        #endif
     }
 
     private var htmlString: String {
@@ -47,7 +67,7 @@ struct FileJSONViewer: View {
     }
 
     private var baseURL: URL? {
-        Bundle.main.resourceURL?.appendingPathComponent("json-viewer")
+        Bundle.main.resourceURL
     }
 }
 

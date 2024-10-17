@@ -62,6 +62,7 @@
 		35652B432B960D100075AD71 /* MapDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B422B960D100075AD71 /* MapDatabaseView.swift */; };
 		35652B452B960D2D0075AD71 /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B442B960D2D0075AD71 /* MapCell.swift */; };
 		35652B472B960D370075AD71 /* MapInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B462B960D370075AD71 /* MapInfoView.swift */; };
+		357EA4E32CC14A440081370F /* browser.js in Resources */ = {isa = PBXBuildFile; fileRef = 357EA4E12CC14A440081370F /* browser.js */; };
 		357F96BA2C4AA48400B3231B /* ImageGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357F96B92C4AA48400B3231B /* ImageGrid.swift */; };
 		3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC52B8C830D00E746D7 /* SettingsView.swift */; };
 		3582FFCA2B8DB9FE00E746D7 /* FilePreviewTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC92B8DB9FE00E746D7 /* FilePreviewTabView.swift */; };
@@ -135,7 +136,6 @@
 		35E67C702CBF6C1F006E42A3 /* ACT+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C682CBF6C1F006E42A3 /* ACT+JSON.swift */; };
 		35E67C712CBF6C1F006E42A3 /* ObservableFile+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C6C2CBF6C1F006E42A3 /* ObservableFile+JSON.swift */; };
 		35E67C722CBF6C1F006E42A3 /* FileJSONViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C692CBF6C1F006E42A3 /* FileJSONViewer.swift */; };
-		35E67C732CBF6C1F006E42A3 /* browser.js in Resources */ = {isa = PBXBuildFile; fileRef = 35E67C662CBF6C1F006E42A3 /* browser.js */; };
 		35E67C752CBF6E4F006E42A3 /* RSM+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C742CBF6E48006E42A3 /* RSM+JSON.swift */; };
 		35E67C772CBF6E57006E42A3 /* RSW+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C762CBF6E53006E42A3 /* RSW+JSON.swift */; };
 		35E67C792CBF6E60006E42A3 /* SPR+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C782CBF6E5B006E42A3 /* SPR+JSON.swift */; };
@@ -209,6 +209,7 @@
 		35652B422B960D100075AD71 /* MapDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDatabaseView.swift; sourceTree = "<group>"; };
 		35652B442B960D2D0075AD71 /* MapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
 		35652B462B960D370075AD71 /* MapInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInfoView.swift; sourceTree = "<group>"; };
+		357EA4E12CC14A440081370F /* browser.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = browser.js; sourceTree = "<group>"; };
 		357F96B92C4AA48400B3231B /* ImageGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGrid.swift; sourceTree = "<group>"; };
 		3582FFC52B8C830D00E746D7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3582FFC92B8DB9FE00E746D7 /* FilePreviewTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePreviewTabView.swift; sourceTree = "<group>"; };
@@ -274,7 +275,6 @@
 		35E27A842BC96B3000C11076 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		35E27A8D2BCC112200C11076 /* swift-lua */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-lua"; path = "Packages/swift-lua"; sourceTree = "<group>"; };
 		35E27A8E2BCC112200C11076 /* swift-rathena */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-rathena"; path = "Packages/swift-rathena"; sourceTree = "<group>"; };
-		35E67C662CBF6C1F006E42A3 /* browser.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = browser.js; sourceTree = "<group>"; };
 		35E67C682CBF6C1F006E42A3 /* ACT+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ACT+JSON.swift"; sourceTree = "<group>"; };
 		35E67C692CBF6C1F006E42A3 /* FileJSONViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileJSONViewer.swift; sourceTree = "<group>"; };
 		35E67C6A2CBF6C1F006E42A3 /* GAT+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GAT+JSON.swift"; sourceTree = "<group>"; };
@@ -444,6 +444,14 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
+		357EA4E22CC14A440081370F /* json-viewer */ = {
+			isa = PBXGroup;
+			children = (
+				357EA4E12CC14A440081370F /* browser.js */,
+			);
+			path = "json-viewer";
+			sourceTree = "<group>";
+		};
 		3582FFC42B8C820E00E746D7 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -607,18 +615,10 @@
 			name = Packages;
 			sourceTree = "<group>";
 		};
-		35E67C672CBF6C1F006E42A3 /* json-viewer */ = {
-			isa = PBXGroup;
-			children = (
-				35E67C662CBF6C1F006E42A3 /* browser.js */,
-			);
-			path = "json-viewer";
-			sourceTree = "<group>";
-		};
 		35E67C6D2CBF6C1F006E42A3 /* FileJSONViewer */ = {
 			isa = PBXGroup;
 			children = (
-				35E67C672CBF6C1F006E42A3 /* json-viewer */,
+				357EA4E22CC14A440081370F /* json-viewer */,
 				35E67C692CBF6C1F006E42A3 /* FileJSONViewer.swift */,
 				35E67C6C2CBF6C1F006E42A3 /* ObservableFile+JSON.swift */,
 				35E67C7C2CBF909E006E42A3 /* Miscellaneous+JSON.swift */,
@@ -743,7 +743,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				35B3B8DF2A08BEA700B4540B /* Preview Assets.xcassets in Resources */,
-				35E67C732CBF6C1F006E42A3 /* browser.js in Resources */,
+				357EA4E32CC14A440081370F /* browser.js in Resources */,
 				3506D11F2C00EF5400903A47 /* Localizable.xcstrings in Resources */,
 				35B3B9FA2A08C01600B4540B /* wall.jpg in Resources */,
 				35B3B8DC2A08BEA700B4540B /* Assets.xcassets in Resources */,

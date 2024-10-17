@@ -52,6 +52,7 @@ struct MessagesView: View {
             .scrollIndicators(.never)
             .background(.bar)
         }
+        .background(.background)
         .navigationTitle("Messages")
         .alert(pendingCommand?.rawValue ?? "", isPresented: $isCommandAlertPresented) {
             ForEach(0..<(pendingCommand?.arguments.count ?? 0), id: \.self) { index in

@@ -48,6 +48,7 @@ struct MapInfoView: View {
                 }
             }
         }
+        .background(.background)
         .navigationTitle(map.name)
         .task {
             await loadMapInfo()

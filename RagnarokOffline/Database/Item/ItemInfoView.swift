@@ -104,6 +104,7 @@ struct ItemInfoView: View {
                 }
             }
         }
+        .background(.background)
         .navigationTitle(title)
         .task {
             await loadItemInfo()

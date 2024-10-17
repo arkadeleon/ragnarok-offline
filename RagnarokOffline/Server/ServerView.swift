@@ -24,7 +24,9 @@ struct ServerView: View {
                         .padding(15)
                 }
                 .buttonStyle(.bordered)
+                #if !os(macOS)
                 .buttonBorderShape(.circle)
+                #endif
             }
         }
         .navigationTitle(server.name)

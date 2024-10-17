@@ -15,6 +15,7 @@ struct GameButton: View {
         Button(action: action) {
             GameImage(imageName)
         }
+        .buttonStyle(.plain)
     }
 
     init(_ imageName: String, action: @escaping () -> Void) {

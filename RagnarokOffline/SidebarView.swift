@@ -88,20 +88,20 @@ struct SidebarView: View {
                     Label("Server Files", systemImage: "folder")
                 }
                 #endif
+
+                Button {
+                    startAllServers()
+                } label: {
+                    Label("Start All Servers", systemImage: "play")
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.link)
             } header: {
-                HStack {
+                HStack(spacing: 16) {
                     Text("Server")
                         .font(.title3)
                         .fontWeight(.semibold)
                         .foregroundStyle(Color.primary)
-
-                    Spacer()
-
-                    Button {
-                        startAllServers()
-                    } label: {
-                        Label("Start All", systemImage: "play")
-                    }
                 }
                 .textCase(nil)
             }
