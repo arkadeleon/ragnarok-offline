@@ -4,16 +4,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "ro-tools",
+    name: "swift-ro-tools",
     platforms: [
         .macOS(.v15),
     ],
     products: [
         .executable(
             name: "generate-code",
-            targets: [
-                "ROCodeGenerator",
-            ]
+            targets: ["ROCodeGenerator"]
         ),
     ],
     dependencies: [
