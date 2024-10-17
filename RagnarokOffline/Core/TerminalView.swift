@@ -7,6 +7,21 @@
 
 import SwiftUI
 
+#if os(macOS)
+
+struct TerminalViewContainer: NSViewRepresentable {
+    var terminalView: TerminalView
+
+    func makeNSView(context: Context) -> TerminalView {
+        return terminalView
+    }
+
+    func updateNSView(_ nsView: TerminalView, context: Context) {
+    }
+}
+
+#else
+
 struct TerminalViewContainer: UIViewRepresentable {
     var terminalView: TerminalView
 
@@ -14,9 +29,11 @@ struct TerminalViewContainer: UIViewRepresentable {
         return terminalView
     }
 
-    func updateUIView(_ uiView: UIViewType, context: Context) {
+    func updateUIView(_ uiView: TerminalView, context: Context) {
     }
 }
+
+#endif
 
 #if os(iOS)
 
@@ -50,13 +67,13 @@ class TerminalView: UIView {
 import SwiftTerm
 
 class TerminalView: SwiftTerm.TerminalView {
-    override var canBecomeFirstResponder: Bool {
-        false
-    }
-
-    override var canBecomeFocused: Bool {
-        false
-    }
+//    override var canBecomeFirstResponder: Bool {
+//        false
+//    }
+//
+//    override var canBecomeFocused: Bool {
+//        false
+//    }
 }
 
 #endif

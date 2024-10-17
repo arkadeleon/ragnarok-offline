@@ -56,7 +56,9 @@ struct MessagesView: View {
         .alert(pendingCommand?.rawValue ?? "", isPresented: $isCommandAlertPresented) {
             ForEach(0..<(pendingCommand?.arguments.count ?? 0), id: \.self) { index in
                 TextField(pendingCommand?.arguments[index] ?? "", text: $commandParameters[index])
+                    #if !os(macOS)
                     .textInputAutocapitalization(.never)
+                    #endif
                     .disableAutocorrection(true)
             }
 

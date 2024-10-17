@@ -15,6 +15,21 @@ struct FilePreviewTabView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
+        #if os(macOS)
+        FilePreviewView(file: currentFile)
+            .frame(width: 400, height: 400)
+            .navigationTitle(currentFile.file.name)
+            .toolbar {
+                ToolbarItem(placement: .automatic) {
+                    ShareLink(item: currentFile, preview: SharePreview(currentFile.file.name))
+                }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                }
+            }
+        #else
         TabView(selection: $currentFile) {
             ForEach(files) { file in
                 FilePreviewView(file: file)
@@ -23,10 +38,11 @@ struct FilePreviewTabView: View {
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
         .navigationTitle(currentFile.file.name)
-        #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)
-        #endif
         .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                ShareLink(item: currentFile, preview: SharePreview(currentFile.file.name))
+            }
             ToolbarItem(placement: .topBarLeading) {
                 Button {
                     dismiss()
@@ -35,10 +51,6 @@ struct FilePreviewTabView: View {
                 }
             }
         }
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                ShareLink(item: currentFile, preview: SharePreview(currentFile.file.name))
-            }
-        }
+        #endif
     }
 }

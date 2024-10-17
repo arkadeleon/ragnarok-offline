@@ -5,11 +5,11 @@
 //  Created by Leon Li on 2024/4/25.
 //
 
-#if !os(visionOS)
-
 import MetalKit
 import RORenderers
 import SwiftUI
+
+#if os(iOS)
 
 struct MetalViewContainer: UIViewRepresentable {
     var renderer: any Renderer
@@ -70,6 +70,79 @@ class MetalView: UIView, MTKViewDelegate {
 
         commandBuffer.present(drawable)
         commandBuffer.commit()
+    }
+}
+
+#elseif os(macOS)
+
+struct MetalViewContainer: NSViewRepresentable {
+    var renderer: any Renderer
+
+    func makeNSView(context: Context) -> MetalView {
+        MetalView(renderer: renderer)
+    }
+
+    func updateNSView(_ metalView: MetalView, context: Context) {
+    }
+}
+
+class MetalView: NSView, MTKViewDelegate {
+    let renderer: any Renderer
+    let commandQueue: any MTLCommandQueue
+
+    private var mtkView: MTKView!
+
+    init(renderer: any Renderer) {
+        self.renderer = renderer
+
+        commandQueue = renderer.device.makeCommandQueue()!
+
+        super.init(frame: .zero)
+
+        mtkView = MTKView()
+        mtkView.autoresizingMask = [.width, .height]
+        mtkView.delegate = self
+        mtkView.device = renderer.device
+        mtkView.colorPixelFormat = renderer.colorPixelFormat
+        mtkView.depthStencilPixelFormat = renderer.depthStencilPixelFormat
+        mtkView.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
+        addSubview(mtkView)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+    }
+
+    func draw(in view: MTKView) {
+        guard let commandBuffer = commandQueue.makeCommandBuffer() else {
+            return
+        }
+
+        guard let drawable = view.currentDrawable,
+              let renderPassDescriptor = view.currentRenderPassDescriptor
+        else {
+            return
+        }
+
+        let time = CACurrentMediaTime()
+
+        renderer.render(atTime: time, viewport: view.bounds, commandBuffer: commandBuffer, renderPassDescriptor: renderPassDescriptor)
+
+        commandBuffer.present(drawable)
+        commandBuffer.commit()
+    }
+}
+
+#else
+
+struct MetalViewContainer: View {
+    var renderer: any Renderer
+
+    var body: some View {
+        EmptyView()
     }
 }
 

@@ -16,11 +16,15 @@ struct DatabaseView<RecordProvider, Content, Empty>: View where RecordProvider: 
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     private var searchFieldPlacement: SearchFieldPlacement {
+        #if os(macOS)
+        .automatic
+        #else
         if horizontalSizeClass == .compact {
             .navigationBarDrawer(displayMode: .always)
         } else {
             .automatic
         }
+        #endif
     }
 
     var body: some View {
