@@ -7,18 +7,28 @@
 
 import Foundation
 
-public protocol BinaryEncodable {
-    func encode(to encoder: BinaryEncoder) throws
-}
-
 public enum BinaryEncodingError: Error {
     case invalidValue(Any)
 }
 
-public class BinaryEncoder {
-    var data = Data()
+public protocol BinaryEncodable {
+    func encode(to encoder: BinaryEncoder) throws
+}
 
-    public func encode<T: FixedWidthInteger>(_ value: T) throws {
+public protocol BinaryEncodableWithConfiguration {
+    associatedtype BinaryEncodingConfiguration
+
+    func encode(to encoder: BinaryEncoder, configuration: BinaryEncodingConfiguration) throws
+}
+
+public class BinaryEncoder {
+    public private(set) var data: Data
+
+    public init() {
+        data = Data()
+    }
+
+    public func encode<T>(_ value: T) throws where T: FixedWidthInteger {
         let bytes = withUnsafeBytes(of: value, [UInt8].init)
         self.data.append(contentsOf: bytes)
     }
@@ -39,14 +49,21 @@ public class BinaryEncoder {
         self.data.append(data)
     }
 
-    public func encode<T: BinaryEncodable>(_ value: T) throws {
+    public func encode<T>(_ value: T) throws where T: BinaryEncodable {
         let encoder = BinaryEncoder()
         try value.encode(to: encoder)
         let data = encoder.data
         self.data.append(data)
     }
+    
+    public func encode<T>(_ value: T, configuration: T.BinaryEncodingConfiguration) throws where T: BinaryEncodableWithConfiguration {
+        let encoder = BinaryEncoder()
+        try value.encode(to: encoder, configuration: configuration)
+        let data = encoder.data
+        self.data.append(data)
+    }
 
-    public func encode<T: BinaryEncodable>(_ value: T, length: Int) throws {
+    public func encode<T>(_ value: T, length: Int) throws where T: BinaryEncodable {
         let encoder = BinaryEncoder()
         try value.encode(to: encoder)
         var data = encoder.data

@@ -7,22 +7,28 @@
 
 import Foundation
 
-public protocol BinaryDecodable {
-    init(from decoder: BinaryDecoder) throws
-}
-
 public enum BinaryDecodingError: Error {
     case dataCorrupted
 }
 
-public class BinaryDecoder {
-    var data: Data
+public protocol BinaryDecodable {
+    init(from decoder: BinaryDecoder) throws
+}
 
-    init(data: Data) {
+public protocol BinaryDecodableWithConfiguration {
+    associatedtype BinaryDecodingConfiguration
+
+    init(from decoder: BinaryDecoder, configuration: BinaryDecodingConfiguration) throws
+}
+
+public class BinaryDecoder {
+    public private(set) var data: Data
+
+    public init(data: Data) {
         self.data = data
     }
 
-    public func decode<T: FixedWidthInteger>(_ type: T.Type) throws -> T {
+    public func decode<T>(_ type: T.Type) throws -> T where T: FixedWidthInteger {
         let length = type.bitWidth / 8
         let data = self.data.prefix(length)
         guard data.count == length else {
@@ -64,12 +70,17 @@ public class BinaryDecoder {
         return string
     }
 
-    public func decode<T: BinaryDecodable>(_ type: T.Type) throws -> T {
+    public func decode<T>(_ type: T.Type) throws -> T where T: BinaryDecodable {
         let value = try type.init(from: self)
         return value
     }
 
-    public func decode<T: BinaryDecodable>(_ type: T.Type, length: Int) throws -> T {
+    public func decode<T>(_ type: T.Type, configuration: T.BinaryDecodingConfiguration) throws -> T where T: BinaryDecodableWithConfiguration {
+        let value = try type.init(from: self, configuration: configuration)
+        return value
+    }
+
+    public func decode<T>(_ type: T.Type, length: Int) throws -> T where T: BinaryDecodable {
         let data = self.data.prefix(length)
         guard data.count == length else {
             throw BinaryDecodingError.dataCorrupted
