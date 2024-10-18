@@ -68,32 +68,12 @@ extension ACT {
                 frameLayer.addSublayer(caLayer)
             }
 
-            let width = Int(bounds.width)
-            let height = Int(bounds.height)
-            let colorSpace = CGColorSpaceCreateDeviceRGB()
-            let bitmapInfo = CGImageAlphaInfo.premultipliedFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
-
-            guard let cgContext = CGContext(
-                data: nil,
-                width: width,
-                height: height,
-                bitsPerComponent: 8,
-                bytesPerRow: width * 4,
-                space: colorSpace,
-                bitmapInfo: bitmapInfo
-            ) else {
-                return nil
+            let renderer = GraphicsImageRenderer(size: bounds.size)
+            let cgImage = renderer.image { cgContext in
+                cgContext.translateBy(x: -bounds.origin.x, y: -bounds.origin.y)
+                frameLayer.render(in: cgContext)
             }
-
-            // Flip vertically
-            let transform = CGAffineTransform(1, 0, 0, -1, 0, bounds.height)
-            cgContext.concatenate(transform)
-
-            cgContext.translateBy(x: -bounds.origin.x, y: -bounds.origin.y)
-            frameLayer.render(in: cgContext)
-            cgContext.translateBy(x: bounds.origin.x, y: bounds.origin.y)
-
-            return cgContext.makeImage()
+            return cgImage
         }
         let delay = CGFloat(action.animationSpeed * 25 / 1000)
         let animatedImage = AnimatedImage(images: images, delay: delay)
