@@ -10,7 +10,7 @@ let package = Package(
     ],
     products: [
         .executable(
-            name: "generate-code",
+            name: "code-generator",
             targets: ["ROCodeGenerator"]
         ),
     ],

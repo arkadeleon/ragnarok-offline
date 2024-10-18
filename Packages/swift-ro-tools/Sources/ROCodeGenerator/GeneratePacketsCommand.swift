@@ -1,8 +1,8 @@
 //
-//  GenerateCode.swift
-//  ROCodeGenerator
+//  GeneratePacketsCommand.swift
+//  ROTools
 //
-//  Created by Leon Li on 2024/10/10.
+//  Created by Leon Li on 2024/10/18.
 //
 
 import ArgumentParser
@@ -10,12 +10,13 @@ import Foundation
 import SwiftSyntax
 import SwiftSyntaxBuilder
 
-@main
-struct GenerateCode: ParsableCommand {
+struct GeneratePacketsCommand: ParsableCommand {
+    static let configuration = CommandConfiguration(commandName: "generate-packets")
+
     @Argument(transform: { URL(filePath: $0, directoryHint: .isDirectory) })
     var rathenaDirectory: URL
 
-    @Argument(transform: { URL(filePath: $0, directoryHint: .isDirectory) })
+    @Argument(transform: { URL(filePath: $0, directoryHint: .isDirectory).appending(path: "Packets") })
     var generatedDirectory: URL
 
     mutating func run() throws {
@@ -23,7 +24,6 @@ struct GenerateCode: ParsableCommand {
         try? FileManager.default.createDirectory(at: generatedDirectory, withIntermediateDirectories: true)
 
         try generatePackets()
-        try convertConstants()
 //        try generatePacketHeaders()
 //        try generatePacketDatabase()
     }
@@ -41,6 +41,7 @@ struct GenerateCode: ParsableCommand {
         public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (Int16, Int16, String?, [Int]) -> Void, PACKETVER: Int, PACKETVER_MAIN_NUM: Int, PACKETVER_RE_NUM: Int, PACKETVER_ZERO_NUM: Int) {
         \(packetdbLines)
         }
+        
         """
 
         let shuffleLine = try outputLines(for: shuffleURL)
@@ -50,6 +51,7 @@ struct GenerateCode: ParsableCommand {
         public func add_packets_shuffle(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (Int16, Int16, String?, [Int]) -> Void, PACKETVER: Int, PACKETVER_MAIN_NUM: Int, PACKETVER_RE_NUM: Int, PACKETVER_ZERO_NUM: Int) {
         \(shuffleLine)
         }
+        
         """
 
         let packetdbOutputURL = generatedDirectory.appending(path: "packets.swift")
@@ -136,21 +138,6 @@ struct GenerateCode: ParsableCommand {
         }
 
         return output
-    }
-
-    // MARK: - Convert Constants
-
-    func convertConstants() throws {
-        let converter = ConstantConverter(rathenaDirectory: rathenaDirectory)
-        for conversion in allConstantConversions {
-            let outputContents = try converter.convert(conversion: conversion)
-
-            let outputDirectory = generatedDirectory.appending(path: "Constants")
-            try FileManager.default.createDirectory(at: outputDirectory, withIntermediateDirectories: true)
-
-            let outputURL = outputDirectory.appending(path: "\(conversion.outputType).swift")
-            try outputContents.write(to: outputURL, atomically: true, encoding: .utf8)
-        }
     }
 
     // MARK: - Generate Packet Headers
