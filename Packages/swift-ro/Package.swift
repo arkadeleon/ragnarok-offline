@@ -123,7 +123,10 @@ let package = Package(
                 .swiftLanguageMode(.v5),
             ]),
         .target(
-            name: "ROGenerated"),
+            name: "ROGenerated",
+            dependencies: [
+                "ROCore",
+            ]),
         .target(
             name: "ROLocalizations",
             dependencies: [
