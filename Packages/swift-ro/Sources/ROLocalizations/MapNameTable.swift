@@ -11,17 +11,17 @@ final public class MapNameTable: Sendable {
     public static let shared = MapNameTable(locale: .current)
 
     let locale: Locale
-    let nameTable: [String : String]
+    let mapNamesByRSW: [String : String]
 
     init(locale: Locale) {
         self.locale = locale
 
-        nameTable = {
+        mapNamesByRSW = {
             guard let string = Bundle.module.string(forResource: "mapnametable", withExtension: "txt", encoding: .isoLatin1, locale: locale) else {
                 return [:]
             }
 
-            var nameTable: [String : String] = [:]
+            var mapNamesByRSW: [String : String] = [:]
 
             let lines = string.split(separator: "\r\n")
             let encoding = locale.language.preferredEncoding
@@ -33,20 +33,20 @@ final public class MapNameTable: Sendable {
 
                 let columns = line.split(separator: "#")
                 if columns.count >= 2 {
-                    let mapName = columns[0]
+                    let rsw = columns[0]
                         .replacingOccurrences(of: ".rsw", with: "")
-                    let mapDisplayName = columns[1]
+                    let mapName = columns[1]
                         .trimmingCharacters(in: .whitespaces)
                         .transcoding(from: .isoLatin1, to: encoding)
-                    nameTable[mapName] = mapDisplayName
+                    mapNamesByRSW[rsw] = mapName
                 }
             }
 
-            return nameTable
+            return mapNamesByRSW
         }()
     }
 
     public func localizedMapName(forMapName mapName: String) -> String? {
-        nameTable[mapName]
+        mapNamesByRSW[mapName]
     }
 }

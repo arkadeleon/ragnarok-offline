@@ -20,7 +20,6 @@ public actor ClientResourceManager {
 
     let grfs: [GRFReference]
 
-    private let resourceNameTable = ResourceNameTable()
     private let cache = NSCache<NSString, CGImage>()
 
     public init() {
@@ -159,7 +158,7 @@ public actor ClientResourceManager {
     // MARK: - data\texture
 
     public func itemIconImage(forItemID itemID: Int) async -> CGImage? {
-        guard let resourceName = resourceNameTable.identifiedItemResourceName(forItemID: itemID) else {
+        guard let resourceName = ItemInfoTable.shared.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
 
@@ -169,7 +168,7 @@ public actor ClientResourceManager {
     }
 
     public func itemPreviewImage(forItemID itemID: Int) async -> CGImage? {
-        guard let resourceName = resourceNameTable.identifiedItemResourceName(forItemID: itemID) else {
+        guard let resourceName = ItemInfoTable.shared.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
 

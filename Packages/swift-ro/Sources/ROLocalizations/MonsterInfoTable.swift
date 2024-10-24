@@ -13,7 +13,7 @@ final public class MonsterInfoTable: Sendable {
 
     let locale: Locale
     let context: LuaContext
-    let namesByID: [Int : String]
+    let monsterNamesByID: [Int : String]
 
     init(locale: Locale) {
         self.locale = locale
@@ -44,12 +44,12 @@ final public class MonsterInfoTable: Sendable {
             return context
         }()
 
-        namesByID = {
+        monsterNamesByID = {
             guard let string = Bundle.module.string(forResource: "mobname", withExtension: "txt", encoding: .utf8, locale: locale) else {
                 return [:]
             }
 
-            var nameTable: [Int : String] = [:]
+            var monsterNamesByID: [Int : String] = [:]
 
             let lines = string.split(separator: "\n")
             for line in lines {
@@ -61,12 +61,12 @@ final public class MonsterInfoTable: Sendable {
                 if columns.count >= 2 {
                     if let monsterID = Int(String(columns[0])) {
                         let monsterName = String(columns[1])
-                        nameTable[monsterID] = monsterName
+                        monsterNamesByID[monsterID] = monsterName
                     }
                 }
             }
 
-            return nameTable
+            return monsterNamesByID
         }()
     }
 
@@ -76,6 +76,6 @@ final public class MonsterInfoTable: Sendable {
     }
 
     public func localizedMonsterName(forMonsterID monsterID: Int) -> String? {
-        namesByID[monsterID]
+        monsterNamesByID[monsterID]
     }
 }

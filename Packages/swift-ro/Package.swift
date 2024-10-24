@@ -57,9 +57,7 @@ let package = Package(
                 "ROFileFormats",
                 "ROFileSystem",
                 "ROGenerated",
-            ],
-            resources: [
-                .process("Resources"),
+                "ROLocalizations",
             ]),
         .target(
             name: "ROCore"),

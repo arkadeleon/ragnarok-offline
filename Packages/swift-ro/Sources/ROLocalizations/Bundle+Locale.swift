@@ -22,7 +22,3 @@ extension Bundle {
         return string
     }
 }
-
-extension Locale {
-    public static let korean = Locale(languageCode: .korean)
-}
