@@ -16,18 +16,17 @@ class ObservableServer {
 
     let name: String
     var status: ServerStatus
+    var messages: [AttributedString]
 
-    let terminalView: TerminalView
-
-    @ObservationIgnored private var subscriptions = Set<AnyCancellable>()
+    @ObservationIgnored
+    private var subscriptions = Set<AnyCancellable>()
 
     init(server: Server) {
         self.server = server
 
         name = server.name
         status = server.status
-
-        terminalView = TerminalView()
+        messages = []
 
         server.statusPublisher
             .receive(on: RunLoop.main)
@@ -35,14 +34,27 @@ class ObservableServer {
             .store(in: &subscriptions)
 
         server.outputDataPublisher
-            .compactMap { data in
-                String(data: data, encoding: .isoLatin1)?
-                    .replacingOccurrences(of: "\n", with: "\r\n")
+            .compactMap {
+                String(data: $0, encoding: .isoLatin1)
             }
-            .collect(.byTime(RunLoop.main, .milliseconds(500)))
-            .sink { [weak self] texts in
-                self?.terminalView.feed(text: texts.joined())
+            .scan([AttributedString]()) {
+                var result = $0
+                if let last = result.last, last.characters.last == "\r" {
+                    result.removeLast()
+                }
+                let output = $1
+                let lines = output.split(separator: "\n")
+                for line in lines where !line.isEmpty {
+                    let attributedString = attributedStringForServerOutput(String(line))
+                    result.append(attributedString)
+                }
+                if result.count > 1000 {
+                    result.removeLast(result.count - 1000)
+                }
+                return result
             }
+            .throttle(for: 0.1, scheduler: RunLoop.main, latest: true)
+            .assign(to: \.messages, on: self)
             .store(in: &subscriptions)
     }
 

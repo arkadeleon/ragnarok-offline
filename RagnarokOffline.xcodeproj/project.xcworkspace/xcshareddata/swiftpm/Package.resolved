@@ -26,24 +26,6 @@
         "revision" : "0687f71944021d616d34d922343dcef086855920",
         "version" : "600.0.1"
       }
-    },
-    {
-      "identity" : "swiftterm",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/migueldeicaza/SwiftTerm.git",
-      "state" : {
-        "branch" : "main",
-        "revision" : "d59364294704280e435c42c6343e2d2b76b930e3"
-      }
-    },
-    {
-      "identity" : "terminal",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/dnpp73/Terminal.git",
-      "state" : {
-        "revision" : "407d3ed9d88da9c4c7518e72f7bfbe2cd5cf0b49",
-        "version" : "0.3.4"
-      }
     }
   ],
   "version" : 2

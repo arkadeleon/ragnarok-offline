@@ -49,6 +49,8 @@
 		3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */; };
 		352B140F2C22DCA40097E643 /* ObservableMonster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B140E2C22DCA40097E643 /* ObservableMonster.swift */; };
 		352B14112C2433A20097E643 /* rAthenaResources in Frameworks */ = {isa = PBXBuildFile; productRef = 352B14102C2433A20097E643 /* rAthenaResources */; };
+		3536BDAD2CCA72840098950E /* ConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3536BDAC2CCA72840098950E /* ConsoleView.swift */; };
+		3536BDAF2CCA8E030098950E /* ConsoleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3536BDAE2CCA8DFE0098950E /* ConsoleColor.swift */; };
 		353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 353AFBDB2BC779BE00F613A8 /* RODatabase */; };
 		353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */; };
 		353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F172B44FFE100605E92 /* SkillInfoView.swift */; };
@@ -56,7 +58,6 @@
 		354668C52CA9338500CE2D11 /* TextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354668C42CA9338000CE2D11 /* TextMessage.swift */; };
 		354668C72CA9344600CE2D11 /* CommandMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354668C62CA9344100CE2D11 /* CommandMessage.swift */; };
 		3546C3D32C6D9DC9002A1321 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3546C3D22C6D9DC9002A1321 /* Conversation.swift */; };
-		3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555E1162B7D12D9007CE4BA /* TerminalView.swift */; };
 		355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC18B2B8F25C0002F0586 /* WebView.swift */; };
 		355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC1912B9056E5002F0586 /* FileContextMenu.swift */; };
 		35652B432B960D100075AD71 /* MapDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B422B960D100075AD71 /* MapDatabaseView.swift */; };
@@ -67,7 +68,6 @@
 		3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC52B8C830D00E746D7 /* SettingsView.swift */; };
 		3582FFCA2B8DB9FE00E746D7 /* FilePreviewTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC92B8DB9FE00E746D7 /* FilePreviewTabView.swift */; };
 		3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */; };
-		358362CD2BD55D4000821500 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, xros, ); productRef = 358362CC2BD55D4000821500 /* SwiftTerm */; };
 		358D4C612BC6EBB500FAF45D /* Lua in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C602BC6EBB500FAF45D /* Lua */; };
 		358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C662BC7707400FAF45D /* ROFileFormats */; };
 		358D4C692BC7707400FAF45D /* ROFileSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C682BC7707400FAF45D /* ROFileSystem */; };
@@ -82,7 +82,6 @@
 		35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */; };
 		35B33BA22BF3BDCE00EF28F5 /* CubeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA12BF3BDCE00EF28F5 /* CubeViewController.swift */; };
 		35B33BA52BF465E700EF28F5 /* CubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA42BF465E700EF28F5 /* CubeView.swift */; };
-		35B367452BD6AE700018ED27 /* Terminal in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 35B367442BD6AE700018ED27 /* Terminal */; };
 		35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */; };
 		35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D92A08BEA600B4540B /* ContentView.swift */; };
 		35B3B8DC2A08BEA700B4540B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B3B8DB2A08BEA700B4540B /* Assets.xcassets */; };
@@ -197,13 +196,14 @@
 		352B140E2C22DCA40097E643 /* ObservableMonster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMonster.swift; sourceTree = "<group>"; };
 		3535EC802CC0A6890012ACF0 /* swift-ro-tools */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-ro-tools"; path = "Packages/swift-ro-tools"; sourceTree = "<group>"; };
 		3535EC812CC0D69E0012ACF0 /* RagnarokOffline.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RagnarokOffline.entitlements; sourceTree = "<group>"; };
+		3536BDAC2CCA72840098950E /* ConsoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleView.swift; sourceTree = "<group>"; };
+		3536BDAE2CCA8DFE0098950E /* ConsoleColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleColor.swift; sourceTree = "<group>"; };
 		353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillDatabaseView.swift; sourceTree = "<group>"; };
 		353B4F172B44FFE100605E92 /* SkillInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillInfoView.swift; sourceTree = "<group>"; };
 		353B4F1B2B451F1300605E92 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		354668C42CA9338000CE2D11 /* TextMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessage.swift; sourceTree = "<group>"; };
 		354668C62CA9344100CE2D11 /* CommandMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandMessage.swift; sourceTree = "<group>"; };
 		3546C3D22C6D9DC9002A1321 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
-		3555E1162B7D12D9007CE4BA /* TerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
 		355BC18B2B8F25C0002F0586 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		355BC1912B9056E5002F0586 /* FileContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileContextMenu.swift; sourceTree = "<group>"; };
 		35652B422B960D100075AD71 /* MapDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDatabaseView.swift; sourceTree = "<group>"; };
@@ -296,10 +296,8 @@
 				3519901F2BC837320082EB0E /* rAthenaWeb in Frameworks */,
 				351990122BC837320082EB0E /* rAthenaChar in Frameworks */,
 				358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */,
-				358362CD2BD55D4000821500 /* SwiftTerm in Frameworks */,
 				35BDF7022C9B080000CCAB8F /* ROLocalizations in Frameworks */,
 				358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */,
-				35B367452BD6AE700018ED27 /* Terminal in Frameworks */,
 				350458162C89787E003FF3D6 /* ROGame in Frameworks */,
 				351990152BC837320082EB0E /* rAthenaCommon in Frameworks */,
 				351990172BC837320082EB0E /* rAthenaLogin in Frameworks */,
@@ -415,6 +413,7 @@
 			children = (
 				35BE55342BD9574E003715C3 /* AnimatedImageView.swift */,
 				35BE552E2BD94053003715C3 /* AsyncContentView.swift */,
+				3536BDAC2CCA72840098950E /* ConsoleView.swift */,
 				35239E022BC29F660039F7D5 /* EmptyContentView.swift */,
 				357F96B92C4AA48400B3231B /* ImageGrid.swift */,
 				3599BD582C3FCE7A0010DBE7 /* ImageGridCell.swift */,
@@ -423,7 +422,6 @@
 				3594DD562BF5FCB600575F3D /* ModelViewer.swift */,
 				35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */,
 				35B422E12BEDEBD000681AA2 /* ResponsiveView.swift */,
-				3555E1162B7D12D9007CE4BA /* TerminalView.swift */,
 				351EE2F72C0735390012BC9E /* TransferableAnimatedImage.swift */,
 				351EE2F62C0735390012BC9E /* TransferableImage.swift */,
 				355BC18B2B8F25C0002F0586 /* WebView.swift */,
@@ -468,6 +466,7 @@
 				351468DC2C50F53A0061D7F9 /* ServerCell.swift */,
 				35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */,
 				35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */,
+				3536BDAE2CCA8DFE0098950E /* ConsoleColor.swift */,
 			);
 			path = Server;
 			sourceTree = "<group>";
@@ -675,8 +674,6 @@
 				351990162BC837320082EB0E /* rAthenaLogin */,
 				351990192BC837320082EB0E /* rAthenaMap */,
 				3519901E2BC837320082EB0E /* rAthenaWeb */,
-				358362CC2BD55D4000821500 /* SwiftTerm */,
-				35B367442BD6AE700018ED27 /* Terminal */,
 				352B14102C2433A20097E643 /* rAthenaResources */,
 				350458152C89787E003FF3D6 /* ROGame */,
 				35BDF7012C9B080000CCAB8F /* ROLocalizations */,
@@ -725,8 +722,6 @@
 			);
 			mainGroup = 35B3B8CB2A08BEA600B4540B;
 			packageReferences = (
-				358362CB2BD55D4000821500 /* XCRemoteSwiftPackageReference "SwiftTerm" */,
-				35B367432BD6AE700018ED27 /* XCRemoteSwiftPackageReference "Terminal" */,
 			);
 			productRefGroup = 35B3B8D52A08BEA600B4540B /* Products */;
 			projectDirPath = "";
@@ -781,6 +776,7 @@
 				35B422ED2BEF07C100681AA2 /* DatabaseView.swift in Sources */,
 				35B422F42BEF602500681AA2 /* StatusChangeDatabaseView.swift in Sources */,
 				35BF5BE22C65B5D8006A3487 /* SidebarView.swift in Sources */,
+				3536BDAD2CCA72840098950E /* ConsoleView.swift in Sources */,
 				35B422F82BEFA35400681AA2 /* DatabaseRecordDetailView.swift in Sources */,
 				351EE3072C08BF440012BC9E /* ItemNameView.swift in Sources */,
 				35BE55352BD9574E003715C3 /* AnimatedImageView.swift in Sources */,
@@ -809,7 +805,6 @@
 				35E27A852BC96B3000C11076 /* MessageCell.swift in Sources */,
 				355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */,
 				35E67C792CBF6E60006E42A3 /* SPR+JSON.swift in Sources */,
-				3555E1172B7D12D9007CE4BA /* TerminalView.swift in Sources */,
 				35E67C7B2CBF7F4F006E42A3 /* STR+JSON.swift in Sources */,
 				3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */,
 				35B422E02BECAB6E00681AA2 /* MonsterSummonInfoView.swift in Sources */,
@@ -846,6 +841,7 @@
 				35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */,
 				35B422F22BEF5F3000681AA2 /* StatusChangeProvider.swift in Sources */,
 				351EE3032C08B94A0012BC9E /* MapNameView.swift in Sources */,
+				3536BDAF2CCA8E030098950E /* ConsoleColor.swift in Sources */,
 				353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */,
 				35B422DA2BECA87400681AA2 /* ObservableMonsterSummon.swift in Sources */,
 				357F96BA2C4AA48400B3231B /* ImageGrid.swift in Sources */,
@@ -1093,25 +1089,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		358362CB2BD55D4000821500 /* XCRemoteSwiftPackageReference "SwiftTerm" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/migueldeicaza/SwiftTerm.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-		35B367432BD6AE700018ED27 /* XCRemoteSwiftPackageReference "Terminal" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/dnpp73/Terminal.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.3.4;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
 		350458152C89787E003FF3D6 /* ROGame */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1145,11 +1122,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = RODatabase;
 		};
-		358362CC2BD55D4000821500 /* SwiftTerm */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 358362CB2BD55D4000821500 /* XCRemoteSwiftPackageReference "SwiftTerm" */;
-			productName = SwiftTerm;
-		};
 		358D4C602BC6EBB500FAF45D /* Lua */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Lua;
@@ -1169,11 +1141,6 @@
 		358D4C6E2BC7707400FAF45D /* RORenderers */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RORenderers;
-		};
-		35B367442BD6AE700018ED27 /* Terminal */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 35B367432BD6AE700018ED27 /* XCRemoteSwiftPackageReference "Terminal" */;
-			productName = Terminal;
 		};
 		35BDF7012C9B080000CCAB8F /* ROLocalizations */ = {
 			isa = XCSwiftPackageProductDependency;

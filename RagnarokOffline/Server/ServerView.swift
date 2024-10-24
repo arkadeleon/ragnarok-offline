@@ -13,7 +13,7 @@ struct ServerView: View {
 
     var body: some View {
         ZStack {
-            TerminalViewContainer(terminalView: server.terminalView)
+            ConsoleView(messages: server.messages)
 
             if server.status == .notStarted {
                 Button {
@@ -29,14 +29,12 @@ struct ServerView: View {
                 #endif
             }
         }
+        .background(.background)
         .navigationTitle(server.name)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    // Clear entire display: ^[[2J
-                    // Position cursor on top line: ^[[1;1H
-                    let escape = "\u{001B}"
-                    server.terminalView.feed(text: escape + "[2J" + escape + "[1;1H")
+                    server.messages.removeAll()
                 } label: {
                     Image(systemName: "trash")
                 }
