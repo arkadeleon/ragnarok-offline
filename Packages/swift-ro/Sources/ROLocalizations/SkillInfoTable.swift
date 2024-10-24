@@ -21,12 +21,12 @@ final public class SkillInfoTable: Sendable {
             let context = LuaContext()
 
             do {
-                if let url = Bundle.module.url(forResource: "jobinheritlist", withExtension: "lub", locale: locale) {
+                if let url = Bundle.module.url(forResource: "jobinheritlist", withExtension: "lub", locale: .korean) {
                     let data = try Data(contentsOf: url)
                     try context.load(data)
                 }
 
-                if let url = Bundle.module.url(forResource: "skillid", withExtension: "lub", locale: locale) {
+                if let url = Bundle.module.url(forResource: "skillid", withExtension: "lub", locale: .korean) {
                     let data = try Data(contentsOf: url)
                     try context.load(data)
                 }

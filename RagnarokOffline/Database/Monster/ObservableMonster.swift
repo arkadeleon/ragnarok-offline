@@ -102,7 +102,7 @@ class ObservableMonster {
         self.mode = mode
         self.monster = monster
 
-        let localizedName = MonsterNameTable.shared.localizedMonsterName(forMonsterID: monster.id)
+        let localizedName = MonsterInfoTable.shared.localizedMonsterName(forMonsterID: monster.id)
         self.localizedName = localizedName ?? monster.name
     }
 

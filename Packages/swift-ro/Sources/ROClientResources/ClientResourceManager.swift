@@ -11,6 +11,7 @@ import ROCore
 import ROFileFormats
 import ROFileSystem
 import ROGenerated
+import ROLocalizations
 
 public actor ClientResourceManager {
     public static let `default` = ClientResourceManager()
@@ -31,7 +32,7 @@ public actor ClientResourceManager {
     }
 
     public func monsterImage(_ monsterID: Int) async -> CGImage? {
-        guard let resourceName = resourceNameTable.monsterResourceName(forMonsterID: monsterID) else {
+        guard let resourceName = MonsterInfoTable.shared.monsterResourceName(forMonsterID: monsterID) else {
             return nil
         }
 

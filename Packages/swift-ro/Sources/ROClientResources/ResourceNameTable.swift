@@ -37,26 +37,6 @@ final class ResourceNameTable: Sendable {
                 print(error)
             }
 
-            do {
-                if let url = Bundle.module.url(forResource: "npcidentity", withExtension: "lub") {
-                    let data = try Data(contentsOf: url)
-                    try context.load(data)
-                }
-
-                if let url = Bundle.module.url(forResource: "jobname", withExtension: "lub") {
-                    let data = try Data(contentsOf: url)
-                    try context.load(data)
-                }
-
-                try context.parse("""
-                function monsterResourceName(monsterID)
-                    return JobNameTable[monsterID]
-                end
-                """)
-            } catch {
-                print(error)
-            }
-
             return context
         }()
     }
@@ -72,12 +52,5 @@ final class ResourceNameTable: Sendable {
         let encoding = locale.language.preferredEncoding
         let itemResourceName = result.transcoding(from: .isoLatin1, to: encoding)
         return itemResourceName
-    }
-
-    // MARK: - Monster
-
-    func monsterResourceName(forMonsterID monsterID: Int) -> String? {
-        let result = try? context.call("monsterResourceName", with: [monsterID]) as? String
-        return result
     }
 }
