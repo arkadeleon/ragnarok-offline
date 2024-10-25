@@ -52,5 +52,5 @@ struct FileReferencesView: View {
 }
 
 #Preview {
-    FileReferencesView(file: PreviewFiles.gndFile)
+    FileReferencesView(file: .previewGND)
 }

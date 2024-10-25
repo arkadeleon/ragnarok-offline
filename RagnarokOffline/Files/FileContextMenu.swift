@@ -82,8 +82,8 @@ struct FileContextMenu: View {
 }
 
 #Preview {
-    Text(PreviewFiles.rswFile.file.name)
+    Text(ObservableFile.previewRSW.file.name)
         .contextMenu {
-            FileContextMenu(file: PreviewFiles.rswFile)
+            FileContextMenu(file: .previewRSW)
         }
 }

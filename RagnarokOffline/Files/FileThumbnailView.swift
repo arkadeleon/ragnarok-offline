@@ -50,10 +50,10 @@ struct FileThumbnailView: View {
 
 #Preview {
     HStack {
-        FileThumbnailView(file: PreviewFiles.dataDirectory)
-        FileThumbnailView(file: PreviewFiles.gatFile)
-        FileThumbnailView(file: PreviewFiles.gndFile)
-        FileThumbnailView(file: PreviewFiles.rswFile)
-        FileThumbnailView(file: PreviewFiles.sprFile)
+        FileThumbnailView(file: .previewDataDirectory)
+        FileThumbnailView(file: .previewGAT)
+        FileThumbnailView(file: .previewGND)
+        FileThumbnailView(file: .previewRSW)
+        FileThumbnailView(file: .previewSPR)
     }
 }

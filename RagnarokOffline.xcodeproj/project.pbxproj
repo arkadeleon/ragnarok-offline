@@ -75,7 +75,7 @@
 		358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6E2BC7707400FAF45D /* RORenderers */; };
 		3594DD552BF5FB6E00575F3D /* GNDFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3594DD542BF5FB6E00575F3D /* GNDFilePreviewView.swift */; };
 		3594DD572BF5FCB600575F3D /* ModelViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3594DD562BF5FCB600575F3D /* ModelViewer.swift */; };
-		3599BD4A2C3F90250010DBE7 /* PreviewFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3599BD492C3F90250010DBE7 /* PreviewFiles.swift */; };
+		3599BD4A2C3F90250010DBE7 /* ObservableFile+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3599BD492C3F90250010DBE7 /* ObservableFile+Preview.swift */; };
 		3599BD552C3FA4E90010DBE7 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 3599BD542C3FA4E90010DBE7 /* data */; };
 		3599BD572C3FB5020010DBE7 /* FileThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3599BD562C3FB5020010DBE7 /* FileThumbnailView.swift */; };
 		3599BD592C3FCE7A0010DBE7 /* ImageGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3599BD582C3FCE7A0010DBE7 /* ImageGridCell.swift */; };
@@ -217,7 +217,7 @@
 		358362CA2BD558DC00821500 /* RagnarokOffline.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = RagnarokOffline.xctestplan; sourceTree = "<group>"; };
 		3594DD542BF5FB6E00575F3D /* GNDFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNDFilePreviewView.swift; sourceTree = "<group>"; };
 		3594DD562BF5FCB600575F3D /* ModelViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelViewer.swift; sourceTree = "<group>"; };
-		3599BD492C3F90250010DBE7 /* PreviewFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewFiles.swift; sourceTree = "<group>"; };
+		3599BD492C3F90250010DBE7 /* ObservableFile+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableFile+Preview.swift"; sourceTree = "<group>"; };
 		3599BD542C3FA4E90010DBE7 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
 		3599BD562C3FB5020010DBE7 /* FileThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnailView.swift; sourceTree = "<group>"; };
 		3599BD582C3FCE7A0010DBE7 /* ImageGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGridCell.swift; sourceTree = "<group>"; };
@@ -538,7 +538,6 @@
 		35B3B8DD2A08BEA700B4540B /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				3599BD492C3F90250010DBE7 /* PreviewFiles.swift */,
 				3599BD542C3FA4E90010DBE7 /* data */,
 				35B3B8DE2A08BEA700B4540B /* Preview Assets.xcassets */,
 			);
@@ -567,6 +566,7 @@
 				355BC1912B9056E5002F0586 /* FileContextMenu.swift */,
 				351426C32C11BF9600B076BE /* FileReferencesView.swift */,
 				3506D11B2C00526A00903A47 /* ObservableFile.swift */,
+				3599BD492C3F90250010DBE7 /* ObservableFile+Preview.swift */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -860,7 +860,7 @@
 				35239DF92BBDB7B50039F7D5 /* MonsterProvider.swift in Sources */,
 				35B422E22BEDEBD000681AA2 /* ResponsiveView.swift in Sources */,
 				35B422D02BEB68F600681AA2 /* PetProvider.swift in Sources */,
-				3599BD4A2C3F90250010DBE7 /* PreviewFiles.swift in Sources */,
+				3599BD4A2C3F90250010DBE7 /* ObservableFile+Preview.swift in Sources */,
 				351EE2F82C0735390012BC9E /* TransferableAnimatedImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -992,7 +992,7 @@
 				CODE_SIGN_ENTITLEMENTS = RagnarokOffline/RagnarokOffline.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_ASSET_PATHS = "\"RagnarokOffline/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "RagnarokOffline/Preview\\ Content";
 				DEVELOPMENT_TEAM = GG76KD534U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1033,7 +1033,7 @@
 				CODE_SIGN_ENTITLEMENTS = RagnarokOffline/RagnarokOffline.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_ASSET_PATHS = "\"RagnarokOffline/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "RagnarokOffline/Preview\\ Content";
 				DEVELOPMENT_TEAM = GG76KD534U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

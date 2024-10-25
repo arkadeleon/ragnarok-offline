@@ -35,5 +35,5 @@ struct GATFilePreviewView: View {
 }
 
 #Preview {
-    GATFilePreviewView(file: PreviewFiles.gatFile)
+    GATFilePreviewView(file: .previewGAT)
 }

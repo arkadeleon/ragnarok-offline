@@ -57,5 +57,5 @@ struct GNDFilePreviewView: View {
 }
 
 #Preview {
-    GNDFilePreviewView(file: PreviewFiles.gndFile)
+    GNDFilePreviewView(file: .previewGND)
 }

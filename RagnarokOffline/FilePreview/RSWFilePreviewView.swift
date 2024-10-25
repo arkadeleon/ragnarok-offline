@@ -117,5 +117,5 @@ struct RSWFilePreviewView: View {
 }
 
 #Preview {
-    RSWFilePreviewView(file: PreviewFiles.rswFile)
+    RSWFilePreviewView(file: .previewRSW)
 }

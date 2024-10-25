@@ -155,5 +155,5 @@ struct FilesView: View {
 }
 
 #Preview {
-    FilesView(title: "", directory: PreviewFiles.dataDirectory)
+    FilesView(title: "", directory: .previewDataDirectory)
 }

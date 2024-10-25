@@ -51,5 +51,5 @@ struct FileGridCell: View {
 }
 
 #Preview {
-    FileGridCell(file: PreviewFiles.gatFile)
+    FileGridCell(file: .previewGAT)
 }

@@ -115,5 +115,5 @@ struct ACTFilePreviewView: View {
 }
 
 #Preview {
-    ACTFilePreviewView(file: PreviewFiles.actFile)
+    ACTFilePreviewView(file: .previewACT)
 }

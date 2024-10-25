@@ -49,5 +49,5 @@ struct RSMFilePreviewView: View {
 }
 
 #Preview {
-    RSMFilePreviewView(file: PreviewFiles.rmsFile)
+    RSMFilePreviewView(file: .previewRSM)
 }

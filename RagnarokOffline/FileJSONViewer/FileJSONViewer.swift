@@ -72,5 +72,5 @@ struct FileJSONViewer: View {
 }
 
 #Preview {
-    FileJSONViewer(file: PreviewFiles.rswFile)
+    FileJSONViewer(file: .previewRSW)
 }

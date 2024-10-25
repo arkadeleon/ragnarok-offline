@@ -70,5 +70,5 @@ struct SPRFilePreviewView: View {
 }
 
 #Preview {
-    SPRFilePreviewView(file: PreviewFiles.sprFile)
+    SPRFilePreviewView(file: .previewSPR)
 }
