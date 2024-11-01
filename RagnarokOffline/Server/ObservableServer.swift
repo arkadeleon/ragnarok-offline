@@ -45,7 +45,7 @@ class ObservableServer {
                 let output = $1
                 let lines = output.split(separator: "\n")
                 for line in lines where !line.isEmpty {
-                    let attributedString = attributedStringForServerOutput(String(line))
+                    let attributedString = AttributedString(logMessage: String(line))
                     result.append(attributedString)
                 }
                 if result.count > 1000 {

@@ -17,8 +17,6 @@ struct ConsoleView: View {
                     ForEach(0..<messages.count, id: \.self) { index in
                         Text(messages[index])
                             .id(index)
-                            .font(.caption)
-                            .monospaced()
                             .lineLimit(1)
                     }
                 }
