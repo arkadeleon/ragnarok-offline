@@ -6,27 +6,26 @@
 //
 
 import Foundation
-import rAthenaCommon
 import rAthenaResources
 
 public actor MonsterDatabase {
     public static let prerenewal = MonsterDatabase(mode: .prerenewal)
     public static let renewal = MonsterDatabase(mode: .renewal)
 
-    public static func database(for mode: ServerMode) -> MonsterDatabase {
+    public static func database(for mode: DatabaseMode) -> MonsterDatabase {
         switch mode {
         case .prerenewal: .prerenewal
         case .renewal: .renewal
         }
     }
 
-    public let mode: ServerMode
+    public let mode: DatabaseMode
 
     private var cachedMonsters: [Monster] = []
     private var cachedMonstersByID: [Int : Monster] = [:]
     private var cachedMonstersByAegisName: [String : Monster] = [:]
 
-    private init(mode: ServerMode) {
+    private init(mode: DatabaseMode) {
         self.mode = mode
     }
 
@@ -35,7 +34,7 @@ public actor MonsterDatabase {
             let decoder = YAMLDecoder()
 
             let url = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.dbPath)
+                .appendingPathComponent(mode.path)
                 .appendingPathComponent("mob_db.yml")
             let data = try Data(contentsOf: url)
             cachedMonsters = try decoder.decode(ListNode<Monster>.self, from: data).body

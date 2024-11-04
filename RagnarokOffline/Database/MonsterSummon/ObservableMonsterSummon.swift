@@ -6,19 +6,18 @@
 //
 
 import Observation
-import rAthenaCommon
 import RODatabase
 
 @Observable
 @dynamicMemberLookup
 class ObservableMonsterSummon {
-    private let mode: ServerMode
+    private let mode: DatabaseMode
     private let monsterSummon: MonsterSummon
 
     var defaultMonster: ObservableMonster?
     var summonMonsters: [Summon]?
 
-    init(mode: ServerMode, monsterSummon: MonsterSummon) {
+    init(mode: DatabaseMode, monsterSummon: MonsterSummon) {
         self.mode = mode
         self.monsterSummon = monsterSummon
     }

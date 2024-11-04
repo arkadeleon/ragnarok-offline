@@ -6,26 +6,26 @@
 //
 
 import Observation
-import rAthenaCommon
+import RODatabase
 
 protocol DatabaseRecordProvider {
     associatedtype Record
 
-    func records(for mode: ServerMode) async throws -> [Record]
-    func moreRecords(for mode: ServerMode) async throws -> [Record]
+    func records(for mode: DatabaseMode) async throws -> [Record]
+    func moreRecords(for mode: DatabaseMode) async throws -> [Record]
 
     func records(matching searchText: String, in records: [Record]) async -> [Record]
 }
 
 extension DatabaseRecordProvider {
-    func moreRecords(for mode: ServerMode) async throws -> [Record] {
+    func moreRecords(for mode: DatabaseMode) async throws -> [Record] {
         []
     }
 }
 
 @Observable 
 class ObservableDatabase<RecordProvider> where RecordProvider: DatabaseRecordProvider {
-    let mode: ServerMode
+    let mode: DatabaseMode
     let recordProvider: RecordProvider
 
     var loadStatus: LoadStatus = .notYetLoaded
@@ -33,7 +33,7 @@ class ObservableDatabase<RecordProvider> where RecordProvider: DatabaseRecordPro
     var records: [RecordProvider.Record] = []
     var filteredRecords: [RecordProvider.Record] = []
 
-    init(mode: ServerMode, recordProvider: RecordProvider) {
+    init(mode: DatabaseMode, recordProvider: RecordProvider) {
         self.mode = mode
         self.recordProvider = recordProvider
     }

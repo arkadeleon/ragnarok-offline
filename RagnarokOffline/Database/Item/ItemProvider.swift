@@ -5,17 +5,16 @@
 //  Created by Leon Li on 2024/4/3.
 //
 
-import rAthenaCommon
 import RODatabase
 
 struct ItemProvider: DatabaseRecordProvider {
-    func records(for mode: ServerMode) async throws -> [Item] {
+    func records(for mode: DatabaseMode) async throws -> [Item] {
         let database = ItemDatabase.database(for: mode)
         let usableItems = try await database.usableItems()
         return usableItems
     }
 
-    func moreRecords(for mode: ServerMode) async throws -> [Item] {
+    func moreRecords(for mode: DatabaseMode) async throws -> [Item] {
         let database = ItemDatabase.database(for: mode)
         let equipItems = try await database.equipItems()
         let etcItems = try await database.etcItems()

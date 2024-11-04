@@ -6,26 +6,25 @@
 //
 
 import Foundation
-import rAthenaCommon
 import rAthenaResources
 
 public actor MapDatabase {
     public static let prerenewal = MapDatabase(mode: .prerenewal)
     public static let renewal = MapDatabase(mode: .renewal)
 
-    public static func database(for mode: ServerMode) -> MapDatabase {
+    public static func database(for mode: DatabaseMode) -> MapDatabase {
         switch mode {
         case .prerenewal: .prerenewal
         case .renewal: .renewal
         }
     }
 
-    public let mode: ServerMode
+    public let mode: DatabaseMode
 
     private var cachedMaps: [Map] = []
     private var cachedMapsByName: [String : Map] = [:]
 
-    private init(mode: ServerMode) {
+    private init(mode: DatabaseMode) {
         self.mode = mode
     }
 

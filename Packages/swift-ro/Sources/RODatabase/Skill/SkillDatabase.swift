@@ -6,27 +6,26 @@
 //
 
 import Foundation
-import rAthenaCommon
 import rAthenaResources
 
 public actor SkillDatabase {
     public static let prerenewal = SkillDatabase(mode: .prerenewal)
     public static let renewal = SkillDatabase(mode: .renewal)
 
-    public static func database(for mode: ServerMode) -> SkillDatabase {
+    public static func database(for mode: DatabaseMode) -> SkillDatabase {
         switch mode {
         case .prerenewal: .prerenewal
         case .renewal: .renewal
         }
     }
 
-    public let mode: ServerMode
+    public let mode: DatabaseMode
 
     private var cachedSkills: [Skill] = []
     private var cachedSkillsByID: [Int : Skill] = [:]
     private var cachedSkillsByAegisName: [String : Skill] = [:]
 
-    private init(mode: ServerMode) {
+    private init(mode: DatabaseMode) {
         self.mode = mode
     }
 
@@ -35,7 +34,7 @@ public actor SkillDatabase {
             let decoder = YAMLDecoder()
 
             let url = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.dbPath)
+                .appendingPathComponent(mode.path)
                 .appendingPathComponent("skill_db.yml")
             let data = try Data(contentsOf: url)
             cachedSkills = try decoder.decode(ListNode<Skill>.self, from: data).body

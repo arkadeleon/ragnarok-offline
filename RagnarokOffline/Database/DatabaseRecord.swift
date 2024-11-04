@@ -6,7 +6,8 @@
 //
 
 import CoreGraphics
-import rAthenaCommon
+import Foundation
+import RODatabase
 
 struct DatabaseRecordDetail {
     enum Section: Identifiable {
@@ -74,7 +75,7 @@ protocol DatabaseRecord: Hashable, Identifiable {
 
     var recordName: String { get }
 
-    func recordDetail(for mode: ServerMode) async throws -> DatabaseRecordDetail
+    func recordDetail(for mode: DatabaseMode) async throws -> DatabaseRecordDetail
 }
 
 extension DatabaseRecord {

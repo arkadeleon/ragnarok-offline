@@ -6,12 +6,11 @@
 //
 
 import SwiftUI
-import rAthenaCommon
 import ROClientResources
 import RODatabase
 
 struct MapInfoView: View {
-    var mode: ServerMode
+    var mode: DatabaseMode
     var map: Map
 
     typealias SpawnMonster = (monster: ObservableMonster, spawn: MonsterSpawn)

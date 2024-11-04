@@ -5,11 +5,11 @@
 //  Created by Leon Li on 2024/5/11.
 //
 
+import RODatabase
 import SwiftUI
-import rAthenaCommon
 
 struct DatabaseRecordDetailView: View {
-    var mode: ServerMode
+    var mode: DatabaseMode
     var record: any DatabaseRecord
 
     @State private var loadStatus: LoadStatus = .notYetLoaded

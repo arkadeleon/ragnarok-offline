@@ -6,21 +6,20 @@
 //
 
 import Foundation
-import rAthenaCommon
 import rAthenaResources
 
 public actor ItemDatabase {
     public static let prerenewal = ItemDatabase(mode: .prerenewal)
     public static let renewal = ItemDatabase(mode: .renewal)
 
-    public static func database(for mode: ServerMode) -> ItemDatabase {
+    public static func database(for mode: DatabaseMode) -> ItemDatabase {
         switch mode {
         case .prerenewal: .prerenewal
         case .renewal: .renewal
         }
     }
 
-    public let mode: ServerMode
+    public let mode: DatabaseMode
 
     private var cachedUsableItems: [Item] = []
     private var cachedEquipItems: [Item] = []
@@ -29,7 +28,7 @@ public actor ItemDatabase {
     private var cachedItemsByID: [Int : Item] = [:]
     private var cachedItemsByAegisName: [String : Item] = [:]
 
-    private init(mode: ServerMode) {
+    private init(mode: DatabaseMode) {
         self.mode = mode
     }
 
@@ -38,7 +37,7 @@ public actor ItemDatabase {
             let decoder = YAMLDecoder()
 
             let usableItemURL = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.dbPath)
+                .appendingPathComponent(mode.path)
                 .appendingPathComponent("item_db_usable.yml")
             let usableItemData = try Data(contentsOf: usableItemURL)
             cachedUsableItems = try decoder.decode(ListNode<Item>.self, from: usableItemData).body
@@ -52,7 +51,7 @@ public actor ItemDatabase {
             let decoder = YAMLDecoder()
 
             let equipItemURL = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.dbPath)
+                .appendingPathComponent(mode.path)
                 .appendingPathComponent("item_db_equip.yml")
             let equipItemData = try Data(contentsOf: equipItemURL)
             cachedEquipItems = try decoder.decode(ListNode<Item>.self, from: equipItemData).body
@@ -66,7 +65,7 @@ public actor ItemDatabase {
             let decoder = YAMLDecoder()
 
             let etcItemURL = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.dbPath)
+                .appendingPathComponent(mode.path)
                 .appendingPathComponent("item_db_etc.yml")
             let etcItemData = try Data(contentsOf: etcItemURL)
             cachedEtcItems = try decoder.decode(ListNode<Item>.self, from: etcItemData).body

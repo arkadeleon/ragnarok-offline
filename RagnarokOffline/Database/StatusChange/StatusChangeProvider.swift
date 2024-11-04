@@ -5,11 +5,10 @@
 //  Created by Leon Li on 2024/5/11.
 //
 
-import rAthenaCommon
 import RODatabase
 
 struct StatusChangeProvider: DatabaseRecordProvider {
-    func records(for mode: ServerMode) async throws -> [StatusChange] {
+    func records(for mode: DatabaseMode) async throws -> [StatusChange] {
         let database = StatusChangeDatabase.database(for: mode)
         let statusChanges = try await database.statusChanges()
         return statusChanges

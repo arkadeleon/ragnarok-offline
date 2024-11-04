@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2024/5/11.
 //
 
-import rAthenaCommon
 import RODatabase
 
 extension StatusChange: DatabaseRecord {
@@ -17,7 +16,7 @@ extension StatusChange: DatabaseRecord {
         status.stringValue
     }
 
-    func recordDetail(for mode: ServerMode) async throws -> DatabaseRecordDetail {
+    func recordDetail(for mode: DatabaseMode) async throws -> DatabaseRecordDetail {
         let statusChangeDatabase = StatusChangeDatabase.database(for: mode)
 
         var sections: [DatabaseRecordDetail.Section] = []

@@ -6,14 +6,13 @@
 //
 
 import SwiftUI
-import rAthenaCommon
 import ROClientResources
 import RODatabase
 import ROGenerated
 import ROLocalizations
 
 struct ItemInfoView: View {
-    var mode: ServerMode
+    var mode: DatabaseMode
     var item: Item
 
     typealias DroppingMonster = (monster: ObservableMonster, drop: Monster.Drop)

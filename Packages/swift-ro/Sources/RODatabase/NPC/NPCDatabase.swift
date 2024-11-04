@@ -6,21 +6,20 @@
 //
 
 import Foundation
-import rAthenaCommon
 import rAthenaResources
 
 public actor NPCDatabase {
     public static let prerenewal = NPCDatabase(mode: .prerenewal)
     public static let renewal = NPCDatabase(mode: .renewal)
 
-    public static func database(for mode: ServerMode) -> NPCDatabase {
+    public static func database(for mode: DatabaseMode) -> NPCDatabase {
         switch mode {
         case .prerenewal: .prerenewal
         case .renewal: .renewal
         }
     }
 
-    public let mode: ServerMode
+    public let mode: DatabaseMode
 
     private var mapFlags: [MapFlag] = []
     private var monsterSpawns: [MonsterSpawn] = []
@@ -33,7 +32,7 @@ public actor NPCDatabase {
 
     private var isCached = false
 
-    private init(mode: ServerMode) {
+    private init(mode: DatabaseMode) {
         self.mode = mode
     }
 
@@ -58,7 +57,7 @@ public actor NPCDatabase {
     private func restoreScripts() throws {
         if !isCached {
             let url = ServerResourceManager.default.npcURL
-                .appendingPathComponent(mode.dbPath)
+                .appendingPathComponent(mode.path)
                 .appendingPathComponent("scripts_main.conf")
             try import_conf_file(url: url)
 

@@ -7,26 +7,25 @@
 
 import Foundation
 import ROGenerated
-import rAthenaCommon
 import rAthenaResources
 
 public actor StatusChangeDatabase {
     public static let prerenewal = StatusChangeDatabase(mode: .prerenewal)
     public static let renewal = StatusChangeDatabase(mode: .renewal)
 
-    public static func database(for mode: ServerMode) -> StatusChangeDatabase {
+    public static func database(for mode: DatabaseMode) -> StatusChangeDatabase {
         switch mode {
         case .prerenewal: .prerenewal
         case .renewal: .renewal
         }
     }
 
-    public let mode: ServerMode
+    public let mode: DatabaseMode
 
     private var cachedStatusChanges: [StatusChange] = []
     private var cachedStatusChangesByID: [StatusChangeID : StatusChange] = [:]
 
-    private init(mode: ServerMode) {
+    private init(mode: DatabaseMode) {
         self.mode = mode
     }
 
@@ -35,7 +34,7 @@ public actor StatusChangeDatabase {
             let decoder = YAMLDecoder()
 
             let url = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.dbPath)
+                .appendingPathComponent(mode.path)
                 .appendingPathComponent("status.yml")
             let data = try Data(contentsOf: url)
             cachedStatusChanges = try decoder.decode(ListNode<StatusChange>.self, from: data).body

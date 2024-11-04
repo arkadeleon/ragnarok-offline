@@ -6,15 +6,15 @@
 //
 
 import CoreGraphics
+import Foundation
 import Observation
-import rAthenaCommon
 import ROClientResources
 import RODatabase
 import ROLocalizations
 
 @Observable
 class ObservableMonster {
-    private let mode: ServerMode
+    private let mode: DatabaseMode
     private let monster: Monster
 
     let localizedName: String
@@ -98,7 +98,7 @@ class ObservableMonster {
             .joined(separator: "\n")
     }
 
-    init(mode: ServerMode, monster: Monster) {
+    init(mode: DatabaseMode, monster: Monster) {
         self.mode = mode
         self.monster = monster
 

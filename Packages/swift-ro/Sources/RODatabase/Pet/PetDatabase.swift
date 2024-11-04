@@ -6,26 +6,25 @@
 //
 
 import Foundation
-import rAthenaCommon
 import rAthenaResources
 
 public actor PetDatabase {
     public static let prerenewal = PetDatabase(mode: .prerenewal)
     public static let renewal = PetDatabase(mode: .renewal)
 
-    public static func database(for mode: ServerMode) -> PetDatabase {
+    public static func database(for mode: DatabaseMode) -> PetDatabase {
         switch mode {
         case .prerenewal: .prerenewal
         case .renewal: .renewal
         }
     }
 
-    public let mode: ServerMode
+    public let mode: DatabaseMode
 
     private var cachedPets: [Pet] = []
     private var cachedPetsByAegisName: [String : Pet] = [:]
 
-    private init(mode: ServerMode) {
+    private init(mode: DatabaseMode) {
         self.mode = mode
     }
 
@@ -34,7 +33,7 @@ public actor PetDatabase {
             let decoder = YAMLDecoder()
 
             let url = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.dbPath)
+                .appendingPathComponent(mode.path)
                 .appendingPathComponent("pet_db.yml")
             let data = try Data(contentsOf: url)
             cachedPets = try decoder.decode(ListNode<Pet>.self, from: data).body

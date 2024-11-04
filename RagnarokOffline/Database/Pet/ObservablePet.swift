@@ -6,12 +6,15 @@
 //
 
 import Observation
-import rAthenaCommon
 import RODatabase
+
+enum ObservablePetError: Error {
+    case monsterNotFound(String)
+}
 
 @Observable 
 class ObservablePet {
-    let mode: ServerMode
+    let mode: DatabaseMode
     let pet: Pet
 
     let monster: ObservableMonster
@@ -44,7 +47,7 @@ class ObservablePet {
         return attributes
     }
 
-    init(mode: ServerMode, pet: Pet) async throws {
+    init(mode: DatabaseMode, pet: Pet) async throws {
         self.mode = mode
         self.pet = pet
 
@@ -52,7 +55,7 @@ class ObservablePet {
         if let monster = try await monsterDatabase.monster(forAegisName: pet.monster) {
             self.monster = ObservableMonster(mode: mode, monster: monster)
         } else {
-            throw NSError()
+            throw ObservablePetError.monsterNotFound(pet.monster)
         }
     }
 

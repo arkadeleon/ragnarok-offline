@@ -7,25 +7,24 @@
 
 import Foundation
 import ROGenerated
-import rAthenaCommon
 import rAthenaResources
 
 public actor JobDatabase {
     public static let prerenewal = JobDatabase(mode: .prerenewal)
     public static let renewal = JobDatabase(mode: .renewal)
 
-    public static func database(for mode: ServerMode) -> JobDatabase {
+    public static func database(for mode: DatabaseMode) -> JobDatabase {
         switch mode {
         case .prerenewal: .prerenewal
         case .renewal: .renewal
         }
     }
 
-    public let mode: ServerMode
+    public let mode: DatabaseMode
 
     private var cachedJobs: [Job] = []
 
-    private init(mode: ServerMode) {
+    private init(mode: DatabaseMode) {
         self.mode = mode
     }
 
@@ -34,25 +33,25 @@ public actor JobDatabase {
             let decoder = YAMLDecoder()
 
             let basicStatsURL = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.dbPath)
+                .appendingPathComponent(mode.path)
                 .appendingPathComponent("job_stats.yml")
             let basicStatsData = try Data(contentsOf: basicStatsURL)
             let basicStatsList = try decoder.decode(ListNode<JobBasicStats>.self, from: basicStatsData).body
 
             let aspdStatsURL = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.dbPath)
+                .appendingPathComponent(mode.path)
                 .appendingPathComponent("job_aspd.yml")
             let aspdStatsData = try Data(contentsOf: aspdStatsURL)
             let aspdStatsList = try decoder.decode(ListNode<JobASPDStats>.self, from: aspdStatsData).body
 
             let expStatsURL = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.dbPath)
+                .appendingPathComponent(mode.path)
                 .appendingPathComponent("job_exp.yml")
             let expStatsData = try Data(contentsOf: expStatsURL)
             let expStatsList = try decoder.decode(ListNode<JobExpStats>.self, from: expStatsData).body
 
             let basePointsStatsURL = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.dbPath)
+                .appendingPathComponent(mode.path)
                 .appendingPathComponent("job_basepoints.yml")
             let basePointsStatsData = try Data(contentsOf: basePointsStatsURL)
             let basePointsStatsList = try decoder.decode(ListNode<JobBasePointsStats>.self, from: basePointsStatsData).body

@@ -7,26 +7,25 @@
 
 import Foundation
 import ROGenerated
-import rAthenaCommon
 import rAthenaResources
 
 public actor SkillTreeDatabase {
     public static let prerenewal = SkillTreeDatabase(mode: .prerenewal)
     public static let renewal = SkillTreeDatabase(mode: .renewal)
 
-    public static func database(for mode: ServerMode) -> SkillTreeDatabase {
+    public static func database(for mode: DatabaseMode) -> SkillTreeDatabase {
         switch mode {
         case .prerenewal: .prerenewal
         case .renewal: .renewal
         }
     }
 
-    public let mode: ServerMode
+    public let mode: DatabaseMode
 
     private var cachedSkillTrees: [SkillTree] = []
     private var cachedSkillTreesByJobID: [JobID : SkillTree] = [:]
 
-    private init(mode: ServerMode) {
+    private init(mode: DatabaseMode) {
         self.mode = mode
     }
 
@@ -35,7 +34,7 @@ public actor SkillTreeDatabase {
             let decoder = YAMLDecoder()
 
             let url = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.dbPath)
+                .appendingPathComponent(mode.path)
                 .appendingPathComponent("skill_tree.yml")
             let data = try Data(contentsOf: url)
             cachedSkillTrees = try decoder.decode(ListNode<SkillTree>.self, from: data).body

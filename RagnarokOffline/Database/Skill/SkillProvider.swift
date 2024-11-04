@@ -5,11 +5,10 @@
 //  Created by Leon Li on 2024/4/4.
 //
 
-import rAthenaCommon
 import RODatabase
 
 struct SkillProvider: DatabaseRecordProvider {
-    func records(for mode: ServerMode) async throws -> [Skill] {
+    func records(for mode: DatabaseMode) async throws -> [Skill] {
         let database = SkillDatabase.database(for: mode)
         let skills = try await database.skills()
         return skills

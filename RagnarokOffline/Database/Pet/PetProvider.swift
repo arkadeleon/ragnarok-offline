@@ -5,11 +5,10 @@
 //  Created by Leon Li on 2024/5/8.
 //
 
-import rAthenaCommon
 import RODatabase
 
 struct PetProvider: DatabaseRecordProvider {
-    func records(for mode: ServerMode) async throws -> [ObservablePet] {
+    func records(for mode: DatabaseMode) async throws -> [ObservablePet] {
         let petDatabase = PetDatabase.database(for: mode)
 
         let ps = try await petDatabase.pets()

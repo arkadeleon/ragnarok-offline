@@ -5,11 +5,10 @@
 //  Created by Leon Li on 2024/4/4.
 //
 
-import rAthenaCommon
 import RODatabase
 
 struct JobProvider: DatabaseRecordProvider {
-    func records(for mode: ServerMode) async throws -> [Job] {
+    func records(for mode: DatabaseMode) async throws -> [Job] {
         let database = JobDatabase.database(for: mode)
         let jobs = try await database.jobs()
         return jobs

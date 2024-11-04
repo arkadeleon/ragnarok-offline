@@ -9,10 +9,9 @@ import SwiftUI
 import ROClientResources
 import RODatabase
 import ROGenerated
-import rAthenaCommon
 
 struct JobInfoView: View {
-    var mode: ServerMode
+    var mode: DatabaseMode
     var job: Job
 
     typealias BaseLevelStats = (level: Int, baseExp: Int, baseHp: Int, baseSp: Int)

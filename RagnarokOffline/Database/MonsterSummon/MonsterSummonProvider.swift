@@ -5,11 +5,10 @@
 //  Created by Leon Li on 2024/5/9.
 //
 
-import rAthenaCommon
 import RODatabase
 
 struct MonsterSummonProvider: DatabaseRecordProvider {
-    func records(for mode: ServerMode) async throws -> [ObservableMonsterSummon] {
+    func records(for mode: DatabaseMode) async throws -> [ObservableMonsterSummon] {
         let monsterSummonDatabase = MonsterSummonDatabase.database(for: mode)
         let mss = try await monsterSummonDatabase.monsterSummons()
 
