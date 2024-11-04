@@ -11,34 +11,33 @@ struct MapDatabaseView: View {
     @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .map)
 
     var body: some View {
-        DatabaseView(database: $database) { maps in
-            ResponsiveView {
-                List(maps) { map in
-                    NavigationLink(value: map) {
-                        MapCell(map: map)
-                    }
+        ResponsiveView {
+            List(database.filteredRecords) { map in
+                NavigationLink(value: map) {
+                    MapCell(map: map)
                 }
-                .listStyle(.plain)
-            } regular: {
-                List(maps) { map in
-                    NavigationLink(value: map) {
-                        HStack {
-                            MapImageView(map: map)
-                                .frame(width: 40)
-                            MapNameView(map: map)
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            Text(map.name)
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color.secondary)
-                        }
-                    }
-                }
-                .listStyle(.plain)
             }
-        } empty: {
-            ContentUnavailableView("No Maps", systemImage: "map.fill")
+            .listStyle(.plain)
+        } regular: {
+            List(database.filteredRecords) { map in
+                NavigationLink(value: map) {
+                    HStack {
+                        MapImageView(map: map)
+                            .frame(width: 40)
+                        MapNameView(map: map)
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                        Text(map.name)
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .foregroundStyle(Color.secondary)
+                    }
+                }
+            }
+            .listStyle(.plain)
         }
         .navigationTitle("Map Database")
+        .databaseRoot($database) {
+            ContentUnavailableView("No Maps", systemImage: "map.fill")
+        }
     }
 }
 

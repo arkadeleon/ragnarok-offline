@@ -12,33 +12,32 @@ struct MonsterSummonDatabaseView: View {
     @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .monsterSummon)
 
     var body: some View {
-        DatabaseView(database: $database) { monsterSummons in
-            ResponsiveView {
-                List(monsterSummons) { monsterSummon in
-                    NavigationLink(monsterSummon.group, value: monsterSummon)
-                }
-                .listStyle(.plain)
-            } regular: {
-                List(monsterSummons) { monsterSummon in
-                    NavigationLink(value: monsterSummon) {
-                        HStack {
-                            Text(monsterSummon.group)
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            Text(monsterSummon.default)
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color.secondary)
-                            Text("\(monsterSummon.summon.count) monsters")
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color.secondary)
-                        }
+        ResponsiveView {
+            List(database.filteredRecords) { monsterSummon in
+                NavigationLink(monsterSummon.group, value: monsterSummon)
+            }
+            .listStyle(.plain)
+        } regular: {
+            List(database.filteredRecords) { monsterSummon in
+                NavigationLink(value: monsterSummon) {
+                    HStack {
+                        Text(monsterSummon.group)
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                        Text(monsterSummon.default)
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .foregroundStyle(Color.secondary)
+                        Text("\(monsterSummon.summon.count) monsters")
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .foregroundStyle(Color.secondary)
                     }
                 }
-                .listStyle(.plain)
             }
-        } empty: {
-            ContentUnavailableView("No Monster Summons", systemImage: "pawprint.fill")
+            .listStyle(.plain)
         }
         .navigationTitle("Monster Summon Database")
+        .databaseRoot($database) {
+            ContentUnavailableView("No Monster Summons", systemImage: "pawprint.fill")
+        }
     }
 }
 

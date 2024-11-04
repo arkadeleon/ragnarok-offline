@@ -1,16 +1,15 @@
 //
-//  DatabaseView.swift
+//  DatabaseRoot.swift
 //  RagnarokOffline
 //
-//  Created by Leon Li on 2024/5/11.
+//  Created by Leon Li on 2024/11/4.
 //
 
-import SwiftUI
 import RODatabase
+import SwiftUI
 
-struct DatabaseView<RecordProvider, Content, Empty>: View where RecordProvider: DatabaseRecordProvider, Content: View, Empty: View {
+struct DatabaseRoot<RecordProvider, Empty>: ViewModifier where RecordProvider: DatabaseRecordProvider, Empty: View {
     @Binding var database: ObservableDatabase<RecordProvider>
-    @ViewBuilder var content: ([RecordProvider.Record]) -> Content
     @ViewBuilder var empty: () -> Empty
 
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -27,8 +26,8 @@ struct DatabaseView<RecordProvider, Content, Empty>: View where RecordProvider: 
         #endif
     }
 
-    var body: some View {
-        content(database.filteredRecords)
+    func body(content: Content) -> some View {
+        content
             .background(.background)
             .overlay {
                 if database.loadStatus == .loading {
@@ -81,12 +80,11 @@ struct DatabaseView<RecordProvider, Content, Empty>: View where RecordProvider: 
     }
 }
 
-#Preview {
-    DatabaseView(database: .constant(.init(mode: .renewal, recordProvider: .monsterSummon))) { records in
-        List(records) { record in
-            Text(record.group)
-        }
-    } empty: {
-        ContentUnavailableView("", systemImage: "")
+extension View {
+    func databaseRoot<RecordProvider, Empty>(
+        _ database: Binding<ObservableDatabase<RecordProvider>>,
+        @ViewBuilder empty: @escaping () -> Empty
+    ) -> some View where RecordProvider: DatabaseRecordProvider, Empty: View {
+        modifier(DatabaseRoot(database: database, empty: empty))
     }
 }

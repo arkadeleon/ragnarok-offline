@@ -12,37 +12,36 @@ struct SkillDatabaseView: View {
     @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .skill)
 
     var body: some View {
-        DatabaseView(database: $database) { skills in
-            ResponsiveView {
-                List(skills) { skill in
-                    NavigationLink(value: skill) {
-                        SkillCell(skill: skill)
-                    }
+        ResponsiveView {
+            List(database.filteredRecords) { skill in
+                NavigationLink(value: skill) {
+                    SkillCell(skill: skill)
                 }
-                .listStyle(.plain)
-            } regular: {
-                List(skills) { skill in
-                    NavigationLink(value: skill) {
-                        HStack {
-                            SkillIconView(skill: skill)
-                                .frame(width: 40)
-                            SkillNameView(skill: skill)
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            Text(skill.maxLevel.formatted())
-                                .frame(width: 80, alignment: .leading)
-                                .foregroundStyle(Color.secondary)
-                            Text(spCost(for: skill))
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color.secondary)
-                        }
-                    }
-                }
-                .listStyle(.plain)
             }
-        } empty: {
-            ContentUnavailableView("No Skills", systemImage: "arrow.up.heart.fill")
+            .listStyle(.plain)
+        } regular: {
+            List(database.filteredRecords) { skill in
+                NavigationLink(value: skill) {
+                    HStack {
+                        SkillIconView(skill: skill)
+                            .frame(width: 40)
+                        SkillNameView(skill: skill)
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                        Text(skill.maxLevel.formatted())
+                            .frame(width: 80, alignment: .leading)
+                            .foregroundStyle(Color.secondary)
+                        Text(spCost(for: skill))
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .foregroundStyle(Color.secondary)
+                    }
+                }
+            }
+            .listStyle(.plain)
         }
         .navigationTitle("Skill Database")
+        .databaseRoot($database) {
+            ContentUnavailableView("No Skills", systemImage: "arrow.up.heart.fill")
+        }
     }
 
     private func spCost(for skill: Skill) -> String {
