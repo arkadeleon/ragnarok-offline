@@ -19,71 +19,69 @@ struct StatusChangeInfoView: View {
 
     var body: some View {
         ScrollView {
-            DatabaseRecordInfoSection("Info") {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                    ForEach(attributes) { attribute in
-                        LabeledContent {
-                            Text(attribute.value)
-                        } label: {
-                            Text(attribute.name)
+            LazyVStack(pinnedViews: .sectionHeaders) {
+                DatabaseRecordSectionView("Info", spacing: 10) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
+                        ForEach(attributes) { attribute in
+                            LabeledContent {
+                                Text(attribute.value)
+                            } label: {
+                                Text(attribute.name)
+                            }
                         }
                     }
                 }
-            }
 
-            if !fail.isEmpty {
-                DatabaseRecordInfoSection("Fail", verticalSpacing: 0) {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        ForEach(fail, id: \.status) { statusChange in
-                            NavigationLink(value: statusChange) {
-                                Text(statusChange.status.stringValue)
+                if !fail.isEmpty {
+                    DatabaseRecordSectionView("Fail", spacing: 20) {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                            ForEach(fail, id: \.status) { statusChange in
+                                NavigationLink(value: statusChange) {
+                                    Text(statusChange.status.stringValue)
+                                }
+                                .buttonStyle(.plain)
                             }
-                            .buttonStyle(.plain)
                         }
                     }
-                    .padding(.vertical, 20)
                 }
-            }
 
-            if !endOnStart.isEmpty {
-                DatabaseRecordInfoSection("End on Start", verticalSpacing: 0) {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        ForEach(endOnStart, id: \.status) { statusChange in
-                            NavigationLink(value: statusChange) {
-                                Text(statusChange.status.stringValue)
+                if !endOnStart.isEmpty {
+                    DatabaseRecordSectionView("End on Start", spacing: 20) {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                            ForEach(endOnStart, id: \.status) { statusChange in
+                                NavigationLink(value: statusChange) {
+                                    Text(statusChange.status.stringValue)
+                                }
+                                .buttonStyle(.plain)
                             }
-                            .buttonStyle(.plain)
                         }
                     }
-                    .padding(.vertical, 20)
                 }
-            }
 
-            if !endReturn.isEmpty {
-                DatabaseRecordInfoSection("End Return", verticalSpacing: 0) {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        ForEach(endReturn, id: \.status) { statusChange in
-                            NavigationLink(value: statusChange) {
-                                Text(statusChange.status.stringValue)
+                if !endReturn.isEmpty {
+                    DatabaseRecordSectionView("End Return", spacing: 20) {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                            ForEach(endReturn, id: \.status) { statusChange in
+                                NavigationLink(value: statusChange) {
+                                    Text(statusChange.status.stringValue)
+                                }
+                                .buttonStyle(.plain)
                             }
-                            .buttonStyle(.plain)
                         }
                     }
-                    .padding(.vertical, 20)
                 }
-            }
 
-            if !endOnEnd.isEmpty {
-                DatabaseRecordInfoSection("End on End", verticalSpacing: 0) {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        ForEach(endOnEnd, id: \.status) { statusChange in
-                            NavigationLink(value: statusChange) {
-                                Text(statusChange.status.stringValue)
+                if !endOnEnd.isEmpty {
+                    DatabaseRecordSectionView("End on End", spacing: 20) {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                            ForEach(endOnEnd, id: \.status) { statusChange in
+                                NavigationLink(value: statusChange) {
+                                    Text(statusChange.status.stringValue)
+                                }
+                                .buttonStyle(.plain)
                             }
-                            .buttonStyle(.plain)
                         }
                     }
-                    .padding(.vertical, 20)
                 }
             }
         }

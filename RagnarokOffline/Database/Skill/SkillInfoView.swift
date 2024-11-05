@@ -17,21 +17,23 @@ struct SkillInfoView: View {
 
     var body: some View {
         ScrollView {
-            DatabaseRecordInfoSection("Info") {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                    ForEach(attributes) { attribute in
-                        LabeledContent {
-                            Text(attribute.value)
-                        } label: {
-                            Text(attribute.name)
+            LazyVStack(pinnedViews: .sectionHeaders) {
+                DatabaseRecordSectionView("Info", spacing: 10) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
+                        ForEach(attributes) { attribute in
+                            LabeledContent {
+                                Text(attribute.value)
+                            } label: {
+                                Text(attribute.name)
+                            }
                         }
                     }
                 }
-            }
 
-            if let skillDescription {
-                DatabaseRecordInfoSection("Description") {
-                    Text(skillDescription)
+                if let skillDescription {
+                    DatabaseRecordSectionView("Description") {
+                        Text(skillDescription)
+                    }
                 }
             }
         }

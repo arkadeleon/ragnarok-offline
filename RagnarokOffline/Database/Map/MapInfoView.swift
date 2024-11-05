@@ -20,30 +20,31 @@ struct MapInfoView: View {
 
     var body: some View {
         ScrollView {
-            ZStack {
-                if let mapImage {
-                    Image(mapImage, scale: 1, label: Text(map.name))
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                } else {
-                    Image(systemName: "map")
-                        .font(.system(size: 100, weight: .thin))
-                        .foregroundStyle(Color.secondary)
+            LazyVStack(pinnedViews: .sectionHeaders) {
+                ZStack {
+                    if let mapImage {
+                        Image(mapImage, scale: 1, label: Text(map.name))
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    } else {
+                        Image(systemName: "map")
+                            .font(.system(size: 100, weight: .thin))
+                            .foregroundStyle(Color.secondary)
+                    }
                 }
-            }
-            .frame(height: 200)
+                .frame(height: 200)
 
-            if !spawnMonsters.isEmpty {
-                DatabaseRecordInfoSection("Spawn Monsters", verticalSpacing: 0) {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .leading, spacing: 30) {
-                        ForEach(spawnMonsters, id: \.monster.id) { spawnMonster in
-                            NavigationLink(value: spawnMonster.monster) {
-                                MonsterGridCell(monster: spawnMonster.monster, secondaryText: "(\(spawnMonster.spawn.amount)x)")
+                if !spawnMonsters.isEmpty {
+                    DatabaseRecordSectionView("Spawn Monsters", spacing: 30) {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .leading, spacing: 30) {
+                            ForEach(spawnMonsters, id: \.monster.id) { spawnMonster in
+                                NavigationLink(value: spawnMonster.monster) {
+                                    MonsterGridCell(monster: spawnMonster.monster, secondaryText: "(\(spawnMonster.spawn.amount)x)")
+                                }
+                                .buttonStyle(.plain)
                             }
-                            .buttonStyle(.plain)
                         }
                     }
-                    .padding(.vertical, 30)
                 }
             }
         }

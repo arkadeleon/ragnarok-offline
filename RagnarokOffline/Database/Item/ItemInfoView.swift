@@ -23,83 +23,84 @@ struct ItemInfoView: View {
 
     var body: some View {
         ScrollView {
-            ZStack {
-                if let itemPreviewImage {
-                    Image(itemPreviewImage, scale: 1, label: Text(item.name))
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                } else {
-                    Image(systemName: "leaf")
-                        .font(.system(size: 100, weight: .thin))
-                        .foregroundStyle(Color.secondary)
-                }
-            }
-            .frame(height: 200)
-
-            DatabaseRecordInfoSection("Info") {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                    ForEach(attributes) { attribute in
-                        LabeledContent {
-                            Text(attribute.value)
-                        } label: {
-                            Text(attribute.name)
-                        }
+            LazyVStack(pinnedViews: .sectionHeaders) {
+                ZStack {
+                    if let itemPreviewImage {
+                        Image(itemPreviewImage, scale: 1, label: Text(item.name))
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    } else {
+                        Image(systemName: "leaf")
+                            .font(.system(size: 100, weight: .thin))
+                            .foregroundStyle(Color.secondary)
                     }
                 }
-            }
+                .frame(height: 200)
 
-            if item.type == .weapon || item.type == .armor {
-                DatabaseRecordInfoSection("Jobs") {
-                    Text(jobs)
-                }
-
-                DatabaseRecordInfoSection("Classes") {
-                    Text(classes)
-                }
-
-                DatabaseRecordInfoSection("Locations") {
-                    Text(locations)
-                }
-            }
-
-            if let localizedItemDescription {
-                DatabaseRecordInfoSection("Description") {
-                    Text(localizedItemDescription)
-                }
-            }
-
-            if let script {
-                DatabaseRecordInfoSection("Script") {
-                    Text(script)
-                        .monospaced()
-                }
-            }
-
-            if let equipScript {
-                DatabaseRecordInfoSection("Equip Script") {
-                    Text(equipScript)
-                        .monospaced()
-                }
-            }
-
-            if let unEquipScript {
-                DatabaseRecordInfoSection("Unequip Script") {
-                    Text(unEquipScript)
-                        .monospaced()
-                }
-            }
-
-            if !droppingMonsters.isEmpty {
-                DatabaseRecordInfoSection("Dropping Monsters", verticalSpacing: 0) {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .leading, spacing: 30) {
-                        ForEach(droppingMonsters, id: \.monster.id) { droppingMonster in
-                            NavigationLink(value: droppingMonster.monster) {
-                                MonsterGridCell(monster: droppingMonster.monster, secondaryText: "(" + (Double(droppingMonster.drop.rate) / 100).formatted() + "%)")
+                DatabaseRecordSectionView("Info", spacing: 10) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
+                        ForEach(attributes) { attribute in
+                            LabeledContent {
+                                Text(attribute.value)
+                            } label: {
+                                Text(attribute.name)
                             }
-                            .buttonStyle(.plain)
                         }
                     }
-                    .padding(.vertical, 30)
+                }
+
+                if item.type == .weapon || item.type == .armor {
+                    DatabaseRecordSectionView("Jobs") {
+                        Text(jobs)
+                    }
+
+                    DatabaseRecordSectionView("Classes") {
+                        Text(classes)
+                    }
+
+                    DatabaseRecordSectionView("Locations") {
+                        Text(locations)
+                    }
+                }
+
+                if let localizedItemDescription {
+                    DatabaseRecordSectionView("Description") {
+                        Text(localizedItemDescription)
+                    }
+                }
+
+                if let script {
+                    DatabaseRecordSectionView("Script") {
+                        Text(script)
+                            .monospaced()
+                    }
+                }
+
+                if let equipScript {
+                    DatabaseRecordSectionView("Equip Script") {
+                        Text(equipScript)
+                            .monospaced()
+                    }
+                }
+
+                if let unEquipScript {
+                    DatabaseRecordSectionView("Unequip Script") {
+                        Text(unEquipScript)
+                            .monospaced()
+                    }
+                }
+
+                if !droppingMonsters.isEmpty {
+                    DatabaseRecordSectionView("Dropping Monsters", spacing: 30) {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .leading, spacing: 30) {
+                            ForEach(droppingMonsters, id: \.monster.id) { droppingMonster in
+                                NavigationLink(value: droppingMonster.monster) {
+                                    MonsterGridCell(monster: droppingMonster.monster, secondaryText: "(" + (Double(droppingMonster.drop.rate) / 100).formatted() + "%)")
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                    }
                 }
             }
         }

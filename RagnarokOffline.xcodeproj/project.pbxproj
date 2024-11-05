@@ -46,7 +46,7 @@
 		35239E012BC29A4E0039F7D5 /* ItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239E002BC29A4E0039F7D5 /* ItemProvider.swift */; };
 		35239E032BC29F660039F7D5 /* EmptyContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239E022BC29F660039F7D5 /* EmptyContentView.swift */; };
 		35239E052BC2D5D60039F7D5 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */; };
-		3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */; };
+		3523B5822B98B74B00CCE722 /* DatabaseRecordSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3523B5812B98B74B00CCE722 /* DatabaseRecordSectionView.swift */; };
 		352B140F2C22DCA40097E643 /* ObservableMonster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B140E2C22DCA40097E643 /* ObservableMonster.swift */; };
 		352B14112C2433A20097E643 /* rAthenaResources in Frameworks */ = {isa = PBXBuildFile; productRef = 352B14102C2433A20097E643 /* rAthenaResources */; };
 		3536BDAD2CCA72840098950E /* ConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3536BDAC2CCA72840098950E /* ConsoleView.swift */; };
@@ -190,7 +190,7 @@
 		35239E002BC29A4E0039F7D5 /* ItemProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemProvider.swift; sourceTree = "<group>"; };
 		35239E022BC29F660039F7D5 /* EmptyContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyContentView.swift; sourceTree = "<group>"; };
 		35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
-		3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordInfoSection.swift; sourceTree = "<group>"; };
+		3523B5812B98B74B00CCE722 /* DatabaseRecordSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordSectionView.swift; sourceTree = "<group>"; };
 		35270D2B2A68F4610001A8BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		352B140E2C22DCA40097E643 /* ObservableMonster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMonster.swift; sourceTree = "<group>"; };
 		3535EC802CC0A6890012ACF0 /* swift-ro-tools */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-ro-tools"; path = "Packages/swift-ro-tools"; sourceTree = "<group>"; };
@@ -400,7 +400,7 @@
 				35B422F02BEF5EEB00681AA2 /* StatusChange */,
 				35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */,
 				35B422EE2BEF091F00681AA2 /* ObservableDatabase.swift */,
-				3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */,
+				3523B5812B98B74B00CCE722 /* DatabaseRecordSectionView.swift */,
 				35B422F52BEF76F700681AA2 /* DatabaseRecordAttribute.swift */,
 			);
 			path = Database;
@@ -841,7 +841,7 @@
 				3514BF602B455EF90065ED89 /* MonsterGridCell.swift in Sources */,
 				35E27A832BC96AC800C11076 /* Message.swift in Sources */,
 				35BF5BE42C65B9FD006A3487 /* DetailView.swift in Sources */,
-				3523B5822B98B74B00CCE722 /* DatabaseRecordInfoSection.swift in Sources */,
+				3523B5822B98B74B00CCE722 /* DatabaseRecordSectionView.swift in Sources */,
 				351426C42C11BF9600B076BE /* FileReferencesView.swift in Sources */,
 				35BE55292BD92D52003715C3 /* TextFilePreviewView.swift in Sources */,
 				3599BD572C3FB5020010DBE7 /* FileThumbnailView.swift in Sources */,

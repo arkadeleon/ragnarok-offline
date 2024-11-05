@@ -22,126 +22,127 @@ struct JobInfoView: View {
 
     var body: some View {
         ScrollView {
-            ZStack {
-                if let jobImage {
-                    Image(jobImage, scale: 1, label: Text(job.id.stringValue))
-                } else {
-                    Image(systemName: "person")
-                        .font(.system(size: 100, weight: .thin))
-                        .foregroundStyle(Color.secondary)
-                }
-            }
-            .frame(height: 200)
-
-            DatabaseRecordInfoSection("Info") {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                    ForEach(attributes) { attribute in
-                        LabeledContent {
-                            Text(attribute.value)
-                        } label: {
-                            Text(attribute.name)
-                        }
+            LazyVStack(pinnedViews: .sectionHeaders) {
+                ZStack {
+                    if let jobImage {
+                        Image(jobImage, scale: 1, label: Text(job.id.stringValue))
+                    } else {
+                        Image(systemName: "person")
+                            .font(.system(size: 100, weight: .thin))
+                            .foregroundStyle(Color.secondary)
                     }
                 }
-            }
+                .frame(height: 200)
 
-            DatabaseRecordInfoSection("Base ASPD") {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                    ForEach(baseASPD) { baseASPD in
-                        LabeledContent {
-                            Text(baseASPD.value)
-                        } label: {
-                            Text(baseASPD.name)
-                        }
-                    }
-                }
-            }
-
-            if !skills.isEmpty {
-                DatabaseRecordInfoSection("Skills", verticalSpacing: 0) {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        ForEach(skills) { skill in
-                            NavigationLink(value: skill) {
-                                SkillCell(skill: skill)
+                DatabaseRecordSectionView("Info", spacing: 10) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
+                        ForEach(attributes) { attribute in
+                            LabeledContent {
+                                Text(attribute.value)
+                            } label: {
+                                Text(attribute.name)
                             }
-                            .buttonStyle(.plain)
-                        }
-                    }
-                    .padding(.vertical, 20)
-                }
-            }
-
-            DatabaseRecordInfoSection {
-                LazyVStack(spacing: 10) {
-                    ForEach(baseLevels, id: \.level) { levelStats in
-                        HStack {
-                            Text((levelStats.level + 1).formatted())
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                            Text(levelStats.baseExp.formatted())
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color.secondary)
-
-                            Text(levelStats.baseHp.formatted())
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color.secondary)
-
-                            Text(levelStats.baseSp.formatted())
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color.secondary)
                         }
                     }
                 }
-            } header: {
-                HStack {
-                    Text("Base Level")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
-                    Text("Base Exp")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                    Text("Base HP")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                    Text("Base SP")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                }
-            }
-
-            DatabaseRecordInfoSection {
-                LazyVStack(spacing: 10) {
-                    ForEach(jobLevels, id: \.level) { levelStats in
-                        HStack {
-                            Text((levelStats.level + 1).formatted())
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                            Text(levelStats.jobExp.formatted())
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color.secondary)
-
-                            Text(levelStats.bonusStats)
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color.secondary)
-
-                            Text(verbatim: "")
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color.secondary)
+                DatabaseRecordSectionView("Base ASPD", spacing: 10) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
+                        ForEach(baseASPD) { baseASPD in
+                            LabeledContent {
+                                Text(baseASPD.value)
+                            } label: {
+                                Text(baseASPD.name)
+                            }
                         }
                     }
                 }
-            } header: {
-                HStack {
-                    Text("Job Level")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
-                    Text("Job Exp")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                if !skills.isEmpty {
+                    DatabaseRecordSectionView("Skills", spacing: 20) {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                            ForEach(skills) { skill in
+                                NavigationLink(value: skill) {
+                                    SkillCell(skill: skill)
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                    }
+                }
 
-                    Text("Bonus Stats")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                DatabaseRecordSectionView {
+                    LazyVStack(spacing: 10) {
+                        ForEach(baseLevels, id: \.level) { levelStats in
+                            HStack {
+                                Text((levelStats.level + 1).formatted())
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
-                    Text(verbatim: "")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                Text(levelStats.baseExp.formatted())
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                    .foregroundStyle(Color.secondary)
+
+                                Text(levelStats.baseHp.formatted())
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                    .foregroundStyle(Color.secondary)
+
+                                Text(levelStats.baseSp.formatted())
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                    .foregroundStyle(Color.secondary)
+                            }
+                        }
+                    }
+                } header: {
+                    HStack {
+                        Text("Base Level")
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
+                        Text("Base Exp")
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
+                        Text("Base HP")
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
+                        Text("Base SP")
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                    }
+                }
+
+                DatabaseRecordSectionView {
+                    LazyVStack(spacing: 10) {
+                        ForEach(jobLevels, id: \.level) { levelStats in
+                            HStack {
+                                Text((levelStats.level + 1).formatted())
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
+                                Text(levelStats.jobExp.formatted())
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                    .foregroundStyle(Color.secondary)
+
+                                Text(levelStats.bonusStats)
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                    .foregroundStyle(Color.secondary)
+
+                                Text(verbatim: "")
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                    .foregroundStyle(Color.secondary)
+                            }
+                        }
+                    }
+                } header: {
+                    HStack {
+                        Text("Job Level")
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
+                        Text("Job Exp")
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
+                        Text("Bonus Stats")
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
+                        Text(verbatim: "")
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                    }
                 }
             }
         }
