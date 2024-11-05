@@ -52,4 +52,10 @@ public actor StatusChangeDatabase {
         let statusChange = cachedStatusChangesByID[statusChangeID]
         return statusChange
     }
+
+    public func statusChanges(forIDs statusChangeIDs: [StatusChangeID]) throws -> [StatusChange] {
+        try statusChangeIDs.compactMap {
+            try statusChange(forID: $0)
+        }
+    }
 }

@@ -7,7 +7,7 @@
 
 import ROGenerated
 
-public struct StatusChange: Decodable, Equatable, Hashable, Sendable {
+public struct StatusChange: Decodable, Equatable, Hashable, Identifiable, Sendable {
 
     /// Status change name.
     public var status: StatusChangeID
@@ -56,6 +56,10 @@ public struct StatusChange: Decodable, Equatable, Hashable, Sendable {
 
     /// List of Status Changes that will end when the status becomes inactive. (Optional)
     public var endOnEnd: Set<StatusChangeID>?
+
+    public var id: StatusChangeID {
+        status
+    }
 
     enum CodingKeys: String, CodingKey {
         case status = "Status"

@@ -61,7 +61,7 @@ struct DatabaseRoot<RecordProvider, Empty>: ViewModifier where RecordProvider: D
                 SkillInfoView(mode: database.mode, skill: skill)
             }
             .navigationDestination(for: StatusChange.self) { statusChange in
-                DatabaseRecordDetailView(mode: database.mode, record: statusChange)
+                StatusChangeInfoView(mode: database.mode, statusChange: statusChange)
             }
             .searchable(text: $database.searchText, placement: searchFieldPlacement)
             .onSubmit(of: .search) {

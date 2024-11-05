@@ -102,9 +102,7 @@
 		35B422EF2BEF091F00681AA2 /* ObservableDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422EE2BEF091F00681AA2 /* ObservableDatabase.swift */; };
 		35B422F22BEF5F3000681AA2 /* StatusChangeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422F12BEF5F3000681AA2 /* StatusChangeProvider.swift */; };
 		35B422F42BEF602500681AA2 /* StatusChangeDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422F32BEF602500681AA2 /* StatusChangeDatabaseView.swift */; };
-		35B422F62BEF76F700681AA2 /* DatabaseRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422F52BEF76F700681AA2 /* DatabaseRecord.swift */; };
-		35B422F82BEFA35400681AA2 /* DatabaseRecordDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422F72BEFA35400681AA2 /* DatabaseRecordDetailView.swift */; };
-		35B422FC2BEFBC8F00681AA2 /* StatusChange+DatabaseRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422FB2BEFBC8F00681AA2 /* StatusChange+DatabaseRecord.swift */; };
+		35B422F62BEF76F700681AA2 /* DatabaseRecordAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422F52BEF76F700681AA2 /* DatabaseRecordAttribute.swift */; };
 		35B695EA2A305EF6006F1904 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695E92A305EF6006F1904 /* GameView.swift */; };
 		35B695EC2A307164006F1904 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695EB2A307164006F1904 /* GameScene.swift */; };
 		35BDF7022C9B080000CCAB8F /* ROLocalizations in Frameworks */ = {isa = PBXBuildFile; productRef = 35BDF7012C9B080000CCAB8F /* ROLocalizations */; };
@@ -141,6 +139,7 @@
 		35E67C7D2CBF90C8006E42A3 /* Miscellaneous+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C7C2CBF909E006E42A3 /* Miscellaneous+JSON.swift */; };
 		35F50CCC2BB4615F00B36455 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CCB2BB4615F00B36455 /* MessagesView.swift */; };
 		35FEB6AD2CD8BE4E00F24A4A /* DatabaseRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */; };
+		35FEB6AF2CD8C90300F24A4A /* StatusChangeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -247,9 +246,7 @@
 		35B422EE2BEF091F00681AA2 /* ObservableDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableDatabase.swift; sourceTree = "<group>"; };
 		35B422F12BEF5F3000681AA2 /* StatusChangeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeProvider.swift; sourceTree = "<group>"; };
 		35B422F32BEF602500681AA2 /* StatusChangeDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeDatabaseView.swift; sourceTree = "<group>"; };
-		35B422F52BEF76F700681AA2 /* DatabaseRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecord.swift; sourceTree = "<group>"; };
-		35B422F72BEFA35400681AA2 /* DatabaseRecordDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordDetailView.swift; sourceTree = "<group>"; };
-		35B422FB2BEFBC8F00681AA2 /* StatusChange+DatabaseRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusChange+DatabaseRecord.swift"; sourceTree = "<group>"; };
+		35B422F52BEF76F700681AA2 /* DatabaseRecordAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordAttribute.swift; sourceTree = "<group>"; };
 		35B695E92A305EF6006F1904 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		35B695EB2A307164006F1904 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		35BDF7032C9B0AED00CCAB8F /* ClientSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSettings.swift; sourceTree = "<group>"; };
@@ -286,6 +283,7 @@
 		35E67C7C2CBF909E006E42A3 /* Miscellaneous+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Miscellaneous+JSON.swift"; sourceTree = "<group>"; };
 		35F50CCB2BB4615F00B36455 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRoot.swift; sourceTree = "<group>"; };
+		35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeInfoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -400,10 +398,10 @@
 				35B422CE2BEB68C500681AA2 /* Pet */,
 				3514BF432B4526DE0065ED89 /* Skill */,
 				35B422F02BEF5EEB00681AA2 /* StatusChange */,
-				35B33BA62BF467C600EF28F5 /* DatabaseRecordDetail */,
 				35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */,
 				35B422EE2BEF091F00681AA2 /* ObservableDatabase.swift */,
-				35B422F52BEF76F700681AA2 /* DatabaseRecord.swift */,
+				3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */,
+				35B422F52BEF76F700681AA2 /* DatabaseRecordAttribute.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -478,15 +476,6 @@
 				35B33BA12BF3BDCE00EF28F5 /* CubeViewController.swift */,
 			);
 			path = Cube;
-			sourceTree = "<group>";
-		};
-		35B33BA62BF467C600EF28F5 /* DatabaseRecordDetail */ = {
-			isa = PBXGroup;
-			children = (
-				35B422F72BEFA35400681AA2 /* DatabaseRecordDetailView.swift */,
-				3523B5812B98B74B00CCE722 /* DatabaseRecordInfoSection.swift */,
-			);
-			path = DatabaseRecordDetail;
 			sourceTree = "<group>";
 		};
 		35B3B8CB2A08BEA600B4540B = {
@@ -597,8 +586,8 @@
 			isa = PBXGroup;
 			children = (
 				35B422F32BEF602500681AA2 /* StatusChangeDatabaseView.swift */,
+				35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */,
 				35B422F12BEF5F3000681AA2 /* StatusChangeProvider.swift */,
-				35B422FB2BEFBC8F00681AA2 /* StatusChange+DatabaseRecord.swift */,
 			);
 			path = StatusChange;
 			sourceTree = "<group>";
@@ -776,12 +765,11 @@
 				35B422F42BEF602500681AA2 /* StatusChangeDatabaseView.swift in Sources */,
 				35BF5BE22C65B5D8006A3487 /* SidebarView.swift in Sources */,
 				3536BDAD2CCA72840098950E /* ConsoleView.swift in Sources */,
-				35B422F82BEFA35400681AA2 /* DatabaseRecordDetailView.swift in Sources */,
 				351EE3072C08BF440012BC9E /* ItemNameView.swift in Sources */,
 				35BE55352BD9574E003715C3 /* AnimatedImageView.swift in Sources */,
 				35652B452B960D2D0075AD71 /* MapCell.swift in Sources */,
 				35BE55312BD94D79003715C3 /* AudioFilePreviewView.swift in Sources */,
-				35B422F62BEF76F700681AA2 /* DatabaseRecord.swift in Sources */,
+				35B422F62BEF76F700681AA2 /* DatabaseRecordAttribute.swift in Sources */,
 				351EE3012C08B86A0012BC9E /* MapImageView.swift in Sources */,
 				35E67C7D2CBF90C8006E42A3 /* Miscellaneous+JSON.swift in Sources */,
 				35239E012BC29A4E0039F7D5 /* ItemProvider.swift in Sources */,
@@ -793,6 +781,7 @@
 				35E67C722CBF6C1F006E42A3 /* FileJSONViewer.swift in Sources */,
 				35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */,
 				35B422EF2BEF091F00681AA2 /* ObservableDatabase.swift in Sources */,
+				35FEB6AF2CD8C90300F24A4A /* StatusChangeInfoView.swift in Sources */,
 				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,
 				35239DFB2BBEEF890039F7D5 /* JobProvider.swift in Sources */,
 				35B3BA1A2A08C01600B4540B /* FilesView.swift in Sources */,
@@ -849,7 +838,6 @@
 				35BE555C2BDAAFBF003715C3 /* MetalView.swift in Sources */,
 				35BE552D2BD939AA003715C3 /* ImageFilePreviewView.swift in Sources */,
 				351EE2FF2C08896F0012BC9E /* SkillNameView.swift in Sources */,
-				35B422FC2BEFBC8F00681AA2 /* StatusChange+DatabaseRecord.swift in Sources */,
 				3514BF602B455EF90065ED89 /* MonsterGridCell.swift in Sources */,
 				35E27A832BC96AC800C11076 /* Message.swift in Sources */,
 				35BF5BE42C65B9FD006A3487 /* DetailView.swift in Sources */,
