@@ -6,26 +6,16 @@
 //
 
 import SwiftUI
-import ROClientResources
-import RODatabase
-import ROGenerated
 
 struct JobInfoView: View {
-    var mode: DatabaseMode
-    var job: Job
-
-    typealias BaseLevelStats = (level: Int, baseExp: Int, baseHp: Int, baseSp: Int)
-    typealias JobLevelStats = (level: Int, jobExp: Int, bonusStats: String)
-
-    @State private var jobImage: CGImage?
-    @State private var skills: [Skill] = []
+    var job: ObservableJob
 
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: .sectionHeaders) {
                 ZStack {
-                    if let jobImage {
-                        Image(jobImage, scale: 1, label: Text(job.id.stringValue))
+                    if let jobImage = job.image {
+                        Image(jobImage, scale: 1, label: Text(job.displayName))
                     } else {
                         Image(systemName: "person")
                             .font(.system(size: 100, weight: .thin))
@@ -34,34 +24,14 @@ struct JobInfoView: View {
                 }
                 .frame(height: 200)
 
-                DatabaseRecordSectionView("Info", spacing: 10) {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                        ForEach(attributes) { attribute in
-                            LabeledContent {
-                                Text(attribute.value)
-                            } label: {
-                                Text(attribute.name)
-                            }
-                        }
-                    }
-                }
+                DatabaseRecordAttributesSectionView("Info", attributes: job.attributes)
 
-                DatabaseRecordSectionView("Base ASPD", spacing: 10) {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                        ForEach(baseASPD) { baseASPD in
-                            LabeledContent {
-                                Text(baseASPD.value)
-                            } label: {
-                                Text(baseASPD.name)
-                            }
-                        }
-                    }
-                }
+                DatabaseRecordAttributesSectionView("Base ASPD", attributes: job.baseASPD)
 
-                if !skills.isEmpty {
+                if !job.skills.isEmpty {
                     DatabaseRecordSectionView("Skills", spacing: 20) {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                            ForEach(skills) { skill in
+                            ForEach(job.skills) { skill in
                                 NavigationLink(value: skill) {
                                     SkillCell(skill: skill)
                                 }
@@ -73,7 +43,7 @@ struct JobInfoView: View {
 
                 DatabaseRecordSectionView {
                     LazyVStack(spacing: 10) {
-                        ForEach(baseLevels, id: \.level) { levelStats in
+                        ForEach(job.baseLevels) { levelStats in
                             HStack {
                                 Text((levelStats.level + 1).formatted())
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
@@ -110,7 +80,7 @@ struct JobInfoView: View {
 
                 DatabaseRecordSectionView {
                     LazyVStack(spacing: 10) {
-                        ForEach(jobLevels, id: \.level) { levelStats in
+                        ForEach(job.jobLevels) { levelStats in
                             HStack {
                                 Text((levelStats.level + 1).formatted())
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
@@ -147,66 +117,9 @@ struct JobInfoView: View {
             }
         }
         .background(.background)
-        .navigationTitle(job.id.stringValue)
+        .navigationTitle(job.displayName)
         .task {
-            await loadJobInfo()
-        }
-    }
-
-    private var attributes: [DatabaseRecordAttribute] {
-        var attributes: [DatabaseRecordAttribute] = []
-
-        attributes.append(.init(name: "Max Weight", value: job.maxWeight))
-        attributes.append(.init(name: "HP Factor", value: job.hpFactor))
-        attributes.append(.init(name: "HP Increase", value: job.hpIncrease))
-        attributes.append(.init(name: "SP Increase", value: job.spIncrease))
-
-        return attributes
-    }
-
-    private var baseASPD: [DatabaseRecordAttribute] {
-        WeaponType.allCases.compactMap { weaponType in
-            if let aspd = job.baseASPD[weaponType] {
-                DatabaseRecordAttribute(name: weaponType.localizedStringResource, value: aspd)
-            } else {
-                nil
-            }
-        }
-    }
-
-    private var baseLevels: [BaseLevelStats] {
-        (0..<job.maxBaseLevel).map { level in
-            (level, job.baseExp[level], job.baseHp[level], job.baseSp[level])
-        }
-    }
-
-    private var jobLevels: [JobLevelStats] {
-        (0..<job.maxJobLevel).map { level in
-            let bonusStats = Parameter.allCases.compactMap { parameter in
-                if let value = job.bonusStats[level][parameter], value > 0 {
-                    return "\(parameter.stringValue)(+\(value))"
-                } else {
-                    return nil
-                }
-            }.joined(separator: " ")
-            return (level, job.jobExp[level], bonusStats)
-        }
-    }
-
-    private func loadJobInfo() async {
-        jobImage = await ClientResourceManager.default.jobImage(sex: .male, jobID: job.id)
-
-        let skillDatabase = SkillDatabase.database(for: mode)
-        let skillTreeDatabase = SkillTreeDatabase.database(for: mode)
-
-        if let skillTree = try? await skillTreeDatabase.skillTree(forJobID: job.id)?.tree {
-            var skills: [Skill] = []
-            for s in skillTree {
-                if let skill = try? await skillDatabase.skill(forAegisName: s.name) {
-                    skills.append(skill)
-                }
-            }
-            self.skills = skills
+            await job.fetchDetail()
         }
     }
 }

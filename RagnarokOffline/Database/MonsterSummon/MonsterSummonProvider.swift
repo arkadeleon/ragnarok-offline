@@ -10,19 +10,15 @@ import RODatabase
 struct MonsterSummonProvider: DatabaseRecordProvider {
     func records(for mode: DatabaseMode) async throws -> [ObservableMonsterSummon] {
         let monsterSummonDatabase = MonsterSummonDatabase.database(for: mode)
-        let mss = try await monsterSummonDatabase.monsterSummons()
-
-        var monsterSummons: [ObservableMonsterSummon] = []
-        for ms in mss {
-            let monsterSummon = ObservableMonsterSummon(mode: mode, monsterSummon: ms)
-            monsterSummons.append(monsterSummon)
+        let monsterSummons = try await monsterSummonDatabase.monsterSummons().map { monsterSummon in
+            ObservableMonsterSummon(mode: mode, monsterSummon: monsterSummon)
         }
         return monsterSummons
     }
 
     func records(matching searchText: String, in monsterSummons: [ObservableMonsterSummon]) async -> [ObservableMonsterSummon] {
         monsterSummons.filter { monsterSummon in
-            monsterSummon.group.localizedStandardContains(searchText)
+            monsterSummon.displayName.localizedStandardContains(searchText)
         }
     }
 }

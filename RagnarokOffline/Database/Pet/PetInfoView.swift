@@ -14,10 +14,12 @@ struct PetInfoView: View {
         ScrollView {
             LazyVStack(pinnedViews: .sectionHeaders) {
                 DatabaseRecordSectionView("Monster") {
-                    NavigationLink(value: pet.monster) {
-                        MonsterGridCell(monster: pet.monster, secondaryText: nil)
+                    if let monster = pet.monster {
+                        NavigationLink(value: monster) {
+                            MonsterGridCell(monster: monster, secondaryText: nil)
+                        }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
 
                 DatabaseRecordSectionView("Items", spacing: 20) {
@@ -49,26 +51,16 @@ struct PetInfoView: View {
                     }
                 }
 
-                DatabaseRecordSectionView("Info", spacing: 10) {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                        ForEach(pet.attributes) { attribute in
-                            LabeledContent {
-                                Text(attribute.value)
-                            } label: {
-                                Text(attribute.name)
-                            }
-                        }
-                    }
-                }
+                DatabaseRecordAttributesSectionView("Info", attributes: pet.attributes)
 
-                if let script = pet.pet.script {
+                if let script = pet.script {
                     DatabaseRecordSectionView("Script") {
                         Text(script)
                             .monospaced()
                     }
                 }
 
-                if let supportScript = pet.pet.supportScript {
+                if let supportScript = pet.supportScript {
                     DatabaseRecordSectionView("Support Script") {
                         Text(supportScript)
                             .monospaced()
@@ -77,9 +69,9 @@ struct PetInfoView: View {
             }
         }
         .background(.background)
-        .navigationTitle(pet.monster.localizedName)
+        .navigationTitle(pet.displayName)
         .task {
-            await pet.fetchPetInfo()
+            await pet.fetchDetail()
         }
     }
 }

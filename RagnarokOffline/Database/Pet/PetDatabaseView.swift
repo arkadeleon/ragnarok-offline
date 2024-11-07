@@ -13,10 +13,12 @@ struct PetDatabaseView: View {
     var body: some View {
         ImageGrid {
             ForEach(database.filteredRecords) { pet in
-                NavigationLink(value: pet) {
-                    MonsterGridCell(monster: pet.monster, secondaryText: nil)
+                if let monster = pet.monster {
+                    NavigationLink(value: pet) {
+                        MonsterGridCell(monster: monster, secondaryText: nil)
+                    }
+                    .buttonStyle(.plain)
                 }
-                .buttonStyle(.plain)
             }
         }
         .navigationTitle("Pet Database")

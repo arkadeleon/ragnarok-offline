@@ -1,38 +1,30 @@
 //
-//  ItemIconView.swift
+//  SkillIconImageView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/5/30.
 //
 
-import ROClientResources
-import RODatabase
 import SwiftUI
 
-struct ItemIconView: View {
-    var item: Item
-
-    @State private var itemIcon: CGImage?
+struct SkillIconImageView: View {
+    var skill: ObservableSkill
 
     var body: some View {
         ZStack {
-            if let itemIcon {
-                Image(itemIcon, scale: 1, label: Text(item.name))
+            if let skillIconImage = skill.iconImage {
+                Image(skillIconImage, scale: 1, label: Text(skill.displayName))
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             } else {
-                Image(systemName: "leaf")
+                Image(systemName: "arrow.up.heart")
                     .font(.system(size: 25, weight: .thin))
                     .foregroundStyle(Color.secondary)
             }
         }
         .frame(width: 40, height: 40)
         .task {
-            itemIcon = await ClientResourceManager.default.itemIconImage(forItemID: item.id)
+            await skill.fetchIconImage()
         }
     }
 }
-
-//#Preview {
-//    ItemIconView()
-//}

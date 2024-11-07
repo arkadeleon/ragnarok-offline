@@ -14,14 +14,14 @@ struct MonsterSummonDatabaseView: View {
     var body: some View {
         ResponsiveView {
             List(database.filteredRecords) { monsterSummon in
-                NavigationLink(monsterSummon.group, value: monsterSummon)
+                NavigationLink(monsterSummon.displayName, value: monsterSummon)
             }
             .listStyle(.plain)
         } regular: {
             List(database.filteredRecords) { monsterSummon in
                 NavigationLink(value: monsterSummon) {
                     HStack {
-                        Text(monsterSummon.group)
+                        Text(monsterSummon.displayName)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                         Text(monsterSummon.default)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)

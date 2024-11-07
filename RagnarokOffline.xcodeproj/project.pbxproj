@@ -31,12 +31,9 @@
 		351990202BC837320082EB0E /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3519901E2BC837320082EB0E /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		351EE2F82C0735390012BC9E /* TransferableAnimatedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2F72C0735390012BC9E /* TransferableAnimatedImage.swift */; };
 		351EE2F92C0735390012BC9E /* TransferableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2F62C0735390012BC9E /* TransferableImage.swift */; };
-		351EE2FD2C0880A00012BC9E /* SkillIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2FC2C0880A00012BC9E /* SkillIconView.swift */; };
-		351EE2FF2C08896F0012BC9E /* SkillNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2FE2C08896F0012BC9E /* SkillNameView.swift */; };
+		351EE2FD2C0880A00012BC9E /* SkillIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2FC2C0880A00012BC9E /* SkillIconImageView.swift */; };
 		351EE3012C08B86A0012BC9E /* MapImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE3002C08B86A0012BC9E /* MapImageView.swift */; };
-		351EE3032C08B94A0012BC9E /* MapNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE3022C08B94A0012BC9E /* MapNameView.swift */; };
-		351EE3052C08BF3A0012BC9E /* ItemIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE3042C08BF3A0012BC9E /* ItemIconView.swift */; };
-		351EE3072C08BF440012BC9E /* ItemNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE3062C08BF440012BC9E /* ItemNameView.swift */; };
+		351EE3052C08BF3A0012BC9E /* ItemIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE3042C08BF3A0012BC9E /* ItemIconImageView.swift */; };
 		35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */; };
 		35239DF72BBDA0760039F7D5 /* LoadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF62BBDA0760039F7D5 /* LoadStatus.swift */; };
 		35239DF92BBDB7B50039F7D5 /* MonsterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF82BBDB7B50039F7D5 /* MonsterProvider.swift */; };
@@ -140,6 +137,12 @@
 		35F50CCC2BB4615F00B36455 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CCB2BB4615F00B36455 /* MessagesView.swift */; };
 		35FEB6AD2CD8BE4E00F24A4A /* DatabaseRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */; };
 		35FEB6AF2CD8C90300F24A4A /* StatusChangeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */; };
+		35FEB6B52CDA13C200F24A4A /* DatabaseRecordAttributesSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6B42CDA13BB00F24A4A /* DatabaseRecordAttributesSectionView.swift */; };
+		35FEB6BA2CDB18D300F24A4A /* ObservableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6B92CDB18CC00F24A4A /* ObservableItem.swift */; };
+		35FEB6C02CDC5E9D00F24A4A /* ObservableJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6BF2CDC5E9200F24A4A /* ObservableJob.swift */; };
+		35FEB6C22CDC845E00F24A4A /* ObservableMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6C12CDC845800F24A4A /* ObservableMap.swift */; };
+		35FEB6C42CDCBED900F24A4A /* ObservableStatusChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6C32CDCBED400F24A4A /* ObservableStatusChange.swift */; };
+		35FEB6C62CDCC28F00F24A4A /* ObservableSkill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6C52CDCC28500F24A4A /* ObservableSkill.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -175,12 +178,9 @@
 		3514BF852B4801EB0065ED89 /* JobInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInfoView.swift; sourceTree = "<group>"; };
 		351EE2F62C0735390012BC9E /* TransferableImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferableImage.swift; sourceTree = "<group>"; };
 		351EE2F72C0735390012BC9E /* TransferableAnimatedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferableAnimatedImage.swift; sourceTree = "<group>"; };
-		351EE2FC2C0880A00012BC9E /* SkillIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillIconView.swift; sourceTree = "<group>"; };
-		351EE2FE2C08896F0012BC9E /* SkillNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillNameView.swift; sourceTree = "<group>"; };
+		351EE2FC2C0880A00012BC9E /* SkillIconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillIconImageView.swift; sourceTree = "<group>"; };
 		351EE3002C08B86A0012BC9E /* MapImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapImageView.swift; sourceTree = "<group>"; };
-		351EE3022C08B94A0012BC9E /* MapNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapNameView.swift; sourceTree = "<group>"; };
-		351EE3042C08BF3A0012BC9E /* ItemIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemIconView.swift; sourceTree = "<group>"; };
-		351EE3062C08BF440012BC9E /* ItemNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemNameView.swift; sourceTree = "<group>"; };
+		351EE3042C08BF3A0012BC9E /* ItemIconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemIconImageView.swift; sourceTree = "<group>"; };
 		35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableServer.swift; sourceTree = "<group>"; };
 		35239DF62BBDA0760039F7D5 /* LoadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadStatus.swift; sourceTree = "<group>"; };
 		35239DF82BBDB7B50039F7D5 /* MonsterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterProvider.swift; sourceTree = "<group>"; };
@@ -284,6 +284,12 @@
 		35F50CCB2BB4615F00B36455 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRoot.swift; sourceTree = "<group>"; };
 		35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeInfoView.swift; sourceTree = "<group>"; };
+		35FEB6B42CDA13BB00F24A4A /* DatabaseRecordAttributesSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordAttributesSectionView.swift; sourceTree = "<group>"; };
+		35FEB6B92CDB18CC00F24A4A /* ObservableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableItem.swift; sourceTree = "<group>"; };
+		35FEB6BF2CDC5E9200F24A4A /* ObservableJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableJob.swift; sourceTree = "<group>"; };
+		35FEB6C12CDC845800F24A4A /* ObservableMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMap.swift; sourceTree = "<group>"; };
+		35FEB6C32CDCBED400F24A4A /* ObservableStatusChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableStatusChange.swift; sourceTree = "<group>"; };
+		35FEB6C52CDCC28500F24A4A /* ObservableSkill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableSkill.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,10 +323,10 @@
 			children = (
 				35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */,
 				353B4F1B2B451F1300605E92 /* ItemCell.swift */,
-				351EE3042C08BF3A0012BC9E /* ItemIconView.swift */,
-				351EE3062C08BF440012BC9E /* ItemNameView.swift */,
+				351EE3042C08BF3A0012BC9E /* ItemIconImageView.swift */,
 				3514BF442B4526F40065ED89 /* ItemInfoView.swift */,
 				35239E002BC29A4E0039F7D5 /* ItemProvider.swift */,
+				35FEB6B92CDB18CC00F24A4A /* ObservableItem.swift */,
 			);
 			path = Item;
 			sourceTree = "<group>";
@@ -330,10 +336,10 @@
 			children = (
 				353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */,
 				3514BF5A2B454A040065ED89 /* SkillCell.swift */,
-				351EE2FC2C0880A00012BC9E /* SkillIconView.swift */,
-				351EE2FE2C08896F0012BC9E /* SkillNameView.swift */,
+				351EE2FC2C0880A00012BC9E /* SkillIconImageView.swift */,
 				353B4F172B44FFE100605E92 /* SkillInfoView.swift */,
 				35239DFC2BBEF1C80039F7D5 /* SkillProvider.swift */,
+				35FEB6C52CDCC28500F24A4A /* ObservableSkill.swift */,
 			);
 			path = Skill;
 			sourceTree = "<group>";
@@ -357,6 +363,7 @@
 				3514BF832B4801E20065ED89 /* JobGridCell.swift */,
 				3514BF852B4801EB0065ED89 /* JobInfoView.swift */,
 				35239DFA2BBEEF890039F7D5 /* JobProvider.swift */,
+				35FEB6BF2CDC5E9200F24A4A /* ObservableJob.swift */,
 			);
 			path = Job;
 			sourceTree = "<group>";
@@ -401,6 +408,7 @@
 				35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */,
 				35B422EE2BEF091F00681AA2 /* ObservableDatabase.swift */,
 				3523B5812B98B74B00CCE722 /* DatabaseRecordSectionView.swift */,
+				35FEB6B42CDA13BB00F24A4A /* DatabaseRecordAttributesSectionView.swift */,
 				35B422F52BEF76F700681AA2 /* DatabaseRecordAttribute.swift */,
 			);
 			path = Database;
@@ -434,9 +442,9 @@
 				35652B422B960D100075AD71 /* MapDatabaseView.swift */,
 				35652B442B960D2D0075AD71 /* MapCell.swift */,
 				351EE3002C08B86A0012BC9E /* MapImageView.swift */,
-				351EE3022C08B94A0012BC9E /* MapNameView.swift */,
 				35652B462B960D370075AD71 /* MapInfoView.swift */,
 				35239DFE2BBEF4510039F7D5 /* MapProvider.swift */,
+				35FEB6C12CDC845800F24A4A /* ObservableMap.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -588,6 +596,7 @@
 				35B422F32BEF602500681AA2 /* StatusChangeDatabaseView.swift */,
 				35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */,
 				35B422F12BEF5F3000681AA2 /* StatusChangeProvider.swift */,
+				35FEB6C32CDCBED400F24A4A /* ObservableStatusChange.swift */,
 			);
 			path = StatusChange;
 			sourceTree = "<group>";
@@ -761,11 +770,11 @@
 				3594DD552BF5FB6E00575F3D /* GNDFilePreviewView.swift in Sources */,
 				3514BF622B4560730065ED89 /* MonsterInfoView.swift in Sources */,
 				3514BF5E2B4557950065ED89 /* MonsterDatabaseView.swift in Sources */,
-				351EE2FD2C0880A00012BC9E /* SkillIconView.swift in Sources */,
+				35FEB6BA2CDB18D300F24A4A /* ObservableItem.swift in Sources */,
+				351EE2FD2C0880A00012BC9E /* SkillIconImageView.swift in Sources */,
 				35B422F42BEF602500681AA2 /* StatusChangeDatabaseView.swift in Sources */,
 				35BF5BE22C65B5D8006A3487 /* SidebarView.swift in Sources */,
 				3536BDAD2CCA72840098950E /* ConsoleView.swift in Sources */,
-				351EE3072C08BF440012BC9E /* ItemNameView.swift in Sources */,
 				35BE55352BD9574E003715C3 /* AnimatedImageView.swift in Sources */,
 				35652B452B960D2D0075AD71 /* MapCell.swift in Sources */,
 				35BE55312BD94D79003715C3 /* AudioFilePreviewView.swift in Sources */,
@@ -786,12 +795,14 @@
 				35239DFB2BBEEF890039F7D5 /* JobProvider.swift in Sources */,
 				35B3BA1A2A08C01600B4540B /* FilesView.swift in Sources */,
 				35B3B9F92A08C01600B4540B /* GameRenderer.swift in Sources */,
+				35FEB6C42CDCBED900F24A4A /* ObservableStatusChange.swift in Sources */,
 				35239DF72BBDA0760039F7D5 /* LoadStatus.swift in Sources */,
 				35B422D22BEB6C7C00681AA2 /* PetDatabaseView.swift in Sources */,
 				35B422D42BEB785500681AA2 /* ObservablePet.swift in Sources */,
 				35652B432B960D100075AD71 /* MapDatabaseView.swift in Sources */,
 				35E27A852BC96B3000C11076 /* MessageCell.swift in Sources */,
 				355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */,
+				35FEB6C22CDC845E00F24A4A /* ObservableMap.swift in Sources */,
 				35E67C792CBF6E60006E42A3 /* SPR+JSON.swift in Sources */,
 				35E67C7B2CBF7F4F006E42A3 /* STR+JSON.swift in Sources */,
 				3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */,
@@ -808,6 +819,7 @@
 				35BE55622BDAB6EC003715C3 /* STRFilePreviewView.swift in Sources */,
 				35E67C772CBF6E57006E42A3 /* RSW+JSON.swift in Sources */,
 				3514BF452B4526F40065ED89 /* ItemInfoView.swift in Sources */,
+				35FEB6C62CDCC28F00F24A4A /* ObservableSkill.swift in Sources */,
 				35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */,
 				354668C52CA9338500CE2D11 /* TextMessage.swift in Sources */,
 				35BE55602BDAB2A7003715C3 /* RSWFilePreviewView.swift in Sources */,
@@ -818,10 +830,11 @@
 				3599BD592C3FCE7A0010DBE7 /* ImageGridCell.swift in Sources */,
 				35BDF7042C9B0AED00CCAB8F /* ClientSettings.swift in Sources */,
 				35239DFF2BBEF4510039F7D5 /* MapProvider.swift in Sources */,
+				35FEB6C02CDC5E9D00F24A4A /* ObservableJob.swift in Sources */,
 				35E67C752CBF6E4F006E42A3 /* RSM+JSON.swift in Sources */,
 				3506D11C2C00526A00903A47 /* ObservableFile.swift in Sources */,
 				355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */,
-				351EE3052C08BF3A0012BC9E /* ItemIconView.swift in Sources */,
+				351EE3052C08BF3A0012BC9E /* ItemIconImageView.swift in Sources */,
 				35BE55332BD9547F003715C3 /* ACTFilePreviewView.swift in Sources */,
 				353B4F1C2B451F1300605E92 /* ItemCell.swift in Sources */,
 				35B422DE2BECAB6100681AA2 /* MonsterSummonDatabaseView.swift in Sources */,
@@ -829,7 +842,6 @@
 				35F50CCC2BB4615F00B36455 /* MessagesView.swift in Sources */,
 				35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */,
 				35B422F22BEF5F3000681AA2 /* StatusChangeProvider.swift in Sources */,
-				351EE3032C08B94A0012BC9E /* MapNameView.swift in Sources */,
 				3536BDAF2CCA8E030098950E /* ANSIColor.swift in Sources */,
 				353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */,
 				35B422DA2BECA87400681AA2 /* ObservableMonsterSummon.swift in Sources */,
@@ -837,10 +849,10 @@
 				3514BF842B4801E20065ED89 /* JobGridCell.swift in Sources */,
 				35BE555C2BDAAFBF003715C3 /* MetalView.swift in Sources */,
 				35BE552D2BD939AA003715C3 /* ImageFilePreviewView.swift in Sources */,
-				351EE2FF2C08896F0012BC9E /* SkillNameView.swift in Sources */,
 				3514BF602B455EF90065ED89 /* MonsterGridCell.swift in Sources */,
 				35E27A832BC96AC800C11076 /* Message.swift in Sources */,
 				35BF5BE42C65B9FD006A3487 /* DetailView.swift in Sources */,
+				35FEB6B52CDA13C200F24A4A /* DatabaseRecordAttributesSectionView.swift in Sources */,
 				3523B5822B98B74B00CCE722 /* DatabaseRecordSectionView.swift in Sources */,
 				351426C42C11BF9600B076BE /* FileReferencesView.swift in Sources */,
 				35BE55292BD92D52003715C3 /* TextFilePreviewView.swift in Sources */,

@@ -24,7 +24,7 @@ struct MapDatabaseView: View {
                     HStack {
                         MapImageView(map: map)
                             .frame(width: 40)
-                        MapNameView(map: map)
+                        Text(map.displayName)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                         Text(map.name)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)

@@ -8,15 +8,20 @@
 import RODatabase
 
 struct SkillProvider: DatabaseRecordProvider {
-    func records(for mode: DatabaseMode) async throws -> [Skill] {
+    func records(for mode: DatabaseMode) async throws -> [ObservableSkill] {
         let database = SkillDatabase.database(for: mode)
-        let skills = try await database.skills()
+        let skills = try await database.skills().map { skill in
+            ObservableSkill(mode: mode, skill: skill)
+        }
+        for skill in skills {
+            skill.fetchLocalizedName()
+        }
         return skills
     }
 
-    func records(matching searchText: String, in skills: [Skill]) async -> [Skill] {
+    func records(matching searchText: String, in skills: [ObservableSkill]) async -> [ObservableSkill] {
         skills.filter { skill in
-            skill.name.localizedStandardContains(searchText)
+            skill.displayName.localizedStandardContains(searchText)
         }
     }
 }

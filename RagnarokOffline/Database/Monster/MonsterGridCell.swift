@@ -11,17 +11,15 @@ struct MonsterGridCell: View {
     var monster: ObservableMonster
     var secondaryText: String?
 
-    @State private var monsterImage: CGImage?
-
     var body: some View {
-        ImageGridCell(title: monster.localizedName, subtitle: secondaryText) {
-            if let monsterImage {
+        ImageGridCell(title: monster.displayName, subtitle: secondaryText) {
+            if let monsterImage = monster.image {
                 if monsterImage.width > 80 || monsterImage.height > 80 {
-                    Image(monsterImage, scale: 1, label: Text(monster.localizedName))
+                    Image(monsterImage, scale: 1, label: Text(monster.displayName))
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 } else {
-                    Image(monsterImage, scale: 1, label: Text(monster.localizedName))
+                    Image(monsterImage, scale: 1, label: Text(monster.displayName))
                 }
             } else {
                 Image(systemName: "pawprint")
@@ -30,7 +28,7 @@ struct MonsterGridCell: View {
             }
         }
         .task {
-            monsterImage = await monster.fetchImage()
+            await monster.fetchImage()
         }
     }
 }

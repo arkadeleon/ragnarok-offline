@@ -5,18 +5,17 @@
 //  Created by Leon Li on 2024/1/3.
 //
 
-import RODatabase
 import SwiftUI
 
 struct SkillCell: View {
-    var skill: Skill
+    var skill: ObservableSkill
 
     var body: some View {
         HStack {
-            SkillIconView(skill: skill)
+            SkillIconImageView(skill: skill)
 
             VStack(alignment: .leading, spacing: 2) {
-                SkillNameView(skill: skill)
+                Text(skill.displayName)
                     .foregroundStyle(Color.primary)
                     .lineLimit(1)
 

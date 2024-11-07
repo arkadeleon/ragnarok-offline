@@ -14,7 +14,7 @@ struct StatusChangeDatabaseView: View {
         ResponsiveView {
             List(database.filteredRecords) { statusChange in
                 NavigationLink(value: statusChange) {
-                    Text(statusChange.status.stringValue)
+                    Text(statusChange.displayName)
                 }
             }
             .listStyle(.plain)
@@ -22,7 +22,7 @@ struct StatusChangeDatabaseView: View {
             List(database.filteredRecords) { statusChange in
                 NavigationLink(value: statusChange) {
                     HStack {
-                        Text(statusChange.status.stringValue)
+                        Text(statusChange.displayName)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                         Text(statusChange.icon.stringValue)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)

@@ -11,11 +11,24 @@ import RODatabase
 @Observable
 @dynamicMemberLookup
 class ObservableMonsterSummon {
+    struct Summon: Identifiable {
+        var monster: ObservableMonster
+        var rate: Int
+
+        var id: Int {
+            monster.id
+        }
+    }
+
     private let mode: DatabaseMode
     private let monsterSummon: MonsterSummon
 
     var defaultMonster: ObservableMonster?
     var summonMonsters: [Summon]?
+
+    var displayName: String {
+        monsterSummon.group
+    }
 
     init(mode: DatabaseMode, monsterSummon: MonsterSummon) {
         self.mode = mode
@@ -26,18 +39,20 @@ class ObservableMonsterSummon {
         monsterSummon[keyPath: keyPath]
     }
 
-    func fetchDetail() async throws {
+    func fetchDetail() async {
         let monsterDatabase = MonsterDatabase.database(for: mode)
 
-        if let monster = try await monsterDatabase.monster(forAegisName: monsterSummon.default) {
+        if let monster = try? await monsterDatabase.monster(forAegisName: monsterSummon.default) {
             defaultMonster = ObservableMonster(mode: mode, monster: monster)
         }
 
         var summonMonsters: [Summon] = []
         for summon in monsterSummon.summon {
-            if let monster = try await monsterDatabase.monster(forAegisName: summon.monster) {
-                let monster = ObservableMonster(mode: mode, monster: monster)
-                let summon = Summon(monster: monster, rate: summon.rate)
+            if let monster = try? await monsterDatabase.monster(forAegisName: summon.monster) {
+                let summon = Summon(
+                    monster: ObservableMonster(mode: mode, monster: monster),
+                    rate: summon.rate
+                )
                 summonMonsters.append(summon)
             }
         }
@@ -45,26 +60,13 @@ class ObservableMonsterSummon {
     }
 }
 
-extension ObservableMonsterSummon {
-    struct Summon: Identifiable {
-        var monster: ObservableMonster
-        var rate: Int
-
-        var id: Int {
-            monster.id
-        }
-    }
-}
-
-extension ObservableMonsterSummon: Equatable {
-    static func == (lhs: ObservableMonsterSummon, rhs: ObservableMonsterSummon) -> Bool {
-        lhs.monsterSummon == rhs.monsterSummon
-    }
-}
-
 extension ObservableMonsterSummon: Hashable {
+    static func == (lhs: ObservableMonsterSummon, rhs: ObservableMonsterSummon) -> Bool {
+        lhs.monsterSummon.group == rhs.monsterSummon.group
+    }
+
     func hash(into hasher: inout Hasher) {
-        monsterSummon.hash(into: &hasher)
+        hasher.combine(monsterSummon.group)
     }
 }
 

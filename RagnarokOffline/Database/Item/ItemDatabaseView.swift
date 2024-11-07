@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import RODatabase
 
 struct ItemDatabaseView: View {
     @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .item)
@@ -23,9 +22,9 @@ struct ItemDatabaseView: View {
             List(database.filteredRecords) { item in
                 NavigationLink(value: item) {
                     HStack {
-                        ItemIconView(item: item)
+                        ItemIconImageView(item: item)
                             .frame(width: 40)
-                        ItemNameView(item: item)
+                        Text(item.displayName)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                         Text(item.type.localizedStringResource)
                             .frame(width: 160, alignment: .leading)

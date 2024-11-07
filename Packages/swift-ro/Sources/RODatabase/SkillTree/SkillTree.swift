@@ -93,12 +93,6 @@ extension SkillTree {
     }
 }
 
-extension SkillTree: Identifiable {
-    public var id: Int {
-        job.rawValue
-    }
-}
-
 extension SkillTree: Comparable {
     public static func < (lhs: SkillTree, rhs: SkillTree) -> Bool {
         lhs.job.rawValue < rhs.job.rawValue

@@ -8,15 +8,17 @@
 import RODatabase
 
 struct StatusChangeProvider: DatabaseRecordProvider {
-    func records(for mode: DatabaseMode) async throws -> [StatusChange] {
+    func records(for mode: DatabaseMode) async throws -> [ObservableStatusChange] {
         let database = StatusChangeDatabase.database(for: mode)
-        let statusChanges = try await database.statusChanges()
+        let statusChanges = try await database.statusChanges().map { statusChange in
+            ObservableStatusChange(mode: mode, statusChange: statusChange)
+        }
         return statusChanges
     }
 
-    func records(matching searchText: String, in statusChanges: [StatusChange]) async -> [StatusChange] {
+    func records(matching searchText: String, in statusChanges: [ObservableStatusChange]) async -> [ObservableStatusChange] {
         statusChanges.filter { statusChange in
-            statusChange.status.stringValue.localizedStandardContains(searchText)
+            statusChange.displayName.localizedStandardContains(searchText)
         }
     }
 }

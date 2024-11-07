@@ -10,19 +10,18 @@ import RODatabase
 struct MonsterProvider: DatabaseRecordProvider {
     func records(for mode: DatabaseMode) async throws -> [ObservableMonster] {
         let database = MonsterDatabase.database(for: mode)
-        let monsters = try await database.monsters()
-
-        var observableMonsters: [ObservableMonster] = []
-        for monster in monsters {
-            let observableMonster = ObservableMonster(mode: mode, monster: monster)
-            observableMonsters.append(observableMonster)
+        let monsters = try await database.monsters().map { monster in
+            ObservableMonster(mode: mode, monster: monster)
         }
-        return observableMonsters
+        for monster in monsters {
+            monster.fetchLocalizedName()
+        }
+        return monsters
     }
 
     func records(matching searchText: String, in monsters: [ObservableMonster]) async -> [ObservableMonster] {
         monsters.filter { monster in
-            monster.localizedName.localizedStandardContains(searchText)
+            monster.displayName.localizedStandardContains(searchText)
         }
     }
 }

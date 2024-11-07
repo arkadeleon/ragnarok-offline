@@ -8,21 +8,21 @@
 import Observation
 import RODatabase
 
-enum ObservablePetError: Error {
-    case monsterNotFound(String)
-}
-
-@Observable 
+@Observable
+@dynamicMemberLookup
 class ObservablePet {
-    let mode: DatabaseMode
-    let pet: Pet
+    private let mode: DatabaseMode
+    private let pet: Pet
 
-    let monster: ObservableMonster
+    var monster: ObservableMonster?
+    var tameItem: ObservableItem?
+    var eggItem: ObservableItem?
+    var equipItem: ObservableItem?
+    var foodItem: ObservableItem?
 
-    var tameItem: Item?
-    var eggItem: Item?
-    var equipItem: Item?
-    var foodItem: Item?
+    var displayName: String {
+        monster?.displayName ?? pet.monster
+    }
 
     var attributes: [DatabaseRecordAttribute] {
         var attributes: [DatabaseRecordAttribute] = []
@@ -47,59 +47,63 @@ class ObservablePet {
         return attributes
     }
 
-    init(mode: DatabaseMode, pet: Pet) async throws {
+    init(mode: DatabaseMode, pet: Pet) {
         self.mode = mode
         self.pet = pet
+    }
 
-        let monsterDatabase = MonsterDatabase.database(for: mode)
-        if let monster = try await monsterDatabase.monster(forAegisName: pet.monster) {
-            self.monster = ObservableMonster(mode: mode, monster: monster)
-        } else {
-            throw ObservablePetError.monsterNotFound(pet.monster)
+    subscript<Value>(dynamicMember keyPath: KeyPath<Pet, Value>) -> Value {
+        pet[keyPath: keyPath]
+    }
+
+    func fetchMonster() async {
+        if monster == nil {
+            let monsterDatabase = MonsterDatabase.database(for: mode)
+            if let monster = try? await monsterDatabase.monster(forAegisName: pet.monster) {
+                self.monster = ObservableMonster(mode: mode, monster: monster)
+            }
         }
     }
 
-    func fetchPetInfo() async {
+    func fetchDetail() async {
         let itemDatabase = ItemDatabase.database(for: mode)
 
         if let tameItem = pet.tameItem {
             if let item = try? await itemDatabase.item(forAegisName: tameItem) {
-                self.tameItem = item
+                self.tameItem = ObservableItem(mode: mode, item: item)
             }
         }
 
         if let item = try? await itemDatabase.item(forAegisName: pet.eggItem) {
-            self.eggItem = item
+            self.eggItem = ObservableItem(mode: mode, item: item)
         }
 
         if let equipItem = pet.equipItem {
             if let item = try? await itemDatabase.item(forAegisName: equipItem) {
-                self.equipItem = item
+                self.equipItem = ObservableItem(mode: mode, item: item)
             }
         }
 
         if let foodItem = pet.foodItem {
             if let item = try? await itemDatabase.item(forAegisName: foodItem) {
-                self.foodItem = item
+                self.foodItem = ObservableItem(mode: mode, item: item)
             }
         }
     }
 }
 
-extension ObservablePet: Equatable {
+extension ObservablePet: Hashable {
     static func == (lhs: ObservablePet, rhs: ObservablePet) -> Bool {
         lhs.pet.monster == rhs.pet.monster
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(pet.monster)
     }
 }
 
 extension ObservablePet: Identifiable {
     var id: String {
         pet.monster
-    }
-}
-
-extension ObservablePet: Hashable {
-    func hash(into hasher: inout Hasher) {
-        pet.monster.hash(into: &hasher)
     }
 }

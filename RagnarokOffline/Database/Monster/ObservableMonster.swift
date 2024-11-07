@@ -13,15 +13,39 @@ import RODatabase
 import ROLocalizations
 
 @Observable
+@dynamicMemberLookup
 class ObservableMonster {
+    struct DropItem: Identifiable {
+        var index: Int
+        var drop: Monster.Drop
+        var item: ObservableItem
+
+        var id: Int {
+            index
+        }
+    }
+
+    struct SpawnMap: Identifiable {
+        var map: ObservableMap
+        var monsterSpawn: MonsterSpawn
+
+        var id: String {
+            map.name
+        }
+    }
+
     private let mode: DatabaseMode
     private let monster: Monster
 
-    let localizedName: String
-
+    var localizedName: String?
+    var image: CGImage?
     var mvpDropItems: [DropItem] = []
     var dropItems: [DropItem] = []
     var spawnMaps: [SpawnMap] = []
+
+    var displayName: String {
+        localizedName ?? monster.name
+    }
 
     var attributes: [DatabaseRecordAttribute] {
         var attributes: [DatabaseRecordAttribute] = []
@@ -101,16 +125,25 @@ class ObservableMonster {
     init(mode: DatabaseMode, monster: Monster) {
         self.mode = mode
         self.monster = monster
-
-        let localizedName = MonsterInfoTable.shared.localizedMonsterName(forMonsterID: monster.id)
-        self.localizedName = localizedName ?? monster.name
     }
 
-    func fetchImage() async -> CGImage? {
-        await ClientResourceManager.default.monsterImage(monster.id)
+    subscript<Value>(dynamicMember keyPath: KeyPath<Monster, Value>) -> Value {
+        monster[keyPath: keyPath]
     }
 
-    func fetchDetail() async throws {
+    func fetchLocalizedName() {
+        localizedName = MonsterInfoTable.shared.localizedMonsterName(forMonsterID: monster.id)
+    }
+
+    func fetchImage() async {
+        if image == nil {
+            image = await ClientResourceManager.default.monsterImage(monster.id)
+        }
+    }
+
+    func fetchDetail() async {
+        await fetchImage()
+
         let itemDatabase = ItemDatabase.database(for: mode)
         let mapDatabase = MapDatabase.database(for: mode)
         let npcDatabase = NPCDatabase.database(for: mode)
@@ -118,8 +151,13 @@ class ObservableMonster {
         if let mvpDrops = monster.mvpDrops {
             var mvpDropItems: [DropItem] = []
             for (index, drop) in mvpDrops.enumerated() {
-                if let item = try await itemDatabase.item(forAegisName: drop.item) {
-                    mvpDropItems.append((index, drop, item))
+                if let item = try? await itemDatabase.item(forAegisName: drop.item) {
+                    let dropItem = DropItem(
+                        index: index,
+                        drop: drop,
+                        item: ObservableItem(mode: mode, item: item)
+                    )
+                    mvpDropItems.append(dropItem)
                 }
             }
             self.mvpDropItems = mvpDropItems
@@ -128,40 +166,43 @@ class ObservableMonster {
         if let drops = monster.drops {
             var dropItems: [DropItem] = []
             for (index, drop) in drops.enumerated() {
-                if let item = try await itemDatabase.item(forAegisName: drop.item) {
-                    dropItems.append((index, drop, item))
+                if let item = try? await itemDatabase.item(forAegisName: drop.item) {
+                    let dropItem = DropItem(
+                        index: index,
+                        drop: drop,
+                        item: ObservableItem(mode: mode, item: item)
+                    )
+                    dropItems.append(dropItem)
                 }
             }
             self.dropItems = dropItems
         }
 
-        let monsterSpawns = try await npcDatabase.monsterSpawns(forMonster: monster)
-        var spawnMaps: [SpawnMap] = []
-        for monsterSpawn in monsterSpawns {
-            if let map = try await mapDatabase.map(forName: monsterSpawn.mapName) {
-                if !spawnMaps.contains(where: { $0.map == map }) {
-                    spawnMaps.append((map, monsterSpawn))
+        if let monsterSpawns = try? await npcDatabase.monsterSpawns(forMonster: monster) {
+            var spawnMaps: [SpawnMap] = []
+            for monsterSpawn in monsterSpawns {
+                if let map = try? await mapDatabase.map(forName: monsterSpawn.mapName) {
+                    if !spawnMaps.contains(where: { $0.map.name == map.name }) {
+                        let spawnMap = SpawnMap(
+                            map: ObservableMap(mode: mode, map: map),
+                            monsterSpawn: monsterSpawn
+                        )
+                        spawnMaps.append(spawnMap)
+                    }
                 }
             }
+            self.spawnMaps = spawnMaps
         }
-        self.spawnMaps = spawnMaps
-    }
-}
-
-extension ObservableMonster {
-    typealias DropItem = (index: Int, drop: Monster.Drop, item: Item)
-    typealias SpawnMap = (map: Map, monsterSpawn: MonsterSpawn)
-}
-
-extension ObservableMonster: Equatable {
-    static func == (lhs: ObservableMonster, rhs: ObservableMonster) -> Bool {
-        lhs.monster == rhs.monster
     }
 }
 
 extension ObservableMonster: Hashable {
+    static func == (lhs: ObservableMonster, rhs: ObservableMonster) -> Bool {
+        lhs.monster.id == rhs.monster.id
+    }
+
     func hash(into hasher: inout Hasher) {
-        monster.hash(into: &hasher)
+        hasher.combine(monster.id)
     }
 }
 

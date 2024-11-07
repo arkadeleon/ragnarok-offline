@@ -6,23 +6,19 @@
 //
 
 import SwiftUI
-import RODatabase
-import ROClientResources
 
 struct JobGridCell: View {
-    var job: Job
-
-    @State private var jobImage: CGImage?
+    var job: ObservableJob
 
     var body: some View {
-        ImageGridCell(title: job.id.stringValue) {
-            if let jobImage {
+        ImageGridCell(title: job.displayName) {
+            if let jobImage = job.image {
                 if jobImage.width > 80 || jobImage.height > 80 {
-                    Image(jobImage, scale: 1, label: Text(job.id.stringValue))
+                    Image(jobImage, scale: 1, label: Text(job.displayName))
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 } else {
-                    Image(jobImage, scale: 1, label: Text(job.id.stringValue))
+                    Image(jobImage, scale: 1, label: Text(job.displayName))
                 }
             } else {
                 Image(systemName: "person")
@@ -31,7 +27,7 @@ struct JobGridCell: View {
             }
         }
         .task {
-            jobImage = await ClientResourceManager.default.jobImage(sex: .male, jobID: job.id)
+            await job.fetchImage()
         }
     }
 }

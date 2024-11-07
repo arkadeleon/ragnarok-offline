@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2024/1/2.
 //
 
-import RODatabase
 import SwiftUI
 
 struct SkillDatabaseView: View {
@@ -23,14 +22,14 @@ struct SkillDatabaseView: View {
             List(database.filteredRecords) { skill in
                 NavigationLink(value: skill) {
                     HStack {
-                        SkillIconView(skill: skill)
+                        SkillIconImageView(skill: skill)
                             .frame(width: 40)
-                        SkillNameView(skill: skill)
+                        Text(skill.displayName)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                         Text(skill.maxLevel.formatted())
                             .frame(width: 80, alignment: .leading)
                             .foregroundStyle(Color.secondary)
-                        Text(spCost(for: skill))
+                        Text(skill.spCost)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                             .foregroundStyle(Color.secondary)
                     }
@@ -41,19 +40,6 @@ struct SkillDatabaseView: View {
         .navigationTitle("Skill Database")
         .databaseRoot($database) {
             ContentUnavailableView("No Skills", systemImage: "arrow.up.heart.fill")
-        }
-    }
-
-    private func spCost(for skill: Skill) -> String {
-        guard let spCost = skill.requires?.spCost else {
-            return ""
-        }
-
-        switch spCost {
-        case .left(let spCost):
-            return spCost.formatted()
-        case .right(let spCost):
-            return spCost.compactMap(String.init).joined(separator: " / ")
         }
     }
 }

@@ -183,15 +183,15 @@ extension ObservableFile: Comparable {
     }
 }
 
-extension ObservableFile: Identifiable {
-    var id: URL {
-        file.url
+extension ObservableFile: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(file.url)
     }
 }
 
-extension ObservableFile: Hashable {
-    func hash(into hasher: inout Hasher) {
-        file.url.hash(into: &hasher)
+extension ObservableFile: Identifiable {
+    var id: URL {
+        file.url
     }
 }
 

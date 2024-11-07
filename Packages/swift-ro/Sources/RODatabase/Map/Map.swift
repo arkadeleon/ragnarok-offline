@@ -14,12 +14,6 @@ public struct Map: Equatable, Hashable, Sendable {
     public var index: Int
 }
 
-extension Map: Identifiable {
-    public var id: String {
-        name
-    }
-}
-
 extension Map: Comparable {
     public static func < (lhs: Map, rhs: Map) -> Bool {
         lhs.index < rhs.index

@@ -213,7 +213,7 @@ extension GRF {
         }
 
         public func hash(into hasher: inout Hasher) {
-            string.hash(into: &hasher)
+            hasher.combine(string)
         }
 
         public static func == (lhs: GRF.Path, rhs: GRF.Path) -> Bool {

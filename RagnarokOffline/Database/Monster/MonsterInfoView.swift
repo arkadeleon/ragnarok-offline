@@ -10,19 +10,17 @@ import SwiftUI
 struct MonsterInfoView: View {
     var monster: ObservableMonster
 
-    @State private var monsterImage: CGImage?
-
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: .sectionHeaders) {
                 ZStack {
-                    if let monsterImage {
+                    if let monsterImage = monster.image {
                         if monsterImage.height > 200 {
-                            Image(monsterImage, scale: 1, label: Text(monster.localizedName))
+                            Image(monsterImage, scale: 1, label: Text(monster.displayName))
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                         } else {
-                            Image(monsterImage, scale: 1, label: Text(monster.localizedName))
+                            Image(monsterImage, scale: 1, label: Text(monster.displayName))
                         }
                     } else {
                         Image(systemName: "pawprint")
@@ -32,17 +30,7 @@ struct MonsterInfoView: View {
                 }
                 .frame(height: 200)
 
-                DatabaseRecordSectionView("Info", spacing: 10) {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                        ForEach(monster.attributes) { attribute in
-                            LabeledContent {
-                                Text(attribute.value)
-                            } label: {
-                                Text(attribute.name)
-                            }
-                        }
-                    }
-                }
+                DatabaseRecordAttributesSectionView("Info", attributes: monster.attributes)
 
                 if let raceGroups = monster.raceGroups {
                     DatabaseRecordSectionView("Race Groups") {
@@ -72,7 +60,7 @@ struct MonsterInfoView: View {
                 if !monster.dropItems.isEmpty {
                     DatabaseRecordSectionView("Drops", spacing: 20) {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                            ForEach(monster.dropItems, id: \.index) { dropItem in
+                            ForEach(monster.dropItems) { dropItem in
                                 NavigationLink(value: dropItem.item) {
                                     ItemCell(item: dropItem.item, secondaryText: "(" + (Double(dropItem.drop.rate) / 100).formatted() + "%)")
                                 }
@@ -85,7 +73,7 @@ struct MonsterInfoView: View {
                 if !monster.spawnMaps.isEmpty {
                     DatabaseRecordSectionView("Maps", spacing: 20) {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                            ForEach(monster.spawnMaps, id: \.map.index) { spawnMap in
+                            ForEach(monster.spawnMaps) { spawnMap in
                                 NavigationLink(value: spawnMap.map) {
                                     MapCell(map: spawnMap.map, secondaryText: "(\(spawnMap.monsterSpawn.amount)x)")
                                 }
@@ -97,10 +85,9 @@ struct MonsterInfoView: View {
             }
         }
         .background(.background)
-        .navigationTitle(monster.localizedName)
+        .navigationTitle(monster.displayName)
         .task {
-            monsterImage = await monster.fetchImage()
-            try? await monster.fetchDetail()
+            await monster.fetchDetail()
         }
     }
 }

@@ -6,58 +6,26 @@
 //
 
 import SwiftUI
-import RODatabase
-import ROLocalizations
 
 struct SkillInfoView: View {
-    var mode: DatabaseMode
-    var skill: Skill
-
-    @State private var skillDescription: String?
+    var skill: ObservableSkill
 
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: .sectionHeaders) {
-                DatabaseRecordSectionView("Info", spacing: 10) {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
-                        ForEach(attributes) { attribute in
-                            LabeledContent {
-                                Text(attribute.value)
-                            } label: {
-                                Text(attribute.name)
-                            }
-                        }
-                    }
-                }
+                DatabaseRecordAttributesSectionView("Info", attributes: skill.attributes)
 
-                if let skillDescription {
+                if let skillLocalizedDescription = skill.localizedDescription {
                     DatabaseRecordSectionView("Description") {
-                        Text(skillDescription)
+                        Text(skillLocalizedDescription)
                     }
                 }
             }
         }
         .background(.background)
-        .navigationTitle(skill.name)
+        .navigationTitle(skill.displayName)
         .task {
-            loadSkillInfo()
+            skill.fetchDetail()
         }
-    }
-
-    private var attributes: [DatabaseRecordAttribute] {
-        var attributes: [DatabaseRecordAttribute] = []
-
-        attributes.append(.init(name: "ID", value: "#\(skill.id)"))
-        attributes.append(.init(name: "Aegis Name", value: skill.aegisName))
-        attributes.append(.init(name: "Name", value: skill.name))
-        attributes.append(.init(name: "Maximum Level", value: skill.maxLevel))
-        attributes.append(.init(name: "Type", value: skill.type.stringValue))
-        attributes.append(.init(name: "Target Type", value: skill.targetType.stringValue))
-
-        return attributes
-    }
-
-    private func loadSkillInfo() {
-        skillDescription = SkillInfoTable.shared.localizedSkillDescription(forSkillID: skill.id)
     }
 }

@@ -8,15 +8,20 @@
 import RODatabase
 
 struct MapProvider: DatabaseRecordProvider {
-    func records(for mode: DatabaseMode) async throws -> [Map] {
+    func records(for mode: DatabaseMode) async throws -> [ObservableMap] {
         let database = MapDatabase.database(for: mode)
-        let maps = try await database.maps()
+        let maps = try await database.maps().map { map in
+            ObservableMap(mode: mode, map: map)
+        }
+        for map in maps {
+            map.fetchLocalizedName()
+        }
         return maps
     }
 
-    func records(matching searchText: String, in maps: [Map]) async -> [Map] {
+    func records(matching searchText: String, in maps: [ObservableMap]) async -> [ObservableMap] {
         maps.filter { map in
-            map.name.localizedStandardContains(searchText)
+            map.displayName.localizedStandardContains(searchText)
         }
     }
 }
