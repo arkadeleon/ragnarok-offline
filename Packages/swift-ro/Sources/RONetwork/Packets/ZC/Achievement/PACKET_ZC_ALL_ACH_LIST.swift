@@ -23,6 +23,6 @@ public struct PACKET_ZC_ALL_ACH_LIST: DecodablePacket {
         let packetLength = try decoder.decode(Int16.self)
 
         // TODO: To be implemented.
-        _ = try decoder.decode([UInt8].self, length: Int(packetLength - 4))
+        _ = try decoder.decodeBytes(Int(packetLength - 4))
     }
 }

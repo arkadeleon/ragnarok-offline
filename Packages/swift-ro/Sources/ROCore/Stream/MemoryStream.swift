@@ -95,7 +95,7 @@ public class MemoryStream: Stream {
 }
 
 extension Data {
-    init(stream: MemoryStream) {
+    public init(stream: MemoryStream) {
         self = Data(bytes: stream.storage, count: stream.length)
     }
 }

@@ -25,7 +25,7 @@ public struct PACKET_ZC_MAIL_RECEIVE: DecodablePacket {
         try decoder.decodePacketType(Self.self)
 
         mailID = try decoder.decode(UInt32.self)
-        title = try decoder.decode(String.self, length: 40)
-        sender = try decoder.decode(String.self, length: 24)
+        title = try decoder.decodeString(40)
+        sender = try decoder.decodeString(24)
     }
 }

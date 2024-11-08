@@ -45,7 +45,7 @@ extension PACKET_ZC_FRIENDS_LIST {
             charID = try decoder.decode(UInt32.self)
 
             if !(PACKET_VERSION_MAIN_NUMBER >= 20180307 || PACKET_VERSION_RE_NUMBER >= 20180221 || PACKET_VERSION_ZERO_NUMBER >= 20180328) || PACKET_VERSION >= 20200902 {
-                name = try decoder.decode(String.self, length: 24)
+                name = try decoder.decodeString(24)
             } else {
                 name = ""
             }

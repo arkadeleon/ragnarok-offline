@@ -31,10 +31,15 @@ extension DecodablePacket {
 extension BinaryDecodable {
     static var decodedLength: Int16 {
         let data = Data(count: Int(Int16.max))
-        let decoder = BinaryDecoder(data: data)
+        let stream = MemoryStream(data: data)
+        defer {
+            stream.close()
+        }
+
+        let decoder = BinaryDecoder(stream: stream)
         _ = try? Self.init(from: decoder)
-        let length = Int16.max - Int16(decoder.data.count)
-        return length
+        let decodedLength = Int16(stream.position)
+        return decodedLength
     }
 }
 

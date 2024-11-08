@@ -156,7 +156,7 @@ public struct CharInfo: BinaryDecodable, Sendable {
         headMiddle = try decoder.decode(UInt16.self)
         hairColor = try decoder.decode(UInt16.self)
         clothesColor = try decoder.decode(UInt16.self)
-        name = try decoder.decode(String.self, length: 24)
+        name = try decoder.decodeString(24)
         str = try decoder.decode(UInt8.self)
         agi = try decoder.decode(UInt8.self)
         vit = try decoder.decode(UInt8.self)
@@ -169,7 +169,7 @@ public struct CharInfo: BinaryDecodable, Sendable {
 
         if (PACKET_VERSION >= 20100720 && PACKET_VERSION <= 20100727) || 
             PACKET_VERSION >= 20100803 {
-            mapName = try decoder.decode(String.self, length: 16)
+            mapName = try decoder.decodeString(16)
         } else {
             mapName = ""
         }

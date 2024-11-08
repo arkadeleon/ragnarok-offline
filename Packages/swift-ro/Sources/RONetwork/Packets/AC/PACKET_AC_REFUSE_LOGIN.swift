@@ -37,6 +37,6 @@ public struct PACKET_AC_REFUSE_LOGIN: DecodablePacket {
             errorCode = UInt32(try decoder.decode(UInt8.self))
         }
 
-        unblockTime = try decoder.decode(String.self, length: 20)
+        unblockTime = try decoder.decodeString(20)
     }
 }

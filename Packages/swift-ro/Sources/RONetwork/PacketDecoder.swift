@@ -23,9 +23,17 @@ final class PacketDecoder {
     func decode(from data: Data) throws -> [any DecodablePacket] {
         var packets: [any DecodablePacket] = []
 
-        let decoder = BinaryDecoder(data: data)
-        while decoder.data.count >= 2 {
-            let packetType = decoder.data.prefix(2).withUnsafeBytes({ $0.bindMemory(to: Int16.self) })[0]
+        let stream = MemoryStream(data: data)
+        defer {
+            stream.close()
+        }
+
+        let decoder = BinaryDecoder(stream: stream)
+
+        while stream.length - stream.position >= 2 {
+            let packetType = try decoder.decode(Int16.self)
+            try stream.seek(-MemoryLayout<Int16>.size, origin: .current)
+
             if let registeredPacket = registeredPackets[packetType] {
                 let packet = try registeredPacket.init(from: decoder)
                 packets.append(packet)
@@ -34,14 +42,14 @@ final class PacketDecoder {
                 if entry.packetLength == -1 {
                     let packetType = try decoder.decode(Int16.self)
                     let packetLength = try decoder.decode(Int16.self)
-                    _ = try decoder.decode([UInt8].self, length: Int(packetLength - 2 - 2))
+                    _ = try decoder.decodeBytes(Int(packetLength - 2 - 2))
                     print("Unimplemented packet: 0x" + String(packetType, radix: 16) + ", length: \(packetLength)")
                 } else {
-                    _ = try decoder.decode([UInt8].self, length: Int(entry.packetLength))
+                    _ = try decoder.decodeBytes(Int(entry.packetLength))
                     print("Unimplemented packet: 0x" + String(entry.packetType, radix: 16) + ", length: \(entry.packetLength)")
                 }
             } else {
-                print("Unknown packet: 0x" + String(packetType, radix: 16) + ", remaining bytes: \(decoder.data.count)")
+                print("Unknown packet: 0x" + String(packetType, radix: 16) + ", remaining bytes: \(stream.length - stream.position)")
                 break
             }
         }

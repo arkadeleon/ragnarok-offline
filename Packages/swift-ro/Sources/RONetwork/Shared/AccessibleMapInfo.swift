@@ -13,6 +13,6 @@ public struct AccessibleMapInfo: BinaryDecodable, Sendable {
 
     public init(from decoder: BinaryDecoder) throws {
         status = try decoder.decode(UInt32.self)
-        mapName = try decoder.decode(String.self, length: 16)
+        mapName = try decoder.decodeString(16)
     }
 }

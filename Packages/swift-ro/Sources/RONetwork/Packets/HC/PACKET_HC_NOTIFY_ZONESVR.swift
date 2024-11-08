@@ -33,11 +33,11 @@ public struct PACKET_HC_NOTIFY_ZONESVR: DecodablePacket {
         try decoder.decodePacketType(Self.self)
 
         charID = try decoder.decode(UInt32.self)
-        mapName = try decoder.decode(String.self, length: 16)
+        mapName = try decoder.decodeString(16)
         mapServer = try decoder.decode(MapServerInfo.self)
 
         if PACKET_VERSION >= 20170315 {
-            _ = try decoder.decode([UInt8].self, length: 128)
+            _ = try decoder.decodeBytes(128)
         }
     }
 }

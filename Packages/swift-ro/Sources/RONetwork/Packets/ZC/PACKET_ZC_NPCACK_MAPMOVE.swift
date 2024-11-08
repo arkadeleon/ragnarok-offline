@@ -24,7 +24,7 @@ public struct PACKET_ZC_NPCACK_MAPMOVE: DecodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
 
-        mapName = try decoder.decode(String.self, length: 16)
+        mapName = try decoder.decodeString(16)
         x = try decoder.decode(UInt16.self)
         y = try decoder.decode(UInt16.self)
     }

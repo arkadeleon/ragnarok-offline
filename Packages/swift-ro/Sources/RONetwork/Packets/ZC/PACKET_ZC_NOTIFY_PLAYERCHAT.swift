@@ -24,6 +24,6 @@ public struct PACKET_ZC_NOTIFY_PLAYERCHAT: DecodablePacket {
 
         let packetLength = try decoder.decode(Int16.self)
 
-        message = try decoder.decode([UInt8].self, length: Int(packetLength - 4))
+        message = try decoder.decodeBytes(Int(packetLength - 4))
     }
 }

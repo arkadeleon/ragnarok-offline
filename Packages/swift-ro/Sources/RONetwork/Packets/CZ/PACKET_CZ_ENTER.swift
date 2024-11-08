@@ -42,7 +42,7 @@ public struct PACKET_CZ_ENTER: EncodablePacket {
         data.replaceSubrange(from: offsets[3], with: clientTime)
         data.replaceSubrange(from: offsets[4], with: sex)
 
-        try encoder.encode(data)
+        try encoder.encodeBytes(data)
     }
 }
 

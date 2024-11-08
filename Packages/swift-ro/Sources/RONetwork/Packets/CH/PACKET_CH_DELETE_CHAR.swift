@@ -44,11 +44,11 @@ public struct PACKET_CH_DELETE_CHAR: EncodablePacket {
         try encoder.encode(charID)
 
         if PACKET_VERSION > 20100803 {
-            try encoder.encode(birthdate, length: 6)
+            try encoder.encodeString(birthdate, count: 6)
         } else if PACKET_VERSION == 20040419 {
-            try encoder.encode(email, length: 50)
+            try encoder.encodeString(email, count: 50)
         } else {
-            try encoder.encode(email, length: 40)
+            try encoder.encodeString(email, count: 40)
         }
     }
 }

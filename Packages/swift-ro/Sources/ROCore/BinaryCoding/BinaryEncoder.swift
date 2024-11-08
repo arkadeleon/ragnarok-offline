@@ -22,55 +22,52 @@ public protocol BinaryEncodableWithConfiguration {
 }
 
 public class BinaryEncoder {
-    public private(set) var data: Data
+    let stream: any Stream
 
-    public init() {
-        data = Data()
+    public init(stream: any Stream) {
+        self.stream = stream
     }
 
     public func encode<T>(_ value: T) throws where T: FixedWidthInteger {
-        let bytes = withUnsafeBytes(of: value, [UInt8].init)
-        self.data.append(contentsOf: bytes)
+        let count = MemoryLayout<T>.size
+        var value = value
+        try withUnsafePointer(to: &value) { pointer in
+            _ = try stream.write(pointer, count: count)
+        }
     }
 
-    public func encode(_ value: [UInt8]) throws {
-        let data = Data(value)
-        self.data.append(data)
-    }
-
-    public func encode(_ value: String, length: Int) throws {
-        guard var data = value.data(using: .utf8) else {
-            throw BinaryEncodingError.invalidValue(value)
+    public func encode<T>(_ value: T) throws where T: FloatingPoint {
+        let count = MemoryLayout<T>.size
+        var value = value
+        try withUnsafePointer(to: &value) { pointer in
+            _ = try stream.write(pointer, count: count)
         }
-        guard data.count <= length else {
-            throw BinaryEncodingError.invalidValue(value)
-        }
-        data.append(contentsOf: [UInt8](repeating: 0, count: length - data.count))
-        self.data.append(data)
     }
 
     public func encode<T>(_ value: T) throws where T: BinaryEncodable {
-        let encoder = BinaryEncoder()
+        let encoder = BinaryEncoder(stream: stream)
         try value.encode(to: encoder)
-        let data = encoder.data
-        self.data.append(data)
-    }
-    
-    public func encode<T>(_ value: T, configuration: T.BinaryEncodingConfiguration) throws where T: BinaryEncodableWithConfiguration {
-        let encoder = BinaryEncoder()
-        try value.encode(to: encoder, configuration: configuration)
-        let data = encoder.data
-        self.data.append(data)
     }
 
-    public func encode<T>(_ value: T, length: Int) throws where T: BinaryEncodable & Sendable {
-        let encoder = BinaryEncoder()
-        try value.encode(to: encoder)
-        var data = encoder.data
-        guard data.count <= length else {
-            throw BinaryEncodingError.invalidValue(value)
+    public func encode<T>(_ value: T, configuration: T.BinaryEncodingConfiguration) throws where T: BinaryEncodableWithConfiguration {
+        let encoder = BinaryEncoder(stream: stream)
+        try value.encode(to: encoder, configuration: configuration)
+    }
+
+    public func encodeBytes(_ bytes: [UInt8]) throws {
+        _ = try stream.write(bytes, count: bytes.count)
+    }
+
+    public func encodeString(_ string: String, count: Int, encoding: String.Encoding = .ascii) throws {
+        guard var data = string.data(using: encoding) else {
+            throw BinaryEncodingError.invalidValue(string)
         }
-        data.append(contentsOf: [UInt8](repeating: 0, count: length - data.count))
-        self.data.append(data)
+        guard data.count <= count else {
+            throw BinaryEncodingError.invalidValue(string)
+        }
+        data.append(contentsOf: [UInt8](repeating: 0, count: count - data.count))
+        try data.withUnsafeBytes { pointer in
+            _ = try stream.write(pointer.baseAddress!, count: pointer.count)
+        }
     }
 }

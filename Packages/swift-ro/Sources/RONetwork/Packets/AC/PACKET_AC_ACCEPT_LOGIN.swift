@@ -46,11 +46,11 @@ public struct PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
         accountID = try decoder.decode(UInt32.self)
         loginID2 = try decoder.decode(UInt32.self)
         lastLoginIP = try decoder.decode(UInt32.self)
-        lastLoginTime = try decoder.decode(String.self, length: 26)
+        lastLoginTime = try decoder.decodeString(26)
         sex = try decoder.decode(UInt8.self)
 
         if PACKET_VERSION >= 20170315 {
-            token = try decoder.decode([UInt8].self, length: 17)
+            token = try decoder.decodeBytes(17)
         } else {
             token = []
         }

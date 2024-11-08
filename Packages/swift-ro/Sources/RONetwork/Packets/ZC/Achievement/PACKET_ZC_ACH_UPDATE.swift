@@ -21,6 +21,6 @@ public struct PACKET_ZC_ACH_UPDATE: DecodablePacket {
         try decoder.decodePacketType(Self.self)
 
         // TODO: To be implemented.
-        _ = try decoder.decode([UInt8].self, length: 64)
+        _ = try decoder.decodeBytes(64)
     }
 }

@@ -33,7 +33,7 @@ public struct PACKET_CZ_CHANGE_DIRECTION: EncodablePacket {
         data.replaceSubrange(from: offsets[0], with: headDirection)
         data.replaceSubrange(from: offsets[1], with: direction)
 
-        try encoder.encode(data)
+        try encoder.encodeBytes(data)
     }
 }
 

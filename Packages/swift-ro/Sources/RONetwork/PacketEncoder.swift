@@ -10,8 +10,15 @@ import ROCore
 
 final class PacketEncoder {
     func encode(_ packet: some EncodablePacket) throws -> Data {
-        let encoder = BinaryEncoder()
+        let stream = MemoryStream()
+        defer {
+            stream.close()
+        }
+
+        let encoder = BinaryEncoder(stream: stream)
         try packet.encode(to: encoder)
-        return encoder.data
+
+        let data = Data(stream: stream)
+        return data
     }
 }

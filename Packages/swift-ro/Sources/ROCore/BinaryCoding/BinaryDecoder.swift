@@ -22,52 +22,41 @@ public protocol BinaryDecodableWithConfiguration {
 }
 
 public class BinaryDecoder {
-    public private(set) var data: Data
+    let stream: any Stream
+    let needsCloseStream: Bool
+
+    public init(stream: any Stream) {
+        self.stream = stream
+        self.needsCloseStream = false
+    }
 
     public init(data: Data) {
-        self.data = data
+        self.stream = MemoryStream(data: data)
+        self.needsCloseStream = true
+    }
+
+    deinit {
+        if needsCloseStream {
+            stream.close()
+        }
     }
 
     public func decode<T>(_ type: T.Type) throws -> T where T: FixedWidthInteger {
-        let length = type.bitWidth / 8
-        let data = self.data.prefix(length)
-        guard data.count == length else {
-            throw BinaryDecodingError.dataCorrupted
+        let count = MemoryLayout<T>.size
+        var result: T = 0
+        try withUnsafeMutablePointer(to: &result) { pointer in
+            _ = try stream.read(pointer, count: count)
         }
-
-        self.data.removeFirst(length)
-
-        let values = data.withUnsafeBytes { pointer in
-            pointer.bindMemory(to: type)
-        }
-        return values[0]
+        return result
     }
 
-    public func decode(_ type: [UInt8].Type, length: Int) throws -> [UInt8] {
-        let data = self.data.prefix(length)
-        guard data.count == length else {
-            throw BinaryDecodingError.dataCorrupted
+    public func decode<T>(_ type: T.Type) throws -> T where T: FloatingPoint {
+        let count = MemoryLayout<T>.size
+        var result: T = 0
+        try withUnsafeMutablePointer(to: &result) { pointer in
+            _ = try stream.read(pointer, count: count)
         }
-
-        self.data.removeFirst(length)
-
-        let bytes = [UInt8](data)
-        return bytes
-    }
-
-    public func decode(_ type: String.Type, length: Int) throws -> String {
-        let data = self.data.prefix(length)
-        guard data.count == length else {
-            throw BinaryDecodingError.dataCorrupted
-        }
-
-        self.data.removeFirst(length)
-
-        let endIndex = data.firstIndex(of: 0) ?? data.endIndex
-        guard let string = String(data: data[..<endIndex], encoding: .utf8) else {
-            throw BinaryDecodingError.dataCorrupted
-        }
-        return string
+        return result
     }
 
     public func decode<T>(_ type: T.Type) throws -> T where T: BinaryDecodable {
@@ -80,16 +69,23 @@ public class BinaryDecoder {
         return value
     }
 
-    public func decode<T>(_ type: T.Type, length: Int) throws -> T where T: BinaryDecodable {
-        let data = self.data.prefix(length)
-        guard data.count == length else {
-            throw BinaryDecodingError.dataCorrupted
+    public func decodeBytes(_ count: Int) throws -> [UInt8] {
+        var bytes = [UInt8](repeating: 0, count: count)
+        try bytes.withUnsafeMutableBytes { pointer in
+            _ = try stream.read(pointer.baseAddress!, count: count)
         }
+        return bytes
+    }
 
-        self.data.removeFirst(length)
-
-        let decoder = BinaryDecoder(data: data)
-        let value = try type.init(from: decoder)
-        return value
+    public func decodeString(_ count: Int, encoding: String.Encoding = .ascii) throws -> String {
+        var bytes = [UInt8](repeating: 0, count: count)
+        try bytes.withUnsafeMutableBytes { pointer in
+            _ = try stream.read(pointer.baseAddress!, count: count)
+        }
+        bytes = bytes.prefix { $0 != 0 }
+        guard let string = String(bytes: bytes, encoding: encoding) else {
+            throw StreamError.invalidEncoding
+        }
+        return string
     }
 }

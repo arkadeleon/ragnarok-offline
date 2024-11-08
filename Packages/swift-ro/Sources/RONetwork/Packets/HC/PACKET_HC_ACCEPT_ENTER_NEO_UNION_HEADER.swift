@@ -34,6 +34,6 @@ public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER: DecodablePacket {
         producibleSlot = try decoder.decode(UInt8.self)
         validSlot = try decoder.decode(UInt8.self)
 
-        _ = try decoder.decode([UInt8].self, length: 20)
+        _ = try decoder.decodeBytes(20)
     }
 }
