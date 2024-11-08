@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/27.
 //
 
+import ROCore
+
 /// See `clif_couplestatus`
 public struct PACKET_ZC_COUPLESTATUS: DecodablePacket {
     public static var packetType: Int16 {

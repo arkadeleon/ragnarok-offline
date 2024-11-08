@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/4/9.
 //
 
+import ROCore
+
 /// See `chclif_parse_select_accessible_map`
 public struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME: EncodablePacket {
     public var packetType: Int16 {

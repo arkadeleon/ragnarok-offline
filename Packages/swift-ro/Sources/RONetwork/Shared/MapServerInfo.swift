@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/26.
 //
 
+import ROCore
+
 public struct MapServerInfo: BinaryDecodable, Sendable {
     public var ip: UInt32
     public var port: UInt16

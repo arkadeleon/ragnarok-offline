@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/9/25.
 //
 
+import ROCore
+
 public struct AccessibleMapInfo: BinaryDecodable, Sendable {
     public var status: UInt32
     public var mapName: String

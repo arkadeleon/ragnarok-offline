@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/4/8.
 //
 
+import ROCore
+
 /// See `chclif_parse_createnewchar`
 public struct PACKET_HC_ACCEPT_MAKECHAR: DecodablePacket {
     public static var packetType: Int16 {

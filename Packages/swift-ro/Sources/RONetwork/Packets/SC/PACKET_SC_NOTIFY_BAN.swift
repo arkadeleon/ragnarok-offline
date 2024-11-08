@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/3/27.
 //
 
+import ROCore
+
 /// See `logclif_sent_auth_result` or `chclif_send_auth_result` or `clif_authfail_fd`
 public struct PACKET_SC_NOTIFY_BAN: DecodablePacket {
     public static var packetType: Int16 {

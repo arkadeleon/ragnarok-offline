@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/3/26.
 //
 
+import ROCore
+
 public struct PACKET_CA_EXE_HASHCHECK: EncodablePacket {
     public var packetType: Int16 {
         0x204

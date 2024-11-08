@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ROCore
 
 final class PacketEncoder {
     func encode(_ packet: some EncodablePacket) throws -> Data {

@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/28.
 //
 
+import ROCore
+
 /// See `clif_Mail_new`
 public struct PACKET_ZC_NOTIFY_UNREADMAIL: DecodablePacket {
     public static var packetType: Int16 {

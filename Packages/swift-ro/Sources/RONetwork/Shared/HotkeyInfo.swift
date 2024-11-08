@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/29.
 //
 
+import ROCore
+
 public struct HotkeyInfo: BinaryDecodable, Sendable {
 
     /// 0: Item, 1: Skill

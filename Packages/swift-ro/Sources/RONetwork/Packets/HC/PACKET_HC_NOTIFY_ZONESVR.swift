@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/4/8.
 //
 
+import ROCore
+
 /// See `chclif_send_map_data`
 public struct PACKET_HC_NOTIFY_ZONESVR: DecodablePacket {
     public static var packetType: Int16 {

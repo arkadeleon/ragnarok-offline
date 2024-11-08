@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ROCore
 
 enum PacketDecodingError: Error {
     case packetMismatch(Int16)

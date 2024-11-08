@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/4/8.
 //
 
+import ROCore
+
 /// See `chclif_char_delete2_accept_ack`
 public struct PACKET_HC_DELETE_CHAR: DecodablePacket {
     public static var packetType: Int16 {

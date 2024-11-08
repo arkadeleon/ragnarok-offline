@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/3/27.
 //
 
+import ROCore
+
 public struct CharInfo: BinaryDecodable, Sendable {
     public var charID: UInt32
     public var baseExp: UInt64

@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2021/7/6.
 //
 
+import ROCore
+
 /// See `logclif_auth_failed`
 public struct PACKET_AC_REFUSE_LOGIN: DecodablePacket {
     public static var packetType: Int16 {

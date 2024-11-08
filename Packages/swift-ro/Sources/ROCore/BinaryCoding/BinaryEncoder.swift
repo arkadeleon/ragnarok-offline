@@ -8,7 +8,7 @@
 import Foundation
 
 public enum BinaryEncodingError: Error {
-    case invalidValue(Any)
+    case invalidValue(any Sendable)
 }
 
 public protocol BinaryEncodable {
@@ -63,7 +63,7 @@ public class BinaryEncoder {
         self.data.append(data)
     }
 
-    public func encode<T>(_ value: T, length: Int) throws where T: BinaryEncodable {
+    public func encode<T>(_ value: T, length: Int) throws where T: BinaryEncodable & Sendable {
         let encoder = BinaryEncoder()
         try value.encode(to: encoder)
         var data = encoder.data

@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/24.
 //
 
+import ROCore
+
 /// See `clif_walkok`
 public struct PACKET_ZC_NOTIFY_PLAYERMOVE: DecodablePacket {
     public static var packetType: Int16 {

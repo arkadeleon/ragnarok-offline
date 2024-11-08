@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/29.
 //
 
+import ROCore
+
 /// See `clif_hotkeys_send`
 public struct PACKET_ZC_SHORTCUT_KEY_LIST: DecodablePacket {
     public static var packetType: Int16 {

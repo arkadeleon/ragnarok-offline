@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/4/8.
 //
 
+import ROCore
+
 /// See `chclif_parse_char_delete2_req`
 public struct PACKET_CH_DELETE_CHAR_RESERVED: EncodablePacket {
     public var packetType: Int16 {

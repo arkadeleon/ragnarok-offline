@@ -142,6 +142,7 @@ let package = Package(
         .target(
             name: "RONetwork",
             dependencies: [
+                "ROCore",
                 "ROGenerated",
                 "ROLocalizations",
             ],

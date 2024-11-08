@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/28.
 //
 
+import ROCore
+
 /// See `clif_inventorylist`
 public struct PACKET_ZC_ITEMLIST_EQUIP: DecodablePacket {
     public static var packetType: Int16 {

@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/23.
 //
 
+import ROCore
+
 /// See `clif_ping`
 public struct PACKET_ZC_PING_LIVE: DecodablePacket {
     public static var packetType: Int16 {

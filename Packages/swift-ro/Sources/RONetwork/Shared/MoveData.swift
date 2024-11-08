@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/24.
 //
 
+import ROCore
+
 public struct MoveData: BinaryDecodable, Sendable {
     public var x0: UInt16
     public var y0: UInt16

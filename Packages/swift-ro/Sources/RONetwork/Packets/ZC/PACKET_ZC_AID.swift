@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/22.
 //
 
+import ROCore
+
 public struct PACKET_ZC_AID: DecodablePacket {
     public static var packetType: Int16 {
         0x283

@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/28.
 //
 
+import ROCore
+
 /// See `clif_achievement_list_all`
 public struct PACKET_ZC_ALL_ACH_LIST: DecodablePacket {
     public static var packetType: Int16 {

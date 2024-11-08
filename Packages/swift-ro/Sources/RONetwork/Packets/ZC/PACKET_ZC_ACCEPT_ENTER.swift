@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/22.
 //
 
+import ROCore
+
 /// See `clif_authok`
 public struct PACKET_ZC_ACCEPT_ENTER: DecodablePacket {
     public static var packetType: Int16 {

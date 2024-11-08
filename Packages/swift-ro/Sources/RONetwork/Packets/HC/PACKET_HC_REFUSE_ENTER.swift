@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/4/8.
 //
 
+import ROCore
+
 /// See `chclif_reject`
 public struct PACKET_HC_REFUSE_ENTER: DecodablePacket {
     public static var packetType: Int16 {

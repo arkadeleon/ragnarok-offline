@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/22.
 //
 
+import ROCore
+
 /// See `clif_inventory_expansion_info`
 public struct PACKET_ZC_EXTEND_BODYITEM_SIZE: DecodablePacket {
     public static var packetType: Int16 {

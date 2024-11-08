@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/27.
 //
 
+import ROCore
+
 /// See `clif_longlongpar_change`
 public struct PACKET_ZC_LONGLONGPAR_CHANGE: DecodablePacket {
     public static var packetType: Int16 {

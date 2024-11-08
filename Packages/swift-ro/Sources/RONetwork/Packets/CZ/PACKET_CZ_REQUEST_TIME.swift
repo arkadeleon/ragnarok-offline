@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/23.
 //
 
+import ROCore
+
 /// See `clif_parse_TickSend`
 public struct PACKET_CZ_REQUEST_TIME: EncodablePacket {
     public var packetType: Int16 {

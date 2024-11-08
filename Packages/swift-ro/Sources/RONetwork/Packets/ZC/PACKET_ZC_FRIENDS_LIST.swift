@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/22.
 //
 
+import ROCore
+
 /// See `clif_friendslist_send`
 public struct PACKET_ZC_FRIENDS_LIST: DecodablePacket {
     public static var packetType: Int16 {

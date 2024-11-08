@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/22.
 //
 
+import ROCore
+
 /// See `clif_changed_dir`
 public struct PACKET_ZC_CHANGE_DIRECTION: DecodablePacket {
     public static var packetType: Int16 {

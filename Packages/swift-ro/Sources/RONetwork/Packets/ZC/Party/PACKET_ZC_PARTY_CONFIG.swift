@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/29.
 //
 
+import ROCore
+
 /// See `clif_partyinvitationstate`
 public struct PACKET_ZC_PARTY_CONFIG: DecodablePacket {
     public static var packetType: Int16 {

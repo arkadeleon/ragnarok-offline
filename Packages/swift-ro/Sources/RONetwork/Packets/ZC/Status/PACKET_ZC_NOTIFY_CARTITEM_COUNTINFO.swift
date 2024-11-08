@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/8/27.
 //
 
+import ROCore
+
 /// See `clif_cartcount`
 public struct PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO: DecodablePacket {
     public static var packetType: Int16 {
