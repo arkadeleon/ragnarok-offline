@@ -8,49 +8,47 @@
 import Foundation
 import ROCore
 
-public struct ACT {
+public struct ACT: BinaryDecodable {
     public var header: String
     public var version: String
     public var actions: [Action] = []
     public var sounds: [String] = []
 
     public init(data: Data) throws {
-        let stream = MemoryStream(data: data)
-        let reader = BinaryReader(stream: stream)
+        let decoder = BinaryDecoder(data: data)
+        self = try decoder.decode(ACT.self)
+    }
 
-        defer {
-            reader.close()
-        }
-
-        header = try reader.readString(2)
+    public init(from decoder: BinaryDecoder) throws {
+        header = try decoder.decodeString(2)
         guard header == "AC" else {
             throw FileFormatError.invalidHeader(header, expected: "AC")
         }
 
-        let minor: UInt8 = try reader.readInt()
-        let major: UInt8 = try reader.readInt()
+        let minor = try decoder.decode(UInt8.self)
+        let major = try decoder.decode(UInt8.self)
         version = "\(major).\(minor)"
 
-        let actionCount: UInt16 = try reader.readInt()
+        let actionCount = try decoder.decode(Int16.self)
 
         // Reserved, unused bytes.
-        _ = try reader.readBytes(10)
+        _ = try decoder.decodeBytes(10)
 
         for _ in 0..<actionCount {
-            let action = try Action(from: reader, version: version)
+            let action = try decoder.decode(Action.self, configuration: version)
             actions.append(action)
         }
 
         if version >= "2.1" {
-            let soundCount: Int32 = try reader.readInt()
+            let soundCount = try decoder.decode(Int32.self)
             for _ in 0..<soundCount {
-                let sound = try reader.readString(40)
+                let sound = try decoder.decodeString(40)
                 sounds.append(sound)
             }
 
             if version >= "2.2" {
                 for i in 0..<actions.count {
-                    actions[i].animationSpeed = try reader.readFloat()
+                    actions[i].animationSpeed = try decoder.decode(Float.self)
                 }
             }
         }
@@ -58,14 +56,14 @@ public struct ACT {
 }
 
 extension ACT {
-    public struct Action {
+    public struct Action: BinaryDecodableWithConfiguration {
         public var frames: [Frame] = []
         public var animationSpeed: Float = 6
 
-        init(from reader: BinaryReader, version: String) throws {
-            let frameCount: UInt32 = try reader.readInt()
+        public init(from decoder: BinaryDecoder, configuration version: String) throws {
+            let frameCount = try decoder.decode(Int32.self)
             for _ in 0..<frameCount {
-                let frame = try Frame(from: reader, version: version)
+                let frame = try decoder.decode(Frame.self, configuration: version)
                 frames.append(frame)
             }
         }
@@ -73,29 +71,29 @@ extension ACT {
 }
 
 extension ACT {
-    public struct Frame {
+    public struct Frame: BinaryDecodableWithConfiguration {
         public var layers: [Layer] = []
         public var soundIndex: Int32 = -1
         public var anchorPoints: [AnchorPoint] = []
 
-        init(from reader: BinaryReader, version: String) throws {
+        public init(from decoder: BinaryDecoder, configuration version: String) throws {
             // Range1 and Range2, seems to be unused.
-            _ = try reader.readBytes(32)
+            _ = try decoder.decodeBytes(32)
 
-            let layerCount: UInt32 = try reader.readInt()
+            let layerCount = try decoder.decode(Int32.self)
             for _ in 0..<layerCount {
-                let layer = try Layer(from: reader, version: version)
+                let layer = try decoder.decode(Layer.self, configuration: version)
                 layers.append(layer)
             }
 
             if version >= "2.0" {
-                soundIndex = try reader.readInt()
+                soundIndex = try decoder.decode(Int32.self)
             }
 
             if version >= "2.3" {
-                let anchorPointCount: Int32 = try reader.readInt()
+                let anchorPointCount = try decoder.decode(Int32.self)
                 for _ in 0..<anchorPointCount {
-                    let anchorPoint = try AnchorPoint(from: reader)
+                    let anchorPoint = try decoder.decode(AnchorPoint.self)
                     anchorPoints.append(anchorPoint)
                 }
             }
@@ -104,7 +102,7 @@ extension ACT {
 }
 
 extension ACT {
-    public struct Layer {
+    public struct Layer: BinaryDecodableWithConfiguration {
         public var offset: SIMD2<Int32>
         public var spriteIndex: Int32
         public var isMirrored: Int32
@@ -115,28 +113,31 @@ extension ACT {
         public var width: Int32 = 0
         public var height: Int32 = 0
 
-        init(from reader: BinaryReader, version: String) throws {
-            offset = try [reader.readInt(), reader.readInt()]
-            spriteIndex = try reader.readInt()
-            isMirrored = try reader.readInt()
+        public init(from decoder: BinaryDecoder, configuration version: String) throws {
+            offset = try [
+                decoder.decode(Int32.self),
+                decoder.decode(Int32.self),
+            ]
+            spriteIndex = try decoder.decode(Int32.self)
+            isMirrored = try decoder.decode(Int32.self)
 
             if version >= "2.0" {
-                color = try Color(from: reader)
+                color = try decoder.decode(Color.self)
 
-                scale.x = try reader.readFloat()
+                scale.x = try decoder.decode(Float.self)
                 scale.y = scale.x
 
                 if version >= "2.4" {
-                    scale.y = try reader.readFloat()
+                    scale.y = try decoder.decode(Float.self)
                 }
 
-                rotationAngle = try reader.readInt()
+                rotationAngle = try decoder.decode(Int32.self)
 
-                spriteType = try reader.readInt()
+                spriteType = try decoder.decode(Int32.self)
 
                 if version >= "2.5" {
-                    width = try reader.readInt()
-                    height = try reader.readInt()
+                    width = try decoder.decode(Int32.self)
+                    height = try decoder.decode(Int32.self)
                 }
             }
         }
@@ -144,19 +145,19 @@ extension ACT {
 }
 
 extension ACT {
-    public struct AnchorPoint {
+    public struct AnchorPoint: BinaryDecodable {
         public var x: Int32
         public var y: Int32
 
-        init(from reader: BinaryReader) throws {
+        public init(from decoder: BinaryDecoder) throws {
             // Unknown bytes.
-            _ = try reader.readBytes(4)
+            _ = try decoder.decodeBytes(4)
 
-            x = try reader.readInt()
-            y = try reader.readInt()
+            x = try decoder.decode(Int32.self)
+            y = try decoder.decode(Int32.self)
 
             // Unknown bytes.
-            _ = try reader.readBytes(4)
+            _ = try decoder.decodeBytes(4)
         }
     }
 }

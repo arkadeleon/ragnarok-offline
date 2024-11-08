@@ -8,59 +8,56 @@
 import Foundation
 import ROCore
 
-public struct SPR {
+public struct SPR: BinaryDecodable {
     public var header: String
     public var version: String
     public var sprites: [Sprite] = []
     public var palette: PAL?
 
     public init(data: Data) throws {
-        let stream = MemoryStream(data: data)
-        let reader = BinaryReader(stream: stream)
+        let decoder = BinaryDecoder(data: data)
+        self = try decoder.decode(SPR.self)
+    }
 
-        defer {
-            reader.close()
-        }
-
-        header = try reader.readString(2)
+    public init(from decoder: BinaryDecoder) throws {
+        header = try decoder.decodeString(2)
         guard header == "SP" else {
             throw FileFormatError.invalidHeader(header, expected: "SP")
         }
 
-        let minor: UInt8 = try reader.readInt()
-        let major: UInt8 = try reader.readInt()
+        let minor = try decoder.decode(UInt8.self)
+        let major = try decoder.decode(UInt8.self)
         version = "\(major).\(minor)"
 
-        let indexedSpriteCount: UInt16 = try reader.readInt()
+        let indexedSpriteCount = try decoder.decode(Int16.self)
 
-        let rgbaSpriteCount: UInt16
+        let rgbaSpriteCount: Int16
         if version > "1.1" {
-            rgbaSpriteCount = try reader.readInt()
+            rgbaSpriteCount = try decoder.decode(Int16.self)
         } else {
             rgbaSpriteCount = 0
         }
 
         if version < "2.1" {
             for _ in 0..<indexedSpriteCount {
-                let sprite = try Sprite.indexedSprite(from: reader)
+                let sprite = try decoder.decode(Sprite.self, configuration: .indexed)
                 sprites.append(sprite)
             }
         } else {
             for _ in 0..<indexedSpriteCount {
-                let sprite = try Sprite.indexedSpriteRLE(from: reader)
+                let sprite = try decoder.decode(Sprite.self, configuration: .indexedRLE)
                 sprites.append(sprite)
             }
         }
 
         for _ in 0..<rgbaSpriteCount {
-            let sprite = try Sprite.rgbaSprite(from: reader)
+            let sprite = try decoder.decode(Sprite.self, configuration: .rgba)
             sprites.append(sprite)
         }
 
         if version > "1.0" {
-            try stream.seek(-1024, origin: .end)
-            let paletteData = try reader.readBytes(1024)
-            palette = try PAL(data: Data(paletteData))
+            _ = try decoder.decodeBytes(decoder.bytesRemaining - 1024)
+            palette = try decoder.decode(PAL.self)
         }
     }
 }
@@ -71,58 +68,42 @@ extension SPR {
         case rgba = 1
     }
 
-    public struct Sprite {
+    public struct Sprite: BinaryDecodableWithConfiguration {
+        public enum BinaryDecodingConfiguration {
+            case indexed
+            case indexedRLE
+            case rgba
+        }
+
         public var type: SpriteType
-        public var width: UInt16
-        public var height: UInt16
+        public var width: Int16
+        public var height: Int16
         public var data: Data
 
-        static func indexedSprite(from reader: BinaryReader) throws -> Sprite {
-            let width: UInt16 = try reader.readInt()
-            let height: UInt16 = try reader.readInt()
+        public init(from decoder: BinaryDecoder, configuration: BinaryDecodingConfiguration) throws {
+            width = try decoder.decode(Int16.self)
+            height = try decoder.decode(Int16.self)
 
-            let dataLength = Int(width) * Int(height)
-            let data = try reader.readBytes(dataLength)
+            switch configuration {
+            case .indexed:
+                type = .indexed
 
-            let sprite = SPR.Sprite(
-                type: .indexed,
-                width: width,
-                height: height,
-                data: Data(data)
-            )
-            return sprite
-        }
+                let dataLength = Int(width) * Int(height)
+                let data = try decoder.decodeBytes(dataLength)
+                self.data = Data(data)
+            case .indexedRLE:
+                type = .indexed
 
-        static func indexedSpriteRLE(from reader: BinaryReader) throws -> Sprite {
-            let width: UInt16 = try reader.readInt()
-            let height: UInt16 = try reader.readInt()
+                let dataLength = try decoder.decode(Int16.self)
+                let data = try decoder.decodeBytes(Int(dataLength))
+                self.data = Data(data)
+            case .rgba:
+                type = .rgba
 
-            let dataLength: UInt16 = try reader.readInt()
-            let data = try reader.readBytes(Int(dataLength))
-
-            let sprite = SPR.Sprite(
-                type: .indexed,
-                width: width,
-                height: height,
-                data: Data(data)
-            )
-            return sprite
-        }
-
-        static func rgbaSprite(from reader: BinaryReader) throws -> Sprite {
-            let width: UInt16 = try reader.readInt()
-            let height: UInt16 = try reader.readInt()
-
-            let dataLength = Int(width) * Int(height) * 4
-            let data = try reader.readBytes(dataLength)
-
-            let sprite = SPR.Sprite(
-                type: .rgba,
-                width: width,
-                height: height,
-                data: Data(data)
-            )
-            return sprite
+                let dataLength = Int(width) * Int(height) * 4
+                let data = try decoder.decodeBytes(dataLength)
+                self.data = Data(data)
+            }
         }
     }
 }

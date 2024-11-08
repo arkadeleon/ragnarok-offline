@@ -8,7 +8,7 @@
 import Foundation
 import ROCore
 
-public struct GAT {
+public struct GAT: BinaryDecodable {
     public var header: String
     public var version: String
     public var width: Int32
@@ -16,27 +16,25 @@ public struct GAT {
     public var tiles: [Tile] = []
 
     public init(data: Data) throws {
-        let stream = MemoryStream(data: data)
-        let reader = BinaryReader(stream: stream)
+        let decoder = BinaryDecoder(data: data)
+        self = try decoder.decode(GAT.self)
+    }
 
-        defer {
-            reader.close()
-        }
-
-        header = try reader.readString(4)
+    public init(from decoder: BinaryDecoder) throws {
+        header = try decoder.decodeString(4)
         guard header == "GRAT" else {
             throw FileFormatError.invalidHeader(header, expected: "GRAT")
         }
 
-        let major: UInt8 = try reader.readInt()
-        let minor: UInt8 = try reader.readInt()
+        let major = try decoder.decode(UInt8.self)
+        let minor = try decoder.decode(UInt8.self)
         version = "\(major).\(minor)"
 
-        width = try reader.readInt()
-        height = try reader.readInt()
+        width = try decoder.decode(Int32.self)
+        height = try decoder.decode(Int32.self)
 
         for _ in 0..<(width * height) {
-            let tile = try Tile(from: reader)
+            let tile = try decoder.decode(Tile.self)
             tiles.append(tile)
         }
     }
@@ -53,19 +51,21 @@ extension GAT {
         case walkable3 = 6
     }
 
-    public struct Tile {
+    public struct Tile: BinaryDecodable {
         public var bottomLeftAltitude: Float
         public var bottomRightAltitude: Float
         public var topLeftAltitude: Float
         public var topRightAltitude: Float
         public var type: TileType
 
-        init(from reader: BinaryReader) throws {
-            bottomLeftAltitude = try reader.readFloat()
-            bottomRightAltitude = try reader.readFloat()
-            topLeftAltitude = try reader.readFloat()
-            topRightAltitude = try reader.readFloat()
-            type = try TileType(rawValue: reader.readInt()) ?? .walkable
+        public init(from decoder: BinaryDecoder) throws {
+            bottomLeftAltitude = try decoder.decode(Float.self)
+            bottomRightAltitude = try decoder.decode(Float.self)
+            topLeftAltitude = try decoder.decode(Float.self)
+            topRightAltitude = try decoder.decode(Float.self)
+
+            let type = try TileType(rawValue: decoder.decode(Int32.self))
+            self.type = type ?? .walkable
         }
     }
 }

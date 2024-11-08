@@ -22,22 +22,22 @@ public struct GRF {
 
     public init(url: URL) throws {
         let stream = try FileStream(url: url)
-        let reader = BinaryReader(stream: stream)
-
         defer {
-            reader.close()
+            stream.close()
         }
 
-        header = try Header(from: reader)
+        let decoder = BinaryDecoder(stream: stream)
+
+        header = try decoder.decode(Header.self)
 
         try stream.seek(Int(header.fileTableOffset), origin: .current)
 
-        table = try Table(from: reader, header: header)
+        table = try decoder.decode(Table.self, configuration: header)
     }
 }
 
 extension GRF {
-    public struct Header {
+    public struct Header: BinaryDecodable {
         static let size: Int = 0x2e
 
         public var magic: String
@@ -47,17 +47,17 @@ extension GRF {
         public var fileCount: UInt32
         public var version: UInt32
 
-        init(from reader: BinaryReader) throws {
-            magic = try reader.readString(15)
+        public init(from decoder: BinaryDecoder) throws {
+            magic = try decoder.decodeString(15)
             guard magic == "Master of Magic" else {
                 throw FileFormatError.invalidHeader(magic, expected: "Master of Magic")
             }
 
-            key = try reader.readBytes(15)
-            fileTableOffset = try reader.readInt()
-            seed = try reader.readInt()
-            fileCount = try reader.readInt()
-            version = try reader.readInt()
+            key = try decoder.decodeBytes(15)
+            fileTableOffset = try decoder.decode(UInt32.self)
+            seed = try decoder.decode(UInt32.self)
+            fileCount = try decoder.decode(UInt32.self)
+            version = try decoder.decode(UInt32.self)
 
             fileCount = fileCount - seed - 7
         }
@@ -65,7 +65,7 @@ extension GRF {
 }
 
 extension GRF {
-    public struct Table {
+    public struct Table: BinaryDecodableWithConfiguration {
         static let size: UInt64 = 0x08
 
         public var tableSizeCompressed: UInt32
@@ -73,15 +73,15 @@ extension GRF {
 
         public var entries: [Entry] = []
 
-        init(from reader: BinaryReader, header: Header) throws {
+        public init(from decoder: BinaryDecoder, configuration header: GRF.Header) throws {
             switch header.version {
             case 0x102, 0x103:
                 throw GRFError.invalidVersion(header.version)
             case 0x200:
-                tableSizeCompressed = try reader.readInt()
-                tableSize = try reader.readInt()
+                tableSizeCompressed = try decoder.decode(UInt32.self)
+                tableSize = try decoder.decode(UInt32.self)
 
-                let compressedData = try reader.readBytes(Int(tableSizeCompressed))
+                let compressedData = try decoder.decodeBytes(Int(tableSizeCompressed))
                 guard let data = Data(compressedData).unzip() else {
                     throw GRFError.dataCorrupted(Data(compressedData))
                 }
@@ -143,10 +143,11 @@ extension GRF {
             position += 17
         }
 
-        public func data(from reader: BinaryReader) throws -> Data {
-            try reader.stream.seek(Header.size + Int(offset), origin: .begin)
+        public func data(from stream: any ROCore.Stream) throws -> Data {
+            try stream.seek(Header.size + Int(offset), origin: .begin)
 
-            var bytes = try reader.readBytes(Int(sizeCompressedAligned))
+            let decoder = BinaryDecoder(stream: stream)
+            var bytes = try decoder.decodeBytes(Int(sizeCompressedAligned))
 
             if type & EntryType.encryptMixed.rawValue != 0 {
                 let des = DES()

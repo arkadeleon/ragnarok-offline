@@ -84,14 +84,11 @@ public class GRFReference {
         }
 
         let stream = try FileStream(url: url)
-        let reader = BinaryReader(stream: stream)
-
         defer {
-            reader.close()
+            stream.close()
         }
 
-        let data = try entry.data(from: reader)
-
+        let data = try entry.data(from: stream)
         return data
     }
 }

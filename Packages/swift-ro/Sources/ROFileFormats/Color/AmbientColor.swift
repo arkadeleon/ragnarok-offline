@@ -7,7 +7,7 @@
 
 import ROCore
 
-public struct AmbientColor {
+public struct AmbientColor: BinaryDecodable {
     public var red: Float
     public var green: Float
     public var blue: Float
@@ -18,9 +18,9 @@ public struct AmbientColor {
         self.blue = blue
     }
 
-    init(from reader: BinaryReader) throws {
-        red = try reader.readFloat()
-        green = try reader.readFloat()
-        blue = try reader.readFloat()
+    public init(from decoder: BinaryDecoder) throws {
+        red = try decoder.decode(Float.self)
+        green = try decoder.decode(Float.self)
+        blue = try decoder.decode(Float.self)
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import ROCore
 
-public struct RSW {
+public struct RSW: BinaryDecodable {
     public var header: String
     public var version: String
     public var files: Files
@@ -21,56 +21,54 @@ public struct RSW {
     public var effects: [Object.Effect] = []
 
     public init(data: Data) throws {
-        let stream = MemoryStream(data: data)
-        let reader = BinaryReader(stream: stream)
+        let decoder = BinaryDecoder(data: data)
+        self = try decoder.decode(RSW.self)
+    }
 
-        defer {
-            reader.close()
-        }
-
-        header = try reader.readString(4)
+    public init(from decoder: BinaryDecoder) throws {
+        header = try decoder.decodeString(4)
         guard header == "GRSW" else {
             throw FileFormatError.invalidHeader(header, expected: "GRSW")
         }
 
-        let major: UInt8 = try reader.readInt()
-        let minor: UInt8 = try reader.readInt()
+        let major = try decoder.decode(UInt8.self)
+        let minor = try decoder.decode(UInt8.self)
         version = "\(major).\(minor)"
 
         if version >= "2.5" {
             // Build number
-            _ = try reader.readInt() as UInt32
+            _ = try decoder.decode(UInt32.self)
         }
 
         if version >= "2.2" {
             // Unknown data
-            _ = try reader.readInt() as UInt8
+            _ = try decoder.decode(UInt8.self)
         }
 
-        files = try Files(from: reader, version: version)
+        files = try decoder.decode(Files.self, configuration: version)
 
-        water = try Water(from: reader, version: version)
+        water = try decoder.decode(Water.self, configuration: version)
 
-        light = try Light(from: reader, version: version)
+        light = try decoder.decode(Light.self, configuration: version)
 
-        boundingBox = try BoundingBox(from: reader, version: version)
+        boundingBox = try decoder.decode(BoundingBox.self, configuration: version)
 
-        let objectCount: Int32 = try reader.readInt()
+        let objectCount = try decoder.decode(Int32.self)
 
         for _ in 0..<objectCount {
-            let objectType = try Object.ObjectType(rawValue: reader.readInt())
+            let objectType = try Object.ObjectType(rawValue: decoder.decode(Int32.self))
             switch objectType {
             case .model:
-                let model = try Object.Model(from: reader, version: version)
+                let model = try decoder.decode(Object.Model.self, configuration: version)
                 models.append(model)
             case .light:
-                let light = try Object.Light(from: reader, version: version)
+                let light = try decoder.decode(Object.Light.self, configuration: version)
                 lights.append(light)
             case .sound:
-                let sound = try Object.Sound(from: reader, version: version)
+                let sound = try decoder.decode(Object.Sound.self, configuration: version)
                 sounds.append(sound)
             case .effect:
-                let effect = try Object.Effect(from: reader, version: version)
+                let effect = try decoder.decode(Object.Effect.self, configuration: version)
                 effects.append(effect)
             default:
                 break
@@ -80,30 +78,30 @@ public struct RSW {
 }
 
 extension RSW {
-    public struct Files {
+    public struct Files: BinaryDecodableWithConfiguration {
         public var ini: String
         public var gnd: String
         public var gat: String
         public var src: String
 
-        init(from reader: BinaryReader, version: String) throws {
-            ini = try reader.readString(40)
+        public init(from decoder: BinaryDecoder, configuration version: String) throws {
+            ini = try decoder.decodeString(40)
 
-            gnd = try reader.readString(40)
+            gnd = try decoder.decodeString(40)
 
             if version >= "1.4" {
-                gat = try reader.readString(40)
+                gat = try decoder.decodeString(40)
             } else {
                 gat = ""
             }
 
-            src = try reader.readString(40)
+            src = try decoder.decodeString(40)
         }
     }
 }
 
 extension RSW {
-    public struct Water {
+    public struct Water: BinaryDecodableWithConfiguration {
         public var level: Float
         public var type: Int32
         public var waveHeight: Float
@@ -111,7 +109,7 @@ extension RSW {
         public var wavePitch: Float
         public var animSpeed: Int32
 
-        init(from reader: BinaryReader, version: String) throws {
+        public init(from decoder: BinaryDecoder, configuration version: String) throws {
             if version >= "2.6" {
                 level = 0
                 type = 0
@@ -123,16 +121,16 @@ extension RSW {
             }
 
             if version >= "1.3" {
-                level = try reader.readFloat()
+                level = try decoder.decode(Float.self)
             } else {
                 level = 0
             }
 
             if version >= "1.8" {
-                type = try reader.readInt()
-                waveHeight = try reader.readFloat()
-                waveSpeed = try reader.readFloat()
-                wavePitch = try reader.readFloat()
+                type = try decoder.decode(Int32.self)
+                waveHeight = try decoder.decode(Float.self)
+                waveSpeed = try decoder.decode(Float.self)
+                wavePitch = try decoder.decode(Float.self)
             } else {
                 type = 0
                 waveHeight = 1
@@ -141,7 +139,7 @@ extension RSW {
             }
 
             if version >= "1.9" {
-                animSpeed = try reader.readInt()
+                animSpeed = try decoder.decode(Int32.self)
             } else {
                 animSpeed = 3
             }
@@ -150,19 +148,19 @@ extension RSW {
 }
 
 extension RSW {
-    public struct Light {
+    public struct Light: BinaryDecodableWithConfiguration {
         public var longitude: Int32
         public var latitude: Int32
         public var diffuse: DiffuseColor
         public var ambient: AmbientColor
         public var opacity: Float
 
-        init(from reader: BinaryReader, version: String) throws {
+        public init(from decoder: BinaryDecoder, configuration version: String) throws {
             if version >= "1.5" {
-                longitude = try reader.readInt()
-                latitude = try reader.readInt()
-                diffuse = try DiffuseColor(from: reader)
-                ambient = try AmbientColor(from: reader)
+                longitude = try decoder.decode(Int32.self)
+                latitude = try decoder.decode(Int32.self)
+                diffuse = try decoder.decode(DiffuseColor.self)
+                ambient = try decoder.decode(AmbientColor.self)
             } else {
                 longitude = 45
                 latitude = 45
@@ -171,7 +169,7 @@ extension RSW {
             }
 
             if version >= "1.7" {
-                opacity = try reader.readFloat()
+                opacity = try decoder.decode(Float.self)
             } else {
                 opacity = 1
             }
@@ -180,18 +178,18 @@ extension RSW {
 }
 
 extension RSW {
-    public struct BoundingBox {
+    public struct BoundingBox: BinaryDecodableWithConfiguration {
         public var top: Int32
         public var bottom: Int32
         public var left: Int32
         public var right: Int32
 
-        init(from reader: BinaryReader, version: String) throws {
+        public init(from decoder: BinaryDecoder, configuration version: String) throws {
             if version >= "1.6" {
-                top = try reader.readInt()
-                bottom = try reader.readInt()
-                left = try reader.readInt()
-                right = try reader.readInt()
+                top = try decoder.decode(Int32.self)
+                bottom = try decoder.decode(Int32.self)
+                left = try decoder.decode(Int32.self)
+                right = try decoder.decode(Int32.self)
             } else {
                 top = -500
                 bottom = 500
@@ -211,7 +209,7 @@ extension RSW {
             case effect = 4
         }
 
-        public struct Model {
+        public struct Model: BinaryDecodableWithConfiguration {
             public var name: String
             public var animationType: Int32
             public var animationSpeed: Float
@@ -222,12 +220,12 @@ extension RSW {
             public var rotation: SIMD3<Float>
             public var scale: SIMD3<Float>
 
-            init(from reader: BinaryReader, version: String) throws {
+            public init(from decoder: BinaryDecoder, configuration version: String) throws {
                 if version >= "1.3" {
-                    name = try reader.readString(40, encoding: .koreanEUC)
-                    animationType = try reader.readInt()
-                    animationSpeed = try reader.readFloat()
-                    blockType = try reader.readInt()
+                    name = try decoder.decodeString(40, encoding: .koreanEUC)
+                    animationType = try decoder.decode(Int32.self)
+                    animationSpeed = try decoder.decode(Float.self)
+                    blockType = try decoder.decode(Int32.self)
                 } else {
                     name = ""
                     animationType = 0
@@ -235,29 +233,45 @@ extension RSW {
                     blockType = 0
                 }
 
-                modelName = try reader.readString(80, encoding: .koreanEUC)
-                nodeName = try  reader.readString(80)
-                position = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
-                rotation = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
-                scale = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
+                modelName = try decoder.decodeString(80, encoding: .koreanEUC)
+                nodeName = try  decoder.decodeString(80)
+                position = try [
+                    decoder.decode(Float.self) / 5,
+                    decoder.decode(Float.self) / 5,
+                    decoder.decode(Float.self) / 5,
+                ]
+                rotation = try [
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                ]
+                scale = try [
+                    decoder.decode(Float.self) / 5,
+                    decoder.decode(Float.self) / 5,
+                    decoder.decode(Float.self) / 5,
+                ]
             }
         }
 
-        public struct Light {
+        public struct Light: BinaryDecodableWithConfiguration {
             public var name: String
             public var position: SIMD3<Float>
             public var diffuse: DiffuseColor
             public var range: Float
 
-            init(from reader: BinaryReader, version: String) throws {
-                name = try reader.readString(80, encoding: .koreanEUC)
-                position = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
-                diffuse = try DiffuseColor(from: reader)
-                range = try reader.readFloat()
+            public init(from decoder: BinaryDecoder, configuration version: String) throws {
+                name = try decoder.decodeString(80, encoding: .koreanEUC)
+                position = try [
+                    decoder.decode(Float.self) / 5,
+                    decoder.decode(Float.self) / 5,
+                    decoder.decode(Float.self) / 5,
+                ]
+                diffuse = try decoder.decode(DiffuseColor.self)
+                range = try decoder.decode(Float.self)
             }
         }
 
-        public struct Sound {
+        public struct Sound: BinaryDecodableWithConfiguration {
             public var name: String
             public var waveName: String
             public var position: SIMD3<Float>
@@ -267,35 +281,48 @@ extension RSW {
             public var range: Float
             public var cycle: Float
 
-            init(from reader: BinaryReader, version: String) throws {
-                name = try reader.readString(80, encoding: .koreanEUC)
-                waveName = try reader.readString(80)
-                position = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
-                volume = try reader.readFloat()
-                width = try reader.readInt()
-                height = try reader.readInt()
-                range = try reader.readFloat()
-                cycle = try version >= "2.0" ? reader.readFloat() : 0
+            public init(from decoder: BinaryDecoder, configuration version: String) throws {
+                name = try decoder.decodeString(80, encoding: .koreanEUC)
+                waveName = try decoder.decodeString(80)
+                position = try [
+                    decoder.decode(Float.self) / 5,
+                    decoder.decode(Float.self) / 5,
+                    decoder.decode(Float.self) / 5,
+                ]
+                volume = try decoder.decode(Float.self)
+                width = try decoder.decode(Int32.self)
+                height = try decoder.decode(Int32.self)
+                range = try decoder.decode(Float.self)
+
+                if version >= "2.0" {
+                    cycle = try decoder.decode(Float.self)
+                } else {
+                    cycle = 0
+                }
             }
         }
 
-        public struct Effect {
+        public struct Effect: BinaryDecodableWithConfiguration {
             public var name: String
             public var position: SIMD3<Float>
             public var id: Int32
             public var delay: Float
             public var parameters: SIMD4<Float>
 
-            init(from reader: BinaryReader, version: String) throws {
-                name = try reader.readString(80, encoding: .koreanEUC)
-                position = try [reader.readFloat() / 5, reader.readFloat() / 5, reader.readFloat() / 5]
-                id = try reader.readInt()
-                delay = try reader.readFloat() * 10
+            public init(from decoder: BinaryDecoder, configuration version: String) throws {
+                name = try decoder.decodeString(80, encoding: .koreanEUC)
+                position = try [
+                    decoder.decode(Float.self) / 5,
+                    decoder.decode(Float.self) / 5,
+                    decoder.decode(Float.self) / 5,
+                ]
+                id = try decoder.decode(Int32.self)
+                delay = try decoder.decode(Float.self) * 10
                 parameters = try [
-                    reader.readFloat(),
-                    reader.readFloat(),
-                    reader.readFloat(),
-                    reader.readFloat()
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
                 ]
             }
         }

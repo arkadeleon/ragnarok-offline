@@ -39,12 +39,12 @@ final class GRFTests: XCTestCase {
         ]
 
         let stream = try FileStream(url: grfURL)
-        let reader = BinaryReader(stream: stream)
-
-        for (i, entry) in grf.table.entries.enumerated() {
-            try XCTAssertEqual(entry.data(from: reader), Data(contentsOf: files[i]))
+        defer {
+            stream.close()
         }
 
-        stream.close()
+        for (i, entry) in grf.table.entries.enumerated() {
+            try XCTAssertEqual(entry.data(from: stream), Data(contentsOf: files[i]))
+        }
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 import simd
 import ROCore
 
-public struct RSM {
+public struct RSM: BinaryDecodable {
     public var header: String
     public var version: String
     public var animationLength: Int32
@@ -26,85 +26,83 @@ public struct RSM {
     public var volumeBoxes: [VolumeBox] = []
 
     public init(data: Data) throws {
-        let stream = MemoryStream(data: data)
-        let reader = BinaryReader(stream: stream)
+        let decoder = BinaryDecoder(data: data)
+        self = try decoder.decode(RSM.self)
+    }
 
-        defer {
-            reader.close()
-        }
-
-        header = try reader.readString(4)
+    public init(from decoder: BinaryDecoder) throws {
+        header = try decoder.decodeString(4)
         guard header == "GRSM" else {
             throw FileFormatError.invalidHeader(header, expected: "GRSM")
         }
 
-        let major: UInt8 = try reader.readInt()
-        let minor: UInt8 = try reader.readInt()
+        let major = try decoder.decode(UInt8.self)
+        let minor = try decoder.decode(UInt8.self)
         version = "\(major).\(minor)"
 
-        animationLength = try reader.readInt()
+        animationLength = try decoder.decode(Int32.self)
 
-        shadeType = try reader.readInt()
+        shadeType = try decoder.decode(Int32.self)
 
         if version >= "1.4" {
-            alpha = try reader.readInt()
+            alpha = try decoder.decode(UInt8.self)
         } else {
             alpha = 255
         }
 
         if version >= "2.3" {
-            let fps: Float = try reader.readFloat()
+            let fps = try decoder.decode(Float.self)
 
-            let rootNodeCount: Int32 = try reader.readInt()
+            let rootNodeCount = try decoder.decode(Int32.self)
             for _ in 0..<rootNodeCount {
-                let nodeNameLength: Int32 = try reader.readInt()
-                let rootNodeName = try reader.readString(Int(nodeNameLength))
+                let nodeNameLength = try decoder.decode(Int32.self)
+                let rootNodeName = try decoder.decodeString(Int(nodeNameLength))
                 rootNodes.append(rootNodeName)
             }
 
-            let nodeCount: Int32 = try reader.readInt()
+            let nodeCount = try decoder.decode(Int32.self)
             for _ in 0..<nodeCount {
-                let node = try Node(from: reader, version: version)
+                let node = try decoder.decode(Node.self, configuration: version)
                 nodes.append(node)
             }
         } else if version >= "2.2" {
-            let fps: Float = try reader.readFloat()
+            let fps = try decoder.decode(Float.self)
 
-            let textureCount: Int32 = try reader.readInt()
+            let textureCount = try decoder.decode(Int32.self)
             for _ in 0..<textureCount {
-                let textureNameLength: Int32 = try reader.readInt()
-                let texture = try reader.readString(Int(textureNameLength), encoding: .koreanEUC)
+                let textureNameLength = try decoder.decode(Int32.self)
+                let texture = try decoder.decodeString(Int(textureNameLength), encoding: .koreanEUC)
                 textures.append(texture)
             }
 
-            let rootNodeCount: Int32 = try reader.readInt()
+            let rootNodeCount = try decoder.decode(Int32.self)
             for _ in 0..<rootNodeCount {
-                let nodeNameLength: Int32 = try reader.readInt()
-                let rootNodeName = try reader.readString(Int(nodeNameLength))
+                let nodeNameLength = try decoder.decode(Int32.self)
+                let rootNodeName = try decoder.decodeString(Int(nodeNameLength))
                 rootNodes.append(rootNodeName)
             }
 
-            let nodeCount: Int32 = try reader.readInt()
+            let nodeCount = try decoder.decode(Int32.self)
             for _ in 0..<nodeCount {
-                let node = try Node(from: reader, version: version)
+                let node = try decoder.decode(Node.self, configuration: version)
                 nodes.append(node)
             }
         } else {
             // Reserved
-            _ = try reader.readBytes(16)
+            _ = try decoder.decodeBytes(16)
 
-            let textureCount: Int32 = try reader.readInt()
+            let textureCount = try decoder.decode(Int32.self)
             for _ in 0..<textureCount {
-                let texture = try reader.readString(40, encoding: .koreanEUC)
+                let texture = try decoder.decodeString(40, encoding: .koreanEUC)
                 textures.append(texture)
             }
 
-            let rootNode = try reader.readString(40)
+            let rootNode = try decoder.decodeString(40)
             rootNodes.append(rootNode)
 
-            let nodeCount: Int32 = try reader.readInt()
+            let nodeCount = try decoder.decode(Int32.self)
             for _ in 0..<nodeCount {
-                let node = try Node(from: reader, version: version)
+                let node = try decoder.decode(Node.self, configuration: version)
                 nodes.append(node)
             }
         }
@@ -114,17 +112,17 @@ public struct RSM {
         }
 
         if version < "1.6" {
-            let scaleKeyframeCount: Int32 = try reader.readInt()
+            let scaleKeyframeCount = try decoder.decode(Int32.self)
             for _ in 0..<scaleKeyframeCount {
-                let keyframe = try ScaleKeyframe(from: reader)
+                let keyframe = try decoder.decode(ScaleKeyframe.self)
                 scaleKeyframes.append(keyframe)
             }
         }
 
-        if reader.stream.length > reader.stream.position {
-            let volumeBoxCount: Int32 = try reader.readInt()
+        if decoder.bytesRemaining > 0 {
+            let volumeBoxCount = try decoder.decode(Int32.self)
             for _ in 0..<volumeBoxCount {
-                let volumeBox = try VolumeBox(from: reader, version: version)
+                let volumeBox = try decoder.decode(VolumeBox.self, configuration: version)
                 volumeBoxes.append(volumeBox)
             }
         }
@@ -140,7 +138,7 @@ extension RSM {
 }
 
 extension RSM {
-    public struct Node {
+    public struct Node: BinaryDecodableWithConfiguration {
         public struct TextureVertex {
             public var color: UInt32
             public var u: Float
@@ -169,41 +167,57 @@ extension RSM {
         public var rotationKeyframes: [RotationKeyframe] = []
         public var positionKeyframes: [PositionKeyframe] = []
 
-        init(from reader: BinaryReader, version: String) throws {
+        public init(from decoder: BinaryDecoder, configuration version: String) throws {
             if version >= "2.2" {
-                let nameLength: Int32 = try reader.readInt()
-                name = try reader.readString(Int(nameLength))
+                let nameLength = try decoder.decode(Int32.self)
+                name = try decoder.decodeString(Int(nameLength))
 
-                let parentNameLength: Int32 = try reader.readInt()
-                parentName = try reader.readString(Int(parentNameLength))
+                let parentNameLength = try decoder.decode(Int32.self)
+                parentName = try decoder.decodeString(Int(parentNameLength))
             } else {
-                name = try reader.readString(40)
-                parentName = try reader.readString(40)
+                name = try decoder.decodeString(40)
+                parentName = try decoder.decodeString(40)
             }
 
             if version >= "2.3" {
-                let textureCount: Int32 = try reader.readInt()
+                let textureCount = try decoder.decode(Int32.self)
                 for textureIndex in 0..<textureCount {
-                    let textureNameLength: Int32 = try reader.readInt()
-                    let texture = try reader.readString(Int(textureNameLength))
+                    let textureNameLength = try decoder.decode(Int32.self)
+                    let texture = try decoder.decodeString(Int(textureNameLength))
                     textures.append(texture)
                     textureIndexes.append(textureIndex)
                 }
             } else {
-                let textureCount: Int32 = try reader.readInt()
+                let textureCount = try decoder.decode(Int32.self)
                 for _ in 0..<textureCount {
-                    let texture: Int32 = try reader.readInt()
+                    let texture = try decoder.decode(Int32.self)
                     textureIndexes.append(texture)
                 }
             }
 
             transformationMatrix = try float3x3(
-                [reader.readFloat(), reader.readFloat(), reader.readFloat()],
-                [reader.readFloat(), reader.readFloat(), reader.readFloat()],
-                [reader.readFloat(), reader.readFloat(), reader.readFloat()]
+                [
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                ],
+                [
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                ],
+                [
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                ]
             )
 
-            offset = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
+            offset = try [
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+            ]
 
             if version >= "2.2" {
                 position = [0, 0, 0]
@@ -211,56 +225,72 @@ extension RSM {
                 rotationAxis = [0, 0, 0]
                 scale = [1, 1, 1]
             } else {
-                position = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
-                rotationAngle = try reader.readFloat()
-                rotationAxis = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
-                scale = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
+                position = try [
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                ]
+                rotationAngle = try decoder.decode(Float.self)
+                rotationAxis = try [
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                ]
+                scale = try [
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                ]
             }
 
-            let vertexCount: Int32 = try reader.readInt()
+            let vertexCount = try decoder.decode(Int32.self)
             for _ in 0..<vertexCount {
-                let vertex: float3 = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
+                let vertex: SIMD3<Float> = try [
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                    decoder.decode(Float.self),
+                ]
                 vertices.append(vertex)
             }
 
-            let tvertexCount: Int32 = try reader.readInt()
+            let tvertexCount = try decoder.decode(Int32.self)
             for _ in 0..<tvertexCount {
                 let color: UInt32
                 if version >= "1.2" {
-                    color = try reader.readInt()
+                    color = try decoder.decode(UInt32.self)
                 } else {
                     color = 0xFFFFFFFF
                 }
-                let u: Float = try reader.readFloat()
-                let v: Float = try reader.readFloat()
+                let u = try decoder.decode(Float.self)
+                let v = try decoder.decode(Float.self)
                 let textureVertex = TextureVertex(color: color, u: u, v: v)
                 tvertices.append(textureVertex)
             }
 
-            let faceCount: Int32 = try reader.readInt()
+            let faceCount = try decoder.decode(Int32.self)
             for _ in 0..<faceCount {
-                let face = try Face(from: reader, version: version)
+                let face = try decoder.decode(Face.self, configuration: version)
                 faces.append(face)
             }
 
             if version >= "1.6" {
-                let scaleKeyframeCount: Int32 = try reader.readInt()
+                let scaleKeyframeCount = try decoder.decode(Int32.self)
                 for _ in 0..<scaleKeyframeCount {
-                    let keyframe = try ScaleKeyframe(from: reader)
+                    let keyframe = try decoder.decode(ScaleKeyframe.self)
                     scaleKeyframes.append(keyframe)
                 }
             }
 
-            let rotationKeyframeCount: Int32 = try reader.readInt()
+            let rotationKeyframeCount = try decoder.decode(Int32.self)
             for _ in 0..<rotationKeyframeCount {
-                let keyframe = try RotationKeyframe(from: reader)
+                let keyframe = try decoder.decode(RotationKeyframe.self)
                 rotationKeyframes.append(keyframe)
             }
 
             if version >= "2.2" {
-                let positionKeyframeCount: Int32 = try reader.readInt()
+                let positionKeyframeCount = try decoder.decode(Int32.self)
                 for _ in 0..<positionKeyframeCount {
-                    let keyframe = try PositionKeyframe(from: reader)
+                    let keyframe = try decoder.decode(PositionKeyframe.self)
                     positionKeyframes.append(keyframe)
                 }
             }
@@ -290,7 +320,7 @@ extension RSM {
 }
 
 extension RSM {
-    public struct Face {
+    public struct Face: BinaryDecodableWithConfiguration {
         public var vertidx: SIMD3<UInt16>
         public var tvertidx: SIMD3<UInt16>
         public var textureIndex: UInt16
@@ -298,32 +328,40 @@ extension RSM {
         public var twoSide: Int32
         public var smoothGroup: SIMD3<Int32>
 
-        init(from reader: BinaryReader, version: String) throws {
+        public init(from decoder: BinaryDecoder, configuration version: String) throws {
             var length: Int32 = -1
             if version >= "2.2" {
-                length = try reader.readInt()
+                length = try decoder.decode(Int32.self)
             }
 
-            vertidx = try [reader.readInt(), reader.readInt(), reader.readInt()]
-            tvertidx = try [reader.readInt(), reader.readInt(), reader.readInt()]
-            textureIndex = try reader.readInt()
-            padding = try reader.readInt()
-            twoSide = try reader.readInt()
+            vertidx = try [
+                decoder.decode(UInt16.self),
+                decoder.decode(UInt16.self),
+                decoder.decode(UInt16.self),
+            ]
+            tvertidx = try [
+                decoder.decode(UInt16.self),
+                decoder.decode(UInt16.self),
+                decoder.decode(UInt16.self),
+            ]
+            textureIndex = try decoder.decode(UInt16.self)
+            padding = try decoder.decode(UInt16.self)
+            twoSide = try decoder.decode(Int32.self)
 
             if version >= "1.2" {
-                let smooth: Int32 = try reader.readInt()
+                let smooth: Int32 = try decoder.decode(Int32.self)
                 smoothGroup = [smooth, smooth, smooth]
 
                 if length > 24 {
-                    smoothGroup[1] = try reader.readInt()
+                    smoothGroup[1] = try decoder.decode(Int32.self)
                 }
 
                 if length > 28 {
-                    smoothGroup[2] = try reader.readInt()
+                    smoothGroup[2] = try decoder.decode(Int32.self)
                 }
 
                 if length > 32 {
-                    try reader.stream.seek(Int(length) - 32, origin: .current)
+                    _ = try decoder.decodeBytes(Int(length) - 32)
                 }
             } else {
                 smoothGroup = [0, 0, 0]
@@ -333,66 +371,83 @@ extension RSM {
 }
 
 extension RSM {
-    public struct ScaleKeyframe {
+    public struct ScaleKeyframe: BinaryDecodable {
         public var frame: Int32
         public var sx: Float
         public var sy: Float
         public var sz: Float
         public var data: Float
 
-        init(from reader: BinaryReader) throws {
-            frame = try reader.readInt()
-            sx = try reader.readFloat()
-            sy = try reader.readFloat()
-            sz = try reader.readFloat()
-            data = try reader.readFloat()
+        public init(from decoder: BinaryDecoder) throws {
+            frame = try decoder.decode(Int32.self)
+            sx = try decoder.decode(Float.self)
+            sy = try decoder.decode(Float.self)
+            sz = try decoder.decode(Float.self)
+            data = try decoder.decode(Float.self)
         }
     }
 
-    public struct RotationKeyframe {
+    public struct RotationKeyframe: BinaryDecodable {
         public var frame: Int32
         public var quaternion: SIMD4<Float>
 
-        init(from reader: BinaryReader) throws {
-            frame = try reader.readInt()
+        public init(from decoder: BinaryDecoder) throws {
+            frame = try decoder.decode(Int32.self)
             quaternion = try [
-                reader.readFloat(),
-                reader.readFloat(),
-                reader.readFloat(),
-                reader.readFloat()
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
             ]
         }
     }
 
-    public struct PositionKeyframe {
+    public struct PositionKeyframe: BinaryDecodable {
         public var frame: Int32
         public var px: Float
         public var py: Float
         public var pz: Float
         public var data: Int32
 
-        init(from reader: BinaryReader) throws {
-            frame = try reader.readInt()
-            px = try reader.readFloat()
-            py = try reader.readFloat()
-            pz = try reader.readFloat()
-            data = try reader.readInt()
+        public init(from decoder: BinaryDecoder) throws {
+            frame = try decoder.decode(Int32.self)
+            px = try decoder.decode(Float.self)
+            py = try decoder.decode(Float.self)
+            pz = try decoder.decode(Float.self)
+            data = try decoder.decode(Int32.self)
         }
     }
 }
 
 extension RSM {
-    public struct VolumeBox {
+    public struct VolumeBox: BinaryDecodableWithConfiguration {
         public var size: SIMD3<Float>
         public var position: SIMD3<Float>
         public var rotation: SIMD3<Float>
         public var flag: Int32
 
-        init(from reader: BinaryReader, version: String) throws {
-            size = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
-            position = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
-            rotation = try [reader.readFloat(), reader.readFloat(), reader.readFloat()]
-            flag = try version >= "1.3" ? reader.readInt() : 0
+        public init(from decoder: BinaryDecoder, configuration version: String) throws {
+            size = try [
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+            ]
+            position = try [
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+            ]
+            rotation = try [
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+            ]
+
+            if version >= "1.3" {
+                flag = try decoder.decode(Int32.self)
+            } else {
+                flag = 0
+            }
         }
     }
 }

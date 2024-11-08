@@ -25,6 +25,10 @@ public class BinaryDecoder {
     let stream: any Stream
     let needsCloseStream: Bool
 
+    public var bytesRemaining: Int {
+        stream.length - stream.position
+    }
+
     public init(stream: any Stream) {
         self.stream = stream
         self.needsCloseStream = false

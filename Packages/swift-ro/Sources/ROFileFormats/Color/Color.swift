@@ -7,7 +7,7 @@
 
 import ROCore
 
-public struct Color: Equatable {
+public struct Color: BinaryDecodable, Equatable {
     public var red: UInt8
     public var green: UInt8
     public var blue: UInt8
@@ -20,10 +20,10 @@ public struct Color: Equatable {
         self.alpha = alpha
     }
 
-    init(from reader: BinaryReader) throws {
-        red = try reader.readInt()
-        green = try reader.readInt()
-        blue = try reader.readInt()
-        alpha = try reader.readInt()
+    public init(from decoder: BinaryDecoder) throws {
+        red = try decoder.decode(UInt8.self)
+        green = try decoder.decode(UInt8.self)
+        blue = try decoder.decode(UInt8.self)
+        alpha = try decoder.decode(UInt8.self)
     }
 }

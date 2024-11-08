@@ -8,7 +8,7 @@
 import Foundation
 import ROCore
 
-public struct STR {
+public struct STR: BinaryDecodable {
     public var header: String
     public var version: String
     public var fps: Int32
@@ -16,53 +16,51 @@ public struct STR {
     public var layers: [Layer] = []
 
     public init(data: Data) throws {
-        let stream = MemoryStream(data: data)
-        let reader = BinaryReader(stream: stream)
+        let decoder = BinaryDecoder(data: data)
+        self = try decoder.decode(STR.self)
+    }
 
-        defer {
-            reader.close()
-        }
-
-        header = try reader.readString(4)
+    public init(from decoder: BinaryDecoder) throws {
+        header = try decoder.decodeString(4)
         guard header == "STRM" else {
             throw FileFormatError.invalidHeader(header, expected: "STRM")
         }
 
-        let major: UInt8 = try reader.readInt()
-        let minor: UInt8 = try reader.readInt()
+        let major = try decoder.decode(UInt8.self)
+        let minor = try decoder.decode(UInt8.self)
         version = "\(major).\(minor)"
 
-        _ = try reader.readBytes(2)
+        _ = try decoder.decodeBytes(2)
 
-        fps = try reader.readInt()
-        maxKeyframeIndex = try reader.readInt()
+        fps = try decoder.decode(Int32.self)
+        maxKeyframeIndex = try decoder.decode(Int32.self)
 
-        let layerCount: Int32 = try reader.readInt()
+        let layerCount = try decoder.decode(Int32.self)
 
-        _ = try reader.readBytes(16)
+        _ = try decoder.decodeBytes(16)
 
         for _ in 0..<layerCount {
-            let layer = try Layer(from: reader)
+            let layer = try decoder.decode(Layer.self)
             layers.append(layer)
         }
     }
 }
 
 extension STR {
-    public struct Layer {
+    public struct Layer: BinaryDecodable {
         public var textures: [String] = []
         public var keyframes: [Keyframe] = []
 
-        init(from reader: BinaryReader) throws {
-            let textureCount: Int32 = try reader.readInt()
+        public init(from decoder: BinaryDecoder) throws {
+            let textureCount = try decoder.decode(Int32.self)
             for _ in 0..<textureCount {
-                let texture = try reader.readString(128)
+                let texture = try decoder.decodeString(128)
                 textures.append(texture)
             }
 
-            let keyframeCount: Int32 = try reader.readInt()
+            let keyframeCount = try decoder.decode(Int32.self)
             for _ in 0..<keyframeCount {
-                let keyframe = try Keyframe(from: reader)
+                let keyframe = try decoder.decode(Keyframe.self)
                 keyframes.append(keyframe)
             }
         }
@@ -70,7 +68,7 @@ extension STR {
 }
 
 extension STR {
-    public struct Keyframe {
+    public struct Keyframe: BinaryDecodable {
         public var frameIndex: Int32
         public var type: Int32
         public var position: SIMD2<Float>
@@ -85,46 +83,46 @@ extension STR {
         public var destinationAlpha: Int32
         public var multiTexturePreset: Int32
 
-        init(from reader: BinaryReader) throws {
-            frameIndex = try reader.readInt()
-            type = try reader.readInt()
+        public init(from decoder: BinaryDecoder) throws {
+            frameIndex = try decoder.decode(Int32.self)
+            type = try decoder.decode(Int32.self)
             position = try [
-                reader.readFloat(),
-                reader.readFloat()
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
             ]
             uv = try [
-                reader.readFloat(),
-                reader.readFloat(),
-                reader.readFloat(),
-                reader.readFloat(),
-                reader.readFloat(),
-                reader.readFloat(),
-                reader.readFloat(),
-                reader.readFloat()
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
             ]
             xy = try [
-                reader.readFloat(),
-                reader.readFloat(),
-                reader.readFloat(),
-                reader.readFloat(),
-                reader.readFloat(),
-                reader.readFloat(),
-                reader.readFloat(),
-                reader.readFloat()
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
             ]
-            textureIndex = try reader.readFloat()
-            animationType = try reader.readInt()
-            delay = try reader.readFloat()
-            angle = try reader.readFloat() / (1024 / 360)
+            textureIndex = try decoder.decode(Float.self)
+            animationType = try decoder.decode(Int32.self)
+            delay = try decoder.decode(Float.self)
+            angle = try decoder.decode(Float.self) / (1024 / 360)
             color = try [
-                reader.readFloat() / 255,
-                reader.readFloat() / 255,
-                reader.readFloat() / 255,
-                reader.readFloat() / 255
+                decoder.decode(Float.self) / 255,
+                decoder.decode(Float.self) / 255,
+                decoder.decode(Float.self) / 255,
+                decoder.decode(Float.self) / 255,
             ]
-            sourceAlpha = try reader.readInt()
-            destinationAlpha = try reader.readInt()
-            multiTexturePreset = try reader.readInt()
+            sourceAlpha = try decoder.decode(Int32.self)
+            destinationAlpha = try decoder.decode(Int32.self)
+            multiTexturePreset = try decoder.decode(Int32.self)
         }
     }
 }
