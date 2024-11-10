@@ -40,7 +40,7 @@ public struct PACKET_ZC_ACCEPT_ENTER: DecodablePacket {
         try decoder.decodePacketType(Self.self)
 
         startTime = try decoder.decode(UInt32.self)
-        positionAndDirection = try decoder.decodeBytes(3)
+        positionAndDirection = try decoder.decode([UInt8].self, count: 3)
         xSize = try decoder.decode(UInt8.self)
         ySize = try decoder.decode(UInt8.self)
 

@@ -53,7 +53,7 @@ extension GRF {
                 throw FileFormatError.invalidHeader(magic, expected: "Master of Magic")
             }
 
-            key = try decoder.decodeBytes(15)
+            key = try decoder.decode([UInt8].self, count: 15)
             fileTableOffset = try decoder.decode(UInt32.self)
             seed = try decoder.decode(UInt32.self)
             fileCount = try decoder.decode(UInt32.self)
@@ -81,7 +81,7 @@ extension GRF {
                 tableSizeCompressed = try decoder.decode(UInt32.self)
                 tableSize = try decoder.decode(UInt32.self)
 
-                let compressedData = try decoder.decodeBytes(Int(tableSizeCompressed))
+                let compressedData = try decoder.decode([UInt8].self, count: Int(tableSizeCompressed))
                 guard let data = Data(compressedData).unzip() else {
                     throw GRFError.dataCorrupted(Data(compressedData))
                 }
@@ -147,7 +147,7 @@ extension GRF {
             try stream.seek(Header.size + Int(offset), origin: .begin)
 
             let decoder = BinaryDecoder(stream: stream)
-            var bytes = try decoder.decodeBytes(Int(sizeCompressedAligned))
+            var bytes = try decoder.decode([UInt8].self, count: Int(sizeCompressedAligned))
 
             if type & EntryType.encryptMixed.rawValue != 0 {
                 let des = DES()

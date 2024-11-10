@@ -30,7 +30,7 @@ public struct PACKET_CZ_REQUEST_TIME: EncodablePacket {
         data.replaceSubrange(from: 0, with: packetType)
         data.replaceSubrange(from: offsets[0], with: clientTime)
 
-        try encoder.encodeBytes(data)
+        try encoder.encode(data)
     }
 }
 

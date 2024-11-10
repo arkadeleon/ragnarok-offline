@@ -42,10 +42,10 @@ final class PacketDecoder {
                 if entry.packetLength == -1 {
                     let packetType = try decoder.decode(Int16.self)
                     let packetLength = try decoder.decode(Int16.self)
-                    _ = try decoder.decodeBytes(Int(packetLength - 2 - 2))
+                    _ = try decoder.decode([UInt8].self, count: Int(packetLength - 2 - 2))
                     print("Unimplemented packet: 0x" + String(packetType, radix: 16) + ", length: \(packetLength)")
                 } else {
-                    _ = try decoder.decodeBytes(Int(entry.packetLength))
+                    _ = try decoder.decode([UInt8].self, count: Int(entry.packetLength))
                     print("Unimplemented packet: 0x" + String(entry.packetType, radix: 16) + ", length: \(entry.packetLength)")
                 }
             } else {

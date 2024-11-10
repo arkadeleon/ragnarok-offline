@@ -37,7 +37,7 @@ public struct PACKET_HC_NOTIFY_ZONESVR: DecodablePacket {
         mapServer = try decoder.decode(MapServerInfo.self)
 
         if PACKET_VERSION >= 20170315 {
-            _ = try decoder.decodeBytes(128)
+            _ = try decoder.decode([UInt8].self, count: 128)
         }
     }
 }

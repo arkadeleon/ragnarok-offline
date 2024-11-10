@@ -30,14 +30,14 @@ public struct STR: BinaryDecodable {
         let minor = try decoder.decode(UInt8.self)
         version = "\(major).\(minor)"
 
-        _ = try decoder.decodeBytes(2)
+        _ = try decoder.decode([UInt8].self, count: 2)
 
         fps = try decoder.decode(Int32.self)
         maxKeyframeIndex = try decoder.decode(Int32.self)
 
         let layerCount = try decoder.decode(Int32.self)
 
-        _ = try decoder.decodeBytes(16)
+        _ = try decoder.decode([UInt8].self, count: 16)
 
         for _ in 0..<layerCount {
             let layer = try decoder.decode(Layer.self)

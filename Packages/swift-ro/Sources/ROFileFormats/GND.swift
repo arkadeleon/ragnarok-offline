@@ -59,7 +59,7 @@ public struct GND: BinaryDecodable {
         lightmap = try GNDLightmap(
             per_cell: per_cell,
             count: count,
-            data: decoder.decodeBytes(Int(count) * Int(per_cell) * 4)
+            data: decoder.decode([UInt8].self, count: Int(count) * Int(per_cell) * 4)
         )
 
         let surfaceCount = try decoder.decode(Int32.self)

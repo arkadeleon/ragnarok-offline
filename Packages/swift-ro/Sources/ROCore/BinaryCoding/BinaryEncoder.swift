@@ -11,16 +11,6 @@ public enum BinaryEncodingError: Error {
     case invalidValue(any Sendable)
 }
 
-public protocol BinaryEncodable {
-    func encode(to encoder: BinaryEncoder) throws
-}
-
-public protocol BinaryEncodableWithConfiguration {
-    associatedtype BinaryEncodingConfiguration
-
-    func encode(to encoder: BinaryEncoder, configuration: BinaryEncodingConfiguration) throws
-}
-
 public class BinaryEncoder {
     let stream: any Stream
 
@@ -28,16 +18,72 @@ public class BinaryEncoder {
         self.stream = stream
     }
 
-    public func encode<T>(_ value: T) throws where T: FixedWidthInteger {
-        let count = MemoryLayout<T>.size
+    public func encode(_ value: Int8) throws {
+        let count = MemoryLayout<Int8>.size
         var value = value
         try withUnsafePointer(to: &value) { pointer in
             _ = try stream.write(pointer, count: count)
         }
     }
 
-    public func encode<T>(_ value: T) throws where T: FloatingPoint {
-        let count = MemoryLayout<T>.size
+    public func encode(_ value: Int16) throws {
+        let count = MemoryLayout<Int16>.size
+        var value = value
+        try withUnsafePointer(to: &value) { pointer in
+            _ = try stream.write(pointer, count: count)
+        }
+    }
+
+    public func encode(_ value: Int32) throws {
+        let count = MemoryLayout<Int32>.size
+        var value = value
+        try withUnsafePointer(to: &value) { pointer in
+            _ = try stream.write(pointer, count: count)
+        }
+    }
+
+    public func encode(_ value: Int64) throws {
+        let count = MemoryLayout<Int64>.size
+        var value = value
+        try withUnsafePointer(to: &value) { pointer in
+            _ = try stream.write(pointer, count: count)
+        }
+    }
+
+    public func encode(_ value: UInt8) throws {
+        let count = MemoryLayout<UInt8>.size
+        var value = value
+        try withUnsafePointer(to: &value) { pointer in
+            _ = try stream.write(pointer, count: count)
+        }
+    }
+
+    public func encode(_ value: UInt16) throws {
+        let count = MemoryLayout<UInt16>.size
+        var value = value
+        try withUnsafePointer(to: &value) { pointer in
+            _ = try stream.write(pointer, count: count)
+        }
+    }
+
+    public func encode(_ value: UInt32) throws {
+        let count = MemoryLayout<UInt32>.size
+        var value = value
+        try withUnsafePointer(to: &value) { pointer in
+            _ = try stream.write(pointer, count: count)
+        }
+    }
+
+    public func encode(_ value: UInt64) throws {
+        let count = MemoryLayout<UInt64>.size
+        var value = value
+        try withUnsafePointer(to: &value) { pointer in
+            _ = try stream.write(pointer, count: count)
+        }
+    }
+
+    public func encode(_ value: Float) throws {
+        let count = MemoryLayout<Float>.size
         var value = value
         try withUnsafePointer(to: &value) { pointer in
             _ = try stream.write(pointer, count: count)
@@ -52,10 +98,6 @@ public class BinaryEncoder {
     public func encode<T>(_ value: T, configuration: T.BinaryEncodingConfiguration) throws where T: BinaryEncodableWithConfiguration {
         let encoder = BinaryEncoder(stream: stream)
         try value.encode(to: encoder, configuration: configuration)
-    }
-
-    public func encodeBytes(_ bytes: [UInt8]) throws {
-        _ = try stream.write(bytes, count: bytes.count)
     }
 
     public func encodeString(_ string: String, count: Int, encoding: String.Encoding = .ascii) throws {

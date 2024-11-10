@@ -56,7 +56,7 @@ public struct SPR: BinaryDecodable {
         }
 
         if version > "1.0" {
-            _ = try decoder.decodeBytes(decoder.bytesRemaining - 1024)
+            _ = try decoder.decode([UInt8].self, count: decoder.bytesRemaining - 1024)
             palette = try decoder.decode(PAL.self)
         }
     }
@@ -89,19 +89,19 @@ extension SPR {
                 type = .indexed
 
                 let dataLength = Int(width) * Int(height)
-                let data = try decoder.decodeBytes(dataLength)
+                let data = try decoder.decode([UInt8].self, count: dataLength)
                 self.data = Data(data)
             case .indexedRLE:
                 type = .indexed
 
                 let dataLength = try decoder.decode(Int16.self)
-                let data = try decoder.decodeBytes(Int(dataLength))
+                let data = try decoder.decode([UInt8].self, count: Int(dataLength))
                 self.data = Data(data)
             case .rgba:
                 type = .rgba
 
                 let dataLength = Int(width) * Int(height) * 4
-                let data = try decoder.decodeBytes(dataLength)
+                let data = try decoder.decode([UInt8].self, count: dataLength)
                 self.data = Data(data)
             }
         }

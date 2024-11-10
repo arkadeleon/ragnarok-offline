@@ -89,7 +89,7 @@ public struct RSM: BinaryDecodable {
             }
         } else {
             // Reserved
-            _ = try decoder.decodeBytes(16)
+            _ = try decoder.decode([UInt8].self, count: 16)
 
             let textureCount = try decoder.decode(Int32.self)
             for _ in 0..<textureCount {
@@ -361,7 +361,7 @@ extension RSM {
                 }
 
                 if length > 32 {
-                    _ = try decoder.decodeBytes(Int(length) - 32)
+                    _ = try decoder.decode([UInt8].self, count: Int(length) - 32)
                 }
             } else {
                 smoothGroup = [0, 0, 0]

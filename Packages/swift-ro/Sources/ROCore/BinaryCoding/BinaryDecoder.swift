@@ -11,16 +11,6 @@ public enum BinaryDecodingError: Error {
     case dataCorrupted
 }
 
-public protocol BinaryDecodable {
-    init(from decoder: BinaryDecoder) throws
-}
-
-public protocol BinaryDecodableWithConfiguration {
-    associatedtype BinaryDecodingConfiguration
-
-    init(from decoder: BinaryDecoder, configuration: BinaryDecodingConfiguration) throws
-}
-
 public class BinaryDecoder {
     let stream: any Stream
     let needsCloseStream: Bool
@@ -45,18 +35,81 @@ public class BinaryDecoder {
         }
     }
 
-    public func decode<T>(_ type: T.Type) throws -> T where T: FixedWidthInteger {
-        let count = MemoryLayout<T>.size
-        var result: T = 0
+    public func decode(_ type: Int8.Type) throws -> Int8 {
+        let count = MemoryLayout<Int8>.size
+        var result: Int8 = 0
         try withUnsafeMutablePointer(to: &result) { pointer in
             _ = try stream.read(pointer, count: count)
         }
         return result
     }
 
-    public func decode<T>(_ type: T.Type) throws -> T where T: FloatingPoint {
-        let count = MemoryLayout<T>.size
-        var result: T = 0
+    public func decode(_ type: Int16.Type) throws -> Int16 {
+        let count = MemoryLayout<Int16>.size
+        var result: Int16 = 0
+        try withUnsafeMutablePointer(to: &result) { pointer in
+            _ = try stream.read(pointer, count: count)
+        }
+        return result
+    }
+
+    public func decode(_ type: Int32.Type) throws -> Int32 {
+        let count = MemoryLayout<Int32>.size
+        var result: Int32 = 0
+        try withUnsafeMutablePointer(to: &result) { pointer in
+            _ = try stream.read(pointer, count: count)
+        }
+        return result
+    }
+
+    public func decode(_ type: Int64.Type) throws -> Int64 {
+        let count = MemoryLayout<Int64>.size
+        var result: Int64 = 0
+        try withUnsafeMutablePointer(to: &result) { pointer in
+            _ = try stream.read(pointer, count: count)
+        }
+        return result
+    }
+
+    public func decode(_ type: UInt8.Type) throws -> UInt8 {
+        let count = MemoryLayout<UInt8>.size
+        var result: UInt8 = 0
+        try withUnsafeMutablePointer(to: &result) { pointer in
+            _ = try stream.read(pointer, count: count)
+        }
+        return result
+    }
+
+    public func decode(_ type: UInt16.Type) throws -> UInt16 {
+        let count = MemoryLayout<UInt16>.size
+        var result: UInt16 = 0
+        try withUnsafeMutablePointer(to: &result) { pointer in
+            _ = try stream.read(pointer, count: count)
+        }
+        return result
+    }
+
+    public func decode(_ type: UInt32.Type) throws -> UInt32 {
+        let count = MemoryLayout<UInt32>.size
+        var result: UInt32 = 0
+        try withUnsafeMutablePointer(to: &result) { pointer in
+            _ = try stream.read(pointer, count: count)
+        }
+        return result
+    }
+
+    public func decode(_ type: UInt64.Type) throws -> UInt64 {
+        let count = MemoryLayout<UInt64>.size
+        var result: UInt64 = 0
+        try withUnsafeMutablePointer(to: &result) { pointer in
+            _ = try stream.read(pointer, count: count)
+        }
+        return result
+    }
+
+    public func decode(_ type: Float.Type) throws -> Float {
+        let count = MemoryLayout<Float>.size
+        var result: Float = 0
         try withUnsafeMutablePointer(to: &result) { pointer in
             _ = try stream.read(pointer, count: count)
         }
@@ -64,21 +117,22 @@ public class BinaryDecoder {
     }
 
     public func decode<T>(_ type: T.Type) throws -> T where T: BinaryDecodable {
-        let value = try type.init(from: self)
+        let value = try T(from: self)
         return value
+    }
+
+    public func decode<T>(_ type: [T].Type, count: Int) throws -> [T] where T: BinaryDecodable {
+        var array: [T] = []
+        for _ in 0..<count {
+            let element = try T(from: self)
+            array.append(element)
+        }
+        return array
     }
 
     public func decode<T>(_ type: T.Type, configuration: T.BinaryDecodingConfiguration) throws -> T where T: BinaryDecodableWithConfiguration {
-        let value = try type.init(from: self, configuration: configuration)
+        let value = try T(from: self, configuration: configuration)
         return value
-    }
-
-    public func decodeBytes(_ count: Int) throws -> [UInt8] {
-        var bytes = [UInt8](repeating: 0, count: count)
-        try bytes.withUnsafeMutableBytes { pointer in
-            _ = try stream.read(pointer.baseAddress!, count: count)
-        }
-        return bytes
     }
 
     public func decodeString(_ count: Int, encoding: String.Encoding = .ascii) throws -> String {

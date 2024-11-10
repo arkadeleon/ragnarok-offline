@@ -50,7 +50,7 @@ public struct PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
         sex = try decoder.decode(UInt8.self)
 
         if PACKET_VERSION >= 20170315 {
-            token = try decoder.decodeBytes(17)
+            token = try decoder.decode([UInt8].self, count: 17)
         } else {
             token = []
         }

@@ -33,7 +33,7 @@ public struct PACKET_CZ_REQUEST_ACT: EncodablePacket {
         data.replaceSubrange(from: offsets[0], with: targetID)
         data.replaceSubrange(from: offsets[1], with: action)
 
-        try encoder.encodeBytes(data)
+        try encoder.encode(data)
     }
 }
 

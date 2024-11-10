@@ -32,7 +32,7 @@ public struct ACT: BinaryDecodable {
         let actionCount = try decoder.decode(Int16.self)
 
         // Reserved, unused bytes.
-        _ = try decoder.decodeBytes(10)
+        _ = try decoder.decode([UInt8].self, count: 10)
 
         for _ in 0..<actionCount {
             let action = try decoder.decode(Action.self, configuration: version)
@@ -78,7 +78,7 @@ extension ACT {
 
         public init(from decoder: BinaryDecoder, configuration version: String) throws {
             // Range1 and Range2, seems to be unused.
-            _ = try decoder.decodeBytes(32)
+            _ = try decoder.decode([UInt8].self, count: 32)
 
             let layerCount = try decoder.decode(Int32.self)
             for _ in 0..<layerCount {
@@ -151,13 +151,13 @@ extension ACT {
 
         public init(from decoder: BinaryDecoder) throws {
             // Unknown bytes.
-            _ = try decoder.decodeBytes(4)
+            _ = try decoder.decode([UInt8].self, count: 4)
 
             x = try decoder.decode(Int32.self)
             y = try decoder.decode(Int32.self)
 
             // Unknown bytes.
-            _ = try decoder.decodeBytes(4)
+            _ = try decoder.decode([UInt8].self, count: 4)
         }
     }
 }

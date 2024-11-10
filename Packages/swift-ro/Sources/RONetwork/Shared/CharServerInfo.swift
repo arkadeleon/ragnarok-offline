@@ -24,7 +24,7 @@ public struct CharServerInfo: BinaryDecodable, Sendable {
         property = try decoder.decode(UInt16.self)
 
         if PACKET_VERSION >= 20170315 {
-            _ = try decoder.decodeBytes(128)
+            _ = try decoder.decode([UInt8].self, count: 128)
         }
     }
 }

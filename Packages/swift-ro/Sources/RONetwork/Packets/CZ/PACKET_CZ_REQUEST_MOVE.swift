@@ -36,7 +36,7 @@ public struct PACKET_CZ_REQUEST_MOVE: EncodablePacket {
             UInt8((y % 16) << 4),
         ])
 
-        try encoder.encodeBytes(data)
+        try encoder.encode(data)
     }
 }
 

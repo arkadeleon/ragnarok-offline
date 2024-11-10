@@ -24,6 +24,6 @@ public struct PACKET_CA_EXE_HASHCHECK: EncodablePacket {
 
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encodeBytes(hash)
+        try encoder.encode(hash)
     }
 }
