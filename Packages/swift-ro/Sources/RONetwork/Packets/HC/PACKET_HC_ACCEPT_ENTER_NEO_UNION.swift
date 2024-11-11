@@ -44,7 +44,7 @@ public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION: DecodablePacket {
             premiumSlots = 0
         }
 
-        _ = try decoder.decodeString(20)
+        _ = try decoder.decode(String.self, lengthOfBytes: 20)
 
         chars = []
         for _ in 0..<charCount {

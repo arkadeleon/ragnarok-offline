@@ -31,7 +31,7 @@ public struct RSM: BinaryDecodable {
     }
 
     public init(from decoder: BinaryDecoder) throws {
-        header = try decoder.decodeString(4)
+        header = try decoder.decode(String.self, lengthOfBytes: 4)
         guard header == "GRSM" else {
             throw FileFormatError.invalidHeader(header, expected: "GRSM")
         }
@@ -56,7 +56,7 @@ public struct RSM: BinaryDecodable {
             let rootNodeCount = try decoder.decode(Int32.self)
             for _ in 0..<rootNodeCount {
                 let nodeNameLength = try decoder.decode(Int32.self)
-                let rootNodeName = try decoder.decodeString(Int(nodeNameLength))
+                let rootNodeName = try decoder.decode(String.self, lengthOfBytes: Int(nodeNameLength))
                 rootNodes.append(rootNodeName)
             }
 
@@ -71,14 +71,14 @@ public struct RSM: BinaryDecodable {
             let textureCount = try decoder.decode(Int32.self)
             for _ in 0..<textureCount {
                 let textureNameLength = try decoder.decode(Int32.self)
-                let texture = try decoder.decodeString(Int(textureNameLength), encoding: .koreanEUC)
+                let texture = try decoder.decode(String.self, lengthOfBytes: Int(textureNameLength), encoding: .koreanEUC)
                 textures.append(texture)
             }
 
             let rootNodeCount = try decoder.decode(Int32.self)
             for _ in 0..<rootNodeCount {
                 let nodeNameLength = try decoder.decode(Int32.self)
-                let rootNodeName = try decoder.decodeString(Int(nodeNameLength))
+                let rootNodeName = try decoder.decode(String.self, lengthOfBytes: Int(nodeNameLength))
                 rootNodes.append(rootNodeName)
             }
 
@@ -93,11 +93,11 @@ public struct RSM: BinaryDecodable {
 
             let textureCount = try decoder.decode(Int32.self)
             for _ in 0..<textureCount {
-                let texture = try decoder.decodeString(40, encoding: .koreanEUC)
+                let texture = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .koreanEUC)
                 textures.append(texture)
             }
 
-            let rootNode = try decoder.decodeString(40)
+            let rootNode = try decoder.decode(String.self, lengthOfBytes: 40)
             rootNodes.append(rootNode)
 
             let nodeCount = try decoder.decode(Int32.self)
@@ -170,20 +170,20 @@ extension RSM {
         public init(from decoder: BinaryDecoder, configuration version: String) throws {
             if version >= "2.2" {
                 let nameLength = try decoder.decode(Int32.self)
-                name = try decoder.decodeString(Int(nameLength))
+                name = try decoder.decode(String.self, lengthOfBytes: Int(nameLength))
 
                 let parentNameLength = try decoder.decode(Int32.self)
-                parentName = try decoder.decodeString(Int(parentNameLength))
+                parentName = try decoder.decode(String.self, lengthOfBytes: Int(parentNameLength))
             } else {
-                name = try decoder.decodeString(40)
-                parentName = try decoder.decodeString(40)
+                name = try decoder.decode(String.self, lengthOfBytes: 40)
+                parentName = try decoder.decode(String.self, lengthOfBytes: 40)
             }
 
             if version >= "2.3" {
                 let textureCount = try decoder.decode(Int32.self)
                 for textureIndex in 0..<textureCount {
                     let textureNameLength = try decoder.decode(Int32.self)
-                    let texture = try decoder.decodeString(Int(textureNameLength))
+                    let texture = try decoder.decode(String.self, lengthOfBytes: Int(textureNameLength))
                     textures.append(texture)
                     textureIndexes.append(textureIndex)
                 }

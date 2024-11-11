@@ -21,7 +21,7 @@ public struct STR: BinaryDecodable {
     }
 
     public init(from decoder: BinaryDecoder) throws {
-        header = try decoder.decodeString(4)
+        header = try decoder.decode(String.self, lengthOfBytes: 4)
         guard header == "STRM" else {
             throw FileFormatError.invalidHeader(header, expected: "STRM")
         }
@@ -54,7 +54,7 @@ extension STR {
         public init(from decoder: BinaryDecoder) throws {
             let textureCount = try decoder.decode(Int32.self)
             for _ in 0..<textureCount {
-                let texture = try decoder.decodeString(128)
+                let texture = try decoder.decode(String.self, lengthOfBytes: 128)
                 textures.append(texture)
             }
 

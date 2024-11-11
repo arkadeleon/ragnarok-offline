@@ -21,7 +21,7 @@ public struct GAT: BinaryDecodable {
     }
 
     public init(from decoder: BinaryDecoder) throws {
-        header = try decoder.decodeString(4)
+        header = try decoder.decode(String.self, lengthOfBytes: 4)
         guard header == "GRAT" else {
             throw FileFormatError.invalidHeader(header, expected: "GRAT")
         }

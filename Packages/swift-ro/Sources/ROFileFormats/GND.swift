@@ -29,7 +29,7 @@ public struct GND: BinaryDecodable {
     }
 
     public init(from decoder: BinaryDecoder) throws {
-        header = try decoder.decodeString(4)
+        header = try decoder.decode(String.self, lengthOfBytes: 4)
         guard header == "GRGN" else {
             throw FileFormatError.invalidHeader(header, expected: "GRGN")
         }
@@ -46,7 +46,7 @@ public struct GND: BinaryDecodable {
         let textureNameLength = try decoder.decode(Int32.self)
 
         for _ in 0..<textureCount {
-            let texture = try decoder.decodeString(Int(textureNameLength), encoding: .koreanEUC)
+            let texture = try decoder.decode(String.self, lengthOfBytes: Int(textureNameLength), encoding: .koreanEUC)
             textures.append(texture)
         }
 

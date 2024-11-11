@@ -8,7 +8,7 @@
 import Foundation
 
 public enum BinaryDecodingError: Error {
-    case dataCorrupted
+    case invalidEncoding(String.Encoding)
 }
 
 public class BinaryDecoder {
@@ -116,6 +116,18 @@ public class BinaryDecoder {
         return result
     }
 
+    public func decode(_ type: String.Type, lengthOfBytes: Int, encoding: String.Encoding = .ascii) throws -> String {
+        var bytes = [UInt8](repeating: 0, count: lengthOfBytes)
+        try bytes.withUnsafeMutableBytes { pointer in
+            _ = try stream.read(pointer.baseAddress!, count: lengthOfBytes)
+        }
+        bytes = bytes.prefix { $0 != 0 }
+        guard let string = String(bytes: bytes, encoding: encoding) else {
+            throw BinaryDecodingError.invalidEncoding(encoding)
+        }
+        return string
+    }
+
     public func decode<T>(_ type: T.Type) throws -> T where T: BinaryDecodable {
         let value = try T(from: self)
         return value
@@ -133,17 +145,5 @@ public class BinaryDecoder {
     public func decode<T>(_ type: T.Type, configuration: T.BinaryDecodingConfiguration) throws -> T where T: BinaryDecodableWithConfiguration {
         let value = try T(from: self, configuration: configuration)
         return value
-    }
-
-    public func decodeString(_ count: Int, encoding: String.Encoding = .ascii) throws -> String {
-        var bytes = [UInt8](repeating: 0, count: count)
-        try bytes.withUnsafeMutableBytes { pointer in
-            _ = try stream.read(pointer.baseAddress!, count: count)
-        }
-        bytes = bytes.prefix { $0 != 0 }
-        guard let string = String(bytes: bytes, encoding: encoding) else {
-            throw StreamError.invalidEncoding
-        }
-        return string
     }
 }

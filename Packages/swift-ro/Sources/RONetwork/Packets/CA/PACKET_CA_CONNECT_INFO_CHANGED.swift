@@ -25,6 +25,6 @@ public struct PACKET_CA_CONNECT_INFO_CHANGED: EncodablePacket {
 
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encodeString(name, count: 24)
+        try encoder.encode(name, lengthOfBytes: 24)
     }
 }

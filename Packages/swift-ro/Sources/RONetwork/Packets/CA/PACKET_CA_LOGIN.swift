@@ -32,8 +32,8 @@ public struct PACKET_CA_LOGIN: EncodablePacket {
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(version)
-        try encoder.encodeString(username, count: 24)
-        try encoder.encodeString(password, count: 24)
+        try encoder.encode(username, lengthOfBytes: 24)
+        try encoder.encode(password, lengthOfBytes: 24)
         try encoder.encode(clientType)
     }
 }

@@ -18,7 +18,7 @@ public struct CharServerInfo: BinaryDecodable, Sendable {
     public init(from decoder: BinaryDecoder) throws {
         ip = try decoder.decode(UInt32.self)
         port = try decoder.decode(UInt16.self)
-        name = try decoder.decodeString(20)
+        name = try decoder.decode(String.self, lengthOfBytes: 20)
         userCount = try decoder.decode(UInt16.self)
         state = try decoder.decode(UInt16.self)
         property = try decoder.decode(UInt16.self)

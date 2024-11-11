@@ -8,7 +8,8 @@
 import Foundation
 
 public enum BinaryEncodingError: Error {
-    case invalidValue(any Sendable)
+    case invalidEncoding(String.Encoding)
+    case invalidLengthOfBytes(Int)
 }
 
 public class BinaryEncoder {
@@ -90,26 +91,33 @@ public class BinaryEncoder {
         }
     }
 
+    public func encode(_ value: String, lengthOfBytes: Int, encoding: String.Encoding = .ascii) throws {
+        guard var data = value.data(using: encoding) else {
+            throw BinaryEncodingError.invalidEncoding(encoding)
+        }
+        guard data.count <= lengthOfBytes else {
+            throw BinaryEncodingError.invalidLengthOfBytes(lengthOfBytes)
+        }
+        data.append(contentsOf: [UInt8](repeating: 0, count: lengthOfBytes - data.count))
+        try data.withUnsafeBytes { pointer in
+            _ = try stream.write(pointer.baseAddress!, count: pointer.count)
+        }
+    }
+
     public func encode<T>(_ value: T) throws where T: BinaryEncodable {
         let encoder = BinaryEncoder(stream: stream)
         try value.encode(to: encoder)
     }
 
+    public func encode<T>(_ value: [T]) throws where T: BinaryEncodable {
+        let encoder = BinaryEncoder(stream: stream)
+        for element in value {
+            try element.encode(to: encoder)
+        }
+    }
+
     public func encode<T>(_ value: T, configuration: T.BinaryEncodingConfiguration) throws where T: BinaryEncodableWithConfiguration {
         let encoder = BinaryEncoder(stream: stream)
         try value.encode(to: encoder, configuration: configuration)
-    }
-
-    public func encodeString(_ string: String, count: Int, encoding: String.Encoding = .ascii) throws {
-        guard var data = string.data(using: encoding) else {
-            throw BinaryEncodingError.invalidValue(string)
-        }
-        guard data.count <= count else {
-            throw BinaryEncodingError.invalidValue(string)
-        }
-        data.append(contentsOf: [UInt8](repeating: 0, count: count - data.count))
-        try data.withUnsafeBytes { pointer in
-            _ = try stream.write(pointer.baseAddress!, count: pointer.count)
-        }
     }
 }

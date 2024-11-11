@@ -68,11 +68,3 @@ extension Float: BinaryEncodable {
         try encoder.encode(self)
     }
 }
-
-extension Array: BinaryEncodable where Element: BinaryEncodable {
-    public func encode(to encoder: BinaryEncoder) throws {
-        for element in self {
-            try encoder.encode(element)
-        }
-    }
-}

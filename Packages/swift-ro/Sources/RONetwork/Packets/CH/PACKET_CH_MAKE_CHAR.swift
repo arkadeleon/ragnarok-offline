@@ -60,7 +60,7 @@ public struct PACKET_CH_MAKE_CHAR: EncodablePacket {
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
 
-        try encoder.encodeString(name, count: 24)
+        try encoder.encode(name, lengthOfBytes: 24)
 
         if PACKET_VERSION < 20120307 {
             try encoder.encode(str)

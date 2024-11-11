@@ -20,7 +20,7 @@ public struct SPR: BinaryDecodable {
     }
 
     public init(from decoder: BinaryDecoder) throws {
-        header = try decoder.decodeString(2)
+        header = try decoder.decode(String.self, lengthOfBytes: 2)
         guard header == "SP" else {
             throw FileFormatError.invalidHeader(header, expected: "SP")
         }

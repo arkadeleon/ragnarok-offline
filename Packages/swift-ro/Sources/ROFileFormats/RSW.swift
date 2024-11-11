@@ -26,7 +26,7 @@ public struct RSW: BinaryDecodable {
     }
 
     public init(from decoder: BinaryDecoder) throws {
-        header = try decoder.decodeString(4)
+        header = try decoder.decode(String.self, lengthOfBytes: 4)
         guard header == "GRSW" else {
             throw FileFormatError.invalidHeader(header, expected: "GRSW")
         }
@@ -85,17 +85,17 @@ extension RSW {
         public var src: String
 
         public init(from decoder: BinaryDecoder, configuration version: String) throws {
-            ini = try decoder.decodeString(40)
+            ini = try decoder.decode(String.self, lengthOfBytes: 40)
 
-            gnd = try decoder.decodeString(40)
+            gnd = try decoder.decode(String.self, lengthOfBytes: 40)
 
             if version >= "1.4" {
-                gat = try decoder.decodeString(40)
+                gat = try decoder.decode(String.self, lengthOfBytes: 40)
             } else {
                 gat = ""
             }
 
-            src = try decoder.decodeString(40)
+            src = try decoder.decode(String.self, lengthOfBytes: 40)
         }
     }
 }
@@ -222,7 +222,7 @@ extension RSW {
 
             public init(from decoder: BinaryDecoder, configuration version: String) throws {
                 if version >= "1.3" {
-                    name = try decoder.decodeString(40, encoding: .koreanEUC)
+                    name = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .koreanEUC)
                     animationType = try decoder.decode(Int32.self)
                     animationSpeed = try decoder.decode(Float.self)
                     blockType = try decoder.decode(Int32.self)
@@ -233,8 +233,8 @@ extension RSW {
                     blockType = 0
                 }
 
-                modelName = try decoder.decodeString(80, encoding: .koreanEUC)
-                nodeName = try  decoder.decodeString(80)
+                modelName = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .koreanEUC)
+                nodeName = try  decoder.decode(String.self, lengthOfBytes: 80)
                 position = try [
                     decoder.decode(Float.self) / 5,
                     decoder.decode(Float.self) / 5,
@@ -260,7 +260,7 @@ extension RSW {
             public var range: Float
 
             public init(from decoder: BinaryDecoder, configuration version: String) throws {
-                name = try decoder.decodeString(80, encoding: .koreanEUC)
+                name = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .koreanEUC)
                 position = try [
                     decoder.decode(Float.self) / 5,
                     decoder.decode(Float.self) / 5,
@@ -282,8 +282,8 @@ extension RSW {
             public var cycle: Float
 
             public init(from decoder: BinaryDecoder, configuration version: String) throws {
-                name = try decoder.decodeString(80, encoding: .koreanEUC)
-                waveName = try decoder.decodeString(80)
+                name = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .koreanEUC)
+                waveName = try decoder.decode(String.self, lengthOfBytes: 80)
                 position = try [
                     decoder.decode(Float.self) / 5,
                     decoder.decode(Float.self) / 5,
@@ -310,7 +310,7 @@ extension RSW {
             public var parameters: SIMD4<Float>
 
             public init(from decoder: BinaryDecoder, configuration version: String) throws {
-                name = try decoder.decodeString(80, encoding: .koreanEUC)
+                name = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .koreanEUC)
                 position = try [
                     decoder.decode(Float.self) / 5,
                     decoder.decode(Float.self) / 5,

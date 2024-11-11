@@ -48,7 +48,7 @@ extension GRF {
         public var version: UInt32
 
         public init(from decoder: BinaryDecoder) throws {
-            magic = try decoder.decodeString(15)
+            magic = try decoder.decode(String.self, lengthOfBytes: 15)
             guard magic == "Master of Magic" else {
                 throw FileFormatError.invalidHeader(magic, expected: "Master of Magic")
             }

@@ -20,7 +20,7 @@ public struct ACT: BinaryDecodable {
     }
 
     public init(from decoder: BinaryDecoder) throws {
-        header = try decoder.decodeString(2)
+        header = try decoder.decode(String.self, lengthOfBytes: 2)
         guard header == "AC" else {
             throw FileFormatError.invalidHeader(header, expected: "AC")
         }
@@ -42,7 +42,7 @@ public struct ACT: BinaryDecodable {
         if version >= "2.1" {
             let soundCount = try decoder.decode(Int32.self)
             for _ in 0..<soundCount {
-                let sound = try decoder.decodeString(40)
+                let sound = try decoder.decode(String.self, lengthOfBytes: 40)
                 sounds.append(sound)
             }
 

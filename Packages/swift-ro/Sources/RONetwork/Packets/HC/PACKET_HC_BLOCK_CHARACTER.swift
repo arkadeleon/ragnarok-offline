@@ -41,7 +41,7 @@ extension PACKET_HC_BLOCK_CHARACTER {
 
         public init(from decoder: BinaryDecoder) throws {
             charID = try decoder.decode(UInt32.self)
-            szExpireDate = try decoder.decodeString(20)
+            szExpireDate = try decoder.decode(String.self, lengthOfBytes: 20)
         }
     }
 }
