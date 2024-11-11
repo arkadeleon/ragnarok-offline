@@ -944,6 +944,21 @@ public enum StatusChangeID: Int, CaseIterable, Sendable {
     case bath_foam_a = 954
     case bath_foam_b = 955
     case bath_foam_c = 956
+    case buchedenoel = 957
+    case ep16_def = 958
+    case str_scroll = 959
+    case int_scroll = 960
+    case contents_1 = 961
+    case contents_2 = 962
+    case contents_3 = 963
+    case contents_4 = 964
+    case contents_5 = 965
+    case contents_6 = 966
+    case contents_7 = 967
+    case contents_8 = 968
+    case contents_9 = 969
+    case contents_10 = 970
+    case mystery_powder = 971
 }
 
 extension StatusChangeID: CodingKey {
@@ -1886,6 +1901,21 @@ extension StatusChangeID: CodingKey {
         case .bath_foam_a: "BATH_FOAM_A"
         case .bath_foam_b: "BATH_FOAM_B"
         case .bath_foam_c: "BATH_FOAM_C"
+        case .buchedenoel: "BUCHEDENOEL"
+        case .ep16_def: "EP16_DEF"
+        case .str_scroll: "STR_SCROLL"
+        case .int_scroll: "INT_SCROLL"
+        case .contents_1: "CONTENTS_1"
+        case .contents_2: "CONTENTS_2"
+        case .contents_3: "CONTENTS_3"
+        case .contents_4: "CONTENTS_4"
+        case .contents_5: "CONTENTS_5"
+        case .contents_6: "CONTENTS_6"
+        case .contents_7: "CONTENTS_7"
+        case .contents_8: "CONTENTS_8"
+        case .contents_9: "CONTENTS_9"
+        case .contents_10: "CONTENTS_10"
+        case .mystery_powder: "MYSTERY_POWDER"
         }
     }
 
@@ -2828,6 +2858,21 @@ extension StatusChangeID: CodingKey {
         case "BATH_FOAM_A": self = .bath_foam_a
         case "BATH_FOAM_B": self = .bath_foam_b
         case "BATH_FOAM_C": self = .bath_foam_c
+        case "BUCHEDENOEL": self = .buchedenoel
+        case "EP16_DEF": self = .ep16_def
+        case "STR_SCROLL": self = .str_scroll
+        case "INT_SCROLL": self = .int_scroll
+        case "CONTENTS_1": self = .contents_1
+        case "CONTENTS_2": self = .contents_2
+        case "CONTENTS_3": self = .contents_3
+        case "CONTENTS_4": self = .contents_4
+        case "CONTENTS_5": self = .contents_5
+        case "CONTENTS_6": self = .contents_6
+        case "CONTENTS_7": self = .contents_7
+        case "CONTENTS_8": self = .contents_8
+        case "CONTENTS_9": self = .contents_9
+        case "CONTENTS_10": self = .contents_10
+        case "MYSTERY_POWDER": self = .mystery_powder
         default: return nil
         }
     }

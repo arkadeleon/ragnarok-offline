@@ -18,13 +18,13 @@ final class MapDatabaseTests: XCTestCase {
         let database = MapDatabase.prerenewal
 
         let maps = try await database.maps()
-        XCTAssertEqual(maps.count, 1245)
+        XCTAssertEqual(maps.count, 1247)
     }
 
     func testRenewal() async throws {
         let database = MapDatabase.renewal
 
         let maps = try await database.maps()
-        XCTAssertEqual(maps.count, 1245)
+        XCTAssertEqual(maps.count, 1247)
     }
 }

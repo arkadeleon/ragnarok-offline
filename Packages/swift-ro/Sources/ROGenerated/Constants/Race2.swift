@@ -43,6 +43,8 @@ public enum Race2: Int, CaseIterable, Sendable {
     case illusion_luanda = 34
     case illusion_frozen = 35
     case illusion_moonlight = 36
+    case ep16_def = 37
+    case edda_arunafeltz = 38
 }
 
 extension Race2: CodingKey {
@@ -84,6 +86,8 @@ extension Race2: CodingKey {
         case .illusion_luanda: "ILLUSION_LUANDA"
         case .illusion_frozen: "ILLUSION_FROZEN"
         case .illusion_moonlight: "ILLUSION_MOONLIGHT"
+        case .ep16_def: "EP16_DEF"
+        case .edda_arunafeltz: "EDDA_ARUNAFELTZ"
         }
     }
 
@@ -125,6 +129,8 @@ extension Race2: CodingKey {
         case "ILLUSION_LUANDA": self = .illusion_luanda
         case "ILLUSION_FROZEN": self = .illusion_frozen
         case "ILLUSION_MOONLIGHT": self = .illusion_moonlight
+        case "EP16_DEF": self = .ep16_def
+        case "EDDA_ARUNAFELTZ": self = .edda_arunafeltz
         default: return nil
         }
     }

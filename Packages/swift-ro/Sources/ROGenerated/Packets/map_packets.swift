@@ -368,6 +368,14 @@ public let HEADER_ZC_HO_PAR_CHANGE = 0xba5
 public let HEADER_ZC_EL_PAR_CHANGE = 0x81e
 public let HEADER_ZC_NOTIFY_ACT = 0x8c8
 public let HEADER_CZ_REQUEST_MOVENPC = 0x232
+public let HEADER_ZC_NPCSPRITE_CHANGE = 0x1b0
+public let HEADER_ZC_MEMBER_NEWENTRY = 0xdc
+public let HEADER_ZC_MEMBER_EXIT = 0xdd
+public let HEADER_CZ_MOVETO_MAP = 0x140
+public let HEADER_CZ_BROADCAST = 0x99
+public let HEADER_CZ_REQ_WEAR_EQUIP = 0x998
+public let HEADER_CZ_ACK_SELECT_DEALTYPE = 0xc5
+public let HEADER_CZ_CREATE_CHATROOM = 0xd5
 public let HEADER_ZC_NOTIFY_CHAT = 0x8d
 public let HEADER_ZC_ITEM_ENTRY = 0x9d
 public let HEADER_ZC_MVP_GETTING_ITEM = 0x10a
@@ -400,6 +408,7 @@ public let HEADER_CZ_REQ_STYLE_CHANGE = 0xa46
 public let HEADER_ZC_STYLE_CHANGE_RES = 0xa47
 public let HEADER_ZC_GROUP_ISALIVE = 0xab2
 public let HEADER_CZ_REQ_STYLE_CHANGE2 = 0xafc
+public let HEADER_ZC_GUILD_POSITION = 0xafd
 public let HEADER_ZC_REMOVE_EFFECT = 0xb0d
 public let HEADER_ZC_FEED_MER = 0x22f
 public let HEADER_ZC_FEED_PET = 0x1a3
@@ -5933,7 +5942,7 @@ public struct PACKET_ZC_PAR_CHANGE_USER: Sendable {
     public var packetType: Int16
     public var gid: UInt32
     public var type: Int16
-    public var value: UInt16
+    public var value: UInt32
     public init() {
         packetType = .init()
         gid = .init()
@@ -6542,6 +6551,106 @@ public struct PACKET_CZ_REQUEST_MOVENPC: Sendable {
     public init() {
         packetType = .init()
         GID = .init()
+    }
+}
+
+public struct PACKET_ZC_NPCSPRITE_CHANGE: Sendable {
+    public var packetType: Int16
+    public var GID: UInt32
+    public var type: UInt8
+    public var class_: UInt32
+    public init() {
+        packetType = .init()
+        GID = .init()
+        type = .init()
+        class_ = .init()
+    }
+}
+
+public struct PACKET_ZC_MEMBER_NEWENTRY: Sendable {
+    public var packetType: Int16
+    public var count: UInt16
+    @FixedSizeArray(size: 24, initialValue: .init())
+    public var name: [Int8]
+    public init() {
+        packetType = .init()
+        count = .init()
+    }
+}
+
+public struct PACKET_ZC_MEMBER_EXIT: Sendable {
+    public var packetType: Int16
+    public var count: UInt16
+    @FixedSizeArray(size: 24, initialValue: .init())
+    public var name: [Int8]
+    public var kicked: UInt8
+    public init() {
+        packetType = .init()
+        count = .init()
+        kicked = .init()
+    }
+}
+
+public struct PACKET_CZ_MOVETO_MAP: Sendable {
+    public var packetType: Int16
+    @FixedSizeArray(size: 16, initialValue: .init())
+    public var map: [Int8]
+    public var x: UInt16
+    public var y: UInt16
+    public init() {
+        packetType = .init()
+        x = .init()
+        y = .init()
+    }
+}
+
+public struct PACKET_CZ_BROADCAST: Sendable {
+    public var packetType: Int16
+    public var packetSize: UInt16
+    public var message: [Int8]
+    public init() {
+        packetType = .init()
+        packetSize = .init()
+        message = .init()
+    }
+}
+
+public struct PACKET_CZ_REQ_WEAR_EQUIP: Sendable {
+    public var packetType: Int16
+    public var index: UInt16
+    public var position: UInt32
+    public init() {
+        packetType = .init()
+        index = .init()
+        position = .init()
+    }
+}
+
+public struct PACKET_CZ_ACK_SELECT_DEALTYPE: Sendable {
+    public var packetType: Int16
+    public var GID: UInt32
+    public var type: UInt8
+    public init() {
+        packetType = .init()
+        GID = .init()
+        type = .init()
+    }
+}
+
+public struct PACKET_CZ_CREATE_CHATROOM: Sendable {
+    public var packetType: Int16
+    public var packetSize: UInt16
+    public var limit: UInt16
+    public var type: UInt8
+    @FixedSizeArray(size: 8, initialValue: .init())
+    public var password: [Int8]
+    public var title: [Int8]
+    public init() {
+        packetType = .init()
+        packetSize = .init()
+        limit = .init()
+        type = .init()
+        title = .init()
     }
 }
 
