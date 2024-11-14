@@ -8,20 +8,21 @@
 import Combine
 import Foundation
 import Observation
-import rAthenaCommon
+import ROServer
+import SwiftUI
 
 @Observable 
 class ObservableServer {
-    private let server: Server
+    private let server: ServerWrapper
 
     let name: String
-    var status: ServerStatus
+    var status: ServerWrapper.Status
     var messages: [AttributedString]
 
     @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
 
-    init(server: Server) {
+    init(server: ServerWrapper) {
         self.server = server
 
         name = server.name
@@ -65,29 +66,9 @@ class ObservableServer {
     }
 }
 
-extension Server {
-    public var statusPublisher: AnyPublisher<ServerStatus, Never> {
-        publisher(for: \.status)
-            .eraseToAnyPublisher()
-    }
-
-    public var outputDataPublisher: AnyPublisher<Data, Never> {
-        NotificationCenter.default.publisher(for: .ServerDidOutputData, object: self)
-            .map { $0.userInfo![ServerOutputDataKey] as! Data }
-            .eraseToAnyPublisher()
-    }
-}
-
-extension ServerStatus: CustomLocalizedStringResourceConvertible {
-    public var localizedStringResource: LocalizedStringResource {
-        switch self {
-        case .notStarted: "NOT STARTED"
-        case .starting: "STARTING"
-        case .running: "RUNNING"
-        case .stopping: "STOPPING"
-        case .stopped: "STOPPED"
-        @unknown default:
-            fatalError()
-        }
-    }
+extension EnvironmentValues {
+    @Entry var loginServer = ObservableServer(server: .login)
+    @Entry var charServer = ObservableServer(server: .char)
+    @Entry var mapServer = ObservableServer(server: .map)
+    @Entry var webServer = ObservableServer(server: .web)
 }

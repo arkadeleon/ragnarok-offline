@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/7/24.
 //
 
-import rAthenaLogin
+import ROServer
 import SwiftUI
 
 struct ServerCell: View {
@@ -22,6 +22,6 @@ struct ServerCell: View {
 }
 
 #Preview {
-    let server = ObservableServer(server: LoginServer.shared)
+    let server = ObservableServer(server: .login)
     return ServerCell(server: server)
 }

@@ -404,9 +404,6 @@
     "No Status Changes" : {
 
     },
-    "NOT STARTED" : {
-
-    },
     "Paste" : {
 
     },
@@ -435,9 +432,6 @@
 
     },
     "Retaliate Rate" : {
-
-    },
-    "RUNNING" : {
 
     },
     "Script" : {
@@ -494,19 +488,10 @@
     "Start All Servers" : {
 
     },
-    "STARTING" : {
-
-    },
     "Status" : {
 
     },
     "Status Change Database" : {
-
-    },
-    "STOPPED" : {
-
-    },
-    "STOPPING" : {
 
     },
     "Str" : {

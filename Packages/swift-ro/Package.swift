@@ -40,12 +40,15 @@ let package = Package(
             name: "RORenderers",
             targets: ["RORenderers"]),
         .library(
+            name: "ROServer",
+            targets: ["ROServer"]),
+        .library(
             name: "ROShaders",
             targets: ["ROShaders"]),
     ],
     dependencies: [
-        .package(path: "../swift-lua"),
-        .package(path: "../swift-rathena"),
+        .package(path: "../../swift-lua"),
+        .package(path: "../../swift-rathena"),
         .package(url: "https://github.com/mw99/DataCompression.git", from: "3.8.0"),
     ],
     targets: [
@@ -165,6 +168,14 @@ let package = Package(
                 "ROCore",
                 "ROFileFormats",
                 "ROShaders",
+            ]),
+        .target(
+            name: "ROServer",
+            dependencies: [
+                .product(name: "rAthenaLogin", package: "swift-rathena"),
+                .product(name: "rAthenaChar", package: "swift-rathena"),
+                .product(name: "rAthenaMap", package: "swift-rathena"),
+                .product(name: "rAthenaWeb", package: "swift-rathena"),
             ]),
         .target(
             name: "ROShaders",

@@ -1,0 +1,21 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NOT STARTED" : {
+
+    },
+    "RUNNING" : {
+
+    },
+    "STARTING" : {
+
+    },
+    "STOPPED" : {
+
+    },
+    "STOPPING" : {
+
+    }
+  },
+  "version" : "1.0"
+}
