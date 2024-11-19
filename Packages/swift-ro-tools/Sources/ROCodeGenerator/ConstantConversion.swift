@@ -98,6 +98,14 @@ let allConstantConversions: [ConstantConversion] = [
         outputFormat: .hex,
         extensions: [.rawRepresentable, .decodable]
     ),
+    // MARK: - map/clif.hpp
+    .cEnum(
+        source: "map/clif.hpp",
+        type: "e_damage_type",
+        prefix: "DMG_",
+        outputType: "DamageType",
+        extensions: [.decodable]
+    ),
     // MARK: - map/itemdb.hpp
     .optionSet(
         source: "map/itemdb.hpp",

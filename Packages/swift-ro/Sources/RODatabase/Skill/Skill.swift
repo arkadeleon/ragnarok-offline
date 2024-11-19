@@ -37,7 +37,7 @@ public struct Skill: Decodable, Equatable, Hashable, Identifiable, Sendable {
     public var range: EitherNode<Int, [Int]>
 
     /// Skill hit type. (Default: Normal)
-    public var hitType: SkillHitType
+    public var hit: DamageType
 
     /// Skill hit count. (Default: 0)
     public var hitCount: EitherNode<Int, [Int]>
@@ -115,7 +115,7 @@ public struct Skill: Decodable, Equatable, Hashable, Identifiable, Sendable {
         case damageFlags = "DamageFlags"
         case flags = "Flags"
         case range = "Range"
-        case hitType = "Hit"
+        case hit = "Hit"
         case hitCount = "HitCount"
         case element = "Element"
         case splashArea = "SplashArea"
@@ -151,7 +151,7 @@ public struct Skill: Decodable, Equatable, Hashable, Identifiable, Sendable {
         self.damageFlags = try container.decodeIfPresent([SkillDamageFlag : Bool].self, forKey: .damageFlags)?.unorderedKeys ?? []
         self.flags = try container.decodeIfPresent([SkillInfoFlag2 : Bool].self, forKey: .flags)?.unorderedKeys ?? []
         self.range = try container.decodeIfPresent(EitherNode<Int, [LevelRange]>.self, forKey: .range)?.mapRight { $0.map { $0.range } } ?? .left(0)
-        self.hitType = try container.decodeIfPresent(SkillHitType.self, forKey: .hitType) ?? .normal
+        self.hit = try container.decodeIfPresent(DamageType.self, forKey: .hit) ?? .normal
         self.hitCount = try container.decodeIfPresent(EitherNode<Int, [LevelHitCount]>.self, forKey: .hitCount)?.mapRight { $0.map { $0.hitCount } } ?? .left(0)
         self.element = try container.decodeIfPresent(EitherNode<Element, [LevelElement]>.self, forKey: .element)?.mapRight { $0.map { $0.element } } ?? .left(.neutral)
         self.splashArea = try container.decodeIfPresent(EitherNode<Int, [LevelSplashArea]>.self, forKey: .splashArea)?.mapRight { $0.map { $0.splashArea } } ?? .left(0)

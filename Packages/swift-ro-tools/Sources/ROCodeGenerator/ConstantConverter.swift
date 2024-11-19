@@ -83,7 +83,7 @@ class ConstantConverter {
             let digits = try Regex("[0-9]+")
             if outputName.starts(with: digits) {
                 outputName = "_" + outputName
-            } else if outputName == "class" || outputName == "self" {
+            } else if outputName == "class" || outputName == "repeat" || outputName == "self" {
                 outputName = "_" + outputName
             }
 
