@@ -57,6 +57,9 @@ public struct StatusChange: Decodable, Equatable, Hashable, Identifiable, Sendab
     /// List of Status Changes that will end when the status becomes inactive. (Optional)
     public var endOnEnd: Set<StatusChangeID>?
 
+    /// Script to execute, when starting the status change. (Optional)
+    public var script: String?
+
     public var id: StatusChangeID {
         status
     }
@@ -78,6 +81,7 @@ public struct StatusChange: Decodable, Equatable, Hashable, Identifiable, Sendab
         case endOnStart = "EndOnStart"
         case endReturn = "EndReturn"
         case endOnEnd = "EndOnEnd"
+        case script = "Script"
     }
 
     public init(from decoder: any Decoder) throws {
@@ -98,5 +102,6 @@ public struct StatusChange: Decodable, Equatable, Hashable, Identifiable, Sendab
         self.endOnStart = try container.decodeIfPresent([StatusChangeID : Bool].self, forKey: .endOnStart)?.unorderedKeys
         self.endReturn = try container.decodeIfPresent([StatusChangeID : Bool].self, forKey: .endReturn)?.unorderedKeys
         self.endOnEnd = try container.decodeIfPresent([StatusChangeID : Bool].self, forKey: .endOnEnd)?.unorderedKeys
+        self.script = try container.decodeIfPresent(String.self, forKey: .script)
     }
 }

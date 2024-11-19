@@ -66,6 +66,13 @@ struct StatusChangeInfoView: View {
                         }
                     }
                 }
+
+                if let script = statusChange.script {
+                    DatabaseRecordSectionView("Script") {
+                        Text(script.trimmingCharacters(in: .whitespacesAndNewlines))
+                            .monospaced()
+                    }
+                }
             }
         }
         .background(.background)
