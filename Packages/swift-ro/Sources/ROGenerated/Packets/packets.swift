@@ -274,7 +274,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     packet(0x01f2, 20)
     packet(0x01f3, 10)
     packet(0x01f6, 34)
-    parseable_packet(0x01f7, 14, "clif_parse_Adopt_reply", [2, 6, 10])
+    // parseable_packet(HEADER_CZ_JOIN_BABY, sizeof( PACKET_CZ_JOIN_BABY ), "clif_parse_Adopt_reply", [0])
     packet(0x01f8, 2)
     parseable_packet(0x01f9, 6, "clif_parse_Adopt_request", [2])
     packet(0x01fa, 48)
@@ -434,15 +434,21 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     if PACKETVER >= 20041108 {
         packet(0x0084, 2)
         packet(0x0216, 6)
-        parseable_packet(0x0217, 2, "clif_parse_Blacksmith", [0])
-        parseable_packet(0x0218, 2, "clif_parse_Alchemist", [0])
-        packet(0x0219, 282)
-        packet(0x021a, 282)
-        packet(0x021b, 10)
-        packet(0x021c, 10)
+    }
+    if PACKETVER_MAIN_NUM >= 20120503 || PACKETVER_RE_NUM >= 20120502 {
+        // parseable_packet(HEADER_CZ_REQ_RANKING, sizeof( PACKET_CZ_REQ_RANKING ), "clif_parse_ranklist", [0])
+    } else if PACKETVER >= 20041108 {
+        // parseable_packet(HEADER_CZ_BLACKSMITH_RANK, sizeof( PACKET_CZ_BLACKSMITH_RANK ), "clif_parse_ranklist_blacksmith", [0])
+        // parseable_packet(HEADER_CZ_ALCHEMIST_RANK, sizeof( PACKET_CZ_ALCHEMIST_RANK ), "clif_parse_ranklist_alchemist", [0])
+        if PACKETVER >= 20050328 {
+            // parseable_packet(HEADER_CZ_TAEKWON_RANK, sizeof( PACKET_CZ_TAEKWON_RANK ), "clif_parse_ranklist_taekwon", [0])
+        }
+        if PACKETVER >= 20050530 {
+            // parseable_packet(HEADER_CZ_KILLER_RANK, sizeof( PACKET_CZ_KILLER_RANK ), "clif_parse_ranklist_killer", [0])
+        }
     }
     if PACKETVER >= 20041115 {
-        parseable_packet(0x021d, 6, "clif_parse_LessEffect", [2])
+        // parseable_packet(HEADER_CZ_LESSEFFECT, sizeof( PACKET_CZ_LESSEFFECT ), "clif_parse_LessEffect", [0])
     }
     if PACKETVER >= 20041129 {
         parseable_packet(0x0072, 22, "clif_parse_UseSkillToId", [8, 12, 18])
@@ -493,11 +499,6 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         parseable_packet(0x0190, 20, "clif_parse_ActionRequest", [9, 19])
         parseable_packet(0x0193, 2, "clif_parse_CloseKafra", [0])
     }
-    if PACKETVER >= 20050328 {
-        packet(0x0224, 10)
-        parseable_packet(0x0225, 2, "clif_parse_Taekwon", [0])
-        packet(0x0226, 282)
-    }
     if PACKETVER >= 20050404 {
         packet(0x0227, 18)
         packet(0x0228, 18)
@@ -536,16 +537,12 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     }
     if PACKETVER >= 20050530 {
         packet(0x022e, 71)
-        packet(0x0236, 10)
-        parseable_packet(0x0237, 2, "clif_parse_RankingPk", [0])
-        packet(0x0238, 282)
     }
     if PACKETVER >= 20050531 {
         packet(0x0216, 2)
     }
     if PACKETVER >= 20050608 {
         packet(0x0216, 6)
-        parseable_packet(0x0217, 2, "clif_parse_Blacksmith", [0])
         packet(0x022f, 5)
         parseable_packet(0x0231, 26, "clif_parse_ChangeHomunculusName", [2])
         packet(0x023a, 4)
@@ -608,7 +605,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         parseable_packet(0x024c, 8, "clif_parse_Auction_setitem", [2, 4])
         packet(0x024d, 14)
         parseable_packet(0x024e, 6, "clif_parse_Auction_cancel", [2])
-        parseable_packet(0x024f, 10, "clif_parse_Auction_bid", [2, 6])
+        // parseable_packet(HEADER_CZ_AUCTION_BUY, sizeof( PACKET_CZ_AUCTION_BUY ), "clif_parse_Auction_bid", [0])
         packet(0x0250, 3)
         packet(0x0251, 2)
         packet(0x0252, -1)
@@ -674,7 +671,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     }
     if PACKETVER >= 20051107 {
         parseable_packet(0x024e, 6, "clif_parse_Auction_cancel", [2])
-        parseable_packet(0x0251, 34, "clif_parse_Auction_search", [2, 4, 8, 32])
+        // parseable_packet(HEADER_CZ_AUCTION_ITEM_SEARCH, sizeof( PACKET_CZ_AUCTION_ITEM_SEARCH ), "clif_parse_Auction_search", [0])
     }
     if PACKETVER >= 20060109 {
         packet(0x0261, 11)
@@ -827,7 +824,6 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x02b3, 107)
         packet(0x02b4, 6)
         packet(0x02b5, -1)
-        parseable_packet(0x02b6, 7, "clif_parse_questStateAck", [2, 6])
         packet(0x02b7, 7)
         // packet(HEADER_ZC_ITEM_PICKUP_PARTY, sizeof( struct PACKET_ZC_ITEM_PICKUP_PARTY ))
         packet(0x02b9, 191)
@@ -858,6 +854,9 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x02de, 6)
         packet(0x02df, 36)
         packet(0x02e0, 34)
+    }
+    if PACKETVER >= 20070622 {
+        // parseable_packet(HEADER_CZ_ACTIVE_QUEST, sizeof( PACKET_CZ_ACTIVE_QUEST ), "clif_parse_questStateAck", [0])
     }
     if PACKETVER >= 20071023 {
         packet(0x02cb, 65)
@@ -1477,13 +1476,6 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x08ff, 24)
         packet(0x0984, 28)
         packet(0x099f, 22)
-    }
-    if PACKETVER >= 20130605 {
-        parseable_packet(0x097C, 4, "clif_parse_ranklist", [2])
-    }
-    if PACKETVER >= 20130710 {
-        packet(0x097D, 288)
-        packet(0x097E, 12)
     }
     if PACKETVER >= 20130717 {
         // parseable_packet(HEADER_CZ_REQ_BANKING_DEPOSIT, sizeof( PACKET_CZ_REQ_BANKING_DEPOSIT ), "clif_parse_BankDeposit", [0])

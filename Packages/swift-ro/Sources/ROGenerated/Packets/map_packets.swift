@@ -97,7 +97,6 @@ public let HEADER_ZC_REFINING_MATERIAL_LIST = 0xaa2
 public let HEADER_CZ_REQ_REFINING = 0xaa3
 public let HEADER_CZ_CLOSE_REFINING_UI = 0xaa4
 public let HEADER_ZC_BROADCAST_ITEMREFINING_RESULT = 0xada
-public let HEADER_ZC_ACK_RANKING = 0xaf6
 public let HEADER_ZC_STATUS_CHANGE_ACK = 0xbc
 public let HEADER_ZC_EQUIPMENT_EFFECT = 0xa3b
 public let HEADER_ZC_ADD_SKILL = 0xb31
@@ -376,6 +375,27 @@ public let HEADER_CZ_BROADCAST = 0x99
 public let HEADER_CZ_REQ_WEAR_EQUIP = 0x998
 public let HEADER_CZ_ACK_SELECT_DEALTYPE = 0xc5
 public let HEADER_CZ_CREATE_CHATROOM = 0xd5
+public let HEADER_CZ_BLACKSMITH_RANK = 0x217
+public let HEADER_CZ_ALCHEMIST_RANK = 0x218
+public let HEADER_ZC_BLACKSMITH_RANK = 0x219
+public let HEADER_ZC_ALCHEMIST_RANK = 0x21a
+public let HEADER_ZC_BLACKSMITH_POINT = 0x21b
+public let HEADER_ZC_ALCHEMIST_POINT = 0x21c
+public let HEADER_ZC_TAEKWON_POINT = 0x224
+public let HEADER_CZ_TAEKWON_RANK = 0x225
+public let HEADER_ZC_TAEKWON_RANK = 0x226
+public let HEADER_ZC_KILLER_POINT = 0x236
+public let HEADER_CZ_KILLER_RANK = 0x237
+public let HEADER_ZC_KILLER_RANK = 0x238
+public let HEADER_CZ_REQ_RANKING = 0x97c
+public let HEADER_ZC_ACK_RANKING = 0x97d
+public let HEADER_ZC_UPDATE_RANKING_POINT = 0x97e
+public let HEADER_ZC_ACK_RANKING2 = 0xaf6
+public let HEADER_CZ_LESSEFFECT = 0x21d
+public let HEADER_CZ_ACTIVE_QUEST = 0x2b6
+public let HEADER_CZ_JOIN_BABY = 0x1f7
+public let HEADER_CZ_AUCTION_ITEM_SEARCH = 0x251
+public let HEADER_CZ_AUCTION_BUY = 0x24f
 public let HEADER_ZC_NOTIFY_CHAT = 0x8d
 public let HEADER_ZC_ITEM_ENTRY = 0x9d
 public let HEADER_ZC_MVP_GETTING_ITEM = 0x10a
@@ -2985,44 +3005,6 @@ public struct PACKET_ZC_BROADCAST_ITEMREFINING_RESULT: Sendable {
         itemId = .init()
         refine_level = .init()
         status = .init()
-    }
-}
-
-public struct PACKET_ZC_ACK_RANKING_name: Sendable {
-    @FixedSizeArray(size: 24, initialValue: .init())
-    public var name: [Int8]
-    public init() {
-    }
-}
-
-public struct PACKET_ZC_ACK_RANKING_points: Sendable {
-    public var points: UInt32
-    public init() {
-        points = .init()
-    }
-}
-
-public struct PACKET_ZC_ACK_RANKING_sub: Sendable {
-    @FixedSizeArray(size: 24, initialValue: .init())
-    public var name: [Int8]
-    public var points: UInt32
-    public init() {
-        points = .init()
-    }
-}
-
-public struct PACKET_ZC_ACK_RANKING: Sendable {
-    public var packetType: Int16
-    public var rankType: Int16
-    @FixedSizeArray(size: 10, initialValue: .init())
-    public var chars: [UInt32]
-    @FixedSizeArray(size: 10, initialValue: .init())
-    public var points: [UInt32]
-    public var myPoints: UInt32
-    public init() {
-        packetType = .init()
-        rankType = .init()
-        myPoints = .init()
     }
 }
 
@@ -6654,6 +6636,232 @@ public struct PACKET_CZ_CREATE_CHATROOM: Sendable {
     }
 }
 
+public struct PACKET_CZ_BLACKSMITH_RANK: Sendable {
+    public var packetType: Int16
+    public init() {
+        packetType = .init()
+    }
+}
+
+public struct PACKET_CZ_ALCHEMIST_RANK: Sendable {
+    public var packetType: Int16
+    public init() {
+        packetType = .init()
+    }
+}
+
+public struct PACKET_ZC_BLACKSMITH_RANK: Sendable {
+    public var packetType: Int16
+    public var list: RANKLIST
+    public init() {
+        packetType = .init()
+        list = .init()
+    }
+}
+
+public struct PACKET_ZC_ALCHEMIST_RANK: Sendable {
+    public var packetType: Int16
+    public var list: RANKLIST
+    public init() {
+        packetType = .init()
+        list = .init()
+    }
+}
+
+public struct PACKET_ZC_BLACKSMITH_POINT: Sendable {
+    public var packetType: Int16
+    public var points: UInt32
+    public var points_total: UInt32
+    public init() {
+        packetType = .init()
+        points = .init()
+        points_total = .init()
+    }
+}
+
+public struct PACKET_ZC_ALCHEMIST_POINT: Sendable {
+    public var packetType: Int16
+    public var points: UInt32
+    public var points_total: UInt32
+    public init() {
+        packetType = .init()
+        points = .init()
+        points_total = .init()
+    }
+}
+
+public struct PACKET_ZC_TAEKWON_POINT: Sendable {
+    public var packetType: Int16
+    public var points: UInt32
+    public var points_total: UInt32
+    public init() {
+        packetType = .init()
+        points = .init()
+        points_total = .init()
+    }
+}
+
+public struct PACKET_CZ_TAEKWON_RANK: Sendable {
+    public var packetType: Int16
+    public init() {
+        packetType = .init()
+    }
+}
+
+public struct PACKET_ZC_TAEKWON_RANK: Sendable {
+    public var packetType: Int16
+    public var list: RANKLIST
+    public init() {
+        packetType = .init()
+        list = .init()
+    }
+}
+
+public struct PACKET_ZC_KILLER_POINT: Sendable {
+    public var packetType: Int16
+    public var points: UInt32
+    public var points_total: UInt32
+    public init() {
+        packetType = .init()
+        points = .init()
+        points_total = .init()
+    }
+}
+
+public struct PACKET_CZ_KILLER_RANK: Sendable {
+    public var packetType: Int16
+    public init() {
+        packetType = .init()
+    }
+}
+
+public struct PACKET_ZC_KILLER_RANK: Sendable {
+    public var packetType: Int16
+    public var list: RANKLIST
+    public init() {
+        packetType = .init()
+        list = .init()
+    }
+}
+
+public struct PACKET_CZ_REQ_RANKING: Sendable {
+    public var packetType: Int16
+    public var type: UInt16
+    public init() {
+        packetType = .init()
+        type = .init()
+    }
+}
+
+public struct PACKET_ZC_ACK_RANKING_sub: Sendable {
+    @FixedSizeArray(size: 24, initialValue: .init())
+    public var name: [Int8]
+    public var points: UInt32
+    public init() {
+        points = .init()
+    }
+}
+
+public struct PACKET_ZC_ACK_RANKING: Sendable {
+    public var packetType: Int16
+    public var type: UInt16
+    public var list: RANKLIST
+    public var mypoints: UInt32
+    public init() {
+        packetType = .init()
+        type = .init()
+        list = .init()
+        mypoints = .init()
+    }
+}
+
+public struct PACKET_ZC_UPDATE_RANKING_POINT: Sendable {
+    public var packetType: Int16
+    public var type: UInt16
+    public var points: UInt32
+    public var points_total: UInt32
+    public init() {
+        packetType = .init()
+        type = .init()
+        points = .init()
+        points_total = .init()
+    }
+}
+
+public struct PACKET_ZC_ACK_RANKING2: Sendable {
+    public var packetType: Int16
+    public var type: UInt16
+    @FixedSizeArray(size: 10, initialValue: .init())
+    public var CIDs: [UInt32]
+    @FixedSizeArray(size: 10, initialValue: .init())
+    public var points: [UInt32]
+    public var mypoints: UInt32
+    public init() {
+        packetType = .init()
+        type = .init()
+        mypoints = .init()
+    }
+}
+
+public struct PACKET_CZ_LESSEFFECT: Sendable {
+    public var packetType: Int16
+    public var state: Int32
+    public init() {
+        packetType = .init()
+        state = .init()
+    }
+}
+
+public struct PACKET_CZ_ACTIVE_QUEST: Sendable {
+    public var packetType: Int16
+    public var quest_id: UInt32
+    public var active: UInt8
+    public init() {
+        packetType = .init()
+        quest_id = .init()
+        active = .init()
+    }
+}
+
+public struct PACKET_CZ_JOIN_BABY: Sendable {
+    public var packetType: Int16
+    public var father_AID: UInt32
+    public var mother_AID: UInt32
+    public var accepted: UInt32
+    public init() {
+        packetType = .init()
+        father_AID = .init()
+        mother_AID = .init()
+        accepted = .init()
+    }
+}
+
+public struct PACKET_CZ_AUCTION_ITEM_SEARCH: Sendable {
+    public var packetType: Int16
+    public var type: UInt16
+    public var auction_id: UInt32
+    @FixedSizeArray(size: 24, initialValue: .init())
+    public var text: [Int8]
+    public var page: UInt16
+    public init() {
+        packetType = .init()
+        type = .init()
+        auction_id = .init()
+        page = .init()
+    }
+}
+
+public struct PACKET_CZ_AUCTION_BUY: Sendable {
+    public var packetType: Int16
+    public var auction_id: UInt32
+    public var money: UInt32
+    public init() {
+        packetType = .init()
+        auction_id = .init()
+        money = .init()
+    }
+}
+
 public struct EQUIPSLOTINFO: Sendable {
     @FixedSizeArray(size: 4, initialValue: .init())
     public var card: [UInt32]
@@ -6864,5 +7072,14 @@ public struct CZ_PURCHASE_ITEM_FROMMC: Sendable {
     public init() {
         count = .init()
         index = .init()
+    }
+}
+
+public struct RANKLIST: Sendable {
+    @FixedSizeArray(size: 10, initialValue: .init())
+    public var names: [Int8]
+    @FixedSizeArray(size: 10, initialValue: .init())
+    public var points: [UInt32]
+    public init() {
     }
 }
