@@ -127,6 +127,10 @@ let allConstantConversions: [ConstantConversion] = [
             "MAPID_ALL",
         ],
         compatible: [
+            "MAPID_STAR_GLADIATOR": ["MAPID_STARGLADIATOR"],
+            "MAPID_DEATH_KNIGHT": ["MAPID_DEATHKNIGHT"],
+            "MAPID_SOUL_LINKER": ["MAPID_SOULLINKER"],
+            "MAPID_DARK_COLLECTOR": ["MAPID_DARKCOLLECTOR"],
             "MAPID_SUPER_NOVICE": ["MAPID_SUPERNOVICE"],
         ],
         outputType: "EAJobID",
