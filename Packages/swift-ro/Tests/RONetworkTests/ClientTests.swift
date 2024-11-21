@@ -235,5 +235,7 @@ final class ClientTests: XCTestCase {
         mapClient.requestMove(x: 10, y: 26)
 
         await fulfillment(of: [requestMoveExpectation])
+
+        sleep(1)
     }
 }

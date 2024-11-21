@@ -143,15 +143,14 @@ struct GeneratePacketsCommand: ParsableCommand {
     // MARK: - Generate Packet Structures
 
     func generatePacketStructures() throws {
-        try generatePacketStructure(path: "common/packets.hpp", outputName: "common_packets")
-        try generatePacketStructure(path: "char/packets.hpp", outputName: "char_packets")
-        try generatePacketStructure(path: "map/packets.hpp", outputName: "map_packets")
-    }
-
-    func generatePacketStructure(path: String, outputName: String) throws {
         let dumper = ASTDumper(rathenaDirectory: rathenaDirectory)
-        let ast = try dumper.dump(path: path)
+        let asts = try [
+            dumper.dump(path: "common/packets.hpp"),
+            dumper.dump(path: "char/packets.hpp"),
+            dumper.dump(path: "map/packets.hpp"),
+        ]
 
+        let outputName = "PacketStructures"
         var output = """
         //
         //  \(outputName).swift
@@ -164,53 +163,71 @@ struct GeneratePacketsCommand: ParsableCommand {
         
         """
 
-        let headerNodes = ast.findNodes { node in
-            node.kind == "VarDecl" && node.name?.hasPrefix("HEADER_") == true
+        var headers: [ASTNode] = []
+        for ast in asts {
+            let nodes = ast.findNodes {
+                $0.kind == "VarDecl" && $0.name != nil && $0.name!.hasPrefix("HEADER_")
+            }
+
+            for node in nodes {
+                if !headers.contains(where: { $0.name! == node.name! }) {
+                    headers.append(node)
+                }
+            }
         }
-        for node in headerNodes {
-            let name = node.name!
-            let value = node.findNode(where: { $0.kind == "IntegerLiteral" })!.value!.intValue!
+        for header in headers {
+            let value = header.findNode(where: { $0.kind == "IntegerLiteral" })!.value!.intValue!
             output.append("\n")
-            output.append("public let " + name + " = 0x" + String(value, radix: 16))
+            output.append("public let " + header.name! + " = 0x" + String(value, radix: 16))
         }
         output.append("\n")
 
-        var structNodes = ast.findNodes { node in
-            guard node.kind == "CXXRecordDecl" else { return false }
-            guard let name = node.name, name.hasPrefix("PACKET_") else { return false }
-            guard node.inner != nil else { return false }
-            return true
-        }
-        var referencedStructNodes: [ASTNode] = []
-        for node in structNodes {
-            let fields = node.findNodes { node in
-                node.kind == "FieldDecl"
+        var structures: [ASTNode] = []
+        var referencedStructures: [ASTNode] = []
+        for ast in asts {
+            let nodes = ast.findNodes { node in
+                guard node.kind == "CXXRecordDecl" else { return false }
+                guard let name = node.name, name.hasPrefix("PACKET_") else { return false }
+                guard node.inner != nil else { return false }
+                return true
             }
-            for field in fields {
-                let structure = switch field.type!.asSwiftType! {
-                case .structure(let structure):
-                    structure
-                case .structureArray(let structure):
-                    structure
-                case .fixedSizeStructureArray(let structure, _):
-                    structure
-                }
-                if case .custom(let name) = structure {
-                    print(name)
-                    guard let node = ast.findNode(where: { $0.kind == "CXXRecordDecl" && $0.name == name && $0.inner != nil }) else {
-                        continue
-                    }
-                    if !referencedStructNodes.contains(where: { $0.name == node.name }) &&
-                        !structNodes.contains(where: { $0.name == node.name }) {
-                        referencedStructNodes.append(node)
-                    }
-                }
-            }
-        }
-        structNodes += referencedStructNodes
 
-        for node in structNodes {
-            let fields = node.findNodes { node in
+            for node in nodes {
+                if structures.contains(where: { $0.name! == node.name! }) {
+                    continue
+                }
+
+                structures.append(node)
+
+                let fields = node.findNodes { node in
+                    node.kind == "FieldDecl"
+                }
+                for field in fields {
+                    let type = field.type!.asSwiftType!
+                    let structure = switch type {
+                    case .structure(let structure):
+                        structure
+                    case .structureArray(let structure):
+                        structure
+                    case .fixedSizeStructureArray(let structure, _):
+                        structure
+                    }
+                    if case .custom(let name) = structure {
+                        print(name)
+                        guard let node = ast.findNode(where: { $0.kind == "CXXRecordDecl" && $0.name == name && $0.inner != nil }) else {
+                            continue
+                        }
+                        if !referencedStructures.contains(where: { $0.name == node.name }) &&
+                            !structures.contains(where: { $0.name == node.name }) {
+                            referencedStructures.append(node)
+                        }
+                    }
+                }
+            }
+        }
+
+        for structure in structures + referencedStructures {
+            let fields = structure.findNodes { node in
                 node.kind == "FieldDecl"
             }
 
@@ -218,18 +235,27 @@ struct GeneratePacketsCommand: ParsableCommand {
             let inheritanceClause = InheritanceClauseSyntax {
                 InheritedTypeSyntax(type: IdentifierTypeSyntax(name: "Sendable"))
             }
-            let structDecl = try StructDeclSyntax(modifiers: modifiers, name: "\(raw: node.name!)", inheritanceClause: inheritanceClause) {
-                fields.map { node in
+            let structDecl = try StructDeclSyntax(modifiers: modifiers, name: "\(raw: structure.name!)", inheritanceClause: inheritanceClause) {
+                fields.map { field in
+                    var fieldType = field.type!.asSwiftType!
+                    if structure.name == "PACKET_ZC_POSITION_ID_NAME_INFO" && field.name == "posInfo" {
+                        fieldType = .fixedSizeStructureArray(.custom("PACKET_ZC_POSITION_ID_NAME_INFO_sub"), 20)
+                    }
+                    if structure.name == "EQUIPITEM_INFO" && field.name == "Flag" {
+                        fieldType = .structure(.standard("UInt8"))
+                    }
+
+
                     let attributes = AttributeListSyntax {
-                        for attribute in node.type!.asSwiftType!.attributes {
+                        for attribute in fieldType.attributes {
                             AttributeSyntax(stringLiteral: attribute)
                         }
                     }
                     return VariableDeclSyntax(attributes: attributes, modifiers: modifiers, bindingSpecifier: "var") {
                         PatternBindingSyntax(
-                            pattern: IdentifierPatternSyntax(identifier: "\(raw: node.name!)"),
+                            pattern: IdentifierPatternSyntax(identifier: "\(raw: field.name!)"),
                             typeAnnotation: TypeAnnotationSyntax(
-                                type: IdentifierTypeSyntax(name: "\(raw: node.type!.asSwiftType!.annotation)")
+                                type: IdentifierTypeSyntax(name: "\(raw: fieldType.annotation)")
                             )
                         )
                     }
@@ -249,6 +275,19 @@ struct GeneratePacketsCommand: ParsableCommand {
             output.append(structDecl.formatted().description)
             output.append("\n")
         }
+
+        output.append("\n")
+        output.append("""
+            public struct PACKET_ZC_POSITION_ID_NAME_INFO_sub: Sendable {
+                public var positionID: Int32
+                @FixedSizeArray(size: 24, initialValue: .init())
+                public var posName: [Int8]
+                public init() {
+                    positionID = .init()
+                }
+            }
+            """)
+        output.append("\n")
 
         let outputURL = generatedDirectory.appending(path: "\(outputName).swift")
         try output.write(to: outputURL, atomically: true, encoding: .utf8)
