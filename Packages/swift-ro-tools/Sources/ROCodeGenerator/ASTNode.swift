@@ -114,15 +114,6 @@ extension ASTNode.NodeType {
         case structureArray(StructureType)
         case fixedSizeStructureArray(StructureType, Int)
 
-        var attributes: [String] {
-            switch self {
-            case .fixedSizeStructureArray(_, let size):
-                ["@FixedSizeArray(size: \(size), initialValue: .init())\n"]
-            default:
-                []
-            }
-        }
-
         var annotation: String {
             switch self {
             case .structure(let structure):
@@ -131,6 +122,17 @@ extension ASTNode.NodeType {
                 "[" + structure.name + "]"
             case .fixedSizeStructureArray(let structure, _):
                 "[" + structure.name + "]"
+            }
+        }
+
+        var initialValue: String {
+            switch self {
+            case .structure(let structure):
+                structure.initialValue
+            case .structureArray:
+                "[]"
+            case .fixedSizeStructureArray:
+                ""
             }
         }
     }
@@ -145,6 +147,15 @@ extension ASTNode.NodeType {
                 name
             case .custom(let name):
                 name
+            }
+        }
+
+        var initialValue: String {
+            switch self {
+            case .standard:
+                "0"
+            case .custom(let name):
+                "\(name)()"
             }
         }
 

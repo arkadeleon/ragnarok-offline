@@ -213,12 +213,12 @@ struct GeneratePacketsCommand: ParsableCommand {
                         structure
                     }
                     if case .custom(let name) = structure {
-                        print(name)
                         guard let node = ast.findNode(where: { $0.kind == "CXXRecordDecl" && $0.name == name && $0.inner != nil }) else {
                             continue
                         }
                         if !referencedStructures.contains(where: { $0.name == node.name }) &&
                             !structures.contains(where: { $0.name == node.name }) {
+                            print(name)
                             referencedStructures.append(node)
                         }
                     }
@@ -231,63 +231,54 @@ struct GeneratePacketsCommand: ParsableCommand {
                 node.kind == "FieldDecl"
             }
 
-            let modifiers = DeclModifierListSyntax(arrayLiteral: DeclModifierSyntax(name: "public"))
-            let inheritanceClause = InheritanceClauseSyntax {
-                InheritedTypeSyntax(type: IdentifierTypeSyntax(name: "Sendable"))
-            }
-            let structDecl = try StructDeclSyntax(modifiers: modifiers, name: "\(raw: structure.name!)", inheritanceClause: inheritanceClause) {
-                fields.map { field in
-                    var fieldType = field.type!.asSwiftType!
-                    if structure.name == "PACKET_ZC_POSITION_ID_NAME_INFO" && field.name == "posInfo" {
-                        fieldType = .fixedSizeStructureArray(.custom("PACKET_ZC_POSITION_ID_NAME_INFO_sub"), 20)
-                    }
-                    if structure.name == "EQUIPITEM_INFO" && field.name == "Flag" {
-                        fieldType = .structure(.standard("UInt8"))
-                    }
-
-
-                    let attributes = AttributeListSyntax {
-                        for attribute in fieldType.attributes {
-                            AttributeSyntax(stringLiteral: attribute)
-                        }
-                    }
-                    return VariableDeclSyntax(attributes: attributes, modifiers: modifiers, bindingSpecifier: "var") {
-                        PatternBindingSyntax(
-                            pattern: IdentifierPatternSyntax(identifier: "\(raw: field.name!)"),
-                            typeAnnotation: TypeAnnotationSyntax(
-                                type: IdentifierTypeSyntax(name: "\(raw: fieldType.annotation)")
-                            )
-                        )
-                    }
+            let variables = fields.map { field in
+                var fieldType = field.type!.asSwiftType!
+                if structure.name == "PACKET_ZC_POSITION_ID_NAME_INFO" && field.name == "posInfo" {
+                    fieldType = .fixedSizeStructureArray(.custom("PACKET_ZC_POSITION_ID_NAME_INFO_sub"), 20)
+                }
+                if structure.name == "EQUIPITEM_INFO" && field.name == "Flag" {
+                    fieldType = .structure(.standard("UInt8"))
                 }
 
-                try InitializerDeclSyntax("public init()") {
-                    for node in fields where !node.type!.isFixedSizeArray {
-                        InfixOperatorExprSyntax(
-                            leftOperand: DeclReferenceExprSyntax(baseName: "\(raw: node.name!)"),
-                            operator: AssignmentExprSyntax(),
-                            rightOperand: FunctionCallExprSyntax(calledExpression: MemberAccessExprSyntax(name: "init()"), arguments: LabeledExprListSyntax())
-                        )
-                    }
+                switch fieldType {
+                case .fixedSizeStructureArray(let structure, let size):
+                    return """
+                        @FixedSizeArray(size: \(size), initialValue: \(structure.initialValue))
+                        public var \(field.name!): \(fieldType.annotation)
+                    """
+                default:
+                    return """
+                        public var \(field.name!): \(fieldType.annotation) = \(fieldType.initialValue)
+                    """
                 }
             }
-            output.append("\n")
-            output.append(structDecl.formatted().description)
-            output.append("\n")
+
+            output.append(
+                """
+                
+                public struct \(structure.name!): Sendable {
+                \(variables.joined(separator: "\n"))
+                    public init() {
+                    }
+                }
+                
+                """
+            )
         }
 
-        output.append("\n")
-        output.append("""
+        output.append(
+            """
+            
             public struct PACKET_ZC_POSITION_ID_NAME_INFO_sub: Sendable {
-                public var positionID: Int32
-                @FixedSizeArray(size: 24, initialValue: .init())
+                public var positionID: Int32 = 0
+                @FixedSizeArray(size: 24, initialValue: 0)
                 public var posName: [Int8]
                 public init() {
-                    positionID = .init()
                 }
             }
-            """)
-        output.append("\n")
+            
+            """
+        )
 
         let outputURL = generatedDirectory.appending(path: "\(outputName).swift")
         try output.write(to: outputURL, atomically: true, encoding: .utf8)

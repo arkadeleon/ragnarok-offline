@@ -455,6924 +455,4999 @@ public let HEADER_ZC_FEED_PET = 0x1a3
 public let HEADER_ZC_WARPLIST = 0xabe
 
 public struct PACKET_CA_LOGIN: Sendable {
-    public var packetType: Int16
-    public var version: UInt32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var version: UInt32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var username: [Int8]
-    @FixedSizeArray(size: 24, initialValue: .init())
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var password: [Int8]
-    public var clienttype: UInt8
+    public var clienttype: UInt8 = 0
     public init() {
-        packetType = .init()
-        version = .init()
-        clienttype = .init()
     }
 }
 
 public struct PACKET_AC_ACCEPT_LOGIN_sub: Sendable {
-    public var ip: UInt32
-    public var port: UInt16
-    @FixedSizeArray(size: 20, initialValue: .init())
+    public var ip: UInt32 = 0
+    public var port: UInt16 = 0
+    @FixedSizeArray(size: 20, initialValue: 0)
     public var name: [Int8]
-    public var users: UInt16
-    public var type: UInt16
-    public var new_: UInt16
-    @FixedSizeArray(size: 128, initialValue: .init())
+    public var users: UInt16 = 0
+    public var type: UInt16 = 0
+    public var new_: UInt16 = 0
+    @FixedSizeArray(size: 128, initialValue: 0)
     public var unknown: [UInt8]
     public init() {
-        ip = .init()
-        port = .init()
-        users = .init()
-        type = .init()
-        new_ = .init()
     }
 }
 
 public struct PACKET_AC_ACCEPT_LOGIN: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var login_id1: UInt32
-    public var AID: UInt32
-    public var login_id2: UInt32
-    public var last_ip: UInt32
-    @FixedSizeArray(size: 26, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var login_id1: UInt32 = 0
+    public var AID: UInt32 = 0
+    public var login_id2: UInt32 = 0
+    public var last_ip: UInt32 = 0
+    @FixedSizeArray(size: 26, initialValue: 0)
     public var last_login: [Int8]
-    public var sex: UInt8
-    @FixedSizeArray(size: 17, initialValue: .init())
+    public var sex: UInt8 = 0
+    @FixedSizeArray(size: 17, initialValue: 0)
     public var token: [Int8]
-    public var char_servers: [PACKET_AC_ACCEPT_LOGIN_sub]
+    public var char_servers: [PACKET_AC_ACCEPT_LOGIN_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        login_id1 = .init()
-        AID = .init()
-        login_id2 = .init()
-        last_ip = .init()
-        sex = .init()
-        char_servers = .init()
     }
 }
 
 public struct PACKET_AC_REFUSE_LOGIN: Sendable {
-    public var packetType: Int16
-    public var error: UInt32
-    @FixedSizeArray(size: 20, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var error: UInt32 = 0
+    @FixedSizeArray(size: 20, initialValue: 0)
     public var unblock_time: [Int8]
     public init() {
-        packetType = .init()
-        error = .init()
     }
 }
 
 public struct PACKET_SC_NOTIFY_BAN: Sendable {
-    public var packetType: Int16
-    public var result: UInt8
+    public var packetType: Int16 = 0
+    public var result: UInt8 = 0
     public init() {
-        packetType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_CA_REQ_HASH: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_AC_ACK_HASH: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var salt: [Int8]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var salt: [Int8] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        salt = .init()
     }
 }
 
 public struct PACKET_CA_LOGIN2: Sendable {
-    public var packetType: Int16
-    public var version: UInt32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var version: UInt32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var username: [Int8]
-    @FixedSizeArray(size: 16, initialValue: .init())
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var passwordMD5: [UInt8]
-    public var clienttype: UInt8
+    public var clienttype: UInt8 = 0
     public init() {
-        packetType = .init()
-        version = .init()
-        clienttype = .init()
     }
 }
 
 public struct PACKET_CA_LOGIN3: Sendable {
-    public var packetType: Int16
-    public var version: UInt32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var version: UInt32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var username: [Int8]
-    @FixedSizeArray(size: 16, initialValue: .init())
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var passwordMD5: [UInt8]
-    public var clienttype: UInt8
-    public var clientinfo: UInt8
+    public var clienttype: UInt8 = 0
+    public var clientinfo: UInt8 = 0
     public init() {
-        packetType = .init()
-        version = .init()
-        clienttype = .init()
-        clientinfo = .init()
     }
 }
 
 public struct PACKET_CA_CONNECT_INFO_CHANGED: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CA_EXE_HASHCHECK: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 16, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var hash: [Int8]
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CA_LOGIN_PCBANG: Sendable {
-    public var packetType: Int16
-    public var version: UInt32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var version: UInt32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var username: [Int8]
-    @FixedSizeArray(size: 24, initialValue: .init())
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var password: [Int8]
-    public var clienttype: UInt8
-    @FixedSizeArray(size: 16, initialValue: .init())
+    public var clienttype: UInt8 = 0
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var ip: [Int8]
-    @FixedSizeArray(size: 13, initialValue: .init())
+    @FixedSizeArray(size: 13, initialValue: 0)
     public var mac: [Int8]
     public init() {
-        packetType = .init()
-        version = .init()
-        clienttype = .init()
     }
 }
 
 public struct PACKET_CA_LOGIN4: Sendable {
-    public var packetType: Int16
-    public var version: UInt32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var version: UInt32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var username: [Int8]
-    @FixedSizeArray(size: 16, initialValue: .init())
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var passwordMD5: [UInt8]
-    public var clienttype: UInt8
-    @FixedSizeArray(size: 13, initialValue: .init())
+    public var clienttype: UInt8 = 0
+    @FixedSizeArray(size: 13, initialValue: 0)
     public var mac: [Int8]
     public init() {
-        packetType = .init()
-        version = .init()
-        clienttype = .init()
     }
 }
 
 public struct PACKET_CA_LOGIN_CHANNEL: Sendable {
-    public var packetType: Int16
-    public var version: UInt32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var version: UInt32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var username: [Int8]
-    @FixedSizeArray(size: 24, initialValue: .init())
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var password: [Int8]
-    public var clienttype: UInt8
-    @FixedSizeArray(size: 16, initialValue: .init())
+    public var clienttype: UInt8 = 0
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var ip: [Int8]
-    @FixedSizeArray(size: 13, initialValue: .init())
+    @FixedSizeArray(size: 13, initialValue: 0)
     public var mac: [Int8]
-    public var is_gravity: UInt8
+    public var is_gravity: UInt8 = 0
     public init() {
-        packetType = .init()
-        version = .init()
-        clienttype = .init()
-        is_gravity = .init()
     }
 }
 
 public struct PACKET_CA_SSO_LOGIN_REQ: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var version: UInt32
-    public var clienttype: UInt8
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var version: UInt32 = 0
+    public var clienttype: UInt8 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var username: [Int8]
-    @FixedSizeArray(size: 27, initialValue: .init())
+    @FixedSizeArray(size: 27, initialValue: 0)
     public var password: [Int8]
-    @FixedSizeArray(size: 17, initialValue: .init())
+    @FixedSizeArray(size: 17, initialValue: 0)
     public var mac: [Int8]
-    @FixedSizeArray(size: 15, initialValue: .init())
+    @FixedSizeArray(size: 15, initialValue: 0)
     public var ip: [Int8]
-    public var token: [Int8]
+    public var token: [Int8] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        version = .init()
-        clienttype = .init()
-        token = .init()
     }
 }
 
 public struct PACKET_CT_AUTH: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 66, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 66, initialValue: 0)
     public var unknown: [UInt8]
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_TC_RESULT: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var type: UInt32
-    @FixedSizeArray(size: 20, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var type: UInt32 = 0
+    @FixedSizeArray(size: 20, initialValue: 0)
     public var unknown1: [Int8]
-    @FixedSizeArray(size: 6, initialValue: .init())
+    @FixedSizeArray(size: 6, initialValue: 0)
     public var unknown2: [Int8]
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        type = .init()
     }
 }
 
 public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub: Sendable {
-    public var status: Int32
-    @FixedSizeArray(size: 16, initialValue: .init())
+    public var status: Int32 = 0
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var map: [Int8]
     public init() {
-        status = .init()
     }
 }
 
 public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var maps: [PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var maps: [PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        maps = .init()
     }
 }
 
 public struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME: Sendable {
-    public var packetType: Int16
-    public var slot: Int8
-    public var mapnumber: Int8
+    public var packetType: Int16 = 0
+    public var slot: Int8 = 0
+    public var mapnumber: Int8 = 0
     public init() {
-        packetType = .init()
-        slot = .init()
-        mapnumber = .init()
     }
 }
 
 public struct PACKET_ZC_PAR_CHANGE: Sendable {
-    public var PacketType: Int16
-    public var varID: UInt16
-    public var count: Int32
+    public var PacketType: Int16 = 0
+    public var varID: UInt16 = 0
+    public var count: Int32 = 0
     public init() {
-        PacketType = .init()
-        varID = .init()
-        count = .init()
     }
 }
 
 public struct PACKET_ZC_LONGPAR_CHANGE: Sendable {
-    public var PacketType: Int16
-    public var varID: UInt16
-    public var amount: Int32
+    public var PacketType: Int16 = 0
+    public var varID: UInt16 = 0
+    public var amount: Int32 = 0
     public init() {
-        PacketType = .init()
-        varID = .init()
-        amount = .init()
     }
 }
 
 public struct PACKET_ZC_STATUS_CHANGE: Sendable {
-    public var PacketType: Int16
-    public var statusID: UInt16
-    public var value: UInt8
+    public var PacketType: Int16 = 0
+    public var statusID: UInt16 = 0
+    public var value: UInt8 = 0
     public init() {
-        PacketType = .init()
-        statusID = .init()
-        value = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO: Sendable {
-    public var PacketType: Int16
-    public var curCount: Int16
-    public var maxCount: Int16
-    public var curWeight: Int32
-    public var maxWeight: Int32
+    public var PacketType: Int16 = 0
+    public var curCount: Int16 = 0
+    public var maxCount: Int16 = 0
+    public var curWeight: Int32 = 0
+    public var maxWeight: Int32 = 0
     public init() {
-        PacketType = .init()
-        curCount = .init()
-        maxCount = .init()
-        curWeight = .init()
-        maxWeight = .init()
     }
 }
 
 public struct PACKET_ZC_ATTACK_RANGE: Sendable {
-    public var PacketType: Int16
-    public var currentAttRange: Int16
+    public var PacketType: Int16 = 0
+    public var currentAttRange: Int16 = 0
     public init() {
-        PacketType = .init()
-        currentAttRange = .init()
     }
 }
 
 public struct PACKET_ZC_COUPLESTATUS: Sendable {
-    public var PacketType: Int16
-    public var statusType: UInt32
-    public var defaultStatus: Int32
-    public var plusStatus: Int32
+    public var PacketType: Int16 = 0
+    public var statusType: UInt32 = 0
+    public var defaultStatus: Int32 = 0
+    public var plusStatus: Int32 = 0
     public init() {
-        PacketType = .init()
-        statusType = .init()
-        defaultStatus = .init()
-        plusStatus = .init()
     }
 }
 
 public struct PACKET_ZC_LONGLONGPAR_CHANGE: Sendable {
-    public var PacketType: Int16
-    public var varID: UInt16
-    public var amount: Int64
+    public var PacketType: Int16 = 0
+    public var varID: UInt16 = 0
+    public var amount: Int64 = 0
     public init() {
-        PacketType = .init()
-        varID = .init()
-        amount = .init()
     }
 }
 
 public struct PACKET_ZC_ITEM_PICKUP_ACK: Sendable {
-    public var PacketType: Int16
-    public var Index: UInt16
-    public var count: UInt16
-    public var nameid: UInt32
-    public var IsIdentified: UInt8
-    public var IsDamaged: UInt8
-    public var slot: EQUIPSLOTINFO
-    public var location: UInt32
-    public var type: UInt8
-    public var result: UInt8
-    public var HireExpireDate: Int32
-    public var bindOnEquipType: UInt16
-    @FixedSizeArray(size: 5, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var Index: UInt16 = 0
+    public var count: UInt16 = 0
+    public var nameid: UInt32 = 0
+    public var IsIdentified: UInt8 = 0
+    public var IsDamaged: UInt8 = 0
+    public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
+    public var location: UInt32 = 0
+    public var type: UInt8 = 0
+    public var result: UInt8 = 0
+    public var HireExpireDate: Int32 = 0
+    public var bindOnEquipType: UInt16 = 0
+    @FixedSizeArray(size: 5, initialValue: ItemOptions())
     public var option_data: [ItemOptions]
-    public var favorite: UInt8
-    public var look: UInt16
-    public var refiningLevel: UInt8
-    public var grade: UInt8
+    public var favorite: UInt8 = 0
+    public var look: UInt16 = 0
+    public var refiningLevel: UInt8 = 0
+    public var grade: UInt8 = 0
     public init() {
-        PacketType = .init()
-        Index = .init()
-        count = .init()
-        nameid = .init()
-        IsIdentified = .init()
-        IsDamaged = .init()
-        slot = .init()
-        location = .init()
-        type = .init()
-        result = .init()
-        HireExpireDate = .init()
-        bindOnEquipType = .init()
-        favorite = .init()
-        look = .init()
-        refiningLevel = .init()
-        grade = .init()
     }
 }
 
 public struct PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var type: UInt8
-    public var ItemID: UInt32
-    public var len: Int8
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var type: UInt8 = 0
+    public var ItemID: UInt32 = 0
+    public var len: Int8 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var Name: [Int8]
-    public var boxItemID_len: Int8
-    public var BoxItemID: UInt32
+    public var boxItemID_len: Int8 = 0
+    public var BoxItemID: UInt32 = 0
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        type = .init()
-        ItemID = .init()
-        len = .init()
-        boxItemID_len = .init()
-        BoxItemID = .init()
     }
 }
 
 public struct PACKET_ZC_INVENTORY_START: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var invType: UInt8
-    public var name: [Int8]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var invType: UInt8 = 0
+    public var name: [Int8] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        invType = .init()
-        name = .init()
     }
 }
 
 public struct PACKET_ZC_INVENTORY_END: Sendable {
-    public var packetType: Int16
-    public var invType: UInt8
-    public var flag: Int8
+    public var packetType: Int16 = 0
+    public var invType: UInt8 = 0
+    public var flag: Int8 = 0
     public init() {
-        packetType = .init()
-        invType = .init()
-        flag = .init()
     }
 }
 
 public struct PACKET_ZC_REQ_WEAR_EQUIP_ACK: Sendable {
-    public var PacketType: Int16
-    public var index: UInt16
-    public var wearLocation: UInt32
-    public var wItemSpriteNumber: UInt16
-    public var result: UInt8
+    public var PacketType: Int16 = 0
+    public var index: UInt16 = 0
+    public var wearLocation: UInt32 = 0
+    public var wItemSpriteNumber: UInt16 = 0
+    public var result: UInt8 = 0
     public init() {
-        PacketType = .init()
-        index = .init()
-        wearLocation = .init()
-        wItemSpriteNumber = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_EQUIPWIN_MICROSCOPE: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var characterName: [Int8]
-    public var job: Int16
-    public var head: Int16
-    public var accessory: Int16
-    public var accessory2: Int16
-    public var accessory3: Int16
-    public var robe: Int16
-    public var headpalette: Int16
-    public var bodypalette: Int16
-    public var body2: Int16
-    public var sex: UInt8
-    public var list: [EQUIPITEM_INFO]
+    public var job: Int16 = 0
+    public var head: Int16 = 0
+    public var accessory: Int16 = 0
+    public var accessory2: Int16 = 0
+    public var accessory3: Int16 = 0
+    public var robe: Int16 = 0
+    public var headpalette: Int16 = 0
+    public var bodypalette: Int16 = 0
+    public var body2: Int16 = 0
+    public var sex: UInt8 = 0
+    public var list: [EQUIPITEM_INFO] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        job = .init()
-        head = .init()
-        accessory = .init()
-        accessory2 = .init()
-        accessory3 = .init()
-        robe = .init()
-        headpalette = .init()
-        bodypalette = .init()
-        body2 = .init()
-        sex = .init()
-        list = .init()
     }
 }
 
 public struct PACKET_CZ_NPC_MARKET_PURCHASE_sub: Sendable {
-    public var ITID: UInt32
-    public var qty: Int32
+    public var ITID: UInt32 = 0
+    public var qty: Int32 = 0
     public init() {
-        ITID = .init()
-        qty = .init()
     }
 }
 
 public struct PACKET_CZ_NPC_MARKET_PURCHASE: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var list: [PACKET_CZ_NPC_MARKET_PURCHASE_sub]
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var list: [PACKET_CZ_NPC_MARKET_PURCHASE_sub] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        list = .init()
     }
 }
 
 public struct PACKET_ZC_NPC_MARKET_OPEN_sub: Sendable {
-    public var nameid: UInt32
-    public var type: UInt8
-    public var price: UInt32
-    public var qty: UInt32
-    public var weight: UInt16
-    public var location: UInt32
+    public var nameid: UInt32 = 0
+    public var type: UInt8 = 0
+    public var price: UInt32 = 0
+    public var qty: UInt32 = 0
+    public var weight: UInt16 = 0
+    public var location: UInt32 = 0
     public init() {
-        nameid = .init()
-        type = .init()
-        price = .init()
-        qty = .init()
-        weight = .init()
-        location = .init()
     }
 }
 
 public struct PACKET_ZC_NPC_MARKET_OPEN: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var list: [PACKET_ZC_NPC_MARKET_OPEN_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var list: [PACKET_ZC_NPC_MARKET_OPEN_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        list = .init()
     }
 }
 
 public struct PACKET_ZC_SHORTCUT_KEY_LIST: Sendable {
-    public var packetType: Int16
-    public var rotate: Int8
-    public var tab: Int16
-    @FixedSizeArray(size: 38, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var rotate: Int8 = 0
+    public var tab: Int16 = 0
+    @FixedSizeArray(size: 38, initialValue: hotkey_data())
     public var hotkey: [hotkey_data]
     public init() {
-        packetType = .init()
-        rotate = .init()
-        tab = .init()
     }
 }
 
 public struct PACKET_CZ_SHORTCUT_KEY_CHANGE1: Sendable {
-    public var packetType: Int16
-    public var index: UInt16
-    public var hotkey: hotkey_data
+    public var packetType: Int16 = 0
+    public var index: UInt16 = 0
+    public var hotkey: hotkey_data = hotkey_data()
     public init() {
-        packetType = .init()
-        index = .init()
-        hotkey = .init()
     }
 }
 
 public struct PACKET_CZ_SHORTCUT_KEY_CHANGE2: Sendable {
-    public var packetType: Int16
-    public var tab: UInt16
-    public var index: UInt16
-    public var hotkey: hotkey_data
+    public var packetType: Int16 = 0
+    public var tab: UInt16 = 0
+    public var index: UInt16 = 0
+    public var hotkey: hotkey_data = hotkey_data()
     public init() {
-        packetType = .init()
-        tab = .init()
-        index = .init()
-        hotkey = .init()
     }
 }
 
 public struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE1: Sendable {
-    public var packetType: Int16
-    public var rowshift: UInt8
+    public var packetType: Int16 = 0
+    public var rowshift: UInt8 = 0
     public init() {
-        packetType = .init()
-        rowshift = .init()
     }
 }
 
 public struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE2: Sendable {
-    public var packetType: Int16
-    public var tab: UInt16
-    public var rowshift: UInt8
+    public var packetType: Int16 = 0
+    public var tab: UInt16 = 0
+    public var rowshift: UInt8 = 0
     public init() {
-        packetType = .init()
-        tab = .init()
-        rowshift = .init()
     }
 }
 
 public struct PACKET_CZ_ADD_ITEM_TO_MAIL: Sendable {
-    public var PacketType: Int16
-    public var index: Int16
-    public var count: Int16
+    public var PacketType: Int16 = 0
+    public var index: Int16 = 0
+    public var count: Int16 = 0
     public init() {
-        PacketType = .init()
-        index = .init()
-        count = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_ADD_ITEM_RODEX: Sendable {
-    public var PacketType: Int16
-    public var result: Int8
-    public var index: Int16
-    public var count: Int16
-    public var itemId: UInt32
-    public var type: Int8
-    public var IsIdentified: Int8
-    public var IsDamaged: Int8
-    public var slot: EQUIPSLOTINFO
-    @FixedSizeArray(size: 5, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var result: Int8 = 0
+    public var index: Int16 = 0
+    public var count: Int16 = 0
+    public var itemId: UInt32 = 0
+    public var type: Int8 = 0
+    public var IsIdentified: Int8 = 0
+    public var IsDamaged: Int8 = 0
+    public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
+    @FixedSizeArray(size: 5, initialValue: ItemOptions())
     public var optionData: [ItemOptions]
-    public var weight: Int16
-    public var favorite: UInt8
-    public var location: UInt32
-    public var refiningLevel: Int8
-    public var grade: Int8
+    public var weight: Int16 = 0
+    public var favorite: UInt8 = 0
+    public var location: UInt32 = 0
+    public var refiningLevel: Int8 = 0
+    public var grade: Int8 = 0
     public init() {
-        PacketType = .init()
-        result = .init()
-        index = .init()
-        count = .init()
-        itemId = .init()
-        type = .init()
-        IsIdentified = .init()
-        IsDamaged = .init()
-        slot = .init()
-        weight = .init()
-        favorite = .init()
-        location = .init()
-        refiningLevel = .init()
-        grade = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_OPEN_WRITE_MAIL: Sendable {
-    public var PacketType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var receiveName: [Int8]
     public init() {
-        PacketType = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_OPEN_WRITE_MAIL: Sendable {
-    public var PacketType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var receiveName: [Int8]
-    public var result: Int8
+    public var result: Int8 = 0
     public init() {
-        PacketType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_REMOVE_ITEM_MAIL: Sendable {
-    public var PacketType: Int16
-    public var index: Int16
-    public var cnt: UInt16
+    public var PacketType: Int16 = 0
+    public var index: Int16 = 0
+    public var cnt: UInt16 = 0
     public init() {
-        PacketType = .init()
-        index = .init()
-        cnt = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_REMOVE_ITEM_MAIL: Sendable {
-    public var PacketType: Int16
-    public var result: Int8
-    public var index: Int16
-    public var cnt: UInt16
-    public var weight: Int16
+    public var PacketType: Int16 = 0
+    public var result: Int8 = 0
+    public var index: Int16 = 0
+    public var cnt: UInt16 = 0
+    public var weight: Int16 = 0
     public init() {
-        PacketType = .init()
-        result = .init()
-        index = .init()
-        cnt = .init()
-        weight = .init()
     }
 }
 
 public struct PACKET_CZ_SEND_MAIL: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var receiveName: [Int8]
-    @FixedSizeArray(size: 24, initialValue: .init())
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var senderName: [Int8]
-    public var zeny: Int64
-    public var Titlelength: Int16
-    public var TextcontentsLength: Int16
-    public var receiver_char_id: Int32
-    public var string: [Int8]
+    public var zeny: Int64 = 0
+    public var Titlelength: Int16 = 0
+    public var TextcontentsLength: Int16 = 0
+    public var receiver_char_id: Int32 = 0
+    public var string: [Int8] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        zeny = .init()
-        Titlelength = .init()
-        TextcontentsLength = .init()
-        receiver_char_id = .init()
-        string = .init()
     }
 }
 
 public struct PACKET_ZC_WRITE_MAIL_RESULT: Sendable {
-    public var PacketType: Int16
-    public var result: Int8
+    public var PacketType: Int16 = 0
+    public var result: Int8 = 0
     public init() {
-        PacketType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_CZ_CHECKNAME1: Sendable {
-    public var PacketType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var Name: [Int8]
     public init() {
-        PacketType = .init()
     }
 }
 
 public struct PACKET_CZ_CHECKNAME2: Sendable {
-    public var PacketType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var Name: [Int8]
-    public var own_char: Int8
+    public var own_char: Int8 = 0
     public init() {
-        PacketType = .init()
-        own_char = .init()
     }
 }
 
 public struct PACKET_ZC_CHECKNAME: Sendable {
-    public var PacketType: Int16
-    public var CharId: Int32
-    public var Class: Int16
-    public var BaseLevel: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var CharId: Int32 = 0
+    public var Class: Int16 = 0
+    public var BaseLevel: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var Name: [Int8]
     public init() {
-        PacketType = .init()
-        CharId = .init()
-        Class = .init()
-        BaseLevel = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_UNREADMAIL: Sendable {
-    public var PacketType: Int16
-    public var result: Int8
+    public var PacketType: Int16 = 0
+    public var result: Int8 = 0
     public init() {
-        PacketType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_MAIL_LIST: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var IsEnd: Int8
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var IsEnd: Int8 = 0
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        IsEnd = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_NEXT_MAIL_LIST: Sendable {
-    public var PacketType: Int16
-    public var opentype: Int8
-    public var Lower_MailID: Int64
+    public var PacketType: Int16 = 0
+    public var opentype: Int8 = 0
+    public var Lower_MailID: Int64 = 0
     public init() {
-        PacketType = .init()
-        opentype = .init()
-        Lower_MailID = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_OPEN_MAIL: Sendable {
-    public var PacketType: Int16
-    public var char_Upper_MailID: Int64
-    public var return_Upper_MailID: Int64
-    public var account_Upper_MailID: Int64
+    public var PacketType: Int16 = 0
+    public var char_Upper_MailID: Int64 = 0
+    public var return_Upper_MailID: Int64 = 0
+    public var account_Upper_MailID: Int64 = 0
     public init() {
-        PacketType = .init()
-        char_Upper_MailID = .init()
-        return_Upper_MailID = .init()
-        account_Upper_MailID = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_READ_MAIL: Sendable {
-    public var PacketType: Int16
-    public var opentype: Int8
-    public var MailID: Int64
+    public var PacketType: Int16 = 0
+    public var opentype: Int8 = 0
+    public var MailID: Int64 = 0
     public init() {
-        PacketType = .init()
-        opentype = .init()
-        MailID = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_READ_RODEX_SUB: Sendable {
-    public var count: Int16
-    public var ITID: UInt32
-    public var IsIdentified: Int8
-    public var IsDamaged: Int8
-    public var slot: EQUIPSLOTINFO
-    public var location: UInt32
-    public var type: UInt8
-    public var viewSprite: UInt16
-    public var bindOnEquip: UInt16
-    @FixedSizeArray(size: 5, initialValue: .init())
+    public var count: Int16 = 0
+    public var ITID: UInt32 = 0
+    public var IsIdentified: Int8 = 0
+    public var IsDamaged: Int8 = 0
+    public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
+    public var location: UInt32 = 0
+    public var type: UInt8 = 0
+    public var viewSprite: UInt16 = 0
+    public var bindOnEquip: UInt16 = 0
+    @FixedSizeArray(size: 5, initialValue: ItemOptions())
     public var option_data: [ItemOptions]
-    public var refiningLevel: Int8
-    public var grade: Int8
+    public var refiningLevel: Int8 = 0
+    public var grade: Int8 = 0
     public init() {
-        count = .init()
-        ITID = .init()
-        IsIdentified = .init()
-        IsDamaged = .init()
-        slot = .init()
-        location = .init()
-        type = .init()
-        viewSprite = .init()
-        bindOnEquip = .init()
-        refiningLevel = .init()
-        grade = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_READ_RODEX: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var opentype: Int8
-    public var MailID: Int64
-    public var TextcontentsLength: Int16
-    public var zeny: Int64
-    public var ItemCnt: Int8
-    public var Textcontent: [Int8]
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var opentype: Int8 = 0
+    public var MailID: Int64 = 0
+    public var TextcontentsLength: Int16 = 0
+    public var zeny: Int64 = 0
+    public var ItemCnt: Int8 = 0
+    public var Textcontent: [Int8] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        opentype = .init()
-        MailID = .init()
-        TextcontentsLength = .init()
-        zeny = .init()
-        ItemCnt = .init()
-        Textcontent = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_DELETE_MAIL: Sendable {
-    public var PacketType: Int16
-    public var opentype: Int8
-    public var MailID: Int64
+    public var PacketType: Int16 = 0
+    public var opentype: Int8 = 0
+    public var MailID: Int64 = 0
     public init() {
-        PacketType = .init()
-        opentype = .init()
-        MailID = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_DELETE_MAIL: Sendable {
-    public var PacketType: Int16
-    public var opentype: Int8
-    public var MailID: Int64
+    public var PacketType: Int16 = 0
+    public var opentype: Int8 = 0
+    public var MailID: Int64 = 0
     public init() {
-        PacketType = .init()
-        opentype = .init()
-        MailID = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_REFRESH_MAIL_LIST: Sendable {
-    public var PacketType: Int16
-    public var Upper_MailID: Int64
-    @FixedSizeArray(size: 16, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var Upper_MailID: Int64 = 0
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var unknown: [Int8]
     public init() {
-        PacketType = .init()
-        Upper_MailID = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_ZENY_FROM_MAIL: Sendable {
-    public var PacketType: Int16
-    public var MailID: Int64
-    public var opentype: Int8
+    public var PacketType: Int16 = 0
+    public var MailID: Int64 = 0
+    public var opentype: Int8 = 0
     public init() {
-        PacketType = .init()
-        MailID = .init()
-        opentype = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_ZENY_FROM_MAIL: Sendable {
-    public var PacketType: Int16
-    public var MailID: Int64
-    public var opentype: Int8
-    public var result: Int8
+    public var PacketType: Int16 = 0
+    public var MailID: Int64 = 0
+    public var opentype: Int8 = 0
+    public var result: Int8 = 0
     public init() {
-        PacketType = .init()
-        MailID = .init()
-        opentype = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_ITEM_FROM_MAIL: Sendable {
-    public var PacketType: Int16
-    public var MailID: Int64
-    public var opentype: Int8
+    public var PacketType: Int16 = 0
+    public var MailID: Int64 = 0
+    public var opentype: Int8 = 0
     public init() {
-        PacketType = .init()
-        MailID = .init()
-        opentype = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_ITEM_FROM_MAIL: Sendable {
-    public var PacketType: Int16
-    public var MailID: Int64
-    public var opentype: Int8
-    public var result: Int8
+    public var PacketType: Int16 = 0
+    public var MailID: Int64 = 0
+    public var opentype: Int8 = 0
+    public var result: Int8 = 0
     public init() {
-        PacketType = .init()
-        MailID = .init()
-        opentype = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_SKILL_SCALE: Sendable {
-    public var PacketType: Int16
-    public var AID: UInt32
-    public var skill_id: Int16
-    public var skill_lv: Int16
-    public var x: Int16
-    public var y: Int16
-    public var casttime: UInt32
+    public var PacketType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var skill_id: Int16 = 0
+    public var skill_lv: Int16 = 0
+    public var x: Int16 = 0
+    public var y: Int16 = 0
+    public var casttime: UInt32 = 0
     public init() {
-        PacketType = .init()
-        AID = .init()
-        skill_id = .init()
-        skill_lv = .init()
-        x = .init()
-        y = .init()
-        casttime = .init()
     }
 }
 
 public struct PACKET_ZC_ADD_MEMBER_TO_GROUP: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
-    public var GID: UInt32
-    public var leader: UInt32
-    public var class_: Int16
-    public var baseLevel: Int16
-    public var x: Int16
-    public var y: Int16
-    public var offline: UInt8
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var GID: UInt32 = 0
+    public var leader: UInt32 = 0
+    public var class_: Int16 = 0
+    public var baseLevel: Int16 = 0
+    public var x: Int16 = 0
+    public var y: Int16 = 0
+    public var offline: UInt8 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var partyName: [Int8]
-    @FixedSizeArray(size: 24, initialValue: .init())
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var playerName: [Int8]
-    @FixedSizeArray(size: 16, initialValue: .init())
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var mapName: [Int8]
-    public var sharePickup: Int8
-    public var shareLoot: Int8
+    public var sharePickup: Int8 = 0
+    public var shareLoot: Int8 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
-        GID = .init()
-        leader = .init()
-        class_ = .init()
-        baseLevel = .init()
-        x = .init()
-        y = .init()
-        offline = .init()
-        sharePickup = .init()
-        shareLoot = .init()
     }
 }
 
 public struct PACKET_ZC_GROUP_LIST_SUB: Sendable {
-    public var AID: UInt32
-    public var GID: UInt32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var AID: UInt32 = 0
+    public var GID: UInt32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var playerName: [Int8]
-    @FixedSizeArray(size: 16, initialValue: .init())
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var mapName: [Int8]
-    public var leader: UInt8
-    public var offline: UInt8
-    public var class_: Int16
-    public var baseLevel: Int16
+    public var leader: UInt8 = 0
+    public var offline: UInt8 = 0
+    public var class_: Int16 = 0
+    public var baseLevel: Int16 = 0
     public init() {
-        AID = .init()
-        GID = .init()
-        leader = .init()
-        offline = .init()
-        class_ = .init()
-        baseLevel = .init()
     }
 }
 
 public struct PACKET_ZC_GROUP_LIST: Sendable {
-    public var packetType: Int16
-    public var packetLen: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var packetLen: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var partyName: [Int8]
-    public var members: [PACKET_ZC_GROUP_LIST_SUB]
+    public var members: [PACKET_ZC_GROUP_LIST_SUB] = []
     public init() {
-        packetType = .init()
-        packetLen = .init()
-        members = .init()
     }
 }
 
 public struct PACKET_ZC_CLANINFO: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var ClanID: UInt32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var ClanID: UInt32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var ClanName: [Int8]
-    @FixedSizeArray(size: 24, initialValue: .init())
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var MasterName: [Int8]
-    @FixedSizeArray(size: 16, initialValue: .init())
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var Map: [Int8]
-    public var AllyCount: UInt8
-    public var AntagonistCount: UInt8
+    public var AllyCount: UInt8 = 0
+    public var AntagonistCount: UInt8 = 0
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        ClanID = .init()
-        AllyCount = .init()
-        AntagonistCount = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_CLAN_CONNECTINFO: Sendable {
-    public var PacketType: Int16
-    public var NumConnect: Int16
-    public var NumTotal: Int16
+    public var PacketType: Int16 = 0
+    public var NumConnect: Int16 = 0
+    public var NumTotal: Int16 = 0
     public init() {
-        PacketType = .init()
-        NumConnect = .init()
-        NumTotal = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_CLAN_LEAVE: Sendable {
-    public var PacketType: Int16
+    public var PacketType: Int16 = 0
     public init() {
-        PacketType = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_CLAN_CHAT: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var MemberName: [Int8]
-    public var Message: [Int8]
+    public var Message: [Int8] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        Message = .init()
     }
 }
 
 public struct PACKET_ZC_FORMATSTRING_MSG: Sendable {
-    public var PacketType: UInt16
-    public var PacketLength: UInt16
-    public var MessageId: UInt16
-    public var MessageString: [Int8]
+    public var PacketType: UInt16 = 0
+    public var PacketLength: UInt16 = 0
+    public var MessageId: UInt16 = 0
+    public var MessageString: [Int8] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        MessageId = .init()
-        MessageString = .init()
     }
 }
 
 public struct PACKET_ZC_FORMATSTRING_MSG_COLOR: Sendable {
-    public var PacketType: UInt16
-    public var PacketLength: UInt16
-    public var messageId: UInt16
-    public var color: UInt32
-    public var messageString: [Int8]
+    public var PacketType: UInt16 = 0
+    public var PacketLength: UInt16 = 0
+    public var messageId: UInt16 = 0
+    public var color: UInt32 = 0
+    public var messageString: [Int8] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        messageId = .init()
-        color = .init()
-        messageString = .init()
     }
 }
 
 public struct PACKET_ZC_MSG_COLOR: Sendable {
-    public var PacketType: UInt16
-    public var MessageId: UInt16
-    public var MessageColor: UInt32
+    public var PacketType: UInt16 = 0
+    public var MessageId: UInt16 = 0
+    public var MessageColor: UInt32 = 0
     public init() {
-        PacketType = .init()
-        MessageId = .init()
-        MessageColor = .init()
     }
 }
 
 public struct PACKET_CZ_OPEN_UI: Sendable {
-    public var PacketType: Int16
-    public var UIType: Int8
+    public var PacketType: Int16 = 0
+    public var UIType: Int8 = 0
     public init() {
-        PacketType = .init()
-        UIType = .init()
     }
 }
 
 public struct PACKET_ZC_UI_OPEN: Sendable {
-    public var PacketType: Int16
-    public var UIType: Int8
-    public var data: Int32
+    public var PacketType: Int16 = 0
+    public var UIType: Int8 = 0
+    public var data: Int32 = 0
     public init() {
-        PacketType = .init()
-        UIType = .init()
-        data = .init()
     }
 }
 
 public struct PACKET_ZC_UI_OPEN2: Sendable {
-    public var PacketType: Int16
-    public var UIType: Int8
-    public var data: Int64
+    public var PacketType: Int16 = 0
+    public var UIType: Int8 = 0
+    public var data: Int64 = 0
     public init() {
-        PacketType = .init()
-        UIType = .init()
-        data = .init()
     }
 }
 
 public struct PACKET_ZC_UI_ACTION: Sendable {
-    public var PacketType: Int16
-    public var UIType: Int32
-    public var data: Int32
+    public var PacketType: Int16 = 0
+    public var UIType: Int32 = 0
+    public var data: Int32 = 0
     public init() {
-        PacketType = .init()
-        UIType = .init()
-        data = .init()
     }
 }
 
 public struct PACKET_CZ_PRIVATE_AIRSHIP_REQUEST: Sendable {
-    public var PacketType: Int16
-    @FixedSizeArray(size: 16, initialValue: .init())
+    public var PacketType: Int16 = 0
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var mapName: [Int8]
-    public var ItemID: UInt32
+    public var ItemID: UInt32 = 0
     public init() {
-        PacketType = .init()
-        ItemID = .init()
     }
 }
 
 public struct PACKET_ZC_PRIVATE_AIRSHIP_RESPONSE: Sendable {
-    public var PacketType: Int16
-    public var flag: UInt32
+    public var PacketType: Int16 = 0
+    public var flag: UInt32 = 0
     public init() {
-        PacketType = .init()
-        flag = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_STYLE_CHANGE: Sendable {
-    public var PacketType: Int16
-    public var HeadPalette: Int16
-    public var HeadStyle: Int16
-    public var BodyPalette: Int16
-    public var TopAccessory: Int16
-    public var MidAccessory: Int16
-    public var BottomAccessory: Int16
+    public var PacketType: Int16 = 0
+    public var HeadPalette: Int16 = 0
+    public var HeadStyle: Int16 = 0
+    public var BodyPalette: Int16 = 0
+    public var TopAccessory: Int16 = 0
+    public var MidAccessory: Int16 = 0
+    public var BottomAccessory: Int16 = 0
     public init() {
-        PacketType = .init()
-        HeadPalette = .init()
-        HeadStyle = .init()
-        BodyPalette = .init()
-        TopAccessory = .init()
-        MidAccessory = .init()
-        BottomAccessory = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_STYLE_CHANGE2: Sendable {
-    public var PacketType: Int16
-    public var HeadPalette: Int16
-    public var HeadStyle: Int16
-    public var BodyPalette: Int16
-    public var TopAccessory: Int16
-    public var MidAccessory: Int16
-    public var BottomAccessory: Int16
-    public var BodyStyle: Int16
+    public var PacketType: Int16 = 0
+    public var HeadPalette: Int16 = 0
+    public var HeadStyle: Int16 = 0
+    public var BodyPalette: Int16 = 0
+    public var TopAccessory: Int16 = 0
+    public var MidAccessory: Int16 = 0
+    public var BottomAccessory: Int16 = 0
+    public var BodyStyle: Int16 = 0
     public init() {
-        PacketType = .init()
-        HeadPalette = .init()
-        HeadStyle = .init()
-        BodyPalette = .init()
-        TopAccessory = .init()
-        MidAccessory = .init()
-        BottomAccessory = .init()
-        BodyStyle = .init()
     }
 }
 
 public struct PACKET_ZC_STYLE_CHANGE_RES: Sendable {
-    public var PacketType: Int16
-    public var flag: Int8
+    public var PacketType: Int16 = 0
+    public var flag: Int8 = 0
     public init() {
-        PacketType = .init()
-        flag = .init()
     }
 }
 
 public struct PACKET_CZ_PET_EVOLUTION: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: UInt16
-    public var EvolvedPetEggID: UInt32
+    public var PacketType: Int16 = 0
+    public var PacketLength: UInt16 = 0
+    public var EvolvedPetEggID: UInt32 = 0
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        EvolvedPetEggID = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_CHAT: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var GID: UInt32
-    public var Message: [Int8]
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var GID: UInt32 = 0
+    public var Message: [Int8] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        GID = .init()
-        Message = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_PLAYERCHAT: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var Message: [Int8]
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var Message: [Int8] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        Message = .init()
     }
 }
 
 public struct PACKET_ZC_ITEM_ENTRY: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
-    public var itemId: UInt32
-    public var identify: UInt8
-    public var x: UInt16
-    public var y: UInt16
-    public var amount: UInt16
-    public var subX: UInt8
-    public var subY: UInt8
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var itemId: UInt32 = 0
+    public var identify: UInt8 = 0
+    public var x: UInt16 = 0
+    public var y: UInt16 = 0
+    public var amount: UInt16 = 0
+    public var subX: UInt8 = 0
+    public var subY: UInt8 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
-        itemId = .init()
-        identify = .init()
-        x = .init()
-        y = .init()
-        amount = .init()
-        subX = .init()
-        subY = .init()
     }
 }
 
 public struct PACKET_ZC_ADD_ITEM_TO_STORE: Sendable {
-    public var packetType: Int16
-    public var index: Int16
-    public var amount: Int32
-    public var itemId: UInt32
-    public var itemType: UInt8
-    public var identified: UInt8
-    public var damaged: UInt8
-    public var slot: EQUIPSLOTINFO
-    @FixedSizeArray(size: 5, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var index: Int16 = 0
+    public var amount: Int32 = 0
+    public var itemId: UInt32 = 0
+    public var itemType: UInt8 = 0
+    public var identified: UInt8 = 0
+    public var damaged: UInt8 = 0
+    public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
+    @FixedSizeArray(size: 5, initialValue: ItemOptions())
     public var option_data: [ItemOptions]
-    public var refine: UInt8
-    public var grade: UInt8
+    public var refine: UInt8 = 0
+    public var grade: UInt8 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        amount = .init()
-        itemId = .init()
-        itemType = .init()
-        identified = .init()
-        damaged = .init()
-        slot = .init()
-        refine = .init()
-        grade = .init()
     }
 }
 
 public struct PACKET_ZC_MVP_GETTING_ITEM: Sendable {
-    public var packetType: Int16
-    public var itemId: UInt32
+    public var packetType: Int16 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        packetType = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_TOUSESKILL: Sendable {
-    public var packetType: Int16
-    public var skillId: UInt16
-    public var btype: Int32
-    public var itemId: UInt32
-    public var flag: UInt8
-    public var cause: UInt8
+    public var packetType: Int16 = 0
+    public var skillId: UInt16 = 0
+    public var btype: Int32 = 0
+    public var itemId: UInt32 = 0
+    public var flag: UInt8 = 0
+    public var cause: UInt8 = 0
     public init() {
-        packetType = .init()
-        skillId = .init()
-        btype = .init()
-        itemId = .init()
-        flag = .init()
-        cause = .init()
     }
 }
 
 public struct PACKET_ZC_ADD_ITEM_TO_CART: Sendable {
-    public var packetType: Int16
-    public var index: Int16
-    public var amount: Int32
-    public var itemId: UInt32
-    public var itemType: UInt8
-    public var identified: UInt8
-    public var damaged: UInt8
-    public var slot: EQUIPSLOTINFO
-    @FixedSizeArray(size: 5, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var index: Int16 = 0
+    public var amount: Int32 = 0
+    public var itemId: UInt32 = 0
+    public var itemType: UInt8 = 0
+    public var identified: UInt8 = 0
+    public var damaged: UInt8 = 0
+    public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
+    @FixedSizeArray(size: 5, initialValue: ItemOptions())
     public var option_data: [ItemOptions]
-    public var refine: UInt8
-    public var grade: UInt8
+    public var refine: UInt8 = 0
+    public var grade: UInt8 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        amount = .init()
-        itemId = .init()
-        itemType = .init()
-        identified = .init()
-        damaged = .init()
-        slot = .init()
-        refine = .init()
-        grade = .init()
     }
 }
 
 public struct PACKET_CZ_REQMAKINGITEM: Sendable {
-    public var packetType: Int16
-    public var itemId: UInt32
-    @FixedSizeArray(size: 3, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var itemId: UInt32 = 0
+    @FixedSizeArray(size: 3, initialValue: 0)
     public var material: [UInt32]
     public init() {
-        packetType = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_REQMAKINGITEM: Sendable {
-    public var packetType: Int16
-    public var result: Int16
-    public var itemId: UInt32
+    public var packetType: Int16 = 0
+    public var result: Int16 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        packetType = .init()
-        result = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_FEED_PET: Sendable {
-    public var packetType: Int16
-    public var result: UInt8
-    public var itemId: UInt32
+    public var packetType: Int16 = 0
+    public var result: UInt8 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        packetType = .init()
-        result = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_FEED_MER: Sendable {
-    public var packetType: Int16
-    public var result: UInt8
-    public var itemId: UInt32
+    public var packetType: Int16 = 0
+    public var result: UInt8 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        packetType = .init()
-        result = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_USE_ITEM_ACK: Sendable {
-    public var packetType: Int16
-    public var index: Int16
-    public var itemId: UInt32
-    public var AID: UInt32
-    public var amount: Int16
-    public var result: UInt8
+    public var packetType: Int16 = 0
+    public var index: Int16 = 0
+    public var itemId: UInt32 = 0
+    public var AID: UInt32 = 0
+    public var amount: Int16 = 0
+    public var result: UInt8 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        itemId = .init()
-        AID = .init()
-        amount = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_SPRITE_CHANGE: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
-    public var type: UInt8
-    public var val: UInt32
-    public var val2: UInt32
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var type: UInt8 = 0
+    public var val: UInt32 = 0
+    public var val2: UInt32 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
-        type = .init()
-        val = .init()
-        val2 = .init()
     }
 }
 
 public struct PACKET_ZC_ADD_EXCHANGE_ITEM: Sendable {
-    public var packetType: Int16
-    public var itemId: UInt32
-    public var itemType: UInt8
-    public var amount: Int32
-    public var identified: UInt8
-    public var damaged: UInt8
-    public var slot: EQUIPSLOTINFO
-    @FixedSizeArray(size: 5, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var itemId: UInt32 = 0
+    public var itemType: UInt8 = 0
+    public var amount: Int32 = 0
+    public var identified: UInt8 = 0
+    public var damaged: UInt8 = 0
+    public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
+    @FixedSizeArray(size: 5, initialValue: ItemOptions())
     public var option_data: [ItemOptions]
-    public var location: UInt32
-    public var look: UInt16
-    public var refine: UInt8
-    public var grade: UInt8
+    public var location: UInt32 = 0
+    public var look: UInt16 = 0
+    public var refine: UInt8 = 0
+    public var grade: UInt8 = 0
     public init() {
-        packetType = .init()
-        itemId = .init()
-        itemType = .init()
-        amount = .init()
-        identified = .init()
-        damaged = .init()
-        slot = .init()
-        location = .init()
-        look = .init()
-        refine = .init()
-        grade = .init()
     }
 }
 
 public struct PACKET_ZC_CASH_TIME_COUNTER: Sendable {
-    public var packetType: Int16
-    public var itemId: UInt32
-    public var seconds: UInt32
+    public var packetType: Int16 = 0
+    public var itemId: UInt32 = 0
+    public var seconds: UInt32 = 0
     public init() {
-        packetType = .init()
-        itemId = .init()
-        seconds = .init()
     }
 }
 
 public struct PACKET_ZC_CASH_ITEM_DELETE: Sendable {
-    public var packetType: Int16
-    public var index: UInt16
-    public var itemId: UInt32
+    public var packetType: Int16 = 0
+    public var index: UInt16 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_ITEM_PICKUP_PARTY: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
-    public var itemId: UInt32
-    public var identified: UInt8
-    public var damaged: UInt8
-    public var slot: EQUIPSLOTINFO
-    public var location: UInt16
-    public var itemType: UInt8
-    public var refine: UInt8
-    public var grade: UInt8
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var itemId: UInt32 = 0
+    public var identified: UInt8 = 0
+    public var damaged: UInt8 = 0
+    public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
+    public var location: UInt16 = 0
+    public var itemType: UInt8 = 0
+    public var refine: UInt8 = 0
+    public var grade: UInt8 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
-        itemId = .init()
-        identified = .init()
-        damaged = .init()
-        slot = .init()
-        location = .init()
-        itemType = .init()
-        refine = .init()
-        grade = .init()
     }
 }
 
 public struct PACKET_ZC_UPDATE_ITEM_FROM_BUYING_STORE: Sendable {
-    public var packetType: Int16
-    public var itemId: UInt32
-    public var amount: UInt16
-    public var zeny: UInt32
-    public var zenyLimit: UInt32
-    public var charId: UInt32
-    public var updateTime: UInt32
+    public var packetType: Int16 = 0
+    public var itemId: UInt32 = 0
+    public var amount: UInt16 = 0
+    public var zeny: UInt32 = 0
+    public var zenyLimit: UInt32 = 0
+    public var charId: UInt32 = 0
+    public var updateTime: UInt32 = 0
     public init() {
-        packetType = .init()
-        itemId = .init()
-        amount = .init()
-        zeny = .init()
-        zenyLimit = .init()
-        charId = .init()
-        updateTime = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_WEAPONREFINE: Sendable {
-    public var packetType: Int16
-    public var result: Int32
-    public var itemId: UInt32
+    public var packetType: Int16 = 0
+    public var result: Int32 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        packetType = .init()
-        result = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_PROPERTY_HOMUN: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
-    public var flags: UInt8
-    public var level: UInt16
-    public var hunger: UInt16
-    public var intimacy: UInt16
-    public var atk2: UInt16
-    public var matk: UInt16
-    public var hit: UInt16
-    public var crit: UInt16
-    public var def: UInt16
-    public var mdef: UInt16
-    public var flee: UInt16
-    public var amotion: UInt16
-    public var hp: UInt32
-    public var maxHp: UInt32
-    public var sp: UInt32
-    public var maxSp: UInt32
-    public var exp: Int64
-    public var expNext: Int64
-    public var skillPoints: UInt16
-    public var range: UInt16
+    public var flags: UInt8 = 0
+    public var level: UInt16 = 0
+    public var hunger: UInt16 = 0
+    public var intimacy: UInt16 = 0
+    public var atk2: UInt16 = 0
+    public var matk: UInt16 = 0
+    public var hit: UInt16 = 0
+    public var crit: UInt16 = 0
+    public var def: UInt16 = 0
+    public var mdef: UInt16 = 0
+    public var flee: UInt16 = 0
+    public var amotion: UInt16 = 0
+    public var hp: UInt32 = 0
+    public var maxHp: UInt32 = 0
+    public var sp: UInt32 = 0
+    public var maxSp: UInt32 = 0
+    public var exp: Int64 = 0
+    public var expNext: Int64 = 0
+    public var skillPoints: UInt16 = 0
+    public var range: UInt16 = 0
     public init() {
-        packetType = .init()
-        flags = .init()
-        level = .init()
-        hunger = .init()
-        intimacy = .init()
-        atk2 = .init()
-        matk = .init()
-        hit = .init()
-        crit = .init()
-        def = .init()
-        mdef = .init()
-        flee = .init()
-        amotion = .init()
-        hp = .init()
-        maxHp = .init()
-        sp = .init()
-        maxSp = .init()
-        exp = .init()
-        expNext = .init()
-        skillPoints = .init()
-        range = .init()
     }
 }
 
 public struct PACKET_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER: Sendable {
-    public var packetType: Int16
-    public var result: UInt16
-    public var itemId: UInt32
+    public var packetType: Int16 = 0
+    public var result: UInt16 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        packetType = .init()
-        result = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_ITEMREPAIR2: Sendable {
-    public var packetType: Int16
-    public var item: REPAIRITEM_INFO2
+    public var packetType: Int16 = 0
+    public var item: REPAIRITEM_INFO2 = REPAIRITEM_INFO2()
     public init() {
-        packetType = .init()
-        item = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_ITEMREPAIR1: Sendable {
-    public var packetType: Int16
-    public var item: REPAIRITEM_INFO1
+    public var packetType: Int16 = 0
+    public var item: REPAIRITEM_INFO1 = REPAIRITEM_INFO1()
     public init() {
-        packetType = .init()
-        item = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_MAKINGITEM: Sendable {
-    public var packetType: Int16
-    public var type: Int16
-    public var itemId: UInt32
+    public var packetType: Int16 = 0
+    public var type: Int16 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        packetType = .init()
-        type = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_CZ_SSILIST_ITEM_CLICK: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
-    public var storeId: UInt32
-    public var itemId: UInt32
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var storeId: UInt32 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
-        storeId = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_SCHEDULER_CASHITEM_sub: Sendable {
-    public var itemId: UInt32
-    public var price: UInt32
+    public var itemId: UInt32 = 0
+    public var price: UInt32 = 0
     public init() {
-        itemId = .init()
-        price = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_SCHEDULER_CASHITEM: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var count: Int16
-    public var tabNum: Int16
-    public var items: [PACKET_ZC_ACK_SCHEDULER_CASHITEM_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var count: Int16 = 0
+    public var tabNum: Int16 = 0
+    public var items: [PACKET_ZC_ACK_SCHEDULER_CASHITEM_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        count = .init()
-        tabNum = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_ZC_PC_PURCHASE_MYITEMLIST_sub: Sendable {
-    public var price: UInt32
-    public var index: Int16
-    public var amount: Int16
-    public var itemType: UInt8
-    public var itemId: UInt32
-    public var identified: UInt8
-    public var damaged: UInt8
-    public var slot: EQUIPSLOTINFO
-    @FixedSizeArray(size: 5, initialValue: .init())
+    public var price: UInt32 = 0
+    public var index: Int16 = 0
+    public var amount: Int16 = 0
+    public var itemType: UInt8 = 0
+    public var itemId: UInt32 = 0
+    public var identified: UInt8 = 0
+    public var damaged: UInt8 = 0
+    public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
+    @FixedSizeArray(size: 5, initialValue: ItemOptions())
     public var option_data: [ItemOptions]
-    public var refine: UInt8
-    public var grade: UInt8
+    public var refine: UInt8 = 0
+    public var grade: UInt8 = 0
     public init() {
-        price = .init()
-        index = .init()
-        amount = .init()
-        itemType = .init()
-        itemId = .init()
-        identified = .init()
-        damaged = .init()
-        slot = .init()
-        refine = .init()
-        grade = .init()
     }
 }
 
 public struct PACKET_ZC_PC_PURCHASE_MYITEMLIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var AID: UInt32
-    public var items: [PACKET_ZC_PC_PURCHASE_MYITEMLIST_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var AID: UInt32 = 0
+    public var items: [PACKET_ZC_PC_PURCHASE_MYITEMLIST_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        AID = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_ZC_PC_PURCHASE_ITEMLIST_sub: Sendable {
-    public var itemId: UInt32
-    public var price: UInt32
-    public var discountPrice: UInt32
-    public var itemType: UInt8
-    public var viewSprite: UInt16
-    public var location: UInt32
+    public var itemId: UInt32 = 0
+    public var price: UInt32 = 0
+    public var discountPrice: UInt32 = 0
+    public var itemType: UInt8 = 0
+    public var viewSprite: UInt16 = 0
+    public var location: UInt32 = 0
     public init() {
-        itemId = .init()
-        price = .init()
-        discountPrice = .init()
-        itemType = .init()
-        viewSprite = .init()
-        location = .init()
     }
 }
 
 public struct PACKET_ZC_PC_PURCHASE_ITEMLIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var items: [PACKET_ZC_PC_PURCHASE_ITEMLIST_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var items: [PACKET_ZC_PC_PURCHASE_ITEMLIST_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_sub: Sendable {
-    public var amount: UInt16
-    public var itemId: UInt32
+    public var amount: UInt16 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        amount = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_CZ_PC_PURCHASE_ITEMLIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var items: [PACKET_CZ_PC_PURCHASE_ITEMLIST_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var items: [PACKET_CZ_PC_PURCHASE_ITEMLIST_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub: Sendable {
-    public var itemId: UInt32
-    public var amount: UInt16
-    public var price: UInt32
+    public var itemId: UInt32 = 0
+    public var amount: UInt16 = 0
+    public var price: UInt32 = 0
     public init() {
-        itemId = .init()
-        amount = .init()
-        price = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_OPEN_BUYING_STORE: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var zenyLimit: UInt32
-    public var result: UInt8
-    @FixedSizeArray(size: 80, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var zenyLimit: UInt32 = 0
+    public var result: UInt8 = 0
+    @FixedSizeArray(size: 80, initialValue: 0)
     public var storeName: [Int8]
-    public var items: [PACKET_CZ_REQ_OPEN_BUYING_STORE_sub]
+    public var items: [PACKET_CZ_REQ_OPEN_BUYING_STORE_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        zenyLimit = .init()
-        result = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_ZC_MYITEMLIST_BUYING_STORE_sub: Sendable {
-    public var price: UInt32
-    public var amount: UInt16
-    public var itemType: UInt8
-    public var itemId: UInt32
+    public var price: UInt32 = 0
+    public var amount: UInt16 = 0
+    public var itemType: UInt8 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        price = .init()
-        amount = .init()
-        itemType = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_MYITEMLIST_BUYING_STORE: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var AID: UInt32
-    public var zenyLimit: UInt32
-    public var items: [PACKET_ZC_MYITEMLIST_BUYING_STORE_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var AID: UInt32 = 0
+    public var zenyLimit: UInt32 = 0
+    public var items: [PACKET_ZC_MYITEMLIST_BUYING_STORE_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        AID = .init()
-        zenyLimit = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC_sub: Sendable {
-    public var price: UInt32
-    public var amount: UInt16
-    public var index: Int16
-    public var itemType: UInt8
-    public var itemId: UInt32
-    public var identified: UInt8
-    public var damaged: UInt8
-    public var slot: EQUIPSLOTINFO
-    @FixedSizeArray(size: 5, initialValue: .init())
+    public var price: UInt32 = 0
+    public var amount: UInt16 = 0
+    public var index: Int16 = 0
+    public var itemType: UInt8 = 0
+    public var itemId: UInt32 = 0
+    public var identified: UInt8 = 0
+    public var damaged: UInt8 = 0
+    public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
+    @FixedSizeArray(size: 5, initialValue: ItemOptions())
     public var option_data: [ItemOptions]
-    public var location: UInt32
-    public var viewSprite: UInt16
-    public var refine: UInt8
-    public var grade: UInt8
+    public var location: UInt32 = 0
+    public var viewSprite: UInt16 = 0
+    public var refine: UInt8 = 0
+    public var grade: UInt8 = 0
     public init() {
-        price = .init()
-        amount = .init()
-        index = .init()
-        itemType = .init()
-        itemId = .init()
-        identified = .init()
-        damaged = .init()
-        slot = .init()
-        location = .init()
-        viewSprite = .init()
-        refine = .init()
-        grade = .init()
     }
 }
 
 public struct PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var AID: UInt32
-    public var venderId: UInt32
-    public var items: [PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var AID: UInt32 = 0
+    public var venderId: UInt32 = 0
+    public var items: [PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        AID = .init()
-        venderId = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_ITEMLIST_BUYING_STORE_sub: Sendable {
-    public var price: UInt32
-    public var amount: UInt16
-    public var itemType: UInt8
-    public var itemId: UInt32
+    public var price: UInt32 = 0
+    public var amount: UInt16 = 0
+    public var itemType: UInt8 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        price = .init()
-        amount = .init()
-        itemType = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_ITEMLIST_BUYING_STORE: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var AID: UInt32
-    public var storeId: UInt32
-    public var zenyLimit: UInt32
-    public var items: [PACKET_ZC_ACK_ITEMLIST_BUYING_STORE_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var AID: UInt32 = 0
+    public var storeId: UInt32 = 0
+    public var zenyLimit: UInt32 = 0
+    public var items: [PACKET_ZC_ACK_ITEMLIST_BUYING_STORE_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        AID = .init()
-        storeId = .init()
-        zenyLimit = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub: Sendable {
-    public var index: Int16
-    public var itemId: UInt32
-    public var amount: UInt16
+    public var index: Int16 = 0
+    public var itemId: UInt32 = 0
+    public var amount: UInt16 = 0
     public init() {
-        index = .init()
-        itemId = .init()
-        amount = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_TRADE_BUYING_STORE: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var AID: UInt32
-    public var storeId: UInt32
-    public var items: [PACKET_CZ_REQ_TRADE_BUYING_STORE_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var AID: UInt32 = 0
+    public var storeId: UInt32 = 0
+    public var items: [PACKET_CZ_REQ_TRADE_BUYING_STORE_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        AID = .init()
-        storeId = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_ZC_MAKABLEITEMLIST_sub: Sendable {
-    public var itemId: UInt32
-    @FixedSizeArray(size: 3, initialValue: .init())
+    public var itemId: UInt32 = 0
+    @FixedSizeArray(size: 3, initialValue: 0)
     public var material: [UInt32]
     public init() {
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_MAKABLEITEMLIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var items: [PACKET_ZC_MAKABLEITEMLIST_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var items: [PACKET_ZC_MAKABLEITEMLIST_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_ZC_MAKINGARROW_LIST_sub: Sendable {
-    public var itemId: UInt32
+    public var itemId: UInt32 = 0
     public init() {
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_MAKINGARROW_LIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var items: [PACKET_ZC_MAKINGARROW_LIST_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var items: [PACKET_ZC_MAKINGARROW_LIST_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_ZC_SKILL_SELECT_REQUEST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var flag: Int32
-    public var skillIds: [Int16]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var flag: Int32 = 0
+    public var skillIds: [Int16] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        flag = .init()
-        skillIds = .init()
     }
 }
 
 public struct PACKET_CZ_SKILL_SELECT_RESPONSE: Sendable {
-    public var packetType: Int16
-    public var flag: Int32
-    public var selectedSkillId: Int16
+    public var packetType: Int16 = 0
+    public var flag: Int32 = 0
+    public var selectedSkillId: Int16 = 0
     public init() {
-        packetType = .init()
-        flag = .init()
-        selectedSkillId = .init()
     }
 }
 
 public struct PACKET_ZC_REPAIRITEMLIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var items: [REPAIRITEM_INFO2]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var items: [REPAIRITEM_INFO2] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_WEAPONITEMLIST_sub: Sendable {
-    public var index: Int16
-    public var itemId: UInt32
-    public var refine: UInt8
-    public var slot: EQUIPSLOTINFO
+    public var index: Int16 = 0
+    public var itemId: UInt32 = 0
+    public var refine: UInt8 = 0
+    public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
     public init() {
-        index = .init()
-        itemId = .init()
-        refine = .init()
-        slot = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_WEAPONITEMLIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var items: [PACKET_ZC_NOTIFY_WEAPONITEMLIST_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var items: [PACKET_ZC_NOTIFY_WEAPONITEMLIST_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_ZC_MAKINGITEM_LIST_sub: Sendable {
-    public var itemId: UInt32
+    public var itemId: UInt32 = 0
     public init() {
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_MAKINGITEM_LIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var makeItem: UInt16
-    public var items: [PACKET_ZC_MAKINGITEM_LIST_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var makeItem: UInt16 = 0
+    public var items: [PACKET_ZC_MAKINGITEM_LIST_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        makeItem = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_ZC_PC_CASH_POINT_ITEMLIST_sub: Sendable {
-    public var price: UInt32
-    public var discountPrice: UInt32
-    public var itemType: UInt8
-    public var itemId: UInt32
+    public var price: UInt32 = 0
+    public var discountPrice: UInt32 = 0
+    public var itemType: UInt8 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        price = .init()
-        discountPrice = .init()
-        itemType = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_PC_CASH_POINT_ITEMLIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var cashPoints: UInt32
-    public var kafraPoints: UInt32
-    public var items: [PACKET_ZC_PC_CASH_POINT_ITEMLIST_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var cashPoints: UInt32 = 0
+    public var kafraPoints: UInt32 = 0
+    public var items: [PACKET_ZC_PC_CASH_POINT_ITEMLIST_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        cashPoints = .init()
-        kafraPoints = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM_sub: Sendable {
-    public var amount: UInt16
-    public var itemId: UInt32
+    public var amount: UInt16 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        amount = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var kafraPoints: UInt32
-    public var count: UInt16
-    public var items: [PACKET_CZ_PC_BUY_CASH_POINT_ITEM_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var kafraPoints: UInt32 = 0
+    public var count: UInt16 = 0
+    public var items: [PACKET_CZ_PC_BUY_CASH_POINT_ITEM_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        kafraPoints = .init()
-        count = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_CZ_SEARCH_STORE_INFO_item: Sendable {
-    public var itemId: UInt32
+    public var itemId: UInt32 = 0
     public init() {
-        itemId = .init()
     }
 }
 
 public struct PACKET_CZ_SEARCH_STORE_INFO: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var searchType: UInt8
-    public var maxPrice: UInt32
-    public var minPrice: UInt32
-    public var itemsCount: UInt8
-    public var cardsCount: UInt8
-    public var items: [PACKET_CZ_SEARCH_STORE_INFO_item]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var searchType: UInt8 = 0
+    public var maxPrice: UInt32 = 0
+    public var minPrice: UInt32 = 0
+    public var itemsCount: UInt8 = 0
+    public var cardsCount: UInt8 = 0
+    public var items: [PACKET_CZ_SEARCH_STORE_INFO_item] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        searchType = .init()
-        maxPrice = .init()
-        minPrice = .init()
-        itemsCount = .init()
-        cardsCount = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_ZC_SEARCH_STORE_INFO_FAILED: Sendable {
-    public var packetType: Int16
-    public var reason: UInt8
+    public var packetType: Int16 = 0
+    public var reason: UInt8 = 0
     public init() {
-        packetType = .init()
-        reason = .init()
     }
 }
 
 public struct PACKET_ZC_OPEN_SEARCH_STORE_INFO: Sendable {
-    public var packetType: Int16
-    public var effect: UInt16
-    public var remainingUses: UInt8
+    public var packetType: Int16 = 0
+    public var effect: UInt16 = 0
+    public var remainingUses: UInt8 = 0
     public init() {
-        packetType = .init()
-        effect = .init()
-        remainingUses = .init()
     }
 }
 
 public struct PACKET_ZC_SSILIST_ITEM_CLICK_ACK: Sendable {
-    public var packetType: Int16
-    public var x: Int16
-    public var y: Int16
+    public var packetType: Int16 = 0
+    public var x: Int16 = 0
+    public var y: Int16 = 0
     public init() {
-        packetType = .init()
-        x = .init()
-        y = .init()
     }
 }
 
 public struct PACKET_ZC_SEARCH_STORE_INFO_ACK_sub: Sendable {
-    public var storeId: UInt32
-    public var AID: UInt32
-    @FixedSizeArray(size: 80, initialValue: .init())
+    public var storeId: UInt32 = 0
+    public var AID: UInt32 = 0
+    @FixedSizeArray(size: 80, initialValue: 0)
     public var shopName: [Int8]
-    public var itemId: UInt32
-    public var itemType: UInt8
-    public var price: UInt32
-    public var amount: UInt16
-    public var slot: EQUIPSLOTINFO
-    @FixedSizeArray(size: 5, initialValue: .init())
+    public var itemId: UInt32 = 0
+    public var itemType: UInt8 = 0
+    public var price: UInt32 = 0
+    public var amount: UInt16 = 0
+    public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
+    @FixedSizeArray(size: 5, initialValue: ItemOptions())
     public var option_data: [ItemOptions]
-    public var refine: UInt8
-    public var grade: UInt8
+    public var refine: UInt8 = 0
+    public var grade: UInt8 = 0
     public init() {
-        storeId = .init()
-        AID = .init()
-        itemId = .init()
-        itemType = .init()
-        price = .init()
-        amount = .init()
-        slot = .init()
-        refine = .init()
-        grade = .init()
     }
 }
 
 public struct PACKET_ZC_SEARCH_STORE_INFO_ACK: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var firstPage: UInt8
-    public var nextPage: UInt8
-    public var usesCount: UInt8
-    public var items: [PACKET_ZC_SEARCH_STORE_INFO_ACK_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var firstPage: UInt8 = 0
+    public var nextPage: UInt8 = 0
+    public var usesCount: UInt8 = 0
+    public var items: [PACKET_ZC_SEARCH_STORE_INFO_ACK_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        firstPage = .init()
-        nextPage = .init()
-        usesCount = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_REQNAMEALL: Sendable {
-    public var packet_id: UInt16
-    public var gid: Int32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packet_id: UInt16 = 0
+    public var gid: Int32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
-    @FixedSizeArray(size: 24, initialValue: .init())
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var party_name: [Int8]
-    @FixedSizeArray(size: 24, initialValue: .init())
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var guild_name: [Int8]
-    @FixedSizeArray(size: 24, initialValue: .init())
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var position_name: [Int8]
-    public var title_id: Int32
+    public var title_id: Int32 = 0
     public init() {
-        packet_id = .init()
-        gid = .init()
-        title_id = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_REQNAMEALL_NPC: Sendable {
-    public var packet_id: UInt16
-    public var gid: Int32
-    public var groupId: Int32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packet_id: UInt16 = 0
+    public var gid: Int32 = 0
+    public var groupId: Int32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
-    @FixedSizeArray(size: 24, initialValue: .init())
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var title: [Int8]
     public init() {
-        packet_id = .init()
-        gid = .init()
-        groupId = .init()
     }
 }
 
 public struct PACKET_ZC_OVERWEIGHT_PERCENT: Sendable {
-    public var packetType: Int16
-    public var percent: UInt32
+    public var packetType: Int16 = 0
+    public var percent: UInt32 = 0
     public init() {
-        packetType = .init()
-        percent = .init()
     }
 }
 
 public struct PACKET_ZC_WARPLIST_sub: Sendable {
-    @FixedSizeArray(size: 16, initialValue: .init())
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var map: [Int8]
     public init() {
     }
 }
 
 public struct PACKET_ZC_WARPLIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var skillId: UInt16
-    public var maps: [PACKET_ZC_WARPLIST_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var skillId: UInt16 = 0
+    public var maps: [PACKET_ZC_WARPLIST_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        skillId = .init()
-        maps = .init()
     }
 }
 
 public struct PACKET_ZC_GROUP_ISALIVE: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
-    public var isDead: UInt8
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var isDead: UInt8 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
-        isDead = .init()
     }
 }
 
 public struct PACKET_ZC_GUILD_POSITION: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var AID: UInt32
-    public var position: [Int8]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var AID: UInt32 = 0
+    public var position: [Int8] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        AID = .init()
-        position = .init()
     }
 }
 
 public struct PACKET_ZC_MOVE_ITEM_FAILED: Sendable {
-    public var packetType: Int16
-    public var itemIndex: Int16
-    public var itemCount: Int16
+    public var packetType: Int16 = 0
+    public var itemIndex: Int16 = 0
+    public var itemCount: Int16 = 0
     public init() {
-        packetType = .init()
-        itemIndex = .init()
-        itemCount = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_BAN_GUILD1: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
-    @FixedSizeArray(size: 40, initialValue: .init())
+    @FixedSizeArray(size: 40, initialValue: 0)
     public var reason: [Int8]
-    @FixedSizeArray(size: 24, initialValue: .init())
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var account_name: [Int8]
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_BAN_GUILD2: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
-    @FixedSizeArray(size: 40, initialValue: .init())
+    @FixedSizeArray(size: 40, initialValue: 0)
     public var reason: [Int8]
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_BAN_GUILD3: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 40, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 40, initialValue: 0)
     public var reason: [Int8]
-    public var GID: UInt32
+    public var GID: UInt32 = 0
     public init() {
-        packetType = .init()
-        GID = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_LEAVE_GUILD1: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
-    @FixedSizeArray(size: 40, initialValue: .init())
+    @FixedSizeArray(size: 40, initialValue: 0)
     public var reason: [Int8]
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_LEAVE_GUILD2: Sendable {
-    public var packetType: Int16
-    public var GID: UInt32
-    @FixedSizeArray(size: 40, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var GID: UInt32 = 0
+    @FixedSizeArray(size: 40, initialValue: 0)
     public var reason: [Int8]
     public init() {
-        packetType = .init()
-        GID = .init()
     }
 }
 
 public struct PACKET_CZ_MEMORIALDUNGEON_COMMAND: Sendable {
-    public var packetType: Int16
-    public var command: Int32
+    public var packetType: Int16 = 0
+    public var command: Int32 = 0
     public init() {
-        packetType = .init()
-        command = .init()
     }
 }
 
 public struct PACKET_ZC_REMOVE_EFFECT: Sendable {
-    public var packetType: Int16
-    public var aid: UInt32
-    public var effectId: UInt32
+    public var packetType: Int16 = 0
+    public var aid: UInt32 = 0
+    public var effectId: UInt32 = 0
     public init() {
-        packetType = .init()
-        aid = .init()
-        effectId = .init()
     }
 }
 
 public struct PACKET_ZC_VIEW_CAMERAINFO: Sendable {
-    public var packetType: Int16
-    public var action: Int8
-    public var range: Float32
-    public var rotation: Float32
-    public var latitude: Float32
+    public var packetType: Int16 = 0
+    public var action: Int8 = 0
+    public var range: Float32 = 0
+    public var rotation: Float32 = 0
+    public var latitude: Float32 = 0
     public init() {
-        packetType = .init()
-        action = .init()
-        range = .init()
-        rotation = .init()
-        latitude = .init()
     }
 }
 
 public struct PACKET_CZ_VIEW_CAMERAINFO: Sendable {
-    public var packetType: Int16
-    public var action: Int8
-    public var range: Float32
-    public var rotation: Float32
-    public var latitude: Float32
+    public var packetType: Int16 = 0
+    public var action: Int8 = 0
+    public var range: Float32 = 0
+    public var rotation: Float32 = 0
+    public var latitude: Float32 = 0
     public init() {
-        packetType = .init()
-        action = .init()
-        range = .init()
-        rotation = .init()
-        latitude = .init()
     }
 }
 
 public struct PACKET_ZC_AUTOSPELLLIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var skills: [Int32]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var skills: [Int32] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        skills = .init()
     }
 }
 
 public struct PACKET_ZC_CHANGE_ITEM_OPTION: Sendable {
-    public var packetType: Int16
-    public var index: Int16
-    public var isDamaged: Int8
-    public var slot: EQUIPSLOTINFO
-    @FixedSizeArray(size: 5, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var index: Int16 = 0
+    public var isDamaged: Int8 = 0
+    public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
+    @FixedSizeArray(size: 5, initialValue: ItemOptions())
     public var option_data: [ItemOptions]
-    public var refiningLevel: UInt8
-    public var grade: UInt8
+    public var refiningLevel: UInt8 = 0
+    public var grade: UInt8 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        isDamaged = .init()
-        slot = .init()
-        refiningLevel = .init()
-        grade = .init()
     }
 }
 
 public struct PACKET_ZC_UPDATE_CARDSLOT: Sendable {
-    public var packetType: Int16
-    public var wearState: Int16
-    public var cardSlot: Int16
-    public var itemId: Int32
-    public var equipFlag: Int8
+    public var packetType: Int16 = 0
+    public var wearState: Int16 = 0
+    public var cardSlot: Int16 = 0
+    public var itemId: Int32 = 0
+    public var equipFlag: Int8 = 0
     public init() {
-        packetType = .init()
-        wearState = .init()
-        cardSlot = .init()
-        itemId = .init()
-        equipFlag = .init()
     }
 }
 
 public struct PACKET_ZC_DEBUGMSG: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var color: Int32
-    public var message: [Int8]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var color: Int32 = 0
+    public var message: [Int8] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        color = .init()
-        message = .init()
     }
 }
 
 public struct PACKET_CZ_USE_SKILL_START: Sendable {
-    public var packetType: Int16
-    public var skillId: Int16
-    public var skillLv: Int16
-    public var targetId: UInt32
+    public var packetType: Int16 = 0
+    public var skillId: Int16 = 0
+    public var skillLv: Int16 = 0
+    public var targetId: UInt32 = 0
     public init() {
-        packetType = .init()
-        skillId = .init()
-        skillLv = .init()
-        targetId = .init()
     }
 }
 
 public struct PACKET_CZ_USE_SKILL_END: Sendable {
-    public var packetType: Int16
-    public var skillId: Int16
+    public var packetType: Int16 = 0
+    public var skillId: Int16 = 0
     public init() {
-        packetType = .init()
-        skillId = .init()
     }
 }
 
 public struct PACKET_ZC_EXTEND_BODYITEM_SIZE: Sendable {
-    public var packetType: Int16
-    public var expansionSize: Int16
+    public var packetType: Int16 = 0
+    public var expansionSize: Int16 = 0
     public init() {
-        packetType = .init()
-        expansionSize = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE: Sendable {
-    public var packetType: Int16
-    public var result: UInt8
-    public var itemId: UInt32
+    public var packetType: Int16 = 0
+    public var result: UInt8 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        packetType = .init()
-        result = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_EXTEND_BODYITEM_SIZE: Sendable {
-    public var packetType: Int16
-    public var result: UInt8
+    public var packetType: Int16 = 0
+    public var result: UInt8 = 0
     public init() {
-        packetType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_EXTEND_BODYITEM_SIZE: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_CLOSE_MSGBOX_EXTEND_BODYITEM_SIZE: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_REMAINTIME: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_PARTY_CONFIG: Sendable {
-    public var packetType: Int16
-    public var refuseInvite: UInt8
+    public var packetType: Int16 = 0
+    public var refuseInvite: UInt8 = 0
     public init() {
-        packetType = .init()
-        refuseInvite = .init()
     }
 }
 
 public struct PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO_sub: Sendable {
-    public var nameid: UInt32
-    public var type: UInt8
-    public var amount: UInt32
-    public var currencyNameid: UInt32
-    public var currencyAmount: UInt32
-    public var weight: UInt32
-    public var index: UInt32
-    public var viewSprite: UInt16
-    public var location: UInt32
+    public var nameid: UInt32 = 0
+    public var type: UInt8 = 0
+    public var amount: UInt32 = 0
+    public var currencyNameid: UInt32 = 0
+    public var currencyAmount: UInt32 = 0
+    public var weight: UInt32 = 0
+    public var index: UInt32 = 0
+    public var viewSprite: UInt16 = 0
+    public var location: UInt32 = 0
     public init() {
-        nameid = .init()
-        type = .init()
-        amount = .init()
-        currencyNameid = .init()
-        currencyAmount = .init()
-        weight = .init()
-        index = .init()
-        viewSprite = .init()
-        location = .init()
     }
 }
 
 public struct PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var list: [PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var list: [PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        list = .init()
     }
 }
 
 public struct PACKET_CZ_NPC_BARTER_MARKET_CLOSE: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_NPC_BARTER_MARKET_PURCHASE_sub: Sendable {
-    public var itemId: UInt32
-    public var amount: UInt32
-    public var invIndex: UInt16
-    public var shopIndex: UInt32
+    public var itemId: UInt32 = 0
+    public var amount: UInt32 = 0
+    public var invIndex: UInt16 = 0
+    public var shopIndex: UInt32 = 0
     public init() {
-        itemId = .init()
-        amount = .init()
-        invIndex = .init()
-        shopIndex = .init()
     }
 }
 
 public struct PACKET_CZ_NPC_BARTER_MARKET_PURCHASE: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var list: [PACKET_CZ_NPC_BARTER_MARKET_PURCHASE_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var list: [PACKET_CZ_NPC_BARTER_MARKET_PURCHASE_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        list = .init()
     }
 }
 
 public struct PACKET_ZC_USESKILL_ACK: Sendable {
-    public var packetType: Int16
-    public var srcId: UInt32
-    public var dstId: UInt32
-    public var x: UInt16
-    public var y: UInt16
-    public var skillId: UInt16
-    public var element: UInt32
-    public var delayTime: UInt32
-    public var disposable: UInt8
-    public var attackMT: UInt32
+    public var packetType: Int16 = 0
+    public var srcId: UInt32 = 0
+    public var dstId: UInt32 = 0
+    public var x: UInt16 = 0
+    public var y: UInt16 = 0
+    public var skillId: UInt16 = 0
+    public var element: UInt32 = 0
+    public var delayTime: UInt32 = 0
+    public var disposable: UInt8 = 0
+    public var attackMT: UInt32 = 0
     public init() {
-        packetType = .init()
-        srcId = .init()
-        dstId = .init()
-        x = .init()
-        y = .init()
-        skillId = .init()
-        element = .init()
-        delayTime = .init()
-        disposable = .init()
-        attackMT = .init()
     }
 }
 
 public struct PACKET_CZ_CLIENT_VERSION: Sendable {
-    public var packetType: Int16
-    public var clientVersion: UInt32
+    public var packetType: Int16 = 0
+    public var clientVersion: UInt32 = 0
     public init() {
-        packetType = .init()
-        clientVersion = .init()
     }
 }
 
 public struct PACKET_CZ_PING_LIVE: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_PING_LIVE: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_CMD_RESETCOOLTIME: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_CLOSE_UI_STYLINGSHOP: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_ACTORINIT: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_PARTY_CONFIG: Sendable {
-    public var packetType: Int16
-    public var denyPartyInvites: UInt8
+    public var packetType: Int16 = 0
+    public var denyPartyInvites: UInt8 = 0
     public init() {
-        packetType = .init()
-        denyPartyInvites = .init()
     }
 }
 
 public struct PACKET_ZC_ROLE_CHANGE: Sendable {
-    public var packetType: Int16
-    public var flag: Int32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var flag: Int32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
     public init() {
-        packetType = .init()
-        flag = .init()
     }
 }
 
 public struct PACKET_ZC_BAN_LIST_sub: Sendable {
-    public var char_id: Int32
-    @FixedSizeArray(size: 40, initialValue: .init())
+    public var char_id: Int32 = 0
+    @FixedSizeArray(size: 40, initialValue: 0)
     public var message: [Int8]
-    @FixedSizeArray(size: 24, initialValue: .init())
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var char_name: [Int8]
     public init() {
-        char_id = .init()
     }
 }
 
 public struct PACKET_ZC_BAN_LIST: Sendable {
-    public var packetType: Int16
-    public var packetLen: UInt16
-    public var chars: [PACKET_ZC_BAN_LIST_sub]
+    public var packetType: Int16 = 0
+    public var packetLen: UInt16 = 0
+    public var chars: [PACKET_ZC_BAN_LIST_sub] = []
     public init() {
-        packetType = .init()
-        packetLen = .init()
-        chars = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_CLOSE_ROULETTE: Sendable {
-    public var packetType: Int16
-    public var result: UInt8
+    public var packetType: Int16 = 0
+    public var result: UInt8 = 0
     public init() {
-        packetType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_MERGE_ITEM: Sendable {
-    public var packetType: Int16
-    public var index: Int16
-    public var amount: Int16
-    public var reason: UInt8
+    public var packetType: Int16 = 0
+    public var index: Int16 = 0
+    public var amount: Int16 = 0
+    public var reason: UInt8 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        amount = .init()
-        reason = .init()
     }
 }
 
 public struct PACKET_ZC_MERGE_ITEM_OPEN_sub: Sendable {
-    public var index: Int16
+    public var index: Int16 = 0
     public init() {
-        index = .init()
     }
 }
 
 public struct PACKET_ZC_MERGE_ITEM_OPEN: Sendable {
-    public var packetType: Int16
-    public var packetLen: UInt16
-    public var items: [PACKET_ZC_MERGE_ITEM_OPEN_sub]
+    public var packetType: Int16 = 0
+    public var packetLen: UInt16 = 0
+    public var items: [PACKET_ZC_MERGE_ITEM_OPEN_sub] = []
     public init() {
-        packetType = .init()
-        packetLen = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_ZC_SE_PC_BUY_CASHITEM_RESULT: Sendable {
-    public var packetType: Int16
-    public var itemId: UInt32
-    public var result: UInt16
-    public var cashPoints: UInt32
-    public var kafraPoints: UInt32
+    public var packetType: Int16 = 0
+    public var itemId: UInt32 = 0
+    public var result: UInt16 = 0
+    public var cashPoints: UInt32 = 0
+    public var kafraPoints: UInt32 = 0
     public init() {
-        packetType = .init()
-        itemId = .init()
-        result = .init()
-        cashPoints = .init()
-        kafraPoints = .init()
     }
 }
 
 public struct PACKET_ZC_OPEN_REFINING_UI: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_REFINING_SELECT_ITEM: Sendable {
-    public var packetType: Int16
-    public var index: Int16
+    public var packetType: Int16 = 0
+    public var index: Int16 = 0
     public init() {
-        packetType = .init()
-        index = .init()
     }
 }
 
 public struct PACKET_ZC_REFINING_MATERIAL_LIST_SUB: Sendable {
-    public var itemId: UInt32
-    public var chance: Int8
-    public var zeny: Int32
+    public var itemId: UInt32 = 0
+    public var chance: Int8 = 0
+    public var zeny: Int32 = 0
     public init() {
-        itemId = .init()
-        chance = .init()
-        zeny = .init()
     }
 }
 
 public struct PACKET_ZC_REFINING_MATERIAL_LIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var itemIndex: Int16
-    public var blacksmithBlessing: Int8
-    public var req: [PACKET_ZC_REFINING_MATERIAL_LIST_SUB]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var itemIndex: Int16 = 0
+    public var blacksmithBlessing: Int8 = 0
+    public var req: [PACKET_ZC_REFINING_MATERIAL_LIST_SUB] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        itemIndex = .init()
-        blacksmithBlessing = .init()
-        req = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_REFINING: Sendable {
-    public var packetType: Int16
-    public var index: Int16
-    public var itemId: UInt32
-    public var blacksmithBlessing: Int8
+    public var packetType: Int16 = 0
+    public var index: Int16 = 0
+    public var itemId: UInt32 = 0
+    public var blacksmithBlessing: Int8 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        itemId = .init()
-        blacksmithBlessing = .init()
     }
 }
 
 public struct PACKET_CZ_CLOSE_REFINING_UI: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_BROADCAST_ITEMREFINING_RESULT: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
-    public var itemId: UInt32
-    public var refine_level: Int8
-    public var status: Int8
+    public var itemId: UInt32 = 0
+    public var refine_level: Int8 = 0
+    public var status: Int8 = 0
     public init() {
-        packetType = .init()
-        itemId = .init()
-        refine_level = .init()
-        status = .init()
     }
 }
 
 public struct PACKET_ZC_STATUS_CHANGE_ACK: Sendable {
-    public var packetType: Int16
-    public var sp: UInt16
-    public var ok: UInt8
-    public var value: UInt8
+    public var packetType: Int16 = 0
+    public var sp: UInt16 = 0
+    public var ok: UInt8 = 0
+    public var value: UInt8 = 0
     public init() {
-        packetType = .init()
-        sp = .init()
-        ok = .init()
-        value = .init()
     }
 }
 
 public struct PACKET_ZC_EQUIPMENT_EFFECT: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var aid: UInt32
-    public var status: Int8
-    public var effects: [UInt16]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var aid: UInt32 = 0
+    public var status: Int8 = 0
+    public var effects: [UInt16] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        aid = .init()
-        status = .init()
-        effects = .init()
     }
 }
 
 public struct PACKET_ZC_ADD_SKILL: Sendable {
-    public var packetType: Int16
-    public var skill: SKILLDATA
+    public var packetType: Int16 = 0
+    public var skill: SKILLDATA = SKILLDATA()
     public init() {
-        packetType = .init()
-        skill = .init()
     }
 }
 
 public struct PACKET_ZC_SKILLINFO_LIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var skills: [SKILLDATA]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var skills: [SKILLDATA] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        skills = .init()
     }
 }
 
 public struct PACKET_ZC_SKILLINFO_UPDATE2: Sendable {
-    public var packetType: Int16
-    public var id: UInt16
-    public var inf: Int32
-    public var level: UInt16
-    public var sp: UInt16
-    public var range2: UInt16
-    public var upFlag: UInt8
-    public var level2: UInt16
+    public var packetType: Int16 = 0
+    public var id: UInt16 = 0
+    public var inf: Int32 = 0
+    public var level: UInt16 = 0
+    public var sp: UInt16 = 0
+    public var range2: UInt16 = 0
+    public var upFlag: UInt8 = 0
+    public var level2: UInt16 = 0
     public init() {
-        packetType = .init()
-        id = .init()
-        inf = .init()
-        level = .init()
-        sp = .init()
-        range2 = .init()
-        upFlag = .init()
-        level2 = .init()
     }
 }
 
 public struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT_sub: Sendable {
-    public var ITID: UInt32
-    public var qty: UInt16
-    public var price: UInt32
+    public var ITID: UInt32 = 0
+    public var qty: UInt16 = 0
+    public var price: UInt32 = 0
     public init() {
-        ITID = .init()
-        qty = .init()
-        price = .init()
     }
 }
 
 public struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var result: UInt16
-    public var list: [PACKET_ZC_NPC_MARKET_PURCHASE_RESULT_sub]
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var result: UInt16 = 0
+    public var list: [PACKET_ZC_NPC_MARKET_PURCHASE_RESULT_sub] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        result = .init()
-        list = .init()
     }
 }
 
 public struct PACKET_ZC_TALKBOX_CHATCONTENTS: Sendable {
-    public var PacketType: Int16
-    public var aid: UInt32
-    @FixedSizeArray(size: 21, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var aid: UInt32 = 0
+    @FixedSizeArray(size: 21, initialValue: 0)
     public var message: [Int8]
     public init() {
-        PacketType = .init()
-        aid = .init()
     }
 }
 
 public struct PACKET_ZC_GUILD_AGIT_INFO: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var castle_list: [Int8]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var castle_list: [Int8] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        castle_list = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_MOVE_GUILD_AGIT: Sendable {
-    public var packetType: Int16
-    public var castle_id: Int8
+    public var packetType: Int16 = 0
+    public var castle_id: Int8 = 0
     public init() {
-        packetType = .init()
-        castle_id = .init()
     }
 }
 
 public struct PACKET_ZC_REQ_ACK_MOVE_GUILD_AGIT: Sendable {
-    public var packetType: Int16
-    public var result: Int16
+    public var packetType: Int16 = 0
+    public var result: Int16 = 0
     public init() {
-        packetType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_REQ_ACK_AGIT_INVESTMENT: Sendable {
-    public var packetType: Int16
-    public var castle_id: Int8
-    public var economy: Int32
-    public var defense: Int32
+    public var packetType: Int16 = 0
+    public var castle_id: Int8 = 0
+    public var economy: Int32 = 0
+    public var defense: Int32 = 0
     public init() {
-        packetType = .init()
-        castle_id = .init()
-        economy = .init()
-        defense = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_AGIT_INVESTMENT: Sendable {
-    public var packetType: Int16
-    public var castle_id: Int8
+    public var packetType: Int16 = 0
+    public var castle_id: Int8 = 0
     public init() {
-        packetType = .init()
-        castle_id = .init()
     }
 }
 
 public struct PACKET_ZC_RANDOM_COMBINE_ITEM_UI_OPEN: Sendable {
-    public var packetType: Int16
-    public var itemId: Int32
+    public var packetType: Int16 = 0
+    public var itemId: Int32 = 0
     public init() {
-        packetType = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_CZ_RANDOM_COMBINE_ITEM_UI_CLOSE: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_RANDOM_COMBINE_ITEM_sub: Sendable {
-    public var index: Int16
-    public var count: Int16
+    public var index: Int16 = 0
+    public var count: Int16 = 0
     public init() {
-        index = .init()
-        count = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_RANDOM_COMBINE_ITEM: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var itemId: Int32
-    public var items: [PACKET_CZ_REQ_RANDOM_COMBINE_ITEM_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var itemId: Int32 = 0
+    public var items: [PACKET_CZ_REQ_RANDOM_COMBINE_ITEM_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        itemId = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_RANDOM_COMBINE_ITEM: Sendable {
-    public var packetType: Int16
-    public var result: Int16
+    public var packetType: Int16 = 0
+    public var result: Int16 = 0
     public init() {
-        packetType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_CZ_UNINSTALLATION: Sendable {
-    public var PacketType: Int16
-    public var InstallationKind: UInt8
+    public var PacketType: Int16 = 0
+    public var InstallationKind: UInt8 = 0
     public init() {
-        PacketType = .init()
-        InstallationKind = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_EFFECT3: Sendable {
-    public var packetType: Int16
-    public var aid: UInt32
-    public var effectId: UInt32
-    public var num: UInt64
+    public var packetType: Int16 = 0
+    public var aid: UInt32 = 0
+    public var effectId: UInt32 = 0
+    public var num: UInt64 = 0
     public init() {
-        packetType = .init()
-        aid = .init()
-        effectId = .init()
-        num = .init()
     }
 }
 
 public struct PACKET_CZ_SE_CASHSHOP_OPEN1: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_SE_CASHSHOP_OPEN2: Sendable {
-    public var packetType: Int16
-    public var tab: UInt32
+    public var packetType: Int16 = 0
+    public var tab: UInt32 = 0
     public init() {
-        packetType = .init()
-        tab = .init()
     }
 }
 
 public struct PACKET_CZ_GET_ACCOUNT_LIMTIED_SALE_LIST: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_SE_CASHSHOP_OPEN: Sendable {
-    public var packetType: Int16
-    public var cashPoints: UInt32
-    public var kafraPoints: UInt32
-    public var tab: UInt32
+    public var packetType: Int16 = 0
+    public var cashPoints: UInt32 = 0
+    public var kafraPoints: UInt32 = 0
+    public var tab: UInt32 = 0
     public init() {
-        packetType = .init()
-        cashPoints = .init()
-        kafraPoints = .init()
-        tab = .init()
     }
 }
 
 public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_CLOSE: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2: Sendable {
-    public var nameid: UInt32
-    public var refine_level: UInt16
-    public var amount: UInt32
-    public var type: UInt16
+    public var nameid: UInt32 = 0
+    public var refine_level: UInt16 = 0
+    public var amount: UInt32 = 0
+    public var type: UInt16 = 0
     public init() {
-        nameid = .init()
-        refine_level = .init()
-        amount = .init()
-        type = .init()
     }
 }
 
 public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub: Sendable {
-    public var nameid: UInt32
-    public var type: UInt16
-    public var amount: UInt32
-    public var weight: UInt32
-    public var index: UInt32
-    public var zeny: UInt32
-    public var viewSprite: UInt16
-    public var location: UInt32
-    public var currency_count: UInt32
-    @FixedSizeArray(size: 1, initialValue: .init())
+    public var nameid: UInt32 = 0
+    public var type: UInt16 = 0
+    public var amount: UInt32 = 0
+    public var weight: UInt32 = 0
+    public var index: UInt32 = 0
+    public var zeny: UInt32 = 0
+    public var viewSprite: UInt16 = 0
+    public var location: UInt32 = 0
+    public var currency_count: UInt32 = 0
+    @FixedSizeArray(size: 1, initialValue: PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2())
     public var currencies: [PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2]
     public init() {
-        nameid = .init()
-        type = .init()
-        amount = .init()
-        weight = .init()
-        index = .init()
-        zeny = .init()
-        viewSprite = .init()
-        location = .init()
-        currency_count = .init()
     }
 }
 
 public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var items_count: Int32
-    public var items: [PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var items_count: Int32 = 0
+    public var items: [PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        items_count = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE_sub: Sendable {
-    public var itemId: UInt32
-    public var shopIndex: UInt32
-    public var amount: UInt32
+    public var itemId: UInt32 = 0
+    public var shopIndex: UInt32 = 0
+    public var amount: UInt32 = 0
     public init() {
-        itemId = .init()
-        shopIndex = .init()
-        amount = .init()
     }
 }
 
 public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var list: [PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var list: [PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        list = .init()
     }
 }
 
 public struct PACKET_ZC_STATE_CHANGE: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
-    public var bodyState: Int16
-    public var healthState: Int16
-    public var effectState: Int32
-    public var isPKModeON: Int8
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var bodyState: Int16 = 0
+    public var healthState: Int16 = 0
+    public var effectState: Int32 = 0
+    public var isPKModeON: Int8 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
-        bodyState = .init()
-        healthState = .init()
-        effectState = .init()
-        isPKModeON = .init()
     }
 }
 
 public struct PACKET_ZC_AUTORUN_SKILL: Sendable {
-    public var packetType: Int16
-    public var skill_id: UInt16
-    public var skill_type: UInt32
-    public var skill_lv: UInt16
-    public var skill_sp: UInt16
-    public var skill_range: UInt16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var skill_id: UInt16 = 0
+    public var skill_type: UInt32 = 0
+    public var skill_lv: UInt16 = 0
+    public var skill_sp: UInt16 = 0
+    public var skill_range: UInt16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var skill_name: [Int8]
-    public var up_flag: Int8
+    public var up_flag: Int8 = 0
     public init() {
-        packetType = .init()
-        skill_id = .init()
-        skill_type = .init()
-        skill_lv = .init()
-        skill_sp = .init()
-        skill_range = .init()
-        up_flag = .init()
     }
 }
 
 public struct PACKET_ZC_RANDOM_UPGRADE_ITEM_UI_OPEN: Sendable {
-    public var packetType: Int16
-    public var itemId: UInt32
+    public var packetType: Int16 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        packetType = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_RANDOM_UPGRADE_ITEM: Sendable {
-    public var packetType: Int16
-    public var result: UInt16
+    public var packetType: Int16 = 0
+    public var result: UInt16 = 0
     public init() {
-        packetType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_CZ_RANDOM_UPGRADE_ITEM_UI_CLOSE: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_RANDOM_UPGRADE_ITEM: Sendable {
-    public var packetType: Int16
-    public var itemId: UInt32
-    public var index: UInt16
+    public var packetType: Int16 = 0
+    public var itemId: UInt32 = 0
+    public var index: UInt16 = 0
     public init() {
-        packetType = .init()
-        itemId = .init()
-        index = .init()
     }
 }
 
 public struct PACKET_ZC_PERSONAL_INFOMATION_SUB: Sendable {
-    public var type: Int8
-    public var exp: Int32
-    public var death: Int32
-    public var drop: Int32
+    public var type: Int8 = 0
+    public var exp: Int32 = 0
+    public var death: Int32 = 0
+    public var drop: Int32 = 0
     public init() {
-        type = .init()
-        exp = .init()
-        death = .init()
-        drop = .init()
     }
 }
 
 public struct PACKET_ZC_PERSONAL_INFOMATION: Sendable {
-    public var packetType: Int16
-    public var length: Int16
-    public var total_exp: Int32
-    public var total_death: Int32
-    public var total_drop: Int32
-    public var details: [PACKET_ZC_PERSONAL_INFOMATION_SUB]
+    public var packetType: Int16 = 0
+    public var length: Int16 = 0
+    public var total_exp: Int32 = 0
+    public var total_death: Int32 = 0
+    public var total_drop: Int32 = 0
+    public var details: [PACKET_ZC_PERSONAL_INFOMATION_SUB] = []
     public init() {
-        packetType = .init()
-        length = .init()
-        total_exp = .init()
-        total_death = .init()
-        total_drop = .init()
-        details = .init()
     }
 }
 
 public struct PACKET_CZ_REQUEST_ACTNPC: Sendable {
-    public var packetType: Int16
-    public var GID: UInt32
-    public var targetGID: UInt32
-    public var action: Int8
+    public var packetType: Int16 = 0
+    public var GID: UInt32 = 0
+    public var targetGID: UInt32 = 0
+    public var action: Int8 = 0
     public init() {
-        packetType = .init()
-        GID = .init()
-        targetGID = .init()
-        action = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_SKILL: Sendable {
-    public var PacketType: Int16
-    public var SKID: UInt16
-    public var AID: UInt32
-    public var targetID: UInt32
-    public var startTime: UInt32
-    public var attackMT: Int32
-    public var attackedMT: Int32
-    public var damage: Int32
-    public var level: Int16
-    public var count: Int16
-    public var action: Int8
+    public var PacketType: Int16 = 0
+    public var SKID: UInt16 = 0
+    public var AID: UInt32 = 0
+    public var targetID: UInt32 = 0
+    public var startTime: UInt32 = 0
+    public var attackMT: Int32 = 0
+    public var attackedMT: Int32 = 0
+    public var damage: Int32 = 0
+    public var level: Int16 = 0
+    public var count: Int16 = 0
+    public var action: Int8 = 0
     public init() {
-        PacketType = .init()
-        SKID = .init()
-        AID = .init()
-        targetID = .init()
-        startTime = .init()
-        attackMT = .init()
-        attackedMT = .init()
-        damage = .init()
-        level = .init()
-        count = .init()
-        action = .init()
     }
 }
 
 public struct PACKET_ZC_USE_SKILL: Sendable {
-    public var PacketType: Int16
-    public var SKID: UInt16
-    public var level: Int32
-    public var targetAID: UInt32
-    public var srcAID: UInt32
-    public var result: Int8
+    public var PacketType: Int16 = 0
+    public var SKID: UInt16 = 0
+    public var level: Int32 = 0
+    public var targetAID: UInt32 = 0
+    public var srcAID: UInt32 = 0
+    public var result: Int8 = 0
     public init() {
-        PacketType = .init()
-        SKID = .init()
-        level = .init()
-        targetAID = .init()
-        srcAID = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_GROUNDSKILL: Sendable {
-    public var PacketType: Int16
-    public var SKID: UInt16
-    public var AID: UInt32
-    public var level: Int16
-    public var xPos: Int16
-    public var yPos: Int16
-    public var startTime: UInt32
+    public var PacketType: Int16 = 0
+    public var SKID: UInt16 = 0
+    public var AID: UInt32 = 0
+    public var level: Int16 = 0
+    public var xPos: Int16 = 0
+    public var yPos: Int16 = 0
+    public var startTime: UInt32 = 0
     public init() {
-        PacketType = .init()
-        SKID = .init()
-        AID = .init()
-        level = .init()
-        xPos = .init()
-        yPos = .init()
-        startTime = .init()
     }
 }
 
 public struct PACKET_ZC_SKILL_POSTDELAY: Sendable {
-    public var PacketType: Int16
-    public var SKID: UInt16
-    public var DelayTM: UInt32
+    public var PacketType: Int16 = 0
+    public var SKID: UInt16 = 0
+    public var DelayTM: UInt32 = 0
     public init() {
-        PacketType = .init()
-        SKID = .init()
-        DelayTM = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_SKILL_POSITION: Sendable {
-    public var PacketType: Int16
-    public var SKID: UInt16
-    public var AID: UInt32
-    public var targetID: UInt32
-    public var startTime: UInt32
-    public var attackMT: Int32
-    public var attackedMT: Int32
-    public var xPos: Int16
-    public var yPos: Int16
-    public var damage: Int16
-    public var level: Int16
-    public var count: Int16
-    public var action: Int8
+    public var PacketType: Int16 = 0
+    public var SKID: UInt16 = 0
+    public var AID: UInt32 = 0
+    public var targetID: UInt32 = 0
+    public var startTime: UInt32 = 0
+    public var attackMT: Int32 = 0
+    public var attackedMT: Int32 = 0
+    public var xPos: Int16 = 0
+    public var yPos: Int16 = 0
+    public var damage: Int16 = 0
+    public var level: Int16 = 0
+    public var count: Int16 = 0
+    public var action: Int8 = 0
     public init() {
-        PacketType = .init()
-        SKID = .init()
-        AID = .init()
-        targetID = .init()
-        startTime = .init()
-        attackMT = .init()
-        attackedMT = .init()
-        xPos = .init()
-        yPos = .init()
-        damage = .init()
-        level = .init()
-        count = .init()
-        action = .init()
     }
 }
 
 public struct PACKET_ZC_C_MARKERINFO: Sendable {
-    public var PacketType: Int16
-    public var AID: UInt32
-    public var xPos: Int16
-    public var yPos: Int16
+    public var PacketType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var xPos: Int16 = 0
+    public var yPos: Int16 = 0
     public init() {
-        PacketType = .init()
-        AID = .init()
-        xPos = .init()
-        yPos = .init()
     }
 }
 
 public struct PACKET_ZC_MEMBERMGR_INFO: Sendable {
-    public var PacketType: Int16
-    public var packetLength: Int16
-    public var guildMemberInfo: [GUILD_MEMBER_INFO]
+    public var PacketType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var guildMemberInfo: [GUILD_MEMBER_INFO] = []
     public init() {
-        PacketType = .init()
-        packetLength = .init()
-        guildMemberInfo = .init()
     }
 }
 
 public struct PACKET_ZC_GUILD_INFO: Sendable {
-    public var PacketType: Int16
-    public var GDID: Int32
-    public var level: Int32
-    public var userNum: Int32
-    public var maxUserNum: Int32
-    public var userAverageLevel: Int32
-    public var exp: Int32
-    public var maxExp: Int32
-    public var point: Int32
-    public var honor: Int32
-    public var virtue: Int32
-    public var emblemVersion: Int32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var GDID: Int32 = 0
+    public var level: Int32 = 0
+    public var userNum: Int32 = 0
+    public var maxUserNum: Int32 = 0
+    public var userAverageLevel: Int32 = 0
+    public var exp: Int32 = 0
+    public var maxExp: Int32 = 0
+    public var point: Int32 = 0
+    public var honor: Int32 = 0
+    public var virtue: Int32 = 0
+    public var emblemVersion: Int32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var guildname: [Int8]
-    @FixedSizeArray(size: 16, initialValue: .init())
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var manageLand: [Int8]
-    public var zeny: Int32
-    public var masterGID: Int32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var zeny: Int32 = 0
+    public var masterGID: Int32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var masterName: [Int8]
     public init() {
-        PacketType = .init()
-        GDID = .init()
-        level = .init()
-        userNum = .init()
-        maxUserNum = .init()
-        userAverageLevel = .init()
-        exp = .init()
-        maxExp = .init()
-        point = .init()
-        honor = .init()
-        virtue = .init()
-        emblemVersion = .init()
-        zeny = .init()
-        masterGID = .init()
     }
 }
 
 public struct PACKET_ZC_POSITION_ID_NAME_INFO: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var positionID: Int32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var positionID: Int32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var posName: [Int8]
-    @FixedSizeArray(size: 20, initialValue: .init())
+    @FixedSizeArray(size: 20, initialValue: PACKET_ZC_POSITION_ID_NAME_INFO_sub())
     public var posInfo: [PACKET_ZC_POSITION_ID_NAME_INFO_sub]
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        positionID = .init()
     }
 }
 
 public struct PACKET_ZC_POSITION_INFO_sub: Sendable {
-    public var positionID: Int32
-    public var right: Int32
-    public var ranking: Int32
-    public var payRate: Int32
+    public var positionID: Int32 = 0
+    public var right: Int32 = 0
+    public var ranking: Int32 = 0
+    public var payRate: Int32 = 0
     public init() {
-        positionID = .init()
-        right = .init()
-        ranking = .init()
-        payRate = .init()
     }
 }
 
 public struct PACKET_ZC_POSITION_INFO: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var posInfo: [PACKET_ZC_POSITION_INFO_sub]
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var posInfo: [PACKET_ZC_POSITION_INFO_sub] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        posInfo = .init()
     }
 }
 
 public struct PACKET_ZC_GUILD_SKILLINFO: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var skillPoint: Int16
-    public var skillInfo: [GUILD_SKILLDATA]
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var skillPoint: Int16 = 0
+    public var skillInfo: [GUILD_SKILLDATA] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        skillPoint = .init()
-        skillInfo = .init()
     }
 }
 
 public struct PACKET_ZC_MYGUILD_BASIC_INFO: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var rgInfo: [RELATED_GUILD_INFO]
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var rgInfo: [RELATED_GUILD_INFO] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        rgInfo = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_UPLOAD_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16
-    @FixedSizeArray(size: 16, initialValue: .init())
+    public var PacketType: Int16 = 0
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var answer: [Int8]
-    public var imageSize: UInt16
+    public var imageSize: UInt16 = 0
     public init() {
-        PacketType = .init()
-        imageSize = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_UPLOAD_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16
-    @FixedSizeArray(size: 4, initialValue: .init())
+    public var PacketType: Int16 = 0
+    @FixedSizeArray(size: 4, initialValue: 0)
     public var captchaKey: [Int8]
-    public var captchaFlag: Int32
+    public var captchaFlag: Int32 = 0
     public init() {
-        PacketType = .init()
-        captchaFlag = .init()
     }
 }
 
 public struct PACKET_CZ_UPLOAD_MACRO_DETECTOR_CAPTCHA: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    @FixedSizeArray(size: 4, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    @FixedSizeArray(size: 4, initialValue: 0)
     public var captchaKey: [Int8]
-    public var imageData: [Int8]
+    public var imageData: [Int8] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        imageData = .init()
     }
 }
 
 public struct PACKET_ZC_COMPLETE_UPLOAD_MACRO_DETECTOR_CAPTCHA: Sendable {
-    public var PacketType: Int16
+    public var PacketType: Int16 = 0
     public init() {
-        PacketType = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_APPLY_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16
-    public var AID: UInt32
+    public var PacketType: Int16 = 0
+    public var AID: UInt32 = 0
     public init() {
-        PacketType = .init()
-        AID = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_APPLY_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16
-    public var status: Int32
+    public var PacketType: Int16 = 0
+    public var status: Int32 = 0
     public init() {
-        PacketType = .init()
-        status = .init()
     }
 }
 
 public struct PACKET_ZC_APPLY_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16
-    public var imageSize: UInt16
-    @FixedSizeArray(size: 4, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var imageSize: UInt16 = 0
+    @FixedSizeArray(size: 4, initialValue: 0)
     public var captchaKey: [Int8]
     public init() {
-        PacketType = .init()
-        imageSize = .init()
     }
 }
 
 public struct PACKET_ZC_APPLY_MACRO_DETECTOR_CAPTCHA: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    @FixedSizeArray(size: 4, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    @FixedSizeArray(size: 4, initialValue: 0)
     public var captchaKey: [Int8]
-    public var imageData: [Int8]
+    public var imageData: [Int8] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        imageData = .init()
     }
 }
 
 public struct PACKET_CZ_COMPLETE_APPLY_MACRO_DETECTOR_CAPTCHA: Sendable {
-    public var PacketType: Int16
+    public var PacketType: Int16 = 0
     public init() {
-        PacketType = .init()
     }
 }
 
 public struct PACKET_ZC_REQ_ANSWER_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16
-    public var retryCount: UInt8
-    public var timeout: Int32
+    public var PacketType: Int16 = 0
+    public var retryCount: UInt8 = 0
+    public var timeout: Int32 = 0
     public init() {
-        PacketType = .init()
-        retryCount = .init()
-        timeout = .init()
     }
 }
 
 public struct PACKET_CZ_ACK_ANSWER_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16
-    @FixedSizeArray(size: 16, initialValue: .init())
+    public var PacketType: Int16 = 0
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var answer: [Int8]
     public init() {
-        PacketType = .init()
     }
 }
 
 public struct PACKET_ZC_CLOSE_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16
-    public var status: Int32
+    public var PacketType: Int16 = 0
+    public var status: Int32 = 0
     public init() {
-        PacketType = .init()
-        status = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_PREVIEW_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16
-    public var captchaID: Int32
+    public var PacketType: Int16 = 0
+    public var captchaID: Int32 = 0
     public init() {
-        PacketType = .init()
-        captchaID = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_PREVIEW_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16
-    public var captchaFlag: Int32
-    public var imageSize: UInt16
-    @FixedSizeArray(size: 4, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var captchaFlag: Int32 = 0
+    public var imageSize: UInt16 = 0
+    @FixedSizeArray(size: 4, initialValue: 0)
     public var captchaKey: [Int8]
     public init() {
-        PacketType = .init()
-        captchaFlag = .init()
-        imageSize = .init()
     }
 }
 
 public struct PACKET_ZC_PREVIEW_MACRO_DETECTOR_CAPTCHA: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    @FixedSizeArray(size: 4, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    @FixedSizeArray(size: 4, initialValue: 0)
     public var captchaKey: [Int8]
-    public var imageData: [Int8]
+    public var imageData: [Int8] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        imageData = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_PLAYER_AID_IN_RANGE: Sendable {
-    public var PacketType: Int16
-    public var xPos: Int16
-    public var yPos: Int16
-    public var RadiusRange: Int8
+    public var PacketType: Int16 = 0
+    public var xPos: Int16 = 0
+    public var yPos: Int16 = 0
+    public var RadiusRange: Int8 = 0
     public init() {
-        PacketType = .init()
-        xPos = .init()
-        yPos = .init()
-        RadiusRange = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_PLAYER_AID_IN_RANGE: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var AID: [UInt32]
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var AID: [UInt32] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        AID = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_MAKE_GROUP: Sendable {
-    public var PacketType: Int16
-    public var result: Int8
+    public var PacketType: Int16 = 0
+    public var result: Int8 = 0
     public init() {
-        PacketType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_PARTY_JOIN_REQ: Sendable {
-    public var PacketType: Int16
-    public var GRID: Int32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var GRID: Int32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var groupName: [Int8]
     public init() {
-        PacketType = .init()
-        GRID = .init()
     }
 }
 
 public struct PACKET_ZC_PARTY_JOIN_REQ_ACK: Sendable {
-    public var PacketType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var characterName: [Int8]
-    public var result: Int32
+    public var result: Int32 = 0
     public init() {
-        PacketType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_CHAT_PARTY: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var AID: Int32
-    public var chatMsg: [Int8]
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var AID: Int32 = 0
+    public var chatMsg: [Int8] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        AID = .init()
-        chatMsg = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_POSITION_TO_GROUPM: Sendable {
-    public var PacketType: Int16
-    public var AID: Int32
-    public var xPos: Int16
-    public var yPos: Int16
+    public var PacketType: Int16 = 0
+    public var AID: Int32 = 0
+    public var xPos: Int16 = 0
+    public var yPos: Int16 = 0
     public init() {
-        PacketType = .init()
-        AID = .init()
-        xPos = .init()
-        yPos = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_HP_TO_GROUPM: Sendable {
-    public var PacketType: Int16
-    public var AID: UInt32
-    public var hp: Int32
-    public var maxhp: Int32
+    public var PacketType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var hp: Int32 = 0
+    public var maxhp: Int32 = 0
     public init() {
-        PacketType = .init()
-        AID = .init()
-        hp = .init()
-        maxhp = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_MEMBERINFO_TO_GROUPM: Sendable {
-    public var PacketType: Int16
-    public var AID: Int32
-    public var job: Int16
-    public var level: Int16
+    public var PacketType: Int16 = 0
+    public var AID: Int32 = 0
+    public var job: Int16 = 0
+    public var level: Int16 = 0
     public init() {
-        PacketType = .init()
-        AID = .init()
-        job = .init()
-        level = .init()
     }
 }
 
 public struct PACKET_ZC_DELETE_MEMBER_FROM_GROUP: Sendable {
-    public var PacketType: Int16
-    public var AID: Int32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var AID: Int32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var characterName: [Int8]
-    public var result: Int8
+    public var result: Int8 = 0
     public init() {
-        PacketType = .init()
-        AID = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL: Sendable {
-    public var PacketType: Int16
+    public var PacketType: Int16 = 0
     public init() {
-        PacketType = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_TAKEOFF_EQUIP_ALL: Sendable {
-    public var PacketType: Int16
-    public var result: UInt8
+    public var PacketType: Int16 = 0
+    public var result: UInt8 = 0
     public init() {
-        PacketType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_BATTLEFIELD_NOTIFY_HP: Sendable {
-    public var PacketType: Int16
-    public var AID: UInt32
-    public var hp: Int32
-    public var maxhp: Int32
+    public var PacketType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var hp: Int32 = 0
+    public var maxhp: Int32 = 0
     public init() {
-        PacketType = .init()
-        AID = .init()
-        hp = .init()
-        maxhp = .init()
     }
 }
 
 public struct PACKET_CZ_CHOOSE_MENU_ZERO: Sendable {
-    public var PacketType: Int16
-    public var NpcID: UInt32
-    public var menuIndex: UInt8
+    public var PacketType: Int16 = 0
+    public var NpcID: UInt32 = 0
+    public var menuIndex: UInt8 = 0
     public init() {
-        PacketType = .init()
-        NpcID = .init()
-        menuIndex = .init()
     }
 }
 
 public struct PACKET_ZC_DIALOG_TEXT_ALIGN: Sendable {
-    public var PacketType: Int16
-    public var align: UInt8
+    public var PacketType: Int16 = 0
+    public var align: UInt8 = 0
     public init() {
-        PacketType = .init()
-        align = .init()
     }
 }
 
 public struct PACKET_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT: Sendable {
-    public var PacketType: Int16
-    public var index: Int16
+    public var PacketType: Int16 = 0
+    public var index: Int16 = 0
     public init() {
-        PacketType = .init()
-        index = .init()
     }
 }
 
 public struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var index: Int16
-    public var success_chance: Int32
-    public var blessing_info: GRADE_ENCHANT_BLESSING
-    public var protect_itemid: Int32
-    public var protect_amount: Int32
-    public var material_info: [GRADE_ENCHANT_MATERIAL]
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var index: Int16 = 0
+    public var success_chance: Int32 = 0
+    public var blessing_info: GRADE_ENCHANT_BLESSING = GRADE_ENCHANT_BLESSING()
+    public var protect_itemid: Int32 = 0
+    public var protect_amount: Int32 = 0
+    public var material_info: [GRADE_ENCHANT_MATERIAL] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        index = .init()
-        success_chance = .init()
-        blessing_info = .init()
-        protect_itemid = .init()
-        protect_amount = .init()
-        material_info = .init()
     }
 }
 
 public struct PACKET_CZ_GRADE_ENCHANT_REQUEST: Sendable {
-    public var PacketType: Int16
-    public var index: Int16
-    public var material_index: Int32
-    public var blessing_flag: Int8
-    public var blessing_amount: Int32
-    public var protect_flag: Int8
+    public var PacketType: Int16 = 0
+    public var index: Int16 = 0
+    public var material_index: Int32 = 0
+    public var blessing_flag: Int8 = 0
+    public var blessing_amount: Int32 = 0
+    public var protect_flag: Int8 = 0
     public init() {
-        PacketType = .init()
-        index = .init()
-        material_index = .init()
-        blessing_flag = .init()
-        blessing_amount = .init()
-        protect_flag = .init()
     }
 }
 
 public struct PACKET_CZ_GRADE_ENCHANT_CLOSE_UI: Sendable {
-    public var PacketType: Int16
+    public var PacketType: Int16 = 0
     public init() {
-        PacketType = .init()
     }
 }
 
 public struct PACKET_ZC_GRADE_ENCHANT_ACK: Sendable {
-    public var PacketType: Int16
-    public var index: Int16
-    public var grade: Int16
-    public var result: Int32
+    public var PacketType: Int16 = 0
+    public var index: Int16 = 0
+    public var grade: Int16 = 0
+    public var result: Int32 = 0
     public init() {
-        PacketType = .init()
-        index = .init()
-        grade = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_GRADE_ENCHANT_BROADCAST_RESULT: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
-    public var itemId: UInt32
-    public var grade: Int16
-    public var status: Int8
+    public var itemId: UInt32 = 0
+    public var grade: Int16 = 0
+    public var status: Int8 = 0
     public init() {
-        packetType = .init()
-        itemId = .init()
-        grade = .init()
-        status = .init()
     }
 }
 
 public struct PACKET_ZC_SHOW_IMAGE: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 64, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 64, initialValue: 0)
     public var image: [Int8]
-    public var type: UInt8
+    public var type: UInt8 = 0
     public init() {
-        packetType = .init()
-        type = .init()
     }
 }
 
 public struct PACKET_ZC_WHISPER: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var senderGID: UInt32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var senderGID: UInt32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var sender: [Int8]
-    public var isAdmin: UInt8
-    public var message: [Int8]
+    public var isAdmin: UInt8 = 0
+    public var message: [Int8] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        senderGID = .init()
-        isAdmin = .init()
-        message = .init()
     }
 }
 
 public struct PACKET_ZC_UPDATE_GDID: Sendable {
-    public var PacketType: Int16
-    public var guildId: UInt32
-    public var emblemVersion: Int32
-    public var mode: UInt32
-    public var isMaster: UInt8
-    public var interSid: Int32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    public var guildId: UInt32 = 0
+    public var emblemVersion: Int32 = 0
+    public var mode: UInt32 = 0
+    public var isMaster: UInt8 = 0
+    public var interSid: Int32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var guildName: [Int8]
     public init() {
-        PacketType = .init()
-        guildId = .init()
-        emblemVersion = .init()
-        mode = .init()
-        isMaster = .init()
-        interSid = .init()
     }
 }
 
 public struct PACKET_CZ_CONTACTNPC: Sendable {
-    public var PacketType: Int16
-    public var AID: UInt32
-    public var type: UInt8
+    public var PacketType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var type: UInt8 = 0
     public init() {
-        PacketType = .init()
-        AID = .init()
-        type = .init()
     }
 }
 
 public struct PACKET_ZC_ATTACK_FAILURE_FOR_DISTANCE: Sendable {
-    public var PacketType: Int16
-    public var targetAID: UInt32
-    public var targetXPos: Int16
-    public var targetYPos: Int16
-    public var xPos: Int16
-    public var yPos: Int16
-    public var currentAttRange: Int16
+    public var PacketType: Int16 = 0
+    public var targetAID: UInt32 = 0
+    public var targetXPos: Int16 = 0
+    public var targetYPos: Int16 = 0
+    public var xPos: Int16 = 0
+    public var yPos: Int16 = 0
+    public var currentAttRange: Int16 = 0
     public init() {
-        PacketType = .init()
-        targetAID = .init()
-        targetXPos = .init()
-        targetYPos = .init()
-        xPos = .init()
-        yPos = .init()
-        currentAttRange = .init()
     }
 }
 
 public struct PACKET_ZC_START_CAPTURE: Sendable {
-    public var PacketType: Int16
+    public var PacketType: Int16 = 0
     public init() {
-        PacketType = .init()
     }
 }
 
 public struct PACKET_ZC_TRYCAPTURE_MONSTER: Sendable {
-    public var PacketType: Int16
-    public var result: Int8
+    public var PacketType: Int16 = 0
+    public var result: Int8 = 0
     public init() {
-        PacketType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_PROPERTY_PET: Sendable {
-    public var PacketType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var szName: [Int8]
-    public var bModified: Int8
-    public var nLevel: Int16
-    public var nFullness: Int16
-    public var nRelationship: Int16
-    public var ITID: Int16
-    public var job: Int16
+    public var bModified: Int8 = 0
+    public var nLevel: Int16 = 0
+    public var nFullness: Int16 = 0
+    public var nRelationship: Int16 = 0
+    public var ITID: Int16 = 0
+    public var job: Int16 = 0
     public init() {
-        PacketType = .init()
-        bModified = .init()
-        nLevel = .init()
-        nFullness = .init()
-        nRelationship = .init()
-        ITID = .init()
-        job = .init()
     }
 }
 
 public struct PACKET_ZC_CHANGESTATE_PET: Sendable {
-    public var PacketType: Int16
-    public var type: Int8
-    public var GID: Int32
-    public var data: Int32
+    public var PacketType: Int16 = 0
+    public var type: Int8 = 0
+    public var GID: Int32 = 0
+    public var data: Int32 = 0
     public init() {
-        PacketType = .init()
-        type = .init()
-        GID = .init()
-        data = .init()
     }
 }
 
 public struct PACKET_ZC_SPIRITS: Sendable {
-    public var PacketType: Int16
-    public var AID: UInt32
-    public var num: Int16
+    public var PacketType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var num: Int16 = 0
     public init() {
-        PacketType = .init()
-        AID = .init()
-        num = .init()
     }
 }
 
 public struct PACKET_ZC_SPIRITS2: Sendable {
-    public var PacketType: Int16
-    public var AID: UInt32
-    public var num: Int16
+    public var PacketType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var num: Int16 = 0
     public init() {
-        PacketType = .init()
-        AID = .init()
-        num = .init()
     }
 }
 
 public struct PACKET_ZC_SOULENERGY: Sendable {
-    public var PacketType: Int16
-    public var AID: UInt32
-    public var num: UInt16
+    public var PacketType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var num: UInt16 = 0
     public init() {
-        PacketType = .init()
-        AID = .init()
-        num = .init()
     }
 }
 
 public struct PACKET_ZC_SAY_DIALOG: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var NpcID: UInt32
-    public var message: [Int8]
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var NpcID: UInt32 = 0
+    public var message: [Int8] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        NpcID = .init()
-        message = .init()
     }
 }
 
 public struct PACKET_ZC_SAY_DIALOG2: Sendable {
-    public var PacketType: Int16
-    public var PacketLength: Int16
-    public var NpcID: UInt32
-    public var message: [Int8]
+    public var PacketType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var NpcID: UInt32 = 0
+    public var message: [Int8] = []
     public init() {
-        PacketType = .init()
-        PacketLength = .init()
-        NpcID = .init()
-        message = .init()
     }
 }
 
 public struct PACKET_ZC_WAIT_DIALOG: Sendable {
-    public var PacketType: Int16
-    public var NpcID: UInt32
+    public var PacketType: Int16 = 0
+    public var NpcID: UInt32 = 0
     public init() {
-        PacketType = .init()
-        NpcID = .init()
     }
 }
 
 public struct PACKET_ZC_WAIT_DIALOG2: Sendable {
-    public var PacketType: Int16
-    public var NpcID: UInt32
+    public var PacketType: Int16 = 0
+    public var NpcID: UInt32 = 0
     public init() {
-        PacketType = .init()
-        NpcID = .init()
     }
 }
 
 public struct PACKET_ZC_PLAY_NPC_BGM: Sendable {
-    public var PacketType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var bgm: [Int8]
     public init() {
-        PacketType = .init()
     }
 }
 
 public struct PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART: Sendable {
-    public var PacketType: Int16
-    public var index: Int16
-    public var count: Int32
+    public var PacketType: Int16 = 0
+    public var index: Int16 = 0
+    public var count: Int32 = 0
     public init() {
-        PacketType = .init()
-        index = .init()
-        count = .init()
     }
 }
 
 public struct PACKET_ZC_SOUND: Sendable {
-    public var PacketType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
-    public var act: UInt8
-    public var term: UInt32
-    public var AID: UInt32
+    public var act: UInt8 = 0
+    public var term: UInt32 = 0
+    public var AID: UInt32 = 0
     public init() {
-        PacketType = .init()
-        act = .init()
-        term = .init()
-        AID = .init()
     }
 }
 
 public struct PACKET_ZC_BUYING_STORE_ENTRY: Sendable {
-    public var packetType: Int16
-    public var makerAID: UInt32
-    @FixedSizeArray(size: 80, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var makerAID: UInt32 = 0
+    @FixedSizeArray(size: 80, initialValue: 0)
     public var storeName: [Int8]
     public init() {
-        packetType = .init()
-        makerAID = .init()
     }
 }
 
 public struct PACKET_ZC_STORE_ENTRY: Sendable {
-    public var packetType: Int16
-    public var makerAID: UInt32
-    @FixedSizeArray(size: 80, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var makerAID: UInt32 = 0
+    @FixedSizeArray(size: 80, initialValue: 0)
     public var storeName: [Int8]
     public init() {
-        packetType = .init()
-        makerAID = .init()
     }
 }
 
 public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var AID: UInt32
-    public var list: [CZ_PURCHASE_ITEM_FROMMC]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var AID: UInt32 = 0
+    public var list: [CZ_PURCHASE_ITEM_FROMMC] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        AID = .init()
-        list = .init()
     }
 }
 
 public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC2: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var AID: UInt32
-    public var UniqueID: UInt32
-    public var list: [CZ_PURCHASE_ITEM_FROMMC]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var AID: UInt32 = 0
+    public var UniqueID: UInt32 = 0
+    public var list: [CZ_PURCHASE_ITEM_FROMMC] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        AID = .init()
-        UniqueID = .init()
-        list = .init()
     }
 }
 
 public struct PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY: Sendable {
-    public var packetType: Int16
-    public var makerAID: UInt32
+    public var packetType: Int16 = 0
+    public var makerAID: UInt32 = 0
     public init() {
-        packetType = .init()
-        makerAID = .init()
     }
 }
 
 public struct PACKET_ZC_OPEN_REFORM_UI: Sendable {
-    public var PacketType: Int16
-    public var ITID: Int32
+    public var PacketType: Int16 = 0
+    public var ITID: Int32 = 0
     public init() {
-        PacketType = .init()
-        ITID = .init()
     }
 }
 
 public struct PACKET_CZ_CLOSE_REFORM_UI: Sendable {
-    public var PacketType: Int16
+    public var PacketType: Int16 = 0
     public init() {
-        PacketType = .init()
     }
 }
 
 public struct PACKET_CZ_ITEM_REFORM: Sendable {
-    public var PacketType: Int16
-    public var ITID: Int32
-    public var index: Int16
+    public var PacketType: Int16 = 0
+    public var ITID: Int32 = 0
+    public var index: Int16 = 0
     public init() {
-        PacketType = .init()
-        ITID = .init()
-        index = .init()
     }
 }
 
 public struct PACKET_ZC_ITEM_REFORM_ACK: Sendable {
-    public var PacketType: Int16
-    public var index: Int16
-    public var result: Int8
+    public var PacketType: Int16 = 0
+    public var index: Int16 = 0
+    public var result: Int8 = 0
     public init() {
-        PacketType = .init()
-        index = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_CZ_REQUEST_RANDOM_ENCHANT: Sendable {
-    public var PacketType: Int16
-    public var enchant_group: Int64
-    public var index: Int16
+    public var PacketType: Int16 = 0
+    public var enchant_group: Int64 = 0
+    public var index: Int16 = 0
     public init() {
-        PacketType = .init()
-        enchant_group = .init()
-        index = .init()
     }
 }
 
 public struct PACKET_CZ_REQUEST_PERFECT_ENCHANT: Sendable {
-    public var PacketType: Int16
-    public var enchant_group: Int64
-    public var index: Int16
-    public var ITID: UInt32
+    public var PacketType: Int16 = 0
+    public var enchant_group: Int64 = 0
+    public var index: Int16 = 0
+    public var ITID: UInt32 = 0
     public init() {
-        PacketType = .init()
-        enchant_group = .init()
-        index = .init()
-        ITID = .init()
     }
 }
 
 public struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT: Sendable {
-    public var PacketType: Int16
-    public var enchant_group: Int64
-    public var index: Int16
-    public var slot: Int16
+    public var PacketType: Int16 = 0
+    public var enchant_group: Int64 = 0
+    public var index: Int16 = 0
+    public var slot: Int16 = 0
     public init() {
-        PacketType = .init()
-        enchant_group = .init()
-        index = .init()
-        slot = .init()
     }
 }
 
 public struct PACKET_CZ_REQUEST_RESET_ENCHANT: Sendable {
-    public var PacketType: Int16
-    public var enchant_group: Int64
-    public var index: Int16
+    public var PacketType: Int16 = 0
+    public var enchant_group: Int64 = 0
+    public var index: Int16 = 0
     public init() {
-        PacketType = .init()
-        enchant_group = .init()
-        index = .init()
     }
 }
 
 public struct PACKET_ZC_RESPONSE_ENCHANT: Sendable {
-    public var PacketType: Int16
-    public var msgId: Int32
-    public var ITID: UInt32
+    public var PacketType: Int16 = 0
+    public var msgId: Int32 = 0
+    public var ITID: UInt32 = 0
     public init() {
-        PacketType = .init()
-        msgId = .init()
-        ITID = .init()
     }
 }
 
 public struct PACKET_CZ_CLOSE_UI_ENCHANT: Sendable {
-    public var PacketType: Int16
+    public var PacketType: Int16 = 0
     public init() {
-        PacketType = .init()
     }
 }
 
 public struct PACKET_ZC_GOLDPCCAFE_POINT: Sendable {
-    public var PacketType: UInt16
-    public var isActive: Int8
-    public var mode: Int8
-    public var point: Int32
-    public var playedTime: Int32
+    public var PacketType: UInt16 = 0
+    public var isActive: Int8 = 0
+    public var mode: Int8 = 0
+    public var point: Int32 = 0
+    public var playedTime: Int32 = 0
     public init() {
-        PacketType = .init()
-        isActive = .init()
-        mode = .init()
-        point = .init()
-        playedTime = .init()
     }
 }
 
 public struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST: Sendable {
-    public var PacketType: UInt16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var PacketType: UInt16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
     public init() {
-        PacketType = .init()
     }
 }
 
 public struct PACKET_ZC_DYNAMICNPC_CREATE_RESULT: Sendable {
-    public var PacketType: UInt16
-    public var result: UInt32
+    public var PacketType: UInt16 = 0
+    public var result: UInt32 = 0
     public init() {
-        PacketType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG1: Sendable {
-    public var packetType: Int16
-    public var guild_id: Int32
+    public var packetType: Int16 = 0
+    public var guild_id: Int32 = 0
     public init() {
-        packetType = .init()
-        guild_id = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG3: Sendable {
-    public var packetType: Int16
-    public var guild_id: Int32
-    public var emblem_id: Int32
+    public var packetType: Int16 = 0
+    public var guild_id: Int32 = 0
+    public var emblem_id: Int32 = 0
     public init() {
-        packetType = .init()
-        guild_id = .init()
-        emblem_id = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG2: Sendable {
-    public var packetType: Int16
-    public var guild_id: Int32
-    public var emblem_id: Int32
-    public var unused: Int32
+    public var packetType: Int16 = 0
+    public var guild_id: Int32 = 0
+    public var emblem_id: Int32 = 0
+    public var unused: Int32 = 0
     public init() {
-        packetType = .init()
-        guild_id = .init()
-        emblem_id = .init()
-        unused = .init()
     }
 }
 
 public struct PACKET_ZC_CHANGE_GUILD: Sendable {
-    public var packetType: Int16
-    public var guild_id: Int32
-    public var emblem_id: UInt32
-    public var AID: UInt32
+    public var packetType: Int16 = 0
+    public var guild_id: Int32 = 0
+    public var emblem_id: UInt32 = 0
+    public var AID: UInt32 = 0
     public init() {
-        packetType = .init()
-        guild_id = .init()
-        emblem_id = .init()
-        AID = .init()
     }
 }
 
 public struct PACKET_ZC_GUILD_EMBLEM_IMG: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var result: UInt16
-    public var guild_id: Int32
-    public var emblem_id: UInt32
-    public var emblem_data: [Int8]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var result: UInt16 = 0
+    public var guild_id: Int32 = 0
+    public var emblem_id: UInt32 = 0
+    public var emblem_data: [Int8] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        result = .init()
-        guild_id = .init()
-        emblem_id = .init()
-        emblem_data = .init()
     }
 }
 
 public struct PACKET_CZ_ADVENTURER_AGENCY_JOIN_REQ: Sendable {
-    public var packetType: Int16
-    public var GID: Int32
-    public var AID: Int32
+    public var packetType: Int16 = 0
+    public var GID: Int32 = 0
+    public var AID: Int32 = 0
     public init() {
-        packetType = .init()
-        GID = .init()
-        AID = .init()
     }
 }
 
 public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_RESULT: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var player_name: [Int8]
-    @FixedSizeArray(size: 24, initialValue: .init())
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var party_name: [Int8]
-    public var AID: Int32
-    public var result: Int32
+    public var AID: Int32 = 0
+    public var result: Int32 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_REQ: Sendable {
-    public var packetType: Int16
-    public var GRID: Int32
-    public var AID: Int32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var GRID: Int32 = 0
+    public var AID: Int32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var groupName: [Int8]
-    public var level: Int16
-    public var job: Int16
+    public var level: Int16 = 0
+    public var job: Int16 = 0
     public init() {
-        packetType = .init()
-        GRID = .init()
-        AID = .init()
-        level = .init()
-        job = .init()
     }
 }
 
 public struct PACKET_CZ_ADVENTURER_AGENCY_JOIN_RESULT: Sendable {
-    public var packetType: Int16
-    public var GRID: Int32
-    public var AID: Int32
-    public var result: Int8
+    public var packetType: Int16 = 0
+    public var GRID: Int32 = 0
+    public var AID: Int32 = 0
+    public var result: Int8 = 0
     public init() {
-        packetType = .init()
-        GRID = .init()
-        AID = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_USER_COUNT: Sendable {
-    public var packetType: UInt16
-    public var playersCount: Int32
+    public var packetType: UInt16 = 0
+    public var playersCount: Int32 = 0
     public init() {
-        packetType = .init()
-        playersCount = .init()
     }
 }
 
 public struct PACKET_ZC_PC_PURCHASE_RESULT: Sendable {
-    public var packetType: Int16
-    public var result: UInt8
+    public var packetType: Int16 = 0
+    public var result: UInt8 = 0
     public init() {
-        packetType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_MAKINGARROW: Sendable {
-    public var packetType: Int16
-    public var itemId: UInt32
+    public var packetType: Int16 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        packetType = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub: Sendable {
-    public var itemId: UInt32
-    public var amount: UInt32
-    public var tab: UInt16
+    public var itemId: UInt32 = 0
+    public var amount: UInt32 = 0
+    public var tab: UInt16 = 0
     public init() {
-        itemId = .init()
-        amount = .init()
-        tab = .init()
     }
 }
 
 public struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var count: UInt16
-    public var kafraPoints: UInt32
-    public var items: [PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var count: UInt16 = 0
+    public var kafraPoints: UInt32 = 0
+    public var items: [PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        count = .init()
-        kafraPoints = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var AID: UInt32
-    public var itemId: UInt32
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var AID: UInt32 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        AID = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO: Sendable {
-    public var packetType: Int16
-    public var result: UInt16
-    public var itemId: UInt32
-    public var price: UInt32
+    public var packetType: Int16 = 0
+    public var result: UInt16 = 0
+    public var itemId: UInt32 = 0
+    public var price: UInt32 = 0
     public init() {
-        packetType = .init()
-        result = .init()
-        itemId = .init()
-        price = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_APPLY_BARGAIN_SALE_ITEM: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
-    public var itemId: UInt32
-    public var amount: UInt32
-    public var startTime: UInt32
-    public var hours: UInt16
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var itemId: UInt32 = 0
+    public var amount: UInt32 = 0
+    public var startTime: UInt32 = 0
+    public var hours: UInt16 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
-        itemId = .init()
-        amount = .init()
-        startTime = .init()
-        hours = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
-    public var itemId: UInt32
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_BARGAIN_SALE_SELLING: Sendable {
-    public var packetType: Int16
-    public var itemId: UInt32
-    public var remainingTime: UInt32
+    public var packetType: Int16 = 0
+    public var itemId: UInt32 = 0
+    public var remainingTime: UInt32 = 0
     public init() {
-        packetType = .init()
-        itemId = .init()
-        remainingTime = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_BARGAIN_SALE_CLOSE: Sendable {
-    public var packetType: Int16
-    public var itemId: UInt32
+    public var packetType: Int16 = 0
+    public var itemId: UInt32 = 0
     public init() {
-        packetType = .init()
-        itemId = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_COUNT_BARGAIN_SALE_ITEM: Sendable {
-    public var packetType: Int16
-    public var itemId: UInt32
-    public var amount: UInt32
+    public var packetType: Int16 = 0
+    public var itemId: UInt32 = 0
+    public var amount: UInt32 = 0
     public init() {
-        packetType = .init()
-        itemId = .init()
-        amount = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub: Sendable {
-    public var id: UInt32
-    public var itemId: UInt32
-    public var amount: Int32
-    public var action: UInt8
-    public var refine: Int32
-    public var uniqueId: Int64
-    public var IsIdentified: UInt8
-    public var itemType: UInt16
-    public var slot: EQUIPSLOTINFO
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var id: UInt32 = 0
+    public var itemId: UInt32 = 0
+    public var amount: Int32 = 0
+    public var action: UInt8 = 0
+    public var refine: Int32 = 0
+    public var uniqueId: Int64 = 0
+    public var IsIdentified: UInt8 = 0
+    public var itemType: UInt16 = 0
+    public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
-    @FixedSizeArray(size: 24, initialValue: .init())
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var time: [Int8]
-    public var attribute: UInt8
+    public var attribute: UInt8 = 0
     public init() {
-        id = .init()
-        itemId = .init()
-        amount = .init()
-        action = .init()
-        refine = .init()
-        uniqueId = .init()
-        IsIdentified = .init()
-        itemType = .init()
-        slot = .init()
-        attribute = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG: Sendable {
-    public var packetType: Int16
-    public var PacketLength: Int16
-    public var result: UInt16
-    public var amount: UInt16
-    public var items: [PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub]
+    public var packetType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var result: UInt16 = 0
+    public var amount: UInt16 = 0
+    public var items: [PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub] = []
     public init() {
-        packetType = .init()
-        PacketLength = .init()
-        result = .init()
-        amount = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_CZ_ADVANCED_STATUS_CHANGE: Sendable {
-    public var packetType: Int16
-    public var type: Int16
-    public var amount: Int16
+    public var packetType: Int16 = 0
+    public var type: Int16 = 0
+    public var amount: Int16 = 0
     public init() {
-        packetType = .init()
-        type = .init()
-        amount = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_ADD_NEW_EMBLEM: Sendable {
-    public var packetType: Int16
-    public var guild_id: UInt32
-    public var version: UInt32
+    public var packetType: Int16 = 0
+    public var guild_id: UInt32 = 0
+    public var version: UInt32 = 0
     public init() {
-        packetType = .init()
-        guild_id = .init()
-        version = .init()
     }
 }
 
 public struct PACKET_ZC_BROADCAST: Sendable {
-    public var packetType: Int16
-    public var PacketLength: Int16
-    public var message: [Int8]
+    public var packetType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var message: [Int8] = []
     public init() {
-        packetType = .init()
-        PacketLength = .init()
-        message = .init()
     }
 }
 
 public struct PACKET_ZC_BROADCAST2: Sendable {
-    public var packetType: Int16
-    public var PacketLength: Int16
-    public var fontColor: UInt32
-    public var fontType: Int16
-    public var fontSize: Int16
-    public var fontAlign: Int16
-    public var fontY: Int16
-    public var message: [Int8]
+    public var packetType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var fontColor: UInt32 = 0
+    public var fontType: Int16 = 0
+    public var fontSize: Int16 = 0
+    public var fontAlign: Int16 = 0
+    public var fontY: Int16 = 0
+    public var message: [Int8] = []
     public init() {
-        packetType = .init()
-        PacketLength = .init()
-        fontColor = .init()
-        fontType = .init()
-        fontSize = .init()
-        fontAlign = .init()
-        fontY = .init()
-        message = .init()
     }
 }
 
 public struct PACKET_ZC_ENTRY_QUEUE_INIT: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_RODEX_RETURN: Sendable {
-    public var packetType: Int16
-    public var msgId: UInt32
+    public var packetType: Int16 = 0
+    public var msgId: UInt32 = 0
     public init() {
-        packetType = .init()
-        msgId = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_STYLE_CLOSE: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_SUMMON_HP_INIT: Sendable {
-    public var PacketType: Int16
-    public var summonAID: UInt32
-    public var CurrentHP: UInt32
-    public var MaxHP: UInt32
+    public var PacketType: Int16 = 0
+    public var summonAID: UInt32 = 0
+    public var CurrentHP: UInt32 = 0
+    public var MaxHP: UInt32 = 0
     public init() {
-        PacketType = .init()
-        summonAID = .init()
-        CurrentHP = .init()
-        MaxHP = .init()
     }
 }
 
 public struct PACKET_ZC_SUMMON_HP_UPDATE: Sendable {
-    public var PacketType: Int16
-    public var summonAID: UInt32
-    public var VarId: UInt16
-    public var Value: UInt32
+    public var PacketType: Int16 = 0
+    public var summonAID: UInt32 = 0
+    public var VarId: UInt16 = 0
+    public var Value: UInt32 = 0
     public init() {
-        PacketType = .init()
-        summonAID = .init()
-        VarId = .init()
-        Value = .init()
     }
 }
 
 public struct PACKET_ZC_REPUTE_INFO_sub: Sendable {
-    public var type: UInt64
-    public var points: Int64
+    public var type: UInt64 = 0
+    public var points: Int64 = 0
     public init() {
-        type = .init()
-        points = .init()
     }
 }
 
 public struct PACKET_ZC_REPUTE_INFO: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var success: UInt8
-    public var list: [PACKET_ZC_REPUTE_INFO_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var success: UInt8 = 0
+    public var list: [PACKET_ZC_REPUTE_INFO_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        success = .init()
-        list = .init()
     }
 }
 
 public struct PACKET_ZC_UI_OPEN_V3: Sendable {
-    public var packetType: Int16
-    public var type: UInt8
-    public var data: UInt64
+    public var packetType: Int16 = 0
+    public var type: UInt8 = 0
+    public var data: UInt64 = 0
     public init() {
-        packetType = .init()
-        type = .init()
-        data = .init()
     }
 }
 
 public struct PACKET_ZC_TARGET_SPIRITS: Sendable {
-    public var packetType: Int16
-    public var GID: UInt32
-    public var unknown_val: UInt32
-    public var amount: UInt16
+    public var packetType: Int16 = 0
+    public var GID: UInt32 = 0
+    public var unknown_val: UInt32 = 0
+    public var amount: UInt16 = 0
     public init() {
-        packetType = .init()
-        GID = .init()
-        unknown_val = .init()
-        amount = .init()
     }
 }
 
 public struct PACKET_ZC_FRIENDS_LIST_sub: Sendable {
-    public var AID: UInt32
-    public var CID: UInt32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var AID: UInt32 = 0
+    public var CID: UInt32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
     public init() {
-        AID = .init()
-        CID = .init()
     }
 }
 
 public struct PACKET_ZC_FRIENDS_LIST: Sendable {
-    public var packetType: Int16
-    public var PacketLength: Int16
-    public var friends: [PACKET_ZC_FRIENDS_LIST_sub]
+    public var packetType: Int16 = 0
+    public var PacketLength: Int16 = 0
+    public var friends: [PACKET_ZC_FRIENDS_LIST_sub] = []
     public init() {
-        packetType = .init()
-        PacketLength = .init()
-        friends = .init()
     }
 }
 
 public struct PACKET_CZ_PC_SELL_ITEMLIST_sub: Sendable {
-    public var index: UInt16
-    public var amount: UInt16
+    public var index: UInt16 = 0
+    public var amount: UInt16 = 0
     public init() {
-        index = .init()
-        amount = .init()
     }
 }
 
 public struct PACKET_CZ_PC_SELL_ITEMLIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var sellList: [PACKET_CZ_PC_SELL_ITEMLIST_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var sellList: [PACKET_CZ_PC_SELL_ITEMLIST_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        sellList = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_CHANGE_MEMBERPOS_sub: Sendable {
-    public var AID: UInt32
-    public var CID: UInt32
-    public var position: Int32
+    public var AID: UInt32 = 0
+    public var CID: UInt32 = 0
+    public var position: Int32 = 0
     public init() {
-        AID = .init()
-        CID = .init()
-        position = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_CHANGE_MEMBERPOS: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var list: [PACKET_CZ_REQ_CHANGE_MEMBERPOS_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var list: [PACKET_CZ_REQ_CHANGE_MEMBERPOS_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        list = .init()
     }
 }
 
 public struct PACKET_ZC_CLEAR_DIALOG: Sendable {
-    public var packetType: Int16
-    public var GID: UInt32
+    public var packetType: Int16 = 0
+    public var GID: UInt32 = 0
     public init() {
-        packetType = .init()
-        GID = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_BIND_ON_EQUIP: Sendable {
-    public var packetType: Int16
-    public var index: Int16
+    public var packetType: Int16 = 0
+    public var index: Int16 = 0
     public init() {
-        packetType = .init()
-        index = .init()
     }
 }
 
 public struct PACKET_ZC_BANKING_CHECK: Sendable {
-    public var packetType: Int16
-    public var money: Int64
-    public var reason: Int16
+    public var packetType: Int16 = 0
+    public var money: Int64 = 0
+    public var reason: Int16 = 0
     public init() {
-        packetType = .init()
-        money = .init()
-        reason = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_BANKING_WITHDRAW: Sendable {
-    public var packetType: Int16
-    public var reason: Int16
-    public var money: Int64
-    public var zeny: Int32
+    public var packetType: Int16 = 0
+    public var reason: Int16 = 0
+    public var money: Int64 = 0
+    public var zeny: Int32 = 0
     public init() {
-        packetType = .init()
-        reason = .init()
-        money = .init()
-        zeny = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_BANKING_DEPOSIT: Sendable {
-    public var packetType: Int16
-    public var reason: Int16
-    public var money: Int64
-    public var zeny: Int32
+    public var packetType: Int16 = 0
+    public var reason: Int16 = 0
+    public var money: Int64 = 0
+    public var zeny: Int32 = 0
     public init() {
-        packetType = .init()
-        reason = .init()
-        money = .init()
-        zeny = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_CLOSE_BANKING: Sendable {
-    public var packetType: Int16
-    public var unknown: Int16
+    public var packetType: Int16 = 0
+    public var unknown: Int16 = 0
     public init() {
-        packetType = .init()
-        unknown = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_OPEN_BANKING: Sendable {
-    public var packetType: Int16
-    public var unknown: Int16
+    public var packetType: Int16 = 0
+    public var unknown: Int16 = 0
     public init() {
-        packetType = .init()
-        unknown = .init()
     }
 }
 
 public struct PACKET_ZC_REQ_EXCHANGE_ITEM: Sendable {
-    public var packetType: UInt16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: UInt16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var requesterName: [Int8]
-    public var targetId: UInt32
-    public var targetLv: UInt16
+    public var targetId: UInt32 = 0
+    public var targetLv: UInt16 = 0
     public init() {
-        packetType = .init()
-        targetId = .init()
-        targetLv = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_EXCHANGE_ITEM: Sendable {
-    public var packetType: UInt16
-    public var result: UInt8
-    public var targetId: UInt32
-    public var targetLv: UInt16
+    public var packetType: UInt16 = 0
+    public var result: UInt8 = 0
+    public var targetId: UInt32 = 0
+    public var targetLv: UInt16 = 0
     public init() {
-        packetType = .init()
-        result = .init()
-        targetId = .init()
-        targetLv = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_ADD_EXCHANGE_ITEM: Sendable {
-    public var packetType: Int16
-    public var index: UInt16
-    public var result: UInt8
+    public var packetType: Int16 = 0
+    public var index: UInt16 = 0
+    public var result: UInt8 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_COUPLENAME: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN: Sendable {
-    public var packetType: Int16
-    public var CID: UInt32
-    public var AID: UInt32
+    public var packetType: Int16 = 0
+    public var CID: UInt32 = 0
+    public var AID: UInt32 = 0
     public init() {
-        packetType = .init()
-        CID = .init()
-        AID = .init()
     }
 }
 
 public struct PACKET_ZC_PARTY_REQ_MASTER_TO_JOIN: Sendable {
-    public var packetType: Int16
-    public var CID: UInt32
-    public var AID: UInt32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var CID: UInt32 = 0
+    public var AID: UInt32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
-    public var x: UInt16
-    public var y: UInt16
+    public var x: UInt16 = 0
+    public var y: UInt16 = 0
     public init() {
-        packetType = .init()
-        CID = .init()
-        AID = .init()
-        x = .init()
-        y = .init()
     }
 }
 
 public struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN: Sendable {
-    public var packetType: Int16
-    public var CID: UInt32
-    public var AID: UInt32
-    public var accept: UInt8
+    public var packetType: Int16 = 0
+    public var CID: UInt32 = 0
+    public var AID: UInt32 = 0
+    public var accept: UInt8 = 0
     public init() {
-        packetType = .init()
-        CID = .init()
-        AID = .init()
-        accept = .init()
     }
 }
 
 public struct PACKET_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var player_name: [Int8]
-    @FixedSizeArray(size: 24, initialValue: .init())
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var party_name: [Int8]
-    public var AID: UInt32
-    public var refused: UInt32
+    public var AID: UInt32 = 0
+    public var refused: UInt32 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
-        refused = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_SE_CASH_TAB_CODE: Sendable {
-    public var packetType: Int16
-    public var tab: Int16
+    public var packetType: Int16 = 0
+    public var tab: Int16 = 0
     public init() {
-        packetType = .init()
-        tab = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2_sub: Sendable {
-    public var itemId: UInt32
-    public var price: Int32
+    public var itemId: UInt32 = 0
+    public var price: Int32 = 0
     public init() {
-        itemId = .init()
-        price = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var tab: UInt32
-    public var count: Int16
-    public var items: [PACKET_ZC_ACK_SE_CASH_ITEM_LIST2_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var tab: UInt32 = 0
+    public var count: Int16 = 0
+    public var items: [PACKET_ZC_ACK_SE_CASH_ITEM_LIST2_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        tab = .init()
-        count = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_MERGE_ITEM: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var indices: [UInt16]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var indices: [UInt16] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        indices = .init()
     }
 }
 
 public struct PACKET_CZ_RESET_SKILL: Sendable {
-    public var packetType: Int16
-    public var unknown: UInt8
+    public var packetType: Int16 = 0
+    public var unknown: UInt8 = 0
     public init() {
-        packetType = .init()
-        unknown = .init()
     }
 }
 
 public struct PACKET_ZC_BOSS_INFO: Sendable {
-    public var packetType: Int16
-    public var type: UInt8
-    public var x: UInt32
-    public var y: UInt32
-    public var minHours: UInt16
-    public var minMinutes: UInt16
-    public var maxHours: UInt16
-    public var maxMinutes: UInt16
-    @FixedSizeArray(size: 51, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var type: UInt8 = 0
+    public var x: UInt32 = 0
+    public var y: UInt32 = 0
+    public var minHours: UInt16 = 0
+    public var minMinutes: UInt16 = 0
+    public var maxHours: UInt16 = 0
+    public var maxMinutes: UInt16 = 0
+    @FixedSizeArray(size: 51, initialValue: 0)
     public var name: [Int8]
     public init() {
-        packetType = .init()
-        type = .init()
-        x = .init()
-        y = .init()
-        minHours = .init()
-        minMinutes = .init()
-        maxHours = .init()
-        maxMinutes = .init()
     }
 }
 
 public struct PACKET_CZ_INVENTORY_TAB: Sendable {
-    public var packetType: Int16
-    public var index: Int16
-    public var favorite: Int8
+    public var packetType: Int16 = 0
+    public var index: Int16 = 0
+    public var favorite: Int8 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        favorite = .init()
     }
 }
 
 public struct PACKET_ZC_INVENTORY_TAB: Sendable {
-    public var packetType: Int16
-    public var index: Int16
-    public var favorite: Int8
+    public var packetType: Int16 = 0
+    public var index: Int16 = 0
+    public var favorite: Int8 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        favorite = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_OPEN_BANKING: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_CLOSE_BANKING: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_BANKING_CHECK: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_BANKING_DEPOSIT: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
-    public var zeny: Int32
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var zeny: Int32 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
-        zeny = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_BANKING_WITHDRAW: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
-    public var zeny: Int32
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var zeny: Int32 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
-        zeny = .init()
     }
 }
 
 public struct PACKET_ZC_ACCEPT_ENTER: Sendable {
-    public var packetType: Int16
-    public var startTime: UInt32
-    @FixedSizeArray(size: 3, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var startTime: UInt32 = 0
+    @FixedSizeArray(size: 3, initialValue: 0)
     public var posDir: [UInt8]
-    public var xSize: UInt8
-    public var ySize: UInt8
-    public var font: UInt16
+    public var xSize: UInt8 = 0
+    public var ySize: UInt8 = 0
+    public var font: UInt16 = 0
     public init() {
-        packetType = .init()
-        startTime = .init()
-        xSize = .init()
-        ySize = .init()
-        font = .init()
     }
 }
 
 public struct PACKET_ZC_REFUSE_ENTER: Sendable {
-    public var packetType: Int16
-    public var errorCode: UInt8
+    public var packetType: Int16 = 0
+    public var errorCode: UInt8 = 0
     public init() {
-        packetType = .init()
-        errorCode = .init()
     }
 }
 
 public struct PACKET_ZC_RESTART_ACK: Sendable {
-    public var packetType: Int16
-    public var type: UInt8
+    public var packetType: Int16 = 0
+    public var type: UInt8 = 0
     public init() {
-        packetType = .init()
-        type = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_VANISH: Sendable {
-    public var packetType: Int16
-    public var gid: UInt32
-    public var type: UInt8
+    public var packetType: Int16 = 0
+    public var gid: UInt32 = 0
+    public var type: UInt8 = 0
     public init() {
-        packetType = .init()
-        gid = .init()
-        type = .init()
     }
 }
 
 public struct PACKET_ZC_ITEM_DISAPPEAR: Sendable {
-    public var packetType: Int16
-    public var itemAid: UInt32
+    public var packetType: Int16 = 0
+    public var itemAid: UInt32 = 0
     public init() {
-        packetType = .init()
-        itemAid = .init()
     }
 }
 
 public struct PACKET_ZC_MILLENNIUMSHIELD: Sendable {
-    public var packetType: Int16
-    public var aid: UInt32
-    public var num: Int16
-    public var state: Int16
+    public var packetType: Int16 = 0
+    public var aid: UInt32 = 0
+    public var num: Int16 = 0
+    public var state: Int16 = 0
     public init() {
-        packetType = .init()
-        aid = .init()
-        num = .init()
-        state = .init()
     }
 }
 
 public struct PACKET_ZC_SPIRITS_ATTRIBUTE: Sendable {
-    public var packetType: Int16
-    public var aid: UInt32
-    public var spiritsType: Int16
-    public var num: Int16
+    public var packetType: Int16 = 0
+    public var aid: UInt32 = 0
+    public var spiritsType: Int16 = 0
+    public var num: Int16 = 0
     public init() {
-        packetType = .init()
-        aid = .init()
-        spiritsType = .init()
-        num = .init()
     }
 }
 
 public struct PACKET_ZC_CHANGESTATE_MER: Sendable {
-    public var packetType: Int16
-    public var type: UInt8
-    public var state: UInt8
-    public var gid: UInt32
-    public var data: UInt32
+    public var packetType: Int16 = 0
+    public var type: UInt8 = 0
+    public var state: UInt8 = 0
+    public var gid: UInt32 = 0
+    public var data: UInt32 = 0
     public init() {
-        packetType = .init()
-        type = .init()
-        state = .init()
-        gid = .init()
-        data = .init()
     }
 }
 
 public struct PACKET_ZC_HOSKILLINFO_LIST_sub: Sendable {
-    public var id: UInt16
-    public var inf: UInt16
-    public var unknown: UInt16
-    public var level: UInt16
-    public var sp: UInt16
-    public var range: UInt16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var id: UInt16 = 0
+    public var inf: UInt16 = 0
+    public var unknown: UInt16 = 0
+    public var level: UInt16 = 0
+    public var sp: UInt16 = 0
+    public var range: UInt16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
-    public var upgradable: UInt8
+    public var upgradable: UInt8 = 0
     public init() {
-        id = .init()
-        inf = .init()
-        unknown = .init()
-        level = .init()
-        sp = .init()
-        range = .init()
-        upgradable = .init()
     }
 }
 
 public struct PACKET_ZC_HOSKILLINFO_LIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var skills: [PACKET_ZC_HOSKILLINFO_LIST_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var skills: [PACKET_ZC_HOSKILLINFO_LIST_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        skills = .init()
     }
 }
 
 public struct PACKET_ZC_HOSKILLINFO_UPDATE: Sendable {
-    public var packetType: Int16
-    public var skill_id: UInt16
-    public var Level: Int16
-    public var SP: Int16
-    public var AttackRange: Int16
-    public var upgradable: Int8
+    public var packetType: Int16 = 0
+    public var skill_id: UInt16 = 0
+    public var Level: Int16 = 0
+    public var SP: Int16 = 0
+    public var AttackRange: Int16 = 0
+    public var upgradable: Int8 = 0
     public init() {
-        packetType = .init()
-        skill_id = .init()
-        Level = .init()
-        SP = .init()
-        AttackRange = .init()
-        upgradable = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_PLAYERMOVE: Sendable {
-    public var packetType: Int16
-    public var moveStartTime: UInt32
-    @FixedSizeArray(size: 6, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var moveStartTime: UInt32 = 0
+    @FixedSizeArray(size: 6, initialValue: 0)
     public var moveData: [UInt8]
     public init() {
-        packetType = .init()
-        moveStartTime = .init()
     }
 }
 
 public struct PACKET_ZC_CHANGE_DIRECTION: Sendable {
-    public var packetType: Int16
-    public var srcId: UInt32
-    public var headDir: UInt16
-    public var dir: UInt8
+    public var packetType: Int16 = 0
+    public var srcId: UInt32 = 0
+    public var headDir: UInt16 = 0
+    public var dir: UInt8 = 0
     public init() {
-        packetType = .init()
-        srcId = .init()
-        headDir = .init()
-        dir = .init()
     }
 }
 
 public struct PACKET_ZC_NPCACK_MAPMOVE: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 16, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var mapName: [Int8]
-    public var xPos: UInt16
-    public var yPos: UInt16
+    public var xPos: UInt16 = 0
+    public var yPos: UInt16 = 0
     public init() {
-        packetType = .init()
-        xPos = .init()
-        yPos = .init()
     }
 }
 
 public struct PACKET_ZC_NPCACK_SERVERMOVE: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 16, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var mapName: [Int8]
-    public var xPos: UInt16
-    public var yPos: UInt16
-    public var ip: UInt32
-    public var port: UInt16
-    @FixedSizeArray(size: 128, initialValue: .init())
+    public var xPos: UInt16 = 0
+    public var yPos: UInt16 = 0
+    public var ip: UInt32 = 0
+    public var port: UInt16 = 0
+    @FixedSizeArray(size: 128, initialValue: 0)
     public var domain: [Int8]
     public init() {
-        packetType = .init()
-        xPos = .init()
-        yPos = .init()
-        ip = .init()
-        port = .init()
     }
 }
 
 public struct PACKET_ZC_STOPMOVE: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
-    public var xPos: UInt16
-    public var yPos: UInt16
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var xPos: UInt16 = 0
+    public var yPos: UInt16 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
-        xPos = .init()
-        yPos = .init()
     }
 }
 
 public struct PACKET_ZC_SELECT_DEALTYPE: Sendable {
-    public var packetType: Int16
-    public var npcId: UInt32
+    public var packetType: Int16 = 0
+    public var npcId: UInt32 = 0
     public init() {
-        packetType = .init()
-        npcId = .init()
     }
 }
 
 public struct PACKET_ZC_PC_SELL_ITEMLIST_sub: Sendable {
-    public var index: UInt16
-    public var price: UInt32
-    public var overcharge: UInt32
+    public var index: UInt16 = 0
+    public var price: UInt32 = 0
+    public var overcharge: UInt32 = 0
     public init() {
-        index = .init()
-        price = .init()
-        overcharge = .init()
     }
 }
 
 public struct PACKET_ZC_PC_SELL_ITEMLIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var items: [PACKET_ZC_PC_SELL_ITEMLIST_sub]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var items: [PACKET_ZC_PC_SELL_ITEMLIST_sub] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        items = .init()
     }
 }
 
 public struct PACKET_ZC_CLOSE_DIALOG: Sendable {
-    public var packetType: Int16
-    public var npcId: UInt32
+    public var packetType: Int16 = 0
+    public var npcId: UInt32 = 0
     public init() {
-        packetType = .init()
-        npcId = .init()
     }
 }
 
 public struct PACKET_ZC_MENU_LIST: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var npcId: UInt32
-    public var menu: [Int8]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var npcId: UInt32 = 0
+    public var menu: [Int8] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        npcId = .init()
-        menu = .init()
     }
 }
 
 public struct PACKET_ZC_OPEN_EDITDLG: Sendable {
-    public var packetType: Int16
-    public var npcId: UInt32
+    public var packetType: Int16 = 0
+    public var npcId: UInt32 = 0
     public init() {
-        packetType = .init()
-        npcId = .init()
     }
 }
 
 public struct PACKET_ZC_OPEN_EDITDLGSTR: Sendable {
-    public var packetType: Int16
-    public var npcId: UInt32
+    public var packetType: Int16 = 0
+    public var npcId: UInt32 = 0
     public init() {
-        packetType = .init()
-        npcId = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_REQ_ALLY_GUILD: Sendable {
-    public var packetType: Int16
-    public var flag: UInt8
+    public var packetType: Int16 = 0
+    public var flag: UInt8 = 0
     public init() {
-        packetType = .init()
-        flag = .init()
     }
 }
 
 public struct PACKET_ZC_DELETE_RELATED_GUILD: Sendable {
-    public var packetType: Int16
-    public var allyID: UInt32
-    public var flag: UInt32
+    public var packetType: Int16 = 0
+    public var allyID: UInt32 = 0
+    public var flag: UInt32 = 0
     public init() {
-        packetType = .init()
-        allyID = .init()
-        flag = .init()
     }
 }
 
 public struct PACKET_ZC_REQ_ALLY_GUILD: Sendable {
-    public var packetType: Int16
-    public var inviterId: UInt32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var inviterId: UInt32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var inviterGuildName: [Int8]
     public init() {
-        packetType = .init()
-        inviterId = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_REQ_HOSTILE_GUILD: Sendable {
-    public var packetType: Int16
-    public var flag: UInt8
+    public var packetType: Int16 = 0
+    public var flag: UInt8 = 0
     public init() {
-        packetType = .init()
-        flag = .init()
     }
 }
 
 public struct PACKET_ZC_COMPASS: Sendable {
-    public var packetType: Int16
-    public var npcId: UInt32
-    public var type: UInt32
-    public var xPos: UInt32
-    public var yPos: UInt32
-    public var id: UInt8
-    public var color: UInt32
+    public var packetType: Int16 = 0
+    public var npcId: UInt32 = 0
+    public var type: UInt32 = 0
+    public var xPos: UInt32 = 0
+    public var yPos: UInt32 = 0
+    public var id: UInt8 = 0
+    public var color: UInt32 = 0
     public init() {
-        packetType = .init()
-        npcId = .init()
-        type = .init()
-        xPos = .init()
-        yPos = .init()
-        id = .init()
-        color = .init()
     }
 }
 
 public struct PACKET_ZC_ITEM_THROW_ACK: Sendable {
-    public var packetType: Int16
-    public var index: UInt16
-    public var count: UInt16
+    public var packetType: Int16 = 0
+    public var index: UInt16 = 0
+    public var count: UInt16 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        count = .init()
     }
 }
 
 public struct PACKET_ZC_DELETE_ITEM_FROM_BODY: Sendable {
-    public var packetType: Int16
-    public var deleteType: Int16
-    public var index: UInt16
-    public var count: Int16
+    public var packetType: Int16 = 0
+    public var deleteType: Int16 = 0
+    public var index: UInt16 = 0
+    public var count: Int16 = 0
     public init() {
-        packetType = .init()
-        deleteType = .init()
-        index = .init()
-        count = .init()
     }
 }
 
 public struct PACKET_ZC_CARTOFF: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_GUILD_MENUINTERFACE: Sendable {
-    public var packetType: Int16
-    public var menuFlag: Int32
+    public var packetType: Int16 = 0
+    public var menuFlag: Int32 = 0
     public init() {
-        packetType = .init()
-        menuFlag = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_POSITION_TO_GUILDM: Sendable {
-    public var packetType: Int16
-    public var aid: UInt32
-    public var xPos: Int16
-    public var yPos: Int16
+    public var packetType: Int16 = 0
+    public var aid: UInt32 = 0
+    public var xPos: Int16 = 0
+    public var yPos: Int16 = 0
     public init() {
-        packetType = .init()
-        aid = .init()
-        xPos = .init()
-        yPos = .init()
     }
 }
 
 public struct PACKET_ZC_GUILD_CHAT: Sendable {
-    public var packetType: Int16
-    public var packetLength: Int16
-    public var message: [Int8]
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var message: [Int8] = []
     public init() {
-        packetType = .init()
-        packetLength = .init()
-        message = .init()
     }
 }
 
 public struct PACKET_ZC_STATUS: Sendable {
-    public var packetType: Int16
-    public var point: UInt16
-    public var str: UInt8
-    public var standardStr: UInt8
-    public var agi: UInt8
-    public var standardAgi: UInt8
-    public var vit: UInt8
-    public var standardVit: UInt8
-    public var int_: UInt8
-    public var standardInt: UInt8
-    public var dex: UInt8
-    public var standardDex: UInt8
-    public var luk: UInt8
-    public var standardLuk: UInt8
-    public var attPower: Int16
-    public var refiningPower: Int16
-    public var max_mattPower: Int16
-    public var min_mattPower: Int16
-    public var itemdefPower: Int16
-    public var plusdefPower: Int16
-    public var mdefPower: Int16
-    public var plusmdefPower: Int16
-    public var hitSuccessValue: Int16
-    public var avoidSuccessValue: Int16
-    public var plusAvoidSuccessValue: Int16
-    public var criticalSuccessValue: Int16
-    public var ASPD: Int16
-    public var plusASPD: Int16
+    public var packetType: Int16 = 0
+    public var point: UInt16 = 0
+    public var str: UInt8 = 0
+    public var standardStr: UInt8 = 0
+    public var agi: UInt8 = 0
+    public var standardAgi: UInt8 = 0
+    public var vit: UInt8 = 0
+    public var standardVit: UInt8 = 0
+    public var int_: UInt8 = 0
+    public var standardInt: UInt8 = 0
+    public var dex: UInt8 = 0
+    public var standardDex: UInt8 = 0
+    public var luk: UInt8 = 0
+    public var standardLuk: UInt8 = 0
+    public var attPower: Int16 = 0
+    public var refiningPower: Int16 = 0
+    public var max_mattPower: Int16 = 0
+    public var min_mattPower: Int16 = 0
+    public var itemdefPower: Int16 = 0
+    public var plusdefPower: Int16 = 0
+    public var mdefPower: Int16 = 0
+    public var plusmdefPower: Int16 = 0
+    public var hitSuccessValue: Int16 = 0
+    public var avoidSuccessValue: Int16 = 0
+    public var plusAvoidSuccessValue: Int16 = 0
+    public var criticalSuccessValue: Int16 = 0
+    public var ASPD: Int16 = 0
+    public var plusASPD: Int16 = 0
     public init() {
-        packetType = .init()
-        point = .init()
-        str = .init()
-        standardStr = .init()
-        agi = .init()
-        standardAgi = .init()
-        vit = .init()
-        standardVit = .init()
-        int_ = .init()
-        standardInt = .init()
-        dex = .init()
-        standardDex = .init()
-        luk = .init()
-        standardLuk = .init()
-        attPower = .init()
-        refiningPower = .init()
-        max_mattPower = .init()
-        min_mattPower = .init()
-        itemdefPower = .init()
-        plusdefPower = .init()
-        mdefPower = .init()
-        plusmdefPower = .init()
-        hitSuccessValue = .init()
-        avoidSuccessValue = .init()
-        plusAvoidSuccessValue = .init()
-        criticalSuccessValue = .init()
-        ASPD = .init()
-        plusASPD = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_MAPINFO: Sendable {
-    public var packetType: Int16
-    public var type: Int16
+    public var packetType: Int16 = 0
+    public var type: Int16 = 0
     public init() {
-        packetType = .init()
-        type = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_REMEMBER_WARPPOINT: Sendable {
-    public var packetType: Int16
-    public var type: UInt8
+    public var packetType: Int16 = 0
+    public var type: UInt8 = 0
     public init() {
-        packetType = .init()
-        type = .init()
     }
 }
 
 public struct PACKET_ZC_DISPEL: Sendable {
-    public var packetType: Int16
-    public var gid: UInt32
+    public var packetType: Int16 = 0
+    public var gid: UInt32 = 0
     public init() {
-        packetType = .init()
-        gid = .init()
     }
 }
 
 public struct PACKET_ZC_RESURRECTION: Sendable {
-    public var packetType: Int16
-    public var gid: UInt32
-    public var type: Int16
+    public var packetType: Int16 = 0
+    public var gid: UInt32 = 0
+    public var type: Int16 = 0
     public init() {
-        packetType = .init()
-        gid = .init()
-        type = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_MAPPROPERTY2: Sendable {
-    public var packetType: Int16
-    public var type: Int16
+    public var packetType: Int16 = 0
+    public var type: Int16 = 0
     public init() {
-        packetType = .init()
-        type = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_ITEMREFINING: Sendable {
-    public var packetType: Int16
-    public var result: UInt16
-    public var index: UInt16
-    public var value: UInt16
+    public var packetType: Int16 = 0
+    public var result: UInt16 = 0
+    public var index: UInt16 = 0
+    public var value: UInt16 = 0
     public init() {
-        packetType = .init()
-        result = .init()
-        index = .init()
-        value = .init()
     }
 }
 
 public struct PACKET_ZC_PAR_CHANGE_USER: Sendable {
-    public var packetType: Int16
-    public var gid: UInt32
-    public var type: Int16
-    public var value: UInt32
+    public var packetType: Int16 = 0
+    public var gid: UInt32 = 0
+    public var type: Int16 = 0
+    public var value: UInt32 = 0
     public init() {
-        packetType = .init()
-        gid = .init()
-        type = .init()
-        value = .init()
     }
 }
 
 public struct PACKET_ZC_CHANGE_CHATROOM: Sendable {
-    public var packetType: UInt16
-    public var packetSize: UInt16
-    public var ownerId: UInt32
-    public var chatId: UInt32
-    public var limit: UInt16
-    public var users: UInt16
-    public var flag: UInt8
-    public var title: [Int8]
+    public var packetType: UInt16 = 0
+    public var packetSize: UInt16 = 0
+    public var ownerId: UInt32 = 0
+    public var chatId: UInt32 = 0
+    public var limit: UInt16 = 0
+    public var users: UInt16 = 0
+    public var flag: UInt8 = 0
+    public var title: [Int8] = []
     public init() {
-        packetType = .init()
-        packetSize = .init()
-        ownerId = .init()
-        chatId = .init()
-        limit = .init()
-        users = .init()
-        flag = .init()
-        title = .init()
     }
 }
 
 public struct PACKET_ZC_EQUIP_ARROW: Sendable {
-    public var packetType: Int16
-    public var index: UInt16
+    public var packetType: Int16 = 0
+    public var index: UInt16 = 0
     public init() {
-        packetType = .init()
-        index = .init()
     }
 }
 
 public struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK: Sendable {
-    public var packetType: UInt16
-    public var index: UInt16
-    public var wearLocation: UInt32
-    public var flag: UInt8
+    public var packetType: UInt16 = 0
+    public var index: UInt16 = 0
+    public var wearLocation: UInt32 = 0
+    public var flag: UInt8 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        wearLocation = .init()
-        flag = .init()
     }
 }
 
 public struct PACKET_ZC_CLOSE_STORE: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_DELETE_ITEM_FROM_STORE: Sendable {
-    public var packetType: Int16
-    public var index: UInt16
-    public var amount: UInt32
+    public var packetType: Int16 = 0
+    public var index: UInt16 = 0
+    public var amount: UInt32 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        amount = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_STOREITEM_COUNTINFO: Sendable {
-    public var packetType: Int16
-    public var amount: UInt16
-    public var max_amount: UInt16
+    public var packetType: Int16 = 0
+    public var amount: UInt16 = 0
+    public var max_amount: UInt16 = 0
     public init() {
-        packetType = .init()
-        amount = .init()
-        max_amount = .init()
     }
 }
 
 public struct PACKET_ZC_EXCHANGEITEM_UNDO: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_EXEC_EXCHANGE_ITEM: Sendable {
-    public var packetType: Int16
-    public var result: UInt8
+    public var packetType: Int16 = 0
+    public var result: UInt8 = 0
     public init() {
-        packetType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_CANCEL_EXCHANGE_ITEM: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_CONCLUDE_EXCHANGE_ITEM: Sendable {
-    public var packetType: Int16
-    public var who: UInt8
+    public var packetType: Int16 = 0
+    public var who: UInt8 = 0
     public init() {
-        packetType = .init()
-        who = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_CREATE_CHATROOM: Sendable {
-    public var packetType: Int16
-    public var flag: UInt8
+    public var packetType: Int16 = 0
+    public var flag: UInt8 = 0
     public init() {
-        packetType = .init()
-        flag = .init()
     }
 }
 
 public struct PACKET_ZC_REFUSE_ENTER_ROOM: Sendable {
-    public var packetType: Int16
-    public var result: UInt8
+    public var packetType: Int16 = 0
+    public var result: UInt8 = 0
     public init() {
-        packetType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_DESTROY_ROOM: Sendable {
-    public var packetType: Int16
-    public var chatId: UInt32
+    public var packetType: Int16 = 0
+    public var chatId: UInt32 = 0
     public init() {
-        packetType = .init()
-        chatId = .init()
     }
 }
 
 public struct PACKET_ZC_ENTER_ROOM_sub: Sendable {
-    public var flag: UInt32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var flag: UInt32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
     public init() {
-        flag = .init()
     }
 }
 
 public struct PACKET_ZC_ENTER_ROOM: Sendable {
-    public var packetType: UInt16
-    public var packetSize: UInt16
-    public var chatId: UInt32
-    public var members: [PACKET_ZC_ENTER_ROOM_sub]
+    public var packetType: UInt16 = 0
+    public var packetSize: UInt16 = 0
+    public var chatId: UInt32 = 0
+    public var members: [PACKET_ZC_ENTER_ROOM_sub] = []
     public init() {
-        packetType = .init()
-        packetSize = .init()
-        chatId = .init()
-        members = .init()
     }
 }
 
 public struct PACKET_ZC_NPC_SHOWEFST_UPDATE: Sendable {
-    public var packetType: Int16
-    public var gid: UInt32
-    public var effectState: UInt32
-    public var level: Int32
-    public var showEFST: UInt32
+    public var packetType: Int16 = 0
+    public var gid: UInt32 = 0
+    public var effectState: UInt32 = 0
+    public var level: Int32 = 0
+    public var showEFST: UInt32 = 0
     public init() {
-        packetType = .init()
-        gid = .init()
-        effectState = .init()
-        level = .init()
-        showEFST = .init()
     }
 }
 
 public struct PACKET_ZC_ACTION_FAILURE: Sendable {
-    public var packetType: Int16
-    public var type: UInt16
+    public var packetType: Int16 = 0
+    public var type: UInt16 = 0
     public init() {
-        packetType = .init()
-        type = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_EFFECT: Sendable {
-    public var packetType: Int16
-    public var aid: UInt32
-    public var effectId: UInt32
+    public var packetType: Int16 = 0
+    public var aid: UInt32 = 0
+    public var effectId: UInt32 = 0
     public init() {
-        packetType = .init()
-        aid = .init()
-        effectId = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_ITEMCOMPOSITION: Sendable {
-    public var packetType: Int16
-    public var equipIndex: UInt16
-    public var cardIndex: UInt16
-    public var result: UInt8
+    public var packetType: Int16 = 0
+    public var equipIndex: UInt16 = 0
+    public var cardIndex: UInt16 = 0
+    public var result: UInt8 = 0
     public init() {
-        packetType = .init()
-        equipIndex = .init()
-        cardIndex = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_ITEMIDENTIFY: Sendable {
-    public var packetType: Int16
-    public var index: UInt16
-    public var result: UInt8
+    public var packetType: Int16 = 0
+    public var index: UInt16 = 0
+    public var result: UInt8 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_ITEMREPAIR: Sendable {
-    public var packetType: Int16
-    public var index: UInt16
-    public var result: UInt8
+    public var packetType: Int16 = 0
+    public var index: UInt16 = 0
+    public var result: UInt8 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_EQUIPITEM_DAMAGED: Sendable {
-    public var packetType: Int16
-    public var equipLocation: UInt16
-    public var GID: UInt32
+    public var packetType: Int16 = 0
+    public var equipLocation: UInt16 = 0
+    public var GID: UInt32 = 0
     public init() {
-        packetType = .init()
-        equipLocation = .init()
-        GID = .init()
     }
 }
 
 public struct PACKET_ZC_DELETE_ITEM_FROM_CART: Sendable {
-    public var packetType: Int16
-    public var index: UInt16
-    public var amount: Int32
+    public var packetType: Int16 = 0
+    public var index: UInt16 = 0
+    public var amount: Int32 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        amount = .init()
     }
 }
 
 public struct PACKET_ZC_OPENSTORE: Sendable {
-    public var packetType: Int16
-    public var num: UInt16
+    public var packetType: Int16 = 0
+    public var num: UInt16 = 0
     public init() {
-        packetType = .init()
-        num = .init()
     }
 }
 
 public struct PACKET_ZC_PC_PURCHASE_RESULT_FROMMC: Sendable {
-    public var packetType: Int16
-    public var index: UInt16
-    public var amount: UInt16
-    public var result: UInt8
+    public var packetType: Int16 = 0
+    public var index: UInt16 = 0
+    public var amount: UInt16 = 0
+    public var result: UInt8 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        amount = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_OPENSTORE2: Sendable {
-    public var packetType: Int16
-    public var result: UInt8
+    public var packetType: Int16 = 0
+    public var result: UInt8 = 0
     public init() {
-        packetType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_SKILL_DISAPPEAR: Sendable {
-    public var packetType: Int16
-    public var GID: UInt32
+    public var packetType: Int16 = 0
+    public var GID: UInt32 = 0
     public init() {
-        packetType = .init()
-        GID = .init()
     }
 }
 
 public struct PACKET_ZC_SKILLINFO_DELETE: Sendable {
-    public var packetType: UInt16
-    public var skillID: UInt16
+    public var packetType: UInt16 = 0
+    public var skillID: UInt16 = 0
     public init() {
-        packetType = .init()
-        skillID = .init()
     }
 }
 
 public struct PACKET_ZC_SKILL_UPDATE: Sendable {
-    public var packetType: Int16
-    public var GID: UInt32
+    public var packetType: Int16 = 0
+    public var GID: UInt32 = 0
     public init() {
-        packetType = .init()
-        GID = .init()
     }
 }
 
 public struct PACKET_ZC_HIGHJUMP: Sendable {
-    public var packetType: UInt16
-    public var srcId: UInt32
-    public var x: UInt16
-    public var y: UInt16
+    public var packetType: UInt16 = 0
+    public var srcId: UInt32 = 0
+    public var x: UInt16 = 0
+    public var y: UInt16 = 0
     public init() {
-        packetType = .init()
-        srcId = .init()
-        x = .init()
-        y = .init()
     }
 }
 
 public struct PACKET_ZC_RECOVERY: Sendable {
-    public var packetType: Int16
-    public var type: UInt16
-    public var amount: Int32
+    public var packetType: Int16 = 0
+    public var type: UInt16 = 0
+    public var amount: Int32 = 0
     public init() {
-        packetType = .init()
-        type = .init()
-        amount = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_WHISPER: Sendable {
-    public var packetType: Int16
-    public var result: UInt8
-    public var CID: UInt32
+    public var packetType: Int16 = 0
+    public var result: UInt8 = 0
+    public var CID: UInt32 = 0
     public init() {
-        packetType = .init()
-        result = .init()
-        CID = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_ADDITEM_TO_CART: Sendable {
-    public var packetType: Int16
-    public var result: UInt8
+    public var packetType: Int16 = 0
+    public var result: UInt8 = 0
     public init() {
-        packetType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_DELETEITEM_FROM_MCSTORE: Sendable {
-    public var packetType: Int16
-    public var index: UInt16
-    public var amount: UInt16
-    public var buyerCID: UInt32
-    public var date: UInt32
-    public var zeny: Int32
+    public var packetType: Int16 = 0
+    public var index: UInt16 = 0
+    public var amount: UInt16 = 0
+    public var buyerCID: UInt32 = 0
+    public var date: UInt32 = 0
+    public var zeny: Int32 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        amount = .init()
-        buyerCID = .init()
-        date = .init()
-        zeny = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_BAN_GUILD: Sendable {
-    public var packetType: Int16
-    public var guild_id: UInt32
-    public var AID: UInt32
-    public var CID: UInt32
-    @FixedSizeArray(size: 40, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var guild_id: UInt32 = 0
+    public var AID: UInt32 = 0
+    public var CID: UInt32 = 0
+    @FixedSizeArray(size: 40, initialValue: 0)
     public var message: [Int8]
     public init() {
-        packetType = .init()
-        guild_id = .init()
-        AID = .init()
-        CID = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_LEAVE_GUILD: Sendable {
-    public var packetType: Int16
-    public var guild_id: UInt32
-    public var AID: UInt32
-    public var CID: UInt32
-    @FixedSizeArray(size: 40, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var guild_id: UInt32 = 0
+    public var AID: UInt32 = 0
+    public var CID: UInt32 = 0
+    @FixedSizeArray(size: 40, initialValue: 0)
     public var message: [Int8]
     public init() {
-        packetType = .init()
-        guild_id = .init()
-        AID = .init()
-        CID = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_DISORGANIZE_GUILD: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 40, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 40, initialValue: 0)
     public var key: [Int8]
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_DISORGANIZE_GUILD_RESULT: Sendable {
-    public var packetType: Int16
-    public var result: Int32
+    public var packetType: Int16 = 0
+    public var result: Int32 = 0
     public init() {
-        packetType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_RESULT_MAKE_GUILD: Sendable {
-    public var packetType: Int16
-    public var result: UInt8
+    public var packetType: Int16 = 0
+    public var result: UInt8 = 0
     public init() {
-        packetType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_JOIN_GUILD: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
-    public var inviter_AID: UInt32
-    public var inviter_CID: UInt32
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var inviter_AID: UInt32 = 0
+    public var inviter_CID: UInt32 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
-        inviter_AID = .init()
-        inviter_CID = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_REQ_JOIN_GUILD: Sendable {
-    public var packetType: Int16
-    public var result: UInt8
+    public var packetType: Int16 = 0
+    public var result: UInt8 = 0
     public init() {
-        packetType = .init()
-        result = .init()
     }
 }
 
 public struct PACKET_ZC_REQ_JOIN_GUILD: Sendable {
-    public var packetType: Int16
-    public var guild_id: UInt32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var guild_id: UInt32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var guild_name: [Int8]
     public init() {
-        packetType = .init()
-        guild_id = .init()
     }
 }
 
 public struct PACKET_CZ_JOIN_GUILD: Sendable {
-    public var packetType: Int16
-    public var guild_id: UInt32
-    public var answer: Int32
+    public var packetType: Int16 = 0
+    public var guild_id: UInt32 = 0
+    public var answer: Int32 = 0
     public init() {
-        packetType = .init()
-        guild_id = .init()
-        answer = .init()
     }
 }
 
 public struct PACKET_ZC_GUILD_NOTICE: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 60, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 60, initialValue: 0)
     public var subject: [Int8]
-    @FixedSizeArray(size: 120, initialValue: .init())
+    @FixedSizeArray(size: 120, initialValue: 0)
     public var notice: [Int8]
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_JOIN_GUILD2: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_JOIN_GROUP: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
     public init() {
-        packetType = .init()
-        AID = .init()
     }
 }
 
 public struct PACKET_CZ_JOIN_GROUP: Sendable {
-    public var packetType: Int16
-    public var party_id: UInt32
-    public var flag: Int32
+    public var packetType: Int16 = 0
+    public var party_id: UInt32 = 0
+    public var flag: Int32 = 0
     public init() {
-        packetType = .init()
-        party_id = .init()
-        flag = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_LEAVE_GROUP: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_EXPEL_GROUP_MEMBER: Sendable {
-    public var packetType: Int16
-    public var AID: UInt32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
     public init() {
-        packetType = .init()
-        AID = .init()
     }
 }
 
 public struct PACKET_CZ_PARTY_JOIN_REQ: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_PARTY_JOIN_REQ_ACK: Sendable {
-    public var packetType: Int16
-    public var party_id: UInt32
-    public var flag: UInt8
+    public var packetType: Int16 = 0
+    public var party_id: UInt32 = 0
+    public var flag: UInt8 = 0
     public init() {
-        packetType = .init()
-        party_id = .init()
-        flag = .init()
     }
 }
 
 public struct PACKET_ZC_HO_PAR_CHANGE: Sendable {
-    public var packetType: Int16
-    public var type: UInt16
-    public var value: UInt64
+    public var packetType: Int16 = 0
+    public var type: UInt16 = 0
+    public var value: UInt64 = 0
     public init() {
-        packetType = .init()
-        type = .init()
-        value = .init()
     }
 }
 
 public struct PACKET_ZC_EL_PAR_CHANGE: Sendable {
-    public var packetType: Int16
-    public var type: UInt16
-    public var value: UInt32
+    public var packetType: Int16 = 0
+    public var type: UInt16 = 0
+    public var value: UInt32 = 0
     public init() {
-        packetType = .init()
-        type = .init()
-        value = .init()
     }
 }
 
 public struct PACKET_ZC_NOTIFY_ACT: Sendable {
-    public var packetType: Int16
-    public var srcID: Int32
-    public var targetID: Int32
-    public var serverTick: Int32
-    public var srcSpeed: Int32
-    public var dmgSpeed: Int32
-    public var damage: Int32
-    public var isSPDamage: Int8
-    public var div: UInt16
-    public var type: UInt8
-    public var damage2: Int32
+    public var packetType: Int16 = 0
+    public var srcID: Int32 = 0
+    public var targetID: Int32 = 0
+    public var serverTick: Int32 = 0
+    public var srcSpeed: Int32 = 0
+    public var dmgSpeed: Int32 = 0
+    public var damage: Int32 = 0
+    public var isSPDamage: Int8 = 0
+    public var div: UInt16 = 0
+    public var type: UInt8 = 0
+    public var damage2: Int32 = 0
     public init() {
-        packetType = .init()
-        srcID = .init()
-        targetID = .init()
-        serverTick = .init()
-        srcSpeed = .init()
-        dmgSpeed = .init()
-        damage = .init()
-        isSPDamage = .init()
-        div = .init()
-        type = .init()
-        damage2 = .init()
     }
 }
 
 public struct PACKET_CZ_REQUEST_MOVENPC: Sendable {
-    public var packetType: Int16
-    public var GID: UInt32
-    @FixedSizeArray(size: 3, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var GID: UInt32 = 0
+    @FixedSizeArray(size: 3, initialValue: 0)
     public var PosDir: [UInt8]
     public init() {
-        packetType = .init()
-        GID = .init()
     }
 }
 
 public struct PACKET_ZC_NPCSPRITE_CHANGE: Sendable {
-    public var packetType: Int16
-    public var GID: UInt32
-    public var type: UInt8
-    public var class_: UInt32
+    public var packetType: Int16 = 0
+    public var GID: UInt32 = 0
+    public var type: UInt8 = 0
+    public var class_: UInt32 = 0
     public init() {
-        packetType = .init()
-        GID = .init()
-        type = .init()
-        class_ = .init()
     }
 }
 
 public struct PACKET_ZC_MEMBER_NEWENTRY: Sendable {
-    public var packetType: Int16
-    public var count: UInt16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var count: UInt16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
     public init() {
-        packetType = .init()
-        count = .init()
     }
 }
 
 public struct PACKET_ZC_MEMBER_EXIT: Sendable {
-    public var packetType: Int16
-    public var count: UInt16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var count: UInt16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
-    public var kicked: UInt8
+    public var kicked: UInt8 = 0
     public init() {
-        packetType = .init()
-        count = .init()
-        kicked = .init()
     }
 }
 
 public struct PACKET_CZ_MOVETO_MAP: Sendable {
-    public var packetType: Int16
-    @FixedSizeArray(size: 16, initialValue: .init())
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 16, initialValue: 0)
     public var map: [Int8]
-    public var x: UInt16
-    public var y: UInt16
+    public var x: UInt16 = 0
+    public var y: UInt16 = 0
     public init() {
-        packetType = .init()
-        x = .init()
-        y = .init()
     }
 }
 
 public struct PACKET_CZ_BROADCAST: Sendable {
-    public var packetType: Int16
-    public var packetSize: UInt16
-    public var message: [Int8]
+    public var packetType: Int16 = 0
+    public var packetSize: UInt16 = 0
+    public var message: [Int8] = []
     public init() {
-        packetType = .init()
-        packetSize = .init()
-        message = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_WEAR_EQUIP: Sendable {
-    public var packetType: Int16
-    public var index: UInt16
-    public var position: UInt32
+    public var packetType: Int16 = 0
+    public var index: UInt16 = 0
+    public var position: UInt32 = 0
     public init() {
-        packetType = .init()
-        index = .init()
-        position = .init()
     }
 }
 
 public struct PACKET_CZ_ACK_SELECT_DEALTYPE: Sendable {
-    public var packetType: Int16
-    public var GID: UInt32
-    public var type: UInt8
+    public var packetType: Int16 = 0
+    public var GID: UInt32 = 0
+    public var type: UInt8 = 0
     public init() {
-        packetType = .init()
-        GID = .init()
-        type = .init()
     }
 }
 
 public struct PACKET_CZ_CREATE_CHATROOM: Sendable {
-    public var packetType: Int16
-    public var packetSize: UInt16
-    public var limit: UInt16
-    public var type: UInt8
-    @FixedSizeArray(size: 8, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var packetSize: UInt16 = 0
+    public var limit: UInt16 = 0
+    public var type: UInt8 = 0
+    @FixedSizeArray(size: 8, initialValue: 0)
     public var password: [Int8]
-    public var title: [Int8]
+    public var title: [Int8] = []
     public init() {
-        packetType = .init()
-        packetSize = .init()
-        limit = .init()
-        type = .init()
-        title = .init()
     }
 }
 
 public struct PACKET_CZ_BLACKSMITH_RANK: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_CZ_ALCHEMIST_RANK: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_BLACKSMITH_RANK: Sendable {
-    public var packetType: Int16
-    public var list: RANKLIST
+    public var packetType: Int16 = 0
+    public var list: RANKLIST = RANKLIST()
     public init() {
-        packetType = .init()
-        list = .init()
     }
 }
 
 public struct PACKET_ZC_ALCHEMIST_RANK: Sendable {
-    public var packetType: Int16
-    public var list: RANKLIST
+    public var packetType: Int16 = 0
+    public var list: RANKLIST = RANKLIST()
     public init() {
-        packetType = .init()
-        list = .init()
     }
 }
 
 public struct PACKET_ZC_BLACKSMITH_POINT: Sendable {
-    public var packetType: Int16
-    public var points: UInt32
-    public var points_total: UInt32
+    public var packetType: Int16 = 0
+    public var points: UInt32 = 0
+    public var points_total: UInt32 = 0
     public init() {
-        packetType = .init()
-        points = .init()
-        points_total = .init()
     }
 }
 
 public struct PACKET_ZC_ALCHEMIST_POINT: Sendable {
-    public var packetType: Int16
-    public var points: UInt32
-    public var points_total: UInt32
+    public var packetType: Int16 = 0
+    public var points: UInt32 = 0
+    public var points_total: UInt32 = 0
     public init() {
-        packetType = .init()
-        points = .init()
-        points_total = .init()
     }
 }
 
 public struct PACKET_ZC_TAEKWON_POINT: Sendable {
-    public var packetType: Int16
-    public var points: UInt32
-    public var points_total: UInt32
+    public var packetType: Int16 = 0
+    public var points: UInt32 = 0
+    public var points_total: UInt32 = 0
     public init() {
-        packetType = .init()
-        points = .init()
-        points_total = .init()
     }
 }
 
 public struct PACKET_CZ_TAEKWON_RANK: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_TAEKWON_RANK: Sendable {
-    public var packetType: Int16
-    public var list: RANKLIST
+    public var packetType: Int16 = 0
+    public var list: RANKLIST = RANKLIST()
     public init() {
-        packetType = .init()
-        list = .init()
     }
 }
 
 public struct PACKET_ZC_KILLER_POINT: Sendable {
-    public var packetType: Int16
-    public var points: UInt32
-    public var points_total: UInt32
+    public var packetType: Int16 = 0
+    public var points: UInt32 = 0
+    public var points_total: UInt32 = 0
     public init() {
-        packetType = .init()
-        points = .init()
-        points_total = .init()
     }
 }
 
 public struct PACKET_CZ_KILLER_RANK: Sendable {
-    public var packetType: Int16
+    public var packetType: Int16 = 0
     public init() {
-        packetType = .init()
     }
 }
 
 public struct PACKET_ZC_KILLER_RANK: Sendable {
-    public var packetType: Int16
-    public var list: RANKLIST
+    public var packetType: Int16 = 0
+    public var list: RANKLIST = RANKLIST()
     public init() {
-        packetType = .init()
-        list = .init()
     }
 }
 
 public struct PACKET_CZ_REQ_RANKING: Sendable {
-    public var packetType: Int16
-    public var type: UInt16
+    public var packetType: Int16 = 0
+    public var type: UInt16 = 0
     public init() {
-        packetType = .init()
-        type = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_RANKING_sub: Sendable {
-    @FixedSizeArray(size: 24, initialValue: .init())
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
-    public var points: UInt32
+    public var points: UInt32 = 0
     public init() {
-        points = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_RANKING: Sendable {
-    public var packetType: Int16
-    public var type: UInt16
-    public var list: RANKLIST
-    public var mypoints: UInt32
+    public var packetType: Int16 = 0
+    public var type: UInt16 = 0
+    public var list: RANKLIST = RANKLIST()
+    public var mypoints: UInt32 = 0
     public init() {
-        packetType = .init()
-        type = .init()
-        list = .init()
-        mypoints = .init()
     }
 }
 
 public struct PACKET_ZC_UPDATE_RANKING_POINT: Sendable {
-    public var packetType: Int16
-    public var type: UInt16
-    public var points: UInt32
-    public var points_total: UInt32
+    public var packetType: Int16 = 0
+    public var type: UInt16 = 0
+    public var points: UInt32 = 0
+    public var points_total: UInt32 = 0
     public init() {
-        packetType = .init()
-        type = .init()
-        points = .init()
-        points_total = .init()
     }
 }
 
 public struct PACKET_ZC_ACK_RANKING2: Sendable {
-    public var packetType: Int16
-    public var type: UInt16
-    @FixedSizeArray(size: 10, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var type: UInt16 = 0
+    @FixedSizeArray(size: 10, initialValue: 0)
     public var CIDs: [UInt32]
-    @FixedSizeArray(size: 10, initialValue: .init())
+    @FixedSizeArray(size: 10, initialValue: 0)
     public var points: [UInt32]
-    public var mypoints: UInt32
+    public var mypoints: UInt32 = 0
     public init() {
-        packetType = .init()
-        type = .init()
-        mypoints = .init()
     }
 }
 
 public struct PACKET_CZ_LESSEFFECT: Sendable {
-    public var packetType: Int16
-    public var state: Int32
+    public var packetType: Int16 = 0
+    public var state: Int32 = 0
     public init() {
-        packetType = .init()
-        state = .init()
     }
 }
 
 public struct PACKET_CZ_ACTIVE_QUEST: Sendable {
-    public var packetType: Int16
-    public var quest_id: UInt32
-    public var active: UInt8
+    public var packetType: Int16 = 0
+    public var quest_id: UInt32 = 0
+    public var active: UInt8 = 0
     public init() {
-        packetType = .init()
-        quest_id = .init()
-        active = .init()
     }
 }
 
 public struct PACKET_CZ_JOIN_BABY: Sendable {
-    public var packetType: Int16
-    public var father_AID: UInt32
-    public var mother_AID: UInt32
-    public var accepted: UInt32
+    public var packetType: Int16 = 0
+    public var father_AID: UInt32 = 0
+    public var mother_AID: UInt32 = 0
+    public var accepted: UInt32 = 0
     public init() {
-        packetType = .init()
-        father_AID = .init()
-        mother_AID = .init()
-        accepted = .init()
     }
 }
 
 public struct PACKET_CZ_AUCTION_ITEM_SEARCH: Sendable {
-    public var packetType: Int16
-    public var type: UInt16
-    public var auction_id: UInt32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var packetType: Int16 = 0
+    public var type: UInt16 = 0
+    public var auction_id: UInt32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var text: [Int8]
-    public var page: UInt16
+    public var page: UInt16 = 0
     public init() {
-        packetType = .init()
-        type = .init()
-        auction_id = .init()
-        page = .init()
     }
 }
 
 public struct PACKET_CZ_AUCTION_BUY: Sendable {
-    public var packetType: Int16
-    public var auction_id: UInt32
-    public var money: UInt32
+    public var packetType: Int16 = 0
+    public var auction_id: UInt32 = 0
+    public var money: UInt32 = 0
     public init() {
-        packetType = .init()
-        auction_id = .init()
-        money = .init()
     }
 }
 
 public struct EQUIPSLOTINFO: Sendable {
-    @FixedSizeArray(size: 4, initialValue: .init())
+    @FixedSizeArray(size: 4, initialValue: 0)
     public var card: [UInt32]
     public init() {
     }
 }
 
 public struct ItemOptions: Sendable {
-    public var index: Int16
-    public var value: Int16
-    public var param: UInt8
+    public var index: Int16 = 0
+    public var value: Int16 = 0
+    public var param: UInt8 = 0
     public init() {
-        index = .init()
-        value = .init()
-        param = .init()
     }
 }
 
 public struct EQUIPITEM_INFO: Sendable {
-    public var index: Int16
-    public var ITID: UInt32
-    public var type: UInt8
-    public var location: UInt32
-    public var WearState: UInt32
-    public var slot: EQUIPSLOTINFO
-    public var HireExpireDate: Int32
-    public var bindOnEquipType: UInt16
-    public var wItemSpriteNumber: UInt16
-    public var option_count: UInt8
-    @FixedSizeArray(size: 5, initialValue: .init())
+    public var index: Int16 = 0
+    public var ITID: UInt32 = 0
+    public var type: UInt8 = 0
+    public var location: UInt32 = 0
+    public var WearState: UInt32 = 0
+    public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
+    public var HireExpireDate: Int32 = 0
+    public var bindOnEquipType: UInt16 = 0
+    public var wItemSpriteNumber: UInt16 = 0
+    public var option_count: UInt8 = 0
+    @FixedSizeArray(size: 5, initialValue: ItemOptions())
     public var option_data: [ItemOptions]
-    public var RefiningLevel: UInt8
-    public var grade: UInt8
-    public var IsIdentified: UInt8
-    public var IsDamaged: UInt8
-    public var PlaceETCTab: UInt8
-    public var SpareBits: UInt8
-    public var Flag: UInt8
+    public var RefiningLevel: UInt8 = 0
+    public var grade: UInt8 = 0
+    public var IsIdentified: UInt8 = 0
+    public var IsDamaged: UInt8 = 0
+    public var PlaceETCTab: UInt8 = 0
+    public var SpareBits: UInt8 = 0
+    public var Flag: UInt8 = 0
     public init() {
-        index = .init()
-        ITID = .init()
-        type = .init()
-        location = .init()
-        WearState = .init()
-        slot = .init()
-        HireExpireDate = .init()
-        bindOnEquipType = .init()
-        wItemSpriteNumber = .init()
-        option_count = .init()
-        RefiningLevel = .init()
-        grade = .init()
-        IsIdentified = .init()
-        IsDamaged = .init()
-        PlaceETCTab = .init()
-        SpareBits = .init()
-        Flag = .init()
     }
 }
 
 public struct hotkey_data: Sendable {
-    public var isSkill: Int8
-    public var id: UInt32
-    public var count: Int16
+    public var isSkill: Int8 = 0
+    public var id: UInt32 = 0
+    public var count: Int16 = 0
     public init() {
-        isSkill = .init()
-        id = .init()
-        count = .init()
     }
 }
 
 public struct REPAIRITEM_INFO2: Sendable {
-    public var index: Int16
-    public var itemId: UInt32
-    public var slot: EQUIPSLOTINFO
-    public var refine: UInt8
-    public var grade: UInt8
+    public var index: Int16 = 0
+    public var itemId: UInt32 = 0
+    public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
+    public var refine: UInt8 = 0
+    public var grade: UInt8 = 0
     public init() {
-        index = .init()
-        itemId = .init()
-        slot = .init()
-        refine = .init()
-        grade = .init()
     }
 }
 
 public struct REPAIRITEM_INFO1: Sendable {
-    public var index: Int16
-    public var itemId: UInt32
-    public var refine: UInt8
-    public var slot: EQUIPSLOTINFO
+    public var index: Int16 = 0
+    public var itemId: UInt32 = 0
+    public var refine: UInt8 = 0
+    public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
     public init() {
-        index = .init()
-        itemId = .init()
-        refine = .init()
-        slot = .init()
     }
 }
 
 public struct SKILLDATA: Sendable {
-    public var id: UInt16
-    public var inf: Int32
-    public var level: UInt16
-    public var sp: UInt16
-    public var range2: UInt16
-    public var upFlag: UInt8
-    public var level2: UInt16
+    public var id: UInt16 = 0
+    public var inf: Int32 = 0
+    public var level: UInt16 = 0
+    public var sp: UInt16 = 0
+    public var range2: UInt16 = 0
+    public var upFlag: UInt8 = 0
+    public var level2: UInt16 = 0
     public init() {
-        id = .init()
-        inf = .init()
-        level = .init()
-        sp = .init()
-        range2 = .init()
-        upFlag = .init()
-        level2 = .init()
     }
 }
 
 public struct GUILD_MEMBER_INFO: Sendable {
-    public var AID: UInt32
-    public var GID: UInt32
-    public var head: Int16
-    public var headPalette: Int16
-    public var sex: Int16
-    public var job: Int16
-    public var level: Int16
-    public var contributionExp: Int32
-    public var currentState: Int32
-    public var positionID: Int32
-    public var lastLoginTime: UInt32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var AID: UInt32 = 0
+    public var GID: UInt32 = 0
+    public var head: Int16 = 0
+    public var headPalette: Int16 = 0
+    public var sex: Int16 = 0
+    public var job: Int16 = 0
+    public var level: Int16 = 0
+    public var contributionExp: Int32 = 0
+    public var currentState: Int32 = 0
+    public var positionID: Int32 = 0
+    public var lastLoginTime: UInt32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var char_name: [Int8]
     public init() {
-        AID = .init()
-        GID = .init()
-        head = .init()
-        headPalette = .init()
-        sex = .init()
-        job = .init()
-        level = .init()
-        contributionExp = .init()
-        currentState = .init()
-        positionID = .init()
-        lastLoginTime = .init()
     }
 }
 
 public struct GUILD_SKILLDATA: Sendable {
-    public var id: UInt16
-    public var inf: Int32
-    public var level: UInt16
-    public var sp: UInt16
-    public var range2: UInt16
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var id: UInt16 = 0
+    public var inf: Int32 = 0
+    public var level: UInt16 = 0
+    public var sp: UInt16 = 0
+    public var range2: UInt16 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var name: [Int8]
-    public var upFlag: UInt8
+    public var upFlag: UInt8 = 0
     public init() {
-        id = .init()
-        inf = .init()
-        level = .init()
-        sp = .init()
-        range2 = .init()
-        upFlag = .init()
     }
 }
 
 public struct RELATED_GUILD_INFO: Sendable {
-    public var relation: Int32
-    public var GDID: Int32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var relation: Int32 = 0
+    public var GDID: Int32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var guildname: [Int8]
     public init() {
-        relation = .init()
-        GDID = .init()
     }
 }
 
 public struct GRADE_ENCHANT_BLESSING: Sendable {
-    public var id: Int32
-    public var amount: Int32
-    public var max_blessing: Int32
-    public var bonus: Int32
+    public var id: Int32 = 0
+    public var amount: Int32 = 0
+    public var max_blessing: Int32 = 0
+    public var bonus: Int32 = 0
     public init() {
-        id = .init()
-        amount = .init()
-        max_blessing = .init()
-        bonus = .init()
     }
 }
 
 public struct GRADE_ENCHANT_MATERIAL: Sendable {
-    public var nameid: Int32
-    public var amount: Int32
-    public var price: Int32
-    public var downgrade: Int32
-    public var breakable: Int8
+    public var nameid: Int32 = 0
+    public var amount: Int32 = 0
+    public var price: Int32 = 0
+    public var downgrade: Int32 = 0
+    public var breakable: Int8 = 0
     public init() {
-        nameid = .init()
-        amount = .init()
-        price = .init()
-        downgrade = .init()
-        breakable = .init()
     }
 }
 
 public struct CZ_PURCHASE_ITEM_FROMMC: Sendable {
-    public var count: Int16
-    public var index: Int16
+    public var count: Int16 = 0
+    public var index: Int16 = 0
     public init() {
-        count = .init()
-        index = .init()
     }
 }
 
 public struct RANKLIST: Sendable {
-    @FixedSizeArray(size: 10, initialValue: .init())
+    @FixedSizeArray(size: 10, initialValue: 0)
     public var names: [Int8]
-    @FixedSizeArray(size: 10, initialValue: .init())
+    @FixedSizeArray(size: 10, initialValue: 0)
     public var points: [UInt32]
     public init() {
     }
 }
 
 public struct PACKET_ZC_POSITION_ID_NAME_INFO_sub: Sendable {
-    public var positionID: Int32
-    @FixedSizeArray(size: 24, initialValue: .init())
+    public var positionID: Int32 = 0
+    @FixedSizeArray(size: 24, initialValue: 0)
     public var posName: [Int8]
     public init() {
-        positionID = .init()
     }
 }
