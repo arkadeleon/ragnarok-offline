@@ -457,10 +457,10 @@ public let HEADER_ZC_WARPLIST = 0xabe
 public struct PACKET_CA_LOGIN: Sendable {
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var username: [Int8]
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var password: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var username: String
+    @FixedLengthString(lengthOfBytes: 24)
+    public var password: String
     public var clienttype: UInt8 = 0
     public init() {
     }
@@ -469,8 +469,8 @@ public struct PACKET_CA_LOGIN: Sendable {
 public struct PACKET_AC_ACCEPT_LOGIN_sub: Sendable {
     public var ip: UInt32 = 0
     public var port: UInt16 = 0
-    @FixedSizeArray(size: 20, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 20)
+    public var name: String
     public var users: UInt16 = 0
     public var type: UInt16 = 0
     public var new_: UInt16 = 0
@@ -487,11 +487,11 @@ public struct PACKET_AC_ACCEPT_LOGIN: Sendable {
     public var AID: UInt32 = 0
     public var login_id2: UInt32 = 0
     public var last_ip: UInt32 = 0
-    @FixedSizeArray(size: 26, initialValue: 0)
-    public var last_login: [Int8]
+    @FixedLengthString(lengthOfBytes: 26)
+    public var last_login: String
     public var sex: UInt8 = 0
-    @FixedSizeArray(size: 17, initialValue: 0)
-    public var token: [Int8]
+    @FixedLengthString(lengthOfBytes: 17)
+    public var token: String
     public var char_servers: [PACKET_AC_ACCEPT_LOGIN_sub] = []
     public init() {
     }
@@ -500,8 +500,8 @@ public struct PACKET_AC_ACCEPT_LOGIN: Sendable {
 public struct PACKET_AC_REFUSE_LOGIN: Sendable {
     public var packetType: Int16 = 0
     public var error: UInt32 = 0
-    @FixedSizeArray(size: 20, initialValue: 0)
-    public var unblock_time: [Int8]
+    @FixedLengthString(lengthOfBytes: 20)
+    public var unblock_time: String
     public init() {
     }
 }
@@ -522,7 +522,7 @@ public struct PACKET_CA_REQ_HASH: Sendable {
 public struct PACKET_AC_ACK_HASH: Sendable {
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
-    public var salt: [Int8] = []
+    public var salt: String = ""
     public init() {
     }
 }
@@ -530,8 +530,8 @@ public struct PACKET_AC_ACK_HASH: Sendable {
 public struct PACKET_CA_LOGIN2: Sendable {
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var username: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var username: String
     @FixedSizeArray(size: 16, initialValue: 0)
     public var passwordMD5: [UInt8]
     public var clienttype: UInt8 = 0
@@ -542,8 +542,8 @@ public struct PACKET_CA_LOGIN2: Sendable {
 public struct PACKET_CA_LOGIN3: Sendable {
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var username: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var username: String
     @FixedSizeArray(size: 16, initialValue: 0)
     public var passwordMD5: [UInt8]
     public var clienttype: UInt8 = 0
@@ -554,16 +554,16 @@ public struct PACKET_CA_LOGIN3: Sendable {
 
 public struct PACKET_CA_CONNECT_INFO_CHANGED: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public init() {
     }
 }
 
 public struct PACKET_CA_EXE_HASHCHECK: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 16, initialValue: 0)
-    public var hash: [Int8]
+    @FixedLengthString(lengthOfBytes: 16)
+    public var hash: String
     public init() {
     }
 }
@@ -571,15 +571,15 @@ public struct PACKET_CA_EXE_HASHCHECK: Sendable {
 public struct PACKET_CA_LOGIN_PCBANG: Sendable {
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var username: [Int8]
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var password: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var username: String
+    @FixedLengthString(lengthOfBytes: 24)
+    public var password: String
     public var clienttype: UInt8 = 0
-    @FixedSizeArray(size: 16, initialValue: 0)
-    public var ip: [Int8]
-    @FixedSizeArray(size: 13, initialValue: 0)
-    public var mac: [Int8]
+    @FixedLengthString(lengthOfBytes: 16)
+    public var ip: String
+    @FixedLengthString(lengthOfBytes: 13)
+    public var mac: String
     public init() {
     }
 }
@@ -587,13 +587,13 @@ public struct PACKET_CA_LOGIN_PCBANG: Sendable {
 public struct PACKET_CA_LOGIN4: Sendable {
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var username: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var username: String
     @FixedSizeArray(size: 16, initialValue: 0)
     public var passwordMD5: [UInt8]
     public var clienttype: UInt8 = 0
-    @FixedSizeArray(size: 13, initialValue: 0)
-    public var mac: [Int8]
+    @FixedLengthString(lengthOfBytes: 13)
+    public var mac: String
     public init() {
     }
 }
@@ -601,15 +601,15 @@ public struct PACKET_CA_LOGIN4: Sendable {
 public struct PACKET_CA_LOGIN_CHANNEL: Sendable {
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var username: [Int8]
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var password: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var username: String
+    @FixedLengthString(lengthOfBytes: 24)
+    public var password: String
     public var clienttype: UInt8 = 0
-    @FixedSizeArray(size: 16, initialValue: 0)
-    public var ip: [Int8]
-    @FixedSizeArray(size: 13, initialValue: 0)
-    public var mac: [Int8]
+    @FixedLengthString(lengthOfBytes: 16)
+    public var ip: String
+    @FixedLengthString(lengthOfBytes: 13)
+    public var mac: String
     public var is_gravity: UInt8 = 0
     public init() {
     }
@@ -620,15 +620,15 @@ public struct PACKET_CA_SSO_LOGIN_REQ: Sendable {
     public var packetLength: Int16 = 0
     public var version: UInt32 = 0
     public var clienttype: UInt8 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var username: [Int8]
-    @FixedSizeArray(size: 27, initialValue: 0)
-    public var password: [Int8]
-    @FixedSizeArray(size: 17, initialValue: 0)
-    public var mac: [Int8]
-    @FixedSizeArray(size: 15, initialValue: 0)
-    public var ip: [Int8]
-    public var token: [Int8] = []
+    @FixedLengthString(lengthOfBytes: 24)
+    public var username: String
+    @FixedLengthString(lengthOfBytes: 27)
+    public var password: String
+    @FixedLengthString(lengthOfBytes: 17)
+    public var mac: String
+    @FixedLengthString(lengthOfBytes: 15)
+    public var ip: String
+    public var token: String = ""
     public init() {
     }
 }
@@ -645,18 +645,18 @@ public struct PACKET_TC_RESULT: Sendable {
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var type: UInt32 = 0
-    @FixedSizeArray(size: 20, initialValue: 0)
-    public var unknown1: [Int8]
-    @FixedSizeArray(size: 6, initialValue: 0)
-    public var unknown2: [Int8]
+    @FixedLengthString(lengthOfBytes: 20)
+    public var unknown1: String
+    @FixedLengthString(lengthOfBytes: 6)
+    public var unknown2: String
     public init() {
     }
 }
 
 public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub: Sendable {
     public var status: Int32 = 0
-    @FixedSizeArray(size: 16, initialValue: 0)
-    public var map: [Int8]
+    @FixedLengthString(lengthOfBytes: 16)
+    public var map: String
     public init() {
     }
 }
@@ -764,8 +764,8 @@ public struct PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item: Sendable {
     public var type: UInt8 = 0
     public var ItemID: UInt32 = 0
     public var len: Int8 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var Name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var Name: String
     public var boxItemID_len: Int8 = 0
     public var BoxItemID: UInt32 = 0
     public init() {
@@ -776,7 +776,7 @@ public struct PACKET_ZC_INVENTORY_START: Sendable {
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var invType: UInt8 = 0
-    public var name: [Int8] = []
+    public var name: String = ""
     public init() {
     }
 }
@@ -802,8 +802,8 @@ public struct PACKET_ZC_REQ_WEAR_EQUIP_ACK: Sendable {
 public struct PACKET_ZC_EQUIPWIN_MICROSCOPE: Sendable {
     public var PacketType: Int16 = 0
     public var PacketLength: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var characterName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var characterName: String
     public var job: Int16 = 0
     public var head: Int16 = 0
     public var accessory: Int16 = 0
@@ -926,16 +926,16 @@ public struct PACKET_ZC_ACK_ADD_ITEM_RODEX: Sendable {
 
 public struct PACKET_CZ_REQ_OPEN_WRITE_MAIL: Sendable {
     public var PacketType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var receiveName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var receiveName: String
     public init() {
     }
 }
 
 public struct PACKET_ZC_ACK_OPEN_WRITE_MAIL: Sendable {
     public var PacketType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var receiveName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var receiveName: String
     public var result: Int8 = 0
     public init() {
     }
@@ -962,15 +962,15 @@ public struct PACKET_ZC_ACK_REMOVE_ITEM_MAIL: Sendable {
 public struct PACKET_CZ_SEND_MAIL: Sendable {
     public var PacketType: Int16 = 0
     public var PacketLength: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var receiveName: [Int8]
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var senderName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var receiveName: String
+    @FixedLengthString(lengthOfBytes: 24)
+    public var senderName: String
     public var zeny: Int64 = 0
     public var Titlelength: Int16 = 0
     public var TextcontentsLength: Int16 = 0
     public var receiver_char_id: Int32 = 0
-    public var string: [Int8] = []
+    public var string: String = ""
     public init() {
     }
 }
@@ -984,16 +984,16 @@ public struct PACKET_ZC_WRITE_MAIL_RESULT: Sendable {
 
 public struct PACKET_CZ_CHECKNAME1: Sendable {
     public var PacketType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var Name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var Name: String
     public init() {
     }
 }
 
 public struct PACKET_CZ_CHECKNAME2: Sendable {
     public var PacketType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var Name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var Name: String
     public var own_char: Int8 = 0
     public init() {
     }
@@ -1004,8 +1004,8 @@ public struct PACKET_ZC_CHECKNAME: Sendable {
     public var CharId: Int32 = 0
     public var Class: Int16 = 0
     public var BaseLevel: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var Name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var Name: String
     public init() {
     }
 }
@@ -1076,7 +1076,7 @@ public struct PACKET_ZC_ACK_READ_RODEX: Sendable {
     public var TextcontentsLength: Int16 = 0
     public var zeny: Int64 = 0
     public var ItemCnt: Int8 = 0
-    public var Textcontent: [Int8] = []
+    public var Textcontent: String = ""
     public init() {
     }
 }
@@ -1162,12 +1162,12 @@ public struct PACKET_ZC_ADD_MEMBER_TO_GROUP: Sendable {
     public var x: Int16 = 0
     public var y: Int16 = 0
     public var offline: UInt8 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var partyName: [Int8]
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var playerName: [Int8]
-    @FixedSizeArray(size: 16, initialValue: 0)
-    public var mapName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var partyName: String
+    @FixedLengthString(lengthOfBytes: 24)
+    public var playerName: String
+    @FixedLengthString(lengthOfBytes: 16)
+    public var mapName: String
     public var sharePickup: Int8 = 0
     public var shareLoot: Int8 = 0
     public init() {
@@ -1177,10 +1177,10 @@ public struct PACKET_ZC_ADD_MEMBER_TO_GROUP: Sendable {
 public struct PACKET_ZC_GROUP_LIST_SUB: Sendable {
     public var AID: UInt32 = 0
     public var GID: UInt32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var playerName: [Int8]
-    @FixedSizeArray(size: 16, initialValue: 0)
-    public var mapName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var playerName: String
+    @FixedLengthString(lengthOfBytes: 16)
+    public var mapName: String
     public var leader: UInt8 = 0
     public var offline: UInt8 = 0
     public var class_: Int16 = 0
@@ -1192,8 +1192,8 @@ public struct PACKET_ZC_GROUP_LIST_SUB: Sendable {
 public struct PACKET_ZC_GROUP_LIST: Sendable {
     public var packetType: Int16 = 0
     public var packetLen: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var partyName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var partyName: String
     public var members: [PACKET_ZC_GROUP_LIST_SUB] = []
     public init() {
     }
@@ -1203,12 +1203,12 @@ public struct PACKET_ZC_CLANINFO: Sendable {
     public var PacketType: Int16 = 0
     public var PacketLength: Int16 = 0
     public var ClanID: UInt32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var ClanName: [Int8]
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var MasterName: [Int8]
-    @FixedSizeArray(size: 16, initialValue: 0)
-    public var Map: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var ClanName: String
+    @FixedLengthString(lengthOfBytes: 24)
+    public var MasterName: String
+    @FixedLengthString(lengthOfBytes: 16)
+    public var Map: String
     public var AllyCount: UInt8 = 0
     public var AntagonistCount: UInt8 = 0
     public init() {
@@ -1232,9 +1232,9 @@ public struct PACKET_ZC_ACK_CLAN_LEAVE: Sendable {
 public struct PACKET_ZC_NOTIFY_CLAN_CHAT: Sendable {
     public var PacketType: Int16 = 0
     public var PacketLength: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var MemberName: [Int8]
-    public var Message: [Int8] = []
+    @FixedLengthString(lengthOfBytes: 24)
+    public var MemberName: String
+    public var Message: String = ""
     public init() {
     }
 }
@@ -1243,7 +1243,7 @@ public struct PACKET_ZC_FORMATSTRING_MSG: Sendable {
     public var PacketType: UInt16 = 0
     public var PacketLength: UInt16 = 0
     public var MessageId: UInt16 = 0
-    public var MessageString: [Int8] = []
+    public var MessageString: String = ""
     public init() {
     }
 }
@@ -1253,7 +1253,7 @@ public struct PACKET_ZC_FORMATSTRING_MSG_COLOR: Sendable {
     public var PacketLength: UInt16 = 0
     public var messageId: UInt16 = 0
     public var color: UInt32 = 0
-    public var messageString: [Int8] = []
+    public var messageString: String = ""
     public init() {
     }
 }
@@ -1299,8 +1299,8 @@ public struct PACKET_ZC_UI_ACTION: Sendable {
 
 public struct PACKET_CZ_PRIVATE_AIRSHIP_REQUEST: Sendable {
     public var PacketType: Int16 = 0
-    @FixedSizeArray(size: 16, initialValue: 0)
-    public var mapName: [Int8]
+    @FixedLengthString(lengthOfBytes: 16)
+    public var mapName: String
     public var ItemID: UInt32 = 0
     public init() {
     }
@@ -1357,7 +1357,7 @@ public struct PACKET_ZC_NOTIFY_CHAT: Sendable {
     public var PacketType: Int16 = 0
     public var PacketLength: Int16 = 0
     public var GID: UInt32 = 0
-    public var Message: [Int8] = []
+    public var Message: String = ""
     public init() {
     }
 }
@@ -1365,7 +1365,7 @@ public struct PACKET_ZC_NOTIFY_CHAT: Sendable {
 public struct PACKET_ZC_NOTIFY_PLAYERCHAT: Sendable {
     public var PacketType: Int16 = 0
     public var PacketLength: Int16 = 0
-    public var Message: [Int8] = []
+    public var Message: String = ""
     public init() {
     }
 }
@@ -1561,8 +1561,8 @@ public struct PACKET_ZC_ACK_WEAPONREFINE: Sendable {
 
 public struct PACKET_ZC_PROPERTY_HOMUN: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public var flags: UInt8 = 0
     public var level: UInt16 = 0
     public var hunger: UInt16 = 0
@@ -1716,8 +1716,8 @@ public struct PACKET_CZ_REQ_OPEN_BUYING_STORE: Sendable {
     public var packetLength: Int16 = 0
     public var zenyLimit: UInt32 = 0
     public var result: UInt8 = 0
-    @FixedSizeArray(size: 80, initialValue: 0)
-    public var storeName: [Int8]
+    @FixedLengthString(lengthOfBytes: 80)
+    public var storeName: String
     public var items: [PACKET_CZ_REQ_OPEN_BUYING_STORE_sub] = []
     public init() {
     }
@@ -1977,8 +1977,8 @@ public struct PACKET_ZC_SSILIST_ITEM_CLICK_ACK: Sendable {
 public struct PACKET_ZC_SEARCH_STORE_INFO_ACK_sub: Sendable {
     public var storeId: UInt32 = 0
     public var AID: UInt32 = 0
-    @FixedSizeArray(size: 80, initialValue: 0)
-    public var shopName: [Int8]
+    @FixedLengthString(lengthOfBytes: 80)
+    public var shopName: String
     public var itemId: UInt32 = 0
     public var itemType: UInt8 = 0
     public var price: UInt32 = 0
@@ -2006,14 +2006,14 @@ public struct PACKET_ZC_SEARCH_STORE_INFO_ACK: Sendable {
 public struct PACKET_ZC_ACK_REQNAMEALL: Sendable {
     public var packet_id: UInt16 = 0
     public var gid: Int32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var party_name: [Int8]
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var guild_name: [Int8]
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var position_name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
+    @FixedLengthString(lengthOfBytes: 24)
+    public var party_name: String
+    @FixedLengthString(lengthOfBytes: 24)
+    public var guild_name: String
+    @FixedLengthString(lengthOfBytes: 24)
+    public var position_name: String
     public var title_id: Int32 = 0
     public init() {
     }
@@ -2023,10 +2023,10 @@ public struct PACKET_ZC_ACK_REQNAMEALL_NPC: Sendable {
     public var packet_id: UInt16 = 0
     public var gid: Int32 = 0
     public var groupId: Int32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var title: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
+    @FixedLengthString(lengthOfBytes: 24)
+    public var title: String
     public init() {
     }
 }
@@ -2039,8 +2039,8 @@ public struct PACKET_ZC_OVERWEIGHT_PERCENT: Sendable {
 }
 
 public struct PACKET_ZC_WARPLIST_sub: Sendable {
-    @FixedSizeArray(size: 16, initialValue: 0)
-    public var map: [Int8]
+    @FixedLengthString(lengthOfBytes: 16)
+    public var map: String
     public init() {
     }
 }
@@ -2066,7 +2066,7 @@ public struct PACKET_ZC_GUILD_POSITION: Sendable {
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var AID: UInt32 = 0
-    public var position: [Int8] = []
+    public var position: String = ""
     public init() {
     }
 }
@@ -2081,30 +2081,30 @@ public struct PACKET_ZC_MOVE_ITEM_FAILED: Sendable {
 
 public struct PACKET_ZC_ACK_BAN_GUILD1: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
-    @FixedSizeArray(size: 40, initialValue: 0)
-    public var reason: [Int8]
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var account_name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
+    @FixedLengthString(lengthOfBytes: 40)
+    public var reason: String
+    @FixedLengthString(lengthOfBytes: 24)
+    public var account_name: String
     public init() {
     }
 }
 
 public struct PACKET_ZC_ACK_BAN_GUILD2: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
-    @FixedSizeArray(size: 40, initialValue: 0)
-    public var reason: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
+    @FixedLengthString(lengthOfBytes: 40)
+    public var reason: String
     public init() {
     }
 }
 
 public struct PACKET_ZC_ACK_BAN_GUILD3: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 40, initialValue: 0)
-    public var reason: [Int8]
+    @FixedLengthString(lengthOfBytes: 40)
+    public var reason: String
     public var GID: UInt32 = 0
     public init() {
     }
@@ -2112,10 +2112,10 @@ public struct PACKET_ZC_ACK_BAN_GUILD3: Sendable {
 
 public struct PACKET_ZC_ACK_LEAVE_GUILD1: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
-    @FixedSizeArray(size: 40, initialValue: 0)
-    public var reason: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
+    @FixedLengthString(lengthOfBytes: 40)
+    public var reason: String
     public init() {
     }
 }
@@ -2123,8 +2123,8 @@ public struct PACKET_ZC_ACK_LEAVE_GUILD1: Sendable {
 public struct PACKET_ZC_ACK_LEAVE_GUILD2: Sendable {
     public var packetType: Int16 = 0
     public var GID: UInt32 = 0
-    @FixedSizeArray(size: 40, initialValue: 0)
-    public var reason: [Int8]
+    @FixedLengthString(lengthOfBytes: 40)
+    public var reason: String
     public init() {
     }
 }
@@ -2199,7 +2199,7 @@ public struct PACKET_ZC_DEBUGMSG: Sendable {
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var color: Int32 = 0
-    public var message: [Int8] = []
+    public var message: String = ""
     public init() {
     }
 }
@@ -2380,18 +2380,18 @@ public struct PACKET_ZC_PARTY_CONFIG: Sendable {
 public struct PACKET_ZC_ROLE_CHANGE: Sendable {
     public var packetType: Int16 = 0
     public var flag: Int32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public init() {
     }
 }
 
 public struct PACKET_ZC_BAN_LIST_sub: Sendable {
     public var char_id: Int32 = 0
-    @FixedSizeArray(size: 40, initialValue: 0)
-    public var message: [Int8]
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var char_name: [Int8]
+    @FixedLengthString(lengthOfBytes: 40)
+    public var message: String
+    @FixedLengthString(lengthOfBytes: 24)
+    public var char_name: String
     public init() {
     }
 }
@@ -2492,8 +2492,8 @@ public struct PACKET_CZ_CLOSE_REFINING_UI: Sendable {
 
 public struct PACKET_ZC_BROADCAST_ITEMREFINING_RESULT: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public var itemId: UInt32 = 0
     public var refine_level: Int8 = 0
     public var status: Int8 = 0
@@ -2568,8 +2568,8 @@ public struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT: Sendable {
 public struct PACKET_ZC_TALKBOX_CHATCONTENTS: Sendable {
     public var PacketType: Int16 = 0
     public var aid: UInt32 = 0
-    @FixedSizeArray(size: 21, initialValue: 0)
-    public var message: [Int8]
+    @FixedLengthString(lengthOfBytes: 21)
+    public var message: String
     public init() {
     }
 }
@@ -2766,8 +2766,8 @@ public struct PACKET_ZC_AUTORUN_SKILL: Sendable {
     public var skill_lv: UInt16 = 0
     public var skill_sp: UInt16 = 0
     public var skill_range: UInt16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var skill_name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var skill_name: String
     public var up_flag: Int8 = 0
     public init() {
     }
@@ -2925,14 +2925,14 @@ public struct PACKET_ZC_GUILD_INFO: Sendable {
     public var honor: Int32 = 0
     public var virtue: Int32 = 0
     public var emblemVersion: Int32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var guildname: [Int8]
-    @FixedSizeArray(size: 16, initialValue: 0)
-    public var manageLand: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var guildname: String
+    @FixedLengthString(lengthOfBytes: 16)
+    public var manageLand: String
     public var zeny: Int32 = 0
     public var masterGID: Int32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var masterName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var masterName: String
     public init() {
     }
 }
@@ -2941,8 +2941,8 @@ public struct PACKET_ZC_POSITION_ID_NAME_INFO: Sendable {
     public var PacketType: Int16 = 0
     public var PacketLength: Int16 = 0
     public var positionID: Int32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var posName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var posName: String
     @FixedSizeArray(size: 20, initialValue: PACKET_ZC_POSITION_ID_NAME_INFO_sub())
     public var posInfo: [PACKET_ZC_POSITION_ID_NAME_INFO_sub]
     public init() {
@@ -2985,8 +2985,8 @@ public struct PACKET_ZC_MYGUILD_BASIC_INFO: Sendable {
 
 public struct PACKET_CZ_REQ_UPLOAD_MACRO_DETECTOR: Sendable {
     public var PacketType: Int16 = 0
-    @FixedSizeArray(size: 16, initialValue: 0)
-    public var answer: [Int8]
+    @FixedLengthString(lengthOfBytes: 16)
+    public var answer: String
     public var imageSize: UInt16 = 0
     public init() {
     }
@@ -2994,8 +2994,8 @@ public struct PACKET_CZ_REQ_UPLOAD_MACRO_DETECTOR: Sendable {
 
 public struct PACKET_ZC_ACK_UPLOAD_MACRO_DETECTOR: Sendable {
     public var PacketType: Int16 = 0
-    @FixedSizeArray(size: 4, initialValue: 0)
-    public var captchaKey: [Int8]
+    @FixedLengthString(lengthOfBytes: 4)
+    public var captchaKey: String
     public var captchaFlag: Int32 = 0
     public init() {
     }
@@ -3004,9 +3004,9 @@ public struct PACKET_ZC_ACK_UPLOAD_MACRO_DETECTOR: Sendable {
 public struct PACKET_CZ_UPLOAD_MACRO_DETECTOR_CAPTCHA: Sendable {
     public var PacketType: Int16 = 0
     public var PacketLength: Int16 = 0
-    @FixedSizeArray(size: 4, initialValue: 0)
-    public var captchaKey: [Int8]
-    public var imageData: [Int8] = []
+    @FixedLengthString(lengthOfBytes: 4)
+    public var captchaKey: String
+    public var imageData: String = ""
     public init() {
     }
 }
@@ -3034,8 +3034,8 @@ public struct PACKET_ZC_ACK_APPLY_MACRO_DETECTOR: Sendable {
 public struct PACKET_ZC_APPLY_MACRO_DETECTOR: Sendable {
     public var PacketType: Int16 = 0
     public var imageSize: UInt16 = 0
-    @FixedSizeArray(size: 4, initialValue: 0)
-    public var captchaKey: [Int8]
+    @FixedLengthString(lengthOfBytes: 4)
+    public var captchaKey: String
     public init() {
     }
 }
@@ -3043,9 +3043,9 @@ public struct PACKET_ZC_APPLY_MACRO_DETECTOR: Sendable {
 public struct PACKET_ZC_APPLY_MACRO_DETECTOR_CAPTCHA: Sendable {
     public var PacketType: Int16 = 0
     public var PacketLength: Int16 = 0
-    @FixedSizeArray(size: 4, initialValue: 0)
-    public var captchaKey: [Int8]
-    public var imageData: [Int8] = []
+    @FixedLengthString(lengthOfBytes: 4)
+    public var captchaKey: String
+    public var imageData: String = ""
     public init() {
     }
 }
@@ -3066,8 +3066,8 @@ public struct PACKET_ZC_REQ_ANSWER_MACRO_DETECTOR: Sendable {
 
 public struct PACKET_CZ_ACK_ANSWER_MACRO_DETECTOR: Sendable {
     public var PacketType: Int16 = 0
-    @FixedSizeArray(size: 16, initialValue: 0)
-    public var answer: [Int8]
+    @FixedLengthString(lengthOfBytes: 16)
+    public var answer: String
     public init() {
     }
 }
@@ -3090,8 +3090,8 @@ public struct PACKET_ZC_ACK_PREVIEW_MACRO_DETECTOR: Sendable {
     public var PacketType: Int16 = 0
     public var captchaFlag: Int32 = 0
     public var imageSize: UInt16 = 0
-    @FixedSizeArray(size: 4, initialValue: 0)
-    public var captchaKey: [Int8]
+    @FixedLengthString(lengthOfBytes: 4)
+    public var captchaKey: String
     public init() {
     }
 }
@@ -3099,9 +3099,9 @@ public struct PACKET_ZC_ACK_PREVIEW_MACRO_DETECTOR: Sendable {
 public struct PACKET_ZC_PREVIEW_MACRO_DETECTOR_CAPTCHA: Sendable {
     public var PacketType: Int16 = 0
     public var PacketLength: Int16 = 0
-    @FixedSizeArray(size: 4, initialValue: 0)
-    public var captchaKey: [Int8]
-    public var imageData: [Int8] = []
+    @FixedLengthString(lengthOfBytes: 4)
+    public var captchaKey: String
+    public var imageData: String = ""
     public init() {
     }
 }
@@ -3133,16 +3133,16 @@ public struct PACKET_ZC_ACK_MAKE_GROUP: Sendable {
 public struct PACKET_ZC_PARTY_JOIN_REQ: Sendable {
     public var PacketType: Int16 = 0
     public var GRID: Int32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var groupName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var groupName: String
     public init() {
     }
 }
 
 public struct PACKET_ZC_PARTY_JOIN_REQ_ACK: Sendable {
     public var PacketType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var characterName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var characterName: String
     public var result: Int32 = 0
     public init() {
     }
@@ -3152,7 +3152,7 @@ public struct PACKET_ZC_NOTIFY_CHAT_PARTY: Sendable {
     public var PacketType: Int16 = 0
     public var PacketLength: Int16 = 0
     public var AID: Int32 = 0
-    public var chatMsg: [Int8] = []
+    public var chatMsg: String = ""
     public init() {
     }
 }
@@ -3187,8 +3187,8 @@ public struct PACKET_ZC_NOTIFY_MEMBERINFO_TO_GROUPM: Sendable {
 public struct PACKET_ZC_DELETE_MEMBER_FROM_GROUP: Sendable {
     public var PacketType: Int16 = 0
     public var AID: Int32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var characterName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var characterName: String
     public var result: Int8 = 0
     public init() {
     }
@@ -3279,8 +3279,8 @@ public struct PACKET_ZC_GRADE_ENCHANT_ACK: Sendable {
 
 public struct PACKET_ZC_GRADE_ENCHANT_BROADCAST_RESULT: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public var itemId: UInt32 = 0
     public var grade: Int16 = 0
     public var status: Int8 = 0
@@ -3290,8 +3290,8 @@ public struct PACKET_ZC_GRADE_ENCHANT_BROADCAST_RESULT: Sendable {
 
 public struct PACKET_ZC_SHOW_IMAGE: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 64, initialValue: 0)
-    public var image: [Int8]
+    @FixedLengthString(lengthOfBytes: 64)
+    public var image: String
     public var type: UInt8 = 0
     public init() {
     }
@@ -3301,10 +3301,10 @@ public struct PACKET_ZC_WHISPER: Sendable {
     public var PacketType: Int16 = 0
     public var PacketLength: Int16 = 0
     public var senderGID: UInt32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var sender: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var sender: String
     public var isAdmin: UInt8 = 0
-    public var message: [Int8] = []
+    public var message: String = ""
     public init() {
     }
 }
@@ -3316,8 +3316,8 @@ public struct PACKET_ZC_UPDATE_GDID: Sendable {
     public var mode: UInt32 = 0
     public var isMaster: UInt8 = 0
     public var interSid: Int32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var guildName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var guildName: String
     public init() {
     }
 }
@@ -3357,8 +3357,8 @@ public struct PACKET_ZC_TRYCAPTURE_MONSTER: Sendable {
 
 public struct PACKET_ZC_PROPERTY_PET: Sendable {
     public var PacketType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var szName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var szName: String
     public var bModified: Int8 = 0
     public var nLevel: Int16 = 0
     public var nFullness: Int16 = 0
@@ -3406,7 +3406,7 @@ public struct PACKET_ZC_SAY_DIALOG: Sendable {
     public var PacketType: Int16 = 0
     public var PacketLength: Int16 = 0
     public var NpcID: UInt32 = 0
-    public var message: [Int8] = []
+    public var message: String = ""
     public init() {
     }
 }
@@ -3415,7 +3415,7 @@ public struct PACKET_ZC_SAY_DIALOG2: Sendable {
     public var PacketType: Int16 = 0
     public var PacketLength: Int16 = 0
     public var NpcID: UInt32 = 0
-    public var message: [Int8] = []
+    public var message: String = ""
     public init() {
     }
 }
@@ -3436,8 +3436,8 @@ public struct PACKET_ZC_WAIT_DIALOG2: Sendable {
 
 public struct PACKET_ZC_PLAY_NPC_BGM: Sendable {
     public var PacketType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var bgm: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var bgm: String
     public init() {
     }
 }
@@ -3452,8 +3452,8 @@ public struct PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART: Sendable {
 
 public struct PACKET_ZC_SOUND: Sendable {
     public var PacketType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public var act: UInt8 = 0
     public var term: UInt32 = 0
     public var AID: UInt32 = 0
@@ -3464,8 +3464,8 @@ public struct PACKET_ZC_SOUND: Sendable {
 public struct PACKET_ZC_BUYING_STORE_ENTRY: Sendable {
     public var packetType: Int16 = 0
     public var makerAID: UInt32 = 0
-    @FixedSizeArray(size: 80, initialValue: 0)
-    public var storeName: [Int8]
+    @FixedLengthString(lengthOfBytes: 80)
+    public var storeName: String
     public init() {
     }
 }
@@ -3473,8 +3473,8 @@ public struct PACKET_ZC_BUYING_STORE_ENTRY: Sendable {
 public struct PACKET_ZC_STORE_ENTRY: Sendable {
     public var packetType: Int16 = 0
     public var makerAID: UInt32 = 0
-    @FixedSizeArray(size: 80, initialValue: 0)
-    public var storeName: [Int8]
+    @FixedLengthString(lengthOfBytes: 80)
+    public var storeName: String
     public init() {
     }
 }
@@ -3594,8 +3594,8 @@ public struct PACKET_ZC_GOLDPCCAFE_POINT: Sendable {
 
 public struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST: Sendable {
     public var PacketType: UInt16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public init() {
     }
 }
@@ -3646,7 +3646,7 @@ public struct PACKET_ZC_GUILD_EMBLEM_IMG: Sendable {
     public var result: UInt16 = 0
     public var guild_id: Int32 = 0
     public var emblem_id: UInt32 = 0
-    public var emblem_data: [Int8] = []
+    public var emblem_data: String = ""
     public init() {
     }
 }
@@ -3661,10 +3661,10 @@ public struct PACKET_CZ_ADVENTURER_AGENCY_JOIN_REQ: Sendable {
 
 public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_RESULT: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var player_name: [Int8]
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var party_name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var player_name: String
+    @FixedLengthString(lengthOfBytes: 24)
+    public var party_name: String
     public var AID: Int32 = 0
     public var result: Int32 = 0
     public init() {
@@ -3675,8 +3675,8 @@ public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_REQ: Sendable {
     public var packetType: Int16 = 0
     public var GRID: Int32 = 0
     public var AID: Int32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var groupName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var groupName: String
     public var level: Int16 = 0
     public var job: Int16 = 0
     public init() {
@@ -3801,10 +3801,10 @@ public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub: Sendable {
     public var IsIdentified: UInt8 = 0
     public var itemType: UInt16 = 0
     public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var time: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
+    @FixedLengthString(lengthOfBytes: 24)
+    public var time: String
     public var attribute: UInt8 = 0
     public init() {
     }
@@ -3839,7 +3839,7 @@ public struct PACKET_CZ_REQ_ADD_NEW_EMBLEM: Sendable {
 public struct PACKET_ZC_BROADCAST: Sendable {
     public var packetType: Int16 = 0
     public var PacketLength: Int16 = 0
-    public var message: [Int8] = []
+    public var message: String = ""
     public init() {
     }
 }
@@ -3852,7 +3852,7 @@ public struct PACKET_ZC_BROADCAST2: Sendable {
     public var fontSize: Int16 = 0
     public var fontAlign: Int16 = 0
     public var fontY: Int16 = 0
-    public var message: [Int8] = []
+    public var message: String = ""
     public init() {
     }
 }
@@ -3930,8 +3930,8 @@ public struct PACKET_ZC_TARGET_SPIRITS: Sendable {
 public struct PACKET_ZC_FRIENDS_LIST_sub: Sendable {
     public var AID: UInt32 = 0
     public var CID: UInt32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public init() {
     }
 }
@@ -4031,8 +4031,8 @@ public struct PACKET_ZC_ACK_OPEN_BANKING: Sendable {
 
 public struct PACKET_ZC_REQ_EXCHANGE_ITEM: Sendable {
     public var packetType: UInt16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var requesterName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var requesterName: String
     public var targetId: UInt32 = 0
     public var targetLv: UInt16 = 0
     public init() {
@@ -4058,8 +4058,8 @@ public struct PACKET_ZC_ACK_ADD_EXCHANGE_ITEM: Sendable {
 
 public struct PACKET_ZC_COUPLENAME: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public init() {
     }
 }
@@ -4076,8 +4076,8 @@ public struct PACKET_ZC_PARTY_REQ_MASTER_TO_JOIN: Sendable {
     public var packetType: Int16 = 0
     public var CID: UInt32 = 0
     public var AID: UInt32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public var x: UInt16 = 0
     public var y: UInt16 = 0
     public init() {
@@ -4095,10 +4095,10 @@ public struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN: Sendable {
 
 public struct PACKET_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var player_name: [Int8]
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var party_name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var player_name: String
+    @FixedLengthString(lengthOfBytes: 24)
+    public var party_name: String
     public var AID: UInt32 = 0
     public var refused: UInt32 = 0
     public init() {
@@ -4153,8 +4153,8 @@ public struct PACKET_ZC_BOSS_INFO: Sendable {
     public var minMinutes: UInt16 = 0
     public var maxHours: UInt16 = 0
     public var maxMinutes: UInt16 = 0
-    @FixedSizeArray(size: 51, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 51)
+    public var name: String
     public init() {
     }
 }
@@ -4288,8 +4288,8 @@ public struct PACKET_ZC_HOSKILLINFO_LIST_sub: Sendable {
     public var level: UInt16 = 0
     public var sp: UInt16 = 0
     public var range: UInt16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public var upgradable: UInt8 = 0
     public init() {
     }
@@ -4334,8 +4334,8 @@ public struct PACKET_ZC_CHANGE_DIRECTION: Sendable {
 
 public struct PACKET_ZC_NPCACK_MAPMOVE: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 16, initialValue: 0)
-    public var mapName: [Int8]
+    @FixedLengthString(lengthOfBytes: 16)
+    public var mapName: String
     public var xPos: UInt16 = 0
     public var yPos: UInt16 = 0
     public init() {
@@ -4344,14 +4344,14 @@ public struct PACKET_ZC_NPCACK_MAPMOVE: Sendable {
 
 public struct PACKET_ZC_NPCACK_SERVERMOVE: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 16, initialValue: 0)
-    public var mapName: [Int8]
+    @FixedLengthString(lengthOfBytes: 16)
+    public var mapName: String
     public var xPos: UInt16 = 0
     public var yPos: UInt16 = 0
     public var ip: UInt32 = 0
     public var port: UInt16 = 0
-    @FixedSizeArray(size: 128, initialValue: 0)
-    public var domain: [Int8]
+    @FixedLengthString(lengthOfBytes: 128)
+    public var domain: String
     public init() {
     }
 }
@@ -4399,7 +4399,7 @@ public struct PACKET_ZC_MENU_LIST: Sendable {
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var npcId: UInt32 = 0
-    public var menu: [Int8] = []
+    public var menu: String = ""
     public init() {
     }
 }
@@ -4436,8 +4436,8 @@ public struct PACKET_ZC_DELETE_RELATED_GUILD: Sendable {
 public struct PACKET_ZC_REQ_ALLY_GUILD: Sendable {
     public var packetType: Int16 = 0
     public var inviterId: UInt32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var inviterGuildName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var inviterGuildName: String
     public init() {
     }
 }
@@ -4503,7 +4503,7 @@ public struct PACKET_ZC_NOTIFY_POSITION_TO_GUILDM: Sendable {
 public struct PACKET_ZC_GUILD_CHAT: Sendable {
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
-    public var message: [Int8] = []
+    public var message: String = ""
     public init() {
     }
 }
@@ -4603,7 +4603,7 @@ public struct PACKET_ZC_CHANGE_CHATROOM: Sendable {
     public var limit: UInt16 = 0
     public var users: UInt16 = 0
     public var flag: UInt8 = 0
-    public var title: [Int8] = []
+    public var title: String = ""
     public init() {
     }
 }
@@ -4695,8 +4695,8 @@ public struct PACKET_ZC_DESTROY_ROOM: Sendable {
 
 public struct PACKET_ZC_ENTER_ROOM_sub: Sendable {
     public var flag: UInt32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public init() {
     }
 }
@@ -4868,8 +4868,8 @@ public struct PACKET_CZ_REQ_BAN_GUILD: Sendable {
     public var guild_id: UInt32 = 0
     public var AID: UInt32 = 0
     public var CID: UInt32 = 0
-    @FixedSizeArray(size: 40, initialValue: 0)
-    public var message: [Int8]
+    @FixedLengthString(lengthOfBytes: 40)
+    public var message: String
     public init() {
     }
 }
@@ -4879,16 +4879,16 @@ public struct PACKET_CZ_REQ_LEAVE_GUILD: Sendable {
     public var guild_id: UInt32 = 0
     public var AID: UInt32 = 0
     public var CID: UInt32 = 0
-    @FixedSizeArray(size: 40, initialValue: 0)
-    public var message: [Int8]
+    @FixedLengthString(lengthOfBytes: 40)
+    public var message: String
     public init() {
     }
 }
 
 public struct PACKET_CZ_REQ_DISORGANIZE_GUILD: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 40, initialValue: 0)
-    public var key: [Int8]
+    @FixedLengthString(lengthOfBytes: 40)
+    public var key: String
     public init() {
     }
 }
@@ -4926,8 +4926,8 @@ public struct PACKET_ZC_ACK_REQ_JOIN_GUILD: Sendable {
 public struct PACKET_ZC_REQ_JOIN_GUILD: Sendable {
     public var packetType: Int16 = 0
     public var guild_id: UInt32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var guild_name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var guild_name: String
     public init() {
     }
 }
@@ -4942,18 +4942,18 @@ public struct PACKET_CZ_JOIN_GUILD: Sendable {
 
 public struct PACKET_ZC_GUILD_NOTICE: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 60, initialValue: 0)
-    public var subject: [Int8]
-    @FixedSizeArray(size: 120, initialValue: 0)
-    public var notice: [Int8]
+    @FixedLengthString(lengthOfBytes: 60)
+    public var subject: String
+    @FixedLengthString(lengthOfBytes: 120)
+    public var notice: String
     public init() {
     }
 }
 
 public struct PACKET_CZ_REQ_JOIN_GUILD2: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public init() {
     }
 }
@@ -4982,16 +4982,16 @@ public struct PACKET_CZ_REQ_LEAVE_GROUP: Sendable {
 public struct PACKET_CZ_REQ_EXPEL_GROUP_MEMBER: Sendable {
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public init() {
     }
 }
 
 public struct PACKET_CZ_PARTY_JOIN_REQ: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public init() {
     }
 }
@@ -5057,8 +5057,8 @@ public struct PACKET_ZC_NPCSPRITE_CHANGE: Sendable {
 public struct PACKET_ZC_MEMBER_NEWENTRY: Sendable {
     public var packetType: Int16 = 0
     public var count: UInt16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public init() {
     }
 }
@@ -5066,8 +5066,8 @@ public struct PACKET_ZC_MEMBER_NEWENTRY: Sendable {
 public struct PACKET_ZC_MEMBER_EXIT: Sendable {
     public var packetType: Int16 = 0
     public var count: UInt16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public var kicked: UInt8 = 0
     public init() {
     }
@@ -5075,8 +5075,8 @@ public struct PACKET_ZC_MEMBER_EXIT: Sendable {
 
 public struct PACKET_CZ_MOVETO_MAP: Sendable {
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 16, initialValue: 0)
-    public var map: [Int8]
+    @FixedLengthString(lengthOfBytes: 16)
+    public var map: String
     public var x: UInt16 = 0
     public var y: UInt16 = 0
     public init() {
@@ -5086,7 +5086,7 @@ public struct PACKET_CZ_MOVETO_MAP: Sendable {
 public struct PACKET_CZ_BROADCAST: Sendable {
     public var packetType: Int16 = 0
     public var packetSize: UInt16 = 0
-    public var message: [Int8] = []
+    public var message: String = ""
     public init() {
     }
 }
@@ -5112,9 +5112,9 @@ public struct PACKET_CZ_CREATE_CHATROOM: Sendable {
     public var packetSize: UInt16 = 0
     public var limit: UInt16 = 0
     public var type: UInt8 = 0
-    @FixedSizeArray(size: 8, initialValue: 0)
-    public var password: [Int8]
-    public var title: [Int8] = []
+    @FixedLengthString(lengthOfBytes: 8)
+    public var password: String
+    public var title: String = ""
     public init() {
     }
 }
@@ -5211,8 +5211,8 @@ public struct PACKET_CZ_REQ_RANKING: Sendable {
 }
 
 public struct PACKET_ZC_ACK_RANKING_sub: Sendable {
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public var points: UInt32 = 0
     public init() {
     }
@@ -5276,8 +5276,8 @@ public struct PACKET_CZ_AUCTION_ITEM_SEARCH: Sendable {
     public var packetType: Int16 = 0
     public var type: UInt16 = 0
     public var auction_id: UInt32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var text: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var text: String
     public var page: UInt16 = 0
     public init() {
     }
@@ -5381,8 +5381,8 @@ public struct GUILD_MEMBER_INFO: Sendable {
     public var currentState: Int32 = 0
     public var positionID: Int32 = 0
     public var lastLoginTime: UInt32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var char_name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var char_name: String
     public init() {
     }
 }
@@ -5393,8 +5393,8 @@ public struct GUILD_SKILLDATA: Sendable {
     public var level: UInt16 = 0
     public var sp: UInt16 = 0
     public var range2: UInt16 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var name: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
     public var upFlag: UInt8 = 0
     public init() {
     }
@@ -5403,8 +5403,8 @@ public struct GUILD_SKILLDATA: Sendable {
 public struct RELATED_GUILD_INFO: Sendable {
     public var relation: Int32 = 0
     public var GDID: Int32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var guildname: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var guildname: String
     public init() {
     }
 }
@@ -5436,8 +5436,8 @@ public struct CZ_PURCHASE_ITEM_FROMMC: Sendable {
 }
 
 public struct RANKLIST: Sendable {
-    @FixedSizeArray(size: 10, initialValue: 0)
-    public var names: [Int8]
+    @FixedLengthString(lengthOfBytes: 10)
+    public var names: String
     @FixedSizeArray(size: 10, initialValue: 0)
     public var points: [UInt32]
     public init() {
@@ -5446,8 +5446,8 @@ public struct RANKLIST: Sendable {
 
 public struct PACKET_ZC_POSITION_ID_NAME_INFO_sub: Sendable {
     public var positionID: Int32 = 0
-    @FixedSizeArray(size: 24, initialValue: 0)
-    public var posName: [Int8]
+    @FixedLengthString(lengthOfBytes: 24)
+    public var posName: String
     public init() {
     }
 }

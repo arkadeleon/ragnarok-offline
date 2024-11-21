@@ -203,14 +203,16 @@ struct GeneratePacketsCommand: ParsableCommand {
                     node.kind == "FieldDecl"
                 }
                 for field in fields {
-                    let type = field.type!.asSwiftType!
-                    let structure = switch type {
+                    let fieldType = NativeType(nodeType: field.type!)!
+                    let structure = switch fieldType {
                     case .structure(let structure):
                         structure
                     case .structureArray(let structure):
                         structure
                     case .fixedSizeStructureArray(let structure, _):
                         structure
+                    case .string, .fixedLengthString:
+                        NativeType.StructureType.char
                     }
                     if case .custom(let name) = structure {
                         guard let node = ast.findNode(where: { $0.kind == "CXXRecordDecl" && $0.name == name && $0.inner != nil }) else {
@@ -232,23 +234,28 @@ struct GeneratePacketsCommand: ParsableCommand {
             }
 
             let variables = fields.map { field in
-                var fieldType = field.type!.asSwiftType!
+                var fieldType = NativeType(nodeType: field.type!)!
                 if structure.name == "PACKET_ZC_POSITION_ID_NAME_INFO" && field.name == "posInfo" {
                     fieldType = .fixedSizeStructureArray(.custom("PACKET_ZC_POSITION_ID_NAME_INFO_sub"), 20)
                 }
                 if structure.name == "EQUIPITEM_INFO" && field.name == "Flag" {
-                    fieldType = .structure(.standard("UInt8"))
+                    fieldType = .structure(.number("UInt8"))
                 }
 
                 switch fieldType {
+                case .structure, .structureArray, .string:
+                    return """
+                        public var \(field.name!): \(fieldType.annotation) = \(fieldType.initialValue)
+                    """
                 case .fixedSizeStructureArray(let structure, let size):
                     return """
                         @FixedSizeArray(size: \(size), initialValue: \(structure.initialValue))
                         public var \(field.name!): \(fieldType.annotation)
                     """
-                default:
+                case .fixedLengthString(let lengthOfBytes):
                     return """
-                        public var \(field.name!): \(fieldType.annotation) = \(fieldType.initialValue)
+                        @FixedLengthString(lengthOfBytes: \(lengthOfBytes))
+                        public var \(field.name!): \(fieldType.annotation)
                     """
                 }
             }
@@ -271,8 +278,8 @@ struct GeneratePacketsCommand: ParsableCommand {
             
             public struct PACKET_ZC_POSITION_ID_NAME_INFO_sub: Sendable {
                 public var positionID: Int32 = 0
-                @FixedSizeArray(size: 24, initialValue: 0)
-                public var posName: [Int8]
+                @FixedLengthString(lengthOfBytes: 24)
+                public var posName: String
                 public init() {
                 }
             }
