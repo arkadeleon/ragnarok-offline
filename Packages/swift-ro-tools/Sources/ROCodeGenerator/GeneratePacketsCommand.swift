@@ -264,6 +264,7 @@ struct GeneratePacketsCommand: ParsableCommand {
         for structDecl in structDecls + referencedStructDecls {
             var properties: [String] = []
             var decodes: [String] = []
+            var encodes: [String] = []
 
             for (i, field) in structDecl.fields.enumerated() {
                 switch field.type {
@@ -314,16 +315,30 @@ struct GeneratePacketsCommand: ParsableCommand {
                             \(field.name) = try decoder.decode(String.self, lengthOfBytes: \(lengthOfBytes))
                     """)
                 }
+
+                switch field.type {
+                case .structure, .array, .fixedSizeArray, .string:
+                    encodes.append("""
+                            try encoder.encode(\(field.name))
+                    """)
+                case .fixedLengthString(let lengthOfBytes):
+                    encodes.append("""
+                            try encoder.encode(\(field.name), lengthOfBytes: \(lengthOfBytes))
+                    """)
+                }
             }
 
             output.append("""
             
-            public struct \(structDecl.name): BinaryDecodable, Sendable {
+            public struct \(structDecl.name): BinaryDecodable, BinaryEncodable, Sendable {
             \(properties.joined(separator: "\n"))
                 public init() {
                 }
                 public init(from decoder: BinaryDecoder) throws {
             \(decodes.joined(separator: "\n"))
+                }
+                public func encode(to encoder: BinaryEncoder) throws {
+            \(encodes.joined(separator: "\n"))
                 }
             }
             

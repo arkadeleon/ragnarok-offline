@@ -91,6 +91,15 @@ public class BinaryEncoder {
         }
     }
 
+    public func encode(_ value: String, encoding: String.Encoding = .ascii) throws {
+        guard var data = value.data(using: encoding) else {
+            throw BinaryEncodingError.invalidEncoding(encoding)
+        }
+        try data.withUnsafeBytes { pointer in
+            _ = try stream.write(pointer.baseAddress!, count: pointer.count)
+        }
+    }
+
     public func encode(_ value: String, lengthOfBytes: Int, encoding: String.Encoding = .ascii) throws {
         guard var data = value.data(using: encoding) else {
             throw BinaryEncodingError.invalidEncoding(encoding)
