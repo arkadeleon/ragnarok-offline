@@ -199,17 +199,17 @@ struct GeneratePacketsCommand: ParsableCommand {
 
                 structures.append(node)
 
-                let fields = node.findNodes { node in
-                    node.kind == "FieldDecl"
+                let fields = node.findNodes {
+                    $0.kind == "FieldDecl"
                 }
                 for field in fields {
                     let fieldType = NativeType(nodeType: field.type!)!
                     let structure = switch fieldType {
                     case .structure(let structure):
                         structure
-                    case .structureArray(let structure):
+                    case .array(let structure):
                         structure
-                    case .fixedSizeStructureArray(let structure, _):
+                    case .fixedSizeArray(let structure, _):
                         structure
                     case .string, .fixedLengthString:
                         NativeType.StructureType.char
@@ -229,63 +229,108 @@ struct GeneratePacketsCommand: ParsableCommand {
         }
 
         for structure in structures + referencedStructures {
-            let fields = structure.findNodes { node in
-                node.kind == "FieldDecl"
+            let fields = structure.findNodes {
+                $0.kind == "FieldDecl"
             }
 
-            let variables = fields.map { field in
-                var fieldType = NativeType(nodeType: field.type!)!
-                if structure.name == "PACKET_ZC_POSITION_ID_NAME_INFO" && field.name == "posInfo" {
-                    fieldType = .fixedSizeStructureArray(.custom("PACKET_ZC_POSITION_ID_NAME_INFO_sub"), 20)
+            var properties: [String] = []
+            var decodes: [String] = []
+
+            for (i, field) in fields.enumerated() {
+                var fieldName = field.name!
+                if i == 0 && fieldName == "PacketType" {
+                    fieldName = "packetType"
+                } else if i == 1 && (fieldName == "PacketLength" || fieldName == "packetLen" || fieldName == "packetSize" || fieldName == "length") {
+                    fieldName = "packetLength"
                 }
-                if structure.name == "EQUIPITEM_INFO" && field.name == "Flag" {
-                    fieldType = .structure(.number("UInt8"))
+
+                var fieldType = NativeType(nodeType: field.type!)!
+                if structure.name == "PACKET_ZC_POSITION_ID_NAME_INFO" && fieldName == "posInfo" {
+                    fieldType = .fixedSizeArray(.custom("PACKET_ZC_POSITION_ID_NAME_INFO_sub"), 20)
+                } else if structure.name == "EQUIPITEM_INFO" && fieldName == "Flag" {
+                    fieldType = .structure(.number(.uint8))
                 }
 
                 switch fieldType {
-                case .structure, .structureArray, .string:
-                    return """
-                        public var \(field.name!): \(fieldType.annotation) = \(fieldType.initialValue)
-                    """
-                case .fixedSizeStructureArray(let structure, let size):
-                    return """
+                case .structure, .array, .string:
+                    properties.append("""
+                        public var \(fieldName): \(fieldType.annotation) = \(fieldType.initialValue)
+                    """)
+                case .fixedSizeArray(let structure, let size):
+                    properties.append("""
                         @FixedSizeArray(size: \(size), initialValue: \(structure.initialValue))
-                        public var \(field.name!): \(fieldType.annotation)
-                    """
+                        public var \(fieldName): \(fieldType.annotation)
+                    """)
                 case .fixedLengthString(let lengthOfBytes):
-                    return """
+                    properties.append("""
                         @FixedLengthString(lengthOfBytes: \(lengthOfBytes))
-                        public var \(field.name!): \(fieldType.annotation)
-                    """
+                        public var \(fieldName): \(fieldType.annotation)
+                    """)
+                }
+
+                switch fieldType {
+                case .structure(let structure):
+                    decodes.append("""
+                            \(fieldName) = try decoder.decode(\(structure.name).self)
+                    """)
+                case .array(let structure):
+                    let sizes = fields[0..<i].map {
+                        let fieldType = NativeType(nodeType: $0.type!)!
+                        return fieldType.size
+                    }
+                    let remaining = "Int(packetLength - (\(sizes.joined(separator: " + "))))"
+                    decodes.append("""
+                            \(fieldName) = try decoder.decode([\(structure.name)].self, count: \(remaining) / \(structure.size))
+                    """)
+                case .fixedSizeArray(let structure, let size):
+                    decodes.append("""
+                            \(fieldName) = try decoder.decode([\(structure.name)].self, count: \(size))
+                    """)
+                case .string:
+                    let sizes = fields[0..<i].map {
+                        let fieldType = NativeType(nodeType: $0.type!)!
+                        return fieldType.size
+                    }
+                    let remaining = "Int(packetLength - (\(sizes.joined(separator: " + "))))"
+                    decodes.append("""
+                            \(fieldName) = try decoder.decode(String.self, lengthOfBytes: \(remaining))
+                    """)
+                case .fixedLengthString(let lengthOfBytes):
+                    decodes.append("""
+                            \(fieldName) = try decoder.decode(String.self, lengthOfBytes: \(lengthOfBytes))
+                    """)
                 }
             }
 
-            output.append(
-                """
-                
-                public struct \(structure.name!): Sendable {
-                \(variables.joined(separator: "\n"))
-                    public init() {
-                    }
-                }
-                
-                """
-            )
-        }
-
-        output.append(
-            """
+            output.append("""
             
-            public struct PACKET_ZC_POSITION_ID_NAME_INFO_sub: Sendable {
-                public var positionID: Int32 = 0
-                @FixedLengthString(lengthOfBytes: 24)
-                public var posName: String
+            public struct \(structure.name!): BinaryDecodable, Sendable {
+            \(properties.joined(separator: "\n"))
                 public init() {
                 }
+                public init(from decoder: BinaryDecoder) throws {
+            \(decodes.joined(separator: "\n"))
+                }
             }
             
-            """
-        )
+            """)
+        }
+
+        output.append("""
+        
+        public struct PACKET_ZC_POSITION_ID_NAME_INFO_sub: BinaryDecodable, Sendable {
+            public var positionID: Int32 = 0
+            @FixedLengthString(lengthOfBytes: 24)
+            public var posName: String
+            public init() {
+            }
+            public init(from decoder: BinaryDecoder) throws {
+                positionID = try decoder.decode(Int32.self)
+                posName = try decoder.decode(String.self, lengthOfBytes: 24)
+            }
+        }
+        
+        """)
 
         let outputURL = generatedDirectory.appending(path: "\(outputName).swift")
         try output.write(to: outputURL, atomically: true, encoding: .utf8)
