@@ -182,8 +182,9 @@ struct GeneratePacketsCommand: ParsableCommand {
         }
         output.append("\n")
 
-        var structures: [ASTNode] = []
-        var referencedStructures: [ASTNode] = []
+        var structDecls: [StructDecl] = []
+        var referencedStructDecls: [StructDecl] = []
+
         for ast in asts {
             let nodes = ast.findNodes { node in
                 guard node.kind == "CXXRecordDecl" else { return false }
@@ -193,18 +194,15 @@ struct GeneratePacketsCommand: ParsableCommand {
             }
 
             for node in nodes {
-                if structures.contains(where: { $0.name! == node.name! }) {
+                if structDecls.contains(where: { $0.name == node.name }) {
                     continue
                 }
 
-                structures.append(node)
+                let structDecl = StructDecl(node: node)
+                structDecls.append(structDecl)
 
-                let fields = node.findNodes {
-                    $0.kind == "FieldDecl"
-                }
-                for field in fields {
-                    let fieldType = NativeType(nodeType: field.type!)!
-                    let structure = switch fieldType {
+                for field in structDecl.fields {
+                    let structure = switch field.type {
                     case .structure(let structure):
                         structure
                     case .array(let structure):
@@ -212,125 +210,121 @@ struct GeneratePacketsCommand: ParsableCommand {
                     case .fixedSizeArray(let structure, _):
                         structure
                     case .string, .fixedLengthString:
-                        NativeType.StructureType.char
+                        StructureType.char
                     }
-                    if case .custom(let name) = structure {
-                        guard let node = ast.findNode(where: { $0.kind == "CXXRecordDecl" && $0.name == name && $0.inner != nil }) else {
-                            continue
-                        }
-                        if !referencedStructures.contains(where: { $0.name == node.name }) &&
-                            !structures.contains(where: { $0.name == node.name }) {
-                            print(name)
-                            referencedStructures.append(node)
-                        }
+                    guard case .custom(let name) = structure else {
+                        continue
                     }
+                    guard let node = ast.findNode(where: { $0.kind == "CXXRecordDecl" && $0.name == name && $0.inner != nil }) else {
+                        continue
+                    }
+                    guard !referencedStructDecls.contains(where: { $0.name == node.name }) &&
+                        !structDecls.contains(where: { $0.name == node.name }) else {
+                        continue
+                    }
+
+                    print(name)
+
+                    let structDecl = StructDecl(node: node)
+                    referencedStructDecls.append(structDecl)
                 }
             }
         }
 
-        for structure in structures + referencedStructures {
-            let fields = structure.findNodes {
-                $0.kind == "FieldDecl"
-            }
+        for (s, structDecl) in structDecls.enumerated() {
+            for (f, fieldDecl) in structDecl.fields.enumerated() {
+                if f == 0 && fieldDecl.name == "PacketType" {
+                    structDecls[s].fields[f].name = "packetType"
+                } else if f == 1 && (fieldDecl.name == "PacketLength" || fieldDecl.name == "packetLen" || fieldDecl.name == "packetSize" || fieldDecl.name == "length") {
+                    structDecls[s].fields[f].name = "packetLength"
+                }
 
+                if structDecl.name == "PACKET_ZC_POSITION_ID_NAME_INFO" && fieldDecl.name == "posInfo" {
+                    structDecls[s].fields[f].type = .fixedSizeArray(.custom("PACKET_ZC_POSITION_ID_NAME_INFO_sub"), 20)
+                }
+            }
+        }
+
+        for (s, structDecl) in referencedStructDecls.enumerated() {
+            for (f, fieldDecl) in structDecl.fields.enumerated() {
+                if structDecl.name == "EQUIPITEM_INFO" && fieldDecl.name == "Flag" {
+                    referencedStructDecls[s].fields[f].type = .structure(.uint8)
+                }
+            }
+        }
+
+        referencedStructDecls.append(.init(
+            name: "PACKET_ZC_POSITION_ID_NAME_INFO_sub",
+            fields: [
+                .init(name: "positionID", type: .structure(.int32)),
+                .init(name: "posName", type: .fixedLengthString(24)),
+            ]
+        ))
+
+        for structDecl in structDecls + referencedStructDecls {
             var properties: [String] = []
             var decodes: [String] = []
 
-            for (i, field) in fields.enumerated() {
-                var fieldName = field.name!
-                if i == 0 && fieldName == "PacketType" {
-                    fieldName = "packetType"
-                } else if i == 1 && (fieldName == "PacketLength" || fieldName == "packetLen" || fieldName == "packetSize" || fieldName == "length") {
-                    fieldName = "packetLength"
-                }
-
-                var fieldType = NativeType(nodeType: field.type!)!
-                if structure.name == "PACKET_ZC_POSITION_ID_NAME_INFO" && fieldName == "posInfo" {
-                    fieldType = .fixedSizeArray(.custom("PACKET_ZC_POSITION_ID_NAME_INFO_sub"), 20)
-                } else if structure.name == "EQUIPITEM_INFO" && fieldName == "Flag" {
-                    fieldType = .structure(.number(.uint8))
-                }
-
-                switch fieldType {
+            for (i, field) in structDecl.fields.enumerated() {
+                switch field.type {
                 case .structure, .array, .string:
                     properties.append("""
-                        public var \(fieldName): \(fieldType.annotation) = \(fieldType.initialValue)
+                        public var \(field.name): \(field.type.annotation) = \(field.type.initialValue)
                     """)
                 case .fixedSizeArray(let structure, let size):
                     properties.append("""
                         @FixedSizeArray(size: \(size), initialValue: \(structure.initialValue))
-                        public var \(fieldName): \(fieldType.annotation)
+                        public var \(field.name): \(field.type.annotation)
                     """)
                 case .fixedLengthString(let lengthOfBytes):
                     properties.append("""
                         @FixedLengthString(lengthOfBytes: \(lengthOfBytes))
-                        public var \(fieldName): \(fieldType.annotation)
+                        public var \(field.name): \(field.type.annotation)
                     """)
                 }
 
-                switch fieldType {
+                switch field.type {
                 case .structure(let structure):
                     decodes.append("""
-                            \(fieldName) = try decoder.decode(\(structure.name).self)
+                            \(field.name) = try decoder.decode(\(structure.name).self)
                     """)
                 case .array(let structure):
-                    let sizes = fields[0..<i].map {
-                        let fieldType = NativeType(nodeType: $0.type!)!
-                        return fieldType.size
+                    let sizes = structDecl.fields[0..<i].map {
+                        return $0.type.size
                     }
                     let remaining = "Int(packetLength - (\(sizes.joined(separator: " + "))))"
                     decodes.append("""
-                            \(fieldName) = try decoder.decode([\(structure.name)].self, count: \(remaining) / \(structure.size))
+                            \(field.name) = try decoder.decode([\(structure.name)].self, count: \(remaining) / \(structure.size))
                     """)
                 case .fixedSizeArray(let structure, let size):
                     decodes.append("""
-                            \(fieldName) = try decoder.decode([\(structure.name)].self, count: \(size))
+                            \(field.name) = try decoder.decode([\(structure.name)].self, count: \(size))
                     """)
                 case .string:
-                    let sizes = fields[0..<i].map {
-                        let fieldType = NativeType(nodeType: $0.type!)!
-                        return fieldType.size
+                    let sizes = structDecl.fields[0..<i].map {
+                        return $0.type.size
                     }
                     let remaining = "Int(packetLength - (\(sizes.joined(separator: " + "))))"
                     decodes.append("""
-                            \(fieldName) = try decoder.decode(String.self, lengthOfBytes: \(remaining))
+                            \(field.name) = try decoder.decode(String.self, lengthOfBytes: \(remaining))
                     """)
                 case .fixedLengthString(let lengthOfBytes):
                     decodes.append("""
-                            \(fieldName) = try decoder.decode(String.self, lengthOfBytes: \(lengthOfBytes))
+                            \(field.name) = try decoder.decode(String.self, lengthOfBytes: \(lengthOfBytes))
                     """)
                 }
             }
 
             output.append("""
             
-            public struct \(structure.name!): BinaryDecodable, Sendable {
+            public struct \(structDecl.name): Sendable {
             \(properties.joined(separator: "\n"))
                 public init() {
-                }
-                public init(from decoder: BinaryDecoder) throws {
-            \(decodes.joined(separator: "\n"))
                 }
             }
             
             """)
         }
-
-        output.append("""
-        
-        public struct PACKET_ZC_POSITION_ID_NAME_INFO_sub: BinaryDecodable, Sendable {
-            public var positionID: Int32 = 0
-            @FixedLengthString(lengthOfBytes: 24)
-            public var posName: String
-            public init() {
-            }
-            public init(from decoder: BinaryDecoder) throws {
-                positionID = try decoder.decode(Int32.self)
-                posName = try decoder.decode(String.self, lengthOfBytes: 24)
-            }
-        }
-        
-        """)
 
         let outputURL = generatedDirectory.appending(path: "\(outputName).swift")
         try output.write(to: outputURL, atomically: true, encoding: .utf8)

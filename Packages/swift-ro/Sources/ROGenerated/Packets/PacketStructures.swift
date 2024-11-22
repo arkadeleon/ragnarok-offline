@@ -678,7 +678,7 @@ public struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME: Sendable {
 }
 
 public struct PACKET_ZC_PAR_CHANGE: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var varID: UInt16 = 0
     public var count: Int32 = 0
     public init() {
@@ -686,7 +686,7 @@ public struct PACKET_ZC_PAR_CHANGE: Sendable {
 }
 
 public struct PACKET_ZC_LONGPAR_CHANGE: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var varID: UInt16 = 0
     public var amount: Int32 = 0
     public init() {
@@ -694,7 +694,7 @@ public struct PACKET_ZC_LONGPAR_CHANGE: Sendable {
 }
 
 public struct PACKET_ZC_STATUS_CHANGE: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var statusID: UInt16 = 0
     public var value: UInt8 = 0
     public init() {
@@ -702,7 +702,7 @@ public struct PACKET_ZC_STATUS_CHANGE: Sendable {
 }
 
 public struct PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var curCount: Int16 = 0
     public var maxCount: Int16 = 0
     public var curWeight: Int32 = 0
@@ -712,14 +712,14 @@ public struct PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO: Sendable {
 }
 
 public struct PACKET_ZC_ATTACK_RANGE: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var currentAttRange: Int16 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_COUPLESTATUS: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var statusType: UInt32 = 0
     public var defaultStatus: Int32 = 0
     public var plusStatus: Int32 = 0
@@ -728,7 +728,7 @@ public struct PACKET_ZC_COUPLESTATUS: Sendable {
 }
 
 public struct PACKET_ZC_LONGLONGPAR_CHANGE: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var varID: UInt16 = 0
     public var amount: Int64 = 0
     public init() {
@@ -736,7 +736,7 @@ public struct PACKET_ZC_LONGLONGPAR_CHANGE: Sendable {
 }
 
 public struct PACKET_ZC_ITEM_PICKUP_ACK: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var Index: UInt16 = 0
     public var count: UInt16 = 0
     public var nameid: UInt32 = 0
@@ -759,8 +759,8 @@ public struct PACKET_ZC_ITEM_PICKUP_ACK: Sendable {
 }
 
 public struct PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var type: UInt8 = 0
     public var ItemID: UInt32 = 0
     public var len: Int8 = 0
@@ -790,7 +790,7 @@ public struct PACKET_ZC_INVENTORY_END: Sendable {
 }
 
 public struct PACKET_ZC_REQ_WEAR_EQUIP_ACK: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public var wearLocation: UInt32 = 0
     public var wItemSpriteNumber: UInt16 = 0
@@ -800,8 +800,8 @@ public struct PACKET_ZC_REQ_WEAR_EQUIP_ACK: Sendable {
 }
 
 public struct PACKET_ZC_EQUIPWIN_MICROSCOPE: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var characterName: String
     public var job: Int16 = 0
@@ -827,8 +827,8 @@ public struct PACKET_CZ_NPC_MARKET_PURCHASE_sub: Sendable {
 }
 
 public struct PACKET_CZ_NPC_MARKET_PURCHASE: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var list: [PACKET_CZ_NPC_MARKET_PURCHASE_sub] = []
     public init() {
     }
@@ -896,7 +896,7 @@ public struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE2: Sendable {
 }
 
 public struct PACKET_CZ_ADD_ITEM_TO_MAIL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var count: Int16 = 0
     public init() {
@@ -904,7 +904,7 @@ public struct PACKET_CZ_ADD_ITEM_TO_MAIL: Sendable {
 }
 
 public struct PACKET_ZC_ACK_ADD_ITEM_RODEX: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var result: Int8 = 0
     public var index: Int16 = 0
     public var count: Int16 = 0
@@ -925,7 +925,7 @@ public struct PACKET_ZC_ACK_ADD_ITEM_RODEX: Sendable {
 }
 
 public struct PACKET_CZ_REQ_OPEN_WRITE_MAIL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var receiveName: String
     public init() {
@@ -933,7 +933,7 @@ public struct PACKET_CZ_REQ_OPEN_WRITE_MAIL: Sendable {
 }
 
 public struct PACKET_ZC_ACK_OPEN_WRITE_MAIL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var receiveName: String
     public var result: Int8 = 0
@@ -942,7 +942,7 @@ public struct PACKET_ZC_ACK_OPEN_WRITE_MAIL: Sendable {
 }
 
 public struct PACKET_CZ_REQ_REMOVE_ITEM_MAIL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var cnt: UInt16 = 0
     public init() {
@@ -950,7 +950,7 @@ public struct PACKET_CZ_REQ_REMOVE_ITEM_MAIL: Sendable {
 }
 
 public struct PACKET_ZC_ACK_REMOVE_ITEM_MAIL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var result: Int8 = 0
     public var index: Int16 = 0
     public var cnt: UInt16 = 0
@@ -960,8 +960,8 @@ public struct PACKET_ZC_ACK_REMOVE_ITEM_MAIL: Sendable {
 }
 
 public struct PACKET_CZ_SEND_MAIL: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var receiveName: String
     @FixedLengthString(lengthOfBytes: 24)
@@ -976,14 +976,14 @@ public struct PACKET_CZ_SEND_MAIL: Sendable {
 }
 
 public struct PACKET_ZC_WRITE_MAIL_RESULT: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var result: Int8 = 0
     public init() {
     }
 }
 
 public struct PACKET_CZ_CHECKNAME1: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var Name: String
     public init() {
@@ -991,7 +991,7 @@ public struct PACKET_CZ_CHECKNAME1: Sendable {
 }
 
 public struct PACKET_CZ_CHECKNAME2: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var Name: String
     public var own_char: Int8 = 0
@@ -1000,7 +1000,7 @@ public struct PACKET_CZ_CHECKNAME2: Sendable {
 }
 
 public struct PACKET_ZC_CHECKNAME: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var CharId: Int32 = 0
     public var Class: Int16 = 0
     public var BaseLevel: Int16 = 0
@@ -1011,22 +1011,22 @@ public struct PACKET_ZC_CHECKNAME: Sendable {
 }
 
 public struct PACKET_ZC_NOTIFY_UNREADMAIL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var result: Int8 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_MAIL_LIST: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var IsEnd: Int8 = 0
     public init() {
     }
 }
 
 public struct PACKET_CZ_REQ_NEXT_MAIL_LIST: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var opentype: Int8 = 0
     public var Lower_MailID: Int64 = 0
     public init() {
@@ -1034,7 +1034,7 @@ public struct PACKET_CZ_REQ_NEXT_MAIL_LIST: Sendable {
 }
 
 public struct PACKET_CZ_REQ_OPEN_MAIL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var char_Upper_MailID: Int64 = 0
     public var return_Upper_MailID: Int64 = 0
     public var account_Upper_MailID: Int64 = 0
@@ -1043,7 +1043,7 @@ public struct PACKET_CZ_REQ_OPEN_MAIL: Sendable {
 }
 
 public struct PACKET_CZ_REQ_READ_MAIL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var opentype: Int8 = 0
     public var MailID: Int64 = 0
     public init() {
@@ -1069,8 +1069,8 @@ public struct PACKET_ZC_ACK_READ_RODEX_SUB: Sendable {
 }
 
 public struct PACKET_ZC_ACK_READ_RODEX: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var opentype: Int8 = 0
     public var MailID: Int64 = 0
     public var TextcontentsLength: Int16 = 0
@@ -1082,7 +1082,7 @@ public struct PACKET_ZC_ACK_READ_RODEX: Sendable {
 }
 
 public struct PACKET_CZ_REQ_DELETE_MAIL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var opentype: Int8 = 0
     public var MailID: Int64 = 0
     public init() {
@@ -1090,7 +1090,7 @@ public struct PACKET_CZ_REQ_DELETE_MAIL: Sendable {
 }
 
 public struct PACKET_ZC_ACK_DELETE_MAIL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var opentype: Int8 = 0
     public var MailID: Int64 = 0
     public init() {
@@ -1098,7 +1098,7 @@ public struct PACKET_ZC_ACK_DELETE_MAIL: Sendable {
 }
 
 public struct PACKET_CZ_REQ_REFRESH_MAIL_LIST: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var Upper_MailID: Int64 = 0
     @FixedSizeArray(size: 16, initialValue: 0)
     public var unknown: [Int8]
@@ -1107,7 +1107,7 @@ public struct PACKET_CZ_REQ_REFRESH_MAIL_LIST: Sendable {
 }
 
 public struct PACKET_CZ_REQ_ZENY_FROM_MAIL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var MailID: Int64 = 0
     public var opentype: Int8 = 0
     public init() {
@@ -1115,7 +1115,7 @@ public struct PACKET_CZ_REQ_ZENY_FROM_MAIL: Sendable {
 }
 
 public struct PACKET_ZC_ACK_ZENY_FROM_MAIL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var MailID: Int64 = 0
     public var opentype: Int8 = 0
     public var result: Int8 = 0
@@ -1124,7 +1124,7 @@ public struct PACKET_ZC_ACK_ZENY_FROM_MAIL: Sendable {
 }
 
 public struct PACKET_CZ_REQ_ITEM_FROM_MAIL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var MailID: Int64 = 0
     public var opentype: Int8 = 0
     public init() {
@@ -1132,7 +1132,7 @@ public struct PACKET_CZ_REQ_ITEM_FROM_MAIL: Sendable {
 }
 
 public struct PACKET_ZC_ACK_ITEM_FROM_MAIL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var MailID: Int64 = 0
     public var opentype: Int8 = 0
     public var result: Int8 = 0
@@ -1141,7 +1141,7 @@ public struct PACKET_ZC_ACK_ITEM_FROM_MAIL: Sendable {
 }
 
 public struct PACKET_ZC_SKILL_SCALE: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var skill_id: Int16 = 0
     public var skill_lv: Int16 = 0
@@ -1191,7 +1191,7 @@ public struct PACKET_ZC_GROUP_LIST_SUB: Sendable {
 
 public struct PACKET_ZC_GROUP_LIST: Sendable {
     public var packetType: Int16 = 0
-    public var packetLen: Int16 = 0
+    public var packetLength: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var partyName: String
     public var members: [PACKET_ZC_GROUP_LIST_SUB] = []
@@ -1200,8 +1200,8 @@ public struct PACKET_ZC_GROUP_LIST: Sendable {
 }
 
 public struct PACKET_ZC_CLANINFO: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var ClanID: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var ClanName: String
@@ -1216,7 +1216,7 @@ public struct PACKET_ZC_CLANINFO: Sendable {
 }
 
 public struct PACKET_ZC_NOTIFY_CLAN_CONNECTINFO: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var NumConnect: Int16 = 0
     public var NumTotal: Int16 = 0
     public init() {
@@ -1224,14 +1224,14 @@ public struct PACKET_ZC_NOTIFY_CLAN_CONNECTINFO: Sendable {
 }
 
 public struct PACKET_ZC_ACK_CLAN_LEAVE: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_NOTIFY_CLAN_CHAT: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var MemberName: String
     public var Message: String = ""
@@ -1240,8 +1240,8 @@ public struct PACKET_ZC_NOTIFY_CLAN_CHAT: Sendable {
 }
 
 public struct PACKET_ZC_FORMATSTRING_MSG: Sendable {
-    public var PacketType: UInt16 = 0
-    public var PacketLength: UInt16 = 0
+    public var packetType: UInt16 = 0
+    public var packetLength: UInt16 = 0
     public var MessageId: UInt16 = 0
     public var MessageString: String = ""
     public init() {
@@ -1249,8 +1249,8 @@ public struct PACKET_ZC_FORMATSTRING_MSG: Sendable {
 }
 
 public struct PACKET_ZC_FORMATSTRING_MSG_COLOR: Sendable {
-    public var PacketType: UInt16 = 0
-    public var PacketLength: UInt16 = 0
+    public var packetType: UInt16 = 0
+    public var packetLength: UInt16 = 0
     public var messageId: UInt16 = 0
     public var color: UInt32 = 0
     public var messageString: String = ""
@@ -1259,7 +1259,7 @@ public struct PACKET_ZC_FORMATSTRING_MSG_COLOR: Sendable {
 }
 
 public struct PACKET_ZC_MSG_COLOR: Sendable {
-    public var PacketType: UInt16 = 0
+    public var packetType: UInt16 = 0
     public var MessageId: UInt16 = 0
     public var MessageColor: UInt32 = 0
     public init() {
@@ -1267,14 +1267,14 @@ public struct PACKET_ZC_MSG_COLOR: Sendable {
 }
 
 public struct PACKET_CZ_OPEN_UI: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var UIType: Int8 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_UI_OPEN: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var UIType: Int8 = 0
     public var data: Int32 = 0
     public init() {
@@ -1282,7 +1282,7 @@ public struct PACKET_ZC_UI_OPEN: Sendable {
 }
 
 public struct PACKET_ZC_UI_OPEN2: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var UIType: Int8 = 0
     public var data: Int64 = 0
     public init() {
@@ -1290,7 +1290,7 @@ public struct PACKET_ZC_UI_OPEN2: Sendable {
 }
 
 public struct PACKET_ZC_UI_ACTION: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var UIType: Int32 = 0
     public var data: Int32 = 0
     public init() {
@@ -1298,7 +1298,7 @@ public struct PACKET_ZC_UI_ACTION: Sendable {
 }
 
 public struct PACKET_CZ_PRIVATE_AIRSHIP_REQUEST: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 16)
     public var mapName: String
     public var ItemID: UInt32 = 0
@@ -1307,14 +1307,14 @@ public struct PACKET_CZ_PRIVATE_AIRSHIP_REQUEST: Sendable {
 }
 
 public struct PACKET_ZC_PRIVATE_AIRSHIP_RESPONSE: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var flag: UInt32 = 0
     public init() {
     }
 }
 
 public struct PACKET_CZ_REQ_STYLE_CHANGE: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var HeadPalette: Int16 = 0
     public var HeadStyle: Int16 = 0
     public var BodyPalette: Int16 = 0
@@ -1326,7 +1326,7 @@ public struct PACKET_CZ_REQ_STYLE_CHANGE: Sendable {
 }
 
 public struct PACKET_CZ_REQ_STYLE_CHANGE2: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var HeadPalette: Int16 = 0
     public var HeadStyle: Int16 = 0
     public var BodyPalette: Int16 = 0
@@ -1339,23 +1339,23 @@ public struct PACKET_CZ_REQ_STYLE_CHANGE2: Sendable {
 }
 
 public struct PACKET_ZC_STYLE_CHANGE_RES: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var flag: Int8 = 0
     public init() {
     }
 }
 
 public struct PACKET_CZ_PET_EVOLUTION: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: UInt16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: UInt16 = 0
     public var EvolvedPetEggID: UInt32 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_NOTIFY_CHAT: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var GID: UInt32 = 0
     public var Message: String = ""
     public init() {
@@ -1363,8 +1363,8 @@ public struct PACKET_ZC_NOTIFY_CHAT: Sendable {
 }
 
 public struct PACKET_ZC_NOTIFY_PLAYERCHAT: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var Message: String = ""
     public init() {
     }
@@ -2398,7 +2398,7 @@ public struct PACKET_ZC_BAN_LIST_sub: Sendable {
 
 public struct PACKET_ZC_BAN_LIST: Sendable {
     public var packetType: Int16 = 0
-    public var packetLen: UInt16 = 0
+    public var packetLength: UInt16 = 0
     public var chars: [PACKET_ZC_BAN_LIST_sub] = []
     public init() {
     }
@@ -2428,7 +2428,7 @@ public struct PACKET_ZC_MERGE_ITEM_OPEN_sub: Sendable {
 
 public struct PACKET_ZC_MERGE_ITEM_OPEN: Sendable {
     public var packetType: Int16 = 0
-    public var packetLen: UInt16 = 0
+    public var packetLength: UInt16 = 0
     public var items: [PACKET_ZC_MERGE_ITEM_OPEN_sub] = []
     public init() {
     }
@@ -2557,8 +2557,8 @@ public struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT_sub: Sendable {
 }
 
 public struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var result: UInt16 = 0
     public var list: [PACKET_ZC_NPC_MARKET_PURCHASE_RESULT_sub] = []
     public init() {
@@ -2566,7 +2566,7 @@ public struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT: Sendable {
 }
 
 public struct PACKET_ZC_TALKBOX_CHATCONTENTS: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var aid: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 21)
     public var message: String
@@ -2649,7 +2649,7 @@ public struct PACKET_ZC_ACK_RANDOM_COMBINE_ITEM: Sendable {
 }
 
 public struct PACKET_CZ_UNINSTALLATION: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var InstallationKind: UInt8 = 0
     public init() {
     }
@@ -2812,7 +2812,7 @@ public struct PACKET_ZC_PERSONAL_INFOMATION_SUB: Sendable {
 
 public struct PACKET_ZC_PERSONAL_INFOMATION: Sendable {
     public var packetType: Int16 = 0
-    public var length: Int16 = 0
+    public var packetLength: Int16 = 0
     public var total_exp: Int32 = 0
     public var total_death: Int32 = 0
     public var total_drop: Int32 = 0
@@ -2831,7 +2831,7 @@ public struct PACKET_CZ_REQUEST_ACTNPC: Sendable {
 }
 
 public struct PACKET_ZC_NOTIFY_SKILL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var SKID: UInt16 = 0
     public var AID: UInt32 = 0
     public var targetID: UInt32 = 0
@@ -2847,7 +2847,7 @@ public struct PACKET_ZC_NOTIFY_SKILL: Sendable {
 }
 
 public struct PACKET_ZC_USE_SKILL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var SKID: UInt16 = 0
     public var level: Int32 = 0
     public var targetAID: UInt32 = 0
@@ -2858,7 +2858,7 @@ public struct PACKET_ZC_USE_SKILL: Sendable {
 }
 
 public struct PACKET_ZC_NOTIFY_GROUNDSKILL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var SKID: UInt16 = 0
     public var AID: UInt32 = 0
     public var level: Int16 = 0
@@ -2870,7 +2870,7 @@ public struct PACKET_ZC_NOTIFY_GROUNDSKILL: Sendable {
 }
 
 public struct PACKET_ZC_SKILL_POSTDELAY: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var SKID: UInt16 = 0
     public var DelayTM: UInt32 = 0
     public init() {
@@ -2878,7 +2878,7 @@ public struct PACKET_ZC_SKILL_POSTDELAY: Sendable {
 }
 
 public struct PACKET_ZC_NOTIFY_SKILL_POSITION: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var SKID: UInt16 = 0
     public var AID: UInt32 = 0
     public var targetID: UInt32 = 0
@@ -2896,7 +2896,7 @@ public struct PACKET_ZC_NOTIFY_SKILL_POSITION: Sendable {
 }
 
 public struct PACKET_ZC_C_MARKERINFO: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var xPos: Int16 = 0
     public var yPos: Int16 = 0
@@ -2905,7 +2905,7 @@ public struct PACKET_ZC_C_MARKERINFO: Sendable {
 }
 
 public struct PACKET_ZC_MEMBERMGR_INFO: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var guildMemberInfo: [GUILD_MEMBER_INFO] = []
     public init() {
@@ -2913,7 +2913,7 @@ public struct PACKET_ZC_MEMBERMGR_INFO: Sendable {
 }
 
 public struct PACKET_ZC_GUILD_INFO: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var GDID: Int32 = 0
     public var level: Int32 = 0
     public var userNum: Int32 = 0
@@ -2938,8 +2938,8 @@ public struct PACKET_ZC_GUILD_INFO: Sendable {
 }
 
 public struct PACKET_ZC_POSITION_ID_NAME_INFO: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var positionID: Int32 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var posName: String
@@ -2959,16 +2959,16 @@ public struct PACKET_ZC_POSITION_INFO_sub: Sendable {
 }
 
 public struct PACKET_ZC_POSITION_INFO: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var posInfo: [PACKET_ZC_POSITION_INFO_sub] = []
     public init() {
     }
 }
 
 public struct PACKET_ZC_GUILD_SKILLINFO: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var skillPoint: Int16 = 0
     public var skillInfo: [GUILD_SKILLDATA] = []
     public init() {
@@ -2976,15 +2976,15 @@ public struct PACKET_ZC_GUILD_SKILLINFO: Sendable {
 }
 
 public struct PACKET_ZC_MYGUILD_BASIC_INFO: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var rgInfo: [RELATED_GUILD_INFO] = []
     public init() {
     }
 }
 
 public struct PACKET_CZ_REQ_UPLOAD_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 16)
     public var answer: String
     public var imageSize: UInt16 = 0
@@ -2993,7 +2993,7 @@ public struct PACKET_CZ_REQ_UPLOAD_MACRO_DETECTOR: Sendable {
 }
 
 public struct PACKET_ZC_ACK_UPLOAD_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 4)
     public var captchaKey: String
     public var captchaFlag: Int32 = 0
@@ -3002,8 +3002,8 @@ public struct PACKET_ZC_ACK_UPLOAD_MACRO_DETECTOR: Sendable {
 }
 
 public struct PACKET_CZ_UPLOAD_MACRO_DETECTOR_CAPTCHA: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     @FixedLengthString(lengthOfBytes: 4)
     public var captchaKey: String
     public var imageData: String = ""
@@ -3012,27 +3012,27 @@ public struct PACKET_CZ_UPLOAD_MACRO_DETECTOR_CAPTCHA: Sendable {
 }
 
 public struct PACKET_ZC_COMPLETE_UPLOAD_MACRO_DETECTOR_CAPTCHA: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public init() {
     }
 }
 
 public struct PACKET_CZ_REQ_APPLY_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_ACK_APPLY_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var status: Int32 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_APPLY_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var imageSize: UInt16 = 0
     @FixedLengthString(lengthOfBytes: 4)
     public var captchaKey: String
@@ -3041,8 +3041,8 @@ public struct PACKET_ZC_APPLY_MACRO_DETECTOR: Sendable {
 }
 
 public struct PACKET_ZC_APPLY_MACRO_DETECTOR_CAPTCHA: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     @FixedLengthString(lengthOfBytes: 4)
     public var captchaKey: String
     public var imageData: String = ""
@@ -3051,13 +3051,13 @@ public struct PACKET_ZC_APPLY_MACRO_DETECTOR_CAPTCHA: Sendable {
 }
 
 public struct PACKET_CZ_COMPLETE_APPLY_MACRO_DETECTOR_CAPTCHA: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_REQ_ANSWER_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var retryCount: UInt8 = 0
     public var timeout: Int32 = 0
     public init() {
@@ -3065,7 +3065,7 @@ public struct PACKET_ZC_REQ_ANSWER_MACRO_DETECTOR: Sendable {
 }
 
 public struct PACKET_CZ_ACK_ANSWER_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 16)
     public var answer: String
     public init() {
@@ -3073,21 +3073,21 @@ public struct PACKET_CZ_ACK_ANSWER_MACRO_DETECTOR: Sendable {
 }
 
 public struct PACKET_ZC_CLOSE_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var status: Int32 = 0
     public init() {
     }
 }
 
 public struct PACKET_CZ_REQ_PREVIEW_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var captchaID: Int32 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_ACK_PREVIEW_MACRO_DETECTOR: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var captchaFlag: Int32 = 0
     public var imageSize: UInt16 = 0
     @FixedLengthString(lengthOfBytes: 4)
@@ -3097,8 +3097,8 @@ public struct PACKET_ZC_ACK_PREVIEW_MACRO_DETECTOR: Sendable {
 }
 
 public struct PACKET_ZC_PREVIEW_MACRO_DETECTOR_CAPTCHA: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     @FixedLengthString(lengthOfBytes: 4)
     public var captchaKey: String
     public var imageData: String = ""
@@ -3107,7 +3107,7 @@ public struct PACKET_ZC_PREVIEW_MACRO_DETECTOR_CAPTCHA: Sendable {
 }
 
 public struct PACKET_CZ_REQ_PLAYER_AID_IN_RANGE: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var xPos: Int16 = 0
     public var yPos: Int16 = 0
     public var RadiusRange: Int8 = 0
@@ -3116,22 +3116,22 @@ public struct PACKET_CZ_REQ_PLAYER_AID_IN_RANGE: Sendable {
 }
 
 public struct PACKET_ZC_ACK_PLAYER_AID_IN_RANGE: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var AID: [UInt32] = []
     public init() {
     }
 }
 
 public struct PACKET_ZC_ACK_MAKE_GROUP: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var result: Int8 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_PARTY_JOIN_REQ: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var GRID: Int32 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var groupName: String
@@ -3140,7 +3140,7 @@ public struct PACKET_ZC_PARTY_JOIN_REQ: Sendable {
 }
 
 public struct PACKET_ZC_PARTY_JOIN_REQ_ACK: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var characterName: String
     public var result: Int32 = 0
@@ -3149,8 +3149,8 @@ public struct PACKET_ZC_PARTY_JOIN_REQ_ACK: Sendable {
 }
 
 public struct PACKET_ZC_NOTIFY_CHAT_PARTY: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var AID: Int32 = 0
     public var chatMsg: String = ""
     public init() {
@@ -3158,7 +3158,7 @@ public struct PACKET_ZC_NOTIFY_CHAT_PARTY: Sendable {
 }
 
 public struct PACKET_ZC_NOTIFY_POSITION_TO_GROUPM: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var AID: Int32 = 0
     public var xPos: Int16 = 0
     public var yPos: Int16 = 0
@@ -3167,7 +3167,7 @@ public struct PACKET_ZC_NOTIFY_POSITION_TO_GROUPM: Sendable {
 }
 
 public struct PACKET_ZC_NOTIFY_HP_TO_GROUPM: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var hp: Int32 = 0
     public var maxhp: Int32 = 0
@@ -3176,7 +3176,7 @@ public struct PACKET_ZC_NOTIFY_HP_TO_GROUPM: Sendable {
 }
 
 public struct PACKET_ZC_NOTIFY_MEMBERINFO_TO_GROUPM: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var AID: Int32 = 0
     public var job: Int16 = 0
     public var level: Int16 = 0
@@ -3185,7 +3185,7 @@ public struct PACKET_ZC_NOTIFY_MEMBERINFO_TO_GROUPM: Sendable {
 }
 
 public struct PACKET_ZC_DELETE_MEMBER_FROM_GROUP: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var AID: Int32 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var characterName: String
@@ -3195,20 +3195,20 @@ public struct PACKET_ZC_DELETE_MEMBER_FROM_GROUP: Sendable {
 }
 
 public struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_ACK_TAKEOFF_EQUIP_ALL: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_BATTLEFIELD_NOTIFY_HP: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var hp: Int32 = 0
     public var maxhp: Int32 = 0
@@ -3217,7 +3217,7 @@ public struct PACKET_ZC_BATTLEFIELD_NOTIFY_HP: Sendable {
 }
 
 public struct PACKET_CZ_CHOOSE_MENU_ZERO: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var NpcID: UInt32 = 0
     public var menuIndex: UInt8 = 0
     public init() {
@@ -3225,22 +3225,22 @@ public struct PACKET_CZ_CHOOSE_MENU_ZERO: Sendable {
 }
 
 public struct PACKET_ZC_DIALOG_TEXT_ALIGN: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var align: UInt8 = 0
     public init() {
     }
 }
 
 public struct PACKET_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var index: Int16 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var index: Int16 = 0
     public var success_chance: Int32 = 0
     public var blessing_info: GRADE_ENCHANT_BLESSING = GRADE_ENCHANT_BLESSING()
@@ -3252,7 +3252,7 @@ public struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST: Sendable {
 }
 
 public struct PACKET_CZ_GRADE_ENCHANT_REQUEST: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var material_index: Int32 = 0
     public var blessing_flag: Int8 = 0
@@ -3263,13 +3263,13 @@ public struct PACKET_CZ_GRADE_ENCHANT_REQUEST: Sendable {
 }
 
 public struct PACKET_CZ_GRADE_ENCHANT_CLOSE_UI: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_GRADE_ENCHANT_ACK: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var grade: Int16 = 0
     public var result: Int32 = 0
@@ -3298,8 +3298,8 @@ public struct PACKET_ZC_SHOW_IMAGE: Sendable {
 }
 
 public struct PACKET_ZC_WHISPER: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var senderGID: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var sender: String
@@ -3310,7 +3310,7 @@ public struct PACKET_ZC_WHISPER: Sendable {
 }
 
 public struct PACKET_ZC_UPDATE_GDID: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var guildId: UInt32 = 0
     public var emblemVersion: Int32 = 0
     public var mode: UInt32 = 0
@@ -3323,7 +3323,7 @@ public struct PACKET_ZC_UPDATE_GDID: Sendable {
 }
 
 public struct PACKET_CZ_CONTACTNPC: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var type: UInt8 = 0
     public init() {
@@ -3331,7 +3331,7 @@ public struct PACKET_CZ_CONTACTNPC: Sendable {
 }
 
 public struct PACKET_ZC_ATTACK_FAILURE_FOR_DISTANCE: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var targetAID: UInt32 = 0
     public var targetXPos: Int16 = 0
     public var targetYPos: Int16 = 0
@@ -3343,20 +3343,20 @@ public struct PACKET_ZC_ATTACK_FAILURE_FOR_DISTANCE: Sendable {
 }
 
 public struct PACKET_ZC_START_CAPTURE: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_TRYCAPTURE_MONSTER: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var result: Int8 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_PROPERTY_PET: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var szName: String
     public var bModified: Int8 = 0
@@ -3370,7 +3370,7 @@ public struct PACKET_ZC_PROPERTY_PET: Sendable {
 }
 
 public struct PACKET_ZC_CHANGESTATE_PET: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var type: Int8 = 0
     public var GID: Int32 = 0
     public var data: Int32 = 0
@@ -3379,7 +3379,7 @@ public struct PACKET_ZC_CHANGESTATE_PET: Sendable {
 }
 
 public struct PACKET_ZC_SPIRITS: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var num: Int16 = 0
     public init() {
@@ -3387,7 +3387,7 @@ public struct PACKET_ZC_SPIRITS: Sendable {
 }
 
 public struct PACKET_ZC_SPIRITS2: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var num: Int16 = 0
     public init() {
@@ -3395,7 +3395,7 @@ public struct PACKET_ZC_SPIRITS2: Sendable {
 }
 
 public struct PACKET_ZC_SOULENERGY: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var num: UInt16 = 0
     public init() {
@@ -3403,8 +3403,8 @@ public struct PACKET_ZC_SOULENERGY: Sendable {
 }
 
 public struct PACKET_ZC_SAY_DIALOG: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var NpcID: UInt32 = 0
     public var message: String = ""
     public init() {
@@ -3412,8 +3412,8 @@ public struct PACKET_ZC_SAY_DIALOG: Sendable {
 }
 
 public struct PACKET_ZC_SAY_DIALOG2: Sendable {
-    public var PacketType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var NpcID: UInt32 = 0
     public var message: String = ""
     public init() {
@@ -3421,21 +3421,21 @@ public struct PACKET_ZC_SAY_DIALOG2: Sendable {
 }
 
 public struct PACKET_ZC_WAIT_DIALOG: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var NpcID: UInt32 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_WAIT_DIALOG2: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var NpcID: UInt32 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_PLAY_NPC_BGM: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var bgm: String
     public init() {
@@ -3443,7 +3443,7 @@ public struct PACKET_ZC_PLAY_NPC_BGM: Sendable {
 }
 
 public struct PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var count: Int32 = 0
     public init() {
@@ -3451,7 +3451,7 @@ public struct PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART: Sendable {
 }
 
 public struct PACKET_ZC_SOUND: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
     public var act: UInt8 = 0
@@ -3506,20 +3506,20 @@ public struct PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY: Sendable {
 }
 
 public struct PACKET_ZC_OPEN_REFORM_UI: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var ITID: Int32 = 0
     public init() {
     }
 }
 
 public struct PACKET_CZ_CLOSE_REFORM_UI: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public init() {
     }
 }
 
 public struct PACKET_CZ_ITEM_REFORM: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var ITID: Int32 = 0
     public var index: Int16 = 0
     public init() {
@@ -3527,7 +3527,7 @@ public struct PACKET_CZ_ITEM_REFORM: Sendable {
 }
 
 public struct PACKET_ZC_ITEM_REFORM_ACK: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var result: Int8 = 0
     public init() {
@@ -3535,7 +3535,7 @@ public struct PACKET_ZC_ITEM_REFORM_ACK: Sendable {
 }
 
 public struct PACKET_CZ_REQUEST_RANDOM_ENCHANT: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var enchant_group: Int64 = 0
     public var index: Int16 = 0
     public init() {
@@ -3543,7 +3543,7 @@ public struct PACKET_CZ_REQUEST_RANDOM_ENCHANT: Sendable {
 }
 
 public struct PACKET_CZ_REQUEST_PERFECT_ENCHANT: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var enchant_group: Int64 = 0
     public var index: Int16 = 0
     public var ITID: UInt32 = 0
@@ -3552,7 +3552,7 @@ public struct PACKET_CZ_REQUEST_PERFECT_ENCHANT: Sendable {
 }
 
 public struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var enchant_group: Int64 = 0
     public var index: Int16 = 0
     public var slot: Int16 = 0
@@ -3561,7 +3561,7 @@ public struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT: Sendable {
 }
 
 public struct PACKET_CZ_REQUEST_RESET_ENCHANT: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var enchant_group: Int64 = 0
     public var index: Int16 = 0
     public init() {
@@ -3569,7 +3569,7 @@ public struct PACKET_CZ_REQUEST_RESET_ENCHANT: Sendable {
 }
 
 public struct PACKET_ZC_RESPONSE_ENCHANT: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var msgId: Int32 = 0
     public var ITID: UInt32 = 0
     public init() {
@@ -3577,13 +3577,13 @@ public struct PACKET_ZC_RESPONSE_ENCHANT: Sendable {
 }
 
 public struct PACKET_CZ_CLOSE_UI_ENCHANT: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public init() {
     }
 }
 
 public struct PACKET_ZC_GOLDPCCAFE_POINT: Sendable {
-    public var PacketType: UInt16 = 0
+    public var packetType: UInt16 = 0
     public var isActive: Int8 = 0
     public var mode: Int8 = 0
     public var point: Int32 = 0
@@ -3593,7 +3593,7 @@ public struct PACKET_ZC_GOLDPCCAFE_POINT: Sendable {
 }
 
 public struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST: Sendable {
-    public var PacketType: UInt16 = 0
+    public var packetType: UInt16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
     public init() {
@@ -3601,7 +3601,7 @@ public struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST: Sendable {
 }
 
 public struct PACKET_ZC_DYNAMICNPC_CREATE_RESULT: Sendable {
-    public var PacketType: UInt16 = 0
+    public var packetType: UInt16 = 0
     public var result: UInt32 = 0
     public init() {
     }
@@ -3812,7 +3812,7 @@ public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub: Sendable {
 
 public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG: Sendable {
     public var packetType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetLength: Int16 = 0
     public var result: UInt16 = 0
     public var amount: UInt16 = 0
     public var items: [PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub] = []
@@ -3838,7 +3838,7 @@ public struct PACKET_CZ_REQ_ADD_NEW_EMBLEM: Sendable {
 
 public struct PACKET_ZC_BROADCAST: Sendable {
     public var packetType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetLength: Int16 = 0
     public var message: String = ""
     public init() {
     }
@@ -3846,7 +3846,7 @@ public struct PACKET_ZC_BROADCAST: Sendable {
 
 public struct PACKET_ZC_BROADCAST2: Sendable {
     public var packetType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetLength: Int16 = 0
     public var fontColor: UInt32 = 0
     public var fontType: Int16 = 0
     public var fontSize: Int16 = 0
@@ -3877,7 +3877,7 @@ public struct PACKET_CZ_REQ_STYLE_CLOSE: Sendable {
 }
 
 public struct PACKET_ZC_SUMMON_HP_INIT: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var summonAID: UInt32 = 0
     public var CurrentHP: UInt32 = 0
     public var MaxHP: UInt32 = 0
@@ -3886,7 +3886,7 @@ public struct PACKET_ZC_SUMMON_HP_INIT: Sendable {
 }
 
 public struct PACKET_ZC_SUMMON_HP_UPDATE: Sendable {
-    public var PacketType: Int16 = 0
+    public var packetType: Int16 = 0
     public var summonAID: UInt32 = 0
     public var VarId: UInt16 = 0
     public var Value: UInt32 = 0
@@ -3938,7 +3938,7 @@ public struct PACKET_ZC_FRIENDS_LIST_sub: Sendable {
 
 public struct PACKET_ZC_FRIENDS_LIST: Sendable {
     public var packetType: Int16 = 0
-    public var PacketLength: Int16 = 0
+    public var packetLength: Int16 = 0
     public var friends: [PACKET_ZC_FRIENDS_LIST_sub] = []
     public init() {
     }
@@ -4597,7 +4597,7 @@ public struct PACKET_ZC_PAR_CHANGE_USER: Sendable {
 
 public struct PACKET_ZC_CHANGE_CHATROOM: Sendable {
     public var packetType: UInt16 = 0
-    public var packetSize: UInt16 = 0
+    public var packetLength: UInt16 = 0
     public var ownerId: UInt32 = 0
     public var chatId: UInt32 = 0
     public var limit: UInt16 = 0
@@ -4703,7 +4703,7 @@ public struct PACKET_ZC_ENTER_ROOM_sub: Sendable {
 
 public struct PACKET_ZC_ENTER_ROOM: Sendable {
     public var packetType: UInt16 = 0
-    public var packetSize: UInt16 = 0
+    public var packetLength: UInt16 = 0
     public var chatId: UInt32 = 0
     public var members: [PACKET_ZC_ENTER_ROOM_sub] = []
     public init() {
@@ -5085,7 +5085,7 @@ public struct PACKET_CZ_MOVETO_MAP: Sendable {
 
 public struct PACKET_CZ_BROADCAST: Sendable {
     public var packetType: Int16 = 0
-    public var packetSize: UInt16 = 0
+    public var packetLength: UInt16 = 0
     public var message: String = ""
     public init() {
     }
@@ -5109,7 +5109,7 @@ public struct PACKET_CZ_ACK_SELECT_DEALTYPE: Sendable {
 
 public struct PACKET_CZ_CREATE_CHATROOM: Sendable {
     public var packetType: Int16 = 0
-    public var packetSize: UInt16 = 0
+    public var packetLength: UInt16 = 0
     public var limit: UInt16 = 0
     public var type: UInt8 = 0
     @FixedLengthString(lengthOfBytes: 8)
