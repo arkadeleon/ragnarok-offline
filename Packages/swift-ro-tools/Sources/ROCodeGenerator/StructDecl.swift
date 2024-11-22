@@ -67,21 +67,6 @@ enum FieldType {
         }
     }
 
-    var size: String {
-        switch self {
-        case .structure(let structure):
-            structure.size
-        case .array(let structure):
-            "0"
-        case .fixedSizeArray(let structure, let size):
-            "\(structure.size) * \(size)"
-        case .string:
-            "0"
-        case .fixedLengthString(let lengthOfBytes):
-            "\(lengthOfBytes)"
-        }
-    }
-
     init?(nodeType: ASTNode.NodeType) {
         guard let qualType = nodeType.qualType else {
             return nil
@@ -181,35 +166,6 @@ enum StructureType {
             "0"
         case .custom(let name):
             "\(name)()"
-        }
-    }
-
-    var size: String {
-        switch self {
-        case .char:
-            "1"
-        case .int8:
-            "1"
-        case .uint8:
-            "1"
-        case .int16:
-            "2"
-        case .uint16:
-            "2"
-        case .int32:
-            "4"
-        case .uint32:
-            "4"
-        case .int64:
-            "8"
-        case .uint64:
-            "8"
-        case .float:
-            "4"
-        case .double:
-            "8"
-        case .custom(let name):
-            "MemoryLayout<\(name)>.size"
         }
     }
 

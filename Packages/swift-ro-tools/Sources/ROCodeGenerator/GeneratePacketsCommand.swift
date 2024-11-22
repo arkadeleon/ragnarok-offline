@@ -290,11 +290,12 @@ struct GeneratePacketsCommand: ParsableCommand {
                     """)
                 case .array(let structure):
                     let sizes = structDecl.fields[0..<i].map {
-                        return $0.type.size
+                        byteCount(forFieldType: $0.type, structDecls: structDecls + referencedStructDecls)
                     }
-                    let remaining = "Int(packetLength - (\(sizes.joined(separator: " + "))))"
+                    let remaining = "(Int(packetLength) - (\(sizes.joined(separator: " + "))))"
+                    let structByteCount = byteCount(forStructRef: structure, structDecls: structDecls + referencedStructDecls)
                     decodes.append("""
-                            \(field.name) = try decoder.decode([\(structure.name)].self, count: \(remaining) / \(structure.size))
+                            \(field.name) = try decoder.decode([\(structure.name)].self, count: \(remaining) / \(structByteCount))
                     """)
                 case .fixedSizeArray(let structure, let size):
                     decodes.append("""
@@ -302,9 +303,9 @@ struct GeneratePacketsCommand: ParsableCommand {
                     """)
                 case .string:
                     let sizes = structDecl.fields[0..<i].map {
-                        return $0.type.size
+                        byteCount(forFieldType: $0.type, structDecls: structDecls + referencedStructDecls)
                     }
-                    let remaining = "Int(packetLength - (\(sizes.joined(separator: " + "))))"
+                    let remaining = "(Int(packetLength) - (\(sizes.joined(separator: " + "))))"
                     decodes.append("""
                             \(field.name) = try decoder.decode(String.self, lengthOfBytes: \(remaining))
                     """)
@@ -317,9 +318,12 @@ struct GeneratePacketsCommand: ParsableCommand {
 
             output.append("""
             
-            public struct \(structDecl.name): Sendable {
+            public struct \(structDecl.name): BinaryDecodable, Sendable {
             \(properties.joined(separator: "\n"))
                 public init() {
+                }
+                public init(from decoder: BinaryDecoder) throws {
+            \(decodes.joined(separator: "\n"))
                 }
             }
             
@@ -328,6 +332,56 @@ struct GeneratePacketsCommand: ParsableCommand {
 
         let outputURL = generatedDirectory.appending(path: "\(outputName).swift")
         try output.write(to: outputURL, atomically: true, encoding: .utf8)
+    }
+
+    func byteCount(forFieldType fieldType: FieldType, structDecls: [StructDecl]) -> String {
+        switch fieldType {
+        case .structure(let structRef):
+            byteCount(forStructRef: structRef, structDecls: structDecls)
+        case .array:
+            "?"
+        case .fixedSizeArray(let structRef, let size):
+            "(" + byteCount(forStructRef: structRef, structDecls: structDecls) + " * \(size))"
+        case .string:
+            "?"
+        case .fixedLengthString(let lengthOfBytes):
+            "\(lengthOfBytes)"
+        }
+    }
+
+    func byteCount(forStructRef structRef: StructureType, structDecls: [StructDecl]) -> String {
+        switch structRef {
+        case .char:
+            return "1"
+        case .int8:
+            return "1"
+        case .uint8:
+            return "1"
+        case .int16:
+            return "2"
+        case .uint16:
+            return "2"
+        case .int32:
+            return "4"
+        case .uint32:
+            return "4"
+        case .int64:
+            return "8"
+        case .uint64:
+            return "8"
+        case .float:
+            return "4"
+        case .double:
+            return "8"
+        case .custom(let name):
+            let structDecl = structDecls.first {
+                $0.name == name
+            }!
+            let size = structDecl.fields.map {
+                byteCount(forFieldType: $0.type, structDecls: structDecls)
+            }.joined(separator: " + ")
+            return "(\(size))"
+        }
     }
 
     // MARK: - Generate Packet Database
