@@ -7,25 +7,35 @@
 
 struct StructDecl {
     var name: String
-    var fields: [FieldDecl] = []
+    var fields: [FieldDecl]
+//    var nestedStructs: [StructDecl]
 
     init(name: String, fields: [FieldDecl]) {
         self.name = name
         self.fields = fields
+//        self.nestedStructs = []
     }
 
     init(node: ASTNode) {
-        name = node.name!
+        name = node.name ?? ""
 
-        let fieldNodes = node.findNodes {
-            $0.kind == "FieldDecl"
-        }
+        fields = node
+            .findNodes {
+                $0.kind == "FieldDecl"
+            }
+            .map {
+                let fieldName = $0.name!
+                let fieldType = FieldType(nodeType: $0.type!)!
+                return FieldDecl(name: fieldName, type: fieldType)
+            }
 
-        fields = fieldNodes.map {
-            let fieldName = $0.name!
-            let fieldType = FieldType(nodeType: $0.type!)!
-            return FieldDecl(name: fieldName, type: fieldType)
-        }
+//        nestedStructs = node.inner!
+//            .filter {
+//                $0.kind == "CXXRecordDecl" && $0.inner != nil
+//            }
+//            .map {
+//                StructDecl(node: $0)
+//            }
     }
 }
 

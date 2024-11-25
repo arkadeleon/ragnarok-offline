@@ -2248,15 +2248,15 @@ public struct PACKET_ZC_NOTIFY_CLAN_CHAT: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_FORMATSTRING_MSG: BinaryDecodable, BinaryEncodable, Sendable {
-    public var packetType: UInt16 = 0
-    public var packetLength: UInt16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var MessageId: UInt16 = 0
     public var MessageString: String = ""
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        packetType = try decoder.decode(UInt16.self)
-        packetLength = try decoder.decode(UInt16.self)
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
         MessageId = try decoder.decode(UInt16.self)
         MessageString = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 2)))
     }
@@ -2269,16 +2269,16 @@ public struct PACKET_ZC_FORMATSTRING_MSG: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_FORMATSTRING_MSG_COLOR: BinaryDecodable, BinaryEncodable, Sendable {
-    public var packetType: UInt16 = 0
-    public var packetLength: UInt16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var messageId: UInt16 = 0
     public var color: UInt32 = 0
     public var messageString: String = ""
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        packetType = try decoder.decode(UInt16.self)
-        packetLength = try decoder.decode(UInt16.self)
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
         messageId = try decoder.decode(UInt16.self)
         color = try decoder.decode(UInt32.self)
         messageString = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 2 + 4)))
@@ -2293,13 +2293,13 @@ public struct PACKET_ZC_FORMATSTRING_MSG_COLOR: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_ZC_MSG_COLOR: BinaryDecodable, BinaryEncodable, Sendable {
-    public var packetType: UInt16 = 0
+    public var packetType: Int16 = 0
     public var MessageId: UInt16 = 0
     public var MessageColor: UInt32 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        packetType = try decoder.decode(UInt16.self)
+        packetType = try decoder.decode(Int16.self)
         MessageId = try decoder.decode(UInt16.self)
         MessageColor = try decoder.decode(UInt32.self)
     }
@@ -2493,13 +2493,13 @@ public struct PACKET_ZC_STYLE_CHANGE_RES: BinaryDecodable, BinaryEncodable, Send
 
 public struct PACKET_CZ_PET_EVOLUTION: BinaryDecodable, BinaryEncodable, Sendable {
     public var packetType: Int16 = 0
-    public var packetLength: UInt16 = 0
+    public var packetLength: Int16 = 0
     public var EvolvedPetEggID: UInt32 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        packetLength = try decoder.decode(UInt16.self)
+        packetLength = try decoder.decode(Int16.self)
         EvolvedPetEggID = try decoder.decode(UInt32.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
@@ -4048,7 +4048,7 @@ public struct PACKET_ZC_SEARCH_STORE_INFO_ACK: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_ZC_ACK_REQNAMEALL: BinaryDecodable, BinaryEncodable, Sendable {
-    public var packet_id: UInt16 = 0
+    public var packetType: Int16 = 0
     public var gid: Int32 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
@@ -4062,7 +4062,7 @@ public struct PACKET_ZC_ACK_REQNAMEALL: BinaryDecodable, BinaryEncodable, Sendab
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        packet_id = try decoder.decode(UInt16.self)
+        packetType = try decoder.decode(Int16.self)
         gid = try decoder.decode(Int32.self)
         name = try decoder.decode(String.self, lengthOfBytes: 24)
         party_name = try decoder.decode(String.self, lengthOfBytes: 24)
@@ -4071,7 +4071,7 @@ public struct PACKET_ZC_ACK_REQNAMEALL: BinaryDecodable, BinaryEncodable, Sendab
         title_id = try decoder.decode(Int32.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
-        try encoder.encode(packet_id)
+        try encoder.encode(packetType)
         try encoder.encode(gid)
         try encoder.encode(name, lengthOfBytes: 24)
         try encoder.encode(party_name, lengthOfBytes: 24)
@@ -4082,7 +4082,7 @@ public struct PACKET_ZC_ACK_REQNAMEALL: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_ACK_REQNAMEALL_NPC: BinaryDecodable, BinaryEncodable, Sendable {
-    public var packet_id: UInt16 = 0
+    public var packetType: Int16 = 0
     public var gid: Int32 = 0
     public var groupId: Int32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -4092,14 +4092,14 @@ public struct PACKET_ZC_ACK_REQNAMEALL_NPC: BinaryDecodable, BinaryEncodable, Se
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        packet_id = try decoder.decode(UInt16.self)
+        packetType = try decoder.decode(Int16.self)
         gid = try decoder.decode(Int32.self)
         groupId = try decoder.decode(Int32.self)
         name = try decoder.decode(String.self, lengthOfBytes: 24)
         title = try decoder.decode(String.self, lengthOfBytes: 24)
     }
     public func encode(to encoder: BinaryEncoder) throws {
-        try encoder.encode(packet_id)
+        try encoder.encode(packetType)
         try encoder.encode(gid)
         try encoder.encode(groupId)
         try encoder.encode(name, lengthOfBytes: 24)
@@ -4912,13 +4912,13 @@ public struct PACKET_ZC_BAN_LIST_sub: BinaryDecodable, BinaryEncodable, Sendable
 
 public struct PACKET_ZC_BAN_LIST: BinaryDecodable, BinaryEncodable, Sendable {
     public var packetType: Int16 = 0
-    public var packetLength: UInt16 = 0
+    public var packetLength: Int16 = 0
     public var chars: [PACKET_ZC_BAN_LIST_sub] = []
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        packetLength = try decoder.decode(UInt16.self)
+        packetLength = try decoder.decode(Int16.self)
         chars = try decoder.decode([PACKET_ZC_BAN_LIST_sub].self, count: (Int(packetLength) - (2 + 2)) / (4 + 40 + 24))
     }
     public func encode(to encoder: BinaryEncoder) throws {
@@ -4978,13 +4978,13 @@ public struct PACKET_ZC_MERGE_ITEM_OPEN_sub: BinaryDecodable, BinaryEncodable, S
 
 public struct PACKET_ZC_MERGE_ITEM_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
     public var packetType: Int16 = 0
-    public var packetLength: UInt16 = 0
+    public var packetLength: Int16 = 0
     public var items: [PACKET_ZC_MERGE_ITEM_OPEN_sub] = []
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        packetLength = try decoder.decode(UInt16.self)
+        packetLength = try decoder.decode(Int16.self)
         items = try decoder.decode([PACKET_ZC_MERGE_ITEM_OPEN_sub].self, count: (Int(packetLength) - (2 + 2)) / (2))
     }
     public func encode(to encoder: BinaryEncoder) throws {
@@ -7601,7 +7601,7 @@ public struct PACKET_CZ_CLOSE_UI_ENCHANT: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_GOLDPCCAFE_POINT: BinaryDecodable, BinaryEncodable, Sendable {
-    public var packetType: UInt16 = 0
+    public var packetType: Int16 = 0
     public var isActive: Int8 = 0
     public var mode: Int8 = 0
     public var point: Int32 = 0
@@ -7609,7 +7609,7 @@ public struct PACKET_ZC_GOLDPCCAFE_POINT: BinaryDecodable, BinaryEncodable, Send
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        packetType = try decoder.decode(UInt16.self)
+        packetType = try decoder.decode(Int16.self)
         isActive = try decoder.decode(Int8.self)
         mode = try decoder.decode(Int8.self)
         point = try decoder.decode(Int32.self)
@@ -7625,13 +7625,13 @@ public struct PACKET_ZC_GOLDPCCAFE_POINT: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST: BinaryDecodable, BinaryEncodable, Sendable {
-    public var packetType: UInt16 = 0
+    public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        packetType = try decoder.decode(UInt16.self)
+        packetType = try decoder.decode(Int16.self)
         name = try decoder.decode(String.self, lengthOfBytes: 24)
     }
     public func encode(to encoder: BinaryEncoder) throws {
@@ -7641,12 +7641,12 @@ public struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_ZC_DYNAMICNPC_CREATE_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
-    public var packetType: UInt16 = 0
+    public var packetType: Int16 = 0
     public var result: UInt32 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        packetType = try decoder.decode(UInt16.self)
+        packetType = try decoder.decode(Int16.self)
         result = try decoder.decode(UInt32.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
@@ -7851,12 +7851,12 @@ public struct PACKET_CZ_ADVENTURER_AGENCY_JOIN_RESULT: BinaryDecodable, BinaryEn
 }
 
 public struct PACKET_ZC_USER_COUNT: BinaryDecodable, BinaryEncodable, Sendable {
-    public var packetType: UInt16 = 0
+    public var packetType: Int16 = 0
     public var playersCount: Int32 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        packetType = try decoder.decode(UInt16.self)
+        packetType = try decoder.decode(Int16.self)
         playersCount = try decoder.decode(Int32.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
@@ -8616,7 +8616,7 @@ public struct PACKET_ZC_ACK_OPEN_BANKING: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_REQ_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
-    public var packetType: UInt16 = 0
+    public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var requesterName: String
     public var targetId: UInt32 = 0
@@ -8624,7 +8624,7 @@ public struct PACKET_ZC_REQ_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sen
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        packetType = try decoder.decode(UInt16.self)
+        packetType = try decoder.decode(Int16.self)
         requesterName = try decoder.decode(String.self, lengthOfBytes: 24)
         targetId = try decoder.decode(UInt32.self)
         targetLv = try decoder.decode(UInt16.self)
@@ -8638,14 +8638,14 @@ public struct PACKET_ZC_REQ_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_ACK_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
-    public var packetType: UInt16 = 0
+    public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public var targetId: UInt32 = 0
     public var targetLv: UInt16 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        packetType = try decoder.decode(UInt16.self)
+        packetType = try decoder.decode(Int16.self)
         result = try decoder.decode(UInt8.self)
         targetId = try decoder.decode(UInt32.self)
         targetLv = try decoder.decode(UInt16.self)
@@ -9910,8 +9910,8 @@ public struct PACKET_ZC_PAR_CHANGE_USER: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_CHANGE_CHATROOM: BinaryDecodable, BinaryEncodable, Sendable {
-    public var packetType: UInt16 = 0
-    public var packetLength: UInt16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var ownerId: UInt32 = 0
     public var chatId: UInt32 = 0
     public var limit: UInt16 = 0
@@ -9921,8 +9921,8 @@ public struct PACKET_ZC_CHANGE_CHATROOM: BinaryDecodable, BinaryEncodable, Senda
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        packetType = try decoder.decode(UInt16.self)
-        packetLength = try decoder.decode(UInt16.self)
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
         ownerId = try decoder.decode(UInt32.self)
         chatId = try decoder.decode(UInt32.self)
         limit = try decoder.decode(UInt16.self)
@@ -9958,14 +9958,14 @@ public struct PACKET_ZC_EQUIP_ARROW: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK: BinaryDecodable, BinaryEncodable, Sendable {
-    public var packetType: UInt16 = 0
+    public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public var wearLocation: UInt32 = 0
     public var flag: UInt8 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        packetType = try decoder.decode(UInt16.self)
+        packetType = try decoder.decode(Int16.self)
         index = try decoder.decode(UInt16.self)
         wearLocation = try decoder.decode(UInt32.self)
         flag = try decoder.decode(UInt8.self)
@@ -10142,15 +10142,15 @@ public struct PACKET_ZC_ENTER_ROOM_sub: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_ENTER_ROOM: BinaryDecodable, BinaryEncodable, Sendable {
-    public var packetType: UInt16 = 0
-    public var packetLength: UInt16 = 0
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
     public var chatId: UInt32 = 0
     public var members: [PACKET_ZC_ENTER_ROOM_sub] = []
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        packetType = try decoder.decode(UInt16.self)
-        packetLength = try decoder.decode(UInt16.self)
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
         chatId = try decoder.decode(UInt32.self)
         members = try decoder.decode([PACKET_ZC_ENTER_ROOM_sub].self, count: (Int(packetLength) - (2 + 2 + 4)) / (4 + 24))
     }
@@ -10379,12 +10379,12 @@ public struct PACKET_ZC_SKILL_DISAPPEAR: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_SKILLINFO_DELETE: BinaryDecodable, BinaryEncodable, Sendable {
-    public var packetType: UInt16 = 0
+    public var packetType: Int16 = 0
     public var skillID: UInt16 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        packetType = try decoder.decode(UInt16.self)
+        packetType = try decoder.decode(Int16.self)
         skillID = try decoder.decode(UInt16.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
@@ -10409,14 +10409,14 @@ public struct PACKET_ZC_SKILL_UPDATE: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_HIGHJUMP: BinaryDecodable, BinaryEncodable, Sendable {
-    public var packetType: UInt16 = 0
+    public var packetType: Int16 = 0
     public var srcId: UInt32 = 0
     public var x: UInt16 = 0
     public var y: UInt16 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        packetType = try decoder.decode(UInt16.self)
+        packetType = try decoder.decode(Int16.self)
         srcId = try decoder.decode(UInt32.self)
         x = try decoder.decode(UInt16.self)
         y = try decoder.decode(UInt16.self)
@@ -10993,13 +10993,13 @@ public struct PACKET_CZ_MOVETO_MAP: BinaryDecodable, BinaryEncodable, Sendable {
 
 public struct PACKET_CZ_BROADCAST: BinaryDecodable, BinaryEncodable, Sendable {
     public var packetType: Int16 = 0
-    public var packetLength: UInt16 = 0
+    public var packetLength: Int16 = 0
     public var message: String = ""
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        packetLength = try decoder.decode(UInt16.self)
+        packetLength = try decoder.decode(Int16.self)
         message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2)))
     }
     public func encode(to encoder: BinaryEncoder) throws {
@@ -11047,7 +11047,7 @@ public struct PACKET_CZ_ACK_SELECT_DEALTYPE: BinaryDecodable, BinaryEncodable, S
 
 public struct PACKET_CZ_CREATE_CHATROOM: BinaryDecodable, BinaryEncodable, Sendable {
     public var packetType: Int16 = 0
-    public var packetLength: UInt16 = 0
+    public var packetLength: Int16 = 0
     public var limit: UInt16 = 0
     public var type: UInt8 = 0
     @FixedLengthString(lengthOfBytes: 8)
@@ -11057,7 +11057,7 @@ public struct PACKET_CZ_CREATE_CHATROOM: BinaryDecodable, BinaryEncodable, Senda
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        packetLength = try decoder.decode(UInt16.self)
+        packetLength = try decoder.decode(Int16.self)
         limit = try decoder.decode(UInt16.self)
         type = try decoder.decode(UInt8.self)
         password = try decoder.decode(String.self, lengthOfBytes: 8)
