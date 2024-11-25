@@ -232,6 +232,12 @@ struct GeneratePacketsCommand: ParsableCommand {
         }
 
         for (s, structDecl) in structDecls.enumerated() {
+            if structDecl.name == "PACKET_ZC_POSITION_ID_NAME_INFO" {
+                var nestedStructDecl = structDecl.nestedStructs[0]
+                nestedStructDecl.name = "PACKET_ZC_POSITION_ID_NAME_INFO_sub"
+                referencedStructDecls.append(nestedStructDecl)
+            }
+
             for (f, fieldDecl) in structDecl.fields.enumerated() {
                 switch f {
                 case 0:
@@ -255,9 +261,11 @@ struct GeneratePacketsCommand: ParsableCommand {
                 }
 
                 if structDecl.name == "PACKET_ZC_POSITION_ID_NAME_INFO" && fieldDecl.name == "posInfo" {
-                    structDecls[s].fields[f].type = .fixedSizeArray(.custom("PACKET_ZC_POSITION_ID_NAME_INFO_sub"), 20)
+                    if case .fixedSizeArray(_, let size) = fieldDecl.type {
+                        structDecls[s].fields[f].type = .fixedSizeArray(.custom("PACKET_ZC_POSITION_ID_NAME_INFO_sub"), size)
+                    }
                 } else if structDecl.name == "packet_maptypeproperty2" && fieldDecl.name == "flag" {
-                    structDecls[s].fields[f].type = .structure(.uint32)
+                    structDecls[s].fields[f].type = structDecl.nestedStructs[0].fields[0].type
                 }
             }
         }
@@ -265,20 +273,12 @@ struct GeneratePacketsCommand: ParsableCommand {
         for (s, structDecl) in referencedStructDecls.enumerated() {
             for (f, fieldDecl) in structDecl.fields.enumerated() {
                 if structDecl.name == "EQUIPITEM_INFO" && fieldDecl.name == "Flag" {
-                    referencedStructDecls[s].fields[f].type = .structure(.uint8)
+                    referencedStructDecls[s].fields[f].type = structDecl.nestedStructs[0].fields[0].type
                 } else if structDecl.name == "NORMALITEM_INFO" && fieldDecl.name == "Flag" {
-                    referencedStructDecls[s].fields[f].type = .structure(.uint8)
+                    referencedStructDecls[s].fields[f].type = structDecl.nestedStructs[0].fields[0].type
                 }
             }
         }
-
-        referencedStructDecls.append(.init(
-            name: "PACKET_ZC_POSITION_ID_NAME_INFO_sub",
-            fields: [
-                .init(name: "positionID", type: .structure(.int32)),
-                .init(name: "posName", type: .fixedLengthString(24)),
-            ]
-        ))
 
         for structDecl in structDecls + referencedStructDecls {
             if structDecl.name == "packet_quest_list_info" {

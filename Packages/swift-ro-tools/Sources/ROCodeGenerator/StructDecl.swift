@@ -8,19 +8,19 @@
 struct StructDecl {
     var name: String
     var fields: [FieldDecl]
-//    var nestedStructs: [StructDecl]
+    var nestedStructs: [StructDecl]
 
     init(name: String, fields: [FieldDecl]) {
         self.name = name
         self.fields = fields
-//        self.nestedStructs = []
+        self.nestedStructs = []
     }
 
     init(node: ASTNode) {
         name = node.name ?? ""
 
-        fields = node
-            .findNodes {
+        fields = node.inner!
+            .filter {
                 $0.kind == "FieldDecl"
             }
             .map {
@@ -29,13 +29,13 @@ struct StructDecl {
                 return FieldDecl(name: fieldName, type: fieldType)
             }
 
-//        nestedStructs = node.inner!
-//            .filter {
-//                $0.kind == "CXXRecordDecl" && $0.inner != nil
-//            }
-//            .map {
-//                StructDecl(node: $0)
-//            }
+        nestedStructs = node.inner!
+            .filter {
+                $0.kind == "CXXRecordDecl" && $0.inner != nil
+            }
+            .map {
+                StructDecl(node: $0)
+            }
     }
 }
 

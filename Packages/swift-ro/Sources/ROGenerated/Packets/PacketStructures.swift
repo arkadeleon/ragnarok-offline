@@ -1261,7 +1261,7 @@ public struct PACKET_ZC_EQUIPWIN_MICROSCOPE: BinaryDecodable, BinaryEncodable, S
         bodypalette = try decoder.decode(Int16.self)
         body2 = try decoder.decode(Int16.self)
         sex = try decoder.decode(UInt8.self)
-        list = try decoder.decode([EQUIPITEM_INFO].self, count: (Int(packetLength) - (2 + 2 + 24 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1)) / (2 + 4 + 1 + 4 + 4 + ((4 * 4)) + 4 + 2 + 2 + 1 + ((2 + 2 + 1) * 5) + 1 + 1 + 1 + 1 + 1 + 1 + 1))
+        list = try decoder.decode([EQUIPITEM_INFO].self, count: (Int(packetLength) - (2 + 2 + 24 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1)) / (2 + 4 + 1 + 4 + 4 + ((4 * 4)) + 4 + 2 + 2 + 1 + ((2 + 2 + 1) * 5) + 1 + 1 + 1))
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -6162,9 +6162,6 @@ public struct PACKET_ZC_GUILD_INFO: BinaryDecodable, BinaryEncodable, Sendable {
 public struct PACKET_ZC_POSITION_ID_NAME_INFO: BinaryDecodable, BinaryEncodable, Sendable {
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
-    public var positionID: Int32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
-    public var posName: String
     @FixedSizeArray(size: 20, initialValue: PACKET_ZC_POSITION_ID_NAME_INFO_sub())
     public var posInfo: [PACKET_ZC_POSITION_ID_NAME_INFO_sub]
     public init() {
@@ -6172,15 +6169,11 @@ public struct PACKET_ZC_POSITION_ID_NAME_INFO: BinaryDecodable, BinaryEncodable,
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        positionID = try decoder.decode(Int32.self)
-        posName = try decoder.decode(String.self, lengthOfBytes: 24)
         posInfo = try decoder.decode([PACKET_ZC_POSITION_ID_NAME_INFO_sub].self, count: 20)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
-        try encoder.encode(positionID)
-        try encoder.encode(posName, lengthOfBytes: 24)
         try encoder.encode(posInfo)
     }
 }
@@ -11495,10 +11488,6 @@ public struct EQUIPITEM_INFO: BinaryDecodable, BinaryEncodable, Sendable {
     public var option_data: [ItemOptions]
     public var RefiningLevel: UInt8 = 0
     public var grade: UInt8 = 0
-    public var IsIdentified: UInt8 = 0
-    public var IsDamaged: UInt8 = 0
-    public var PlaceETCTab: UInt8 = 0
-    public var SpareBits: UInt8 = 0
     public var Flag: UInt8 = 0
     public init() {
     }
@@ -11516,10 +11505,6 @@ public struct EQUIPITEM_INFO: BinaryDecodable, BinaryEncodable, Sendable {
         option_data = try decoder.decode([ItemOptions].self, count: 5)
         RefiningLevel = try decoder.decode(UInt8.self)
         grade = try decoder.decode(UInt8.self)
-        IsIdentified = try decoder.decode(UInt8.self)
-        IsDamaged = try decoder.decode(UInt8.self)
-        PlaceETCTab = try decoder.decode(UInt8.self)
-        SpareBits = try decoder.decode(UInt8.self)
         Flag = try decoder.decode(UInt8.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
@@ -11536,10 +11521,6 @@ public struct EQUIPITEM_INFO: BinaryDecodable, BinaryEncodable, Sendable {
         try encoder.encode(option_data)
         try encoder.encode(RefiningLevel)
         try encoder.encode(grade)
-        try encoder.encode(IsIdentified)
-        try encoder.encode(IsDamaged)
-        try encoder.encode(PlaceETCTab)
-        try encoder.encode(SpareBits)
         try encoder.encode(Flag)
     }
 }
