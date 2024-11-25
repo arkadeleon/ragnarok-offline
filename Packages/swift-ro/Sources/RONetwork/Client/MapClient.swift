@@ -28,7 +28,7 @@ final public class MapClient {
         }
 
         // 0x9c
-        connection.registerPacket(PACKET_ZC_CHANGE_DIRECTION.self)
+        connection.registerPacket(PACKET_ZC_CHANGE_DIRECTION.self, for: PACKET_ZC_CHANGE_DIRECTION.packetType)
             .map { packet in
                 BlockEvents.DirectionChanged(sourceID: packet.sourceID, headDirection: packet.headDirection, direction: packet.direction)
             }
@@ -36,26 +36,26 @@ final public class MapClient {
             .store(in: &subscriptions)
 
         // 0xc3, 0x1d7
-        connection.registerPacket(PACKET_ZC_SPRITE_CHANGE.self)
+        connection.registerPacket(PACKET_ZC_SPRITE_CHANGE.self, for: PACKET_ZC_SPRITE_CHANGE.packetType)
 
         // 0x201
-        connection.registerPacket(PACKET_ZC_FRIENDS_LIST.self)
+        connection.registerPacket(PACKET_ZC_FRIENDS_LIST.self, for: PACKET_ZC_FRIENDS_LIST.packetType)
 
         // 0x283
-        connection.registerPacket(PACKET_ZC_AID.self)
+        connection.registerPacket(PACKET_ZC_AID.self, for: PACKET_ZC_AID.packetType)
             .sink { [weak self] packet in
                 self?.state.accountID = packet.accountID
             }
             .store(in: &subscriptions)
 
         // 0x2b9, 0x7d9, 0xa00, 0xb20
-        connection.registerPacket(PACKET_ZC_SHORTCUT_KEY_LIST.self)
+        connection.registerPacket(PACKET_ZC_SHORTCUT_KEY_LIST.self, for: PACKET_ZC_SHORTCUT_KEY_LIST.packetType)
 
         // 0xb18
-        connection.registerPacket(PACKET_ZC_EXTEND_BODYITEM_SIZE.self)
+        connection.registerPacket(PACKET_ZC_EXTEND_BODYITEM_SIZE.self, for: PACKET_ZC_EXTEND_BODYITEM_SIZE.packetType)
 
         // 0xb1d
-        connection.registerPacket(PACKET_ZC_PING_LIVE.self)
+        connection.registerPacket(PACKET_ZC_PING_LIVE.self, for: PACKET_ZC_PING_LIVE.packetType)
             .sink { [weak self] packet in
                 let packet = PACKET_CZ_PING_LIVE()
                 self?.connection.sendPacket(packet)
@@ -74,7 +74,7 @@ final public class MapClient {
 
     private func registerMapConnectionPackets() {
         // 0x73, 0x2eb, 0xa18
-        connection.registerPacket(PACKET_ZC_ACCEPT_ENTER.self)
+        connection.registerPacket(PACKET_ZC_ACCEPT_ENTER.self, for: PACKET_ZC_ACCEPT_ENTER.packetType)
             .map { packet in
                 MapConnectionEvents.Accepted()
             }
@@ -84,7 +84,7 @@ final public class MapClient {
 
     private func registerMapPackets() {
         // 0x91
-        connection.registerPacket(PACKET_ZC_NPCACK_MAPMOVE.self)
+        connection.registerPacket(PACKET_ZC_NPCACK_MAPMOVE.self, for: PACKET_ZC_NPCACK_MAPMOVE.packetType)
             .map { packet in
                 MapEvents.Changed(mapName: packet.mapName, position: [packet.x, packet.y])
             }
@@ -94,7 +94,7 @@ final public class MapClient {
 
     private func registerPlayerPackets() {
         // 0x87
-        connection.registerPacket(PACKET_ZC_NOTIFY_PLAYERMOVE.self)
+        connection.registerPacket(PACKET_ZC_NOTIFY_PLAYERMOVE.self, for: PACKET_ZC_NOTIFY_PLAYERMOVE.packetType)
             .map { packet in
                 PlayerEvents.Moved(moveData: packet.moveData)
             }
@@ -102,7 +102,7 @@ final public class MapClient {
             .store(in: &subscriptions)
 
         // 0x8e
-        connection.registerPacket(PACKET_ZC_NOTIFY_PLAYERCHAT.self)
+        connection.registerPacket(PACKET_ZC_NOTIFY_PLAYERCHAT.self, for: PACKET_ZC_NOTIFY_PLAYERCHAT.packetType)
             .map { packet in
                 PlayerEvents.MessageDisplay(message: packet.message)
             }
@@ -112,7 +112,7 @@ final public class MapClient {
 
     private func registerAchievementPackets() {
         // 0xa23
-        connection.registerPacket(PACKET_ZC_ALL_ACH_LIST.self)
+        connection.registerPacket(PACKET_ZC_ALL_ACH_LIST.self, for: PACKET_ZC_ALL_ACH_LIST.packetType)
             .map { packet in
                 AchievementEvents.Listed()
             }
@@ -120,7 +120,7 @@ final public class MapClient {
             .store(in: &subscriptions)
 
         // 0xa24
-        connection.registerPacket(PACKET_ZC_ACH_UPDATE.self)
+        connection.registerPacket(PACKET_ZC_ACH_UPDATE.self, for: PACKET_ZC_ACH_UPDATE.packetType)
             .map { packet in
                 AchievementEvents.Updated()
             }
@@ -130,34 +130,34 @@ final public class MapClient {
 
     private func registerInventoryPackets() {
         // 0xb08
-        connection.registerPacket(PACKET_ZC_INVENTORY_START.self)
+        connection.registerPacket(PACKET_ZC_INVENTORY_START.self, for: PACKET_ZC_INVENTORY_START.packetType)
 
         // 0xa3, 0x1ee, 0x2e8, 0x991, 0xb09
-        connection.registerPacket(PACKET_ZC_ITEMLIST_NORMAL.self)
+        connection.registerPacket(PACKET_ZC_ITEMLIST_NORMAL.self, for: PACKET_ZC_ITEMLIST_NORMAL.packetType)
 
         // 0xa4, 0x295, 0x2d0, 0x992, 0xa0d, 0xb0a, 0xb39
-        connection.registerPacket(PACKET_ZC_ITEMLIST_EQUIP.self)
+        connection.registerPacket(PACKET_ZC_ITEMLIST_EQUIP.self, for: PACKET_ZC_ITEMLIST_EQUIP.packetType)
 
         // 0xb0b
-        connection.registerPacket(PACKET_ZC_INVENTORY_END.self)
+        connection.registerPacket(PACKET_ZC_INVENTORY_END.self, for: PACKET_ZC_INVENTORY_END.packetType)
     }
 
     private func registerMailPackets() {
         // 0x24a
-        connection.registerPacket(PACKET_ZC_MAIL_RECEIVE.self)
+        connection.registerPacket(PACKET_ZC_MAIL_RECEIVE.self, for: PACKET_ZC_MAIL_RECEIVE.packetType)
 
         // 0x9e7
-        connection.registerPacket(PACKET_ZC_NOTIFY_UNREADMAIL.self)
+        connection.registerPacket(PACKET_ZC_NOTIFY_UNREADMAIL.self, for: PACKET_ZC_NOTIFY_UNREADMAIL.packetType)
     }
 
     private func registerPartyPackets() {
         // 0x2c9
-        connection.registerPacket(PACKET_ZC_PARTY_CONFIG.self)
+        connection.registerPacket(PACKET_ZC_PARTY_CONFIG.self, for: PACKET_ZC_PARTY_CONFIG.packetType)
     }
 
     private func registerStatusPackets() {
         // 0xb0
-        connection.registerPacket(PACKET_ZC_PAR_CHANGE.self)
+        connection.registerPacket(PACKET_ZC_PAR_CHANGE.self, for: PACKET_ZC_PAR_CHANGE.packetType)
             .compactMap { packet in
                 if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                     PlayerEvents.StatusPropertyChanged(sp: sp, value: Int(packet.count), value2: 0)
@@ -169,7 +169,7 @@ final public class MapClient {
             .store(in: &subscriptions)
 
         // 0xb1
-        connection.registerPacket(PACKET_ZC_LONGPAR_CHANGE.self)
+        connection.registerPacket(PACKET_ZC_LONGPAR_CHANGE.self, for: PACKET_ZC_LONGPAR_CHANGE.packetType)
             .compactMap { packet in
                 if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                     PlayerEvents.StatusPropertyChanged(sp: sp, value: Int(packet.amount), value2: 0)
@@ -181,10 +181,10 @@ final public class MapClient {
             .store(in: &subscriptions)
 
         // 0xbd
-        connection.registerPacket(PACKET_ZC_STATUS.self)
+        connection.registerPacket(PACKET_ZC_STATUS.self, for: PACKET_ZC_STATUS.packetType)
 
         // 0xbe
-        connection.registerPacket(PACKET_ZC_STATUS_CHANGE.self)
+        connection.registerPacket(PACKET_ZC_STATUS_CHANGE.self, for: PACKET_ZC_STATUS_CHANGE.packetType)
             .compactMap { packet in
                 if let sp = StatusProperty(rawValue: Int(packet.statusID)) {
                     PlayerEvents.StatusPropertyChanged(sp: sp, value: Int(packet.value), value2: 0)
@@ -196,10 +196,10 @@ final public class MapClient {
             .store(in: &subscriptions)
 
         // 0x121
-        connection.registerPacket(PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO.self)
+        connection.registerPacket(PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO.self, for: PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO.packetType)
 
         // 0x13a
-        connection.registerPacket(PACKET_ZC_ATTACK_RANGE.self)
+        connection.registerPacket(PACKET_ZC_ATTACK_RANGE.self, for: PACKET_ZC_ATTACK_RANGE.packetType)
             .map { packet in
                 PlayerEvents.AttackRangeChanged(value: Int(packet.currentAttackRange))
             }
@@ -207,7 +207,7 @@ final public class MapClient {
             .store(in: &subscriptions)
 
         // 0x141
-        connection.registerPacket(PACKET_ZC_COUPLESTATUS.self)
+        connection.registerPacket(PACKET_ZC_COUPLESTATUS.self, for: PACKET_ZC_COUPLESTATUS.packetType)
             .compactMap { packet in
                 if let sp = StatusProperty(rawValue: Int(packet.statusType)) {
                     PlayerEvents.StatusPropertyChanged(sp: sp, value: Int(packet.defaultStatus), value2: Int(packet.plusStatus))
@@ -219,7 +219,7 @@ final public class MapClient {
             .store(in: &subscriptions)
 
         // 0xacb
-        connection.registerPacket(PACKET_ZC_LONGLONGPAR_CHANGE.self)
+        connection.registerPacket(PACKET_ZC_LONGLONGPAR_CHANGE.self, for: PACKET_ZC_LONGLONGPAR_CHANGE.packetType)
             .compactMap { packet in
                 if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                     PlayerEvents.StatusPropertyChanged(sp: sp, value: Int(packet.amount), value2: 0)

@@ -8,15 +8,16 @@
 import Combine
 import Foundation
 import Network
+import ROCore
 
 final class ClientConnection {
     private let connection: NWConnection
 
     private let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client-connection")
 
-    private let packetSubject = PassthroughSubject<any DecodablePacket, Never>()
+    private let packetSubject = PassthroughSubject<any BinaryDecodable, Never>()
 
-    private var registeredPackets: [Int16 : any DecodablePacket.Type] = [:]
+    private var registeredPackets: [Int16 : any BinaryDecodable.Type] = [:]
 
     var errorHandler: (@Sendable (_ error: any Error) -> Void)?
 
@@ -42,8 +43,8 @@ final class ClientConnection {
         connection.cancel()
     }
 
-    func registerPacket<P>(_ type: P.Type) -> AnyPublisher<P, Never> where P: DecodablePacket {
-        registeredPackets[type.packetType] = type
+    func registerPacket<P>(_ type: P.Type, for packetType: Int16) -> AnyPublisher<P, Never> where P: BinaryDecodable {
+        registeredPackets[packetType] = type
 
         let publisher = packetSubject
             .compactMap { packet in

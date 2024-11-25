@@ -14,14 +14,14 @@ enum PacketDecodingError: Error {
 }
 
 final class PacketDecoder {
-    let registeredPackets: [Int16 : any DecodablePacket.Type]
+    let registeredPackets: [Int16 : any BinaryDecodable.Type]
 
-    init(registeredPackets: [Int16 : any DecodablePacket.Type]) {
+    init(registeredPackets: [Int16 : any BinaryDecodable.Type]) {
         self.registeredPackets = registeredPackets
     }
 
-    func decode(from data: Data) throws -> [any DecodablePacket] {
-        var packets: [any DecodablePacket] = []
+    func decode(from data: Data) throws -> [any BinaryDecodable] {
+        var packets: [any BinaryDecodable] = []
 
         let stream = MemoryStream(data: data)
         defer {

@@ -30,19 +30,19 @@ final public class CharClient {
         registerCharPackets()
 
         // 0x82d
-        connection.registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.self)
+        connection.registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.self, for: PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.packetType)
 
         // 0x8b9
-        connection.registerPacket(PACKET_HC_SECOND_PASSWD_LOGIN.self)
+        connection.registerPacket(PACKET_HC_SECOND_PASSWD_LOGIN.self, for: PACKET_HC_SECOND_PASSWD_LOGIN.packetType)
 
         // 0x9a0
-        connection.registerPacket(PACKET_HC_CHARLIST_NOTIFY.self)
+        connection.registerPacket(PACKET_HC_CHARLIST_NOTIFY.self, for: PACKET_HC_CHARLIST_NOTIFY.packetType)
 
         // 0x20d
-        connection.registerPacket(PACKET_HC_BLOCK_CHARACTER.self)
+        connection.registerPacket(PACKET_HC_BLOCK_CHARACTER.self, for: PACKET_HC_BLOCK_CHARACTER.packetType)
 
         // 0x81
-        connection.registerPacket(PACKET_SC_NOTIFY_BAN.self)
+        connection.registerPacket(PACKET_SC_NOTIFY_BAN.self, for: PACKET_SC_NOTIFY_BAN.packetType)
             .map { packet in
                 AuthenticationEvents.Banned(errorCode: packet.errorCode)
             }
@@ -52,7 +52,7 @@ final public class CharClient {
 
     private func registerCharServerPackets() {
         // 0x6b
-        connection.registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION.self)
+        connection.registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION.self, for: PACKET_HC_ACCEPT_ENTER_NEO_UNION.packetType)
             .map { packet in
                 CharServerEvents.Accepted(chars: packet.chars)
             }
@@ -60,7 +60,7 @@ final public class CharClient {
             .store(in: &subscriptions)
 
         // 0x6c
-        connection.registerPacket(PACKET_HC_REFUSE_ENTER.self)
+        connection.registerPacket(PACKET_HC_REFUSE_ENTER.self, for: PACKET_HC_REFUSE_ENTER.packetType)
             .map { packet in
                 CharServerEvents.Refused()
             }
@@ -68,7 +68,7 @@ final public class CharClient {
             .store(in: &subscriptions)
 
         // 0x71, 0xac5
-        connection.registerPacket(PACKET_HC_NOTIFY_ZONESVR.self)
+        connection.registerPacket(PACKET_HC_NOTIFY_ZONESVR.self, for: PACKET_HC_NOTIFY_ZONESVR.packetType)
             .map { packet in
                 CharServerEvents.NotifyMapServer(charID: packet.charID, mapName: packet.mapName, mapServer: packet.mapServer)
             }
@@ -76,7 +76,7 @@ final public class CharClient {
             .store(in: &subscriptions)
 
         // 0x840
-        connection.registerPacket(PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self)
+        connection.registerPacket(PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self, for: PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.packetType)
             .map { packet in
                 CharServerEvents.NotifyAccessibleMaps(accessibleMaps: packet.accessibleMaps)
             }
@@ -86,7 +86,7 @@ final public class CharClient {
 
     private func registerCharPackets() {
         // 0x6d
-        connection.registerPacket(PACKET_HC_ACCEPT_MAKECHAR.self)
+        connection.registerPacket(PACKET_HC_ACCEPT_MAKECHAR.self, for: PACKET_HC_ACCEPT_MAKECHAR.packetType)
             .map { packet in
                 CharEvents.MakeAccepted(char: packet.char)
             }
@@ -94,7 +94,7 @@ final public class CharClient {
             .store(in: &subscriptions)
 
         // 0x6e
-        connection.registerPacket(PACKET_HC_REFUSE_MAKECHAR.self)
+        connection.registerPacket(PACKET_HC_REFUSE_MAKECHAR.self, for: PACKET_HC_REFUSE_MAKECHAR.packetType)
             .map { packet in
                 CharEvents.MakeRefused()
             }
@@ -102,7 +102,7 @@ final public class CharClient {
             .store(in: &subscriptions)
 
         // 0x6f
-        connection.registerPacket(PACKET_HC_ACCEPT_DELETECHAR.self)
+        connection.registerPacket(PACKET_HC_ACCEPT_DELETECHAR.self, for: PACKET_HC_ACCEPT_DELETECHAR.packetType)
             .map { packet in
                 CharEvents.DeleteAccepted()
             }
@@ -110,7 +110,7 @@ final public class CharClient {
             .store(in: &subscriptions)
 
         // 0x70
-        connection.registerPacket(PACKET_HC_REFUSE_DELETECHAR.self)
+        connection.registerPacket(PACKET_HC_REFUSE_DELETECHAR.self, for: PACKET_HC_REFUSE_DELETECHAR.packetType)
             .map { packet in
                 CharEvents.DeleteRefused(errorCode: UInt32(packet.errorCode))
             }
@@ -118,7 +118,7 @@ final public class CharClient {
             .store(in: &subscriptions)
 
         // 0x82a
-        connection.registerPacket(PACKET_HC_DELETE_CHAR.self)
+        connection.registerPacket(PACKET_HC_DELETE_CHAR.self, for: PACKET_HC_DELETE_CHAR.packetType)
             .map { packet in
                 if packet.result == 1 {
                     CharEvents.DeleteAccepted()
@@ -130,7 +130,7 @@ final public class CharClient {
             .store(in: &subscriptions)
 
         // 0x82c
-        connection.registerPacket(PACKET_HC_DELETE_CHAR_CANCEL.self)
+        connection.registerPacket(PACKET_HC_DELETE_CHAR_CANCEL.self, for: PACKET_HC_DELETE_CHAR_CANCEL.packetType)
             .map { packet in
                 CharEvents.DeleteCancelled()
             }
@@ -138,7 +138,7 @@ final public class CharClient {
             .store(in: &subscriptions)
 
         // 0x828
-        connection.registerPacket(PACKET_HC_DELETE_CHAR_RESERVED.self)
+        connection.registerPacket(PACKET_HC_DELETE_CHAR_RESERVED.self, for: PACKET_HC_DELETE_CHAR_RESERVED.packetType)
             .map { packet in
                 CharEvents.DeletionDateResponse(deletionDate: packet.deletionDate)
             }

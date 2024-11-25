@@ -23,7 +23,7 @@ final public class LoginClient {
         }
 
         // 0x69, 0xac4
-        connection.registerPacket(PACKET_AC_ACCEPT_LOGIN.self)
+        connection.registerPacket(PACKET_AC_ACCEPT_LOGIN.self, for: PACKET_AC_ACCEPT_LOGIN.packetType)
             .map { packet in
                 let event = LoginEvents.Accepted(
                     accountID: packet.accountID,
@@ -38,7 +38,7 @@ final public class LoginClient {
             .store(in: &subscriptions)
 
         // 0x6a, 0x83e
-        connection.registerPacket(PACKET_AC_REFUSE_LOGIN.self)
+        connection.registerPacket(PACKET_AC_REFUSE_LOGIN.self, for: PACKET_AC_REFUSE_LOGIN.packetType)
             .map { packet in
                 LoginEvents.Refused(errorCode: packet.errorCode, unblockTime: packet.unblockTime)
             }
@@ -46,7 +46,7 @@ final public class LoginClient {
             .store(in: &subscriptions)
 
         // 0x81
-        connection.registerPacket(PACKET_SC_NOTIFY_BAN.self)
+        connection.registerPacket(PACKET_SC_NOTIFY_BAN.self, for: PACKET_SC_NOTIFY_BAN.packetType)
             .map { packet in
                 AuthenticationEvents.Banned(errorCode: packet.errorCode)
             }
