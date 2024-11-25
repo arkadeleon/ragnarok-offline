@@ -77,6 +77,19 @@ enum FieldType {
         }
     }
 
+    var structRef: StructureType? {
+        switch self {
+        case .structure(let structure):
+            structure
+        case .array(let structure):
+            structure
+        case .fixedSizeArray(let structure, _):
+            structure
+        case .string, .fixedLengthString:
+            nil
+        }
+    }
+
     init?(nodeType: ASTNode.NodeType) {
         guard let qualType = nodeType.qualType else {
             return nil
