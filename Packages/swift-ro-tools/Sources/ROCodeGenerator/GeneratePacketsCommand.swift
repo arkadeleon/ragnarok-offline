@@ -188,7 +188,7 @@ struct GeneratePacketsCommand: ParsableCommand {
         for ast in asts {
             let nodes = ast.findNodes { node in
                 guard node.kind == "CXXRecordDecl" else { return false }
-                guard let name = node.name, name.hasPrefix("PACKET_") /*|| name.hasPrefix("packet_")*/ else { return false }
+                guard let name = node.name, name.hasPrefix("PACKET_") || name.hasPrefix("packet_") else { return false }
                 guard node.inner != nil else { return false }
                 return true
             }
@@ -232,10 +232,17 @@ struct GeneratePacketsCommand: ParsableCommand {
         }
 
         for (s, structDecl) in structDecls.enumerated() {
-            if structDecl.name == "PACKET_ZC_POSITION_ID_NAME_INFO" {
+            switch structDecl.name {
+            case "PACKET_ZC_POSITION_ID_NAME_INFO":
                 var nestedStructDecl = structDecl.nestedStructs[0]
                 nestedStructDecl.name = "PACKET_ZC_POSITION_ID_NAME_INFO_sub"
                 referencedStructDecls.append(nestedStructDecl)
+            case "packet_roulette_info_ack":
+                var nestedStructDecl = structDecl.nestedStructs[0]
+                nestedStructDecl.name = "packet_roulette_info_ack_sub"
+                referencedStructDecls.append(nestedStructDecl)
+            default:
+                break
             }
 
             for (f, fieldDecl) in structDecl.fields.enumerated() {
@@ -263,6 +270,10 @@ struct GeneratePacketsCommand: ParsableCommand {
                 if structDecl.name == "PACKET_ZC_POSITION_ID_NAME_INFO" && fieldDecl.name == "posInfo" {
                     if case .fixedSizeArray(_, let size) = fieldDecl.type {
                         structDecls[s].fields[f].type = .fixedSizeArray(.custom("PACKET_ZC_POSITION_ID_NAME_INFO_sub"), size)
+                    }
+                } else if structDecl.name == "packet_roulette_info_ack" && fieldDecl.name == "ItemInfo" {
+                    if case .fixedSizeArray(_, let size) = fieldDecl.type {
+                        structDecls[s].fields[f].type = .fixedSizeArray(.custom("packet_roulette_info_ack_sub"), size)
                     }
                 } else if structDecl.name == "packet_maptypeproperty2" && fieldDecl.name == "flag" {
                     structDecls[s].fields[f].type = structDecl.nestedStructs[0].fields[0].type

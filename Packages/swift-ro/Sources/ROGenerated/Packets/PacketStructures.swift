@@ -1071,6 +1071,76 @@ public struct PACKET_ZC_LONGLONGPAR_CHANGE: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
+public struct packet_authok: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var startTime: UInt32 = 0
+    @FixedSizeArray(size: 3, initialValue: 0)
+    public var PosDir: [UInt8]
+    public var xSize: UInt8 = 0
+    public var ySize: UInt8 = 0
+    public var font: Int16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        startTime = try decoder.decode(UInt32.self)
+        PosDir = try decoder.decode([UInt8].self, count: 3)
+        xSize = try decoder.decode(UInt8.self)
+        ySize = try decoder.decode(UInt8.self)
+        font = try decoder.decode(Int16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(startTime)
+        try encoder.encode(PosDir)
+        try encoder.encode(xSize)
+        try encoder.encode(ySize)
+        try encoder.encode(font)
+    }
+}
+
+public struct packet_monster_hp: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var GID: UInt32 = 0
+    public var HP: Int32 = 0
+    public var MaxHP: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        GID = try decoder.decode(UInt32.self)
+        HP = try decoder.decode(Int32.self)
+        MaxHP = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(GID)
+        try encoder.encode(HP)
+        try encoder.encode(MaxHP)
+    }
+}
+
+public struct packet_sc_notick: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var index: Int16 = 0
+    public var AID: UInt32 = 0
+    public var state: UInt8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        index = try decoder.decode(Int16.self)
+        AID = try decoder.decode(UInt32.self)
+        state = try decoder.decode(UInt8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(index)
+        try encoder.encode(AID)
+        try encoder.encode(state)
+    }
+}
+
 public struct PACKET_ZC_ITEM_PICKUP_ACK: BinaryDecodable, BinaryEncodable, Sendable {
     public var packetType: Int16 = 0
     public var Index: UInt16 = 0
@@ -1132,6 +1202,731 @@ public struct PACKET_ZC_ITEM_PICKUP_ACK: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
+public struct packet_dropflooritem: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var ITAID: UInt32 = 0
+    public var ITID: UInt32 = 0
+    public var type: UInt16 = 0
+    public var IsIdentified: UInt8 = 0
+    public var xPos: Int16 = 0
+    public var yPos: Int16 = 0
+    public var subX: UInt8 = 0
+    public var subY: UInt8 = 0
+    public var count: Int16 = 0
+    public var showdropeffect: Int8 = 0
+    public var dropeffectmode: Int16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        ITAID = try decoder.decode(UInt32.self)
+        ITID = try decoder.decode(UInt32.self)
+        type = try decoder.decode(UInt16.self)
+        IsIdentified = try decoder.decode(UInt8.self)
+        xPos = try decoder.decode(Int16.self)
+        yPos = try decoder.decode(Int16.self)
+        subX = try decoder.decode(UInt8.self)
+        subY = try decoder.decode(UInt8.self)
+        count = try decoder.decode(Int16.self)
+        showdropeffect = try decoder.decode(Int8.self)
+        dropeffectmode = try decoder.decode(Int16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(ITAID)
+        try encoder.encode(ITID)
+        try encoder.encode(type)
+        try encoder.encode(IsIdentified)
+        try encoder.encode(xPos)
+        try encoder.encode(yPos)
+        try encoder.encode(subX)
+        try encoder.encode(subY)
+        try encoder.encode(count)
+        try encoder.encode(showdropeffect)
+        try encoder.encode(dropeffectmode)
+    }
+}
+
+public struct packet_idle_unit2: BinaryDecodable, BinaryEncodable, Sendable {
+    public var _____unavailable: Int8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        _____unavailable = try decoder.decode(Int8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(_____unavailable)
+    }
+}
+
+public struct packet_spawn_unit2: BinaryDecodable, BinaryEncodable, Sendable {
+    public var _____unavailable: Int8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        _____unavailable = try decoder.decode(Int8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(_____unavailable)
+    }
+}
+
+public struct packet_spawn_unit: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var objecttype: UInt8 = 0
+    public var AID: UInt32 = 0
+    public var GID: UInt32 = 0
+    public var speed: Int16 = 0
+    public var bodyState: Int16 = 0
+    public var healthState: Int16 = 0
+    public var effectState: Int32 = 0
+    public var job: Int16 = 0
+    public var head: UInt16 = 0
+    public var weapon: UInt32 = 0
+    public var shield: UInt32 = 0
+    public var accessory: UInt16 = 0
+    public var accessory2: UInt16 = 0
+    public var accessory3: UInt16 = 0
+    public var headpalette: Int16 = 0
+    public var bodypalette: Int16 = 0
+    public var headDir: Int16 = 0
+    public var robe: UInt16 = 0
+    public var GUID: UInt32 = 0
+    public var GEmblemVer: Int16 = 0
+    public var honor: Int16 = 0
+    public var virtue: Int32 = 0
+    public var isPKModeON: UInt8 = 0
+    public var sex: UInt8 = 0
+    @FixedSizeArray(size: 3, initialValue: 0)
+    public var PosDir: [UInt8]
+    public var xSize: UInt8 = 0
+    public var ySize: UInt8 = 0
+    public var clevel: Int16 = 0
+    public var font: Int16 = 0
+    public var maxHP: Int32 = 0
+    public var HP: Int32 = 0
+    public var isBoss: UInt8 = 0
+    public var body: Int16 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        objecttype = try decoder.decode(UInt8.self)
+        AID = try decoder.decode(UInt32.self)
+        GID = try decoder.decode(UInt32.self)
+        speed = try decoder.decode(Int16.self)
+        bodyState = try decoder.decode(Int16.self)
+        healthState = try decoder.decode(Int16.self)
+        effectState = try decoder.decode(Int32.self)
+        job = try decoder.decode(Int16.self)
+        head = try decoder.decode(UInt16.self)
+        weapon = try decoder.decode(UInt32.self)
+        shield = try decoder.decode(UInt32.self)
+        accessory = try decoder.decode(UInt16.self)
+        accessory2 = try decoder.decode(UInt16.self)
+        accessory3 = try decoder.decode(UInt16.self)
+        headpalette = try decoder.decode(Int16.self)
+        bodypalette = try decoder.decode(Int16.self)
+        headDir = try decoder.decode(Int16.self)
+        robe = try decoder.decode(UInt16.self)
+        GUID = try decoder.decode(UInt32.self)
+        GEmblemVer = try decoder.decode(Int16.self)
+        honor = try decoder.decode(Int16.self)
+        virtue = try decoder.decode(Int32.self)
+        isPKModeON = try decoder.decode(UInt8.self)
+        sex = try decoder.decode(UInt8.self)
+        PosDir = try decoder.decode([UInt8].self, count: 3)
+        xSize = try decoder.decode(UInt8.self)
+        ySize = try decoder.decode(UInt8.self)
+        clevel = try decoder.decode(Int16.self)
+        font = try decoder.decode(Int16.self)
+        maxHP = try decoder.decode(Int32.self)
+        HP = try decoder.decode(Int32.self)
+        isBoss = try decoder.decode(UInt8.self)
+        body = try decoder.decode(Int16.self)
+        name = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(objecttype)
+        try encoder.encode(AID)
+        try encoder.encode(GID)
+        try encoder.encode(speed)
+        try encoder.encode(bodyState)
+        try encoder.encode(healthState)
+        try encoder.encode(effectState)
+        try encoder.encode(job)
+        try encoder.encode(head)
+        try encoder.encode(weapon)
+        try encoder.encode(shield)
+        try encoder.encode(accessory)
+        try encoder.encode(accessory2)
+        try encoder.encode(accessory3)
+        try encoder.encode(headpalette)
+        try encoder.encode(bodypalette)
+        try encoder.encode(headDir)
+        try encoder.encode(robe)
+        try encoder.encode(GUID)
+        try encoder.encode(GEmblemVer)
+        try encoder.encode(honor)
+        try encoder.encode(virtue)
+        try encoder.encode(isPKModeON)
+        try encoder.encode(sex)
+        try encoder.encode(PosDir)
+        try encoder.encode(xSize)
+        try encoder.encode(ySize)
+        try encoder.encode(clevel)
+        try encoder.encode(font)
+        try encoder.encode(maxHP)
+        try encoder.encode(HP)
+        try encoder.encode(isBoss)
+        try encoder.encode(body)
+        try encoder.encode(name, lengthOfBytes: 24)
+    }
+}
+
+public struct packet_unit_walking: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var objecttype: UInt8 = 0
+    public var AID: UInt32 = 0
+    public var GID: UInt32 = 0
+    public var speed: Int16 = 0
+    public var bodyState: Int16 = 0
+    public var healthState: Int16 = 0
+    public var effectState: Int32 = 0
+    public var job: Int16 = 0
+    public var head: UInt16 = 0
+    public var weapon: UInt32 = 0
+    public var shield: UInt32 = 0
+    public var accessory: UInt16 = 0
+    public var moveStartTime: UInt32 = 0
+    public var accessory2: UInt16 = 0
+    public var accessory3: UInt16 = 0
+    public var headpalette: Int16 = 0
+    public var bodypalette: Int16 = 0
+    public var headDir: Int16 = 0
+    public var robe: UInt16 = 0
+    public var GUID: UInt32 = 0
+    public var GEmblemVer: Int16 = 0
+    public var honor: Int16 = 0
+    public var virtue: Int32 = 0
+    public var isPKModeON: UInt8 = 0
+    public var sex: UInt8 = 0
+    @FixedSizeArray(size: 6, initialValue: 0)
+    public var MoveData: [UInt8]
+    public var xSize: UInt8 = 0
+    public var ySize: UInt8 = 0
+    public var clevel: Int16 = 0
+    public var font: Int16 = 0
+    public var maxHP: Int32 = 0
+    public var HP: Int32 = 0
+    public var isBoss: UInt8 = 0
+    public var body: UInt16 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        objecttype = try decoder.decode(UInt8.self)
+        AID = try decoder.decode(UInt32.self)
+        GID = try decoder.decode(UInt32.self)
+        speed = try decoder.decode(Int16.self)
+        bodyState = try decoder.decode(Int16.self)
+        healthState = try decoder.decode(Int16.self)
+        effectState = try decoder.decode(Int32.self)
+        job = try decoder.decode(Int16.self)
+        head = try decoder.decode(UInt16.self)
+        weapon = try decoder.decode(UInt32.self)
+        shield = try decoder.decode(UInt32.self)
+        accessory = try decoder.decode(UInt16.self)
+        moveStartTime = try decoder.decode(UInt32.self)
+        accessory2 = try decoder.decode(UInt16.self)
+        accessory3 = try decoder.decode(UInt16.self)
+        headpalette = try decoder.decode(Int16.self)
+        bodypalette = try decoder.decode(Int16.self)
+        headDir = try decoder.decode(Int16.self)
+        robe = try decoder.decode(UInt16.self)
+        GUID = try decoder.decode(UInt32.self)
+        GEmblemVer = try decoder.decode(Int16.self)
+        honor = try decoder.decode(Int16.self)
+        virtue = try decoder.decode(Int32.self)
+        isPKModeON = try decoder.decode(UInt8.self)
+        sex = try decoder.decode(UInt8.self)
+        MoveData = try decoder.decode([UInt8].self, count: 6)
+        xSize = try decoder.decode(UInt8.self)
+        ySize = try decoder.decode(UInt8.self)
+        clevel = try decoder.decode(Int16.self)
+        font = try decoder.decode(Int16.self)
+        maxHP = try decoder.decode(Int32.self)
+        HP = try decoder.decode(Int32.self)
+        isBoss = try decoder.decode(UInt8.self)
+        body = try decoder.decode(UInt16.self)
+        name = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(objecttype)
+        try encoder.encode(AID)
+        try encoder.encode(GID)
+        try encoder.encode(speed)
+        try encoder.encode(bodyState)
+        try encoder.encode(healthState)
+        try encoder.encode(effectState)
+        try encoder.encode(job)
+        try encoder.encode(head)
+        try encoder.encode(weapon)
+        try encoder.encode(shield)
+        try encoder.encode(accessory)
+        try encoder.encode(moveStartTime)
+        try encoder.encode(accessory2)
+        try encoder.encode(accessory3)
+        try encoder.encode(headpalette)
+        try encoder.encode(bodypalette)
+        try encoder.encode(headDir)
+        try encoder.encode(robe)
+        try encoder.encode(GUID)
+        try encoder.encode(GEmblemVer)
+        try encoder.encode(honor)
+        try encoder.encode(virtue)
+        try encoder.encode(isPKModeON)
+        try encoder.encode(sex)
+        try encoder.encode(MoveData)
+        try encoder.encode(xSize)
+        try encoder.encode(ySize)
+        try encoder.encode(clevel)
+        try encoder.encode(font)
+        try encoder.encode(maxHP)
+        try encoder.encode(HP)
+        try encoder.encode(isBoss)
+        try encoder.encode(body)
+        try encoder.encode(name, lengthOfBytes: 24)
+    }
+}
+
+public struct packet_idle_unit: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var objecttype: UInt8 = 0
+    public var AID: UInt32 = 0
+    public var GID: UInt32 = 0
+    public var speed: Int16 = 0
+    public var bodyState: Int16 = 0
+    public var healthState: Int16 = 0
+    public var effectState: Int32 = 0
+    public var job: Int16 = 0
+    public var head: UInt16 = 0
+    public var weapon: UInt32 = 0
+    public var shield: UInt32 = 0
+    public var accessory: UInt16 = 0
+    public var accessory2: UInt16 = 0
+    public var accessory3: UInt16 = 0
+    public var headpalette: Int16 = 0
+    public var bodypalette: Int16 = 0
+    public var headDir: Int16 = 0
+    public var robe: UInt16 = 0
+    public var GUID: UInt32 = 0
+    public var GEmblemVer: Int16 = 0
+    public var honor: Int16 = 0
+    public var virtue: Int32 = 0
+    public var isPKModeON: UInt8 = 0
+    public var sex: UInt8 = 0
+    @FixedSizeArray(size: 3, initialValue: 0)
+    public var PosDir: [UInt8]
+    public var xSize: UInt8 = 0
+    public var ySize: UInt8 = 0
+    public var state: UInt8 = 0
+    public var clevel: Int16 = 0
+    public var font: Int16 = 0
+    public var maxHP: Int32 = 0
+    public var HP: Int32 = 0
+    public var isBoss: UInt8 = 0
+    public var body: UInt16 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        objecttype = try decoder.decode(UInt8.self)
+        AID = try decoder.decode(UInt32.self)
+        GID = try decoder.decode(UInt32.self)
+        speed = try decoder.decode(Int16.self)
+        bodyState = try decoder.decode(Int16.self)
+        healthState = try decoder.decode(Int16.self)
+        effectState = try decoder.decode(Int32.self)
+        job = try decoder.decode(Int16.self)
+        head = try decoder.decode(UInt16.self)
+        weapon = try decoder.decode(UInt32.self)
+        shield = try decoder.decode(UInt32.self)
+        accessory = try decoder.decode(UInt16.self)
+        accessory2 = try decoder.decode(UInt16.self)
+        accessory3 = try decoder.decode(UInt16.self)
+        headpalette = try decoder.decode(Int16.self)
+        bodypalette = try decoder.decode(Int16.self)
+        headDir = try decoder.decode(Int16.self)
+        robe = try decoder.decode(UInt16.self)
+        GUID = try decoder.decode(UInt32.self)
+        GEmblemVer = try decoder.decode(Int16.self)
+        honor = try decoder.decode(Int16.self)
+        virtue = try decoder.decode(Int32.self)
+        isPKModeON = try decoder.decode(UInt8.self)
+        sex = try decoder.decode(UInt8.self)
+        PosDir = try decoder.decode([UInt8].self, count: 3)
+        xSize = try decoder.decode(UInt8.self)
+        ySize = try decoder.decode(UInt8.self)
+        state = try decoder.decode(UInt8.self)
+        clevel = try decoder.decode(Int16.self)
+        font = try decoder.decode(Int16.self)
+        maxHP = try decoder.decode(Int32.self)
+        HP = try decoder.decode(Int32.self)
+        isBoss = try decoder.decode(UInt8.self)
+        body = try decoder.decode(UInt16.self)
+        name = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(objecttype)
+        try encoder.encode(AID)
+        try encoder.encode(GID)
+        try encoder.encode(speed)
+        try encoder.encode(bodyState)
+        try encoder.encode(healthState)
+        try encoder.encode(effectState)
+        try encoder.encode(job)
+        try encoder.encode(head)
+        try encoder.encode(weapon)
+        try encoder.encode(shield)
+        try encoder.encode(accessory)
+        try encoder.encode(accessory2)
+        try encoder.encode(accessory3)
+        try encoder.encode(headpalette)
+        try encoder.encode(bodypalette)
+        try encoder.encode(headDir)
+        try encoder.encode(robe)
+        try encoder.encode(GUID)
+        try encoder.encode(GEmblemVer)
+        try encoder.encode(honor)
+        try encoder.encode(virtue)
+        try encoder.encode(isPKModeON)
+        try encoder.encode(sex)
+        try encoder.encode(PosDir)
+        try encoder.encode(xSize)
+        try encoder.encode(ySize)
+        try encoder.encode(state)
+        try encoder.encode(clevel)
+        try encoder.encode(font)
+        try encoder.encode(maxHP)
+        try encoder.encode(HP)
+        try encoder.encode(isBoss)
+        try encoder.encode(body)
+        try encoder.encode(name, lengthOfBytes: 24)
+    }
+}
+
+public struct packet_status_change: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var index: Int16 = 0
+    public var AID: UInt32 = 0
+    public var state: UInt8 = 0
+    public var Total: UInt32 = 0
+    public var Left: UInt32 = 0
+    public var val1: Int32 = 0
+    public var val2: Int32 = 0
+    public var val3: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        index = try decoder.decode(Int16.self)
+        AID = try decoder.decode(UInt32.self)
+        state = try decoder.decode(UInt8.self)
+        Total = try decoder.decode(UInt32.self)
+        Left = try decoder.decode(UInt32.self)
+        val1 = try decoder.decode(Int32.self)
+        val2 = try decoder.decode(Int32.self)
+        val3 = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(index)
+        try encoder.encode(AID)
+        try encoder.encode(state)
+        try encoder.encode(Total)
+        try encoder.encode(Left)
+        try encoder.encode(val1)
+        try encoder.encode(val2)
+        try encoder.encode(val3)
+    }
+}
+
+public struct packet_status_change_end: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var index: Int16 = 0
+    public var AID: UInt32 = 0
+    public var state: UInt8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        index = try decoder.decode(Int16.self)
+        AID = try decoder.decode(UInt32.self)
+        state = try decoder.decode(UInt8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(index)
+        try encoder.encode(AID)
+        try encoder.encode(state)
+    }
+}
+
+public struct packet_status_change2: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var index: Int16 = 0
+    public var AID: UInt32 = 0
+    public var state: UInt8 = 0
+    public var Left: UInt32 = 0
+    public var val1: Int32 = 0
+    public var val2: Int32 = 0
+    public var val3: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        index = try decoder.decode(Int16.self)
+        AID = try decoder.decode(UInt32.self)
+        state = try decoder.decode(UInt8.self)
+        Left = try decoder.decode(UInt32.self)
+        val1 = try decoder.decode(Int32.self)
+        val2 = try decoder.decode(Int32.self)
+        val3 = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(index)
+        try encoder.encode(AID)
+        try encoder.encode(state)
+        try encoder.encode(Left)
+        try encoder.encode(val1)
+        try encoder.encode(val2)
+        try encoder.encode(val3)
+    }
+}
+
+public struct packet_maptypeproperty2: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var type: Int16 = 0
+    public var flag: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        type = try decoder.decode(Int16.self)
+        flag = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(type)
+        try encoder.encode(flag)
+    }
+}
+
+public struct packet_bgqueue_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var type: UInt8 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var bg_name: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        type = try decoder.decode(UInt8.self)
+        bg_name = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(type)
+        try encoder.encode(bg_name, lengthOfBytes: 24)
+    }
+}
+
+public struct packet_bgqueue_notice_delete: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var type: UInt8 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var bg_name: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        type = try decoder.decode(UInt8.self)
+        bg_name = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(type)
+        try encoder.encode(bg_name, lengthOfBytes: 24)
+    }
+}
+
+public struct packet_bgqueue_register: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var type: Int16 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var bg_name: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        type = try decoder.decode(Int16.self)
+        bg_name = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(type)
+        try encoder.encode(bg_name, lengthOfBytes: 24)
+    }
+}
+
+public struct packet_bgqueue_update_info: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var bg_name: String
+    public var position: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        bg_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        position = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(bg_name, lengthOfBytes: 24)
+        try encoder.encode(position)
+    }
+}
+
+public struct packet_bgqueue_checkstate: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var bg_name: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        bg_name = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(bg_name, lengthOfBytes: 24)
+    }
+}
+
+public struct packet_bgqueue_revoke_req: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var bg_name: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        bg_name = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(bg_name, lengthOfBytes: 24)
+    }
+}
+
+public struct packet_bgqueue_battlebegin_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var result: UInt8 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var bg_name: String
+    @FixedLengthString(lengthOfBytes: 24)
+    public var game_name: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        result = try decoder.decode(UInt8.self)
+        bg_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        game_name = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(result)
+        try encoder.encode(bg_name, lengthOfBytes: 24)
+        try encoder.encode(game_name, lengthOfBytes: 24)
+    }
+}
+
+public struct packet_bgqueue_notify_entry: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
+    public var position: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        position = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(position)
+    }
+}
+
+public struct packet_bgqueue_battlebegins: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var bg_name: String
+    @FixedLengthString(lengthOfBytes: 24)
+    public var game_name: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        bg_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        game_name = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(bg_name, lengthOfBytes: 24)
+        try encoder.encode(game_name, lengthOfBytes: 24)
+    }
+}
+
+public struct packet_script_clear: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var NpcID: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        NpcID = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(NpcID)
+    }
+}
+
 public struct PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item: BinaryDecodable, BinaryEncodable, Sendable {
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
@@ -1163,6 +1958,335 @@ public struct PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item: BinaryDecodable, 
         try encoder.encode(Name, lengthOfBytes: 24)
         try encoder.encode(boxItemID_len)
         try encoder.encode(BoxItemID)
+    }
+}
+
+public struct packet_item_drop_announce: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var type: UInt8 = 0
+    public var ItemID: UInt32 = 0
+    public var len: Int8 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var Name: String
+    public var monsterNameLen: Int8 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var monsterName: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        type = try decoder.decode(UInt8.self)
+        ItemID = try decoder.decode(UInt32.self)
+        len = try decoder.decode(Int8.self)
+        Name = try decoder.decode(String.self, lengthOfBytes: 24)
+        monsterNameLen = try decoder.decode(Int8.self)
+        monsterName = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(type)
+        try encoder.encode(ItemID)
+        try encoder.encode(len)
+        try encoder.encode(Name, lengthOfBytes: 24)
+        try encoder.encode(monsterNameLen)
+        try encoder.encode(monsterName, lengthOfBytes: 24)
+    }
+}
+
+public struct packet_cart_additem_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var result: Int8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        result = try decoder.decode(Int8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(result)
+    }
+}
+
+public struct packet_banking_check: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var Money: Int64 = 0
+    public var Reason: Int16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        Money = try decoder.decode(Int64.self)
+        Reason = try decoder.decode(Int16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(Money)
+        try encoder.encode(Reason)
+    }
+}
+
+public struct packet_banking_deposit_req: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var Money: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        AID = try decoder.decode(UInt32.self)
+        Money = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(AID)
+        try encoder.encode(Money)
+    }
+}
+
+public struct packet_banking_withdraw_req: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var Money: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        AID = try decoder.decode(UInt32.self)
+        Money = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(AID)
+        try encoder.encode(Money)
+    }
+}
+
+public struct packet_banking_deposit_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var Reason: Int16 = 0
+    public var Money: Int64 = 0
+    public var Balance: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        Reason = try decoder.decode(Int16.self)
+        Money = try decoder.decode(Int64.self)
+        Balance = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(Reason)
+        try encoder.encode(Money)
+        try encoder.encode(Balance)
+    }
+}
+
+public struct packet_banking_withdraw_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var Reason: Int16 = 0
+    public var Money: Int64 = 0
+    public var Balance: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        Reason = try decoder.decode(Int16.self)
+        Money = try decoder.decode(Int64.self)
+        Balance = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(Reason)
+        try encoder.encode(Money)
+        try encoder.encode(Balance)
+    }
+}
+
+public struct packet_roulette_open_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var Result: Int8 = 0
+    public var Serial: Int32 = 0
+    public var Step: Int8 = 0
+    public var Idx: Int8 = 0
+    public var AdditionItemID: UInt32 = 0
+    public var GoldPoint: Int32 = 0
+    public var SilverPoint: Int32 = 0
+    public var BronzePoint: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        Result = try decoder.decode(Int8.self)
+        Serial = try decoder.decode(Int32.self)
+        Step = try decoder.decode(Int8.self)
+        Idx = try decoder.decode(Int8.self)
+        AdditionItemID = try decoder.decode(UInt32.self)
+        GoldPoint = try decoder.decode(Int32.self)
+        SilverPoint = try decoder.decode(Int32.self)
+        BronzePoint = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(Result)
+        try encoder.encode(Serial)
+        try encoder.encode(Step)
+        try encoder.encode(Idx)
+        try encoder.encode(AdditionItemID)
+        try encoder.encode(GoldPoint)
+        try encoder.encode(SilverPoint)
+        try encoder.encode(BronzePoint)
+    }
+}
+
+public struct packet_roulette_info_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var RouletteSerial: UInt32 = 0
+    @FixedSizeArray(size: 42, initialValue: packet_roulette_info_ack_sub())
+    public var ItemInfo: [packet_roulette_info_ack_sub]
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        RouletteSerial = try decoder.decode(UInt32.self)
+        ItemInfo = try decoder.decode([packet_roulette_info_ack_sub].self, count: 42)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(RouletteSerial)
+        try encoder.encode(ItemInfo)
+    }
+}
+
+public struct packet_roulette_close_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var Result: UInt8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        Result = try decoder.decode(UInt8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(Result)
+    }
+}
+
+public struct packet_roulette_generate_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var Result: UInt8 = 0
+    public var Step: UInt16 = 0
+    public var Idx: UInt16 = 0
+    public var AdditionItemID: UInt32 = 0
+    public var RemainGold: Int32 = 0
+    public var RemainSilver: Int32 = 0
+    public var RemainBronze: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        Result = try decoder.decode(UInt8.self)
+        Step = try decoder.decode(UInt16.self)
+        Idx = try decoder.decode(UInt16.self)
+        AdditionItemID = try decoder.decode(UInt32.self)
+        RemainGold = try decoder.decode(Int32.self)
+        RemainSilver = try decoder.decode(Int32.self)
+        RemainBronze = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(Result)
+        try encoder.encode(Step)
+        try encoder.encode(Idx)
+        try encoder.encode(AdditionItemID)
+        try encoder.encode(RemainGold)
+        try encoder.encode(RemainSilver)
+        try encoder.encode(RemainBronze)
+    }
+}
+
+public struct packet_roulette_itemrecv_req: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var Condition: UInt8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        Condition = try decoder.decode(UInt8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(Condition)
+    }
+}
+
+public struct packet_roulette_itemrecv_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var Result: UInt8 = 0
+    public var AdditionItemID: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        Result = try decoder.decode(UInt8.self)
+        AdditionItemID = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(Result)
+        try encoder.encode(AdditionItemID)
+    }
+}
+
+public struct packet_itemlist_normal: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var invType: UInt8 = 0
+    @FixedSizeArray(size: 600, initialValue: NORMALITEM_INFO())
+    public var list: [NORMALITEM_INFO]
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        invType = try decoder.decode(UInt8.self)
+        list = try decoder.decode([NORMALITEM_INFO].self, count: 600)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(invType)
+        try encoder.encode(list)
+    }
+}
+
+public struct packet_itemlist_equip: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var invType: UInt8 = 0
+    @FixedSizeArray(size: 600, initialValue: EQUIPITEM_INFO())
+    public var list: [EQUIPITEM_INFO]
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        invType = try decoder.decode(UInt8.self)
+        list = try decoder.decode([EQUIPITEM_INFO].self, count: 600)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(invType)
+        try encoder.encode(list)
     }
 }
 
@@ -1205,6 +2329,24 @@ public struct PACKET_ZC_INVENTORY_END: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
+public struct packet_equip_item: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var index: UInt16 = 0
+    public var wearLocation: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        index = try decoder.decode(UInt16.self)
+        wearLocation = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(index)
+        try encoder.encode(wearLocation)
+    }
+}
+
 public struct PACKET_ZC_REQ_WEAR_EQUIP_ACK: BinaryDecodable, BinaryEncodable, Sendable {
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
@@ -1225,6 +2367,27 @@ public struct PACKET_ZC_REQ_WEAR_EQUIP_ACK: BinaryDecodable, BinaryEncodable, Se
         try encoder.encode(index)
         try encoder.encode(wearLocation)
         try encoder.encode(wItemSpriteNumber)
+        try encoder.encode(result)
+    }
+}
+
+public struct packet_unequipitem_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var index: UInt16 = 0
+    public var wearLocation: UInt32 = 0
+    public var result: UInt8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        index = try decoder.decode(UInt16.self)
+        wearLocation = try decoder.decode(UInt32.self)
+        result = try decoder.decode(UInt8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(index)
+        try encoder.encode(wearLocation)
         try encoder.encode(result)
     }
 }
@@ -1278,6 +2441,155 @@ public struct PACKET_ZC_EQUIPWIN_MICROSCOPE: BinaryDecodable, BinaryEncodable, S
         try encoder.encode(body2)
         try encoder.encode(sex)
         try encoder.encode(list)
+    }
+}
+
+public struct packet_notify_bounditem: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var index: UInt16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        index = try decoder.decode(UInt16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(index)
+    }
+}
+
+public struct packet_skill_entry: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var AID: UInt32 = 0
+    public var creatorAID: UInt32 = 0
+    public var xPos: Int16 = 0
+    public var yPos: Int16 = 0
+    public var job: Int32 = 0
+    public var RadiusRange: Int8 = 0
+    public var isVisible: UInt8 = 0
+    public var level: UInt8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        AID = try decoder.decode(UInt32.self)
+        creatorAID = try decoder.decode(UInt32.self)
+        xPos = try decoder.decode(Int16.self)
+        yPos = try decoder.decode(Int16.self)
+        job = try decoder.decode(Int32.self)
+        RadiusRange = try decoder.decode(Int8.self)
+        isVisible = try decoder.decode(UInt8.self)
+        level = try decoder.decode(UInt8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(AID)
+        try encoder.encode(creatorAID)
+        try encoder.encode(xPos)
+        try encoder.encode(yPos)
+        try encoder.encode(job)
+        try encoder.encode(RadiusRange)
+        try encoder.encode(isVisible)
+        try encoder.encode(level)
+    }
+}
+
+public struct packet_graffiti_entry: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var creatorAID: UInt32 = 0
+    public var xPos: Int16 = 0
+    public var yPos: Int16 = 0
+    public var job: UInt8 = 0
+    public var isVisible: UInt8 = 0
+    public var isContens: UInt8 = 0
+    @FixedLengthString(lengthOfBytes: 80)
+    public var msg: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        AID = try decoder.decode(UInt32.self)
+        creatorAID = try decoder.decode(UInt32.self)
+        xPos = try decoder.decode(Int16.self)
+        yPos = try decoder.decode(Int16.self)
+        job = try decoder.decode(UInt8.self)
+        isVisible = try decoder.decode(UInt8.self)
+        isContens = try decoder.decode(UInt8.self)
+        msg = try decoder.decode(String.self, lengthOfBytes: 80)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(AID)
+        try encoder.encode(creatorAID)
+        try encoder.encode(xPos)
+        try encoder.encode(yPos)
+        try encoder.encode(job)
+        try encoder.encode(isVisible)
+        try encoder.encode(isContens)
+        try encoder.encode(msg, lengthOfBytes: 80)
+    }
+}
+
+public struct packet_damage: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var GID: UInt32 = 0
+    public var targetGID: UInt32 = 0
+    public var startTime: UInt32 = 0
+    public var attackMT: Int32 = 0
+    public var attackedMT: Int32 = 0
+    public var damage: Int32 = 0
+    public var is_sp_damaged: UInt8 = 0
+    public var count: Int16 = 0
+    public var action: UInt8 = 0
+    public var leftDamage: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        GID = try decoder.decode(UInt32.self)
+        targetGID = try decoder.decode(UInt32.self)
+        startTime = try decoder.decode(UInt32.self)
+        attackMT = try decoder.decode(Int32.self)
+        attackedMT = try decoder.decode(Int32.self)
+        damage = try decoder.decode(Int32.self)
+        is_sp_damaged = try decoder.decode(UInt8.self)
+        count = try decoder.decode(Int16.self)
+        action = try decoder.decode(UInt8.self)
+        leftDamage = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(GID)
+        try encoder.encode(targetGID)
+        try encoder.encode(startTime)
+        try encoder.encode(attackMT)
+        try encoder.encode(attackedMT)
+        try encoder.encode(damage)
+        try encoder.encode(is_sp_damaged)
+        try encoder.encode(count)
+        try encoder.encode(action)
+        try encoder.encode(leftDamage)
+    }
+}
+
+public struct packet_gm_monster_item: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    @FixedLengthString(lengthOfBytes: 100)
+    public var str: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        str = try decoder.decode(String.self, lengthOfBytes: 100)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(str, lengthOfBytes: 100)
     }
 }
 
@@ -1356,6 +2668,42 @@ public struct PACKET_ZC_NPC_MARKET_OPEN: BinaryDecodable, BinaryEncodable, Senda
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(list)
+    }
+}
+
+public struct packet_wis_end: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var result: Int8 = 0
+    public var AID: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        result = try decoder.decode(Int8.self)
+        AID = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(result)
+        try encoder.encode(AID)
+    }
+}
+
+public struct packet_party_leader_changed: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var prev_leader_aid: UInt32 = 0
+    public var new_leader_aid: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        prev_leader_aid = try decoder.decode(UInt32.self)
+        new_leader_aid = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(prev_leader_aid)
+        try encoder.encode(new_leader_aid)
     }
 }
 
@@ -1450,6 +2798,101 @@ public struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE2: BinaryDecodable, BinaryEncodable
         try encoder.encode(packetType)
         try encoder.encode(tab)
         try encoder.encode(rowshift)
+    }
+}
+
+public struct packet_mission_info_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public var huntIdent: UInt32 = 0
+    public var huntIdent2: UInt32 = 0
+    public var mobType: UInt32 = 0
+    public var mob_id: UInt32 = 0
+    public var levelMin: Int16 = 0
+    public var levelMax: Int16 = 0
+    public var huntCount: Int16 = 0
+    public var maxCount: Int16 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var mobName: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        huntIdent = try decoder.decode(UInt32.self)
+        huntIdent2 = try decoder.decode(UInt32.self)
+        mobType = try decoder.decode(UInt32.self)
+        mob_id = try decoder.decode(UInt32.self)
+        levelMin = try decoder.decode(Int16.self)
+        levelMax = try decoder.decode(Int16.self)
+        huntCount = try decoder.decode(Int16.self)
+        maxCount = try decoder.decode(Int16.self)
+        mobName = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(huntIdent)
+        try encoder.encode(huntIdent2)
+        try encoder.encode(mobType)
+        try encoder.encode(mob_id)
+        try encoder.encode(levelMin)
+        try encoder.encode(levelMax)
+        try encoder.encode(huntCount)
+        try encoder.encode(maxCount)
+        try encoder.encode(mobName, lengthOfBytes: 24)
+    }
+}
+
+public struct packet_quest_list_header: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var questCount: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        questCount = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(questCount)
+    }
+}
+
+public struct packet_chat_message: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var message: String = ""
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2)))
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(message)
+    }
+}
+
+public struct packet_whisper_message: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
+    public var message: String = ""
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 24)))
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(message)
     }
 }
 
@@ -2247,6 +3690,154 @@ public struct PACKET_ZC_NOTIFY_CLAN_CHAT: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
+public struct packet_quest_hunt_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public var huntIdent: UInt32 = 0
+    public var huntIdent2: UInt32 = 0
+    public var mobType: UInt32 = 0
+    public var mob_id: UInt32 = 0
+    public var levelMin: Int16 = 0
+    public var levelMax: Int16 = 0
+    public var huntCount: Int16 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var mobName: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        huntIdent = try decoder.decode(UInt32.self)
+        huntIdent2 = try decoder.decode(UInt32.self)
+        mobType = try decoder.decode(UInt32.self)
+        mob_id = try decoder.decode(UInt32.self)
+        levelMin = try decoder.decode(Int16.self)
+        levelMax = try decoder.decode(Int16.self)
+        huntCount = try decoder.decode(Int16.self)
+        mobName = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(huntIdent)
+        try encoder.encode(huntIdent2)
+        try encoder.encode(mobType)
+        try encoder.encode(mob_id)
+        try encoder.encode(levelMin)
+        try encoder.encode(levelMax)
+        try encoder.encode(huntCount)
+        try encoder.encode(mobName, lengthOfBytes: 24)
+    }
+}
+
+public struct packet_quest_add_header: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var questID: UInt32 = 0
+    public var active: UInt8 = 0
+    public var quest_svrTime: Int32 = 0
+    public var quest_endTime: Int32 = 0
+    public var count: Int16 = 0
+    public var objectives: [packet_quest_hunt_sub] = []
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        questID = try decoder.decode(UInt32.self)
+        active = try decoder.decode(UInt8.self)
+        quest_svrTime = try decoder.decode(Int32.self)
+        quest_endTime = try decoder.decode(Int32.self)
+        count = try decoder.decode(Int16.self)
+        objectives = try decoder.decode([packet_quest_hunt_sub].self, count: Int(count))
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(questID)
+        try encoder.encode(active)
+        try encoder.encode(quest_svrTime)
+        try encoder.encode(quest_endTime)
+        try encoder.encode(count)
+        try encoder.encode(objectives)
+    }
+}
+
+public struct packet_quest_update_hunt: BinaryDecodable, BinaryEncodable, Sendable {
+    public var questID: UInt32 = 0
+    public var huntIdent: UInt32 = 0
+    public var huntIdent2: UInt32 = 0
+    public var maxCount: Int16 = 0
+    public var count: Int16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        questID = try decoder.decode(UInt32.self)
+        huntIdent = try decoder.decode(UInt32.self)
+        huntIdent2 = try decoder.decode(UInt32.self)
+        maxCount = try decoder.decode(Int16.self)
+        count = try decoder.decode(Int16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(questID)
+        try encoder.encode(huntIdent)
+        try encoder.encode(huntIdent2)
+        try encoder.encode(maxCount)
+        try encoder.encode(count)
+    }
+}
+
+public struct packet_quest_update_header: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var count: Int16 = 0
+    public var objectives: [packet_quest_update_hunt] = []
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        count = try decoder.decode(Int16.self)
+        objectives = try decoder.decode([packet_quest_update_hunt].self, count: (Int(packetLength) - (2 + 2 + 2)) / (4 + 4 + 4 + 2 + 2))
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(count)
+        try encoder.encode(objectives)
+    }
+}
+
+public struct packet_quest_hunt_info_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public var questID: UInt32 = 0
+    public var mob_id: UInt32 = 0
+    public var maxCount: Int16 = 0
+    public var count: Int16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        questID = try decoder.decode(UInt32.self)
+        mob_id = try decoder.decode(UInt32.self)
+        maxCount = try decoder.decode(Int16.self)
+        count = try decoder.decode(Int16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(questID)
+        try encoder.encode(mob_id)
+        try encoder.encode(maxCount)
+        try encoder.encode(count)
+    }
+}
+
+public struct packet_quest_hunt_info: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var info: [packet_quest_hunt_info_sub] = []
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        info = try decoder.decode([packet_quest_hunt_info_sub].self, count: (Int(packetLength) - (2 + 2)) / (4 + 4 + 2 + 2))
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(info)
+    }
+}
+
 public struct PACKET_ZC_FORMATSTRING_MSG: BinaryDecodable, BinaryEncodable, Sendable {
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
@@ -2506,6 +4097,25 @@ public struct PACKET_CZ_PET_EVOLUTION: BinaryDecodable, BinaryEncodable, Sendabl
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(EvolvedPetEggID)
+    }
+}
+
+public struct packet_ZC_REFUSE_LOGIN: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var error_code: UInt32 = 0
+    @FixedLengthString(lengthOfBytes: 20)
+    public var block_date: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        error_code = try decoder.decode(UInt32.self)
+        block_date = try decoder.decode(String.self, lengthOfBytes: 20)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(error_code)
+        try encoder.encode(block_date, lengthOfBytes: 20)
     }
 }
 
@@ -4044,6 +5654,104 @@ public struct PACKET_ZC_SEARCH_STORE_INFO_ACK: BinaryDecodable, BinaryEncodable,
         try encoder.encode(nextPage)
         try encoder.encode(usesCount)
         try encoder.encode(items)
+    }
+}
+
+public struct packet_achievement_list: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var total_achievements: UInt32 = 0
+    public var total_points: UInt32 = 0
+    public var rank: UInt16 = 0
+    public var current_rank_points: UInt32 = 0
+    public var next_rank_points: UInt32 = 0
+    @FixedSizeArray(size: 10, initialValue: ach_list_info())
+    public var ach: [ach_list_info]
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        total_achievements = try decoder.decode(UInt32.self)
+        total_points = try decoder.decode(UInt32.self)
+        rank = try decoder.decode(UInt16.self)
+        current_rank_points = try decoder.decode(UInt32.self)
+        next_rank_points = try decoder.decode(UInt32.self)
+        ach = try decoder.decode([ach_list_info].self, count: 10)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(total_achievements)
+        try encoder.encode(total_points)
+        try encoder.encode(rank)
+        try encoder.encode(current_rank_points)
+        try encoder.encode(next_rank_points)
+        try encoder.encode(ach)
+    }
+}
+
+public struct packet_achievement_update: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var total_points: UInt32 = 0
+    public var rank: UInt16 = 0
+    public var current_rank_points: UInt32 = 0
+    public var next_rank_points: UInt32 = 0
+    public var ach: ach_list_info = ach_list_info()
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        total_points = try decoder.decode(UInt32.self)
+        rank = try decoder.decode(UInt16.self)
+        current_rank_points = try decoder.decode(UInt32.self)
+        next_rank_points = try decoder.decode(UInt32.self)
+        ach = try decoder.decode(ach_list_info.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(total_points)
+        try encoder.encode(rank)
+        try encoder.encode(current_rank_points)
+        try encoder.encode(next_rank_points)
+        try encoder.encode(ach)
+    }
+}
+
+public struct packet_achievement_reward_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var failed: UInt8 = 0
+    public var ach_id: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        failed = try decoder.decode(UInt8.self)
+        ach_id = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(failed)
+        try encoder.encode(ach_id)
+    }
+}
+
+public struct packet_reqname_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var gid: Int32 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        gid = try decoder.decode(Int32.self)
+        name = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(gid)
+        try encoder.encode(name, lengthOfBytes: 24)
     }
 }
 
@@ -11473,6 +13181,39 @@ public struct ItemOptions: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
+public struct NORMALITEM_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public var index: Int16 = 0
+    public var ITID: UInt32 = 0
+    public var type: UInt8 = 0
+    public var count: Int16 = 0
+    public var WearState: UInt32 = 0
+    public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
+    public var HireExpireDate: Int32 = 0
+    public var Flag: UInt8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        index = try decoder.decode(Int16.self)
+        ITID = try decoder.decode(UInt32.self)
+        type = try decoder.decode(UInt8.self)
+        count = try decoder.decode(Int16.self)
+        WearState = try decoder.decode(UInt32.self)
+        slot = try decoder.decode(EQUIPSLOTINFO.self)
+        HireExpireDate = try decoder.decode(Int32.self)
+        Flag = try decoder.decode(UInt8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(index)
+        try encoder.encode(ITID)
+        try encoder.encode(type)
+        try encoder.encode(count)
+        try encoder.encode(WearState)
+        try encoder.encode(slot)
+        try encoder.encode(HireExpireDate)
+        try encoder.encode(Flag)
+    }
+}
+
 public struct EQUIPITEM_INFO: BinaryDecodable, BinaryEncodable, Sendable {
     public var index: Int16 = 0
     public var ITID: UInt32 = 0
@@ -11585,6 +13326,31 @@ public struct REPAIRITEM_INFO1: BinaryDecodable, BinaryEncodable, Sendable {
         try encoder.encode(itemId)
         try encoder.encode(refine)
         try encoder.encode(slot)
+    }
+}
+
+public struct ach_list_info: BinaryDecodable, BinaryEncodable, Sendable {
+    public var ach_id: UInt32 = 0
+    public var completed: UInt8 = 0
+    @FixedSizeArray(size: 10, initialValue: 0)
+    public var objective: [UInt32]
+    public var completed_at: UInt32 = 0
+    public var reward: UInt8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        ach_id = try decoder.decode(UInt32.self)
+        completed = try decoder.decode(UInt8.self)
+        objective = try decoder.decode([UInt32].self, count: 10)
+        completed_at = try decoder.decode(UInt32.self)
+        reward = try decoder.decode(UInt8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(ach_id)
+        try encoder.encode(completed)
+        try encoder.encode(objective)
+        try encoder.encode(completed_at)
+        try encoder.encode(reward)
     }
 }
 
@@ -11788,6 +13554,30 @@ public struct RANKLIST: BinaryDecodable, BinaryEncodable, Sendable {
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(names, lengthOfBytes: 10)
         try encoder.encode(points)
+    }
+}
+
+public struct packet_roulette_info_ack_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public var Row: UInt16 = 0
+    public var Position: UInt16 = 0
+    public var ItemId: UInt32 = 0
+    public var Count: UInt16 = 0
+    public var unused: UInt16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        Row = try decoder.decode(UInt16.self)
+        Position = try decoder.decode(UInt16.self)
+        ItemId = try decoder.decode(UInt32.self)
+        Count = try decoder.decode(UInt16.self)
+        unused = try decoder.decode(UInt16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(Row)
+        try encoder.encode(Position)
+        try encoder.encode(ItemId)
+        try encoder.encode(Count)
+        try encoder.encode(unused)
     }
 }
 
