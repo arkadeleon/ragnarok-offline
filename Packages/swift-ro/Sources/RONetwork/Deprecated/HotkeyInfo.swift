@@ -7,7 +7,7 @@
 
 import ROCore
 
-public struct HotkeyInfo: BinaryDecodable, Sendable {
+public struct _HotkeyInfo: BinaryDecodable, Sendable {
 
     /// 0: Item, 1: Skill
     public var isSkill: Int8

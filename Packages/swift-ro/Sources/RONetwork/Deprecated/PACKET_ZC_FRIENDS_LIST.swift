@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `clif_friendslist_send`
-public struct PACKET_ZC_FRIENDS_LIST: DecodablePacket {
+public struct _PACKET_ZC_FRIENDS_LIST: DecodablePacket {
     public static var packetType: Int16 {
         0x201
     }
@@ -17,25 +17,25 @@ public struct PACKET_ZC_FRIENDS_LIST: DecodablePacket {
         -1
     }
 
-    public var friends: [FriendInfo]
+    public var friends: [_FriendInfo]
 
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
 
         let packetLength = try decoder.decode(Int16.self)
 
-        let friendCount = (packetLength - 4) / FriendInfo.decodedLength
+        let friendCount = (packetLength - 4) / _FriendInfo.decodedLength
 
         friends = []
         for _ in 0..<friendCount {
-            let friendInfo = try FriendInfo(from: decoder)
+            let friendInfo = try _FriendInfo(from: decoder)
             friends.append(friendInfo)
         }
     }
 }
 
-extension PACKET_ZC_FRIENDS_LIST {
-    public struct FriendInfo: BinaryDecodable {
+extension _PACKET_ZC_FRIENDS_LIST {
+    public struct _FriendInfo: BinaryDecodable {
         public var accountID: UInt32
         public var charID: UInt32
         public var name: String

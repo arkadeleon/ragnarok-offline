@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `clif_inventorylist`
-public struct PACKET_ZC_ITEMLIST_EQUIP: DecodablePacket {
+public struct _PACKET_ZC_ITEMLIST_EQUIP: DecodablePacket {
     public static var packetType: Int16 {
         if PACKET_VERSION_MAIN_NUMBER >= 20200916 || PACKET_VERSION_RE_NUMBER >= 20200723 || PACKET_VERSION_ZERO_NUMBER >= 20221024 {
             0xb39
@@ -32,7 +32,7 @@ public struct PACKET_ZC_ITEMLIST_EQUIP: DecodablePacket {
     }
 
     public var inventoryType: UInt8
-    public var items: [EquipItemInfo]
+    public var items: [_EquipItemInfo]
 
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
@@ -47,11 +47,11 @@ public struct PACKET_ZC_ITEMLIST_EQUIP: DecodablePacket {
             inventoryType = 0
         }
 
-        let itemCount = remainingLength / EquipItemInfo.decodedLength
+        let itemCount = remainingLength / _EquipItemInfo.decodedLength
 
         items = []
         for _ in 0..<itemCount {
-            let item = try EquipItemInfo(from: decoder)
+            let item = try _EquipItemInfo(from: decoder)
             items.append(item)
         }
     }

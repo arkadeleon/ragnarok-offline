@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `clif_partyinvitationstate`
-public struct PACKET_ZC_PARTY_CONFIG: DecodablePacket {
+public struct _PACKET_ZC_PARTY_CONFIG: DecodablePacket {
     public static var packetType: Int16 {
         0x2c9
     }

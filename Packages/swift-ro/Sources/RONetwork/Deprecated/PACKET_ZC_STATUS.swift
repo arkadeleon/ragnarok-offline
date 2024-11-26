@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `clif_initialstatus`
-public struct PACKET_ZC_STATUS: DecodablePacket {
+public struct _PACKET_ZC_STATUS: DecodablePacket {
     public static var packetType: Int16 {
         0xbd
     }

@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `clif_inventoryStart`
-public struct PACKET_ZC_INVENTORY_START: DecodablePacket {
+public struct _PACKET_ZC_INVENTORY_START: DecodablePacket {
     public static var packetType: Int16 {
         0xb08
     }

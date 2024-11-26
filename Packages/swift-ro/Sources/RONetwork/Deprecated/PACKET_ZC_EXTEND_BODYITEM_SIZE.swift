@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `clif_inventory_expansion_info`
-public struct PACKET_ZC_EXTEND_BODYITEM_SIZE: DecodablePacket {
+public struct _PACKET_ZC_EXTEND_BODYITEM_SIZE: DecodablePacket {
     public static var packetType: Int16 {
         0xb18
     }

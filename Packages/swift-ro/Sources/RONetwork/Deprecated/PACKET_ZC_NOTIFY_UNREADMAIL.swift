@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `clif_Mail_new`
-public struct PACKET_ZC_NOTIFY_UNREADMAIL: DecodablePacket {
+public struct _PACKET_ZC_NOTIFY_UNREADMAIL: DecodablePacket {
     public static var packetType: Int16 {
         0x9e7
     }

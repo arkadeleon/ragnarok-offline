@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `clif_cartcount`
-public struct PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO: DecodablePacket {
+public struct _PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO: DecodablePacket {
     public static var packetType: Int16 {
         0x121
     }

@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `clif_couplestatus`
-public struct PACKET_ZC_COUPLESTATUS: DecodablePacket {
+public struct _PACKET_ZC_COUPLESTATUS: DecodablePacket {
     public static var packetType: Int16 {
         0x141
     }

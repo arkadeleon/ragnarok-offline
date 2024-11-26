@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `clif_longlongpar_change`
-public struct PACKET_ZC_LONGLONGPAR_CHANGE: DecodablePacket {
+public struct _PACKET_ZC_LONGLONGPAR_CHANGE: DecodablePacket {
     public static var packetType: Int16 {
         0xacb
     }

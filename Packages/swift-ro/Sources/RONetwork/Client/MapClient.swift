@@ -27,19 +27,19 @@ final public class MapClient {
             self?.eventSubject.send(event)
         }
 
-        // 0x9c
-        connection.registerPacket(PACKET_ZC_CHANGE_DIRECTION.self, for: PACKET_ZC_CHANGE_DIRECTION.packetType)
+        // See `clif_changed_dir`
+        connection.registerPacket(PACKET_ZC_CHANGE_DIRECTION.self, for: HEADER_ZC_CHANGE_DIRECTION)
             .map { packet in
-                BlockEvents.DirectionChanged(sourceID: packet.sourceID, headDirection: packet.headDirection, direction: packet.direction)
+                BlockEvents.DirectionChanged(sourceID: packet.srcId, headDirection: packet.headDir, direction: packet.dir)
             }
             .subscribe(eventSubject)
             .store(in: &subscriptions)
 
-        // 0xc3, 0x1d7
-        connection.registerPacket(PACKET_ZC_SPRITE_CHANGE.self, for: PACKET_ZC_SPRITE_CHANGE.packetType)
+        // See `clif_sprite_change`
+        connection.registerPacket(PACKET_ZC_SPRITE_CHANGE.self, for: packet_header_sendLookType)
 
-        // 0x201
-        connection.registerPacket(PACKET_ZC_FRIENDS_LIST.self, for: PACKET_ZC_FRIENDS_LIST.packetType)
+        // See `clif_friendslist_send`
+        connection.registerPacket(PACKET_ZC_FRIENDS_LIST.self, for: HEADER_ZC_FRIENDS_LIST)
 
         // 0x283
         connection.registerPacket(PACKET_ZC_AID.self, for: PACKET_ZC_AID.packetType)
@@ -48,14 +48,14 @@ final public class MapClient {
             }
             .store(in: &subscriptions)
 
-        // 0x2b9, 0x7d9, 0xa00, 0xb20
-        connection.registerPacket(PACKET_ZC_SHORTCUT_KEY_LIST.self, for: PACKET_ZC_SHORTCUT_KEY_LIST.packetType)
+        // See `clif_hotkeys_send`
+        connection.registerPacket(PACKET_ZC_SHORTCUT_KEY_LIST.self, for: HEADER_ZC_SHORTCUT_KEY_LIST)
 
-        // 0xb18
-        connection.registerPacket(PACKET_ZC_EXTEND_BODYITEM_SIZE.self, for: PACKET_ZC_EXTEND_BODYITEM_SIZE.packetType)
+        // See `clif_inventory_expansion_info`
+        connection.registerPacket(PACKET_ZC_EXTEND_BODYITEM_SIZE.self, for: HEADER_ZC_EXTEND_BODYITEM_SIZE)
 
-        // 0xb1d
-        connection.registerPacket(PACKET_ZC_PING_LIVE.self, for: PACKET_ZC_PING_LIVE.packetType)
+        // See `clif_ping`
+        connection.registerPacket(PACKET_ZC_PING_LIVE.self, for: HEADER_ZC_PING_LIVE)
             .sink { [weak self] packet in
                 let packet = PACKET_CZ_PING_LIVE()
                 self?.connection.sendPacket(packet)
@@ -73,8 +73,8 @@ final public class MapClient {
     }
 
     private func registerMapConnectionPackets() {
-        // 0x73, 0x2eb, 0xa18
-        connection.registerPacket(PACKET_ZC_ACCEPT_ENTER.self, for: PACKET_ZC_ACCEPT_ENTER.packetType)
+        // See `clif_authok`
+        connection.registerPacket(PACKET_ZC_ACCEPT_ENTER.self, for: HEADER_ZC_ACCEPT_ENTER)
             .map { packet in
                 MapConnectionEvents.Accepted()
             }
@@ -83,20 +83,22 @@ final public class MapClient {
     }
 
     private func registerMapPackets() {
-        // 0x91
-        connection.registerPacket(PACKET_ZC_NPCACK_MAPMOVE.self, for: PACKET_ZC_NPCACK_MAPMOVE.packetType)
+        // See `clif_changemap`
+        connection.registerPacket(PACKET_ZC_NPCACK_MAPMOVE.self, for: HEADER_ZC_NPCACK_MAPMOVE)
             .map { packet in
-                MapEvents.Changed(mapName: packet.mapName, position: [packet.x, packet.y])
+                MapEvents.Changed(mapName: packet.mapName, position: [packet.xPos, packet.yPos])
             }
             .subscribe(eventSubject)
             .store(in: &subscriptions)
     }
 
     private func registerPlayerPackets() {
-        // 0x87
-        connection.registerPacket(PACKET_ZC_NOTIFY_PLAYERMOVE.self, for: PACKET_ZC_NOTIFY_PLAYERMOVE.packetType)
+        // See `clif_walkok`
+        connection.registerPacket(PACKET_ZC_NOTIFY_PLAYERMOVE.self, for: HEADER_ZC_NOTIFY_PLAYERMOVE)
             .map { packet in
-                PlayerEvents.Moved(moveData: packet.moveData)
+                let moveData = MoveData(data: packet.moveData)
+                let event = PlayerEvents.Moved(moveData: moveData)
+                return event
             }
             .subscribe(eventSubject)
             .store(in: &subscriptions)
@@ -129,35 +131,35 @@ final public class MapClient {
     }
 
     private func registerInventoryPackets() {
-        // 0xb08
-        connection.registerPacket(PACKET_ZC_INVENTORY_START.self, for: PACKET_ZC_INVENTORY_START.packetType)
+        // See `clif_inventoryStart`
+        connection.registerPacket(PACKET_ZC_INVENTORY_START.self, for: HEADER_ZC_INVENTORY_START)
 
-        // 0xa3, 0x1ee, 0x2e8, 0x991, 0xb09
-        connection.registerPacket(PACKET_ZC_ITEMLIST_NORMAL.self, for: PACKET_ZC_ITEMLIST_NORMAL.packetType)
+        // See `clif_inventorylist`
+        connection.registerPacket(packet_itemlist_normal.self, for: packet_header_inventorylistnormalType)
 
-        // 0xa4, 0x295, 0x2d0, 0x992, 0xa0d, 0xb0a, 0xb39
-        connection.registerPacket(PACKET_ZC_ITEMLIST_EQUIP.self, for: PACKET_ZC_ITEMLIST_EQUIP.packetType)
+        // See `clif_inventorylist`
+        connection.registerPacket(packet_itemlist_equip.self, for: packet_header_inventorylistequipType)
 
-        // 0xb0b
-        connection.registerPacket(PACKET_ZC_INVENTORY_END.self, for: PACKET_ZC_INVENTORY_END.packetType)
+        // See `clif_inventoryEnd`
+        connection.registerPacket(PACKET_ZC_INVENTORY_END.self, for: HEADER_ZC_INVENTORY_END)
     }
 
     private func registerMailPackets() {
         // 0x24a
         connection.registerPacket(PACKET_ZC_MAIL_RECEIVE.self, for: PACKET_ZC_MAIL_RECEIVE.packetType)
 
-        // 0x9e7
-        connection.registerPacket(PACKET_ZC_NOTIFY_UNREADMAIL.self, for: PACKET_ZC_NOTIFY_UNREADMAIL.packetType)
+        // See `clif_Mail_new`
+        connection.registerPacket(PACKET_ZC_NOTIFY_UNREADMAIL.self, for: packet_header_rodexicon)
     }
 
     private func registerPartyPackets() {
-        // 0x2c9
-        connection.registerPacket(PACKET_ZC_PARTY_CONFIG.self, for: PACKET_ZC_PARTY_CONFIG.packetType)
+        // See `clif_partyinvitationstate`
+        connection.registerPacket(PACKET_ZC_PARTY_CONFIG.self, for: HEADER_ZC_PARTY_CONFIG)
     }
 
     private func registerStatusPackets() {
-        // 0xb0
-        connection.registerPacket(PACKET_ZC_PAR_CHANGE.self, for: PACKET_ZC_PAR_CHANGE.packetType)
+        // See `clif_par_change`
+        connection.registerPacket(PACKET_ZC_PAR_CHANGE.self, for: HEADER_ZC_PAR_CHANGE)
             .compactMap { packet in
                 if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                     PlayerEvents.StatusPropertyChanged(sp: sp, value: Int(packet.count), value2: 0)
@@ -168,8 +170,8 @@ final public class MapClient {
             .subscribe(eventSubject)
             .store(in: &subscriptions)
 
-        // 0xb1
-        connection.registerPacket(PACKET_ZC_LONGPAR_CHANGE.self, for: PACKET_ZC_LONGPAR_CHANGE.packetType)
+        // See `clif_longpar_change`
+        connection.registerPacket(PACKET_ZC_LONGPAR_CHANGE.self, for: HEADER_ZC_LONGPAR_CHANGE)
             .compactMap { packet in
                 if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                     PlayerEvents.StatusPropertyChanged(sp: sp, value: Int(packet.amount), value2: 0)
@@ -180,11 +182,11 @@ final public class MapClient {
             .subscribe(eventSubject)
             .store(in: &subscriptions)
 
-        // 0xbd
-        connection.registerPacket(PACKET_ZC_STATUS.self, for: PACKET_ZC_STATUS.packetType)
+        // See `clif_initialstatus`
+        connection.registerPacket(PACKET_ZC_STATUS.self, for: HEADER_ZC_STATUS)
 
-        // 0xbe
-        connection.registerPacket(PACKET_ZC_STATUS_CHANGE.self, for: PACKET_ZC_STATUS_CHANGE.packetType)
+        // See `clif_zc_status_change`
+        connection.registerPacket(PACKET_ZC_STATUS_CHANGE.self, for: HEADER_ZC_STATUS_CHANGE)
             .compactMap { packet in
                 if let sp = StatusProperty(rawValue: Int(packet.statusID)) {
                     PlayerEvents.StatusPropertyChanged(sp: sp, value: Int(packet.value), value2: 0)
@@ -195,19 +197,19 @@ final public class MapClient {
             .subscribe(eventSubject)
             .store(in: &subscriptions)
 
-        // 0x121
-        connection.registerPacket(PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO.self, for: PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO.packetType)
+        // See `clif_cartcount`
+        connection.registerPacket(PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO.self, for: HEADER_ZC_NOTIFY_CARTITEM_COUNTINFO)
 
-        // 0x13a
-        connection.registerPacket(PACKET_ZC_ATTACK_RANGE.self, for: PACKET_ZC_ATTACK_RANGE.packetType)
+        // See `clif_attackrange`
+        connection.registerPacket(PACKET_ZC_ATTACK_RANGE.self, for: HEADER_ZC_ATTACK_RANGE)
             .map { packet in
-                PlayerEvents.AttackRangeChanged(value: Int(packet.currentAttackRange))
+                PlayerEvents.AttackRangeChanged(value: Int(packet.currentAttRange))
             }
             .subscribe(eventSubject)
             .store(in: &subscriptions)
 
-        // 0x141
-        connection.registerPacket(PACKET_ZC_COUPLESTATUS.self, for: PACKET_ZC_COUPLESTATUS.packetType)
+        // See `clif_couplestatus`
+        connection.registerPacket(PACKET_ZC_COUPLESTATUS.self, for: HEADER_ZC_COUPLESTATUS)
             .compactMap { packet in
                 if let sp = StatusProperty(rawValue: Int(packet.statusType)) {
                     PlayerEvents.StatusPropertyChanged(sp: sp, value: Int(packet.defaultStatus), value2: Int(packet.plusStatus))
@@ -218,8 +220,8 @@ final public class MapClient {
             .subscribe(eventSubject)
             .store(in: &subscriptions)
 
-        // 0xacb
-        connection.registerPacket(PACKET_ZC_LONGLONGPAR_CHANGE.self, for: PACKET_ZC_LONGLONGPAR_CHANGE.packetType)
+        // See `clif_longlongpar_change`
+        connection.registerPacket(PACKET_ZC_LONGLONGPAR_CHANGE.self, for: HEADER_ZC_LONGLONGPAR_CHANGE)
             .compactMap { packet in
                 if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                     PlayerEvents.StatusPropertyChanged(sp: sp, value: Int(packet.amount), value2: 0)

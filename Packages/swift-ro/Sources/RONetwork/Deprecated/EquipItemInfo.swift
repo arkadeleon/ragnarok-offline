@@ -7,7 +7,7 @@
 
 import ROCore
 
-public struct EquipItemInfo: BinaryDecodable, Sendable {
+public struct _EquipItemInfo: BinaryDecodable, Sendable {
     public var index: Int16
     public var itemID: UInt32
     public var type: UInt8

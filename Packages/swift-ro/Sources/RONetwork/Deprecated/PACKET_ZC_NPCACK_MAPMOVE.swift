@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `clif_changemap`
-public struct PACKET_ZC_NPCACK_MAPMOVE: DecodablePacket {
+public struct _PACKET_ZC_NPCACK_MAPMOVE: DecodablePacket {
     public static var packetType: Int16 {
         0x91
     }
