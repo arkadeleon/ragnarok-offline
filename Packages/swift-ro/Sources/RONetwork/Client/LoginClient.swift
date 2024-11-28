@@ -8,69 +8,35 @@
 import Combine
 import Foundation
 
-final public class LoginClient {
-    private let connection: ClientConnection
-
-    private let eventSubject = PassthroughSubject<any Event, Never>()
-    private var subscriptions = Set<AnyCancellable>()
+final public class LoginClient: ClientBase {
+    private var timerSubscription: AnyCancellable?
 
     public init() {
-        connection = ClientConnection(port: 6900)
-
-        connection.errorHandler = { [weak self] error in
-            let event = ConnectionEvents.ErrorOccurred(error: error)
-            self?.eventSubject.send(event)
-        }
+        super.init(port: 6900)
 
         // 0x69, 0xac4
-        connection.registerPacket(PACKET_AC_ACCEPT_LOGIN.self, for: PACKET_AC_ACCEPT_LOGIN.packetType)
-            .map { packet in
-                let event = LoginEvents.Accepted(
-                    accountID: packet.accountID,
-                    loginID1: packet.loginID1,
-                    loginID2: packet.loginID2,
-                    sex: packet.sex,
-                    charServers: packet.charServers
-                )
-                return event
-            }
-            .subscribe(eventSubject)
-            .store(in: &subscriptions)
+        registerPacket(PACKET_AC_ACCEPT_LOGIN.self, for: PACKET_AC_ACCEPT_LOGIN.packetType) { [weak self] packet in
+            let event = LoginEvents.Accepted(
+                accountID: packet.accountID,
+                loginID1: packet.loginID1,
+                loginID2: packet.loginID2,
+                sex: packet.sex,
+                charServers: packet.charServers
+            )
+            self?.postEvent(event)
+        }
 
         // 0x6a, 0x83e
-        connection.registerPacket(PACKET_AC_REFUSE_LOGIN.self, for: PACKET_AC_REFUSE_LOGIN.packetType)
-            .map { packet in
-                LoginEvents.Refused(errorCode: packet.errorCode, unblockTime: packet.unblockTime)
-            }
-            .subscribe(eventSubject)
-            .store(in: &subscriptions)
+        registerPacket(PACKET_AC_REFUSE_LOGIN.self, for: PACKET_AC_REFUSE_LOGIN.packetType) { [weak self] packet in
+            let event = LoginEvents.Refused(errorCode: packet.errorCode, unblockTime: packet.unblockTime)
+            self?.postEvent(event)
+        }
 
         // 0x81
-        connection.registerPacket(PACKET_SC_NOTIFY_BAN.self, for: PACKET_SC_NOTIFY_BAN.packetType)
-            .map { packet in
-                AuthenticationEvents.Banned(errorCode: packet.errorCode)
-            }
-            .subscribe(eventSubject)
-            .store(in: &subscriptions)
-    }
-
-    public func subscribe<E>(to event: E.Type, _ handler: @escaping (E) -> Void) -> any Cancellable where E: Event {
-        let cancellable = eventSubject
-            .compactMap { event in
-                event as? E
-            }
-            .sink { event in
-                handler(event)
-            }
-        return cancellable
-    }
-
-    public func connect() {
-        connection.start()
-    }
-
-    public func disconnect() {
-        connection.cancel()
+        registerPacket(PACKET_SC_NOTIFY_BAN.self, for: PACKET_SC_NOTIFY_BAN.packetType) { [weak self] packet in
+            let event = AuthenticationEvents.Banned(errorCode: packet.errorCode)
+            self?.postEvent(event)
+        }
     }
 
     /// Login.
@@ -85,23 +51,22 @@ final public class LoginClient {
         packet.username = username
         packet.password = password
 
-        connection.sendPacket(packet)
+        sendPacket(packet)
 
-        connection.receivePacket()
+        receivePacket()
     }
 
     /// Keep alive.
     ///
     /// Send ``PACKET_CA_CONNECT_INFO_CHANGED`` every 10 seconds.
     public func keepAlive(username: String) {
-        Timer.publish(every: 10, on: .main, in: .common)
+        timerSubscription = Timer.publish(every: 10, on: .main, in: .common)
             .autoconnect()
             .sink { [weak self] _ in
                 var packet = PACKET_CA_CONNECT_INFO_CHANGED()
                 packet.name = username
 
-                self?.connection.sendPacket(packet)
+                self?.sendPacket(packet)
             }
-            .store(in: &subscriptions)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ClientConnection.swift
+//  ClientBase.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/8/12.
@@ -10,16 +10,18 @@ import Foundation
 import Network
 import ROCore
 
-final class ClientConnection {
+public class ClientBase {
     private let connection: NWConnection
 
-    private let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client-connection")
-
-    private let packetSubject = PassthroughSubject<any BinaryDecodable, Never>()
+    private let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client-base")
 
     private var registeredPackets: [Int16 : any BinaryDecodable.Type] = [:]
 
-    var errorHandler: (@Sendable (_ error: any Error) -> Void)?
+    private let packetSubject = PassthroughSubject<any BinaryDecodable, Never>()
+    private let eventSubject = PassthroughSubject<any Event, Never>()
+    private let errorSubject = PassthroughSubject<any Error, Never>()
+
+    private var subscriptions = Set<AnyCancellable>()
 
     init(port: UInt16) {
         connection = NWConnection(
@@ -27,9 +29,16 @@ final class ClientConnection {
             port: .init(rawValue: port)!,
             using: .tcp
         )
+
+        errorSubject
+            .map { error in
+                ConnectionEvents.ErrorOccurred(error: error)
+            }
+            .subscribe(eventSubject)
+            .store(in: &subscriptions)
     }
 
-    func start() {
+    public func connect() {
         connection.stateUpdateHandler = { state in
             print(state)
         }
@@ -37,21 +46,42 @@ final class ClientConnection {
         connection.start(queue: queue)
     }
 
-    func cancel() {
+    public func disconnect() {
         connection.stateUpdateHandler = nil
 
         connection.cancel()
     }
 
-    func registerPacket<P>(_ type: P.Type, for packetType: Int16) -> AnyPublisher<P, Never> where P: BinaryDecodable {
+    // MARK: - Event
+
+    public func subscribe<E>(to event: E.Type, _ handler: @escaping (E) -> Void) -> any Cancellable where E: Event {
+        let cancellable = eventSubject
+            .compactMap { event in
+                event as? E
+            }
+            .sink { event in
+                handler(event)
+            }
+        return cancellable
+    }
+
+    func postEvent(_ event: some Event) {
+        eventSubject.send(event)
+    }
+
+    // MARK: - Packet
+
+    func registerPacket<P>(_ type: P.Type, for packetType: Int16, _ handler: @escaping (P) -> Void) where P: BinaryDecodable {
         registeredPackets[packetType] = type
 
-        let publisher = packetSubject
+        packetSubject
             .compactMap { packet in
                 packet as? P
             }
-            .eraseToAnyPublisher()
-        return publisher
+            .sink { packet in
+                handler(packet)
+            }
+            .store(in: &subscriptions)
     }
 
     func sendPacket(_ packet: some BinaryEncodable) {
@@ -59,15 +89,15 @@ final class ClientConnection {
             let encoder = PacketEncoder()
             let data = try encoder.encode(packet)
 
-            connection.send(content: data, completion: .contentProcessed({ error in
+            connection.send(content: data, completion: .contentProcessed({ [weak self] error in
                 if let error {
-                    self.errorHandler?(error)
+                    self?.errorSubject.send(error)
                 }
             }))
 
             print("Sent packet: \(packet)")
         } catch {
-            errorHandler?(error)
+            errorSubject.send(error)
         }
     }
 
@@ -95,12 +125,12 @@ final class ClientConnection {
                     }
                 } catch {
                     print(error)
-                    self.errorHandler?(error)
+                    self.errorSubject.send(error)
                 }
             }
 
             if let error {
-                self.errorHandler?(error)
+                self.errorSubject.send(error)
             } else {
                 self.receivePacket()
             }
