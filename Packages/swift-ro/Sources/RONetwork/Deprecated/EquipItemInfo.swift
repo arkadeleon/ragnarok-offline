@@ -21,7 +21,7 @@ public struct _EquipItemInfo: BinaryDecodable, Sendable {
     public var bindOnEquipType: UInt16
     public var wItemSpriteNumber: UInt16
     public var optionCount: UInt8
-    public var optionData: [ItemOptions]
+    public var optionData: [_ItemOptions]
     public var grade: UInt8
     public var flag: UInt8
 
@@ -99,11 +99,11 @@ public struct _EquipItemInfo: BinaryDecodable, Sendable {
         if PACKET_VERSION >= 20150226 {
             optionCount = try decoder.decode(UInt8.self)
             optionData = try [
-                ItemOptions(from: decoder),
-                ItemOptions(from: decoder),
-                ItemOptions(from: decoder),
-                ItemOptions(from: decoder),
-                ItemOptions(from: decoder),
+                _ItemOptions(from: decoder),
+                _ItemOptions(from: decoder),
+                _ItemOptions(from: decoder),
+                _ItemOptions(from: decoder),
+                _ItemOptions(from: decoder),
             ]
         } else {
             optionCount = 0

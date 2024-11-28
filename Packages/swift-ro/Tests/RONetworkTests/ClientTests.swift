@@ -187,7 +187,7 @@ final class ClientTests: XCTestCase {
 
         mapClient = MapClient(state: state, mapServer: mapServer!)
 
-        mapClient.subscribe(to: MapEvents.Changed.self) { event in
+        var mapChangedEvent = mapClient.subscribe(to: MapEvents.Changed.self) { event in
             XCTAssertEqual(event.position, [18, 26])
 
             // Load map.
@@ -197,7 +197,6 @@ final class ClientTests: XCTestCase {
 
             enterMapExpectation.fulfill()
         }
-        .store(in: &subscriptions)
 
         mapClient.subscribe(to: PlayerEvents.StatusPropertyChanged.self) { event in
             print("Status property changed: \(event.sp), \(event.value)")
@@ -217,6 +216,7 @@ final class ClientTests: XCTestCase {
         mapClient.keepAlive()
 
         await fulfillment(of: [enterMapExpectation])
+        mapChangedEvent.cancel()
 
         // MARK: - Request Move
 
@@ -225,17 +225,28 @@ final class ClientTests: XCTestCase {
         mapClient.subscribe(to: PlayerEvents.Moved.self) { event in
             XCTAssertEqual(event.moveData.x0, 18)
             XCTAssertEqual(event.moveData.y0, 26)
-            XCTAssertEqual(event.moveData.x1, 10)
-            XCTAssertEqual(event.moveData.y1, 26)
+            XCTAssertEqual(event.moveData.x1, 27)
+            XCTAssertEqual(event.moveData.y1, 30)
 
             requestMoveExpectation.fulfill()
         }
         .store(in: &subscriptions)
 
-        mapClient.requestMove(x: 10, y: 26)
+        mapChangedEvent = mapClient.subscribe(to: MapEvents.Changed.self) { event in
+            XCTAssertEqual(event.position, [51, 30])
+
+            // Load map.
+            sleep(1)
+
+            self.mapClient.notifyMapLoaded()
+        }
+
+        sleep(1)
+
+        mapClient.requestMove(x: 27, y: 30)
 
         await fulfillment(of: [requestMoveExpectation])
 
-        sleep(1)
+        sleep(10)
     }
 }

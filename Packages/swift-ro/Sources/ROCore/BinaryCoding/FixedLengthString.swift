@@ -34,3 +34,13 @@ public struct FixedLengthString: Sendable {
         self.encoding = encoding
     }
 }
+
+extension FixedLengthString: CustomStringConvertible, CustomDebugStringConvertible {
+    public var description: String {
+        wrappedValue
+    }
+
+    public var debugDescription: String {
+        wrappedValue
+    }
+}

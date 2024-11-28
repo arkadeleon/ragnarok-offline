@@ -33,5 +33,15 @@ public struct FixedSizeArray<Element> {
     }
 }
 
+extension FixedSizeArray: CustomStringConvertible, CustomDebugStringConvertible {
+    public var description: String {
+        _elements.description
+    }
+
+    public var debugDescription: String {
+        _elements.debugDescription
+    }
+}
+
 extension FixedSizeArray: Sendable where Element: Sendable {
 }

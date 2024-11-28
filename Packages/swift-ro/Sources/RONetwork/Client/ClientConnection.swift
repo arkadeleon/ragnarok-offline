@@ -54,7 +54,7 @@ final class ClientConnection {
         return publisher
     }
 
-    func sendPacket(_ packet: some EncodablePacket) {
+    func sendPacket(_ packet: some BinaryEncodable) {
         do {
             let encoder = PacketEncoder()
             let data = try encoder.encode(packet)

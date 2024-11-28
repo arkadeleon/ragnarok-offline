@@ -7,7 +7,7 @@
 
 import ROCore
 
-public struct ItemOptions: BinaryDecodable, Sendable {
+public struct _ItemOptions: BinaryDecodable, Sendable {
     public var index: Int16
     public var value: Int16
     public var param: UInt8

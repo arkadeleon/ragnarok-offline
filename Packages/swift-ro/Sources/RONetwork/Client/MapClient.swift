@@ -70,6 +70,23 @@ final public class MapClient {
         registerMailPackets()
         registerPartyPackets()
         registerStatusPackets()
+
+        // See `clif_set_unit_idle`
+        connection.registerPacket(packet_idle_unit.self, for: packet_header_idle_unitType)
+            .sink { packet in
+                let positionDirection = PositionDirection(data: packet.PosDir)
+                print(positionDirection)
+            }
+            .store(in: &subscriptions)
+
+        // See `clif_reputation_list`
+        connection.registerPacket(PACKET_ZC_REPUTE_INFO.self, for: HEADER_ZC_REPUTE_INFO)
+
+        // See `clif_broadcast2`
+        connection.registerPacket(PACKET_ZC_BROADCAST2.self, for: HEADER_ZC_BROADCAST2)
+
+        // See `clif_scriptclose`
+        connection.registerPacket(PACKET_ZC_CLOSE_DIALOG.self, for: HEADER_ZC_CLOSE_DIALOG)
     }
 
     private func registerMapConnectionPackets() {
@@ -333,6 +350,15 @@ final public class MapClient {
         var packet = PACKET_CZ_REQUEST_MOVE()
         packet.x = x
         packet.y = y
+
+        connection.sendPacket(packet)
+    }
+
+    public func contactNPC(aid: UInt32) {
+        var packet = PACKET_CZ_CONTACTNPC()
+        packet.packetType = HEADER_CZ_CONTACTNPC
+        packet.AID = aid
+        packet.type = 1
 
         connection.sendPacket(packet)
     }
