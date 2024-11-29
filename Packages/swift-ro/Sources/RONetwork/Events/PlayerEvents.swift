@@ -14,10 +14,6 @@ public enum PlayerEvents {
 
     public struct MessageDisplay: Event {
         public let message: String
-
-        init(message: [UInt8]) {
-            self.message = String(bytes: message, encoding: .isoLatin1) ?? ""
-        }
     }
 
     public struct StatusPropertyChanged: Event {

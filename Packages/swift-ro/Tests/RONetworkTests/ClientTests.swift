@@ -40,9 +40,10 @@ final class ClientTests: XCTestCase {
             }
             .store(in: &subscriptions)
 
-        await LoginServer.shared.start()
-        await CharServer.shared.start()
-        await MapServer.shared.start()
+        async let login = LoginServer.shared.start()
+        async let char = CharServer.shared.start()
+        async let map = MapServer.shared.start()
+        _ = await (login, char, map)
 
         // Wait char server connect to login server.
         try await Task.sleep(for: .seconds(1))
@@ -199,13 +200,18 @@ final class ClientTests: XCTestCase {
         }
 
         mapClient.subscribe(to: PlayerEvents.StatusPropertyChanged.self) { event in
-            print("Status property changed: \(event.sp), \(event.value)")
             switch event.sp {
             case .str, .agi, .vit, .int, .dex, .luk:
                 XCTAssertEqual(event.value, 1)
             default:
                 break
             }
+        }
+        .store(in: &subscriptions)
+
+        var spawns: [ObjectEvents.Spawned] = []
+        mapClient.subscribe(to: ObjectEvents.Spawned.self) { event in
+            spawns.append(event)
         }
         .store(in: &subscriptions)
 
@@ -247,6 +253,28 @@ final class ClientTests: XCTestCase {
 
         await fulfillment(of: [requestMoveExpectation])
 
-        sleep(10)
+        sleep(5)
+
+        let woundedSwordsman1 = spawns.first(where: { $0.job == 687 })!
+        mapClient.contactNPC(npcID: woundedSwordsman1.id)
+
+        sleep(1)
+
+        let woundedSwordsman2 = spawns.first(where: { $0.job == 688 })!
+        mapClient.contactNPC(npcID: woundedSwordsman2.id)
+
+        sleep(1)
+
+        mapClient.requestNextScript(npcID: woundedSwordsman2.id)
+
+        sleep(1)
+
+        mapClient.requestNextScript(npcID: woundedSwordsman2.id)
+
+        sleep(1)
+
+        mapClient.closeDialog(npcID: woundedSwordsman2.id)
+
+        sleep(5)
     }
 }

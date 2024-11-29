@@ -17,13 +17,13 @@ public struct PACKET_ZC_NOTIFY_PLAYERCHAT: DecodablePacket {
         -1
     }
 
-    public var message: [UInt8]
+    public var message: String
 
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
 
         let packetLength = try decoder.decode(Int16.self)
 
-        message = try decoder.decode([UInt8].self, count: Int(packetLength - 4))
+        message = try decoder.decode(String.self, lengthOfBytes: Int(packetLength - 4))
     }
 }

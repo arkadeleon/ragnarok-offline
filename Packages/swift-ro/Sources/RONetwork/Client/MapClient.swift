@@ -19,16 +19,6 @@ final public class MapClient: ClientBase {
 
         super.init(port: mapServer.port)
 
-        // See `clif_changed_dir`
-        registerPacket(PACKET_ZC_CHANGE_DIRECTION.self, for: HEADER_ZC_CHANGE_DIRECTION) { [weak self] packet in
-            let event = BlockEvents.DirectionChanged(sourceID: packet.srcId, headDirection: packet.headDir, direction: packet.dir)
-            self?.postEvent(event)
-        }
-
-        // See `clif_sprite_change`
-        registerPacket(PACKET_ZC_SPRITE_CHANGE.self, for: packet_header_sendLookType) { packet in
-        }
-
         // See `clif_friendslist_send`
         registerPacket(PACKET_ZC_FRIENDS_LIST.self, for: HEADER_ZC_FRIENDS_LIST) { packet in
         }
@@ -58,14 +48,10 @@ final public class MapClient: ClientBase {
         registerAchievementPackets()
         registerInventoryPackets()
         registerMailPackets()
+        registerNPCPackets()
+        registerObjectPackets()
         registerPartyPackets()
         registerStatusPackets()
-
-        // See `clif_set_unit_idle`
-        registerPacket(packet_idle_unit.self, for: packet_header_idle_unitType) { packet in
-            let positionDirection = PositionDirection(data: packet.PosDir)
-            print(positionDirection)
-        }
 
         // See `clif_reputation_list`
         registerPacket(PACKET_ZC_REPUTE_INFO.self, for: HEADER_ZC_REPUTE_INFO) { packet in
@@ -73,10 +59,6 @@ final public class MapClient: ClientBase {
 
         // See `clif_broadcast2`
         registerPacket(PACKET_ZC_BROADCAST2.self, for: HEADER_ZC_BROADCAST2) { packet in
-        }
-
-        // See `clif_scriptclose`
-        registerPacket(PACKET_ZC_CLOSE_DIALOG.self, for: HEADER_ZC_CLOSE_DIALOG) { packet in
         }
     }
 
@@ -150,6 +132,58 @@ final public class MapClient: ClientBase {
 
         // See `clif_Mail_new`
         registerPacket(PACKET_ZC_NOTIFY_UNREADMAIL.self, for: packet_header_rodexicon) { packet in
+        }
+    }
+
+    private func registerObjectPackets() {
+        // See `clif_spawn_unit`
+        registerPacket(packet_spawn_unit.self, for: packet_header_spawn_unitType) { [weak self] packet in
+            let event = ObjectEvents.Spawned(id: packet.AID, job: packet.job, name: packet.name)
+            self?.postEvent(event)
+        }
+
+        // See `clif_set_unit_idle`
+        registerPacket(packet_idle_unit.self, for: packet_header_idle_unitType) { [weak self] packet in
+            let positionDirection = PositionDirection(data: packet.PosDir)
+            let event = ObjectEvents.Spawned(id: packet.AID, job: packet.job, name: packet.name)
+            self?.postEvent(event)
+        }
+
+        // See `clif_set_unit_walking`
+        registerPacket(packet_unit_walking.self, for: packet_header_unit_walkingType) { [weak self] packet in
+            let moveData = MoveData(data: packet.MoveData)
+            let event = ObjectEvents.Moved(id: packet.AID, moveData: moveData)
+            self?.postEvent(event)
+        }
+
+        // See `clif_clearunit_single` and `clif_clearunit_area`
+        registerPacket(PACKET_ZC_NOTIFY_VANISH.self, for: HEADER_ZC_NOTIFY_VANISH) { [weak self] packet in
+            let event = ObjectEvents.Vanished(id: packet.gid)
+            self?.postEvent(event)
+        }
+
+        // See `clif_changed_dir`
+        registerPacket(PACKET_ZC_CHANGE_DIRECTION.self, for: HEADER_ZC_CHANGE_DIRECTION) { [weak self] packet in
+            let event = ObjectEvents.DirectionChanged(sourceID: packet.srcId, headDirection: packet.headDir, direction: packet.dir)
+            self?.postEvent(event)
+        }
+
+        // See `clif_sprite_change`
+        registerPacket(PACKET_ZC_SPRITE_CHANGE.self, for: packet_header_sendLookType) { [weak self] packet in
+            let event = ObjectEvents.SpriteChanged(id: packet.AID)
+            self?.postEvent(event)
+        }
+
+        // See `clif_changeoption_target`
+        registerPacket(PACKET_ZC_STATE_CHANGE.self, for: HEADER_ZC_STATE_CHANGE) { [weak self] packet in
+            let event = ObjectEvents.StateChanged(id: packet.AID)
+            self?.postEvent(event)
+        }
+
+        // See `clif_channel_msg` and `clif_messagecolor_target`
+        registerPacket(PACKET_ZC_NPC_CHAT.self, for: HEADER_ZC_NPC_CHAT) { [weak self] packet in
+            let event = ObjectEvents.MessageDisplay(message: packet.message)
+            self?.postEvent(event)
         }
     }
 
@@ -295,15 +329,6 @@ final public class MapClient: ClientBase {
         var packet = PACKET_CZ_REQUEST_MOVE()
         packet.x = x
         packet.y = y
-
-        sendPacket(packet)
-    }
-
-    public func contactNPC(aid: UInt32) {
-        var packet = PACKET_CZ_CONTACTNPC()
-        packet.packetType = HEADER_CZ_CONTACTNPC
-        packet.AID = aid
-        packet.type = 1
 
         sendPacket(packet)
     }
