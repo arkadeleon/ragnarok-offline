@@ -15,7 +15,7 @@ final public class LoginClient: ClientBase {
         super.init(port: 6900)
 
         // 0x69, 0xac4
-        registerPacket(PACKET_AC_ACCEPT_LOGIN.self, for: PACKET_AC_ACCEPT_LOGIN.packetType) { [weak self] packet in
+        registerPacket(PACKET_AC_ACCEPT_LOGIN.self, for: PACKET_AC_ACCEPT_LOGIN.packetType) { [unowned self] packet in
             let event = LoginEvents.Accepted(
                 accountID: packet.accountID,
                 loginID1: packet.loginID1,
@@ -23,19 +23,19 @@ final public class LoginClient: ClientBase {
                 sex: packet.sex,
                 charServers: packet.charServers
             )
-            self?.postEvent(event)
+            self.postEvent(event)
         }
 
         // 0x6a, 0x83e
-        registerPacket(PACKET_AC_REFUSE_LOGIN.self, for: PACKET_AC_REFUSE_LOGIN.packetType) { [weak self] packet in
+        registerPacket(PACKET_AC_REFUSE_LOGIN.self, for: PACKET_AC_REFUSE_LOGIN.packetType) { [unowned self] packet in
             let event = LoginEvents.Refused(errorCode: packet.errorCode, unblockTime: packet.unblockTime)
-            self?.postEvent(event)
+            self.postEvent(event)
         }
 
         // 0x81
-        registerPacket(PACKET_SC_NOTIFY_BAN.self, for: PACKET_SC_NOTIFY_BAN.packetType) { [weak self] packet in
+        registerPacket(PACKET_SC_NOTIFY_BAN.self, for: PACKET_SC_NOTIFY_BAN.packetType) { [unowned self] packet in
             let event = AuthenticationEvents.Banned(errorCode: packet.errorCode)
-            self?.postEvent(event)
+            self.postEvent(event)
         }
     }
 

@@ -26,6 +26,7 @@ extension MapClient {
         }
     }
 
+    // See `clif_parse_NpcClicked`
     public func contactNPC(npcID: UInt32) {
         var packet = PACKET_CZ_CONTACTNPC()
         packet.packetType = HEADER_CZ_CONTACTNPC
@@ -35,6 +36,7 @@ extension MapClient {
         sendPacket(packet)
     }
 
+    // See `clif_parse_NpcNextClicked`
     public func requestNextScript(npcID: UInt32) {
         var packet = PACKET_CZ_REQ_NEXT_SCRIPT()
         packet.packetType = HEADER_CZ_REQ_NEXT_SCRIPT

@@ -38,84 +38,84 @@ final public class CharClient: ClientBase {
         }
 
         // 0x81
-        registerPacket(PACKET_SC_NOTIFY_BAN.self, for: PACKET_SC_NOTIFY_BAN.packetType) { [weak self] packet in
+        registerPacket(PACKET_SC_NOTIFY_BAN.self, for: PACKET_SC_NOTIFY_BAN.packetType) { [unowned self] packet in
             let event = AuthenticationEvents.Banned(errorCode: packet.errorCode)
-            self?.postEvent(event)
+            self.postEvent(event)
         }
     }
 
     private func registerCharServerPackets() {
         // 0x6b
-        registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION.self, for: PACKET_HC_ACCEPT_ENTER_NEO_UNION.packetType) { [weak self] packet in
+        registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION.self, for: PACKET_HC_ACCEPT_ENTER_NEO_UNION.packetType) { [unowned self] packet in
             let event = CharServerEvents.Accepted(chars: packet.chars)
-            self?.postEvent(event)
+            self.postEvent(event)
         }
 
         // 0x6c
-        registerPacket(PACKET_HC_REFUSE_ENTER.self, for: PACKET_HC_REFUSE_ENTER.packetType) { [weak self] packet in
+        registerPacket(PACKET_HC_REFUSE_ENTER.self, for: PACKET_HC_REFUSE_ENTER.packetType) { [unowned self] packet in
             let event = CharServerEvents.Refused()
-            self?.postEvent(event)
+            self.postEvent(event)
         }
 
         // 0x71, 0xac5
-        registerPacket(PACKET_HC_NOTIFY_ZONESVR.self, for: PACKET_HC_NOTIFY_ZONESVR.packetType) { [weak self] packet in
+        registerPacket(PACKET_HC_NOTIFY_ZONESVR.self, for: PACKET_HC_NOTIFY_ZONESVR.packetType) { [unowned self] packet in
             let event = CharServerEvents.NotifyMapServer(charID: packet.charID, mapName: packet.mapName, mapServer: packet.mapServer)
-            self?.postEvent(event)
+            self.postEvent(event)
         }
 
         // 0x840
-        registerPacket(PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self, for: PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.packetType) { [weak self] packet in
+        registerPacket(PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self, for: PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.packetType) { [unowned self] packet in
             let event = CharServerEvents.NotifyAccessibleMaps(accessibleMaps: packet.accessibleMaps)
-            self?.postEvent(event)
+            self.postEvent(event)
         }
     }
 
     private func registerCharPackets() {
         // 0x6d
-        registerPacket(PACKET_HC_ACCEPT_MAKECHAR.self, for: PACKET_HC_ACCEPT_MAKECHAR.packetType) { [weak self] packet in
+        registerPacket(PACKET_HC_ACCEPT_MAKECHAR.self, for: PACKET_HC_ACCEPT_MAKECHAR.packetType) { [unowned self] packet in
             let event = CharEvents.MakeAccepted(char: packet.char)
-            self?.postEvent(event)
+            self.postEvent(event)
         }
 
         // 0x6e
-        registerPacket(PACKET_HC_REFUSE_MAKECHAR.self, for: PACKET_HC_REFUSE_MAKECHAR.packetType) { [weak self] packet in
+        registerPacket(PACKET_HC_REFUSE_MAKECHAR.self, for: PACKET_HC_REFUSE_MAKECHAR.packetType) { [unowned self] packet in
             let event = CharEvents.MakeRefused()
-            self?.postEvent(event)
+            self.postEvent(event)
         }
 
         // 0x6f
-        registerPacket(PACKET_HC_ACCEPT_DELETECHAR.self, for: PACKET_HC_ACCEPT_DELETECHAR.packetType) { [weak self] packet in
+        registerPacket(PACKET_HC_ACCEPT_DELETECHAR.self, for: PACKET_HC_ACCEPT_DELETECHAR.packetType) { [unowned self] packet in
             let event = CharEvents.DeleteAccepted()
-            self?.postEvent(event)
+            self.postEvent(event)
         }
 
         // 0x70
-        registerPacket(PACKET_HC_REFUSE_DELETECHAR.self, for: PACKET_HC_REFUSE_DELETECHAR.packetType) { [weak self] packet in
+        registerPacket(PACKET_HC_REFUSE_DELETECHAR.self, for: PACKET_HC_REFUSE_DELETECHAR.packetType) { [unowned self] packet in
             let event = CharEvents.DeleteRefused(errorCode: UInt32(packet.errorCode))
-            self?.postEvent(event)
+            self.postEvent(event)
         }
 
         // 0x82a
-        registerPacket(PACKET_HC_DELETE_CHAR.self, for: PACKET_HC_DELETE_CHAR.packetType) { [weak self] packet in
+        registerPacket(PACKET_HC_DELETE_CHAR.self, for: PACKET_HC_DELETE_CHAR.packetType) { [unowned self] packet in
             if packet.result == 1 {
                 let event = CharEvents.DeleteAccepted()
-                self?.postEvent(event)
+                self.postEvent(event)
             } else {
                 let event = CharEvents.DeleteRefused(errorCode: packet.result)
-                self?.postEvent(event)
+                self.postEvent(event)
             }
         }
 
         // 0x82c
-        registerPacket(PACKET_HC_DELETE_CHAR_CANCEL.self, for: PACKET_HC_DELETE_CHAR_CANCEL.packetType) { [weak self] packet in
+        registerPacket(PACKET_HC_DELETE_CHAR_CANCEL.self, for: PACKET_HC_DELETE_CHAR_CANCEL.packetType) { [unowned self] packet in
             let event = CharEvents.DeleteCancelled()
-            self?.postEvent(event)
+            self.postEvent(event)
         }
 
         // 0x828
-        registerPacket(PACKET_HC_DELETE_CHAR_RESERVED.self, for: PACKET_HC_DELETE_CHAR_RESERVED.packetType) { [weak self] packet in
+        registerPacket(PACKET_HC_DELETE_CHAR_RESERVED.self, for: PACKET_HC_DELETE_CHAR_RESERVED.packetType) { [unowned self] packet in
             let event = CharEvents.DeletionDateResponse(deletionDate: packet.deletionDate)
-            self?.postEvent(event)
+            self.postEvent(event)
         }
     }
 
