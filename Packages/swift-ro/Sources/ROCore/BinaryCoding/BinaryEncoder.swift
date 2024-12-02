@@ -91,8 +91,14 @@ public class BinaryEncoder {
         }
     }
 
+    public func encode(_ value: [UInt8]) throws {
+        try value.withUnsafeBytes { pointer in
+            _ = try stream.write(pointer.baseAddress!, count: pointer.count)
+        }
+    }
+
     public func encode(_ value: String, encoding: String.Encoding = .ascii) throws {
-        guard var data = value.data(using: encoding) else {
+        guard let data = value.data(using: encoding) else {
             throw BinaryEncodingError.invalidEncoding(encoding)
         }
         try data.withUnsafeBytes { pointer in

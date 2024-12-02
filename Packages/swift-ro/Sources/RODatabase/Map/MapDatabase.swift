@@ -7,6 +7,7 @@
 
 import Foundation
 import rAthenaResources
+import ROCore
 
 public actor MapDatabase {
     public static let prerenewal = MapDatabase(mode: .prerenewal)
@@ -30,7 +31,24 @@ public actor MapDatabase {
 
     public func maps() throws -> [Map] {
         if cachedMaps.isEmpty {
-            let url = ServerResourceManager.default.dbURL.appendingPathComponent("map_index.txt")
+            var mapInfos: [String : MapCache.MapInfo] = [:]
+            let mapCacheURLs = [
+                ServerResourceManager.default.dbURL
+                    .appendingPathComponent("map_cache.dat"),
+                ServerResourceManager.default.dbURL
+                    .appendingPathComponent(mode.path)
+                    .appendingPathComponent("map_cache.dat"),
+            ]
+            for mapCacheURL in mapCacheURLs {
+                let decoder = try BinaryDecoder(url: mapCacheURL)
+                let mapCache = try MapCache(from: decoder)
+                for mapInfo in mapCache.maps {
+                    mapInfos[mapInfo.name] = mapInfo
+                }
+            }
+
+            let url = ServerResourceManager.default.dbURL
+                .appendingPathComponent("map_index.txt")
             let string = try String(contentsOf: url)
 
             var index = 0
@@ -38,18 +56,23 @@ public actor MapDatabase {
                 if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
                     continue
                 }
+
                 let columns = line.split(separator: " ")
                 if columns.count == 2 {
-                    let name = String(columns[0])
                     index = Int(columns[1]) ?? 1
-                    let map = Map(name: name, index: index)
-                    cachedMaps.append(map)
                 } else if columns.count == 1 {
-                    let name = String(columns[0])
                     index += 1
-                    let map = Map(name: name, index: index)
-                    cachedMaps.append(map)
+                } else {
+                    continue
                 }
+
+                let name = String(columns[0])
+                guard let mapInfo = mapInfos[name] else {
+                    continue
+                }
+
+                let map = Map(name: name, index: index, info: mapInfo)
+                cachedMaps.append(map)
             }
         }
 

@@ -24,6 +24,11 @@ public class BinaryDecoder {
         self.needsCloseStream = false
     }
 
+    public init(url: URL) throws {
+        self.stream = try FileStream(url: url)
+        self.needsCloseStream = true
+    }
+
     public init(data: Data) {
         self.stream = MemoryStream(data: data)
         self.needsCloseStream = true
@@ -114,6 +119,14 @@ public class BinaryDecoder {
             _ = try stream.read(pointer, count: count)
         }
         return result
+    }
+
+    public func decode(_ type: [UInt8].Type, count: Int) throws -> [UInt8] {
+        var bytes = [UInt8](repeating: 0, count: count)
+        try bytes.withUnsafeMutableBytes { pointer in
+            _ = try stream.read(pointer.baseAddress!, count: count)
+        }
+        return bytes
     }
 
     public func decode(_ type: String.Type, lengthOfBytes: Int, encoding: String.Encoding = .ascii) throws -> String {
