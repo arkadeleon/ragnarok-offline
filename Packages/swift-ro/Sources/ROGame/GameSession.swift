@@ -22,53 +22,37 @@ enum GamePhase {
 final class GameSession {
     var phase: GamePhase = .login
 
+    @ObservationIgnored
     private var loginClient: LoginClient?
+    @ObservationIgnored
     private var charClient: CharClient?
+    @ObservationIgnored
     private var mapClient: MapClient?
 
+    @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
 
+    @ObservationIgnored
     private var state = ClientState()
+    @ObservationIgnored
     private var charServers: [CharServerInfo] = []
+    @ObservationIgnored
     private var chars: [CharInfo] = []
 
     func login(username: String, password: String) {
-        let loginClient = LoginClient()
+        connectToLoginServer()
 
-        loginClient.subscribe(to: LoginEvents.Accepted.self, onLoginAccepted).store(in: &subscriptions)
-        loginClient.subscribe(to: LoginEvents.Refused.self, onLoginRefused).store(in: &subscriptions)
+        loginClient?.login(username: username, password: password)
 
-        loginClient.subscribe(to: AuthenticationEvents.Banned.self, onAuthenticationBanned).store(in: &subscriptions)
-
-        loginClient.subscribe(to: ConnectionEvents.ErrorOccurred.self, onConnectionErrorOccurred).store(in: &subscriptions)
-
-        loginClient.connect()
-
-        loginClient.login(username: username, password: password)
-
-        self.loginClient = loginClient
+        loginClient?.keepAlive(username: username)
     }
 
     func selectCharServer(_ charServer: CharServerInfo) {
-        let charClient = CharClient(state: state, charServer: charServer)
+        connectToCharServer(charServer)
 
-        charClient.subscribe(to: CharServerEvents.Accepted.self, onCharServerAccepted).store(in: &subscriptions)
-        charClient.subscribe(to: CharServerEvents.Refused.self, onCharServerRefused).store(in: &subscriptions)
-        charClient.subscribe(to: CharServerEvents.NotifyMapServer.self, onCharServerNotifyMapServer).store(in: &subscriptions)
-        charClient.subscribe(to: CharServerEvents.NotifyAccessibleMaps.self, onCharServerNotifyAccessibleMaps).store(in: &subscriptions)
+        charClient?.enter()
 
-        charClient.subscribe(to: CharEvents.MakeAccepted.self, onCharMakeAccepted).store(in: &subscriptions)
-        charClient.subscribe(to: CharEvents.MakeRefused.self, onCharMakeRefused).store(in: &subscriptions)
-
-        charClient.subscribe(to: AuthenticationEvents.Banned.self, onAuthenticationBanned).store(in: &subscriptions)
-
-        charClient.subscribe(to: ConnectionEvents.ErrorOccurred.self, onConnectionErrorOccurred).store(in: &subscriptions)
-
-        charClient.connect()
-
-        charClient.enter()
-
-        self.charClient = charClient
+        charClient?.keepAlive()
     }
 
     func makeChar(char: CharInfo) {
@@ -79,92 +63,114 @@ final class GameSession {
         charClient?.selectChar(slot: slot)
     }
 
-    // MARK: - Login Events
+    private func connectToLoginServer() {
+        let loginClient = LoginClient()
 
-    private func onLoginAccepted(_ event: LoginEvents.Accepted) {
-        state.accountID = event.accountID
-        state.loginID1 = event.loginID1
-        state.loginID2 = event.loginID2
-        state.sex = event.sex
+        loginClient.subscribe(to: LoginEvents.Accepted.self) { [unowned self] event in
+            self.state.accountID = event.accountID
+            self.state.loginID1 = event.loginID1
+            self.state.loginID2 = event.loginID2
+            self.state.sex = event.sex
 
-        charServers = event.charServers
+            self.charServers = event.charServers
 
-        phase = .charServerList(charServers)
+            self.phase = .charServerList(charServers)
+        }
+        .store(in: &subscriptions)
+
+        loginClient.subscribe(to: LoginEvents.Refused.self) { event in
+        }
+        .store(in: &subscriptions)
+
+        loginClient.subscribe(to: AuthenticationEvents.Banned.self) { event in
+        }
+        .store(in: &subscriptions)
+
+        loginClient.subscribe(to: ConnectionEvents.ErrorOccurred.self) { event in
+        }
+        .store(in: &subscriptions)
+
+        loginClient.connect()
+
+        self.loginClient = loginClient
     }
 
-    private func onLoginRefused(_ event: LoginEvents.Refused) {
+    private func connectToCharServer(_ charServer: CharServerInfo) {
+        let charClient = CharClient(state: state, charServer: charServer)
+
+        charClient.subscribe(to: CharServerEvents.Accepted.self) { [unowned self] event in
+            self.chars = event.chars
+
+            self.phase = .charSelect(chars)
+        }
+        .store(in: &subscriptions)
+
+        charClient.subscribe(to: CharServerEvents.Refused.self) { event in
+        }
+        .store(in: &subscriptions)
+
+        charClient.subscribe(to: CharServerEvents.NotifyMapServer.self) { [unowned self] event in
+            self.state.charID = event.charID
+
+            self.phase = .map(event.mapName)
+
+            self.connectToMapServer(event.mapServer)
+
+            self.mapClient?.enter()
+
+            self.mapClient?.keepAlive()
+        }
+        .store(in: &subscriptions)
+
+        charClient.subscribe(to: CharServerEvents.NotifyAccessibleMaps.self) { event in
+        }
+        .store(in: &subscriptions)
+
+        charClient.subscribe(to: CharEvents.MakeAccepted.self) { [unowned self] event in
+            self.chars.append(event.char)
+
+            self.phase = .charSelect(chars)
+        }
+        .store(in: &subscriptions)
+
+        charClient.subscribe(to: CharEvents.MakeRefused.self) { event in
+        }
+        .store(in: &subscriptions)
+
+        charClient.subscribe(to: AuthenticationEvents.Banned.self) { event in
+        }
+        .store(in: &subscriptions)
+
+        charClient.subscribe(to: ConnectionEvents.ErrorOccurred.self) { event in
+        }
+        .store(in: &subscriptions)
+
+        charClient.connect()
+
+        self.charClient = charClient
     }
 
-    // MARK: - Char Server Events
+    private func connectToMapServer(_ mapServer: MapServerInfo) {
+        let mapClient = MapClient(state: state, mapServer: mapServer)
 
-    private func onCharServerAccepted(_ event: CharServerEvents.Accepted) {
-        chars = event.chars
+        mapClient.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
+            // Load map.
 
-        phase = .charSelect(chars)
-    }
+            self.mapClient?.notifyMapLoaded()
+        }
+        .store(in: &subscriptions)
 
-    private func onCharServerRefused(_ event: CharServerEvents.Refused) {
-    }
+        mapClient.subscribe(to: PlayerEvents.Moved.self) { event in
+        }
+        .store(in: &subscriptions)
 
-    private func onCharServerNotifyMapServer(_ event: CharServerEvents.NotifyMapServer) {
-        state.charID = event.charID
-
-        phase = .map(event.mapName)
-
-        let mapClient = MapClient(state: state, mapServer: event.mapServer)
-
-        mapClient.subscribe(to: MapEvents.Changed.self, onMapChanged).store(in: &subscriptions)
-
-        mapClient.subscribe(to: PlayerEvents.Moved.self, onPlayerMoved).store(in: &subscriptions)
-        mapClient.subscribe(to: PlayerEvents.MessageDisplay.self, onPlayerMessageDisplay).store(in: &subscriptions)
+        mapClient.subscribe(to: PlayerEvents.MessageDisplay.self) { event in
+        }
+        .store(in: &subscriptions)
 
         mapClient.connect()
 
-        mapClient.enter()
-
-        mapClient.keepAlive()
-
         self.mapClient = mapClient
-    }
-
-    private func onCharServerNotifyAccessibleMaps(_ event: CharServerEvents.NotifyAccessibleMaps) {
-    }
-
-    // MARK: - Char Events
-
-    private func onCharMakeAccepted(_ event: CharEvents.MakeAccepted) {
-        chars.append(event.char)
-
-        phase = .charSelect(chars)
-    }
-
-    private func onCharMakeRefused(_ event: CharEvents.MakeRefused) {
-    }
-
-    // MARK: - Map Events
-
-    private func onMapChanged(_ event: MapEvents.Changed) {
-        // Load map.
-
-        mapClient?.notifyMapLoaded()
-    }
-
-    // MARK: - Player Events
-
-    private func onPlayerMoved(_ event: PlayerEvents.Moved) {
-    }
-
-    private func onPlayerMessageDisplay(_ event: PlayerEvents.MessageDisplay) {
-    }
-
-    // MARK: - Authentication Events
-
-    private func onAuthenticationBanned(_ event: AuthenticationEvents.Banned) {
-    }
-
-    // MARK: - Connection Events
-
-    private func onConnectionErrorOccurred(_ event: ConnectionEvents.ErrorOccurred) {
     }
 }
 
