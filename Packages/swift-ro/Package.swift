@@ -28,9 +28,6 @@ let package = Package(
             name: "ROFileSystem",
             targets: ["ROFileSystem"]),
         .library(
-            name: "ROGame",
-            targets: ["ROGame"]),
-        .library(
             name: "ROLocalizations",
             targets: ["ROLocalizations"]),
         .library(
@@ -108,18 +105,6 @@ let package = Package(
             dependencies: [
                 "ROCore",
                 "ROFileFormats",
-            ],
-            swiftSettings: [
-                .swiftLanguageMode(.v5),
-            ]),
-        .target(
-            name: "ROGame",
-            dependencies: [
-                "ROLocalizations",
-                "RONetwork",
-            ],
-            resources: [
-                .copy("Resources/Images/"),
             ],
             swiftSettings: [
                 .swiftLanguageMode(.v5),

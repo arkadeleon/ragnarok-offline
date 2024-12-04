@@ -1,5 +1,5 @@
 //
-//  Map.swift
+//  MapView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/9/10.
@@ -8,7 +8,7 @@
 import RONetwork
 import SwiftUI
 
-struct Map: View {
+struct MapView: View {
     var mapName: String
 
     var body: some View {
@@ -19,5 +19,5 @@ struct Map: View {
 }
 
 #Preview {
-    Map(mapName: "")
+    MapView(mapName: "")
 }

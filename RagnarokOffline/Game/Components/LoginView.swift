@@ -1,5 +1,5 @@
 //
-//  Login.swift
+//  LoginView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/9/4.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Login: View {
+struct LoginView: View {
     @Environment(\.gameSession) private var gameSession
 
     @State private var username = ""
@@ -17,7 +17,7 @@ struct Login: View {
         ZStack(alignment: .topLeading) {
             GameImage("login_interface/win_login.bmp")
 
-            TextField("", text: $username)
+            TextField(String(), text: $username)
                 .textFieldStyle(.plain)
                 .font(.system(size: 12))
                 #if !os(macOS)
@@ -27,7 +27,7 @@ struct Login: View {
                 .frame(width: 127, height: 18)
                 .offset(x: 91, y: 29)
 
-            TextField("", text: $password)
+            TextField(String(), text: $password)
                 .textFieldStyle(.plain)
                 .font(.system(size: 12))
                 #if !os(macOS)
@@ -67,5 +67,5 @@ struct Login: View {
 }
 
 #Preview {
-    Login()
+    LoginView()
 }

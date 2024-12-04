@@ -5,10 +5,9 @@
 //  Created by Leon Li on 2024/8/9.
 //
 
-import ROClientResources
-import ROGame
-import SwiftUI
 import rAthenaResources
+import ROClientResources
+import SwiftUI
 
 struct DetailView: View {
     var item: SidebarItem

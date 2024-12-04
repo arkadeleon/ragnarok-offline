@@ -7,27 +7,24 @@
 
 import SwiftUI
 
-public struct GameView: View {
+struct GameView: View {
     @Environment(\.gameSession) private var gameSession
 
-    public var body: some View {
+    var body: some View {
         ZStack {
             switch gameSession.phase {
             case .login:
-                Login()
+                LoginView()
             case .charServerList(let charServers):
-                CharServerList(charServers: charServers)
+                CharServerListView(charServers: charServers)
             case .charSelect(let chars):
-                CharSelect(chars: chars)
+                CharSelectView(chars: chars)
             case .charMake(let slot):
-                CharMake(slot: slot)
+                CharMakeView(slot: slot)
             case .map(let mapName):
-                Map(mapName: mapName)
+                MapView(mapName: mapName)
             }
         }
-    }
-
-    public init() {
     }
 }
 

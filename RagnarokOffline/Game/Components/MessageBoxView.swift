@@ -1,5 +1,5 @@
 //
-//  MessageBox.swift
+//  MessageBoxView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/9/9.
@@ -8,7 +8,7 @@
 import ROLocalizations
 import SwiftUI
 
-struct MessageBox: View {
+struct MessageBoxView: View {
     var message: String
 
     var body: some View {
@@ -27,5 +27,5 @@ struct MessageBox: View {
 }
 
 #Preview {
-    MessageBox(MessageStringTable.shared.localizedMessageString(at: 121))
+    MessageBoxView(MessageStringTable.shared.localizedMessageString(at: 121))
 }

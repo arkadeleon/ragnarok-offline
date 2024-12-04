@@ -189,9 +189,9 @@ public actor ClientResourceManager {
         return image
     }
 
-    // MARK: - Private
+    // MARK: - General
 
-    private func image(forBMPPath path: GRF.Path) async -> CGImage? {
+    public func image(forBMPPath path: GRF.Path) async -> CGImage? {
         if let image = cache.object(forKey: path.string as NSString) {
             return image
         }
@@ -213,7 +213,7 @@ public actor ClientResourceManager {
         return image
     }
 
-    private func grfEntryFile(at path: GRF.Path) -> File? {
+    public func grfEntryFile(at path: GRF.Path) -> File? {
         for grf in grfs {
             if grf.entry(at: path) != nil {
                 return .grfEntry(grf, path)

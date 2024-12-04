@@ -1,5 +1,5 @@
 //
-//  CharSelect.swift
+//  CharSelectView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/9/10.
@@ -8,7 +8,7 @@
 import RONetwork
 import SwiftUI
 
-struct CharSelect: View {
+struct CharSelectView: View {
     var chars: [CharInfo]
 
     @Environment(\.gameSession) private var gameSession
@@ -151,7 +151,7 @@ struct CharSelect: View {
         return char
     }()
 
-    CharSelect(chars: [
+    CharSelectView(chars: [
         char
     ])
 }

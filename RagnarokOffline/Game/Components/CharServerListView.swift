@@ -1,5 +1,5 @@
 //
-//  CharServerList.swift
+//  CharServerListView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/9/10.
@@ -8,7 +8,7 @@
 import RONetwork
 import SwiftUI
 
-struct CharServerList: View {
+struct CharServerListView: View {
     var charServers: [CharServerInfo]
 
     @Environment(\.gameSession) private var gameSession
@@ -44,5 +44,5 @@ struct CharServerList: View {
 }
 
 #Preview {
-    CharServerList(charServers: [])
+    CharServerListView(charServers: [])
 }

@@ -1,5 +1,5 @@
 //
-//  CharMake.swift
+//  CharMakeView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/9/10.
@@ -8,7 +8,7 @@
 import RONetwork
 import SwiftUI
 
-struct CharMake: View {
+struct CharMakeView: View {
     var slot: UInt8
 
     @Environment(\.gameSession) private var gameSession
@@ -26,7 +26,7 @@ struct CharMake: View {
             ZStack(alignment: .topLeading) {
                 GameImage("login_interface/win_make.bmp")
 
-                TextField("", text: $name)
+                TextField(String(), text: $name)
                     .textFieldStyle(.plain)
                     .font(.system(size: 12))
                     #if !os(macOS)
@@ -69,5 +69,5 @@ struct CharMake: View {
 }
 
 #Preview {
-    CharMake(slot: 0)
+    CharMakeView(slot: 0)
 }
