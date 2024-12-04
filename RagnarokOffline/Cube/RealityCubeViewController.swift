@@ -1,5 +1,5 @@
 //
-//  CubeViewController.swift
+//  RealityCubeViewController.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/5/14.
@@ -10,7 +10,7 @@
 import RealityKit
 import UIKit
 
-class CubeViewController: UIViewController {
+class RealityCubeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,7 +21,7 @@ class CubeViewController: UIViewController {
 
         let cubeAnchor = AnchorEntity(world: .zero)
 
-        let texture = try! MaterialParameters.Texture(.load(named: "wall.jpg"))
+        let texture = try! MaterialParameters.Texture(.load(named: "wall"))
         var material = SimpleMaterial()
         material.color = .init(texture: texture)
 

@@ -1,5 +1,5 @@
 //
-//  GameScene.swift
+//  MetalCubeScene.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/6/7.
@@ -9,7 +9,7 @@ import Metal
 import MetalKit
 import RORenderers
 
-struct GameScene {
+struct MetalCubeScene {
     let device: any MTLDevice
 
     lazy var objects: [Object3D] = {
@@ -57,7 +57,7 @@ struct GameScene {
         let indexBuffer = device.makeBuffer(bytes: indices, length: MemoryLayout<UInt16>.size * indices.count)!
 
         let textureLoader = MTKTextureLoader(device: device)
-        let texture = try! textureLoader.newTexture(name: "wall.jpg", scaleFactor: 1, bundle: nil)
+        let texture = try! textureLoader.newTexture(name: "wall", scaleFactor: 1, bundle: nil)
 
         let submesh = Submesh(
             primitiveType: .triangle,

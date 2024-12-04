@@ -29,9 +29,9 @@ struct DetailView: View {
             case .messages:
                 MessagesView()
             case .game:
-                ROGame.GameView()
+                GameView()
             case .cube:
-                CubeView()
+                RealityCubeView()
             case .loginServer:
                 ServerView(server: loginServer)
             case .charServer:

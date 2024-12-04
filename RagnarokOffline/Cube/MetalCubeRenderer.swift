@@ -1,5 +1,5 @@
 //
-//  GameRenderer.swift
+//  MetalCubeRenderer.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2020/5/22.
@@ -8,14 +8,14 @@
 import Metal
 import RORenderers
 
-class GameRenderer: Renderer {
+class MetalCubeRenderer: Renderer {
     let device: any MTLDevice
     let colorPixelFormat: MTLPixelFormat
     let depthStencilPixelFormat: MTLPixelFormat
     let renderPipelineState: any MTLRenderPipelineState
     let depthStencilState: any MTLDepthStencilState
 
-    lazy var scene = GameScene(device: device)
+    lazy var scene = MetalCubeScene(device: device)
 
     init(device: any MTLDevice) {
         self.device = device

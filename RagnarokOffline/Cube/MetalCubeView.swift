@@ -1,5 +1,5 @@
 //
-//  GameView.swift
+//  MetalCubeView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/6/7.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct GameView: View {
-    private let renderer: GameRenderer = {
+struct MetalCubeView: View {
+    private let renderer: MetalCubeRenderer = {
         let device = MTLCreateSystemDefaultDevice()!
-        let renderer = GameRenderer(device: device)
+        let renderer = MetalCubeRenderer(device: device)
         return renderer
     }()
 
