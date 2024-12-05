@@ -7,14 +7,9 @@
 
 import XCTest
 import ROGenerated
-import rAthenaResources
 @testable import RODatabase
 
 final class ItemDatabaseTests: XCTestCase {
-    override func setUp() async throws {
-        try ServerResourceManager.default.prepareForServers()
-    }
-
     func testItemType() {
         let weapon = ItemType(rawValue: 5)
         XCTAssertEqual(weapon, ItemType.weapon)

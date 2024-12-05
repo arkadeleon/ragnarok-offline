@@ -33,9 +33,8 @@ public actor SkillTreeDatabase {
         if cachedSkillTrees.isEmpty {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.path)
-                .appendingPathComponent("skill_tree.yml")
+            let url = ServerResourceManager.default.sourceURL
+                .appending(path: "db/\(mode.path)/skill_tree.yml")
             let data = try Data(contentsOf: url)
             cachedSkillTrees = try decoder.decode(ListNode<SkillTree>.self, from: data).body
         }

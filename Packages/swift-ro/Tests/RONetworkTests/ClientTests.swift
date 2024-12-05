@@ -24,10 +24,10 @@ final class ClientTests: XCTestCase {
     var subscriptions = Set<AnyCancellable>()
 
     override func setUp() async throws {
-        let url = ServerResourceManager.default.baseURL
+        let url = ServerResourceManager.default.workingDirectoryURL
         try FileManager.default.removeItem(at: url)
 
-        try ServerResourceManager.default.prepareForServers()
+        try ServerResourceManager.default.prepareWorkingDirectory()
 
         NotificationCenter.default.publisher(for: .ServerDidOutputData, object: nil)
             .map { $0.userInfo![ServerOutputDataKey] as! Data }

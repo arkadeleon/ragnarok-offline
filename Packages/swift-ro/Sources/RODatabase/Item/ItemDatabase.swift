@@ -36,9 +36,8 @@ public actor ItemDatabase {
         if cachedUsableItems.isEmpty {
             let decoder = YAMLDecoder()
 
-            let usableItemURL = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.path)
-                .appendingPathComponent("item_db_usable.yml")
+            let usableItemURL = ServerResourceManager.default.sourceURL
+                .appending(path: "db/\(mode.path)/item_db_usable.yml")
             let usableItemData = try Data(contentsOf: usableItemURL)
             cachedUsableItems = try decoder.decode(ListNode<Item>.self, from: usableItemData).body
         }
@@ -50,9 +49,8 @@ public actor ItemDatabase {
         if cachedEquipItems.isEmpty {
             let decoder = YAMLDecoder()
 
-            let equipItemURL = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.path)
-                .appendingPathComponent("item_db_equip.yml")
+            let equipItemURL = ServerResourceManager.default.sourceURL
+                .appending(path: "db/\(mode.path)/item_db_equip.yml")
             let equipItemData = try Data(contentsOf: equipItemURL)
             cachedEquipItems = try decoder.decode(ListNode<Item>.self, from: equipItemData).body
         }
@@ -64,9 +62,8 @@ public actor ItemDatabase {
         if cachedEtcItems.isEmpty {
             let decoder = YAMLDecoder()
 
-            let etcItemURL = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.path)
-                .appendingPathComponent("item_db_etc.yml")
+            let etcItemURL = ServerResourceManager.default.sourceURL
+                .appending(path: "db/\(mode.path)/item_db_etc.yml")
             let etcItemData = try Data(contentsOf: etcItemURL)
             cachedEtcItems = try decoder.decode(ListNode<Item>.self, from: etcItemData).body
         }

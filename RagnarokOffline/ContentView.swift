@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2023/1/13.
 //
 
-import SwiftUI
 import rAthenaResources
+import SwiftUI
 
 struct ContentView: View {
     @State private var selectedItem: SidebarItem? = .files
@@ -35,6 +35,6 @@ struct ContentView: View {
     }
 
     private func load() async throws {
-        try ServerResourceManager.default.prepareForServers()
+        try ServerResourceManager.default.prepareWorkingDirectory()
     }
 }

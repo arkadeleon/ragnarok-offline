@@ -33,11 +33,10 @@ public actor MapDatabase {
         if cachedMaps.isEmpty {
             var mapInfos: [String : MapCache.MapInfo] = [:]
             let mapCacheURLs = [
-                ServerResourceManager.default.dbURL
-                    .appendingPathComponent("map_cache.dat"),
-                ServerResourceManager.default.dbURL
-                    .appendingPathComponent(mode.path)
-                    .appendingPathComponent("map_cache.dat"),
+                ServerResourceManager.default.sourceURL
+                    .appending(path: "db/map_cache.dat"),
+                ServerResourceManager.default.sourceURL
+                    .appending(path: "db/\(mode.path)/map_cache.dat"),
             ]
             for mapCacheURL in mapCacheURLs {
                 let decoder = try BinaryDecoder(url: mapCacheURL)
@@ -47,8 +46,8 @@ public actor MapDatabase {
                 }
             }
 
-            let url = ServerResourceManager.default.dbURL
-                .appendingPathComponent("map_index.txt")
+            let url = ServerResourceManager.default.sourceURL
+                .appending(path: "db/map_index.txt")
             let string = try String(contentsOf: url)
 
             var index = 0

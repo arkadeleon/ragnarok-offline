@@ -32,9 +32,8 @@ public actor PetDatabase {
         if cachedPets.isEmpty {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.path)
-                .appendingPathComponent("pet_db.yml")
+            let url = ServerResourceManager.default.sourceURL
+                .appending(path: "db/\(mode.path)/pet_db.yml")
             let data = try Data(contentsOf: url)
             cachedPets = try decoder.decode(ListNode<Pet>.self, from: data).body
         }

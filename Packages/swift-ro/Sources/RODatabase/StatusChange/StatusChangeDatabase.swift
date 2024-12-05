@@ -33,9 +33,8 @@ public actor StatusChangeDatabase {
         if cachedStatusChanges.isEmpty {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.path)
-                .appendingPathComponent("status.yml")
+            let url = ServerResourceManager.default.sourceURL
+                .appending(path: "db/\(mode.path)/status.yml")
             let data = try Data(contentsOf: url)
             cachedStatusChanges = try decoder.decode(ListNode<StatusChange>.self, from: data).body
         }

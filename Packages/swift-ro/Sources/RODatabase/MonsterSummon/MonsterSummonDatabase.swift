@@ -32,9 +32,8 @@ public actor MonsterSummonDatabase {
         if cachedMonsterSummons.isEmpty {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.path)
-                .appendingPathComponent("mob_summon.yml")
+            let url = ServerResourceManager.default.sourceURL
+                .appending(path: "db/\(mode.path)/mob_summon.yml")
             let data = try Data(contentsOf: url)
             cachedMonsterSummons = try decoder.decode(ListNode<MonsterSummon>.self, from: data).body
         }

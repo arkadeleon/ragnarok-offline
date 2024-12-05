@@ -6,14 +6,9 @@
 //
 
 import XCTest
-import rAthenaResources
 @testable import RODatabase
 
 final class MonsterSummonDatabaseTests: XCTestCase {
-    override func setUp() async throws {
-        try ServerResourceManager.default.prepareForServers()
-    }
-
     func testPrerenewal() async throws {
         let database = MonsterSummonDatabase.prerenewal
 

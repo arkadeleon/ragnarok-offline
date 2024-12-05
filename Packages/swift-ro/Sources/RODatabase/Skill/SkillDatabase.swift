@@ -33,9 +33,8 @@ public actor SkillDatabase {
         if cachedSkills.isEmpty {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceManager.default.dbURL
-                .appendingPathComponent(mode.path)
-                .appendingPathComponent("skill_db.yml")
+            let url = ServerResourceManager.default.sourceURL
+                .appending(path: "db/\(mode.path)/skill_db.yml")
             let data = try Data(contentsOf: url)
             cachedSkills = try decoder.decode(ListNode<Skill>.self, from: data).body
         }

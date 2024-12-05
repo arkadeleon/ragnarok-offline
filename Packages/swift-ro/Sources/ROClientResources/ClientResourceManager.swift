@@ -25,8 +25,8 @@ public actor ClientResourceManager {
     public init() {
         baseURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         grfs = [
-            GRFReference(url: baseURL.appendingPathComponent("rdata.grf")),
-            GRFReference(url: baseURL.appendingPathComponent("data.grf")),
+            GRFReference(url: baseURL.appending(path: "rdata.grf")),
+            GRFReference(url: baseURL.appending(path: "data.grf")),
         ]
     }
 

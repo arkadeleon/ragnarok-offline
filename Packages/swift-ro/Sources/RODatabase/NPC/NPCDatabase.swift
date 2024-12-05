@@ -56,9 +56,8 @@ public actor NPCDatabase {
 
     private func restoreScripts() throws {
         if !isCached {
-            let url = ServerResourceManager.default.npcURL
-                .appendingPathComponent(mode.path)
-                .appendingPathComponent("scripts_main.conf")
+            let url = ServerResourceManager.default.sourceURL
+                .appending(path: "npc/\(mode.path)/scripts_main.conf")
             try import_conf_file(url: url)
 
             isCached = true
@@ -82,7 +81,8 @@ public actor NPCDatabase {
 
             let w1 = words[0]
             let w2 = words[1]
-            let url = ServerResourceManager.default.baseURL.appendingPathComponent(w2)
+            let url = ServerResourceManager.default.workingDirectoryURL
+                .appending(path: w2)
 
             switch w1 {
             case "npc":
