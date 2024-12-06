@@ -12,38 +12,50 @@ struct MapView: View {
     var map: GameMap
 
     var body: some View {
-        ScrollView([.horizontal, .vertical]) {
-            LazyVStack(spacing: 1) {
-                ForEach(0..<map.grid.ys, id: \.self) { y in
-                    LazyHStack(spacing: 1) {
-                        ForEach(0..<map.grid.xs, id: \.self) { x in
-                            MapCellView(
-                                x: x,
-                                y: y,
-                                cell: map.grid.cell(atX: x, y: y),
-                                player: player(at: [x, y]),
-                                objects: objects(at: [x, y])
-                            )
+        ScrollViewReader { proxy in
+            ScrollView([.horizontal, .vertical]) {
+                LazyVStack(spacing: 1) {
+                    ForEach(0..<map.grid.ys, id: \.self) { y in
+                        LazyHStack(spacing: 1) {
+                            ForEach(0..<map.grid.xs, id: \.self) { x in
+                                MapCellView(
+                                    x: x,
+                                    y: y,
+                                    cell: map.grid.cell(atX: x, y: y),
+                                    player: player(at: [x, y]),
+                                    objects: objects(at: [x, y])
+                                )
+                                .id(SIMD2(x, y))
+                            }
                         }
                     }
                 }
-            }
 
-//            LazyVGrid(columns: [GridItem](repeating: .init(.fixed(20), spacing: 1), count: Int(map.grid.xs)), spacing: 1) {
-//                ForEach(map.grid.cells, id: \.xy) { cell in
-//                    MapCellView()
+//                LazyVGrid(columns: [GridItem](repeating: .init(.fixed(20), spacing: 1), count: Int(map.grid.xs)), spacing: 1) {
+//                    ForEach(map.grid.cells, id: \.xy) { cell in
+//                        MapCellView()
+//                    }
 //                }
-//            }
 
-//            Grid(horizontalSpacing: 1, verticalSpacing: 1) {
-//                ForEach(0..<map.grid.ys, id: \.self) { y in
-//                    GridRow {
-//                        ForEach(0..<map.grid.xs, id: \.self) { x in
-//                            MapCellView()
+//                Grid(horizontalSpacing: 1, verticalSpacing: 1) {
+//                    ForEach(0..<map.grid.ys, id: \.self) { y in
+//                        GridRow {
+//                            ForEach(0..<map.grid.xs, id: \.self) { x in
+//                                MapCellView()
+//                            }
 //                        }
 //                    }
 //                }
-//            }
+            }
+            .scrollDisabled(true)
+            .onAppear {
+                proxy.scrollTo(map.player.position, anchor: .center)
+            }
+            .onChange(of: map.player.position) {
+                withAnimation {
+                    proxy.scrollTo(map.player.position, anchor: .center)
+                }
+            }
         }
     }
 
