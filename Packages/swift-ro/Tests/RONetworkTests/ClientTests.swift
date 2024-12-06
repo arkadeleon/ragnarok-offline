@@ -238,10 +238,8 @@ final class ClientTests: XCTestCase {
         let requestMoveExpectation = expectation(description: "RequestMove")
 
         mapClient.subscribe(to: PlayerEvents.Moved.self) { event in
-            XCTAssertEqual(event.moveData.x0, 18)
-            XCTAssertEqual(event.moveData.y0, 26)
-            XCTAssertEqual(event.moveData.x1, 27)
-            XCTAssertEqual(event.moveData.y1, 30)
+            XCTAssertEqual(event.fromPosition, [18, 26])
+            XCTAssertEqual(event.toPosition, [27, 30])
 
             requestMoveExpectation.fulfill()
         }
@@ -265,24 +263,24 @@ final class ClientTests: XCTestCase {
         sleep(5)
 
         let woundedSwordsman1 = spawns.first(where: { $0.job == 687 })!
-        mapClient.contactNPC(npcID: woundedSwordsman1.id)
+        mapClient.contactNPC(npcID: woundedSwordsman1.objectID)
 
         sleep(1)
 
         let woundedSwordsman2 = spawns.first(where: { $0.job == 688 })!
-        mapClient.contactNPC(npcID: woundedSwordsman2.id)
+        mapClient.contactNPC(npcID: woundedSwordsman2.objectID)
 
         sleep(1)
 
-        mapClient.requestNextScript(npcID: woundedSwordsman2.id)
+        mapClient.requestNextScript(npcID: woundedSwordsman2.objectID)
 
         sleep(1)
 
-        mapClient.requestNextScript(npcID: woundedSwordsman2.id)
+        mapClient.requestNextScript(npcID: woundedSwordsman2.objectID)
 
         sleep(1)
 
-        mapClient.closeDialog(npcID: woundedSwordsman2.id)
+        mapClient.closeDialog(npcID: woundedSwordsman2.objectID)
 
         sleep(5)
     }

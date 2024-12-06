@@ -174,7 +174,7 @@ final class GameSession {
         mapClient.subscribe(to: PlayerEvents.Moved.self) { [unowned self] event in
             Task {
                 await MainActor.run {
-                    self.map?.player.position = [event.moveData.x1, event.moveData.y1]
+                    self.map?.player.position = event.toPosition
                 }
             }
         }

@@ -16,25 +16,19 @@ final public class LoginClient: ClientBase {
 
         // 0x69, 0xac4
         registerPacket(PACKET_AC_ACCEPT_LOGIN.self, for: PACKET_AC_ACCEPT_LOGIN.packetType) { [unowned self] packet in
-            let event = LoginEvents.Accepted(
-                accountID: packet.accountID,
-                loginID1: packet.loginID1,
-                loginID2: packet.loginID2,
-                sex: packet.sex,
-                charServers: packet.charServers
-            )
+            let event = LoginEvents.Accepted(packet: packet)
             self.postEvent(event)
         }
 
         // 0x6a, 0x83e
         registerPacket(PACKET_AC_REFUSE_LOGIN.self, for: PACKET_AC_REFUSE_LOGIN.packetType) { [unowned self] packet in
-            let event = LoginEvents.Refused(errorCode: packet.errorCode, unblockTime: packet.unblockTime)
+            let event = LoginEvents.Refused(packet: packet)
             self.postEvent(event)
         }
 
-        // 0x81
+        // See `logclif_sent_auth_result`
         registerPacket(PACKET_SC_NOTIFY_BAN.self, for: PACKET_SC_NOTIFY_BAN.packetType) { [unowned self] packet in
-            let event = AuthenticationEvents.Banned(errorCode: packet.errorCode)
+            let event = AuthenticationEvents.Banned(packet: packet)
             self.postEvent(event)
         }
     }

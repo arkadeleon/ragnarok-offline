@@ -11,8 +11,8 @@ public enum AuthenticationEvents {
     public struct Banned: Event {
         public let message: String
 
-        init(errorCode: UInt8) {
-            let messageCode = switch errorCode {
+        init(packet: PACKET_SC_NOTIFY_BAN) {
+            let messageCode = switch packet.errorCode {
             case   0: 3     // Server closed
             case   1: 4     // Server closed
             case   2: 5     // Someone has already logged in with this id
@@ -29,7 +29,7 @@ public enum AuthenticationEvents {
             default : 3
             }
 
-            message = MessageStringTable.shared.localizedMessageString(at: messageCode)
+            self.message = MessageStringTable.shared.localizedMessageString(at: messageCode)
         }
     }
 }

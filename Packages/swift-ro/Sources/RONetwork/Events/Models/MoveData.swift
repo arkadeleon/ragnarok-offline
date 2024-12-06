@@ -6,15 +6,15 @@
 //
 
 // See `WBUFPOS2`
-public struct MoveData: Sendable {
-    public var x0: Int16
-    public var y0: Int16
-    public var x1: Int16
-    public var y1: Int16
-    public var sx0: UInt8
-    public var sy0: UInt8
+struct MoveData {
+    var x0: Int16
+    var y0: Int16
+    var x1: Int16
+    var y1: Int16
+    var sx0: UInt8
+    var sy0: UInt8
 
-    public init(data: [UInt8]) {
+    init(data: [UInt8]) {
         let a = data[0]
         let b = data[1]
         let c = data[2]

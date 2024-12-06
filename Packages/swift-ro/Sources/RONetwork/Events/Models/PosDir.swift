@@ -6,12 +6,12 @@
 //
 
 // See `WBUFPOS`
-public struct PosDir {
-    public var x: Int16
-    public var y: Int16
-    public var dir: UInt8
+struct PosDir {
+    var x: Int16
+    var y: Int16
+    var dir: UInt8
 
-    public init(data: [UInt8]) {
+    init(data: [UInt8]) {
         var p: UInt32 = 0
         withUnsafeMutableBytes(of: &p) { pointer in
             pointer[2] = data[0]

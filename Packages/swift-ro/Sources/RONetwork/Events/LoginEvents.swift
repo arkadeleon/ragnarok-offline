@@ -14,13 +14,21 @@ public enum LoginEvents {
         public let loginID2: UInt32
         public let sex: UInt8
         public let charServers: [CharServerInfo]
+
+        init(packet: PACKET_AC_ACCEPT_LOGIN) {
+            self.accountID = packet.accountID
+            self.loginID1 = packet.loginID1
+            self.loginID2 = packet.loginID2
+            self.sex = packet.sex
+            self.charServers = packet.charServers
+        }
     }
 
     public struct Refused: Event {
         public let message: String
 
-        init(errorCode: UInt32, unblockTime: String) {
-            let messageCode = switch errorCode {
+        init(packet: PACKET_AC_REFUSE_LOGIN) {
+            let messageCode = switch packet.errorCode {
             case   0: 6     // Unregistered ID
             case   1: 7     // Incorrect Password
             case   2: 8     // This ID is expired
@@ -46,8 +54,8 @@ public enum LoginEvents {
             default : 9
             }
 
-            message = MessageStringTable.shared.localizedMessageString(at: messageCode)
-                .replacingOccurrences(of: "%s", with: unblockTime)
+            self.message = MessageStringTable.shared.localizedMessageString(at: messageCode)
+                .replacingOccurrences(of: "%s", with: packet.unblockTime)
         }
     }
 }

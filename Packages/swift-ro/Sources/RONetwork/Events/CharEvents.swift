@@ -8,6 +8,10 @@
 public enum CharEvents {
     public struct MakeAccepted: Event {
         public let char: CharInfo
+
+        init(packet: PACKET_HC_ACCEPT_MAKECHAR) {
+            self.char = packet.char
+        }
     }
 
     public struct MakeRefused: Event {
@@ -19,8 +23,12 @@ public enum CharEvents {
     public struct DeleteRefused: Event {
         public let message: String
 
-        init(errorCode: UInt32) {
-            message = ""
+        init(packet: PACKET_HC_REFUSE_DELETECHAR) {
+            self.message = ""
+        }
+
+        init(packet: PACKET_HC_DELETE_CHAR) {
+            self.message = ""
         }
     }
 
@@ -29,5 +37,9 @@ public enum CharEvents {
 
     public struct DeletionDateResponse: Event {
         public let deletionDate: UInt32
+
+        init(packet: PACKET_HC_DELETE_CHAR_RESERVED) {
+            self.deletionDate = packet.deletionDate
+        }
     }
 }

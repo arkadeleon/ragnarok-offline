@@ -8,5 +8,9 @@
 public enum ConnectionEvents {
     public struct ErrorOccurred: Event {
         public let error: any Error
+
+        init(error: any Error) {
+            self.error = error
+        }
     }
 }

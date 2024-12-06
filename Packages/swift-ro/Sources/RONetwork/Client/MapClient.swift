@@ -73,7 +73,7 @@ final public class MapClient: ClientBase {
     private func registerMapPackets() {
         // See `clif_changemap`
         registerPacket(PACKET_ZC_NPCACK_MAPMOVE.self, for: HEADER_ZC_NPCACK_MAPMOVE) { [unowned self] packet in
-            let event = MapEvents.Changed(mapName: packet.mapName, position: [Int16(packet.xPos), Int16(packet.yPos)])
+            let event = MapEvents.Changed(packet: packet)
             self.postEvent(event)
         }
     }
@@ -81,14 +81,13 @@ final public class MapClient: ClientBase {
     private func registerPlayerPackets() {
         // See `clif_walkok`
         registerPacket(PACKET_ZC_NOTIFY_PLAYERMOVE.self, for: HEADER_ZC_NOTIFY_PLAYERMOVE) { [unowned self] packet in
-            let moveData = MoveData(data: packet.moveData)
-            let event = PlayerEvents.Moved(moveData: moveData)
+            let event = PlayerEvents.Moved(packet: packet)
             self.postEvent(event)
         }
 
         // 0x8e
         registerPacket(PACKET_ZC_NOTIFY_PLAYERCHAT.self, for: PACKET_ZC_NOTIFY_PLAYERCHAT.packetType) { [unowned self] packet in
-            let event = PlayerEvents.MessageDisplay(message: packet.message)
+            let event = PlayerEvents.MessageDisplay(packet: packet)
             self.postEvent(event)
         }
     }
@@ -150,38 +149,37 @@ final public class MapClient: ClientBase {
 
         // See `clif_set_unit_walking`
         registerPacket(packet_unit_walking.self, for: packet_header_unit_walkingType) { [unowned self] packet in
-            let moveData = MoveData(data: packet.MoveData)
-            let event = ObjectEvents.Moved(id: packet.AID, moveData: moveData)
+            let event = ObjectEvents.Moved(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_clearunit_single` and `clif_clearunit_area`
         registerPacket(PACKET_ZC_NOTIFY_VANISH.self, for: HEADER_ZC_NOTIFY_VANISH) { [unowned self] packet in
-            let event = ObjectEvents.Vanished(id: packet.gid)
+            let event = ObjectEvents.Vanished(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_changed_dir`
         registerPacket(PACKET_ZC_CHANGE_DIRECTION.self, for: HEADER_ZC_CHANGE_DIRECTION) { [unowned self] packet in
-            let event = ObjectEvents.DirectionChanged(sourceID: packet.srcId, headDirection: packet.headDir, direction: packet.dir)
+            let event = ObjectEvents.DirectionChanged(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_sprite_change`
         registerPacket(PACKET_ZC_SPRITE_CHANGE.self, for: packet_header_sendLookType) { [unowned self] packet in
-            let event = ObjectEvents.SpriteChanged(id: packet.AID)
+            let event = ObjectEvents.SpriteChanged(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_changeoption_target`
         registerPacket(PACKET_ZC_STATE_CHANGE.self, for: HEADER_ZC_STATE_CHANGE) { [unowned self] packet in
-            let event = ObjectEvents.StateChanged(id: packet.AID)
+            let event = ObjectEvents.StateChanged(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_channel_msg` and `clif_messagecolor_target`
         registerPacket(PACKET_ZC_NPC_CHAT.self, for: HEADER_ZC_NPC_CHAT) { [unowned self] packet in
-            let event = ObjectEvents.MessageDisplay(message: packet.message)
+            let event = ObjectEvents.MessageDisplay(packet: packet)
             self.postEvent(event)
         }
     }
@@ -195,16 +193,14 @@ final public class MapClient: ClientBase {
     private func registerStatusPackets() {
         // See `clif_par_change`
         registerPacket(PACKET_ZC_PAR_CHANGE.self, for: HEADER_ZC_PAR_CHANGE) { [unowned self] packet in
-            if let sp = StatusProperty(rawValue: Int(packet.varID)) {
-                let event = PlayerEvents.StatusPropertyChanged(sp: sp, value: Int(packet.count), value2: 0)
+            if let event = PlayerEvents.StatusPropertyChanged(packet: packet) {
                 self.postEvent(event)
             }
         }
 
         // See `clif_longpar_change`
         registerPacket(PACKET_ZC_LONGPAR_CHANGE.self, for: HEADER_ZC_LONGPAR_CHANGE) { [unowned self] packet in
-            if let sp = StatusProperty(rawValue: Int(packet.varID)) {
-                let event = PlayerEvents.StatusPropertyChanged(sp: sp, value: Int(packet.amount), value2: 0)
+            if let event = PlayerEvents.StatusPropertyChanged(packet: packet) {
                 self.postEvent(event)
             }
         }
@@ -215,8 +211,7 @@ final public class MapClient: ClientBase {
 
         // See `clif_zc_status_change`
         registerPacket(PACKET_ZC_STATUS_CHANGE.self, for: HEADER_ZC_STATUS_CHANGE) { [unowned self] packet in
-            if let sp = StatusProperty(rawValue: Int(packet.statusID)) {
-                let event = PlayerEvents.StatusPropertyChanged(sp: sp, value: Int(packet.value), value2: 0)
+            if let event = PlayerEvents.StatusPropertyChanged(packet: packet) {
                 self.postEvent(event)
             }
         }
@@ -227,22 +222,20 @@ final public class MapClient: ClientBase {
 
         // See `clif_attackrange`
         registerPacket(PACKET_ZC_ATTACK_RANGE.self, for: HEADER_ZC_ATTACK_RANGE) { [unowned self] packet in
-            let event = PlayerEvents.AttackRangeChanged(value: Int(packet.currentAttRange))
+            let event = PlayerEvents.AttackRangeChanged(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_couplestatus`
         registerPacket(PACKET_ZC_COUPLESTATUS.self, for: HEADER_ZC_COUPLESTATUS) { [unowned self] packet in
-            if let sp = StatusProperty(rawValue: Int(packet.statusType)) {
-                let event = PlayerEvents.StatusPropertyChanged(sp: sp, value: Int(packet.defaultStatus), value2: Int(packet.plusStatus))
+            if let event = PlayerEvents.StatusPropertyChanged(packet: packet) {
                 self.postEvent(event)
             }
         }
 
         // See `clif_longlongpar_change`
         registerPacket(PACKET_ZC_LONGLONGPAR_CHANGE.self, for: HEADER_ZC_LONGLONGPAR_CHANGE) { [unowned self] packet in
-            if let sp = StatusProperty(rawValue: Int(packet.varID)) {
-                let event = PlayerEvents.StatusPropertyChanged(sp: sp, value: Int(packet.amount), value2: 0)
+            if let event = PlayerEvents.StatusPropertyChanged(packet: packet) {
                 self.postEvent(event)
             }
         }

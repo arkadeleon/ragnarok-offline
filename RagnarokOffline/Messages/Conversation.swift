@@ -243,9 +243,9 @@ class Conversation {
         .store(in: &subscriptions)
 
         mapClient.subscribe(to: PlayerEvents.Moved.self) { [unowned self] event in
-            self.position = [event.moveData.x1, event.moveData.y1]
+            self.position = event.toPosition
 
-            self.messages.append(.serverText("Player moved from (\(event.moveData.x0), \(event.moveData.y0)) to (\(event.moveData.x1), \(event.moveData.y1))"))
+            self.messages.append(.serverText("Player moved from \(event.fromPosition) to \(event.toPosition)"))
         }
         .store(in: &subscriptions)
 
