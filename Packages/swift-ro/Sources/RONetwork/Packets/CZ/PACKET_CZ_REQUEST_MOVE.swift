@@ -17,8 +17,8 @@ public struct PACKET_CZ_REQUEST_MOVE: EncodablePacket {
         PacketDatabase.Entry.CZ_REQUEST_MOVE.packetLength
     }
 
-    public var x: UInt16
-    public var y: UInt16
+    public var x: Int16
+    public var y: Int16
 
     public init() {
         x = 0

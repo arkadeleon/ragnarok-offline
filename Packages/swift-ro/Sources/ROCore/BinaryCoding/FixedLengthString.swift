@@ -15,7 +15,9 @@ public struct FixedLengthString: Sendable {
     private var _bytes: [UInt8] = []
     public var wrappedValue: String {
         get {
-            String(bytes: _bytes, encoding: encoding) ?? ""
+            let bytes = _bytes.prefix { $0 != 0 }
+            let string = String(bytes: bytes, encoding: encoding) ?? ""
+            return string
         }
         set {
             guard let bytes = newValue.data(using: encoding) else {

@@ -1,14 +1,15 @@
 //
-//  PositionDirection.swift
+//  PosDir.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/11/27.
 //
 
-public struct PositionDirection {
-    public var x: UInt16
-    public var y: UInt16
-    public var direction: UInt8
+// See `WBUFPOS`
+public struct PosDir {
+    public var x: Int16
+    public var y: Int16
+    public var dir: UInt8
 
     public init(data: [UInt8]) {
         var p: UInt32 = 0
@@ -18,12 +19,12 @@ public struct PositionDirection {
             pointer[0] = data[2]
         }
 
-        direction = UInt8(truncatingIfNeeded: p) & 0x0f
+        dir = UInt8(truncatingIfNeeded: p) & 0x0f
 
         p = p >> 4
-        y = UInt16(truncatingIfNeeded: p) & 0x03ff
+        y = Int16(truncatingIfNeeded: p) & 0x03ff
 
         p = p >> 10
-        x = UInt16(truncatingIfNeeded: p) & 0x03ff
+        x = Int16(truncatingIfNeeded: p) & 0x03ff
     }
 }

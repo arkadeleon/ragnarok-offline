@@ -8,6 +8,6 @@
 public enum MapEvents {
     public struct Changed: Event {
         public let mapName: String
-        public let position: SIMD2<UInt16>
+        public let position: SIMD2<Int16>
     }
 }

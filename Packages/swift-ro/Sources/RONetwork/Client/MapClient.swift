@@ -73,7 +73,7 @@ final public class MapClient: ClientBase {
     private func registerMapPackets() {
         // See `clif_changemap`
         registerPacket(PACKET_ZC_NPCACK_MAPMOVE.self, for: HEADER_ZC_NPCACK_MAPMOVE) { [unowned self] packet in
-            let event = MapEvents.Changed(mapName: packet.mapName, position: [packet.xPos, packet.yPos])
+            let event = MapEvents.Changed(mapName: packet.mapName, position: [Int16(packet.xPos), Int16(packet.yPos)])
             self.postEvent(event)
         }
     }
@@ -138,14 +138,13 @@ final public class MapClient: ClientBase {
     private func registerObjectPackets() {
         // See `clif_spawn_unit`
         registerPacket(packet_spawn_unit.self, for: packet_header_spawn_unitType) { [unowned self] packet in
-            let event = ObjectEvents.Spawned(id: packet.AID, job: packet.job, name: packet.name)
+            let event = ObjectEvents.Spawned(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_set_unit_idle`
         registerPacket(packet_idle_unit.self, for: packet_header_idle_unitType) { [unowned self] packet in
-            let positionDirection = PositionDirection(data: packet.PosDir)
-            let event = ObjectEvents.Spawned(id: packet.AID, job: packet.job, name: packet.name)
+            let event = ObjectEvents.Spawned(packet: packet)
             self.postEvent(event)
         }
 
@@ -325,7 +324,7 @@ final public class MapClient: ClientBase {
     /// Request move.
     ///
     /// Send ``PACKET_CZ_REQUEST_MOVE``
-    public func requestMove(x: UInt16, y: UInt16) {
+    public func requestMove(x: Int16, y: Int16) {
         var packet = PACKET_CZ_REQUEST_MOVE()
         packet.x = x
         packet.y = y

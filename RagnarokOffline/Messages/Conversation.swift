@@ -51,7 +51,7 @@ class Conversation {
     @ObservationIgnored
     private var charServers: [CharServerInfo] = []
     @ObservationIgnored
-    private var position: SIMD2<UInt16> = [0, 0]
+    private var position: SIMD2<Int16> = [0, 0]
 
     func sendCommand(_ command: CommandMessage.Command, parameters: [String] = []) {
         messages.append(.command(command, parameters: parameters))

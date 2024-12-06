@@ -12,6 +12,7 @@ import rAthenaLogin
 import rAthenaChar
 import rAthenaMap
 import rAthenaResources
+import RODatabase
 @testable import RONetwork
 
 final class ClientTests: XCTestCase {
@@ -192,6 +193,14 @@ final class ClientTests: XCTestCase {
             XCTAssertEqual(event.position, [18, 26])
 
             // Load map.
+            Task {
+                let map = try await MapDatabase.renewal.map(forName: String(event.mapName.dropLast(4)))!
+                let grid = map.grid()!
+                XCTAssertEqual(grid.xs, 80)
+                XCTAssertEqual(grid.ys, 80)
+                XCTAssertTrue(grid.cell(atX: 18, y: 26).isWalkable)
+            }
+
             sleep(1)
 
             self.mapClient.notifyMapLoaded()

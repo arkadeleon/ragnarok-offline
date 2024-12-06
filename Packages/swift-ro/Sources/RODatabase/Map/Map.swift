@@ -52,6 +52,12 @@ extension Map {
         /// Cells.
         public var cells: [Map.Cell]
 
+        public init() {
+            xs = 0
+            ys = 0
+            cells = []
+        }
+
         init?(xs: Int16, ys: Int16, data: [UInt8]) {
             self.xs = xs
             self.ys = ys
@@ -68,8 +74,8 @@ extension Map {
             self.cells = cells
         }
 
-        public func cell(atX x: Int, y: Int) -> Map.Cell {
-            let index = x + y * Int(xs)
+        public func cell(atX x: Int16, y: Int16) -> Map.Cell {
+            let index = Int(x) + Int(y) * Int(xs)
             let cell = cells[index]
             return cell
         }

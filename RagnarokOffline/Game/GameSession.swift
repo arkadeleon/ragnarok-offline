@@ -7,6 +7,7 @@
 
 import Combine
 import Observation
+import RODatabase
 import RONetwork
 import SwiftUI
 
@@ -15,12 +16,13 @@ enum GamePhase {
     case charServerList(_ charServers: [CharServerInfo])
     case charSelect(_ chars: [CharInfo])
     case charMake(_ slot: UInt8)
-    case map(String)
+    case map
 }
 
 @Observable
 final class GameSession {
     var phase: GamePhase = .login
+    var map: GameMap?
 
     @ObservationIgnored
     private var loginClient: LoginClient?
@@ -61,6 +63,10 @@ final class GameSession {
 
     func selectChar(slot: UInt8) {
         charClient?.selectChar(slot: slot)
+    }
+
+    func requestMove(x: Int16, y: Int16) {
+        mapClient?.requestMove(x: x, y: y)
     }
 
     private func connectToLoginServer() {
@@ -112,8 +118,6 @@ final class GameSession {
         charClient.subscribe(to: CharServerEvents.NotifyMapServer.self) { [unowned self] event in
             self.state.charID = event.charID
 
-            self.phase = .map(event.mapName)
-
             self.connectToMapServer(event.mapServer)
 
             self.mapClient?.enter()
@@ -154,17 +158,35 @@ final class GameSession {
         let mapClient = MapClient(state: state, mapServer: mapServer)
 
         mapClient.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
-            // Load map.
+            Task { [self] in
+                let mapName = String(event.mapName.dropLast(4))
+                if let map = try await MapDatabase.renewal.map(forName: mapName),
+                   let grid = map.grid() {
+                    self.phase = .map
+                    self.map = GameMap(name: mapName, grid: grid, position: event.position)
+                }
 
-            self.mapClient?.notifyMapLoaded()
+                self.mapClient?.notifyMapLoaded()
+            }
         }
         .store(in: &subscriptions)
 
-        mapClient.subscribe(to: PlayerEvents.Moved.self) { event in
+        mapClient.subscribe(to: PlayerEvents.Moved.self) { [unowned self] event in
+            Task {
+                await MainActor.run {
+                    self.map?.player.position = [event.moveData.x1, event.moveData.y1]
+                }
+            }
         }
         .store(in: &subscriptions)
 
         mapClient.subscribe(to: PlayerEvents.MessageDisplay.self) { event in
+        }
+        .store(in: &subscriptions)
+
+        mapClient.subscribe(to: ObjectEvents.Spawned.self) { [unowned self] event in
+            let object = GameMap.Object(position: event.position)
+            self.map?.objects.append(object)
         }
         .store(in: &subscriptions)
 

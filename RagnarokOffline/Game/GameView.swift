@@ -21,8 +21,12 @@ struct GameView: View {
                 CharSelectView(chars: chars)
             case .charMake(let slot):
                 CharMakeView(slot: slot)
-            case .map(let mapName):
-                MapView(mapName: mapName)
+            case .map:
+                if let map = gameSession.map {
+                    MapView(map: map)
+                } else {
+                    ProgressView()
+                }
             }
         }
     }
