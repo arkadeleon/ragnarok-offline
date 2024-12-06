@@ -218,9 +218,9 @@ final class ClientTests: XCTestCase {
         }
         .store(in: &subscriptions)
 
-        var spawns: [ObjectEvents.Spawned] = []
-        mapClient.subscribe(to: ObjectEvents.Spawned.self) { event in
-            spawns.append(event)
+        var objects: [MapObject] = []
+        mapClient.subscribe(to: MapObjectEvents.Spawned.self) { event in
+            objects.append(event.object)
         }
         .store(in: &subscriptions)
 
@@ -262,25 +262,25 @@ final class ClientTests: XCTestCase {
 
         sleep(5)
 
-        let woundedSwordsman1 = spawns.first(where: { $0.job == 687 })!
-        mapClient.contactNPC(npcID: woundedSwordsman1.objectID)
+        let woundedSwordsman1 = objects.first(where: { $0.job == 687 })!
+        mapClient.contactNPC(npcID: woundedSwordsman1.id)
 
         sleep(1)
 
-        let woundedSwordsman2 = spawns.first(where: { $0.job == 688 })!
-        mapClient.contactNPC(npcID: woundedSwordsman2.objectID)
+        let woundedSwordsman2 = objects.first(where: { $0.job == 688 })!
+        mapClient.contactNPC(npcID: woundedSwordsman2.id)
 
         sleep(1)
 
-        mapClient.requestNextScript(npcID: woundedSwordsman2.objectID)
+        mapClient.requestNextScript(npcID: woundedSwordsman2.id)
 
         sleep(1)
 
-        mapClient.requestNextScript(npcID: woundedSwordsman2.objectID)
+        mapClient.requestNextScript(npcID: woundedSwordsman2.id)
 
         sleep(1)
 
-        mapClient.closeDialog(npcID: woundedSwordsman2.objectID)
+        mapClient.closeDialog(npcID: woundedSwordsman2.id)
 
         sleep(5)
     }

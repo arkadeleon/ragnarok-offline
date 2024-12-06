@@ -184,7 +184,7 @@ final class GameSession {
         }
         .store(in: &subscriptions)
 
-        mapClient.subscribe(to: ObjectEvents.Spawned.self) { [unowned self] event in
+        mapClient.subscribe(to: MapObjectEvents.Spawned.self) { [unowned self] event in
             let object = GameMap.Object(position: event.position)
             self.map?.objects.append(object)
         }

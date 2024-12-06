@@ -59,9 +59,8 @@ public class ClientBase {
             .compactMap { event in
                 event as? E
             }
-            .sink { event in
-                handler(event)
-            }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: handler)
         return cancellable
     }
 

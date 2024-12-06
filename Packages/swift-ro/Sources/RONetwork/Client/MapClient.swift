@@ -137,49 +137,49 @@ final public class MapClient: ClientBase {
     private func registerObjectPackets() {
         // See `clif_spawn_unit`
         registerPacket(packet_spawn_unit.self, for: packet_header_spawn_unitType) { [unowned self] packet in
-            let event = ObjectEvents.Spawned(packet: packet)
+            let event = MapObjectEvents.Spawned(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_set_unit_idle`
         registerPacket(packet_idle_unit.self, for: packet_header_idle_unitType) { [unowned self] packet in
-            let event = ObjectEvents.Spawned(packet: packet)
+            let event = MapObjectEvents.Spawned(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_set_unit_walking`
         registerPacket(packet_unit_walking.self, for: packet_header_unit_walkingType) { [unowned self] packet in
-            let event = ObjectEvents.Moved(packet: packet)
+            let event = MapObjectEvents.Moved(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_clearunit_single` and `clif_clearunit_area`
         registerPacket(PACKET_ZC_NOTIFY_VANISH.self, for: HEADER_ZC_NOTIFY_VANISH) { [unowned self] packet in
-            let event = ObjectEvents.Vanished(packet: packet)
+            let event = MapObjectEvents.Vanished(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_changed_dir`
         registerPacket(PACKET_ZC_CHANGE_DIRECTION.self, for: HEADER_ZC_CHANGE_DIRECTION) { [unowned self] packet in
-            let event = ObjectEvents.DirectionChanged(packet: packet)
+            let event = MapObjectEvents.DirectionChanged(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_sprite_change`
         registerPacket(PACKET_ZC_SPRITE_CHANGE.self, for: packet_header_sendLookType) { [unowned self] packet in
-            let event = ObjectEvents.SpriteChanged(packet: packet)
+            let event = MapObjectEvents.SpriteChanged(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_changeoption_target`
         registerPacket(PACKET_ZC_STATE_CHANGE.self, for: HEADER_ZC_STATE_CHANGE) { [unowned self] packet in
-            let event = ObjectEvents.StateChanged(packet: packet)
+            let event = MapObjectEvents.StateChanged(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_channel_msg` and `clif_messagecolor_target`
         registerPacket(PACKET_ZC_NPC_CHAT.self, for: HEADER_ZC_NPC_CHAT) { [unowned self] packet in
-            let event = ObjectEvents.MessageDisplay(packet: packet)
+            let event = MapObjectEvents.MessageDisplay(packet: packet)
             self.postEvent(event)
         }
     }
