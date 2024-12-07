@@ -14,9 +14,9 @@ struct MapView: View {
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView([.horizontal, .vertical]) {
-                LazyVStack(spacing: 1) {
+                LazyVStack(spacing: 2) {
                     ForEach(0..<map.grid.ys, id: \.self) { y in
-                        LazyHStack(spacing: 1) {
+                        LazyHStack(spacing: 2) {
                             ForEach(0..<map.grid.xs, id: \.self) { x in
                                 MapCellView(
                                     x: x,
@@ -47,7 +47,7 @@ struct MapView: View {
 //                    }
 //                }
             }
-            .scrollDisabled(true)
+//            .scrollDisabled(true)
             .onAppear {
                 proxy.scrollTo(map.player.position, anchor: .center)
             }
@@ -64,9 +64,10 @@ struct MapView: View {
     }
 
     private func objects(at position: SIMD2<Int16>) -> [GameMap.Object] {
-        map.objects.filter {
-            $0.position == position
+        let objects = map.objects.filter {
+            $0.value.position == position
         }
+        return Array(objects.values)
     }
 }
 

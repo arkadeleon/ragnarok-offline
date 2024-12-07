@@ -23,22 +23,31 @@ struct MapCellView: View {
                 Button {
                     gameSession.requestMove(x: x, y: y)
                 } label: {
-                    Color.green
-                        .frame(width: 20, height: 20)
+                    Color.green.opacity(0.5)
                 }
+                .buttonStyle(.plain)
             } else {
-                Color.gray
-                    .frame(width: 20, height: 20)
-            }
-
-            if let player {
-                Text(verbatim: "P")
-            }
-
-            if let object = objects.last {
-                Text(verbatim: "O")
+                Color.gray.opacity(0.5)
             }
         }
-        .frame(width: 20, height: 20)
+        .frame(width: 32, height: 32)
+        .overlay {
+            if let player {
+                Circle()
+                    .fill(.white)
+                    .frame(width: 30, height: 30)
+            }
+
+            ForEach(objects) { object in
+                if object.effectState != .cloak {
+                    Button {
+                        gameSession.contactNPC(npcID: object.id)
+                    } label: {
+                        Text(object.name)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
     }
 }
