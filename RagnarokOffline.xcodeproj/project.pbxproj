@@ -41,6 +41,8 @@
 		353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */; };
 		353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F172B44FFE100605E92 /* SkillInfoView.swift */; };
 		353B4F1C2B451F1300605E92 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F1B2B451F1300605E92 /* ItemCell.swift */; };
+		354535252D04A8090099B7EF /* GameMapScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354535242D04A8030099B7EF /* GameMapScene.swift */; };
+		354535272D058E1D0099B7EF /* GameNPCDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354535262D058E1B0099B7EF /* GameNPCDialog.swift */; };
 		354668C52CA9338500CE2D11 /* TextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354668C42CA9338000CE2D11 /* TextMessage.swift */; };
 		354668C72CA9344600CE2D11 /* CommandMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354668C62CA9344100CE2D11 /* CommandMessage.swift */; };
 		3546C3D32C6D9DC9002A1321 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3546C3D22C6D9DC9002A1321 /* Conversation.swift */; };
@@ -196,6 +198,8 @@
 		353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillDatabaseView.swift; sourceTree = "<group>"; };
 		353B4F172B44FFE100605E92 /* SkillInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillInfoView.swift; sourceTree = "<group>"; };
 		353B4F1B2B451F1300605E92 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
+		354535242D04A8030099B7EF /* GameMapScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMapScene.swift; sourceTree = "<group>"; };
+		354535262D058E1B0099B7EF /* GameNPCDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNPCDialog.swift; sourceTree = "<group>"; };
 		354668C42CA9338000CE2D11 /* TextMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessage.swift; sourceTree = "<group>"; };
 		354668C62CA9344100CE2D11 /* CommandMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandMessage.swift; sourceTree = "<group>"; };
 		3546C3D22C6D9DC9002A1321 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
@@ -475,9 +479,11 @@
 			children = (
 				3577425C2D005FAA00F2CE8D /* Components */,
 				3577425F2D005FAA00F2CE8D /* Views */,
+				357742612D005FAA00F2CE8D /* GameView.swift */,
 				357742602D005FAA00F2CE8D /* GameSession.swift */,
 				3577426D2D00AD8800F2CE8D /* GameMap.swift */,
-				357742612D005FAA00F2CE8D /* GameView.swift */,
+				354535242D04A8030099B7EF /* GameMapScene.swift */,
+				354535262D058E1B0099B7EF /* GameNPCDialog.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -809,6 +815,8 @@
 				35FEB6AF2CD8C90300F24A4A /* StatusChangeInfoView.swift in Sources */,
 				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,
 				35239DFB2BBEEF890039F7D5 /* JobProvider.swift in Sources */,
+				354535272D058E1D0099B7EF /* GameNPCDialog.swift in Sources */,
+				354535252D04A8090099B7EF /* GameMapScene.swift in Sources */,
 				35B3BA1A2A08C01600B4540B /* FilesView.swift in Sources */,
 				35B3B9F92A08C01600B4540B /* MetalCubeRenderer.swift in Sources */,
 				35FEB6C42CDCBED900F24A4A /* ObservableStatusChange.swift in Sources */,

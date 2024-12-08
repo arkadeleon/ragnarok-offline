@@ -19,8 +19,6 @@ final class GameMap {
 
     var objects: [UInt32 : Object]
 
-    var dialog: Dialog?
-
     init(name: String, grid: Map.Grid, position: SIMD2<Int16>) {
         self.name = name
         self.grid = grid
@@ -67,21 +65,6 @@ extension GameMap {
             self.effectState = object.effectState
 
             self.position = position
-        }
-    }
-}
-
-extension GameMap {
-    @Observable
-    final class Dialog {
-        let npcID: UInt32
-        var message: String
-        var showsNextButton = false
-        var showsCloseButton = false
-
-        init(npcID: UInt32, message: String) {
-            self.npcID = npcID
-            self.message = message
         }
     }
 }
