@@ -50,7 +50,7 @@ struct STRFilePreviewView: View {
             if let texture = texturesByName[textureName] {
                 return texture
             }
-            let texturePath = GRF.Path(string: path.parent.string + "\\" + textureName)
+            let texturePath = path.parent.appending([textureName])
             guard let data = try? grf.contentsOfEntry(at: texturePath) else {
                 return nil
             }

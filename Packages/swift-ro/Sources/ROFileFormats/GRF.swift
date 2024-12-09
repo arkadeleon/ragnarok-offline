@@ -116,8 +116,8 @@ extension GRF {
         static let encryptHeader = EntryType(rawValue: 0x04) // encryption mode 1 (header DES only)
     }
 
-    public struct Entry: Comparable {
-        public var path: Path
+    public struct Entry {
+        public var path: GRF.Path
         public var sizeCompressed: UInt32
         public var sizeCompressedAligned: UInt32
         public var size: UInt32
@@ -162,16 +162,12 @@ extension GRF {
             }
             return data
         }
-
-        public static func < (lhs: GRF.Entry, rhs: GRF.Entry) -> Bool {
-            lhs.path < rhs.path
-        }
     }
 }
 
 extension GRF {
-    public class Path: Comparable, Hashable {
-        public static let effectTextureDirectory = Path(string: "data\\texture\\effect")
+    public class Path: Hashable {
+        public static let effectTextureDirectory = Path(components: ["data", "texture", "effect"])
 
         /// A string representation of the path.
         public let string: String
@@ -202,8 +198,16 @@ extension GRF {
             lastComponent.split(separator: ".").last.map(String.init) ?? ""
         }
 
-        public init(string: String) {
+        init(string: String) {
             self.string = string
+        }
+
+        public init(components: [String]) {
+            self.string = components.joined(separator: "\\")
+        }
+
+        public func appending(_ components: [String]) -> GRF.Path {
+            GRF.Path(string: ([string] + components).joined(separator: "\\"))
         }
 
         /// The result of replacing with the new extension.
@@ -219,10 +223,6 @@ extension GRF {
 
         public static func == (lhs: GRF.Path, rhs: GRF.Path) -> Bool {
             lhs.string == rhs.string
-        }
-
-        public static func < (lhs: GRF.Path, rhs: GRF.Path) -> Bool {
-            lhs.string < rhs.string
         }
     }
 }

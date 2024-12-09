@@ -32,7 +32,7 @@ struct GNDFilePreviewView: View {
         let gat = try GAT(data: gatData)
 
         let groundEntity = try await Entity.loadGround(gat: gat, gnd: gnd) { textureName in
-            let path = GRF.Path(string: "data\\texture\\" + textureName)
+            let path = GRF.Path(components: ["data", "texture", textureName])
             guard let data = try? grf.contentsOfEntry(at: path) else {
                 return nil
             }

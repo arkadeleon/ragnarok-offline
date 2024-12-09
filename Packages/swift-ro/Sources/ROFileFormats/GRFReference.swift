@@ -63,11 +63,11 @@ public class GRFReference {
 
         let directories = directories
             .filter { $0.parent == directory }
-            .sorted()
+            .sorted(using: KeyPathComparator(\.string))
 
         let entries = grf.table.entries
             .filter { $0.path.parent == directory }
-            .sorted()
+            .sorted(using: KeyPathComparator(\.path.string))
 
         print("Finish loading contents of directory (\(Date().timeIntervalSince(start))")
 

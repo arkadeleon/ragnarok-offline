@@ -30,16 +30,16 @@ struct RSWFilePreviewView: View {
 
         let rsw = try RSW(data: data)
 
-        let gatPath = GRF.Path(string: "data\\" + rsw.files.gat)
+        let gatPath = GRF.Path(components: ["data", rsw.files.gat])
         let gatData = try grf.contentsOfEntry(at: gatPath)
         let gat = try GAT(data: gatData)
 
-        let gndPath = GRF.Path(string: "data\\" + rsw.files.gnd)
+        let gndPath = GRF.Path(components: ["data", rsw.files.gnd])
         let gndData = try grf.contentsOfEntry(at: gndPath)
         let gnd = try GND(data: gndData)
 
         let groundEntity = try await Entity.loadGround(gat: gat, gnd: gnd) { textureName in
-            let path = GRF.Path(string: "data\\texture\\" + textureName)
+            let path = GRF.Path(components: ["data", "texture", textureName])
             guard let data = try? grf.contentsOfEntry(at: path) else {
                 return nil
             }
@@ -48,7 +48,7 @@ struct RSWFilePreviewView: View {
         }
 
 //        let water = Water(gnd: gnd, rsw: rsw) { textureName in
-//            let path = GRF.Path(string: "data\\texture\\" + textureName)
+//            let path = GRF.Path(components: ["data", "texture", textureName])
 //            guard let data = try? grf.contentsOfEntry(at: path) else {
 //                return nil
 //            }
@@ -60,7 +60,7 @@ struct RSWFilePreviewView: View {
 
         for model in rsw.models {
             if !modelEntitiesByName.contains(where: { $0.key == model.modelName }) {
-                let path = GRF.Path(string: "data\\model\\" + model.modelName)
+                let path = GRF.Path(components: ["data", "model", model.modelName])
                 let data = try grf.contentsOfEntry(at: path)
                 let rsm = try RSM(data: data)
 
@@ -73,7 +73,7 @@ struct RSWFilePreviewView: View {
                 )
 
                 let modelEntity = try await Entity.loadModel(rsm: rsm, instance: instance) { textureName in
-                    let path = GRF.Path(string: "data\\texture\\" + textureName)
+                    let path = GRF.Path(components: ["data", "texture", textureName])
                     guard let data = try? grf.contentsOfEntry(at: path) else {
                         return nil
                     }

@@ -22,22 +22,22 @@ struct GameImage: View {
             }
         }
         .task {
-            let path = "data/texture/유저인터페이스/\(name)"
+            let components = ["data", "texture", "유저인터페이스", name]
 
-            let url = ClientResourceManager.default.baseURL.appending(path: path)
+            let url = ClientResourceManager.default.baseURL.appending(component: components.joined(separator: "/"))
             if FileManager.default.fileExists(atPath: url.path()),
                let data = try? Data(contentsOf: url) {
                 image = CGImageCreateWithData(data)?.removingMagentaPixels()
                 return
             }
 
-            let grfPath = GRF.Path(string: path.replacingOccurrences(of: "/", with: "\\"))
+            let grfPath = GRF.Path(components: components)
             if let image = await ClientResourceManager.default.image(forBMPPath: grfPath) {
                 self.image = image
                 return
             }
 
-            if let url = Bundle.main.resourceURL?.appending(path: path),
+            if let url = Bundle.main.resourceURL?.appending(component: components.joined(separator: "/")),
                let data = try? Data(contentsOf: url) {
                 image = CGImageCreateWithData(data)?.removingMagentaPixels()
             }

@@ -111,7 +111,7 @@ public enum File {
         case .regularFile:
             return []
         case .grf(let grf):
-            let file = File.grfDirectory(grf, GRF.Path(string: "data"))
+            let file = File.grfDirectory(grf, GRF.Path(components: ["data"]))
             return file.files()
         case .grfDirectory(let grf, let directory):
             var files: [File] = []
