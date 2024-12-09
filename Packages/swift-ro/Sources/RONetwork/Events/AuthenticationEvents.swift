@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/9/25.
 //
 
+import ROGenerated
 import ROLocalizations
 
 public enum AuthenticationEvents {
@@ -12,7 +13,7 @@ public enum AuthenticationEvents {
         public let message: String
 
         init(packet: PACKET_SC_NOTIFY_BAN) {
-            let messageCode = switch packet.errorCode {
+            let messageCode = switch packet.result {
             case   0: 3     // Server closed
             case   1: 4     // Server closed
             case   2: 5     // Someone has already logged in with this id

@@ -60,6 +60,12 @@ final public class MapClient: ClientBase {
         // See `clif_broadcast2`
         registerPacket(PACKET_ZC_BROADCAST2.self, for: HEADER_ZC_BROADCAST2) { packet in
         }
+
+        // See `clif_authfail_fd`
+        registerPacket(PACKET_SC_NOTIFY_BAN.self, for: HEADER_SC_NOTIFY_BAN) { [unowned self] packet in
+            let event = AuthenticationEvents.Banned(packet: packet)
+            self.postEvent(event)
+        }
     }
 
     private func registerMapConnectionPackets() {

@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import ROGenerated
 
 final public class CharClient: ClientBase {
     public let state: ClientState
@@ -38,7 +39,7 @@ final public class CharClient: ClientBase {
         }
 
         // See `chclif_send_auth_result`
-        registerPacket(PACKET_SC_NOTIFY_BAN.self, for: PACKET_SC_NOTIFY_BAN.packetType) { [unowned self] packet in
+        registerPacket(PACKET_SC_NOTIFY_BAN.self, for: HEADER_SC_NOTIFY_BAN) { [unowned self] packet in
             let event = AuthenticationEvents.Banned(packet: packet)
             self.postEvent(event)
         }

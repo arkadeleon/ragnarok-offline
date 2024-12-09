@@ -8,7 +8,8 @@
 import ROCore
 
 /// See `logclif_sent_auth_result` or `chclif_send_auth_result` or `clif_authfail_fd`
-public struct PACKET_SC_NOTIFY_BAN: DecodablePacket {
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
+public struct _PACKET_SC_NOTIFY_BAN: DecodablePacket {
     public static var packetType: Int16 {
         0x81
     }
