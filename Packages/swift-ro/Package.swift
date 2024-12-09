@@ -86,9 +86,6 @@ let package = Package(
             dependencies: [
                 "DataCompression",
                 "ROCore",
-            ],
-            swiftSettings: [
-                .swiftLanguageMode(.v5),
             ]),
         .testTarget(
             name: "ROFileFormatsTests",

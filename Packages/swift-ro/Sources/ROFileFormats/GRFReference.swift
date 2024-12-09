@@ -90,7 +90,7 @@ public class GRFReference {
 
     public func contentsOfEntry(at path: GRF.Path) throws -> Data {
         guard let entry = entry(at: path) else {
-            throw GRFError.invalidPath(path)
+            throw GRFError.invalidPath(path.string)
         }
 
         let stream = try FileStream(url: url)

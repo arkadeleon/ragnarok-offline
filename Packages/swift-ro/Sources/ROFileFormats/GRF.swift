@@ -12,7 +12,7 @@ import ROCore
 
 public enum GRFError: Error {
     case invalidVersion(UInt32)
-    case invalidPath(GRF.Path)
+    case invalidPath(String)
     case dataCorrupted(Data)
 }
 
