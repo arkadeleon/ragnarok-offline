@@ -8,6 +8,7 @@
 import ROCore
 
 /// See `clif_cartcount`
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
 public struct _PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO: DecodablePacket {
     public static var packetType: Int16 {
         0x121

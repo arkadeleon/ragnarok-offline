@@ -8,6 +8,7 @@
 import ROCore
 
 /// See `clif_attackrange`
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
 public struct _PACKET_ZC_ATTACK_RANGE: DecodablePacket {
     public static var packetType: Int16 {
         0x13a

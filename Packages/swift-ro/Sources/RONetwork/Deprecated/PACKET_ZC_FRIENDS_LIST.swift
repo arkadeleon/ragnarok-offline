@@ -8,6 +8,7 @@
 import ROCore
 
 /// See `clif_friendslist_send`
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
 public struct _PACKET_ZC_FRIENDS_LIST: DecodablePacket {
     public static var packetType: Int16 {
         0x201
@@ -34,6 +35,7 @@ public struct _PACKET_ZC_FRIENDS_LIST: DecodablePacket {
     }
 }
 
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
 extension _PACKET_ZC_FRIENDS_LIST {
     public struct _FriendInfo: BinaryDecodable {
         public var accountID: UInt32

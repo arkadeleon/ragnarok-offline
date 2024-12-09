@@ -8,6 +8,7 @@
 import ROCore
 
 /// See `clif_changed_dir`
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
 public struct _PACKET_ZC_CHANGE_DIRECTION: DecodablePacket {
     public static var packetType: Int16 {
         0x9c

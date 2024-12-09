@@ -9,7 +9,7 @@ import ROGenerated
 
 let packetDatabase = PacketDatabase()
 
-class PacketDatabase {
+final class PacketDatabase: Sendable {
     struct Entry {
         var packetType: Int16
         var packetLength: Int16

@@ -7,6 +7,7 @@
 
 import ROCore
 
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
 public struct _EquipItemInfo: BinaryDecodable, Sendable {
     public var index: Int16
     public var itemID: UInt32

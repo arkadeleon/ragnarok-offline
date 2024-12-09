@@ -8,6 +8,7 @@
 import ROCore
 
 /// See `clif_walkok`
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
 public struct _PACKET_ZC_NOTIFY_PLAYERMOVE: DecodablePacket {
     public static var packetType: Int16 {
         0x87

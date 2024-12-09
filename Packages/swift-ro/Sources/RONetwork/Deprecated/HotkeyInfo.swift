@@ -7,6 +7,7 @@
 
 import ROCore
 
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
 public struct _HotkeyInfo: BinaryDecodable, Sendable {
 
     /// 0: Item, 1: Skill

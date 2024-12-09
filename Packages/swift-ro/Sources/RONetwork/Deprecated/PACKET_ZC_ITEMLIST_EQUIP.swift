@@ -8,6 +8,7 @@
 import ROCore
 
 /// See `clif_inventorylist`
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
 public struct _PACKET_ZC_ITEMLIST_EQUIP: DecodablePacket {
     public static var packetType: Int16 {
         if PACKET_VERSION_MAIN_NUMBER >= 20200916 || PACKET_VERSION_RE_NUMBER >= 20200723 || PACKET_VERSION_ZERO_NUMBER >= 20221024 {

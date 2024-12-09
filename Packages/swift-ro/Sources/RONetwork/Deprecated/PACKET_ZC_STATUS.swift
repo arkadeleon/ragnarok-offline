@@ -8,6 +8,7 @@
 import ROCore
 
 /// See `clif_initialstatus`
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
 public struct _PACKET_ZC_STATUS: DecodablePacket {
     public static var packetType: Int16 {
         0xbd
