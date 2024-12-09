@@ -13,7 +13,7 @@ import SpriteKit
 class GameMapScene: SKScene {
     var positionTapHandler: ((SIMD2<Int16>) -> Void)?
 
-    private let tileSize = 32
+    private let tileSize = 20
 
     private let grid: Map.Grid
     private let playerNode: SKNode
@@ -24,7 +24,7 @@ class GameMapScene: SKScene {
 
         let playerNode = SKSpriteNode()
         playerNode.position = CGPoint(x: Int(position.x) * tileSize, y: Int(position.y) * tileSize)
-        playerNode.zPosition = 1
+        playerNode.zPosition = 2
         playerNode.color = .white
         playerNode.anchorPoint = CGPoint(x: 0, y: 0)
         playerNode.size = CGSize(width: tileSize, height: tileSize)
@@ -98,6 +98,7 @@ class GameMapScene: SKScene {
     func addObject(_ object: MapObject, at position: SIMD2<Int16>) {
         let objectNode = SKLabelNode()
         objectNode.position = CGPoint(x: Int(position.x) * tileSize, y: Int(position.y) * tileSize)
+        objectNode.zPosition = 1
         objectNode.isHidden = (object.effectState == .cloak)
         objectNode.text = object.name
         objectNodes[object.id] = objectNode

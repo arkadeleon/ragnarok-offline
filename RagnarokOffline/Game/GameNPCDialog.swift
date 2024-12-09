@@ -19,3 +19,14 @@ final class GameNPCDialog {
         self.message = message
     }
 }
+
+@Observable
+final class GameNPCMenuDialog {
+    let npcID: UInt32
+    let items: [String]
+
+    init(npcID: UInt32, items: [String]) {
+        self.npcID = npcID
+        self.items = items
+    }
+}

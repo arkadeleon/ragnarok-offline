@@ -27,6 +27,7 @@ final class GameSession {
     var mapScene: GameMapScene?
 
     var npcDialog: GameNPCDialog?
+    var npcMenuDialog: GameNPCMenuDialog?
 
     @ObservationIgnored
     private var loginClient: LoginClient?
@@ -87,6 +88,12 @@ final class GameSession {
         npcDialog = nil
 
         mapClient?.closeDialog(npcID: npcID)
+    }
+
+    func selectMenu(npcID: UInt32, select: UInt8) {
+        npcMenuDialog = nil
+
+        mapClient?.selectMenu(npcID: npcID, select: select)
     }
 
     private func connectToLoginServer() {
@@ -181,21 +188,11 @@ final class GameSession {
             self.phase = .map
             self.mapObjects.removeAll()
             self.mapScene = nil
+            self.npcDialog = nil
+            self.npcMenuDialog = nil
 
             Task { [self] in
-                let mapName = String(event.mapName.dropLast(4))
-                if let map = try await MapDatabase.renewal.map(forName: mapName),
-                   let grid = map.grid() {
-                    await MainActor.run {
-                        let mapScene = GameMapScene(name: mapName, grid: grid, position: event.position)
-                        mapScene.positionTapHandler = { [unowned self] position in
-                            self.requestMove(x: position.x, y: position.y)
-                        }
-                        self.mapScene = mapScene
-                    }
-                }
-
-                self.mapClient?.notifyMapLoaded()
+                try await self.loadMap(event)
             }
         }
         .store(in: &subscriptions)
@@ -253,33 +250,60 @@ final class GameSession {
         // NPCEvents
 
         mapClient.subscribe(to: NPCEvents.DisplayDialog.self) { [unowned self] event in
-            if let dialog = self.npcDialog, dialog.npcID == event.npcID {
-                dialog.message.append("\n")
-                dialog.message.append(event.message)
+            if let npcDialog, npcDialog.npcID == event.npcID {
+                npcDialog.message.append("\n")
+                npcDialog.message.append(event.message)
             } else {
-                let dialog = GameNPCDialog(npcID: event.npcID, message: event.message)
-                self.npcDialog = dialog
+                let npcDialog = GameNPCDialog(npcID: event.npcID, message: event.message)
+                self.npcDialog = npcDialog
             }
         }
         .store(in: &subscriptions)
 
         mapClient.subscribe(to: NPCEvents.AddNextButton.self) { [unowned self] event in
-            if let dialog = self.npcDialog, dialog.npcID == event.npcID {
-                dialog.showsNextButton = true
+            if let npcDialog, npcDialog.npcID == event.npcID {
+                npcDialog.showsNextButton = true
             }
         }
         .store(in: &subscriptions)
 
         mapClient.subscribe(to: NPCEvents.AddCloseButton.self) { [unowned self] event in
-            if let dialog = self.npcDialog, dialog.npcID == event.npcID {
-                dialog.showsCloseButton = true
+            if let npcDialog, npcDialog.npcID == event.npcID {
+                npcDialog.showsCloseButton = true
             }
+        }
+        .store(in: &subscriptions)
+
+        mapClient.subscribe(to: NPCEvents.DisplayMenuDialog.self) { [unowned self] event in
+            self.npcDialog = nil
+            self.npcMenuDialog = GameNPCMenuDialog(npcID: event.npcID, items: event.items)
         }
         .store(in: &subscriptions)
 
         mapClient.connect()
 
         self.mapClient = mapClient
+    }
+
+    private func loadMap(_ event: MapEvents.Changed) async throws {
+        let mapName = String(event.mapName.dropLast(4))
+
+        if let map = try await MapDatabase.renewal.map(forName: mapName),
+           let grid = map.grid() {
+            await MainActor.run {
+                let mapScene = GameMapScene(name: mapName, grid: grid, position: event.position)
+                mapScene.positionTapHandler = { [unowned self] position in
+                    if let object = self.mapObjects.values.first(where: { $0.position == position && $0.effectState != .cloak }) {
+                        self.contactNPC(npcID: object.id)
+                    } else {
+                        self.requestMove(x: position.x, y: position.y)
+                    }
+                }
+                self.mapScene = mapScene
+            }
+        }
+
+        mapClient?.notifyMapLoaded()
     }
 }
 
