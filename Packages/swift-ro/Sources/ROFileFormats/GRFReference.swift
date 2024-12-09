@@ -27,6 +27,9 @@ public class GRFReference {
             return []
         }
 
+        let start = Date()
+        print("Start loading directories: \(url)")
+
         var directories = Set(grf.table.entries.map({ $0.path.parent }))
         for directory in directories {
             var parent = directory
@@ -36,6 +39,8 @@ public class GRFReference {
             } while !parent.string.isEmpty
         }
 
+        print("Finish loading directories (\(Date().timeIntervalSince(start))")
+
         return directories
     }()
 
@@ -44,7 +49,12 @@ public class GRFReference {
             return [:]
         }
 
+        let start = Date()
+        print("Start loading entries: \(url)")
+
         let entries = Dictionary(grf.table.entries.map({ ($0.path.string.uppercased(), $0) }), uniquingKeysWith: { (first, _) in first })
+
+        print("Finish loading entries (\(Date().timeIntervalSince(start))")
 
         return entries
     }()

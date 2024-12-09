@@ -17,8 +17,8 @@ public enum GRFError: Error {
 }
 
 public struct GRF {
-    public var header: Header
-    public var table: Table
+    public var header: GRF.Header
+    public var table: GRF.Table
 
     public init(url: URL) throws {
         let stream = try FileStream(url: url)
@@ -28,17 +28,17 @@ public struct GRF {
 
         let decoder = BinaryDecoder(stream: stream)
 
-        header = try decoder.decode(Header.self)
+        header = try decoder.decode(GRF.Header.self)
 
         try stream.seek(Int(header.fileTableOffset), origin: .current)
 
-        table = try decoder.decode(Table.self, configuration: header)
+        table = try decoder.decode(GRF.Table.self, configuration: header)
     }
 }
 
 extension GRF {
     public struct Header: BinaryDecodable {
-        static let size: Int = 0x2e
+        static let size = 0x2e
 
         public var magic: String
         public var key: [UInt8]
@@ -66,12 +66,12 @@ extension GRF {
 
 extension GRF {
     public struct Table: BinaryDecodableWithConfiguration {
-        static let size: UInt64 = 0x08
+        static let size = 0x08
 
         public var tableSizeCompressed: UInt32
         public var tableSize: UInt32
 
-        public var entries: [Entry] = []
+        public var entries: [GRF.Entry] = []
 
         public init(from decoder: BinaryDecoder, configuration header: GRF.Header) throws {
             switch header.version {
@@ -88,9 +88,9 @@ extension GRF {
 
                 var position = 0
                 for _ in 0..<header.fileCount {
-                    let entry = try Entry(data: data, position: &position)
+                    let entry = try GRF.Entry(data: data, position: &position)
 
-                    if entry.type & EntryType.file.rawValue == 0 {
+                    if entry.type & GRF.EntryType.file.rawValue == 0 {
                         continue
                     }
 
@@ -111,9 +111,9 @@ extension GRF {
             self.rawValue = rawValue
         }
 
-        static let file          = EntryType(rawValue: 0x01) // entry is a file
-        static let encryptMixed  = EntryType(rawValue: 0x02) // encryption mode 0 (header DES + periodic DES/shuffle)
-        static let encryptHeader = EntryType(rawValue: 0x04) // encryption mode 1 (header DES only)
+        static let file          = GRF.EntryType(rawValue: 0x01) // entry is a file
+        static let encryptMixed  = GRF.EntryType(rawValue: 0x02) // encryption mode 0 (header DES + periodic DES/shuffle)
+        static let encryptHeader = GRF.EntryType(rawValue: 0x04) // encryption mode 1 (header DES only)
     }
 
     public struct Entry {
@@ -130,7 +130,7 @@ extension GRF {
             }
 
             let name = String(data: data[position..<index], encoding: .koreanEUC) ?? ""
-            path = Path(string: name)
+            path = GRF.Path(string: name)
 
             position = index + 1
 
@@ -144,7 +144,7 @@ extension GRF {
         }
 
         public func data(from stream: any ROCore.Stream) throws -> Data {
-            try stream.seek(Header.size + Int(offset), origin: .begin)
+            try stream.seek(GRF.Header.size + Int(offset), origin: .begin)
 
             let decoder = BinaryDecoder(stream: stream)
             var bytes = try decoder.decode([UInt8].self, count: Int(sizeCompressedAligned))
@@ -167,8 +167,6 @@ extension GRF {
 
 extension GRF {
     public class Path: Hashable {
-        public static let effectTextureDirectory = Path(components: ["data", "texture", "effect"])
-
         /// A string representation of the path.
         public let string: String
 
