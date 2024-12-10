@@ -8,7 +8,8 @@
 import ROCore
 
 /// See `logclif_parse_reqauth_raw`
-public struct PACKET_CA_LOGIN: EncodablePacket {
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
+public struct _PACKET_CA_LOGIN: EncodablePacket {
     public var packetType: Int16 {
         0x64
     }

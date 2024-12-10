@@ -42,9 +42,13 @@ final public class LoginClient: ClientBase {
     ///         ``PACKET_AC_REFUSE_LOGIN`` or
     ///         ``PACKET_SC_NOTIFY_BAN``
     public func login(username: String, password: String) {
+        // See `logclif_parse_reqauth_raw`
         var packet = PACKET_CA_LOGIN()
+        packet.packetType = HEADER_CA_LOGIN
+        packet.version = 0
         packet.username = username
         packet.password = password
+        packet.clienttype = 0
 
         sendPacket(packet)
 
@@ -58,7 +62,9 @@ final public class LoginClient: ClientBase {
         timerSubscription = Timer.publish(every: 10, on: .main, in: .common)
             .autoconnect()
             .sink { [weak self] _ in
+                // See `logclif_parse_keepalive`
                 var packet = PACKET_CA_CONNECT_INFO_CHANGED()
+                packet.packetType = HEADER_CA_CONNECT_INFO_CHANGED
                 packet.name = username
 
                 self?.sendPacket(packet)

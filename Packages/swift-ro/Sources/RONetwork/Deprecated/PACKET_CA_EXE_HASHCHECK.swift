@@ -7,7 +7,8 @@
 
 import ROCore
 
-public struct PACKET_CA_EXE_HASHCHECK: EncodablePacket {
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
+public struct _PACKET_CA_EXE_HASHCHECK: EncodablePacket {
     public var packetType: Int16 {
         0x204
     }

@@ -8,7 +8,8 @@
 import ROCore
 
 /// See `logclif_parse_keepalive`
-public struct PACKET_CA_CONNECT_INFO_CHANGED: EncodablePacket {
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
+public struct _PACKET_CA_CONNECT_INFO_CHANGED: EncodablePacket {
     public var packetType: Int16 {
         0x200
     }
