@@ -15,14 +15,14 @@ final public class LoginClient: ClientBase {
     public init() {
         super.init(port: 6900)
 
-        // 0x69, 0xac4
-        registerPacket(PACKET_AC_ACCEPT_LOGIN.self, for: PACKET_AC_ACCEPT_LOGIN.packetType) { [unowned self] packet in
+        // See `logclif_auth_ok`
+        registerPacket(PACKET_AC_ACCEPT_LOGIN.self, for: HEADER_AC_ACCEPT_LOGIN) { [unowned self] packet in
             let event = LoginEvents.Accepted(packet: packet)
             self.postEvent(event)
         }
 
-        // 0x6a, 0x83e
-        registerPacket(PACKET_AC_REFUSE_LOGIN.self, for: PACKET_AC_REFUSE_LOGIN.packetType) { [unowned self] packet in
+        // See `logclif_auth_failed`
+        registerPacket(PACKET_AC_REFUSE_LOGIN.self, for: HEADER_AC_REFUSE_LOGIN) { [unowned self] packet in
             let event = LoginEvents.Refused(packet: packet)
             self.postEvent(event)
         }

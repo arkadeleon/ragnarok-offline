@@ -8,7 +8,8 @@
 import ROCore
 
 /// See `logclif_auth_failed`
-public struct PACKET_AC_REFUSE_LOGIN: DecodablePacket {
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
+public struct _PACKET_AC_REFUSE_LOGIN: DecodablePacket {
     public static var packetType: Int16 {
         if PACKET_VERSION >= 20120000 {
             0x83e

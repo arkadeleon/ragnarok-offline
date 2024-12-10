@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/9/24.
 //
 
+import ROGenerated
 import ROLocalizations
 
 public enum LoginEvents {
@@ -16,11 +17,11 @@ public enum LoginEvents {
         public let charServers: [CharServerInfo]
 
         init(packet: PACKET_AC_ACCEPT_LOGIN) {
-            self.accountID = packet.accountID
-            self.loginID1 = packet.loginID1
-            self.loginID2 = packet.loginID2
+            self.accountID = packet.AID
+            self.loginID1 = packet.login_id1
+            self.loginID2 = packet.login_id2
             self.sex = packet.sex
-            self.charServers = packet.charServers
+            self.charServers = packet.char_servers.map(CharServerInfo.init)
         }
     }
 
@@ -28,7 +29,7 @@ public enum LoginEvents {
         public let message: String
 
         init(packet: PACKET_AC_REFUSE_LOGIN) {
-            let messageCode = switch packet.errorCode {
+            let messageCode = switch packet.error {
             case   0: 6     // Unregistered ID
             case   1: 7     // Incorrect Password
             case   2: 8     // This ID is expired
@@ -55,7 +56,7 @@ public enum LoginEvents {
             }
 
             self.message = MessageStringTable.shared.localizedMessageString(at: messageCode)
-                .replacingOccurrences(of: "%s", with: packet.unblockTime)
+                .replacingOccurrences(of: "%s", with: packet.unblock_time)
         }
     }
 }

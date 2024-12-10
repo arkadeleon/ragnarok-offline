@@ -8,7 +8,8 @@
 import ROCore
 
 /// See `logclif_auth_ok`
-public struct PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
+public struct _PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
     public static var packetType: Int16 {
         if PACKET_VERSION >= 20170315 {
             0xac4
@@ -28,7 +29,7 @@ public struct PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
     public var lastLoginTime: String
     public var sex: UInt8
     public var token: [UInt8]
-    public var charServers: [CharServerInfo]
+    public var charServers: [_CharServerInfo]
 
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
@@ -37,9 +38,9 @@ public struct PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
 
         let charServerCount: Int16
         if PACKET_VERSION >= 20170315 {
-            charServerCount = (packetLength - 64) / CharServerInfo.decodedLength
+            charServerCount = (packetLength - 64) / _CharServerInfo.decodedLength
         } else {
-            charServerCount = (packetLength - 47) / CharServerInfo.decodedLength
+            charServerCount = (packetLength - 47) / _CharServerInfo.decodedLength
         }
 
         loginID1 = try decoder.decode(UInt32.self)
@@ -57,8 +58,33 @@ public struct PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
 
         charServers = []
         for _ in 0..<charServerCount {
-            let charServer = try decoder.decode(CharServerInfo.self)
+            let charServer = try decoder.decode(_CharServerInfo.self)
             charServers.append(charServer)
+        }
+    }
+}
+
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
+extension _PACKET_AC_ACCEPT_LOGIN {
+    public struct _CharServerInfo: BinaryDecodable, Sendable {
+        public var ip: UInt32
+        public var port: UInt16
+        public var name: String
+        public var userCount: UInt16
+        public var state: UInt16
+        public var property: UInt16
+        
+        public init(from decoder: BinaryDecoder) throws {
+            ip = try decoder.decode(UInt32.self)
+            port = try decoder.decode(UInt16.self)
+            name = try decoder.decode(String.self, lengthOfBytes: 20)
+            userCount = try decoder.decode(UInt16.self)
+            state = try decoder.decode(UInt16.self)
+            property = try decoder.decode(UInt16.self)
+            
+            if PACKET_VERSION >= 20170315 {
+                _ = try decoder.decode([UInt8].self, count: 128)
+            }
         }
     }
 }
