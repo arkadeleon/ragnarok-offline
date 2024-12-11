@@ -6,7 +6,6 @@
 //
 
 import XCTest
-import Combine
 import OSLog
 import rAthenaLogin
 import rAthenaChar
@@ -18,28 +17,25 @@ import RODatabase
 final class ClientTests: XCTestCase {
     let logger = Logger(subsystem: "RONetworkTests", category: "ClientTests")
 
-    var loginClient: LoginClient!
-    var charClient: CharClient!
-    var mapClient: MapClient!
-
-    var subscriptions = Set<AnyCancellable>()
-
     override func setUp() async throws {
         let url = ServerResourceManager.default.workingDirectoryURL
         try FileManager.default.removeItem(at: url)
 
         try ServerResourceManager.default.prepareWorkingDirectory()
 
-        NotificationCenter.default.publisher(for: .ServerDidOutputData, object: nil)
-            .map { $0.userInfo![ServerOutputDataKey] as! Data }
-            .compactMap { data in
-                String(data: data, encoding: .isoLatin1)?
-                    .replacingOccurrences(of: "\n", with: "\r\n")
+        Task {
+            let messages = NotificationCenter.default.notifications(named: .ServerDidOutputData)
+                .map { notification in
+                    notification.userInfo![ServerOutputDataKey] as! Data
+                }
+                .compactMap { data in
+                    String(data: data, encoding: .isoLatin1)?
+                        .replacingOccurrences(of: "\n", with: "\r\n")
+                }
+            for await message in messages {
+//                logger.info("\(message)")
             }
-            .sink { [weak self] string in
-//                self?.logger.info("\(string)")
-            }
-            .store(in: &subscriptions)
+        }
 
         async let login = LoginServer.shared.start()
         async let char = CharServer.shared.start()
@@ -63,11 +59,15 @@ final class ClientTests: XCTestCase {
 
         // MARK: - Login
 
-        let loginExpectation = expectation(description: "Login")
+        let loginClient = LoginClient()
 
-        loginClient = LoginClient()
+        loginClient.connect()
 
-        loginClient.subscribe(to: LoginEvents.Accepted.self) { event in
+        let username = "ragnarok_m"
+        let password = "ragnarok"
+        loginClient.login(username: username, password: password)
+
+        for await event in loginClient.eventStream(for: LoginEvents.Accepted.self).prefix(1) {
             XCTAssertEqual(event.charServers.count, 1)
 
             state.accountID = event.accountID
@@ -76,83 +76,21 @@ final class ClientTests: XCTestCase {
             state.sex = event.sex
 
             charServer = event.charServers[0]
-
-            loginExpectation.fulfill()
         }
-        .store(in: &subscriptions)
 
-        loginClient.subscribe(to: LoginEvents.Refused.self) { _ in
-            XCTAssert(false)
-        }
-        .store(in: &subscriptions)
+        // MARK: - Enter char
 
-        loginClient.subscribe(to: AuthenticationEvents.Banned.self) { _ in
-            XCTAssert(false)
-        }
-        .store(in: &subscriptions)
-
-        loginClient.subscribe(to: ConnectionEvents.ErrorOccurred.self) { event in
-            self.logger.error("\(event.error)")
-        }
-        .store(in: &subscriptions)
-
-        loginClient.connect()
-
-        let username = "ragnarok_m"
-        let password = "ragnarok"
-        loginClient.login(username: username, password: password)
-
-        await fulfillment(of: [loginExpectation])
-
-        // MARK: - Enter Char
-
-        let enterCharExpectation = expectation(description: "EnterChar")
-
-        charClient = CharClient(state: state, charServer: charServer!)
-
-        charClient.subscribe(to: CharServerEvents.Accepted.self) { event in
-            XCTAssertEqual(event.chars.count, 0)
-
-            enterCharExpectation.fulfill()
-        }
-        .store(in: &subscriptions)
-
-        charClient.subscribe(to: CharServerEvents.Refused.self) { _ in
-            XCTAssert(false)
-        }
-        .store(in: &subscriptions)
-
-        charClient.subscribe(to: AuthenticationEvents.Banned.self) { _ in
-            XCTAssert(false)
-        }
-        .store(in: &subscriptions)
-
-        charClient.subscribe(to: ConnectionEvents.ErrorOccurred.self) { event in
-            self.logger.error("\(event.error)")
-        }
-        .store(in: &subscriptions)
+        let charClient = CharClient(state: state, charServer: charServer!)
 
         charClient.connect()
 
         charClient.enter()
 
-        await fulfillment(of: [enterCharExpectation])
-
-        // MARK: - Make Char
-
-        let makeCharExpectation = expectation(description: "MakeChar")
-
-        charClient.subscribe(to: CharEvents.MakeAccepted.self) { event in
-            XCTAssertEqual(event.char.name, "Leon")
-
-            makeCharExpectation.fulfill()
+        for await event in charClient.eventStream(for: CharServerEvents.Accepted.self).prefix(1) {
+            XCTAssertEqual(event.chars.count, 0)
         }
-        .store(in: &subscriptions)
 
-        charClient.subscribe(to: CharEvents.MakeRefused.self) { _ in
-            XCTAssert(false)
-        }
-        .store(in: &subscriptions)
+        // MARK: - Make a char
 
         var char = CharInfo()
         char.name = "Leon"
@@ -164,65 +102,41 @@ final class ClientTests: XCTestCase {
         char.luk = 1
         charClient.makeChar(char: char)
 
-        await fulfillment(of: [makeCharExpectation])
-
-        // MARK: - Select Char
-
-        let selectCharExpectation = expectation(description: "SelectChar")
-
-        charClient.subscribe(to: CharServerEvents.NotifyMapServer.self) { event in
-            state.charID = event.charID
-
-            mapServer = event.mapServer
-
-            selectCharExpectation.fulfill()
+        for await event in charClient.eventStream(for: CharEvents.MakeAccepted.self).prefix(1) {
+            XCTAssertEqual(event.char.name, "Leon")
         }
-        .store(in: &subscriptions)
+
+        // MARK: - Select a char
 
         charClient.selectChar(slot: 0)
 
-        await fulfillment(of: [selectCharExpectation])
+        for await event in charClient.eventStream(for: CharServerEvents.NotifyMapServer.self).prefix(1) {
+            state.charID = event.charID
 
-        // MARK: - Enter Map
-
-        let enterMapExpectation = expectation(description: "EnterMap")
-
-        mapClient = MapClient(state: state, mapServer: mapServer!)
-
-        var mapChangedEvent = mapClient.subscribe(to: MapEvents.Changed.self) { event in
-            XCTAssertEqual(event.position, [18, 26])
-
-            // Load map.
-            Task {
-                let map = try await MapDatabase.renewal.map(forName: String(event.mapName.dropLast(4)))!
-                let grid = map.grid()!
-                XCTAssertEqual(grid.xs, 80)
-                XCTAssertEqual(grid.ys, 80)
-                XCTAssertTrue(grid.cell(atX: 18, y: 26).isWalkable)
-            }
-
-            sleep(1)
-
-            self.mapClient.notifyMapLoaded()
-
-            enterMapExpectation.fulfill()
+            mapServer = event.mapServer
         }
 
-        mapClient.subscribe(to: PlayerEvents.StatusPropertyChanged.self) { event in
-            switch event.sp {
-            case .str, .agi, .vit, .int, .dex, .luk:
-                XCTAssertEqual(event.value, 1)
-            default:
-                break
+        // MARK: - Enter map
+
+        let mapClient = MapClient(state: state, mapServer: mapServer!)
+
+        Task {
+            for await event in mapClient.eventStream(for: PlayerEvents.StatusPropertyChanged.self) {
+                switch event.sp {
+                case .str, .agi, .vit, .int, .dex, .luk:
+                    XCTAssertEqual(event.value, 1)
+                default:
+                    break
+                }
             }
         }
-        .store(in: &subscriptions)
 
         var objects: [MapObject] = []
-        mapClient.subscribe(to: MapObjectEvents.Spawned.self) { event in
-            objects.append(event.object)
+        Task {
+            for await event in mapClient.eventStream(for: MapObjectEvents.Spawned.self) {
+                objects.append(event.object)
+            }
         }
-        .store(in: &subscriptions)
 
         mapClient.connect()
 
@@ -230,37 +144,42 @@ final class ClientTests: XCTestCase {
 
         mapClient.keepAlive()
 
-        await fulfillment(of: [enterMapExpectation])
-        mapChangedEvent.cancel()
-
-        // MARK: - Request Move
-
-        let requestMoveExpectation = expectation(description: "RequestMove")
-
-        mapClient.subscribe(to: PlayerEvents.Moved.self) { event in
-            XCTAssertEqual(event.fromPosition, [18, 26])
-            XCTAssertEqual(event.toPosition, [27, 30])
-
-            requestMoveExpectation.fulfill()
-        }
-        .store(in: &subscriptions)
-
-        mapChangedEvent = mapClient.subscribe(to: MapEvents.Changed.self) { event in
-            XCTAssertEqual(event.position, [51, 30])
+        for await event in mapClient.eventStream(for: MapEvents.Changed.self).prefix(1) {
+            XCTAssertEqual(event.position, [18, 26])
 
             // Load map.
-            sleep(1)
+            let map = try await MapDatabase.renewal.map(forName: String(event.mapName.dropLast(4)))!
+            let grid = map.grid()!
+            XCTAssertEqual(grid.xs, 80)
+            XCTAssertEqual(grid.ys, 80)
+            XCTAssertTrue(grid.cell(atX: 18, y: 26).isWalkable)
 
-            self.mapClient.notifyMapLoaded()
+            mapClient.notifyMapLoaded()
         }
+
+        // MARK: - Move to warp
 
         sleep(1)
 
         mapClient.requestMove(x: 27, y: 30)
 
-        await fulfillment(of: [requestMoveExpectation])
+        for await event in mapClient.eventStream(for: PlayerEvents.Moved.self).prefix(1) {
+            XCTAssertEqual(event.fromPosition, [18, 26])
+            XCTAssertEqual(event.toPosition, [27, 30])
+        }
 
-        sleep(5)
+        for await event in mapClient.eventStream(for: MapEvents.Changed.self).prefix(1) {
+            XCTAssertEqual(event.position, [51, 30])
+
+            // Load map.
+            sleep(1)
+
+            mapClient.notifyMapLoaded()
+        }
+
+        // MARK: - Talk to wounded swordsman
+
+        sleep(1)
 
         let woundedSwordsman1 = objects.first(where: { $0.job == 687 })!
         mapClient.contactNPC(npcID: woundedSwordsman1.id)

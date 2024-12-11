@@ -148,6 +148,7 @@ let package = Package(
             ],
             swiftSettings: [
                 .interoperabilityMode(.Cxx),
+                .swiftLanguageMode(.v5),
             ]),
         .target(
             name: "RORenderers",

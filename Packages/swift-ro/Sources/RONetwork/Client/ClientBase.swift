@@ -64,6 +64,21 @@ public class ClientBase {
         return cancellable
     }
 
+    public func eventStream<E>(for event: E.Type) -> AsyncStream<E> where E: Event {
+        AsyncStream { continuation in
+            let subscription = eventSubject
+                .compactMap { event in
+                    event as? E
+                }
+                .sink { event in
+                    continuation.yield(event)
+                }
+            continuation.onTermination = { termination in
+                subscription.cancel()
+            }
+        }
+    }
+
     func postEvent(_ event: some Event) {
         eventSubject.send(event)
     }
