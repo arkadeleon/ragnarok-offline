@@ -30,7 +30,7 @@ final class GameSession {
     var npcMenuDialog: GameNPCMenuDialog?
 
     @ObservationIgnored
-    private var loginClient: LoginClient?
+    private var loginSession: LoginSession?
     @ObservationIgnored
     private var charClient: CharClient?
     @ObservationIgnored
@@ -47,11 +47,11 @@ final class GameSession {
     private var chars: [CharInfo] = []
 
     func login(username: String, password: String) {
-        connectToLoginServer()
+        startLoginSession()
 
-        loginClient?.login(username: username, password: password)
+        loginSession?.login(username: username, password: password)
 
-        loginClient?.keepAlive(username: username)
+        loginSession?.keepAlive(username: username)
     }
 
     func selectCharServer(_ charServer: CharServerInfo) {
@@ -96,10 +96,10 @@ final class GameSession {
         mapClient?.selectMenu(npcID: npcID, select: select)
     }
 
-    private func connectToLoginServer() {
-        let loginClient = LoginClient()
+    private func startLoginSession() {
+        let loginSession = LoginSession()
 
-        loginClient.subscribe(to: LoginEvents.Accepted.self) { [unowned self] event in
+        loginSession.subscribe(to: LoginEvents.Accepted.self) { [unowned self] event in
             self.state.accountID = event.accountID
             self.state.loginID1 = event.loginID1
             self.state.loginID2 = event.loginID2
@@ -111,21 +111,21 @@ final class GameSession {
         }
         .store(in: &subscriptions)
 
-        loginClient.subscribe(to: LoginEvents.Refused.self) { event in
+        loginSession.subscribe(to: LoginEvents.Refused.self) { event in
         }
         .store(in: &subscriptions)
 
-        loginClient.subscribe(to: AuthenticationEvents.Banned.self) { event in
+        loginSession.subscribe(to: AuthenticationEvents.Banned.self) { event in
         }
         .store(in: &subscriptions)
 
-        loginClient.subscribe(to: ConnectionEvents.ErrorOccurred.self) { event in
+        loginSession.subscribe(to: ConnectionEvents.ErrorOccurred.self) { event in
         }
         .store(in: &subscriptions)
 
-        loginClient.connect()
+        loginSession.start()
 
-        self.loginClient = loginClient
+        self.loginSession = loginSession
     }
 
     private func connectToCharServer(_ charServer: CharServerInfo) {

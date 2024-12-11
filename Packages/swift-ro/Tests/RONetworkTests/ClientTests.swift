@@ -59,15 +59,15 @@ final class ClientTests: XCTestCase {
 
         // MARK: - Login
 
-        let loginClient = LoginClient()
+        let loginSession = LoginSession()
 
-        loginClient.connect()
+        loginSession.start()
 
         let username = "ragnarok_m"
         let password = "ragnarok"
-        loginClient.login(username: username, password: password)
+        loginSession.login(username: username, password: password)
 
-        for await event in loginClient.eventStream(for: LoginEvents.Accepted.self).prefix(1) {
+        for await event in loginSession.eventStream(for: LoginEvents.Accepted.self).prefix(1) {
             XCTAssertEqual(event.charServers.count, 1)
 
             state.accountID = event.accountID

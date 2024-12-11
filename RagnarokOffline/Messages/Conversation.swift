@@ -37,7 +37,7 @@ class Conversation {
     }
 
     @ObservationIgnored
-    private var loginClient: LoginClient?
+    private var loginSession: LoginSession?
     @ObservationIgnored
     private var charClient: CharClient?
     @ObservationIgnored
@@ -58,13 +58,13 @@ class Conversation {
 
         switch command {
         case .login:
-            connectToLoginServer()
+            startLoginSession()
 
             let username = parameters[0]
             let password = parameters[1]
-            loginClient?.login(username: username, password: password)
+            loginSession?.login(username: username, password: password)
 
-            loginClient?.keepAlive(username: username)
+            loginSession?.keepAlive(username: username)
         case .selectCharServer:
             guard let serverNumber = Int(parameters[0]),
                   serverNumber - 1 < charServers.count else {
@@ -107,10 +107,10 @@ class Conversation {
         }
     }
 
-    private func connectToLoginServer() {
-        let loginClient = LoginClient()
+    private func startLoginSession() {
+        let loginSession = LoginSession()
 
-        loginClient.subscribe(to: LoginEvents.Accepted.self) { [unowned self] event in
+        loginSession.subscribe(to: LoginEvents.Accepted.self) { [unowned self] event in
             self.state.accountID = event.accountID
             self.state.loginID1 = event.loginID1
             self.state.loginID2 = event.loginID2
@@ -131,26 +131,26 @@ class Conversation {
         }
         .store(in: &subscriptions)
 
-        loginClient.subscribe(to: LoginEvents.Refused.self) { [unowned self] event in
+        loginSession.subscribe(to: LoginEvents.Refused.self) { [unowned self] event in
             self.messages.append(.serverText("Refused"))
             self.messages.append(.serverText(event.message))
         }
         .store(in: &subscriptions)
 
-        loginClient.subscribe(to: AuthenticationEvents.Banned.self) { [unowned self] event in
+        loginSession.subscribe(to: AuthenticationEvents.Banned.self) { [unowned self] event in
             self.messages.append(.serverText("Banned"))
             self.messages.append(.serverText(event.message))
         }
         .store(in: &subscriptions)
 
-        loginClient.subscribe(to: ConnectionEvents.ErrorOccurred.self) { [unowned self] event in
+        loginSession.subscribe(to: ConnectionEvents.ErrorOccurred.self) { [unowned self] event in
             self.messages.append(.serverText(event.error.localizedDescription))
         }
         .store(in: &subscriptions)
 
-        loginClient.connect()
+        loginSession.start()
 
-        self.loginClient = loginClient
+        self.loginSession = loginSession
     }
 
     private func connectToCharServer(_ charServer: CharServerInfo) {

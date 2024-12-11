@@ -1,5 +1,5 @@
 //
-//  LoginClient.swift
+//  LoginSession.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/3/27.
@@ -9,29 +9,48 @@ import Combine
 import Foundation
 import ROGenerated
 
-final public class LoginClient: ClientBase {
+final public class LoginSession: SessionProtocol {
+    private let client: ClientBase
+    private let eventSubject = PassthroughSubject<any Event, Never>()
+
     private var timerSubscription: AnyCancellable?
 
+    public var eventPublisher: AnyPublisher<any Event, Never> {
+        eventSubject.eraseToAnyPublisher()
+    }
+
     public init() {
-        super.init(port: 6900)
+        client = ClientBase(port: 6900)
 
         // See `logclif_auth_ok`
-        registerPacket(PACKET_AC_ACCEPT_LOGIN.self, for: HEADER_AC_ACCEPT_LOGIN) { [unowned self] packet in
+        client.registerPacket(PACKET_AC_ACCEPT_LOGIN.self, for: HEADER_AC_ACCEPT_LOGIN) { [unowned self] packet in
             let event = LoginEvents.Accepted(packet: packet)
             self.postEvent(event)
         }
 
         // See `logclif_auth_failed`
-        registerPacket(PACKET_AC_REFUSE_LOGIN.self, for: HEADER_AC_REFUSE_LOGIN) { [unowned self] packet in
+        client.registerPacket(PACKET_AC_REFUSE_LOGIN.self, for: HEADER_AC_REFUSE_LOGIN) { [unowned self] packet in
             let event = LoginEvents.Refused(packet: packet)
             self.postEvent(event)
         }
 
         // See `logclif_sent_auth_result`
-        registerPacket(PACKET_SC_NOTIFY_BAN.self, for: HEADER_SC_NOTIFY_BAN) { [unowned self] packet in
+        client.registerPacket(PACKET_SC_NOTIFY_BAN.self, for: HEADER_SC_NOTIFY_BAN) { [unowned self] packet in
             let event = AuthenticationEvents.Banned(packet: packet)
             self.postEvent(event)
         }
+    }
+
+    private func postEvent(_ event: some Event) {
+        eventSubject.send(event)
+    }
+
+    public func start() {
+        client.connect()
+    }
+
+    public func stop() {
+        client.disconnect()
     }
 
     /// Login.
@@ -50,9 +69,9 @@ final public class LoginClient: ClientBase {
         packet.password = password
         packet.clienttype = 0
 
-        sendPacket(packet)
+        client.sendPacket(packet)
 
-        receivePacket()
+        client.receivePacket()
     }
 
     /// Keep alive.
@@ -67,7 +86,7 @@ final public class LoginClient: ClientBase {
                 packet.packetType = HEADER_CA_CONNECT_INFO_CHANGED
                 packet.name = username
 
-                self?.sendPacket(packet)
+                self?.client.sendPacket(packet)
             }
     }
 }
