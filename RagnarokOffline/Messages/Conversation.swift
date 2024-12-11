@@ -39,7 +39,7 @@ class Conversation {
     @ObservationIgnored
     private var loginSession: LoginSession?
     @ObservationIgnored
-    private var charClient: CharClient?
+    private var charSession: CharSession?
     @ObservationIgnored
     private var mapClient: MapClient?
 
@@ -73,11 +73,7 @@ class Conversation {
 
             let charServer = charServers[serverNumber - 1]
 
-            connectToCharServer(charServer)
-
-            charClient?.enter()
-
-            charClient?.keepAlive()
+            startCharSession(charServer)
         case .makeChar:
             var char = CharInfo()
             char.name = parameters[0]
@@ -89,13 +85,13 @@ class Conversation {
             char.luk = UInt8(parameters[6]) ?? 1
             char.slot = UInt8(parameters[7]) ?? 0
 
-            charClient?.makeChar(char: char)
+            charSession?.makeChar(char: char)
         case .deleteChar:
             break
         case .selectChar:
             let slot = UInt8(parameters[0]) ?? 0
 
-            charClient?.selectChar(slot: slot)
+            charSession?.selectChar(slot: slot)
         case .moveUp:
             mapClient?.requestMove(x: position.x, y: position.y + 1)
         case .moveDown:
@@ -153,10 +149,10 @@ class Conversation {
         self.loginSession = loginSession
     }
 
-    private func connectToCharServer(_ charServer: CharServerInfo) {
-        let charClient = CharClient(state: state, charServer: charServer)
+    private func startCharSession(_ charServer: CharServerInfo) {
+        let charSession = CharSession(state: state, charServer: charServer)
 
-        charClient.subscribe(to: CharServerEvents.Accepted.self) { [unowned self] event in
+        charSession.subscribe(to: CharServerEvents.Accepted.self) { [unowned self] event in
             self.scene = .selectChar
 
             self.messages.append(.serverText("Accepted"))
@@ -178,12 +174,12 @@ class Conversation {
         }
         .store(in: &subscriptions)
 
-        charClient.subscribe(to: CharServerEvents.Refused.self) { [unowned self] event in
+        charSession.subscribe(to: CharServerEvents.Refused.self) { [unowned self] event in
             self.messages.append(.serverText("Refused"))
         }
         .store(in: &subscriptions)
 
-        charClient.subscribe(to: CharServerEvents.NotifyMapServer.self) { [unowned self] event in
+        charSession.subscribe(to: CharServerEvents.NotifyMapServer.self) { [unowned self] event in
             self.state.charID = event.charID
 
             self.scene = .map
@@ -198,34 +194,34 @@ class Conversation {
         }
         .store(in: &subscriptions)
 
-        charClient.subscribe(to: CharServerEvents.NotifyAccessibleMaps.self) { event in
+        charSession.subscribe(to: CharServerEvents.NotifyAccessibleMaps.self) { event in
         }
         .store(in: &subscriptions)
 
-        charClient.subscribe(to: CharEvents.MakeAccepted.self) { [unowned self] event in
+        charSession.subscribe(to: CharEvents.MakeAccepted.self) { [unowned self] event in
             self.messages.append(.serverText("Accepted"))
         }
         .store(in: &subscriptions)
 
-        charClient.subscribe(to: CharEvents.MakeRefused.self) { [unowned self] event in
+        charSession.subscribe(to: CharEvents.MakeRefused.self) { [unowned self] event in
             self.messages.append(.serverText("Refused"))
         }
         .store(in: &subscriptions)
 
-        charClient.subscribe(to: AuthenticationEvents.Banned.self) { [unowned self] event in
+        charSession.subscribe(to: AuthenticationEvents.Banned.self) { [unowned self] event in
             self.messages.append(.serverText("Banned"))
             self.messages.append(.serverText(event.message))
         }
         .store(in: &subscriptions)
 
-        charClient.subscribe(to: ConnectionEvents.ErrorOccurred.self) { [unowned self] event in
+        charSession.subscribe(to: ConnectionEvents.ErrorOccurred.self) { [unowned self] event in
             self.messages.append(.serverText(event.error.localizedDescription))
         }
         .store(in: &subscriptions)
 
-        charClient.connect()
+        charSession.start()
 
-        self.charClient = charClient
+        self.charSession = charSession
     }
 
     private func connectToMapServer(_ mapServer: MapServerInfo) {

@@ -1,5 +1,5 @@
 //
-//  CharClient.swift
+//  CharSession.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/8/8.
@@ -9,37 +9,43 @@ import Combine
 import Foundation
 import ROGenerated
 
-final public class CharClient: ClientBase {
+final public class CharSession: SessionProtocol {
     public let state: ClientState
+
+    private let client: ClientBase
+    private let eventSubject = PassthroughSubject<any Event, Never>()
 
     private var timerSubscription: AnyCancellable?
 
+    public var eventPublisher: AnyPublisher<any Event, Never> {
+        eventSubject.eraseToAnyPublisher()
+    }
+
     public init(state: ClientState, charServer: CharServerInfo) {
         self.state = state
-
-        super.init(port: charServer.port)
+        self.client = ClientBase(port: charServer.port)
 
         registerCharServerPackets()
         registerCharPackets()
 
         // 0x82d
-        registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.self, for: PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.packetType) { packet in
+        client.registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.self, for: PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.packetType) { packet in
         }
 
         // 0x8b9
-        registerPacket(PACKET_HC_SECOND_PASSWD_LOGIN.self, for: PACKET_HC_SECOND_PASSWD_LOGIN.packetType) { packet in
+        client.registerPacket(PACKET_HC_SECOND_PASSWD_LOGIN.self, for: PACKET_HC_SECOND_PASSWD_LOGIN.packetType) { packet in
         }
 
         // 0x9a0
-        registerPacket(PACKET_HC_CHARLIST_NOTIFY.self, for: PACKET_HC_CHARLIST_NOTIFY.packetType) { packet in
+        client.registerPacket(PACKET_HC_CHARLIST_NOTIFY.self, for: PACKET_HC_CHARLIST_NOTIFY.packetType) { packet in
         }
 
         // 0x20d
-        registerPacket(PACKET_HC_BLOCK_CHARACTER.self, for: PACKET_HC_BLOCK_CHARACTER.packetType) { packet in
+        client.registerPacket(PACKET_HC_BLOCK_CHARACTER.self, for: PACKET_HC_BLOCK_CHARACTER.packetType) { packet in
         }
 
         // See `chclif_send_auth_result`
-        registerPacket(PACKET_SC_NOTIFY_BAN.self, for: HEADER_SC_NOTIFY_BAN) { [unowned self] packet in
+        client.registerPacket(PACKET_SC_NOTIFY_BAN.self, for: HEADER_SC_NOTIFY_BAN) { [unowned self] packet in
             let event = AuthenticationEvents.Banned(packet: packet)
             self.postEvent(event)
         }
@@ -47,25 +53,25 @@ final public class CharClient: ClientBase {
 
     private func registerCharServerPackets() {
         // 0x6b
-        registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION.self, for: PACKET_HC_ACCEPT_ENTER_NEO_UNION.packetType) { [unowned self] packet in
+        client.registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION.self, for: PACKET_HC_ACCEPT_ENTER_NEO_UNION.packetType) { [unowned self] packet in
             let event = CharServerEvents.Accepted(packet: packet)
             self.postEvent(event)
         }
 
         // 0x6c
-        registerPacket(PACKET_HC_REFUSE_ENTER.self, for: PACKET_HC_REFUSE_ENTER.packetType) { [unowned self] packet in
+        client.registerPacket(PACKET_HC_REFUSE_ENTER.self, for: PACKET_HC_REFUSE_ENTER.packetType) { [unowned self] packet in
             let event = CharServerEvents.Refused()
             self.postEvent(event)
         }
 
         // 0x71, 0xac5
-        registerPacket(PACKET_HC_NOTIFY_ZONESVR.self, for: PACKET_HC_NOTIFY_ZONESVR.packetType) { [unowned self] packet in
+        client.registerPacket(PACKET_HC_NOTIFY_ZONESVR.self, for: PACKET_HC_NOTIFY_ZONESVR.packetType) { [unowned self] packet in
             let event = CharServerEvents.NotifyMapServer(packet: packet)
             self.postEvent(event)
         }
 
         // 0x840
-        registerPacket(PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self, for: PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.packetType) { [unowned self] packet in
+        client.registerPacket(PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self, for: PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.packetType) { [unowned self] packet in
             let event = CharServerEvents.NotifyAccessibleMaps(packet: packet)
             self.postEvent(event)
         }
@@ -73,31 +79,31 @@ final public class CharClient: ClientBase {
 
     private func registerCharPackets() {
         // 0x6d
-        registerPacket(PACKET_HC_ACCEPT_MAKECHAR.self, for: PACKET_HC_ACCEPT_MAKECHAR.packetType) { [unowned self] packet in
+        client.registerPacket(PACKET_HC_ACCEPT_MAKECHAR.self, for: PACKET_HC_ACCEPT_MAKECHAR.packetType) { [unowned self] packet in
             let event = CharEvents.MakeAccepted(packet: packet)
             self.postEvent(event)
         }
 
         // 0x6e
-        registerPacket(PACKET_HC_REFUSE_MAKECHAR.self, for: PACKET_HC_REFUSE_MAKECHAR.packetType) { [unowned self] packet in
+        client.registerPacket(PACKET_HC_REFUSE_MAKECHAR.self, for: PACKET_HC_REFUSE_MAKECHAR.packetType) { [unowned self] packet in
             let event = CharEvents.MakeRefused()
             self.postEvent(event)
         }
 
         // 0x6f
-        registerPacket(PACKET_HC_ACCEPT_DELETECHAR.self, for: PACKET_HC_ACCEPT_DELETECHAR.packetType) { [unowned self] packet in
+        client.registerPacket(PACKET_HC_ACCEPT_DELETECHAR.self, for: PACKET_HC_ACCEPT_DELETECHAR.packetType) { [unowned self] packet in
             let event = CharEvents.DeleteAccepted()
             self.postEvent(event)
         }
 
         // 0x70
-        registerPacket(PACKET_HC_REFUSE_DELETECHAR.self, for: PACKET_HC_REFUSE_DELETECHAR.packetType) { [unowned self] packet in
+        client.registerPacket(PACKET_HC_REFUSE_DELETECHAR.self, for: PACKET_HC_REFUSE_DELETECHAR.packetType) { [unowned self] packet in
             let event = CharEvents.DeleteRefused(packet: packet)
             self.postEvent(event)
         }
 
         // 0x82a
-        registerPacket(PACKET_HC_DELETE_CHAR.self, for: PACKET_HC_DELETE_CHAR.packetType) { [unowned self] packet in
+        client.registerPacket(PACKET_HC_DELETE_CHAR.self, for: PACKET_HC_DELETE_CHAR.packetType) { [unowned self] packet in
             if packet.result == 1 {
                 let event = CharEvents.DeleteAccepted()
                 self.postEvent(event)
@@ -108,16 +114,34 @@ final public class CharClient: ClientBase {
         }
 
         // 0x82c
-        registerPacket(PACKET_HC_DELETE_CHAR_CANCEL.self, for: PACKET_HC_DELETE_CHAR_CANCEL.packetType) { [unowned self] packet in
+        client.registerPacket(PACKET_HC_DELETE_CHAR_CANCEL.self, for: PACKET_HC_DELETE_CHAR_CANCEL.packetType) { [unowned self] packet in
             let event = CharEvents.DeleteCancelled()
             self.postEvent(event)
         }
 
         // 0x828
-        registerPacket(PACKET_HC_DELETE_CHAR_RESERVED.self, for: PACKET_HC_DELETE_CHAR_RESERVED.packetType) { [unowned self] packet in
+        client.registerPacket(PACKET_HC_DELETE_CHAR_RESERVED.self, for: PACKET_HC_DELETE_CHAR_RESERVED.packetType) { [unowned self] packet in
             let event = CharEvents.DeletionDateResponse(packet: packet)
             self.postEvent(event)
         }
+    }
+
+    private func postEvent(_ event: some Event) {
+        eventSubject.send(event)
+    }
+
+    public func start() {
+        client.connect()
+
+        enter()
+
+        keepAlive()
+    }
+
+    public func stop() {
+        client.disconnect()
+
+        timerSubscription = nil
     }
 
     /// Enter.
@@ -132,7 +156,7 @@ final public class CharClient: ClientBase {
     ///         ``PACKET_HC_BLOCK_CHARACTER`` +
     ///         ``PACKET_HC_SECOND_PASSWD_LOGIN`` or
     ///         ``PACKET_HC_REFUSE_ENTER``
-    public func enter() {
+    private func enter() {
         var packet = PACKET_CH_ENTER()
         packet.accountID = state.accountID
         packet.loginID1 = state.loginID1
@@ -140,19 +164,19 @@ final public class CharClient: ClientBase {
         packet.clientType = state.langType
         packet.sex = state.sex
 
-        sendPacket(packet)
+        client.sendPacket(packet)
 
-        receiveData { data in
+        client.receiveData { data in
             self.state.accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
 
-            self.receivePacket()
+            self.client.receivePacket()
         }
     }
 
     /// Keep alive.
     ///
     /// Send ``PACKET_CZ_PING`` every 12 seconds.
-    public func keepAlive() {
+    private func keepAlive() {
         let accountID = state.accountID
 
         timerSubscription = Timer.publish(every: 12, on: .main, in: .common)
@@ -161,7 +185,7 @@ final public class CharClient: ClientBase {
                 var packet = PACKET_CZ_PING()
                 packet.accountID = accountID
 
-                self?.sendPacket(packet)
+                self?.client.sendPacket(packet)
             }
     }
 
@@ -186,7 +210,7 @@ final public class CharClient: ClientBase {
         packet.job = char.job
         packet.sex = char.sex
 
-        sendPacket(packet)
+        client.sendPacket(packet)
     }
 
     /// Delete char.
@@ -209,7 +233,7 @@ final public class CharClient: ClientBase {
         var packet = PACKET_CH_DELETE_CHAR()
         packet.charID = charID
 
-        sendPacket(packet)
+        client.sendPacket(packet)
     }
 
     /// Request deletion date.
@@ -221,7 +245,7 @@ final public class CharClient: ClientBase {
         var packet = PACKET_CH_DELETE_CHAR_RESERVED()
         packet.charID = charID
 
-        sendPacket(packet)
+        client.sendPacket(packet)
     }
 
     /// Cancel delete.
@@ -233,7 +257,7 @@ final public class CharClient: ClientBase {
         var packet = PACKET_CH_DELETE_CHAR_CANCEL()
         packet.charID = charID
 
-        sendPacket(packet)
+        client.sendPacket(packet)
     }
 
     /// Select char.
@@ -251,6 +275,6 @@ final public class CharClient: ClientBase {
         var packet = PACKET_CH_SELECT_CHAR()
         packet.slot = slot
 
-        sendPacket(packet)
+        client.sendPacket(packet)
     }
 }

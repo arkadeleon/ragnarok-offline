@@ -32,7 +32,7 @@ final class GameSession {
     @ObservationIgnored
     private var loginSession: LoginSession?
     @ObservationIgnored
-    private var charClient: CharClient?
+    private var charSession: CharSession?
     @ObservationIgnored
     private var mapClient: MapClient?
 
@@ -55,19 +55,15 @@ final class GameSession {
     }
 
     func selectCharServer(_ charServer: CharServerInfo) {
-        connectToCharServer(charServer)
-
-        charClient?.enter()
-
-        charClient?.keepAlive()
+        startCharSession(charServer)
     }
 
     func makeChar(char: CharInfo) {
-        charClient?.makeChar(char: char)
+        charSession?.makeChar(char: char)
     }
 
     func selectChar(slot: UInt8) {
-        charClient?.selectChar(slot: slot)
+        charSession?.selectChar(slot: slot)
     }
 
     func requestMove(x: Int16, y: Int16) {
@@ -128,21 +124,21 @@ final class GameSession {
         self.loginSession = loginSession
     }
 
-    private func connectToCharServer(_ charServer: CharServerInfo) {
-        let charClient = CharClient(state: state, charServer: charServer)
+    private func startCharSession(_ charServer: CharServerInfo) {
+        let charSession = CharSession(state: state, charServer: charServer)
 
-        charClient.subscribe(to: CharServerEvents.Accepted.self) { [unowned self] event in
+        charSession.subscribe(to: CharServerEvents.Accepted.self) { [unowned self] event in
             self.chars = event.chars
 
             self.phase = .charSelect(chars)
         }
         .store(in: &subscriptions)
 
-        charClient.subscribe(to: CharServerEvents.Refused.self) { event in
+        charSession.subscribe(to: CharServerEvents.Refused.self) { event in
         }
         .store(in: &subscriptions)
 
-        charClient.subscribe(to: CharServerEvents.NotifyMapServer.self) { [unowned self] event in
+        charSession.subscribe(to: CharServerEvents.NotifyMapServer.self) { [unowned self] event in
             self.state.charID = event.charID
 
             self.connectToMapServer(event.mapServer)
@@ -153,32 +149,32 @@ final class GameSession {
         }
         .store(in: &subscriptions)
 
-        charClient.subscribe(to: CharServerEvents.NotifyAccessibleMaps.self) { event in
+        charSession.subscribe(to: CharServerEvents.NotifyAccessibleMaps.self) { event in
         }
         .store(in: &subscriptions)
 
-        charClient.subscribe(to: CharEvents.MakeAccepted.self) { [unowned self] event in
+        charSession.subscribe(to: CharEvents.MakeAccepted.self) { [unowned self] event in
             self.chars.append(event.char)
 
             self.phase = .charSelect(chars)
         }
         .store(in: &subscriptions)
 
-        charClient.subscribe(to: CharEvents.MakeRefused.self) { event in
+        charSession.subscribe(to: CharEvents.MakeRefused.self) { event in
         }
         .store(in: &subscriptions)
 
-        charClient.subscribe(to: AuthenticationEvents.Banned.self) { event in
+        charSession.subscribe(to: AuthenticationEvents.Banned.self) { event in
         }
         .store(in: &subscriptions)
 
-        charClient.subscribe(to: ConnectionEvents.ErrorOccurred.self) { event in
+        charSession.subscribe(to: ConnectionEvents.ErrorOccurred.self) { event in
         }
         .store(in: &subscriptions)
 
-        charClient.connect()
+        charSession.start()
 
-        self.charClient = charClient
+        self.charSession = charSession
     }
 
     private func connectToMapServer(_ mapServer: MapServerInfo) {

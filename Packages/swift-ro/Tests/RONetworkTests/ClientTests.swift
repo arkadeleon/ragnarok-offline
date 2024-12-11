@@ -57,7 +57,7 @@ final class ClientTests: XCTestCase {
         var charServer: CharServerInfo?
         var mapServer: MapServerInfo?
 
-        // MARK: - Login
+        // MARK: - Start login session
 
         let loginSession = LoginSession()
 
@@ -78,15 +78,13 @@ final class ClientTests: XCTestCase {
             charServer = event.charServers[0]
         }
 
-        // MARK: - Enter char
+        // MARK: - Start char session
 
-        let charClient = CharClient(state: state, charServer: charServer!)
+        let charSession = CharSession(state: state, charServer: charServer!)
 
-        charClient.connect()
+        charSession.start()
 
-        charClient.enter()
-
-        for await event in charClient.eventStream(for: CharServerEvents.Accepted.self).prefix(1) {
+        for await event in charSession.eventStream(for: CharServerEvents.Accepted.self).prefix(1) {
             XCTAssertEqual(event.chars.count, 0)
         }
 
@@ -100,17 +98,17 @@ final class ClientTests: XCTestCase {
         char.int = 1
         char.dex = 1
         char.luk = 1
-        charClient.makeChar(char: char)
+        charSession.makeChar(char: char)
 
-        for await event in charClient.eventStream(for: CharEvents.MakeAccepted.self).prefix(1) {
+        for await event in charSession.eventStream(for: CharEvents.MakeAccepted.self).prefix(1) {
             XCTAssertEqual(event.char.name, "Leon")
         }
 
         // MARK: - Select a char
 
-        charClient.selectChar(slot: 0)
+        charSession.selectChar(slot: 0)
 
-        for await event in charClient.eventStream(for: CharServerEvents.NotifyMapServer.self).prefix(1) {
+        for await event in charSession.eventStream(for: CharServerEvents.NotifyMapServer.self).prefix(1) {
             state.charID = event.charID
 
             mapServer = event.mapServer
