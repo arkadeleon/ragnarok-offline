@@ -41,7 +41,7 @@ class Conversation {
     @ObservationIgnored
     private var charSession: CharSession?
     @ObservationIgnored
-    private var mapClient: MapClient?
+    private var mapSession: MapSession?
 
     @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
@@ -93,13 +93,13 @@ class Conversation {
 
             charSession?.selectChar(slot: slot)
         case .moveUp:
-            mapClient?.requestMove(x: position.x, y: position.y + 1)
+            mapSession?.requestMove(x: position.x, y: position.y + 1)
         case .moveDown:
-            mapClient?.requestMove(x: position.x, y: position.y - 1)
+            mapSession?.requestMove(x: position.x, y: position.y - 1)
         case .moveLeft:
-            mapClient?.requestMove(x: position.x - 1, y: position.y)
+            mapSession?.requestMove(x: position.x - 1, y: position.y)
         case .moveRight:
-            mapClient?.requestMove(x: position.x + 1, y: position.y)
+            mapSession?.requestMove(x: position.x + 1, y: position.y)
         }
     }
 
@@ -186,11 +186,7 @@ class Conversation {
 
             self.messages.append(.serverText("Entered map: \(event.mapName)"))
 
-            self.connectToMapServer(event.mapServer)
-
-            self.mapClient?.enter()
-
-            self.mapClient?.keepAlive()
+            self.startMapSession(event.mapServer)
         }
         .store(in: &subscriptions)
 
@@ -224,35 +220,35 @@ class Conversation {
         self.charSession = charSession
     }
 
-    private func connectToMapServer(_ mapServer: MapServerInfo) {
-        let mapClient = MapClient(state: state, mapServer: mapServer)
+    private func startMapSession(_ mapServer: MapServerInfo) {
+        let mapSession = MapSession(state: state, mapServer: mapServer)
 
-        mapClient.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
+        mapSession.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
             self.position = event.position
 
             self.messages.append(.serverText("Map changed: \(event.mapName), position: (\(event.position.x), \(event.position.y))"))
 
             // Load map.
 
-            self.mapClient?.notifyMapLoaded()
+            self.mapSession?.notifyMapLoaded()
         }
         .store(in: &subscriptions)
 
-        mapClient.subscribe(to: PlayerEvents.Moved.self) { [unowned self] event in
+        mapSession.subscribe(to: PlayerEvents.Moved.self) { [unowned self] event in
             self.position = event.toPosition
 
             self.messages.append(.serverText("Player moved from \(event.fromPosition) to \(event.toPosition)"))
         }
         .store(in: &subscriptions)
 
-        mapClient.subscribe(to: PlayerEvents.MessageDisplay.self) { [unowned self] event in
+        mapSession.subscribe(to: PlayerEvents.MessageDisplay.self) { [unowned self] event in
             self.messages.append(.serverText("Player message display: \(event.message)"))
         }
         .store(in: &subscriptions)
 
-        mapClient.connect()
+        mapSession.start()
 
-        self.mapClient = mapClient
+        self.mapSession = mapSession
     }
 }
 

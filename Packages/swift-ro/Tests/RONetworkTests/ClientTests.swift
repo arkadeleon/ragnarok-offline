@@ -114,12 +114,12 @@ final class ClientTests: XCTestCase {
             mapServer = event.mapServer
         }
 
-        // MARK: - Enter map
+        // MARK: - Start map session
 
-        let mapClient = MapClient(state: state, mapServer: mapServer!)
+        let mapSession = MapSession(state: state, mapServer: mapServer!)
 
         Task {
-            for await event in mapClient.eventStream(for: PlayerEvents.StatusPropertyChanged.self) {
+            for await event in mapSession.eventStream(for: PlayerEvents.StatusPropertyChanged.self) {
                 switch event.sp {
                 case .str, .agi, .vit, .int, .dex, .luk:
                     XCTAssertEqual(event.value, 1)
@@ -131,18 +131,14 @@ final class ClientTests: XCTestCase {
 
         var objects: [MapObject] = []
         Task {
-            for await event in mapClient.eventStream(for: MapObjectEvents.Spawned.self) {
+            for await event in mapSession.eventStream(for: MapObjectEvents.Spawned.self) {
                 objects.append(event.object)
             }
         }
 
-        mapClient.connect()
+        mapSession.start()
 
-        mapClient.enter()
-
-        mapClient.keepAlive()
-
-        for await event in mapClient.eventStream(for: MapEvents.Changed.self).prefix(1) {
+        for await event in mapSession.eventStream(for: MapEvents.Changed.self).prefix(1) {
             XCTAssertEqual(event.position, [18, 26])
 
             // Load map.
@@ -152,27 +148,27 @@ final class ClientTests: XCTestCase {
             XCTAssertEqual(grid.ys, 80)
             XCTAssertTrue(grid.cell(atX: 18, y: 26).isWalkable)
 
-            mapClient.notifyMapLoaded()
+            mapSession.notifyMapLoaded()
         }
 
         // MARK: - Move to warp
 
         sleep(1)
 
-        mapClient.requestMove(x: 27, y: 30)
+        mapSession.requestMove(x: 27, y: 30)
 
-        for await event in mapClient.eventStream(for: PlayerEvents.Moved.self).prefix(1) {
+        for await event in mapSession.eventStream(for: PlayerEvents.Moved.self).prefix(1) {
             XCTAssertEqual(event.fromPosition, [18, 26])
             XCTAssertEqual(event.toPosition, [27, 30])
         }
 
-        for await event in mapClient.eventStream(for: MapEvents.Changed.self).prefix(1) {
+        for await event in mapSession.eventStream(for: MapEvents.Changed.self).prefix(1) {
             XCTAssertEqual(event.position, [51, 30])
 
             // Load map.
             sleep(1)
 
-            mapClient.notifyMapLoaded()
+            mapSession.notifyMapLoaded()
         }
 
         // MARK: - Talk to wounded swordsman
@@ -180,24 +176,24 @@ final class ClientTests: XCTestCase {
         sleep(1)
 
         let woundedSwordsman1 = objects.first(where: { $0.job == 687 })!
-        mapClient.contactNPC(npcID: woundedSwordsman1.id)
+        mapSession.contactNPC(npcID: woundedSwordsman1.id)
 
         sleep(1)
 
         let woundedSwordsman2 = objects.first(where: { $0.job == 688 })!
-        mapClient.contactNPC(npcID: woundedSwordsman2.id)
+        mapSession.contactNPC(npcID: woundedSwordsman2.id)
 
         sleep(1)
 
-        mapClient.requestNextScript(npcID: woundedSwordsman2.id)
+        mapSession.requestNextScript(npcID: woundedSwordsman2.id)
 
         sleep(1)
 
-        mapClient.requestNextScript(npcID: woundedSwordsman2.id)
+        mapSession.requestNextScript(npcID: woundedSwordsman2.id)
 
         sleep(1)
 
-        mapClient.closeDialog(npcID: woundedSwordsman2.id)
+        mapSession.closeDialog(npcID: woundedSwordsman2.id)
 
         sleep(5)
     }

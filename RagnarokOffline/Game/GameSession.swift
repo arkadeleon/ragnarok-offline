@@ -34,7 +34,7 @@ final class GameSession {
     @ObservationIgnored
     private var charSession: CharSession?
     @ObservationIgnored
-    private var mapClient: MapClient?
+    private var mapSession: MapSession?
 
     @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
@@ -67,29 +67,29 @@ final class GameSession {
     }
 
     func requestMove(x: Int16, y: Int16) {
-        mapClient?.requestMove(x: x, y: y)
+        mapSession?.requestMove(x: x, y: y)
     }
 
     func contactNPC(npcID: UInt32) {
-        mapClient?.contactNPC(npcID: npcID)
+        mapSession?.contactNPC(npcID: npcID)
     }
 
     func requestNextScript(npcID: UInt32) {
         npcDialog = nil
 
-        mapClient?.requestNextScript(npcID: npcID)
+        mapSession?.requestNextScript(npcID: npcID)
     }
 
     func closeDialog(npcID: UInt32) {
         npcDialog = nil
 
-        mapClient?.closeDialog(npcID: npcID)
+        mapSession?.closeDialog(npcID: npcID)
     }
 
     func selectMenu(npcID: UInt32, select: UInt8) {
         npcMenuDialog = nil
 
-        mapClient?.selectMenu(npcID: npcID, select: select)
+        mapSession?.selectMenu(npcID: npcID, select: select)
     }
 
     private func startLoginSession() {
@@ -141,11 +141,7 @@ final class GameSession {
         charSession.subscribe(to: CharServerEvents.NotifyMapServer.self) { [unowned self] event in
             self.state.charID = event.charID
 
-            self.connectToMapServer(event.mapServer)
-
-            self.mapClient?.enter()
-
-            self.mapClient?.keepAlive()
+            self.startMapSession(event.mapServer)
         }
         .store(in: &subscriptions)
 
@@ -177,10 +173,10 @@ final class GameSession {
         self.charSession = charSession
     }
 
-    private func connectToMapServer(_ mapServer: MapServerInfo) {
-        let mapClient = MapClient(state: state, mapServer: mapServer)
+    private func startMapSession(_ mapServer: MapServerInfo) {
+        let mapSession = MapSession(state: state, mapServer: mapServer)
 
-        mapClient.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
+        mapSession.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
             self.phase = .map
             self.mapObjects.removeAll()
             self.mapScene = nil
@@ -193,18 +189,18 @@ final class GameSession {
         }
         .store(in: &subscriptions)
 
-        mapClient.subscribe(to: PlayerEvents.Moved.self) { [unowned self] event in
+        mapSession.subscribe(to: PlayerEvents.Moved.self) { [unowned self] event in
             self.mapScene?.movePlayer(from: event.fromPosition, to: event.toPosition)
         }
         .store(in: &subscriptions)
 
-        mapClient.subscribe(to: PlayerEvents.MessageDisplay.self) { event in
+        mapSession.subscribe(to: PlayerEvents.MessageDisplay.self) { event in
         }
         .store(in: &subscriptions)
 
         // MapObjectEvents
 
-        mapClient.subscribe(to: MapObjectEvents.Spawned.self) { [unowned self] event in
+        mapSession.subscribe(to: MapObjectEvents.Spawned.self) { [unowned self] event in
             let object = GameMap.Object(object: event.object, position: event.position)
             self.mapObjects[object.id] = object
 
@@ -212,7 +208,7 @@ final class GameSession {
         }
         .store(in: &subscriptions)
 
-        mapClient.subscribe(to: MapObjectEvents.Moved.self) { [unowned self] event in
+        mapSession.subscribe(to: MapObjectEvents.Moved.self) { [unowned self] event in
             if let object = mapObjects[event.object.id] {
                 object.position = event.toPosition
 
@@ -226,13 +222,13 @@ final class GameSession {
         }
         .store(in: &subscriptions)
 
-        mapClient.subscribe(to: MapObjectEvents.Vanished.self) { [unowned self] event in
+        mapSession.subscribe(to: MapObjectEvents.Vanished.self) { [unowned self] event in
             self.mapObjects[event.objectID] = nil
             self.mapScene?.removeObject(event.objectID)
         }
         .store(in: &subscriptions)
 
-        mapClient.subscribe(to: MapObjectEvents.StateChanged.self) { [unowned self] event in
+        mapSession.subscribe(to: MapObjectEvents.StateChanged.self) { [unowned self] event in
             if let object = self.mapObjects[event.objectID] {
                 object.bodyState = event.bodyState
                 object.healthState = event.healthState
@@ -245,7 +241,7 @@ final class GameSession {
 
         // NPCEvents
 
-        mapClient.subscribe(to: NPCEvents.DisplayDialog.self) { [unowned self] event in
+        mapSession.subscribe(to: NPCEvents.DisplayDialog.self) { [unowned self] event in
             if let npcDialog, npcDialog.npcID == event.npcID {
                 npcDialog.message.append("\n")
                 npcDialog.message.append(event.message)
@@ -256,29 +252,29 @@ final class GameSession {
         }
         .store(in: &subscriptions)
 
-        mapClient.subscribe(to: NPCEvents.AddNextButton.self) { [unowned self] event in
+        mapSession.subscribe(to: NPCEvents.AddNextButton.self) { [unowned self] event in
             if let npcDialog, npcDialog.npcID == event.npcID {
                 npcDialog.showsNextButton = true
             }
         }
         .store(in: &subscriptions)
 
-        mapClient.subscribe(to: NPCEvents.AddCloseButton.self) { [unowned self] event in
+        mapSession.subscribe(to: NPCEvents.AddCloseButton.self) { [unowned self] event in
             if let npcDialog, npcDialog.npcID == event.npcID {
                 npcDialog.showsCloseButton = true
             }
         }
         .store(in: &subscriptions)
 
-        mapClient.subscribe(to: NPCEvents.DisplayMenuDialog.self) { [unowned self] event in
+        mapSession.subscribe(to: NPCEvents.DisplayMenuDialog.self) { [unowned self] event in
             self.npcDialog = nil
             self.npcMenuDialog = GameNPCMenuDialog(npcID: event.npcID, items: event.items)
         }
         .store(in: &subscriptions)
 
-        mapClient.connect()
+        mapSession.start()
 
-        self.mapClient = mapClient
+        self.mapSession = mapSession
     }
 
     private func loadMap(_ event: MapEvents.Changed) async throws {
@@ -299,7 +295,7 @@ final class GameSession {
             }
         }
 
-        mapClient?.notifyMapLoaded()
+        mapSession?.notifyMapLoaded()
     }
 }
 

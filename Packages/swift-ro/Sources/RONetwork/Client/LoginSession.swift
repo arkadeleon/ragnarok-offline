@@ -10,8 +10,8 @@ import Foundation
 import ROGenerated
 
 final public class LoginSession: SessionProtocol {
-    private let client: ClientBase
-    private let eventSubject = PassthroughSubject<any Event, Never>()
+    let client: ClientBase
+    let eventSubject = PassthroughSubject<any Event, Never>()
 
     private var timerSubscription: AnyCancellable?
 
@@ -51,6 +51,8 @@ final public class LoginSession: SessionProtocol {
 
     public func stop() {
         client.disconnect()
+
+        timerSubscription = nil
     }
 
     /// Login.
