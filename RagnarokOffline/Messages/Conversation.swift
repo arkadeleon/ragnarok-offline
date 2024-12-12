@@ -19,10 +19,13 @@ enum ConversationScene {
 
 @Observable
 class Conversation {
+    @MainActor
     var messages: [any Message] = []
 
+    @MainActor
     var scene: ConversationScene = .login
 
+    @MainActor
     var availableCommands: [CommandMessage.Command] {
         switch scene {
         case .login:
@@ -53,6 +56,7 @@ class Conversation {
     @ObservationIgnored
     private var position: SIMD2<Int16> = [0, 0]
 
+    @MainActor
     func sendCommand(_ command: CommandMessage.Command, parameters: [String] = []) {
         messages.append(.command(command, parameters: parameters))
 

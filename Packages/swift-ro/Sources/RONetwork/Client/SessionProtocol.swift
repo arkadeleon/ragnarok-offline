@@ -16,13 +16,18 @@ public protocol SessionProtocol {
 }
 
 extension SessionProtocol {
-    public func subscribe<E>(to event: E.Type, _ handler: @escaping (E) -> Void) -> AnyCancellable where E: Event {
+    public func subscribe<E>(to event: E.Type, handler: @escaping @MainActor (E) -> Void) -> AnyCancellable where E: Event {
         let subscription = eventPublisher
             .compactMap { e in
                 e as? E
             }
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: handler)
+            .sink { e in
+                Task {
+                    await MainActor.run {
+                        handler(e)
+                    }
+                }
+            }
         return subscription
     }
 

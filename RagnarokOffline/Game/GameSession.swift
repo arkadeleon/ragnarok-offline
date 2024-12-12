@@ -21,12 +21,17 @@ enum GamePhase {
 
 @Observable
 final class GameSession {
+    @MainActor
     var phase: GamePhase = .login
 
+    @MainActor
     var mapObjects: [UInt32 : GameMap.Object] = [:]
+    @MainActor
     var mapScene: GameMapScene?
 
+    @MainActor
     var npcDialog: GameNPCDialog?
+    @MainActor
     var npcMenuDialog: GameNPCMenuDialog?
 
     @ObservationIgnored
@@ -46,6 +51,7 @@ final class GameSession {
     @ObservationIgnored
     private var chars: [CharInfo] = []
 
+    @MainActor
     func login(username: String, password: String) {
         startLoginSession()
 
@@ -54,38 +60,46 @@ final class GameSession {
         loginSession?.keepAlive(username: username)
     }
 
+    @MainActor
     func selectCharServer(_ charServer: CharServerInfo) {
         startCharSession(charServer)
     }
 
+    @MainActor
     func makeChar(char: CharInfo) {
         charSession?.makeChar(char: char)
     }
 
+    @MainActor
     func selectChar(slot: UInt8) {
         charSession?.selectChar(slot: slot)
     }
 
+    @MainActor
     func requestMove(x: Int16, y: Int16) {
         mapSession?.requestMove(x: x, y: y)
     }
 
+    @MainActor
     func contactNPC(npcID: UInt32) {
         mapSession?.contactNPC(npcID: npcID)
     }
 
+    @MainActor
     func requestNextScript(npcID: UInt32) {
         npcDialog = nil
 
         mapSession?.requestNextScript(npcID: npcID)
     }
 
+    @MainActor
     func closeDialog(npcID: UInt32) {
         npcDialog = nil
 
         mapSession?.closeDialog(npcID: npcID)
     }
 
+    @MainActor
     func selectMenu(npcID: UInt32, select: UInt8) {
         npcMenuDialog = nil
 
