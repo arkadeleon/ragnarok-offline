@@ -12,7 +12,7 @@ import ROGenerated
 final public class CharSession: SessionProtocol {
     public let state: ClientState
 
-    let client: ClientBase
+    let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
 
     private var timerSubscription: AnyCancellable?
@@ -24,7 +24,12 @@ final public class CharSession: SessionProtocol {
     public init(state: ClientState, charServer: CharServerInfo) {
         self.state = state
 
-        self.client = ClientBase(port: charServer.port)
+        self.client = Client(port: charServer.port)
+
+        client.errorHandler = { [unowned self] error in
+            let event = ConnectionEvents.ErrorOccurred(error: error)
+            self.eventSubject.send(event)
+        }
 
         registerCharServerPackets()
         registerCharPackets()

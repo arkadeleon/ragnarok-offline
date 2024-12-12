@@ -10,7 +10,7 @@ import Foundation
 import ROGenerated
 
 final public class LoginSession: SessionProtocol {
-    let client: ClientBase
+    let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
 
     private var timerSubscription: AnyCancellable?
@@ -20,7 +20,12 @@ final public class LoginSession: SessionProtocol {
     }
 
     public init() {
-        client = ClientBase(port: 6900)
+        client = Client(port: 6900)
+
+        client.errorHandler = { [unowned self] error in
+            let event = ConnectionEvents.ErrorOccurred(error: error)
+            self.eventSubject.send(event)
+        }
 
         // See `logclif_auth_ok`
         client.registerPacket(PACKET_AC_ACCEPT_LOGIN.self, for: HEADER_AC_ACCEPT_LOGIN) { [unowned self] packet in

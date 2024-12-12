@@ -12,7 +12,7 @@ import ROGenerated
 final public class MapSession: SessionProtocol {
     public let state: ClientState
 
-    let client: ClientBase
+    let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
 
     private var timerSubscription: AnyCancellable?
@@ -24,7 +24,12 @@ final public class MapSession: SessionProtocol {
     public init(state: ClientState, mapServer: MapServerInfo) {
         self.state = state
 
-        self.client = ClientBase(port: mapServer.port)
+        self.client = Client(port: mapServer.port)
+
+        client.errorHandler = { [unowned self] error in
+            let event = ConnectionEvents.ErrorOccurred(error: error)
+            self.eventSubject.send(event)
+        }
 
         // See `clif_friendslist_send`
         client.registerPacket(PACKET_ZC_FRIENDS_LIST.self, for: HEADER_ZC_FRIENDS_LIST) { packet in

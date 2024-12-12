@@ -1,5 +1,5 @@
 //
-//  ClientBase.swift
+//  Client.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/8/12.
@@ -10,17 +10,16 @@ import Foundation
 import Network
 import ROCore
 
-public class ClientBase {
+final class Client {
+    var errorHandler: (@Sendable (_ error: any Error) -> Void)?
+
     private let connection: NWConnection
 
-    private let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client-base")
+    private let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client")
 
     private var registeredPackets: [Int16 : any BinaryDecodable.Type] = [:]
 
     private let packetSubject = PassthroughSubject<any BinaryDecodable, Never>()
-    private let eventSubject = PassthroughSubject<any Event, Never>()
-    private let errorSubject = PassthroughSubject<any Error, Never>()
-
     private var subscriptions = Set<AnyCancellable>()
 
     init(port: UInt16) {
@@ -29,16 +28,9 @@ public class ClientBase {
             port: .init(rawValue: port)!,
             using: .tcp
         )
-
-        errorSubject
-            .map { error in
-                ConnectionEvents.ErrorOccurred(error: error)
-            }
-            .subscribe(eventSubject)
-            .store(in: &subscriptions)
     }
 
-    public func connect() {
+    func connect() {
         connection.stateUpdateHandler = { state in
             print(state)
         }
@@ -46,55 +38,20 @@ public class ClientBase {
         connection.start(queue: queue)
     }
 
-    public func disconnect() {
+    func disconnect() {
         connection.stateUpdateHandler = nil
 
         connection.cancel()
     }
 
-    // MARK: - Event
-
-    public func subscribe<E>(to event: E.Type, _ handler: @escaping (E) -> Void) -> any Cancellable where E: Event {
-        let cancellable = eventSubject
-            .compactMap { event in
-                event as? E
-            }
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: handler)
-        return cancellable
-    }
-
-    public func eventStream<E>(for event: E.Type) -> AsyncStream<E> where E: Event {
-        AsyncStream { continuation in
-            let subscription = eventSubject
-                .compactMap { event in
-                    event as? E
-                }
-                .sink { event in
-                    continuation.yield(event)
-                }
-            continuation.onTermination = { termination in
-                subscription.cancel()
-            }
-        }
-    }
-
-    func postEvent(_ event: some Event) {
-        eventSubject.send(event)
-    }
-
-    // MARK: - Packet
-
     func registerPacket<P>(_ type: P.Type, for packetType: Int16, _ handler: @escaping (P) -> Void) where P: BinaryDecodable {
         registeredPackets[packetType] = type
 
         packetSubject
-            .compactMap { packet in
-                packet as? P
+            .compactMap { p in
+                p as? P
             }
-            .sink { packet in
-                handler(packet)
-            }
+            .sink(receiveValue: handler)
             .store(in: &subscriptions)
     }
 
@@ -105,13 +62,13 @@ public class ClientBase {
 
             connection.send(content: data, completion: .contentProcessed({ [weak self] error in
                 if let error {
-                    self?.errorSubject.send(error)
+                    self?.errorHandler?(error)
                 }
             }))
 
             print("Sent packet: \(packet)")
         } catch {
-            errorSubject.send(error)
+            errorHandler?(error)
         }
     }
 
@@ -139,12 +96,12 @@ public class ClientBase {
                     }
                 } catch {
                     print(error)
-                    self.errorSubject.send(error)
+                    self.errorHandler?(error)
                 }
             }
 
             if let error {
-                self.errorSubject.send(error)
+                self.errorHandler?(error)
             } else {
                 self.receivePacket()
             }
