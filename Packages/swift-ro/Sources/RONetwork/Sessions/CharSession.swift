@@ -12,6 +12,10 @@ import ROGenerated
 final public class CharSession: SessionProtocol {
     public let state: ClientState
 
+    public private(set) var chars: [CharInfo] = []
+    public private(set) var mapName: String?
+    public private(set) var mapServer: MapServerInfo?
+
     let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
 
@@ -61,6 +65,7 @@ final public class CharSession: SessionProtocol {
         // 0x6b
         client.registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION.self, for: PACKET_HC_ACCEPT_ENTER_NEO_UNION.packetType) { [unowned self] packet in
             let event = CharServerEvents.Accepted(packet: packet)
+            self.chars = event.chars
             self.postEvent(event)
         }
 
@@ -73,6 +78,8 @@ final public class CharSession: SessionProtocol {
         // 0x71, 0xac5
         client.registerPacket(PACKET_HC_NOTIFY_ZONESVR.self, for: PACKET_HC_NOTIFY_ZONESVR.packetType) { [unowned self] packet in
             let event = CharServerEvents.NotifyMapServer(packet: packet)
+            self.mapName = event.mapName
+            self.mapServer = event.mapServer
             self.postEvent(event)
         }
 
@@ -87,6 +94,7 @@ final public class CharSession: SessionProtocol {
         // 0x6d
         client.registerPacket(PACKET_HC_ACCEPT_MAKECHAR.self, for: PACKET_HC_ACCEPT_MAKECHAR.packetType) { [unowned self] packet in
             let event = CharEvents.MakeAccepted(packet: packet)
+            self.chars.append(event.char)
             self.postEvent(event)
         }
 

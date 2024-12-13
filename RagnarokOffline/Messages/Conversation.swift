@@ -51,10 +51,6 @@ class Conversation {
 
     @ObservationIgnored
     private var state = ClientState()
-    @ObservationIgnored
-    private var charServers: [CharServerInfo] = []
-    @ObservationIgnored
-    private var position: SIMD2<Int16> = [0, 0]
 
     @MainActor
     func sendCommand(_ command: CommandMessage.Command, parameters: [String] = []) {
@@ -71,6 +67,7 @@ class Conversation {
             loginSession?.keepAlive(username: username)
         case .selectCharServer:
             guard let serverNumber = Int(parameters[0]),
+                  let charServers = loginSession?.charServers,
                   serverNumber - 1 < charServers.count else {
                 break
             }
@@ -97,13 +94,21 @@ class Conversation {
 
             charSession?.selectChar(slot: slot)
         case .moveUp:
-            mapSession?.requestMove(x: position.x, y: position.y + 1)
+            if let position = mapSession?.player?.position {
+                mapSession?.requestMove(x: position.x, y: position.y + 1)
+            }
         case .moveDown:
-            mapSession?.requestMove(x: position.x, y: position.y - 1)
+            if let position = mapSession?.player?.position {
+                mapSession?.requestMove(x: position.x, y: position.y - 1)
+            }
         case .moveLeft:
-            mapSession?.requestMove(x: position.x - 1, y: position.y)
+            if let position = mapSession?.player?.position {
+                mapSession?.requestMove(x: position.x - 1, y: position.y)
+            }
         case .moveRight:
-            mapSession?.requestMove(x: position.x + 1, y: position.y)
+            if let position = mapSession?.player?.position {
+                mapSession?.requestMove(x: position.x + 1, y: position.y)
+            }
         }
     }
 
@@ -116,18 +121,16 @@ class Conversation {
             self.state.loginID2 = event.loginID2
             self.state.sex = event.sex
 
-            self.charServers = event.charServers
-
             self.scene = .selectCharServer
 
             self.messages.append(.serverText("Accepted"))
 
-            let servers = self.charServers.enumerated()
+            let charServers = event.charServers.enumerated()
                 .map {
                     "(\($0.offset + 1)) \($0.element.name)"
                 }
                 .joined(separator: "\n")
-            self.messages.append(.serverText(servers))
+            self.messages.append(.serverText(charServers))
         }
         .store(in: &subscriptions)
 
@@ -228,9 +231,7 @@ class Conversation {
         let mapSession = MapSession(state: state, mapServer: mapServer)
 
         mapSession.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
-            self.position = event.position
-
-            self.messages.append(.serverText("Map changed: \(event.mapName), position: (\(event.position.x), \(event.position.y))"))
+            self.messages.append(.serverText("Map changed: \(event.mapName), position: \(event.position)"))
 
             // Load map.
 
@@ -239,8 +240,6 @@ class Conversation {
         .store(in: &subscriptions)
 
         mapSession.subscribe(to: PlayerEvents.Moved.self) { [unowned self] event in
-            self.position = event.toPosition
-
             self.messages.append(.serverText("Player moved from \(event.fromPosition) to \(event.toPosition)"))
         }
         .store(in: &subscriptions)

@@ -11,12 +11,6 @@ public enum PlayerEvents {
     public struct Moved: Event {
         public let fromPosition: SIMD2<Int16>
         public let toPosition: SIMD2<Int16>
-
-        init(packet: PACKET_ZC_NOTIFY_PLAYERMOVE) {
-            let moveData = MoveData(data: packet.moveData)
-            self.fromPosition = [moveData.x0, moveData.y0]
-            self.toPosition = [moveData.x1, moveData.y1]
-        }
     }
 
     public struct MessageDisplay: Event {

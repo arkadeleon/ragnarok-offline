@@ -53,9 +53,7 @@ final class ClientTests: XCTestCase {
     }
 
     func testClient() async throws {
-        var state = ClientState()
-        var charServer: CharServerInfo?
-        var mapServer: MapServerInfo?
+        let state = ClientState()
 
         // MARK: - Start login session
 
@@ -74,13 +72,12 @@ final class ClientTests: XCTestCase {
             state.loginID1 = event.loginID1
             state.loginID2 = event.loginID2
             state.sex = event.sex
-
-            charServer = event.charServers[0]
         }
 
         // MARK: - Start char session
 
-        let charSession = CharSession(state: state, charServer: charServer!)
+        let charServer = loginSession.charServers[0]
+        let charSession = CharSession(state: state, charServer: charServer)
 
         charSession.start()
 
@@ -110,13 +107,12 @@ final class ClientTests: XCTestCase {
 
         for await event in charSession.eventStream(for: CharServerEvents.NotifyMapServer.self).prefix(1) {
             state.charID = event.charID
-
-            mapServer = event.mapServer
         }
 
         // MARK: - Start map session
 
-        let mapSession = MapSession(state: state, mapServer: mapServer!)
+        let mapServer = charSession.mapServer!
+        let mapSession = MapSession(state: state, mapServer: mapServer)
 
         Task {
             for await event in mapSession.eventStream(for: PlayerEvents.StatusPropertyChanged.self) {
@@ -126,13 +122,6 @@ final class ClientTests: XCTestCase {
                 default:
                     break
                 }
-            }
-        }
-
-        var objects: [MapObject] = []
-        Task {
-            for await event in mapSession.eventStream(for: MapObjectEvents.Spawned.self) {
-                objects.append(event.object)
             }
         }
 
@@ -175,12 +164,12 @@ final class ClientTests: XCTestCase {
 
         sleep(1)
 
-        let woundedSwordsman1 = objects.first(where: { $0.job == 687 })!
+        let woundedSwordsman1 = mapSession.objects.values.first(where: { $0.job == 687 })!
         mapSession.contactNPC(npcID: woundedSwordsman1.id)
 
         sleep(1)
 
-        let woundedSwordsman2 = objects.first(where: { $0.job == 688 })!
+        let woundedSwordsman2 = mapSession.objects.values.first(where: { $0.job == 688 })!
         mapSession.contactNPC(npcID: woundedSwordsman2.id)
 
         sleep(1)

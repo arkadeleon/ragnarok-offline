@@ -12,6 +12,9 @@ import ROGenerated
 final public class MapSession: SessionProtocol {
     public let state: ClientState
 
+    public private(set) var player: Player?
+    public private(set) var objects: [UInt32 : MapObject] = [:]
+
     let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
 
@@ -91,7 +94,12 @@ final public class MapSession: SessionProtocol {
     private func registerMapPackets() {
         // See `clif_changemap`
         client.registerPacket(PACKET_ZC_NPCACK_MAPMOVE.self, for: HEADER_ZC_NPCACK_MAPMOVE) { [unowned self] packet in
-            let event = MapEvents.Changed(packet: packet)
+            let position = SIMD2(Int16(packet.xPos), Int16(packet.yPos))
+            self.player = Player(position: position)
+
+            self.objects.removeAll()
+
+            let event = MapEvents.Changed(mapName: packet.mapName, position: position)
             self.postEvent(event)
         }
     }
@@ -99,7 +107,13 @@ final public class MapSession: SessionProtocol {
     private func registerPlayerPackets() {
         // See `clif_walkok`
         client.registerPacket(PACKET_ZC_NOTIFY_PLAYERMOVE.self, for: HEADER_ZC_NOTIFY_PLAYERMOVE) { [unowned self] packet in
-            let event = PlayerEvents.Moved(packet: packet)
+            let moveData = MoveData(data: packet.moveData)
+            let fromPosition = SIMD2(moveData.x0, moveData.y0)
+            let toPosition = SIMD2(moveData.x1, moveData.y1)
+
+            self.player?.position = toPosition
+
+            let event = PlayerEvents.Moved(fromPosition: fromPosition, toPosition: toPosition)
             self.postEvent(event)
         }
 
@@ -155,25 +169,50 @@ final public class MapSession: SessionProtocol {
     private func registerObjectPackets() {
         // See `clif_spawn_unit`
         client.registerPacket(packet_spawn_unit.self, for: packet_header_spawn_unitType) { [unowned self] packet in
-            let event = MapObjectEvents.Spawned(packet: packet)
+            let object = MapObject(packet: packet)
+            self.objects[object.id] = object
+
+            let event = MapObjectEvents.Spawned(object: object)
             self.postEvent(event)
         }
 
         // See `clif_set_unit_idle`
         client.registerPacket(packet_idle_unit.self, for: packet_header_idle_unitType) { [unowned self] packet in
-            let event = MapObjectEvents.Spawned(packet: packet)
+            let object = MapObject(packet: packet)
+            self.objects[object.id] = object
+
+            let event = MapObjectEvents.Spawned(object: object)
             self.postEvent(event)
         }
 
         // See `clif_set_unit_walking`
         client.registerPacket(packet_unit_walking.self, for: packet_header_unit_walkingType) { [unowned self] packet in
-            let event = MapObjectEvents.Moved(packet: packet)
-            self.postEvent(event)
+            let objectID = packet.AID
+            if var object = self.objects[objectID] {
+                let moveData = MoveData(data: packet.MoveData)
+                let fromPosition = SIMD2(moveData.x0, moveData.y0)
+                let toPosition = SIMD2(moveData.x1, moveData.y1)
+
+                object.position = toPosition
+                self.objects[objectID] = object
+
+                let event = MapObjectEvents.Moved(objectID: packet.AID, fromPosition: fromPosition, toPosition: toPosition)
+                self.postEvent(event)
+            } else {
+                let object = MapObject(packet: packet)
+                self.objects[object.id] = object
+
+                let event = MapObjectEvents.Spawned(object: object)
+                self.postEvent(event)
+            }
         }
 
         // See `clif_clearunit_single` and `clif_clearunit_area`
         client.registerPacket(PACKET_ZC_NOTIFY_VANISH.self, for: HEADER_ZC_NOTIFY_VANISH) { [unowned self] packet in
-            let event = MapObjectEvents.Vanished(packet: packet)
+            let objectID = packet.gid
+            self.objects[objectID] = nil
+
+            let event = MapObjectEvents.Vanished(objectID: objectID)
             self.postEvent(event)
         }
 
@@ -185,19 +224,31 @@ final public class MapSession: SessionProtocol {
 
         // See `clif_sprite_change`
         client.registerPacket(PACKET_ZC_SPRITE_CHANGE.self, for: packet_header_sendLookType) { [unowned self] packet in
-            let event = MapObjectEvents.SpriteChanged(packet: packet)
+            let event = MapObjectEvents.SpriteChanged(objectID: packet.AID)
             self.postEvent(event)
         }
 
         // See `clif_changeoption_target`
         client.registerPacket(PACKET_ZC_STATE_CHANGE.self, for: HEADER_ZC_STATE_CHANGE) { [unowned self] packet in
-            let event = MapObjectEvents.StateChanged(packet: packet)
-            self.postEvent(event)
+            let objectID = packet.AID
+            if var object = self.objects[objectID] {
+                let bodyState = StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none
+                let healthState = StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none
+                let effectState = StatusChangeOption(rawValue: Int(packet.effectState)) ?? .nothing
+
+                object.bodyState = bodyState
+                object.healthState = healthState
+                object.effectState = effectState
+                self.objects[objectID] = object
+
+                let event = MapObjectEvents.StateChanged(objectID: objectID, bodyState: bodyState, healthState: healthState, effectState: effectState)
+                self.postEvent(event)
+            }
         }
 
         // See `clif_channel_msg` and `clif_messagecolor_target`
         client.registerPacket(PACKET_ZC_NPC_CHAT.self, for: HEADER_ZC_NPC_CHAT) { [unowned self] packet in
-            let event = MapObjectEvents.MessageDisplay(packet: packet)
+            let event = MapObjectEvents.MessageDisplay(message: packet.message)
             self.postEvent(event)
         }
     }

@@ -10,6 +10,8 @@ import Foundation
 import ROGenerated
 
 final public class LoginSession: SessionProtocol {
+    public private(set) var charServers: [CharServerInfo] = []
+
     let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
 
@@ -30,6 +32,7 @@ final public class LoginSession: SessionProtocol {
         // See `logclif_auth_ok`
         client.registerPacket(PACKET_AC_ACCEPT_LOGIN.self, for: HEADER_AC_ACCEPT_LOGIN) { [unowned self] packet in
             let event = LoginEvents.Accepted(packet: packet)
+            self.charServers = event.charServers
             self.postEvent(event)
         }
 

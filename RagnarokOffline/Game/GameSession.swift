@@ -13,8 +13,8 @@ import SwiftUI
 
 enum GamePhase {
     case login
-    case charServerList(_ charServers: [CharServerInfo])
-    case charSelect(_ chars: [CharInfo])
+    case charServerList
+    case charSelect
     case charMake(_ slot: UInt8)
     case map
 }
@@ -25,8 +25,6 @@ final class GameSession {
     var phase: GamePhase = .login
 
     @MainActor
-    var mapObjects: [UInt32 : GameMap.Object] = [:]
-    @MainActor
     var mapScene: GameMapScene?
 
     @MainActor
@@ -35,21 +33,17 @@ final class GameSession {
     var npcMenuDialog: GameNPCMenuDialog?
 
     @ObservationIgnored
-    private var loginSession: LoginSession?
+    var loginSession: LoginSession?
     @ObservationIgnored
-    private var charSession: CharSession?
+    var charSession: CharSession?
     @ObservationIgnored
-    private var mapSession: MapSession?
+    var mapSession: MapSession?
 
     @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
 
     @ObservationIgnored
     private var state = ClientState()
-    @ObservationIgnored
-    private var charServers: [CharServerInfo] = []
-    @ObservationIgnored
-    private var chars: [CharInfo] = []
 
     @MainActor
     func login(username: String, password: String) {
@@ -63,26 +57,6 @@ final class GameSession {
     @MainActor
     func selectCharServer(_ charServer: CharServerInfo) {
         startCharSession(charServer)
-    }
-
-    @MainActor
-    func makeChar(char: CharInfo) {
-        charSession?.makeChar(char: char)
-    }
-
-    @MainActor
-    func selectChar(slot: UInt8) {
-        charSession?.selectChar(slot: slot)
-    }
-
-    @MainActor
-    func requestMove(x: Int16, y: Int16) {
-        mapSession?.requestMove(x: x, y: y)
-    }
-
-    @MainActor
-    func contactNPC(npcID: UInt32) {
-        mapSession?.contactNPC(npcID: npcID)
     }
 
     @MainActor
@@ -115,9 +89,7 @@ final class GameSession {
             self.state.loginID2 = event.loginID2
             self.state.sex = event.sex
 
-            self.charServers = event.charServers
-
-            self.phase = .charServerList(charServers)
+            self.phase = .charServerList
         }
         .store(in: &subscriptions)
 
@@ -142,9 +114,7 @@ final class GameSession {
         let charSession = CharSession(state: state, charServer: charServer)
 
         charSession.subscribe(to: CharServerEvents.Accepted.self) { [unowned self] event in
-            self.chars = event.chars
-
-            self.phase = .charSelect(chars)
+            self.phase = .charSelect
         }
         .store(in: &subscriptions)
 
@@ -164,9 +134,7 @@ final class GameSession {
         .store(in: &subscriptions)
 
         charSession.subscribe(to: CharEvents.MakeAccepted.self) { [unowned self] event in
-            self.chars.append(event.char)
-
-            self.phase = .charSelect(chars)
+            self.phase = .charSelect
         }
         .store(in: &subscriptions)
 
@@ -192,7 +160,6 @@ final class GameSession {
 
         mapSession.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
             self.phase = .map
-            self.mapObjects.removeAll()
             self.mapScene = nil
             self.npcDialog = nil
             self.npcMenuDialog = nil
@@ -215,41 +182,22 @@ final class GameSession {
         // MapObjectEvents
 
         mapSession.subscribe(to: MapObjectEvents.Spawned.self) { [unowned self] event in
-            let object = GameMap.Object(object: event.object, position: event.position)
-            self.mapObjects[object.id] = object
-
-            self.mapScene?.addObject(event.object, at: event.position)
+            self.mapScene?.addObject(event.object)
         }
         .store(in: &subscriptions)
 
         mapSession.subscribe(to: MapObjectEvents.Moved.self) { [unowned self] event in
-            if let object = mapObjects[event.object.id] {
-                object.position = event.toPosition
-
-                self.mapScene?.moveObject(event.object.id, from: event.fromPosition, to: event.toPosition)
-            } else {
-                let object = GameMap.Object(object: event.object, position: event.toPosition)
-                self.mapObjects[object.id] = object
-
-                self.mapScene?.addObject(event.object, at: event.toPosition)
-            }
+            self.mapScene?.moveObject(event.objectID, from: event.fromPosition, to: event.toPosition)
         }
         .store(in: &subscriptions)
 
         mapSession.subscribe(to: MapObjectEvents.Vanished.self) { [unowned self] event in
-            self.mapObjects[event.objectID] = nil
             self.mapScene?.removeObject(event.objectID)
         }
         .store(in: &subscriptions)
 
         mapSession.subscribe(to: MapObjectEvents.StateChanged.self) { [unowned self] event in
-            if let object = self.mapObjects[event.objectID] {
-                object.bodyState = event.bodyState
-                object.healthState = event.healthState
-                object.effectState = event.effectState
-
-                self.mapScene?.updateObject(event.objectID, effectState: event.effectState)
-            }
+            self.mapScene?.updateObject(event.objectID, effectState: event.effectState)
         }
         .store(in: &subscriptions)
 
@@ -299,10 +247,10 @@ final class GameSession {
             await MainActor.run {
                 let mapScene = GameMapScene(name: mapName, grid: grid, position: event.position)
                 mapScene.positionTapHandler = { [unowned self] position in
-                    if let object = self.mapObjects.values.first(where: { $0.position == position && $0.effectState != .cloak }) {
-                        self.contactNPC(npcID: object.id)
+                    if let object = self.mapSession?.objects.values.first(where: { $0.position == position && $0.effectState != .cloak }) {
+                        self.mapSession?.contactNPC(npcID: object.id)
                     } else {
-                        self.requestMove(x: position.x, y: position.y)
+                        self.mapSession?.requestMove(x: position.x, y: position.y)
                     }
                 }
                 self.mapScene = mapScene

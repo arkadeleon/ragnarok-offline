@@ -53,7 +53,7 @@ struct CharMakeView: View {
                             char.luk = luk
                             char.slot = slot
 
-                            gameSession.makeChar(char: char)
+                            gameSession.charSession?.makeChar(char: char)
                         }
 
                         GameButton("btn_cancel.bmp") {

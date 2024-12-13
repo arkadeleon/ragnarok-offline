@@ -61,7 +61,6 @@
 		3577426A2D005FAA00F2CE8D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3577425A2D005FAA00F2CE8D /* MapView.swift */; };
 		3577426B2D005FAA00F2CE8D /* GameImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3577425E2D005FAA00F2CE8D /* GameImage.swift */; };
 		3577426C2D005FAA00F2CE8D /* GameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3577425D2D005FAA00F2CE8D /* GameButton.swift */; };
-		3577426E2D00AD8800F2CE8D /* GameMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3577426D2D00AD8800F2CE8D /* GameMap.swift */; };
 		357EA4E32CC14A440081370F /* browser.js in Resources */ = {isa = PBXBuildFile; fileRef = 357EA4E12CC14A440081370F /* browser.js */; };
 		357F96BA2C4AA48400B3231B /* ImageGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357F96B92C4AA48400B3231B /* ImageGrid.swift */; };
 		3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC52B8C830D00E746D7 /* SettingsView.swift */; };
@@ -135,7 +134,6 @@
 		35E67C792CBF6E60006E42A3 /* SPR+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C782CBF6E5B006E42A3 /* SPR+JSON.swift */; };
 		35E67C7B2CBF7F4F006E42A3 /* STR+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C7A2CBF7F4B006E42A3 /* STR+JSON.swift */; };
 		35E67C7D2CBF90C8006E42A3 /* Miscellaneous+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C7C2CBF909E006E42A3 /* Miscellaneous+JSON.swift */; };
-		35EF743F2D02085200D1B509 /* MapCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF743E2D02084D00D1B509 /* MapCellView.swift */; };
 		35F50CCC2BB4615F00B36455 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CCB2BB4615F00B36455 /* MessagesView.swift */; };
 		35FEB6AD2CD8BE4E00F24A4A /* DatabaseRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */; };
 		35FEB6AF2CD8C90300F24A4A /* StatusChangeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */; };
@@ -218,7 +216,6 @@
 		3577425E2D005FAA00F2CE8D /* GameImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameImage.swift; sourceTree = "<group>"; };
 		357742602D005FAA00F2CE8D /* GameSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSession.swift; sourceTree = "<group>"; };
 		357742612D005FAA00F2CE8D /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		3577426D2D00AD8800F2CE8D /* GameMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMap.swift; sourceTree = "<group>"; };
 		357EA4E12CC14A440081370F /* browser.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = browser.js; sourceTree = "<group>"; };
 		357F96B92C4AA48400B3231B /* ImageGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGrid.swift; sourceTree = "<group>"; };
 		3582FFC52B8C830D00E746D7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -289,7 +286,6 @@
 		35E67C782CBF6E5B006E42A3 /* SPR+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SPR+JSON.swift"; sourceTree = "<group>"; };
 		35E67C7A2CBF7F4B006E42A3 /* STR+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "STR+JSON.swift"; sourceTree = "<group>"; };
 		35E67C7C2CBF909E006E42A3 /* Miscellaneous+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Miscellaneous+JSON.swift"; sourceTree = "<group>"; };
-		35EF743E2D02084D00D1B509 /* MapCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCellView.swift; sourceTree = "<group>"; };
 		35F50CCB2BB4615F00B36455 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRoot.swift; sourceTree = "<group>"; };
 		35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeInfoView.swift; sourceTree = "<group>"; };
@@ -459,7 +455,6 @@
 				357742582D005FAA00F2CE8D /* CharServerListView.swift */,
 				357742592D005FAA00F2CE8D /* LoginView.swift */,
 				3577425A2D005FAA00F2CE8D /* MapView.swift */,
-				35EF743E2D02084D00D1B509 /* MapCellView.swift */,
 				3577425B2D005FAA00F2CE8D /* MessageBoxView.swift */,
 			);
 			path = Components;
@@ -481,7 +476,6 @@
 				3577425F2D005FAA00F2CE8D /* Views */,
 				357742612D005FAA00F2CE8D /* GameView.swift */,
 				357742602D005FAA00F2CE8D /* GameSession.swift */,
-				3577426D2D00AD8800F2CE8D /* GameMap.swift */,
 				354535242D04A8030099B7EF /* GameMapScene.swift */,
 				354535262D058E1B0099B7EF /* GameNPCDialog.swift */,
 			);
@@ -782,7 +776,6 @@
 				3514BF862B4801EB0065ED89 /* JobInfoView.swift in Sources */,
 				35B33BA22BF3BDCE00EF28F5 /* RealityCubeViewController.swift in Sources */,
 				35BE555E2BDAAFFF003715C3 /* RSMFilePreviewView.swift in Sources */,
-				3577426E2D00AD8800F2CE8D /* GameMap.swift in Sources */,
 				3514BF822B4801D70065ED89 /* JobDatabaseView.swift in Sources */,
 				351EE2F92C0735390012BC9E /* TransferableImage.swift in Sources */,
 				35239E052BC2D5D60039F7D5 /* ProgressHUD.swift in Sources */,
@@ -848,7 +841,6 @@
 				354668C52CA9338500CE2D11 /* TextMessage.swift in Sources */,
 				35BE55602BDAB2A7003715C3 /* RSWFilePreviewView.swift in Sources */,
 				35BE55642BDAB834003715C3 /* FilePreviewView.swift in Sources */,
-				35EF743F2D02085200D1B509 /* MapCellView.swift in Sources */,
 				35B422D62BEB7ED800681AA2 /* PetInfoView.swift in Sources */,
 				35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */,
 				35B422DC2BECAA1800681AA2 /* MonsterSummonProvider.swift in Sources */,

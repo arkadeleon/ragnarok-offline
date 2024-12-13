@@ -95,9 +95,9 @@ class GameMapScene: SKScene {
         camera?.run(cameraAction)
     }
 
-    func addObject(_ object: MapObject, at position: SIMD2<Int16>) {
+    func addObject(_ object: MapObject) {
         let objectNode = SKLabelNode()
-        objectNode.position = CGPoint(x: Int(position.x) * tileSize, y: Int(position.y) * tileSize)
+        objectNode.position = CGPoint(x: Int(object.position.x) * tileSize, y: Int(object.position.y) * tileSize)
         objectNode.zPosition = 1
         objectNode.isHidden = (object.effectState == .cloak)
         objectNode.text = object.name
