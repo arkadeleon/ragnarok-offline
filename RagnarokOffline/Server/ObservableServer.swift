@@ -34,16 +34,17 @@ class ObservableServer {
             .assign(to: \.status, on: self)
             .store(in: &subscriptions)
 
+        let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.server-output", qos: .userInitiated)
         server.outputDataPublisher
-            .compactMap {
-                String(data: $0, encoding: .isoLatin1)
-            }
+            .receive(on: queue)
             .scan([AttributedString]()) {
                 var result = $0
+                guard let output = String(data: $1, encoding: .isoLatin1) else {
+                    return result
+                }
                 if let last = result.last, last.characters.last == "\r" {
                     result.removeLast()
                 }
-                let output = $1
                 let lines = output.split(separator: "\n")
                 for line in lines where !line.isEmpty {
                     let attributedString = AttributedString(logMessage: String(line))
