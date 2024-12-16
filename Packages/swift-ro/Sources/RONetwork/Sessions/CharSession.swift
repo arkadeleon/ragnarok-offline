@@ -10,11 +10,7 @@ import Foundation
 import ROGenerated
 
 final public class CharSession: SessionProtocol {
-    public let state: ClientState
-
-    public private(set) var chars: [CharInfo] = []
-    public private(set) var mapName: String?
-    public private(set) var mapServer: MapServerInfo?
+    let storage: SessionStorage
 
     let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
@@ -25,8 +21,8 @@ final public class CharSession: SessionProtocol {
         eventSubject.eraseToAnyPublisher()
     }
 
-    public init(state: ClientState, charServer: CharServerInfo) {
-        self.state = state
+    public init(storage: SessionStorage, charServer: CharServerInfo) {
+        self.storage = storage
 
         self.client = Client(port: charServer.port)
 
@@ -64,9 +60,12 @@ final public class CharSession: SessionProtocol {
     private func registerCharServerPackets() {
         // 0x6b
         client.registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION.self, for: PACKET_HC_ACCEPT_ENTER_NEO_UNION.packetType) { [unowned self] packet in
-            let event = CharServerEvents.Accepted(packet: packet)
-            self.chars = event.chars
-            self.postEvent(event)
+            Task {
+                await self.storage.updateChars(packet.chars)
+
+                let event = CharServerEvents.Accepted(packet: packet)
+                self.postEvent(event)
+            }
         }
 
         // 0x6c
@@ -77,10 +76,12 @@ final public class CharSession: SessionProtocol {
 
         // 0x71, 0xac5
         client.registerPacket(PACKET_HC_NOTIFY_ZONESVR.self, for: PACKET_HC_NOTIFY_ZONESVR.packetType) { [unowned self] packet in
-            let event = CharServerEvents.NotifyMapServer(packet: packet)
-            self.mapName = event.mapName
-            self.mapServer = event.mapServer
-            self.postEvent(event)
+            Task {
+                await self.storage.updateMapServer(with: packet)
+
+                let event = CharServerEvents.NotifyMapServer(packet: packet)
+                self.postEvent(event)
+            }
         }
 
         // 0x840
@@ -93,8 +94,11 @@ final public class CharSession: SessionProtocol {
     private func registerCharPackets() {
         // 0x6d
         client.registerPacket(PACKET_HC_ACCEPT_MAKECHAR.self, for: PACKET_HC_ACCEPT_MAKECHAR.packetType) { [unowned self] packet in
+            Task {
+                await self.storage.addChar(packet.char)
+            }
+
             let event = CharEvents.MakeAccepted(packet: packet)
-            self.chars.append(event.char)
             self.postEvent(event)
         }
 
@@ -147,9 +151,11 @@ final public class CharSession: SessionProtocol {
     public func start() {
         client.connect()
 
-        enter()
+        Task {
+            await enter()
 
-        keepAlive()
+            await keepAlive()
+        }
     }
 
     public func stop() {
@@ -170,18 +176,21 @@ final public class CharSession: SessionProtocol {
     ///         ``PACKET_HC_BLOCK_CHARACTER`` +
     ///         ``PACKET_HC_SECOND_PASSWD_LOGIN`` or
     ///         ``PACKET_HC_REFUSE_ENTER``
-    private func enter() {
+    private func enter() async {
         var packet = PACKET_CH_ENTER()
-        packet.accountID = state.accountID
-        packet.loginID1 = state.loginID1
-        packet.loginID2 = state.loginID2
-        packet.clientType = state.langType
-        packet.sex = state.sex
+        packet.accountID = await storage.accountID
+        packet.loginID1 = await storage.loginID1
+        packet.loginID2 = await storage.loginID2
+        packet.clientType = storage.langType
+        packet.sex = await storage.sex
 
         client.sendPacket(packet)
 
         client.receiveData { data in
-            self.state.accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
+            Task {
+                let accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
+                await self.storage.updateAccountID(accountID)
+            }
 
             self.client.receivePacket()
         }
@@ -190,8 +199,8 @@ final public class CharSession: SessionProtocol {
     /// Keep alive.
     ///
     /// Send ``PACKET_CZ_PING`` every 12 seconds.
-    private func keepAlive() {
-        let accountID = state.accountID
+    private func keepAlive() async {
+        let accountID = await storage.accountID
 
         timerSubscription = Timer.publish(every: 12, on: .main, in: .common)
             .autoconnect()

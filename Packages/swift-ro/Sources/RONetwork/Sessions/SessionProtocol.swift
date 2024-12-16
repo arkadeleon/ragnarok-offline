@@ -22,10 +22,8 @@ extension SessionProtocol {
                 e as? E
             }
             .sink { e in
-                Task {
-                    await MainActor.run {
-                        handler(e)
-                    }
+                Task { @MainActor in
+                    handler(e)
                 }
             }
         return subscription

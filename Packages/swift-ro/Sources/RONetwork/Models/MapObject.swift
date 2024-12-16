@@ -68,4 +68,10 @@ public struct MapObject: Sendable {
         let moveData = MoveData(data: packet.MoveData)
         self.position = [moveData.x1, moveData.y1]
     }
+
+    mutating func updateState(with packet: PACKET_ZC_STATE_CHANGE) {
+        bodyState = StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none
+        healthState = StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none
+        effectState = StatusChangeOption(rawValue: Int(packet.effectState)) ?? .nothing
+    }
 }

@@ -44,7 +44,7 @@ final class Client {
         connection.cancel()
     }
 
-    func registerPacket<P>(_ type: P.Type, for packetType: Int16, _ handler: @escaping (P) -> Void) where P: BinaryDecodable {
+    func registerPacket<P>(_ type: P.Type, for packetType: Int16, handler: @escaping (P) -> Void) where P: BinaryDecodable {
         registeredPackets[packetType] = type
 
         packetSubject

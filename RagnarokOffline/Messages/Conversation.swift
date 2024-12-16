@@ -19,6 +19,8 @@ enum ConversationScene {
 
 @Observable
 class Conversation {
+    let storage = SessionStorage()
+
     @MainActor
     var messages: [any Message] = []
 
@@ -49,11 +51,8 @@ class Conversation {
     @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
 
-    @ObservationIgnored
-    private var state = ClientState()
-
     @MainActor
-    func sendCommand(_ command: CommandMessage.Command, parameters: [String] = []) {
+    func sendCommand(_ command: CommandMessage.Command, parameters: [String] = []) async {
         messages.append(.command(command, parameters: parameters))
 
         switch command {
@@ -66,14 +65,14 @@ class Conversation {
 
             loginSession?.keepAlive(username: username)
         case .selectCharServer:
+            let charServers = await storage.charServers
+
             guard let serverNumber = Int(parameters[0]),
-                  let charServers = loginSession?.charServers,
                   serverNumber - 1 < charServers.count else {
-                break
+                return
             }
 
             let charServer = charServers[serverNumber - 1]
-
             startCharSession(charServer)
         case .makeChar:
             var char = CharInfo()
@@ -94,33 +93,28 @@ class Conversation {
 
             charSession?.selectChar(slot: slot)
         case .moveUp:
-            if let position = mapSession?.player?.position {
+            if let position = await storage.player?.position {
                 mapSession?.requestMove(x: position.x, y: position.y + 1)
             }
         case .moveDown:
-            if let position = mapSession?.player?.position {
+            if let position = await storage.player?.position {
                 mapSession?.requestMove(x: position.x, y: position.y - 1)
             }
         case .moveLeft:
-            if let position = mapSession?.player?.position {
+            if let position = await storage.player?.position {
                 mapSession?.requestMove(x: position.x - 1, y: position.y)
             }
         case .moveRight:
-            if let position = mapSession?.player?.position {
+            if let position = await storage.player?.position {
                 mapSession?.requestMove(x: position.x + 1, y: position.y)
             }
         }
     }
 
     private func startLoginSession() {
-        let loginSession = LoginSession()
+        let loginSession = LoginSession(storage: storage)
 
         loginSession.subscribe(to: LoginEvents.Accepted.self) { [unowned self] event in
-            self.state.accountID = event.accountID
-            self.state.loginID1 = event.loginID1
-            self.state.loginID2 = event.loginID2
-            self.state.sex = event.sex
-
             self.scene = .selectCharServer
 
             self.messages.append(.serverText("Accepted"))
@@ -157,7 +151,7 @@ class Conversation {
     }
 
     private func startCharSession(_ charServer: CharServerInfo) {
-        let charSession = CharSession(state: state, charServer: charServer)
+        let charSession = CharSession(storage: storage, charServer: charServer)
 
         charSession.subscribe(to: CharServerEvents.Accepted.self) { [unowned self] event in
             self.scene = .selectChar
@@ -187,8 +181,6 @@ class Conversation {
         .store(in: &subscriptions)
 
         charSession.subscribe(to: CharServerEvents.NotifyMapServer.self) { [unowned self] event in
-            self.state.charID = event.charID
-
             self.scene = .map
 
             self.messages.append(.serverText("Entered map: \(event.mapName)"))
@@ -228,7 +220,7 @@ class Conversation {
     }
 
     private func startMapSession(_ mapServer: MapServerInfo) {
-        let mapSession = MapSession(state: state, mapServer: mapServer)
+        let mapSession = MapSession(storage: storage, mapServer: mapServer)
 
         mapSession.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
             self.messages.append(.serverText("Map changed: \(event.mapName), position: \(event.position)"))

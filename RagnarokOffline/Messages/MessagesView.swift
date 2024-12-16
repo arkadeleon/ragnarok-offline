@@ -40,7 +40,9 @@ struct MessagesView: View {
                 HStack(spacing: 16) {
                     ForEach(conversation.availableCommands, id: \.rawValue) { command in
                         Button(command.rawValue) {
-                            executeCommand(command)
+                            Task {
+                                await executeCommand(command)
+                            }
                         }
                         .buttonStyle(.bordered)
                         .buttonBorderShape(.capsule)
@@ -67,21 +69,27 @@ struct MessagesView: View {
             }
 
             Button("Send") {
-                conversation.sendCommand(pendingCommand!, parameters: commandParameters)
-                pendingCommand = nil
-                commandParameters = []
+                Task {
+                    await sendPendingCommand()
+                }
             }
         }
     }
 
-    private func executeCommand(_ command: CommandMessage.Command) {
+    private func executeCommand(_ command: CommandMessage.Command) async {
         if command.arguments.isEmpty {
-            conversation.sendCommand(command)
+            await conversation.sendCommand(command)
         } else {
             pendingCommand = command
             commandParameters = Array(repeating: "", count: command.arguments.count)
             isCommandAlertPresented.toggle()
         }
+    }
+
+    private func sendPendingCommand() async {
+        await conversation.sendCommand(pendingCommand!, parameters: commandParameters)
+        pendingCommand = nil
+        commandParameters = []
     }
 }
 

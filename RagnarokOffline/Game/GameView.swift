@@ -15,10 +15,10 @@ struct GameView: View {
             switch gameSession.phase {
             case .login:
                 LoginView()
-            case .charServerList:
-                CharServerListView(charServers: gameSession.loginSession?.charServers ?? [])
-            case .charSelect:
-                CharSelectView(chars: gameSession.charSession?.chars ?? [])
+            case .charServerList(let charServers):
+                CharServerListView(charServers: charServers)
+            case .charSelect(let chars):
+                CharSelectView(chars: chars)
             case .charMake(let slot):
                 CharMakeView(slot: slot)
             case .map:

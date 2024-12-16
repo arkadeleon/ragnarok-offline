@@ -53,11 +53,11 @@ final class ClientTests: XCTestCase {
     }
 
     func testClient() async throws {
-        let state = ClientState()
+        let storage = SessionStorage()
 
         // MARK: - Start login session
 
-        let loginSession = LoginSession()
+        let loginSession = LoginSession(storage: storage)
 
         loginSession.start()
 
@@ -67,17 +67,12 @@ final class ClientTests: XCTestCase {
 
         for await event in loginSession.eventStream(for: LoginEvents.Accepted.self).prefix(1) {
             XCTAssertEqual(event.charServers.count, 1)
-
-            state.accountID = event.accountID
-            state.loginID1 = event.loginID1
-            state.loginID2 = event.loginID2
-            state.sex = event.sex
         }
 
         // MARK: - Start char session
 
-        let charServer = loginSession.charServers[0]
-        let charSession = CharSession(state: state, charServer: charServer)
+        let charServer = await storage.charServers[0]
+        let charSession = CharSession(storage: storage, charServer: charServer)
 
         charSession.start()
 
@@ -106,13 +101,13 @@ final class ClientTests: XCTestCase {
         charSession.selectChar(slot: 0)
 
         for await event in charSession.eventStream(for: CharServerEvents.NotifyMapServer.self).prefix(1) {
-            state.charID = event.charID
+            XCTAssertEqual(event.charID, 1)
         }
 
         // MARK: - Start map session
 
-        let mapServer = charSession.mapServer!
-        let mapSession = MapSession(state: state, mapServer: mapServer)
+        let mapServer = await storage.mapServer!
+        let mapSession = MapSession(storage: storage, mapServer: mapServer)
 
         Task {
             for await event in mapSession.eventStream(for: PlayerEvents.StatusPropertyChanged.self) {
@@ -164,12 +159,12 @@ final class ClientTests: XCTestCase {
 
         sleep(1)
 
-        let woundedSwordsman1 = mapSession.objects.values.first(where: { $0.job == 687 })!
+        let woundedSwordsman1 = await storage.mapObjects.values.first(where: { $0.job == 687 })!
         mapSession.contactNPC(npcID: woundedSwordsman1.id)
 
         sleep(1)
 
-        let woundedSwordsman2 = mapSession.objects.values.first(where: { $0.job == 688 })!
+        let woundedSwordsman2 = await storage.mapObjects.values.first(where: { $0.job == 688 })!
         mapSession.contactNPC(npcID: woundedSwordsman2.id)
 
         sleep(1)

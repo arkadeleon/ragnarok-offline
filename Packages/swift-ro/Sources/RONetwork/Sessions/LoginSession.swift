@@ -10,7 +10,7 @@ import Foundation
 import ROGenerated
 
 final public class LoginSession: SessionProtocol {
-    public private(set) var charServers: [CharServerInfo] = []
+    let storage: SessionStorage
 
     let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
@@ -21,8 +21,10 @@ final public class LoginSession: SessionProtocol {
         eventSubject.eraseToAnyPublisher()
     }
 
-    public init() {
-        client = Client(port: 6900)
+    public init(storage: SessionStorage) {
+        self.storage = storage
+
+        self.client = Client(port: 6900)
 
         client.errorHandler = { [unowned self] error in
             let event = ConnectionEvents.ErrorOccurred(error: error)
@@ -31,9 +33,12 @@ final public class LoginSession: SessionProtocol {
 
         // See `logclif_auth_ok`
         client.registerPacket(PACKET_AC_ACCEPT_LOGIN.self, for: HEADER_AC_ACCEPT_LOGIN) { [unowned self] packet in
-            let event = LoginEvents.Accepted(packet: packet)
-            self.charServers = event.charServers
-            self.postEvent(event)
+            Task {
+                await self.storage.updateAccount(with: packet)
+
+                let event = LoginEvents.Accepted(packet: packet)
+                self.postEvent(event)
+            }
         }
 
         // See `logclif_auth_failed`

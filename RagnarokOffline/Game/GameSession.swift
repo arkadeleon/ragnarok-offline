@@ -13,14 +13,16 @@ import SwiftUI
 
 enum GamePhase {
     case login
-    case charServerList
-    case charSelect
+    case charServerList(_ charServers: [CharServerInfo])
+    case charSelect(_ chars: [CharInfo])
     case charMake(_ slot: UInt8)
     case map
 }
 
 @Observable
 final class GameSession {
+    let storage = SessionStorage()
+
     @MainActor
     var phase: GamePhase = .login
 
@@ -41,9 +43,6 @@ final class GameSession {
 
     @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
-
-    @ObservationIgnored
-    private var state = ClientState()
 
     @MainActor
     func login(username: String, password: String) {
@@ -81,15 +80,10 @@ final class GameSession {
     }
 
     private func startLoginSession() {
-        let loginSession = LoginSession()
+        let loginSession = LoginSession(storage: storage)
 
         loginSession.subscribe(to: LoginEvents.Accepted.self) { [unowned self] event in
-            self.state.accountID = event.accountID
-            self.state.loginID1 = event.loginID1
-            self.state.loginID2 = event.loginID2
-            self.state.sex = event.sex
-
-            self.phase = .charServerList
+            self.phase = .charServerList(event.charServers)
         }
         .store(in: &subscriptions)
 
@@ -111,10 +105,13 @@ final class GameSession {
     }
 
     private func startCharSession(_ charServer: CharServerInfo) {
-        let charSession = CharSession(state: state, charServer: charServer)
+        let charSession = CharSession(storage: storage, charServer: charServer)
 
         charSession.subscribe(to: CharServerEvents.Accepted.self) { [unowned self] event in
-            self.phase = .charSelect
+            Task {
+                let chars = await self.storage.chars
+                self.phase = .charSelect(chars)
+            }
         }
         .store(in: &subscriptions)
 
@@ -123,8 +120,6 @@ final class GameSession {
         .store(in: &subscriptions)
 
         charSession.subscribe(to: CharServerEvents.NotifyMapServer.self) { [unowned self] event in
-            self.state.charID = event.charID
-
             self.startMapSession(event.mapServer)
         }
         .store(in: &subscriptions)
@@ -134,7 +129,10 @@ final class GameSession {
         .store(in: &subscriptions)
 
         charSession.subscribe(to: CharEvents.MakeAccepted.self) { [unowned self] event in
-            self.phase = .charSelect
+            Task {
+                let chars = await self.storage.chars
+                self.phase = .charSelect(chars)
+            }
         }
         .store(in: &subscriptions)
 
@@ -156,7 +154,7 @@ final class GameSession {
     }
 
     private func startMapSession(_ mapServer: MapServerInfo) {
-        let mapSession = MapSession(state: state, mapServer: mapServer)
+        let mapSession = MapSession(storage: storage, mapServer: mapServer)
 
         mapSession.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
             self.phase = .map
@@ -164,7 +162,7 @@ final class GameSession {
             self.npcDialog = nil
             self.npcMenuDialog = nil
 
-            Task { [self] in
+            Task {
                 try await self.loadMap(event)
             }
         }
@@ -244,20 +242,22 @@ final class GameSession {
 
         if let map = try await MapDatabase.renewal.map(forName: mapName),
            let grid = map.grid() {
-            await MainActor.run {
+            Task { @MainActor in
                 let mapScene = GameMapScene(name: mapName, grid: grid, position: event.position)
                 mapScene.positionTapHandler = { [unowned self] position in
-                    if let object = self.mapSession?.objects.values.first(where: { $0.position == position && $0.effectState != .cloak }) {
-                        self.mapSession?.contactNPC(npcID: object.id)
-                    } else {
-                        self.mapSession?.requestMove(x: position.x, y: position.y)
+                    Task {
+                        if let object = await self.storage.mapObjects.values.first(where: { $0.position == position && $0.effectState != .cloak }) {
+                            self.mapSession?.contactNPC(npcID: object.id)
+                        } else {
+                            self.mapSession?.requestMove(x: position.x, y: position.y)
+                        }
                     }
                 }
                 self.mapScene = mapScene
+
+                mapSession?.notifyMapLoaded()
             }
         }
-
-        mapSession?.notifyMapLoaded()
     }
 }
 
