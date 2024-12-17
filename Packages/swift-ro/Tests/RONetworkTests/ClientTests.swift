@@ -160,20 +160,20 @@ final class ClientTests: XCTestCase {
         sleep(1)
 
         let woundedSwordsman1 = await storage.mapObjects.values.first(where: { $0.job == 687 })!
-        mapSession.contactNPC(npcID: woundedSwordsman1.id)
+        mapSession.talkToNPC(npcID: woundedSwordsman1.id)
 
         sleep(1)
 
         let woundedSwordsman2 = await storage.mapObjects.values.first(where: { $0.job == 688 })!
-        mapSession.contactNPC(npcID: woundedSwordsman2.id)
+        mapSession.talkToNPC(npcID: woundedSwordsman2.id)
 
         sleep(1)
 
-        mapSession.requestNextScript(npcID: woundedSwordsman2.id)
+        mapSession.requestNextMessage(npcID: woundedSwordsman2.id)
 
         sleep(1)
 
-        mapSession.requestNextScript(npcID: woundedSwordsman2.id)
+        mapSession.requestNextMessage(npcID: woundedSwordsman2.id)
 
         sleep(1)
 

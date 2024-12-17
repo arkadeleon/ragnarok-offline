@@ -29,11 +29,6 @@ final class GameSession {
     @MainActor
     var mapScene: GameMapScene?
 
-    @MainActor
-    var npcDialog: GameNPCDialog?
-    @MainActor
-    var npcMenuDialog: GameNPCMenuDialog?
-
     @ObservationIgnored
     var loginSession: LoginSession?
     @ObservationIgnored
@@ -56,27 +51,6 @@ final class GameSession {
     @MainActor
     func selectCharServer(_ charServer: CharServerInfo) {
         startCharSession(charServer)
-    }
-
-    @MainActor
-    func requestNextScript(npcID: UInt32) {
-        npcDialog = nil
-
-        mapSession?.requestNextScript(npcID: npcID)
-    }
-
-    @MainActor
-    func closeDialog(npcID: UInt32) {
-        npcDialog = nil
-
-        mapSession?.closeDialog(npcID: npcID)
-    }
-
-    @MainActor
-    func selectMenu(npcID: UInt32, select: UInt8) {
-        npcMenuDialog = nil
-
-        mapSession?.selectMenu(npcID: npcID, select: select)
     }
 
     private func startLoginSession() {
@@ -159,8 +133,6 @@ final class GameSession {
         mapSession.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
             self.phase = .map
             self.mapScene = nil
-            self.npcDialog = nil
-            self.npcMenuDialog = nil
 
             Task {
                 try await self.loadMap(event)
@@ -199,39 +171,6 @@ final class GameSession {
         }
         .store(in: &subscriptions)
 
-        // NPCEvents
-
-        mapSession.subscribe(to: NPCEvents.DisplayDialog.self) { [unowned self] event in
-            if let npcDialog, npcDialog.npcID == event.npcID {
-                npcDialog.message.append("\n")
-                npcDialog.message.append(event.message)
-            } else {
-                let npcDialog = GameNPCDialog(npcID: event.npcID, message: event.message)
-                self.npcDialog = npcDialog
-            }
-        }
-        .store(in: &subscriptions)
-
-        mapSession.subscribe(to: NPCEvents.AddNextButton.self) { [unowned self] event in
-            if let npcDialog, npcDialog.npcID == event.npcID {
-                npcDialog.showsNextButton = true
-            }
-        }
-        .store(in: &subscriptions)
-
-        mapSession.subscribe(to: NPCEvents.AddCloseButton.self) { [unowned self] event in
-            if let npcDialog, npcDialog.npcID == event.npcID {
-                npcDialog.showsCloseButton = true
-            }
-        }
-        .store(in: &subscriptions)
-
-        mapSession.subscribe(to: NPCEvents.DisplayMenuDialog.self) { [unowned self] event in
-            self.npcDialog = nil
-            self.npcMenuDialog = GameNPCMenuDialog(npcID: event.npcID, items: event.items)
-        }
-        .store(in: &subscriptions)
-
         mapSession.start()
 
         self.mapSession = mapSession
@@ -247,7 +186,7 @@ final class GameSession {
                 mapScene.positionTapHandler = { [unowned self] position in
                     Task {
                         if let object = await self.storage.mapObjects.values.first(where: { $0.position == position && $0.effectState != .cloak }) {
-                            self.mapSession?.contactNPC(npcID: object.id)
+                            self.mapSession?.talkToNPC(npcID: object.id)
                         } else {
                             self.mapSession?.requestMove(x: position.x, y: position.y)
                         }

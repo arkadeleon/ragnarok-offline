@@ -16,6 +16,15 @@ public protocol SessionProtocol {
 }
 
 extension SessionProtocol {
+    public func publisher<E>(for event: E.Type) -> AnyPublisher<E, Never> where E: Event {
+        eventPublisher
+            .compactMap { e in
+                e as? E
+            }
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
+
     public func subscribe<E>(to event: E.Type, handler: @escaping @MainActor (E) -> Void) -> AnyCancellable where E: Event {
         eventPublisher
             .compactMap { e in

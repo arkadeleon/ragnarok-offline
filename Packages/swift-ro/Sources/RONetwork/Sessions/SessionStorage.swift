@@ -27,6 +27,8 @@ final public actor SessionStorage {
 
     public private(set) var mapObjects: [UInt32 : MapObject] = [:]
 
+    public private(set) var npcDialog: NPCDialog?
+
     public init() {
     }
 
@@ -62,8 +64,9 @@ final public actor SessionStorage {
 
     func updateMap(with mapName: String, position: SIMD2<Int16>) {
         self.mapName = mapName
-        self.player = Player(position: position)
-        self.mapObjects.removeAll()
+        player = Player(position: position)
+        mapObjects.removeAll()
+        npcDialog = nil
     }
 
     func updatePlayerPosition(_ position: SIMD2<Int16>) {
@@ -91,5 +94,64 @@ final public actor SessionStorage {
         mapObjects[packet.AID] = object
 
         return object
+    }
+
+    // MARK: - NPC Dialog
+
+    func updateNPCDialog(with packet: PACKET_ZC_SAY_DIALOG) -> NPCDialog {
+        if let npcDialog, npcDialog.npcID == packet.NpcID, case .message(var message, let hasNextMessage) = npcDialog.content {
+            message.append("\n")
+            message.append(packet.message)
+            let npcDialog = NPCDialog(npcID: packet.NpcID, content: .message(message: message, hasNextMessage: hasNextMessage))
+            self.npcDialog = npcDialog
+            return npcDialog
+        } else {
+            let npcDialog = NPCDialog(npcID: packet.NpcID, content: .message(message: packet.message, hasNextMessage: nil))
+            self.npcDialog = npcDialog
+            return npcDialog
+        }
+    }
+
+    func updateNPCDialog(with packet: PACKET_ZC_WAIT_DIALOG) -> NPCDialog? {
+        if let npcDialog, npcDialog.npcID == packet.NpcID, case .message(let message, _) = npcDialog.content {
+            let npcDialog = NPCDialog(npcID: npcDialog.npcID, content: .message(message: message, hasNextMessage: true))
+            self.npcDialog = npcDialog
+            return npcDialog
+        } else {
+            return nil
+        }
+    }
+
+    func updateNPCDialog(with packet: PACKET_ZC_CLOSE_DIALOG) -> NPCDialog? {
+        if let npcDialog, npcDialog.npcID == packet.npcId, case .message(let message, _) = npcDialog.content {
+            let npcDialog = NPCDialog(npcID: npcDialog.npcID, content: .message(message: message, hasNextMessage: false))
+            self.npcDialog = npcDialog
+            return npcDialog
+        } else {
+            return nil
+        }
+    }
+
+    func updateNPCDialog(with packet: PACKET_ZC_MENU_LIST) -> NPCDialog {
+        let menu = packet.menu.split(separator: ":").map(String.init)
+        let npcDialog = NPCDialog(npcID: packet.npcId, content: .menu(menu: menu))
+        self.npcDialog = npcDialog
+        return npcDialog
+    }
+
+    func updateNPCDialog(with packet: PACKET_ZC_OPEN_EDITDLG) -> NPCDialog {
+        let npcDialog = NPCDialog(npcID: packet.npcId, content: .textInput)
+        self.npcDialog = npcDialog
+        return npcDialog
+    }
+
+    func updateNPCDialog(with packet: PACKET_ZC_OPEN_EDITDLGSTR) -> NPCDialog {
+        let npcDialog = NPCDialog(npcID: packet.npcId, content: .textInput)
+        self.npcDialog = npcDialog
+        return npcDialog
+    }
+
+    func closeNPCDialog() {
+        npcDialog = nil
     }
 }
