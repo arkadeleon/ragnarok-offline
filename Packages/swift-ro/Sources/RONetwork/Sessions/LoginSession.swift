@@ -33,12 +33,10 @@ final public class LoginSession: SessionProtocol {
 
         // See `logclif_auth_ok`
         client.registerPacket(PACKET_AC_ACCEPT_LOGIN.self, for: HEADER_AC_ACCEPT_LOGIN) { [unowned self] packet in
-            Task {
-                await self.storage.updateAccount(with: packet)
+            await self.storage.updateAccount(with: packet)
 
-                let event = LoginEvents.Accepted(packet: packet)
-                self.postEvent(event)
-            }
+            let event = LoginEvents.Accepted(packet: packet)
+            self.postEvent(event)
         }
 
         // See `logclif_auth_failed`

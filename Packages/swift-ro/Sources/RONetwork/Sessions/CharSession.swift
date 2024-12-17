@@ -60,12 +60,10 @@ final public class CharSession: SessionProtocol {
     private func registerCharServerPackets() {
         // 0x6b
         client.registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION.self, for: PACKET_HC_ACCEPT_ENTER_NEO_UNION.packetType) { [unowned self] packet in
-            Task {
-                await self.storage.updateChars(packet.chars)
+            await self.storage.updateChars(packet.chars)
 
-                let event = CharServerEvents.Accepted(packet: packet)
-                self.postEvent(event)
-            }
+            let event = CharServerEvents.Accepted(packet: packet)
+            self.postEvent(event)
         }
 
         // 0x6c
@@ -76,12 +74,10 @@ final public class CharSession: SessionProtocol {
 
         // 0x71, 0xac5
         client.registerPacket(PACKET_HC_NOTIFY_ZONESVR.self, for: PACKET_HC_NOTIFY_ZONESVR.packetType) { [unowned self] packet in
-            Task {
-                await self.storage.updateMapServer(with: packet)
+            await self.storage.updateMapServer(with: packet)
 
-                let event = CharServerEvents.NotifyMapServer(packet: packet)
-                self.postEvent(event)
-            }
+            let event = CharServerEvents.NotifyMapServer(packet: packet)
+            self.postEvent(event)
         }
 
         // 0x840
@@ -94,9 +90,7 @@ final public class CharSession: SessionProtocol {
     private func registerCharPackets() {
         // 0x6d
         client.registerPacket(PACKET_HC_ACCEPT_MAKECHAR.self, for: PACKET_HC_ACCEPT_MAKECHAR.packetType) { [unowned self] packet in
-            Task {
-                await self.storage.addChar(packet.char)
-            }
+            await self.storage.addChar(packet.char)
 
             let event = CharEvents.MakeAccepted(packet: packet)
             self.postEvent(event)

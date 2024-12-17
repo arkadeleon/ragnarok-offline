@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2024/8/12.
 //
 
-import Combine
 import Foundation
 import Network
 import ROCore
@@ -15,19 +14,21 @@ final class Client {
 
     private let connection: NWConnection
 
-    private let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client")
+    private let packetStream: AsyncStream<PacketDecodingResult>
+    private let packetContinuation: AsyncStream<PacketDecodingResult>.Continuation
 
-    private var registeredPackets: [Int16 : any BinaryDecodable.Type] = [:]
-
-    private let packetSubject = PassthroughSubject<any BinaryDecodable, Never>()
-    private var subscriptions = Set<AnyCancellable>()
+    private var packetRegistrations: [Int16 : any PacketRegistration] = [:]
 
     init(port: UInt16) {
-        connection = NWConnection(
+        self.connection = NWConnection(
             host: .ipv4(.loopback),
             port: .init(rawValue: port)!,
             using: .tcp
         )
+
+        let (stream, continuation) = AsyncStream<PacketDecodingResult>.makeStream()
+        self.packetStream = stream
+        self.packetContinuation = continuation
     }
 
     func connect() {
@@ -35,24 +36,27 @@ final class Client {
             print(state)
         }
 
+        let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client")
         connection.start(queue: queue)
+
+        Task {
+            for await result in packetStream {
+                let packet = result.packet
+                await result.packetHandler(packet)
+            }
+        }
     }
 
     func disconnect() {
         connection.stateUpdateHandler = nil
 
         connection.cancel()
+
+        packetContinuation.finish()
     }
 
-    func registerPacket<P>(_ type: P.Type, for packetType: Int16, handler: @escaping (P) -> Void) where P: BinaryDecodable {
-        registeredPackets[packetType] = type
-
-        packetSubject
-            .compactMap { p in
-                p as? P
-            }
-            .sink(receiveValue: handler)
-            .store(in: &subscriptions)
+    func registerPacket<P>(_ type: P.Type, for packetType: Int16, handler: @escaping (P) async -> Void) where P: BinaryDecodable {
+        packetRegistrations[packetType] = _PacketRegistration(type: type, handler: handler)
     }
 
     func sendPacket(_ packet: some BinaryEncodable) {
@@ -89,10 +93,10 @@ final class Client {
             if let content {
                 print("Received \(content.count) bytes")
                 do {
-                    let decoder = PacketDecoder(registeredPackets: registeredPackets)
-                    let packets = try decoder.decode(from: content)
-                    for packet in packets {
-                        packetSubject.send(packet)
+                    let decoder = PacketDecoder(packetRegistrations: packetRegistrations)
+                    let results = try decoder.decode(from: content)
+                    for result in results {
+                        packetContinuation.yield(result)
                     }
                 } catch {
                     print(error)

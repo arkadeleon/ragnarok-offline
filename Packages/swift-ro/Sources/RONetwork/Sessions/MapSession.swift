@@ -37,9 +37,7 @@ final public class MapSession: SessionProtocol {
 
         // 0x283
         client.registerPacket(PACKET_ZC_AID.self, for: PACKET_ZC_AID.packetType) { [unowned self] packet in
-            Task {
-                await self.storage.updateAccountID(packet.accountID)
-            }
+            await self.storage.updateAccountID(packet.accountID)
         }
 
         // See `clif_hotkeys_send`
@@ -93,30 +91,26 @@ final public class MapSession: SessionProtocol {
     private func registerMapPackets() {
         // See `clif_changemap`
         client.registerPacket(PACKET_ZC_NPCACK_MAPMOVE.self, for: HEADER_ZC_NPCACK_MAPMOVE) { [unowned self] packet in
-            Task {
-                let position = SIMD2(Int16(packet.xPos), Int16(packet.yPos))
+            let position = SIMD2(Int16(packet.xPos), Int16(packet.yPos))
 
-                await self.storage.updateMap(with: packet.mapName, position: position)
+            await self.storage.updateMap(with: packet.mapName, position: position)
 
-                let event = MapEvents.Changed(mapName: packet.mapName, position: position)
-                self.postEvent(event)
-            }
+            let event = MapEvents.Changed(mapName: packet.mapName, position: position)
+            self.postEvent(event)
         }
     }
 
     private func registerPlayerPackets() {
         // See `clif_walkok`
         client.registerPacket(PACKET_ZC_NOTIFY_PLAYERMOVE.self, for: HEADER_ZC_NOTIFY_PLAYERMOVE) { [unowned self] packet in
-            Task {
-                let moveData = MoveData(data: packet.moveData)
-                let fromPosition = SIMD2(moveData.x0, moveData.y0)
-                let toPosition = SIMD2(moveData.x1, moveData.y1)
+            let moveData = MoveData(data: packet.moveData)
+            let fromPosition = SIMD2(moveData.x0, moveData.y0)
+            let toPosition = SIMD2(moveData.x1, moveData.y1)
 
-                await self.storage.updatePlayerPosition(toPosition)
+            await self.storage.updatePlayerPosition(toPosition)
 
-                let event = PlayerEvents.Moved(fromPosition: fromPosition, toPosition: toPosition)
-                self.postEvent(event)
-            }
+            let event = PlayerEvents.Moved(fromPosition: fromPosition, toPosition: toPosition)
+            self.postEvent(event)
         }
 
         // 0x8e
@@ -171,55 +165,47 @@ final public class MapSession: SessionProtocol {
     private func registerObjectPackets() {
         // See `clif_spawn_unit`
         client.registerPacket(packet_spawn_unit.self, for: packet_header_spawn_unitType) { [unowned self] packet in
-            Task {
-                let object = MapObject(packet: packet)
+            let object = MapObject(packet: packet)
 
-                await self.storage.updateMapObject(object)
+            await self.storage.updateMapObject(object)
 
-                let event = MapObjectEvents.Spawned(object: object)
-                self.postEvent(event)
-            }
+            let event = MapObjectEvents.Spawned(object: object)
+            self.postEvent(event)
         }
 
         // See `clif_set_unit_idle`
         client.registerPacket(packet_idle_unit.self, for: packet_header_idle_unitType) { [unowned self] packet in
-            Task {
-                let object = MapObject(packet: packet)
+            let object = MapObject(packet: packet)
 
-                await self.storage.updateMapObject(object)
+            await self.storage.updateMapObject(object)
 
-                let event = MapObjectEvents.Spawned(object: object)
-                self.postEvent(event)
-            }
+            let event = MapObjectEvents.Spawned(object: object)
+            self.postEvent(event)
         }
 
         // See `clif_set_unit_walking`
         client.registerPacket(packet_unit_walking.self, for: packet_header_unit_walkingType) { [unowned self] packet in
-            Task {
-                let object = MapObject(packet: packet)
-                if let _ = await self.storage.updateMapObject(object) {
-                    let moveData = MoveData(data: packet.MoveData)
-                    let fromPosition = SIMD2(moveData.x0, moveData.y0)
-                    let toPosition = SIMD2(moveData.x1, moveData.y1)
+            let object = MapObject(packet: packet)
+            if let _ = await self.storage.updateMapObject(object) {
+                let moveData = MoveData(data: packet.MoveData)
+                let fromPosition = SIMD2(moveData.x0, moveData.y0)
+                let toPosition = SIMD2(moveData.x1, moveData.y1)
 
-                    let event = MapObjectEvents.Moved(objectID: object.id, fromPosition: fromPosition, toPosition: toPosition)
-                    self.postEvent(event)
-                } else {
-                    let event = MapObjectEvents.Spawned(object: object)
-                    self.postEvent(event)
-                }
+                let event = MapObjectEvents.Moved(objectID: object.id, fromPosition: fromPosition, toPosition: toPosition)
+                self.postEvent(event)
+            } else {
+                let event = MapObjectEvents.Spawned(object: object)
+                self.postEvent(event)
             }
         }
 
         // See `clif_clearunit_single` and `clif_clearunit_area`
         client.registerPacket(PACKET_ZC_NOTIFY_VANISH.self, for: HEADER_ZC_NOTIFY_VANISH) { [unowned self] packet in
-            Task {
-                let objectID = packet.gid
-                await self.storage.removeMapObject(for: objectID)
+            let objectID = packet.gid
+            await self.storage.removeMapObject(for: objectID)
 
-                let event = MapObjectEvents.Vanished(objectID: objectID)
-                self.postEvent(event)
-            }
+            let event = MapObjectEvents.Vanished(objectID: objectID)
+            self.postEvent(event)
         }
 
         // See `clif_changed_dir`
@@ -236,16 +222,14 @@ final public class MapSession: SessionProtocol {
 
         // See `clif_changeoption_target`
         client.registerPacket(PACKET_ZC_STATE_CHANGE.self, for: HEADER_ZC_STATE_CHANGE) { [unowned self] packet in
-            Task {
-                if let object = await self.storage.updateMapObjectState(with: packet) {
-                    let event = MapObjectEvents.StateChanged(
-                        objectID: object.id,
-                        bodyState: object.bodyState,
-                        healthState: object.healthState,
-                        effectState: object.effectState
-                    )
-                    self.postEvent(event)
-                }
+            if let object = await self.storage.updateMapObjectState(with: packet) {
+                let event = MapObjectEvents.StateChanged(
+                    objectID: object.id,
+                    bodyState: object.bodyState,
+                    healthState: object.healthState,
+                    effectState: object.effectState
+                )
+                self.postEvent(event)
             }
         }
 
