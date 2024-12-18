@@ -1442,14 +1442,21 @@ public enum OfficialStatusChangeID: Int, CaseIterable, Sendable {
     case efst_contents_23 = 1481
     case efst_contents_24 = 1482
     case efst_contents_25 = 1483
+    case efst_contents_26 = 1484
+    case efst_contents_27 = 1485
+    case efst_contents_28 = 1486
+    case efst_contents_29 = 1487
+    case efst_contents_30 = 1488
     case efst_c_buff_1 = 1509
     case efst_c_buff_2 = 1510
     case efst_chasing = 1560
     case efst_mystery_powder = 1665
+    case efst_wild_walk = 1666
     case efst_fire_charm_power = 1667
     case efst_water_charm_power = 1668
     case efst_wind_charm_power = 1669
     case efst_ground_charm_power = 1670
+    case efst_overcoming_crisis = 1671
 }
 
 extension OfficialStatusChangeID: CodingKey {
@@ -2890,14 +2897,21 @@ extension OfficialStatusChangeID: CodingKey {
         case .efst_contents_23: "EFST_CONTENTS_23"
         case .efst_contents_24: "EFST_CONTENTS_24"
         case .efst_contents_25: "EFST_CONTENTS_25"
+        case .efst_contents_26: "EFST_CONTENTS_26"
+        case .efst_contents_27: "EFST_CONTENTS_27"
+        case .efst_contents_28: "EFST_CONTENTS_28"
+        case .efst_contents_29: "EFST_CONTENTS_29"
+        case .efst_contents_30: "EFST_CONTENTS_30"
         case .efst_c_buff_1: "EFST_C_BUFF_1"
         case .efst_c_buff_2: "EFST_C_BUFF_2"
         case .efst_chasing: "EFST_CHASING"
         case .efst_mystery_powder: "EFST_MYSTERY_POWDER"
+        case .efst_wild_walk: "EFST_WILD_WALK"
         case .efst_fire_charm_power: "EFST_FIRE_CHARM_POWER"
         case .efst_water_charm_power: "EFST_WATER_CHARM_POWER"
         case .efst_wind_charm_power: "EFST_WIND_CHARM_POWER"
         case .efst_ground_charm_power: "EFST_GROUND_CHARM_POWER"
+        case .efst_overcoming_crisis: "EFST_OVERCOMING_CRISIS"
         }
     }
 
@@ -4338,14 +4352,21 @@ extension OfficialStatusChangeID: CodingKey {
         case "EFST_CONTENTS_23": self = .efst_contents_23
         case "EFST_CONTENTS_24": self = .efst_contents_24
         case "EFST_CONTENTS_25": self = .efst_contents_25
+        case "EFST_CONTENTS_26": self = .efst_contents_26
+        case "EFST_CONTENTS_27": self = .efst_contents_27
+        case "EFST_CONTENTS_28": self = .efst_contents_28
+        case "EFST_CONTENTS_29": self = .efst_contents_29
+        case "EFST_CONTENTS_30": self = .efst_contents_30
         case "EFST_C_BUFF_1": self = .efst_c_buff_1
         case "EFST_C_BUFF_2": self = .efst_c_buff_2
         case "EFST_CHASING": self = .efst_chasing
         case "EFST_MYSTERY_POWDER": self = .efst_mystery_powder
+        case "EFST_WILD_WALK": self = .efst_wild_walk
         case "EFST_FIRE_CHARM_POWER": self = .efst_fire_charm_power
         case "EFST_WATER_CHARM_POWER": self = .efst_water_charm_power
         case "EFST_WIND_CHARM_POWER": self = .efst_wind_charm_power
         case "EFST_GROUND_CHARM_POWER": self = .efst_ground_charm_power
+        case "EFST_OVERCOMING_CRISIS": self = .efst_overcoming_crisis
         default: return nil
         }
     }

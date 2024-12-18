@@ -416,6 +416,9 @@ public let HEADER_CZ_ACTIVE_QUEST: Int16 = 0x2b6
 public let HEADER_CZ_JOIN_BABY: Int16 = 0x1f7
 public let HEADER_CZ_AUCTION_ITEM_SEARCH: Int16 = 0x251
 public let HEADER_CZ_AUCTION_BUY: Int16 = 0x24f
+public let HEADER_CZ_AUCTION_ADD: Int16 = 0x24d
+public let HEADER_ZC_DRESSROOM_OPEN: Int16 = 0xa02
+public let HEADER_ZC_ROOM_NEWENTRY: Int16 = 0xd7
 public let HEADER_ZC_NOTIFY_CHAT: Int16 = 0x8d
 public let HEADER_ZC_ITEM_ENTRY: Int16 = 0x9d
 public let HEADER_ZC_MVP_GETTING_ITEM: Int16 = 0x10a
@@ -13223,6 +13226,75 @@ public struct PACKET_CZ_AUCTION_BUY: BinaryDecodable, BinaryEncodable, Sendable 
         try encoder.encode(packetType)
         try encoder.encode(auction_id)
         try encoder.encode(money)
+    }
+}
+
+public struct PACKET_CZ_AUCTION_ADD: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var now_money: UInt32 = 0
+    public var max_money: UInt32 = 0
+    public var hours: UInt16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        now_money = try decoder.decode(UInt32.self)
+        max_money = try decoder.decode(UInt32.self)
+        hours = try decoder.decode(UInt16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(now_money)
+        try encoder.encode(max_money)
+        try encoder.encode(hours)
+    }
+}
+
+public struct PACKET_ZC_DRESSROOM_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var view: UInt16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        view = try decoder.decode(UInt16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(view)
+    }
+}
+
+public struct PACKET_ZC_ROOM_NEWENTRY: BinaryDecodable, BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var owner: Int32 = 0
+    public var id: Int32 = 0
+    public var limit: UInt16 = 0
+    public var users: UInt16 = 0
+    public var type: UInt8 = 0
+    public var title: String = ""
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        owner = try decoder.decode(Int32.self)
+        id = try decoder.decode(Int32.self)
+        limit = try decoder.decode(UInt16.self)
+        users = try decoder.decode(UInt16.self)
+        type = try decoder.decode(UInt8.self)
+        title = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4 + 4 + 2 + 2 + 1)))
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(owner)
+        try encoder.encode(id)
+        try encoder.encode(limit)
+        try encoder.encode(users)
+        try encoder.encode(type)
+        try encoder.encode(title)
     }
 }
 

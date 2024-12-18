@@ -77,7 +77,6 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     parseable_packet(0x00d3, 2, "clif_parse_PMIgnoreList", [0])
     packet(0x00d4, -1)
     // parseable_packet(HEADER_CZ_CREATE_CHATROOM, -1, "clif_parse_CreateChatRoom", [0])
-    packet(0x00d7, -1)
     parseable_packet(0x00d9, 14, "clif_parse_ChatAddMember", [2, 6])
     parseable_packet(0x00de, -1, "clif_parse_ChatRoomStatusChange", [2, 4, 6, 7, 15])
     parseable_packet(0x00e0, 30, "clif_parse_ChangeChatOwner", [2, 6])
@@ -632,7 +631,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x0251, 4)
     }
     if PACKETVER >= 20050808 {
-        parseable_packet(0x024d, 12, "clif_parse_Auction_register", [2, 6, 10])
+        // parseable_packet(HEADER_CZ_AUCTION_ADD, sizeof( PACKET_CZ_AUCTION_ADD ), "clif_parse_Auction_register", [0])
         packet(0x024e, 4)
     }
     if PACKETVER >= 20050817 {
@@ -1525,7 +1524,6 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     if PACKETVER >= 20141016 {
         packet(0x0A00, 269)
         parseable_packet(0x0A01, 3, "clif_parse_HotkeyRowShift", [2])
-        packet(0x0A02, 4)
         packet(0x0A0E, 14)
         packet(0x09F7, 75)
         packet(0x09E6, 22)
