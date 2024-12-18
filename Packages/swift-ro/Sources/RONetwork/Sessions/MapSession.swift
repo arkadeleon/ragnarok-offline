@@ -334,13 +334,11 @@ final public class MapSession: SessionProtocol {
         client.sendPacket(packet)
 
         if PACKET_VERSION < 20070521 {
-            client.receiveData { data in
+            client.receiveDataAndPacket(count: 4) { data in
                 Task {
                     let accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
                     await self.storage.updateAccountID(accountID)
                 }
-
-                self.client.receivePacket()
             }
         } else {
             client.receivePacket()

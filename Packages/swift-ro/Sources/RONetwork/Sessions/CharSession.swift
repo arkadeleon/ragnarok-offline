@@ -180,13 +180,11 @@ final public class CharSession: SessionProtocol {
 
         client.sendPacket(packet)
 
-        client.receiveData { data in
+        client.receiveDataAndPacket(count: 4) { data in
             Task {
                 let accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
                 await self.storage.updateAccountID(accountID)
             }
-
-            self.client.receivePacket()
         }
     }
 

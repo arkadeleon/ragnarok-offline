@@ -76,10 +76,36 @@ final class Client {
         }
     }
 
-    func receiveData(completion: @escaping @Sendable (_ data: Data) -> Void) {
-        connection.receive(minimumIncompleteLength: 1, maximumLength: 65536) { content, _, _, error in
+    func receiveDataAndPacket(count: Int, completion: @escaping @Sendable (_ data: Data) -> Void) {
+        connection.receive(minimumIncompleteLength: count, maximumLength: 65536) { [weak self] content, _, _, error in
+            guard let self else {
+                return
+            }
+
             if let content {
-                completion(content)
+                print("Received \(content.count) bytes")
+                if content.count >= count {
+                    let data = content[0..<count]
+                    completion(data)
+
+                    let remaining = content[count...]
+                    do {
+                        let decoder = PacketDecoder(packetRegistrations: packetRegistrations)
+                        let results = try decoder.decode(from: remaining)
+                        for result in results {
+                            packetContinuation.yield(result)
+                        }
+                    } catch {
+                        print(error)
+                        self.errorHandler?(error)
+                    }
+                }
+            }
+
+            if let error {
+                self.errorHandler?(error)
+            } else {
+                self.receivePacket()
             }
         }
     }
