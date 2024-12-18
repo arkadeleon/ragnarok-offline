@@ -145,7 +145,7 @@ final class GameSession {
         }
         .store(in: &subscriptions)
 
-        mapSession.subscribe(to: PlayerEvents.MessageDisplay.self) { event in
+        mapSession.subscribe(to: PlayerEvents.MessageReceived.self) { event in
         }
         .store(in: &subscriptions)
 

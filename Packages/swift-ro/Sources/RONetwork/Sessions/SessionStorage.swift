@@ -69,8 +69,22 @@ final public actor SessionStorage {
         npcDialog = nil
     }
 
+    // MARK: - Player
+
     func updatePlayerPosition(_ position: SIMD2<Int16>) {
         player?.position = position
+    }
+
+    func updatePlayerStatus(with packet: PACKET_ZC_STATUS) {
+        player?.status.update(with: packet)
+    }
+
+    func updatePlayerStatusProperty(_ sp: StatusProperty, value: Int) {
+        player?.status.update(property: sp, value: value)
+    }
+
+    func updatePlayerStatusProperty(_ sp: StatusProperty, value: Int, value2: Int) {
+        player?.status.update(property: sp, value: value, value2: value2)
     }
 
     // MARK: - Map Objects

@@ -20,7 +20,7 @@ public enum MapObjectEvents {
         }
     }
 
-    public struct MessageDisplay: Event {
+    public struct MessageReceived: Event {
         public let message: String
     }
 

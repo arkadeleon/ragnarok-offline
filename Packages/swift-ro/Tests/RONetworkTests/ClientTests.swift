@@ -109,17 +109,6 @@ final class ClientTests: XCTestCase {
         let mapServer = await storage.mapServer!
         let mapSession = MapSession(storage: storage, mapServer: mapServer)
 
-        Task {
-            for await event in mapSession.eventStream(for: PlayerEvents.StatusPropertyChanged.self) {
-                switch event.sp {
-                case .str, .agi, .vit, .int, .dex, .luk:
-                    XCTAssertEqual(event.value, 1)
-                default:
-                    break
-                }
-            }
-        }
-
         mapSession.start()
 
         for await event in mapSession.eventStream(for: MapEvents.Changed.self).prefix(1) {
@@ -135,9 +124,17 @@ final class ClientTests: XCTestCase {
             mapSession.notifyMapLoaded()
         }
 
-        // MARK: - Move to warp
-
         sleep(1)
+
+        let player = await storage.player!
+        XCTAssertEqual(player.status.str, 1)
+        XCTAssertEqual(player.status.agi, 1)
+        XCTAssertEqual(player.status.vit, 1)
+        XCTAssertEqual(player.status.int, 1)
+        XCTAssertEqual(player.status.dex, 1)
+        XCTAssertEqual(player.status.luk, 1)
+
+        // MARK: - Move to warp
 
         mapSession.requestMove(x: 27, y: 30)
 

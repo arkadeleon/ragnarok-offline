@@ -63,7 +63,6 @@ final public class MapSession: SessionProtocol {
         registerNPCPackets()
         registerObjectPackets()
         registerPartyPackets()
-        registerStatusPackets()
 
         // See `clif_reputation_list`
         client.registerPacket(PACKET_ZC_REPUTE_INFO.self, for: HEADER_ZC_REPUTE_INFO) { packet in
@@ -96,26 +95,6 @@ final public class MapSession: SessionProtocol {
             await self.storage.updateMap(with: packet.mapName, position: position)
 
             let event = MapEvents.Changed(mapName: packet.mapName, position: position)
-            self.postEvent(event)
-        }
-    }
-
-    private func registerPlayerPackets() {
-        // See `clif_walkok`
-        client.registerPacket(PACKET_ZC_NOTIFY_PLAYERMOVE.self, for: HEADER_ZC_NOTIFY_PLAYERMOVE) { [unowned self] packet in
-            let moveData = MoveData(data: packet.moveData)
-            let fromPosition = SIMD2(moveData.x0, moveData.y0)
-            let toPosition = SIMD2(moveData.x1, moveData.y1)
-
-            await self.storage.updatePlayerPosition(toPosition)
-
-            let event = PlayerEvents.Moved(fromPosition: fromPosition, toPosition: toPosition)
-            self.postEvent(event)
-        }
-
-        // 0x8e
-        client.registerPacket(PACKET_ZC_NOTIFY_PLAYERCHAT.self, for: PACKET_ZC_NOTIFY_PLAYERCHAT.packetType) { [unowned self] packet in
-            let event = PlayerEvents.MessageDisplay(packet: packet)
             self.postEvent(event)
         }
     }
@@ -235,7 +214,7 @@ final public class MapSession: SessionProtocol {
 
         // See `clif_channel_msg` and `clif_messagecolor_target`
         client.registerPacket(PACKET_ZC_NPC_CHAT.self, for: HEADER_ZC_NPC_CHAT) { [unowned self] packet in
-            let event = MapObjectEvents.MessageDisplay(message: packet.message)
+            let event = MapObjectEvents.MessageReceived(message: packet.message)
             self.postEvent(event)
         }
     }
@@ -243,57 +222,6 @@ final public class MapSession: SessionProtocol {
     private func registerPartyPackets() {
         // See `clif_partyinvitationstate`
         client.registerPacket(PACKET_ZC_PARTY_CONFIG.self, for: HEADER_ZC_PARTY_CONFIG) { packet in
-        }
-    }
-
-    private func registerStatusPackets() {
-        // See `clif_par_change`
-        client.registerPacket(PACKET_ZC_PAR_CHANGE.self, for: HEADER_ZC_PAR_CHANGE) { [unowned self] packet in
-            if let event = PlayerEvents.StatusPropertyChanged(packet: packet) {
-                self.postEvent(event)
-            }
-        }
-
-        // See `clif_longpar_change`
-        client.registerPacket(PACKET_ZC_LONGPAR_CHANGE.self, for: HEADER_ZC_LONGPAR_CHANGE) { [unowned self] packet in
-            if let event = PlayerEvents.StatusPropertyChanged(packet: packet) {
-                self.postEvent(event)
-            }
-        }
-
-        // See `clif_initialstatus`
-        client.registerPacket(PACKET_ZC_STATUS.self, for: HEADER_ZC_STATUS) { packet in
-        }
-
-        // See `clif_zc_status_change`
-        client.registerPacket(PACKET_ZC_STATUS_CHANGE.self, for: HEADER_ZC_STATUS_CHANGE) { [unowned self] packet in
-            if let event = PlayerEvents.StatusPropertyChanged(packet: packet) {
-                self.postEvent(event)
-            }
-        }
-
-        // See `clif_cartcount`
-        client.registerPacket(PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO.self, for: HEADER_ZC_NOTIFY_CARTITEM_COUNTINFO) { packet in
-        }
-
-        // See `clif_attackrange`
-        client.registerPacket(PACKET_ZC_ATTACK_RANGE.self, for: HEADER_ZC_ATTACK_RANGE) { [unowned self] packet in
-            let event = PlayerEvents.AttackRangeChanged(packet: packet)
-            self.postEvent(event)
-        }
-
-        // See `clif_couplestatus`
-        client.registerPacket(PACKET_ZC_COUPLESTATUS.self, for: HEADER_ZC_COUPLESTATUS) { [unowned self] packet in
-            if let event = PlayerEvents.StatusPropertyChanged(packet: packet) {
-                self.postEvent(event)
-            }
-        }
-
-        // See `clif_longlongpar_change`
-        client.registerPacket(PACKET_ZC_LONGLONGPAR_CHANGE.self, for: HEADER_ZC_LONGLONGPAR_CHANGE) { [unowned self] packet in
-            if let event = PlayerEvents.StatusPropertyChanged(packet: packet) {
-                self.postEvent(event)
-            }
         }
     }
 
@@ -363,40 +291,6 @@ final public class MapSession: SessionProtocol {
 
     public func notifyMapLoaded() {
         let packet = PACKET_CZ_NOTIFY_ACTORINIT()
-
-        client.sendPacket(packet)
-    }
-
-    /// Change direction.
-    ///
-    /// Send ``PACKET_CZ_CHANGE_DIRECTION``
-    ///
-    /// Receive ``PACKET_ZC_CHANGE_DIRECTION``
-    public func changeDirection(headDirection: UInt16, direction: UInt8) {
-        var packet = PACKET_CZ_CHANGE_DIRECTION()
-        packet.headDirection = headDirection
-        packet.direction = direction
-
-        client.sendPacket(packet)
-    }
-
-    /// Request action.
-    ///
-    /// Send ``PACKET_CZ_REQUEST_ACT``
-    public func requestAction(action: UInt8) {
-        var packet = PACKET_CZ_REQUEST_ACT()
-        packet.action = action
-
-        client.sendPacket(packet)
-    }
-
-    /// Request move.
-    ///
-    /// Send ``PACKET_CZ_REQUEST_MOVE``
-    public func requestMove(x: Int16, y: Int16) {
-        var packet = PACKET_CZ_REQUEST_MOVE()
-        packet.x = x
-        packet.y = y
 
         client.sendPacket(packet)
     }
