@@ -53,10 +53,10 @@ extension Player {
 
         public var atk = 0
         public var atk2 = 0
-        public var matk = 0
-        public var matk2 = 0
         public var def = 0
         public var def2 = 0
+        public var matk = 0
+        public var matk2 = 0
         public var mdef = 0
         public var mdef2 = 0
         public var hit = 0
@@ -85,10 +85,10 @@ extension Player {
 
             atk = Int(packet.attPower)
             atk2 = Int(packet.refiningPower)
-            matk = Int(packet.min_mattPower)
-            matk2 = Int(packet.max_mattPower)
             def = Int(packet.itemdefPower)
             def2 = Int(packet.plusdefPower)
+            matk = Int(packet.min_mattPower)
+            matk2 = Int(packet.max_mattPower)
             mdef = Int(packet.mdefPower)
             mdef2 = Int(packet.plusmdefPower)
             hit = Int(packet.hitSuccessValue)
@@ -143,14 +143,14 @@ extension Player {
                 atk = value
             case .atk2:
                 atk2 = value
-            case .matk1:
-                matk = value
-            case .matk2:
-                matk2 = value
             case .def1:
                 def = value
             case .def2:
                 def2 = value
+            case .matk1:
+                matk = value
+            case .matk2:
+                matk2 = value
             case .mdef1:
                 mdef = value
             case .mdef2:

@@ -14,19 +14,14 @@ struct MapView: View {
     var mapSession: MapSession
     var mapScene: GameMapScene
 
-    @State private var npcDialog: NPCDialog?
-
     var body: some View {
         SpriteView(scene: mapScene)
             .ignoresSafeArea()
+            .overlay(alignment: .topLeading) {
+                PlayerStatusOverlayView(mapSession: mapSession)
+            }
             .overlay {
-                NPCDialogBox(mapSession: mapSession, dialog: $npcDialog)
-            }
-            .onReceive(mapSession.publisher(for: NPCEvents.DialogUpdated.self)) { event in
-                self.npcDialog = event.dialog
-            }
-            .onReceive(mapSession.publisher(for: NPCEvents.DialogClosed.self)) { event in
-                self.npcDialog = nil
+                NPCDialogOverlayView(mapSession: mapSession)
             }
     }
 }

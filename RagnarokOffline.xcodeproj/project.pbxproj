@@ -77,6 +77,7 @@
 		3599BD572C3FB5020010DBE7 /* FileThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3599BD562C3FB5020010DBE7 /* FileThumbnailView.swift */; };
 		3599BD592C3FCE7A0010DBE7 /* ImageGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3599BD582C3FCE7A0010DBE7 /* ImageGridCell.swift */; };
 		35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */; };
+		35AD22AC2D13292500A7BB6C /* PlayerStatusOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AD22AB2D13291C00A7BB6C /* PlayerStatusOverlayView.swift */; };
 		35B33BA22BF3BDCE00EF28F5 /* RealityCubeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA12BF3BDCE00EF28F5 /* RealityCubeViewController.swift */; };
 		35B33BA52BF465E700EF28F5 /* RealityCubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA42BF465E700EF28F5 /* RealityCubeView.swift */; };
 		35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */; };
@@ -120,7 +121,7 @@
 		35BE55642BDAB834003715C3 /* FilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55632BDAB834003715C3 /* FilePreviewView.swift */; };
 		35BF5BE22C65B5D8006A3487 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BF5BE12C65B5D8006A3487 /* SidebarView.swift */; };
 		35BF5BE42C65B9FD006A3487 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BF5BE32C65B9FD006A3487 /* DetailView.swift */; };
-		35C8F8F02D1025D0005603CD /* NPCDialogBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C8F8EF2D1025CA005603CD /* NPCDialogBox.swift */; };
+		35C8F8F02D1025D0005603CD /* NPCDialogOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C8F8EF2D1025CA005603CD /* NPCDialogOverlayView.swift */; };
 		35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */; };
 		35E27A832BC96AC800C11076 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A822BC96AC800C11076 /* Message.swift */; };
 		35E27A852BC96B3000C11076 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A842BC96B3000C11076 /* MessageCell.swift */; };
@@ -228,6 +229,7 @@
 		3599BD562C3FB5020010DBE7 /* FileThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnailView.swift; sourceTree = "<group>"; };
 		3599BD582C3FCE7A0010DBE7 /* ImageGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGridCell.swift; sourceTree = "<group>"; };
 		35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerView.swift; sourceTree = "<group>"; };
+		35AD22AB2D13291C00A7BB6C /* PlayerStatusOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStatusOverlayView.swift; sourceTree = "<group>"; };
 		35B33BA12BF3BDCE00EF28F5 /* RealityCubeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityCubeViewController.swift; sourceTree = "<group>"; };
 		35B33BA42BF465E700EF28F5 /* RealityCubeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityCubeView.swift; sourceTree = "<group>"; };
 		35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOffline.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -272,7 +274,7 @@
 		35BE55632BDAB834003715C3 /* FilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePreviewView.swift; sourceTree = "<group>"; };
 		35BF5BE12C65B5D8006A3487 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		35BF5BE32C65B9FD006A3487 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
-		35C8F8EF2D1025CA005603CD /* NPCDialogBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPCDialogBox.swift; sourceTree = "<group>"; };
+		35C8F8EF2D1025CA005603CD /* NPCDialogOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPCDialogOverlayView.swift; sourceTree = "<group>"; };
 		35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabaseView.swift; sourceTree = "<group>"; };
 		35E27A822BC96AC800C11076 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		35E27A842BC96B3000C11076 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
@@ -455,7 +457,8 @@
 				357742582D005FAA00F2CE8D /* CharServerListView.swift */,
 				357742592D005FAA00F2CE8D /* LoginView.swift */,
 				3577425A2D005FAA00F2CE8D /* MapView.swift */,
-				35C8F8EF2D1025CA005603CD /* NPCDialogBox.swift */,
+				35AD22AB2D13291C00A7BB6C /* PlayerStatusOverlayView.swift */,
+				35C8F8EF2D1025CA005603CD /* NPCDialogOverlayView.swift */,
 				3577425B2D005FAA00F2CE8D /* MessageBoxView.swift */,
 			);
 			path = Components;
@@ -815,11 +818,12 @@
 				35239DF72BBDA0760039F7D5 /* LoadStatus.swift in Sources */,
 				35B422D22BEB6C7C00681AA2 /* PetDatabaseView.swift in Sources */,
 				35B422D42BEB785500681AA2 /* ObservablePet.swift in Sources */,
+				35AD22AC2D13292500A7BB6C /* PlayerStatusOverlayView.swift in Sources */,
 				35652B432B960D100075AD71 /* MapDatabaseView.swift in Sources */,
 				35E27A852BC96B3000C11076 /* MessageCell.swift in Sources */,
 				355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */,
 				35FEB6C22CDC845E00F24A4A /* ObservableMap.swift in Sources */,
-				35C8F8F02D1025D0005603CD /* NPCDialogBox.swift in Sources */,
+				35C8F8F02D1025D0005603CD /* NPCDialogOverlayView.swift in Sources */,
 				35E67C792CBF6E60006E42A3 /* SPR+JSON.swift in Sources */,
 				35E67C7B2CBF7F4F006E42A3 /* STR+JSON.swift in Sources */,
 				3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */,
