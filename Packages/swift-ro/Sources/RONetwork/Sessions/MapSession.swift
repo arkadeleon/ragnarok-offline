@@ -10,7 +10,7 @@ import Foundation
 import ROGenerated
 
 final public class MapSession: SessionProtocol {
-    let storage: SessionStorage
+    public let storage: SessionStorage
 
     let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
@@ -129,6 +129,14 @@ final public class MapSession: SessionProtocol {
         // See `clif_inventoryEnd`
         client.registerPacket(PACKET_ZC_INVENTORY_END.self, for: HEADER_ZC_INVENTORY_END) { packet in
         }
+
+        // See `clif_additem`
+        client.registerPacket(PACKET_ZC_ITEM_PICKUP_ACK.self, for: HEADER_ZC_ITEM_PICKUP_ACK) { packet in
+        }
+
+        // See `clif_dropitem`
+        client.registerPacket(PACKET_ZC_ITEM_THROW_ACK.self, for: HEADER_ZC_ITEM_THROW_ACK) { packet in
+        }
     }
 
     private func registerMailPackets() {
@@ -178,6 +186,17 @@ final public class MapSession: SessionProtocol {
             }
         }
 
+        // See `clif_fixpos`
+        client.registerPacket(PACKET_ZC_STOPMOVE.self, for: HEADER_ZC_STOPMOVE) { [unowned self] packet in
+            let objectID = packet.AID
+            let position: SIMD2 = [Int16(packet.xPos), Int16(packet.yPos)]
+
+            if let _ = await self.storage.updateMapObjectPosition(objectID, position: position) {
+                let event = MapObjectEvents.Stopped(objectID: objectID, position: position)
+                self.postEvent(event)
+            }
+        }
+
         // See `clif_clearunit_single` and `clif_clearunit_area`
         client.registerPacket(PACKET_ZC_NOTIFY_VANISH.self, for: HEADER_ZC_NOTIFY_VANISH) { [unowned self] packet in
             let objectID = packet.gid
@@ -210,6 +229,15 @@ final public class MapSession: SessionProtocol {
                 )
                 self.postEvent(event)
             }
+        }
+
+        // See `clif_damage` and `clif_takeitem` and `clif_sitting` and `clif_standing`
+        client.registerPacket(PACKET_ZC_NOTIFY_ACT.self, for: HEADER_ZC_NOTIFY_ACT) { [unowned self] packet in
+        }
+
+        // See `clif_skill_nodamage`
+        client.registerPacket(PACKET_ZC_USE_SKILL.self, for: HEADER_ZC_USE_SKILL) { [unowned self] packet in
+
         }
 
         // See `clif_channel_msg` and `clif_messagecolor_target`

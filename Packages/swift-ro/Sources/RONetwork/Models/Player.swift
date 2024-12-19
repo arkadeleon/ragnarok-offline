@@ -8,7 +8,7 @@
 import ROGenerated
 
 public struct Player {
-    public var position: SIMD2<Int16>
+    public var position: SIMD2<Int16> = .zero
     public var status = Player.Status()
 }
 

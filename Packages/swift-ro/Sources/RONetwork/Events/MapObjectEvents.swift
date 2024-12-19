@@ -30,6 +30,11 @@ public enum MapObjectEvents {
         public let toPosition: SIMD2<Int16>
     }
 
+    public struct Stopped: Event {
+        public let objectID: UInt32
+        public let position: SIMD2<Int16>
+    }
+
     public struct Spawned: Event {
         public let object: MapObject
     }

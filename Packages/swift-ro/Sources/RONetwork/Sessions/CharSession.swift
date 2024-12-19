@@ -10,7 +10,7 @@ import Foundation
 import ROGenerated
 
 final public class CharSession: SessionProtocol {
-    let storage: SessionStorage
+    public let storage: SessionStorage
 
     let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()

@@ -60,11 +60,13 @@ final public actor SessionStorage {
         self.charID = packet.charID
         self.mapName = packet.mapName
         self.mapServer = packet.mapServer
+
+        player = Player()
     }
 
     func updateMap(with mapName: String, position: SIMD2<Int16>) {
         self.mapName = mapName
-        player = Player(position: position)
+        player?.position = position
         mapObjects.removeAll()
         npcDialog = nil
     }
@@ -97,6 +99,17 @@ final public actor SessionStorage {
     @discardableResult
     func removeMapObject(for objectID: UInt32) -> MapObject? {
         mapObjects.removeValue(forKey: objectID)
+    }
+
+    func updateMapObjectPosition(_ objectID: UInt32, position: SIMD2<Int16>) -> MapObject? {
+        guard var object = mapObjects[objectID] else {
+            return nil
+        }
+
+        object.position = position
+        mapObjects[objectID] = object
+
+        return object
     }
 
     func updateMapObjectState(with packet: PACKET_ZC_STATE_CHANGE) -> MapObject? {

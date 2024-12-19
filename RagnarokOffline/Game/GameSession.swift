@@ -161,6 +161,11 @@ final class GameSession {
         }
         .store(in: &subscriptions)
 
+        mapSession.subscribe(to: MapObjectEvents.Stopped.self) { [unowned self] event in
+            self.mapScene?.moveObject(event.objectID, to: event.position)
+        }
+        .store(in: &subscriptions)
+
         mapSession.subscribe(to: MapObjectEvents.Vanished.self) { [unowned self] event in
             self.mapScene?.removeObject(event.objectID)
         }

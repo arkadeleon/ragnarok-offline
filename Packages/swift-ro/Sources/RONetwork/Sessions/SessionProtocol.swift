@@ -6,7 +6,7 @@
 //
 
 import Combine
-import Foundation
+import Dispatch
 
 public protocol SessionProtocol {
     var eventPublisher: AnyPublisher<any Event, Never> { get }
@@ -21,7 +21,7 @@ extension SessionProtocol {
             .compactMap { e in
                 e as? E
             }
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.main, options: DispatchQueue.SchedulerOptions(qos: .userInteractive))
             .eraseToAnyPublisher()
     }
 
@@ -30,7 +30,7 @@ extension SessionProtocol {
             .compactMap { e in
                 e as? E
             }
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.main, options: DispatchQueue.SchedulerOptions(qos: .userInteractive))
             .sink { e in
                 MainActor.assumeIsolated {
                     handler(e)

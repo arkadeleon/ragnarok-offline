@@ -113,6 +113,14 @@ class GameMapScene: SKScene {
         }
     }
 
+    func moveObject(_ objectID: UInt32, to position: SIMD2<Int16>) {
+        if let objectNode = objectNodes[objectID] {
+            let location = CGPoint(x: Int(position.x) * tileSize, y: Int(position.y) * tileSize)
+            let action = SKAction.move(to: location, duration: 0)
+            objectNode.run(action)
+        }
+    }
+
     func removeObject(_ objectID: UInt32) {
         if let objectNode = objectNodes[objectID] {
             objectNode.removeFromParent()

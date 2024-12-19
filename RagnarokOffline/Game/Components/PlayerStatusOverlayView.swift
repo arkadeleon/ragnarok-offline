@@ -19,7 +19,10 @@ struct PlayerStatusOverlayView: View {
                 PlayerStatusView(status: status)
             }
         }
-        .onReceive(mapSession.publisher(for: PlayerEvents.StatusChanged.self).throttle(for: 0.1, scheduler: RunLoop.main, latest: true)) { event in
+        .task {
+            status = await mapSession.storage.player?.status
+        }
+        .onReceive(mapSession.publisher(for: PlayerEvents.StatusChanged.self)) { event in
             status = event.status
         }
     }
