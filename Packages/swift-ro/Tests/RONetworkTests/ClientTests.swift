@@ -57,7 +57,7 @@ final class ClientTests: XCTestCase {
 
         // MARK: - Start login session
 
-        let loginSession = LoginSession(storage: storage)
+        let loginSession = LoginSession(storage: storage, address: "127.0.0.1", port: 6900)
 
         loginSession.start()
 

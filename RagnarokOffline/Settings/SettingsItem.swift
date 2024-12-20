@@ -28,9 +28,15 @@ struct SettingsItem<Value> {
 
     private func value() -> Value {
         switch defaultValue {
+        case _ as String:
+            if let value = UserDefaults.standard.value(forKey: key) as? String {
+                (value as? Value) ?? defaultValue
+            } else {
+                defaultValue
+            }
         case let rawRepresentable as any RawRepresentable<String>:
             if let value = UserDefaults.standard.value(forKey: key) as? String {
-                type(of: rawRepresentable).init(rawValue: value) as? Value ?? defaultValue
+                (type(of: rawRepresentable).init(rawValue: value) as? Value) ?? defaultValue
             } else {
                 defaultValue
             }
@@ -41,6 +47,8 @@ struct SettingsItem<Value> {
 
     private func setValue(_ value: Value) {
         switch value {
+        case let string as String:
+            UserDefaults.standard.set(string, forKey: key)
         case let rawRepresentable as any RawRepresentable<String>:
             UserDefaults.standard.set(rawRepresentable.rawValue, forKey: key)
         default:

@@ -19,10 +19,10 @@ final class Client {
 
     private var packetRegistrations: [Int16 : any PacketRegistration] = [:]
 
-    init(port: UInt16) {
+    init(address: String, port: UInt16) {
         self.connection = NWConnection(
-            host: .ipv4(.loopback),
-            port: .init(rawValue: port)!,
+            host: NWEndpoint.Host(address),
+            port: NWEndpoint.Port(rawValue: port)!,
             using: .tcp
         )
 

@@ -21,10 +21,10 @@ final public class LoginSession: SessionProtocol {
         eventSubject.eraseToAnyPublisher()
     }
 
-    public init(storage: SessionStorage) {
+    public init(storage: SessionStorage, address: String, port: UInt16) {
         self.storage = storage
 
-        self.client = Client(port: 6900)
+        self.client = Client(address: address, port: port)
 
         client.errorHandler = { [unowned self] error in
             let event = ConnectionEvents.ErrorOccurred(error: error)

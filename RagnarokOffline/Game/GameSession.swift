@@ -54,7 +54,12 @@ final class GameSession {
     }
 
     private func startLoginSession() {
-        let loginSession = LoginSession(storage: storage)
+        let address = ClientSettings.shared.serverAddress
+        guard let port = UInt16(ClientSettings.shared.serverPort) else {
+            return
+        }
+
+        let loginSession = LoginSession(storage: storage, address: address, port: port)
 
         loginSession.subscribe(to: LoginEvents.Accepted.self) { [unowned self] event in
             self.phase = .charServerList(event.charServers)

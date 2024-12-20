@@ -24,7 +24,7 @@ final public class MapSession: SessionProtocol {
     public init(storage: SessionStorage, mapServer: MapServerInfo) {
         self.storage = storage
 
-        self.client = Client(port: mapServer.port)
+        self.client = Client(address: mapServer.ip, port: mapServer.port)
 
         client.errorHandler = { [unowned self] error in
             let event = ConnectionEvents.ErrorOccurred(error: error)

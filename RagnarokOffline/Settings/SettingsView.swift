@@ -8,8 +8,17 @@
 import SwiftUI
 
 struct SettingsView: View {
+    enum Field: Hashable {
+        case serverAddress
+        case serverPort
+    }
+
     @State private var serviceType = ClientSettings.shared.serviceType
     @State private var itemInfoSource = ClientSettings.shared.itemInfoSource
+    @State private var serverAddress = ClientSettings.shared.serverAddress
+    @State private var serverPort = ClientSettings.shared.serverPort
+
+    @FocusState private var focusedField: Field?
 
     var body: some View {
         let serviceTypeBinding = Binding {
@@ -41,9 +50,40 @@ struct SettingsView: View {
                             .tag(itemInfoSource)
                     }
                 }
+
+                LabeledContent("Server Address") {
+                    TextField("Server Address", text: $serverAddress)
+                        .multilineTextAlignment(.trailing)
+                        .focused($focusedField, equals: .serverAddress)
+                }
+
+                LabeledContent("Server Port") {
+                    TextField("Server Port", text: $serverPort)
+                        .multilineTextAlignment(.trailing)
+                        .focused($focusedField, equals: .serverPort)
+                }
             }
         }
         .navigationTitle("Settings")
+        .onChange(of: focusedField) { oldValue, newValue in
+            if oldValue == Field.serverAddress {
+                let regex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
+                if let _ = try? regex.wholeMatch(in: serverAddress) {
+                    ClientSettings.shared.serverAddress = serverAddress
+                } else {
+                    serverAddress = ClientSettings.shared.serverAddress
+                }
+            }
+
+            if oldValue == Field.serverPort {
+                let regex = /^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0-9]{1,4}))$/
+                if let _ = try? regex.wholeMatch(in: serverPort) {
+                    ClientSettings.shared.serverPort = serverPort
+                } else {
+                    serverPort = ClientSettings.shared.serverPort
+                }
+            }
+        }
     }
 }
 

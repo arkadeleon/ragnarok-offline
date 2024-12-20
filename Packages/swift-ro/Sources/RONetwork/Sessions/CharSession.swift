@@ -24,7 +24,7 @@ final public class CharSession: SessionProtocol {
     public init(storage: SessionStorage, charServer: CharServerInfo) {
         self.storage = storage
 
-        self.client = Client(port: charServer.port)
+        self.client = Client(address: charServer.ip, port: charServer.port)
 
         client.errorHandler = { [unowned self] error in
             let event = ConnectionEvents.ErrorOccurred(error: error)

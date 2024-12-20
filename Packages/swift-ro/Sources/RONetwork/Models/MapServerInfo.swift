@@ -5,14 +5,22 @@
 //  Created by Leon Li on 2024/8/26.
 //
 
+import Darwin
 import ROCore
 
 public struct MapServerInfo: BinaryDecodable, Sendable {
-    public var ip: UInt32
+    public var ip: String
     public var port: UInt16
 
     public init(from decoder: BinaryDecoder) throws {
-        ip = try decoder.decode(UInt32.self)
+        let ip = try decoder.decode(UInt32.self)
+        let addri = in_addr(s_addr: ip)
+        if let addrs = inet_ntoa(addri) {
+            self.ip = String(cString: addrs)
+        } else {
+            self.ip = ""
+        }
+
         port = try decoder.decode(UInt16.self)
     }
 }
