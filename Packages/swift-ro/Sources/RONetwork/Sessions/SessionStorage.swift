@@ -125,17 +125,15 @@ final public actor SessionStorage {
 
     // MARK: - NPC Dialog
 
-    func updateNPCDialog(with packet: PACKET_ZC_SAY_DIALOG) -> NPCDialog {
+    func updateNPCDialog(with packet: PACKET_ZC_SAY_DIALOG) {
         if let npcDialog, npcDialog.npcID == packet.NpcID, case .message(var message, let hasNextMessage) = npcDialog.content {
             message.append("\n")
             message.append(packet.message)
             let npcDialog = NPCDialog(npcID: packet.NpcID, content: .message(message: message, hasNextMessage: hasNextMessage))
             self.npcDialog = npcDialog
-            return npcDialog
         } else {
             let npcDialog = NPCDialog(npcID: packet.NpcID, content: .message(message: packet.message, hasNextMessage: nil))
             self.npcDialog = npcDialog
-            return npcDialog
         }
     }
 

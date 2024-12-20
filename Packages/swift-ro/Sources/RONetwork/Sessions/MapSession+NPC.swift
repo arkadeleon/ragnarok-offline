@@ -11,10 +11,7 @@ extension MapSession {
     func registerNPCPackets() {
         // See `clif_scriptmes`
         client.registerPacket(PACKET_ZC_SAY_DIALOG.self, for: HEADER_ZC_SAY_DIALOG) { [unowned self] packet in
-            let dialog = await self.storage.updateNPCDialog(with: packet)
-
-            let event = NPCEvents.DialogUpdated(dialog: dialog)
-            self.postEvent(event)
+            await self.storage.updateNPCDialog(with: packet)
         }
 
         // See `clif_scriptnext`
