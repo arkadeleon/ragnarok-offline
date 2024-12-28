@@ -81,25 +81,10 @@ extension SPR {
                 return nil
             }
 
-            guard let context = CGContext(
-                data: nil,
-                width: width,
-                height: height,
-                bitsPerComponent: 8,
-                bytesPerRow: width * 4,
-                space: colorSpace,
-                bitmapInfo: CGBitmapInfo.byteOrder32Little.rawValue | CGImageAlphaInfo.premultipliedLast.rawValue
-            ) else {
-                return nil
+            let renderer = CGImageRenderer(size: CGSize(width: width, height: height))
+            let downMirroredImage = renderer.image { context in
+                context.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
             }
-
-            // Flip vertically
-            let transform = CGAffineTransform(1, 0, 0, -1, 0, CGFloat(height))
-            context.concatenate(transform)
-
-            context.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
-
-            let downMirroredImage = context.makeImage()
             return downMirroredImage
         }
     }

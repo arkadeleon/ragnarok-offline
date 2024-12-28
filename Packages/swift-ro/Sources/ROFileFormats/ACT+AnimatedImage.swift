@@ -68,7 +68,7 @@ extension ACT {
                 frameLayer.addSublayer(caLayer)
             }
 
-            let renderer = GraphicsImageRenderer(size: bounds.size)
+            let renderer = CGImageRenderer(size: bounds.size)
             let cgImage = renderer.image { cgContext in
                 cgContext.translateBy(x: -bounds.origin.x, y: -bounds.origin.y)
                 frameLayer.render(in: cgContext)
@@ -105,6 +105,9 @@ extension CALayer {
         } else {
             transform = CATransform3DScale(transform, -CGFloat(layer.scale.x), CGFloat(layer.scale.y), 1)
         }
+        #if os(macOS)
+        transform = CATransform3DScale(transform, 1, -1, 1)
+        #endif
         self.transform = transform
 
         if layer.color != Color(red: 255, green: 255, blue: 255, alpha: 255) {
