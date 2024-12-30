@@ -10,8 +10,8 @@ import SwiftUI
 struct LoginView: View {
     @Environment(\.gameSession) private var gameSession
 
-    @State private var username = ""
-    @State private var password = ""
+    @State private var username = ClientSettings.shared.username
+    @State private var password = ClientSettings.shared.password
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -52,6 +52,9 @@ struct LoginView: View {
                     Spacer()
 
                     GameButton("login_interface/btn_connect.bmp") {
+                        ClientSettings.shared.username = username
+                        ClientSettings.shared.password = password
+
                         gameSession.login(username: username, password: password)
                     }
 

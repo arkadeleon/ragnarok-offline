@@ -14,6 +14,8 @@ class ClientSettings {
     @SettingsItem("client.item_info_source", defaultValue: .lua) var itemInfoSource: ItemInfoSource
     @SettingsItem("client.server_address", defaultValue: "127.0.0.1") var serverAddress: String
     @SettingsItem("client.server_port", defaultValue: "6900") var serverPort: String
+    @SettingsItem("client.username", defaultValue: "") var username: String
+    @SettingsItem("client.password", defaultValue: "") var password: String
 }
 
 extension ClientSettings {
