@@ -9,21 +9,19 @@ import CoreImage.CIFilterBuiltins
 import QuartzCore
 import ROCore
 
-extension ACT {
-    public func animatedImage(forActionAt index: Int, imagesForSpritesByType: [SPR.SpriteType : [CGImage?]]) -> AnimatedImage {
-        let action = actions[index]
-
+extension ACT.Action {
+    public func animatedImage(using imagesBySpriteType: [SPR.SpriteType : [CGImage?]]) -> AnimatedImage {
         var bounds: CGRect = .zero
-        for frame in action.frames {
+        for frame in frames {
             for layer in frame.layers {
                 guard let spriteType = SPR.SpriteType(rawValue: Int(layer.spriteType)),
-                      let imagesForSprites = imagesForSpritesByType[spriteType]
+                      let spriteImages = imagesBySpriteType[spriteType]
                 else {
                     continue
                 }
 
                 let spriteIndex = Int(layer.spriteIndex)
-                guard 0..<imagesForSprites.count ~= spriteIndex, let image = imagesForSprites[spriteIndex] else {
+                guard 0..<spriteImages.count ~= spriteIndex, let image = spriteImages[spriteIndex] else {
                     continue
                 }
 
@@ -47,19 +45,19 @@ extension ACT {
         }
 
         let ciContext = CIContext()
-        let images = action.frames.compactMap { frame -> CGImage? in
+        let images = frames.compactMap { frame -> CGImage? in
             let frameLayer = CALayer()
             frameLayer.bounds = bounds
 
             for layer in frame.layers {
                 guard let caLayer = CALayer(context: ciContext, layer: layer, contents: { spriteType, spriteIndex in
-                    guard let imagesForSprites = imagesForSpritesByType[spriteType] else {
+                    guard let spriteImages = imagesBySpriteType[spriteType] else {
                         return nil
                     }
-                    guard 0..<imagesForSprites.count ~= spriteIndex else {
+                    guard 0..<spriteImages.count ~= spriteIndex else {
                         return nil
                     }
-                    let image = imagesForSprites[spriteIndex]
+                    let image = spriteImages[spriteIndex]
                     return image
                 }) else {
                     continue
@@ -75,7 +73,7 @@ extension ACT {
             }
             return cgImage
         }
-        let delay = CGFloat(action.animationSpeed * 25 / 1000)
+        let delay = CGFloat(animationSpeed * 25 / 1000)
         let animatedImage = AnimatedImage(images: images, delay: delay)
         return animatedImage
     }

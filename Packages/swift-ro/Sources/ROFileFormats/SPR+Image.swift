@@ -10,6 +10,27 @@ import Foundation
 import ROCore
 
 extension SPR {
+    public func imagesBySpriteType() -> [SPR.SpriteType : [CGImage?]] {
+        var indexedImages = [CGImage?]()
+        var rgbaImages = [CGImage?]()
+
+        for (index, sprite) in sprites.enumerated() {
+            let image = image(forSpriteAt: index)
+            switch sprite.type {
+            case .indexed:
+                indexedImages.append(image)
+            case .rgba:
+                rgbaImages.append(image)
+            }
+        }
+
+        var imagesBySpriteType = [SPR.SpriteType : [CGImage?]]()
+        imagesBySpriteType[.indexed] = indexedImages
+        imagesBySpriteType[.rgba] = rgbaImages
+
+        return imagesBySpriteType
+    }
+
     public func image(forSpriteAt index: Int) -> CGImage? {
         let sprite = sprites[index]
         let width = Int(sprite.width)

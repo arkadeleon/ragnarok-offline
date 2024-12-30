@@ -15,7 +15,11 @@ struct AnimatedImageView: View {
 
     @State private var index = 0
 
-    private var image: CGImage {
+    private var image: CGImage? {
+        guard !animatedImage.images.isEmpty else {
+            return nil
+        }
+
         let imageCount = animatedImage.images.count
         let image = animatedImage.images[index % imageCount]
         return image
@@ -23,7 +27,9 @@ struct AnimatedImageView: View {
 
     var body: some View {
         ZStack {
-            Image(image, scale: 1, label: Text(index.formatted()))
+            if let image {
+                Image(image, scale: 1, label: Text(index.formatted()))
+            }
         }
         .onReceive(timer.autoconnect()) { _ in
             index += 1

@@ -32,10 +32,12 @@ struct ACTFilePreviewView: View {
                             AnimatedImageView(animatedImage: action.animatedImage)
                                 .frame(width: section.actionSize.width, height: section.actionSize.height)
                                 .contextMenu {
-                                    ShareLink(
-                                        item: TransferableAnimatedImage(name: String(format: "%@.%03d.png", file.file.name, action.index), image: action.animatedImage),
-                                        preview: SharePreview(file.file.name, image: Image(action.animatedImage.images[0], scale: 1, label: Text(verbatim: "")))
-                                    )
+                                    if let image = action.animatedImage.images.first {
+                                        ShareLink(
+                                            item: TransferableAnimatedImage(name: String(format: "%@.%03d.png", file.file.name, action.index), image: action.animatedImage),
+                                            preview: SharePreview(file.file.name, image: Image(image, scale: 1, label: Text(verbatim: "")))
+                                        )
+                                    }
                                 }
                         }
                     }
@@ -65,18 +67,9 @@ struct ACTFilePreviewView: View {
         let act = try ACT(data: actData)
         let spr = try SPR(data: sprData)
 
-        let sprites = spr.sprites.enumerated()
-        let spritesByType = Dictionary(grouping: sprites, by: { $0.element.type })
-        let imagesForSpritesByType = spritesByType.mapValues { sprites in
-            sprites.map { sprite in
-                spr.image(forSpriteAt: sprite.offset)
-            }
-        }
-
-        var animatedImages: [AnimatedImage] = []
-        for index in 0..<act.actions.count {
-            let animatedImage = act.animatedImage(forActionAt: index, imagesForSpritesByType: imagesForSpritesByType)
-            animatedImages.append(animatedImage)
+        let imagesBySpriteType = spr.imagesBySpriteType()
+        let animatedImages = act.actions.map { action in
+            action.animatedImage(using: imagesBySpriteType)
         }
 
         if animatedImages.count % 8 != 0 {

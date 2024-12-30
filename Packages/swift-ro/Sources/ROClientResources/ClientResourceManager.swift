@@ -44,16 +44,9 @@ public actor ClientResourceManager {
             let spr = try SPR(data: sprData)
             let act = try ACT(data: actData)
 
-            let sprites = spr.sprites.enumerated()
-            let spritesByType = Dictionary(grouping: sprites, by: { $0.element.type })
-            let imagesForSpritesByType = spritesByType.mapValues { sprites in
-                sprites.map { sprite in
-                    spr.image(forSpriteAt: sprite.offset)
-                }
-            }
-
-            let animatedImage = act.animatedImage(forActionAt: 0, imagesForSpritesByType: imagesForSpritesByType)
-            let image = animatedImage.images.first
+            let imagesBySpriteType = spr.imagesBySpriteType()
+            let animatedImage = act.actions.first?.animatedImage(using: imagesBySpriteType)
+            let image = animatedImage?.images.first
             return image
         } catch {
             return nil
@@ -71,16 +64,9 @@ public actor ClientResourceManager {
             let spr = try SPR(data: sprData)
             let act = try ACT(data: actData)
 
-            let sprites = spr.sprites.enumerated()
-            let spritesByType = Dictionary(grouping: sprites, by: { $0.element.type })
-            let imagesForSpritesByType = spritesByType.mapValues { sprites in
-                sprites.map { sprite in
-                    spr.image(forSpriteAt: sprite.offset)
-                }
-            }
-
-            let animatedImage = act.animatedImage(forActionAt: 0, imagesForSpritesByType: imagesForSpritesByType)
-            let image = animatedImage.images.first
+            let imagesBySpriteType = spr.imagesBySpriteType()
+            let animatedImage = act.actions.first?.animatedImage(using: imagesBySpriteType)
+            let image = animatedImage?.images.first
             return image
         } catch {
             return nil
