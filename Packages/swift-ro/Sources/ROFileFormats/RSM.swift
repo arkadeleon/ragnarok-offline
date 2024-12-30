@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import simd
 import ROCore
+import simd
 
 public struct RSM: BinaryDecodable {
     public var header: String
@@ -19,11 +19,11 @@ public struct RSM: BinaryDecodable {
     public var textures: [String] = []
 
     public var rootNodes: [String] = []
-    public var nodes: [Node] = []
+    public var nodes: [RSM.Node] = []
 
-    public var scaleKeyframes: [ScaleKeyframe] = []
+    public var scaleKeyframes: [RSM.ScaleKeyframe] = []
 
-    public var volumeBoxes: [VolumeBox] = []
+    public var volumeBoxes: [RSM.VolumeBox] = []
 
     public init(data: Data) throws {
         let decoder = BinaryDecoder(data: data)
@@ -62,7 +62,7 @@ public struct RSM: BinaryDecodable {
 
             let nodeCount = try decoder.decode(Int32.self)
             for _ in 0..<nodeCount {
-                let node = try decoder.decode(Node.self, configuration: version)
+                let node = try decoder.decode(RSM.Node.self, configuration: version)
                 nodes.append(node)
             }
         } else if version >= "2.2" {
@@ -84,7 +84,7 @@ public struct RSM: BinaryDecodable {
 
             let nodeCount = try decoder.decode(Int32.self)
             for _ in 0..<nodeCount {
-                let node = try decoder.decode(Node.self, configuration: version)
+                let node = try decoder.decode(RSM.Node.self, configuration: version)
                 nodes.append(node)
             }
         } else {
@@ -102,7 +102,7 @@ public struct RSM: BinaryDecodable {
 
             let nodeCount = try decoder.decode(Int32.self)
             for _ in 0..<nodeCount {
-                let node = try decoder.decode(Node.self, configuration: version)
+                let node = try decoder.decode(RSM.Node.self, configuration: version)
                 nodes.append(node)
             }
         }
@@ -114,7 +114,7 @@ public struct RSM: BinaryDecodable {
         if version < "1.6" {
             let scaleKeyframeCount = try decoder.decode(Int32.self)
             for _ in 0..<scaleKeyframeCount {
-                let keyframe = try decoder.decode(ScaleKeyframe.self)
+                let keyframe = try decoder.decode(RSM.ScaleKeyframe.self)
                 scaleKeyframes.append(keyframe)
             }
         }
@@ -122,7 +122,7 @@ public struct RSM: BinaryDecodable {
         if decoder.bytesRemaining > 0 {
             let volumeBoxCount = try decoder.decode(Int32.self)
             for _ in 0..<volumeBoxCount {
-                let volumeBox = try decoder.decode(VolumeBox.self, configuration: version)
+                let volumeBox = try decoder.decode(RSM.VolumeBox.self, configuration: version)
                 volumeBoxes.append(volumeBox)
             }
         }
@@ -159,13 +159,13 @@ extension RSM {
         public var scale: SIMD3<Float>
 
         public var vertices: [SIMD3<Float>] = []
-        public var tvertices: [TextureVertex] = []
+        public var tvertices: [RSM.Node.TextureVertex] = []
 
-        public var faces: [Face] = []
+        public var faces: [RSM.Face] = []
 
-        public var scaleKeyframes: [ScaleKeyframe] = []
-        public var rotationKeyframes: [RotationKeyframe] = []
-        public var positionKeyframes: [PositionKeyframe] = []
+        public var scaleKeyframes: [RSM.ScaleKeyframe] = []
+        public var rotationKeyframes: [RSM.RotationKeyframe] = []
+        public var positionKeyframes: [RSM.PositionKeyframe] = []
 
         public init(from decoder: BinaryDecoder, configuration version: String) throws {
             if version >= "2.2" {
@@ -263,34 +263,34 @@ extension RSM {
                 }
                 let u = try decoder.decode(Float.self)
                 let v = try decoder.decode(Float.self)
-                let textureVertex = TextureVertex(color: color, u: u, v: v)
+                let textureVertex = RSM.Node.TextureVertex(color: color, u: u, v: v)
                 tvertices.append(textureVertex)
             }
 
             let faceCount = try decoder.decode(Int32.self)
             for _ in 0..<faceCount {
-                let face = try decoder.decode(Face.self, configuration: version)
+                let face = try decoder.decode(RSM.Face.self, configuration: version)
                 faces.append(face)
             }
 
             if version >= "1.6" {
                 let scaleKeyframeCount = try decoder.decode(Int32.self)
                 for _ in 0..<scaleKeyframeCount {
-                    let keyframe = try decoder.decode(ScaleKeyframe.self)
+                    let keyframe = try decoder.decode(RSM.ScaleKeyframe.self)
                     scaleKeyframes.append(keyframe)
                 }
             }
 
             let rotationKeyframeCount = try decoder.decode(Int32.self)
             for _ in 0..<rotationKeyframeCount {
-                let keyframe = try decoder.decode(RotationKeyframe.self)
+                let keyframe = try decoder.decode(RSM.RotationKeyframe.self)
                 rotationKeyframes.append(keyframe)
             }
 
             if version >= "2.2" {
                 let positionKeyframeCount = try decoder.decode(Int32.self)
                 for _ in 0..<positionKeyframeCount {
-                    let keyframe = try decoder.decode(PositionKeyframe.self)
+                    let keyframe = try decoder.decode(RSM.PositionKeyframe.self)
                     positionKeyframes.append(keyframe)
                 }
             }

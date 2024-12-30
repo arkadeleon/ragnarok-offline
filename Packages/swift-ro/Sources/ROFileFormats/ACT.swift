@@ -11,7 +11,7 @@ import ROCore
 public struct ACT: BinaryDecodable {
     public var header: String
     public var version: String
-    public var actions: [Action] = []
+    public var actions: [ACT.Action] = []
     public var sounds: [String] = []
 
     public init(data: Data) throws {
@@ -35,7 +35,7 @@ public struct ACT: BinaryDecodable {
         _ = try decoder.decode([UInt8].self, count: 10)
 
         for _ in 0..<actionCount {
-            let action = try decoder.decode(Action.self, configuration: version)
+            let action = try decoder.decode(ACT.Action.self, configuration: version)
             actions.append(action)
         }
 
@@ -57,13 +57,13 @@ public struct ACT: BinaryDecodable {
 
 extension ACT {
     public struct Action: BinaryDecodableWithConfiguration {
-        public var frames: [Frame] = []
+        public var frames: [ACT.Frame] = []
         public var animationSpeed: Float = 6
 
         public init(from decoder: BinaryDecoder, configuration version: String) throws {
             let frameCount = try decoder.decode(Int32.self)
             for _ in 0..<frameCount {
-                let frame = try decoder.decode(Frame.self, configuration: version)
+                let frame = try decoder.decode(ACT.Frame.self, configuration: version)
                 frames.append(frame)
             }
         }
@@ -72,9 +72,9 @@ extension ACT {
 
 extension ACT {
     public struct Frame: BinaryDecodableWithConfiguration {
-        public var layers: [Layer] = []
+        public var layers: [ACT.Layer] = []
         public var soundIndex: Int32 = -1
-        public var anchorPoints: [AnchorPoint] = []
+        public var anchorPoints: [ACT.AnchorPoint] = []
 
         public init(from decoder: BinaryDecoder, configuration version: String) throws {
             // Range1 and Range2, seems to be unused.
@@ -82,7 +82,7 @@ extension ACT {
 
             let layerCount = try decoder.decode(Int32.self)
             for _ in 0..<layerCount {
-                let layer = try decoder.decode(Layer.self, configuration: version)
+                let layer = try decoder.decode(ACT.Layer.self, configuration: version)
                 layers.append(layer)
             }
 
@@ -93,7 +93,7 @@ extension ACT {
             if version >= "2.3" {
                 let anchorPointCount = try decoder.decode(Int32.self)
                 for _ in 0..<anchorPointCount {
-                    let anchorPoint = try decoder.decode(AnchorPoint.self)
+                    let anchorPoint = try decoder.decode(ACT.AnchorPoint.self)
                     anchorPoints.append(anchorPoint)
                 }
             }

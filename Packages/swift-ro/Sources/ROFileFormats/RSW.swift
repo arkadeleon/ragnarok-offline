@@ -11,14 +11,14 @@ import ROCore
 public struct RSW: BinaryDecodable {
     public var header: String
     public var version: String
-    public var files: Files
-    public var water: Water
-    public var light: Light
-    public var boundingBox: BoundingBox
-    public var models: [Object.Model] = []
-    public var lights: [Object.Light] = []
-    public var sounds: [Object.Sound] = []
-    public var effects: [Object.Effect] = []
+    public var files: RSW.Files
+    public var water: RSW.Water
+    public var light: RSW.Light
+    public var boundingBox: RSW.BoundingBox
+    public var models: [RSW.Object.Model] = []
+    public var lights: [RSW.Object.Light] = []
+    public var sounds: [RSW.Object.Sound] = []
+    public var effects: [RSW.Object.Effect] = []
 
     public init(data: Data) throws {
         let decoder = BinaryDecoder(data: data)
@@ -45,30 +45,30 @@ public struct RSW: BinaryDecodable {
             _ = try decoder.decode(UInt8.self)
         }
 
-        files = try decoder.decode(Files.self, configuration: version)
+        files = try decoder.decode(RSW.Files.self, configuration: version)
 
-        water = try decoder.decode(Water.self, configuration: version)
+        water = try decoder.decode(RSW.Water.self, configuration: version)
 
-        light = try decoder.decode(Light.self, configuration: version)
+        light = try decoder.decode(RSW.Light.self, configuration: version)
 
-        boundingBox = try decoder.decode(BoundingBox.self, configuration: version)
+        boundingBox = try decoder.decode(RSW.BoundingBox.self, configuration: version)
 
         let objectCount = try decoder.decode(Int32.self)
 
         for _ in 0..<objectCount {
-            let objectType = try Object.ObjectType(rawValue: decoder.decode(Int32.self))
+            let objectType = try RSW.Object.ObjectType(rawValue: decoder.decode(Int32.self))
             switch objectType {
             case .model:
-                let model = try decoder.decode(Object.Model.self, configuration: version)
+                let model = try decoder.decode(RSW.Object.Model.self, configuration: version)
                 models.append(model)
             case .light:
-                let light = try decoder.decode(Object.Light.self, configuration: version)
+                let light = try decoder.decode(RSW.Object.Light.self, configuration: version)
                 lights.append(light)
             case .sound:
-                let sound = try decoder.decode(Object.Sound.self, configuration: version)
+                let sound = try decoder.decode(RSW.Object.Sound.self, configuration: version)
                 sounds.append(sound)
             case .effect:
-                let effect = try decoder.decode(Object.Effect.self, configuration: version)
+                let effect = try decoder.decode(RSW.Object.Effect.self, configuration: version)
                 effects.append(effect)
             default:
                 break

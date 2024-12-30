@@ -17,11 +17,11 @@ public struct GND: BinaryDecodable {
 
     public var textures: [String] = []
 
-    public var lightmap: GNDLightmap
+    public var lightmap: GND.Lightmap
 
-    public var surfaces: [Surface] = []
+    public var surfaces: [GND.Surface] = []
 
-    public var cubes: [Cube] = []
+    public var cubes: [GND.Cube] = []
 
     public init(data: Data) throws {
         let decoder = BinaryDecoder(data: data)
@@ -56,7 +56,7 @@ public struct GND: BinaryDecodable {
         let size_cell = try decoder.decode(Int32.self)
         let per_cell = per_cell_x * per_cell_y * size_cell
 
-        lightmap = try GNDLightmap(
+        lightmap = try GND.Lightmap(
             per_cell: per_cell,
             count: count,
             data: decoder.decode([UInt8].self, count: Int(count) * Int(per_cell) * 4)
@@ -64,20 +64,20 @@ public struct GND: BinaryDecodable {
 
         let surfaceCount = try decoder.decode(Int32.self)
         for _ in 0..<surfaceCount {
-            let surface = try decoder.decode(Surface.self)
+            let surface = try decoder.decode(GND.Surface.self)
             surfaces.append(surface)
         }
 
         let cubeCount = width * height
         for _ in 0..<cubeCount {
-            let cube = try decoder.decode(Cube.self)
+            let cube = try decoder.decode(GND.Cube.self)
             cubes.append(cube)
         }
     }
 }
 
 extension GND {
-    public struct GNDLightmap {
+    public struct Lightmap {
         public var per_cell: Int32
         public var count: Int32
         public var data: [UInt8]

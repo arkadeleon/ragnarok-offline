@@ -13,7 +13,7 @@ public struct GAT: BinaryDecodable {
     public var version: String
     public var width: Int32
     public var height: Int32
-    public var tiles: [Tile] = []
+    public var tiles: [GAT.Tile] = []
 
     public init(data: Data) throws {
         let decoder = BinaryDecoder(data: data)
@@ -34,7 +34,7 @@ public struct GAT: BinaryDecodable {
         height = try decoder.decode(Int32.self)
 
         for _ in 0..<(width * height) {
-            let tile = try decoder.decode(Tile.self)
+            let tile = try decoder.decode(GAT.Tile.self)
             tiles.append(tile)
         }
     }
@@ -56,7 +56,7 @@ extension GAT {
         public var bottomRightAltitude: Float
         public var topLeftAltitude: Float
         public var topRightAltitude: Float
-        public var type: TileType
+        public var type: GAT.TileType
 
         public init(from decoder: BinaryDecoder) throws {
             bottomLeftAltitude = try decoder.decode(Float.self)
@@ -64,7 +64,7 @@ extension GAT {
             topLeftAltitude = try decoder.decode(Float.self)
             topRightAltitude = try decoder.decode(Float.self)
 
-            let type = try TileType(rawValue: decoder.decode(Int32.self))
+            let type = try GAT.TileType(rawValue: decoder.decode(Int32.self))
             self.type = type ?? .walkable
         }
     }

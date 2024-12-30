@@ -13,7 +13,7 @@ public struct STR: BinaryDecodable {
     public var version: String
     public var fps: Int32
     public var maxKeyframeIndex: Int32
-    public var layers: [Layer] = []
+    public var layers: [STR.Layer] = []
 
     public init(data: Data) throws {
         let decoder = BinaryDecoder(data: data)
@@ -40,7 +40,7 @@ public struct STR: BinaryDecodable {
         _ = try decoder.decode([UInt8].self, count: 16)
 
         for _ in 0..<layerCount {
-            let layer = try decoder.decode(Layer.self)
+            let layer = try decoder.decode(STR.Layer.self)
             layers.append(layer)
         }
     }
@@ -49,7 +49,7 @@ public struct STR: BinaryDecodable {
 extension STR {
     public struct Layer: BinaryDecodable {
         public var textures: [String] = []
-        public var keyframes: [Keyframe] = []
+        public var keyframes: [STR.Keyframe] = []
 
         public init(from decoder: BinaryDecoder) throws {
             let textureCount = try decoder.decode(Int32.self)
@@ -60,7 +60,7 @@ extension STR {
 
             let keyframeCount = try decoder.decode(Int32.self)
             for _ in 0..<keyframeCount {
-                let keyframe = try decoder.decode(Keyframe.self)
+                let keyframe = try decoder.decode(STR.Keyframe.self)
                 keyframes.append(keyframe)
             }
         }

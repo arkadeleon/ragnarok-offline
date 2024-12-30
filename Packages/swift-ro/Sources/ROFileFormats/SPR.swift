@@ -11,7 +11,7 @@ import ROCore
 public struct SPR: BinaryDecodable {
     public var header: String
     public var version: String
-    public var sprites: [Sprite] = []
+    public var sprites: [SPR.Sprite] = []
     public var palette: PAL?
 
     public init(data: Data) throws {
@@ -40,18 +40,18 @@ public struct SPR: BinaryDecodable {
 
         if version < "2.1" {
             for _ in 0..<indexedSpriteCount {
-                let sprite = try decoder.decode(Sprite.self, configuration: .indexed)
+                let sprite = try decoder.decode(SPR.Sprite.self, configuration: .indexed)
                 sprites.append(sprite)
             }
         } else {
             for _ in 0..<indexedSpriteCount {
-                let sprite = try decoder.decode(Sprite.self, configuration: .indexedRLE)
+                let sprite = try decoder.decode(SPR.Sprite.self, configuration: .indexedRLE)
                 sprites.append(sprite)
             }
         }
 
         for _ in 0..<rgbaSpriteCount {
-            let sprite = try decoder.decode(Sprite.self, configuration: .rgba)
+            let sprite = try decoder.decode(SPR.Sprite.self, configuration: .rgba)
             sprites.append(sprite)
         }
 
@@ -75,7 +75,7 @@ extension SPR {
             case rgba
         }
 
-        public var type: SpriteType
+        public var type: SPR.SpriteType
         public var width: Int16
         public var height: Int16
         public var data: Data

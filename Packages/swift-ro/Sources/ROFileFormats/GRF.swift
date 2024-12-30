@@ -149,10 +149,10 @@ extension GRF {
             let decoder = BinaryDecoder(stream: stream)
             var bytes = try decoder.decode([UInt8].self, count: Int(sizeCompressedAligned))
 
-            if type & EntryType.encryptMixed.rawValue != 0 {
+            if type & GRF.EntryType.encryptMixed.rawValue != 0 {
                 let des = DES()
                 des.decodeFull(buf: &bytes, len: Int(sizeCompressedAligned), entrylen: Int(sizeCompressed))
-            } else if type & EntryType.encryptHeader.rawValue != 0 {
+            } else if type & GRF.EntryType.encryptHeader.rawValue != 0 {
                 let des = DES()
                 des.decodeHeader(buf: &bytes, len: Int(sizeCompressedAligned))
             }
