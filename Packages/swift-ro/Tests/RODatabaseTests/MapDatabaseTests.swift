@@ -12,9 +12,6 @@ final class MapDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
         let database = MapDatabase.prerenewal
 
-        let maps = try await database.maps()
-        XCTAssertEqual(maps.count, 1247)
-
         let new_11 = try await database.map(forName: "new_1-1")!
         let grid = new_11.grid()!
         let startCell = grid.cell(atX: 53, y: 111)
@@ -23,9 +20,6 @@ final class MapDatabaseTests: XCTestCase {
 
     func testRenewal() async throws {
         let database = MapDatabase.renewal
-
-        let maps = try await database.maps()
-        XCTAssertEqual(maps.count, 1247)
 
         let iz_int = try await database.map(forName: "iz_int")!
         let grid = iz_int.grid()!

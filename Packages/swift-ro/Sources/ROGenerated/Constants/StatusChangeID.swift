@@ -963,6 +963,28 @@ public enum StatusChangeID: Int, CaseIterable, Sendable {
     case contents_27 = 973
     case contents_28 = 974
     case contents_29 = 975
+    case contents_31 = 976
+    case contents_32 = 977
+    case contents_33 = 978
+    case talisman_of_protection = 979
+    case talisman_of_warrior = 980
+    case talisman_of_magician = 981
+    case talisman_of_five_elements = 982
+    case t_first_god = 983
+    case t_second_god = 984
+    case t_third_god = 985
+    case t_fourth_god = 986
+    case t_fifth_god = 987
+    case heaven_and_earth = 988
+    case totem_of_tutelary = 989
+    case return_to_eldicastes = 990
+    case guardian_recall = 991
+    case eclage_recall = 992
+    case all_niflheim_recall = 993
+    case all_prontera_recall = 994
+    case all_glastheim_recall = 995
+    case all_thanatos_recall = 996
+    case all_lighthalzen_recall = 997
 }
 
 extension StatusChangeID: CodingKey {
@@ -1924,6 +1946,28 @@ extension StatusChangeID: CodingKey {
         case .contents_27: "CONTENTS_27"
         case .contents_28: "CONTENTS_28"
         case .contents_29: "CONTENTS_29"
+        case .contents_31: "CONTENTS_31"
+        case .contents_32: "CONTENTS_32"
+        case .contents_33: "CONTENTS_33"
+        case .talisman_of_protection: "TALISMAN_OF_PROTECTION"
+        case .talisman_of_warrior: "TALISMAN_OF_WARRIOR"
+        case .talisman_of_magician: "TALISMAN_OF_MAGICIAN"
+        case .talisman_of_five_elements: "TALISMAN_OF_FIVE_ELEMENTS"
+        case .t_first_god: "T_FIRST_GOD"
+        case .t_second_god: "T_SECOND_GOD"
+        case .t_third_god: "T_THIRD_GOD"
+        case .t_fourth_god: "T_FOURTH_GOD"
+        case .t_fifth_god: "T_FIFTH_GOD"
+        case .heaven_and_earth: "HEAVEN_AND_EARTH"
+        case .totem_of_tutelary: "TOTEM_OF_TUTELARY"
+        case .return_to_eldicastes: "RETURN_TO_ELDICASTES"
+        case .guardian_recall: "GUARDIAN_RECALL"
+        case .eclage_recall: "ECLAGE_RECALL"
+        case .all_niflheim_recall: "ALL_NIFLHEIM_RECALL"
+        case .all_prontera_recall: "ALL_PRONTERA_RECALL"
+        case .all_glastheim_recall: "ALL_GLASTHEIM_RECALL"
+        case .all_thanatos_recall: "ALL_THANATOS_RECALL"
+        case .all_lighthalzen_recall: "ALL_LIGHTHALZEN_RECALL"
         }
     }
 
@@ -2885,6 +2929,28 @@ extension StatusChangeID: CodingKey {
         case "CONTENTS_27": self = .contents_27
         case "CONTENTS_28": self = .contents_28
         case "CONTENTS_29": self = .contents_29
+        case "CONTENTS_31": self = .contents_31
+        case "CONTENTS_32": self = .contents_32
+        case "CONTENTS_33": self = .contents_33
+        case "TALISMAN_OF_PROTECTION": self = .talisman_of_protection
+        case "TALISMAN_OF_WARRIOR": self = .talisman_of_warrior
+        case "TALISMAN_OF_MAGICIAN": self = .talisman_of_magician
+        case "TALISMAN_OF_FIVE_ELEMENTS": self = .talisman_of_five_elements
+        case "T_FIRST_GOD": self = .t_first_god
+        case "T_SECOND_GOD": self = .t_second_god
+        case "T_THIRD_GOD": self = .t_third_god
+        case "T_FOURTH_GOD": self = .t_fourth_god
+        case "T_FIFTH_GOD": self = .t_fifth_god
+        case "HEAVEN_AND_EARTH": self = .heaven_and_earth
+        case "TOTEM_OF_TUTELARY": self = .totem_of_tutelary
+        case "RETURN_TO_ELDICASTES": self = .return_to_eldicastes
+        case "GUARDIAN_RECALL": self = .guardian_recall
+        case "ECLAGE_RECALL": self = .eclage_recall
+        case "ALL_NIFLHEIM_RECALL": self = .all_niflheim_recall
+        case "ALL_PRONTERA_RECALL": self = .all_prontera_recall
+        case "ALL_GLASTHEIM_RECALL": self = .all_glastheim_recall
+        case "ALL_THANATOS_RECALL": self = .all_thanatos_recall
+        case "ALL_LIGHTHALZEN_RECALL": self = .all_lighthalzen_recall
         default: return nil
         }
     }

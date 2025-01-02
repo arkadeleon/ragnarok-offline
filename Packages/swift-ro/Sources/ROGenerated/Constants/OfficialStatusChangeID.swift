@@ -1447,6 +1447,9 @@ public enum OfficialStatusChangeID: Int, CaseIterable, Sendable {
     case efst_contents_28 = 1486
     case efst_contents_29 = 1487
     case efst_contents_30 = 1488
+    case efst_contents_31 = 1489
+    case efst_contents_32 = 1490
+    case efst_contents_33 = 1491
     case efst_c_buff_1 = 1509
     case efst_c_buff_2 = 1510
     case efst_chasing = 1560
@@ -2902,6 +2905,9 @@ extension OfficialStatusChangeID: CodingKey {
         case .efst_contents_28: "EFST_CONTENTS_28"
         case .efst_contents_29: "EFST_CONTENTS_29"
         case .efst_contents_30: "EFST_CONTENTS_30"
+        case .efst_contents_31: "EFST_CONTENTS_31"
+        case .efst_contents_32: "EFST_CONTENTS_32"
+        case .efst_contents_33: "EFST_CONTENTS_33"
         case .efst_c_buff_1: "EFST_C_BUFF_1"
         case .efst_c_buff_2: "EFST_C_BUFF_2"
         case .efst_chasing: "EFST_CHASING"
@@ -4357,6 +4363,9 @@ extension OfficialStatusChangeID: CodingKey {
         case "EFST_CONTENTS_28": self = .efst_contents_28
         case "EFST_CONTENTS_29": self = .efst_contents_29
         case "EFST_CONTENTS_30": self = .efst_contents_30
+        case "EFST_CONTENTS_31": self = .efst_contents_31
+        case "EFST_CONTENTS_32": self = .efst_contents_32
+        case "EFST_CONTENTS_33": self = .efst_contents_33
         case "EFST_C_BUFF_1": self = .efst_c_buff_1
         case "EFST_C_BUFF_2": self = .efst_c_buff_2
         case "EFST_CHASING": self = .efst_chasing
