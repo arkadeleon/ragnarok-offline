@@ -16,7 +16,7 @@ enum GamePhase {
     case charServerList(_ charServers: [CharServerInfo])
     case charSelect(_ chars: [CharInfo])
     case charMake(_ slot: UInt8)
-    case map
+    case map(_ mapName: String, _ position: SIMD2<Int16>)
 }
 
 @Observable
@@ -25,9 +25,6 @@ final class GameSession {
 
     @MainActor
     var phase: GamePhase = .login
-
-    @MainActor
-    var mapScene: GameMapScene?
 
     @ObservationIgnored
     var loginSession: LoginSession?
@@ -136,48 +133,8 @@ final class GameSession {
         let mapSession = MapSession(storage: storage, mapServer: mapServer)
 
         mapSession.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
-            self.phase = .map
-            self.mapScene = nil
-
-            Task {
-                try await self.loadMap(event)
-            }
-        }
-        .store(in: &subscriptions)
-
-        mapSession.subscribe(to: PlayerEvents.Moved.self) { [unowned self] event in
-            self.mapScene?.movePlayer(from: event.fromPosition, to: event.toPosition)
-        }
-        .store(in: &subscriptions)
-
-        mapSession.subscribe(to: PlayerEvents.MessageReceived.self) { event in
-        }
-        .store(in: &subscriptions)
-
-        // MapObjectEvents
-
-        mapSession.subscribe(to: MapObjectEvents.Spawned.self) { [unowned self] event in
-            self.mapScene?.addObject(event.object)
-        }
-        .store(in: &subscriptions)
-
-        mapSession.subscribe(to: MapObjectEvents.Moved.self) { [unowned self] event in
-            self.mapScene?.moveObject(event.objectID, from: event.fromPosition, to: event.toPosition)
-        }
-        .store(in: &subscriptions)
-
-        mapSession.subscribe(to: MapObjectEvents.Stopped.self) { [unowned self] event in
-            self.mapScene?.moveObject(event.objectID, to: event.position)
-        }
-        .store(in: &subscriptions)
-
-        mapSession.subscribe(to: MapObjectEvents.Vanished.self) { [unowned self] event in
-            self.mapScene?.removeObject(event.objectID)
-        }
-        .store(in: &subscriptions)
-
-        mapSession.subscribe(to: MapObjectEvents.StateChanged.self) { [unowned self] event in
-            self.mapScene?.updateObject(event.objectID, effectState: event.effectState)
+            let mapName = String(event.mapName.dropLast(4))
+            self.phase = .map(mapName, event.position)
         }
         .store(in: &subscriptions)
 
@@ -186,28 +143,28 @@ final class GameSession {
         self.mapSession = mapSession
     }
 
-    private func loadMap(_ event: MapEvents.Changed) async throws {
-        let mapName = String(event.mapName.dropLast(4))
-
-        if let map = try await MapDatabase.renewal.map(forName: mapName),
-           let grid = map.grid() {
-            Task { @MainActor in
-                let mapScene = GameMapScene(name: mapName, grid: grid, position: event.position)
-                mapScene.positionTapHandler = { [unowned self] position in
-                    Task {
-                        if let object = await self.storage.mapObjects.values.first(where: { $0.position == position && $0.effectState != .cloak }) {
-                            self.mapSession?.talkToNPC(npcID: object.id)
-                        } else {
-                            self.mapSession?.requestMove(x: position.x, y: position.y)
-                        }
-                    }
-                }
-                self.mapScene = mapScene
-
-                mapSession?.notifyMapLoaded()
-            }
-        }
-    }
+//    private func loadMap(_ event: MapEvents.Changed) async throws {
+//        let mapName = String(event.mapName.dropLast(4))
+//
+//        if let map = try await MapDatabase.renewal.map(forName: mapName),
+//           let grid = map.grid() {
+//            Task { @MainActor in
+//                let mapScene = GameMapScene(name: mapName, grid: grid, position: event.position)
+//                mapScene.positionTapHandler = { [unowned self] position in
+//                    Task {
+//                        if let object = await self.storage.mapObjects.values.first(where: { $0.position == position && $0.effectState != .cloak }) {
+//                            self.mapSession?.talkToNPC(npcID: object.id)
+//                        } else {
+//                            self.mapSession?.requestMove(x: position.x, y: position.y)
+//                        }
+//                    }
+//                }
+//                self.mapScene = mapScene
+//
+//                mapSession?.notifyMapLoaded()
+//            }
+//        }
+//    }
 }
 
 extension EnvironmentValues {

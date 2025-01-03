@@ -75,6 +75,18 @@ public actor ClientResourceManager {
 
     // MARK: - data
 
+    public func gatFile(forMapName mapName: String) -> File? {
+        let path = GRF.Path(components: ["data", "\(mapName).gat"])
+        let file = grfEntryFile(at: path)
+        return file
+    }
+
+    public func gndFile(forMapName mapName: String) -> File? {
+        let path = GRF.Path(components: ["data", "\(mapName).gnd"])
+        let file = grfEntryFile(at: path)
+        return file
+    }
+
     public func rswFile(forMapName mapName: String) -> File? {
         let path = GRF.Path(components: ["data", "\(mapName).rsw"])
         let file = grfEntryFile(at: path)
