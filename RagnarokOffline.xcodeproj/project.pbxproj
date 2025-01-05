@@ -100,6 +100,8 @@
 		35B422F22BEF5F3000681AA2 /* StatusChangeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422F12BEF5F3000681AA2 /* StatusChangeProvider.swift */; };
 		35B422F42BEF602500681AA2 /* StatusChangeDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422F32BEF602500681AA2 /* StatusChangeDatabaseView.swift */; };
 		35B422F62BEF76F700681AA2 /* DatabaseRecordAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422F52BEF76F700681AA2 /* DatabaseRecordAttribute.swift */; };
+		35B575FB2D1B035F00FC12BB /* ActionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B575FA2D1B035100FC12BB /* ActionsComponent.swift */; };
+		35B575FE2D1BB34200FC12BB /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B575FD2D1BB33B00FC12BB /* CharacterView.swift */; };
 		35B695EA2A305EF6006F1904 /* MetalCubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695E92A305EF6006F1904 /* MetalCubeView.swift */; };
 		35B695EC2A307164006F1904 /* MetalCubeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695EB2A307164006F1904 /* MetalCubeScene.swift */; };
 		35BDF7022C9B080000CCAB8F /* ROLocalizations in Frameworks */ = {isa = PBXBuildFile; productRef = 35BDF7012C9B080000CCAB8F /* ROLocalizations */; };
@@ -255,6 +257,8 @@
 		35B422F12BEF5F3000681AA2 /* StatusChangeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeProvider.swift; sourceTree = "<group>"; };
 		35B422F32BEF602500681AA2 /* StatusChangeDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeDatabaseView.swift; sourceTree = "<group>"; };
 		35B422F52BEF76F700681AA2 /* DatabaseRecordAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordAttribute.swift; sourceTree = "<group>"; };
+		35B575FA2D1B035100FC12BB /* ActionsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsComponent.swift; sourceTree = "<group>"; };
+		35B575FD2D1BB33B00FC12BB /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
 		35B695E92A305EF6006F1904 /* MetalCubeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalCubeView.swift; sourceTree = "<group>"; };
 		35B695EB2A307164006F1904 /* MetalCubeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalCubeScene.swift; sourceTree = "<group>"; };
 		35BDF7032C9B0AED00CCAB8F /* ClientSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSettings.swift; sourceTree = "<group>"; };
@@ -481,6 +485,7 @@
 				357742612D005FAA00F2CE8D /* GameView.swift */,
 				357742602D005FAA00F2CE8D /* GameSession.swift */,
 				354535242D04A8030099B7EF /* GameMapScene.swift */,
+				35B575FA2D1B035100FC12BB /* ActionsComponent.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -561,6 +566,7 @@
 				35F50CCA2BB4614100B36455 /* Messages */,
 				357742622D005FAA00F2CE8D /* Game */,
 				35B33BA32BF465D500EF28F5 /* Cube */,
+				35B575FC2D1BB32B00FC12BB /* Character */,
 				35A2ABBA2B3AC69F0026DAC2 /* Server */,
 				353B4F0E2B43AEC000605E92 /* Database */,
 				3582FFC42B8C820E00E746D7 /* Settings */,
@@ -627,6 +633,14 @@
 				35FEB6C32CDCBED400F24A4A /* ObservableStatusChange.swift */,
 			);
 			path = StatusChange;
+			sourceTree = "<group>";
+		};
+		35B575FC2D1BB32B00FC12BB /* Character */ = {
+			isa = PBXGroup;
+			children = (
+				35B575FD2D1BB33B00FC12BB /* CharacterView.swift */,
+			);
+			path = Character;
 			sourceTree = "<group>";
 		};
 		35E27A8C2BCC111400C11076 /* Packages */ = {
@@ -775,6 +789,7 @@
 				35239DFD2BBEF1C80039F7D5 /* SkillProvider.swift in Sources */,
 				35BE55582BDA9FD8003715C3 /* GATFilePreviewView.swift in Sources */,
 				35B695EC2A307164006F1904 /* MetalCubeScene.swift in Sources */,
+				35B575FE2D1BB34200FC12BB /* CharacterView.swift in Sources */,
 				35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */,
 				3514BF862B4801EB0065ED89 /* JobInfoView.swift in Sources */,
 				35B33BA22BF3BDCE00EF28F5 /* RealityCubeViewController.swift in Sources */,
@@ -801,6 +816,7 @@
 				35E67C7D2CBF90C8006E42A3 /* Miscellaneous+JSON.swift in Sources */,
 				35239E012BC29A4E0039F7D5 /* ItemProvider.swift in Sources */,
 				3594DD572BF5FCB600575F3D /* ModelViewer.swift in Sources */,
+				35B575FB2D1B035F00FC12BB /* ActionsComponent.swift in Sources */,
 				35E67C6E2CBF6C1F006E42A3 /* GND+JSON.swift in Sources */,
 				35E67C6F2CBF6C1F006E42A3 /* GAT+JSON.swift in Sources */,
 				35E67C702CBF6C1F006E42A3 /* ACT+JSON.swift in Sources */,
@@ -1035,11 +1051,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.4;
 				OTHER_SWIFT_FLAGS = "-cxx-interoperability-mode=default -enable-upcoming-feature ExistentialAny -enable-upcoming-feature GlobalConcurrency";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.arkadeleon.ragnarok-offline";
@@ -1053,6 +1070,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "RagnarokOffline/RagnarokOffline-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -1076,11 +1094,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.4;
 				OTHER_SWIFT_FLAGS = "-cxx-interoperability-mode=default -enable-upcoming-feature ExistentialAny -enable-upcoming-feature GlobalConcurrency";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.arkadeleon.ragnarok-offline";
@@ -1094,6 +1113,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "RagnarokOffline/RagnarokOffline-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};

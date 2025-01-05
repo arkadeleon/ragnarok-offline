@@ -31,6 +31,8 @@ struct DetailView: View {
                 GameView()
             case .cube:
                 RealityCubeView()
+            case .character:
+                CharacterView()
             case .loginServer:
                 ServerView(server: loginServer)
             case .charServer:

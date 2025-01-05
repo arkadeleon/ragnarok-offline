@@ -9,8 +9,51 @@ import CoreImage.CIFilterBuiltins
 import QuartzCore
 import ROCore
 
+public struct ACTActionSpriteAtlas {
+    public var image: CGImage?
+    public var frameWidth: Float
+    public var frameHeight: Float
+    public var frameCount: Int
+    public var frameInterval: Float
+}
+
 extension ACT.Action {
     public func animatedImage(using imagesBySpriteType: [SPR.SpriteType : [CGImage?]]) -> AnimatedImage {
+        let bounds = calculateBounds(using: imagesBySpriteType)
+        let ciContext = CIContext()
+
+        let images = frames.compactMap { frame -> CGImage? in
+            frame.image(in: bounds, ciContext: ciContext, using: imagesBySpriteType)
+        }
+        let delay = CGFloat(animationSpeed * 25 / 1000)
+        let animatedImage = AnimatedImage(images: images, delay: delay)
+        return animatedImage
+    }
+
+    public func spriteAtlas(using imagesBySpriteType: [SPR.SpriteType : [CGImage?]]) -> ACTActionSpriteAtlas {
+        let bounds = calculateBounds(using: imagesBySpriteType)
+        let ciContext = CIContext()
+
+        let renderer = CGImageRenderer(size: CGSize(width: bounds.size.width * CGFloat(frames.count), height: bounds.size.height), flipped: false)
+        let image = renderer.image { cgContext in
+            for frameIndex in 0..<frames.count {
+                if let frameImage = frames[frameIndex].image(in: bounds, ciContext: ciContext, using: imagesBySpriteType) {
+                    cgContext.draw(frameImage, in: CGRect(x: bounds.size.width * CGFloat(frameIndex), y: 0, width: bounds.size.width, height: bounds.size.height))
+                }
+            }
+        }
+
+        let spriteAtlas = ACTActionSpriteAtlas(
+            image: image,
+            frameWidth: Float(bounds.size.width),
+            frameHeight: Float(bounds.size.height),
+            frameCount: frames.count,
+            frameInterval: animationSpeed * 25 / 1000
+        )
+        return spriteAtlas
+    }
+
+    func calculateBounds(using imagesBySpriteType: [SPR.SpriteType : [CGImage?]]) -> CGRect {
         var bounds: CGRect = .zero
         for frame in frames {
             for layer in frame.layers {
@@ -43,39 +86,38 @@ extension ACT.Action {
                 bounds = bounds.union(rect)
             }
         }
+        return bounds
+    }
+}
 
-        let ciContext = CIContext()
-        let images = frames.compactMap { frame -> CGImage? in
-            let frameLayer = CALayer()
-            frameLayer.bounds = bounds
+extension ACT.Frame {
+    func image(in bounds: CGRect, ciContext: CIContext, using imagesBySpriteType: [SPR.SpriteType : [CGImage?]]) -> CGImage? {
+        let frameLayer = CALayer()
+        frameLayer.bounds = bounds
 
-            for layer in frame.layers {
-                guard let caLayer = CALayer(context: ciContext, layer: layer, contents: { spriteType, spriteIndex in
-                    guard let spriteImages = imagesBySpriteType[spriteType] else {
-                        return nil
-                    }
-                    guard 0..<spriteImages.count ~= spriteIndex else {
-                        return nil
-                    }
-                    let image = spriteImages[spriteIndex]
-                    return image
-                }) else {
-                    continue
+        for layer in layers {
+            guard let caLayer = CALayer(context: ciContext, layer: layer, contents: { spriteType, spriteIndex in
+                guard let spriteImages = imagesBySpriteType[spriteType] else {
+                    return nil
                 }
-
-                frameLayer.addSublayer(caLayer)
+                guard 0..<spriteImages.count ~= spriteIndex else {
+                    return nil
+                }
+                let image = spriteImages[spriteIndex]
+                return image
+            }) else {
+                continue
             }
 
-            let renderer = CGImageRenderer(size: bounds.size)
-            let cgImage = renderer.image { cgContext in
-                cgContext.translateBy(x: -bounds.origin.x, y: -bounds.origin.y)
-                frameLayer.render(in: cgContext)
-            }
-            return cgImage
+            frameLayer.addSublayer(caLayer)
         }
-        let delay = CGFloat(animationSpeed * 25 / 1000)
-        let animatedImage = AnimatedImage(images: images, delay: delay)
-        return animatedImage
+
+        let renderer = CGImageRenderer(size: bounds.size, flipped: true)
+        let cgImage = renderer.image { cgContext in
+            cgContext.translateBy(x: -bounds.origin.x, y: -bounds.origin.y)
+            frameLayer.render(in: cgContext)
+        }
+        return cgImage
     }
 }
 

@@ -102,7 +102,7 @@ extension SPR {
                 return nil
             }
 
-            let renderer = CGImageRenderer(size: CGSize(width: width, height: height))
+            let renderer = CGImageRenderer(size: CGSize(width: width, height: height), flipped: true)
             let downMirroredImage = renderer.image { context in
                 context.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
             }

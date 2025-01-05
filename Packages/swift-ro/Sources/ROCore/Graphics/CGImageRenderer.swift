@@ -9,9 +9,11 @@ import CoreGraphics
 
 public class CGImageRenderer {
     public let size: CGSize
+    public let flipped: Bool
 
-    public init(size: CGSize) {
+    public init(size: CGSize, flipped: Bool) {
         self.size = size
+        self.flipped = flipped
     }
 
     public func image(actions: (CGContext) -> Void) -> CGImage? {
@@ -30,9 +32,11 @@ public class CGImageRenderer {
             return nil
         }
 
-        // Flip vertically.
-        let transform = CGAffineTransform(1, 0, 0, -1, 0, size.height)
-        context.concatenate(transform)
+        if flipped {
+            // Flip vertically.
+            let transform = CGAffineTransform(1, 0, 0, -1, 0, size.height)
+            context.concatenate(transform)
+        }
 
         actions(context)
 

@@ -14,4 +14,8 @@ struct RagnarokOfflineApp: App {
             ContentView()
         }
     }
+
+    init() {
+        ActionsComponent.registerComponent()
+    }
 }
