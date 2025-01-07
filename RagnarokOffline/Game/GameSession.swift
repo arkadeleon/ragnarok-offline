@@ -7,7 +7,9 @@
 
 import Combine
 import Observation
+import ROClientResources
 import RODatabase
+import ROFileFormats
 import RONetwork
 import SwiftUI
 
@@ -16,7 +18,8 @@ enum GamePhase {
     case charServerList(_ charServers: [CharServerInfo])
     case charSelect(_ chars: [CharInfo])
     case charMake(_ slot: UInt8)
-    case map(_ mapName: String, _ position: SIMD2<Int16>)
+    case mapLoading
+    case map(gat: GAT, gnd: GND, _ position: SIMD2<Int16>)
 }
 
 @Observable
@@ -134,7 +137,23 @@ final class GameSession {
 
         mapSession.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
             let mapName = String(event.mapName.dropLast(4))
-            self.phase = .map(mapName, event.position)
+            self.phase = .mapLoading
+
+            Task {
+                guard let gatFile = await ClientResourceManager.default.gatFile(forMapName: mapName),
+                      let gatData = gatFile.contents(),
+                      let gat = try? GAT(data: gatData) else {
+                    return
+                }
+
+                guard let gndFile = await ClientResourceManager.default.gndFile(forMapName: mapName),
+                      let gndData = gndFile.contents(),
+                      let gnd = try? GND(data: gndData) else {
+                    return
+                }
+
+                self.phase = .map(gat: gat, gnd: gnd, event.position)
+            }
         }
         .store(in: &subscriptions)
 

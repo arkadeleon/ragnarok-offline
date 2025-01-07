@@ -21,11 +21,13 @@ struct GameView: View {
                 CharSelectView(chars: chars)
             case .charMake(let slot):
                 CharMakeView(slot: slot)
-            case .map(let mapName, let position):
+            case .mapLoading:
+                ProgressView()
+            case .map(let gat, let gnd, let position):
                 if #available(iOS 18.0, macOS 15.0, visionOS 2.0, *) {
-                    MapView(mapSession: gameSession.mapSession!, mapName: mapName, position: position)
+                    MapView(mapSession: gameSession.mapSession!, gat: gat, gnd: gnd, position: position)
                 } else {
-                    Text(mapName)
+                    EmptyView()
                 }
             }
         }
