@@ -29,6 +29,8 @@ struct MapSceneView: View {
         RealityView { content in
             content.add(root)
 
+            let group = ModelSortGroup()
+
             let groundEntity = try? await Entity.loadGround(gat: gat, gnd: gnd) { textureName in
                 let path = GRF.Path(components: ["data", "texture", textureName])
                 let file = ClientResourceManager.default.grfEntryFile(at: path)
@@ -40,52 +42,48 @@ struct MapSceneView: View {
             }
 
             if let groundEntity {
+                groundEntity.components.set(ModelSortGroupComponent(group: group, order: 0))
                 groundEntity.transform = Transform(rotation: simd_quatf(angle: radians(-90), axis: [1, 0, 0]))
-
-                groundEntity.generateCollisionShapes(recursive: false)
-
-                groundEntity.components.set(InputTargetComponent())
-
                 root.addChild(groundEntity)
             }
 
-//            var meshDescriptors = [MeshDescriptor]()
-//
-//            for y in 0..<gat.height {
-//                for x in 0..<gat.width {
-//                    let tile = gat.tile(atX: Int(x), y: Int(y))
-//
-//                    guard tile.type == .walkable || tile.type == .walkable2 || tile.type == .walkable3 else {
-//                        continue
-//                    }
-//
-//                    let p0: SIMD3<Float> = [Float(x) + 0, tile.bottomLeftAltitude / 5, Float(y) + 0]
-//                    let p1: SIMD3<Float> = [Float(x) + 1, tile.bottomRightAltitude / 5, Float(y) + 0]
-//                    let p2: SIMD3<Float> = [Float(x) + 1, tile.topRightAltitude / 5, Float(y) + 1]
-//                    let p3: SIMD3<Float> = [Float(x) + 1, tile.topRightAltitude / 5, Float(y) + 1]
-//                    let p4: SIMD3<Float> = [Float(x) + 0, tile.topLeftAltitude / 5, Float(y) + 1]
-//                    let p5: SIMD3<Float> = [Float(x) + 0, tile.bottomLeftAltitude / 5, Float(y) + 0]
-//
-//                    var meshDescriptor = MeshDescriptor()
-//                    meshDescriptor.positions = MeshBuffer([p0, p1, p2, p3, p4, p5])
-//                    meshDescriptor.primitives = .triangles([0, 1, 2, 3, 4, 5])
-////                    meshDescriptor.materials = .allFaces(0)
-//
-//                    meshDescriptors.append(meshDescriptor)
-//                }
-//            }
-//
-//            if let mesh = try? MeshResource.generate(from: meshDescriptors) {
-//                let tileEntity = ModelEntity(mesh: mesh)
-//
-//                tileEntity.transform = Transform(rotation: simd_quatf(angle: radians(-90), axis: [1, 0, 0]))
-//
-//                tileEntity.generateCollisionShapes(recursive: false)
-//
-//                tileEntity.components.set(InputTargetComponent())
-//
-//                root.addChild(tileEntity)
-//            }
+            var meshDescriptors = [MeshDescriptor]()
+
+            for y in 0..<gat.height {
+                for x in 0..<gat.width {
+                    let tile = gat.tile(atX: Int(x), y: Int(y))
+
+                    guard tile.type == .walkable || tile.type == .walkable2 || tile.type == .walkable3 else {
+                        continue
+                    }
+
+                    let p0: SIMD3<Float> = [Float(x) + 0, tile.bottomLeftAltitude / 5 - 0.1, Float(y) + 0]
+                    let p1: SIMD3<Float> = [Float(x) + 1, tile.bottomRightAltitude / 5 - 0.1, Float(y) + 0]
+                    let p2: SIMD3<Float> = [Float(x) + 1, tile.topRightAltitude / 5 - 0.1, Float(y) + 1]
+                    let p3: SIMD3<Float> = [Float(x) + 1, tile.topRightAltitude / 5 - 0.1, Float(y) + 1]
+                    let p4: SIMD3<Float> = [Float(x) + 0, tile.topLeftAltitude / 5 - 0.1, Float(y) + 1]
+                    let p5: SIMD3<Float> = [Float(x) + 0, tile.bottomLeftAltitude / 5 - 0.1, Float(y) + 0]
+
+                    var meshDescriptor = MeshDescriptor()
+                    meshDescriptor.positions = MeshBuffer([p0, p1, p2, p3, p4, p5])
+                    meshDescriptor.primitives = .triangles([0, 1, 2, 3, 4, 5])
+
+                    meshDescriptors.append(meshDescriptor)
+                }
+            }
+
+            if let mesh = try? MeshResource.generate(from: meshDescriptors) {
+                var material = SimpleMaterial()
+                material.color = SimpleMaterial.BaseColor(tint: .yellow)
+                material.triangleFillMode = .lines
+
+                let tileEntity = ModelEntity(mesh: mesh, materials: [material])
+                tileEntity.components.set(ModelSortGroupComponent(group: group, order: 1))
+                tileEntity.components.set(InputTargetComponent())
+                tileEntity.transform = Transform(rotation: simd_quatf(angle: radians(-90), axis: [1, 0, 0]))
+                tileEntity.generateCollisionShapes(recursive: false)
+                root.addChild(tileEntity)
+            }
 
             var material = PhysicallyBasedMaterial()
             material.metallic = PhysicallyBasedMaterial.Metallic()
@@ -94,26 +92,20 @@ struct MapSceneView: View {
                 ModelComponent(mesh: .generateBox(width: 1, height: 1, depth: 2), materials: [material])
             )
             player.name = "player"
-            player.position = [Float(position.x), Float(position.y), 0]
+            player.position = position3D(for: position)
             root.addChild(player)
 
-            camera.position = [Float(position.x), Float(position.y) - 20, 65]
+            camera.position = [Float(position.x), Float(position.y) - 20, 25]
             camera.look(at: [Float(position.x), Float(position.y), 0], from: camera.position, relativeTo: nil)
             root.addChild(camera)
 
             mapSession.notifyMapLoaded()
         } update: { content in
-            print("Update")
+
         } placeholder: {
             ProgressView()
         }
         .ignoresSafeArea()
-        .overlay(alignment: .topLeading) {
-            PlayerStatusOverlayView(mapSession: mapSession)
-        }
-        .overlay {
-            NPCDialogOverlayView(mapSession: mapSession)
-        }
         .overlay(alignment: .bottom) {
             VStack {
                 Slider(value: $camera.position.x, in: 0...400)
@@ -124,7 +116,7 @@ struct MapSceneView: View {
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button {
-                    camera.position = [Float(position.x), Float(position.y) - 20, 65]
+                    camera.position = [Float(position.x), Float(position.y) - 20, 25]
                 } label: {
                     Text(verbatim: "Reset")
                 }
