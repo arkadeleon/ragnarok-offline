@@ -52,8 +52,9 @@ struct MapSceneView: View {
                 root.addChild(groundEntity)
             }
 
-            var meshDescriptors = [MeshDescriptor]()
-
+            var gridPositions = [SIMD3<Float>]()
+            var gridPositionIndices = [UInt32]()
+            var index: UInt32 = 0
             for y in 0..<gat.height {
                 for x in 0..<gat.width {
                     let tile = gat.tile(atX: Int(x), y: Int(y))
@@ -62,32 +63,31 @@ struct MapSceneView: View {
                         continue
                     }
 
-                    let p0: SIMD3<Float> = [Float(x) + 0, tile.bottomLeftAltitude / 5 - 0.1, Float(y) + 0]
-                    let p1: SIMD3<Float> = [Float(x) + 1, tile.bottomRightAltitude / 5 - 0.1, Float(y) + 0]
-                    let p2: SIMD3<Float> = [Float(x) + 1, tile.topRightAltitude / 5 - 0.1, Float(y) + 1]
-                    let p3: SIMD3<Float> = [Float(x) + 1, tile.topRightAltitude / 5 - 0.1, Float(y) + 1]
-                    let p4: SIMD3<Float> = [Float(x) + 0, tile.topLeftAltitude / 5 - 0.1, Float(y) + 1]
-                    let p5: SIMD3<Float> = [Float(x) + 0, tile.bottomLeftAltitude / 5 - 0.1, Float(y) + 0]
+                    let p0: SIMD3<Float> = [Float(x) + 0, tile.bottomLeftAltitude / 5, Float(y) + 0]
+                    let p1: SIMD3<Float> = [Float(x) + 1, tile.bottomRightAltitude / 5, Float(y) + 0]
+                    let p2: SIMD3<Float> = [Float(x) + 1, tile.topRightAltitude / 5, Float(y) + 1]
+                    let p3: SIMD3<Float> = [Float(x) + 0, tile.topLeftAltitude / 5, Float(y) + 1]
 
-                    var meshDescriptor = MeshDescriptor()
-                    meshDescriptor.positions = MeshBuffer([p0, p1, p2, p3, p4, p5])
-                    meshDescriptor.primitives = .triangles([0, 1, 2, 3, 4, 5])
-
-                    meshDescriptors.append(meshDescriptor)
+                    gridPositions.append(contentsOf: [p0, p1, p2, p3])
+                    gridPositionIndices.append(contentsOf: [index, index + 1, index + 2, index + 2, index + 3, index])
+                    index += 4
                 }
             }
 
-            if let mesh = try? MeshResource.generate(from: meshDescriptors) {
+            var meshDescriptor = MeshDescriptor(name: "grid")
+            meshDescriptor.positions = MeshBuffers.Positions(gridPositions)
+            meshDescriptor.primitives = .triangles(gridPositionIndices)
+            if let mesh = try? MeshResource.generate(from: [meshDescriptor]) {
                 var material = SimpleMaterial()
                 material.color = SimpleMaterial.BaseColor(tint: .yellow)
                 material.triangleFillMode = .lines
 
-                let tileEntity = ModelEntity(mesh: mesh, materials: [material])
-                tileEntity.components.set(ModelSortGroupComponent(group: group, order: 1))
-                tileEntity.components.set(InputTargetComponent())
-                tileEntity.transform = Transform(rotation: simd_quatf(angle: radians(-90), axis: [1, 0, 0]))
-                tileEntity.generateCollisionShapes(recursive: false)
-                root.addChild(tileEntity)
+                let gridEntity = ModelEntity(mesh: mesh, materials: [material])
+                gridEntity.components.set(ModelSortGroupComponent(group: group, order: 1))
+                gridEntity.components.set(InputTargetComponent())
+                gridEntity.transform = Transform(rotation: simd_quatf(angle: radians(-90), axis: [1, 0, 0]), translation: [0, 0, 0.0001])
+                gridEntity.generateCollisionShapes(recursive: false)
+                root.addChild(gridEntity)
             }
 
             var material = PhysicallyBasedMaterial()
