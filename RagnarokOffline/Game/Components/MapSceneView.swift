@@ -24,10 +24,12 @@ struct MapSceneView: View {
 
     @State private var root = Entity()
     @State private var player = Entity()
-    @State private var camera = PerspectiveCamera()
+    @State private var camera = Entity()
     @State private var cameraHelper = Entity()
 
-    @State private var distance: Float = 85
+    @State private var distance: Float = 100
+
+    @State private var tappedLocation: CGPoint?
 
     var body: some View {
         RealityView { content in
@@ -83,6 +85,7 @@ struct MapSceneView: View {
                 material.triangleFillMode = .lines
 
                 let gridEntity = ModelEntity(mesh: mesh, materials: [material])
+                gridEntity.name = "grid"
                 gridEntity.components.set(ModelSortGroupComponent(group: group, order: 1))
                 gridEntity.components.set(InputTargetComponent())
                 gridEntity.transform = Transform(rotation: simd_quatf(angle: radians(-90), axis: [1, 0, 0]), translation: [0, 0, 0.0001])
@@ -100,45 +103,49 @@ struct MapSceneView: View {
             player.position = position3D(for: position)
             root.addChild(player)
 
-            camera.camera.fieldOfViewInDegrees = 15
-            camera.transform = cameraTransform(for: position)
+            let perspectiveCameraComponent = PerspectiveCameraComponent(near: 2, far: 300, fieldOfViewInDegrees: 15)
+            camera.components.set(perspectiveCameraComponent)
+            camera.transform = cameraTransform(for: player.position)
             root.addChild(camera)
 
             mapSession.notifyMapLoaded()
         } update: { content in
-            
+            #if os(iOS) || os(macOS)
+            if let tappedLocation {
+                if let ray = content.ray(through: tappedLocation, in: .global, to: .scene) {
+                    Task {
+                        if let hit = try await root.scene?.pixelCast(origin: ray.origin, direction: ray.direction, length: 300) {
+                            if hit.entity.name == "grid" {
+                                mapSession.requestMove(x: Int16(hit.position.x), y: Int16(hit.position.y))
+                            }
+                        }
+                    }
+                }
+            }
+            #endif
         } placeholder: {
             ProgressView()
         }
         .ignoresSafeArea()
         .overlay(alignment: .bottom) {
-            Slider(value: $distance, in: 25...400)
-        }
-        .toolbar {
-            ToolbarItem(placement: .automatic) {
-                Button {
-                    camera.transform = cameraTransform(for: position)
-                } label: {
-                    Text(verbatim: "Reset")
+            Slider(value: $distance, in: 2...300)
+                .onChange(of: distance) { oldValue, newValue in
+                    camera.transform = cameraTransform(for: player.position)
                 }
-            }
         }
         #if os(iOS) || os(macOS)
         .gesture(
-            SpatialTapGesture()
-                .targetedToAnyEntity()
+            SpatialTapGesture(coordinateSpace: .global)
                 .onEnded { event in
-                    if let position = event.unproject(\.location, to: .scene) {
-                        mapSession.requestMove(x: Int16(position.x), y: Int16(position.y))
-                    }
+                    tappedLocation = event.location
                 }
         )
         #endif
         .onReceive(mapSession.publisher(for: PlayerEvents.Moved.self)) { event in
-            let translation = position3D(for: event.toPosition)
-            player.move(to: Transform(translation: translation), relativeTo: nil, duration: 0.2)
+            let position = position3D(for: event.toPosition)
+            player.move(to: Transform(translation: position), relativeTo: nil, duration: 0.2)
 
-            let cameraTransform = cameraTransform(for: event.toPosition)
+            let cameraTransform = cameraTransform(for: position)
             camera.move(to: cameraTransform, relativeTo: nil, duration: 0.2)
         }
         .onReceive(mapSession.publisher(for: MapObjectEvents.Spawned.self)) { event in
@@ -189,9 +196,7 @@ struct MapSceneView: View {
         ]
     }
 
-    private func cameraTransform(for position: SIMD2<Int16>) -> Transform {
-        let target = position3D(for: position)
-
+    private func cameraTransform(for target: SIMD3<Float>) -> Transform {
         var position = target + [0, 0, distance]
         var point = Point3D(position)
         point = point.rotated(
