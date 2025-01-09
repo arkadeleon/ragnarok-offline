@@ -12,6 +12,7 @@ import RODatabase
 import ROFileFormats
 import RONetwork
 import RORenderers
+import Spatial
 import SwiftUI
 
 @available(iOS 18.0, macOS 15.0, visionOS 2.0, *)
@@ -24,10 +25,14 @@ struct MapSceneView: View {
     @State private var root = Entity()
     @State private var player = Entity()
     @State private var camera = PerspectiveCamera()
+    @State private var cameraHelper = Entity()
+
+    @State private var distance: Float = 85
 
     var body: some View {
         RealityView { content in
             content.add(root)
+            root.addChild(cameraHelper)
 
             let group = ModelSortGroup()
 
@@ -95,28 +100,24 @@ struct MapSceneView: View {
             player.position = position3D(for: position)
             root.addChild(player)
 
-            camera.position = [Float(position.x), Float(position.y) - 20, 25]
-            camera.look(at: [Float(position.x), Float(position.y), 0], from: camera.position, relativeTo: nil)
+            camera.camera.fieldOfViewInDegrees = 15
+            camera.transform = cameraTransform(for: position)
             root.addChild(camera)
 
             mapSession.notifyMapLoaded()
         } update: { content in
-
+            
         } placeholder: {
             ProgressView()
         }
         .ignoresSafeArea()
         .overlay(alignment: .bottom) {
-            VStack {
-                Slider(value: $camera.position.x, in: 0...400)
-                Slider(value: $camera.position.y, in: 0...400)
-                Slider(value: $camera.position.z, in: 0...400)
-            }
+            Slider(value: $distance, in: 25...400)
         }
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button {
-                    camera.position = [Float(position.x), Float(position.y) - 20, 25]
+                    camera.transform = cameraTransform(for: position)
                 } label: {
                     Text(verbatim: "Reset")
                 }
@@ -137,12 +138,8 @@ struct MapSceneView: View {
             let translation = position3D(for: event.toPosition)
             player.move(to: Transform(translation: translation), relativeTo: nil, duration: 0.2)
 
-            let cameraTranslation: SIMD3<Float> = [
-                Float(event.toPosition.x - event.fromPosition.x),
-                Float(event.toPosition.y - event.fromPosition.y),
-                0,
-            ]
-            camera.move(to: Transform(translation: cameraTranslation), relativeTo: camera, duration: 0.2)
+            let cameraTransform = cameraTransform(for: event.toPosition)
+            camera.move(to: cameraTransform, relativeTo: nil, duration: 0.2)
         }
         .onReceive(mapSession.publisher(for: MapObjectEvents.Spawned.self)) { event in
             var material = PhysicallyBasedMaterial()
@@ -190,5 +187,20 @@ struct MapSceneView: View {
             Float(position2D.y),
             -altitude / 5,
         ]
+    }
+
+    private func cameraTransform(for position: SIMD2<Int16>) -> Transform {
+        let target = position3D(for: position)
+
+        var position = target + [0, 0, distance]
+        var point = Point3D(position)
+        point = point.rotated(
+            by: simd_quatd(angle: radians(30), axis: [1, 0, 0]),
+            around: Point3D(target)
+        )
+        position = SIMD3(point)
+
+        cameraHelper.look(at: target, from: position, relativeTo: nil)
+        return cameraHelper.transform
     }
 }
