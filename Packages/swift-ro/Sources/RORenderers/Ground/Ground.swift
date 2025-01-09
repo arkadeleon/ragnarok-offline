@@ -87,28 +87,14 @@ public struct Ground {
                             tileColorCoordinate: [(Float(x) + 1.5) / Float(width), (Float(y) + 1.5) / Float(height)]
                         )
                         let v3 = GroundVertex(
-                            position: [(Float(x) + 1) * 2, cube.topRightAltitude / 5, (Float(y) + 1) * 2],
-                            normal: n[2],
-                            textureCoordinate: [surface.u[3], surface.v[3]],
-                            lightmapCoordinate: [l.u2, l.v2],
-                            tileColorCoordinate: [(Float(x) + 1.5) / Float(width), (Float(y) + 1.5) / Float(height)]
-                        )
-                        let v4 = GroundVertex(
                             position: [(Float(x) + 0) * 2, cube.topLeftAltitude / 5, (Float(y) + 1) * 2],
                             normal: n[3],
                             textureCoordinate: [surface.u[2], surface.v[2]],
                             lightmapCoordinate: [l.u1, l.v2],
                             tileColorCoordinate: [(Float(x) + 0.5) / Float(width), (Float(y) + 1.5) / Float(height)]
                         )
-                        let v5 = GroundVertex(
-                            position: [(Float(x) + 0) * 2, cube.bottomLeftAltitude / 5, (Float(y) + 0) * 2],
-                            normal: n[0],
-                            textureCoordinate: [surface.u[0], surface.v[0]],
-                            lightmapCoordinate: [l.u1, l.v1],
-                            tileColorCoordinate: [(Float(x) + 0.5) / Float(width), (Float(y) + 0.5) / Float(height)]
-                        )
 
-                        meshes[Int(surface.textureIndex)].vertices += [v0, v1, v2, v3, v4, v5]
+                        meshes[Int(surface.textureIndex)].vertices += [v0, v1, v2, v2, v3, v0]
                     }
                 }
 
@@ -121,10 +107,10 @@ public struct Ground {
                         let l = lightmap_atlas(Int(surface.lightmapIndex))
 
                         let v0 = GroundVertex(
-                            position: [(Float(x) + 0) * 2, frontCube.bottomLeftAltitude / 5, (Float(y) + 1) * 2],
+                            position: [(Float(x) + 0) * 2, cube.topLeftAltitude / 5, (Float(y) + 1) * 2],
                             normal: [0, 0, 1],
-                            textureCoordinate: [surface.u[2], surface.v[2]],
-                            lightmapCoordinate: [l.u1, l.v2],
+                            textureCoordinate: [surface.u[0], surface.v[0]],
+                            lightmapCoordinate: [l.u1, l.v1],
                             tileColorCoordinate: [0, 0]
                         )
                         let v1 = GroundVertex(
@@ -148,22 +134,8 @@ public struct Ground {
                             lightmapCoordinate: [l.u1, l.v2],
                             tileColorCoordinate: [0, 0]
                         )
-                        let v4 = GroundVertex(
-                            position: [(Float(x) + 1) * 2, cube.topRightAltitude / 5, (Float(y) + 1) * 2],
-                            normal: [0, 0, 1],
-                            textureCoordinate: [surface.u[1], surface.v[1]],
-                            lightmapCoordinate: [l.u2, l.v1],
-                            tileColorCoordinate: [0, 0]
-                        )
-                        let v5 = GroundVertex(
-                            position: [(Float(x) + 0) * 2, cube.topLeftAltitude / 5, (Float(y) + 1) * 2],
-                            normal: [0, 0, 1],
-                            textureCoordinate: [surface.u[0], surface.v[0]],
-                            lightmapCoordinate: [l.u1, l.v1],
-                            tileColorCoordinate: [0, 0]
-                        )
 
-                        meshes[Int(surface.textureIndex)].vertices += [v0, v1, v2, v3, v4, v5]
+                        meshes[Int(surface.textureIndex)].vertices += [v0, v1, v2, v2, v3, v0]
                     }
                 }
 
@@ -176,17 +148,17 @@ public struct Ground {
                         let l = lightmap_atlas(Int(surface.lightmapIndex))
 
                         let v0 = GroundVertex(
-                            position: [(Float(x) + 1) * 2, cube.bottomRightAltitude / 5, (Float(y) + 0) * 2],
-                            normal: [1, 0, 0],
-                            textureCoordinate: [surface.u[1], surface.v[1]],
-                            lightmapCoordinate: [l.u2, l.v1],
-                            tileColorCoordinate: [0, 0]
-                        )
-                        let v1 = GroundVertex(
                             position: [(Float(x) + 1) * 2, cube.topRightAltitude / 5, (Float(y) + 1) * 2],
                             normal: [1, 0, 0],
                             textureCoordinate: [surface.u[0], surface.v[0]],
                             lightmapCoordinate: [l.u1, l.v1],
+                            tileColorCoordinate: [0, 0]
+                        )
+                        let v1 = GroundVertex(
+                            position: [(Float(x) + 1) * 2, cube.bottomRightAltitude / 5, (Float(y) + 0) * 2],
+                            normal: [1, 0, 0],
+                            textureCoordinate: [surface.u[1], surface.v[1]],
+                            lightmapCoordinate: [l.u2, l.v1],
                             tileColorCoordinate: [0, 0]
                         )
                         let v2 = GroundVertex(
@@ -197,28 +169,14 @@ public struct Ground {
                             tileColorCoordinate: [0, 0]
                         )
                         let v3 = GroundVertex(
-                            position: [(Float(x) + 1) * 2, rightCube.bottomLeftAltitude / 5, (Float(y) + 0) * 2],
-                            normal: [1, 0, 0],
-                            textureCoordinate: [surface.u[3], surface.v[3]],
-                            lightmapCoordinate: [l.u2, l.v2],
-                            tileColorCoordinate: [0, 0]
-                        )
-                        let v4 = GroundVertex(
                             position: [(Float(x) + 1) * 2, rightCube.topLeftAltitude / 5, (Float(y) + 1) * 2],
                             normal: [1, 0, 0],
                             textureCoordinate: [surface.u[2], surface.v[2]],
                             lightmapCoordinate: [l.u1, l.v2],
                             tileColorCoordinate: [0, 0]
                         )
-                        let v5 = GroundVertex(
-                            position: [(Float(x) + 1) * 2, cube.topRightAltitude / 5, (Float(y) + 1) * 2],
-                            normal: [1, 0, 0],
-                            textureCoordinate: [surface.u[0], surface.v[0]],
-                            lightmapCoordinate: [l.u1, l.v1],
-                            tileColorCoordinate: [0, 0]
-                        )
 
-                        meshes[Int(surface.textureIndex)].vertices += [v0, v1, v2, v3, v4, v5]
+                        meshes[Int(surface.textureIndex)].vertices += [v0, v1, v2, v2, v3, v0]
                     }
                 }
             }
