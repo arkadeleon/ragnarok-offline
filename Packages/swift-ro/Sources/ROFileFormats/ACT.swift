@@ -8,7 +8,7 @@
 import Foundation
 import ROCore
 
-public struct ACT: BinaryDecodable {
+public struct ACT: BinaryDecodable, Sendable {
     public var header: String
     public var version: String
     public var actions: [ACT.Action] = []
@@ -56,7 +56,7 @@ public struct ACT: BinaryDecodable {
 }
 
 extension ACT {
-    public struct Action: BinaryDecodableWithConfiguration {
+    public struct Action: BinaryDecodableWithConfiguration, Sendable {
         public var frames: [ACT.Frame] = []
         public var animationSpeed: Float = 6
 
@@ -71,7 +71,7 @@ extension ACT {
 }
 
 extension ACT {
-    public struct Frame: BinaryDecodableWithConfiguration {
+    public struct Frame: BinaryDecodableWithConfiguration, Sendable {
         public var layers: [ACT.Layer] = []
         public var soundIndex: Int32 = -1
         public var anchorPoints: [ACT.AnchorPoint] = []
@@ -102,7 +102,7 @@ extension ACT {
 }
 
 extension ACT {
-    public struct Layer: BinaryDecodableWithConfiguration {
+    public struct Layer: BinaryDecodableWithConfiguration, Sendable {
         public var offset: SIMD2<Int32>
         public var spriteIndex: Int32
         public var isMirrored: Int32
@@ -145,7 +145,7 @@ extension ACT {
 }
 
 extension ACT {
-    public struct AnchorPoint: BinaryDecodable {
+    public struct AnchorPoint: BinaryDecodable, Sendable {
         public var x: Int32
         public var y: Int32
 

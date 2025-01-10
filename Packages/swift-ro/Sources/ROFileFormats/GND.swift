@@ -8,7 +8,7 @@
 import Foundation
 import ROCore
 
-public struct GND: BinaryDecodable {
+public struct GND: BinaryDecodable, Sendable {
     public var header: String
     public var version: String
     public var width: Int32
@@ -77,7 +77,7 @@ public struct GND: BinaryDecodable {
 }
 
 extension GND {
-    public struct Lightmap {
+    public struct Lightmap: Sendable {
         public var per_cell: Int32
         public var count: Int32
         public var data: [UInt8]
@@ -85,7 +85,7 @@ extension GND {
 }
 
 extension GND {
-    public struct Surface: BinaryDecodable {
+    public struct Surface: BinaryDecodable, Sendable {
         public var u: SIMD4<Float>
         public var v: SIMD4<Float>
         public var textureIndex: Int16
@@ -119,7 +119,7 @@ extension GND {
 }
 
 extension GND {
-    public struct Cube: BinaryDecodable {
+    public struct Cube: BinaryDecodable, Sendable {
         public var bottomLeftAltitude: Float
         public var bottomRightAltitude: Float
         public var topLeftAltitude: Float

@@ -8,7 +8,7 @@
 import Foundation
 import ROCore
 
-public struct GAT: BinaryDecodable {
+public struct GAT: BinaryDecodable, Sendable {
     public var header: String
     public var version: String
     public var width: Int32
@@ -41,7 +41,7 @@ public struct GAT: BinaryDecodable {
 }
 
 extension GAT {
-    public enum TileType: Int32 {
+    public enum TileType: Int32, Sendable {
         case walkable = 0
         case noWalkable = 1
         case noWalkableNoSnipable = 2
@@ -51,7 +51,7 @@ extension GAT {
         case walkable3 = 6
     }
 
-    public struct Tile: BinaryDecodable {
+    public struct Tile: BinaryDecodable, Sendable {
         public var bottomLeftAltitude: Float
         public var bottomRightAltitude: Float
         public var topLeftAltitude: Float

@@ -8,7 +8,7 @@
 import Foundation
 import ROCore
 
-public struct STR: BinaryDecodable {
+public struct STR: BinaryDecodable, Sendable {
     public var header: String
     public var version: String
     public var fps: Int32
@@ -47,7 +47,7 @@ public struct STR: BinaryDecodable {
 }
 
 extension STR {
-    public struct Layer: BinaryDecodable {
+    public struct Layer: BinaryDecodable, Sendable {
         public var textures: [String] = []
         public var keyframes: [STR.Keyframe] = []
 
@@ -68,7 +68,7 @@ extension STR {
 }
 
 extension STR {
-    public struct Keyframe: BinaryDecodable {
+    public struct Keyframe: BinaryDecodable, Sendable {
         public var frameIndex: Int32
         public var type: Int32
         public var position: SIMD2<Float>

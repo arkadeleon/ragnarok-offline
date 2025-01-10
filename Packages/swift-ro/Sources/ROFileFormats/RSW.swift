@@ -8,7 +8,7 @@
 import Foundation
 import ROCore
 
-public struct RSW: BinaryDecodable {
+public struct RSW: BinaryDecodable, Sendable {
     public var header: String
     public var version: String
     public var files: RSW.Files
@@ -78,7 +78,7 @@ public struct RSW: BinaryDecodable {
 }
 
 extension RSW {
-    public struct Files: BinaryDecodableWithConfiguration {
+    public struct Files: BinaryDecodableWithConfiguration, Sendable {
         public var ini: String
         public var gnd: String
         public var gat: String
@@ -101,7 +101,7 @@ extension RSW {
 }
 
 extension RSW {
-    public struct Water: BinaryDecodableWithConfiguration {
+    public struct Water: BinaryDecodableWithConfiguration, Sendable {
         public var level: Float
         public var type: Int32
         public var waveHeight: Float
@@ -148,7 +148,7 @@ extension RSW {
 }
 
 extension RSW {
-    public struct Light: BinaryDecodableWithConfiguration {
+    public struct Light: BinaryDecodableWithConfiguration, Sendable {
         public var longitude: Int32
         public var latitude: Int32
         public var diffuse: DiffuseColor
@@ -178,7 +178,7 @@ extension RSW {
 }
 
 extension RSW {
-    public struct BoundingBox: BinaryDecodableWithConfiguration {
+    public struct BoundingBox: BinaryDecodableWithConfiguration, Sendable {
         public var top: Int32
         public var bottom: Int32
         public var left: Int32
@@ -209,7 +209,7 @@ extension RSW {
             case effect = 4
         }
 
-        public struct Model: BinaryDecodableWithConfiguration {
+        public struct Model: BinaryDecodableWithConfiguration, Sendable {
             public var name: String
             public var animationType: Int32
             public var animationSpeed: Float
@@ -253,7 +253,7 @@ extension RSW {
             }
         }
 
-        public struct Light: BinaryDecodableWithConfiguration {
+        public struct Light: BinaryDecodableWithConfiguration, Sendable {
             public var name: String
             public var position: SIMD3<Float>
             public var diffuse: DiffuseColor
@@ -271,7 +271,7 @@ extension RSW {
             }
         }
 
-        public struct Sound: BinaryDecodableWithConfiguration {
+        public struct Sound: BinaryDecodableWithConfiguration, Sendable {
             public var name: String
             public var waveName: String
             public var position: SIMD3<Float>
@@ -302,7 +302,7 @@ extension RSW {
             }
         }
 
-        public struct Effect: BinaryDecodableWithConfiguration {
+        public struct Effect: BinaryDecodableWithConfiguration, Sendable {
             public var name: String
             public var position: SIMD3<Float>
             public var id: Int32

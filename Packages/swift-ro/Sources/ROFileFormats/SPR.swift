@@ -8,7 +8,7 @@
 import Foundation
 import ROCore
 
-public struct SPR: BinaryDecodable {
+public struct SPR: BinaryDecodable, Sendable {
     public var header: String
     public var version: String
     public var sprites: [SPR.Sprite] = []
@@ -63,12 +63,12 @@ public struct SPR: BinaryDecodable {
 }
 
 extension SPR {
-    public enum SpriteType: Int {
+    public enum SpriteType: Int, Sendable {
         case indexed = 0
         case rgba = 1
     }
 
-    public struct Sprite: BinaryDecodableWithConfiguration {
+    public struct Sprite: BinaryDecodableWithConfiguration, Sendable {
         public enum BinaryDecodingConfiguration {
             case indexed
             case indexedRLE
