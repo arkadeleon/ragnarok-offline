@@ -13,10 +13,6 @@ import ROCore
 import ROFileFormats
 import ROGenerated
 
-enum EntityError: Error {
-    case invalid
-}
-
 extension Entity {
     static func loadJob(jobID: JobID) async throws -> Entity {
         async let bodyAsync = loadBody(jobID: jobID)
@@ -38,27 +34,16 @@ extension Entity {
     }
 
     static func loadBody(jobID: JobID) async throws -> Entity {
-        let (sprFile, actFile) = await ClientResourceManager.default.bodySpriteFile(sex: .male, jobID: jobID)
-        guard let sprFile, let sprData = sprFile.contents(), let actFile, let actData = actFile.contents() else {
-            throw EntityError.invalid
-        }
-
-        let spr = try SPR(data: sprData)
-        let act = try ACT(data: actData)
+        let (spr, act) = try await ClientResourceManager.default.bodySpriteFile(sex: .male, jobID: jobID)
 
         let entity = try await Entity.load(act: act, spr: spr)
         entity.name = "body"
+
         return entity
     }
 
     static func loadHead(hairID: Int) async throws -> Entity {
-        let (sprFile, actFile) = await ClientResourceManager.default.headSpriteFile(sex: .male, hairID: hairID)
-        guard let sprFile, let sprData = sprFile.contents(), let actFile, let actData = actFile.contents() else {
-            throw EntityError.invalid
-        }
-
-        let spr = try SPR(data: sprData)
-        let act = try ACT(data: actData)
+        let (spr, act) = try await ClientResourceManager.default.headSpriteFile(sex: .male, hairID: hairID)
 
         let entity = try await Entity.load(act: act, spr: spr)
         entity.name = "head"

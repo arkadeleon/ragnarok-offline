@@ -41,13 +41,7 @@ struct MapSceneView: View {
             let group = ModelSortGroup()
 
             let groundEntity = try? await Entity.loadGround(gat: gat, gnd: gnd) { textureName in
-                let path = GRF.Path(components: ["data", "texture", textureName])
-                let file = ClientResourceManager.default.grfEntryFile(at: path)
-                guard let data = file?.contents() else {
-                    return nil
-                }
-                let texture = CGImageCreateWithData(data)
-                return texture
+                try? ClientResourceManager.default.image(forTextureNamed: textureName)
             }
 
             if let groundEntity {

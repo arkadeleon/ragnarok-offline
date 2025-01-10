@@ -55,7 +55,6 @@ let package = Package(
                 .product(name: "Lua", package: "swift-lua"),
                 "ROCore",
                 "ROFileFormats",
-                "ROFileSystem",
                 "ROGenerated",
                 "ROLocalizations",
             ]),

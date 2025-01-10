@@ -140,17 +140,8 @@ final class GameSession {
             self.phase = .mapLoading
 
             Task {
-                guard let gatFile = await ClientResourceManager.default.gatFile(forMapName: mapName),
-                      let gatData = gatFile.contents(),
-                      let gat = try? GAT(data: gatData) else {
-                    return
-                }
-
-                guard let gndFile = await ClientResourceManager.default.gndFile(forMapName: mapName),
-                      let gndData = gndFile.contents(),
-                      let gnd = try? GND(data: gndData) else {
-                    return
-                }
+                let gat = try await ClientResourceManager.default.gatFile(forMapName: mapName)
+                let gnd = try await ClientResourceManager.default.gndFile(forMapName: mapName)
 
                 self.phase = .map(mapName, gat, gnd, event.position)
             }
