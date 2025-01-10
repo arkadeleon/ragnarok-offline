@@ -19,7 +19,7 @@ enum GamePhase {
     case charSelect(_ chars: [CharInfo])
     case charMake(_ slot: UInt8)
     case mapLoading
-    case map(gat: GAT, gnd: GND, _ position: SIMD2<Int16>)
+    case map(_ mapName: String, _ gat: GAT, _ gnd: GND, _ position: SIMD2<Int16>)
 }
 
 @Observable
@@ -152,7 +152,7 @@ final class GameSession {
                     return
                 }
 
-                self.phase = .map(gat: gat, gnd: gnd, event.position)
+                self.phase = .map(mapName, gat, gnd, event.position)
             }
         }
         .store(in: &subscriptions)

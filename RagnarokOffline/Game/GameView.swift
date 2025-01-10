@@ -23,9 +23,9 @@ struct GameView: View {
                 CharMakeView(slot: slot)
             case .mapLoading:
                 ProgressView()
-            case .map(let gat, let gnd, let position):
+            case .map(let mapName, let gat, let gnd, let position):
                 if #available(iOS 18.0, macOS 15.0, visionOS 2.0, *) {
-                    MapView(mapSession: gameSession.mapSession!, gat: gat, gnd: gnd, position: position)
+                    MapView(mapSession: gameSession.mapSession!, mapName: mapName, gat: gat, gnd: gnd, position: position)
                 } else {
                     EmptyView()
                 }

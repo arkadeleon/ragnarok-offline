@@ -10,6 +10,7 @@ import ROClientResources
 import ROCore
 import RODatabase
 import ROFileFormats
+import ROLocalizations
 import RONetwork
 import RORenderers
 import Spatial
@@ -18,6 +19,7 @@ import SwiftUI
 @available(iOS 18.0, macOS 15.0, visionOS 2.0, *)
 struct MapSceneView: View {
     var mapSession: MapSession
+    var mapName: String
     var gat: GAT
     var gnd: GND
     var position: SIMD2<Int16>
@@ -108,6 +110,14 @@ struct MapSceneView: View {
             camera.transform = cameraTransform(for: player.position)
             root.addChild(camera)
 
+            if let bgm = MapInfoTable.shared.mapBGM(forMapName: mapName) {
+                let url = ClientResourceManager.default.baseURL.appending(path: "BGM/\(bgm)")
+                let configuration = AudioFileResource.Configuration(shouldLoop: true)
+                if let audioResource = try? await AudioFileResource(contentsOf: url, withName: bgm, configuration: configuration) {
+                    root.playAudio(audioResource)
+                }
+            }
+
             mapSession.notifyMapLoaded()
         } update: { content in
             #if os(iOS) || os(macOS)
@@ -141,6 +151,9 @@ struct MapSceneView: View {
                 }
         )
         #endif
+        .onDisappear {
+            root.stopAllAudio()
+        }
         .onReceive(mapSession.publisher(for: PlayerEvents.Moved.self)) { event in
             let position = position3D(for: event.toPosition)
             player.move(to: Transform(translation: position), relativeTo: nil, duration: 0.2)
