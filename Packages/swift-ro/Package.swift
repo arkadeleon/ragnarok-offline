@@ -28,14 +28,14 @@ let package = Package(
             name: "ROFileSystem",
             targets: ["ROFileSystem"]),
         .library(
-            name: "ROLocalizations",
-            targets: ["ROLocalizations"]),
-        .library(
             name: "RONetwork",
             targets: ["RONetwork"]),
         .library(
             name: "RORenderers",
             targets: ["RORenderers"]),
+        .library(
+            name: "ROResources",
+            targets: ["ROResources"]),
         .library(
             name: "ROServer",
             targets: ["ROServer"]),
@@ -56,7 +56,7 @@ let package = Package(
                 "ROCore",
                 "ROFileFormats",
                 "ROGenerated",
-                "ROLocalizations",
+                "ROResources",
             ]),
         .target(
             name: "ROCore"),
@@ -111,25 +111,11 @@ let package = Package(
                 "ROCore",
             ]),
         .target(
-            name: "ROLocalizations",
-            dependencies: [
-                .product(name: "Lua", package: "swift-lua"),
-                "ROCore",
-            ],
-            resources: [
-                .process("Resources"),
-            ]),
-        .testTarget(
-            name: "ROLocalizationsTests",
-            dependencies: [
-                "ROLocalizations",
-            ]),
-        .target(
             name: "RONetwork",
             dependencies: [
                 "ROCore",
                 "ROGenerated",
-                "ROLocalizations",
+                "ROResources",
             ],
             swiftSettings: [
                 .swiftLanguageMode(.v5),
@@ -155,6 +141,20 @@ let package = Package(
                 "ROCore",
                 "ROFileFormats",
                 "ROShaders",
+            ]),
+        .target(
+            name: "ROResources",
+            dependencies: [
+                .product(name: "Lua", package: "swift-lua"),
+                "ROCore",
+            ],
+            resources: [
+                .process("Resources"),
+            ]),
+        .testTarget(
+            name: "ROResourcesTests",
+            dependencies: [
+                "ROResources",
             ]),
         .target(
             name: "ROServer",

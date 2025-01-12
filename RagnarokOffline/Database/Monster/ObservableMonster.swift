@@ -10,7 +10,7 @@ import Foundation
 import Observation
 import ROClientResources
 import RODatabase
-import ROLocalizations
+import ROResources
 
 @Observable
 @dynamicMemberLookup

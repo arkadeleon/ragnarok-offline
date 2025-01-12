@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import ROLocalizations
+@testable import ROResources
 
 final class MonsterInfoTableTests: XCTestCase {
     func testChineseSimplified() async throws {

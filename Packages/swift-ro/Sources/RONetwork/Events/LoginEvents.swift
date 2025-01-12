@@ -6,7 +6,7 @@
 //
 
 import ROGenerated
-import ROLocalizations
+import ROResources
 
 public enum LoginEvents {
     public struct Accepted: Event {

@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import ROLocalizations
+@testable import ROResources
 
 final class MapInfoTableTests: XCTestCase {
     func testChineseSimplified() async throws {

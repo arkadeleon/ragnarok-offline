@@ -10,9 +10,9 @@ import ROClientResources
 import ROCore
 import RODatabase
 import ROFileFormats
-import ROLocalizations
 import RONetwork
 import RORenderers
+import ROResources
 import Spatial
 import SwiftUI
 

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/9/9.
 //
 
-import ROLocalizations
+import ROResources
 import SwiftUI
 
 struct MessageBoxView: View {

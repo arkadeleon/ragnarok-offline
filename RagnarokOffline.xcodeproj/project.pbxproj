@@ -105,7 +105,6 @@
 		35B575FE2D1BB34200FC12BB /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B575FD2D1BB33B00FC12BB /* CharacterView.swift */; };
 		35B695EA2A305EF6006F1904 /* MetalCubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695E92A305EF6006F1904 /* MetalCubeView.swift */; };
 		35B695EC2A307164006F1904 /* MetalCubeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695EB2A307164006F1904 /* MetalCubeScene.swift */; };
-		35BDF7022C9B080000CCAB8F /* ROLocalizations in Frameworks */ = {isa = PBXBuildFile; productRef = 35BDF7012C9B080000CCAB8F /* ROLocalizations */; };
 		35BDF7042C9B0AED00CCAB8F /* ClientSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF7032C9B0AED00CCAB8F /* ClientSettings.swift */; };
 		35BDF7062C9B0AF200CCAB8F /* SettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF7052C9B0AF200CCAB8F /* SettingsItem.swift */; };
 		35BDF7082C9B16E100CCAB8F /* ROClientResources in Frameworks */ = {isa = PBXBuildFile; productRef = 35BDF7072C9B16E100CCAB8F /* ROClientResources */; };
@@ -124,6 +123,7 @@
 		35BE55642BDAB834003715C3 /* FilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55632BDAB834003715C3 /* FilePreviewView.swift */; };
 		35BF5BE22C65B5D8006A3487 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BF5BE12C65B5D8006A3487 /* SidebarView.swift */; };
 		35BF5BE42C65B9FD006A3487 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BF5BE32C65B9FD006A3487 /* DetailView.swift */; };
+		35C8AF082D31781C0033B3DB /* ROResources in Frameworks */ = {isa = PBXBuildFile; productRef = 35C8AF072D31781C0033B3DB /* ROResources */; };
 		35C8F8F02D1025D0005603CD /* NPCDialogOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C8F8EF2D1025CA005603CD /* NPCDialogOverlayView.swift */; };
 		35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */; };
 		35E27A832BC96AC800C11076 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A822BC96AC800C11076 /* Message.swift */; };
@@ -311,13 +311,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */,
-				35BDF7022C9B080000CCAB8F /* ROLocalizations in Frameworks */,
 				358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */,
 				358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */,
 				358D4C692BC7707400FAF45D /* ROFileSystem in Frameworks */,
 				3590B23E2CE5EA9F007A0AED /* ROServer in Frameworks */,
 				35BDF7082C9B16E100CCAB8F /* ROClientResources in Frameworks */,
 				353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */,
+				35C8AF082D31781C0033B3DB /* ROResources in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -709,9 +709,9 @@
 				358D4C6C2BC7707400FAF45D /* RONetwork */,
 				358D4C6E2BC7707400FAF45D /* RORenderers */,
 				353AFBDB2BC779BE00F613A8 /* RODatabase */,
-				35BDF7012C9B080000CCAB8F /* ROLocalizations */,
 				35BDF7072C9B16E100CCAB8F /* ROClientResources */,
 				3590B23D2CE5EA9F007A0AED /* ROServer */,
+				35C8AF072D31781C0033B3DB /* ROResources */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -1169,13 +1169,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ROServer;
 		};
-		35BDF7012C9B080000CCAB8F /* ROLocalizations */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ROLocalizations;
-		};
 		35BDF7072C9B16E100CCAB8F /* ROClientResources */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ROClientResources;
+		};
+		35C8AF072D31781C0033B3DB /* ROResources */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ROResources;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

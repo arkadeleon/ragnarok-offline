@@ -6,7 +6,7 @@
 //
 
 import ROGenerated
-import ROLocalizations
+import ROResources
 
 public enum AuthenticationEvents {
     public struct Banned: Event {

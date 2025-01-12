@@ -10,7 +10,7 @@ import Foundation
 import ROCore
 import ROFileFormats
 import ROGenerated
-import ROLocalizations
+import ROResources
 
 enum ClientResourceError: Error {
     case resourceNotFound

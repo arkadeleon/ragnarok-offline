@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import ROLocalizations
+@testable import ROResources
 
 final class MessageStringTableTests: XCTestCase {
     func testChineseSimplified() async throws {
