@@ -60,13 +60,21 @@
 		3577426A2D005FAA00F2CE8D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3577425A2D005FAA00F2CE8D /* MapView.swift */; };
 		3577426B2D005FAA00F2CE8D /* GameImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3577425E2D005FAA00F2CE8D /* GameImage.swift */; };
 		3577426C2D005FAA00F2CE8D /* GameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3577425D2D005FAA00F2CE8D /* GameButton.swift */; };
+		3579609F2D3564B0003D9CEF /* File+UTType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357960962D3564B0003D9CEF /* File+UTType.swift */; };
+		357960A02D3564B0003D9CEF /* FileThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3579609A2D3564B0003D9CEF /* FileThumbnail.swift */; };
+		357960A12D3564B0003D9CEF /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3579609D2D3564B0003D9CEF /* FileType.swift */; };
+		357960A22D3564B0003D9CEF /* FilePasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357960982D3564B0003D9CEF /* FilePasteboard.swift */; };
+		357960A32D3564B0003D9CEF /* FileThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3579609B2D3564B0003D9CEF /* FileThumbnailGenerator.swift */; };
+		357960A42D3564B0003D9CEF /* FileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357960972D3564B0003D9CEF /* FileInfo.swift */; };
+		357960A52D3564B0003D9CEF /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357960992D3564B0003D9CEF /* FileSystem.swift */; };
+		357960A62D3564B0003D9CEF /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357960952D3564B0003D9CEF /* File.swift */; };
+		357960A72D3564B0003D9CEF /* FileThumbnailRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3579609C2D3564B0003D9CEF /* FileThumbnailRequest.swift */; };
 		357EA4E32CC14A440081370F /* browser.js in Resources */ = {isa = PBXBuildFile; fileRef = 357EA4E12CC14A440081370F /* browser.js */; };
 		357F96BA2C4AA48400B3231B /* ImageGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357F96B92C4AA48400B3231B /* ImageGrid.swift */; };
 		3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC52B8C830D00E746D7 /* SettingsView.swift */; };
 		3582FFCA2B8DB9FE00E746D7 /* FilePreviewTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC92B8DB9FE00E746D7 /* FilePreviewTabView.swift */; };
 		3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */; };
 		358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C662BC7707400FAF45D /* ROFileFormats */; };
-		358D4C692BC7707400FAF45D /* ROFileSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C682BC7707400FAF45D /* ROFileSystem */; };
 		358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6C2BC7707400FAF45D /* RONetwork */; };
 		358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6E2BC7707400FAF45D /* RORenderers */; };
 		3590B23E2CE5EA9F007A0AED /* ROServer in Frameworks */ = {isa = PBXBuildFile; productRef = 3590B23D2CE5EA9F007A0AED /* ROServer */; };
@@ -219,6 +227,15 @@
 		3577425E2D005FAA00F2CE8D /* GameImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameImage.swift; sourceTree = "<group>"; };
 		357742602D005FAA00F2CE8D /* GameSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSession.swift; sourceTree = "<group>"; };
 		357742612D005FAA00F2CE8D /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		357960952D3564B0003D9CEF /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		357960962D3564B0003D9CEF /* File+UTType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+UTType.swift"; sourceTree = "<group>"; };
+		357960972D3564B0003D9CEF /* FileInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileInfo.swift; sourceTree = "<group>"; };
+		357960982D3564B0003D9CEF /* FilePasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePasteboard.swift; sourceTree = "<group>"; };
+		357960992D3564B0003D9CEF /* FileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
+		3579609A2D3564B0003D9CEF /* FileThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnail.swift; sourceTree = "<group>"; };
+		3579609B2D3564B0003D9CEF /* FileThumbnailGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnailGenerator.swift; sourceTree = "<group>"; };
+		3579609C2D3564B0003D9CEF /* FileThumbnailRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnailRequest.swift; sourceTree = "<group>"; };
+		3579609D2D3564B0003D9CEF /* FileType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileType.swift; sourceTree = "<group>"; };
 		357EA4E12CC14A440081370F /* browser.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = browser.js; sourceTree = "<group>"; };
 		357F96B92C4AA48400B3231B /* ImageGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGrid.swift; sourceTree = "<group>"; };
 		3582FFC52B8C830D00E746D7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -313,7 +330,6 @@
 				358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */,
 				358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */,
 				358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */,
-				358D4C692BC7707400FAF45D /* ROFileSystem in Frameworks */,
 				3590B23E2CE5EA9F007A0AED /* ROServer in Frameworks */,
 				35BDF7082C9B16E100CCAB8F /* ROClientResources in Frameworks */,
 				353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */,
@@ -493,6 +509,36 @@
 			path = Game;
 			sourceTree = "<group>";
 		};
+		3579609E2D3564B0003D9CEF /* FileSystem */ = {
+			isa = PBXGroup;
+			children = (
+				357960952D3564B0003D9CEF /* File.swift */,
+				357960962D3564B0003D9CEF /* File+UTType.swift */,
+				357960972D3564B0003D9CEF /* FileInfo.swift */,
+				357960982D3564B0003D9CEF /* FilePasteboard.swift */,
+				357960992D3564B0003D9CEF /* FileSystem.swift */,
+				3579609A2D3564B0003D9CEF /* FileThumbnail.swift */,
+				3579609B2D3564B0003D9CEF /* FileThumbnailGenerator.swift */,
+				3579609C2D3564B0003D9CEF /* FileThumbnailRequest.swift */,
+				3579609D2D3564B0003D9CEF /* FileType.swift */,
+			);
+			path = FileSystem;
+			sourceTree = "<group>";
+		};
+		357960A82D356860003D9CEF /* FileGrid */ = {
+			isa = PBXGroup;
+			children = (
+				35B3B99A2A08C01600B4540B /* FilesView.swift */,
+				3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */,
+				3599BD562C3FB5020010DBE7 /* FileThumbnailView.swift */,
+				355BC1912B9056E5002F0586 /* FileContextMenu.swift */,
+				351426C32C11BF9600B076BE /* FileReferencesView.swift */,
+				3506D11B2C00526A00903A47 /* ObservableFile.swift */,
+				3599BD492C3F90250010DBE7 /* ObservableFile+Preview.swift */,
+			);
+			path = FileGrid;
+			sourceTree = "<group>";
+		};
 		357EA4E22CC14A440081370F /* json-viewer */ = {
 			isa = PBXGroup;
 			children = (
@@ -564,8 +610,6 @@
 				35BF5BE32C65B9FD006A3487 /* DetailView.swift */,
 				355BC18A2B8F25A6002F0586 /* Core */,
 				35B3B9892A08C01600B4540B /* Files */,
-				353098412B161C3800F32B62 /* FilePreview */,
-				35E67C6D2CBF6C1F006E42A3 /* FileJSONViewer */,
 				35F50CCA2BB4614100B36455 /* Messages */,
 				357742622D005FAA00F2CE8D /* Game */,
 				35B33BA32BF465D500EF28F5 /* Cube */,
@@ -594,13 +638,10 @@
 		35B3B9892A08C01600B4540B /* Files */ = {
 			isa = PBXGroup;
 			children = (
-				35B3B99A2A08C01600B4540B /* FilesView.swift */,
-				3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */,
-				3599BD562C3FB5020010DBE7 /* FileThumbnailView.swift */,
-				355BC1912B9056E5002F0586 /* FileContextMenu.swift */,
-				351426C32C11BF9600B076BE /* FileReferencesView.swift */,
-				3506D11B2C00526A00903A47 /* ObservableFile.swift */,
-				3599BD492C3F90250010DBE7 /* ObservableFile+Preview.swift */,
+				3579609E2D3564B0003D9CEF /* FileSystem */,
+				357960A82D356860003D9CEF /* FileGrid */,
+				353098412B161C3800F32B62 /* FilePreview */,
+				35E67C6D2CBF6C1F006E42A3 /* FileJSONViewer */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -705,7 +746,6 @@
 			name = RagnarokOffline;
 			packageProductDependencies = (
 				358D4C662BC7707400FAF45D /* ROFileFormats */,
-				358D4C682BC7707400FAF45D /* ROFileSystem */,
 				358D4C6C2BC7707400FAF45D /* RONetwork */,
 				358D4C6E2BC7707400FAF45D /* RORenderers */,
 				353AFBDB2BC779BE00F613A8 /* RODatabase */,
@@ -787,6 +827,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				35B695EA2A305EF6006F1904 /* MetalCubeView.swift in Sources */,
+				3579609F2D3564B0003D9CEF /* File+UTType.swift in Sources */,
+				357960A02D3564B0003D9CEF /* FileThumbnail.swift in Sources */,
+				357960A12D3564B0003D9CEF /* FileType.swift in Sources */,
+				357960A22D3564B0003D9CEF /* FilePasteboard.swift in Sources */,
+				357960A32D3564B0003D9CEF /* FileThumbnailGenerator.swift in Sources */,
+				357960A42D3564B0003D9CEF /* FileInfo.swift in Sources */,
+				357960A52D3564B0003D9CEF /* FileSystem.swift in Sources */,
+				357960A62D3564B0003D9CEF /* File.swift in Sources */,
+				357960A72D3564B0003D9CEF /* FileThumbnailRequest.swift in Sources */,
 				354668C72CA9344600CE2D11 /* CommandMessage.swift in Sources */,
 				3514BF5B2B454A040065ED89 /* SkillCell.swift in Sources */,
 				35239DFD2BBEF1C80039F7D5 /* SkillProvider.swift in Sources */,
@@ -1152,10 +1201,6 @@
 		358D4C662BC7707400FAF45D /* ROFileFormats */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ROFileFormats;
-		};
-		358D4C682BC7707400FAF45D /* ROFileSystem */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ROFileSystem;
 		};
 		358D4C6C2BC7707400FAF45D /* RONetwork */ = {
 			isa = XCSwiftPackageProductDependency;

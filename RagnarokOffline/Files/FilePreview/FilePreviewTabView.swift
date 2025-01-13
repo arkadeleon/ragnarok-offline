@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import ROFileSystem
 
 struct FilePreviewTabView: View {
     var files: [ObservableFile]

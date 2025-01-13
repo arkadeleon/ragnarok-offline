@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2024/7/11.
 //
 
-import ROFileSystem
 import SwiftUI
 
 struct FileThumbnailView: View {

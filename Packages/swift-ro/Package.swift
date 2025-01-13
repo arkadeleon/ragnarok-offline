@@ -25,9 +25,6 @@ let package = Package(
             name: "ROFileFormats",
             targets: ["ROFileFormats"]),
         .library(
-            name: "ROFileSystem",
-            targets: ["ROFileSystem"]),
-        .library(
             name: "RONetwork",
             targets: ["RONetwork"]),
         .library(
@@ -95,15 +92,6 @@ let package = Package(
                 .copy("Resources/data"),
                 .copy("Resources/test.grf"),
                 .copy("Resources/cursors.act"),
-            ]),
-        .target(
-            name: "ROFileSystem",
-            dependencies: [
-                "ROCore",
-                "ROFileFormats",
-            ],
-            swiftSettings: [
-                .swiftLanguageMode(.v5),
             ]),
         .target(
             name: "ROGenerated",

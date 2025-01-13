@@ -9,7 +9,6 @@ import CoreTransferable
 import Foundation
 import Observation
 import ROFileFormats
-import ROFileSystem
 
 @Observable 
 class ObservableFile {
