@@ -1719,6 +1719,7 @@
 			<kviuli_2>	Æ÷ÀÚ·¦ Á´ ´Ñ·®¿í ¿¡Áö°ä!	</kviuli_2>
 			<kviuli_3>	ÇÏ ÇÏ ÇÏ ÇÏ !!	</kviuli_3>
 			<kviuli_3>	´çÀå»Ô ¿¼¾×»Â ÃÖ¿í°¶°ä!	</kviuli_3>
+			<kviuli_h>	²µÆä³È ÆÛÆ÷ ±øÀ²	</kviuli_h>
 		</hl_ufoo>
 
 	</hkliv>
@@ -1741,6 +1742,7 @@
 			<kviuli_2>	·öÀÌ ¾ÙÁú¾ÙÁúÇØ! ÆÄ·£·£~	</kviuli_2>
 			<kviuli_3>	°ÍÇÏÇÏ! ¶æ¾Ý Àç¶ÌÀÖ±ú±î!	</kviuli_3>
 			<kviuli_3>	ÇÏÇÏÇÏÇÏ! ÀÚ¼× °ô¾â»Â¾···!	</kviuli_3>
+			<kviuli_h>	²µÆä³È ÆÛÆ÷ ±øÀ²	</kviuli_h>
 		</sfmtib>
 
 		<yrg_sfmtib>
@@ -1758,6 +1760,7 @@
 			<kviuli_2>	·öÀÌ ¾ÙÁú¾ÙÁúÇØ! ÆÄ·£·£~	</kviuli_2>
 			<kviuli_3>	°ÍÇÏÇÏ! ¶æ¾Ý Àç¶ÌÀÖ±ú±î!	</kviuli_3>
 			<kviuli_3>	ÇÏÇÏÇÏÇÏ! ÀÚ¼× °ô¾â»Â¾···!	</kviuli_3>
+			<kviuli_h>	²µÆä³È ÆÛÆ÷ ±øÀ²	</kviuli_h>
 		</yrg_sfmtib>
 
 		<mlgrmt>
@@ -1775,6 +1778,7 @@
 			<kviuli_2>	·öÀÌ ¾ÙÁú¾ÙÁúÇØ! ÆÄ·£·£~	</kviuli_2>
 			<kviuli_3>	°ÍÇÏÇÏ! ¶æ¾Ý Àç¶ÌÀÖ±ú±î!	</kviuli_3>
 			<kviuli_3>	ÇÏÇÏÇÏÇÏ! ÀÚ¼× °ô¾â»Â¾···!	</kviuli_3>
+			<kviuli_h>	²µÆä³È ÆÛÆ÷ ±øÀ²	</kviuli_h>
 		</mlgrmt>
 
 		<ufoo>
@@ -1791,6 +1795,7 @@
 			<kviuli_2>	·öÀÌ ¾ÙÁú¾ÙÁúÇØ! ÆÄ·£·£~	</kviuli_2>
 			<kviuli_3>	°ÍÇÏÇÏ! ¶æ¾Ý Àç¶ÌÀÖ±ú±î!	</kviuli_3>
 			<kviuli_3>	ÇÏÇÏÇÏÇÏ! ÀÚ¼× °ô¾â»Â¾···!	</kviuli_3>
+			<kviuli_h>	²µÆä³È ÆÛÆ÷ ±øÀ²	</kviuli_h>
 		</ufoo>
 
 		<hl_ufoo>
@@ -1808,6 +1813,7 @@
 			<kviuli_2>	·öÀÌ ¾ÙÁú¾ÙÁúÇØ! ÆÄ·£·£~	</kviuli_2>
 			<kviuli_3>	°ÍÇÏÇÏ! ¶æ¾Ý Àç¶ÌÀÖ±ú±î!	</kviuli_3>
 			<kviuli_3>	ÇÏÇÏÇÏÇÏ! ÀÚ¼× °ô¾â»Â¾···!	</kviuli_3>
+			<kviuli_h>	²µÆä³È ÆÛÆ÷ ±øÀ²	</kviuli_h>
 		</hl_ufoo>
 
 	</klrhlm_hkliv>
@@ -3362,7 +3368,7 @@
 		</ufoo>
 
 		<hl_ufoo>
-			<uvvwrmt>	#MZNV?	</uvvwrmt>
+			<uvvwrmt>	»õ ÀÌ´óÀµ ±ÈºÅ!!	</uvvwrmt>
 			<sfmgrmt>	Fmpmldm Hproo!!!      ±î¹ó...¼­ °Ö ±È¼ª¿¡Áö?¤Ð_¤Ð	</sfmgrmt>
 			<wzmtvi>	Á¹²ÉÇØ...'ÀÚ··²ÉÀµ ¶ÙÆ÷ ÃÖ¿íÀÇ ÀûÀÌ»Ù'¹ó»Â ¿Ý±ðÀÌ ÀÖ±î...±ÈÁ×À´½¨¹õ ´ý¿¢Àµ ÇÏÁö·¹;	</wzmtvi>
 			<wvzw>	'C¹ó ²ë Åõ·í ºå¸¡¿ï'ÀÌ¹óºº ··¼­¿Å±ß? ¤Ð_¤Ð	</wvzw>
@@ -4191,7 +4197,7 @@
 			<uvvwrmt> ¶è¿íÆÄ³­ ÀýÆíÀÌ ºÉ´¸ Çß±î°ä!  </uvvwrmt>
 			<uvvwrmt> Á´ »õ »Ê±úÀ··é ´ì ¹³·ÔÀ·¸Á Çß±î°ä!  </uvvwrmt>
 			<sfmgrmt> À÷ Á×ÀÌ·é ¶ä ¼ª°Í°ä?  </sfmgrmt>
-			<sfmgrmt> ¼×¼ðÀÇ Çãµê»Â ¶«²³´öÀÌ†m?!  </sfmgrmt>
+			<sfmgrmt> ¼×¼ðÀÇ Çãµê»Â ¶«²³´öÀÌ??!  </sfmgrmt>
 			<sfmgrmt> ¶è¿¡ ¿íÆÄ³­ À÷¿¡ ÃÊ¸Ï´öÀ·¸Î µ·°©°ä. </sfmgrmt>
 			<wzmtvi>  ÀúÇÑÅ× ±¦ ±ÈÁà³­ ¾×¸¾¿Å°¡°ä.  </wzmtvi>
 			<wzmtvi>  ·¸»ë¾â¿¡ ²Ã¸ç¹¾´öÀÌ¼×°ä.  </wzmtvi>
@@ -4275,7 +4281,7 @@
 			<uvvwrmt> ¼´ ³Ó°¡ ÃÊ¸ÏÇãµê¿¡ ÀÌ··Å­ÀÌ¼ª Ã¡±î°ä... </uvvwrmt>
 			<sfmgrmt> Àúºº ³Ò²ÃÀû°£ Äá¿í¶¿Á´ Èê·®¿í »Ù¼æ»Ù¾·°ä! </sfmgrmt>
 			<sfmgrmt> Å©À¶;; ÀÌ ÀÌ¿ÍÀµ.. ¿­±à±à Áß¿­±à±à....!!  </sfmgrmt>
-			<sfmgrmt> ¼×¼ðÀÇ Çãµê»Â ¶«²³´öÀÌ†m! </sfmgrmt>
+			<sfmgrmt> ¼×¼ðÀÇ Çãµê»Â ¶«²³´öÀÌ?! </sfmgrmt>
 			<sfmgrmt> ¼ªÀÇ ¹¾ÆÈ·Å·¦ ¶Þ±Æ¹ù! </sfmgrmt>
 			<wzmtvi>  ±¦Àµ ·Ô±îºº ÇÇ¿¡ ±ÈÂ÷°ä! ¶¿±àÀ´ ºå³³°ä~ </wzmtvi>
 			<wzmtvi>  ÁÖÀÎ»Ô! Àú·¦ ºå²Ã¿í Èû¼´³³°ä! </wzmtvi>
@@ -5112,7 +5118,7 @@
 			<ovevofk> ÀÚ. ¾×º°±È ·ð±Æ¼õÀµ ´ç¿úÁ´ ¶ñ±îµÁ. </ovevofk>
 			<ovevofk> ÇÑ³û º¶·®¿í ¶ä·Ô¿í ÇÏÀÚ¾·! </ovevofk>
 			<kviuli_1> °ï¹ó°ï¹ó~ °ï¹ó°ï¹ó~  </kviuli_1>
-			<kviuli_1> À·›CÀ·›C~ À·›C~À·›C~  </kviuli_1>
+			<kviuli_1> À·?À·?~ À·?~À·?~  </kviuli_1>
 			<kviuli_2> µù¾Ûµù¾Û~~~ ¸¶ºå²ã!!  </kviuli_2>
 			<kviuli_2> ¼ªÀÇ ÀÌ Åõ·£ ±Ó ¸¶·£ º°ÀÛ ±î¹§? ´ç²Ç ¼´ ½ÞÀµ ¶ß¸¶·®¼ë°»±î~ </kviuli_2>
 			<kviuli_2> 5¶ø°¡³­ ´Ü·®°¡¸Î °¬¿á, ¾× ÈûÀ·¸Î ÆÄ³³·¦ ÇÏ»Â ¼´ ´ß¸ç°§ ±î¹§?			</kviuli_2>
@@ -5139,7 +5145,7 @@
 			<ovevofk> ÀÚ. ¾×º°±È ·ð±Æ¼õÀµ ´ç¿úÁ´ ¶ñ±îµÁ. </ovevofk>
 			<ovevofk> ÇÑ³û º¶·®¿í ¶ä·Ô¿í ÇÏÀÚ¾·! </ovevofk>
 			<kviuli_1> °ï¹ó°ï¹ó~ °ï¹ó°ï¹ó~  </kviuli_1>
-			<kviuli_1> À·›CÀ·›C~ À·›C~À·›C~  </kviuli_1>
+			<kviuli_1> À·?À·?~ À·?~À·?~  </kviuli_1>
 			<kviuli_2> µù¾Ûµù¾Û~~~ ¸¶ºå²ã!!  </kviuli_2>
 			<kviuli_2> ¼ªÀÇ ÀÌ Åõ·£ ±Ó ¸¶·£ º°ÀÛ ±î¹§? ´ç²Ç ¼´ ½ÞÀµ ¶ß¸¶·®¼ë°»±î~ </kviuli_2>
 			<kviuli_2> 5¶ø°¡³­ ´Ü·®°¡¸Î °¬¿á, ¾× ÈûÀ·¸Î ÆÄ³³·¦ ÇÏ»Â ¼´ ´ß¸ç°§ ±î¹§?			</kviuli_2>
@@ -5166,7 +5172,7 @@
 			<ovevofk> ÀÌ¸¾ ¹§±ß ·´¸Î ¶Ì¸¡·¦ ÇâÇØ ¸±±÷ÀÌ»å!! </ovevofk>
 			<ovevofk> °ì·®±Õ¾æÀ´ »©¿¡ ·¸À´²î¼Ä! °ì·¿ ¶«ÀûÀÇ ³Ö¸ÎµÎ»ë»Ù! </ovevofk>
 			<kviuli_1> °ï¹ó°ï¹ó~ °ï¹ó°ï¹ó~  </kviuli_1>
-			<kviuli_1> À·›CÀ·›C~ À·›C~À·›C~  </kviuli_1>
+			<kviuli_1> À·?À·?~ À·?~À·?~  </kviuli_1>
 			<kviuli_2> µù¾Ûµù¾Û~~~ ¸¶ºå²ã!!  </kviuli_2>
 			<kviuli_2> ¼ªÀÇ ÀÌ Åõ·£ ±Ó ¸¶·£ º°ÀÛ ±î¹§? ´ç²Ç ¼´ ½ÞÀµ ¶ß¸¶·®¼ë°»±î~ </kviuli_2>
 			<kviuli_2> 5¶ø°¡³­ ´Ü·®°¡¸Î °¬¿á, ¾× ÈûÀ·¸Î ÆÄ³³·¦ ÇÏ»Â ¼´ ´ß¸ç°§ ±î¹§?			</kviuli_2>
@@ -5194,7 +5200,7 @@
 			<xlmmvxg> ÇÏ¾ä ÀáÀÚ»Â¿Íµ·»Ù±ß ¼ª¹û ¼ë»Â¿Ô ¼»Áö? </xlmmvxg>
 			<xlmmvxg> ±î³­°Í. ·¹Ä§ ¼× ±ê¾â ÇÏ¿í ÀÖ±ú±î. ¼¥¼¥ </xlmmvxg>
 			<kviuli_1> °ï¹ó°ï¹ó~ °ï¹ó°ï¹ó~  </kviuli_1>
-			<kviuli_1> À·›CÀ·›C~ À·›C~À·›C~  </kviuli_1>
+			<kviuli_1> À·?À·?~ À·?~À·?~  </kviuli_1>
 			<kviuli_2> µù¾Ûµù¾Û~~~ ¸¶ºå²ã!!  </kviuli_2>
 			<kviuli_2> ¼ªÀÇ ÀÌ Åõ·£ ±Ó ¸¶·£ º°ÀÛ ±î¹§? ´ç²Ç ¼´ ½ÞÀµ ¶ß¸¶·®¼ë°»±î~ </kviuli_2>
 			<kviuli_2> 5¶ø°¡³­ ´Ü·®°¡¸Î °¬¿á, ¾× ÈûÀ·¸Î ÆÄ³³·¦ ÇÏ»Â ¼´ ´ß¸ç°§ ±î¹§?			</kviuli_2>
@@ -5223,7 +5229,7 @@
 			<ovevofk> Ãº´ç»Â ¼× º¥ÀÌÆ® ´ó»ë¿¡ ±Æ»Ï¹ó¾·~ Å¾Å¾  </ovevofk>
 			<ovevofk> ¼ªºº ¿æÇèÄ¡Á´ ¼ª»½Áà~ ¿íµí·¿ È÷±î¸Î·¦ ·ñÇ¥¸Î!! </ovevofk>
 			<kviuli_1> °ï¹ó°ï¹ó~ °ï¹ó°ï¹ó~  </kviuli_1>
-			<kviuli_1> À·›CÀ·›C~ À·›C~À·›C~  </kviuli_1>
+			<kviuli_1> À·?À·?~ À·?~À·?~  </kviuli_1>
 			<kviuli_2> µù¾Ûµù¾Û~~~ ¸¶ºå²ã!!  </kviuli_2>
 			<kviuli_2> ¼ªÀÇ ÀÌ Åõ·£ ±Ó ¸¶·£ º°ÀÛ ±î¹§? ´ç²Ç ¼´ ½ÞÀµ ¶ß¸¶·®¼ë°»±î~ </kviuli_2>
 			<kviuli_2> 5¶ø°¡³­ ´Ü·®°¡¸Î °¬¿á, ¾× ÈûÀ·¸Î ÆÄ³³·¦ ÇÏ»Â ¼´ ´ß¸ç°§ ±î¹§?			</kviuli_2>
@@ -5393,8 +5399,8 @@
       <ovevofk> ¸¶µ§±÷ÇßÀ·»Ï ÆÄÆ³·¦ ¶úÀÌÀÚ! ¼­ ¶è¿íÆÄ. </ovevofk>
       <kviuli_1>  °ì¸ª±Æ±Æ±Æ±Æ±Æ!!!  </kviuli_1>
       <kviuli_1>  ²»ÆÛ ºð±Æµ³·¯2»Ù!!!!! </kviuli_1>
-      <kviuli_2>  °ì¸ª±ÆÚ!!!!!! ²ÇÆÐ @.@ </kviuli_2>
-      <kviuli_2>  Å·ÇÏÚ? Æã?!?!?! </kviuli_2>
+      <kviuli_2>  °ì¸ª±Æ?!!!!!! ²ÇÆÐ @.@ </kviuli_2>
+      <kviuli_2>  Å·ÇÏ?? Æã?!?!?! </kviuli_2>
 		</sfmtib>
 
 		<yrg_sfmtib>
@@ -5418,8 +5424,8 @@
       <ovevofk> ¸¶µ§±÷ÇßÀ·»Ï ÆÄÆ³·¦ ¶úÀÌÀÚ! ¼­ ¶è¿íÆÄ. </ovevofk>
       <kviuli_1>  °ì¸ª±Æ±Æ±Æ±Æ±Æ!!!  </kviuli_1>
       <kviuli_1>  ²»ÆÛ ºð±Æµ³·¯2»Ù!!!!! </kviuli_1>
-      <kviuli_2>  °ì¸ª±ÆÚ!!!!!! ²ÇÆÐ @.@ </kviuli_2>
-      <kviuli_2>  Å·ÇÏÚ? Æã?!?!?! </kviuli_2>
+      <kviuli_2>  °ì¸ª±Æ?!!!!!! ²ÇÆÐ @.@ </kviuli_2>
+      <kviuli_2>  Å·ÇÏ?? Æã?!?!?! </kviuli_2>
 		</yrg_sfmtib>
 
 		<mlgrmt>
@@ -5441,8 +5447,8 @@
       <ovevofk> ÃàÇÏÇØ~ Ofp°¡ °ÃÀÎÇÒ¿ÅÁö? °ª²Ã Çà°îÀÌ Á¦ÀÏ ÁÁ»Ù»Ï¾ñ! </ovevofk>
       <kviuli_1>  °ì¸ª±Æ±Æ±Æ±Æ±Æ!!!  </kviuli_1>
       <kviuli_1>  ²»ÆÛ ºð±Æµ³·¯2»Ù!!!!! </kviuli_1>
-      <kviuli_2>  °ì¸ª±ÆÚ!!!!!! ²ÇÆÐ @.@ </kviuli_2>
-      <kviuli_2>  Å·ÇÏÚ? Æã?!?!?! </kviuli_2>
+      <kviuli_2>  °ì¸ª±Æ?!!!!!! ²ÇÆÐ @.@ </kviuli_2>
+      <kviuli_2>  Å·ÇÏ?? Æã?!?!?! </kviuli_2>
 		</mlgrmt>
 
 		<ufoo>
@@ -5468,14 +5474,14 @@
       <ovevofk> ¿æ´ç¸Î³³ ¿æ´ç¸Î³³~ ...¿ÅÁþ·´ÀÌÁö··  </ovevofk>
       <kviuli_1>  °ì¸ª±Æ±Æ±Æ±Æ±Æ!!!  </kviuli_1>
       <kviuli_1>  ²»ÆÛ ºð±Æµ³·¯2»Ù!!!!! </kviuli_1>
-      <kviuli_2>  °ì¸ª±ÆÚ!!!!!! ²ÇÆÐ @.@ </kviuli_2>
-      <kviuli_2>  Å·ÇÏÚ? Æã?!?!?! </kviuli_2>
+      <kviuli_2>  °ì¸ª±Æ?!!!!!! ²ÇÆÐ @.@ </kviuli_2>
+      <kviuli_2>  Å·ÇÏ?? Æã?!?!?! </kviuli_2>
 		</ufoo>
 
 		<hl_ufoo>
 			<uvvwrmt>	ÅÍ...ÅÍ......ÅÍÁú¿Å ¿¿±Æ. °ì°í.. 	</uvvwrmt>
 			<uvvwrmt>	¶èÅÍÁ®³­ Á×Àµ ±Ç·¹½ÃÀ´ µ·¿í²ÍÀµ¿Å±ß? ÀÀ? ¾×¸¾¿Å±ß? 	</uvvwrmt>
-			<uvvwrmt>	....Å·ÇÏÚ! Æã! ÇÏ¿í ÅÍÁ®¶ö·¾Áöºº ·ô¹ó.	</uvvwrmt>
+			<uvvwrmt>	....Å·ÇÏ?! Æã! ÇÏ¿í ÅÍÁ®¶ö·¾Áöºº ·ô¹ó.	</uvvwrmt>
 			<sfmgrmt>	·ö ¿¡»©¾â¿¡ ÈûºéÁ¤ºº¸Î ¶è¿¡ µÎ·£Áö·· ´ç¼ÉÀµ ºº°ÍÁÖÁö!	</sfmgrmt>
 			<sfmgrmt>	±å! ±å! ±å! ¼´ Ã¢ÀÌ ¹ÕÁö ·øÇÏ»Â¿ÍÀµ ±ø»Ù!	</sfmgrmt>
 			<wzmtvi>	¿ÅµÁ. ¼Ê¶« ·Ô±î³­ ·öÀÌ ºÐÇØÁø¿Å¹ó»Ï¾ñ, ¼Êºº ¾×¸·¿í ¼ªºº ¾×¸·¿í... 	</wzmtvi>
@@ -5494,8 +5500,8 @@
 			<ovevofk>	°ì·® ±Ç·¹ºº ¸¶µ§±÷ ÃàÇÏÇØÁÙ ³ö ÀÖ»Âº¥ °Ö Ç×´ó Ãº´ç¿¡ ¼ªÅ·¼ª»Â¿É¾î?	</ovevofk>
       <kviuli_1>  °ì¸ª±Æ±Æ±Æ±Æ±Æ!!!  </kviuli_1>
       <kviuli_1>  ²»ÆÛ ºð±Æµ³·¯2»Ù!!!!! </kviuli_1>
-      <kviuli_2>  °ì¸ª±ÆÚ!!!!!! ²ÇÆÐ @.@ </kviuli_2>
-      <kviuli_2>  Å·ÇÏÚ? Æã?!?!?! </kviuli_2>
+      <kviuli_2>  °ì¸ª±Æ?!!!!!! ²ÇÆÐ @.@ </kviuli_2>
+      <kviuli_2>  Å·ÇÏ?? Æã?!?!?! </kviuli_2>
 		</hl_ufoo>
 	</wrzylorx>
 
@@ -5825,6 +5831,7 @@
 			<kviuli_2> ±î·Ú~ º¶±Æ¿¡¸Å~ </kviuli_2>
 			<kviuli_3> °¤¹óCÆ± Çß±î°ä~ </kviuli_3>
 			<kviuli_3> ¼ªÁ´ µÁ ÁÙ¸¡?(Âô¾ß) </kviuli_3>
+			<kviuli_h>	...	</kviuli_h>
 		</sfmtib>
 
 		<yrg_sfmtib>
@@ -5854,6 +5861,7 @@
 			<kviuli_2> ±î·Ú~ º¶±Æ¿¡¸Å~ </kviuli_2>
 			<kviuli_3> °¤¹óCÆ± Çß±î°ä~ </kviuli_3>
 			<kviuli_3> ¼ªÁ´ µÁ ÁÙ¸¡?(Âô¾ß) </kviuli_3>
+			<kviuli_h>	...	</kviuli_h>
 		</yrg_sfmtib>
 
 		<mlgrmt>
@@ -5883,6 +5891,7 @@
 			<kviuli_2> ±î·Ú~ º¶±Æ¿¡¸Å~ </kviuli_2>
 			<kviuli_3> °¤¹óCÆ± Çß±î°ä~ </kviuli_3>
 			<kviuli_3> ¼ªÁ´ µÁ ÁÙ¸¡?(Âô¾ß) </kviuli_3>
+			<kviuli_h>	... </kviuli_h>
 		</mlgrmt>
 
 		<ufoo>
@@ -5913,6 +5922,7 @@
 			<kviuli_2> ±î·Ú~ º¶±Æ¿¡¸Å~ </kviuli_2>
 			<kviuli_3> °¤¹óCÆ± Çß±î°ä~ </kviuli_3>
 			<kviuli_3> ¼ªÁ´ µÁ ÁÙ¸¡?(Âô¾ß) </kviuli_3>
+			<kviuli_h>	... </kviuli_h>
 		</ufoo>
 
 		<hl_ufoo>
@@ -5943,6 +5953,7 @@
 			<kviuli_2> ±î·Ú~ º¶±Æ¿¡¸Å~ </kviuli_2>
 			<kviuli_3> °¤¹óCÆ± Çß±î°ä~ </kviuli_3>
 			<kviuli_3> ¼ªÁ´ µÁ ÁÙ¸¡?(Âô¾ß) </kviuli_3>
+			<kviuli_h>	... </kviuli_h>
 		</hl_ufoo>
 
 	</HFXXFYFH>
@@ -5977,6 +5988,7 @@
 			<kviuli_2> ¶Ì¸¡ ÁöÇâÇü Æ÷Áî! </kviuli_2>
 			<kviuli_3> µÁ! µ·¹ó¾·! ÀÌ ±Æ·§»Ù°î ·öÀ´! </kviuli_3>
 			<kviuli_3> °ìÀ·À°! </kviuli_3>
+			<kviuli_h>	... </kviuli_h>
 		</sfmtib>
 
 		<yrg_sfmtib>
@@ -6007,6 +6019,7 @@
 			<kviuli_2> ¶Ì¸¡ ÁöÇâÇü Æ÷Áî! </kviuli_2>
 			<kviuli_3> µÁ! µ·¹ó¾·! ÀÌ ±Æ·§»Ù°î ·öÀ´! </kviuli_3>
 			<kviuli_3> °ìÀ·À°! </kviuli_3>
+			<kviuli_h>	... </kviuli_h>
 		</yrg_sfmtib>
 
 		<mlgrmt>
@@ -6036,6 +6049,7 @@
 			<kviuli_2> ¶Ì¸¡ ÁöÇâÇü Æ÷Áî! </kviuli_2>
 			<kviuli_3> µÁ! µ·¹ó¾·! ÀÌ ±Æ·§»Ù°î ·öÀ´! </kviuli_3>
 			<kviuli_3> °ìÀ·À°! </kviuli_3>
+			<kviuli_h>	... </kviuli_h>
 		</mlgrmt>
 
 		<ufoo>
@@ -6066,6 +6080,7 @@
 			<kviuli_2> ¶Ì¸¡ ÁöÇâÇü Æ÷Áî! </kviuli_2>
 			<kviuli_3> µÁ! µ·¹ó¾·! ÀÌ ±Æ·§»Ù°î ·öÀ´! </kviuli_3>
 			<kviuli_3> °ìÀ·À°! </kviuli_3>
+			<kviuli_h>	... </kviuli_h>
 		</ufoo>
 
 		<hl_ufoo>
@@ -6096,6 +6111,7 @@
 			<kviuli_2> ¶Ì¸¡ ÁöÇâÇü Æ÷Áî! </kviuli_2>
 			<kviuli_3> µÁ! µ·¹ó¾·! ÀÌ ±Æ·§»Ù°î ·öÀ´! </kviuli_3>
 			<kviuli_3> °ìÀ·À°! </kviuli_3>
+			<kviuli_h>	... </kviuli_h>
 		</hl_ufoo>
   </RNK>
 
@@ -6562,6 +6578,7 @@
 			<kviuli_2> ÈÞ-....... ¶®ºæ ¿íÇâ ´ý¿¢ÀÌ ¼ª»Â¾µ. </kviuli_2>
 			<kviuli_3> ±îÇã. ¾×¿Ô ±Æ»ÏÁö! </kviuli_3>
 			<kviuli_3> ÈåÀ²....... </kviuli_3>
+			<kviuli_h>	......	</kviuli_h>
 		</sfmtib>
 
 		<yrg_sfmtib>
@@ -6592,6 +6609,7 @@
 			<kviuli_2> ÈÞ-....... ¶®ºæ ¿íÇâ ´ý¿¢ÀÌ ¼ª»Â¾µ. </kviuli_2>
 			<kviuli_3> ±îÇã. ¾×¿Ô ±Æ»ÏÁö! </kviuli_3>
 			<kviuli_3> ÈåÀ²....... </kviuli_3>
+			<kviuli_h>	......	</kviuli_h>
 		</yrg_sfmtib>
 
 		<mlgrmt>
@@ -6621,6 +6639,7 @@
 			<kviuli_2> ÈÞ-....... ¶®ºæ ¿íÇâ ´ý¿¢ÀÌ ¼ª»Â¾µ. </kviuli_2>
 			<kviuli_3> ±îÇã. ¾×¿Ô ±Æ»ÏÁö! </kviuli_3>
 			<kviuli_3> ÈåÀ²....... </kviuli_3>
+			<kviuli_h>	......	</kviuli_h>
 		</mlgrmt>
 
 		<ufoo>
@@ -6651,6 +6670,7 @@
 			<kviuli_2> ÈÞ-....... ¶®ºæ ¿íÇâ ´ý¿¢ÀÌ ¼ª»Â¾µ. </kviuli_2>
 			<kviuli_3> ±îÇã. ¾×¿Ô ±Æ»ÏÁö! </kviuli_3>
 			<kviuli_3> ÈåÀ²....... </kviuli_3>
+			<kviuli_h>	......	</kviuli_h>
 		</ufoo>
 
 		<hl_ufoo>
@@ -6681,6 +6701,7 @@
 			<kviuli_2> ÈÞ-....... ¶®ºæ ¿íÇâ ´ý¿¢ÀÌ ¼ª»Â¾µ. </kviuli_2>
 			<kviuli_3> ±îÇã. ¾×¿Ô ±Æ»ÏÁö! </kviuli_3>
 			<kviuli_3> ÈåÀ²....... </kviuli_3>
+			<kviuli_h>	......	</kviuli_h>
 		</hl_ufoo>
   </XRERO_HVIEZMG>
 
@@ -8396,7 +8417,7 @@
 		<wvzw>	°ì·® ÁÖÀÎ»ÔÀ´ ´ì¸ÁÁÖ³³°ä¡¦ ¤Ð_¤Ð	</wvzw>
 		<hgzmw>	¶èµÎ·£¿í ºî ºû±ª¿í... À²¼ÄÀ²¼Ä	</hgzmw>
 		<hgzmw> ´¡·® ±îºðºçÁö ¹¿¼ª°ä~ ¶èµÎ·¦ ¹© °òÁ÷°© Áà±ß ÇÑ»Ù¾·°ä~	</hgzmw>
-		<xlmmvxg>	±î³­°Í°ä! ¶èµÒ¸¯³­ °îº°ÁßÀÌ±ú±î°ä! Ät! ÇÏ!	</xlmmvxg>
+		<xlmmvxg>	±î³­°Í°ä! ¶èµÒ¸¯³­ °îº°ÁßÀÌ±ú±î°ä! ?! ÇÏ!	</xlmmvxg>
 		<xlmmvxg>	±È¼ç! °À»ÃÀµ ·ðºç ·¹À´À´ ·ðºÎ ´êÃ¥ÇÏ·ç ¾·¿æÇÏ¿í ²Í±î°ä!	</xlmmvxg>
 		<ovevofk>	°ì°Í! ÃàÇÏÇØ°ä! »õ ¿­ÇØÁ¼¾µ°ä!	</ovevofk>
 		<ovevofk>	Ãº´ç»ÔÀÌ»Ù~ ¶Ý¿¡°ö°ä~	</ovevofk>
@@ -8433,8 +8454,8 @@
 		<sfmgrmt>	ÀÌ¶ø ÀüÅõ ¿í´ýÇß»Ù. ÀÌÁ¦»Â ¶ä ·ÔÀ´ ¹§ ¿¿Àµº¥?	</sfmgrmt>
 		<sfmgrmt>	¹Ù±î¼­ µ»´ç»Â ¶äÀ´ ½À Ã¬¿Ü·Ô»Â»Ù»Â ³Ó³¼ÀÌ ÀÖÁö. ¶ä ·ÔÀÚ.	</sfmgrmt>
 		<wzmtvi>	±î.. ±î±î.. ±î±î±î? ±û?	</wzmtvi>
-		<wzmtvi>	Ä«±Ç~ ¶! ¼Í ÀÌ¸¾ ²ÄÀ·¸Î ²µ·¾À´ Áñ¾â¼ª? ÀÀ?	</wzmtvi>
-		<wvzw>	Ä«±Ç~ ¶! »Ù »ýµ­ Ãë´çµ»µ·»Ù ¼´¿¡ ²Î°ì»Â ¿Ô »õ ¼¸¿Ú±î!	</wvzw>
+		<wzmtvi>	Ä«±Ç~ ?! ¼Í ÀÌ¸¾ ²ÄÀ·¸Î ²µ·¾À´ Áñ¾â¼ª? ÀÀ?	</wzmtvi>
+		<wvzw>	Ä«±Ç~ ?! »Ù »ýµ­ Ãë´çµ»µ·»Ù ¼´¿¡ ²Î°ì»Â ¿Ô »õ ¼¸¿Ú±î!	</wvzw>
 		<wvzw>	±îÂ° ³ö ±øÁö. ÀÏ»Ü ·¹À´¸Î º¶±Æ¿¥¾î?	</wvzw>
 		<hgzmw>	·´ÇÏ¼ª! ·´ºÑ! ·´³Â! ÀÌ ¿­ÇØ µ·ÀÌ»Â ÆÈ¿ú »Ù·®. ²¾¿Ô ±òÀµ ¿Ô ±Æ»Ï»Ù.	</hgzmw>
 		<hgzmw>	ÀÌµÁ. Ãë´çµ» ¶¶ÇÏ¼ª? °©ÀÚÄ£¾· ´ý¿¢ÀÌ¹óºº ÇÏ»Â ¿Ç¿¡?	</hgzmw>
@@ -8508,125 +8529,128 @@
 		<kviuli_h>	°ì°í.. ¼Ê¶« ·¶ÀÌ ·Ô±ú¼ª? ÅäÇÒ ¿Í ¿¿¾µ.	</kviuli_h>
 	</hl_ufoo>			
 </GRPYZOZMT>
-<ORGGOV_KLIRMT>
-	<sfmtib>
-		<uvvwrmt>	ºåºð±î!! ¤Ì¤Ì! ±Æ, ¶îÁ©·®¹û ºîÁ©·®¿¡ µÙ±î¶ö¸ÈÁö ·´ÀÔ»Ï»Ù! 	</uvvwrmt>
-		<uvvwrmt>	±îÈæ...»«¶¿ Á¥Àµ ´ç¿úÁê²µ ÇÑ ¿¼¡¦ÈåÈæ¡¦.	</uvvwrmt>
-		<sfmgrmt>	±Æ¡¦¸¦±÷ºº ²ÄÈÄ¿æÀÌÁö ·´ÀÔ»Ï»Ù!	</sfmgrmt>
-		<sfmgrmt>	²Ä´çÇÒ ¹§¿¡ ÇÏ±ÈÂü~ Áö¼­ ¿Í ¿¿Áö ·´ÀÔ»Ï»Ù!	</sfmgrmt>
-		
-		<wzmtvi>	¶è¿íÇÁ·é ÈûÀÌ ±È¼ª³­ »õ À§ÇèÇÏÁö ·´ÀÔ»Ï»Ù!	</wzmtvi>
-		<wzmtvi>	¸¦±÷Àµ ·Ô¿í ¼ª³­ ´ý¿¢ÇÏ²Ã»Â¿Ô ÁÁÀ´ ¿Í ¿¿Áö ·´ÀÔ»Ï»Ù!	</wzmtvi>
-		<wvzw>	±îÈÞ¡¦¾×¸¯¿Ô ¼´¿¡¡¦ ±ù;; ÁÖÀÎ»ÔÇÑÅ× ºå·¿ ·´±·ÀÌ ±Æ»ÏÁö ·´ÀÔ»Ï»Ù!	</wvzw>
-		<wvzw>	ÀÌ¿Å °ÏÀü ¿íÇàÀÌÁö ·´ÀÔ»Ï»Ù! ²ÅÁ± »Ü²Ä¿íÇàÀÌÁö ·´ÀÔ»Ï»Ù!	</wvzw>
-		<hgzmw>	ÁÖÀÎ»Ô! ¶ä²Ã¿£ ÀÎ ¿Í ¿¿²À»Ï»Ù!	</hgzmw>
-		<hgzmw>	±Æ, ¶ä·ÔÀ··é °ÏÀü ÁÁÀµº¥.. ÁøÂ¥ ÁÁÀµº¥¡¦ ¶¶¹ó ³¼·íÇÒ ¶æ¶ýÀÌ ±ø¼×¡¦	</hgzmw>
-		<xlmmvxg>	À·±Ó! ¤Ð¤Ð) ¾â»Ù¸ÈÁö ·´ÀÔ»Ï»Ù! ¶è¿íÇÁÁö ·´ÀÔ»Ï»Ù!	</xlmmvxg>
-		<xlmmvxg>	ÁÖÀÎ»Ô! °ÏÀü ¶è¿íÇÁÁö ·´ÀÔ»Ï»Ù!	</xlmmvxg>
-		<ovevofk>	ÀÌ±æÈ£! ¸¦±÷! ÀÚÀÚ, ÀÌÁ¦ ¶ä·ÔÀ·¸¯ ¿¡±ßºÇÁö ·´ÀÔ»Ï»Ù?	</ovevofk>
-		<ovevofk>	´ç¿úÁê²µ! ´ç¿úÁê²µ! ´ç¿úÁê²µ!	</ovevofk>
-		<kviuli_1>	¡¦ÀÌ¸·¿Ô ÇÏ·é ´ìÂ¦ ¿­ÇØµ·ÀÌ»Â ¿Í ¿¿Áö ·´ÀÔ»Ï»Ù	</kviuli_1>
-		<kviuli_2>	Çª°¨Ä¡!	</kviuli_2>
-		<kviuli_3>	¾·°õ¶Î~°©Èç¸á~µü±ËÆ÷~	</kviuli_3>
-		<kviuli_h>	ÈÄÈÄ¡¦.ÈÄÈÄÈÄÈÄÈÄ¡¦.	</kviuli_h>
-	</sfmtib>
-	<yrg_sfmtib>
-		<uvvwrmt>	¿í·°²À»Ï»Ù! ´ìÂ¦ ÃâÃâÇÏ»ø ÂüÀÌÁö ·´ÀÔ»Ï»Ù!	</uvvwrmt>
-		<uvvwrmt>	°ÏÀü ºü ·ÂÃèÁö ·´ÀÔ»Ï»Ù! °Í- ºü ¶Ù¸Î ÀÌ¹§»Ù ²Í±ú»Âº¥-! °ª~²Ã! ¶µ¿¡ ÅëÇÏ»Â¿Ô ÀÖ»Ù»Ï¾ñ°ä!	</uvvwrmt>
-		<sfmgrmt>	¾×¿Ì»Ï»Ù! Á¹°À±Ò²á! °ì¡ÚÀº¡Úµû¡Ú¾ò¡ÚÁÖ¡ÚÀÎ¡Ú»Ô!	</sfmgrmt>
-		<sfmgrmt>	±Ë¿í ¿è²Ç ¿Í ¿¿Áö··! ·ó²µÅÍ°Í 15¸¶µ§ ÀÌ´ó Â÷ÀÌ¼ª·é ¿æÇèÄ¡°¡ ³Õ²ÇÀÌ ÀÖÁö ·´ÀÔ»Ï»Ù!	</sfmgrmt>
-		<wzmtvi>	SK¶Ù¿¡ ´¡¿£´öÀÌ ‰ç»Ù»Â¿Ç SK¿¡ 25% ÀÌÇÏ¿¡ ºÇ±ú»Ù»Â ¿ÍÀ·¸Î.. ±Æ»Ï,±Æ»Ï, ±î³­ ´¡¿£Æ÷³ÇÀ´!!	</wzmtvi>
-		<wzmtvi>	Çä!! ¤Ì¤Ì) ·ðºç ·¹À´ÀÇ ºº¾·´óÀÎ°¡¿Ô³­ Æ÷³ÇÀ´ ¾·ÀÔÇÒ ³ö ÀÖÁö ·´ÀÔ»Ï»Ù!!	</wzmtvi>
-		<wvzw>	À².. ±Æ²¾Áö··¡¦. Ä«ÇÁ¹ó ÀúÀåÇÑ ¿÷À·¸Î ÀÌº°ÇÕ²Ã»Ù¡¦ Âü, ±îºð ÀúÀåÇØºÎ³ÌÁÒ?	</wvzw>
-		<wvzw>	±Æ¡¦!! ºü Á±ÀÌÇÑÀå Â÷ÀÌ°»»Âº¥ ·´ÀÔ»Ï»Ù! ±Æ²¾»Ù~	</wvzw>
-		<hgzmw>	±Æ, ºéÀµ¿Çº¥ ·´ÀÔ»Ï»Ù, ÇåÅÍ ²µÅ¼Áß°£ Æ®¸¦ÀÌ¹õ ¿ÍÀ´ ³Ò·ðÇÑ»Ù»õ¾µ°ä. »Ã Á¦»Ï¿¡ ¶®Á¦Áö ·´ÀÔ»Ï»Ù.	</hgzmw>
-		<hgzmw>	°¥Æç·®°òÀÌ¹ó»Â ¿ÍÀÌ ÀÖÀ··é, ¾æºå·¦ Ã¢³¼ÇÒ ³ö ÀÖ»Ù¿í ÇÕ»Ï»Ù! [Ç½¼´¾â ¾æºå] ¹ó¡¦. ÈÄÈÄ.	</hgzmw>
-		<hgzmw>	·ó²µÅÍ°¡¿Ô³­ ±òÀµ Ä«ºå»Â ÀåÂø¿è°­°¡ ·Â»Â ³ÒÄÏÀÖ»Â Àåµñ¿¡ ÀÖÀ´ ¹§ »õµíÅ¬·¯ ÇØµ·²ÃÁö ·´ÀÔ»Ï»Ù!	</hgzmw>
-		<hgzmw>	°À»ÃÀÇ ÆÁ! Hsrug + ·¹°ì²µ °À·¥ÂÊ Å¬·¯À·¸Î °øÇÏ»Â »ë´óÀ´ ºû¹ó»Ù»Ò ³ö ÀÖ²À»Ï»Ù! ¶¿¸Ð, ·ó²µÅÍ»Â ±ÈºÇÁÒ.	</hgzmw>
-		<hgzmw>	·Þ³³ÁöÃ¢ÀÇ °ÞÂÊ ÀÛÀµ Ä­°¡ °øÇÏ»Â Ä¼·¯ÅÍ ÀÌ·§À´ ¼ÖÀ··é ¾Ó³Ó·´ ¿¡»É! ±Æ, »ç°¬È÷ ·ó²µÅÍ»Â ±È¶Þ±ÆÁÖÁÒ.	</hgzmw>
-		<hgzmw>	²µÅ¼ Ã¢ÀÇ ²µÅ¼ºéÀµ ·¹°ì²µ¸Î ºå¸¡¾×mºå¸ÓÀ·¸Î »ÜÃà¶Ù°¡ °Ã¸ÁºÑ ³ö ÀÖ²À»Ï»Ù! ±ÆÀÌÅÛÀÌ¼ª Àåµñºº ¿¡»É!	</hgzmw>
-		<xlmmvxg>	ÀÚ! °À»ÃÀµ ¹Ç ±î¹½ ·ðÇèÀÎ¿¡°ä!	</xlmmvxg>
-		<xlmmvxg>	Èû²ê¿í ÁÁÀµ ±ÆÄ§!	</xlmmvxg>
-		<ovevofk>	ÀÌ±ß~ ÀÌ¿Ô »ëÃ³ ·î¶øÂ¿ Ãº´ç»ÔÀÌ±ß~	</ovevofk>
-		<ovevofk>	ÀÌ±æÈ£! Zog+J·¦ »­¸¯³­ ²µÅ×ÀÌÅÍ²µ Æ÷ÀÎÆ®·¦ È®ÀÎÇÏ²ÃÁö ·´ÀÔ»Ï»Ù?	</ovevofk>
-		<kviuli_1>	¡¦ÀÌ¸·¿Ô ÇÏ·é ´ìÂ¦ ¿­ÇØµ·ÀÌ»Â ¿Í ¿¿Áö ·´ÀÔ»Ï»Ù	</kviuli_1>
-		<kviuli_2>	Çª°¨Ä¡!	</kviuli_2>
-		<kviuli_3>	¾·°õ¶Î~°©Èç¸á~µü±ËÆ÷~	</kviuli_3>
-		<kviuli_h>	ÈÄÈÄ¡¦.ÈÄÈÄÈÄÈÄÈÄ¡¦.	</kviuli_h>
-	</yrg_sfmtib>
-	<mlgrmt>
-		<uvvwrmt>	»Ã ¿í·°Áö ·´ÀÔ»Ï»Ù! ¤Ì¤Ì)	</uvvwrmt>
-		<uvvwrmt>	Àß ·Ô¿Ú! ²À»Ï»Ù!!	</uvvwrmt>
-		<sfmgrmt>	ÀÀ°øÀÌ¹óºº °­²ÉÈ÷ ÇØ±ß¿ÚÁö ·´ÀÔ»Ï»Ù! °ì¡ÚÀº¡Úµû¡Ú¾ò¡ÚÁÖ¡ÚÀÎ¡Ú»Ô!	</sfmgrmt>
-		<sfmgrmt>	ºº°Íºå·®¿í ²ÍÁö··, Æê¿úÀÇ ÆÄÆ³»Â Áö°øÇÏÁö ±ÊÁö ·´ÀÔ»Ï»Ù!	</sfmgrmt>
-		<wzmtvi>	ÀÇ°åÀµ ÁÁÁö··¡¦. ±É±Æ³­ ²¬·é SK·¦ 2¶è µü·£¿Ô È·µ¶ºÇÁö ·´ÀÔ»Ï»Ù!	</wzmtvi>
-		<wzmtvi>	±Æ¶«¸¡ºº ²¬»Â¿Ô ÁÁÀ´ ¿Í ¿¿Áö ·´ÀÔ»Ï»Ù!	</wzmtvi>
-		<wvzw>	ÈåÈæ, ÀüÅõµÒ»É ´óÅÂ¿¡ºÇ¶ö·®·é ¿æÇèÄ¡¿¡ ÇÏ¹ôÇÏÁö ·´ÀÔ»Ï»Ù!! ¤Ì¤Ì)	</wvzw>
-		<wvzw>	²ÇÆÐ»Â µ»¿¡Áö´ó´çÁö ·´ÀÔ»Ï»Ù!	</wvzw>
-		<hgzmw>	ÆÄÆ³·¦ °øÇÏ²Ã·é ·Þ²ÃÁö Ã¢°¡ /¿á³µ ÆÄÆ³ÀÌ·§ ÇØµ·²ÃÁö ·´ÀÔ»Ï»Ù?	</hgzmw>
-		<hgzmw>	·Þ³³ÁöÃ¢ °ìÃø ÇÏ»ÜÀ´ µ·²Ã·é ·Þ²ÃÁö·¦ ±îºð¸Î µ·¼±Áö ³¾ÅÃÇÒ ³ö ÀÖÁö ·´ÀÔ»Ï»Ù.	</hgzmw>
-		<hgzmw>	·ó²µÅÍ¿¡ ºå¹øÇÏ»Â Àåµñ ±ÆÀÌÅÛÀ´ ´ç°ëÇÏ²Ã¸Á·é ½À º·µ·¾â¸Î [¿¨Á¤]ÇÏ³Å±ß ºÇÁö ·´ÀÔ»Ï»Ù!	</hgzmw>
-		<hgzmw>	²µÅ¼´ç°ë Á÷ÈÄ, ÀüÅõ Á÷ÈÄÀÇ ±à 5ÃÊ¿£Àµ Á¢³ÓÁ±¸á¿¡ µÒ¿¡»É ÇÏÁö ·´ÀÔ»Ï»Ù!	</hgzmw>
-		<hgzmw>	U10À´ »©·£·é »ëÈ­Ã¢ ´çÀÌÁî·¦ Á¹ÀýÇÒ ³ö ÀÖÁö ·´ÀÔ»Ï»Ù!	</hgzmw>
-		<hgzmw>	U11À´ »©·£·é ¿¡Àå ¾âµ´ÀûÀÎ Ã¢À´ Á¦°ÜÇÏ¿í ·ðºÎ »ÝÈ÷Áö ·´ÀÔ»Ï»Ù!	</hgzmw>
-		<xlmmvxg>	°À³Ì¾·¼ª! °À»ÃÀµ ±îºð·¦ ·ðÇèÇÒ °¶Á¤ÀÔ»Ï¾î!!	</xlmmvxg>
-		<xlmmvxg>	¾â»Ù·®¿í ÀÖ±ú²À»Ï»Ù!	</xlmmvxg>
-		<ovevofk>	ÀÌ±æÈ£! Zog+J·¦ »­¸¯³­ ²µÅ×ÀÌÅÍ²µ Æ÷ÀÎÆ®·¦ È®ÀÎÇÏ²ÃÁö ·´ÀÔ»Ï»Ù?	</ovevofk>
-		<ovevofk>	°À°À! ÀÌ¸¾²ÄÀ·¸Î Qly¸¶µ§ºº °À·£¿í ²µÅ¼Æ÷ÀÎÆ®ºº ´ý¾âÁö ·´ÀÔ»Ï»Ù!	</ovevofk>
-		<kviuli_1>	¡¦ÀÌ¸·¿Ô ÇÏ·é ´ìÂ¦ ¿­ÇØµ·ÀÌ»Â ¿Í ¿¿Áö ·´ÀÔ»Ï»Ù	</kviuli_1>
-		<kviuli_2>	Çª°¨Ä¡!	</kviuli_2>
-		<kviuli_3>	¾·°õ¶Î~°©Èç¸á~µü±ËÆ÷~	</kviuli_3>
-		<kviuli_h>	ÈÄÈÄ¡¦.ÈÄÈÄÈÄÈÄÈÄ¡¦.	</kviuli_h>
-	</mlgrmt>
-	<ufoo>
-		<uvvwrmt>	µÎÃ¤Ç¥¡¦ µÎÃ¤Ç¥¿¡ ÇÊ°äÇÒ ¿Í ¿¿Àµ... ºü ¾×¸¾ ´óÅÂÁö ·´ÀÔ»Ï»Ù.	</uvvwrmt>
-		<uvvwrmt>	¼×, ÀÖÀ´ ¹§ ·Ô±îºÎ»Â ¿ÅÁÒ. ±Ð»Ï»Ù.	</uvvwrmt>
-		<sfmgrmt>	±Ë¿í ¿è²Ê»Ï¾î? OFPÀµ °îÀ·¸Î²á ´ç²Ç´ó ·ðºç »É¸ÂÄ¡°¡ ¿ü°©ÇÑ»Ù»Â ´ç²Ç¡¦!! XIR°Í °ÏÀüÈ·ÇÇ»Â ·´ÇÒ ¿Íºº ±ø¿í°ä!	</sfmgrmt>
-		<sfmgrmt>	Áö¾Ý ÀÌ ·ÚÁø ´ç¼ÉÀå·éÀ´ Å¿µ·ºåÀÇ [Kirmg Hxivvm]¶öÆ¿ ÇÏ¼ª¸Î ÀúÀå¿¡»É! [HxivvmHslg]Æú»õ°¡³­ È®ÀÎÇÏ³³°ä!	</sfmgrmt>
-		<wzmtvi>	±î¹ó¡¦ À§Çè! È·µ¶È·µ¶! Âü, ³ÒÁö¶«¿Ô¿¡ 50% ¼ÑÀ··é ÀÚº°È·µ¶ÀÌ ±ÈºÇ»Ï ½À È®ÀÎÇÏ³³°ä!	</wzmtvi>
-		<wzmtvi>	ÀÌ¸½ ¹§·¦ À§ÇØ ÇÒ·Ó»Ï ²ÓÁþº¸·¹¼É ·ð±Æ°Â È·µ¶±ÆÀÌÅÛ! Æ÷³Ç! À²²Ä! ÁöÃ³·´¿í »©·£³³°ä!	</wzmtvi>
-		<wvzw>	°ØÁö ÀÌ¸·¿Ô ºÉ ¿Í ¿¿Àµ °¶¿¨ÀÌ ÀÖ±úÁö. ÇÏÁö·· ÁÖÀÎ»ÔÀµ ¶¿±àÀÌ ±ø±ú±î. ±Æ·¹ ±ø±úÀ´½¨±ß.	</wvzw>
-		<wvzw>	±Æ¡¦! Áö¾Ý ±½¸¯Áø¿Å ±Æ»Ï¿Åºç°ä. Àá¾ñ »©°î¿Å°¡°ä! ¡¦.Àú, ÀÌ¾×ºå¹ó²Ç ÀÙ´ç¾Í ÀÖ»Â µÐ ±øÀ·²Ê»Ï¾î¡¦?	</wvzw>
-		<hgzmw>	RMG»Â ·¹¶ý¿ú ¾íÀµ ¿ü¿è¿¡ ÀÖ»Ù»õ¾µ°ä. ·¹¶ý¿ø¿Ý, ¶æ±î, ÃÑHK¸®¾îÁö! ·¹¶ý´ç ÇÏ²Ã¸Á·é ÇÊ³öÁÒ!	</hgzmw>
-		<hgzmw>	ERGÀµ Ã³¸ÂÀ´ ¹æÇÑ»Ù»õ¾µ°ä. °Ã·¾³ö¸Ï ¾âµ´ ¶æ±î¸Âºº Áõ¿¡ÇÏ·ç, ÃÑSK¸®ºº »Ã±î¼­»Ù¿í ÇÕ»Ï»Ù!	</hgzmw>
-		<hgzmw>	ZTR»Â ¶ÎÃ·ÇÔ! µü·£¿Ô ¿ø¿ÝÇÏ¿Å¼ª, È·ÇÇÇÏ¿Å¼ª! µü·¥ Å·¿Ý ÁÁ±ÆÇÏ²Ã·é °ª²Ã ZTRÁÒ!	</hgzmw>
-		<hgzmw>	WVCÀµ ³ÕÀçÁÖ ¹Ç»Â Á¤È®³µÀÌÁÒ! ²ÇÆÐ±ø»Â Á¤È®ÇÑ Å·¿Ý! ¾×·®¿í È¿¿ø¿Ý°¡³¾ ¶«¸Á º¥¶ÌÁö ´ó²Â È°¿ú¾îÁö!	</hgzmw>
-		<hgzmw>	HGIÀµ Èû!! ÈûÀÇ Áõ¿¡»Â ¾âµ´ ³ÒÁö¸®À´ »Ã¸ÁÁÖ¿Å¼ª, ¶¿·®¿ø¿Ý¸ÂÀ´ ´ó²Â²ÃÅº»Ï»Ù!	</hgzmw>
-		<hgzmw>	±ÆÁ÷ ±î¹½ Á÷±÷À´ ³¾ÅÃÇÒÁö ¿í¶ÎÇÏ¿í ¿è²Å¿¡°ä?	</hgzmw>
-		<xlmmvxg>	¾â»Ù·®¿í ÀÖ±ú±î°ä! °À»ÃÀµ ±î¹½ ·ðÇèÀ´??	</xlmmvxg>
-		<xlmmvxg>	ÀÚ, ÀÌ¸½¿Ô ±Æ»Ï¹ó ±î³­ °òÁ÷ÀÌÁÒ!	</xlmmvxg>
-		<ovevofk>	L~P~!! ÀÌ¸·¿Ô·· ¿£»Ù·é 3Â÷ ¾×¾îÁþ¿Å ³ø²Ä¿£ÀÌÁö ·´ÀÔ»Ï»Ù!	</ovevofk>
-		<ovevofk>	ÀÌ±ß~ ÀÌ¿Ô ·î ¸¶µ§ÀÌ±ß!! ¼Ê¶« ¼ô~ ±Æ~~	</ovevofk>
-		<kviuli_1>	¡¦ÀÌ¸·¿Ô ÇÏ·é ´ìÂ¦ ¿­ÇØµ·ÀÌ»Â ¿Í ¿¿Áö ·´ÀÔ»Ï»Ù	</kviuli_1>
-		<kviuli_2>	Çª°¨Ä¡!	</kviuli_2>
-		<kviuli_3>	¾·°õ¶Î~°©Èç¸á~µü±ËÆ÷~	</kviuli_3>
-		<kviuli_h>	ÈÄÈÄ¡¦.ÈÄÈÄÈÄÈÄÈÄ¡¦.	</kviuli_h>
-	</ufoo>
-	<hl_ufoo>
-		<uvvwrmt>	Áö¾ÝÀµ ±ÈÃ¬¿ÜÁÖ³Åºº ºÇ»Âº¥.. ÁøÂ¥ ¾¦ÂúÀµº¥¡¦ ÁÖÀÎ»Ô ºå³Åºº ºÇ»Âº¥¡¦	</uvvwrmt>
-		<uvvwrmt>	ÀÔ ¶ÛÀ·¸Î ¶ÝÂë ¼ª°À»Â ¿Í ¿¿»Ù¿í°ä? ±Æ»Õ»Ï»Ù. ÀÌ¿Å Ä§ÀÌ°¡°ä. ±îÈÞ~ »Æ ·ÀÀÖ±î³­ Ä§ÀÌ ·¸ Èå·£¼×~	</uvvwrmt>
-		<sfmgrmt>	Áö¾Ý ÀÌ ·ÚÁø ´ç¼ÉÀå·éÀ´ Å¿µ·ºåÀÇ [Kirmg Hxivvm]¶öÆ¿ ÇÏ¼ª¸Î ÀúÀå¿¡»É! [HxivvmHslg]Æú»õ°¡³­ È®ÀÎÇÏ³³°ä!	</sfmgrmt>
-		<sfmgrmt>	»õ ¿­ÇØÁö¿í ²Í»Ù·é ¿¢ ·¹À´ÀÇ Á¦¸Ã³Ò·¦ Ã£±Æ¿¡µ·²Ê²Ã°À! Á¦»Ï¿¡ »ë»ÜÈ÷ ºì»Ï»Ù··¡¦.	</sfmgrmt>
-		<wzmtvi>	ÇÑ¶ø·· »õ ·Â±Ò»Ù¿£ ÈÅ ¿¥ ³ö ÀÖ»Â ¾×¸¾ ´óÈ½! ¾×¸¾ ´óÈ½À´ Áñ¾â»Â ÁÖÀÎ»Ô.. ¡¦.Àµ ±Æ»ÏÁÒ?! ±î³­ È·µ¶ È·µ¶!	</wzmtvi>
-		<wzmtvi>	±Æ~ ÀÌ¸½ ¹§ [Èú]²µÅ¼À´ ´çÁø µ¶´ç»ÔÀÇ ÆÄÆ³¿¡ Àý²ÇÇÏÁÒ~ »©¾· ±Æ»Â ´ç¹÷ ±ø¼ª°ä~	</wzmtvi>
-		<wvzw>	ÀÌ¸·¿Ô ÇÏ»ÃÀ´ ¶Ù¹óµ·¿í ²ÍÀµ ¹§¿¡ ÇÑ¶øÂëÀµ ÀÖÁÒ. ¼×. Àúºº ±ËÁÒ.	</wvzw>
-		<wvzw>	À·Çä¡¦¡¦¡¦¡¦. ÀÚÀÚ! ¾â°î¼´²Ã¿í »Ù²Ã ²ÃÀÛÇÕ²Ã»Ù!	</wvzw>
-		<hgzmw>	¶èµÎ·¥ ¾è°¡ °À»ÃÀÇ ÆÁ! [Rmhvig]Å¿¸Î ±É±Ò»Ù ÀÏ±î¼º»Ù¿¡ ¿¡»ÉÇÕ»Ï»Ù! °À- ³³´ó°¡!	</hgzmw>
-		<hgzmw>	[Xgio + ` ] ¸Î °ùºå·ÊÀ´ µ³ ³ö ÀÖ²À»Ï»Ù! °ùºå·Ê °ìÃøÇÏ»ÜÀÇ Æ÷·ººº ½À »­¸¯³­ µ·²Ê³î!	</hgzmw>
-		<hgzmw>	ÀÎµ¥Åä·®°¡ ³ÒÁö ¿¡»ÉÇÑ ±ÆÀÌÅÛ ¿¼³ö»Â ÃÑ 100Á±ÀÓºÂ! ¾×ÀÌ´óÀµ ¿¡Áú ³ö¿¡ ±ø±î°ä~ Á¦¿¡ ºü ¾× ´óÅÂ¹ö¾î¡¦	</hgzmw>
-		<hgzmw>	·ó²µÅÍ°¡¿Ô³­ Á¦»Ï¿¡ ºå¹øºÇÁø ±ÊÁö··¡¦ ·ó²µÅÍ ºå¹ø±ÆÀÌÅÛÀ´ ÆÈ·é ´ý¾é»Ï»Ù!	</hgzmw>
-		<hgzmw>	³ÒÀ¯ÇÑ ±ÆÀÌÅÛ°¡ Ä°³­·¦ ¿¡Á®¿£ ºÚ °À·¥ÂÊ Å¬·¯À´ ÇÏ·é ³³µÎÁ¤µ··¦ ±Ë ³ö ÀÖÁÒ!	</hgzmw>
-		<hgzmw>	XgioÀ´ »©·¥ ´óÅÂ°¡³­ ·ó²µÅÍ·¦ ¿ø¿ÝÇÏ·é [¹ô °Â ·ðºå]¿¡ ºË»Ï»Ù! ÀÚº°¿ø¿ÝÀÌÁÒ!	</hgzmw>
-		<xlmmvxg>	Zog + OÀ´ »©·£·é °©¸¯¿¡Áö ÀÌ·ð³Ç ·®²µÆ®¿¡! Áö¾ÝÀÇ Àú»Â /°ôÀ² ¾âµÐ!	</xlmmvxg>
-		<xlmmvxg>	·ðÇèÀ´ ¹¿¼ª¾âÀü°¡ Ä«ÇÁ¹óÁ÷°ø ¶æ¶®Àµ ÇÊ³ö! À§Ä¡ÀúÀå! Ã¢¿íÀÌ°ë! ¿ø¿£ÀÌº° ·ðºç ¿ÍÀ´ ÇÑ¶æ°¡!	</xlmmvxg>
-		<ovevofk>	¿ú°¬! Âø²ÇÇÑ ¸¶µ§±÷! Àúºº ±ðÁ¨¿£ ·¹²µÅÍ·º¾îÁö¡¦!!	</ovevofk>
-		<ovevofk>	¸¶µ§±÷À´ ÇÏ·é Ç®~ È·µ¶! ÀÌ ³ø¿£À´ ÀÌ°ëÇØ³­ À§¾â Å´Ãâ! ·ðºç ²µÅ¼À´ »Ù º°°øÇØ³­ ¿ø¿ÝÀÌ ¿¡»ÉÇÏÁÒ!	</ovevofk>
-		<kviuli_1>	¡¦ÀÌ¸·¿Ô ÇÏ·é ´ìÂ¦ ¿­ÇØµ·ÀÌ»Â ¿Í ¿¿Áö ·´ÀÔ»Ï»Ù	</kviuli_1>
-		<kviuli_2>	Çª°¨Ä¡!	</kviuli_2>
-		<kviuli_3>	¾·°õ¶Î~°©Èç¸á~µü±ËÆ÷~	</kviuli_3>
-		<kviuli_h>	ÈÄÈÄ¡¦.ÈÄÈÄÈÄÈÄÈÄ¡¦.	</kviuli_h>
-	</hl_ufoo>
-</ORGGOV_KLIRMT>
+<ORGGOV_KLIRMT>				
+	<sfmtib>			
+		<uvvwrmt>	À²²ÄÀ´ ·ÔÀ··é ··µ¶ºº ¿ÔÀÌÁö¿¡ Áõ¿¡ÇÑ»ä»Ï»Ù. ··µ¶ºº·¦ È·µ¶ÇÒ¹§·¹»Ù Ä£¶Ðºº¿¡ ´ó²ÂÇÏÁö°ä.	</uvvwrmt>
+		<uvvwrmt>	Àú»Â ´ç¿úÁê²µ·¦ ÁÁ±ÆÇÏÁö··, Æê·¹»Ù ·Ô»Â À²²ÄÀÌ »Þ¹ó°ä.	</uvvwrmt>
+		<sfmgrmt>	·ó²µÅÍÀÇ SK¿¡ ¹¼±îÁö·é, ÆêÀ·¸Î Æ÷È¶ÇÒ È®¸üÀÌ ´ó²ÂÇØ°ä!	</sfmgrmt>
+		<sfmgrmt>	·ó²µÅÍ·¦ ÆêÀ·¸Î ÇÏ»Â ±ÆÀÌÅÛÀµ, Àâ¿í ²ÍÀµ ·ó²µÅÍ·¦ ´ç¼ÉÇØ³­ ¾·ÇÒ ³ö ÀÖ»Â ¿æ°ì¿¡ ·¶±Æ°ä. ½À ¾×¸¾¿Ç ±Æ»ÏÁö··..	</sfmgrmt>
+		<wzmtvi>	Á¹²ÉÇÏ³³°ä! ÁÖÀÎ»ÔÀÌ Á×À··é ÁÖÀÎ»Ô¿úÀÇ Ä£¶Ðºººº ¼¸±ÆÁø»ä»Ï»Ù.	</wzmtvi>
+		<wzmtvi>	ÁÖÀÎ»Ô½½ Æ÷³ÇÀÌ ÇÊ°äÇÏºí, Àú°¡¿Ôºº À²²ÄÀÌ ÇÊ°äÇØ°ä.	</wzmtvi>
+		<wvzw>	ÆêÀµ Á×Áö»Â ±ÊÁö··, Ä£¶Ðºº¿¡ ¼Ê¶« ¼¸À··é ÁÖÀÎ»Ô ¿çÀ´ ¹¿¼ª¿Ô ºÈ»ä»Ï»Ù.	</wvzw>
+		<wvzw>	Ä£¶Ðºº»Â ÁÖÀÎ»ÔÀÌ Á×±úÀ´ ¹§, À²²ÄÀ´ ¼Ê¶« ·¶ÀÌ ·ÔÀÏ ¹§, ¶è¿íÇÂ ´óÅÂ¸Î ¶æÄ¡ÇÒ ¹§°¡ ¼¸±ÆÁ®°ä.	</wvzw>
+		<hgzmw>	À²²ÄÀ´ ÁÖ¿í ²ÍÀ·²Ã»Ù·é, Àú·¦ ·¹°ì²µ °À·¥ÂÊ ¶öÆ¿À·¸Î Å¬·¯ÇÏ¿í ·ÔÀÌ ÁÖ¾â·¦ ³¾ÅÃÇØÁÖ³³°ä. Àú»Â ´ç¿úÁê²µ·· ·Ô»Â»ä»Ï»Ù.	</hgzmw>
+		<hgzmw>	±×³³³­·®»Â Å×ÀÌ¶Ö´óÀÎ°¡¿Ô³­ ¾·ÀÔÇÒ ³ö ÀÖ±î°ä. ÆêÀ´ Àå²ÄÇØÁÙ ³ö ÀÖ»ä»Ï»Ù.	</hgzmw>
+		<hgzmw>	Æê ±×³³³­·®»Â ±Æ¶«¸¾ »É¸ÂÄ¡ºº ±ø±î°ä.. »Ù·· ÆêÀ´ Á´ »õ °¶´ºµ·ÀÌ¿Ô ÇÒ ³ö ÀÖÁÒ.	</hgzmw>
+		<xlmmvxg>	±î³­°À³³°ä. ÁÖÀÎ»Ô. Æê°¡ »ëÇØ³­ ³Ò¿¼·¦ ÇØÁÙ Ç½¼´¾âÆ÷·ºÀÔ»Ï»Ù.	</xlmmvxg>
+		<xlmmvxg>	··µ¶ºº·¦ ÁÖÀÇ ¾í¿Ô µ·³³°ä. ¶è¿íÇÃ ¹§°¡»Â Ä£¶Ðºº¿¡ Á¹¾Ý±° ¼¸±ÆÁ®°ä.	</xlmmvxg>
+		<ovevofk>	ÆêÀµ ¸¶µ§±÷Àµ ÇÏÁö ±ÊÁö··, Ä£¶Ðºº¿¡ ¼ô±ÆÁö·é ÁÖÀÎ»Ô½½ »É¸ÂÀ´ µ·ÅÂ ºå·¾ ³ö ÀÖ»ä»Ï»Ù.	</ovevofk>
+		<ovevofk>	¶è¿íÇÃ¹§ À²²ÄÀ´ ·ÔÀ··é Ä£¶Ðºº¿¡ ¼ô±ÆÁö¿í, Ä£¶Ðºº¿¡ ¼ô±ÆÁö·é µ·ÅÂºå·®»Â »É¸ÂÄ¡ºº ¼ô±ÆÁ®°ä!	</ovevofk>
+		<kviuli_1>	ÆÛÆ÷·Õ²µ»Â ÀýÄ£ ´óÅÂ°¡·· µ³ ³ö ÀÖ»ä»Ï»Ù. Àú»Â ±È¼´°ªÀÌ¹ó °¶°Ü°¶°ä!	</kviuli_1>
+		<kviuli_2>	ÆÛÆ÷·Õ²µ¸Î ÆêÀÌ ºÈ ·ó²µÅÍºéÀÇ ´ö»Ù·¥ ³µ¿ÝÀ´ µ³ ³ö ÀÖ±î°ä. ·ó²µÅÍÀÏ ¹§°£ µ·Áö ·øÇß»ø ·ð²ÀÀÌÁÒ.	</kviuli_2>
+		<kviuli_3>	ÆÛÆ÷·Õ²µ»Â ±Æ¶«¸¾ °ªÇÒºº ÇÏÁö»Â ±Ê±Æ°ä. ¾×Àú °ì·®ºéÀÇ ´ö»Ù·¥ ·ð²ÀÀ´ µ·°©ÁÙ ´ÓÀÌ¹ø»Ï»Ù.	</kviuli_3>
+		<kviuli_h>	ÆÛÆ÷·Õ²µ¿¡ ±ø»Â ·ó²µÅÍºº ÀÖ±î°ä. ¶«¹Ò¹ÒÇÑ Ä£¾·ºéÀÌÁö··, ¾×¸¡ºº ±Æ½·ÁÖ³³°ä.	</kviuli_h>
+	</sfmtib>			
+	<yrg_sfmtib>			
+		<uvvwrmt>	±à¿£ ¶è¿íÇÃ¹§ ·ÔÀÌ·¦ ÁÖ·é ¿¡Àå Ä£¶Ðºº¿¡ ·¶ÀÌ °Ã¹ó¿£»ä»Ï»Ù.	</uvvwrmt>
+		<uvvwrmt>	¶è¿íÇÃ¹§°£ Ä£¶Ðºº¿¡ ¹¼±îÁö»Ï, ¶è¿íÇÁ¾â Àü°¡ ½À À²²ÄÀ´ ÁÖ³³°ä.	</uvvwrmt>
+		<sfmgrmt>	ÃÊÄÚ»Â °­»ëÀÇ ¶Ù¼ª¼ª·¦ ¿¡½û±° Áà°ä. °­»ëÀÇ ¶Ù¼ª¼ª¸Î»Â °ä°ä·¦ Æ÷È¶ÇÒ³ö ÀÖ»ä»Ï»Ù.	</sfmgrmt>
+		<sfmgrmt>	È£ºå¹û Ä°¼ÊÅõ²µ»Â Åä²ÇÅä²Ç ´ìÂð Áö¸¸ÀÌ·¦ Áà°ä. ÆäÄÚÆäÄÚ·¦ ¾æºéÀÏ ³ö ÀÖ»Â ¿¡Àå ÁÁ±ÆÇÏ»Â À²²ÄÀÌÁÒ!	</sfmgrmt>
+		<wzmtvi>	Á¹²ÉÇÏ³³°ä! ÁÖÀÎ»ÔÀÌ Á×À··é ÁÖÀÎ»Ô¿úÀÇ Ä£¶Ðºººº ¼¸±ÆÁø»ä»Ï»Ù.	</wzmtvi>
+		<wzmtvi>	ÁÖÀÎ»Ô½½ Æ÷³ÇÀÌ ÇÊ°äÇÏºí, Àú°¡¿Ôºº À²²ÄÀÌ ÇÊ°äÇØ°ä.	</wzmtvi>
+		<wvzw>	ÆêÀµ Á×Áö»Â ±ÊÁö··, Ä£¶Ðºº¿¡ ¼Ê¶« ¼¸À··é ÁÖÀÎ»Ô ¿çÀ´ ¹¿¼ª¿Ô ºÈ»ä»Ï»Ù.	</wvzw>
+		<wvzw>	Ä£¶Ðºº»Â ÁÖÀÎ»ÔÀÌ Á×±úÀ´ ¹§, À²²ÄÀ´ ¼Ê¶« ·¶ÀÌ ·ÔÀÏ ¹§, ¶è¿íÇÂ ´óÅÂ¸Î ¶æÄ¡ÇÒ ¹§°¡ ¼¸±ÆÁ®°ä.	</wvzw>
+		<hgzmw>	À²²ÄÀ´ ÁÖ¿í ²ÍÀ·²Ã»Ù·é, Àú·¦ ·¹°ì²µ °À·¥ÂÊ ¶öÆ¿À·¸Î Å¬·¯ÇÏ¿í ·ÔÀÌ ÁÖ¾â·¦ ³¾ÅÃÇØÁÖ³³°ä. Àú»Â ´ç¿úÁê²µ·· ·Ô»Â»ä»Ï»Ù.	</hgzmw>
+		<hgzmw>	Ä£¶Ðºº·¦ °Ã·®»Â ºü ÇÑ¿¡Áö ¶æ¶ýÀµ À²²ÄÀ´ ÁÖ»Â ¿Í ´ÓÀÌ°¡°ä. ¾×¸·Áö·· ¶èµÎ·¦ ¹§ ÁÖ·é °ÀÈ÷¸Á Ä£¶Ðºº¿¡ ¹¼±îÁ®°ä.	</hgzmw>
+		<hgzmw>	Ä£¶Ðºº»Â ³­·Ô³­·ÔÇÔ, ±î´öÇÔ, µ·Åë, Ä£ÇÔ, ÀýÄ£ÀÇ ³øÀ·¸Î °Ã¹ó¿¡°ä.	</hgzmw>
+		<hgzmw>	ÀýÄ£ÀÎ ÆêÀµ ÁÖÀÎ»Ô½½ »É¸ÂÄ¡·¦ µ·ÅÂºå·¿»ä»Ï»Ù. ¹Ç, ÁøÈ­ºº ÇÒ ³ö ÀÖ±î°ä.	</hgzmw>
+		<hgzmw>	Àú»Â ÁøÈ­»Â ÇÏÁö ·øÇØ°ä.. ¾×Àú ±È¼´°ªÀÌ¹ó³­°ä.	</hgzmw>
+		<hgzmw>	Æ÷·ºÀµ ÀýÄ£ÀÌ ºÇ·é ·¹²µÅÍ·ºÀ·¸Î ÁøÈ­ÇÒ ³ö ÀÖ»ä»Ï»Ù. ·¹²µÅÍ·ºÀµ ÀýÄ£ÀÌ ºÇ·é °£Á©·ºÀ·¸Î ÁøÈ­ÇÒ ³ö ÀÖÁÒ.	</hgzmw>
+		<hgzmw>	ÆêÀÌ ÁøÈ­ÇÏ·é »É¸ÂÄ¡¿¡ ¿­È­ºÅ°ä! Á´ »õ ÁÖÀÎ»Ô½½ ºº°òÀ´ ºå·¾ ³ö ÀÖ»ä»Ï»Ù.	</hgzmw>
+		<xlmmvxg>	±î³­°À³³°ä. ÁÖÀÎ»Ô. Æê°¡ »ëÇØ³­ ³Ò¿¼·¦ ÇØÁÙ Ç½¼´¾âÆ÷·ºÀÔ»Ï»Ù.	</xlmmvxg>
+		<xlmmvxg>	··µ¶ºº·¦ ÁÖÀÇ ¾í¿Ô µ·³³°ä. ¶è¿íÇÃ ¹§°¡»Â Ä£¶Ðºº¿¡ Á¹¾Ý±° ¼¸±ÆÁ®°ä.	</xlmmvxg>
+		<ovevofk>	ÆêÀµ ¸¶µ§±÷Àµ ÇÏÁö ±ÊÁö··, Ä£¶Ðºº¿¡ ¼ô±ÆÁö·é ÁÖÀÎ»Ô½½ »É¸ÂÀ´ µ·ÅÂ ºå·¾ ³ö ÀÖ»ä»Ï»Ù.	</ovevofk>
+		<ovevofk>	¶è¿íÇÃ¹§ À²²ÄÀ´ ·ÔÀ··é Ä£¶Ðºº¿¡ ¼ô±ÆÁö¿í, Ä£¶Ðºº¿¡ ¼ô±ÆÁö·é µ·ÅÂºå·®»Â »É¸ÂÄ¡ºº ¼ô±ÆÁ®°ä!	</ovevofk>
+		<kviuli_1>	ÆÛÆ÷·Õ²µ»Â ÀýÄ£ ´óÅÂ°¡·· µ³ ³ö ÀÖ»ä»Ï»Ù. Àú»Â ±È¼´°ªÀÌ¹ó °¶°Ü°¶°ä!	</kviuli_1>
+		<kviuli_2>	ÆÛÆ÷·Õ²µ¸Î ÆêÀÌ ºÈ ·ó²µÅÍºéÀÇ ´ö»Ù·¥ ³µ¿ÝÀ´ µ³ ³ö ÀÖ±î°ä. ·ó²µÅÍÀÏ ¹§°£ µ·Áö ·øÇß»ø ·ð²ÀÀÌÁÒ.	</kviuli_2>
+		<kviuli_3>	ÆÛÆ÷·Õ²µ»Â ±Æ¶«¸¾ °ªÇÒºº ÇÏÁö»Â ±Ê±Æ°ä. ¾×Àú °ì·®ºéÀÇ ´ö»Ù·¥ ·ð²ÀÀ´ µ·°©ÁÙ ´ÓÀÌ¹ø»Ï»Ù.	</kviuli_3>
+		<kviuli_h>	ÆÛÆ÷·Õ²µ¿¡ ±ø»Â ·ó²µÅÍºº ÀÖ±î°ä. ¶«¹Ò¹ÒÇÑ Ä£¾·ºéÀÌÁö··, ¾×¸¡ºº ±Æ½·ÁÖ³³°ä.	</kviuli_h>
+	</yrg_sfmtib>			
+	<mlgrmt>			
+		<uvvwrmt>	µ·Åë ¹§°¡ºº À²²ÄÀ´ ·ÔÀ··é Ä£¶Ðºº¿¡ °Ã¹ó¿¡°ä. ¾×¸·Áö·· ¶è¿íÇÃ¹§µ·»Ù»Â Àû¿Ô °Ã¹ó¿£»ä»Ï»Ù.	</uvvwrmt>
+		<uvvwrmt>	µ·Åë¹§¿¡ ºÉ¹§·¹»Ù ½ÙÁØÈ÷ À²²ÄÀ´ ·ÔÀÌ»Â ¿ÍÀÌ ¿¡Àå µü·£¿Ô Ä£ÇØÁú ³ö ÀÖ±î°ä. ¾×¸·Áö·· À²²ÄÀÌ ·¶ÀÌ ºé±î¿¡ÁÒ..	</uvvwrmt>
+		<sfmgrmt>	Æ÷Æ÷·ºÀµ ±½ºð±»Ç®¸Î Æ÷È¶ÇÒ ³ö ÀÖ±î°ä. ÃÊ¸ÏÇ®À´ ÀâÀ··é ¿¡½û ±½ºð±» Ç®ÀÌ ¼ª°ÀÁö°ä.	</sfmgrmt>
+		<sfmgrmt>	º¥ÀúÆ® °ïÇÁ ´õ¼¢»Â Àß ·´·¿ ´À»Ù¾Í·¦ ÁÁ±ÆÇØ°ä. ÆÄÀÌ±î¸º²µÄÌÀÌ ¿¡½û ÁÖ»Â ´À»Ù¾ÍÀÌÁÒ.	</sfmgrmt>
+		<wzmtvi>	Á¹²ÉÇÏ³³°ä! ÁÖÀÎ»ÔÀÌ Á×À··é ÁÖÀÎ»Ô¿úÀÇ Ä£¶Ðºººº ¼¸±ÆÁø»ä»Ï»Ù.	</wzmtvi>
+		<wzmtvi>	ÁÖÀÎ»Ô½½ Æ÷³ÇÀÌ ÇÊ°äÇÏºí, Àú°¡¿Ôºº À²²ÄÀÌ ÇÊ°äÇØ°ä.	</wzmtvi>
+		<wvzw>	ÆêÀµ Á×Áö»Â ±ÊÁö··, Ä£¶Ðºº¿¡ ¼Ê¶« ¼¸À··é ÁÖÀÎ»Ô ¿çÀ´ ¹¿¼ª¿Ô ºÈ»ä»Ï»Ù.	</wvzw>
+		<wvzw>	Ä£¶Ðºº»Â ÁÖÀÎ»ÔÀÌ Á×±úÀ´ ¹§, À²²ÄÀ´ ¼Ê¶« ·¶ÀÌ ·ÔÀÏ ¹§, ¶è¿íÇÂ ´óÅÂ¸Î ¶æÄ¡ÇÒ ¹§°¡ ¼¸±ÆÁ®°ä.	</wvzw>
+		<hgzmw>	À²²ÄÀ´ ÁÖ¿í ²ÍÀ·²Ã»Ù·é, Àú·¦ ·¹°ì²µ °À·¥ÂÊ ¶öÆ¿À·¸Î Å¬·¯ÇÏ¿í ·ÔÀÌ ÁÖ¾â·¦ ³¾ÅÃÇØÁÖ³³°ä. Àú»Â ´ç¿úÁê²µ·· ·Ô»Â»ä»Ï»Ù.	</hgzmw>
+		<hgzmw>	Àú°¡»ë¿í ·¹°ì²µ °À·¥ÂÊ ¶öÆ¿ Å¬·¯, Kvg ´óÅÂ µ·¾â·¦ ³¾ÅÃÇÏ·é Àú°¡ »ëÇÑ »Ù±çÇÑ Á¤µ··¦ µ³ ³ö ÀÖ±î°ä.	</hgzmw>
+		<hgzmw>	Á¦ °ø¸¡ ÀÌ·§Àµ Ç½¼´¾â Æ÷·ºÀÌÁö··, °øÇÏ²Å»Ù·é Á¦ ±ÖÄªÀ´ ´õ¸Î Áö±îÁÖ²Ç ³ö ÀÖ±î°ä. 	</hgzmw>
+		<hgzmw>	Ä£¶Ðºº¿¡ ÀýÄ£ÀÌ ºÇ·é ÁøÈ­·Þ»µ¿¡ ¼ª°Â»ä»Ï»Ù. Àú»Â ±È¼´°ªÀÏ ´ÓÀÌ¹ó ÁøÈ­ÇÒ ³ö ±øÁö··°ä¡¦ 	</hgzmw>
+		<hgzmw>	±Ë¸Î ºÇº¶·®·é, Àú»Â ÁÖÀÎ»Ô ÀÎµ¥Åä·®ÀÇ ÀåµñÃ¢°¡ ºé±î¿£»ä»Ï»Ù. 	</hgzmw>
+		<hgzmw>	ÆêÀ´ µÎÈ­²ÃÅ¿¸Á·é ÈÞ»ë°ë ±Ë µÎÈ­¾â¿¡ ÇÊ°äÇØ°ä. ¿¢ ·¹À´°¡³­ ÆÈÁö··, ¿¡¿ÝÀÌ 1··Á¦»Ï¼ª ÇÑ»ä»Ï»Ù.	</hgzmw>
+		<hgzmw>	±Ë¸Î ºÇº¶·¿ ÈÄ°¡ »Ù·¥ ÁÖÀÎ»Ô½½ µ·¼± ³öºº ÀÖ±î°ä. »Ù·¥ ÁÖÀÎ»Ô°¡¿Ô ¿¡»õ¹óºº Á¦ ÀÌ·§¿ú Ä£¶Ðºº»Â ¾×»ë¸Î¹ø»Ï»Ù.	</hgzmw>
+		<xlmmvxg>	±î³­°À³³°ä. ÁÖÀÎ»Ô. Æê°¡ »ëÇØ³­ ³Ò¿¼·¦ ÇØÁÙ Ç½¼´¾âÆ÷·ºÀÔ»Ï»Ù.	</xlmmvxg>
+		<xlmmvxg>	··µ¶ºº·¦ ÁÖÀÇ ¾í¿Ô µ·³³°ä. ¶è¿íÇÃ ¹§°¡»Â Ä£¶Ðºº¿¡ Á¹¾Ý±° ¼¸±ÆÁ®°ä.	</xlmmvxg>
+		<ovevofk>	ÆêÀµ ¸¶µ§±÷Àµ ÇÏÁö ±ÊÁö··, Ä£¶Ðºº¿¡ ¼ô±ÆÁö·é ÁÖÀÎ»Ô½½ »É¸ÂÀ´ µ·ÅÂ ºå·¾ ³ö ÀÖ»ä»Ï»Ù.	</ovevofk>
+		<ovevofk>	¶è¿íÇÃ¹§ À²²ÄÀ´ ·ÔÀ··é Ä£¶Ðºº¿¡ ¼ô±ÆÁö¿í, Ä£¶Ðºº¿¡ ¼ô±ÆÁö·é µ·ÅÂºå·®»Â »É¸ÂÄ¡ºº ¼ô±ÆÁ®°ä!	</ovevofk>
+		<kviuli_1>	ÆÛÆ÷·Õ²µ»Â ÀýÄ£ ´óÅÂ°¡·· µ³ ³ö ÀÖ»ä»Ï»Ù. Àú»Â ±È¼´°ªÀÌ¹ó °¶°Ü°¶°ä!	</kviuli_1>
+		<kviuli_2>	ÆÛÆ÷·Õ²µ¸Î ÆêÀÌ ºÈ ·ó²µÅÍºéÀÇ ´ö»Ù·¥ ³µ¿ÝÀ´ µ³ ³ö ÀÖ±î°ä. ·ó²µÅÍÀÏ ¹§°£ µ·Áö ·øÇß»ø ·ð²ÀÀÌÁÒ.	</kviuli_2>
+		<kviuli_3>	ÆÛÆ÷·Õ²µ»Â ±Æ¶«¸¾ °ªÇÒºº ÇÏÁö»Â ±Ê±Æ°ä. ¾×Àú °ì·®ºéÀÇ ´ö»Ù·¥ ·ð²ÀÀ´ µ·°©ÁÙ ´ÓÀÌ¹ø»Ï»Ù.	</kviuli_3>
+		<kviuli_h>	ÆÛÆ÷·Õ²µ¿¡ ±ø»Â ·ó²µÅÍºº ÀÖ±î°ä. ¶«¹Ò¹ÒÇÑ Ä£¾·ºéÀÌÁö··, ¾×¸¡ºº ±Æ½·ÁÖ³³°ä.	</kviuli_h>
+	</mlgrmt>			
+	<ufoo>			
+		<uvvwrmt>	¶èµÎ·¦ ¹§°¡»Â À²²ÄÀ´ ÁÖ·é ±ÈºÅ°ä. Ä£¶Ðºº¿¡ ¼¸±ÆÁø»ä»Ï»Ù.	</uvvwrmt>
+		<uvvwrmt>	¿¡Àå ²¾¿Ô ÆêÀÌ ¹¿¼ª»Â ¶æ¶ýÀµ, ¶èµÎ·¦ ¹§ À²²ÄÀ´ ¿è³ÓÇØ³­ ÁÖ»Â¿ÅÁÒ.. ¾î»Ù¸Ó»Ù¿í ¼Ê¶« ²È±îÇÏÁö ·´±ÆÁÖ³³°ä.	</uvvwrmt>
+		<sfmgrmt>	¿¡½û ÀÌµ¥Æ®¸Î ±òÀ´ ³ö ÀÖ»Â Æê ¾¼È¯ ÄíÆù°¡»Â »Ù±çÇÑ Æê Æ÷È¶°ë ±ÆÀÌÅÛÀÌ ºé±î ÀÖ»ä»Ï»Ù.	</sfmgrmt>
+		<sfmgrmt>	ÆêÀÌ ÁøÈ­ÇÒ ¹§°£ »Ù±çÇÑ ±ÆÀÌÅÛÀ´ ÇÊ°ä¸Î ÇÑ»ä»Ï»Ù. ÁøÈ­¿¡ ¿¡»ÉÇÑ ÀýÄ£ÀÎ ÆêÀ´ »©·£·é Àç¸á·¦ È®ÀÎÇÒ ³ö ÀÖ±î°ä.	</sfmgrmt>
+		<wzmtvi>	Á¹²ÉÇÏ³³°ä! ÁÖÀÎ»ÔÀÌ Á×À··é ÁÖÀÎ»Ô¿úÀÇ Ä£¶Ðºººº ¼¸±ÆÁø»ä»Ï»Ù.	</wzmtvi>
+		<wzmtvi>	ÁÖÀÎ»ÔÀÌ Á×Áö·· ±Ê»Â»Ù·é, ÀüÅõ·¦ ·¶ÀÌ ÇÏ»õ¹óºº Ä£¶Ðºº¿¡ ¼¸±ÆÁö»Â ÀÏÀµ ±ø±î°ä.	</wzmtvi>
+		<wvzw>	ÆêÀµ Á×Áö»Â ±ÊÁö··, Ä£¶Ðºº¿¡ ¼Ê¶« ¼¸À··é ÁÖÀÎ»Ô ¿çÀ´ ¹¿¼ª¿Ô ºÈ»ä»Ï»Ù.	</wvzw>
+		<wvzw>	Ä£¶Ðºº»Â ÁÖÀÎ»ÔÀÌ Á×±úÀ´ ¹§, À²²ÄÀ´ ¼Ê¶« ·¶ÀÌ ·ÔÀÏ ¹§, ¶è¿íÇÂ ´óÅÂ¸Î ¶æÄ¡ÇÒ ¹§°¡ ¼¸±ÆÁ®°ä.	</wvzw>
+		<hgzmw>	¶èµÎ·¦ ¹§°£ À²²ÄÀ´ ÁÖÁö ·¹³³°ä. °ÀÈ÷¸Á Ä£¶Ðºº¿¡ ¹¼±îÁø»ä»Ï»Ù.	</hgzmw>
+		<hgzmw>	Ä£¶Ðºº¿¡ ÀýÄ£ÀÌ ºÇÁö ±ÊÀ··é ÆêÀµ ±Æ¶« ·´ºº ÇÏÁö ±Ê»Â »ä»Ï»Ù. Àú»Â ±È¼´°ªÀÌ¹ó³­ °¶°Ü°¶°ä!	</hgzmw>
+		<hgzmw>	Ä£¶Ðºº¿¡ ¼¸À··é ÆêÀÌ ÁÖÀÎ»ÔÀ´ ¹¿¼¯ ³ö ÀÖ±î°ä.. ½À Á¹²ÉÇØÁÖ³³°ä. Àú»Â ±È¼´°ªÀÌ¹ó ¹¿¼ªÁö ±Ê»Â »ä»Ï»Ù.	</hgzmw>
+		<hgzmw>	³­·Ô³­·ÔÇÑ ´óÅÂ°¡³­»Â ·ÔÀÌ·¦ Áàºº ¾×»ÙÁö ÁÁÁö ±ÊÀµ Ç¥Á¤ÀÌ°¡°ä. ¾×¸·Áö·· ³ÓÀ·¸Î»Â ¿í·¹°öÇÏ¿í ÀÖ±î°ä.	</hgzmw>
+		<hgzmw>	ÆêÇªºå»Â ·¶Àµ ÆêºéÀÌ ÁÁ±ÆÇÏ»Â ·ÔÀÌ°¡°ä. ¶è¿íÇÃ¹§ ½À Ã¬¿ÜÁÖ³³°ä.	</hgzmw>
+		<hgzmw>	Æê ±×³³³­·®, ÆêÇªºå, ÈÞ»ë°ë ±Ë µÎÈ­¾â»Â ¿¢ ·¹À´°¡ ÀÖ»Â Å×ÀÌ¶Ö ´óÀÎÀÌ ÆÇ·ÅÇÑ»ä»Ï»Ù.	</hgzmw>
+		<hgzmw>	Àúºº Æ÷·ºÀ·¸Î ÁøÈ­ÇÒ ³ö ÀÖÀ··é ÁÁ¿Ú¼×°ä.. Ç½¼´¾â°¡³­ ¸¶µ§±÷!	</hgzmw>
+		<xlmmvxg>	±î³­°À³³°ä. ÁÖÀÎ»Ô. Æê°¡ »ëÇØ³­ ³Ò¿¼·¦ ÇØÁÙ Ç½¼´¾âÆ÷·ºÀÔ»Ï»Ù.	</xlmmvxg>
+		<xlmmvxg>	··µ¶ºº·¦ ÁÖÀÇ ¾í¿Ô µ·³³°ä. ¶è¿íÇÃ ¹§°¡»Â Ä£¶Ðºº¿¡ Á¹¾Ý±° ¼¸±ÆÁ®°ä.	</xlmmvxg>
+		<ovevofk>	ÆêÀµ ¸¶µ§±÷Àµ ÇÏÁö ±ÊÁö··, Ä£¶Ðºº¿¡ ¼ô±ÆÁö·é ÁÖÀÎ»Ô½½ »É¸ÂÀ´ µ·ÅÂ ºå·¾ ³ö ÀÖ»ä»Ï»Ù.	</ovevofk>
+		<ovevofk>	¶è¿íÇÃ¹§ À²²ÄÀ´ ·ÔÀ··é Ä£¶Ðºº¿¡ ¼ô±ÆÁö¿í, Ä£¶Ðºº¿¡ ¼ô±ÆÁö·é µ·ÅÂºå·®»Â »É¸ÂÄ¡ºº ¼ô±ÆÁ®°ä!	</ovevofk>
+		<kviuli_1>	ÆÛÆ÷·Õ²µ»Â ÀýÄ£ ´óÅÂ°¡·· µ³ ³ö ÀÖ»ä»Ï»Ù. Àú»Â ±È¼´°ªÀÌ¹ó °¶°Ü°¶°ä!	</kviuli_1>
+		<kviuli_2>	ÆÛÆ÷·Õ²µ¸Î ÆêÀÌ ºÈ ·ó²µÅÍºéÀÇ ´ö»Ù·¥ ³µ¿ÝÀ´ µ³ ³ö ÀÖ±î°ä. ·ó²µÅÍÀÏ ¹§°£ µ·Áö ·øÇß»ø ·ð²ÀÀÌÁÒ.	</kviuli_2>
+		<kviuli_3>	ÆÛÆ÷·Õ²µ»Â ±Æ¶«¸¾ °ªÇÒºº ÇÏÁö»Â ±Ê±Æ°ä. ¾×Àú °ì·®ºéÀÇ ´ö»Ù·¥ ·ð²ÀÀ´ µ·°©ÁÙ ´ÓÀÌ¹ø»Ï»Ù.	</kviuli_3>
+		<kviuli_h>	ÆÛÆ÷·Õ²µ¿¡ ±ø»Â ·ó²µÅÍºº ÀÖ±î°ä. ¶«¹Ò¹ÒÇÑ Ä£¾·ºéÀÌÁö··, ¾×¸¡ºº ±Æ½·ÁÖ³³°ä.	</kviuli_h>
+	</ufoo>			
+	<hl_ufoo>			
+		<uvvwrmt>	¶èµÎ·¦ ¹§°¡»Â À²²ÄÀ´ ÁÖ·é ±ÈºÅ°ä. Ä£¶Ðºº¿¡ ¼¸±ÆÁø»ä»Ï»Ù.	</uvvwrmt>
+		<uvvwrmt>	¿¡Àå ²¾¿Ô ÆêÀÌ ¹¿¼ª»Â ¶æ¶ýÀµ, ¶èµÎ·¦ ¹§ À²²ÄÀ´ ¿è³ÓÇØ³­ ÁÖ»Â¿ÅÁÒ.. ¾î»Ù¸Ó»Ù¿í ¼Ê¶« ²È±îÇÏÁö ·´±ÆÁÖ³³°ä.	</uvvwrmt>
+		<sfmgrmt>	Æê Æ÷È¶°ë ±ÆÀÌÅÛÀ´ ±ò±úÀ··é, ´ç°ë ÇÑ »ÙÀ² Æ÷È¶ÇÒ ·ó²µÅÍ·¦ Å¬·¯ÇØµ·³³°ä. Hfxxvhh¿¡ ¼ª°À·é ³µ¿ø!	</sfmgrmt>
+		<sfmgrmt>	Æê Æ÷È¶°ë ±ÆÀÌÅÛÀµ ±Ëµ£·£Å·, ÀÌÁî¸çºå, ÄÚ·ðººÀÇ MKX°¡¿Ô ±ÆÀÌÅÛÀ´ ÁÖ¿í ¾¼È¯ÇÒ ³öºº ÀÖ±î°ä.	</sfmgrmt>
+		<wzmtvi>	Á¹²ÉÇÏ³³°ä! ÁÖÀÎ»ÔÀÌ Á×À··é ÁÖÀÎ»Ô¿úÀÇ Ä£¶Ðºººº ¼¸±ÆÁø»ä»Ï»Ù.	</wzmtvi>
+		<wzmtvi>	ÁÖÀÎ»ÔÀÌ Á×Áö·· ±Ê»Â»Ù·é, ÀüÅõ·¦ ·¶ÀÌ ÇÏ»õ¹óºº Ä£¶Ðºº¿¡ ¼¸±ÆÁö»Â ÀÏÀµ ±ø±î°ä.	</wzmtvi>
+		<wvzw>	ÆêÀµ Á×Áö»Â ±ÊÁö··, Ä£¶Ðºº¿¡ ¼Ê¶« ¼¸À··é ÁÖÀÎ»Ô ¿çÀ´ ¹¿¼ª¿Ô ºÈ»ä»Ï»Ù.	</wvzw>
+		<wvzw>	Ä£¶Ðºº»Â ÁÖÀÎ»ÔÀÌ Á×±úÀ´ ¹§, À²²ÄÀ´ ¼Ê¶« ·¶ÀÌ ·ÔÀÏ ¹§, ¶è¿íÇÂ ´óÅÂ¸Î ¶æÄ¡ÇÒ ¹§°¡ ¼¸±ÆÁ®°ä.	</wvzw>
+		<hgzmw>	¶èµÎ·¦ ¹§°£ À²²ÄÀ´ ÁÖÁö ·¹³³°ä. °ÀÈ÷¸Á Ä£¶Ðºº¿¡ ¹¼±îÁø»ä»Ï»Ù.	</hgzmw>
+		<hgzmw>	Æ÷È¶À´ ÀßÇÏ»Â ¶æ¶ýÀÌ°ä? Æ÷È¶ÇÒ ·ó²µÅÍÀÇ SK¿¡ ¼¸À´ ³ö¸Ï ÁÁÁö··, ¾× °Ü°¡»Â °î¶Û°¡»Â ±ø»ä»Ï»Ù..	</hgzmw>
+		<hgzmw>	ÁøÈ­ºÈ ÆêÀµ ·ÔÀÌ·¦ ÀÚº°ÁÖ¾â ÇÒ ³ö ÀÖ±î°ä! ¾×¸·Áö·· ¶æÄ¡ÇØ¼õ¿í ¶æ²ÉÇÏ»Ù¿¡, ·ÔÀÌ¿¡ »Ù ¹¼±îÁö·é ¿ï¹õÇØÁ®°ä.	</hgzmw>
+		<hgzmw>	ÁøÈ­ºÈ ÆêÀµ Ä£¶Ðºº¿¡ ÃºÃºÈ÷ ¹¼±îÁ®°ä. ¾×¸·Áö·· Ä£¶Ðºº·¦ °Ã·®»Â ¿Íºº Èûºé»ä»Ï»Ù.	</hgzmw>
+		<hgzmw>	±î¹½ ÆêºéÀµ 2Á±¸ùÀÇ ÆêÀ·¸Î ÁøÈ­ºº ¿¡»ÉÇØ°ä. ±î¹½ ·ó²µÅÍ¸Î µ¯ÇÏ»À¼Ä°¡ ºû¹ó Àç¸áºº »Þ¹óÁø»ä»Ï»Ù.	</hgzmw>
+		<hgzmw>	ÁøÈ­·¦ ·¹Ä£ ÆêÀµ ³­·Ô³­·ÔÇØÁö¿í ¶èºº ¿íÇÂ ´óÅÂ¹ø»Ï»Ù. µ¯È­»Â Ç×´ó Èûºç¿¡µÁ°ä..	</hgzmw>
+		<xlmmvxg>	±î³­°À³³°ä. ÁÖÀÎ»Ô. Æê°¡ »ëÇØ³­ ³Ò¿¼·¦ ÇØÁÙ Ç½¼´¾âÆ÷·ºÀÔ»Ï»Ù.	</xlmmvxg>
+		<xlmmvxg>	··µ¶ºº·¦ ÁÖÀÇ ¾í¿Ô µ·³³°ä. ¶è¿íÇÃ ¹§°¡»Â Ä£¶Ðºº¿¡ Á¹¾Ý±° ¼¸±ÆÁ®°ä.	</xlmmvxg>
+		<ovevofk>	ÆêÀµ ¸¶µ§±÷Àµ ÇÏÁö ±ÊÁö··, Ä£¶Ðºº¿¡ ¼ô±ÆÁö·é ÁÖÀÎ»Ô½½ »É¸ÂÀ´ µ·ÅÂ ºå·¾ ³ö ÀÖ»ä»Ï»Ù.	</ovevofk>
+		<ovevofk>	¶è¿íÇÃ¹§ À²²ÄÀ´ ·ÔÀ··é Ä£¶Ðºº¿¡ ¼ô±ÆÁö¿í, Ä£¶Ðºº¿¡ ¼ô±ÆÁö·é µ·ÅÂºå·®»Â »É¸ÂÄ¡ºº ¼ô±ÆÁ®°ä!	</ovevofk>
+		<kviuli_1>	ÆÛÆ÷·Õ²µ»Â ÀýÄ£ ´óÅÂ°¡·· µ³ ³ö ÀÖ»ä»Ï»Ù. Àú»Â ±È¼´°ªÀÌ¹ó °¶°Ü°¶°ä!	</kviuli_1>
+		<kviuli_2>	ÆÛÆ÷·Õ²µ¸Î ÆêÀÌ ºÈ ·ó²µÅÍºéÀÇ ´ö»Ù·¥ ³µ¿ÝÀ´ µ³ ³ö ÀÖ±î°ä. ·ó²µÅÍÀÏ ¹§°£ µ·Áö ·øÇß»ø ·ð²ÀÀÌÁÒ.	</kviuli_2>
+		<kviuli_3>	ÆÛÆ÷·Õ²µ»Â ±Æ¶«¸¾ °ªÇÒºº ÇÏÁö»Â ±Ê±Æ°ä. ¾×Àú °ì·®ºéÀÇ ´ö»Ù·¥ ·ð²ÀÀ´ µ·°©ÁÙ ´ÓÀÌ¹ø»Ï»Ù.	</kviuli_3>
+		<kviuli_h>	ÆÛÆ÷·Õ²µ¿¡ ±ø»Â ·ó²µÅÍºº ÀÖ±î°ä. ¶«¹Ò¹ÒÇÑ Ä£¾·ºéÀÌÁö··, ¾×¸¡ºº ±Æ½·ÁÖ³³°ä.	</kviuli_h>
+	</hl_ufoo>			
+</ORGGOV_KLIRMT>				
 <YOFV_FMRXLIM>
 	<sfmtib>
 		<uvvwrmt>	ÇÏ·¹ÅÍ·é ¾×»ë°Í ¼ªÀÇ ¿í·®¿¡ ½÷±îÁú ´¸ Çßºº»Ù. ÀÌ¿É¸Î »Ù²Ã °¬ÀåÀÎ¿¡.. 	</uvvwrmt>
@@ -9210,4 +9234,3997 @@
 		</hl_ufoo>
 
 	</srts_lix>
+	<ORGGOV_RHRH>
+
+		<sfmtib>
+			<uvvwrmt>	¼Ê¶« »Ê¿Ô ÁÖ²Å ¿Ç ±Æ»Ñ¿¡°ä? Èï!	</uvvwrmt>
+			<wvzw>	Èï.. »©°ì²Ã»Ï ³ÓÀµ ÆíÇÏ²Ã¿Ú¼×°ä?	</wvzw>
+			<hgzmw>	...°äÁò ¶Ø°¡ ±ÖºéÀÌ ÀÌ´ó ÇÕ»Ï»Ù...	</hgzmw>
+			<hgzmw>	¶¶ ÀØÀ·²Å ¿Å ±ø¼ª°ä?	</hgzmw>
+			<ovevofk>	¸¶µ§±÷ºº ÁÁÁö·· Àú°¡¿Ôºº ²Å¿æÀ´ Á´ ²áÁÖ³³°ä.	</ovevofk>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	ÁÁ¾µ°ä. Àß ·Ô¿Ú²À»Ï»Ù. 	</uvvwrmt>
+			<wvzw>	À·À²;; ¾×¸¯»Ï¾î Á¹²ÉÇÏ³Å±ßÁÒ.	</wvzw>
+			<hgzmw>	ÁÖÀÎ»ÔÀµ ÃâÃâÇÒ ¹§ ÁÖ¸Î ¶´ ºå²Ã¼ª°ä???	</hgzmw>
+			<ovevofk>	ÀÌ Á¤ºº¸Ð µÎÁ¸ÇØ°ä. »õ µÐ¶ßÇØÁÖ³³°ä.	</ovevofk>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	¿¿ÀÌ ·Ô±î°ä¡¦¢Ü	</uvvwrmt>
+			<wvzw>	ÁÖµ¯°¡ ºº°òÀ´ °äÃ´ ÇØµ·ºº¸Ï ÇÏÁö°ä..	</wvzw>
+			<hgzmw>	ÁÖÀÎ»Ô. ´ç¼É°ë ¶¿Ç¿Àµ »Ù Ã¬¾â³Ì¿ÚÁÒ??	</hgzmw>
+			<hgzmw>	·¹¶ýÀÇ ÈûÀµ ÂüÀ·¸Î ²Åµñ¸Ó¾µ°ä.	</hgzmw>
+			<hgzmw>	ÀÌÀüµ·»Ù ±Æ¸¡°¡³­ µ·»Â ³³´óÀÌ¹õ ÀÌ¸¾ ¿ÍÀÌ±ú¾µ°ä.	</hgzmw>
+			<ovevofk>	·ñÇ¥°¡ Á¹¾Ý±° ¿¡¾î°ö Áö²Ã»Â¾µ°ä.	</ovevofk>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	·ö·Å¿ü·® ÇØ±ß ÇÏ»Âº¥.. ±Ñ; ºé¸È¼ª°ä?	</uvvwrmt>
+			<wvzw>	...±îÂ° ³ö ±øÁö°ä...Èû¼´²Ã¹ó»Â ·´¶Û°¡»Â...	</wvzw>
+			<hgzmw>	ÁÖÀÎ»Ô. ´ç¼É°ë ¶¿Ç¿Àµ »Ù Ã¬¾â³Ì¿ÚÁÒ??	</hgzmw>
+			<hgzmw>	·¹¶ýÀÇ ÈûÀµ ÂüÀ·¸Î ²Åµñ¸Ó¾µ°ä.	</hgzmw>
+			<hgzmw>	ÀÌÀüµ·»Ù ±Æ¸¡°¡³­ µ·»Â ³³´óÀÌ¹õ ÀÌ¸¾ ¿ÍÀÌ±ú¾µ°ä.	</hgzmw>
+			<hgzmw>	...Èû¼´³³°ä. ÀÌ ÀÌ²Ã²µ¿¡ °¸°¡³­ µ·ÁÂÇÏ¿Ú²À»Ï»Ù.. ÆÄÀÌÆÃ!!	</hgzmw>
+			<ovevofk>	ÈÄÈÊ... °ª²Ã ÁÖÀÎ»ÔÀÌ²Ã¾µ°ä. ÃàÇÏºå·¼»Ï»Ù.	</ovevofk>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	°äÁò ½°·® ´ìÀÌ µÙ»Â ºí ÇÑº¥...»ÙÀÌ±îÆ®·¦ ÇØ±ß ÇÏ»Ï ²Å¿æ²áÁÖ³³°ä.	</uvvwrmt>
+			<wvzw>	...±îÂ° ³ö ±øÁö°ä...Èû¼´²Ã¹ó»Â ·´¶Û°¡»Â...	</wvzw>
+			<hgzmw>	ÁÖÀÎ»Ô. ´ç¼É°ë ¶¿Ç¿Àµ »Ù Ã¬¾â³Ì¿ÚÁÒ??	</hgzmw>
+			<hgzmw>	·¹¶ýÀÇ ÈûÀµ ÂüÀ·¸Î ²Åµñ¸Ó¾µ°ä.	</hgzmw>
+			<hgzmw>	ÀÌÀüµ·»Ù ±Æ¸¡°¡³­ µ·»Â ³³´óÀÌ¹õ ÀÌ¸¾ ¿ÍÀÌ±ú¾µ°ä.	</hgzmw>
+			<hgzmw>	...Èû¼´³³°ä. ÀÌ ÀÌ²Ã²µ¿¡ °¸°¡³­ µ·ÁÂÇÏ¿Ú²À»Ï»Ù.. ÆÄÀÌÆÃ!!	</hgzmw>
+			<ovevofk>	ÈÄÈÊ... ÁÖÀÎ»ÔÀ·¸Î ³¹¾â¾â·¦ ÀßÇß¾µ°ä. ÃàÇÏ ºå·¼»Ï»Ù¢Ü	</ovevofk>
+		</hl_ufoo>
+
+	</ORGGOV_RHRH>
+	<wi_vttirmt>
+
+		<sfmtib>
+			<uvvwrmt>	¿í·¹°ö°ä°Ë~ (°ì Àû °ì Àû)	</uvvwrmt>
+			<wvzw>	È÷À× ¤Ì¤Ì, ¶äÀÌ¹óºº ¶Ì·® ÁÖÂ¡..	</wvzw>
+			<hgzmw>	.¶äÁÖ³³°ä°À°Ë.. ¤Ð ¤º¤Ð)/	</hgzmw>
+			<ovevofk>	¸¶µ§±÷ºº ÇßÀ·»Ï ¼ª ¶ä ÇÑ ¶ø ÁÖ·é ±È»ë°ä°À°Ë?	</ovevofk>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	¿í·¹°ö°ä°Ë~¢±	</uvvwrmt>
+			<wvzw>	¶äºº ±ÈÁÖ¿í Á×À··é ±îÄÉ°ä°À°Ë..¤Ð.¤Ð...	</wvzw>
+			<hgzmw>	¶è¿íÇÁ»Ù°ä°À°Ë ¤Ì ¤º¤Ì)z	</hgzmw>
+			<ovevofk>	¸¶µ§±÷ºº ÇßÀ·»Ï ÀÌÁ¦ ¿¿ÀÌ ¶ä·Ô±î°ä°À°Ë = ¤º=)/	</ovevofk>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	Àß ·Ô±úÀ·°ä°À°Ë¢Ý	</uvvwrmt>
+			<wvzw>	ÁÖÀÎ»Ô Á´ ´ì¸ÁÁÖ³³°ä°À°Ë !! ¤¸ ¤º¤¸)/	</wvzw>
+			<hgzmw>	ÆäÄÚ±ËÀ´ ÁÖ°ö·Ô»Ùµ·»Ï ÀÌ¸·¿Ô ºÇ±úÁö°ä°À°Ë...	</hgzmw>
+			<hgzmw>	°À»ÃÀµ ¶¶ÇÏ¿í ¼î¿Ç¿¡°ä°Ë? *= ¤º=)z	</hgzmw>
+			<hgzmw>	»õ°î ¿÷°¡ ÀÖÀ··é ÀÍ±î¶ö·¾Áö ·ô¹ó°ä°À°Ë	</hgzmw>
+			<ovevofk>	°À°Ë~! O V E V O F K ! 	</ovevofk>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	°¡¾×·ºÀÌ»Â »õ ÀÌ´ó ·ø ·ÔÀ´ ¿Í ¿¿±Æ°ä°À°Ë.. ¤Ì ¤º¤Ì)	</uvvwrmt>
+			<wvzw>	ÁÖÀÎ»Ô Á´ ´ì¸ÁÁÖ³³°ä°À°Ë !! ¤¸ ¤º¤¸)/	</wvzw>
+			<hgzmw>	ÆäÄÚ±ËÀ´ ÁÖ°ö·Ô»Ùµ·»Ï ÀÌ¸·¿Ô ºÇ±úÁö°ä°À°Ë...	</hgzmw>
+			<hgzmw>	°À»ÃÀµ ¶¶ÇÏ¿í ¼î¿Ç¿¡°ä°Ë? *= ¤º=)z	</hgzmw>
+			<hgzmw>	»õ°î ¿÷°¡ ÀÖÀ··é ÀÍ±î¶ö·¾Áö ·ô¹ó°ä°À°Ë	</hgzmw>
+			<hgzmw>	º¥Çò¢Ý °À»ÃÀµ ¾âµÐÀÌ ÁÁ±Æµ·°©°ä°À°Ë~~	</hgzmw>
+			<ovevofk>	Ãº´ç°¶°ä°À°Ë !! ¤¸ ¤º¤¸)/	</ovevofk>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	°¡¾×·ºÀÌ»Â »õ ÀÌ´ó ·ø ·ÔÀ´ ¿Í ¿¿±Æ°ä°À°Ë.. ¤Ì ¤º¤Ì)	</uvvwrmt>
+			<wvzw>	ÁÖÀÎ»Ô Á´ ´ì¸ÁÁÖ³³°ä°À°Ë !! ¤¸ ¤º¤¸)/	</wvzw>
+			<hgzmw>	ÆäÄÚ±ËÀ´ ÁÖ°ö·Ô»Ùµ·»Ï ÀÌ¸·¿Ô ºÇ±úÁö°ä°À°Ë...	</hgzmw>
+			<hgzmw>	°À»ÃÀµ ¶¶ÇÏ¿í ¼î¿Ç¿¡°ä°Ë? *= ¤º=)z	</hgzmw>
+			<hgzmw>	»õ°î ¿÷°¡ ÀÖÀ··é ÀÍ±î¶ö·¾Áö ·ô¹ó°ä°À°Ë	</hgzmw>
+			<hgzmw>	º¥Çò¢Ý °À»ÃÀµ ¾âµÐÀÌ ÁÁ±Æµ·°©°ä°À°Ë~~	</hgzmw>
+			<ovevofk>	Ãº´ç°¶°ä°À°Ë !! ¤¸ ¤º¤¸)/	</ovevofk>
+		</hl_ufoo>
+
+	</wi_vttirmt>
+	<zmtvormt>
+
+		<sfmtib>
+			<uvvwrmt>	°ä°À°À!!! ¼Ñ¼Ñ ·Ô¿íÆÍ±î·º~~ ^-^/	</uvvwrmt>
+			<wvzw>	¾×¸¯¾æ¸¡ ¼ª ¶äÁáÀ··é ¾¦Âú±Ò»Ù·º~	</wvzw>
+			<hgzmw>	..¼ª..¼ª ¶è¿¡ ¿íÇÁ»Ù·º...¤Ð¤Ð..	</hgzmw>
+			<ovevofk>	È¥ÀÚ·· ¾âµÐ ÁÁÄí... ¶Ó»Ù·º~!	</ovevofk>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	½¥~ Àß·Ô¿Ú²À»Ï»Ù·º~	</uvvwrmt>
+			<wvzw>	¾×..¾×¸½ ÁÙ ±Ë±Ò»Ù·º~	</wvzw>
+			<hgzmw>	³­ ÀÖÁö·· ·´¿í ¶ä Á´ Áà·º~	</hgzmw>
+			<ovevofk>	¸¶µ§°Ã¸ÈÀ·»Ï ÀÌÁ¦»Â ²Ä»ç¿¡»Â¿Å·º?~	</ovevofk>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	Àß·Ô¿Ú²À»Ï»Ù·º~~!	</uvvwrmt>
+			<wvzw>	¼Ê¶« ¶«·®°»»Ù·º..	</wvzw>
+			<hgzmw>	¢Ý~·®·®·º ·º·º~¢Ü ·®·®·®·®·º~¢Ü	</hgzmw>
+			<hgzmw>	±ÆÅ©°£Á©·ºµ·»Ù»Â ¼´¿¡ »õ ¿­ÇÏ»Ù·º ^_^*	</hgzmw>
+			<hgzmw>	°ª²Ã ·¹²µÅÍ·ºµ·»Ù»Â °£Á©·ºÀÌ »õ ÁÁ»Ù·º~	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù·º·º~ 	</ovevofk>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	ÀÌ¿Å ¼½¿ÜºººÇ¼ª·º?	</uvvwrmt>
+			<wvzw>	¼Ê¶« ¶«·®°»»Ù·º..	</wvzw>
+			<hgzmw>	¢Ý~·®·®·º ·º·º~¢Ü ·®·®·®·®·º~¢Ü	</hgzmw>
+			<hgzmw>	±ÆÅ©°£Á©·ºµ·»Ù»Â ¼´¿¡ »õ ¿­ÇÏ»Ù·º ^_^*	</hgzmw>
+			<hgzmw>	°ª²Ã ·¹²µÅÍ·ºµ·»Ù»Â °£Á©·ºÀÌ »õ ÁÁ»Ù·º~	</hgzmw>
+			<hgzmw>	È÷È÷ °À»ÃÀµ ¾âµÐÀÌ ¼Ñ¼Ñ ÁÁ±Æ·º*(^¤º^)*	</hgzmw>
+			<ovevofk>	ÁøÂ¥ Ãº´ç»Ù·º!!~	</ovevofk>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	¶è¿¡ ··¹¥ÀÌ»Ù·º! ¶è¿¡ ÅÍÁú ¿Í ¿¿»Ù·º - ¤º-)/	</uvvwrmt>
+			<wvzw>	¼Ê¶« ¶«·®°»»Ù·º..	</wvzw>
+			<hgzmw>	¢Ý~·®·®·º ·º·º~¢Ü ·®·®·®·®·º~¢Ü	</hgzmw>
+			<hgzmw>	±ÆÅ©°£Á©·ºµ·»Ù»Â ¼´¿¡ »õ ¿­ÇÏ»Ù·º ^_^*	</hgzmw>
+			<hgzmw>	°ª²Ã ·¹²µÅÍ·ºµ·»Ù»Â °£Á©·ºÀÌ »õ ÁÁ»Ù·º~	</hgzmw>
+			<hgzmw>	È÷È÷ °À»ÃÀµ ¾âµÐÀÌ ¼Ñ¼Ñ ÁÁ±Æ·º*(^¤º^)*	</hgzmw>
+			<ovevofk>	ÁøÂ¥ Ãº´ç»Ù·º!!~	</ovevofk>
+		</hl_ufoo>
+
+	</zmtvormt>
+	<zn_nfg>
+
+		<sfmtib>
+			<uvvwrmt>	±Æ~ ÁÖ ·À ÁÁ¾···~	</uvvwrmt>
+			<wvzw>	±îÀÌÄí !!	</wvzw>
+			<hgzmw>	¼´ ¶æ·ÁÀÌ¸Î ¶äÀ´ ··ºé±î¼± ³ø ±ø»Ù¾·	</hgzmw>
+			<ovevofk>	¸¶µ§±÷!! ¼´ ¶äºº Á´ !!	</ovevofk>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	·ö°¡ºº ÁÁ¿í ·Àºº ÁÁÀµ ¶ä¢Ý	</uvvwrmt>
+			<wvzw>	ÀÌµÁ, ¼´ ¶äÀµ ±îºð°¡ º×»ÂÁö ·´Àµ ÇØÁà -_-.. 	</wvzw>
+			<hgzmw>	¶è»Â ¿íÇÁ¿í.. ¶äÀµ ±ÈÁÖ¿í.. ÃÂ..	</hgzmw>
+			<ovevofk>	ÃàÇÏÇØ~ ÀÌÁ¦ ¶ä ·ÔÀ·¸¯ ¿¥½¨Áö?	</ovevofk>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	·Àºº ÀÖ¿í~ ·ö°¡ºº ÁÁ¿í~ ¾âµÐºº ÁÁ¿í¢Ý	</uvvwrmt>
+			<wvzw>	¡¦ (ÁÖ·¤)	</wvzw>
+			<hgzmw>	·ÅÀÏ ¶æ·ÁÀÌ ÈÖºÎ·£¾â 100È·!! ±É±Ò»Ù ÀÏ±î¼ª¾â 100È·!! Å©¿Ô °ô¾â 100È·!!	</hgzmw>
+			<hgzmw>	°Í... ¼´¿¡ ºº¾úµñ°»À´ ¹© ·´ÀÌÁö.. ÀÌ¸¾ ¿Ç ´ó´óºº ·øÇß»ø ÀÏÀÌ±ß!	</hgzmw>
+			<hgzmw>	¼­ ¾×¼É ºº¾úµñ°Í»Â »Ù·£»Ù¾·! ÀÌ ·ÁÅä·¦ µ··é ·ð·£¿Ú±î? 	</hgzmw>
+			<ovevofk>	°ì~°ö!!  	</ovevofk>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	ÀÌÁ¦ ¶èµÒ¸¯. ¾×·· Áà.. ¤Ì¤Ì	</uvvwrmt>
+			<wvzw>	¡¦ (ÁÖ·¤)	</wvzw>
+			<hgzmw>	·ÅÀÏ ¶æ·ÁÀÌ ÈÖºÎ·£¾â 100È·!! ±É±Ò»Ù ÀÏ±î¼ª¾â 100È·!! Å©¿Ô °ô¾â 100È·!!	</hgzmw>
+			<hgzmw>	°Í... ¼´¿¡ ºº¾úµñ°»À´ ¹© ·´ÀÌÁö.. ÀÌ¸¾ ¿Ç ´ó´óºº ·øÇß»ø ÀÏÀÌ±ß!	</hgzmw>
+			<hgzmw>	¼­ ¾×¼É ºº¾úµñ°Í»Â »Ù·£»Ù¾·! ÀÌ ·ÁÅä·¦ µ··é ·ð·£¿Ú±î? 	</hgzmw>
+			<hgzmw>	²»ÆÛ ºº¾úµñ, ±Ï ¶«Æ® ¼ª¿¡²Å»Ù~~	</hgzmw>
+			<ovevofk>	¼ÊÀÇ ¸¶µ§ ±÷Àµ ¼ª°¡¿Õ Å« ¾â´ÝÀÌÁö!	</ovevofk>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	¶è¿¡ µü±Æ±Ó!! ÇÏ¿í ÅÍÁú ¿Í¿¿»Ù¾·! 	</uvvwrmt>
+			<wvzw>	¡¦ (ÁÖ·¤)	</wvzw>
+			<hgzmw>	·ÅÀÏ ¶æ·ÁÀÌ ÈÖºÎ·£¾â 100È·!! ±É±Ò»Ù ÀÏ±î¼ª¾â 100È·!! Å©¿Ô °ô¾â 100È·!!	</hgzmw>
+			<hgzmw>	°Í... ¼´¿¡ ºº¾úµñ°»À´ ¹© ·´ÀÌÁö.. ÀÌ¸¾ ¿Ç ´ó´óºº ·øÇß»ø ÀÏÀÌ±ß!	</hgzmw>
+			<hgzmw>	¼­ ¾×¼É ºº¾úµñ°Í»Â »Ù·£»Ù¾·! ÀÌ ·ÁÅä·¦ µ··é ·ð·£¿Ú±î? 	</hgzmw>
+			<hgzmw>	²»ÆÛ ºº¾úµñ, ±Ï ¶«Æ® ¼ª¿¡²Å»Ù~~	</hgzmw>
+			<ovevofk>	¼ÊÀÇ ¸¶µ§ ±÷Àµ ¼ª°¡¿Õ Å« ¾â´ÝÀÌÁö!	</ovevofk>
+		</hl_ufoo>
+
+	</zn_nfg>	
+	<xslxl>
+
+		<sfmtib>
+			<uvvwrmt>	¶è¿íÆÍ±î ÃÝ~~¼­ Ç×´ó ¶è¿íÇÁ»Ù ÃÝ~~~	</uvvwrmt>
+			<wvzw>	¼ª ¶äÁÖ¿í Á×±î¹ó ÃÝ~ ¶è¿íÆÄ ÃÝ~ ¶è¿íÆÄ ÃÝ~	</wvzw>
+			<hgzmw>	±ÆÁÖ°ì~ ¶è¿¡ ¿íÆÄ³­.. ÈûÀÌ ±ø»Ù ÃÝ..	</hgzmw>
+			<ovevofk>	ÈïÈï~ ¸¶µ§±÷ ¾×··ÇÏ¿í ¶äÀ´ »Þ¹ó ÃÝ~	</ovevofk>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	¼ª ·¶ÀÌ ¶è¿íÆÍ±î ÃÝ~¤Ì¤Ì	</uvvwrmt>
+			<wvzw>	»Ù²Ã ÀÏ±î¼ª¹ó ÃÝ~ °Ö »©°öÀÖ¼ª ÃÝ~ 	</wvzw>
+			<hgzmw>ÀÌÁ¦ ¶ä·ÔÀ´ ¹§ ºÈ ¿Í ¿¿»Ù ÃÝ~¢Ü	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù ÃÝ~¢Ý ÀÌÁ¦ ¶ä·ÔÀÚ ÃÝ~¢Ü	</ovevofk>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	Àß ·Ô¿Ú»Ù ÃÝ~¡Ú	</uvvwrmt>
+			<wvzw>	°©¾ä Á¹¾Ý ¶«·®¿¡ ±Æ»Ñ¿¡ ÃÝ?? 	</wvzw>
+			<hgzmw>	¼­ ²£ ³ÓÀÇ ¿ø¾â·¦ ÁÁ±ÆÇÑ»Ù ÃÝ~~	</hgzmw>
+			<hgzmw>	±Æ±Æ~ ¼ª·¥¼ª·¥...ÇÑ³ûÀÚ¿í²Í»Ù ÃÝ~~ ¼¸Àá Á´ ÀÚ·é ±ÈºÇ¼Ä ÃÝ??	</hgzmw>
+			<hgzmw>	°ä°äºéÀÇ »ëÀåÀµ ¶Ù¸Î ¼ª¹ó¾· ÃÝ~¡Ú = ¤½=)/ 	</hgzmw>
+			<ovevofk>	¼£¼£~ ÃÖ¿í¸Î ·ÚÁö»Ù ÃÝ~¢Ý  	</ovevofk>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	ÃÝÄÚ°¡¿Ô ÇÔµÎ¸Î À²²ÄÀ´ ÁÖÁö ·´¹ó ÃÝ - ¤½-)/	</uvvwrmt>
+			<wvzw>	°©¾ä Á¹¾Ý ¶«·®¿¡ ±Æ»Ñ¿¡ ÃÝ?? 	</wvzw>
+			<hgzmw>	¼­ ²£ ³ÓÀÇ ¿ø¾â·¦ ÁÁ±ÆÇÑ»Ù ÃÝ~~	</hgzmw>
+			<hgzmw>	±Æ±Æ~ ¼ª·¥¼ª·¥...ÇÑ³ûÀÚ¿í²Í»Ù ÃÝ~~ ¼¸Àá Á´ ÀÚ·é ±ÈºÇ¼Ä ÃÝ??	</hgzmw>
+			<hgzmw>	°ä°äºéÀÇ »ëÀåÀµ ¶Ù¸Î ¼ª¹ó¾· ÃÝ~¡Ú = ¤½=)/ 	</hgzmw>
+			<hgzmw>	¼¢ÀÌÀÍ ¼£~ ¿¿ÀÌ ¼î±Æ»Þ¹ó ÃÝ~¢Ý	</hgzmw>
+			<ovevofk>	°Í°õ~ ¾âµÐ ÁÁ±Æ~ÃÝ~°À~¡Ú	</ovevofk>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	ÀÌ¿Ç ººÀúÈ÷ ·ø ·Ô¿Ú»Ù ÃÝ¡¦- ¤½-)/	</uvvwrmt>
+			<wvzw>	°©¾ä Á¹¾Ý ¶«·®¿¡ ±Æ»Ñ¿¡ ÃÝ?? 	</wvzw>
+			<hgzmw>	¼­ ²£ ³ÓÀÇ ¿ø¾â·¦ ÁÁ±ÆÇÑ»Ù ÃÝ~~	</hgzmw>
+			<hgzmw>	±Æ±Æ~ ¼ª·¥¼ª·¥...ÇÑ³ûÀÚ¿í²Í»Ù ÃÝ~~ ¼¸Àá Á´ ÀÚ·é ±ÈºÇ¼Ä ÃÝ??	</hgzmw>
+			<hgzmw>	°ä°äºéÀÇ »ëÀåÀµ ¶Ù¸Î ¼ª¹ó¾· ÃÝ~¡Ú = ¤½=)/ 	</hgzmw>
+			<hgzmw>	¼¢ÀÌÀÍ ¼£~ ¿¿ÀÌ ¼î±Æ»Þ¹ó ÃÝ~¢Ý	</hgzmw>
+			<ovevofk>	°Í°õ~ ¾âµÐ ÁÁ±Æ~ÃÝ~°À~¡Ú	</ovevofk>
+		</hl_ufoo>
+
+	</xslxl>
+	<wrzylorx2>
+
+		<sfmtib>
+			<uvvwrmt>	±Æ~ÁÖ ¿í·°»Ù.	</uvvwrmt>
+			<wvzw>	¶è¿íÇÂº¥ ¶äºº ±ÈÁÖ¼Ä? Å¯	</wvzw>
+			<hgzmw>	¼ª ¿£»Ù?	</hgzmw>
+			<ovevofk>	¼ÊÀÇ ¸¶µ§ ±÷ÀÌ µÒÅ·¿í ÀÖ»Ù...	</ovevofk>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	ÀÌ¿Å ·Ô¿í ÀÌ´¡ »Û±Æ±ßÁö~	</uvvwrmt>
+			<wvzw>	ÀÏ±î¼ª¹ó.	</wvzw>
+			<hgzmw>	¶ä Áà.	</hgzmw>
+			<ovevofk>	¼ÊÀÇ ¸¶µ§ ±÷ÀÌ µÒÅ·¿í ÀÖ»Ù...	</ovevofk>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	ÀÌ¿Å ·Ô¿í ÀÌ´¡ »Û±Æ±ßÁö~	</uvvwrmt>
+			<wvzw>	ÀÏ±î¼ª¹ó ÁÖÀÎ! 	</wvzw>
+			<hgzmw>	¼­ ¾× ³³¾Õ¿¿Àµ º¥µñ¸çÄ¡°Í»Â »Ù·£»Ù!!	</hgzmw>
+			<hgzmw>	°Í~ µÒµÙ±ú±î~	</hgzmw>
+			<hgzmw>	¼­ µÒ½ÉÀÇ ±Ç·¹»Ù~ 	</hgzmw>
+			<ovevofk>	¼ÊÀÇ ¸¶µ§ ±÷ÀÌ µÒÅ·¿í ÀÖ»Ù... 	</ovevofk>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	¼ª ÀÌ¶Ì ÀÌ´¡ »Û±Ò»Ù¿í!!	</uvvwrmt>
+			<wvzw>	ÀÏ±î¼ª¹ó ÁÖÀÎ!	</wvzw>
+			<hgzmw>	¼­ ¾× ³³¾Õ¿¿Àµ º¥µñ¸çÄ¡°Í»Â »Ù·£»Ù!!	</hgzmw>
+			<hgzmw>	°Í~ µÒµÙ±ú±î~	</hgzmw>
+			<hgzmw>	¼­ µÒ½ÉÀÇ ±Ç·¹»Ù~ 	</hgzmw>
+			<hgzmw>	ÆÄÀÌ~±î~~~µ·°À~°Ã ±Æ? ÀÌ¿Ô ±Æ»Ñ¿¡?	</hgzmw>
+			<ovevofk>	¼ÊÀÇ ¸¶µ§ ±÷ÀÌ µÒÅ·¿í ÀÖ»Ù... 	</ovevofk>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	¼ª ÀÌ¶Ì ÀÌ´¡ »Û±Ò»Ù¿í!!	</uvvwrmt>
+			<wvzw>	ÀÏ±î¼ª¹ó ÁÖÀÎ! 	</wvzw>
+			<hgzmw>	¼­ ¾× ³³¾Õ¿¿Àµ º¥µñ¸çÄ¡°Í»Â »Ù·£»Ù!!	</hgzmw>
+			<hgzmw>	°Í~ µÒµÙ±ú±î~	</hgzmw>
+			<hgzmw>	¼­ µÒ½ÉÀÇ ±Ç·¹»Ù~ 	</hgzmw>
+			<hgzmw>	ÆÄÀÌ~±î~~~µ·°À~°Ã ±Æ? ÀÌ¿Ô ±Æ»Ñ¿¡?	</hgzmw>
+			<ovevofk>	¼ÊÀÇ ¸¶µ§ ±÷ÀÌ µÒÅ·¿í ÀÖ»Ù...	</ovevofk>
+		</hl_ufoo>
+
+	</wrzylorx2>
+	<wvovgvi_2>
+
+		<sfmtib>
+			<uvvwrmt>	´Ñ°ì°ì°ì°ì°ì°ì-	</uvvwrmt>
+			<wvzw>	Á×±ú¼ª´Ñ°ì?	</wvzw>
+			<hgzmw>	¶ä Á´ ÁàµÁ ´Ñ°ì!	</hgzmw>
+			<ovevofk>	¶äÀ´ ·ÔÀÚ¾· ´Ñ°ì...	</ovevofk>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	·¹ÀÌÂÇ~´Ñ°ì~	</uvvwrmt>
+			<wvzw>	»©°öÀÖÁö·´¿í ¶äÁ´ ÁÖ³³°© ´Ñ°ì~	</wvzw>
+			<hgzmw>	¶ä·ÔÀ´ ²Ã¿£ÀÌ»Ù ´Ñ~°ì~	</hgzmw>
+			<ovevofk>	Äá¾×¸¶Ãò~´Ñ~	</ovevofk>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	·¹ÀÌÂÇ~´Ñ°ì~	</uvvwrmt>
+			<wvzw>	ÀÏ±î¼ª³³°ä ÁÖÀÎ»Ô ¤Ð¤Ð	</wvzw>
+			<hgzmw> ¹ß¿Å°î µÒ¾·º¢ÀÌ°¡³­ºº ¼­ ¾¦Âú»Ù ´Ñ~	</hgzmw>
+			<hgzmw>	¼ª µê¸¶²µ ±º ³ö ÀÖ»Ù´Ñ?	</hgzmw>
+			<hgzmw>	·Ó·® À§°¡ »Þ·¿¿Å µ¿´çÅÁ ±Æ»Ï»Ù´Ñ~	</hgzmw>
+			<ovevofk>	Äá¾×¸¶Ãò~´Ñ~ 	</ovevofk>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	´Ñ----°ì--- - ¤º-)z	</uvvwrmt>
+			<wvzw>	ÀÏ±î¼ª³³°ä ÁÖÀÎ»Ô ¤Ð¤Ð	</wvzw>
+			<hgzmw>	¹ß¿Å°î µÒ¾·º¢ÀÌ°¡³­ºº ¼­ ¾¦Âú»Ù ´Ñ~	</hgzmw>
+			<hgzmw>	¼ª µê¸¶²µ ±º ³ö ÀÖ»Ù´Ñ?	</hgzmw>
+			<hgzmw>	·Ó·® À§°¡ »Þ·¿¿Å µ¿´çÅÁ ±Æ»Ï»Ù´Ñ~	</hgzmw>
+			<hgzmw>	´Õ´ÕÀÌ~ ´Õ´ÕÀÌ~ ´Ñ~	</hgzmw>
+			<ovevofk>	Äá¾×¸¶Ãò~´Ñ~	</ovevofk>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	´Ñ----°ì--- - ¤º-)z	</uvvwrmt>
+			<wvzw>	ÀÏ±î¼ª³³°ä ÁÖÀÎ»Ô ¤Ð¤Ð 	</wvzw>
+			<hgzmw>	¹ß¿Å°î µÒ¾·º¢ÀÌ°¡³­ºº ¼­ ¾¦Âú»Ù ´Ñ~	</hgzmw>
+			<hgzmw>	¼ª µê¸¶²µ ±º ³ö ÀÖ»Ù´Ñ?	</hgzmw>
+			<hgzmw>	·Ó·® À§°¡ »Þ·¿¿Å µ¿´çÅÁ ±Æ»Ï»Ù´Ñ~ 	</hgzmw>
+			<hgzmw>	´Õ´ÕÀÌ~ ´Õ´ÕÀÌ~ ´Ñ~	</hgzmw>
+			<ovevofk>	Äá¾×¸¶Ãò~´Ñ~	</ovevofk>
+		</hl_ufoo>
+
+	</wvovgvi_2>
+	<xzg_l_mrmv_gzro>
+
+		<sfmtib>
+			<uvvwrmt>	Àß ·Ô¿Ú»Ù ¼Ä-±Ó ~	</uvvwrmt>
+			<wvzw>	Àú ¼à³®°¡¿Ô µ¶³öÇØÁÙ¾î ¼Ä±Ó?	</wvzw>
+			<hgzmw>	¶ä ·ÔÀ´ ²Ã¿£ÀÌ»Ù ¼Ä-±Ó !!	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù ¼Ä-±Ó	</ovevofk>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	Àß ·Ô¿Ú»Ù ¼Ä-±Ó ~	</uvvwrmt>
+			<wvzw>	Àú ¼à³®°¡¿Ô µ¶³öÇØÁÙ¾î ¼Ä±Ó?	</wvzw>
+			<hgzmw>	¶ä ·ÔÀ´ ²Ã¿£ÀÌ»Ù ¼Ä-±Ó !!	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù ¼Ä-±Ó	</ovevofk>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	Àß ·Ô¿Ú»Ù ¼Ä-±Ó ~	</uvvwrmt>
+			<wvzw>	Àú ¼à³®°¡¿Ô µ¶³öÇØÁÙ¾î ¼Ä±Ó?	</wvzw>
+			<hgzmw> ºþ¹û~¢Ý ºþ¹û~¢Ý ºþ¹û~¢Ý	</hgzmw>
+			<hgzmw>	¼ÊÀÇ ¾×¿ÍÀ´ ´¯¾âÁö ±Ê¿Ô Á¹²ÉÇØ¹ó ¼Ä-±ç	</hgzmw>
+			<hgzmw>	¶æ²ÉÇÏ»Ù¿£ ´©±Ñ¾ä»Ù ¼Ä-±Ó	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù ¼Ä-±Ó	</ovevofk>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	¶èµÎ·£»Ù ¼Ä-±Ó ¤Ð¤º¤Ð	</uvvwrmt>
+			<wvzw>	Àú ¼à³®°¡¿Ô µ¶³öÇØÁÙ¾î ¼Ä±Ó?	</wvzw>
+			<hgzmw>	ºþ¹û~¢Ý ºþ¹û~¢Ý ºþ¹û~¢Ý	</hgzmw>
+			<hgzmw>	¼ÊÀÇ ¾×¿ÍÀ´ ´¯¾âÁö ±Ê¿Ô Á¹²ÉÇØ¹ó ¼Ä-±ç	</hgzmw>
+			<hgzmw>	¶æ²ÉÇÏ»Ù¿£ ´©±Ñ¾ä»Ù ¼Ä-±Ó	</hgzmw>
+			<hgzmw>	°ù±ßÈ­¹ó¿í µÎ·£Áö ·¹¹ó ¼Ä-±Ó!	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù ¼Ä-±Ó	</ovevofk>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	¶èµÎ·£»Ù ¼Ä-±Ó ¤Ð¤º¤Ð	</uvvwrmt>
+			<wvzw>	Àú ¼à³®°¡¿Ô µ¶³öÇØÁÙ¾î ¼Ä±Ó?	</wvzw>
+			<hgzmw>	ºþ¹û~¢Ý ºþ¹û~¢Ý ºþ¹û~¢Ý	</hgzmw>
+			<hgzmw>	¼ÊÀÇ ¾×¿ÍÀ´ ´¯¾âÁö ±Ê¿Ô Á¹²ÉÇØ¹ó ¼Ä-±ç	</hgzmw>
+			<hgzmw>	¶æ²ÉÇÏ»Ù¿£ ´©±Ñ¾ä»Ù ¼Ä-±Ó	</hgzmw>
+			<hgzmw>	°ù±ßÈ­¹ó¿í µÎ·£Áö ·¹¹ó ¼Ä-±Ó!	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù ¼Ä-±Ó	</ovevofk>
+		</hl_ufoo>
+
+	</xzg_l_mrmv_gzro>
+	<mrmv_gzro>
+
+		<sfmtib>
+			<uvvwrmt>	Àß ·ÔÀ´½½°ä..	</uvvwrmt>
+			<wvzw>	ÀÌÁ¦ ·Ô±îºº ºÇ¿Ú²À»Ï¾î? »ç²ÅÀÇ..	</wvzw>
+			<hgzmw>	·ÔÀ´ ²Ã¿£ÀÔ»Ï»Ù ÇÏ±Æ..	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÕ»Ï»Ù..	</ovevofk>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	Àß ·ÔÀ´½½°ä..	</uvvwrmt>
+			<wvzw>	ÀÌÁ¦ ·Ô±îºº ºÇ¿Ú²À»Ï¾î? »ç²ÅÀÇ..	</wvzw>
+			<hgzmw>	·ÔÀ´ ²Ã¿£ÀÔ»Ï»Ù ÇÏ±Æ..	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÕ»Ï»Ù..	</ovevofk>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	Àß ·ÔÀ´½½°ä..	</uvvwrmt>
+			<wvzw>	ÀÌÁ¦ ·Ô±îºº ºÇ¿Ú²À»Ï¾î? »ç²ÅÀÇ..	</wvzw>
+			<hgzmw> À··£±ç! À··£±ç!	</hgzmw>
+			<hgzmw>	Á¦ ½°·®»Â ÇÏ¼ª, ºÑ, ³Â, ¼Ý..°©»ü..À·Èì?	</hgzmw>
+			<hgzmw>	¿£ ¹§¶®ÀÔ»Ï»Ù.	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÕ»Ï»Ù..	</ovevofk>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	¶èµÎ·£»Ù!!!!!	</uvvwrmt>
+			<wvzw>	µ¶³öÇØÁÙ¾î°ä?	</wvzw>
+			<hgzmw> À··£±ç! À··£±ç!	</hgzmw>
+			<hgzmw>	Á¦ ½°·®»Â ÇÏ¼ª, ºÑ, ³Â, ¼Ý..°©»ü..À·Èì?	</hgzmw>
+			<hgzmw>	¿£ ¹§¶®ÀÔ»Ï»Ù.	</hgzmw>
+			<hgzmw>	Ãº¼âÀÌ Áö¼ª·é..	°º´ýÀÇ ¶®ÀÌ..</hgzmw>
+			<ovevofk>	ÃàÇÏÇÕ»Ï»Ù..	</ovevofk>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	¶èµÎ·£»Ù!!!!!	</uvvwrmt>
+			<wvzw>	µ¶³öÇØÁÙ¾î°ä?	</wvzw>
+			<hgzmw>	À··£±ç! À··£±ç!	</hgzmw>
+			<hgzmw>	Á¦ ½°·®»Â ÇÏ¼ª, ºÑ, ³Â, ¼Ý..°©»ü..À·Èì?	</hgzmw>
+			<hgzmw>	¿£ ¹§¶®ÀÔ»Ï»Ù.	</hgzmw>
+			<hgzmw>	Ãº¼âÀÌ Áö¼ª·é..	°º´ýÀÇ ¶®ÀÌ..</hgzmw>
+			<ovevofk>	ÃàÇÏÇÕ»Ï»Ù..	</ovevofk>
+		</hl_ufoo>
+
+	</mrmv_gzro>
+	<wi_ofmzgrx>
+
+		<sfmtib>
+			<uvvwrmt>	¶è¿íÆÍ»Ù~·®¸ç! 	</uvvwrmt>
+			<wvzw>	ÀÌÁ¦ ·¹À´°¡ ¶ä·ÔÀ·¸Î ¿¡»Â¿Å±ß ·®¸ç?	</wvzw>
+			<hgzmw>	Áå»ÔÀµ SK ¹¼±îÁö·é Æ÷³ÇÀ´ ·ÔÁö·· ¼­ ¶è¿íÆÄºº ±Ï¿Íºº ·ÔÀ´³ö ±ø»Ù·®¸ç..	</hgzmw>
+			<ovevofk>	±ó·¥ ¶ä Á´ Áà°ä ·®¸ç!! 	</ovevofk>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	¶è¿íÆÍ»Ù~·®¸ç! 	</uvvwrmt>
+			<wvzw>	ÀÌÁ¦ ·¹À´°¡ ¶ä·ÔÀ·¸Î ¿¡»Â¿Å±ß ·®¸ç?	</wvzw>
+			<hgzmw>	Áå»ÔÀµ SK ¹¼±îÁö·é Æ÷³ÇÀ´ ·ÔÁö·· ¼­ ¶è¿íÆÄºº ±Ï¿Íºº ·ÔÀ´³ö ±ø»Ù·®¸ç..	</hgzmw>
+			<ovevofk>	±ó·¥±ó·¥ ¶ä Á´ Áà°ä ·®¸ç!! 	</ovevofk>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	¶è¿íÆÍ»Ù~·®¸ç! 	</uvvwrmt>
+			<wvzw>	ÀÌÁ¦ ·¹À´°¡ ¶ä·ÔÀ·¸Î ¿¡»Â¿Å±ß ·®¸ç?	</wvzw>
+			<hgzmw>	Áå»Ô! Á¦ ¾Í»Â ¼ª¶ºÀÙÀµ ±Æ»Ï°¶°ä ·®¸ç..	</hgzmw>
+			<hgzmw>	°¶Àü°£ ¸ç¼ªÆ²ÀÇ ÅÐÀ´ ¼ë·®»Â ´ç¹÷ÀÌ ·¶±Ò»Ù ·®¸ç..	</hgzmw>
+			<hgzmw>	¼´ ÀÙ´ç¾Í·¦ ¼ë·®»Â ´ç¹÷Àµ ±ø»Ù¼×°ä.. ·®¸ç..	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÕ»Ï»Ù ·®¸ç~~	</ovevofk>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	¾×··Áà¹ó~ ·®¸ç!!	</uvvwrmt>
+			<wvzw>	Mlllll !! ·®¸ç ¤Ð¤Ð	</wvzw>
+			<hgzmw>	Áå»Ô! Á¦ ¾Í»Â ¼ª¶ºÀÙÀµ ±Æ»Ï°¶°ä ·®¸ç..	</hgzmw>
+			<hgzmw>	°¶Àü°£ ¸ç¼ªÆ²ÀÇ ÅÐÀ´ ¼ë·®»Â ´ç¹÷ÀÌ ·¶±Ò»Ù ·®¸ç..	</hgzmw>
+			<hgzmw>	¼´ ÀÙ´ç¾Í·¦ ¼ë·®»Â ´ç¹÷Àµ ±ø»Ù¼×°ä.. ·®¸ç..	</hgzmw>
+			<hgzmw>	ÆÄ·©ÇÑ ÀúÀÇ ÀÙ´ç¾Í°¡ ·ÎÈù ÀÌ²² Á´ µ·³³°ä~ ·®¸ç~!!	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÕ»Ï»Ù ·®¸ç~~	</ovevofk>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	¾×··Áà¹ó~ ·®¸ç!! 	</uvvwrmt>
+			<wvzw>	Mlllll !! ·®¸ç ¤Ð¤Ð	</wvzw>
+			<hgzmw>	Áå»Ô! Á¦ ¾Í»Â ¼ª¶ºÀÙÀµ ±Æ»Ï°¶°ä ·®¸ç..	</hgzmw>
+			<hgzmw>	°¶Àü°£ ¸ç¼ªÆ²ÀÇ ÅÐÀ´ ¼ë·®»Â ´ç¹÷ÀÌ ·¶±Ò»Ù ·®¸ç..	</hgzmw>
+			<hgzmw>	¼´ ÀÙ´ç¾Í·¦ ¼ë·®»Â ´ç¹÷Àµ ±ø»Ù¼×°ä.. ·®¸ç..	</hgzmw>
+			<hgzmw>	ÆÄ·©ÇÑ ÀúÀÇ ÀÙ´ç¾Í°¡ ·ÎÈù ÀÌ²² Á´ µ·³³°ä~ ·®¸ç~!!	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÕ»Ï»Ù ·®¸ç~~	</ovevofk>
+		</hl_ufoo>
+
+	</wi_ofmzgrx>
+	<sbvtfm>
+
+		<sfmtib>
+			<uvvwrmt>	Èì.. ÀÌ¸¾¿Ç Á´ Á¦¹§ Ã¬¿ÜÁÖ·é ÁÁ¿Ú¾µ°ä. 	</uvvwrmt>
+			<wvzw>	¾×»ë¿¡ Á×±ú»ÙÁö··, ³ÒÀÎÀµ ¾×»ë·¦ ºÎ¿í ¹¿¼¯ ³ø ±ø²À»Ï»Ù.	</wvzw>
+			<hgzmw>	³ÒÀÎ ¶è·¦ Ã¤°ï ¹§¿¡ °Â ¿Í ¿¿³Ò.	</hgzmw>
+			<ovevofk>	¾×»ëÀÇ ³µÀåÀµ ÀúÀÇ ¾â´ÝÀÌ°À. 	</ovevofk>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	ÈÄ.. Àß·Ô±ú³Ò.	</uvvwrmt>
+			<wvzw>	¾×»ë¿¡ Á×±ú»ÙÁö··, ³ÒÀÎÀµ ¾×»ë·¦ ºÎ¿í ¹¿¼¯ ³ø ±ø²À»Ï»Ù.	</wvzw>
+			<hgzmw>	³ÒÀÎ ¶è·¦ Ã¤°ï ¹§¿¡ °Â ¿Í ¿¿³Ò.		</hgzmw>
+			<ovevofk>	¾×»ëÀÇ ³µÀåÀµ ÀúÀÇ ¾â´ÝÀÌ°À. 	</ovevofk>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	ÈÄ.. Àß·Ô±ú³Ò.	</uvvwrmt>
+			<wvzw>	¾×»ë¿¡ Á×±ú»ÙÁö··, ³ÒÀÎÀµ ¾×»ë·¦ ºÎ¿í ¹¿¼¯ ³ø ±ø²À»Ï»Ù.	</wvzw>
+			<hgzmw>	¾×¼à°Í ÇÔ½½ Â÷·¦ ¼ª»©»ø ¹§¿¡ ´ý¿¢¼ª°À.	</hgzmw>
+			<hgzmw>	¾×»ë°Í ÇÔ½½ °©ÇàÀ´ ÇÏ»Ùµ··é ··¼¯ ³ö ÀÖ¿ÚÁö°ä.	</hgzmw>
+			<hgzmw>	Èì.. ºûºíÇÑ Â÷·¦ ·¹³Åµ´ ¹§¿¡ ¾×·¼³Ò.	</hgzmw>
+			<ovevofk>	¾×»ëÀÇ ³µÀåÀµ ÀúÀÇ ¾â´ÝÀÌ°À. 	</ovevofk>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	ÈÄ.. ¿ú²ÄÀµ ¾Ý¶¿ÀÌ°À.	</uvvwrmt>
+			<wvzw>	¾×»ë¿¡ Á×±ú»ÙÁö··, ³ÒÀÎÀµ ¾×»ë·¦ ºÎ¿í ¹¿¼¯ ³ø ±ø²À»Ï»Ù.	</wvzw>
+			<hgzmw>	¾×¼à°Í ÇÔ½½ Â÷·¦ ¼ª»©»ø ¹§¿¡ ´ý¿¢¼ª°À.	</hgzmw>
+			<hgzmw>	¾×»ë°Í ÇÔ½½ °©ÇàÀ´ ÇÏ»Ùµ··é ··¼¯ ³ö ÀÖ¿ÚÁö°ä.	</hgzmw>
+			<hgzmw>	Èì.. ºûºíÇÑ Â÷·¦ ·¹³Åµ´ ¹§¿¡ ¾×·¼³Ò.	</hgzmw>
+			<hgzmw>	¾×»ë»Â °º°øÇÑ ´ç¹û°¡ »ëÇØ ±Æ²Ã°À?	</hgzmw>
+			<ovevofk>	¾×»ëÀÇ ³µÀåÀµ ÀúÀÇ ¾â´ÝÀÌ°À. 	</ovevofk>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	ÈÄ.. ¿ú²ÄÀµ ¾Ý¶¿ÀÌ°À.	</uvvwrmt>
+			<wvzw>	¾×»ë¿¡ Á×±ú»ÙÁö··, ³ÒÀÎÀµ ¾×»ë·¦ ºÎ¿í ¹¿¼¯ ³ø ±ø²À»Ï»Ù.	</wvzw>
+			<hgzmw>	¾×¼à°Í ÇÔ½½ Â÷·¦ ¼ª»©»ø ¹§¿¡ ´ý¿¢¼ª°À.	</hgzmw>
+			<hgzmw>	¾×»ë°Í ÇÔ½½ °©ÇàÀ´ ÇÏ»Ùµ··é ··¼¯ ³ö ÀÖ¿ÚÁö°ä.	</hgzmw>
+			<hgzmw>	Èì.. ºûºíÇÑ Â÷·¦ ·¹³Åµ´ ¹§¿¡ ¾×·¼³Ò.	</hgzmw>
+			<hgzmw>	¾×»ë»Â °º°øÇÑ ´ç¹û°¡ »ëÇØ ±Æ²Ã°À?	</hgzmw>
+			<ovevofk>	¾×»ëÀÇ ³µÀåÀµ ÀúÀÇ ¾â´ÝÀÌ°À. 	</ovevofk>
+		</hl_ufoo>
+
+	</sbvtfm>
+	<gvwwb_yvzi>
+
+		<sfmtib>
+			<uvvwrmt>	ÀÎÇüÀÌÁö·· ·ÀÀÖ¿Ôºº ¼È¼È. 	</uvvwrmt>
+			<wvzw>	ÀÎÇüÀµ ¶ö¸ÁÁö¿í ²ÍÁö ±Ê»Ù¼×	</wvzw>
+			<hgzmw>	±È¼ç? ¿õÀÎÇüÀµ Ã¼À²ÀÌÁö?	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù¼×..ÈìÈì	</ovevofk>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	ÀÎÇüÀÌÁö·· ·ÀÀÖ¿Ôºº ¼È¼È.	</uvvwrmt>
+			<wvzw>	ÀÎÇüÀµ ¶ö¸ÁÁö¿í ²ÍÁö ±Ê»Ù¼×	</wvzw>
+			<hgzmw>	±È¼ç? ¿õÀÎÇüÀµ Ã¼À²ÀÌÁö?	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù¼×..ÈìÈì	</ovevofk>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	ÀÎÇüÀÌÁö·· ·ÀÀÖ¿Ôºº ¼È¼È.	</uvvwrmt>
+			<wvzw>	ÀÎÇüÀµ ¶ö¸ÁÁö¿í ²ÍÁö ±Ê»Ù¼×	</wvzw>
+			<hgzmw>	±È¼ç? ¿õÀÎÇüÀµ Ã¼À²ÀÌÁö?	</hgzmw>
+			<hgzmw>	±î³ö¸èÇÑ ³Ø±±¸Î ¼¯ ³ö³¾ÇÏÁö ·´±ÆÁà..	</hgzmw>
+			<hgzmw>	¼´¿¡ °òÁ÷ÀÌ»Â ÀÌÀ¯? µñ¶ÐÀÌ¹ó¼×.	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù¼×..ÈìÈì 	 	</ovevofk>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	ÀÎÇüÀÌÁö·· ¶èµÎ·£»Ù~~~~	</uvvwrmt>
+			<wvzw>	ÀÎÇüÀµ ¶ö¸ÁÁö¿í ²ÍÁö ±Ê»Ù¼×	</wvzw>
+			<hgzmw>	±È¼ç? ¿õÀÎÇüÀµ Ã¼À²ÀÌÁö?	</hgzmw>
+			<hgzmw>	±î³ö¸èÇÑ ³Ø±±¸Î ¼¯ ³ö³¾ÇÏÁö ·´±ÆÁà..	</hgzmw>
+			<hgzmw>	¼´¿¡ °òÁ÷ÀÌ»Â ÀÌÀ¯? µñ¶ÐÀÌ¹ó¼×.		</hgzmw>
+			<hgzmw>	¼¯ ¶ö·®Áö ·´±ÆÁà¤Ð¤Ð	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù¼×..ÈìÈì 	 	</ovevofk>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	ÀÎÇüÀÌÁö·· ¶èµÎ·£»Ù~~~~	</uvvwrmt>
+			<wvzw>	ÀÎÇüÀµ ¶ö¸ÁÁö¿í ²ÍÁö ±Ê»Ù¼×	</wvzw>
+			<hgzmw>	±È¼ç? ¿õÀÎÇüÀµ Ã¼À²ÀÌÁö?	</hgzmw>
+			<hgzmw>	±î³ö¸èÇÑ ³Ø±±¸Î ¼¯ ³ö³¾ÇÏÁö ·´±ÆÁà..	</hgzmw>
+			<hgzmw>	¼´¿¡ °òÁ÷ÀÌ»Â ÀÌÀ¯? µñ¶ÐÀÌ¹ó¼×.		</hgzmw>
+			<hgzmw>	¼¯ ¶ö·®Áö ·´±ÆÁà¤Ð¤Ð	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù¼×..ÈìÈì 	 	</ovevofk>
+		</hl_ufoo>
+
+	</gvwwb_yvzi>
+	<tivnorm>
+
+		<sfmtib>
+			<uvvwrmt>	Å©Èæ ·ÀÁÁ»Ù.. ÅªÅ©Å©Å©Åª. 	</uvvwrmt>
+			<wvzw>	Å©Å©Åª..Å©Åª	</wvzw>
+			<hgzmw>	Å©Èæ..	</hgzmw>
+			<ovevofk>	Å©Å©Å©Å©Åª..ÃàÇÏÇÑ»Ù Å©Åª.	</ovevofk>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	Å©Èæ ·ÀÁÁ»Ù.. ÅªÅ©Å©Å©Åª.	</uvvwrmt>
+			<wvzw>	Å©Å©Åª..Å©Åª	</wvzw>
+			<hgzmw>	Å©Èæ..	</hgzmw>
+			<ovevofk>	Å©Å©Å©Å©Åª..ÃàÇÏÇÑ»Ù Å©Åª.	</ovevofk>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	Å©Èæ ·ÀÁÁ»Ù.. ÅªÅ©Å©Å©Åª.	</uvvwrmt>
+			<wvzw>	Å©Å©Åª..Å©Åª	</wvzw>
+			<hgzmw>	Å©Èæ..	</hgzmw>
+			<hgzmw>	Å©Å©Å©.. ³èµÙÀÌ Á´ ±îºð ±ø¼ª? Å©Å©Åª	</hgzmw>
+			<hgzmw>	¾â¿èºéÀÌ ÀÖ»Â ¿÷ÀÌ·é ¾×¸²·¿ºéÀÌ ¼ªÅ·¼ªÁö Å©Åª	</hgzmw>
+			<ovevofk>	Å©Å©Å©Å©Åª..ÃàÇÏÇÑ»Ù Å©Åª.	</ovevofk>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	Å©Èæ ·À±ø»Ù.. ÅªÅ©Å©Å©Åª.	</uvvwrmt>
+			<wvzw>	Å©Å©Åª..Å©Åª	</wvzw>
+			<hgzmw>	Å©Èæ..	</hgzmw>
+			<hgzmw>	Å©Å©Å©.. ³èµÙÀÌ Á´ ±îºð ±ø¼ª? Å©Å©Åª	</hgzmw>
+			<hgzmw>	¾â¿èºéÀÌ ÀÖ»Â ¿÷ÀÌ·é ¾×¸²·¿ºéÀÌ ¼ªÅ·¼ªÁö Å©Åª	</hgzmw>
+			<hgzmw>	µñ¿øÁ¤? ¾×±ß·´¸Î ¾×¸²·¿ºéÀÇ µßÆäÁö Å©Å©Å©Åª	</hgzmw>
+			<ovevofk>	Å©Å©Å©Å©Åª..ÃàÇÏÇÑ»Ù Å©Åª.	</ovevofk>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	Å©Èæ ·À±ø»Ù.. ÅªÅ©Å©Å©Åª.	</uvvwrmt>
+			<wvzw>	Å©Å©Åª..Å©Åª	</wvzw>
+			<hgzmw>	Å©Èæ..	</hgzmw>
+			<hgzmw>	Å©Å©Å©.. ³èµÙÀÌ Á´ ±îºð ±ø¼ª? Å©Å©Åª	</hgzmw>
+			<hgzmw>	¾â¿èºéÀÌ ÀÖ»Â ¿÷ÀÌ·é ¾×¸²·¿ºéÀÌ ¼ªÅ·¼ªÁö Å©Åª	</hgzmw>
+			<hgzmw>	µñ¿øÁ¤? ¾×±ß·´¸Î ¾×¸²·¿ºéÀÇ µßÆäÁö Å©Å©Å©Åª	</hgzmw>
+			<ovevofk>	Å©Å©Å©Å©Åª..ÃàÇÏÇÑ»Ù Å©Åª.	 </ovevofk>
+		</hl_ufoo>
+
+	</tivnorm>
+	<hxzgovglm>				
+					
+		<sfmtib>			
+			<uvvwrmt>	Å©?¡¦¡¦ ¼´ ±È°¡ Àáºé±îÀÖ»ø ¼à³®ÀÌ »«À´ ¹ß»Â¾µ¡¦¡¦	</uvvwrmt>
+			<uvvwrmt>	µ£·£Á¦µêµê²Ã°©¡¦¡¦	</uvvwrmt>
+			<sfmgrmt>	´ç¼ÉÇÑ ¿ÍÀµ ·Ô±î Ä¡°î»Ù. ¾×¿ÍÀÌ ÀÌ ³Õ°¡ Á×±î¿£ ´ç¼É¿¨°¡ »ëÇÑ ·¹Áö·¸ °¶ÀÇ»Ù.	</sfmgrmt>
+			<sfmgrmt>	µÒ²ÖÇÑ °ºÈ¥ºéÀÌ¾µ¡¦¡¦	</sfmgrmt>
+			<wzmtvi>	´ç¼ÉÇÏ»Â ¿ÍÀÌ ±Æ»Ï¹ó ´ç¼É »çÇØ¶ö·®»Â ¿ÍÀÎ¿¡¡¦¡¦	</wzmtvi>
+			<wzmtvi>	Å©À°¡¦¡¦ ¶¶Áö ÀÇ²ÄÀÌ Èå·»ÇØÁ® °À»Â¿É¡¦¡¦	</wzmtvi>
+			<wvzw>	¿ÆÁ¤ ·¹. ±Æ¶«·® ¶è¿¡ ¿íÆÄºº ¼× ¼à³®À´ ·ÔÁö»Â ±Ê»Â»Ù.	</wvzw>
+			<wvzw>	ÇÔ½½¡¦¡¦º¶±Æ¿¡ÀÚ¡¦¡¦ ¼ªÀÇ ¿íÇâÀ·¸Î¡¦¡¦	</wvzw>
+			<hgzmw>	Å©À°¡¦¡¦ ¾× ¼à³®ÀÌ °äº°Ä¡¾â ²ÃÀÛÇß±î¡¦¡¦	</hgzmw>
+			<hgzmw>	¾«¸Ó»Ù¡¦¡¦	</hgzmw>
+			<hgzmw>	ºé·®Áö ±Ê»Â¿¡? ÀÌ µñ·í³Ò·®¿¡¡¦¡¦	</hgzmw>
+			<xlmmvxg>	ÀÌ»ë¸Î ±Æ¾Í¿¡ ºÇ±î¶ö·®»Â ¿Íºº ¼ª´ÚÁö ±Ê»Ù¿í ´ý¿¢ÇÏ¿í ÀÖ±ú»Ù.	</xlmmvxg>
+			<xlmmvxg>	»Ù²Ã¡¦¡¦ ±îºÒÀÇ ¹§¿¡ º¶±Æ°Â»Ù.	</xlmmvxg>
+			<ovevofk>	Å©?¡¦¡¦	</ovevofk>
+			<ovevofk>	´ì±Æ¼½¿í ²Í»Ù·é¡¦¡¦ ¿­ÇØÁ®¹ó¡¦¡¦	</ovevofk>
+			<kviuli_1>	ÇÑ¿¡ÇØ µ·ÀÌ»Â¾µ¡¦¡¦ ¾×¸¡...... Áñ¾æ ³ö ÀÖÀ´ ¹§ ·¹À²½¯ Áñ¿ÜºÎ±î¹ó.	</kviuli_1>
+			<kviuli_1>	ÈÊ¡¦¡¦	</kviuli_1>
+			<kviuli_2>	´ì±Æ ÀÖ»Ù»Â ¿ÍÀµ ¿íÅëÀÇ °¬³ÓÀÌÁö.	</kviuli_2>
+			<kviuli_2>	Å²°åÀµ ²µ²µ¸Î·¦ ÆÄ¾«ÇÒ ´ÓÀÌ»Ù......	</kviuli_2>
+			<kviuli_3>	»À½·Áö»Â¿¡ ÀÌ ·öÀÇ ÈûÀÌ¡¦¡¦	</kviuli_3>
+			<kviuli_3>	Å©?¡¦¡¦ °À¸£··ÀÌ¾µ ÀÌ¸·¿Ô¾îÁö ÇÇ¿¡ ½ú±î°À·£»Â ¿Ç¡¦¡¦	</kviuli_3>
+			<kviuli_h>	?¡¦¡¦ ±îÁö¸»¾µ¡¦¡¦ ´õ¸Î°î ¿¨¿¢ÀÌ»Ù.	</kviuli_h>
+			<kviuli_h>	È¥º¸!!!! È¥º¸ÀÌ »Ù¿¡°À¿í ÀÖ»Ù!!!!!	</kviuli_h>
+		</sfmtib>			
+					
+		<yrg_sfmtib>			
+			<uvvwrmt>	ÀÌ Á¤ºº¸Î»Â ¼ªÀÇ Çã¶«ÇÔÀ´ »Þ¸¤ ³ö ±ø»Ù......	</uvvwrmt>
+			<uvvwrmt>	±î·®³®Àµ ÀÎ¿£ÀÌ°©¡¦¡¦	</uvvwrmt>
+			<sfmgrmt>	¾×¿ÍÀÌ ¼ÊÀÇ ÃÖ³¾ÀÎ¿¡?	</sfmgrmt>
+			<sfmgrmt>	Áö¸çÇÏ¾µ¡¦¡¦	</sfmgrmt>
+			<wzmtvi>	°©¾â¾îÁöÀÎ¿¡¡¦¡¦	</wzmtvi>
+			<wzmtvi>	´ç¼ÉÇÏ»Â ¿ÍÀÌ ±Æ»Ï¹ó ´ç¼É »çÇØ¶ö·®»Â ¿ÍÀÎ¿¡¡¦¡¦	</wzmtvi>
+			<wvzw>	¿ÆÁ¤ ·¹. ±Æ¶«·® ¶è¿¡ ¿íÆÄºº ¼Î ·ÔÁø ±Ê»Â»Ù.	</wvzw>
+			<wvzw>	ÇÔ½½¡¦¡¦º¶±Æ¿¡ÀÚ¡¦¡¦ ¼ªÀÇ ¿íÇâÀ·¸Î¡¦¡¦	</wvzw>
+			<hgzmw>	ÀÌ ¿øµ¶¿¨ÀÌ±ß ·´¸Î ¼´¿¡ ±ÆÁ÷ ´ì±ÆÀÖ»Ù»Â Áõ¿Å»Ù.	</hgzmw>
+			<hgzmw>	ºé·®Áö ±Ê»Â¿¡? ÀÌ µñ·í³Ò·®¿¡¡¦¡¦	</hgzmw>
+			<hgzmw>	Áö¸çÇÏ¾µ¡¦¡¦	</hgzmw>
+			<xlmmvxg>	»Ù²Ã¡¦¡¦ ±îºÒÀÇ ¹§¿¡ º¶±Æ°Â»Ù.	</xlmmvxg>
+			<xlmmvxg>	ÂªÀµ ÈÞ²ÄÀÌ±ú¾µ¡¦¡¦	</xlmmvxg>
+			<ovevofk>	´ì±Æ¼½¿í ²Í»Ù·é¡¦¡¦ ¿­ÇØÁ®¹ó¡¦¡¦	</ovevofk>
+			<ovevofk>	±ÆÁ÷ µÎÁ¸ÇÏ»Ù.	</ovevofk>
+			<kviuli_1>	ÇÑ¿¡ÇØ µ·ÀÌ»Â¾µ¡¦¡¦ ¾×¸¡...... Áñ¾æ ³ö ÀÖÀ´ ¹§ ·¹À²½¯ Áñ¿ÜºÎ±î¹ó.	</kviuli_1>
+			<kviuli_1>	ÈÊ¡¦¡¦	</kviuli_1>
+			<kviuli_2>	´ì±Æ ÀÖ»Ù»Â ¿ÍÀµ ¿íÅëÀÇ °¬³ÓÀÌÁö.	</kviuli_2>
+			<kviuli_2>	Å²°åÀµ ²µ²µ¸Î·¦ ÆÄ¾«ÇÒ ´ÓÀÌ»Ù......	</kviuli_2>
+			<kviuli_3>	»À½·Áö»Â¿¡ ÀÌ ·öÀÇ ÈûÀÌ¡¦¡¦	</kviuli_3>
+			<kviuli_3>	Å©?¡¦¡¦ °À¸£··ÀÌ¾µ ÀÌ¸·¿Ô¾îÁö ÇÇ¿¡ ½ú±î°À·£»Â ¿Ç¡¦¡¦	</kviuli_3>
+			<kviuli_h>	?¡¦¡¦ ±îÁö¸»¾µ¡¦¡¦ ´õ¸Î°î ¿¨¿¢ÀÌ»Ù.	</kviuli_h>
+			<kviuli_h>	È¥º¸!!!! È¥º¸ÀÌ »Ù¿¡°À¿í ÀÖ»Ù!!!!!	</kviuli_h>
+		</yrg_sfmtib>			
+					
+		<mlgrmt>			
+			<uvvwrmt>	¾× ²ÃÀý¡¦¡¦ ¾±ÁÖ·½µ·»Ù ºÎ¸Á°î ¿ÍÀµ ±ø»Ù¿í ´ý¿¢Çß±ú»Ù¡¦¡¦ ²²ÇÂ ¾â±ïÀÌÁö¡¦¡¦	</uvvwrmt>
+			<uvvwrmt>	ÈÊ¡¦¡¦ ±ºº¥ ±ø»Â ¾â±ïÀÌ ¹¿°À·£»Â¾µ¡¦¡¦	</uvvwrmt>
+			<sfmgrmt>	¾×¸¡! ÆÄ¾«ÇØ¹ó!!!! ¾×¿ÍÀÌ ¼ÊÀÇ ÁøÁ¤ÇÑ ·ð²ÀÀÌ»Ù!!!	</sfmgrmt>
+			<sfmgrmt>	Å©ÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÏ!!!! Å©ÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÖ!!!!!!	</sfmgrmt>
+			<wzmtvi>	µÐ¼ë»Â Ä®¼¡À´ ¶«º®Áö¿Ô ÇÏÁö¡¦¡¦	</wzmtvi>
+			<wzmtvi>	°©¾â¾îÁöÀÎ¿¡¡¦¡¦	</wzmtvi>
+			<wvzw>	»À½·Áö»Â¿¡? ÀÌ¿ÍÀÌ ¼Ê°¡¿Ô Èñ´ý»çÇÑ ÀÚºéÀÇ ²²ÇÄ¿ú µÐ¼ë»Ù.	</wvzw>
+			<wvzw>	±îºÒÀ´ ºÎ¸Á°öÇÏÁö ·¹¹ó¡¦¡¦	</wvzw>
+			<hgzmw>	Áö¸çÇÏ¾µ¡¦¡¦	</hgzmw>
+			<hgzmw>	ÀÌ ±ó·¹··ÀÇ ÈÞ²ÄÀÎ¿¡.	</hgzmw>
+			<hgzmw>	¾×¸¡¡¦¡¦ ¿£ÀýÈ÷ °øÇÑ»Ù·é ÀÌ ¼ª·¦ ³¹¾æ ¾âÈ··¦ ÁÖ¿Ú»Ù.	</hgzmw>
+			<xlmmvxg>	»Ù²Ã¡¦¡¦ ±îºÒÀÇ ¹§¿¡ º¶±Æ°Â»Ù.	</xlmmvxg>
+			<xlmmvxg>	ÇÇÀÇ ÃàÁ¦¿¡ ²ÃÀÛºÈ»Ù¡¦¡¦	</xlmmvxg>
+			<ovevofk>	¾×¸¡ »õ°í »õ ¶ß¶öºÕ ÃÄ¹ó¡¦¡¦	</ovevofk>
+			<ovevofk>	±ÆÁ÷ µÎÁ¸ÇÏ»Ù.	</ovevofk>
+			<kviuli_1>	ÇÑ¿¡ÇØ µ·ÀÌ»Â¾µ¡¦¡¦ ¾×¸¡...... Áñ¾æ ³ö ÀÖÀ´ ¹§ ·¹À²½¯ Áñ¿ÜºÎ±î¹ó.	</kviuli_1>
+			<kviuli_1>	ÈÊ¡¦¡¦	</kviuli_1>
+			<kviuli_2>	´ì±Æ ÀÖ»Ù»Â ¿ÍÀµ ¿íÅëÀÇ °¬³ÓÀÌÁö.	</kviuli_2>
+			<kviuli_2>	Å²°åÀµ ²µ²µ¸Î·¦ ÆÄ¾«ÇÒ ´ÓÀÌ»Ù......	</kviuli_2>
+			<kviuli_3>	»À½·Áö»Â¿¡ ÀÌ ·öÀÇ ÈûÀÌ¡¦¡¦	</kviuli_3>
+			<kviuli_3>	Å©?¡¦¡¦ °À¸£··ÀÌ¾µ ÀÌ¸·¿Ô¾îÁö ÇÇ¿¡ ½ú±î°À·£»Â ¿Ç¡¦¡¦	</kviuli_3>
+			<kviuli_h>	?¡¦¡¦ ±îÁö¸»¾µ¡¦¡¦ ´õ¸Î°î ¿¨¿¢ÀÌ»Ù.	</kviuli_h>
+			<kviuli_h>	È¥º¸!!!! È¥º¸ÀÌ »Ù¿¡°À¿í ÀÖ»Ù!!!!!	</kviuli_h>
+		</mlgrmt>			
+					
+		<ufoo>			
+			<uvvwrmt>	¾×··ºÎ»Â ¿ÍÀÌ ÁÁÀ´ ¿ÍÀÌ»Ù ±î·®³®Àµ ÀÚ°©¡¦¡¦	</uvvwrmt>
+			<uvvwrmt>	Å©À¶¡¦¡¦	</uvvwrmt>
+			<sfmgrmt>	ÀÌ ·öÀÌ Á÷Á¢ ¼ª³¼ ÇÊ°äºº ±ø¿Ú¾µ.	</sfmgrmt>
+			<sfmgrmt>	¾×¸¡! ÆÄ¾«ÇØ¹ó!!!! ¾×¿ÍÀÌ ¼ÊÀÇ ÁøÁ¤ÇÑ ·ð²ÀÀÌ»Ù!!!	</sfmgrmt>
+			<wzmtvi>	µÐ¼ë»Â Ä®¼¡À´ ¶«º®Áö¿Ô ÇÏÁö¡¦¡¦	</wzmtvi>
+			<wzmtvi>	°å·Á°¡ ¶«¼ÊÁö·®¹ó¡¦¡¦	</wzmtvi>
+			<wvzw>	Å©ÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÖ! Áö°ÁÀÇ ¶®ÀÌ °­·®»Â ¾·¼ª!	</wvzw>
+			<wvzw>	»À½·Áö»Â¿¡? ÀÌ¿ÍÀÌ ¼Ê°¡¿Ô Èñ´ý»çÇÑ ÀÚºéÀÇ ²²ÇÄ¿ú µÐ¼ë»Ù.	</wvzw>
+			<hgzmw>	±ðÁ¦¾îÁö ·Ó¶º¿Å·®¿í ÀÖÀ´ ³ÀÀÌ¼Ä!	</hgzmw>
+			<hgzmw>	µÒ¾æÇÑ ¶Ù¹÷ÀÌ µÒ±î°À»Â¾µ¡¦¡¦	</hgzmw>
+			<hgzmw>	¾×¸¡¡¦¡¦ ¿£ÀýÈ÷ °øÇÑ»Ù·é ÀÌ ¼ª·¦ ³¹¾æ ¾âÈ··¦ ÁÖ¿Ú»Ù.	</hgzmw>
+			<xlmmvxg>	ÇÇÀÇ ÃàÁ¦¿¡ ²ÃÀÛºÈ»Ù¡¦¡¦	</xlmmvxg>
+			<xlmmvxg>	»Ù²Ã¡¦¡¦ ±îºÒÀÇ ¹§¿¡ º¶±Æ°Â»Ù.	</xlmmvxg>
+			<ovevofk>	¾×¸¡ »õ°í »õ ¶ß¶öºÕÃÄ¹ó¡¦¡¦	</ovevofk>
+			<ovevofk>	Á¹¾ÝÀµ¡¦¡¦ ³µÀå ÇÑ ¿Ç¿¡?	</ovevofk>
+			<kviuli_1>	ÇÑ¿¡ÇØ µ·ÀÌ»Â¾µ¡¦¡¦ ¾×¸¡...... Áñ¾æ ³ö ÀÖÀ´ ¹§ ·¹À²½¯ Áñ¿ÜºÎ±î¹ó.	</kviuli_1>
+			<kviuli_1>	ÈÊ¡¦¡¦	</kviuli_1>
+			<kviuli_2>	´ì±Æ ÀÖ»Ù»Â ¿ÍÀµ ¿íÅëÀÇ °¬³ÓÀÌÁö.	</kviuli_2>
+			<kviuli_2>	Å²°åÀµ ²µ²µ¸Î·¦ ÆÄ¾«ÇÒ ´ÓÀÌ»Ù......	</kviuli_2>
+			<kviuli_3>	»À½·Áö»Â¿¡ ÀÌ ·öÀÇ ÈûÀÌ¡¦¡¦	</kviuli_3>
+			<kviuli_3>	Å©?¡¦¡¦ °À¸£··ÀÌ¾µ ÀÌ¸·¿Ô¾îÁö ÇÇ¿¡ ½ú±î°À·£»Â ¿Ç¡¦¡¦	</kviuli_3>
+			<kviuli_h>	?¡¦¡¦ ±îÁö¸»¾µ¡¦¡¦ ´õ¸Î°î ¿¨¿¢ÀÌ»Ù.	</kviuli_h>
+			<kviuli_h>	È¥º¸!!!! È¥º¸ÀÌ »Ù¿¡°À¿í ÀÖ»Ù!!!!!	</kviuli_h>
+		</ufoo>			
+					
+		<hl_ufoo>			
+			<uvvwrmt>	¾×··ºÎ»Â ¿ÍÀÌ ÁÁÀ´ ¿ÍÀÌ»Ù ±î·®³®Àµ ÀÚ°©¡¦¡¦	</uvvwrmt>
+			<uvvwrmt>	ÀÌ¸¾ ²ÄÀ·¸Î ¼¯ ¿í¶®ÇÏ¸Á ÇÏ»Ù»Ï¡¦¡¦ µñ¿ÌÇÑ ¼à³®¡¦¡¦	</uvvwrmt>
+			<sfmgrmt>	ÀÌ ·öÀÌ Á÷Á¢ ¼ª³¼ ÇÊ°äºº ±ø¿Ú¾µ.	</sfmgrmt>
+			<sfmgrmt>	³Ò¹õ²µ¸»¾µ¡¦¡¦	</sfmgrmt>
+			<wzmtvi>	µ·ÀÌ»Â¿¡ Á×À²ÀÇ ³ÕÁþÀÌ¡¦¡¦	</wzmtvi>
+			<wzmtvi>	ÀÌ¿ÍÀÌ ÃÖÈÄ·¦ ¿¢°ÀÇÑÀÚÀÇ 	</wzmtvi>
+			<wvzw>	Å©ÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÖ! Áö°ÁÀÇ ¶®ÀÌ °­·®»Â ¾·¼ª!	</wvzw>
+			<wvzw>	»À½·Áö»Â¿¡? ÀÌ¿ÍÀÌ ¼Ê°¡¿Ô Èñ´ý»çÇÑ ÀÚºéÀÇ ²²ÇÄ¿ú µÐ¼ë»Ù.	</wvzw>
+			<hgzmw>	µÒ¾æÇÑ ¶Ù¹÷ÀÌ µÒ±î°À»Â¾µ¡¦¡¦	</hgzmw>
+			<hgzmw>	±ðÁ¦ºç ´ó»ëÇØÁÖ·¹ ±Ö³ÛÀÌ¡¦¡¦	</hgzmw>
+			<hgzmw>	¶ú²á ÁöÄ£ ¿Å¼Ä?	</hgzmw>
+			<xlmmvxg>	ÇÇÀÇ ÃàÁ¦¿¡ ²ÃÀÛºÈ»Ù¡¦¡¦	</xlmmvxg>
+			<xlmmvxg>	»Ù²Ã¡¦¡¦ ±îºÒÀÇ ¹§¿¡ º¶±Æ°Â»Ù.	</xlmmvxg>
+			<ovevofk>	¾×¸¡ »õ°í »õ ¶ß¶öºÕ ÃÄ¹ó¡¦¡¦	</ovevofk>
+			<ovevofk>	Á¹¾ÝÀµ¡¦¡¦ ³µÀåÇÑ ¿Ç¿¡?	</ovevofk>
+			<kviuli_1>	ÇÑ¿¡ÇØ µ·ÀÌ»Â¾µ¡¦¡¦ ¾×¸¡...... Áñ¾æ ³ö ÀÖÀ´ ¹§ ·¹À²½¯ Áñ¿ÜºÎ±î¹ó.	</kviuli_1>
+			<kviuli_1>	ÈÊ¡¦¡¦	</kviuli_1>
+			<kviuli_2>	´ì±Æ ÀÖ»Ù»Â ¿ÍÀµ ¿íÅëÀÇ °¬³ÓÀÌÁö.	</kviuli_2>
+			<kviuli_2>	Å²°åÀµ ²µ²µ¸Î·¦ ÆÄ¾«ÇÒ ´ÓÀÌ»Ù......	</kviuli_2>
+			<kviuli_3>	»À½·Áö»Â¿¡ ÀÌ ·öÀÇ ÈûÀÌ¡¦¡¦	</kviuli_3>
+			<kviuli_3>	Å©?¡¦¡¦ °À¸£··ÀÌ¾µ ÀÌ¸·¿Ô¾îÁö ÇÇ¿¡ ½ú±î°À·£»Â ¿Ç¡¦¡¦	</kviuli_3>
+			<kviuli_h>	?¡¦¡¦ ±îÁö¸»¾µ¡¦¡¦ ´õ¸Î°î ¿¨¿¢ÀÌ»Ù.	</kviuli_h>
+			<kviuli_h>	È¥º¸!!!! È¥º¸ÀÌ »Ù¿¡°À¿í ÀÖ»Ù!!!!!	</kviuli_h>
+		</hl_ufoo>			
+					
+	</hxzgovglm>	
+	<hdvvgh_wilkh>				
+					
+		<sfmtib>			
+			<uvvwrmt>	»ÞÄÞÇÑ ´çÅÁÀµ ±ðÁ¦¼ª È¯°ºÀÌÁö~²µÀ­~¢±	</uvvwrmt>
+			<wvzw>	¾×¸¼ ¼­ ÀÌÁ¦ ´çÅÁ »©¿¡Áà-±î±û?? ¤Ð_¤Ð	</wvzw>
+			<hgzmw>	ÀÌÁ¦ ¶¶ÇÏ¿í ¼î¾î? ~ ¢Ý	</hgzmw>
+			<ovevofk>	°À°Ê¢Ü ÃàÇÏÇØ~~¢²¢±	</ovevofk>
+		</sfmtib>			
+					
+		<yrg_sfmtib>			
+			<uvvwrmt>	»ÞÄÞÇÑ ´çÅÁÀµ ±ðÁ¦¼ª È¯°ºÀÌÁö~²µÀ­~¢±	</uvvwrmt>
+			<wvzw>	¾×¸¼ ¼­ ÀÌÁ¦ ´çÅÁ »©¿¡Áà-±î±û?? ¤Ð_¤Ð	</wvzw>
+			<hgzmw>	ÀÌÁ¦ ¶¶ÇÏ¿í ¼î¾î? ~ ¢Ý	</hgzmw>
+			<ovevofk>	°À°Ê¢Ü ÃàÇÏÇØ~~¢²¢±	</ovevofk>
+		</yrg_sfmtib>			
+					
+		<mlgrmt>			
+			<uvvwrmt>	»ÞÄÞÇÑ ´çÅÁÀµ ±ðÁ¦¼ª È¯°ºÀÌÁö~²µÀ­~¢±	</uvvwrmt>
+			<wvzw>	¾×¸¼ ¼­ ÀÌÁ¦ ´çÅÁ »©¿¡Áà-±î±û?? ¤Ð_¤Ð	</wvzw>
+			<hgzmw>	ÀÌÁ¦ ¶¶ÇÏ¿í ¼î¾î? ~ ¢Ý	</hgzmw>
+			<hgzmw>	»Þ»ÞÇÑ Å©¸¶ÀÌÇÁºº ·ÀÀÖ¿í~ ÆÄ·£Æäºº ·ÀÀÖ¿í~¢Ü	</hgzmw>
+			<hgzmw>	ÃËÃËÇÑ ·¹Ä«¸Õ ÇÑ ÀÔ°¡ ºûºíÇÑ ±Æ·Þ·®Ä«¼ë ÇÑ ·ð¾Ý 0 ¤º+	</hgzmw>
+			<ovevofk>	°À°Ê¢Ü ÃàÇÏÇØ~~¢²¢±	</ovevofk>
+		</mlgrmt>			
+					
+		<ufoo>			
+			<uvvwrmt>	»ÞÄÞÇÑ ´çÅÁÀ´ ¼Ê¶« ·¶ÀÌ ·ÔÀ··é ÀÌ¿¡ ²â»Â»Ù¾Ã ¤Ð¤º¤Ð	</uvvwrmt>
+			<wvzw>	¾×¸¼ ¼­ ÀÌÁ¦ ´çÅÁ »©¿¡Áà-±î±û?? ¤Ð_¤Ð	</wvzw>
+			<hgzmw>	ÀÌÁ¦ ¶¶ÇÏ¿í ¼î¾î? ~ ¢Ý	</hgzmw>
+			<hgzmw>	»Þ»ÞÇÑ Å©¸¶ÀÌÇÁºº ·ÀÀÖ¿í~ ÆÄ·£Æäºº ·ÀÀÖ¿í~¢Ü	</hgzmw>
+			<hgzmw>	ÃËÃËÇÑ ·¹Ä«¸Õ ÇÑ ÀÔ°¡ ºûºíÇÑ ±Æ·Þ·®Ä«¼ë ÇÑ ·ð¾Ý 0 ¤º+	</hgzmw>
+			<hgzmw>	¶¶ºçÁö ·ÀÀÖ¿Ô ·Ô±ú»Ù·é! 0 Ä®¸Î·®¹ó¾·°ì°ì ~~ ¢±	</hgzmw>
+			<ovevofk>	°À°Ê¢Ü ÃàÇÏÇØ~~¢²¢±	</ovevofk>
+		</ufoo>			
+					
+		<hl_ufoo>			
+			<uvvwrmt>	»ÞÄÞÇÑ ´çÅÁÀ´ ¼Ê¶« ·¶ÀÌ ·ÔÀ··é ÀÌ¿¡ ²â»Â»Ù¾Ã ¤Ð¤º¤Ð	</uvvwrmt>
+			<wvzw>	¾×¸¼ ¼­ ÀÌÁ¦ ´çÅÁ »©¿¡Áà-±î±û?? ¤Ð_¤Ð	</wvzw>
+			<hgzmw>	ÀÌÁ¦ ¶¶ÇÏ¿í ¼î¾î? ~ ¢Ý	</hgzmw>
+			<hgzmw>	»Þ»ÞÇÑ Å©¸¶ÀÌÇÁºº ·ÀÀÖ¿í~ ÆÄ·£Æäºº ·ÀÀÖ¿í~¢Ü	</hgzmw>
+			<hgzmw>	ÃËÃËÇÑ ·¹Ä«¸Õ ÇÑ ÀÔ°¡ ºûºíÇÑ ±Æ·Þ·®Ä«¼ë ÇÑ ·ð¾Ý 0 ¤º+	</hgzmw>
+			<hgzmw>	¶¶ºçÁö ·ÀÀÖ¿Ô ·Ô±ú»Ù·é! 0 Ä®¸Î·®¹ó¾·°ì°ì ~~ ¢±	</hgzmw>
+			<ovevofk>	°À°Ê¢Ü ÃàÇÏÇØ~~¢²¢±	</ovevofk>
+		</hl_ufoo>			
+					
+	</hdvvgh_wilkh>	
+	<nfnnb>				
+					
+		<sfmtib>			
+			<uvvwrmt>	ÀÌ¿ÍÀµ ¼ªÀÇ ÀÏµÎµÐÀÏ´Ó..	</uvvwrmt>
+			<wvzw>	±î·®³®Àµ ÀÚ°©..Á×À²ÀÇ ³³¿è¸Î ¿¥Áö±î»Ù..	</wvzw>
+			<hgzmw>	¾×»ë..´çÈÄÀÇ ³³¿è·¦ ¿¡µ´Àû ÀÖ»Â¿¡..	</hgzmw>
+			<ovevofk>	ÇÑÃþ »õ ¿­»ëÇØÁø °ºÈ¥ÀÇ ÈûÀ´ µ·°©ÁÖ¿Ô..	</ovevofk>
+		</sfmtib>			
+					
+		<yrg_sfmtib>			
+			<uvvwrmt>	ÀÌ¿ÍÀµ ¼ªÀÇ ÀÏµÎµÐÀÏ´Ó..	</uvvwrmt>
+			<wvzw>	±î·®³®Àµ ÀÚ°©..Á×À²ÀÇ ³³¿è¸Î ¿¥Áö±î»Ù..	</wvzw>
+			<hgzmw>	¾×»ë..´çÈÄÀÇ ³³¿è·¦ ¿¡µ´Àû ÀÖ»Â¿¡..	</hgzmw>
+			<ovevofk>	ÇÑÃþ »õ ¿­»ëÇØÁø °ºÈ¥ÀÇ ÈûÀ´ µ·°©ÁÖ¿Ô..	</ovevofk>
+		</yrg_sfmtib>			
+					
+		<mlgrmt>			
+			<uvvwrmt>	ÀÌ¿ÍÀµ ¼ªÀÇ ÀÏµÎµÐÀÏ´Ó..	</uvvwrmt>
+			<wvzw>	±î·®³®Àµ ÀÚ°©..Á×À²ÀÇ ³³¿è¸Î ¿¥Áö±î»Ù..	</wvzw>
+			<hgzmw>	¾×»ë..´çÈÄÀÇ ³³¿è·¦ ¿¡µ´Àû ÀÖ»Â¿¡..	</hgzmw>
+			<hgzmw>	¼­.. »Ù²Ã.. ´ì±Æ¼¯ ¿ÍÀÌ»Ù.. 	</hgzmw>
+			<hgzmw>	°ºÇèÇÑ ¾â°îÀÌ ¼ª°À»Â µØ»ë·¦..°ø..ÇÑ¡¦»Ù¡¦.	</hgzmw>
+			<ovevofk>	ÇÑÃþ »õ ¿­»ëÇØÁø °ºÈ¥ÀÇ ÈûÀ´ µ·°©ÁÖ¿Ô..	</ovevofk>
+		</mlgrmt>			
+					
+		<ufoo>			
+			<uvvwrmt>	ÀÌ¿ÍÀµ ¼´¿ÍÀÌ ±Æ»Ï»Ù..	</uvvwrmt>
+			<wvzw>	±î·®³®Àµ ÀÚ°©..Á×À²ÀÇ ³³¿è¸Î ¿¥Áö±î»Ù..	</wvzw>
+			<hgzmw>	¾×»ë..´çÈÄÀÇ ³³¿è·¦ ¿¡µ´Àû ÀÖ»Â¿¡..	</hgzmw>
+			<hgzmw>	¼­.. »Ù²Ã.. ´ì±Æ¼¯ ¿ÍÀÌ»Ù.. 	</hgzmw>
+			<hgzmw>	°ºÇèÇÑ ¾â°îÀÌ ¼ª°À»Â µØ»ë·¦..°ø..ÇÑ¡¦»Ù¡¦.	</hgzmw>
+			<hgzmw>	Á×À²ÀÇ ¼¡°¡³­.. ±îºÒÀÇ ²ÉÆÇÀ´ ¶ÞÀ··®..	</hgzmw>
+			<ovevofk>	ÇÑÃþ »õ ¿­»ëÇØÁø °ºÈ¥ÀÇ ÈûÀ´ µ·°©ÁÖ¿Ô..	</ovevofk>
+		</ufoo>			
+					
+		<hl_ufoo>			
+			<uvvwrmt>	ÀÌ¿ÍÀµ ¼´¿ÍÀÌ ±Æ»Ï»Ù..	</uvvwrmt>
+			<wvzw>	±î·®³®Àµ ÀÚ°©..Á×À²ÀÇ ³³¿è¸Î ¿¥Áö±î»Ù..	</wvzw>
+			<hgzmw>	¾×»ë..´çÈÄÀÇ ³³¿è·¦ ¿¡µ´Àû ÀÖ»Â¿¡..	</hgzmw>
+			<hgzmw>	¼­.. »Ù²Ã.. ´ì±Æ¼¯ ¿ÍÀÌ»Ù.. 	</hgzmw>
+			<hgzmw>	°ºÇèÇÑ ¾â°îÀÌ ¼ª°À»Â µØ»ë·¦..°ø..ÇÑ¡¦»Ù¡¦.	</hgzmw>
+			<hgzmw>	Á×À²ÀÇ ¼¡°¡³­.. ±îºÒÀÇ ²ÉÆÇÀ´ ¶ÞÀ··®..	</hgzmw>
+			<ovevofk>	ÇÑÃþ »õ ¿­»ëÇØÁø °ºÈ¥ÀÇ ÈûÀ´ µ·°©ÁÖ¿Ô..	</ovevofk>
+		</hl_ufoo>			
+					
+	</nfnnb>				
+	<drold>				
+					
+		<sfmtib>			
+			<uvvwrmt>	¡¦°ì..	</uvvwrmt>
+			<wvzw>	¡¦	</wvzw>
+			<hgzmw>	¡¦ ¡¦. ¡¦. ¡¦¡¦ 	</hgzmw>
+			<ovevofk>	°ì	</ovevofk>
+		</sfmtib>			
+					
+		<yrg_sfmtib>			
+			<uvvwrmt>	¡¦°ì..	</uvvwrmt>
+			<wvzw>	¡¦	</wvzw>
+			<hgzmw>	¡¦ ¡¦. ¡¦. ¡¦¡¦ 	</hgzmw>
+			<ovevofk>	°ì	</ovevofk>
+		</yrg_sfmtib>			
+					
+		<mlgrmt>			
+			<uvvwrmt>	¡¦°ì..	</uvvwrmt>
+			<wvzw>	¡¦	</wvzw>
+			<hgzmw>	¡¦ ¡¦. ¡¦. ¡¦¡¦ 	</hgzmw>
+			<hgzmw>	°ì.°ì¡¦.¤¸°ì	</hgzmw>
+			<hgzmw>	°ì!	</hgzmw>
+			<ovevofk>	°ì-°ì!	</ovevofk>
+		</mlgrmt>			
+					
+		<ufoo>			
+			<uvvwrmt>	°ì!!!!!! ¡¦¡¦¡¦¡¦ 	</uvvwrmt>
+			<wvzw>	¡¦	</wvzw>
+			<hgzmw>	¡¦ ¡¦. ¡¦. ¡¦¡¦ 	</hgzmw>
+			<hgzmw>	°ì.°ì¡¦.¤¸°ì	</hgzmw>
+			<hgzmw>	°ì!	</hgzmw>
+			<hgzmw>	Å©°ì. Å©°ì. Å©°ì	</hgzmw>
+			<ovevofk>	°ì-°ì!	</ovevofk>
+		</ufoo>			
+					
+		<hl_ufoo>			
+			<uvvwrmt>	°ì!!!!!! ¡¦¡¦¡¦¡¦ 	</uvvwrmt>
+			<wvzw>	¡¦	</wvzw>
+			<hgzmw>	¡¦ ¡¦. ¡¦. ¡¦¡¦ 	</hgzmw>
+			<hgzmw>	°ì.°ì¡¦.¤¸°ì	</hgzmw>
+			<hgzmw>	°ì!	</hgzmw>
+			<hgzmw>	Å©°ì. Å©°ì. Å©°ì	</hgzmw>
+			<ovevofk>	°ì-°ì°ì°ì°ì! 	</ovevofk>
+		</hl_ufoo>			
+					
+	</drold>				
+	<ildvvm>				
+					
+		<sfmtib>			
+			<uvvwrmt>	Å©~~ ÀÌ Çâ¾â~~ Áßº¹³µÀÖ»Â ·À! ÃÖ¿í»å!! 	</uvvwrmt>
+			<wvzw>	¼ª.. ·Ô±îºº ºÇ??	</wvzw>
+			<hgzmw>	¶ö¸ÁÁø ¿í¾êÁ¹¿¢ÀÌ¹óºº °ì·¿ »Ù Ã£±Æ¼± ³ö ÀÖ»å!	</hgzmw>
+			<ovevofk>	°À ~~~ ! ÃàÇÏÇÑ»å! ÇÑÅÎ ²÷¹ó ±å! 	</ovevofk>
+		</sfmtib>			
+					
+		<yrg_sfmtib>			
+			<uvvwrmt>	Å©~~ ÀÌ Çâ¾â~~ Áßº¹³µÀÖ»Â ·À! ÃÖ¿í»å!! 	</uvvwrmt>
+			<wvzw>	¼ª.. ·Ô±îºº ºÇ??	</wvzw>
+			<hgzmw>	¶ö¸ÁÁø ¿í¾êÁ¹¿¢ÀÌ¹óºº °ì·¿ »Ù Ã£±Æ¼± ³ö ÀÖ»å!	</hgzmw>
+			<ovevofk>	°À ~~~ ! ÃàÇÏÇÑ»å! ÇÑÅÎ ²÷¹ó ±å! 	</ovevofk>
+		</yrg_sfmtib>			
+					
+		<mlgrmt>			
+			<uvvwrmt>	Å©~~ ÀÌ Çâ¾â~~ Áßº¹³µÀÖ»Â ·À! ÃÖ¿í»å!! 	</uvvwrmt>
+			<wvzw>	¼ª.. ·Ô±îºº ºÇ??	</wvzw>
+			<hgzmw>	¶ö¸ÁÁø ¿í¾êÁ¹¿¢ÀÌ¹óºº °ì·¿ »Ù Ã£±Æ¼± ³ö ÀÖ»å!	</hgzmw>
+			<hgzmw>	È½¸®ÇÑ ºéÆÇ°¡³­ºº.. ÀÀ? ±îºð³­ ¿í¾â¼°´õ¿«?!!	</hgzmw>
+			<hgzmw>	²âÀµ ¿í¾âºº ¿í¾â»å!! ¶ö·®Áö·À!!! ¤Ð ¤º¤Ð)	</hgzmw>
+			<ovevofk>	°À ~~~ ! ÃàÇÏÇÑ»å! ÇÑÅÎ ²÷¹ó ±å! 	</ovevofk>
+		</mlgrmt>			
+					
+		<ufoo>			
+			<uvvwrmt>	±Æ»Ï°ä-. ÀÌ ¿í¾â»Â ·ø·Ô»Â ¿Ì»Ï»Ù.  - ¤º-)z	</uvvwrmt>
+			<wvzw>	¼ª.. ·Ô±îºº ºÇ??	</wvzw>
+			<hgzmw>	¶ö¸ÁÁø ¿í¾êÁ¹¿¢ÀÌ¹óºº °ì·¿ »Ù Ã£±Æ¼± ³ö ÀÖ»å!	</hgzmw>
+			<hgzmw>	È½¸®ÇÑ ºéÆÇ°¡³­ºº.. ÀÀ? ±îºð³­ ¿í¾â¼°´õ¿«?!!	</hgzmw>
+			<hgzmw>	²âÀµ ¿í¾âºº ¿í¾â»å!! ¶ö·®Áö·À!!! ¤Ð ¤º¤Ð)	</hgzmw>
+			<hgzmw>	È½±ßÀÇ ¸Î°ìÀ©»ÔÀÌ ÇÔ½½ ÇÏ¿Ú»å!!	</hgzmw>
+			<ovevofk>	°À ~~~ ! ÃàÇÏÇÑ»å! ÇÑÅÎ ²÷¹ó ±å! 	</ovevofk>
+		</ufoo>			
+					
+		<hl_ufoo>			
+			<uvvwrmt>	±Æ»Ï°ä-. ÀÌ ¿í¾â»Â ·ø·Ô»Â ¿Ì»Ï»Ù.  - ¤º-)z	</uvvwrmt>
+			<wvzw>	¼ª.. ·Ô±îºº ºÇ??	</wvzw>
+			<hgzmw>	¶ö¸ÁÁø ¿í¾êÁ¹¿¢ÀÌ¹óºº °ì·¿ »Ù Ã£±Æ¼± ³ö ÀÖ»å!	</hgzmw>
+			<hgzmw>	È½¸®ÇÑ ºéÆÇ°¡³­ºº.. ÀÀ? ±îºð³­ ¿í¾â¼°´õ¿«?!!	</hgzmw>
+			<hgzmw>	²âÀµ ¿í¾âºº ¿í¾â»å!! ¶ö·®Áö·À!!! ¤Ð ¤º¤Ð)	</hgzmw>
+			<hgzmw>	È½±ßÀÇ ¸Î°ìÀ©»ÔÀÌ ÇÔ½½ ÇÏ¿Ú»å!!	</hgzmw>
+			<ovevofk>	°À ~~~ ! ÃàÇÏÇÑ»å! ÇÑÅÎ ²÷¹ó ±å! 	</ovevofk>
+		</hl_ufoo>			
+					
+	</ildvvm>				
+	<slwivnorm>				
+					
+		<sfmtib>			
+			<uvvwrmt>	ÈåÈåÈå...·ÀÁÁ¾µ	</uvvwrmt>
+			<wvzw>	ÈåÈå..¼Î ·Ô±îÁÙÅ×»Ù	</wvzw>
+			<hgzmw>	¼Î ·Ô±îºº ºÉ¾î?	</hgzmw>
+			<ovevofk>	ÈåÈå.. Á´·· »õ Ä°¹ó..	</ovevofk>
+		</sfmtib>			
+					
+		<yrg_sfmtib>			
+			<uvvwrmt>	ÈåÈåÈå...·ÀÁÁ¾µ	</uvvwrmt>
+			<wvzw>	ÈåÈå..¼Î ·Ô±îÁÙÅ×»Ù	</wvzw>
+			<hgzmw>	¼Î ·Ô±îºº ºÉ¾î?	</hgzmw>
+			<ovevofk>	ÈåÈå.. Á´·· »õ Ä°¹ó..	</ovevofk>
+		</yrg_sfmtib>			
+					
+		<mlgrmt>			
+			<uvvwrmt>	ÈåÈåÈå...·ÀÁÁ¾µ	</uvvwrmt>
+			<wvzw>	ÈåÈå..¼Î ·Ô±îÁÙÅ×»Ù	</wvzw>
+			<hgzmw>	¼Î ·Ô±îºº ºÉ¾î?	</hgzmw>
+			<hgzmw>	ÈåÈå.. Ä¥Èæ°¡ µüÁø °ºÈ¥À´..	</hgzmw>
+			<hgzmw>	¼´ ¿øÇãÇÔÀ´ Ã¤°öÁÙ ³ö ±ø¼ª??	</hgzmw>
+			<ovevofk>	ÈåÈå.. Á´·· »õ Ä°¹ó..	</ovevofk>
+		</mlgrmt>			
+					
+		<ufoo>			
+			<uvvwrmt>	ÈåÈåÈå¡¦¾×··	</uvvwrmt>
+			<wvzw>	ÈåÈå..¼Î ·Ô±îÁÙÅ×»Ù	</wvzw>
+			<hgzmw>	¼Î ·Ô±îºº ºÉ¾î?	</hgzmw>
+			<hgzmw>	ÈåÈå.. Ä¥Èæ°¡ µüÁø °ºÈ¥À´..	</hgzmw>
+			<hgzmw>	¾â¿èºéÀÌ ÀÖ»Â ¿÷ÀÌ·é ¾×¸²·¿ºéÀÌ ¼ªÅ·¼ªÁö Å©Åª	</hgzmw>
+			<hgzmw>	¼´ ¿øÇãÇÔÀ´ Ã¤°öÁÙ ³ö ±ø¼ª??	</hgzmw>
+			<ovevofk>	ÈåÈå.. Á´·· »õ Ä°¹ó..	</ovevofk>
+		</ufoo>			
+					
+		<hl_ufoo>			
+			<uvvwrmt>	ÈåÈåÈå¡¦¾×··	</uvvwrmt>
+			<wvzw>	ÈåÈå..¼Î ·Ô±îÁÙÅ×»Ù	</wvzw>
+			<hgzmw>	¼Î ·Ô±îºº ºÉ¾î?	</hgzmw>
+			<hgzmw>	ÈåÈå.. Ä¥Èæ°¡ µüÁø °ºÈ¥À´..	</hgzmw>
+			<hgzmw>	¾â¿èºéÀÌ ÀÖ»Â ¿÷ÀÌ·é ¾×¸²·¿ºéÀÌ ¼ªÅ·¼ªÁö Å©Åª	</hgzmw>
+			<hgzmw>	¼´ ¿øÇãÇÔÀ´ Ã¤°öÁÙ ³ö ±ø¼ª??	</hgzmw>
+			<ovevofk>	ÈåÈå.. Á´·· »õ Ä°¹ó..	 </ovevofk>
+		</hl_ufoo>			
+					
+	</slwivnorm>				
+	<nvgzoovi>				
+					
+		<sfmtib>			
+			<uvvwrmt>	»ÞÄÞÇÑ ÀÌ ·À¢Ü	</uvvwrmt>
+			<wvzw>	...¼´ ¼ë¸¡·¦ »õ ºé±îÁÖ°À~¢Ý	</wvzw>
+			<hgzmw>	ÈÊ. ¶´ ·ð·£²Ã»Â¾µ! ¼ªÀÇ ¼ë¸¡»Â..	</hgzmw>
+			<ovevofk>	ÇÑ»Ü¿è±° ÂøÂø ¶â±Æ¼ª¿¡»Â¾µ~	</ovevofk>
+		</sfmtib>			
+					
+		<yrg_sfmtib>			
+			<uvvwrmt>	»ÞÄÞÇÑ ÀÌ ·À¢Ü	</uvvwrmt>
+			<wvzw>	...¼´ ¼ë¸¡·¦ »õ ºé±îÁÖ°À~¢Ý	</wvzw>
+			<hgzmw>	ÈÊ. ¶´ ·ð·£²Ã»Â¾µ! ¼ªÀÇ ¼ë¸¡»Â..	</hgzmw>
+			<ovevofk>	ÇÑ»Ü¿è±° ÂøÂø ¶â±Æ¼ª¿¡»Â¾µ~	</ovevofk>
+		</yrg_sfmtib>			
+					
+		<mlgrmt>			
+			<uvvwrmt>	»ÞÄÞÇÑ ÀÌ ·À¢Ü	</uvvwrmt>
+			<wvzw>	...¼´ ¼ë¸¡·¦ »õ ºé±îÁÖ°À~¢Ý	</wvzw>
+			<hgzmw>	ÈÊ. ¶´ ·ð·£²Ã»Â¾µ! ¼ªÀÇ ¼ë¸¡»Â..	</hgzmw>
+			<hgzmw>	Á¦ Á¡³ö»Â°ä?	</hgzmw>
+			<hgzmw>	¢Ö¼ªÀÇ¢Ù¢Ö¼ë¸¡·¦¢Ù¢Öºé±îÁÖÁö ±Ê¿Ú¼ª~¢Ö¢Ö¢Ö¢Ý	</hgzmw>
+			<ovevofk>	ÇÑ»Ü¿è±° ÂøÂø ¶â±Æ¼ª¿¡»Â¾µ~	</ovevofk>
+		</mlgrmt>			
+					
+		<ufoo>			
+			<uvvwrmt>	ÀÌ¸¾ À²²ÄÀµ Áö¾Ý ¼ª°¡¿Õ ÇÊ°ä ±ø»Ù¼×..	</uvvwrmt>
+			<wvzw>	...¼´ ¼ë¸¡·¦ »õ ºé±îÁÖ°À~¢Ý	</wvzw>
+			<hgzmw>	ÈÊ. ¶´ ·ð·£²Ã»Â¾µ! ¼ªÀÇ ¼ë¸¡»Â..	</hgzmw>
+			<hgzmw>	Á¦ Á¡³ö»Â°ä?	</hgzmw>
+			<hgzmw>	¢Ö¼ªÀÇ¢Ù¢Ö¼ë¸¡·¦¢Ù¢Öºé±îÁÖÁö ±Ê¿Ú¼ª~¢Ö¢Ö¢Ö¢Ý	</hgzmw>
+			<hgzmw>	°À¢Ö¢Ö¢Ö~¼ª¢Ö°Í¢ÖÇÔ¢Ö½½¢Ö ¼î±Æ¢Ö¢ÖÁÖ°À~¢Ö¢Ö¢Ý	</hgzmw>
+			<ovevofk>	ÇÑ»Ü¿è±° ÂøÂø ¶â±Æ¼ª¿¡»Â¾µ~	</ovevofk>
+		</ufoo>			
+					
+		<hl_ufoo>			
+			<uvvwrmt>	ÀÌ¸¾ À²²ÄÀµ Áö¾Ý ¼ª°¡¿Õ ÇÊ°ä ±ø»Ù¼×..	</uvvwrmt>
+			<wvzw>	...¼´ ¼ë¸¡·¦ »õ ºé±îÁÖ°À~¢Ý	</wvzw>
+			<hgzmw>	ÈÊ. ¶´ ·ð·£²Ã»Â¾µ! ¼ªÀÇ ¼ë¸¡»Â..	</hgzmw>
+			<hgzmw>	Á¦ Á¡³ö»Â°ä?	</hgzmw>
+			<hgzmw>	¢Ö¼ªÀÇ¢Ù¢Ö¼ë¸¡·¦¢Ù¢Öºé±îÁÖÁö ±Ê¿Ú¼ª~¢Ö¢Ö¢Ö¢Ý	</hgzmw>
+			<hgzmw>	°À¢Ö¢Ö¢Ö~¼ª¢Ö°Í¢ÖÇÔ¢Ö½½¢Ö ¼î±Æ¢Ö¢ÖÁÖ°À~¢Ö¢Ö¢Ý	</hgzmw>
+			<ovevofk>	ÇÑ»Ü¿è±° ÂøÂø ¶â±Æ¼ª¿¡»Â¾µ~	</ovevofk>
+		</hl_ufoo>			
+					
+	</nvgzoovi>				
+	<zmxrvmg_nfnnb>				
+					
+		<sfmtib>			
+			<uvvwrmt>	ÈûÀ´ Ã¤°ü¼×	</uvvwrmt>
+			<wvzw>	±îÇã.. ±ÆÁ÷ ¼¡¼­¿Ô ±Æ»Ï¼×..	</wvzw>
+			<hgzmw>	.. ¼­ ¾×¸¾ ÇÏÂúÀµ ¶ÌÀÌ¹ó¿¡ ±Æ»Ï¹ó¼×..	</hgzmw>
+			<ovevofk>	ÀÚ¼×°¡¿Ô³­ ¶µ¿¡ ²Å³µÇÑ ÈûÀÌ »À½·Á¼¼×..	</ovevofk>
+		</sfmtib>			
+					
+		<yrg_sfmtib>			
+			<uvvwrmt>	ÈûÀ´ Ã¤°ü¼×	</uvvwrmt>
+			<wvzw>	±îÇã.. ±ÆÁ÷ ¼¡¼­¿Ô ±Æ»Ï¼×..	</wvzw>
+			<hgzmw>	.. ¼­ ¾×¸¾ ÇÏÂúÀµ ¶ÌÀÌ¹ó¿¡ ±Æ»Ï¹ó¼×..	</hgzmw>
+			<ovevofk>	ÀÚ¼×°¡¿Ô³­ ¶µ¿¡ ²Å³µÇÑ ÈûÀÌ »À½·Á¼¼×..	</ovevofk>
+		</yrg_sfmtib>			
+					
+		<mlgrmt>			
+			<uvvwrmt>	ÈûÀ´ Ã¤°ü¼×	</uvvwrmt>
+			<wvzw>	±îÇã.. ±ÆÁ÷ ¼¡¼­¿Ô ±Æ»Ï¼×..	</wvzw>
+			<hgzmw>	.. ¼­ ¾×¸¾ ÇÏÂúÀµ ¶ÌÀÌ¹ó¿¡ ±Æ»Ï¹ó¼×..	</hgzmw>
+			<hgzmw>	¼´¿¡ ¾â·£»ø ±î°©´Û ¿­±ÆÁö.. Ã£±ÆÁÖ¿Ú¼ª?	</hgzmw>
+			<hgzmw>	±Æ¶«¼ª ¼ª°Í ¿¿Àµ Á·Àç¿¡ ºÇ»Â ¿ÍÀµ ±Æ»ÏÁö..	</hgzmw>
+			<ovevofk>	ÀÚ¼×°¡¿Ô³­ ¶µ¿¡ ²Å³µÇÑ ÈûÀÌ »À½·Á¼¼×..	</ovevofk>
+		</mlgrmt>			
+					
+		<ufoo>			
+			<uvvwrmt>	»õ ÀÌ´ó Ã¤°ï ÈûÀÌ ±ø»Ù¼×	</uvvwrmt>
+			<wvzw>	±îÇã.. ±ÆÁ÷ ¼¡¼­¿Ô ±Æ»Ï¼×..	</wvzw>
+			<hgzmw>	.. ¼­ ¾×¸¾ ÇÏÂúÀµ ¶ÌÀÌ¹ó¿¡ ±Æ»Ï¹ó¼×..	</hgzmw>
+			<hgzmw>	¼´¿¡ ¾â·£»ø ±î°©´Û ¿­±ÆÁö.. Ã£±ÆÁÖ¿Ú¼ª?	</hgzmw>
+			<hgzmw>	±Æ¶«¼ª ¼ª°Í ¿¿Àµ Á·Àç¿¡ ºÇ»Â ¿ÍÀµ ±Æ»ÏÁö..	</hgzmw>
+			<hgzmw>	°º¿ÌÀÇ ²Ã¿£º°±È ¾â»Ù¸Á°Ô»Ù.. °À»ÃÀ´..	</hgzmw>
+			<ovevofk>	ÀÚ¼×°¡¿Ô³­ ¶µ¿¡ ²Å³µÇÑ ÈûÀÌ »À½·Á¼¼×..	</ovevofk>
+		</ufoo>			
+					
+		<hl_ufoo>			
+			<uvvwrmt>	»õ ÀÌ´ó Ã¤°ï ÈûÀÌ ±ø»Ù¼×	</uvvwrmt>
+			<wvzw>	±îÇã.. ±ÆÁ÷ ¼¡¼­¿Ô ±Æ»Ï¼×..	</wvzw>
+			<hgzmw>	.. ¼­ ¾×¸¾ ÇÏÂúÀµ ¶ÌÀÌ¹ó¿¡ ±Æ»Ï¹ó¼×..	</hgzmw>
+			<hgzmw>	¼´¿¡ ¾â·£»ø ±î°©´Û ¿­±ÆÁö.. Ã£±ÆÁÖ¿Ú¼ª?	</hgzmw>
+			<hgzmw>	±Æ¶«¼ª ¼ª°Í ¿¿Àµ Á·Àç¿¡ ºÇ»Â ¿ÍÀµ ±Æ»ÏÁö..	</hgzmw>
+			<hgzmw>	°º¿ÌÀÇ ²Ã¿£º°±È ¾â»Ù¸Á°Ô»Ù.. °À»ÃÀ´..	</hgzmw>
+			<ovevofk>	ÀÚ¼×°¡¿Ô³­ ¶µ¿¡ ²Å³µÇÑ ÈûÀÌ »À½·Á¼¼×..	</ovevofk>
+		</hl_ufoo>			
+					
+	</zmxrvmg_nfnnb>				
+	<cn_gvwwb_yvzi>				
+					
+		<sfmtib>			
+			<uvvwrmt>	ÀÎÇüÀÌÁö·· ·Ô»Â»Ù..	</uvvwrmt>
+			<wvzw>	Èì.. ¹Ç »Ù²Ã ¼¯ ¶ö·®»Â ¿Ç¿¡.	</wvzw>
+			<hgzmw>	ÇÑ¶ø ¶ö¸ÁÁø ¿õÀÎÇüÀµ..	</hgzmw>
+			<ovevofk>	ÇÑ¶ø »õ.. µ·¿í ²Í»Ù.. ¾×¼à¿¡.. 	</ovevofk>
+		</sfmtib>			
+					
+		<yrg_sfmtib>			
+			<uvvwrmt>	ÀÎÇüÀÌÁö·· ·Ô»Â»Ù..	</uvvwrmt>
+			<wvzw>	Èì.. ¹Ç »Ù²Ã ¼¯ ¶ö·®»Â ¿Ç¿¡.	</wvzw>
+			<hgzmw>	ÇÑ¶ø ¶ö¸ÁÁø ¿õÀÎÇüÀµ..	</hgzmw>
+			<ovevofk>	ÇÑ¶ø »õ.. µ·¿í ²Í»Ù.. ¾×¼à¿¡.. 	</ovevofk>
+		</yrg_sfmtib>			
+					
+		<mlgrmt>			
+			<uvvwrmt>	ÀÎÇüÀÌÁö·· ·Ô»Â»Ù..	</uvvwrmt>
+			<wvzw>	Èì.. ¹Ç »Ù²Ã ¼¯ ¶ö·®»Â ¿Ç¿¡.	</wvzw>
+			<hgzmw>	ÇÑ¶ø ¶ö¸ÁÁø ¿õÀÎÇüÀµ..	</hgzmw>
+			<hgzmw>	ÀúÁÖÇÑ»Ù..	</hgzmw>
+			<hgzmw>	±Ç·ù°¡³­ Çì±î¼ª°Ã ³ö ±øÀ´ ¿ÍÀÌ»Ù..	</hgzmw>
+			<ovevofk>	ÇÑ¶ø »õ.. µ·¿í ²Í»Ù.. ¾×¼à¿¡.. 	</ovevofk>
+		</mlgrmt>			
+					
+		<ufoo>			
+			<uvvwrmt>	±ïÁö¸Î ·ÔÀÌÁö ·¹¹ó. ÁÖÀÎ.	</uvvwrmt>
+			<wvzw>	Èì.. ¹Ç »Ù²Ã ¶ö¸ÁÁö»Â¿Ç¿¡..	</wvzw>
+			<hgzmw>	ÇÑ¶ø ¶ö¸ÁÁø ¿õÀÎÇüÀµ..	</hgzmw>
+			<hgzmw>	ÀúÁÖÇÑ»Ù..	</hgzmw>
+			<hgzmw>	±Ç·ù°¡³­ Çì±î¼ª°Ã ³ö ±øÀ´ ¿ÍÀÌ»Ù..	</hgzmw>
+			<hgzmw>	»õ ÀÌ´ó ¶ö¸ÁÁö¿í ²ÍÁö ±Ê»Ù...	</hgzmw>
+			<ovevofk>	ÇÑ¶ø »õ.. µ·¿í ²Í»Ù.. ¾×¼à¿¡.. 	</ovevofk>
+		</ufoo>			
+					
+		<hl_ufoo>			
+			<uvvwrmt>	±ïÁö¸Î ·ÔÀÌÁö ·¹¹ó. ÁÖÀÎ.	</uvvwrmt>
+			<wvzw>	Èì.. ¹Ç »Ù²Ã ¶ö¸ÁÁö»Â¿Ç¿¡..	</wvzw>
+			<hgzmw>	ÇÑ¶ø ¶ö¸ÁÁø ¿õÀÎÇüÀµ..	</hgzmw>
+			<hgzmw>	ÀúÁÖÇÑ»Ù..	</hgzmw>
+			<hgzmw>	±Ç·ù°¡³­ Çì±î¼ª°Ã ³ö ±øÀ´ ¿ÍÀÌ»Ù..	</hgzmw>
+			<hgzmw>	»õ ÀÌ´ó ¶ö¸ÁÁö¿í ²ÍÁö ±Ê»Ù...	</hgzmw>
+			<ovevofk>	ÇÑ¶ø »õ.. µ·¿í ²Í»Ù.. ¾×¼à¿¡.. 	</ovevofk>
+		</hl_ufoo>			
+					
+	</cn_gvwwb_yvzi>
+	<ksivvlmr>				
+					
+		<sfmtib>			
+			<uvvwrmt>	Èì..ÀÌÁ¦±ß..	</uvvwrmt>
+			<wvzw>	Àß..¿¡..¹ó..	</wvzw>
+			<hgzmw>	¿ñÄ¡±ÆÇÁ¾µ..	</hgzmw>
+			<ovevofk>	Á¹¾Ý »õ ¿Ç¶æÁ®Á¼¾µ..	</ovevofk>
+			<kviuli_1>	°ì°þ°¢ °þ°¢!	</kviuli_1>
+			<kviuli_1>	À¡! À¡°þÀ¡!	</kviuli_1>
+			<kviuli_2>	¼¯±Æ°À·¥»Ù!	</kviuli_2>
+			<kviuli_2>	Àú ÇÏ»Ã¸Î!	</kviuli_2>
+		</sfmtib>			
+					
+		<yrg_sfmtib>			
+			<uvvwrmt>	Èì..G..s..c	</uvvwrmt>
+			<wvzw>	Àß..¿¡..¹ó..	</wvzw>
+			<hgzmw>	(ÇÒÂ¦)?	</hgzmw>
+			<ovevofk>	Á¹¾Ý »õ ¿Ç¶æÁ®Á¼¾µ..	</ovevofk>
+			<kviuli_1>	°ì°þ°¢ °þ°¢!	</kviuli_1>
+			<kviuli_1>	À¡! À¡°þÀ¡!	</kviuli_1>
+			<kviuli_2>	¼¯±Æ°À·¥»Ù!	</kviuli_2>
+			<kviuli_2>	Àú ÇÏ»Ã¸Î!	</kviuli_2>
+		</yrg_sfmtib>			
+					
+		<mlgrmt>			
+			<uvvwrmt>	Èì..G..s..c	</uvvwrmt>
+			<wvzw>	Àß..¿¡..¹ó..	</wvzw>
+			<hgzmw>	(ÇÒÂ¦)?	</hgzmw>
+			<hgzmw>	¿ñÄ¡±ÆÇÁ¾µ..	</hgzmw>
+			<hgzmw>	ÇÒÂ¦, ÇÒÂ¦, (²µ-À·À±) Ä³~	</hgzmw>
+			<ovevofk>	Á´ »õ ¿Ç¶æÀ´ ¹¼±î¹ó!!	</ovevofk>
+			<kviuli_1>	°ì°þ°¢ °þ°¢!	</kviuli_1>
+			<kviuli_1>	À¡! À¡°þÀ¡!	</kviuli_1>
+			<kviuli_2>	¼¯±Æ°À·¥»Ù!	</kviuli_2>
+			<kviuli_2>	Àú ÇÏ»Ã¸Î!	</kviuli_2>
+		</mlgrmt>			
+					
+		<ufoo>			
+			<uvvwrmt>	»ÜÈ£ÇÏ¿Ô ·´ÇÏÁö·· »õ ÀÌ´ó ÇÊ°ä±ø»Ù!	</uvvwrmt>
+			<wvzw>	Àß..¿¡..¹ó..	</wvzw>
+			<hgzmw>	(ÇÒÂ¦)?	</hgzmw>
+			<hgzmw>	¿ñÄ¡±ÆÇÁ¾µ..	</hgzmw>
+			<hgzmw>	ÇÒÂ¦, ÇÒÂ¦, (²µ-À·À±) Ä³~	</hgzmw>
+			<hgzmw>	À²!!! ÀÌ ·ÀÀµ?!	</hgzmw>
+			<ovevofk>	Á´ »õ ¿Ç¶æÀ´ ¹¼±î¹ó!!	</ovevofk>
+			<kviuli_1>	°ì°þ°¢ °þ°¢!	</kviuli_1>
+			<kviuli_1>	À¡! À¡°þÀ¡!	</kviuli_1>
+			<kviuli_2>	¼¯±Æ°À·¥»Ù!	</kviuli_2>
+			<kviuli_2>	Àú ÇÏ»Ã¸Î!	</kviuli_2>
+		</ufoo>			
+					
+		<hl_ufoo>			
+			<uvvwrmt>	»ÜÈ£ÇÏ¿Ô ·´ÇÏÁö·· »õ ÀÌ´ó ÇÊ°ä±ø»Ù!	</uvvwrmt>
+			<wvzw>	Àß..¿¡..¹ó..	</wvzw>
+			<hgzmw>	(ÇÒÂ¦)?	</hgzmw>
+			<hgzmw>	¿ñÄ¡±ÆÇÁ¾µ..	</hgzmw>
+			<hgzmw>	ÇÒÂ¦, ÇÒÂ¦, (²µ-À·À±) Ä³~	</hgzmw>
+			<hgzmw>	À²!!! ÀÌ ·ÀÀµ?!	</hgzmw>
+			<ovevofk>	Á´ »õ ¿Ç¶æÀ´ ¹¼±î¹ó!!	</ovevofk>
+			<kviuli_1>	°ì°þ°¢ °þ°¢!	</kviuli_1>
+			<kviuli_1>	À¡! À¡°þÀ¡!	</kviuli_1>
+			<kviuli_2>	¼¯±Æ°À·¥»Ù!	</kviuli_2>
+			<kviuli_2>	Àú ÇÏ»Ã¸Î!	</kviuli_2>
+		</hl_ufoo>			
+					
+	</ksivvlmr>		
+	<nllmortsg>
+
+		<sfmtib>
+			<uvvwrmt>	Àß ·ÔÀ´½½..	</uvvwrmt>
+			<wvzw>	±àÇØµüÁø ¼à³®Àµ ÇÊ°ä±ø±î..	</wvzw>
+			<hgzmw>	¶è¿íÇÁ»Ï¾î, ¿£ Á´ Á¹²ÉÇØÁÙ¸¡?	</hgzmw>
+			<ovevofk>	ÃàÇÏÇØ	</ovevofk>
+			<kviuli_1>	°¡ÀÕ! ±î·Ó! ¼ÄÇÏÇÏÇÏÇÖ~	</kviuli_1>
+			<kviuli_1>	ÀÌ±å!! ±î±ù?? ...	</kviuli_1>
+			<kviuli_2>	¼Ä-¼Ä¼Ä¼Ä-¼Ä-¼É	</kviuli_2>
+			<kviuli_2>	È÷À× - ¤º-)z	</kviuli_2>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	Àß ·ÔÀ´½½..(²Ì¾ß ^¤º^)	</uvvwrmt>
+			<wvzw>	±àÇØµüÁø ¼à³®Àµ ÇÊ°ä±ø±î..	</wvzw>
+			<hgzmw>	¶è¿íÇÁ»Ï¾î, ¿£ Á´ Á¹²ÉÇØÁÙ¸¡?	</hgzmw>
+			<ovevofk>	ÃàÇÏÇØ.	</ovevofk>
+			<kviuli_1>	°¡ÀÕ! ±î·Ó! ¼ÄÇÏÇÏÇÏÇÖ~	</kviuli_1>
+			<kviuli_1>	ÀÌ±å!! ±î±ù?? ...	</kviuli_1>
+			<kviuli_2>	¼Ä-¼Ä¼Ä¼Ä-¼Ä-¼É	</kviuli_2>
+			<kviuli_2>	È÷À× - ¤º-)z	</kviuli_2>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	Àß ·ÔÀ´½½..(²Ì¾ß ^¤º^)	</uvvwrmt>
+			<wvzw>	±àÇØµüÁø ¼à³®Àµ ÇÊ°ä±ø±î..	</wvzw>
+			<hgzmw> ºû¹û~¢Ý ºû¹û~¢Ý ºû¹û~¢Ý	</hgzmw>
+			<hgzmw>	Á±³Ò·®·¦ ºè»Ùµ··é..°± Ãß±ïÀÌ..	</hgzmw>
+			<hgzmw>	·¹À²À´ °©»Â¿Ç ÀÌºû¾Ý..	</hgzmw>
+			<ovevofk>	ÃàÇÏÇØ.. >¤º¤¸)	</ovevofk>
+			<kviuli_1>	°¡ÀÕ! ±î·Ó! ¼ÄÇÏÇÏÇÏÇÖ~	</kviuli_1>
+			<kviuli_1>	ÀÌ±å!! ±î±ù?? ...	</kviuli_1>
+			<kviuli_2>	¼Ä-¼Ä¼Ä¼Ä-¼Ä-¼É	</kviuli_2>
+			<kviuli_2>	È÷À× - ¤º-)z	</kviuli_2>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	ÀÌºý¿Ç ÇÊ°ä±ø±î!	</uvvwrmt>
+			<wvzw>	±àÇØµüÁø ¼à³®Àµ ÇÊ°ä±ø±î..	</wvzw>
+			<hgzmw> ºû¹û~¢Ý ºû¹û~¢Ý ºû¹û~¢Ý	</hgzmw>
+			<hgzmw>	Á±³Ò·®·¦ ºè»Ùµ··é..°± Ãß±ïÀÌ..	</hgzmw>
+			<hgzmw>	·¹À²À´ °©»Â¿Ç ÀÌºû¾Ý..·Ö·®³­	</hgzmw>
+			<hgzmw>	¿¡··È÷ ÁöÄÑµÁÁÖ»Â ¿Í··À·¸Îºº	</hgzmw>
+			<ovevofk>	ÃàÇÏÇØ.. >¤º¤¸)	</ovevofk>
+			<kviuli_1>	°¡ÀÕ! ±î·Ó! ¼ÄÇÏÇÏÇÏÇÖ~	</kviuli_1>
+			<kviuli_1>	ÀÌ±å!! ±î±ù?? ...	</kviuli_1>
+			<kviuli_2>	¼Ä-¼Ä¼Ä¼Ä-¼Ä-¼É	</kviuli_2>
+			<kviuli_2>	È÷À× - ¤º-)z	</kviuli_2>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	ÀÌºý¿Ç ÇÊ°ä±ø±î!	</uvvwrmt>
+			<wvzw>	±àÇØµüÁø ¼à³®Àµ ÇÊ°ä±ø±î..	</wvzw>
+			<hgzmw> ºû¹û~¢Ý ºû¹û~¢Ý ºû¹û~¢Ý	</hgzmw>
+			<hgzmw>	Á±³Ò·®·¦ ºè»Ùµ··é..°± Ãß±ïÀÌ..	</hgzmw>
+			<hgzmw>	·¹À²À´ °©»Â¿Ç ÀÌºû¾Ý..·Ö·®³­	</hgzmw>
+			<hgzmw>	¿¡··È÷ ÁöÄÑµÁÁÖ»Â ¿Í··À·¸Îºº	</hgzmw>
+			<ovevofk>	ÃàÇÏÇØ.. >¤º¤¸)	</ovevofk>
+			<kviuli_1>	°¡ÀÕ! ±î·Ó! ¼ÄÇÏÇÏÇÏÇÖ~	</kviuli_1>
+			<kviuli_1>	ÀÌ±å!! ±î±ù?? ...	</kviuli_1>
+			<kviuli_2>	¼Ä-¼Ä¼Ä¼Ä-¼Ä-¼É	</kviuli_2>
+			<kviuli_2>	È÷À× - ¤º-)z	</kviuli_2>
+		</hl_ufoo>
+
+	</nllmortsg>		
+	<hpvorlm>				
+					
+		<sfmtib>			
+			<uvvwrmt>	Å©?¡¦¡¦ ¼´ ±È°¡ Àáºé±îÀÖ»ø ¼à³®ÀÌ »«À´ ¹ß»Â¾µ¡¦¡¦	</uvvwrmt>
+			<uvvwrmt>	µ£·£Á¦µêµê²Ã°©¡¦¡¦	</uvvwrmt>
+			<sfmgrmt>	´ç¼ÉÇÑ ¿ÍÀµ ·Ô±î Ä¡°î»Ù. ¾×¿ÍÀÌ ÀÌ ³Õ°¡ Á×±î¿£ ´ç¼É¿¨°¡ »ëÇÑ ·¹Áö·¸ °¶ÀÇ»Ù.	</sfmgrmt>
+			<sfmgrmt>	µÒ²ÖÇÑ °ºÈ¥ºéÀÌ¾µ¡¦¡¦	</sfmgrmt>
+			<wzmtvi>	´ç¼ÉÇÏ»Â ¿ÍÀÌ ±Æ»Ï¹ó ´ç¼É »çÇØ¶ö·®»Â ¿ÍÀÎ¿¡¡¦¡¦	</wzmtvi>
+			<wzmtvi>	Å©À°¡¦¡¦ ¶¶Áö ÀÇ²ÄÀÌ Èå·»ÇØÁ® °À»Â¿É¡¦¡¦	</wzmtvi>
+			<wvzw>	¿ÆÁ¤ ·¹. ±Æ¶«·® ¶è¿¡ ¿íÆÄºº ¼× ¼à³®À´ ·ÔÁö»Â ±Ê»Â»Ù.	</wvzw>
+			<wvzw>	ÇÔ½½¡¦¡¦º¶±Æ¿¡ÀÚ¡¦¡¦ ¼ªÀÇ ¿íÇâÀ·¸Î¡¦¡¦	</wvzw>
+			<hgzmw>	Å©À°¡¦¡¦ ¾× ¼à³®ÀÌ °äº°Ä¡¾â ²ÃÀÛÇß±î¡¦¡¦	</hgzmw>
+			<hgzmw>	¾«¸Ó»Ù¡¦¡¦	</hgzmw>
+			<hgzmw>	ºé·®Áö ±Ê»Â¿¡? ÀÌ µñ·í³Ò·®¿¡¡¦¡¦	</hgzmw>
+			<xlmmvxg>	ÀÌ»ë¸Î ±Æ¾Í¿¡ ºÇ±î¶ö·®»Â ¿Íºº ¼ª´ÚÁö ±Ê»Ù¿í ´ý¿¢ÇÏ¿í ÀÖ±ú»Ù.	</xlmmvxg>
+			<xlmmvxg>	»Ù²Ã¡¦¡¦ ±îºÒÀÇ ¹§¿¡ º¶±Æ°Â»Ù.	</xlmmvxg>
+			<ovevofk>	Å©?¡¦¡¦	</ovevofk>
+			<ovevofk>	´ì±Æ¼½¿í ²Í»Ù·é¡¦¡¦ ¿­ÇØÁ®¹ó¡¦¡¦	</ovevofk>
+			<kviuli_1>	ÇÑ¿¡ÇØ µ·ÀÌ»Â¾µ¡¦¡¦ ¾×¸¡...... Áñ¾æ ³ö ÀÖÀ´ ¹§ ·¹À²½¯ Áñ¿ÜºÎ±î¹ó.	</kviuli_1>
+			<kviuli_1>	ÈÊ¡¦¡¦	</kviuli_1>
+			<kviuli_2>	´ì±Æ ÀÖ»Ù»Â ¿ÍÀµ ¿íÅëÀÇ °¬³ÓÀÌÁö.	</kviuli_2>
+			<kviuli_2>	Å²°åÀµ ²µ²µ¸Î·¦ ÆÄ¾«ÇÒ ´ÓÀÌ»Ù......	</kviuli_2>
+			<kviuli_3>	»À½·Áö»Â¿¡ ÀÌ ·öÀÇ ÈûÀÌ¡¦¡¦	</kviuli_3>
+			<kviuli_3>	Å©?¡¦¡¦ °À¸£··ÀÌ¾µ ÀÌ¸·¿Ô¾îÁö ÇÇ¿¡ ½ú±î°À·£»Â ¿Ç¡¦¡¦	</kviuli_3>
+			<kviuli_h>	?¡¦¡¦ ±îÁö¸»¾µ¡¦¡¦ ´õ¸Î°î ¿¨¿¢ÀÌ»Ù.	</kviuli_h>
+			<kviuli_h>	È¥º¸!!!! È¥º¸ÀÌ »Ù¿¡°À¿í ÀÖ»Ù!!!!!	</kviuli_h>
+		</sfmtib>			
+					
+		<yrg_sfmtib>			
+			<uvvwrmt>	ÀÌ Á¤ºº¸Î»Â ¼ªÀÇ Çã¶«ÇÔÀ´ »Þ¸¤ ³ö ±ø»Ù......	</uvvwrmt>
+			<uvvwrmt>	±î·®³®Àµ ÀÎ¿£ÀÌ°©¡¦¡¦	</uvvwrmt>
+			<sfmgrmt>	¾×¿ÍÀÌ ¼ÊÀÇ ÃÖ³¾ÀÎ¿¡?	</sfmgrmt>
+			<sfmgrmt>	Áö¸çÇÏ¾µ¡¦¡¦	</sfmgrmt>
+			<wzmtvi>	°©¾â¾îÁöÀÎ¿¡¡¦¡¦	</wzmtvi>
+			<wzmtvi>	´ç¼ÉÇÏ»Â ¿ÍÀÌ ±Æ»Ï¹ó ´ç¼É »çÇØ¶ö·®»Â ¿ÍÀÎ¿¡¡¦¡¦	</wzmtvi>
+			<wvzw>	¿ÆÁ¤ ·¹. ±Æ¶«·® ¶è¿¡ ¿íÆÄºº ¼Î ·ÔÁø ±Ê»Â»Ù.	</wvzw>
+			<wvzw>	ÇÔ½½¡¦¡¦º¶±Æ¿¡ÀÚ¡¦¡¦ ¼ªÀÇ ¿íÇâÀ·¸Î¡¦¡¦	</wvzw>
+			<hgzmw>	ÀÌ ¿øµ¶¿¨ÀÌ±ß ·´¸Î ¼´¿¡ ±ÆÁ÷ ´ì±ÆÀÖ»Ù»Â Áõ¿Å»Ù.	</hgzmw>
+			<hgzmw>	ºé·®Áö ±Ê»Â¿¡? ÀÌ µñ·í³Ò·®¿¡¡¦¡¦	</hgzmw>
+			<hgzmw>	Áö¸çÇÏ¾µ¡¦¡¦	</hgzmw>
+			<xlmmvxg>	»Ù²Ã¡¦¡¦ ±îºÒÀÇ ¹§¿¡ º¶±Æ°Â»Ù.	</xlmmvxg>
+			<xlmmvxg>	ÂªÀµ ÈÞ²ÄÀÌ±ú¾µ¡¦¡¦	</xlmmvxg>
+			<ovevofk>	´ì±Æ¼½¿í ²Í»Ù·é¡¦¡¦ ¿­ÇØÁ®¹ó¡¦¡¦	</ovevofk>
+			<ovevofk>	±ÆÁ÷ µÎÁ¸ÇÏ»Ù.	</ovevofk>
+			<kviuli_1>	ÇÑ¿¡ÇØ µ·ÀÌ»Â¾µ¡¦¡¦ ¾×¸¡...... Áñ¾æ ³ö ÀÖÀ´ ¹§ ·¹À²½¯ Áñ¿ÜºÎ±î¹ó.	</kviuli_1>
+			<kviuli_1>	ÈÊ¡¦¡¦	</kviuli_1>
+			<kviuli_2>	´ì±Æ ÀÖ»Ù»Â ¿ÍÀµ ¿íÅëÀÇ °¬³ÓÀÌÁö.	</kviuli_2>
+			<kviuli_2>	Å²°åÀµ ²µ²µ¸Î·¦ ÆÄ¾«ÇÒ ´ÓÀÌ»Ù......	</kviuli_2>
+			<kviuli_3>	»À½·Áö»Â¿¡ ÀÌ ·öÀÇ ÈûÀÌ¡¦¡¦	</kviuli_3>
+			<kviuli_3>	Å©?¡¦¡¦ °À¸£··ÀÌ¾µ ÀÌ¸·¿Ô¾îÁö ÇÇ¿¡ ½ú±î°À·£»Â ¿Ç¡¦¡¦	</kviuli_3>
+			<kviuli_h>	?¡¦¡¦ ±îÁö¸»¾µ¡¦¡¦ ´õ¸Î°î ¿¨¿¢ÀÌ»Ù.	</kviuli_h>
+			<kviuli_h>	È¥º¸!!!! È¥º¸ÀÌ »Ù¿¡°À¿í ÀÖ»Ù!!!!!	</kviuli_h>
+		</yrg_sfmtib>			
+					
+		<mlgrmt>			
+			<uvvwrmt>	¾× ²ÃÀý¡¦¡¦ ¾±ÁÖ·½µ·»Ù ºÎ¸Á°î ¿ÍÀµ ±ø»Ù¿í ´ý¿¢Çß±ú»Ù¡¦¡¦ ²²ÇÂ ¾â±ïÀÌÁö¡¦¡¦	</uvvwrmt>
+			<uvvwrmt>	ÈÊ¡¦¡¦ ±ºº¥ ±ø»Â ¾â±ïÀÌ ¹¿°À·£»Â¾µ¡¦¡¦	</uvvwrmt>
+			<sfmgrmt>	¾×¸¡! ÆÄ¾«ÇØ¹ó!!!! ¾×¿ÍÀÌ ¼ÊÀÇ ÁøÁ¤ÇÑ ·ð²ÀÀÌ»Ù!!!	</sfmgrmt>
+			<sfmgrmt>	Å©ÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÏ!!!! Å©ÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÖ!!!!!!	</sfmgrmt>
+			<wzmtvi>	µÐ¼ë»Â Ä®¼¡À´ ¶«º®Áö¿Ô ÇÏÁö¡¦¡¦	</wzmtvi>
+			<wzmtvi>	°©¾â¾îÁöÀÎ¿¡¡¦¡¦	</wzmtvi>
+			<wvzw>	»À½·Áö»Â¿¡? ÀÌ¿ÍÀÌ ¼Ê°¡¿Ô Èñ´ý»çÇÑ ÀÚºéÀÇ ²²ÇÄ¿ú µÐ¼ë»Ù.	</wvzw>
+			<wvzw>	±îºÒÀ´ ºÎ¸Á°öÇÏÁö ·¹¹ó¡¦¡¦	</wvzw>
+			<hgzmw>	Áö¸çÇÏ¾µ¡¦¡¦	</hgzmw>
+			<hgzmw>	ÀÌ ±ó·¹··ÀÇ ÈÞ²ÄÀÎ¿¡.	</hgzmw>
+			<hgzmw>	¾×¸¡¡¦¡¦ ¿£ÀýÈ÷ °øÇÑ»Ù·é ÀÌ ¼ª·¦ ³¹¾æ ¾âÈ··¦ ÁÖ¿Ú»Ù.	</hgzmw>
+			<xlmmvxg>	»Ù²Ã¡¦¡¦ ±îºÒÀÇ ¹§¿¡ º¶±Æ°Â»Ù.	</xlmmvxg>
+			<xlmmvxg>	ÇÇÀÇ ÃàÁ¦¿¡ ²ÃÀÛºÈ»Ù¡¦¡¦	</xlmmvxg>
+			<ovevofk>	¾×¸¡ »õ°í »õ ¶ß¶öºÕ ÃÄ¹ó¡¦¡¦	</ovevofk>
+			<ovevofk>	±ÆÁ÷ µÎÁ¸ÇÏ»Ù.	</ovevofk>
+			<kviuli_1>	ÇÑ¿¡ÇØ µ·ÀÌ»Â¾µ¡¦¡¦ ¾×¸¡...... Áñ¾æ ³ö ÀÖÀ´ ¹§ ·¹À²½¯ Áñ¿ÜºÎ±î¹ó.	</kviuli_1>
+			<kviuli_1>	ÈÊ¡¦¡¦	</kviuli_1>
+			<kviuli_2>	´ì±Æ ÀÖ»Ù»Â ¿ÍÀµ ¿íÅëÀÇ °¬³ÓÀÌÁö.	</kviuli_2>
+			<kviuli_2>	Å²°åÀµ ²µ²µ¸Î·¦ ÆÄ¾«ÇÒ ´ÓÀÌ»Ù......	</kviuli_2>
+			<kviuli_3>	»À½·Áö»Â¿¡ ÀÌ ·öÀÇ ÈûÀÌ¡¦¡¦	</kviuli_3>
+			<kviuli_3>	Å©?¡¦¡¦ °À¸£··ÀÌ¾µ ÀÌ¸·¿Ô¾îÁö ÇÇ¿¡ ½ú±î°À·£»Â ¿Ç¡¦¡¦	</kviuli_3>
+			<kviuli_h>	?¡¦¡¦ ±îÁö¸»¾µ¡¦¡¦ ´õ¸Î°î ¿¨¿¢ÀÌ»Ù.	</kviuli_h>
+			<kviuli_h>	È¥º¸!!!! È¥º¸ÀÌ »Ù¿¡°À¿í ÀÖ»Ù!!!!!	</kviuli_h>
+		</mlgrmt>			
+					
+		<ufoo>			
+			<uvvwrmt>	¾×··ºÎ»Â ¿ÍÀÌ ÁÁÀ´ ¿ÍÀÌ»Ù ±î·®³®Àµ ÀÚ°©¡¦¡¦	</uvvwrmt>
+			<uvvwrmt>	Å©À¶¡¦¡¦	</uvvwrmt>
+			<sfmgrmt>	ÀÌ ·öÀÌ Á÷Á¢ ¼ª³¼ ÇÊ°äºº ±ø¿Ú¾µ.	</sfmgrmt>
+			<sfmgrmt>	¾×¸¡! ÆÄ¾«ÇØ¹ó!!!! ¾×¿ÍÀÌ ¼ÊÀÇ ÁøÁ¤ÇÑ ·ð²ÀÀÌ»Ù!!!	</sfmgrmt>
+			<wzmtvi>	µÐ¼ë»Â Ä®¼¡À´ ¶«º®Áö¿Ô ÇÏÁö¡¦¡¦	</wzmtvi>
+			<wzmtvi>	°å·Á°¡ ¶«¼ÊÁö·®¹ó¡¦¡¦	</wzmtvi>
+			<wvzw>	Å©ÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÖ! Áö°ÁÀÇ ¶®ÀÌ °­·®»Â ¾·¼ª!	</wvzw>
+			<wvzw>	»À½·Áö»Â¿¡? ÀÌ¿ÍÀÌ ¼Ê°¡¿Ô Èñ´ý»çÇÑ ÀÚºéÀÇ ²²ÇÄ¿ú µÐ¼ë»Ù.	</wvzw>
+			<hgzmw>	±ðÁ¦¾îÁö ·Ó¶º¿Å·®¿í ÀÖÀ´ ³ÀÀÌ¼Ä!	</hgzmw>
+			<hgzmw>	µÒ¾æÇÑ ¶Ù¹÷ÀÌ µÒ±î°À»Â¾µ¡¦¡¦	</hgzmw>
+			<hgzmw>	¾×¸¡¡¦¡¦ ¿£ÀýÈ÷ °øÇÑ»Ù·é ÀÌ ¼ª·¦ ³¹¾æ ¾âÈ··¦ ÁÖ¿Ú»Ù.	</hgzmw>
+			<xlmmvxg>	ÇÇÀÇ ÃàÁ¦¿¡ ²ÃÀÛºÈ»Ù¡¦¡¦	</xlmmvxg>
+			<xlmmvxg>	»Ù²Ã¡¦¡¦ ±îºÒÀÇ ¹§¿¡ º¶±Æ°Â»Ù.	</xlmmvxg>
+			<ovevofk>	¾×¸¡ »õ°í »õ ¶ß¶öºÕÃÄ¹ó¡¦¡¦	</ovevofk>
+			<ovevofk>	Á¹¾ÝÀµ¡¦¡¦ ³µÀå ÇÑ ¿Ç¿¡?	</ovevofk>
+			<kviuli_1>	ÇÑ¿¡ÇØ µ·ÀÌ»Â¾µ¡¦¡¦ ¾×¸¡...... Áñ¾æ ³ö ÀÖÀ´ ¹§ ·¹À²½¯ Áñ¿ÜºÎ±î¹ó.	</kviuli_1>
+			<kviuli_1>	ÈÊ¡¦¡¦	</kviuli_1>
+			<kviuli_2>	´ì±Æ ÀÖ»Ù»Â ¿ÍÀµ ¿íÅëÀÇ °¬³ÓÀÌÁö.	</kviuli_2>
+			<kviuli_2>	Å²°åÀµ ²µ²µ¸Î·¦ ÆÄ¾«ÇÒ ´ÓÀÌ»Ù......	</kviuli_2>
+			<kviuli_3>	»À½·Áö»Â¿¡ ÀÌ ·öÀÇ ÈûÀÌ¡¦¡¦	</kviuli_3>
+			<kviuli_3>	Å©?¡¦¡¦ °À¸£··ÀÌ¾µ ÀÌ¸·¿Ô¾îÁö ÇÇ¿¡ ½ú±î°À·£»Â ¿Ç¡¦¡¦	</kviuli_3>
+			<kviuli_h>	?¡¦¡¦ ±îÁö¸»¾µ¡¦¡¦ ´õ¸Î°î ¿¨¿¢ÀÌ»Ù.	</kviuli_h>
+			<kviuli_h>	È¥º¸!!!! È¥º¸ÀÌ »Ù¿¡°À¿í ÀÖ»Ù!!!!!	</kviuli_h>
+		</ufoo>			
+					
+		<hl_ufoo>			
+			<uvvwrmt>	¾×··ºÎ»Â ¿ÍÀÌ ÁÁÀ´ ¿ÍÀÌ»Ù ±î·®³®Àµ ÀÚ°©¡¦¡¦	</uvvwrmt>
+			<uvvwrmt>	ÀÌ¸¾ ²ÄÀ·¸Î ¼¯ ¿í¶®ÇÏ¸Á ÇÏ»Ù»Ï¡¦¡¦ µñ¿ÌÇÑ ¼à³®¡¦¡¦	</uvvwrmt>
+			<sfmgrmt>	ÀÌ ·öÀÌ Á÷Á¢ ¼ª³¼ ÇÊ°äºº ±ø¿Ú¾µ.	</sfmgrmt>
+			<sfmgrmt>	³Ò¹õ²µ¸»¾µ¡¦¡¦	</sfmgrmt>
+			<wzmtvi>	µ·ÀÌ»Â¿¡ Á×À²ÀÇ ³ÕÁþÀÌ¡¦¡¦	</wzmtvi>
+			<wzmtvi>	ÀÌ¿ÍÀÌ ÃÖÈÄ·¦ ¿¢°ÀÇÑÀÚÀÇ 	</wzmtvi>
+			<wvzw>	Å©ÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÏÇÖ! Áö°ÁÀÇ ¶®ÀÌ °­·®»Â ¾·¼ª!	</wvzw>
+			<wvzw>	»À½·Áö»Â¿¡? ÀÌ¿ÍÀÌ ¼Ê°¡¿Ô Èñ´ý»çÇÑ ÀÚºéÀÇ ²²ÇÄ¿ú µÐ¼ë»Ù.	</wvzw>
+			<hgzmw>	µÒ¾æÇÑ ¶Ù¹÷ÀÌ µÒ±î°À»Â¾µ¡¦¡¦	</hgzmw>
+			<hgzmw>	±ðÁ¦ºç ´ó»ëÇØÁÖ·¹ ±Ö³ÛÀÌ¡¦¡¦	</hgzmw>
+			<hgzmw>	¶ú²á ÁöÄ£ ¿Å¼Ä?	</hgzmw>
+			<xlmmvxg>	ÇÇÀÇ ÃàÁ¦¿¡ ²ÃÀÛºÈ»Ù¡¦¡¦	</xlmmvxg>
+			<xlmmvxg>	»Ù²Ã¡¦¡¦ ±îºÒÀÇ ¹§¿¡ º¶±Æ°Â»Ù.	</xlmmvxg>
+			<ovevofk>	¾×¸¡ »õ°í »õ ¶ß¶öºÕ ÃÄ¹ó¡¦¡¦	</ovevofk>
+			<ovevofk>	Á¹¾ÝÀµ¡¦¡¦ ³µÀåÇÑ ¿Ç¿¡?	</ovevofk>
+			<kviuli_1>	ÇÑ¿¡ÇØ µ·ÀÌ»Â¾µ¡¦¡¦ ¾×¸¡...... Áñ¾æ ³ö ÀÖÀ´ ¹§ ·¹À²½¯ Áñ¿ÜºÎ±î¹ó.	</kviuli_1>
+			<kviuli_1>	ÈÊ¡¦¡¦	</kviuli_1>
+			<kviuli_2>	´ì±Æ ÀÖ»Ù»Â ¿ÍÀµ ¿íÅëÀÇ °¬³ÓÀÌÁö.	</kviuli_2>
+			<kviuli_2>	Å²°åÀµ ²µ²µ¸Î·¦ ÆÄ¾«ÇÒ ´ÓÀÌ»Ù......	</kviuli_2>
+			<kviuli_3>	»À½·Áö»Â¿¡ ÀÌ ·öÀÇ ÈûÀÌ¡¦¡¦	</kviuli_3>
+			<kviuli_3>	Å©?¡¦¡¦ °À¸£··ÀÌ¾µ ÀÌ¸·¿Ô¾îÁö ÇÇ¿¡ ½ú±î°À·£»Â ¿Ç¡¦¡¦	</kviuli_3>
+			<kviuli_h>	?¡¦¡¦ ±îÁö¸»¾µ¡¦¡¦ ´õ¸Î°î ¿¨¿¢ÀÌ»Ù.	</kviuli_h>
+			<kviuli_h>	È¥º¸!!!! È¥º¸ÀÌ »Ù¿¡°À¿í ÀÖ»Ù!!!!!	</kviuli_h>
+		</hl_ufoo>			
+					
+	</hpvorlm>		
+	<yzxhlqrm2>
+
+		<sfmtib>
+			<uvvwrmt>	½Ï¼ª ·ÀÀÖ»Â ²Ä´ç¾µ°ä.	</uvvwrmt>
+			<wvzw>	¾×»ë»Â Á¤·´ ÇÑ²ÉÇÏ¾µ°ä..	</wvzw>
+			<hgzmw>	Á¤¼ç ¾×»ë»Â Á¦¿¡ µ·ÀÌÁö ±Ê»Â¿Ç¿¡°ä?	</hgzmw>
+			<ovevofk>	ÃàÇÏºå·®°É»Ï»Ù.	</ovevofk>
+			<kviuli_1>	Á¦¿¡ °ä¾«¹ó»Ï°ä! ¼Ê¶« ÇÏ²Ã°É»Ï»Ù..ÈåÈæ	</kviuli_1>
+			<kviuli_1>	...ÈåÈæÈæ..	</kviuli_1>
+			<kviuli_2>	È÷È÷ Á¦¿¡ ³¾¼à¸Î µ·ÀÌ²Ã¼ª°ä?	</kviuli_2>
+			<kviuli_2>	¾×¸¡°ä! ´ç²Ç Àü ¶é´ç°ä¾«¹ø»Ï»Ù! È£È£È£	</kviuli_2>
+			<kviuli_3>	ÇÏ±Æ±Ï~Á¹¾Ý ÇÇ¿ïÇÏ¾µ°ä.	</kviuli_3>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	½Ï¼ª ·ÀÀÖ»Â ²Ä´ç¾µ°ä.	</uvvwrmt>
+			<wvzw>	¾×»ë»Â Á¤·´ ÇÑ²ÉÇÏ¾µ°ä..	</wvzw>
+			<hgzmw>	Á¤¼ç ¾×»ë»Â Á¦¿¡ µ·ÀÌÁö ±Ê»Â¿Ç¿¡°ä?	</hgzmw>
+			<ovevofk>	ÃàÇÏºå·®°É»Ï»Ù.	</ovevofk>
+			<kviuli_1>	Á¦¿¡ °ä¾«¹ó»Ï°ä! ¼Ê¶« ÇÏ²Ã°É»Ï»Ù..ÈåÈæ	</kviuli_1>
+			<kviuli_1>	...ÈåÈæÈæ..	</kviuli_1>
+			<kviuli_2>	È÷È÷ Á¦¿¡ ³¾¼à¸Î µ·ÀÌ²Ã¼ª°ä?	</kviuli_2>
+			<kviuli_2>	¾×¸¡°ä! ´ç²Ç Àü ¶é´ç°ä¾«¹ø»Ï»Ù! È£È£È£	</kviuli_2>
+			<kviuli_3>	ÇÏ±Æ±Ï~Á¹¾Ý ÇÇ¿ïÇÏ¾µ°ä.	</kviuli_3>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	½Ï¼ª ·ÀÀÖ»Â ²Ä´ç¾µ°ä.	</uvvwrmt>
+			<wvzw>	¾×»ë»Â Á¤·´ ÇÑ²ÉÇÏ¾µ°ä...	</wvzw>
+			<hgzmw> Àü »ÜÁö..¾×»ë·¦..	</hgzmw>
+			<hgzmw>	¶öºå¼ª¶« ±Æ¸¡³­..	</hgzmw>
+			<hgzmw>	·¹À²À´ °©»Â¿Ç ÀÌºû¾Ý..	</hgzmw>
+			<ovevofk>	ÃàÇÏºå·®°É»Ï»Ù.	</ovevofk>
+			<kviuli_1>	Á¦¿¡ °ä¾«¹ó»Ï°ä! ¼Ê¶« ÇÏ²Ã°É»Ï»Ù..ÈåÈæ	</kviuli_1>
+			<kviuli_1>	...ÈåÈæÈæ..	</kviuli_1>
+			<kviuli_2>	È÷È÷ Á¦¿¡ ³¾¼à¸Î µ·ÀÌ²Ã¼ª°ä?	</kviuli_2>
+			<kviuli_2>	¾×¸¡°ä! ´ç²Ç Àü ¶é´ç°ä¾«¹ø»Ï»Ù! È£È£È£	</kviuli_2>
+			<kviuli_3>	ÇÏ±Æ±Ï~Á¹¾Ý ÇÇ¿ïÇÏ¾µ°ä.	</kviuli_3>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	½Ï¼ª ·ÀÀÖ»Â ²Ä´ç¾µ°ä.	</uvvwrmt>
+			<wvzw>	¾×»ë»Â Á¤·´ ÇÑ²ÉÇÏ¾µ°ä..	</wvzw>
+			<hgzmw> Àü »ÜÁö..¾×»ë·¦..	</hgzmw>
+			<hgzmw>	¶öºå¼ª¶« ±Æ¸¡³­..	</hgzmw>
+			<hgzmw>	·¹À²À´ °©»Â¿Ç ÀÌºû¾Ý..	</hgzmw>
+			<hgzmw>	¾×·¦ ··¼ªÁö ±Ê±Ò»õ¹ó·é..	</hgzmw>
+			<ovevofk>	ÃàÇÏºå·®°É»Ï»Ù.	</ovevofk>
+			<kviuli_1>	Á¦¿¡ °ä¾«¹ó»Ï°ä! ¼Ê¶« ÇÏ²Ã°É»Ï»Ù..ÈåÈæ	</kviuli_1>
+			<kviuli_1>	...ÈåÈæÈæ..	</kviuli_1>
+			<kviuli_2>	È÷È÷ Á¦¿¡ ³¾¼à¸Î µ·ÀÌ²Ã¼ª°ä?	</kviuli_2>
+			<kviuli_2>	¾×¸¡°ä! ´ç²Ç Àü ¶é´ç°ä¾«¹ø»Ï»Ù! È÷È÷È÷	</kviuli_2>
+			<kviuli_3>	ÇÏ±Æ±Ï~Á¹¾Ý ÇÇ¿ïÇÏ¾µ°ä.	</kviuli_3>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	½Ï¼ª ·ÀÀÖ»Â ²Ä´ç¾µ°ä.	</uvvwrmt>
+			<wvzw>	¾×»ë»Â Á¤·´ ÇÑ²ÉÇÏ¾µ°ä..	</wvzw>
+			<hgzmw> Àü »ÜÁö..¾×»ë·¦..	</hgzmw>
+			<hgzmw>	¶öºå¼ª¶« ±Æ¸¡³­..	</hgzmw>
+			<hgzmw>	·¹À²À´ °©»Â¿Ç ÀÌºû¾Ý..	</hgzmw>
+			<hgzmw>	¾×·¦ ··¼ªÁö ±Ê±Ò»õ¹ó·é..	</hgzmw>
+			<ovevofk>	ÃàÇÏºå·®°É»Ï»Ù.	</ovevofk>
+			<kviuli_1>	Á¦¿¡ °ä¾«¹ó»Ï°ä! ¼Ê¶« ÇÏ²Ã°É»Ï»Ù..ÈåÈæ	</kviuli_1>
+			<kviuli_1>	...ÈåÈæÈæ..	</kviuli_1>
+			<kviuli_2>	È÷È÷ Á¦¿¡ ³¾¼à¸Î µ·ÀÌ²Ã¼ª°ä?	</kviuli_2>
+			<kviuli_2>	¾×¸¡°ä! ´ç²Ç Àü ¶é´ç°ä¾«¹ø»Ï»Ù! È£È£È£	</kviuli_2>
+			<kviuli_3>	ÇÏ±Æ±Ï~Á¹¾Ý ÇÇ¿ïÇÏ¾µ°ä.	</kviuli_3>
+		</hl_ufoo>
+
+	</yzxhlqrm2>
+	<mrtsgnziv_gviili_nq>
+		<sfmtib>
+			<uvvwrmt> ÀÌÈ÷È÷~Èþ! ÀÌÈ÷È÷~Èþ! </uvvwrmt>
+			<uvvwrmt> ÀÎ¿£ºéÀÇ ½Þºº ·Ô¿í²Í±î.. </uvvwrmt>
+			<uvvwrmt> ¼´ ÁÖ²ÄÀµ ÀÎ¿£ºéÀÇ ½ÞÀÌ¹õ»Ù! Çª·£·£!</uvvwrmt>
+			<sfmgrmt> Çª·£·£·£! È÷È÷Èþ-! È÷È÷Èþ-! </sfmgrmt>
+			<sfmgrmt> µ·¹ó ¼ªÀÇ ÀßµüÁø ·öÀ´! </sfmgrmt>
+			<sfmgrmt> ¼ªÀÇ ¿­¸ÂÇÔÀ´ µ·°©ÁÖ·¹! </sfmgrmt>
+			<wzmtvi> À§ÇèÇÏ»Ù... ÇÏÁö·· ¼ª»Â ÀÌ¿Ü¼± ³ö ÀÖ±î! </wzmtvi>
+			<wzmtvi> ÀÎ¿£ÀÌ°©...¼ª·¦ ·øµ´ Ã³ ÇÏ¸Á¿í ÇÏ»Â¿¡? </wzmtvi>
+			<wzmtvi> À§ÇèÇÑ¿É? ¼´¿¡ ½Þ³ÓÀ·¸Î ¿¡¶ö·¾¿Í¿¿±Æ. </wzmtvi>
+			<wvzw> Çª·£·£......Çª·£·£... ...</wvzw>
+			<wvzw> ¼ª·¦ ÀÌ»ë¸Î ºÐ»Ù·é ¼× ½ÞÀ´ ·Ô±î¶ö·®¿Ú»Ù! </wvzw>
+			<wvzw> ¼ª»Â ÀÌ»ë¸Î ´ç¹óÁö»Â¿Õ¿¡? </wvzw>
+			<hgzmw> Çö²Ç°¡³­ÀÇ Áñ¿Å°òÀ´ Ã£±Æµ³¾î? </hgzmw>
+			<hgzmw> ±àÇÑ ·ð²ÀÀ´ µ·ÀÌ·é ÀÚ¼×ÀÇ ½Þ³Ó°¡ ¼ªÅ·¼¯ ¿Ô±ß. </hgzmw>
+			<hgzmw> ÀÚ¼×»Â ±î¹½ ½ÞÀ´ ½Ù¼ª? ·ÀÀÖ»Â ½ÞÀÎ¿¡? </hgzmw>
+			<xlmmvxg> Çö²Ç°¡³­ ¼ª·¦ µ·»Ï ±î¹½¿¡? </xlmmvxg>
+			<xlmmvxg> ±î³­°À¿Ô. Çö²Ç°¡³­ µ·»Ï »õ ¶Ý¿©¾µ. </xlmmvxg>
+			<xlmmvxg> ½Þ°¡³­ ¾ú±î¼­ ÀÌ´ó, ÀÌÁ¦µÎÅÍ»Â Çö²ÇÀÇ ²ÃÀÛÀÏ³³. Èû¼´¿Ô. </xlmmvxg>
+			<ovevofk> ¼ª»Â ½Þ³Ó°¡³­ »õ°í»õ ¿­¸ÂÇÏÁö! Çª·£·£.. </ovevofk>
+			<ovevofk> Çª·£·£·£·£·£- È÷È÷È÷È÷È÷Èþ!!! ¼´¿­ÇÔÀÌµ·ÀÌ»Â¿¡!!! </ovevofk>
+			<ovevofk> Çª·£·£·£!! ÀÚ¼×µ·»Ù ¿­ÇØÁø¿Í ¿¿Àµº¥? </ovevofk>
+		</sfmtib>
+		<yrg_sfmtib>
+			<uvvwrmt> ÀÌÈ÷È÷~Èþ! ÀÌÈ÷È÷~Èþ! </uvvwrmt>
+			<uvvwrmt> ÀÎ¿£ºéÀÇ ½Þºº ·Ô¿í²Í±î.. </uvvwrmt>
+			<uvvwrmt> ¼´ ÁÖ²ÄÀµ ÀÎ¿£ºéÀÇ ½ÞÀÌ¹õ»Ù! Çª·£·£!</uvvwrmt>
+			<sfmgrmt> Çª·£·£·£! È÷È÷Èþ-! È÷È÷Èþ-! </sfmgrmt>
+			<sfmgrmt> µ·¹ó ¼ªÀÇ ÀßµüÁø ·öÀ´! </sfmgrmt>
+			<sfmgrmt> ¼ªÀÇ ¿­¸ÂÇÔÀ´ µ·°©ÁÖ·¹! </sfmgrmt>
+			<wzmtvi> À§ÇèÇÏ»Ù... ÇÏÁö·· ¼ª»Â ÀÌ¿Ü¼± ³ö ÀÖ±î! </wzmtvi>
+			<wzmtvi> ÀÎ¿£ÀÌ°©...¼ª·¦ ·øµ´ Ã³ ÇÏ¸Á¿í ÇÏ»Â¿¡? </wzmtvi>
+			<wzmtvi> À§ÇèÇÑ¿É? ¼´¿¡ ½Þ³ÓÀ·¸Î ¿¡¶ö·¾¿Í¿¿±Æ. </wzmtvi>
+			<wvzw> Çª·£·£......Çª·£·£... ...</wvzw>
+			<wvzw> ¼ª·¦ ÀÌ»ë¸Î ºÐ»Ù·é ¼× ½ÞÀ´ ·Ô±î¶ö·®¿Ú»Ù! </wvzw>
+			<wvzw> ¼ª»Â ÀÌ»ë¸Î ´ç¹óÁö»Â¿Õ¿¡? </wvzw>
+			<hgzmw> Çö²Ç°¡³­ÀÇ Áñ¿Å°òÀ´ Ã£±Æµ³¾î? </hgzmw>
+			<hgzmw> ±àÇÑ ·ð²ÀÀ´ µ·ÀÌ·é ÀÚ¼×ÀÇ ½Þ³Ó°¡ ¼ªÅ·¼¯ ¿Ô±ß. </hgzmw>
+			<hgzmw> ÀÚ¼×»Â ±î¹½ ½ÞÀ´ ½Ù¼ª? ·ÀÀÖ»Â ½ÞÀÎ¿¡? </hgzmw>
+			<xlmmvxg> Çö²Ç°¡³­ ¼ª·¦ µ·»Ï ±î¹½¿¡? </xlmmvxg>
+			<xlmmvxg> ±î³­°À¿Ô. Çö²Ç°¡³­ µ·»Ï »õ ¶Ý¿©¾µ. </xlmmvxg>
+			<xlmmvxg> ½Þ°¡³­ ¾ú±î¼­ ÀÌ´ó, ÀÌÁ¦µÎÅÍ»Â Çö²ÇÀÇ ²ÃÀÛÀÏ³³. Èû¼´¿Ô. </xlmmvxg>
+			<ovevofk> ¼ª»Â ½Þ³Ó°¡³­ »õ°í»õ ¿­¸ÂÇÏÁö! Çª·£·£.. </ovevofk>
+			<ovevofk> Çª·£·£·£·£·£- È÷È÷È÷È÷È÷Èþ!!! ¼´¿­ÇÔÀÌµ·ÀÌ»Â¿¡!!! </ovevofk>
+			<ovevofk> Çª·£·£·£!! ÀÚ¼×µ·»Ù ¿­ÇØÁø¿Í ¿¿Àµº¥? </ovevofk>
+		</yrg_sfmtib>
+		<mlgrmt>
+			<uvvwrmt> ÀÌÈ÷È÷~Èþ! ÀÌÈ÷È÷~Èþ! </uvvwrmt>
+			<uvvwrmt> ÀÎ¿£ºéÀÇ ½Þºº ·Ô¿í²Í±î.. </uvvwrmt>
+			<uvvwrmt> ¼´ ÁÖ²ÄÀµ ÀÎ¿£ºéÀÇ ½ÞÀÌ¹õ»Ù! Çª·£·£!</uvvwrmt>
+			<sfmgrmt> Çª·£·£·£! È÷È÷Èþ-! È÷È÷Èþ-! </sfmgrmt>
+			<sfmgrmt> µ·¹ó ¼ªÀÇ ÀßµüÁø ·öÀ´! </sfmgrmt>
+			<sfmgrmt> ¼ªÀÇ ¿­¸ÂÇÔÀ´ µ·°©ÁÖ·¹! </sfmgrmt>
+			<wzmtvi> À§ÇèÇÏ»Ù... ÇÏÁö·· ¼ª»Â ÀÌ¿Ü¼± ³ö ÀÖ±î! </wzmtvi>
+			<wzmtvi> ÀÎ¿£ÀÌ°©...¼ª·¦ ·øµ´ Ã³ ÇÏ¸Á¿í ÇÏ»Â¿¡? </wzmtvi>
+			<wzmtvi> À§ÇèÇÑ¿É? ¼´¿¡ ½Þ³ÓÀ·¸Î ¿¡¶ö·¾¿Í¿¿±Æ. </wzmtvi>
+			<wvzw> Çª·£·£......Çª·£·£... ...</wvzw>
+			<wvzw> ¼ª·¦ ÀÌ»ë¸Î ºÐ»Ù·é ¼× ½ÞÀ´ ·Ô±î¶ö·®¿Ú»Ù! </wvzw>
+			<wvzw> ¼ª»Â ÀÌ»ë¸Î ´ç¹óÁö»Â¿Õ¿¡? </wvzw>
+			<hgzmw> Çö²Ç°¡³­ÀÇ Áñ¿Å°òÀ´ Ã£±Æµ³¾î? </hgzmw>
+			<hgzmw> ±àÇÑ ·ð²ÀÀ´ µ·ÀÌ·é ÀÚ¼×ÀÇ ½Þ³Ó°¡ ¼ªÅ·¼¯ ¿Ô±ß. </hgzmw>
+			<hgzmw> ÀÚ¼×»Â ±î¹½ ½ÞÀ´ ½Ù¼ª? ·ÀÀÖ»Â ½ÞÀÎ¿¡? </hgzmw>
+			<xlmmvxg> Çö²Ç°¡³­ ¼ª·¦ µ·»Ï ±î¹½¿¡? </xlmmvxg>
+			<xlmmvxg> ±î³­°À¿Ô. Çö²Ç°¡³­ µ·»Ï »õ ¶Ý¿©¾µ. </xlmmvxg>
+			<xlmmvxg> ½Þ°¡³­ ¾ú±î¼­ ÀÌ´ó, ÀÌÁ¦µÎÅÍ»Â Çö²ÇÀÇ ²ÃÀÛÀÏ³³. Èû¼´¿Ô. </xlmmvxg>
+			<ovevofk> ¼ª»Â ½Þ³Ó°¡³­ »õ°í»õ ¿­¸ÂÇÏÁö! Çª·£·£.. </ovevofk>
+			<ovevofk> Çª·£·£·£·£·£- È÷È÷È÷È÷È÷Èþ!!! ¼´¿­ÇÔÀÌµ·ÀÌ»Â¿¡!!! </ovevofk>
+			<ovevofk> Çª·£·£·£!! ÀÚ¼×µ·»Ù ¿­ÇØÁø¿Í ¿¿Àµº¥? </ovevofk>
+
+		</mlgrmt>
+		<ufoo>
+			<uvvwrmt> ¶è¿¡ ÅÍÁú¿Í ¿¿»Ù. Çª·£·£.. </uvvwrmt>
+			<sfmgrmt> Çª·£·£·£! È÷È÷Èþ-! È÷È÷Èþ-! </sfmgrmt>
+			<sfmgrmt> µ·¹ó ¼ªÀÇ ÀßµüÁø ·öÀ´! </sfmgrmt>
+			<sfmgrmt> ¼ªÀÇ ¿­¸ÂÇÔÀ´ µ·°©ÁÖ·¹! </sfmgrmt>
+			<wzmtvi> À§ÇèÇÏ»Ù... ÇÏÁö·· ¼ª»Â ÀÌ¿Ü¼± ³ö ÀÖ±î! </wzmtvi>
+			<wzmtvi> ÀÎ¿£ÀÌ°©...¼ª·¦ ·øµ´ Ã³ ÇÏ¸Á¿í ÇÏ»Â¿¡? </wzmtvi>
+			<wzmtvi> À§ÇèÇÑ¿É? ¼´¿¡ ½Þ³ÓÀ·¸Î ¿¡¶ö·¾¿Í¿¿±Æ. </wzmtvi>
+			<wvzw> Çª·£·£......Çª·£·£... ...</wvzw>
+			<wvzw> ¼ª·¦ ÀÌ»ë¸Î ºÐ»Ù·é ¼× ½ÞÀ´ ·Ô±î¶ö·®¿Ú»Ù! </wvzw>
+			<wvzw> ¼ª»Â ÀÌ»ë¸Î ´ç¹óÁö»Â¿Õ¿¡? </wvzw>
+			<hgzmw> Çö²Ç°¡³­ÀÇ Áñ¿Å°òÀ´ Ã£±Æµ³¾î? </hgzmw>
+			<hgzmw> ±àÇÑ ·ð²ÀÀ´ µ·ÀÌ·é ÀÚ¼×ÀÇ ½Þ³Ó°¡ ¼ªÅ·¼¯ ¿Ô±ß. </hgzmw>
+			<hgzmw> ÀÚ¼×»Â ±î¹½ ½ÞÀ´ ½Ù¼ª? ·ÀÀÖ»Â ½ÞÀÎ¿¡? </hgzmw>
+			<xlmmvxg> Çö²Ç°¡³­ ¼ª·¦ µ·»Ï ±î¹½¿¡? </xlmmvxg>
+			<xlmmvxg> ±î³­°À¿Ô. Çö²Ç°¡³­ µ·»Ï »õ ¶Ý¿©¾µ. </xlmmvxg>
+			<xlmmvxg> ½Þ°¡³­ ¾ú±î¼­ ÀÌ´ó, ÀÌÁ¦µÎÅÍ»Â Çö²ÇÀÇ ²ÃÀÛÀÏ³³. Èû¼´¿Ô. </xlmmvxg>
+			<ovevofk> ¼ª»Â ½Þ³Ó°¡³­ »õ°í»õ ¿­¸ÂÇÏÁö! Çª·£·£.. </ovevofk>
+			<ovevofk> Çª·£·£·£·£·£- È÷È÷È÷È÷È÷Èþ!!! ¼´¿­ÇÔÀÌµ·ÀÌ»Â¿¡!!! </ovevofk>
+			<ovevofk> Çª·£·£·£!! ÀÚ¼×µ·»Ù ¿­ÇØÁø¿Í ¿¿Àµº¥? </ovevofk>
+
+		</ufoo>
+		<hl_ufoo>
+			<uvvwrmt> ¶è¿¡ ÅÍÁú¿Í ¿¿»Ù. Çª·£·£·£..</uvvwrmt>
+			<sfmgrmt> Çª·£·£·£! È÷È÷Èþ-! È÷È÷Èþ-! </sfmgrmt>
+			<sfmgrmt> µ·¹ó ¼ªÀÇ ÀßµüÁø ·öÀ´! </sfmgrmt>
+			<sfmgrmt> ¼ªÀÇ ¿­¸ÂÇÔÀ´ µ·°©ÁÖ·¹! </sfmgrmt>
+			<wzmtvi> À§ÇèÇÏ»Ù... ÇÏÁö·· ¼ª»Â ÀÌ¿Ü¼± ³ö ÀÖ±î! </wzmtvi>
+			<wzmtvi> ÀÎ¿£ÀÌ°©...¼ª·¦ ·øµ´ Ã³ ÇÏ¸Á¿í ÇÏ»Â¿¡? </wzmtvi>
+			<wzmtvi> À§ÇèÇÑ¿É? ¼´¿¡ ½Þ³ÓÀ·¸Î ¿¡¶ö·¾¿Í¿¿±Æ. </wzmtvi>
+			<wvzw> Çª·£·£......Çª·£·£... ...</wvzw>
+			<wvzw> ¼ª·¦ ÀÌ»ë¸Î ºÐ»Ù·é ¼× ½ÞÀ´ ·Ô±î¶ö·®¿Ú»Ù! </wvzw>
+			<wvzw> ¼ª»Â ÀÌ»ë¸Î ´ç¹óÁö»Â¿Õ¿¡? </wvzw>
+			<hgzmw> Çö²Ç°¡³­ÀÇ Áñ¿Å°òÀ´ Ã£±Æµ³¾î? </hgzmw>
+			<hgzmw> ±àÇÑ ·ð²ÀÀ´ µ·ÀÌ·é ÀÚ¼×ÀÇ ½Þ³Ó°¡ ¼ªÅ·¼¯ ¿Ô±ß. </hgzmw>
+			<hgzmw> ÀÚ¼×»Â ±î¹½ ½ÞÀ´ ½Ù¼ª? ·ÀÀÖ»Â ½ÞÀÎ¿¡? </hgzmw>
+			<xlmmvxg> Çö²Ç°¡³­ ¼ª·¦ µ·»Ï ±î¹½¿¡? </xlmmvxg>
+			<xlmmvxg> ±î³­°À¿Ô. Çö²Ç°¡³­ µ·»Ï »õ ¶Ý¿©¾µ. </xlmmvxg>
+			<xlmmvxg> ½Þ°¡³­ ¾ú±î¼­ ÀÌ´ó, ÀÌÁ¦µÎÅÍ»Â Çö²ÇÀÇ ²ÃÀÛÀÏ³³. Èû¼´¿Ô. </xlmmvxg>
+			<ovevofk> ¼ª»Â ½Þ³Ó°¡³­ »õ°í»õ ¿­¸ÂÇÏÁö! Çª·£·£.. </ovevofk>
+			<ovevofk> Çª·£·£·£·£·£- È÷È÷È÷È÷È÷Èþ!!! ¼´¿­ÇÔÀÌµ·ÀÌ»Â¿¡!!! </ovevofk>
+			<ovevofk> Çª·£·£·£!! ÀÚ¼×µ·»Ù ¿­ÇØÁø¿Í ¿¿Àµº¥? </ovevofk>
+		</hl_ufoo>
+	</mrtsgnziv_gviili_nq>
+	<dzmwvi_nzm_nq>
+		<sfmtib>
+			<uvvwrmt> ·ñÀÌ..»õ·¹·¥¿É? </uvvwrmt>
+			<uvvwrmt> ÀÌ¿É¸Î ·ñÀ´ ÃàÀÏ ³ö¼ª ÀÖ¿Ú¼ª?  </uvvwrmt>
+			<uvvwrmt> ·ñÀÌ Å·ºé±î¿£»Ù. </uvvwrmt>
+			<sfmgrmt> ±ÈÁÖ¿ª Á¤ºº ¶ú ³ö ÀÖÀ´ ¼à³®ÀÎ¿¡?  </sfmgrmt>
+			<sfmgrmt> ³úÇÑÀÜ¿Å·®ºº ±ÈºÇ»Â¾···.  </sfmgrmt>
+			<sfmgrmt> ÀÌ Á¤ºº¸Î»Â Àç¶Ì¿¡±ø¾µ. </sfmgrmt>
+			<wzmtvi> À§ÇèÇÏ¾µ ÀÚÄ© ¼ÊÀÇ ÇÇ¸Î ³úÀ´ »ã¾Å±ßºÉÁöºº ·ð·£¿Ú±î </wzmtvi>
+			<wzmtvi> ¶æ²ÉÇÏÁö·¹¹ó. </wzmtvi>
+			<wvzw> »Ù²Ã Á¤ÁøÇÏ¹ó. </wvzw>
+			<wvzw> ÀÌÁ¦ ³úÀµ »©¾·°Í ·¹²ÃÁö? </wvzw>
+			<wvzw> ÀÌÁ¤ºº¹ó»Ï ²Ç·ÁÀÌ¾µ. </wvzw>
+			<hgzmw> ·ñÀÌ...Å·ºé±î¿£»Ù.. </hgzmw>
+			<hgzmw> ¼ª°¡¿Ô ¿ü²ÉÀ´ ½¨¹ó.. </hgzmw>
+			<hgzmw> ¼Ê°Í ¿¿Àµ ÀÚ°Í ´ó»ëÇÏ»Â ¾â´Ý. °À¸§º°±È ÀØ¿í ÀÖ±ú¾µ!  </hgzmw>
+			<hgzmw> ¿í»ÞÇÂ ´îÀÌ±ú¾µ..  </hgzmw>
+			<xlmmvxg> Àß °Ô¼×.. ¼ª°Í ÇÑÀÜÇÏÁö ±Ê¿Ú¼ª? </xlmmvxg>
+			<xlmmvxg> ¿Å¾â ³ú »õ±ø¼ª?  </xlmmvxg>
+			<ovevofk> ÀÚ Ãà¶è·¦ °Ã·®ÀÚ¾·. »õ°í ¿­ÇØÁø ·ð²ÀÀ´ µ·°©ÁÖºº¸Ï ÇÏÁö. </ovevofk>
+			<ovevofk> »õ ¿­ÇØÁú³ö¸Ï ³úÀÌ ´ý¿¢¼ª»Â¾µ.. </ovevofk>
+		</sfmtib>
+		<yrg_sfmtib>
+			<uvvwrmt> ·ñÀÌ..»õ·¹·¥¿É? </uvvwrmt>
+			<uvvwrmt> ÀÌ¿É¸Î ·ñÀ´ ÃàÀÏ ³ö¼ª ÀÖ¿Ú¼ª?  </uvvwrmt>
+			<uvvwrmt> ·ñÀÌ Å·ºé±î¿£»Ù. </uvvwrmt>
+			<sfmgrmt> ±ÈÁÖ¿ª Á¤ºº ¶ú ³ö ÀÖÀ´ ¼à³®ÀÎ¿¡?  </sfmgrmt>
+			<sfmgrmt> ³úÇÑÀÜ¿Å·®ºº ±ÈºÇ»Â¾···.  </sfmgrmt>
+			<sfmgrmt> ÀÌ Á¤ºº¸Î»Â Àç¶Ì¿¡±ø¾µ. </sfmgrmt>
+			<wzmtvi> À§ÇèÇÏ¾µ ÀÚÄ© ¼ÊÀÇ ÇÇ¸Î ³úÀ´ »ã¾Å±ßºÉÁöºº ·ð·£¿Ú±î </wzmtvi>
+			<wzmtvi> ¶æ²ÉÇÏÁö·¹¹ó. </wzmtvi>
+			<wvzw> »Ù²Ã Á¤ÁøÇÏ¹ó. </wvzw>
+			<wvzw> ÀÌÁ¦ ³úÀµ »©¾·°Í ·¹²ÃÁö? </wvzw>
+			<wvzw> ÀÌÁ¤ºº¹ó»Ï ²Ç·ÁÀÌ¾µ. </wvzw>
+			<hgzmw> ·ñÀÌ...Å·ºé±î¿£»Ù.. </hgzmw>
+			<hgzmw> ¼ª°¡¿Ô ¿ü²ÉÀ´ ½¨¹ó.. </hgzmw>
+			<hgzmw> ¼Ê°Í ¿¿Àµ ÀÚ°Í ´ó»ëÇÏ»Â ¾â´Ý. °À¸§º°±È ÀØ¿í ÀÖ±ú¾µ!  </hgzmw>
+			<hgzmw> ¿í»ÞÇÂ ´îÀÌ±ú¾µ..  </hgzmw>
+			<xlmmvxg> Àß °Ô¼×.. ¼ª°Í ÇÑÀÜÇÏÁö ±Ê¿Ú¼ª? </xlmmvxg>
+			<xlmmvxg> ¿Å¾â ³ú »õ±ø¼ª?  </xlmmvxg>
+			<ovevofk> ÀÚ Ãà¶è·¦ °Ã·®ÀÚ¾·. »õ°í ¿­ÇØÁø ·ð²ÀÀ´ µ·°©ÁÖºº¸Ï ÇÏÁö. </ovevofk>
+			<ovevofk> »õ ¿­ÇØÁú³ö¸Ï ³úÀÌ ´ý¿¢¼ª»Â¾µ.. </ovevofk>
+		</yrg_sfmtib>
+		<mlgrmt>
+			<uvvwrmt> ·ñÀÌ..»õ·¹·¥¿É? </uvvwrmt>
+			<uvvwrmt> ÀÌ¿É¸Î ·ñÀ´ ÃàÀÏ ³ö¼ª ÀÖ¿Ú¼ª?  </uvvwrmt>
+			<uvvwrmt> ·ñÀÌ Å·ºé±î¿£»Ù. </uvvwrmt>
+			<sfmgrmt> ±ÈÁÖ¿ª Á¤ºº ¶ú ³ö ÀÖÀ´ ¼à³®ÀÎ¿¡?  </sfmgrmt>
+			<sfmgrmt> ³úÇÑÀÜ¿Å·®ºº ±ÈºÇ»Â¾···.  </sfmgrmt>
+			<sfmgrmt> ÀÌ Á¤ºº¸Î»Â Àç¶Ì¿¡±ø¾µ. </sfmgrmt>
+			<wzmtvi> À§ÇèÇÏ¾µ ÀÚÄ© ¼ÊÀÇ ÇÇ¸Î ³úÀ´ »ã¾Å±ßºÉÁöºº ·ð·£¿Ú±î </wzmtvi>
+			<wzmtvi> ¶æ²ÉÇÏÁö·¹¹ó. </wzmtvi>
+			<wvzw> »Ù²Ã Á¤ÁøÇÏ¹ó. </wvzw>
+			<wvzw> ÀÌÁ¦ ³úÀµ »©¾·°Í ·¹²ÃÁö? </wvzw>
+			<wvzw> ÀÌÁ¤ºº¹ó»Ï ²Ç·ÁÀÌ¾µ. </wvzw>
+			<hgzmw> ·ñÀÌ...Å·ºé±î¿£»Ù.. </hgzmw>
+			<hgzmw> ¼ª°¡¿Ô ¿ü²ÉÀ´ ½¨¹ó.. </hgzmw>
+			<hgzmw> ¼Ê°Í ¿¿Àµ ÀÚ°Í ´ó»ëÇÏ»Â ¾â´Ý. °À¸§º°±È ÀØ¿í ÀÖ±ú¾µ!  </hgzmw>
+			<hgzmw> ¿í»ÞÇÂ ´îÀÌ±ú¾µ..  </hgzmw>
+			<xlmmvxg> Àß °Ô¼×.. ¼ª°Í ÇÑÀÜÇÏÁö ±Ê¿Ú¼ª? </xlmmvxg>
+			<xlmmvxg> ¿Å¾â ³ú »õ±ø¼ª?  </xlmmvxg>
+			<ovevofk> ÀÚ Ãà¶è·¦ °Ã·®ÀÚ¾·. »õ°í ¿­ÇØÁø ·ð²ÀÀ´ µ·°©ÁÖºº¸Ï ÇÏÁö. </ovevofk>
+			<ovevofk> »õ ¿­ÇØÁú³ö¸Ï ³úÀÌ ´ý¿¢¼ª»Â¾µ.. </ovevofk>
+		</mlgrmt>
+		<ufoo>
+			<uvvwrmt> Á¹¾Ý ÃëÇÏ»Â¾µ. ÀÜÀ´ ¼½¿Üºº ºÇ¿Ú¼ª?  </uvvwrmt>
+			<sfmgrmt> ±ÈÁÖ¿ª Á¤ºº ¶ú ³ö ÀÖÀ´ ¼à³®ÀÎ¿¡?  </sfmgrmt>
+			<sfmgrmt> ³úÇÑÀÜ¿Å·®ºº ±ÈºÇ»Â¾···.  </sfmgrmt>
+			<sfmgrmt> ÀÌ Á¤ºº¸Î»Â Àç¶Ì¿¡±ø¾µ. </sfmgrmt>
+			<wzmtvi> À§ÇèÇÏ¾µ ÀÚÄ© ¼ÊÀÇ ÇÇ¸Î ³úÀ´ »ã¾Å±ßºÉÁöºº ·ð·£¿Ú±î </wzmtvi>
+			<wzmtvi> ¶æ²ÉÇÏÁö·¹¹ó. </wzmtvi>
+			<wvzw> »Ù²Ã Á¤ÁøÇÏ¹ó. </wvzw>
+			<wvzw> ÀÌÁ¦ ³úÀµ »©¾·°Í ·¹²ÃÁö? </wvzw>
+			<wvzw> ÀÌÁ¤ºº¹ó»Ï ²Ç·ÁÀÌ¾µ. </wvzw>
+			<hgzmw> ·ñÀÌ...Å·ºé±î¿£»Ù.. </hgzmw>
+			<hgzmw> ¼ª°¡¿Ô ¿ü²ÉÀ´ ½¨¹ó.. </hgzmw>
+			<hgzmw> ¼Ê°Í ¿¿Àµ ÀÚ°Í ´ó»ëÇÏ»Â ¾â´Ý. °À¸§º°±È ÀØ¿í ÀÖ±ú¾µ!  </hgzmw>
+			<hgzmw> ¿í»ÞÇÂ ´îÀÌ±ú¾µ..  </hgzmw>
+			<xlmmvxg> Àß °Ô¼×.. ¼ª°Í ÇÑÀÜÇÏÁö ±Ê¿Ú¼ª? </xlmmvxg>
+			<xlmmvxg> ¿Å¾â ³ú »õ±ø¼ª?  </xlmmvxg>
+			<ovevofk> ÀÚ Ãà¶è·¦ °Ã·®ÀÚ¾·. »õ°í ¿­ÇØÁø ·ð²ÀÀ´ µ·°©ÁÖºº¸Ï ÇÏÁö. </ovevofk>
+			<ovevofk> »õ ¿­ÇØÁú³ö¸Ï ³úÀÌ ´ý¿¢¼ª»Â¾µ.. </ovevofk>
+		</ufoo>
+		<hl_ufoo>
+			<uvvwrmt> ¼Ê¶« ¿úÇÏ¿Ô ·¹³Ì¾µ. ¿ÅÀýÇÏ¿Ú¼× </uvvwrmt>
+			<sfmgrmt> ±ÈÁÖ¿ª Á¤ºº ¶ú ³ö ÀÖÀ´ ¼à³®ÀÎ¿¡?  </sfmgrmt>
+			<sfmgrmt> ³úÇÑÀÜ¿Å·®ºº ±ÈºÇ»Â¾···.  </sfmgrmt>
+			<sfmgrmt> ÀÌ Á¤ºº¸Î»Â Àç¶Ì¿¡±ø¾µ. </sfmgrmt>
+			<wzmtvi> À§ÇèÇÏ¾µ ÀÚÄ© ¼ÊÀÇ ÇÇ¸Î ³úÀ´ »ã¾Å±ßºÉÁöºº ·ð·£¿Ú±î </wzmtvi>
+			<wzmtvi> ¶æ²ÉÇÏÁö·¹¹ó. </wzmtvi>
+			<wvzw> »Ù²Ã Á¤ÁøÇÏ¹ó. </wvzw>
+			<wvzw> ÀÌÁ¦ ³úÀµ »©¾·°Í ·¹²ÃÁö? </wvzw>
+			<wvzw> ÀÌÁ¤ºº¹ó»Ï ²Ç·ÁÀÌ¾µ. </wvzw>
+			<hgzmw> ·ñÀÌ...Å·ºé±î¿£»Ù.. </hgzmw>
+			<hgzmw> ¼ª°¡¿Ô ¿ü²ÉÀ´ ½¨¹ó.. </hgzmw>
+			<hgzmw> ¼Ê°Í ¿¿Àµ ÀÚ°Í ´ó»ëÇÏ»Â ¾â´Ý. °À¸§º°±È ÀØ¿í ÀÖ±ú¾µ!  </hgzmw>
+			<hgzmw> ¿í»ÞÇÂ ´îÀÌ±ú¾µ..  </hgzmw>
+			<xlmmvxg> Àß °Ô¼×.. ¼ª°Í ÇÑÀÜÇÏÁö ±Ê¿Ú¼ª? </xlmmvxg>
+			<xlmmvxg> ¿Å¾â ³ú »õ±ø¼ª?  </xlmmvxg>
+			<ovevofk> ÀÚ Ãà¶è·¦ °Ã·®ÀÚ¾·. »õ°í ¿­ÇØÁø ·ð²ÀÀ´ µ·°©ÁÖºº¸Ï ÇÏÁö. </ovevofk>
+			<ovevofk> »õ ¿­ÇØÁú³ö¸Ï ³úÀÌ ´ý¿¢¼ª»Â¾µ.. </ovevofk>
+		</hl_ufoo>
+	</dzmwvi_nzm_nq>
+	<ZORLG>
+		<sfmtib>
+			<uvvwrmt> °£Áø °ÀÀÏÀÌ »õ ÇÊ°äÇÑ¿É? </uvvwrmt>
+			<uvvwrmt> µÎÇ¿ÀÌ º¶±Æ¿¡»Âº¥»Â ¶®Á¦¿¡ ±ø¿Ú±î</uvvwrmt>
+			<uvvwrmt> Á¤·´ ¿í·°»Ù¾·. </uvvwrmt>
+			<sfmgrmt> µ¿¿Å ±øÀÝ±Æ?  </sfmgrmt>
+			<sfmgrmt> ÀÌ Á¤ºº¸Î»Â Àç¶Ì¿¡±ø»Ù¾·! </sfmgrmt>
+			<wzmtvi> ³ö·®ÇØ±ß ÇÒ¿Ç ¼´¿¡ ±Æ»Ï¹ó ¼Ê ¿¿Àµº¥? </wzmtvi>
+			<wzmtvi> ¼ª´ç Ç®·®Áö ±Ê¿Ô Á¹²ÉÇÏ¹ó¾·.</wzmtvi>
+			<wvzw>  ¼Ê·¦ ³ö·®²ÃÄÑ±ß¿Ú±î.</wvzw>
+			<wvzw> ´¡·® ÀÏ±î¼ª¹ó¾·.</wvzw>
+			<wvzw> Á¤·´ ²Ç·ÁÀÌ¹ó¾·. </wvzw>
+			<hgzmw> Àá²Ã °©¾â ¼ª´ç Á´ Á¹°©ÁÙ¸¡? </hgzmw>
+			<hgzmw> °Ö ÀÚ½Ù ÆÈ°¡³­ ´ß¾×»ö ³Ò·®¿¡ ¼ª»Â¿ÅÁö? </hgzmw>
+			<hgzmw> ¼ª¹û ¿¡À§ ¶ÙÀ§ µ· ÇÒ¸¡? ¼ª»Â ¿¡À§ ¶Û°¡ ·ø¼²»Ù¾·!  </hgzmw>
+			<xlmmvxg> ±î³­°À¹ó¾·! °Ö ÀÌ¸·¿Ô »Ê±ú±î? </xlmmvxg>
+			<xlmmvxg> °Ö ÀÌÁ¦°Ô±î? ¾â»Ù¸È»Ù¾·!  </xlmmvxg>
+			<ovevofk> ÀÌµÁ ¼´ µÎÇ¿ºº ±÷¾×¸¶ÀÌºå ÇØÁÖ¿Ú±î? </ovevofk>
+			<ovevofk> ÃàÇÏÇÑ»Ù¾·! ÇÏÁö·· ÀÚ··ÇÏ·é ±ÈºÈ»Ù¾·! </ovevofk>
+		</sfmtib>
+		<yrg_sfmtib>
+			<uvvwrmt> °£Áø °ÀÀÏÀÌ »õ ÇÊ°äÇÑ¿É? </uvvwrmt>
+			<uvvwrmt> µÎÇ¿ÀÌ º¶±Æ¿¡»Âº¥»Â ¶®Á¦¿¡ ±ø¿Ú±î</uvvwrmt>
+			<uvvwrmt> Á¤·´ ¿í·°»Ù¾·. </uvvwrmt>
+			<sfmgrmt> µ¿¿Å ±øÀÝ±Æ?  </sfmgrmt>
+			<sfmgrmt> ÀÌ Á¤ºº¸Î»Â Àç¶Ì¿¡±ø»Ù¾·! </sfmgrmt>
+			<wzmtvi> ³ö·®ÇØ±ß ÇÒ¿Ç ¼´¿¡ ±Æ»Ï¹ó ¼Ê ¿¿Àµº¥? </wzmtvi>
+			<wzmtvi> ¼ª´ç Ç®·®Áö ±Ê¿Ô Á¹²ÉÇÏ¹ó¾·.</wzmtvi>
+			<wvzw>  ¼Ê·¦ ³ö·®²ÃÄÑ±ß¿Ú±î.</wvzw>
+			<wvzw> ´¡·® ÀÏ±î¼ª¹ó¾·.</wvzw>
+			<wvzw> Á¤·´ ²Ç·ÁÀÌ¹ó¾·. </wvzw>
+			<hgzmw> Àá²Ã °©¾â ¼ª´ç Á´ Á¹°©ÁÙ¸¡? </hgzmw>
+			<hgzmw> °Ö ÀÚ½Ù ÆÈ°¡³­ ´ß¾×»ö ³Ò·®¿¡ ¼ª»Â¿ÅÁö? </hgzmw>
+			<hgzmw> ¼ª¹û ¿¡À§ ¶ÙÀ§ µ· ÇÒ¸¡? ¼ª»Â ¿¡À§ ¶Û°¡ ·ø¼²»Ù¾·!  </hgzmw>
+			<xlmmvxg> ±î³­°À¹ó¾·! °Ö ÀÌ¸·¿Ô »Ê±ú±î? </xlmmvxg>
+			<xlmmvxg> °Ö ÀÌÁ¦°Ô±î? ¾â»Ù¸È»Ù¾·!  </xlmmvxg>
+			<ovevofk> ÀÌµÁ ¼´ µÎÇ¿ºº ±÷¾×¸¶ÀÌºå ÇØÁÖ¿Ú±î? </ovevofk>
+			<ovevofk> ÃàÇÏÇÑ»Ù¾·! ÇÏÁö·· ÀÚ··ÇÏ·é ±ÈºÈ»Ù¾·! </ovevofk>
+		</yrg_sfmtib>
+		<mlgrmt>
+			<uvvwrmt> °£Áø °ÀÀÏÀÌ »õ ÇÊ°äÇÑ¿É? </uvvwrmt>
+			<uvvwrmt> µÎÇ¿ÀÌ º¶±Æ¿¡»Âº¥»Â ¶®Á¦¿¡ ±ø¿Ú±î</uvvwrmt>
+			<uvvwrmt> Á¤·´ ¿í·°»Ù¾·. </uvvwrmt>
+			<sfmgrmt> µ¿¿Å ±øÀÝ±Æ?  </sfmgrmt>
+			<sfmgrmt> ÀÌ Á¤ºº¸Î»Â Àç¶Ì¿¡±ø»Ù¾·! </sfmgrmt>
+			<wzmtvi> ³ö·®ÇØ±ß ÇÒ¿Ç ¼´¿¡ ±Æ»Ï¹ó ¼Ê ¿¿Àµº¥? </wzmtvi>
+			<wzmtvi> ¼ª´ç Ç®·®Áö ±Ê¿Ô Á¹²ÉÇÏ¹ó¾·.</wzmtvi>
+			<wvzw>  ¼Ê·¦ ³ö·®²ÃÄÑ±ß¿Ú±î.</wvzw>
+			<wvzw> ´¡·® ÀÏ±î¼ª¹ó¾·.</wvzw>
+			<wvzw> Á¤·´ ²Ç·ÁÀÌ¹ó¾·. </wvzw>
+			<hgzmw> Àá²Ã °©¾â ¼ª´ç Á´ Á¹°©ÁÙ¸¡? </hgzmw>
+			<hgzmw> °Ö ÀÚ½Ù ÆÈ°¡³­ ´ß¾×»ö ³Ò·®¿¡ ¼ª»Â¿ÅÁö? </hgzmw>
+			<hgzmw> ¼ª¹û ¿¡À§ ¶ÙÀ§ µ· ÇÒ¸¡? ¼ª»Â ¿¡À§ ¶Û°¡ ·ø¼²»Ù¾·!  </hgzmw>
+			<xlmmvxg> ±î³­°À¹ó¾·! °Ö ÀÌ¸·¿Ô »Ê±ú±î? </xlmmvxg>
+			<xlmmvxg> °Ö ÀÌÁ¦°Ô±î? ¾â»Ù¸È»Ù¾·!  </xlmmvxg>
+			<ovevofk> ÀÌµÁ ¼´ µÎÇ¿ºº ±÷¾×¸¶ÀÌºå ÇØÁÖ¿Ú±î? </ovevofk>
+			<ovevofk> ÃàÇÏÇÑ»Ù¾·! ÇÏÁö·· ÀÚ··ÇÏ·é ±ÈºÈ»Ù¾·! </ovevofk>
+		</mlgrmt>
+		<ufoo>
+			<uvvwrmt> ÀÌµÁ ¾×·· Áàºº ºÇ!</uvvwrmt>
+			<sfmgrmt> µ¿¿Å ±øÀÝ±Æ?  </sfmgrmt>
+			<sfmgrmt> ÀÌ Á¤ºº¸Î»Â Àç¶Ì¿¡±ø»Ù¾·! </sfmgrmt>
+			<wzmtvi> ³ö·®ÇØ±ß ÇÒ¿Ç ¼´¿¡ ±Æ»Ï¹ó ¼Ê ¿¿Àµº¥? </wzmtvi>
+			<wzmtvi> ¼ª´ç Ç®·®Áö ±Ê¿Ô Á¹²ÉÇÏ¹ó¾·.</wzmtvi>
+			<wvzw>  ¼Ê·¦ ³ö·®²ÃÄÑ±ß¿Ú±î.</wvzw>
+			<wvzw> ´¡·® ÀÏ±î¼ª¹ó¾·.</wvzw>
+			<wvzw> Á¤·´ ²Ç·ÁÀÌ¹ó¾·. </wvzw>
+			<hgzmw> Àá²Ã °©¾â ¼ª´ç Á´ Á¹°©ÁÙ¸¡? </hgzmw>
+			<hgzmw> °Ö ÀÚ½Ù ÆÈ°¡³­ ´ß¾×»ö ³Ò·®¿¡ ¼ª»Â¿ÅÁö? </hgzmw>
+			<hgzmw> ¼ª¹û ¿¡À§ ¶ÙÀ§ µ· ÇÒ¸¡? ¼ª»Â ¿¡À§ ¶Û°¡ ·ø¼²»Ù¾·!  </hgzmw>
+			<xlmmvxg> ±î³­°À¹ó¾·! °Ö ÀÌ¸·¿Ô »Ê±ú±î? </xlmmvxg>
+			<xlmmvxg> °Ö ÀÌÁ¦°Ô±î? ¾â»Ù¸È»Ù¾·!  </xlmmvxg>
+			<ovevofk> ÀÌµÁ ¼´ µÎÇ¿ºº ±÷¾×¸¶ÀÌºå ÇØÁÖ¿Ú±î? </ovevofk>
+			<ovevofk> ÃàÇÏÇÑ»Ù¾·! ÇÏÁö·· ÀÚ··ÇÏ·é ±ÈºÈ»Ù¾·! </ovevofk>
+		</ufoo>
+		<hl_ufoo>
+			<uvvwrmt> ÀÌµÁ °£Áø°ÀÀÏÀÌ ¼ÑÄ¥ ¿Í ¿¿»Ù¾·!</uvvwrmt>
+			<sfmgrmt> µ¿¿Å ±øÀÝ±Æ?  </sfmgrmt>
+			<sfmgrmt> ÀÌ Á¤ºº¸Î»Â Àç¶Ì¿¡±ø»Ù¾·! </sfmgrmt>
+			<wzmtvi> ³ö·®ÇØ±ß ÇÒ¿Ç ¼´¿¡ ±Æ»Ï¹ó ¼Ê ¿¿Àµº¥? </wzmtvi>
+			<wzmtvi> ¼ª´ç Ç®·®Áö ±Ê¿Ô Á¹²ÉÇÏ¹ó¾·.</wzmtvi>
+			<wvzw>  ¼Ê·¦ ³ö·®²ÃÄÑ±ß¿Ú±î.</wvzw>
+			<wvzw> ´¡·® ÀÏ±î¼ª¹ó¾·.</wvzw>
+			<wvzw> Á¤·´ ²Ç·ÁÀÌ¹ó¾·. </wvzw>
+			<hgzmw> Àá²Ã °©¾â ¼ª´ç Á´ Á¹°©ÁÙ¸¡? </hgzmw>
+			<hgzmw> °Ö ÀÚ½Ù ÆÈ°¡³­ ´ß¾×»ö ³Ò·®¿¡ ¼ª»Â¿ÅÁö? </hgzmw>
+			<hgzmw> ¼ª¹û ¿¡À§ ¶ÙÀ§ µ· ÇÒ¸¡? ¼ª»Â ¿¡À§ ¶Û°¡ ·ø¼²»Ù¾·!  </hgzmw>
+			<xlmmvxg> ±î³­°À¹ó¾·! °Ö ÀÌ¸·¿Ô »Ê±ú±î? </xlmmvxg>
+			<xlmmvxg> °Ö ÀÌÁ¦°Ô±î? ¾â»Ù¸È»Ù¾·!  </xlmmvxg>
+			<ovevofk> ÀÌµÁ ¼´ µÎÇ¿ºº ±÷¾×¸¶ÀÌºå ÇØÁÖ¿Ú±î? </ovevofk>
+			<ovevofk> ÃàÇÏÇÑ»Ù¾·! ÇÏÁö·· ÀÚ··ÇÏ·é ±ÈºÈ»Ù¾·! </ovevofk>
+		</hl_ufoo>
+	</ZORLG>
+	<ZORXVO>
+		<sfmtib>
+			<uvvwrmt> Àú¾â.. °£Áø °ÀÀÏÀµ ±ø¼ª°ä? </uvvwrmt>
+			<uvvwrmt> Á¤·´ ¿í·¹°ö°ä.   </uvvwrmt>
+			<uvvwrmt> Àß·ÔÀ´¿Ô°ä. </uvvwrmt>
+			<sfmgrmt> Èï¶Ì¿¡ ´ý¾æ ··Å­ÀÇ ´ó»ë»Â ±Æ»Ï±ú¼×°ä. </sfmgrmt>
+			<sfmgrmt> Á¦¿¡ ºº°Íºå·¾¾î°ä?  </sfmgrmt>
+			<wzmtvi> »ç²Å Á¹¾Ý À§ÇèÇØ µ·°©°ä.</wzmtvi>
+			<wzmtvi> ¶æ²ÉÇÏ²Ã·é ±ÈºÅ°ä. </wzmtvi>
+			<wvzw> ÀÏÀ·ÄÑºå·¾¾î°ä? </wvzw>
+			<wvzw> Á¹¾Ý ²Ç·ÁÇß±î°ä..</wvzw>
+			<wvzw> ÀÚ¾â ÀÚ²ÅÀ´ ºÇº¶±Æµ·¾æ ¶Ù¸¡°ä. </wvzw>
+			<hgzmw> ²É²ÉÇÏ²Ã·é Àú°Í ÇÔ½½ ¼î±Æ°ä. </hgzmw>
+			<hgzmw> ¿¡½ûÀµ ÀÎ¿£ÀÌ±úÀ··é ÇØ°ä. </hgzmw>
+			<hgzmw> Àú°Í ¿¡À§ ¶ÙÀ§ µ· ÇÑ¶ø ÇÏ²Ã¿Ú±î°ä?  </hgzmw>
+			<xlmmvxg> µ·¿í²Í±ú±î°ä. ºº°òÀÌ ÇÊ°äÇÑ¿¡°ä? </xlmmvxg>
+			<ovevofk> ÃàÇÏºå¸Á°ä. Á¦ ÆÈºº ±÷¾×¸¶ÀÌºå ÇØÁÖ²Ã¿Ú±î°ä? </ovevofk>
+			<ovevofk> ÀÚ··ÇÏ¾â°£ ±ÆÁ÷ ÀÏ¸¯°ä.</ovevofk>
+		</sfmtib>
+		<yrg_sfmtib>
+			<uvvwrmt> Àú¾â.. °£Áø °ÀÀÏÀµ ±ø¼ª°ä? </uvvwrmt>
+			<uvvwrmt> Á¤·´ ¿í·¹°ö°ä.   </uvvwrmt>
+			<uvvwrmt> Àß·ÔÀ´¿Ô°ä. </uvvwrmt>
+			<sfmgrmt> Èï¶Ì¿¡ ´ý¾æ ··Å­ÀÇ ´ó»ë»Â ±Æ»Ï±ú¼×°ä. </sfmgrmt>
+			<sfmgrmt> Á¦¿¡ ºº°Íºå·¾¾î°ä?  </sfmgrmt>
+			<wzmtvi> »ç²Å Á¹¾Ý À§ÇèÇØ µ·°©°ä.</wzmtvi>
+			<wzmtvi> ¶æ²ÉÇÏ²Ã·é ±ÈºÅ°ä. </wzmtvi>
+			<wvzw> ÀÏÀ·ÄÑºå·¾¾î°ä? </wvzw>
+			<wvzw> Á¹¾Ý ²Ç·ÁÇß±î°ä..</wvzw>
+			<wvzw> ÀÚ¾â ÀÚ²ÅÀ´ ºÇº¶±Æµ·¾æ ¶Ù¸¡°ä. </wvzw>
+			<hgzmw> ²É²ÉÇÏ²Ã·é Àú°Í ÇÔ½½ ¼î±Æ°ä. </hgzmw>
+			<hgzmw> ¿¡½ûÀµ ÀÎ¿£ÀÌ±úÀ··é ÇØ°ä. </hgzmw>
+			<hgzmw> Àú°Í ¿¡À§ ¶ÙÀ§ µ· ÇÑ¶ø ÇÏ²Ã¿Ú±î°ä?  </hgzmw>
+			<xlmmvxg> µ·¿í²Í±ú±î°ä. ºº°òÀÌ ÇÊ°äÇÑ¿¡°ä? </xlmmvxg>
+			<ovevofk> ÃàÇÏºå¸Á°ä. Á¦ ÆÈºº ±÷¾×¸¶ÀÌºå ÇØÁÖ²Ã¿Ú±î°ä? </ovevofk>
+			<ovevofk> ÀÚ··ÇÏ¾â°£ ±ÆÁ÷ ÀÏ¸¯°ä.</ovevofk>
+		</yrg_sfmtib>
+		<mlgrmt>
+			<uvvwrmt> Àú¾â.. °£Áø °ÀÀÏÀµ ±ø¼ª°ä? </uvvwrmt>
+			<uvvwrmt> Á¤·´ ¿í·¹°ö°ä.   </uvvwrmt>
+			<uvvwrmt> Àß·ÔÀ´¿Ô°ä. </uvvwrmt>
+			<sfmgrmt> Èï¶Ì¿¡ ´ý¾æ ··Å­ÀÇ ´ó»ë»Â ±Æ»Ï±ú¼×°ä. </sfmgrmt>
+			<sfmgrmt> Á¦¿¡ ºº°Íºå·¾¾î°ä?  </sfmgrmt>
+			<wzmtvi> »ç²Å Á¹¾Ý À§ÇèÇØ µ·°©°ä.</wzmtvi>
+			<wzmtvi> ¶æ²ÉÇÏ²Ã·é ±ÈºÅ°ä. </wzmtvi>
+			<wvzw> ÀÏÀ·ÄÑºå·¾¾î°ä? </wvzw>
+			<wvzw> Á¹¾Ý ²Ç·ÁÇß±î°ä..</wvzw>
+			<wvzw> ÀÚ¾â ÀÚ²ÅÀ´ ºÇº¶±Æµ·¾æ ¶Ù¸¡°ä. </wvzw>
+			<hgzmw> ²É²ÉÇÏ²Ã·é Àú°Í ÇÔ½½ ¼î±Æ°ä. </hgzmw>
+			<hgzmw> ¿¡½ûÀµ ÀÎ¿£ÀÌ±úÀ··é ÇØ°ä. </hgzmw>
+			<hgzmw> Àú°Í ¿¡À§ ¶ÙÀ§ µ· ÇÑ¶ø ÇÏ²Ã¿Ú±î°ä?  </hgzmw>
+			<xlmmvxg> µ·¿í²Í±ú±î°ä. ºº°òÀÌ ÇÊ°äÇÑ¿¡°ä? </xlmmvxg>
+			<ovevofk> ÃàÇÏºå¸Á°ä. Á¦ ÆÈºº ±÷¾×¸¶ÀÌºå ÇØÁÖ²Ã¿Ú±î°ä? </ovevofk>
+			<ovevofk> ÀÚ··ÇÏ¾â°£ ±ÆÁ÷ ÀÏ¸¯°ä.</ovevofk>
+		</mlgrmt>
+		<ufoo>
+			<uvvwrmt> ¾×·· ÁÖ³Åºº ºÅ°ä. ¼ÑÄ¡¿Ú±î°ä.</uvvwrmt>
+			<sfmgrmt> Èï¶Ì¿¡ ´ý¾æ ··Å­ÀÇ ´ó»ë»Â ±Æ»Ï±ú¼×°ä. </sfmgrmt>
+			<sfmgrmt> Á¦¿¡ ºº°Íºå·¾¾î°ä?  </sfmgrmt>
+			<wzmtvi> »ç²Å Á¹¾Ý À§ÇèÇØ µ·°©°ä.</wzmtvi>
+			<wzmtvi> ¶æ²ÉÇÏ²Ã·é ±ÈºÅ°ä. </wzmtvi>
+			<wvzw> ÀÏÀ·ÄÑºå·¾¾î°ä? </wvzw>
+			<wvzw> Á¹¾Ý ²Ç·ÁÇß±î°ä..</wvzw>
+			<wvzw> ÀÚ¾â ÀÚ²ÅÀ´ ºÇº¶±Æµ·¾æ ¶Ù¸¡°ä. </wvzw>
+			<hgzmw> ²É²ÉÇÏ²Ã·é Àú°Í ÇÔ½½ ¼î±Æ°ä. </hgzmw>
+			<hgzmw> ¿¡½ûÀµ ÀÎ¿£ÀÌ±úÀ··é ÇØ°ä. </hgzmw>
+			<hgzmw> Àú°Í ¿¡À§ ¶ÙÀ§ µ· ÇÑ¶ø ÇÏ²Ã¿Ú±î°ä?  </hgzmw>
+			<xlmmvxg> µ·¿í²Í±ú±î°ä. ºº°òÀÌ ÇÊ°äÇÑ¿¡°ä? </xlmmvxg>
+			<ovevofk> ÃàÇÏºå¸Á°ä. Á¦ ÆÈºº ±÷¾×¸¶ÀÌºå ÇØÁÖ²Ã¿Ú±î°ä? </ovevofk>
+			<ovevofk> ÀÚ··ÇÏ¾â°£ ±ÆÁ÷ ÀÏ¸¯°ä.</ovevofk>
+		</ufoo>
+		<hl_ufoo>
+			<uvvwrmt> ¾×·· ÁÖ³Åºº ºÅ°ä. ¼ÑÄ¡¿Ú±î°ä. </uvvwrmt>
+			<sfmgrmt> Èï¶Ì¿¡ ´ý¾æ ··Å­ÀÇ ´ó»ë»Â ±Æ»Ï±ú¼×°ä. </sfmgrmt>
+			<sfmgrmt> Á¦¿¡ ºº°Íºå·¾¾î°ä?  </sfmgrmt>
+			<wzmtvi> »ç²Å Á¹¾Ý À§ÇèÇØ µ·°©°ä.</wzmtvi>
+			<wzmtvi> ¶æ²ÉÇÏ²Ã·é ±ÈºÅ°ä. </wzmtvi>
+			<wvzw> ÀÏÀ·ÄÑºå·¾¾î°ä? </wvzw>
+			<wvzw> Á¹¾Ý ²Ç·ÁÇß±î°ä..</wvzw>
+			<wvzw> ÀÚ¾â ÀÚ²ÅÀ´ ºÇº¶±Æµ·¾æ ¶Ù¸¡°ä. </wvzw>
+			<hgzmw> ²É²ÉÇÏ²Ã·é Àú°Í ÇÔ½½ ¼î±Æ°ä. </hgzmw>
+			<hgzmw> ¿¡½ûÀµ ÀÎ¿£ÀÌ±úÀ··é ÇØ°ä. </hgzmw>
+			<hgzmw> Àú°Í ¿¡À§ ¶ÙÀ§ µ· ÇÑ¶ø ÇÏ²Ã¿Ú±î°ä?  </hgzmw>
+			<xlmmvxg> µ·¿í²Í±ú±î°ä. ºº°òÀÌ ÇÊ°äÇÑ¿¡°ä? </xlmmvxg>
+			<ovevofk> ÃàÇÏºå¸Á°ä. Á¦ ÆÈºº ±÷¾×¸¶ÀÌºå ÇØÁÖ²Ã¿Ú±î°ä? </ovevofk>
+			<ovevofk> ÀÚ··ÇÏ¾â°£ ±ÆÁ÷ ÀÏ¸¯°ä.</ovevofk>
+		</hl_ufoo>
+	</ZORXVO>
+	<ZORAZ>
+		<sfmtib>
+			<uvvwrmt>ÁÖÀÎ»Ô, ¶è¿¡ ¿íÆÄ ÀÏÀ´ ÇÒ ³ö¿¡ ±ø±ú±î°ä.</uvvwrmt>
+			<uvvwrmt>ÁÖÀÎ»Ô..Á¦¿¡ ²Ä´ç·¦ ÁØµñÇÒ¾î°ä?	</uvvwrmt>
+			<uvvwrmt>ÁÖÀÎ»Ô..Á¹¾Ý »õ ±øÀ´¾î°ä?	</uvvwrmt>
+			<uvvwrmt>ÁÖÀÎ»Ô..¿¨´çÇÕ»Ï»Ù.	</uvvwrmt>
+			<sfmgrmt>Àú»Â ÁÖÀÎ»ÔÀ´ ¶Ï±î°ä.	</sfmgrmt>
+			<sfmgrmt>ÁÖÀÎ»Ô ÀÌ¾â²Ç ³ö ÀÖ¿Ú±î°ä?</sfmgrmt>
+			<sfmgrmt>ÁÖÀÎ»ÔÀÌ ÀÌ¾â²Ç¿Å¹ó¿í ¶Ï±î°ä.</sfmgrmt>
+			<wzmtvi>ÁÖÀÎ»Ô ¿æ¿¢²ÉÀ´ ¿¡Áö³³°ä!	</wzmtvi>
+			<wzmtvi>À§ÇèÇÑ ·ð²ÀÀ´ µ·°©³­»Â ±ÈºÇ°ä!	</wzmtvi>
+			<wzmtvi>Á¤²Å Â÷·®³³°ä ÁÖÀÎ»Ô!!	</wzmtvi>
+			<wvzw>	¡¦ÀúÀÇ µÒÂûÀÌ°¡°ä.	</wvzw>
+			<wvzw>	ÀÏ±î¼ª³³°ä. ÁÖÀÎ»Ô	</wvzw>
+			<wvzw>	¶Ù»ÚÀµ Â÷¿¡°ö°ä. 	</wvzw>
+			<hgzmw>	ÁÖÀÎ»Ô! Àú·® µñÅ¿³³°ä! Ã´³Ò·¦ ÇÒ ³ö¿¡ ±øÀÝ±Æ°ä!!	</hgzmw>
+			<hgzmw>	Àúºº ·øÃ¬¾â²Ã·é³­ ¿áÈ¥Àµ ±î¹´¿Ô ÇÏ²Ç¿Ç¿¡°ä?	</hgzmw>
+			<hgzmw>  Àú·¦ Á´ Ã¬¿ÜÁÖ²Ã¿Ú±î°ä? ÁÖÀÎ»Ô?	</hgzmw>
+			<hgzmw>	ÁÖÀÎ»Ô ²É²ÉÇÏ²ÃÁÒ?	</hgzmw>
+			<hgzmw>	ÁÖÀÎ»Ô? ·Û¹§·®Áö·´¿í Àú°Í ¼î±ÆÁÖ³³°ä.</hgzmw>
+			<xlmmvxg>¾â»Ù·®¾â Èûºé±î°ä.	</xlmmvxg>
+			<xlmmvxg>°Ö Ç×´ó »ÊÀ·²Ã»Â¿ÅÁÒ?	</xlmmvxg>
+			<xlmmvxg>ÁÖÀÎ»Ô ¹§¶®°¡ °ï¿í ²ÍÀµ ¼¯ºº ÀÖ±î°ä.	</xlmmvxg>
+			<ovevofk>²Å¼ª³Ì¾µ°ä?	</ovevofk>
+			<ovevofk>ÃàÇÏºå¸Á°ä..! ÇÏÁö·· Àú·¦ Ã¬¾â²Ã»Â¿Ç ÀØÀ·²Ã·é±ÈºÇ°ä!</ovevofk>
+		</sfmtib>
+		<yrg_sfmtib>
+			<uvvwrmt>ÁÖÀÎ»Ô, ¶è¿¡ ¿íÆÄ ÀÏÀ´ ÇÒ ³ö¿¡ ±ø±ú±î°ä.</uvvwrmt>
+			<uvvwrmt>ÁÖÀÎ»Ô..Á¦¿¡ ²Ä´ç·¦ ÁØµñÇÒ¾î°ä?	</uvvwrmt>
+			<uvvwrmt>ÁÖÀÎ»Ô..Á¹¾Ý »õ ±øÀ´¾î°ä?	</uvvwrmt>
+			<uvvwrmt>ÁÖÀÎ»Ô..¿¨´çÇÕ»Ï»Ù.	</uvvwrmt>
+			<sfmgrmt>Àú»Â ÁÖÀÎ»ÔÀ´ ¶Ï±î°ä.	</sfmgrmt>
+			<sfmgrmt>ÁÖÀÎ»Ô ÀÌ¾â²Ç ³ö ÀÖ¿Ú±î°ä?</sfmgrmt>
+			<sfmgrmt>ÁÖÀÎ»ÔÀÌ ÀÌ¾â²Ç¿Å¹ó¿í ¶Ï±î°ä.</sfmgrmt>
+			<wzmtvi>ÁÖÀÎ»Ô ¿æ¿¢²ÉÀ´ ¿¡Áö³³°ä!	</wzmtvi>
+			<wzmtvi>À§ÇèÇÑ ·ð²ÀÀ´ µ·°©³­»Â ±ÈºÇ°ä!	</wzmtvi>
+			<wzmtvi>Á¤²Å Â÷·®³³°ä ÁÖÀÎ»Ô!!	</wzmtvi>
+			<wvzw>	¡¦ÀúÀÇ µÒÂûÀÌ°¡°ä.	</wvzw>
+			<wvzw>	ÀÏ±î¼ª³³°ä. ÁÖÀÎ»Ô	</wvzw>
+			<wvzw>	¶Ù»ÚÀµ Â÷¿¡°ö°ä. 	</wvzw>
+			<hgzmw>	ÁÖÀÎ»Ô! Àú·® µñÅ¿³³°ä! Ã´³Ò·¦ ÇÒ ³ö¿¡ ±øÀÝ±Æ°ä!!	</hgzmw>
+			<hgzmw>	Àúºº ·øÃ¬¾â²Ã·é³­ ¿áÈ¥Àµ ±î¹´¿Ô ÇÏ²Ç¿Ç¿¡°ä?	</hgzmw>
+			<hgzmw>  Àú·¦ Á´ Ã¬¿ÜÁÖ²Ã¿Ú±î°ä? ÁÖÀÎ»Ô?	</hgzmw>
+			<hgzmw>	ÁÖÀÎ»Ô ²É²ÉÇÏ²ÃÁÒ?	</hgzmw>
+			<hgzmw>	ÁÖÀÎ»Ô? ·Û¹§·®Áö·´¿í Àú°Í ¼î±ÆÁÖ³³°ä.</hgzmw>
+			<xlmmvxg>¾â»Ù·®¾â Èûºé±î°ä.	</xlmmvxg>
+			<xlmmvxg>°Ö Ç×´ó »ÊÀ·²Ã»Â¿ÅÁÒ?	</xlmmvxg>
+			<xlmmvxg>ÁÖÀÎ»Ô ¹§¶®°¡ °ï¿í ²ÍÀµ ¼¯ºº ÀÖ±î°ä.	</xlmmvxg>
+			<ovevofk>²Å¼ª³Ì¾µ°ä?	</ovevofk>
+			<ovevofk>ÃàÇÏºå¸Á°ä..! ÇÏÁö·· Àú·¦ Ã¬¾â²Ã»Â¿Ç ÀØÀ·²Ã·é±ÈºÇ°ä!</ovevofk>
+		</yrg_sfmtib>
+		<mlgrmt>
+			<uvvwrmt>ÁÖÀÎ»Ô, ¶è¿¡ ¿íÆÄ ÀÏÀ´ ÇÒ ³ö¿¡ ±ø±ú±î°ä	</uvvwrmt>
+			<uvvwrmt>ÁÖÀÎ»Ô..Á¦¿¡ ²Ä´ç·¦ ÁØµñÇÒ¾î°ä?	</uvvwrmt>
+			<uvvwrmt>ÁÖÀÎ»Ô..Á¹¾Ý »õ ±øÀ´¾î°ä?	</uvvwrmt>
+			<uvvwrmt>ÁÖÀÎ»Ô..¿¨´çÇÕ»Ï»Ù.	</uvvwrmt>
+			<sfmgrmt>Àú»Â ÁÖÀÎ»ÔÀ´ ¶Ï±î°ä.	</sfmgrmt>
+			<sfmgrmt>ÁÖÀÎ»Ô ÀÌ¾â²Ç ³ö ÀÖ¿Ú±î°ä?</sfmgrmt>
+			<sfmgrmt>ÁÖÀÎ»ÔÀÌ ÀÌ¾â²Ç¿Å¹ó¿í ¶Ï±î°ä.</sfmgrmt>
+			<wzmtvi>ÁÖÀÎ»Ô ¿æ¿¢²ÉÀ´ ¿¡Áö³³°ä!	</wzmtvi>
+			<wzmtvi>À§ÇèÇÑ ·ð²ÀÀ´ µ·°©³­»Â ±ÈºÇ°ä!	</wzmtvi>
+			<wzmtvi>Á¤²Å Â÷·®³³°ä ÁÖÀÎ»Ô!!	</wzmtvi>
+			<wvzw>	¡¦ÀúÀÇ µÒÂûÀÌ°¡°ä.	</wvzw>
+			<wvzw>	ÀÏ±î¼ª³³°ä. ÁÖÀÎ»Ô	</wvzw>
+			<wvzw>	¶Ù»ÚÀµ Â÷¿¡°ö°ä. 	</wvzw>
+			<hgzmw>	ÁÖÀÎ»Ô! Àú·® µñÅ¿³³°ä! Ã´³Ò·¦ ÇÒ ³ö¿¡ ±øÀÝ±Æ°ä!!	</hgzmw>
+			<hgzmw>	Àúºº ·øÃ¬¾â²Ã·é³­ ¿áÈ¥Àµ ±î¹´¿Ô ÇÏ²Ç¿Ç¿¡°ä?	</hgzmw>
+			<hgzmw>  Àú·¦ Á´ Ã¬¿ÜÁÖ²Ã¿Ú±î°ä? ÁÖÀÎ»Ô?	</hgzmw>
+			<hgzmw>	ÁÖÀÎ»Ô ²É²ÉÇÏ²ÃÁÒ?	</hgzmw>
+			<hgzmw>	ÁÖÀÎ»Ô? ·Û¹§·®Áö·´¿í Àú°Í ¼î±ÆÁÖ³³°ä.</hgzmw>
+			<xlmmvxg>¾â»Ù·®¾â Èûºé±î°ä.	</xlmmvxg>
+			<xlmmvxg>°Ö Ç×´ó »ÊÀ·²Ã»Â¿ÅÁÒ?	</xlmmvxg>
+			<xlmmvxg>ÁÖÀÎ»Ô ¹§¶®°¡ °ï¿í ²ÍÀµ ¼¯ºº ÀÖ±î°ä.	</xlmmvxg>
+			<ovevofk>²Å¼ª³Ì¾µ°ä?	</ovevofk>
+			<ovevofk>ÃàÇÏºå¸Á°ä..! ÇÏÁö·· Àú·¦ Ã¬¾â²Ã»Â¿Ç ÀØÀ·²Ã·é±ÈºÇ°ä!</ovevofk>
+		</mlgrmt>
+		<ufoo>
+			<uvvwrmt>ÁÖÀÎ»Ô ÃæµÐÈ÷ ¶èµÒ¸¯°ä.</uvvwrmt>
+			<sfmgrmt>Àú»Â ÁÖÀÎ»ÔÀ´ ¶Ï±î°ä.	</sfmgrmt>
+			<sfmgrmt>ÁÖÀÎ»Ô ÀÌ¾â²Ç ³ö ÀÖ¿Ú±î°ä?</sfmgrmt>
+			<sfmgrmt>ÁÖÀÎ»ÔÀÌ ÀÌ¾â²Ç¿Å¹ó¿í ¶Ï±î°ä.</sfmgrmt>
+			<wzmtvi>ÁÖÀÎ»Ô ¿æ¿¢²ÉÀ´ ¿¡Áö³³°ä!	</wzmtvi>
+			<wzmtvi>À§ÇèÇÑ ·ð²ÀÀ´ µ·°©³­»Â ±ÈºÇ°ä!	</wzmtvi>
+			<wzmtvi>Á¤²Å Â÷·®³³°ä ÁÖÀÎ»Ô!!	</wzmtvi>
+			<wvzw>	¡¦ÀúÀÇ µÒÂûÀÌ°¡°ä.	</wvzw>
+			<wvzw>	ÀÏ±î¼ª³³°ä. ÁÖÀÎ»Ô	</wvzw>
+			<wvzw>	¶Ù»ÚÀµ Â÷¿¡°ö°ä. 	</wvzw>
+			<hgzmw>	ÁÖÀÎ»Ô! Àú·® µñÅ¿³³°ä! Ã´³Ò·¦ ÇÒ ³ö¿¡ ±øÀÝ±Æ°ä!!	</hgzmw>
+			<hgzmw>	Àúºº ·øÃ¬¾â²Ã·é³­ ¿áÈ¥Àµ ±î¹´¿Ô ÇÏ²Ç¿Ç¿¡°ä?	</hgzmw>
+			<hgzmw>  Àú·¦ Á´ Ã¬¿ÜÁÖ²Ã¿Ú±î°ä? ÁÖÀÎ»Ô?	</hgzmw>
+			<hgzmw>	ÁÖÀÎ»Ô ²É²ÉÇÏ²ÃÁÒ?	</hgzmw>
+			<hgzmw>	ÁÖÀÎ»Ô? ·Û¹§·®Áö·´¿í Àú°Í ¼î±ÆÁÖ³³°ä.</hgzmw>
+			<xlmmvxg>¾â»Ù·®¾â Èûºé±î°ä.	</xlmmvxg>
+			<xlmmvxg>°Ö Ç×´ó »ÊÀ·²Ã»Â¿ÅÁÒ?	</xlmmvxg>
+			<xlmmvxg>ÁÖÀÎ»Ô ¹§¶®°¡ °ï¿í ²ÍÀµ ¼¯ºº ÀÖ±î°ä.	</xlmmvxg>
+			<ovevofk>²Å¼ª³Ì¾µ°ä?	</ovevofk>
+			<ovevofk>ÃàÇÏºå¸Á°ä..! ÇÏÁö·· Àú·¦ Ã¬¾â²Ã»Â¿Ç ÀØÀ·²Ã·é±ÈºÇ°ä!</ovevofk>
+		</ufoo>
+		<hl_ufoo>
+			<uvvwrmt>ÁÖÀÎ»Ô Á¤·´ ¶èµÎ·£»Ù»Ï¾î°ä!</uvvwrmt>
+			<sfmgrmt>Àú»Â ÁÖÀÎ»ÔÀ´ ¶Ï±î°ä.	</sfmgrmt>
+			<sfmgrmt>ÁÖÀÎ»Ô ÀÌ¾â²Ç ³ö ÀÖ¿Ú±î°ä?</sfmgrmt>
+			<sfmgrmt>ÁÖÀÎ»ÔÀÌ ÀÌ¾â²Ç¿Å¹ó¿í ¶Ï±î°ä.</sfmgrmt>
+			<wzmtvi>ÁÖÀÎ»Ô ¿æ¿¢²ÉÀ´ ¿¡Áö³³°ä!	</wzmtvi>
+			<wzmtvi>À§ÇèÇÑ ·ð²ÀÀ´ µ·°©³­»Â ±ÈºÇ°ä!	</wzmtvi>
+			<wzmtvi>Á¤²Å Â÷·®³³°ä ÁÖÀÎ»Ô!!	</wzmtvi>
+			<wvzw>	¡¦ÀúÀÇ µÒÂûÀÌ°¡°ä.	</wvzw>
+			<wvzw>	ÀÏ±î¼ª³³°ä. ÁÖÀÎ»Ô	</wvzw>
+			<wvzw>	¶Ù»ÚÀµ Â÷¿¡°ö°ä. 	</wvzw>
+			<hgzmw>	ÁÖÀÎ»Ô! Àú·® µñÅ¿³³°ä! Ã´³Ò·¦ ÇÒ ³ö¿¡ ±øÀÝ±Æ°ä!!	</hgzmw>
+			<hgzmw>	Àúºº ·øÃ¬¾â²Ã·é³­ ¿áÈ¥Àµ ±î¹´¿Ô ÇÏ²Ç¿Ç¿¡°ä?	</hgzmw>
+			<hgzmw>  Àú·¦ Á´ Ã¬¿ÜÁÖ²Ã¿Ú±î°ä? ÁÖÀÎ»Ô?	</hgzmw>
+			<hgzmw>	ÁÖÀÎ»Ô ²É²ÉÇÏ²ÃÁÒ?	</hgzmw>
+			<hgzmw>	ÁÖÀÎ»Ô? ·Û¹§·®Áö·´¿í Àú°Í ¼î±ÆÁÖ³³°ä.</hgzmw>
+			<xlmmvxg>¾â»Ù·®¾â Èûºé±î°ä.	</xlmmvxg>
+			<xlmmvxg>°Ö Ç×´ó »ÊÀ·²Ã»Â¿ÅÁÒ?	</xlmmvxg>
+			<xlmmvxg>ÁÖÀÎ»Ô ¹§¶®°¡ °ï¿í ²ÍÀµ ¼¯ºº ÀÖ±î°ä.	</xlmmvxg>
+			<ovevofk>²Å¼ª³Ì¾µ°ä?	</ovevofk>
+			<ovevofk>ÃàÇÏºå¸Á°ä..! ÇÏÁö·· Àú·¦ Ã¬¾â²Ã»Â¿Ç ÀØÀ·²Ã·é±ÈºÇ°ä!</ovevofk>
+		</hl_ufoo>
+	</ZORAZ>
+	<LIP_SVIL2>
+		<sfmtib>
+			<uvvwrmt>	À·ÇÏÇÏÇÏ! Á¦¶ý ·ÀÀÖ¾·¼ª!	</uvvwrmt>
+			<wvzw>		ÇÑ²ÉÇÏ¿Ô Â¦ÀÌ ±ø¾·¼ª!	</wvzw>
+			<hgzmw>		À§Ç¼»ç»çÇÑ °ÀÅ©ÀÇ ÀÚÅÂ·¦ µ·¹ó!</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù¼×! ÀÚ¼×ºº °º°õÀÌ ºÇ¿í²Í¼ª?	</ovevofk>
+			<kviuli_1>	¼ª·¦ µ·±Æ¹ó ! ¼´¿¡ ¶Ù¸Î °º°õ! °ÀÅ© È÷±î¸Î!	</kviuli_1>
+			<kviuli_1>	ºÕºÕºÕ!! °ÀÅ© È÷±î¸Î ¼ª¿¡²Å»Ù! </kviuli_1>
+			<kviuli_2>	±î¹§? °º°õÀÇ ·ð²ÀÀÌ?</kviuli_2>
+			<kviuli_2>	ÈÖ·®·®·®·¯! ÀÌ¿ÍÀÌ °º°õÀÇ ³Õ¼î·½!	</kviuli_2>
+		</sfmtib>
+		<yrg_sfmtib>
+			<uvvwrmt>	À·ÇÏÇÏÇÏ! Á¦¶ý ·ÀÀÖ¾·¼ª!	</uvvwrmt>
+			<wvzw>		ÇÑ²ÉÇÏ¿Ô Â¦ÀÌ ±ø¾·¼ª!	</wvzw>
+			<hgzmw>		À§Ç¼»ç»çÇÑ °ÀÅ©ÀÇ ÀÚÅÂ·¦ µ·¹ó!</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù¼×! ÀÚ¼×ºº °º°õÀÌ ºÇ¿í²Í¼ª?	</ovevofk>
+			<kviuli_1>	¼ª·¦ µ·±Æ¹ó ! ¼´¿¡ ¶Ù¸Î °º°õ! °ÀÅ© È÷±î¸Î!	</kviuli_1>
+			<kviuli_1>	ºÕºÕºÕ!! °ÀÅ© È÷±î¸Î ¼ª¿¡²Å»Ù! </kviuli_1>
+			<kviuli_2>	±î¹§? °º°õÀÇ ·ð²ÀÀÌ?</kviuli_2>
+			<kviuli_2>	ÈÖ·®·®·®·¯! ÀÌ¿ÍÀÌ °º°õÀÇ ³Õ¼î·½!	</kviuli_2>
+		</yrg_sfmtib>
+		<mlgrmt>
+			<uvvwrmt>	À·ÇÏÇÏÇÏ! Á¦¶ý ·ÀÀÖ¾·¼ª!	</uvvwrmt>
+			<wvzw>		ÇÑ²ÉÇÏ¿Ô Â¦ÀÌ ±ø¾·¼ª!	</wvzw>
+			<hgzmw>		À§Ç¼»ç»çÇÑ °ÀÅ©ÀÇ ÀÚÅÂ·¦ µ·¹ó!</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù¼×! ÀÚ¼×ºº °º°õÀÌ ºÇ¿í²Í¼ª?	</ovevofk>
+			<kviuli_1>	¼ª·¦ µ·±Æ¹ó ! ¼´¿¡ ¶Ù¸Î °º°õ! °ÀÅ© È÷±î¸Î!	</kviuli_1>
+			<kviuli_1>	ºÕºÕºÕ!! °ÀÅ© È÷±î¸Î ¼ª¿¡²Å»Ù! </kviuli_1>
+			<kviuli_2>	±î¹§? °º°õÀÇ ·ð²ÀÀÌ?</kviuli_2>
+			<kviuli_2>	ÈÖ·®·®·®·¯! ÀÌ¿ÍÀÌ °º°õÀÇ ³Õ¼î·½!	</kviuli_2>
+		</mlgrmt>
+		<ufoo>
+			<uvvwrmt>	·ÀÀÖÁö·· ²²²² ¶¿·®»Â ¾·¼ª!	</uvvwrmt>
+			<wvzw>		ÇÑ²ÉÇÏ¿Ô Â¦ÀÌ ±ø¾·¼ª!	</wvzw>
+			<hgzmw>		À§Ç¼»ç»çÇÑ °ÀÅ©ÀÇ ÀÚÅÂ·¦ µ·¹ó!</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù¼×! ÀÚ¼×ºº °º°õÀÌ ºÇ¿í²Í¼ª?	</ovevofk>
+			<kviuli_1>	¼ª·¦ µ·±Æ¹ó ! ¼´¿¡ ¶Ù¸Î °º°õ! °ÀÅ© È÷±î¸Î!	</kviuli_1>
+			<kviuli_1>	ºÕºÕºÕ!! °ÀÅ© È÷±î¸Î ¼ª¿¡²Å»Ù! </kviuli_1>
+			<kviuli_2>	±î¹§? °º°õÀÇ ·ð²ÀÀÌ?</kviuli_2>
+			<kviuli_2>	ÈÖ·®·®·®·¯! ÀÌ¿ÍÀÌ °º°õÀÇ ³Õ¼î·½!	</kviuli_2>
+		</ufoo>
+		<hl_ufoo>
+			<uvvwrmt>	ÀÌµÁ! ¶è¿¡ µÎ·£»Ù»Ï¾ñ! ¾×··ÁÖ¹ó¿í!	</uvvwrmt>
+			<wvzw>		ÇÑ²ÉÇÏ¿Ô Â¦ÀÌ ±ø¾·¼ª!	</wvzw>
+			<hgzmw>		À§Ç¼»ç»çÇÑ °ÀÅ©ÀÇ ÀÚÅÂ·¦ µ·¹ó!</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù¼×! ÀÚ¼×ºº °º°õÀÌ ºÇ¿í²Í¼ª?	</ovevofk>
+			<kviuli_1>	¼ª·¦ µ·±Æ¹ó ! ¼´¿¡ ¶Ù¸Î °º°õ! °ÀÅ© È÷±î¸Î!	</kviuli_1>
+			<kviuli_1>	ºÕºÕºÕ!! °ÀÅ© È÷±î¸Î ¼ª¿¡²Å»Ù!	 </kviuli_1>
+			<kviuli_2>	±î¹§? °º°õÀÇ ·ð²ÀÀÌ?</kviuli_2>
+			<kviuli_2>	ÈÖ·®·®·®·¯! ÀÌ¿ÍÀÌ °º°õÀÇ ³Õ¼î·½!	</kviuli_2>
+		</hl_ufoo>
+	</LIP_SVIL2>
+
+	<tollnfmwvimrtsg2>
+
+		<sfmtib>
+			<uvvwrmt>	(·ÀÀÖ¿Ô ·Ô»ÂÁß)	</uvvwrmt>
+			<wvzw>	ÇÏ..Âú...Àµ Á·Àç..	</wvzw>
+			<hgzmw>	(¶«Ã» ¶è¿íÆÄ µ·ÀÎ»Ù)	</hgzmw>
+			<ovevofk>	(Èú½ý ÃÄ»Ùµ´»Ù)	</ovevofk>
+			<kviuli_1>	Ä¥Èæ¿¿Àµ ¶ãÇÏ»Ã ±Æ¸¡	</kviuli_1>
+			<kviuli_1>	µÒÅ·»Â ±îºÒÀÇ Á·Àç	</kviuli_1>
+			<kviuli_2>	(ÇÑ¿¡¸Î°ö µ·ÀÎ»Ù) 	</kviuli_2>
+			<kviuli_2>	¾×¸ç°ì°ò......	</kviuli_2>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	(·ÀÀÖ¿Ô ·Ô»ÂÁß)	</uvvwrmt>
+			<wvzw>	ÇÏ..Âú...Àµ Á·Àç.	</wvzw>
+			<hgzmw>	(¶è¿íÆÄ µ·ÀÎ»Ù)	</hgzmw>
+			<ovevofk>	(Èú½ý ÃÄ»Ùµ´»Ù)	</ovevofk>
+			<kviuli_1>	Ä¥Èæ¿¿Àµ ¶ãÇÏ»Ã ±Æ¸¡	</kviuli_1>
+			<kviuli_1>	µÒÅ·»Â ±îºÒÀÇ Á·Àç	</kviuli_1>
+			<kviuli_2>	(ÇÑ¿¡¸Î°ö µ·ÀÎ»Ù) 	</kviuli_2>
+			<kviuli_2>	¾×¸ç°ì°ò......	</kviuli_2>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	(·ÀÀÖ¿Ô ·Ô»ÂÁß)	</uvvwrmt>
+			<wvzw>	ÇÏ..Âú...Àµ Á·Àç.	</wvzw>
+			<hgzmw> Á·Àç..¹ó»Â¿Ç... ¶«±ùÀÎ¿¡....	</hgzmw>
+			<hgzmw>	¿æ¶è....ÇÏ¹ó..Âù±ç....ÇÏ¹ó...	</hgzmw>
+			<hgzmw>	(¾ÍÂú±Æ ÇÏ¿í ÀÖ»Ù)	</hgzmw>
+			<ovevofk>	(Èú½ý ÃÄ»Ùµ´»Ù)	</ovevofk>
+			<kviuli_1>	Ä¥Èæ¿¿Àµ ¶ãÇÏ»Ã ±Æ¸¡	</kviuli_1>
+			<kviuli_1>	µÒÅ·»Â ±îºÒÀÇ Á·Àç	</kviuli_1>
+			<kviuli_2>	(ÇÑ¿¡¸Î°ö µ·ÀÎ»Ù) 	</kviuli_2>
+			<kviuli_2>	¾×¸ç°ì°ò......	</kviuli_2>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	(Ç¥Á¤ÀÌ ÁÁÁö ±Ê»Ù)	</uvvwrmt>
+			<wvzw>	ÇÏ..Âú...Àµ Á·Àç.	</wvzw>
+			<hgzmw>	Á·Àç..¹ó»Â¿Ç... ¶«±ùÀÎ¿¡....	</hgzmw>
+			<hgzmw>	¿æ¶è....ÇÏ¹ó..Âù±ç....ÇÏ¹ó...	</hgzmw>
+			<hgzmw>	(¾ÍÂú±Æ ÇÏ¿í ÀÖ»Ù)	</hgzmw>
+			<hgzmw>	¾×»ëÀÇ..Á·Àç..ÀÇ¶Ì»Â..	</hgzmw>
+			<ovevofk>	(Èú½ý ÃÄ»Ùµ´»Ù)	</ovevofk>
+			<kviuli_1>	Ä¥Èæ¿¿Àµ ¶ãÇÏ»Ã ±Æ¸¡	</kviuli_1>
+			<kviuli_1>	µÒÅ·»Â ±îºÒÀÇ Á·Àç	</kviuli_1>
+			<kviuli_2>	(ÇÑ¿¡¸Î°ö µ·ÀÎ»Ù) 	</kviuli_2>
+			<kviuli_2>	¾×¸ç°ì°ò......	</kviuli_2>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	(Ç¥Á¤ÀÌ ÁÁÁö ±Ê»Ù)	</uvvwrmt>
+			<wvzw>	ÇÏ..Âú...Àµ Á·Àç.	</wvzw>
+			<hgzmw>	Á·Àç..¹ó»Â¿Ç... ¶«±ùÀÎ¿¡....	</hgzmw>
+			<hgzmw>	¿æ¶è....ÇÏ¹ó..Âù±ç....ÇÏ¹ó...	</hgzmw>
+			<hgzmw>	(¾ÍÂú±Æ ÇÏ¿í ÀÖ»Ù)	</hgzmw>
+			<hgzmw>	¾×»ëÀÇ..Á·Àç..ÀÇ¶Ì»Â..	</hgzmw>
+			<hgzmw>	Mlgsrmt..	</hgzmw>
+			<ovevofk>	(Èú½ý ÃÄ»Ùµ´»Ù)	</ovevofk>
+			<kviuli_1>	Ä¥Èæ¿¿Àµ ¶ãÇÏ»Ã ±Æ¸¡	</kviuli_1>
+			<kviuli_1>	µÒÅ·»Â ±îºÒÀÇ Á·Àç	</kviuli_1>
+			<kviuli_2>	(ÇÑ¿¡¸Î°ö µ·ÀÎ»Ù) 	</kviuli_2>
+			<kviuli_2>	¾×¸ç°ì°ò......	</kviuli_2>
+		</hl_ufoo>
+
+	</tollnfmwvimrtsg2>
+	<xsrow_zwnrm_y>
+
+		<sfmtib>
+			<uvvwrmt>	°¬¸á ÃæÀü Áß...	£þ¡ä£þ </uvvwrmt>
+			<wvzw>	±ÆÁ÷ Àú·¦ Å¿°ì¾â°£ ¶ö¿Å°î µÐÀÌ²Ã¾µ°ä (¢Á_¢Á)</wvzw>
+			<xlmmvxg>	±î³­°À³³°ä. ¶Ý¿¡°ö°ä^_^	</xlmmvxg>
+			<hgzmw>	²Ä´ç ²Ã¿£ÀÌ ·¶ÀÌ Áö¼º±î°ä... ¢Ñ¢Ð	</hgzmw>
+			<ovevofk>	Àúºº ±î·¥ÀÌ ºÇ¿í ²Í±î°ä. *'¡å'*	</ovevofk>
+			<kviuli_1>	¶«±ùÀ´ ºº°Íºå·¾¾î°ä?	</kviuli_1>
+			<kviuli_1>	Olzwrmt..¡á¡á¡à¡à¡à..	</kviuli_1>
+			<kviuli_2>	±îºð¸Î ±È¼´ÇÒ¾î°ä? 	</kviuli_2>
+			<kviuli_2>	²Ã²µÅÛ ¿¡º° Áß ¡Ý_¡Ý!	</kviuli_2>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	°¬¸á ÃæÀü Áß...	£þ¡ä£þ </uvvwrmt>
+			<wvzw>	±ÆÁ÷ Àú·¦ Å¿°ì¾â°£ ¶ö¿Å°î µÐÀÌ²Ã¾µ°ä (¢Á_¢Á)</wvzw>
+			<xlmmvxg>	±î³­°À³³°ä. ¶Ý¿¡°ö°ä^_^	</xlmmvxg>
+			<hgzmw>	²Ä´ç ²Ã¿£ÀÌ Áö¼º±î°ä... ¢Ñ¢Ð	</hgzmw>
+			<ovevofk>	Àúºº ±î·¥ÀÌ ºÇ¿í ²Í±î°ä. *'¡å'*	</ovevofk>
+			<kviuli_1>	¶«±ùÀ´ ºº°Íºå·¾¾î°ä?	</kviuli_1>
+			<kviuli_1>	Olzwrmt..¡á¡á¡à¡à¡à..	</kviuli_1>
+			<kviuli_2>	±îºð¸Î ±È¼´ÇÒ¾î°ä? 	</kviuli_2>
+			<kviuli_2>	²Ã²µÅÛ ¿¡º° Áß ¡Ý_¡Ý!	</kviuli_2>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	°¬¸á ÃæÀü Áß...	£þ¡ä£þ </uvvwrmt>
+			<wvzw>	±ÆÁ÷ Àú·¦ Å¿°ì¾â°£ ¶ö¿Å°î µÐÀÌ²Ã¾µ°ä (¢Á_¢Á)</wvzw>
+			<xlmmvxg>	±î³­°À³³°ä. ¶Ý¿¡°ö°ä^_^	</xlmmvxg>
+			<hgzmw>	±îºð¸Î ¿¡²Ç °¶Á¤ÀÎ¿¡°ä?	</hgzmw>
+			<hgzmw>	¼î±ÆÁÖ³³°ä *'¡å'*...	</hgzmw>
+			<sfmgrmt>	Èû¼´¹ó Èû!	</sfmgrmt>
+			<wzmtvi> ±î±î±î.. Á¹²ÉÇÏ³³°ä G^G	</wzmtvi>
+			<ovevofk>	Àúºº ±î·¥ÀÌ ºÇ¿í ²Í±î°ä. *'¡å'*	</ovevofk>
+			<kviuli_1>	¶«±ùÀ´ ºº°Íºå·¾¾î°ä?	</kviuli_1>
+			<kviuli_1>	Olzwrmt..¡á¡á¡à¡à¡à..	</kviuli_1>
+			<kviuli_2>	±îºð¸Î ±È¼´ÇÒ¾î°ä? 	</kviuli_2>
+			<kviuli_2>	²Ã²µÅÛ ¿¡º° Áß ¡Ý_¡Ý!	</kviuli_2>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>ÀÌ¶Ì °¬¸á¿¡ ¿¡ºæ Ã¡±î°ä..¡Ã_¡Â	</uvvwrmt>
+			<wvzw>	±ÆÁ÷ Àú·¦ Å¿°ì¾â°£ ¶ö¿Å°î µÐÀÌ²Ã¾µ°ä (¢Á_¢Á)</wvzw>
+			<xlmmvxg>	±î³­°À³³°ä. ¶Ý¿¡°ö°ä^_^	</xlmmvxg>
+			<hgzmw>	±îºð¸Î ¿¡²Ç °¶Á¤ÀÎ¿¡°ä?	</hgzmw>
+			<hgzmw>	¼î±ÆÁÖ³³°ä *'¡å'*...	</hgzmw>
+			<sfmgrmt>	Èû¼´¹ó Èû!	</sfmgrmt>
+			<wzmtvi> ±î±î±î.. Á¹²ÉÇÏ³³°ä G^G	</wzmtvi>
+			<ovevofk>	Àúºº ±î·¥ÀÌ ºÇ¿í ²Í±î°ä. *'¡å'*	</ovevofk>
+			<kviuli_1>	¶«±ùÀ´ ºº°Íºå·¾¾î°ä?	</kviuli_1>
+			<kviuli_1>	Olzwrmt..¡á¡á¡à¡à¡à..	</kviuli_1>
+			<kviuli_2>	±îºð¸Î ±È¼´ÇÒ¾î°ä? 	</kviuli_2>
+			<kviuli_2>	²Ã²µÅÛ ¿¡º° Áß ¡Ý_¡Ý!	</kviuli_2>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	ÀÌ¶Ì °¬¸á¿¡ ¿¡ºæ Ã¡±î°ä..¡Ã_¡Â	</uvvwrmt>
+			<wvzw>	±ÆÁ÷ Àú·¦ Å¿°ì¾â°£ ¶ö¿Å°î µÐÀÌ²Ã¾µ°ä ¢Á_¢Á	</wvzw>
+			<xlmmvxg>	±î³­°À³³°ä. ¶Ý¿¡°ö°ä^_^	</xlmmvxg>
+			<hgzmw>	±îºð¸Î ¿¡²Ç °¶Á¤ÀÎ¿¡°ä?	</hgzmw>
+			<hgzmw>	¼î±ÆÁÖ³³°ä *'¡å'*...	</hgzmw>
+			<hgzmw>	²ÅÈ£ ³ö²ÅÁß..¢Á_¢Á* ¢Ï Xlmmvxg..	</hgzmw>
+			<sfmgrmt>	Èû¼´¹ó Èû!	</sfmgrmt>
+			<wzmtvi> ±î±î±î.. Á¹²ÉÇÏ³³°ä G^G	</wzmtvi>
+			<ovevofk>	Àúºº ±î·¥ÀÌ ºÇ¿í ²Í±î°ä. *'¡å'*	</ovevofk>
+			<kviuli_1>	¶«±ùÀ´ ºº°Íºå·¾¾î°ä?	</kviuli_1>
+			<kviuli_1>	Olzwrmt..¡á¡á¡à¡à¡à..	</kviuli_1>
+			<kviuli_2>	±îºð¸Î ±È¼´ÇÒ¾î°ä? 	</kviuli_2>
+			<kviuli_2>	²Ã²µÅÛ ¿¡º° Áß ¡Ý_¡Ý!	</kviuli_2>
+		</hl_ufoo>
+
+	</xsrow_zwnrm_y>
+	
+	<xsrow_zwnrm_z>
+
+		<sfmtib>
+			<uvvwrmt>	°¬¸á ÃæÀü Áß...	£þ¡ä£þ </uvvwrmt>
+			<wvzw>	±ÆÁ÷ Àú·¦ Å¿°ì¾â°£ ¶ö¿Å°î µÐÀÌ²Ã¾µ°ä (¢Á_¢Á)</wvzw>
+			<xlmmvxg>	±î³­°À³³°ä. ¶Ý¿¡°ö°ä^_^	</xlmmvxg>
+			<hgzmw>	²Ä´ç ²Ã¿£ÀÌ ·¶ÀÌ Áö¼º±î°ä... ¢Ñ¢Ð	</hgzmw>
+			<ovevofk>	Àúºº ±î·¥ÀÌ ºÇ¿í ²Í±î°ä. *'¡å'*	</ovevofk>
+			<kviuli_1>	¶«±ùÀ´ ºº°Íºå·¾¾î°ä?	</kviuli_1>
+			<kviuli_1>	Olzwrmt..¡á¡á¡à¡à¡à..	</kviuli_1>
+			<kviuli_2>	±îºð¸Î ±È¼´ÇÒ¾î°ä? 	</kviuli_2>
+			<kviuli_2>	²Ã²µÅÛ ¿¡º° Áß ¡Ý_¡Ý!	</kviuli_2>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	°¬¸á ÃæÀü Áß...	£þ¡ä£þ </uvvwrmt>
+			<wvzw>	±ÆÁ÷ Àú·¦ Å¿°ì¾â°£ ¶ö¿Å°î µÐÀÌ²Ã¾µ°ä (¢Á_¢Á)</wvzw>
+			<xlmmvxg>	±î³­°À³³°ä. ¶Ý¿¡°ö°ä^_^	</xlmmvxg>
+			<hgzmw>	²Ä´ç ²Ã¿£ÀÌ Áö¼º±î°ä... ¢Ñ¢Ð	</hgzmw>
+			<ovevofk>	Àúºº ±î·¥ÀÌ ºÇ¿í ²Í±î°ä. *'¡å'*	</ovevofk>
+			<kviuli_1>	¶«±ùÀ´ ºº°Íºå·¾¾î°ä?	</kviuli_1>
+			<kviuli_1>	Olzwrmt..¡á¡á¡à¡à¡à..	</kviuli_1>
+			<kviuli_2>	±îºð¸Î ±È¼´ÇÒ¾î°ä? 	</kviuli_2>
+			<kviuli_2>	²Ã²µÅÛ ¿¡º° Áß ¡Ý_¡Ý!	</kviuli_2>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	°¬¸á ÃæÀü Áß...	£þ¡ä£þ </uvvwrmt>
+			<wvzw>	±ÆÁ÷ Àú·¦ Å¿°ì¾â°£ ¶ö¿Å°î µÐÀÌ²Ã¾µ°ä (¢Á_¢Á)</wvzw>
+			<xlmmvxg>	±î³­°À³³°ä. ¶Ý¿¡°ö°ä^_^	</xlmmvxg>
+			<hgzmw>	±îºð¸Î ¿¡²Ç °¶Á¤ÀÎ¿¡°ä?	</hgzmw>
+			<hgzmw>	¼î±ÆÁÖ³³°ä *'¡å'*...	</hgzmw>
+			<sfmgrmt>	Èû¼´¹ó Èû!	</sfmgrmt>
+			<wzmtvi> ±î±î±î.. Á¹²ÉÇÏ³³°ä G^G	</wzmtvi>
+			<ovevofk>	Àúºº ±î·¥ÀÌ ºÇ¿í ²Í±î°ä. *'¡å'*	</ovevofk>
+			<kviuli_1>	¶«±ùÀ´ ºº°Íºå·¾¾î°ä?	</kviuli_1>
+			<kviuli_1>	Olzwrmt..¡á¡á¡à¡à¡à..	</kviuli_1>
+			<kviuli_2>	±îºð¸Î ±È¼´ÇÒ¾î°ä? 	</kviuli_2>
+			<kviuli_2>	²Ã²µÅÛ ¿¡º° Áß ¡Ý_¡Ý!	</kviuli_2>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>ÀÌ¶Ì °¬¸á¿¡ ¿¡ºæ Ã¡±î°ä..¡Ã_¡Â	</uvvwrmt>
+			<wvzw>	±ÆÁ÷ Àú·¦ Å¿°ì¾â°£ ¶ö¿Å°î µÐÀÌ²Ã¾µ°ä (¢Á_¢Á)</wvzw>
+			<xlmmvxg>	±î³­°À³³°ä. ¶Ý¿¡°ö°ä^_^	</xlmmvxg>
+			<hgzmw>	±îºð¸Î ¿¡²Ç °¶Á¤ÀÎ¿¡°ä?	</hgzmw>
+			<hgzmw>	¼î±ÆÁÖ³³°ä *'¡å'*...	</hgzmw>
+			<sfmgrmt>	Èû¼´¹ó Èû!	</sfmgrmt>
+			<wzmtvi> ±î±î±î.. Á¹²ÉÇÏ³³°ä G^G	</wzmtvi>
+			<ovevofk>	Àúºº ±î·¥ÀÌ ºÇ¿í ²Í±î°ä. *'¡å'*	</ovevofk>
+			<kviuli_1>	¶«±ùÀ´ ºº°Íºå·¾¾î°ä?	</kviuli_1>
+			<kviuli_1>	Olzwrmt..¡á¡á¡à¡à¡à..	</kviuli_1>
+			<kviuli_2>	±îºð¸Î ±È¼´ÇÒ¾î°ä? 	</kviuli_2>
+			<kviuli_2>	²Ã²µÅÛ ¿¡º° Áß ¡Ý_¡Ý!	</kviuli_2>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	ÀÌ¶Ì °¬¸á¿¡ ¿¡ºæ Ã¡±î°ä..¡Ã_¡Â	</uvvwrmt>
+			<wvzw>	±ÆÁ÷ Àú·¦ Å¿°ì¾â°£ ¶ö¿Å°î µÐÀÌ²Ã¾µ°ä ¢Á_¢Á	</wvzw>
+			<xlmmvxg>	±î³­°À³³°ä. ¶Ý¿¡°ö°ä^_^	</xlmmvxg>
+			<hgzmw>	±îºð¸Î ¿¡²Ç °¶Á¤ÀÎ¿¡°ä?	</hgzmw>
+			<hgzmw>	¼î±ÆÁÖ³³°ä *'¡å'*...	</hgzmw>
+			<hgzmw>	²ÅÈ£ ³ö²ÅÁß..¢Á_¢Á* ¢Ï Xlmmvxg..	</hgzmw>
+			<sfmgrmt>	Èû¼´¹ó Èû!	</sfmgrmt>
+			<wzmtvi> ±î±î±î.. Á¹²ÉÇÏ³³°ä G^G	</wzmtvi>
+			<ovevofk>	Àúºº ±î·¥ÀÌ ºÇ¿í ²Í±î°ä. *'¡å'*	</ovevofk>
+			<kviuli_1>	¶«±ùÀ´ ºº°Íºå·¾¾î°ä?	</kviuli_1>
+			<kviuli_1>	Olzwrmt..¡á¡á¡à¡à¡à..	</kviuli_1>
+			<kviuli_2>	±îºð¸Î ±È¼´ÇÒ¾î°ä? 	</kviuli_2>
+			<kviuli_2>	²Ã²µÅÛ ¿¡º° Áß ¡Ý_¡Ý!	</kviuli_2>
+		</hl_ufoo>
+
+	</xsrow_zwnrm_z>
+<DZMWVIRMT_WFXP>
+<sfmtib>
+	<uvvwrmt>¶èµÎ·¥ ¼ª»Â Á¤·´ Çàµ¶ÇÑ °À·®±ß</uvvwrmt>
+	<uvvwrmt>·ÀÀÖ»Â¿Å Áà³­ ¿í·¹°ö~ Àú±û·´ ¿í·¹°ö!</uvvwrmt>
+	<sfmgrmt>¼ªºº~ ¿¿ÀÌ ²Î°ö ÁÖ¿í ²ÍÁö·¹±È~ ¶è¿¡ ¿íÇ¬¿É~</sfmgrmt>
+	<sfmgrmt>±ó·¥ Ã¼Ä¡ÇÏ¿í ¼ªÇÑÅ× ·ÔÀ´ ¿Í Á´ ÁÖ³³°ä</sfmgrmt>
+	<wzmtvi>Á×À´ ¿Í ¿¿±Æ! Á¹²ÉÇØ±ßÁö»ë!</wzmtvi>
+	<wzmtvi>Á¹¾Ý À§ÇèÇÑ ¿Í ¿¿Àµº¥ ¾¦Âú±Æ?</wzmtvi>
+	<wvzw>ÀÏ±î¼ª±Æ.. ±î³­ ÀÏ±î¼ª¹ó±Æ~</wvzw>
+	<wvzw>¼ª·· ºÎ¿í ¿¥ ¿Å±ß?</wvzw>
+	<hgzmw>±Æ±Æ~ ¼ª°¡¿Ô ¶äÀ´ Áà¹ó Áà~</hgzmw>
+	<hgzmw>Áö¾Ý ¶äÀ´ ·ÔÀ··é Àú±î±û·´ Çàµ¶ÇÏ¿Ú»Ù±Æ~ ¾×Ä¡ÀÌ?</hgzmw>
+	<hgzmw>°Ö ¶ä ±È Áà? °ì·® ¾×¸·¿Ô ¿¡¼­ÇØ?</hgzmw>
+	<hgzmw>¶è¿íÇª»Ù±Æ... ¶ä ·ÔÀ´ ²Ã¿£ Áö¼º»Âº­...</hgzmw>
+	<xlmmvxg>¼ª ¶ä ÁÖ¸Á¿í °ÔÁöÀÌ?</xlmmvxg>
+	<xlmmvxg>°À¸£··! ¶äÀµ ·Ô±ú±î? ¼ª»« ±ÆÁ÷ ±È·Ô±ú»«º¥°¡~</xlmmvxg>
+	<ovevofk>°Í~ ÃàÇÏÇØ! ÀÌÁ¦ °ì·® ¾â¼äÀ·¸Î ·ÀÀÖ»«¿Å ·ÔÀð!</ovevofk>
+	<ovevofk>¼ª ¶è¿íÆÄ³­ Çê¿ÍÀÌ µ·ÀÌ¼ªµÁ.. ¶æ¾Ý Ãº´ç»ÔÀÌ µ·°»Áö..</ovevofk>
+	<kviuli_1>ÀÌÄÉÀÌÄÉ ÇÏ·é ¼¯±Æ¿¥ ³ö ÀÖÁöÀÌ~</kviuli_1>
+	<kviuli_1>»õ°ï ¹© ¼¯¿¼ÁþÀ´ ÇÏ·é ²Ã°øÇØ Áø»Ù¾·°¼!</kviuli_1>
+	<kviuli_2>¾âµÐÀÌ ÁÁÀ´ ¹© ½°·®·¦ ÈçºéÈçºé~¢Ý</kviuli_2>
+	<kviuli_2>¿¡½û ½°·®·¦ ÅÐ±î Áà±ß ½°·®¾êÀÌ ±ûÅ¿Áö ±ÊÁö!</kviuli_2>
+</sfmtib>
+
+<yrg_sfmtib>
+	<uvvwrmt>°À»Ãºû¹ó ³Ø¶¹Ä¡¿¡ »õ Æ÷¾ÙÆ÷¾ÙÇØ ¿í·¹°ö±î</uvvwrmt>
+	<uvvwrmt>ºé±î µÁ¹ó °À»Ãºû¹ó ¼´ ²ÉÀå³Ò·®¿¡ »õ ¾Í°¾ÁöÀÌ</uvvwrmt>
+	<sfmgrmt>Áö¾Ý ¼´ ¶ä ÁÖ¸Á¿í ²Î°ì»Â ¿ÅÁö?</sfmgrmt>
+	<sfmgrmt>Àû»çÈ÷ ¹§¸Áºº »Ù ÀÌ¾æ ¿ÅÁöÀÌ?</sfmgrmt>
+	<wzmtvi>À§ÇèÇØ! Á¤²Å Â÷¸Á¹ù!</wzmtvi>
+	<wzmtvi>¾×¿Å ·Ô±î¹ó, ¾×¿Å! ¶¿±à!</wzmtvi>
+	<wvzw>½Ð!!!</wvzw>
+	<wvzw>°ì·® »Ù²Ã ²ÃÀÛ ÇØ±ß ÇÏ»« ¿Å±ß..?</wvzw>
+	<hgzmw>¶è¿íÇ¬º¥...</hgzmw>
+	<hgzmw>¶æ¾Ý ¼´ ¶è°¡³­ ÃººÕ ³Ò·®¿¡ ºé·¿¿Í ¿¿Àµº¥?</hgzmw>
+	<hgzmw>ÃâÃâ.. ÃâÃâ... Ãâ... Ãß°ï...</hgzmw>
+	<hgzmw>Á¹¾Ý ¶è¿íÇªÁö ±Ê±Æ°ä? ¶è¿íÆÄ°ä~</hgzmw>
+	<xlmmvxg>°À»Ãºº ¶Ý¿©Áö!</xlmmvxg>
+	<xlmmvxg>°À»ÃÀÇ ¼ª»« »õ ¾Í°¾Áö?</xlmmvxg>
+	<ovevofk>°À°Í~ ¸¶µ§±÷!!</ovevofk>
+	<ovevofk>¼ªºº Á¹¾Ý ÀÚ¹õ ¿Í ¿¿Àµ ¾âµÐÀÌ ºå»«º¥!</ovevofk>
+	<kviuli_1>ÀÌÄÉÀÌÄÉ ÇÏ·é ¼¯±Æ¿¥ ³ö ÀÖÁöÀÌ~</kviuli_1>
+	<kviuli_1>»õ°ï ¹© ¼¯¿¼ÁþÀ´ ÇÏ·é ²Ã°øÇØ Áø»Ù¾·°¼!</kviuli_1>
+	<kviuli_2>¾âµÐÀÌ ÁÁÀ´ ¹© ½°·®·¦ ÈçºéÈçºé~¢Ý</kviuli_2>
+	<kviuli_2>¿¡½û ½°·®·¦ ÅÐ±î Áà±ß ½°·®¾êÀÌ ±ûÅ¿Áö ±ÊÁö!</kviuli_2>
+</yrg_sfmtib>
+
+<mlgrmt>
+	<uvvwrmt>°À»ÃÀµ ¾×¸¿Àú¸¿, ¾×¼É¾×¼É µ·ÅëÀÇ ·ÀÀÌ»Ù</uvvwrmt>
+	<uvvwrmt>°õ¼È¼È~</uvvwrmt>
+	<sfmgrmt>´ó»ëÀÇ »«À´ ¹È¶Ù¸Î µ··é Á¦±ÐÇÒ ³ö ÀÖ»ò»Ù!</sfmgrmt>
+	<sfmgrmt>°ø ÆÝÄ¡! ±½·® ¿­¼ÃÀÌ!</sfmgrmt>
+	<wzmtvi>±î±î? Áö¾Ý Á´ À§ÇèÇÑ ¿Í ¿¡Æ¿º¥?</wzmtvi>
+	<wzmtvi>¾¦Âú±Æ? ·ñ³ûÀÌ »Þ¹û»Þ¹ûÇØ</wzmtvi>
+	<wvzw>±ó·¥ º¶±Æ °Í~</wvzw>
+	<wvzw>·¹À´¾îÁö»Â ¹Ç ±ðÁ¦ ¿¡¼Ä...</wvzw>
+	<hgzmw>°À»Ãºû¹ó ³Ø Á¤·®¿¡ Àß ºÈ ¿Í ¿¡Æ¿º¥, ¾×Ä¡ÀÌ?</hgzmw>
+	<hgzmw>·ðÀÚ»Â ¶ÝºíÇÏ¿Ô ²á±ß Èê¸¯¼´·®Áö ±Ê»Â»ë</hgzmw>
+	<hgzmw>°À»ÃÀµ ±îºð ¿¥ ¿Å±ß? ²Å¼ª»Â ¿÷°¡ ¿¡Àð! ¼´¿¡ ±ÕÀå ³¼¿Ô!</hgzmw>
+	<hgzmw>°¶´Û »ÜÃß ¿¡Áø ¿Í Á´ ÀÖ±î? ÀÖÀ··é ¼´¼ö µÁ.</hgzmw>
+	<xlmmvxg>¶äÀµ ·Ô¾· »Ù»Ï»Â ¿ÅÁö?</xlmmvxg>
+	<xlmmvxg>°Ö ÀÌÁ¦°Í±Æ!</xlmmvxg>
+	<ovevofk>°À±Æ~~ ·ÚÀÖ»Ù!!! ²µÅ×ÀÌÅÍ²µ»Â ¶´ °Ã·¾ ¿Å±ß?</ovevofk>
+	<ovevofk>°ì·®»Â ¿­ÇØÁ¼»Ù!!!!!</ovevofk>
+	<kviuli_1>ÀÌÄÉÀÌÄÉ ÇÏ·é ¼¯±Æ¿¥ ³ö ÀÖÁöÀÌ~</kviuli_1>
+	<kviuli_1>»õ°ï ¹© ¼¯¿¼ÁþÀ´ ÇÏ·é ²Ã°øÇØ Áø»Ù¾·°¼!</kviuli_1>
+	<kviuli_2>¾âµÐÀÌ ÁÁÀ´ ¹© ½°·®·¦ ÈçºéÈçºé~¢Ý</kviuli_2>
+	<kviuli_2>¿¡½û ½°·®·¦ ÅÐ±î Áà±ß ½°·®¾êÀÌ ±ûÅ¿Áö ±ÊÁö!</kviuli_2>
+</mlgrmt>
+
+<ufoo>
+	<uvvwrmt>»õ ÀÌ´óÀµ ¶«·®±ß...</uvvwrmt>
+	<uvvwrmt>·ÀÀÖ»Â ¿Íºº, ÁÁÀµ ¿Íºº ·¶ÀÌ ·ÔÀ··é ²È»Ù¾·...</uvvwrmt>
+	<sfmgrmt>Àß ²Î°î»Ù! ÀßÇÑ»Ù!</sfmgrmt>
+	<sfmgrmt>´¡·® ÇØÄ¡°ì¿í ±î³­ ²¬Àð!</sfmgrmt>
+	<wzmtvi>¼´¿¡ »ë²Å ²Î°öÁÙ ³öºº ±ø¿í, ±îÂ³Áö?</wzmtvi>
+	<wzmtvi>´¡·® ¶¶¹óºº Á´ ·Ô±î µÁ! ÀÌ¸¯»Ù¿¡ Á×¿Ú»Ù±Æ!</wzmtvi>
+	<wvzw>°øÅëÇÏ¿í µÐÇÏ»Ù!! ½¨ÀÌ½¨ÀÌ~</wvzw>
+	<wvzw>°ì·®»Â »õ ¿­ÇØÁú ¿Å»Ù. ±î³­ ÀÏ±î¼ª¹ó.</wvzw>
+	<hgzmw>¼ª»ÀÀµ~ ¼ë¸¡ µÎ·£»Â ¿É ÁÁ±ÆÇØ~ ´¼~ ´½´½±Ç~~¢Ý</hgzmw>
+	<hgzmw>¼´ ³Ö¾â¿¡ ÅÍÁöÁö ±Ê±Ò»ÂÁö ÇÑ ¶ø µÁ ÁÖÁö ±ÊÀ´¸¡?</hgzmw>
+	<hgzmw>¼´ ·ÚÁø ¼¯¿¼¾ê Á´ µÁ Áà. °¶´ºÇØ ÁÖ¿í ±½»Ùºë±î Áà.</hgzmw>
+	<hgzmw>¼ª, ÀÌ ¶Ù¹÷À´ Å·¿í °ØÁö ¼¯ ³ö ÀÖÀ´ ¿Í ¿¿±Æ! ¾×Ä¡·· ¼´¿¡ ¼¯±Æ¿¡·é ½À µÙÀâ±Æ Áà±ß»ë?</hgzmw>
+	<hgzmw>¿¡·· ÀÖ±î µÁ, ¶«²³ ³Ò·®¿¡ ºé¸È»«º¥? ÇÖ! ÀÌ¿Ç ¼´ ²ÉÀå ³Ò·®»Ù!</hgzmw>
+	<hgzmw>²½! Á¹°ëÈ÷ ÇØ µÁ. ¼× ²ÉÀå ³Ò·®¿¡ ºé¸Á. Äá»ÚÄá»Ú. ½À ¼ë¸¡ÇÏ»Â ¿Í ¿¿±Æ~¢Ý</hgzmw>
+	<xlmmvxg>·¶ÀÌ ¾â»Ù·®¿í ÀÖ±ú»«º¥!</xlmmvxg>
+	<xlmmvxg>Â¥ÀÜ! °À»Ãºº ÁÁÀµ ¼¯ÀÌ±ß!</xlmmvxg>
+	<ovevofk>ÃàÇÏ ³¾¶¿ÀÌ¹óºº ÁÖ¿í ²ÍÀµº¥ ¿¡Áø¿Ô ±ø»Ù~ ·¹À²·· ¶Þ±ÆÁà!</ovevofk>
+	<ovevofk>·ÚÀÖ»Ù! ¿­ÇÏ»Ù!</ovevofk>
+	<kviuli_1>ÀÌÄÉÀÌÄÉ ÇÏ·é ¼¯±Æ¿¥ ³ö ÀÖÁöÀÌ~</kviuli_1>
+	<kviuli_1>»õ°ï ¹© ¼¯¿¼ÁþÀ´ ÇÏ·é ²Ã°øÇØ Áø»Ù¾·°¼!</kviuli_1>
+	<kviuli_2>¾âµÐÀÌ ÁÁÀ´ ¹© ½°·®·¦ ÈçºéÈçºé~¢Ý</kviuli_2>
+	<kviuli_2>¿¡½û ½°·®·¦ ÅÐ±î Áà±ß ½°·®¾êÀÌ ±ûÅ¿Áö ±ÊÁö!</kviuli_2>
+</ufoo>
+
+<hl_ufoo>
+	<uvvwrmt>¼ª»Â ºÅÁö ÀÎÇü ±Æ»Ï¹ó °À·® ÀÎÇüÀÌ¹ó¾·°¼!</uvvwrmt>
+	<uvvwrmt>·ÔÀ·¹ó»Ï¾î ·Ô±úÁö··, ÀÌ¿Ç Á¤·´ ²²ÇÂ ·ÀÀÌ»Ù...</uvvwrmt>
+	<sfmgrmt>¼Ê»« ¿¡··È÷ ÀÖ±î! ¼´¿¡ »Ù Á¤·®ÇÒ¿Ô!</sfmgrmt>
+	<sfmgrmt>³Õ¿¡¹ô ÇÏ¼ª¸Î »Ù ÇØÄ¡°ï ¿ÅÁö? ¾×Ä¡ÀÌ?</sfmgrmt>
+	<wzmtvi>Á¹²ÉÇØ±ß»ë! ¶¿±àÀÌ¹óºº ·Ô»Â¿Ô ÁÁÁö ±Ê¿Ú±î?</wzmtvi>
+	<wzmtvi>ÀÌ¸·¿Ô, Àú¸·¿Ô! ´þ³¡! ´þ´þ³¡! ¼ª·¦ Àß µ·¿í ºû¹ó ÇØ¹ó!</wzmtvi>
+	<wvzw>±î³­ ÀÏ±î¼ª.. ¼´ ²ÉÀåÀÌ¹óºº ½¨¼´ ÁÙ¾î±Æ?</wvzw>
+	<wvzw>¾Ý¶æ º¶±Æ °Ã ¿ÅÁö? ¼ª»« °©¾â³­ ¾â»Ù·¾¿Ô...</wvzw>
+	<hgzmw>°ì·® °À»ÃÀµ ±îºð ¿¥¾î? ±îºðºç ÁÁ±Æ~¢±</hgzmw>
+	<hgzmw>°À»ÃÀµ ±îÂ±Áö ÁÁÀµ ÀÏÀÌ ´ý¾æ ¿Í ¿¿Áö ±Ê±Æ?</hgzmw>
+	<hgzmw>°¶´Û »ÜÃß ´ý¿¢·· ÇÏ·é~ ÇÏ±Æ±Æ~ °©¾â ²ÉÀåÀÌ ¿£Áú¿£Áú ´ç·£·£ ÇÑ»Ù...</hgzmw>
+	<hgzmw>Á¤·´Á¤·´ ÁÁ±ÆÇØ! ¶ÝÂ¦ÀÌ»Â »ÜÃß··Å­!!</hgzmw>
+	<hgzmw>¼ª»ÀÀµ~ Çì±öÄ¡»Â¿É Á¤·´ ÁÁ±ÆÇØ! ³ØÀÌ »Ù Á¥±îºº~</hgzmw>
+	<hgzmw>°ì·® °À»ÃÀµ ¶¶ ÇÒ¾î? ºÎ¾ÙºÎ¾Ù~¢±</hgzmw>
+	<hgzmw>ÇÑ ¶ø ´ÓÀÎ °À·® ÀÎÇü ÀÎ´ý, °¶´Û »ÜÃß·¦ ¾·ÇÏ»Âº¥ ·ðºÎ »Ù ¶ÙÄ¡¿Ú»Ù!</hgzmw>
+	<hgzmw>¼× »«Àµ µ¿ ··Å­ °¶´º~¡Ú °¶´Û »ÜÃßµ·»Ùºº »õ ¶ÝÂ¦°©~¡Ú</hgzmw>
+	<xlmmvxg>ÇÑÂüÀÌ¼ª ¾â»Ù¸È»«º¥! µ·¿í ²Í±î³­ ÂüÀ´ ³ö¿¡ ±ø±ú±î!</xlmmvxg>
+	<xlmmvxg>°ì·® °À»Ãºº Áñ¿Å°î ·ðÇèÀ´ ÇÏ»Â ¿Å±ß!</xlmmvxg>
+	<ovevofk>°À°Í±Æ±Æ~ ¼×¿¡ ¶ÝÂ¦¶ÝÂ¦ µû¼ª¿í ÀÖ±î!!!</ovevofk>
+	<ovevofk>°ì·® ÀÌÁ¦ ·¶ÀÌ ÀÚ¹úÁö? °ì·® Á¤·´ ·ÚÁöÁöÀÌ?</ovevofk>
+	<kviuli_1>ÀÌÄÉÀÌÄÉ ÇÏ·é ¼¯±Æ¿¥ ³ö ÀÖÁöÀÌ~</kviuli_1>
+	<kviuli_1>»õ°ï ¹© ¼¯¿¼ÁþÀ´ ÇÏ·é ²Ã°øÇØ Áø»Ù¾·°¼!</kviuli_1>
+	<kviuli_2>¾âµÐÀÌ ÁÁÀ´ ¹© ½°·®·¦ ÈçºéÈçºé~¢Ý</kviuli_2>
+	<kviuli_2>¿¡½û ½°·®·¦ ÅÐ±î Áà±ß ½°·®¾êÀÌ ±ûÅ¿Áö ±ÊÁö!</kviuli_2>
+</hl_ufoo>
+</DZMWVIRMT_WFXP>
+	<kvg_prvo>
+		<sfmtib>
+			<uvvwrmt>	..ÀÌÁ¦±ß?.. 	</uvvwrmt>
+			<wvzw>		´ýÃ³ °¡¼ÊÁö µÐ³® ¿á¿ú : 0% / ´óÅÂ : µÎÀûÇÕ	</wvzw>
+			<hgzmw>		¼Ê¶« »Ê±ú»Ù»Â ´ý¿¢ÀÌ ºéÁö ±Ê¼ª?	</hgzmw>
+			<ovevofk>	VIILI : ´ýÃ³ °¡¼ÊÁö È¿³µºº ÃøÁ¤ ¿á¿ú : 101%	</ovevofk>
+			<kviuli_1>	VIILI : µÐ..³® µÒ¿¡...»É	</kviuli_1>
+			<kviuli_2>	ÈÞ²Ä ²Ã¿£ÀÌ»Ù.	</kviuli_2>
+			<kviuli_2>	·ðºå ²ÇÇà : ³ö·é	</kviuli_2>
+			<kviuli_3>	±ÈºÅ°¡°¡°¡°¡°¡!!	 </kviuli_3>
+		</sfmtib>
+		<yrg_sfmtib>
+			<uvvwrmt>	Àû»çÈ÷ ·Ô±îÁÙ·· ÇÏ¾µ..	</uvvwrmt>
+			<wvzw>		´ýÃ³ °¡¼ÊÁö µÐ³® ¿á¿ú : 0% / ´óÅÂ : µÎÀûÇÕ	</wvzw>
+			<hgzmw>		¶«±ð¿¡ ÀØÀµ ºíÇÏÁö ±Ê¼ª?	</hgzmw>
+			<ovevofk>	VIILI : ´ýÃ³ °¡¼ÊÁö È¿³µºº ÃøÁ¤ ¿á¿ú : 101%	</ovevofk>
+			<kviuli_1>	VIILI : µÐ..³® µÒ¿¡...»É	</kviuli_1>
+			<kviuli_2>	ÈÞ²Ä ²Ã¿£ÀÌ»Ù.	</kviuli_2>
+			<kviuli_2>	·ðºå ²ÇÇà : ³ö·é	</kviuli_2>
+			<kviuli_3>	±ÈºÅ°¡°¡°¡°¡°¡!!	 </kviuli_3>
+		</yrg_sfmtib>
+		<mlgrmt>
+			<uvvwrmt>	Àû»çÈ÷ ·Ô±îÁÙ·· ÇÏ¾µ..	</uvvwrmt>
+			<wvzw>		´ýÃ³ °¡¼ÊÁö µÐ³® ¿á¿ú : 0% / ´óÅÂ : µÎÀûÇÕ	</wvzw>
+			<hgzmw>		¿¨Á¤? ·¹À²? °¬¶Î?	</hgzmw>
+			<hgzmw>		ÀÌÇØÇÏÁö ·øÇÏ»Â ¿ÍÀÌ ±Æ»Ï»Ù. </hgzmw>
+			<ovevofk>	VIILI : ´ýÃ³ °¡¼ÊÁö È¿³µºº ÃøÁ¤ ¿á¿ú : 101%	</ovevofk>
+			<kviuli_1>	VIILI : µÐ..³® µÒ¿¡...»É	</kviuli_1>
+			<kviuli_2>	ÈÞ²Ä ²Ã¿£ÀÌ»Ù.	</kviuli_2>
+			<kviuli_2>	·ðºå ²ÇÇà : ³ö·é	</kviuli_2>
+			<kviuli_3>	±ÈºÅ°¡°¡°¡°¡°¡!!	 </kviuli_3>
+		</mlgrmt>
+		<ufoo>
+			<uvvwrmt>	»õ ÀÌ´ó ÀÔ°¡ ·ÂÁö ±Ê»Â¾·¼ª. 	</uvvwrmt>
+			<wvzw>		´ýÃ³ °¡¼ÊÁö µÐ³® ¿á¿ú : 0% / ´óÅÂ : µÎÀûÇÕ	</wvzw>
+			<hgzmw>		¿¨Á¤? ·¹À²? °¬¶Î?	</hgzmw>
+			<hgzmw>		ÀÌÇØÇÏÁö ·øÇÏ»Â ¿ÍÀÌ ±Æ»Ï»Ù. </hgzmw>
+			<hgzmw>		µÐ³®ÇÒ ³ö ±ø»Â º¥ÀÌÅÍÀÏ ´ÓÀÌÁö..	</hgzmw>
+			<ovevofk>	VIILI : ´ýÃ³ °¡¼ÊÁö È¿³µºº ÃøÁ¤ ¿á¿ú : 101%	</ovevofk>
+			<kviuli_1>	VIILI : µÐ..³® µÒ¿¡...»É	</kviuli_1>
+			<kviuli_2>	ÈÞ²Ä ²Ã¿£ÀÌ»Ù.	</kviuli_2>
+			<kviuli_2>	·ðºå ²ÇÇà : ³ö·é	</kviuli_2>
+			<kviuli_3>	±ÈºÅ°¡°¡°¡°¡°¡!!	 </kviuli_3>
+		</ufoo>
+		<hl_ufoo>
+			<uvvwrmt>	»õ ÀÌ´ó ÀÔ°¡ ·ÂÁö ±Ê»Â¾·¼ª. 	</uvvwrmt>
+			<wvzw>		´ýÃ³ °¡¼ÊÁö µÐ³® ¿á¿ú : 0% / ´óÅÂ : µÎÀûÇÕ	</wvzw>
+			<hgzmw>		¿¨Á¤? ·¹À²? °¬¶Î?	</hgzmw>
+			<hgzmw>		ÀÌÇØÇÏÁö ·øÇÏ»Â ¿ÍÀÌ ±Æ»Ï»Ù. </hgzmw>
+			<hgzmw>		µÐ³®ÇÒ ³ö ±ø»Â º¥ÀÌÅÍÀÏ ´ÓÀÌÁö..	</hgzmw>
+			<ovevofk>	VIILI : ´ýÃ³ °¡¼ÊÁö È¿³µºº ÃøÁ¤ ¿á¿ú : 101%	</ovevofk>
+			<kviuli_1>	VIILI : µÐ..³® µÒ¿¡...»É	</kviuli_1>
+			<kviuli_2>	ÈÞ²Ä ²Ã¿£ÀÌ»Ù.	</kviuli_2>
+			<kviuli_2>	·ðºå ²ÇÇà : ³ö·é	</kviuli_2>
+			<kviuli_3>	±ÈºÅ°¡°¡°¡°¡°¡!!	 </kviuli_3>
+		</hl_ufoo>
+	</kvg_prvo>
+	<ROO_YZKSLNVG_Q>				
+		<sfmtib>			
+			<uvvwrmt>	¶ä¹§»Â ÈÎ±À Àü°¡ Áö¼º±î! ·¹²µÅÍ È¤²Ã Ãº´ç??...¤Ð¤Ð	</uvvwrmt>
+			<wvzw>	·¹²µÅÍÀÇ µ¶³ö·¦ ÇÏ¿í ²ÍÁö·· È¥º¸ÀÇ ÈûÀÌ µÎÁ¸ÇØ¡¦	</wvzw>
+			<hgzmw>	È¥º¸ÀÇ ¾â°îÀÌ µÎÁ¸ÇÏ¾µ¡¦ ÀÌ¸¯»Ù ³Ò·êÇÏ¿Ú±î...¤Ð¤Ð	</hgzmw>
+			<hgzmw>	±îºÒÀÇ ¾â°îÀÌ µÎÁ¸ÇÏ¾µ¡¦ ÀÌ¸¯»Ù ³Ò·êÇÏ¿Ú±î...¤Ð¤Ð	</hgzmw>
+			<ovevofk>	¼ª¿¡¹ó ·¹Áö·¸ Èû µ£ÀÌ²µ ¸¶µ§ ±÷!!!	</ovevofk>
+		</sfmtib>			
+		<yrg_sfmtib>			
+			<uvvwrmt>	¶ä¹§»Â ÈÎ±À Àü°¡ Áö¼º±î! ·¹²µÅÍ È¤²Ã Ãº´ç??...¤Ð¤Ð	</uvvwrmt>
+			<wvzw>	·¹²µÅÍÀÇ µ¶³ö·¦ ÇÏ¿í ²ÍÁö·· È¥º¸ÀÇ ÈûÀÌ µÎÁ¸ÇØ¡¦	</wvzw>
+			<hgzmw>	È¥º¸ÀÇ ¾â°îÀÌ µÎÁ¸ÇÏ¾µ¡¦ ÀÌ¸¯»Ù ³Ò·êÇÏ¿Ú±î...¤Ð¤Ð	</hgzmw>
+			<hgzmw>	±îºÒÀÇ ¾â°îÀÌ µÎÁ¸ÇÏ¾µ¡¦ ÀÌ¸¯»Ù ³Ò·êÇÏ¿Ú±î...¤Ð¤Ð	</hgzmw>
+			<ovevofk>	¼ª¿¡¹ó ·¹Áö·¸ Èû µ£ÀÌ²µ ¸¶µ§ ±÷!!!	</ovevofk>
+		</yrg_sfmtib>			
+		<mlgrmt>			
+			<uvvwrmt>	ÅªÅªÅª¡¦. È¥º¸ÀÇ ÈûÀÌ °Ã¹ó°À»Âº¥?	</uvvwrmt>
+			<wvzw>	ÀÌ¸·¿Ô ±àÇÑ ¿ÍÇÑÅ× Á×»Ù»Ï... ÇÑ²ÉÇÑ ·¹²µÅÍ¡¦¤Ð¤Ð	</wvzw>
+			<hgzmw>	Å¿·¤Å¿·¤ ¿¡··È÷ ÀÖ»Â ¿É µ·»Ï ·¹²µÅÍ! È¤²Ã È¥º¸À´ °øÇÏ»Â¿¡?	</hgzmw>
+			<hgzmw>	À·ÈåÈåÈåÈåÈå¡¦. ±îºÒÀÌ ¼ªÀÇ ·öÀ´ ÀÏ¾ú°î»Ù..	</hgzmw>
+			<ovevofk>	Å©ÈåÈåÈåÈå Å·°Ã¹ó¹ó µ£ÀÌ²µ ¸¶µ§!	</ovevofk>
+		</mlgrmt>			
+		<ufoo>			
+			<uvvwrmt>	ÅªÅªÅª¡¦. È¥º¸ÀÇ ÈûÀÌ °Ã¹ó°À»Âº¥?	</uvvwrmt>
+			<wvzw>	ÀÌ¸·¿Ô ±àÇÑ ¿ÍÇÑÅ× Á×»Ù»Ï... ÇÑ²ÉÇÑ ·¹²µÅÍ¡¦¤Ð¤Ð	</wvzw>
+			<hgzmw>	Å¿·¤Å¿·¤ ¿¡··È÷ ÀÖ»Â ¿É µ·»Ï ·¹²µÅÍ! È¤²Ã È¥º¸À´ °øÇÏ»Â¿¡?	</hgzmw>
+			<hgzmw>	À·ÈåÈåÈåÈåÈå¡¦. ±îºÒÀÌ ¼ªÀÇ ·öÀ´ ÀÏ¾ú°î»Ù..	</hgzmw>
+			<ovevofk>	Å©ÈåÈåÈåÈå Å·°Ã¹ó¹ó µ£ÀÌ²µ ¸¶µ§!	</ovevofk>
+		</ufoo>			
+		<hl_ufoo>			
+			<uvvwrmt>	ÀÌ¸¾ ¼°´õ¼ª»Â À²²ÄÀµ ±È ·Ô±î!	</uvvwrmt>
+			<wvzw>	ÀÌ¸·¿Ô ±àÇÑ ¿ÍÇÑÅ× Á×»Ù»Ï... ÇÑ²ÉÇÑ ·¹²µÅÍ¡¦¤Ð¤Ð	</wvzw>
+			<hgzmw>	À·ÈåÈåÈåÈåÈå¡¦. ±îºÒÀÌ ¼ªÀÇ ·öÀ´ ÀÏ¾ú°î»Ù¡¦	</hgzmw>
+			<hgzmw>	Å¿·¤Å¿·¤ ¿¡··È÷ ÀÖ»Â ¿É µ·»Ï ·¹²µÅÍ! È¤²Ã È¥º¸À´ °øÇÏ»Â¿¡?	</hgzmw>
+			<ovevofk>	Å©ÈåÈåÈåÈå Å·°Ã¹ó¹ó µ£ÀÌ²µ ¸¶µ§!	</ovevofk>
+		</hl_ufoo>			
+	</ROO_YZKSLNVG_Q>				
+	<WVHVIG_DLOU>				
+		<sfmtib>			
+			<uvvwrmt>	¿¨´çÇÏ»Ù. ÁÖÀÎ! ½Ü½©½Ü½©	</uvvwrmt>
+			<wvzw>	ÁÖÀÎ! ±½¸¯Á¼»Ù! ºº°ÍÁà! ±Æ°ì~~~~~~	</wvzw>
+			<hgzmw>	±Æ°ì~~~~~~~~~~~~ ½°·£·¤ ¤Ð¤Ð	</hgzmw>
+			<hgzmw>	ÁÖÀÎ! ¶ä! ¶äÀÌ ÇÊ°äÇÏ»Ù! ¶ä! ¶ä! ¶ä! ¶ä!	</hgzmw>
+			<ovevofk>	ÃàÇÏ¡¦.. ÁÖÀÎ! ½°·£·¤.....	</ovevofk>
+		</sfmtib>			
+		<yrg_sfmtib>			
+			<uvvwrmt>	¿¨´çÇÏ»Ù. ÁÖÀÎ! ½Ü½©½Ü½©	</uvvwrmt>
+			<wvzw>	ÁÖÀÎ! ±½¸¯Á¼»Ù! ºº°ÍÁà! ±Æ°ì~~~~~~	</wvzw>
+			<hgzmw>	±Æ°ì~~~~~~~~~~~~ ½°·£·¤ ¤Ð¤Ð	</hgzmw>
+			<hgzmw>	ÁÖÀÎ! ¶ä! ¶äÀÌ ÇÊ°äÇÏ»Ù! ¶ä! ¶ä! ¶ä! ¶ä!	</hgzmw>
+			<ovevofk>	ÃàÇÏ¡¦.. ÁÖÀÎ! ½°·£·¤.....	</ovevofk>
+		</yrg_sfmtib>			
+		<mlgrmt>			
+			<uvvwrmt>	¿¨´çÇÏ»Ù. ÁÖÀÎ! ½Ü½©½Ü½©	</uvvwrmt>
+			<wvzw>	ÁÖÀÎ! ÁöÄÑÁÖ¿Ú»Ù! ¾×·£·ª~~	</wvzw>
+			<hgzmw>	±Æ°ï~~~~~~~~~~~~~~!!!	</hgzmw>
+			<hgzmw>	ÁÖÀÎ! ±îºð°¡? »ÙÀ² ´ç¼É¿¨?	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù!! ÁÖÀÎ! ±Æ°ï~~~~~~!!	</ovevofk>
+		</mlgrmt>			
+		<ufoo>			
+			<uvvwrmt>	²²²² ¶èµÎ·£»Ù¡¦ ÁÖÀÎ	</uvvwrmt>
+			<wvzw>	ÁÖÀÎ! ÁöÄÑÁÖ¿Ú»Ù! ¾×·£·ª~~	</wvzw>
+			<hgzmw>	±Æ°ï~~~~~~~~~~~~~~!!!	</hgzmw>
+			<hgzmw>	ÁÖÀÎ! ±îºð°¡? »ÙÀ² ´ç¼É¿¨?	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù!! ÁÖÀÎ! ±Æ°ï~~~~~~!!	</ovevofk>
+		</ufoo>			
+		<hl_ufoo>			
+			<uvvwrmt>	¾¦Âú»Ù¡¦.. ÁÖÀÎ... »ë²Å°¡ ¼î±Æ¡¦±Æ»Ï ´ç¼É ±î¹½¿¡??~~	</uvvwrmt>
+			<wvzw>	ÁÖÀÎ! ÁöÄÑÁÖ¿Ú»Ù! ¾×·£·ª~~	</wvzw>
+			<hgzmw>	±Æ°ï~~~~~~~~~~~~~~!!!	</hgzmw>
+			<hgzmw>	ÁÖÀÎ! ±îºð°¡?? »ÙÀ² ´ç¼É¿¨??	</hgzmw>
+			<ovevofk>	ÃàÇÏÇÑ»Ù!! ÁÖÀÎ! ±Æ°ï~~~~~~!!	</ovevofk>
+		</hl_ufoo>			
+	</WVHVIG_DLOU>				
+	<URIV_TLOVN>				
+		<sfmtib>			
+			<uvvwrmt>	È¿È¿È¿È¿	</uvvwrmt>
+			<wvzw>	¡¦¡¦¡¦	</wvzw>
+			<hgzmw>	È¿¡¦¡¦¡¦È¿¡¦¡¦¡¦..È¿¡¦¡¦¡¦¡¦È¿¡¦¡¦¡¦.	</hgzmw>
+			<hgzmw>	È­·£·£·£·£·£	</hgzmw>
+			<ovevofk>	È­·£·£¡¦¡¦È­·£·£¡¦¡¦¡¦	</ovevofk>
+		</sfmtib>			
+		<yrg_sfmtib>			
+			<uvvwrmt>	È¿È¿È¿È¿	</uvvwrmt>
+			<wvzw>	¡¦¡¦¡¦	</wvzw>
+			<hgzmw>	È¿¡¦¡¦¡¦È¿¡¦¡¦¡¦..È¿¡¦¡¦¡¦¡¦È¿¡¦¡¦¡¦.	</hgzmw>
+			<hgzmw>	È­·£·£·£·£·£	</hgzmw>
+			<ovevofk>	È­·£·£¡¦¡¦È­·£·£¡¦¡¦¡¦	</ovevofk>
+		</yrg_sfmtib>			
+		<mlgrmt>			
+			<uvvwrmt>	È¿È¿È¿È¿	</uvvwrmt>
+			<wvzw>	¡¦¡¦¡¦	</wvzw>
+			<hgzmw>	È¿¡¦¡¦¡¦È¿¡¦¡¦¡¦..È¿¡¦¡¦¡¦¡¦È¿¡¦¡¦¡¦.	</hgzmw>
+			<hgzmw>	È­·£·£·£·£·£	</hgzmw>
+			<ovevofk>	È­·£·£¡¦¡¦È­·£·£¡¦¡¦¡¦	</ovevofk>
+		</mlgrmt>			
+		<ufoo>			
+			<uvvwrmt>	È¿È¿È¿È¿	</uvvwrmt>
+			<wvzw>	¡¦¡¦¡¦	</wvzw>
+			<hgzmw>	È¿¡¦¡¦¡¦È¿¡¦¡¦¡¦..È¿¡¦¡¦¡¦¡¦È¿¡¦¡¦¡¦.	</hgzmw>
+			<hgzmw>	È­·£·£·£·£·£	</hgzmw>
+			<ovevofk>	È­·£·£¡¦¡¦È­·£·£¡¦¡¦¡¦	</ovevofk>
+		</ufoo>			
+		<hl_ufoo>			
+			<uvvwrmt>	È¿È¿È¿È¿	</uvvwrmt>
+			<wvzw>	¡¦¡¦¡¦	</wvzw>
+			<hgzmw>	È¿¡¦¡¦¡¦È¿¡¦¡¦¡¦..È¿¡¦¡¦¡¦¡¦È¿¡¦¡¦¡¦.	</hgzmw>
+			<hgzmw>	È­·£·£·£·£·£	</hgzmw>
+			<ovevofk>	È­·£·£¡¦¡¦È­·£·£¡¦¡¦¡¦	</ovevofk>
+		</hl_ufoo>			
+	</URIV_TLOVN>				
+	<WZIP_KIRVHG>				
+		<sfmtib>			
+			<uvvwrmt>	Å©Åª ±îºÒÀÌ Â÷°À·¥»Ù! ¸Îºå½½³­ºº ¾â´ºÇÏ²Ç ¿ÍÀÌ»Ù.	</uvvwrmt>
+			<wvzw>	¸Îºå½½ »õ ¿¡¾î°öÁ¼¾µ¡¦	</wvzw>
+			<hgzmw>	µÀÇåÇØ¹ó. ¸Îºå½½³­ ¾â´ºÇÏ²Ç ¿ÍÀÌ»Ï¡¦	</hgzmw>
+			<hgzmw>	¸Îºå½½ °º°øÇÑ ±ÏÈæÀÇ ÈûÀ´ ¶ÙÄ¡·®¹ó	</hgzmw>
+			<hgzmw>	ÁøÁ¤ÇÑ Á×À²À´ ÀÌ½ø±î¼´¾â À§ÇÑ Á¦¶¿ÀÌ ÇÊ°äÇÏ»Ù¡¦	</hgzmw>
+			<hgzmw>	¸Îºå½½³­ Á¦¶¿ÀÌ ÇÊ°äÇÏ»Ù¿í ÇÏ²Å»Ù¡¦	</hgzmw>
+			<ovevofk>	¸Îºå½½ ¿¨´ç Á¦¶¿ÀÌ¹óºº ¶ÙÄ¡»Â ¿ÍÀµ ±î¹¼¾î?	</ovevofk>
+		</sfmtib>			
+		<yrg_sfmtib>			
+			<uvvwrmt>	Å©Åª ±îºÒÀÌ Â÷°À·¥»Ù! ¸Îºå½½³­ºº ¾â´ºÇÏ²Ç ¿ÍÀÌ»Ù.	</uvvwrmt>
+			<wvzw>	¸Îºå½½ »õ ¿¡¾î°öÁ¼¾µ¡¦	</wvzw>
+			<hgzmw>	µÀÇåÇØ¹ó. ¸Îºå½½³­ ¾â´ºÇÏ²Ç ¿ÍÀÌ»Ï¡¦	</hgzmw>
+			<hgzmw>	¸Îºå½½ °º°øÇÑ ±ÏÈæÀÇ ÈûÀ´ ¶ÙÄ¡·®¹ó	</hgzmw>
+			<hgzmw>	ÁøÁ¤ÇÑ Á×À²À´ ÀÌ½ø±î¼´¾â À§ÇÑ Á¦¶¿ÀÌ ÇÊ°äÇÏ»Ù¡¦	</hgzmw>
+			<hgzmw>	¸Îºå½½³­ Á¦¶¿ÀÌ ÇÊ°äÇÏ»Ù¿í ÇÏ²Å»Ù¡¦	</hgzmw>
+			<ovevofk>	¸Îºå½½ ¿¨´ç Á¦¶¿ÀÌ¹óºº ¶ÙÄ¡»Â ¿ÍÀµ ±î¹¼¾î?	</ovevofk>
+		</yrg_sfmtib>			
+		<mlgrmt>			
+			<uvvwrmt>	¾â´ºÇÏ¹ó. ¸Îºå½½³­ ¾â´ºÇÏ²Ç ¿ÍÀÌ»Ù¡¦	</uvvwrmt>
+			<wvzw>	¿ÅÁþºÈ ¿÷°¡³­ Áø²ÇÇÑ ³³¿è°¡ ºé±î³¶¾·¼ª. ¸Îºå½½ »õ »Ù¿¡¿¡·®¹ó.	</wvzw>
+			<hgzmw>	¸Îºå½½ µ¶Á±ÇÏ¹ó. ¸Îºå½½³­ ¾×»ë°Í ÇÔ½½ÇÏ²Ç ¿ÍÀÌ»Ù.	</hgzmw>
+			<hgzmw>	¸Îºå½½³­ Áö¶èÇÏ»Â °º°øÇÑ ±îºÒÀÇ ¹§¿¡ °À·®¹ó¡¦	</hgzmw>
+			<hgzmw>	±îºÒ ±È°¡³­··ÀÌ ÁøÁ¤ÇÑ °º´ýÀ´ ±òÀ´ ¿ÍÀÌ»Ù¡¦	</hgzmw>
+			<hgzmw>	¾â´ºÇÏ·ç ¿æ¶èÇÏ¹ó! »ÙÅ© ¸Îºå·¦ À§ÇØ!	</hgzmw>
+			<ovevofk>	ÈÊ¡¦ ¸Îºå½½ ¿¨´çÇØ¹ó...	</ovevofk>
+		</mlgrmt>			
+		<ufoo>			
+			<uvvwrmt>	¾â´ºÇÏ¹ó. ¸Îºå½½³­ ¾â´ºÇÏ²Ç ¿ÍÀÌ»Ù¡¦	</uvvwrmt>
+			<wvzw>	¿ÅÁþºÈ ¿÷°¡³­ Áø²ÇÇÑ ³³¿è°¡ ºé±î³¶¾·¼ª. ¸Îºå½½ »õ »Ù¿¡¿¡·®¹ó.	</wvzw>
+			<hgzmw>	¸Îºå½½ µ¶Á±ÇÏ¹ó. ¸Îºå½½³­ ¾×»ë°Í ÇÔ½½ÇÏ²Ç ¿ÍÀÌ»Ù.	</hgzmw>
+			<hgzmw>	¸Îºå½½³­ Áö¶èÇÏ»Â °º°øÇÑ ±îºÒÀÇ ¹§¿¡ °À·®¹ó¡¦	</hgzmw>
+			<hgzmw>	±îºÒ ±È°¡³­··ÀÌ ÁøÁ¤ÇÑ °º´ýÀ´ ±òÀ´ ¿ÍÀÌ»Ù¡¦	</hgzmw>
+			<hgzmw>	¾â´ºÇÏ·ç ¿æ¶èÇÏ¹ó! ¸Îºå·¦ À§ÇØ!	</hgzmw>
+			<ovevofk>	ÈÊ¡¦ ¸Îºå½½ ¿¨´çÇØ¹ó¡¦	</ovevofk>
+		</ufoo>			
+		<hl_ufoo>			
+			<uvvwrmt>	Áö¾ÝÀµ ÀÇ²ÄÀÇ ²Ã¿£ÀÌ ±Æ»Ï»Ù¡¦ ¾â»Ù¸Á¹ó¡¦	</uvvwrmt>
+			<wvzw>	¿ÅÁþºÈ ¿÷°¡³­ Áø²ÇÇÑ ³³¿è°¡ ºé±î³¶¾·¼ª. ¸Îºå½½ »õ »Ù¿¡¿¡·®¹ó.	</wvzw>
+			<hgzmw>	¸Îºå½½ µ¶Á±ÇÏ¹ó. ¸Îºå½½³­ ¾×»ë°Í ÇÔ½½ÇÏ²Ç ¿ÍÀÌ»Ù.	</hgzmw>
+			<hgzmw>	¸Îºå½½³­ Áö¶èÇÏ»Â °º°øÇÑ ±îºÒÀÇ ¹§¿¡ °À·®¹ó¡¦	</hgzmw>
+			<hgzmw>	±îºÒ ±È°¡³­··ÀÌ ÁøÁ¤ÇÑ °º´ýÀ´ ±òÀ´ ¿ÍÀÌ»Ù¡¦	</hgzmw>
+			<hgzmw>	¾â´ºÇÏ·ç ¿æ¶èÇÏ¹ó! ¸Îºå·¦ À§ÇØ!	</hgzmw>
+			<ovevofk>	ÈÊ¡¦ ¸Îºå½½ ¿¨´çÇØ¹ó¡¦	</ovevofk>
+		</hl_ufoo>			
+	</WZIP_KIRVHG>				
+	<YZKSLNVG2>
+		<sfmtib>
+			<uvvwrmt>	..Âê±ïÂê±ï.. 	</uvvwrmt>
+			<wvzw>		¼Ê¶«¼ª Çã±àÇÏ¿í ¶Ì±àÇÑ Á·Àç¾µ	</wvzw>
+			<hgzmw>		ÀÌµÁ ¶Ì¶¿! ²Ã¿£ÀÌ »Ê±ú»Ù	</hgzmw>
+			<ovevofk>	¶Ì¶¿ÀÎ¿Í Ä¡¿ï ¿­ÇØÁö¿í ÀÖ¾µ	</ovevofk>
+			<kviuli_1>	Âê±÷-Âê±÷-	</kviuli_1>
+			<kviuli_2>	È÷ÀÌÀÍ?!	</kviuli_2>
+			<kviuli_3>	µê±Æ±Æ±Æ±Æ!!!!!!	</kviuli_3>
+		</sfmtib>
+		<yrg_sfmtib>
+			<uvvwrmt>	Àû»çÈ÷ ±ÃÀ´·· ÇÏ¾µ..	</uvvwrmt>
+			<wvzw>		¼Ê¶«¼ª Çã±àÇÏ¿í ¶Ì±àÇÑ Á·Àç¾µ	</wvzw>
+			<hgzmw>		¼ªÀÇ ±Õ°¡³¾ ·ðºÎ ÇÑ¼¶ ¶Ì¶¿ÀÏ ´ÓÀÌÁö	</hgzmw>
+			<ovevofk>	¶Ì¶¿ÀÎ¿Í Ä¡¿ï ¿­ÇØÁö¿í ÀÖ¾µ	</ovevofk>
+			<kviuli_1>	Âê±÷-Âê±÷-	</kviuli_1>
+			<kviuli_2>	È÷ÀÌÀÍ?!	</kviuli_2>
+			<kviuli_3>	µê±Æ±Æ±Æ±Æ!!!!!!	</kviuli_3>
+		</yrg_sfmtib>
+		<mlgrmt>
+			<uvvwrmt>	Àû»çÈ÷ ±ÃÀ´·· ÇÏ¾µ..	</uvvwrmt>
+			<wvzw>		¼Ê¶«¼ª Çã±àÇÏ¿í ¶Ì±àÇÑ Á·Àç¾µ	</wvzw>
+			<hgzmw>		¼ªÀÇ ±Õ°¡³¾ ·ðºÎ ÇÑ¼¶ ¶Ì¶¿ÀÏ ´ÓÀÌÁö	</hgzmw>
+			<hgzmw>		³¾¿ú ±Ç? ¼ªÀÇ ±Õ°¡³¾ ¶«ÀÇ¶ÌÇÏ»Ù	</hgzmw>
+			<ovevofk>	¶Ì¶¿ÀÎ¿Í Ä¡¿ï ¿­ÇØÁö¿í ÀÖ¾µ	</ovevofk>
+			<kviuli_1>	Âê±÷-Âê±÷-	</kviuli_1>
+			<kviuli_2>	È÷ÀÌÀÍ?!	</kviuli_2>
+			<kviuli_3>	µê±Æ±Æ±Æ±Æ!!!!!!	</kviuli_3>
+		</mlgrmt>
+		<ufoo>
+			<uvvwrmt>	±Ã»Ù ¶ö¸Áºº ºÇ¿Ú¼ª? 	</uvvwrmt>
+			<wvzw>		¼Ê¶«¼ª Çã±àÇÏ¿í ¶Ì±àÇÑ Á·Àç¾µ	</wvzw>
+			<hgzmw>		¼ªÀÇ ±Õ°¡³¾ ·ðºÎ ÇÑ¼¶ ¶Ì¶¿ÀÏ ´ÓÀÌÁö	</hgzmw>
+			<hgzmw>		³¾¿ú ±Ç? ¼ªÀÇ ±Õ°¡³¾ ¶«ÀÇ¶ÌÇÏ»Ù	</hgzmw>
+			<hgzmw>		°À¸ÎÁö ¼ª ¶ÙÆ÷·ÞÆ®·· ÀÖÀ´ ´Ó	</hgzmw>
+			<ovevofk>	¶Ì¶¿ÀÎ¿Í Ä¡¿ï ¿­ÇØÁö¿í ÀÖ¾µ	</ovevofk>
+			<kviuli_1>	Âê±÷-Âê±÷-	</kviuli_1>
+			<kviuli_2>	È÷ÀÌÀÍ?!	</kviuli_2>
+			<kviuli_3>	µê±Æ±Æ±Æ±Æ!!!!!!	</kviuli_3>
+		</ufoo>
+		<hl_ufoo>
+			<uvvwrmt>	±Ã»Ù ¶ö¸Áºº ºÇ¿Ú¼ª? 	</uvvwrmt>
+			<wvzw>		¼Ê¶«¼ª Çã±àÇÏ¿í ¶Ì±àÇÑ Á·Àç¾µ	</wvzw>
+			<hgzmw>		¼ªÀÇ ±Õ°¡³¾ ·ðºÎ ÇÑ¼¶ ¶Ì¶¿ÀÏ ´ÓÀÌÁö	</hgzmw>
+			<hgzmw>		³¾¿ú ±Ç? ¼ªÀÇ ±Õ°¡³¾ ¶«ÀÇ¶ÌÇÏ»Ù	</hgzmw>
+			<hgzmw>		°À¸ÎÁö ¼ª ¶ÙÆ÷·ÞÆ®·· ÀÖÀ´ ´Ó	</hgzmw>
+			<ovevofk>	¶Ì¶¿ÀÎ¿Í Ä¡¿ï ¿­ÇØÁö¿í ÀÖ¾µ	</ovevofk>
+			<kviuli_1>	Âê±÷-Âê±÷-	</kviuli_1>
+			<kviuli_2>	È÷ÀÌÀÍ?!	</kviuli_2>
+			<kviuli_3>	µê±Æ±Æ±Æ±Æ!!!!!!	</kviuli_3>
+		</hl_ufoo>
+	</YZKSLNVG2>
+	<WZIP_ROOFHRLM2>				
+		<sfmtib>			
+			<uvvwrmt>	ÀÌµÁ ¼ªºº ¶è¿íÇÄÀ´ ±Æ»Â Á·Àç»Ï¾î ±ÕÀ·¸Îºº Àß Ã¬¿ÜÁÖºº¸Ï. </uvvwrmt>
+			<wvzw>	¾â»Ù¸È»Ù! ÀÌ ³ø¿£À´! ±îºÒÀÇ ¾æ¸Î ±È¼´ÇØ ÁÖ·¹..!! </wvzw>
+			<wzmtvi>	ºº°òÀÌ ÇÊ°äÇØ µ·ÀÌ»Â¾µ, ±ÏÈæ ·¹¶ýÀ´ ¿É±îÁÙ¾î?	</wzmtvi>
+			<hgzmw>	¼Ê°¡¿Ô ¿¡½û ¶àÀµ ·ð²ÀÀÌ ¼ª°Ã ¹© Á¤·´ ³Ó´óÇÏ»Ü ·´ÀÌÁö. </hgzmw>
+			<hgzmw>	¼­ ¶àÀµ ¿÷ÀÌ ²È»Ù! ±îºÎ°î ¿÷À·¸Î »Ù»Ï·é ±È ºÇ¿Ú¼ª? </hgzmw>
+			<hgzmw>	ÀÎ¿£ÀÇ ¼´·é°£ Ç×´ó ±îºÒÀÌ ¿¡ºæÇÏÁö.</hgzmw>
+			<ovevofk>	¼×¿¡ ¿­ÇØÁú³ö¸Ï ¼× ±ÈÀÇ ±îºÒ ¹ÇÇÑ ¿­ÇØÁö·®¹ó!! Å©ÇÏÇÏ! </ovevofk>
+		</sfmtib>			
+		<yrg_sfmtib>			
+			<uvvwrmt> ÀÌµÁ ¼ªºº ¶è¿íÇÄÀ´ ±Æ»Â Á·Àç»Ï¾î ±ÕÀ·¸Îºº Àß Ã¬¿ÜÁÖºº¸Ï. </uvvwrmt>
+			<wvzw>	¾â»Ù¸È»Ù! ÀÌ ³ø¿£À´! ±îºÒÀÇ ¾æ¸Î ±È¼´ÇØ ÁÖ·¹..!! </wvzw>
+			<wzmtvi>	ºº°òÀÌ ÇÊ°äÇØ µ·ÀÌ»Â¾µ, ±ÏÈæ ·¹¶ýÀ´ ¿É±îÁÙ¾î?	</wzmtvi>
+			<hgzmw>	¼Ê°¡¿Ô ¿¡½û ¶àÀµ ·ð²ÀÀÌ ¼ª°Ã ¹© Á¤·´ ³Ó´óÇÏ»Ü ·´ÀÌÁö. </hgzmw>
+			<hgzmw>	¼­ ¶àÀµ ¿÷ÀÌ ²È»Ù! ±îºÎ°î ¿÷À·¸Î »Ù»Ï·é ±È ºÇ¿Ú¼ª? </hgzmw>
+			<hgzmw>	ÀÎ¿£ÀÇ ¼´·é°£ Ç×´ó ±îºÒÀÌ ¿¡ºæÇÏÁö.</hgzmw>
+			<ovevofk>	¼×¿¡ ¿­ÇØÁú³ö¸Ï ¼× ±ÈÀÇ ±îºÒ ¹ÇÇÑ ¿­ÇØÁö·®¹ó!! Å©ÇÏÇÏ! </ovevofk>
+		</yrg_sfmtib>			
+		<mlgrmt>			
+			<uvvwrmt>	ÀÌ À²²ÄÀ´ ±î¹´¿Ô ·Ô¼Ä¿í? µñ¶ÐÀÌ»Ù!	</uvvwrmt>
+			<wvzw>	¾â»Ù¸È»Ù! ÀÌ ³ø¿£À´! ±îºÒÀÇ ¾æ¸Î ±È¼´ÇØ ÁÖ·¹..!! </wvzw>
+			<wzmtvi>	ºº°òÀÌ ÇÊ°äÇØ µ·ÀÌ»Â¾µ, ±ÏÈæ ·¹¶ýÀ´ ¿É±îÁÙ¾î?	</wzmtvi>
+			<hgzmw>	¼Ê°¡¿Ô ¿¡½û ¶àÀµ ·ð²ÀÀÌ ¼ª°Ã ¹© Á¤·´ ³Ó´óÇÏ»Ü ·´ÀÌÁö. </hgzmw>
+			<hgzmw>	¼­ ¶àÀµ ¿÷ÀÌ ²È»Ù! ±îºÎ°î ¿÷À·¸Î »Ù»Ï·é ±È ºÇ¿Ú¼ª? </hgzmw>
+			<hgzmw>	ÀÎ¿£ÀÇ ¼´·é°£ Ç×´ó ±îºÒÀÌ ¿¡ºæÇÏÁö.</hgzmw>
+			<ovevofk>	¼×¿¡ ¿­ÇØÁú³ö¸Ï ¼× ±ÈÀÇ ±îºÒ ¹ÇÇÑ ¿­ÇØÁö·®¹ó!! Å©ÇÏÇÏ! </ovevofk>
+		</mlgrmt>			
+		<ufoo>			
+			<uvvwrmt>	²²²² ¶è¿¡ µÎ·£»Ï ¾×·· Áàºº ºÉ ¿Í ¿¿»Ù ÀÎ¿£ÀÌ°©.. </uvvwrmt>
+			<wvzw>	¾â»Ù¸È»Ù! ÀÌ ³ø¿£À´! ±îºÒÀÇ ¾æ¸Î ±È¼´ÇØ ÁÖ·¹..!! </wvzw>
+			<wzmtvi>	ºº°òÀÌ ÇÊ°äÇØ µ·ÀÌ»Â¾µ, ±ÏÈæ ·¹¶ýÀ´ ¿É±îÁÙ¾î?	</wzmtvi>
+			<hgzmw>	¼Ê°¡¿Ô ¿¡½û ¶àÀµ ·ð²ÀÀÌ ¼ª°Ã ¹© Á¤·´ ³Ó´óÇÏ»Ü ·´ÀÌÁö. </hgzmw>
+			<hgzmw>	¼­ ¶àÀµ ¿÷ÀÌ ²È»Ù! ±îºÎ°î ¿÷À·¸Î »Ù»Ï·é ±È ºÇ¿Ú¼ª? </hgzmw>
+			<hgzmw>	ÀÎ¿£ÀÇ ¼´·é°£ Ç×´ó ±îºÒÀÌ ¿¡ºæÇÏÁö.</hgzmw>
+			<ovevofk>	¼×¿¡ ¿­ÇØÁú³ö¸Ï ¼× ±ÈÀÇ ±îºÒ ¹ÇÇÑ ¿­ÇØÁö·®¹ó!! Å©ÇÏÇÏ! </ovevofk>
+		</ufoo>			
+		<hl_ufoo>			
+			<uvvwrmt>	²Î°ìÀÚ»Â ¿Ç¿¡? ±È µ·ÀÌ¿ÚÁö·· ¶è¿¡ µÒ¸¯ ¿©°ÊÀÌ ÅÍÁú ¿Í ¿¿»Ü ·´ÀÌ»Ù. </uvvwrmt>
+			<wvzw>	¾â»Ù¸È»Ù! ÀÌ ³ø¿£À´! ±îºÒÀÇ ¾æ¸Î ±È¼´ÇØ ÁÖ·¹..!! </wvzw>
+			<wzmtvi>	ºº°òÀÌ ÇÊ°äÇØ µ·ÀÌ»Â¾µ, ±ÏÈæ ·¹¶ýÀ´ ¿É±îÁÙ¾î?	</wzmtvi>
+			<hgzmw>	¼Ê°¡¿Ô ¿¡½û ¶àÀµ ·ð²ÀÀÌ ¼ª°Ã ¹© Á¤·´ ³Ó´óÇÏ»Ü ·´ÀÌÁö. </hgzmw>
+			<hgzmw>	¼­ ¶àÀµ ¿÷ÀÌ ²È»Ù! ±îºÎ°î ¿÷À·¸Î »Ù»Ï·é ±È ºÇ¿Ú¼ª? </hgzmw>
+			<hgzmw>	ÀÎ¿£ÀÇ ¼´·é°£ Ç×´ó ±îºÒÀÌ ¿¡ºæÇÏÁö.</hgzmw>
+			<ovevofk>	¼×¿¡ ¿­ÇØÁú³ö¸Ï ¼× ±ÈÀÇ ±îºÒ ¹ÇÇÑ ¿­ÇØÁö·®¹ó!! Å©ÇÏÇÏ! </ovevofk>
+		</hl_ufoo>			
+	</WZIP_ROOFHRLM2>		
+
+	<YOFVNLLM_OLOR_IFIR2>
+		<sfmtib>
+			<uvvwrmt>	ÁÖÀÎ»Ô ¼ª ¼Ê¶« ¶è¿íÆÍ±î~~!! ÀÌ¸¾¿Å ·´¿í µí¸çµ£·® ÆÄÀÌ ¿¿Àµ ¿Ç ±ø±î??</uvvwrmt> 
+			<sfmgrmt>	ÀÌ ¼à³®ºéÀ´ µÙÀâ±Æ, ´õ¸Î°î ±àÀÇ Àç¸á¸Î ±º ³ö ÀÖ¿Ô ÇØÁÙ¸¡?</sfmgrmt> 
+			<sfmgrmt>	ÈÄ±Ó, ²Î°ö¹ó! ²Î°ö¹ó! E.R.X.G.L.I.B! ÁÖÀÎ Èû¼´!!</sfmgrmt> 
+			<wzmtvi>	·Ó·®¿¡ ±îÁö¸¯°ì·é ·´ÇÏºº¸Ï ÇØ, ÁÖÀÎ»ÔÀ´ À§ÇØ ºÎ½¨µñ Áø±×À·¸Î ··ºç Æ¯Á¦ ±àÀ´ ÁØµñÇß»Ù¾·¢²</wzmtvi> 
+			<wzmtvi>	¼¯ ¶ö·®¿í ±ø±îÁ® ¶ö·¿»Ù·é ÁÖÀÎ»ÔÀ´ Æò´ý ÀúÁÖÇÒ ¿Å±ß!!</wzmtvi> 
+			<wvzw>	¾â»Ù¸Á. ÀÌ¸½ ¹§·¦ »ëµñÇØ³­ Á¤²ÅÀÌ ¶øÂ² ºå»Â ¸Î·®¸ç·®ÀÇ Æ¯Á¦ ¿¢³µÁ¦¿¡... ±Æ±Ñ ±ø»Â ¿Í ¿¿±Æ...</wvzw> 
+			<wvzw>	¼ª µí¸ç ¶® ¸Î·®¸ç·®»Â ±àÇÑ ÁÖÀÎÀµ ²È»Ü ·´ÀÌ±ß!</wvzw> 
+			<hgzmw>	±ðÁ¨¿¡ ¼´¿¡ ÁÁ±ÆÇÏ»Â °ÀÆä¹ó ÇÏ°ì²µ°¡ ¿¿ÀÌ ¿¡Áö ±ÊÀ´¸¡? Á¹¾Ý ¶«¼ÊÁö¾ä ÇßÁö··...</hgzmw> 
+			<hgzmw>	·¶Àµ ´ç¹÷Àµ ¼¯ ·¹¼à¹ó µÎ·£Áö··, ¼­ ¾×Àú ÂøÇÑ ±ÆÀÌÀÏ ´ÓÀÎ¿É?</hgzmw> 
+			<hgzmw>	»ÏÇÃÇìÀÓ°¡ ÀÖ»Â ¼´ Ä£¾·»Â È­ÀåÀ´ ±öÃ´ ÀßÇÑ»Ù»Ï¾î?</hgzmw> 
+			<hgzmw>	»ÏÇÃÇìÀÓ°¡ ÀÖ»Â ¹Ç »Ù·¥ Ä£¾·»Â µ·ÀÏ¹û~ ·´¹û~~?</hgzmw> 
+			<hgzmw>	¼´ Ä£¾··¦ ³Ò¿¼ÇÒ¿Ô~°©¾â»Â ¿í±çÀÌ, °©¾â»Â ¶ÚÁãºé ±î¹§? ¾Í°¾Áö? Äí¸ç</hgzmw> 
+			<ovevofk>	¿­ÇØÁ¼À·»Ï, ¼ª¹ûºº ¼î±ÆÁÙ ³ö ÀÖÁö?</ovevofk> 
+		</sfmtib>
+    
+		<yrg_sfmtib>
+			<uvvwrmt>	ÁÖÀÎ»Ô ¼ª ¼Ê¶« ¶è¿íÆÍ±î~~!! ÀÌ¸¾¿Å ·´¿í µí¸çµ£·® ÆÄÀÌ ¿¿Àµ ¿Ç ±ø±î??</uvvwrmt> 
+			<sfmgrmt>	ÀÌ ¼à³®ºéÀ´ µÙÀâ±Æ, ´õ¸Î°î ±àÀÇ Àç¸á¸Î ±º ³ö ÀÖ¿Ô ÇØÁÙ¸¡?</sfmgrmt> 
+			<sfmgrmt>	ÈÄ±Ó, ²Î°ö¹ó! ²Î°ö¹ó! E.R.X.G.L.I.B! ÁÖÀÎ Èû¼´!!</sfmgrmt> 
+			<wzmtvi>	·Ó·®¿¡ ±îÁö¸¯°ì·é ·´ÇÏºº¸Ï ÇØ, ÁÖÀÎ»ÔÀ´ À§ÇØ ºÎ½¨µñ Áø±×À·¸Î ··ºç Æ¯Á¦ ±àÀ´ ÁØµñÇß»Ù¾·¢²</wzmtvi> 
+			<wzmtvi>	¼¯ ¶ö·®¿í ±ø±îÁ® ¶ö·¿»Ù·é ÁÖÀÎ»ÔÀ´ Æò´ý ÀúÁÖÇÒ ¿Å±ß!!</wzmtvi> 
+			<wvzw>	¾â»Ù¸Á. ÀÌ¸½ ¹§·¦ »ëµñÇØ³­ Á¤²ÅÀÌ ¶øÂ² ºå»Â ¸Î·®¸ç·®ÀÇ Æ¯Á¦ ¿¢³µÁ¦¿¡... ±Æ±Ñ ±ø»Â ¿Í ¿¿±Æ...</wvzw> 
+			<wvzw>	¼ª µí¸ç ¶® ¸Î·®¸ç·®»Â ±àÇÑ ÁÖÀÎÀµ ²È»Ü ·´ÀÌ±ß!</wvzw> 
+			<hgzmw>	±ðÁ¨¿¡ ¼´¿¡ ÁÁ±ÆÇÏ»Â °ÀÆä¹ó ÇÏ°ì²µ°¡ ¿¿ÀÌ ¿¡Áö ±ÊÀ´¸¡? Á¹¾Ý ¶«¼ÊÁö¾ä ÇßÁö··...</hgzmw> 
+			<hgzmw>	·¶Àµ ´ç¹÷Àµ ¼¯ ·¹¼à¹ó µÎ·£Áö··, ¼­ ¾×Àú ÂøÇÑ ±ÆÀÌÀÏ ´ÓÀÎ¿É?</hgzmw> 
+			<hgzmw>	»ÏÇÃÇìÀÓ°¡ ÀÖ»Â ¼´ Ä£¾·»Â È­ÀåÀ´ ±öÃ´ ÀßÇÑ»Ù»Ï¾î?</hgzmw> 
+			<hgzmw>	»ÏÇÃÇìÀÓ°¡ ÀÖ»Â ¹Ç »Ù·¥ Ä£¾·»Â µ·ÀÏ¹û~ ·´¹û~~?</hgzmw> 
+			<hgzmw>	¼´ Ä£¾··¦ ³Ò¿¼ÇÒ¿Ô~°©¾â»Â ¿í±çÀÌ, °©¾â»Â ¶ÚÁãºé ±î¹§? ¾Í°¾Áö? Äí¸ç</hgzmw> 
+			<ovevofk>	¿­ÇØÁ¼À·»Ï, ¼ª¹ûºº ¼î±ÆÁÙ ³ö ÀÖÁö?</ovevofk> 
+		</yrg_sfmtib>
+    
+		<mlgrmt>
+			<uvvwrmt>	ÁÖÀÎ»Ô¿ú ÇÔ½½ÇÏ»Â ²Ä!´ç!²Ã!¿£! ¼È¼È¢±</uvvwrmt> 
+			<sfmgrmt>	ÀÌ ¼à³®ºéÀ´ µÙÀâ±Æ, ´õ¸Î°î ±àÀÇ Àç¸á¸Î ±º ³ö ÀÖ¿Ô ÇØÁÙ¸¡?</sfmgrmt> 
+			<sfmgrmt>	ÈÄ±Ó, ²Î°ö¹ó! ²Î°ö¹ó! E.R.X.G.L.I.B! ÁÖÀÎ Èû¼´!!</sfmgrmt> 
+			<wzmtvi>	·Ó·®¿¡ ±îÁö¸¯°ì·é ·´ÇÏºº¸Ï ÇØ, ÁÖÀÎ»ÔÀ´ À§ÇØ ºÎ½¨µñ Áø±×À·¸Î ··ºç Æ¯Á¦ ±àÀ´ ÁØµñÇß»Ù¾·¢²</wzmtvi> 
+			<wzmtvi>	¼¯ ¶ö·®¿í ±ø±îÁ® ¶ö·¿»Ù·é ÁÖÀÎ»ÔÀ´ Æò´ý ÀúÁÖÇÒ ¿Å±ß!!</wzmtvi> 
+			<wvzw>	¾â»Ù¸Á. ÀÌ¸½ ¹§·¦ »ëµñÇØ³­ Á¤²ÅÀÌ ¶øÂ² ºå»Â ¸Î·®¸ç·®ÀÇ Æ¯Á¦ ¿¢³µÁ¦¿¡... ±Æ±Ñ ±ø»Â ¿Í ¿¿±Æ...</wvzw> 
+			<wvzw>	¼ª µí¸ç ¶® ¸Î·®¸ç·®»Â ±àÇÑ ÁÖÀÎÀµ ²È»Ü ·´ÀÌ±ß!</wvzw> 
+			<hgzmw>	±ðÁ¨¿¡ ¼´¿¡ ÁÁ±ÆÇÏ»Â °ÀÆä¹ó ÇÏ°ì²µ°¡ ¿¿ÀÌ ¿¡Áö ±ÊÀ´¸¡? Á¹¾Ý ¶«¼ÊÁö¾ä ÇßÁö··...</hgzmw> 
+			<hgzmw>	·¶Àµ ´ç¹÷Àµ ¼¯ ·¹¼à¹ó µÎ·£Áö··, ¼­ ¾×Àú ÂøÇÑ ±ÆÀÌÀÏ ´ÓÀÎ¿É?</hgzmw> 
+			<hgzmw>	»ÏÇÃÇìÀÓ°¡ ÀÖ»Â ¼´ Ä£¾·»Â È­ÀåÀ´ ±öÃ´ ÀßÇÑ»Ù»Ï¾î?</hgzmw> 
+			<hgzmw>	»ÏÇÃÇìÀÓ°¡ ÀÖ»Â ¹Ç »Ù·¥ Ä£¾·»Â µ·ÀÏ¹û~ ·´¹û~~?</hgzmw> 
+			<hgzmw>	¼´ Ä£¾··¦ ³Ò¿¼ÇÒ¿Ô~°©¾â»Â ¿í±çÀÌ, °©¾â»Â ¶ÚÁãºé ±î¹§? ¾Í°¾Áö? Äí¸ç</hgzmw> 
+			<ovevofk>	¿­ÇØÁ¼À·»Ï, ¼ª¹ûºº ¼î±ÆÁÙ ³ö ÀÖÁö?</ovevofk> 
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	¾×¸·¿Ô ¶è¿íÇÁÁø ±ÊÀµ¿É..? ¾×¸¡ºº ¿í·¹°ö~¢Ý</uvvwrmt> 
+			<sfmgrmt>	ÀÌ ¼à³®ºéÀ´ µÙÀâ±Æ, ´õ¸Î°î ±àÀÇ Àç¸á¸Î ±º ³ö ÀÖ¿Ô ÇØÁÙ¸¡?</sfmgrmt> 
+			<sfmgrmt>	ÈÄ±Ó, ²Î°ö¹ó! ²Î°ö¹ó! E.R.X.G.L.I.B! ÁÖÀÎ Èû¼´!!</sfmgrmt> 
+			<wzmtvi>	·Ó·®¿¡ ±îÁö¸¯°ì·é ·´ÇÏºº¸Ï ÇØ, ÁÖÀÎ»ÔÀ´ À§ÇØ ºÎ½¨µñ Áø±×À·¸Î ··ºç Æ¯Á¦ ±àÀ´ ÁØµñÇß»Ù¾·¢²</wzmtvi> 
+			<wzmtvi>	¼¯ ¶ö·®¿í ±ø±îÁ® ¶ö·¿»Ù·é ÁÖÀÎ»ÔÀ´ Æò´ý ÀúÁÖÇÒ ¿Å±ß!!</wzmtvi> 
+			<wvzw>	¾â»Ù¸Á. ÀÌ¸½ ¹§·¦ »ëµñÇØ³­ Á¤²ÅÀÌ ¶øÂ² ºå»Â ¸Î·®¸ç·®ÀÇ Æ¯Á¦ ¿¢³µÁ¦¿¡... ±Æ±Ñ ±ø»Â ¿Í ¿¿±Æ...</wvzw> 
+			<wvzw>	¼ª µí¸ç ¶® ¸Î·®¸ç·®»Â ±àÇÑ ÁÖÀÎÀµ ²È»Ü ·´ÀÌ±ß!</wvzw> 
+			<hgzmw>	±ðÁ¨¿¡ ¼´¿¡ ÁÁ±ÆÇÏ»Â °ÀÆä¹ó ÇÏ°ì²µ°¡ ¿¿ÀÌ ¿¡Áö ±ÊÀ´¸¡? Á¹¾Ý ¶«¼ÊÁö¾ä ÇßÁö··...</hgzmw> 
+			<hgzmw>	·¶Àµ ´ç¹÷Àµ ¼¯ ·¹¼à¹ó µÎ·£Áö··, ¼­ ¾×Àú ÂøÇÑ ±ÆÀÌÀÏ ´ÓÀÎ¿É?</hgzmw> 
+			<hgzmw>	»ÏÇÃÇìÀÓ°¡ ÀÖ»Â ¼´ Ä£¾·»Â È­ÀåÀ´ ±öÃ´ ÀßÇÑ»Ù»Ï¾î?</hgzmw> 
+			<hgzmw>	»ÏÇÃÇìÀÓ°¡ ÀÖ»Â ¹Ç »Ù·¥ Ä£¾·»Â µ·ÀÏ¹û~ ·´¹û~~?</hgzmw> 
+			<hgzmw>	¼´ Ä£¾··¦ ³Ò¿¼ÇÒ¿Ô~°©¾â»Â ¿í±çÀÌ, °©¾â»Â ¶ÚÁãºé ±î¹§? ¾Í°¾Áö? Äí¸ç</hgzmw> 
+			<ovevofk>	¿­ÇØÁ¼À·»Ï, ¼ª¹ûºº ¼î±ÆÁÙ ³ö ÀÖÁö?</ovevofk> 
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	¶è¿¡ ÅÍÁú ¿Í ¿¿»Ü ·´ÀÌ±ß ¼¯ Á×ÀÏ ³ÀÀÌ±ß??</uvvwrmt> 
+			<sfmgrmt>	ÀÌ ¼à³®ºéÀ´ µÙÀâ±Æ, ´õ¸Î°î ±àÀÇ Àç¸á¸Î ±º ³ö ÀÖ¿Ô ÇØÁÙ¸¡?</sfmgrmt> 
+			<sfmgrmt>	ÈÄ±Ó, ²Î°ö¹ó! ²Î°ö¹ó! E.R.X.G.L.I.B! ÁÖÀÎ Èû¼´!!</sfmgrmt> 
+			<wzmtvi>	·Ó·®¿¡ ±îÁö¸¯°ì·é ·´ÇÏºº¸Ï ÇØ, ÁÖÀÎ»ÔÀ´ À§ÇØ ºÎ½¨µñ Áø±×À·¸Î ··ºç Æ¯Á¦ ±àÀ´ ÁØµñÇß»Ù¾·¢²</wzmtvi> 
+			<wzmtvi>	¼¯ ¶ö·®¿í ±ø±îÁ® ¶ö·¿»Ù·é ÁÖÀÎ»ÔÀ´ Æò´ý ÀúÁÖÇÒ ¿Å±ß!!</wzmtvi> 
+			<wvzw>	¾â»Ù¸Á. ÀÌ¸½ ¹§·¦ »ëµñÇØ³­ Á¤²ÅÀÌ ¶øÂ² ºå»Â ¸Î·®¸ç·®ÀÇ Æ¯Á¦ ¿¢³µÁ¦¿¡... ±Æ±Ñ ±ø»Â ¿Í ¿¿±Æ...</wvzw> 
+			<wvzw>	¼ª µí¸ç ¶® ¸Î·®¸ç·®»Â ±àÇÑ ÁÖÀÎÀµ ²È»Ü ·´ÀÌ±ß!</wvzw> 
+			<hgzmw>	±ðÁ¨¿¡ ¼´¿¡ ÁÁ±ÆÇÏ»Â °ÀÆä¹ó ÇÏ°ì²µ°¡ ¿¿ÀÌ ¿¡Áö ±ÊÀ´¸¡? Á¹¾Ý ¶«¼ÊÁö¾ä ÇßÁö··...</hgzmw> 
+			<hgzmw>	·¶Àµ ´ç¹÷Àµ ¼¯ ·¹¼à¹ó µÎ·£Áö··, ¼­ ¾×Àú ÂøÇÑ ±ÆÀÌÀÏ ´ÓÀÎ¿É?</hgzmw> 
+			<hgzmw>	»ÏÇÃÇìÀÓ°¡ ÀÖ»Â ¼´ Ä£¾·»Â È­ÀåÀ´ ±öÃ´ ÀßÇÑ»Ù»Ï¾î?</hgzmw> 
+			<hgzmw>	»ÏÇÃÇìÀÓ°¡ ÀÖ»Â ¹Ç »Ù·¥ Ä£¾·»Â µ·ÀÏ¹û~ ·´¹û~~?</hgzmw> 
+			<hgzmw>	¼´ Ä£¾··¦ ³Ò¿¼ÇÒ¿Ô~°©¾â»Â ¿í±çÀÌ, °©¾â»Â ¶ÚÁãºé ±î¹§? ¾Í°¾Áö? Äí¸ç</hgzmw> 
+			<ovevofk>	¿­ÇØÁ¼À·»Ï, ¼ª¹ûºº ¼î±ÆÁÙ ³ö ÀÖÁö?</ovevofk> 
+		</hl_ufoo>
+	</YOFVNLLM_OLOR_IFIR2>
+
+	<UZINRORZI>				
+		<sfmtib>			
+			<uvvwrmt>	»Þ»Ù »Þ±Æ! ÀÌÁ¦±ß ¼¯¿¼°¡ ÈûÀÌ ºé±î¿¡»Â¿É! </uvvwrmt>
+			<wvzw>	ÁÖÀÎ»Ô.. Âù ¶Ù»Ú°¡ »©°ì·é ÀÔ º¶±Æ¿¡..!!	</wvzw>
+			<wzmtvi>	À§ÇèÇØ µ·°© ¼´ ¿úÀÏ Áê²µ¹óºº ´¡·® ·¹³Å±ß ºÉ ¿Í ¿¿Àµº¥?	</wzmtvi>
+			<hgzmw>	ÁÖÀÎ»Ô¿ú ÇÔ½½¹ó·é ·Ô±îµ·Áö ·øÇÑ ¿úÀÏÀ´ ·Àµ³ ³ö ÀÖÀ´ ¿Í ¿¿±Æ.	</hgzmw>
+			<hgzmw>	¼ªºº ·ð·£¿Ô »Ü¿Íµ·»Ù ÇÇ·¦ ·Ô¿í ²ÍÀ´ ¹§¿¡ ÀÖ»Ü ·´ÀÌ±ß?	</hgzmw>
+			<hgzmw>	¶ÚÁã¿¡ ³Ò·®°¡ °¶¶ÎÇÏ»Ù¿í ±Ë¿í ÀÖÁö? ´ç²ÇÀµ ¶Ì¿¢ºº °¶¶ÎÇØ. </hgzmw>
+			<ovevofk>	ÃàÇÏÇØ!! ÁÖÀÎ»Ô!! ÃàÇÏÀÇ ¼¯¿¶ÁþÀ´ µ·°©ÁÙ¾î?	</ovevofk>
+		</sfmtib>			
+		<yrg_sfmtib>			
+			<uvvwrmt>	»Þ»Ù »Þ±Æ! ÀÌÁ¦±ß ¼¯¿¼°¡ ÈûÀÌ ºé±î¿¡»Â¿É! </uvvwrmt>
+			<wvzw>	ÁÖÀÎ»Ô.. Âù ¶Ù»Ú°¡ »©°ì·é ÀÔ º¶±Æ¿¡..!!	</wvzw>
+			<wzmtvi>	À§ÇèÇØ µ·°© ¼´ ¿úÀÏ Áê²µ¹óºº ´¡·® ·¹³Å±ß ºÉ ¿Í ¿¿Àµº¥?	</wzmtvi>
+			<hgzmw>	ÁÖÀÎ»Ô¿ú ÇÔ½½¹ó·é ·Ô±îµ·Áö ·øÇÑ ¿úÀÏÀ´ ·Àµ³ ³ö ÀÖÀ´ ¿Í ¿¿±Æ.	</hgzmw>
+			<hgzmw>	¼ªºº ·ð·£¿Ô »Ü¿Íµ·»Ù ÇÇ·¦ ·Ô¿í ²ÍÀ´ ¹§¿¡ ÀÖ»Ü ·´ÀÌ±ß?	</hgzmw>
+			<hgzmw>	¶ÚÁã¿¡ ³Ò·®°¡ °¶¶ÎÇÏ»Ù¿í ±Ë¿í ÀÖÁö? ´ç²ÇÀµ ¶Ì¿¢ºº °¶¶ÎÇØ. </hgzmw>
+			<ovevofk>	ÃàÇÏÇØ!! ÁÖÀÎ»Ô!! ÃàÇÏÀÇ ¼¯¿¶ÁþÀ´ µ·°©ÁÙ¾î?	</ovevofk>
+		</yrg_sfmtib>			
+		<mlgrmt>			
+			<uvvwrmt>	°À»ÃÀµ ±î¹½ ¿úÀÏÀÌ ºé±î¿¬À´¾î¼ª!? </uvvwrmt>
+			<wvzw>	ÁÖÀÎ»Ô.. Âù ¶Ù»Ú°¡ »©°ì·é ÀÔ º¶±Æ¿¡..!!	</wvzw>
+			<wzmtvi>	À§ÇèÇØ µ·°© ¼´ ¿úÀÏ Áê²µ¹óºº ´¡·® ·¹³Å±ß ºÉ ¿Í ¿¿Àµº¥?	</wzmtvi>
+			<hgzmw>	ÁÖÀÎ»Ô¿ú ÇÔ½½¹ó·é ·Ô±îµ·Áö ·øÇÑ ¿úÀÏÀ´ ·Àµ³ ³ö ÀÖÀ´ ¿Í ¿¿±Æ.	</hgzmw>
+			<hgzmw>	¼ªºº ·ð·£¿Ô »Ü¿Íµ·»Ù ÇÇ·¦ ·Ô¿í ²ÍÀ´ ¹§¿¡ ÀÖ»Ü ·´ÀÌ±ß?	</hgzmw>
+			<hgzmw>	¶ÚÁã¿¡ ³Ò·®°¡ °¶¶ÎÇÏ»Ù¿í ±Ë¿í ÀÖÁö? ´ç²ÇÀµ ¶Ì¿¢ºº °¶¶ÎÇØ. </hgzmw>
+			<ovevofk>	ÃàÇÏÇØ!! ÁÖÀÎ»Ô!! ÃàÇÏÀÇ ¼¯¿¶ÁþÀ´ µ·°©ÁÙ¾î?	</ovevofk>
+		</mlgrmt>			
+		<ufoo>			
+			<uvvwrmt>	¶è¿¡ ¼Ê¶« µÒ¸¯ ¼¯ ³ö¿¡ ±ø±î ÁÖÀÎ»Ô ±î¾ú Á´ µô¸ÁÁà! </uvvwrmt>
+			<wvzw>	ÁÖÀÎ»Ô.. Âù ¶Ù»Ú°¡ »©°ì·é ÀÔ º¶±Æ¿¡..!!	</wvzw>
+			<wzmtvi>	À§ÇèÇØ µ·°© ¼´ ¿úÀÏ Áê²µ¹óºº ´¡·® ·¹³Å±ß ºÉ ¿Í ¿¿Àµº¥?	</wzmtvi>
+			<hgzmw>	ÁÖÀÎ»Ô¿ú ÇÔ½½¹ó·é ·Ô±îµ·Áö ·øÇÑ ¿úÀÏÀ´ ·Àµ³ ³ö ÀÖÀ´ ¿Í ¿¿±Æ.	</hgzmw>
+			<hgzmw>	¼ªºº ·ð·£¿Ô »Ü¿Íµ·»Ù ÇÇ·¦ ·Ô¿í ²ÍÀ´ ¹§¿¡ ÀÖ»Ü ·´ÀÌ±ß?	</hgzmw>
+			<hgzmw>	¶ÚÁã¿¡ ³Ò·®°¡ °¶¶ÎÇÏ»Ù¿í ±Ë¿í ÀÖÁö? ´ç²ÇÀµ ¶Ì¿¢ºº °¶¶ÎÇØ. </hgzmw>
+			<ovevofk>	ÃàÇÏÇØ!! ÁÖÀÎ»Ô!! ÃàÇÏÀÇ ¼¯¿¶ÁþÀ´ µ·°©ÁÙ¾î?	</ovevofk>
+		</ufoo>			
+		<hl_ufoo>			
+			<uvvwrmt>	¾×·· Áà ! ÀÚ½Ù ¾«¸ÓÈ÷·é ÁÖÀÎ»Ô ÇÇ·¦ ´¡±Æ·ÔÀ´Áöºº ·ô¹ó. </uvvwrmt>
+			<wvzw>	ÁÖÀÎ»Ô.. Âù ¶Ù»Ú°¡ »©°ì·é ÀÔ º¶±Æ¿¡..!!	</wvzw>
+			<wzmtvi>	À§ÇèÇØ µ·°© ¼´ ¿úÀÏ Áê²µ¹óºº ´¡·® ·¹³Å±ß ºÉ ¿Í ¿¿Àµº¥?	</wzmtvi>
+			<hgzmw>	ÁÖÀÎ»Ô¿ú ÇÔ½½¹ó·é ·Ô±îµ·Áö ·øÇÑ ¿úÀÏÀ´ ·Àµ³ ³ö ÀÖÀ´ ¿Í ¿¿±Æ.	</hgzmw>
+			<hgzmw>	¼ªºº ·ð·£¿Ô »Ü¿Íµ·»Ù ÇÇ·¦ ·Ô¿í ²ÍÀ´ ¹§¿¡ ÀÖ»Ü ·´ÀÌ±ß?	</hgzmw>
+			<hgzmw>	¶ÚÁã¿¡ ³Ò·®°¡ °¶¶ÎÇÏ»Ù¿í ±Ë¿í ÀÖÁö? ´ç²ÇÀµ ¶Ì¿¢ºº °¶¶ÎÇØ. </hgzmw>
+			<ovevofk>	ÃàÇÏÇØ!! ÁÖÀÎ»Ô!! ÃàÇÏÀÇ ¼¯¿¶ÁþÀ´ µ·°©ÁÙ¾î?	</ovevofk>
+		</hl_ufoo>						
+	</UZINRORZI>	
+	<DROW_ILHV3>
+		<sfmtib>
+			<uvvwrmt> Çá~! ¶è¿íÆÍ±î! ¼Ê»Â »«Ä¡¿¡ µü·£¾·¼Ä! </uvvwrmt>
+			<uvvwrmt> Àß~~~·Ô¿Ú²À»Ï»Ù! À·~À²~¢Ü ÃÖ¿í¸Î Çàµ¶ÇÑ ²Ã¿£ÀÌ»Ù¼Ä! </uvvwrmt>
+			<xlmmvxg> »Ê±î~! ±ðÁ¦¾îÁö ¼ª·¦ ¾â»Ù·®¿Ô ÇÒ ³ÀÀÌ¼É! </xlmmvxg>
+			<xlmmvxg> ±îºð ¿¡¾â Àü°¡ ·ÕÀú ¶äÀ´ ·Ô¿í²Í»Ù¼Ä! </xlmmvxg>
+			<wzmtvi> ÀÚÀÚÀÚÀÚ Àá¾ñ! À§ÇèÇÑ¿Å ±Æ»Ï¼É!? </wzmtvi>
+			<wzmtvi> À·±Æ±Æ...ÀÌ, ÀÌ¿Ç À§ÇèÇÏ»Ù¼Ä... </wzmtvi>
+			<wvzw> ±Æ~±Æ...¾×¸¯»Ï¾î À§ÇèÇÏ»Ù¿í ·´Çß»Âº¥! </wvzw>
+			<wvzw> ¼Ê¶« ¶«·®ÇÑ»Ù¿í! »ÙÀ²µÎÅÍ»Â Á¤²ÅÂ÷·®¹ó¼Ä! </wvzw>
+			<hgzmw> °À»Ãºº ÇÏ¿í²ÍÀµ »ë¸Î~ »À¾ßÇÏ¿Ô ¿¡ÀÚ¼É! </hgzmw>
+			<hgzmw> ÀÚ~ ¾×¸¼ °À»ÃÀµ ±î¹½ Àç¶ÌÀÖ»Â ÀÏºéÀÌ ÀÏ±î¼¯¾î¼É? </hgzmw>
+			<hgzmw> ´ç¼É··ÇÏ·é ·¾¸µ²µ¿¡ ±ÈºÈ»Ù¼Ä. ¿¿ÀÌ ÇÞµºÀÌ¼ª ÂØ·é³­ ÀÖÀÚ¼Ä. </hgzmw>
+			<ovevofk> ÇØ¼Â¾·¼É! ¼Ê¹ó·é »õ°í ¿­ÇØÁú ³ö ÀÖ»Â ¿Å ±Æ»Ï¼É!? </ovevofk>
+			<ovevofk> ÃàÇÏ³¾¶¿¸Î ¼ªÀÇ ÇÞµº ÂØ»Â Àå³Ò·¦ ±Ë¸ÁÁÖ¿Ú»Ù¼É! </ovevofk>
+			<ovevofk> Á¤·´ ±îºð¾îÁö ¿­ÇØÁö¸Á»Â ¿ÍÀÌ¼É? ³³´óÀÌ¹óºº ¾·ÇÒ½¨¼É!? </ovevofk>
+			<ovevofk> ¼ªºº ²²²² ¼Ê°¡¿Ô ¼ªÀÇ Áø²ÉÀ´ µ·°©Áà±ß ÇÒ ¿Í ¿¿¾·¼Ä </ovevofk>
+			<kviuli_1> °ì·Ï! °ì·Ï! °ì·Ï·Ï·Ï·Ï·Ï·Ï·Ï~~! </kviuli_1>
+			<kviuli_1> °òÁ÷ÀÌ»Â ¿ÍÀ´ µ··é »Þ¸Áºç»Ù! ¼É!	</kviuli_1>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt> Çá~! ¶è¿íÆÍ±î! ¼Ê»Â »«Ä¡¿¡ µü·£¾·¼Ä! </uvvwrmt>
+			<uvvwrmt> Àß~~~·Ô¿Ú²À»Ï»Ù! À·~À²~¢Ü ÃÖ¿í¸Î Çàµ¶ÇÑ ²Ã¿£ÀÌ»Ù¼Ä! </uvvwrmt>
+			<xlmmvxg> »Ê±î~! ±ðÁ¦¾îÁö ¼ª·¦ ¾â»Ù·®¿Ô ÇÒ ³ÀÀÌ¼É! </xlmmvxg>
+			<xlmmvxg> ±îºð ¿¡¾â Àü°¡ ·ÕÀú ¶äÀ´ ·Ô¿í²Í»Ù¼Ä! </xlmmvxg>
+			<wzmtvi> ÀÚÀÚÀÚÀÚ Àá¾ñ! À§ÇèÇÑ¿Å ±Æ»Ï¼É!? </wzmtvi>
+			<wzmtvi> À·±Æ±Æ...ÀÌ, ÀÌ¿Ç À§ÇèÇÏ»Ù¼Ä... </wzmtvi>
+			<wvzw> ±Æ~±Æ...¾×¸¯»Ï¾î À§ÇèÇÏ»Ù¿í ·´Çß»Âº¥! </wvzw>
+			<wvzw> ¼Ê¶« ¶«·®ÇÑ»Ù¿í! »ÙÀ²µÎÅÍ»Â Á¤²ÅÂ÷·®¹ó¼Ä! </wvzw>
+			<hgzmw> °À»Ãºº ÇÏ¿í²ÍÀµ »ë¸Î~ »À¾ßÇÏ¿Ô ¿¡ÀÚ¼É! </hgzmw>
+			<hgzmw> ÀÚ~ ¾×¸¼ °À»ÃÀµ ±î¹½ Àç¶ÌÀÖ»Â ÀÏºéÀÌ ÀÏ±î¼¯¾î¼É? </hgzmw>
+			<hgzmw> ´ç¼É··ÇÏ·é ·¾¸µ²µ¿¡ ±ÈºÈ»Ù¼Ä. ¿¿ÀÌ ÇÞµºÀÌ¼ª ÂØ·é³­ ÀÖÀÚ¼Ä. </hgzmw>
+			<ovevofk> ÇØ¼Â¾·¼É! ¼Ê¹ó·é »õ°í ¿­ÇØÁú ³ö ÀÖ»Â ¿Å ±Æ»Ï¼É!? </ovevofk>
+			<ovevofk> ÃàÇÏ³¾¶¿¸Î ¼ªÀÇ ÇÞµº ÂØ»Â Àå³Ò·¦ ±Ë¸ÁÁÖ¿Ú»Ù¼É! </ovevofk>
+			<ovevofk> Á¤·´ ±îºð¾îÁö ¿­ÇØÁö¸Á»Â ¿ÍÀÌ¼É? ³³´óÀÌ¹óºº ¾·ÇÒ½¨¼É!? </ovevofk>
+			<ovevofk> ¼ªºº ²²²² ¼Ê°¡¿Ô ¼ªÀÇ Áø²ÉÀ´ µ·°©Áà±ß ÇÒ ¿Í ¿¿¾·¼Ä </ovevofk>
+			<kviuli_1> °ì·Ï! °ì·Ï! °ì·Ï·Ï·Ï·Ï·Ï·Ï·Ï~~! </kviuli_1>
+			<kviuli_1> °òÁ÷ÀÌ»Â ¿ÍÀ´ µ··é »Þ¸Áºç»Ù! ¼É!	</kviuli_1>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt> ¶ä ²Ã¿£Àµ ±ÆÁÖ ³ÒÁßÇÏ»Ù¼Ä! ¼Êºº ¾×¸·¿Ô ´ý¿¢Áö? </uvvwrmt>
+			<uvvwrmt> ¼´ ´çÀü°¡ ´ç±çÀÌ¹ó»Â »Ü±î»Â ±ø»Ù¼É!  Àß~·Ô¿Ú²À»Ï»Ù! </uvvwrmt>
+			<xlmmvxg> ±Æ, °Ô»Ù! °Ô»Ù! ¼î¸¯ ¼ª¿¥ ÁØµñ»Â ¼¡¼º»Ù¼É! </xlmmvxg>
+			<xlmmvxg> ¾â»Ù·®¿í ÀÖ±ú»Ù¼É! È¥ÀÚ³­ ²É²ÉÇØ Á×»ÂÁÙ ±Ë±Ò»Ù¼Ä! </xlmmvxg>
+			<wzmtvi> ÀÚÀÚÀÚÀÚ Àá¾ñ! À§ÇèÇÑ¿Å ±Æ»Ï¼É!? </wzmtvi>
+			<wzmtvi> À·±Æ±Æ...ÀÌ, ÀÌ¿Ç À§ÇèÇÏ»Ù¼Ä... </wzmtvi>
+			<wvzw> ±Æ~±Æ...¾×¸¯»Ï¾î À§ÇèÇÏ»Ù¿í ·´Çß»Âº¥! </wvzw>
+			<wvzw> ¼Ê¶« ¶«·®ÇÑ»Ù¿í! »ÙÀ²µÎÅÍ»Â Á¤²ÅÂ÷·®¹ó¼Ä! </wvzw>
+			<hgzmw> °À»Ãºº ÇÏ¿í²ÍÀµ »ë¸Î~ »À¾ßÇÏ¿Ô ¿¡ÀÚ¼É! </hgzmw>
+			<hgzmw> ÀÚ~ ¾×¸¼ °À»ÃÀµ ±î¹½ Àç¶ÌÀÖ»Â ÀÏºéÀÌ ÀÏ±î¼¯¾î¼É? </hgzmw>
+			<hgzmw> ´ç¼É··ÇÏ·é ·¾¸µ²µ¿¡ ±ÈºÈ»Ù¼Ä. ¿¿ÀÌ ÇÞµºÀÌ¼ª ÂØ·é³­ ÀÖÀÚ¼Ä. </hgzmw>
+			<ovevofk> ÇØ¼Â¾·¼É! ¼Ê¹ó·é »õ°í ¿­ÇØÁú ³ö ÀÖ»Â ¿Å ±Æ»Ï¼É!? </ovevofk>
+			<ovevofk> ÃàÇÏ³¾¶¿¸Î ¼ªÀÇ ÇÞµº ÂØ»Â Àå³Ò·¦ ±Ë¸ÁÁÖ¿Ú»Ù¼É! </ovevofk>
+			<ovevofk> Á¤·´ ±îºð¾îÁö ¿­ÇØÁö¸Á»Â ¿ÍÀÌ¼É? ³³´óÀÌ¹óºº ¾·ÇÒ½¨¼É!?	</ovevofk>
+			<ovevofk> ¼ªºº ²²²² ¼Ê°¡¿Ô ¼ªÀÇ Áø²ÉÀ´ µ·°©Áà±ß ÇÒ ¿Í ¿¿¾·¼Ä </ovevofk>
+			<kviuli_1> °ì·Ï! °ì·Ï! °ì·Ï·Ï·Ï·Ï·Ï·Ï·Ï~~! </kviuli_1>
+			<kviuli_1> °òÁ÷ÀÌ»Â ¿ÍÀ´ µ··é »Þ¸Áºç»Ù! ¼É!	</kviuli_1>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt> ·ÀÀÖÁö··, ²²²² ¶è¿¡ ´§´§ÇÏ»Ù¼Ä! </uvvwrmt>
+			<uvvwrmt> ³³´ó ·ðºç ÀÏ°¡»Â ÀýÁ¦¿¡ ÇÊ°äÇÏ»Ù¿í ´ý¿¢ÇÑ»Ù¼É.. </uvvwrmt>
+			<xlmmvxg> ±Æ, °Ô»Ù! °Ô»Ù! ¼î¸¯ ¼ª¿¥ ÁØµñ»Â ¼¡¼º»Ù¼É! </xlmmvxg>
+			<xlmmvxg> ¾â»Ù·®¿í ÀÖ±ú»Ù¼É! È¥ÀÚ³­ ²É²ÉÇØ Á×»ÂÁÙ ±Ë±Ò»Ù¼Ä! </xlmmvxg>
+			<wzmtvi> ÀÚÀÚÀÚÀÚ Àá¾ñ! À§ÇèÇÑ¿Å ±Æ»Ï¼É!? </wzmtvi>
+			<wzmtvi> À·±Æ±Æ...ÀÌ, ÀÌ¿Ç À§ÇèÇÏ»Ù¼Ä... </wzmtvi>
+			<wvzw> ±Æ~±Æ...¾×¸¯»Ï¾î À§ÇèÇÏ»Ù¿í ·´Çß»Âº¥! </wvzw>
+			<wvzw> ¼Ê¶« ¶«·®ÇÑ»Ù¿í! »ÙÀ²µÎÅÍ»Â Á¤²ÅÂ÷·®¹ó¼Ä! </wvzw>
+			<hgzmw> °À»Ãºº ÇÏ¿í²ÍÀµ »ë¸Î~ »À¾ßÇÏ¿Ô ¿¡ÀÚ¼É! </hgzmw>
+			<hgzmw> ÀÚ~ ¾×¸¼ °À»ÃÀµ ±î¹½ Àç¶ÌÀÖ»Â ÀÏºéÀÌ ÀÏ±î¼¯¾î¼É? </hgzmw>
+			<hgzmw> ´ç¼É··ÇÏ·é ·¾¸µ²µ¿¡ ±ÈºÈ»Ù¼Ä. ¿¿ÀÌ ÇÞµºÀÌ¼ª ÂØ·é³­ ÀÖÀÚ¼Ä. </hgzmw>
+			<ovevofk> ÇØ¼Â¾·¼É! ¼Ê¹ó·é »õ°í ¿­ÇØÁú ³ö ÀÖ»Â ¿Å ±Æ»Ï¼É!? </ovevofk>
+			<ovevofk> ÃàÇÏ³¾¶¿¸Î ¼ªÀÇ ÇÞµº ÂØ»Â Àå³Ò·¦ ±Ë¸ÁÁÖ¿Ú»Ù¼É! </ovevofk>
+			<ovevofk> Á¤·´ ±îºð¾îÁö ¿­ÇØÁö¸Á»Â ¿ÍÀÌ¼É? ³³´óÀÌ¹óºº ¾·ÇÒ½¨¼É!?	</ovevofk>
+			<ovevofk> ¼ªºº ²²²² ¼Ê°¡¿Ô ¼ªÀÇ Áø²ÉÀ´ µ·°©Áà±ß ÇÒ ¿Í ¿¿¾·¼Ä </ovevofk>
+			<kviuli_1> °ì·Ï! °ì·Ï! °ì·Ï·Ï·Ï·Ï·Ï·Ï·Ï~~! </kviuli_1>
+			<kviuli_1> °òÁ÷ÀÌ»Â ¿ÍÀ´ µ··é »Þ¸Áºç»Ù! ¼É!	</kviuli_1>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt> ¾×....¾×··..... ¶è¿¡ ½Ë Ã¡»Ù¼Ä... </uvvwrmt>
+			<uvvwrmt> ¼Ê. Á´ ¶è¸Á¹ó»Â ¿ÍÀ´ ¶è°ö¹ó. </uvvwrmt>
+			<xlmmvxg> ±Æ, °Ô»Ù! °Ô»Ù! ¼î¸¯ ¼ª¿¥ ÁØµñ»Â ¼¡¼º»Ù¼É! </xlmmvxg>
+			<xlmmvxg> ¾â»Ù·®¿í ÀÖ±ú»Ù¼É! È¥ÀÚ³­ ²É²ÉÇØ Á×»ÂÁÙ ±Ë±Ò»Ù¼Ä! </xlmmvxg>
+			<wzmtvi> ÀÚÀÚÀÚÀÚ Àá¾ñ! À§ÇèÇÑ¿Å ±Æ»Ï¼É!? </wzmtvi>
+			<wzmtvi> À·±Æ±Æ...ÀÌ, ÀÌ¿Ç À§ÇèÇÏ»Ù¼Ä... </wzmtvi>
+			<wvzw> ±Æ~±Æ...¾×¸¯»Ï¾î À§ÇèÇÏ»Ù¿í ·´Çß»Âº¥! </wvzw>
+			<wvzw> ¼Ê¶« ¶«·®ÇÑ»Ù¿í! »ÙÀ²µÎÅÍ»Â Á¤²ÅÂ÷·®¹ó¼Ä! </wvzw>
+			<hgzmw> °À»Ãºº ÇÏ¿í²ÍÀµ »ë¸Î~ »À¾ßÇÏ¿Ô ¿¡ÀÚ¼É! </hgzmw>
+			<hgzmw> ÀÚ~ ¾×¸¼ °À»ÃÀµ ±î¹½ Àç¶ÌÀÖ»Â ÀÏºéÀÌ ÀÏ±î¼¯¾î¼É? </hgzmw>
+			<hgzmw> ´ç¼É··ÇÏ·é ·¾¸µ²µ¿¡ ±ÈºÈ»Ù¼Ä. ¿¿ÀÌ ÇÞµºÀÌ¼ª ÂØ·é³­ ÀÖÀÚ¼Ä. </hgzmw>
+			<ovevofk> ÇØ¼Â¾·¼É! ¼Ê¹ó·é »õ°í ¿­ÇØÁú ³ö ÀÖ»Â ¿Å ±Æ»Ï¼É!? </ovevofk>
+			<ovevofk> ÃàÇÏ³¾¶¿¸Î ¼ªÀÇ ÇÞµº ÂØ»Â Àå³Ò·¦ ±Ë¸ÁÁÖ¿Ú»Ù¼É! </ovevofk>
+			<ovevofk> Á¤·´ ±îºð¾îÁö ¿­ÇØÁö¸Á»Â ¿ÍÀÌ¼É? ³³´óÀÌ¹óºº ¾·ÇÒ½¨¼É!?	</ovevofk>
+			<ovevofk> ¼ªºº ²²²² ¼Ê°¡¿Ô ¼ªÀÇ Áø²ÉÀ´ µ·°©Áà±ß ÇÒ ¿Í ¿¿¾·¼Ä </ovevofk>
+			<kviuli_1> °ì·Ï! °ì·Ï! °ì·Ï·Ï·Ï·Ï·Ï·Ï·Ï~~! </kviuli_1>
+			<kviuli_1> °òÁ÷ÀÌ»Â ¿ÍÀ´ µ··é »Þ¸Áºç»Ù! ¼É!	</kviuli_1>
+		</hl_ufoo>
+	</DROW_ILHV3>
+		<XDSRGVPMRTSG>
+		<sfmtib>
+			<uvvwrmt>	...	</uvvwrmt>
+			<wzmtvi>	²Ã¿£ÀÌ..±ø...»Ù..	</wzmtvi>
+			<wvzw>	°©¾â¾îÁöÀÎ¿¡..	</wvzw>
+			<hgzmw>	À¶À·..À·...	</hgzmw>
+			<ovevofk>	...	</ovevofk>
+			<kviuli_1>	ÀÌ¿Ü..¼´±ß..ÇÏ»Âº¥..	</kviuli_1>
+			<kviuli_2>	²É°¬ ³ÓÀ·¸Î..	</kviuli_2>
+			<kviuli_3>	¶¿¸¯³­¹ó!!	</kviuli_3>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	À·...	</uvvwrmt>
+			<wzmtvi>	²Ã¿£ÀÌ..±ø...»Ù..	</wzmtvi>
+			<wvzw>	°©¾â¾îÁöÀÎ¿¡..	</wvzw>
+			<hgzmw>	À¶À·..À·...	</hgzmw>
+			<ovevofk>	¾× Á¤ºº¹ó·é ¾×»í ÃæµÐÈ÷..	</ovevofk>
+			<kviuli_1>	ÀÌ¿Ü..¼´±ß..ÇÏ»Âº¥..	</kviuli_1>
+			<kviuli_2>	²É°¬ ³ÓÀ·¸Î..	</kviuli_2>
+			<kviuli_3>	¶¿¸¯³­¹ó!!	</kviuli_3>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	À·...	</uvvwrmt>
+			<wzmtvi>	²Ã¿£ÀÌ..±ø...»Ù..	</wzmtvi>
+			<wvzw>	°©¾â¾îÁöÀÎ¿¡..	</wvzw>
+			<hgzmw>	À¶À·..À·...	</hgzmw>
+			<hgzmw>	¾³..µ¶..ÇØ³¾.... 	</hgzmw>
+			<ovevofk>	¾× Á¤ºº¹ó·é ¾×»í ÃæµÐÈ÷..	</ovevofk>
+			<kviuli_1>	ÀÌ¿Ü..¼´±ß..ÇÏ»Âº¥..	</kviuli_1>
+			<kviuli_2>	²É°¬ ³ÓÀ·¸Î..	</kviuli_2>
+			<kviuli_3>	¶¿¸¯³­¹ó!!	</kviuli_3>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	...	</uvvwrmt>
+			<wzmtvi>	»õ..»õ...ÀÌ..´ó....	</wzmtvi>
+			<wzmtvi>	²Ã¿£ÀÌ..±ø...»Ù..	</wzmtvi>
+			<wvzw>	°©¾â¾îÁöÀÎ¿¡..	</wvzw>
+			<hgzmw>	¾³..µ¶..ÇØ³¾.... 	</hgzmw>
+			<hgzmw>	±ÈºÅ..ÇÏÁö··...	</hgzmw>
+			<hgzmw>	ºÎ¸Æ»Ù.....	</hgzmw>
+			<ovevofk>	¾× Á¤ºº¹ó·é ¾×»í ÃæµÐÈ÷..	</ovevofk>
+			<ovevofk>	¾Øµ¶ÇØ¼± ³ö ÀÖ¿ÚÁö...	</ovevofk>
+			<kviuli_1>	ÀÌ¿Ü..¼´±ß..ÇÏ»Âº¥..	</kviuli_1>
+			<kviuli_2>	²É°¬ ³ÓÀ·¸Î..	</kviuli_2>
+			<kviuli_3>	¶¿¸¯³­¹ó!!	</kviuli_3>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	...	</uvvwrmt>
+			<wzmtvi>	»õ..»õ...ÀÌ..´ó....	</wzmtvi>
+			<wzmtvi>	²Ã¿£ÀÌ..±ø...»Ù..	</wzmtvi>
+			<wvzw>	°©¾â¾îÁöÀÎ¿¡..	</wvzw>
+			<hgzmw>	¾³..µ¶..ÇØ³¾.... 	</hgzmw>
+			<hgzmw>	±ÈºÅ..ÇÏÁö··...	</hgzmw>
+			<hgzmw>	ºÎ¸Æ»Ù.....	</hgzmw>
+			<ovevofk>	¾× Á¤ºº¹ó·é ¾×»í ÃæµÐÈ÷..	</ovevofk>
+			<ovevofk>	¾Øµ¶ÇØ¼± ³ö ÀÖ¿ÚÁö...	</ovevofk>
+			<kviuli_1>	ÀÌ¿Ü..¼´±ß..ÇÏ»Âº¥..	</kviuli_1>
+			<kviuli_2>	²É°¬ ³ÓÀ·¸Î..	</kviuli_2>
+			<kviuli_3>	¶¿¸¯³­¹ó!!	</kviuli_3>
+		</hl_ufoo>
+	</XDSRGVPMRTSG>
+
+	<PMRTSG_LU_ZYBHH2>
+		<sfmtib>
+			<uvvwrmt>	Èì...	</uvvwrmt>
+			<wzmtvi>	¿æ¿¢°¡ »ÞÇß¾µ...	</wzmtvi>
+			<wvzw>	ÀÌÁ¦ ¾×·· ²É°¬ ³Ó°¡ Àáºå²Ã¿Ô	</wvzw>
+			<hgzmw>	ÀØ±ú¾µ..	</hgzmw>
+			<ovevofk>	...	</ovevofk>
+			<kviuli_1>	µñÄÑ¹ó!	</kviuli_1>
+			<kviuli_2>	²É°¬ÀÇ ÀÎÀå..°¡³­ ÇØ¶æÀ´..	</kviuli_2>
+			<kviuli_3>	¶¿¸¯³­¹ó!!	</kviuli_3>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	À²...	</uvvwrmt>
+			<wzmtvi>	¿æ¿¢°¡ »ÞÇß¾µ...	</wzmtvi>
+			<wvzw>	ÀÌÁ¦ ¾×·· ²É°¬ ³Ó°¡ Àáºå²Ã¿Ô	</wvzw>
+			<hgzmw>	²²²² ²Ã¿£ÀÌ ºÇ±ú»Ù.	</hgzmw>
+			<ovevofk>	»õ.. ¿­ÇÑ ÈûÀ´	</ovevofk>
+			<kviuli_1>	µñÄÑ¹ó!	</kviuli_1>
+			<kviuli_2>	²É°¬ÀÇ ÀÎÀå..°¡³­ ÇØ¶æÀ´..	</kviuli_2>
+			<kviuli_3>	¶¿¸¯³­¹ó!!	</kviuli_3>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	À·À²...	</uvvwrmt>
+			<wzmtvi>	¿æ¿¢°¡ »ÞÇß¾µ...	</wzmtvi>
+			<wvzw>	ÀÌÁ¦ ¾×·· ²É°¬ ³Ó°¡ Àáºå²Ã¿Ô	</wvzw>
+			<hgzmw>	²²²² ¹§¿¡ °Â»Ù.	</hgzmw>
+			<hgzmw>	²É°¬ÀÇ ¿æ¿è°¡³­..¼­.. 	</hgzmw>
+			<ovevofk>	»õ.. ¿­ÇÑ ÈûÀ´	</ovevofk>
+			<kviuli_1>	µñÄÑ¹ó!	</kviuli_1>
+			<kviuli_2>	²É°¬ÀÇ ÀÎÀå..°¡³­ ÇØ¶æÀ´..	</kviuli_2>
+			<kviuli_3>	¶¿¸¯³­¹ó!!	</kviuli_3>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	...	</uvvwrmt>
+			<wzmtvi>	¾×»ëÀÇ ·íºº ÀÌÁ¨..	</wzmtvi>
+			<wzmtvi>	¿æ¿¢°¡ »ÞÇß¾µ...	</wzmtvi>
+			<wvzw>	ÀÌÁ¦ ¾×·· ²É°¬ ³Ó°¡ Àáºå²Ã¿Ô	</wvzw>
+			<hgzmw>	²É°¬ÀÇ ¿æ¿è°¡³­..¼­.. 	</hgzmw>
+			<hgzmw>	·Á³¼ÀÌ¿í ·´±Ò»Ù..	</hgzmw>
+			<hgzmw>	²É°¬ÀÇ ¿øÆ÷°¡ ¾³µ¶ÇÏ¿í ·´±Ò»Ù.	</hgzmw>
+			<ovevofk>	»õ.. ¿­ÇÑ ÈûÀ´	</ovevofk>
+			<ovevofk>	¾×»ë¹ó·é.. ÃæµÐÈ÷..	</ovevofk>
+			<kviuli_1>	µñÄÑ¹ó!	</kviuli_1>
+			<kviuli_2>	²É°¬ÀÇ ÀÎÀå..°¡³­ ÇØ¶æÀ´..	</kviuli_2>
+			<kviuli_3>	¶¿¸¯³­¹ó!!	</kviuli_3>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	...	</uvvwrmt>
+			<wzmtvi>	¾×»ëÀÇ ·íºº ÀÌÁ¨..	</wzmtvi>
+			<wzmtvi>	¿æ¿¢°¡ »ÞÇß¾µ...	</wzmtvi>
+			<wvzw>	ÀÌÁ¦ ¾×·· ²É°¬ ³Ó°¡ Àáºå²Ã¿Ô	</wvzw>
+			<hgzmw>	²É°¬ÀÇ ¿æ¿è°¡³­..¼­..	</hgzmw>
+			<hgzmw>	·Á³¼ÀÌ¿í ·´±Ò»Ù..	</hgzmw>
+			<hgzmw>	²É°¬ÀÇ ¿øÆ÷°¡ ¾³µ¶ÇÏ¿í ·´±Ò»Ù.	</hgzmw>
+			<ovevofk>	»õ.. ¿­ÇÑ ÈûÀ´	</ovevofk>
+			<ovevofk>	¾×»ë¹ó·é.. ÃæµÐÈ÷..	</ovevofk>
+			<kviuli_1>	µñÄÑ¹ó!	</kviuli_1>
+			<kviuli_2>	²É°¬ÀÇ ÀÎÀå..°¡³­ ÇØ¶æÀ´..	</kviuli_2>
+			<kviuli_3>	¶¿¸¯³­¹ó!!	</kviuli_3>
+		</hl_ufoo>
+	</PMRTSG_LU_ZYBHH2>
+	
+	<TS_DSRGVPMRTSG>
+		<sfmtib>
+			<uvvwrmt>	»Ê±î¶ö¸È¾µ!	</uvvwrmt>
+			<wzmtvi>	Á¹²ÉÇÏ²Ã¿Ô!!	</wzmtvi>
+			<wvzw>	ÁöÅ¿Áö ·øÇØ ¶Ì±ÈÇÏ¼×..	</wvzw>
+			<hgzmw>	...ÃâÃâÇÏ¾µ	</hgzmw>
+			<ovevofk>	...	</ovevofk>
+			<kviuli_1>	·ØÃß±î¹ó!	</kviuli_1>
+			<kviuli_2>	¶é´ö ¾â´ç»ÜÀÇ ¾àÁö!!	</kviuli_2>
+			<kviuli_3>	ÁöÄÑ¼´·®¹ó!!	</kviuli_3>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	ºü ÁÁ¾µ!	</uvvwrmt>
+			<wzmtvi>	Á¹²ÉÇÏ²Ã¿Ô!!	</wzmtvi>
+			<wvzw>	ÁöÅ¿Áö ·øÇØ ¶Ì±ÈÇÏ¼×..	</wvzw>
+			<hgzmw>	...ÃâÃâÇÏ¾µ	</hgzmw>
+			<ovevofk>	¾× Á¤ºº¹ó·é ¾×»í ÃæµÐÈ÷..	</ovevofk>
+			<kviuli_1>	·ØÃß±î¹ó!	</kviuli_1>
+			<kviuli_2>	¶é´ö ¾â´ç»ÜÀÇ ¾àÁö!!	</kviuli_2>
+			<kviuli_3>	ÁöÄÑ¼´·®¹ó!!	</kviuli_3>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	ºü ÁÁ¾µ!	</uvvwrmt>
+			<wzmtvi>	Á¹²ÉÇÏ²Ã¿Ô!!	</wzmtvi>
+			<wvzw>	ÁöÅ¿Áö ·øÇØ ¶Ì±ÈÇÏ¼×..	</wvzw>
+			<hgzmw>	²É°¬ ³Ó°¡³­ Çì·ÞÀÏ ¹§.. µ·±Ò¼×	</hgzmw>
+			<hgzmw>	»Ü ÇÏ¼ªÀÇ ·Í±àÀ´!	</hgzmw>
+			<ovevofk>	¾× Á¤ºº¹ó·é ¾×»í ÃæµÐÈ÷..	</ovevofk>
+			<kviuli_1>	·ØÃß±î¹ó!	</kviuli_1>
+			<kviuli_2>	¶é´ö ¾â´ç»ÜÀÇ ¾àÁö!!	</kviuli_2>
+			<kviuli_3>	ÁöÄÑ¼´·®¹ó!!	</kviuli_3>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	...	</uvvwrmt>
+			<wzmtvi>	Á¹²ÉÇÏ²Ã¿Ô !!	</wzmtvi>
+			<wzmtvi>	À§ÇèÇÏ¼×!!!	</wzmtvi>
+			<wvzw>	ÁöÅ¿Áö ·øÇØ ¶Ì±ÈÇÏ¼×..	</wvzw>
+			<hgzmw>	²É°¬ ³Ó°¡³­ Çì·ÞÀÏ ¹§.. µ·±Ò¼×	</hgzmw>
+			<hgzmw>	»Ü ÇÏ¼ªÀÇ ·Í±àÀ´!	</hgzmw>
+			<hgzmw>	ÁöÄÑ¼´¿Ú»Ù»Â ¾× ·Í±à..	</hgzmw>
+			<ovevofk>	¾× Á¤ºº¹ó·é ¾×»í ÃæµÐÈ÷..	</ovevofk>
+			<ovevofk>	¾Øµ¶ÇØ¼± ³ö ÀÖ¿Ú¾µ!	</ovevofk>
+			<kviuli_1>	·ØÃß±î¹ó!	</kviuli_1>
+			<kviuli_2>	¶é´ö ¾â´ç»ÜÀÇ ¾àÁö!!	</kviuli_2>
+			<kviuli_3>	ÁöÄÑ¼´·®¹ó!!	</kviuli_3>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	...	</uvvwrmt>
+			<wzmtvi>	Á¹²ÉÇÏ²Ã¿Ô!!	</wzmtvi>
+			<wzmtvi>	À§ÇèÇÏ¼×!!!	</wzmtvi>
+			<wvzw>	°©¾â¾îÁöÀÎ¿¡..	</wvzw>
+			<hgzmw>	²É°¬ ³Ó°¡³­ Çì·ÞÀÏ ¹§.. µ·±Ò¼×	</hgzmw>
+			<hgzmw>	»Ü ÇÏ¼ªÀÇ ·Í±àÀ´!	</hgzmw>
+			<hgzmw>	ÁöÄÑ¼´¿Ú»Ù»Â ¾× ·Í±à..	</hgzmw>
+			<hgzmw>	¾×¿ÍÀÌ ¼¯ ²É°¬ÀÇ ¿æ¿è°¡³­ ¶þ±î¼ª¿Ô ÇØÁÖ±úÁö	</hgzmw>
+			<ovevofk>	¾× Á¤ºº¹ó·é ¾×»í ÃæµÐÈ÷..	</ovevofk>
+			<ovevofk>	¾Øµ¶ÇØ¼± ³ö ÀÖ¿Ú¾µ!	</ovevofk>
+			<kviuli_1>	·ØÃß±î¹ó!	</kviuli_1>
+			<kviuli_2>	¶é´ö ¾â´ç»ÜÀÇ ¾àÁö!!	</kviuli_2>
+			<kviuli_3>	ÁöÄÑ¼´·®¹ó!!	</kviuli_3>
+		</hl_ufoo>
+	</TS_DSRGVPMRTSG>
+
+	<VWWTZ3>
+		<sfmtib>
+			<uvvwrmt>	ÈÄ..»Ê±ú»Ù!! ÀÌ»®±Æ!	</uvvwrmt>
+			<wzmtvi>	À§ÇèÇÏ»Ù °ä»®±Æ! Æ¢¹ó!	</wzmtvi>
+			<wvzw>	À·ÀÌ¾·~~ È£¹û·´ÄÚ¿¿Àµ »®±Æ~	</wvzw>
+			<hgzmw>	...¶ä´ó Á´ ¼´°ÍµÁ¹ó ÀÌ»®±Æ~	</hgzmw>
+			<ovevofk>	±îÂÞ¾··®~?	</ovevofk>
+			<kviuli_1>	(´óÀÚ!!?!! ÀÌ¿Ç ·øÂüÁö!)	</kviuli_1>
+			<kviuli_2>	°§Çð! Å©Èì! Èì!!	</kviuli_2>
+			<kviuli_3>	aAaAaa (¾×·£¸¸ ¾×·£¸¸)	</kviuli_3>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	ºü ·ÂÃç »ë¸ÉÇß¾···~	</uvvwrmt>
+			<wzmtvi>	À§ÇèÇÏ»Ù °ä»®±Æ! Æ¢¹ó!	</wzmtvi>
+			<wvzw>	À·ÀÌ¾·~~ È£¹û·´ÄÚ¿¿Àµ »®±Æ~	</wvzw>
+			<hgzmw>	...¶ä´ó ¼´°Í¹ó ÀÌ»®±Æ~	</hgzmw>
+			<ovevofk>	±îÀÌÄí~ °ä»®ÀÌ Á´ ÄÆ¼×?	</ovevofk>
+			<kviuli_1>	(´óÀÚ!!?!! ÀÌ¿Ç ·øÂüÁö!)	</kviuli_1>
+			<kviuli_2>	°§Çð! Å©Èì! Èì!!	</kviuli_2>
+			<kviuli_3>	aAaAaa (¾×·£¸¸ ¾×·£¸¸)	</kviuli_3>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	ºü ·ÂÃç »ë¸ÉÇß¾···~	</uvvwrmt>
+			<wzmtvi>	À§ÇèÇÏ»Ù °ä»®±Æ! Æ¢¹ó!	</wzmtvi>
+			<wvzw>	À·ÀÌ¾·~~ È£¹û·´ÄÚ¿¿Àµ »®±Æ~	</wvzw>
+			<hgzmw>	¿Å~ È£¸©ÀÌ »ã¶èÇÇ»ø ²ÃÀý°£ ·´ÀÌ±ß~	</hgzmw>
+			<hgzmw>	¾× ²ÃÀýÀÌ Áö¾ÝÀÎ¿¡?	</hgzmw>
+			<ovevofk>	±îÀÌÄí~ °ä»®ÀÌ Á´ ÄÆ¼×?	</ovevofk>
+			<kviuli_1>	(´óÀÚ!!?!! ÀÌ¿Ç ·øÂüÁö!)	</kviuli_1>
+			<kviuli_2>	°§Çð! Å©Èì! Èì!!	</kviuli_2>
+			<kviuli_3>	aAaAaa (¾×·£¸¸ ¾×·£¸¸)	</kviuli_3>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	ºÆ»Ù! ÀÌ»®±Æ!!	</uvvwrmt>
+			<wzmtvi>	À§ÇèÇÏ»Ù °ä»®±Æ! Æ¢¹ó!	</wzmtvi>
+			<wvzw>	À·ÀÌ¾·~~ È£¹û·´ÄÚ¿¿Àµ »®±Æ~	</wvzw>
+			<hgzmw>	¿Å~ È£¸©ÀÌ »ã¶èÇÇ»ø ²ÃÀý°£ ·´ÀÌ±ß~	</hgzmw>
+			<hgzmw>	¾× ²ÃÀýÀÌ Áö¾ÝÀÎ¿¡?	</hgzmw>
+			<hgzmw>	ÈÄ..±ÆÀÌ¾· Çã·® Á´ ºÎºé¿Ü µÁ¹ó	</hgzmw>
+			<ovevofk>	±îÀÌÄí~ °ä»®ÀÌ Á´ ÄÆ¼×?	</ovevofk>
+			<kviuli_1>	(´óÀÚ!!?!! ÀÌ¿Ç ·øÂüÁö!)	</kviuli_1>
+			<kviuli_2>	°§Çð! Å©Èì! Èì!!	</kviuli_2>
+			<kviuli_3>	aAaAaa (¾×·£¸¸ ¾×·£¸¸)	</kviuli_3>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	ºÆ»Ù! ÀÌ»®±Æ!!	</uvvwrmt>
+			<wzmtvi>	À§ÇèÇÏ»Ù °ä»®±Æ! Æ¢¹ó!	</wzmtvi>
+			<wvzw>	À·ÀÌ¾·~~ È£¹û·´ÄÚ¿¿Àµ »®±Æ~	</wvzw>
+			<hgzmw>	¿Å~ È£¸©ÀÌ »ã¶èÇÇ»ø ²ÃÀý°£ ·´ÀÌ±ß~	</hgzmw>
+			<hgzmw>	¾× ²ÃÀýÀÌ Áö¾ÝÀÎ¿¡?	</hgzmw>
+			<hgzmw>	ÈÄ..±ÆÀÌ¾· Çã·® Á´ ºÎºé¿Ü µÁ¹ó	</hgzmw>
+			<ovevofk>	±îÀÌÄí~ °ä»®ÀÌ Á´ ÄÆ¼×?	</ovevofk>
+			<kviuli_1>	(´óÀÚ!!?!! ÀÌ¿Ç ·øÂüÁö!)	</kviuli_1>
+			<kviuli_2>	°§Çð! Å©Èì! Èì!!	</kviuli_2>
+			<kviuli_3>	aAaAaa (¾×·£¸¸ ¾×·£¸¸)	</kviuli_3>
+		</hl_ufoo>
+	</VWWTZ3>
+
+	<OZIEZ_ERLOVG>
+		<sfmtib>
+			<uvvwrmt>	~~¢Ü	</uvvwrmt>
+			<wzmtvi>	!!!	</wzmtvi>
+			<wvzw>	?	</wvzw>
+			<hgzmw>	...	</hgzmw>
+			<ovevofk>	!!!	</ovevofk>
+			<kviuli_1>	~~	</kviuli_1>
+			<kviuli_2>	!	</kviuli_2>
+			<kviuli_3>	?	</kviuli_3>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	~~¢Ü	</uvvwrmt>
+			<wzmtvi>	!!!	</wzmtvi>
+			<wvzw>	?	</wvzw>
+			<hgzmw>	...	</hgzmw>
+			<ovevofk>	!!!	</ovevofk>
+			<kviuli_1>	~~	</kviuli_1>
+			<kviuli_2>	!	</kviuli_2>
+			<kviuli_3>	?	</kviuli_3>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	~~¢Ü	</uvvwrmt>
+			<wzmtvi>	!!!	</wzmtvi>
+			<wvzw>	?	</wvzw>
+			<hgzmw>	...	</hgzmw>
+			<hgzmw>	!!!	</hgzmw>
+			<hgzmw>	???	</hgzmw>
+			<ovevofk>	!!!	</ovevofk>
+			<kviuli_1>	~~	</kviuli_1>
+			<kviuli_2>	!	</kviuli_2>
+			<kviuli_3>	?	</kviuli_3>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	~~¢Ü	</uvvwrmt>
+			<wzmtvi>	!!!	</wzmtvi>
+			<wvzw>	?	</wvzw>
+			<hgzmw>	....	</hgzmw>
+			<hgzmw>	!!!!	</hgzmw>
+			<hgzmw>	????	</hgzmw>
+			<ovevofk>	!!!	</ovevofk>
+			<kviuli_1>	~~	</kviuli_1>
+			<kviuli_2>	!	</kviuli_2>
+			<kviuli_3>	?	</kviuli_3>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	~~¢Ü	</uvvwrmt>
+			<wzmtvi>	!!!	</wzmtvi>
+			<wvzw>	?	</wvzw>
+			<hgzmw>	.....	</hgzmw>
+			<hgzmw>	!!!!!	</hgzmw>
+			<hgzmw>	?????	</hgzmw>
+			<ovevofk>	!!!	</ovevofk>
+			<kviuli_1>	~~	</kviuli_1>
+			<kviuli_2>	!	</kviuli_2>
+			<kviuli_3>	?	</kviuli_3>
+		</hl_ufoo>
+	</OZIEZ_ERLOVG>
+
+	<vk20_xlkl>
+		<sfmtib>
+			<uvvwrmt>	~~¢Ü¢Ý	</uvvwrmt>
+			<wzmtvi>	?!	</wzmtvi>
+			<wvzw>	!!!	</wvzw>
+			<hgzmw>	...(¤Ì-¤Ì)	</hgzmw>
+			<ovevofk>	(l-l)!!	</ovevofk>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	~~¢Ü¢Ý	</uvvwrmt>
+			<wzmtvi>	?!	</wzmtvi>
+			<wvzw>	!!!	</wvzw>
+			<hgzmw>	...(¤Ì-¤Ì)	</hgzmw>
+			<ovevofk>	(l-l)!!	</ovevofk>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	~~¢Ü	</uvvwrmt>
+			<wzmtvi>	?!	</wzmtvi>
+			<wvzw>	!!!	</wvzw>
+			<hgzmw>	~(- -  )~	</hgzmw>
+			<hgzmw>	~(  - -)~	</hgzmw>
+			<ovevofk>	(l-l)!!	</ovevofk>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	...	</uvvwrmt>
+			<wzmtvi>	?!	</wzmtvi>
+			<wvzw>	!!!	</wvzw>
+			<hgzmw>	~(l-l  )~	</hgzmw>
+			<hgzmw>	~(  l-l)~	</hgzmw>
+			<ovevofk>	(^-^)!!	</ovevofk>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	...(¤Ð-¤Ð)	</uvvwrmt>
+			<wzmtvi>	?!	</wzmtvi>
+			<wvzw>	(¤Ð-¤Ð)!!	</wvzw>
+			<hgzmw>	~(l-l  )~	</hgzmw>
+			<hgzmw>	~(  l-l)~	</hgzmw>
+			<ovevofk>	(^-^)!!	</ovevofk>
+		</hl_ufoo>
+	</vk20_xlkl>
+	
+	<vk20_rxvdrmw1>
+		<sfmtib>
+			<uvvwrmt>	·ÀÀÖ¾µ!	</uvvwrmt>
+			<wzmtvi>	ºº°òÀÌ ÇÊ°äÇÏ¼×!!	</wzmtvi>
+			<wvzw>	±Æ...	</wvzw>
+			<hgzmw>	·ÔÀÌ¿¡ ·Ô¿í²Í¾µ...	</hgzmw>
+			<ovevofk>	ÁÁ¾···!	</ovevofk>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	·ÀÀÖ¾µ!	</uvvwrmt>
+			<wzmtvi>	ºº°òÀÌ ÇÊ°äÇÏ¼×!!	</wzmtvi>
+			<wvzw>	±Æ...	</wvzw>
+			<hgzmw>	·ÔÀÌ¿¡ ·Ô¿í²Í¾µ...	</hgzmw>
+			<ovevofk>	ÁÁ¾···!	</ovevofk>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	ÁÁ³Ò!	</uvvwrmt>
+			<wzmtvi>	ºº°òÀÌ ÇÊ°äÇÏ¼×!!	</wzmtvi>
+			<wvzw>	±Æ...	</wvzw>
+			<hgzmw>	¶Ù¹÷ÀÌ Â÷¾µ	</hgzmw>
+			<hgzmw>	¾×·£·£·£·£...	</hgzmw>
+			<ovevofk>	¿¨º°ÀÏ³³	</ovevofk>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	...	</uvvwrmt>
+			<wzmtvi>	Á¹²ÉÇÏ²Ã¿Ô !!	</wzmtvi>
+			<wzmtvi>	À§ÇèÇÏ¼×!!!	</wzmtvi>
+			<wvzw>	ºº°òÀÌ ·øºÇ±î ¶Ì±ÈÇÏ¼×..	</wvzw>
+			<hgzmw>	¶Ù¹÷ÀÌ Â÷¾µ	</hgzmw>
+			<hgzmw>	¾×·£·£·£·£...	</hgzmw>
+			<ovevofk>	·ÚÁö¾···!	</ovevofk>
+			<ovevofk>	¿¨º°ÀÏ³³	</ovevofk>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	¾×··ÇÏ²Ã¿Ô !!	</uvvwrmt>
+			<wzmtvi>	Á¹²ÉÇÏ²Ã¿Ô !!	</wzmtvi>
+			<wzmtvi>	À§ÇèÇÏ¼×!!!	</wzmtvi>
+			<wvzw>	ºº°òÀÌ ·øºÇ±î ¶Ì±ÈÇÏ¼×..	</wvzw>
+			<hgzmw>	¶Ù¹÷ÀÌ Â÷¾µ	</hgzmw>
+			<hgzmw>	¾×·£·£·£·£...	</hgzmw>
+			<ovevofk>	·ÚÁö¾···!	</ovevofk>
+			<ovevofk>	¿¨º°ÀÏ³³	</ovevofk>
+		</hl_ufoo>
+	</vk20_rxvdrmw1>
+	
+	<vk20_rxvdrmw2>
+		<sfmtib>
+			<uvvwrmt>	·ÀÀÖ¼×°ä...	</uvvwrmt>
+			<wzmtvi>	ºº°òÀÌ ÇÊ°äÇÑ¿¡°ä?	</wzmtvi>
+			<wvzw>	Èû¼´°ä..	</wvzw>
+			<hgzmw>	Èì...	</hgzmw>
+			<ovevofk>	ÃàÇÏÇØ°ä!	</ovevofk>
+		</sfmtib>
+
+		<yrg_sfmtib>
+			<uvvwrmt>	·ÀÀÖ¼×°ä...	</uvvwrmt>
+			<wzmtvi>	ºº°òÀÌ ÇÊ°äÇÑ¿¡°ä?	</wzmtvi>
+			<wvzw>	Èû¼´°ä..	</wvzw>
+			<hgzmw>	Èì...	</hgzmw>
+			<ovevofk>	ÃàÇÏÇØ°ä!	</ovevofk>
+		</yrg_sfmtib>
+
+		<mlgrmt>
+			<uvvwrmt>	ÁÁ±Æ°ä	</uvvwrmt>
+			<wzmtvi>	ºº°òÀÌ ÇÊ°äÇÑ¿¡°ä?	</wzmtvi>
+			<wvzw>	Èû¼´°ä..	</wvzw>
+			<hgzmw>	¾êÅÐ Á¤·®¿¡ ÇÊ°äÇØ°ä	</hgzmw>
+			<hgzmw>	Èå±Æ±Ï	</hgzmw>
+			<ovevofk>	ÃàÇÏÇØ°ä!	</ovevofk>
+		</mlgrmt>
+
+		<ufoo>
+			<uvvwrmt>	...	</uvvwrmt>
+			<wzmtvi>	ºº°òÀÌ ÇÊ°äÇÑ¿¡°ä?	</wzmtvi>
+			<wzmtvi>	±î³­ ºº·Á¿¡°ä!	</wzmtvi>
+			<wvzw>	Á¦¿¡ ÁöÄÑºå·®Áö ·øÇß¼×°ä..	</wvzw>
+			<hgzmw>	¾êÅÐ Á¤·®¿¡ ÇÊ°äÇØ°ä	</hgzmw>
+			<hgzmw>	Èå±Æ±Ï	</hgzmw>
+			<ovevofk>	ÃàÇÏÇØ°ä!	</ovevofk>
+			<ovevofk>	·ÚÁ®°ä!	</ovevofk>
+		</ufoo>
+
+		<hl_ufoo>
+			<uvvwrmt>	¾«¸Ó¼×°ä...	</uvvwrmt>
+			<wzmtvi>	ºº°òÀÌ ÇÊ°äÇÑ¿¡°ä?	</wzmtvi>
+			<wzmtvi>	±î³­ ºº·Á¿¡°ä!	</wzmtvi>
+			<wvzw>	Åª..	</wvzw>
+			<hgzmw>	¾êÅÐ Á¤·®¿¡ ÇÊ°äÇØ°ä	</hgzmw>
+			<hgzmw>	Èå±Æ±Ï	</hgzmw>
+			<ovevofk>	³µÀåÇÏ»Â ·ð²À µ·¾â ÁÁ±Æ°ä	</ovevofk>
+			<ovevofk>	·ÚÁ®°ä!	</ovevofk>
+		</hl_ufoo>
+	</vk20_rxvdrmw2>
+
+	<WZIP_OLIW2>
+		<sfmtib>
+			<uvvwrmt>	ÃÖ¿í¹ó ÇÒ ³ø ±øÁö·· ·ÔÀ´··Àµ ÇÏ¾µ.	</uvvwrmt>
+			<wzmtvi>	±îºÒ ³Ó°¡³­ Á×À²ÀÇ ¼´À²ÀÌ Áøº°ÇÏ»Â¾·¼ª	</wzmtvi>
+			<wvzw>	¾×¸·¿Ô ÇÏÂúÁø ±ÊÀµ Á×À²ÀÌ±ú»Ù.	</wvzw>
+			<hgzmw>	¿Ç¶æÁö¾µ¡¦	</hgzmw>
+			<ovevofk>	Èì¡¦(±±-ÀÍ)	</ovevofk>
+			<kviuli_1>	(Â¦)(Â¦)(Â¦)ÇÏ!ÇÏ! »õ ÀçÁÖ·¦ µÎ¸Áµ·¿Å¹ó!	</kviuli_1>
+			<kviuli_2>	¼ª! »ÙÅ©-OLIW»ÔÀÇ ·¹¸ÂÀ´ »À¼¢¿Ô ÇØÁÖ¿Ô¤º¡¦±î? 	</kviuli_2>
+			<kviuli_3>	µ·ÀÌ»À¼Ä? ÀÌ OLIW»ÔÀÇ ÇÑÁ¤ÆÇ ÄÃ¸µ³ÇÀÌ!	</kviuli_3>
+		</sfmtib>
+		<yrg_sfmtib>
+			<uvvwrmt>	ÃÖ¿í¹ó ÇÒ ³ø ±øÁö·· ·ÔÀ´··Àµ ÇÏ¾µ.	</uvvwrmt>
+			<wzmtvi>	±îºÒ ³Ó°¡³­ Á×À²ÀÇ ¼´À²ÀÌ Áøº°ÇÏ»Â¾·¼ª	</wzmtvi>
+			<wvzw>	¾×¸·¿Ô ÇÏÂúÁø ±ÊÀµ Á×À²ÀÌ±ú»Ù.	</wvzw>
+			<hgzmw>	¿Ç¶æÁö¾µ¡¦	</hgzmw>
+			<ovevofk>	Èì¡¦(±±-ÀÍ)	</ovevofk>
+			<kviuli_1>	(Â¦)(Â¦)(Â¦)ÇÏ!ÇÏ! »õ ÀçÁÖ·¦ µÎ¸Áµ·¿Å¹ó!	</kviuli_1>
+			<kviuli_2>	¼ª! »ÙÅ©-OLIW»ÔÀÇ ·¹¸ÂÀ´ »À¼¢¿Ô ÇØÁÖ¿Ô¤º¡¦±î? 	</kviuli_2>
+			<kviuli_3>	µ·ÀÌ»À¼Ä? ÀÌ OLIW»ÔÀÇ ÇÑÁ¤ÆÇ ÄÃ¸µ³ÇÀÌ!	</kviuli_3>
+		</yrg_sfmtib>
+		<mlgrmt>
+			<uvvwrmt>	ÃÖ¿í¹ó ÇÒ ³ø ±øÁö·· ·ÔÀ´··Àµ ÇÏ¾µ.	</uvvwrmt>
+			<wzmtvi>	±îºÒ ³Ó°¡³­ Á×À²ÀÇ ¼´À²ÀÌ Áøº°ÇÏ»Â¾·¼ª	</wzmtvi>
+			<wvzw>	¾×¸·¿Ô ÇÏÂúÁø ±ÊÀµ Á×À²ÀÌ±ú»Ù.	</wvzw>
+			<hgzmw>	ÁøÁ¤ÇÑ ±îºÒ ³Ó°¡³­ ¼´¿¡ °Ô¼ë¹ó.	</hgzmw>
+			<hgzmw>	¶ãµ·»Ù »õ Â£Àµ.. ±ÏÈæÀÇ È¥º¸ ¾×·®¿í ÆÄ·ê..	</hgzmw>
+			<ovevofk>	Èì¡¦(±±-ÀÍ)	</ovevofk>
+			<kviuli_1>	(Â¦)(Â¦)(Â¦)ÇÏ!ÇÏ! »õ ÀçÁÖ·¦ µÎ¸Áµ·¿Å¹ó!	</kviuli_1>
+			<kviuli_2>	¼ª! »ÙÅ©-OLIW»ÔÀÇ ·¹¸ÂÀ´ »À¼¢¿Ô ÇØÁÖ¿Ô¤º¡¦±î? 	</kviuli_2>
+			<kviuli_3>	µ·ÀÌ»À¼Ä? ÀÌ OLIW»ÔÀÇ ÇÑÁ¤ÆÇ ÄÃ¸µ³ÇÀÌ!	</kviuli_3>
+		</mlgrmt>
+		<ufoo>
+			<uvvwrmt>	¾×-··	</uvvwrmt>
+			<wzmtvi>	±îºÒ ³Ó°¡³­ Á×À²ÀÇ ¼´À²ÀÌ Áøº°ÇÏ»Â¾·¼ª	</wzmtvi>
+			<wvzw>	¾×¸·¿Ô ÇÏÂúÁø ±ÊÀµ Á×À²ÀÌ±ú»Ù.	</wvzw>
+			<hgzmw>	ÁøÁ¤ÇÑ ±îºÒ ³Ó°¡³­ ¼´¿¡ °Ô¼ë¹ó.	</hgzmw>
+			<hgzmw>	¶ãµ·»Ù »õ Â£Àµ.. ±ÏÈæÀÇ È¥º¸ ¾×·®¿í ÆÄ·ê..	</hgzmw>
+			<ovevofk>	Èì¡¦(±±-ÀÍ)	</ovevofk>
+			<kviuli_1>	(Â¦)(Â¦)(Â¦)ÇÏ!ÇÏ! »õ ÀçÁÖ·¦ µÎ¸Áµ·¿Å¹ó!	</kviuli_1>
+			<kviuli_2>	¼ª! »ÙÅ©-OLIW»ÔÀÇ ·¹¸ÂÀ´ »À¼¢¿Ô ÇØÁÖ¿Ô¤º¡¦±î? 	</kviuli_2>
+			<kviuli_3>	µ·ÀÌ»À¼Ä? ÀÌ OLIW»ÔÀÇ ÇÑÁ¤ÆÇ ÄÃ¸µ³ÇÀÌ!	</kviuli_3>
+		</ufoo>
+		<hl_ufoo>
+			<uvvwrmt>	¾×-··	</uvvwrmt>
+			<wzmtvi>	±îºÒ ³Ó°¡³­ Á×À²ÀÇ ¼´À²ÀÌ Áøº°ÇÏ»Â¾·¼ª	</wzmtvi>
+			<wvzw>	¾×¸·¿Ô ÇÏÂúÁø ±ÊÀµ Á×À²ÀÌ±ú»Ù.	</wvzw>
+			<hgzmw>	ÁøÁ¤ÇÑ ±îºÒ ³Ó°¡³­ ¼´¿¡ °Ô¼ë¹ó.	</hgzmw>
+			<hgzmw>	¶ãµ·»Ù »õ Â£Àµ.. ±ÏÈæÀÇ È¥º¸ ¾×·®¿í ÆÄ·ê..	</hgzmw>
+			<ovevofk>	Èì¡¦(±±-ÀÍ)	</ovevofk>
+			<kviuli_1>	(Â¦)(Â¦)(Â¦)ÇÏ!ÇÏ! »õ ÀçÁÖ·¦ µÎ¸Áµ·¿Å¹ó!	</kviuli_1>
+			<kviuli_2>	¼ª! »ÙÅ©-OLIW»ÔÀÇ ·¹¸ÂÀ´ »À¼¢¿Ô ÇØÁÖ¿Ô¤º¡¦±î? 	</kviuli_2>
+			<kviuli_3>	µ·ÀÌ»À¼Ä? ÀÌ OLIW»ÔÀÇ ÇÑÁ¤ÆÇ ÄÃ¸µ³ÇÀÌ!	</kviuli_3>
+		</hl_ufoo>
+	</WZIP_OLIW2>
+
+	<EI_XSZL>				
+		<sfmtib>			
+			<uvvwrmt>	Â÷°À Â÷°À~ (¶è¿íÇÁ»ÙÂ÷°À~)	</uvvwrmt>
+			<uvvwrmt>	Â÷°ÀÂ÷°À! Â÷°À. (·¹Ä§ ¶è¿íÆÍ»ÙÂ÷°À! ¿í·¹°öÂ÷°À.)	</uvvwrmt>
+			<sfmgrmt>	Â÷°À, Â÷°À~ (·ðÇè¿¡, »É¸ÂÀÖ»ÙÂ÷°À~)	</sfmgrmt>
+			<sfmgrmt>	Â÷°ÀÂ÷°À~. (´ç¼Éºº ÁÁÁö·· ¶è¿¡ ¿íÇÁ»ÙÂ÷°À~.)	</sfmgrmt>
+			<wzmtvi>	Â÷°À! (À§ÇèÇØÂ÷°À!)	</wzmtvi>
+			<wzmtvi>	Â÷°ÀÂ÷°À¡¦ (·ðÇè¿¡»Â Èûºé»ÙÂ÷°À¡¦)	</wzmtvi>
+			<wvzw>	Â÷°ÀÂ÷°À~ (Á¤²ÅÂ÷¸ÁÂ÷°À~)	</wvzw>
+			<wvzw>	Â÷°À~ (Å«ÀÏÀÌ±ßÂ÷°À~)	</wvzw>
+			<hgzmw>	Â÷°ÀÂ÷°À. (¼¯±±¿¡ ÁÁ±ÆÂ÷°À.)	</hgzmw>
+			<hgzmw>	Â÷°À? (µÒ¸¹±îÂ÷°À?)	</hgzmw>
+			<xlmmvxg>	Â÷°ÀÂ÷°À! (¾â»Ù¸È»ÙÂ÷°À!)	</xlmmvxg>
+			<xlmmvxg>	Â÷°À~! Â÷°ÀÂ÷°À. (±È¼çÂ÷°À~! °À»Ãºº ¹Ç µ´»ÙÂ÷°À.)	</xlmmvxg>
+			<ovevofk>	Â÷°À Â÷°À! (»õ ¿­ÇØÁ¼»ÙÂ÷°À!)	</ovevofk>
+			<ovevofk>	Â÷°ÀÂ÷°ÀÂ÷°À! (ÀÌ ¾â³³¸Î ¿¡»Â¿Å»ÙÂ÷°À!)	</ovevofk>
+			<kviuli_1>	Â÷°À Â÷°À. (°À»Ãºº Èû¼´ÀÚÂ÷°À.)	</kviuli_1>
+			<kviuli_2>	Â÷°ÀÂ÷°À~ (ÁÁÀµ ÀÏÀÌ ÀÖÀ´ ¿Í ¿¿±ÆÂ÷°À~)	</kviuli_2>
+			<kviuli_3>	Â÷°À Â÷°À~ (ÁÁÀµ °¶¿¨ÀÌ ºç»ÙÂ÷°À~)	</kviuli_3>
+			<kviuli_h>	Â÷°À Â÷°ÀÂ÷°À~. (Â÷°À ºîÀåÀÌ»ÙÂ÷°À~.)	</kviuli_h>
+		</sfmtib>			
+		<yrg_sfmtib>			
+			<uvvwrmt>	Â÷°À Â÷°À~ (¿í·¹°öÂ÷°À~)	</uvvwrmt>
+			<uvvwrmt>	Â÷°À Â÷°ÀÂ÷°À~ (·ðÇè¿¡ºº ·ÀÀÖ»Â ¿Å ·Ô±îÂ÷°À~)	</uvvwrmt>
+			<sfmgrmt>	Â÷°À Â÷°À! (Èû¼´¹óÂ÷°À!)	</sfmgrmt>
+			<sfmgrmt>	Â÷°ÀÂ÷°À~ (»õ ¿­ÇØÁú ¿Å±ßÂ÷°À~)	</sfmgrmt>
+			<wzmtvi>	Â÷°ÀÂ÷°À, Â÷°À~ (À§ÇèÇÏ·é ºº·Á¿¡Â÷°À~)	</wzmtvi>
+			<wzmtvi>	Â÷°À? Â÷°ÀÂ÷°À? (ºº·Á¿¡»Â ÆíÀÌ ¼»Áö ±Ê¿Ú±îÂ÷°À?)	</wzmtvi>
+			<wvzw>	Â÷°À~¡¦ (¾â°î¼´Â÷°À~¡¦)	</wvzw>
+			<wvzw>	Â÷°ÀÂ÷°À~ (ÈûÀ´ ¼´¹óÂ÷°À~)	</wvzw>
+			<hgzmw>	Â÷°ÀÂ÷°À. (ÁÁÀµ ÀÏÀÌ ÀÖÀ´ ¿Í ¿¿±ÆÂ÷°À.)	</hgzmw>
+			<hgzmw>	Â÷°ÀÂ÷°À~! (´êÃ¥ÇÏ¾â ÁÁÀµ ¼¯±±»ÙÂ÷°À~!)	</hgzmw>
+			<xlmmvxg>	Â÷°ÀÂ÷°À! (¾â»Ù¸È»ÙÂ÷°À!)	</xlmmvxg>
+			<xlmmvxg>	Â÷°À~! Â÷°ÀÂ÷°À. (±È¼çÂ÷°À~! °À»Ãºº ¹Ç µ´»ÙÂ÷°À.)	</xlmmvxg>
+			<ovevofk>	Â÷°À Â÷°À! (»õ ¿­ÇØÁ¼»ÙÂ÷°À!)	</ovevofk>
+			<ovevofk>	Â÷°ÀÂ÷°À, Â÷°À! (ÀÌ ¾â³³¸Î ¿¡»Â¿Å»ÙÂ÷°À!)	</ovevofk>
+			<kviuli_1>	Â÷°À Â÷°À. (°À»Ãºº Èû¼´ÀÚÂ÷°À.)	</kviuli_1>
+			<kviuli_2>	Â÷°ÀÂ÷°À~ (ÁÁÀµ ÀÏÀÌ ÀÖÀ´ ¿Í ¿¿±ÆÂ÷°À~)	</kviuli_2>
+			<kviuli_3>	Â÷°À Â÷°À~ (ÁÁÀµ °¶¿¨ÀÌ ºç»ÙÂ÷°À~)	</kviuli_3>
+			<kviuli_h>	Â÷°À Â÷°ÀÂ÷°À~. (Â÷°À ºîÀåÀÌ»ÙÂ÷°À~.)	</kviuli_h>
+		</yrg_sfmtib>			
+		<mlgrmt>			
+			<uvvwrmt>	Â÷°À~ (·ÀÀÖ»ÙÂ÷°À~)	</uvvwrmt>
+			<uvvwrmt>	Â÷°À Â÷°À! (Áñ¿Å°î ²Ä´ç²Ã¿£ÀÌ»ÙÂ÷°À!)	</uvvwrmt>
+			<sfmgrmt>	Â÷°À Â÷°À~ (°À»Ãºº °­²ÉÀÌ¼×Â÷°À~)	</sfmgrmt>
+			<sfmgrmt>	Â÷°À! Â÷°À! (ÀßÇÑ»ÙÂ÷°À! ÀßÇÑ»ÙÂ÷°À!)	</sfmgrmt>
+			<wzmtvi>	Â÷°À Â÷°À~ (±ÆÀÌÅÛÀ´ ²á¹óÂ÷°À~)	</wzmtvi>
+			<wzmtvi>	Â÷°ÀÂ÷°À! (ÈÄÅðºº ¶æ¶ýÀÌ»ÙÂ÷°À!)	</wzmtvi>
+			<wvzw>	Â÷°ÀÂ÷°À~ (¾¦ÂúÀ·»Ï »Ù²Ã ÇØµ·ÀÚÂ÷°À~)	</wvzw>
+			<wvzw>	Â÷°À, Â÷°ÀÂ÷°À~ (¾×¸½ ³öºº ÀÖÁöÂ÷°À~)	</wvzw>
+			<hgzmw>	Â÷°À~ (ÁÁÀµ °¶¿¨ÀÌ ºç»ÙÂ÷°À~)	</hgzmw>
+			<hgzmw>	Â÷°ÀÂ÷°À~ (Áñ¿Å°î ¼¯ÀÌ»ÙÂ÷°À~)	</hgzmw>
+			<xlmmvxg>	Â÷°ÀÂ÷°À~! (¾â»Ù¸È»Ù¾·Â÷°À~!)	</xlmmvxg>
+			<xlmmvxg>	Â÷°À Â÷°À. (Â÷°À ºîÀåÀÌ»ÙÂ÷°À.)	</xlmmvxg>
+			<ovevofk>	Â÷°À Â÷°À! (»õ ¿­ÇØÁ¼»ÙÂ÷°À!)	</ovevofk>
+			<ovevofk>	Â÷°ÀÂ÷°À, Â÷°À! (ÀÌ ¾â³³¸Î ¿¡»Â¿Å»ÙÂ÷°À!)	</ovevofk>
+			<kviuli_1>	Â÷°À Â÷°À. (°À»Ãºº Èû¼´ÀÚÂ÷°À.)	</kviuli_1>
+			<kviuli_2>	Â÷°ÀÂ÷°À~ (ÁÁÀµ ÀÏÀÌ ÀÖÀ´ ¿Í ¿¿±ÆÂ÷°À~)	</kviuli_2>
+			<kviuli_3>	Â÷°À Â÷°À~ (ÁÁÀµ °¶¿¨ÀÌ ºç»ÙÂ÷°À~)	</kviuli_3>
+			<kviuli_h>	Â÷°À Â÷°ÀÂ÷°À~. (Â÷°À ºîÀåÀÌ»ÙÂ÷°À~.)	</kviuli_h>
+		</mlgrmt>			
+		<ufoo>			
+			<uvvwrmt>	Â÷°À Â÷°À. (·¶ÀÌ ·Ô±ú»ÙÂ÷°À.)	</uvvwrmt>
+			<uvvwrmt>	Â÷°ÀÂ÷°À~. (¶èµÎ·£»Ù»Ï¾îÂ÷°À~.)	</uvvwrmt>
+			<sfmgrmt>	Â÷°À Â÷°À~ (Â÷°Àºº ¶µ¿¡ ÇÒ ³ö ÀÖÀ´ ¿Í ¿¿»ÙÂ÷°À~)	</sfmgrmt>
+			<sfmgrmt>	Â÷°ÀÂ÷°À¡¦ (¶èµÒ¸¯³­ Èûºé±îÂ÷°À¡¦)	</sfmgrmt>
+			<wzmtvi>	Â÷°À! Â÷°ÀÂ÷°À! (ÈÄÅð»ÙÂ÷°À! ÀÏ»Ü ºº·ÁÂ÷°À!)	</wzmtvi>
+			<wzmtvi>	Â÷°ÀÂ÷°À! (±ÆÀÌÅÛÀ´ ±½»Â¿Å±ßÂ÷°À!)	</wzmtvi>
+			<wvzw>	Â÷°À~ Â÷°ÀÂ÷°À~ (¾×¸½ ³öºº ÀÖÁöÂ÷°À~)	</wvzw>
+			<wvzw>	Â÷°ÀÂ÷°À~ (ÈûÀ´ ¼´¹óÂ÷°À~)	</wvzw>
+			<hgzmw>	Â÷°À~ (ÁÁÀµ °¶¿¨ÀÌ ºç»ÙÂ÷°À~)	</hgzmw>
+			<hgzmw>	Â÷°ÀÂ÷°À~ (Áñ¿Å°î ¼¯ÀÌ»ÙÂ÷°À~)	</hgzmw>
+			<xlmmvxg>	Â÷°À~! Â÷°ÀÂ÷°À. (±È¼çÂ÷°À~! °À»Ãºº ¹Ç µ´»ÙÂ÷°À.)	</xlmmvxg>
+			<xlmmvxg>	Â÷°À~ Â÷°À. (Â÷°À ºîÀåÀÌ»ÙÂ÷°À.)	</xlmmvxg>
+			<ovevofk>	Â÷°À Â÷°À! (»õ ¿­ÇØÁ¼»ÙÂ÷°À!)	</ovevofk>
+			<ovevofk>	Â÷°ÀÂ÷°À, Â÷°À! (ÀÌ ¾â³³¸Î ¿¡»Â¿Å»ÙÂ÷°À!)	</ovevofk>
+			<kviuli_1>	Â÷°À Â÷°À. (°À»Ãºº Èû¼´ÀÚÂ÷°À.)	</kviuli_1>
+			<kviuli_2>	Â÷°ÀÂ÷°À~ (ÁÁÀµ ÀÏÀÌ ÀÖÀ´ ¿Í ¿¿±ÆÂ÷°À~)	</kviuli_2>
+			<kviuli_3>	Â÷°À Â÷°À~ (ÁÁÀµ °¶¿¨ÀÌ ºç»ÙÂ÷°À~)	</kviuli_3>
+			<kviuli_h>	Â÷°À Â÷°ÀÂ÷°À~. (Â÷°À ºîÀåÀÌ»ÙÂ÷°À~.)	</kviuli_h>
+		</ufoo>			
+		<hl_ufoo>			
+			<uvvwrmt>	Â÷°À~ Â÷°À~~. (¶è¿¡ µÒ¸¯³­ °òÁ÷ÀÌ¾â Èûºé»ÙÂ÷°À~.)	</uvvwrmt>
+			<uvvwrmt>	Â÷°ÀÂ÷°À Â÷°À~. (¼Ê¶« ·¶ÀÌ ·Ô±ú»ÙÂ÷°À~.)	</uvvwrmt>
+			<sfmgrmt>	Â÷°À Â÷°À~ (Â÷°Àºº ¶µ¿¡ ÇÒ ³ö ÀÖÀ´ ¿Í ¿¿»ÙÂ÷°À~)	</sfmgrmt>
+			<sfmgrmt>	Â÷°ÀÂ÷°À¡¦ (¶èµÒ¸¯³­ Èûºé±îÂ÷°À¡¦)	</sfmgrmt>
+			<wzmtvi>	Â÷°À! Â÷°ÀÂ÷°À! (ÈÄÅð»ÙÂ÷°À! ÀÏ»Ü ºº·ÁÂ÷°À!)	</wzmtvi>
+			<wzmtvi>	Â÷°ÀÂ÷°À! (±ÆÀÌÅÛÀ´ ±½»Â¿Å±ßÂ÷°À!)	</wzmtvi>
+			<wvzw>	Â÷°À Â÷°ÀÂ÷°À~ (¾×¸½ ³öºº ÀÖÁöÂ÷°À~)	</wvzw>
+			<wvzw>	Â÷°ÀÂ÷°À~ (ÈûÀ´ ¼´¹óÂ÷°À~)	</wvzw>
+			<hgzmw>	Â÷°À~ (ÁÁÀµ °¶¿¨ÀÌ ºç»ÙÂ÷°À~)	</hgzmw>
+			<hgzmw>	Â÷°ÀÂ÷°À~ (Áñ¿Å°î ¼¯ÀÌ»ÙÂ÷°À~)	</hgzmw>
+			<xlmmvxg>	Â÷°À~! Â÷°ÀÂ÷°À. (±È¼çÂ÷°À~! °À»Ãºº ¹Ç µ´»ÙÂ÷°À.)	</xlmmvxg>
+			<xlmmvxg>	Â÷°À Â÷°ÀÂ÷°À. (Â÷°À ºîÀåÀÌ»ÙÂ÷°À.)	</xlmmvxg>
+			<ovevofk>	Â÷°À Â÷°À! (»õ ¿­ÇØÁ¼»ÙÂ÷°À!)	</ovevofk>
+			<ovevofk>	Â÷°ÀÂ÷°À, Â÷°À! (ÀÌ ¾â³³¸Î ¿¡»Â¿Å»ÙÂ÷°À!)	</ovevofk>
+			<kviuli_1>	Â÷°À Â÷°À. (°À»Ãºº Èû¼´ÀÚÂ÷°À.)	</kviuli_1>
+			<kviuli_2>	Â÷°ÀÂ÷°À~ (ÁÁÀµ ÀÏÀÌ ÀÖÀ´ ¿Í ¿¿±ÆÂ÷°À~)	</kviuli_2>
+			<kviuli_3>	Â÷°À Â÷°À~ (ÁÁÀµ °¶¿¨ÀÌ ºç»ÙÂ÷°À~)	</kviuli_3>
+			<kviuli_h>	Â÷°À Â÷°ÀÂ÷°À~. (Â÷°À ºîÀåÀÌ»ÙÂ÷°À~.)	</kviuli_h>
+		</hl_ufoo>			
+	</EI_XSZL>				
+
+	<vk21_rxvhvzslihv>
+		<sfmtib>
+			<uvvwrmt>	½ó-	</uvvwrmt>
+			<wzmtvi>	½Ù½ó½ó	</wzmtvi>
+			<wvzw>	½ó-½ó°ì...	</wvzw>
+			<hgzmw>	½ó°ì-! ½ó.½ó.½ó.!!	</hgzmw>
+			<ovevofk>	½ó-½ó-¾·~ ½ó½ó½ó-°ì~	</ovevofk>
+		</sfmtib>
+		<yrg_sfmtib>
+			<uvvwrmt>	½ó-	</uvvwrmt>
+			<wzmtvi>	½Ù½ó½ó	</wzmtvi>
+			<wvzw>	½ó-½ó°ì...	</wvzw>
+			<hgzmw>	½ó°ì-! ½ó.½ó.½ó.!!	</hgzmw>
+			<ovevofk>	½ó-½ó-¾·~ ½ó½ó½ó-°ì~	</ovevofk>
+		</yrg_sfmtib>
+		<mlgrmt>
+			<uvvwrmt>	½ó-	</uvvwrmt>
+			<wzmtvi>	½Ù½ó½ó	</wzmtvi>
+			<wvzw>	½ó-½ó°ì...	</wvzw>
+			<hgzmw>	½ó°ì-! ½ó.½ó.½ó.!!	</hgzmw>
+			<ovevofk>	½ó-½ó-¾·~ ½ó½ó½ó-°ì~	</ovevofk>
+		</mlgrmt>
+		<ufoo>
+			<uvvwrmt>	½ó! ½ó°ì°ì!!!!	</uvvwrmt>
+			<wzmtvi>	½Ù½ó½ó	</wzmtvi>
+			<wvzw>	½ó-½ó°ì...	</wvzw>
+			<hgzmw>	½ó°ì-! ½ó.½ó.½ó.!!	</hgzmw>
+			<ovevofk>	½ó-½ó-¾·~ ½ó½ó½ó-°ì~	</ovevofk>
+		</ufoo>
+		<hl_ufoo>
+			<uvvwrmt>	½ó! ½ó°ì°ì!!!!	</uvvwrmt>
+			<wzmtvi>	½Ù½ó½ó	</wzmtvi>
+			<wvzw>	½ó-½ó°ì...	</wvzw>
+			<hgzmw>	½ó°ì-! ½ó.½ó.½ó.!!	</hgzmw>
+			<ovevofk>	½ó-½ó-¾·~ ½ó½ó½ó-°ì~	</ovevofk>
+		</hl_ufoo>
+	</vk21_rxvhvzslihv>
+		<XOY_HH_UX>			
+		<sfmtib>			
+			<uvvwrmt>	ÀÌ¸·¿Ô ·ÀÀÖ»Â À²²ÄÀ´ À§ÇØ³­¹ó·é ·ðºç ¿É Æ÷¾âÇÒ ³ö ÀÖ±î	</uvvwrmt>
+			<uvvwrmt>	·ÅÀÏ ÀÌ ³ø¿£··À´ À§ÇØ ¼ë¸ÂÇÏ¿í ÀÖÁö	</uvvwrmt>
+			<uvvwrmt>	´îÀµ ´ç¹÷À´ ÇÇ¿ïÇÏ¿Ô ÇÏÁö··, ·ÀÀÖ»Â À²²ÄÀµ ´ç¹÷À´ »Ù²Ã ´ì¿Ô ÇÑ»Ù!	</uvvwrmt>
+			<sfmgrmt>	ÀÌ¾â·é ··ÂùÀ´ Áñ¿Ü±ßÁö!	</sfmgrmt>
+			<sfmgrmt>	»ÙÀ²°£ ¿£²ÄÀ´ »õ ¼Ë¼ËÇÏ¿Ô Ã¬¿Ü±ß¿Ú±î	</sfmgrmt>
+			<sfmgrmt>	°Õ ¶¿±îÁÙ Å×»Ù	</sfmgrmt>
+			<wzmtvi>	··±à ¼´¿¡ ±½¸¯Áø»Ù·é ¾×¿Ç µÐ·í ¶è¿íÆÄ³­ÀÏ ¿Å±ß~	</wzmtvi>
+			<wzmtvi>	²Î°òµ·»Ù »õ ¼ª´Û ¿Ç, ¶è¿íÇÂ ´óÅÂ¸Î ²Î°ì»Â ¿Å±ß...	</wzmtvi>
+			<wzmtvi>	·¹Áö·¸ ··ÂùÀ´ ·ÔÀ´ ²Ã¿£ÀÌ ÁÖ±îÁö¾æ!	</wzmtvi>
+			<wvzw>	¼ªºº »©°ö±ß¿Ú»Ù	</wvzw>
+			<wvzw>	»¯»Â ¿Ç ¼´ Æ¯¾ÇÀÎº¥!	</wvzw>
+			<wvzw>	¼ª»Â »©¾·? °©¾ä ±îºð?	</wvzw>
+			<hgzmw>	²É²ÉÇØ~¶¶ Á´ ·ÔÀ´¸¡?	</hgzmw>
+			<hgzmw>	°©¾â Ä¡Å½Áý ÀÖ±î?	</hgzmw>
+			<hgzmw>	¶¶ ÇØ±ß ÇÒÁö ´ý¿¢¼º±î?	</hgzmw>
+			<xlmmvxg>	Áß±Ó ºº²Ã°¡»Â ·ÀÁý ¿Å·®¿¡ ÀÖÀ´¾î?	</xlmmvxg>
+			<xlmmvxg>	·ñ°å? ¼´¿¡ ¶èµÎ·¥ ´óÅÂ¿¡ ±Æ»Ï·é ·´ºº ½¨¼´Áö ·¹!	</xlmmvxg>
+			<xlmmvxg>	·ð·£Å©°¡ ´ç»Â ´ç¹÷ºéÀµ °À¸§º°±È ·ñ°åÀ´ ±È ÇÑ»Ù·ç?	</xlmmvxg>
+			<ovevofk>	ºåºð±î ¸¶µ§±÷! ¾Ùº¥ ¼­ ¼´ Á¡²ÉÀ´ »õ ±÷¾×¸¶ÀÌºåÇÏ¿í ²Í±î~	</ovevofk>
+			<ovevofk>	¼´¿¡ ÇÊ°äÇÑ ¿Ç Ä®¸Î·®Áö, ¿æÇèÄ¡¿¡ ±Æ»Ï±ß~	</ovevofk>
+			<ovevofk>	¸¶µ§±÷ ³µ¿ø~ ¾×¸¼ ÀÌÁ¦ ¶ä ·Ô±îºº ºÅ?	</ovevofk>
+			<kviuli_1>	±Æ»Ù»Ù»Ù»Ù»Ù~ ¼ª »ë»ÜÇÏÁö?	</kviuli_1>
+			<kviuli_1>	¼´ ¶î´ìÀµ ····ÇÏÁö ±Ê»Ù¿í	</kviuli_1>
+			<kviuli_1>	°À»Ã ¾··§Àµ ³Ø´çÅÁ ¿¿»Ù..	</kviuli_1>
+			<kviuli_2>	¿ø¾âºº ±ÃÀ·»Ï ·ÀÀÌ ¼ª´ÚÁö ±Ê¼×.	</kviuli_2>
+			<kviuli_2>	°ºÈ¥ ¾¼È¯ÇÏ¿í ²ÍÀµ ´ç¹÷?	</kviuli_2>
+			<kviuli_2>	ÀÌ ³Ò·® ºé¸Á? ¼´ ¶è°¡³­ ¼ª»Â ³Ò·®±ß	</kviuli_2>
+		</sfmtib>			
+		<yrg_sfmtib>			
+			<uvvwrmt>	·ÅÀÏ ÀÌ¸·¿Ô ·Ô¿í ²Í»Ù!	</uvvwrmt>
+			<uvvwrmt>	°À»Ã À²²ÄÀµ Á´ ±÷¾×¸¶ÀÌºåºÇ±ú±î?	</uvvwrmt>
+			<uvvwrmt>	ÀÌ¿Íºº ¼ª ÁÖ»Â ¿Å±ß?	</uvvwrmt>
+			<sfmgrmt>	¼Êºº ¼ªÃ¼¸¼ ¶è¿íÇÃ³ö¸Ï ÀüÅõ¸ÂÀÌ ¿­ÇØÁ®?	</sfmgrmt>
+			<sfmgrmt>	ÀÇÁö¸Î ²Î°ö¹ó!	</sfmgrmt>
+			<sfmgrmt>	·¹Áö·¸ ÇÑ ¶æÀµ ¼´¿¡!	</sfmgrmt>
+			<wzmtvi>	Á¹¾Ý À§ÇèÇÑº¥!	</wzmtvi>
+			<wzmtvi>	ÁÖÀÎºº ¶èµÒ·® ·ø ·ÔÀµ ¿Å±ß?	</wzmtvi>
+			<wzmtvi>	ÀÌ¿Ç ¼ªºº ¿¨»ç ±È ºÅ..	</wzmtvi>
+			<wvzw>	Èûºé·é..»©°ö¶ö·®ÀÚ!	</wvzw>
+			<wvzw>	Ãß°ö.. Á±ÀÌ´óÀÚ ±ø±î?	</wvzw>
+			<wvzw>	ÁÖÀÎ ÀÏ±î¼ª~ÀÌ¸¯·é ÀÌÁ¦ »©¿¡ ¼¯ º¶µÁÁà?	</wvzw>
+			<hgzmw>	°ì·¿ °Ö ´õµ® ÇÇÅ©»ÐÀ´ ÇÒ ³ö ±ø»Â ¿Å±ß?	</hgzmw>
+			<hgzmw>	¼´ ½ÞÀµ ²Ã²Ä°ø~	</hgzmw>
+			<hgzmw>	Áö¾Ý ÇÒ ¿Ô ±ø»Â ¿Å·é, ·ÕÀú ¼ª ·ÔÀ´ ¿Í Á´ ÁÙ¸¡?	</hgzmw>
+			<xlmmvxg>	Á´ ÀÚ¿í ²Í»Ù.. Á´ ÀÌºû ¼Ê¶« ±Ö±½Áö ·¹! 	</xlmmvxg>
+			<xlmmvxg>	ÀÚ¿í ÀÏ±î¼ª³­ Ã¼À²À·¸Î ÇØ±ß ÇÒ ÀÏÀµ ·Ô»Â ¿Í	</xlmmvxg>
+			<xlmmvxg>	ÃÖ¾Ù°¡ ¶¶ Àç¶Õ»Â ÀÏ ºéÀµ ¿Å ±ø±î?	</xlmmvxg>
+			<ovevofk>	ÁÖÀÎÀÌ ¿­ÇØÁ¼»Ù! ¼ª ÀØÀ··é ±È ºÅ~	</ovevofk>
+			<ovevofk>	ÃàÇÏÇÏ»Â ÀÚ·®°£ Ç×´ó ·ÔÀ´ ¿Ô ÀÖÁö, ¾×Ä¡?	</ovevofk>
+			<ovevofk>	ÃàÇÏÇØ~ ¹Ç ¶ßÀüÇß¼×.	</ovevofk>
+			<kviuli_1>	±Æ»Ù»Ù»Ù»Ù»Ù~ ¼ª »ë»ÜÇÏÁö?	</kviuli_1>
+			<kviuli_1>	¼´ ¶î´ìÀµ ····ÇÏÁö ±Ê»Ù¿í	</kviuli_1>
+			<kviuli_1>	°À»Ã ¾··§Àµ ³Ø´çÅÁ ¿¿»Ù..	</kviuli_1>
+			<kviuli_2>	¿ø¾âºº ±ÃÀ·»Ï ·ÀÀÌ ¼ª´ÚÁö ±Ê¼×.	</kviuli_2>
+			<kviuli_2>	°ºÈ¥ ¾¼È¯ÇÏ¿í ²ÍÀµ ´ç¹÷?	</kviuli_2>
+			<kviuli_2>	ÀÌ ³Ò·® ºé¸Á? ¼´ ¶è°¡³­ ¼ª»Â ³Ò·®±ß	</kviuli_2>
+		</yrg_sfmtib>			
+		<mlgrmt>			
+			<uvvwrmt>	Çàµ¶ÀÌ¹õ~ ·Ô¿í ²ÍÀ´ ¹§ ·ÔÀ´ ¿Ô ÀÖ»Â ¿Í!	</uvvwrmt>
+			<uvvwrmt>	¶Ì²Ä··ÀÌ ¼¯ ²Ç·Á²ÃÅ¿Áö ±Ê±Æ	</uvvwrmt>
+			<uvvwrmt>	ÀÌ¿Å ¾¦Âú»Ù~	</uvvwrmt>
+			<sfmgrmt>	¼ªºº Èû Á´ ²áµ³¾î!	</sfmgrmt>
+			<sfmgrmt>	²Â·®ÀÇ ¼°´õ¿¡ ¼­»Ù~	</sfmgrmt>
+			<sfmgrmt>	·ÕÀú ¶¶ Á´ ·Ô±îºº ºÉ¾î? ÈûÀÌ ÇÊ°äÇØ	</sfmgrmt>
+			<wzmtvi>	Àü¸«Àû ÈÄÅð ±î¹§?	</wzmtvi>
+			<wzmtvi>	Á´·· »õ ¶öÅß¡¦	</wzmtvi>
+			<wzmtvi>	·ÕÀú °¸°¡ ¿¡³­ ²Ä´ç ÁØµñ·¦ ÇÏ¿í ÀÖ±îºº ºÉ¾î?	</wzmtvi>
+			<wvzw>	¼´ Á¤²ÅÀµ ¼Ê°Í ÇÔ½½ ÀÖ±î!	</wvzw>
+			<wvzw>	ÁÖÀÎ ´¡·® ÀÏ±î¼ª~ ¼ª º¶µÁ±ßÁö~	</wvzw>
+			<wvzw>	°ì·¾ ºº°ÍÁÙ ÂøÇÑ ´ç¹÷ ±îºð ±ø±î?	</wvzw>
+			<hgzmw>	ÀáÀß ³ö ÀÖ»Â Ä§»ë ±îºð ÀÖ»ÂÁö ±Ë±Æ?	</hgzmw>
+			<hgzmw>	¶ä ·Ô»Â ¿Å ÀØÁö ·¹!	</hgzmw>
+			<hgzmw>	À²... °©¾â ¶¶ Æ¯µ¿ÇÑ ¿Ô ÀÖ±î?	</hgzmw>
+			<xlmmvxg>	¼¯±± ÁÁÀµº¥ ¼ª¿¡³­ Á´ ¿ÈÀÚ!	</xlmmvxg>
+			<xlmmvxg>	¼Ê ±ø»Â ´çÀÌ°¡ ·ô¸¡ ±È ÈÉÃÄ ·Ô±ú±î!	</xlmmvxg>
+			<xlmmvxg>	±îºð ´õ¸Î°î ²Ä»ç ±øÀ´¾î?	</xlmmvxg>
+			<ovevofk>	¶¶ Á´ ·ÔÀ··é³­ ÃàÇÏÇØ±ß ÇÏÁö ±Ê±Æ?	</ovevofk>
+			<ovevofk>	ÁÖÀÎ ¸¶µ§±÷Çß¼×, ¼´ ²Ä´çºº ±÷¾×¸¶ÀÌºå ²ÃÄÑÁÖÁö?	</ovevofk>
+			<ovevofk>	°ì·®»Â ÃÖ¿í±ß!	</ovevofk>
+			<kviuli_1>	±Æ»Ù»Ù»Ù»Ù»Ù~ ¼ª »ë»ÜÇÏÁö?	</kviuli_1>
+			<kviuli_1>	¼´ ¶î´ìÀµ ····ÇÏÁö ±Ê»Ù¿í	</kviuli_1>
+			<kviuli_1>	°À»Ã ¾··§Àµ ³Ø´çÅÁ ¿¿»Ù..	</kviuli_1>
+			<kviuli_2>	¿ø¾âºº ±ÃÀ·»Ï ·ÀÀÌ ¼ª´ÚÁö ±Ê¼×.	</kviuli_2>
+			<kviuli_2>	°ºÈ¥ ¾¼È¯ÇÏ¿í ²ÍÀµ ´ç¹÷?	</kviuli_2>
+			<kviuli_2>	ÀÌ ³Ò·® ºé¸Á? ¼´ ¶è°¡³­ ¼ª»Â ³Ò·®±ß	</kviuli_2>
+		</mlgrmt>			
+		<ufoo>			
+			<uvvwrmt>	ÀÌ ³ø¿£ ·ðºç ¶ø¼ú¿¡ ÀØÇôÁø»Ù~	</uvvwrmt>
+			<uvvwrmt>	¼´ ²Ä´ç¸®À´ ····ÇÏ¿Ô µ·Áö ·¹~	</uvvwrmt>
+			<uvvwrmt>	Çâ¾â¸Î°ö~	</uvvwrmt>
+			<sfmgrmt>	¼ªºº Á´ ¹§·®¿Ô ÇØÁà~	</sfmgrmt>
+			<sfmgrmt>	¼Ê ¹Ò¶è¾â·· ÇÑ ÁÖ·Ô µ´ Àû ÀÖ±î?	</sfmgrmt>
+			<sfmgrmt>	¼´ ²Ç¸ÂÀµ ÀÌ Á¤ºº¿¡ ±Æ»Ï¹ó¾·~	</sfmgrmt>
+			<wzmtvi>	Á¹²ÉÇØ! ±ÆÁ÷Àµ ¼´ À²²ÄÀ´ Á¦¿øÇØ ÁÙ ´ç¹÷ÀÌ ÇÊ°äÇÏ»Ù¿í!	</wzmtvi>
+			<wzmtvi>	°©¾ä ±ÈÀüÇÏÁö ±ÊÀµ ¿Å ¿¿±Æ, ±ó·¥ ¿¡ÀÚ.	</wzmtvi>
+			<wzmtvi>	Á¹¾Ý ¶«³¸»Ù~ ·ÕÀú ¿¡¿í ÀÖÀ´¸¡?	</wzmtvi>
+			<wvzw>	¼­ ºº°òÀÌ ºÇÁö ±ÊÀµ ¿Å ¿¿±Æ...	</wvzw>
+			<wvzw>	ÁÖÀÎ »¯Áö ·¹~ °ì·®ÀÇ ·ðÇèÀµ ±ÆÁ÷ ¼¡¼ªÁö ±Ê±Ò±î	</wvzw>
+			<wvzw>	¼Ê»Â µñ¸Ï ·Ö·® ¿¡Áö··, ¼ÊÀÇ Á¤²ÅÀµ °º°øÇÒ ¿Å±ß	</wvzw>
+			<hgzmw>	¼´ ³ÕÀÌ ¶ß°¡ »êÀ´ ³ö ÀÖÀ´ ¿Å ¿¿±Æ?	</hgzmw>
+			<hgzmw>	·ÅÀÏ ¼ª µ·¸¯ °Í±ß ÇØ!	</hgzmw>
+			<hgzmw>	¼ª ¿í±çÀÌ¹û »ëÈ­ÇÒ ³ö ÀÖ»Â ¿Å ¿¿±Æ.	</hgzmw>
+			<xlmmvxg>	ÁÖÀÎ, ¼ªºº ÀÌÁ¦ ·¸ Àáºé ÂüÀÌ±ú»Âº¥¡¦	</xlmmvxg>
+			<xlmmvxg>	Ãâ¶ßÇÏ¾â Àü°¡ ¼´ ¿£²Ä Ã¬¾â»Â ¿Å ÀØÁö ·¹!	</xlmmvxg>
+			<xlmmvxg>	±îºð¸Î ¿¥Áö ¿áÁ¤Çß±î?	</xlmmvxg>
+			<ovevofk>	»ë»ÜÇÏ»Ù! ¹Ç ¸¶µ§±÷ÀÌ±ß!	</ovevofk>
+			<ovevofk>	ÀÌÁ¦ ±Æ¶«ºº °ì·® ±Õ¾æÀ´ ·¸À´ ³ö ±ø±î!	</ovevofk>
+			<ovevofk>	ÁÖÀÎ¹û ¿¿ÀÌ ³µÀåÇÏ»Â »À¼¦ Á¤·´ ÁÁ»Ù!	</ovevofk>
+			<kviuli_1>	±Æ»Ù»Ù»Ù»Ù»Ù~ ¼ª »ë»ÜÇÏÁö?	</kviuli_1>
+			<kviuli_1>	¼´ ¶î´ìÀµ ····ÇÏÁö ±Ê»Ù¿í	</kviuli_1>
+			<kviuli_1>	°À»Ã ¾··§Àµ ³Ø´çÅÁ ¿¿»Ù..	</kviuli_1>
+			<kviuli_2>	¿ø¾âºº ±ÃÀ·»Ï ·ÀÀÌ ¼ª´ÚÁö ±Ê¼×.	</kviuli_2>
+			<kviuli_2>	°ºÈ¥ ¾¼È¯ÇÏ¿í ²ÍÀµ ´ç¹÷?	</kviuli_2>
+			<kviuli_2>	ÀÌ ³Ò·® ºé¸Á? ¼´ ¶è°¡³­ ¼ª»Â ³Ò·®±ß	</kviuli_2>
+		</ufoo>			
+		<hl_ufoo>			
+			<uvvwrmt>	ÁÖÀÎ Á¤·´ ±Æ¼¦±øÀÌ ÁØ»Ù!	</uvvwrmt>
+			<uvvwrmt>	¼ªºº ¿è³Ó ·Ô¿í ²ÍÁö··, ÀÌÁ¦ ÁøÂ¥ ·ø ·Ô¿Ú±î¡¦	</uvvwrmt>
+			<uvvwrmt>	¼´ º°¾Ûº°¾ÛÇÑ ¶è Á´ µÁ	</uvvwrmt>
+			<sfmgrmt>	²Î°ï ¹§ ·î Ä®¸Î·®¿¡ ³Ò·ðºÉ¾î?	</sfmgrmt>
+			<sfmgrmt>	Áö¾Ý ¼´¿¡ ²Î°ì»Â ´ó»ë»Â ÀûÀÌ ±Æ»Ï¹ó ¼´ ¶è±ß	</sfmgrmt>
+			<sfmgrmt>	¶Þ±Æ¹ó ¼´ ¶î´ì ¿ø¿Ý~	</sfmgrmt>
+			<wzmtvi>	Áö¶æÀ´ µÒÅÂ°ï ¹§¾µ!	</wzmtvi>
+			<wzmtvi>	Á´ ÀÌ´óÇÑ ¿Å ¿¿±Æ¡¦	</wzmtvi>
+			<wzmtvi>	¼´¿¡ ¼Î ÁöÄÑÁÙ¿Ô	</wzmtvi>
+			<wvzw>	»©°öÀÖ»Â ¿Íºº Á´ ÆíÇÑº¥?	</wvzw>
+			<wvzw>	Æò±ÈÈ÷ Àáºé±î, ¼ÊÀÇ °ë¾â»Â Àý»ë ÀØÁö ±ÊÀ´¿Ô	</wvzw>
+			<wvzw>	¿ÆÁ¤ ·¹... ¼× ÀÌ±ß¾â»Â ¼´¿¡ ½À ¼Î·® ¼Î·® ÆÛÆ®·¾¿Ô	</wvzw>
+			<hgzmw>	´êÃ¥ ²ÃÄÑÁà~	</hgzmw>
+			<hgzmw>	²¬»Â ¿Å ÀØÁö ·¹, ¿ú¸ÎÇÏ·é ±È ºÅ	</hgzmw>
+			<hgzmw>	·ÅÀÏÀÌ ´õ¸Î°î ²ÃÀÛ~	</hgzmw>
+			<xlmmvxg>	5µÐ·· »õ ÀÚ·é ±È ºÉ¾î?	</xlmmvxg>
+			<xlmmvxg>	°ì·®ÀÇ °ìÁ¤Àµ ¶«±ùµ·»Ù Áß°äÇØ¡¦ ¶Ì²Ä ´©¿í	</xlmmvxg>
+			<xlmmvxg>	·ÅÀÏ ±ÆÄ§°¡ ÀÏ±î¼¯ ¹§ ¼Î µ·¿í ²Í±î!	</xlmmvxg>
+			<ovevofk>	°ì·® ¿¿ÀÌ ³³¿è·¦ Á¤µ¶ÇÏÀÚ!	</ovevofk>
+			<ovevofk>	´ó´óÀ´ ÃÊ°ùÇÑ ¶ßÀüÀÌ±ß!	</ovevofk>
+			<ovevofk>	¸¶µ§±÷ ÇÒ ¹§·¹»Ù ¼ª ¼Ê¶« ³¼¸¶!	</ovevofk>
+			<kviuli_1>	±Æ»Ù»Ù»Ù»Ù»Ù~ ¼ª »ë»ÜÇÏÁö?	</kviuli_1>
+			<kviuli_1>	¼´ ¶î´ìÀµ ····ÇÏÁö ±Ê»Ù¿í	</kviuli_1>
+			<kviuli_1>	°À»Ã ¾··§Àµ ³Ø´çÅÁ ¿¿»Ù..	</kviuli_1>
+			<kviuli_2>	¿ø¾âºº ±ÃÀ·»Ï ·ÀÀÌ ¼ª´ÚÁö ±Ê¼×.	</kviuli_2>
+			<kviuli_2>	°ºÈ¥ ¾¼È¯ÇÏ¿í ²ÍÀµ ´ç¹÷?	</kviuli_2>
+			<kviuli_2>	ÀÌ ³Ò·® ºé¸Á? ¼´ ¶è°¡³­ ¼ª»Â ³Ò·®±ß	</kviuli_2>
+		</hl_ufoo>			
+		</XOY_HH_UX>			
+					
+		<XOY_HH_GA>			
+					
+		<sfmtib>			
+			<uvvwrmt>	¿Ç±î¶¿ ºÎ ·¹·®»Â »õ ·ÔÀ´ ³ö ÀÖ±î	</uvvwrmt>
+			<uvvwrmt>	»ÙÀ² ²Ä´ç ²Ã¿£¾îÁö ·ø ¾â»Ù·®¿Ú±î!	</uvvwrmt>
+			<uvvwrmt>	¿í·¹°ö, ÇÏÁö·· ¼´ÀÏÀµ Á´ »õ ´¡·® Áà	</uvvwrmt>
+			<sfmgrmt>	¿¿ÀÌ ·ðÇèÇÏ»Â ¿Å Á¤·´ Â¥·»ÇÏ»Ù!	</sfmgrmt>
+			<sfmgrmt>	²Î°ìÀÚ, ·¹Áö·¸ ³ø¿£¾îÁö!	</sfmgrmt>
+			<sfmgrmt>	¼´¿¡ ÀßÇÏ·é ´ó ÁÖ»Â ¿Å ÀØÁö ·¹~	</sfmgrmt>
+			<wzmtvi>	ÁÖÀÎ, Á¹²ÉÇØ! À§ÇèÀÌ »Ù¿¡°À¿í ÀÖ±î	</wzmtvi>
+			<wzmtvi>	¼ª¹û ¿¿ÀÌ ºº·Á¿¥¸¡?	</wzmtvi>
+			<wzmtvi>	°À»Ã ¾ÙÀ¿ÀÌ ¶µ¿¡ »ç¾â»Â ¿Å ¿¿±Æ~	</wzmtvi>
+			<wvzw>	²²ÇÂ Ã»ÀÌ¹óºº ÇØ±ß ÇÏ¼ª?	</wvzw>
+			<wvzw>	ºåºð±î ²¯ ³ö ÀÖ¿Ú»Ù	</wvzw>
+			<wvzw>	¼´¿¡ Á´ ÀÌºû ¾ú°öÁÙ¾î?	</wvzw>
+			<hgzmw>	ÀÚ²ÅÀ´ Àß Ã¬¿Ü±ß ¼ªºº Ã¬¾âÁö~	</hgzmw>
+			<hgzmw>	ÇìÀÌ, ¼ª ·ÔÀÌ ÁÖ»Â ¿Å ÀØÁö ·¹!	</hgzmw>
+			<hgzmw>	Áß±Óºº²ÃÀÇ ¼ëÁ¡°¡ ·ÀÀÖ»Â ¿Ô ·¶ÀÌ ÀÖ»Ù»øº¥	</hgzmw>
+			<xlmmvxg>	ÁÖÀÎ ¼´ ¿Ç±î¶¿ ´ç»Â¿Å ÀØÁö ±Ê±ÒÁö?	</xlmmvxg>
+			<xlmmvxg>	°À»ÃÀµ ±îºð¸Î ¿¡³­ ¼î¿Å±ß?	</xlmmvxg>
+			<xlmmvxg>	·ñ°å ²ÃÅ¿¸Á¿í °Â ¿Ç ±Æ»Ï¾æ ¶Ù¸¡	</xlmmvxg>
+			<ovevofk>	¶ßÀüÇÏ»Â ·ð²ÀÀ´ µ·»Ï ¼ªºº ¾â´Ú»Ù	</ovevofk>
+			<ovevofk>	ÃàÇÏÇØ! ÇÏÁö·· °ì·®ÀÇ °ÀÈÄ Æ³Å·ÀÓÀµ ÀØÁö ·¹	</ovevofk>
+			<ovevofk>	Äººº ¿¿ÀÌ ±÷¾×¸¶ÀÌºåºÇ·é »õ ÁÁÀ´ ¿Í ¿¿±Æ!	</ovevofk>
+			<kviuli_1>	¼ó»ãÀÌ ±Æ»Ï±ß, ÁøÁöÇÏ¿Ô »ëÇØ Áà	</kviuli_1>
+			<kviuli_1>	¿ú°¬ »©¿¡ ÁÖÀÎÀÏ¾î?	</kviuli_1>
+			<kviuli_1>	¼¯ ··Áú ³ö ÀÖ»Â ¿Ç ÀÏÁ±ÀÇ Æ÷´óÀÌÁö	</kviuli_1>
+			<kviuli_2>	¾â~Áö~¿¼~	</kviuli_2>
+			<kviuli_2>	¶ßÅéÀ·¸Î ¾Ü»Â ³Ò·® ºé±îµ´ Àû ÀÖ±î?	</kviuli_2>
+			<kviuli_2>	¼Ä°Ë~ ¼´¿¡ Á¦ÀÏ ¾Í°©°ö!	</kviuli_2>
+		</sfmtib>			
+		<yrg_sfmtib>			
+			<uvvwrmt>	·ÀÀÖ»Â À²²ÄÀµ ¾â»Ù·¾ ¿¡Ä¡¿¡ ÀÖÁö~	</uvvwrmt>
+			<uvvwrmt>	¾¦ÂúÀ··é, ÇÑ ¾×·© »õ Áà.	</uvvwrmt>
+			<uvvwrmt>	ºðÀúÆ®ºº ÀÖÀ··é »õ ÁÁÀ´ ÅÙº¥~	</uvvwrmt>
+			<sfmgrmt>	´õ¸Î°î ººÀüÀÚÀÎ¿¡?	</sfmgrmt>
+			<sfmgrmt>	ÈïÈï~ ¼´ ¶ßÅé ·À Á´ µ·²ÃÁö~	</sfmgrmt>
+			<sfmgrmt>	ÁÖÀÎ ºº°ÍÁÙ¾î?	</sfmgrmt>
+			<wzmtvi>	ÁÖÀÎ, ¼´ ¶ßÀÚ¾¶À´ ºû¹ó ÇÇÇØ~	</wzmtvi>
+			<wzmtvi>	ÈÄÅðÇÏÀÚ, ±È µñ°ôÀ´¿Ô	</wzmtvi>
+			<wzmtvi>	À§ÇèÀµ ÀÏ²ÃÀûÀÎ ¿Å±ß, ¾×¸·Áö?	</wzmtvi>
+			<wvzw>	ÁÖÀÎ, ¿ÆÁ¤ÇÏÁö ·¹, ¼ª Àß Áö¼±¿Ô	</wvzw>
+			<wvzw>	ÀÏÀ·ÄÑÁÙ¾î?	</wvzw>
+			<wvzw>	´ç¹÷ºº ±½¸¯Á¼À·»Ï ÀÌÁ¦ ·ðºÎ ÇØ´ê~	</wvzw>
+			<hgzmw>	ÁÖÀÎ °À»Ãºû¹ó ·ÚÀÖ»Ù! ¼ªÃ¼¸¼	</hgzmw>
+			<hgzmw>	°À»ÃÀµ ´õ¸Î°î ¾â³úÀ´ ¶è°ì»Â ¿Ô ±î¹¼¾î?	</hgzmw>
+			<hgzmw>	¿¿ÀÌ Áã ÀâÀ·¸¯ ¿¡ÀÚ.. µÐ·í Àç¶ÕÀ´ ¿Å±ß!	</hgzmw>
+			<xlmmvxg>	°À»Ã ¶«²³ ÁÁÀµ ÀÏ ÀÖ±î?	</xlmmvxg>
+			<xlmmvxg>	¾¦ÂúÀ··é, ¼ªµÎÅÍ ¶èµÒ·® ·Ô°©ÁáÀ··é ÇØ	</xlmmvxg>
+			<xlmmvxg>	ÃÖ¾ÙÀÇ ·ñÇ¥»Â ¶¶±ß?	</xlmmvxg>
+			<ovevofk>	·ðºç ÀüÅõ»Â °ì·¾ »õ ¿­ÇÏ¿Ô ··ºç»Ù!	</ovevofk>
+			<ovevofk>	ÀÌ¸·¿Ô »ë»ÜÇÑ ÁÖÀÎÀÌ ÀÖ»Ù»Ï, Á¤·´ Çà°îÀÌ±ß!	</ovevofk>
+			<ovevofk>	ÃàÇÏÇØ! ¹Ç ¿­ÇØÁ¼¼×!	</ovevofk>
+			<kviuli_1>	¼ó»ãÀÌ ±Æ»Ï±ß, ÁøÁöÇÏ¿Ô »ëÇØ Áà	</kviuli_1>
+			<kviuli_1>	¿ú°¬ »©¿¡ ÁÖÀÎÀÏ¾î?	</kviuli_1>
+			<kviuli_1>	¼¯ ··Áú ³ö ÀÖ»Â ¿Ç ÀÏÁ±ÀÇ Æ÷´óÀÌÁö	</kviuli_1>
+			<kviuli_2>	¾â~Áö~¿¼~	</kviuli_2>
+			<kviuli_2>	¶ßÅéÀ·¸Î ¾Ü»Â ³Ò·® ºé±îµ´ Àû ÀÖ±î?	</kviuli_2>
+			<kviuli_2>	¼Ä°Ë~ ¼´¿¡ Á¦ÀÏ ¾Í°©°ö!	</kviuli_2>
+		</yrg_sfmtib>			
+		<mlgrmt>			
+			<uvvwrmt>	·Å ¼¢»Ï¿¡ »Ù ÀÌ¸¨À··é ÁÁ¿Ú»Ù	</uvvwrmt>
+			<uvvwrmt>	Á¹²ÉÇØ, ¹¥°¡ ¹¼±îÁö¿Ú±î!	</uvvwrmt>
+			<uvvwrmt>	¼¯ ±ÆÁ÷ ¾â±ïÇØ ÁÖ»Ù»Ï Á¤·´ ¾â´º	</uvvwrmt>
+			<sfmgrmt>	¶«³­°öÇÏÁö ·¹, ¼´¿¡ °¸°¡ ÀÖ±î!	</sfmgrmt>
+			<sfmgrmt>	¿í±çÀÌÀÇ ¶ßÅé ¿ø¿ÝÀ´ ¶«²ÃÇÏÁö ·¹~	</sfmgrmt>
+			<sfmgrmt>	¿¡»ÉÇÏ·é ¶«»Â ¿Ç ±È ÇÏ¿í ²Í±î.	</sfmgrmt>
+			<wzmtvi>	¿Ì¼´Áö ·¹, ¼´¿¡ ¼Î ÁöÄÑÁÙ¿Ô.	</wzmtvi>
+			<wzmtvi>	¿ÆÁ¤ÇÏÁö ·¹, ¼´¿¡ ÀÖÀÝ±Æ~	</wzmtvi>
+			<wzmtvi>	´ç¹÷À´ Á´ »õ µÎ·¦¾î?	</wzmtvi>
+			<wvzw>	ÁÖÀÎ, ¼Í ÀÌ¶Ì ÃÖ³¾À´ »ÙÇß±î, ¼Ê¶« ¼«²ÉÇÏÁö ·¹	</wvzw>
+			<wvzw>	ÁÖÀÎ, ¼ª ¿­ÇØÁú¿Ô	</wvzw>
+			<wvzw>	ÀÌÁ¦ ²²²² ÀÏ±î¼ª±ßÁö?	</wvzw>
+			<hgzmw>	¼ª È¥ÀÚ °¸Áý ³ÒÈ­ÇÑÅ× ¼î¸¯ ¿¡ºº ºÅ?	</hgzmw>
+			<hgzmw>	°À»Ã »Þ ±î¹§?	</hgzmw>
+			<hgzmw>	·ðÇèÀ´ ¹¿¼ªÀÚ! ¶ÛÀÇ ³³´óÀµ ¼Ð±î!	</hgzmw>
+			<xlmmvxg>	³û¿ÜÁø µ·¶¿À´ Ã£±Æµ·ÀÚ!	</xlmmvxg>
+			<xlmmvxg>	³³´ó°¡ ¼¯ ¾«¸ÓÈ÷¿í ²ÍÀµ ´ç¹÷Àµ ±ø¿ÚÁö?	</xlmmvxg>
+			<xlmmvxg>	ÁÖÀÎ °À»ÃÀµ ¶¶ ÇÏ¿í ²Í±î?	</xlmmvxg>
+			<ovevofk>	ÁÖÀÎ ²Ç¸Â°¡ ±È²ÉÀÌ ºÈ»Ù	</ovevofk>
+			<ovevofk>	ÃÖ¿í±ß~ Á¡Á¡ »õ ¶«ÀûÀÌ ºÇ±î¿¡»Â ¿Å±ß~	</ovevofk>
+			<ovevofk>	ÃÖ¿í±ß! ²Â·®»Â °ì·®ÀÇ ¿Í!	</ovevofk>
+			<kviuli_1>	¼ó»ãÀÌ ±Æ»Ï±ß, ÁøÁöÇÏ¿Ô »ëÇØ Áà	</kviuli_1>
+			<kviuli_1>	¿ú°¬ »©¿¡ ÁÖÀÎÀÏ¾î?	</kviuli_1>
+			<kviuli_1>	¼¯ ··Áú ³ö ÀÖ»Â ¿Ç ÀÏÁ±ÀÇ Æ÷´óÀÌÁö	</kviuli_1>
+			<kviuli_2>	¾â~Áö~¿¼~	</kviuli_2>
+			<kviuli_2>	¶ßÅéÀ·¸Î ¾Ü»Â ³Ò·® ºé±îµ´ Àû ÀÖ±î?	</kviuli_2>
+			<kviuli_2>	¼Ä°Ë~ ¼´¿¡ Á¦ÀÏ ¾Í°©°ö!	</kviuli_2>
+		</mlgrmt>			
+		<ufoo>			
+			<uvvwrmt>	¶èµÎ·§Àµ ¾âµÐ°¡ Å« °ºÇâÀ´ ¶ÌÄ£»Ù¾·~	</uvvwrmt>
+			<uvvwrmt>	°À»Ã ±ÆÁÖ ÁÁ±Ò±î. ¼´ÀÏºº µÎÅ¶ÇØ!	</uvvwrmt>
+			<uvvwrmt>	¼´ Áñ¿Å°òÀ´ ¶æÇØÇÏÁö ·¹.	</uvvwrmt>
+			<sfmgrmt>	Å« ³Ò·®¸Î °ÜÄ¥³ö¸Ï ÀüÅõ¸ÂÀÌ ¿­ÇØÁø»ë!	</sfmgrmt>
+			<sfmgrmt>	¼¯ ±Õ³³°ì¸Á»Â ¿Ç ±Æ»ÏÁö?	</sfmgrmt>
+			<sfmgrmt>	È÷È÷, ¼ª °¬²ÀÇß»Ù¾·!	</sfmgrmt>
+			<wzmtvi>	Áö¾Ý ÈÄÅðÇÏ¾â°£ ¼Ê¶« »Ê±ú¼ª?	</wzmtvi>
+			<wzmtvi>	»çÈ½ÇÏÁö ·¹~ ÁÖÀÎÀÌ ÇÒ ³ö ÀÖ»Ù¿í ¼ª»Â ¶Ï±î!	</wzmtvi>
+			<wzmtvi>	Æ÷³Ç ±Æ¼¢Áö ·¹!	</wzmtvi>
+			<wvzw>	°ì·¾ ¾·ÇØÁÖ»Â ÂøÇÑ ´ç¹÷°¡¿Õ ¼´ ¶ß Á©·® ··Áö»Â ¿É Çã¹ôÇØ ÁÖ¿Ú±î.	</wvzw>
+			<wvzw>	¶Ù»ÚÀ´ Ä§»ë ´ï±Æ »©°öÀÖÀ··é ÆíÇØ?	</wvzw>
+			<wvzw>	±È²ÉÇÏ¿í »©°ö, »Ù·¥ ´ç¹÷ÇÑÅÙ ·´ ±È ÇÒ¿Ô	</wvzw>
+			<hgzmw>	»©¿¡ »õ ´¡·® ¹Ù»ÂÁö ¼´¾âÇÒ¾î?	</hgzmw>
+			<hgzmw>	±Æ¶« ÀÏ ±È ÇØºº ·ÔÀ´ ¶äÀÌ ÀÖ±úÀ··é ÁÁ¿Ú»Ù.	</hgzmw>
+			<hgzmw>	ÀÌ µ¿¶Ù»Ù°¡»Â ¶¶¿¡ ÀÖÀ´¾î?	</hgzmw>
+			<xlmmvxg>	ÁÖÀÎ °À»Ãºû¹ó »õ ¶ÝÂ¦ÀÎ»Ù!	</xlmmvxg>
+			<xlmmvxg>	ÁÖÀÎ~ ·ÕÀú ¼´ ÅÐ Á´ µø¿ÜÁà~	</xlmmvxg>
+			<xlmmvxg>	¶ÛÀÇ ³³¿è»Â Á¤·´ ¼Ð±î?	</xlmmvxg>
+			<ovevofk>	¸¶µ§±÷ÀÌ»Ù! °ì·® ±îºð ¿¡³­ ÃàÇÏÇÒ¾î?	</ovevofk>
+			<ovevofk>	ÀÌ¶ø ¸¶µ§±÷Àµ ¼´ ¿øºº ÀÖ±î!	</ovevofk>
+			<ovevofk>	°ì·® Á´ »õ ¿­ÇØÁ¼¼×!	</ovevofk>
+			<kviuli_1>	¼ó»ãÀÌ ±Æ»Ï±ß, ÁøÁöÇÏ¿Ô »ëÇØ Áà	</kviuli_1>
+			<kviuli_1>	¿ú°¬ »©¿¡ ÁÖÀÎÀÏ¾î?	</kviuli_1>
+			<kviuli_1>	¼¯ ··Áú ³ö ÀÖ»Â ¿Ç ÀÏÁ±ÀÇ Æ÷´óÀÌÁö	</kviuli_1>
+			<kviuli_2>	¾â~Áö~¿¼~	</kviuli_2>
+			<kviuli_2>	¶ßÅéÀ·¸Î ¾Ü»Â ³Ò·® ºé±îµ´ Àû ÀÖ±î?	</kviuli_2>
+			<kviuli_2>	¼Ä°Ë~ ¼´¿¡ Á¦ÀÏ ¾Í°©°ö!	</kviuli_2>
+		</ufoo>			
+		<hl_ufoo>			
+			<uvvwrmt>	»ÙÀ²°£ ´õ¸Î°î ·ÀÀ·¸Î ¶Ù½ãµ³¾î?	</uvvwrmt>
+			<uvvwrmt>	Àß ·Ô¿Ú²À»Ï»Ù~	</uvvwrmt>
+			<uvvwrmt>	¿¡Áö¿í ¼ª¿¥ ³ö ÀÖ»Â Äººº ÀÖ±î?	</uvvwrmt>
+			<sfmgrmt>	ÃÊÀ§Çè ¶ßÅé ¿ø¿Ý!	</sfmgrmt>
+			<sfmgrmt>	³³¿è Á¤µ¶Àµ ÀÌ¶ø ÀüÅõµÎÅÍ ²ÃÀÛ~	</sfmgrmt>
+			<sfmgrmt>	¼´ µñ¶Ð ¶«¾â¿¡ ±îºð ÀÖ»ÂÁö ±Ë±Æ?	</sfmgrmt>
+			<wzmtvi>	ÀÌ¸½ ¹© °ë¾â¿¡ ½À ±º·ð¿¡ ÀÖ»Â ¿Ç ±Æ»Ï±ß	</wzmtvi>
+			<wzmtvi>	ÀÌ ¼­¿üÀ´ ÀÌ¿Ü¼± ³ö ÀÖ¾â·¦	</wzmtvi>
+			<wzmtvi>	ÀÌ ÀÚ·®·¦ ¶þ±î¼¯ ¶æ¶ýÀÌ ÀÖ±î?	</wzmtvi>
+			<wvzw>	°ì·® Àß·ø °Â ¿Å ±Æ»Ï±ß?	</wvzw>
+			<wvzw>	ºº°òÀ´ Ã´ÇÒ¾î? »©¾· ±ø±î°ä~?	</wvzw>
+			<wvzw>	ÁÖÀÎ~ ¼­ ÁÖÀÎ ¿çÀ´ ¹¿¼ªÁö ±ÊÀ´ ¿Å±ß	</wvzw>
+			<hgzmw>	¿¡½ûÀµ Á¹°ëÇÑ ¿Íºº Áñ¿Å°òÀÌÁö	</hgzmw>
+			<hgzmw>	°ì·® µ¿ µ·¿í ³Ò°ø µôÀÚ	</hgzmw>
+			<hgzmw>	·öÀÌ Á´ ¶«¿Å°îº¥, µñÇàÇÒ ³ö ÀÖ»Â ·¹¶ý ±øÀ´¾î?	</hgzmw>
+			<xlmmvxg>	°À¸£··ÀÌ»Ù~	</xlmmvxg>
+			<xlmmvxg>	ÃÖ¾Ù ´õ¸Î°î ¾â³ú ¶è°î¿Å ÀÖ±î?	</xlmmvxg>
+			<xlmmvxg>	±îÀÌ~ °Ô±î?	</xlmmvxg>
+			<ovevofk>	Á¹¾Ý±° ¶«ÀûÀÌ ºÇ±î¿¡»Â ¿Å±ß	</ovevofk>
+			<ovevofk>	¼´ ºº°òÀÌ ÀÖÀ·»Ï »õ µü·£Áö?	</ovevofk>
+			<ovevofk>	°ì°©¿îÀýÀ´ ¿ÞÀµ ÀÌ¶ø ·ðÇèÀµ Àý»ë ÀØÁö ·øÇÒ ¿Å±ß 	</ovevofk>
+			<kviuli_1>	¼ó»ãÀÌ ±Æ»Ï±ß, ÁøÁöÇÏ¿Ô »ëÇØ Áà	</kviuli_1>
+			<kviuli_1>	¿ú°¬ »©¿¡ ÁÖÀÎÀÏ¾î?	</kviuli_1>
+			<kviuli_1>	¼¯ ··Áú ³ö ÀÖ»Â ¿Ç ÀÏÁ±ÀÇ Æ÷´óÀÌÁö	</kviuli_1>
+			<kviuli_2>	¾â~Áö~¿¼~	</kviuli_2>
+			<kviuli_2>	¶ßÅéÀ·¸Î ¾Ü»Â ³Ò·® ºé±îµ´ Àû ÀÖ±î?	</kviuli_2>
+			<kviuli_2>	¼Ä°Ë~ ¼´¿¡ Á¦ÀÏ ¾Í°©°ö!	</kviuli_2>
+		</hl_ufoo>			
+					
+		</XOY_HH_GA>	
+
+	<Slimvg>		
+			
+		<sfmtib>	
+			<uvvwrmt>°Í±Æ! ¶äÀÌ»Ù!</uvvwrmt>
+			<wvzw>ÈûÀÌ ±ø¼×. ÁöÃÆ±î?</wvzw>
+			<hgzmw>°À»ÃÀµ ±îºð¾îÁö ½ÉÀ´ Ã£±Æ ¿¥¾î?</hgzmw>
+			<hgzmw>ÀÌ³³¿è°¡»Â ¶«³­°î ¶úÀÌ ÀÖ»ë!</hgzmw>
+			<ovevofk>°Í! ¾½ÀåÇØ! ÃàÇÏÇØ!</ovevofk>
+		</sfmtib>	
+		<yrg_sfmtib>	
+			<uvvwrmt>°Í±Æ! ¶äÀÌ»Ù!</uvvwrmt>
+			<wvzw>ÈûÀÌ ±ø¼×. ÁöÃÆ±î?</wvzw>
+			<hgzmw>°À»ÃÀµ ±îºð¾îÁö ½ÉÀ´ Ã£±Æ ¿¥¾î?</hgzmw>
+			<hgzmw>ÀÌ³³¿è°¡»Â ¶«³­°î ¶úÀÌ ÀÖ»ë!</hgzmw>
+			<ovevofk>°Í! ¾½ÀåÇØ! ÃàÇÏÇØ!</ovevofk>
+		</yrg_sfmtib>	
+		<mlgrmt>	
+			<uvvwrmt>°Í±Æ! ¶äÀÌ»Ù!</uvvwrmt>
+			<wvzw>ÈûÀÌ ±ø¼×. ÁöÃÆ±î?</wvzw>
+			<hgzmw>°À»ÃÀµ ±îºð¾îÁö ½ÉÀ´ Ã£±Æ ¿¥¾î?</hgzmw>
+			<hgzmw>ÀÌ³³¿è°¡»Â ¶«³­°î ¶úÀÌ ÀÖ»ë!</hgzmw>
+			<ovevofk>¼ªºº ¾Ý¶æ ±î·¥ÀÌ ºÉ¿Å»Ï¾î Àß µÁºÖ±ß ÇØ?</ovevofk>
+		</mlgrmt>	
+		<ufoo>	
+			<uvvwrmt>ÀÌÁ¨ ¶èµÒ¸¯!</uvvwrmt>
+			<wvzw>ÈûÀÌ ±ø¼×. ÁöÃÆ±î?</wvzw>
+			<hgzmw>°À»ÃÀµ ±îºð¾îÁö ½ÉÀ´ Ã£±Æ ¿¥¾î?</hgzmw>
+			<hgzmw>ÀÌ³³¿è°¡»Â ¶«³­°î ¶úÀÌ ÀÖ»ë!</hgzmw>
+			<ovevofk>¼ªºº ¾Ý¶æ ±î·¥ÀÌ ºÉ¿Å»Ï¾î Àß µÁºÖ±ß ÇØ?</ovevofk>
+		</ufoo>	
+		<hl_ufoo>	
+			<uvvwrmt>ÀÌÁ¨ ¶èµÒ¸¯!</uvvwrmt>
+			<wvzw>ÈûÀÌ ±ø¼×. ÁöÃÆ±î?</wvzw>
+			<hgzmw>°À»ÃÀµ ±îºð¾îÁö ½ÉÀ´ Ã£±Æ ¿¥¾î?</hgzmw>
+			<hgzmw>ÀÌ³³¿è°¡»Â ¶«³­°î ¶úÀÌ ÀÖ»ë!</hgzmw>
+			<ovevofk>¼ªºº ¾Ý¶æ ±î·¥ÀÌ ºÉ¿Å»Ï¾î Àß µÁºÖ±ß ÇØ?</ovevofk>
+		</hl_ufoo>	
+			
+	</Slimvg>		
+			
+			
+	<TRZMG_SLMVG>		
+			
+		<sfmtib>	
+			<uvvwrmt>Àúºº ¶è¿¡ ¿íÇÁ¿Åºç°ä!?</uvvwrmt>
+			<wvzw>°©°Õ»Ô½½ ·ð²Ã¿í ¿¡±ß¿Ú±î°ä.</wvzw>
+			<wzmtvi>¸Î±â Á¦·®¿¡ ÇÊ°äÇØ°ä! ´¡·® ºå³³°ä.</wzmtvi>
+			<hgzmw>Àúºº °©°Õ»ÔÃ¼¸¼ ºÉ ³ö ÀÖÀ´¾î°ä?</hgzmw>
+			<hgzmw>°À»Ãºº ¶ÙµüÁú ¿Í ¿¿¼×°ä.</hgzmw>
+			<ovevofk>°©°Õ»Ôºº ¾â´ºÇÏ²Ç ¿Å°¶°ä!</ovevofk>
+		</sfmtib>	
+		<yrg_sfmtib>	
+			<uvvwrmt>Àúºº ¶è¿¡ ¿íÇÁ¿Åºç°ä!?</uvvwrmt>
+			<wvzw>°©°Õ»Ô½½ ·ð²Ã¿í ¿¡±ß¿Ú±î°ä.</wvzw>
+			<wzmtvi>¸Î±â Á¦·®¿¡ ÇÊ°äÇØ°ä! ´¡·® ºå³³°ä.</wzmtvi>
+			<hgzmw>Àúºº °©°Õ»ÔÃ¼¸¼ ºÉ ³ö ÀÖÀ´¾î°ä?</hgzmw>
+			<hgzmw>°À»Ãºº ¶ÙµüÁú ¿Í ¿¿¼×°ä.</hgzmw>
+			<ovevofk>°©°Õ»Ôºº ¾â´ºÇÏ²Ç ¿Å°¶°ä!</ovevofk>
+		</yrg_sfmtib>	
+		<mlgrmt>	
+			<uvvwrmt>¼È¼È °º±ç µ·ÃæÀµ ´©¼õÀ´ ³ö ±ø²À»Ï»Ù.</uvvwrmt>
+			<wvzw>°©°Õ»Ô½½ ·ð²Ã¿í ¿¡±ß¿Ú±î°ä.</wvzw>
+			<wzmtvi>¸Î±â Á¦·®¿¡ ÇÊ°äÇØ°ä! ´¡·® ºå³³°ä.</wzmtvi>
+			<hgzmw>Àúºº °©°Õ»ÔÃ¼¸¼ ºÉ ³ö ÀÖÀ´¾î°ä?</hgzmw>
+			<hgzmw>°À»Ãºº ¶ÙµüÁú ¿Í ¿¿¼×°ä.</hgzmw>
+			<ovevofk>°©°Õ»Ôºº ¾â´ºÇÏ²Ç ¿Å°¶°ä!</ovevofk>
+		</mlgrmt>	
+		<ufoo>	
+			<uvvwrmt>»õ ÀÌ´ó ·ÔÀ··é ¼¯ ³ö ±ø¿Ô ºÇ±î¶ö¸Á°ä!</uvvwrmt>
+			<wvzw>°©°Õ»Ô½½ ·ð²Ã¿í ¿¡±ß¿Ú±î°ä.</wvzw>
+			<wzmtvi>¸Î±â Á¦·®¿¡ ÇÊ°äÇØ°ä! ´¡·® ºå³³°ä.</wzmtvi>
+			<hgzmw>Àúºº °©°Õ»ÔÃ¼¸¼ ºÉ ³ö ÀÖÀ´¾î°ä?</hgzmw>
+			<hgzmw>°À»Ãºº ¶ÙµüÁú ¿Í ¿¿¼×°ä.</hgzmw>
+			<ovevofk>°©°Õ»Ôºº ¾â´ºÇÏ²Ç ¿Å°¶°ä!</ovevofk>
+		</ufoo>	
+		<hl_ufoo>	
+			<uvvwrmt>»õ ÀÌ´ó ·ÔÀ··é ¼¯ ³ö ±ø¿Ô ºÇ±î¶ö¸Á°ä!</uvvwrmt>
+			<wvzw>°©°Õ»Ô½½ ·ð²Ã¿í ¿¡±ß¿Ú±î°ä.</wvzw>
+			<wzmtvi>¸Î±â Á¦·®¿¡ ÇÊ°äÇØ°ä! ´¡·® ºå³³°ä.</wzmtvi>
+			<hgzmw>Àúºº °©°Õ»ÔÃ¼¸¼ ºÉ ³ö ÀÖÀ´¾î°ä?</hgzmw>
+			<hgzmw>°À»Ãºº ¶ÙµüÁú ¿Í ¿¿¼×°ä.</hgzmw>
+			<ovevofk>°©°Õ»Ôºº ¾â´ºÇÏ²Ç ¿Å°¶°ä!</ovevofk>
+		</hl_ufoo>	
+			
+	</TRZMG_SLMVG>		
+			
+			
+	<NRHGIVHH2>		
+			
+		<sfmtib>	
+			<uvvwrmt>Á¦ ¿ø¶¿À´ ³ÒÈ¦È÷ ÇÏ¿í ÀÖÁö ±Ê¼ª°ä?</uvvwrmt>
+			<wzmtvi>ÀÌ¸¾ ¿÷°¡³­ ±½¸¯Á®³­»Â ±È ºÈ»ä»Ï»Ù.</wzmtvi>
+			<wvzw>±î¹ó¹ó...ºÕÁö¾îÁö °Å¿Üºå·¾¾î°ä?</wvzw>
+			<hgzmw>ÀúÂÊ°¡³­ »ÞÄÞÇÑ Çâ¾â¿¡...</hgzmw>
+			<ovevofk>ÈÄÈÄÈÄ..ÃàÇÏºå·¼»Ï»Ù.</ovevofk>
+			<kviuli_1>±î¹¾ÇØ! ±î¹¾ÇØ! È­ÀåÀÌ ·Á¿¡Á¼ÀÝ±Æ±Æ±Æ...</kviuli_1>
+			<kviuli_2>»ÞÄÞÇÑ Çâ¾â¿¡ ´ç¹óÁ¼±î...!?</kviuli_2>
+			<kviuli_3>¾Í°©°î ±ÆÀÌ¼×~</kviuli_3>
+		</sfmtib>	
+		<yrg_sfmtib>	
+			<uvvwrmt>Á¦ ¿ø¶¿À´ ³ÒÈ¦È÷ ÇÏ¿í ÀÖÁö ±Ê¼ª°ä?</uvvwrmt>
+			<wzmtvi>ÀÌ¸¾ ¿÷°¡³­ ±½¸¯Á®³­»Â ±È ºÈ»ä»Ï»Ù.</wzmtvi>
+			<wvzw>±î¹ó¹ó...ºÕÁö¾îÁö °Å¿Üºå·¾¾î°ä?</wvzw>
+			<hgzmw>ÀúÂÊ°¡³­ »ÞÄÞÇÑ Çâ¾â¿¡...</hgzmw>
+			<ovevofk>ÈÄÈÄÈÄ..ÃàÇÏºå·¼»Ï»Ù.</ovevofk>
+			<kviuli_1>±î¹¾ÇØ! ±î¹¾ÇØ! È­ÀåÀÌ ·Á¿¡Á¼ÀÝ±Æ±Æ±Æ...</kviuli_1>
+			<kviuli_2>»ÞÄÞÇÑ Çâ¾â¿¡ ´ç¹óÁ¼±î...!?</kviuli_2>
+			<kviuli_3>¾Í°©°î ±ÆÀÌ¼×~</kviuli_3>
+		</yrg_sfmtib>	
+		<mlgrmt>	
+			<uvvwrmt>ÈåÀ²..ÀÌÂë ÇÒ¾î°ä.</uvvwrmt>
+			<wzmtvi>ÀÌ¸¾ ¿÷°¡³­ ±½¸¯Á®³­»Â ±È ºÈ»ä»Ï»Ù.</wzmtvi>
+			<wvzw>±î¹ó¹ó...ºÕÁö¾îÁö °Å¿Üºå·¾¾î°ä?</wvzw>
+			<hgzmw>ÀúÂÊ°¡³­ »ÞÄÞÇÑ Çâ¾â¿¡...</hgzmw>
+			<ovevofk>ÈÄÈÄÈÄ..ÃàÇÏºå·¼»Ï»Ù.</ovevofk>
+			<kviuli_1>±î¹¾ÇØ! ±î¹¾ÇØ! È­ÀåÀÌ ·Á¿¡Á¼ÀÝ±Æ±Æ±Æ...</kviuli_1>
+			<kviuli_2>»ÞÄÞÇÑ Çâ¾â¿¡ ´ç¹óÁ¼±î...!?</kviuli_2>
+			<kviuli_3>¾Í°©°î ±ÆÀÌ¼×~</kviuli_3>
+		</mlgrmt>	
+		<ufoo>	
+			<uvvwrmt>ÈåÀ²..ÀÌÂë ÇÒ¾î°ä.</uvvwrmt>
+			<wzmtvi>ÀÌ¸¾ ¿÷°¡³­ ±½¸¯Á®³­»Â ±È ºÈ»ä»Ï»Ù.</wzmtvi>
+			<wvzw>±î¹ó¹ó...ºÕÁö¾îÁö °Å¿Üºå·¾¾î°ä?</wvzw>
+			<hgzmw>ÀúÂÊ°¡³­ »ÞÄÞÇÑ Çâ¾â¿¡...</hgzmw>
+			<ovevofk>ÈÄÈÄÈÄ..ÃàÇÏºå·¼»Ï»Ù.</ovevofk>
+			<kviuli_1>±î¹¾ÇØ! ±î¹¾ÇØ! È­ÀåÀÌ ·Á¿¡Á¼ÀÝ±Æ±Æ±Æ...</kviuli_1>
+			<kviuli_2>»ÞÄÞÇÑ Çâ¾â¿¡ ´ç¹óÁ¼±î...!?</kviuli_2>
+			<kviuli_3>¾Í°©°î ±ÆÀÌ¼×~</kviuli_3>
+		</ufoo>	
+		<hl_ufoo>	
+			<uvvwrmt>ÈåÀ²..ÀÌÂë ÇÒ¾î°ä.</uvvwrmt>
+			<wzmtvi>ÀÌ¸¾ ¿÷°¡³­ ±½¸¯Á®³­»Â ±È ºÈ»ä»Ï»Ù.</wzmtvi>
+			<wvzw>±î¹ó¹ó...ºÕÁö¾îÁö °Å¿Üºå·¾¾î°ä?</wvzw>
+			<hgzmw>ÀúÂÊ°¡³­ »ÞÄÞÇÑ Çâ¾â¿¡...</hgzmw>
+			<ovevofk>ÈÄÈÄÈÄ..ÃàÇÏºå·¼»Ï»Ù.</ovevofk>
+			<kviuli_1>±î¹¾ÇØ! ±î¹¾ÇØ! È­ÀåÀÌ ·Á¿¡Á¼ÀÝ±Æ±Æ±Æ...</kviuli_1>
+			<kviuli_2>»ÞÄÞÇÑ Çâ¾â¿¡ ´ç¹óÁ¼±î...!?</kviuli_2>
+			<kviuli_3>¾Í°©°î ±ÆÀÌ¼×~</kviuli_3>
+		</hl_ufoo>	
+			
+	</NRHGIVHH2>			
+
 </nlmhgvi_gzop_gzyov>

@@ -1,4 +1,121 @@
-//-- 최종갱신 오전 11:00 2016-02-23 사크라이
+//-- 최종갱신 본서버 2019-05-20
+
+// 글래스트 헤임 도전모드
+1@gl_he.rsw#오염된 차원#
+
+// EDDA 생체연구소 - 원정의 여로
+1@gol1.rsw#생체 실험동#
+1@gol2.rsw#시체 보관소#
+
+// 일루전 오브 라비린스
+prt_mz03_i.rsw#뒤틀린 미궁 숲#
+
+// 2018 할로윈
+1@halo.rsw#할로윈 축제장#
+
+// EDDA 글래스트 헤임의 몰락
+1@gl_prq.rsw#글래스트 헤임의 몰락#
+
+// 레벨확장 컨텐츠
+mag_dun03.rsw#유노 노그로드 3층#
+gl_cas01_.rsw#글래스트헤임 성 어비스 1층#
+
+// 에피소드 17.1 태동, 일루시온 
+1@cor.rsw#코르 메모리얼#
+1@os_a.rsw#오스 점령전#
+1@os_b.rsw#봉쇄된 오스#
+1@rgsr.rsw#레겐쉬름#
+rgsr_in.rsw#레켄베르 부설 연구소#
+pub_cat.rsw#총알 탄 야옹이#
+sp_cor.rsw#특수경계지역 코르#
+sp_os.rsw#특수경계지역 오스#
+sp_rudus.rsw#폐기실험체 유기장 루두스 1층#
+sp_rudus2.rsw#폐기실험체 유기장 루두스 2층#
+sp_rudus3.rsw#폐기실험체 유기장 루두스 3층#
+
+// 성제 전직
+star_frst.rsw#유성림#
+star_in.rsw#유성림 실내#
+
+// 소울리퍼 전직
+1@soul.rsw#영혼의 통로#
+
+// 일루전 오브 루안다
+com_d02_i.rsw#북쪽 동굴 루안다#
+
+// 일루전 테디베어 나사리안 제국
+ein_d02_i.rsw#나사리안 제국#
+
+//-- 환영의 회랑
+vis_h01.rsw#환영의 회랑 1층#
+vis_h02.rsw#환영의 회랑 2층#
+vis_h03.rsw#환영의 회랑 3층#
+vis_h04.rsw#환영의 회랑 4층#
+
+//고성 상급 메모리얼던전
+2@gl_kh.rsw#옛기사단2층#
+1@gl_kh.rsw#옛기사단1층#
+
+// 11월 사냥대회
+hu_fild03.rsw#사냥터#
+prt_evt_in.rsw#사냥터의 오두막#
+
+// 꿈과 그림자 (지터벅 개편)
+1@jtb.rsw#꿈과 그림자#
+
+// X주년
+x_prt.rsw#차원너머의 프론테라#
+x_lhz.rsw#차원너머의 리히타르젠#
+x_ra.rsw#차원너머의 라헬#
+
+// 7월 국수 축제
+lasa_sea.rsw#냐일굴#
+1@drdo.rsw#전설의 도라도#
+
+//닌자 건슬 전직소
+que_ng.rsw#알 수 없는 곳#
+
+//화산섬 코로도
+1@crd.rsw#화산섬 코로도#
+
+// 일루전 거북섬 (구양궁)
+tur_d03_i.rsw#쓸쓸한 양거촌#
+tur_d04_i.rsw#스산한 구양궁#
+
+//포링마을
+1@begi.rsw#포링 마을#
+
+// 수상한 난파선
+1@tre.rsw#수상한 난파선#
+
+// 일루전 얼던 (프로즌)
+ice_d03_i.rsw#프로즌 메모리#
+
+// 일루전 게펜 (뱀파이어)
+gef_d01_i.rsw#250 페이지#
+
+// 일루전 페이욘 (문라이트)
+pay_d03_i.rsw#월야화의 악몽#
+
+// 치킨모드 호러 장난감 공장
+1@xm_d2.rsw#호러 장난감 공장#
+
+// 치킨모드 고성
+1@gl_k2.rsw#옛기사단1층#
+2@gl_k2.rsw#옛기사단2층#
+
+// 로컬라이징 락릿지
+har_in01.rsw#락 릿지#
+harboro1.rsw#락 릿지#
+harboro2.rsw#지하수로#
+rockmi1.rsw#락 릿지 광산#
+rockmi2.rsw#락 릿지 광산#
+rockrdg1.rsw#키와와 사막#
+rockrdg2.rsw#키와와 사막#
+
+// 요일던전
+1@md_gef.rsw#금요메모리얼#
+1@md_pay.rsw#주말메모리얼#
 
 // ep16.2
 1@slw.rsw#베르너연구소 중추실#
@@ -71,8 +188,9 @@ un_myst.rsw#지하 터널#
 1@uns.rsw#마지막 방#
 1@lab.rsw#중앙 실험실#
 
-// 생체던전 신규맵
+// 전사자의 무덤
 lhz_dun_n.rsw#전사자의 무덤#
+lhz_d_n2.rsw#사념의 공간#
 
 // 영웅의 흔적3
 1@glast.rsw#과거의 글래스트헤임#
@@ -88,7 +206,7 @@ ver_tunn.rsw#베루스 외곽 터널#
 verus04.rsw#베루스 발굴지#
 verus03.rsw#베루스 중앙 광장#
 
-1@mcd.rsw#찰스턴 공장#
+1@mcd.rsw#왕의 구두굽에서#
 
 //운영팀이벤트
 e_hugel.rsw#침공당한 휘겔#
@@ -109,7 +227,7 @@ moro_cav.rsw#화염동굴#
 1@rev.rsw#모르스의 동굴#
 1@xm_d.rsw#호러 장난감 공장#
 1@eom.rsw#마신전#
-1@jtb.rsw#악몽의 지터벅#
+//지터벅 설정 삭제
 
 //영웅의흔적
 dali02.rsw#차원의 균열#
@@ -337,11 +455,11 @@ que_qaru02.rsw#허상의 오콜니르#
 que_qaru03.rsw#허상의 오콜니르#
 que_qaru04.rsw#허상의 오콜니르#
 que_qaru05.rsw#허상의 오콜니르#
-arug_cas01.rsw#발프레이야 길드#
-arug_cas02.rsw#발프레이야 길드#
-arug_cas03.rsw#발프레이야 길드#
-arug_cas04.rsw#발프레이야 길드#
-arug_cas05.rsw#발프레이야 길드#
+arug_cas01.rsw#마르돌#
+arug_cas02.rsw#시르#
+arug_cas03.rsw#호른#
+arug_cas04.rsw#게픈#
+arug_cas05.rsw#바나디스#
 aru_gld.rsw#발프레이야#
 moscovia.rsw#모스코비아#
 mosk_in.rsw#모스코비아 내부#
@@ -351,11 +469,11 @@ mosk_fild02.rsw#모스코비아 필드#
 mosk_dun01.rsw#모스코비아 숲#
 mosk_dun02.rsw#모스코비아 깊은 숲#
 mosk_dun03.rsw#모스코비아 깊고 깊은 숲#
-schg_cas01.rsw#니다뵐 길드#
-schg_cas02.rsw#니다뵐 길드#
-schg_cas03.rsw#니다뵐 길드#
-schg_cas04.rsw#니다뵐 길드#
-schg_cas05.rsw#니다뵐 길드#
+schg_cas01.rsw#히민#
+schg_cas02.rsw#안들랑그#
+schg_cas03.rsw#비드블라인#
+schg_cas04.rsw#흘료드#
+schg_cas05.rsw#스카티르닐#
 sch_gld.rsw#니다뵐#
 cave.rsw#동굴마을#
 moc_fild20.rsw#소그라트 사막 차원의 균열#
@@ -428,6 +546,7 @@ p_track02.rsw#몬스터 레이스 경기장#
 odin_tem01.rsw#휘겔 오딘 신전 서쪽 지역#
 odin_tem02.rsw#휘겔 오딘 신전 남쪽 지역#
 odin_tem03.rsw#휘겔 오딘 신전 북쪽 지역#
+odin_past.rsw#고대 오딘 신전#
 hu_fild02.rsw#휘겔 필드#
 //hu_fild03.rsw#휘겔 필드#	2008년 리뉴얼
 hu_fild06.rsw#휘겔 필드#
@@ -449,6 +568,7 @@ que_job01.rsw#비밀주점#
 abyss_01.rsw#휘겔 어비스 호수 지하 동굴 1층#
 abyss_02.rsw#휘겔 어비스 호수 지하 동굴 2층#
 abyss_03.rsw#휘겔 어비스 호수 지하 동굴 3층#
+abyss_04.rsw#휘겔 어비스 호수 지하 동굴 4층#
 tha_t01.rsw#타나토스 타워 하층부 박물관 입구#
 tha_t02.rsw#타나토스 타워 하층부 박물관#
 tha_t03.rsw#타나토스 타워 하층부 버려진 공간#
@@ -499,6 +619,7 @@ lhz_fild03.rsw#리히타르젠 필드#
 lhz_fild02.rsw#리히타르젠 필드(사신의 계곡)#
 ein_fild04.rsw#아인브로크 필드#
 ein_fild03.rsw#아인브로크 필드#
+ein_dun03.rsw#아인베흐 광산 3층#
 ein_dun02.rsw#아인베흐 광산 2층#
 ein_dun01.rsw#아인베흐 광산 1층#
 //ein_fild10.rsw#아인브로크 필드#	2008년 리뉴얼
@@ -608,28 +729,28 @@ gld_dun04.rsw#길드 지하 던전#
 gld_dun03.rsw#길드 지하 던전#
 gld_dun02.rsw#길드 지하 던전#
 gld_dun01.rsw#길드 지하 던전#
-payg_cas05.rsw#청림 호수 길드#
-payg_cas04.rsw#청림 호수 길드#
-payg_cas03.rsw#청림 호수 길드#
-payg_cas02.rsw#청림 호수 길드#
-payg_cas01.rsw#청림 호수 길드#
+payg_cas05.rsw#죽림현(竹林峴)#
+payg_cas04.rsw#홍루(紅樓)#
+payg_cas03.rsw#불영(佛影)#
+payg_cas02.rsw#천단(天壇)#
+payg_cas01.rsw#명정(明亭)#
 pay_gld.rsw#청림 호수#
-aldeg_cas05.rsw#루이나 길드#
-aldeg_cas04.rsw#루이나 길드#
-aldeg_cas03.rsw#루이나 길드#
-aldeg_cas02.rsw#루이나 길드#
-aldeg_cas01.rsw#루이나 길드#
+aldeg_cas05.rsw#로텐부르크#
+aldeg_cas04.rsw#뷔르츠부르크#
+aldeg_cas03.rsw#뉘렌베르크#
+aldeg_cas02.rsw#호헨슈반가우#
+aldeg_cas01.rsw#노이슈반스타인#
 alde_gld.rsw#알데바란 위성도시 루이나#
-gefg_cas05.rsw#브리토리아 길드#
-gefg_cas04.rsw#브리토리아 길드#
-gefg_cas03.rsw#브리토리아 길드#
-gefg_cas02.rsw#브리토리아 길드#
-gefg_cas01.rsw#브리토리아 길드#
-prtg_cas05.rsw#발키리 렐름 길드#
-prtg_cas04.rsw#발키리 렐름 길드#
-prtg_cas03.rsw#발키리 렐름 길드#
-prtg_cas02.rsw#발키리 렐름 길드#
-prtg_cas01.rsw#발키리 렐름 길드#
+gefg_cas05.rsw#멜세스데츠#
+gefg_cas04.rsw#베르겔#
+gefg_cas03.rsw#이스넬프#
+gefg_cas02.rsw#욜브리거#
+gefg_cas01.rsw#레프리온#
+prtg_cas05.rsw#괸들#
+prtg_cas04.rsw#스쾨굴#
+prtg_cas03.rsw#라즈리그스#
+prtg_cas02.rsw#스반힐트#
+prtg_cas01.rsw#크림힐트#
 prt_gld.rsw#발키리 렐름#
 tur_dun01.rsw#거북이 섬#
 tur_dun02.rsw#거북이 섬 던전#
@@ -868,7 +989,7 @@ prt_are_in.rsw#아레나 대기실#
 arena_room.rsw#아레나 대기실#
 prt_arena01.rsw#아레나#
 prt_are01.rsw#아레나#
-glast_01.rsw#글레스트헤임#
+glast_01.rsw#글래스트헤임#
 alde_dun01.rsw#알데바란 시계탑 지하 1층#
 alde_dun02.rsw#알데바란 시계탑 지하 2층#
 alde_dun03.rsw#알데바란 시계탑 지하 3층#
@@ -877,22 +998,22 @@ c_tower1.rsw#알데바란 시계탑 지상 1층#
 c_tower2.rsw#알데바란 시계탑 지상 2층#
 c_tower3.rsw#알데바란 시계탑 지상 3층#
 c_tower4.rsw#알데바란 시계탑 지상 4층#
-gl_cas01.rsw#글레스트헤임 성 1층#
-gl_cas02.rsw#글레스트헤임 성 2층#
-gl_church.rsw#글레스트헤임 수도원#
-gl_chyard.rsw#글레스트헤임 지하 묘지#
-gl_dun01.rsw#글레스트헤임 지하 동굴 1층#
-gl_dun02.rsw#글레스트헤임 지하 동굴 2층#
-gl_in01.rsw#글레스트헤임 실내#
-gl_knt01.rsw#글레스트헤임 기사단 1층#
-gl_knt02.rsw#글레스트헤임 기사단 2층#
-gl_prison.rsw#글레스트헤임 지하 감옥 1층#
-gl_prison1.rsw#글레스트헤임 지하 감옥 2층#
-gl_sew01.rsw#글레스트헤임 지하 수로 1층#
-gl_sew02.rsw#글레스트헤임 지하 수로 2층#
-gl_sew03.rsw#글레스트헤임 지하 수로 3층#
-gl_sew04.rsw#글레스트헤임 지하 수로 4층#
-gl_step.rsw#글레스트헤임 계단 던전#
+gl_cas01.rsw#글래스트헤임 성 1층#
+gl_cas02.rsw#글래스트헤임 성 2층#
+gl_church.rsw#글래스트헤임 수도원#
+gl_chyard.rsw#글래스트헤임 지하 묘지#
+gl_dun01.rsw#글래스트헤임 지하 동굴 1층#
+gl_dun02.rsw#글래스트헤임 지하 동굴 2층#
+gl_in01.rsw#글래스트헤임 실내#
+gl_knt01.rsw#글래스트헤임 기사단 1층#
+gl_knt02.rsw#글래스트헤임 기사단 2층#
+gl_prison.rsw#글래스트헤임 지하 감옥 1층#
+gl_prison1.rsw#글래스트헤임 지하 감옥 2층#
+gl_sew01.rsw#글래스트헤임 지하 수로 1층#
+gl_sew02.rsw#글래스트헤임 지하 수로 2층#
+gl_sew03.rsw#글래스트헤임 지하 수로 3층#
+gl_sew04.rsw#글래스트헤임 지하 수로 4층#
+gl_step.rsw#글래스트헤임 계단 던전#
 pvp_y_room.rsw#PvP : 대기실#
 pvp_n_room.rsw#PvP : 대기실#
 pvp_c_room.rsw#PvP : 대기실#
