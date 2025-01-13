@@ -8,8 +8,8 @@
 import CoreGraphics
 import Foundation
 import Observation
-import ROClientResources
 import RODatabase
+import ROGame
 import ROResources
 
 @Observable

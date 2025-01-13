@@ -5,9 +5,9 @@
 //  Created by Leon Li on 2024/9/9.
 //
 
-import ROClientResources
 import ROCore
 import ROFileFormats
+import ROGame
 import SwiftUI
 
 struct GameImage: View {

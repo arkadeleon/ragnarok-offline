@@ -6,10 +6,10 @@
 //
 
 import RealityKit
-import ROClientResources
 import ROCore
 import RODatabase
 import ROFileFormats
+import ROGame
 import RONetwork
 import RORenderers
 import ROResources

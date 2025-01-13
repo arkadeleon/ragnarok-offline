@@ -13,9 +13,6 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "ROClientResources",
-            targets: ["ROClientResources"]),
-        .library(
             name: "ROCore",
             targets: ["ROCore"]),
         .library(
@@ -24,6 +21,9 @@ let package = Package(
         .library(
             name: "ROFileFormats",
             targets: ["ROFileFormats"]),
+        .library(
+            name: "ROGame",
+            targets: ["ROGame"]),
         .library(
             name: "RONetwork",
             targets: ["RONetwork"]),
@@ -46,15 +46,6 @@ let package = Package(
         .package(url: "https://github.com/mw99/DataCompression.git", from: "3.8.0"),
     ],
     targets: [
-        .target(
-            name: "ROClientResources",
-            dependencies: [
-                .product(name: "Lua", package: "swift-lua"),
-                "ROCore",
-                "ROFileFormats",
-                "ROGenerated",
-                "ROResources",
-            ]),
         .target(
             name: "ROCore"),
         .target(
@@ -92,6 +83,15 @@ let package = Package(
                 .copy("Resources/data"),
                 .copy("Resources/test.grf"),
                 .copy("Resources/cursors.act"),
+            ]),
+        .target(
+            name: "ROGame",
+            dependencies: [
+                .product(name: "Lua", package: "swift-lua"),
+                "ROCore",
+                "ROFileFormats",
+                "ROGenerated",
+                "ROResources",
             ]),
         .target(
             name: "ROGenerated",

@@ -8,9 +8,9 @@
 import Metal
 import MetalKit
 import RealityKit
-import ROClientResources
 import ROCore
 import ROFileFormats
+import ROGame
 import ROGenerated
 
 extension Entity {

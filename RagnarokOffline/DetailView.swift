@@ -6,7 +6,7 @@
 //
 
 import rAthenaResources
-import ROClientResources
+import ROGame
 import SwiftUI
 
 struct DetailView: View {
