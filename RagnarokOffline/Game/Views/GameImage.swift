@@ -24,7 +24,7 @@ struct GameImage: View {
         .task {
             let components = ["data", "texture", "유저인터페이스", name]
 
-            let url = ClientResourceManager.default.baseURL.appending(component: components.joined(separator: "/"))
+            let url = GameResourceManager.default.baseURL.appending(component: components.joined(separator: "/"))
             if FileManager.default.fileExists(atPath: url.path()),
                let data = try? Data(contentsOf: url) {
                 image = CGImageCreateWithData(data)?.removingMagentaPixels()
@@ -32,7 +32,7 @@ struct GameImage: View {
             }
 
             let grfPath = GRF.Path(components: components)
-            if let image = await ClientResourceManager.default.image(forBMPPath: grfPath) {
+            if let image = await GameResourceManager.default.image(forBMPPath: grfPath) {
                 self.image = image
                 return
             }

@@ -16,7 +16,7 @@ import ROGenerated
 extension Entity {
     static func loadJob(jobID: JobID) async throws -> Entity {
         async let bodyAsync = loadBody(jobID: jobID)
-        async let headAsync = loadHead(hairID: 2)
+        async let headAsync = loadHead(hairStyle: 2)
         async let hpAsync = loadHP()
 
         let body = try await bodyAsync
@@ -34,7 +34,7 @@ extension Entity {
     }
 
     static func loadBody(jobID: JobID) async throws -> Entity {
-        let (spr, act) = try await ClientResourceManager.default.bodySpriteFile(sex: .male, jobID: jobID)
+        let (spr, act) = try await GameResourceManager.default.sprite(forJobID: jobID, sex: .male)
 
         let entity = try await Entity.load(act: act, spr: spr)
         entity.name = "body"
@@ -42,8 +42,8 @@ extension Entity {
         return entity
     }
 
-    static func loadHead(hairID: Int) async throws -> Entity {
-        let (spr, act) = try await ClientResourceManager.default.headSpriteFile(sex: .male, hairID: hairID)
+    static func loadHead(hairStyle: Int) async throws -> Entity {
+        let (spr, act) = try await GameResourceManager.default.sprite(forHairStyle: hairStyle, sex: .male)
 
         let entity = try await Entity.load(act: act, spr: spr)
         entity.name = "head"

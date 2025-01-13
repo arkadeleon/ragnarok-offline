@@ -140,8 +140,8 @@ final class GameSession {
             self.phase = .mapLoading
 
             Task {
-                let gat = try await ClientResourceManager.default.gatFile(forMapName: mapName)
-                let gnd = try await ClientResourceManager.default.gndFile(forMapName: mapName)
+                let gat = try await GameResourceManager.default.gat(forMapName: mapName)
+                let gnd = try await GameResourceManager.default.gnd(forMapName: mapName)
 
                 self.phase = .map(mapName, gat, gnd, event.position)
             }

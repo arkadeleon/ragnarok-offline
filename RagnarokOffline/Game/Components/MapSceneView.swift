@@ -41,7 +41,7 @@ struct MapSceneView: View {
             let group = ModelSortGroup()
 
             let groundEntity = try? await Entity.loadGround(gat: gat, gnd: gnd) { textureName in
-                try? ClientResourceManager.default.image(forTextureNamed: textureName)
+                try? GameResourceManager.default.image(forTextureNamed: textureName)
             }
 
             if let groundEntity {
@@ -105,7 +105,7 @@ struct MapSceneView: View {
             root.addChild(camera)
 
             if let bgm = MapInfoTable.shared.mapBGM(forMapName: mapName) {
-                let url = ClientResourceManager.default.baseURL.appending(path: "BGM/\(bgm)")
+                let url = GameResourceManager.default.baseURL.appending(path: "BGM/\(bgm)")
                 let configuration = AudioFileResource.Configuration(shouldLoop: true)
                 if let audioResource = try? await AudioFileResource(contentsOf: url, withName: bgm, configuration: configuration) {
                     root.playAudio(audioResource)

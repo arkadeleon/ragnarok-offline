@@ -24,7 +24,7 @@ struct ItemIconImageView: View {
         }
         .frame(width: 40, height: 40)
         .task {
-            await item.fetchIconImage()
+            try? await item.fetchIconImage()
         }
     }
 }

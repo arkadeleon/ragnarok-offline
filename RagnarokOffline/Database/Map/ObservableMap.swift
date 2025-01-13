@@ -49,7 +49,7 @@ class ObservableMap {
 
     func fetchImage() async {
         if image == nil {
-            image = await ClientResourceManager.default.mapImage(forMapName: map.name)
+            image = await GameResourceManager.default.mapImage(forMapName: map.name)
         }
     }
 

@@ -106,7 +106,7 @@ class ObservableJob {
 
     func fetchImage() async {
         if image == nil {
-            image = try? await ClientResourceManager.default.jobImage(sex: .male, jobID: job.id)
+            image = try? await GameResourceManager.default.jobImage(forJobID: job.id, sex: .male)
         }
     }
 

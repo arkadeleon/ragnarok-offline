@@ -1,5 +1,5 @@
 //
-//  ClientResourceManager.swift
+//  GameResourceManager.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/2.
@@ -12,12 +12,12 @@ import ROFileFormats
 import ROGenerated
 import ROResources
 
-enum ClientResourceError: Error {
+enum GameResourceError: Error {
     case resourceNotFound
 }
 
-public actor ClientResourceManager {
-    public static let `default` = ClientResourceManager()
+public actor GameResourceManager {
+    public static let `default` = GameResourceManager()
 
     nonisolated public let baseURL: URL
 
@@ -25,20 +25,15 @@ public actor ClientResourceManager {
 
     private let cache = NSCache<NSString, CGImage>()
 
-    public init() {
+    init() {
         baseURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         grfs = [
-            GRFReference(url: baseURL.appending(path: "rdata.grf")),
             GRFReference(url: baseURL.appending(path: "data.grf")),
         ]
     }
 
     public func monsterImage(_ monsterID: Int) async throws -> CGImage? {
-        guard let resourceName = MonsterInfoTable.shared.monsterResourceName(forMonsterID: monsterID) else {
-            return nil
-        }
-
-        let (spr, act) = try monsterSpriteFile(forResourceName: resourceName)
+        let (spr, act) = try sprite(forMonsterID: monsterID)
 
         let imagesBySpriteType = spr.imagesBySpriteType()
         let animatedImage = act.actions.first?.animatedImage(using: imagesBySpriteType)
@@ -46,8 +41,8 @@ public actor ClientResourceManager {
         return image
     }
 
-    public func jobImage(sex: Sex, jobID: JobID) async throws -> CGImage? {
-        let (spr, act) = try bodySpriteFile(sex: sex, jobID: jobID)
+    public func jobImage(forJobID jobID: JobID, sex: Sex) async throws -> CGImage? {
+        let (spr, act) = try sprite(forJobID: jobID, sex: sex)
 
         let imagesBySpriteType = spr.imagesBySpriteType()
         let animatedImage = act.actions.first?.animatedImage(using: imagesBySpriteType)
@@ -57,21 +52,21 @@ public actor ClientResourceManager {
 
     // MARK: - data
 
-    public func gatFile(forMapName mapName: String) throws -> GAT {
+    public func gat(forMapName mapName: String) throws -> GAT {
         let path = GRF.Path(components: ["data", "\(mapName).gat"])
         let data = try contentsOfEntry(at: path)
         let gat = try GAT(data: data)
         return gat
     }
 
-    public func gndFile(forMapName mapName: String) throws -> GND {
+    public func gnd(forMapName mapName: String) throws -> GND {
         let path = GRF.Path(components: ["data", "\(mapName).gnd"])
         let data = try contentsOfEntry(at: path)
         let gnd = try GND(data: data)
         return gnd
     }
 
-    public func rswFile(forMapName mapName: String) throws -> RSW {
+    public func rsw(forMapName mapName: String) throws -> RSW {
         let path = GRF.Path(components: ["data", "\(mapName).rsw"])
         let data = try contentsOfEntry(at: path)
         let rsw = try RSW(data: data)
@@ -80,8 +75,8 @@ public actor ClientResourceManager {
 
     // MARK: - data\palette
 
-    public func headPaletteFile(sex: Sex, hairID: Int, paletteID: Int) throws -> PAL {
-        let path = GRF.Path(components: ["data", "palette", "머리", "머리", "\(hairID)_\(sex.resourceName)_\(paletteID).pal"])
+    public func palette(forHairStyle hairStyle: Int, hairColor: Int, sex: Sex) throws -> PAL {
+        let path = GRF.Path(components: ["data", "palette", "머리", "머리", "\(hairStyle)_\(sex.resourceName)_\(hairColor).pal"])
         let data = try contentsOfEntry(at: path)
         let pal = try PAL(data: data)
         return pal
@@ -89,7 +84,11 @@ public actor ClientResourceManager {
 
     // MARK: - data\sprite
 
-    public func itemSpriteFile(forResourceName resourceName: String) throws -> (spr: SPR, act: ACT) {
+    public func sprite(forItemID itemID: Int) throws -> (spr: SPR, act: ACT) {
+        guard let resourceName = ItemInfoTable.shared.identifiedItemResourceName(forItemID: itemID) else {
+            throw GameResourceError.resourceNotFound
+        }
+
         let sprPath = GRF.Path(components: ["data", "sprite", "아이템", "\(resourceName).spr"])
         let sprData = try contentsOfEntry(at: sprPath)
         let spr = try SPR(data: sprData)
@@ -98,10 +97,14 @@ public actor ClientResourceManager {
         let actData = try contentsOfEntry(at: actPath)
         let act = try ACT(data: actData)
 
-        return (spr: spr, act: act)
+        return (spr, act)
     }
 
-    public func monsterSpriteFile(forResourceName resourceName: String) throws -> (spr: SPR, act: ACT) {
+    public func sprite(forMonsterID monsterID: Int) throws -> (spr: SPR, act: ACT) {
+        guard let resourceName = MonsterInfoTable.shared.monsterResourceName(forMonsterID: monsterID) else {
+            throw GameResourceError.resourceNotFound
+        }
+
         let sprPath = GRF.Path(components: ["data", "sprite", "몬스터", "\(resourceName).spr"])
         let sprData = try contentsOfEntry(at: sprPath)
         let spr = try SPR(data: sprData)
@@ -110,10 +113,10 @@ public actor ClientResourceManager {
         let actData = try contentsOfEntry(at: actPath)
         let act = try ACT(data: actData)
 
-        return (spr: spr, act: act)
+        return (spr, act)
     }
 
-    public func bodySpriteFile(sex: Sex, jobID: JobID) throws -> (spr: SPR, act: ACT) {
+    public func sprite(forJobID jobID: JobID, sex: Sex) throws -> (spr: SPR, act: ACT) {
         let sprPath = GRF.Path(components: ["data", "sprite", "인간족", "몸통", "\(sex.resourceName)", "\(jobID.resourceName)_\(sex.resourceName).spr"])
         let sprData = try contentsOfEntry(at: sprPath)
         let spr = try SPR(data: sprData)
@@ -122,31 +125,31 @@ public actor ClientResourceManager {
         let actData = try contentsOfEntry(at: actPath)
         let act = try ACT(data: actData)
 
-        return (spr: spr, act: act)
+        return (spr, act)
     }
 
-    public func headSpriteFile(sex: Sex, hairID: Int) throws -> (spr: SPR, act: ACT) {
-        let sprPath = GRF.Path(components: ["data", "sprite", "인간족", "머리통", "\(sex.resourceName)", "\(hairID)_\(sex.resourceName).spr"])
+    public func sprite(forHairStyle hairStyle: Int, sex: Sex) throws -> (spr: SPR, act: ACT) {
+        let sprPath = GRF.Path(components: ["data", "sprite", "인간족", "머리통", "\(sex.resourceName)", "\(hairStyle)_\(sex.resourceName).spr"])
         let sprData = try contentsOfEntry(at: sprPath)
         let spr = try SPR(data: sprData)
 
-        let actPath = GRF.Path(components: ["data", "sprite", "인간족", "머리통", "\(sex.resourceName)", "\(hairID)_\(sex.resourceName).act"])
+        let actPath = GRF.Path(components: ["data", "sprite", "인간족", "머리통", "\(sex.resourceName)", "\(hairStyle)_\(sex.resourceName).act"])
         let actData = try contentsOfEntry(at: actPath)
         let act = try ACT(data: actData)
 
-        return (spr: spr, act: act)
+        return (spr, act)
     }
 
-    public func skillSpriteFile(forResourceName resourceName: String) throws -> (spr: SPR, act: ACT) {
-        let sprPath = GRF.Path(components: ["data", "sprite", "아이템", "\(resourceName).spr"])
+    public func sprite(forSkillName skillName: String) throws -> (spr: SPR, act: ACT) {
+        let sprPath = GRF.Path(components: ["data", "sprite", "아이템", "\(skillName).spr"])
         let sprData = try contentsOfEntry(at: sprPath)
         let spr = try SPR(data: sprData)
 
-        let actPath = GRF.Path(components: ["data", "sprite", "아이템", "\(resourceName).act"])
+        let actPath = GRF.Path(components: ["data", "sprite", "아이템", "\(skillName).act"])
         let actData = try contentsOfEntry(at: actPath)
         let act = try ACT(data: actData)
 
-        return (spr: spr, act: act)
+        return (spr, act)
     }
 
     // MARK: - data\texture
@@ -158,9 +161,9 @@ public actor ClientResourceManager {
         return image
     }
 
-    public func itemIconImage(forItemID itemID: Int) async -> CGImage? {
+    public func itemIconImage(forItemID itemID: Int) async throws -> CGImage? {
         guard let resourceName = ItemInfoTable.shared.identifiedItemResourceName(forItemID: itemID) else {
-            return nil
+            throw GameResourceError.resourceNotFound
         }
 
         let path = GRF.Path(components: ["data", "texture", "유저인터페이스", "item", "\(resourceName).bmp"])
@@ -168,9 +171,9 @@ public actor ClientResourceManager {
         return image
     }
 
-    public func itemPreviewImage(forItemID itemID: Int) async -> CGImage? {
+    public func itemPreviewImage(forItemID itemID: Int) async throws -> CGImage? {
         guard let resourceName = ItemInfoTable.shared.identifiedItemResourceName(forItemID: itemID) else {
-            return nil
+            throw GameResourceError.resourceNotFound
         }
 
         let path = GRF.Path(components: ["data", "texture", "유저인터페이스", "collection", "\(resourceName).bmp"])
@@ -216,6 +219,6 @@ public actor ClientResourceManager {
                 return try grf.contentsOfEntry(at: path)
             }
         }
-        throw ClientResourceError.resourceNotFound
+        throw GameResourceError.resourceNotFound
     }
 }

@@ -141,14 +141,14 @@ class ObservableItem {
         localizedName = ItemInfoTable.shared.localizedIdentifiedItemName(forItemID: item.id)
     }
 
-    func fetchIconImage() async {
+    func fetchIconImage() async throws {
         if iconImage == nil {
-            iconImage = await ClientResourceManager.default.itemIconImage(forItemID: item.id)
+            iconImage = try await GameResourceManager.default.itemIconImage(forItemID: item.id)
         }
     }
 
-    func fetchDetail() async {
-        previewImage = await ClientResourceManager.default.itemPreviewImage(forItemID: item.id)
+    func fetchDetail() async throws {
+        previewImage = try await GameResourceManager.default.itemPreviewImage(forItemID: item.id)
 
         localizedDescription = ItemInfoTable.shared.localizedIdentifiedItemDescription(forItemID: item.id)
 

@@ -137,7 +137,7 @@ class ObservableMonster {
 
     func fetchImage() async {
         if image == nil {
-            image = try? await ClientResourceManager.default.monsterImage(monster.id)
+            image = try? await GameResourceManager.default.monsterImage(monster.id)
         }
     }
 

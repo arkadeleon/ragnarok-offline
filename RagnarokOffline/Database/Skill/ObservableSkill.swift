@@ -65,7 +65,7 @@ class ObservableSkill {
     }
 
     func fetchIconImage() async {
-        iconImage = await ClientResourceManager.default.skillIconImage(forSkillAegisName: skill.aegisName)
+        iconImage = await GameResourceManager.default.skillIconImage(forSkillAegisName: skill.aegisName)
     }
 
     func fetchDetail() {
