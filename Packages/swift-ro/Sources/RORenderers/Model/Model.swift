@@ -61,10 +61,20 @@ public struct Model {
             return mesh
         }
 
-        for wrapper in wrappers {
-            let ms = wrapper.compile(rsm: rsm, instance_matrix: instance, boundingBox: boundingBox)
-            for (i, m) in ms.enumerated() {
-                meshes[i].vertices.append(contentsOf: m)
+        if rsm.version >= "2.3" {
+            for wrapper in wrappers {
+                let ms = wrapper.compile(rsm: rsm, instance_matrix: instance, boundingBox: boundingBox)
+                for (i, m) in ms.enumerated() {
+                    let mesh = ModelMesh(vertices: m, texture: textureProvider(wrapper.node.textures[i]))
+                    meshes.append(mesh)
+                }
+            }
+        } else {
+            for wrapper in wrappers {
+                let ms = wrapper.compile(rsm: rsm, instance_matrix: instance, boundingBox: boundingBox)
+                for (i, m) in ms.enumerated() {
+                    meshes[i].vertices.append(contentsOf: m)
+                }
             }
         }
     }
@@ -178,7 +188,7 @@ class ModelNodeWrapper {
 
         var face_normal = [SIMD3<Float>](repeating: .zero, count: node.faces.count)
 
-        let maxTexture = node.textureIndexes.max() ?? 0
+        let maxTexture = node.textureIndexes.max() ?? -1
         var mesh = [[ModelVertex]](repeating: [], count: Int(maxTexture) + 1)
 
         switch rsm.shadeType {

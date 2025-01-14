@@ -246,7 +246,7 @@ extension RSW {
                 }
 
                 modelName = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .koreanEUC)
-                nodeName = try  decoder.decode(String.self, lengthOfBytes: 80)
+                nodeName = try  decoder.decode(String.self, lengthOfBytes: 80, encoding: .isoLatin1)
                 position = try [
                     decoder.decode(Float.self) / 5,
                     decoder.decode(Float.self) / 5,

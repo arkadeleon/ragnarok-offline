@@ -60,31 +60,35 @@ struct RSWFilePreviewView: View {
 
         for model in rsw.models {
             if !modelEntitiesByName.contains(where: { $0.key == model.modelName }) {
-                let path = GRF.Path(components: ["data", "model", model.modelName])
-                let data = try grf.contentsOfEntry(at: path)
-                let rsm = try RSM(data: data)
+                do {
+                    let path = GRF.Path(components: ["data", "model", model.modelName])
+                    let data = try grf.contentsOfEntry(at: path)
+                    let rsm = try RSM(data: data)
 
-                let instance = Model.createInstance(
-                    position: .zero,
-                    rotation: .zero,
-                    scale: .one,
-                    width: 0,
-                    height: 0
-                )
+                    let instance = Model.createInstance(
+                        position: .zero,
+                        rotation: .zero,
+                        scale: .one,
+                        width: 0,
+                        height: 0
+                    )
 
-                let modelEntity = try await Entity.loadModel(rsm: rsm, instance: instance) { textureName in
-                    let path = GRF.Path(components: ["data", "texture", textureName])
-                    guard let data = try? grf.contentsOfEntry(at: path) else {
-                        return nil
+                    let modelEntity = try await Entity.loadModel(rsm: rsm, instance: instance) { textureName in
+                        let path = GRF.Path(components: ["data", "texture", textureName])
+                        let data = try grf.contentsOfEntry(at: path)
+                        let texture = CGImageCreateWithData(data)
+                        return texture?.removingMagentaPixels()
                     }
-                    let texture = CGImageCreateWithData(data)
-                    return texture?.removingMagentaPixels()
-                }
 
-                modelEntitiesByName[model.modelName] = modelEntity
+                    modelEntitiesByName[model.modelName] = modelEntity
+                } catch {
+                }
             }
 
-            let modelEntity = modelEntitiesByName[model.modelName]!
+            guard let modelEntity = modelEntitiesByName[model.modelName] else {
+                continue
+            }
+
             let modelEntityClone = await modelEntity.clone(recursive: true)
 
             await MainActor.run {

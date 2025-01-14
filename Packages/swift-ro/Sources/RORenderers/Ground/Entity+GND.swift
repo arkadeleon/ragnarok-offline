@@ -14,9 +14,11 @@ extension Entity {
         var materials: [any Material] = []
         let ground = Ground(gat: gat, gnd: gnd) { textureName in
             guard let cgImage = textureProvider(textureName) else {
+                materials.append(SimpleMaterial())
                 return nil
             }
             guard let textureResource = try? TextureResource.generate(from: cgImage, withName: textureName, options: .init(semantic: .color)) else {
+                materials.append(SimpleMaterial())
                 return nil
             }
 

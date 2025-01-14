@@ -10,13 +10,15 @@ import RealityKit
 import ROFileFormats
 
 extension Entity {
-    public static func loadModel(rsm: RSM, instance: float4x4, textureProvider: (String) -> CGImage?) async throws -> Entity {
+    public static func loadModel(rsm: RSM, instance: float4x4, textureProvider: (String) throws -> CGImage?) async throws -> Entity {
         var materials: [any Material] = []
         let model = Model(rsm: rsm, instance: instance) { textureName in
-            guard let cgImage = textureProvider(textureName) else {
+            guard let cgImage = try? textureProvider(textureName) else {
+                materials.append(SimpleMaterial())
                 return nil
             }
             guard let textureResource = try? TextureResource.generate(from: cgImage, withName: textureName, options: .init(semantic: .color)) else {
+                materials.append(SimpleMaterial())
                 return nil
             }
 
