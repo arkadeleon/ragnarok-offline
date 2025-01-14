@@ -106,7 +106,7 @@ extension ACT {
         public var offset: SIMD2<Int32>
         public var spriteIndex: Int32
         public var isMirrored: Int32
-        public var color = Color(red: 255, green: 255, blue: 255, alpha: 255)
+        public var color = RGBAColor(red: 255, green: 255, blue: 255, alpha: 255)
         public var scale: SIMD2<Float> = [1, 1]
         public var rotationAngle: Int32 = 0
         public var spriteType: Int32 = 0
@@ -122,7 +122,7 @@ extension ACT {
             isMirrored = try decoder.decode(Int32.self)
 
             if version >= "2.0" {
-                color = try decoder.decode(Color.self)
+                color = try decoder.decode(RGBAColor.self)
 
                 scale.x = try decoder.decode(Float.self)
                 scale.y = scale.x

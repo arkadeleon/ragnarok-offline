@@ -151,21 +151,33 @@ extension RSW {
     public struct Light: BinaryDecodableWithConfiguration, Sendable {
         public var longitude: Int32
         public var latitude: Int32
-        public var diffuse: DiffuseColor
-        public var ambient: AmbientColor
+        public var diffuseRed: Float
+        public var diffuseGreen: Float
+        public var diffuseBlue: Float
+        public var ambientRed: Float
+        public var ambientGreen: Float
+        public var ambientBlue: Float
         public var opacity: Float
 
         public init(from decoder: BinaryDecoder, configuration version: String) throws {
             if version >= "1.5" {
                 longitude = try decoder.decode(Int32.self)
                 latitude = try decoder.decode(Int32.self)
-                diffuse = try decoder.decode(DiffuseColor.self)
-                ambient = try decoder.decode(AmbientColor.self)
+                diffuseRed = try decoder.decode(Float.self)
+                diffuseGreen = try decoder.decode(Float.self)
+                diffuseBlue = try decoder.decode(Float.self)
+                ambientRed = try decoder.decode(Float.self)
+                ambientGreen = try decoder.decode(Float.self)
+                ambientBlue = try decoder.decode(Float.self)
             } else {
                 longitude = 45
                 latitude = 45
-                diffuse = DiffuseColor(red: 1, green: 1, blue: 1)
-                ambient = AmbientColor(red: 0.3, green: 0.3, blue: 0.3)
+                diffuseRed = 1
+                diffuseGreen = 1
+                diffuseBlue = 1
+                ambientRed = 0.3
+                ambientGreen = 0.3
+                ambientBlue = 0.3
             }
 
             if version >= "1.7" {
@@ -256,7 +268,9 @@ extension RSW {
         public struct Light: BinaryDecodableWithConfiguration, Sendable {
             public var name: String
             public var position: SIMD3<Float>
-            public var diffuse: DiffuseColor
+            public var diffuseRed: Float
+            public var diffuseGreen: Float
+            public var diffuseBlue: Float
             public var range: Float
 
             public init(from decoder: BinaryDecoder, configuration version: String) throws {
@@ -266,7 +280,9 @@ extension RSW {
                     decoder.decode(Float.self) / 5,
                     decoder.decode(Float.self) / 5,
                 ]
-                diffuse = try decoder.decode(DiffuseColor.self)
+                diffuseRed = try decoder.decode(Float.self)
+                diffuseGreen = try decoder.decode(Float.self)
+                diffuseBlue = try decoder.decode(Float.self)
                 range = try decoder.decode(Float.self)
             }
         }

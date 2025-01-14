@@ -9,7 +9,7 @@ import Foundation
 import ROCore
 
 public struct PAL: BinaryDecodable, Sendable {
-    public var colors: [Color] = []
+    public var colors: [RGBAColor] = []
 
     public init(data: Data) throws {
         let decoder = BinaryDecoder(data: data)
@@ -18,7 +18,7 @@ public struct PAL: BinaryDecodable, Sendable {
 
     public init(from decoder: BinaryDecoder) throws {
         for _ in 0..<256 {
-            let color = try decoder.decode(Color.self)
+            let color = try decoder.decode(RGBAColor.self)
             colors.append(color)
         }
     }

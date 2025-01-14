@@ -90,7 +90,7 @@ extension GND {
         public var v: SIMD4<Float>
         public var textureIndex: Int16
         public var lightmapIndex: Int16
-        public var color: Color
+        public var color: RGBAColor
 
         public init(from decoder: BinaryDecoder) throws {
             u = try [
@@ -113,7 +113,7 @@ extension GND {
             let red = try decoder.decode(UInt8.self)
             let green = try decoder.decode(UInt8.self)
             let blue = try decoder.decode(UInt8.self)
-            color = Color(red: red, green: green, blue: blue, alpha: alpha)
+            color = RGBAColor(red: red, green: green, blue: blue, alpha: alpha)
         }
     }
 }

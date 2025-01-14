@@ -150,7 +150,7 @@ extension CALayer {
         #endif
         self.transform = transform
 
-        if layer.color != Color(red: 255, green: 255, blue: 255, alpha: 255) {
+        if layer.color != RGBAColor(red: 255, green: 255, blue: 255, alpha: 255) {
             let colorMatrix = CIFilter.colorMatrix()
             colorMatrix.inputImage = CIImage(cgImage: image)
             colorMatrix.rVector = CIVector(x: CGFloat(layer.color.red) / 255, y: 0, z: 0, w: 0)

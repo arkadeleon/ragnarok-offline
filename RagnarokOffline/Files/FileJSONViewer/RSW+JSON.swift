@@ -60,8 +60,12 @@ extension RSW.Light {
         {
           "longitude": \(longitude),
           "latitude": \(latitude),
-          "diffuse": \(diffuse.json),
-          "ambient": \(ambient.json),
+          "diffuseRed": \(diffuseRed),
+          "diffuseGreen": \(diffuseGreen),
+          "diffuseBlue": \(diffuseBlue),
+          "ambientRed": \(ambientRed),
+          "ambientGreen": \(ambientGreen),
+          "ambientBlue": \(ambientBlue),
           "opacity": \(opacity)
         }
         """
@@ -105,7 +109,9 @@ extension RSW.Object.Light {
         {
           "name": \(name.quoted),
           "position": \(position.json),
-          "diffuse": \(diffuse.json),
+          "diffuseRed": \(diffuseRed),
+          "diffuseGreen": \(diffuseGreen),
+          "diffuseBlue": \(diffuseBlue),
           "range": \(range)
         }
         """

@@ -1,5 +1,5 @@
 //
-//  Color.swift
+//  RGBAColor.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/12/7.
@@ -7,7 +7,7 @@
 
 import ROCore
 
-public struct Color: BinaryDecodable, Equatable, Sendable {
+public struct RGBAColor: BinaryDecodable, Equatable, Sendable {
     public var red: UInt8
     public var green: UInt8
     public var blue: UInt8

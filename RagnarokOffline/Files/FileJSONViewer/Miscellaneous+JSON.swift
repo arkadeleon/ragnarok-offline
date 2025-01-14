@@ -7,21 +7,9 @@
 
 import ROFileFormats
 
-extension ROFileFormats.Color {
+extension RGBAColor {
     var json: String {
         "\(red), \(green), \(blue), \(alpha)".parenthesized.quoted
-    }
-}
-
-extension ROFileFormats.AmbientColor {
-    var json: String {
-        "\(red), \(green), \(blue)".parenthesized.quoted
-    }
-}
-
-extension ROFileFormats.DiffuseColor {
-    var json: String {
-        "\(red), \(green), \(blue)".parenthesized.quoted
     }
 }
 
