@@ -73,6 +73,15 @@ public actor GameResourceManager {
         return rsw
     }
 
+    // MARK: - data\model
+
+    public func rsm(forModelName modelName: String) throws -> RSM {
+        let path = GRF.Path(components: ["data", "model", modelName])
+        let data = try contentsOfEntry(at: path)
+        let rsm = try RSM(data: data)
+        return rsm
+    }
+
     // MARK: - data\palette
 
     public func palette(forHairStyle hairStyle: Int, hairColor: Int, sex: Sex) throws -> PAL {

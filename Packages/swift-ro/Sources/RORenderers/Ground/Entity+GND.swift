@@ -10,23 +10,27 @@ import RealityKit
 import ROFileFormats
 
 extension Entity {
-    public static func loadGround(gat: GAT, gnd: GND, textureProvider: (String) -> CGImage?) async throws -> Entity {
-        var materials: [any Material] = []
+    public static func loadGround(gat: GAT, gnd: GND, textureProvider: (String) async throws -> CGImage?) async throws -> Entity {
+        var textureNames = [String]()
         let ground = Ground(gat: gat, gnd: gnd) { textureName in
-            guard let cgImage = textureProvider(textureName) else {
+            textureNames.append(textureName)
+            return nil
+        }
+
+        var materials = [any Material]()
+        for textureName in textureNames {
+            guard let cgImage = try? await textureProvider(textureName) else {
                 materials.append(SimpleMaterial())
-                return nil
+                continue
             }
             guard let textureResource = try? TextureResource.generate(from: cgImage, withName: textureName, options: .init(semantic: .color)) else {
                 materials.append(SimpleMaterial())
-                return nil
+                continue
             }
 
             var material = PhysicallyBasedMaterial()
             material.baseColor = .init(texture: .init(textureResource))
             materials.append(material)
-
-            return nil
         }
 
         let meshDescriptors = ground.meshes.enumerated().map { (index, mesh) in

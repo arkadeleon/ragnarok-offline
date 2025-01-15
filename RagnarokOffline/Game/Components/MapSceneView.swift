@@ -39,14 +39,10 @@ struct MapSceneView: View {
 
             let group = ModelSortGroup()
 
-            let groundEntity = try? await Entity.loadGround(gat: gat, gnd: gnd) { textureName in
-                try? GameResourceManager.default.image(forTextureNamed: textureName)
-            }
-
-            if let groundEntity {
-                groundEntity.components.set(ModelSortGroupComponent(group: group, order: 0))
-                groundEntity.transform = Transform(rotation: simd_quatf(angle: radians(-90), axis: [1, 0, 0]))
-                root.addChild(groundEntity)
+            if let worldEntity = try? await GameResourceManager.default.worldEntity(mapName: mapName) {
+                worldEntity.components.set(ModelSortGroupComponent(group: group, order: 0))
+                worldEntity.transform = Transform(rotation: simd_quatf(angle: radians(-90), axis: [1, 0, 0]))
+                root.addChild(worldEntity)
             }
 
             var gridPositions = [SIMD3<Float>]()

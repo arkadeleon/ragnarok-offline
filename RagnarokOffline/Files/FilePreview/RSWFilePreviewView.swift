@@ -59,7 +59,7 @@ struct RSWFilePreviewView: View {
         var modelEntitiesByName: [String : Entity] = [:]
 
         for model in rsw.models {
-            if !modelEntitiesByName.contains(where: { $0.key == model.modelName }) {
+            if modelEntitiesByName[model.modelName] == nil {
                 do {
                     let path = GRF.Path(components: ["data", "model", model.modelName])
                     let data = try grf.contentsOfEntry(at: path)

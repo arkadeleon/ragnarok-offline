@@ -10,16 +10,22 @@ import RealityKit
 import ROFileFormats
 
 extension Entity {
-    public static func loadModel(rsm: RSM, instance: float4x4, textureProvider: (String) throws -> CGImage?) async throws -> Entity {
-        var materials: [any Material] = []
+    public static func loadModel(rsm: RSM, instance: float4x4, textureProvider: (String) async throws -> CGImage?) async throws -> Entity {
+        var textureNames = [String]()
         let model = Model(rsm: rsm, instance: instance) { textureName in
-            guard let cgImage = try? textureProvider(textureName) else {
+            textureNames.append(textureName)
+            return nil
+        }
+
+        var materials: [any Material] = []
+        for textureName in textureNames {
+            guard let cgImage = try? await textureProvider(textureName) else {
                 materials.append(SimpleMaterial())
-                return nil
+                continue
             }
             guard let textureResource = try? TextureResource.generate(from: cgImage, withName: textureName, options: .init(semantic: .color)) else {
                 materials.append(SimpleMaterial())
-                return nil
+                continue
             }
 
             var material = PhysicallyBasedMaterial()
@@ -27,8 +33,6 @@ extension Entity {
             material.blending = .transparent(opacity: 1.0)
             material.opacityThreshold = 0.9999
             materials.append(material)
-
-            return nil
         }
 
         let meshDescriptors = model.meshes.enumerated().map { (index, mesh) in
