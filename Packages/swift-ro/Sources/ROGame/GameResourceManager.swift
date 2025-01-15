@@ -16,10 +16,11 @@ enum GameResourceError: Error {
     case resourceNotFound
 }
 
-public actor GameResourceManager {
+@MainActor
+final public class GameResourceManager {
     public static let `default` = GameResourceManager()
 
-    nonisolated public let baseURL: URL
+    public let baseURL: URL
 
     let grfs: [GRFReference]
 
@@ -33,7 +34,7 @@ public actor GameResourceManager {
     }
 
     public func monsterImage(_ monsterID: Int) async throws -> CGImage? {
-        let (spr, act) = try sprite(forMonsterID: monsterID)
+        let (spr, act) = try await sprite(forMonsterID: monsterID)
 
         let imagesBySpriteType = spr.imagesBySpriteType()
         let animatedImage = act.actions.first?.animatedImage(using: imagesBySpriteType)
@@ -42,7 +43,7 @@ public actor GameResourceManager {
     }
 
     public func jobImage(forJobID jobID: JobID, sex: Sex) async throws -> CGImage? {
-        let (spr, act) = try sprite(forJobID: jobID, sex: sex)
+        let (spr, act) = try await sprite(forJobID: jobID, sex: sex)
 
         let imagesBySpriteType = spr.imagesBySpriteType()
         let animatedImage = act.actions.first?.animatedImage(using: imagesBySpriteType)
@@ -52,21 +53,21 @@ public actor GameResourceManager {
 
     // MARK: - data
 
-    public func gat(forMapName mapName: String) throws -> GAT {
+    public func gat(forMapName mapName: String) async throws -> GAT {
         let path = GRF.Path(components: ["data", "\(mapName).gat"])
         let data = try contentsOfEntry(at: path)
         let gat = try GAT(data: data)
         return gat
     }
 
-    public func gnd(forMapName mapName: String) throws -> GND {
+    public func gnd(forMapName mapName: String) async throws -> GND {
         let path = GRF.Path(components: ["data", "\(mapName).gnd"])
         let data = try contentsOfEntry(at: path)
         let gnd = try GND(data: data)
         return gnd
     }
 
-    public func rsw(forMapName mapName: String) throws -> RSW {
+    public func rsw(forMapName mapName: String) async throws -> RSW {
         let path = GRF.Path(components: ["data", "\(mapName).rsw"])
         let data = try contentsOfEntry(at: path)
         let rsw = try RSW(data: data)
@@ -75,7 +76,7 @@ public actor GameResourceManager {
 
     // MARK: - data\model
 
-    public func rsm(forModelName modelName: String) throws -> RSM {
+    public func rsm(forModelName modelName: String) async throws -> RSM {
         let path = GRF.Path(components: ["data", "model", modelName])
         let data = try contentsOfEntry(at: path)
         let rsm = try RSM(data: data)
@@ -84,7 +85,7 @@ public actor GameResourceManager {
 
     // MARK: - data\palette
 
-    public func palette(forHairStyle hairStyle: Int, hairColor: Int, sex: Sex) throws -> PAL {
+    public func palette(forHairStyle hairStyle: Int, hairColor: Int, sex: Sex) async throws -> PAL {
         let path = GRF.Path(components: ["data", "palette", "머리", "머리", "\(hairStyle)_\(sex.resourceName)_\(hairColor).pal"])
         let data = try contentsOfEntry(at: path)
         let pal = try PAL(data: data)
@@ -93,7 +94,7 @@ public actor GameResourceManager {
 
     // MARK: - data\sprite
 
-    public func sprite(forItemID itemID: Int) throws -> (spr: SPR, act: ACT) {
+    public func sprite(forItemID itemID: Int) async throws -> (spr: SPR, act: ACT) {
         guard let resourceName = ItemInfoTable.shared.identifiedItemResourceName(forItemID: itemID) else {
             throw GameResourceError.resourceNotFound
         }
@@ -109,7 +110,7 @@ public actor GameResourceManager {
         return (spr, act)
     }
 
-    public func sprite(forMonsterID monsterID: Int) throws -> (spr: SPR, act: ACT) {
+    public func sprite(forMonsterID monsterID: Int) async throws -> (spr: SPR, act: ACT) {
         guard let resourceName = MonsterInfoTable.shared.monsterResourceName(forMonsterID: monsterID) else {
             throw GameResourceError.resourceNotFound
         }
@@ -125,7 +126,7 @@ public actor GameResourceManager {
         return (spr, act)
     }
 
-    public func sprite(forJobID jobID: JobID, sex: Sex) throws -> (spr: SPR, act: ACT) {
+    public func sprite(forJobID jobID: JobID, sex: Sex) async throws -> (spr: SPR, act: ACT) {
         let sprPath = GRF.Path(components: ["data", "sprite", "인간족", "몸통", "\(sex.resourceName)", "\(jobID.resourceName)_\(sex.resourceName).spr"])
         let sprData = try contentsOfEntry(at: sprPath)
         let spr = try SPR(data: sprData)
@@ -137,7 +138,7 @@ public actor GameResourceManager {
         return (spr, act)
     }
 
-    public func sprite(forHairStyle hairStyle: Int, sex: Sex) throws -> (spr: SPR, act: ACT) {
+    public func sprite(forHairStyle hairStyle: Int, sex: Sex) async throws -> (spr: SPR, act: ACT) {
         let sprPath = GRF.Path(components: ["data", "sprite", "인간족", "머리통", "\(sex.resourceName)", "\(hairStyle)_\(sex.resourceName).spr"])
         let sprData = try contentsOfEntry(at: sprPath)
         let spr = try SPR(data: sprData)
@@ -149,7 +150,7 @@ public actor GameResourceManager {
         return (spr, act)
     }
 
-    public func sprite(forSkillName skillName: String) throws -> (spr: SPR, act: ACT) {
+    public func sprite(forSkillName skillName: String) async throws -> (spr: SPR, act: ACT) {
         let sprPath = GRF.Path(components: ["data", "sprite", "아이템", "\(skillName).spr"])
         let sprData = try contentsOfEntry(at: sprPath)
         let spr = try SPR(data: sprData)
@@ -163,7 +164,7 @@ public actor GameResourceManager {
 
     // MARK: - data\texture
 
-    public func image(forTextureNamed textureName: String) throws -> CGImage? {
+    public func image(forTextureNamed textureName: String) async throws -> CGImage? {
         let path = GRF.Path(components: ["data", "texture", textureName])
         let data = try contentsOfEntry(at: path)
         let image = CGImageCreateWithData(data)
