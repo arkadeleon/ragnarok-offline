@@ -10,28 +10,33 @@ import SwiftUI
 struct MessagesView: View {
     @Environment(\.conversation) private var conversation
 
+    @State private var position = ScrollPosition(idType: UUID.self)
+
     @State private var pendingCommand: CommandMessage.Command?
     @State private var commandParameters: [String] = []
 
     @State private var isCommandAlertPresented = false
 
     var body: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                LazyVStack {
-                    ForEach(conversation.messages, id: \.id) { message in
-                        MessageCell(message: message)
-                            .id(message.id)
-                    }
+        ScrollView {
+            LazyVStack {
+                ForEach(conversation.messages, id: \.id) { message in
+                    MessageCell(message: message)
+                        .id(message.id)
                 }
-                .padding()
             }
-            .onAppear {
-                proxy.scrollTo(conversation.messages.last?.id)
+            .padding()
+        }
+        .scrollPosition($position)
+        .onAppear {
+            if let id = conversation.messages.last?.id {
+                position.scrollTo(id: id)
             }
-            .onChange(of: conversation.messages.count) {
+        }
+        .onChange(of: conversation.messages.count) {
+            if let id = conversation.messages.last?.id {
                 withAnimation {
-                    proxy.scrollTo(conversation.messages.last?.id)
+                    position.scrollTo(id: id)
                 }
             }
         }

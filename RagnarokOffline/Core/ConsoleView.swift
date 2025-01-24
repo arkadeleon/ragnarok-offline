@@ -10,22 +10,25 @@ import SwiftUI
 struct ConsoleView: View {
     var messages: [AttributedString]
 
+    @State private var position = ScrollPosition(idType: Int.self)
+
     var body: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                LazyVStack(alignment: .leading) {
-                    ForEach(0..<messages.count, id: \.self) { index in
-                        Text(messages[index])
-                            .id(index)
-                            .lineLimit(1)
-                    }
+        ScrollView {
+            LazyVStack(alignment: .leading) {
+                ForEach(0..<messages.count, id: \.self) { index in
+                    Text(messages[index])
+                        .id(index)
+                        .lineLimit(1)
                 }
             }
-            .onAppear {
-                proxy.scrollTo(messages.count - 1)
-            }
-            .onChange(of: messages.count) {
-                proxy.scrollTo(messages.count - 1)
+        }
+        .scrollPosition($position)
+        .onAppear {
+            position.scrollTo(id: messages.count - 1)
+        }
+        .onChange(of: messages.count) {
+            if !position.isPositionedByUser {
+                position.scrollTo(id: messages.count - 1)
             }
         }
     }

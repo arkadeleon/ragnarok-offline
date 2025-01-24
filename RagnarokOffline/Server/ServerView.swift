@@ -31,9 +31,29 @@ struct ServerView: View {
         .background(.background)
         .navigationTitle(server.name)
         .toolbar {
+            if server.status == .stopped {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        server.start()
+                    } label: {
+                        Image(systemName: "play.fill")
+                    }
+                }
+            }
+
+            if server.status == .running {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        server.stop()
+                    } label: {
+                        Image(systemName: "stop.fill")
+                    }
+                }
+            }
+
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    server.messages.removeAll()
+                    server.clearConsole()
                 } label: {
                     Image(systemName: "trash")
                 }

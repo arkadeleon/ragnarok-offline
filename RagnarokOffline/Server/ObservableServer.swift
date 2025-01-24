@@ -13,11 +13,23 @@ import SwiftUI
 
 @Observable 
 class ObservableServer {
+    private enum ConsoleAction {
+        case append(Data)
+        case clear
+
+        init(_ data: Data) {
+            self = .append(data)
+        }
+    }
+
     private let server: ServerWrapper
 
     let name: String
     var status: ServerWrapper.Status
     var messages: [AttributedString]
+
+    @ObservationIgnored
+    private let consoleActionSubject = PassthroughSubject<ConsoleAction, Never>()
 
     @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
@@ -37,23 +49,30 @@ class ObservableServer {
         let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.server-output", qos: .userInitiated)
         server.outputDataPublisher
             .receive(on: queue)
-            .scan([AttributedString]()) {
-                var result = $0
-                guard let output = String(data: $1, encoding: .isoLatin1) else {
+            .map(ConsoleAction.init)
+            .merge(with: consoleActionSubject)
+            .scan([AttributedString]()) { result, action in
+                switch action {
+                case .append(let data):
+                    var result = result
+                    guard let output = String(data: data, encoding: .isoLatin1) else {
+                        return result
+                    }
+                    if let last = result.last, last.characters.last == "\r" {
+                        result.removeLast()
+                    }
+                    let lines = output.split(separator: "\n")
+                    for line in lines where !line.isEmpty {
+                        let attributedString = AttributedString(logMessage: String(line))
+                        result.append(attributedString)
+                    }
+                    if result.count > 1000 {
+                        result.removeLast(result.count - 1000)
+                    }
                     return result
+                case .clear:
+                    return []
                 }
-                if let last = result.last, last.characters.last == "\r" {
-                    result.removeLast()
-                }
-                let lines = output.split(separator: "\n")
-                for line in lines where !line.isEmpty {
-                    let attributedString = AttributedString(logMessage: String(line))
-                    result.append(attributedString)
-                }
-                if result.count > 1000 {
-                    result.removeLast(result.count - 1000)
-                }
-                return result
             }
             .throttle(for: 0.1, scheduler: RunLoop.main, latest: true)
             .assign(to: \.messages, on: self)
@@ -64,6 +83,16 @@ class ObservableServer {
         Task {
             await server.start()
         }
+    }
+
+    func stop() {
+        Task {
+            await server.stop()
+        }
+    }
+
+    func clearConsole() {
+        consoleActionSubject.send(.clear)
     }
 }
 
