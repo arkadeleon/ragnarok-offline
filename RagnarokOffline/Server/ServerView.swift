@@ -5,18 +5,24 @@
 //  Created by Leon Li on 2023/12/26.
 //
 
+import ROServer
 import SwiftUI
 
 struct ServerView: View {
-    var server: ObservableServer
+    var server: ServerWrapper
+
+    @State private var status: ServerWrapper.Status
+    @State private var consoleMessages: [AttributedString]
 
     var body: some View {
         ZStack {
-            ConsoleView(messages: server.messages)
+            ConsoleView(messages: consoleMessages)
 
-            if server.status == .notStarted {
+            if status == .notStarted {
                 Button {
-                    server.start()
+                    Task {
+                        await server.start()
+                    }
                 } label: {
                     Image(systemName: "play")
                         .font(.system(size: 40))
@@ -31,20 +37,24 @@ struct ServerView: View {
         .background(.background)
         .navigationTitle(server.name)
         .toolbar {
-            if server.status == .stopped {
+            if status == .stopped {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
-                        server.start()
+                        Task {
+                            await server.start()
+                        }
                     } label: {
                         Image(systemName: "play.fill")
                     }
                 }
             }
 
-            if server.status == .running {
+            if status == .running {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
-                        server.stop()
+                        Task {
+                            await server.stop()
+                        }
                     } label: {
                         Image(systemName: "stop.fill")
                     }
@@ -59,5 +69,21 @@ struct ServerView: View {
                 }
             }
         }
+        .onReceive(server.statusPublisher.receive(on: RunLoop.main)) { status in
+            self.status = status
+        }
+        .onReceive(server.consoleMessagesPublisher.throttle(for: 0.1, scheduler: RunLoop.main, latest: true)) { consoleMessages in
+            self.consoleMessages = consoleMessages
+        }
     }
+
+    init(server: ServerWrapper) {
+        self.server = server
+        _status = State(initialValue: server.status)
+        _consoleMessages = State(initialValue: server.consoleMessages)
+    }
+}
+
+#Preview {
+    ServerView(server: .login)
 }

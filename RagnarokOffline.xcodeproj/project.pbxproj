@@ -24,7 +24,6 @@
 		351EE2FD2C0880A00012BC9E /* SkillIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2FC2C0880A00012BC9E /* SkillIconImageView.swift */; };
 		351EE3012C08B86A0012BC9E /* MapImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE3002C08B86A0012BC9E /* MapImageView.swift */; };
 		351EE3052C08BF3A0012BC9E /* ItemIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE3042C08BF3A0012BC9E /* ItemIconImageView.swift */; };
-		35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */; };
 		35239DF72BBDA0760039F7D5 /* LoadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF62BBDA0760039F7D5 /* LoadStatus.swift */; };
 		35239DF92BBDB7B50039F7D5 /* MonsterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DF82BBDB7B50039F7D5 /* MonsterProvider.swift */; };
 		35239DFB2BBEEF890039F7D5 /* JobProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35239DFA2BBEEF890039F7D5 /* JobProvider.swift */; };
@@ -189,7 +188,6 @@
 		351EE2FC2C0880A00012BC9E /* SkillIconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillIconImageView.swift; sourceTree = "<group>"; };
 		351EE3002C08B86A0012BC9E /* MapImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapImageView.swift; sourceTree = "<group>"; };
 		351EE3042C08BF3A0012BC9E /* ItemIconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemIconImageView.swift; sourceTree = "<group>"; };
-		35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableServer.swift; sourceTree = "<group>"; };
 		35239DF62BBDA0760039F7D5 /* LoadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadStatus.swift; sourceTree = "<group>"; };
 		35239DF82BBDB7B50039F7D5 /* MonsterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterProvider.swift; sourceTree = "<group>"; };
 		35239DFA2BBEEF890039F7D5 /* JobProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobProvider.swift; sourceTree = "<group>"; };
@@ -562,7 +560,6 @@
 			children = (
 				351468DC2C50F53A0061D7F9 /* ServerCell.swift */,
 				35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */,
-				35239DF12BBD4A1C0039F7D5 /* ObservableServer.swift */,
 			);
 			path = Server;
 			sourceTree = "<group>";
@@ -875,7 +872,6 @@
 				35E67C702CBF6C1F006E42A3 /* ACT+JSON.swift in Sources */,
 				35E67C712CBF6C1F006E42A3 /* ObservableFile+JSON.swift in Sources */,
 				35E67C722CBF6C1F006E42A3 /* FileJSONViewer.swift in Sources */,
-				35239DF22BBD4A1C0039F7D5 /* ObservableServer.swift in Sources */,
 				35B422EF2BEF091F00681AA2 /* ObservableDatabase.swift in Sources */,
 				35FEB6AF2CD8C90300F24A4A /* StatusChangeInfoView.swift in Sources */,
 				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,

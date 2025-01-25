@@ -19,36 +19,84 @@ final public class ServerWrapper: Sendable {
 
     private let server: Server
 
+    private let statusSubject: CurrentValueSubject<ServerWrapper.Status, Never>
+    private let statusSubscription: AnyCancellable
+    public let statusPublisher: AnyPublisher<ServerWrapper.Status, Never>
+
+    private let consoleMessagesSubject: CurrentValueSubject<[AttributedString], Never>
+    private let consoleMessagesSubscription: AnyCancellable
+    public let consoleMessagesPublisher: AnyPublisher<[AttributedString], Never>
+
+    private let consoleActionSubject = PassthroughSubject<ServerWrapper.ConsoleAction, Never>()
+
     public var name: String {
         server.name
     }
 
-    public var status: Status {
-        Status(status: server.status)
+    public var status: ServerWrapper.Status {
+        statusSubject.value
     }
 
-    public let statusPublisher: AnyPublisher<Status, Never>
-
-    public let outputDataPublisher: AnyPublisher<Data, Never>
+    public var consoleMessages: [AttributedString] {
+        consoleMessagesSubject.value
+    }
 
     init(server: Server) {
         self.server = server
 
-        statusPublisher = server.publisher(for: \.status)
-            .map(Status.init)
-            .eraseToAnyPublisher()
+        statusSubject = CurrentValueSubject(ServerWrapper.Status(status: server.status))
+        statusSubscription = server.publisher(for: \.status)
+            .map(ServerWrapper.Status.init)
+            .subscribe(statusSubject)
+        statusPublisher = statusSubject.eraseToAnyPublisher()
 
-        outputDataPublisher = NotificationCenter.default.publisher(for: .ServerDidOutputData, object: server)
-            .map { $0.userInfo![ServerOutputDataKey] as! Data }
-            .eraseToAnyPublisher()
+        let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.server-output", qos: .userInitiated)
+        consoleMessagesSubject = CurrentValueSubject([])
+        consoleMessagesSubscription = NotificationCenter.default.publisher(for: .ServerDidOutputData, object: server)
+            .receive(on: queue)
+            .map {
+                let data = $0.userInfo![ServerOutputDataKey] as! Data
+                let consoleAction = ServerWrapper.ConsoleAction(data: data)
+                return consoleAction
+            }
+            .merge(with: consoleActionSubject)
+            .scan([AttributedString]()) { result, action in
+                switch action {
+                case .append(let data):
+                    var result = result
+                    guard let output = String(data: data, encoding: .isoLatin1) else {
+                        return result
+                    }
+                    if let last = result.last, last.characters.last == "\r" {
+                        result.removeLast()
+                    }
+                    let lines = output.split(separator: "\n")
+                    for line in lines where !line.isEmpty {
+                        let attributedString = AttributedString(logMessage: String(line))
+                        result.append(attributedString)
+                    }
+                    if result.count > 1000 {
+                        result.removeFirst(result.count - 1000)
+                    }
+                    return result
+                case .clear:
+                    return []
+                }
+            }
+            .subscribe(consoleMessagesSubject)
+        consoleMessagesPublisher = consoleMessagesSubject.eraseToAnyPublisher()
     }
 
-    public func start() async {
+    public func start() async -> Bool {
         await server.start()
     }
 
-    public func stop() async {
+    public func stop() async -> Bool {
         await server.stop()
+    }
+
+    public func clearConsole() {
+        consoleActionSubject.send(.clear)
     }
 }
 
@@ -85,6 +133,15 @@ extension ServerWrapper {
             case .stopping: "STOPPING"
             case .stopped: "STOPPED"
             }
+        }
+    }
+
+    private enum ConsoleAction {
+        case append(Data)
+        case clear
+
+        init(data: Data) {
+            self = .append(data)
         }
     }
 }

@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/8/9.
 //
 
+import ROServer
 import SwiftUI
 
 enum SidebarItem: Hashable {
@@ -30,11 +31,6 @@ enum SidebarItem: Hashable {
 
 struct SidebarView: View {
     var selection: Binding<SidebarItem?>?
-
-    @Environment(\.loginServer) private var loginServer
-    @Environment(\.charServer) private var charServer
-    @Environment(\.mapServer) private var mapServer
-    @Environment(\.webServer) private var webServer
 
     @State private var isDatabaseSectionExpanded = true
     @State private var isSettingsPresented = false
@@ -73,19 +69,19 @@ struct SidebarView: View {
 
             Section {
                 NavigationLink(value: SidebarItem.loginServer) {
-                    ServerCell(server: loginServer)
+                    ServerCell(server: .login)
                 }
 
                 NavigationLink(value: SidebarItem.charServer) {
-                    ServerCell(server: charServer)
+                    ServerCell(server: .char)
                 }
 
                 NavigationLink(value: SidebarItem.mapServer) {
-                    ServerCell(server: mapServer)
+                    ServerCell(server: .map)
                 }
 
                 NavigationLink(value: SidebarItem.webServer) {
-                    ServerCell(server: webServer)
+                    ServerCell(server: .web)
                 }
 
                 #if DEBUG
@@ -95,7 +91,9 @@ struct SidebarView: View {
                 #endif
 
                 Button {
-                    startAllServers()
+                    Task {
+                        await startAllServers()
+                    }
                 } label: {
                     Label("Start All Servers", systemImage: "play")
                 }
@@ -182,11 +180,21 @@ struct SidebarView: View {
         #endif
     }
 
-    private func startAllServers() {
-        loginServer.start()
-        charServer.start()
-        mapServer.start()
-        webServer.start()
+    private func startAllServers() async {
+        await withTaskGroup(of: Bool.self) { taskGroup in
+            taskGroup.addTask {
+                await ServerWrapper.login.start()
+            }
+            taskGroup.addTask {
+                await ServerWrapper.char.start()
+            }
+            taskGroup.addTask {
+                await ServerWrapper.map.start()
+            }
+            taskGroup.addTask {
+                await ServerWrapper.web.start()
+            }
+        }
     }
 }
 

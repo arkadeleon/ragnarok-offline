@@ -9,19 +9,28 @@ import ROServer
 import SwiftUI
 
 struct ServerCell: View {
-    var server: ObservableServer
+    var server: ServerWrapper
+
+    @State private var status: ServerWrapper.Status
 
     var body: some View {
         LabeledContent {
-            Text(server.status.localizedStringResource)
+            Text(status.localizedStringResource)
                 .font(.footnote)
         } label: {
             Label(server.name, systemImage: "terminal")
         }
+        .onReceive(server.statusPublisher.receive(on: RunLoop.main)) { status in
+            self.status = status
+        }
+    }
+
+    init(server: ServerWrapper) {
+        self.server = server
+        _status = State(initialValue: server.status)
     }
 }
 
 #Preview {
-    let server = ObservableServer(server: .login)
-    return ServerCell(server: server)
+    ServerCell(server: .login)
 }

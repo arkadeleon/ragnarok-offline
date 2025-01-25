@@ -12,11 +12,6 @@ import SwiftUI
 struct DetailView: View {
     var item: SidebarItem
 
-    @Environment(\.loginServer) private var loginServer
-    @Environment(\.charServer) private var charServer
-    @Environment(\.mapServer) private var mapServer
-    @Environment(\.webServer) private var webServer
-
     @State private var clientDirectory = ObservableFile(file: .directory(GameResourceManager.default.baseURL))
     @State private var serverDirectory = ObservableFile(file: .directory(ServerResourceManager.default.workingDirectoryURL))
 
@@ -34,13 +29,13 @@ struct DetailView: View {
             case .character:
                 CharacterView()
             case .loginServer:
-                ServerView(server: loginServer)
+                ServerView(server: .login)
             case .charServer:
-                ServerView(server: charServer)
+                ServerView(server: .char)
             case .mapServer:
-                ServerView(server: mapServer)
+                ServerView(server: .map)
             case .webServer:
-                ServerView(server: webServer)
+                ServerView(server: .web)
             case .serverFiles:
                 FilesView(title: "Server Files", directory: serverDirectory)
             case .itemDatabase:
