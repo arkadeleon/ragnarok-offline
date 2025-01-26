@@ -23,12 +23,12 @@ struct GeneratePacketsCommand: ParsableCommand {
         try? FileManager.default.removeItem(at: generatedDirectory)
         try? FileManager.default.createDirectory(at: generatedDirectory, withIntermediateDirectories: true)
 
-        try generatePackets()
+//        try generatePackets()
         try generatePacketStructures()
-//        try generatePacketDatabase()
+        try generatePacketDatabase()
     }
 
-    // MARK: - Generate Packet Database
+    // MARK: - Generate Packet Database (Deprecated)
 
     private func generatePackets() throws {
         let packetdbURL = rathenaDirectory.appending(path: "src/map/clif_packetdb.hpp")
@@ -477,27 +477,62 @@ struct GeneratePacketsCommand: ParsableCommand {
 
         let readdb = ast.findFunctionDecl(named: "packetdb_readdb")!
         let addpackets = readdb.findCallExprs(fn: "packetdb_addpacket")
+
+        var outputLines: [String] = []
+
         for addpacket in addpackets {
-            let packetType = addpacket.inner![1].findNode { node in
-                node.kind == "IntegerLiteral"
+            let packetTypeNode = addpacket.inner![1].findNode { node in
+                node.kind == "IntegerLiteral" || node.kind == "DeclRefExpr"
+            }!
+            var packetType: String
+            if let intValue = packetTypeNode.value?.intValue {
+                packetType = "0x" + String(intValue, radix: 16)
+            } else {
+                packetType = packetTypeNode.referencedDecl!.name!
+                if !packetType.hasPrefix("HEADER_") {
+                    packetType = "packet_header_" + packetType
+                }
             }
-            print(packetType?.value?.intValue)
 
-            let packetLength = addpacket.inner![2].findNode { node in
-                node.kind == "IntegerLiteral"
+            let packetLengthNode = addpacket.inner![2].findNode { node in
+                node.kind == "IntegerLiteral" || node.kind == "UnaryExprOrTypeTraitExpr"
+            }!
+            var packetLength: String
+            if let intValue = packetLengthNode.value?.intValue {
+                packetLength = "\(intValue)"
+                if addpacket.inner![2].findNode(where: { $0.kind == "UnaryOperator" && $0.opcode == "-" }) != nil {
+                    packetLength = "-" + packetLength
+                }
+            } else {
+                packetLength = "\(packetLengthNode.argType!.desugaredQualType!).size"
             }
-            print(packetLength?.value?.intValue)
 
-            let functionName = addpacket.inner![3].findNode { node in
+            let functionNameNode = addpacket.inner![3].findNode { node in
                 node.referencedDecl?.kind == "FunctionDecl"
             }
-            print(functionName?.referencedDecl?.name)
+            let nullableFunctionName = functionNameNode?.referencedDecl?.name
+            let functionName = nullableFunctionName == nil ? "nil" : "\"\(nullableFunctionName!)\""
 
-            let offsets = addpacket.inner![4...].map { node in
+            let offsetsNode = addpacket.inner![4...].map { node in
                 node.findNode(where: { $0.kind == "IntegerLiteral" })!.value!.intValue!
             }
-            print(offsets)
+            let offsets = "[" + offsetsNode.dropLast().map(String.init).joined(separator: ", ") + "]"
+
+            outputLines.append("add_packet(\(packetType), \(packetLength), \(functionName), \(offsets))")
         }
+
+        let packetdbLines = outputLines
+            .map({ "    \($0)" })
+            .joined(separator: "\n")
+        let packetdbOutputContents = """
+        public func add_packets(_ add_packet: (Int16, Int, String?, [Int]) -> Void) {
+        \(packetdbLines)
+        }
+        
+        """
+
+        let packetdbOutputURL = generatedDirectory.appending(path: "packetdb.swift")
+        try packetdbOutputContents.write(to: packetdbOutputURL, atomically: true, encoding: .utf8)
     }
 }
 

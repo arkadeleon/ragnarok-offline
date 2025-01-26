@@ -7,6 +7,7 @@
 
 struct ASTNode: Decodable {
     struct NodeType: Decodable {
+        var desugaredQualType: String?
         var qualType: String?
     }
 
@@ -34,8 +35,10 @@ struct ASTNode: Decodable {
     var isReferenced: Bool?
     var name: String?
     var type: ASTNode.NodeType?
+    var argType: ASTNode.NodeType?
     var value: ASTNode.NodeValue?
     var referencedDecl: ASTNode.ReferencedDecl?
+    var opcode: String?
     var inner: [ASTNode]?
 
     func findEnumDecl(named name: String) -> ASTNode? {
