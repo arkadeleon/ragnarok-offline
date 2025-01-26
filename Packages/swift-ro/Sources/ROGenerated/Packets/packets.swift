@@ -33,23 +33,23 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     parseable_packet(0x008c, -1, "clif_parse_GlobalMessage", [2, 4])
     packet(0x008d, -1)
     packet(0x008e, -1)
-    // parseable_packet(HEADER_CZ_CONTACTNPC, sizeof( PACKET_CZ_CONTACTNPC ), "clif_parse_NpcClicked", [0])
+    parseable_packet(HEADER_CZ_CONTACTNPC, Int16(PACKET_CZ_CONTACTNPC.size), "clif_parse_NpcClicked", [0])
     packet(0x0093, 2)
     parseable_packet(0x0094, 6, "clif_parse_GetCharNameRequest", [2])
     parseable_packet(0x0096, -1, "clif_parse_WisMessage", [2, 4, 28])
-    // parseable_packet(HEADER_CZ_BROADCAST, -1, "clif_parse_Broadcast", [0])
+    parseable_packet(HEADER_CZ_BROADCAST, -1, "clif_parse_Broadcast", [0])
     parseable_packet(0x009b, 5, "clif_parse_ChangeDir", [2, 4])
-    // packet(HEADER_ZC_ITEM_ENTRY, sizeof( struct PACKET_ZC_ITEM_ENTRY ))
+    packet(HEADER_ZC_ITEM_ENTRY, Int16(PACKET_ZC_ITEM_ENTRY.size))
     packet(0x009e, 17)
     parseable_packet(0x009f, 6, "clif_parse_TakeItem", [2])
     parseable_packet(0x00a2, 6, "clif_parse_DropItem", [2, 4])
-    // packet(inventorylistnormalType, -1)
-    // packet(inventorylistequipType, -1)
-    // packet(storageListNormalType, -1)
-    // packet(storageListEquipType, -1)
+    packet(packet_header_inventorylistnormalType, -1)
+    packet(packet_header_inventorylistequipType, -1)
+    packet(packet_header_storageListNormalType, -1)
+    packet(packet_header_storageListEquipType, -1)
     parseable_packet(0x00a7, 8, "clif_parse_UseItem", [2, 4])
-    // packet(useItemAckType, sizeof( struct PACKET_ZC_USE_ITEM_ACK ))
-    // parseable_packet(HEADER_CZ_REQ_WEAR_EQUIP, sizeof( PACKET_CZ_REQ_WEAR_EQUIP ), "clif_parse_EquipItem", [0])
+    packet(packet_header_useItemAckType, Int16(PACKET_ZC_USE_ITEM_ACK.size))
+    parseable_packet(HEADER_CZ_REQ_WEAR_EQUIP, Int16(PACKET_CZ_REQ_WEAR_EQUIP.size), "clif_parse_EquipItem", [0])
     parseable_packet(0x00ab, 4, "clif_parse_UnequipItem", [2])
     packet(0x00ae, -1)
     parseable_packet(0x00b2, 3, "clif_parse_Restart", [2])
@@ -61,10 +61,10 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     packet(0x00c0, 7)
     parseable_packet(0x00c1, 2, "clif_parse_HowManyConnections", [0])
     packet(0x00c3, 8)
-    // parseable_packet(HEADER_CZ_ACK_SELECT_DEALTYPE, sizeof( PACKET_CZ_ACK_SELECT_DEALTYPE ), "clif_parse_NpcBuySellSelected", [0])
+    parseable_packet(HEADER_CZ_ACK_SELECT_DEALTYPE, Int16(PACKET_CZ_ACK_SELECT_DEALTYPE.size), "clif_parse_NpcBuySellSelected", [0])
     packet(0x00c6, -1)
     parseable_packet(0x00c8, -1, "clif_parse_NpcBuyListSend", [2, 4])
-    // parseable_packet(HEADER_CZ_PC_SELL_ITEMLIST, -1, "clif_parse_NpcSellListSend", [2, 4])
+    parseable_packet(HEADER_CZ_PC_SELL_ITEMLIST, -1, "clif_parse_NpcSellListSend", [2, 4])
     packet(0x00ca, 3)
     packet(0x00cb, 3)
     parseable_packet(0x00cc, 6, "clif_parse_GMKick", [2])
@@ -76,7 +76,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     packet(0x00d2, 4)
     parseable_packet(0x00d3, 2, "clif_parse_PMIgnoreList", [0])
     packet(0x00d4, -1)
-    // parseable_packet(HEADER_CZ_CREATE_CHATROOM, -1, "clif_parse_CreateChatRoom", [0])
+    parseable_packet(HEADER_CZ_CREATE_CHATROOM, -1, "clif_parse_CreateChatRoom", [0])
     parseable_packet(0x00d9, 14, "clif_parse_ChatAddMember", [2, 6])
     parseable_packet(0x00de, -1, "clif_parse_ChatRoomStatusChange", [2, 4, 6, 7, 15])
     parseable_packet(0x00e0, 30, "clif_parse_ChangeChatOwner", [2, 6])
@@ -95,23 +95,23 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     parseable_packet(0x00f7, 2, "clif_parse_CloseKafra", [0])
     parseable_packet(0x00f9, 26, "clif_parse_CreateParty", [2])
     packet(0x00fb, -1)
-    // parseable_packet(HEADER_CZ_REQ_JOIN_GROUP, sizeof( PACKET_CZ_REQ_JOIN_GROUP ), "clif_parse_PartyInvite", [0])
+    parseable_packet(HEADER_CZ_REQ_JOIN_GROUP, Int16(PACKET_CZ_REQ_JOIN_GROUP.size), "clif_parse_PartyInvite", [0])
     packet(0x00fd, 27)
-    // parseable_packet(HEADER_CZ_JOIN_GROUP, sizeof( PACKET_CZ_JOIN_GROUP ), "clif_parse_ReplyPartyInvite", [0])
-    // parseable_packet(HEADER_CZ_REQ_LEAVE_GROUP, sizeof( PACKET_CZ_REQ_LEAVE_GROUP ), "clif_parse_LeaveParty", [0])
+    parseable_packet(HEADER_CZ_JOIN_GROUP, Int16(PACKET_CZ_JOIN_GROUP.size), "clif_parse_ReplyPartyInvite", [0])
+    parseable_packet(HEADER_CZ_REQ_LEAVE_GROUP, Int16(PACKET_CZ_REQ_LEAVE_GROUP.size), "clif_parse_LeaveParty", [0])
     packet(0x0101, 6)
     parseable_packet(0x0102, 6, "clif_parse_PartyChangeOption", [2])
-    // parseable_packet(HEADER_CZ_REQ_EXPEL_GROUP_MEMBER, sizeof( PACKET_CZ_REQ_EXPEL_GROUP_MEMBER ), "clif_parse_RemovePartyMember", [0])
+    parseable_packet(HEADER_CZ_REQ_EXPEL_GROUP_MEMBER, Int16(PACKET_CZ_REQ_EXPEL_GROUP_MEMBER.size), "clif_parse_RemovePartyMember", [0])
     packet(0x0104, 79)
     parseable_packet(0x0108, -1, "clif_parse_PartyMessage", [2, 4])
     packet(0x0109, -1)
-    // packet(HEADER_ZC_MVP_GETTING_ITEM, sizeof( struct PACKET_ZC_MVP_GETTING_ITEM ))
+    packet(HEADER_ZC_MVP_GETTING_ITEM, Int16(PACKET_ZC_MVP_GETTING_ITEM.size))
     packet(0x010b, 6)
     packet(0x010c, 6)
     packet(0x010d, 2)
     packet(0x010e, 11)
     packet(0x010f, -1)
-    // packet(HEADER_ZC_ACK_TOUSESKILL, sizeof( PACKET_ZC_ACK_TOUSESKILL ))
+    packet(HEADER_ZC_ACK_TOUSESKILL, Int16(PACKET_ZC_ACK_TOUSESKILL.size))
     parseable_packet(0x0112, 4, "clif_parse_SkillUp", [2])
     parseable_packet(0x0113, 10, "clif_parse_UseSkillToId", [2, 4, 6])
     packet(0x0114, 31)
@@ -123,9 +123,9 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     parseable_packet(0x011b, 20, "clif_parse_UseSkillMap", [2, 4])
     parseable_packet(0x011d, 2, "clif_parse_RequestMemo", [0])
     packet(0x011f, 16)
-    // packet(cartlistequipType, -1)
-    // packet(cartlistnormalType, -1)
-    // parseable_packet(HEADER_CZ_MOVE_ITEM_FROM_BODY_TO_CART, sizeof( PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART ), "clif_parse_PutItemToCart", [0])
+    packet(packet_header_cartlistequipType, -1)
+    packet(packet_header_cartlistnormalType, -1)
+    parseable_packet(HEADER_CZ_MOVE_ITEM_FROM_BODY_TO_CART, Int16(PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART.size), "clif_parse_PutItemToCart", [0])
     parseable_packet(0x0127, 8, "clif_parse_GetItemFromCart", [2, 4])
     parseable_packet(0x0128, 8, "clif_parse_MoveFromKafraToCart", [2, 4])
     parseable_packet(0x0129, 8, "clif_parse_MoveToKafraFromCart", [2, 4])
@@ -134,11 +134,11 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     parseable_packet(0x012f, -1, "clif_parse_OpenVending", [2, 4, 0, 84])
     parseable_packet(0x0130, 6, "clif_parse_VendingListReq", [2])
     packet(0x0132, 6)
-    // parseable_packet(HEADER_CZ_PC_PURCHASE_ITEMLIST_FROMMC, -1, "clif_parse_PurchaseReq", [0])
+    parseable_packet(HEADER_CZ_PC_PURCHASE_ITEMLIST_FROMMC, -1, "clif_parse_PurchaseReq", [0])
     packet(0x0138, 3)
     packet(0x013e, 24)
     parseable_packet(0x013f, 26, "clif_parse_GM_Item_Monster", [2])
-    // parseable_packet(HEADER_CZ_MOVETO_MAP, sizeof( PACKET_CZ_MOVETO_MAP ), "clif_parse_MapMove", [0])
+    parseable_packet(HEADER_CZ_MOVETO_MAP, Int16(PACKET_CZ_MOVETO_MAP.size), "clif_parse_MapMove", [0])
     parseable_packet(0x0143, 10, "clif_parse_NpcAmountInput", [2, 6])
     packet(0x0145, 19)
     parseable_packet(0x0146, 6, "clif_parse_NpcCloseClicked", [2])
@@ -153,20 +153,20 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     packet(0x0152, -1)
     parseable_packet(0x0153, -1, "clif_parse_GuildChangeEmblem", [2, 4])
     packet(0x0154, -1)
-    // parseable_packet(HEADER_CZ_REQ_CHANGE_MEMBERPOS, -1, "clif_parse_GuildChangeMemberPosition", [0])
+    parseable_packet(HEADER_CZ_REQ_CHANGE_MEMBERPOS, -1, "clif_parse_GuildChangeMemberPosition", [0])
     packet(0x0156, -1)
     packet(0x0157, 6)
     packet(0x0158, -1)
-    // parseable_packet(HEADER_CZ_REQ_LEAVE_GUILD, sizeof( PACKET_CZ_REQ_LEAVE_GUILD ), "clif_parse_GuildLeave", [0])
-    // parseable_packet(HEADER_CZ_REQ_BAN_GUILD, sizeof( PACKET_CZ_REQ_BAN_GUILD ), "clif_parse_GuildExpulsion", [0])
-    // parseable_packet(HEADER_CZ_REQ_DISORGANIZE_GUILD, sizeof( PACKET_CZ_REQ_DISORGANIZE_GUILD ), "clif_parse_GuildBreak", [0])
+    parseable_packet(HEADER_CZ_REQ_LEAVE_GUILD, Int16(PACKET_CZ_REQ_LEAVE_GUILD.size), "clif_parse_GuildLeave", [0])
+    parseable_packet(HEADER_CZ_REQ_BAN_GUILD, Int16(PACKET_CZ_REQ_BAN_GUILD.size), "clif_parse_GuildExpulsion", [0])
+    parseable_packet(HEADER_CZ_REQ_DISORGANIZE_GUILD, Int16(PACKET_CZ_REQ_DISORGANIZE_GUILD.size), "clif_parse_GuildBreak", [0])
     packet(0x015f, 42)
     parseable_packet(0x0161, -1, "clif_parse_GuildChangePositionInfo", [2, 4])
     packet(0x0164, -1)
     parseable_packet(0x0165, 30, "clif_parse_CreateGuild", [2, 6])
     packet(0x0166, -1)
-    // parseable_packet(HEADER_CZ_REQ_JOIN_GUILD, sizeof( PACKET_CZ_REQ_JOIN_GUILD ), "clif_parse_GuildInvite", [0])
-    // parseable_packet(HEADER_CZ_JOIN_GUILD, sizeof( PACKET_CZ_JOIN_GUILD ), "clif_parse_GuildReplyInvite", [0])
+    parseable_packet(HEADER_CZ_REQ_JOIN_GUILD, Int16(PACKET_CZ_REQ_JOIN_GUILD.size), "clif_parse_GuildInvite", [0])
+    parseable_packet(HEADER_CZ_JOIN_GUILD, Int16(PACKET_CZ_JOIN_GUILD.size), "clif_parse_GuildReplyInvite", [0])
     packet(0x016c, 43)
     packet(0x016d, 14)
     parseable_packet(0x016e, 186, "clif_parse_GuildChangeNotice", [2, 6, 66])
@@ -189,14 +189,14 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     parseable_packet(0x018a, 4, "clif_parse_QuitGame", [2])
     packet(0x018b, 4)
     packet(0x018c, 29)
-    // parseable_packet(HEADER_CZ_REQMAKINGITEM, sizeof( struct PACKET_CZ_REQMAKINGITEM ), "clif_parse_ProduceMix", [0])
-    // packet(HEADER_ZC_ACK_REQMAKINGITEM, sizeof( PACKET_ZC_ACK_REQMAKINGITEM ))
+    parseable_packet(HEADER_CZ_REQMAKINGITEM, Int16(PACKET_CZ_REQMAKINGITEM.size), "clif_parse_ProduceMix", [0])
+    packet(HEADER_ZC_ACK_REQMAKINGITEM, Int16(PACKET_ZC_ACK_REQMAKINGITEM.size))
     parseable_packet(0x0190, 90, "clif_parse_UseSkillToPosMoreInfo", [2, 4, 6, 8, 10])
-    // packet(HEADER_ZC_TALKBOX_CHATCONTENTS, sizeof( struct PACKET_ZC_TALKBOX_CHATCONTENTS ))
+    packet(HEADER_ZC_TALKBOX_CHATCONTENTS, Int16(PACKET_ZC_TALKBOX_CHATCONTENTS.size))
     packet(0x0192, 24)
     parseable_packet(0x0193, 6, "clif_parse_SolveCharName", [2])
     packet(0x0194, 30)
-    // packet(HEADER_ZC_ACK_REQNAMEALL, sizeof( struct PACKET_ZC_ACK_REQNAMEALL ))
+    packet(HEADER_ZC_ACK_REQNAMEALL, Int16(PACKET_ZC_ACK_REQNAMEALL.size))
     packet(0x0196, 9)
     parseable_packet(0x0197, 4, "clif_parse_ResetChar", [2])
     parseable_packet(0x0198, 8, "clif_parse_GMChangeMapType", [2, 4, 6])
@@ -217,7 +217,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     packet(0x01aa, 10)
     packet(0x01ac, 6)
     packet(0x01ad, -1)
-    // parseable_packet(HEADER_CZ_REQ_MAKINGARROW, sizeof( PACKET_CZ_REQ_MAKINGARROW ), "clif_parse_SelectArrow", [0])
+    parseable_packet(HEADER_CZ_REQ_MAKINGARROW, Int16(PACKET_CZ_REQ_MAKINGARROW.size), "clif_parse_SelectArrow", [0])
     parseable_packet(0x01af, 4, "clif_parse_ChangeCart", [2])
     packet(0x01b0, 11)
     packet(0x01b1, 7)
@@ -273,13 +273,13 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     packet(0x01f2, 20)
     packet(0x01f3, 10)
     packet(0x01f6, 34)
-    // parseable_packet(HEADER_CZ_JOIN_BABY, sizeof( PACKET_CZ_JOIN_BABY ), "clif_parse_Adopt_reply", [0])
+    parseable_packet(HEADER_CZ_JOIN_BABY, Int16(PACKET_CZ_JOIN_BABY.size), "clif_parse_Adopt_reply", [0])
     packet(0x01f8, 2)
     parseable_packet(0x01f9, 6, "clif_parse_Adopt_request", [2])
     packet(0x01fa, 48)
     packet(0x01fb, 56)
     packet(0x01fc, -1)
-    // parseable_packet(HEADER_CZ_REQ_ITEMREPAIR1, sizeof( struct PACKET_CZ_REQ_ITEMREPAIR1 ), "clif_parse_RepairItem", [0])
+    parseable_packet(HEADER_CZ_REQ_ITEMREPAIR1, Int16(PACKET_CZ_REQ_ITEMREPAIR1.size), "clif_parse_RepairItem", [0])
     packet(0x0200, 26)
     packet(0x0201, -1)
     parseable_packet(0x0202, 26, "clif_parse_FriendsListAdd", [2])
@@ -435,19 +435,19 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x0216, 6)
     }
     if PACKETVER_MAIN_NUM >= 20120503 || PACKETVER_RE_NUM >= 20120502 {
-        // parseable_packet(HEADER_CZ_REQ_RANKING, sizeof( PACKET_CZ_REQ_RANKING ), "clif_parse_ranklist", [0])
+        parseable_packet(HEADER_CZ_REQ_RANKING, Int16(PACKET_CZ_REQ_RANKING.size), "clif_parse_ranklist", [0])
     } else if PACKETVER >= 20041108 {
-        // parseable_packet(HEADER_CZ_BLACKSMITH_RANK, sizeof( PACKET_CZ_BLACKSMITH_RANK ), "clif_parse_ranklist_blacksmith", [0])
-        // parseable_packet(HEADER_CZ_ALCHEMIST_RANK, sizeof( PACKET_CZ_ALCHEMIST_RANK ), "clif_parse_ranklist_alchemist", [0])
+        parseable_packet(HEADER_CZ_BLACKSMITH_RANK, Int16(PACKET_CZ_BLACKSMITH_RANK.size), "clif_parse_ranklist_blacksmith", [0])
+        parseable_packet(HEADER_CZ_ALCHEMIST_RANK, Int16(PACKET_CZ_ALCHEMIST_RANK.size), "clif_parse_ranklist_alchemist", [0])
         if PACKETVER >= 20050328 {
-            // parseable_packet(HEADER_CZ_TAEKWON_RANK, sizeof( PACKET_CZ_TAEKWON_RANK ), "clif_parse_ranklist_taekwon", [0])
+            parseable_packet(HEADER_CZ_TAEKWON_RANK, Int16(PACKET_CZ_TAEKWON_RANK.size), "clif_parse_ranklist_taekwon", [0])
         }
         if PACKETVER >= 20050530 {
-            // parseable_packet(HEADER_CZ_KILLER_RANK, sizeof( PACKET_CZ_KILLER_RANK ), "clif_parse_ranklist_killer", [0])
+            parseable_packet(HEADER_CZ_KILLER_RANK, Int16(PACKET_CZ_KILLER_RANK.size), "clif_parse_ranklist_killer", [0])
         }
     }
     if PACKETVER >= 20041115 {
-        // parseable_packet(HEADER_CZ_LESSEFFECT, sizeof( PACKET_CZ_LESSEFFECT ), "clif_parse_LessEffect", [0])
+        parseable_packet(HEADER_CZ_LESSEFFECT, Int16(PACKET_CZ_LESSEFFECT.size), "clif_parse_LessEffect", [0])
     }
     if PACKETVER >= 20041129 {
         parseable_packet(0x0072, 22, "clif_parse_UseSkillToId", [8, 12, 18])
@@ -469,7 +469,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         parseable_packet(0x0193, 21, "clif_parse_MoveFromKafra", [4, 17])
         packet(0x0221, -1)
         parseable_packet(0x0222, 6, "clif_parse_WeaponRefine", [2])
-        // packet(HEADER_ZC_ACK_WEAPONREFINE, sizeof( struct PACKET_ZC_ACK_WEAPONREFINE ))
+        packet(HEADER_ZC_ACK_WEAPONREFINE, Int16(PACKET_ZC_ACK_WEAPONREFINE.size))
     }
     if PACKETVER >= 20041213 {
         packet(0x0066, 3)
@@ -510,7 +510,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     }
     if PACKETVER >= 20050425 {
         parseable_packet(0x022d, 5, "clif_parse_HomMenu", [2, 4])
-        // parseable_packet(HEADER_CZ_REQUEST_MOVENPC, sizeof( PACKET_CZ_REQUEST_MOVENPC ), "clif_parse_HomMoveTo", [0])
+        parseable_packet(HEADER_CZ_REQUEST_MOVENPC, Int16(PACKET_CZ_REQUEST_MOVENPC.size), "clif_parse_HomMoveTo", [0])
         parseable_packet(0x0233, 11, "clif_parse_HomAttack", [2, 6, 10])
         parseable_packet(0x0234, 6, "clif_parse_HomMoveToMaster", [2])
     }
@@ -604,7 +604,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         parseable_packet(0x024c, 8, "clif_parse_Auction_setitem", [2, 4])
         packet(0x024d, 14)
         parseable_packet(0x024e, 6, "clif_parse_Auction_cancel", [2])
-        // parseable_packet(HEADER_CZ_AUCTION_BUY, sizeof( PACKET_CZ_AUCTION_BUY ), "clif_parse_Auction_bid", [0])
+        parseable_packet(HEADER_CZ_AUCTION_BUY, Int16(PACKET_CZ_AUCTION_BUY.size), "clif_parse_Auction_bid", [0])
         packet(0x0250, 3)
         packet(0x0251, 2)
         packet(0x0252, -1)
@@ -631,7 +631,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x0251, 4)
     }
     if PACKETVER >= 20050808 {
-        // parseable_packet(HEADER_CZ_AUCTION_ADD, sizeof( PACKET_CZ_AUCTION_ADD ), "clif_parse_Auction_register", [0])
+        parseable_packet(HEADER_CZ_AUCTION_ADD, Int16(PACKET_CZ_AUCTION_ADD.size), "clif_parse_Auction_register", [0])
         packet(0x024e, 4)
     }
     if PACKETVER >= 20050817 {
@@ -652,7 +652,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     }
     if PACKETVER >= 20051010 {
         packet(0x020e, 32)
-        // parseable_packet(HEADER_CZ_REQ_MAKINGITEM, sizeof( struct PACKET_CZ_REQ_MAKINGITEM ), "clif_parse_Cooking", [0])
+        parseable_packet(HEADER_CZ_REQ_MAKINGITEM, Int16(PACKET_CZ_REQ_MAKINGITEM.size), "clif_parse_Cooking", [0])
     }
     if PACKETVER >= 20051013 {
         packet(0x007a, 6)
@@ -670,7 +670,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     }
     if PACKETVER >= 20051107 {
         parseable_packet(0x024e, 6, "clif_parse_Auction_cancel", [2])
-        // parseable_packet(HEADER_CZ_AUCTION_ITEM_SEARCH, sizeof( PACKET_CZ_AUCTION_ITEM_SEARCH ), "clif_parse_Auction_search", [0])
+        parseable_packet(HEADER_CZ_AUCTION_ITEM_SEARCH, Int16(PACKET_CZ_AUCTION_ITEM_SEARCH.size), "clif_parse_Auction_search", [0])
     }
     if PACKETVER >= 20060109 {
         packet(0x0261, 11)
@@ -751,8 +751,8 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         parseable_packet(0x0292, 2, "clif_parse_AutoRevive", [0])
         packet(0x0293, 70)
         packet(0x0294, 10)
-        // packet(HEADER_ZC_CASH_TIME_COUNTER, sizeof( struct PACKET_ZC_CASH_TIME_COUNTER ))
-        // packet(HEADER_ZC_CASH_ITEM_DELETE, sizeof( struct PACKET_ZC_CASH_ITEM_DELETE ))
+        packet(HEADER_ZC_CASH_TIME_COUNTER, Int16(PACKET_ZC_CASH_TIME_COUNTER.size))
+        packet(HEADER_ZC_CASH_ITEM_DELETE, Int16(PACKET_ZC_CASH_ITEM_DELETE.size))
         packet(0x029c, 66)
         packet(0x029d, -1)
         packet(0x029e, 11)
@@ -824,7 +824,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x02b4, 6)
         packet(0x02b5, -1)
         packet(0x02b7, 7)
-        // packet(HEADER_ZC_ITEM_PICKUP_PARTY, sizeof( struct PACKET_ZC_ITEM_PICKUP_PARTY ))
+        packet(HEADER_ZC_ITEM_PICKUP_PARTY, Int16(PACKET_ZC_ITEM_PICKUP_PARTY.size))
         packet(0x02b9, 191)
         parseable_packet(0x02ba, 11, "clif_parse_Hotkey", [2, 4, 5, 9])
         packet(0x02bc, 6)
@@ -832,10 +832,10 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x02c0, 2)
         packet(0x02c1, -1)
         packet(0x02c2, -1)
-        // parseable_packet(HEADER_CZ_PARTY_JOIN_REQ, sizeof( PACKET_CZ_PARTY_JOIN_REQ ), "clif_parse_PartyInvite2", [0])
+        parseable_packet(HEADER_CZ_PARTY_JOIN_REQ, Int16(PACKET_CZ_PARTY_JOIN_REQ.size), "clif_parse_PartyInvite2", [0])
         packet(0x02c5, 30)
-        // parseable_packet(HEADER_CZ_PARTY_JOIN_REQ_ACK, sizeof( PACKET_CZ_PARTY_JOIN_REQ_ACK ), "clif_parse_ReplyPartyInvite2", [0])
-        // parseable_packet(HEADER_CZ_PARTY_CONFIG, sizeof( PACKET_CZ_PARTY_CONFIG ), "clif_parse_PartyTick", [0])
+        parseable_packet(HEADER_CZ_PARTY_JOIN_REQ_ACK, Int16(PACKET_CZ_PARTY_JOIN_REQ_ACK.size), "clif_parse_ReplyPartyInvite2", [0])
+        parseable_packet(HEADER_CZ_PARTY_CONFIG, Int16(PACKET_CZ_PARTY_CONFIG.size), "clif_parse_PartyTick", [0])
         packet(0x02ca, 3)
         packet(0x02cb, 20)
         packet(0x02cc, 4)
@@ -855,7 +855,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x02e0, 34)
     }
     if PACKETVER >= 20070622 {
-        // parseable_packet(HEADER_CZ_ACTIVE_QUEST, sizeof( PACKET_CZ_ACTIVE_QUEST ), "clif_parse_questStateAck", [0])
+        parseable_packet(HEADER_CZ_ACTIVE_QUEST, Int16(PACKET_CZ_ACTIVE_QUEST.size), "clif_parse_questStateAck", [0])
     }
     if PACKETVER >= 20071023 {
         packet(0x02cb, 65)
@@ -1064,7 +1064,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x01a2, 37)
     }
     if PACKETVER >= 20081210 {
-        // parseable_packet(HEADER_CZ_SKILL_SELECT_RESPONSE, sizeof( PACKET_CZ_SKILL_SELECT_RESPONSE ), "clif_parse_SkillSelectMenu", [0])
+        parseable_packet(HEADER_CZ_SKILL_SELECT_RESPONSE, Int16(PACKET_CZ_SKILL_SELECT_RESPONSE.size), "clif_parse_SkillSelectMenu", [0])
     }
     if PACKETVER >= 20090114 {
         packet(0x043f, 25)
@@ -1191,7 +1191,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x080B, 6)
     }
     if PACKETVER >= 20100105 {
-        // parseable_packet(HEADER_CZ_PC_PURCHASE_ITEMLIST_FROMMC2, -1, "clif_parse_PurchaseReq2", [0])
+        parseable_packet(HEADER_CZ_PC_PURCHASE_ITEMLIST_FROMMC2, -1, "clif_parse_PurchaseReq2", [0])
     }
     if PACKETVER >= 20100303 {
         packet(0x0810, 3)
@@ -1211,23 +1211,23 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x081a, 4)
         packet(0x081b, 10)
         packet(0x081c, 10)
-        // packet(HEADER_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER, sizeof( struct PACKET_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER ))
+        packet(HEADER_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER, Int16(PACKET_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER.size))
     }
     if PACKETVER >= 20100608 {
         parseable_packet(0x0838, 2, "clif_parse_SearchStoreInfoNextPage", [0])
         parseable_packet(0x083B, 2, "clif_parse_CloseSearchStoreInfo", [0])
-        // parseable_packet(HEADER_CZ_SSILIST_ITEM_CLICK, sizeof( struct PACKET_CZ_SSILIST_ITEM_CLICK ), "clif_parse_SearchStoreInfoListItemClick", [0])
+        parseable_packet(HEADER_CZ_SSILIST_ITEM_CLICK, Int16(PACKET_CZ_SSILIST_ITEM_CLICK.size), "clif_parse_SearchStoreInfoListItemClick", [0])
     }
     if PACKETVER_MAIN_NUM >= 20100817 || PACKETVER_RE_NUM >= 20100706 || PACKETVER_ZERO_NUM != 0 {
         parseable_packet(0x0835, -1, "clif_parse_SearchStoreInfo", [2, 4, 5, 9, 13, 14, 15])
-        // packet(HEADER_ZC_SEARCH_STORE_INFO_ACK, -1)
+        packet(HEADER_ZC_SEARCH_STORE_INFO_ACK, -1)
     }
     if PACKETVER >= 20100803 {
         parseable_packet(0x0842, 6, "clif_parse_GMRecall2", [2])
         parseable_packet(0x0843, 6, "clif_parse_GMRemove2", [2])
     }
     if PACKETVER_MAIN_NUM >= 20100824 || PACKETVER_RE_NUM >= 20100824 || PACKETVER_ZERO_NUM != 0 {
-        // parseable_packet(HEADER_CZ_REQ_SE_CASH_TAB_CODE, sizeof( struct PACKET_CZ_REQ_SE_CASH_TAB_CODE ), "clif_parse_CashShopReqTab", [0])
+        parseable_packet(HEADER_CZ_REQ_SE_CASH_TAB_CODE, Int16(PACKET_CZ_REQ_SE_CASH_TAB_CODE.size), "clif_parse_CashShopReqTab", [0])
     }
     if PACKETVER >= 20101124 {
         parseable_packet(0x0288, -1, "clif_parse_npccashshop_buy", [2, 4, 8, 10])
@@ -1279,7 +1279,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         parseable_packet(0x089e, -1, "clif_parse_ReqTradeBuyingStore", [2, 4, 8, 12])
         parseable_packet(0x08ab, -1, "clif_parse_SearchStoreInfo", [2, 4, 5, 9, 13, 14, 15])
         parseable_packet(0x088b, 2, "clif_parse_SearchStoreInfoNextPage", [0])
-        // parseable_packet(0x08a2, sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK), "clif_parse_SearchStoreInfoListItemClick", [2, 6, 10])
+        parseable_packet(0x08a2, Int16(PACKET_CZ_SSILIST_ITEM_CLICK.size), "clif_parse_SearchStoreInfoListItemClick", [2, 6, 10])
     }
     if PACKETVER >= 20120307 {
         parseable_packet(0x086A, 19, "clif_parse_WantToConnection", [2, 6, 10, 14, 18])
@@ -1307,7 +1307,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         parseable_packet(0x0811, -1, "clif_parse_ReqTradeBuyingStore", [2, 4, 8, 12])
         parseable_packet(0x0884, -1, "clif_parse_SearchStoreInfo", [2, 4, 5, 9, 13, 14, 15])
         parseable_packet(0x0835, 2, "clif_parse_SearchStoreInfoNextPage", [0])
-        // parseable_packet(0x0838, sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK), "clif_parse_SearchStoreInfoListItemClick", [2, 6, 10])
+        parseable_packet(0x0838, Int16(PACKET_CZ_SSILIST_ITEM_CLICK.size), "clif_parse_SearchStoreInfoListItemClick", [2, 6, 10])
         parseable_packet(0x0439, 8, "clif_parse_UseItem", [2, 4])
         parseable_packet(0x0365, 41, "clif_parse_PartyBookingRegisterReq", [2, 4, 6])
         packet(0x090F, -1)
@@ -1331,7 +1331,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         parseable_packet(0x0811, -1, "clif_parse_ReqTradeBuyingStore", [2, 4, 8, 12])
         parseable_packet(0x0819, -1, "clif_parse_SearchStoreInfo", [2, 4, 5, 9, 13, 14, 15])
         parseable_packet(0x0835, 2, "clif_parse_SearchStoreInfoNextPage", [0])
-        // parseable_packet(0x0838, sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK), "clif_parse_SearchStoreInfoListItemClick", [2, 6, 10])
+        parseable_packet(0x0838, Int16(PACKET_CZ_SSILIST_ITEM_CLICK.size), "clif_parse_SearchStoreInfoListItemClick", [2, 6, 10])
         parseable_packet(0x0437, 5, "clif_parse_WalkToXY", [2])
         parseable_packet(0x0886, 6, "clif_parse_TickSend", [2])
         parseable_packet(0x0871, 5, "clif_parse_ChangeDir", [2, 4])
@@ -1365,7 +1365,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x08f9, 6)
         packet(0x08fa, 6)
         parseable_packet(0x08fb, 6, nil, [2])
-        // parseable_packet(HEADER_CZ_INVENTORY_TAB, sizeof( PACKET_CZ_INVENTORY_TAB ), "clif_parse_MoveItem", [0])
+        parseable_packet(HEADER_CZ_INVENTORY_TAB, Int16(PACKET_CZ_INVENTORY_TAB.size), "clif_parse_MoveItem", [0])
         parseable_packet(0x08D7, 28, "clif_parse_bg_queue_apply_request", [2, 4])
         packet(0x08D8, 27)
         packet(0x08D9, 30)
@@ -1378,15 +1378,15 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         parseable_packet(0x08E0, 51, "clif_parse_bg_queue_lobby_reply", [2, 3, 27])
         packet(0x08E1, 51)
         parseable_packet(0x090A, 26, "clif_parse_bg_queue_request_queue_number", [2])
-        // packet(HEADER_ZC_ENTRY_QUEUE_INIT, sizeof(PACKET_ZC_ENTRY_QUEUE_INIT))
+        packet(HEADER_ZC_ENTRY_QUEUE_INIT, Int16(PACKET_ZC_ENTRY_QUEUE_INIT.size))
         packet(0x0977, 14)
-        // parseable_packet(HEADER_CZ_REQ_JOIN_GUILD2, sizeof( PACKET_CZ_REQ_JOIN_GUILD2 ), "clif_parse_GuildInvite2", [0])
+        parseable_packet(HEADER_CZ_REQ_JOIN_GUILD2, Int16(PACKET_CZ_REQ_JOIN_GUILD2.size), "clif_parse_GuildInvite2", [0])
         parseable_packet(0x091d, 41, "clif_parse_PartyBookingRegisterReq", [2, 4, 6])
-        // parseable_packet(HEADER_CZ_REQ_MERGE_ITEM, -1, "clif_parse_merge_item_req", [0])
+        parseable_packet(HEADER_CZ_REQ_MERGE_ITEM, -1, "clif_parse_merge_item_req", [0])
         parseable_packet(0x0974, 2, "clif_parse_merge_item_cancel", [0])
         parseable_packet(0x0844, 2, "clif_parse_cashshop_open_request", [0])
         packet(0x0849, 16)
-        // parseable_packet(HEADER_CZ_SE_PC_BUY_CASHITEM_LIST, -1, "clif_parse_cashshop_buy", [0])
+        parseable_packet(HEADER_CZ_SE_PC_BUY_CASHITEM_LIST, -1, "clif_parse_cashshop_buy", [0])
         parseable_packet(0x084a, 2, "clif_parse_cashshop_close", [0])
         parseable_packet(0x08c9, 2, "clif_parse_cashshop_list_request", [0])
     }
@@ -1436,7 +1436,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         parseable_packet(0x014f, 6, "clif_parse_GuildRequestInfo", [2])
         parseable_packet(0x035f, 6, "clif_parse_ReqClickBuyingStore", [2])
         parseable_packet(0x0363, 6, "clif_parse_TickSend", [2])
-        // parseable_packet(0x0365, sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK), "clif_parse_SearchStoreInfoListItemClick", [2, 6, 10])
+        parseable_packet(0x0365, Int16(PACKET_CZ_SSILIST_ITEM_CLICK.size), "clif_parse_SearchStoreInfoListItemClick", [2, 6, 10])
         parseable_packet(0x0438, 6, "clif_parse_DropItem", [2, 4])
         parseable_packet(0x0447, 2, "clif_parse_blocking_playcancel", [0])
         parseable_packet(0x044A, 6, "clif_parse_client_version", [2])
@@ -1477,11 +1477,11 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x099f, 22)
     }
     if PACKETVER >= 20130717 {
-        // parseable_packet(HEADER_CZ_REQ_BANKING_DEPOSIT, sizeof( PACKET_CZ_REQ_BANKING_DEPOSIT ), "clif_parse_BankDeposit", [0])
-        // parseable_packet(HEADER_CZ_REQ_BANKING_WITHDRAW, sizeof( PACKET_CZ_REQ_BANKING_WITHDRAW ), "clif_parse_BankWithdraw", [0])
-        // parseable_packet(HEADER_CZ_REQ_BANKING_CHECK, sizeof( PACKET_CZ_REQ_BANKING_CHECK ), "clif_parse_BankCheck", [0])
-        // parseable_packet(HEADER_CZ_REQ_OPEN_BANKING, sizeof( PACKET_CZ_REQ_OPEN_BANKING ), "clif_parse_BankOpen", [0])
-        // parseable_packet(HEADER_CZ_REQ_CLOSE_BANKING, sizeof( PACKET_CZ_REQ_CLOSE_BANKING ), "clif_parse_BankClose", [0])
+        parseable_packet(HEADER_CZ_REQ_BANKING_DEPOSIT, Int16(PACKET_CZ_REQ_BANKING_DEPOSIT.size), "clif_parse_BankDeposit", [0])
+        parseable_packet(HEADER_CZ_REQ_BANKING_WITHDRAW, Int16(PACKET_CZ_REQ_BANKING_WITHDRAW.size), "clif_parse_BankWithdraw", [0])
+        parseable_packet(HEADER_CZ_REQ_BANKING_CHECK, Int16(PACKET_CZ_REQ_BANKING_CHECK.size), "clif_parse_BankCheck", [0])
+        parseable_packet(HEADER_CZ_REQ_OPEN_BANKING, Int16(PACKET_CZ_REQ_OPEN_BANKING.size), "clif_parse_BankOpen", [0])
+        parseable_packet(HEADER_CZ_REQ_CLOSE_BANKING, Int16(PACKET_CZ_REQ_CLOSE_BANKING.size), "clif_parse_BankClose", [0])
     }
     if PACKETVER >= 20130731 {
         packet(0x09ca, 23)
@@ -1496,22 +1496,22 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
     if PACKETVER >= 20131223 {
         parseable_packet(0x09CE, 102, "clif_parse_GM_Item_Monster", [2])
         parseable_packet(0x09D4, 2, "clif_parse_NPCShopClosed", [0])
-        // parseable_packet(HEADER_CZ_NPC_MARKET_PURCHASE, -1, "clif_parse_NPCMarketPurchase", [0])
+        parseable_packet(HEADER_CZ_NPC_MARKET_PURCHASE, -1, "clif_parse_NPCMarketPurchase", [0])
         packet(0x09D7, -1)
         parseable_packet(0x09D8, 2, "clif_parse_NPCMarketClosed", [0])
         parseable_packet(0x098D, -1, "clif_parse_clan_chat", [2, 4])
-        // parseable_packet(HEADER_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO, -1, "clif_parse_sale_search", [0])
-        // packet(HEADER_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO, sizeof( PACKET_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO ))
-        // parseable_packet(HEADER_CZ_REQ_APPLY_BARGAIN_SALE_ITEM, sizeof( PACKET_CZ_REQ_APPLY_BARGAIN_SALE_ITEM ), "clif_parse_sale_add", [0])
+        parseable_packet(HEADER_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO, -1, "clif_parse_sale_search", [0])
+        packet(HEADER_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO, Int16(PACKET_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO.size))
+        parseable_packet(HEADER_CZ_REQ_APPLY_BARGAIN_SALE_ITEM, Int16(PACKET_CZ_REQ_APPLY_BARGAIN_SALE_ITEM.size), "clif_parse_sale_add", [0])
         packet(0x09AF, 4)
-        // parseable_packet(HEADER_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM, sizeof( PACKET_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM ), "clif_parse_sale_remove", [0])
+        parseable_packet(HEADER_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM, Int16(PACKET_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM.size), "clif_parse_sale_remove", [0])
         packet(0x09B1, 4)
-        // packet(HEADER_ZC_NOTIFY_BARGAIN_SALE_SELLING, sizeof( PACKET_ZC_NOTIFY_BARGAIN_SALE_SELLING ))
-        // packet(HEADER_ZC_NOTIFY_BARGAIN_SALE_CLOSE, sizeof( PACKET_ZC_NOTIFY_BARGAIN_SALE_CLOSE ))
+        packet(HEADER_ZC_NOTIFY_BARGAIN_SALE_SELLING, Int16(PACKET_ZC_NOTIFY_BARGAIN_SALE_SELLING.size))
+        packet(HEADER_ZC_NOTIFY_BARGAIN_SALE_CLOSE, Int16(PACKET_ZC_NOTIFY_BARGAIN_SALE_CLOSE.size))
         parseable_packet(0x09B4, 6, "clif_parse_sale_open", [2])
         parseable_packet(0x09BC, 6, "clif_parse_sale_close", [2])
         parseable_packet(0x09C3, 8, "clif_parse_sale_refresh", [2, 6])
-        // packet(HEADER_ZC_ACK_COUNT_BARGAIN_SALE_ITEM, sizeof( PACKET_ZC_ACK_COUNT_BARGAIN_SALE_ITEM ))
+        packet(HEADER_ZC_ACK_COUNT_BARGAIN_SALE_ITEM, Int16(PACKET_ZC_ACK_COUNT_BARGAIN_SALE_ITEM.size))
         packet(0x097A, -1)
         packet(0x09DB, -1)
         packet(0x09DC, -1)
@@ -1534,7 +1534,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         parseable_packet(0x0A1D, 2, "clif_parse_roulette_close", [0])
         packet(0x0A1E, 3)
         parseable_packet(0x0A1F, 2, "clif_parse_roulette_generate", [0])
-        // packet(roulettgenerateackType, sizeof( struct packet_roulette_generate_ack ))
+        packet(packet_header_roulettgenerateackType, Int16(packet_roulette_generate_ack.size))
         parseable_packet(0x0A21, 3, "clif_parse_roulette_item", [2])
         packet(0x0A22, 5)
     }
@@ -1583,31 +1583,31 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x09FA, -1)
     }
     if PACKETVER >= 20150520 {
-        // parseable_packet(HEADER_CZ_REQ_APPLY_BARGAIN_SALE_ITEM2, sizeof( PACKET_CZ_REQ_APPLY_BARGAIN_SALE_ITEM ), "clif_parse_sale_add", [0])
+        parseable_packet(HEADER_CZ_REQ_APPLY_BARGAIN_SALE_ITEM2, Int16(PACKET_CZ_REQ_APPLY_BARGAIN_SALE_ITEM.size), "clif_parse_sale_add", [0])
     }
     if PACKETVER >= 20150916 {
         packet(0x097F, -1)
         parseable_packet(0x0980, 7, "clif_parse_SelectCart", [2, 6])
     }
     if PACKETVER >= 20151104 {
-        // parseable_packet(HEADER_CZ_REQ_STYLE_CHANGE, sizeof( PACKET_CZ_REQ_STYLE_CHANGE ), "clif_parse_stylist_buy", [0])
-        // parseable_packet(HEADER_CZ_REQ_STYLE_CLOSE, sizeof( PACKET_CZ_REQ_STYLE_CLOSE ), "clif_parse_stylist_close", [0])
+        parseable_packet(HEADER_CZ_REQ_STYLE_CHANGE, Int16(PACKET_CZ_REQ_STYLE_CHANGE.size), "clif_parse_stylist_buy", [0])
+        parseable_packet(HEADER_CZ_REQ_STYLE_CLOSE, Int16(PACKET_CZ_REQ_STYLE_CLOSE.size), "clif_parse_stylist_close", [0])
     }
     if PACKETVER >= 20160302 {
         packet(0x0A51, 34)
     }
     if PACKETVER >= 20160316 {
-        // parseable_packet(HEADER_CZ_REQ_UPLOAD_MACRO_DETECTOR, sizeof(PACKET_CZ_REQ_UPLOAD_MACRO_DETECTOR), "clif_parse_captcha_register", [0])
-        // parseable_packet(HEADER_CZ_UPLOAD_MACRO_DETECTOR_CAPTCHA, -1, "clif_parse_captcha_upload", [0])
-        // parseable_packet(HEADER_CZ_COMPLETE_APPLY_MACRO_DETECTOR_CAPTCHA, sizeof(PACKET_CZ_COMPLETE_APPLY_MACRO_DETECTOR_CAPTCHA), "clif_parse_macro_detector_download_ack", [0])
-        // parseable_packet(HEADER_CZ_ACK_ANSWER_MACRO_DETECTOR, sizeof(PACKET_CZ_ACK_ANSWER_MACRO_DETECTOR), "clif_parse_macro_detector_answer", [0])
-        // parseable_packet(HEADER_CZ_REQ_APPLY_MACRO_DETECTOR, sizeof(PACKET_CZ_REQ_APPLY_MACRO_DETECTOR), "clif_parse_macro_reporter_ack", [0])
+        parseable_packet(HEADER_CZ_REQ_UPLOAD_MACRO_DETECTOR, Int16(PACKET_CZ_REQ_UPLOAD_MACRO_DETECTOR.size), "clif_parse_captcha_register", [0])
+        parseable_packet(HEADER_CZ_UPLOAD_MACRO_DETECTOR_CAPTCHA, -1, "clif_parse_captcha_upload", [0])
+        parseable_packet(HEADER_CZ_COMPLETE_APPLY_MACRO_DETECTOR_CAPTCHA, Int16(PACKET_CZ_COMPLETE_APPLY_MACRO_DETECTOR_CAPTCHA.size), "clif_parse_macro_detector_download_ack", [0])
+        parseable_packet(HEADER_CZ_ACK_ANSWER_MACRO_DETECTOR, Int16(PACKET_CZ_ACK_ANSWER_MACRO_DETECTOR.size), "clif_parse_macro_detector_answer", [0])
+        parseable_packet(HEADER_CZ_REQ_APPLY_MACRO_DETECTOR, Int16(PACKET_CZ_REQ_APPLY_MACRO_DETECTOR.size), "clif_parse_macro_reporter_ack", [0])
     }
     if PACKETVER >= 20160323 {
-        // parseable_packet(HEADER_CZ_REQ_PREVIEW_MACRO_DETECTOR, sizeof(PACKET_CZ_REQ_PREVIEW_MACRO_DETECTOR), "clif_parse_captcha_preview_request", [0])
+        parseable_packet(HEADER_CZ_REQ_PREVIEW_MACRO_DETECTOR, Int16(PACKET_CZ_REQ_PREVIEW_MACRO_DETECTOR.size), "clif_parse_captcha_preview_request", [0])
     }
     if PACKETVER >= 20160330 {
-        // parseable_packet(HEADER_CZ_REQ_PLAYER_AID_IN_RANGE, sizeof(PACKET_CZ_REQ_PLAYER_AID_IN_RANGE), "clif_parse_macro_reporter_select", [0])
+        parseable_packet(HEADER_CZ_REQ_PLAYER_AID_IN_RANGE, Int16(PACKET_CZ_REQ_PLAYER_AID_IN_RANGE.size), "clif_parse_macro_reporter_select", [0])
     }
     if PACKETVER >= 20160330 {
         parseable_packet(0x0A6E, -1, "clif_parse_Mail_send", [2, 4, 28, 52, 60, 62, 64, 68])
@@ -1620,16 +1620,16 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x0A7D, -1)
     }
     if PACKETVER_MAIN_NUM >= 20160601 || PACKETVER_RE_NUM >= 20160525 || PACKETVER_ZERO_NUM != 0 {
-        // parseable_packet(HEADER_CZ_RANDOM_COMBINE_ITEM_UI_CLOSE, sizeof( struct PACKET_CZ_RANDOM_COMBINE_ITEM_UI_CLOSE ), "clif_parse_laphine_synthesis_close", [0])
-        // parseable_packet(HEADER_CZ_REQ_RANDOM_COMBINE_ITEM, -1, "clif_parse_laphine_synthesis", [0])
+        parseable_packet(HEADER_CZ_RANDOM_COMBINE_ITEM_UI_CLOSE, Int16(PACKET_CZ_RANDOM_COMBINE_ITEM_UI_CLOSE.size), "clif_parse_laphine_synthesis_close", [0])
+        parseable_packet(HEADER_CZ_REQ_RANDOM_COMBINE_ITEM, -1, "clif_parse_laphine_synthesis", [0])
     }
     if PACKETVER_MAIN_NUM >= 20160622 || PACKETVER_RE_NUM >= 20160622 || PACKETVER_ZERO_NUM != 0 {
-        // parseable_packet(HEADER_CZ_CMD_RESETCOOLTIME, sizeof( PACKET_CZ_CMD_RESETCOOLTIME ), "clif_parse_gm_resetcooltime", [0])
+        parseable_packet(HEADER_CZ_CMD_RESETCOOLTIME, Int16(PACKET_CZ_CMD_RESETCOOLTIME.size), "clif_parse_gm_resetcooltime", [0])
     }
     if PACKETVER >= 20161012 {
-        // parseable_packet(HEADER_CZ_REFINING_SELECT_ITEM, sizeof( struct PACKET_CZ_REFINING_SELECT_ITEM ), "clif_parse_refineui_add", [0])
-        // parseable_packet(HEADER_CZ_REQ_REFINING, sizeof( struct PACKET_CZ_REQ_REFINING ), "clif_parse_refineui_refine", [0])
-        // parseable_packet(HEADER_CZ_CLOSE_REFINING_UI, sizeof( struct PACKET_CZ_CLOSE_REFINING_UI ), "clif_parse_refineui_close", [0])
+        parseable_packet(HEADER_CZ_REFINING_SELECT_ITEM, Int16(PACKET_CZ_REFINING_SELECT_ITEM.size), "clif_parse_refineui_add", [0])
+        parseable_packet(HEADER_CZ_REQ_REFINING, Int16(PACKET_CZ_REQ_REFINING.size), "clif_parse_refineui_refine", [0])
+        parseable_packet(HEADER_CZ_CLOSE_REFINING_UI, Int16(PACKET_CZ_CLOSE_REFINING_UI.size), "clif_parse_refineui_close", [0])
     }
     if PACKETVER >= 20161026 {
         packet(0x0AA5, -1)
@@ -1654,8 +1654,8 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         parseable_packet(0x0ACE, 4, "clif_parse_equipswitch_request_single", [0])
     }
     if PACKETVER_MAIN_NUM >= 20170726 || PACKETVER_RE_NUM >= 20170621 || PACKETVER_ZERO_NUM != 0 {
-        // parseable_packet(HEADER_CZ_RANDOM_UPGRADE_ITEM_UI_CLOSE, sizeof( struct PACKET_CZ_RANDOM_UPGRADE_ITEM_UI_CLOSE ), "clif_parse_laphine_upgrade_close", [0])
-        // parseable_packet(HEADER_CZ_REQ_RANDOM_UPGRADE_ITEM, sizeof( struct PACKET_CZ_REQ_RANDOM_UPGRADE_ITEM ), "clif_parse_laphine_upgrade", [0])
+        parseable_packet(HEADER_CZ_RANDOM_UPGRADE_ITEM_UI_CLOSE, Int16(PACKET_CZ_RANDOM_UPGRADE_ITEM_UI_CLOSE.size), "clif_parse_laphine_upgrade_close", [0])
+        parseable_packet(HEADER_CZ_REQ_RANDOM_UPGRADE_ITEM, Int16(PACKET_CZ_REQ_RANDOM_UPGRADE_ITEM.size), "clif_parse_laphine_upgrade", [0])
     }
     if PACKETVER >= 20170830 {
         packet(0x0ACC, 18)
@@ -1679,7 +1679,7 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x0AF0, 10)
     }
     if PACKETVER >= 20180321 {
-        // parseable_packet(0x0A49, sizeof( struct PACKET_CZ_PRIVATE_AIRSHIP_REQUEST ), "clif_parse_private_airship_request", [0])
+        parseable_packet(0x0A49, Int16(PACKET_CZ_PRIVATE_AIRSHIP_REQUEST.size), "clif_parse_private_airship_request", [0])
         packet(0x0A4A, 6)
         packet(0x0A4B, 22)
         packet(0x0A4C, 28)
@@ -1688,84 +1688,84 @@ public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (I
         packet(0x0ADD, 22)
     }
     if PACKETVER >= 20180516 {
-        // parseable_packet(HEADER_CZ_REQ_STYLE_CHANGE2, sizeof( PACKET_CZ_REQ_STYLE_CHANGE2 ), "clif_parse_stylist_buy", [0])
+        parseable_packet(HEADER_CZ_REQ_STYLE_CHANGE2, Int16(PACKET_CZ_REQ_STYLE_CHANGE2.size), "clif_parse_stylist_buy", [0])
     }
     if PACKETVER_MAIN_NUM >= 20181002 || PACKETVER_RE_NUM >= 20181002 || PACKETVER_ZERO_NUM >= 20181010 {
-        // parseable_packet(HEADER_CZ_USE_SKILL_START, sizeof( struct PACKET_CZ_USE_SKILL_START ), "clif_parse_StartUseSkillToId", [0])
-        // parseable_packet(HEADER_CZ_USE_SKILL_END, sizeof( struct PACKET_CZ_USE_SKILL_END ), "clif_parse_StopUseSkillToId", [0])
+        parseable_packet(HEADER_CZ_USE_SKILL_START, Int16(PACKET_CZ_USE_SKILL_START.size), "clif_parse_StartUseSkillToId", [0])
+        parseable_packet(HEADER_CZ_USE_SKILL_END, Int16(PACKET_CZ_USE_SKILL_END.size), "clif_parse_StopUseSkillToId", [0])
     }
     if PACKETVER_MAIN_NUM >= 20181219 || PACKETVER_RE_NUM >= 20181219 || PACKETVER_ZERO_NUM >= 20181212 {
-        // parseable_packet(HEADER_CZ_REQ_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE, sizeof( struct PACKET_CZ_REQ_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE ), "clif_parse_inventory_expansion_request", [0])
-        // parseable_packet(HEADER_CZ_REQ_EXTEND_BODYITEM_SIZE, sizeof( struct PACKET_CZ_REQ_EXTEND_BODYITEM_SIZE ), "clif_parse_inventory_expansion_confirm", [0])
-        // parseable_packet(HEADER_CZ_CLOSE_MSGBOX_EXTEND_BODYITEM_SIZE, sizeof( struct PACKET_CZ_CLOSE_MSGBOX_EXTEND_BODYITEM_SIZE ), "clif_parse_inventory_expansion_reject", [0])
+        parseable_packet(HEADER_CZ_REQ_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE, Int16(PACKET_CZ_REQ_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE.size), "clif_parse_inventory_expansion_request", [0])
+        parseable_packet(HEADER_CZ_REQ_EXTEND_BODYITEM_SIZE, Int16(PACKET_CZ_REQ_EXTEND_BODYITEM_SIZE.size), "clif_parse_inventory_expansion_confirm", [0])
+        parseable_packet(HEADER_CZ_CLOSE_MSGBOX_EXTEND_BODYITEM_SIZE, Int16(PACKET_CZ_CLOSE_MSGBOX_EXTEND_BODYITEM_SIZE.size), "clif_parse_inventory_expansion_reject", [0])
     }
     if PACKETVER_MAIN_NUM >= 20190116 || PACKETVER_RE_NUM >= 20190116 || PACKETVER_ZERO_NUM >= 20181226 {
-        // parseable_packet(HEADER_CZ_NPC_BARTER_MARKET_PURCHASE, -1, "clif_parse_barter_buy", [0])
-        // parseable_packet(HEADER_CZ_NPC_BARTER_MARKET_CLOSE, sizeof( struct PACKET_CZ_NPC_BARTER_MARKET_CLOSE ), "clif_parse_barter_close", [0])
+        parseable_packet(HEADER_CZ_NPC_BARTER_MARKET_PURCHASE, -1, "clif_parse_barter_buy", [0])
+        parseable_packet(HEADER_CZ_NPC_BARTER_MARKET_CLOSE, Int16(PACKET_CZ_NPC_BARTER_MARKET_CLOSE.size), "clif_parse_barter_close", [0])
     }
     if PACKETVER_MAIN_NUM >= 20190227 || PACKETVER_RE_NUM >= 20190220 || PACKETVER_ZERO_NUM >= 20190220 {
-        // parseable_packet(HEADER_CZ_PING_LIVE, sizeof( struct PACKET_CZ_PING_LIVE ), "clif_parse_dull", [0])
+        parseable_packet(HEADER_CZ_PING_LIVE, Int16(PACKET_CZ_PING_LIVE.size), "clif_parse_dull", [0])
     }
     if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190522 || PACKETVER_ZERO_NUM >= 20190515 {
-        // parseable_packet(HEADER_CZ_REQ_MOVE_GUILD_AGIT, sizeof(PACKET_CZ_REQ_MOVE_GUILD_AGIT), "clif_parse_guild_castle_teleport_request", [0])
-        // parseable_packet(HEADER_CZ_REQ_AGIT_INVESTMENT, sizeof(PACKET_CZ_REQ_AGIT_INVESTMENT), "clif_parse_guild_castle_info_request", [0])
+        parseable_packet(HEADER_CZ_REQ_MOVE_GUILD_AGIT, Int16(PACKET_CZ_REQ_MOVE_GUILD_AGIT.size), "clif_parse_guild_castle_teleport_request", [0])
+        parseable_packet(HEADER_CZ_REQ_AGIT_INVESTMENT, Int16(PACKET_CZ_REQ_AGIT_INVESTMENT.size), "clif_parse_guild_castle_info_request", [0])
     }
     if PACKETVER >= 20190724 {
-        // parseable_packet(HEADER_CZ_REQ_ADD_NEW_EMBLEM, sizeof( PACKET_CZ_REQ_ADD_NEW_EMBLEM ), "clif_parse_GuildChangeEmblem2", [0])
-        // packet(HEADER_ZC_CHANGE_GUILD, sizeof(PACKET_ZC_CHANGE_GUILD))
+        parseable_packet(HEADER_CZ_REQ_ADD_NEW_EMBLEM, Int16(PACKET_CZ_REQ_ADD_NEW_EMBLEM.size), "clif_parse_GuildChangeEmblem2", [0])
+        packet(HEADER_ZC_CHANGE_GUILD, Int16(PACKET_ZC_CHANGE_GUILD.size))
     }
     if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190508 || PACKETVER_ZERO_NUM >= 20190605 {
-        // parseable_packet(0x0B21, sizeof( struct PACKET_CZ_SHORTCUT_KEY_CHANGE2 ), "clif_parse_Hotkey", [0])
-        // parseable_packet(0x0B22, sizeof( struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE2 ), "clif_parse_HotkeyRowShift", [0])
+        parseable_packet(0x0B21, Int16(PACKET_CZ_SHORTCUT_KEY_CHANGE2.size), "clif_parse_Hotkey", [0])
+        parseable_packet(0x0B22, Int16(PACKET_CZ_SHORTCUTKEYBAR_ROTATE2.size), "clif_parse_HotkeyRowShift", [0])
     }
     if PACKETVER_MAIN_NUM >= 20190703 || PACKETVER_RE_NUM >= 20190703 || PACKETVER_ZERO_NUM >= 20190709 {
-        // parseable_packet(HEADER_CZ_UNINSTALLATION, sizeof( PACKET_CZ_UNINSTALLATION ), "clif_parse_RemoveOption", [0])
+        parseable_packet(HEADER_CZ_UNINSTALLATION, Int16(PACKET_CZ_UNINSTALLATION.size), "clif_parse_RemoveOption", [0])
     }
     if PACKETVER >= 20190724 {
         parseable_packet(0x0b4c, 2, "clif_parse_dull", [0])
     }
     if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127 {
-        // parseable_packet(HEADER_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE, -1, "clif_parse_barter_extended_buy", [0])
-        // parseable_packet(HEADER_CZ_NPC_EXPANDED_BARTER_MARKET_CLOSE, sizeof( struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_CLOSE ), "clif_parse_barter_extended_close", [0])
+        parseable_packet(HEADER_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE, -1, "clif_parse_barter_extended_buy", [0])
+        parseable_packet(HEADER_CZ_NPC_EXPANDED_BARTER_MARKET_CLOSE, Int16(PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_CLOSE.size), "clif_parse_barter_extended_close", [0])
     }
     if PACKETVER >= 20191224 {
-        // parseable_packet(HEADER_CZ_SE_CASHSHOP_OPEN2, sizeof( struct PACKET_CZ_SE_CASHSHOP_OPEN2 ), "clif_parse_cashshop_open_request", [0])
-        // parseable_packet(HEADER_CZ_REQ_ITEMREPAIR2, sizeof( struct PACKET_CZ_REQ_ITEMREPAIR2 ), "clif_parse_RepairItem", [0])
+        parseable_packet(HEADER_CZ_SE_CASHSHOP_OPEN2, Int16(PACKET_CZ_SE_CASHSHOP_OPEN2.size), "clif_parse_cashshop_open_request", [0])
+        parseable_packet(HEADER_CZ_REQ_ITEMREPAIR2, Int16(PACKET_CZ_REQ_ITEMREPAIR2.size), "clif_parse_RepairItem", [0])
     }
     if PACKETVER >= 20191204 {
-        // parseable_packet(HEADER_CZ_PARTY_REQ_MASTER_TO_JOIN, sizeof( struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN ), "clif_parse_partybooking_join", [0])
-        // parseable_packet(HEADER_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN, sizeof( struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN ), "clif_parse_partybooking_reply", [0])
+        parseable_packet(HEADER_CZ_PARTY_REQ_MASTER_TO_JOIN, Int16(PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN.size), "clif_parse_partybooking_join", [0])
+        parseable_packet(HEADER_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN, Int16(PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN.size), "clif_parse_partybooking_reply", [0])
     }
     if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724 {
-        // parseable_packet(HEADER_CZ_ADVANCED_STATUS_CHANGE, sizeof( PACKET_CZ_ADVANCED_STATUS_CHANGE ), "clif_parse_traitstatus_up", [0])
-        // parseable_packet(HEADER_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT, sizeof( struct PACKET_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT ), "clif_parse_enchantgrade_add", [0])
-        // parseable_packet(HEADER_CZ_GRADE_ENCHANT_REQUEST, sizeof( struct PACKET_CZ_GRADE_ENCHANT_REQUEST ), "clif_parse_enchantgrade_start", [0])
-        // parseable_packet(HEADER_CZ_GRADE_ENCHANT_CLOSE_UI, sizeof( struct PACKET_CZ_GRADE_ENCHANT_CLOSE_UI ), "clif_parse_enchantgrade_close", [0])
+        parseable_packet(HEADER_CZ_ADVANCED_STATUS_CHANGE, Int16(PACKET_CZ_ADVANCED_STATUS_CHANGE.size), "clif_parse_traitstatus_up", [0])
+        parseable_packet(HEADER_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT, Int16(PACKET_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT.size), "clif_parse_enchantgrade_add", [0])
+        parseable_packet(HEADER_CZ_GRADE_ENCHANT_REQUEST, Int16(PACKET_CZ_GRADE_ENCHANT_REQUEST.size), "clif_parse_enchantgrade_start", [0])
+        parseable_packet(HEADER_CZ_GRADE_ENCHANT_CLOSE_UI, Int16(PACKET_CZ_GRADE_ENCHANT_CLOSE_UI.size), "clif_parse_enchantgrade_close", [0])
     }
     if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024 {
-        // parseable_packet(HEADER_CZ_REQUEST_RANDOM_ENCHANT, sizeof( struct PACKET_CZ_REQUEST_RANDOM_ENCHANT ), "clif_parse_enchantwindow_general", [0])
-        // parseable_packet(HEADER_CZ_REQUEST_PERFECT_ENCHANT, sizeof( struct PACKET_CZ_REQUEST_PERFECT_ENCHANT ), "clif_parse_enchantwindow_perfect", [0])
-        // parseable_packet(HEADER_CZ_REQUEST_UPGRADE_ENCHANT, sizeof( struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT ), "clif_parse_enchantwindow_upgrade", [0])
-        // parseable_packet(HEADER_CZ_REQUEST_RESET_ENCHANT, sizeof( struct PACKET_CZ_REQUEST_RESET_ENCHANT ), "clif_parse_enchantwindow_reset", [0])
-        // parseable_packet(HEADER_CZ_CLOSE_UI_ENCHANT, sizeof( struct PACKET_CZ_CLOSE_UI_ENCHANT ), "clif_parse_enchantwindow_close", [0])
+        parseable_packet(HEADER_CZ_REQUEST_RANDOM_ENCHANT, Int16(PACKET_CZ_REQUEST_RANDOM_ENCHANT.size), "clif_parse_enchantwindow_general", [0])
+        parseable_packet(HEADER_CZ_REQUEST_PERFECT_ENCHANT, Int16(PACKET_CZ_REQUEST_PERFECT_ENCHANT.size), "clif_parse_enchantwindow_perfect", [0])
+        parseable_packet(HEADER_CZ_REQUEST_UPGRADE_ENCHANT, Int16(PACKET_CZ_REQUEST_UPGRADE_ENCHANT.size), "clif_parse_enchantwindow_upgrade", [0])
+        parseable_packet(HEADER_CZ_REQUEST_RESET_ENCHANT, Int16(PACKET_CZ_REQUEST_RESET_ENCHANT.size), "clif_parse_enchantwindow_reset", [0])
+        parseable_packet(HEADER_CZ_CLOSE_UI_ENCHANT, Int16(PACKET_CZ_CLOSE_UI_ENCHANT.size), "clif_parse_enchantwindow_close", [0])
     }
     if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818 || PACKETVER_MAIN_NUM >= 20220330 {
-        // parseable_packet(HEADER_CZ_CHECKNAME2, sizeof( struct PACKET_CZ_CHECKNAME2 ), "clif_parse_Mail_Receiver_Check", [0])
-        // parseable_packet(HEADER_CZ_RODEX_RETURN, sizeof( struct PACKET_CZ_RODEX_RETURN ), "clif_parse_Mail_return", [0])
-        // parseable_packet(HEADER_CZ_REQ_TAKEOFF_EQUIP_ALL, sizeof( struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL ), "clif_parse_unequipall", [0])
+        parseable_packet(HEADER_CZ_CHECKNAME2, Int16(PACKET_CZ_CHECKNAME2.size), "clif_parse_Mail_Receiver_Check", [0])
+        parseable_packet(HEADER_CZ_RODEX_RETURN, Int16(PACKET_CZ_RODEX_RETURN.size), "clif_parse_Mail_return", [0])
+        parseable_packet(HEADER_CZ_REQ_TAKEOFF_EQUIP_ALL, Int16(PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL.size), "clif_parse_unequipall", [0])
         parseable_packet(0xb93, 12, "clif_parse_dull", [0])
     }
     if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024 {
-        // parseable_packet(HEADER_CZ_CLOSE_REFORM_UI, sizeof( struct PACKET_CZ_CLOSE_REFORM_UI ), "clif_parse_item_reform_close", [0])
-        // parseable_packet(HEADER_CZ_ITEM_REFORM, sizeof( struct PACKET_CZ_ITEM_REFORM ), "clif_parse_item_reform_start", [0])
+        parseable_packet(HEADER_CZ_CLOSE_REFORM_UI, Int16(PACKET_CZ_CLOSE_REFORM_UI.size), "clif_parse_item_reform_close", [0])
+        parseable_packet(HEADER_CZ_ITEM_REFORM, Int16(PACKET_CZ_ITEM_REFORM.size), "clif_parse_item_reform_start", [0])
     }
     if PACKETVER_MAIN_NUM >= 20220216 {
-        // parseable_packet(HEADER_CZ_APPROXIMATE_ACTOR, sizeof( struct PACKET_CZ_APPROXIMATE_ACTOR ), "clif_parse_dull", [0])
+//        parseable_packet(HEADER_CZ_APPROXIMATE_ACTOR, Int16(PACKET_CZ_APPROXIMATE_ACTOR.size), "clif_parse_dull", [0])
     }
     if PACKETVER_MAIN_NUM >= 20220216 || PACKETVER_ZERO_NUM >= 20220316 {
-        // parseable_packet(HEADER_CZ_USE_PACKAGEITEM, sizeof( struct PACKET_CZ_USE_PACKAGEITEM ), "clif_parse_itempackage_select", [0])
+//        parseable_packet(HEADER_CZ_USE_PACKAGEITEM, Int16(PACKET_CZ_USE_PACKAGEITEM.size), "clif_parse_itempackage_select", [0])
     }
     if PACKETVER_MAIN_NUM >= 20220216 || PACKETVER_ZERO_NUM >= 20220203 {
-        // parseable_packet(HEADER_CZ_RESET_SKILL, sizeof( struct PACKET_CZ_RESET_SKILL ), "clif_parse_reset_skill", [0])
+        parseable_packet(HEADER_CZ_RESET_SKILL, Int16(PACKET_CZ_RESET_SKILL.size), "clif_parse_reset_skill", [0])
     }
 }

@@ -82,16 +82,22 @@ struct GeneratePacketsCommand: ParsableCommand {
                 let parameters = line[start..<end]
                     .split(separator: ",")
                     .map({ $0.trimmingCharacters(in: .whitespaces) })
-                let packetType = parameters[0]
-                let packetLength = parameters[1]
+                var packetType = parameters[0]
+                if !packetType.hasPrefix("0x") && !packetType.hasPrefix("HEADER_") {
+                    packetType = "packet_header_" + packetType
+                }
+                var packetLength = parameters[1]
+                if packetLength.hasPrefix("sizeof(") && packetLength.hasSuffix(")") {
+                    packetLength.replace("sizeof(", with: "")
+                    packetLength.replace(")", with: "")
+                    packetLength.replace("struct", with: "")
+                    packetLength = packetLength.trimmingCharacters(in: .whitespaces)
+                    packetLength = "Int16(\(packetLength).size)"
+                }
 
                 let indentation = Array(repeating: " ", count: indentationLevel * 4).joined()
                 let statement = "packet(\(packetType), \(packetLength))"
-                if packetType.hasPrefix("0x") && Int(packetLength) != nil {
-                    output.append(indentation + statement)
-                } else {
-                    output.append(indentation + "// " + statement)
-                }
+                output.append(indentation + statement)
             } else if line.hasPrefix("parseable_packet(") {
                 let open = line.firstIndex(of: "(")!
                 let close = line.lastIndex(of: ")")!
@@ -101,17 +107,20 @@ struct GeneratePacketsCommand: ParsableCommand {
                     .split(separator: ",")
                     .map({ $0.trimmingCharacters(in: .whitespaces) })
                 let packetType = parameters[0]
-                let packetLength = parameters[1]
+                var packetLength = parameters[1]
+                if packetLength.hasPrefix("sizeof(") && packetLength.hasSuffix(")") {
+                    packetLength.replace("sizeof(", with: "")
+                    packetLength.replace(")", with: "")
+                    packetLength.replace("struct", with: "")
+                    packetLength = packetLength.trimmingCharacters(in: .whitespaces)
+                    packetLength = "Int16(\(packetLength).size)"
+                }
                 let functionName = parameters[2] == "nullptr" ? "nil" : "\"\(parameters[2])\""
                 let offsets = parameters[3...].joined(separator: ", ")
 
                 let indentation = Array(repeating: " ", count: indentationLevel * 4).joined()
                 let statement = "parseable_packet(\(packetType), \(packetLength), \(functionName), [\(offsets)])"
-                if packetType.hasPrefix("0x") && Int(packetLength) != nil {
-                    output.append(indentation + statement)
-                } else {
-                    output.append(indentation + "// " + statement)
-                }
+                output.append(indentation + statement)
             } else if line.hasPrefix("#if ") {
                 indentationLevel += 1
 
@@ -389,6 +398,9 @@ struct GeneratePacketsCommand: ParsableCommand {
             output.append("""
             
             public struct \(structDecl.name): BinaryDecodable, BinaryEncodable, Sendable {
+                public static var size: Int {
+                    \(byteCount(forStructRef: .custom(structDecl.name), structDecls: structDecls + referencedStructDecls))
+                }
             \(properties.joined(separator: "\n"))
                 public init() {
                 }
@@ -453,7 +465,7 @@ struct GeneratePacketsCommand: ParsableCommand {
             let size = structDecl.fields.map {
                 byteCount(forFieldType: $0.type, structDecls: structDecls)
             }.joined(separator: " + ")
-            return "(\(size))"
+            return size.contains("?") ? "-1" : "(\(size))"
         }
     }
 

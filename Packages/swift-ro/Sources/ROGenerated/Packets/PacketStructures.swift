@@ -536,6 +536,9 @@ public let packet_header_guildExpulsion: Int16 = 0xa82
 public let packet_header_guildLeave: Int16 = 0xa83
 
 public struct PACKET_CA_LOGIN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 24 + 24 + 1)
+    }
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -562,6 +565,9 @@ public struct PACKET_CA_LOGIN: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_AC_ACCEPT_LOGIN_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 2 + 20 + 2 + 2 + 2 + (1 * 128))
+    }
     public var ip: UInt32 = 0
     public var port: UInt16 = 0
     @FixedLengthString(lengthOfBytes: 20)
@@ -594,6 +600,9 @@ public struct PACKET_AC_ACCEPT_LOGIN_sub: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_AC_ACCEPT_LOGIN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var login_id1: UInt32 = 0
@@ -635,6 +644,9 @@ public struct PACKET_AC_ACCEPT_LOGIN: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_AC_REFUSE_LOGIN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 20)
+    }
     public var packetType: Int16 = 0
     public var error: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 20)
@@ -654,6 +666,9 @@ public struct PACKET_AC_REFUSE_LOGIN: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_SC_NOTIFY_BAN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public init() {
@@ -669,6 +684,9 @@ public struct PACKET_SC_NOTIFY_BAN: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CA_REQ_HASH: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -681,6 +699,9 @@ public struct PACKET_CA_REQ_HASH: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_AC_ACK_HASH: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var salt: String = ""
@@ -699,6 +720,9 @@ public struct PACKET_AC_ACK_HASH: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CA_LOGIN2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 24 + (1 * 16) + 1)
+    }
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -725,6 +749,9 @@ public struct PACKET_CA_LOGIN2: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CA_LOGIN3: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 24 + (1 * 16) + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -754,6 +781,9 @@ public struct PACKET_CA_LOGIN3: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CA_CONNECT_INFO_CHANGED: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
@@ -770,6 +800,9 @@ public struct PACKET_CA_CONNECT_INFO_CHANGED: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_CA_EXE_HASHCHECK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 16)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 16)
     public var hash: String
@@ -786,6 +819,9 @@ public struct PACKET_CA_EXE_HASHCHECK: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_CA_LOGIN_PCBANG: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 24 + 24 + 1 + 16 + 13)
+    }
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -820,6 +856,9 @@ public struct PACKET_CA_LOGIN_PCBANG: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_CA_LOGIN4: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 24 + (1 * 16) + 1 + 13)
+    }
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -850,6 +889,9 @@ public struct PACKET_CA_LOGIN4: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CA_LOGIN_CHANNEL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 24 + 24 + 1 + 16 + 13 + 1)
+    }
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -887,6 +929,9 @@ public struct PACKET_CA_LOGIN_CHANNEL: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_CA_SSO_LOGIN_REQ: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var version: UInt32 = 0
@@ -927,6 +972,9 @@ public struct PACKET_CA_SSO_LOGIN_REQ: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_CT_AUTH: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + (1 * 66))
+    }
     public var packetType: Int16 = 0
     @FixedSizeArray(size: 66, initialValue: 0)
     public var unknown: [UInt8]
@@ -943,6 +991,9 @@ public struct PACKET_CT_AUTH: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_TC_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 20 + 6)
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var type: UInt32 = 0
@@ -969,6 +1020,9 @@ public struct PACKET_TC_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 16)
+    }
     public var status: Int32 = 0
     @FixedLengthString(lengthOfBytes: 16)
     public var map: String
@@ -985,6 +1039,9 @@ public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub: BinaryDecodable, BinaryEn
 }
 
 public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var maps: [PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub] = []
@@ -1003,6 +1060,9 @@ public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var slot: Int8 = 0
     public var mapnumber: Int8 = 0
@@ -1021,6 +1081,9 @@ public struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_ZC_PAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var varID: UInt16 = 0
     public var count: Int32 = 0
@@ -1039,6 +1102,9 @@ public struct PACKET_ZC_PAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_LONGPAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var varID: UInt16 = 0
     public var amount: Int32 = 0
@@ -1057,6 +1123,9 @@ public struct PACKET_ZC_LONGPAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_STATUS_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var statusID: UInt16 = 0
     public var value: UInt8 = 0
@@ -1075,6 +1144,9 @@ public struct PACKET_ZC_STATUS_CHANGE: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var curCount: Int16 = 0
     public var maxCount: Int16 = 0
@@ -1099,6 +1171,9 @@ public struct PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_ZC_ATTACK_RANGE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var currentAttRange: Int16 = 0
     public init() {
@@ -1114,6 +1189,9 @@ public struct PACKET_ZC_ATTACK_RANGE: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_COUPLESTATUS: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var statusType: UInt32 = 0
     public var defaultStatus: Int32 = 0
@@ -1135,6 +1213,9 @@ public struct PACKET_ZC_COUPLESTATUS: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_LONGLONGPAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 8)
+    }
     public var packetType: Int16 = 0
     public var varID: UInt16 = 0
     public var amount: Int64 = 0
@@ -1153,6 +1234,9 @@ public struct PACKET_ZC_LONGLONGPAR_CHANGE: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct packet_authok: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + (1 * 3) + 1 + 1 + 2)
+    }
     public var packetType: Int16 = 0
     public var startTime: UInt32 = 0
     @FixedSizeArray(size: 3, initialValue: 0)
@@ -1181,6 +1265,9 @@ public struct packet_authok: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct packet_monster_hp: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var GID: UInt32 = 0
     public var HP: Int32 = 0
@@ -1202,6 +1289,9 @@ public struct packet_monster_hp: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct packet_sc_notick: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var AID: UInt32 = 0
@@ -1223,6 +1313,9 @@ public struct packet_sc_notick: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_ITEM_PICKUP_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 4 + 1 + 1 + ((4 * 4)) + 4 + 1 + 1 + 4 + 2 + ((2 + 2 + 1) * 5) + 1 + 2 + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var Index: UInt16 = 0
     public var count: UInt16 = 0
@@ -1284,6 +1377,9 @@ public struct PACKET_ZC_ITEM_PICKUP_ACK: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct packet_dropflooritem: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 2 + 1 + 2 + 2 + 1 + 1 + 2 + 1 + 2)
+    }
     public var packetType: Int16 = 0
     public var ITAID: UInt32 = 0
     public var ITID: UInt32 = 0
@@ -1329,6 +1425,9 @@ public struct packet_dropflooritem: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct packet_idle_unit2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (1)
+    }
     public var _____unavailable: Int8 = 0
     public init() {
     }
@@ -1341,6 +1440,9 @@ public struct packet_idle_unit2: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct packet_spawn_unit2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (1)
+    }
     public var _____unavailable: Int8 = 0
     public init() {
     }
@@ -1353,6 +1455,9 @@ public struct packet_spawn_unit2: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct packet_spawn_unit: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1 + 4 + 4 + 2 + 2 + 2 + 4 + 2 + 2 + 4 + 4 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 4 + 2 + 2 + 4 + 1 + 1 + (1 * 3) + 1 + 1 + 2 + 2 + 4 + 4 + 1 + 2 + 24)
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var objecttype: UInt8 = 0
@@ -1472,6 +1577,9 @@ public struct packet_spawn_unit: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct packet_unit_walking: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1 + 4 + 4 + 2 + 2 + 2 + 4 + 2 + 2 + 4 + 4 + 2 + 4 + 2 + 2 + 2 + 2 + 2 + 2 + 4 + 2 + 2 + 4 + 1 + 1 + (1 * 6) + 1 + 1 + 2 + 2 + 4 + 4 + 1 + 2 + 24)
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var objecttype: UInt8 = 0
@@ -1594,6 +1702,9 @@ public struct packet_unit_walking: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct packet_idle_unit: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1 + 4 + 4 + 2 + 2 + 2 + 4 + 2 + 2 + 4 + 4 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 4 + 2 + 2 + 4 + 1 + 1 + (1 * 3) + 1 + 1 + 1 + 2 + 2 + 4 + 4 + 1 + 2 + 24)
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var objecttype: UInt8 = 0
@@ -1716,6 +1827,9 @@ public struct packet_idle_unit: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct packet_status_change: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 1 + 4 + 4 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var AID: UInt32 = 0
@@ -1752,6 +1866,9 @@ public struct packet_status_change: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct packet_status_change_end: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var AID: UInt32 = 0
@@ -1773,6 +1890,9 @@ public struct packet_status_change_end: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct packet_status_change2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 1 + 4 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var AID: UInt32 = 0
@@ -1806,6 +1926,9 @@ public struct packet_status_change2: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct packet_maptypeproperty2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var type: Int16 = 0
     public var flag: UInt32 = 0
@@ -1824,6 +1947,9 @@ public struct packet_maptypeproperty2: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct packet_bgqueue_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 24)
+    }
     public var packetType: Int16 = 0
     public var type: UInt8 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -1843,6 +1969,9 @@ public struct packet_bgqueue_ack: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct packet_bgqueue_notice_delete: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 24)
+    }
     public var packetType: Int16 = 0
     public var type: UInt8 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -1862,6 +1991,9 @@ public struct packet_bgqueue_notice_delete: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct packet_bgqueue_register: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 24)
+    }
     public var packetType: Int16 = 0
     public var type: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -1881,6 +2013,9 @@ public struct packet_bgqueue_register: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct packet_bgqueue_update_info: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24 + 4)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var bg_name: String
@@ -1900,6 +2035,9 @@ public struct packet_bgqueue_update_info: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct packet_bgqueue_checkstate: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var bg_name: String
@@ -1916,6 +2054,9 @@ public struct packet_bgqueue_checkstate: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct packet_bgqueue_revoke_req: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var bg_name: String
@@ -1932,6 +2073,9 @@ public struct packet_bgqueue_revoke_req: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct packet_bgqueue_battlebegin_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 24 + 24)
+    }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -1955,6 +2099,9 @@ public struct packet_bgqueue_battlebegin_ack: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct packet_bgqueue_notify_entry: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24 + 4)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
@@ -1974,6 +2121,9 @@ public struct packet_bgqueue_notify_entry: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct packet_bgqueue_battlebegins: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24 + 24)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var bg_name: String
@@ -1994,6 +2144,9 @@ public struct packet_bgqueue_battlebegins: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct packet_script_clear: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var NpcID: UInt32 = 0
     public init() {
@@ -2009,6 +2162,9 @@ public struct packet_script_clear: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1 + 4 + 1 + 24 + 1 + 4)
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var type: UInt8 = 0
@@ -2043,6 +2199,9 @@ public struct PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item: BinaryDecodable, 
 }
 
 public struct packet_item_drop_announce: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1 + 4 + 1 + 24 + 1 + 24)
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var type: UInt8 = 0
@@ -2078,6 +2237,9 @@ public struct packet_item_drop_announce: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct packet_cart_additem_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var result: Int8 = 0
     public init() {
@@ -2093,6 +2255,9 @@ public struct packet_cart_additem_ack: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct packet_banking_check: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 8 + 2)
+    }
     public var packetType: Int16 = 0
     public var Money: Int64 = 0
     public var Reason: Int16 = 0
@@ -2111,6 +2276,9 @@ public struct packet_banking_check: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct packet_banking_deposit_req: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var Money: Int32 = 0
@@ -2129,6 +2297,9 @@ public struct packet_banking_deposit_req: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct packet_banking_withdraw_req: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var Money: Int32 = 0
@@ -2147,6 +2318,9 @@ public struct packet_banking_withdraw_req: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct packet_banking_deposit_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 8 + 4)
+    }
     public var packetType: Int16 = 0
     public var Reason: Int16 = 0
     public var Money: Int64 = 0
@@ -2168,6 +2342,9 @@ public struct packet_banking_deposit_ack: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct packet_banking_withdraw_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 8 + 4)
+    }
     public var packetType: Int16 = 0
     public var Reason: Int16 = 0
     public var Money: Int64 = 0
@@ -2189,6 +2366,9 @@ public struct packet_banking_withdraw_ack: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct packet_roulette_open_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 4 + 1 + 1 + 4 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var Result: Int8 = 0
     public var Serial: Int32 = 0
@@ -2225,6 +2405,9 @@ public struct packet_roulette_open_ack: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct packet_roulette_info_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + ((2 + 2 + 4 + 2 + 2) * 42))
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var RouletteSerial: UInt32 = 0
@@ -2247,6 +2430,9 @@ public struct packet_roulette_info_ack: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct packet_roulette_close_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var Result: UInt8 = 0
     public init() {
@@ -2262,6 +2448,9 @@ public struct packet_roulette_close_ack: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct packet_roulette_generate_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 2 + 2 + 4 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var Result: UInt8 = 0
     public var Step: UInt16 = 0
@@ -2295,6 +2484,9 @@ public struct packet_roulette_generate_ack: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct packet_roulette_itemrecv_req: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var Condition: UInt8 = 0
     public init() {
@@ -2310,6 +2502,9 @@ public struct packet_roulette_itemrecv_req: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct packet_roulette_itemrecv_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 4)
+    }
     public var packetType: Int16 = 0
     public var Result: UInt8 = 0
     public var AdditionItemID: UInt32 = 0
@@ -2328,6 +2523,9 @@ public struct packet_roulette_itemrecv_ack: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct packet_itemlist_normal: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var invType: UInt8 = 0
@@ -2349,6 +2547,9 @@ public struct packet_itemlist_normal: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct packet_itemlist_equip: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var invType: UInt8 = 0
@@ -2370,6 +2571,9 @@ public struct packet_itemlist_equip: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_INVENTORY_START: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var invType: UInt8 = 0
@@ -2391,6 +2595,9 @@ public struct PACKET_ZC_INVENTORY_START: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_INVENTORY_END: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var invType: UInt8 = 0
     public var flag: Int8 = 0
@@ -2409,6 +2616,9 @@ public struct PACKET_ZC_INVENTORY_END: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct packet_equip_item: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public var wearLocation: UInt32 = 0
@@ -2427,6 +2637,9 @@ public struct packet_equip_item: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_REQ_WEAR_EQUIP_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public var wearLocation: UInt32 = 0
@@ -2451,6 +2664,9 @@ public struct PACKET_ZC_REQ_WEAR_EQUIP_ACK: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct packet_unequipitem_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public var wearLocation: UInt32 = 0
@@ -2472,6 +2688,9 @@ public struct packet_unequipitem_ack: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_EQUIPWIN_MICROSCOPE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -2524,6 +2743,9 @@ public struct PACKET_ZC_EQUIPWIN_MICROSCOPE: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct packet_notify_bounditem: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public init() {
@@ -2539,6 +2761,9 @@ public struct packet_notify_bounditem: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct packet_skill_entry: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 4 + 2 + 2 + 4 + 1 + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var AID: UInt32 = 0
@@ -2578,6 +2803,9 @@ public struct packet_skill_entry: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct packet_graffiti_entry: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 2 + 2 + 1 + 1 + 1 + 80)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var creatorAID: UInt32 = 0
@@ -2615,6 +2843,9 @@ public struct packet_graffiti_entry: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct packet_damage: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4 + 4 + 4 + 4 + 1 + 2 + 1 + 4)
+    }
     public var packetType: Int16 = 0
     public var GID: UInt32 = 0
     public var targetGID: UInt32 = 0
@@ -2657,6 +2888,9 @@ public struct packet_damage: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct packet_gm_monster_item: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 100)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 100)
     public var str: String
@@ -2673,6 +2907,9 @@ public struct packet_gm_monster_item: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_CZ_NPC_MARKET_PURCHASE_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4)
+    }
     public var ITID: UInt32 = 0
     public var qty: Int32 = 0
     public init() {
@@ -2688,6 +2925,9 @@ public struct PACKET_CZ_NPC_MARKET_PURCHASE_sub: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_CZ_NPC_MARKET_PURCHASE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var list: [PACKET_CZ_NPC_MARKET_PURCHASE_sub] = []
@@ -2706,6 +2946,9 @@ public struct PACKET_CZ_NPC_MARKET_PURCHASE: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_ZC_NPC_MARKET_OPEN_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 1 + 4 + 4 + 2 + 4)
+    }
     public var nameid: UInt32 = 0
     public var type: UInt8 = 0
     public var price: UInt32 = 0
@@ -2733,6 +2976,9 @@ public struct PACKET_ZC_NPC_MARKET_OPEN_sub: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_ZC_NPC_MARKET_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var list: [PACKET_ZC_NPC_MARKET_OPEN_sub] = []
@@ -2751,6 +2997,9 @@ public struct PACKET_ZC_NPC_MARKET_OPEN: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct packet_wis_end: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 4)
+    }
     public var packetType: Int16 = 0
     public var result: Int8 = 0
     public var AID: UInt32 = 0
@@ -2769,6 +3018,9 @@ public struct packet_wis_end: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct packet_party_leader_changed: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var prev_leader_aid: UInt32 = 0
     public var new_leader_aid: UInt32 = 0
@@ -2787,6 +3039,9 @@ public struct packet_party_leader_changed: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_SHORTCUT_KEY_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 2 + ((1 + 4 + 2) * 38))
+    }
     public var packetType: Int16 = 0
     public var rotate: Int8 = 0
     public var tab: Int16 = 0
@@ -2809,6 +3064,9 @@ public struct PACKET_ZC_SHORTCUT_KEY_LIST: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_CZ_SHORTCUT_KEY_CHANGE1: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + (1 + 4 + 2))
+    }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public var hotkey: hotkey_data = hotkey_data()
@@ -2827,6 +3085,9 @@ public struct PACKET_CZ_SHORTCUT_KEY_CHANGE1: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_CZ_SHORTCUT_KEY_CHANGE2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + (1 + 4 + 2))
+    }
     public var packetType: Int16 = 0
     public var tab: UInt16 = 0
     public var index: UInt16 = 0
@@ -2848,6 +3109,9 @@ public struct PACKET_CZ_SHORTCUT_KEY_CHANGE2: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE1: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var rowshift: UInt8 = 0
     public init() {
@@ -2863,6 +3127,9 @@ public struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE1: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var tab: UInt16 = 0
     public var rowshift: UInt8 = 0
@@ -2881,6 +3148,9 @@ public struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE2: BinaryDecodable, BinaryEncodable
 }
 
 public struct packet_mission_info_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 4 + 4 + 2 + 2 + 2 + 2 + 24)
+    }
     public var huntIdent: UInt32 = 0
     public var huntIdent2: UInt32 = 0
     public var mobType: UInt32 = 0
@@ -2918,6 +3188,9 @@ public struct packet_mission_info_sub: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct packet_quest_list_header: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var questCount: Int32 = 0
@@ -2936,6 +3209,9 @@ public struct packet_quest_list_header: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct packet_chat_message: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var message: String = ""
@@ -2954,6 +3230,9 @@ public struct packet_chat_message: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct packet_whisper_message: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -2976,6 +3255,9 @@ public struct packet_whisper_message: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_CZ_ADD_ITEM_TO_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var count: Int16 = 0
@@ -2994,6 +3276,9 @@ public struct PACKET_CZ_ADD_ITEM_TO_MAIL: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_ACK_ADD_ITEM_RODEX: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 2 + 2 + 4 + 1 + 1 + 1 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 2 + 1 + 4 + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var result: Int8 = 0
     public var index: Int16 = 0
@@ -3049,6 +3334,9 @@ public struct PACKET_ZC_ACK_ADD_ITEM_RODEX: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_CZ_REQ_OPEN_WRITE_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var receiveName: String
@@ -3065,6 +3353,9 @@ public struct PACKET_CZ_REQ_OPEN_WRITE_MAIL: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_ZC_ACK_OPEN_WRITE_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24 + 1)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var receiveName: String
@@ -3084,6 +3375,9 @@ public struct PACKET_ZC_ACK_OPEN_WRITE_MAIL: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_CZ_REQ_REMOVE_ITEM_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var cnt: UInt16 = 0
@@ -3102,6 +3396,9 @@ public struct PACKET_CZ_REQ_REMOVE_ITEM_MAIL: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_ZC_ACK_REMOVE_ITEM_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 2 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var result: Int8 = 0
     public var index: Int16 = 0
@@ -3126,6 +3423,9 @@ public struct PACKET_ZC_ACK_REMOVE_ITEM_MAIL: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_CZ_SEND_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -3164,6 +3464,9 @@ public struct PACKET_CZ_SEND_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_WRITE_MAIL_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var result: Int8 = 0
     public init() {
@@ -3179,6 +3482,9 @@ public struct PACKET_ZC_WRITE_MAIL_RESULT: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_CZ_CHECKNAME1: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var Name: String
@@ -3195,6 +3501,9 @@ public struct PACKET_CZ_CHECKNAME1: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CZ_CHECKNAME2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24 + 1)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var Name: String
@@ -3214,6 +3523,9 @@ public struct PACKET_CZ_CHECKNAME2: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_CHECKNAME: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 2 + 24)
+    }
     public var packetType: Int16 = 0
     public var CharId: Int32 = 0
     public var Class: Int16 = 0
@@ -3239,6 +3551,9 @@ public struct PACKET_ZC_CHECKNAME: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_NOTIFY_UNREADMAIL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var result: Int8 = 0
     public init() {
@@ -3254,6 +3569,9 @@ public struct PACKET_ZC_NOTIFY_UNREADMAIL: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_MAIL_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var IsEnd: Int8 = 0
@@ -3272,6 +3590,9 @@ public struct PACKET_ZC_MAIL_LIST: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CZ_REQ_NEXT_MAIL_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 8)
+    }
     public var packetType: Int16 = 0
     public var opentype: Int8 = 0
     public var Lower_MailID: Int64 = 0
@@ -3290,6 +3611,9 @@ public struct PACKET_CZ_REQ_NEXT_MAIL_LIST: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_CZ_REQ_OPEN_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 8 + 8 + 8)
+    }
     public var packetType: Int16 = 0
     public var char_Upper_MailID: Int64 = 0
     public var return_Upper_MailID: Int64 = 0
@@ -3311,6 +3635,9 @@ public struct PACKET_CZ_REQ_OPEN_MAIL: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_CZ_REQ_READ_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 8)
+    }
     public var packetType: Int16 = 0
     public var opentype: Int8 = 0
     public var MailID: Int64 = 0
@@ -3329,6 +3656,9 @@ public struct PACKET_CZ_REQ_READ_MAIL: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_ZC_ACK_READ_RODEX_SUB: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 1 + 1 + ((4 * 4)) + 4 + 1 + 2 + 2 + ((2 + 2 + 1) * 5) + 1 + 1)
+    }
     public var count: Int16 = 0
     public var ITID: UInt32 = 0
     public var IsIdentified: Int8 = 0
@@ -3375,6 +3705,9 @@ public struct PACKET_ZC_ACK_READ_RODEX_SUB: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_ACK_READ_RODEX: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var opentype: Int8 = 0
@@ -3408,6 +3741,9 @@ public struct PACKET_ZC_ACK_READ_RODEX: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_CZ_REQ_DELETE_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 8)
+    }
     public var packetType: Int16 = 0
     public var opentype: Int8 = 0
     public var MailID: Int64 = 0
@@ -3426,6 +3762,9 @@ public struct PACKET_CZ_REQ_DELETE_MAIL: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_ACK_DELETE_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 8)
+    }
     public var packetType: Int16 = 0
     public var opentype: Int8 = 0
     public var MailID: Int64 = 0
@@ -3444,6 +3783,9 @@ public struct PACKET_ZC_ACK_DELETE_MAIL: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_CZ_REQ_REFRESH_MAIL_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 8 + (1 * 16))
+    }
     public var packetType: Int16 = 0
     public var Upper_MailID: Int64 = 0
     @FixedSizeArray(size: 16, initialValue: 0)
@@ -3463,6 +3805,9 @@ public struct PACKET_CZ_REQ_REFRESH_MAIL_LIST: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_CZ_REQ_ZENY_FROM_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 8 + 1)
+    }
     public var packetType: Int16 = 0
     public var MailID: Int64 = 0
     public var opentype: Int8 = 0
@@ -3481,6 +3826,9 @@ public struct PACKET_CZ_REQ_ZENY_FROM_MAIL: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_ACK_ZENY_FROM_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 8 + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var MailID: Int64 = 0
     public var opentype: Int8 = 0
@@ -3502,6 +3850,9 @@ public struct PACKET_ZC_ACK_ZENY_FROM_MAIL: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_CZ_REQ_ITEM_FROM_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 8 + 1)
+    }
     public var packetType: Int16 = 0
     public var MailID: Int64 = 0
     public var opentype: Int8 = 0
@@ -3520,6 +3871,9 @@ public struct PACKET_CZ_REQ_ITEM_FROM_MAIL: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_ACK_ITEM_FROM_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 8 + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var MailID: Int64 = 0
     public var opentype: Int8 = 0
@@ -3541,6 +3895,9 @@ public struct PACKET_ZC_ACK_ITEM_FROM_MAIL: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_SKILL_SCALE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 2 + 2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var skill_id: Int16 = 0
@@ -3571,6 +3928,9 @@ public struct PACKET_ZC_SKILL_SCALE: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_ADD_MEMBER_TO_GROUP: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4 + 2 + 2 + 2 + 2 + 1 + 24 + 24 + 16 + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var GID: UInt32 = 0
@@ -3625,6 +3985,9 @@ public struct PACKET_ZC_ADD_MEMBER_TO_GROUP: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_ZC_GROUP_LIST_SUB: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 24 + 16 + 1 + 1 + 2 + 2)
+    }
     public var AID: UInt32 = 0
     public var GID: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -3660,6 +4023,9 @@ public struct PACKET_ZC_GROUP_LIST_SUB: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_GROUP_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -3682,6 +4048,9 @@ public struct PACKET_ZC_GROUP_LIST: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_CLANINFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 24 + 24 + 16 + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var ClanID: UInt32 = 0
@@ -3718,6 +4087,9 @@ public struct PACKET_ZC_CLANINFO: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_NOTIFY_CLAN_CONNECTINFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var NumConnect: Int16 = 0
     public var NumTotal: Int16 = 0
@@ -3736,6 +4108,9 @@ public struct PACKET_ZC_NOTIFY_CLAN_CONNECTINFO: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_ZC_ACK_CLAN_LEAVE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -3748,6 +4123,9 @@ public struct PACKET_ZC_ACK_CLAN_LEAVE: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_NOTIFY_CLAN_CHAT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -3770,6 +4148,9 @@ public struct PACKET_ZC_NOTIFY_CLAN_CHAT: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct packet_quest_hunt_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 4 + 4 + 2 + 2 + 2 + 24)
+    }
     public var huntIdent: UInt32 = 0
     public var huntIdent2: UInt32 = 0
     public var mobType: UInt32 = 0
@@ -3804,6 +4185,9 @@ public struct packet_quest_hunt_sub: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct packet_quest_add_header: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var questID: UInt32 = 0
     public var active: UInt8 = 0
@@ -3834,6 +4218,9 @@ public struct packet_quest_add_header: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct packet_quest_update_hunt: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 4 + 2 + 2)
+    }
     public var questID: UInt32 = 0
     public var huntIdent: UInt32 = 0
     public var huntIdent2: UInt32 = 0
@@ -3858,6 +4245,9 @@ public struct packet_quest_update_hunt: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct packet_quest_update_header: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var count: Int16 = 0
@@ -3879,6 +4269,9 @@ public struct packet_quest_update_header: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct packet_quest_hunt_info_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 2 + 2)
+    }
     public var questID: UInt32 = 0
     public var mob_id: UInt32 = 0
     public var maxCount: Int16 = 0
@@ -3900,6 +4293,9 @@ public struct packet_quest_hunt_info_sub: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct packet_quest_hunt_info: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var info: [packet_quest_hunt_info_sub] = []
@@ -3918,6 +4314,9 @@ public struct packet_quest_hunt_info: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_FORMATSTRING_MSG: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var MessageId: UInt16 = 0
@@ -3939,6 +4338,9 @@ public struct PACKET_ZC_FORMATSTRING_MSG: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_FORMATSTRING_MSG_COLOR: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var messageId: UInt16 = 0
@@ -3963,6 +4365,9 @@ public struct PACKET_ZC_FORMATSTRING_MSG_COLOR: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_ZC_MSG_COLOR: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var MessageId: UInt16 = 0
     public var MessageColor: UInt32 = 0
@@ -3981,6 +4386,9 @@ public struct PACKET_ZC_MSG_COLOR: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CZ_OPEN_UI: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var UIType: Int8 = 0
     public init() {
@@ -3996,6 +4404,9 @@ public struct PACKET_CZ_OPEN_UI: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_UI_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 4)
+    }
     public var packetType: Int16 = 0
     public var UIType: Int8 = 0
     public var data: Int32 = 0
@@ -4014,6 +4425,9 @@ public struct PACKET_ZC_UI_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_UI_OPEN2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 8)
+    }
     public var packetType: Int16 = 0
     public var UIType: Int8 = 0
     public var data: Int64 = 0
@@ -4032,6 +4446,9 @@ public struct PACKET_ZC_UI_OPEN2: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_UI_ACTION: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var UIType: Int32 = 0
     public var data: Int32 = 0
@@ -4050,6 +4467,9 @@ public struct PACKET_ZC_UI_ACTION: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CZ_PRIVATE_AIRSHIP_REQUEST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 16 + 4)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 16)
     public var mapName: String
@@ -4069,6 +4489,9 @@ public struct PACKET_CZ_PRIVATE_AIRSHIP_REQUEST: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_ZC_PRIVATE_AIRSHIP_RESPONSE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var flag: UInt32 = 0
     public init() {
@@ -4084,6 +4507,9 @@ public struct PACKET_ZC_PRIVATE_AIRSHIP_RESPONSE: BinaryDecodable, BinaryEncodab
 }
 
 public struct PACKET_CZ_REQ_STYLE_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 2 + 2 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var HeadPalette: Int16 = 0
     public var HeadStyle: Int16 = 0
@@ -4114,6 +4540,9 @@ public struct PACKET_CZ_REQ_STYLE_CHANGE: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_CZ_REQ_STYLE_CHANGE2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 2 + 2 + 2 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var HeadPalette: Int16 = 0
     public var HeadStyle: Int16 = 0
@@ -4147,6 +4576,9 @@ public struct PACKET_CZ_REQ_STYLE_CHANGE2: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_STYLE_CHANGE_RES: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var flag: Int8 = 0
     public init() {
@@ -4162,6 +4594,9 @@ public struct PACKET_ZC_STYLE_CHANGE_RES: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_CZ_PET_EVOLUTION: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var EvolvedPetEggID: UInt32 = 0
@@ -4180,6 +4615,9 @@ public struct PACKET_CZ_PET_EVOLUTION: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct packet_ZC_REFUSE_LOGIN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 20)
+    }
     public var packetType: Int16 = 0
     public var error_code: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 20)
@@ -4199,6 +4637,9 @@ public struct packet_ZC_REFUSE_LOGIN: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_NOTIFY_CHAT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var GID: UInt32 = 0
@@ -4220,6 +4661,9 @@ public struct PACKET_ZC_NOTIFY_CHAT: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_NOTIFY_PLAYERCHAT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var Message: String = ""
@@ -4238,6 +4682,9 @@ public struct PACKET_ZC_NOTIFY_PLAYERCHAT: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_ITEM_ENTRY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 1 + 2 + 2 + 2 + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var itemId: UInt32 = 0
@@ -4274,6 +4721,9 @@ public struct PACKET_ZC_ITEM_ENTRY: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_ADD_ITEM_TO_STORE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 4 + 1 + 1 + 1 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var amount: Int32 = 0
@@ -4317,6 +4767,9 @@ public struct PACKET_ZC_ADD_ITEM_TO_STORE: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_MVP_GETTING_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var itemId: UInt32 = 0
     public init() {
@@ -4332,6 +4785,9 @@ public struct PACKET_ZC_MVP_GETTING_ITEM: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_ACK_TOUSESKILL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 4 + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var skillId: UInt16 = 0
     public var btype: Int32 = 0
@@ -4359,6 +4815,9 @@ public struct PACKET_ZC_ACK_TOUSESKILL: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_ADD_ITEM_TO_CART: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 4 + 1 + 1 + 1 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var amount: Int32 = 0
@@ -4402,6 +4861,9 @@ public struct PACKET_ZC_ADD_ITEM_TO_CART: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_CZ_REQMAKINGITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + (4 * 3))
+    }
     public var packetType: Int16 = 0
     public var itemId: UInt32 = 0
     @FixedSizeArray(size: 3, initialValue: 0)
@@ -4421,6 +4883,9 @@ public struct PACKET_CZ_REQMAKINGITEM: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_ZC_ACK_REQMAKINGITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var result: Int16 = 0
     public var itemId: UInt32 = 0
@@ -4439,6 +4904,9 @@ public struct PACKET_ZC_ACK_REQMAKINGITEM: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_FEED_PET: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 4)
+    }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public var itemId: UInt32 = 0
@@ -4457,6 +4925,9 @@ public struct PACKET_ZC_FEED_PET: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_FEED_MER: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 4)
+    }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public var itemId: UInt32 = 0
@@ -4475,6 +4946,9 @@ public struct PACKET_ZC_FEED_MER: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_USE_ITEM_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 4 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var itemId: UInt32 = 0
@@ -4502,6 +4976,9 @@ public struct PACKET_ZC_USE_ITEM_ACK: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_SPRITE_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 1 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var type: UInt8 = 0
@@ -4526,6 +5003,9 @@ public struct PACKET_ZC_SPRITE_CHANGE: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_ZC_ADD_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 1 + 4 + 1 + 1 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 4 + 2 + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var itemId: UInt32 = 0
     public var itemType: UInt8 = 0
@@ -4572,6 +5052,9 @@ public struct PACKET_ZC_ADD_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_CASH_TIME_COUNTER: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var itemId: UInt32 = 0
     public var seconds: UInt32 = 0
@@ -4590,6 +5073,9 @@ public struct PACKET_ZC_CASH_TIME_COUNTER: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_CASH_ITEM_DELETE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public var itemId: UInt32 = 0
@@ -4608,6 +5094,9 @@ public struct PACKET_ZC_CASH_ITEM_DELETE: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_ITEM_PICKUP_PARTY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 1 + 1 + ((4 * 4)) + 2 + 1 + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var itemId: UInt32 = 0
@@ -4647,6 +5136,9 @@ public struct PACKET_ZC_ITEM_PICKUP_PARTY: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_UPDATE_ITEM_FROM_BUYING_STORE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 4 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var itemId: UInt32 = 0
     public var amount: UInt16 = 0
@@ -4677,6 +5169,9 @@ public struct PACKET_ZC_UPDATE_ITEM_FROM_BUYING_STORE: BinaryDecodable, BinaryEn
 }
 
 public struct PACKET_ZC_ACK_WEAPONREFINE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var result: Int32 = 0
     public var itemId: UInt32 = 0
@@ -4695,6 +5190,9 @@ public struct PACKET_ZC_ACK_WEAPONREFINE: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_PROPERTY_HOMUN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24 + 1 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 4 + 4 + 4 + 4 + 8 + 8 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
@@ -4771,6 +5269,9 @@ public struct PACKET_ZC_PROPERTY_HOMUN: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var result: UInt16 = 0
     public var itemId: UInt32 = 0
@@ -4789,6 +5290,9 @@ public struct PACKET_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER: BinaryDecodable, Bi
 }
 
 public struct PACKET_CZ_REQ_ITEMREPAIR2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + (2 + 4 + ((4 * 4)) + 1 + 1))
+    }
     public var packetType: Int16 = 0
     public var item: REPAIRITEM_INFO2 = REPAIRITEM_INFO2()
     public init() {
@@ -4804,6 +5308,9 @@ public struct PACKET_CZ_REQ_ITEMREPAIR2: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_CZ_REQ_ITEMREPAIR1: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + (2 + 4 + 1 + ((4 * 4))))
+    }
     public var packetType: Int16 = 0
     public var item: REPAIRITEM_INFO1 = REPAIRITEM_INFO1()
     public init() {
@@ -4819,6 +5326,9 @@ public struct PACKET_CZ_REQ_ITEMREPAIR1: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_CZ_REQ_MAKINGITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var type: Int16 = 0
     public var itemId: UInt32 = 0
@@ -4837,6 +5347,9 @@ public struct PACKET_CZ_REQ_MAKINGITEM: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_CZ_SSILIST_ITEM_CLICK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var storeId: UInt32 = 0
@@ -4858,6 +5371,9 @@ public struct PACKET_CZ_SSILIST_ITEM_CLICK: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_ACK_SCHEDULER_CASHITEM_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4)
+    }
     public var itemId: UInt32 = 0
     public var price: UInt32 = 0
     public init() {
@@ -4873,6 +5389,9 @@ public struct PACKET_ZC_ACK_SCHEDULER_CASHITEM_sub: BinaryDecodable, BinaryEncod
 }
 
 public struct PACKET_ZC_ACK_SCHEDULER_CASHITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var count: Int16 = 0
@@ -4897,6 +5416,9 @@ public struct PACKET_ZC_ACK_SCHEDULER_CASHITEM: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_ZC_PC_PURCHASE_MYITEMLIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 2 + 2 + 1 + 4 + 1 + 1 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 1 + 1)
+    }
     public var price: UInt32 = 0
     public var index: Int16 = 0
     public var amount: Int16 = 0
@@ -4940,6 +5462,9 @@ public struct PACKET_ZC_PC_PURCHASE_MYITEMLIST_sub: BinaryDecodable, BinaryEncod
 }
 
 public struct PACKET_ZC_PC_PURCHASE_MYITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var AID: UInt32 = 0
@@ -4961,6 +5486,9 @@ public struct PACKET_ZC_PC_PURCHASE_MYITEMLIST: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_ZC_PC_PURCHASE_ITEMLIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 4 + 1 + 2 + 4)
+    }
     public var itemId: UInt32 = 0
     public var price: UInt32 = 0
     public var discountPrice: UInt32 = 0
@@ -4988,6 +5516,9 @@ public struct PACKET_ZC_PC_PURCHASE_ITEMLIST_sub: BinaryDecodable, BinaryEncodab
 }
 
 public struct PACKET_ZC_PC_PURCHASE_ITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var items: [PACKET_ZC_PC_PURCHASE_ITEMLIST_sub] = []
@@ -5006,6 +5537,9 @@ public struct PACKET_ZC_PC_PURCHASE_ITEMLIST: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var amount: UInt16 = 0
     public var itemId: UInt32 = 0
     public init() {
@@ -5021,6 +5555,9 @@ public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_sub: BinaryDecodable, BinaryEncodab
 }
 
 public struct PACKET_CZ_PC_PURCHASE_ITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var items: [PACKET_CZ_PC_PURCHASE_ITEMLIST_sub] = []
@@ -5039,6 +5576,9 @@ public struct PACKET_CZ_PC_PURCHASE_ITEMLIST: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 2 + 4)
+    }
     public var itemId: UInt32 = 0
     public var amount: UInt16 = 0
     public var price: UInt32 = 0
@@ -5057,6 +5597,9 @@ public struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_CZ_REQ_OPEN_BUYING_STORE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var zenyLimit: UInt32 = 0
@@ -5085,6 +5628,9 @@ public struct PACKET_CZ_REQ_OPEN_BUYING_STORE: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_ZC_MYITEMLIST_BUYING_STORE_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 2 + 1 + 4)
+    }
     public var price: UInt32 = 0
     public var amount: UInt16 = 0
     public var itemType: UInt8 = 0
@@ -5106,6 +5652,9 @@ public struct PACKET_ZC_MYITEMLIST_BUYING_STORE_sub: BinaryDecodable, BinaryEnco
 }
 
 public struct PACKET_ZC_MYITEMLIST_BUYING_STORE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var AID: UInt32 = 0
@@ -5130,6 +5679,9 @@ public struct PACKET_ZC_MYITEMLIST_BUYING_STORE: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 2 + 2 + 1 + 4 + 1 + 1 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 4 + 2 + 1 + 1)
+    }
     public var price: UInt32 = 0
     public var amount: UInt16 = 0
     public var index: Int16 = 0
@@ -5179,6 +5731,9 @@ public struct PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC_sub: BinaryDecodable, Binary
 }
 
 public struct PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var AID: UInt32 = 0
@@ -5203,6 +5758,9 @@ public struct PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC: BinaryDecodable, BinaryEnco
 }
 
 public struct PACKET_ZC_ACK_ITEMLIST_BUYING_STORE_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 2 + 1 + 4)
+    }
     public var price: UInt32 = 0
     public var amount: UInt16 = 0
     public var itemType: UInt8 = 0
@@ -5224,6 +5782,9 @@ public struct PACKET_ZC_ACK_ITEMLIST_BUYING_STORE_sub: BinaryDecodable, BinaryEn
 }
 
 public struct PACKET_ZC_ACK_ITEMLIST_BUYING_STORE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var AID: UInt32 = 0
@@ -5251,6 +5812,9 @@ public struct PACKET_ZC_ACK_ITEMLIST_BUYING_STORE: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2)
+    }
     public var index: Int16 = 0
     public var itemId: UInt32 = 0
     public var amount: UInt16 = 0
@@ -5269,6 +5833,9 @@ public struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub: BinaryDecodable, BinaryEncod
 }
 
 public struct PACKET_CZ_REQ_TRADE_BUYING_STORE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var AID: UInt32 = 0
@@ -5293,6 +5860,9 @@ public struct PACKET_CZ_REQ_TRADE_BUYING_STORE: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_ZC_MAKABLEITEMLIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + (4 * 3))
+    }
     public var itemId: UInt32 = 0
     @FixedSizeArray(size: 3, initialValue: 0)
     public var material: [UInt32]
@@ -5309,6 +5879,9 @@ public struct PACKET_ZC_MAKABLEITEMLIST_sub: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_ZC_MAKABLEITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var items: [PACKET_ZC_MAKABLEITEMLIST_sub] = []
@@ -5327,6 +5900,9 @@ public struct PACKET_ZC_MAKABLEITEMLIST: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_MAKINGARROW_LIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4)
+    }
     public var itemId: UInt32 = 0
     public init() {
     }
@@ -5339,6 +5915,9 @@ public struct PACKET_ZC_MAKINGARROW_LIST_sub: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_ZC_MAKINGARROW_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var items: [PACKET_ZC_MAKINGARROW_LIST_sub] = []
@@ -5357,6 +5936,9 @@ public struct PACKET_ZC_MAKINGARROW_LIST: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_SKILL_SELECT_REQUEST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var flag: Int32 = 0
@@ -5378,6 +5960,9 @@ public struct PACKET_ZC_SKILL_SELECT_REQUEST: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_CZ_SKILL_SELECT_RESPONSE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2)
+    }
     public var packetType: Int16 = 0
     public var flag: Int32 = 0
     public var selectedSkillId: Int16 = 0
@@ -5396,6 +5981,9 @@ public struct PACKET_CZ_SKILL_SELECT_RESPONSE: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_ZC_REPAIRITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var items: [REPAIRITEM_INFO2] = []
@@ -5414,6 +6002,9 @@ public struct PACKET_ZC_REPAIRITEMLIST: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_NOTIFY_WEAPONITEMLIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 1 + ((4 * 4)))
+    }
     public var index: Int16 = 0
     public var itemId: UInt32 = 0
     public var refine: UInt8 = 0
@@ -5435,6 +6026,9 @@ public struct PACKET_ZC_NOTIFY_WEAPONITEMLIST_sub: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_ZC_NOTIFY_WEAPONITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var items: [PACKET_ZC_NOTIFY_WEAPONITEMLIST_sub] = []
@@ -5453,6 +6047,9 @@ public struct PACKET_ZC_NOTIFY_WEAPONITEMLIST: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_ZC_MAKINGITEM_LIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4)
+    }
     public var itemId: UInt32 = 0
     public init() {
     }
@@ -5465,6 +6062,9 @@ public struct PACKET_ZC_MAKINGITEM_LIST_sub: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_ZC_MAKINGITEM_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var makeItem: UInt16 = 0
@@ -5486,6 +6086,9 @@ public struct PACKET_ZC_MAKINGITEM_LIST: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_PC_CASH_POINT_ITEMLIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 1 + 4)
+    }
     public var price: UInt32 = 0
     public var discountPrice: UInt32 = 0
     public var itemType: UInt8 = 0
@@ -5507,6 +6110,9 @@ public struct PACKET_ZC_PC_CASH_POINT_ITEMLIST_sub: BinaryDecodable, BinaryEncod
 }
 
 public struct PACKET_ZC_PC_CASH_POINT_ITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var cashPoints: UInt32 = 0
@@ -5531,6 +6137,9 @@ public struct PACKET_ZC_PC_CASH_POINT_ITEMLIST: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var amount: UInt16 = 0
     public var itemId: UInt32 = 0
     public init() {
@@ -5546,6 +6155,9 @@ public struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM_sub: BinaryDecodable, BinaryEncod
 }
 
 public struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var kafraPoints: UInt32 = 0
@@ -5570,6 +6182,9 @@ public struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_CZ_SEARCH_STORE_INFO_item: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4)
+    }
     public var itemId: UInt32 = 0
     public init() {
     }
@@ -5582,6 +6197,9 @@ public struct PACKET_CZ_SEARCH_STORE_INFO_item: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_CZ_SEARCH_STORE_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var searchType: UInt8 = 0
@@ -5615,6 +6233,9 @@ public struct PACKET_CZ_SEARCH_STORE_INFO: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_SEARCH_STORE_INFO_FAILED: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var reason: UInt8 = 0
     public init() {
@@ -5630,6 +6251,9 @@ public struct PACKET_ZC_SEARCH_STORE_INFO_FAILED: BinaryDecodable, BinaryEncodab
 }
 
 public struct PACKET_ZC_OPEN_SEARCH_STORE_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var effect: UInt16 = 0
     public var remainingUses: UInt8 = 0
@@ -5648,6 +6272,9 @@ public struct PACKET_ZC_OPEN_SEARCH_STORE_INFO: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_ZC_SSILIST_ITEM_CLICK_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var x: Int16 = 0
     public var y: Int16 = 0
@@ -5666,6 +6293,9 @@ public struct PACKET_ZC_SSILIST_ITEM_CLICK_ACK: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_ZC_SEARCH_STORE_INFO_ACK_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 80 + 4 + 1 + 4 + 2 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 1 + 1)
+    }
     public var storeId: UInt32 = 0
     public var AID: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 80)
@@ -5710,6 +6340,9 @@ public struct PACKET_ZC_SEARCH_STORE_INFO_ACK_sub: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_ZC_SEARCH_STORE_INFO_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var firstPage: UInt8 = 0
@@ -5737,6 +6370,9 @@ public struct PACKET_ZC_SEARCH_STORE_INFO_ACK: BinaryDecodable, BinaryEncodable,
 }
 
 public struct packet_achievement_list: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 4 + 2 + 4 + 4 + ((4 + 1 + (4 * 10) + 4 + 1) * 10))
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var total_achievements: UInt32 = 0
@@ -5771,6 +6407,9 @@ public struct packet_achievement_list: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct packet_achievement_update: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 4 + 4 + (4 + 1 + (4 * 10) + 4 + 1))
+    }
     public var packetType: Int16 = 0
     public var total_points: UInt32 = 0
     public var rank: UInt16 = 0
@@ -5798,6 +6437,9 @@ public struct packet_achievement_update: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct packet_achievement_reward_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 4)
+    }
     public var packetType: Int16 = 0
     public var failed: UInt8 = 0
     public var ach_id: UInt32 = 0
@@ -5816,6 +6458,9 @@ public struct packet_achievement_reward_ack: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct packet_reqname_ack: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 24)
+    }
     public var packetType: Int16 = 0
     public var gid: Int32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -5835,6 +6480,9 @@ public struct packet_reqname_ack: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_ACK_REQNAMEALL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 24 + 24 + 24 + 24 + 4)
+    }
     public var packetType: Int16 = 0
     public var gid: Int32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -5869,6 +6517,9 @@ public struct PACKET_ZC_ACK_REQNAMEALL: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_ACK_REQNAMEALL_NPC: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 24 + 24)
+    }
     public var packetType: Int16 = 0
     public var gid: Int32 = 0
     public var groupId: Int32 = 0
@@ -5895,6 +6546,9 @@ public struct PACKET_ZC_ACK_REQNAMEALL_NPC: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_OVERWEIGHT_PERCENT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var percent: UInt32 = 0
     public init() {
@@ -5910,6 +6564,9 @@ public struct PACKET_ZC_OVERWEIGHT_PERCENT: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_WARPLIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (16)
+    }
     @FixedLengthString(lengthOfBytes: 16)
     public var map: String
     public init() {
@@ -5923,6 +6580,9 @@ public struct PACKET_ZC_WARPLIST_sub: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_WARPLIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var skillId: UInt16 = 0
@@ -5944,6 +6604,9 @@ public struct PACKET_ZC_WARPLIST: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_GROUP_ISALIVE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var isDead: UInt8 = 0
@@ -5962,6 +6625,9 @@ public struct PACKET_ZC_GROUP_ISALIVE: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_ZC_GUILD_POSITION: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var AID: UInt32 = 0
@@ -5983,6 +6649,9 @@ public struct PACKET_ZC_GUILD_POSITION: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_MOVE_ITEM_FAILED: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var itemIndex: Int16 = 0
     public var itemCount: Int16 = 0
@@ -6001,6 +6670,9 @@ public struct PACKET_ZC_MOVE_ITEM_FAILED: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_ACK_BAN_GUILD1: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24 + 40 + 24)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
@@ -6025,6 +6697,9 @@ public struct PACKET_ZC_ACK_BAN_GUILD1: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_ACK_BAN_GUILD2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24 + 40)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
@@ -6045,6 +6720,9 @@ public struct PACKET_ZC_ACK_BAN_GUILD2: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_ACK_BAN_GUILD3: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 40 + 4)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 40)
     public var reason: String
@@ -6064,6 +6742,9 @@ public struct PACKET_ZC_ACK_BAN_GUILD3: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_ACK_LEAVE_GUILD1: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24 + 40)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
@@ -6084,6 +6765,9 @@ public struct PACKET_ZC_ACK_LEAVE_GUILD1: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_ACK_LEAVE_GUILD2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 40)
+    }
     public var packetType: Int16 = 0
     public var GID: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 40)
@@ -6103,6 +6787,9 @@ public struct PACKET_ZC_ACK_LEAVE_GUILD2: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_CZ_MEMORIALDUNGEON_COMMAND: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var command: Int32 = 0
     public init() {
@@ -6118,6 +6805,9 @@ public struct PACKET_CZ_MEMORIALDUNGEON_COMMAND: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_ZC_REMOVE_EFFECT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var aid: UInt32 = 0
     public var effectId: UInt32 = 0
@@ -6136,6 +6826,9 @@ public struct PACKET_ZC_REMOVE_EFFECT: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_ZC_VIEW_CAMERAINFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var action: Int8 = 0
     public var range: Float32 = 0
@@ -6160,6 +6853,9 @@ public struct PACKET_ZC_VIEW_CAMERAINFO: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_CZ_VIEW_CAMERAINFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var action: Int8 = 0
     public var range: Float32 = 0
@@ -6184,6 +6880,9 @@ public struct PACKET_CZ_VIEW_CAMERAINFO: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_AUTOSPELLLIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var skills: [Int32] = []
@@ -6202,6 +6901,9 @@ public struct PACKET_ZC_AUTOSPELLLIST: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_ZC_CHANGE_ITEM_OPTION: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var isDamaged: Int8 = 0
@@ -6233,6 +6935,9 @@ public struct PACKET_ZC_CHANGE_ITEM_OPTION: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_UPDATE_CARDSLOT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var wearState: Int16 = 0
     public var cardSlot: Int16 = 0
@@ -6257,6 +6962,9 @@ public struct PACKET_ZC_UPDATE_CARDSLOT: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_DEBUGMSG: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var color: Int32 = 0
@@ -6278,6 +6986,9 @@ public struct PACKET_ZC_DEBUGMSG: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CZ_USE_SKILL_START: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var skillId: Int16 = 0
     public var skillLv: Int16 = 0
@@ -6299,6 +7010,9 @@ public struct PACKET_CZ_USE_SKILL_START: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_CZ_USE_SKILL_END: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var skillId: Int16 = 0
     public init() {
@@ -6314,6 +7028,9 @@ public struct PACKET_CZ_USE_SKILL_END: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_ZC_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var expansionSize: Int16 = 0
     public init() {
@@ -6329,6 +7046,9 @@ public struct PACKET_ZC_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_ZC_ACK_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 4)
+    }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public var itemId: UInt32 = 0
@@ -6347,6 +7067,9 @@ public struct PACKET_ZC_ACK_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE: BinaryDecodable, B
 }
 
 public struct PACKET_ZC_ACK_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public init() {
@@ -6362,6 +7085,9 @@ public struct PACKET_ZC_ACK_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodab
 }
 
 public struct PACKET_CZ_REQ_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -6374,6 +7100,9 @@ public struct PACKET_CZ_REQ_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE: BinaryDecodable, B
 }
 
 public struct PACKET_CZ_REQ_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -6386,6 +7115,9 @@ public struct PACKET_CZ_REQ_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodab
 }
 
 public struct PACKET_CZ_CLOSE_MSGBOX_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -6398,6 +7130,9 @@ public struct PACKET_CZ_CLOSE_MSGBOX_EXTEND_BODYITEM_SIZE: BinaryDecodable, Bina
 }
 
 public struct PACKET_CZ_REQ_REMAINTIME: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -6410,6 +7145,9 @@ public struct PACKET_CZ_REQ_REMAINTIME: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_CZ_PARTY_CONFIG: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var refuseInvite: UInt8 = 0
     public init() {
@@ -6425,6 +7163,9 @@ public struct PACKET_CZ_PARTY_CONFIG: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 1 + 4 + 4 + 4 + 4 + 4 + 2 + 4)
+    }
     public var nameid: UInt32 = 0
     public var type: UInt8 = 0
     public var amount: UInt32 = 0
@@ -6461,6 +7202,9 @@ public struct PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO_sub: BinaryDecodable, BinaryE
 }
 
 public struct PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var list: [PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO_sub] = []
@@ -6479,6 +7223,9 @@ public struct PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO: BinaryDecodable, BinaryEncod
 }
 
 public struct PACKET_CZ_NPC_BARTER_MARKET_CLOSE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -6491,6 +7238,9 @@ public struct PACKET_CZ_NPC_BARTER_MARKET_CLOSE: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_CZ_NPC_BARTER_MARKET_PURCHASE_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 2 + 4)
+    }
     public var itemId: UInt32 = 0
     public var amount: UInt32 = 0
     public var invIndex: UInt16 = 0
@@ -6512,6 +7262,9 @@ public struct PACKET_CZ_NPC_BARTER_MARKET_PURCHASE_sub: BinaryDecodable, BinaryE
 }
 
 public struct PACKET_CZ_NPC_BARTER_MARKET_PURCHASE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var list: [PACKET_CZ_NPC_BARTER_MARKET_PURCHASE_sub] = []
@@ -6530,6 +7283,9 @@ public struct PACKET_CZ_NPC_BARTER_MARKET_PURCHASE: BinaryDecodable, BinaryEncod
 }
 
 public struct PACKET_ZC_USESKILL_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 2 + 2 + 2 + 4 + 4 + 1 + 4)
+    }
     public var packetType: Int16 = 0
     public var srcId: UInt32 = 0
     public var dstId: UInt32 = 0
@@ -6569,6 +7325,9 @@ public struct PACKET_ZC_USESKILL_ACK: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_CZ_CLIENT_VERSION: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var clientVersion: UInt32 = 0
     public init() {
@@ -6584,6 +7343,9 @@ public struct PACKET_CZ_CLIENT_VERSION: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_CZ_PING_LIVE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -6596,6 +7358,9 @@ public struct PACKET_CZ_PING_LIVE: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_PING_LIVE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -6608,6 +7373,9 @@ public struct PACKET_ZC_PING_LIVE: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CZ_CMD_RESETCOOLTIME: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -6620,6 +7388,9 @@ public struct PACKET_CZ_CMD_RESETCOOLTIME: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_CZ_CLOSE_UI_STYLINGSHOP: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -6632,6 +7403,9 @@ public struct PACKET_CZ_CLOSE_UI_STYLINGSHOP: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_ZC_NOTIFY_ACTORINIT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -6644,6 +7418,9 @@ public struct PACKET_ZC_NOTIFY_ACTORINIT: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_PARTY_CONFIG: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var denyPartyInvites: UInt8 = 0
     public init() {
@@ -6659,6 +7436,9 @@ public struct PACKET_ZC_PARTY_CONFIG: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_ROLE_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 24)
+    }
     public var packetType: Int16 = 0
     public var flag: Int32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -6678,6 +7458,9 @@ public struct PACKET_ZC_ROLE_CHANGE: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_BAN_LIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 40 + 24)
+    }
     public var char_id: Int32 = 0
     @FixedLengthString(lengthOfBytes: 40)
     public var message: String
@@ -6698,6 +7481,9 @@ public struct PACKET_ZC_BAN_LIST_sub: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_BAN_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var chars: [PACKET_ZC_BAN_LIST_sub] = []
@@ -6716,6 +7502,9 @@ public struct PACKET_ZC_BAN_LIST: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_ACK_CLOSE_ROULETTE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public init() {
@@ -6731,6 +7520,9 @@ public struct PACKET_ZC_ACK_CLOSE_ROULETTE: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_ACK_MERGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var amount: Int16 = 0
@@ -6752,6 +7544,9 @@ public struct PACKET_ZC_ACK_MERGE_ITEM: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_MERGE_ITEM_OPEN_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var index: Int16 = 0
     public init() {
     }
@@ -6764,6 +7559,9 @@ public struct PACKET_ZC_MERGE_ITEM_OPEN_sub: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_ZC_MERGE_ITEM_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var items: [PACKET_ZC_MERGE_ITEM_OPEN_sub] = []
@@ -6782,6 +7580,9 @@ public struct PACKET_ZC_MERGE_ITEM_OPEN: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_SE_PC_BUY_CASHITEM_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var itemId: UInt32 = 0
     public var result: UInt16 = 0
@@ -6806,6 +7607,9 @@ public struct PACKET_ZC_SE_PC_BUY_CASHITEM_RESULT: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_ZC_OPEN_REFINING_UI: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -6818,6 +7622,9 @@ public struct PACKET_ZC_OPEN_REFINING_UI: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_CZ_REFINING_SELECT_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public init() {
@@ -6833,6 +7640,9 @@ public struct PACKET_CZ_REFINING_SELECT_ITEM: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_ZC_REFINING_MATERIAL_LIST_SUB: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 1 + 4)
+    }
     public var itemId: UInt32 = 0
     public var chance: Int8 = 0
     public var zeny: Int32 = 0
@@ -6851,6 +7661,9 @@ public struct PACKET_ZC_REFINING_MATERIAL_LIST_SUB: BinaryDecodable, BinaryEncod
 }
 
 public struct PACKET_ZC_REFINING_MATERIAL_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var itemIndex: Int16 = 0
@@ -6875,6 +7688,9 @@ public struct PACKET_ZC_REFINING_MATERIAL_LIST: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_CZ_REQ_REFINING: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var itemId: UInt32 = 0
@@ -6896,6 +7712,9 @@ public struct PACKET_CZ_REQ_REFINING: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_CZ_CLOSE_REFINING_UI: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -6908,6 +7727,9 @@ public struct PACKET_CZ_CLOSE_REFINING_UI: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_BROADCAST_ITEMREFINING_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24 + 4 + 1 + 1)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
@@ -6933,6 +7755,9 @@ public struct PACKET_ZC_BROADCAST_ITEMREFINING_RESULT: BinaryDecodable, BinaryEn
 }
 
 public struct PACKET_ZC_STATUS_CHANGE_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1 + 1)
+    }
     public var packetType: Int16 = 0
     public var sp: UInt16 = 0
     public var ok: UInt8 = 0
@@ -6954,6 +7779,9 @@ public struct PACKET_ZC_STATUS_CHANGE_ACK: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_EQUIPMENT_EFFECT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var aid: UInt32 = 0
@@ -6978,6 +7806,9 @@ public struct PACKET_ZC_EQUIPMENT_EFFECT: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_ADD_SKILL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + (2 + 4 + 2 + 2 + 2 + 1 + 2))
+    }
     public var packetType: Int16 = 0
     public var skill: SKILLDATA = SKILLDATA()
     public init() {
@@ -6993,6 +7824,9 @@ public struct PACKET_ZC_ADD_SKILL: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_SKILLINFO_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var skills: [SKILLDATA] = []
@@ -7011,6 +7845,9 @@ public struct PACKET_ZC_SKILLINFO_LIST: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_SKILLINFO_UPDATE2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 2 + 2 + 2 + 1 + 2)
+    }
     public var packetType: Int16 = 0
     public var id: UInt16 = 0
     public var inf: Int32 = 0
@@ -7044,6 +7881,9 @@ public struct PACKET_ZC_SKILLINFO_UPDATE2: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 2 + 4)
+    }
     public var ITID: UInt32 = 0
     public var qty: UInt16 = 0
     public var price: UInt32 = 0
@@ -7062,6 +7902,9 @@ public struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT_sub: BinaryDecodable, BinaryE
 }
 
 public struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var result: UInt16 = 0
@@ -7083,6 +7926,9 @@ public struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT: BinaryDecodable, BinaryEncod
 }
 
 public struct PACKET_ZC_TALKBOX_CHATCONTENTS: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 21)
+    }
     public var packetType: Int16 = 0
     public var aid: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 21)
@@ -7102,6 +7948,9 @@ public struct PACKET_ZC_TALKBOX_CHATCONTENTS: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_ZC_GUILD_AGIT_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var castle_list: [Int8] = []
@@ -7120,6 +7969,9 @@ public struct PACKET_ZC_GUILD_AGIT_INFO: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_CZ_REQ_MOVE_GUILD_AGIT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var castle_id: Int8 = 0
     public init() {
@@ -7135,6 +7987,9 @@ public struct PACKET_CZ_REQ_MOVE_GUILD_AGIT: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_ZC_REQ_ACK_MOVE_GUILD_AGIT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var result: Int16 = 0
     public init() {
@@ -7150,6 +8005,9 @@ public struct PACKET_ZC_REQ_ACK_MOVE_GUILD_AGIT: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_ZC_REQ_ACK_AGIT_INVESTMENT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var castle_id: Int8 = 0
     public var economy: Int32 = 0
@@ -7171,6 +8029,9 @@ public struct PACKET_ZC_REQ_ACK_AGIT_INVESTMENT: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_CZ_REQ_AGIT_INVESTMENT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var castle_id: Int8 = 0
     public init() {
@@ -7186,6 +8047,9 @@ public struct PACKET_CZ_REQ_AGIT_INVESTMENT: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_ZC_RANDOM_COMBINE_ITEM_UI_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var itemId: Int32 = 0
     public init() {
@@ -7201,6 +8065,9 @@ public struct PACKET_ZC_RANDOM_COMBINE_ITEM_UI_OPEN: BinaryDecodable, BinaryEnco
 }
 
 public struct PACKET_CZ_RANDOM_COMBINE_ITEM_UI_CLOSE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -7213,6 +8080,9 @@ public struct PACKET_CZ_RANDOM_COMBINE_ITEM_UI_CLOSE: BinaryDecodable, BinaryEnc
 }
 
 public struct PACKET_CZ_REQ_RANDOM_COMBINE_ITEM_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var index: Int16 = 0
     public var count: Int16 = 0
     public init() {
@@ -7228,6 +8098,9 @@ public struct PACKET_CZ_REQ_RANDOM_COMBINE_ITEM_sub: BinaryDecodable, BinaryEnco
 }
 
 public struct PACKET_CZ_REQ_RANDOM_COMBINE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var itemId: Int32 = 0
@@ -7249,6 +8122,9 @@ public struct PACKET_CZ_REQ_RANDOM_COMBINE_ITEM: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_ZC_ACK_RANDOM_COMBINE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var result: Int16 = 0
     public init() {
@@ -7264,6 +8140,9 @@ public struct PACKET_ZC_ACK_RANDOM_COMBINE_ITEM: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_CZ_UNINSTALLATION: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var InstallationKind: UInt8 = 0
     public init() {
@@ -7279,6 +8158,9 @@ public struct PACKET_CZ_UNINSTALLATION: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_NOTIFY_EFFECT3: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 8)
+    }
     public var packetType: Int16 = 0
     public var aid: UInt32 = 0
     public var effectId: UInt32 = 0
@@ -7300,6 +8182,9 @@ public struct PACKET_ZC_NOTIFY_EFFECT3: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_CZ_SE_CASHSHOP_OPEN1: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -7312,6 +8197,9 @@ public struct PACKET_CZ_SE_CASHSHOP_OPEN1: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_CZ_SE_CASHSHOP_OPEN2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var tab: UInt32 = 0
     public init() {
@@ -7327,6 +8215,9 @@ public struct PACKET_CZ_SE_CASHSHOP_OPEN2: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_CZ_GET_ACCOUNT_LIMTIED_SALE_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -7339,6 +8230,9 @@ public struct PACKET_CZ_GET_ACCOUNT_LIMTIED_SALE_LIST: BinaryDecodable, BinaryEn
 }
 
 public struct PACKET_ZC_SE_CASHSHOP_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var cashPoints: UInt32 = 0
     public var kafraPoints: UInt32 = 0
@@ -7360,6 +8254,9 @@ public struct PACKET_ZC_SE_CASHSHOP_OPEN: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_CLOSE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -7372,6 +8269,9 @@ public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_CLOSE: BinaryDecodable, Binar
 }
 
 public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 2 + 4 + 2)
+    }
     public var nameid: UInt32 = 0
     public var refine_level: UInt16 = 0
     public var amount: UInt32 = 0
@@ -7393,6 +8293,9 @@ public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2: BinaryDecodabl
 }
 
 public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 2 + 4 + 4 + 4 + 4 + 2 + 4 + 4 + ((4 + 2 + 4 + 2) * 1))
+    }
     public var nameid: UInt32 = 0
     public var type: UInt16 = 0
     public var amount: UInt32 = 0
@@ -7433,6 +8336,9 @@ public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub: BinaryDecodable
 }
 
 public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var items_count: Int32 = 0
@@ -7454,6 +8360,9 @@ public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO: BinaryDecodable, Bi
 }
 
 public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 4)
+    }
     public var itemId: UInt32 = 0
     public var shopIndex: UInt32 = 0
     public var amount: UInt32 = 0
@@ -7472,6 +8381,9 @@ public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE_sub: BinaryDecodable
 }
 
 public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var list: [PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE_sub] = []
@@ -7490,6 +8402,9 @@ public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE: BinaryDecodable, Bi
 }
 
 public struct PACKET_ZC_STATE_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 2 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var bodyState: Int16 = 0
@@ -7517,6 +8432,9 @@ public struct PACKET_ZC_STATE_CHANGE: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_AUTORUN_SKILL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 2 + 2 + 2 + 24 + 1)
+    }
     public var packetType: Int16 = 0
     public var skill_id: UInt16 = 0
     public var skill_type: UInt32 = 0
@@ -7551,6 +8469,9 @@ public struct PACKET_ZC_AUTORUN_SKILL: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_ZC_RANDOM_UPGRADE_ITEM_UI_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var itemId: UInt32 = 0
     public init() {
@@ -7566,6 +8487,9 @@ public struct PACKET_ZC_RANDOM_UPGRADE_ITEM_UI_OPEN: BinaryDecodable, BinaryEnco
 }
 
 public struct PACKET_ZC_ACK_RANDOM_UPGRADE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var result: UInt16 = 0
     public init() {
@@ -7581,6 +8505,9 @@ public struct PACKET_ZC_ACK_RANDOM_UPGRADE_ITEM: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_CZ_RANDOM_UPGRADE_ITEM_UI_CLOSE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -7593,6 +8520,9 @@ public struct PACKET_CZ_RANDOM_UPGRADE_ITEM_UI_CLOSE: BinaryDecodable, BinaryEnc
 }
 
 public struct PACKET_CZ_REQ_RANDOM_UPGRADE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2)
+    }
     public var packetType: Int16 = 0
     public var itemId: UInt32 = 0
     public var index: UInt16 = 0
@@ -7611,6 +8541,9 @@ public struct PACKET_CZ_REQ_RANDOM_UPGRADE_ITEM: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_ZC_PERSONAL_INFOMATION_SUB: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (1 + 4 + 4 + 4)
+    }
     public var type: Int8 = 0
     public var exp: Int32 = 0
     public var death: Int32 = 0
@@ -7632,6 +8565,9 @@ public struct PACKET_ZC_PERSONAL_INFOMATION_SUB: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_ZC_PERSONAL_INFOMATION: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var total_exp: Int32 = 0
@@ -7659,6 +8595,9 @@ public struct PACKET_ZC_PERSONAL_INFOMATION: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_CZ_REQUEST_ACTNPC: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var GID: UInt32 = 0
     public var targetGID: UInt32 = 0
@@ -7680,6 +8619,9 @@ public struct PACKET_CZ_REQUEST_ACTNPC: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_NOTIFY_SKILL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 4 + 4 + 4 + 4 + 4 + 2 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var SKID: UInt16 = 0
     public var AID: UInt32 = 0
@@ -7722,6 +8664,9 @@ public struct PACKET_ZC_NOTIFY_SKILL: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_USE_SKILL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 4 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var SKID: UInt16 = 0
     public var level: Int32 = 0
@@ -7749,6 +8694,9 @@ public struct PACKET_ZC_USE_SKILL: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_NOTIFY_GROUNDSKILL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 2 + 2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var SKID: UInt16 = 0
     public var AID: UInt32 = 0
@@ -7779,6 +8727,9 @@ public struct PACKET_ZC_NOTIFY_GROUNDSKILL: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_SKILL_POSTDELAY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var SKID: UInt16 = 0
     public var DelayTM: UInt32 = 0
@@ -7797,6 +8748,9 @@ public struct PACKET_ZC_SKILL_POSTDELAY: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_NOTIFY_SKILL_POSITION: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 4 + 4 + 4 + 4 + 2 + 2 + 2 + 2 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var SKID: UInt16 = 0
     public var AID: UInt32 = 0
@@ -7845,6 +8799,9 @@ public struct PACKET_ZC_NOTIFY_SKILL_POSITION: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_ZC_C_MARKERINFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var xPos: Int16 = 0
@@ -7866,6 +8823,9 @@ public struct PACKET_ZC_C_MARKERINFO: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_MEMBERMGR_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var guildMemberInfo: [GUILD_MEMBER_INFO] = []
@@ -7884,6 +8844,9 @@ public struct PACKET_ZC_MEMBERMGR_INFO: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_GUILD_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4 + 4 + 4 + 4 + 4 + 4 + 4 + 4 + 4 + 24 + 16 + 4 + 4 + 24)
+    }
     public var packetType: Int16 = 0
     public var GDID: Int32 = 0
     public var level: Int32 = 0
@@ -7947,6 +8910,9 @@ public struct PACKET_ZC_GUILD_INFO: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_POSITION_ID_NAME_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + ((4 + 24) * 20))
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     @FixedSizeArray(size: 20, initialValue: PACKET_ZC_POSITION_ID_NAME_INFO_sub())
@@ -7966,6 +8932,9 @@ public struct PACKET_ZC_POSITION_ID_NAME_INFO: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_ZC_POSITION_INFO_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 4 + 4)
+    }
     public var positionID: Int32 = 0
     public var right: Int32 = 0
     public var ranking: Int32 = 0
@@ -7987,6 +8956,9 @@ public struct PACKET_ZC_POSITION_INFO_sub: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_POSITION_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var posInfo: [PACKET_ZC_POSITION_INFO_sub] = []
@@ -8005,6 +8977,9 @@ public struct PACKET_ZC_POSITION_INFO: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_ZC_GUILD_SKILLINFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var skillPoint: Int16 = 0
@@ -8026,6 +9001,9 @@ public struct PACKET_ZC_GUILD_SKILLINFO: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_MYGUILD_BASIC_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var rgInfo: [RELATED_GUILD_INFO] = []
@@ -8044,6 +9022,9 @@ public struct PACKET_ZC_MYGUILD_BASIC_INFO: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_CZ_REQ_UPLOAD_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 16 + 2)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 16)
     public var answer: String
@@ -8063,6 +9044,9 @@ public struct PACKET_CZ_REQ_UPLOAD_MACRO_DETECTOR: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_ZC_ACK_UPLOAD_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 4)
     public var captchaKey: String
@@ -8082,6 +9066,9 @@ public struct PACKET_ZC_ACK_UPLOAD_MACRO_DETECTOR: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_CZ_UPLOAD_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     @FixedLengthString(lengthOfBytes: 4)
@@ -8104,6 +9091,9 @@ public struct PACKET_CZ_UPLOAD_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, BinaryEn
 }
 
 public struct PACKET_ZC_COMPLETE_UPLOAD_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -8116,6 +9106,9 @@ public struct PACKET_ZC_COMPLETE_UPLOAD_MACRO_DETECTOR_CAPTCHA: BinaryDecodable,
 }
 
 public struct PACKET_CZ_REQ_APPLY_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public init() {
@@ -8131,6 +9124,9 @@ public struct PACKET_CZ_REQ_APPLY_MACRO_DETECTOR: BinaryDecodable, BinaryEncodab
 }
 
 public struct PACKET_ZC_ACK_APPLY_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var status: Int32 = 0
     public init() {
@@ -8146,6 +9142,9 @@ public struct PACKET_ZC_ACK_APPLY_MACRO_DETECTOR: BinaryDecodable, BinaryEncodab
 }
 
 public struct PACKET_ZC_APPLY_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var imageSize: UInt16 = 0
     @FixedLengthString(lengthOfBytes: 4)
@@ -8165,6 +9164,9 @@ public struct PACKET_ZC_APPLY_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_ZC_APPLY_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     @FixedLengthString(lengthOfBytes: 4)
@@ -8187,6 +9189,9 @@ public struct PACKET_ZC_APPLY_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, BinaryEnc
 }
 
 public struct PACKET_CZ_COMPLETE_APPLY_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -8199,6 +9204,9 @@ public struct PACKET_CZ_COMPLETE_APPLY_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, 
 }
 
 public struct PACKET_ZC_REQ_ANSWER_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 4)
+    }
     public var packetType: Int16 = 0
     public var retryCount: UInt8 = 0
     public var timeout: Int32 = 0
@@ -8217,6 +9225,9 @@ public struct PACKET_ZC_REQ_ANSWER_MACRO_DETECTOR: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_CZ_ACK_ANSWER_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 16)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 16)
     public var answer: String
@@ -8233,6 +9244,9 @@ public struct PACKET_CZ_ACK_ANSWER_MACRO_DETECTOR: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_ZC_CLOSE_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var status: Int32 = 0
     public init() {
@@ -8248,6 +9262,9 @@ public struct PACKET_ZC_CLOSE_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_CZ_REQ_PREVIEW_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var captchaID: Int32 = 0
     public init() {
@@ -8263,6 +9280,9 @@ public struct PACKET_CZ_REQ_PREVIEW_MACRO_DETECTOR: BinaryDecodable, BinaryEncod
 }
 
 public struct PACKET_ZC_ACK_PREVIEW_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var captchaFlag: Int32 = 0
     public var imageSize: UInt16 = 0
@@ -8285,6 +9305,9 @@ public struct PACKET_ZC_ACK_PREVIEW_MACRO_DETECTOR: BinaryDecodable, BinaryEncod
 }
 
 public struct PACKET_ZC_PREVIEW_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     @FixedLengthString(lengthOfBytes: 4)
@@ -8307,6 +9330,9 @@ public struct PACKET_ZC_PREVIEW_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, BinaryE
 }
 
 public struct PACKET_CZ_REQ_PLAYER_AID_IN_RANGE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var xPos: Int16 = 0
     public var yPos: Int16 = 0
@@ -8328,6 +9354,9 @@ public struct PACKET_CZ_REQ_PLAYER_AID_IN_RANGE: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_ZC_ACK_PLAYER_AID_IN_RANGE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var AID: [UInt32] = []
@@ -8346,6 +9375,9 @@ public struct PACKET_ZC_ACK_PLAYER_AID_IN_RANGE: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_ZC_ACK_MAKE_GROUP: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var result: Int8 = 0
     public init() {
@@ -8361,6 +9393,9 @@ public struct PACKET_ZC_ACK_MAKE_GROUP: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_PARTY_JOIN_REQ: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 24)
+    }
     public var packetType: Int16 = 0
     public var GRID: Int32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -8380,6 +9415,9 @@ public struct PACKET_ZC_PARTY_JOIN_REQ: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_PARTY_JOIN_REQ_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24 + 4)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var characterName: String
@@ -8399,6 +9437,9 @@ public struct PACKET_ZC_PARTY_JOIN_REQ_ACK: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_NOTIFY_CHAT_PARTY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var AID: Int32 = 0
@@ -8420,6 +9461,9 @@ public struct PACKET_ZC_NOTIFY_CHAT_PARTY: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_NOTIFY_POSITION_TO_GROUPM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var AID: Int32 = 0
     public var xPos: Int16 = 0
@@ -8441,6 +9485,9 @@ public struct PACKET_ZC_NOTIFY_POSITION_TO_GROUPM: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_ZC_NOTIFY_HP_TO_GROUPM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var hp: Int32 = 0
@@ -8462,6 +9509,9 @@ public struct PACKET_ZC_NOTIFY_HP_TO_GROUPM: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_ZC_NOTIFY_MEMBERINFO_TO_GROUPM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var AID: Int32 = 0
     public var job: Int16 = 0
@@ -8483,6 +9533,9 @@ public struct PACKET_ZC_NOTIFY_MEMBERINFO_TO_GROUPM: BinaryDecodable, BinaryEnco
 }
 
 public struct PACKET_ZC_DELETE_MEMBER_FROM_GROUP: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 24 + 1)
+    }
     public var packetType: Int16 = 0
     public var AID: Int32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -8505,6 +9558,9 @@ public struct PACKET_ZC_DELETE_MEMBER_FROM_GROUP: BinaryDecodable, BinaryEncodab
 }
 
 public struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -8517,6 +9573,9 @@ public struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_ZC_ACK_TAKEOFF_EQUIP_ALL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public init() {
@@ -8532,6 +9591,9 @@ public struct PACKET_ZC_ACK_TAKEOFF_EQUIP_ALL: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_ZC_BATTLEFIELD_NOTIFY_HP: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var hp: Int32 = 0
@@ -8553,6 +9615,9 @@ public struct PACKET_ZC_BATTLEFIELD_NOTIFY_HP: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_CZ_CHOOSE_MENU_ZERO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var NpcID: UInt32 = 0
     public var menuIndex: UInt8 = 0
@@ -8571,6 +9636,9 @@ public struct PACKET_CZ_CHOOSE_MENU_ZERO: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_DIALOG_TEXT_ALIGN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var align: UInt8 = 0
     public init() {
@@ -8586,6 +9654,9 @@ public struct PACKET_ZC_DIALOG_TEXT_ALIGN: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public init() {
@@ -8601,6 +9672,9 @@ public struct PACKET_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT: BinaryDecodable, BinaryE
 }
 
 public struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var index: Int16 = 0
@@ -8634,6 +9708,9 @@ public struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST: BinaryDecodable, BinaryEnco
 }
 
 public struct PACKET_CZ_GRADE_ENCHANT_REQUEST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 1 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var material_index: Int32 = 0
@@ -8661,6 +9738,9 @@ public struct PACKET_CZ_GRADE_ENCHANT_REQUEST: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_CZ_GRADE_ENCHANT_CLOSE_UI: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -8673,6 +9753,9 @@ public struct PACKET_CZ_GRADE_ENCHANT_CLOSE_UI: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_ZC_GRADE_ENCHANT_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var grade: Int16 = 0
@@ -8694,6 +9777,9 @@ public struct PACKET_ZC_GRADE_ENCHANT_ACK: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_GRADE_ENCHANT_BROADCAST_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24 + 4 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
@@ -8719,6 +9805,9 @@ public struct PACKET_ZC_GRADE_ENCHANT_BROADCAST_RESULT: BinaryDecodable, BinaryE
 }
 
 public struct PACKET_ZC_SHOW_IMAGE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 64 + 1)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 64)
     public var image: String
@@ -8738,6 +9827,9 @@ public struct PACKET_ZC_SHOW_IMAGE: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_WHISPER: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var senderGID: UInt32 = 0
@@ -8766,6 +9858,9 @@ public struct PACKET_ZC_WHISPER: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_UPDATE_GDID: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4 + 1 + 4 + 24)
+    }
     public var packetType: Int16 = 0
     public var guildId: UInt32 = 0
     public var emblemVersion: Int32 = 0
@@ -8797,6 +9892,9 @@ public struct PACKET_ZC_UPDATE_GDID: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_CZ_CONTACTNPC: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var type: UInt8 = 0
@@ -8815,6 +9913,9 @@ public struct PACKET_CZ_CONTACTNPC: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_ATTACK_FAILURE_FOR_DISTANCE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 2 + 2 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var targetAID: UInt32 = 0
     public var targetXPos: Int16 = 0
@@ -8845,6 +9946,9 @@ public struct PACKET_ZC_ATTACK_FAILURE_FOR_DISTANCE: BinaryDecodable, BinaryEnco
 }
 
 public struct PACKET_ZC_START_CAPTURE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -8857,6 +9961,9 @@ public struct PACKET_ZC_START_CAPTURE: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_ZC_TRYCAPTURE_MONSTER: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var result: Int8 = 0
     public init() {
@@ -8872,6 +9979,9 @@ public struct PACKET_ZC_TRYCAPTURE_MONSTER: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_PROPERTY_PET: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24 + 1 + 2 + 2 + 2 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var szName: String
@@ -8906,6 +10016,9 @@ public struct PACKET_ZC_PROPERTY_PET: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_CHANGESTATE_PET: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var type: Int8 = 0
     public var GID: Int32 = 0
@@ -8927,6 +10040,9 @@ public struct PACKET_ZC_CHANGESTATE_PET: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_SPIRITS: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var num: Int16 = 0
@@ -8945,6 +10061,9 @@ public struct PACKET_ZC_SPIRITS: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_SPIRITS2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var num: Int16 = 0
@@ -8963,6 +10082,9 @@ public struct PACKET_ZC_SPIRITS2: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_SOULENERGY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var num: UInt16 = 0
@@ -8981,6 +10103,9 @@ public struct PACKET_ZC_SOULENERGY: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_SAY_DIALOG: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var NpcID: UInt32 = 0
@@ -9002,6 +10127,9 @@ public struct PACKET_ZC_SAY_DIALOG: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_SAY_DIALOG2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var NpcID: UInt32 = 0
@@ -9023,6 +10151,9 @@ public struct PACKET_ZC_SAY_DIALOG2: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_WAIT_DIALOG: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var NpcID: UInt32 = 0
     public init() {
@@ -9038,6 +10169,9 @@ public struct PACKET_ZC_WAIT_DIALOG: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_WAIT_DIALOG2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var NpcID: UInt32 = 0
     public init() {
@@ -9053,6 +10187,9 @@ public struct PACKET_ZC_WAIT_DIALOG2: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_PLAY_NPC_BGM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var bgm: String
@@ -9069,6 +10206,9 @@ public struct PACKET_ZC_PLAY_NPC_BGM: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var count: Int32 = 0
@@ -9087,6 +10227,9 @@ public struct PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART: BinaryDecodable, BinaryEnco
 }
 
 public struct PACKET_ZC_SOUND: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24 + 1 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
@@ -9112,6 +10255,9 @@ public struct PACKET_ZC_SOUND: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_BUYING_STORE_ENTRY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 80)
+    }
     public var packetType: Int16 = 0
     public var makerAID: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 80)
@@ -9131,6 +10277,9 @@ public struct PACKET_ZC_BUYING_STORE_ENTRY: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_STORE_ENTRY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 80)
+    }
     public var packetType: Int16 = 0
     public var makerAID: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 80)
@@ -9150,6 +10299,9 @@ public struct PACKET_ZC_STORE_ENTRY: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var AID: UInt32 = 0
@@ -9171,6 +10323,9 @@ public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC: BinaryDecodable, BinaryEnco
 }
 
 public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var AID: UInt32 = 0
@@ -9195,6 +10350,9 @@ public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC2: BinaryDecodable, BinaryEnc
 }
 
 public struct PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var makerAID: UInt32 = 0
     public init() {
@@ -9210,6 +10368,9 @@ public struct PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY: BinaryDecodable, BinaryEnc
 }
 
 public struct PACKET_ZC_OPEN_REFORM_UI: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var ITID: Int32 = 0
     public init() {
@@ -9225,6 +10386,9 @@ public struct PACKET_ZC_OPEN_REFORM_UI: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_CZ_CLOSE_REFORM_UI: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -9237,6 +10401,9 @@ public struct PACKET_CZ_CLOSE_REFORM_UI: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_CZ_ITEM_REFORM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2)
+    }
     public var packetType: Int16 = 0
     public var ITID: Int32 = 0
     public var index: Int16 = 0
@@ -9255,6 +10422,9 @@ public struct PACKET_CZ_ITEM_REFORM: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_ITEM_REFORM_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var result: Int8 = 0
@@ -9273,6 +10443,9 @@ public struct PACKET_ZC_ITEM_REFORM_ACK: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_CZ_REQUEST_RANDOM_ENCHANT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 8 + 2)
+    }
     public var packetType: Int16 = 0
     public var enchant_group: Int64 = 0
     public var index: Int16 = 0
@@ -9291,6 +10464,9 @@ public struct PACKET_CZ_REQUEST_RANDOM_ENCHANT: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_CZ_REQUEST_PERFECT_ENCHANT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 8 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var enchant_group: Int64 = 0
     public var index: Int16 = 0
@@ -9312,6 +10488,9 @@ public struct PACKET_CZ_REQUEST_PERFECT_ENCHANT: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 8 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var enchant_group: Int64 = 0
     public var index: Int16 = 0
@@ -9333,6 +10512,9 @@ public struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_CZ_REQUEST_RESET_ENCHANT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 8 + 2)
+    }
     public var packetType: Int16 = 0
     public var enchant_group: Int64 = 0
     public var index: Int16 = 0
@@ -9351,6 +10533,9 @@ public struct PACKET_CZ_REQUEST_RESET_ENCHANT: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_ZC_RESPONSE_ENCHANT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var msgId: Int32 = 0
     public var ITID: UInt32 = 0
@@ -9369,6 +10554,9 @@ public struct PACKET_ZC_RESPONSE_ENCHANT: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_CZ_CLOSE_UI_ENCHANT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -9381,6 +10569,9 @@ public struct PACKET_CZ_CLOSE_UI_ENCHANT: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_GOLDPCCAFE_POINT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 1 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var isActive: Int8 = 0
     public var mode: Int8 = 0
@@ -9405,6 +10596,9 @@ public struct PACKET_ZC_GOLDPCCAFE_POINT: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
@@ -9421,6 +10615,9 @@ public struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_ZC_DYNAMICNPC_CREATE_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var result: UInt32 = 0
     public init() {
@@ -9436,6 +10633,9 @@ public struct PACKET_ZC_DYNAMICNPC_CREATE_RESULT: BinaryDecodable, BinaryEncodab
 }
 
 public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG1: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var guild_id: Int32 = 0
     public init() {
@@ -9451,6 +10651,9 @@ public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG1: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG3: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var guild_id: Int32 = 0
     public var emblem_id: Int32 = 0
@@ -9469,6 +10672,9 @@ public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG3: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var guild_id: Int32 = 0
     public var emblem_id: Int32 = 0
@@ -9490,6 +10696,9 @@ public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG2: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_ZC_CHANGE_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var guild_id: Int32 = 0
     public var emblem_id: UInt32 = 0
@@ -9511,6 +10720,9 @@ public struct PACKET_ZC_CHANGE_GUILD: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_GUILD_EMBLEM_IMG: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var result: UInt16 = 0
@@ -9538,6 +10750,9 @@ public struct PACKET_ZC_GUILD_EMBLEM_IMG: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_CZ_ADVENTURER_AGENCY_JOIN_REQ: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var GID: Int32 = 0
     public var AID: Int32 = 0
@@ -9556,6 +10771,9 @@ public struct PACKET_CZ_ADVENTURER_AGENCY_JOIN_REQ: BinaryDecodable, BinaryEncod
 }
 
 public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24 + 24 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var player_name: String
@@ -9582,6 +10800,9 @@ public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_RESULT: BinaryDecodable, BinaryEn
 }
 
 public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_REQ: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 24 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var GRID: Int32 = 0
     public var AID: Int32 = 0
@@ -9610,6 +10831,9 @@ public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_REQ: BinaryDecodable, BinaryEncod
 }
 
 public struct PACKET_CZ_ADVENTURER_AGENCY_JOIN_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var GRID: Int32 = 0
     public var AID: Int32 = 0
@@ -9631,6 +10855,9 @@ public struct PACKET_CZ_ADVENTURER_AGENCY_JOIN_RESULT: BinaryDecodable, BinaryEn
 }
 
 public struct PACKET_ZC_USER_COUNT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var playersCount: Int32 = 0
     public init() {
@@ -9646,6 +10873,9 @@ public struct PACKET_ZC_USER_COUNT: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_PC_PURCHASE_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public init() {
@@ -9661,6 +10891,9 @@ public struct PACKET_ZC_PC_PURCHASE_RESULT: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_CZ_REQ_MAKINGARROW: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var itemId: UInt32 = 0
     public init() {
@@ -9676,6 +10909,9 @@ public struct PACKET_CZ_REQ_MAKINGARROW: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 2)
+    }
     public var itemId: UInt32 = 0
     public var amount: UInt32 = 0
     public var tab: UInt16 = 0
@@ -9694,6 +10930,9 @@ public struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub: BinaryDecodable, BinaryEnco
 }
 
 public struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var count: UInt16 = 0
@@ -9718,6 +10957,9 @@ public struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var AID: UInt32 = 0
@@ -9739,6 +10981,9 @@ public struct PACKET_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO: BinaryDecodable, Binary
 }
 
 public struct PACKET_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var result: UInt16 = 0
     public var itemId: UInt32 = 0
@@ -9760,6 +11005,9 @@ public struct PACKET_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO: BinaryDecodable, Binary
 }
 
 public struct PACKET_CZ_REQ_APPLY_BARGAIN_SALE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4 + 4 + 2)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var itemId: UInt32 = 0
@@ -9787,6 +11035,9 @@ public struct PACKET_CZ_REQ_APPLY_BARGAIN_SALE_ITEM: BinaryDecodable, BinaryEnco
 }
 
 public struct PACKET_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var itemId: UInt32 = 0
@@ -9805,6 +11056,9 @@ public struct PACKET_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM: BinaryDecodable, BinaryEnc
 }
 
 public struct PACKET_ZC_NOTIFY_BARGAIN_SALE_SELLING: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var itemId: UInt32 = 0
     public var remainingTime: UInt32 = 0
@@ -9823,6 +11077,9 @@ public struct PACKET_ZC_NOTIFY_BARGAIN_SALE_SELLING: BinaryDecodable, BinaryEnco
 }
 
 public struct PACKET_ZC_NOTIFY_BARGAIN_SALE_CLOSE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var itemId: UInt32 = 0
     public init() {
@@ -9838,6 +11095,9 @@ public struct PACKET_ZC_NOTIFY_BARGAIN_SALE_CLOSE: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_ZC_ACK_COUNT_BARGAIN_SALE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var itemId: UInt32 = 0
     public var amount: UInt32 = 0
@@ -9856,6 +11116,9 @@ public struct PACKET_ZC_ACK_COUNT_BARGAIN_SALE_ITEM: BinaryDecodable, BinaryEnco
 }
 
 public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 4 + 1 + 4 + 8 + 1 + 2 + ((4 * 4)) + 24 + 24 + 1)
+    }
     public var id: UInt32 = 0
     public var itemId: UInt32 = 0
     public var amount: Int32 = 0
@@ -9903,6 +11166,9 @@ public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub: BinaryDecodable, BinaryEncodab
 }
 
 public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var result: UInt16 = 0
@@ -9927,6 +11193,9 @@ public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_CZ_ADVANCED_STATUS_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var type: Int16 = 0
     public var amount: Int16 = 0
@@ -9945,6 +11214,9 @@ public struct PACKET_CZ_ADVANCED_STATUS_CHANGE: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_CZ_REQ_ADD_NEW_EMBLEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var guild_id: UInt32 = 0
     public var version: UInt32 = 0
@@ -9963,6 +11235,9 @@ public struct PACKET_CZ_REQ_ADD_NEW_EMBLEM: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_BROADCAST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var message: String = ""
@@ -9981,6 +11256,9 @@ public struct PACKET_ZC_BROADCAST: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_BROADCAST2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var fontColor: UInt32 = 0
@@ -10014,6 +11292,9 @@ public struct PACKET_ZC_BROADCAST2: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_ENTRY_QUEUE_INIT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -10026,6 +11307,9 @@ public struct PACKET_ZC_ENTRY_QUEUE_INIT: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_CZ_RODEX_RETURN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var msgId: UInt32 = 0
     public init() {
@@ -10041,6 +11325,9 @@ public struct PACKET_CZ_RODEX_RETURN: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_CZ_REQ_STYLE_CLOSE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -10053,6 +11340,9 @@ public struct PACKET_CZ_REQ_STYLE_CLOSE: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_SUMMON_HP_INIT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var summonAID: UInt32 = 0
     public var CurrentHP: UInt32 = 0
@@ -10074,6 +11364,9 @@ public struct PACKET_ZC_SUMMON_HP_INIT: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_SUMMON_HP_UPDATE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var summonAID: UInt32 = 0
     public var VarId: UInt16 = 0
@@ -10095,6 +11388,9 @@ public struct PACKET_ZC_SUMMON_HP_UPDATE: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_REPUTE_INFO_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (8 + 8)
+    }
     public var type: UInt64 = 0
     public var points: Int64 = 0
     public init() {
@@ -10110,6 +11406,9 @@ public struct PACKET_ZC_REPUTE_INFO_sub: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_REPUTE_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var success: UInt8 = 0
@@ -10131,6 +11430,9 @@ public struct PACKET_ZC_REPUTE_INFO: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_UI_OPEN_V3: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 8)
+    }
     public var packetType: Int16 = 0
     public var type: UInt8 = 0
     public var data: UInt64 = 0
@@ -10149,6 +11451,9 @@ public struct PACKET_ZC_UI_OPEN_V3: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_TARGET_SPIRITS: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 2)
+    }
     public var packetType: Int16 = 0
     public var GID: UInt32 = 0
     public var unknown_val: UInt32 = 0
@@ -10170,6 +11475,9 @@ public struct PACKET_ZC_TARGET_SPIRITS: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_FRIENDS_LIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 24)
+    }
     public var AID: UInt32 = 0
     public var CID: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -10189,6 +11497,9 @@ public struct PACKET_ZC_FRIENDS_LIST_sub: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_FRIENDS_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var friends: [PACKET_ZC_FRIENDS_LIST_sub] = []
@@ -10207,6 +11518,9 @@ public struct PACKET_ZC_FRIENDS_LIST: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_CZ_PC_SELL_ITEMLIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var index: UInt16 = 0
     public var amount: UInt16 = 0
     public init() {
@@ -10222,6 +11536,9 @@ public struct PACKET_CZ_PC_SELL_ITEMLIST_sub: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_CZ_PC_SELL_ITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var sellList: [PACKET_CZ_PC_SELL_ITEMLIST_sub] = []
@@ -10240,6 +11557,9 @@ public struct PACKET_CZ_PC_SELL_ITEMLIST: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_CZ_REQ_CHANGE_MEMBERPOS_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 4)
+    }
     public var AID: UInt32 = 0
     public var CID: UInt32 = 0
     public var position: Int32 = 0
@@ -10258,6 +11578,9 @@ public struct PACKET_CZ_REQ_CHANGE_MEMBERPOS_sub: BinaryDecodable, BinaryEncodab
 }
 
 public struct PACKET_CZ_REQ_CHANGE_MEMBERPOS: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var list: [PACKET_CZ_REQ_CHANGE_MEMBERPOS_sub] = []
@@ -10276,6 +11599,9 @@ public struct PACKET_CZ_REQ_CHANGE_MEMBERPOS: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_ZC_CLEAR_DIALOG: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var GID: UInt32 = 0
     public init() {
@@ -10291,6 +11617,9 @@ public struct PACKET_ZC_CLEAR_DIALOG: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_NOTIFY_BIND_ON_EQUIP: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public init() {
@@ -10306,6 +11635,9 @@ public struct PACKET_ZC_NOTIFY_BIND_ON_EQUIP: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_ZC_BANKING_CHECK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 8 + 2)
+    }
     public var packetType: Int16 = 0
     public var money: Int64 = 0
     public var reason: Int16 = 0
@@ -10324,6 +11656,9 @@ public struct PACKET_ZC_BANKING_CHECK: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_ZC_ACK_BANKING_WITHDRAW: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 8 + 4)
+    }
     public var packetType: Int16 = 0
     public var reason: Int16 = 0
     public var money: Int64 = 0
@@ -10345,6 +11680,9 @@ public struct PACKET_ZC_ACK_BANKING_WITHDRAW: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_ZC_ACK_BANKING_DEPOSIT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 8 + 4)
+    }
     public var packetType: Int16 = 0
     public var reason: Int16 = 0
     public var money: Int64 = 0
@@ -10366,6 +11704,9 @@ public struct PACKET_ZC_ACK_BANKING_DEPOSIT: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_ZC_ACK_CLOSE_BANKING: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var unknown: Int16 = 0
     public init() {
@@ -10381,6 +11722,9 @@ public struct PACKET_ZC_ACK_CLOSE_BANKING: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_ACK_OPEN_BANKING: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var unknown: Int16 = 0
     public init() {
@@ -10396,6 +11740,9 @@ public struct PACKET_ZC_ACK_OPEN_BANKING: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_REQ_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24 + 4 + 2)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var requesterName: String
@@ -10418,6 +11765,9 @@ public struct PACKET_ZC_REQ_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_ACK_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 4 + 2)
+    }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public var targetId: UInt32 = 0
@@ -10439,6 +11789,9 @@ public struct PACKET_ZC_ACK_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_ACK_ADD_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public var result: UInt8 = 0
@@ -10457,6 +11810,9 @@ public struct PACKET_ZC_ACK_ADD_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_ZC_COUPLENAME: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
@@ -10473,6 +11829,9 @@ public struct PACKET_ZC_COUPLENAME: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var CID: UInt32 = 0
     public var AID: UInt32 = 0
@@ -10491,6 +11850,9 @@ public struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN: BinaryDecodable, BinaryEncodab
 }
 
 public struct PACKET_ZC_PARTY_REQ_MASTER_TO_JOIN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 24 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var CID: UInt32 = 0
     public var AID: UInt32 = 0
@@ -10519,6 +11881,9 @@ public struct PACKET_ZC_PARTY_REQ_MASTER_TO_JOIN: BinaryDecodable, BinaryEncodab
 }
 
 public struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var CID: UInt32 = 0
     public var AID: UInt32 = 0
@@ -10540,6 +11905,9 @@ public struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN: BinaryDecodable, BinaryEnc
 }
 
 public struct PACKET_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24 + 24 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var player_name: String
@@ -10566,6 +11934,9 @@ public struct PACKET_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER: BinaryDecodable, BinaryE
 }
 
 public struct PACKET_CZ_REQ_SE_CASH_TAB_CODE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var tab: Int16 = 0
     public init() {
@@ -10581,6 +11952,9 @@ public struct PACKET_CZ_REQ_SE_CASH_TAB_CODE: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4)
+    }
     public var itemId: UInt32 = 0
     public var price: Int32 = 0
     public init() {
@@ -10596,6 +11970,9 @@ public struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2_sub: BinaryDecodable, BinaryEncod
 }
 
 public struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var tab: UInt32 = 0
@@ -10620,6 +11997,9 @@ public struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_CZ_REQ_MERGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var indices: [UInt16] = []
@@ -10638,6 +12018,9 @@ public struct PACKET_CZ_REQ_MERGE_ITEM: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_CZ_RESET_SKILL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var unknown: UInt8 = 0
     public init() {
@@ -10653,6 +12036,9 @@ public struct PACKET_CZ_RESET_SKILL: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_BOSS_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 4 + 4 + 2 + 2 + 2 + 2 + 51)
+    }
     public var packetType: Int16 = 0
     public var type: UInt8 = 0
     public var x: UInt32 = 0
@@ -10690,6 +12076,9 @@ public struct PACKET_ZC_BOSS_INFO: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CZ_INVENTORY_TAB: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var favorite: Int8 = 0
@@ -10708,6 +12097,9 @@ public struct PACKET_CZ_INVENTORY_TAB: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_ZC_INVENTORY_TAB: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
     public var favorite: Int8 = 0
@@ -10726,6 +12118,9 @@ public struct PACKET_ZC_INVENTORY_TAB: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_CZ_REQ_OPEN_BANKING: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public init() {
@@ -10741,6 +12136,9 @@ public struct PACKET_CZ_REQ_OPEN_BANKING: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_CZ_REQ_CLOSE_BANKING: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public init() {
@@ -10756,6 +12154,9 @@ public struct PACKET_CZ_REQ_CLOSE_BANKING: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_CZ_REQ_BANKING_CHECK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public init() {
@@ -10771,6 +12172,9 @@ public struct PACKET_CZ_REQ_BANKING_CHECK: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_CZ_REQ_BANKING_DEPOSIT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var zeny: Int32 = 0
@@ -10789,6 +12193,9 @@ public struct PACKET_CZ_REQ_BANKING_DEPOSIT: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_CZ_REQ_BANKING_WITHDRAW: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var zeny: Int32 = 0
@@ -10807,6 +12214,9 @@ public struct PACKET_CZ_REQ_BANKING_WITHDRAW: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_ZC_ACCEPT_ENTER: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + (1 * 3) + 1 + 1 + 2)
+    }
     public var packetType: Int16 = 0
     public var startTime: UInt32 = 0
     @FixedSizeArray(size: 3, initialValue: 0)
@@ -10835,6 +12245,9 @@ public struct PACKET_ZC_ACCEPT_ENTER: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_REFUSE_ENTER: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var errorCode: UInt8 = 0
     public init() {
@@ -10850,6 +12263,9 @@ public struct PACKET_ZC_REFUSE_ENTER: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_RESTART_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var type: UInt8 = 0
     public init() {
@@ -10865,6 +12281,9 @@ public struct PACKET_ZC_RESTART_ACK: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_NOTIFY_VANISH: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var gid: UInt32 = 0
     public var type: UInt8 = 0
@@ -10883,6 +12302,9 @@ public struct PACKET_ZC_NOTIFY_VANISH: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_ZC_ITEM_DISAPPEAR: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var itemAid: UInt32 = 0
     public init() {
@@ -10898,6 +12320,9 @@ public struct PACKET_ZC_ITEM_DISAPPEAR: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_MILLENNIUMSHIELD: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var aid: UInt32 = 0
     public var num: Int16 = 0
@@ -10919,6 +12344,9 @@ public struct PACKET_ZC_MILLENNIUMSHIELD: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_SPIRITS_ATTRIBUTE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var aid: UInt32 = 0
     public var spiritsType: Int16 = 0
@@ -10940,6 +12368,9 @@ public struct PACKET_ZC_SPIRITS_ATTRIBUTE: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_CHANGESTATE_MER: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 1 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var type: UInt8 = 0
     public var state: UInt8 = 0
@@ -10964,6 +12395,9 @@ public struct PACKET_ZC_CHANGESTATE_MER: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_HOSKILLINFO_LIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 2 + 2 + 2 + 24 + 1)
+    }
     public var id: UInt16 = 0
     public var inf: UInt16 = 0
     public var unknown: UInt16 = 0
@@ -10998,6 +12432,9 @@ public struct PACKET_ZC_HOSKILLINFO_LIST_sub: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_ZC_HOSKILLINFO_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var skills: [PACKET_ZC_HOSKILLINFO_LIST_sub] = []
@@ -11016,6 +12453,9 @@ public struct PACKET_ZC_HOSKILLINFO_LIST: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_HOSKILLINFO_UPDATE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 2 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var skill_id: UInt16 = 0
     public var Level: Int16 = 0
@@ -11043,6 +12483,9 @@ public struct PACKET_ZC_HOSKILLINFO_UPDATE: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_NOTIFY_PLAYERMOVE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + (1 * 6))
+    }
     public var packetType: Int16 = 0
     public var moveStartTime: UInt32 = 0
     @FixedSizeArray(size: 6, initialValue: 0)
@@ -11062,6 +12505,9 @@ public struct PACKET_ZC_NOTIFY_PLAYERMOVE: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_CHANGE_DIRECTION: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var srcId: UInt32 = 0
     public var headDir: UInt16 = 0
@@ -11083,6 +12529,9 @@ public struct PACKET_ZC_CHANGE_DIRECTION: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_NPCACK_MAPMOVE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 16 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 16)
     public var mapName: String
@@ -11105,6 +12554,9 @@ public struct PACKET_ZC_NPCACK_MAPMOVE: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_NPCACK_SERVERMOVE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 16 + 2 + 2 + 4 + 2 + 128)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 16)
     public var mapName: String
@@ -11137,6 +12589,9 @@ public struct PACKET_ZC_NPCACK_SERVERMOVE: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_STOPMOVE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var xPos: UInt16 = 0
@@ -11158,6 +12613,9 @@ public struct PACKET_ZC_STOPMOVE: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_SELECT_DEALTYPE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var npcId: UInt32 = 0
     public init() {
@@ -11173,6 +12631,9 @@ public struct PACKET_ZC_SELECT_DEALTYPE: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_PC_SELL_ITEMLIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var index: UInt16 = 0
     public var price: UInt32 = 0
     public var overcharge: UInt32 = 0
@@ -11191,6 +12652,9 @@ public struct PACKET_ZC_PC_SELL_ITEMLIST_sub: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_ZC_PC_SELL_ITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var items: [PACKET_ZC_PC_SELL_ITEMLIST_sub] = []
@@ -11209,6 +12673,9 @@ public struct PACKET_ZC_PC_SELL_ITEMLIST: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_CLOSE_DIALOG: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var npcId: UInt32 = 0
     public init() {
@@ -11224,6 +12691,9 @@ public struct PACKET_ZC_CLOSE_DIALOG: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_MENU_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var npcId: UInt32 = 0
@@ -11245,6 +12715,9 @@ public struct PACKET_ZC_MENU_LIST: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_OPEN_EDITDLG: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var npcId: UInt32 = 0
     public init() {
@@ -11260,6 +12733,9 @@ public struct PACKET_ZC_OPEN_EDITDLG: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_OPEN_EDITDLGSTR: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var npcId: UInt32 = 0
     public init() {
@@ -11275,6 +12751,9 @@ public struct PACKET_ZC_OPEN_EDITDLGSTR: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_ACK_REQ_ALLY_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var flag: UInt8 = 0
     public init() {
@@ -11290,6 +12769,9 @@ public struct PACKET_ZC_ACK_REQ_ALLY_GUILD: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_DELETE_RELATED_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var allyID: UInt32 = 0
     public var flag: UInt32 = 0
@@ -11308,6 +12790,9 @@ public struct PACKET_ZC_DELETE_RELATED_GUILD: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_ZC_REQ_ALLY_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 24)
+    }
     public var packetType: Int16 = 0
     public var inviterId: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -11327,6 +12812,9 @@ public struct PACKET_ZC_REQ_ALLY_GUILD: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_ACK_REQ_HOSTILE_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var flag: UInt8 = 0
     public init() {
@@ -11342,6 +12830,9 @@ public struct PACKET_ZC_ACK_REQ_HOSTILE_GUILD: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_ZC_COMPASS: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4 + 4 + 1 + 4)
+    }
     public var packetType: Int16 = 0
     public var npcId: UInt32 = 0
     public var type: UInt32 = 0
@@ -11372,6 +12863,9 @@ public struct PACKET_ZC_COMPASS: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_ITEM_THROW_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public var count: UInt16 = 0
@@ -11390,6 +12884,9 @@ public struct PACKET_ZC_ITEM_THROW_ACK: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_DELETE_ITEM_FROM_BODY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var deleteType: Int16 = 0
     public var index: UInt16 = 0
@@ -11411,6 +12908,9 @@ public struct PACKET_ZC_DELETE_ITEM_FROM_BODY: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_ZC_CARTOFF: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -11423,6 +12923,9 @@ public struct PACKET_ZC_CARTOFF: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_ACK_GUILD_MENUINTERFACE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var menuFlag: Int32 = 0
     public init() {
@@ -11438,6 +12941,9 @@ public struct PACKET_ZC_ACK_GUILD_MENUINTERFACE: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_ZC_NOTIFY_POSITION_TO_GUILDM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var aid: UInt32 = 0
     public var xPos: Int16 = 0
@@ -11459,6 +12965,9 @@ public struct PACKET_ZC_NOTIFY_POSITION_TO_GUILDM: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_ZC_GUILD_CHAT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var message: String = ""
@@ -11477,6 +12986,9 @@ public struct PACKET_ZC_GUILD_CHAT: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_STATUS: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var point: UInt16 = 0
     public var str: UInt8 = 0
@@ -11570,6 +13082,9 @@ public struct PACKET_ZC_STATUS: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_NOTIFY_MAPINFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var type: Int16 = 0
     public init() {
@@ -11585,6 +13100,9 @@ public struct PACKET_ZC_NOTIFY_MAPINFO: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_ACK_REMEMBER_WARPPOINT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var type: UInt8 = 0
     public init() {
@@ -11600,6 +13118,9 @@ public struct PACKET_ZC_ACK_REMEMBER_WARPPOINT: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_ZC_DISPEL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var gid: UInt32 = 0
     public init() {
@@ -11615,6 +13136,9 @@ public struct PACKET_ZC_DISPEL: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_RESURRECTION: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2)
+    }
     public var packetType: Int16 = 0
     public var gid: UInt32 = 0
     public var type: Int16 = 0
@@ -11633,6 +13157,9 @@ public struct PACKET_ZC_RESURRECTION: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_NOTIFY_MAPPROPERTY2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var type: Int16 = 0
     public init() {
@@ -11648,6 +13175,9 @@ public struct PACKET_ZC_NOTIFY_MAPPROPERTY2: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_ZC_ACK_ITEMREFINING: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var result: UInt16 = 0
     public var index: UInt16 = 0
@@ -11669,6 +13199,9 @@ public struct PACKET_ZC_ACK_ITEMREFINING: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_PAR_CHANGE_USER: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var gid: UInt32 = 0
     public var type: Int16 = 0
@@ -11690,6 +13223,9 @@ public struct PACKET_ZC_PAR_CHANGE_USER: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_CHANGE_CHATROOM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var ownerId: UInt32 = 0
@@ -11723,6 +13259,9 @@ public struct PACKET_ZC_CHANGE_CHATROOM: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_EQUIP_ARROW: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public init() {
@@ -11738,6 +13277,9 @@ public struct PACKET_ZC_EQUIP_ARROW: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public var wearLocation: UInt32 = 0
@@ -11759,6 +13301,9 @@ public struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_ZC_CLOSE_STORE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -11771,6 +13316,9 @@ public struct PACKET_ZC_CLOSE_STORE: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_DELETE_ITEM_FROM_STORE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public var amount: UInt32 = 0
@@ -11789,6 +13337,9 @@ public struct PACKET_ZC_DELETE_ITEM_FROM_STORE: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_ZC_NOTIFY_STOREITEM_COUNTINFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var amount: UInt16 = 0
     public var max_amount: UInt16 = 0
@@ -11807,6 +13358,9 @@ public struct PACKET_ZC_NOTIFY_STOREITEM_COUNTINFO: BinaryDecodable, BinaryEncod
 }
 
 public struct PACKET_ZC_EXCHANGEITEM_UNDO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -11819,6 +13373,9 @@ public struct PACKET_ZC_EXCHANGEITEM_UNDO: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_EXEC_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public init() {
@@ -11834,6 +13391,9 @@ public struct PACKET_ZC_EXEC_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_CANCEL_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -11846,6 +13406,9 @@ public struct PACKET_ZC_CANCEL_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_ZC_CONCLUDE_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var who: UInt8 = 0
     public init() {
@@ -11861,6 +13424,9 @@ public struct PACKET_ZC_CONCLUDE_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_ZC_ACK_CREATE_CHATROOM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var flag: UInt8 = 0
     public init() {
@@ -11876,6 +13442,9 @@ public struct PACKET_ZC_ACK_CREATE_CHATROOM: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_ZC_REFUSE_ENTER_ROOM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public init() {
@@ -11891,6 +13460,9 @@ public struct PACKET_ZC_REFUSE_ENTER_ROOM: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_DESTROY_ROOM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var chatId: UInt32 = 0
     public init() {
@@ -11906,6 +13478,9 @@ public struct PACKET_ZC_DESTROY_ROOM: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_ENTER_ROOM_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 24)
+    }
     public var flag: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
@@ -11922,6 +13497,9 @@ public struct PACKET_ZC_ENTER_ROOM_sub: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_ENTER_ROOM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var chatId: UInt32 = 0
@@ -11943,6 +13521,9 @@ public struct PACKET_ZC_ENTER_ROOM: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_NPC_SHOWEFST_UPDATE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var gid: UInt32 = 0
     public var effectState: UInt32 = 0
@@ -11967,6 +13548,9 @@ public struct PACKET_ZC_NPC_SHOWEFST_UPDATE: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_ZC_ACTION_FAILURE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var type: UInt16 = 0
     public init() {
@@ -11982,6 +13566,9 @@ public struct PACKET_ZC_ACTION_FAILURE: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_NOTIFY_EFFECT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var aid: UInt32 = 0
     public var effectId: UInt32 = 0
@@ -12000,6 +13587,9 @@ public struct PACKET_ZC_NOTIFY_EFFECT: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_ZC_ACK_ITEMCOMPOSITION: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var equipIndex: UInt16 = 0
     public var cardIndex: UInt16 = 0
@@ -12021,6 +13611,9 @@ public struct PACKET_ZC_ACK_ITEMCOMPOSITION: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_ZC_ACK_ITEMIDENTIFY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public var result: UInt8 = 0
@@ -12039,6 +13632,9 @@ public struct PACKET_ZC_ACK_ITEMIDENTIFY: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_ACK_ITEMREPAIR: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public var result: UInt8 = 0
@@ -12057,6 +13653,9 @@ public struct PACKET_ZC_ACK_ITEMREPAIR: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_EQUIPITEM_DAMAGED: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var equipLocation: UInt16 = 0
     public var GID: UInt32 = 0
@@ -12075,6 +13674,9 @@ public struct PACKET_ZC_EQUIPITEM_DAMAGED: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_ZC_DELETE_ITEM_FROM_CART: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public var amount: Int32 = 0
@@ -12093,6 +13695,9 @@ public struct PACKET_ZC_DELETE_ITEM_FROM_CART: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_ZC_OPENSTORE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var num: UInt16 = 0
     public init() {
@@ -12108,6 +13713,9 @@ public struct PACKET_ZC_OPENSTORE: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_PC_PURCHASE_RESULT_FROMMC: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 1)
+    }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public var amount: UInt16 = 0
@@ -12129,6 +13737,9 @@ public struct PACKET_ZC_PC_PURCHASE_RESULT_FROMMC: BinaryDecodable, BinaryEncoda
 }
 
 public struct PACKET_ZC_ACK_OPENSTORE2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public init() {
@@ -12144,6 +13755,9 @@ public struct PACKET_ZC_ACK_OPENSTORE2: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_SKILL_DISAPPEAR: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var GID: UInt32 = 0
     public init() {
@@ -12159,6 +13773,9 @@ public struct PACKET_ZC_SKILL_DISAPPEAR: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_SKILLINFO_DELETE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var skillID: UInt16 = 0
     public init() {
@@ -12174,6 +13791,9 @@ public struct PACKET_ZC_SKILLINFO_DELETE: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_SKILL_UPDATE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var GID: UInt32 = 0
     public init() {
@@ -12189,6 +13809,9 @@ public struct PACKET_ZC_SKILL_UPDATE: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_HIGHJUMP: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     public var srcId: UInt32 = 0
     public var x: UInt16 = 0
@@ -12210,6 +13833,9 @@ public struct PACKET_ZC_HIGHJUMP: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_RECOVERY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var type: UInt16 = 0
     public var amount: Int32 = 0
@@ -12228,6 +13854,9 @@ public struct PACKET_ZC_RECOVERY: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_ACK_WHISPER: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1 + 4)
+    }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public var CID: UInt32 = 0
@@ -12246,6 +13875,9 @@ public struct PACKET_ZC_ACK_WHISPER: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_ACK_ADDITEM_TO_CART: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public init() {
@@ -12261,6 +13893,9 @@ public struct PACKET_ZC_ACK_ADDITEM_TO_CART: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_ZC_DELETEITEM_FROM_MCSTORE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public var amount: UInt16 = 0
@@ -12288,6 +13923,9 @@ public struct PACKET_ZC_DELETEITEM_FROM_MCSTORE: BinaryDecodable, BinaryEncodabl
 }
 
 public struct PACKET_CZ_REQ_BAN_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4 + 40)
+    }
     public var packetType: Int16 = 0
     public var guild_id: UInt32 = 0
     public var AID: UInt32 = 0
@@ -12313,6 +13951,9 @@ public struct PACKET_CZ_REQ_BAN_GUILD: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_CZ_REQ_LEAVE_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4 + 40)
+    }
     public var packetType: Int16 = 0
     public var guild_id: UInt32 = 0
     public var AID: UInt32 = 0
@@ -12338,6 +13979,9 @@ public struct PACKET_CZ_REQ_LEAVE_GUILD: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_CZ_REQ_DISORGANIZE_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 40)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 40)
     public var key: String
@@ -12354,6 +13998,9 @@ public struct PACKET_CZ_REQ_DISORGANIZE_GUILD: BinaryDecodable, BinaryEncodable,
 }
 
 public struct PACKET_ZC_ACK_DISORGANIZE_GUILD_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var result: Int32 = 0
     public init() {
@@ -12369,6 +14016,9 @@ public struct PACKET_ZC_ACK_DISORGANIZE_GUILD_RESULT: BinaryDecodable, BinaryEnc
 }
 
 public struct PACKET_ZC_RESULT_MAKE_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public init() {
@@ -12384,6 +14034,9 @@ public struct PACKET_ZC_RESULT_MAKE_GUILD: BinaryDecodable, BinaryEncodable, Sen
 }
 
 public struct PACKET_CZ_REQ_JOIN_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var inviter_AID: UInt32 = 0
@@ -12405,6 +14058,9 @@ public struct PACKET_CZ_REQ_JOIN_GUILD: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_ACK_REQ_JOIN_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
     public init() {
@@ -12420,6 +14076,9 @@ public struct PACKET_ZC_ACK_REQ_JOIN_GUILD: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_REQ_JOIN_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 24)
+    }
     public var packetType: Int16 = 0
     public var guild_id: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -12439,6 +14098,9 @@ public struct PACKET_ZC_REQ_JOIN_GUILD: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_CZ_JOIN_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var guild_id: UInt32 = 0
     public var answer: Int32 = 0
@@ -12457,6 +14119,9 @@ public struct PACKET_CZ_JOIN_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_ZC_GUILD_NOTICE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 60 + 120)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 60)
     public var subject: String
@@ -12477,6 +14142,9 @@ public struct PACKET_ZC_GUILD_NOTICE: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_CZ_REQ_JOIN_GUILD2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
@@ -12493,6 +14161,9 @@ public struct PACKET_CZ_REQ_JOIN_GUILD2: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_CZ_REQ_JOIN_GROUP: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public init() {
@@ -12508,6 +14179,9 @@ public struct PACKET_CZ_REQ_JOIN_GROUP: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_CZ_JOIN_GROUP: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var party_id: UInt32 = 0
     public var flag: Int32 = 0
@@ -12526,6 +14200,9 @@ public struct PACKET_CZ_JOIN_GROUP: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CZ_REQ_LEAVE_GROUP: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -12538,6 +14215,9 @@ public struct PACKET_CZ_REQ_LEAVE_GROUP: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_CZ_REQ_EXPEL_GROUP_MEMBER: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 24)
+    }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -12557,6 +14237,9 @@ public struct PACKET_CZ_REQ_EXPEL_GROUP_MEMBER: BinaryDecodable, BinaryEncodable
 }
 
 public struct PACKET_CZ_PARTY_JOIN_REQ: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 24)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
@@ -12573,6 +14256,9 @@ public struct PACKET_CZ_PARTY_JOIN_REQ: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_CZ_PARTY_JOIN_REQ_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var party_id: UInt32 = 0
     public var flag: UInt8 = 0
@@ -12591,6 +14277,9 @@ public struct PACKET_CZ_PARTY_JOIN_REQ_ACK: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_HO_PAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 8)
+    }
     public var packetType: Int16 = 0
     public var type: UInt16 = 0
     public var value: UInt64 = 0
@@ -12609,6 +14298,9 @@ public struct PACKET_ZC_HO_PAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_ZC_EL_PAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var type: UInt16 = 0
     public var value: UInt32 = 0
@@ -12627,6 +14319,9 @@ public struct PACKET_ZC_EL_PAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_ZC_NOTIFY_ACT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4 + 4 + 4 + 4 + 1 + 2 + 1 + 4)
+    }
     public var packetType: Int16 = 0
     public var srcID: Int32 = 0
     public var targetID: Int32 = 0
@@ -12669,6 +14364,9 @@ public struct PACKET_ZC_NOTIFY_ACT: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CZ_REQUEST_MOVENPC: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + (1 * 3))
+    }
     public var packetType: Int16 = 0
     public var GID: UInt32 = 0
     @FixedSizeArray(size: 3, initialValue: 0)
@@ -12688,6 +14386,9 @@ public struct PACKET_CZ_REQUEST_MOVENPC: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_NPCSPRITE_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 1 + 4)
+    }
     public var packetType: Int16 = 0
     public var GID: UInt32 = 0
     public var type: UInt8 = 0
@@ -12709,6 +14410,9 @@ public struct PACKET_ZC_NPCSPRITE_CHANGE: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_MEMBER_NEWENTRY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 24)
+    }
     public var packetType: Int16 = 0
     public var count: UInt16 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -12728,6 +14432,9 @@ public struct PACKET_ZC_MEMBER_NEWENTRY: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_MEMBER_EXIT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 24 + 1)
+    }
     public var packetType: Int16 = 0
     public var count: UInt16 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -12750,6 +14457,9 @@ public struct PACKET_ZC_MEMBER_EXIT: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_CZ_MOVETO_MAP: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 16 + 2 + 2)
+    }
     public var packetType: Int16 = 0
     @FixedLengthString(lengthOfBytes: 16)
     public var map: String
@@ -12772,6 +14482,9 @@ public struct PACKET_CZ_MOVETO_MAP: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CZ_BROADCAST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var message: String = ""
@@ -12790,6 +14503,9 @@ public struct PACKET_CZ_BROADCAST: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CZ_REQ_WEAR_EQUIP: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
     public var position: UInt32 = 0
@@ -12808,6 +14524,9 @@ public struct PACKET_CZ_REQ_WEAR_EQUIP: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_CZ_ACK_SELECT_DEALTYPE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var GID: UInt32 = 0
     public var type: UInt8 = 0
@@ -12826,6 +14545,9 @@ public struct PACKET_CZ_ACK_SELECT_DEALTYPE: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_CZ_CREATE_CHATROOM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var limit: UInt16 = 0
@@ -12854,6 +14576,9 @@ public struct PACKET_CZ_CREATE_CHATROOM: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_CZ_BLACKSMITH_RANK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -12866,6 +14591,9 @@ public struct PACKET_CZ_BLACKSMITH_RANK: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_CZ_ALCHEMIST_RANK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -12878,6 +14606,9 @@ public struct PACKET_CZ_ALCHEMIST_RANK: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_BLACKSMITH_RANK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + (10 + (4 * 10)))
+    }
     public var packetType: Int16 = 0
     public var list: RANKLIST = RANKLIST()
     public init() {
@@ -12893,6 +14624,9 @@ public struct PACKET_ZC_BLACKSMITH_RANK: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_ALCHEMIST_RANK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + (10 + (4 * 10)))
+    }
     public var packetType: Int16 = 0
     public var list: RANKLIST = RANKLIST()
     public init() {
@@ -12908,6 +14642,9 @@ public struct PACKET_ZC_ALCHEMIST_RANK: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_BLACKSMITH_POINT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var points: UInt32 = 0
     public var points_total: UInt32 = 0
@@ -12926,6 +14663,9 @@ public struct PACKET_ZC_BLACKSMITH_POINT: BinaryDecodable, BinaryEncodable, Send
 }
 
 public struct PACKET_ZC_ALCHEMIST_POINT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var points: UInt32 = 0
     public var points_total: UInt32 = 0
@@ -12944,6 +14684,9 @@ public struct PACKET_ZC_ALCHEMIST_POINT: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_TAEKWON_POINT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var points: UInt32 = 0
     public var points_total: UInt32 = 0
@@ -12962,6 +14705,9 @@ public struct PACKET_ZC_TAEKWON_POINT: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct PACKET_CZ_TAEKWON_RANK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -12974,6 +14720,9 @@ public struct PACKET_CZ_TAEKWON_RANK: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_TAEKWON_RANK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + (10 + (4 * 10)))
+    }
     public var packetType: Int16 = 0
     public var list: RANKLIST = RANKLIST()
     public init() {
@@ -12989,6 +14738,9 @@ public struct PACKET_ZC_TAEKWON_RANK: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_ZC_KILLER_POINT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var points: UInt32 = 0
     public var points_total: UInt32 = 0
@@ -13007,6 +14759,9 @@ public struct PACKET_ZC_KILLER_POINT: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_CZ_KILLER_RANK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
     public var packetType: Int16 = 0
     public init() {
     }
@@ -13019,6 +14774,9 @@ public struct PACKET_CZ_KILLER_RANK: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_KILLER_RANK: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + (10 + (4 * 10)))
+    }
     public var packetType: Int16 = 0
     public var list: RANKLIST = RANKLIST()
     public init() {
@@ -13034,6 +14792,9 @@ public struct PACKET_ZC_KILLER_RANK: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_CZ_REQ_RANKING: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var type: UInt16 = 0
     public init() {
@@ -13049,6 +14810,9 @@ public struct PACKET_CZ_REQ_RANKING: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_ACK_RANKING_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (24 + 4)
+    }
     @FixedLengthString(lengthOfBytes: 24)
     public var name: String
     public var points: UInt32 = 0
@@ -13065,6 +14829,9 @@ public struct PACKET_ZC_ACK_RANKING_sub: BinaryDecodable, BinaryEncodable, Senda
 }
 
 public struct PACKET_ZC_ACK_RANKING: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + (10 + (4 * 10)) + 4)
+    }
     public var packetType: Int16 = 0
     public var type: UInt16 = 0
     public var list: RANKLIST = RANKLIST()
@@ -13086,6 +14853,9 @@ public struct PACKET_ZC_ACK_RANKING: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_UPDATE_RANKING_POINT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var type: UInt16 = 0
     public var points: UInt32 = 0
@@ -13107,6 +14877,9 @@ public struct PACKET_ZC_UPDATE_RANKING_POINT: BinaryDecodable, BinaryEncodable, 
 }
 
 public struct PACKET_ZC_ACK_RANKING2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + (4 * 10) + (4 * 10) + 4)
+    }
     public var packetType: Int16 = 0
     public var type: UInt16 = 0
     @FixedSizeArray(size: 10, initialValue: 0)
@@ -13133,6 +14906,9 @@ public struct PACKET_ZC_ACK_RANKING2: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_CZ_LESSEFFECT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
     public var packetType: Int16 = 0
     public var state: Int32 = 0
     public init() {
@@ -13148,6 +14924,9 @@ public struct PACKET_CZ_LESSEFFECT: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CZ_ACTIVE_QUEST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 1)
+    }
     public var packetType: Int16 = 0
     public var quest_id: UInt32 = 0
     public var active: UInt8 = 0
@@ -13166,6 +14945,9 @@ public struct PACKET_CZ_ACTIVE_QUEST: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct PACKET_CZ_JOIN_BABY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var father_AID: UInt32 = 0
     public var mother_AID: UInt32 = 0
@@ -13187,6 +14969,9 @@ public struct PACKET_CZ_JOIN_BABY: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct PACKET_CZ_AUCTION_ITEM_SEARCH: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 24 + 2)
+    }
     public var packetType: Int16 = 0
     public var type: UInt16 = 0
     public var auction_id: UInt32 = 0
@@ -13212,6 +14997,9 @@ public struct PACKET_CZ_AUCTION_ITEM_SEARCH: BinaryDecodable, BinaryEncodable, S
 }
 
 public struct PACKET_CZ_AUCTION_BUY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
     public var packetType: Int16 = 0
     public var auction_id: UInt32 = 0
     public var money: UInt32 = 0
@@ -13230,6 +15018,9 @@ public struct PACKET_CZ_AUCTION_BUY: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_CZ_AUCTION_ADD: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 2)
+    }
     public var packetType: Int16 = 0
     public var now_money: UInt32 = 0
     public var max_money: UInt32 = 0
@@ -13251,6 +15042,9 @@ public struct PACKET_CZ_AUCTION_ADD: BinaryDecodable, BinaryEncodable, Sendable 
 }
 
 public struct PACKET_ZC_DRESSROOM_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var packetType: Int16 = 0
     public var view: UInt16 = 0
     public init() {
@@ -13266,6 +15060,9 @@ public struct PACKET_ZC_DRESSROOM_OPEN: BinaryDecodable, BinaryEncodable, Sendab
 }
 
 public struct PACKET_ZC_ROOM_NEWENTRY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var owner: Int32 = 0
@@ -13299,6 +15096,9 @@ public struct PACKET_ZC_ROOM_NEWENTRY: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct EQUIPSLOTINFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        ((4 * 4))
+    }
     @FixedSizeArray(size: 4, initialValue: 0)
     public var card: [UInt32]
     public init() {
@@ -13312,6 +15112,9 @@ public struct EQUIPSLOTINFO: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct ItemOptions: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 1)
+    }
     public var index: Int16 = 0
     public var value: Int16 = 0
     public var param: UInt8 = 0
@@ -13330,6 +15133,9 @@ public struct ItemOptions: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct NORMALITEM_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 1 + 2 + 4 + ((4 * 4)) + 4 + 1)
+    }
     public var index: Int16 = 0
     public var ITID: UInt32 = 0
     public var type: UInt8 = 0
@@ -13363,6 +15169,9 @@ public struct NORMALITEM_INFO: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct EQUIPITEM_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 1 + 4 + 4 + ((4 * 4)) + 4 + 2 + 2 + 1 + ((2 + 2 + 1) * 5) + 1 + 1 + 1)
+    }
     public var index: Int16 = 0
     public var ITID: UInt32 = 0
     public var type: UInt8 = 0
@@ -13415,6 +15224,9 @@ public struct EQUIPITEM_INFO: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct hotkey_data: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (1 + 4 + 2)
+    }
     public var isSkill: Int8 = 0
     public var id: UInt32 = 0
     public var count: Int16 = 0
@@ -13433,6 +15245,9 @@ public struct hotkey_data: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct REPAIRITEM_INFO2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + ((4 * 4)) + 1 + 1)
+    }
     public var index: Int16 = 0
     public var itemId: UInt32 = 0
     public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
@@ -13457,6 +15272,9 @@ public struct REPAIRITEM_INFO2: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct REPAIRITEM_INFO1: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 1 + ((4 * 4)))
+    }
     public var index: Int16 = 0
     public var itemId: UInt32 = 0
     public var refine: UInt8 = 0
@@ -13478,6 +15296,9 @@ public struct REPAIRITEM_INFO1: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct ach_list_info: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 1 + (4 * 10) + 4 + 1)
+    }
     public var ach_id: UInt32 = 0
     public var completed: UInt8 = 0
     @FixedSizeArray(size: 10, initialValue: 0)
@@ -13503,6 +15324,9 @@ public struct ach_list_info: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct SKILLDATA: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 2 + 2 + 1 + 2)
+    }
     public var id: UInt16 = 0
     public var inf: Int32 = 0
     public var level: UInt16 = 0
@@ -13533,6 +15357,9 @@ public struct SKILLDATA: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct GUILD_MEMBER_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 2 + 2 + 2 + 2 + 2 + 4 + 4 + 4 + 4 + 24)
+    }
     public var AID: UInt32 = 0
     public var GID: UInt32 = 0
     public var head: Int16 = 0
@@ -13579,6 +15406,9 @@ public struct GUILD_MEMBER_INFO: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct GUILD_SKILLDATA: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 2 + 2 + 24 + 1)
+    }
     public var id: UInt16 = 0
     public var inf: Int32 = 0
     public var level: UInt16 = 0
@@ -13610,6 +15440,9 @@ public struct GUILD_SKILLDATA: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct RELATED_GUILD_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 24)
+    }
     public var relation: Int32 = 0
     public var GDID: Int32 = 0
     @FixedLengthString(lengthOfBytes: 24)
@@ -13629,6 +15462,9 @@ public struct RELATED_GUILD_INFO: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct GRADE_ENCHANT_BLESSING: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 4 + 4)
+    }
     public var id: Int32 = 0
     public var amount: Int32 = 0
     public var max_blessing: Int32 = 0
@@ -13650,6 +15486,9 @@ public struct GRADE_ENCHANT_BLESSING: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct GRADE_ENCHANT_MATERIAL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 4 + 4 + 1)
+    }
     public var nameid: Int32 = 0
     public var amount: Int32 = 0
     public var price: Int32 = 0
@@ -13674,6 +15513,9 @@ public struct GRADE_ENCHANT_MATERIAL: BinaryDecodable, BinaryEncodable, Sendable
 }
 
 public struct CZ_PURCHASE_ITEM_FROMMC: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
     public var count: Int16 = 0
     public var index: Int16 = 0
     public init() {
@@ -13689,6 +15531,9 @@ public struct CZ_PURCHASE_ITEM_FROMMC: BinaryDecodable, BinaryEncodable, Sendabl
 }
 
 public struct RANKLIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (10 + (4 * 10))
+    }
     @FixedLengthString(lengthOfBytes: 10)
     public var names: String
     @FixedSizeArray(size: 10, initialValue: 0)
@@ -13706,6 +15551,9 @@ public struct RANKLIST: BinaryDecodable, BinaryEncodable, Sendable {
 }
 
 public struct packet_roulette_info_ack_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 2 + 2)
+    }
     public var Row: UInt16 = 0
     public var Position: UInt16 = 0
     public var ItemId: UInt32 = 0
@@ -13730,6 +15578,9 @@ public struct packet_roulette_info_ack_sub: BinaryDecodable, BinaryEncodable, Se
 }
 
 public struct PACKET_ZC_POSITION_ID_NAME_INFO_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 24)
+    }
     public var positionID: Int32 = 0
     @FixedLengthString(lengthOfBytes: 24)
     public var posName: String
