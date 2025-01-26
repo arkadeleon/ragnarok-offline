@@ -15,15 +15,18 @@ struct DetailView: View {
     @State private var clientDirectory = ObservableFile(file: .directory(GameResourceManager.default.baseURL))
     @State private var serverDirectory = ObservableFile(file: .directory(ServerResourceManager.default.workingDirectoryURL))
 
+    @State private var conversation = Conversation()
+    @State private var gameSession = GameSession()
+
     var body: some View {
         ZStack {
             switch item {
             case .files:
                 FilesView(title: "Files", directory: clientDirectory)
             case .messages:
-                MessagesView()
+                MessagesView(conversation: conversation)
             case .game:
-                GameView()
+                GameView(gameSession: gameSession)
             case .cube:
                 RealityCubeView()
             case .character:

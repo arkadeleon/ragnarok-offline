@@ -39,6 +39,10 @@ final class GameSession {
     @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
 
+    init() {
+        print("Init")
+    }
+
     @MainActor
     func login(username: String, password: String) {
         startLoginSession()
@@ -175,8 +179,4 @@ final class GameSession {
 //            }
 //        }
 //    }
-}
-
-extension EnvironmentValues {
-    @Entry var gameSession = GameSession()
 }

@@ -9,9 +9,8 @@ import RONetwork
 import SwiftUI
 
 struct CharMakeView: View {
+    var gameSession: GameSession
     var slot: UInt8
-
-    @Environment(\.gameSession) private var gameSession
 
     @State private var name = ""
     @State private var str: UInt8 = 1
@@ -69,5 +68,5 @@ struct CharMakeView: View {
 }
 
 #Preview {
-    CharMakeView(slot: 0)
+    CharMakeView(gameSession: GameSession(), slot: 0)
 }

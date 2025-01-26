@@ -9,9 +9,8 @@ import RONetwork
 import SwiftUI
 
 struct CharSelectView: View {
+    var gameSession: GameSession
     var chars: [CharInfo]
-
-    @Environment(\.gameSession) private var gameSession
 
     @State private var slot1: CharInfo?
     @State private var slot2: CharInfo?
@@ -151,7 +150,8 @@ struct CharSelectView: View {
         return char
     }()
 
-    CharSelectView(chars: [
-        char
-    ])
+    CharSelectView(
+        gameSession: GameSession(),
+        chars: [char]
+    )
 }

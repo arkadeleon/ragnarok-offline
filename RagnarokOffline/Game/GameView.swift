@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct GameView: View {
-    @Environment(\.gameSession) private var gameSession
+    var gameSession: GameSession
 
     var body: some View {
         ZStack {
             switch gameSession.phase {
             case .login:
-                LoginView()
+                LoginView(gameSession: gameSession)
             case .charServerList(let charServers):
-                CharServerListView(charServers: charServers)
+                CharServerListView(gameSession: gameSession, charServers: charServers)
             case .charSelect(let chars):
-                CharSelectView(chars: chars)
+                CharSelectView(gameSession: gameSession, chars: chars)
             case .charMake(let slot):
-                CharMakeView(slot: slot)
+                CharMakeView(gameSession: gameSession, slot: slot)
             case .mapLoading:
                 ProgressView()
             case .map(let mapName, let gat, let gnd, let position):
@@ -31,5 +31,5 @@ struct GameView: View {
 }
 
 #Preview {
-    GameView()
+    GameView(gameSession: GameSession())
 }

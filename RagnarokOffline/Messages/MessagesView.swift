@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MessagesView: View {
-    @Environment(\.conversation) private var conversation
+    var conversation: Conversation
 
     @State private var position = ScrollPosition(idType: UUID.self)
 
@@ -99,5 +99,5 @@ struct MessagesView: View {
 }
 
 #Preview {
-    MessagesView()
+    MessagesView(conversation: Conversation())
 }

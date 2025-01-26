@@ -251,7 +251,3 @@ class Conversation {
         self.mapSession = mapSession
     }
 }
-
-extension EnvironmentValues {
-    @Entry var conversation = Conversation()
-}

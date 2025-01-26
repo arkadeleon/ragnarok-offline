@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    @Environment(\.gameSession) private var gameSession
+    var gameSession: GameSession
 
     @State private var username = ClientSettings.shared.username
     @State private var password = ClientSettings.shared.password
@@ -70,5 +70,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
+    LoginView(gameSession: GameSession())
 }

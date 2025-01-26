@@ -9,9 +9,8 @@ import RONetwork
 import SwiftUI
 
 struct CharServerListView: View {
+    var gameSession: GameSession
     var charServers: [CharServerInfo]
-
-    @Environment(\.gameSession) private var gameSession
 
     var body: some View {
         ZStack {
@@ -44,5 +43,5 @@ struct CharServerListView: View {
 }
 
 #Preview {
-    CharServerListView(charServers: [])
+    CharServerListView(gameSession: GameSession(), charServers: [])
 }
