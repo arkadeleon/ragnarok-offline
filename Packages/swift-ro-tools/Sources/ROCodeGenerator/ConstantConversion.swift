@@ -231,6 +231,17 @@ let allConstantConversions: [ConstantConversion] = [
         outputType: "MonsterClass",
         extensions: [.decodable]
     ),
+    // MARK: - map/path.hpp
+    .cEnum(
+        source: "map/path.hpp",
+        type: "directions",
+        prefix: "DIR_",
+        exclude: [
+            "DIR_CENTER",
+            "DIR_MAX",
+        ],
+        outputType: "Direction"
+    ),
     // MARK: - map/pc.hpp
     .cEnum(
         source: "map/pc.hpp",
