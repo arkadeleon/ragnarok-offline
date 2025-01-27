@@ -51,7 +51,10 @@ class ObservableJob {
         attributes.append(.init(name: "Max Weight", value: job.maxWeight))
         attributes.append(.init(name: "HP Factor", value: job.hpFactor))
         attributes.append(.init(name: "HP Increase", value: job.hpIncrease))
+        attributes.append(.init(name: "SP Factor", value: job.spFactor))
         attributes.append(.init(name: "SP Increase", value: job.spIncrease))
+        attributes.append(.init(name: "AP Factor", value: job.apFactor))
+        attributes.append(.init(name: "AP Increase", value: job.apIncrease))
 
         return attributes
     }

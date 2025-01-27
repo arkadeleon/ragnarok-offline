@@ -19,6 +19,12 @@
     "Ammo Type" : {
 
     },
+    "AP Factor" : {
+
+    },
+    "AP Increase" : {
+
+    },
     "Armor Level" : {
 
     },
@@ -483,6 +489,9 @@
 
     },
     "SP" : {
+
+    },
+    "SP Factor" : {
 
     },
     "SP Increase" : {

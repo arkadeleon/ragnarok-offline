@@ -21,14 +21,26 @@ public struct Job: Equatable, Hashable, Identifiable, Sendable {
     /// Linear HP increase. Per base level: [HpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 500)
     public var hpIncrease: Int
 
+    /// Exponential SP increase. Per base level: [SpFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
+    public var spFactor: Int
+
     /// Linear SP increase. Per base level: [SpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 100)
     public var spIncrease: Int
+
+    /// Exponential AP increase. Per base level: [ApFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
+    public var apFactor: Int
+
+    /// Linear AP increase. Per base level: [ApIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
+    public var apIncrease: Int
+
+    /// Base ASPD for each weapon type. (Default: 2000)
+    public var baseASPD: [WeaponType : Int]
 
     /// Job level bonus stats/traits.
     public var bonusStats: [[Parameter : Int]]
 
-    /// Base ASPD for each weapon type. (Default: 2000)
-    public var baseASPD: [WeaponType : Int]
+    /// Maximum stats/traits applicable. (Default: battle_config::max_*_parameter)
+    public var maxStats: [Parameter : Int]?
 
     /// Maximum base level. (Default: MAX_LEVEL)
     public var maxBaseLevel: Int
@@ -68,7 +80,10 @@ public struct Job: Equatable, Hashable, Identifiable, Sendable {
         self.maxWeight = basicStats.maxWeight
         self.hpFactor = basicStats.hpFactor
         self.hpIncrease = basicStats.hpIncrease
+        self.spFactor = basicStats.spFactor
         self.spIncrease = basicStats.spIncrease
+        self.apFactor = basicStats.apFactor
+        self.apIncrease = basicStats.apIncrease
 
         self.baseASPD = aspdStats.baseASPD
 

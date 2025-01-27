@@ -21,8 +21,17 @@ struct JobBasicStats: Decodable {
     /// Linear HP increase. Per base level: [HpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 500)
     var hpIncrease: Int
 
+    /// Exponential SP increase. Per base level: [SpFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
+    var spFactor: Int
+
     /// Linear SP increase. Per base level: [SpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 100)
     var spIncrease: Int
+
+    /// Exponential AP increase. Per base level: [ApFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
+    var apFactor: Int
+
+    /// Linear AP increase. Per base level: [ApIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
+    var apIncrease: Int
 
     /// Job level bonus stats/traits.
     var bonusStats: [LevelBonusStats]
@@ -32,7 +41,10 @@ struct JobBasicStats: Decodable {
         case maxWeight = "MaxWeight"
         case hpFactor = "HpFactor"
         case hpIncrease = "HpIncrease"
+        case spFactor = "SpFactor"
         case spIncrease = "SpIncrease"
+        case apFactor = "ApFactor"
+        case apIncrease = "ApIncrease"
         case bonusStats = "BonusStats"
     }
 
@@ -43,7 +55,10 @@ struct JobBasicStats: Decodable {
         self.maxWeight = try container.decodeIfPresent(Int.self, forKey: .maxWeight) ?? 20000
         self.hpFactor = try container.decodeIfPresent(Int.self, forKey: .hpFactor) ?? 0
         self.hpIncrease = try container.decodeIfPresent(Int.self, forKey: .hpIncrease) ?? 500
+        self.spFactor = try container.decodeIfPresent(Int.self, forKey: .spFactor) ?? 0
         self.spIncrease = try container.decodeIfPresent(Int.self, forKey: .spIncrease) ?? 100
+        self.apFactor = try container.decodeIfPresent(Int.self, forKey: .apFactor) ?? 0
+        self.apIncrease = try container.decodeIfPresent(Int.self, forKey: .apIncrease) ?? 0
         self.bonusStats = try container.decodeIfPresent([LevelBonusStats].self, forKey: .bonusStats) ?? []
     }
 }
