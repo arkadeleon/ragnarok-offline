@@ -985,6 +985,29 @@ public enum StatusChangeID: Int, CaseIterable, Sendable {
     case all_glastheim_recall = 995
     case all_thanatos_recall = 996
     case all_lighthalzen_recall = 997
+    case hogogong = 998
+    case marine_festival = 999
+    case sandy_festival = 1000
+    case ki_sul_rampage = 1001
+    case colors_of_hyun_rok_1 = 1002
+    case colors_of_hyun_rok_2 = 1003
+    case colors_of_hyun_rok_3 = 1004
+    case colors_of_hyun_rok_4 = 1005
+    case colors_of_hyun_rok_5 = 1006
+    case colors_of_hyun_rok_6 = 1007
+    case colors_of_hyun_rok_buff = 1008
+    case temporary_communion = 1009
+    case blessing_of_m_creatures = 1010
+    case blessing_of_m_c_debuff = 1011
+    case rising_sun = 1012
+    case noon_sun = 1013
+    case sunset_sun = 1014
+    case rising_moon = 1015
+    case midnight_moon = 1016
+    case dawn_moon = 1017
+    case star_burst = 1018
+    case sky_enchant = 1019
+    case wild_walk = 1020
 }
 
 extension StatusChangeID: CodingKey {
@@ -1968,6 +1991,29 @@ extension StatusChangeID: CodingKey {
         case .all_glastheim_recall: "ALL_GLASTHEIM_RECALL"
         case .all_thanatos_recall: "ALL_THANATOS_RECALL"
         case .all_lighthalzen_recall: "ALL_LIGHTHALZEN_RECALL"
+        case .hogogong: "HOGOGONG"
+        case .marine_festival: "MARINE_FESTIVAL"
+        case .sandy_festival: "SANDY_FESTIVAL"
+        case .ki_sul_rampage: "KI_SUL_RAMPAGE"
+        case .colors_of_hyun_rok_1: "COLORS_OF_HYUN_ROK_1"
+        case .colors_of_hyun_rok_2: "COLORS_OF_HYUN_ROK_2"
+        case .colors_of_hyun_rok_3: "COLORS_OF_HYUN_ROK_3"
+        case .colors_of_hyun_rok_4: "COLORS_OF_HYUN_ROK_4"
+        case .colors_of_hyun_rok_5: "COLORS_OF_HYUN_ROK_5"
+        case .colors_of_hyun_rok_6: "COLORS_OF_HYUN_ROK_6"
+        case .colors_of_hyun_rok_buff: "COLORS_OF_HYUN_ROK_BUFF"
+        case .temporary_communion: "TEMPORARY_COMMUNION"
+        case .blessing_of_m_creatures: "BLESSING_OF_M_CREATURES"
+        case .blessing_of_m_c_debuff: "BLESSING_OF_M_C_DEBUFF"
+        case .rising_sun: "RISING_SUN"
+        case .noon_sun: "NOON_SUN"
+        case .sunset_sun: "SUNSET_SUN"
+        case .rising_moon: "RISING_MOON"
+        case .midnight_moon: "MIDNIGHT_MOON"
+        case .dawn_moon: "DAWN_MOON"
+        case .star_burst: "STAR_BURST"
+        case .sky_enchant: "SKY_ENCHANT"
+        case .wild_walk: "WILD_WALK"
         }
     }
 
@@ -2951,6 +2997,29 @@ extension StatusChangeID: CodingKey {
         case "ALL_GLASTHEIM_RECALL": self = .all_glastheim_recall
         case "ALL_THANATOS_RECALL": self = .all_thanatos_recall
         case "ALL_LIGHTHALZEN_RECALL": self = .all_lighthalzen_recall
+        case "HOGOGONG": self = .hogogong
+        case "MARINE_FESTIVAL": self = .marine_festival
+        case "SANDY_FESTIVAL": self = .sandy_festival
+        case "KI_SUL_RAMPAGE": self = .ki_sul_rampage
+        case "COLORS_OF_HYUN_ROK_1": self = .colors_of_hyun_rok_1
+        case "COLORS_OF_HYUN_ROK_2": self = .colors_of_hyun_rok_2
+        case "COLORS_OF_HYUN_ROK_3": self = .colors_of_hyun_rok_3
+        case "COLORS_OF_HYUN_ROK_4": self = .colors_of_hyun_rok_4
+        case "COLORS_OF_HYUN_ROK_5": self = .colors_of_hyun_rok_5
+        case "COLORS_OF_HYUN_ROK_6": self = .colors_of_hyun_rok_6
+        case "COLORS_OF_HYUN_ROK_BUFF": self = .colors_of_hyun_rok_buff
+        case "TEMPORARY_COMMUNION": self = .temporary_communion
+        case "BLESSING_OF_M_CREATURES": self = .blessing_of_m_creatures
+        case "BLESSING_OF_M_C_DEBUFF": self = .blessing_of_m_c_debuff
+        case "RISING_SUN": self = .rising_sun
+        case "NOON_SUN": self = .noon_sun
+        case "SUNSET_SUN": self = .sunset_sun
+        case "RISING_MOON": self = .rising_moon
+        case "MIDNIGHT_MOON": self = .midnight_moon
+        case "DAWN_MOON": self = .dawn_moon
+        case "STAR_BURST": self = .star_burst
+        case "SKY_ENCHANT": self = .sky_enchant
+        case "WILD_WALK": self = .wild_walk
         default: return nil
         }
     }

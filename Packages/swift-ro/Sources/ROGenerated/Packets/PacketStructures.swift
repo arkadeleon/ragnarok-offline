@@ -290,6 +290,7 @@ public let HEADER_CZ_REQ_SE_CASH_TAB_CODE: Int16 = 0x846
 public let HEADER_ZC_ACK_SE_CASH_ITEM_LIST2: Int16 = 0x8c0
 public let HEADER_CZ_REQ_MERGE_ITEM: Int16 = 0x96e
 public let HEADER_CZ_RESET_SKILL: Int16 = 0xbb1
+public let HEADER_ZC_SKILLINFO_UPDATE: Int16 = 0x10e
 public let HEADER_ZC_BOSS_INFO: Int16 = 0x293
 public let HEADER_CZ_INVENTORY_TAB: Int16 = 0x907
 public let HEADER_ZC_INVENTORY_TAB: Int16 = 0x908
@@ -419,6 +420,20 @@ public let HEADER_CZ_AUCTION_BUY: Int16 = 0x24f
 public let HEADER_CZ_AUCTION_ADD: Int16 = 0x24d
 public let HEADER_ZC_DRESSROOM_OPEN: Int16 = 0xa02
 public let HEADER_ZC_ROOM_NEWENTRY: Int16 = 0xd7
+public let HEADER_ZC_MONSTER_INFO: Int16 = 0x18c
+public let HEADER_ZC_ACK_REQNAME_BYGID: Int16 = 0xaf7
+public let HEADER_ZC_PET_ACT: Int16 = 0x1aa
+public let HEADER_ZC_COMBODELAY: Int16 = 0x1d2
+public let HEADER_ZC_BLADESTOP: Int16 = 0x1d1
+public let HEADER_ZC_MVP: Int16 = 0x10c
+public let HEADER_ZC_MVP_GETTING_SPECIAL_EXP: Int16 = 0x10b
+public let HEADER_ZC_THROW_MVPITEM: Int16 = 0x10d
+public let HEADER_ZC_UPDATE_MAPINFO: Int16 = 0x192
+public let HEADER_CZ_REQ_ENTER_ROOM: Int16 = 0xd9
+public let HEADER_CZ_CHANGE_CHATROOM: Int16 = 0xde
+public let HEADER_CZ_ADD_EXCHANGE_ITEM: Int16 = 0xe8
+public let HEADER_CZ_MOVE_ITEM_FROM_CART_TO_BODY: Int16 = 0x127
+public let HEADER_CZ_SELECT_WARPPOINT: Int16 = 0x11b
 public let HEADER_ZC_NOTIFY_CHAT: Int16 = 0x8d
 public let HEADER_ZC_ITEM_ENTRY: Int16 = 0x9d
 public let HEADER_ZC_MVP_GETTING_ITEM: Int16 = 0x10a
@@ -12035,6 +12050,36 @@ public struct PACKET_CZ_RESET_SKILL: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
+public struct PACKET_ZC_SKILLINFO_UPDATE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 2 + 2 + 1)
+    }
+    public var packetType: Int16 = 0
+    public var skillId: UInt16 = 0
+    public var level: UInt16 = 0
+    public var sp: UInt16 = 0
+    public var range2: UInt16 = 0
+    public var upFlag: Int8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        skillId = try decoder.decode(UInt16.self)
+        level = try decoder.decode(UInt16.self)
+        sp = try decoder.decode(UInt16.self)
+        range2 = try decoder.decode(UInt16.self)
+        upFlag = try decoder.decode(Int8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(skillId)
+        try encoder.encode(level)
+        try encoder.encode(sp)
+        try encoder.encode(range2)
+        try encoder.encode(upFlag)
+    }
+}
+
 public struct PACKET_ZC_BOSS_INFO: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
         (2 + 1 + 4 + 4 + 2 + 2 + 2 + 2 + 51)
@@ -15092,6 +15137,359 @@ public struct PACKET_ZC_ROOM_NEWENTRY: BinaryDecodable, BinaryEncodable, Sendabl
         try encoder.encode(users)
         try encoder.encode(type)
         try encoder.encode(title)
+    }
+}
+
+public struct PACKET_ZC_MONSTER_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 2 + 4 + 2 + 2 + 2 + 2 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1)
+    }
+    public var packetType: Int16 = 0
+    public var class_: UInt16 = 0
+    public var level: UInt16 = 0
+    public var size: UInt16 = 0
+    public var hp: UInt32 = 0
+    public var def: Int16 = 0
+    public var race: UInt16 = 0
+    public var mdef: Int16 = 0
+    public var element: UInt16 = 0
+    public var water: UInt8 = 0
+    public var earth: UInt8 = 0
+    public var fire: UInt8 = 0
+    public var wind: UInt8 = 0
+    public var poison: UInt8 = 0
+    public var holy: UInt8 = 0
+    public var shadow: UInt8 = 0
+    public var ghost: UInt8 = 0
+    public var undead: UInt8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        class_ = try decoder.decode(UInt16.self)
+        level = try decoder.decode(UInt16.self)
+        size = try decoder.decode(UInt16.self)
+        hp = try decoder.decode(UInt32.self)
+        def = try decoder.decode(Int16.self)
+        race = try decoder.decode(UInt16.self)
+        mdef = try decoder.decode(Int16.self)
+        element = try decoder.decode(UInt16.self)
+        water = try decoder.decode(UInt8.self)
+        earth = try decoder.decode(UInt8.self)
+        fire = try decoder.decode(UInt8.self)
+        wind = try decoder.decode(UInt8.self)
+        poison = try decoder.decode(UInt8.self)
+        holy = try decoder.decode(UInt8.self)
+        shadow = try decoder.decode(UInt8.self)
+        ghost = try decoder.decode(UInt8.self)
+        undead = try decoder.decode(UInt8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(class_)
+        try encoder.encode(level)
+        try encoder.encode(size)
+        try encoder.encode(hp)
+        try encoder.encode(def)
+        try encoder.encode(race)
+        try encoder.encode(mdef)
+        try encoder.encode(element)
+        try encoder.encode(water)
+        try encoder.encode(earth)
+        try encoder.encode(fire)
+        try encoder.encode(wind)
+        try encoder.encode(poison)
+        try encoder.encode(holy)
+        try encoder.encode(shadow)
+        try encoder.encode(ghost)
+        try encoder.encode(undead)
+    }
+}
+
+public struct PACKET_ZC_ACK_REQNAME_BYGID: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4 + 24)
+    }
+    public var packetType: Int16 = 0
+    public var flag: UInt16 = 0
+    public var CID: UInt32 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        flag = try decoder.decode(UInt16.self)
+        CID = try decoder.decode(UInt32.self)
+        name = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(flag)
+        try encoder.encode(CID)
+        try encoder.encode(name, lengthOfBytes: 24)
+    }
+}
+
+public struct PACKET_ZC_PET_ACT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var GID: UInt32 = 0
+    public var data: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        GID = try decoder.decode(UInt32.self)
+        data = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(GID)
+        try encoder.encode(data)
+    }
+}
+
+public struct PACKET_ZC_COMBODELAY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var delay: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        AID = try decoder.decode(UInt32.self)
+        delay = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(AID)
+        try encoder.encode(delay)
+    }
+}
+
+public struct PACKET_ZC_BLADESTOP: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var srcId: UInt32 = 0
+    public var targetId: UInt32 = 0
+    public var flag: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        srcId = try decoder.decode(UInt32.self)
+        targetId = try decoder.decode(UInt32.self)
+        flag = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(srcId)
+        try encoder.encode(targetId)
+        try encoder.encode(flag)
+    }
+}
+
+public struct PACKET_ZC_MVP: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        AID = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(AID)
+    }
+}
+
+public struct PACKET_ZC_MVP_GETTING_SPECIAL_EXP: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var exp: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        exp = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(exp)
+    }
+}
+
+public struct PACKET_ZC_THROW_MVPITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2)
+    }
+    public var packetType: Int16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+    }
+}
+
+public struct PACKET_ZC_UPDATE_MAPINFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 2 + 2 + 16)
+    }
+    public var packetType: Int16 = 0
+    public var x: Int16 = 0
+    public var y: Int16 = 0
+    public var type: Int16 = 0
+    @FixedLengthString(lengthOfBytes: 16)
+    public var mapname: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        x = try decoder.decode(Int16.self)
+        y = try decoder.decode(Int16.self)
+        type = try decoder.decode(Int16.self)
+        mapname = try decoder.decode(String.self, lengthOfBytes: 16)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(x)
+        try encoder.encode(y)
+        try encoder.encode(type)
+        try encoder.encode(mapname, lengthOfBytes: 16)
+    }
+}
+
+public struct PACKET_CZ_REQ_ENTER_ROOM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 8)
+    }
+    public var packetType: Int16 = 0
+    public var chat_id: UInt32 = 0
+    @FixedLengthString(lengthOfBytes: 8)
+    public var password: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        chat_id = try decoder.decode(UInt32.self)
+        password = try decoder.decode(String.self, lengthOfBytes: 8)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(chat_id)
+        try encoder.encode(password, lengthOfBytes: 8)
+    }
+}
+
+public struct PACKET_CZ_CHANGE_CHATROOM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var limit: UInt16 = 0
+    public var type: UInt8 = 0
+    @FixedLengthString(lengthOfBytes: 8)
+    public var password: String
+    public var title: String = ""
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        limit = try decoder.decode(UInt16.self)
+        type = try decoder.decode(UInt8.self)
+        password = try decoder.decode(String.self, lengthOfBytes: 8)
+        title = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 2 + 1 + 8)))
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(limit)
+        try encoder.encode(type)
+        try encoder.encode(password, lengthOfBytes: 8)
+        try encoder.encode(title)
+    }
+}
+
+public struct PACKET_CZ_ADD_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var index: UInt16 = 0
+    public var amount: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        index = try decoder.decode(UInt16.self)
+        amount = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(index)
+        try encoder.encode(amount)
+    }
+}
+
+public struct PACKET_CZ_MOVE_ITEM_FROM_CART_TO_BODY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var index: UInt16 = 0
+    public var amount: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        index = try decoder.decode(UInt16.self)
+        amount = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(index)
+        try encoder.encode(amount)
+    }
+}
+
+public struct PACKET_CZ_SELECT_WARPPOINT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2 + 16)
+    }
+    public var packetType: Int16 = 0
+    public var skill_id: Int16 = 0
+    @FixedLengthString(lengthOfBytes: 16)
+    public var mapname: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        skill_id = try decoder.decode(Int16.self)
+        mapname = try decoder.decode(String.self, lengthOfBytes: 16)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(skill_id)
+        try encoder.encode(mapname, lengthOfBytes: 16)
     }
 }
 
