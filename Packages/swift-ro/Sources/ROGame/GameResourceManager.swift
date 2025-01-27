@@ -51,6 +51,17 @@ final public class GameResourceManager {
         return image
     }
 
+    // MARK: - BGM
+
+    public func bgmURL(forMapName mapName: String) throws -> URL {
+        guard let bgm = MapInfoTable.shared.mapBGM(forMapName: mapName) else {
+            throw GameResourceError.resourceNotFound
+        }
+
+        let url = baseURL.appending(path: "BGM/\(bgm)")
+        return url
+    }
+
     // MARK: - data
 
     public func gat(forMapName mapName: String) async throws -> GAT {
