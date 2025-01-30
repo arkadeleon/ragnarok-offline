@@ -67,6 +67,12 @@ struct StatusChangeInfoView: View {
                     }
                 }
 
+                if let localizedDescription = statusChange.localizedDescription {
+                    DatabaseRecordSectionView("Description") {
+                        Text(localizedDescription)
+                    }
+                }
+
                 if let script = statusChange.script {
                     DatabaseRecordSectionView("Script") {
                         Text(script.trimmingCharacters(in: .whitespacesAndNewlines))

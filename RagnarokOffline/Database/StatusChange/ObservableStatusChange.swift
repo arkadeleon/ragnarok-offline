@@ -5,9 +5,12 @@
 //  Created by Leon Li on 2024/11/7.
 //
 
+import CoreGraphics
 import Observation
 import RODatabase
+import ROGame
 import ROGenerated
+import ROResources
 
 @Observable
 @dynamicMemberLookup
@@ -15,10 +18,12 @@ class ObservableStatusChange {
     private let mode: DatabaseMode
     private let statusChange: StatusChange
 
+    var iconImage: CGImage?
     var fail: [ObservableStatusChange] = []
     var endOnStart: [ObservableStatusChange] = []
     var endReturn: [ObservableStatusChange] = []
     var endOnEnd: [ObservableStatusChange] = []
+    var localizedDescription: String?
 
     var displayName: String {
         statusChange.status.stringValue
@@ -40,6 +45,12 @@ class ObservableStatusChange {
 
     subscript<Value>(dynamicMember keyPath: KeyPath<StatusChange, Value>) -> Value {
         statusChange[keyPath: keyPath]
+    }
+
+    func fetchIconImage() async throws {
+        if iconImage == nil {
+            iconImage = try await GameResourceManager.default.statusIconImage(forStatusID: statusChange.icon.rawValue)
+        }
     }
 
     func fetchDetail() async {
@@ -68,6 +79,8 @@ class ObservableStatusChange {
                 ObservableStatusChange(mode: mode, statusChange: statusChange)
             }
         }
+
+        localizedDescription = StatusInfoTable.shared.localizedDescription(forStatusID: statusChange.icon.rawValue)
     }
 }
 

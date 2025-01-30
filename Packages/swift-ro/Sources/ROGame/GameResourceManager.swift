@@ -214,6 +214,17 @@ final public class GameResourceManager {
         return image
     }
 
+    public func statusIconImage(forStatusID statusID: Int) throws -> CGImage? {
+        guard let iconName = StatusInfoTable.shared.iconName(forStatusID: statusID) else {
+            throw GameResourceError.resourceNotFound
+        }
+
+        let path = GRF.Path(components: ["data", "texture", "effect", iconName])
+        let data = try contentsOfEntry(at: path)
+        let image = CGImageCreateWithData(data)
+        return image
+    }
+
     // MARK: - General
 
     public func image(forBMPPath path: GRF.Path) async -> CGImage? {

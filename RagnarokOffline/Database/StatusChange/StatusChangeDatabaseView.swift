@@ -14,20 +14,14 @@ struct StatusChangeDatabaseView: View {
         ResponsiveView {
             List(database.filteredRecords) { statusChange in
                 NavigationLink(value: statusChange) {
-                    Text(statusChange.displayName)
+                    StatusChangeCell(statusChange: statusChange)
                 }
             }
             .listStyle(.plain)
         } regular: {
             List(database.filteredRecords) { statusChange in
                 NavigationLink(value: statusChange) {
-                    HStack {
-                        Text(statusChange.displayName)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                        Text(statusChange.icon.stringValue)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            .foregroundStyle(Color.secondary)
-                    }
+                    StatusChangeCell(statusChange: statusChange)
                 }
             }
             .listStyle(.plain)

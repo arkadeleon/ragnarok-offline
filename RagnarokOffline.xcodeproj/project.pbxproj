@@ -74,6 +74,7 @@
 		3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC52B8C830D00E746D7 /* SettingsView.swift */; };
 		3582FFCA2B8DB9FE00E746D7 /* FilePreviewTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC92B8DB9FE00E746D7 /* FilePreviewTabView.swift */; };
 		3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */; };
+		3589B7B22D495C1700155884 /* StatusChangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3589B7B12D495C1500155884 /* StatusChangeCell.swift */; };
 		358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C662BC7707400FAF45D /* ROFileFormats */; };
 		358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6C2BC7707400FAF45D /* RONetwork */; };
 		358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6E2BC7707400FAF45D /* RORenderers */; };
@@ -240,6 +241,7 @@
 		3582FFC92B8DB9FE00E746D7 /* FilePreviewTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePreviewTabView.swift; sourceTree = "<group>"; };
 		3582FFCB2B8DBD3300E746D7 /* FileGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileGridCell.swift; sourceTree = "<group>"; };
 		358362CA2BD558DC00821500 /* RagnarokOffline.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = RagnarokOffline.xctestplan; sourceTree = "<group>"; };
+		3589B7B12D495C1500155884 /* StatusChangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeCell.swift; sourceTree = "<group>"; };
 		3594DD542BF5FB6E00575F3D /* GNDFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNDFilePreviewView.swift; sourceTree = "<group>"; };
 		3594DD562BF5FCB600575F3D /* ModelViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelViewer.swift; sourceTree = "<group>"; };
 		3599BD492C3F90250010DBE7 /* ObservableFile+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableFile+Preview.swift"; sourceTree = "<group>"; };
@@ -669,6 +671,7 @@
 			isa = PBXGroup;
 			children = (
 				35B422F32BEF602500681AA2 /* StatusChangeDatabaseView.swift */,
+				3589B7B12D495C1500155884 /* StatusChangeCell.swift */,
 				35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */,
 				35B422F12BEF5F3000681AA2 /* StatusChangeProvider.swift */,
 				35FEB6C32CDCBED400F24A4A /* ObservableStatusChange.swift */,
@@ -882,6 +885,7 @@
 				35FEB6C42CDCBED900F24A4A /* ObservableStatusChange.swift in Sources */,
 				35239DF72BBDA0760039F7D5 /* LoadStatus.swift in Sources */,
 				35B422D22BEB6C7C00681AA2 /* PetDatabaseView.swift in Sources */,
+				3589B7B22D495C1700155884 /* StatusChangeCell.swift in Sources */,
 				35B422D42BEB785500681AA2 /* ObservablePet.swift in Sources */,
 				35AD22AC2D13292500A7BB6C /* PlayerStatusOverlayView.swift in Sources */,
 				35652B432B960D100075AD71 /* MapDatabaseView.swift in Sources */,

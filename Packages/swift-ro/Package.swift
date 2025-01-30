@@ -143,6 +143,7 @@ let package = Package(
         .testTarget(
             name: "ROResourcesTests",
             dependencies: [
+                "ROGenerated",
                 "ROResources",
             ]),
         .target(
