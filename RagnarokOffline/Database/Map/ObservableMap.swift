@@ -43,8 +43,8 @@ class ObservableMap {
         map[keyPath: keyPath]
     }
 
-    func fetchLocalizedName() {
-        localizedName = MapInfoTable.shared.localizedMapName(forMapName: map.name)
+    func fetchLocalizedName() async {
+        localizedName = await MapInfoTable.shared.localizedMapName(forMapName: map.name)
     }
 
     func fetchImage() async {

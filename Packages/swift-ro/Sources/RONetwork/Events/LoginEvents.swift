@@ -28,7 +28,7 @@ public enum LoginEvents {
     public struct Refused: Event {
         public let message: String
 
-        init(packet: PACKET_AC_REFUSE_LOGIN) {
+        init(packet: PACKET_AC_REFUSE_LOGIN) async {
             let messageCode = switch packet.error {
             case   0: 6     // Unregistered ID
             case   1: 7     // Incorrect Password
@@ -55,7 +55,7 @@ public enum LoginEvents {
             default : 9
             }
 
-            self.message = MessageStringTable.shared.localizedMessageString(at: messageCode)
+            self.message = await MessageStringTable.shared.localizedMessageString(at: messageCode)
                 .replacingOccurrences(of: "%s", with: packet.unblock_time)
         }
     }

@@ -25,7 +25,7 @@ struct SkillInfoView: View {
         .background(.background)
         .navigationTitle(skill.displayName)
         .task {
-            skill.fetchDetail()
+            await skill.fetchDetail()
         }
     }
 }

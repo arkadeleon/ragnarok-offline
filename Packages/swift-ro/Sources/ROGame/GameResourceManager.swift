@@ -53,8 +53,8 @@ final public class GameResourceManager {
 
     // MARK: - BGM
 
-    public func bgmURL(forMapName mapName: String) throws -> URL {
-        guard let bgm = MapInfoTable.shared.mapBGM(forMapName: mapName) else {
+    public func bgmURL(forMapName mapName: String) async throws -> URL {
+        guard let bgm = await MapInfoTable.shared.mapBGM(forMapName: mapName) else {
             throw GameResourceError.resourceNotFound
         }
 
@@ -106,7 +106,7 @@ final public class GameResourceManager {
     // MARK: - data\sprite
 
     public func sprite(forItemID itemID: Int) async throws -> (spr: SPR, act: ACT) {
-        guard let resourceName = ItemInfoTable.shared.identifiedItemResourceName(forItemID: itemID) else {
+        guard let resourceName = await ItemInfoTable.shared.identifiedItemResourceName(forItemID: itemID) else {
             throw GameResourceError.resourceNotFound
         }
 
@@ -122,7 +122,7 @@ final public class GameResourceManager {
     }
 
     public func sprite(forMonsterID monsterID: Int) async throws -> (spr: SPR, act: ACT) {
-        guard let resourceName = MonsterInfoTable.shared.monsterResourceName(forMonsterID: monsterID) else {
+        guard let resourceName = await MonsterInfoTable.shared.monsterResourceName(forMonsterID: monsterID) else {
             throw GameResourceError.resourceNotFound
         }
 
@@ -183,7 +183,7 @@ final public class GameResourceManager {
     }
 
     public func itemIconImage(forItemID itemID: Int) async throws -> CGImage? {
-        guard let resourceName = ItemInfoTable.shared.identifiedItemResourceName(forItemID: itemID) else {
+        guard let resourceName = await ItemInfoTable.shared.identifiedItemResourceName(forItemID: itemID) else {
             throw GameResourceError.resourceNotFound
         }
 
@@ -193,7 +193,7 @@ final public class GameResourceManager {
     }
 
     public func itemPreviewImage(forItemID itemID: Int) async throws -> CGImage? {
-        guard let resourceName = ItemInfoTable.shared.identifiedItemResourceName(forItemID: itemID) else {
+        guard let resourceName = await ItemInfoTable.shared.identifiedItemResourceName(forItemID: itemID) else {
             throw GameResourceError.resourceNotFound
         }
 
@@ -214,8 +214,8 @@ final public class GameResourceManager {
         return image
     }
 
-    public func statusIconImage(forStatusID statusID: Int) throws -> CGImage? {
-        guard let iconName = StatusInfoTable.shared.iconName(forStatusID: statusID) else {
+    public func statusIconImage(forStatusID statusID: Int) async throws -> CGImage? {
+        guard let iconName = await StatusInfoTable.shared.iconName(forStatusID: statusID) else {
             throw GameResourceError.resourceNotFound
         }
 

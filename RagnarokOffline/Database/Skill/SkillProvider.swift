@@ -14,7 +14,7 @@ struct SkillProvider: DatabaseRecordProvider {
             ObservableSkill(mode: mode, skill: skill)
         }
         for skill in skills {
-            skill.fetchLocalizedName()
+            await skill.fetchLocalizedName()
         }
         return skills
     }

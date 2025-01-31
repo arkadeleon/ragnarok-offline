@@ -137,8 +137,8 @@ class ObservableItem {
         item[keyPath: keyPath]
     }
 
-    func fetchLocalizedName() {
-        localizedName = ItemInfoTable.shared.localizedIdentifiedItemName(forItemID: item.id)
+    func fetchLocalizedName() async {
+        localizedName = await ItemInfoTable.shared.localizedIdentifiedItemName(forItemID: item.id)
     }
 
     func fetchIconImage() async throws {
@@ -150,7 +150,7 @@ class ObservableItem {
     func fetchDetail() async throws {
         previewImage = try await GameResourceManager.default.itemPreviewImage(forItemID: item.id)
 
-        localizedDescription = ItemInfoTable.shared.localizedIdentifiedItemDescription(forItemID: item.id)
+        localizedDescription = await ItemInfoTable.shared.localizedIdentifiedItemDescription(forItemID: item.id)
 
         let monsterDatabase = MonsterDatabase.database(for: mode)
 

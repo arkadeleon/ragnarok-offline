@@ -99,7 +99,7 @@ struct MapSceneView: View {
             camera.transform = cameraTransform(for: player.position)
             root.addChild(camera)
 
-            if let bgmURL = try? GameResourceManager.default.bgmURL(forMapName: mapName) {
+            if let bgmURL = try? await GameResourceManager.default.bgmURL(forMapName: mapName) {
                 let configuration = AudioFileResource.Configuration(shouldLoop: true, calibration: .relative(dBSPL: 20 * log10(10)))
                 if let audioResource = try? await AudioFileResource(contentsOf: bgmURL, withName: mapName, configuration: configuration) {
                     root.playAudio(audioResource)

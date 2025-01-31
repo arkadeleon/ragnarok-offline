@@ -14,7 +14,7 @@ struct ItemProvider: DatabaseRecordProvider {
             ObservableItem(mode: mode, item: item)
         }
         for item in usableItems {
-            item.fetchLocalizedName()
+            await item.fetchLocalizedName()
         }
         return usableItems
     }
@@ -28,7 +28,7 @@ struct ItemProvider: DatabaseRecordProvider {
             ObservableItem(mode: mode, item: item)
         }
         for item in equipItems + etcItems {
-            item.fetchLocalizedName()
+            await item.fetchLocalizedName()
         }
         return equipItems + etcItems
     }

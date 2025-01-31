@@ -80,7 +80,7 @@ class ObservableStatusChange {
             }
         }
 
-        localizedDescription = StatusInfoTable.shared.localizedDescription(forStatusID: statusChange.icon.rawValue)
+        localizedDescription = await StatusInfoTable.shared.localizedDescription(forStatusID: statusChange.icon.rawValue)
     }
 }
 

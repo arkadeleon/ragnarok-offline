@@ -9,7 +9,7 @@ import Foundation
 @preconcurrency import Lua
 import ROCore
 
-final public class ItemInfoTable: Sendable {
+public actor ItemInfoTable {
     enum LocalizationInfoDataSource {
         case lua(context: LuaContext)
         case txt(identifiedItemNamesByID: [Int : Data], identifiedItemDescriptionsByID: [Int : Data])
@@ -18,138 +18,134 @@ final public class ItemInfoTable: Sendable {
     public static let shared = ItemInfoTable(locale: .current)
 
     let locale: Locale
-    let resourceInfoContext: LuaContext
-    let localizationInfoDataSource: LocalizationInfoDataSource
 
-    init(locale: Locale) {
-        self.locale = locale
+    lazy var resourceInfoContext: LuaContext = {
+        let context = LuaContext()
 
-        resourceInfoContext = {
+        do {
+            if let url = Bundle.module.url(forResource: "itemInfo", withExtension: "lub", locale: .korean) {
+                let data = try Data(contentsOf: url)
+                try context.load(data)
+            }
+
+            try context.parse("""
+            function unidentifiedItemResourceName(itemID)
+                return tbl[itemID]["unidentifiedResourceName"]
+            end
+            function identifiedItemResourceName(itemID)
+                return tbl[itemID]["identifiedResourceName"]
+            end
+            function itemSlotCount(itemID)
+                return tbl[itemID]["slotCount"]
+            end
+            """)
+        } catch {
+            print(error)
+        }
+
+        return context
+    }()
+
+    lazy var localizationInfoDataSource: LocalizationInfoDataSource = {
+        if let url = Bundle.module.url(forResource: "itemInfo", withExtension: "lub", locale: locale) {
             let context = LuaContext()
 
             do {
-                if let url = Bundle.module.url(forResource: "itemInfo", withExtension: "lub", locale: .korean) {
-                    let data = try Data(contentsOf: url)
-                    try context.load(data)
-                }
+                let data = try Data(contentsOf: url)
+                try context.load(data)
 
                 try context.parse("""
-                function unidentifiedItemResourceName(itemID)
-                    return tbl[itemID]["unidentifiedResourceName"]
+                function unidentifiedItemDisplayName(itemID)
+                    return tbl[itemID]["unidentifiedDisplayName"]
                 end
-                function identifiedItemResourceName(itemID)
-                    return tbl[itemID]["identifiedResourceName"]
+                function unidentifiedItemDescription(itemID)
+                    return tbl[itemID]["unidentifiedDescriptionName"]
                 end
-                function itemSlotCount(itemID)
-                    return tbl[itemID]["slotCount"]
+                function identifiedItemDisplayName(itemID)
+                    return tbl[itemID]["identifiedDisplayName"]
+                end
+                function identifiedItemDescription(itemID)
+                    return tbl[itemID]["identifiedDescriptionName"]
                 end
                 """)
             } catch {
                 print(error)
             }
 
-            return context
-        }()
-
-        if let url = Bundle.module.url(forResource: "itemInfo", withExtension: "lub", locale: locale) {
-            localizationInfoDataSource = {
-                let context = LuaContext()
-
-                do {
-                    let data = try Data(contentsOf: url)
-                    try context.load(data)
-
-                    try context.parse("""
-                    function unidentifiedItemDisplayName(itemID)
-                        return tbl[itemID]["unidentifiedDisplayName"]
-                    end
-                    function unidentifiedItemDescription(itemID)
-                        return tbl[itemID]["unidentifiedDescriptionName"]
-                    end
-                    function identifiedItemDisplayName(itemID)
-                        return tbl[itemID]["identifiedDisplayName"]
-                    end
-                    function identifiedItemDescription(itemID)
-                        return tbl[itemID]["identifiedDescriptionName"]
-                    end
-                    """)
-                } catch {
-                    print(error)
+            return .lua(context: context)
+        } else {
+            let identifiedItemNamesByID: [Int : Data] = {
+                guard let url = Bundle.module.url(forResource: "idnum2itemdisplaynametable", withExtension: "txt", locale: locale),
+                      let stream = try? FileStream(url: url) else {
+                    return [:]
                 }
 
-                return .lua(context: context)
+                let reader = StreamReader(stream: stream, delimiter: "\r\n")
+                defer {
+                    reader.close()
+                }
+
+                var identifiedItemNamesByID: [Int : Data] = [:]
+
+                while let line = reader.readLine() {
+                    if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
+                        continue
+                    }
+
+                    let columns = line.split(separator: "#")
+                    if columns.count >= 2 {
+                        let itemID = Int(columns[0])
+                        let itemDisplayName = columns[1]
+                        if let itemID {
+                            identifiedItemNamesByID[itemID] = itemDisplayName.data(using: .isoLatin1)
+                        }
+                    }
+                }
+
+                return identifiedItemNamesByID
             }()
-        } else {
-            localizationInfoDataSource = {
-                let identifiedItemNamesByID: [Int : Data] = {
-                    guard let url = Bundle.module.url(forResource: "idnum2itemdisplaynametable", withExtension: "txt", locale: locale),
-                          let stream = try? FileStream(url: url) else {
-                        return [:]
+
+            let identifiedItemDescriptionsByID: [Int : Data] = {
+                guard let url = Bundle.module.url(forResource: "idnum2itemdesctable", withExtension: "txt", locale: locale),
+                      let stream = try? FileStream(url: url) else {
+                    return [:]
+                }
+
+                let reader = StreamReader(stream: stream, delimiter: "\r\n#\r\n")
+                defer {
+                    reader.close()
+                }
+
+                var identifiedItemDescriptionsByID: [Int : Data] = [:]
+
+                while let line = reader.readLine() {
+                    if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
+                        continue
                     }
 
-                    let reader = StreamReader(stream: stream, delimiter: "\r\n")
-                    defer {
-                        reader.close()
-                    }
-
-                    var identifiedItemNamesByID: [Int : Data] = [:]
-
-                    while let line = reader.readLine() {
-                        if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
-                            continue
-                        }
-
-                        let columns = line.split(separator: "#")
-                        if columns.count >= 2 {
-                            let itemID = Int(columns[0])
-                            let itemDisplayName = columns[1]
-                            if let itemID {
-                                identifiedItemNamesByID[itemID] = itemDisplayName.data(using: .isoLatin1)
-                            }
-                        }
-                    }
-
-                    return identifiedItemNamesByID
-                }()
-
-                let identifiedItemDescriptionsByID: [Int : Data] = {
-                    guard let url = Bundle.module.url(forResource: "idnum2itemdesctable", withExtension: "txt", locale: locale),
-                          let stream = try? FileStream(url: url) else {
-                        return [:]
-                    }
-
-                    let reader = StreamReader(stream: stream, delimiter: "\r\n#\r\n")
-                    defer {
-                        reader.close()
-                    }
-
-                    var identifiedItemDescriptionsByID: [Int : Data] = [:]
-
-                    while let line = reader.readLine() {
-                        if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
-                            continue
-                        }
-
-                        let columns = line.split(separator: "#")
-                        if columns.count >= 2 {
-                            let itemID = Int(columns[0])
-                            let itemDescription = columns[1]
-                                .trimmingCharacters(in: .whitespacesAndNewlines)
-                            if let itemID {
-                                identifiedItemDescriptionsByID[itemID] = itemDescription.data(using: .isoLatin1)
-                            }
+                    let columns = line.split(separator: "#")
+                    if columns.count >= 2 {
+                        let itemID = Int(columns[0])
+                        let itemDescription = columns[1]
+                            .trimmingCharacters(in: .whitespacesAndNewlines)
+                        if let itemID {
+                            identifiedItemDescriptionsByID[itemID] = itemDescription.data(using: .isoLatin1)
                         }
                     }
+                }
 
-                    return identifiedItemDescriptionsByID
-                }()
-
-                return .txt(
-                    identifiedItemNamesByID: identifiedItemNamesByID,
-                    identifiedItemDescriptionsByID: identifiedItemDescriptionsByID
-                )
+                return identifiedItemDescriptionsByID
             }()
+
+            return .txt(
+                identifiedItemNamesByID: identifiedItemNamesByID,
+                identifiedItemDescriptionsByID: identifiedItemDescriptionsByID
+            )
         }
+    }()
+
+    init(locale: Locale) {
+        self.locale = locale
     }
 
     public func identifiedItemResourceName(forItemID itemID: Int) -> String? {

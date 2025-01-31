@@ -8,53 +8,52 @@
 import Foundation
 @preconcurrency import Lua
 
-final public class SkillInfoTable: Sendable {
+public actor SkillInfoTable {
     public static let shared = SkillInfoTable(locale: .current)
 
     let locale: Locale
-    let context: LuaContext
+
+    lazy var context: LuaContext = {
+        let context = LuaContext()
+
+        do {
+            if let url = Bundle.module.url(forResource: "jobinheritlist", withExtension: "lub", locale: .korean) {
+                let data = try Data(contentsOf: url)
+                try context.load(data)
+            }
+
+            if let url = Bundle.module.url(forResource: "skillid", withExtension: "lub", locale: .korean) {
+                let data = try Data(contentsOf: url)
+                try context.load(data)
+            }
+
+            if let url = Bundle.module.url(forResource: "skillinfolist", withExtension: "lub", locale: locale) {
+                let data = try Data(contentsOf: url)
+                try context.load(data)
+            }
+
+            if let url = Bundle.module.url(forResource: "skilldescript", withExtension: "lub", locale: locale) {
+                let data = try Data(contentsOf: url)
+                try context.load(data)
+            }
+
+            try context.parse("""
+            function skillName(skillID)
+                return SKILL_INFO_LIST[skillID]["SkillName"]
+            end
+            function skillDescription(skillID)
+                return SKILL_DESCRIPT[skillID]
+            end
+            """)
+        } catch {
+            print(error)
+        }
+
+        return context
+    }()
 
     init(locale: Locale) {
         self.locale = locale
-
-        context = {
-            let context = LuaContext()
-
-            do {
-                if let url = Bundle.module.url(forResource: "jobinheritlist", withExtension: "lub", locale: .korean) {
-                    let data = try Data(contentsOf: url)
-                    try context.load(data)
-                }
-
-                if let url = Bundle.module.url(forResource: "skillid", withExtension: "lub", locale: .korean) {
-                    let data = try Data(contentsOf: url)
-                    try context.load(data)
-                }
-
-                if let url = Bundle.module.url(forResource: "skillinfolist", withExtension: "lub", locale: locale) {
-                    let data = try Data(contentsOf: url)
-                    try context.load(data)
-                }
-
-                if let url = Bundle.module.url(forResource: "skilldescript", withExtension: "lub", locale: locale) {
-                    let data = try Data(contentsOf: url)
-                    try context.load(data)
-                }
-
-                try context.parse("""
-                function skillName(skillID)
-                    return SKILL_INFO_LIST[skillID]["SkillName"]
-                end
-                function skillDescription(skillID)
-                    return SKILL_DESCRIPT[skillID]
-                end
-                """)
-            } catch {
-                print(error)
-            }
-
-            return context
-        }()
     }
 
     public func localizedSkillName(forSkillID skillID: Int) -> String? {

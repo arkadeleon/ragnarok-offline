@@ -14,7 +14,7 @@ struct MonsterProvider: DatabaseRecordProvider {
             ObservableMonster(mode: mode, monster: monster)
         }
         for monster in monsters {
-            monster.fetchLocalizedName()
+            await monster.fetchLocalizedName()
         }
         return monsters
     }

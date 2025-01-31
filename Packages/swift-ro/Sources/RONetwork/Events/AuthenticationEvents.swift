@@ -12,7 +12,7 @@ public enum AuthenticationEvents {
     public struct Banned: Event {
         public let message: String
 
-        init(packet: PACKET_SC_NOTIFY_BAN) {
+        init(packet: PACKET_SC_NOTIFY_BAN) async {
             let messageCode = switch packet.result {
             case   0: 3     // Server closed
             case   1: 4     // Server closed
@@ -30,7 +30,7 @@ public enum AuthenticationEvents {
             default : 3
             }
 
-            self.message = MessageStringTable.shared.localizedMessageString(at: messageCode)
+            self.message = await MessageStringTable.shared.localizedMessageString(at: messageCode)
         }
     }
 }

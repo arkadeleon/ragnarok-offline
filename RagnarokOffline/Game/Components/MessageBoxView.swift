@@ -27,5 +27,5 @@ struct MessageBoxView: View {
 }
 
 #Preview {
-    MessageBoxView(MessageStringTable.shared.localizedMessageString(at: 121))
+    MessageBoxView("Please wait...")
 }

@@ -8,12 +8,12 @@
 import Foundation
 
 extension Bundle {
-    public func url(forResource name: String?, withExtension ext: String?, locale: Locale) -> URL? {
+    func url(forResource name: String?, withExtension ext: String?, locale: Locale) -> URL? {
         let localization = Bundle.preferredLocalizations(from: localizations, forPreferences: [locale.identifier])[0]
         return url(forResource: name, withExtension: ext, subdirectory: nil, localization: localization)
     }
 
-    public func string(forResource name: String?, withExtension ext: String?, encoding enc: String.Encoding, locale: Locale) -> String? {
+    func string(forResource name: String?, withExtension ext: String?, encoding enc: String.Encoding, locale: Locale) -> String? {
         guard let url = url(forResource: name, withExtension: ext, locale: locale) else {
             return nil
         }

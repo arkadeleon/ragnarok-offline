@@ -41,13 +41,13 @@ final public class LoginSession: SessionProtocol {
 
         // See `logclif_auth_failed`
         client.registerPacket(PACKET_AC_REFUSE_LOGIN.self, for: HEADER_AC_REFUSE_LOGIN) { [unowned self] packet in
-            let event = LoginEvents.Refused(packet: packet)
+            let event = await LoginEvents.Refused(packet: packet)
             self.postEvent(event)
         }
 
         // See `logclif_sent_auth_result`
         client.registerPacket(PACKET_SC_NOTIFY_BAN.self, for: HEADER_SC_NOTIFY_BAN) { [unowned self] packet in
-            let event = AuthenticationEvents.Banned(packet: packet)
+            let event = await AuthenticationEvents.Banned(packet: packet)
             self.postEvent(event)
         }
     }

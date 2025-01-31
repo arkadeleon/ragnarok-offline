@@ -74,7 +74,7 @@ final public class MapSession: SessionProtocol {
 
         // See `clif_authfail_fd`
         client.registerPacket(PACKET_SC_NOTIFY_BAN.self, for: HEADER_SC_NOTIFY_BAN) { [unowned self] packet in
-            let event = AuthenticationEvents.Banned(packet: packet)
+            let event = await AuthenticationEvents.Banned(packet: packet)
             self.postEvent(event)
         }
     }

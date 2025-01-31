@@ -14,7 +14,7 @@ struct MapProvider: DatabaseRecordProvider {
             ObservableMap(mode: mode, map: map)
         }
         for map in maps {
-            map.fetchLocalizedName()
+            await map.fetchLocalizedName()
         }
         return maps
     }
