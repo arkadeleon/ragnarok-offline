@@ -7,9 +7,9 @@
 
 import Foundation
 
-public actor MessageStringTable {
-    public static let shared = MessageStringTable(locale: .current)
+public let messageStringTable = MessageStringTable(locale: .current)
 
+public actor MessageStringTable {
     let locale: Locale
 
     lazy var messageStrings: [String] = {

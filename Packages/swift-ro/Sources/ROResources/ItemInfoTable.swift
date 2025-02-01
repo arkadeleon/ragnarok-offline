@@ -6,20 +6,20 @@
 //
 
 import Foundation
-@preconcurrency import Lua
+import Lua
 import ROCore
 
-public actor ItemInfoTable {
-    enum LocalizationInfoDataSource {
-        case lua(context: LuaContext)
-        case txt(identifiedItemNamesByID: [Int : Data], identifiedItemDescriptionsByID: [Int : Data])
-    }
+public let itemInfoTable = ItemInfoTable(locale: .current)
 
-    public static let shared = ItemInfoTable(locale: .current)
+public actor ItemInfoTable {
+    enum ItemDataSource {
+        case lua(_ context: LuaContext)
+        case txt(_ identifiedItemNamesByID: [Int : Data], _ identifiedItemDescriptionsByID: [Int : Data])
+    }
 
     let locale: Locale
 
-    lazy var resourceInfoContext: LuaContext = {
+    lazy var itemContext: LuaContext = {
         let context = LuaContext()
 
         do {
@@ -46,7 +46,7 @@ public actor ItemInfoTable {
         return context
     }()
 
-    lazy var localizationInfoDataSource: LocalizationInfoDataSource = {
+    lazy var itemDataSource: ItemDataSource = {
         if let url = Bundle.module.url(forResource: "itemInfo", withExtension: "lub", locale: locale) {
             let context = LuaContext()
 
@@ -72,7 +72,7 @@ public actor ItemInfoTable {
                 print(error)
             }
 
-            return .lua(context: context)
+            return .lua(context)
         } else {
             let identifiedItemNamesByID: [Int : Data] = {
                 guard let url = Bundle.module.url(forResource: "idnum2itemdisplaynametable", withExtension: "txt", locale: locale),
@@ -138,8 +138,8 @@ public actor ItemInfoTable {
             }()
 
             return .txt(
-                identifiedItemNamesByID: identifiedItemNamesByID,
-                identifiedItemDescriptionsByID: identifiedItemDescriptionsByID
+                identifiedItemNamesByID,
+                identifiedItemDescriptionsByID
             )
         }
     }()
@@ -149,17 +149,16 @@ public actor ItemInfoTable {
     }
 
     public func identifiedItemResourceName(forItemID itemID: Int) -> String? {
-        guard let result = try? resourceInfoContext.call("identifiedItemResourceName", with: [itemID]) as? String else {
+        guard let result = try? itemContext.call("identifiedItemResourceName", with: [itemID]) as? String else {
             return nil
         }
 
-        let encoding = Locale.korean.language.preferredEncoding
-        let itemResourceName = result.transcoding(from: .isoLatin1, to: encoding)
+        let itemResourceName = result.transcoding(from: .isoLatin1, to: .koreanEUC)
         return itemResourceName
     }
 
     public func localizedIdentifiedItemName(forItemID itemID: Int) -> String? {
-        switch localizationInfoDataSource {
+        switch itemDataSource {
         case .lua(let context):
             guard let result = try? context.call("identifiedItemDisplayName", with: [itemID]) as? String else {
                 return nil
@@ -177,7 +176,7 @@ public actor ItemInfoTable {
     }
 
     public func localizedIdentifiedItemDescription(forItemID itemID: Int) -> String? {
-        switch localizationInfoDataSource {
+        switch itemDataSource {
         case .lua(let context):
             guard let result = try? context.call("identifiedItemDescription", with: [itemID]) as? [String] else {
                 return nil

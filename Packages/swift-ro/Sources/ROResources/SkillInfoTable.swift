@@ -6,11 +6,11 @@
 //
 
 import Foundation
-@preconcurrency import Lua
+import Lua
+
+public let skillInfoTable = SkillInfoTable(locale: .current)
 
 public actor SkillInfoTable {
-    public static let shared = SkillInfoTable(locale: .current)
-
     let locale: Locale
 
     lazy var context: LuaContext = {

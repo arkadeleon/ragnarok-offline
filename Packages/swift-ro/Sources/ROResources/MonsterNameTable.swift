@@ -1,43 +1,17 @@
 //
-//  MonsterInfoTable.swift
+//  MonsterNameTable.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/5/29.
 //
 
 import Foundation
-@preconcurrency import Lua
+import Lua
 
-public actor MonsterInfoTable {
-    public static let shared = MonsterInfoTable(locale: .current)
+public let monsterNameTable = MonsterNameTable(locale: .current)
 
+public actor MonsterNameTable {
     let locale: Locale
-
-    lazy var context: LuaContext = {
-        let context = LuaContext()
-
-        do {
-            if let url = Bundle.module.url(forResource: "npcidentity", withExtension: "lub", locale: .korean) {
-                let data = try Data(contentsOf: url)
-                try context.load(data)
-            }
-
-            if let url = Bundle.module.url(forResource: "jobname", withExtension: "lub", locale: .korean) {
-                let data = try Data(contentsOf: url)
-                try context.load(data)
-            }
-
-            try context.parse("""
-            function monsterResourceName(monsterID)
-                return JobNameTable[monsterID]
-            end
-            """)
-        } catch {
-            print(error)
-        }
-
-        return context
-    }()
 
     lazy var monsterNamesByID: [Int : String] = {
         guard let string = Bundle.module.string(forResource: "mobname", withExtension: "txt", encoding: .utf8, locale: locale) else {
@@ -66,11 +40,6 @@ public actor MonsterInfoTable {
 
     init(locale: Locale) {
         self.locale = locale
-    }
-
-    public func monsterResourceName(forMonsterID monsterID: Int) -> String? {
-        let result = try? context.call("monsterResourceName", with: [monsterID]) as? String
-        return result
     }
 
     public func localizedMonsterName(forMonsterID monsterID: Int) -> String? {

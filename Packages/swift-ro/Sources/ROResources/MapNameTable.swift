@@ -1,5 +1,5 @@
 //
-//  MapInfoTable.swift
+//  MapNameTable.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/5/27.
@@ -7,9 +7,9 @@
 
 import Foundation
 
-public actor MapInfoTable {
-    public static let shared = MapInfoTable(locale: .current)
+public let mapNameTable = MapNameTable(locale: .current)
 
+public actor MapNameTable {
     let locale: Locale
 
     lazy var mapNamesByRSW: [String : String] = {
@@ -41,43 +41,11 @@ public actor MapInfoTable {
         return mapNamesByRSW
     }()
 
-    lazy var mapBGMsByRSW: [String : String] = {
-        guard let string = Bundle.module.string(forResource: "mp3nametable", withExtension: "txt", encoding: .koreanEUC, locale: .korean) else {
-            return [:]
-        }
-
-        var mapBGMsByRSW: [String : String] = [:]
-
-        let lines = string.split(separator: "\r\n")
-
-        for line in lines {
-            if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
-                continue
-            }
-
-            let columns = line.split(separator: "#")
-            if columns.count >= 2 {
-                let rsw = columns[0]
-                    .replacingOccurrences(of: ".rsw", with: "")
-                let mapBGM = columns[1]
-                    .trimmingCharacters(in: .whitespaces)
-                    .replacingOccurrences(of: "bgm\\\\", with: "")
-                mapBGMsByRSW[rsw] = mapBGM
-            }
-        }
-
-        return mapBGMsByRSW
-    }()
-
     init(locale: Locale) {
         self.locale = locale
     }
 
     public func localizedMapName(forMapName mapName: String) -> String? {
         mapNamesByRSW[mapName]
-    }
-
-    public func mapBGM(forMapName mapName: String) -> String? {
-        mapBGMsByRSW[mapName]
     }
 }

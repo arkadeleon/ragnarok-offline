@@ -5,11 +5,12 @@
 //  Created by Leon Li on 2025/1/29.
 //
 
-@preconcurrency import Lua
+import Foundation
+import Lua
+
+public let statusInfoTable = StatusInfoTable(locale: .current)
 
 public actor StatusInfoTable {
-    public static let shared = StatusInfoTable(locale: .current)
-
     let locale: Locale
 
     lazy var context: LuaContext = {

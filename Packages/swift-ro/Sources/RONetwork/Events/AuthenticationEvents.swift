@@ -30,7 +30,7 @@ public enum AuthenticationEvents {
             default : 3
             }
 
-            self.message = await MessageStringTable.shared.localizedMessageString(at: messageCode)
+            self.message = await messageStringTable.localizedMessageString(at: messageCode)
         }
     }
 }

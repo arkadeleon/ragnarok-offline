@@ -55,7 +55,7 @@ public enum LoginEvents {
             default : 9
             }
 
-            self.message = await MessageStringTable.shared.localizedMessageString(at: messageCode)
+            self.message = await messageStringTable.localizedMessageString(at: messageCode)
                 .replacingOccurrences(of: "%s", with: packet.unblock_time)
         }
     }
