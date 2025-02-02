@@ -56,28 +56,24 @@ class ObservableStatusChange {
     func fetchDetail() async {
         let database = StatusChangeDatabase.database(for: mode)
 
-        if let fail = try? await database.statusChanges(forIDs: Array(statusChange.fail ?? [])) {
-            self.fail = fail.map { statusChange in
-                ObservableStatusChange(mode: mode, statusChange: statusChange)
-            }
+        let fail = await database.statusChanges(forIDs: Array(statusChange.fail ?? []))
+        self.fail = fail.map { statusChange in
+            ObservableStatusChange(mode: mode, statusChange: statusChange)
         }
 
-        if let endOnStart = try? await database.statusChanges(forIDs: Array(statusChange.endOnStart ?? [])) {
-            self.endOnStart = endOnStart.map { statusChange in
-                ObservableStatusChange(mode: mode, statusChange: statusChange)
-            }
+        let endOnStart = await database.statusChanges(forIDs: Array(statusChange.endOnStart ?? []))
+        self.endOnStart = endOnStart.map { statusChange in
+            ObservableStatusChange(mode: mode, statusChange: statusChange)
         }
 
-        if let endReturn = try? await database.statusChanges(forIDs: Array(statusChange.endReturn ?? [])) {
-            self.endReturn = endReturn.map { statusChange in
-                ObservableStatusChange(mode: mode, statusChange: statusChange)
-            }
+        let endReturn = await database.statusChanges(forIDs: Array(statusChange.endReturn ?? []))
+        self.endReturn = endReturn.map { statusChange in
+            ObservableStatusChange(mode: mode, statusChange: statusChange)
         }
 
-        if let endOnEnd = try? await database.statusChanges(forIDs: Array(statusChange.endOnEnd ?? [])) {
-            self.endOnEnd = endOnEnd.map { statusChange in
-                ObservableStatusChange(mode: mode, statusChange: statusChange)
-            }
+        let endOnEnd = await database.statusChanges(forIDs: Array(statusChange.endOnEnd ?? []))
+        self.endOnEnd = endOnEnd.map { statusChange in
+            ObservableStatusChange(mode: mode, statusChange: statusChange)
         }
 
         localizedDescription = await statusInfoTable.localizedDescription(forStatusID: statusChange.icon.rawValue)

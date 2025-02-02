@@ -22,33 +22,33 @@ public actor SkillTreeDatabase {
 
     public let mode: DatabaseMode
 
-    private var cachedSkillTrees: [SkillTree] = []
-    private var cachedSkillTreesByJobID: [JobID : SkillTree] = [:]
+    private lazy var _skillTrees: [SkillTree] = (try? {
+        let decoder = YAMLDecoder()
+
+        let url = ServerResourceManager.default.sourceURL
+            .appending(path: "db/\(mode.path)/skill_tree.yml")
+        let data = try Data(contentsOf: url)
+        let skillTrees = try decoder.decode(ListNode<SkillTree>.self, from: data).body
+
+        return skillTrees
+    }()) ?? []
+
+    private lazy var _skillTreesByJobID: [JobID : SkillTree] = {
+        Dictionary(
+            _skillTrees.map({ ($0.job, $0) }),
+            uniquingKeysWith: { (first, _) in first }
+        )
+    }()
 
     private init(mode: DatabaseMode) {
         self.mode = mode
     }
 
-    func skillTrees() throws -> [SkillTree] {
-        if cachedSkillTrees.isEmpty {
-            let decoder = YAMLDecoder()
-
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: "db/\(mode.path)/skill_tree.yml")
-            let data = try Data(contentsOf: url)
-            cachedSkillTrees = try decoder.decode(ListNode<SkillTree>.self, from: data).body
-        }
-
-        return cachedSkillTrees
+    func skillTrees() -> [SkillTree] {
+        _skillTrees
     }
 
-    public func skillTree(forJobID jobID: JobID) throws -> SkillTree? {
-        if cachedSkillTreesByJobID.isEmpty {
-            let skillTrees = try skillTrees()
-            cachedSkillTreesByJobID = Dictionary(skillTrees.map({ ($0.job, $0) }), uniquingKeysWith: { (first, _) in first })
-        }
-
-        let skillTree = cachedSkillTreesByJobID[jobID]
-        return skillTree
+    public func skillTree(forJobID jobID: JobID) -> SkillTree? {
+        _skillTreesByJobID[jobID]
     }
 }

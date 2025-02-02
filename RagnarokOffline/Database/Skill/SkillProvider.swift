@@ -8,9 +8,9 @@
 import RODatabase
 
 struct SkillProvider: DatabaseRecordProvider {
-    func records(for mode: DatabaseMode) async throws -> [ObservableSkill] {
+    func records(for mode: DatabaseMode) async -> [ObservableSkill] {
         let database = SkillDatabase.database(for: mode)
-        let skills = try await database.skills().map { skill in
+        let skills = await database.skills().map { skill in
             ObservableSkill(mode: mode, skill: skill)
         }
         for skill in skills {

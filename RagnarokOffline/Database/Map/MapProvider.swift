@@ -8,9 +8,9 @@
 import RODatabase
 
 struct MapProvider: DatabaseRecordProvider {
-    func records(for mode: DatabaseMode) async throws -> [ObservableMap] {
+    func records(for mode: DatabaseMode) async -> [ObservableMap] {
         let database = MapDatabase.database(for: mode)
-        let maps = try await database.maps().map { map in
+        let maps = await database.maps().map { map in
             ObservableMap(mode: mode, map: map)
         }
         for map in maps {

@@ -151,7 +151,7 @@ class ObservableMonster {
         if let mvpDrops = monster.mvpDrops {
             var mvpDropItems: [DropItem] = []
             for (index, drop) in mvpDrops.enumerated() {
-                if let item = try? await itemDatabase.item(forAegisName: drop.item) {
+                if let item = await itemDatabase.item(forAegisName: drop.item) {
                     let dropItem = DropItem(
                         index: index,
                         drop: drop,
@@ -166,7 +166,7 @@ class ObservableMonster {
         if let drops = monster.drops {
             var dropItems: [DropItem] = []
             for (index, drop) in drops.enumerated() {
-                if let item = try? await itemDatabase.item(forAegisName: drop.item) {
+                if let item = await itemDatabase.item(forAegisName: drop.item) {
                     let dropItem = DropItem(
                         index: index,
                         drop: drop,
@@ -181,7 +181,7 @@ class ObservableMonster {
         if let monsterSpawns = try? await npcDatabase.monsterSpawns(forMonster: monster) {
             var spawnMaps: [SpawnMap] = []
             for monsterSpawn in monsterSpawns {
-                if let map = try? await mapDatabase.map(forName: monsterSpawn.mapName) {
+                if let map = await mapDatabase.map(forName: monsterSpawn.mapName) {
                     if !spawnMaps.contains(where: { $0.map.name == map.name }) {
                         let spawnMap = SpawnMap(
                             map: ObservableMap(mode: mode, map: map),

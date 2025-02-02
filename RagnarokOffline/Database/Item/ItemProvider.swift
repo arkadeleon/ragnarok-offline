@@ -8,9 +8,9 @@
 import RODatabase
 
 struct ItemProvider: DatabaseRecordProvider {
-    func records(for mode: DatabaseMode) async throws -> [ObservableItem] {
+    func records(for mode: DatabaseMode) async -> [ObservableItem] {
         let database = ItemDatabase.database(for: mode)
-        let usableItems = try await database.usableItems().map { item in
+        let usableItems = await database.usableItems().map { item in
             ObservableItem(mode: mode, item: item)
         }
         for item in usableItems {
@@ -19,12 +19,12 @@ struct ItemProvider: DatabaseRecordProvider {
         return usableItems
     }
 
-    func moreRecords(for mode: DatabaseMode) async throws -> [ObservableItem] {
+    func moreRecords(for mode: DatabaseMode) async -> [ObservableItem] {
         let database = ItemDatabase.database(for: mode)
-        let equipItems = try await database.equipItems().map { item in
+        let equipItems = await database.equipItems().map { item in
             ObservableItem(mode: mode, item: item)
         }
-        let etcItems = try await database.etcItems().map { item in
+        let etcItems = await database.etcItems().map { item in
             ObservableItem(mode: mode, item: item)
         }
         for item in equipItems + etcItems {

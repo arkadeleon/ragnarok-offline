@@ -21,85 +21,82 @@ public actor ItemDatabase {
 
     public let mode: DatabaseMode
 
-    private var cachedUsableItems: [Item] = []
-    private var cachedEquipItems: [Item] = []
-    private var cachedEtcItems: [Item] = []
-    private var cachedItems: [Item] = []
-    private var cachedItemsByID: [Int : Item] = [:]
-    private var cachedItemsByAegisName: [String : Item] = [:]
+    private lazy var _usableItems: [Item] = (try? {
+        let decoder = YAMLDecoder()
+
+        let url = ServerResourceManager.default.sourceURL
+            .appending(path: "db/\(mode.path)/item_db_usable.yml")
+        let data = try Data(contentsOf: url)
+        let usableItems = try decoder.decode(ListNode<Item>.self, from: data).body
+
+        return usableItems
+    }()) ?? []
+
+    private lazy var _equipItems: [Item] = (try? {
+        let decoder = YAMLDecoder()
+
+        let url = ServerResourceManager.default.sourceURL
+            .appending(path: "db/\(mode.path)/item_db_equip.yml")
+        let data = try Data(contentsOf: url)
+        let equipItems = try decoder.decode(ListNode<Item>.self, from: data).body
+
+        return equipItems
+    }()) ?? []
+
+    private lazy var _etcItems: [Item] = (try? {
+        let decoder = YAMLDecoder()
+
+        let url = ServerResourceManager.default.sourceURL
+            .appending(path: "db/\(mode.path)/item_db_etc.yml")
+        let data = try Data(contentsOf: url)
+        let etcItems = try decoder.decode(ListNode<Item>.self, from: data).body
+
+        return etcItems
+    }()) ?? []
+
+    private lazy var _items: [Item] = {
+        _usableItems + _equipItems + _etcItems
+    }()
+
+    private lazy var _itemsByID: [Int : Item] = {
+        Dictionary(
+            _items.map({ ($0.id, $0) }),
+            uniquingKeysWith: { (first, _) in first }
+        )
+    }()
+
+    private lazy var _itemsByAegisName: [String : Item] = {
+        Dictionary(
+            _items.map({ ($0.aegisName, $0) }),
+            uniquingKeysWith: { (first, _) in first }
+        )
+    }()
 
     private init(mode: DatabaseMode) {
         self.mode = mode
     }
 
-    public func usableItems() throws -> [Item] {
-        if cachedUsableItems.isEmpty {
-            let decoder = YAMLDecoder()
-
-            let usableItemURL = ServerResourceManager.default.sourceURL
-                .appending(path: "db/\(mode.path)/item_db_usable.yml")
-            let usableItemData = try Data(contentsOf: usableItemURL)
-            cachedUsableItems = try decoder.decode(ListNode<Item>.self, from: usableItemData).body
-        }
-
-        return cachedUsableItems
+    public func usableItems() -> [Item] {
+        _usableItems
     }
 
-    public func equipItems() throws -> [Item] {
-        if cachedEquipItems.isEmpty {
-            let decoder = YAMLDecoder()
-
-            let equipItemURL = ServerResourceManager.default.sourceURL
-                .appending(path: "db/\(mode.path)/item_db_equip.yml")
-            let equipItemData = try Data(contentsOf: equipItemURL)
-            cachedEquipItems = try decoder.decode(ListNode<Item>.self, from: equipItemData).body
-        }
-
-        return cachedEquipItems
+    public func equipItems() -> [Item] {
+        _equipItems
     }
 
-    public func etcItems() throws -> [Item] {
-        if cachedEtcItems.isEmpty {
-            let decoder = YAMLDecoder()
-
-            let etcItemURL = ServerResourceManager.default.sourceURL
-                .appending(path: "db/\(mode.path)/item_db_etc.yml")
-            let etcItemData = try Data(contentsOf: etcItemURL)
-            cachedEtcItems = try decoder.decode(ListNode<Item>.self, from: etcItemData).body
-        }
-
-        return cachedEtcItems
+    public func etcItems() -> [Item] {
+        _etcItems
     }
 
-    public func items() throws -> [Item] {
-        if cachedItems.isEmpty {
-            let usableItems = try usableItems()
-            let equipItems = try equipItems()
-            let etcItems = try etcItems()
-
-            cachedItems = usableItems + equipItems + etcItems
-        }
-
-        return cachedItems
+    public func items() -> [Item] {
+        _items
     }
 
-    public func item(forID id: Int) throws -> Item? {
-        if cachedItemsByID.isEmpty {
-            let items = try items()
-            cachedItemsByID = Dictionary(items.map({ ($0.id, $0) }), uniquingKeysWith: { (first, _) in first })
-        }
-
-        let item = cachedItemsByID[id]
-        return item
+    public func item(forID id: Int) -> Item? {
+        _itemsByID[id]
     }
 
-    public func item(forAegisName aegisName: String) throws -> Item? {
-        if cachedItemsByAegisName.isEmpty {
-            let items = try items()
-            cachedItemsByAegisName = Dictionary(items.map({ ($0.aegisName, $0) }), uniquingKeysWith: { (first, _) in first })
-        }
-
-        let item = cachedItemsByAegisName[aegisName]
-        return item
+    public func item(forAegisName aegisName: String) -> Item? {
+        _itemsByAegisName[aegisName]
     }
 }

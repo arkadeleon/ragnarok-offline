@@ -22,39 +22,39 @@ public actor StatusChangeDatabase {
 
     public let mode: DatabaseMode
 
-    private var cachedStatusChanges: [StatusChange] = []
-    private var cachedStatusChangesByID: [StatusChangeID : StatusChange] = [:]
+    private lazy var _statusChanges: [StatusChange] = (try? {
+        let decoder = YAMLDecoder()
+
+        let url = ServerResourceManager.default.sourceURL
+            .appending(path: "db/\(mode.path)/status.yml")
+        let data = try Data(contentsOf: url)
+        let statusChanges = try decoder.decode(ListNode<StatusChange>.self, from: data).body
+
+        return statusChanges
+    }()) ?? []
+
+    private lazy var _statusChangesByID: [StatusChangeID : StatusChange] = {
+        Dictionary(
+            _statusChanges.map({ ($0.status, $0) }),
+            uniquingKeysWith: { (first, _) in first }
+        )
+    }()
 
     private init(mode: DatabaseMode) {
         self.mode = mode
     }
 
-    public func statusChanges() throws -> [StatusChange] {
-        if cachedStatusChanges.isEmpty {
-            let decoder = YAMLDecoder()
-
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: "db/\(mode.path)/status.yml")
-            let data = try Data(contentsOf: url)
-            cachedStatusChanges = try decoder.decode(ListNode<StatusChange>.self, from: data).body
-        }
-
-        return cachedStatusChanges
+    public func statusChanges() -> [StatusChange] {
+        _statusChanges
     }
 
-    public func statusChange(forID statusChangeID: StatusChangeID) throws -> StatusChange? {
-        if cachedStatusChangesByID.isEmpty {
-            let statusChanges = try statusChanges()
-            cachedStatusChangesByID = Dictionary(statusChanges.map({ ($0.status, $0) }), uniquingKeysWith: { (first, _) in first })
-        }
-
-        let statusChange = cachedStatusChangesByID[statusChangeID]
-        return statusChange
+    public func statusChange(forID statusChangeID: StatusChangeID) -> StatusChange? {
+        _statusChangesByID[statusChangeID]
     }
 
-    public func statusChanges(forIDs statusChangeIDs: [StatusChangeID]) throws -> [StatusChange] {
-        try statusChangeIDs.compactMap {
-            try statusChange(forID: $0)
+    public func statusChanges(forIDs statusChangeIDs: [StatusChangeID]) -> [StatusChange] {
+        statusChangeIDs.compactMap {
+            statusChange(forID: $0)
         }
     }
 }

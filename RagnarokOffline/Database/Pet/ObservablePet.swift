@@ -59,7 +59,7 @@ class ObservablePet {
     func fetchMonster() async {
         if monster == nil {
             let monsterDatabase = MonsterDatabase.database(for: mode)
-            if let monster = try? await monsterDatabase.monster(forAegisName: pet.monster) {
+            if let monster = await monsterDatabase.monster(forAegisName: pet.monster) {
                 self.monster = ObservableMonster(mode: mode, monster: monster)
             }
         }
@@ -69,23 +69,23 @@ class ObservablePet {
         let itemDatabase = ItemDatabase.database(for: mode)
 
         if let tameItem = pet.tameItem {
-            if let item = try? await itemDatabase.item(forAegisName: tameItem) {
+            if let item = await itemDatabase.item(forAegisName: tameItem) {
                 self.tameItem = ObservableItem(mode: mode, item: item)
             }
         }
 
-        if let item = try? await itemDatabase.item(forAegisName: pet.eggItem) {
+        if let item = await itemDatabase.item(forAegisName: pet.eggItem) {
             self.eggItem = ObservableItem(mode: mode, item: item)
         }
 
         if let equipItem = pet.equipItem {
-            if let item = try? await itemDatabase.item(forAegisName: equipItem) {
+            if let item = await itemDatabase.item(forAegisName: equipItem) {
                 self.equipItem = ObservableItem(mode: mode, item: item)
             }
         }
 
         if let foodItem = pet.foodItem {
-            if let item = try? await itemDatabase.item(forAegisName: foodItem) {
+            if let item = await itemDatabase.item(forAegisName: foodItem) {
                 self.foodItem = ObservableItem(mode: mode, item: item)
             }
         }

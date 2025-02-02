@@ -153,24 +153,23 @@ class ObservableItem {
         localizedDescription = await itemInfoTable.localizedIdentifiedItemDescription(forItemID: item.id)
 
         let monsterDatabase = MonsterDatabase.database(for: mode)
+        let monsters = await monsterDatabase.monsters()
 
-        if let monsters = try? await monsterDatabase.monsters() {
-            var droppingMonsters: [DroppingMonster] = []
-            for monster in monsters {
-                let drops = (monster.mvpDrops ?? []) + (monster.drops ?? [])
-                for drop in drops {
-                    if drop.item == item.aegisName {
-                        let droppingMonster = DroppingMonster(
-                            monster: ObservableMonster(mode: mode, monster: monster),
-                            drop: drop
-                        )
-                        droppingMonsters.append(droppingMonster)
-                        break
-                    }
+        var droppingMonsters: [DroppingMonster] = []
+        for monster in monsters {
+            let drops = (monster.mvpDrops ?? []) + (monster.drops ?? [])
+            for drop in drops {
+                if drop.item == item.aegisName {
+                    let droppingMonster = DroppingMonster(
+                        monster: ObservableMonster(mode: mode, monster: monster),
+                        drop: drop
+                    )
+                    droppingMonsters.append(droppingMonster)
+                    break
                 }
             }
-            self.droppingMonsters = droppingMonsters
         }
+        self.droppingMonsters = droppingMonsters
     }
 }
 

@@ -11,14 +11,14 @@ import RODatabase
 protocol DatabaseRecordProvider {
     associatedtype Record
 
-    func records(for mode: DatabaseMode) async throws -> [Record]
-    func moreRecords(for mode: DatabaseMode) async throws -> [Record]
+    func records(for mode: DatabaseMode) async -> [Record]
+    func moreRecords(for mode: DatabaseMode) async -> [Record]
 
     func records(matching searchText: String, in records: [Record]) async -> [Record]
 }
 
 extension DatabaseRecordProvider {
-    func moreRecords(for mode: DatabaseMode) async throws -> [Record] {
+    func moreRecords(for mode: DatabaseMode) async -> [Record] {
         []
     }
 }
@@ -45,17 +45,14 @@ class ObservableDatabase<RecordProvider> where RecordProvider: DatabaseRecordPro
 
         loadStatus = .loading
 
-        do {
-            records = try await recordProvider.records(for: mode)
+        records = await recordProvider.records(for: mode)
 
-            await filterRecords()
+        await filterRecords()
 
-            loadStatus = .loaded
-        } catch {
-            loadStatus = .failed
-        }
+        loadStatus = .loaded
 
-        if !records.isEmpty, let moreRecords = try? await recordProvider.moreRecords(for: mode) {
+        let moreRecords = await recordProvider.moreRecords(for: mode)
+        if !records.isEmpty, !moreRecords.isEmpty {
             records += moreRecords
         }
     }

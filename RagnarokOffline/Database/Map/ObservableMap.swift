@@ -64,7 +64,7 @@ class ObservableMap {
             var monsters: [Monster] = []
             for monsterSpawn in monsterSpawns {
                 if let monsterID = monsterSpawn.monsterID {
-                    if let monster = try? await monsterDatabase.monster(forID: monsterID) {
+                    if let monster = await monsterDatabase.monster(forID: monsterID) {
                         if !monsters.contains(monster) {
                             monsters.append(monster)
 
@@ -76,7 +76,7 @@ class ObservableMap {
                         }
                     }
                 } else if let monsterAegisName = monsterSpawn.monsterAegisName {
-                    if let monster = try? await monsterDatabase.monster(forAegisName: monsterAegisName) {
+                    if let monster = await monsterDatabase.monster(forAegisName: monsterAegisName) {
                         if !monsters.contains(monster) {
                             monsters.append(monster)
 

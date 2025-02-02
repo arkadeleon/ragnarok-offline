@@ -22,69 +22,71 @@ public actor MapDatabase {
 
     public let mode: DatabaseMode
 
-    private var cachedMaps: [Map] = []
-    private var cachedMapsByName: [String : Map] = [:]
+    private lazy var _maps: [Map] = (try? {
+        var mapInfos: [String : MapCache.MapInfo] = [:]
+        let mapCacheURLs = [
+            ServerResourceManager.default.sourceURL
+                .appending(path: "db/map_cache.dat"),
+            ServerResourceManager.default.sourceURL
+                .appending(path: "db/\(mode.path)/map_cache.dat"),
+        ]
+        for mapCacheURL in mapCacheURLs {
+            let decoder = try BinaryDecoder(url: mapCacheURL)
+            let mapCache = try MapCache(from: decoder)
+            for mapInfo in mapCache.maps {
+                mapInfos[mapInfo.name] = mapInfo
+            }
+        }
+
+        let url = ServerResourceManager.default.sourceURL
+            .appending(path: "db/map_index.txt")
+        let string = try String(contentsOf: url)
+
+        var index = 0
+        var maps: [Map] = []
+
+        for line in string.split(separator: "\n") {
+            if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
+                continue
+            }
+
+            let columns = line.split(separator: " ")
+            if columns.count == 2 {
+                index = Int(columns[1]) ?? 1
+            } else if columns.count == 1 {
+                index += 1
+            } else {
+                continue
+            }
+
+            let name = String(columns[0])
+            guard let mapInfo = mapInfos[name] else {
+                continue
+            }
+
+            let map = Map(name: name, index: index, info: mapInfo)
+            maps.append(map)
+        }
+
+        return maps
+    }()) ?? []
+
+    private lazy var _mapsByName: [String : Map] = {
+        Dictionary(
+            _maps.map({ ($0.name, $0) }),
+            uniquingKeysWith: { (first, _) in first }
+        )
+    }()
 
     private init(mode: DatabaseMode) {
         self.mode = mode
     }
 
-    public func maps() throws -> [Map] {
-        if cachedMaps.isEmpty {
-            var mapInfos: [String : MapCache.MapInfo] = [:]
-            let mapCacheURLs = [
-                ServerResourceManager.default.sourceURL
-                    .appending(path: "db/map_cache.dat"),
-                ServerResourceManager.default.sourceURL
-                    .appending(path: "db/\(mode.path)/map_cache.dat"),
-            ]
-            for mapCacheURL in mapCacheURLs {
-                let decoder = try BinaryDecoder(url: mapCacheURL)
-                let mapCache = try MapCache(from: decoder)
-                for mapInfo in mapCache.maps {
-                    mapInfos[mapInfo.name] = mapInfo
-                }
-            }
-
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: "db/map_index.txt")
-            let string = try String(contentsOf: url)
-
-            var index = 0
-            for line in string.split(separator: "\n") {
-                if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
-                    continue
-                }
-
-                let columns = line.split(separator: " ")
-                if columns.count == 2 {
-                    index = Int(columns[1]) ?? 1
-                } else if columns.count == 1 {
-                    index += 1
-                } else {
-                    continue
-                }
-
-                let name = String(columns[0])
-                guard let mapInfo = mapInfos[name] else {
-                    continue
-                }
-
-                let map = Map(name: name, index: index, info: mapInfo)
-                cachedMaps.append(map)
-            }
-        }
-
-        return cachedMaps
+    public func maps() -> [Map] {
+        _maps
     }
 
-    public func map(forName name: String) throws -> Map? {
-        if cachedMapsByName.isEmpty {
-            let maps = try maps()
-            cachedMapsByName = Dictionary(maps.map({ ($0.name, $0) }), uniquingKeysWith: { (first, _) in first })
-        }
-
-        let map = cachedMapsByName[name]
-        return map
+    public func map(forName name: String) -> Map? {
+        _mapsByName[name]
     }
 }

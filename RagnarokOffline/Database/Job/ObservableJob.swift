@@ -119,10 +119,10 @@ class ObservableJob {
         let skillDatabase = SkillDatabase.database(for: mode)
         let skillTreeDatabase = SkillTreeDatabase.database(for: mode)
 
-        if let skillTree = try? await skillTreeDatabase.skillTree(forJobID: job.id)?.tree {
+        if let skillTree = await skillTreeDatabase.skillTree(forJobID: job.id)?.tree {
             var skills: [ObservableSkill] = []
             for s in skillTree {
-                if let skill = try? await skillDatabase.skill(forAegisName: s.name) {
+                if let skill = await skillDatabase.skill(forAegisName: s.name) {
                     skills.append(ObservableSkill(mode: mode, skill: skill))
                 }
             }

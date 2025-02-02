@@ -8,9 +8,9 @@
 import RODatabase
 
 struct PetProvider: DatabaseRecordProvider {
-    func records(for mode: DatabaseMode) async throws -> [ObservablePet] {
+    func records(for mode: DatabaseMode) async -> [ObservablePet] {
         let petDatabase = PetDatabase.database(for: mode)
-        let pets = try await petDatabase.pets().map { pet in
+        let pets = await petDatabase.pets().map { pet in
             ObservablePet(mode: mode, pet: pet)
         }
         for pet in pets {

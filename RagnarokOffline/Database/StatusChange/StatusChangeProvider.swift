@@ -8,9 +8,9 @@
 import RODatabase
 
 struct StatusChangeProvider: DatabaseRecordProvider {
-    func records(for mode: DatabaseMode) async throws -> [ObservableStatusChange] {
+    func records(for mode: DatabaseMode) async -> [ObservableStatusChange] {
         let database = StatusChangeDatabase.database(for: mode)
-        let statusChanges = try await database.statusChanges().map { statusChange in
+        let statusChanges = await database.statusChanges().map { statusChange in
             ObservableStatusChange(mode: mode, statusChange: statusChange)
         }
         return statusChanges

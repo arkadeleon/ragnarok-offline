@@ -42,13 +42,13 @@ class ObservableMonsterSummon {
     func fetchDetail() async {
         let monsterDatabase = MonsterDatabase.database(for: mode)
 
-        if let monster = try? await monsterDatabase.monster(forAegisName: monsterSummon.default) {
+        if let monster = await monsterDatabase.monster(forAegisName: monsterSummon.default) {
             defaultMonster = ObservableMonster(mode: mode, monster: monster)
         }
 
         var summonMonsters: [Summon] = []
         for summon in monsterSummon.summon {
-            if let monster = try? await monsterDatabase.monster(forAegisName: summon.monster) {
+            if let monster = await monsterDatabase.monster(forAegisName: summon.monster) {
                 let summon = Summon(
                     monster: ObservableMonster(mode: mode, monster: monster),
                     rate: summon.rate

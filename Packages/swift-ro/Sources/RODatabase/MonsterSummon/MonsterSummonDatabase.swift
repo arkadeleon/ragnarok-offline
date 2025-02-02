@@ -21,33 +21,33 @@ public actor MonsterSummonDatabase {
 
     public let mode: DatabaseMode
 
-    private var cachedMonsterSummons: [MonsterSummon] = []
-    private var cachedMonsterSummonsByGroup: [String : MonsterSummon] = [:]
+    private lazy var _monsterSummons: [MonsterSummon] = (try? {
+        let decoder = YAMLDecoder()
+
+        let url = ServerResourceManager.default.sourceURL
+            .appending(path: "db/\(mode.path)/mob_summon.yml")
+        let data = try Data(contentsOf: url)
+        let monsterSummons = try decoder.decode(ListNode<MonsterSummon>.self, from: data).body
+
+        return monsterSummons
+    }()) ?? []
+
+    private lazy var _monsterSummonsByGroup: [String : MonsterSummon] = {
+        Dictionary(
+            _monsterSummons.map({ ($0.group, $0) }),
+            uniquingKeysWith: { (first, _) in first }
+        )
+    }()
 
     private init(mode: DatabaseMode) {
         self.mode = mode
     }
 
-    public func monsterSummons() throws -> [MonsterSummon] {
-        if cachedMonsterSummons.isEmpty {
-            let decoder = YAMLDecoder()
-
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: "db/\(mode.path)/mob_summon.yml")
-            let data = try Data(contentsOf: url)
-            cachedMonsterSummons = try decoder.decode(ListNode<MonsterSummon>.self, from: data).body
-        }
-
-        return cachedMonsterSummons
+    public func monsterSummons() -> [MonsterSummon] {
+        _monsterSummons
     }
 
-    public func monsterSummon(forGroup group: String) throws -> MonsterSummon? {
-        if cachedMonsterSummonsByGroup.isEmpty {
-            let monsterSummons = try monsterSummons()
-            cachedMonsterSummonsByGroup = Dictionary(monsterSummons.map({ ($0.group, $0) }), uniquingKeysWith: { (first, _) in first })
-        }
-
-        let monsterSummon = cachedMonsterSummonsByGroup[group]
-        return monsterSummon
+    public func monsterSummon(forGroup group: String) -> MonsterSummon? {
+        _monsterSummonsByGroup[group]
     }
 }

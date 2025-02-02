@@ -21,33 +21,33 @@ public actor PetDatabase {
 
     public let mode: DatabaseMode
 
-    private var cachedPets: [Pet] = []
-    private var cachedPetsByAegisName: [String : Pet] = [:]
+    private lazy var _pets: [Pet] = (try? {
+        let decoder = YAMLDecoder()
+
+        let url = ServerResourceManager.default.sourceURL
+            .appending(path: "db/\(mode.path)/pet_db.yml")
+        let data = try Data(contentsOf: url)
+        let pets = try decoder.decode(ListNode<Pet>.self, from: data).body
+
+        return pets
+    }()) ?? []
+
+    private lazy var _petsByAegisName: [String : Pet] = {
+        Dictionary(
+            _pets.map({ ($0.monster, $0) }),
+            uniquingKeysWith: { (first, _) in first }
+        )
+    }()
 
     private init(mode: DatabaseMode) {
         self.mode = mode
     }
 
-    public func pets() throws -> [Pet] {
-        if cachedPets.isEmpty {
-            let decoder = YAMLDecoder()
-
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: "db/\(mode.path)/pet_db.yml")
-            let data = try Data(contentsOf: url)
-            cachedPets = try decoder.decode(ListNode<Pet>.self, from: data).body
-        }
-
-        return cachedPets
+    public func pets() -> [Pet] {
+        _pets
     }
 
-    public func pet(forAegisName aegisName: String) throws -> Pet? {
-        if cachedPetsByAegisName.isEmpty {
-            let pets = try pets()
-            cachedPetsByAegisName = Dictionary(pets.map({ ($0.monster, $0) }), uniquingKeysWith: { (first, _) in first })
-        }
-
-        let pet = cachedPetsByAegisName[aegisName]
-        return pet
+    public func pet(forAegisName aegisName: String) -> Pet? {
+        _petsByAegisName[aegisName]
     }
 }

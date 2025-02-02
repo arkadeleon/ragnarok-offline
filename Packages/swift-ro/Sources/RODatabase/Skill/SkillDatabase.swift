@@ -21,44 +21,44 @@ public actor SkillDatabase {
 
     public let mode: DatabaseMode
 
-    private var cachedSkills: [Skill] = []
-    private var cachedSkillsByID: [Int : Skill] = [:]
-    private var cachedSkillsByAegisName: [String : Skill] = [:]
+    private lazy var _skills: [Skill] = (try? {
+        let decoder = YAMLDecoder()
+
+        let url = ServerResourceManager.default.sourceURL
+            .appending(path: "db/\(mode.path)/skill_db.yml")
+        let data = try Data(contentsOf: url)
+        let skills = try decoder.decode(ListNode<Skill>.self, from: data).body
+
+        return skills
+    }()) ?? []
+
+    private lazy var _skillsByID: [Int : Skill] = {
+        Dictionary(
+            _skills.map({ ($0.id, $0) }),
+            uniquingKeysWith: { (first, _) in first }
+        )
+    }()
+
+    private lazy var _skillsByAegisName: [String : Skill] = {
+        Dictionary(
+            _skills.map({ ($0.aegisName, $0) }),
+            uniquingKeysWith: { (first, _) in first }
+        )
+    }()
 
     private init(mode: DatabaseMode) {
         self.mode = mode
     }
 
-    public func skills() throws -> [Skill] {
-        if cachedSkills.isEmpty {
-            let decoder = YAMLDecoder()
-
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: "db/\(mode.path)/skill_db.yml")
-            let data = try Data(contentsOf: url)
-            cachedSkills = try decoder.decode(ListNode<Skill>.self, from: data).body
-        }
-
-        return cachedSkills
+    public func skills() -> [Skill] {
+        _skills
     }
 
-    public func skill(forID id: Int) throws -> Skill? {
-        if cachedSkillsByID.isEmpty {
-            let skills = try skills()
-            cachedSkillsByID = Dictionary(skills.map({ ($0.id, $0) }), uniquingKeysWith: { (first, _) in first })
-        }
-
-        let skillTree = cachedSkillsByID[id]
-        return skillTree
+    public func skill(forID id: Int) -> Skill? {
+        _skillsByID[id]
     }
 
-    public func skill(forAegisName aegisName: String) throws -> Skill? {
-        if cachedSkillsByAegisName.isEmpty {
-            let skills = try skills()
-            cachedSkillsByAegisName = Dictionary(skills.map({ ($0.aegisName, $0) }), uniquingKeysWith: { (first, _) in first })
-        }
-
-        let skill = cachedSkillsByAegisName[aegisName]
-        return skill
+    public func skill(forAegisName aegisName: String) -> Skill? {
+        _skillsByAegisName[aegisName]
     }
 }
