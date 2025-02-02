@@ -6,10 +6,17 @@
 //
 
 import rAthenaResources
+import ROGame
 import SwiftUI
 
 struct ContentView: View {
     @State private var selectedItem: SidebarItem? = .files
+
+    @State private var clientDirectory = ObservableFile(file: .directory(GameResourceManager.default.baseURL))
+    @State private var serverDirectory = ObservableFile(file: .directory(ServerResourceManager.default.workingDirectoryURL))
+
+    @State private var conversation = Conversation()
+    @State private var gameSession = GameSession()
 
     var body: some View {
         AsyncContentView(load: load) {
@@ -17,7 +24,8 @@ struct ContentView: View {
                 NavigationStack {
                     SidebarView(selection: nil)
                         .navigationDestination(for: SidebarItem.self) { item in
-                            DetailView(item: item)
+                            detail(for: item)
+                                .toolbarTitleDisplayMode(.inline)
                         }
                 }
             } regular: {
@@ -26,11 +34,54 @@ struct ContentView: View {
                 } detail: {
                     if let item = selectedItem {
                         NavigationStack {
-                            DetailView(item: item)
+                            detail(for: item)
+                                .toolbarTitleDisplayMode(.inline)
                         }
                     }
                 }
             }
+        }
+    }
+
+    @ViewBuilder
+    private func detail(for item: SidebarItem) -> some View {
+        switch item {
+        case .files:
+            FilesView(title: "Files", directory: clientDirectory)
+        case .messages:
+            MessagesView(conversation: conversation)
+        case .game:
+            GameView(gameSession: gameSession)
+        case .cube:
+            RealityCubeView()
+        case .character:
+            CharacterView()
+        case .loginServer:
+            ServerView(server: .login)
+        case .charServer:
+            ServerView(server: .char)
+        case .mapServer:
+            ServerView(server: .map)
+        case .webServer:
+            ServerView(server: .web)
+        case .serverFiles:
+            FilesView(title: "Server Files", directory: serverDirectory)
+        case .itemDatabase:
+            ItemDatabaseView()
+        case .jobDatabase:
+            JobDatabaseView()
+        case .mapDatabase:
+            MapDatabaseView()
+        case .monsterDatabase:
+            MonsterDatabaseView()
+        case .monsterSummonDatabase:
+            MonsterSummonDatabaseView()
+        case .petDatabase:
+            PetDatabaseView()
+        case .skillDatabase:
+            SkillDatabaseView()
+        case .statusChangeDatabase:
+            StatusChangeDatabaseView()
         }
     }
 

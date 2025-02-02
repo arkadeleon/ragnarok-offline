@@ -130,7 +130,6 @@
 		35BE55622BDAB6EC003715C3 /* STRFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55612BDAB6EC003715C3 /* STRFilePreviewView.swift */; };
 		35BE55642BDAB834003715C3 /* FilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55632BDAB834003715C3 /* FilePreviewView.swift */; };
 		35BF5BE22C65B5D8006A3487 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BF5BE12C65B5D8006A3487 /* SidebarView.swift */; };
-		35BF5BE42C65B9FD006A3487 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BF5BE32C65B9FD006A3487 /* DetailView.swift */; };
 		35C8AF082D31781C0033B3DB /* ROResources in Frameworks */ = {isa = PBXBuildFile; productRef = 35C8AF072D31781C0033B3DB /* ROResources */; };
 		35C8F8F02D1025D0005603CD /* NPCDialogOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C8F8EF2D1025CA005603CD /* NPCDialogOverlayView.swift */; };
 		35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */; };
@@ -296,7 +295,6 @@
 		35BE55612BDAB6EC003715C3 /* STRFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRFilePreviewView.swift; sourceTree = "<group>"; };
 		35BE55632BDAB834003715C3 /* FilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePreviewView.swift; sourceTree = "<group>"; };
 		35BF5BE12C65B5D8006A3487 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
-		35BF5BE32C65B9FD006A3487 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		35C8F8EF2D1025CA005603CD /* NPCDialogOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPCDialogOverlayView.swift; sourceTree = "<group>"; };
 		35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabaseView.swift; sourceTree = "<group>"; };
 		35E27A822BC96AC800C11076 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -606,7 +604,6 @@
 				35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */,
 				35B3B8D92A08BEA600B4540B /* ContentView.swift */,
 				35BF5BE12C65B5D8006A3487 /* SidebarView.swift */,
-				35BF5BE32C65B9FD006A3487 /* DetailView.swift */,
 				355BC18A2B8F25A6002F0586 /* Core */,
 				35B3B9892A08C01600B4540B /* Files */,
 				35F50CCA2BB4614100B36455 /* Messages */,
@@ -941,7 +938,6 @@
 				35BE552D2BD939AA003715C3 /* ImageFilePreviewView.swift in Sources */,
 				3514BF602B455EF90065ED89 /* MonsterGridCell.swift in Sources */,
 				35E27A832BC96AC800C11076 /* Message.swift in Sources */,
-				35BF5BE42C65B9FD006A3487 /* DetailView.swift in Sources */,
 				35FEB6B52CDA13C200F24A4A /* DatabaseRecordAttributesSectionView.swift in Sources */,
 				3523B5822B98B74B00CCE722 /* DatabaseRecordSectionView.swift in Sources */,
 				351426C42C11BF9600B076BE /* FileReferencesView.swift in Sources */,
