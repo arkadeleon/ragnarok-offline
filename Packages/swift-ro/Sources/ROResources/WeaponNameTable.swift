@@ -15,7 +15,7 @@ public actor WeaponNameTable {
         let context = LuaContext()
 
         do {
-            if let url = Bundle.module.url(forResource: "weapontable", withExtension: "lub", locale: .korean) {
+            if let url = Bundle.module.url(forResource: "weapontable", withExtension: "lub") {
                 let data = try Data(contentsOf: url)
                 try context.load(data)
             }

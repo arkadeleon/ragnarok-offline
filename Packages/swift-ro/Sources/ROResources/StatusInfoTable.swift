@@ -17,12 +17,12 @@ public actor StatusInfoTable {
         let context = LuaContext()
 
         do {
-            if let url = Bundle.module.url(forResource: "efstids", withExtension: "lub", locale: .korean) {
+            if let url = Bundle.module.url(forResource: "efstids", withExtension: "lub") {
                 let data = try Data(contentsOf: url)
                 try context.load(data)
             }
 
-            if let url = Bundle.module.url(forResource: "stateiconimginfo", withExtension: "lub", locale: .korean) {
+            if let url = Bundle.module.url(forResource: "stateiconimginfo", withExtension: "lub") {
                 let data = try Data(contentsOf: url)
                 try context.load(data)
             }

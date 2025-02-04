@@ -17,12 +17,12 @@ public actor SkillInfoTable {
         let context = LuaContext()
 
         do {
-            if let url = Bundle.module.url(forResource: "jobinheritlist", withExtension: "lub", locale: .korean) {
+            if let url = Bundle.module.url(forResource: "jobinheritlist", withExtension: "lub") {
                 let data = try Data(contentsOf: url)
                 try context.load(data)
             }
 
-            if let url = Bundle.module.url(forResource: "skillid", withExtension: "lub", locale: .korean) {
+            if let url = Bundle.module.url(forResource: "skillid", withExtension: "lub") {
                 let data = try Data(contentsOf: url)
                 try context.load(data)
             }

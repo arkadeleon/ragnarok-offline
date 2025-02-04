@@ -15,12 +15,12 @@ public actor RobeNameTable {
         let context = LuaContext()
 
         do {
-            if let url = Bundle.module.url(forResource: "spriterobeid", withExtension: "lub", locale: .korean) {
+            if let url = Bundle.module.url(forResource: "spriterobeid", withExtension: "lub") {
                 let data = try Data(contentsOf: url)
                 try context.load(data)
             }
 
-            if let url = Bundle.module.url(forResource: "spriterobename", withExtension: "lub", locale: .korean) {
+            if let url = Bundle.module.url(forResource: "spriterobename", withExtension: "lub") {
                 let data = try Data(contentsOf: url)
                 try context.load(data)
             }

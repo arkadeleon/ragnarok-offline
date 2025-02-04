@@ -17,7 +17,7 @@ public actor ItemRandomOptionNameTable {
         let context = LuaContext()
 
         do {
-            if let url = Bundle.module.url(forResource: "enumvar", withExtension: "lub", locale: .korean) {
+            if let url = Bundle.module.url(forResource: "enumvar", withExtension: "lub") {
                 let data = try Data(contentsOf: url)
                 try context.load(data)
             }

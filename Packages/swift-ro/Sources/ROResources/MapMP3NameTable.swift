@@ -11,7 +11,8 @@ public let mapMP3NameTable = MapMP3NameTable()
 
 public actor MapMP3NameTable {
     lazy var mapMP3NamesByRSW: [String : String] = {
-        guard let string = Bundle.module.string(forResource: "mp3nametable", withExtension: "txt", encoding: .koreanEUC, locale: .korean) else {
+        guard let url = Bundle.module.url(forResource: "mp3nametable", withExtension: "txt"),
+              let string = try? String(contentsOf: url, encoding: .koreanEUC) else {
             return [:]
         }
 

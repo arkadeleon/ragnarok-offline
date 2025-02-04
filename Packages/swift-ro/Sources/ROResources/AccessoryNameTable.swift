@@ -15,12 +15,12 @@ public actor AccessoryNameTable {
         let context = LuaContext()
 
         do {
-            if let url = Bundle.module.url(forResource: "accessoryid", withExtension: "lub", locale: .korean) {
+            if let url = Bundle.module.url(forResource: "accessoryid", withExtension: "lub") {
                 let data = try Data(contentsOf: url)
                 try context.load(data)
             }
 
-            if let url = Bundle.module.url(forResource: "accname", withExtension: "lub", locale: .korean) {
+            if let url = Bundle.module.url(forResource: "accname", withExtension: "lub") {
                 let data = try Data(contentsOf: url)
                 try context.load(data)
             }

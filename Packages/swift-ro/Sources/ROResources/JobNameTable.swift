@@ -15,12 +15,12 @@ public actor JobNameTable {
         let context = LuaContext()
 
         do {
-            if let url = Bundle.module.url(forResource: "npcidentity", withExtension: "lub", locale: .korean) {
+            if let url = Bundle.module.url(forResource: "npcidentity", withExtension: "lub") {
                 let data = try Data(contentsOf: url)
                 try context.load(data)
             }
 
-            if let url = Bundle.module.url(forResource: "jobname", withExtension: "lub", locale: .korean) {
+            if let url = Bundle.module.url(forResource: "jobname", withExtension: "lub") {
                 let data = try Data(contentsOf: url)
                 try context.load(data)
             }
