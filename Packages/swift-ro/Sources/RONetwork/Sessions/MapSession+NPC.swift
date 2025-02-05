@@ -113,7 +113,7 @@ extension MapSession {
 
             var packet = PACKET_CZ_CLOSE_DIALOG()
             packet.packetType = HEADER_CZ_CLOSE_DIALOG
-            packet.npcID = npcID
+            packet.GID = npcID
 
             client.sendPacket(packet)
         }

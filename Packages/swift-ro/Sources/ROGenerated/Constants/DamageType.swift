@@ -21,6 +21,7 @@ public enum DamageType: Int, CaseIterable, Sendable {
     case lucy_dodge = 11
     case touch = 12
     case multi_hit_critical = 13
+    case splash_endure = 14
 }
 
 extension DamageType: CodingKey {
@@ -40,6 +41,7 @@ extension DamageType: CodingKey {
         case .lucy_dodge: "LUCY_DODGE"
         case .touch: "TOUCH"
         case .multi_hit_critical: "MULTI_HIT_CRITICAL"
+        case .splash_endure: "SPLASH_ENDURE"
         }
     }
 
@@ -59,6 +61,7 @@ extension DamageType: CodingKey {
         case "LUCY_DODGE": self = .lucy_dodge
         case "TOUCH": self = .touch
         case "MULTI_HIT_CRITICAL": self = .multi_hit_critical
+        case "SPLASH_ENDURE": self = .splash_endure
         default: return nil
         }
     }
