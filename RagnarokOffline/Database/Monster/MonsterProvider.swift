@@ -20,9 +20,19 @@ struct MonsterProvider: DatabaseRecordProvider {
     }
 
     func records(matching searchText: String, in monsters: [ObservableMonster]) async -> [ObservableMonster] {
-        monsters.filter { monster in
+        if searchText.hasPrefix("#") {
+            if let monsterID = Int(searchText.dropFirst()),
+               let monster = monsters.first(where: { $0.id == monsterID }) {
+                return [monster]
+            } else {
+                return []
+            }
+        }
+
+        let filteredMonsters = monsters.filter { monster in
             monster.displayName.localizedStandardContains(searchText)
         }
+        return filteredMonsters
     }
 }
 

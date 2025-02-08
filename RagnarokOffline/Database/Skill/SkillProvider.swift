@@ -20,9 +20,19 @@ struct SkillProvider: DatabaseRecordProvider {
     }
 
     func records(matching searchText: String, in skills: [ObservableSkill]) async -> [ObservableSkill] {
-        skills.filter { skill in
+        if searchText.hasPrefix("#") {
+            if let skillID = Int(searchText.dropFirst()),
+               let skill = skills.first(where: { $0.id == skillID }) {
+                return [skill]
+            } else {
+                return []
+            }
+        }
+
+        let filteredSkills = skills.filter { skill in
             skill.displayName.localizedStandardContains(searchText)
         }
+        return filteredSkills
     }
 }
 

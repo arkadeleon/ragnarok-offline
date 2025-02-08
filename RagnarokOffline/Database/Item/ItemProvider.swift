@@ -34,9 +34,19 @@ struct ItemProvider: DatabaseRecordProvider {
     }
 
     func records(matching searchText: String, in items: [ObservableItem]) async -> [ObservableItem] {
-        items.filter { item in
+        if searchText.hasPrefix("#") {
+            if let itemID = Int(searchText.dropFirst()),
+               let item = items.first(where: { $0.id == itemID }) {
+                return [item]
+            } else {
+                return []
+            }
+        }
+
+        let filteredItems = items.filter { item in
             item.displayName.localizedStandardContains(searchText)
         }
+        return filteredItems
     }
 }
 

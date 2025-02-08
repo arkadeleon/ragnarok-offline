@@ -160,7 +160,7 @@ public struct Skill: Decodable, Equatable, Hashable, Identifiable, Sendable {
         self.giveAp = try container.decodeIfPresent(EitherNode<Int, [LevelGiveAp]>.self, forKey: .giveAp)?.mapRight { $0.map { $0.giveAp } } ?? .left(0)
         self.copyFlags = try container.decodeIfPresent(CopyFlags.self, forKey: .copyFlags)
         self.noNearNPC = try container.decodeIfPresent(NoNearNPC.self, forKey: .noNearNPC)
-        self.castCancel = try container.decodeIfPresent(Bool.self, forKey: .castCancel) ?? false
+        self.castCancel = try container.decodeIfPresent(Bool.self, forKey: .castCancel) ?? true
         self.castDefenseReduction = try container.decodeIfPresent(Int.self, forKey: .castDefenseReduction) ?? 0
         self.castTime = try container.decodeIfPresent(EitherNode<Int, [LevelCastTime]>.self, forKey: .castTime)?.mapRight { $0.map { $0.caseTime } } ?? .left(0)
         self.afterCastActDelay = try container.decodeIfPresent(EitherNode<Int, [LevelAfterCastActDelay]>.self, forKey: .afterCastActDelay)?.mapRight { $0.map { $0.afterCastActDelay } } ?? .left(0)
