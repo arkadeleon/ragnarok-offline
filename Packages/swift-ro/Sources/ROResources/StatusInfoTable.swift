@@ -8,9 +8,9 @@
 import Foundation
 import Lua
 
-public let statusInfoTable = StatusInfoTable(locale: .current)
-
 public actor StatusInfoTable {
+    public static let current = StatusInfoTable(locale: .current)
+
     let locale: Locale
 
     lazy var context: LuaContext = {

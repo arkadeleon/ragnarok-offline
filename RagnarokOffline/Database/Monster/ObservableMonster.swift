@@ -132,7 +132,7 @@ class ObservableMonster {
     }
 
     func fetchLocalizedName() async {
-        localizedName = await monsterNameTable.localizedMonsterName(forMonsterID: monster.id)
+        localizedName = await MonsterNameTable.current.localizedMonsterName(forMonsterID: monster.id)
     }
 
     func fetchImage() async {

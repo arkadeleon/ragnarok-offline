@@ -9,13 +9,13 @@ import Foundation
 import Lua
 import ROCore
 
-public let itemInfoTable = ItemInfoTable(locale: .current)
-
 public actor ItemInfoTable {
     enum ItemDataSource {
         case lua(_ context: LuaContext)
         case txt(_ identifiedItemNamesByID: [Int : Data], _ identifiedItemDescriptionsByID: [Int : Data])
     }
+
+    public static let current = ItemInfoTable(locale: .current)
 
     let locale: Locale
 

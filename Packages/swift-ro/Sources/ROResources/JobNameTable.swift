@@ -8,9 +8,9 @@
 import Foundation
 import Lua
 
-public let jobNameTable = JobNameTable()
-
 public actor JobNameTable {
+    public static let current = JobNameTable()
+
     lazy var context: LuaContext = {
         let context = LuaContext()
 

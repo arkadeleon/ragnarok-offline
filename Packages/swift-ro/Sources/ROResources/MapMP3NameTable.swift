@@ -7,9 +7,9 @@
 
 import Foundation
 
-public let mapMP3NameTable = MapMP3NameTable()
-
 public actor MapMP3NameTable {
+    public static let current = MapMP3NameTable()
+
     lazy var mapMP3NamesByRSW: [String : String] = {
         guard let url = Bundle.module.url(forResource: "mp3nametable", withExtension: "txt"),
               let string = try? String(contentsOf: url, encoding: .koreanEUC) else {

@@ -8,9 +8,9 @@
 import Foundation
 import Lua
 
-public let itemRandomOptionNameTable = ItemRandomOptionNameTable(locale: .current)
-
 public actor ItemRandomOptionNameTable {
+    public static let current = ItemRandomOptionNameTable(locale: .current)
+
     let locale: Locale
 
     lazy var context: LuaContext = {

@@ -8,9 +8,9 @@
 import Foundation
 import Lua
 
-public let weaponNameTable = WeaponNameTable()
-
 public actor WeaponNameTable {
+    public static let current = WeaponNameTable()
+
     lazy var context: LuaContext = {
         let context = LuaContext()
 

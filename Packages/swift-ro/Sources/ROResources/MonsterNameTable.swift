@@ -8,13 +8,14 @@
 import Foundation
 import Lua
 
-public let monsterNameTable = MonsterNameTable(locale: .current)
-
 public actor MonsterNameTable {
+    public static let current = MonsterNameTable(locale: .current)
+
     let locale: Locale
 
     lazy var monsterNamesByID: [Int : String] = {
-        guard let string = Bundle.module.string(forResource: "mobname", withExtension: "txt", encoding: .utf8, locale: locale) else {
+        guard let url = Bundle.module.url(forResource: "mobname", withExtension: "txt", locale: locale),
+              let string = try? String(contentsOf: url, encoding: .utf8) else {
             return [:]
         }
 

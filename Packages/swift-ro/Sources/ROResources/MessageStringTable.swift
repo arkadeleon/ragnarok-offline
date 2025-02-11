@@ -7,13 +7,14 @@
 
 import Foundation
 
-public let messageStringTable = MessageStringTable(locale: .current)
-
 public actor MessageStringTable {
+    public static let current = MessageStringTable(locale: .current)
+
     let locale: Locale
 
     lazy var messageStrings: [String] = {
-        guard let string = Bundle.module.string(forResource: "msgstringtable", withExtension: "txt", encoding: .isoLatin1, locale: locale) else {
+        guard let url = Bundle.module.url(forResource: "msgstringtable", withExtension: "txt", locale: locale),
+              let string = try? String(contentsOf: url, encoding: .isoLatin1) else {
             return []
         }
 

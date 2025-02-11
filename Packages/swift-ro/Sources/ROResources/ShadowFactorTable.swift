@@ -8,9 +8,9 @@
 import Foundation
 import Lua
 
-public let shadowFactorTable = ShadowFactorTable()
-
 public actor ShadowFactorTable {
+    public static let current = ShadowFactorTable()
+
     lazy var context: LuaContext = {
         let context = LuaContext()
 

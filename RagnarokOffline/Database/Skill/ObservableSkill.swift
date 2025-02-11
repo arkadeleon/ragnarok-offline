@@ -61,7 +61,7 @@ class ObservableSkill {
     }
 
     func fetchLocalizedName() async {
-        localizedName = await skillInfoTable.localizedSkillName(forSkillID: skill.id)
+        localizedName = await SkillInfoTable.current.localizedSkillName(forSkillID: skill.id)
     }
 
     func fetchIconImage() async {
@@ -69,7 +69,7 @@ class ObservableSkill {
     }
 
     func fetchDetail() async {
-        localizedDescription = await skillInfoTable.localizedSkillDescription(forSkillID: skill.id)
+        localizedDescription = await SkillInfoTable.current.localizedSkillDescription(forSkillID: skill.id)
     }
 }
 

@@ -8,9 +8,9 @@
 import Foundation
 import Lua
 
-public let accessoryNameTable = AccessoryNameTable()
-
 public actor AccessoryNameTable {
+    public static let current = AccessoryNameTable()
+
     lazy var context: LuaContext = {
         let context = LuaContext()
 

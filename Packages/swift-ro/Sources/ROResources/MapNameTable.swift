@@ -7,13 +7,14 @@
 
 import Foundation
 
-public let mapNameTable = MapNameTable(locale: .current)
-
 public actor MapNameTable {
+    public static let current = MapNameTable(locale: .current)
+
     let locale: Locale
 
     lazy var mapNamesByRSW: [String : String] = {
-        guard let string = Bundle.module.string(forResource: "mapnametable", withExtension: "txt", encoding: .isoLatin1, locale: locale) else {
+        guard let url = Bundle.module.url(forResource: "mapnametable", withExtension: "txt", locale: locale),
+              let string = try? String(contentsOf: url, encoding: .isoLatin1) else {
             return [:]
         }
 

@@ -76,7 +76,7 @@ class ObservableStatusChange {
             ObservableStatusChange(mode: mode, statusChange: statusChange)
         }
 
-        localizedDescription = await statusInfoTable.localizedDescription(forStatusID: statusChange.icon.rawValue)
+        localizedDescription = await StatusInfoTable.current.localizedDescription(forStatusID: statusChange.icon.rawValue)
     }
 }
 

@@ -8,9 +8,9 @@
 import Foundation
 import Lua
 
-public let skillInfoTable = SkillInfoTable(locale: .current)
-
 public actor SkillInfoTable {
+    public static let current = SkillInfoTable(locale: .current)
+
     let locale: Locale
 
     lazy var context: LuaContext = {
