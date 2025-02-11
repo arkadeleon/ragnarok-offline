@@ -292,6 +292,15 @@ let allConstantConversions: [ConstantConversion] = [
         outputType: "CardType",
         extensions: [.decodable]
     ),
+    .cEnum(
+        source: "map/pc.hpp",
+        type: "e_mado_type",
+        prefix: "MADO_",
+        exclude: [
+            "MADO_MAX",
+        ],
+        outputType: "MadoType"
+    ),
     // MARK: - map/skill.hpp
     .cEnum(
         source: "map/skill.hpp",
