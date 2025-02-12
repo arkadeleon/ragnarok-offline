@@ -16,8 +16,7 @@ enum GameResourceError: Error {
     case resourceNotFound
 }
 
-@MainActor
-final public class GameResourceManager {
+public actor GameResourceManager {
     public static let `default` = GameResourceManager()
 
     public let baseURL: URL

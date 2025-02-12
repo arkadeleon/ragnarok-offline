@@ -10,6 +10,7 @@ import ROFileFormats
 import RORenderers
 
 extension GameResourceManager {
+    @MainActor
     public func worldEntity(mapName: String) async throws -> Entity {
         let gat = try await gat(forMapName: mapName)
         let gnd = try await gnd(forMapName: mapName)
@@ -48,6 +49,7 @@ extension GameResourceManager {
         return groundEntity
     }
 
+    @MainActor
     public func modelEntity(modelName: String) async throws -> Entity {
         let rsm = try await rsm(forModelName: modelName)
 
