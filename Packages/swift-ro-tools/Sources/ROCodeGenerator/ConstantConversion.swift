@@ -73,7 +73,7 @@ let allConstantConversions: [ConstantConversion] = [
         exclude: [
             "SEX_SERVER",
         ],
-        outputType: "Sex",
+        outputType: "Gender",
         extensions: [.decodable]
     ),
     // MARK: - map/battle.hpp

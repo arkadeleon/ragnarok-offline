@@ -34,7 +34,7 @@ extension Entity {
     }
 
     static func loadBody(jobID: JobID) async throws -> Entity {
-        let (spr, act) = try await GameResourceManager.default.sprite(forJobID: jobID, sex: .male)
+        let (spr, act) = try await GameResourceManager.default.sprite(forJobID: jobID, gender: .male)
 
         let entity = try await Entity.load(act: act, spr: spr)
         entity.name = "body"
@@ -43,7 +43,7 @@ extension Entity {
     }
 
     static func loadHead(hairStyle: Int) async throws -> Entity {
-        let (spr, act) = try await GameResourceManager.default.sprite(forHairStyle: hairStyle, sex: .male)
+        let (spr, act) = try await GameResourceManager.default.sprite(forHairStyle: hairStyle, gender: .male)
 
         let entity = try await Entity.load(act: act, spr: spr)
         entity.name = "head"

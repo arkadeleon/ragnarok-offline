@@ -41,8 +41,8 @@ public actor GameResourceManager {
         return image
     }
 
-    public func jobImage(forJobID jobID: JobID, sex: Sex) async throws -> CGImage? {
-        let (spr, act) = try await sprite(forJobID: jobID, sex: sex)
+    public func jobImage(forJobID jobID: JobID, gender: Gender) async throws -> CGImage? {
+        let (spr, act) = try await sprite(forJobID: jobID, gender: gender)
 
         let imagesBySpriteType = spr.imagesBySpriteType()
         let animatedImage = act.actions.first?.animatedImage(using: imagesBySpriteType)
@@ -95,8 +95,8 @@ public actor GameResourceManager {
 
     // MARK: - data\palette
 
-    public func palette(forHairStyle hairStyle: Int, hairColor: Int, sex: Sex) async throws -> PAL {
-        let path = GRF.Path(components: ["data", "palette", "머리", "머리", "\(hairStyle)_\(sex.resourceName)_\(hairColor).pal"])
+    public func palette(forHairStyle hairStyle: Int, hairColor: Int, gender: Gender) async throws -> PAL {
+        let path = GRF.Path(components: ["data", "palette", "머리", "머리", "\(hairStyle)_\(gender.name)_\(hairColor).pal"])
         let data = try contentsOfEntry(at: path)
         let pal = try PAL(data: data)
         return pal
@@ -136,28 +136,28 @@ public actor GameResourceManager {
         return (spr, act)
     }
 
-    public func sprite(forJobID jobID: JobID, sex: Sex) async throws -> (spr: SPR, act: ACT) {
+    public func sprite(forJobID jobID: JobID, gender: Gender) async throws -> (spr: SPR, act: ACT) {
         guard let jobName = PlayerJobNameTable.current.jobName(for: jobID.rawValue) else {
             throw GameResourceError.resourceNotFound
         }
 
-        let sprPath = GRF.Path(components: ["data", "sprite", "인간족", "몸통", "\(sex.resourceName)", "\(jobName)_\(sex.resourceName).spr"])
+        let sprPath = GRF.Path(components: ["data", "sprite", "인간족", "몸통", "\(gender.name)", "\(jobName)_\(gender.name).spr"])
         let sprData = try contentsOfEntry(at: sprPath)
         let spr = try SPR(data: sprData)
 
-        let actPath = GRF.Path(components: ["data", "sprite", "인간족", "몸통", "\(sex.resourceName)", "\(jobName)_\(sex.resourceName).act"])
+        let actPath = GRF.Path(components: ["data", "sprite", "인간족", "몸통", "\(gender.name)", "\(jobName)_\(gender.name).act"])
         let actData = try contentsOfEntry(at: actPath)
         let act = try ACT(data: actData)
 
         return (spr, act)
     }
 
-    public func sprite(forHairStyle hairStyle: Int, sex: Sex) async throws -> (spr: SPR, act: ACT) {
-        let sprPath = GRF.Path(components: ["data", "sprite", "인간족", "머리통", "\(sex.resourceName)", "\(hairStyle)_\(sex.resourceName).spr"])
+    public func sprite(forHairStyle hairStyle: Int, gender: Gender) async throws -> (spr: SPR, act: ACT) {
+        let sprPath = GRF.Path(components: ["data", "sprite", "인간족", "머리통", "\(gender.name)", "\(hairStyle)_\(gender.name).spr"])
         let sprData = try contentsOfEntry(at: sprPath)
         let spr = try SPR(data: sprData)
 
-        let actPath = GRF.Path(components: ["data", "sprite", "인간족", "머리통", "\(sex.resourceName)", "\(hairStyle)_\(sex.resourceName).act"])
+        let actPath = GRF.Path(components: ["data", "sprite", "인간족", "머리통", "\(gender.name)", "\(hairStyle)_\(gender.name).act"])
         let actData = try contentsOfEntry(at: actPath)
         let act = try ACT(data: actData)
 

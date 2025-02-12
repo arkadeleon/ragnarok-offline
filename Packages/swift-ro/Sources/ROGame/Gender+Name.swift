@@ -1,5 +1,5 @@
 //
-//  Sex+ResourceName.swift
+//  Gender+Name.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/8.
@@ -7,8 +7,8 @@
 
 import ROGenerated
 
-extension Sex {
-    var resourceName: String {
+extension Gender {
+    var name: String {
         switch self {
         case .female: "여"
         case .male: "남"
