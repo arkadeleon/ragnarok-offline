@@ -122,15 +122,15 @@ final public class GameResourceManager {
     }
 
     public func sprite(forMonsterID monsterID: Int) async throws -> (spr: SPR, act: ACT) {
-        guard let resourceName = await JobNameTable.current.jobName(forJobID: monsterID) else {
+        guard let jobName = await JobNameTable.current.jobName(forJobID: monsterID) else {
             throw GameResourceError.resourceNotFound
         }
 
-        let sprPath = GRF.Path(components: ["data", "sprite", "몬스터", "\(resourceName).spr"])
+        let sprPath = GRF.Path(components: ["data", "sprite", "몬스터", "\(jobName).spr"])
         let sprData = try contentsOfEntry(at: sprPath)
         let spr = try SPR(data: sprData)
 
-        let actPath = GRF.Path(components: ["data", "sprite", "몬스터", "\(resourceName).act"])
+        let actPath = GRF.Path(components: ["data", "sprite", "몬스터", "\(jobName).act"])
         let actData = try contentsOfEntry(at: actPath)
         let act = try ACT(data: actData)
 
@@ -138,11 +138,15 @@ final public class GameResourceManager {
     }
 
     public func sprite(forJobID jobID: JobID, sex: Sex) async throws -> (spr: SPR, act: ACT) {
-        let sprPath = GRF.Path(components: ["data", "sprite", "인간족", "몸통", "\(sex.resourceName)", "\(jobID.resourceName)_\(sex.resourceName).spr"])
+        guard let jobName = PlayerJobNameTable.current.jobName(for: jobID.rawValue) else {
+            throw GameResourceError.resourceNotFound
+        }
+
+        let sprPath = GRF.Path(components: ["data", "sprite", "인간족", "몸통", "\(sex.resourceName)", "\(jobName)_\(sex.resourceName).spr"])
         let sprData = try contentsOfEntry(at: sprPath)
         let spr = try SPR(data: sprData)
 
-        let actPath = GRF.Path(components: ["data", "sprite", "인간족", "몸통", "\(sex.resourceName)", "\(jobID.resourceName)_\(sex.resourceName).act"])
+        let actPath = GRF.Path(components: ["data", "sprite", "인간족", "몸통", "\(sex.resourceName)", "\(jobName)_\(sex.resourceName).act"])
         let actData = try contentsOfEntry(at: actPath)
         let act = try ACT(data: actData)
 
