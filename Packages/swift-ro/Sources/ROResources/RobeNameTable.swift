@@ -25,11 +25,10 @@ public actor RobeNameTable {
                 try context.load(data)
             }
 
-            try context.parse("""
-            function robeName(robeID)
-                return RobeNameTable[robeID]
-            end
-            """)
+            if let url = Bundle.module.url(forResource: "spriterobename_f", withExtension: "lub") {
+                let data = try Data(contentsOf: url)
+                try context.load(data)
+            }
         } catch {
             print(error)
         }
@@ -37,8 +36,8 @@ public actor RobeNameTable {
         return context
     }()
 
-    public func robeName(forRobeID robeID: Int) -> String? {
-        guard let result = try? context.call("robeName", with: [robeID]) as? String else {
+    public func robeName(forRobeID robeID: Int, checkEnglish: Bool) -> String? {
+        guard let result = try? context.call("ReqRobSprName_V2", with: [robeID, checkEnglish]) as? String else {
             return nil
         }
 

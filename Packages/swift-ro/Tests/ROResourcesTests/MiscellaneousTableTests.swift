@@ -30,7 +30,7 @@ final class MiscellaneousTableTests: XCTestCase {
     }
 
     func testRobeNameTable() async throws {
-        let wings = await RobeNameTable.current.robeName(forRobeID: 1)
+        let wings = await RobeNameTable.current.robeName(forRobeID: 1, checkEnglish: false)
         XCTAssertEqual(wings, "천사날개")
     }
 
@@ -42,5 +42,8 @@ final class MiscellaneousTableTests: XCTestCase {
     func testWeaponNameTable() async throws {
         let shortsword = await WeaponNameTable.current.weaponName(forWeaponID: 1)
         XCTAssertEqual(shortsword, "_단검")
+
+        let mainGauche = await WeaponNameTable.current.realWeaponID(forWeaponID: 31)
+        XCTAssertEqual(mainGauche, 1)
     }
 }

@@ -87,7 +87,6 @@ let package = Package(
         .target(
             name: "ROGame",
             dependencies: [
-                .product(name: "Lua", package: "swift-lua"),
                 "ROCore",
                 "ROFileFormats",
                 "ROGenerated",
@@ -130,6 +129,19 @@ let package = Package(
                 "ROCore",
                 "ROFileFormats",
                 "ROShaders",
+            ]),
+        .target(
+            name: "RORendering",
+            dependencies: [
+                "ROCore",
+                "ROFileFormats",
+                "ROGenerated",
+                "ROResources",
+            ]),
+        .testTarget(
+            name: "RORenderingTests",
+            dependencies: [
+                "RORendering",
             ]),
         .target(
             name: "ROResources",

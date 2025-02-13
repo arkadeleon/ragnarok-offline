@@ -25,11 +25,10 @@ public actor AccessoryNameTable {
                 try context.load(data)
             }
 
-            try context.parse("""
-            function accessoryName(accessoryID)
-                return AccNameTable[accessoryID]
-            end
-            """)
+            if let url = Bundle.module.url(forResource: "accname_f", withExtension: "lub") {
+                let data = try Data(contentsOf: url)
+                try context.load(data)
+            }
         } catch {
             print(error)
         }
@@ -38,7 +37,7 @@ public actor AccessoryNameTable {
     }()
 
     public func accessoryName(forAccessoryID accessoryID: Int) -> String? {
-        guard let result = try? context.call("accessoryName", with: [accessoryID]) as? String else {
+        guard let result = try? context.call("ReqAccName", with: [accessoryID]) as? String else {
             return nil
         }
 

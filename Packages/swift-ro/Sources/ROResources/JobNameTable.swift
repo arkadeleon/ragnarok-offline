@@ -25,11 +25,10 @@ public actor JobNameTable {
                 try context.load(data)
             }
 
-            try context.parse("""
-            function jobName(jobID)
-                return JobNameTable[jobID]
-            end
-            """)
+            if let url = Bundle.module.url(forResource: "jobname_f", withExtension: "lub") {
+                let data = try Data(contentsOf: url)
+                try context.load(data)
+            }
         } catch {
             print(error)
         }
@@ -38,7 +37,7 @@ public actor JobNameTable {
     }()
 
     public func jobName(forJobID jobID: Int) -> String? {
-        let result = try? context.call("jobName", with: [jobID]) as? String
+        let result = try? context.call("ReqJobName", with: [jobID]) as? String
         return result
     }
 }

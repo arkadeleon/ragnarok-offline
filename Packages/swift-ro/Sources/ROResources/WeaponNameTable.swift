@@ -20,11 +20,10 @@ public actor WeaponNameTable {
                 try context.load(data)
             }
 
-            try context.parse("""
-            function weaponName(weaponID)
-                return WeaponNameTable[weaponID]
-            end
-            """)
+            if let url = Bundle.module.url(forResource: "weapontable_f", withExtension: "lub") {
+                let data = try Data(contentsOf: url)
+                try context.load(data)
+            }
         } catch {
             print(error)
         }
@@ -33,11 +32,19 @@ public actor WeaponNameTable {
     }()
 
     public func weaponName(forWeaponID weaponID: Int) -> String? {
-        guard let result = try? context.call("weaponName", with: [weaponID]) as? String else {
+        guard let result = try? context.call("ReqWeaponName", with: [weaponID]) as? String else {
             return nil
         }
 
         let weaponName = result.transcoding(from: .isoLatin1, to: .koreanEUC)
         return weaponName
+    }
+
+    public func realWeaponID(forWeaponID weaponID: Int) -> Int? {
+        guard let result = try? context.call("GetRealWeaponId", with: [weaponID]) as? Int else {
+            return nil
+        }
+
+        return result
     }
 }
