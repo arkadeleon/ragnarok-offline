@@ -154,6 +154,32 @@ extension ObservableFile {
     }
 }
 
+extension ObservableFile {
+    struct Comparator: SortComparator {
+        var order: SortOrder = .forward
+
+        func compare(_ lhs: ObservableFile, _ rhs: ObservableFile) -> ComparisonResult {
+            let lhsRank = switch lhs.file {
+            case .directory, .grfDirectory: 0
+            case .grf: 1
+            default: 2
+            }
+
+            let rhsRank = switch rhs.file {
+            case .directory, .grfDirectory: 0
+            case .grf: 1
+            default: 2
+            }
+
+            if lhsRank == rhsRank {
+                return lhs.file.name.localizedStandardCompare(rhs.file.name)
+            } else {
+                return NSNumber(integerLiteral: lhsRank).compare(NSNumber(integerLiteral: rhsRank))
+            }
+        }
+    }
+}
+
 extension ObservableFile: Equatable {
     static func == (lhs: ObservableFile, rhs: ObservableFile) -> Bool {
         lhs.file.url == rhs.file.url
@@ -175,7 +201,7 @@ extension ObservableFile: Comparable {
         }
 
         if lhsRank == rhsRank {
-            return lhs.file.name.lowercased() < rhs.file.name.lowercased()
+            return lhs.file.name.localizedStandardCompare(rhs.file.name) == .orderedAscending
         } else {
             return lhsRank < rhsRank
         }
