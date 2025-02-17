@@ -9,6 +9,10 @@ import ROGenerated
 import ROResources
 
 struct ResourcePath: ExpressibleByArrayLiteral {
+    static func + (lhs: ResourcePath, rhs: ResourcePath) -> ResourcePath {
+        ResourcePath(components: lhs.components + rhs.components)
+    }
+
     var components: [String]
 
     init(components: [String]) {
@@ -21,6 +25,16 @@ struct ResourcePath: ExpressibleByArrayLiteral {
 
     func appending(_ component: String) -> ResourcePath {
         ResourcePath(components: components + [component])
+    }
+
+    func appendingPathExtension(_ pathExtension: String) -> ResourcePath {
+        var components = components
+        if var lastComponent = components.last {
+            lastComponent.append(".")
+            lastComponent.append(pathExtension)
+            components[components.count - 1] = lastComponent
+        }
+        return ResourcePath(components: components)
     }
 }
 
@@ -91,7 +105,7 @@ extension ResourcePath {
         }
     }
 
-    static func weaponSprite(jobID: UniversalJobID, weaponID: Int, gender: Gender, madoType: MadoType = .robot) async -> ResourcePath? {
+    static func weaponSprite(jobID: UniversalJobID, weaponID: Int, isSlash: Bool = false, gender: Gender, madoType: MadoType = .robot) async -> ResourcePath? {
         guard jobID.isPlayer || jobID.isMercenary else {
             return nil
         }
@@ -125,9 +139,9 @@ extension ResourcePath {
             }
 
             if jobID.isDoram {
-                return ["도람족", jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)"]
+                return ["도람족", jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)\(isSlash ? "_검광" : "")"]
             } else {
-                return ["인간족", jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)"]
+                return ["인간족", jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)\(isSlash ? "_검광" : "")"]
             }
         } else {
             let mercenaryPath: ResourcePath = ["인간족", "용병"]
