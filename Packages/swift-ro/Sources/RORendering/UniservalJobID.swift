@@ -5,9 +5,19 @@
 //  Created by Leon Li on 2025/2/12.
 //
 
-struct UniversalJobID: RawRepresentable, ExpressibleByIntegerLiteral {
-    let rawValue: Int
+public struct UniversalJobID: RawRepresentable, ExpressibleByIntegerLiteral, Sendable {
+    public let rawValue: Int
 
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+
+    public init(integerLiteral value: Int) {
+        self.rawValue = value
+    }
+}
+
+extension UniversalJobID {
     var isPlayer: Bool {
         switch rawValue {
         case 0..<45: true
@@ -52,22 +62,24 @@ struct UniversalJobID: RawRepresentable, ExpressibleByIntegerLiteral {
     }
 
     var isHomunculus: Bool {
-        rawValue - 6001 <= 51
+        switch rawValue {
+        case 6001...6052: true
+        default: false
+        }
     }
 
     var isMercenary: Bool {
-        rawValue - 6017 <= 29
+        switch rawValue {
+        case 6017...6046: true
+        default: false
+        }
     }
 
     var isDoram: Bool {
-        (rawValue - 4217 <= 4) || rawValue == 4308 || rawValue == 4315
-    }
-
-    init(rawValue: Int) {
-        self.rawValue = rawValue
-    }
-
-    init(integerLiteral value: Int) {
-        self.rawValue = value
+        switch rawValue {
+        case 4217...4221: true
+        case 4308, 4315: true
+        default: false
+        }
     }
 }

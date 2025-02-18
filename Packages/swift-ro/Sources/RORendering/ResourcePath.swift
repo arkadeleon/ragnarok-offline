@@ -5,34 +5,35 @@
 //  Created by Leon Li on 2025/2/12.
 //
 
+import Foundation
 import ROGenerated
 import ROResources
 
-struct ResourcePath: ExpressibleByArrayLiteral {
-    static func + (lhs: ResourcePath, rhs: ResourcePath) -> ResourcePath {
+public struct ResourcePath: ExpressibleByArrayLiteral {
+    public static func + (lhs: ResourcePath, rhs: ResourcePath) -> ResourcePath {
         ResourcePath(components: lhs.components + rhs.components)
     }
 
-    var components: [String]
+    public let components: [String]
 
-    init(components: [String]) {
+    public init(components: [String]) {
         self.components = components
     }
 
-    init(arrayLiteral elements: String...) {
+    public init(arrayLiteral elements: String...) {
         self.components = elements
     }
 
-    func appending(_ component: String) -> ResourcePath {
+    public func appending(component: String) -> ResourcePath {
         ResourcePath(components: components + [component])
     }
 
-    func appendingPathExtension(_ pathExtension: String) -> ResourcePath {
+    public func appendingPathExtension(_ pathExtension: String) -> ResourcePath {
         var components = components
-        if var lastComponent = components.last {
+        if var lastComponent = components.popLast() {
             lastComponent.append(".")
             lastComponent.append(pathExtension)
-            components[components.count - 1] = lastComponent
+            components.append(lastComponent)
         }
         return ResourcePath(components: components)
     }
@@ -148,11 +149,11 @@ extension ResourcePath {
 
             switch jobID.rawValue {
             case 6017...6026:
-                return mercenaryPath.appending("활용병_활")
+                return mercenaryPath.appending(component: "활용병_활")
             case 6027...6036:
-                return mercenaryPath.appending("창용병_창")
+                return mercenaryPath.appending(component: "창용병_창")
             default:
-                return mercenaryPath.appending("검용병_검")
+                return mercenaryPath.appending(component: "검용병_검")
             }
         }
     }
@@ -287,5 +288,12 @@ extension ResourcePath {
         } else {
             return "meister_madogear2"
         }
+    }
+}
+
+extension URL {
+    func appending(path: ResourcePath, directoryHint: URL.DirectoryHint = .inferFromPath) -> URL {
+        let path = path.components.joined(separator: "/")
+        return appending(path: path, directoryHint: directoryHint)
     }
 }

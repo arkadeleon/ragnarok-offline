@@ -7,16 +7,24 @@
 
 import ROGenerated
 
-struct SpriteConfiguration {
-    var gender: Gender = .male
-    var headID = 1
-    var outfitID: Int?
-    var headgearIDs: [Int] = []
-    var garmentID: Int?
-    var weaponID: Int?
-    var shieldID: Int?
-    var bodyPaletteID: Int?
-    var headPaletteID: Int?
-    var headDirection = 0
-    var madoType: MadoType = .robot
+public struct SpriteConfiguration: Sendable {
+    public var gender: Gender
+    public var headID: Int
+    public var outfitID: Int?
+    public var headgearIDs: [Int]
+    public var garmentID: Int?
+    public var weaponID: Int?
+    public var shieldID: Int?
+    public var bodyPaletteID: Int?
+    public var headPaletteID: Int?
+    public var headDirection: Int
+    public var madoType: MadoType
+
+    public init() {
+        gender = .male
+        headID = 1
+        headgearIDs = []
+        headDirection = 0
+        madoType = .robot
+    }
 }

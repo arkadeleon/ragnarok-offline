@@ -69,6 +69,7 @@
 		357960A62D3564B0003D9CEF /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357960952D3564B0003D9CEF /* File.swift */; };
 		357960A72D3564B0003D9CEF /* FileThumbnailRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3579609C2D3564B0003D9CEF /* FileThumbnailRequest.swift */; };
 		357960AA2D356D26003D9CEF /* ROGame in Frameworks */ = {isa = PBXBuildFile; productRef = 357960A92D356D26003D9CEF /* ROGame */; };
+		3579DF942D637BFC00B8C98A /* RORendering in Frameworks */ = {isa = PBXBuildFile; productRef = 3579DF932D637BFC00B8C98A /* RORendering */; };
 		357EA4E32CC14A440081370F /* browser.js in Resources */ = {isa = PBXBuildFile; fileRef = 357EA4E12CC14A440081370F /* browser.js */; };
 		357F96BA2C4AA48400B3231B /* ImageGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357F96B92C4AA48400B3231B /* ImageGrid.swift */; };
 		3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC52B8C830D00E746D7 /* SettingsView.swift */; };
@@ -327,6 +328,7 @@
 			files = (
 				358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */,
 				358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */,
+				3579DF942D637BFC00B8C98A /* RORendering in Frameworks */,
 				358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */,
 				3590B23E2CE5EA9F007A0AED /* ROServer in Frameworks */,
 				353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */,
@@ -749,6 +751,7 @@
 				3590B23D2CE5EA9F007A0AED /* ROServer */,
 				35C8AF072D31781C0033B3DB /* ROResources */,
 				357960A92D356D26003D9CEF /* ROGame */,
+				3579DF932D637BFC00B8C98A /* RORendering */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -1197,6 +1200,10 @@
 		357960A92D356D26003D9CEF /* ROGame */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ROGame;
+		};
+		3579DF932D637BFC00B8C98A /* RORendering */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RORendering;
 		};
 		358D4C662BC7707400FAF45D /* ROFileFormats */ = {
 			isa = XCSwiftPackageProductDependency;

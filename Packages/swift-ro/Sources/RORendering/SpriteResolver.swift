@@ -7,14 +7,14 @@
 
 import ROGenerated
 
-final class SpriteResolver {
-    let resourceManager: ResourceManager
+final public class SpriteResolver: Sendable {
+    public let resourceManager: ResourceManager
 
-    init(resourceManager: ResourceManager) {
+    public init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
     }
 
-    func resolvePlayerSprites(jobID: UniversalJobID, configuration: SpriteConfiguration) async -> [SpriteResource] {
+    public func resolvePlayerSprites(jobID: UniversalJobID, configuration: SpriteConfiguration) async -> [SpriteResource] {
         let gender = configuration.gender
         let headID = configuration.headID
         let madoType = configuration.madoType
@@ -22,32 +22,16 @@ final class SpriteResolver {
         var sprites: [SpriteResource] = []
 
         // Body
-        if let outfitID = configuration.outfitID {
-            if let bodySpritePath = await ResourcePath.playerBodyAltSprite(jobID: jobID, gender: gender, costumeID: outfitID, madoType: madoType) {
-                do {
-                    let bodySprite = try await resourceManager.spriteResource(at: bodySpritePath)
-                    bodySprite.semantic = .playerBody
-                    sprites.append(bodySprite)
-                } catch {
-                    print(error)
-                }
-            }
-        } else {
-            if let bodySpritePath = await ResourcePath.playerBodySprite(jobID: jobID, gender: gender, madoType: madoType) {
-                do {
-                    let bodySprite = try await resourceManager.spriteResource(at: bodySpritePath)
-                    bodySprite.semantic = .playerBody
-                    sprites.append(bodySprite)
-                } catch {
-                    print(error)
-                }
-            }
+        let bodySprite = await playerBodySprite(jobID: jobID, configuration: configuration)
+        if let bodySprite {
+            sprites.append(bodySprite)
         }
 
         // Head
         if let headSpritePath = ResourcePath.playerHeadSprite(jobID: jobID, headID: headID, gender: gender) {
             do {
                 let headSprite = try await resourceManager.spriteResource(at: headSpritePath)
+                headSprite.parent = bodySprite
                 headSprite.semantic = .playerHead
                 sprites.append(headSprite)
             } catch {
@@ -103,5 +87,34 @@ final class SpriteResolver {
         // Shadow
 
         return sprites
+    }
+
+    private func playerBodySprite(jobID: UniversalJobID, configuration: SpriteConfiguration) async -> SpriteResource? {
+        let gender = configuration.gender
+        let madoType = configuration.madoType
+
+        if let outfitID = configuration.outfitID {
+            if let bodySpritePath = await ResourcePath.playerBodyAltSprite(jobID: jobID, gender: gender, costumeID: outfitID, madoType: madoType) {
+                do {
+                    let bodySprite = try await resourceManager.spriteResource(at: bodySpritePath)
+                    bodySprite.semantic = .playerBody
+                    return bodySprite
+                } catch {
+                    print(error)
+                }
+            }
+        } else {
+            if let bodySpritePath = await ResourcePath.playerBodySprite(jobID: jobID, gender: gender, madoType: madoType) {
+                do {
+                    let bodySprite = try await resourceManager.spriteResource(at: bodySpritePath)
+                    bodySprite.semantic = .playerBody
+                    return bodySprite
+                } catch {
+                    print(error)
+                }
+            }
+        }
+
+        return nil
     }
 }

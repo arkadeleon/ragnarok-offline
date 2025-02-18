@@ -12,21 +12,20 @@ enum ResourceError: Error {
     case resourceNotFound
 }
 
-final class ResourceManager: @unchecked Sendable {
-    public static let `default` = ResourceManager()
+final public class ResourceManager: @unchecked Sendable {
+    public let url: URL
 
-    public let baseURL: URL
+    private let grfs: [GRFReference]
 
-    let grfs: [GRFReference]
+    public init(url: URL) {
+        self.url = url
 
-    init() {
-        baseURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         grfs = [
-            GRFReference(url: baseURL.appending(path: "data.grf")),
+            GRFReference(url: url.appending(path: "data.grf")),
         ]
     }
 
-    func spriteResource(at path: ResourcePath) async throws -> SpriteResource {
+    public func spriteResource(at path: ResourcePath) async throws -> SpriteResource {
         let path = ["data", "sprite"] + path
 
         let actPath = path.appendingPathExtension("act")
@@ -42,12 +41,20 @@ final class ResourceManager: @unchecked Sendable {
     }
 
     private func contentsOfResource(at path: ResourcePath) throws -> Data {
-        let path = GRF.Path(components: path.components)
+        let fileURL = url.absoluteURL.appending(path: path)
+        let filePath = fileURL.path(percentEncoded: false)
+        if FileManager.default.fileExists(atPath: filePath) {
+            let data = try Data(contentsOf: fileURL)
+            return data
+        }
+
+        let grfPath = GRF.Path(components: path.components)
         for grf in grfs {
-            if grf.entry(at: path) != nil {
-                return try grf.contentsOfEntry(at: path)
+            if grf.entry(at: grfPath) != nil {
+                return try grf.contentsOfEntry(at: grfPath)
             }
         }
+
         throw ResourceError.resourceNotFound
     }
 }

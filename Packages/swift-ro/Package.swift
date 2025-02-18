@@ -31,6 +31,9 @@ let package = Package(
             name: "RORenderers",
             targets: ["RORenderers"]),
         .library(
+            name: "RORendering",
+            targets: ["RORendering"]),
+        .library(
             name: "ROResources",
             targets: ["ROResources"]),
         .library(
@@ -142,6 +145,9 @@ let package = Package(
             name: "RORenderingTests",
             dependencies: [
                 "RORendering",
+            ],
+            resources: [
+                .copy("Resources/data"),
             ]),
         .target(
             name: "ROResources",
