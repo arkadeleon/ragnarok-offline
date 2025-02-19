@@ -7,7 +7,7 @@
 
 import ROGenerated
 
-final public class SpriteResolver: Sendable {
+final public class SpriteResolver {
     public let resourceManager: ResourceManager
 
     public init(resourceManager: ResourceManager) {
@@ -85,6 +85,13 @@ final public class SpriteResolver: Sendable {
         // Garment
 
         // Shadow
+        do {
+            let shadowSprite = try await resourceManager.spriteResource(at: ["shadow"])
+            shadowSprite.semantic = .shadow
+            sprites.append(shadowSprite)
+        } catch {
+            print(error)
+        }
 
         return sprites
     }

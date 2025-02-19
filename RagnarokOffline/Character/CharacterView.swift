@@ -31,7 +31,7 @@ struct CharacterView: View {
             let sprites = await spriteResolver.resolvePlayerSprites(jobID: 0, configuration: configuration)
 
             let spriteRenderer = SpriteRenderer()
-            let images = spriteRenderer.drawPlayerSprites(sprites: sprites, actionIndex: 8)
+            let images = spriteRenderer.drawPlayerSprites(sprites: sprites, actionType: .walk, direction: .south, headDirection: .straight)
 
             animatedImage = AnimatedImage(images: images, delay: 1 / 12)
         }

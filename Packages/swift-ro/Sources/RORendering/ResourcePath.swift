@@ -9,7 +9,7 @@ import Foundation
 import ROGenerated
 import ROResources
 
-public struct ResourcePath: ExpressibleByArrayLiteral {
+public struct ResourcePath: ExpressibleByArrayLiteral, Sendable {
     public static func + (lhs: ResourcePath, rhs: ResourcePath) -> ResourcePath {
         ResourcePath(components: lhs.components + rhs.components)
     }

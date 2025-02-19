@@ -17,14 +17,12 @@ public struct SpriteConfiguration: Sendable {
     public var shieldID: Int?
     public var bodyPaletteID: Int?
     public var headPaletteID: Int?
-    public var headDirection: Int
     public var madoType: MadoType
 
     public init() {
         gender = .male
         headID = 1
         headgearIDs = []
-        headDirection = 0
         madoType = .robot
     }
 }

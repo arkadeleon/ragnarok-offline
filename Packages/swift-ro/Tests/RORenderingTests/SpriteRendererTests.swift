@@ -19,7 +19,7 @@ final class SpriteRendererTests: XCTestCase {
         XCTAssertEqual(sprites.count, 2)
 
         let spriteRenderer = SpriteRenderer()
-        let images = spriteRenderer.drawPlayerSprites(sprites: sprites, actionIndex: 8)
+        let images = spriteRenderer.drawPlayerSprites(sprites: sprites, actionType: .walk, direction: .south, headDirection: .straight)
         XCTAssertEqual(images.count, 8)
         XCTAssertEqual(images[0].width, 40)
         XCTAssertEqual(images[0].height, 95)

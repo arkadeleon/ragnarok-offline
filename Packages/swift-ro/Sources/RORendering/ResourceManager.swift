@@ -12,7 +12,7 @@ enum ResourceError: Error {
     case resourceNotFound
 }
 
-final public class ResourceManager: @unchecked Sendable {
+final public class ResourceManager {
     public let url: URL
 
     private let grfs: [GRFReference]
