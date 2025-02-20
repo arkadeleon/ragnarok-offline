@@ -21,6 +21,15 @@ final public class SpriteResolver {
 
         var sprites: [SpriteResource] = []
 
+        // Shadow
+        do {
+            let shadowSprite = try await resourceManager.spriteResource(at: ["shadow"])
+            shadowSprite.semantic = .shadow
+            sprites.append(shadowSprite)
+        } catch {
+            print(error)
+        }
+
         // Body
         let bodySprite = await playerBodySprite(jobID: jobID, configuration: configuration)
         if let bodySprite {
@@ -83,15 +92,6 @@ final public class SpriteResolver {
         // Headgears
 
         // Garment
-
-        // Shadow
-        do {
-            let shadowSprite = try await resourceManager.spriteResource(at: ["shadow"])
-            shadowSprite.semantic = .shadow
-            sprites.append(shadowSprite)
-        } catch {
-            print(error)
-        }
 
         return sprites
     }

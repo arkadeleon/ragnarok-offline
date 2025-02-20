@@ -1,6 +1,6 @@
 //
 //  SpriteRendererTests.swift
-//  swift-ro
+//  RagnarokOfflineTests
 //
 //  Created by Leon Li on 2025/2/17.
 //
@@ -21,7 +21,7 @@ final class SpriteRendererTests: XCTestCase {
         let spriteRenderer = SpriteRenderer()
         let images = spriteRenderer.drawPlayerSprites(sprites: sprites, actionType: .walk, direction: .south, headDirection: .straight)
         XCTAssertEqual(images.count, 8)
-        XCTAssertEqual(images[0].width, 40)
-        XCTAssertEqual(images[0].height, 95)
+        XCTAssertEqual(images[0].width, 40 * 2)
+        XCTAssertEqual(images[0].height, 95 * 2)
     }
 }

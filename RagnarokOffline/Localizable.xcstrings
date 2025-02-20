@@ -4,6 +4,9 @@
     "%lld monsters" : {
 
     },
+    "Action" : {
+
+    },
     "Aegis Name" : {
 
     },
@@ -82,7 +85,7 @@
     "Change Target Rate" : {
 
     },
-    "Character" : {
+    "Character Simulator" : {
 
     },
     "Chase Range" : {
@@ -128,6 +131,9 @@
 
     },
     "Dex" : {
+
+    },
+    "Direction" : {
 
     },
     "Done" : {
@@ -254,6 +260,12 @@
     "Gradable" : {
 
     },
+    "Hair Style" : {
+
+    },
+    "Head Direction" : {
+
+    },
     "HP" : {
 
     },
@@ -303,6 +315,9 @@
 
     },
     "Items" : {
+
+    },
+    "Job" : {
 
     },
     "Job Database" : {

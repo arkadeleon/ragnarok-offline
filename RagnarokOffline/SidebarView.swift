@@ -13,7 +13,7 @@ enum SidebarItem: Hashable {
     case messages
     case game
     case cube
-    case character
+    case characterSimulator
     case loginServer
     case charServer
     case mapServer
@@ -55,8 +55,8 @@ struct SidebarView: View {
                     Label("Cube", systemImage: "cube")
                 }
 
-                NavigationLink(value: SidebarItem.character) {
-                    Label("Character", systemImage: "person")
+                NavigationLink(value: SidebarItem.characterSimulator) {
+                    Label("Character Simulator", systemImage: "person")
                 }
                 #endif
             } header: {

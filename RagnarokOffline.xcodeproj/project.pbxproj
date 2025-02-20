@@ -70,6 +70,8 @@
 		357960A72D3564B0003D9CEF /* FileThumbnailRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3579609C2D3564B0003D9CEF /* FileThumbnailRequest.swift */; };
 		357960AA2D356D26003D9CEF /* ROGame in Frameworks */ = {isa = PBXBuildFile; productRef = 357960A92D356D26003D9CEF /* ROGame */; };
 		3579DF942D637BFC00B8C98A /* RORendering in Frameworks */ = {isa = PBXBuildFile; productRef = 3579DF932D637BFC00B8C98A /* RORendering */; };
+		3579DF982D66085A00B8C98A /* CharacterConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3579DF972D66085100B8C98A /* CharacterConfigurationView.swift */; };
+		3579DF9D2D67541D00B8C98A /* CharacterConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3579DF9C2D67541B00B8C98A /* CharacterConfiguration.swift */; };
 		357EA4E32CC14A440081370F /* browser.js in Resources */ = {isa = PBXBuildFile; fileRef = 357EA4E12CC14A440081370F /* browser.js */; };
 		357F96BA2C4AA48400B3231B /* ImageGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357F96B92C4AA48400B3231B /* ImageGrid.swift */; };
 		3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582FFC52B8C830D00E746D7 /* SettingsView.swift */; };
@@ -112,7 +114,7 @@
 		35B422F42BEF602500681AA2 /* StatusChangeDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422F32BEF602500681AA2 /* StatusChangeDatabaseView.swift */; };
 		35B422F62BEF76F700681AA2 /* DatabaseRecordAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422F52BEF76F700681AA2 /* DatabaseRecordAttribute.swift */; };
 		35B575FB2D1B035F00FC12BB /* ActionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B575FA2D1B035100FC12BB /* ActionsComponent.swift */; };
-		35B575FE2D1BB34200FC12BB /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B575FD2D1BB33B00FC12BB /* CharacterView.swift */; };
+		35B575FE2D1BB34200FC12BB /* CharacterSimulatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B575FD2D1BB33B00FC12BB /* CharacterSimulatorView.swift */; };
 		35B695EA2A305EF6006F1904 /* MetalCubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695E92A305EF6006F1904 /* MetalCubeView.swift */; };
 		35B695EC2A307164006F1904 /* MetalCubeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695EB2A307164006F1904 /* MetalCubeScene.swift */; };
 		35BDF7042C9B0AED00CCAB8F /* ClientSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF7032C9B0AED00CCAB8F /* ClientSettings.swift */; };
@@ -235,6 +237,8 @@
 		3579609B2D3564B0003D9CEF /* FileThumbnailGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnailGenerator.swift; sourceTree = "<group>"; };
 		3579609C2D3564B0003D9CEF /* FileThumbnailRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnailRequest.swift; sourceTree = "<group>"; };
 		3579609D2D3564B0003D9CEF /* FileType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileType.swift; sourceTree = "<group>"; };
+		3579DF972D66085100B8C98A /* CharacterConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterConfigurationView.swift; sourceTree = "<group>"; };
+		3579DF9C2D67541B00B8C98A /* CharacterConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterConfiguration.swift; sourceTree = "<group>"; };
 		357EA4E12CC14A440081370F /* browser.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = browser.js; sourceTree = "<group>"; };
 		357F96B92C4AA48400B3231B /* ImageGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGrid.swift; sourceTree = "<group>"; };
 		3582FFC52B8C830D00E746D7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -277,7 +281,7 @@
 		35B422F32BEF602500681AA2 /* StatusChangeDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeDatabaseView.swift; sourceTree = "<group>"; };
 		35B422F52BEF76F700681AA2 /* DatabaseRecordAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordAttribute.swift; sourceTree = "<group>"; };
 		35B575FA2D1B035100FC12BB /* ActionsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsComponent.swift; sourceTree = "<group>"; };
-		35B575FD2D1BB33B00FC12BB /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
+		35B575FD2D1BB33B00FC12BB /* CharacterSimulatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSimulatorView.swift; sourceTree = "<group>"; };
 		35B695E92A305EF6006F1904 /* MetalCubeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalCubeView.swift; sourceTree = "<group>"; };
 		35B695EB2A307164006F1904 /* MetalCubeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalCubeScene.swift; sourceTree = "<group>"; };
 		35BDF7032C9B0AED00CCAB8F /* ClientSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSettings.swift; sourceTree = "<group>"; };
@@ -611,7 +615,7 @@
 				35F50CCA2BB4614100B36455 /* Messages */,
 				357742622D005FAA00F2CE8D /* Game */,
 				35B33BA32BF465D500EF28F5 /* Cube */,
-				35B575FC2D1BB32B00FC12BB /* Character */,
+				35B575FC2D1BB32B00FC12BB /* CharacterSimulator */,
 				35A2ABBA2B3AC69F0026DAC2 /* Server */,
 				353B4F0E2B43AEC000605E92 /* Database */,
 				3582FFC42B8C820E00E746D7 /* Settings */,
@@ -678,12 +682,14 @@
 			path = StatusChange;
 			sourceTree = "<group>";
 		};
-		35B575FC2D1BB32B00FC12BB /* Character */ = {
+		35B575FC2D1BB32B00FC12BB /* CharacterSimulator */ = {
 			isa = PBXGroup;
 			children = (
-				35B575FD2D1BB33B00FC12BB /* CharacterView.swift */,
+				3579DF9C2D67541B00B8C98A /* CharacterConfiguration.swift */,
+				3579DF972D66085100B8C98A /* CharacterConfigurationView.swift */,
+				35B575FD2D1BB33B00FC12BB /* CharacterSimulatorView.swift */,
 			);
-			path = Character;
+			path = CharacterSimulator;
 			sourceTree = "<group>";
 		};
 		35E27A8C2BCC111400C11076 /* Packages */ = {
@@ -841,7 +847,7 @@
 				35239DFD2BBEF1C80039F7D5 /* SkillProvider.swift in Sources */,
 				35BE55582BDA9FD8003715C3 /* GATFilePreviewView.swift in Sources */,
 				35B695EC2A307164006F1904 /* MetalCubeScene.swift in Sources */,
-				35B575FE2D1BB34200FC12BB /* CharacterView.swift in Sources */,
+				35B575FE2D1BB34200FC12BB /* CharacterSimulatorView.swift in Sources */,
 				35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */,
 				3514BF862B4801EB0065ED89 /* JobInfoView.swift in Sources */,
 				35B33BA22BF3BDCE00EF28F5 /* RealityCubeViewController.swift in Sources */,
@@ -917,9 +923,11 @@
 				35B422D62BEB7ED800681AA2 /* PetInfoView.swift in Sources */,
 				35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */,
 				35B422DC2BECAA1800681AA2 /* MonsterSummonProvider.swift in Sources */,
+				3579DF9D2D67541D00B8C98A /* CharacterConfiguration.swift in Sources */,
 				3599BD592C3FCE7A0010DBE7 /* ImageGridCell.swift in Sources */,
 				35BDF7042C9B0AED00CCAB8F /* ClientSettings.swift in Sources */,
 				35239DFF2BBEF4510039F7D5 /* MapProvider.swift in Sources */,
+				3579DF982D66085A00B8C98A /* CharacterConfigurationView.swift in Sources */,
 				35FEB6C02CDC5E9D00F24A4A /* ObservableJob.swift in Sources */,
 				35E67C752CBF6E4F006E42A3 /* RSM+JSON.swift in Sources */,
 				3506D11C2C00526A00903A47 /* ObservableFile.swift in Sources */,

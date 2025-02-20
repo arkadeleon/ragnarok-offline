@@ -149,14 +149,14 @@ extension SpriteResource {
 
         let width = CGFloat(image.width)
         let height = CGFloat(image.height)
-        let frame = CGRect(x: -width / 2, y: -height / 2, width: width, height: height)
+        let frame = CGRect(x: -width, y: -height, width: width * 2, height: height * 2)
         layerNode.frame = frame
 
         var transform = CGAffineTransformIdentity
         transform = CGAffineTransformTranslate(
             transform,
-            CGFloat(layer.offset.x + parentOffset.x),
-            CGFloat(layer.offset.y + parentOffset.y)
+            CGFloat(layer.offset.x + parentOffset.x) * 2,
+            CGFloat(layer.offset.y + parentOffset.y) * 2
         )
         transform = CGAffineTransformRotate(transform, CGFloat(layer.rotationAngle) / 180 * .pi)
         if layer.isMirrored == 0 {

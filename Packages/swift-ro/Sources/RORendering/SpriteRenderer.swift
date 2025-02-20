@@ -1,6 +1,6 @@
 //
 //  SpriteRenderer.swift
-//  swift-ro
+//  RagnarokOffline
 //
 //  Created by Leon Li on 2025/2/17.
 //
@@ -8,7 +8,7 @@
 import CoreGraphics
 import ROCore
 
-public enum PlayerActionType: Int, Sendable {
+public enum PlayerActionType: Int, CaseIterable, CustomStringConvertible, Sendable {
     case idle
     case walk
     case sit
@@ -22,23 +22,86 @@ public enum PlayerActionType: Int, Sendable {
     case attack2
     case attack3
     case skill
+
+    public var description: String {
+        switch self {
+        case .idle:
+            "Idle"
+        case .walk:
+            "Walk"
+        case .sit:
+            "Sit"
+        case .pickup:
+            "Pickup"
+        case .attackWait:
+            "Attack Wait"
+        case .attack:
+            "Attack"
+        case .hurt:
+            "Hurt"
+        case .freeze:
+            "Freeze"
+        case .die:
+            "Die"
+        case .freeze2:
+            "Freeze"
+        case .attack2:
+            "Attack"
+        case .attack3:
+            "Attack"
+        case .skill:
+            "Skill"
+        }
+    }
 }
 
-public enum BodyDirection: Int, Sendable {
+public enum BodyDirection: Int, CaseIterable, CustomStringConvertible, Sendable {
     case south
-    case southWest
+    case southwest
     case west
-    case northWest
+    case northwest
     case north
-    case northEast
+    case northeast
     case east
-    case southEast
+    case southeast
+
+    public var description: String {
+        switch self {
+        case .south:
+            "South"
+        case .southwest:
+            "Southwest"
+        case .west:
+            "West"
+        case .northwest:
+            "Northwest"
+        case .north:
+            "North"
+        case .northeast:
+            "Northeast"
+        case .east:
+            "East"
+        case .southeast:
+            "Southeast"
+        }
+    }
 }
 
-public enum HeadDirection: Int, Sendable {
+public enum HeadDirection: Int, CaseIterable, CustomStringConvertible, Sendable {
     case straight
     case left
     case right
+
+    public var description: String {
+        switch self {
+        case .straight:
+            "Straight"
+        case .left:
+            "Left"
+        case .right:
+            "Right"
+        }
+    }
 }
 
 final public class SpriteRenderer {

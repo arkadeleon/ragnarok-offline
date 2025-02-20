@@ -54,8 +54,8 @@ struct ContentView: View {
             GameView(gameSession: gameSession)
         case .cube:
             RealityCubeView()
-        case .character:
-            CharacterView()
+        case .characterSimulator:
+            CharacterSimulatorView()
         case .loginServer:
             ServerView(server: .login)
         case .charServer:
