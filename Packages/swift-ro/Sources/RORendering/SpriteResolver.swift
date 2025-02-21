@@ -16,7 +16,7 @@ final public class SpriteResolver {
 
     public func resolvePlayerSprites(jobID: UniversalJobID, configuration: SpriteConfiguration) async -> [SpriteResource] {
         let gender = configuration.gender
-        let headID = configuration.headID
+        let hairStyleID = configuration.hairStyleID
         let madoType = configuration.madoType
 
         var sprites: [SpriteResource] = []
@@ -37,7 +37,7 @@ final public class SpriteResolver {
         }
 
         // Head
-        if let headSpritePath = ResourcePath.playerHeadSprite(jobID: jobID, headID: headID, gender: gender) {
+        if let headSpritePath = ResourcePath.playerHeadSprite(jobID: jobID, hairStyleID: hairStyleID, gender: gender) {
             do {
                 let headSprite = try await resourceManager.spriteResource(at: headSpritePath)
                 headSprite.parent = bodySprite

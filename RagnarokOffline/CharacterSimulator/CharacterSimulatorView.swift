@@ -103,7 +103,7 @@ struct CharacterSimulatorView: View {
 
         var spriteConfiguration = SpriteConfiguration()
         spriteConfiguration.gender = configuration.gender
-        spriteConfiguration.headID = configuration.hairStyleID
+        spriteConfiguration.hairStyleID = configuration.hairStyleID
         spriteConfiguration.weaponID = configuration.weaponID
         spriteConfiguration.shieldID = configuration.shieldID
 

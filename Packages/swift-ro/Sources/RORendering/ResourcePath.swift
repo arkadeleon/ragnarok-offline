@@ -72,15 +72,15 @@ extension ResourcePath {
         }
     }
 
-    static func playerHeadSprite(jobID: UniversalJobID, headID: Int, gender: Gender) -> ResourcePath? {
+    static func playerHeadSprite(jobID: UniversalJobID, hairStyleID: Int, gender: Gender) -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
 
         if jobID.isDoram {
-            return ["도람족", "머리통", gender.name, "\(headID)_\(gender.name)"]
+            return ["도람족", "머리통", gender.name, "\(hairStyleID)_\(gender.name)"]
         } else {
-            return ["인간족", "머리통", gender.name, "\(headID)_\(gender.name)"]
+            return ["인간족", "머리통", gender.name, "\(hairStyleID)_\(gender.name)"]
         }
     }
 
@@ -216,14 +216,14 @@ extension ResourcePath {
         return ["\(jobName)_\(gender.name)"]
     }
 
-    static func bodyPalette(jobID: UniversalJobID, paletteID: Int, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
+    static func bodyPalette(jobID: UniversalJobID, clothesColorID: Int, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
 
         if jobID.isMadogear && madoType == .suit {
             let jobName = alternativeMadogearJobName(jobID: jobID, type: madoType)
-            return ["몸", "\(jobName)_\(gender.name)_\(paletteID)"]
+            return ["몸", "\(jobName)_\(gender.name)_\(clothesColorID)"]
         }
 
         guard let jobName = PlayerJobNameTable.current.palJobName(for: jobID.rawValue) else {
@@ -231,20 +231,20 @@ extension ResourcePath {
         }
 
         if jobID.isDoram {
-            return ["도람족", "body", "\(jobName)_\(gender.name)_\(paletteID)"]
+            return ["도람족", "body", "\(jobName)_\(gender.name)_\(clothesColorID)"]
         } else {
-            return ["몸", "\(jobName)_\(gender.name)_\(paletteID)"]
+            return ["몸", "\(jobName)_\(gender.name)_\(clothesColorID)"]
         }
     }
 
-    static func bodyAltPalette(jobID: UniversalJobID, paletteID: Int, gender: Gender, costumeID: Int, madoType: MadoType = .robot) -> ResourcePath? {
+    static func bodyAltPalette(jobID: UniversalJobID, clothesColorID: Int, gender: Gender, costumeID: Int, madoType: MadoType = .robot) -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
 
         if jobID.isMadogear && madoType == .suit {
             let jobName = alternativeMadogearJobName(jobID: jobID, type: madoType)
-            return ["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(paletteID)_\(costumeID)"]
+            return ["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"]
         }
 
         guard let jobName = PlayerJobNameTable.current.palJobName(for: jobID.rawValue) else {
@@ -252,21 +252,21 @@ extension ResourcePath {
         }
 
         if jobID.isDoram {
-            return ["도람족", "body", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(paletteID)_\(costumeID)"]
+            return ["도람족", "body", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"]
         } else {
-            return ["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(paletteID)_\(costumeID)"]
+            return ["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"]
         }
     }
 
-    static func headPalette(jobID: UniversalJobID, headID: Int, paletteID: Int, gender: Gender) -> ResourcePath? {
+    static func headPalette(jobID: UniversalJobID, hairStyleID: Int, hairColorID: Int, gender: Gender) -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
 
         if jobID.isDoram {
-            return ["도람족", "머리", "머리\(headID)_\(gender.name)_\(paletteID)"]
+            return ["도람족", "머리", "머리\(hairStyleID)_\(gender.name)_\(hairColorID)"]
         } else {
-            return ["머리", "머리\(headID)_\(gender.name)_\(paletteID)"]
+            return ["머리", "머리\(hairStyleID)_\(gender.name)_\(hairColorID)"]
         }
     }
 
