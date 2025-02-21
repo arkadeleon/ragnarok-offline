@@ -11,6 +11,7 @@ import RORendering
 struct CharacterConfiguration {
     var jobID: JobID
     var gender: Gender
+    var clothesColorID: Int?
     var hairStyleID: Int
     var hairColorID: Int?
     var weaponID: Int?

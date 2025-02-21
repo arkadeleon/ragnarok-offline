@@ -10,12 +10,12 @@ import Foundation
 import ROCore
 
 extension SPR {
-    public func imagesBySpriteType() -> [SPR.SpriteType : [CGImage?]] {
+    public func imagesBySpriteType(palette: PAL? = nil) -> [SPR.SpriteType : [CGImage?]] {
         var indexedImages = [CGImage?]()
         var rgbaImages = [CGImage?]()
 
         for (index, sprite) in sprites.enumerated() {
-            let image = image(forSpriteAt: index)
+            let image = image(forSpriteAt: index, palette: palette)
             switch sprite.type {
             case .indexed:
                 indexedImages.append(image)
@@ -31,7 +31,7 @@ extension SPR {
         return imagesBySpriteType
     }
 
-    public func image(forSpriteAt index: Int) -> CGImage? {
+    public func image(forSpriteAt index: Int, palette: PAL? = nil) -> CGImage? {
         let sprite = sprites[index]
         let width = Int(sprite.width)
         let height = Int(sprite.height)
@@ -39,7 +39,7 @@ extension SPR {
 
         switch sprite.type {
         case .indexed:
-            guard let palette else {
+            guard let palette = palette ?? self.palette else {
                 return nil
             }
 

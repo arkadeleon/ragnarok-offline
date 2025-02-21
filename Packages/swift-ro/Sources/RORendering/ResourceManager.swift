@@ -29,18 +29,29 @@ final public class ResourceManager {
         let path = ["data", "sprite"] + path
 
         let actPath = path.appendingPathExtension("act")
-        let actData = try contentsOfResource(at: actPath)
+        let actData = try await contentsOfResource(at: actPath)
         let act = try ACT(data: actData)
 
         let sprPath = path.appendingPathExtension("spr")
-        let sprData = try contentsOfResource(at: sprPath)
+        let sprData = try await contentsOfResource(at: sprPath)
         let spr = try SPR(data: sprData)
 
         let sprite = SpriteResource(act: act, spr: spr)
         return sprite
     }
 
-    private func contentsOfResource(at path: ResourcePath) throws -> Data {
+    public func paletteResource(at path: ResourcePath) async throws -> PaletteResource {
+        let path = ["data", "palette"] + path
+
+        let palPath = path.appendingPathExtension("pal")
+        let palData = try await contentsOfResource(at: palPath)
+        let pal = try PAL(data: palData)
+
+        let palette = PaletteResource(pal: pal)
+        return palette
+    }
+
+    private func contentsOfResource(at path: ResourcePath) async throws -> Data {
         let fileURL = url.absoluteURL.appending(path: path)
         let filePath = fileURL.path(percentEncoded: false)
         if FileManager.default.fileExists(atPath: filePath) {

@@ -38,10 +38,21 @@ final public class SpriteResolver {
 
         // Head
         if let headSpritePath = ResourcePath.playerHeadSprite(jobID: jobID, hairStyleID: hairStyleID, gender: gender) {
+            var headPalette: PaletteResource?
+            if let hairColorID = configuration.hairColorID,
+               let headPalettePath = ResourcePath.headPalette(jobID: jobID, hairStyleID: hairStyleID, hairColorID: hairColorID, gender: gender) {
+                do {
+                    headPalette = try await resourceManager.paletteResource(at: headPalettePath)
+                } catch {
+                    print(error)
+                }
+            }
+
             do {
                 let headSprite = try await resourceManager.spriteResource(at: headSpritePath)
                 headSprite.parent = bodySprite
                 headSprite.semantic = .playerHead
+                headSprite.palette = headPalette
                 sprites.append(headSprite)
             } catch {
                 print(error)
@@ -100,12 +111,22 @@ final public class SpriteResolver {
         let gender = configuration.gender
         let madoType = configuration.madoType
 
+        var bodySprite: SpriteResource?
+        var bodyPalette: PaletteResource?
+
         if let outfitID = configuration.outfitID {
             if let bodySpritePath = await ResourcePath.playerBodyAltSprite(jobID: jobID, gender: gender, costumeID: outfitID, madoType: madoType) {
                 do {
-                    let bodySprite = try await resourceManager.spriteResource(at: bodySpritePath)
-                    bodySprite.semantic = .playerBody
-                    return bodySprite
+                    bodySprite = try await resourceManager.spriteResource(at: bodySpritePath)
+                } catch {
+                    print(error)
+                }
+            }
+
+            if let clothesColorID = configuration.clothesColorID,
+               let bodyPalettePath = ResourcePath.bodyAltPalette(jobID: jobID, clothesColorID: clothesColorID, gender: gender, costumeID: outfitID, madoType: madoType) {
+                do {
+                    bodyPalette = try await resourceManager.paletteResource(at: bodyPalettePath)
                 } catch {
                     print(error)
                 }
@@ -113,15 +134,25 @@ final public class SpriteResolver {
         } else {
             if let bodySpritePath = await ResourcePath.playerBodySprite(jobID: jobID, gender: gender, madoType: madoType) {
                 do {
-                    let bodySprite = try await resourceManager.spriteResource(at: bodySpritePath)
-                    bodySprite.semantic = .playerBody
-                    return bodySprite
+                    bodySprite = try await resourceManager.spriteResource(at: bodySpritePath)
+                } catch {
+                    print(error)
+                }
+            }
+
+            if let clothesColorID = configuration.clothesColorID,
+               let bodyPalettePath = ResourcePath.bodyPalette(jobID: jobID, clothesColorID: clothesColorID, gender: gender, madoType: madoType) {
+                do {
+                    bodyPalette = try await resourceManager.paletteResource(at: bodyPalettePath)
                 } catch {
                     print(error)
                 }
             }
         }
 
-        return nil
+        bodySprite?.semantic = .playerBody
+        bodySprite?.palette = bodyPalette
+
+        return bodySprite
     }
 }

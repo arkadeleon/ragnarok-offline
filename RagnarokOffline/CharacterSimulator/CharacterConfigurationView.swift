@@ -31,10 +31,33 @@ struct CharacterConfigurationView: View {
                     .tag(Gender.male)
             }
 
+            Picker("Clothes Color", selection: $configuration.clothesColorID) {
+                Text("Default")
+                    .tag(Int?.none)
+
+                // 0...7
+                ForEach(0..<8) { clothesColorID in
+                    Text(clothesColorID.formatted())
+                        .tag(clothesColorID)
+                }
+            }
+
             Picker("Hair Style", selection: $configuration.hairStyleID) {
-                ForEach(1..<43) { hairStyle in
-                    Text(hairStyle.formatted())
-                        .tag(hairStyle)
+                // 1...42
+                ForEach(1..<43) { hairStyleID in
+                    Text(hairStyleID.formatted())
+                        .tag(hairStyleID)
+                }
+            }
+
+            Picker("Hair Color", selection: $configuration.hairColorID) {
+                Text("Default")
+                    .tag(Int?.none)
+
+                // 0...8
+                ForEach(0..<9) { hairColorID in
+                    Text(hairColorID.formatted())
+                        .tag(hairColorID)
                 }
             }
 

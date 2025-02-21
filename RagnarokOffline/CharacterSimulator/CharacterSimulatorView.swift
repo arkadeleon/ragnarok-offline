@@ -59,7 +59,19 @@ struct CharacterSimulatorView: View {
                 await reloadAnimatedImage()
             }
         }
+        .onChange(of: configuration.clothesColorID) {
+            Task {
+                await reloadSprites()
+                await reloadAnimatedImage()
+            }
+        }
         .onChange(of: configuration.hairStyleID) {
+            Task {
+                await reloadSprites()
+                await reloadAnimatedImage()
+            }
+        }
+        .onChange(of: configuration.hairColorID) {
             Task {
                 await reloadSprites()
                 await reloadAnimatedImage()
@@ -103,7 +115,9 @@ struct CharacterSimulatorView: View {
 
         var spriteConfiguration = SpriteConfiguration()
         spriteConfiguration.gender = configuration.gender
+        spriteConfiguration.clothesColorID = configuration.clothesColorID
         spriteConfiguration.hairStyleID = configuration.hairStyleID
+        spriteConfiguration.hairColorID = configuration.hairColorID
         spriteConfiguration.weaponID = configuration.weaponID
         spriteConfiguration.shieldID = configuration.shieldID
 

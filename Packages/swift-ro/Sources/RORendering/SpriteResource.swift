@@ -34,10 +34,12 @@ public class SpriteResource {
     var semantic: SpriteSemantic = .standard
     var orderBySemantic = 0
 
+    var palette: PaletteResource?
+
     var scale: Float = 1
 
     lazy var imagesBySpriteType: [SPR.SpriteType : [CGImage?]] = {
-        spr.imagesBySpriteType()
+        spr.imagesBySpriteType(palette: palette?.pal)
     }()
 
     init(act: ACT, spr: SPR) {
