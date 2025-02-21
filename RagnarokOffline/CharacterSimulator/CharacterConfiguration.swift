@@ -14,7 +14,7 @@ struct CharacterConfiguration {
     var clothesColorID: Int?
     var hairStyleID: Int
     var hairColorID: Int?
-    var weaponID: Int?
+    var weaponType: WeaponType
     var shieldID: Int?
     var actionType: PlayerActionType
     var direction: BodyDirection
@@ -24,8 +24,7 @@ struct CharacterConfiguration {
         jobID = .novice
         gender = .male
         hairStyleID = 1
-        weaponID = 1
-        shieldID = 1
+        weaponType = .w_fist
         actionType = .idle
         direction = .south
         headDirection = .straight

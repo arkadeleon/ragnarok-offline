@@ -61,6 +61,28 @@ struct CharacterConfigurationView: View {
                 }
             }
 
+            Picker(selection: $configuration.weaponType) {
+                ForEach(WeaponType.allCases, id: \.rawValue) { weaponType in
+                    Text(weaponType.localizedStringResource)
+                        .tag(weaponType)
+                }
+            } label: {
+                Text(ItemType.weapon.localizedStringResource)
+            }
+
+            Picker(selection: $configuration.shieldID) {
+                Text("None")
+                    .tag(Int?.none)
+
+                // 1...4
+                ForEach(1..<5) { shieldID in
+                    Text(shieldID.formatted())
+                        .tag(shieldID)
+                }
+            } label: {
+                Text(WeaponType.w_shield.localizedStringResource)
+            }
+
             Picker("Action", selection: $configuration.actionType) {
                 ForEach(PlayerActionType.allCases, id: \.rawValue) { actionType in
                     Text(actionType.description)

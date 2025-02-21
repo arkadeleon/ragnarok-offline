@@ -77,7 +77,7 @@ struct CharacterSimulatorView: View {
                 await reloadAnimatedImage()
             }
         }
-        .onChange(of: configuration.weaponID) {
+        .onChange(of: configuration.weaponType) {
             Task {
                 await reloadSprites()
                 await reloadAnimatedImage()
@@ -118,7 +118,7 @@ struct CharacterSimulatorView: View {
         spriteConfiguration.clothesColorID = configuration.clothesColorID
         spriteConfiguration.hairStyleID = configuration.hairStyleID
         spriteConfiguration.hairColorID = configuration.hairColorID
-        spriteConfiguration.weaponID = configuration.weaponID
+        spriteConfiguration.weaponID = configuration.weaponType.rawValue
         spriteConfiguration.shieldID = configuration.shieldID
 
         sprites = await spriteResolver.resolvePlayerSprites(jobID: jobID, configuration: spriteConfiguration)
