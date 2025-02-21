@@ -60,47 +60,62 @@ final public class SpriteResolver {
         }
 
         // Weapon
-        if let weaponID = configuration.weaponID, !jobID.isMadogear {
-            if let weaponSpritePath = await ResourcePath.weaponSprite(jobID: jobID, weaponID: weaponID, isSlash: false, gender: gender, madoType: madoType) {
-                do {
-                    let weaponSprite = try await resourceManager.spriteResource(at: weaponSpritePath)
-                    weaponSprite.semantic = .weapon
-                    weaponSprite.orderBySemantic = 0
-                    sprites.append(weaponSprite)
-                } catch {
-                    print(error)
-                }
+        if let weaponID = configuration.weaponID, !jobID.isMadogear,
+           let weaponSpritePath = await ResourcePath.weaponSprite(jobID: jobID, weaponID: weaponID, isSlash: false, gender: gender, madoType: madoType) {
+            do {
+                let weaponSprite = try await resourceManager.spriteResource(at: weaponSpritePath)
+                weaponSprite.semantic = .weapon
+                weaponSprite.orderBySemantic = 0
+                sprites.append(weaponSprite)
+            } catch {
+                print(error)
             }
         }
 
         // Weapon Slash
-        if let weaponID = configuration.weaponID {
-            if let weaponSlashSpritePath = await ResourcePath.weaponSprite(jobID: jobID, weaponID: weaponID, isSlash: true, gender: gender, madoType: madoType) {
-                do {
-                    let weaponSlashSprite = try await resourceManager.spriteResource(at: weaponSlashSpritePath)
-                    weaponSlashSprite.semantic = .weapon
-                    weaponSlashSprite.orderBySemantic = 1
-                    sprites.append(weaponSlashSprite)
-                } catch {
-                    print(error)
-                }
+        if let weaponID = configuration.weaponID,
+           let weaponSlashSpritePath = await ResourcePath.weaponSprite(jobID: jobID, weaponID: weaponID, isSlash: true, gender: gender, madoType: madoType) {
+            do {
+                let weaponSlashSprite = try await resourceManager.spriteResource(at: weaponSlashSpritePath)
+                weaponSlashSprite.semantic = .weapon
+                weaponSlashSprite.orderBySemantic = 1
+                sprites.append(weaponSlashSprite)
+            } catch {
+                print(error)
             }
         }
 
         // Shield
-        if let shieldID = configuration.shieldID {
-            if let shieldSpritePath = await ResourcePath.shieldSprite(jobID: jobID, shieldID: shieldID, gender: gender) {
-                do {
-                    let shieldSprite = try await resourceManager.spriteResource(at: shieldSpritePath)
-                    shieldSprite.semantic = .shield
-                    sprites.append(shieldSprite)
-                } catch {
-                    print(error)
-                }
+        if let shieldID = configuration.shieldID,
+           let shieldSpritePath = await ResourcePath.shieldSprite(jobID: jobID, shieldID: shieldID, gender: gender) {
+            do {
+                let shieldSprite = try await resourceManager.spriteResource(at: shieldSpritePath)
+                shieldSprite.semantic = .shield
+                sprites.append(shieldSprite)
+            } catch {
+                print(error)
             }
         }
 
         // Headgears
+        for (i, headgearID) in configuration.headgearIDs.enumerated() {
+            guard let headgearSpritePath = await ResourcePath.headgearSprite(headgearID: headgearID, gender: gender) else {
+                continue
+            }
+
+            do {
+                let headgearSprite = try await resourceManager.spriteResource(at: headgearSpritePath)
+                headgearSprite.parent = bodySprite
+                headgearSprite.semantic = .headgear
+                headgearSprite.orderBySemantic = i
+
+                // TODO: Handle headgear offset for Doram
+
+                sprites.append(headgearSprite)
+            } catch {
+                print(error)
+            }
+        }
 
         // Garment
 

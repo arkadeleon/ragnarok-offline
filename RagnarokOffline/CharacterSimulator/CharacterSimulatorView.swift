@@ -13,6 +13,12 @@ import SwiftUI
 struct CharacterSimulatorView: View {
     @State private var configuration = CharacterConfiguration()
 
+    @State private var resourceManager: ResourceManager = {
+        let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        let resourceManager = ResourceManager(url: url)
+        return resourceManager
+    }()
+
     @State private var sprites: [SpriteResource] = []
     @State private var animatedImage: AnimatedImage?
 
@@ -77,6 +83,24 @@ struct CharacterSimulatorView: View {
                 await reloadAnimatedImage()
             }
         }
+        .onChange(of: configuration.upperHeadgear) {
+            Task {
+                await reloadSprites()
+                await reloadAnimatedImage()
+            }
+        }
+        .onChange(of: configuration.middleHeadgear) {
+            Task {
+                await reloadSprites()
+                await reloadAnimatedImage()
+            }
+        }
+        .onChange(of: configuration.lowerHeadgear) {
+            Task {
+                await reloadSprites()
+                await reloadAnimatedImage()
+            }
+        }
         .onChange(of: configuration.weaponType) {
             Task {
                 await reloadSprites()
@@ -107,8 +131,6 @@ struct CharacterSimulatorView: View {
     }
 
     private func reloadSprites() async {
-        let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        let resourceManager = ResourceManager(url: url)
         let spriteResolver = SpriteResolver(resourceManager: resourceManager)
 
         let jobID = UniformJobID(rawValue: configuration.jobID.rawValue)
@@ -118,6 +140,7 @@ struct CharacterSimulatorView: View {
         spriteConfiguration.clothesColorID = configuration.clothesColorID
         spriteConfiguration.hairStyleID = configuration.hairStyleID
         spriteConfiguration.hairColorID = configuration.hairColorID
+        spriteConfiguration.headgearIDs = configuration.headgearIDs
         spriteConfiguration.weaponID = configuration.weaponType.rawValue
         spriteConfiguration.shieldID = configuration.shieldID
 

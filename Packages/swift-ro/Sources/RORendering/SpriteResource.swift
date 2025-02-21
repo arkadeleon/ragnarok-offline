@@ -10,19 +10,19 @@ import Foundation
 import ROFileFormats
 
 enum SpriteSemantic {
-    case accessory
+    case standard
+    case playerBody
     case costume
+    case playerHead
+    case headgear
     case garment
+    case weapon
+    case shield
+    case npc
+    case monster
     case homunculus
     case mercenary
-    case monster
-    case npc
-    case playerBody
-    case playerHead
     case shadow
-    case shield
-    case standard
-    case weapon
 }
 
 public class SpriteResource {
@@ -81,7 +81,7 @@ extension SpriteResource {
             case .playerBody:
                 startFrameIndex = headDirection.rawValue
                 endFrameIndex = startFrameIndex + 1
-            case .playerHead, .accessory:
+            case .playerHead, .headgear:
                 let frameCount = action.frames.count / 3
                 startFrameIndex = headDirection.rawValue * frameCount
                 endFrameIndex = startFrameIndex + frameCount
@@ -112,7 +112,7 @@ extension SpriteResource {
         if let parent {
             var parentFrameIndex = frameIndex
 
-            if semantic == .accessory,
+            if semantic == .headgear,
                let actionType = PlayerActionType(rawValue: actionIndex / 8),
                actionType == .idle || actionType == .sit {
                 let frameCount = action.frames.count / 3

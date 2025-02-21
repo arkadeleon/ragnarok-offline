@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2025/2/20.
 //
 
+import RODatabase
 import ROGenerated
 import RORendering
 
@@ -14,11 +15,18 @@ struct CharacterConfiguration {
     var clothesColorID: Int?
     var hairStyleID: Int
     var hairColorID: Int?
+    var upperHeadgear: Item?
+    var middleHeadgear: Item?
+    var lowerHeadgear: Item?
     var weaponType: WeaponType
     var shieldID: Int?
     var actionType: PlayerActionType
     var direction: BodyDirection
     var headDirection: HeadDirection
+
+    var headgearIDs: [Int] {
+        [upperHeadgear, middleHeadgear, lowerHeadgear].compactMap({ $0?.view })
+    }
 
     init() {
         jobID = .novice
