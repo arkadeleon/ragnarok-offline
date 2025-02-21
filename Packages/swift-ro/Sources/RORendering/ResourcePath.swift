@@ -40,7 +40,7 @@ public struct ResourcePath: ExpressibleByArrayLiteral, Sendable {
 }
 
 extension ResourcePath {
-    static func playerBodySprite(jobID: UniversalJobID, gender: Gender, madoType: MadoType = .robot) async -> ResourcePath? {
+    static func playerBodySprite(jobID: UniformJobID, gender: Gender, madoType: MadoType = .robot) async -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
@@ -56,7 +56,7 @@ extension ResourcePath {
         }
     }
 
-    static func playerBodyAltSprite(jobID: UniversalJobID, gender: Gender, costumeID: Int, madoType: MadoType = .robot) async -> ResourcePath? {
+    static func playerBodyAltSprite(jobID: UniformJobID, gender: Gender, costumeID: Int, madoType: MadoType = .robot) async -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
@@ -72,7 +72,7 @@ extension ResourcePath {
         }
     }
 
-    static func playerHeadSprite(jobID: UniversalJobID, hairStyleID: Int, gender: Gender) -> ResourcePath? {
+    static func playerHeadSprite(jobID: UniformJobID, hairStyleID: Int, gender: Gender) -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
@@ -84,7 +84,7 @@ extension ResourcePath {
         }
     }
 
-    static func nonPlayerSprite(jobID: UniversalJobID) async -> ResourcePath? {
+    static func nonPlayerSprite(jobID: UniformJobID) async -> ResourcePath? {
         guard !jobID.isPlayer else {
             return nil
         }
@@ -106,7 +106,7 @@ extension ResourcePath {
         }
     }
 
-    static func weaponSprite(jobID: UniversalJobID, weaponID: Int, isSlash: Bool = false, gender: Gender, madoType: MadoType = .robot) async -> ResourcePath? {
+    static func weaponSprite(jobID: UniformJobID, weaponID: Int, isSlash: Bool = false, gender: Gender, madoType: MadoType = .robot) async -> ResourcePath? {
         guard jobID.isPlayer || jobID.isMercenary else {
             return nil
         }
@@ -158,7 +158,7 @@ extension ResourcePath {
         }
     }
 
-    static func shieldSprite(jobID: UniversalJobID, shieldID: Int, gender: Gender) async -> ResourcePath? {
+    static func shieldSprite(jobID: UniformJobID, shieldID: Int, gender: Gender) async -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
@@ -182,7 +182,7 @@ extension ResourcePath {
         return ["악세사리", gender.name, "\(gender.name)\(accessoryName)"]
     }
 
-    static func garmentSprite(jobID: UniversalJobID, garmentID: Int, gender: Gender, checkEnglish: Bool = false, useFallback: Bool = false) async -> ResourcePath? {
+    static func garmentSprite(jobID: UniformJobID, garmentID: Int, gender: Gender, checkEnglish: Bool = false, useFallback: Bool = false) async -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
@@ -199,7 +199,7 @@ extension ResourcePath {
         }
     }
 
-    static func imf(jobID: UniversalJobID, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
+    static func imf(jobID: UniformJobID, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
@@ -216,7 +216,7 @@ extension ResourcePath {
         return ["\(jobName)_\(gender.name)"]
     }
 
-    static func bodyPalette(jobID: UniversalJobID, clothesColorID: Int, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
+    static func bodyPalette(jobID: UniformJobID, clothesColorID: Int, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
@@ -237,7 +237,7 @@ extension ResourcePath {
         }
     }
 
-    static func bodyAltPalette(jobID: UniversalJobID, clothesColorID: Int, gender: Gender, costumeID: Int, madoType: MadoType = .robot) -> ResourcePath? {
+    static func bodyAltPalette(jobID: UniformJobID, clothesColorID: Int, gender: Gender, costumeID: Int, madoType: MadoType = .robot) -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
@@ -258,7 +258,7 @@ extension ResourcePath {
         }
     }
 
-    static func headPalette(jobID: UniversalJobID, hairStyleID: Int, hairColorID: Int, gender: Gender) -> ResourcePath? {
+    static func headPalette(jobID: UniformJobID, hairStyleID: Int, hairColorID: Int, gender: Gender) -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
@@ -270,7 +270,7 @@ extension ResourcePath {
         }
     }
 
-    private static func jobSpriteName(jobID: UniversalJobID, madoType: MadoType = .robot) async -> String? {
+    private static func jobSpriteName(jobID: UniformJobID, madoType: MadoType = .robot) async -> String? {
         if jobID.isPlayer {
             if jobID.isMadogear && madoType == .suit {
                 return alternativeMadogearJobName(jobID: jobID, type: madoType)
@@ -282,7 +282,7 @@ extension ResourcePath {
         }
     }
 
-    private static func alternativeMadogearJobName(jobID: UniversalJobID, type: MadoType) -> String {
+    private static func alternativeMadogearJobName(jobID: UniformJobID, type: MadoType) -> String {
         if [4086, 4087, 4112].contains(jobID.rawValue) {
             return "마도아머"
         } else {

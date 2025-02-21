@@ -14,7 +14,7 @@ final public class SpriteResolver {
         self.resourceManager = resourceManager
     }
 
-    public func resolvePlayerSprites(jobID: UniversalJobID, configuration: SpriteConfiguration) async -> [SpriteResource] {
+    public func resolvePlayerSprites(jobID: UniformJobID, configuration: SpriteConfiguration) async -> [SpriteResource] {
         let gender = configuration.gender
         let hairStyleID = configuration.hairStyleID
         let madoType = configuration.madoType
@@ -107,7 +107,7 @@ final public class SpriteResolver {
         return sprites
     }
 
-    private func playerBodySprite(jobID: UniversalJobID, configuration: SpriteConfiguration) async -> SpriteResource? {
+    private func playerBodySprite(jobID: UniformJobID, configuration: SpriteConfiguration) async -> SpriteResource? {
         let gender = configuration.gender
         let madoType = configuration.madoType
 

@@ -111,7 +111,7 @@ struct CharacterSimulatorView: View {
         let resourceManager = ResourceManager(url: url)
         let spriteResolver = SpriteResolver(resourceManager: resourceManager)
 
-        let jobID = UniversalJobID(rawValue: configuration.jobID.rawValue)
+        let jobID = UniformJobID(rawValue: configuration.jobID.rawValue)
 
         var spriteConfiguration = SpriteConfiguration()
         spriteConfiguration.gender = configuration.gender

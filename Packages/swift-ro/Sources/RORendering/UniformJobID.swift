@@ -1,11 +1,11 @@
 //
-//  UniservalJobID.swift
+//  UniformJobID.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2025/2/12.
 //
 
-public struct UniversalJobID: RawRepresentable, ExpressibleByIntegerLiteral, Sendable {
+public struct UniformJobID: RawRepresentable, ExpressibleByIntegerLiteral, Sendable {
     public let rawValue: Int
 
     public init(rawValue: Int) {
@@ -17,7 +17,7 @@ public struct UniversalJobID: RawRepresentable, ExpressibleByIntegerLiteral, Sen
     }
 }
 
-extension UniversalJobID {
+extension UniformJobID {
     var isPlayer: Bool {
         switch rawValue {
         case 0..<45: true
