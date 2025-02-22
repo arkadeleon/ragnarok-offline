@@ -24,13 +24,15 @@ struct CharacterSimulatorView: View {
 
     var body: some View {
         ResponsiveView {
-            VStack {
+            VStack(spacing: 0) {
                 ZStack {
                     if let animatedImage {
                         AnimatedImageView(animatedImage: animatedImage)
                     }
                 }
-                .frame(minHeight: 0, maxHeight: .infinity)
+                .frame(minHeight: 0, maxHeight: 300)
+
+                Divider()
 
                 CharacterConfigurationView(configuration: $configuration)
                     .frame(minHeight: 0, maxHeight: .infinity)
@@ -46,7 +48,11 @@ struct CharacterSimulatorView: View {
 
                 CharacterConfigurationView(configuration: $configuration)
                     .frame(minWidth: 0, maxWidth: .infinity)
+                    .background(.background.secondary)
+                    .scrollContentBackground(.hidden)
             }
+            .background(.background)
+            .toolbarTitleDisplayMode(.automatic)
         }
         .navigationTitle("Character Simulator")
         .task {
@@ -186,5 +192,11 @@ struct CharacterSimulatorView2: View {
                 Image(systemName: "figure.run.circle")
             }
         }
+    }
+}
+
+#Preview {
+    NavigationStack {
+        CharacterSimulatorView()
     }
 }

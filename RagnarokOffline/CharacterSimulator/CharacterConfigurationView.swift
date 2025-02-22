@@ -119,6 +119,7 @@ struct CharacterConfigurationView: View {
                 }
             }
         }
+        .formStyle(.grouped)
         .task {
             jobs = await JobDatabase.renewal.jobs()
         }
