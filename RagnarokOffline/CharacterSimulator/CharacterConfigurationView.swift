@@ -13,18 +13,15 @@ import SwiftUI
 struct CharacterConfigurationView: View {
     @Binding var configuration: CharacterConfiguration
 
-    @State private var jobs: [Job] = []
     @State private var upperHeadgears: [Item] = []
     @State private var middleHeadgears: [Item] = []
     @State private var lowerHeadgears: [Item] = []
 
-    @State private var color: Color = .blue
-
     var body: some View {
         Form {
             Picker("Job", selection: $configuration.jobID) {
-                ForEach(jobs) { job in
-                    Text(job.id.stringValue).tag(job.id)
+                ForEach(JobID.allCases, id: \.rawValue) { jobID in
+                    Text(jobID.stringValue).tag(jobID)
                 }
             }
 
@@ -120,9 +117,6 @@ struct CharacterConfigurationView: View {
             }
         }
         .formStyle(.grouped)
-        .task {
-            jobs = await JobDatabase.renewal.jobs()
-        }
         .task {
             let equipItems = await ItemDatabase.renewal.equipItems()
             upperHeadgears = equipItems.filter({ $0.type == .armor && $0.locations.contains(.head_top) })
