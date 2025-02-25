@@ -40,7 +40,7 @@ extension Entity {
             meshDescriptor.textureCoordinates = MeshBuffer(mesh.vertices.map({ SIMD2($0.textureCoordinate.x, 1.0 - $0.textureCoordinate.y) }))
 
             let indices = (0..<meshDescriptor.positions.count).map(UInt32.init)
-            meshDescriptor.primitives = .triangles(indices)
+            meshDescriptor.primitives = .triangles(indices + indices.reversed())
 
             meshDescriptor.materials = .allFaces(UInt32(index))
 
@@ -52,4 +52,3 @@ extension Entity {
         return groundEntity
     }
 }
-

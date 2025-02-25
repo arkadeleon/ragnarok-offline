@@ -6,13 +6,13 @@
 //
 
 import rAthenaResources
-import ROGame
+import RORendering
 import SwiftUI
 
 struct ContentView: View {
     @State private var selectedItem: SidebarItem? = .files
 
-    @State private var clientDirectory = ObservableFile(file: .directory(GameResourceManager.default.baseURL))
+    @State private var clientDirectory = ObservableFile(file: .directory(ResourceManager.default.baseURL))
     @State private var serverDirectory = ObservableFile(file: .directory(ServerResourceManager.default.workingDirectoryURL))
 
     @State private var conversation = Conversation()

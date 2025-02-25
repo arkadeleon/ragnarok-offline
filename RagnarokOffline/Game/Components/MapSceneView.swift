@@ -12,6 +12,7 @@ import ROFileFormats
 import ROGame
 import RONetwork
 import RORenderers
+import RORendering
 import ROResources
 import Spatial
 import SwiftUI
@@ -24,7 +25,7 @@ struct MapSceneView: View {
     var position: SIMD2<Int16>
 
     @State private var root = Entity()
-    @State private var player = Entity()
+    @State private var player = SpriteEntity()
     @State private var camera = Entity()
     @State private var cameraHelper = Entity()
 
@@ -41,7 +42,7 @@ struct MapSceneView: View {
 
             if let worldEntity = try? await GameResourceManager.default.worldEntity(mapName: mapName) {
                 worldEntity.components.set(ModelSortGroupComponent(group: group, order: 0))
-                worldEntity.transform = Transform(rotation: simd_quatf(angle: radians(-90), axis: [1, 0, 0]))
+                worldEntity.transform = Transform(rotation: simd_quatf(angle: radians(-180), axis: [1, 0, 0]))
                 root.addChild(worldEntity)
             }
 
@@ -79,24 +80,28 @@ struct MapSceneView: View {
                 gridEntity.name = "grid"
                 gridEntity.components.set(ModelSortGroupComponent(group: group, order: 1))
                 gridEntity.components.set(InputTargetComponent())
-                gridEntity.transform = Transform(rotation: simd_quatf(angle: radians(-90), axis: [1, 0, 0]), translation: [0, 0, 0.0001])
+                gridEntity.transform = Transform(rotation: simd_quatf(angle: radians(-180), axis: [1, 0, 0]), translation: [0, 0.0001, 0])
                 gridEntity.generateCollisionShapes(recursive: false)
                 root.addChild(gridEntity)
             }
 
-            var material = PhysicallyBasedMaterial()
-            material.metallic = PhysicallyBasedMaterial.Metallic()
-            material.baseColor = PhysicallyBasedMaterial.BaseColor(tint: .white)
-            player.components.set(
-                ModelComponent(mesh: .generateBox(width: 1, height: 1, depth: 2), materials: [material])
-            )
+            do {
+                let actions = try await SpriteAction.actions(for: 4, configuration: SpriteConfiguration())
+                let spriteComponent = SpriteComponent(actions: actions)
+                player.components.set(spriteComponent)
+            } catch {
+                print(error)
+            }
+
             player.name = "player"
-            player.position = position3D(for: position)
+            player.transform = transform(for: position)
+            player.runPlayerAction(.attack2, direction: .south)
+
             root.addChild(player)
 
             let perspectiveCameraComponent = PerspectiveCameraComponent(near: 2, far: 300, fieldOfViewInDegrees: 15)
             camera.components.set(perspectiveCameraComponent)
-            camera.transform = cameraTransform(for: player.position)
+            camera.transform = cameraTransform(for: position)
             root.addChild(camera)
 
             if let bgmURL = try? await GameResourceManager.default.bgmURL(forMapName: mapName) {
@@ -114,7 +119,7 @@ struct MapSceneView: View {
                     Task {
                         if let hit = try await root.scene?.pixelCast(origin: ray.origin, direction: ray.direction, length: 300) {
                             if hit.entity.name == "grid" {
-                                mapSession.requestMove(x: Int16(hit.position.x), y: Int16(hit.position.y))
+                                mapSession.requestMove(x: Int16(hit.position.x), y: Int16(-hit.position.z))
                             }
                         }
                     }
@@ -128,7 +133,7 @@ struct MapSceneView: View {
         .overlay(alignment: .bottom) {
             Slider(value: $distance, in: 2...300)
                 .onChange(of: distance) { oldValue, newValue in
-                    camera.transform = cameraTransform(for: player.position)
+//                    camera.transform = cameraTransform(for: player.position)
                 }
         }
         #if os(iOS) || os(macOS)
@@ -143,37 +148,37 @@ struct MapSceneView: View {
             root.stopAllAudio()
         }
         .onReceive(mapSession.publisher(for: PlayerEvents.Moved.self)) { event in
-            let position = position3D(for: event.toPosition)
-            player.move(to: Transform(translation: position), relativeTo: nil, duration: 0.2)
+            let transform = transform(for: event.toPosition)
+            player.move(to: transform, relativeTo: nil, duration: 1)
 
-            let cameraTransform = cameraTransform(for: position)
-            camera.move(to: cameraTransform, relativeTo: nil, duration: 0.2)
+            let cameraTransform = cameraTransform(for: event.toPosition)
+            camera.move(to: cameraTransform, relativeTo: nil, duration: 1)
         }
         .onReceive(mapSession.publisher(for: MapObjectEvents.Spawned.self)) { event in
-            var material = PhysicallyBasedMaterial()
-            material.metallic = PhysicallyBasedMaterial.Metallic()
-            material.baseColor = PhysicallyBasedMaterial.BaseColor(tint: .blue)
+            Task {
+                let jobID = UniformJobID(rawValue: 0)
+                let configuration = SpriteConfiguration()
 
-            let entity = ModelEntity(
-                mesh: .generateBox(width: 1, height: 1, depth: 2),
-                materials: [material]
-            )
-            entity.name = "\(event.object.id)"
-            entity.position = position3D(for: event.object.position)
-            entity.isEnabled = (event.object.effectState != .cloak)
+                let entity = try await SpriteEntity(jobID: jobID, configuration: configuration)
+                entity.name = "\(event.object.id)"
+                entity.transform = transform(for: event.object.position)
+                entity.isEnabled = (event.object.effectState != .cloak)
 
-            root.addChild(entity)
+                root.addChild(entity)
+
+                entity.runPlayerAction(.walk, direction: .south)
+            }
         }
         .onReceive(mapSession.publisher(for: MapObjectEvents.Moved.self)) { event in
             if let entity = root.findEntity(named: "\(event.objectID)") {
-                let translation = position3D(for: event.toPosition)
-                entity.move(to: Transform(translation: translation), relativeTo: nil, duration: 0.2)
+                let transform = transform(for: event.toPosition)
+                entity.move(to: transform, relativeTo: nil, duration: 1)
             }
         }
         .onReceive(mapSession.publisher(for: MapObjectEvents.Stopped.self)) { event in
             if let entity = root.findEntity(named: "\(event.objectID)") {
-                let translation = position3D(for: event.position)
-                entity.move(to: Transform(translation: translation), relativeTo: nil)
+                let transform = transform(for: event.position)
+                entity.move(to: transform, relativeTo: nil)
             }
         }
         .onReceive(mapSession.publisher(for: MapObjectEvents.Vanished.self)) { event in
@@ -188,17 +193,16 @@ struct MapSceneView: View {
         }
     }
 
-    private func position3D(for position2D: SIMD2<Int16>) -> SIMD3<Float> {
-        let altitude = gat.tile(atX: Int(position2D.x), y: Int(position2D.y)).averageAltitude
-        return [
-            Float(position2D.x),
-            Float(position2D.y),
-            -altitude / 5,
-        ]
+    private func transform(for position2D: SIMD2<Int16>) -> Transform {
+        let translation = position3D(for: position2D)
+        let rotation = simd_quatf(angle: radians(-60), axis: [1, 0, 0])
+        let transform = Transform(rotation: rotation, translation: translation)
+        return transform
     }
 
-    private func cameraTransform(for target: SIMD3<Float>) -> Transform {
-        var position = target + [0, 0, distance]
+    private func cameraTransform(for position2D: SIMD2<Int16>) -> Transform {
+        let target = position3D(for: position2D)
+        var position = target + [0, distance, 0]
         var point = Point3D(position)
         point = point.rotated(
             by: simd_quatd(angle: radians(30), axis: [1, 0, 0]),
@@ -206,7 +210,17 @@ struct MapSceneView: View {
         )
         position = SIMD3(point)
 
-        cameraHelper.look(at: target, from: position, relativeTo: nil)
+        cameraHelper.look(at: target, from: position, upVector: [0, 0, -1], relativeTo: nil)
         return cameraHelper.transform
+    }
+
+    private func position3D(for position2D: SIMD2<Int16>) -> SIMD3<Float> {
+        let altitude = gat.tile(atX: Int(position2D.x), y: Int(position2D.y)).averageAltitude
+        let position: SIMD3<Float> = [
+            Float(position2D.x),
+            -altitude / 5,
+            -Float(position2D.y),
+        ]
+        return position + [0.5, 2, -0.5]
     }
 }

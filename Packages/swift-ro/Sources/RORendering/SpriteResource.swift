@@ -25,7 +25,7 @@ enum SpriteSemantic {
     case shadow
 }
 
-public class SpriteResource {
+final public class SpriteResource: @unchecked Sendable {
     let act: ACT
     let spr: SPR
 

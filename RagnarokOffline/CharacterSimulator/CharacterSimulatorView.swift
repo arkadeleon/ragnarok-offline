@@ -13,12 +13,6 @@ import SwiftUI
 struct CharacterSimulatorView: View {
     @State private var configuration = CharacterConfiguration()
 
-    @State private var resourceManager: ResourceManager = {
-        let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        let resourceManager = ResourceManager(url: url)
-        return resourceManager
-    }()
-
     @State private var sprites: [SpriteResource] = []
     @State private var animatedImage: AnimatedImage?
 
@@ -137,7 +131,7 @@ struct CharacterSimulatorView: View {
     }
 
     private func reloadSprites() async {
-        let spriteResolver = SpriteResolver(resourceManager: resourceManager)
+        let spriteResolver = SpriteResolver()
 
         let jobID = UniformJobID(rawValue: configuration.jobID.rawValue)
 
@@ -162,35 +156,38 @@ struct CharacterSimulatorView: View {
 }
 
 struct CharacterSimulatorView2: View {
-    @State private var action = 0
+    @State private var configuration = CharacterConfiguration()
 
     var body: some View {
         RealityView { content in
-            if let entity = try? await Entity.loadJob(jobID: .novice) {
-                entity.name = "character"
-                entity.position = [0, 0, 0]
-                content.add(entity)
-            }
+            let entity = SpriteEntity()
+            entity.name = "character"
+            entity.position = [0, 0, 0]
+            content.add(entity)
         } update: { content in
-            if let entity = content.entities.first {
-                entity.runAction(action)
-                entity.findEntity(named: "head")?.runAction(action)
+            if let entity = content.entities.first as? SpriteEntity {
+                Task {
+                    let jobID = UniformJobID(rawValue: configuration.jobID.rawValue)
 
-                let transform = Transform(translation: [0, -1, 0])
-                entity.move(to: transform, relativeTo: nil, duration: 30, timingFunction: .linear)
+                    var spriteConfiguration = SpriteConfiguration()
+                    spriteConfiguration.gender = configuration.gender
+                    spriteConfiguration.clothesColorID = configuration.clothesColorID
+                    spriteConfiguration.hairStyleID = configuration.hairStyleID
+                    spriteConfiguration.hairColorID = configuration.hairColorID
+                    spriteConfiguration.headgearIDs = configuration.headgearIDs
+                    spriteConfiguration.weaponID = configuration.weaponType.rawValue
+                    spriteConfiguration.shieldID = configuration.shieldID
+
+                    let actions = try await SpriteAction.actions(for: jobID, configuration: spriteConfiguration)
+
+                    let spriteComponent = SpriteComponent(actions: actions)
+                    entity.components.set(spriteComponent)
+
+                    entity.runPlayerAction(.walk, direction: .south)
+                }
             }
         } placeholder: {
             ProgressView()
-        }
-        .toolbar {
-            Picker(selection: $action) {
-                ForEach(0..<24) { i in
-                    Text(verbatim: "\(i)")
-                        .tag(i)
-                }
-            } label: {
-                Image(systemName: "figure.run.circle")
-            }
         }
     }
 }

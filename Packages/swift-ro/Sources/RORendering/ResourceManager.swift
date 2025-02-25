@@ -12,17 +12,32 @@ enum ResourceError: Error {
     case resourceNotFound
 }
 
-final public class ResourceManager {
-    public let url: URL
+final public class ResourceManager: @unchecked Sendable {
+    public static let `default` = ResourceManager(
+        baseURL: try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+    )
+
+    public let baseURL: URL
 
     private let grfs: [GRFReference]
 
-    public init(url: URL) {
-        self.url = url
+    public init(baseURL: URL) {
+        self.baseURL = baseURL
 
         grfs = [
-            GRFReference(url: url.appending(path: "data.grf")),
+            GRFReference(url: baseURL.appending(path: "data.grf")),
         ]
+    }
+
+    public func paletteResource(at path: ResourcePath) async throws -> PaletteResource {
+        let path = ["data", "palette"] + path
+
+        let palPath = path.appendingPathExtension("pal")
+        let palData = try await contentsOfResource(at: palPath)
+        let pal = try PAL(data: palData)
+
+        let palette = PaletteResource(pal: pal)
+        return palette
     }
 
     public func spriteResource(at path: ResourcePath) async throws -> SpriteResource {
@@ -40,19 +55,8 @@ final public class ResourceManager {
         return sprite
     }
 
-    public func paletteResource(at path: ResourcePath) async throws -> PaletteResource {
-        let path = ["data", "palette"] + path
-
-        let palPath = path.appendingPathExtension("pal")
-        let palData = try await contentsOfResource(at: palPath)
-        let pal = try PAL(data: palData)
-
-        let palette = PaletteResource(pal: pal)
-        return palette
-    }
-
     private func contentsOfResource(at path: ResourcePath) async throws -> Data {
-        let fileURL = url.absoluteURL.appending(path: path)
+        let fileURL = baseURL.absoluteURL.appending(path: path)
         let filePath = fileURL.path(percentEncoded: false)
         if FileManager.default.fileExists(atPath: filePath) {
             let data = try Data(contentsOf: fileURL)
