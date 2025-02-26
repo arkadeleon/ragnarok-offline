@@ -39,6 +39,7 @@ class ObservableMonsterSummon {
         monsterSummon[keyPath: keyPath]
     }
 
+    @MainActor
     func fetchDetail() async {
         let monsterDatabase = MonsterDatabase.database(for: mode)
 

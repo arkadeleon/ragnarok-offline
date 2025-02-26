@@ -56,6 +56,7 @@ class ObservablePet {
         pet[keyPath: keyPath]
     }
 
+    @MainActor
     func fetchMonster() async {
         if monster == nil {
             let monsterDatabase = MonsterDatabase.database(for: mode)
@@ -65,6 +66,7 @@ class ObservablePet {
         }
     }
 
+    @MainActor
     func fetchDetail() async {
         let itemDatabase = ItemDatabase.database(for: mode)
 

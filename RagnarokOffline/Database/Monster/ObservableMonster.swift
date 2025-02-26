@@ -9,7 +9,7 @@ import CoreGraphics
 import Foundation
 import Observation
 import RODatabase
-import ROGame
+import RORendering
 import ROResources
 
 @Observable
@@ -131,16 +131,26 @@ class ObservableMonster {
         monster[keyPath: keyPath]
     }
 
+    @MainActor
     func fetchLocalizedName() async {
         localizedName = await MonsterNameTable.current.localizedMonsterName(forMonsterID: monster.id)
     }
 
+    @MainActor
     func fetchImage() async {
         if image == nil {
-            image = try? await GameResourceManager.default.monsterImage(monster.id)
+            let jobID = UniformJobID(rawValue: monster.id)
+            let spriteResolver = SpriteResolver(resourceManager: .default)
+            let sprites = await spriteResolver.resolve(jobID: jobID, configuration: SpriteConfiguration())
+
+            let spriteRenderer = SpriteRenderer(sprites: sprites)
+            let images = await spriteRenderer.renderAction(at: 0, headDirection: .straight)
+
+            image = images.first
         }
     }
 
+    @MainActor
     func fetchDetail() async {
         await fetchImage()
 

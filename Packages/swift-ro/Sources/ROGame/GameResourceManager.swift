@@ -32,24 +32,6 @@ public actor GameResourceManager {
         ]
     }
 
-    public func monsterImage(_ monsterID: Int) async throws -> CGImage? {
-        let (spr, act) = try await sprite(forMonsterID: monsterID)
-
-        let imagesBySpriteType = spr.imagesBySpriteType()
-        let animatedImage = act.actions.first?.animatedImage(using: imagesBySpriteType)
-        let image = animatedImage?.images.first
-        return image
-    }
-
-    public func jobImage(forJobID jobID: JobID, gender: Gender) async throws -> CGImage? {
-        let (spr, act) = try await sprite(forJobID: jobID, gender: gender)
-
-        let imagesBySpriteType = spr.imagesBySpriteType()
-        let animatedImage = act.actions.first?.animatedImage(using: imagesBySpriteType)
-        let image = animatedImage?.images.first
-        return image
-    }
-
     // MARK: - BGM
 
     public func bgmURL(forMapName mapName: String) async throws -> URL {

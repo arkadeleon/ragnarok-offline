@@ -137,16 +137,19 @@ class ObservableItem {
         item[keyPath: keyPath]
     }
 
+    @MainActor
     func fetchLocalizedName() async {
         localizedName = await ItemInfoTable.current.localizedIdentifiedItemName(forItemID: item.id)
     }
 
+    @MainActor
     func fetchIconImage() async throws {
         if iconImage == nil {
             iconImage = try await GameResourceManager.default.itemIconImage(forItemID: item.id)
         }
     }
 
+    @MainActor
     func fetchDetail() async throws {
         previewImage = try await GameResourceManager.default.itemPreviewImage(forItemID: item.id)
 

@@ -147,9 +147,9 @@ struct CharacterSimulatorView: View {
     }
 
     private func reloadAnimatedImage() async {
-        let spriteRenderer = SpriteRenderer()
+        let spriteRenderer = SpriteRenderer(sprites: sprites)
         let actionIndex = configuration.actionType.rawValue * 8 + configuration.direction.rawValue
-        let images = spriteRenderer.render(sprites: sprites, actionIndex: actionIndex, headDirection: configuration.headDirection)
+        let images = await spriteRenderer.renderAction(at: actionIndex, headDirection: configuration.headDirection)
 
         animatedImage = AnimatedImage(images: images, delay: 1 / 12)
     }

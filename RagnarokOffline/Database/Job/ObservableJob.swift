@@ -8,8 +8,8 @@
 import CoreGraphics
 import Observation
 import RODatabase
-import ROGame
 import ROGenerated
+import RORendering
 
 @Observable
 @dynamicMemberLookup
@@ -107,12 +107,21 @@ class ObservableJob {
         job[keyPath: keyPath]
     }
 
+    @MainActor
     func fetchImage() async {
         if image == nil {
-            image = try? await GameResourceManager.default.jobImage(forJobID: job.id, gender: .male)
+            let jobID = UniformJobID(rawValue: job.id.rawValue)
+            let spriteResolver = SpriteResolver(resourceManager: .default)
+            let sprites = await spriteResolver.resolve(jobID: jobID, configuration: SpriteConfiguration())
+
+            let spriteRenderer = SpriteRenderer(sprites: sprites)
+            let images = await spriteRenderer.renderAction(at: 0, headDirection: .straight)
+
+            image = images.first
         }
     }
 
+    @MainActor
     func fetchDetail() async {
         await fetchImage()
 

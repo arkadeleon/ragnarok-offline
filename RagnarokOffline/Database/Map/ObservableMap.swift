@@ -43,16 +43,19 @@ class ObservableMap {
         map[keyPath: keyPath]
     }
 
+    @MainActor
     func fetchLocalizedName() async {
         localizedName = await MapNameTable.current.localizedMapName(forMapName: map.name)
     }
 
+    @MainActor
     func fetchImage() async {
         if image == nil {
             image = await GameResourceManager.default.mapImage(forMapName: map.name)
         }
     }
 
+    @MainActor
     func fetchDetail() async {
         await fetchImage()
 

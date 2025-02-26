@@ -60,14 +60,17 @@ class ObservableSkill {
         skill[keyPath: keyPath]
     }
 
+    @MainActor
     func fetchLocalizedName() async {
         localizedName = await SkillInfoTable.current.localizedSkillName(forSkillID: skill.id)
     }
 
+    @MainActor
     func fetchIconImage() async {
         iconImage = await GameResourceManager.default.skillIconImage(forSkillAegisName: skill.aegisName)
     }
 
+    @MainActor
     func fetchDetail() async {
         localizedDescription = await SkillInfoTable.current.localizedSkillDescription(forSkillID: skill.id)
     }

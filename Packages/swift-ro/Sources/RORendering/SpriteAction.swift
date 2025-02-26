@@ -21,8 +21,8 @@ final public class SpriteAction: Sendable {
     public let frameInterval: Float
 
     public init(sprites: [SpriteResource], actionIndex: Int) async throws {
-        let spriteRenderer = SpriteRenderer()
-        let images = spriteRenderer.render(sprites: sprites, actionIndex: actionIndex, headDirection: .straight)
+        let spriteRenderer = SpriteRenderer(sprites: sprites)
+        let images = await spriteRenderer.renderAction(at: actionIndex, headDirection: .straight)
 
         guard !images.isEmpty else {
             throw SpriteActionError.cannotRenderAction

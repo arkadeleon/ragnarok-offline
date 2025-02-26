@@ -127,11 +127,14 @@ public enum HeadDirection: Int, CaseIterable, CustomStringConvertible, Sendable 
     }
 }
 
-final public class SpriteRenderer {
-    public init() {
+final public class SpriteRenderer: Sendable {
+    public let sprites: [SpriteResource]
+
+    public init(sprites: [SpriteResource]) {
+        self.sprites = sprites
     }
 
-    public func render(sprites: [SpriteResource], actionIndex: Int, headDirection: HeadDirection) -> [CGImage] {
+    public func renderAction(at actionIndex: Int, headDirection: HeadDirection) async -> [CGImage] {
         var actionNodes: [(SpriteResource, SpriteResource.RenderNode)] = []
         var bounds: CGRect = .null
 

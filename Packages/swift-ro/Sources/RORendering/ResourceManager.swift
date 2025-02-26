@@ -21,7 +21,7 @@ final public class ResourceManager: @unchecked Sendable {
 
     private let grfs: [GRFReference]
 
-    public init(baseURL: URL) {
+    init(baseURL: URL) {
         self.baseURL = baseURL
 
         grfs = [

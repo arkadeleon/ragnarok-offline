@@ -47,12 +47,14 @@ class ObservableStatusChange {
         statusChange[keyPath: keyPath]
     }
 
+    @MainActor
     func fetchIconImage() async throws {
         if iconImage == nil {
             iconImage = try await GameResourceManager.default.statusIconImage(forStatusID: statusChange.icon.rawValue)
         }
     }
 
+    @MainActor
     func fetchDetail() async {
         let database = StatusChangeDatabase.database(for: mode)
 

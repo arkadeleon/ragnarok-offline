@@ -7,7 +7,7 @@
 
 import ROGenerated
 
-final public class SpriteResolver {
+final public class SpriteResolver: Sendable {
     public let resourceManager: ResourceManager
 
     public init(resourceManager: ResourceManager) {
