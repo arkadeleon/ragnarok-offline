@@ -29,7 +29,7 @@ struct MapSceneView: View {
     @State private var camera = Entity()
     @State private var cameraHelper = Entity()
 
-    @State private var distance: Float = 100
+    @State private var distance: Float = 80
 
     @State private var tappedLocation: CGPoint?
 
@@ -95,7 +95,7 @@ struct MapSceneView: View {
 
             player.name = "player"
             player.transform = transform(for: position)
-            player.runPlayerAction(.attack2, direction: .south)
+            player.runPlayerAction(.walk, direction: .south)
 
             root.addChild(player)
 
@@ -156,7 +156,7 @@ struct MapSceneView: View {
         }
         .onReceive(mapSession.publisher(for: MapObjectEvents.Spawned.self)) { event in
             Task {
-                let jobID = UniformJobID(rawValue: 0)
+                let jobID = UniformJobID(rawValue: Int(event.object.job))
                 let configuration = SpriteConfiguration()
 
                 let entity = try await SpriteEntity(jobID: jobID, configuration: configuration)
@@ -166,7 +166,7 @@ struct MapSceneView: View {
 
                 root.addChild(entity)
 
-                entity.runPlayerAction(.walk, direction: .south)
+                entity.runPlayerAction(.idle, direction: .south)
             }
         }
         .onReceive(mapSession.publisher(for: MapObjectEvents.Moved.self)) { event in
@@ -194,9 +194,10 @@ struct MapSceneView: View {
     }
 
     private func transform(for position2D: SIMD2<Int16>) -> Transform {
+        let scale: SIMD3<Float> = [1, sqrtf(2), 1]
+        let rotation = simd_quatf(angle: radians(0), axis: [1, 0, 0])
         let translation = position3D(for: position2D)
-        let rotation = simd_quatf(angle: radians(-60), axis: [1, 0, 0])
-        let transform = Transform(rotation: rotation, translation: translation)
+        let transform = Transform(scale: scale, rotation: rotation, translation: translation)
         return transform
     }
 
@@ -205,7 +206,7 @@ struct MapSceneView: View {
         var position = target + [0, distance, 0]
         var point = Point3D(position)
         point = point.rotated(
-            by: simd_quatd(angle: radians(30), axis: [1, 0, 0]),
+            by: simd_quatd(angle: radians(45), axis: [1, 0, 0]),
             around: Point3D(target)
         )
         position = SIMD3(point)
@@ -221,6 +222,6 @@ struct MapSceneView: View {
             -altitude / 5,
             -Float(position2D.y),
         ]
-        return position + [0.5, 2, -0.5]
+        return position + [0.5, 2, 0]
     }
 }

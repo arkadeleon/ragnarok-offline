@@ -10,16 +10,17 @@ import XCTest
 
 final class SpriteRendererTests: XCTestCase {
     func testSpriteRenderer() async throws {
-        let url = Bundle.module.resourceURL!
-        let resourceManager = ResourceManager(url: url)
+        let baseURL = Bundle.module.resourceURL!
+        let resourceManager = ResourceManager(baseURL: baseURL)
         let spriteResolver = SpriteResolver(resourceManager: resourceManager)
 
         let configuration = SpriteConfiguration()
-        let sprites = await spriteResolver.resolvePlayerSprites(jobID: 0, configuration: configuration)
+        let sprites = await spriteResolver.resolve(jobID: 0, configuration: configuration)
         XCTAssertEqual(sprites.count, 2)
 
         let spriteRenderer = SpriteRenderer()
-        let images = spriteRenderer.drawPlayerSprites(sprites: sprites, actionType: .walk, direction: .south, headDirection: .straight)
+        let actionIndex = PlayerActionType.walk.rawValue * 8 + BodyDirection.south.rawValue
+        let images = spriteRenderer.render(sprites: sprites, actionIndex: actionIndex, headDirection: .straight)
         XCTAssertEqual(images.count, 8)
         XCTAssertEqual(images[0].width, 40 * 2)
         XCTAssertEqual(images[0].height, 95 * 2)

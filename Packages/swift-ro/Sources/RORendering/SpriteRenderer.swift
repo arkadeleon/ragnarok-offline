@@ -55,6 +55,29 @@ public enum PlayerActionType: Int, CaseIterable, CustomStringConvertible, Sendab
     }
 }
 
+public enum MonsterActionType: Int, CaseIterable, CustomStringConvertible, Sendable {
+    case idle
+    case walk
+    case attack
+    case hurt
+    case die
+
+    public var description: String {
+        switch self {
+        case .idle:
+            "Idle"
+        case .walk:
+            "Walk"
+        case .attack:
+            "Attack"
+        case .hurt:
+            "Hurt"
+        case .die:
+            "Die"
+        }
+    }
+}
+
 public enum BodyDirection: Int, CaseIterable, CustomStringConvertible, Sendable {
     case south
     case southwest
@@ -108,11 +131,9 @@ final public class SpriteRenderer {
     public init() {
     }
 
-    public func drawPlayerSprites(sprites: [SpriteResource], actionType: PlayerActionType, direction: BodyDirection, headDirection: HeadDirection) -> [CGImage] {
+    public func render(sprites: [SpriteResource], actionIndex: Int, headDirection: HeadDirection) -> [CGImage] {
         var actionNodes: [(SpriteResource, SpriteResource.RenderNode)] = []
         var bounds: CGRect = .null
-
-        let actionIndex = actionType.rawValue * 8 + direction.rawValue
 
         var frameCount = 0
 

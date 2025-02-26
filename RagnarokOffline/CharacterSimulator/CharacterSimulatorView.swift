@@ -131,8 +131,6 @@ struct CharacterSimulatorView: View {
     }
 
     private func reloadSprites() async {
-        let spriteResolver = SpriteResolver()
-
         let jobID = UniformJobID(rawValue: configuration.jobID.rawValue)
 
         var spriteConfiguration = SpriteConfiguration()
@@ -144,12 +142,14 @@ struct CharacterSimulatorView: View {
         spriteConfiguration.weaponID = configuration.weaponType.rawValue
         spriteConfiguration.shieldID = configuration.shieldID
 
-        sprites = await spriteResolver.resolvePlayerSprites(jobID: jobID, configuration: spriteConfiguration)
+        let spriteResolver = SpriteResolver(resourceManager: .default)
+        sprites = await spriteResolver.resolve(jobID: jobID, configuration: spriteConfiguration)
     }
 
     private func reloadAnimatedImage() async {
         let spriteRenderer = SpriteRenderer()
-        let images = spriteRenderer.drawPlayerSprites(sprites: sprites, actionType: configuration.actionType, direction: configuration.direction, headDirection: configuration.headDirection)
+        let actionIndex = configuration.actionType.rawValue * 8 + configuration.direction.rawValue
+        let images = spriteRenderer.render(sprites: sprites, actionIndex: actionIndex, headDirection: configuration.headDirection)
 
         animatedImage = AnimatedImage(images: images, delay: 1 / 12)
     }

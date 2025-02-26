@@ -20,9 +20,9 @@ final public class SpriteAction: Sendable {
     public let frameCount: Int
     public let frameInterval: Float
 
-    public init(sprites: [SpriteResource], actionType: PlayerActionType, direction: BodyDirection) async throws {
+    public init(sprites: [SpriteResource], actionIndex: Int) async throws {
         let spriteRenderer = SpriteRenderer()
-        let images = spriteRenderer.drawPlayerSprites(sprites: sprites, actionType: actionType, direction: direction, headDirection: .straight)
+        let images = spriteRenderer.render(sprites: sprites, actionIndex: actionIndex, headDirection: .straight)
 
         guard !images.isEmpty else {
             throw SpriteActionError.cannotRenderAction
@@ -42,7 +42,8 @@ final public class SpriteAction: Sendable {
         }
 
         if let image {
-            texture = try await TextureResource(image: image, options: TextureResource.CreateOptions(semantic: .color))
+            let options = TextureResource.CreateOptions(semantic: .color, mipmapsMode: .none)
+            texture = try await TextureResource(image: image, options: options)
         } else {
             texture = nil
         }
@@ -56,14 +57,32 @@ final public class SpriteAction: Sendable {
 
 extension SpriteAction {
     public static func actions(for jobID: UniformJobID, configuration: SpriteConfiguration) async throws -> [SpriteAction] {
-        let spriteResolver = SpriteResolver()
-        let sprites = await spriteResolver.resolvePlayerSprites(jobID: jobID, configuration: configuration)
+        let spriteResolver = SpriteResolver(resourceManager: .default)
+
+        let sprites = await spriteResolver.resolve(jobID: jobID, configuration: configuration)
 
         var actions: [SpriteAction] = []
 
-        for actionType in PlayerActionType.allCases {
+        if jobID.isPlayer {
+            for actionType in PlayerActionType.allCases {
+                for direction in BodyDirection.allCases {
+                    let actionIndex = actionType.rawValue * 8 + direction.rawValue
+                    let action = try await SpriteAction(sprites: sprites, actionIndex: actionIndex)
+                    actions.append(action)
+                }
+            }
+        } else if jobID.isMonster {
+            for actionType in MonsterActionType.allCases {
+                for direction in BodyDirection.allCases {
+                    let actionIndex = actionType.rawValue * 8 + direction.rawValue
+                    let action = try await SpriteAction(sprites: sprites, actionIndex: actionIndex)
+                    actions.append(action)
+                }
+            }
+        } else {
             for direction in BodyDirection.allCases {
-                let action = try await SpriteAction(sprites: sprites, actionType: actionType, direction: direction)
+                let actionIndex = direction.rawValue
+                let action = try await SpriteAction(sprites: sprites, actionIndex: actionIndex)
                 actions.append(action)
             }
         }
