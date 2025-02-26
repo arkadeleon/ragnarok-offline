@@ -14,43 +14,6 @@ import ROGame
 import ROGenerated
 
 extension Entity {
-    static func loadJob(jobID: JobID) async throws -> Entity {
-        async let bodyAsync = loadBody(jobID: jobID)
-        async let headAsync = loadHead(hairStyle: 2)
-        async let hpAsync = loadHP()
-
-        let body = try await bodyAsync
-        body.position = [0, 1, 0]
-
-        let head = try await headAsync
-        head.position = [0, 0.1, 0]
-        body.addChild(head)
-
-        let hp = try await hpAsync
-        hp.position = [0, -0.4, 0]
-        body.addChild(hp)
-
-        return body
-    }
-
-    static func loadBody(jobID: JobID) async throws -> Entity {
-        let (spr, act) = try await GameResourceManager.default.sprite(forJobID: jobID, gender: .male)
-
-        let entity = try await Entity.load(act: act, spr: spr)
-        entity.name = "body"
-
-        return entity
-    }
-
-    static func loadHead(hairStyle: Int) async throws -> Entity {
-        let (spr, act) = try await GameResourceManager.default.sprite(forHairStyle: hairStyle, gender: .male)
-
-        let entity = try await Entity.load(act: act, spr: spr)
-        entity.name = "head"
-
-        return entity
-    }
-
     static func load(act: ACT, spr: SPR) async throws -> Entity {
         let entity = Entity()
 

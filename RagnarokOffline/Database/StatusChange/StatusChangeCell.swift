@@ -31,7 +31,7 @@ struct StatusChangeCell: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .task {
-            try? await statusChange.fetchIconImage()
+            await statusChange.fetchIconImage()
         }
     }
 }

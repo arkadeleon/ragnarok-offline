@@ -8,7 +8,7 @@
 import CoreGraphics
 import Observation
 import RODatabase
-import ROGame
+import RORendering
 import ROResources
 
 @Observable
@@ -51,7 +51,8 @@ class ObservableMap {
     @MainActor
     func fetchImage() async {
         if image == nil {
-            image = await GameResourceManager.default.mapImage(forMapName: map.name)
+            let path = ResourcePath(mapImagePathWithMapName: map.name)
+            image = try? await ResourceManager.default.image(at: path, removesMagentaPixels: true)
         }
     }
 

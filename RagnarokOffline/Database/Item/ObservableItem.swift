@@ -9,7 +9,7 @@ import CoreGraphics
 import Foundation
 import Observation
 import RODatabase
-import ROGame
+import RORendering
 import ROResources
 
 @Observable
@@ -143,15 +143,19 @@ class ObservableItem {
     }
 
     @MainActor
-    func fetchIconImage() async throws {
+    func fetchIconImage() async {
         if iconImage == nil {
-            iconImage = try await GameResourceManager.default.itemIconImage(forItemID: item.id)
+            if let path = await ResourcePath(itemIconImagePathWithItemID: item.id) {
+                iconImage = try? await ResourceManager.default.image(at: path, removesMagentaPixels: true)
+            }
         }
     }
 
     @MainActor
-    func fetchDetail() async throws {
-        previewImage = try await GameResourceManager.default.itemPreviewImage(forItemID: item.id)
+    func fetchDetail() async {
+        if let previewImagePath = await ResourcePath(itemPreviewImagePathWithItemID: item.id) {
+            previewImage = try? await ResourceManager.default.image(at: previewImagePath, removesMagentaPixels: true)
+        }
 
         localizedDescription = await ItemInfoTable.current.localizedIdentifiedItemDescription(forItemID: item.id)
 

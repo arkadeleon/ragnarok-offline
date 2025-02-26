@@ -23,24 +23,11 @@ public actor GameResourceManager {
 
     let grfs: [GRFReference]
 
-    private let cache = NSCache<NSString, CGImage>()
-
     init() {
         baseURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         grfs = [
             GRFReference(url: baseURL.appending(path: "data.grf")),
         ]
-    }
-
-    // MARK: - BGM
-
-    public func bgmURL(forMapName mapName: String) async throws -> URL {
-        guard let bgm = await MapMP3NameTable.current.mapMP3Name(forMapName: mapName) else {
-            throw GameResourceError.resourceNotFound
-        }
-
-        let url = baseURL.appending(path: "BGM/\(bgm)")
-        return url
     }
 
     // MARK: - data
@@ -75,89 +62,6 @@ public actor GameResourceManager {
         return rsm
     }
 
-    // MARK: - data\palette
-
-    public func palette(forHairStyle hairStyle: Int, hairColor: Int, gender: Gender) async throws -> PAL {
-        let path = GRF.Path(components: ["data", "palette", "머리", "머리", "\(hairStyle)_\(gender.name)_\(hairColor).pal"])
-        let data = try contentsOfEntry(at: path)
-        let pal = try PAL(data: data)
-        return pal
-    }
-
-    // MARK: - data\sprite
-
-    public func sprite(forItemID itemID: Int) async throws -> (spr: SPR, act: ACT) {
-        guard let resourceName = await ItemInfoTable.current.identifiedItemResourceName(forItemID: itemID) else {
-            throw GameResourceError.resourceNotFound
-        }
-
-        let sprPath = GRF.Path(components: ["data", "sprite", "아이템", "\(resourceName).spr"])
-        let sprData = try contentsOfEntry(at: sprPath)
-        let spr = try SPR(data: sprData)
-
-        let actPath = GRF.Path(components: ["data", "sprite", "아이템", "\(resourceName).act"])
-        let actData = try contentsOfEntry(at: actPath)
-        let act = try ACT(data: actData)
-
-        return (spr, act)
-    }
-
-    public func sprite(forMonsterID monsterID: Int) async throws -> (spr: SPR, act: ACT) {
-        guard let jobName = await JobNameTable.current.jobName(forJobID: monsterID) else {
-            throw GameResourceError.resourceNotFound
-        }
-
-        let sprPath = GRF.Path(components: ["data", "sprite", "몬스터", "\(jobName).spr"])
-        let sprData = try contentsOfEntry(at: sprPath)
-        let spr = try SPR(data: sprData)
-
-        let actPath = GRF.Path(components: ["data", "sprite", "몬스터", "\(jobName).act"])
-        let actData = try contentsOfEntry(at: actPath)
-        let act = try ACT(data: actData)
-
-        return (spr, act)
-    }
-
-    public func sprite(forJobID jobID: JobID, gender: Gender) async throws -> (spr: SPR, act: ACT) {
-        guard let jobName = PlayerJobNameTable.current.jobName(for: jobID.rawValue) else {
-            throw GameResourceError.resourceNotFound
-        }
-
-        let sprPath = GRF.Path(components: ["data", "sprite", "인간족", "몸통", "\(gender.name)", "\(jobName)_\(gender.name).spr"])
-        let sprData = try contentsOfEntry(at: sprPath)
-        let spr = try SPR(data: sprData)
-
-        let actPath = GRF.Path(components: ["data", "sprite", "인간족", "몸통", "\(gender.name)", "\(jobName)_\(gender.name).act"])
-        let actData = try contentsOfEntry(at: actPath)
-        let act = try ACT(data: actData)
-
-        return (spr, act)
-    }
-
-    public func sprite(forHairStyle hairStyle: Int, gender: Gender) async throws -> (spr: SPR, act: ACT) {
-        let sprPath = GRF.Path(components: ["data", "sprite", "인간족", "머리통", "\(gender.name)", "\(hairStyle)_\(gender.name).spr"])
-        let sprData = try contentsOfEntry(at: sprPath)
-        let spr = try SPR(data: sprData)
-
-        let actPath = GRF.Path(components: ["data", "sprite", "인간족", "머리통", "\(gender.name)", "\(hairStyle)_\(gender.name).act"])
-        let actData = try contentsOfEntry(at: actPath)
-        let act = try ACT(data: actData)
-
-        return (spr, act)
-    }
-
-    public func sprite(forSkillName skillName: String) async throws -> (spr: SPR, act: ACT) {
-        let sprPath = GRF.Path(components: ["data", "sprite", "아이템", "\(skillName).spr"])
-        let sprData = try contentsOfEntry(at: sprPath)
-        let spr = try SPR(data: sprData)
-
-        let actPath = GRF.Path(components: ["data", "sprite", "아이템", "\(skillName).act"])
-        let actData = try contentsOfEntry(at: actPath)
-        let act = try ACT(data: actData)
-
-        return (spr, act)
-    }
-
     // MARK: - data\texture
 
     public func image(forTextureNamed textureName: String) async throws -> CGImage? {
@@ -167,68 +71,7 @@ public actor GameResourceManager {
         return image
     }
 
-    public func itemIconImage(forItemID itemID: Int) async throws -> CGImage? {
-        guard let resourceName = await ItemInfoTable.current.identifiedItemResourceName(forItemID: itemID) else {
-            throw GameResourceError.resourceNotFound
-        }
-
-        let path = GRF.Path(components: ["data", "texture", "유저인터페이스", "item", "\(resourceName).bmp"])
-        let image = await image(forBMPPath: path)
-        return image
-    }
-
-    public func itemPreviewImage(forItemID itemID: Int) async throws -> CGImage? {
-        guard let resourceName = await ItemInfoTable.current.identifiedItemResourceName(forItemID: itemID) else {
-            throw GameResourceError.resourceNotFound
-        }
-
-        let path = GRF.Path(components: ["data", "texture", "유저인터페이스", "collection", "\(resourceName).bmp"])
-        let image = await image(forBMPPath: path)
-        return image
-    }
-
-    public func skillIconImage(forSkillAegisName skillAegisName: String) async -> CGImage? {
-        let path = GRF.Path(components: ["data", "texture", "유저인터페이스", "item", "\(skillAegisName).bmp"])
-        let image = await image(forBMPPath: path)
-        return image
-    }
-
-    public func mapImage(forMapName mapName: String) async -> CGImage? {
-        let path = GRF.Path(components: ["data", "texture", "유저인터페이스", "map", "\(mapName).bmp"])
-        let image = await image(forBMPPath: path)
-        return image
-    }
-
-    public func statusIconImage(forStatusID statusID: Int) async throws -> CGImage? {
-        guard let iconName = await StatusInfoTable.current.iconName(forStatusID: statusID) else {
-            throw GameResourceError.resourceNotFound
-        }
-
-        let path = GRF.Path(components: ["data", "texture", "effect", iconName])
-        let data = try contentsOfEntry(at: path)
-        let image = CGImageCreateWithData(data)
-        return image
-    }
-
     // MARK: - General
-
-    public func image(forBMPPath path: GRF.Path) async -> CGImage? {
-        if let image = cache.object(forKey: path.string as NSString) {
-            return image
-        }
-
-        guard let data = try? contentsOfEntry(at: path) else {
-            return nil
-        }
-
-        let image = CGImageCreateWithData(data)?.removingMagentaPixels()
-
-        if let image {
-            cache.setObject(image, forKey: path.string as NSString)
-        }
-
-        return image
-    }
 
     public func contentsOfEntry(at path: GRF.Path) throws -> Data {
         for grf in grfs {

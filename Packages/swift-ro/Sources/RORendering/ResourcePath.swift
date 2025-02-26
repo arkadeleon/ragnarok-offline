@@ -28,6 +28,10 @@ public struct ResourcePath: ExpressibleByArrayLiteral, Sendable {
         ResourcePath(components: components + [component])
     }
 
+    public func appending(components: [String]) -> ResourcePath {
+        ResourcePath(components: self.components + components)
+    }
+
     public func appendingPathExtension(_ pathExtension: String) -> ResourcePath {
         var components = components
         if var lastComponent = components.popLast() {
@@ -36,6 +40,24 @@ public struct ResourcePath: ExpressibleByArrayLiteral, Sendable {
             components.append(lastComponent)
         }
         return ResourcePath(components: components)
+    }
+}
+
+extension ResourcePath {
+    public static let palettePath: ResourcePath = ["data", "palette"]
+    public static let spritePath: ResourcePath = ["data", "sprite"]
+    public static let texturePath: ResourcePath = ["data", "texture"]
+    public static let effectPath: ResourcePath = ["data", "texture", "effect"]
+    public static let userInterface: ResourcePath = ["data", "texture", "유저인터페이스"]
+}
+
+extension ResourcePath {
+    public init?(mapBGMPathWithMapName mapName: String) async {
+        guard let mp3Name = await MapMP3NameTable.current.mapMP3Name(forMapName: mapName) else {
+            return nil
+        }
+
+        self = ["BGM", mp3Name]
     }
 }
 
@@ -50,9 +72,9 @@ extension ResourcePath {
         }
 
         if jobID.isDoram {
-            return ["도람족", "몸통", gender.name, "\(jobName)_\(gender.name)"]
+            return .spritePath + ["도람족", "몸통", gender.name, "\(jobName)_\(gender.name)"]
         } else {
-            return ["인간족", "몸통", gender.name, "\(jobName)_\(gender.name)"]
+            return .spritePath + ["인간족", "몸통", gender.name, "\(jobName)_\(gender.name)"]
         }
     }
 
@@ -66,9 +88,9 @@ extension ResourcePath {
         }
 
         if jobID.isDoram {
-            return ["도람족", "몸통", gender.name, "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(costumeID)"]
+            return .spritePath + ["도람족", "몸통", gender.name, "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(costumeID)"]
         } else {
-            return ["인간족", "몸통", gender.name, "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(costumeID)"]
+            return .spritePath + ["인간족", "몸통", gender.name, "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(costumeID)"]
         }
     }
 
@@ -78,9 +100,9 @@ extension ResourcePath {
         }
 
         if jobID.isDoram {
-            return ["도람족", "머리통", gender.name, "\(hairStyleID)_\(gender.name)"]
+            return .spritePath + ["도람족", "머리통", gender.name, "\(hairStyleID)_\(gender.name)"]
         } else {
-            return ["인간족", "머리통", gender.name, "\(hairStyleID)_\(gender.name)"]
+            return .spritePath + ["인간족", "머리통", gender.name, "\(hairStyleID)_\(gender.name)"]
         }
     }
 
@@ -94,13 +116,13 @@ extension ResourcePath {
         }
 
         if jobID.isNPC {
-            return ["npc", jobName]
+            return .spritePath + ["npc", jobName]
         } else if jobID.isMercenary {
-            return ["인간족", "몸통", jobName]
+            return .spritePath + ["인간족", "몸통", jobName]
         } else if jobID.isHomunculus {
-            return ["homun", jobName]
+            return .spritePath + ["homun", jobName]
         } else if jobID.isMonster {
-            return ["몬스터", jobName]
+            return .spritePath + ["몬스터", jobName]
         } else {
             return nil
         }
@@ -114,7 +136,7 @@ extension ResourcePath {
         if jobID.isPlayer {
             let isMadogear = jobID.isMadogear
             let isAlternativeMadogear = isMadogear && madoType == .suit
-            let madogearJobName = isAlternativeMadogear ? alternativeMadogearJobName(jobID: jobID, type: madoType) : ""
+            let madogearJobName = isAlternativeMadogear ? alternativeMadogearJobName(jobID: jobID, madoType: madoType) : ""
 
             guard var jobName = PlayerJobNameTable.current.weaponJobName(for: jobID.rawValue) else {
                 return nil
@@ -140,20 +162,20 @@ extension ResourcePath {
             }
 
             if jobID.isDoram {
-                return ["도람족", jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)\(isSlash ? "_검광" : "")"]
+                return .spritePath + ["도람족", jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)\(isSlash ? "_검광" : "")"]
             } else {
-                return ["인간족", jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)\(isSlash ? "_검광" : "")"]
+                return .spritePath + ["인간족", jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)\(isSlash ? "_검광" : "")"]
             }
         } else {
-            let mercenaryPath: ResourcePath = ["인간족", "용병"]
+            let mercenaryPath: ResourcePath = .spritePath + ["인간족", "용병"]
 
             switch jobID.rawValue {
             case 6017...6026:
-                return mercenaryPath.appending(component: "활용병_활")
+                return mercenaryPath + ["활용병_활"]
             case 6027...6036:
-                return mercenaryPath.appending(component: "창용병_창")
+                return mercenaryPath + ["창용병_창"]
             default:
-                return mercenaryPath.appending(component: "검용병_검")
+                return mercenaryPath + ["검용병_검"]
             }
         }
     }
@@ -168,9 +190,9 @@ extension ResourcePath {
         }
 
         if let shieldName = ShieldNameTable.current.shieldName(for: shieldID) {
-            return ["방패", jobName, "\(jobName)_\(gender.name)\(shieldName)"]
+            return .spritePath + ["방패", jobName, "\(jobName)_\(gender.name)\(shieldName)"]
         } else {
-            return ["방패", jobName, "\(jobName)_\(gender.name)_\(shieldID)_방패"]
+            return .spritePath + ["방패", jobName, "\(jobName)_\(gender.name)_\(shieldID)_방패"]
         }
     }
 
@@ -179,7 +201,7 @@ extension ResourcePath {
             return nil
         }
 
-        return ["악세사리", gender.name, "\(gender.name)\(accessoryName)"]
+        return .spritePath + ["악세사리", gender.name, "\(gender.name)\(accessoryName)"]
     }
 
     static func garmentSprite(jobID: UniformJobID, garmentID: Int, gender: Gender, checkEnglish: Bool = false, useFallback: Bool = false) async -> ResourcePath? {
@@ -193,9 +215,9 @@ extension ResourcePath {
         }
 
         if useFallback {
-            return ["로브", robeName, robeName]
+            return .spritePath + ["로브", robeName, robeName]
         } else {
-            return ["로브", robeName, gender.name, "\(jobName)_\(gender.name)"]
+            return .spritePath + ["로브", robeName, gender.name, "\(jobName)_\(gender.name)"]
         }
     }
 
@@ -205,7 +227,7 @@ extension ResourcePath {
         }
 
         if jobID.isMadogear && madoType == .suit {
-            let jobName = alternativeMadogearJobName(jobID: jobID, type: madoType)
+            let jobName = alternativeMadogearJobName(jobID: jobID, madoType: madoType)
             return ["\(jobName)_\(gender.name)"]
         }
 
@@ -213,7 +235,7 @@ extension ResourcePath {
             return nil
         }
 
-        return ["\(jobName)_\(gender.name)"]
+        return ["data", "imf", "\(jobName)_\(gender.name)"]
     }
 
     static func bodyPalette(jobID: UniformJobID, clothesColorID: Int, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
@@ -222,7 +244,7 @@ extension ResourcePath {
         }
 
         if jobID.isMadogear && madoType == .suit {
-            let jobName = alternativeMadogearJobName(jobID: jobID, type: madoType)
+            let jobName = alternativeMadogearJobName(jobID: jobID, madoType: madoType)
             return ["몸", "\(jobName)_\(gender.name)_\(clothesColorID)"]
         }
 
@@ -231,9 +253,9 @@ extension ResourcePath {
         }
 
         if jobID.isDoram {
-            return ["도람족", "body", "\(jobName)_\(gender.name)_\(clothesColorID)"]
+            return .palettePath + ["도람족", "body", "\(jobName)_\(gender.name)_\(clothesColorID)"]
         } else {
-            return ["몸", "\(jobName)_\(gender.name)_\(clothesColorID)"]
+            return .palettePath + ["몸", "\(jobName)_\(gender.name)_\(clothesColorID)"]
         }
     }
 
@@ -243,8 +265,8 @@ extension ResourcePath {
         }
 
         if jobID.isMadogear && madoType == .suit {
-            let jobName = alternativeMadogearJobName(jobID: jobID, type: madoType)
-            return ["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"]
+            let jobName = alternativeMadogearJobName(jobID: jobID, madoType: madoType)
+            return .palettePath + ["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"]
         }
 
         guard let jobName = PlayerJobNameTable.current.palJobName(for: jobID.rawValue) else {
@@ -252,9 +274,9 @@ extension ResourcePath {
         }
 
         if jobID.isDoram {
-            return ["도람족", "body", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"]
+            return .palettePath + ["도람족", "body", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"]
         } else {
-            return ["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"]
+            return .palettePath + ["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"]
         }
     }
 
@@ -264,16 +286,16 @@ extension ResourcePath {
         }
 
         if jobID.isDoram {
-            return ["도람족", "머리", "머리\(hairStyleID)_\(gender.name)_\(hairColorID)"]
+            return .palettePath + ["도람족", "머리", "머리\(hairStyleID)_\(gender.name)_\(hairColorID)"]
         } else {
-            return ["머리", "머리\(hairStyleID)_\(gender.name)_\(hairColorID)"]
+            return .palettePath + ["머리", "머리\(hairStyleID)_\(gender.name)_\(hairColorID)"]
         }
     }
 
     private static func jobSpriteName(jobID: UniformJobID, madoType: MadoType = .robot) async -> String? {
         if jobID.isPlayer {
             if jobID.isMadogear && madoType == .suit {
-                return alternativeMadogearJobName(jobID: jobID, type: madoType)
+                return alternativeMadogearJobName(jobID: jobID, madoType: madoType)
             } else {
                 return PlayerJobNameTable.current.jobName(for: jobID.rawValue)
             }
@@ -282,7 +304,7 @@ extension ResourcePath {
         }
     }
 
-    private static func alternativeMadogearJobName(jobID: UniformJobID, type: MadoType) -> String {
+    private static func alternativeMadogearJobName(jobID: UniformJobID, madoType: MadoType) -> String {
         if [4086, 4087, 4112].contains(jobID.rawValue) {
             return "마도아머"
         } else {
@@ -291,9 +313,58 @@ extension ResourcePath {
     }
 }
 
+extension ResourcePath {
+    public init?(itemSpritePathWithItemID itemID: Int) async {
+        guard let resourceName = await ItemInfoTable.current.identifiedItemResourceName(forItemID: itemID) else {
+            return nil
+        }
+
+        self = .spritePath + ["아이템", "\(resourceName)"]
+    }
+
+    public init(skillSpritePathWithSkillName skillName: String) {
+        self = .spritePath + ["아이템", "\(skillName)"]
+    }
+}
+
+extension ResourcePath {
+    public init?(itemIconImagePathWithItemID itemID: Int) async {
+        guard let resourceName = await ItemInfoTable.current.identifiedItemResourceName(forItemID: itemID) else {
+            return nil
+        }
+
+        self = .userInterface + ["item", "\(resourceName).bmp"]
+    }
+
+    public init?(itemPreviewImagePathWithItemID itemID: Int) async {
+        guard let resourceName = await ItemInfoTable.current.identifiedItemResourceName(forItemID: itemID) else {
+            return nil
+        }
+
+        self = .userInterface + ["collection", "\(resourceName).bmp"]
+    }
+
+    public init(skillIconImagePathWithSkillAegisName skillAegisName: String) {
+        self = .userInterface + ["item", "\(skillAegisName).bmp"]
+    }
+
+    public init(mapImagePathWithMapName mapName: String) {
+        self = .userInterface + ["map", "\(mapName).bmp"]
+    }
+
+    public init?(statusIconImagePathWithStatusID statusID: Int) async {
+        guard let iconName = await StatusInfoTable.current.iconName(forStatusID: statusID) else {
+            return nil
+        }
+
+        self = .effectPath + [iconName]
+    }
+}
+
 extension URL {
-    func appending(path: ResourcePath, directoryHint: URL.DirectoryHint = .inferFromPath) -> URL {
+    public func appending(path: ResourcePath, directoryHint: URL.DirectoryHint = .inferFromPath) -> URL {
         let path = path.components.joined(separator: "/")
-        return appending(path: path, directoryHint: directoryHint)
+        let url = appending(path: path, directoryHint: directoryHint)
+        return url
     }
 }

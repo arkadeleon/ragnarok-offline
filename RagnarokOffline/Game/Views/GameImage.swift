@@ -6,8 +6,7 @@
 //
 
 import ROCore
-import ROFileFormats
-import ROGame
+import RORendering
 import SwiftUI
 
 struct GameImage: View {
@@ -22,25 +21,9 @@ struct GameImage: View {
             }
         }
         .task {
-            let components = ["data", "texture", "유저인터페이스", name]
-
-            let url = GameResourceManager.default.baseURL.appending(component: components.joined(separator: "/"))
-            if FileManager.default.fileExists(atPath: url.path()),
-               let data = try? Data(contentsOf: url) {
-                image = CGImageCreateWithData(data)?.removingMagentaPixels()
-                return
-            }
-
-            let grfPath = GRF.Path(components: components)
-            if let image = await GameResourceManager.default.image(forBMPPath: grfPath) {
-                self.image = image
-                return
-            }
-
-            if let url = Bundle.main.resourceURL?.appending(component: components.joined(separator: "/")),
-               let data = try? Data(contentsOf: url) {
-                image = CGImageCreateWithData(data)?.removingMagentaPixels()
-            }
+            let components = name.split(separator: "/").map(String.init)
+            let path = ResourcePath.userInterface.appending(components: components)
+            image = try? await ResourceManager.default.image(at: path, removesMagentaPixels: true)
         }
     }
 

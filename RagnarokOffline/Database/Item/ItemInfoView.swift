@@ -86,7 +86,7 @@ struct ItemInfoView: View {
         .background(.background)
         .navigationTitle(item.displayName)
         .task {
-            try? await item.fetchDetail()
+            await item.fetchDetail()
         }
     }
 }

@@ -8,7 +8,7 @@
 import CoreGraphics
 import Observation
 import RODatabase
-import ROGame
+import RORendering
 import ROResources
 
 @Observable
@@ -67,7 +67,10 @@ class ObservableSkill {
 
     @MainActor
     func fetchIconImage() async {
-        iconImage = await GameResourceManager.default.skillIconImage(forSkillAegisName: skill.aegisName)
+        if iconImage == nil {
+            let path = ResourcePath(skillIconImagePathWithSkillAegisName: skill.aegisName)
+            iconImage = try? await ResourceManager.default.image(at: path, removesMagentaPixels: true)
+        }
     }
 
     @MainActor

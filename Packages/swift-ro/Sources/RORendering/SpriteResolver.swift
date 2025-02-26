@@ -31,7 +31,8 @@ final public class SpriteResolver: Sendable {
 
         // Shadow
         do {
-            let shadowSprite = try await resourceManager.spriteResource(at: ["shadow"])
+            let shadowSpritePath = ResourcePath.spritePath.appending(component: "shadow")
+            let shadowSprite = try await resourceManager.sprite(at: shadowSpritePath)
             shadowSprite.semantic = .shadow
             sprites.append(shadowSprite)
         } catch {
@@ -50,14 +51,14 @@ final public class SpriteResolver: Sendable {
             if let hairColorID = configuration.hairColorID,
                let headPalettePath = ResourcePath.headPalette(jobID: jobID, hairStyleID: hairStyleID, hairColorID: hairColorID, gender: gender) {
                 do {
-                    headPalette = try await resourceManager.paletteResource(at: headPalettePath)
+                    headPalette = try await resourceManager.palette(at: headPalettePath)
                 } catch {
                     print(error)
                 }
             }
 
             do {
-                let headSprite = try await resourceManager.spriteResource(at: headSpritePath)
+                let headSprite = try await resourceManager.sprite(at: headSpritePath)
                 headSprite.parent = bodySprite
                 headSprite.semantic = .playerHead
                 headSprite.palette = headPalette
@@ -71,7 +72,7 @@ final public class SpriteResolver: Sendable {
         if let weaponID = configuration.weaponID, !jobID.isMadogear,
            let weaponSpritePath = await ResourcePath.weaponSprite(jobID: jobID, weaponID: weaponID, isSlash: false, gender: gender, madoType: madoType) {
             do {
-                let weaponSprite = try await resourceManager.spriteResource(at: weaponSpritePath)
+                let weaponSprite = try await resourceManager.sprite(at: weaponSpritePath)
                 weaponSprite.semantic = .weapon
                 weaponSprite.orderBySemantic = 0
                 sprites.append(weaponSprite)
@@ -84,7 +85,7 @@ final public class SpriteResolver: Sendable {
         if let weaponID = configuration.weaponID,
            let weaponSlashSpritePath = await ResourcePath.weaponSprite(jobID: jobID, weaponID: weaponID, isSlash: true, gender: gender, madoType: madoType) {
             do {
-                let weaponSlashSprite = try await resourceManager.spriteResource(at: weaponSlashSpritePath)
+                let weaponSlashSprite = try await resourceManager.sprite(at: weaponSlashSpritePath)
                 weaponSlashSprite.semantic = .weapon
                 weaponSlashSprite.orderBySemantic = 1
                 sprites.append(weaponSlashSprite)
@@ -97,7 +98,7 @@ final public class SpriteResolver: Sendable {
         if let shieldID = configuration.shieldID,
            let shieldSpritePath = await ResourcePath.shieldSprite(jobID: jobID, shieldID: shieldID, gender: gender) {
             do {
-                let shieldSprite = try await resourceManager.spriteResource(at: shieldSpritePath)
+                let shieldSprite = try await resourceManager.sprite(at: shieldSpritePath)
                 shieldSprite.semantic = .shield
                 sprites.append(shieldSprite)
             } catch {
@@ -112,7 +113,7 @@ final public class SpriteResolver: Sendable {
             }
 
             do {
-                let headgearSprite = try await resourceManager.spriteResource(at: headgearSpritePath)
+                let headgearSprite = try await resourceManager.sprite(at: headgearSpritePath)
                 headgearSprite.parent = bodySprite
                 headgearSprite.semantic = .headgear
                 headgearSprite.orderBySemantic = i
@@ -135,7 +136,8 @@ final public class SpriteResolver: Sendable {
 
         // Shadow
         do {
-            let shadowSprite = try await resourceManager.spriteResource(at: ["shadow"])
+            let shadowSpritePath = ResourcePath.spritePath.appending(component: "shadow")
+            let shadowSprite = try await resourceManager.sprite(at: shadowSpritePath)
             shadowSprite.semantic = .shadow
             sprites.append(shadowSprite)
         } catch {
@@ -144,7 +146,7 @@ final public class SpriteResolver: Sendable {
 
         if let bodySpritePath = await ResourcePath.nonPlayerSprite(jobID: jobID) {
             do {
-                let bodySprite = try await resourceManager.spriteResource(at: bodySpritePath)
+                let bodySprite = try await resourceManager.sprite(at: bodySpritePath)
                 sprites.append(bodySprite)
             } catch {
                 print(error)
@@ -164,7 +166,7 @@ final public class SpriteResolver: Sendable {
         if let outfitID = configuration.outfitID {
             if let bodySpritePath = await ResourcePath.playerBodyAltSprite(jobID: jobID, gender: gender, costumeID: outfitID, madoType: madoType) {
                 do {
-                    bodySprite = try await resourceManager.spriteResource(at: bodySpritePath)
+                    bodySprite = try await resourceManager.sprite(at: bodySpritePath)
                 } catch {
                     print(error)
                 }
@@ -173,7 +175,7 @@ final public class SpriteResolver: Sendable {
             if let clothesColorID = configuration.clothesColorID,
                let bodyPalettePath = ResourcePath.bodyAltPalette(jobID: jobID, clothesColorID: clothesColorID, gender: gender, costumeID: outfitID, madoType: madoType) {
                 do {
-                    bodyPalette = try await resourceManager.paletteResource(at: bodyPalettePath)
+                    bodyPalette = try await resourceManager.palette(at: bodyPalettePath)
                 } catch {
                     print(error)
                 }
@@ -181,7 +183,7 @@ final public class SpriteResolver: Sendable {
         } else {
             if let bodySpritePath = await ResourcePath.playerBodySprite(jobID: jobID, gender: gender, madoType: madoType) {
                 do {
-                    bodySprite = try await resourceManager.spriteResource(at: bodySpritePath)
+                    bodySprite = try await resourceManager.sprite(at: bodySpritePath)
                 } catch {
                     print(error)
                 }
@@ -190,7 +192,7 @@ final public class SpriteResolver: Sendable {
             if let clothesColorID = configuration.clothesColorID,
                let bodyPalettePath = ResourcePath.bodyPalette(jobID: jobID, clothesColorID: clothesColorID, gender: gender, madoType: madoType) {
                 do {
-                    bodyPalette = try await resourceManager.paletteResource(at: bodyPalettePath)
+                    bodyPalette = try await resourceManager.palette(at: bodyPalettePath)
                 } catch {
                     print(error)
                 }

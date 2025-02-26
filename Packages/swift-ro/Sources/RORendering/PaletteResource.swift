@@ -7,7 +7,7 @@
 
 import ROFileFormats
 
-public class PaletteResource {
+final public class PaletteResource: Sendable {
     let pal: PAL
 
     init(pal: PAL) {

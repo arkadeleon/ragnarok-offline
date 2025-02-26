@@ -8,8 +8,8 @@
 import CoreGraphics
 import Observation
 import RODatabase
-import ROGame
 import ROGenerated
+import RORendering
 import ROResources
 
 @Observable
@@ -48,9 +48,11 @@ class ObservableStatusChange {
     }
 
     @MainActor
-    func fetchIconImage() async throws {
+    func fetchIconImage() async {
         if iconImage == nil {
-            iconImage = try await GameResourceManager.default.statusIconImage(forStatusID: statusChange.icon.rawValue)
+            if let path = await ResourcePath(statusIconImagePathWithStatusID: statusChange.icon.rawValue) {
+                iconImage = try? await ResourceManager.default.image(at: path)
+            }
         }
     }
 
