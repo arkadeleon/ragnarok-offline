@@ -23,8 +23,8 @@ struct GameView: View {
                 CharMakeView(gameSession: gameSession, slot: slot)
             case .mapLoading:
                 ProgressView()
-            case .map(let mapName, let gat, let gnd, let position):
-                MapView(mapSession: gameSession.mapSession!, mapName: mapName, gat: gat, gnd: gnd, position: position)
+            case .map(let mapName, let world, let position):
+                MapView(mapSession: gameSession.mapSession!, mapName: mapName, world: world, position: position)
             }
         }
     }

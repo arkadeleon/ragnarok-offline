@@ -47,6 +47,14 @@ public actor ResourceManager {
         }
     }
 
+    public func model(at path: ResourcePath) async throws -> ModelResource {
+        let data = try await contentsOfResource(at: path)
+        let rsm = try RSM(data: data)
+
+        let model = ModelResource(rsm: rsm)
+        return model
+    }
+
     public func palette(at path: ResourcePath) async throws -> PaletteResource {
         let palPath = path.appendingPathExtension("pal")
         let palData = try await contentsOfResource(at: palPath)
@@ -67,6 +75,23 @@ public actor ResourceManager {
 
         let sprite = SpriteResource(act: act, spr: spr)
         return sprite
+    }
+
+    public func world(at path: ResourcePath) async throws -> WorldResource {
+        let gatPath = path.appendingPathExtension("gat")
+        let gatData = try await contentsOfResource(at: gatPath)
+        let gat = try GAT(data: gatData)
+
+        let gndPath = path.appendingPathExtension("gnd")
+        let gndData = try await contentsOfResource(at: gndPath)
+        let gnd = try GND(data: gndData)
+
+        let rswPath = path.appendingPathExtension("rsw")
+        let rswData = try await contentsOfResource(at: rswPath)
+        let rsw = try RSW(data: rswData)
+
+        let world = WorldResource(gat: gat, gnd: gnd, rsw: rsw)
+        return world
     }
 
     private func contentsOfResource(at path: ResourcePath) async throws -> Data {

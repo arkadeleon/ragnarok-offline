@@ -8,9 +8,8 @@
 import Combine
 import Observation
 import RODatabase
-import ROFileFormats
-import ROGame
 import RONetwork
+import RORendering
 import SwiftUI
 
 enum GamePhase {
@@ -19,7 +18,7 @@ enum GamePhase {
     case charSelect(_ chars: [CharInfo])
     case charMake(_ slot: UInt8)
     case mapLoading
-    case map(_ mapName: String, _ gat: GAT, _ gnd: GND, _ position: SIMD2<Int16>)
+    case map(_ mapName: String, _ world: WorldResource, _ position: SIMD2<Int16>)
 }
 
 @Observable
@@ -140,10 +139,10 @@ final class GameSession {
             self.phase = .mapLoading
 
             Task {
-                let gat = try await GameResourceManager.default.gat(forMapName: mapName)
-                let gnd = try await GameResourceManager.default.gnd(forMapName: mapName)
+                let worldPath: ResourcePath = ["data", mapName]
+                let world = try await ResourceManager.default.world(at: worldPath)
 
-                self.phase = .map(mapName, gat, gnd, event.position)
+                self.phase = .map(mapName, world, event.position)
             }
         }
         .store(in: &subscriptions)

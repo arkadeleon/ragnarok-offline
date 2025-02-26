@@ -10,7 +10,6 @@ import MetalKit
 import RealityKit
 import ROCore
 import ROFileFormats
-import ROGame
 import ROGenerated
 
 extension Entity {

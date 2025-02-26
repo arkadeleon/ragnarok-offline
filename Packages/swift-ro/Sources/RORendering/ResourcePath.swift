@@ -44,6 +44,7 @@ public struct ResourcePath: ExpressibleByArrayLiteral, Sendable {
 }
 
 extension ResourcePath {
+    public static let modelPath: ResourcePath = ["data", "model"]
     public static let palettePath: ResourcePath = ["data", "palette"]
     public static let spritePath: ResourcePath = ["data", "sprite"]
     public static let texturePath: ResourcePath = ["data", "texture"]

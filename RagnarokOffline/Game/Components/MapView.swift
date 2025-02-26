@@ -5,19 +5,18 @@
 //  Created by Leon Li on 2024/9/10.
 //
 
-import ROFileFormats
 import RONetwork
+import RORendering
 import SwiftUI
 
 struct MapView: View {
     var mapSession: MapSession
     var mapName: String
-    var gat: GAT
-    var gnd: GND
+    var world: WorldResource
     var position: SIMD2<Int16>
 
     var body: some View {
-        MapSceneView(mapSession: mapSession, mapName: mapName, gat: gat, gnd: gnd, position: position)
+        MapSceneView(mapSession: mapSession, mapName: mapName, world: world, position: position)
             .overlay(alignment: .topLeading) {
                 PlayerStatusOverlayView(mapSession: mapSession)
             }

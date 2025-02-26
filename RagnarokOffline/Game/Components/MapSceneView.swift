@@ -8,7 +8,6 @@
 import RealityKit
 import ROCore
 import RODatabase
-import ROFileFormats
 import ROGame
 import RONetwork
 import RORenderers
@@ -20,8 +19,7 @@ import SwiftUI
 struct MapSceneView: View {
     var mapSession: MapSession
     var mapName: String
-    var gat: GAT
-    var gnd: GND
+    var world: WorldResource
     var position: SIMD2<Int16>
 
     @State private var root = Entity()
@@ -40,7 +38,7 @@ struct MapSceneView: View {
 
             let group = ModelSortGroup()
 
-            if let worldEntity = try? await GameResourceManager.default.worldEntity(mapName: mapName) {
+            if let worldEntity = try? await Entity.worldEntity(world: world) {
                 worldEntity.components.set(ModelSortGroupComponent(group: group, order: 0))
                 worldEntity.transform = Transform(rotation: simd_quatf(angle: radians(-180), axis: [1, 0, 0]))
                 root.addChild(worldEntity)
@@ -49,9 +47,9 @@ struct MapSceneView: View {
             var gridPositions = [SIMD3<Float>]()
             var gridPositionIndices = [UInt32]()
             var index: UInt32 = 0
-            for y in 0..<gat.height {
-                for x in 0..<gat.width {
-                    let tile = gat.tile(atX: Int(x), y: Int(y))
+            for y in 0..<world.gat.height {
+                for x in 0..<world.gat.width {
+                    let tile = world.gat.tile(atX: Int(x), y: Int(y))
 
                     guard tile.type == .walkable || tile.type == .walkable2 || tile.type == .walkable3 else {
                         continue
@@ -217,7 +215,7 @@ struct MapSceneView: View {
     }
 
     private func position3D(for position2D: SIMD2<Int16>) -> SIMD3<Float> {
-        let altitude = gat.tile(atX: Int(position2D.x), y: Int(position2D.y)).averageAltitude
+        let altitude = world.gat.tile(atX: Int(position2D.x), y: Int(position2D.y)).averageAltitude
         let position: SIMD3<Float> = [
             Float(position2D.x),
             -altitude / 5,

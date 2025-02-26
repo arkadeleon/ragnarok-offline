@@ -94,6 +94,7 @@ let package = Package(
                 "ROFileFormats",
                 "ROGenerated",
                 "RORenderers",
+                "RORendering",
                 "ROResources",
             ]),
         .target(
