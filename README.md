@@ -5,8 +5,8 @@ Before installing Ragnarok Offline there are certain hardwares you will need.
 
 Hardware | OS Version    | Required
 ---------|---------------|---------
-Mac      | 13.0 or later | Yes
-iPad     | 16.0 or later | No
+Mac      | 15.0 or later | Yes
+iPad     | 18.0 or later | No
 
 ## Installation 
 
