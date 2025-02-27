@@ -73,7 +73,9 @@ extension SpriteAction {
                 }
             }
         } else if jobID.isMonster {
-            for actionType in MonsterActionType.allCases {
+            // It seems that die action type is a little bit different.
+            let actionTypes: [MonsterActionType] = [.idle, .walk, .attack, .hurt]
+            for actionType in actionTypes {
                 for direction in BodyDirection.allCases {
                     let actionIndex = actionType.rawValue * 8 + direction.rawValue
                     let action = try await SpriteAction(sprites: sprites, actionIndex: actionIndex)

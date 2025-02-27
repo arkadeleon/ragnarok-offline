@@ -63,7 +63,7 @@ class ObservableMap {
         let monsterDatabase = MonsterDatabase.database(for: mode)
         let npcDatabase = NPCDatabase.database(for: mode)
 
-        if let monsterSpawns = try? await npcDatabase.monsterSpawns(forMap: map) {
+        if let monsterSpawns = try? await npcDatabase.monsterSpawns(forMapName: map.name) {
             var spawnMonsters: [SpawnMonster] = []
             var monsters: [Monster] = []
             for monsterSpawn in monsterSpawns {

@@ -24,6 +24,7 @@ struct MapSceneView: View {
 
     @State private var root = Entity()
     @State private var player = SpriteEntity()
+    @State private var monsters: [Int : SpriteEntity] = [:]
     @State private var camera = Entity()
     @State private var cameraHelper = Entity()
 
@@ -97,6 +98,24 @@ struct MapSceneView: View {
 
             root.addChild(player)
 
+            // Preload monster entities.
+            do {
+                let npcDatabase = NPCDatabase.renewal
+                let monsterSpawns = try await npcDatabase.monsterSpawns(forMapName: mapName)
+
+                for monsterSpawn in monsterSpawns {
+                    guard let monsterID = monsterSpawn.monsterID, monsters[monsterID] == nil else {
+                        continue
+                    }
+
+                    let jobID = UniformJobID(rawValue: monsterID)
+                    let entity = try await SpriteEntity(jobID: jobID, configuration: SpriteConfiguration())
+                    monsters[monsterID] = entity
+                }
+            } catch {
+                logger.warning("\(error.localizedDescription)")
+            }
+
             let perspectiveCameraComponent = PerspectiveCameraComponent(near: 2, far: 300, fieldOfViewInDegrees: 15)
             camera.components.set(perspectiveCameraComponent)
             camera.transform = cameraTransform(for: position)
@@ -154,6 +173,19 @@ struct MapSceneView: View {
             camera.move(to: cameraTransform, relativeTo: nil, duration: 1)
         }
         .onReceive(mapSession.publisher(for: MapObjectEvents.Spawned.self)) { event in
+            if let monsterEntity = monsters[Int(event.object.job)] {
+                let monsterEntityClone = monsterEntity.clone(recursive: true)
+                monsterEntityClone.name = "\(event.object.id)"
+                monsterEntityClone.transform = transform(for: event.object.position)
+                monsterEntityClone.isEnabled = (event.object.effectState != .cloak)
+
+                root.addChild(monsterEntityClone)
+
+                monsterEntityClone.runPlayerAction(.idle, direction: .south)
+
+                return
+            }
+
             Task {
                 let jobID = UniformJobID(rawValue: Int(event.object.job))
                 let configuration = SpriteConfiguration()

@@ -45,11 +45,11 @@ public actor NPCDatabase {
         return monsterSpawns
     }
 
-    public func monsterSpawns(forMap map: Map) throws -> [MonsterSpawn] {
+    public func monsterSpawns(forMapName mapName: String) throws -> [MonsterSpawn] {
         try restoreScripts()
 
         let monsterSpawns = monsterSpawns.filter { monsterSpawn in
-            monsterSpawn.mapName == map.name
+            monsterSpawn.mapName == mapName
         }
         return monsterSpawns
     }
