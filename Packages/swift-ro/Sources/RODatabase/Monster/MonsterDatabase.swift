@@ -21,16 +21,21 @@ public actor MonsterDatabase {
 
     public let mode: DatabaseMode
 
-    private lazy var _monsters: [Monster] = (try? {
-        let decoder = YAMLDecoder()
+    private lazy var _monsters: [Monster] = {
+        do {
+            let decoder = YAMLDecoder()
 
-        let url = ServerResourceManager.default.sourceURL
-            .appending(path: "db/\(mode.path)/mob_db.yml")
-        let data = try Data(contentsOf: url)
-        let monsters = try decoder.decode(ListNode<Monster>.self, from: data).body
+            let url = ServerResourceManager.default.sourceURL
+                .appending(path: "db/\(mode.path)/mob_db.yml")
+            let data = try Data(contentsOf: url)
+            let monsters = try decoder.decode(ListNode<Monster>.self, from: data).body
 
-        return monsters
-    }()) ?? []
+            return monsters
+        } catch {
+            logger.warning("\(error.localizedDescription)")
+            return []
+        }
+    }()
 
     private lazy var _monstersByID: [Int : Monster] = {
         Dictionary(

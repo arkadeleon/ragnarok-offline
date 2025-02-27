@@ -88,7 +88,7 @@ struct MapSceneView: View {
                 let spriteComponent = SpriteComponent(actions: actions)
                 player.components.set(spriteComponent)
             } catch {
-                print(error)
+                logger.warning("\(error.localizedDescription)")
             }
 
             player.name = "player"

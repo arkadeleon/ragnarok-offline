@@ -22,25 +22,32 @@ public actor MapDatabase {
 
     public let mode: DatabaseMode
 
-    private lazy var _maps: [Map] = (try? {
+    private lazy var _maps: [Map] = {
         var mapInfos: [String : MapCache.MapInfo] = [:]
-        let mapCacheURLs = [
-            ServerResourceManager.default.sourceURL
-                .appending(path: "db/map_cache.dat"),
-            ServerResourceManager.default.sourceURL
-                .appending(path: "db/\(mode.path)/map_cache.dat"),
-        ]
-        for mapCacheURL in mapCacheURLs {
-            let decoder = try BinaryDecoder(url: mapCacheURL)
-            let mapCache = try MapCache(from: decoder)
-            for mapInfo in mapCache.maps {
-                mapInfos[mapInfo.name] = mapInfo
-            }
-        }
+        let string: String
 
-        let url = ServerResourceManager.default.sourceURL
-            .appending(path: "db/map_index.txt")
-        let string = try String(contentsOf: url)
+        do {
+            let mapCacheURLs = [
+                ServerResourceManager.default.sourceURL
+                    .appending(path: "db/map_cache.dat"),
+                ServerResourceManager.default.sourceURL
+                    .appending(path: "db/\(mode.path)/map_cache.dat"),
+            ]
+            for mapCacheURL in mapCacheURLs {
+                let decoder = try BinaryDecoder(url: mapCacheURL)
+                let mapCache = try MapCache(from: decoder)
+                for mapInfo in mapCache.maps {
+                    mapInfos[mapInfo.name] = mapInfo
+                }
+            }
+
+            let url = ServerResourceManager.default.sourceURL
+                .appending(path: "db/map_index.txt")
+            string = try String(contentsOf: url, encoding: .utf8)
+        } catch {
+            logger.warning("\(error.localizedDescription)")
+            return []
+        }
 
         var index = 0
         var maps: [Map] = []
@@ -69,7 +76,7 @@ public actor MapDatabase {
         }
 
         return maps
-    }()) ?? []
+    }()
 
     private lazy var _mapsByName: [String : Map] = {
         Dictionary(

@@ -21,16 +21,21 @@ public actor SkillDatabase {
 
     public let mode: DatabaseMode
 
-    private lazy var _skills: [Skill] = (try? {
-        let decoder = YAMLDecoder()
+    private lazy var _skills: [Skill] = {
+        do {
+            let decoder = YAMLDecoder()
 
-        let url = ServerResourceManager.default.sourceURL
-            .appending(path: "db/\(mode.path)/skill_db.yml")
-        let data = try Data(contentsOf: url)
-        let skills = try decoder.decode(ListNode<Skill>.self, from: data).body
+            let url = ServerResourceManager.default.sourceURL
+                .appending(path: "db/\(mode.path)/skill_db.yml")
+            let data = try Data(contentsOf: url)
+            let skills = try decoder.decode(ListNode<Skill>.self, from: data).body
 
-        return skills
-    }()) ?? []
+            return skills
+        } catch {
+            logger.warning("\(error.localizedDescription)")
+            return []
+        }
+    }()
 
     private lazy var _skillsByID: [Int : Skill] = {
         Dictionary(

@@ -44,19 +44,19 @@ final class PacketDecoder {
                 let packet = try registration.type.init(from: decoder)
                 let result = PacketDecodingResult(packet: packet, packetType: packetType, packetHandler: registration.handlePacket)
                 results.append(result)
-                print("Decoded packet: \(packet)")
+                logger.info("Decoded packet: \(String(describing: packet))")
             } else if let entry = packetDatabase.entriesByPacketType[packetType] {
                 if entry.packetLength == -1 {
                     let packetType = try decoder.decode(Int16.self)
                     let packetLength = try decoder.decode(Int16.self)
                     _ = try decoder.decode([UInt8].self, count: Int(packetLength - 2 - 2))
-                    print("Unimplemented packet: 0x" + String(packetType, radix: 16) + ", length: \(packetLength)")
+                    logger.info("Unimplemented packet: 0x\(UInt16(packetType), format: .hex), length: \(packetLength)")
                 } else {
                     _ = try decoder.decode([UInt8].self, count: Int(entry.packetLength))
-                    print("Unimplemented packet: 0x" + String(entry.packetType, radix: 16) + ", length: \(entry.packetLength)")
+                    logger.info("Unimplemented packet: 0x\(UInt16(entry.packetType), format: .hex), length: \(entry.packetLength)")
                 }
             } else {
-                print("Unknown packet: 0x" + String(packetType, radix: 16) + ", remaining bytes: \(stream.length - stream.position)")
+                logger.info("Unknown packet: 0x\(UInt16(packetType), format: .hex), remaining bytes: \(stream.length - stream.position)")
                 break
             }
         }

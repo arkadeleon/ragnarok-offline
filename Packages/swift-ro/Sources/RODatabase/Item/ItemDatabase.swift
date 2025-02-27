@@ -21,38 +21,53 @@ public actor ItemDatabase {
 
     public let mode: DatabaseMode
 
-    private lazy var _usableItems: [Item] = (try? {
-        let decoder = YAMLDecoder()
+    private lazy var _usableItems: [Item] = {
+        do {
+            let decoder = YAMLDecoder()
 
-        let url = ServerResourceManager.default.sourceURL
-            .appending(path: "db/\(mode.path)/item_db_usable.yml")
-        let data = try Data(contentsOf: url)
-        let usableItems = try decoder.decode(ListNode<Item>.self, from: data).body
+            let url = ServerResourceManager.default.sourceURL
+                .appending(path: "db/\(mode.path)/item_db_usable.yml")
+            let data = try Data(contentsOf: url)
+            let usableItems = try decoder.decode(ListNode<Item>.self, from: data).body
 
-        return usableItems
-    }()) ?? []
+            return usableItems
+        } catch {
+            logger.warning("\(error.localizedDescription)")
+            return []
+        }
+    }()
 
-    private lazy var _equipItems: [Item] = (try? {
-        let decoder = YAMLDecoder()
+    private lazy var _equipItems: [Item] = {
+        do {
+            let decoder = YAMLDecoder()
 
-        let url = ServerResourceManager.default.sourceURL
-            .appending(path: "db/\(mode.path)/item_db_equip.yml")
-        let data = try Data(contentsOf: url)
-        let equipItems = try decoder.decode(ListNode<Item>.self, from: data).body
+            let url = ServerResourceManager.default.sourceURL
+                .appending(path: "db/\(mode.path)/item_db_equip.yml")
+            let data = try Data(contentsOf: url)
+            let equipItems = try decoder.decode(ListNode<Item>.self, from: data).body
 
-        return equipItems
-    }()) ?? []
+            return equipItems
+        } catch {
+            logger.warning("\(error.localizedDescription)")
+            return []
+        }
+    }()
 
-    private lazy var _etcItems: [Item] = (try? {
-        let decoder = YAMLDecoder()
+    private lazy var _etcItems: [Item] = {
+        do {
+            let decoder = YAMLDecoder()
 
-        let url = ServerResourceManager.default.sourceURL
-            .appending(path: "db/\(mode.path)/item_db_etc.yml")
-        let data = try Data(contentsOf: url)
-        let etcItems = try decoder.decode(ListNode<Item>.self, from: data).body
+            let url = ServerResourceManager.default.sourceURL
+                .appending(path: "db/\(mode.path)/item_db_etc.yml")
+            let data = try Data(contentsOf: url)
+            let etcItems = try decoder.decode(ListNode<Item>.self, from: data).body
 
-        return etcItems
-    }()) ?? []
+            return etcItems
+        } catch {
+            logger.warning("\(error.localizedDescription)")
+            return []
+        }
+    }()
 
     private lazy var _items: [Item] = {
         _usableItems + _equipItems + _etcItems

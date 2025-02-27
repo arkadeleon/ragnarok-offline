@@ -6,7 +6,6 @@
 //
 
 import XCTest
-import OSLog
 import rAthenaLogin
 import rAthenaChar
 import rAthenaMap
@@ -15,8 +14,6 @@ import RODatabase
 @testable import RONetwork
 
 final class ClientTests: XCTestCase {
-    let logger = Logger(subsystem: "RONetworkTests", category: "ClientTests")
-
     override func setUp() async throws {
         let url = ServerResourceManager.default.workingDirectoryURL
         try FileManager.default.removeItem(at: url)
@@ -33,7 +30,7 @@ final class ClientTests: XCTestCase {
                         .replacingOccurrences(of: "\n", with: "\r\n")
                 }
             for await message in messages {
-//                logger.info("\(message)")
+//                print("\(message)")
             }
         }
 
@@ -115,7 +112,7 @@ final class ClientTests: XCTestCase {
             XCTAssertEqual(event.position, [18, 26])
 
             // Load map.
-            let map = try await MapDatabase.renewal.map(forName: String(event.mapName.dropLast(4)))!
+            let map = await MapDatabase.renewal.map(forName: String(event.mapName.dropLast(4)))!
             let grid = map.grid()!
             XCTAssertEqual(grid.xs, 80)
             XCTAssertEqual(grid.ys, 80)

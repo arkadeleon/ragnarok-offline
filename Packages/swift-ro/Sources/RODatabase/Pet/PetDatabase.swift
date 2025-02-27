@@ -21,16 +21,21 @@ public actor PetDatabase {
 
     public let mode: DatabaseMode
 
-    private lazy var _pets: [Pet] = (try? {
-        let decoder = YAMLDecoder()
+    private lazy var _pets: [Pet] = {
+        do {
+            let decoder = YAMLDecoder()
 
-        let url = ServerResourceManager.default.sourceURL
-            .appending(path: "db/\(mode.path)/pet_db.yml")
-        let data = try Data(contentsOf: url)
-        let pets = try decoder.decode(ListNode<Pet>.self, from: data).body
+            let url = ServerResourceManager.default.sourceURL
+                .appending(path: "db/\(mode.path)/pet_db.yml")
+            let data = try Data(contentsOf: url)
+            let pets = try decoder.decode(ListNode<Pet>.self, from: data).body
 
-        return pets
-    }()) ?? []
+            return pets
+        } catch {
+            logger.warning("\(error.localizedDescription)")
+            return []
+        }
+    }()
 
     private lazy var _petsByAegisName: [String : Pet] = {
         Dictionary(

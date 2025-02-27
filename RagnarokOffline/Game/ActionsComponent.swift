@@ -16,14 +16,8 @@ extension Entity {
     static func load(act: ACT, spr: SPR) async throws -> Entity {
         let entity = Entity()
 
-        let start = Date()
-
         let actionsComponent = await ActionsComponent(act: act, spr: spr)
         entity.components.set(actionsComponent)
-
-        let end = Date()
-        print("Actions:")
-        print(end.timeIntervalSince(start))
 
         if !actionsComponent.actions.isEmpty {
             entity.runAction(0)
@@ -223,7 +217,7 @@ struct ActionsComponent: Component {
 //                let drawableQueue = try TextureResource.DrawableQueue(descriptor)
 //                destinationTexture.replace(withDrawables: drawableQueue)
 //            } catch {
-//                print(error)
+//                logger.warning("\(error.localizedDescription)")
 //            }
 //        }
 //    }

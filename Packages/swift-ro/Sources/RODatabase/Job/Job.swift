@@ -71,7 +71,7 @@ public struct Job: Equatable, Hashable, Identifiable, Sendable {
               let baseHpPointsStats = basePointsStatsList.first(where: { $0.jobs.contains(jobID) && !$0.baseHp.isEmpty }),
               let baseSpPointsStats = basePointsStatsList.first(where: { $0.jobs.contains(jobID) && !$0.baseSp.isEmpty })
         else {
-            print("Failed to init Job for \(jobID.stringValue)")
+            logger.info("Failed to init Job for \(jobID.stringValue)")
             return nil
         }
 

@@ -46,7 +46,7 @@ public actor SkillInfoTable {
             end
             """)
         } catch {
-            print(error)
+            logger.warning("\(error.localizedDescription)")
         }
 
         return context

@@ -22,16 +22,21 @@ public actor SkillTreeDatabase {
 
     public let mode: DatabaseMode
 
-    private lazy var _skillTrees: [SkillTree] = (try? {
-        let decoder = YAMLDecoder()
+    private lazy var _skillTrees: [SkillTree] = {
+        do {
+            let decoder = YAMLDecoder()
 
-        let url = ServerResourceManager.default.sourceURL
-            .appending(path: "db/\(mode.path)/skill_tree.yml")
-        let data = try Data(contentsOf: url)
-        let skillTrees = try decoder.decode(ListNode<SkillTree>.self, from: data).body
+            let url = ServerResourceManager.default.sourceURL
+                .appending(path: "db/\(mode.path)/skill_tree.yml")
+            let data = try Data(contentsOf: url)
+            let skillTrees = try decoder.decode(ListNode<SkillTree>.self, from: data).body
 
-        return skillTrees
-    }()) ?? []
+            return skillTrees
+        } catch {
+            logger.warning("\(error.localizedDescription)")
+            return []
+        }
+    }()
 
     private lazy var _skillTreesByJobID: [JobID : SkillTree] = {
         Dictionary(

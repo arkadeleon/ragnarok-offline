@@ -40,7 +40,7 @@ public actor ItemInfoTable {
             end
             """)
         } catch {
-            print(error)
+            logger.warning("\(error.localizedDescription)")
         }
 
         return context
@@ -69,7 +69,7 @@ public actor ItemInfoTable {
                 end
                 """)
             } catch {
-                print(error)
+                logger.warning("\(error.localizedDescription)")
             }
 
             return .lua(context)

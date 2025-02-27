@@ -36,7 +36,7 @@ final public class SpriteResolver: Sendable {
             shadowSprite.semantic = .shadow
             sprites.append(shadowSprite)
         } catch {
-            print(error)
+            logger.warning("\(error.localizedDescription)")
         }
 
         // Body
@@ -53,7 +53,7 @@ final public class SpriteResolver: Sendable {
                 do {
                     headPalette = try await resourceManager.palette(at: headPalettePath)
                 } catch {
-                    print(error)
+                    logger.warning("\(error.localizedDescription)")
                 }
             }
 
@@ -64,7 +64,7 @@ final public class SpriteResolver: Sendable {
                 headSprite.palette = headPalette
                 sprites.append(headSprite)
             } catch {
-                print(error)
+                logger.warning("\(error.localizedDescription)")
             }
         }
 
@@ -77,7 +77,7 @@ final public class SpriteResolver: Sendable {
                 weaponSprite.orderBySemantic = 0
                 sprites.append(weaponSprite)
             } catch {
-                print(error)
+                logger.warning("\(error.localizedDescription)")
             }
         }
 
@@ -90,7 +90,7 @@ final public class SpriteResolver: Sendable {
                 weaponSlashSprite.orderBySemantic = 1
                 sprites.append(weaponSlashSprite)
             } catch {
-                print(error)
+                logger.warning("\(error.localizedDescription)")
             }
         }
 
@@ -102,7 +102,7 @@ final public class SpriteResolver: Sendable {
                 shieldSprite.semantic = .shield
                 sprites.append(shieldSprite)
             } catch {
-                print(error)
+                logger.warning("\(error.localizedDescription)")
             }
         }
 
@@ -122,7 +122,7 @@ final public class SpriteResolver: Sendable {
 
                 sprites.append(headgearSprite)
             } catch {
-                print(error)
+                logger.warning("\(error.localizedDescription)")
             }
         }
 
@@ -141,7 +141,7 @@ final public class SpriteResolver: Sendable {
             shadowSprite.semantic = .shadow
             sprites.append(shadowSprite)
         } catch {
-            print(error)
+            logger.warning("\(error.localizedDescription)")
         }
 
         if let bodySpritePath = await ResourcePath.nonPlayerSprite(jobID: jobID) {
@@ -149,7 +149,7 @@ final public class SpriteResolver: Sendable {
                 let bodySprite = try await resourceManager.sprite(at: bodySpritePath)
                 sprites.append(bodySprite)
             } catch {
-                print(error)
+                logger.warning("\(error.localizedDescription)")
             }
         }
 
@@ -168,7 +168,7 @@ final public class SpriteResolver: Sendable {
                 do {
                     bodySprite = try await resourceManager.sprite(at: bodySpritePath)
                 } catch {
-                    print(error)
+                    logger.warning("\(error.localizedDescription)")
                 }
             }
 
@@ -177,7 +177,7 @@ final public class SpriteResolver: Sendable {
                 do {
                     bodyPalette = try await resourceManager.palette(at: bodyPalettePath)
                 } catch {
-                    print(error)
+                    logger.warning("\(error.localizedDescription)")
                 }
             }
         } else {
@@ -185,7 +185,7 @@ final public class SpriteResolver: Sendable {
                 do {
                     bodySprite = try await resourceManager.sprite(at: bodySpritePath)
                 } catch {
-                    print(error)
+                    logger.warning("\(error.localizedDescription)")
                 }
             }
 
@@ -194,7 +194,7 @@ final public class SpriteResolver: Sendable {
                 do {
                     bodyPalette = try await resourceManager.palette(at: bodyPalettePath)
                 } catch {
-                    print(error)
+                    logger.warning("\(error.localizedDescription)")
                 }
             }
         }

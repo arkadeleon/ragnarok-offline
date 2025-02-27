@@ -49,7 +49,7 @@ final public class SpriteResource: @unchecked Sendable {
 }
 
 extension SpriteResource {
-    struct RenderNode {
+    struct RenderNode: Sendable {
         static let null = RenderNode()
 
         var image: CGImage?

@@ -12,12 +12,13 @@ public class GRFReference {
     public let url: URL
 
     private lazy var grf = {
-        let start = Date()
-        print("Start loading GRF: \(url)")
+        let beginTime = CFAbsoluteTimeGetCurrent()
+        logger.info("Start loading GRF: \(self.url)")
 
         let grf = try? GRF(url: url)
 
-        print("Finish loading GRF (\(Date().timeIntervalSince(start))")
+        let endTime = CFAbsoluteTimeGetCurrent()
+        logger.info("Finish loading GRF (\(endTime - beginTime)s)")
 
         return grf
     }()
@@ -27,8 +28,8 @@ public class GRFReference {
             return []
         }
 
-        let start = Date()
-        print("Start loading directories: \(url)")
+        let beginTime = CFAbsoluteTimeGetCurrent()
+        logger.info("Start loading directories: \(self.url)")
 
         var directories = Set(grf.table.entries.map({ $0.path.parent }))
         for directory in directories {
@@ -39,7 +40,8 @@ public class GRFReference {
             } while !parent.string.isEmpty
         }
 
-        print("Finish loading directories (\(Date().timeIntervalSince(start))")
+        let endTime = CFAbsoluteTimeGetCurrent()
+        logger.info("Finish loading directories (\(endTime - beginTime)s)")
 
         return directories
     }()
@@ -49,12 +51,16 @@ public class GRFReference {
             return [:]
         }
 
-        let start = Date()
-        print("Start loading entries: \(url)")
+        let beginTime = CFAbsoluteTimeGetCurrent()
+        logger.info("Start loading entries: \(self.url)")
 
-        let entries = Dictionary(grf.table.entries.map({ ($0.path.string.uppercased(), $0) }), uniquingKeysWith: { (first, _) in first })
+        let entries = Dictionary(
+            grf.table.entries.map({ ($0.path.string.uppercased(), $0) }),
+            uniquingKeysWith: { (first, _) in first }
+        )
 
-        print("Finish loading entries (\(Date().timeIntervalSince(start))")
+        let endTime = CFAbsoluteTimeGetCurrent()
+        logger.info("Finish loading entries (\(endTime - beginTime)s)")
 
         return entries
     }()
@@ -68,8 +74,8 @@ public class GRFReference {
             return ([], [])
         }
 
-        let start = Date()
-        print("Start loading contents of directory: \(directory.string)")
+        let beginTime = CFAbsoluteTimeGetCurrent()
+        logger.info("Start loading contents of directory: \(directory.string)")
 
         let directories = directories
             .filter { $0.parent == directory }
@@ -79,7 +85,8 @@ public class GRFReference {
             .filter { $0.path.parent == directory }
             .sorted(using: KeyPathComparator(\.path.string))
 
-        print("Finish loading contents of directory (\(Date().timeIntervalSince(start))")
+        let endTime = CFAbsoluteTimeGetCurrent()
+        logger.info("Finish loading contents of directory (\(endTime - beginTime)s)")
 
         return (directories, entries)
     }

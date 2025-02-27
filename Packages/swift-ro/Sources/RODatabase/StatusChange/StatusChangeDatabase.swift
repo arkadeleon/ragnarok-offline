@@ -22,16 +22,21 @@ public actor StatusChangeDatabase {
 
     public let mode: DatabaseMode
 
-    private lazy var _statusChanges: [StatusChange] = (try? {
-        let decoder = YAMLDecoder()
+    private lazy var _statusChanges: [StatusChange] = {
+        do {
+            let decoder = YAMLDecoder()
 
-        let url = ServerResourceManager.default.sourceURL
-            .appending(path: "db/\(mode.path)/status.yml")
-        let data = try Data(contentsOf: url)
-        let statusChanges = try decoder.decode(ListNode<StatusChange>.self, from: data).body
+            let url = ServerResourceManager.default.sourceURL
+                .appending(path: "db/\(mode.path)/status.yml")
+            let data = try Data(contentsOf: url)
+            let statusChanges = try decoder.decode(ListNode<StatusChange>.self, from: data).body
 
-        return statusChanges
-    }()) ?? []
+            return statusChanges
+        } catch {
+            logger.warning("\(error.localizedDescription)")
+            return []
+        }
+    }()
 
     private lazy var _statusChangesByID: [StatusChangeID : StatusChange] = {
         Dictionary(

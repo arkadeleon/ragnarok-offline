@@ -33,7 +33,7 @@ final class Client {
 
     func connect() {
         connection.stateUpdateHandler = { state in
-            print(state)
+            logger.info("\(String(describing: state))")
         }
 
         let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client")
@@ -70,7 +70,7 @@ final class Client {
                 }
             }))
 
-            print("Sent packet: \(packet)")
+            logger.info("Sent packet: \(String(describing: packet))")
         } catch {
             errorHandler?(error)
         }
@@ -83,7 +83,7 @@ final class Client {
             }
 
             if let content {
-                print("Received \(content.count) bytes")
+                logger.info("Received \(content.count) bytes")
                 if content.count >= count {
                     let data = content[0..<count]
                     completion(data)
@@ -96,7 +96,7 @@ final class Client {
                             packetContinuation.yield(result)
                         }
                     } catch {
-                        print(error)
+                        logger.warning("\(error.localizedDescription)")
                         self.errorHandler?(error)
                     }
                 }
@@ -117,7 +117,7 @@ final class Client {
             }
 
             if let content {
-                print("Received \(content.count) bytes")
+                logger.info("Received \(content.count) bytes")
                 do {
                     let decoder = PacketDecoder(packetRegistrations: packetRegistrations)
                     let results = try decoder.decode(from: content)
@@ -125,7 +125,7 @@ final class Client {
                         packetContinuation.yield(result)
                     }
                 } catch {
-                    print(error)
+                    logger.warning("\(error.localizedDescription)")
                     self.errorHandler?(error)
                 }
             }

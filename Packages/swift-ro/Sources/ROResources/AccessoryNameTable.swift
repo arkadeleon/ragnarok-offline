@@ -30,7 +30,7 @@ public actor AccessoryNameTable {
                 try context.load(data)
             }
         } catch {
-            print(error)
+            logger.warning("\(error.localizedDescription)")
         }
 
         return context
