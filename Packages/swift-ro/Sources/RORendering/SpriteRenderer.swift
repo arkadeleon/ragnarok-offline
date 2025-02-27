@@ -129,6 +129,7 @@ public enum HeadDirection: Int, CaseIterable, CustomStringConvertible, Sendable 
 
 final public class SpriteRenderer: Sendable {
     public let sprites: [SpriteResource]
+    public let scale: CGFloat = 2
 
     public init(sprites: [SpriteResource]) {
         self.sprites = sprites
@@ -143,7 +144,7 @@ final public class SpriteRenderer: Sendable {
         for sprite in sprites {
             let actionIndex = (sprite.semantic == .shadow ? 0 : actionIndex)
 
-            let actionNode = sprite.actionNode(actionIndex: actionIndex, headDirection: headDirection)
+            let actionNode = sprite.actionNode(actionIndex: actionIndex, headDirection: headDirection, scale: scale)
             actionNodes.append((sprite, actionNode))
 
             bounds = bounds.union(actionNode.bounds)

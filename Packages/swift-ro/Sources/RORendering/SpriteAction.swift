@@ -15,8 +15,8 @@ enum SpriteActionError: Error {
 
 final public class SpriteAction: Sendable {
     public let texture: TextureResource?
-    public let frameWidth: Float
-    public let frameHeight: Float
+    public let frameWidth: Int
+    public let frameHeight: Int
     public let frameCount: Int
     public let frameInterval: Float
 
@@ -28,8 +28,9 @@ final public class SpriteAction: Sendable {
             throw SpriteActionError.cannotRenderAction
         }
 
-        let frameWidth = images[0].width
-        let frameHeight = images[0].height
+        let scale = Int(spriteRenderer.scale)
+        let frameWidth = images[0].width / scale
+        let frameHeight = images[0].height / scale
         let frameCount = images.count
 
         let size = CGSize(width: frameWidth * frameCount, height: frameHeight)
@@ -48,8 +49,8 @@ final public class SpriteAction: Sendable {
             texture = nil
         }
 
-        self.frameWidth = Float(frameWidth)
-        self.frameHeight = Float(frameHeight)
+        self.frameWidth = frameWidth
+        self.frameHeight = frameHeight
         self.frameCount = frameCount
         frameInterval = 1 / 12
     }

@@ -51,7 +51,9 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_ping`
         client.registerPacket(PACKET_ZC_PING_LIVE.self, for: HEADER_ZC_PING_LIVE) { [unowned self] packet in
-            let packet = PACKET_CZ_PING_LIVE()
+            var packet = PACKET_CZ_PING_LIVE()
+            packet.packetType = HEADER_CZ_PING_LIVE
+
             self.client.sendPacket(packet)
         }
 

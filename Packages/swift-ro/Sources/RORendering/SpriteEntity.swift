@@ -35,7 +35,10 @@ public class SpriteEntity: Entity {
         let action = spriteComponent.actions[actionIndex]
 
         // Create mesh.
-        let mesh = MeshResource.generatePlane(width: action.frameWidth / 2 / 32, height: action.frameHeight / 2 / 32)
+        let mesh = MeshResource.generatePlane(
+            width: Float(action.frameWidth) / 32,
+            height: Float(action.frameHeight) / 32
+        )
 
         // Create material.
         var material = PhysicallyBasedMaterial()

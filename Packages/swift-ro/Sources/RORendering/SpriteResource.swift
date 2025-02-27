@@ -53,6 +53,7 @@ extension SpriteResource {
         static let null = RenderNode()
 
         var image: CGImage?
+        var scale: CGFloat
         var color: RGBAColor?
         var frame: CGRect
         var bounds: CGRect
@@ -60,6 +61,7 @@ extension SpriteResource {
         var children: [RenderNode]
 
         init() {
+            scale = 1
             frame = .null
             bounds = .null
             transform = .identity
@@ -67,7 +69,7 @@ extension SpriteResource {
         }
     }
 
-    func actionNode(actionIndex: Int, headDirection: HeadDirection) -> RenderNode {
+    func actionNode(actionIndex: Int, headDirection: HeadDirection, scale: CGFloat) -> RenderNode {
         guard let action = action(at: actionIndex) else {
             return .null
         }
@@ -93,7 +95,7 @@ extension SpriteResource {
         var actionNode = RenderNode()
 
         for frameIndex in startFrameIndex..<endFrameIndex {
-            let frameNode = frameNode(actionIndex: actionIndex, frameIndex: frameIndex)
+            let frameNode = frameNode(actionIndex: actionIndex, frameIndex: frameIndex, scale: scale)
             actionNode.children.append(frameNode)
             actionNode.bounds = actionNode.bounds.union(frameNode.bounds)
         }
@@ -101,7 +103,7 @@ extension SpriteResource {
         return actionNode
     }
 
-    func frameNode(actionIndex: Int, frameIndex: Int) -> RenderNode {
+    func frameNode(actionIndex: Int, frameIndex: Int, scale: CGFloat) -> RenderNode {
         guard let action = action(at: actionIndex),
               let frame = frame(at: [actionIndex, frameIndex]) else {
             return .null
@@ -132,7 +134,7 @@ extension SpriteResource {
         var frameNode = RenderNode()
 
         for layer in frame.layers {
-            let layerNode = layerNode(layer: layer, parentOffset: parentOffset)
+            let layerNode = layerNode(layer: layer, parentOffset: parentOffset, scale: scale)
             frameNode.children.append(layerNode)
             frameNode.bounds = frameNode.bounds.union(layerNode.bounds)
         }
@@ -140,25 +142,26 @@ extension SpriteResource {
         return frameNode
     }
 
-    func layerNode(layer: ACT.Layer, parentOffset: SIMD2<Int32>) -> RenderNode {
+    func layerNode(layer: ACT.Layer, parentOffset: SIMD2<Int32>, scale: CGFloat) -> RenderNode {
         guard let image = image(for: layer) else {
             return .null
         }
 
         var layerNode = RenderNode()
         layerNode.image = image
+        layerNode.scale = scale
         layerNode.color = layer.color
 
-        let width = CGFloat(image.width)
-        let height = CGFloat(image.height)
-        let frame = CGRect(x: -width, y: -height, width: width * 2, height: height * 2)
+        let width = CGFloat(image.width) * scale
+        let height = CGFloat(image.height) * scale
+        let frame = CGRect(x: -width / 2, y: -height / 2, width: width, height: height)
         layerNode.frame = frame
 
         var transform = CGAffineTransformIdentity
         transform = CGAffineTransformTranslate(
             transform,
-            CGFloat(layer.offset.x + parentOffset.x) * 2,
-            CGFloat(layer.offset.y + parentOffset.y) * 2
+            CGFloat(layer.offset.x + parentOffset.x) * scale,
+            CGFloat(layer.offset.y + parentOffset.y) * scale
         )
         transform = CGAffineTransformRotate(transform, CGFloat(layer.rotationAngle) / 180 * .pi)
         if layer.isMirrored == 0 {
