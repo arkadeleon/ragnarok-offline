@@ -16,9 +16,7 @@ enum ResourceError: Error {
 }
 
 public actor ResourceManager {
-    public static let `default` = ResourceManager(
-        baseURL: try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-    )
+    public static let `default` = ResourceManager(baseURL: .documentsDirectory)
 
     nonisolated public let baseURL: URL
 
