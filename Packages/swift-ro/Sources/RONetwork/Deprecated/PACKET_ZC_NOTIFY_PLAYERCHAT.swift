@@ -7,10 +7,13 @@
 
 import ROCore
 
+public let HEADER_ZC_NOTIFY_PLAYERCHAT: Int16 = 0x8e
+
 /// See `clif_displaymessage`
-public struct PACKET_ZC_NOTIFY_PLAYERCHAT: DecodablePacket {
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
+public struct _PACKET_ZC_NOTIFY_PLAYERCHAT: DecodablePacket {
     public static var packetType: Int16 {
-        0x8e
+        HEADER_ZC_NOTIFY_PLAYERCHAT
     }
 
     public var packetLength: Int16 {

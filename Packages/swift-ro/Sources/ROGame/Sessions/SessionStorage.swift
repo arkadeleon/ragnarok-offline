@@ -6,6 +6,7 @@
 //
 
 import ROGenerated
+import RONetwork
 
 final public actor SessionStorage {
     public let langType: UInt16 = 1
@@ -56,10 +57,10 @@ final public actor SessionStorage {
         self.charID = charID
     }
 
-    func updateMapServer(with packet: PACKET_HC_NOTIFY_ZONESVR) {
-        self.charID = packet.charID
-        self.mapName = packet.mapName
-        self.mapServer = packet.mapServer
+    func updateMapServer(with mapName: String, mapServer: MapServerInfo, charID: UInt32) {
+        self.charID = charID
+        self.mapName = mapName
+        self.mapServer = mapServer
 
         player = Player()
     }

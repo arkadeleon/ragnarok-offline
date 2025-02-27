@@ -6,6 +6,7 @@
 //
 
 import ROGenerated
+import RONetwork
 
 extension MapSession {
     func registerPlayerPackets() {
@@ -22,7 +23,7 @@ extension MapSession {
         }
 
         // See `clif_displaymessage`
-        client.registerPacket(PACKET_ZC_NOTIFY_PLAYERCHAT.self, for: PACKET_ZC_NOTIFY_PLAYERCHAT.packetType) { [unowned self] packet in
+        client.registerPacket(PACKET_ZC_NOTIFY_PLAYERCHAT.self, for: HEADER_ZC_NOTIFY_PLAYERCHAT) { [unowned self] packet in
             let event = PlayerEvents.MessageReceived(packet: packet)
             self.postEvent(event)
         }

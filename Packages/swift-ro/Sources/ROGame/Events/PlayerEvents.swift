@@ -17,7 +17,7 @@ public enum PlayerEvents {
         public let message: String
 
         init(packet: PACKET_ZC_NOTIFY_PLAYERCHAT) {
-            self.message = packet.message
+            self.message = packet.Message
         }
     }
 

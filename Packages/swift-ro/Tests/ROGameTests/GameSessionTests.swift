@@ -1,5 +1,5 @@
 //
-//  ClientTests.swift
+//  GameSessionTests.swift
 //  RagnarokOfflineTests
 //
 //  Created by Leon Li on 2024/8/8.
@@ -11,9 +11,10 @@ import rAthenaChar
 import rAthenaMap
 import rAthenaResources
 import RODatabase
-@testable import RONetwork
+import RONetwork
+@testable import ROGame
 
-final class ClientTests: XCTestCase {
+final class GameSessionTests: XCTestCase {
     override func setUp() async throws {
         let url = ServerResourceManager.default.workingDirectoryURL
         try FileManager.default.removeItem(at: url)

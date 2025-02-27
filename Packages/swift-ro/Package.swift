@@ -93,9 +93,24 @@ let package = Package(
                 "ROCore",
                 "ROFileFormats",
                 "ROGenerated",
+                "RONetwork",
                 "RORenderers",
                 "RORendering",
                 "ROResources",
+            ]),
+        .testTarget(
+            name: "ROGameTests",
+            dependencies: [
+                .product(name: "rAthenaCommon", package: "swift-rathena"),
+                .product(name: "rAthenaLogin", package: "swift-rathena"),
+                .product(name: "rAthenaChar", package: "swift-rathena"),
+                .product(name: "rAthenaMap", package: "swift-rathena"),
+                .product(name: "rAthenaResources", package: "swift-rathena"),
+                "RODatabase",
+                "ROGame",
+            ],
+            swiftSettings: [
+                .interoperabilityMode(.Cxx),
             ]),
         .target(
             name: "ROGenerated",
@@ -107,7 +122,6 @@ let package = Package(
             dependencies: [
                 "ROCore",
                 "ROGenerated",
-                "ROResources",
             ],
             swiftSettings: [
                 .swiftLanguageMode(.v5),
@@ -115,17 +129,7 @@ let package = Package(
         .testTarget(
             name: "RONetworkTests",
             dependencies: [
-                .product(name: "rAthenaCommon", package: "swift-rathena"),
-                .product(name: "rAthenaLogin", package: "swift-rathena"),
-                .product(name: "rAthenaChar", package: "swift-rathena"),
-                .product(name: "rAthenaMap", package: "swift-rathena"),
-                .product(name: "rAthenaResources", package: "swift-rathena"),
-                "RODatabase",
                 "RONetwork",
-            ],
-            swiftSettings: [
-                .interoperabilityMode(.Cxx),
-                .swiftLanguageMode(.v5),
             ]),
         .target(
             name: "RORenderers",

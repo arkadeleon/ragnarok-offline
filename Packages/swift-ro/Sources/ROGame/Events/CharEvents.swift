@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/9/25.
 //
 
+import RONetwork
+
 public enum CharEvents {
     public struct MakeAccepted: Event {
         public let char: CharInfo

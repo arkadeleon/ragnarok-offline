@@ -8,8 +8,9 @@
 import Combine
 import Foundation
 import ROGenerated
+import RONetwork
 
-final public class CharSession: SessionProtocol {
+final public class CharSession: SessionProtocol, @unchecked Sendable {
     public let storage: SessionStorage
 
     let client: Client
@@ -74,7 +75,7 @@ final public class CharSession: SessionProtocol {
 
         // 0x71, 0xac5
         client.registerPacket(PACKET_HC_NOTIFY_ZONESVR.self, for: PACKET_HC_NOTIFY_ZONESVR.packetType) { [unowned self] packet in
-            await self.storage.updateMapServer(with: packet)
+            await self.storage.updateMapServer(with: packet.mapName, mapServer: packet.mapServer, charID: packet.charID)
 
             let event = CharServerEvents.NotifyMapServer(packet: packet)
             self.postEvent(event)

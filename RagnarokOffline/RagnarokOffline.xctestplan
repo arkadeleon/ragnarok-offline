@@ -15,8 +15,8 @@
     {
       "target" : {
         "containerPath" : "container:Packages\/swift-ro",
-        "identifier" : "ROResourcesTests",
-        "name" : "ROResourcesTests"
+        "identifier" : "ROFileFormatsTests",
+        "name" : "ROFileFormatsTests"
       }
     },
     {
@@ -29,8 +29,8 @@
     {
       "target" : {
         "containerPath" : "container:Packages\/swift-ro",
-        "identifier" : "ROFileFormatsTests",
-        "name" : "ROFileFormatsTests"
+        "identifier" : "ROGameTests",
+        "name" : "ROGameTests"
       }
     },
     {
@@ -38,6 +38,13 @@
         "containerPath" : "container:Packages\/swift-ro",
         "identifier" : "RONetworkTests",
         "name" : "RONetworkTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/swift-ro",
+        "identifier" : "ROResourcesTests",
+        "name" : "ROResourcesTests"
       }
     },
     {

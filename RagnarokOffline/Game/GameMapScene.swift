@@ -6,8 +6,8 @@
 //
 
 import RODatabase
+import ROGame
 import ROGenerated
-import RONetwork
 import SpriteKit
 
 class GameMapScene: SKScene {

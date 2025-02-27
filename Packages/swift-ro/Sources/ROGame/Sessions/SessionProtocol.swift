@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/12/11.
 //
 
-import Combine
+@preconcurrency import Combine
 import Dispatch
 
 public protocol SessionProtocol {

@@ -6,6 +6,7 @@
 //
 
 import ROGenerated
+import RONetwork
 
 extension MapSession {
     func registerNPCPackets() {

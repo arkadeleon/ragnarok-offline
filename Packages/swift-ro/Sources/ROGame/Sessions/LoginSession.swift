@@ -8,8 +8,9 @@
 import Combine
 import Foundation
 import ROGenerated
+import RONetwork
 
-final public class LoginSession: SessionProtocol {
+final public class LoginSession: SessionProtocol, @unchecked Sendable {
     public let storage: SessionStorage
 
     let client: Client

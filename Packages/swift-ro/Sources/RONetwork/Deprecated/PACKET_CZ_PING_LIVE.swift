@@ -8,7 +8,8 @@
 import ROCore
 
 /// See `clif_ping`
-public struct PACKET_CZ_PING_LIVE: EncodablePacket {
+@available(*, deprecated, message: "Use `ROGenerated` instead.")
+public struct _PACKET_CZ_PING_LIVE: EncodablePacket {
     public var packetType: Int16 {
         0xb1c
     }

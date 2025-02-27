@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/12/19.
 //
 
-import RONetwork
+import ROGame
 import SwiftUI
 
 struct PlayerStatusOverlayView: View {

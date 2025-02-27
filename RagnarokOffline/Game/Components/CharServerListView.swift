@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/9/10.
 //
 
-import RONetwork
+import ROGame
 import SwiftUI
 
 struct CharServerListView: View {
