@@ -12,7 +12,7 @@ final class StatusChangeDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
         let database = StatusChangeDatabase.prerenewal
 
-        let stone = try await database.statusChange(forID: .stone)!
+        let stone = await database.statusChange(forID: .stone)!
         XCTAssertEqual(stone.status, .stone)
         XCTAssertEqual(stone.icon, .efst_blank)
         XCTAssertEqual(stone.durationLookup, "NPC_PETRIFYATTACK")
@@ -28,7 +28,7 @@ final class StatusChangeDatabaseTests: XCTestCase {
     func testRenewal() async throws {
         let database = StatusChangeDatabase.renewal
 
-        let stone = try await database.statusChange(forID: .stone)!
+        let stone = await database.statusChange(forID: .stone)!
         XCTAssertEqual(stone.status, .stone)
         XCTAssertEqual(stone.icon, .efst_blank)
         XCTAssertEqual(stone.durationLookup, "NPC_PETRIFYATTACK")

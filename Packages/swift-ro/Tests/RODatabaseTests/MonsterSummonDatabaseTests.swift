@@ -12,7 +12,7 @@ final class MonsterSummonDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
         let database = MonsterSummonDatabase.prerenewal
 
-        let bloodyDeadBranch = try await database.monsterSummon(forGroup: "Bloody_Dead_Branch")!
+        let bloodyDeadBranch = await database.monsterSummon(forGroup: "Bloody_Dead_Branch")!
         XCTAssertEqual(bloodyDeadBranch.default, "BAPHOMET")
         XCTAssertEqual(bloodyDeadBranch.summon.count, 44)
     }
@@ -20,7 +20,7 @@ final class MonsterSummonDatabaseTests: XCTestCase {
     func testRenewal() async throws {
         let database = MonsterSummonDatabase.renewal
 
-        let bloodyDeadBranch = try await database.monsterSummon(forGroup: "BLOODY_DEAD_BRANCH")!
+        let bloodyDeadBranch = await database.monsterSummon(forGroup: "BLOODY_DEAD_BRANCH")!
         XCTAssertEqual(bloodyDeadBranch.default, "BAPHOMET")
         XCTAssertEqual(bloodyDeadBranch.summon.count, 46)
     }

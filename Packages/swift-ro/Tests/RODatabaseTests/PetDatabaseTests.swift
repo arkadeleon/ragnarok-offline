@@ -12,7 +12,7 @@ final class PetDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
         let database = PetDatabase.prerenewal
 
-        let poring = try await database.pet(forAegisName: "PORING")!
+        let poring = await database.pet(forAegisName: "PORING")!
         XCTAssertEqual(poring.monster, "PORING")
         XCTAssertEqual(poring.tameItem, "Unripe_Apple")
         XCTAssertEqual(poring.eggItem, "Poring_Egg")
@@ -27,7 +27,7 @@ final class PetDatabaseTests: XCTestCase {
     func testRenewal() async throws {
         let database = PetDatabase.renewal
 
-        let poring = try await database.pet(forAegisName: "PORING")!
+        let poring = await database.pet(forAegisName: "PORING")!
         XCTAssertEqual(poring.monster, "PORING")
         XCTAssertEqual(poring.tameItem, "Unripe_Apple")
         XCTAssertEqual(poring.eggItem, "Poring_Egg")
