@@ -81,7 +81,7 @@ public actor NPCDatabase {
 
             let w1 = words[0]
             let w2 = words[1]
-            let url = ServerResourceManager.default.workingDirectoryURL
+            let url = ServerResourceManager.default.sourceURL
                 .appending(path: w2)
 
             switch w1 {

@@ -17,7 +17,9 @@ import RONetwork
 final class GameSessionTests: XCTestCase {
     override func setUp() async throws {
         let url = ServerResourceManager.default.workingDirectoryURL
-        try FileManager.default.removeItem(at: url)
+        if FileManager.default.fileExists(atPath: url.path()) {
+            try FileManager.default.removeItem(at: url)
+        }
 
         try ServerResourceManager.default.prepareWorkingDirectory()
 
