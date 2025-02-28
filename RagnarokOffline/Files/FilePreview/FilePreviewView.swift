@@ -25,7 +25,7 @@ struct FilePreviewView: View {
 
     var body: some View {
         ZStack {
-            switch file.file.info.type {
+            switch file.file.type {
             case .text, .lua, .lub:
                 TextFilePreviewView(file: file)
             case .image, .ebm, .pal:

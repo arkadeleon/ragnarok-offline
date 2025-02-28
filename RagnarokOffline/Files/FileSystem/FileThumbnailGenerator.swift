@@ -5,18 +5,18 @@
 //  Created by Leon Li on 2023/4/23.
 //
 
-import ImageIO
-import Foundation
 import DataCompression
+import Foundation
+import ImageIO
 import ROCore
 import ROFileFormats
 
 class FileThumbnailGenerator {
     func generateThumbnail(for request: FileThumbnailRequest) async throws -> FileThumbnail? {
-        switch request.file.info.type {
+        switch request.file.type {
         case .image, .ebm:
             let data: Data?
-            if request.file.info.type == .ebm {
+            if request.file.type == .ebm {
                 data = request.file.contents()?.unzip()
             } else {
                 data = request.file.contents()

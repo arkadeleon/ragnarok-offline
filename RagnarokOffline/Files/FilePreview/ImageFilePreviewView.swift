@@ -24,7 +24,7 @@ struct ImageFilePreviewView: View {
             throw FilePreviewError.invalidImageFile
         }
 
-        switch file.file.info.type {
+        switch file.file.type {
         case .ebm:
             guard let decompressedData = data.unzip() else {
                 throw FilePreviewError.invalidImageFile

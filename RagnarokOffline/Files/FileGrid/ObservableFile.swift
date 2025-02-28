@@ -27,7 +27,7 @@ class ObservableFile {
 
 extension ObservableFile {
     var iconName: String {
-        switch file.info.type {
+        switch file.type {
         case .directory:
             "folder.fill"
         case .text, .lua, .lub:
@@ -60,7 +60,7 @@ extension ObservableFile {
 
 extension ObservableFile {
     var canPreview: Bool {
-        switch file.info.type {
+        switch file.type {
         case .text, .lua, .lub:
             true
         case .image, .ebm, .pal:
@@ -113,7 +113,7 @@ extension ObservableFile {
 
 extension ObservableFile {
     var hasReferences: Bool {
-        switch file.info.type {
+        switch file.type {
         case .gnd, .rsw:
             true
         default:
@@ -122,7 +122,7 @@ extension ObservableFile {
     }
 
     func referenceFiles() throws -> [ObservableFile] {
-        switch file.info.type {
+        switch file.type {
         case .gnd:
             guard case .grfEntry(let grf, _) = file, let data = file.contents() else {
                 return []

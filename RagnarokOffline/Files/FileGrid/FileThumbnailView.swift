@@ -25,7 +25,7 @@ struct FileThumbnailView: View {
                         RoundedRectangle(cornerRadius: 4)
                             .stroke(Color.secondary, lineWidth: 1)
                     }
-            } else if file.file.info.type == .directory {
+            } else if file.file.type == .directory {
                 Image(systemName: file.iconName)
                     .font(.system(size: 50))
                     .symbolRenderingMode(.multicolor)

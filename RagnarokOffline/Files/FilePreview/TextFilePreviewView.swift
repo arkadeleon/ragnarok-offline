@@ -22,7 +22,7 @@ struct TextFilePreviewView: View {
             throw FilePreviewError.invalidTextFile
         }
 
-        switch file.file.info.type {
+        switch file.file.type {
         case .lub:
             let decompiler = LuaDecompiler()
             if let decompiledData = decompiler.decompileData(data) {
