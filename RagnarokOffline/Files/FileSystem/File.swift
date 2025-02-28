@@ -12,8 +12,8 @@ public enum File {
     case directory(URL)
     case regularFile(URL)
     case grf(GRFReference)
-    case grfDirectory(GRFReference, GRF.Path)
-    case grfEntry(GRFReference, GRF.Path)
+    case grfDirectory(GRFReference, GRFPath)
+    case grfEntry(GRFReference, GRFPath)
 
     public var url: URL {
         switch self {
@@ -111,7 +111,7 @@ public enum File {
         case .regularFile:
             return []
         case .grf(let grf):
-            let file = File.grfDirectory(grf, GRF.Path(components: ["data"]))
+            let file = File.grfDirectory(grf, GRFPath(components: ["data"]))
             return file.files()
         case .grfDirectory(let grf, let directory):
             var files: [File] = []

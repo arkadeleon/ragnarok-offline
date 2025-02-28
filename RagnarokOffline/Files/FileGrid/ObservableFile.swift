@@ -129,7 +129,7 @@ extension ObservableFile {
             }
             let gnd = try GND(data: data)
             let referenceFiles = gnd.textures.map { textureName in
-                let path = GRF.Path(components: ["data", "texture", textureName])
+                let path = GRFPath(components: ["data", "texture", textureName])
                 let file = File.grfEntry(grf, path)
                 return ObservableFile(file: file)
             }
@@ -141,7 +141,7 @@ extension ObservableFile {
             let rsw = try RSW(data: data)
             var referenceFiles: [ObservableFile] = []
             for model in rsw.models {
-                let path = GRF.Path(components: ["data", "model", model.modelName])
+                let path = GRFPath(components: ["data", "model", model.modelName])
                 let file = ObservableFile(file: .grfEntry(grf, path))
                 if !referenceFiles.contains(file) {
                     referenceFiles.append(file)

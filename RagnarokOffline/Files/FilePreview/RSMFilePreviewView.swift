@@ -36,7 +36,7 @@ struct RSMFilePreviewView: View {
         )
 
         let entity = try await Entity.loadModel(rsm: rsm, instance: instance) { textureName in
-            let path = GRF.Path(components: ["data", "texture", textureName])
+            let path = GRFPath(components: ["data", "texture", textureName])
             guard let data = try? grf.contentsOfEntry(at: path) else {
                 return nil
             }

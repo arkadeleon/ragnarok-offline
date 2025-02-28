@@ -99,7 +99,7 @@ public actor ResourceManager {
             return data
         }
 
-        let grfPath = GRF.Path(components: path.components)
+        let grfPath = GRFPath(components: path.components)
         for grf in grfs {
             if grf.entry(at: grfPath) != nil {
                 return try grf.contentsOfEntry(at: grfPath)

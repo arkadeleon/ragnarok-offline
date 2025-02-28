@@ -23,7 +23,7 @@ public class GRFReference {
         return grf
     }()
 
-    private lazy var directories: Set<GRF.Path> = {
+    private lazy var directories: Set<GRFPath> = {
         guard let grf else {
             return []
         }
@@ -69,7 +69,7 @@ public class GRFReference {
         self.url = url
     }
 
-    public func contentsOfDirectory(_ directory: GRF.Path) -> ([GRF.Path], [GRF.Entry]) {
+    public func contentsOfDirectory(_ directory: GRFPath) -> ([GRFPath], [GRF.Entry]) {
         guard let grf else {
             return ([], [])
         }
@@ -91,11 +91,11 @@ public class GRFReference {
         return (directories, entries)
     }
 
-    public func entry(at path: GRF.Path) -> GRF.Entry? {
+    public func entry(at path: GRFPath) -> GRF.Entry? {
         entriesByPath[path.string.uppercased()]
     }
 
-    public func contentsOfEntry(at path: GRF.Path) throws -> Data {
+    public func contentsOfEntry(at path: GRFPath) throws -> Data {
         guard let entry = entry(at: path) else {
             throw GRFError.invalidPath(path.string)
         }

@@ -117,7 +117,7 @@ extension GRF {
     }
 
     public struct Entry {
-        public var path: GRF.Path
+        public var path: GRFPath
         public var sizeCompressed: UInt32
         public var sizeCompressedAligned: UInt32
         public var size: UInt32
@@ -130,7 +130,7 @@ extension GRF {
             }
 
             let name = String(data: data[position..<index], encoding: .koreanEUC) ?? ""
-            path = GRF.Path(string: name)
+            path = GRFPath(string: name)
 
             position = index + 1
 
@@ -161,66 +161,6 @@ extension GRF {
                 throw GRFError.dataCorrupted(Data(bytes))
             }
             return data
-        }
-    }
-}
-
-extension GRF {
-    public class Path: Hashable {
-        /// A string representation of the path.
-        public let string: String
-
-        /// The parent path.
-        public lazy var parent: Path = {
-            let startIndex = string.startIndex
-            if let endIndex = string.lastIndex(of: "\\") {
-                let substring = string[startIndex..<endIndex]
-                return Path(string: String(substring))
-            } else {
-                return Path(string: "")
-            }
-        }()
-
-        /// The last path component (including any extension).
-        public var lastComponent: String {
-            string.split(separator: "\\").last.map(String.init) ?? ""
-        }
-
-        /// The last path component (without any extension).
-        public var stem: String {
-            lastComponent.split(separator: ".").dropLast().joined(separator: ".")
-        }
-
-        /// The filename extension (without any leading dot).
-        public var `extension`: String {
-            lastComponent.split(separator: ".").last.map(String.init) ?? ""
-        }
-
-        init(string: String) {
-            self.string = string
-        }
-
-        public init(components: [String]) {
-            self.string = components.joined(separator: "\\")
-        }
-
-        public func appending(_ components: [String]) -> GRF.Path {
-            GRF.Path(string: ([string] + components).joined(separator: "\\"))
-        }
-
-        /// The result of replacing with the new extension.
-        public func replacingExtension(_ newExtension: String) -> Path {
-            let newLastComponent = stem + "." + newExtension
-            let newString = parent.string + "\\" + newLastComponent
-            return Path(string: newString)
-        }
-
-        public func hash(into hasher: inout Hasher) {
-            hasher.combine(string)
-        }
-
-        public static func == (lhs: GRF.Path, rhs: GRF.Path) -> Bool {
-            lhs.string == rhs.string
         }
     }
 }
