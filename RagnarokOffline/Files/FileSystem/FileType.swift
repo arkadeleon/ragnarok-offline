@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/5/24.
 //
 
-public enum FileType {
+enum FileType {
     case directory
 
     case text

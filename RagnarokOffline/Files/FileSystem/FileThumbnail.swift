@@ -7,8 +7,8 @@
 
 import CoreGraphics
 
-public class FileThumbnail {
-    public let cgImage: CGImage
+class FileThumbnail {
+    let cgImage: CGImage
 
     init(cgImage: CGImage) {
         self.cgImage = cgImage

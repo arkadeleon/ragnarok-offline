@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct FilePreviewTabView: View {
-    var files: [ObservableFile]
-    @State var currentFile: ObservableFile
+    var files: [File]
+    @State var currentFile: File
 
     @Environment(\.dismiss) private var dismiss
 
@@ -17,10 +17,10 @@ struct FilePreviewTabView: View {
         #if os(macOS)
         FilePreviewView(file: currentFile)
             .frame(height: 400)
-            .navigationTitle(currentFile.file.name)
+            .navigationTitle(currentFile.name)
             .toolbar {
                 ToolbarItem(placement: .automatic) {
-                    ShareLink(item: currentFile, preview: SharePreview(currentFile.file.name))
+                    ShareLink(item: currentFile, preview: SharePreview(currentFile.name))
                 }
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
@@ -36,11 +36,11 @@ struct FilePreviewTabView: View {
             }
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
-        .navigationTitle(currentFile.file.name)
+        .navigationTitle(currentFile.name)
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                ShareLink(item: currentFile, preview: SharePreview(currentFile.file.name))
+                ShareLink(item: currentFile, preview: SharePreview(currentFile.name))
             }
             ToolbarItem(placement: .topBarLeading) {
                 Button {

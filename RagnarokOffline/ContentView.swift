@@ -12,8 +12,8 @@ import SwiftUI
 struct ContentView: View {
     @State private var selectedItem: SidebarItem? = .files
 
-    @State private var clientDirectory = ObservableFile(file: .directory(ResourceManager.default.baseURL))
-    @State private var serverDirectory = ObservableFile(file: .directory(ServerResourceManager.default.workingDirectoryURL))
+    @State private var clientDirectory = File(node: .directory(ResourceManager.default.baseURL))
+    @State private var serverDirectory = File(node: .directory(ServerResourceManager.default.workingDirectoryURL))
 
     @State private var conversation = Conversation()
     @State private var gameSession = GameSession()

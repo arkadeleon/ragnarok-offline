@@ -8,12 +8,12 @@
 import UniformTypeIdentifiers
 
 extension File {
-    public var utType: UTType? {
-        if case .directory = self {
+    var utType: UTType? {
+        if case .directory = node {
             return .folder
         }
 
-        if case .grfDirectory = self {
+        if case .grfDirectory = node {
             return .directory
         }
 
@@ -65,7 +65,7 @@ extension File {
         }
     }
 
-    public var isDirectory: Bool {
+    var isDirectory: Bool {
         if let utType, utType.conforms(to: .directory) {
             true
         } else {
@@ -73,7 +73,7 @@ extension File {
         }
     }
 
-    public var isArchive: Bool {
+    var isArchive: Bool {
         if let utType, utType.conforms(to: .archive) {
             true
         } else {
@@ -83,17 +83,17 @@ extension File {
 }
 
 extension UTType {
-    public static let lua = UTType(importedAs: "public.x-lua")
-    public static let lub = UTType(importedAs: "public.x-lua-bytecode")
+    static let lua = UTType(importedAs: "public.x-lua")
+    static let lub = UTType(importedAs: "public.x-lua-bytecode")
 
-    public static let grf = UTType(exportedAs: "kr.co.gravity.grf")
-    public static let act = UTType(exportedAs: "kr.co.gravity.act")
-    public static let ebm = UTType(exportedAs: "kr.co.gravity.ebm")
-    public static let gat = UTType(exportedAs: "kr.co.gravity.gat")
-    public static let gnd = UTType(exportedAs: "kr.co.gravity.gnd")
-    public static let pal = UTType(exportedAs: "kr.co.gravity.pal")
-    public static let rsm = UTType(exportedAs: "kr.co.gravity.rsm")
-    public static let rsw = UTType(exportedAs: "kr.co.gravity.rsw")
-    public static let spr = UTType(exportedAs: "kr.co.gravity.spr")
-    public static let str = UTType(exportedAs: "kr.co.gravity.str")
+    static let grf = UTType(exportedAs: "kr.co.gravity.grf")
+    static let act = UTType(exportedAs: "kr.co.gravity.act")
+    static let ebm = UTType(exportedAs: "kr.co.gravity.ebm")
+    static let gat = UTType(exportedAs: "kr.co.gravity.gat")
+    static let gnd = UTType(exportedAs: "kr.co.gravity.gnd")
+    static let pal = UTType(exportedAs: "kr.co.gravity.pal")
+    static let rsm = UTType(exportedAs: "kr.co.gravity.rsm")
+    static let rsw = UTType(exportedAs: "kr.co.gravity.rsw")
+    static let spr = UTType(exportedAs: "kr.co.gravity.spr")
+    static let str = UTType(exportedAs: "kr.co.gravity.str")
 }

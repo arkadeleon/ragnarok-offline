@@ -9,18 +9,18 @@ import ROFileFormats
 import SwiftUI
 
 struct GATFilePreviewView: View {
-    var file: ObservableFile
+    var file: File
 
     var body: some View {
         AsyncContentView(load: loadGATFile) { image in
-            Image(image, scale: 1, label: Text(file.file.name))
+            Image(image, scale: 1, label: Text(file.name))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
         }
     }
 
     nonisolated private func loadGATFile() async throws -> CGImage {
-        guard let gatData = file.file.contents() else {
+        guard let gatData = file.contents() else {
             throw FilePreviewError.invalidGATFile
         }
 

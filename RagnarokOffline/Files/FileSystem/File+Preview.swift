@@ -1,5 +1,5 @@
 //
-//  ObservableFile+Preview.swift
+//  File+Preview.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/7/11.
@@ -7,46 +7,46 @@
 
 import Foundation
 
-extension ObservableFile {
-    static var previewDataDirectory: ObservableFile {
+extension File {
+    static var previewDataDirectory: File {
         let url = Bundle.main.resourceURL!.appending(path: "data")
-        let file = ObservableFile(file: .directory(url))
+        let file = File(node: .directory(url))
         return file
     }
 
-    static var previewACT: ObservableFile {
+    static var previewACT: File {
         let url = Bundle.main.resourceURL!.appending(path: "data/sprite/cursors.act")
-        let file = ObservableFile(file: .regularFile(url))
+        let file = File(node: .regularFile(url))
         return file
     }
 
-    static var previewGAT: ObservableFile {
+    static var previewGAT: File {
         let url = Bundle.main.resourceURL!.appending(path: "data/06guild_r.gat")
-        let file = ObservableFile(file: .regularFile(url))
+        let file = File(node: .regularFile(url))
         return file
     }
 
-    static var previewGND: ObservableFile {
+    static var previewGND: File {
         let url = Bundle.main.resourceURL!.appending(path: "data/06guild_r.gnd")
-        let file = ObservableFile(file: .regularFile(url))
+        let file = File(node: .regularFile(url))
         return file
     }
 
-    static var previewRSM: ObservableFile {
+    static var previewRSM: File {
         let url = Bundle.main.resourceURL!.appending(path: "data/model/내부소품/철다리.rsm")
-        let file = ObservableFile(file: .regularFile(url))
+        let file = File(node: .regularFile(url))
         return file
     }
 
-    static var previewRSW: ObservableFile {
+    static var previewRSW: File {
         let url = Bundle.main.resourceURL!.appending(path: "data/06guild_r.rsw")
-        let file = ObservableFile(file: .regularFile(url))
+        let file = File(node: .regularFile(url))
         return file
     }
 
-    static var previewSPR: ObservableFile {
+    static var previewSPR: File {
         let url = Bundle.main.resourceURL!.appending(path: "data/sprite/cursors.spr")
-        let file = ObservableFile(file: .regularFile(url))
+        let file = File(node: .regularFile(url))
         return file
     }
 }

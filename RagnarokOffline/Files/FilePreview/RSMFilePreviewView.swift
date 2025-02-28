@@ -12,7 +12,7 @@ import RORenderers
 import SwiftUI
 
 struct RSMFilePreviewView: View {
-    var file: ObservableFile
+    var file: File
 
     var body: some View {
         AsyncContentView(load: loadRSMFile) { entity in
@@ -21,7 +21,7 @@ struct RSMFilePreviewView: View {
     }
 
     nonisolated private func loadRSMFile() async throws -> Entity {
-        guard case .grfEntry(let grf, _) = file.file, let data = file.file.contents() else {
+        guard case .grfEntry(let grf, _) = file.node, let data = file.contents() else {
             throw FilePreviewError.invalidRSMFile
         }
 

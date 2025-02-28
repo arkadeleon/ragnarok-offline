@@ -9,7 +9,7 @@ import Lua
 import SwiftUI
 
 struct TextFilePreviewView: View {
-    var file: ObservableFile
+    var file: File
 
     var body: some View {
         AsyncContentView(load: loadTextFile) { htmlString in
@@ -18,11 +18,11 @@ struct TextFilePreviewView: View {
     }
 
     nonisolated private func loadTextFile() async throws -> String {
-        guard var data = file.file.contents() else {
+        guard var data = file.contents() else {
             throw FilePreviewError.invalidTextFile
         }
 
-        switch file.file.type {
+        switch file.type {
         case .lub:
             let decompiler = LuaDecompiler()
             if let decompiledData = decompiler.decompileData(data) {

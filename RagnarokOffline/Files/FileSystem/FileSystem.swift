@@ -7,27 +7,27 @@
 
 import Foundation
 
-public actor FileSystem {
-    public static let shared = FileSystem()
+actor FileSystem {
+    static let shared = FileSystem()
 
     let thumbnailGenerator = FileThumbnailGenerator()
     let thumbnailCache = NSCache<NSURL, FileThumbnail>()
 
-    nonisolated public func copy(_ file: File) {
+    nonisolated func copy(_ file: File) {
         FilePasteboard.shared.copy(file)
     }
 
-    nonisolated public func paste(to file: File) -> File? {
+    nonisolated func paste(to file: File) -> File? {
         guard let sourceFile = FilePasteboard.shared.file else {
             return nil
         }
 
-        guard case .directory(let url) = file else {
+        guard case .directory(let url) = file.node else {
             return nil
         }
 
-        let destinationFile: File = .regularFile(url.appending(path: sourceFile.name))
-        switch sourceFile {
+        let destinationFile = File(node: .regularFile(url.appending(path: sourceFile.name)))
+        switch sourceFile.node {
         case.directory:
             return nil
         case .regularFile:
@@ -54,8 +54,8 @@ public actor FileSystem {
         }
     }
 
-    nonisolated public func remove(_ file: File) -> Bool {
-        guard case .regularFile(let url) = file else {
+    nonisolated func remove(_ file: File) -> Bool {
+        guard case .regularFile(let url) = file.node else {
             return false
         }
 
@@ -67,7 +67,7 @@ public actor FileSystem {
         }
     }
 
-    public func thumbnail(for request: FileThumbnailRequest) async throws -> FileThumbnail? {
+    func thumbnail(for request: FileThumbnailRequest) async throws -> FileThumbnail? {
         try Task.checkCancellation()
 
         if let thumbnail = thumbnailCache.object(forKey: request.file.url as NSURL) {

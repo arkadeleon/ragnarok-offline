@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct FileReferencesView: View {
-    var file: ObservableFile
+    var file: File
 
     @Environment(\.dismiss) private var dismiss
 
-    @State private var referenceFiles: [ObservableFile] = []
-    @State private var fileToPreview: ObservableFile?
+    @State private var referenceFiles: [File] = []
+    @State private var fileToPreview: File?
 
     var body: some View {
         ImageGrid {

@@ -9,28 +9,28 @@ import SwiftUI
 
 struct FilesView: View {
     var title: String
-    var directory: ObservableFile
+    var directory: File
 
     @State private var loadStatus: LoadStatus = .notYetLoaded
     @State private var searchText = ""
-    @State private var files: [ObservableFile] = []
-    @State private var filteredFiles: [ObservableFile] = []
+    @State private var files: [File] = []
+    @State private var filteredFiles: [File] = []
 
-    @State private var fileToPreview: ObservableFile?
-    @State private var fileToShowRawData: ObservableFile?
-    @State private var fileToShowReferences: ObservableFile?
+    @State private var fileToPreview: File?
+    @State private var fileToShowRawData: File?
+    @State private var fileToShowReferences: File?
 
     var body: some View {
         ImageGrid {
             ForEach(filteredFiles) { file in
-                if file.file.type == .directory || file.file.type == .grf {
+                if file.type == .directory || file.type == .grf {
                     NavigationLink(value: file) {
                         FileGridCell(file: file)
                     }
                     .buttonStyle(.plain)
                     .contextMenu {
                         FileContextMenu(file: file, copyAction: {
-                            FileSystem.shared.copy(file.file)
+                            FileSystem.shared.copy(file)
                         }, deleteAction: {
                             deleteFile(file)
                         })
@@ -52,7 +52,7 @@ struct FilesView: View {
                         }, showReferencesAction: {
                             fileToShowReferences = file
                         }, copyAction: {
-                            FileSystem.shared.copy(file.file)
+                            FileSystem.shared.copy(file)
                         }, deleteAction: {
                             deleteFile(file)
                         })
@@ -71,8 +71,8 @@ struct FilesView: View {
                 ContentUnavailableView("No Files", systemImage: "folder.fill")
             }
         }
-        .navigationDestination(for: ObservableFile.self) { file in
-            FilesView(title: file.file.name, directory: file)
+        .navigationDestination(for: File.self) { file in
+            FilesView(title: file.name, directory: file)
         }
         .navigationTitle(title)
         .toolbar {
@@ -121,7 +121,7 @@ struct FilesView: View {
 
         loadStatus = .loading
 
-        files = directory.file.files().map(ObservableFile.init).sorted()
+        files = directory.files().sorted()
         filterFiles()
 
         loadStatus = .loaded
@@ -132,21 +132,21 @@ struct FilesView: View {
             filteredFiles = files
         } else {
             filteredFiles = files.filter { file in
-                file.file.name.localizedStandardContains(searchText)
+                file.name.localizedStandardContains(searchText)
             }
         }
     }
 
     private func pasteFile() {
-        if let file = FileSystem.shared.paste(to: directory.file), loadStatus == .loaded {
-            files.append(ObservableFile(file: file))
+        if let file = FileSystem.shared.paste(to: directory), loadStatus == .loaded {
+            files.append(file)
             files.sort()
             filterFiles()
         }
     }
 
-    private func deleteFile(_ file: ObservableFile) {
-        if FileSystem.shared.remove(file.file) {
+    private func deleteFile(_ file: File) {
+        if FileSystem.shared.remove(file) {
             files.removeAll(where: { $0 == file })
             filterFiles()
         }

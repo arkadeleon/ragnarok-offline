@@ -9,22 +9,22 @@ import ROFileFormats
 import SwiftUI
 
 struct ImageFilePreviewView: View {
-    var file: ObservableFile
+    var file: File
 
     var body: some View {
         AsyncContentView(load: loadImageFile) { image in
-            Image(image, scale: 1, label: Text(file.file.name))
+            Image(image, scale: 1, label: Text(file.name))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
         }
     }
 
     nonisolated private func loadImageFile() async throws -> CGImage {
-        guard let data = file.file.contents() else {
+        guard let data = file.contents() else {
             throw FilePreviewError.invalidImageFile
         }
 
-        switch file.file.type {
+        switch file.type {
         case .ebm:
             guard let decompressedData = data.unzip() else {
                 throw FilePreviewError.invalidImageFile

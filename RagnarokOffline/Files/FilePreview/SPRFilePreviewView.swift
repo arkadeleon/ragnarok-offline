@@ -20,7 +20,7 @@ struct SPRFilePreviewView: View {
         var image: CGImage
     }
 
-    var file: ObservableFile
+    var file: File
 
     var body: some View {
         AsyncContentView(load: loadSPRFile) { section in
@@ -31,8 +31,8 @@ struct SPRFilePreviewView: View {
                             .frame(width: section.spriteSize.width, height: section.spriteSize.height)
                             .contextMenu {
                                 ShareLink(
-                                    item: TransferableImage(name: String(format: "%@.%03d.png", file.file.name, sprite.index), image: sprite.image),
-                                    preview: SharePreview(file.file.name, image: Image(sprite.image, scale: 1, label: Text(verbatim: "")))
+                                    item: TransferableImage(name: String(format: "%@.%03d.png", file.name, sprite.index), image: sprite.image),
+                                    preview: SharePreview(file.name, image: Image(sprite.image, scale: 1, label: Text(verbatim: "")))
                                 )
                             }
                     }
@@ -43,7 +43,7 @@ struct SPRFilePreviewView: View {
     }
 
     nonisolated private func loadSPRFile() async throws -> SpriteSection {
-        guard let data = file.file.contents() else {
+        guard let data = file.contents() else {
             throw FilePreviewError.invalidSPRFile
         }
 

@@ -7,13 +7,13 @@
 
 import Foundation
 
-public class FilePasteboard {
-    public static let shared = FilePasteboard()
+class FilePasteboard {
+    static let shared = FilePasteboard()
 
-    public var file: File?
-    public var hasFile = false
+    var file: File?
+    var hasFile = false
 
-    public func copy(_ file: File) {
+    func copy(_ file: File) {
         self.file = file
         hasFile = true
     }

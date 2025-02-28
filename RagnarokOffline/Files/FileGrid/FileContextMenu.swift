@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FileContextMenu: View {
-    var file: ObservableFile
+    var file: File
     var previewAction: Action?
     var showRawDataAction: Action?
     var showReferencesAction: Action?
@@ -55,7 +55,7 @@ struct FileContextMenu: View {
                 }
 
                 if file.canShare {
-                    ShareLink("Share", item: file, preview: SharePreview(file.file.name))
+                    ShareLink("Share", item: file, preview: SharePreview(file.name))
                 }
             }
 
@@ -71,7 +71,7 @@ struct FileContextMenu: View {
         }
     }
 
-    init(file: ObservableFile, previewAction: Action? = nil, showRawDataAction: Action? = nil, showReferencesAction: Action? = nil, copyAction: Action? = nil, deleteAction: Action? = nil) {
+    init(file: File, previewAction: Action? = nil, showRawDataAction: Action? = nil, showReferencesAction: Action? = nil, copyAction: Action? = nil, deleteAction: Action? = nil) {
         self.file = file
         self.previewAction = previewAction
         self.showRawDataAction = showRawDataAction
@@ -82,7 +82,7 @@ struct FileContextMenu: View {
 }
 
 #Preview {
-    Text(ObservableFile.previewRSW.file.name)
+    Text(File.previewRSW.name)
         .contextMenu {
             FileContextMenu(file: .previewRSW)
         }

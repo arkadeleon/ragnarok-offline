@@ -11,7 +11,7 @@ import RORenderers
 import SwiftUI
 
 struct STRFilePreviewView: View {
-    var file: ObservableFile
+    var file: File
 
     @State private var magnification: CGFloat = 1
 
@@ -35,7 +35,7 @@ struct STRFilePreviewView: View {
     }
 
     nonisolated private func loadSTRFile() async throws -> STRRenderer {
-        guard case .grfEntry(let grf, let path) = file.file, let data = file.file.contents() else {
+        guard case .grfEntry(let grf, let path) = file.node, let data = file.contents() else {
             throw FilePreviewError.invalidSTRFile
         }
 

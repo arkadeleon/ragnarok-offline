@@ -21,7 +21,7 @@ struct ACTFilePreviewView: View {
         var animatedImage: AnimatedImage
     }
 
-    var file: ObservableFile
+    var file: File
 
     var body: some View {
         AsyncContentView(load: loadACTFile) { sections in
@@ -34,8 +34,8 @@ struct ACTFilePreviewView: View {
                                 .contextMenu {
                                     if let image = action.animatedImage.images.first {
                                         ShareLink(
-                                            item: TransferableAnimatedImage(name: String(format: "%@.%03d.png", file.file.name, action.index), image: action.animatedImage),
-                                            preview: SharePreview(file.file.name, image: Image(image, scale: 1, label: Text(verbatim: "")))
+                                            item: TransferableAnimatedImage(name: String(format: "%@.%03d.png", file.name, action.index), image: action.animatedImage),
+                                            preview: SharePreview(file.name, image: Image(image, scale: 1, label: Text(verbatim: "")))
                                         )
                                     }
                                 }
@@ -48,12 +48,12 @@ struct ACTFilePreviewView: View {
     }
 
     nonisolated private func loadACTFile() async throws -> [ActionSection] {
-        guard let actData = file.file.contents() else {
+        guard let actData = file.contents() else {
             throw FilePreviewError.invalidACTFile
         }
 
         let sprData: Data
-        switch file.file {
+        switch file.node {
         case .regularFile(let url):
             let sprPath = url.deletingPathExtension().path().appending(".spr")
             sprData = try Data(contentsOf: URL(filePath: sprPath))

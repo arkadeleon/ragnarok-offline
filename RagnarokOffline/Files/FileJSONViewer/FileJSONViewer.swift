@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FileJSONViewer: View {
-    var file: ObservableFile
+    var file: File
 
     @Environment(\.dismiss) private var dismiss
 

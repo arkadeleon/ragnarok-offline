@@ -8,9 +8,9 @@
 import Foundation
 import ROFileFormats
 
-extension ObservableFile {
+extension File {
     var jsonRepresentable: Bool {
-        switch file.type {
+        switch type {
         case .act, .gat, .gnd, .rsm, .rsw, .spr, .str:
             true
         default:
@@ -23,11 +23,11 @@ extension ObservableFile {
             return nil
         }
 
-        guard let data = file.contents() else {
+        guard let data = contents() else {
             return nil
         }
 
-        let json: String? = switch file.type {
+        let json: String? = switch type {
         case .act: try? ACT(data: data).json
         case .gat: try? GAT(data: data).json
         case .gnd: try? GND(data: data).json

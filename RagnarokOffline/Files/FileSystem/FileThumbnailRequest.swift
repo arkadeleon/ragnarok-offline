@@ -7,12 +7,12 @@
 
 import CoreGraphics
 
-public struct FileThumbnailRequest {
-    public var file: File
-    public var size: CGSize
-    public var scale: CGFloat
+struct FileThumbnailRequest {
+    var file: File
+    var size: CGSize
+    var scale: CGFloat
 
-    public init(file: File, size: CGSize, scale: CGFloat) {
+    init(file: File, size: CGSize, scale: CGFloat) {
         self.file = file
         self.size = size
         self.scale = scale

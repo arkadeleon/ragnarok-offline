@@ -21,11 +21,11 @@ enum FilePreviewError: Error {
 }
 
 struct FilePreviewView: View {
-    var file: ObservableFile
+    var file: File
 
     var body: some View {
         ZStack {
-            switch file.file.type {
+            switch file.type {
             case .text, .lua, .lub:
                 TextFilePreviewView(file: file)
             case .image, .ebm, .pal:

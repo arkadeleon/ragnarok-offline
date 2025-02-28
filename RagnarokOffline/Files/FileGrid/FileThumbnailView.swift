@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FileThumbnailView: View {
-    var file: ObservableFile
+    var file: File
 
     @Environment(\.displayScale) private var displayScale: CGFloat
 
@@ -17,7 +17,7 @@ struct FileThumbnailView: View {
     var body: some View {
         ZStack {
             if let thumbnail {
-                Image(thumbnail.cgImage, scale: displayScale, label: Text(file.file.name))
+                Image(thumbnail.cgImage, scale: displayScale, label: Text(file.name))
                     .resizable()
                     .scaledToFit()
                     .clipShape(RoundedRectangle(cornerRadius: 4))
@@ -25,7 +25,7 @@ struct FileThumbnailView: View {
                         RoundedRectangle(cornerRadius: 4)
                             .stroke(Color.secondary, lineWidth: 1)
                     }
-            } else if file.file.type == .directory {
+            } else if file.type == .directory {
                 Image(systemName: file.iconName)
                     .font(.system(size: 50))
                     .symbolRenderingMode(.multicolor)

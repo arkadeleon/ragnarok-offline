@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct FileGridCell: View {
-    var file: ObservableFile
+    var file: File
 
     @State private var subtitle: String?
 
     var body: some View {
-        ImageGridCell(title: file.file.name, subtitle: subtitle) {
+        ImageGridCell(title: file.name, subtitle: subtitle) {
             FileThumbnailView(file: file)
         }
         .task {
@@ -22,15 +22,15 @@ struct FileGridCell: View {
     }
 
     nonisolated private func loadSubtitle() async {
-        let fileType = await file.file.type
+        let fileType = await file.type
         switch fileType {
         case .directory:
-            let fileCount = await file.file.files().count
+            let fileCount = await file.files().count
             await MainActor.run {
                 subtitle = fileCount.formatted() + " item(s)"
             }
         default:
-            let fileSize = await file.file.size
+            let fileSize = await file.size
             await MainActor.run {
                 let formatStyle = FloatingPointFormatStyle<Float>().precision(.significantDigits(2))
                 if fileSize > 1024 * 1024 * 1024 {

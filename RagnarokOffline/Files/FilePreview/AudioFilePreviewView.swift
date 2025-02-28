@@ -9,7 +9,7 @@ import AVFoundation
 import SwiftUI
 
 struct AudioFilePreviewView: View {
-    var file: ObservableFile
+    var file: File
 
     @State private var player: AVAudioPlayer?
     @State private var isPlaying = false
@@ -49,7 +49,7 @@ struct AudioFilePreviewView: View {
     }
 
     nonisolated private func loadAudioFile() async throws -> AVAudioPlayer {
-        guard let data = file.file.contents() else {
+        guard let data = file.contents() else {
             throw FilePreviewError.invalidAudioFile
         }
 
