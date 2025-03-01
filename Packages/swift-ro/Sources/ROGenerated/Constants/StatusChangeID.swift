@@ -1008,6 +1008,10 @@ public enum StatusChangeID: Int, CaseIterable, Sendable {
     case star_burst = 1018
     case sky_enchant = 1019
     case wild_walk = 1020
+    case shadow_clock = 1021
+    case shinkirou_call = 1022
+    case nightmare = 1023
+    case sbunshin = 1024
 }
 
 extension StatusChangeID: CodingKey {
@@ -2014,6 +2018,10 @@ extension StatusChangeID: CodingKey {
         case .star_burst: "STAR_BURST"
         case .sky_enchant: "SKY_ENCHANT"
         case .wild_walk: "WILD_WALK"
+        case .shadow_clock: "SHADOW_CLOCK"
+        case .shinkirou_call: "SHINKIROU_CALL"
+        case .nightmare: "NIGHTMARE"
+        case .sbunshin: "SBUNSHIN"
         }
     }
 
@@ -3020,6 +3028,10 @@ extension StatusChangeID: CodingKey {
         case "STAR_BURST": self = .star_burst
         case "SKY_ENCHANT": self = .sky_enchant
         case "WILD_WALK": self = .wild_walk
+        case "SHADOW_CLOCK": self = .shadow_clock
+        case "SHINKIROU_CALL": self = .shinkirou_call
+        case "NIGHTMARE": self = .nightmare
+        case "SBUNSHIN": self = .sbunshin
         default: return nil
         }
     }

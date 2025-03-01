@@ -16,6 +16,7 @@ public enum BattleCheckTarget: CaseIterable, Sendable {
     case sameguild
     case all
     case wos
+    case slave
     case guild
     case noguild
     case noparty
@@ -36,6 +37,7 @@ extension BattleCheckTarget: RawRepresentable {
         case .sameguild: 0x200000
         case .all: 0x3f0000
         case .wos: 0x400000
+        case .slave: 0x410000
         case .guild: 0x280000
         case .noguild: 0x170000
         case .noparty: 0x3b0000
@@ -56,6 +58,7 @@ extension BattleCheckTarget: RawRepresentable {
         case 0x200000: self = .sameguild
         case 0x3f0000: self = .all
         case 0x400000: self = .wos
+        case 0x410000: self = .slave
         case 0x280000: self = .guild
         case 0x170000: self = .noguild
         case 0x3b0000: self = .noparty
@@ -79,6 +82,7 @@ extension BattleCheckTarget: CodingKey {
         case .sameguild: "SAMEGUILD"
         case .all: "ALL"
         case .wos: "WOS"
+        case .slave: "SLAVE"
         case .guild: "GUILD"
         case .noguild: "NOGUILD"
         case .noparty: "NOPARTY"
@@ -99,6 +103,7 @@ extension BattleCheckTarget: CodingKey {
         case "SAMEGUILD": self = .sameguild
         case "ALL": self = .all
         case "WOS": self = .wos
+        case "SLAVE": self = .slave
         case "GUILD": self = .guild
         case "NOGUILD": self = .noguild
         case "NOPARTY": self = .noparty
