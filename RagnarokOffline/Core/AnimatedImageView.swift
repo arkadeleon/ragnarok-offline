@@ -11,34 +11,25 @@ import SwiftUI
 struct AnimatedImageView: View {
     var animatedImage: AnimatedImage
 
-    private var timer: Timer.TimerPublisher
+    private let startDate = Date()
 
-    @State private var index = 0
+    var body: some View {
+        TimelineView(.periodic(from: startDate, by: animatedImage.delay)) { context in
+            if let image = image(at: context.date) {
+                Image(image, scale: 1, label: Text(verbatim: ""))
+            }
+        }
+    }
 
-    private var image: CGImage? {
-        guard !animatedImage.images.isEmpty else {
+    private func image(at date: Date) -> CGImage? {
+        if animatedImage.images.isEmpty {
             return nil
         }
 
-        let imageCount = animatedImage.images.count
-        let image = animatedImage.images[index % imageCount]
+        let index = Int(round(date.timeIntervalSince(startDate) / animatedImage.delay))
+        let count = animatedImage.images.count
+        let image = animatedImage.images[index % count]
         return image
-    }
-
-    var body: some View {
-        ZStack {
-            if let image {
-                Image(image, scale: 1, label: Text(index.formatted()))
-            }
-        }
-        .onReceive(timer.autoconnect()) { _ in
-            index += 1
-        }
-    }
-
-    init(animatedImage: AnimatedImage) {
-        self.animatedImage = animatedImage
-        self.timer = Timer.publish(every: animatedImage.delay, on: .main, in: .common)
     }
 }
 
