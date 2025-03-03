@@ -14,11 +14,6 @@ final class MiscellaneousTableTests: XCTestCase {
         XCTAssertEqual(mhp, "MHP + %d")
     }
 
-    func testJobNameTable() async throws {
-        let warp = await JobNameTable.current.jobName(forJobID: 45)
-        XCTAssertEqual(warp, "1_ETC_01")
-    }
-
     func testMapMP3NameTable() async throws {
         let prontera = await MapMP3NameTable.current.mapMP3Name(forMapName: "prt_fild08")
         XCTAssertEqual(prontera, "12.mp3")

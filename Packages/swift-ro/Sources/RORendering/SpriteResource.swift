@@ -474,7 +474,7 @@ extension ResourcePath {
                 return PlayerJobNameTable.current.jobName(for: jobID.rawValue)
             }
         } else {
-            return await JobNameTable.current.jobName(forJobID: jobID.rawValue)
+            return await ScriptManager.default.jobName(forJobID: jobID.rawValue)
         }
     }
 

@@ -25,6 +25,11 @@ public actor ScriptManager {
         return accessoryName
     }
 
+    public func jobName(forJobID jobID: Int) async -> String? {
+        let result = await call("ReqJobName", with: [jobID], to: String.self)
+        return result
+    }
+
     public func robeName(forRobeID robeID: Int, checkEnglish: Bool) async -> String? {
         let result = await call("ReqRobSprName_V2", with: [robeID, checkEnglish], to: String.self)
         let robeName = result?.transcoding(from: .isoLatin1, to: .koreanEUC)
@@ -72,6 +77,8 @@ public actor ScriptManager {
 
         await load(contentsAt: ["datainfo", "jobidentity.lub"])
         await load(contentsAt: ["datainfo", "npcidentity.lub"])
+        await load(contentsAt: ["datainfo", "jobname.lub"])
+        await load(contentsAt: ["datainfo", "jobname_f.lub"])
 
         await load(contentsAt: ["datainfo", "shadowtable.lub"])
         await load(contentsAt: ["datainfo", "shadowtable_f.lub"])
