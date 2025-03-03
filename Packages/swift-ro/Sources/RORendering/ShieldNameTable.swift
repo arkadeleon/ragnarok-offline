@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/2/11.
 //
 
-public struct ShieldNameTable: Sendable {
-    public static let current = ShieldNameTable()
+struct ShieldNameTable: Sendable {
+    static let current = ShieldNameTable()
 
     let shieldNamesByID: [Int : String] = [
         1: "_가드",
@@ -15,7 +15,7 @@ public struct ShieldNameTable: Sendable {
         4: "_미러쉴드",
     ]
 
-    public func shieldName(for shieldID: Int) -> String? {
+    func shieldName(for shieldID: Int) -> String? {
         shieldNamesByID[shieldID]
     }
 }

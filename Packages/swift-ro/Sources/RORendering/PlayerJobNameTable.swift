@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/2/11.
 //
 
-public struct PlayerJobNameTable: Sendable {
-    public static let current = PlayerJobNameTable()
+struct PlayerJobNameTable: Sendable {
+    static let current = PlayerJobNameTable()
 
     let jobNamesByID: [Int : String] = [
         0: "초보자",
@@ -1488,19 +1488,19 @@ public struct PlayerJobNameTable: Sendable {
         4316: ("SKY_EMPEROR", "SKY_EMPEROR2"),
     ]
 
-    public func jobName(for jobID: Int) -> String? {
+    func jobName(for jobID: Int) -> String? {
         jobNamesByID[jobID]
     }
 
-    public func imfJobName(for jobID: Int) -> String? {
+    func imfJobName(for jobID: Int) -> String? {
         imfJobNamesByID[jobID]
     }
 
-    public func palJobName(for jobID: Int) -> String? {
+    func palJobName(for jobID: Int) -> String? {
         palJobNamesByID[jobID]
     }
 
-    public func weaponJobName(for jobID: Int) -> (String, String)? {
+    func weaponJobName(for jobID: Int) -> (String, String)? {
         weaponJobNamesByID[jobID]
     }
 }
