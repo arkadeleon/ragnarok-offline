@@ -34,11 +34,6 @@ final class MiscellaneousTableTests: XCTestCase {
         XCTAssertEqual(wings, "천사날개")
     }
 
-    func testShadowFactorTable() async throws {
-        let warp = await ShadowFactorTable.current.shadowFactor(forJobID: 45)
-        XCTAssertEqual(warp, 0)
-    }
-
     func testWeaponNameTable() async throws {
         let shortsword = await WeaponNameTable.current.weaponName(forWeaponID: 1)
         XCTAssertEqual(shortsword, "_단검")

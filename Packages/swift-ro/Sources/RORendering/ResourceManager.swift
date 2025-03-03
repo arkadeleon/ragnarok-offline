@@ -62,6 +62,12 @@ public actor ResourceManager {
         return palette
     }
 
+    public func script(at path: ResourcePath) async throws -> ScriptResource {
+        let data = try await contentsOfResource(at: path)
+        let script = ScriptResource(data: data)
+        return script
+    }
+
     public func sprite(at path: ResourcePath) async throws -> SpriteResource {
         let actPath = path.appendingPathExtension("act")
         let actData = try await contentsOfResource(at: actPath)
