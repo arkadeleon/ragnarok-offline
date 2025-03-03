@@ -8,14 +8,16 @@
 @preconcurrency import Lua
 
 public actor ScriptManager {
-    public static let `default` = ScriptManager(resourceManager: .default)
+    public static let `default` = ScriptManager(locale: .current, resourceManager: .default)
 
+    public let locale: Locale
     public let resourceManager: ResourceManager
 
     private let context = LuaContext()
     private var isLoaded = false
 
-    public init(resourceManager: ResourceManager) {
+    public init(locale: Locale, resourceManager: ResourceManager) {
+        self.locale = locale
         self.resourceManager = resourceManager
     }
 
@@ -23,6 +25,12 @@ public actor ScriptManager {
         let result = await call("ReqAccName", with: [accessoryID], to: String.self)
         let accessoryName = result?.transcoding(from: .isoLatin1, to: .koreanEUC)
         return accessoryName
+    }
+
+    public func itemRandomOptionName(forItemRandomOptionID itemRandomOptionID: Int) async -> String? {
+        let result = await call("GetVarOptionName", with: [itemRandomOptionID], to: String.self)
+        let itemRandomOptionName = result?.transcoding(from: .isoLatin1, to: locale.language.preferredEncoding)
+        return itemRandomOptionName
     }
 
     public func jobName(forJobID jobID: Int) async -> String? {
@@ -75,6 +83,10 @@ public actor ScriptManager {
         await load(contentsAt: ["datainfo", "accname.lub"])
         await load(contentsAt: ["datainfo", "accname_f.lub"])
 
+        await load(contentsAt: ["datainfo", "enumvar.lub"])
+        await loadLocalizedScript("addrandomoptionnametable")
+        await load(contentsAt: ["datainfo", "addrandomoption_f.lub"])
+
         await load(contentsAt: ["datainfo", "jobidentity.lub"])
         await load(contentsAt: ["datainfo", "npcidentity.lub"])
         await load(contentsAt: ["datainfo", "jobname.lub"])
@@ -97,6 +109,19 @@ public actor ScriptManager {
         do {
             let path = ResourcePath.scriptPath + path
             let data = try await resourceManager.contentsOfResource(at: path)
+            try context.load(data)
+        } catch {
+            logger.warning("\(error.localizedDescription)")
+        }
+    }
+
+    private func loadLocalizedScript(_ name: String) async {
+        guard let url = Bundle.module.url(forResource: name, withExtension: "lub", locale: locale) else {
+            return
+        }
+
+        do {
+            let data = try Data(contentsOf: url)
             try context.load(data)
         } catch {
             logger.warning("\(error.localizedDescription)")

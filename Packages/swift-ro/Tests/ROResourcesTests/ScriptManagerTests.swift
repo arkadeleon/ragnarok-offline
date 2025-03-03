@@ -10,12 +10,18 @@ import XCTest
 
 final class ScriptManagerTests: XCTestCase {
     let scriptManager = ScriptManager(
+        locale: .korean,
         resourceManager: ResourceManager(baseURL: Bundle.module.resourceURL!)
     )
 
     func testAccessoryNameTable() async throws {
         let goggles = await scriptManager.accessoryName(forAccessoryID: 1)
         XCTAssertEqual(goggles, "_고글")
+    }
+
+    func testItemRandomOptionNameTable() async throws {
+        let mhp = await scriptManager.itemRandomOptionName(forItemRandomOptionID: 1)
+        XCTAssertEqual(mhp, "MHP + %d")
     }
 
     func testJobNameTable() async throws {
