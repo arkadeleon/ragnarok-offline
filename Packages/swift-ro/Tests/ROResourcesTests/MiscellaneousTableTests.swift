@@ -24,11 +24,6 @@ final class MiscellaneousTableTests: XCTestCase {
         XCTAssertEqual(prontera, "12.mp3")
     }
 
-    func testRobeNameTable() async throws {
-        let wings = await RobeNameTable.current.robeName(forRobeID: 1, checkEnglish: false)
-        XCTAssertEqual(wings, "천사날개")
-    }
-
     func testWeaponNameTable() async throws {
         let shortsword = await WeaponNameTable.current.weaponName(forWeaponID: 1)
         XCTAssertEqual(shortsword, "_단검")

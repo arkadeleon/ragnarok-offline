@@ -384,7 +384,7 @@ extension ResourcePath {
         }
 
         guard let jobName = await jobSpriteName(jobID: jobID),
-              let robeName = await RobeNameTable.current.robeName(forRobeID: garmentID, checkEnglish: checkEnglish) else {
+              let robeName = await ScriptManager.default.robeName(forRobeID: garmentID, checkEnglish: checkEnglish) else {
             return nil
         }
 

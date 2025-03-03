@@ -18,6 +18,11 @@ final class ScriptManagerTests: XCTestCase {
         XCTAssertEqual(goggles, "_고글")
     }
 
+    func testRobeNameTable() async throws {
+        let wings = await scriptManager.robeName(forRobeID: 1, checkEnglish: false)
+        XCTAssertEqual(wings, "천사날개")
+    }
+
     func testShadowFactorTable() async throws {
         let warp = await scriptManager.shadowFactor(forJobID: 45)
         XCTAssertEqual(warp, 0)

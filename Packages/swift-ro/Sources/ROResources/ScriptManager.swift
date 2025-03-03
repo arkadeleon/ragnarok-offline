@@ -28,10 +28,21 @@ public actor ScriptManager {
         return accessoryName
     }
 
+    public func robeName(forRobeID robeID: Int, checkEnglish: Bool) async -> String? {
+        guard let result = await call("ReqRobSprName_V2", with: [robeID, checkEnglish], to: String.self) else {
+            return nil
+        }
+
+        let robeName = result.transcoding(from: .isoLatin1, to: .koreanEUC)
+        return robeName
+    }
+
     public func shadowFactor(forJobID jobID: Int) async -> Double? {
         let result = await call("ReqshadowFactor", with: [jobID], to: Double.self)
         return result
     }
+
+    // MARK: - Load & Call
 
     private func call<T>(_ name: String, with args: [Any], to resultType: T.Type) async -> T? {
         await loadScripts()
@@ -53,10 +64,16 @@ public actor ScriptManager {
         await load(contentsAt: ["datainfo", "accessoryid.lub"])
         await load(contentsAt: ["datainfo", "accname.lub"])
         await load(contentsAt: ["datainfo", "accname_f.lub"])
+
         await load(contentsAt: ["datainfo", "jobidentity.lub"])
         await load(contentsAt: ["datainfo", "npcidentity.lub"])
+
         await load(contentsAt: ["datainfo", "shadowtable.lub"])
         await load(contentsAt: ["datainfo", "shadowtable_f.lub"])
+
+        await load(contentsAt: ["datainfo", "spriterobeid.lub"])
+        await load(contentsAt: ["datainfo", "spriterobename.lub"])
+        await load(contentsAt: ["datainfo", "spriterobename_f.lub"])
 
         isLoaded = true
     }
