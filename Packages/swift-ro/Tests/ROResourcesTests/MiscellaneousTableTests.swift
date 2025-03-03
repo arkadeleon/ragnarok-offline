@@ -9,11 +9,6 @@ import XCTest
 @testable import ROResources
 
 final class MiscellaneousTableTests: XCTestCase {
-    func testAccessoryNameTable() async throws {
-        let goggles = await AccessoryNameTable.current.accessoryName(forAccessoryID: 1)
-        XCTAssertEqual(goggles, "_고글")
-    }
-
     func testItemRandomOptionNameTable() async throws {
         let mhp = await ItemRandomOptionNameTable.current.itemRandomOptionName(forItemRandomOptionID: 1)
         XCTAssertEqual(mhp, "MHP + %d")

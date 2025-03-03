@@ -371,7 +371,7 @@ extension ResourcePath {
     }
 
     static func headgearSprite(headgearID: Int, gender: Gender) async -> ResourcePath? {
-        guard let accessoryName = await AccessoryNameTable.current.accessoryName(forAccessoryID: headgearID) else {
+        guard let accessoryName = await ScriptManager.default.accessoryName(forAccessoryID: headgearID) else {
             return nil
         }
 

@@ -19,12 +19,21 @@ public actor ScriptManager {
         self.resourceManager = resourceManager
     }
 
+    public func accessoryName(forAccessoryID accessoryID: Int) async -> String? {
+        guard let result = await call("ReqAccName", with: [accessoryID], to: String.self) else {
+            return nil
+        }
+
+        let accessoryName = result.transcoding(from: .isoLatin1, to: .koreanEUC)
+        return accessoryName
+    }
+
     public func shadowFactor(forJobID jobID: Int) async -> Double? {
-        let result: Double? = await call("ReqshadowFactor", with: [jobID])
+        let result = await call("ReqshadowFactor", with: [jobID], to: Double.self)
         return result
     }
 
-    private func call<T>(_ name: String, with args: [Any]) async -> T? {
+    private func call<T>(_ name: String, with args: [Any], to resultType: T.Type) async -> T? {
         await loadScripts()
 
         do {
@@ -41,6 +50,9 @@ public actor ScriptManager {
             return
         }
 
+        await load(contentsAt: ["datainfo", "accessoryid.lub"])
+        await load(contentsAt: ["datainfo", "accname.lub"])
+        await load(contentsAt: ["datainfo", "accname_f.lub"])
         await load(contentsAt: ["datainfo", "jobidentity.lub"])
         await load(contentsAt: ["datainfo", "npcidentity.lub"])
         await load(contentsAt: ["datainfo", "shadowtable.lub"])

@@ -13,6 +13,11 @@ final class ScriptManagerTests: XCTestCase {
         resourceManager: ResourceManager(baseURL: Bundle.module.resourceURL!)
     )
 
+    func testAccessoryNameTable() async throws {
+        let goggles = await scriptManager.accessoryName(forAccessoryID: 1)
+        XCTAssertEqual(goggles, "_고글")
+    }
+
     func testShadowFactorTable() async throws {
         let warp = await scriptManager.shadowFactor(forJobID: 45)
         XCTAssertEqual(warp, 0)
