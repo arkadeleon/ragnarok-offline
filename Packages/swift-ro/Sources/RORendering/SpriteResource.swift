@@ -320,11 +320,11 @@ extension ResourcePath {
                 jobName = (jobName.0, madogearJobName)
             }
 
-            var weaponName = await WeaponNameTable.current.weaponName(forWeaponID: weaponID)
+            var weaponName = await ScriptManager.default.weaponName(forWeaponID: weaponID)
 
             if weaponName == nil && !isMadogear {
-                if let realWeaponID = await WeaponNameTable.current.realWeaponID(forWeaponID: weaponID) {
-                    weaponName = await WeaponNameTable.current.weaponName(forWeaponID: realWeaponID)
+                if let realWeaponID = await ScriptManager.default.realWeaponID(forWeaponID: weaponID) {
+                    weaponName = await ScriptManager.default.weaponName(forWeaponID: realWeaponID)
                     if weaponName == nil {
                         weaponName = "_\(weaponID)"
                     }

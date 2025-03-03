@@ -30,4 +30,12 @@ final class ScriptManagerTests: XCTestCase {
         let chonchon = await scriptManager.shadowFactor(forJobID: 1011)
         XCTAssertEqual(chonchon, 0.5)
     }
+
+    func testWeaponNameTable() async throws {
+        let shortsword = await scriptManager.weaponName(forWeaponID: 1)
+        XCTAssertEqual(shortsword, "_단검")
+
+        let mainGauche = await scriptManager.realWeaponID(forWeaponID: 31)
+        XCTAssertEqual(mainGauche, 1)
+    }
 }

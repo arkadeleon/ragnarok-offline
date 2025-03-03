@@ -20,25 +20,30 @@ public actor ScriptManager {
     }
 
     public func accessoryName(forAccessoryID accessoryID: Int) async -> String? {
-        guard let result = await call("ReqAccName", with: [accessoryID], to: String.self) else {
-            return nil
-        }
-
-        let accessoryName = result.transcoding(from: .isoLatin1, to: .koreanEUC)
+        let result = await call("ReqAccName", with: [accessoryID], to: String.self)
+        let accessoryName = result?.transcoding(from: .isoLatin1, to: .koreanEUC)
         return accessoryName
     }
 
     public func robeName(forRobeID robeID: Int, checkEnglish: Bool) async -> String? {
-        guard let result = await call("ReqRobSprName_V2", with: [robeID, checkEnglish], to: String.self) else {
-            return nil
-        }
-
-        let robeName = result.transcoding(from: .isoLatin1, to: .koreanEUC)
+        let result = await call("ReqRobSprName_V2", with: [robeID, checkEnglish], to: String.self)
+        let robeName = result?.transcoding(from: .isoLatin1, to: .koreanEUC)
         return robeName
     }
 
     public func shadowFactor(forJobID jobID: Int) async -> Double? {
         let result = await call("ReqshadowFactor", with: [jobID], to: Double.self)
+        return result
+    }
+
+    public func weaponName(forWeaponID weaponID: Int) async -> String? {
+        let result = await call("ReqWeaponName", with: [weaponID], to: String.self)
+        let weaponName = result?.transcoding(from: .isoLatin1, to: .koreanEUC)
+        return weaponName
+    }
+
+    public func realWeaponID(forWeaponID weaponID: Int) async -> Int? {
+        let result = await call("GetRealWeaponId", with: [weaponID], to: Int.self)
         return result
     }
 
@@ -74,6 +79,9 @@ public actor ScriptManager {
         await load(contentsAt: ["datainfo", "spriterobeid.lub"])
         await load(contentsAt: ["datainfo", "spriterobename.lub"])
         await load(contentsAt: ["datainfo", "spriterobename_f.lub"])
+
+        await load(contentsAt: ["datainfo", "weapontable.lub"])
+        await load(contentsAt: ["datainfo", "weapontable_f.lub"])
 
         isLoaded = true
     }

@@ -23,12 +23,4 @@ final class MiscellaneousTableTests: XCTestCase {
         let prontera = await MapMP3NameTable.current.mapMP3Name(forMapName: "prt_fild08")
         XCTAssertEqual(prontera, "12.mp3")
     }
-
-    func testWeaponNameTable() async throws {
-        let shortsword = await WeaponNameTable.current.weaponName(forWeaponID: 1)
-        XCTAssertEqual(shortsword, "_단검")
-
-        let mainGauche = await WeaponNameTable.current.realWeaponID(forWeaponID: 31)
-        XCTAssertEqual(mainGauche, 1)
-    }
 }
