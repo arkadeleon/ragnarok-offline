@@ -7,6 +7,7 @@
 
 import ROCore
 import RORendering
+import ROResources
 import SwiftUI
 
 struct GameImage: View {

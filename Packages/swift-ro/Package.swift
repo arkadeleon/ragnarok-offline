@@ -159,6 +159,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Lua", package: "swift-lua"),
                 "ROCore",
+                "ROFileFormats",
             ],
             resources: [
                 .process("Resources"),
@@ -168,6 +169,9 @@ let package = Package(
             dependencies: [
                 "ROGenerated",
                 "ROResources",
+            ],
+            resources: [
+                .copy("Resources/data"),
             ]),
         .target(
             name: "ROServer",

@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import RORendering
+@testable import ROResources
 
 final class ScriptManagerTests: XCTestCase {
     let scriptManager = ScriptManager(

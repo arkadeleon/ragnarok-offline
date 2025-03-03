@@ -52,8 +52,8 @@ public actor ScriptManager {
     private func load(contentsAt path: ResourcePath) async {
         do {
             let path = ResourcePath.scriptPath + path
-            let script = try await resourceManager.script(at: path)
-            try context.load(script.data)
+            let data = try await resourceManager.contentsOfResource(at: path)
+            try context.load(data)
         } catch {
             logger.warning("\(error.localizedDescription)")
         }

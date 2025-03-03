@@ -7,6 +7,7 @@
 
 import XCTest
 @testable import RORendering
+@testable import ROResources
 
 final class SpriteRendererTests: XCTestCase {
     func testSpriteRenderer() async throws {

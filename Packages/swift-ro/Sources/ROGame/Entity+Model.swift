@@ -8,6 +8,7 @@
 import RealityKit
 import RORenderers
 import RORendering
+import ROResources
 
 extension Entity {
     public static func modelEntity(model: ModelResource) async throws -> Entity {

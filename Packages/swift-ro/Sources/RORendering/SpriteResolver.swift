@@ -6,6 +6,7 @@
 //
 
 import ROGenerated
+import ROResources
 
 final public class SpriteResolver: Sendable {
     public let resourceManager: ResourceManager
