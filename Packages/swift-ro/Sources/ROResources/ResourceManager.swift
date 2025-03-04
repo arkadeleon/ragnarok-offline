@@ -22,8 +22,20 @@ public actor ResourceManager {
     init(baseURL: URL) {
         self.baseURL = baseURL
 
+        let dataGRFURL = baseURL.appending(path: "data.grf")
+
+        if !FileManager.default.fileExists(atPath: dataGRFURL.path()) {
+            let data = Data()
+            let url = baseURL.appending(path: "Copy data.grf Here")
+            do {
+                try data.write(to: url)
+            } catch {
+                logger.warning("\(error.localizedDescription)")
+            }
+        }
+
         grfs = [
-            GRFReference(url: baseURL.appending(path: "data.grf")),
+            GRFReference(url: dataGRFURL),
         ]
     }
 

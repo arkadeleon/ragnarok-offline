@@ -13,13 +13,13 @@ struct ImageGrid<Content>: View where Content: View {
     var body: some View {
         ScrollView {
             ResponsiveView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], spacing: 30, content: content)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 30)
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 100), spacing: 16)], spacing: 32, content: content)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 32)
             } regular: {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 40)], spacing: 60, content: content)
-                    .padding(.horizontal, 40)
-                    .padding(.vertical, 60)
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 100), spacing: 32)], spacing: 64, content: content)
+                    .padding(.horizontal, 32)
+                    .padding(.vertical, 64)
             }
         }
     }
