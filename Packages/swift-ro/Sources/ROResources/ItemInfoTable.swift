@@ -19,33 +19,6 @@ public actor ItemInfoTable {
 
     let locale: Locale
 
-    lazy var itemContext: LuaContext = {
-        let context = LuaContext()
-
-        do {
-            if let url = Bundle.module.url(forResource: "itemInfo", withExtension: "lub", locale: .korean) {
-                let data = try Data(contentsOf: url)
-                try context.load(data)
-            }
-
-            try context.parse("""
-            function unidentifiedItemResourceName(itemID)
-                return tbl[itemID]["unidentifiedResourceName"]
-            end
-            function identifiedItemResourceName(itemID)
-                return tbl[itemID]["identifiedResourceName"]
-            end
-            function itemSlotCount(itemID)
-                return tbl[itemID]["slotCount"]
-            end
-            """)
-        } catch {
-            logger.warning("\(error.localizedDescription)")
-        }
-
-        return context
-    }()
-
     lazy var itemDataSource: ItemDataSource = {
         if let url = Bundle.module.url(forResource: "itemInfo", withExtension: "lub", locale: locale) {
             let context = LuaContext()
@@ -146,15 +119,6 @@ public actor ItemInfoTable {
 
     init(locale: Locale) {
         self.locale = locale
-    }
-
-    public func identifiedItemResourceName(forItemID itemID: Int) -> String? {
-        guard let result = try? itemContext.call("identifiedItemResourceName", with: [itemID]) as? String else {
-            return nil
-        }
-
-        let itemResourceName = result.transcoding(from: .isoLatin1, to: .koreanEUC)
-        return itemResourceName
     }
 
     public func localizedIdentifiedItemName(forItemID itemID: Int) -> String? {

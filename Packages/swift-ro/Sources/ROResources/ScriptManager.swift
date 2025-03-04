@@ -21,6 +21,12 @@ public actor ScriptManager {
         self.resourceManager = resourceManager
     }
 
+    public func identifiedItemResourceName(forItemID itemID: Int) async -> String? {
+        let result = await call("identifiedItemResourceName", with: [itemID], to: String.self)
+        let itemResourceName = result?.transcoding(from: .isoLatin1, to: .koreanEUC)
+        return itemResourceName
+    }
+
     public func accessoryName(forAccessoryID accessoryID: Int) async -> String? {
         let result = await call("ReqAccName", with: [accessoryID], to: String.self)
         let accessoryName = result?.transcoding(from: .isoLatin1, to: .koreanEUC)
@@ -94,34 +100,52 @@ public actor ScriptManager {
             return
         }
 
-        await load(contentsAt: ["datainfo", "accessoryid.lub"])
-        await load(contentsAt: ["datainfo", "accname.lub"])
-        await load(contentsAt: ["datainfo", "accname_f.lub"])
+        await loadLocalScript("itemInfo", locale: .korean)
 
-        await load(contentsAt: ["datainfo", "enumvar.lub"])
-        await loadLocalizedScript("addrandomoptionnametable")
-        await load(contentsAt: ["datainfo", "addrandomoption_f.lub"])
+        await loadScript(at: ["datainfo", "accessoryid.lub"])
+        await loadScript(at: ["datainfo", "accname.lub"])
+        await loadScript(at: ["datainfo", "accname_f.lub"])
 
-        await load(contentsAt: ["datainfo", "jobidentity.lub"])
-        await load(contentsAt: ["datainfo", "npcidentity.lub"])
-        await load(contentsAt: ["datainfo", "jobname.lub"])
-        await load(contentsAt: ["datainfo", "jobname_f.lub"])
+        await loadScript(at: ["datainfo", "enumvar.lub"])
+        await loadLocalScript("addrandomoptionnametable", locale: .korean)
+        await loadScript(at: ["datainfo", "addrandomoption_f.lub"])
 
-        await load(contentsAt: ["datainfo", "shadowtable.lub"])
-        await load(contentsAt: ["datainfo", "shadowtable_f.lub"])
+        await loadScript(at: ["datainfo", "jobidentity.lub"])
+        await loadScript(at: ["datainfo", "npcidentity.lub"])
+        await loadScript(at: ["datainfo", "jobname.lub"])
+        await loadScript(at: ["datainfo", "jobname_f.lub"])
 
-        await load(contentsAt: ["datainfo", "spriterobeid.lub"])
-        await load(contentsAt: ["datainfo", "spriterobename.lub"])
-        await load(contentsAt: ["datainfo", "spriterobename_f.lub"])
+        await loadScript(at: ["datainfo", "shadowtable.lub"])
+        await loadScript(at: ["datainfo", "shadowtable_f.lub"])
 
-        await load(contentsAt: ["datainfo", "weapontable.lub"])
-        await load(contentsAt: ["datainfo", "weapontable_f.lub"])
+        await loadScript(at: ["datainfo", "spriterobeid.lub"])
+        await loadScript(at: ["datainfo", "spriterobename.lub"])
+        await loadScript(at: ["datainfo", "spriterobename_f.lub"])
 
-        await load(contentsAt: ["skillinfoz", "jobinheritlist.lub"])
-        await load(contentsAt: ["skillinfoz", "skillid.lub"])
-        await loadLocalizedScript("skillinfolist")
-        await loadLocalizedScript("skilldescript")
-//        await load(contentsAt: ["skillinfoz", "skillinfo_f.lub"])
+        await loadScript(at: ["datainfo", "weapontable.lub"])
+        await loadScript(at: ["datainfo", "weapontable_f.lub"])
+
+        await loadScript(at: ["skillinfoz", "jobinheritlist.lub"])
+        await loadScript(at: ["skillinfoz", "skillid.lub"])
+        await loadLocalScript("skillinfolist", locale: locale)
+        await loadLocalScript("skilldescript", locale: locale)
+//        await loadScript(at: ["skillinfoz", "skillinfo_f.lub"])
+
+        do {
+            try context.parse("""
+            function unidentifiedItemResourceName(itemID)
+                return tbl[itemID]["unidentifiedResourceName"]
+            end
+            function identifiedItemResourceName(itemID)
+                return tbl[itemID]["identifiedResourceName"]
+            end
+            function itemSlotCount(itemID)
+                return tbl[itemID]["slotCount"]
+            end
+            """)
+        } catch {
+            logger.warning("\(error.localizedDescription)")
+        }
 
         do {
             try context.parse("""
@@ -139,7 +163,7 @@ public actor ScriptManager {
         isLoaded = true
     }
 
-    private func load(contentsAt path: ResourcePath) async {
+    private func loadScript(at path: ResourcePath) async {
         do {
             let path = ResourcePath.scriptPath + path
             let data = try await resourceManager.contentsOfResource(at: path)
@@ -149,7 +173,7 @@ public actor ScriptManager {
         }
     }
 
-    private func loadLocalizedScript(_ name: String) async {
+    private func loadLocalScript(_ name: String, locale: Locale) async {
         guard let url = Bundle.module.url(forResource: name, withExtension: "lub", locale: locale) else {
             return
         }

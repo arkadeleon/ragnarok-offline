@@ -32,7 +32,7 @@ extension ResourceManager {
 
 extension ResourcePath {
     public init?(itemIconImagePathWithItemID itemID: Int) async {
-        guard let resourceName = await ItemInfoTable.current.identifiedItemResourceName(forItemID: itemID) else {
+        guard let resourceName = await ScriptManager.default.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
 
@@ -40,7 +40,7 @@ extension ResourcePath {
     }
 
     public init?(itemPreviewImagePathWithItemID itemID: Int) async {
-        guard let resourceName = await ItemInfoTable.current.identifiedItemResourceName(forItemID: itemID) else {
+        guard let resourceName = await ScriptManager.default.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
 

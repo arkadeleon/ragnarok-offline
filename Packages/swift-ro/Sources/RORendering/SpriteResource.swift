@@ -489,7 +489,7 @@ extension ResourcePath {
 
 extension ResourcePath {
     public init?(itemSpritePathWithItemID itemID: Int) async {
-        guard let resourceName = await ItemInfoTable.current.identifiedItemResourceName(forItemID: itemID) else {
+        guard let resourceName = await ScriptManager.default.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
 

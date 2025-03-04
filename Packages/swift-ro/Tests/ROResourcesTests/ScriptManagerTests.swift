@@ -14,27 +14,32 @@ final class ScriptManagerTests: XCTestCase {
         resourceManager: ResourceManager(baseURL: Bundle.module.resourceURL!)
     )
 
-    func testAccessoryNameTable() async throws {
+    func testItemResourceName() async throws {
+        let redPotion = await scriptManager.identifiedItemResourceName(forItemID: 501)
+        XCTAssertEqual(redPotion, "빨간포션")
+    }
+
+    func testAccessoryName() async throws {
         let goggles = await scriptManager.accessoryName(forAccessoryID: 1)
         XCTAssertEqual(goggles, "_고글")
     }
 
-    func testItemRandomOptionNameTable() async throws {
+    func testItemRandomOptionName() async throws {
         let mhp = await scriptManager.itemRandomOptionName(forItemRandomOptionID: 1)
         XCTAssertEqual(mhp, "MHP + %d")
     }
 
-    func testJobNameTable() async throws {
+    func testJobName() async throws {
         let warp = await scriptManager.jobName(forJobID: 45)
         XCTAssertEqual(warp, "1_ETC_01")
     }
 
-    func testRobeNameTable() async throws {
+    func testRobeName() async throws {
         let wings = await scriptManager.robeName(forRobeID: 1, checkEnglish: false)
         XCTAssertEqual(wings, "천사날개")
     }
 
-    func testShadowFactorTable() async throws {
+    func testShadowFactor() async throws {
         let warp = await scriptManager.shadowFactor(forJobID: 45)
         XCTAssertEqual(warp, 0)
 
@@ -42,7 +47,7 @@ final class ScriptManagerTests: XCTestCase {
         XCTAssertEqual(chonchon, 0.5)
     }
 
-    func testWeaponNameTable() async throws {
+    func testWeaponName() async throws {
         let shortsword = await scriptManager.weaponName(forWeaponID: 1)
         XCTAssertEqual(shortsword, "_단검")
 
