@@ -8,15 +8,40 @@
 import Foundation
 
 public actor MapMP3NameTable {
-    public static let current = MapMP3NameTable()
+    public static let `default` = MapMP3NameTable(resourceManager: .default)
 
-    lazy var mapMP3NamesByRSW: [String : String] = {
-        guard let url = Bundle.module.url(forResource: "mp3nametable", withExtension: "txt"),
-              let string = try? String(contentsOf: url, encoding: .koreanEUC) else {
-            return [:]
+    public let resourceManager: ResourceManager
+
+    private var mapMP3NamesByRSW: [String : String] = [:]
+    private var isLoaded = false
+
+    public init(resourceManager: ResourceManager) {
+        self.resourceManager = resourceManager
+    }
+
+    public func mapMP3Name(forMapName mapName: String) async -> String? {
+        await loadMapMP3NameTable()
+
+        let mapMP3Name = mapMP3NamesByRSW[mapName]
+        return mapMP3Name
+    }
+
+    private func loadMapMP3NameTable() async {
+        if isLoaded {
+            return
         }
 
-        var mapMP3NamesByRSW: [String : String] = [:]
+        let data: Data
+        do {
+            data = try await resourceManager.contentsOfResource(at: ["data", "mp3nametable.txt"])
+        } catch {
+            logger.warning("\(error.localizedDescription)")
+            return
+        }
+
+        guard let string = String(data: data, encoding: .koreanEUC) else {
+            return
+        }
 
         let lines = string.split(separator: "\r\n")
 
@@ -36,10 +61,6 @@ public actor MapMP3NameTable {
             }
         }
 
-        return mapMP3NamesByRSW
-    }()
-
-    public func mapMP3Name(forMapName mapName: String) -> String? {
-        mapMP3NamesByRSW[mapName]
+        isLoaded = true
     }
 }

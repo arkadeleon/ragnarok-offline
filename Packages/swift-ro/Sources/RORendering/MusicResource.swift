@@ -9,7 +9,7 @@ import ROResources
 
 extension ResourcePath {
     public init?(mapBGMPathWithMapName mapName: String) async {
-        guard let mp3Name = await MapMP3NameTable.current.mapMP3Name(forMapName: mapName) else {
+        guard let mp3Name = await MapMP3NameTable.default.mapMP3Name(forMapName: mapName) else {
             return nil
         }
 
