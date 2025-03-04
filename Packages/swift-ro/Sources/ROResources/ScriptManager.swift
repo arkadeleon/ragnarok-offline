@@ -49,6 +49,21 @@ public actor ScriptManager {
         return result
     }
 
+    public func localizedSkillName(forSkillID skillID: Int) async -> String? {
+        let result = await call("GetSkillName", with: [skillID], to: String.self)
+        let skillName = result?
+            .transcoding(from: .isoLatin1, to: locale.language.preferredEncoding)
+        return skillName
+    }
+
+    public func localizedSkillDescription(forSkillID skillID: Int) async -> String? {
+        let result = await call("GetSkillDescript", with: [skillID], to: [String].self)
+        let skillDescription = result?
+            .joined(separator: "\n")
+            .transcoding(from: .isoLatin1, to: locale.language.preferredEncoding)
+        return skillDescription
+    }
+
     public func weaponName(forWeaponID weaponID: Int) async -> String? {
         let result = await call("ReqWeaponName", with: [weaponID], to: String.self)
         let weaponName = result?.transcoding(from: .isoLatin1, to: .koreanEUC)
@@ -101,6 +116,25 @@ public actor ScriptManager {
 
         await load(contentsAt: ["datainfo", "weapontable.lub"])
         await load(contentsAt: ["datainfo", "weapontable_f.lub"])
+
+        await load(contentsAt: ["skillinfoz", "jobinheritlist.lub"])
+        await load(contentsAt: ["skillinfoz", "skillid.lub"])
+        await loadLocalizedScript("skillinfolist")
+        await loadLocalizedScript("skilldescript")
+//        await load(contentsAt: ["skillinfoz", "skillinfo_f.lub"])
+
+        do {
+            try context.parse("""
+            function GetSkillName(skillID)
+                return SKILL_INFO_LIST[skillID]["SkillName"]
+            end
+            function GetSkillDescript(skillID)
+                return SKILL_DESCRIPT[skillID]
+            end
+            """)
+        } catch {
+            logger.warning("\(error.localizedDescription)")
+        }
 
         isLoaded = true
     }

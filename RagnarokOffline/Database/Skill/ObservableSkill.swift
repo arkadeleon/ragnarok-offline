@@ -62,7 +62,7 @@ class ObservableSkill {
 
     @MainActor
     func fetchLocalizedName() async {
-        localizedName = await SkillInfoTable.current.localizedSkillName(forSkillID: skill.id)
+        localizedName = await ScriptManager.default.localizedSkillName(forSkillID: skill.id)
     }
 
     @MainActor
@@ -75,7 +75,7 @@ class ObservableSkill {
 
     @MainActor
     func fetchDetail() async {
-        localizedDescription = await SkillInfoTable.current.localizedSkillDescription(forSkillID: skill.id)
+        localizedDescription = await ScriptManager.default.localizedSkillDescription(forSkillID: skill.id)
     }
 }
 
