@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2023/1/13.
 //
 
-import RORendering
+import ROGame
 import SwiftUI
 
 @main

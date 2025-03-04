@@ -18,7 +18,7 @@ public struct UniformJobID: RawRepresentable, ExpressibleByIntegerLiteral, Senda
 }
 
 extension UniformJobID {
-    var isPlayer: Bool {
+    public var isPlayer: Bool {
         switch rawValue {
         case 0..<45: true
         case 4001...4316: true
@@ -26,7 +26,7 @@ extension UniformJobID {
         }
     }
 
-    var isBabyPlayer: Bool {
+    public var isBabyPlayer: Bool {
         switch rawValue {
         case 4023...4045: true
         case 4096...4112: true
@@ -38,14 +38,14 @@ extension UniformJobID {
         }
     }
 
-    var isMadogear: Bool {
+    public var isMadogear: Bool {
         switch rawValue {
         case 4086, 4087, 4112, 4279: true
         default: false
         }
     }
 
-    var isNPC: Bool {
+    public var isNPC: Bool {
         switch rawValue {
         case 45..<1000: true
         case 10001..<19999: true
@@ -53,7 +53,7 @@ extension UniformJobID {
         }
     }
 
-    var isMonster: Bool {
+    public var isMonster: Bool {
         switch rawValue {
         case 1001..<3999: true
         case 20000...: true
@@ -61,21 +61,21 @@ extension UniformJobID {
         }
     }
 
-    var isHomunculus: Bool {
+    public var isHomunculus: Bool {
         switch rawValue {
         case 6001...6052: true
         default: false
         }
     }
 
-    var isMercenary: Bool {
+    public var isMercenary: Bool {
         switch rawValue {
         case 6017...6046: true
         default: false
         }
     }
 
-    var isDoram: Bool {
+    public var isDoram: Bool {
         switch rawValue {
         case 4217...4221: true
         case 4308, 4315: true

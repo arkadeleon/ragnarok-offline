@@ -6,6 +6,7 @@
 //
 
 import RealityKit
+import RORendering
 
 public class SpriteEntity: Entity {
     public required init() {

@@ -7,6 +7,7 @@
 
 import RealityKit
 import ROCore
+import ROGame
 import RORendering
 import SwiftUI
 

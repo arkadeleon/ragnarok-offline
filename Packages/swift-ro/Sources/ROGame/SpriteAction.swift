@@ -8,6 +8,7 @@
 import CoreGraphics
 import RealityKit
 import ROCore
+import RORendering
 
 enum SpriteActionError: Error {
     case cannotRenderAction
