@@ -16,6 +16,7 @@ struct FilesView: View {
     @State private var files: [File] = []
     @State private var filteredFiles: [File] = []
 
+    @State private var isHelpPresented = false
     @State private var fileToPreview: File?
     @State private var fileToShowRawData: File?
     @State private var fileToShowReferences: File?
@@ -76,6 +77,12 @@ struct FilesView: View {
         }
         .navigationTitle(title)
         .toolbar {
+            Button {
+                isHelpPresented.toggle()
+            } label: {
+                Image(systemName: "questionmark.circle")
+            }
+
             Menu {
                 Button {
                     pasteFile()
@@ -93,6 +100,11 @@ struct FilesView: View {
         }
         .onChange(of: searchText) {
             filterFiles()
+        }
+        .sheet(isPresented: $isHelpPresented) {
+            NavigationStack {
+                FileHelpView()
+            }
         }
         .sheet(item: $fileToPreview) { file in
             NavigationStack {

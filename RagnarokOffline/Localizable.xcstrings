@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "# Copy Ragnarok Client Data on iOS\n\n1. Prerequisites:\n   - A Windows PC with the latest kRO (Korean Ragnarok Online) client installed\n   - An iOS device (iPhone/iPad)\n   - Both devices connected to the same local network\n\n2. On Windows PC:\n   - Install the latest kRO client\n   - Right-click the client folder and select \"Properties\"\n   - Enable file sharing for the folder\n   - Note down your Windows PC's IP address\n\n3. On iOS Device:\n   - Launch the **Files** app\n   - Tap the **More** icon (three dots) in the top-right corner\n   - Select **Connect to Server**\n   - Enter your Windows PC's IP address\n   - Provide your Windows username and password when prompted\n   - Tap **Connect**\n\n4. Transfer Files:\n   - Navigate to the shared kRO client folder\n   - Locate the **data.grf** file\n   - Long-press the file and select **Copy**\n   - Navigate to **On My iPhone/iPad** > **Ragnarok Offline**\n   - Long-press any empty space and select **Paste**\n\nNote: The transfer speed depends on your local network connection." : {
+
+    },
     "%lld monsters" : {
 
     },
@@ -270,6 +273,9 @@
 
     },
     "Head Direction" : {
+
+    },
+    "Help" : {
 
     },
     "HP" : {
