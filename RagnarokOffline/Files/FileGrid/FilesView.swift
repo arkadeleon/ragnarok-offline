@@ -126,14 +126,14 @@ struct FilesView: View {
         }
     }
 
-    nonisolated private func load() async {
+    private func load() async {
         guard loadStatus == .notYetLoaded else {
             return
         }
 
         loadStatus = .loading
 
-        files = directory.files().sorted()
+        files = await directory.files()
         filterFiles()
 
         loadStatus = .loaded

@@ -1,5 +1,5 @@
 //
-//  ObservableFile+JSON.swift
+//  File+JSON.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/10/15.

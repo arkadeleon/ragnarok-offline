@@ -10,7 +10,7 @@ import SwiftUI
 struct FileThumbnailView: View {
     var file: File
 
-    @Environment(\.displayScale) private var displayScale: CGFloat
+    @Environment(\.displayScale) private var displayScale
 
     @State private var thumbnail: FileThumbnail?
 

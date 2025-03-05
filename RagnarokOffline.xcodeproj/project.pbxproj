@@ -144,7 +144,7 @@
 		35E67C6E2CBF6C1F006E42A3 /* GND+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C6B2CBF6C1F006E42A3 /* GND+JSON.swift */; };
 		35E67C6F2CBF6C1F006E42A3 /* GAT+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C6A2CBF6C1F006E42A3 /* GAT+JSON.swift */; };
 		35E67C702CBF6C1F006E42A3 /* ACT+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C682CBF6C1F006E42A3 /* ACT+JSON.swift */; };
-		35E67C712CBF6C1F006E42A3 /* ObservableFile+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C6C2CBF6C1F006E42A3 /* ObservableFile+JSON.swift */; };
+		35E67C712CBF6C1F006E42A3 /* File+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C6C2CBF6C1F006E42A3 /* File+JSON.swift */; };
 		35E67C722CBF6C1F006E42A3 /* FileJSONViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C692CBF6C1F006E42A3 /* FileJSONViewer.swift */; };
 		35E67C752CBF6E4F006E42A3 /* RSM+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C742CBF6E48006E42A3 /* RSM+JSON.swift */; };
 		35E67C772CBF6E57006E42A3 /* RSW+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C762CBF6E53006E42A3 /* RSW+JSON.swift */; };
@@ -314,7 +314,7 @@
 		35E67C692CBF6C1F006E42A3 /* FileJSONViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileJSONViewer.swift; sourceTree = "<group>"; };
 		35E67C6A2CBF6C1F006E42A3 /* GAT+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GAT+JSON.swift"; sourceTree = "<group>"; };
 		35E67C6B2CBF6C1F006E42A3 /* GND+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GND+JSON.swift"; sourceTree = "<group>"; };
-		35E67C6C2CBF6C1F006E42A3 /* ObservableFile+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableFile+JSON.swift"; sourceTree = "<group>"; };
+		35E67C6C2CBF6C1F006E42A3 /* File+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+JSON.swift"; sourceTree = "<group>"; };
 		35E67C742CBF6E48006E42A3 /* RSM+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSM+JSON.swift"; sourceTree = "<group>"; };
 		35E67C762CBF6E53006E42A3 /* RSW+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSW+JSON.swift"; sourceTree = "<group>"; };
 		35E67C782CBF6E5B006E42A3 /* SPR+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SPR+JSON.swift"; sourceTree = "<group>"; };
@@ -715,7 +715,7 @@
 			children = (
 				357EA4E22CC14A440081370F /* json-viewer */,
 				35E67C692CBF6C1F006E42A3 /* FileJSONViewer.swift */,
-				35E67C6C2CBF6C1F006E42A3 /* ObservableFile+JSON.swift */,
+				35E67C6C2CBF6C1F006E42A3 /* File+JSON.swift */,
 				35E67C7C2CBF909E006E42A3 /* Miscellaneous+JSON.swift */,
 				35E67C682CBF6C1F006E42A3 /* ACT+JSON.swift */,
 				35E67C6A2CBF6C1F006E42A3 /* GAT+JSON.swift */,
@@ -890,7 +890,7 @@
 				35E67C6E2CBF6C1F006E42A3 /* GND+JSON.swift in Sources */,
 				35E67C6F2CBF6C1F006E42A3 /* GAT+JSON.swift in Sources */,
 				35E67C702CBF6C1F006E42A3 /* ACT+JSON.swift in Sources */,
-				35E67C712CBF6C1F006E42A3 /* ObservableFile+JSON.swift in Sources */,
+				35E67C712CBF6C1F006E42A3 /* File+JSON.swift in Sources */,
 				35E67C722CBF6C1F006E42A3 /* FileJSONViewer.swift in Sources */,
 				35B422EF2BEF091F00681AA2 /* ObservableDatabase.swift in Sources */,
 				35FEB6AF2CD8C90300F24A4A /* StatusChangeInfoView.swift in Sources */,

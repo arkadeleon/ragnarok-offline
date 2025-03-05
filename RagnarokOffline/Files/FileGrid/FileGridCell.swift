@@ -21,30 +21,26 @@ struct FileGridCell: View {
         }
     }
 
-    nonisolated private func loadSubtitle() async {
-        let fileType = await file.type
+    private func loadSubtitle() async {
+        let fileType = file.type
         switch fileType {
         case .directory:
-            let fileCount = await file.files().count
-            await MainActor.run {
-                subtitle = fileCount.formatted() + " item(s)"
-            }
+            let fileCount = await file.fileCount()
+            subtitle = fileCount.formatted() + " item(s)"
         default:
-            let fileSize = await file.size
-            await MainActor.run {
-                let formatStyle = FloatingPointFormatStyle<Float>().precision(.significantDigits(2))
-                if fileSize > 1024 * 1024 * 1024 {
-                    let fileSizeInGB = Float(fileSize) / 1024 / 1024 / 1024
-                    subtitle = fileSizeInGB.formatted(formatStyle) + " GB"
-                } else if fileSize > 1024 * 1024 {
-                    let fileSizeInMB = Float(fileSize) / 1024 / 1024
-                    subtitle = fileSizeInMB.formatted(formatStyle) + " MB"
-                } else if fileSize > 1024 {
-                    let fileSizeInKB = Float(fileSize) / 1024
-                    subtitle = fileSizeInKB.formatted(formatStyle) + " KB"
-                } else {
-                    subtitle = fileSize.formatted() + " B"
-                }
+            let fileSize = await file.size()
+            let formatStyle = FloatingPointFormatStyle<Float>().precision(.significantDigits(2))
+            if fileSize > 1024 * 1024 * 1024 {
+                let fileSizeInGB = Float(fileSize) / 1024 / 1024 / 1024
+                subtitle = fileSizeInGB.formatted(formatStyle) + " GB"
+            } else if fileSize > 1024 * 1024 {
+                let fileSizeInMB = Float(fileSize) / 1024 / 1024
+                subtitle = fileSizeInMB.formatted(formatStyle) + " MB"
+            } else if fileSize > 1024 {
+                let fileSizeInKB = Float(fileSize) / 1024
+                subtitle = fileSizeInKB.formatted(formatStyle) + " KB"
+            } else {
+                subtitle = fileSize.formatted() + " B"
             }
         }
     }

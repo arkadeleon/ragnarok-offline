@@ -70,30 +70,30 @@ class File: Hashable, Identifiable {
         }
     }
 
-    var size: Int64 {
-        switch node {
-        case .directory:
-            return 0
-        case .regularFile(let url):
-            let size = (try? url.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
-            return Int64(size)
-        case .grf(let grf):
-            let size = (try? grf.url.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
-            return Int64(size)
-        case .grfDirectory:
-            return 0
-        case .grfEntry(let grf, let path):
-            let size = grf.entry(at: path)?.size ?? 0
-            return Int64(size)
-        }
-    }
-
     init(node: FileNode) {
         self.node = node
     }
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(url)
+    }
+
+    func size() async -> Int {
+        switch node {
+        case .directory:
+            return 0
+        case .regularFile(let url):
+            let size = (try? url.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
+            return size
+        case .grf(let grf):
+            let size = (try? grf.url.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
+            return size
+        case .grfDirectory:
+            return 0
+        case .grfEntry(let grf, let path):
+            let size = grf.entry(at: path)?.size ?? 0
+            return Int(size)
+        }
     }
 
     func contents() -> Data? {
@@ -111,7 +111,7 @@ class File: Hashable, Identifiable {
         }
     }
 
-    func files() -> [File] {
+    func files() async -> [File] {
         switch node {
         case .directory(let url):
             let urls = (try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [])) ?? []
@@ -129,13 +129,13 @@ class File: Hashable, Identifiable {
                     }
                 }
             }
-            return files
+            return files.sorted()
         case .regularFile:
             return []
         case .grf(let grf):
             let path = GRFPath(components: ["data"])
             let file = File(node: .grfDirectory(grf, path))
-            return file.files()
+            return await file.files()
         case .grfDirectory(let grf, let directory):
             var files: [File] = []
             let (directories, entries) = grf.contentsOfDirectory(directory)
@@ -147,9 +147,28 @@ class File: Hashable, Identifiable {
                 let file = File(node: .grfEntry(grf, entry.path))
                 files.append(file)
             }
-            return files
+            return files.sorted()
         case .grfEntry:
             return []
+        }
+    }
+
+    func fileCount() async -> Int {
+        switch node {
+        case .directory(let url):
+            let urls = (try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [])) ?? []
+            return urls.count
+        case .regularFile:
+            return 0
+        case .grf(let grf):
+            let path = GRFPath(components: ["data"])
+            let file = File(node: .grfDirectory(grf, path))
+            return await file.fileCount()
+        case .grfDirectory(let grf, let directory):
+            let (directories, entries) = grf.contentsOfDirectory(directory)
+            return directories.count + entries.count
+        case .grfEntry:
+            return 0
         }
     }
 
