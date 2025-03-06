@@ -18,7 +18,7 @@ struct TextFilePreviewView: View {
     }
 
     nonisolated private func loadTextFile() async throws -> String {
-        guard var data = file.contents() else {
+        guard var data = await file.contents() else {
             throw FilePreviewError.invalidTextFile
         }
 

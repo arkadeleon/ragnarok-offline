@@ -21,7 +21,7 @@ struct RSMFilePreviewView: View {
     }
 
     nonisolated private func loadRSMFile() async throws -> Entity {
-        guard case .grfEntry(let grf, _) = file.node, let data = file.contents() else {
+        guard case .grfEntry(let grf, _) = file.node, let data = await file.contents() else {
             throw FilePreviewError.invalidRSMFile
         }
 

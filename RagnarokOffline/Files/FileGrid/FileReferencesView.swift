@@ -43,10 +43,7 @@ struct FileReferencesView: View {
             }
         }
         .task {
-            do {
-                referenceFiles = try file.referenceFiles()
-            } catch {
-            }
+            referenceFiles = await file.referenceFiles()
         }
     }
 }

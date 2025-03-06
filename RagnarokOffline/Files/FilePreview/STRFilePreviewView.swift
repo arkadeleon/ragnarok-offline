@@ -35,7 +35,7 @@ struct STRFilePreviewView: View {
     }
 
     nonisolated private func loadSTRFile() async throws -> STRRenderer {
-        guard case .grfEntry(let grf, let path) = file.node, let data = file.contents() else {
+        guard case .grfEntry(let grf, let path) = file.node, let data = await file.contents() else {
             throw FilePreviewError.invalidSTRFile
         }
 

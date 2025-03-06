@@ -18,12 +18,12 @@ extension File {
         }
     }
 
-    var json: String? {
+    func json() async -> String? {
         guard jsonRepresentable else {
             return nil
         }
 
-        guard let data = contents() else {
+        guard let data = await contents() else {
             return nil
         }
 

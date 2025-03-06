@@ -21,7 +21,7 @@ struct GNDFilePreviewView: View {
     }
 
     nonisolated private func loadGNDFile() async throws -> Entity {
-        guard case .grfEntry(let grf, let path) = file.node, let data = file.contents() else {
+        guard case .grfEntry(let grf, let path) = file.node, let data = await file.contents() else {
             throw FilePreviewError.invalidGNDFile
         }
 

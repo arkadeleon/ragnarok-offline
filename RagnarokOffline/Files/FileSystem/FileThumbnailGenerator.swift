@@ -17,9 +17,9 @@ class FileThumbnailGenerator {
         case .image, .ebm:
             let data: Data?
             if request.file.type == .ebm {
-                data = request.file.contents()?.unzip()
+                data = await request.file.contents()?.unzip()
             } else {
-                data = request.file.contents()
+                data = await request.file.contents()
             }
 
             guard let data else {
@@ -42,7 +42,7 @@ class FileThumbnailGenerator {
 
             return FileThumbnail(cgImage: thumbnail)
         case .gat:
-            guard let data = request.file.contents() else {
+            guard let data = await request.file.contents() else {
                 return nil
             }
 
@@ -54,7 +54,7 @@ class FileThumbnailGenerator {
 
             return FileThumbnail(cgImage: image)
         case .pal:
-            guard let data = request.file.contents() else {
+            guard let data = await request.file.contents() else {
                 return nil
             }
 
@@ -66,7 +66,7 @@ class FileThumbnailGenerator {
 
             return FileThumbnail(cgImage: image)
         case .spr:
-            guard let data = request.file.contents() else {
+            guard let data = await request.file.contents() else {
                 return nil
             }
 

@@ -96,7 +96,7 @@ class File: Hashable, Identifiable {
         }
     }
 
-    func contents() -> Data? {
+    func contents() async -> Data? {
         switch node {
         case .directory:
             return nil

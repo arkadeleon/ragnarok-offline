@@ -49,7 +49,7 @@ struct AudioFilePreviewView: View {
     }
 
     nonisolated private func loadAudioFile() async throws -> AVAudioPlayer {
-        guard let data = file.contents() else {
+        guard let data = await file.contents() else {
             throw FilePreviewError.invalidAudioFile
         }
 

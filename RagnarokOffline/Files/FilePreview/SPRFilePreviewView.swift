@@ -43,7 +43,7 @@ struct SPRFilePreviewView: View {
     }
 
     nonisolated private func loadSPRFile() async throws -> SpriteSection {
-        guard let data = file.contents() else {
+        guard let data = await file.contents() else {
             throw FilePreviewError.invalidSPRFile
         }
 

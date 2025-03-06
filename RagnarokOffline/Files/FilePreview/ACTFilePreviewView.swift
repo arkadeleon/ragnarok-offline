@@ -48,7 +48,7 @@ struct ACTFilePreviewView: View {
     }
 
     nonisolated private func loadACTFile() async throws -> [ActionSection] {
-        guard let actData = file.contents() else {
+        guard let actData = await file.contents() else {
             throw FilePreviewError.invalidACTFile
         }
 

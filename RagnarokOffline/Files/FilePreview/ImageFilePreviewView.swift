@@ -20,7 +20,7 @@ struct ImageFilePreviewView: View {
     }
 
     nonisolated private func loadImageFile() async throws -> CGImage {
-        guard let data = file.contents() else {
+        guard let data = await file.contents() else {
             throw FilePreviewError.invalidImageFile
         }
 

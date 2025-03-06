@@ -12,9 +12,11 @@ struct FileJSONViewer: View {
 
     @Environment(\.dismiss) private var dismiss
 
+    @State private var htmlString = ""
+
     var body: some View {
         #if os(macOS)
-        WebView(htmlString: htmlString, baseURL: baseURL)
+        WebView(htmlString: htmlString, baseURL: Bundle.main.resourceURL)
             .frame(height: 400)
             .navigationTitle("JSON Viewer")
             .toolbar {
@@ -24,8 +26,11 @@ struct FileJSONViewer: View {
                     }
                 }
             }
+            .task {
+                await loadHTMLString()
+            }
         #else
-        WebView(htmlString: htmlString, baseURL: baseURL)
+        WebView(htmlString: htmlString, baseURL: Bundle.main.resourceURL)
             .ignoresSafeArea()
             .navigationTitle("JSON Viewer")
             .toolbarTitleDisplayMode(.inline)
@@ -36,15 +41,18 @@ struct FileJSONViewer: View {
                     }
                 }
             }
+            .task {
+                await loadHTMLString()
+            }
         #endif
     }
 
-    private var htmlString: String {
-        guard let json = file.json else {
-            return ""
+    private func loadHTMLString() async {
+        guard let json = await file.json() else {
+            return
         }
 
-        return """
+        htmlString = """
         <!doctype html>
         <html lang="en">
           <meta charset="utf-8">
@@ -64,10 +72,6 @@ struct FileJSONViewer: View {
           </body>
         </html>
         """
-    }
-
-    private var baseURL: URL? {
-        Bundle.main.resourceURL
     }
 }
 
