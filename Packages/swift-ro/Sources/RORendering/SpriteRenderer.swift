@@ -136,7 +136,7 @@ final public class SpriteRenderer: Sendable {
     }
 
     public func renderAction(at actionIndex: Int, headDirection: HeadDirection) async -> [CGImage] {
-        var actionNodes: [(SpriteResource, SpriteResource.RenderNode)] = []
+        var actionNodes: [(SpriteResource, SpriteRenderNode)] = []
         var bounds: CGRect = .null
 
         var frameCount = 0
@@ -144,7 +144,7 @@ final public class SpriteRenderer: Sendable {
         for sprite in sprites {
             let actionIndex = (sprite.semantic == .shadow ? 0 : actionIndex)
 
-            let actionNode = sprite.actionNode(actionIndex: actionIndex, headDirection: headDirection, scale: scale)
+            let actionNode = SpriteRenderNode(actionNodeWithSprite: sprite, actionIndex: actionIndex, headDirection: headDirection, scale: scale)
             actionNodes.append((sprite, actionNode))
 
             bounds = bounds.union(actionNode.bounds)
