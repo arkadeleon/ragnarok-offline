@@ -144,9 +144,9 @@ class ObservableMonster {
             let sprites = await spriteResolver.resolve(jobID: jobID, configuration: SpriteConfiguration())
 
             let spriteRenderer = SpriteRenderer(sprites: sprites)
-            let images = await spriteRenderer.renderAction(at: 0, headDirection: .straight)
+            let result = await spriteRenderer.renderAction(at: 0, headDirection: .straight)
 
-            image = images.first
+            image = result.frames.first ?? nil
         }
     }
 

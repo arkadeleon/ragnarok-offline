@@ -16,30 +16,29 @@ enum SpriteActionError: Error {
 
 final public class SpriteAction: Sendable {
     public let texture: TextureResource?
-    public let frameWidth: Int
-    public let frameHeight: Int
     public let frameCount: Int
+    public let frameWidth: Float
+    public let frameHeight: Float
     public let frameInterval: Float
 
     public init(sprites: [SpriteResource], actionIndex: Int) async throws {
         let spriteRenderer = SpriteRenderer(sprites: sprites)
-        let images = await spriteRenderer.renderAction(at: actionIndex, headDirection: .straight)
+        let result = await spriteRenderer.renderAction(at: actionIndex, headDirection: .straight)
 
-        guard !images.isEmpty else {
-            throw SpriteActionError.cannotRenderAction
-        }
+        let frameCount = result.frames.count
 
-        let scale = Int(spriteRenderer.scale)
-        let frameWidth = images[0].width / scale
-        let frameHeight = images[0].height / scale
-        let frameCount = images.count
+        let scale = spriteRenderer.scale
+        let frameWidth = result.frameWidth / scale
+        let frameHeight = result.frameHeight / scale
 
-        let size = CGSize(width: frameWidth * frameCount, height: frameHeight)
+        let size = CGSize(width: frameWidth * CGFloat(frameCount), height: frameHeight)
         let renderer = CGImageRenderer(size: size, flipped: false)
         let image = renderer.image { context in
             for frameIndex in 0..<frameCount {
-                let rect = CGRect(x: frameWidth * frameIndex, y: 0, width: frameWidth, height: frameHeight)
-                context.draw(images[frameIndex], in: rect)
+                if let frame = result.frames[frameIndex] {
+                    let rect = CGRect(x: frameWidth * CGFloat(frameIndex), y: 0, width: frameWidth, height: frameHeight)
+                    context.draw(frame, in: rect)
+                }
             }
         }
 
@@ -50,10 +49,10 @@ final public class SpriteAction: Sendable {
             texture = nil
         }
 
-        self.frameWidth = frameWidth
-        self.frameHeight = frameHeight
         self.frameCount = frameCount
-        frameInterval = 1 / 12
+        self.frameWidth = Float(frameWidth)
+        self.frameHeight = Float(frameHeight)
+        self.frameInterval = Float(result.frameInterval)
     }
 }
 

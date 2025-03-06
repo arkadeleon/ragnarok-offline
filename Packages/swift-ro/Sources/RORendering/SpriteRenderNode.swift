@@ -129,7 +129,7 @@ extension SpriteRenderNode {
 }
 
 extension SpriteResource {
-    fileprivate func action(at actionIndex: Int) -> ACT.Action? {
+    func action(at actionIndex: Int) -> ACT.Action? {
         guard 0..<act.actions.count ~= actionIndex else {
             return nil
         }
@@ -138,7 +138,7 @@ extension SpriteResource {
         return action
     }
 
-    fileprivate func frame(at indexPath: IndexPath) -> ACT.Frame? {
+    func frame(at indexPath: IndexPath) -> ACT.Frame? {
         let actionIndex = indexPath[0]
         let frameIndex = indexPath[1]
 

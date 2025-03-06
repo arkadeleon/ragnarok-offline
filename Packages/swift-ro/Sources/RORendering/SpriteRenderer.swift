@@ -128,6 +128,13 @@ public enum HeadDirection: Int, CaseIterable, CustomStringConvertible, Sendable 
 }
 
 final public class SpriteRenderer: Sendable {
+    public struct Result: Sendable {
+        public let frames: [CGImage?]
+        public let frameWidth: CGFloat
+        public let frameHeight: CGFloat
+        public let frameInterval: CGFloat
+    }
+
     public let sprites: [SpriteResource]
     public let scale: CGFloat = 2
 
@@ -135,16 +142,20 @@ final public class SpriteRenderer: Sendable {
         self.sprites = sprites
     }
 
-    public func renderAction(at actionIndex: Int, headDirection: HeadDirection) async -> [CGImage] {
+    public func renderAction(at actionIndex: Int, headDirection: HeadDirection) async -> SpriteRenderer.Result {
         var actionNodes: [(SpriteResource, SpriteRenderNode)] = []
         var bounds: CGRect = .null
-
         var frameCount = 0
 
         for sprite in sprites {
             let actionIndex = (sprite.semantic == .shadow ? 0 : actionIndex)
 
-            let actionNode = SpriteRenderNode(actionNodeWithSprite: sprite, actionIndex: actionIndex, headDirection: headDirection, scale: scale)
+            let actionNode = SpriteRenderNode(
+                actionNodeWithSprite: sprite,
+                actionIndex: actionIndex,
+                headDirection: headDirection,
+                scale: scale
+            )
             actionNodes.append((sprite, actionNode))
 
             bounds = bounds.union(actionNode.bounds)
@@ -152,7 +163,7 @@ final public class SpriteRenderer: Sendable {
             frameCount = max(frameCount, actionNode.children.count)
         }
 
-        var images: [CGImage] = []
+        var frames: [CGImage?] = []
 
         for frameIndex in 0..<frameCount {
             let renderer = CGImageRenderer(size: bounds.size, flipped: true)
@@ -174,11 +185,21 @@ final public class SpriteRenderer: Sendable {
                 }
             }
 
-            if let image {
-                images.append(image)
-            }
+            frames.append(image)
         }
 
-        return images
+        var frameInterval: CGFloat = 1 / 12
+        if let mainSprite = sprites.first(where: { $0.semantic == .main || $0.semantic == .playerBody }),
+           let action = mainSprite.action(at: actionIndex) {
+            frameInterval = CGFloat(action.animationSpeed * 25 / 1000)
+        }
+
+        let result = SpriteRenderer.Result(
+            frames: frames,
+            frameWidth: bounds.size.width,
+            frameHeight: bounds.size.height,
+            frameInterval: frameInterval
+        )
+        return result
     }
 }

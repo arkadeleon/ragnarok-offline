@@ -12,18 +12,13 @@ import ROGenerated
 import ROResources
 
 enum SpriteSemantic {
-    case standard
+    case main
     case playerBody
-    case costume
     case playerHead
     case headgear
     case garment
     case weapon
     case shield
-    case npc
-    case monster
-    case homunculus
-    case mercenary
     case shadow
 }
 
@@ -33,7 +28,7 @@ final public class SpriteResource: @unchecked Sendable {
 
     var parent: SpriteResource?
 
-    var semantic: SpriteSemantic = .standard
+    var semantic: SpriteSemantic = .main
     var orderBySemantic = 0
 
     var palette: PaletteResource?
