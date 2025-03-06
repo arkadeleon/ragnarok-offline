@@ -312,7 +312,7 @@ extension ResourcePath {
             let isAlternativeMadogear = isMadogear && madoType == .suit
             let madogearJobName = isAlternativeMadogear ? alternativeMadogearJobName(jobID: jobID, madoType: madoType) : ""
 
-            guard var jobName = PlayerJobNameTable.current.weaponJobName(for: jobID.rawValue) else {
+            guard var jobName = jobNamesForWeapon[jobID.rawValue] else {
                 return nil
             }
 
@@ -363,7 +363,7 @@ extension ResourcePath {
             return nil
         }
 
-        if let shieldName = ShieldNameTable.current.shieldName(for: shieldID) {
+        if let shieldName = shieldNames[shieldID] {
             return .spritePath + ["방패", jobName, "\(jobName)_\(gender.name)\(shieldName)"]
         } else {
             return .spritePath + ["방패", jobName, "\(jobName)_\(gender.name)_\(shieldID)_방패"]
@@ -405,7 +405,7 @@ extension ResourcePath {
             return ["\(jobName)_\(gender.name)"]
         }
 
-        guard let jobName = PlayerJobNameTable.current.imfJobName(for: jobID.rawValue) else {
+        guard let jobName = jobNamesForIMF[jobID.rawValue] else {
             return nil
         }
 
@@ -422,7 +422,7 @@ extension ResourcePath {
             return ["몸", "\(jobName)_\(gender.name)_\(clothesColorID)"]
         }
 
-        guard let jobName = PlayerJobNameTable.current.palJobName(for: jobID.rawValue) else {
+        guard let jobName = jobNamesForPalette[jobID.rawValue] else {
             return nil
         }
 
@@ -443,7 +443,7 @@ extension ResourcePath {
             return .palettePath + ["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"]
         }
 
-        guard let jobName = PlayerJobNameTable.current.palJobName(for: jobID.rawValue) else {
+        guard let jobName = jobNamesForPalette[jobID.rawValue] else {
             return nil
         }
 
@@ -471,7 +471,7 @@ extension ResourcePath {
             if jobID.isMadogear && madoType == .suit {
                 return alternativeMadogearJobName(jobID: jobID, madoType: madoType)
             } else {
-                return PlayerJobNameTable.current.jobName(for: jobID.rawValue)
+                return jobNamesForSprite[jobID.rawValue]
             }
         } else {
             return await ScriptManager.default.jobName(forJobID: jobID.rawValue)
