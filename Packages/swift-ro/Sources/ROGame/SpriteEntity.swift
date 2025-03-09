@@ -11,13 +11,18 @@ import RORendering
 public class SpriteEntity: Entity {
     public required init() {
         super.init()
+
+        let inputTargetComponent = InputTargetComponent()
+        components.set(inputTargetComponent)
     }
 
     public init(jobID: UniformJobID, configuration: SpriteConfiguration) async throws {
         super.init()
 
-        let actions = try await SpriteAction.actions(for: jobID, configuration: configuration)
+        let inputTargetComponent = InputTargetComponent()
+        components.set(inputTargetComponent)
 
+        let actions = try await SpriteAction.actions(for: jobID, configuration: configuration)
         let spriteComponent = SpriteComponent(actions: actions)
         components.set(spriteComponent)
     }
@@ -35,11 +40,8 @@ public class SpriteEntity: Entity {
 
         let action = spriteComponent.actions[actionIndex]
 
-        // Create mesh.
-        let mesh = MeshResource.generatePlane(
-            width: action.frameWidth / 32,
-            height: action.frameHeight / 32
-        )
+        let width = action.frameWidth / 32
+        let height = action.frameHeight / 32
 
         // Create material.
         var material = PhysicallyBasedMaterial()
@@ -52,8 +54,17 @@ public class SpriteEntity: Entity {
         }
 
         // Create model component.
-        let modelComponent = ModelComponent(mesh: mesh, materials: [material])
+        let modelComponent = ModelComponent(
+            mesh: .generatePlane(width: width, height: height),
+            materials: [material]
+        )
         components.set(modelComponent)
+
+        // Create collision component.
+        let collisionComponent = CollisionComponent(
+            shapes: [.generateBox(width: width, height: height, depth: 0)]
+        )
+        components.set(collisionComponent)
 
         let frames: [SIMD2<Float>] = (0..<action.frameCount).map { frameIndex in
             [Float(frameIndex) / Float(action.frameCount), 0]

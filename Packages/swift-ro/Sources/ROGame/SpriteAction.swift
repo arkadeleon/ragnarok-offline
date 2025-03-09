@@ -33,11 +33,11 @@ final public class SpriteAction: Sendable {
 
         let size = CGSize(width: frameWidth * CGFloat(frameCount), height: frameHeight)
         let renderer = CGImageRenderer(size: size, flipped: false)
-        let image = renderer.image { context in
+        let image = renderer.image { cgContext in
             for frameIndex in 0..<frameCount {
                 if let frame = result.frames[frameIndex] {
                     let rect = CGRect(x: frameWidth * CGFloat(frameIndex), y: 0, width: frameWidth, height: frameHeight)
-                    context.draw(frame, in: rect)
+                    cgContext.draw(frame, in: rect)
                 }
             }
         }

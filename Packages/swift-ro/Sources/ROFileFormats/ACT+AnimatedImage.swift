@@ -34,7 +34,8 @@ extension ACT.Action {
         let bounds = calculateBounds(using: imagesBySpriteType)
         let ciContext = CIContext()
 
-        let renderer = CGImageRenderer(size: CGSize(width: bounds.size.width * CGFloat(frames.count), height: bounds.size.height), flipped: false)
+        let size = CGSize(width: bounds.size.width * CGFloat(frames.count), height: bounds.size.height)
+        let renderer = CGImageRenderer(size: size, flipped: false)
         let image = renderer.image { cgContext in
             for frameIndex in 0..<frames.count {
                 if let frameImage = frames[frameIndex].image(in: bounds, ciContext: ciContext, using: imagesBySpriteType) {

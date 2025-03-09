@@ -22,11 +22,13 @@ struct MapSceneView: View {
     var world: WorldResource
     var position: SIMD2<Int16>
 
-    @State private var root = Entity()
-    @State private var player = SpriteEntity()
+    private let root = Entity()
+    private let grid = Entity()
+    private let player = SpriteEntity()
+    private let camera = Entity()
+    private let cameraHelper = Entity()
+
     @State private var monsters: [Int : SpriteEntity] = [:]
-    @State private var camera = Entity()
-    @State private var cameraHelper = Entity()
 
     @State private var distance: Float = 80
 
@@ -75,13 +77,13 @@ struct MapSceneView: View {
                 material.color = SimpleMaterial.BaseColor(tint: .yellow)
                 material.triangleFillMode = .lines
 
-                let gridEntity = ModelEntity(mesh: mesh, materials: [material])
-                gridEntity.name = "grid"
-                gridEntity.components.set(ModelSortGroupComponent(group: group, order: 1))
-                gridEntity.components.set(InputTargetComponent())
-                gridEntity.transform = Transform(rotation: simd_quatf(angle: radians(-180), axis: [1, 0, 0]), translation: [0, 0.0001, 0])
-                gridEntity.generateCollisionShapes(recursive: false)
-                root.addChild(gridEntity)
+                grid.name = "grid"
+                grid.components.set(ModelComponent(mesh: mesh, materials: [material]))
+                grid.components.set(ModelSortGroupComponent(group: group, order: 1))
+                grid.components.set(InputTargetComponent())
+                grid.transform = Transform(rotation: simd_quatf(angle: radians(-180), axis: [1, 0, 0]), translation: [0, 0.0001, 0])
+                grid.generateCollisionShapes(recursive: false)
+                root.addChild(grid)
             }
 
             do {
@@ -162,6 +164,13 @@ struct MapSceneView: View {
                 }
         )
         #endif
+        .gesture(
+            SpatialTapGesture()
+                .targetedToEntity(where: .has(SpriteComponent.self))
+                .onEnded { event in
+                    logger.info("Tap sprite entity: \(event.entity.name)")
+                }
+        )
         .onDisappear {
             root.stopAllAudio()
         }

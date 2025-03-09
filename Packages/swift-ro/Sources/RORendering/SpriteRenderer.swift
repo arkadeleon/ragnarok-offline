@@ -164,27 +164,26 @@ final public class SpriteRenderer: Sendable {
         }
 
         var frames: [CGImage?] = []
+        let renderer = CGImageRenderer(size: bounds.size, flipped: true)
 
         for frameIndex in 0..<frameCount {
-            let renderer = CGImageRenderer(size: bounds.size, flipped: true)
-
-            let image = renderer.image { context in
+            let image = renderer.image { cgContext in
+                cgContext.clear(CGRect(origin: .zero, size: bounds.size))
                 for (sprite, actionNode) in actionNodes {
                     let frameIndex = frameIndex % actionNode.children.count
                     let frameNode = actionNode.children[frameIndex]
                     for layerNode in frameNode.children {
                         if let image = layerNode.image {
-                            context.saveGState()
-                            context.translateBy(x: -bounds.origin.x, y: -bounds.origin.y)
-                            context.concatenate(layerNode.transform)
-                            context.scaleBy(x: 1, y: -1)
-                            context.draw(image, in: layerNode.frame)
-                            context.restoreGState()
+                            cgContext.saveGState()
+                            cgContext.translateBy(x: -bounds.origin.x, y: -bounds.origin.y)
+                            cgContext.concatenate(layerNode.transform)
+                            cgContext.scaleBy(x: 1, y: -1)
+                            cgContext.draw(image, in: layerNode.frame)
+                            cgContext.restoreGState()
                         }
                     }
                 }
             }
-
             frames.append(image)
         }
 
