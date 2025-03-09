@@ -34,7 +34,7 @@ final public class SpriteResolver: Sendable {
         do {
             let shadowSpritePath = ResourcePath.spritePath.appending(component: "shadow")
             let shadowSprite = try await resourceManager.sprite(at: shadowSpritePath)
-            shadowSprite.semantic = .shadow
+            shadowSprite.part = .shadow
             sprites.append(shadowSprite)
         } catch {
             logger.warning("\(error.localizedDescription)")
@@ -61,7 +61,7 @@ final public class SpriteResolver: Sendable {
             do {
                 let headSprite = try await resourceManager.sprite(at: headSpritePath)
                 headSprite.parent = bodySprite
-                headSprite.semantic = .playerHead
+                headSprite.part = .playerHead
                 headSprite.palette = headPalette
                 sprites.append(headSprite)
             } catch {
@@ -74,8 +74,8 @@ final public class SpriteResolver: Sendable {
            let weaponSpritePath = await ResourcePath.weaponSprite(jobID: jobID, weaponID: weaponID, isSlash: false, gender: gender, madoType: madoType) {
             do {
                 let weaponSprite = try await resourceManager.sprite(at: weaponSpritePath)
-                weaponSprite.semantic = .weapon
-                weaponSprite.orderBySemantic = 0
+                weaponSprite.part = .weapon
+                weaponSprite.orderByPart = 0
                 sprites.append(weaponSprite)
             } catch {
                 logger.warning("\(error.localizedDescription)")
@@ -87,8 +87,8 @@ final public class SpriteResolver: Sendable {
            let weaponSlashSpritePath = await ResourcePath.weaponSprite(jobID: jobID, weaponID: weaponID, isSlash: true, gender: gender, madoType: madoType) {
             do {
                 let weaponSlashSprite = try await resourceManager.sprite(at: weaponSlashSpritePath)
-                weaponSlashSprite.semantic = .weapon
-                weaponSlashSprite.orderBySemantic = 1
+                weaponSlashSprite.part = .weapon
+                weaponSlashSprite.orderByPart = 1
                 sprites.append(weaponSlashSprite)
             } catch {
                 logger.warning("\(error.localizedDescription)")
@@ -100,7 +100,7 @@ final public class SpriteResolver: Sendable {
            let shieldSpritePath = await ResourcePath.shieldSprite(jobID: jobID, shieldID: shieldID, gender: gender) {
             do {
                 let shieldSprite = try await resourceManager.sprite(at: shieldSpritePath)
-                shieldSprite.semantic = .shield
+                shieldSprite.part = .shield
                 sprites.append(shieldSprite)
             } catch {
                 logger.warning("\(error.localizedDescription)")
@@ -116,8 +116,8 @@ final public class SpriteResolver: Sendable {
             do {
                 let headgearSprite = try await resourceManager.sprite(at: headgearSpritePath)
                 headgearSprite.parent = bodySprite
-                headgearSprite.semantic = .headgear
-                headgearSprite.orderBySemantic = i
+                headgearSprite.part = .headgear
+                headgearSprite.orderByPart = i
 
                 // TODO: Handle headgear offset for Doram
 
@@ -139,7 +139,7 @@ final public class SpriteResolver: Sendable {
         do {
             let shadowSpritePath = ResourcePath.spritePath.appending(component: "shadow")
             let shadowSprite = try await resourceManager.sprite(at: shadowSpritePath)
-            shadowSprite.semantic = .shadow
+            shadowSprite.part = .shadow
             sprites.append(shadowSprite)
         } catch {
             logger.warning("\(error.localizedDescription)")
@@ -200,7 +200,7 @@ final public class SpriteResolver: Sendable {
             }
         }
 
-        bodySprite?.semantic = .playerBody
+        bodySprite?.part = .playerBody
         bodySprite?.palette = bodyPalette
 
         return bodySprite

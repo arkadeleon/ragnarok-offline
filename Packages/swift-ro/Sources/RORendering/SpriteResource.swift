@@ -11,7 +11,7 @@ import ROFileFormats
 import ROGenerated
 import ROResources
 
-enum SpriteSemantic {
+enum SpritePart {
     case main
     case playerBody
     case playerHead
@@ -28,8 +28,8 @@ final public class SpriteResource: @unchecked Sendable {
 
     var parent: SpriteResource?
 
-    var semantic: SpriteSemantic = .main
-    var orderBySemantic = 0
+    var part: SpritePart = .main
+    var orderByPart = 0
 
     var palette: PaletteResource?
 

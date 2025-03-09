@@ -148,7 +148,7 @@ final public class SpriteRenderer: Sendable {
         var frameCount = 0
 
         for sprite in sprites {
-            let actionIndex = (sprite.semantic == .shadow ? 0 : actionIndex)
+            let actionIndex = (sprite.part == .shadow ? 0 : actionIndex)
 
             let actionNode = SpriteRenderNode(
                 actionNodeWithSprite: sprite,
@@ -188,7 +188,7 @@ final public class SpriteRenderer: Sendable {
         }
 
         var frameInterval: CGFloat = 1 / 12
-        if let mainSprite = sprites.first(where: { $0.semantic == .main || $0.semantic == .playerBody }),
+        if let mainSprite = sprites.first(where: { $0.part == .main || $0.part == .playerBody }),
            let action = mainSprite.action(at: actionIndex) {
             frameInterval = CGFloat(action.animationSpeed * 25 / 1000)
         }
