@@ -8,6 +8,7 @@
 import CoreGraphics
 import Foundation
 import Observation
+import ROCore
 import RODatabase
 import RORendering
 import ROResources
@@ -148,6 +149,25 @@ class ObservableMonster {
 
             image = result.frames.first ?? nil
         }
+    }
+
+    @MainActor
+    func fetchAnimatedImage() async -> AnimatedImage {
+        let jobID = UniformJobID(rawValue: monster.id)
+        let spriteResolver = SpriteResolver(resourceManager: .default)
+        let sprites = await spriteResolver.resolve(jobID: jobID, configuration: SpriteConfiguration())
+
+        let spriteRenderer = SpriteRenderer(sprites: sprites)
+        let result = await spriteRenderer.renderAction(at: 0, headDirection: .straight)
+
+        let animatedImage = AnimatedImage(
+            frames: result.frames,
+            frameWidth: result.frameWidth,
+            frameHeight: result.frameHeight,
+            frameInterval: result.frameInterval,
+            frameScale: spriteRenderer.scale
+        )
+        return animatedImage
     }
 
     @MainActor

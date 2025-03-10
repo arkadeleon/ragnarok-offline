@@ -153,8 +153,11 @@ struct CharacterSimulatorView: View {
         let result = await spriteRenderer.renderAction(at: actionIndex, headDirection: configuration.headDirection)
 
         animatedImage = AnimatedImage(
-            images: result.frames.compactMap({ $0 }),
-            delay: result.frameInterval
+            frames: result.frames,
+            frameWidth: result.frameWidth,
+            frameHeight: result.frameHeight,
+            frameInterval: result.frameInterval,
+            frameScale: 1
         )
     }
 }

@@ -32,12 +32,10 @@ struct ACTFilePreviewView: View {
                             AnimatedImageView(animatedImage: action.animatedImage)
                                 .frame(width: section.actionSize.width, height: section.actionSize.height)
                                 .contextMenu {
-                                    if let image = action.animatedImage.images.first {
-                                        ShareLink(
-                                            item: TransferableAnimatedImage(name: String(format: "%@.%03d.png", file.name, action.index), image: action.animatedImage),
-                                            preview: SharePreview(file.name, image: Image(image, scale: 1, label: Text(verbatim: "")))
-                                        )
-                                    }
+                                    AnimatedImageShareLink(
+                                        animatedImage: action.animatedImage,
+                                        filename: String(format: "%@.%03d.png", file.name, action.index)
+                                    )
                                 }
                         }
                     }
@@ -75,8 +73,8 @@ struct ACTFilePreviewView: View {
         if animatedImages.count % 8 != 0 {
             let size = animatedImages.reduce(CGSize(width: 80, height: 80)) { size, animatedImage in
                 CGSize(
-                    width: max(size.width, CGFloat(animatedImage.size.width)),
-                    height: max(size.height, CGFloat(animatedImage.size.height))
+                    width: max(size.width, animatedImage.frameWidth),
+                    height: max(size.height, animatedImage.frameHeight)
                 )
             }
             let actions = animatedImages.enumerated().map { (index, animatedImage) in
@@ -92,8 +90,8 @@ struct ACTFilePreviewView: View {
                 let animatedImages = Array(animatedImages[startIndex..<endIndex])
                 let size = animatedImages.reduce(CGSize(width: 80, height: 80)) { size, animatedImage in
                     CGSize(
-                        width: max(size.width, CGFloat(animatedImage.size.width)),
-                        height: max(size.height, CGFloat(animatedImage.size.height))
+                        width: max(size.width, animatedImage.frameWidth),
+                        height: max(size.height, animatedImage.frameHeight)
                     )
                 }
                 let actions = animatedImages.enumerated().map { (index, animatedImage) in

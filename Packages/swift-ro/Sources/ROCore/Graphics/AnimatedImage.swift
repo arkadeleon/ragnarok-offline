@@ -10,21 +10,18 @@ import ImageIO
 import UniformTypeIdentifiers
 
 public struct AnimatedImage: Hashable {
-    public var images: [CGImage]
-    public var delay: CGFloat
+    public var frames: [CGImage?]
+    public var frameWidth: CGFloat
+    public var frameHeight: CGFloat
+    public var frameInterval: CGFloat
+    public var frameScale: CGFloat
 
-    public var size: CGSize {
-        images.reduce(CGSize.zero) { size, image in
-            CGSize(
-                width: max(size.width, CGFloat(image.width)),
-                height: max(size.height, CGFloat(image.height))
-            )
-        }
-    }
-
-    public init(images: [CGImage], delay: CGFloat) {
-        self.images = images
-        self.delay = delay
+    public init(frames: [CGImage?], frameWidth: CGFloat, frameHeight: CGFloat, frameInterval: CGFloat, frameScale: CGFloat) {
+        self.frames = frames
+        self.frameWidth = frameWidth
+        self.frameHeight = frameHeight
+        self.frameInterval = frameInterval
+        self.frameScale = frameScale
     }
 
     public func pngData() -> Data? {
@@ -32,16 +29,18 @@ public struct AnimatedImage: Hashable {
             return nil
         }
 
-        guard let imageDestination = CGImageDestinationCreateWithData(data, UTType.png.identifier as CFString, images.count, nil) else {
+        guard let imageDestination = CGImageDestinationCreateWithData(data, UTType.png.identifier as CFString, frames.count, nil) else {
             return nil
         }
 
         let properties = [kCGImagePropertyPNGDictionary: [kCGImagePropertyAPNGLoopCount: 1]]
         CGImageDestinationSetProperties(imageDestination, properties as CFDictionary)
 
-        for image in images {
-            let properties = [kCGImagePropertyPNGDictionary: [kCGImagePropertyAPNGDelayTime: delay]]
-            CGImageDestinationAddImage(imageDestination, image, properties as CFDictionary)
+        for frame in frames {
+            if let frame {
+                let properties = [kCGImagePropertyPNGDictionary: [kCGImagePropertyAPNGDelayTime: frameInterval]]
+                CGImageDestinationAddImage(imageDestination, frame, properties as CFDictionary)
+            }
         }
 
         CGImageDestinationFinalize(imageDestination)

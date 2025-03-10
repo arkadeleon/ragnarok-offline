@@ -14,22 +14,22 @@ struct AnimatedImageView: View {
     private let startDate = Date()
 
     var body: some View {
-        TimelineView(.periodic(from: startDate, by: animatedImage.delay)) { context in
-            if let image = image(at: context.date) {
-                Image(image, scale: 1, label: Text(verbatim: ""))
+        TimelineView(.periodic(from: startDate, by: animatedImage.frameInterval)) { context in
+            if let frame = frame(at: context.date) {
+                Image(frame, scale: animatedImage.frameScale, label: Text(verbatim: ""))
             }
         }
     }
 
-    private func image(at date: Date) -> CGImage? {
-        if animatedImage.images.isEmpty {
+    private func frame(at date: Date) -> CGImage? {
+        if animatedImage.frames.isEmpty {
             return nil
         }
 
-        let index = Int(round(date.timeIntervalSince(startDate) / animatedImage.delay))
-        let count = animatedImage.images.count
-        let image = animatedImage.images[index % count]
-        return image
+        let frameIndex = Int(round(date.timeIntervalSince(startDate) / animatedImage.frameInterval))
+        let frameCount = animatedImage.frames.count
+        let frame = animatedImage.frames[frameIndex % frameCount]
+        return frame
     }
 }
 

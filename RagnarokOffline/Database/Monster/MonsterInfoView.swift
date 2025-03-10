@@ -5,23 +5,20 @@
 //  Created by Leon Li on 2024/1/3.
 //
 
+import ROCore
 import SwiftUI
 
 struct MonsterInfoView: View {
     var monster: ObservableMonster
 
+    @State private var animatedImage: AnimatedImage?
+
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: .sectionHeaders) {
                 ZStack {
-                    if let monsterImage = monster.image {
-                        if monsterImage.height > 200 {
-                            Image(monsterImage, scale: 1, label: Text(monster.displayName))
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        } else {
-                            Image(monsterImage, scale: 1, label: Text(monster.displayName))
-                        }
+                    if let animatedImage {
+                        AnimatedImageView(animatedImage: animatedImage)
                     } else {
                         Image(systemName: "pawprint")
                             .font(.system(size: 100, weight: .thin))
@@ -87,6 +84,7 @@ struct MonsterInfoView: View {
         .background(.background)
         .navigationTitle(monster.displayName)
         .task {
+            animatedImage = await monster.fetchAnimatedImage()
             await monster.fetchDetail()
         }
     }

@@ -22,11 +22,17 @@ extension ACT.Action {
         let bounds = calculateBounds(using: imagesBySpriteType)
         let ciContext = CIContext()
 
-        let images = frames.compactMap { frame -> CGImage? in
+        let frames = self.frames.compactMap { frame -> CGImage? in
             frame.image(in: bounds, ciContext: ciContext, using: imagesBySpriteType)
         }
-        let delay = CGFloat(animationSpeed * 25 / 1000)
-        let animatedImage = AnimatedImage(images: images, delay: delay)
+        let frameInterval = CGFloat(animationSpeed * 25 / 1000)
+        let animatedImage = AnimatedImage(
+            frames: frames,
+            frameWidth: bounds.size.width,
+            frameHeight: bounds.size.height,
+            frameInterval: frameInterval,
+            frameScale: 1
+        )
         return animatedImage
     }
 
