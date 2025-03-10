@@ -16,6 +16,14 @@ public struct AnimatedImage: Hashable {
     public var frameInterval: CGFloat
     public var frameScale: CGFloat
 
+    public var firstFrame: CGImage? {
+        if let firstFrame = frames.first {
+            firstFrame
+        } else {
+            nil
+        }
+    }
+
     public init(frames: [CGImage?], frameWidth: CGFloat, frameHeight: CGFloat, frameInterval: CGFloat, frameScale: CGFloat) {
         self.frames = frames
         self.frameWidth = frameWidth

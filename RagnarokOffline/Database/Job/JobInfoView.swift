@@ -14,8 +14,8 @@ struct JobInfoView: View {
         ScrollView {
             LazyVStack(pinnedViews: .sectionHeaders) {
                 ZStack {
-                    if let jobImage = job.image {
-                        Image(jobImage, scale: 1, label: Text(job.displayName))
+                    if let animatedImage = job.animatedImage, let firstFrame = animatedImage.firstFrame {
+                        Image(firstFrame, scale: animatedImage.frameScale, label: Text(job.displayName))
                     } else {
                         Image(systemName: "person")
                             .font(.system(size: 100, weight: .thin))
@@ -119,6 +119,7 @@ struct JobInfoView: View {
         .background(.background)
         .navigationTitle(job.displayName)
         .task {
+            await job.fetchAnimatedImage()
             await job.fetchDetail()
         }
     }

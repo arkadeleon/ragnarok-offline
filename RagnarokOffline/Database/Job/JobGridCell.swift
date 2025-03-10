@@ -12,14 +12,8 @@ struct JobGridCell: View {
 
     var body: some View {
         ImageGridCell(title: job.displayName) {
-            if let jobImage = job.image {
-                if jobImage.width > 80 || jobImage.height > 80 {
-                    Image(jobImage, scale: 1, label: Text(job.displayName))
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                } else {
-                    Image(jobImage, scale: 1, label: Text(job.displayName))
-                }
+            if let animatedImage = job.animatedImage, let firstFrame = animatedImage.firstFrame {
+                Image(firstFrame, scale: animatedImage.frameScale * 1.5, label: Text(job.displayName))
             } else {
                 Image(systemName: "person")
                     .font(.system(size: 50, weight: .thin))
@@ -27,7 +21,7 @@ struct JobGridCell: View {
             }
         }
         .task {
-            await job.fetchImage()
+            await job.fetchAnimatedImage()
         }
     }
 }

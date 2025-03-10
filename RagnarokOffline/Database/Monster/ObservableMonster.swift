@@ -39,7 +39,7 @@ class ObservableMonster {
     private let monster: Monster
 
     var localizedName: String?
-    var image: CGImage?
+    var animatedImage: AnimatedImage?
     var mvpDropItems: [DropItem] = []
     var dropItems: [DropItem] = []
     var spawnMaps: [SpawnMap] = []
@@ -138,8 +138,8 @@ class ObservableMonster {
     }
 
     @MainActor
-    func fetchImage() async {
-        if image == nil {
+    func fetchAnimatedImage() async {
+        if animatedImage == nil {
             let jobID = UniformJobID(rawValue: monster.id)
             let spriteResolver = SpriteResolver(resourceManager: .default)
             let sprites = await spriteResolver.resolve(jobID: jobID, configuration: SpriteConfiguration())
@@ -147,33 +147,18 @@ class ObservableMonster {
             let spriteRenderer = SpriteRenderer(sprites: sprites)
             let result = await spriteRenderer.renderAction(at: 0, headDirection: .straight)
 
-            image = result.frames.first ?? nil
+            animatedImage = AnimatedImage(
+                frames: result.frames,
+                frameWidth: result.frameWidth,
+                frameHeight: result.frameHeight,
+                frameInterval: result.frameInterval,
+                frameScale: spriteRenderer.scale
+            )
         }
     }
 
     @MainActor
-    func fetchAnimatedImage() async -> AnimatedImage {
-        let jobID = UniformJobID(rawValue: monster.id)
-        let spriteResolver = SpriteResolver(resourceManager: .default)
-        let sprites = await spriteResolver.resolve(jobID: jobID, configuration: SpriteConfiguration())
-
-        let spriteRenderer = SpriteRenderer(sprites: sprites)
-        let result = await spriteRenderer.renderAction(at: 0, headDirection: .straight)
-
-        let animatedImage = AnimatedImage(
-            frames: result.frames,
-            frameWidth: result.frameWidth,
-            frameHeight: result.frameHeight,
-            frameInterval: result.frameInterval,
-            frameScale: spriteRenderer.scale
-        )
-        return animatedImage
-    }
-
-    @MainActor
     func fetchDetail() async {
-        await fetchImage()
-
         let itemDatabase = ItemDatabase.database(for: mode)
         let mapDatabase = MapDatabase.database(for: mode)
         let npcDatabase = NPCDatabase.database(for: mode)

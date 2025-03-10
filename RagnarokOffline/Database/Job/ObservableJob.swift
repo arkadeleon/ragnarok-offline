@@ -7,6 +7,7 @@
 
 import CoreGraphics
 import Observation
+import ROCore
 import RODatabase
 import ROGenerated
 import RORendering
@@ -38,7 +39,7 @@ class ObservableJob {
     private let mode: DatabaseMode
     private let job: Job
 
-    var image: CGImage?
+    var animatedImage: AnimatedImage?
     var skills: [ObservableSkill] = []
 
     var displayName: String {
@@ -108,8 +109,8 @@ class ObservableJob {
     }
 
     @MainActor
-    func fetchImage() async {
-        if image == nil {
+    func fetchAnimatedImage() async {
+        if animatedImage == nil {
             let jobID = UniformJobID(rawValue: job.id.rawValue)
             let spriteResolver = SpriteResolver(resourceManager: .default)
             let sprites = await spriteResolver.resolve(jobID: jobID, configuration: SpriteConfiguration())
@@ -117,14 +118,18 @@ class ObservableJob {
             let spriteRenderer = SpriteRenderer(sprites: sprites)
             let result = await spriteRenderer.renderAction(at: 0, headDirection: .straight)
 
-            image = result.frames.first ?? nil
+            animatedImage = AnimatedImage(
+                frames: result.frames,
+                frameWidth: result.frameWidth,
+                frameHeight: result.frameHeight,
+                frameInterval: result.frameInterval,
+                frameScale: spriteRenderer.scale
+            )
         }
     }
 
     @MainActor
     func fetchDetail() async {
-        await fetchImage()
-
         let skillDatabase = SkillDatabase.database(for: mode)
         let skillTreeDatabase = SkillTreeDatabase.database(for: mode)
 

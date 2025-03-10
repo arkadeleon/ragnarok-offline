@@ -13,13 +13,14 @@ struct MonsterGridCell: View {
 
     var body: some View {
         ImageGridCell(title: monster.displayName, subtitle: secondaryText) {
-            if let monsterImage = monster.image {
-                if monsterImage.width > 80 || monsterImage.height > 80 {
-                    Image(monsterImage, scale: 1, label: Text(monster.displayName))
+            if let animatedImage = monster.animatedImage, let firstFrame = animatedImage.firstFrame {
+                if animatedImage.frameWidth / animatedImage.frameScale > 80 ||
+                    animatedImage.frameHeight / animatedImage.frameScale > 80 {
+                    Image(firstFrame, scale: animatedImage.frameScale, label: Text(monster.displayName))
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 } else {
-                    Image(monsterImage, scale: 1, label: Text(monster.displayName))
+                    Image(firstFrame, scale: animatedImage.frameScale, label: Text(monster.displayName))
                 }
             } else {
                 Image(systemName: "pawprint")
@@ -28,7 +29,7 @@ struct MonsterGridCell: View {
             }
         }
         .task {
-            await monster.fetchImage()
+            await monster.fetchAnimatedImage()
         }
     }
 }

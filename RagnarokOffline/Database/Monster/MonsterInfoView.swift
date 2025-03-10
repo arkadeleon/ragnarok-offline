@@ -11,13 +11,11 @@ import SwiftUI
 struct MonsterInfoView: View {
     var monster: ObservableMonster
 
-    @State private var animatedImage: AnimatedImage?
-
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: .sectionHeaders) {
                 ZStack {
-                    if let animatedImage {
+                    if let animatedImage = monster.animatedImage {
                         AnimatedImageView(animatedImage: animatedImage)
                     } else {
                         Image(systemName: "pawprint")
@@ -84,7 +82,7 @@ struct MonsterInfoView: View {
         .background(.background)
         .navigationTitle(monster.displayName)
         .task {
-            animatedImage = await monster.fetchAnimatedImage()
+            await monster.fetchAnimatedImage()
             await monster.fetchDetail()
         }
     }

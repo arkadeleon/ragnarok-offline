@@ -158,7 +158,7 @@ final public class SpriteResolver: Sendable {
         let shadowSprite = try await resourceManager.sprite(at: shadowSpritePath)
         shadowSprite.part = .shadow
 
-        if let shadowFactor = await ScriptManager.default.shadowFactor(forJobID: jobID.rawValue), shadowFactor > 0 {
+        if let shadowFactor = await ScriptManager.default.shadowFactor(forJobID: jobID.rawValue), shadowFactor >= 0 {
             shadowSprite.scaleFactor = shadowFactor
         }
 
