@@ -33,7 +33,7 @@ final public class SpriteResource: @unchecked Sendable {
 
     var palette: PaletteResource?
 
-    var scale: Float = 1
+    var scaleFactor: CGFloat = 1
 
     lazy var imagesBySpriteType: [SPR.SpriteType : [CGImage?]] = {
         spr.imagesBySpriteType(palette: palette?.pal)

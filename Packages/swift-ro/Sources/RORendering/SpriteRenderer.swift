@@ -149,6 +149,7 @@ final public class SpriteRenderer: Sendable {
 
         for sprite in sprites {
             let actionIndex = (sprite.part == .shadow ? 0 : actionIndex)
+            let scale = self.scale * sprite.scaleFactor
 
             let actionNode = SpriteRenderNode(
                 actionNodeWithSprite: sprite,

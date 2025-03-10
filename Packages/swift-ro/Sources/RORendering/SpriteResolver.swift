@@ -32,9 +32,7 @@ final public class SpriteResolver: Sendable {
 
         // Shadow
         do {
-            let shadowSpritePath = ResourcePath.spritePath.appending(component: "shadow")
-            let shadowSprite = try await resourceManager.sprite(at: shadowSpritePath)
-            shadowSprite.part = .shadow
+            let shadowSprite = try await shadowSprite(jobID: jobID)
             sprites.append(shadowSprite)
         } catch {
             logger.warning("\(error.localizedDescription)")
@@ -137,9 +135,7 @@ final public class SpriteResolver: Sendable {
 
         // Shadow
         do {
-            let shadowSpritePath = ResourcePath.spritePath.appending(component: "shadow")
-            let shadowSprite = try await resourceManager.sprite(at: shadowSpritePath)
-            shadowSprite.part = .shadow
+            let shadowSprite = try await shadowSprite(jobID: jobID)
             sprites.append(shadowSprite)
         } catch {
             logger.warning("\(error.localizedDescription)")
@@ -155,6 +151,18 @@ final public class SpriteResolver: Sendable {
         }
 
         return sprites
+    }
+
+    private func shadowSprite(jobID: UniformJobID) async throws -> SpriteResource {
+        let shadowSpritePath = ResourcePath.spritePath.appending(component: "shadow")
+        let shadowSprite = try await resourceManager.sprite(at: shadowSpritePath)
+        shadowSprite.part = .shadow
+
+        if let shadowFactor = await ScriptManager.default.shadowFactor(forJobID: jobID.rawValue), shadowFactor > 0 {
+            shadowSprite.scaleFactor = shadowFactor
+        }
+
+        return shadowSprite
     }
 
     private func playerBodySprite(jobID: UniformJobID, configuration: SpriteConfiguration) async -> SpriteResource? {
