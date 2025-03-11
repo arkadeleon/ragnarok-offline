@@ -45,6 +45,14 @@ extension UniformJobID {
         }
     }
 
+    public var isDoram: Bool {
+        switch rawValue {
+        case 4217...4221: true
+        case 4308, 4315: true
+        default: false
+        }
+    }
+
     public var isNPC: Bool {
         switch rawValue {
         case 45..<1000: true
@@ -71,14 +79,6 @@ extension UniformJobID {
     public var isMercenary: Bool {
         switch rawValue {
         case 6017...6046: true
-        default: false
-        }
-    }
-
-    public var isDoram: Bool {
-        switch rawValue {
-        case 4217...4221: true
-        case 4308, 4315: true
         default: false
         }
     }

@@ -13,12 +13,11 @@ public class GRFReference {
 
     private lazy var grf = {
         let beginTime = CFAbsoluteTimeGetCurrent()
-        logger.info("Start loading GRF: \(self.url)")
 
         let grf = try? GRF(url: url)
 
         let endTime = CFAbsoluteTimeGetCurrent()
-        logger.info("Finish loading GRF (\(endTime - beginTime)s)")
+        logger.info("Load GRF (\(endTime - beginTime)s)")
 
         return grf
     }()
@@ -29,7 +28,6 @@ public class GRFReference {
         }
 
         let beginTime = CFAbsoluteTimeGetCurrent()
-        logger.info("Start loading directories: \(self.url)")
 
         var directories = Set(grf.table.entries.map({ $0.path.parent }))
         for directory in directories {
@@ -41,7 +39,7 @@ public class GRFReference {
         }
 
         let endTime = CFAbsoluteTimeGetCurrent()
-        logger.info("Finish loading directories (\(endTime - beginTime)s)")
+        logger.info("Load GRF directories (\(endTime - beginTime)s)")
 
         return directories
     }()
@@ -52,7 +50,6 @@ public class GRFReference {
         }
 
         let beginTime = CFAbsoluteTimeGetCurrent()
-        logger.info("Start loading entries: \(self.url)")
 
         let entries = Dictionary(
             grf.table.entries.map({ ($0.path.string.uppercased(), $0) }),
@@ -60,7 +57,7 @@ public class GRFReference {
         )
 
         let endTime = CFAbsoluteTimeGetCurrent()
-        logger.info("Finish loading entries (\(endTime - beginTime)s)")
+        logger.info("Load GRF entries (\(endTime - beginTime)s)")
 
         return entries
     }()
@@ -69,13 +66,12 @@ public class GRFReference {
         self.url = url
     }
 
-    public func contentsOfDirectory(_ directory: GRFPath) -> ([GRFPath], [GRF.Entry]) {
+    public func contentsOfDirectory(_ directory: GRFPath) -> (directories: [GRFPath], entries: [GRF.Entry]) {
         guard let grf else {
             return ([], [])
         }
 
         let beginTime = CFAbsoluteTimeGetCurrent()
-        logger.info("Start loading contents of directory: \(directory.string)")
 
         let directories = directories
             .filter { $0.parent == directory }
@@ -86,7 +82,7 @@ public class GRFReference {
             .sorted(using: KeyPathComparator(\.path.string))
 
         let endTime = CFAbsoluteTimeGetCurrent()
-        logger.info("Finish loading contents of directory (\(endTime - beginTime)s)")
+        logger.info("Load contents of directory at \(directory.string) (\(endTime - beginTime)s)")
 
         return (directories, entries)
     }
