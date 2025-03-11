@@ -9,14 +9,6 @@ import CoreImage.CIFilterBuiltins
 import QuartzCore
 import ROCore
 
-public struct ACTActionSpriteAtlas {
-    public var image: CGImage?
-    public var frameWidth: Float
-    public var frameHeight: Float
-    public var frameCount: Int
-    public var frameInterval: Float
-}
-
 extension ACT.Action {
     public func animatedImage(using imagesBySpriteType: [SPR.SpriteType : [CGImage?]]) -> AnimatedImage {
         let bounds = calculateBounds(using: imagesBySpriteType)
@@ -34,30 +26,6 @@ extension ACT.Action {
             frameScale: 1
         )
         return animatedImage
-    }
-
-    public func spriteAtlas(using imagesBySpriteType: [SPR.SpriteType : [CGImage?]]) -> ACTActionSpriteAtlas {
-        let bounds = calculateBounds(using: imagesBySpriteType)
-        let ciContext = CIContext()
-
-        let size = CGSize(width: bounds.size.width * CGFloat(frames.count), height: bounds.size.height)
-        let renderer = CGImageRenderer(size: size, flipped: false)
-        let image = renderer.image { cgContext in
-            for frameIndex in 0..<frames.count {
-                if let frameImage = frames[frameIndex].image(in: bounds, ciContext: ciContext, using: imagesBySpriteType) {
-                    cgContext.draw(frameImage, in: CGRect(x: bounds.size.width * CGFloat(frameIndex), y: 0, width: bounds.size.width, height: bounds.size.height))
-                }
-            }
-        }
-
-        let spriteAtlas = ACTActionSpriteAtlas(
-            image: image,
-            frameWidth: Float(bounds.size.width),
-            frameHeight: Float(bounds.size.height),
-            frameCount: frames.count,
-            frameInterval: animationSpeed * 25 / 1000
-        )
-        return spriteAtlas
     }
 
     func calculateBounds(using imagesBySpriteType: [SPR.SpriteType : [CGImage?]]) -> CGRect {

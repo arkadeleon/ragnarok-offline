@@ -117,7 +117,7 @@
 		35B422F22BEF5F3000681AA2 /* StatusChangeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422F12BEF5F3000681AA2 /* StatusChangeProvider.swift */; };
 		35B422F42BEF602500681AA2 /* StatusChangeDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422F32BEF602500681AA2 /* StatusChangeDatabaseView.swift */; };
 		35B422F62BEF76F700681AA2 /* DatabaseRecordAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422F52BEF76F700681AA2 /* DatabaseRecordAttribute.swift */; };
-		35B575FB2D1B035F00FC12BB /* ActionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B575FA2D1B035100FC12BB /* ActionsComponent.swift */; };
+		35B575FB2D1B035F00FC12BB /* Entity+CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B575FA2D1B035100FC12BB /* Entity+CGImage.swift */; };
 		35B575FE2D1BB34200FC12BB /* CharacterSimulatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B575FD2D1BB33B00FC12BB /* CharacterSimulatorView.swift */; };
 		35B695EA2A305EF6006F1904 /* MetalCubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695E92A305EF6006F1904 /* MetalCubeView.swift */; };
 		35B695EC2A307164006F1904 /* MetalCubeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695EB2A307164006F1904 /* MetalCubeScene.swift */; };
@@ -288,7 +288,7 @@
 		35B422F12BEF5F3000681AA2 /* StatusChangeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeProvider.swift; sourceTree = "<group>"; };
 		35B422F32BEF602500681AA2 /* StatusChangeDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeDatabaseView.swift; sourceTree = "<group>"; };
 		35B422F52BEF76F700681AA2 /* DatabaseRecordAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordAttribute.swift; sourceTree = "<group>"; };
-		35B575FA2D1B035100FC12BB /* ActionsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsComponent.swift; sourceTree = "<group>"; };
+		35B575FA2D1B035100FC12BB /* Entity+CGImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+CGImage.swift"; sourceTree = "<group>"; };
 		35B575FD2D1BB33B00FC12BB /* CharacterSimulatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSimulatorView.swift; sourceTree = "<group>"; };
 		35B695E92A305EF6006F1904 /* MetalCubeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalCubeView.swift; sourceTree = "<group>"; };
 		35B695EB2A307164006F1904 /* MetalCubeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalCubeScene.swift; sourceTree = "<group>"; };
@@ -517,7 +517,7 @@
 				357742612D005FAA00F2CE8D /* GameView.swift */,
 				357742602D005FAA00F2CE8D /* GameSession.swift */,
 				354535242D04A8030099B7EF /* GameMapScene.swift */,
-				35B575FA2D1B035100FC12BB /* ActionsComponent.swift */,
+				35B575FA2D1B035100FC12BB /* Entity+CGImage.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -889,7 +889,7 @@
 				35E67C7D2CBF90C8006E42A3 /* Miscellaneous+JSON.swift in Sources */,
 				35239E012BC29A4E0039F7D5 /* ItemProvider.swift in Sources */,
 				3594DD572BF5FCB600575F3D /* ModelViewer.swift in Sources */,
-				35B575FB2D1B035F00FC12BB /* ActionsComponent.swift in Sources */,
+				35B575FB2D1B035F00FC12BB /* Entity+CGImage.swift in Sources */,
 				35E67C6E2CBF6C1F006E42A3 /* GND+JSON.swift in Sources */,
 				35E67C6F2CBF6C1F006E42A3 /* GAT+JSON.swift in Sources */,
 				35E67C702CBF6C1F006E42A3 /* ACT+JSON.swift in Sources */,

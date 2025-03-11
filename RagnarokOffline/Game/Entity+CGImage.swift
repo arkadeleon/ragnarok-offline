@@ -1,5 +1,5 @@
 //
-//  ActionsComponent.swift
+//  Entity+CGImage.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/12/24.
@@ -13,19 +13,6 @@ import ROFileFormats
 import ROGenerated
 
 extension Entity {
-    static func load(act: ACT, spr: SPR) async throws -> Entity {
-        let entity = Entity()
-
-        let actionsComponent = await ActionsComponent(act: act, spr: spr)
-        entity.components.set(actionsComponent)
-
-        if !actionsComponent.actions.isEmpty {
-            entity.runAction(0)
-        }
-
-        return entity
-    }
-
     static func loadHP() async throws -> Entity {
         let renderer = GraphicsImageRenderer(size: CGSize(width: 60, height: 5))
         let image = renderer.image { context in
@@ -55,50 +42,6 @@ extension Entity {
 
         return entity
     }
-
-    func runAction(_ actionIndex: Int) {
-        guard let actionsComponent = components[ActionsComponent.self],
-              actionIndex < actionsComponent.actions.count else {
-            return
-        }
-
-        let action = actionsComponent.actions[actionIndex]
-
-        // Create material.
-        var material = PhysicallyBasedMaterial()
-        material.blending = .transparent(opacity: 1.0)
-        material.opacityThreshold = 0.9999
-
-        // Create texture.
-        if let texture = action.texture {
-            material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(texture))
-            material.textureCoordinateTransform = PhysicallyBasedMaterial.TextureCoordinateTransform(scale: [1 / Float(action.frameCount), 1])
-        }
-
-        // Create model component.
-        let mesh = MeshResource.generatePlane(width: action.frameWidth / 175, height: action.frameHeight / 175)
-
-        let modelComponent = ModelComponent(mesh: mesh, materials: [material])
-        components.set(modelComponent)
-
-        let frames: [SIMD2<Float>] = (0..<action.frameCount).map { frameIndex in
-            [Float(frameIndex) / Float(action.frameCount), 0]
-        }
-        let bindTarget = BindTarget.material(0).textureCoordinate.offset
-        let animationDefinition = SampledAnimation(
-            frames: frames,
-            name: "action",
-            tweenMode: .hold,
-            frameInterval: action.frameInterval,
-            isAdditive: false,
-            bindTarget: bindTarget,
-            repeatMode: .repeat
-        )
-
-        if let animation = try? AnimationResource.generate(with: animationDefinition) {
-            playAnimation(animation)
-        }
-    }
 }
 
 extension Entity {
@@ -126,39 +69,6 @@ extension Entity {
         // Create model sort group component.
         let modelSortGroupComponent = ModelSortGroupComponent(group: group, order: order)
         components[ModelSortGroupComponent.self] = modelSortGroupComponent
-    }
-}
-
-struct ActionsComponent: Component {
-    struct Action {
-        var texture: TextureResource?
-        var frameWidth: Float
-        var frameHeight: Float
-        var frameCount: Int
-        var frameInterval: Float
-    }
-
-    var actions: [Action] = []
-
-    init(act: ACT, spr: SPR) async {
-        let imagesBySpriteType = spr.imagesBySpriteType()
-        for a in act.actions {
-            let spriteAtlas = a.spriteAtlas(using: imagesBySpriteType)
-
-            var action = Action(
-                frameWidth: spriteAtlas.frameWidth,
-                frameHeight: spriteAtlas.frameHeight,
-                frameCount: spriteAtlas.frameCount,
-                frameInterval: spriteAtlas.frameInterval
-            )
-
-            if let image = spriteAtlas.image,
-               let texture = try? await TextureResource(image: image, options: TextureResource.CreateOptions(semantic: .color)) {
-                action.texture = texture
-            }
-
-            actions.append(action)
-        }
     }
 }
 

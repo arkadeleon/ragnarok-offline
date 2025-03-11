@@ -17,7 +17,6 @@ struct RagnarokOfflineApp: App {
     }
 
     init() {
-        ActionsComponent.registerComponent()
         SpriteComponent.registerComponent()
     }
 }
