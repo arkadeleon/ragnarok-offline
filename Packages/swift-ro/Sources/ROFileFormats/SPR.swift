@@ -11,6 +11,8 @@ import ROCore
 public struct SPR: BinaryDecodable, Sendable {
     public var header: String
     public var version: String
+    public var indexedSpriteCount: Int16
+    public var rgbaSpriteCount: Int16
     public var sprites: [SPR.Sprite] = []
     public var palette: PAL?
 
@@ -29,9 +31,8 @@ public struct SPR: BinaryDecodable, Sendable {
         let major = try decoder.decode(UInt8.self)
         version = "\(major).\(minor)"
 
-        let indexedSpriteCount = try decoder.decode(Int16.self)
+        indexedSpriteCount = try decoder.decode(Int16.self)
 
-        let rgbaSpriteCount: Int16
         if version > "1.1" {
             rgbaSpriteCount = try decoder.decode(Int16.self)
         } else {

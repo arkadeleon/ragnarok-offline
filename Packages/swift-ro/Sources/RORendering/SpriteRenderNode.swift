@@ -6,7 +6,6 @@
 //
 
 import CoreGraphics
-import Foundation
 import ROCore
 import ROFileFormats
 
@@ -126,48 +125,5 @@ extension SpriteRenderNode {
         let bounds = frame.applying(transform)
 
         self = SpriteRenderNode(image: image, scale: scale, color: layer.color, frame: frame, bounds: bounds, transform: transform)
-    }
-}
-
-extension SpriteResource {
-    func action(at actionIndex: Int) -> ACT.Action? {
-        guard 0..<act.actions.count ~= actionIndex else {
-            return nil
-        }
-
-        let action = act.actions[actionIndex]
-        return action
-    }
-
-    func frame(at indexPath: IndexPath) -> ACT.Frame? {
-        let actionIndex = indexPath[0]
-        let frameIndex = indexPath[1]
-
-        guard 0..<act.actions.count ~= actionIndex else {
-            return nil
-        }
-
-        let action = act.actions[actionIndex]
-        guard 0..<action.frames.count ~= frameIndex else {
-            return nil
-        }
-
-        let frame = action.frames[frameIndex]
-        return frame
-    }
-
-    fileprivate func image(for layer: ACT.Layer) -> CGImage? {
-        guard let spriteType = SPR.SpriteType(rawValue: Int(layer.spriteType)),
-              let spriteImages = imagesBySpriteType[spriteType] else {
-            return nil
-        }
-
-        let spriteIndex = Int(layer.spriteIndex)
-        guard 0..<spriteImages.count ~= spriteIndex,
-              let image = spriteImages[spriteIndex] else {
-            return nil
-        }
-
-        return image
     }
 }

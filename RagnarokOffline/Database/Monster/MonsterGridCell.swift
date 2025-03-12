@@ -14,8 +14,7 @@ struct MonsterGridCell: View {
     var body: some View {
         ImageGridCell(title: monster.displayName, subtitle: secondaryText) {
             if let animatedImage = monster.animatedImage, let firstFrame = animatedImage.firstFrame {
-                if animatedImage.frameWidth / animatedImage.frameScale > 80 ||
-                    animatedImage.frameHeight / animatedImage.frameScale > 80 {
+                if animatedImage.frameWidth > 80 || animatedImage.frameHeight > 80 {
                     Image(firstFrame, scale: animatedImage.frameScale, label: Text(monster.displayName))
                         .resizable()
                         .aspectRatio(contentMode: .fit)

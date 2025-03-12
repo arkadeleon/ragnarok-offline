@@ -35,13 +35,87 @@ final public class SpriteResource: @unchecked Sendable {
 
     var scaleFactor: CGFloat = 1
 
-    lazy var imagesBySpriteType: [SPR.SpriteType : [CGImage?]] = {
-        spr.imagesBySpriteType(palette: palette?.pal)
-    }()
+    private var indexedSpriteImages: [CGImage?]
+    private var rgbaSpriteImages: [CGImage?]
 
     public init(act: ACT, spr: SPR) {
         self.act = act
         self.spr = spr
+
+        indexedSpriteImages = Array(repeating: nil, count: Int(spr.indexedSpriteCount))
+        rgbaSpriteImages = Array(repeating: nil, count: Int(spr.rgbaSpriteCount))
+    }
+
+    func action(at actionIndex: Int) -> ACT.Action? {
+        guard 0..<act.actions.count ~= actionIndex else {
+            return nil
+        }
+
+        let action = act.actions[actionIndex]
+        return action
+    }
+
+    func frame(at indexPath: IndexPath) -> ACT.Frame? {
+        let actionIndex = indexPath[0]
+        let frameIndex = indexPath[1]
+
+        guard 0..<act.actions.count ~= actionIndex else {
+            return nil
+        }
+
+        let action = act.actions[actionIndex]
+        guard 0..<action.frames.count ~= frameIndex else {
+            return nil
+        }
+
+        let frame = action.frames[frameIndex]
+        return frame
+    }
+
+    func image(for layer: ACT.Layer) -> CGImage? {
+        guard let spriteType = SPR.SpriteType(rawValue: Int(layer.spriteType)) else {
+            return nil
+        }
+
+        let spriteIndex = Int(layer.spriteIndex)
+        let image = image(with: spriteType, at: spriteIndex)
+        return image
+    }
+
+    private func image(with spriteType: SPR.SpriteType, at spriteIndex: Int) -> CGImage? {
+        let indexedSpriteCount = Int(spr.indexedSpriteCount)
+        let rgbaSpriteCount = Int(spr.rgbaSpriteCount)
+
+        switch spriteType {
+        case .indexed:
+            guard 0..<indexedSpriteCount ~= spriteIndex else {
+                return nil
+            }
+
+            if let image = indexedSpriteImages[spriteIndex] {
+                return image
+            }
+
+            let index = spriteIndex
+            let image = spr.image(forSpriteAt: index, palette: palette?.pal)
+            indexedSpriteImages[spriteIndex] = image
+
+            return image
+        case .rgba:
+            guard 0..<rgbaSpriteCount ~= spriteIndex else {
+                return nil
+            }
+
+            if let image = rgbaSpriteImages[spriteIndex] {
+                return image
+            }
+
+            let index = indexedSpriteCount + spriteIndex
+            let image = spr.image(forSpriteAt: index, palette: palette?.pal)
+            rgbaSpriteImages[spriteIndex] = image
+
+            return image
+        }
     }
 }
 
