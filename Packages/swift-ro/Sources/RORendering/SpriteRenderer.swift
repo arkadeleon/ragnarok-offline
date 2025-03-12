@@ -128,13 +128,6 @@ public enum HeadDirection: Int, CaseIterable, CustomStringConvertible, Sendable 
 }
 
 final public class SpriteRenderer: Sendable {
-    public struct Result: Sendable {
-        public let frames: [CGImage?]
-        public let frameWidth: CGFloat
-        public let frameHeight: CGFloat
-        public let frameInterval: CGFloat
-    }
-
     public let sprites: [SpriteResource]
     public let scale: CGFloat = 2
 
@@ -142,7 +135,7 @@ final public class SpriteRenderer: Sendable {
         self.sprites = sprites
     }
 
-    public func renderAction(at actionIndex: Int, headDirection: HeadDirection) async -> SpriteRenderer.Result {
+    public func renderAction(at actionIndex: Int, headDirection: HeadDirection) async -> AnimatedImage {
         var actionNodes: [(SpriteResource, SpriteRenderNode)] = []
         var bounds: CGRect = .null
         var frameCount = 0
@@ -183,6 +176,8 @@ final public class SpriteRenderer: Sendable {
                             cgContext.concatenate(layerNode.transform)
                             cgContext.scaleBy(x: 1, y: -1)
                             cgContext.draw(image, in: layerNode.frame)
+//                            cgContext.setStrokeColor(.black)
+//                            cgContext.stroke(layerNode.frame)
                             cgContext.restoreGState()
                         }
                     }
@@ -191,18 +186,22 @@ final public class SpriteRenderer: Sendable {
             frames.append(image)
         }
 
+        let frameWidth = bounds.size.width / scale
+        let frameHeight = bounds.size.height / scale
+
         var frameInterval: CGFloat = 1 / 12
         if let mainSprite = sprites.first(where: { $0.part == .main || $0.part == .playerBody }),
            let action = mainSprite.action(at: actionIndex) {
-            frameInterval = CGFloat(action.animationSpeed * 25 / 1000)
+            frameInterval = CGFloat(action.animationSpeed) * 25 / 1000
         }
 
-        let result = SpriteRenderer.Result(
+        let animatedImage = AnimatedImage(
             frames: frames,
-            frameWidth: bounds.size.width,
-            frameHeight: bounds.size.height,
-            frameInterval: frameInterval
+            frameWidth: frameWidth,
+            frameHeight: frameHeight,
+            frameInterval: frameInterval,
+            frameScale: scale
         )
-        return result
+        return animatedImage
     }
 }

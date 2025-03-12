@@ -23,19 +23,18 @@ final public class SpriteAction: Sendable {
 
     public init(sprites: [SpriteResource], actionIndex: Int) async throws {
         let spriteRenderer = SpriteRenderer(sprites: sprites)
-        let result = await spriteRenderer.renderAction(at: actionIndex, headDirection: .straight)
+        let animatedImage = await spriteRenderer.renderAction(at: actionIndex, headDirection: .straight)
 
-        let frameCount = result.frames.count
+        let frameCount = animatedImage.frames.count
 
-        let scale = spriteRenderer.scale
-        let frameWidth = result.frameWidth / scale
-        let frameHeight = result.frameHeight / scale
+        let frameWidth = animatedImage.frameWidth
+        let frameHeight = animatedImage.frameHeight
 
         let size = CGSize(width: frameWidth * CGFloat(frameCount), height: frameHeight)
         let renderer = CGImageRenderer(size: size, flipped: false)
         let image = renderer.image { cgContext in
             for frameIndex in 0..<frameCount {
-                if let frame = result.frames[frameIndex] {
+                if let frame = animatedImage.frames[frameIndex] {
                     let rect = CGRect(x: frameWidth * CGFloat(frameIndex), y: 0, width: frameWidth, height: frameHeight)
                     cgContext.draw(frame, in: rect)
                 }
@@ -52,7 +51,7 @@ final public class SpriteAction: Sendable {
         self.frameCount = frameCount
         self.frameWidth = Float(frameWidth)
         self.frameHeight = Float(frameHeight)
-        self.frameInterval = Float(result.frameInterval)
+        self.frameInterval = Float(animatedImage.frameInterval)
     }
 }
 

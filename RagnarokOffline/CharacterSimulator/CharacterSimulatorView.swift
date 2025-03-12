@@ -23,6 +23,7 @@ struct CharacterSimulatorView: View {
                 ZStack {
                     if let animatedImage {
                         AnimatedImageView(animatedImage: animatedImage)
+                            .scaleEffect(2)
                     }
                 }
                 .frame(minHeight: 0, maxHeight: 300)
@@ -37,6 +38,7 @@ struct CharacterSimulatorView: View {
                 ZStack {
                     if let animatedImage {
                         AnimatedImageView(animatedImage: animatedImage)
+                            .scaleEffect(2)
                     }
                 }
                 .frame(minWidth: 0, maxWidth: .infinity)
@@ -150,15 +152,7 @@ struct CharacterSimulatorView: View {
     private func reloadAnimatedImage() async {
         let spriteRenderer = SpriteRenderer(sprites: sprites)
         let actionIndex = configuration.actionType.rawValue * 8 + configuration.direction.rawValue
-        let result = await spriteRenderer.renderAction(at: actionIndex, headDirection: configuration.headDirection)
-
-        animatedImage = AnimatedImage(
-            frames: result.frames,
-            frameWidth: result.frameWidth,
-            frameHeight: result.frameHeight,
-            frameInterval: result.frameInterval,
-            frameScale: 1
-        )
+        animatedImage = await spriteRenderer.renderAction(at: actionIndex, headDirection: configuration.headDirection)
     }
 }
 

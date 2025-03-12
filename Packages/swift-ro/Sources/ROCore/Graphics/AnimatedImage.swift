@@ -9,7 +9,7 @@ import CoreGraphics
 import ImageIO
 import UniformTypeIdentifiers
 
-public struct AnimatedImage: Hashable {
+public struct AnimatedImage: Hashable, Sendable {
     public var frames: [CGImage?]
     public var frameWidth: CGFloat
     public var frameHeight: CGFloat
@@ -17,11 +17,7 @@ public struct AnimatedImage: Hashable {
     public var frameScale: CGFloat
 
     public var firstFrame: CGImage? {
-        if let firstFrame = frames.first {
-            firstFrame
-        } else {
-            nil
-        }
+        frames.first ?? nil
     }
 
     public init(frames: [CGImage?], frameWidth: CGFloat, frameHeight: CGFloat, frameInterval: CGFloat, frameScale: CGFloat) {

@@ -15,7 +15,7 @@ extension ACT.Action {
         let frames = self.frames.compactMap { frame -> CGImage? in
             frame.image(in: bounds, using: imagesBySpriteType)
         }
-        let frameInterval = CGFloat(animationSpeed * 25 / 1000)
+        let frameInterval = CGFloat(animationSpeed) * 25 / 1000
         let animatedImage = AnimatedImage(
             frames: frames,
             frameWidth: bounds.size.width,
