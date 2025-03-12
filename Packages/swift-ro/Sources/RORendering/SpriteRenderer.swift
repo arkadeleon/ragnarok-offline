@@ -174,7 +174,10 @@ final public class SpriteRenderer: Sendable {
                     let frameIndex = frameIndex % actionNode.children.count
                     let frameNode = actionNode.children[frameIndex]
                     for layerNode in frameNode.children {
-                        if let image = layerNode.image {
+                        if var image = layerNode.image {
+                            if let color = layerNode.color {
+                                image = image.applyingColor(color) ?? image
+                            }
                             cgContext.saveGState()
                             cgContext.translateBy(x: -bounds.origin.x, y: -bounds.origin.y)
                             cgContext.concatenate(layerNode.transform)

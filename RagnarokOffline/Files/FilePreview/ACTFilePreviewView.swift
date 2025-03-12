@@ -7,6 +7,7 @@
 
 import ROCore
 import ROFileFormats
+import RORendering
 import SwiftUI
 
 struct ACTFilePreviewView: View {
@@ -65,9 +66,20 @@ struct ACTFilePreviewView: View {
         let act = try ACT(data: actData)
         let spr = try SPR(data: sprData)
 
-        let imagesBySpriteType = spr.imagesBySpriteType()
-        let animatedImages = act.actions.map { action in
-            action.animatedImage(using: imagesBySpriteType)
+        let sprite = SpriteResource(act: act, spr: spr)
+        let spriteRenderer = SpriteRenderer(sprites: [sprite])
+
+        var animatedImages: [AnimatedImage] = []
+        for actionIndex in 0..<act.actions.count {
+            let result = await spriteRenderer.renderAction(at: actionIndex, headDirection: .straight)
+            let animatedImage = AnimatedImage(
+                frames: result.frames,
+                frameWidth: result.frameWidth,
+                frameHeight: result.frameHeight,
+                frameInterval: result.frameInterval,
+                frameScale: spriteRenderer.scale
+            )
+            animatedImages.append(animatedImage)
         }
 
         if animatedImages.count % 8 != 0 {

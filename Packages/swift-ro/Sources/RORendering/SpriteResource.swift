@@ -23,8 +23,8 @@ enum SpritePart {
 }
 
 final public class SpriteResource: @unchecked Sendable {
-    let act: ACT
-    let spr: SPR
+    public let act: ACT
+    public let spr: SPR
 
     var parent: SpriteResource?
 
@@ -39,7 +39,7 @@ final public class SpriteResource: @unchecked Sendable {
         spr.imagesBySpriteType(palette: palette?.pal)
     }()
 
-    init(act: ACT, spr: SPR) {
+    public init(act: ACT, spr: SPR) {
         self.act = act
         self.spr = spr
     }

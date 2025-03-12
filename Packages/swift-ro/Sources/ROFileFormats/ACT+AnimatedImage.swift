@@ -5,17 +5,15 @@
 //  Created by Leon Li on 2023/11/14.
 //
 
-import CoreImage.CIFilterBuiltins
 import QuartzCore
 import ROCore
 
 extension ACT.Action {
     public func animatedImage(using imagesBySpriteType: [SPR.SpriteType : [CGImage?]]) -> AnimatedImage {
         let bounds = calculateBounds(using: imagesBySpriteType)
-        let ciContext = CIContext()
 
         let frames = self.frames.compactMap { frame -> CGImage? in
-            frame.image(in: bounds, ciContext: ciContext, using: imagesBySpriteType)
+            frame.image(in: bounds, using: imagesBySpriteType)
         }
         let frameInterval = CGFloat(animationSpeed * 25 / 1000)
         let animatedImage = AnimatedImage(
@@ -66,12 +64,12 @@ extension ACT.Action {
 }
 
 extension ACT.Frame {
-    func image(in bounds: CGRect, ciContext: CIContext, using imagesBySpriteType: [SPR.SpriteType : [CGImage?]]) -> CGImage? {
+    func image(in bounds: CGRect, using imagesBySpriteType: [SPR.SpriteType : [CGImage?]]) -> CGImage? {
         let frameLayer = CALayer()
         frameLayer.bounds = bounds
 
         for layer in layers {
-            guard let caLayer = CALayer(context: ciContext, layer: layer, contents: { spriteType, spriteIndex in
+            guard let caLayer = CALayer(layer: layer, contents: { spriteType, spriteIndex in
                 guard let spriteImages = imagesBySpriteType[spriteType] else {
                     return nil
                 }
@@ -97,7 +95,7 @@ extension ACT.Frame {
 }
 
 extension CALayer {
-    convenience init?(context: CIContext, layer: ACT.Layer, contents: (SPR.SpriteType, Int) -> CGImage?) {
+    convenience init?(layer: ACT.Layer, contents: (SPR.SpriteType, Int) -> CGImage?) {
         guard let spriteType = SPR.SpriteType(rawValue: Int(layer.spriteType)) else {
             return nil
         }
@@ -126,16 +124,7 @@ extension CALayer {
         self.transform = transform
 
         if layer.color != RGBAColor(red: 255, green: 255, blue: 255, alpha: 255) {
-            let colorMatrix = CIFilter.colorMatrix()
-            colorMatrix.inputImage = CIImage(cgImage: image)
-            colorMatrix.rVector = CIVector(x: CGFloat(layer.color.red) / 255, y: 0, z: 0, w: 0)
-            colorMatrix.gVector = CIVector(x: 0, y: CGFloat(layer.color.green) / 255, z: 0, w: 0)
-            colorMatrix.bVector = CIVector(x: 0, y: 0, z: CGFloat(layer.color.blue) / 255, w: 0)
-            colorMatrix.aVector = CIVector(x: 0, y: 0, z: 0, w: CGFloat(layer.color.alpha) / 255)
-
-            if let outputImage = colorMatrix.outputImage {
-                self.contents = context.createCGImage(outputImage, from: outputImage.extent)
-            }
+            self.contents = image.applyingColor(layer.color)
         }
 
         if self.contents == nil {

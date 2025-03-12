@@ -7,6 +7,7 @@
 
 import CoreGraphics
 import Foundation
+import ROCore
 import ROFileFormats
 
 struct SpriteRenderNode: Sendable {

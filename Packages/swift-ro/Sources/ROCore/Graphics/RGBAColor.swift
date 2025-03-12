@@ -5,9 +5,7 @@
 //  Created by Leon Li on 2023/12/7.
 //
 
-import ROCore
-
-public struct RGBAColor: BinaryDecodable, Equatable, Sendable {
+public struct RGBAColor: BinaryDecodable, Hashable, Sendable {
     public var red: UInt8
     public var green: UInt8
     public var blue: UInt8
