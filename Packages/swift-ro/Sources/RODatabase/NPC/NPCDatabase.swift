@@ -7,6 +7,7 @@
 
 import Foundation
 import rAthenaResources
+import ROCore
 
 public actor NPCDatabase {
     public static let prerenewal = NPCDatabase(mode: .prerenewal)
@@ -65,11 +66,14 @@ public actor NPCDatabase {
     }
 
     private func import_conf_file(url: URL) throws {
-        let string = try String(contentsOf: url, encoding: .isoLatin1)
-        let lines = string.split(separator: "\n")
+        let stream = try FileStream(url: url)
+        let reader = StreamReader(stream: stream)
+        defer {
+            reader.close()
+        }
 
-        for line in lines {
-            let line = line.trimmingCharacters(in: .whitespacesAndNewlines)
+        while let line = reader.readLine() {
+            let line = line.trimmingCharacters(in: .whitespaces)
             if line.isEmpty || line.starts(with: "//") {
                 continue
             }
@@ -98,19 +102,30 @@ public actor NPCDatabase {
     }
 
     private func add_npc_file(url: URL) throws {
-        let string = try String(contentsOf: url, encoding: .isoLatin1)
-        let scanner = Scanner(string: string)
-        scanner.charactersToBeSkipped = nil
+        let stream = try FileStream(url: url)
+        let reader = StreamReader(stream: stream)
+        defer {
+            reader.close()
+        }
 
-        while !scanner.isAtEnd {
-            let line = scanner.scanLine().trimmingCharacters(in: .whitespaces)
+        while let line = reader.readLine() {
+            let line = line.trimmingCharacters(in: .whitespaces)
             if line.isEmpty || line.starts(with: "//") {
                 continue
             }
 
-            if line.starts(with: "/*") {
-                _ = scanner.scanUpToString("*/")
-                _ = scanner.scanString("*/")
+            // `/*` and `*/` is on the same line.
+            if line.hasPrefix("/*") && line.hasSuffix("*/") {
+                continue
+            }
+
+            // `/*` and `*/` is not on the same line.
+            if line.hasPrefix("/*") {
+                while let line = reader.readLine() {
+                    if line.hasSuffix("*/") {
+                        break
+                    }
+                }
                 continue
             }
 
@@ -123,33 +138,39 @@ public actor NPCDatabase {
             let w2 = words[1].trimmingCharacters(in: .whitespaces)
             let w3 = words[2].trimmingCharacters(in: .whitespaces)
 
+            var w4 = ""
+            if words.count >= 4 {
+                w4 = words[3].trimmingCharacters(in: .whitespaces)
+            }
+
             if w1 != "-" && w1.lowercased() != "function" {
                 // <map name>,<x>,<y>,<facing>
             }
 
             switch w2.lowercased() {
             case "warp", "warp2":
-                guard words.count > 3 else {
+                guard words.count >= 4 else {
                     break
                 }
-                let w4 = words[3].trimmingCharacters(in: .whitespaces)
                 let warpPoint = WarpPoint(w1, w2, w3, w4)
                 warpPoints.append(warpPoint)
             case "shop", "cashshop", "itemshop", "pointshop", "marketshop":
-                guard words.count > 3 else {
+                guard words.count >= 4 else {
                     break
                 }
-                let w4 = words[3].trimmingCharacters(in: .whitespaces)
                 let shopNPC = ShopNPC(w1, w2, w3, w4)
                 shopNPCs.append(shopNPC)
             case "script":
-                guard words.count > 3 else {
+                guard words.count >= 4 else {
                     break
                 }
-                var w4 = words[3].trimmingCharacters(in: .whitespaces)
-                let code = scanner.scanUpToString("\n}") ?? ""
-                _ = scanner.scanString("\n}")
-                w4 = w4 + "\n" + code + "\n}"
+                while let line = reader.readLine() {
+                    w4.append("\n")
+                    w4.append(line)
+                    if line == "}" {
+                        break
+                    }
+                }
                 if w1 == "function" {
                     let function = Function(w1, w2, w3, w4)
                     functions.append(function)
@@ -161,21 +182,18 @@ public actor NPCDatabase {
                     npcs.append(npc)
                 }
             case let w2 where w2.starts(with: "duplicate"):
-                guard words.count > 3 else {
+                guard words.count >= 4 else {
                     break
                 }
-                let w4 = words[3].trimmingCharacters(in: .whitespaces)
                 let duplicate = Duplicate(w1, w2, w3, w4)
                 duplicates.append(duplicate)
             case "monster", "boss_monster":
-                guard words.count > 3 else {
+                guard words.count >= 4 else {
                     break
                 }
-                let w4 = words[3].trimmingCharacters(in: .whitespaces)
                 let monsterSpawn = MonsterSpawn(w1, w2, w3, w4)
                 monsterSpawns.append(monsterSpawn)
             case "mapflag":
-                let w4 = words.count > 3 ? words[3].trimmingCharacters(in: .whitespaces) : nil
                 let mapFlag = MapFlag(w1, w2, w3, w4)
                 mapFlags.append(mapFlag)
             default:

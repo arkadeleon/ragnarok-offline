@@ -30,8 +30,8 @@ final class ScriptManagerTests: XCTestCase {
     }
 
     func testJobName() async throws {
-        let warp = await scriptManager.jobName(forJobID: 45)
-        XCTAssertEqual(warp, "1_ETC_01")
+        let etc01 = await scriptManager.jobName(forJobID: 46)
+        XCTAssertEqual(etc01, "1_ETC_01")
     }
 
     func testRobeName() async throws {
