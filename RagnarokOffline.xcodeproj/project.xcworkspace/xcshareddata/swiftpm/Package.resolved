@@ -1,4 +1,5 @@
 {
+  "originHash" : "04023e721024ee513283a75ee1e450b3151c8a18c2614cd01758a11cfa8a5ecf",
   "pins" : [
     {
       "identity" : "datacompression",
@@ -19,6 +20,15 @@
       }
     },
     {
+      "identity" : "swift-highlight",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/arkadeleon/swift-highlight.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "06bde82d173339e68f4ae346c61fb7be0bc8caa3"
+      }
+    },
+    {
       "identity" : "swift-syntax",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-syntax.git",
@@ -28,5 +38,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

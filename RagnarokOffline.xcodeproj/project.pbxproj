@@ -38,6 +38,8 @@
 		3523B5822B98B74B00CCE722 /* DatabaseRecordSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3523B5812B98B74B00CCE722 /* DatabaseRecordSectionView.swift */; };
 		352B140F2C22DCA40097E643 /* ObservableMonster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B140E2C22DCA40097E643 /* ObservableMonster.swift */; };
 		3536BDAD2CCA72840098950E /* ConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3536BDAC2CCA72840098950E /* ConsoleView.swift */; };
+		353725ED2D83FDF2008590F6 /* Highlight in Frameworks */ = {isa = PBXBuildFile; productRef = 353725EC2D83FDF2008590F6 /* Highlight */; };
+		353725EF2D83FE6C008590F6 /* HighlightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353725EE2D83FE67008590F6 /* HighlightTextView.swift */; };
 		353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 353AFBDB2BC779BE00F613A8 /* RODatabase */; };
 		353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */; };
 		353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F172B44FFE100605E92 /* SkillInfoView.swift */; };
@@ -212,6 +214,7 @@
 		3535EC802CC0A6890012ACF0 /* swift-ro-tools */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-ro-tools"; path = "Packages/swift-ro-tools"; sourceTree = "<group>"; };
 		3535EC812CC0D69E0012ACF0 /* RagnarokOffline.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RagnarokOffline.entitlements; sourceTree = "<group>"; };
 		3536BDAC2CCA72840098950E /* ConsoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleView.swift; sourceTree = "<group>"; };
+		353725EE2D83FE67008590F6 /* HighlightTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightTextView.swift; sourceTree = "<group>"; };
 		353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillDatabaseView.swift; sourceTree = "<group>"; };
 		353B4F172B44FFE100605E92 /* SkillInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillInfoView.swift; sourceTree = "<group>"; };
 		353B4F1B2B451F1300605E92 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
@@ -346,6 +349,7 @@
 				353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */,
 				35C8AF082D31781C0033B3DB /* ROResources in Frameworks */,
 				357960AA2D356D26003D9CEF /* ROGame in Frameworks */,
+				353725ED2D83FDF2008590F6 /* Highlight in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +460,7 @@
 				35BE552E2BD94053003715C3 /* AsyncContentView.swift */,
 				3536BDAC2CCA72840098950E /* ConsoleView.swift */,
 				35239E022BC29F660039F7D5 /* EmptyContentView.swift */,
+				353725EE2D83FE67008590F6 /* HighlightTextView.swift */,
 				357F96B92C4AA48400B3231B /* ImageGrid.swift */,
 				3599BD582C3FCE7A0010DBE7 /* ImageGridCell.swift */,
 				35239DF62BBDA0760039F7D5 /* LoadStatus.swift */,
@@ -770,6 +775,7 @@
 				35C8AF072D31781C0033B3DB /* ROResources */,
 				357960A92D356D26003D9CEF /* ROGame */,
 				3579DF932D637BFC00B8C98A /* RORendering */,
+				353725EC2D83FDF2008590F6 /* Highlight */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -814,6 +820,7 @@
 			);
 			mainGroup = 35B3B8CB2A08BEA600B4540B;
 			packageReferences = (
+				353725EB2D83FDF2008590F6 /* XCRemoteSwiftPackageReference "swift-highlight" */,
 			);
 			productRefGroup = 35B3B8D52A08BEA600B4540B /* Products */;
 			projectDirPath = "";
@@ -866,6 +873,7 @@
 				35B33BA22BF3BDCE00EF28F5 /* RealityCubeViewController.swift in Sources */,
 				35BE555E2BDAAFFF003715C3 /* RSMFilePreviewView.swift in Sources */,
 				3514BF822B4801D70065ED89 /* JobDatabaseView.swift in Sources */,
+				353725EF2D83FE6C008590F6 /* HighlightTextView.swift in Sources */,
 				351EE2F92C0735390012BC9E /* TransferableImage.swift in Sources */,
 				35239E052BC2D5D60039F7D5 /* ProgressHUD.swift in Sources */,
 				35BDF7062C9B0AF200CCAB8F /* SettingsItem.swift in Sources */,
@@ -1216,7 +1224,23 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		353725EB2D83FDF2008590F6 /* XCRemoteSwiftPackageReference "swift-highlight" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/arkadeleon/swift-highlight.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		353725EC2D83FDF2008590F6 /* Highlight */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 353725EB2D83FDF2008590F6 /* XCRemoteSwiftPackageReference "swift-highlight" */;
+			productName = Highlight;
+		};
 		353AFBDB2BC779BE00F613A8 /* RODatabase */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RODatabase;

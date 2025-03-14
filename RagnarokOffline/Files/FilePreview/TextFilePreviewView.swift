@@ -12,8 +12,8 @@ struct TextFilePreviewView: View {
     var file: File
 
     var body: some View {
-        AsyncContentView(load: loadTextFile) { htmlString in
-            WebView(htmlString: htmlString, baseURL: nil)
+        AsyncContentView(load: loadTextFile) { text in
+            HighlightTextView(text: text)
         }
     }
 
@@ -39,20 +39,7 @@ struct TextFilePreviewView: View {
             throw FilePreviewError.invalidTextFile
         }
 
-        let htmlString = """
-        <!doctype html>
-        <meta charset="utf-8">
-        <meta name="viewport" content="height=device-height, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-        <style>
-            code {
-                word-wrap: break-word;
-                white-space: -moz-pre-wrap;
-                white-space: pre-wrap;
-            }
-        </style>
-        <pre><code>\(convertedString)</code></pre>
-        """
-        return htmlString
+        return convertedString as String
     }
 }
 
