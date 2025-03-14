@@ -462,6 +462,11 @@ public let HEADER_ZC_NOTIFY_TIME: Int16 = 0x7f
 public let HEADER_ZC_SETTING_WHISPER_PC: Int16 = 0xd1
 public let HEADER_ZC_SETTING_WHISPER_STATE: Int16 = 0xd2
 public let HEADER_ZC_SKILLMSG: Int16 = 0x215
+public let HEADER_CZ_REQ_EMOTION_EXPANSION: Int16 = 0xbe9
+public let HEADER_ZC_DISAPPEAR_ENTRY: Int16 = 0x132
+public let HEADER_ZC_EFST_SET_ENTER: Int16 = 0x984
+public let HEADER_CZ_SETTING_WHISPER_STATE: Int16 = 0xd0
+public let HEADER_ZC_WHISPER_LIST: Int16 = 0xd4
 public let HEADER_ZC_NOTIFY_CHAT: Int16 = 0x8d
 public let HEADER_ZC_ITEM_ENTRY: Int16 = 0x9d
 public let HEADER_ZC_MVP_GETTING_ITEM: Int16 = 0x10a
@@ -16083,6 +16088,134 @@ public struct PACKET_ZC_SKILLMSG: BinaryDecodable, BinaryEncodable, Sendable {
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(msgId)
+    }
+}
+
+public struct PACKET_CZ_REQ_EMOTION_EXPANSION: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + (1 * 4))
+    }
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 4, initialValue: 0)
+    public var unknown: [UInt8]
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        unknown = try decoder.decode([UInt8].self, count: 4)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(unknown)
+    }
+}
+
+public struct PACKET_ZC_DISAPPEAR_ENTRY: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var GID: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        GID = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(GID)
+    }
+}
+
+public struct PACKET_ZC_EFST_SET_ENTER: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 4 + 4 + 4 + 4 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var targetID: UInt32 = 0
+    public var type: UInt16 = 0
+    public var duration: UInt32 = 0
+    public var duration2: UInt32 = 0
+    public var val1: Int32 = 0
+    public var val2: Int32 = 0
+    public var val3: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        targetID = try decoder.decode(UInt32.self)
+        type = try decoder.decode(UInt16.self)
+        duration = try decoder.decode(UInt32.self)
+        duration2 = try decoder.decode(UInt32.self)
+        val1 = try decoder.decode(Int32.self)
+        val2 = try decoder.decode(Int32.self)
+        val3 = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(targetID)
+        try encoder.encode(type)
+        try encoder.encode(duration)
+        try encoder.encode(duration2)
+        try encoder.encode(val1)
+        try encoder.encode(val2)
+        try encoder.encode(val3)
+    }
+}
+
+public struct PACKET_CZ_SETTING_WHISPER_STATE: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
+    public var packetType: Int16 = 0
+    public var type: Int8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        type = try decoder.decode(Int8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(type)
+    }
+}
+
+public struct PACKET_ZC_WHISPER_LIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (24)
+    }
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        name = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(name, lengthOfBytes: 24)
+    }
+}
+
+public struct PACKET_ZC_WHISPER_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var names: [PACKET_ZC_WHISPER_LIST_sub] = []
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        names = try decoder.decode([PACKET_ZC_WHISPER_LIST_sub].self, count: (Int(packetLength) - (2 + 2)) / (24))
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(names)
     }
 }
 
