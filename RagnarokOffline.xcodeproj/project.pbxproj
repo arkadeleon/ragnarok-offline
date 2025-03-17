@@ -154,6 +154,7 @@
 		35E67C792CBF6E60006E42A3 /* SPR+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C782CBF6E5B006E42A3 /* SPR+JSON.swift */; };
 		35E67C7B2CBF7F4F006E42A3 /* STR+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C7A2CBF7F4B006E42A3 /* STR+JSON.swift */; };
 		35E67C7D2CBF90C8006E42A3 /* Miscellaneous+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C7C2CBF909E006E42A3 /* Miscellaneous+JSON.swift */; };
+		35F1E20E2D846757008523FC /* IMF+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F1E20D2D846751008523FC /* IMF+JSON.swift */; };
 		35F50CCC2BB4615F00B36455 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CCB2BB4615F00B36455 /* MessagesView.swift */; };
 		35FEB6AD2CD8BE4E00F24A4A /* DatabaseRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */; };
 		35FEB6AF2CD8C90300F24A4A /* StatusChangeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */; };
@@ -325,6 +326,7 @@
 		35E67C782CBF6E5B006E42A3 /* SPR+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SPR+JSON.swift"; sourceTree = "<group>"; };
 		35E67C7A2CBF7F4B006E42A3 /* STR+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "STR+JSON.swift"; sourceTree = "<group>"; };
 		35E67C7C2CBF909E006E42A3 /* Miscellaneous+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Miscellaneous+JSON.swift"; sourceTree = "<group>"; };
+		35F1E20D2D846751008523FC /* IMF+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IMF+JSON.swift"; sourceTree = "<group>"; };
 		35F50CCB2BB4615F00B36455 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRoot.swift; sourceTree = "<group>"; };
 		35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeInfoView.swift; sourceTree = "<group>"; };
@@ -728,6 +730,7 @@
 				35E67C682CBF6C1F006E42A3 /* ACT+JSON.swift */,
 				35E67C6A2CBF6C1F006E42A3 /* GAT+JSON.swift */,
 				35E67C6B2CBF6C1F006E42A3 /* GND+JSON.swift */,
+				35F1E20D2D846751008523FC /* IMF+JSON.swift */,
 				35E67C742CBF6E48006E42A3 /* RSM+JSON.swift */,
 				35E67C762CBF6E53006E42A3 /* RSW+JSON.swift */,
 				35E67C782CBF6E5B006E42A3 /* SPR+JSON.swift */,
@@ -934,6 +937,7 @@
 				35B33BA52BF465E700EF28F5 /* RealityCubeView.swift in Sources */,
 				35652B472B960D370075AD71 /* MapInfoView.swift in Sources */,
 				3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */,
+				35F1E20E2D846757008523FC /* IMF+JSON.swift in Sources */,
 				353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */,
 				35BE55622BDAB6EC003715C3 /* STRFilePreviewView.swift in Sources */,
 				35E67C772CBF6E57006E42A3 /* RSW+JSON.swift in Sources */,

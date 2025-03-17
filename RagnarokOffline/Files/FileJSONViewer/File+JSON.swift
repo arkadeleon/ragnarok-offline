@@ -11,7 +11,7 @@ import ROFileFormats
 extension File {
     var jsonRepresentable: Bool {
         switch type {
-        case .act, .gat, .gnd, .rsm, .rsw, .spr, .str:
+        case .act, .gat, .gnd, .imf, .rsm, .rsw, .spr, .str:
             true
         default:
             false
@@ -31,6 +31,7 @@ extension File {
         case .act: try? ACT(data: data).json
         case .gat: try? GAT(data: data).json
         case .gnd: try? GND(data: data).json
+        case .imf: try? IMF(data: data).json
         case .rsm: try? RSM(data: data).json
         case .rsw: try? RSW(data: data).json
         case .spr: try? SPR(data: data).json

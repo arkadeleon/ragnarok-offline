@@ -20,6 +20,7 @@ enum FileType {
     case ebm
     case gat
     case gnd
+    case imf
     case pal
     case rsm
     case rsw
@@ -50,6 +51,8 @@ enum FileType {
             self = .gnd
         case "grf":
             self = .grf
+        case "imf":
+            self = .imf
         case "pal":
             self = .pal
         case "rsm":

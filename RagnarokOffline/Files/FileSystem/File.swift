@@ -198,6 +198,8 @@ extension File {
             "square.grid.3x3.middle.filled"
         case .gnd:
             "mountain.2"
+        case .imf:
+            "square.3.layers.3d"
         case .rsm:
             "square.stack.3d.up"
         case .rsw:

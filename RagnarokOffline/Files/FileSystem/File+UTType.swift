@@ -30,6 +30,8 @@ extension File {
             return .gnd
         case "grf":
             return .grf
+        case "imf":
+            return .imf
         case "ini":
             return .text
         case "jpg", "jpeg":
@@ -91,6 +93,7 @@ extension UTType {
     static let ebm = UTType(exportedAs: "kr.co.gravity.ebm")
     static let gat = UTType(exportedAs: "kr.co.gravity.gat")
     static let gnd = UTType(exportedAs: "kr.co.gravity.gnd")
+    static let imf = UTType(exportedAs: "kr.co.gravity.imf")
     static let pal = UTType(exportedAs: "kr.co.gravity.pal")
     static let rsm = UTType(exportedAs: "kr.co.gravity.rsm")
     static let rsw = UTType(exportedAs: "kr.co.gravity.rsw")
