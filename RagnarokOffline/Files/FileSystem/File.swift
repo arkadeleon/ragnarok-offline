@@ -9,7 +9,15 @@ import Foundation
 import Observation
 import ROFileFormats
 
-@Observable 
+enum FileNode {
+    case directory(URL)
+    case regularFile(URL)
+    case grf(GRFReference)
+    case grfDirectory(GRFReference, GRFPath)
+    case grfEntry(GRFReference, GRFPath)
+}
+
+@Observable
 class File: Hashable, Identifiable {
     static func == (lhs: File, rhs: File) -> Bool {
         lhs.url == rhs.url
@@ -17,11 +25,8 @@ class File: Hashable, Identifiable {
 
     let node: FileNode
 
-    var id: URL {
-        url
-    }
-
-    var url: URL {
+    @ObservationIgnored
+    lazy var url: URL = {
         switch node {
         case .directory(let url):
             url
@@ -38,9 +43,10 @@ class File: Hashable, Identifiable {
                 URLQueryItem(name: "path", value: path.string)
             ])
         }
-    }
+    }()
 
-    var name: String {
+    @ObservationIgnored
+    lazy var name: String = {
         switch node {
         case .directory(let url):
             url.lastPathComponent
@@ -53,21 +59,41 @@ class File: Hashable, Identifiable {
         case .grfEntry(_, let path):
             path.lastComponent
         }
-    }
+    }()
+
+    @ObservationIgnored
+    lazy var `extension`: String = {
+        switch node {
+        case .directory(let url):
+            url.pathExtension
+        case .regularFile(let url):
+            url.pathExtension
+        case .grf(let grf):
+            grf.url.pathExtension
+        case .grfDirectory(_, let directory):
+            directory.extension
+        case .grfEntry(_, let path):
+            path.extension
+        }
+    }()
 
     var type: FileType {
         switch node {
         case .directory:
             .directory
         case .regularFile(let url):
-            FileType(url.pathExtension)
+            FileType(self.extension)
         case .grf:
             .grf
         case .grfDirectory:
             .directory
         case .grfEntry(_, let path):
-            FileType(path.extension)
+            FileType(self.extension)
         }
+    }
+
+    var id: URL {
+        url
     }
 
     init(node: FileNode) {
@@ -99,15 +125,15 @@ class File: Hashable, Identifiable {
     func contents() async -> Data? {
         switch node {
         case .directory:
-            return nil
+            nil
         case .regularFile(let url):
-            return try? Data(contentsOf: url)
+            try? Data(contentsOf: url)
         case .grf:
-            return nil
+            nil
         case .grfDirectory:
-            return nil
+            nil
         case .grfEntry(let grf, let path):
-            return try? grf.contentsOfEntry(at: path)
+            try? grf.contentsOfEntry(at: path)
         }
     }
 

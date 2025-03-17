@@ -15,13 +15,13 @@ extension File {
             let lhsRank = switch lhs.node {
             case .directory, .grfDirectory: 0
             case .grf: 1
-            default: 2
+            case .regularFile, .grfEntry: 2
             }
 
             let rhsRank = switch rhs.node {
             case .directory, .grfDirectory: 0
             case .grf: 1
-            default: 2
+            case .regularFile, .grfEntry: 2
             }
 
             if lhsRank == rhsRank {
@@ -38,13 +38,13 @@ extension File: Comparable {
         let lhsRank = switch lhs.node {
         case .directory, .grfDirectory: 0
         case .grf: 1
-        default: 2
+        case .regularFile, .grfEntry: 2
         }
 
         let rhsRank = switch rhs.node {
         case .directory, .grfDirectory: 0
         case .grf: 1
-        default: 2
+        case .regularFile, .grfEntry: 2
         }
 
         if lhsRank == rhsRank {

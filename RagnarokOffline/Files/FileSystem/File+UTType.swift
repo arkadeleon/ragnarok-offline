@@ -17,7 +17,7 @@ extension File {
             return .directory
         }
 
-        switch (name as NSString).pathExtension.lowercased() {
+        switch self.extension.lowercased() {
         case "act":
             return .act
         case "bmp":
