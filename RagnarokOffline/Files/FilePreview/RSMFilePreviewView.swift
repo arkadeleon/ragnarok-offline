@@ -21,7 +21,7 @@ struct RSMFilePreviewView: View {
     }
 
     nonisolated private func loadRSMFile() async throws -> Entity {
-        guard case .grfEntry(let grf, _) = file.node, let data = await file.contents() else {
+        guard let data = await file.contents() else {
             throw FilePreviewError.invalidRSMFile
         }
 
@@ -35,15 +35,7 @@ struct RSMFilePreviewView: View {
             height: 0
         )
 
-        let entity = try await Entity.loadModel(rsm: rsm, instance: instance) { textureName in
-            let path = GRFPath(components: ["data", "texture", textureName])
-            guard let data = try? grf.contentsOfEntry(at: path) else {
-                return nil
-            }
-            let texture = CGImageCreateWithData(data)
-            return texture?.removingMagentaPixels()
-        }
-
+        let entity = try await Entity.modelEntity(rsm: rsm, instance: instance)
         return entity
     }
 }

@@ -15,6 +15,8 @@ struct ContentView: View {
     @State private var clientDirectory = File(node: .directory(ResourceManager.default.baseURL))
     @State private var serverDirectory = File(node: .directory(ServerResourceManager.default.workingDirectoryURL))
 
+    @State private var incomingFile: File?
+
     @State private var conversation = Conversation()
     @State private var gameSession = GameSession()
 
@@ -38,6 +40,14 @@ struct ContentView: View {
                                 .toolbarTitleDisplayMode(.inline)
                         }
                     }
+                }
+            }
+            .onOpenURL { url in
+                incomingFile = File(node: .regularFile(url))
+            }
+            .sheet(item: $incomingFile) { file in
+                NavigationStack {
+                    FilePreviewTabView(files: [file], currentFile: file)
                 }
             }
         }

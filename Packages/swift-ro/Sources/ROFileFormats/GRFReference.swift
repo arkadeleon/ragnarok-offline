@@ -11,7 +11,7 @@ import ROCore
 public class GRFReference {
     public let url: URL
 
-    private lazy var grf = {
+    private lazy var grf: GRF? = {
         let beginTime = CFAbsoluteTimeGetCurrent()
 
         let grf = try? GRF(url: url)

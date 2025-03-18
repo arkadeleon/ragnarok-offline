@@ -9,6 +9,7 @@ import RealityKit
 import ROCore
 import ROFileFormats
 import RORenderers
+import ROResources
 import SwiftUI
 
 struct GNDFilePreviewView: View {
@@ -21,24 +22,27 @@ struct GNDFilePreviewView: View {
     }
 
     nonisolated private func loadGNDFile() async throws -> Entity {
-        guard case .grfEntry(let grf, let path) = file.node, let data = await file.contents() else {
+        guard let data = await file.contents() else {
             throw FilePreviewError.invalidGNDFile
         }
 
         let gnd = try GND(data: data)
 
-        let gatPath = path.replacingExtension("gat")
-        let gatData = try grf.contentsOfEntry(at: gatPath)
+        let gatData: Data
+        switch file.node {
+        case .regularFile(let url):
+            let gatPath = url.deletingPathExtension().path().appending(".gat")
+            gatData = try Data(contentsOf: URL(filePath: gatPath))
+        case .grfEntry(let grf, let path):
+            let gatPath = path.replacingExtension("gat")
+            gatData = try grf.contentsOfEntry(at: gatPath)
+        default:
+            throw FilePreviewError.invalidACTFile
+        }
+
         let gat = try GAT(data: gatData)
 
-        let groundEntity = try await Entity.loadGround(gat: gat, gnd: gnd) { textureName in
-            let path = GRFPath(components: ["data", "texture", textureName])
-            guard let data = try? grf.contentsOfEntry(at: path) else {
-                return nil
-            }
-            let texture = CGImageCreateWithData(data)
-            return texture
-        }
+        let groundEntity = try await Entity.groundEntity(gat: gat, gnd: gnd)
 
         let translation = float4x4(translation: [-Float(gat.width / 2), 0, -Float(gat.height / 2)])
         let rotation = float4x4(rotationX: radians(-90))

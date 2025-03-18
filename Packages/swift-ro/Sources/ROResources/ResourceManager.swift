@@ -8,8 +8,15 @@
 import Foundation
 import ROFileFormats
 
-enum ResourceError: Error {
+enum ResourceError: LocalizedError {
     case resourceNotFound(ResourcePath)
+
+    var errorDescription: String? {
+        switch self {
+        case .resourceNotFound(let path):
+            String(localized: "Resource not found at: \(path.components.joined(separator: "/"))")
+        }
+    }
 }
 
 public actor ResourceManager {
@@ -48,7 +55,7 @@ public actor ResourceManager {
 
         let grfPath = GRFPath(components: path.components)
         for grf in grfs {
-            if grf.entry(at: grfPath) != nil {
+            if let _ = grf.entry(at: grfPath) {
                 return try grf.contentsOfEntry(at: grfPath)
             }
         }
