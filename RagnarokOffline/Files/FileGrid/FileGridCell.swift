@@ -22,12 +22,14 @@ struct FileGridCell: View {
     }
 
     private func loadSubtitle() async {
-        let fileType = file.type
-        switch fileType {
-        case .directory:
+        if file.isDirectory {
             let fileCount = await file.fileCount()
-            subtitle = fileCount.formatted() + " item(s)"
-        default:
+            if fileCount == 1 {
+                subtitle = fileCount.formatted() + " item"
+            } else {
+                subtitle = fileCount.formatted() + " items"
+            }
+        } else {
             let fileSize = await file.size()
             let formatStyle = FloatingPointFormatStyle<Float>().precision(.significantDigits(2))
             if fileSize > 1024 * 1024 * 1024 {

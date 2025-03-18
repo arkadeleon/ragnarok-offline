@@ -17,10 +17,10 @@ extension File: Transferable {
 
     var canShare: Bool {
         switch node {
+        case .regularFile, .grf, .grfEntry:
+            true
         case .directory, .grfDirectory:
             false
-        default:
-            true
         }
     }
 

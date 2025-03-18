@@ -9,7 +9,7 @@ import ROFileFormats
 
 extension File {
     var hasReferences: Bool {
-        switch type {
+        switch utType {
         case .gnd, .rsw:
             true
         default:
@@ -18,7 +18,7 @@ extension File {
     }
 
     func referenceFiles() async -> [File] {
-        switch type {
+        switch utType {
         case .gnd:
             guard case .grfEntry(let grf, _) = node,
                   let data = await contents(),

@@ -65,9 +65,8 @@
 		3577426A2D005FAA00F2CE8D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3577425A2D005FAA00F2CE8D /* MapView.swift */; };
 		3577426B2D005FAA00F2CE8D /* GameImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3577425E2D005FAA00F2CE8D /* GameImage.swift */; };
 		3577426C2D005FAA00F2CE8D /* GameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3577425D2D005FAA00F2CE8D /* GameButton.swift */; };
-		3579609F2D3564B0003D9CEF /* File+UTType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357960962D3564B0003D9CEF /* File+UTType.swift */; };
+		3579609F2D3564B0003D9CEF /* UTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357960962D3564B0003D9CEF /* UTTypes.swift */; };
 		357960A02D3564B0003D9CEF /* FileThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3579609A2D3564B0003D9CEF /* FileThumbnail.swift */; };
-		357960A12D3564B0003D9CEF /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3579609D2D3564B0003D9CEF /* FileType.swift */; };
 		357960A22D3564B0003D9CEF /* FilePasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357960982D3564B0003D9CEF /* FilePasteboard.swift */; };
 		357960A32D3564B0003D9CEF /* FileThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3579609B2D3564B0003D9CEF /* FileThumbnailGenerator.swift */; };
 		357960A52D3564B0003D9CEF /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357960992D3564B0003D9CEF /* FileSystem.swift */; };
@@ -154,6 +153,7 @@
 		35E67C7B2CBF7F4F006E42A3 /* STR+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C7A2CBF7F4B006E42A3 /* STR+JSON.swift */; };
 		35E67C7D2CBF90C8006E42A3 /* Miscellaneous+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C7C2CBF909E006E42A3 /* Miscellaneous+JSON.swift */; };
 		35F1E20E2D846757008523FC /* IMF+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F1E20D2D846751008523FC /* IMF+JSON.swift */; };
+		35F1E2102D891776008523FC /* File+Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F1E20F2D891772008523FC /* File+Icon.swift */; };
 		35F50CCC2BB4615F00B36455 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CCB2BB4615F00B36455 /* MessagesView.swift */; };
 		35FEB6AD2CD8BE4E00F24A4A /* DatabaseRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */; };
 		35FEB6AF2CD8C90300F24A4A /* StatusChangeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */; };
@@ -239,13 +239,12 @@
 		3577425E2D005FAA00F2CE8D /* GameImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameImage.swift; sourceTree = "<group>"; };
 		357742602D005FAA00F2CE8D /* GameSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSession.swift; sourceTree = "<group>"; };
 		357742612D005FAA00F2CE8D /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		357960962D3564B0003D9CEF /* File+UTType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+UTType.swift"; sourceTree = "<group>"; };
+		357960962D3564B0003D9CEF /* UTTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTTypes.swift; sourceTree = "<group>"; };
 		357960982D3564B0003D9CEF /* FilePasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePasteboard.swift; sourceTree = "<group>"; };
 		357960992D3564B0003D9CEF /* FileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
 		3579609A2D3564B0003D9CEF /* FileThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnail.swift; sourceTree = "<group>"; };
 		3579609B2D3564B0003D9CEF /* FileThumbnailGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnailGenerator.swift; sourceTree = "<group>"; };
 		3579609C2D3564B0003D9CEF /* FileThumbnailRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnailRequest.swift; sourceTree = "<group>"; };
-		3579609D2D3564B0003D9CEF /* FileType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileType.swift; sourceTree = "<group>"; };
 		3579DF972D66085100B8C98A /* CharacterConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterConfigurationView.swift; sourceTree = "<group>"; };
 		3579DF9C2D67541B00B8C98A /* CharacterConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterConfiguration.swift; sourceTree = "<group>"; };
 		357EA4E12CC14A440081370F /* browser.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = browser.js; sourceTree = "<group>"; };
@@ -325,6 +324,7 @@
 		35E67C7A2CBF7F4B006E42A3 /* STR+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "STR+JSON.swift"; sourceTree = "<group>"; };
 		35E67C7C2CBF909E006E42A3 /* Miscellaneous+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Miscellaneous+JSON.swift"; sourceTree = "<group>"; };
 		35F1E20D2D846751008523FC /* IMF+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IMF+JSON.swift"; sourceTree = "<group>"; };
+		35F1E20F2D891772008523FC /* File+Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+Icon.swift"; sourceTree = "<group>"; };
 		35F50CCB2BB4615F00B36455 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRoot.swift; sourceTree = "<group>"; };
 		35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeInfoView.swift; sourceTree = "<group>"; };
@@ -533,15 +533,15 @@
 				3506D11B2C00526A00903A47 /* File.swift */,
 				351EE69C2D71FCDE0061F81F /* File+Compare.swift */,
 				3599BD492C3F90250010DBE7 /* File+DevelopmentPreview.swift */,
+				35F1E20F2D891772008523FC /* File+Icon.swift */,
 				351EE69A2D71FC3A0061F81F /* File+References.swift */,
 				351EE6982D71FA7A0061F81F /* File+Share.swift */,
-				357960962D3564B0003D9CEF /* File+UTType.swift */,
 				357960982D3564B0003D9CEF /* FilePasteboard.swift */,
 				357960992D3564B0003D9CEF /* FileSystem.swift */,
 				3579609A2D3564B0003D9CEF /* FileThumbnail.swift */,
 				3579609B2D3564B0003D9CEF /* FileThumbnailGenerator.swift */,
 				3579609C2D3564B0003D9CEF /* FileThumbnailRequest.swift */,
-				3579609D2D3564B0003D9CEF /* FileType.swift */,
+				357960962D3564B0003D9CEF /* UTTypes.swift */,
 			);
 			path = FileSystem;
 			sourceTree = "<group>";
@@ -852,9 +852,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				35B695EA2A305EF6006F1904 /* MetalCubeView.swift in Sources */,
-				3579609F2D3564B0003D9CEF /* File+UTType.swift in Sources */,
+				3579609F2D3564B0003D9CEF /* UTTypes.swift in Sources */,
 				357960A02D3564B0003D9CEF /* FileThumbnail.swift in Sources */,
-				357960A12D3564B0003D9CEF /* FileType.swift in Sources */,
 				357960A22D3564B0003D9CEF /* FilePasteboard.swift in Sources */,
 				357960A32D3564B0003D9CEF /* FileThumbnailGenerator.swift in Sources */,
 				351EE6992D71FA7E0061F81F /* File+Share.swift in Sources */,
@@ -904,6 +903,7 @@
 				35E67C722CBF6C1F006E42A3 /* FileJSONViewer.swift in Sources */,
 				35B422EF2BEF091F00681AA2 /* ObservableDatabase.swift in Sources */,
 				35FEB6AF2CD8C90300F24A4A /* StatusChangeInfoView.swift in Sources */,
+				35F1E2102D891776008523FC /* File+Icon.swift in Sources */,
 				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,
 				35239DFB2BBEEF890039F7D5 /* JobProvider.swift in Sources */,
 				354535252D04A8090099B7EF /* GameMapScene.swift in Sources */,

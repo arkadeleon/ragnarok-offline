@@ -24,7 +24,7 @@ struct FilesView: View {
     var body: some View {
         ImageGrid {
             ForEach(filteredFiles) { file in
-                if file.type == .directory || file.type == .grf {
+                if file.hasFiles {
                     NavigationLink(value: file) {
                         FileGridCell(file: file)
                     }

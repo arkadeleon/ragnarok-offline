@@ -13,16 +13,13 @@ import ROFileFormats
 
 class FileThumbnailGenerator {
     func generateThumbnail(for request: FileThumbnailRequest) async throws -> FileThumbnail? {
-        switch request.file.type {
-        case .image, .ebm:
-            let data: Data?
-            if request.file.type == .ebm {
-                data = await request.file.contents()?.unzip()
-            } else {
-                data = await request.file.contents()
-            }
+        guard let utType = request.file.utType else {
+            return nil
+        }
 
-            guard let data else {
+        switch utType {
+        case let utType where utType.conforms(to: .image):
+            guard let data = await request.file.contents() else {
                 return nil
             }
 
@@ -37,6 +34,20 @@ class FileThumbnailGenerator {
                 kCGImageSourceThumbnailMaxPixelSize: 40 * request.scale
             ]
             guard let thumbnail = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary) else {
+                return nil
+            }
+
+            return FileThumbnail(cgImage: thumbnail)
+        case .ebm:
+            guard let data = await request.file.contents()?.unzip() else {
+                return nil
+            }
+
+            guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil) else {
+                return nil
+            }
+
+            guard let thumbnail = CGImageSourceCreateImageAtIndex(imageSource, 0, nil) else {
                 return nil
             }
 

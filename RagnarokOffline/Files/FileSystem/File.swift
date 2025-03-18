@@ -8,6 +8,7 @@
 import Foundation
 import Observation
 import ROFileFormats
+import UniformTypeIdentifiers
 
 enum FileNode {
     case directory(URL)
@@ -62,8 +63,16 @@ class File: Hashable, Identifiable {
     }()
 
     @ObservationIgnored
-    lazy var `extension`: String = {
-        switch node {
+    lazy var utType: UTType? = {
+        if case .directory = node {
+            return .folder
+        }
+
+        if case .grfDirectory = node {
+            return .directory
+        }
+
+        let filenameExtension = switch node {
         case .directory(let url):
             url.pathExtension
         case .regularFile(let url):
@@ -75,25 +84,31 @@ class File: Hashable, Identifiable {
         case .grfEntry(_, let path):
             path.extension
         }
-    }()
 
-    var type: FileType {
-        switch node {
-        case .directory:
-            .directory
-        case .regularFile(let url):
-            FileType(self.extension)
-        case .grf:
-            .grf
-        case .grfDirectory:
-            .directory
-        case .grfEntry(_, let path):
-            FileType(self.extension)
-        }
-    }
+        let utType = UTType(filenameExtension: filenameExtension)
+        return utType
+    }()
 
     var id: URL {
         url
+    }
+
+    var isDirectory: Bool {
+        switch node {
+        case .directory, .grfDirectory:
+            true
+        case .regularFile, .grf, .grfEntry:
+            false
+        }
+    }
+
+    var hasFiles: Bool {
+        switch node {
+        case .directory, .grf, .grfDirectory:
+            true
+        case .regularFile, .grfEntry:
+            false
+        }
     }
 
     init(node: FileNode) {
@@ -206,53 +221,26 @@ class File: Hashable, Identifiable {
 }
 
 extension File {
-    var iconName: String {
-        switch type {
-        case .directory:
-            "folder.fill"
-        case .text, .lua, .lub:
-            "doc.text"
-        case .image, .ebm, .pal:
-            "photo"
-        case .audio:
-            "waveform.circle"
-        case .grf:
-            "doc.zipper"
-        case .act:
-            "livephoto"
-        case .gat:
-            "square.grid.3x3.middle.filled"
-        case .gnd:
-            "mountain.2"
-        case .imf:
-            "square.3.layers.3d"
-        case .rsm:
-            "square.stack.3d.up"
-        case .rsw:
-            "map"
-        case .spr:
-            "photo.stack"
-        case .str:
-            "sparkles.rectangle.stack"
-        case .unknown:
-            "doc"
-        }
-    }
-}
-
-extension File {
     var canPreview: Bool {
-        switch type {
-        case .text, .lua, .lub:
-            true
-        case .image, .ebm, .pal:
-            true
-        case .audio:
-            true
+        guard let utType else {
+            return false
+        }
+
+        switch utType {
+        case let utType where utType.conforms(to: .text):
+            return true
+        case .lua, .lub:
+            return true
+        case let utType where utType.conforms(to: .image):
+            return true
+        case .ebm, .pal:
+            return true
+        case let utType where utType.conforms(to: .audio):
+            return true
         case .act, .gat, .gnd, .rsm, .rsw, .spr, .str:
-            true
+            return true
         default:
-            false
+            return false
         }
     }
 

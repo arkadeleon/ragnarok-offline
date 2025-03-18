@@ -124,6 +124,16 @@
 				<string>public.x-lua-bytecode</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>IMF</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>kr.co.gravity.imf</string>
+			</array>
+		</dict>
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>
@@ -132,6 +142,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.data</string>
 				<string>public.archive</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -316,6 +327,25 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>str</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>IMF</string>
+			<key>UTTypeIconFiles</key>
+			<array/>
+			<key>UTTypeIdentifier</key>
+			<string>kr.co.gravity.imf</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>imf</string>
 				</array>
 			</dict>
 		</dict>
