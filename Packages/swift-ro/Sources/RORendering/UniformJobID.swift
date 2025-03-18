@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/2/12.
 //
 
-public struct UniformJobID: RawRepresentable, ExpressibleByIntegerLiteral, Sendable {
+public struct UniformJobID: RawRepresentable, ExpressibleByIntegerLiteral, Hashable, Sendable {
     public let rawValue: Int
 
     public init(rawValue: Int) {

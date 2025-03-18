@@ -7,7 +7,6 @@
 
 import RealityKit
 import ROCore
-import RODatabase
 import ROGame
 import RONetwork
 import RORenderers
@@ -27,8 +26,7 @@ struct MapSceneView: View {
     private let player = SpriteEntity()
     private let camera = Entity()
     private let cameraHelper = Entity()
-
-    @State private var monsters: [Int : SpriteEntity] = [:]
+    private let monsterEntityManager = SpriteEntityManager()
 
     @State private var distance: Float = 80
 
@@ -100,24 +98,6 @@ struct MapSceneView: View {
 
             root.addChild(player)
 
-            // Preload monster entities.
-            do {
-                let npcDatabase = NPCDatabase.renewal
-                let monsterSpawns = try await npcDatabase.monsterSpawns(forMapName: mapName)
-
-                for monsterSpawn in monsterSpawns {
-                    guard let monsterID = monsterSpawn.monsterID, monsters[monsterID] == nil else {
-                        continue
-                    }
-
-                    let jobID = UniformJobID(rawValue: monsterID)
-                    let entity = try await SpriteEntity(jobID: jobID, configuration: SpriteConfiguration())
-                    monsters[monsterID] = entity
-                }
-            } catch {
-                logger.warning("\(error.localizedDescription)")
-            }
-
             let perspectiveCameraComponent = PerspectiveCameraComponent(near: 2, far: 300, fieldOfViewInDegrees: 15)
             camera.components.set(perspectiveCameraComponent)
             camera.transform = cameraTransform(for: position)
@@ -182,31 +162,17 @@ struct MapSceneView: View {
             camera.move(to: cameraTransform, relativeTo: nil, duration: 1)
         }
         .onReceive(mapSession.publisher(for: MapObjectEvents.Spawned.self)) { event in
-            if let monsterEntity = monsters[Int(event.object.job)] {
-                let monsterEntityClone = monsterEntity.clone(recursive: true)
-                monsterEntityClone.name = "\(event.object.id)"
-                monsterEntityClone.transform = transform(for: event.object.position)
-                monsterEntityClone.isEnabled = (event.object.effectState != .cloak)
-
-                root.addChild(monsterEntityClone)
-
-                monsterEntityClone.runPlayerAction(.idle, direction: .south)
-
-                return
-            }
-
             Task {
                 let jobID = UniformJobID(rawValue: Int(event.object.job))
-                let configuration = SpriteConfiguration()
+                if let monsterEntity = await monsterEntityManager.entity(forJobID: jobID) {
+                    monsterEntity.name = "\(event.object.id)"
+                    monsterEntity.transform = transform(for: event.object.position)
+                    monsterEntity.isEnabled = (event.object.effectState != .cloak)
 
-                let entity = try await SpriteEntity(jobID: jobID, configuration: configuration)
-                entity.name = "\(event.object.id)"
-                entity.transform = transform(for: event.object.position)
-                entity.isEnabled = (event.object.effectState != .cloak)
+                    root.addChild(monsterEntity)
 
-                root.addChild(entity)
-
-                entity.runPlayerAction(.idle, direction: .south)
+                    monsterEntity.runPlayerAction(.idle, direction: .south)
+                }
             }
         }
         .onReceive(mapSession.publisher(for: MapObjectEvents.Moved.self)) { event in
