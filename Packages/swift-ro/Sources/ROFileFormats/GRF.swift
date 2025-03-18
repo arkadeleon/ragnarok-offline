@@ -134,11 +134,11 @@ extension GRF {
 
             position = index + 1
 
-            sizeCompressed = Data(data[(position + 0)..<(position + 4)]).withUnsafeBytes { $0.load(as: UInt32.self) }
-            sizeCompressedAligned = Data(data[(position + 4)..<(position + 8)]).withUnsafeBytes { $0.load(as: UInt32.self) }
-            size = Data(data[(position + 8)..<(position + 12)]).withUnsafeBytes { $0.load(as: UInt32.self) }
+            sizeCompressed = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position, as: UInt32.self) }
+            sizeCompressedAligned = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position + 4, as: UInt32.self) }
+            size = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position + 8, as: UInt32.self) }
             type = data[position + 12]
-            offset = Data(data[(position + 13)..<(position + 17)]).withUnsafeBytes { $0.load(as: UInt32.self) }
+            offset = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position + 13, as: UInt32.self) }
 
             position += 17
         }

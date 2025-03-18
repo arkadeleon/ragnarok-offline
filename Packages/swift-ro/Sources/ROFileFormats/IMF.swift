@@ -9,9 +9,9 @@ import Foundation
 import ROCore
 
 public struct IMF: BinaryDecodable, Sendable {
-    public let version: Float
-    public let checksum: Int32
-    public let layers: [IMF.Layer]
+    public var version: Float
+    public var checksum: Int32
+    public var layers: [IMF.Layer] = []
 
     public init(data: Data) throws {
         let decoder = BinaryDecoder(data: data)
@@ -25,21 +25,23 @@ public struct IMF: BinaryDecodable, Sendable {
 
         let layerCount = try decoder.decode(Int32.self) + 1
 
-        layers = try (0..<layerCount).map { _ in
-            try decoder.decode(IMF.Layer.self)
+        for _ in 0..<layerCount {
+            let layer = try decoder.decode(IMF.Layer.self)
+            layers.append(layer)
         }
     }
 }
 
 extension IMF {
     public struct Layer: BinaryDecodable, Sendable {
-        public let actions: [IMF.Action]
+        public var actions: [IMF.Action] = []
 
         public init(from decoder: BinaryDecoder) throws {
             let actionCount = try decoder.decode(Int32.self)
 
-            actions = try (0..<actionCount).map { _ in
-                try decoder.decode(IMF.Action.self)
+            for _ in 0..<actionCount {
+                let action = try decoder.decode(IMF.Action.self)
+                actions.append(action)
             }
         }
     }
@@ -47,13 +49,14 @@ extension IMF {
 
 extension IMF {
     public struct Action: BinaryDecodable, Sendable {
-        public let frames: [IMF.Frame]
+        public var frames: [IMF.Frame] = []
 
         public init(from decoder: BinaryDecoder) throws {
             let frameCount = try decoder.decode(Int32.self)
 
-            frames = try (0..<frameCount).map { _ in
-                try decoder.decode(IMF.Frame.self)
+            for _ in 0..<frameCount {
+                let frame = try decoder.decode(IMF.Frame.self)
+                frames.append(frame)
             }
         }
     }
@@ -61,9 +64,9 @@ extension IMF {
 
 extension IMF {
     public struct Frame: BinaryDecodable, Sendable {
-        public let priority: Int32
-        public let cx: Int32
-        public let cy: Int32
+        public var priority: Int32
+        public var cx: Int32
+        public var cy: Int32
 
         public init(from decoder: BinaryDecoder) throws {
             priority = try decoder.decode(Int32.self)
