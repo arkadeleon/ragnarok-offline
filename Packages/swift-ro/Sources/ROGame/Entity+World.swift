@@ -16,20 +16,32 @@ extension Entity {
     public static func worldEntity(world: WorldResource) async throws -> Entity {
         let groundEntity = try await Entity.groundEntity(gat: world.gat, gnd: world.gnd)
 
-        var modelEntitiesByName: [String : Entity] = [:]
+        let uniqueModelNames = Set(world.rsw.models.map({ $0.modelName }))
 
-        for model in world.rsw.models {
-            let modelName = model.modelName
-
-            if modelEntitiesByName[modelName] == nil {
-                let components = modelName.split(separator: "\\").map(String.init)
-                let modelPath = ResourcePath.modelPath.appending(components: components)
-                let model = try await ResourceManager.default.model(at: modelPath)
-                if let modelEntity = try? await Entity.modelEntity(model: model) {
-                    modelEntitiesByName[modelName] = modelEntity
+        let modelEntitiesByName = await withThrowingTaskGroup(
+            of: (modelName: String, modelEntity: Entity).self,
+            returning: [String : Entity].self
+        ) { taskGroup in
+            for modelName in uniqueModelNames {
+                taskGroup.addTask {
+                    let components = modelName.split(separator: "\\").map(String.init)
+                    let modelPath = ResourcePath.modelPath.appending(components: components)
+                    let model = try await ResourceManager.default.model(at: modelPath)
+                    let modelEntity = try await Entity.modelEntity(model: model)
+                    return (modelName, modelEntity)
                 }
             }
 
+            var modelEntitiesByName: [String : Entity] = [:]
+            while !taskGroup.isEmpty {
+                if let result = try? await taskGroup.next() {
+                    modelEntitiesByName[result.modelName] = result.modelEntity
+                }
+            }
+            return modelEntitiesByName
+        }
+
+        for model in world.rsw.models {
             guard let modelEntity = modelEntitiesByName[model.modelName] else {
                 continue
             }
