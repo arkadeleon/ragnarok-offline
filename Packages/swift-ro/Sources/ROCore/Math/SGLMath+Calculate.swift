@@ -7,14 +7,14 @@
 
 import simd
 
-func calcNormal(_ a: simd_float3, _ b: simd_float3, _ c: simd_float3) -> simd_float3 {
+public func calcNormal(_ a: simd_float3, _ b: simd_float3, _ c: simd_float3) -> simd_float3 {
     let v1 = c - b
     let v2 = a - b
     let v3 = simd_cross(v1, v2)
     return simd_normalize(v3)
 }
 
-func calcNormal(_ a: simd_float3, _ b: simd_float3, _ c: simd_float3, _ d: simd_float3) -> simd_float3 {
+public func calcNormal(_ a: simd_float3, _ b: simd_float3, _ c: simd_float3, _ d: simd_float3) -> simd_float3 {
     var v1 = c - b
     var v2 = a - b
     var v3 = simd_cross(v1, v2)
@@ -28,13 +28,13 @@ func calcNormal(_ a: simd_float3, _ b: simd_float3, _ c: simd_float3, _ d: simd_
     return simd_normalize(v)
 }
 
-func translateZ(_ mat: simd_float4x4, _ z: Float) -> simd_float4x4 {
+public func translateZ(_ mat: simd_float4x4, _ z: Float) -> simd_float4x4 {
     var dest = mat
     dest[3] += dest[2] * z
     return dest
 }
 
-func rotateQuat(_ mat: simd_float4x4, w: simd_float4) -> simd_float4x4 {
+public func rotateQuat(_ mat: simd_float4x4, w: simd_float4) -> simd_float4x4 {
     let norm = simd_normalize(w)
     let a = norm[0]
     let b = norm[1]
@@ -51,7 +51,7 @@ func rotateQuat(_ mat: simd_float4x4, w: simd_float4) -> simd_float4x4 {
     return mat * m
 }
 
-func extractRotation(_ mat: simd_float4x4) -> simd_float4x4 {
+public func extractRotation(_ mat: simd_float4x4) -> simd_float4x4 {
     let x: simd_float3 = [mat[0, 0], mat[0, 1], mat[0, 2]]
     let norm_x = simd_normalize(x)
 

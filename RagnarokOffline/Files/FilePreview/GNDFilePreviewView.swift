@@ -8,7 +8,6 @@
 import RealityKit
 import ROCore
 import ROFileFormats
-import RORenderers
 import ROResources
 import SwiftUI
 
@@ -44,10 +43,10 @@ struct GNDFilePreviewView: View {
 
         let groundEntity = try await Entity.groundEntity(gat: gat, gnd: gnd)
 
-        let translation = float4x4(translation: [-Float(gat.width / 2), 0, -Float(gat.height / 2)])
-        let rotation = float4x4(rotationX: radians(-90))
+        let translation = simd_float4x4(translation: [-Float(gat.width / 2), 0, -Float(gat.height / 2)])
+        let rotation = simd_float4x4(rotationX: radians(-90))
         let scaleFactor = 1 / Float(max(gat.width, gat.height))
-        let scale = float4x4(scale: [scaleFactor, scaleFactor, scaleFactor])
+        let scale = simd_float4x4(scale: [scaleFactor, scaleFactor, scaleFactor])
 
         await MainActor.run {
             groundEntity.transform.matrix = scale * rotation * translation

@@ -7,6 +7,7 @@
 
 import CoreGraphics
 import RealityKit
+import ROCore
 import ROFileFormats
 import RORenderers
 import RORendering

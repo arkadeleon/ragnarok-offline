@@ -6,6 +6,7 @@
 //
 
 import Metal
+import ROCore
 import ROShaders
 
 public class RSMRenderer: Renderer {

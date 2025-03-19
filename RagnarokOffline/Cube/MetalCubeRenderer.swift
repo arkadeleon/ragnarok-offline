@@ -6,6 +6,7 @@
 //
 
 import Metal
+import ROCore
 import RORenderers
 
 class MetalCubeRenderer: Renderer {

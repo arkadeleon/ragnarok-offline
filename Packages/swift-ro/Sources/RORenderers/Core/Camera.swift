@@ -6,6 +6,7 @@
 //
 
 import CoreGraphics
+import ROCore
 import simd
 
 public class Camera {

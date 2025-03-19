@@ -6,9 +6,10 @@
 //
 
 import Metal
-import simd
+import ROCore
 import ROFileFormats
 import ROShaders
+import simd
 
 public struct ModelMesh {
     public var vertices: [ModelVertex] = []
