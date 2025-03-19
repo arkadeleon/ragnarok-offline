@@ -12,7 +12,6 @@ struct FileContextMenu: View {
     var previewAction: Action?
     var showRawDataAction: Action?
     var showReferencesAction: Action?
-    var copyAction: Action?
     var deleteAction: Action?
 
     typealias Action = () -> Void
@@ -46,11 +45,15 @@ struct FileContextMenu: View {
             }
 
             Section {
-                if file.canCopy {
+                if FileSystem.shared.canExtractFile(file) {
                     Button {
-                        copyAction?()
+                        do {
+                            try FileSystem.shared.extractFile(file)
+                        } catch {
+                            logger.warning("\(error.localizedDescription)")
+                        }
                     } label: {
-                        Label("Copy", systemImage: "doc.on.doc")
+                        Label("Extract", systemImage: "arrow.up.bin")
                     }
                 }
 
@@ -60,7 +63,7 @@ struct FileContextMenu: View {
             }
 
             Section {
-                if file.canDelete {
+                if FileSystem.shared.canDeleteFile(file) {
                     Button(role: .destructive) {
                         deleteAction?()
                     } label: {
@@ -71,12 +74,11 @@ struct FileContextMenu: View {
         }
     }
 
-    init(file: File, previewAction: Action? = nil, showRawDataAction: Action? = nil, showReferencesAction: Action? = nil, copyAction: Action? = nil, deleteAction: Action? = nil) {
+    init(file: File, previewAction: Action? = nil, showRawDataAction: Action? = nil, showReferencesAction: Action? = nil, deleteAction: Action? = nil) {
         self.file = file
         self.previewAction = previewAction
         self.showRawDataAction = showRawDataAction
         self.showReferencesAction = showReferencesAction
-        self.copyAction = copyAction
         self.deleteAction = deleteAction
     }
 }

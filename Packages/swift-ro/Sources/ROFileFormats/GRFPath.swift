@@ -26,6 +26,11 @@ final public class GRFPath: Hashable {
         return parent
     }()
 
+    /// The components.
+    public var components: [String] {
+        string.split(separator: "\\").map(String.init)
+    }
+
     /// The last path component (including any extension).
     public var lastComponent: String {
         string.split(separator: "\\").last.map(String.init) ?? ""

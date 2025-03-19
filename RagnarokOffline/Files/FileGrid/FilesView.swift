@@ -30,9 +30,7 @@ struct FilesView: View {
                     }
                     .buttonStyle(.plain)
                     .contextMenu {
-                        FileContextMenu(file: file, copyAction: {
-                            FileSystem.shared.copy(file)
-                        }, deleteAction: {
+                        FileContextMenu(file: file, deleteAction: {
                             deleteFile(file)
                         })
                     }
@@ -52,8 +50,6 @@ struct FilesView: View {
                             fileToShowRawData = file
                         }, showReferencesAction: {
                             fileToShowReferences = file
-                        }, copyAction: {
-                            FileSystem.shared.copy(file)
                         }, deleteAction: {
                             deleteFile(file)
                         })
@@ -81,17 +77,6 @@ struct FilesView: View {
                 isHelpPresented.toggle()
             } label: {
                 Image(systemName: "questionmark.circle")
-            }
-
-            Menu {
-                Button {
-                    pasteFile()
-                } label: {
-                    Label("Paste", systemImage: "doc.on.clipboard")
-                }
-                .disabled(!directory.canPaste)
-            } label: {
-                Image(systemName: "ellipsis.circle")
             }
         }
         .searchable(text: $searchText)
@@ -149,18 +134,13 @@ struct FilesView: View {
         }
     }
 
-    private func pasteFile() {
-        if let file = FileSystem.shared.paste(to: directory), loadStatus == .loaded {
-            files.append(file)
-            files.sort()
-            filterFiles()
-        }
-    }
-
     private func deleteFile(_ file: File) {
-        if FileSystem.shared.remove(file) {
+        do {
+            try FileSystem.shared.deleteFile(file)
             files.removeAll(where: { $0 == file })
             filterFiles()
+        } catch {
+            logger.warning("\(error.localizedDescription)")
         }
     }
 }

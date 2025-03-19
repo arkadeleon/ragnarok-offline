@@ -243,31 +243,4 @@ extension File {
             return false
         }
     }
-
-    var canCopy: Bool {
-        switch node {
-        case .regularFile, .grf, .grfEntry:
-            true
-        default:
-            false
-        }
-    }
-
-    var canPaste: Bool {
-        switch node {
-        case .directory where FilePasteboard.shared.hasFile:
-            true
-        default: 
-            false
-        }
-    }
-
-    var canDelete: Bool {
-        switch node {
-        case .regularFile, .grf:
-            true
-        default:
-            false
-        }
-    }
 }
