@@ -11,10 +11,10 @@ struct ResponsiveView<Compact, Regular>: View where Compact: View, Regular: View
     @ViewBuilder var compact: () -> Compact
     @ViewBuilder var regular: () -> Regular
 
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.horizontalSizeClass) private var sizeClass
 
     var body: some View {
-        if horizontalSizeClass == .compact {
+        if sizeClass == .compact {
             compact()
         } else {
             regular()

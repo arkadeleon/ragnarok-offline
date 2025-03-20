@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3506D11C2C00526A00903A47 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3506D11B2C00526A00903A47 /* File.swift */; };
 		3506D11F2C00EF5400903A47 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3506D11E2C00EF5400903A47 /* Localizable.xcstrings */; };
+		350A53592D8BC74100539999 /* SizeClassSpecific.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350A53582D8BC73A00539999 /* SizeClassSpecific.swift */; };
 		351426C42C11BF9600B076BE /* FileReferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351426C32C11BF9600B076BE /* FileReferencesView.swift */; };
 		351468DD2C50F53A0061D7F9 /* ServerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351468DC2C50F53A0061D7F9 /* ServerCell.swift */; };
 		3514BF452B4526F40065ED89 /* ItemInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF442B4526F40065ED89 /* ItemInfoView.swift */; };
@@ -181,6 +182,7 @@
 		3506D11B2C00526A00903A47 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		3506D11D2C00887700903A47 /* swift-ro */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-ro"; path = "Packages/swift-ro"; sourceTree = "<group>"; };
 		3506D11E2C00EF5400903A47 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		350A53582D8BC73A00539999 /* SizeClassSpecific.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeClassSpecific.swift; sourceTree = "<group>"; };
 		351426C32C11BF9600B076BE /* FileReferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileReferencesView.swift; sourceTree = "<group>"; };
 		351468DC2C50F53A0061D7F9 /* ServerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerCell.swift; sourceTree = "<group>"; };
 		3514BF442B4526F40065ED89 /* ItemInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemInfoView.swift; sourceTree = "<group>"; };
@@ -467,6 +469,7 @@
 				3594DD562BF5FCB600575F3D /* ModelViewer.swift */,
 				35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */,
 				35B422E12BEDEBD000681AA2 /* ResponsiveView.swift */,
+				350A53582D8BC73A00539999 /* SizeClassSpecific.swift */,
 				351EE2F72C0735390012BC9E /* TransferableAnimatedImage.swift */,
 				351EE2F62C0735390012BC9E /* TransferableImage.swift */,
 				355BC18B2B8F25C0002F0586 /* WebView.swift */,
@@ -945,6 +948,7 @@
 				3579DF9D2D67541D00B8C98A /* CharacterConfiguration.swift in Sources */,
 				3599BD592C3FCE7A0010DBE7 /* ImageGridCell.swift in Sources */,
 				35BDF7042C9B0AED00CCAB8F /* ClientSettings.swift in Sources */,
+				350A53592D8BC74100539999 /* SizeClassSpecific.swift in Sources */,
 				35239DFF2BBEF4510039F7D5 /* MapProvider.swift in Sources */,
 				3579DF982D66085A00B8C98A /* CharacterConfigurationView.swift in Sources */,
 				35FEB6C02CDC5E9D00F24A4A /* ObservableJob.swift in Sources */,

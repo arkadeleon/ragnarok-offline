@@ -16,17 +16,15 @@ struct FileReferencesView: View {
     @State private var fileToPreview: File?
 
     var body: some View {
-        ImageGrid {
-            ForEach(referenceFiles) { file in
-                Button {
-                    if file.canPreview {
-                        fileToPreview = file
-                    }
-                } label: {
-                    FileGridCell(file: file)
+        ImageGrid(referenceFiles) { file in
+            Button {
+                if file.canPreview {
+                    fileToPreview = file
                 }
-                .buttonStyle(.plain)
+            } label: {
+                FileGridCell(file: file)
             }
+            .buttonStyle(.plain)
         }
         .navigationTitle("References")
         .toolbarTitleDisplayMode(.inline)

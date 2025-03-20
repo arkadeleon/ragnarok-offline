@@ -12,6 +12,8 @@ struct DatabaseRecordSectionView<Content, Header>: View where Content: View, Hea
     @ViewBuilder var content: () -> Content
     @ViewBuilder var header: () -> Header
 
+    @Environment(\.horizontalSizeClass) private var sizeClass
+
     var body: some View {
         Section {
             VStack(spacing: spacing) {
@@ -22,13 +24,14 @@ struct DatabaseRecordSectionView<Content, Header>: View where Content: View, Hea
 
                 Divider()
             }
-            .padding(.horizontal)
+            .padding(.horizontal, hSpacing(sizeClass))
         } header: {
             header()
                 .font(.headline)
                 .foregroundStyle(Color.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
+                .padding(.horizontal, hSpacing(sizeClass))
+                .padding(.vertical)
                 .background(.background.opacity(0.75))
         }
     }

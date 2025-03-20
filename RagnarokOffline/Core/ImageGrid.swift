@@ -8,19 +8,25 @@
 import SwiftUI
 
 struct ImageGrid<Content>: View where Content: View {
-    @ViewBuilder var content: () -> Content
+    var content: () -> Content
+
+    @Environment(\.horizontalSizeClass) private var sizeClass
 
     var body: some View {
         ScrollView {
-            ResponsiveView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 100), spacing: 16)], spacing: 32, content: content)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 32)
-            } regular: {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 100), spacing: 32)], spacing: 64, content: content)
-                    .padding(.horizontal, 32)
-                    .padding(.vertical, 64)
-            }
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 100), spacing: hSpacing(sizeClass))], spacing: vSpacing(sizeClass), content: content)
+                .padding(.horizontal, hSpacing(sizeClass))
+                .padding(.vertical, vSpacing(sizeClass))
+        }
+    }
+
+    init(@ViewBuilder content: @escaping () -> Content) {
+        self.content = content
+    }
+
+    init<Data, CellContent>(_ data: Data, @ViewBuilder cellContent: @escaping (Data.Element) -> CellContent) where Content == ForEach<Data, Data.Element.ID, CellContent>, Data: RandomAccessCollection, Data.Element: Identifiable, CellContent: View {
+        content = {
+            ForEach(data, content: cellContent)
         }
     }
 }

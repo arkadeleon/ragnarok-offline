@@ -12,19 +12,7 @@ struct DatabaseRoot<RecordProvider, Empty>: ViewModifier where RecordProvider: D
     @Binding var database: ObservableDatabase<RecordProvider>
     @ViewBuilder var empty: () -> Empty
 
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-
-    private var searchFieldPlacement: SearchFieldPlacement {
-        #if os(macOS)
-        .automatic
-        #else
-        if horizontalSizeClass == .compact {
-            .navigationBarDrawer(displayMode: .always)
-        } else {
-            .automatic
-        }
-        #endif
-    }
+    @Environment(\.horizontalSizeClass) private var sizeClass
 
     func body(content: Content) -> some View {
         content
@@ -63,7 +51,7 @@ struct DatabaseRoot<RecordProvider, Empty>: ViewModifier where RecordProvider: D
             .navigationDestination(for: ObservableStatusChange.self) { statusChange in
                 StatusChangeInfoView(statusChange: statusChange)
             }
-            .searchable(text: $database.searchText, placement: searchFieldPlacement)
+            .searchable(text: $database.searchText, placement: searchFieldPlacement(sizeClass))
             .onSubmit(of: .search) {
                 Task {
                     await database.filterRecords()

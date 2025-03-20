@@ -11,13 +11,11 @@ struct JobDatabaseView: View {
     @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .job)
 
     var body: some View {
-        ImageGrid {
-            ForEach(database.filteredRecords) { job in
-                NavigationLink(value: job) {
-                    JobGridCell(job: job)
-                }
-                .buttonStyle(.plain)
+        ImageGrid(database.filteredRecords) { job in
+            NavigationLink(value: job) {
+                JobGridCell(job: job)
             }
+            .buttonStyle(.plain)
         }
         .navigationTitle("Job Database")
         .databaseRoot($database) {

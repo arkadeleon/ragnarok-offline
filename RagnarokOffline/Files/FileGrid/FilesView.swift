@@ -11,6 +11,8 @@ struct FilesView: View {
     var title: String
     var directory: File
 
+    @Environment(\.horizontalSizeClass) private var sizeClass
+
     @State private var loadStatus: LoadStatus = .notYetLoaded
     @State private var searchText = ""
     @State private var files: [File] = []
@@ -22,38 +24,36 @@ struct FilesView: View {
     @State private var fileToShowReferences: File?
 
     var body: some View {
-        ImageGrid {
-            ForEach(filteredFiles) { file in
-                if file.hasFiles {
-                    NavigationLink(value: file) {
-                        FileGridCell(file: file)
+        ImageGrid(filteredFiles) { file in
+            if file.hasFiles {
+                NavigationLink(value: file) {
+                    FileGridCell(file: file)
+                }
+                .buttonStyle(.plain)
+                .contextMenu {
+                    FileContextMenu(file: file, deleteAction: {
+                        deleteFile(file)
+                    })
+                }
+            } else {
+                Button {
+                    if file.canPreview {
+                        fileToPreview = file
                     }
-                    .buttonStyle(.plain)
-                    .contextMenu {
-                        FileContextMenu(file: file, deleteAction: {
-                            deleteFile(file)
-                        })
-                    }
-                } else {
-                    Button {
-                        if file.canPreview {
-                            fileToPreview = file
-                        }
-                    } label: {
-                        FileGridCell(file: file)
-                    }
-                    .buttonStyle(.plain)
-                    .contextMenu {
-                        FileContextMenu(file: file, previewAction: {
-                            fileToPreview = file
-                        }, showRawDataAction: {
-                            fileToShowRawData = file
-                        }, showReferencesAction: {
-                            fileToShowReferences = file
-                        }, deleteAction: {
-                            deleteFile(file)
-                        })
-                    }
+                } label: {
+                    FileGridCell(file: file)
+                }
+                .buttonStyle(.plain)
+                .contextMenu {
+                    FileContextMenu(file: file, previewAction: {
+                        fileToPreview = file
+                    }, showRawDataAction: {
+                        fileToShowRawData = file
+                    }, showReferencesAction: {
+                        fileToShowReferences = file
+                    }, deleteAction: {
+                        deleteFile(file)
+                    })
                 }
             }
         }
@@ -79,7 +79,7 @@ struct FilesView: View {
                 Image(systemName: "questionmark.circle")
             }
         }
-        .searchable(text: $searchText)
+        .searchable(text: $searchText, placement: searchFieldPlacement(sizeClass))
         .onSubmit(of: .search) {
             filterFiles()
         }
