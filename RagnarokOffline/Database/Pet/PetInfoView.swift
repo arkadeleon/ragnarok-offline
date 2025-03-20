@@ -10,19 +10,24 @@ import SwiftUI
 struct PetInfoView: View {
     var pet: ObservablePet
 
+    @Environment(\.horizontalSizeClass) private var sizeClass
+
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: .sectionHeaders) {
-                DatabaseRecordSectionView("Monster") {
-                    if let monster = pet.monster {
-                        NavigationLink(value: monster) {
-                            MonsterGridCell(monster: monster, secondaryText: nil)
+                if let monster = pet.monster {
+                    DatabaseRecordSectionView("Monster") {
+                        LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
+                            NavigationLink(value: monster) {
+                                MonsterGridCell(monster: monster, secondaryText: nil)
+                            }
+                            .buttonStyle(.plain)
                         }
-                        .buttonStyle(.plain)
+                        .padding(.vertical, vSpacing(sizeClass))
                     }
                 }
 
-                DatabaseRecordSectionView("Items", spacing: 20) {
+                DatabaseRecordSectionView("Items") {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         if let tameItem = pet.tameItem {
                             NavigationLink(value: tameItem) {
@@ -49,22 +54,17 @@ struct PetInfoView: View {
                             .buttonStyle(.plain)
                         }
                     }
+                    .padding(.vertical, 20)
                 }
 
-                DatabaseRecordAttributesSectionView("Info", attributes: pet.attributes)
+                DatabaseRecordSectionView("Info", attributes: pet.attributes)
 
-                if let script = pet.script {
-                    DatabaseRecordSectionView("Script") {
-                        Text(script)
-                            .monospaced()
-                    }
+                if let script = pet.script?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                    DatabaseRecordSectionView("Script", text: script, monospaced: true)
                 }
 
-                if let supportScript = pet.supportScript {
-                    DatabaseRecordSectionView("Support Script") {
-                        Text(supportScript)
-                            .monospaced()
-                    }
+                if let supportScript = pet.supportScript?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                    DatabaseRecordSectionView("Support Script", text: supportScript, monospaced: true)
                 }
             }
         }

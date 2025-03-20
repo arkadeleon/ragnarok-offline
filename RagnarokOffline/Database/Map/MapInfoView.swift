@@ -10,6 +10,8 @@ import SwiftUI
 struct MapInfoView: View {
     var map: ObservableMap
 
+    @Environment(\.horizontalSizeClass) private var sizeClass
+
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: .sectionHeaders) {
@@ -27,15 +29,16 @@ struct MapInfoView: View {
                 .frame(height: 200)
 
                 if !map.spawnMonsters.isEmpty {
-                    DatabaseRecordSectionView("Spawn Monsters", spacing: 30) {
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .leading, spacing: 30) {
-                            ForEach(map.spawnMonsters, id: \.monster.id) { spawnMonster in
+                    DatabaseRecordSectionView("Spawn Monsters") {
+                        LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
+                            ForEach(map.spawnMonsters) { spawnMonster in
                                 NavigationLink(value: spawnMonster.monster) {
                                     MonsterGridCell(monster: spawnMonster.monster, secondaryText: "(\(spawnMonster.spawn.amount)x)")
                                 }
                                 .buttonStyle(.plain)
                             }
                         }
+                        .padding(.vertical, vSpacing(sizeClass))
                     }
                 }
             }

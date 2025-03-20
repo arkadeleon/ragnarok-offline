@@ -10,6 +10,8 @@ import SwiftUI
 struct ItemInfoView: View {
     var item: ObservableItem
 
+    @Environment(\.horizontalSizeClass) private var sizeClass
+
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: .sectionHeaders) {
@@ -26,52 +28,35 @@ struct ItemInfoView: View {
                 }
                 .frame(height: 200)
 
-                DatabaseRecordAttributesSectionView("Info", attributes: item.attributes)
+                DatabaseRecordSectionView("Info", attributes: item.attributes)
 
                 if item.type == .weapon || item.type == .armor {
-                    DatabaseRecordSectionView("Jobs") {
-                        Text(item.jobs)
-                    }
+                    DatabaseRecordSectionView("Jobs", text: item.jobs)
 
-                    DatabaseRecordSectionView("Classes") {
-                        Text(item.classes)
-                    }
+                    DatabaseRecordSectionView("Classes", text: item.classes)
 
-                    DatabaseRecordSectionView("Locations") {
-                        Text(item.locations)
-                    }
+                    DatabaseRecordSectionView("Locations", text: item.locations)
                 }
 
                 if let localizedDescription = item.localizedDescription {
-                    DatabaseRecordSectionView("Description") {
-                        Text(localizedDescription)
-                    }
+                    DatabaseRecordSectionView("Description", text: localizedDescription)
                 }
 
-                if let script = item.script {
-                    DatabaseRecordSectionView("Script") {
-                        Text(script.trimmingCharacters(in: .whitespacesAndNewlines))
-                            .monospaced()
-                    }
+                if let script = item.script?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                    DatabaseRecordSectionView("Script", text: script, monospaced: true)
                 }
 
-                if let equipScript = item.equipScript {
-                    DatabaseRecordSectionView("Equip Script") {
-                        Text(equipScript.trimmingCharacters(in: .whitespacesAndNewlines))
-                            .monospaced()
-                    }
+                if let equipScript = item.equipScript?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                    DatabaseRecordSectionView("Equip Script", text: equipScript, monospaced: true)
                 }
 
-                if let unEquipScript = item.unEquipScript {
-                    DatabaseRecordSectionView("Unequip Script") {
-                        Text(unEquipScript.trimmingCharacters(in: .whitespacesAndNewlines))
-                            .monospaced()
-                    }
+                if let unEquipScript = item.unEquipScript?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                    DatabaseRecordSectionView("Unequip Script", text: unEquipScript, monospaced: true)
                 }
 
                 if !item.droppingMonsters.isEmpty {
-                    DatabaseRecordSectionView("Dropping Monsters", spacing: 30) {
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .leading, spacing: 30) {
+                    DatabaseRecordSectionView("Dropping Monsters") {
+                        LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                             ForEach(item.droppingMonsters) { droppingMonster in
                                 NavigationLink(value: droppingMonster.monster) {
                                     MonsterGridCell(monster: droppingMonster.monster, secondaryText: "(" + (Double(droppingMonster.drop.rate) / 100).formatted() + "%)")
@@ -79,6 +64,7 @@ struct ItemInfoView: View {
                                 .buttonStyle(.plain)
                             }
                         }
+                        .padding(.vertical, vSpacing(sizeClass))
                     }
                 }
             }

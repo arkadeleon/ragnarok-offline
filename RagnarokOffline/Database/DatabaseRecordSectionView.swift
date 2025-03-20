@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct DatabaseRecordSectionView<Content, Header>: View where Content: View, Header: View {
-    var spacing: CGFloat?
     @ViewBuilder var content: () -> Content
     @ViewBuilder var header: () -> Header
 
@@ -16,12 +15,9 @@ struct DatabaseRecordSectionView<Content, Header>: View where Content: View, Hea
 
     var body: some View {
         Section {
-            VStack(spacing: spacing) {
+            VStack(spacing: 0) {
                 Divider()
-
                 content()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
                 Divider()
             }
             .padding(.horizontal, hSpacing(sizeClass))
@@ -36,18 +32,68 @@ struct DatabaseRecordSectionView<Content, Header>: View where Content: View, Hea
         }
     }
 
-    init(_ titleKey: LocalizedStringKey, spacing: CGFloat? = nil, @ViewBuilder content: @escaping () -> Content) where Header == Text {
-        self.spacing = spacing
+    init(@ViewBuilder content: @escaping () -> Content, @ViewBuilder header: @escaping () -> Header) {
+        self.content = content
+        self.header = header
+    }
+
+    init(_ titleKey: LocalizedStringKey, @ViewBuilder content: @escaping () -> Content) where Header == Text {
         self.content = content
         self.header = {
             Text(titleKey)
         }
     }
 
-    init(spacing: CGFloat? = nil, @ViewBuilder content: @escaping () -> Content, @ViewBuilder header: @escaping () -> Header) {
-        self.spacing = spacing
-        self.content = content
-        self.header = header
+    init(_ titleKey: LocalizedStringKey, text: String, monospaced: Bool = false) where Content == DatabaseRecordSectionTextContent, Header == Text {
+        self.content = {
+            DatabaseRecordSectionTextContent(text: text, monospaced: monospaced)
+        }
+        self.header = {
+            Text(titleKey)
+        }
+    }
+
+    init(_ titleKey: LocalizedStringKey, attributes: [DatabaseRecordAttribute]) where Content == DatabaseRecordSectionAttributesContent, Header == Text {
+        self.content = {
+            DatabaseRecordSectionAttributesContent(attributes: attributes)
+        }
+        self.header = {
+            Text(titleKey)
+        }
+    }
+}
+
+struct DatabaseRecordSectionTextContent: View {
+    var text: String
+    var monospaced: Bool
+
+    var body: some View {
+        Text(text)
+            .monospaced(monospaced)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical)
+    }
+
+    init(text: String, monospaced: Bool) {
+        self.text = text
+        self.monospaced = monospaced
+    }
+}
+
+struct DatabaseRecordSectionAttributesContent: View {
+    var attributes: [DatabaseRecordAttribute]
+
+    var body: some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
+            ForEach(attributes) { attribute in
+                LabeledContent {
+                    Text(attribute.value)
+                } label: {
+                    Text(attribute.name)
+                }
+            }
+        }
+        .padding(.vertical, 10)
     }
 }
 
@@ -64,4 +110,13 @@ struct DatabaseRecordSectionView<Content, Header>: View where Content: View, Hea
             }
         }
     }
+}
+
+#Preview {
+    DatabaseRecordSectionView("Info", attributes: [
+        DatabaseRecordAttribute(name: "ID", value: "#1002"),
+        DatabaseRecordAttribute(name: "Name", value: "Poring"),
+        DatabaseRecordAttribute(name: "Level", value: 1),
+        DatabaseRecordAttribute(name: "HP", value: 55),
+    ])
 }

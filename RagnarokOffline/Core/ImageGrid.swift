@@ -14,7 +14,7 @@ struct ImageGrid<Content>: View where Content: View {
 
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 100), spacing: hSpacing(sizeClass))], spacing: vSpacing(sizeClass), content: content)
+            LazyVGrid(columns: [imageGridItem(sizeClass)], spacing: vSpacing(sizeClass), content: content)
                 .padding(.horizontal, hSpacing(sizeClass))
                 .padding(.vertical, vSpacing(sizeClass))
         }

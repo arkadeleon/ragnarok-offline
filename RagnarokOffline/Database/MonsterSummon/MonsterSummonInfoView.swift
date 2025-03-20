@@ -10,21 +10,26 @@ import SwiftUI
 struct MonsterSummonInfoView: View {
     var monsterSummon: ObservableMonsterSummon
 
+    @Environment(\.horizontalSizeClass) private var sizeClass
+
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: .sectionHeaders) {
                 if let defaultMonster = monsterSummon.defaultMonster {
                     DatabaseRecordSectionView("Default") {
-                        NavigationLink(value: defaultMonster) {
-                            MonsterGridCell(monster: defaultMonster, secondaryText: nil)
+                        LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
+                            NavigationLink(value: defaultMonster) {
+                                MonsterGridCell(monster: defaultMonster, secondaryText: nil)
+                            }
+                            .buttonStyle(.plain)
                         }
-                        .buttonStyle(.plain)
+                        .padding(.vertical, vSpacing(sizeClass))
                     }
                 }
 
                 if let summonMonsters = monsterSummon.summonMonsters {
-                    DatabaseRecordSectionView("Summon", spacing: 30) {
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 20)], alignment: .leading, spacing: 30) {
+                    DatabaseRecordSectionView("Summon") {
+                        LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                             ForEach(summonMonsters) { summonMonster in
                                 NavigationLink(value: summonMonster.monster) {
                                     MonsterGridCell(monster: summonMonster.monster, secondaryText: summonMonster.rate.formatted())
@@ -32,6 +37,7 @@ struct MonsterSummonInfoView: View {
                                 .buttonStyle(.plain)
                             }
                         }
+                        .padding(.vertical, vSpacing(sizeClass))
                     }
                 }
             }

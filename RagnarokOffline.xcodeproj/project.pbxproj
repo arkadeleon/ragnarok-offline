@@ -157,7 +157,6 @@
 		35F50CCC2BB4615F00B36455 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CCB2BB4615F00B36455 /* MessagesView.swift */; };
 		35FEB6AD2CD8BE4E00F24A4A /* DatabaseRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */; };
 		35FEB6AF2CD8C90300F24A4A /* StatusChangeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */; };
-		35FEB6B52CDA13C200F24A4A /* DatabaseRecordAttributesSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6B42CDA13BB00F24A4A /* DatabaseRecordAttributesSectionView.swift */; };
 		35FEB6BA2CDB18D300F24A4A /* ObservableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6B92CDB18CC00F24A4A /* ObservableItem.swift */; };
 		35FEB6C02CDC5E9D00F24A4A /* ObservableJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6BF2CDC5E9200F24A4A /* ObservableJob.swift */; };
 		35FEB6C22CDC845E00F24A4A /* ObservableMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6C12CDC845800F24A4A /* ObservableMap.swift */; };
@@ -328,7 +327,6 @@
 		35F50CCB2BB4615F00B36455 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRoot.swift; sourceTree = "<group>"; };
 		35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeInfoView.swift; sourceTree = "<group>"; };
-		35FEB6B42CDA13BB00F24A4A /* DatabaseRecordAttributesSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRecordAttributesSectionView.swift; sourceTree = "<group>"; };
 		35FEB6B92CDB18CC00F24A4A /* ObservableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableItem.swift; sourceTree = "<group>"; };
 		35FEB6BF2CDC5E9200F24A4A /* ObservableJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableJob.swift; sourceTree = "<group>"; };
 		35FEB6C12CDC845800F24A4A /* ObservableMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMap.swift; sourceTree = "<group>"; };
@@ -446,7 +444,6 @@
 				35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */,
 				35B422EE2BEF091F00681AA2 /* ObservableDatabase.swift */,
 				3523B5812B98B74B00CCE722 /* DatabaseRecordSectionView.swift */,
-				35FEB6B42CDA13BB00F24A4A /* DatabaseRecordAttributesSectionView.swift */,
 				35B422F52BEF76F700681AA2 /* DatabaseRecordAttribute.swift */,
 			);
 			path = Database;
@@ -971,7 +968,6 @@
 				35BE552D2BD939AA003715C3 /* ImageFilePreviewView.swift in Sources */,
 				3514BF602B455EF90065ED89 /* MonsterGridCell.swift in Sources */,
 				35E27A832BC96AC800C11076 /* Message.swift in Sources */,
-				35FEB6B52CDA13C200F24A4A /* DatabaseRecordAttributesSectionView.swift in Sources */,
 				3523B5822B98B74B00CCE722 /* DatabaseRecordSectionView.swift in Sources */,
 				351426C42C11BF9600B076BE /* FileReferencesView.swift in Sources */,
 				357742632D005FAA00F2CE8D /* GameView.swift in Sources */,

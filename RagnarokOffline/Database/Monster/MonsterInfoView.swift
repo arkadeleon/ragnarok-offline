@@ -25,35 +25,32 @@ struct MonsterInfoView: View {
                 }
                 .frame(height: 200)
 
-                DatabaseRecordAttributesSectionView("Info", attributes: monster.attributes)
+                DatabaseRecordSectionView("Info", attributes: monster.attributes)
 
                 if let raceGroups = monster.raceGroups {
-                    DatabaseRecordSectionView("Race Groups") {
-                        Text(raceGroups)
-                    }
+                    DatabaseRecordSectionView("Race Groups", text: raceGroups)
                 }
 
                 if let modes = monster.modes {
-                    DatabaseRecordSectionView("Modes") {
-                        Text(modes)
-                    }
+                    DatabaseRecordSectionView("Modes", text: modes)
                 }
 
                 if !monster.mvpDropItems.isEmpty {
-                    DatabaseRecordSectionView("MVP Drops", spacing: 20) {
+                    DatabaseRecordSectionView("MVP Drops") {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                            ForEach(monster.mvpDropItems, id: \.index) { dropItem in
+                            ForEach(monster.mvpDropItems) { dropItem in
                                 NavigationLink(value: dropItem.item) {
                                     ItemCell(item: dropItem.item, secondaryText: "(" + (Double(dropItem.drop.rate) / 100).formatted() + "%)")
                                 }
                                 .buttonStyle(.plain)
                             }
                         }
+                        .padding(.vertical, 20)
                     }
                 }
 
                 if !monster.dropItems.isEmpty {
-                    DatabaseRecordSectionView("Drops", spacing: 20) {
+                    DatabaseRecordSectionView("Drops") {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                             ForEach(monster.dropItems) { dropItem in
                                 NavigationLink(value: dropItem.item) {
@@ -62,11 +59,12 @@ struct MonsterInfoView: View {
                                 .buttonStyle(.plain)
                             }
                         }
+                        .padding(.vertical, 20)
                     }
                 }
 
                 if !monster.spawnMaps.isEmpty {
-                    DatabaseRecordSectionView("Maps", spacing: 20) {
+                    DatabaseRecordSectionView("Maps") {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                             ForEach(monster.spawnMaps) { spawnMap in
                                 NavigationLink(value: spawnMap.map) {
@@ -75,6 +73,7 @@ struct MonsterInfoView: View {
                                 .buttonStyle(.plain)
                             }
                         }
+                        .padding(.vertical, 20)
                     }
                 }
             }

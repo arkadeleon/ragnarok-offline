@@ -13,10 +13,10 @@ struct StatusChangeInfoView: View {
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: .sectionHeaders) {
-                DatabaseRecordAttributesSectionView("Info", attributes: statusChange.attributes)
+                DatabaseRecordSectionView("Info", attributes: statusChange.attributes)
 
                 if !statusChange.fail.isEmpty {
-                    DatabaseRecordSectionView("Fail", spacing: 20) {
+                    DatabaseRecordSectionView("Fail") {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                             ForEach(statusChange.fail) { statusChange in
                                 NavigationLink(value: statusChange) {
@@ -25,11 +25,12 @@ struct StatusChangeInfoView: View {
                                 .buttonStyle(.plain)
                             }
                         }
+                        .padding(.vertical, 20)
                     }
                 }
 
                 if !statusChange.endOnStart.isEmpty {
-                    DatabaseRecordSectionView("End on Start", spacing: 20) {
+                    DatabaseRecordSectionView("End on Start") {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                             ForEach(statusChange.endOnStart) { statusChange in
                                 NavigationLink(value: statusChange) {
@@ -38,11 +39,12 @@ struct StatusChangeInfoView: View {
                                 .buttonStyle(.plain)
                             }
                         }
+                        .padding(.vertical, 20)
                     }
                 }
 
                 if !statusChange.endReturn.isEmpty {
-                    DatabaseRecordSectionView("End Return", spacing: 20) {
+                    DatabaseRecordSectionView("End Return") {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                             ForEach(statusChange.endReturn) { statusChange in
                                 NavigationLink(value: statusChange) {
@@ -51,11 +53,12 @@ struct StatusChangeInfoView: View {
                                 .buttonStyle(.plain)
                             }
                         }
+                        .padding(.vertical, 20)
                     }
                 }
 
                 if !statusChange.endOnEnd.isEmpty {
-                    DatabaseRecordSectionView("End on End", spacing: 20) {
+                    DatabaseRecordSectionView("End on End") {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                             ForEach(statusChange.endOnEnd) { statusChange in
                                 NavigationLink(value: statusChange) {
@@ -64,20 +67,16 @@ struct StatusChangeInfoView: View {
                                 .buttonStyle(.plain)
                             }
                         }
+                        .padding(.vertical, 20)
                     }
                 }
 
                 if let localizedDescription = statusChange.localizedDescription {
-                    DatabaseRecordSectionView("Description") {
-                        Text(localizedDescription)
-                    }
+                    DatabaseRecordSectionView("Description", text: localizedDescription)
                 }
 
-                if let script = statusChange.script {
-                    DatabaseRecordSectionView("Script") {
-                        Text(script.trimmingCharacters(in: .whitespacesAndNewlines))
-                            .monospaced()
-                    }
+                if let script = statusChange.script?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                    DatabaseRecordSectionView("Script", text: script, monospaced: true)
                 }
             }
         }

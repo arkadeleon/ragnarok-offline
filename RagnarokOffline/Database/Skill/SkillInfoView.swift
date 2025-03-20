@@ -13,12 +13,10 @@ struct SkillInfoView: View {
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: .sectionHeaders) {
-                DatabaseRecordAttributesSectionView("Info", attributes: skill.attributes)
+                DatabaseRecordSectionView("Info", attributes: skill.attributes)
 
-                if let skillLocalizedDescription = skill.localizedDescription {
-                    DatabaseRecordSectionView("Description") {
-                        Text(skillLocalizedDescription)
-                    }
+                if let localizedDescription = skill.localizedDescription {
+                    DatabaseRecordSectionView("Description", text: localizedDescription)
                 }
             }
         }

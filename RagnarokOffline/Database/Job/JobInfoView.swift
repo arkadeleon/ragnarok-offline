@@ -24,12 +24,12 @@ struct JobInfoView: View {
                 }
                 .frame(height: 200)
 
-                DatabaseRecordAttributesSectionView("Info", attributes: job.attributes)
+                DatabaseRecordSectionView("Info", attributes: job.attributes)
 
-                DatabaseRecordAttributesSectionView("Base ASPD", attributes: job.baseASPD)
+                DatabaseRecordSectionView("Base ASPD", attributes: job.baseASPD)
 
                 if !job.skills.isEmpty {
-                    DatabaseRecordSectionView("Skills", spacing: 20) {
+                    DatabaseRecordSectionView("Skills") {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                             ForEach(job.skills) { skill in
                                 NavigationLink(value: skill) {
@@ -38,6 +38,7 @@ struct JobInfoView: View {
                                 .buttonStyle(.plain)
                             }
                         }
+                        .padding(.vertical, 20)
                     }
                 }
 
@@ -62,6 +63,7 @@ struct JobInfoView: View {
                             }
                         }
                     }
+                    .padding(.vertical, 10)
                 } header: {
                     HStack {
                         Text("Base Level")
@@ -99,6 +101,7 @@ struct JobInfoView: View {
                             }
                         }
                     }
+                    .padding(.vertical, 10)
                 } header: {
                     HStack {
                         Text("Job Level")
