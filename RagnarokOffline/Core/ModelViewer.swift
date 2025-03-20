@@ -8,20 +8,74 @@
 import RealityKit
 import SwiftUI
 
-#if os(iOS)
+#if os(iOS) || os(macOS)
 
-struct ModelViewer: UIViewControllerRepresentable {
+struct ModelViewer: View {
     var entity: Entity
 
-    func makeUIViewController(context: Context) -> ModelViewerController {
-        ModelViewerController(entity: entity)
-    }
-
-    func updateUIViewController(_ modelViewerController: ModelViewerController, context: Context) {
+    var body: some View {
+//        RealityModelViewer(entity: entity)
+        ARModelViewer(entity: entity)
     }
 }
 
-class ModelViewerController: UIViewController {
+struct RealityModelViewer: View {
+    var entity: Entity
+
+    @State private var cameraControls: CameraControls = .tilt
+
+    private var cameraControlsPlacement: ToolbarItemPlacement {
+        #if os(iOS)
+        .bottomBar
+        #else
+        .automatic
+        #endif
+    }
+
+    var body: some View {
+        RealityView { content in
+            content.camera = .virtual
+            content.add(entity)
+        } placeholder: {
+            ProgressView()
+        }
+        .realityViewCameraControls(cameraControls)
+        .toolbar {
+            ToolbarItem(placement: cameraControlsPlacement) {
+                Picker(selection: $cameraControls) {
+                    Image(systemName: "dot.arrowtriangles.up.right.down.left.circle")
+                        .tag(CameraControls.tilt)
+                    Image(systemName: "arrow.up.and.down.and.arrow.left.and.right")
+                        .tag(CameraControls.pan)
+                    Image(systemName: "rotate.3d")
+                        .tag(CameraControls.orbit)
+                    Image(systemName: "arrow.up.left.and.down.right.magnifyingglass")
+                        .tag(CameraControls.dolly)
+                } label: {
+                    Image(systemName: "video")
+                }
+                .pickerStyle(.segmented)
+            }
+        }
+    }
+}
+
+#endif
+
+#if os(iOS)
+
+struct ARModelViewer: UIViewControllerRepresentable {
+    var entity: Entity
+
+    func makeUIViewController(context: Context) -> ARModelViewerController {
+        ARModelViewerController(entity: entity)
+    }
+
+    func updateUIViewController(_ modelViewerController: ARModelViewerController, context: Context) {
+    }
+}
+
+class ARModelViewerController: UIViewController {
     let entity: Entity
 
     private var startScale: SIMD3<Float> = .one
@@ -122,20 +176,22 @@ class ModelViewerController: UIViewController {
     }
 }
 
-#elseif os(macOS)
+#endif
 
-struct ModelViewer: NSViewControllerRepresentable {
+#if os(macOS)
+
+struct ARModelViewer: NSViewControllerRepresentable {
     var entity: Entity
 
-    func makeNSViewController(context: Context) -> ModelViewerController {
-        ModelViewerController(entity: entity)
+    func makeNSViewController(context: Context) -> ARModelViewerController {
+        ARModelViewerController(entity: entity)
     }
 
-    func updateNSViewController(_ modelViewerController: ModelViewerController, context: Context) {
+    func updateNSViewController(_ modelViewerController: ARModelViewerController, context: Context) {
     }
 }
 
-class ModelViewerController: NSViewController {
+class ARModelViewerController: NSViewController {
     let entity: Entity
 
     private var startScale: SIMD3<Float> = .one
@@ -236,7 +292,9 @@ class ModelViewerController: NSViewController {
     }
 }
 
-#else
+#endif
+
+#if os(visionOS)
 
 struct ModelViewer: View {
     var entity: Entity
