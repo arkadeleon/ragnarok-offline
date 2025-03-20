@@ -12,6 +12,9 @@ struct MapInfoView: View {
 
     @Environment(\.horizontalSizeClass) private var sizeClass
 
+    @State private var files: [File] = []
+    @State private var fileToPreview: File?
+
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: .sectionHeaders) {
@@ -41,12 +44,34 @@ struct MapInfoView: View {
                         .padding(.vertical, vSpacing(sizeClass))
                     }
                 }
+
+                if !files.isEmpty {
+                    DatabaseRecordSectionView("Files") {
+                        LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
+                            ForEach(files) { file in
+                                Button {
+                                    fileToPreview = file
+                                } label: {
+                                    FileGridCell(file: file)
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                        .padding(.vertical, vSpacing(sizeClass))
+                    }
+                }
             }
         }
         .background(.background)
         .navigationTitle(map.displayName)
+        .sheet(item: $fileToPreview) { file in
+            NavigationStack {
+                FilePreviewTabView(files: files, currentFile: file)
+            }
+        }
         .task {
             await map.fetchDetail()
+            files = await map.fetchFiles()
         }
     }
 }

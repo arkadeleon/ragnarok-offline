@@ -8,6 +8,7 @@
 import Foundation
 import Observation
 import ROFileFormats
+import ROResources
 import UniformTypeIdentifiers
 
 enum FileNode {
@@ -113,6 +114,15 @@ class File: Hashable, Identifiable {
 
     init(node: FileNode) {
         self.node = node
+    }
+
+    init(_ locator: ResourceLocator) {
+        switch locator {
+        case .url(let url):
+            node = .regularFile(url)
+        case .grfPath(let grf, let grfPath):
+            node = .grfEntry(grf, grfPath)
+        }
     }
 
     func hash(into hasher: inout Hasher) {

@@ -19,6 +19,11 @@ enum ResourceError: LocalizedError {
     }
 }
 
+public enum ResourceLocator {
+    case url(URL)
+    case grfPath(GRFReference, GRFPath)
+}
+
 public actor ResourceManager {
     public static let `default` = ResourceManager(baseURL: .documentsDirectory)
 
@@ -46,28 +51,38 @@ public actor ResourceManager {
         ]
     }
 
-    public func contentsOfResource(at path: ResourcePath) async throws -> Data {
+    public func locatorOfResource(at path: ResourcePath) throws -> ResourceLocator {
         let fileURL = baseURL.absoluteURL.appending(path: path)
         if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
-            let data = try Data(contentsOf: fileURL)
-            return data
+            return .url(fileURL)
         }
 
         let grfPath = GRFPath(components: path.components)
         for grf in grfs {
             if let _ = grf.entry(at: grfPath) {
-                return try grf.contentsOfEntry(at: grfPath)
+                return .grfPath(grf, grfPath)
             }
         }
 
         #if DEBUG
         if let fileURL = Bundle.main.resourceURL?.appending(path: path),
            FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
-            let data = try Data(contentsOf: fileURL)
-            return data
+            return .url(fileURL)
         }
         #endif
 
         throw ResourceError.resourceNotFound(path)
+    }
+
+    public func contentsOfResource(at path: ResourcePath) async throws -> Data {
+        let locator = try locatorOfResource(at: path)
+        switch locator {
+        case .url(let url):
+            let data = try Data(contentsOf: url)
+            return data
+        case .grfPath(let grf, let grfPath):
+            let data = try grf.contentsOfEntry(at: grfPath)
+            return data
+        }
     }
 }
