@@ -628,9 +628,9 @@
 				35F50CCA2BB4614100B36455 /* Messages */,
 				357742622D005FAA00F2CE8D /* Game */,
 				35B33BA32BF465D500EF28F5 /* Cube */,
-				35B575FC2D1BB32B00FC12BB /* CharacterSimulator */,
 				35A2ABBA2B3AC69F0026DAC2 /* Server */,
 				353B4F0E2B43AEC000605E92 /* Database */,
+				35B575FC2D1BB32B00FC12BB /* CharacterSimulator */,
 				3582FFC42B8C820E00E746D7 /* Settings */,
 				35B3BA422A08C51000B4540B /* RagnarokOffline-Bridging-Header.h */,
 				3506D11E2C00EF5400903A47 /* Localizable.xcstrings */,
@@ -1118,7 +1118,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = RagnarokOffline/RagnarokOffline.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "RagnarokOffline/Preview\\ Content";
 				DEVELOPMENT_TEAM = GG76KD534U;
 				ENABLE_PREVIEWS = YES;
@@ -1137,7 +1137,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				OTHER_SWIFT_FLAGS = "-cxx-interoperability-mode=default -enable-upcoming-feature ExistentialAny -enable-upcoming-feature GlobalConcurrency";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.arkadeleon.ragnarok-offline";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1161,7 +1161,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = RagnarokOffline/RagnarokOffline.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "RagnarokOffline/Preview\\ Content";
 				DEVELOPMENT_TEAM = GG76KD534U;
 				ENABLE_PREVIEWS = YES;
@@ -1180,7 +1180,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				OTHER_SWIFT_FLAGS = "-cxx-interoperability-mode=default -enable-upcoming-feature ExistentialAny -enable-upcoming-feature GlobalConcurrency";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.arkadeleon.ragnarok-offline";
 				PRODUCT_NAME = "$(TARGET_NAME)";
