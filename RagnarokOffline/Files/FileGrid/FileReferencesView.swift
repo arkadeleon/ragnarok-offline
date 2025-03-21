@@ -29,8 +29,8 @@ struct FileReferencesView: View {
         .navigationTitle("References")
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel") {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Done") {
                     dismiss()
                 }
             }

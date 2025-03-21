@@ -20,8 +20,8 @@ struct FileJSONViewer: View {
             .frame(height: 400)
             .navigationTitle("JSON Viewer")
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") {
                         dismiss()
                     }
                 }
@@ -35,8 +35,8 @@ struct FileJSONViewer: View {
             .navigationTitle("JSON Viewer")
             .toolbarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") {
                         dismiss()
                     }
                 }

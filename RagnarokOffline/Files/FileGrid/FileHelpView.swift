@@ -13,7 +13,7 @@ struct FileHelpView: View {
     var body: some View {
         ScrollView {
             Text("""
-            # Copy Ragnarok Client Data on iOS
+            # Copy Ragnarok Online Client Data to iOS Device
             
             1. Prerequisites:
                - A Windows PC with the latest kRO (Korean Ragnarok Online) client installed
@@ -43,12 +43,14 @@ struct FileHelpView: View {
             
             Note: The transfer speed depends on your local network connection.
             """)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
         }
         .navigationTitle("Help")
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel") {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Done") {
                     dismiss()
                 }
             }
