@@ -6,5 +6,7 @@
 //
 
 import OSLog
+import ROCore
 
 let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "database")
+let metric = Metric(logger: logger)

@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import ROGenerated
 import rAthenaResources
+import ROGenerated
 
 public actor StatusChangeDatabase {
     public static let prerenewal = StatusChangeDatabase(mode: .prerenewal)
@@ -23,6 +23,8 @@ public actor StatusChangeDatabase {
     public let mode: DatabaseMode
 
     private lazy var _statusChanges: [StatusChange] = {
+        metric.beginMeasuring("Load status change database")
+
         do {
             let decoder = YAMLDecoder()
 
@@ -31,9 +33,12 @@ public actor StatusChangeDatabase {
             let data = try Data(contentsOf: url)
             let statusChanges = try decoder.decode(ListNode<StatusChange>.self, from: data).body
 
+            metric.endMeasuring("Load status change database")
+
             return statusChanges
         } catch {
-            logger.warning("\(error.localizedDescription)")
+            metric.endMeasuring("Load status change database", error)
+
             return []
         }
     }()

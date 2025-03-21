@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import ROGenerated
 import rAthenaResources
+import ROGenerated
 
 public actor SkillTreeDatabase {
     public static let prerenewal = SkillTreeDatabase(mode: .prerenewal)
@@ -23,6 +23,8 @@ public actor SkillTreeDatabase {
     public let mode: DatabaseMode
 
     private lazy var _skillTrees: [SkillTree] = {
+        metric.beginMeasuring("Load skill tree database")
+
         do {
             let decoder = YAMLDecoder()
 
@@ -31,9 +33,12 @@ public actor SkillTreeDatabase {
             let data = try Data(contentsOf: url)
             let skillTrees = try decoder.decode(ListNode<SkillTree>.self, from: data).body
 
+            metric.endMeasuring("Load skill tree database")
+
             return skillTrees
         } catch {
-            logger.warning("\(error.localizedDescription)")
+            metric.endMeasuring("Load skill tree database", error)
+
             return []
         }
     }()

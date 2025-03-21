@@ -37,8 +37,8 @@ public actor NPCDatabase {
         self.mode = mode
     }
 
-    public func monsterSpawns(forMonster monster: Monster) throws -> [MonsterSpawn] {
-        try restoreScripts()
+    public func monsterSpawns(forMonster monster: Monster) -> [MonsterSpawn] {
+        restoreScripts()
 
         let monsterSpawns = monsterSpawns.filter { monsterSpawn in
             monsterSpawn.monsterID == monster.id || monsterSpawn.monsterAegisName == monster.aegisName
@@ -46,8 +46,8 @@ public actor NPCDatabase {
         return monsterSpawns
     }
 
-    public func monsterSpawns(forMapName mapName: String) throws -> [MonsterSpawn] {
-        try restoreScripts()
+    public func monsterSpawns(forMapName mapName: String) -> [MonsterSpawn] {
+        restoreScripts()
 
         let monsterSpawns = monsterSpawns.filter { monsterSpawn in
             monsterSpawn.mapName == mapName
@@ -55,11 +55,19 @@ public actor NPCDatabase {
         return monsterSpawns
     }
 
-    private func restoreScripts() throws {
+    private func restoreScripts() {
         if !isCached {
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: "npc/\(mode.path)/scripts_main.conf")
-            try import_conf_file(url: url)
+            metric.beginMeasuring("Load NPC database")
+
+            do {
+                let url = ServerResourceManager.default.sourceURL
+                    .appending(path: "npc/\(mode.path)/scripts_main.conf")
+                try import_conf_file(url: url)
+
+                metric.endMeasuring("Load NPC database")
+            } catch {
+                metric.endMeasuring("Load NPC database", error)
+            }
 
             isCached = true
         }

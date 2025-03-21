@@ -63,38 +63,37 @@ class ObservableMap {
         let monsterDatabase = MonsterDatabase.database(for: mode)
         let npcDatabase = NPCDatabase.database(for: mode)
 
-        if let monsterSpawns = try? await npcDatabase.monsterSpawns(forMapName: map.name) {
-            var spawnMonsters: [SpawnMonster] = []
-            var monsters: [Monster] = []
-            for monsterSpawn in monsterSpawns {
-                if let monsterID = monsterSpawn.monsterID {
-                    if let monster = await monsterDatabase.monster(forID: monsterID) {
-                        if !monsters.contains(monster) {
-                            monsters.append(monster)
+        let monsterSpawns = await npcDatabase.monsterSpawns(forMapName: map.name)
+        var spawnMonsters: [SpawnMonster] = []
+        var monsters: [Monster] = []
+        for monsterSpawn in monsterSpawns {
+            if let monsterID = monsterSpawn.monsterID {
+                if let monster = await monsterDatabase.monster(forID: monsterID) {
+                    if !monsters.contains(monster) {
+                        monsters.append(monster)
 
-                            let spawnMonster = SpawnMonster(
-                                monster: ObservableMonster(mode: mode, monster: monster),
-                                spawn: monsterSpawn
-                            )
-                            spawnMonsters.append(spawnMonster)
-                        }
+                        let spawnMonster = SpawnMonster(
+                            monster: ObservableMonster(mode: mode, monster: monster),
+                            spawn: monsterSpawn
+                        )
+                        spawnMonsters.append(spawnMonster)
                     }
-                } else if let monsterAegisName = monsterSpawn.monsterAegisName {
-                    if let monster = await monsterDatabase.monster(forAegisName: monsterAegisName) {
-                        if !monsters.contains(monster) {
-                            monsters.append(monster)
+                }
+            } else if let monsterAegisName = monsterSpawn.monsterAegisName {
+                if let monster = await monsterDatabase.monster(forAegisName: monsterAegisName) {
+                    if !monsters.contains(monster) {
+                        monsters.append(monster)
 
-                            let spawnMonster = SpawnMonster(
-                                monster: ObservableMonster(mode: mode, monster: monster),
-                                spawn: monsterSpawn
-                            )
-                            spawnMonsters.append(spawnMonster)
-                        }
+                        let spawnMonster = SpawnMonster(
+                            monster: ObservableMonster(mode: mode, monster: monster),
+                            spawn: monsterSpawn
+                        )
+                        spawnMonsters.append(spawnMonster)
                     }
                 }
             }
-            self.spawnMonsters = spawnMonsters
         }
+        self.spawnMonsters = spawnMonsters
     }
 
     @MainActor

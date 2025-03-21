@@ -7,6 +7,7 @@
 
 import Foundation
 import rAthenaResources
+import ROCore
 
 public actor ItemDatabase {
     public static let prerenewal = ItemDatabase(mode: .prerenewal)
@@ -22,6 +23,8 @@ public actor ItemDatabase {
     public let mode: DatabaseMode
 
     private lazy var _usableItems: [Item] = {
+        metric.beginMeasuring("Load usable item database")
+
         do {
             let decoder = YAMLDecoder()
 
@@ -30,14 +33,19 @@ public actor ItemDatabase {
             let data = try Data(contentsOf: url)
             let usableItems = try decoder.decode(ListNode<Item>.self, from: data).body
 
+            metric.endMeasuring("Load usable item database")
+
             return usableItems
         } catch {
-            logger.warning("\(error.localizedDescription)")
+            metric.endMeasuring("Load usable item database", error)
+
             return []
         }
     }()
 
     private lazy var _equipItems: [Item] = {
+        metric.beginMeasuring("Load equip item database")
+
         do {
             let decoder = YAMLDecoder()
 
@@ -46,14 +54,19 @@ public actor ItemDatabase {
             let data = try Data(contentsOf: url)
             let equipItems = try decoder.decode(ListNode<Item>.self, from: data).body
 
+            metric.endMeasuring("Load equip item database")
+
             return equipItems
         } catch {
-            logger.warning("\(error.localizedDescription)")
+            metric.endMeasuring("Load equip item database", error)
+
             return []
         }
     }()
 
     private lazy var _etcItems: [Item] = {
+        metric.beginMeasuring("Load etc item database")
+
         do {
             let decoder = YAMLDecoder()
 
@@ -62,9 +75,12 @@ public actor ItemDatabase {
             let data = try Data(contentsOf: url)
             let etcItems = try decoder.decode(ListNode<Item>.self, from: data).body
 
+            metric.endMeasuring("Load etc item database")
+
             return etcItems
         } catch {
-            logger.warning("\(error.localizedDescription)")
+            metric.endMeasuring("Load etc item database", error)
+
             return []
         }
     }()

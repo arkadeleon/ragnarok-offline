@@ -7,6 +7,7 @@
 
 import Foundation
 import rAthenaResources
+import ROCore
 
 public actor MonsterDatabase {
     public static let prerenewal = MonsterDatabase(mode: .prerenewal)
@@ -22,6 +23,8 @@ public actor MonsterDatabase {
     public let mode: DatabaseMode
 
     private lazy var _monsters: [Monster] = {
+        metric.beginMeasuring("Load monster database")
+
         do {
             let decoder = YAMLDecoder()
 
@@ -30,9 +33,12 @@ public actor MonsterDatabase {
             let data = try Data(contentsOf: url)
             let monsters = try decoder.decode(ListNode<Monster>.self, from: data).body
 
+            metric.endMeasuring("Load monster database")
+
             return monsters
         } catch {
-            logger.warning("\(error.localizedDescription)")
+            metric.endMeasuring("Load monster database", error)
+
             return []
         }
     }()

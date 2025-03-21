@@ -12,12 +12,11 @@ public class GRFReference {
     public let url: URL
 
     private lazy var grf: GRF? = {
-        let beginTime = CFAbsoluteTimeGetCurrent()
+        metric.beginMeasuring("Load GRF")
 
         let grf = try? GRF(url: url)
 
-        let endTime = CFAbsoluteTimeGetCurrent()
-        logger.info("Load GRF (\(endTime - beginTime)s)")
+        metric.endMeasuring("Load GRF")
 
         return grf
     }()
@@ -27,7 +26,7 @@ public class GRFReference {
             return []
         }
 
-        let beginTime = CFAbsoluteTimeGetCurrent()
+        metric.beginMeasuring("Load GRF directories")
 
         var directories = Set(grf.table.entries.map({ $0.path.parent }))
         for directory in directories {
@@ -38,8 +37,7 @@ public class GRFReference {
             } while !parent.string.isEmpty
         }
 
-        let endTime = CFAbsoluteTimeGetCurrent()
-        logger.info("Load GRF directories (\(endTime - beginTime)s)")
+        metric.endMeasuring("Load GRF directories")
 
         return directories
     }()
@@ -49,15 +47,14 @@ public class GRFReference {
             return [:]
         }
 
-        let beginTime = CFAbsoluteTimeGetCurrent()
+        metric.beginMeasuring("Load GRF entries")
 
         let entries = Dictionary(
             grf.table.entries.map({ ($0.path.string.uppercased(), $0) }),
             uniquingKeysWith: { (first, _) in first }
         )
 
-        let endTime = CFAbsoluteTimeGetCurrent()
-        logger.info("Load GRF entries (\(endTime - beginTime)s)")
+        metric.endMeasuring("Load GRF entries")
 
         return entries
     }()
@@ -71,8 +68,6 @@ public class GRFReference {
             return ([], [])
         }
 
-        let beginTime = CFAbsoluteTimeGetCurrent()
-
         let directories = directories
             .filter { $0.parent == directory }
             .sorted(using: KeyPathComparator(\.string))
@@ -80,9 +75,6 @@ public class GRFReference {
         let entries = grf.table.entries
             .filter { $0.path.parent == directory }
             .sorted(using: KeyPathComparator(\.path.string))
-
-        let endTime = CFAbsoluteTimeGetCurrent()
-        logger.info("Load contents of directory at \(directory.string) (\(endTime - beginTime)s)")
 
         return (directories, entries)
     }

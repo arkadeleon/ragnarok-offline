@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import ROGenerated
 import rAthenaResources
+import ROGenerated
 
 public actor JobDatabase {
     public static let prerenewal = JobDatabase(mode: .prerenewal)
@@ -23,6 +23,8 @@ public actor JobDatabase {
     public let mode: DatabaseMode
 
     private lazy var _jobs: [Job] = {
+        metric.beginMeasuring("Load job database")
+
         do {
             let decoder = YAMLDecoder()
 
@@ -56,9 +58,12 @@ public actor JobDatabase {
                 )
             }
 
+            metric.endMeasuring("Load job database")
+
             return jobs
         } catch {
-            logger.warning("\(error.localizedDescription)")
+            metric.endMeasuring("Load job database", error)
+
             return []
         }
     }()

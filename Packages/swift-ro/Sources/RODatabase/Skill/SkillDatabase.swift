@@ -7,6 +7,7 @@
 
 import Foundation
 import rAthenaResources
+import ROCore
 
 public actor SkillDatabase {
     public static let prerenewal = SkillDatabase(mode: .prerenewal)
@@ -22,6 +23,8 @@ public actor SkillDatabase {
     public let mode: DatabaseMode
 
     private lazy var _skills: [Skill] = {
+        metric.beginMeasuring("Load skill database")
+
         do {
             let decoder = YAMLDecoder()
 
@@ -30,9 +33,12 @@ public actor SkillDatabase {
             let data = try Data(contentsOf: url)
             let skills = try decoder.decode(ListNode<Skill>.self, from: data).body
 
+            metric.endMeasuring("Load skill database")
+
             return skills
         } catch {
-            logger.warning("\(error.localizedDescription)")
+            metric.endMeasuring("Load skill database", error)
+
             return []
         }
     }()

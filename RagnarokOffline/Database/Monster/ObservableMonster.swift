@@ -185,21 +185,20 @@ class ObservableMonster {
             self.dropItems = dropItems
         }
 
-        if let monsterSpawns = try? await npcDatabase.monsterSpawns(forMonster: monster) {
-            var spawnMaps: [SpawnMap] = []
-            for monsterSpawn in monsterSpawns {
-                if let map = await mapDatabase.map(forName: monsterSpawn.mapName) {
-                    if !spawnMaps.contains(where: { $0.map.name == map.name }) {
-                        let spawnMap = SpawnMap(
-                            map: ObservableMap(mode: mode, map: map),
-                            monsterSpawn: monsterSpawn
-                        )
-                        spawnMaps.append(spawnMap)
-                    }
+        let monsterSpawns = await npcDatabase.monsterSpawns(forMonster: monster)
+        var spawnMaps: [SpawnMap] = []
+        for monsterSpawn in monsterSpawns {
+            if let map = await mapDatabase.map(forName: monsterSpawn.mapName) {
+                if !spawnMaps.contains(where: { $0.map.name == map.name }) {
+                    let spawnMap = SpawnMap(
+                        map: ObservableMap(mode: mode, map: map),
+                        monsterSpawn: monsterSpawn
+                    )
+                    spawnMaps.append(spawnMap)
                 }
             }
-            self.spawnMaps = spawnMaps
         }
+        self.spawnMaps = spawnMaps
     }
 }
 

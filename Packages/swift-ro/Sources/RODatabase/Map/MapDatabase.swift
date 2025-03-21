@@ -23,8 +23,9 @@ public actor MapDatabase {
     public let mode: DatabaseMode
 
     private lazy var _maps: [Map] = {
+        metric.beginMeasuring("Load map cache")
+
         var mapInfos: [String : MapCache.MapInfo] = [:]
-        let string: String
 
         do {
             let mapCacheURLs = [
@@ -41,41 +42,54 @@ public actor MapDatabase {
                 }
             }
 
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: "db/map_index.txt")
-            string = try String(contentsOf: url, encoding: .utf8)
+            metric.endMeasuring("Load map cache")
         } catch {
-            logger.warning("\(error.localizedDescription)")
+            metric.endMeasuring("Load map cache", error)
+
             return []
         }
 
-        var index = 0
-        var maps: [Map] = []
+        metric.beginMeasuring("Load map index")
 
-        for line in string.split(separator: "\n") {
-            if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
-                continue
+        do {
+            let url = ServerResourceManager.default.sourceURL
+                .appending(path: "db/map_index.txt")
+            let string = try String(contentsOf: url, encoding: .utf8)
+
+            var index = 0
+            var maps: [Map] = []
+
+            for line in string.split(separator: "\n") {
+                if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
+                    continue
+                }
+
+                let columns = line.split(separator: " ")
+                if columns.count == 2 {
+                    index = Int(columns[1]) ?? 1
+                } else if columns.count == 1 {
+                    index += 1
+                } else {
+                    continue
+                }
+
+                let name = String(columns[0])
+                guard let mapInfo = mapInfos[name] else {
+                    continue
+                }
+
+                let map = Map(name: name, index: index, info: mapInfo)
+                maps.append(map)
             }
 
-            let columns = line.split(separator: " ")
-            if columns.count == 2 {
-                index = Int(columns[1]) ?? 1
-            } else if columns.count == 1 {
-                index += 1
-            } else {
-                continue
-            }
+            metric.endMeasuring("Load map index")
 
-            let name = String(columns[0])
-            guard let mapInfo = mapInfos[name] else {
-                continue
-            }
+            return maps
+        } catch {
+            metric.endMeasuring("Load map index", error)
 
-            let map = Map(name: name, index: index, info: mapInfo)
-            maps.append(map)
+            return []
         }
-
-        return maps
     }()
 
     private lazy var _mapsByName: [String : Map] = {
