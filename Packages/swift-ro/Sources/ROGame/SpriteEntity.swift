@@ -46,7 +46,7 @@ public class SpriteEntity: Entity {
         // Create material.
         var material = PhysicallyBasedMaterial()
         material.blending = .transparent(opacity: 1.0)
-        material.opacityThreshold = 0.9999
+        material.opacityThreshold = 0.0001
 
         if let texture = action.texture {
             material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(texture))

@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2023/1/13.
 //
 
-import ROGame
 import SwiftUI
 
 @main
@@ -14,9 +13,5 @@ struct RagnarokOfflineApp: App {
         WindowGroup {
             ContentView()
         }
-    }
-
-    init() {
-        SpriteComponent.registerComponent()
     }
 }

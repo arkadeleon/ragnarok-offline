@@ -21,15 +21,14 @@ struct MapSceneView: View {
     var position: SIMD2<Int16>
 
     private let root = Entity()
-    private let grid = Entity()
     private let player = SpriteEntity()
     private let camera = Entity()
     private let cameraHelper = Entity()
-    private let monsterEntityManager = SpriteEntityManager()
+
+    private let tileEntityManager: TileEntityManager
+    private let monsterEntityManager: SpriteEntityManager
 
     @State private var distance: Float = 80
-
-    @State private var tappedLocation: CGPoint?
 
     var body: some View {
         RealityView { content in
@@ -44,47 +43,10 @@ struct MapSceneView: View {
                 root.addChild(worldEntity)
             }
 
-            var gridPositions = [SIMD3<Float>]()
-            var gridPositionIndices = [UInt32]()
-            var index: UInt32 = 0
-            for y in 0..<world.gat.height {
-                for x in 0..<world.gat.width {
-                    let tile = world.gat.tile(atX: Int(x), y: Int(y))
-
-                    guard tile.type == .walkable || tile.type == .walkable2 || tile.type == .walkable3 else {
-                        continue
-                    }
-
-                    let p0: SIMD3<Float> = [Float(x) + 0, tile.bottomLeftAltitude / 5, Float(y) + 0]
-                    let p1: SIMD3<Float> = [Float(x) + 1, tile.bottomRightAltitude / 5, Float(y) + 0]
-                    let p2: SIMD3<Float> = [Float(x) + 1, tile.topRightAltitude / 5, Float(y) + 1]
-                    let p3: SIMD3<Float> = [Float(x) + 0, tile.topLeftAltitude / 5, Float(y) + 1]
-
-                    gridPositions.append(contentsOf: [p0, p1, p2, p3])
-                    gridPositionIndices.append(contentsOf: [index, index + 1, index + 2, index + 2, index + 3, index])
-                    index += 4
-                }
-            }
-
-            var meshDescriptor = MeshDescriptor(name: "grid")
-            meshDescriptor.positions = MeshBuffers.Positions(gridPositions)
-            meshDescriptor.primitives = .triangles(gridPositionIndices)
-            if let mesh = try? MeshResource.generate(from: [meshDescriptor]) {
-                var material = SimpleMaterial()
-                material.color = SimpleMaterial.BaseColor(tint: .yellow)
-                material.triangleFillMode = .lines
-
-                grid.name = "grid"
-                grid.components.set(ModelComponent(mesh: mesh, materials: [material]))
-                grid.components.set(ModelSortGroupComponent(group: group, order: 1))
-                grid.components.set(InputTargetComponent())
-                grid.transform = Transform(rotation: simd_quatf(angle: radians(-180), axis: [1, 0, 0]), translation: [0, 0.0001, 0])
-                grid.generateCollisionShapes(recursive: false)
-                root.addChild(grid)
-            }
+            tileEntityManager.addTileEntities(for: position)
 
             do {
-                let actions = try await SpriteAction.actions(for: 4, configuration: SpriteConfiguration())
+                let actions = try await SpriteAction.actions(for: 0, configuration: SpriteConfiguration())
                 let spriteComponent = SpriteComponent(actions: actions)
                 player.components.set(spriteComponent)
             } catch {
@@ -112,19 +74,6 @@ struct MapSceneView: View {
 
             mapSession.notifyMapLoaded()
         } update: { content in
-            #if os(iOS) || os(macOS)
-            if let tappedLocation {
-                if let ray = content.ray(through: tappedLocation, in: .global, to: .scene) {
-                    Task {
-                        if let hit = try await root.scene?.pixelCast(origin: ray.origin, direction: ray.direction, length: 300) {
-                            if hit.entity.name == "grid" {
-                                mapSession.requestMove(x: Int16(hit.position.x), y: Int16(-hit.position.z))
-                            }
-                        }
-                    }
-                }
-            }
-            #endif
         } placeholder: {
             ProgressView()
         }
@@ -132,17 +81,18 @@ struct MapSceneView: View {
         .overlay(alignment: .bottom) {
             Slider(value: $distance, in: 2...300)
                 .onChange(of: distance) { oldValue, newValue in
-//                    camera.transform = cameraTransform(for: player.position)
+                    camera.transform = cameraTransform(for: player.position)
                 }
         }
-        #if os(iOS) || os(macOS)
         .gesture(
-            SpatialTapGesture(coordinateSpace: .global)
+            SpatialTapGesture()
+                .targetedToEntity(where: .has(TileComponent.self))
                 .onEnded { event in
-                    tappedLocation = event.location
+                    if let tileComponent = event.entity.components[TileComponent.self] {
+                        mapSession.requestMove(x: Int16(tileComponent.x), y: Int16(tileComponent.y))
+                    }
                 }
         )
-        #endif
         .gesture(
             SpatialTapGesture()
                 .targetedToEntity(where: .has(SpriteComponent.self))
@@ -159,6 +109,8 @@ struct MapSceneView: View {
 
             let cameraTransform = cameraTransform(for: event.toPosition)
             camera.move(to: cameraTransform, relativeTo: nil, duration: 1)
+
+            tileEntityManager.updateTileEntities(for: event.toPosition)
         }
         .onReceive(mapSession.publisher(for: MapObjectEvents.Spawned.self)) { event in
             Task {
@@ -198,6 +150,19 @@ struct MapSceneView: View {
         }
     }
 
+    init(mapSession: MapSession, mapName: String, world: WorldResource, position: SIMD2<Int16>) {
+        self.mapSession = mapSession
+        self.mapName = mapName
+        self.world = world
+        self.position = position
+
+        tileEntityManager = TileEntityManager(gat: world.gat, rootEntity: root)
+        monsterEntityManager = SpriteEntityManager()
+
+        SpriteComponent.registerComponent()
+        TileComponent.registerComponent()
+    }
+
     private func transform(for position2D: SIMD2<Int16>) -> Transform {
         let scale: SIMD3<Float> = [1, sqrtf(2), 1]
         let rotation = simd_quatf(angle: radians(0), axis: [1, 0, 0])
@@ -208,6 +173,11 @@ struct MapSceneView: View {
 
     private func cameraTransform(for position2D: SIMD2<Int16>) -> Transform {
         let target = position3D(for: position2D)
+        let transform = cameraTransform(for: target)
+        return transform
+    }
+
+    private func cameraTransform(for target: SIMD3<Float>) -> Transform {
         var position = target + [0, distance, 0]
         var point = Point3D(position)
         point = point.rotated(
