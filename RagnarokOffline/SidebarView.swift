@@ -13,7 +13,6 @@ enum SidebarItem: Hashable {
     case messages
     case game
     case cube
-    case characterSimulator
     case loginServer
     case charServer
     case mapServer
@@ -27,12 +26,14 @@ enum SidebarItem: Hashable {
     case petDatabase
     case skillDatabase
     case statusChangeDatabase
+    case characterSimulator
 }
 
 struct SidebarView: View {
     var selection: Binding<SidebarItem?>?
 
     @State private var isDatabaseSectionExpanded = true
+    @State private var isToolsSectionExpanded = true
     @State private var isSettingsPresented = false
 
     var body: some View {
@@ -53,10 +54,6 @@ struct SidebarView: View {
 
                 NavigationLink(value: SidebarItem.cube) {
                     Label("Cube", systemImage: "cube")
-                }
-
-                NavigationLink(value: SidebarItem.characterSimulator) {
-                    Label("Character Simulator", systemImage: "person")
                 }
                 #endif
             } header: {
@@ -100,13 +97,11 @@ struct SidebarView: View {
                 .buttonStyle(.plain)
                 .foregroundStyle(.link)
             } header: {
-                HStack(spacing: 16) {
-                    Text("Server")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Color.primary)
-                }
-                .textCase(nil)
+                Text("Server")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.primary)
+                    .textCase(nil)
             }
 
             Section(isExpanded: $isDatabaseSectionExpanded) {
@@ -150,9 +145,21 @@ struct SidebarView: View {
                     .foregroundStyle(Color.primary)
                     .textCase(nil)
             }
+
+            Section(isExpanded: $isToolsSectionExpanded) {
+                NavigationLink(value: SidebarItem.characterSimulator) {
+                    Label("Character Simulator", systemImage: "person")
+                }
+            } header: {
+                Text("Tools")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.primary)
+                    .textCase(nil)
+            }
         }
         .listStyle(.sidebar)
-        .navigationTitle("Ragnarok Offline")
+        .navigationTitle(String("Ragnarok Offline"))
         #if DEBUG
         .toolbar {
             Menu {

@@ -64,8 +64,6 @@ struct ContentView: View {
             GameView(gameSession: gameSession)
         case .cube:
             RealityCubeView()
-        case .characterSimulator:
-            CharacterSimulatorView()
         case .loginServer:
             ServerView(server: .login)
         case .charServer:
@@ -92,10 +90,16 @@ struct ContentView: View {
             SkillDatabaseView()
         case .statusChangeDatabase:
             StatusChangeDatabaseView()
+        case .characterSimulator:
+            CharacterSimulatorView()
         }
     }
 
     private func load() async throws {
-        try ServerResourceManager.default.prepareWorkingDirectory()
+        do {
+            try ServerResourceManager.default.prepareWorkingDirectory()
+        } catch {
+            logger.warning("\(error.localizedDescription)")
+        }
     }
 }
