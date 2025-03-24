@@ -1,12 +1,11 @@
 //
-//  Race.swift
+//  Race+Localized.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/9.
 //
 
 import Foundation
-import ROConstants
 
 extension Race: CustomLocalizedStringResourceConvertible {
     public var localizedStringResource: LocalizedStringResource {

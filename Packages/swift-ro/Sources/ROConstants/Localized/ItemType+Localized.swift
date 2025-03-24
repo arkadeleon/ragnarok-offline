@@ -1,12 +1,11 @@
 //
-//  ItemType+.swift
+//  ItemType+Localized.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/10.
 //
 
 import Foundation
-import ROConstants
 
 extension ItemType: CustomLocalizedStringResourceConvertible {
     public var localizedStringResource: LocalizedStringResource {

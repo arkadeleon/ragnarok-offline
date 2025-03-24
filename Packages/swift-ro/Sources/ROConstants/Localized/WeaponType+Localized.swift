@@ -1,12 +1,11 @@
 //
-//  WeaponType+.swift
+//  WeaponType+Localized.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/10.
 //
 
 import Foundation
-import ROConstants
 
 extension WeaponType: CustomLocalizedStringResourceConvertible {
     public var localizedStringResource: LocalizedStringResource {
