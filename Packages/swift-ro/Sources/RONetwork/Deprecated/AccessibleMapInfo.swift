@@ -7,7 +7,8 @@
 
 import ROCore
 
-public struct AccessibleMapInfo: BinaryDecodable, Sendable {
+@available(*, deprecated, message: "Use generated struct instead.")
+public struct _AccessibleMapInfo: BinaryDecodable, Sendable {
     public var status: UInt32
     public var mapName: String
 

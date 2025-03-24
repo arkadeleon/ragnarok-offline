@@ -7,7 +7,6 @@
 
 import Combine
 import Foundation
-import ROGenerated
 import RONetwork
 
 final public class CharSession: SessionProtocol, @unchecked Sendable {
@@ -82,7 +81,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         }
 
         // 0x840
-        client.registerPacket(PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self, for: PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.packetType) { [unowned self] packet in
+        client.registerPacket(PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self, for: HEADER_HC_NOTIFY_ACCESSIBLE_MAPNAME) { [unowned self] packet in
             let event = CharServerEvents.NotifyAccessibleMaps(packet: packet)
             self.postEvent(event)
         }

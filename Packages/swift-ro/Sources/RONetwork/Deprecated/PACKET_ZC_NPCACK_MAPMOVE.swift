@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `clif_changemap`
-@available(*, deprecated, message: "Use `ROGenerated` instead.")
+@available(*, deprecated, message: "Use generated struct instead.")
 public struct _PACKET_ZC_NPCACK_MAPMOVE: DecodablePacket {
     public static var packetType: Int16 {
         0x91

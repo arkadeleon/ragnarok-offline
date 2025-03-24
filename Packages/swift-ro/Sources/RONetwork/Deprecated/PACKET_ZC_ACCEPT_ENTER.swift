@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `clif_authok`
-@available(*, deprecated, message: "Use `ROGenerated` instead.")
+@available(*, deprecated, message: "Use generated struct instead.")
 public struct _PACKET_ZC_ACCEPT_ENTER: DecodablePacket {
     public static var packetType: Int16 {
         if PACKET_VERSION < 20080102 {

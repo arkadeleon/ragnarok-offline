@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/9/24.
 //
 
-import ROGenerated
+import RONetwork
 import ROResources
 
 public enum LoginEvents {

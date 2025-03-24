@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `clif_ping`
-@available(*, deprecated, message: "Use `ROGenerated` instead.")
+@available(*, deprecated, message: "Use generated struct instead.")
 public struct _PACKET_ZC_PING_LIVE: DecodablePacket {
     public static var packetType: Int16 {
         0xb1d

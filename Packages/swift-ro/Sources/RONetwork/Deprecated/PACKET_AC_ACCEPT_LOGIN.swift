@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `logclif_auth_ok`
-@available(*, deprecated, message: "Use `ROGenerated` instead.")
+@available(*, deprecated, message: "Use generated struct instead.")
 public struct _PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
     public static var packetType: Int16 {
         if PACKET_VERSION >= 20170315 {
@@ -64,7 +64,7 @@ public struct _PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
     }
 }
 
-@available(*, deprecated, message: "Use `ROGenerated` instead.")
+@available(*, deprecated, message: "Use generated struct instead.")
 extension _PACKET_AC_ACCEPT_LOGIN {
     public struct _CharServerInfo: BinaryDecodable, Sendable {
         public var ip: UInt32

@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `logclif_auth_failed`
-@available(*, deprecated, message: "Use `ROGenerated` instead.")
+@available(*, deprecated, message: "Use generated struct instead.")
 public struct _PACKET_AC_REFUSE_LOGIN: DecodablePacket {
     public static var packetType: Int16 {
         if PACKET_VERSION >= 20120000 {

@@ -121,7 +121,6 @@ let package = Package(
             name: "RONetwork",
             dependencies: [
                 "ROCore",
-                "ROGenerated",
             ],
             swiftSettings: [
                 .swiftLanguageMode(.v5),

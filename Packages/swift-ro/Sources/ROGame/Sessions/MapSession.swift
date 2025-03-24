@@ -7,7 +7,6 @@
 
 import Combine
 import Foundation
-import ROGenerated
 import RONetwork
 
 final public class MapSession: SessionProtocol, @unchecked Sendable {

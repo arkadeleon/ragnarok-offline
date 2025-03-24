@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2024/8/21.
 //
 
-import ROGenerated
-
 let packetDatabase = PacketDatabase()
 
 final class PacketDatabase: Sendable {

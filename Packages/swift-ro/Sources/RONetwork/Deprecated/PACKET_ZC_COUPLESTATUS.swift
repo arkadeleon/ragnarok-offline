@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `clif_couplestatus`
-@available(*, deprecated, message: "Use `ROGenerated` instead.")
+@available(*, deprecated, message: "Use generated struct instead.")
 public struct _PACKET_ZC_COUPLESTATUS: DecodablePacket {
     public static var packetType: Int16 {
         0x141

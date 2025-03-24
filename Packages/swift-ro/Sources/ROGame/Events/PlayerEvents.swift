@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/9/25.
 //
 
-import ROGenerated
+import RONetwork
 
 public enum PlayerEvents {
     public struct Moved: Event {

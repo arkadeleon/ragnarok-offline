@@ -7,7 +7,6 @@
 
 import Combine
 import Foundation
-import ROGenerated
 import RONetwork
 
 final public class LoginSession: SessionProtocol, @unchecked Sendable {

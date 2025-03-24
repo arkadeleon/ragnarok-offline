@@ -7,7 +7,7 @@
 
 import ROCore
 
-@available(*, deprecated, message: "Use `ROGenerated` instead.")
+@available(*, deprecated, message: "Use generated struct instead.")
 public struct _ItemOptions: BinaryDecodable, Sendable {
     public var index: Int16
     public var value: Int16

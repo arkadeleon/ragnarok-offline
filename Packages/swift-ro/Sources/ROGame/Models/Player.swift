@@ -6,6 +6,7 @@
 //
 
 import ROGenerated
+import RONetwork
 
 public struct Player: Sendable {
     public var position: SIMD2<Int16> = .zero

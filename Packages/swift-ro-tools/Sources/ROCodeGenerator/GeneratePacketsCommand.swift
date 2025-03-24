@@ -16,142 +16,20 @@ struct GeneratePacketsCommand: ParsableCommand {
     @Argument(transform: { URL(filePath: $0, directoryHint: .isDirectory) })
     var rathenaDirectory: URL
 
-    @Argument(transform: { URL(filePath: $0, directoryHint: .isDirectory).appending(path: "Packets") })
+    @Argument(transform: { URL(filePath: $0, directoryHint: .isDirectory) })
     var generatedDirectory: URL
 
     mutating func run() throws {
         try? FileManager.default.removeItem(at: generatedDirectory)
         try? FileManager.default.createDirectory(at: generatedDirectory, withIntermediateDirectories: true)
 
-//        try generatePackets()
-        try generatePacketStructures()
-        try generatePacketDatabase()
+        try generate_packets()
+        try generate_packetdb()
     }
 
-    // MARK: - Generate Packet Database (Deprecated)
+    // MARK: - generate packets
 
-    private func generatePackets() throws {
-        let packetdbURL = rathenaDirectory.appending(path: "src/map/clif_packetdb.hpp")
-        let shuffleURL = rathenaDirectory.appending(path: "src/map/clif_shuffle.hpp")
-
-        let packetdbLines = try outputLines(for: packetdbURL)
-            .map({ "    \($0)" })
-            .joined(separator: "\n")
-        let packetdbOutputContents = """
-        public func add_packets(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (Int16, Int16, String?, [Int]) -> Void, PACKETVER: Int, PACKETVER_MAIN_NUM: Int, PACKETVER_RE_NUM: Int, PACKETVER_ZERO_NUM: Int) {
-        \(packetdbLines)
-        }
-        
-        """
-
-        let shuffleLine = try outputLines(for: shuffleURL)
-            .map({ "    \($0)" })
-            .joined(separator: "\n")
-        let shuffleOutputContents = """
-        public func add_packets_shuffle(_ packet: (Int16, Int16) -> Void, _ parseable_packet: (Int16, Int16, String?, [Int]) -> Void, PACKETVER: Int, PACKETVER_MAIN_NUM: Int, PACKETVER_RE_NUM: Int, PACKETVER_ZERO_NUM: Int) {
-        \(shuffleLine)
-        }
-        
-        """
-
-        let packetdbOutputURL = generatedDirectory.appending(path: "packets.swift")
-        try packetdbOutputContents.write(to: packetdbOutputURL, atomically: true, encoding: .utf8)
-
-        let shuffleOutputURL = generatedDirectory.appending(path: "packets_shuffle.swift")
-        try shuffleOutputContents.write(to: shuffleOutputURL, atomically: true, encoding: .utf8)
-    }
-
-    private func outputLines(for inputURL: URL) throws -> [String] {
-        var output: [String] = []
-        var indentationLevel = 0
-
-        let contents = try String(contentsOf: inputURL, encoding: .utf8)
-        let lines = contents.split(separator: "\n")
-
-        for line in lines {
-            let line = line.trimmingCharacters(in: .whitespaces)
-            if line.hasPrefix("//") {
-                continue
-            }
-
-            if line.hasPrefix("packet(") {
-                let open = line.firstIndex(of: "(")!
-                let close = line.lastIndex(of: ")")!
-                let start = line.index(after: open)
-                let end = close
-                let parameters = line[start..<end]
-                    .split(separator: ",")
-                    .map({ $0.trimmingCharacters(in: .whitespaces) })
-                var packetType = parameters[0]
-                if !packetType.hasPrefix("0x") && !packetType.hasPrefix("HEADER_") {
-                    packetType = "packet_header_" + packetType
-                }
-                var packetLength = parameters[1]
-                if packetLength.hasPrefix("sizeof(") && packetLength.hasSuffix(")") {
-                    packetLength.replace("sizeof(", with: "")
-                    packetLength.replace(")", with: "")
-                    packetLength.replace("struct", with: "")
-                    packetLength = packetLength.trimmingCharacters(in: .whitespaces)
-                    packetLength = "Int16(\(packetLength).size)"
-                }
-
-                let indentation = Array(repeating: " ", count: indentationLevel * 4).joined()
-                let statement = "packet(\(packetType), \(packetLength))"
-                output.append(indentation + statement)
-            } else if line.hasPrefix("parseable_packet(") {
-                let open = line.firstIndex(of: "(")!
-                let close = line.lastIndex(of: ")")!
-                let start = line.index(after: open)
-                let end = close
-                let parameters = line[start..<end]
-                    .split(separator: ",")
-                    .map({ $0.trimmingCharacters(in: .whitespaces) })
-                let packetType = parameters[0]
-                var packetLength = parameters[1]
-                if packetLength.hasPrefix("sizeof(") && packetLength.hasSuffix(")") {
-                    packetLength.replace("sizeof(", with: "")
-                    packetLength.replace(")", with: "")
-                    packetLength.replace("struct", with: "")
-                    packetLength = packetLength.trimmingCharacters(in: .whitespaces)
-                    packetLength = "Int16(\(packetLength).size)"
-                }
-                let functionName = parameters[2] == "nullptr" ? "nil" : "\"\(parameters[2])\""
-                let offsets = parameters[3...].joined(separator: ", ")
-
-                let indentation = Array(repeating: " ", count: indentationLevel * 4).joined()
-                let statement = "parseable_packet(\(packetType), \(packetLength), \(functionName), [\(offsets)])"
-                output.append(indentation + statement)
-            } else if line.hasPrefix("#if ") {
-                indentationLevel += 1
-
-                let indentation = Array(repeating: " ", count: (indentationLevel - 1) * 4).joined()
-                let statement = line
-                    .replacingOccurrences(of: "#if ", with: "")
-                    .replacingPacketVersion()
-                output.append(indentation + "if " + statement + " {")
-            } else if line.hasPrefix("#elif") {
-                let indentation = Array(repeating: " ", count: (indentationLevel - 1) * 4).joined()
-                let statement = line
-                    .replacingOccurrences(of: "#elif ", with: "")
-                    .replacingPacketVersion()
-                output.append(indentation + "} else if " + statement + " {")
-            } else if line == "#else" {
-                let indentation = Array(repeating: " ", count: (indentationLevel - 1) * 4).joined()
-                output.append(indentation + "} else {")
-            } else if line == "#endif" {
-                let indentation = Array(repeating: " ", count: (indentationLevel - 1) * 4).joined()
-                output.append(indentation + "}")
-
-                indentationLevel -= 1
-            }
-        }
-
-        return output
-    }
-
-    // MARK: - Generate Packet Structures
-
-    func generatePacketStructures() throws {
+    func generate_packets() throws {
         let dumper = ASTDumper(rathenaDirectory: rathenaDirectory)
         let asts = try [
             dumper.dump(path: "common/packets.hpp"),
@@ -159,7 +37,7 @@ struct GeneratePacketsCommand: ParsableCommand {
             dumper.dump(path: "map/packets.hpp"),
         ]
 
-        let outputName = "PacketStructures"
+        let outputName = "packets"
         var output = """
         //
         //  \(outputName).swift
@@ -469,9 +347,9 @@ struct GeneratePacketsCommand: ParsableCommand {
         }
     }
 
-    // MARK: - Generate Packet Database
+    // MARK: - generate packetdb
 
-    func generatePacketDatabase() throws {
+    func generate_packetdb() throws {
         let dumper = ASTDumper(rathenaDirectory: rathenaDirectory)
         let ast = try dumper.dump(path: "map/clif.cpp")
 
@@ -533,11 +411,5 @@ struct GeneratePacketsCommand: ParsableCommand {
 
         let packetdbOutputURL = generatedDirectory.appending(path: "packetdb.swift")
         try packetdbOutputContents.write(to: packetdbOutputURL, atomically: true, encoding: .utf8)
-    }
-}
-
-extension String {
-    func replacingPacketVersion() -> String {
-        replacingOccurrences(of: "defined(PACKETVER_ZERO)", with: "PACKETVER_ZERO_NUM != 0")
     }
 }

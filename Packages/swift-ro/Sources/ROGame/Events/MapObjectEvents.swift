@@ -6,6 +6,7 @@
 //
 
 import ROGenerated
+import RONetwork
 
 public enum MapObjectEvents {
     public struct DirectionChanged: Event {

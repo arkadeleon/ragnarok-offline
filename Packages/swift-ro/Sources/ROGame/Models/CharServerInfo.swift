@@ -6,7 +6,7 @@
 //
 
 import Darwin
-import ROGenerated
+import RONetwork
 
 public struct CharServerInfo: Sendable {
     public let ip: String

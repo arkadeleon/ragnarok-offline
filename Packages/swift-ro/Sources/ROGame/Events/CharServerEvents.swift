@@ -32,10 +32,10 @@ public enum CharServerEvents {
     }
 
     public struct NotifyAccessibleMaps: Event {
-        public let accessibleMaps: [AccessibleMapInfo]
+        public let accessibleMaps: [PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub]
 
         init(packet: PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME) {
-            self.accessibleMaps = packet.accessibleMaps
+            self.accessibleMaps = packet.maps
         }
     }
 }

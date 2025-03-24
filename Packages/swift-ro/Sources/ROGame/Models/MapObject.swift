@@ -6,6 +6,7 @@
 //
 
 import ROGenerated
+import RONetwork
 
 public struct MapObject: Sendable {
     public let id: UInt32
