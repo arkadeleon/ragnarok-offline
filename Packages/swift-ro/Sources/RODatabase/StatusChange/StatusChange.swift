@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/5/10.
 //
 
-import ROGenerated
+import ROConstants
 
 public struct StatusChange: Decodable, Equatable, Hashable, Identifiable, Sendable {
 

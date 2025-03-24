@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ROGenerated
+import ROConstants
 
 extension ItemType: CustomLocalizedStringResourceConvertible {
     public var localizedStringResource: LocalizedStringResource {

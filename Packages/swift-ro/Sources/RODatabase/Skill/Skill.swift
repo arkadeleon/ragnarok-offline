@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/1/11.
 //
 
-import ROGenerated
+import ROConstants
 
 public struct Skill: Decodable, Equatable, Hashable, Identifiable, Sendable {
 

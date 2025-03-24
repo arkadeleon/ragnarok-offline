@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/1/10.
 //
 
-import ROGenerated
 import rAthenaCommon
+import ROConstants
 
 struct JobExpStats: Decodable {
 

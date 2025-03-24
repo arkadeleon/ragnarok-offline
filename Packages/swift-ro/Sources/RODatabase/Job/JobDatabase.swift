@@ -7,7 +7,7 @@
 
 import Foundation
 import rAthenaResources
-import ROGenerated
+import ROConstants
 
 public actor JobDatabase {
     public static let prerenewal = JobDatabase(mode: .prerenewal)

@@ -8,9 +8,9 @@
 import Metal
 import MetalKit
 import RealityKit
+import ROConstants
 import ROCore
 import ROFileFormats
-import ROGenerated
 
 extension Entity {
     static func loadHP() async throws -> Entity {

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/12.
 //
 
-import ROGenerated
+import ROConstants
 import RONetwork
 
 final public actor SessionStorage {

@@ -7,7 +7,7 @@
 
 import Foundation
 import rAthenaResources
-import ROGenerated
+import ROConstants
 
 public actor SkillTreeDatabase {
     public static let prerenewal = SkillTreeDatabase(mode: .prerenewal)

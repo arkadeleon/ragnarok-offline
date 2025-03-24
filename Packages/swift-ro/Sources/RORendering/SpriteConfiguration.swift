@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/2/14.
 //
 
-import ROGenerated
+import ROConstants
 
 public struct SpriteConfiguration: Sendable {
     public var gender: Gender

@@ -50,6 +50,8 @@ let package = Package(
     ],
     targets: [
         .target(
+            name: "ROConstants"),
+        .target(
             name: "ROCore"),
         .target(
             name: "RODatabase",
@@ -58,7 +60,7 @@ let package = Package(
                 .product(name: "rAthenaResources", package: "swift-rathena"),
                 .product(name: "ryml", package: "swift-rathena"),
                 "DataCompression",
-                "ROGenerated",
+                "ROConstants",
             ],
             swiftSettings: [
                 .interoperabilityMode(.Cxx),
@@ -90,9 +92,9 @@ let package = Package(
         .target(
             name: "ROGame",
             dependencies: [
+                "ROConstants",
                 "ROCore",
                 "ROFileFormats",
-                "ROGenerated",
                 "RONetwork",
                 "RORenderers",
                 "RORendering",
@@ -111,11 +113,6 @@ let package = Package(
             ],
             swiftSettings: [
                 .interoperabilityMode(.Cxx),
-            ]),
-        .target(
-            name: "ROGenerated",
-            dependencies: [
-                "ROCore",
             ]),
         .target(
             name: "RONetwork",
@@ -140,9 +137,9 @@ let package = Package(
         .target(
             name: "RORendering",
             dependencies: [
+                "ROConstants",
                 "ROCore",
                 "ROFileFormats",
-                "ROGenerated",
                 "ROResources",
             ]),
         .testTarget(
@@ -166,7 +163,7 @@ let package = Package(
         .testTarget(
             name: "ROResourcesTests",
             dependencies: [
-                "ROGenerated",
+                "ROConstants",
                 "ROResources",
             ],
             resources: [

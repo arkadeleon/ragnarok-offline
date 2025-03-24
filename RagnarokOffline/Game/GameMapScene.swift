@@ -5,9 +5,9 @@
 //  Created by Leon Li on 2024/12/7.
 //
 
+import ROConstants
 import RODatabase
 import ROGame
-import ROGenerated
 import SpriteKit
 
 class GameMapScene: SKScene {

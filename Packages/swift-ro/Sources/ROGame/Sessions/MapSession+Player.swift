@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/12/18.
 //
 
-import ROGenerated
+import ROConstants
 import RONetwork
 
 extension MapSession {

@@ -7,8 +7,8 @@
 
 import CoreGraphics
 import Foundation
+import ROConstants
 import ROFileFormats
-import ROGenerated
 import ROResources
 
 enum SpritePart {

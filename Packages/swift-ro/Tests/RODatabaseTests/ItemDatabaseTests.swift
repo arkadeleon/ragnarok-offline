@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import ROGenerated
+import ROConstants
 @testable import RODatabase
 
 final class ItemDatabaseTests: XCTestCase {

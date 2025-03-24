@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/1/10.
 //
 
-import ROGenerated
+import ROConstants
 
 public enum ItemSubType: Equatable, Hashable, Sendable {
     case none

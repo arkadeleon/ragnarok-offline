@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/2/14.
 //
 
-import ROGenerated
+import ROConstants
 import ROResources
 
 final public class SpriteResolver: Sendable {

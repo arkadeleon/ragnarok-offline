@@ -7,7 +7,7 @@
 
 import Foundation
 import rAthenaResources
-import ROGenerated
+import ROConstants
 
 public actor StatusChangeDatabase {
     public static let prerenewal = StatusChangeDatabase(mode: .prerenewal)

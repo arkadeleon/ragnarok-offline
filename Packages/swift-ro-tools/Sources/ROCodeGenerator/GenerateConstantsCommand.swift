@@ -14,7 +14,7 @@ struct GenerateConstantsCommand: ParsableCommand {
     @Argument(transform: { URL(filePath: $0, directoryHint: .isDirectory) })
     var rathenaDirectory: URL
 
-    @Argument(transform: { URL(filePath: $0, directoryHint: .isDirectory).appending(path: "Constants") })
+    @Argument(transform: { URL(filePath: $0, directoryHint: .isDirectory) })
     var generatedDirectory: URL
 
     mutating func run() throws {

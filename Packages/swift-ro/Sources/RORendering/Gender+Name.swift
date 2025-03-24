@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/1/8.
 //
 
-import ROGenerated
+import ROConstants
 
 extension Gender {
     var name: String {
