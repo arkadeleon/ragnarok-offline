@@ -9,7 +9,7 @@ import ROCore
 
 public let HEADER_ZC_NPC_CHAT: Int16 = 0x2c1
 
-public struct PACKET_ZC_NPC_CHAT: BinaryDecodable {
+public struct PACKET_ZC_NPC_CHAT: BinaryDecodable, Sendable {
     public var packetType: Int16
     public var packetLength: Int16
     public var accountID: UInt32

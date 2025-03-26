@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `chclif_parse_createnewchar`
-public struct PACKET_HC_ACCEPT_MAKECHAR: DecodablePacket {
+public struct PACKET_HC_ACCEPT_MAKECHAR: DecodablePacket, Sendable {
     public static var packetType: Int16 {
         if PACKET_VERSION_MAIN_NUMBER >= 20201007 || PACKET_VERSION_RE_NUMBER >= 20211103 {
             0xb6f

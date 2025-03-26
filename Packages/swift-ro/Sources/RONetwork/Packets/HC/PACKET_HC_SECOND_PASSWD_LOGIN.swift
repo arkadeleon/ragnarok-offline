@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `chclif_pincode_sendstate`
-public struct PACKET_HC_SECOND_PASSWD_LOGIN: DecodablePacket {
+public struct PACKET_HC_SECOND_PASSWD_LOGIN: DecodablePacket, Sendable {
     public static var packetType: Int16 {
         0x8b9
     }

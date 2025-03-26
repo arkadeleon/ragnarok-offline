@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `chclif_reject`
-public struct PACKET_HC_REFUSE_ENTER: DecodablePacket {
+public struct PACKET_HC_REFUSE_ENTER: DecodablePacket, Sendable {
     public static var packetType: Int16 {
         0x6c
     }

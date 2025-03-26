@@ -7,7 +7,7 @@
 
 import ROCore
 
-public struct PACKET_ZC_AID: DecodablePacket {
+public struct PACKET_ZC_AID: DecodablePacket, Sendable {
     public static var packetType: Int16 {
         0x283
     }

@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `chclif_block_character`
-public struct PACKET_HC_BLOCK_CHARACTER: DecodablePacket {
+public struct PACKET_HC_BLOCK_CHARACTER: DecodablePacket, Sendable {
     public static var packetType: Int16 {
         0x20d
     }
@@ -35,7 +35,7 @@ public struct PACKET_HC_BLOCK_CHARACTER: DecodablePacket {
 }
 
 extension PACKET_HC_BLOCK_CHARACTER {
-    public struct CharBlockInfo: BinaryDecodable {
+    public struct CharBlockInfo: BinaryDecodable, Sendable {
         public var charID: UInt32
         public var szExpireDate: String
 

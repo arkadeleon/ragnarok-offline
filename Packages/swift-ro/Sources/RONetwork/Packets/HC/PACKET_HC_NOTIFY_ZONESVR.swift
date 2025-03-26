@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `chclif_send_map_data`
-public struct PACKET_HC_NOTIFY_ZONESVR: DecodablePacket {
+public struct PACKET_HC_NOTIFY_ZONESVR: DecodablePacket, Sendable {
     public static var packetType: Int16 {
         if PACKET_VERSION >= 20170315 {
             0xac5

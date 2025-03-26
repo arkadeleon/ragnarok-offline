@@ -9,7 +9,7 @@ import Foundation
 import Network
 import ROCore
 
-final public class Client {
+final public class Client: @unchecked Sendable {
     public var errorHandler: (@Sendable (_ error: any Error) -> Void)?
 
     private let name: String

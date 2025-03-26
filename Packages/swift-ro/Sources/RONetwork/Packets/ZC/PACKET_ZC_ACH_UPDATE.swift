@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `clif_achievement_update`
-public struct PACKET_ZC_ACH_UPDATE: DecodablePacket {
+public struct PACKET_ZC_ACH_UPDATE: DecodablePacket, Sendable {
     public static var packetType: Int16 {
         0xa24
     }

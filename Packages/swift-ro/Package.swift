@@ -119,9 +119,6 @@ let package = Package(
             name: "RONetwork",
             dependencies: [
                 "ROCore",
-            ],
-            swiftSettings: [
-                .swiftLanguageMode(.v5),
             ]),
         .testTarget(
             name: "RONetworkTests",

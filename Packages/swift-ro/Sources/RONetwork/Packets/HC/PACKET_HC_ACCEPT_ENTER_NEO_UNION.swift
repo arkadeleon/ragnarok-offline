@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `chclif_mmo_send006b`
-public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION: DecodablePacket {
+public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION: DecodablePacket, Sendable {
     public static var packetType: Int16 {
         0x6b
     }

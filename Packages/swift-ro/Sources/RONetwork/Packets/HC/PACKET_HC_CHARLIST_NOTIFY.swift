@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `chclif_charlist_notify`
-public struct PACKET_HC_CHARLIST_NOTIFY: DecodablePacket {
+public struct PACKET_HC_CHARLIST_NOTIFY: DecodablePacket, Sendable {
     public static var packetType: Int16 {
         0x9a0
     }

@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `clif_achievement_list_all`
-public struct PACKET_ZC_ALL_ACH_LIST: DecodablePacket {
+public struct PACKET_ZC_ALL_ACH_LIST: DecodablePacket, Sendable {
     public static var packetType: Int16 {
         0xa23
     }

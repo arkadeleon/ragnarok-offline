@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `chclif_parse_delchar`
-public struct PACKET_HC_ACCEPT_DELETECHAR: DecodablePacket {
+public struct PACKET_HC_ACCEPT_DELETECHAR: DecodablePacket, Sendable {
     public static var packetType: Int16 {
         0x6f
     }

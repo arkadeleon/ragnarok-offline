@@ -7,7 +7,7 @@
 
 import ROCore
 
-public struct PACKET_ZC_MAPPROPERTY_R2: BinaryDecodable {
+public struct PACKET_ZC_MAPPROPERTY_R2: BinaryDecodable, Sendable {
     public var packetType: Int16
     public var type: Int16
     public var flags: UInt32

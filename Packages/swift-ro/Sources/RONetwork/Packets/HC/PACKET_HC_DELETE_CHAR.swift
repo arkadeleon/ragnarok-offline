@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `chclif_char_delete2_accept_ack`
-public struct PACKET_HC_DELETE_CHAR: DecodablePacket {
+public struct PACKET_HC_DELETE_CHAR: DecodablePacket, Sendable {
     public static var packetType: Int16 {
         0x82a
     }

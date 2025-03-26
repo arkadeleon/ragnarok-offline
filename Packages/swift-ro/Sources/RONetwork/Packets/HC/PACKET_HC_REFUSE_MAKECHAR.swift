@@ -8,7 +8,7 @@
 import ROCore
 
 /// See `chclif_parse_createnewchar`
-public struct PACKET_HC_REFUSE_MAKECHAR: DecodablePacket {
+public struct PACKET_HC_REFUSE_MAKECHAR: DecodablePacket, Sendable {
     public static var packetType: Int16 {
         0x6e
     }

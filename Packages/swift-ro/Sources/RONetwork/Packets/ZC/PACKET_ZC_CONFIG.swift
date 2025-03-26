@@ -9,7 +9,7 @@ import ROCore
 
 public let HEADER_ZC_CONFIG: Int16 = 0x2d9
 
-public struct PACKET_ZC_CONFIG: BinaryDecodable {
+public struct PACKET_ZC_CONFIG: BinaryDecodable, Sendable {
     public var packetType: Int16
     public var type: Int32
     public var value: Int32

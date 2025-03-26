@@ -9,7 +9,7 @@ import ROCore
 
 public let HEADER_ZC_RECOVER_PENALTY_OVERWEIGHT: Int16 = 0xade
 
-public struct PACKET_ZC_RECOVER_PENALTY_OVERWEIGHT: BinaryDecodable {
+public struct PACKET_ZC_RECOVER_PENALTY_OVERWEIGHT: BinaryDecodable, Sendable {
     public var packetType: Int16
     public var percentage: UInt32
 

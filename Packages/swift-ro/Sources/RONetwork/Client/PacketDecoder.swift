@@ -14,8 +14,8 @@ enum PacketDecodingError: Error {
 }
 
 final class PacketDecoder {
-    func decode(from data: Data) throws -> [any BinaryDecodable] {
-        var packets: [any BinaryDecodable] = []
+    func decode(from data: Data) throws -> [any RegisteredPacket] {
+        var packets: [any RegisteredPacket] = []
 
         let stream = MemoryStream(data: data)
         defer {
