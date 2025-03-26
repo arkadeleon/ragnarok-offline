@@ -1,5 +1,5 @@
 //
-//  PacketRegistration.swift
+//  PacketHandler.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/8/27.
@@ -7,7 +7,7 @@
 
 import ROCore
 
-protocol PacketRegistration {
+protocol PacketHandlerProtocol {
     associatedtype Packet: BinaryDecodable
 
     var type: Packet.Type { get }
@@ -16,7 +16,7 @@ protocol PacketRegistration {
     func handlePacket(_ packet: any BinaryDecodable) async
 }
 
-struct _PacketRegistration<Packet>: PacketRegistration where Packet: BinaryDecodable {
+struct PacketHandler<Packet>: PacketHandlerProtocol where Packet: BinaryDecodable {
     var type: Packet.Type
     var handler: (Packet) async -> Void
 

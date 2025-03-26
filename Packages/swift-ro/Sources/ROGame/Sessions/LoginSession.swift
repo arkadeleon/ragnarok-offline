@@ -24,7 +24,7 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
     public init(storage: SessionStorage, address: String, port: UInt16) {
         self.storage = storage
 
-        self.client = Client(address: address, port: port)
+        self.client = Client(name: "Login", address: address, port: port)
 
         client.errorHandler = { [unowned self] error in
             let event = ConnectionEvents.ErrorOccurred(error: error)
@@ -32,7 +32,7 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
         }
 
         // See `logclif_auth_ok`
-        client.registerPacket(PACKET_AC_ACCEPT_LOGIN.self, for: HEADER_AC_ACCEPT_LOGIN) { [unowned self] packet in
+        client.subscribe(to: PACKET_AC_ACCEPT_LOGIN.self) { [unowned self] packet in
             await self.storage.updateAccount(with: packet)
 
             let event = LoginEvents.Accepted(packet: packet)
@@ -40,13 +40,13 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
         }
 
         // See `logclif_auth_failed`
-        client.registerPacket(PACKET_AC_REFUSE_LOGIN.self, for: HEADER_AC_REFUSE_LOGIN) { [unowned self] packet in
+        client.subscribe(to: PACKET_AC_REFUSE_LOGIN.self) { [unowned self] packet in
             let event = await LoginEvents.Refused(packet: packet)
             self.postEvent(event)
         }
 
         // See `logclif_sent_auth_result`
-        client.registerPacket(PACKET_SC_NOTIFY_BAN.self, for: HEADER_SC_NOTIFY_BAN) { [unowned self] packet in
+        client.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
             let event = await AuthenticationEvents.Banned(packet: packet)
             self.postEvent(event)
         }

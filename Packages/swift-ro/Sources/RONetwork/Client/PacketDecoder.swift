@@ -13,21 +13,9 @@ enum PacketDecodingError: Error {
     case unknownPacket(Int16)
 }
 
-struct PacketDecodingResult {
-    var packet: any BinaryDecodable
-    var packetType: Int16
-    var packetHandler: (any BinaryDecodable) async -> Void
-}
-
 final class PacketDecoder {
-    let packetRegistrations: [Int16 : any PacketRegistration]
-
-    init(packetRegistrations: [Int16 : any PacketRegistration]) {
-        self.packetRegistrations = packetRegistrations
-    }
-
-    func decode(from data: Data) throws -> [PacketDecodingResult] {
-        var results: [PacketDecodingResult] = []
+    func decode(from data: Data) throws -> [any BinaryDecodable] {
+        var packets: [any BinaryDecodable] = []
 
         let stream = MemoryStream(data: data)
         defer {
@@ -40,10 +28,9 @@ final class PacketDecoder {
             let packetType = try decoder.decode(Int16.self)
             try stream.seek(-MemoryLayout<Int16>.size, origin: .current)
 
-            if let registration = packetRegistrations[packetType] {
-                let packet = try registration.type.init(from: decoder)
-                let result = PacketDecodingResult(packet: packet, packetType: packetType, packetHandler: registration.handlePacket)
-                results.append(result)
+            if let registeredPacket = registeredPackets[packetType] {
+                let packet = try registeredPacket.init(from: decoder)
+                packets.append(packet)
                 logger.info("Decoded packet: \(String(describing: packet))")
             } else if let entry = packetDatabase.entriesByPacketType[packetType] {
                 if entry.packetLength == -1 {
@@ -61,6 +48,6 @@ final class PacketDecoder {
             }
         }
 
-        return results
+        return packets
     }
 }

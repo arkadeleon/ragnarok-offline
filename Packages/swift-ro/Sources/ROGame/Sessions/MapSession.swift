@@ -24,7 +24,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     public init(storage: SessionStorage, mapServer: MapServerInfo) {
         self.storage = storage
 
-        self.client = Client(address: mapServer.ip, port: mapServer.port)
+        self.client = Client(name: "Map", address: mapServer.ip, port: mapServer.port)
 
         client.errorHandler = { [unowned self] error in
             let event = ConnectionEvents.ErrorOccurred(error: error)
@@ -32,24 +32,24 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         }
 
         // See `clif_friendslist_send`
-        client.registerPacket(PACKET_ZC_FRIENDS_LIST.self, for: HEADER_ZC_FRIENDS_LIST) { packet in
+        client.subscribe(to: PACKET_ZC_FRIENDS_LIST.self) { packet in
         }
 
         // 0x283
-        client.registerPacket(PACKET_ZC_AID.self, for: PACKET_ZC_AID.packetType) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_AID.self) { [unowned self] packet in
             await self.storage.updateAccountID(packet.accountID)
         }
 
         // See `clif_hotkeys_send`
-        client.registerPacket(PACKET_ZC_SHORTCUT_KEY_LIST.self, for: HEADER_ZC_SHORTCUT_KEY_LIST) { packet in
+        client.subscribe(to: PACKET_ZC_SHORTCUT_KEY_LIST.self) { packet in
         }
 
         // See `clif_inventory_expansion_info`
-        client.registerPacket(PACKET_ZC_EXTEND_BODYITEM_SIZE.self, for: HEADER_ZC_EXTEND_BODYITEM_SIZE) { packet in
+        client.subscribe(to: PACKET_ZC_EXTEND_BODYITEM_SIZE.self) { packet in
         }
 
         // See `clif_ping`
-        client.registerPacket(PACKET_ZC_PING_LIVE.self, for: HEADER_ZC_PING_LIVE) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_PING_LIVE.self) { [unowned self] packet in
             var packet = PACKET_CZ_PING_LIVE()
             packet.packetType = HEADER_CZ_PING_LIVE
 
@@ -67,15 +67,15 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         registerPartyPackets()
 
         // See `clif_reputation_list`
-        client.registerPacket(PACKET_ZC_REPUTE_INFO.self, for: HEADER_ZC_REPUTE_INFO) { packet in
+        client.subscribe(to: PACKET_ZC_REPUTE_INFO.self) { packet in
         }
 
         // See `clif_broadcast2`
-        client.registerPacket(PACKET_ZC_BROADCAST2.self, for: HEADER_ZC_BROADCAST2) { packet in
+        client.subscribe(to: PACKET_ZC_BROADCAST2.self) { packet in
         }
 
         // See `clif_authfail_fd`
-        client.registerPacket(PACKET_SC_NOTIFY_BAN.self, for: HEADER_SC_NOTIFY_BAN) { [unowned self] packet in
+        client.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
             let event = await AuthenticationEvents.Banned(packet: packet)
             self.postEvent(event)
         }
@@ -83,7 +83,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
     private func registerMapConnectionPackets() {
         // See `clif_authok`
-        client.registerPacket(PACKET_ZC_ACCEPT_ENTER.self, for: HEADER_ZC_ACCEPT_ENTER) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_ACCEPT_ENTER.self) { [unowned self] packet in
             let event = MapConnectionEvents.Accepted()
             self.postEvent(event)
         }
@@ -91,7 +91,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
     private func registerMapPackets() {
         // See `clif_changemap`
-        client.registerPacket(PACKET_ZC_NPCACK_MAPMOVE.self, for: HEADER_ZC_NPCACK_MAPMOVE) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_NPCACK_MAPMOVE.self) { [unowned self] packet in
             let position = SIMD2(Int16(packet.xPos), Int16(packet.yPos))
 
             await self.storage.updateMap(with: packet.mapName, position: position)
@@ -103,13 +103,13 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
     private func registerAchievementPackets() {
         // 0xa23
-        client.registerPacket(PACKET_ZC_ALL_ACH_LIST.self, for: PACKET_ZC_ALL_ACH_LIST.packetType) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_ALL_ACH_LIST.self) { [unowned self] packet in
             let event = AchievementEvents.Listed()
             self.postEvent(event)
         }
 
         // 0xa24
-        client.registerPacket(PACKET_ZC_ACH_UPDATE.self, for: PACKET_ZC_ACH_UPDATE.packetType) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_ACH_UPDATE.self) { [unowned self] packet in
             let event = AchievementEvents.Updated()
             self.postEvent(event)
         }
@@ -117,43 +117,43 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
     private func registerInventoryPackets() {
         // See `clif_inventoryStart`
-        client.registerPacket(PACKET_ZC_INVENTORY_START.self, for: HEADER_ZC_INVENTORY_START) { packet in
+        client.subscribe(to: PACKET_ZC_INVENTORY_START.self) { packet in
         }
 
         // See `clif_inventorylist`
-        client.registerPacket(packet_itemlist_normal.self, for: packet_header_inventorylistnormalType) { packet in
+        client.subscribe(to: packet_itemlist_normal.self) { packet in
         }
 
         // See `clif_inventorylist`
-        client.registerPacket(packet_itemlist_equip.self, for: packet_header_inventorylistequipType) { packet in
+        client.subscribe(to: packet_itemlist_equip.self) { packet in
         }
 
         // See `clif_inventoryEnd`
-        client.registerPacket(PACKET_ZC_INVENTORY_END.self, for: HEADER_ZC_INVENTORY_END) { packet in
+        client.subscribe(to: PACKET_ZC_INVENTORY_END.self) { packet in
         }
 
         // See `clif_additem`
-        client.registerPacket(PACKET_ZC_ITEM_PICKUP_ACK.self, for: HEADER_ZC_ITEM_PICKUP_ACK) { packet in
+        client.subscribe(to: PACKET_ZC_ITEM_PICKUP_ACK.self) { packet in
         }
 
         // See `clif_dropitem`
-        client.registerPacket(PACKET_ZC_ITEM_THROW_ACK.self, for: HEADER_ZC_ITEM_THROW_ACK) { packet in
+        client.subscribe(to: PACKET_ZC_ITEM_THROW_ACK.self) { packet in
         }
     }
 
     private func registerMailPackets() {
         // 0x24a
-        client.registerPacket(PACKET_ZC_MAIL_RECEIVE.self, for: PACKET_ZC_MAIL_RECEIVE.packetType) { packet in
+        client.subscribe(to: PACKET_ZC_MAIL_RECEIVE.self) { packet in
         }
 
         // See `clif_Mail_new`
-        client.registerPacket(PACKET_ZC_NOTIFY_UNREADMAIL.self, for: packet_header_rodexicon) { packet in
+        client.subscribe(to: PACKET_ZC_NOTIFY_UNREADMAIL.self) { packet in
         }
     }
 
     private func registerObjectPackets() {
         // See `clif_spawn_unit`
-        client.registerPacket(packet_spawn_unit.self, for: packet_header_spawn_unitType) { [unowned self] packet in
+        client.subscribe(to: packet_spawn_unit.self) { [unowned self] packet in
             let object = MapObject(packet: packet)
 
             await self.storage.updateMapObject(object)
@@ -163,7 +163,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         }
 
         // See `clif_set_unit_idle`
-        client.registerPacket(packet_idle_unit.self, for: packet_header_idle_unitType) { [unowned self] packet in
+        client.subscribe(to: packet_idle_unit.self) { [unowned self] packet in
             let object = MapObject(packet: packet)
 
             await self.storage.updateMapObject(object)
@@ -173,7 +173,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         }
 
         // See `clif_set_unit_walking`
-        client.registerPacket(packet_unit_walking.self, for: packet_header_unit_walkingType) { [unowned self] packet in
+        client.subscribe(to: packet_unit_walking.self) { [unowned self] packet in
             let object = MapObject(packet: packet)
             if let _ = await self.storage.updateMapObject(object) {
                 let moveData = MoveData(data: packet.MoveData)
@@ -189,7 +189,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         }
 
         // See `clif_fixpos`
-        client.registerPacket(PACKET_ZC_STOPMOVE.self, for: HEADER_ZC_STOPMOVE) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_STOPMOVE.self) { [unowned self] packet in
             let objectID = packet.AID
             let position: SIMD2 = [Int16(packet.xPos), Int16(packet.yPos)]
 
@@ -200,7 +200,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         }
 
         // See `clif_clearunit_single` and `clif_clearunit_area`
-        client.registerPacket(PACKET_ZC_NOTIFY_VANISH.self, for: HEADER_ZC_NOTIFY_VANISH) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_NOTIFY_VANISH.self) { [unowned self] packet in
             let objectID = packet.gid
             await self.storage.removeMapObject(for: objectID)
 
@@ -209,19 +209,19 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         }
 
         // See `clif_changed_dir`
-        client.registerPacket(PACKET_ZC_CHANGE_DIRECTION.self, for: HEADER_ZC_CHANGE_DIRECTION) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_CHANGE_DIRECTION.self) { [unowned self] packet in
             let event = MapObjectEvents.DirectionChanged(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_sprite_change`
-        client.registerPacket(PACKET_ZC_SPRITE_CHANGE.self, for: packet_header_sendLookType) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_SPRITE_CHANGE.self) { [unowned self] packet in
             let event = MapObjectEvents.SpriteChanged(objectID: packet.AID)
             self.postEvent(event)
         }
 
         // See `clif_changeoption_target`
-        client.registerPacket(PACKET_ZC_STATE_CHANGE.self, for: HEADER_ZC_STATE_CHANGE) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_STATE_CHANGE.self) { [unowned self] packet in
             if let object = await self.storage.updateMapObjectState(with: packet) {
                 let event = MapObjectEvents.StateChanged(
                     objectID: object.id,
@@ -234,16 +234,16 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         }
 
         // See `clif_damage` and `clif_takeitem` and `clif_sitting` and `clif_standing`
-        client.registerPacket(PACKET_ZC_NOTIFY_ACT.self, for: HEADER_ZC_NOTIFY_ACT) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_NOTIFY_ACT.self) { [unowned self] packet in
         }
 
         // See `clif_skill_nodamage`
-        client.registerPacket(PACKET_ZC_USE_SKILL.self, for: HEADER_ZC_USE_SKILL) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_USE_SKILL.self) { [unowned self] packet in
 
         }
 
         // See `clif_channel_msg` and `clif_messagecolor_target`
-        client.registerPacket(PACKET_ZC_NPC_CHAT.self, for: HEADER_ZC_NPC_CHAT) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_NPC_CHAT.self) { [unowned self] packet in
             let event = MapObjectEvents.MessageReceived(message: packet.message)
             self.postEvent(event)
         }
@@ -251,7 +251,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
     private func registerPartyPackets() {
         // See `clif_partyinvitationstate`
-        client.registerPacket(PACKET_ZC_PARTY_CONFIG.self, for: HEADER_ZC_PARTY_CONFIG) { packet in
+        client.subscribe(to: PACKET_ZC_PARTY_CONFIG.self) { packet in
         }
     }
 

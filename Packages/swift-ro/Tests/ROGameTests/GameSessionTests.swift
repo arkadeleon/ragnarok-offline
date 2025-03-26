@@ -52,7 +52,7 @@ final class GameSessionTests: XCTestCase {
 //        await MapServer.shared.stop()
     }
 
-    func testClient() async throws {
+    func testGameSession() async throws {
         let storage = SessionStorage()
 
         // MARK: - Start login session

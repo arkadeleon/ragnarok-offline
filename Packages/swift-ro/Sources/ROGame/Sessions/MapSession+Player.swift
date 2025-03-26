@@ -11,7 +11,7 @@ import RONetwork
 extension MapSession {
     func registerPlayerPackets() {
         // See `clif_walkok`
-        client.registerPacket(PACKET_ZC_NOTIFY_PLAYERMOVE.self, for: HEADER_ZC_NOTIFY_PLAYERMOVE) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_NOTIFY_PLAYERMOVE.self) { [unowned self] packet in
             let moveData = MoveData(data: packet.moveData)
             let fromPosition = SIMD2(moveData.x0, moveData.y0)
             let toPosition = SIMD2(moveData.x1, moveData.y1)
@@ -23,13 +23,13 @@ extension MapSession {
         }
 
         // See `clif_displaymessage`
-        client.registerPacket(PACKET_ZC_NOTIFY_PLAYERCHAT.self, for: HEADER_ZC_NOTIFY_PLAYERCHAT) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_NOTIFY_PLAYERCHAT.self) { [unowned self] packet in
             let event = PlayerEvents.MessageReceived(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_initialstatus`
-        client.registerPacket(PACKET_ZC_STATUS.self, for: HEADER_ZC_STATUS) { packet in
+        client.subscribe(to: PACKET_ZC_STATUS.self) { packet in
             await self.storage.updatePlayerStatus(with: packet)
 
             if let status = await self.storage.player?.status {
@@ -39,7 +39,7 @@ extension MapSession {
         }
 
         // See `clif_par_change`
-        client.registerPacket(PACKET_ZC_PAR_CHANGE.self, for: HEADER_ZC_PAR_CHANGE) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_PAR_CHANGE.self) { [unowned self] packet in
             guard let sp = StatusProperty(rawValue: Int(packet.varID)) else {
                 return
             }
@@ -53,7 +53,7 @@ extension MapSession {
         }
 
         // See `clif_longpar_change`
-        client.registerPacket(PACKET_ZC_LONGPAR_CHANGE.self, for: HEADER_ZC_LONGPAR_CHANGE) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_LONGPAR_CHANGE.self) { [unowned self] packet in
             guard let sp = StatusProperty(rawValue: Int(packet.varID)) else {
                 return
             }
@@ -67,7 +67,7 @@ extension MapSession {
         }
 
         // See `clif_longlongpar_change`
-        client.registerPacket(PACKET_ZC_LONGLONGPAR_CHANGE.self, for: HEADER_ZC_LONGLONGPAR_CHANGE) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_LONGLONGPAR_CHANGE.self) { [unowned self] packet in
             guard let sp = StatusProperty(rawValue: Int(packet.varID)) else {
                 return
             }
@@ -81,7 +81,7 @@ extension MapSession {
         }
 
         // See `clif_zc_status_change`
-        client.registerPacket(PACKET_ZC_STATUS_CHANGE.self, for: HEADER_ZC_STATUS_CHANGE) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_STATUS_CHANGE.self) { [unowned self] packet in
             guard let sp = StatusProperty(rawValue: Int(packet.statusID)) else {
                 return
             }
@@ -95,7 +95,7 @@ extension MapSession {
         }
 
         // See `clif_couplestatus`
-        client.registerPacket(PACKET_ZC_COUPLESTATUS.self, for: HEADER_ZC_COUPLESTATUS) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_COUPLESTATUS.self) { [unowned self] packet in
             guard let sp = StatusProperty(rawValue: Int(packet.statusType)) else {
                 return
             }
@@ -109,13 +109,13 @@ extension MapSession {
         }
 
         // See `clif_attackrange`
-        client.registerPacket(PACKET_ZC_ATTACK_RANGE.self, for: HEADER_ZC_ATTACK_RANGE) { [unowned self] packet in
+        client.subscribe(to: PACKET_ZC_ATTACK_RANGE.self) { [unowned self] packet in
             let event = PlayerEvents.AttackRangeChanged(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_cartcount`
-        client.registerPacket(PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO.self, for: HEADER_ZC_NOTIFY_CARTITEM_COUNTINFO) { packet in
+        client.subscribe(to: PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO.self) { packet in
         }
     }
 

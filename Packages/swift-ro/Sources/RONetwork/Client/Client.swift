@@ -12,37 +12,43 @@ import ROCore
 final public class Client {
     public var errorHandler: (@Sendable (_ error: any Error) -> Void)?
 
+    private let name: String
     private let connection: NWConnection
 
-    private let packetStream: AsyncStream<PacketDecodingResult>
-    private let packetContinuation: AsyncStream<PacketDecodingResult>.Continuation
+    private let packetStream: AsyncStream<any BinaryDecodable>
+    private let packetContinuation: AsyncStream<any BinaryDecodable>.Continuation
 
-    private var packetRegistrations: [Int16 : any PacketRegistration] = [:]
+    private var packetHandlers: [any PacketHandlerProtocol] = []
 
-    public init(address: String, port: UInt16) {
+    public init(name: String, address: String, port: UInt16) {
+        self.name = name
         self.connection = NWConnection(
             host: NWEndpoint.Host(address),
             port: NWEndpoint.Port(rawValue: port)!,
             using: .tcp
         )
 
-        let (stream, continuation) = AsyncStream<PacketDecodingResult>.makeStream()
+        let (stream, continuation) = AsyncStream<any BinaryDecodable>.makeStream()
         self.packetStream = stream
         self.packetContinuation = continuation
     }
 
     public func connect() {
+        let name = name
         connection.stateUpdateHandler = { state in
-            logger.info("\(String(describing: state))")
+            logger.info("\(name) client \(String(describing: state))")
         }
 
         let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client")
         connection.start(queue: queue)
 
         Task {
-            for await result in packetStream {
-                let packet = result.packet
-                await result.packetHandler(packet)
+            for await packet in packetStream {
+                for packetHandler in packetHandlers {
+                    if type(of: packet) == packetHandler.type {
+                        await packetHandler.handlePacket(packet)
+                    }
+                }
             }
         }
     }
@@ -55,8 +61,9 @@ final public class Client {
         packetContinuation.finish()
     }
 
-    public func registerPacket<P>(_ type: P.Type, for packetType: Int16, handler: @escaping (P) async -> Void) where P: BinaryDecodable {
-        packetRegistrations[packetType] = _PacketRegistration(type: type, handler: handler)
+    public func subscribe<P>(to type: P.Type, _ handler: @escaping (P) async -> Void) where P: BinaryDecodable {
+        let packetHandler = PacketHandler(type: type, handler: handler)
+        packetHandlers.append(packetHandler)
     }
 
     public func sendPacket(_ packet: some BinaryEncodable) {
@@ -90,10 +97,10 @@ final public class Client {
 
                     let remaining = content[count...]
                     do {
-                        let decoder = PacketDecoder(packetRegistrations: packetRegistrations)
-                        let results = try decoder.decode(from: remaining)
-                        for result in results {
-                            packetContinuation.yield(result)
+                        let decoder = PacketDecoder()
+                        let packets = try decoder.decode(from: remaining)
+                        for packet in packets {
+                            packetContinuation.yield(packet)
                         }
                     } catch {
                         logger.warning("\(error.localizedDescription)")
@@ -119,10 +126,10 @@ final public class Client {
             if let content {
                 logger.info("Received \(content.count) bytes")
                 do {
-                    let decoder = PacketDecoder(packetRegistrations: packetRegistrations)
-                    let results = try decoder.decode(from: content)
-                    for result in results {
-                        packetContinuation.yield(result)
+                    let decoder = PacketDecoder()
+                    let packets = try decoder.decode(from: content)
+                    for packet in packets {
+                        packetContinuation.yield(packet)
                     }
                 } catch {
                     logger.warning("\(error.localizedDescription)")

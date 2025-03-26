@@ -24,7 +24,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     public init(storage: SessionStorage, charServer: CharServerInfo) {
         self.storage = storage
 
-        self.client = Client(address: charServer.ip, port: charServer.port)
+        self.client = Client(name: "Char", address: charServer.ip, port: charServer.port)
 
         client.errorHandler = { [unowned self] error in
             let event = ConnectionEvents.ErrorOccurred(error: error)
@@ -35,23 +35,23 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         registerCharPackets()
 
         // 0x82d
-        client.registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.self, for: PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.packetType) { packet in
+        client.subscribe(to: PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.self) { packet in
         }
 
         // 0x8b9
-        client.registerPacket(PACKET_HC_SECOND_PASSWD_LOGIN.self, for: PACKET_HC_SECOND_PASSWD_LOGIN.packetType) { packet in
+        client.subscribe(to: PACKET_HC_SECOND_PASSWD_LOGIN.self) { packet in
         }
 
         // 0x9a0
-        client.registerPacket(PACKET_HC_CHARLIST_NOTIFY.self, for: PACKET_HC_CHARLIST_NOTIFY.packetType) { packet in
+        client.subscribe(to: PACKET_HC_CHARLIST_NOTIFY.self) { packet in
         }
 
         // 0x20d
-        client.registerPacket(PACKET_HC_BLOCK_CHARACTER.self, for: PACKET_HC_BLOCK_CHARACTER.packetType) { packet in
+        client.subscribe(to: PACKET_HC_BLOCK_CHARACTER.self) { packet in
         }
 
         // See `chclif_send_auth_result`
-        client.registerPacket(PACKET_SC_NOTIFY_BAN.self, for: HEADER_SC_NOTIFY_BAN) { [unowned self] packet in
+        client.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
             let event = await AuthenticationEvents.Banned(packet: packet)
             self.postEvent(event)
         }
@@ -59,7 +59,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
     private func registerCharServerPackets() {
         // 0x6b
-        client.registerPacket(PACKET_HC_ACCEPT_ENTER_NEO_UNION.self, for: PACKET_HC_ACCEPT_ENTER_NEO_UNION.packetType) { [unowned self] packet in
+        client.subscribe(to: PACKET_HC_ACCEPT_ENTER_NEO_UNION.self) { [unowned self] packet in
             await self.storage.updateChars(packet.chars)
 
             let event = CharServerEvents.Accepted(packet: packet)
@@ -67,13 +67,13 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         }
 
         // 0x6c
-        client.registerPacket(PACKET_HC_REFUSE_ENTER.self, for: PACKET_HC_REFUSE_ENTER.packetType) { [unowned self] packet in
+        client.subscribe(to: PACKET_HC_REFUSE_ENTER.self) { [unowned self] packet in
             let event = CharServerEvents.Refused()
             self.postEvent(event)
         }
 
         // 0x71, 0xac5
-        client.registerPacket(PACKET_HC_NOTIFY_ZONESVR.self, for: PACKET_HC_NOTIFY_ZONESVR.packetType) { [unowned self] packet in
+        client.subscribe(to: PACKET_HC_NOTIFY_ZONESVR.self) { [unowned self] packet in
             await self.storage.updateMapServer(with: packet.mapName, mapServer: packet.mapServer, charID: packet.charID)
 
             let event = CharServerEvents.NotifyMapServer(packet: packet)
@@ -81,7 +81,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         }
 
         // 0x840
-        client.registerPacket(PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self, for: HEADER_HC_NOTIFY_ACCESSIBLE_MAPNAME) { [unowned self] packet in
+        client.subscribe(to: PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self) { [unowned self] packet in
             let event = CharServerEvents.NotifyAccessibleMaps(packet: packet)
             self.postEvent(event)
         }
@@ -89,7 +89,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
     private func registerCharPackets() {
         // 0x6d
-        client.registerPacket(PACKET_HC_ACCEPT_MAKECHAR.self, for: PACKET_HC_ACCEPT_MAKECHAR.packetType) { [unowned self] packet in
+        client.subscribe(to: PACKET_HC_ACCEPT_MAKECHAR.self) { [unowned self] packet in
             await self.storage.addChar(packet.char)
 
             let event = CharEvents.MakeAccepted(packet: packet)
@@ -97,25 +97,25 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         }
 
         // 0x6e
-        client.registerPacket(PACKET_HC_REFUSE_MAKECHAR.self, for: PACKET_HC_REFUSE_MAKECHAR.packetType) { [unowned self] packet in
+        client.subscribe(to: PACKET_HC_REFUSE_MAKECHAR.self) { [unowned self] packet in
             let event = CharEvents.MakeRefused()
             self.postEvent(event)
         }
 
         // 0x6f
-        client.registerPacket(PACKET_HC_ACCEPT_DELETECHAR.self, for: PACKET_HC_ACCEPT_DELETECHAR.packetType) { [unowned self] packet in
+        client.subscribe(to: PACKET_HC_ACCEPT_DELETECHAR.self) { [unowned self] packet in
             let event = CharEvents.DeleteAccepted()
             self.postEvent(event)
         }
 
         // 0x70
-        client.registerPacket(PACKET_HC_REFUSE_DELETECHAR.self, for: PACKET_HC_REFUSE_DELETECHAR.packetType) { [unowned self] packet in
+        client.subscribe(to: PACKET_HC_REFUSE_DELETECHAR.self) { [unowned self] packet in
             let event = CharEvents.DeleteRefused(packet: packet)
             self.postEvent(event)
         }
 
         // 0x82a
-        client.registerPacket(PACKET_HC_DELETE_CHAR.self, for: PACKET_HC_DELETE_CHAR.packetType) { [unowned self] packet in
+        client.subscribe(to: PACKET_HC_DELETE_CHAR.self) { [unowned self] packet in
             if packet.result == 1 {
                 let event = CharEvents.DeleteAccepted()
                 self.postEvent(event)
@@ -126,13 +126,13 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         }
 
         // 0x82c
-        client.registerPacket(PACKET_HC_DELETE_CHAR_CANCEL.self, for: PACKET_HC_DELETE_CHAR_CANCEL.packetType) { [unowned self] packet in
+        client.subscribe(to: PACKET_HC_DELETE_CHAR_CANCEL.self) { [unowned self] packet in
             let event = CharEvents.DeleteCancelled()
             self.postEvent(event)
         }
 
         // 0x828
-        client.registerPacket(PACKET_HC_DELETE_CHAR_RESERVED.self, for: PACKET_HC_DELETE_CHAR_RESERVED.packetType) { [unowned self] packet in
+        client.subscribe(to: PACKET_HC_DELETE_CHAR_RESERVED.self) { [unowned self] packet in
             let event = CharEvents.DeletionDateResponse(packet: packet)
             self.postEvent(event)
         }
