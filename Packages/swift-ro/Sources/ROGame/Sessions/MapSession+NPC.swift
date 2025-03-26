@@ -8,14 +8,14 @@
 import RONetwork
 
 extension MapSession {
-    func registerNPCPackets() {
+    func subscribeToNPCPackets(with subscription: inout ClientSubscription) {
         // See `clif_scriptmes`
-        client.subscribe(to: PACKET_ZC_SAY_DIALOG.self) { [unowned self] packet in
+        subscription.subscribe(to: PACKET_ZC_SAY_DIALOG.self) { [unowned self] packet in
             await self.storage.updateNPCDialog(with: packet)
         }
 
         // See `clif_scriptnext`
-        client.subscribe(to: PACKET_ZC_WAIT_DIALOG.self) { [unowned self] packet in
+        subscription.subscribe(to: PACKET_ZC_WAIT_DIALOG.self) { [unowned self] packet in
             let dialog = await self.storage.updateNPCDialog(with: packet)
 
             if let dialog {
@@ -25,7 +25,7 @@ extension MapSession {
         }
 
         // See `clif_scriptclose`
-        client.subscribe(to: PACKET_ZC_CLOSE_DIALOG.self) { [unowned self] packet in
+        subscription.subscribe(to: PACKET_ZC_CLOSE_DIALOG.self) { [unowned self] packet in
             let dialog = await self.storage.updateNPCDialog(with: packet)
 
             if let dialog {
@@ -35,13 +35,13 @@ extension MapSession {
         }
 
         // See `clif_scriptclear`
-        client.subscribe(to: PACKET_ZC_CLEAR_DIALOG.self) { [unowned self] packet in
+        subscription.subscribe(to: PACKET_ZC_CLEAR_DIALOG.self) { [unowned self] packet in
             let event = NPCEvents.DialogClosed(npcID: packet.GID)
             self.postEvent(event)
         }
 
         // See `clif_scriptmenu`
-        client.subscribe(to: PACKET_ZC_MENU_LIST.self) { [unowned self] packet in
+        subscription.subscribe(to: PACKET_ZC_MENU_LIST.self) { [unowned self] packet in
             let dialog = await self.storage.updateNPCDialog(with: packet)
 
             let event = NPCEvents.DialogUpdated(dialog: dialog)
@@ -49,7 +49,7 @@ extension MapSession {
         }
 
         // See `clif_scriptinput`
-        client.subscribe(to: PACKET_ZC_OPEN_EDITDLG.self) { [unowned self] packet in
+        subscription.subscribe(to: PACKET_ZC_OPEN_EDITDLG.self) { [unowned self] packet in
             let dialog = await self.storage.updateNPCDialog(with: packet)
 
             let event = NPCEvents.DialogUpdated(dialog: dialog)
@@ -57,7 +57,7 @@ extension MapSession {
         }
 
         // See `clif_scriptinputstr`
-        client.subscribe(to: PACKET_ZC_OPEN_EDITDLGSTR.self) { [unowned self] packet in
+        subscription.subscribe(to: PACKET_ZC_OPEN_EDITDLGSTR.self) { [unowned self] packet in
             let dialog = await self.storage.updateNPCDialog(with: packet)
 
             let event = NPCEvents.DialogUpdated(dialog: dialog)
@@ -65,13 +65,13 @@ extension MapSession {
         }
 
         // See `clif_cutin`
-        client.subscribe(to: PACKET_ZC_SHOW_IMAGE.self) { [unowned self] packet in
+        subscription.subscribe(to: PACKET_ZC_SHOW_IMAGE.self) { [unowned self] packet in
             let event = NPCEvents.ImageReceived(packet: packet)
             self.postEvent(event)
         }
 
         // See `clif_viewpoint`
-        client.subscribe(to: PACKET_ZC_COMPASS.self) { [unowned self] packet in
+        subscription.subscribe(to: PACKET_ZC_COMPASS.self) { [unowned self] packet in
             let event = NPCEvents.MinimapMarkPositionReceived(packet: packet)
             self.postEvent(event)
         }

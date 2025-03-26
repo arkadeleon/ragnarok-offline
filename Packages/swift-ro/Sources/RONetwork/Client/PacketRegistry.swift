@@ -7,7 +7,7 @@
 
 import ROCore
 
-typealias RegisteredPacket = BinaryDecodable & Sendable
+public typealias RegisteredPacket = BinaryDecodable & Sendable
 
 let registeredPackets: [Int16 : any RegisteredPacket.Type] = [
     HEADER_SC_NOTIFY_BAN: PACKET_SC_NOTIFY_BAN.self,

@@ -7,18 +7,17 @@
 
 import ROCore
 
-protocol PacketHandlerProtocol {
+protocol PacketHandlerProtocol: Sendable {
     associatedtype Packet: BinaryDecodable
 
     var type: Packet.Type { get }
-    var handler: (Packet) async -> Void { get }
 
     func handlePacket(_ packet: any BinaryDecodable) async
 }
 
 struct PacketHandler<Packet>: PacketHandlerProtocol where Packet: BinaryDecodable {
     var type: Packet.Type
-    var handler: (Packet) async -> Void
+    var handler: @Sendable (Packet) async -> Void
 
     func handlePacket(_ packet: any BinaryDecodable) async {
         if let packet = packet as? Packet {

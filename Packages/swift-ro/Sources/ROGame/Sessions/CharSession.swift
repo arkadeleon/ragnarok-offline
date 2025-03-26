@@ -23,127 +23,43 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
     public init(storage: SessionStorage, charServer: CharServerInfo) {
         self.storage = storage
-
         self.client = Client(name: "Char", address: charServer.ip, port: charServer.port)
+    }
 
-        client.subscribe(to: ClientError.self) { [unowned self] error in
+    public func start() {
+        var subscription = ClientSubscription()
+
+        subscription.subscribe(to: ClientError.self) { [unowned self] error in
             let event = ConnectionEvents.ErrorOccurred(error: error)
             self.eventSubject.send(event)
         }
 
-        registerCharServerPackets()
-        registerCharPackets()
+        subscribeToCharServerPackets(with: &subscription)
+        subscribeToCharPackets(with: &subscription)
 
         // 0x82d
-        client.subscribe(to: PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.self) { packet in
+        subscription.subscribe(to: PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.self) { packet in
         }
 
         // 0x8b9
-        client.subscribe(to: PACKET_HC_SECOND_PASSWD_LOGIN.self) { packet in
+        subscription.subscribe(to: PACKET_HC_SECOND_PASSWD_LOGIN.self) { packet in
         }
 
         // 0x9a0
-        client.subscribe(to: PACKET_HC_CHARLIST_NOTIFY.self) { packet in
+        subscription.subscribe(to: PACKET_HC_CHARLIST_NOTIFY.self) { packet in
         }
 
         // 0x20d
-        client.subscribe(to: PACKET_HC_BLOCK_CHARACTER.self) { packet in
+        subscription.subscribe(to: PACKET_HC_BLOCK_CHARACTER.self) { packet in
         }
 
         // See `chclif_send_auth_result`
-        client.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
+        subscription.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
             let event = await AuthenticationEvents.Banned(packet: packet)
             self.postEvent(event)
         }
-    }
 
-    private func registerCharServerPackets() {
-        // 0x6b
-        client.subscribe(to: PACKET_HC_ACCEPT_ENTER_NEO_UNION.self) { [unowned self] packet in
-            await self.storage.updateChars(packet.chars)
-
-            let event = CharServerEvents.Accepted(packet: packet)
-            self.postEvent(event)
-        }
-
-        // 0x6c
-        client.subscribe(to: PACKET_HC_REFUSE_ENTER.self) { [unowned self] packet in
-            let event = CharServerEvents.Refused()
-            self.postEvent(event)
-        }
-
-        // 0x71, 0xac5
-        client.subscribe(to: PACKET_HC_NOTIFY_ZONESVR.self) { [unowned self] packet in
-            await self.storage.updateMapServer(with: packet.mapName, mapServer: packet.mapServer, charID: packet.charID)
-
-            let event = CharServerEvents.NotifyMapServer(packet: packet)
-            self.postEvent(event)
-        }
-
-        // 0x840
-        client.subscribe(to: PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self) { [unowned self] packet in
-            let event = CharServerEvents.NotifyAccessibleMaps(packet: packet)
-            self.postEvent(event)
-        }
-    }
-
-    private func registerCharPackets() {
-        // 0x6d
-        client.subscribe(to: PACKET_HC_ACCEPT_MAKECHAR.self) { [unowned self] packet in
-            await self.storage.addChar(packet.char)
-
-            let event = CharEvents.MakeAccepted(packet: packet)
-            self.postEvent(event)
-        }
-
-        // 0x6e
-        client.subscribe(to: PACKET_HC_REFUSE_MAKECHAR.self) { [unowned self] packet in
-            let event = CharEvents.MakeRefused()
-            self.postEvent(event)
-        }
-
-        // 0x6f
-        client.subscribe(to: PACKET_HC_ACCEPT_DELETECHAR.self) { [unowned self] packet in
-            let event = CharEvents.DeleteAccepted()
-            self.postEvent(event)
-        }
-
-        // 0x70
-        client.subscribe(to: PACKET_HC_REFUSE_DELETECHAR.self) { [unowned self] packet in
-            let event = CharEvents.DeleteRefused(packet: packet)
-            self.postEvent(event)
-        }
-
-        // 0x82a
-        client.subscribe(to: PACKET_HC_DELETE_CHAR.self) { [unowned self] packet in
-            if packet.result == 1 {
-                let event = CharEvents.DeleteAccepted()
-                self.postEvent(event)
-            } else {
-                let event = CharEvents.DeleteRefused(packet: packet)
-                self.postEvent(event)
-            }
-        }
-
-        // 0x82c
-        client.subscribe(to: PACKET_HC_DELETE_CHAR_CANCEL.self) { [unowned self] packet in
-            let event = CharEvents.DeleteCancelled()
-            self.postEvent(event)
-        }
-
-        // 0x828
-        client.subscribe(to: PACKET_HC_DELETE_CHAR_RESERVED.self) { [unowned self] packet in
-            let event = CharEvents.DeletionDateResponse(packet: packet)
-            self.postEvent(event)
-        }
-    }
-
-    private func postEvent(_ event: some Event) {
-        eventSubject.send(event)
-    }
-
-    public func start() {
-        client.connect()
+        client.connect(with: subscription)
 
         Task {
             await enter()
@@ -156,6 +72,87 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         client.disconnect()
 
         timerSubscription = nil
+    }
+
+    private func subscribeToCharServerPackets(with subscription: inout ClientSubscription) {
+        // 0x6b
+        subscription.subscribe(to: PACKET_HC_ACCEPT_ENTER_NEO_UNION.self) { [unowned self] packet in
+            await self.storage.updateChars(packet.chars)
+
+            let event = CharServerEvents.Accepted(packet: packet)
+            self.postEvent(event)
+        }
+
+        // 0x6c
+        subscription.subscribe(to: PACKET_HC_REFUSE_ENTER.self) { [unowned self] packet in
+            let event = CharServerEvents.Refused()
+            self.postEvent(event)
+        }
+
+        // 0x71, 0xac5
+        subscription.subscribe(to: PACKET_HC_NOTIFY_ZONESVR.self) { [unowned self] packet in
+            await self.storage.updateMapServer(with: packet.mapName, mapServer: packet.mapServer, charID: packet.charID)
+
+            let event = CharServerEvents.NotifyMapServer(packet: packet)
+            self.postEvent(event)
+        }
+
+        // 0x840
+        subscription.subscribe(to: PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self) { [unowned self] packet in
+            let event = CharServerEvents.NotifyAccessibleMaps(packet: packet)
+            self.postEvent(event)
+        }
+    }
+
+    private func subscribeToCharPackets(with subscription: inout ClientSubscription) {
+        // 0x6d
+        subscription.subscribe(to: PACKET_HC_ACCEPT_MAKECHAR.self) { [unowned self] packet in
+            await self.storage.addChar(packet.char)
+
+            let event = CharEvents.MakeAccepted(packet: packet)
+            self.postEvent(event)
+        }
+
+        // 0x6e
+        subscription.subscribe(to: PACKET_HC_REFUSE_MAKECHAR.self) { [unowned self] packet in
+            let event = CharEvents.MakeRefused()
+            self.postEvent(event)
+        }
+
+        // 0x6f
+        subscription.subscribe(to: PACKET_HC_ACCEPT_DELETECHAR.self) { [unowned self] packet in
+            let event = CharEvents.DeleteAccepted()
+            self.postEvent(event)
+        }
+
+        // 0x70
+        subscription.subscribe(to: PACKET_HC_REFUSE_DELETECHAR.self) { [unowned self] packet in
+            let event = CharEvents.DeleteRefused(packet: packet)
+            self.postEvent(event)
+        }
+
+        // 0x82a
+        subscription.subscribe(to: PACKET_HC_DELETE_CHAR.self) { [unowned self] packet in
+            if packet.result == 1 {
+                let event = CharEvents.DeleteAccepted()
+                self.postEvent(event)
+            } else {
+                let event = CharEvents.DeleteRefused(packet: packet)
+                self.postEvent(event)
+            }
+        }
+
+        // 0x82c
+        subscription.subscribe(to: PACKET_HC_DELETE_CHAR_CANCEL.self) { [unowned self] packet in
+            let event = CharEvents.DeleteCancelled()
+            self.postEvent(event)
+        }
+
+        // 0x828
+        subscription.subscribe(to: PACKET_HC_DELETE_CHAR_RESERVED.self) { [unowned self] packet in
+            let event = CharEvents.DeletionDateResponse(packet: packet)
+            self.postEvent(event)
+        }
     }
 
     /// Enter.
@@ -291,5 +288,9 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         packet.slot = slot
 
         client.sendPacket(packet)
+    }
+
+    private func postEvent(_ event: some Event) {
+        eventSubject.send(event)
     }
 }

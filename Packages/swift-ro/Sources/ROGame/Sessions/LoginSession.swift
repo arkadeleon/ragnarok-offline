@@ -23,16 +23,19 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
 
     public init(storage: SessionStorage, address: String, port: UInt16) {
         self.storage = storage
-
         self.client = Client(name: "Login", address: address, port: port)
+    }
 
-        client.subscribe(to: ClientError.self) { [unowned self] error in
+    public func start() {
+        var subscription = ClientSubscription()
+
+        subscription.subscribe(to: ClientError.self) { [unowned self] error in
             let event = ConnectionEvents.ErrorOccurred(error: error)
             self.eventSubject.send(event)
         }
 
         // See `logclif_auth_ok`
-        client.subscribe(to: PACKET_AC_ACCEPT_LOGIN.self) { [unowned self] packet in
+        subscription.subscribe(to: PACKET_AC_ACCEPT_LOGIN.self) { [unowned self] packet in
             await self.storage.updateAccount(with: packet)
 
             let event = LoginEvents.Accepted(packet: packet)
@@ -40,24 +43,18 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
         }
 
         // See `logclif_auth_failed`
-        client.subscribe(to: PACKET_AC_REFUSE_LOGIN.self) { [unowned self] packet in
+        subscription.subscribe(to: PACKET_AC_REFUSE_LOGIN.self) { [unowned self] packet in
             let event = await LoginEvents.Refused(packet: packet)
             self.postEvent(event)
         }
 
         // See `logclif_sent_auth_result`
-        client.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
+        subscription.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
             let event = await AuthenticationEvents.Banned(packet: packet)
             self.postEvent(event)
         }
-    }
 
-    private func postEvent(_ event: some Event) {
-        eventSubject.send(event)
-    }
-
-    public func start() {
-        client.connect()
+        client.connect(with: subscription)
     }
 
     public func stop() {
@@ -101,5 +98,9 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
 
                 self?.client.sendPacket(packet)
             }
+    }
+
+    private func postEvent(_ event: some Event) {
+        eventSubject.send(event)
     }
 }

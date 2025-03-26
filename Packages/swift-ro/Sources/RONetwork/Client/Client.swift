@@ -15,7 +15,7 @@ public enum ClientError: Error {
     case network(NWError)
 }
 
-final public class Client: @unchecked Sendable {
+final public class Client: Sendable {
     private let name: String
     private let connection: NWConnection
 
@@ -24,9 +24,6 @@ final public class Client: @unchecked Sendable {
 
     private let packetStream: AsyncStream<any RegisteredPacket>
     private let packetContinuation: AsyncStream<any RegisteredPacket>.Continuation
-
-    private var errorHandlers: [(_ error: ClientError) -> Void] = []
-    private var packetHandlers: [any PacketHandlerProtocol] = []
 
     public init(name: String, address: String, port: UInt16) {
         self.name = name
@@ -45,7 +42,7 @@ final public class Client: @unchecked Sendable {
         self.packetContinuation = packetContinuation
     }
 
-    public func connect() {
+    public func connect(with subscription: ClientSubscription) {
         let name = name
         connection.stateUpdateHandler = { state in
             logger.info("\(name) client \(String(describing: state))")
@@ -53,6 +50,9 @@ final public class Client: @unchecked Sendable {
 
         let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client")
         connection.start(queue: queue)
+
+        let errorHandlers = subscription.errorHandlers
+        let packetHandlers = subscription.packetHandlers
 
         Task {
             for await error in errorStream {
@@ -80,15 +80,6 @@ final public class Client: @unchecked Sendable {
 
         errorContinuation.finish()
         packetContinuation.finish()
-    }
-
-    public func subscribe(to type: ClientError.Type, _ handler: @escaping (ClientError) -> Void) {
-        errorHandlers.append(handler)
-    }
-
-    public func subscribe<P>(to type: P.Type, _ handler: @escaping (P) async -> Void) where P: BinaryDecodable {
-        let packetHandler = PacketHandler(type: type, handler: handler)
-        packetHandlers.append(packetHandler)
     }
 
     public func sendPacket(_ packet: some BinaryEncodable) {
