@@ -34,6 +34,10 @@ let registeredPackets: [Int16 : any BinaryDecodable.Type] = [
     PACKET_ZC_ACH_UPDATE.packetType: PACKET_ZC_ACH_UPDATE.self,
     PACKET_ZC_MAIL_RECEIVE.packetType: PACKET_ZC_MAIL_RECEIVE.self,
     HEADER_ZC_NPC_CHAT: PACKET_ZC_NPC_CHAT.self,
+    HEADER_ZC_RECOVER_PENALTY_OVERWEIGHT: PACKET_ZC_RECOVER_PENALTY_OVERWEIGHT.self,
+    HEADER_ZC_SEND_SWAP_EQUIPITEM_INFO: PACKET_ZC_SEND_SWAP_EQUIPITEM_INFO.self,
+    HEADER_ZC_CONFIG: PACKET_ZC_CONFIG.self,
+    HEADER_ZC_QUEST_NOTIFY_EFFECT: PACKET_ZC_QUEST_NOTIFY_EFFECT.self,
 
     HEADER_ZC_PAR_CHANGE: PACKET_ZC_PAR_CHANGE.self,
     HEADER_ZC_LONGPAR_CHANGE: PACKET_ZC_LONGPAR_CHANGE.self,
@@ -366,6 +370,7 @@ let registeredPackets: [Int16 : any BinaryDecodable.Type] = [
     packet_header_unit_walkingType: packet_unit_walking.self,
     packet_header_inventorylistnormalType: packet_itemlist_normal.self,
     packet_header_inventorylistequipType: packet_itemlist_equip.self,
+    packet_header_maptypeproperty2Type: PACKET_ZC_MAPPROPERTY_R2.self,
     packet_header_rodexicon: PACKET_ZC_NOTIFY_UNREADMAIL.self,
     packet_header_sendLookType: PACKET_ZC_SPRITE_CHANGE.self,
 ]
