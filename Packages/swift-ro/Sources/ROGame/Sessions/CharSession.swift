@@ -26,7 +26,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
         self.client = Client(name: "Char", address: charServer.ip, port: charServer.port)
 
-        client.errorHandler = { [unowned self] error in
+        client.subscribe(to: ClientError.self) { [unowned self] error in
             let event = ConnectionEvents.ErrorOccurred(error: error)
             self.eventSubject.send(event)
         }

@@ -26,7 +26,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         self.client = Client(name: "Map", address: mapServer.ip, port: mapServer.port)
 
-        client.errorHandler = { [unowned self] error in
+        client.subscribe(to: ClientError.self) { [unowned self] error in
             let event = ConnectionEvents.ErrorOccurred(error: error)
             self.eventSubject.send(event)
         }

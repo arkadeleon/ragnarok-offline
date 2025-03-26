@@ -9,15 +9,23 @@ import Foundation
 import Network
 import ROCore
 
-final public class Client: @unchecked Sendable {
-    public var errorHandler: (@Sendable (_ error: any Error) -> Void)?
+public enum ClientError: Error {
+    case decoding(any Error)
+    case encoding(any Error)
+    case network(NWError)
+}
 
+final public class Client: @unchecked Sendable {
     private let name: String
     private let connection: NWConnection
 
-    private let packetStream: AsyncStream<any BinaryDecodable>
-    private let packetContinuation: AsyncStream<any BinaryDecodable>.Continuation
+    private let errorStream: AsyncStream<ClientError>
+    private let errorContinuation: AsyncStream<ClientError>.Continuation
 
+    private let packetStream: AsyncStream<any RegisteredPacket>
+    private let packetContinuation: AsyncStream<any RegisteredPacket>.Continuation
+
+    private var errorHandlers: [(_ error: ClientError) -> Void] = []
     private var packetHandlers: [any PacketHandlerProtocol] = []
 
     public init(name: String, address: String, port: UInt16) {
@@ -28,9 +36,13 @@ final public class Client: @unchecked Sendable {
             using: .tcp
         )
 
-        let (stream, continuation) = AsyncStream<any BinaryDecodable>.makeStream()
-        self.packetStream = stream
-        self.packetContinuation = continuation
+        let (errorStream, errorContinuation) = AsyncStream<ClientError>.makeStream()
+        self.errorStream = errorStream
+        self.errorContinuation = errorContinuation
+
+        let (packetStream, packetContinuation) = AsyncStream<any RegisteredPacket>.makeStream()
+        self.packetStream = packetStream
+        self.packetContinuation = packetContinuation
     }
 
     public func connect() {
@@ -41,6 +53,14 @@ final public class Client: @unchecked Sendable {
 
         let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client")
         connection.start(queue: queue)
+
+        Task {
+            for await error in errorStream {
+                for errorHandler in errorHandlers {
+                    errorHandler(error)
+                }
+            }
+        }
 
         Task {
             for await packet in packetStream {
@@ -58,7 +78,12 @@ final public class Client: @unchecked Sendable {
 
         connection.cancel()
 
+        errorContinuation.finish()
         packetContinuation.finish()
+    }
+
+    public func subscribe(to type: ClientError.Type, _ handler: @escaping (ClientError) -> Void) {
+        errorHandlers.append(handler)
     }
 
     public func subscribe<P>(to type: P.Type, _ handler: @escaping (P) async -> Void) where P: BinaryDecodable {
@@ -73,13 +98,13 @@ final public class Client: @unchecked Sendable {
 
             connection.send(content: data, completion: .contentProcessed({ [weak self] error in
                 if let error {
-                    self?.errorHandler?(error)
+                    self?.errorContinuation.yield(.network(error))
                 }
             }))
 
             logger.info("Sent packet: \(String(describing: packet))")
         } catch {
-            errorHandler?(error)
+            errorContinuation.yield(.encoding(error))
         }
     }
 
@@ -104,13 +129,13 @@ final public class Client: @unchecked Sendable {
                         }
                     } catch {
                         logger.warning("\(error.localizedDescription)")
-                        self.errorHandler?(error)
+                        self.errorContinuation.yield(.decoding(error))
                     }
                 }
             }
 
             if let error {
-                self.errorHandler?(error)
+                self.errorContinuation.yield(.network(error))
             } else {
                 self.receivePacket()
             }
@@ -133,12 +158,12 @@ final public class Client: @unchecked Sendable {
                     }
                 } catch {
                     logger.warning("\(error.localizedDescription)")
-                    self.errorHandler?(error)
+                    self.errorContinuation.yield(.decoding(error))
                 }
             }
 
             if let error {
-                self.errorHandler?(error)
+                self.errorContinuation.yield(.network(error))
             } else {
                 self.receivePacket()
             }
