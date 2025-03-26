@@ -31,10 +31,8 @@ let registeredPackets: [Int16 : any RegisteredPacket.Type] = [
     PACKET_HC_NOTIFY_ZONESVR.packetType: PACKET_HC_NOTIFY_ZONESVR.self, // 0x71, 0xac5
     HEADER_HC_NOTIFY_ACCESSIBLE_MAPNAME: PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self,  // 0x840
 
-    PACKET_ZC_AID.packetType: PACKET_ZC_AID.self,
-    PACKET_ZC_ALL_ACH_LIST.packetType: PACKET_ZC_ALL_ACH_LIST.self,
-    PACKET_ZC_ACH_UPDATE.packetType: PACKET_ZC_ACH_UPDATE.self,
-    PACKET_ZC_MAIL_RECEIVE.packetType: PACKET_ZC_MAIL_RECEIVE.self,
+    HEADER_ZC_AID: PACKET_ZC_AID.self,
+    HEADER_ZC_MAIL_RECEIVE: PACKET_ZC_MAIL_RECEIVE.self,
     HEADER_ZC_NPC_CHAT: PACKET_ZC_NPC_CHAT.self,
     HEADER_ZC_RECOVER_PENALTY_OVERWEIGHT: PACKET_ZC_RECOVER_PENALTY_OVERWEIGHT.self,
     HEADER_ZC_SEND_SWAP_EQUIPITEM_INFO: PACKET_ZC_SEND_SWAP_EQUIPITEM_INFO.self,
@@ -373,6 +371,8 @@ let registeredPackets: [Int16 : any RegisteredPacket.Type] = [
     packet_header_inventorylistnormalType: packet_itemlist_normal.self,
     packet_header_inventorylistequipType: packet_itemlist_equip.self,
     packet_header_maptypeproperty2Type: PACKET_ZC_MAPPROPERTY_R2.self,
+    packet_header_achievementListType: PACKET_ZC_ALL_ACH_LIST.self,
+    packet_header_achievementUpdateType: PACKET_ZC_ACH_UPDATE.self,
     packet_header_rodexicon: PACKET_ZC_NOTIFY_UNREADMAIL.self,
     packet_header_sendLookType: PACKET_ZC_SPRITE_CHANGE.self,
 ]

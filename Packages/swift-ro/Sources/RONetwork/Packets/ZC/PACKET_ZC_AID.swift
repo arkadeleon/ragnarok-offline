@@ -7,20 +7,14 @@
 
 import ROCore
 
-public struct PACKET_ZC_AID: DecodablePacket, Sendable {
-    public static var packetType: Int16 {
-        0x283
-    }
+public let HEADER_ZC_AID: Int16 = 0x283
 
-    public var packetLength: Int16 {
-        2 + 4
-    }
-
+public struct PACKET_ZC_AID: BinaryDecodable, Sendable {
+    public var packetType: Int16
     public var accountID: UInt32
 
     public init(from decoder: BinaryDecoder) throws {
-        try decoder.decodePacketType(Self.self)
-
+        packetType = try decoder.decode(Int16.self)
         accountID = try decoder.decode(UInt32.self)
     }
 }

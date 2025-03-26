@@ -7,23 +7,17 @@
 
 import ROCore
 
+public let HEADER_ZC_MAIL_RECEIVE: Int16 = 0x24a
+
 /// See `clif_Mail_new`
-public struct PACKET_ZC_MAIL_RECEIVE: DecodablePacket, Sendable {
-    public static var packetType: Int16 {
-        0x24a
-    }
-
-    public var packetLength: Int16 {
-        2 + 4 + 40 + 24
-    }
-
+public struct PACKET_ZC_MAIL_RECEIVE: BinaryDecodable, Sendable {
+    public var packetType: Int16
     public var mailID: UInt32
     public var title: String
     public var sender: String
 
     public init(from decoder: BinaryDecoder) throws {
-        try decoder.decodePacketType(Self.self)
-
+        packetType = try decoder.decode(Int16.self)
         mailID = try decoder.decode(UInt32.self)
         title = try decoder.decode(String.self, lengthOfBytes: 40)
         sender = try decoder.decode(String.self, lengthOfBytes: 24)
