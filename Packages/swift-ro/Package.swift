@@ -61,6 +61,7 @@ let package = Package(
                 .product(name: "ryml", package: "swift-rathena"),
                 "DataCompression",
                 "ROConstants",
+                "ROCore",
             ],
             swiftSettings: [
                 .interoperabilityMode(.Cxx),
