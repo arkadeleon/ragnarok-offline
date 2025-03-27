@@ -5,8 +5,13 @@
 //  Created by Leon Li on 2025/2/22.
 //
 
+import Foundation
 import RealityKit
 import RORendering
+
+enum SpriteAnimationError: Error {
+    case actionIndexOutOfRange
+}
 
 public class SpriteEntity: Entity {
     public required init() {
@@ -29,10 +34,33 @@ public class SpriteEntity: Entity {
 
     public func runPlayerAction(_ actionType: PlayerActionType, direction: BodyDirection) {
         let actionIndex = actionType.rawValue * 8 + direction.rawValue
-        runAction(actionIndex)
+
+        generateModel(forActionAt: actionIndex)
+
+        if let animation = try? generateAnimation(forActionAt: actionIndex) {
+            playAnimation(animation)
+        }
     }
 
     public func runAction(_ actionIndex: Int) {
+        generateModel(forActionAt: actionIndex)
+
+        if let animation = try? generateAnimation(forActionAt: actionIndex) {
+            playAnimation(animation)
+        }
+    }
+
+    public func walk(to target: Transform, direction: BodyDirection, duration: TimeInterval) {
+        let actionIndex = PlayerActionType.walk.rawValue * 8 + direction.rawValue
+
+        generateModel(forActionAt: actionIndex)
+
+        if let walkAnimation = try? generateWalkAnimation(withTarget: target, direction: direction, duration: duration) {
+            playAnimation(walkAnimation)
+        }
+    }
+
+    private func generateModel(forActionAt actionIndex: Int) {
         guard let spriteComponent = components[SpriteComponent.self],
               actionIndex < spriteComponent.actions.count else {
             return
@@ -65,23 +93,48 @@ public class SpriteEntity: Entity {
             shapes: [.generateBox(width: width, height: height, depth: 0)]
         )
         components.set(collisionComponent)
+    }
 
+    private func generateAnimation(forActionAt actionIndex: Int, trimDuration: TimeInterval? = nil) throws -> AnimationResource {
+        guard let spriteComponent = components[SpriteComponent.self],
+              actionIndex < spriteComponent.actions.count else {
+            throw SpriteAnimationError.actionIndexOutOfRange
+        }
+
+        let action = spriteComponent.actions[actionIndex]
+
+        let spriteAnimation = try AnimationResource.generateSpriteAnimation(for: action, trimDuration: trimDuration)
+        return spriteAnimation
+    }
+
+    private func generateWalkAnimation(withTarget target: Transform, direction: BodyDirection, duration: TimeInterval) throws -> AnimationResource {
+        let actionIndex = PlayerActionType.walk.rawValue * 8 + direction.rawValue
+        let spriteAnimation = try generateAnimation(forActionAt: actionIndex, trimDuration: duration)
+
+        let moveAction = FromToByAction(to: target, timing: .linear)
+        let moveAnimation = try AnimationResource.makeActionAnimation(for: moveAction, duration: duration, bindTarget: .transform)
+
+        let animation = try AnimationResource.group(with: [spriteAnimation, moveAnimation])
+        return animation
+    }
+}
+
+extension AnimationResource {
+    static func generateSpriteAnimation(for action: SpriteAction, trimDuration: TimeInterval? = nil) throws -> AnimationResource {
         let frames: [SIMD2<Float>] = (0..<action.frameCount).map { frameIndex in
             [Float(frameIndex) / Float(action.frameCount), 0]
         }
-        let bindTarget = BindTarget.material(0).textureCoordinate.offset
         let animationDefinition = SampledAnimation(
             frames: Array(repeating: frames, count: 100).flatMap({ $0 }),
             name: "action",
             tweenMode: .hold,
             frameInterval: action.frameInterval,
             isAdditive: false,
-            bindTarget: bindTarget,
-            repeatMode: .repeat
+            bindTarget: .material(0).textureCoordinate.offset,
+            repeatMode: .repeat,
+            trimDuration: trimDuration
         )
-
-        if let animation = try? AnimationResource.generate(with: animationDefinition) {
-            playAnimation(animation)
-        }
+        let animation = try AnimationResource.generate(with: animationDefinition)
+        return animation
     }
 }

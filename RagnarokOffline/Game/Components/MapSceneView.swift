@@ -55,7 +55,7 @@ struct MapSceneView: View {
 
             player.name = "player"
             player.transform = transform(for: position)
-            player.runPlayerAction(.walk, direction: .south)
+            player.runPlayerAction(.idle, direction: .south)
 
             root.addChild(player)
 
@@ -100,15 +100,24 @@ struct MapSceneView: View {
                     logger.info("Tap sprite entity: \(event.entity.name)")
                 }
         )
+        .onAppear {
+            FromToByAction<Transform>.subscribe(to: .terminated) { event in
+                if let spriteEntity = event.targetEntity as? SpriteEntity {
+                    spriteEntity.runAction(0)
+                }
+            }
+        }
         .onDisappear {
+            FromToByAction<Transform>.unsubscribeAll()
+
             root.stopAllAudio()
         }
         .onReceive(mapSession.publisher(for: PlayerEvents.Moved.self)) { event in
             let transform = transform(for: event.toPosition)
-            player.move(to: transform, relativeTo: nil, duration: 1)
+            player.walk(to: transform, direction: .south, duration: 1)
 
             let cameraTransform = cameraTransform(for: event.toPosition)
-            camera.move(to: cameraTransform, relativeTo: nil, duration: 1)
+            camera.move(to: cameraTransform, relativeTo: nil, duration: 1, timingFunction: .linear)
 
             tileEntityManager.updateTileEntities(for: event.toPosition)
         }
@@ -127,15 +136,15 @@ struct MapSceneView: View {
             }
         }
         .onReceive(mapSession.publisher(for: MapObjectEvents.Moved.self)) { event in
-            if let entity = root.findEntity(named: "\(event.objectID)") {
+            if let entity = root.findEntity(named: "\(event.objectID)") as? SpriteEntity {
                 let transform = transform(for: event.toPosition)
-                entity.move(to: transform, relativeTo: nil, duration: 1)
+                entity.walk(to: transform, direction: .south, duration: 1)
             }
         }
         .onReceive(mapSession.publisher(for: MapObjectEvents.Stopped.self)) { event in
-            if let entity = root.findEntity(named: "\(event.objectID)") {
+            if let entity = root.findEntity(named: "\(event.objectID)") as? SpriteEntity {
                 let transform = transform(for: event.position)
-                entity.move(to: transform, relativeTo: nil)
+                entity.walk(to: transform, direction: .south, duration: 0)
             }
         }
         .onReceive(mapSession.publisher(for: MapObjectEvents.Vanished.self)) { event in
