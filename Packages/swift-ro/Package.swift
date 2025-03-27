@@ -109,11 +109,7 @@ let package = Package(
                 .product(name: "rAthenaChar", package: "swift-rathena"),
                 .product(name: "rAthenaMap", package: "swift-rathena"),
                 .product(name: "rAthenaResources", package: "swift-rathena"),
-                "RODatabase",
                 "ROGame",
-            ],
-            swiftSettings: [
-                .interoperabilityMode(.Cxx),
             ]),
         .target(
             name: "RONetwork",
