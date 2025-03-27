@@ -21,13 +21,13 @@ extension File {
     }
 
     static var previewGAT: File {
-        let url = Bundle.main.resourceURL!.appending(path: "data/06guild_r.gat")
+        let url = Bundle.main.resourceURL!.appending(path: "data/iz_int.gat")
         let file = File(node: .regularFile(url))
         return file
     }
 
     static var previewGND: File {
-        let url = Bundle.main.resourceURL!.appending(path: "data/06guild_r.gnd")
+        let url = Bundle.main.resourceURL!.appending(path: "data/iz_int.gnd")
         let file = File(node: .regularFile(url))
         return file
     }
@@ -39,7 +39,7 @@ extension File {
     }
 
     static var previewRSW: File {
-        let url = Bundle.main.resourceURL!.appending(path: "data/06guild_r.rsw")
+        let url = Bundle.main.resourceURL!.appending(path: "data/iz_int.rsw")
         let file = File(node: .regularFile(url))
         return file
     }

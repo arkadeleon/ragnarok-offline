@@ -82,4 +82,11 @@ extension GAT.Tile {
     public var averageAltitude: Float {
         (bottomLeftAltitude + bottomRightAltitude + topLeftAltitude + topRightAltitude) / 4
     }
+
+    public var isWalkable: Bool {
+        switch type {
+        case .walkable, .walkable2, .walkable3: true
+        default: false
+        }
+    }
 }

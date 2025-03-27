@@ -18,7 +18,8 @@ enum GameScene {
     case charSelect(_ chars: [CharInfo])
     case charMake(_ slot: UInt8)
     case mapLoading
-    case map(_ mapName: String, _ world: WorldResource, _ position: SIMD2<Int16>)
+    case map2D(_ scene: MapScene2D)
+    case map3D(_ mapName: String, _ world: WorldResource, _ position: SIMD2<Int16>)
 }
 
 @Observable
@@ -142,7 +143,11 @@ final class GameSession {
                 let worldPath: ResourcePath = ["data", mapName]
                 let world = try await ResourceManager.default.world(at: worldPath)
 
-                self.scene = .map(mapName, world, event.position)
+//                let scene = MapScene2D(mapName: mapName, world: world, position: event.position)
+//                scene.mapSceneDelegate = self
+//                self.scene = .map2D(scene)
+
+                self.scene = .map3D(mapName, world, event.position)
             }
         }
         .store(in: &subscriptions)
@@ -151,27 +156,20 @@ final class GameSession {
 
         self.mapSession = mapSession
     }
+}
 
-//    private func loadMap(_ event: MapEvents.Changed) async throws {
-//        let mapName = String(event.mapName.dropLast(4))
-//
-//        if let map = try await MapDatabase.renewal.map(forName: mapName),
-//           let grid = map.grid() {
-//            Task { @MainActor in
-//                let mapScene = GameMapScene(name: mapName, grid: grid, position: event.position)
-//                mapScene.positionTapHandler = { [unowned self] position in
-//                    Task {
-//                        if let object = await self.storage.mapObjects.values.first(where: { $0.position == position && $0.effectState != .cloak }) {
-//                            self.mapSession?.talkToNPC(npcID: object.id)
-//                        } else {
-//                            self.mapSession?.requestMove(x: position.x, y: position.y)
-//                        }
-//                    }
-//                }
-//                self.mapScene = mapScene
-//
-//                mapSession?.notifyMapLoaded()
-//            }
-//        }
-//    }
+extension GameSession: MapSceneDelegate {
+    func mapSceneDidFinishLoading(_ scene: any MapSceneProtocol) {
+        mapSession?.notifyMapLoaded()
+    }
+
+    func mapScene(_ scene: any MapSceneProtocol, didTapPosition position: SIMD2<Int16>) {
+        Task {
+            if let object = await self.storage.mapObjects.values.first(where: { $0.position == position && $0.effectState != .cloak }) {
+                self.mapSession?.talkToNPC(npcID: object.id)
+            } else {
+                self.mapSession?.requestMove(x: position.x, y: position.y)
+            }
+        }
+    }
 }

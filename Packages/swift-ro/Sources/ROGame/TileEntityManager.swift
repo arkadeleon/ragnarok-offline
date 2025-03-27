@@ -48,7 +48,7 @@ public class TileEntityManager {
                     let altitude = tile.averageAltitude / 5
                     tileEntity.position = [Float(x) + 0.5, -altitude, -(Float(y) + 0.5)]
 
-                    if tile.type == .walkable || tile.type == .walkable2 || tile.type == .walkable3 {
+                    if tile.isWalkable {
                         tileEntity.isEnabled = true
                     } else {
                         tileEntity.isEnabled = false
@@ -80,7 +80,7 @@ public class TileEntityManager {
                     let altitude = tile.averageAltitude / 5
                     tileEntity.position = [Float(x) + 0.5, -altitude, -(Float(y) + 0.5)]
 
-                    if tile.type == .walkable || tile.type == .walkable2 || tile.type == .walkable3 {
+                    if tile.isWalkable {
                         tileEntity.isEnabled = true
                     } else {
                         tileEntity.isEnabled = false

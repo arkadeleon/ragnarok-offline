@@ -1,26 +1,29 @@
 //
-//  GameMapScene.swift
+//  MapScene2D.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/12/7.
 //
 
 import ROConstants
-import RODatabase
 import ROGame
+import RORendering
 import SpriteKit
 
-class GameMapScene: SKScene {
-    var positionTapHandler: ((SIMD2<Int16>) -> Void)?
+class MapScene2D: SKScene, MapSceneProtocol {
+    weak var mapSceneDelegate: (any MapSceneDelegate)?
 
     private let tileSize = 20
 
-    private let grid: Map.Grid
+    private let mapName: String
+    private let world: WorldResource
+
     private let playerNode: SKNode
     private var objectNodes: [UInt32 : SKNode] = [:]
 
-    init(name: String, grid: Map.Grid, position: SIMD2<Int16>) {
-        self.grid = grid
+    init(mapName: String, world: WorldResource, position: SIMD2<Int16>) {
+        self.mapName = mapName
+        self.world = world
 
         let playerNode = SKSpriteNode()
         playerNode.position = CGPoint(x: Int(position.x) * tileSize, y: Int(position.y) * tileSize)
@@ -49,9 +52,12 @@ class GameMapScene: SKScene {
         addChild(cameraNode)
         self.camera = cameraNode
 
-        for y in 0..<grid.ys {
-            for x in 0..<grid.xs {
-                if grid.cell(atX: x, y: y).isWalkable {
+        let width = Int(world.gat.width)
+        let height = Int(world.gat.height)
+
+        for y in 0..<width {
+            for x in 0..<height {
+                if world.gat.tile(atX: x, y: y).isWalkable {
                     let cell = SKSpriteNode()
                     cell.position = CGPoint(x: Int(x) * tileSize, y: Int(y) * tileSize)
                     cell.zPosition = 0
@@ -64,6 +70,8 @@ class GameMapScene: SKScene {
         }
 
         addChild(playerNode)
+
+        mapSceneDelegate?.mapSceneDidFinishLoading(self)
     }
 
     #if os(macOS)
@@ -72,7 +80,7 @@ class GameMapScene: SKScene {
         let x = Int16(location.x / CGFloat(tileSize))
         let y = Int16(location.y / CGFloat(tileSize))
 
-        positionTapHandler?([x, y])
+        mapSceneDelegate?.mapScene(self, didTapPosition: [x, y])
     }
     #else
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -80,13 +88,15 @@ class GameMapScene: SKScene {
             let x = Int16(location.x / CGFloat(tileSize))
             let y = Int16(location.y / CGFloat(tileSize))
 
-            positionTapHandler?([x, y])
+            mapSceneDelegate?.mapScene(self, didTapPosition: [x, y])
         }
     }
     #endif
 
-    func movePlayer(from fromPosition: SIMD2<Int16>, to toPosition: SIMD2<Int16>) {
-        let location = CGPoint(x: Int(toPosition.x) * tileSize, y: Int(toPosition.y) * tileSize)
+    // MARK: - MapSceneProtocol
+
+    func onPlayerMoved(_ event: PlayerEvents.Moved) {
+        let location = CGPoint(x: Int(event.toPosition.x) * tileSize, y: Int(event.toPosition.y) * tileSize)
 
         let playerAction = SKAction.move(to: location, duration: 0.2)
         playerNode.run(playerAction)
@@ -95,42 +105,42 @@ class GameMapScene: SKScene {
         camera?.run(cameraAction)
     }
 
-    func addObject(_ object: MapObject) {
+    func onMapObjectSpawned(_ event: MapObjectEvents.Spawned) {
         let objectNode = SKLabelNode()
-        objectNode.position = CGPoint(x: Int(object.position.x) * tileSize, y: Int(object.position.y) * tileSize)
+        objectNode.position = CGPoint(x: Int(event.object.position.x) * tileSize, y: Int(event.object.position.y) * tileSize)
         objectNode.zPosition = 1
-        objectNode.isHidden = (object.effectState == .cloak)
-        objectNode.text = object.name
-        objectNodes[object.id] = objectNode
+        objectNode.isHidden = (event.object.effectState == .cloak)
+        objectNode.text = event.object.name
+        objectNodes[event.object.id] = objectNode
         addChild(objectNode)
     }
 
-    func moveObject(_ objectID: UInt32, from fromPosition: SIMD2<Int16>, to toPosition: SIMD2<Int16>) {
-        if let objectNode = objectNodes[objectID] {
-            let location = CGPoint(x: Int(toPosition.x) * tileSize, y: Int(toPosition.y) * tileSize)
+    func onMapObjectMoved(_ event: MapObjectEvents.Moved) {
+        if let objectNode = objectNodes[event.objectID] {
+            let location = CGPoint(x: Int(event.toPosition.x) * tileSize, y: Int(event.toPosition.y) * tileSize)
             let action = SKAction.move(to: location, duration: 0.2)
             objectNode.run(action)
         }
     }
 
-    func moveObject(_ objectID: UInt32, to position: SIMD2<Int16>) {
-        if let objectNode = objectNodes[objectID] {
-            let location = CGPoint(x: Int(position.x) * tileSize, y: Int(position.y) * tileSize)
+    func onMapObjectStopped(_ event: MapObjectEvents.Stopped) {
+        if let objectNode = objectNodes[event.objectID] {
+            let location = CGPoint(x: Int(event.position.x) * tileSize, y: Int(event.position.y) * tileSize)
             let action = SKAction.move(to: location, duration: 0)
             objectNode.run(action)
         }
     }
 
-    func removeObject(_ objectID: UInt32) {
-        if let objectNode = objectNodes[objectID] {
+    func onMapObjectVanished(_ event: MapObjectEvents.Vanished) {
+        if let objectNode = objectNodes[event.objectID] {
             objectNode.removeFromParent()
-            objectNodes.removeValue(forKey: objectID)
+            objectNodes.removeValue(forKey: event.objectID)
         }
     }
 
-    func updateObject(_ objectID: UInt32, effectState: StatusChangeOption) {
-        if let objectNode = objectNodes[objectID] {
-            objectNode.isHidden = (effectState == .cloak)
+    func onMapObjectStateChanged(_ event: MapObjectEvents.StateChanged) {
+        if let objectNode = objectNodes[event.objectID] {
+            objectNode.isHidden = (event.effectState == .cloak)
         }
     }
 }

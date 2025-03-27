@@ -30,8 +30,9 @@ struct GNDFilePreviewView: View {
         let gatData: Data
         switch file.node {
         case .regularFile(let url):
-            let gatPath = url.deletingPathExtension().path().appending(".gat")
-            gatData = try Data(contentsOf: URL(filePath: gatPath))
+            var gatURL = url.deletingPathExtension()
+            gatURL.appendPathExtension("gat")
+            gatData = try Data(contentsOf: gatURL)
         case .grfEntry(let grf, let path):
             let gatPath = path.replacingExtension("gat")
             gatData = try grf.contentsOfEntry(at: gatPath)
