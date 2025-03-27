@@ -110,7 +110,7 @@ struct CharSelectView: View {
 
                         if let selectedSlot, selectedChar == nil {
                             GameButton("btn_make.bmp") {
-                                gameSession.phase = .charMake(selectedSlot)
+                                gameSession.scene = .charMake(selectedSlot)
                             }
                         }
 

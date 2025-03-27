@@ -7,14 +7,12 @@
 
 import Combine
 import Observation
-import RODatabase
 import ROGame
 import RONetwork
 import RORendering
 import ROResources
-import SwiftUI
 
-enum GamePhase {
+enum GameScene {
     case login
     case charServerList(_ charServers: [CharServerInfo])
     case charSelect(_ chars: [CharInfo])
@@ -28,7 +26,7 @@ final class GameSession {
     let storage = SessionStorage()
 
     @MainActor
-    var phase: GamePhase = .login
+    var scene: GameScene = .login
 
     @ObservationIgnored
     var loginSession: LoginSession?
@@ -63,7 +61,7 @@ final class GameSession {
         let loginSession = LoginSession(storage: storage, address: address, port: port)
 
         loginSession.subscribe(to: LoginEvents.Accepted.self) { [unowned self] event in
-            self.phase = .charServerList(event.charServers)
+            self.scene = .charServerList(event.charServers)
         }
         .store(in: &subscriptions)
 
@@ -90,7 +88,7 @@ final class GameSession {
         charSession.subscribe(to: CharServerEvents.Accepted.self) { [unowned self] event in
             Task {
                 let chars = await self.storage.chars
-                self.phase = .charSelect(chars)
+                self.scene = .charSelect(chars)
             }
         }
         .store(in: &subscriptions)
@@ -111,7 +109,7 @@ final class GameSession {
         charSession.subscribe(to: CharEvents.MakeAccepted.self) { [unowned self] event in
             Task {
                 let chars = await self.storage.chars
-                self.phase = .charSelect(chars)
+                self.scene = .charSelect(chars)
             }
         }
         .store(in: &subscriptions)
@@ -138,13 +136,13 @@ final class GameSession {
 
         mapSession.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
             let mapName = String(event.mapName.dropLast(4))
-            self.phase = .mapLoading
+            self.scene = .mapLoading
 
             Task {
                 let worldPath: ResourcePath = ["data", mapName]
                 let world = try await ResourceManager.default.world(at: worldPath)
 
-                self.phase = .map(mapName, world, event.position)
+                self.scene = .map(mapName, world, event.position)
             }
         }
         .store(in: &subscriptions)

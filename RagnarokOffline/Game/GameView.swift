@@ -12,7 +12,7 @@ struct GameView: View {
 
     var body: some View {
         ZStack {
-            switch gameSession.phase {
+            switch gameSession.scene {
             case .login:
                 LoginView(gameSession: gameSession)
             case .charServerList(let charServers):
