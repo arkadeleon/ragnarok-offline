@@ -8,6 +8,7 @@
 import ROConstants
 import ROGame
 
+@MainActor
 protocol MapSceneProtocol {
     func onPlayerMoved(_ event: PlayerEvents.Moved)
 

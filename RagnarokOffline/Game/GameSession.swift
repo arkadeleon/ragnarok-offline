@@ -19,7 +19,7 @@ enum GameScene {
     case charMake(_ slot: UInt8)
     case mapLoading
     case map2D(_ scene: MapScene2D)
-    case map3D(_ mapName: String, _ world: WorldResource, _ position: SIMD2<Int16>)
+    case map3D(_ scene: MapScene3D)
 }
 
 @Observable
@@ -135,7 +135,7 @@ final class GameSession {
     private func startMapSession(_ mapServer: MapServerInfo) {
         let mapSession = MapSession(storage: storage, mapServer: mapServer)
 
-        mapSession.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
+        mapSession.subscribe(to: MapEvents.Changed.self) { event in
             let mapName = String(event.mapName.dropLast(4))
             self.scene = .mapLoading
 
@@ -147,7 +147,9 @@ final class GameSession {
 //                scene.mapSceneDelegate = self
 //                self.scene = .map2D(scene)
 
-                self.scene = .map3D(mapName, world, event.position)
+                let scene = MapScene3D(mapName: mapName, world: world, position: event.position)
+                scene.mapSceneDelegate = self
+                self.scene = .map3D(scene)
             }
         }
         .store(in: &subscriptions)
