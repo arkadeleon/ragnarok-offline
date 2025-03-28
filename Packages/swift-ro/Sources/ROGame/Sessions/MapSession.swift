@@ -15,6 +15,8 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
 
+    var pendingNPCDialog: NPCDialog?
+
     private var timerSubscription: AnyCancellable?
 
     public var eventPublisher: AnyPublisher<any Event, Never> {

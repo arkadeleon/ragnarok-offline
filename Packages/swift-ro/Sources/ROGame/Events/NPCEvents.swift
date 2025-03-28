@@ -8,7 +8,7 @@
 import RONetwork
 
 public enum NPCEvents {
-    public struct DialogUpdated: Event {
+    public struct DialogReceived: Event {
         public let dialog: NPCDialog
     }
 

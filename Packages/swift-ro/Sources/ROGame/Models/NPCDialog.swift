@@ -14,9 +14,9 @@ public struct NPCDialog: Sendable {
     }
 
     public let npcID: UInt32
-    public let content: Content
+    public let content: NPCDialog.Content
 
-    public init(npcID: UInt32, content: Content) {
+    public init(npcID: UInt32, content: NPCDialog.Content) {
         self.npcID = npcID
         self.content = content
     }

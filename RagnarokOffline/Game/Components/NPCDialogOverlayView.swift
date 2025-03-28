@@ -20,12 +20,15 @@ struct NPCDialogOverlayView: View {
                 case .message(let message, let hasNextMessage):
                     NPCMessageDialogView(message: message, hasNextMessage: hasNextMessage) {
                         mapSession.requestNextMessage(npcID: dialog.npcID)
+                        self.dialog = nil
                     } closeAction: {
                         mapSession.closeDialog(npcID: dialog.npcID)
+                        self.dialog = nil
                     }
                 case .menu(let menu):
                     NPCMenuDialogView(menu: menu) { i in
                         mapSession.selectMenu(npcID: dialog.npcID, select: UInt8(i))
+                        self.dialog = nil
                     }
                 case .numberInput:
                     EmptyView()
@@ -34,7 +37,7 @@ struct NPCDialogOverlayView: View {
                 }
             }
         }
-        .onReceive(mapSession.publisher(for: NPCEvents.DialogUpdated.self)) { event in
+        .onReceive(mapSession.publisher(for: NPCEvents.DialogReceived.self)) { event in
             dialog = event.dialog
         }
         .onReceive(mapSession.publisher(for: NPCEvents.DialogClosed.self)) { event in
