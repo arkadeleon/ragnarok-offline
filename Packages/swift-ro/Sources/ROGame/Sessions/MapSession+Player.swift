@@ -16,7 +16,7 @@ extension MapSession {
             let fromPosition = SIMD2(moveData.x0, moveData.y0)
             let toPosition = SIMD2(moveData.x1, moveData.y1)
 
-            await self.storage.updatePlayerPosition(toPosition)
+            self.player.position = toPosition
 
             let event = PlayerEvents.Moved(fromPosition: fromPosition, toPosition: toPosition)
             self.postEvent(event)
@@ -29,13 +29,10 @@ extension MapSession {
         }
 
         // See `clif_initialstatus`
-        subscription.subscribe(to: PACKET_ZC_STATUS.self) { packet in
-            await self.storage.updatePlayerStatus(with: packet)
-
-            if let status = await self.storage.player?.status {
-                let event = PlayerEvents.StatusChanged(status: status)
-                self.postEvent(event)
-            }
+        subscription.subscribe(to: PACKET_ZC_STATUS.self) { [unowned self] packet in
+            self.player.status.update(with: packet)
+            let event = PlayerEvents.StatusChanged(status: self.player.status)
+            self.postEvent(event)
         }
 
         // See `clif_par_change`
@@ -44,12 +41,9 @@ extension MapSession {
                 return
             }
 
-            await self.storage.updatePlayerStatusProperty(sp, value: Int(packet.count))
-
-            if let status = await self.storage.player?.status {
-                let event = PlayerEvents.StatusChanged(status: status)
-                self.postEvent(event)
-            }
+            self.player.status.update(property: sp, value: Int(packet.count))
+            let event = PlayerEvents.StatusChanged(status: self.player.status)
+            self.postEvent(event)
         }
 
         // See `clif_longpar_change`
@@ -58,12 +52,9 @@ extension MapSession {
                 return
             }
 
-            await self.storage.updatePlayerStatusProperty(sp, value: Int(packet.amount))
-
-            if let status = await self.storage.player?.status {
-                let event = PlayerEvents.StatusChanged(status: status)
-                self.postEvent(event)
-            }
+            self.player.status.update(property: sp, value: Int(packet.amount))
+            let event = PlayerEvents.StatusChanged(status: self.player.status)
+            self.postEvent(event)
         }
 
         // See `clif_longlongpar_change`
@@ -72,12 +63,9 @@ extension MapSession {
                 return
             }
 
-            await self.storage.updatePlayerStatusProperty(sp, value: Int(packet.amount))
-
-            if let status = await self.storage.player?.status {
-                let event = PlayerEvents.StatusChanged(status: status)
-                self.postEvent(event)
-            }
+            self.player.status.update(property: sp, value: Int(packet.amount))
+            let event = PlayerEvents.StatusChanged(status: self.player.status)
+            self.postEvent(event)
         }
 
         // See `clif_zc_status_change`
@@ -86,12 +74,9 @@ extension MapSession {
                 return
             }
 
-            await self.storage.updatePlayerStatusProperty(sp, value: Int(packet.value))
-
-            if let status = await self.storage.player?.status {
-                let event = PlayerEvents.StatusChanged(status: status)
-                self.postEvent(event)
-            }
+            self.player.status.update(property: sp, value: Int(packet.value))
+            let event = PlayerEvents.StatusChanged(status: self.player.status)
+            self.postEvent(event)
         }
 
         // See `clif_couplestatus`
@@ -100,12 +85,9 @@ extension MapSession {
                 return
             }
 
-            await self.storage.updatePlayerStatusProperty(sp, value: Int(packet.defaultStatus), value2: Int(packet.plusStatus))
-
-            if let status = await self.storage.player?.status {
-                let event = PlayerEvents.StatusChanged(status: status)
-                self.postEvent(event)
-            }
+            self.player.status.update(property: sp, value: Int(packet.defaultStatus), value2: Int(packet.plusStatus))
+            let event = PlayerEvents.StatusChanged(status: self.player.status)
+            self.postEvent(event)
         }
 
         // See `clif_attackrange`

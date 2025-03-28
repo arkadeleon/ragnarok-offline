@@ -121,7 +121,7 @@ final class GameSessionTests: XCTestCase {
 
         sleep(1)
 
-        let player = await storage.player!
+        let player = mapSession.player
         XCTAssertEqual(player.status.str, 1)
         XCTAssertEqual(player.status.agi, 1)
         XCTAssertEqual(player.status.vit, 1)

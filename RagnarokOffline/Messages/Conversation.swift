@@ -29,6 +29,9 @@ class Conversation {
     var scene: ConversationScene = .login
 
     @MainActor
+    var playerPosition: SIMD2<Int16>?
+
+    @MainActor
     var availableCommands: [CommandMessage.Command] {
         switch scene {
         case .login:
@@ -94,19 +97,19 @@ class Conversation {
 
             charSession?.selectChar(slot: slot)
         case .moveUp:
-            if let position = await storage.player?.position {
+            if let position = playerPosition {
                 mapSession?.requestMove(x: position.x, y: position.y + 1)
             }
         case .moveDown:
-            if let position = await storage.player?.position {
+            if let position = playerPosition {
                 mapSession?.requestMove(x: position.x, y: position.y - 1)
             }
         case .moveLeft:
-            if let position = await storage.player?.position {
+            if let position = playerPosition {
                 mapSession?.requestMove(x: position.x - 1, y: position.y)
             }
         case .moveRight:
-            if let position = await storage.player?.position {
+            if let position = playerPosition {
                 mapSession?.requestMove(x: position.x + 1, y: position.y)
             }
         }
@@ -229,6 +232,7 @@ class Conversation {
         let mapSession = MapSession(storage: storage, mapServer: mapServer)
 
         mapSession.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
+            self.playerPosition = event.position
             self.messages.append(.serverText("Map changed: \(event.mapName), position: \(event.position)"))
 
             // Load map.
@@ -238,6 +242,7 @@ class Conversation {
         .store(in: &subscriptions)
 
         mapSession.subscribe(to: PlayerEvents.Moved.self) { [unowned self] event in
+            self.playerPosition = event.toPosition
             self.messages.append(.serverText("Player moved from \(event.fromPosition) to \(event.toPosition)"))
         }
         .store(in: &subscriptions)

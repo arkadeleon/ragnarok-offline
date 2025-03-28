@@ -15,6 +15,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
 
+    var player = Player()
     var pendingNPCDialog: NPCDialog?
 
     private var timerSubscription: AnyCancellable?
@@ -140,6 +141,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         // See `clif_changemap`
         subscription.subscribe(to: PACKET_ZC_NPCACK_MAPMOVE.self) { [unowned self] packet in
             let position = SIMD2(Int16(packet.xPos), Int16(packet.yPos))
+            self.player.position = position
 
             await self.storage.updateMap(with: packet.mapName, position: position)
 
