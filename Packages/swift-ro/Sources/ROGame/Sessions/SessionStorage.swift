@@ -26,8 +26,6 @@ final public actor SessionStorage {
 
     public private(set) var player: Player?
 
-    public private(set) var mapObjects: [UInt32 : MapObject] = [:]
-
     public private(set) var npcDialog: NPCDialog?
 
     public init() {
@@ -68,7 +66,6 @@ final public actor SessionStorage {
     func updateMap(with mapName: String, position: SIMD2<Int16>) {
         self.mapName = mapName
         player?.position = position
-        mapObjects.removeAll()
         npcDialog = nil
     }
 
@@ -88,40 +85,6 @@ final public actor SessionStorage {
 
     func updatePlayerStatusProperty(_ sp: StatusProperty, value: Int, value2: Int) {
         player?.status.update(property: sp, value: value, value2: value2)
-    }
-
-    // MARK: - Map Objects
-
-    @discardableResult
-    func updateMapObject(_ object: MapObject) -> MapObject? {
-        mapObjects.updateValue(object, forKey: object.id)
-    }
-
-    @discardableResult
-    func removeMapObject(for objectID: UInt32) -> MapObject? {
-        mapObjects.removeValue(forKey: objectID)
-    }
-
-    func updateMapObjectPosition(_ objectID: UInt32, position: SIMD2<Int16>) -> MapObject? {
-        guard var object = mapObjects[objectID] else {
-            return nil
-        }
-
-        object.position = position
-        mapObjects[objectID] = object
-
-        return object
-    }
-
-    func updateMapObjectState(with packet: PACKET_ZC_STATE_CHANGE) -> MapObject? {
-        guard var object = mapObjects[packet.AID] else {
-            return nil
-        }
-
-        object.updateState(with: packet)
-        mapObjects[packet.AID] = object
-
-        return object
     }
 
     // MARK: - NPC Dialog

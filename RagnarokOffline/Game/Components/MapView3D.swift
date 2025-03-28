@@ -36,7 +36,8 @@ struct MapView3D: View {
                 .targetedToEntity(where: .has(TileComponent.self))
                 .onEnded { event in
                     if let tileComponent = event.entity.components[TileComponent.self] {
-                        mapSession.requestMove(x: Int16(tileComponent.x), y: Int16(tileComponent.y))
+                        let position = SIMD2(Int16(tileComponent.x), Int16(tileComponent.y))
+                        scene.mapSceneDelegate?.mapScene(scene, didTapTileAt: position)
                     }
                 }
         )
@@ -44,7 +45,9 @@ struct MapView3D: View {
             SpatialTapGesture()
                 .targetedToEntity(where: .has(SpriteComponent.self))
                 .onEnded { event in
-                    logger.info("Tap sprite entity: \(event.entity.name)")
+                    if let objectID = UInt32(event.entity.name) {
+                        scene.mapSceneDelegate?.mapScene(scene, didTapMapObjectWith: objectID)
+                    }
                 }
         )
         .overlay(alignment: .topLeading) {

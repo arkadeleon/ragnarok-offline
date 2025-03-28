@@ -16,11 +16,11 @@ public struct MapObject: Sendable {
     public let job: Int16
     public let name: String
 
-    public internal(set) var bodyState: StatusChangeOption1
-    public internal(set) var healthState: StatusChangeOption2
-    public internal(set) var effectState: StatusChangeOption
+    public let bodyState: StatusChangeOption1
+    public let healthState: StatusChangeOption2
+    public let effectState: StatusChangeOption
 
-    public internal(set) var position: SIMD2<Int16>
+    public let position: SIMD2<Int16>
 
     init(packet: packet_spawn_unit) {
         self.id = packet.AID
@@ -68,11 +68,5 @@ public struct MapObject: Sendable {
 
         let moveData = MoveData(data: packet.MoveData)
         self.position = [moveData.x1, moveData.y1]
-    }
-
-    mutating func updateState(with packet: PACKET_ZC_STATE_CHANGE) {
-        bodyState = StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none
-        healthState = StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none
-        effectState = StatusChangeOption(rawValue: Int(packet.effectState)) ?? .nothing
     }
 }

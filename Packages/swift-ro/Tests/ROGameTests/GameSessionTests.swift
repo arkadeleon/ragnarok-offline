@@ -147,16 +147,21 @@ final class GameSessionTests: XCTestCase {
             mapSession.notifyMapLoaded()
         }
 
+        var mapObjects: [MapObject] = []
+        for await event in mapSession.eventStream(for: MapObjectEvents.Spawned.self).prefix(4) {
+            mapObjects.append(event.object)
+        }
+
         // MARK: - Talk to wounded swordsman
 
         sleep(1)
 
-        let woundedSwordsman1 = await storage.mapObjects.values.first(where: { $0.job == 687 })!
+        let woundedSwordsman1 = mapObjects.first(where: { $0.job == 687 })!
         mapSession.talkToNPC(npcID: woundedSwordsman1.id)
 
         sleep(1)
 
-        let woundedSwordsman2 = await storage.mapObjects.values.first(where: { $0.job == 688 })!
+        let woundedSwordsman2 = mapObjects.first(where: { $0.job == 688 })!
         mapSession.talkToNPC(npcID: woundedSwordsman2.id)
 
         sleep(1)

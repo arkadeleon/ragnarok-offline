@@ -165,13 +165,11 @@ extension GameSession: MapSceneDelegate {
         mapSession?.notifyMapLoaded()
     }
 
-    func mapScene(_ scene: any MapSceneProtocol, didTapPosition position: SIMD2<Int16>) {
-        Task {
-            if let object = await self.storage.mapObjects.values.first(where: { $0.position == position && $0.effectState != .cloak }) {
-                self.mapSession?.talkToNPC(npcID: object.id)
-            } else {
-                self.mapSession?.requestMove(x: position.x, y: position.y)
-            }
-        }
+    func mapScene(_ scene: any MapSceneProtocol, didTapTileAt position: SIMD2<Int16>) {
+        mapSession?.requestMove(x: position.x, y: position.y)
+    }
+
+    func mapScene(_ scene: any MapSceneProtocol, didTapMapObjectWith objectID: UInt32) {
+        mapSession?.talkToNPC(npcID: objectID)
     }
 }

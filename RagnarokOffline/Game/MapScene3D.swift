@@ -151,24 +151,38 @@ class MapScene3D: MapSceneProtocol {
     }
 
     func onMapObjectSpawned(_ event: MapObjectEvents.Spawned) {
-        Task {
-            let jobID = UniformJobID(rawValue: Int(event.object.job))
-            if let monsterEntity = await monsterEntityManager.entity(forJobID: jobID) {
-                monsterEntity.name = "\(event.object.id)"
-                monsterEntity.transform = transform(for: event.object.position)
-                monsterEntity.isEnabled = (event.object.effectState != .cloak)
-
-                rootEntity.addChild(monsterEntity)
-
-                monsterEntity.runPlayerAction(.idle, direction: .south)
+        if let entity = rootEntity.findEntity(named: "\(event.object.id)") as? SpriteEntity {
+            let transform = transform(for: event.object.position)
+            entity.transform = transform
+        } else {
+            Task {
+                let jobID = UniformJobID(rawValue: Int(event.object.job))
+                if let monsterEntity = await monsterEntityManager.entity(forJobID: jobID) {
+                    monsterEntity.name = "\(event.object.id)"
+                    monsterEntity.transform = transform(for: event.object.position)
+                    monsterEntity.isEnabled = (event.object.effectState != .cloak)
+                    monsterEntity.runPlayerAction(.idle, direction: .south)
+                    rootEntity.addChild(monsterEntity)
+                }
             }
         }
     }
 
     func onMapObjectMoved(_ event: MapObjectEvents.Moved) {
-        if let entity = rootEntity.findEntity(named: "\(event.objectID)") as? SpriteEntity {
+        if let entity = rootEntity.findEntity(named: "\(event.object.id)") as? SpriteEntity {
             let transform = transform(for: event.toPosition)
             entity.walk(to: transform, direction: .south, duration: 1)
+        } else {
+            Task {
+                let jobID = UniformJobID(rawValue: Int(event.object.job))
+                if let monsterEntity = await monsterEntityManager.entity(forJobID: jobID) {
+                    monsterEntity.name = "\(event.object.id)"
+                    monsterEntity.transform = transform(for: event.toPosition)
+                    monsterEntity.isEnabled = (event.object.effectState != .cloak)
+                    monsterEntity.runPlayerAction(.idle, direction: .south)
+                    rootEntity.addChild(monsterEntity)
+                }
+            }
         }
     }
 

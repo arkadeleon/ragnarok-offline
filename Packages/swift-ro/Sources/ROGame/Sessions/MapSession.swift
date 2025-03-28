@@ -200,9 +200,6 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         // See `clif_spawn_unit`
         subscription.subscribe(to: packet_spawn_unit.self) { [unowned self] packet in
             let object = MapObject(packet: packet)
-
-            await self.storage.updateMapObject(object)
-
             let event = MapObjectEvents.Spawned(object: object)
             self.postEvent(event)
         }
@@ -210,9 +207,6 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         // See `clif_set_unit_idle`
         subscription.subscribe(to: packet_idle_unit.self) { [unowned self] packet in
             let object = MapObject(packet: packet)
-
-            await self.storage.updateMapObject(object)
-
             let event = MapObjectEvents.Spawned(object: object)
             self.postEvent(event)
         }
@@ -220,35 +214,26 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         // See `clif_set_unit_walking`
         subscription.subscribe(to: packet_unit_walking.self) { [unowned self] packet in
             let object = MapObject(packet: packet)
-            if let _ = await self.storage.updateMapObject(object) {
-                let moveData = MoveData(data: packet.MoveData)
-                let fromPosition = SIMD2(moveData.x0, moveData.y0)
-                let toPosition = SIMD2(moveData.x1, moveData.y1)
 
-                let event = MapObjectEvents.Moved(objectID: object.id, fromPosition: fromPosition, toPosition: toPosition)
-                self.postEvent(event)
-            } else {
-                let event = MapObjectEvents.Spawned(object: object)
-                self.postEvent(event)
-            }
+            let moveData = MoveData(data: packet.MoveData)
+            let fromPosition = SIMD2(moveData.x0, moveData.y0)
+            let toPosition = SIMD2(moveData.x1, moveData.y1)
+
+            let event = MapObjectEvents.Moved(object: object, fromPosition: fromPosition, toPosition: toPosition)
+            self.postEvent(event)
         }
 
         // See `clif_fixpos`
         subscription.subscribe(to: PACKET_ZC_STOPMOVE.self) { [unowned self] packet in
             let objectID = packet.AID
-            let position: SIMD2 = [Int16(packet.xPos), Int16(packet.yPos)]
-
-            if let _ = await self.storage.updateMapObjectPosition(objectID, position: position) {
-                let event = MapObjectEvents.Stopped(objectID: objectID, position: position)
-                self.postEvent(event)
-            }
+            let position: SIMD2<Int16> = [Int16(packet.xPos), Int16(packet.yPos)]
+            let event = MapObjectEvents.Stopped(objectID: objectID, position: position)
+            self.postEvent(event)
         }
 
         // See `clif_clearunit_single` and `clif_clearunit_area`
         subscription.subscribe(to: PACKET_ZC_NOTIFY_VANISH.self) { [unowned self] packet in
             let objectID = packet.gid
-            await self.storage.removeMapObject(for: objectID)
-
             let event = MapObjectEvents.Vanished(objectID: objectID)
             self.postEvent(event)
         }
@@ -267,15 +252,8 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_changeoption_target`
         subscription.subscribe(to: PACKET_ZC_STATE_CHANGE.self) { [unowned self] packet in
-            if let object = await self.storage.updateMapObjectState(with: packet) {
-                let event = MapObjectEvents.StateChanged(
-                    objectID: object.id,
-                    bodyState: object.bodyState,
-                    healthState: object.healthState,
-                    effectState: object.effectState
-                )
-                self.postEvent(event)
-            }
+            let event = MapObjectEvents.StateChanged(packet: packet)
+            self.postEvent(event)
         }
 
         // See `clif_damage` and `clif_takeitem` and `clif_sitting` and `clif_standing`
@@ -284,7 +262,6 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_skill_nodamage`
         subscription.subscribe(to: PACKET_ZC_USE_SKILL.self) { [unowned self] packet in
-
         }
 
         // See `clif_channel_msg` and `clif_messagecolor_target`

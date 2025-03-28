@@ -19,7 +19,7 @@ class MapScene2D: SKScene, MapSceneProtocol {
     private let world: WorldResource
 
     private let playerNode: SKNode
-    private var objectNodes: [UInt32 : SKNode] = [:]
+    private var mapObjects: [UInt32 : MapObject] = [:]
 
     init(mapName: String, world: WorldResource, position: SIMD2<Int16>) {
         self.mapName = mapName
@@ -58,13 +58,14 @@ class MapScene2D: SKScene, MapSceneProtocol {
         for y in 0..<width {
             for x in 0..<height {
                 if world.gat.tile(atX: x, y: y).isWalkable {
-                    let cell = SKSpriteNode()
-                    cell.position = CGPoint(x: Int(x) * tileSize, y: Int(y) * tileSize)
-                    cell.zPosition = 0
-                    cell.color = .green
-                    cell.anchorPoint = CGPoint(x: 0, y: 0)
-                    cell.size = CGSize(width: tileSize, height: tileSize)
-                    addChild(cell)
+                    let tileNode = SKSpriteNode()
+                    tileNode.name = "tile"
+                    tileNode.position = CGPoint(x: Int(x) * tileSize, y: Int(y) * tileSize)
+                    tileNode.zPosition = 0
+                    tileNode.color = .green
+                    tileNode.anchorPoint = CGPoint(x: 0, y: 0)
+                    tileNode.size = CGSize(width: tileSize, height: tileSize)
+                    addChild(tileNode)
                 }
             }
         }
@@ -77,18 +78,41 @@ class MapScene2D: SKScene, MapSceneProtocol {
     #if os(macOS)
     override func mouseDown(with event: NSEvent) {
         let location = event.location(in: self)
+
         let x = Int16(location.x / CGFloat(tileSize))
         let y = Int16(location.y / CGFloat(tileSize))
 
-        mapSceneDelegate?.mapScene(self, didTapPosition: [x, y])
+        let nodes = nodes(at: location)
+        for node in nodes {
+            if node is SKLabelNode, let name = node.name, let objectID = UInt32(name) {
+                mapSceneDelegate?.mapScene(self, didTapMapObjectWith: objectID)
+                break
+            }
+            if node.name == "tile" {
+                mapSceneDelegate?.mapScene(self, didTapTileAt: [x, y])
+                break
+            }
+        }
     }
     #else
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let location = touches.first?.location(in: self) {
-            let x = Int16(location.x / CGFloat(tileSize))
-            let y = Int16(location.y / CGFloat(tileSize))
+        guard let location = touches.first?.location(in: self) else {
+            return
+        }
 
-            mapSceneDelegate?.mapScene(self, didTapPosition: [x, y])
+        let x = Int16(location.x / CGFloat(tileSize))
+        let y = Int16(location.y / CGFloat(tileSize))
+
+        let nodes = nodes(at: location)
+        for node in nodes {
+            if node is SKLabelNode, let name = node.name, let objectID = UInt32(name) {
+                mapSceneDelegate?.mapScene(self, didTapMapObjectWith: objectID)
+                break
+            }
+            if node.name == "tile" {
+                mapSceneDelegate?.mapScene(self, didTapTileAt: [x, y])
+                break
+            }
         }
     }
     #endif
@@ -106,25 +130,38 @@ class MapScene2D: SKScene, MapSceneProtocol {
     }
 
     func onMapObjectSpawned(_ event: MapObjectEvents.Spawned) {
-        let objectNode = SKLabelNode()
-        objectNode.position = CGPoint(x: Int(event.object.position.x) * tileSize, y: Int(event.object.position.y) * tileSize)
-        objectNode.zPosition = 1
-        objectNode.isHidden = (event.object.effectState == .cloak)
-        objectNode.text = event.object.name
-        objectNodes[event.object.id] = objectNode
-        addChild(objectNode)
+        if let objectNode = childNode(withName: "\(event.object.id)") {
+            let location = CGPoint(x: Int(event.object.position.x) * tileSize, y: Int(event.object.position.y) * tileSize)
+            let action = SKAction.move(to: location, duration: 0)
+            objectNode.run(action)
+        } else {
+            let objectNode = SKLabelNode()
+            objectNode.name = "\(event.object.id)"
+            objectNode.position = CGPoint(x: Int(event.object.position.x) * tileSize, y: Int(event.object.position.y) * tileSize)
+            objectNode.zPosition = 1
+            objectNode.isHidden = (event.object.effectState == .cloak)
+            objectNode.text = event.object.name
+            addChild(objectNode)
+        }
     }
 
     func onMapObjectMoved(_ event: MapObjectEvents.Moved) {
-        if let objectNode = objectNodes[event.objectID] {
+        if let objectNode = childNode(withName: "\(event.object.id)") {
             let location = CGPoint(x: Int(event.toPosition.x) * tileSize, y: Int(event.toPosition.y) * tileSize)
             let action = SKAction.move(to: location, duration: 0.2)
             objectNode.run(action)
+        } else {
+            let objectNode = SKLabelNode()
+            objectNode.position = CGPoint(x: Int(event.toPosition.x) * tileSize, y: Int(event.toPosition.y) * tileSize)
+            objectNode.zPosition = 1
+            objectNode.isHidden = (event.object.effectState == .cloak)
+            objectNode.text = event.object.name
+            addChild(objectNode)
         }
     }
 
     func onMapObjectStopped(_ event: MapObjectEvents.Stopped) {
-        if let objectNode = objectNodes[event.objectID] {
+        if let objectNode = childNode(withName: "\(event.objectID)") {
             let location = CGPoint(x: Int(event.position.x) * tileSize, y: Int(event.position.y) * tileSize)
             let action = SKAction.move(to: location, duration: 0)
             objectNode.run(action)
@@ -132,14 +169,13 @@ class MapScene2D: SKScene, MapSceneProtocol {
     }
 
     func onMapObjectVanished(_ event: MapObjectEvents.Vanished) {
-        if let objectNode = objectNodes[event.objectID] {
+        if let objectNode = childNode(withName: "\(event.objectID)") {
             objectNode.removeFromParent()
-            objectNodes.removeValue(forKey: event.objectID)
         }
     }
 
     func onMapObjectStateChanged(_ event: MapObjectEvents.StateChanged) {
-        if let objectNode = objectNodes[event.objectID] {
+        if let objectNode = childNode(withName: "\(event.objectID)") {
             objectNode.isHidden = (event.effectState == .cloak)
         }
     }
