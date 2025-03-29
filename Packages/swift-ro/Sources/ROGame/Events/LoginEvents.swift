@@ -10,17 +10,16 @@ import ROResources
 
 public enum LoginEvents {
     public struct Accepted: Event {
-        public let accountID: UInt32
-        public let loginID1: UInt32
-        public let loginID2: UInt32
-        public let sex: UInt8
+        public let account: AccountInfo
         public let charServers: [CharServerInfo]
 
         init(packet: PACKET_AC_ACCEPT_LOGIN) {
-            self.accountID = packet.AID
-            self.loginID1 = packet.login_id1
-            self.loginID2 = packet.login_id2
-            self.sex = packet.sex
+            self.account = AccountInfo(
+                accountID: packet.AID,
+                loginID1: packet.login_id1,
+                loginID2: packet.login_id2,
+                sex: packet.sex
+            )
             self.charServers = packet.char_servers.map(CharServerInfo.init)
         }
     }
@@ -28,7 +27,7 @@ public enum LoginEvents {
     public struct Refused: Event {
         public let message: String
 
-        init(packet: PACKET_AC_REFUSE_LOGIN) async {
+        init(packet: PACKET_AC_REFUSE_LOGIN) {
             let messageCode = switch packet.error {
             case   0: 6     // Unregistered ID
             case   1: 7     // Incorrect Password
@@ -55,7 +54,7 @@ public enum LoginEvents {
             default : 9
             }
 
-            self.message = await MessageStringTable.current.localizedMessageString(at: messageCode)
+            self.message = MessageStringTable.current.localizedMessageString(at: messageCode)
                 .replacingOccurrences(of: "%s", with: packet.unblock_time)
         }
     }

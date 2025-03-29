@@ -18,7 +18,7 @@ public struct ClientSubscription {
         errorHandlers.append(handler)
     }
 
-    public mutating func subscribe<P>(to type: P.Type, _ handler: @escaping @Sendable (P) async -> Void) where P: RegisteredPacket {
+    public mutating func subscribe<P>(to type: P.Type, _ handler: @escaping @Sendable (P) -> Void) where P: RegisteredPacket {
         let packetHandler = PacketHandler(type: type, handler: handler)
         packetHandlers.append(packetHandler)
     }

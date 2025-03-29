@@ -20,8 +20,6 @@ enum ConversationScene {
 
 @Observable
 class Conversation {
-    let storage = SessionStorage()
-
     @MainActor
     var messages: [any Message] = []
 
@@ -53,6 +51,12 @@ class Conversation {
     private var mapSession: MapSession?
 
     @ObservationIgnored
+    private var account: AccountInfo?
+
+    @ObservationIgnored
+    private var charServers: [CharServerInfo] = []
+
+    @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
 
     @MainActor
@@ -69,8 +73,6 @@ class Conversation {
 
             loginSession?.keepAlive(username: username)
         case .selectCharServer:
-            let charServers = await storage.charServers
-
             guard let serverNumber = Int(parameters[0]),
                   serverNumber - 1 < charServers.count else {
                 return
@@ -121,9 +123,12 @@ class Conversation {
             return
         }
 
-        let loginSession = LoginSession(storage: storage, address: address, port: port)
+        let loginSession = LoginSession(address: address, port: port)
 
         loginSession.subscribe(to: LoginEvents.Accepted.self) { [unowned self] event in
+            self.account = event.account
+            self.charServers = event.charServers
+
             self.scene = .selectCharServer
 
             self.messages.append(.serverText("Accepted"))
@@ -160,7 +165,11 @@ class Conversation {
     }
 
     private func startCharSession(_ charServer: CharServerInfo) {
-        let charSession = CharSession(storage: storage, charServer: charServer)
+        guard let account else {
+            return
+        }
+
+        let charSession = CharSession(account: account, charServer: charServer)
 
         charSession.subscribe(to: CharServerEvents.Accepted.self) { [unowned self] event in
             self.scene = .selectChar
@@ -194,7 +203,7 @@ class Conversation {
 
             self.messages.append(.serverText("Entered map: \(event.mapName)"))
 
-            self.startMapSession(event.mapServer)
+            self.startMapSession(event)
         }
         .store(in: &subscriptions)
 
@@ -228,8 +237,12 @@ class Conversation {
         self.charSession = charSession
     }
 
-    private func startMapSession(_ mapServer: MapServerInfo) {
-        let mapSession = MapSession(storage: storage, mapServer: mapServer)
+    private func startMapSession(_ event: CharServerEvents.NotifyMapServer) {
+        guard let account = charSession?.account else {
+            return
+        }
+
+        let mapSession = MapSession(account: account, charID: event.charID, mapServer: event.mapServer)
 
         mapSession.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
             self.playerPosition = event.position

@@ -12,16 +12,16 @@ protocol PacketHandlerProtocol: Sendable {
 
     var type: Packet.Type { get }
 
-    func handlePacket(_ packet: any BinaryDecodable) async
+    func handlePacket(_ packet: any BinaryDecodable)
 }
 
 struct PacketHandler<Packet>: PacketHandlerProtocol where Packet: BinaryDecodable {
     var type: Packet.Type
-    var handler: @Sendable (Packet) async -> Void
+    var handler: @Sendable (Packet) -> Void
 
-    func handlePacket(_ packet: any BinaryDecodable) async {
+    func handlePacket(_ packet: any BinaryDecodable) {
         if let packet = packet as? Packet {
-            await handler(packet)
+            handler(packet)
         }
     }
 }

@@ -66,7 +66,7 @@ final public class Client: Sendable {
             for await packet in packetStream {
                 for packetHandler in packetHandlers {
                     if type(of: packet) == packetHandler.type {
-                        await packetHandler.handlePacket(packet)
+                        packetHandler.handlePacket(packet)
                     }
                 }
             }

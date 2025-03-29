@@ -10,7 +10,8 @@ import Foundation
 import RONetwork
 
 final public class MapSession: SessionProtocol, @unchecked Sendable {
-    public let storage: SessionStorage
+    public private(set) var account: AccountInfo
+    public let charID: UInt32
 
     let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
@@ -24,8 +25,9 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         eventSubject.eraseToAnyPublisher()
     }
 
-    public init(storage: SessionStorage, mapServer: MapServerInfo) {
-        self.storage = storage
+    public init(account: AccountInfo, charID: UInt32, mapServer: MapServerInfo) {
+        self.account = account
+        self.charID = charID
         self.client = Client(name: "Map", address: mapServer.ip, port: mapServer.port)
     }
 
@@ -43,7 +45,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // 0x283
         subscription.subscribe(to: PACKET_ZC_AID.self) { [unowned self] packet in
-            await self.storage.updateAccountID(packet.accountID)
+            self.account.accountID = packet.accountID
         }
 
         // See `clif_hotkeys_send`
@@ -82,16 +84,15 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_authfail_fd`
         subscription.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
-            let event = await AuthenticationEvents.Banned(packet: packet)
+            let event = AuthenticationEvents.Banned(packet: packet)
             self.postEvent(event)
         }
 
         client.connect(with: subscription)
 
-        Task {
-            await enter()
-            keepAlive()
-        }
+        enter()
+
+        keepAlive()
     }
 
     public func stop() {
@@ -107,22 +108,20 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     /// Receive ``PACKET_ZC_AID`` +
     ///         ``PACKET_ZC_EXTEND_BODYITEM_SIZE`` +
     ///         ``PACKET_ZC_ACCEPT_ENTER``
-    private func enter() async {
+    private func enter() {
         var packet = PACKET_CZ_ENTER()
-        packet.accountID = await storage.accountID
-        packet.charID = await storage.charID
-        packet.loginID1 = await storage.loginID1
+        packet.accountID = account.accountID
+        packet.charID = charID
+        packet.loginID1 = account.loginID1
         packet.clientTime = UInt32(Date.now.timeIntervalSince1970)
-        packet.sex = await storage.sex
+        packet.sex = account.sex
 
         client.sendPacket(packet)
 
         if PACKET_VERSION < 20070521 {
             client.receiveDataAndPacket(count: 4) { data in
-                Task {
-                    let accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
-                    await self.storage.updateAccountID(accountID)
-                }
+                let accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
+                self.account.accountID = accountID
             }
         } else {
             client.receivePacket()
@@ -142,8 +141,6 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         subscription.subscribe(to: PACKET_ZC_NPCACK_MAPMOVE.self) { [unowned self] packet in
             let position = SIMD2(Int16(packet.xPos), Int16(packet.yPos))
             self.player.position = position
-
-            await self.storage.updateMap(with: packet.mapName, position: position)
 
             let event = MapEvents.Changed(mapName: packet.mapName, position: position)
             self.postEvent(event)

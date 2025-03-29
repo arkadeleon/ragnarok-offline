@@ -14,6 +14,11 @@ import RONetwork
 @testable import ROGame
 
 final class GameSessionTests: XCTestCase {
+    var account: AccountInfo!
+    var charServers: [CharServerInfo]!
+    var charID: UInt32!
+    var mapServer: MapServerInfo!
+
     override func setUp() async throws {
         let url = ServerResourceManager.default.workingDirectoryURL
         if FileManager.default.fileExists(atPath: url.path()) {
@@ -52,11 +57,9 @@ final class GameSessionTests: XCTestCase {
     }
 
     func testGameSession() async throws {
-        let storage = SessionStorage()
-
         // MARK: - Start login session
 
-        let loginSession = LoginSession(storage: storage, address: "127.0.0.1", port: 6900)
+        let loginSession = LoginSession(address: "127.0.0.1", port: 6900)
 
         loginSession.start()
 
@@ -65,13 +68,15 @@ final class GameSessionTests: XCTestCase {
         loginSession.login(username: username, password: password)
 
         for await event in loginSession.eventStream(for: LoginEvents.Accepted.self).prefix(1) {
+            account = event.account
+            charServers = event.charServers
+
             XCTAssertEqual(event.charServers.count, 1)
         }
 
         // MARK: - Start char session
 
-        let charServer = await storage.charServers[0]
-        let charSession = CharSession(storage: storage, charServer: charServer)
+        let charSession = CharSession(account: account, charServer: charServers[0])
 
         charSession.start()
 
@@ -100,13 +105,15 @@ final class GameSessionTests: XCTestCase {
         charSession.selectChar(slot: 0)
 
         for await event in charSession.eventStream(for: CharServerEvents.NotifyMapServer.self).prefix(1) {
+            charID = event.charID
+            mapServer = event.mapServer
+
             XCTAssertEqual(event.charID, 1)
         }
 
         // MARK: - Start map session
 
-        let mapServer = await storage.mapServer!
-        let mapSession = MapSession(storage: storage, mapServer: mapServer)
+        let mapSession = MapSession(account: account, charID: charID, mapServer: mapServer)
 
         mapSession.start()
 

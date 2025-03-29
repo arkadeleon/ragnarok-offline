@@ -10,7 +10,7 @@ import Foundation
 import RONetwork
 
 final public class CharSession: SessionProtocol, @unchecked Sendable {
-    public let storage: SessionStorage
+    public private(set) var account: AccountInfo
 
     let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
@@ -21,8 +21,8 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         eventSubject.eraseToAnyPublisher()
     }
 
-    public init(storage: SessionStorage, charServer: CharServerInfo) {
-        self.storage = storage
+    public init(account: AccountInfo, charServer: CharServerInfo) {
+        self.account = account
         self.client = Client(name: "Char", address: charServer.ip, port: charServer.port)
     }
 
@@ -55,17 +55,15 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
         // See `chclif_send_auth_result`
         subscription.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
-            let event = await AuthenticationEvents.Banned(packet: packet)
+            let event = AuthenticationEvents.Banned(packet: packet)
             self.postEvent(event)
         }
 
         client.connect(with: subscription)
 
-        Task {
-            await enter()
+        enter()
 
-            await keepAlive()
-        }
+        keepAlive()
     }
 
     public func stop() {
@@ -77,8 +75,6 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     private func subscribeToCharServerPackets(with subscription: inout ClientSubscription) {
         // 0x6b
         subscription.subscribe(to: PACKET_HC_ACCEPT_ENTER_NEO_UNION.self) { [unowned self] packet in
-            await self.storage.updateChars(packet.chars)
-
             let event = CharServerEvents.Accepted(packet: packet)
             self.postEvent(event)
         }
@@ -91,8 +87,6 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
         // 0x71, 0xac5
         subscription.subscribe(to: PACKET_HC_NOTIFY_ZONESVR.self) { [unowned self] packet in
-            await self.storage.updateMapServer(with: packet.mapName, mapServer: packet.mapServer, charID: packet.charID)
-
             let event = CharServerEvents.NotifyMapServer(packet: packet)
             self.postEvent(event)
         }
@@ -107,8 +101,6 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     private func subscribeToCharPackets(with subscription: inout ClientSubscription) {
         // 0x6d
         subscription.subscribe(to: PACKET_HC_ACCEPT_MAKECHAR.self) { [unowned self] packet in
-            await self.storage.addChar(packet.char)
-
             let event = CharEvents.MakeAccepted(packet: packet)
             self.postEvent(event)
         }
@@ -167,29 +159,27 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     ///         ``PACKET_HC_BLOCK_CHARACTER`` +
     ///         ``PACKET_HC_SECOND_PASSWD_LOGIN`` or
     ///         ``PACKET_HC_REFUSE_ENTER``
-    private func enter() async {
+    private func enter() {
         var packet = PACKET_CH_ENTER()
-        packet.accountID = await storage.accountID
-        packet.loginID1 = await storage.loginID1
-        packet.loginID2 = await storage.loginID2
-        packet.clientType = storage.langType
-        packet.sex = await storage.sex
+        packet.accountID = account.accountID
+        packet.loginID1 = account.loginID1
+        packet.loginID2 = account.loginID2
+        packet.clientType = account.langType
+        packet.sex = account.sex
 
         client.sendPacket(packet)
 
         client.receiveDataAndPacket(count: 4) { data in
-            Task {
-                let accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
-                await self.storage.updateAccountID(accountID)
-            }
+            let accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
+            self.account.accountID = accountID
         }
     }
 
     /// Keep alive.
     ///
     /// Send ``PACKET_CZ_PING`` every 12 seconds.
-    private func keepAlive() async {
-        let accountID = await storage.accountID
+    private func keepAlive() {
+        let accountID = account.accountID
 
         timerSubscription = Timer.publish(every: 12, on: .main, in: .common)
             .autoconnect()

@@ -24,8 +24,6 @@ enum GameScene {
 
 @Observable
 final class GameSession {
-    let storage = SessionStorage()
-
     @MainActor
     var scene: GameScene = .login
 
@@ -35,6 +33,12 @@ final class GameSession {
     var charSession: CharSession?
     @ObservationIgnored
     var mapSession: MapSession?
+
+    @ObservationIgnored
+    private var account: AccountInfo?
+
+    @ObservationIgnored
+    private var chars: [CharInfo] = []
 
     @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
@@ -59,9 +63,10 @@ final class GameSession {
             return
         }
 
-        let loginSession = LoginSession(storage: storage, address: address, port: port)
+        let loginSession = LoginSession(address: address, port: port)
 
         loginSession.subscribe(to: LoginEvents.Accepted.self) { [unowned self] event in
+            self.account = event.account
             self.scene = .charServerList(event.charServers)
         }
         .store(in: &subscriptions)
@@ -84,13 +89,15 @@ final class GameSession {
     }
 
     private func startCharSession(_ charServer: CharServerInfo) {
-        let charSession = CharSession(storage: storage, charServer: charServer)
+        guard let account else {
+            return
+        }
+
+        let charSession = CharSession(account: account, charServer: charServer)
 
         charSession.subscribe(to: CharServerEvents.Accepted.self) { [unowned self] event in
-            Task {
-                let chars = await self.storage.chars
-                self.scene = .charSelect(chars)
-            }
+            self.chars = event.chars
+            self.scene = .charSelect(event.chars)
         }
         .store(in: &subscriptions)
 
@@ -99,7 +106,7 @@ final class GameSession {
         .store(in: &subscriptions)
 
         charSession.subscribe(to: CharServerEvents.NotifyMapServer.self) { [unowned self] event in
-            self.startMapSession(event.mapServer)
+            self.startMapSession(event)
         }
         .store(in: &subscriptions)
 
@@ -108,10 +115,8 @@ final class GameSession {
         .store(in: &subscriptions)
 
         charSession.subscribe(to: CharEvents.MakeAccepted.self) { [unowned self] event in
-            Task {
-                let chars = await self.storage.chars
-                self.scene = .charSelect(chars)
-            }
+            self.chars.append(event.char)
+            self.scene = .charSelect(chars)
         }
         .store(in: &subscriptions)
 
@@ -132,8 +137,12 @@ final class GameSession {
         self.charSession = charSession
     }
 
-    private func startMapSession(_ mapServer: MapServerInfo) {
-        let mapSession = MapSession(storage: storage, mapServer: mapServer)
+    private func startMapSession(_ event: CharServerEvents.NotifyMapServer) {
+        guard let account = charSession?.account else {
+            return
+        }
+
+        let mapSession = MapSession(account: account, charID: event.charID, mapServer: event.mapServer)
 
         mapSession.subscribe(to: MapEvents.Changed.self) { event in
             let mapName = String(event.mapName.dropLast(4))

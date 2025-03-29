@@ -10,8 +10,6 @@ import Foundation
 import RONetwork
 
 final public class LoginSession: SessionProtocol, @unchecked Sendable {
-    public let storage: SessionStorage
-
     let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
 
@@ -21,8 +19,7 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
         eventSubject.eraseToAnyPublisher()
     }
 
-    public init(storage: SessionStorage, address: String, port: UInt16) {
-        self.storage = storage
+    public init(address: String, port: UInt16) {
         self.client = Client(name: "Login", address: address, port: port)
     }
 
@@ -36,21 +33,19 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
 
         // See `logclif_auth_ok`
         subscription.subscribe(to: PACKET_AC_ACCEPT_LOGIN.self) { [unowned self] packet in
-            await self.storage.updateAccount(with: packet)
-
             let event = LoginEvents.Accepted(packet: packet)
             self.postEvent(event)
         }
 
         // See `logclif_auth_failed`
         subscription.subscribe(to: PACKET_AC_REFUSE_LOGIN.self) { [unowned self] packet in
-            let event = await LoginEvents.Refused(packet: packet)
+            let event = LoginEvents.Refused(packet: packet)
             self.postEvent(event)
         }
 
         // See `logclif_sent_auth_result`
         subscription.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
-            let event = await AuthenticationEvents.Banned(packet: packet)
+            let event = AuthenticationEvents.Banned(packet: packet)
             self.postEvent(event)
         }
 
