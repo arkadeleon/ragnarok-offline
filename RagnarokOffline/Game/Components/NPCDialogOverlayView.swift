@@ -19,15 +19,24 @@ struct NPCDialogOverlayView: View {
                 switch dialog.content {
                 case .message(let message, let hasNextMessage):
                     NPCMessageDialogView(message: message, hasNextMessage: hasNextMessage) {
-                        mapSession.requestNextMessage(npcID: dialog.npcID)
+                        Task {
+                            try await Task.sleep(for: .milliseconds(1))
+                            mapSession.requestNextMessage(npcID: dialog.npcID)
+                        }
                         self.dialog = nil
                     } closeAction: {
-                        mapSession.closeDialog(npcID: dialog.npcID)
+                        Task {
+                            try await Task.sleep(for: .milliseconds(1))
+                            mapSession.closeDialog(npcID: dialog.npcID)
+                        }
                         self.dialog = nil
                     }
                 case .menu(let menu):
                     NPCMenuDialogView(menu: menu) { i in
-                        mapSession.selectMenu(npcID: dialog.npcID, select: UInt8(i))
+                        Task {
+                            try await Task.sleep(for: .milliseconds(1))
+                            mapSession.selectMenu(npcID: dialog.npcID, select: UInt8(i))
+                        }
                         self.dialog = nil
                     }
                 case .numberInput:
