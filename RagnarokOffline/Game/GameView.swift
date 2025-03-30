@@ -24,9 +24,13 @@ struct GameView: View {
             case .mapLoading:
                 ProgressView()
             case .map2D(let scene):
-                MapView2D(mapSession: gameSession.mapSession!, scene: scene)
+                MapView(mapSession: gameSession.mapSession!, scene: scene) {
+                    MapView2DContent(scene: scene)
+                }
             case .map3D(let scene):
-                MapView3D(mapSession: gameSession.mapSession!, scene: scene)
+                MapView(mapSession: gameSession.mapSession!, scene: scene) {
+                    MapView3DContent(scene: scene)
+                }
             }
         }
     }

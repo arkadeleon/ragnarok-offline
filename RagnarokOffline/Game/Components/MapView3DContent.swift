@@ -1,5 +1,5 @@
 //
-//  MapView3D.swift
+//  MapView3DContent.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/9/10.
@@ -7,11 +7,9 @@
 
 import RealityKit
 import ROGame
-import RORendering
 import SwiftUI
 
-struct MapView3D: View {
-    var mapSession: MapSession
+struct MapView3DContent: View {
     var scene: MapScene3D
 
     @State private var distance: Float = 80
@@ -50,17 +48,5 @@ struct MapView3D: View {
                     }
                 }
         )
-        .overlay(alignment: .topLeading) {
-            PlayerStatusOverlayView(mapSession: mapSession)
-        }
-        .overlay {
-            NPCDialogOverlayView(mapSession: mapSession)
-        }
-        .onReceive(mapSession.publisher(for: PlayerEvents.Moved.self), perform: scene.onPlayerMoved)
-        .onReceive(mapSession.publisher(for: MapObjectEvents.Spawned.self), perform: scene.onMapObjectSpawned)
-        .onReceive(mapSession.publisher(for: MapObjectEvents.Moved.self), perform: scene.onMapObjectMoved)
-        .onReceive(mapSession.publisher(for: MapObjectEvents.Stopped.self), perform: scene.onMapObjectStopped)
-        .onReceive(mapSession.publisher(for: MapObjectEvents.Vanished.self), perform: scene.onMapObjectVanished)
-        .onReceive(mapSession.publisher(for: MapObjectEvents.StateChanged.self), perform: scene.onMapObjectStateChanged)
     }
 }
