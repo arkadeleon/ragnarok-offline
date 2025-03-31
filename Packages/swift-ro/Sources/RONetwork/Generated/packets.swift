@@ -2619,6 +2619,30 @@ public struct packet_itemlist_equip: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
+public struct ZC_STORE_ITEMLIST_NORMAL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var invType: UInt8 = 0
+    public var list: [NORMALITEM_INFO] = []
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        invType = try decoder.decode(UInt8.self)
+        list = try decoder.decode([NORMALITEM_INFO].self, count: (Int(packetLength) - (2 + 2 + 1)) / (2 + 4 + 1 + 2 + 4 + ((4 * 4)) + 4 + 1))
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(invType)
+        try encoder.encode(list)
+    }
+}
+
 public struct PACKET_ZC_INVENTORY_START: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
         -1
@@ -2661,6 +2685,30 @@ public struct PACKET_ZC_INVENTORY_END: BinaryDecodable, BinaryEncodable, Sendabl
         try encoder.encode(packetType)
         try encoder.encode(invType)
         try encoder.encode(flag)
+    }
+}
+
+public struct ZC_STORE_ITEMLIST_EQUIP: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var invType: UInt8 = 0
+    public var list: [EQUIPITEM_INFO] = []
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        invType = try decoder.decode(UInt8.self)
+        list = try decoder.decode([EQUIPITEM_INFO].self, count: (Int(packetLength) - (2 + 2 + 1)) / (2 + 4 + 1 + 4 + 4 + ((4 * 4)) + 4 + 2 + 2 + 1 + ((2 + 2 + 1) * 5) + 1 + 1 + 1))
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(invType)
+        try encoder.encode(list)
     }
 }
 
@@ -3973,6 +4021,30 @@ public struct PACKET_ZC_SKILL_SCALE: BinaryDecodable, BinaryEncodable, Sendable 
         try encoder.encode(x)
         try encoder.encode(y)
         try encoder.encode(casttime)
+    }
+}
+
+public struct ZC_PROGRESS_ACTOR: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var GID: Int32 = 0
+    public var color: Int32 = 0
+    public var time: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        GID = try decoder.decode(Int32.self)
+        color = try decoder.decode(Int32.self)
+        time = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(GID)
+        try encoder.encode(color)
+        try encoder.encode(time)
     }
 }
 

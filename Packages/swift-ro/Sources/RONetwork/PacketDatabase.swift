@@ -33,14 +33,8 @@ final class PacketDatabase: Sendable {
 
         add_packets(add_packet)
 
-        /// PACKET_ZC_REPUTE_INFO
-        add_packet(0x0b8d, -1, nil, [])
-
         /// See `clif_navigateTo`
         add_packet(0x08e2, 27, nil, [])
-
-        /// PACKET_ZC_CLOSE_DIALOG
-        add_packet(0x00b6, 6, nil, [])
 
         self.entriesByPacketType = entriesByPacketType
     }

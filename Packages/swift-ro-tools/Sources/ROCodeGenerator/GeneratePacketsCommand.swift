@@ -85,7 +85,7 @@ struct GeneratePacketsCommand: ParsableCommand {
         for ast in asts {
             let nodes = ast.findNodes { node in
                 guard node.kind == "CXXRecordDecl" else { return false }
-                guard let name = node.name, name.hasPrefix("PACKET_") || name.hasPrefix("packet_") else { return false }
+                guard let name = node.name, name.hasPrefix("PACKET_") || name.hasPrefix("packet_") || name.hasPrefix("ZC_") else { return false }
                 guard node.inner != nil else { return false }
                 return true
             }
@@ -165,7 +165,7 @@ struct GeneratePacketsCommand: ParsableCommand {
                 }
 
                 switch fieldDecl.name {
-                case "list" where structDecl.name == "packet_itemlist_normal" || structDecl.name == "packet_itemlist_equip":
+                case "list" where structDecl.name == "packet_itemlist_normal" || structDecl.name == "packet_itemlist_equip" || structDecl.name == "ZC_STORE_ITEMLIST_NORMAL" || structDecl.name == "ZC_STORE_ITEMLIST_EQUIP":
                     structDecls[s].fields[f].type = .array(fieldDecl.type.structRef!)
                 default:
                     break
