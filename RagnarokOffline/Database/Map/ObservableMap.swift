@@ -26,7 +26,8 @@ class ObservableMap {
     private let mode: DatabaseMode
     private let map: Map
 
-    var localizedName: String?
+    private let localizedName: String?
+
     var image: CGImage?
     var spawnMonsters: [SpawnMonster] = []
 
@@ -37,15 +38,12 @@ class ObservableMap {
     init(mode: DatabaseMode, map: Map) {
         self.mode = mode
         self.map = map
+
+        self.localizedName = MapNameTable.current.localizedMapName(forMapName: map.name)
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Map, Value>) -> Value {
         map[keyPath: keyPath]
-    }
-
-    @MainActor
-    func fetchLocalizedName() async {
-        localizedName = await MapNameTable.current.localizedMapName(forMapName: map.name)
     }
 
     @MainActor

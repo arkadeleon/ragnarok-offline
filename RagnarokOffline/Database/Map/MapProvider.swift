@@ -13,9 +13,6 @@ struct MapProvider: DatabaseRecordProvider {
         let maps = await database.maps().map { map in
             ObservableMap(mode: mode, map: map)
         }
-        for map in maps {
-            await map.fetchLocalizedName()
-        }
         return maps
     }
 
