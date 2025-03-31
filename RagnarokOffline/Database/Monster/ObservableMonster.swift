@@ -38,7 +38,8 @@ class ObservableMonster {
     private let mode: DatabaseMode
     private let monster: Monster
 
-    var localizedName: String?
+    private let localizedName: String?
+
     var animatedImage: AnimatedImage?
     var mvpDropItems: [DropItem] = []
     var dropItems: [DropItem] = []
@@ -126,15 +127,12 @@ class ObservableMonster {
     init(mode: DatabaseMode, monster: Monster) {
         self.mode = mode
         self.monster = monster
+
+        self.localizedName = MonsterNameTable.current.localizedMonsterName(forMonsterID: monster.id)
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Monster, Value>) -> Value {
         monster[keyPath: keyPath]
-    }
-
-    @MainActor
-    func fetchLocalizedName() async {
-        localizedName = await MonsterNameTable.current.localizedMonsterName(forMonsterID: monster.id)
     }
 
     @MainActor

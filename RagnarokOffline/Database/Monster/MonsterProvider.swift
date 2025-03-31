@@ -13,9 +13,6 @@ struct MonsterProvider: DatabaseRecordProvider {
         let monsters = await database.monsters().map { monster in
             ObservableMonster(mode: mode, monster: monster)
         }
-        for monster in monsters {
-            await monster.fetchLocalizedName()
-        }
         return monsters
     }
 
