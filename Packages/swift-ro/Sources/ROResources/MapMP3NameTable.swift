@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ROCore
 
 public actor MapMP3NameTable {
     public static let `default` = MapMP3NameTable(resourceManager: .default)
@@ -39,14 +40,15 @@ public actor MapMP3NameTable {
             return
         }
 
-        guard let string = String(data: data, encoding: .koreanEUC) else {
-            return
+        let stream = MemoryStream(data: data)
+
+        let reader = StreamReader(stream: stream, delimiter: "\r\n")
+        defer {
+            reader.close()
         }
 
-        let lines = string.split(separator: "\r\n")
-
-        for line in lines {
-            if line.trimmingCharacters(in: .whitespacesAndNewlines).starts(with: "//") {
+        while let line = reader.readLine() {
+            if line.trimmingCharacters(in: .whitespaces).starts(with: "//") {
                 continue
             }
 
