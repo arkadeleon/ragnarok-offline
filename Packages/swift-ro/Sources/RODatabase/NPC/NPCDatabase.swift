@@ -9,6 +9,10 @@ import Foundation
 import rAthenaResources
 import ROCore
 
+enum NPCDatabaseError: Error {
+    case invalidFile(URL)
+}
+
 public actor NPCDatabase {
     public static let prerenewal = NPCDatabase(mode: .prerenewal)
     public static let renewal = NPCDatabase(mode: .renewal)
@@ -74,7 +78,10 @@ public actor NPCDatabase {
     }
 
     private func import_conf_file(url: URL) throws {
-        let stream = try FileStream(url: url)
+        guard let stream = FileStream(url: url) else {
+            throw NPCDatabaseError.invalidFile(url)
+        }
+
         let reader = StreamReader(stream: stream)
         defer {
             reader.close()
@@ -110,7 +117,10 @@ public actor NPCDatabase {
     }
 
     private func add_npc_file(url: URL) throws {
-        let stream = try FileStream(url: url)
+        guard let stream = FileStream(url: url) else {
+            throw NPCDatabaseError.invalidFile(url)
+        }
+
         let reader = StreamReader(stream: stream)
         defer {
             reader.close()
@@ -211,22 +221,5 @@ public actor NPCDatabase {
     }
 
     private func del_npc_file(url: URL) throws {
-    }
-}
-
-extension Scanner {
-    func scanLine() -> String {
-        var line = ""
-        while !isAtEnd {
-            guard let character = scanCharacter() else {
-                break
-            }
-            if character.isNewline {
-                break
-            } else {
-                line.append(character)
-            }
-        }
-        return line
     }
 }

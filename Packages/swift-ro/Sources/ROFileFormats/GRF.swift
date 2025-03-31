@@ -11,8 +11,9 @@ import Foundation
 import ROCore
 
 public enum GRFError: Error {
+    case invalidURL(URL)
     case invalidVersion(UInt32)
-    case invalidPath(String)
+    case invalidEntryPath(String)
     case dataCorrupted(Data)
 }
 
@@ -21,7 +22,10 @@ public struct GRF {
     public var table: GRF.Table
 
     public init(url: URL) throws {
-        let stream = try FileStream(url: url)
+        guard let stream = FileStream(url: url) else {
+            throw GRFError.invalidURL(url)
+        }
+
         defer {
             stream.close()
         }

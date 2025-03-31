@@ -38,7 +38,7 @@ final class GRFTests: XCTestCase {
             resourceURL.appending(path: "data/t2_배경1-1.bmp"),
         ]
 
-        let stream = try FileStream(url: grfURL)
+        let stream = FileStream(url: grfURL)!
         defer {
             stream.close()
         }

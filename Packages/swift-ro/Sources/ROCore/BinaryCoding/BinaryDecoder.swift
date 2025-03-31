@@ -24,8 +24,11 @@ public class BinaryDecoder {
         self.needsCloseStream = false
     }
 
-    public init(url: URL) throws {
-        self.stream = try FileStream(url: url)
+    public init?(url: URL) {
+        guard let stream = FileStream(url: url) else {
+            return nil
+        }
+        self.stream = stream
         self.needsCloseStream = true
     }
 

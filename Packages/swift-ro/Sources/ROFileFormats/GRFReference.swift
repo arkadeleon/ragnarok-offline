@@ -85,10 +85,13 @@ public class GRFReference {
 
     public func contentsOfEntry(at path: GRFPath) throws -> Data {
         guard let entry = entry(at: path) else {
-            throw GRFError.invalidPath(path.string)
+            throw GRFError.invalidEntryPath(path.string)
         }
 
-        let stream = try FileStream(url: url)
+        guard let stream = FileStream(url: url) else {
+            throw GRFError.invalidURL(url)
+        }
+
         defer {
             stream.close()
         }

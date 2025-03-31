@@ -16,12 +16,16 @@ public class FileStream: Stream {
         ftell(file)
     }
 
-    public init(url: URL) throws {
+    public init?(url: URL) {
         guard let file = fopen(url.path.cString(using: .utf8), "rw+") else {
-            throw StreamError.invalidURL
+            return nil
         }
+
         self.file = file
-        self.length = (try FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int) ?? 0
+
+        fseek(file, 0, SEEK_END)
+        self.length = ftell(file)
+        fseek(file, 0, SEEK_SET)
     }
 
     public func close() {

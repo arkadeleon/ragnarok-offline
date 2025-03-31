@@ -35,7 +35,9 @@ public actor MapDatabase {
                     .appending(path: "db/\(mode.path)/map_cache.dat"),
             ]
             for mapCacheURL in mapCacheURLs {
-                let decoder = try BinaryDecoder(url: mapCacheURL)
+                guard let decoder = BinaryDecoder(url: mapCacheURL) else {
+                    continue
+                }
                 let mapCache = try MapCache(from: decoder)
                 for mapInfo in mapCache.maps {
                     mapInfos[mapInfo.name] = mapInfo
