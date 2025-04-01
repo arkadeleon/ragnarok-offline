@@ -214,7 +214,7 @@ public struct Monster: Decodable, Equatable, Hashable, Identifiable, Sendable {
         self.clientAttackMotion = try container.decodeIfPresent(Int.self, forKey: .clientAttackMotion) ?? self.attackMotion
         self.damageMotion = try container.decodeIfPresent(Int.self, forKey: .damageMotion) ?? 0
         self.damageTaken = try container.decodeIfPresent(Int.self, forKey: .damageTaken) ?? 100
-        self.ai = try container.decodeIfPresent(MonsterAI.self, forKey: .ai) ?? .ai06
+        self.ai = try container.decodeIfPresent(MonsterAI.self, forKey: .ai) ?? ._06
         self.class = try container.decodeIfPresent(MonsterClass.self, forKey: .class) ?? .normal
         self.modes = try container.decodeIfPresent([MonsterMode : Bool].self, forKey: .modes)?.unorderedKeys
         self.mvpDrops = try container.decodeIfPresent([Monster.Drop].self, forKey: .mvpDrops)

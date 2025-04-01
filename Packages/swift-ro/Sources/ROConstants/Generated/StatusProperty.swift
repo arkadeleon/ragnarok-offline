@@ -307,4 +307,5 @@ public enum StatusProperty: Int, CaseIterable, Sendable {
     case sp_ignore_res_race_rate = 2104
     case sp_ignore_mres_race_rate = 2105
     case ematk_hidden = 2106
+    case skill_ratio = 2107
 }

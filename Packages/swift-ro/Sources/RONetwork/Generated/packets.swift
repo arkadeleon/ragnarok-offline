@@ -467,6 +467,9 @@ public let HEADER_ZC_DISAPPEAR_ENTRY: Int16 = 0x132
 public let HEADER_ZC_EFST_SET_ENTER: Int16 = 0x984
 public let HEADER_CZ_SETTING_WHISPER_STATE: Int16 = 0xd0
 public let HEADER_ZC_WHISPER_LIST: Int16 = 0xd4
+public let HEADER_CZ_ALLY_CHAT: Int16 = 0xbdd
+public let HEADER_CZ_REQ_REPORT_USER: Int16 = 0xbe2
+public let HEADER_CZ_QUEST_STATUS_REQ: Int16 = 0xbf3
 public let HEADER_ZC_NOTIFY_CHAT: Int16 = 0x8d
 public let HEADER_ZC_ITEM_ENTRY: Int16 = 0x9d
 public let HEADER_ZC_MVP_GETTING_ITEM: Int16 = 0x10a
@@ -16288,6 +16291,61 @@ public struct PACKET_ZC_WHISPER_LIST: BinaryDecodable, BinaryEncodable, Sendable
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(names)
+    }
+}
+
+public struct PACKET_CZ_ALLY_CHAT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+    }
+}
+
+public struct PACKET_CZ_REQ_REPORT_USER: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + (1 * 135))
+    }
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 135, initialValue: 0)
+    public var unknown: [UInt8]
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        unknown = try decoder.decode([UInt8].self, count: 135)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(unknown)
+    }
+}
+
+public struct PACKET_CZ_QUEST_STATUS_REQ: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 2)
+    }
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
     }
 }
 

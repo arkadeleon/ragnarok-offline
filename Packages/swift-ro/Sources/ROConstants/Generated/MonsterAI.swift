@@ -7,79 +7,85 @@
 
 /// Converted from `e_aegis_monstertype` in `map/mob.hpp`.
 public enum MonsterAI: CaseIterable, Sendable {
-    case ai01
-    case ai02
-    case ai03
-    case ai04
-    case ai05
-    case ai06
-    case ai07
-    case ai08
-    case ai09
-    case ai10
-    case ai11
-    case ai12
-    case ai13
-    case ai17
-    case ai19
-    case ai20
-    case ai21
-    case ai24
-    case ai25
-    case ai26
-    case ai27
+    case _01
+    case _02
+    case _03
+    case _04
+    case _05
+    case _06
+    case _07
+    case _08
+    case _09
+    case _10
+    case _11
+    case _12
+    case _13
+    case _17
+    case _19
+    case _20
+    case _21
+    case _24
+    case _25
+    case _26
+    case _27
+    case abr_passive
+    case abr_offensive
 }
 
 extension MonsterAI: RawRepresentable {
     public var rawValue: Int {
         switch self {
-        case .ai01: 0x81
-        case .ai02: 0x83
-        case .ai03: 0x1089
-        case .ai04: 0x3885
-        case .ai05: 0x2085
-        case .ai06: 0x0
-        case .ai07: 0x108b
-        case .ai08: 0x7085
-        case .ai09: 0x3095
-        case .ai10: 0x84
-        case .ai11: 0x84
-        case .ai12: 0x2085
-        case .ai13: 0x308d
-        case .ai17: 0x91
-        case .ai19: 0x3095
-        case .ai20: 0x3295
-        case .ai21: 0x3695
-        case .ai24: 0xa1
-        case .ai25: 0x1
-        case .ai26: 0xb695
-        case .ai27: 0x8084
+        case ._01: 0x81
+        case ._02: 0x83
+        case ._03: 0x1089
+        case ._04: 0x3885
+        case ._05: 0x2085
+        case ._06: 0x0
+        case ._07: 0x108b
+        case ._08: 0x7085
+        case ._09: 0x3095
+        case ._10: 0x84
+        case ._11: 0x84
+        case ._12: 0x2085
+        case ._13: 0x308d
+        case ._17: 0x91
+        case ._19: 0x3095
+        case ._20: 0x3295
+        case ._21: 0x3695
+        case ._24: 0xa1
+        case ._25: 0x1
+        case ._26: 0xb695
+        case ._27: 0x8084
+        case .abr_passive: 0x21
+        case .abr_offensive: 0xa5
         }
     }
 
     public init?(rawValue: Int) {
         switch rawValue {
-        case 0x81: self = .ai01
-        case 0x83: self = .ai02
-        case 0x1089: self = .ai03
-        case 0x3885: self = .ai04
-        case 0x2085: self = .ai05
-        case 0x0: self = .ai06
-        case 0x108b: self = .ai07
-        case 0x7085: self = .ai08
-        case 0x3095: self = .ai09
-        case 0x84: self = .ai10
-        case 0x84: self = .ai11
-        case 0x2085: self = .ai12
-        case 0x308d: self = .ai13
-        case 0x91: self = .ai17
-        case 0x3095: self = .ai19
-        case 0x3295: self = .ai20
-        case 0x3695: self = .ai21
-        case 0xa1: self = .ai24
-        case 0x1: self = .ai25
-        case 0xb695: self = .ai26
-        case 0x8084: self = .ai27
+        case 0x81: self = ._01
+        case 0x83: self = ._02
+        case 0x1089: self = ._03
+        case 0x3885: self = ._04
+        case 0x2085: self = ._05
+        case 0x0: self = ._06
+        case 0x108b: self = ._07
+        case 0x7085: self = ._08
+        case 0x3095: self = ._09
+        case 0x84: self = ._10
+        case 0x84: self = ._11
+        case 0x2085: self = ._12
+        case 0x308d: self = ._13
+        case 0x91: self = ._17
+        case 0x3095: self = ._19
+        case 0x3295: self = ._20
+        case 0x3695: self = ._21
+        case 0xa1: self = ._24
+        case 0x1: self = ._25
+        case 0xb695: self = ._26
+        case 0x8084: self = ._27
+        case 0x21: self = .abr_passive
+        case 0xa5: self = .abr_offensive
         default: return nil
         }
     }
@@ -88,53 +94,57 @@ extension MonsterAI: RawRepresentable {
 extension MonsterAI: CodingKey {
     public var stringValue: String {
         switch self {
-        case .ai01: "01"
-        case .ai02: "02"
-        case .ai03: "03"
-        case .ai04: "04"
-        case .ai05: "05"
-        case .ai06: "06"
-        case .ai07: "07"
-        case .ai08: "08"
-        case .ai09: "09"
-        case .ai10: "10"
-        case .ai11: "11"
-        case .ai12: "12"
-        case .ai13: "13"
-        case .ai17: "17"
-        case .ai19: "19"
-        case .ai20: "20"
-        case .ai21: "21"
-        case .ai24: "24"
-        case .ai25: "25"
-        case .ai26: "26"
-        case .ai27: "27"
+        case ._01: "01"
+        case ._02: "02"
+        case ._03: "03"
+        case ._04: "04"
+        case ._05: "05"
+        case ._06: "06"
+        case ._07: "07"
+        case ._08: "08"
+        case ._09: "09"
+        case ._10: "10"
+        case ._11: "11"
+        case ._12: "12"
+        case ._13: "13"
+        case ._17: "17"
+        case ._19: "19"
+        case ._20: "20"
+        case ._21: "21"
+        case ._24: "24"
+        case ._25: "25"
+        case ._26: "26"
+        case ._27: "27"
+        case .abr_passive: "ABR_PASSIVE"
+        case .abr_offensive: "ABR_OFFENSIVE"
         }
     }
 
     public init?(stringValue: String) {
         switch stringValue.uppercased() {
-        case "01": self = .ai01
-        case "02": self = .ai02
-        case "03": self = .ai03
-        case "04": self = .ai04
-        case "05": self = .ai05
-        case "06": self = .ai06
-        case "07": self = .ai07
-        case "08": self = .ai08
-        case "09": self = .ai09
-        case "10": self = .ai10
-        case "11": self = .ai11
-        case "12": self = .ai12
-        case "13": self = .ai13
-        case "17": self = .ai17
-        case "19": self = .ai19
-        case "20": self = .ai20
-        case "21": self = .ai21
-        case "24": self = .ai24
-        case "25": self = .ai25
-        case "26": self = .ai26
-        case "27": self = .ai27
+        case "01": self = ._01
+        case "02": self = ._02
+        case "03": self = ._03
+        case "04": self = ._04
+        case "05": self = ._05
+        case "06": self = ._06
+        case "07": self = ._07
+        case "08": self = ._08
+        case "09": self = ._09
+        case "10": self = ._10
+        case "11": self = ._11
+        case "12": self = ._12
+        case "13": self = ._13
+        case "17": self = ._17
+        case "19": self = ._19
+        case "20": self = ._20
+        case "21": self = ._21
+        case "24": self = ._24
+        case "25": self = ._25
+        case "26": self = ._26
+        case "27": self = ._27
+        case "ABR_PASSIVE": self = .abr_passive
+        case "ABR_OFFENSIVE": self = .abr_offensive
         default: return nil
         }
     }

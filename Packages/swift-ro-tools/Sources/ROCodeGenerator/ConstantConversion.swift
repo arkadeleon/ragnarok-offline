@@ -215,7 +215,6 @@ let allConstantConversions: [ConstantConversion] = [
         type: "e_aegis_monstertype",
         prefix: "MONSTER_TYPE_",
         outputType: "MonsterAI",
-        outputPrefix: "ai",
         outputFormat: .hex,
         extensions: [.rawRepresentable, .decodable]
     ),
