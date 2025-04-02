@@ -40,7 +40,7 @@ final class MonsterDatabaseTests: XCTestCase {
         XCTAssertEqual(poring.attackMotion, 672)
         XCTAssertEqual(poring.clientAttackMotion, 288)
         XCTAssertEqual(poring.damageMotion, 480)
-        XCTAssertEqual(poring.ai, .ai02)
+        XCTAssertEqual(poring.ai, ._02)
         XCTAssertEqual(poring.class, .normal)
         XCTAssertEqual(poring.drops?.count, 8)
 
@@ -71,12 +71,12 @@ final class MonsterDatabaseTests: XCTestCase {
         XCTAssertEqual(archerSkeleton.attackMotion, 864)
         XCTAssertEqual(archerSkeleton.clientAttackMotion, 672)
         XCTAssertEqual(archerSkeleton.damageMotion, 576)
-        XCTAssertEqual(archerSkeleton.ai, .ai05)
+        XCTAssertEqual(archerSkeleton.ai, ._05)
         XCTAssertEqual(archerSkeleton.class, .normal)
         XCTAssertEqual(archerSkeleton.drops?.count, 8)
 
         let osiris = await database.monster(forAegisName: "OSIRIS")!
-        XCTAssertEqual(osiris.ai, .ai21)
+        XCTAssertEqual(osiris.ai, ._21)
         XCTAssertEqual(osiris.class, .boss)
         XCTAssertEqual(osiris.modes, [.mvp])
         XCTAssertEqual(osiris.mvpDrops?.count, 3)
@@ -114,7 +114,7 @@ final class MonsterDatabaseTests: XCTestCase {
         XCTAssertEqual(poring.attackMotion, 672)
         XCTAssertEqual(poring.clientAttackMotion, 288)
         XCTAssertEqual(poring.damageMotion, 480)
-        XCTAssertEqual(poring.ai, .ai02)
+        XCTAssertEqual(poring.ai, ._02)
         XCTAssertEqual(poring.class, .normal)
         XCTAssertEqual(poring.drops?.count, 8)
 
@@ -148,12 +148,12 @@ final class MonsterDatabaseTests: XCTestCase {
         XCTAssertEqual(archerSkeleton.attackMotion, 864)
         XCTAssertEqual(archerSkeleton.clientAttackMotion, 672)
         XCTAssertEqual(archerSkeleton.damageMotion, 576)
-        XCTAssertEqual(archerSkeleton.ai, .ai05)
+        XCTAssertEqual(archerSkeleton.ai, ._05)
         XCTAssertEqual(archerSkeleton.class, .normal)
         XCTAssertEqual(archerSkeleton.drops?.count, 8)
 
         let osiris = await database.monster(forAegisName: "OSIRIS")!
-        XCTAssertEqual(osiris.ai, .ai21)
+        XCTAssertEqual(osiris.ai, ._21)
         XCTAssertEqual(osiris.class, .boss)
         XCTAssertEqual(osiris.modes, [.mvp])
         XCTAssertEqual(osiris.mvpDrops?.count, 3)
