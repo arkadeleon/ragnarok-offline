@@ -175,7 +175,18 @@ extension GameSession: MapSceneDelegate {
     }
 
     func mapScene(_ scene: any MapSceneProtocol, didTapTileAt position: SIMD2<Int16>) {
-        mapSession?.requestMove(x: position.x, y: position.y)
+        mapSession?.requestMove(to: position)
+    }
+
+    func mapScene(_ scene: any MapSceneProtocol, didTapMapObject object: MapObject) {
+        switch object.type {
+        case .monster:
+            mapSession?.requestAction(._repeat, onTarget: object.id)
+        case .npc:
+            mapSession?.talkToNPC(npcID: object.id)
+        default:
+            break
+        }
     }
 
     func mapScene(_ scene: any MapSceneProtocol, didTapMapObjectWith objectID: UInt32) {

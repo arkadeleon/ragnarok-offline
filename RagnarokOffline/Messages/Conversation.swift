@@ -100,19 +100,19 @@ class Conversation {
             charSession?.selectChar(slot: slot)
         case .moveUp:
             if let position = playerPosition {
-                mapSession?.requestMove(x: position.x, y: position.y + 1)
+                mapSession?.requestMove(to: [position.x, position.y + 1])
             }
         case .moveDown:
             if let position = playerPosition {
-                mapSession?.requestMove(x: position.x, y: position.y - 1)
+                mapSession?.requestMove(to: [position.x, position.y - 1])
             }
         case .moveLeft:
             if let position = playerPosition {
-                mapSession?.requestMove(x: position.x - 1, y: position.y)
+                mapSession?.requestMove(to: [position.x - 1, position.y])
             }
         case .moveRight:
             if let position = playerPosition {
-                mapSession?.requestMove(x: position.x + 1, y: position.y)
+                mapSession?.requestMove(to: [position.x + 1, position.y])
             }
         }
     }

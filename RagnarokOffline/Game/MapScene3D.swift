@@ -42,6 +42,7 @@ class MapScene3D: MapSceneProtocol {
         tileEntityManager = TileEntityManager(gat: world.gat, rootEntity: rootEntity)
         monsterEntityManager = SpriteEntityManager()
 
+        MapObjectComponent.registerComponent()
         SpriteComponent.registerComponent()
         TileComponent.registerComponent()
 
@@ -161,6 +162,7 @@ class MapScene3D: MapSceneProtocol {
                     monsterEntity.name = "\(event.object.id)"
                     monsterEntity.transform = transform(for: event.object.position)
                     monsterEntity.isEnabled = (event.object.effectState != .cloak)
+                    monsterEntity.components.set(MapObjectComponent(object: event.object))
                     monsterEntity.runPlayerAction(.idle, direction: .south)
                     rootEntity.addChild(monsterEntity)
                 }
@@ -179,6 +181,7 @@ class MapScene3D: MapSceneProtocol {
                     monsterEntity.name = "\(event.object.id)"
                     monsterEntity.transform = transform(for: event.toPosition)
                     monsterEntity.isEnabled = (event.object.effectState != .cloak)
+                    monsterEntity.components.set(MapObjectComponent(object: event.object))
                     monsterEntity.runPlayerAction(.idle, direction: .south)
                     rootEntity.addChild(monsterEntity)
                 }

@@ -101,13 +101,24 @@ extension MapSession {
         }
     }
 
-    /// Request move.
+    /// Request move to position.
     ///
     /// Send ``PACKET_CZ_REQUEST_MOVE``
-    public func requestMove(x: Int16, y: Int16) {
+    public func requestMove(to position: SIMD2<Int16>) {
         var packet = PACKET_CZ_REQUEST_MOVE()
-        packet.x = x
-        packet.y = y
+        packet.x = position.x
+        packet.y = position.y
+
+        client.sendPacket(packet)
+    }
+
+    /// Request action on target.
+    ///
+    /// Send ``PACKET_CZ_REQUEST_ACT``
+    public func requestAction(_ actionType: DamageType, onTarget targetID: UInt32 = 0) {
+        var packet = PACKET_CZ_REQUEST_ACT()
+        packet.targetID = targetID
+        packet.action = UInt8(actionType.rawValue)
 
         client.sendPacket(packet)
     }
@@ -121,24 +132,6 @@ extension MapSession {
         var packet = PACKET_CZ_CHANGE_DIRECTION()
         packet.headDirection = headDirection
         packet.direction = direction
-
-        client.sendPacket(packet)
-    }
-
-    /// Request action.
-    ///
-    /// Send ``PACKET_CZ_REQUEST_ACT``
-    public func requestAction(action: UInt8) {
-        var packet = PACKET_CZ_REQUEST_ACT()
-        packet.action = action
-
-        client.sendPacket(packet)
-    }
-
-    public func attackOnTarget(targetID: UInt32) {
-        var packet = PACKET_CZ_REQUEST_ACT()
-        packet.targetID = targetID
-        packet.action = 7
 
         client.sendPacket(packet)
     }

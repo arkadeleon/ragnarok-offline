@@ -33,18 +33,18 @@ struct MapView3DContent: View {
             SpatialTapGesture()
                 .targetedToEntity(where: .has(TileComponent.self))
                 .onEnded { event in
-                    if let tileComponent = event.entity.components[TileComponent.self] {
-                        let position = SIMD2(Int16(tileComponent.x), Int16(tileComponent.y))
+                    if let component = event.entity.components[TileComponent.self] {
+                        let position = SIMD2(Int16(component.x), Int16(component.y))
                         scene.mapSceneDelegate?.mapScene(scene, didTapTileAt: position)
                     }
                 }
         )
         .gesture(
             SpatialTapGesture()
-                .targetedToEntity(where: .has(SpriteComponent.self))
+                .targetedToEntity(where: .has(MapObjectComponent.self))
                 .onEnded { event in
-                    if let objectID = UInt32(event.entity.name) {
-                        scene.mapSceneDelegate?.mapScene(scene, didTapMapObjectWith: objectID)
+                    if let component = event.entity.components[MapObjectComponent.self] {
+                        scene.mapSceneDelegate?.mapScene(scene, didTapMapObject: component.object)
                     }
                 }
         )

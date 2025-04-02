@@ -8,9 +8,27 @@
 import ROConstants
 import RONetwork
 
+// See `clif_bl_type`
+public enum MapObjectType: Int, Sendable {
+    case pc = 0x0
+    case disguised = 0x1
+    case item = 0x2
+    case skill = 0x3
+    case unknown = 0x4
+    case monster = 0x5
+    case npc = 0x6
+    case pet = 0x7
+    case hom = 0x8
+    case mer = 0x9
+    case elem = 0xa
+    case npc2 = 0xc
+    case abr = 0xd
+    case bionic = 0xe
+}
+
 public struct MapObject: Sendable {
     public let id: UInt32
-    public let type: UInt8
+    public let type: MapObjectType
     public let speed: Int16
 
     public let job: Int16
@@ -24,7 +42,7 @@ public struct MapObject: Sendable {
 
     init(packet: packet_spawn_unit) {
         self.id = packet.AID
-        self.type = packet.objecttype
+        self.type = MapObjectType(rawValue: Int(packet.objecttype)) ?? .unknown
         self.speed = packet.speed
 
         self.job = packet.job
@@ -40,7 +58,7 @@ public struct MapObject: Sendable {
 
     init(packet: packet_idle_unit) {
         self.id = packet.AID
-        self.type = packet.objecttype
+        self.type = MapObjectType(rawValue: Int(packet.objecttype)) ?? .unknown
         self.speed = packet.speed
 
         self.job = packet.job
@@ -56,7 +74,7 @@ public struct MapObject: Sendable {
 
     init(packet: packet_unit_walking) {
         self.id = packet.AID
-        self.type = packet.objecttype
+        self.type = MapObjectType(rawValue: Int(packet.objecttype)) ?? .unknown
         self.speed = packet.speed
 
         self.job = packet.job
