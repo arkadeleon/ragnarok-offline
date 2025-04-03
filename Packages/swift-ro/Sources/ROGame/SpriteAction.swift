@@ -9,10 +9,7 @@ import CoreGraphics
 import RealityKit
 import ROCore
 import RORendering
-
-enum SpriteActionError: Error {
-    case cannotRenderAction
-}
+import ROResources
 
 final public class SpriteAction: Sendable {
     public let texture: TextureResource?
@@ -56,7 +53,7 @@ final public class SpriteAction: Sendable {
 }
 
 extension SpriteAction {
-    public static func actions(for jobID: UniformJobID, configuration: SpriteConfiguration) async throws -> [SpriteAction] {
+    public static func actions(forJobID jobID: UniformJobID, configuration: SpriteConfiguration) async throws -> [SpriteAction] {
         let spriteResolver = SpriteResolver(resourceManager: .default)
 
         let sprites = await spriteResolver.resolve(jobID: jobID, configuration: configuration)
@@ -90,5 +87,15 @@ extension SpriteAction {
         }
 
         return actions
+    }
+
+    public static func actions(forItemID itemID: Int) async throws -> [SpriteAction] {
+        guard let path = await ResourcePath(itemSpritePathWithItemID: itemID) else {
+            return []
+        }
+
+        let sprite = try await ResourceManager.default.sprite(at: path)
+        let action = try await SpriteAction(sprites: [sprite], actionIndex: 0)
+        return [action]
     }
 }

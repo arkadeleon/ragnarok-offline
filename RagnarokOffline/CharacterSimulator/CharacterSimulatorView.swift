@@ -179,7 +179,7 @@ struct CharacterSimulatorView2: View {
                     spriteConfiguration.weaponID = configuration.weaponType.rawValue
                     spriteConfiguration.shieldID = configuration.shieldID
 
-                    let actions = try await SpriteAction.actions(for: jobID, configuration: spriteConfiguration)
+                    let actions = try await SpriteAction.actions(forJobID: jobID, configuration: spriteConfiguration)
 
                     let spriteComponent = SpriteComponent(actions: actions)
                     entity.components.set(spriteComponent)

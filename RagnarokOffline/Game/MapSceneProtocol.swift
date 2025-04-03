@@ -17,4 +17,7 @@ protocol MapSceneProtocol {
     func onMapObjectStopped(_ event: MapObjectEvents.Stopped)
     func onMapObjectVanished(_ event: MapObjectEvents.Vanished)
     func onMapObjectStateChanged(_ event: MapObjectEvents.StateChanged)
+
+    func onMapItemSpawned(_ event: MapItemEvents.Spawned)
+    func onMapItemVanished(_ event: MapItemEvents.Vanished)
 }

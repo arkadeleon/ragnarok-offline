@@ -19,5 +19,7 @@ final class PacketDatabaseTests: XCTestCase {
         XCTAssertEqual(PacketDatabase.Entry.CZ_REQUEST_ACT.packetType, 0x437)
 
         XCTAssertEqual(PacketDatabase.Entry.CZ_REQUEST_MOVE.packetType, 0x35f)
+
+        XCTAssertEqual(PacketDatabase.Entry.CZ_ITEM_PICKUP.packetType, 0x362)
     }
 }

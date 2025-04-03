@@ -192,4 +192,8 @@ extension GameSession: MapSceneDelegate {
     func mapScene(_ scene: any MapSceneProtocol, didTapMapObjectWith objectID: UInt32) {
         mapSession?.talkToNPC(npcID: objectID)
     }
+
+    func mapScene(_ scene: any MapSceneProtocol, didTapMapItem item: MapItem) {
+        mapSession?.pickUpItem(objectID: item.objectID)
+    }
 }

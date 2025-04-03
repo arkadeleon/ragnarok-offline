@@ -21,7 +21,8 @@ public actor SpriteEntityManager {
         }
 
         do {
-            let entity = try await SpriteEntity(jobID: jobID, configuration: SpriteConfiguration())
+            let actions = try await SpriteAction.actions(forJobID: jobID, configuration: SpriteConfiguration())
+            let entity = await SpriteEntity(actions: actions)
             entitiesByJobID[jobID] = entity
             return entity
         } catch {

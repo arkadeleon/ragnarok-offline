@@ -12,4 +12,5 @@ protocol MapSceneDelegate: AnyObject {
     func mapScene(_ scene: any MapSceneProtocol, didTapTileAt position: SIMD2<Int16>)
     func mapScene(_ scene: any MapSceneProtocol, didTapMapObject object: MapObject)
     func mapScene(_ scene: any MapSceneProtocol, didTapMapObjectWith objectID: UInt32)
+    func mapScene(_ scene: any MapSceneProtocol, didTapMapItem item: MapItem)
 }

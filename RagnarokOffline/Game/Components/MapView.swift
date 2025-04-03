@@ -27,6 +27,8 @@ struct MapView<Content>: View where Content: View {
             .onReceive(mapSession.publisher(for: MapObjectEvents.Stopped.self), perform: scene.onMapObjectStopped)
             .onReceive(mapSession.publisher(for: MapObjectEvents.Vanished.self), perform: scene.onMapObjectVanished)
             .onReceive(mapSession.publisher(for: MapObjectEvents.StateChanged.self), perform: scene.onMapObjectStateChanged)
+            .onReceive(mapSession.publisher(for: MapItemEvents.Spawned.self), perform: scene.onMapItemSpawned)
+            .onReceive(mapSession.publisher(for: MapItemEvents.Vanished.self), perform: scene.onMapItemVanished)
     }
 
     init(mapSession: MapSession, scene: any MapSceneProtocol, @ViewBuilder content: @escaping () -> Content) {

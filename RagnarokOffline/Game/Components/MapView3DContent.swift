@@ -48,5 +48,14 @@ struct MapView3DContent: View {
                     }
                 }
         )
+        .gesture(
+            SpatialTapGesture()
+                .targetedToEntity(where: .has(MapItemComponent.self))
+                .onEnded { event in
+                    if let component = event.entity.components[MapItemComponent.self] {
+                        scene.mapSceneDelegate?.mapScene(scene, didTapMapItem: component.item)
+                    }
+                }
+        )
     }
 }

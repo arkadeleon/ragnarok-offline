@@ -138,7 +138,7 @@ final class GameSessionTests: XCTestCase {
 
         // MARK: - Move to warp
 
-        mapSession.requestMove(x: 27, y: 30)
+        mapSession.requestMove(to: [27, 30])
 
         for await event in mapSession.eventStream(for: PlayerEvents.Moved.self).prefix(1) {
             XCTAssertEqual(event.fromPosition, [18, 26])

@@ -21,13 +21,12 @@ public class SpriteEntity: Entity {
         components.set(inputTargetComponent)
     }
 
-    public init(jobID: UniformJobID, configuration: SpriteConfiguration) async throws {
+    public init(actions: [SpriteAction]) {
         super.init()
 
         let inputTargetComponent = InputTargetComponent()
         components.set(inputTargetComponent)
 
-        let actions = try await SpriteAction.actions(for: jobID, configuration: configuration)
         let spriteComponent = SpriteComponent(actions: actions)
         components.set(spriteComponent)
     }

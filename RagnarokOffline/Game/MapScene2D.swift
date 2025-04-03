@@ -179,4 +179,10 @@ class MapScene2D: SKScene, MapSceneProtocol {
             objectNode.isHidden = (event.effectState == .cloak)
         }
     }
+
+    func onMapItemSpawned(_ event: MapItemEvents.Spawned) {
+    }
+
+    func onMapItemVanished(_ event: MapItemEvents.Vanished) {
+    }
 }

@@ -26,6 +26,7 @@ public enum MapObjectType: Int, Sendable {
     case bionic = 0xe
 }
 
+/// Represents a player character, non-player character, monster on a map.
 public struct MapObject: Sendable {
     public let id: UInt32
     public let type: MapObjectType

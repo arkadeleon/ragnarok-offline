@@ -71,7 +71,8 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         subscribeToInventoryPackets(with: &subscription)
         subscribeToMailPackets(with: &subscription)
         subscribeToNPCPackets(with: &subscription)
-        subscribeToObjectPackets(with: &subscription)
+        subscribeToMapItemPackets(with: &subscription)
+        subscribeToMapObjectPackets(with: &subscription)
         subscribeToPartyPackets(with: &subscription)
 
         // See `clif_reputation_list`
@@ -197,7 +198,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         }
     }
 
-    private func subscribeToObjectPackets(with subscription: inout ClientSubscription) {
+    private func subscribeToMapObjectPackets(with subscription: inout ClientSubscription) {
         // See `clif_spawn_unit`
         subscription.subscribe(to: packet_spawn_unit.self) { [unowned self] packet in
             let object = MapObject(packet: packet)

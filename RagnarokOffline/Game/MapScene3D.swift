@@ -42,6 +42,7 @@ class MapScene3D: MapSceneProtocol {
         tileEntityManager = TileEntityManager(gat: world.gat, rootEntity: rootEntity)
         monsterEntityManager = SpriteEntityManager()
 
+        MapItemComponent.registerComponent()
         MapObjectComponent.registerComponent()
         SpriteComponent.registerComponent()
         TileComponent.registerComponent()
@@ -73,7 +74,7 @@ class MapScene3D: MapSceneProtocol {
         tileEntityManager.addTileEntities(for: position)
 
         do {
-            let actions = try await SpriteAction.actions(for: 0, configuration: SpriteConfiguration())
+            let actions = try await SpriteAction.actions(forJobID: 0, configuration: SpriteConfiguration())
             let spriteComponent = SpriteComponent(actions: actions)
             player.components.set(spriteComponent)
         } catch {
@@ -205,6 +206,24 @@ class MapScene3D: MapSceneProtocol {
     func onMapObjectStateChanged(_ event: MapObjectEvents.StateChanged) {
         if let entity = rootEntity.findEntity(named: "\(event.objectID)") {
             entity.isEnabled = (event.effectState != .cloak)
+        }
+    }
+
+    func onMapItemSpawned(_ event: MapItemEvents.Spawned) {
+        Task {
+            let actions = try await SpriteAction.actions(forItemID: Int(event.item.itemID))
+            let entity = SpriteEntity(actions: actions)
+            entity.name = "\(event.item.objectID)"
+            entity.transform = transform(for: event.item.position)
+            entity.components.set(MapItemComponent(item: event.item))
+            entity.runAction(0)
+            rootEntity.addChild(entity)
+        }
+    }
+
+    func onMapItemVanished(_ event: MapItemEvents.Vanished) {
+        if let entity = rootEntity.findEntity(named: "\(event.objectID)") {
+            entity.removeFromParent()
         }
     }
 }
