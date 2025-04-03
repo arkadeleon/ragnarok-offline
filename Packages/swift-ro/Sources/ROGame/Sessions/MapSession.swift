@@ -188,16 +188,6 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         }
     }
 
-    private func subscribeToMailPackets(with subscription: inout ClientSubscription) {
-        // 0x24a
-        subscription.subscribe(to: PACKET_ZC_MAIL_RECEIVE.self) { packet in
-        }
-
-        // See `clif_Mail_new`
-        subscription.subscribe(to: PACKET_ZC_NOTIFY_UNREADMAIL.self) { packet in
-        }
-    }
-
     private func subscribeToMapObjectPackets(with subscription: inout ClientSubscription) {
         // See `clif_spawn_unit`
         subscription.subscribe(to: packet_spawn_unit.self) { [unowned self] packet in

@@ -244,7 +244,36 @@ let registeredPackets: [Int16 : any RegisteredPacket.Type] = [
     HEADER_ZC_FRIENDS_STATE: PACKET_ZC_FRIENDS_STATE.self,          // 0x206
 //    ZC_REQ_ADD_FRIENDS,                                             // 0x207
 //    ZC_ADD_FRIENDS_LIST,                                            // 0x209
-//    CZ_DELETE_FRIENDS,                                              // 0x20a
+//    ZC_DELETE_FRIENDS,                                              // 0x20a
+//    ZC_STARSKILL,                                                   // 0x20e
+//    ZC_ACK_PVPPOINT,                                                // 0x210
+//    ZC_ACK_STATUS_GM,                                               // 0x214
+    HEADER_ZC_SKILLMSG: PACKET_ZC_SKILLMSG.self,                    // 0x215
+//    ZC_BABYMSG,                                                     // 0x216
+    HEADER_ZC_BLACKSMITH_RANK: PACKET_ZC_BLACKSMITH_RANK.self,      // 0x219
+    HEADER_ZC_ALCHEMIST_RANK: PACKET_ZC_ALCHEMIST_RANK.self,        // 0x21a
+    HEADER_ZC_BLACKSMITH_POINT: PACKET_ZC_BLACKSMITH_POINT.self,    // 0x21b
+    HEADER_ZC_ALCHEMIST_POINT: PACKET_ZC_ALCHEMIST_POINT.self,      // 0x21c
+    HEADER_ZC_NOTIFY_WEAPONITEMLIST: PACKET_ZC_NOTIFY_WEAPONITEMLIST.self,  // 0x221
+    HEADER_ZC_ACK_WEAPONREFINE: PACKET_ZC_ACK_WEAPONREFINE.self,    // 0x223
+    HEADER_ZC_TAEKWON_POINT: PACKET_ZC_TAEKWON_POINT.self,          // 0x224
+    HEADER_ZC_TAEKWON_RANK: PACKET_ZC_TAEKWON_RANK.self,            // 0x226
+    HEADER_ZC_PROPERTY_HOMUN: PACKET_ZC_PROPERTY_HOMUN.self,        // 0x22e, 0x9f7, 0xb2f, 0xb76, 0xba4
+    HEADER_ZC_FEED_MER: PACKET_ZC_FEED_MER.self,                    // 0x22f
+    HEADER_ZC_CHANGESTATE_MER: PACKET_ZC_CHANGESTATE_MER.self,      // 0x230
+//    ZC_REQ_STORE_PASSWORD,                                          // 0x23a
+//    ZC_RESULT_STORE_PASSWORD,                                       // 0x23c
+//    ZC_MAIL_REQ_GET_LIST,                                           // 0x240, 0x9f0, 0xa7d, 0xac2
+//    ZC_MAIL_REQ_OPEN,                                               // 0x242
+//    ZC_MAIL_REQ_GET_ITEM,                                           // 0x245
+//    ZC_MAIL_REQ_SEND,                                               // 0x249
+    HEADER_ZC_MAIL_RECEIVE: PACKET_ZC_MAIL_RECEIVE.self,            // 0x24a
+//    ZC_AUCTION_RESULT,                                              // 0x250
+//    ZC_AUCTION_ITEM_REQ_SEARCH,                                     // 0x252
+//    ZC_STARPLACE,                                                   // 0x253
+//    ZC_ACK_MAIL_ADD_ITEM,                                           // 0x255
+//    ZC_ACK_AUCTION_ADD_ITEM,                                        // 0x256
+//    ZC_ACK_MAIL_DELETE,                                             // 0x257
 
     HEADER_ZC_LONGLONGPAR_CHANGE: PACKET_ZC_LONGLONGPAR_CHANGE.self,
     HEADER_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item: PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item.self,
@@ -253,14 +282,12 @@ let registeredPackets: [Int16 : any RegisteredPacket.Type] = [
     HEADER_ZC_EQUIPWIN_MICROSCOPE: PACKET_ZC_EQUIPWIN_MICROSCOPE.self,
     HEADER_ZC_NPC_MARKET_OPEN: PACKET_ZC_NPC_MARKET_OPEN.self,
     HEADER_ZC_SHORTCUT_KEY_LIST: PACKET_ZC_SHORTCUT_KEY_LIST.self,
-    HEADER_ZC_ACK_ADD_ITEM_RODEX: PACKET_ZC_ACK_ADD_ITEM_RODEX.self,
     HEADER_ZC_CHECKNAME: PACKET_ZC_CHECKNAME.self,
     HEADER_ZC_ACK_READ_RODEX: PACKET_ZC_ACK_READ_RODEX.self,
     HEADER_ZC_CLANINFO: PACKET_ZC_CLANINFO.self,
     HEADER_ZC_UI_OPEN: PACKET_ZC_UI_OPEN.self,
     HEADER_ZC_UI_OPEN2: PACKET_ZC_UI_OPEN2.self,
     HEADER_ZC_ITEM_PICKUP_PARTY: PACKET_ZC_ITEM_PICKUP_PARTY.self,
-    HEADER_ZC_PROPERTY_HOMUN: PACKET_ZC_PROPERTY_HOMUN.self,
     HEADER_ZC_SKILL_SELECT_REQUEST: PACKET_ZC_SKILL_SELECT_REQUEST.self,
     HEADER_ZC_MAKINGITEM_LIST: PACKET_ZC_MAKINGITEM_LIST.self,
     HEADER_ZC_SEARCH_STORE_INFO_FAILED: PACKET_ZC_SEARCH_STORE_INFO_FAILED.self,
@@ -354,7 +381,6 @@ let registeredPackets: [Int16 : any RegisteredPacket.Type] = [
     HEADER_ZC_INVENTORY_TAB: PACKET_ZC_INVENTORY_TAB.self,
     HEADER_ZC_MILLENNIUMSHIELD: PACKET_ZC_MILLENNIUMSHIELD.self,
     HEADER_ZC_SPIRITS_ATTRIBUTE: PACKET_ZC_SPIRITS_ATTRIBUTE.self,
-    HEADER_ZC_CHANGESTATE_MER: PACKET_ZC_CHANGESTATE_MER.self,
     HEADER_ZC_HOSKILLINFO_LIST: PACKET_ZC_HOSKILLINFO_LIST.self,
     HEADER_ZC_HOSKILLINFO_UPDATE: PACKET_ZC_HOSKILLINFO_UPDATE.self,
     HEADER_ZC_DELETE_ITEM_FROM_BODY: PACKET_ZC_DELETE_ITEM_FROM_BODY.self,
@@ -364,12 +390,6 @@ let registeredPackets: [Int16 : any RegisteredPacket.Type] = [
     HEADER_ZC_SKILLINFO_DELETE: PACKET_ZC_SKILLINFO_DELETE.self,
     HEADER_ZC_HO_PAR_CHANGE: PACKET_ZC_HO_PAR_CHANGE.self,
     HEADER_ZC_EL_PAR_CHANGE: PACKET_ZC_EL_PAR_CHANGE.self,
-    HEADER_ZC_BLACKSMITH_RANK: PACKET_ZC_BLACKSMITH_RANK.self,
-    HEADER_ZC_ALCHEMIST_RANK: PACKET_ZC_ALCHEMIST_RANK.self,
-    HEADER_ZC_BLACKSMITH_POINT: PACKET_ZC_BLACKSMITH_POINT.self,
-    HEADER_ZC_ALCHEMIST_POINT: PACKET_ZC_ALCHEMIST_POINT.self,
-    HEADER_ZC_TAEKWON_POINT: PACKET_ZC_TAEKWON_POINT.self,
-    HEADER_ZC_TAEKWON_RANK: PACKET_ZC_TAEKWON_RANK.self,
     HEADER_ZC_KILLER_POINT: PACKET_ZC_KILLER_POINT.self,
     HEADER_ZC_KILLER_RANK: PACKET_ZC_KILLER_RANK.self,
     HEADER_ZC_ACK_RANKING: PACKET_ZC_ACK_RANKING.self,
@@ -381,10 +401,7 @@ let registeredPackets: [Int16 : any RegisteredPacket.Type] = [
     HEADER_ZC_MSG: PACKET_ZC_MSG.self,
     HEADER_ZC_MSG_SKILL: PACKET_ZC_MSG_SKILL.self,
     HEADER_ZC_MSG_VALUE: PACKET_ZC_MSG_VALUE.self,
-    HEADER_ZC_SKILLMSG: PACKET_ZC_SKILLMSG.self,
     HEADER_ZC_EFST_SET_ENTER: PACKET_ZC_EFST_SET_ENTER.self,
-    HEADER_ZC_NOTIFY_WEAPONITEMLIST: PACKET_ZC_NOTIFY_WEAPONITEMLIST.self,
-    HEADER_ZC_ACK_WEAPONREFINE: PACKET_ZC_ACK_WEAPONREFINE.self,
     HEADER_ZC_PC_CASH_POINT_ITEMLIST: PACKET_ZC_PC_CASH_POINT_ITEMLIST.self,
     HEADER_ZC_CASH_TIME_COUNTER: PACKET_ZC_CASH_TIME_COUNTER.self,
     HEADER_ZC_CASH_ITEM_DELETE: PACKET_ZC_CASH_ITEM_DELETE.self,
@@ -399,11 +416,9 @@ let registeredPackets: [Int16 : any RegisteredPacket.Type] = [
     HEADER_ZC_GROUP_ISALIVE: PACKET_ZC_GROUP_ISALIVE.self,
     HEADER_ZC_GUILD_POSITION: PACKET_ZC_GUILD_POSITION.self,
     HEADER_ZC_REMOVE_EFFECT: PACKET_ZC_REMOVE_EFFECT.self,
-    HEADER_ZC_FEED_MER: PACKET_ZC_FEED_MER.self,
     HEADER_ZC_MSG_COLOR: PACKET_ZC_MSG_COLOR.self,
 
     HEADER_ZC_AID: PACKET_ZC_AID.self,
-    HEADER_ZC_MAIL_RECEIVE: PACKET_ZC_MAIL_RECEIVE.self,
     HEADER_ZC_NPC_CHAT: PACKET_ZC_NPC_CHAT.self,
     HEADER_ZC_RECOVER_PENALTY_OVERWEIGHT: PACKET_ZC_RECOVER_PENALTY_OVERWEIGHT.self,
     HEADER_ZC_SEND_SWAP_EQUIPITEM_INFO: PACKET_ZC_SEND_SWAP_EQUIPITEM_INFO.self,
@@ -412,5 +427,13 @@ let registeredPackets: [Int16 : any RegisteredPacket.Type] = [
 
     packet_header_achievementListType: PACKET_ZC_ALL_ACH_LIST.self,
     packet_header_achievementUpdateType: PACKET_ZC_ACH_UPDATE.self,
-    packet_header_rodexicon: PACKET_ZC_NOTIFY_UNREADMAIL.self,
+
+    packet_header_rodexicon: PACKET_ZC_NOTIFY_UNREADMAIL.self,          // 0x9e7
+    packet_header_rodexwriteresult: PACKET_ZC_WRITE_MAIL_RESULT.self,   // 0x9ed
+//    packet_header_rodexmailList: ZC_ACK_MAIL_LIST,              // 0x9f0, 0xa7d, 0xac2
+    packet_header_rodexgetzeny: PACKET_ZC_ACK_ITEM_FROM_MAIL.self,      // 0x9f2
+    packet_header_rodexgetitem: PACKET_ZC_ACK_ITEM_FROM_MAIL.self,      // 0x9f4
+    packet_header_rodexdelete: PACKET_ZC_ACK_DELETE_MAIL.self,          // 0x9f6
+
+    HEADER_ZC_ACK_ADD_ITEM_RODEX: PACKET_ZC_ACK_ADD_ITEM_RODEX.self,    // 0xa05, 0xb3f
 ]
