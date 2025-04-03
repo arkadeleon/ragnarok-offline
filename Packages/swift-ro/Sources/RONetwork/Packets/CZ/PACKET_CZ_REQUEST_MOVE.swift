@@ -7,26 +7,22 @@
 
 import ROCore
 
-/// See `clif_parse_WalkToXY`
-public struct PACKET_CZ_REQUEST_MOVE: EncodablePacket {
-    public var packetType: Int16 {
-        PacketDatabase.Entry.CZ_REQUEST_MOVE.packetType
-    }
+let ENTRY_CZ_REQUEST_MOVE = packetDatabase.entry(forFunctionName: "clif_parse_WalkToXY")!
 
-    public var packetLength: Int16 {
-        PacketDatabase.Entry.CZ_REQUEST_MOVE.packetLength
-    }
-
+public struct PACKET_CZ_REQUEST_MOVE: BinaryEncodable {
+    public let packetType: Int16
     public var x: Int16
     public var y: Int16
 
     public init() {
+        packetType = ENTRY_CZ_REQUEST_MOVE.packetType
         x = 0
         y = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {
-        let offsets = PacketDatabase.Entry.CZ_REQUEST_MOVE.offsets
+        let packetLength = ENTRY_CZ_REQUEST_MOVE.packetLength
+        let offsets = ENTRY_CZ_REQUEST_MOVE.offsets
 
         var data = [UInt8](repeating: 0, count: Int(packetLength))
         data.replaceSubrange(from: 0, with: packetType)
@@ -38,8 +34,4 @@ public struct PACKET_CZ_REQUEST_MOVE: EncodablePacket {
 
         try encoder.encode(data)
     }
-}
-
-extension PacketDatabase.Entry {
-    public static let CZ_REQUEST_MOVE = packetDatabase.entry(forFunctionName: "clif_parse_WalkToXY")!
 }

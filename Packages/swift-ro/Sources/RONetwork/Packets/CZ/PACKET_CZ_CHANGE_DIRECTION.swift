@@ -7,26 +7,22 @@
 
 import ROCore
 
-/// See `clif_parse_ChangeDir`
-public struct PACKET_CZ_CHANGE_DIRECTION: EncodablePacket {
-    public var packetType: Int16 {
-        PacketDatabase.Entry.CZ_CHANGE_DIRECTION.packetType
-    }
+let ENTRY_CZ_CHANGE_DIRECTION = packetDatabase.entry(forFunctionName: "clif_parse_ChangeDir")!
 
-    public var packetLength: Int16 {
-        PacketDatabase.Entry.CZ_CHANGE_DIRECTION.packetLength
-    }
-
+public struct PACKET_CZ_CHANGE_DIRECTION: BinaryEncodable {
+    public let packetType: Int16
     public var headDirection: UInt16
     public var direction: UInt8
 
     public init() {
+        packetType = ENTRY_CZ_CHANGE_DIRECTION.packetType
         headDirection = 0
         direction = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {
-        let offsets = PacketDatabase.Entry.CZ_CHANGE_DIRECTION.offsets
+        let packetLength = ENTRY_CZ_CHANGE_DIRECTION.packetLength
+        let offsets = ENTRY_CZ_CHANGE_DIRECTION.offsets
 
         var data = [UInt8](repeating: 0, count: Int(packetLength))
         data.replaceSubrange(from: 0, with: packetType)
@@ -35,8 +31,4 @@ public struct PACKET_CZ_CHANGE_DIRECTION: EncodablePacket {
 
         try encoder.encode(data)
     }
-}
-
-extension PacketDatabase.Entry {
-    public static let CZ_CHANGE_DIRECTION = packetDatabase.entry(forFunctionName: "clif_parse_ChangeDir")!
 }

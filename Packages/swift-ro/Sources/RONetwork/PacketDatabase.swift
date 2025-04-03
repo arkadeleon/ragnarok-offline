@@ -7,7 +7,7 @@
 
 let packetDatabase = PacketDatabase()
 
-final class PacketDatabase: Sendable {
+struct PacketDatabase {
     struct Entry {
         var packetType: Int16
         var packetLength: Int16
@@ -15,10 +15,10 @@ final class PacketDatabase: Sendable {
         var offsets: [Int] = []
     }
 
-    let entriesByPacketType: [Int16 : Entry]
+    let entriesByPacketType: [Int16 : PacketDatabase.Entry]
 
     init() {
-        var entriesByPacketType: [Int16 : Entry] = [:]
+        var entriesByPacketType: [Int16 : PacketDatabase.Entry] = [:]
 
         let add_packet: (Int16, Int, String?, [Int]) -> Void = { packetType, packetLength, functionName, offsets in
             if let functionName {
@@ -27,7 +27,12 @@ final class PacketDatabase: Sendable {
                 }
             }
 
-            let entry = Entry(packetType: packetType, packetLength: Int16(packetLength), functionName: functionName, offsets: offsets)
+            let entry = PacketDatabase.Entry(
+                packetType: packetType,
+                packetLength: Int16(packetLength),
+                functionName: functionName,
+                offsets: offsets
+            )
             entriesByPacketType[packetType] = entry
         }
 
@@ -39,7 +44,7 @@ final class PacketDatabase: Sendable {
         self.entriesByPacketType = entriesByPacketType
     }
 
-    func entry(forFunctionName functionName: String) -> Entry? {
+    func entry(forFunctionName functionName: String) -> PacketDatabase.Entry? {
         entriesByPacketType.first(where: { $0.value.functionName == functionName })?.value
     }
 }

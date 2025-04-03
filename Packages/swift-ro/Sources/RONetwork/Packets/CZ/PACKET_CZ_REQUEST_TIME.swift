@@ -7,24 +7,20 @@
 
 import ROCore
 
-/// See `clif_parse_TickSend`
-public struct PACKET_CZ_REQUEST_TIME: EncodablePacket {
-    public var packetType: Int16 {
-        PacketDatabase.Entry.CZ_REQUEST_TIME.packetType
-    }
+let ENTRY_CZ_REQUEST_TIME = packetDatabase.entry(forFunctionName: "clif_parse_TickSend")!
 
-    public var packetLength: Int16 {
-        PacketDatabase.Entry.CZ_REQUEST_TIME.packetLength
-    }
-
+public struct PACKET_CZ_REQUEST_TIME: BinaryEncodable {
+    public let packetType: Int16
     public var clientTime: UInt32
 
     public init() {
+        packetType = ENTRY_CZ_REQUEST_TIME.packetType
         clientTime = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {
-        let offsets = PacketDatabase.Entry.CZ_REQUEST_TIME.offsets
+        let packetLength = ENTRY_CZ_REQUEST_TIME.packetLength
+        let offsets = ENTRY_CZ_REQUEST_TIME.offsets
 
         var data = [UInt8](repeating: 0, count: Int(packetLength))
         data.replaceSubrange(from: 0, with: packetType)
@@ -32,8 +28,4 @@ public struct PACKET_CZ_REQUEST_TIME: EncodablePacket {
 
         try encoder.encode(data)
     }
-}
-
-extension PacketDatabase.Entry {
-    public static let CZ_REQUEST_TIME = packetDatabase.entry(forFunctionName: "clif_parse_TickSend")!
 }
