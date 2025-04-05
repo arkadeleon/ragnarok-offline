@@ -9,20 +9,8 @@ import ROConstants
 import RONetwork
 
 public enum MapObjectEvents {
-    public struct DirectionChanged: Event {
-        public let objectID: UInt32
-        public let headDirection: UInt16
-        public let direction: UInt8
-
-        init(packet: PACKET_ZC_CHANGE_DIRECTION) {
-            self.objectID = packet.srcId
-            self.headDirection = packet.headDir
-            self.direction = packet.dir
-        }
-    }
-
-    public struct MessageReceived: Event {
-        public let message: String
+    public struct Spawned: Event {
+        public let object: MapObject
     }
 
     public struct Moved: Event {
@@ -36,8 +24,20 @@ public enum MapObjectEvents {
         public let position: SIMD2<Int16>
     }
 
-    public struct Spawned: Event {
-        public let object: MapObject
+    public struct Vanished: Event {
+        public let objectID: UInt32
+    }
+
+    public struct DirectionChanged: Event {
+        public let objectID: UInt32
+        public let headDirection: UInt16
+        public let direction: UInt8
+
+        init(packet: PACKET_ZC_CHANGE_DIRECTION) {
+            self.objectID = packet.srcId
+            self.headDirection = packet.headDir
+            self.direction = packet.dir
+        }
     }
 
     public struct SpriteChanged: Event {
@@ -51,14 +51,26 @@ public enum MapObjectEvents {
         public let effectState: StatusChangeOption
 
         init(packet: PACKET_ZC_STATE_CHANGE) {
-            objectID = packet.AID
-            bodyState = StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none
-            healthState = StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none
-            effectState = StatusChangeOption(rawValue: Int(packet.effectState)) ?? .nothing
+            self.objectID = packet.AID
+            self.bodyState = StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none
+            self.healthState = StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none
+            self.effectState = StatusChangeOption(rawValue: Int(packet.effectState)) ?? .nothing
         }
     }
 
-    public struct Vanished: Event {
-        public let objectID: UInt32
+    public struct ActionPerformed: Event {
+        public let sourceObjectID: UInt32
+        public let targetObjectID: UInt32
+        public let actionType: DamageType
+
+        init(packet: PACKET_ZC_NOTIFY_ACT) {
+            self.sourceObjectID = UInt32(packet.srcID)
+            self.targetObjectID = UInt32(packet.targetID)
+            self.actionType = DamageType(rawValue: Int(packet.type)) ?? .normal
+        }
+    }
+
+    public struct MessageReceived: Event {
+        public let message: String
     }
 }

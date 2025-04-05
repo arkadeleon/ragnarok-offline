@@ -11,7 +11,7 @@ import RONetwork
 
 final public class MapSession: SessionProtocol, @unchecked Sendable {
     public private(set) var account: AccountInfo
-    public let charID: UInt32
+    public let char: CharInfo
 
     let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
@@ -25,9 +25,9 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         eventSubject.eraseToAnyPublisher()
     }
 
-    public init(account: AccountInfo, charID: UInt32, mapServer: MapServerInfo) {
+    public init(account: AccountInfo, char: CharInfo, mapServer: MapServerInfo) {
         self.account = account
-        self.charID = charID
+        self.char = char
         self.client = Client(name: "Map", address: mapServer.ip, port: mapServer.port)
     }
 
@@ -112,7 +112,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     private func enter() {
         var packet = PACKET_CZ_ENTER()
         packet.accountID = account.accountID
-        packet.charID = charID
+        packet.charID = char.charID
         packet.loginID1 = account.loginID1
         packet.clientTime = UInt32(Date.now.timeIntervalSince1970)
         packet.sex = account.sex
@@ -250,6 +250,8 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_damage` and `clif_takeitem` and `clif_sitting` and `clif_standing`
         subscription.subscribe(to: PACKET_ZC_NOTIFY_ACT.self) { [unowned self] packet in
+            let event = MapObjectEvents.ActionPerformed(packet: packet)
+            self.postEvent(event)
         }
 
         // See `clif_skill_nodamage`

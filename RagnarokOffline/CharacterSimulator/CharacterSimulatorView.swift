@@ -184,7 +184,7 @@ struct CharacterSimulatorView2: View {
                     let spriteComponent = SpriteComponent(actions: actions)
                     entity.components.set(spriteComponent)
 
-                    entity.runPlayerAction(.walk, direction: .south)
+                    entity.runPlayerAction(.walk, direction: .south, repeats: true)
                 }
             }
         } placeholder: {

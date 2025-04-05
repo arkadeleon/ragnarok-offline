@@ -138,11 +138,12 @@ final class GameSession {
     }
 
     private func startMapSession(_ event: CharServerEvents.NotifyMapServer) {
-        guard let account = charSession?.account else {
+        guard let account = charSession?.account,
+              let char = chars.first(where: { $0.charID == event.charID }) else {
             return
         }
 
-        let mapSession = MapSession(account: account, charID: event.charID, mapServer: event.mapServer)
+        let mapSession = MapSession(account: account, char: char, mapServer: event.mapServer)
 
         mapSession.subscribe(to: MapEvents.Changed.self) { event in
             let mapName = String(event.mapName.dropLast(4))
@@ -152,11 +153,13 @@ final class GameSession {
                 let worldPath: ResourcePath = ["data", mapName]
                 let world = try await ResourceManager.default.world(at: worldPath)
 
-//                let scene = MapScene2D(mapName: mapName, world: world, position: event.position)
+                let player = MapObject(account: account, char: char, position: event.position)
+
+//                let scene = MapScene2D(mapName: mapName, world: world, player: player)
 //                scene.mapSceneDelegate = self
 //                self.scene = .map2D(scene)
 
-                let scene = MapScene3D(mapName: mapName, world: world, position: event.position)
+                let scene = MapScene3D(mapName: mapName, world: world, player: player)
                 scene.mapSceneDelegate = self
                 self.scene = .map3D(scene)
             }

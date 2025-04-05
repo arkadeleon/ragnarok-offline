@@ -11,22 +11,27 @@ import RORendering
 import SpriteKit
 
 class MapScene2D: SKScene, MapSceneProtocol {
+    let mapName: String
+    let world: WorldResource
+    let player: MapObject
+
     weak var mapSceneDelegate: (any MapSceneDelegate)?
 
     private let tileSize = 20
 
-    private let mapName: String
-    private let world: WorldResource
-
     private let playerNode: SKNode
     private var mapObjects: [UInt32 : MapObject] = [:]
 
-    init(mapName: String, world: WorldResource, position: SIMD2<Int16>) {
+    init(mapName: String, world: WorldResource, player: MapObject) {
         self.mapName = mapName
         self.world = world
+        self.player = player
 
         let playerNode = SKSpriteNode()
-        playerNode.position = CGPoint(x: Int(position.x) * tileSize, y: Int(position.y) * tileSize)
+        playerNode.position = CGPoint(
+            x: Int(player.position.x) * tileSize,
+            y: Int(player.position.y) * tileSize
+        )
         playerNode.zPosition = 2
         playerNode.color = .white
         playerNode.anchorPoint = CGPoint(x: 0, y: 0)
@@ -178,6 +183,9 @@ class MapScene2D: SKScene, MapSceneProtocol {
         if let objectNode = childNode(withName: "\(event.objectID)") {
             objectNode.isHidden = (event.effectState == .cloak)
         }
+    }
+
+    func onMapObjectActionPerformed(_ event: MapObjectEvents.ActionPerformed) {
     }
 
     func onMapItemSpawned(_ event: MapItemEvents.Spawned) {

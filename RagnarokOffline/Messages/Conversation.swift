@@ -57,6 +57,9 @@ class Conversation {
     private var charServers: [CharServerInfo] = []
 
     @ObservationIgnored
+    private var chars: [CharInfo] = []
+
+    @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
 
     @MainActor
@@ -172,6 +175,7 @@ class Conversation {
         let charSession = CharSession(account: account, charServer: charServer)
 
         charSession.subscribe(to: CharServerEvents.Accepted.self) { [unowned self] event in
+            self.chars = event.chars
             self.scene = .selectChar
 
             self.messages.append(.serverText("Accepted"))
@@ -238,11 +242,12 @@ class Conversation {
     }
 
     private func startMapSession(_ event: CharServerEvents.NotifyMapServer) {
-        guard let account = charSession?.account else {
+        guard let account = charSession?.account,
+              let char = chars.first(where: { $0.charID == event.charID }) else {
             return
         }
 
-        let mapSession = MapSession(account: account, charID: event.charID, mapServer: event.mapServer)
+        let mapSession = MapSession(account: account, char: char, mapServer: event.mapServer)
 
         mapSession.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
             self.playerPosition = event.position

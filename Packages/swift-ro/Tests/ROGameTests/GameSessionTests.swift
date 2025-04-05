@@ -16,7 +16,7 @@ import RONetwork
 final class GameSessionTests: XCTestCase {
     var account: AccountInfo!
     var charServers: [CharServerInfo]!
-    var charID: UInt32!
+    var char: CharInfo!
     var mapServer: MapServerInfo!
 
     override func setUp() async throws {
@@ -97,6 +97,7 @@ final class GameSessionTests: XCTestCase {
         charSession.makeChar(char: char)
 
         for await event in charSession.eventStream(for: CharEvents.MakeAccepted.self).prefix(1) {
+            char = event.char
             XCTAssertEqual(event.char.name, "Leon")
         }
 
@@ -105,15 +106,14 @@ final class GameSessionTests: XCTestCase {
         charSession.selectChar(slot: 0)
 
         for await event in charSession.eventStream(for: CharServerEvents.NotifyMapServer.self).prefix(1) {
-            charID = event.charID
             mapServer = event.mapServer
 
-            XCTAssertEqual(event.charID, 1)
+            XCTAssertEqual(event.charID, char.charID)
         }
 
         // MARK: - Start map session
 
-        let mapSession = MapSession(account: account, charID: charID, mapServer: mapServer)
+        let mapSession = MapSession(account: account, char: char, mapServer: mapServer)
 
         mapSession.start()
 
