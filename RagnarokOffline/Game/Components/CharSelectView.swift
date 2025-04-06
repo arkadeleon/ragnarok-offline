@@ -43,7 +43,7 @@ struct CharSelectView: View {
                 Button {
                     selectedSlot = 0
                 } label: {
-                    Text(slot1?.name ?? "Empty")
+                    GameText(slot1?.name ?? "Empty")
                 }
                 .buttonStyle(.plain)
                 .frame(width: 139, height: 144)
@@ -52,7 +52,7 @@ struct CharSelectView: View {
                 Button {
                     selectedSlot = 1
                 } label: {
-                    Text(slot2?.name ?? "Empty")
+                    GameText(slot2?.name ?? "Empty")
                 }
                 .buttonStyle(.plain)
                 .frame(width: 139, height: 144)
@@ -61,7 +61,7 @@ struct CharSelectView: View {
                 Button {
                     selectedSlot = 2
                 } label: {
-                    Text(slot3?.name ?? "Empty")
+                    GameText(slot3?.name ?? "Empty")
                 }
                 .buttonStyle(.plain)
                 .frame(width: 139, height: 144)
@@ -70,28 +70,26 @@ struct CharSelectView: View {
                 if let selectedChar {
                     VStack(spacing: 1) {
                         Group {
-                            Text(selectedChar.name)
-                            Text(selectedChar.job.formatted())
-                            Text(selectedChar.baseLevel.formatted())
-                            Text(selectedChar.baseExp.formatted())
-                            Text(selectedChar.hp.formatted())
-                            Text(selectedChar.sp.formatted())
+                            GameText(selectedChar.name)
+                            GameText(selectedChar.job.formatted())
+                            GameText(selectedChar.baseLevel.formatted())
+                            GameText(selectedChar.baseExp.formatted())
+                            GameText(selectedChar.hp.formatted())
+                            GameText(selectedChar.sp.formatted())
                         }
-                        .font(.system(size: 12))
                         .frame(width: 95, height: 15)
                     }
                     .offset(x: 65, y: 204)
 
                     VStack(spacing: 1) {
                         Group {
-                            Text(selectedChar.str.formatted())
-                            Text(selectedChar.agi.formatted())
-                            Text(selectedChar.vit.formatted())
-                            Text(selectedChar.int.formatted())
-                            Text(selectedChar.dex.formatted())
-                            Text(selectedChar.luk.formatted())
+                            GameText(selectedChar.str.formatted())
+                            GameText(selectedChar.agi.formatted())
+                            GameText(selectedChar.vit.formatted())
+                            GameText(selectedChar.int.formatted())
+                            GameText(selectedChar.dex.formatted())
+                            GameText(selectedChar.luk.formatted())
                         }
-                        .font(.system(size: 12))
                         .frame(width: 95, height: 15)
                     }
                     .offset(x: 209, y: 204)

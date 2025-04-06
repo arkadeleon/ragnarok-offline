@@ -19,7 +19,7 @@ struct LoginView: View {
 
             TextField(String(), text: $username)
                 .textFieldStyle(.plain)
-                .font(.system(size: 12))
+                .font(.custom("Arial", fixedSize: 12))
                 #if !os(macOS)
                 .textInputAutocapitalization(.never)
                 #endif
@@ -29,7 +29,7 @@ struct LoginView: View {
 
             TextField(String(), text: $password)
                 .textFieldStyle(.plain)
-                .font(.system(size: 12))
+                .font(.custom("Arial", fixedSize: 12))
                 #if !os(macOS)
                 .textInputAutocapitalization(.never)
                 #endif

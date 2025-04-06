@@ -17,8 +17,7 @@ struct CharServerListView: View {
             GameImage("login_interface/win_service.bmp")
 
             ForEach(charServers, id: \.name) { charServer in
-                Text(charServer.name)
-                    .font(.system(size: 12))
+                GameText(charServer.name)
             }
 
             VStack {

@@ -27,7 +27,7 @@ struct CharMakeView: View {
 
                 TextField(String(), text: $name)
                     .textFieldStyle(.plain)
-                    .font(.system(size: 12))
+                    .font(.custom("Arial", fixedSize: 12))
                     #if !os(macOS)
                     .textInputAutocapitalization(.never)
                     #endif

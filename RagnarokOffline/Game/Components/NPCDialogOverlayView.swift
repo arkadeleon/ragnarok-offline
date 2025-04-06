@@ -63,13 +63,13 @@ struct NPCMessageDialogView: View {
 
     var body: some View {
         VStack {
-            Text(message)
+            GameText(message)
 
             if hasNextMessage == true {
                 Button {
                     nextAction()
                 } label: {
-                    Text(verbatim: "Next")
+                    GameText("Next")
                 }
             }
 
@@ -77,7 +77,7 @@ struct NPCMessageDialogView: View {
                 Button {
                     closeAction()
                 } label: {
-                    Text(verbatim: "Close")
+                    GameText("Close")
                 }
             }
         }
@@ -97,14 +97,14 @@ struct NPCMenuDialogView: View {
                 Button {
                     action(i + 1)
                 } label: {
-                    Text(menu[i])
+                    GameText(menu[i])
                 }
             }
 
             Button {
                 action(255)
             } label: {
-                Text(verbatim: "Cancel")
+                GameText("Cancel")
             }
         }
         .padding()
