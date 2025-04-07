@@ -12,14 +12,14 @@ extension MapSession {
         // See `clif_scriptmes`
         subscription.subscribe(to: PACKET_ZC_SAY_DIALOG.self) { [unowned self] packet in
             if let dialog = self.pendingNPCDialog,
-               dialog.npcID == packet.NpcID,
+               dialog.objectID == packet.NpcID,
                case .message(var message, let hasNextMessage) = dialog.content {
                 message.append("\n")
                 message.append(packet.message)
-                let dialog = NPCDialog(npcID: packet.NpcID, content: .message(message: message, hasNextMessage: hasNextMessage))
+                let dialog = NPCDialog(objectID: packet.NpcID, content: .message(message: message, hasNextMessage: hasNextMessage))
                 self.pendingNPCDialog = dialog
             } else {
-                let dialog = NPCDialog(npcID: packet.NpcID, content: .message(message: packet.message, hasNextMessage: nil))
+                let dialog = NPCDialog(objectID: packet.NpcID, content: .message(message: packet.message, hasNextMessage: nil))
                 self.pendingNPCDialog = dialog
             }
         }
@@ -27,9 +27,9 @@ extension MapSession {
         // See `clif_scriptnext`
         subscription.subscribe(to: PACKET_ZC_WAIT_DIALOG.self) { [unowned self] packet in
             if let dialog = self.pendingNPCDialog,
-               dialog.npcID == packet.NpcID,
+               dialog.objectID == packet.NpcID,
                case .message(let message, _) = dialog.content {
-                let dialog = NPCDialog(npcID: dialog.npcID, content: .message(message: message, hasNextMessage: true))
+                let dialog = NPCDialog(objectID: dialog.objectID, content: .message(message: message, hasNextMessage: true))
                 let event = NPCEvents.DialogReceived(dialog: dialog)
                 self.postEvent(event)
 
@@ -40,9 +40,9 @@ extension MapSession {
         // See `clif_scriptclose`
         subscription.subscribe(to: PACKET_ZC_CLOSE_DIALOG.self) { [unowned self] packet in
             if let dialog = self.pendingNPCDialog,
-               dialog.npcID == packet.npcId,
+               dialog.objectID == packet.npcId,
                case .message(let message, _) = dialog.content {
-                let dialog = NPCDialog(npcID: dialog.npcID, content: .message(message: message, hasNextMessage: false))
+                let dialog = NPCDialog(objectID: dialog.objectID, content: .message(message: message, hasNextMessage: false))
                 let event = NPCEvents.DialogReceived(dialog: dialog)
                 self.postEvent(event)
 
@@ -59,21 +59,21 @@ extension MapSession {
         // See `clif_scriptmenu`
         subscription.subscribe(to: PACKET_ZC_MENU_LIST.self) { [unowned self] packet in
             let menu = packet.menu.split(separator: ":").map(String.init)
-            let dialog = NPCDialog(npcID: packet.npcId, content: .menu(menu: menu))
+            let dialog = NPCDialog(objectID: packet.npcId, content: .menu(menu: menu))
             let event = NPCEvents.DialogReceived(dialog: dialog)
             self.postEvent(event)
         }
 
         // See `clif_scriptinput`
         subscription.subscribe(to: PACKET_ZC_OPEN_EDITDLG.self) { [unowned self] packet in
-            let dialog = NPCDialog(npcID: packet.npcId, content: .numberInput)
+            let dialog = NPCDialog(objectID: packet.npcId, content: .numberInput)
             let event = NPCEvents.DialogReceived(dialog: dialog)
             self.postEvent(event)
         }
 
         // See `clif_scriptinputstr`
         subscription.subscribe(to: PACKET_ZC_OPEN_EDITDLGSTR.self) { [unowned self] packet in
-            let dialog = NPCDialog(npcID: packet.npcId, content: .textInput)
+            let dialog = NPCDialog(objectID: packet.npcId, content: .textInput)
             let event = NPCEvents.DialogReceived(dialog: dialog)
             self.postEvent(event)
         }
@@ -92,48 +92,48 @@ extension MapSession {
     }
 
     // See `clif_parse_NpcClicked`
-    public func talkToNPC(npcID: UInt32) {
+    public func talkToNPC(objectID: UInt32) {
         var packet = PACKET_CZ_CONTACTNPC()
         packet.packetType = HEADER_CZ_CONTACTNPC
-        packet.AID = npcID
+        packet.AID = objectID
         packet.type = 1
 
         client.sendPacket(packet)
     }
 
     // See `clif_parse_NpcNextClicked`
-    public func requestNextMessage(npcID: UInt32) {
+    public func requestNextMessage(objectID: UInt32) {
         var packet = PACKET_CZ_REQ_NEXT_SCRIPT()
         packet.packetType = HEADER_CZ_REQ_NEXT_SCRIPT
-        packet.npcID = npcID
+        packet.npcID = objectID
 
         client.sendPacket(packet)
     }
 
     // See `clif_parse_NpcCloseClicked`
-    public func closeDialog(npcID: UInt32) {
+    public func closeDialog(objectID: UInt32) {
         var packet = PACKET_CZ_CLOSE_DIALOG()
         packet.packetType = HEADER_CZ_CLOSE_DIALOG
-        packet.GID = npcID
+        packet.GID = objectID
 
         client.sendPacket(packet)
     }
 
     // See `clif_parse_NpcSelectMenu`
-    public func selectMenu(npcID: UInt32, select: UInt8) {
+    public func selectMenu(objectID: UInt32, select: UInt8) {
         var packet = PACKET_CZ_CHOOSE_MENU()
         packet.packetType = HEADER_CZ_CHOOSE_MENU
-        packet.npcID = npcID
+        packet.npcID = objectID
         packet.select = select
 
         client.sendPacket(packet)
     }
 
     // See `clif_parse_NpcAmountInput`
-    public func inputNumber(npcID: UInt32, value: Int32) {
+    public func inputNumber(objectID: UInt32, value: Int32) {
     }
 
     // See `clif_parse_NpcStringInput`
-    public func inputText(npcID: UInt32, value: String) {
+    public func inputText(objectID: UInt32, value: String) {
     }
 }

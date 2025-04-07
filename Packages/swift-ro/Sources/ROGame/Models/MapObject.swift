@@ -28,7 +28,7 @@ public enum MapObjectType: Int, Sendable {
 
 /// Represents a player character, non-player character, monster on a map.
 public struct MapObject: Sendable {
-    public let id: UInt32
+    public let objectID: UInt32
     public let type: MapObjectType
     public let speed: Int
 
@@ -42,7 +42,7 @@ public struct MapObject: Sendable {
     public let position: SIMD2<Int16>
 
     public init(account: AccountInfo, char: CharInfo, position: SIMD2<Int16>) {
-        self.id = account.accountID
+        self.objectID = account.accountID
         self.type = .pc
         self.speed = Int(char.speed)
 
@@ -57,7 +57,7 @@ public struct MapObject: Sendable {
     }
 
     init(packet: packet_spawn_unit) {
-        self.id = packet.AID
+        self.objectID = packet.AID
         self.type = MapObjectType(rawValue: Int(packet.objecttype)) ?? .unknown
         self.speed = Int(packet.speed)
 
@@ -73,7 +73,7 @@ public struct MapObject: Sendable {
     }
 
     init(packet: packet_idle_unit) {
-        self.id = packet.AID
+        self.objectID = packet.AID
         self.type = MapObjectType(rawValue: Int(packet.objecttype)) ?? .unknown
         self.speed = Int(packet.speed)
 
@@ -89,7 +89,7 @@ public struct MapObject: Sendable {
     }
 
     init(packet: packet_unit_walking) {
-        self.id = packet.AID
+        self.objectID = packet.AID
         self.type = MapObjectType(rawValue: Int(packet.objecttype)) ?? .unknown
         self.speed = Int(packet.speed)
 

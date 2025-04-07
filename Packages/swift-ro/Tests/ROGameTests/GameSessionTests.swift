@@ -164,24 +164,24 @@ final class GameSessionTests: XCTestCase {
         sleep(1)
 
         let woundedSwordsman1 = mapObjects.first(where: { $0.job == 687 })!
-        mapSession.talkToNPC(npcID: woundedSwordsman1.id)
+        mapSession.talkToNPC(objectID: woundedSwordsman1.objectID)
 
         sleep(1)
 
         let woundedSwordsman2 = mapObjects.first(where: { $0.job == 688 })!
-        mapSession.talkToNPC(npcID: woundedSwordsman2.id)
+        mapSession.talkToNPC(objectID: woundedSwordsman2.objectID)
 
         sleep(1)
 
-        mapSession.requestNextMessage(npcID: woundedSwordsman2.id)
+        mapSession.requestNextMessage(objectID: woundedSwordsman2.objectID)
 
         sleep(1)
 
-        mapSession.requestNextMessage(npcID: woundedSwordsman2.id)
+        mapSession.requestNextMessage(objectID: woundedSwordsman2.objectID)
 
         sleep(1)
 
-        mapSession.closeDialog(npcID: woundedSwordsman2.id)
+        mapSession.closeDialog(objectID: woundedSwordsman2.objectID)
 
         sleep(5)
     }

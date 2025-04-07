@@ -81,7 +81,7 @@ class MapScene3D: MapSceneProtocol {
             logger.warning("\(error.localizedDescription)")
         }
 
-        playerEntity.name = "\(player.id)"
+        playerEntity.name = "\(player.objectID)"
         playerEntity.transform = transform(for: player.position)
         playerEntity.runPlayerAction(.idle, direction: .south, repeats: true)
 
@@ -153,14 +153,14 @@ class MapScene3D: MapSceneProtocol {
     }
 
     func onMapObjectSpawned(_ event: MapObjectEvents.Spawned) {
-        if let entity = rootEntity.findEntity(named: "\(event.object.id)") as? SpriteEntity {
+        if let entity = rootEntity.findEntity(named: "\(event.object.objectID)") as? SpriteEntity {
             let transform = transform(for: event.object.position)
             entity.transform = transform
         } else {
             Task {
                 let jobID = UniformJobID(rawValue: event.object.job)
                 if let monsterEntity = await monsterEntityManager.entity(forJobID: jobID) {
-                    monsterEntity.name = "\(event.object.id)"
+                    monsterEntity.name = "\(event.object.objectID)"
                     monsterEntity.transform = transform(for: event.object.position)
                     monsterEntity.isEnabled = (event.object.effectState != .cloak)
                     monsterEntity.components.set(MapObjectComponent(object: event.object))
@@ -172,14 +172,14 @@ class MapScene3D: MapSceneProtocol {
     }
 
     func onMapObjectMoved(_ event: MapObjectEvents.Moved) {
-        if let entity = rootEntity.findEntity(named: "\(event.object.id)") as? SpriteEntity {
+        if let entity = rootEntity.findEntity(named: "\(event.object.objectID)") as? SpriteEntity {
             let transform = transform(for: event.toPosition)
             entity.walk(to: transform, direction: .south, duration: 1)
         } else {
             Task {
                 let jobID = UniformJobID(rawValue: event.object.job)
                 if let monsterEntity = await monsterEntityManager.entity(forJobID: jobID) {
-                    monsterEntity.name = "\(event.object.id)"
+                    monsterEntity.name = "\(event.object.objectID)"
                     monsterEntity.transform = transform(for: event.toPosition)
                     monsterEntity.isEnabled = (event.object.effectState != .cloak)
                     monsterEntity.components.set(MapObjectComponent(object: event.object))

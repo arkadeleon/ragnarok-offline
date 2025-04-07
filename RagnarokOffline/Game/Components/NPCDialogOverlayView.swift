@@ -21,13 +21,13 @@ struct NPCDialogOverlayView: View {
                     NPCMessageDialogView(message: message, hasNextMessage: hasNextMessage) {
                         Task {
                             try await Task.sleep(for: .milliseconds(1))
-                            mapSession.requestNextMessage(npcID: dialog.npcID)
+                            mapSession.requestNextMessage(objectID: dialog.objectID)
                         }
                         self.dialog = nil
                     } closeAction: {
                         Task {
                             try await Task.sleep(for: .milliseconds(1))
-                            mapSession.closeDialog(npcID: dialog.npcID)
+                            mapSession.closeDialog(objectID: dialog.objectID)
                         }
                         self.dialog = nil
                     }
@@ -35,7 +35,7 @@ struct NPCDialogOverlayView: View {
                     NPCMenuDialogView(menu: menu) { i in
                         Task {
                             try await Task.sleep(for: .milliseconds(1))
-                            mapSession.selectMenu(npcID: dialog.npcID, select: UInt8(i))
+                            mapSession.selectMenu(objectID: dialog.objectID, select: UInt8(i))
                         }
                         self.dialog = nil
                     }

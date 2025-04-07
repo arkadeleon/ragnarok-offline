@@ -184,16 +184,16 @@ extension GameSession: MapSceneDelegate {
     func mapScene(_ scene: any MapSceneProtocol, didTapMapObject object: MapObject) {
         switch object.type {
         case .monster:
-            mapSession?.requestAction(._repeat, onTarget: object.id)
+            mapSession?.requestAction(._repeat, onTarget: object.objectID)
         case .npc:
-            mapSession?.talkToNPC(npcID: object.id)
+            mapSession?.talkToNPC(objectID: object.objectID)
         default:
             break
         }
     }
 
     func mapScene(_ scene: any MapSceneProtocol, didTapMapObjectWith objectID: UInt32) {
-        mapSession?.talkToNPC(npcID: objectID)
+        mapSession?.talkToNPC(objectID: objectID)
     }
 
     func mapScene(_ scene: any MapSceneProtocol, didTapMapItem item: MapItem) {

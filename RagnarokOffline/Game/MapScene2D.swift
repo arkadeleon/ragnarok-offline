@@ -135,13 +135,13 @@ class MapScene2D: SKScene, MapSceneProtocol {
     }
 
     func onMapObjectSpawned(_ event: MapObjectEvents.Spawned) {
-        if let objectNode = childNode(withName: "\(event.object.id)") {
+        if let objectNode = childNode(withName: "\(event.object.objectID)") {
             let location = CGPoint(x: Int(event.object.position.x) * tileSize, y: Int(event.object.position.y) * tileSize)
             let action = SKAction.move(to: location, duration: 0)
             objectNode.run(action)
         } else {
             let objectNode = SKLabelNode()
-            objectNode.name = "\(event.object.id)"
+            objectNode.name = "\(event.object.objectID)"
             objectNode.position = CGPoint(x: Int(event.object.position.x) * tileSize, y: Int(event.object.position.y) * tileSize)
             objectNode.zPosition = 1
             objectNode.isHidden = (event.object.effectState == .cloak)
@@ -151,12 +151,13 @@ class MapScene2D: SKScene, MapSceneProtocol {
     }
 
     func onMapObjectMoved(_ event: MapObjectEvents.Moved) {
-        if let objectNode = childNode(withName: "\(event.object.id)") {
+        if let objectNode = childNode(withName: "\(event.object.objectID)") {
             let location = CGPoint(x: Int(event.toPosition.x) * tileSize, y: Int(event.toPosition.y) * tileSize)
             let action = SKAction.move(to: location, duration: 0.2)
             objectNode.run(action)
         } else {
             let objectNode = SKLabelNode()
+            objectNode.name = "\(event.object.objectID)"
             objectNode.position = CGPoint(x: Int(event.toPosition.x) * tileSize, y: Int(event.toPosition.y) * tileSize)
             objectNode.zPosition = 1
             objectNode.isHidden = (event.object.effectState == .cloak)

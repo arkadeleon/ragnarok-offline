@@ -13,11 +13,11 @@ public struct NPCDialog: Sendable {
         case textInput
     }
 
-    public let npcID: UInt32
+    public let objectID: UInt32
     public let content: NPCDialog.Content
 
-    public init(npcID: UInt32, content: NPCDialog.Content) {
-        self.npcID = npcID
+    public init(objectID: UInt32, content: NPCDialog.Content) {
+        self.objectID = objectID
         self.content = content
     }
 }
