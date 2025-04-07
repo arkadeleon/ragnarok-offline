@@ -70,6 +70,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         subscribeToAchievementPackets(with: &subscription)
         subscribeToInventoryPackets(with: &subscription)
         subscribeToMailPackets(with: &subscription)
+        subscribeToRodexPackets(with: &subscription)
         subscribeToNPCPackets(with: &subscription)
         subscribeToMapItemPackets(with: &subscription)
         subscribeToMapObjectPackets(with: &subscription)
