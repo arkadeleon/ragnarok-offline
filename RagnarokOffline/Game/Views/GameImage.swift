@@ -10,15 +10,16 @@ import RORendering
 import ROResources
 import SwiftUI
 
-struct GameImage: View {
+struct GameImage<Content>: View where Content: View {
     var name: String
+    var content: (CGImage) -> Content
 
     @State private var image: CGImage?
 
     var body: some View {
         ZStack {
             if let image {
-                Image(decorative: image, scale: 1)
+                content(image)
             }
         }
         .task {
@@ -28,8 +29,18 @@ struct GameImage: View {
         }
     }
 
-    init(_ name: String) {
+    init(_ name: String) where Content == Image {
         self.name = name
+        self.content = { image in
+            Image(decorative: image, scale: 1)
+        }
+    }
+
+    init(_ name: String, @ViewBuilder content: @escaping (Image) -> Content) {
+        self.name = name
+        self.content = { image in
+            content(Image(decorative: image, scale: 1))
+        }
     }
 }
 

@@ -49,6 +49,7 @@
 		354668C52CA9338500CE2D11 /* TextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354668C42CA9338000CE2D11 /* TextMessage.swift */; };
 		354668C72CA9344600CE2D11 /* CommandMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354668C62CA9344100CE2D11 /* CommandMessage.swift */; };
 		3546C3D32C6D9DC9002A1321 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3546C3D22C6D9DC9002A1321 /* Conversation.swift */; };
+		355471D92DA520D4004704F2 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355471D82DA520D1004704F2 /* StatusView.swift */; };
 		355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC18B2B8F25C0002F0586 /* WebView.swift */; };
 		355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC1912B9056E5002F0586 /* FileContextMenu.swift */; };
 		3561E3462D703CF000255442 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3561E3452D703CED00255442 /* Logger.swift */; };
@@ -61,6 +62,7 @@
 		356B64832D95854400DAD679 /* MapScene3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356B64822D95854000DAD679 /* MapScene3D.swift */; };
 		356B64852D99A18D00DAD679 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356B64842D99A18B00DAD679 /* MapView.swift */; };
 		356B64872DA240C500DAD679 /* GameText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356B64862DA240C200DAD679 /* GameText.swift */; };
+		356B64892DA245F000DAD679 /* BasicInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356B64882DA245EC00DAD679 /* BasicInfoView.swift */; };
 		356C03CE2D77D1FF007E118E /* FileHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356C03CD2D77D1EA007E118E /* FileHelpView.swift */; };
 		357742632D005FAA00F2CE8D /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357742612D005FAA00F2CE8D /* GameView.swift */; };
 		357742642D005FAA00F2CE8D /* GameSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357742602D005FAA00F2CE8D /* GameSession.swift */; };
@@ -99,7 +101,6 @@
 		3599BD592C3FCE7A0010DBE7 /* ImageGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3599BD582C3FCE7A0010DBE7 /* ImageGridCell.swift */; };
 		359B3EF62D7E82CB00E0B3AF /* AnimatedImageShareLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359B3EF52D7E82C200E0B3AF /* AnimatedImageShareLink.swift */; };
 		35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */; };
-		35AD22AC2D13292500A7BB6C /* PlayerStatusOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AD22AB2D13291C00A7BB6C /* PlayerStatusOverlayView.swift */; };
 		35B33BA22BF3BDCE00EF28F5 /* RealityCubeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA12BF3BDCE00EF28F5 /* RealityCubeViewController.swift */; };
 		35B33BA52BF465E700EF28F5 /* RealityCubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B33BA42BF465E700EF28F5 /* RealityCubeView.swift */; };
 		35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B3B8D72A08BEA600B4540B /* RagnarokOfflineApp.swift */; };
@@ -147,6 +148,7 @@
 		35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */; };
 		35E27A832BC96AC800C11076 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A822BC96AC800C11076 /* Message.swift */; };
 		35E27A852BC96B3000C11076 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A842BC96B3000C11076 /* MessageCell.swift */; };
+		35E5F39A2DA43A9B00E76080 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5F3992DA43A9600E76080 /* MenuView.swift */; };
 		35E67C6E2CBF6C1F006E42A3 /* GND+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C6B2CBF6C1F006E42A3 /* GND+JSON.swift */; };
 		35E67C6F2CBF6C1F006E42A3 /* GAT+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C6A2CBF6C1F006E42A3 /* GAT+JSON.swift */; };
 		35E67C702CBF6C1F006E42A3 /* ACT+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E67C682CBF6C1F006E42A3 /* ACT+JSON.swift */; };
@@ -227,6 +229,7 @@
 		354668C42CA9338000CE2D11 /* TextMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessage.swift; sourceTree = "<group>"; };
 		354668C62CA9344100CE2D11 /* CommandMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandMessage.swift; sourceTree = "<group>"; };
 		3546C3D22C6D9DC9002A1321 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		355471D82DA520D1004704F2 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		355BC18B2B8F25C0002F0586 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		355BC1912B9056E5002F0586 /* FileContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileContextMenu.swift; sourceTree = "<group>"; };
 		3561E3452D703CED00255442 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -239,6 +242,7 @@
 		356B64822D95854000DAD679 /* MapScene3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapScene3D.swift; sourceTree = "<group>"; };
 		356B64842D99A18B00DAD679 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		356B64862DA240C200DAD679 /* GameText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameText.swift; sourceTree = "<group>"; };
+		356B64882DA245EC00DAD679 /* BasicInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoView.swift; sourceTree = "<group>"; };
 		356C03CD2D77D1EA007E118E /* FileHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileHelpView.swift; sourceTree = "<group>"; };
 		357742562D005FAA00F2CE8D /* CharMakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharMakeView.swift; sourceTree = "<group>"; };
 		357742572D005FAA00F2CE8D /* CharSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharSelectView.swift; sourceTree = "<group>"; };
@@ -272,7 +276,6 @@
 		3599BD582C3FCE7A0010DBE7 /* ImageGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGridCell.swift; sourceTree = "<group>"; };
 		359B3EF52D7E82C200E0B3AF /* AnimatedImageShareLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImageShareLink.swift; sourceTree = "<group>"; };
 		35A2ABBD2B3ACB0A0026DAC2 /* ServerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerView.swift; sourceTree = "<group>"; };
-		35AD22AB2D13291C00A7BB6C /* PlayerStatusOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStatusOverlayView.swift; sourceTree = "<group>"; };
 		35B33BA12BF3BDCE00EF28F5 /* RealityCubeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityCubeViewController.swift; sourceTree = "<group>"; };
 		35B33BA42BF465E700EF28F5 /* RealityCubeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityCubeView.swift; sourceTree = "<group>"; };
 		35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOffline.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -322,6 +325,7 @@
 		35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabaseView.swift; sourceTree = "<group>"; };
 		35E27A822BC96AC800C11076 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		35E27A842BC96B3000C11076 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		35E5F3992DA43A9600E76080 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		35E67C682CBF6C1F006E42A3 /* ACT+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ACT+JSON.swift"; sourceTree = "<group>"; };
 		35E67C692CBF6C1F006E42A3 /* FileJSONViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileJSONViewer.swift; sourceTree = "<group>"; };
 		35E67C6A2CBF6C1F006E42A3 /* GAT+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GAT+JSON.swift"; sourceTree = "<group>"; };
@@ -500,6 +504,7 @@
 		3577425C2D005FAA00F2CE8D /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				356B64882DA245EC00DAD679 /* BasicInfoView.swift */,
 				357742562D005FAA00F2CE8D /* CharMakeView.swift */,
 				357742572D005FAA00F2CE8D /* CharSelectView.swift */,
 				357742582D005FAA00F2CE8D /* CharServerListView.swift */,
@@ -507,9 +512,10 @@
 				356B64842D99A18B00DAD679 /* MapView.swift */,
 				356B647C2D951E3C00DAD679 /* MapView2DContent.swift */,
 				3577425A2D005FAA00F2CE8D /* MapView3DContent.swift */,
-				35AD22AB2D13291C00A7BB6C /* PlayerStatusOverlayView.swift */,
-				35C8F8EF2D1025CA005603CD /* NPCDialogOverlayView.swift */,
+				35E5F3992DA43A9600E76080 /* MenuView.swift */,
 				3577425B2D005FAA00F2CE8D /* MessageBoxView.swift */,
+				35C8F8EF2D1025CA005603CD /* NPCDialogOverlayView.swift */,
+				355471D82DA520D1004704F2 /* StatusView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -868,6 +874,7 @@
 				3579609F2D3564B0003D9CEF /* UTTypes.swift in Sources */,
 				357960A02D3564B0003D9CEF /* FileThumbnail.swift in Sources */,
 				357960A32D3564B0003D9CEF /* FileThumbnailGenerator.swift in Sources */,
+				35E5F39A2DA43A9B00E76080 /* MenuView.swift in Sources */,
 				351EE6992D71FA7E0061F81F /* File+Share.swift in Sources */,
 				357960A52D3564B0003D9CEF /* FileSystem.swift in Sources */,
 				357960A72D3564B0003D9CEF /* FileThumbnailRequest.swift in Sources */,
@@ -928,7 +935,6 @@
 				35B422D22BEB6C7C00681AA2 /* PetDatabaseView.swift in Sources */,
 				3589B7B22D495C1700155884 /* StatusChangeCell.swift in Sources */,
 				35B422D42BEB785500681AA2 /* ObservablePet.swift in Sources */,
-				35AD22AC2D13292500A7BB6C /* PlayerStatusOverlayView.swift in Sources */,
 				35652B432B960D100075AD71 /* MapDatabaseView.swift in Sources */,
 				35E27A852BC96B3000C11076 /* MessageCell.swift in Sources */,
 				355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */,
@@ -937,6 +943,7 @@
 				35E67C792CBF6E60006E42A3 /* SPR+JSON.swift in Sources */,
 				356B64852D99A18D00DAD679 /* MapView.swift in Sources */,
 				35E67C7B2CBF7F4F006E42A3 /* STR+JSON.swift in Sources */,
+				356B64892DA245F000DAD679 /* BasicInfoView.swift in Sources */,
 				3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */,
 				35FEB6AD2CD8BE4E00F24A4A /* DatabaseRoot.swift in Sources */,
 				356B647F2D95573C00DAD679 /* MapSceneDelegate.swift in Sources */,
@@ -964,6 +971,7 @@
 				3579DF9D2D67541D00B8C98A /* CharacterConfiguration.swift in Sources */,
 				3599BD592C3FCE7A0010DBE7 /* ImageGridCell.swift in Sources */,
 				35BDF7042C9B0AED00CCAB8F /* ClientSettings.swift in Sources */,
+				355471D92DA520D4004704F2 /* StatusView.swift in Sources */,
 				350A53592D8BC74100539999 /* SizeClassSpecific.swift in Sources */,
 				35239DFF2BBEF4510039F7D5 /* MapProvider.swift in Sources */,
 				3579DF982D66085A00B8C98A /* CharacterConfigurationView.swift in Sources */,

@@ -13,15 +13,42 @@ struct MapView<Content>: View where Content: View {
     var scene: any MapSceneProtocol
     var content: () -> Content
 
+    @State private var status: Player.Status?
+
+    @State private var presentedMenuItem: MenuItem?
+
     var body: some View {
         content()
             .overlay(alignment: .topLeading) {
-                PlayerStatusOverlayView(mapSession: mapSession)
+                if let status {
+                    VStack(alignment: .leading, spacing: 0) {
+                        BasicInfoView(char: mapSession.char, status: status)
+
+                        MenuView { item in
+                            if item == presentedMenuItem {
+                                presentedMenuItem = nil
+                            } else {
+                                presentedMenuItem = item
+                            }
+                        }
+
+                        if let presentedMenuItem {
+                            switch presentedMenuItem {
+                            case .status:
+                                StatusView(status: status)
+                            }
+                        }
+                    }
+                    .ignoresSafeArea()
+                }
             }
             .overlay {
                 NPCDialogOverlayView(mapSession: mapSession)
             }
             .onReceive(mapSession.publisher(for: PlayerEvents.Moved.self), perform: scene.onPlayerMoved)
+            .onReceive(mapSession.publisher(for: PlayerEvents.StatusChanged.self)) { event in
+                status = event.status
+            }
             .onReceive(mapSession.publisher(for: MapObjectEvents.Spawned.self), perform: scene.onMapObjectSpawned)
             .onReceive(mapSession.publisher(for: MapObjectEvents.Moved.self), perform: scene.onMapObjectMoved)
             .onReceive(mapSession.publisher(for: MapObjectEvents.Stopped.self), perform: scene.onMapObjectStopped)
