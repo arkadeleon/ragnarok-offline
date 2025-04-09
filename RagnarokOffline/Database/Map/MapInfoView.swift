@@ -55,6 +55,7 @@ struct MapInfoView: View {
                                     FileGridCell(file: file)
                                 }
                                 .buttonStyle(.plain)
+                                .fileContextMenu(file: file)
                             }
                         }
                         .padding(.vertical, vSpacing(sizeClass))

@@ -20,8 +20,6 @@ struct FilesView: View {
 
     @State private var isHelpPresented = false
     @State private var fileToPreview: File?
-    @State private var fileToShowRawData: File?
-    @State private var fileToShowReferences: File?
 
     var body: some View {
         ImageGrid(filteredFiles) { file in
@@ -30,11 +28,7 @@ struct FilesView: View {
                     FileGridCell(file: file)
                 }
                 .buttonStyle(.plain)
-                .contextMenu {
-                    FileContextMenu(file: file, deleteAction: {
-                        deleteFile(file)
-                    })
-                }
+                .fileContextMenu(file: file, onDelete: deleteFile)
             } else {
                 Button {
                     if file.canPreview {
@@ -44,17 +38,7 @@ struct FilesView: View {
                     FileGridCell(file: file)
                 }
                 .buttonStyle(.plain)
-                .contextMenu {
-                    FileContextMenu(file: file, previewAction: {
-                        fileToPreview = file
-                    }, showRawDataAction: {
-                        fileToShowRawData = file
-                    }, showReferencesAction: {
-                        fileToShowReferences = file
-                    }, deleteAction: {
-                        deleteFile(file)
-                    })
-                }
+                .fileContextMenu(file: file, onPreview: previewFile, onDelete: deleteFile)
             }
         }
         .background(.background)
@@ -96,16 +80,6 @@ struct FilesView: View {
                 FilePreviewTabView(files: filteredFiles.filter({ $0.canPreview }), currentFile: file)
             }
         }
-        .sheet(item: $fileToShowRawData) { file in
-            NavigationStack {
-                FileJSONViewer(file: file)
-            }
-        }
-        .sheet(item: $fileToShowReferences) { file in
-            NavigationStack {
-                FileReferencesView(file: file)
-            }
-        }
         .task {
             await load()
         }
@@ -132,6 +106,10 @@ struct FilesView: View {
                 file.name.localizedStandardContains(searchText)
             }
         }
+    }
+
+    private func previewFile(_ file: File) {
+        fileToPreview = file
     }
 
     private func deleteFile(_ file: File) {

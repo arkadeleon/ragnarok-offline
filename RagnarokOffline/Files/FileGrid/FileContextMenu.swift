@@ -7,85 +7,97 @@
 
 import SwiftUI
 
-struct FileContextMenu: View {
+struct FileContextMenu: ViewModifier {
     var file: File
-    var previewAction: Action?
-    var showRawDataAction: Action?
-    var showReferencesAction: Action?
-    var deleteAction: Action?
+    var onPreview: ((File) -> Void)?
+    var onDelete: ((File) -> Void)?
 
-    typealias Action = () -> Void
+    @State private var isJSONViewerPresented = false
+    @State private var isReferencesPresented = false
 
-    var body: some View {
-        Group {
-            Section {
-                if file.canPreview {
-                    Button {
-                        previewAction?()
-                    } label: {
-                        Label("Preview", systemImage: "eye")
-                    }
-                }
-
-                if file.jsonRepresentable {
-                    Button {
-                        showRawDataAction?()
-                    } label: {
-                        Label("JSON Viewer", systemImage: "list.bullet.indent")
-                    }
-                }
-
-                if file.hasReferences {
-                    Button {
-                        showReferencesAction?()
-                    } label: {
-                        Label("References", systemImage: "link")
-                    }
-                }
-            }
-
-            Section {
-                if FileSystem.shared.canExtractFile(file) {
-                    Button {
-                        do {
-                            try FileSystem.shared.extractFile(file)
-                        } catch {
-                            logger.warning("\(error.localizedDescription)")
-                        }
-                    } label: {
-                        Label("Extract", systemImage: "arrow.up.bin")
-                    }
-                }
-
-                if file.canShare {
-                    ShareLink("Share", item: file, preview: SharePreview(file.name))
-                }
-            }
-
-            Section {
-                if FileSystem.shared.canDeleteFile(file) {
-                    Button(role: .destructive) {
-                        deleteAction?()
-                    } label: {
-                        Label("Delete", image: "trash")
-                    }
-                }
-            }
-        }
+    init(file: File, onPreview: ((File) -> Void)? = nil, onDelete: ((File) -> Void)? = nil) {
+        self.file = file
+        self.onPreview = onPreview
+        self.onDelete = onDelete
     }
 
-    init(file: File, previewAction: Action? = nil, showRawDataAction: Action? = nil, showReferencesAction: Action? = nil, deleteAction: Action? = nil) {
-        self.file = file
-        self.previewAction = previewAction
-        self.showRawDataAction = showRawDataAction
-        self.showReferencesAction = showReferencesAction
-        self.deleteAction = deleteAction
+    func body(content: Content) -> some View {
+        content
+            .contextMenu {
+                Section {
+                    if let onPreview, file.canPreview {
+                        Button {
+                            onPreview(file)
+                        } label: {
+                            Label("Preview", systemImage: "eye")
+                        }
+                    }
+
+                    if file.jsonRepresentable {
+                        Button {
+                            isJSONViewerPresented.toggle()
+                        } label: {
+                            Label("JSON Viewer", systemImage: "list.bullet.indent")
+                        }
+                    }
+
+                    if file.hasReferences {
+                        Button {
+                            isReferencesPresented.toggle()
+                        } label: {
+                            Label("References", systemImage: "link")
+                        }
+                    }
+                }
+
+                Section {
+                    if FileSystem.shared.canExtractFile(file) {
+                        Button {
+                            do {
+                                try FileSystem.shared.extractFile(file)
+                            } catch {
+                                logger.warning("\(error.localizedDescription)")
+                            }
+                        } label: {
+                            Label("Extract", systemImage: "arrow.up.bin")
+                        }
+                    }
+
+                    if file.canShare {
+                        ShareLink("Share", item: file, preview: SharePreview(file.name))
+                    }
+                }
+
+                Section {
+                    if let onDelete, FileSystem.shared.canDeleteFile(file) {
+                        Button(role: .destructive) {
+                            onDelete(file)
+                        } label: {
+                            Label("Delete", image: "trash")
+                        }
+                    }
+                }
+            }
+            .sheet(isPresented: $isJSONViewerPresented) {
+                NavigationStack {
+                    FileJSONViewer(file: file)
+                }
+            }
+            .sheet(isPresented: $isReferencesPresented) {
+                NavigationStack {
+                    FileReferencesView(file: file)
+                }
+            }
+    }
+}
+
+extension View {
+    func fileContextMenu(file: File, onPreview: ((File) -> Void)? = nil, onDelete: ((File) -> Void)? = nil) -> some View {
+        modifier(FileContextMenu(file: file, onPreview: onPreview, onDelete: onDelete))
     }
 }
 
 #Preview {
     Text(File.previewRSW.name)
-        .contextMenu {
-            FileContextMenu(file: .previewRSW)
-        }
+        .fileContextMenu(file: .previewRSW)
 }
