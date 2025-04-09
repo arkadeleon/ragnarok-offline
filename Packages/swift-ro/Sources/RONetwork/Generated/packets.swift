@@ -679,7 +679,7 @@ public struct PACKET_AC_ACCEPT_LOGIN: BinaryDecodable, BinaryEncodable, Sendable
         last_login = try decoder.decode(String.self, lengthOfBytes: 26)
         sex = try decoder.decode(UInt8.self)
         token = try decoder.decode(String.self, lengthOfBytes: 17)
-        char_servers = try decoder.decode([PACKET_AC_ACCEPT_LOGIN_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 4 + 4 + 4 + 26 + 1 + 17)) / (4 + 2 + 20 + 2 + 2 + 2 + (1 * 128)))
+        char_servers = try decoder.decode([PACKET_AC_ACCEPT_LOGIN_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 4 + 4 + 4 + 26 + 1 + 17)) / PACKET_AC_ACCEPT_LOGIN_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -1102,7 +1102,7 @@ public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME: BinaryDecodable, BinaryEncoda
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        maps = try decoder.decode([PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub].self, count: (Int(packetLength) - (2 + 2)) / (4 + 16))
+        maps = try decoder.decode([PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -1366,7 +1366,7 @@ public struct packet_sc_notick: BinaryDecodable, BinaryEncodable, Sendable {
 
 public struct PACKET_ZC_ITEM_PICKUP_ACK: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 2 + 2 + 4 + 1 + 1 + ((4 * 4)) + 4 + 1 + 1 + 4 + 2 + ((2 + 2 + 1) * 5) + 1 + 2 + 1 + 1)
+        (2 + 2 + 2 + 4 + 1 + 1 + EQUIPSLOTINFO.size + 4 + 1 + 1 + 4 + 2 + (ItemOptions.size * 5) + 1 + 2 + 1 + 1)
     }
     public var packetType: Int16 = 0
     public var Index: UInt16 = 0
@@ -2458,7 +2458,7 @@ public struct packet_roulette_open_ack: BinaryDecodable, BinaryEncodable, Sendab
 
 public struct packet_roulette_info_ack: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 2 + 4 + ((2 + 2 + 4 + 2 + 2) * 42))
+        (2 + 2 + 4 + (packet_roulette_info_ack_sub.size * 42))
     }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
@@ -2588,7 +2588,7 @@ public struct packet_itemlist_normal: BinaryDecodable, BinaryEncodable, Sendable
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         invType = try decoder.decode(UInt8.self)
-        list = try decoder.decode([NORMALITEM_INFO].self, count: (Int(packetLength) - (2 + 2 + 1)) / (2 + 4 + 1 + 2 + 4 + ((4 * 4)) + 4 + 1))
+        list = try decoder.decode([NORMALITEM_INFO].self, count: (Int(packetLength) - (2 + 2 + 1)) / NORMALITEM_INFO.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -2612,7 +2612,7 @@ public struct packet_itemlist_equip: BinaryDecodable, BinaryEncodable, Sendable 
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         invType = try decoder.decode(UInt8.self)
-        list = try decoder.decode([EQUIPITEM_INFO].self, count: (Int(packetLength) - (2 + 2 + 1)) / (2 + 4 + 1 + 4 + 4 + ((4 * 4)) + 4 + 2 + 2 + 1 + ((2 + 2 + 1) * 5) + 1 + 1 + 1))
+        list = try decoder.decode([EQUIPITEM_INFO].self, count: (Int(packetLength) - (2 + 2 + 1)) / EQUIPITEM_INFO.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -2636,7 +2636,7 @@ public struct ZC_STORE_ITEMLIST_NORMAL: BinaryDecodable, BinaryEncodable, Sendab
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         invType = try decoder.decode(UInt8.self)
-        list = try decoder.decode([NORMALITEM_INFO].self, count: (Int(packetLength) - (2 + 2 + 1)) / (2 + 4 + 1 + 2 + 4 + ((4 * 4)) + 4 + 1))
+        list = try decoder.decode([NORMALITEM_INFO].self, count: (Int(packetLength) - (2 + 2 + 1)) / NORMALITEM_INFO.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -2705,7 +2705,7 @@ public struct ZC_STORE_ITEMLIST_EQUIP: BinaryDecodable, BinaryEncodable, Sendabl
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         invType = try decoder.decode(UInt8.self)
-        list = try decoder.decode([EQUIPITEM_INFO].self, count: (Int(packetLength) - (2 + 2 + 1)) / (2 + 4 + 1 + 4 + 4 + ((4 * 4)) + 4 + 2 + 2 + 1 + ((2 + 2 + 1) * 5) + 1 + 1 + 1))
+        list = try decoder.decode([EQUIPITEM_INFO].self, count: (Int(packetLength) - (2 + 2 + 1)) / EQUIPITEM_INFO.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -2822,7 +2822,7 @@ public struct PACKET_ZC_EQUIPWIN_MICROSCOPE: BinaryDecodable, BinaryEncodable, S
         bodypalette = try decoder.decode(Int16.self)
         body2 = try decoder.decode(Int16.self)
         sex = try decoder.decode(UInt8.self)
-        list = try decoder.decode([EQUIPITEM_INFO].self, count: (Int(packetLength) - (2 + 2 + 24 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1)) / (2 + 4 + 1 + 4 + 4 + ((4 * 4)) + 4 + 2 + 2 + 1 + ((2 + 2 + 1) * 5) + 1 + 1 + 1))
+        list = try decoder.decode([EQUIPITEM_INFO].self, count: (Int(packetLength) - (2 + 2 + 24 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1)) / EQUIPITEM_INFO.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -3036,7 +3036,7 @@ public struct PACKET_CZ_NPC_MARKET_PURCHASE: BinaryDecodable, BinaryEncodable, S
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        list = try decoder.decode([PACKET_CZ_NPC_MARKET_PURCHASE_sub].self, count: (Int(packetLength) - (2 + 2)) / (4 + 4))
+        list = try decoder.decode([PACKET_CZ_NPC_MARKET_PURCHASE_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_CZ_NPC_MARKET_PURCHASE_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -3087,7 +3087,7 @@ public struct PACKET_ZC_NPC_MARKET_OPEN: BinaryDecodable, BinaryEncodable, Senda
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        list = try decoder.decode([PACKET_ZC_NPC_MARKET_OPEN_sub].self, count: (Int(packetLength) - (2 + 2)) / (4 + 1 + 4 + 4 + 2 + 4))
+        list = try decoder.decode([PACKET_ZC_NPC_MARKET_OPEN_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_ZC_NPC_MARKET_OPEN_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -3140,7 +3140,7 @@ public struct packet_party_leader_changed: BinaryDecodable, BinaryEncodable, Sen
 
 public struct PACKET_ZC_SHORTCUT_KEY_LIST: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 1 + 2 + ((1 + 4 + 2) * 38))
+        (2 + 1 + 2 + (hotkey_data.size * 38))
     }
     public var packetType: Int16 = 0
     public var rotate: Int8 = 0
@@ -3165,7 +3165,7 @@ public struct PACKET_ZC_SHORTCUT_KEY_LIST: BinaryDecodable, BinaryEncodable, Sen
 
 public struct PACKET_CZ_SHORTCUT_KEY_CHANGE1: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 2 + (1 + 4 + 2))
+        (2 + 2 + hotkey_data.size)
     }
     public var packetType: Int16 = 0
     public var index: UInt16 = 0
@@ -3186,7 +3186,7 @@ public struct PACKET_CZ_SHORTCUT_KEY_CHANGE1: BinaryDecodable, BinaryEncodable, 
 
 public struct PACKET_CZ_SHORTCUT_KEY_CHANGE2: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 2 + 2 + (1 + 4 + 2))
+        (2 + 2 + 2 + hotkey_data.size)
     }
     public var packetType: Int16 = 0
     public var tab: UInt16 = 0
@@ -3377,7 +3377,7 @@ public struct PACKET_CZ_ADD_ITEM_TO_MAIL: BinaryDecodable, BinaryEncodable, Send
 
 public struct PACKET_ZC_ACK_ADD_ITEM_RODEX: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 1 + 2 + 2 + 4 + 1 + 1 + 1 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 2 + 1 + 4 + 1 + 1)
+        (2 + 1 + 2 + 2 + 4 + 1 + 1 + 1 + EQUIPSLOTINFO.size + (ItemOptions.size * 5) + 2 + 1 + 4 + 1 + 1)
     }
     public var packetType: Int16 = 0
     public var result: Int8 = 0
@@ -3757,7 +3757,7 @@ public struct PACKET_CZ_REQ_READ_MAIL: BinaryDecodable, BinaryEncodable, Sendabl
 
 public struct PACKET_ZC_ACK_READ_RODEX_SUB: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 4 + 1 + 1 + ((4 * 4)) + 4 + 1 + 2 + 2 + ((2 + 2 + 1) * 5) + 1 + 1)
+        (2 + 4 + 1 + 1 + EQUIPSLOTINFO.size + 4 + 1 + 2 + 2 + (ItemOptions.size * 5) + 1 + 1)
     }
     public var count: Int16 = 0
     public var ITID: UInt32 = 0
@@ -4161,7 +4161,7 @@ public struct PACKET_ZC_GROUP_LIST: BinaryDecodable, BinaryEncodable, Sendable {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         partyName = try decoder.decode(String.self, lengthOfBytes: 24)
-        members = try decoder.decode([PACKET_ZC_GROUP_LIST_SUB].self, count: (Int(packetLength) - (2 + 2 + 24)) / (4 + 4 + 24 + 16 + 1 + 1 + 2 + 2))
+        members = try decoder.decode([PACKET_ZC_GROUP_LIST_SUB].self, count: (Int(packetLength) - (2 + 2 + 24)) / PACKET_ZC_GROUP_LIST_SUB.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -4382,7 +4382,7 @@ public struct packet_quest_update_header: BinaryDecodable, BinaryEncodable, Send
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         count = try decoder.decode(Int16.self)
-        objectives = try decoder.decode([packet_quest_update_hunt].self, count: (Int(packetLength) - (2 + 2 + 2)) / (4 + 4 + 4 + 2 + 2))
+        objectives = try decoder.decode([packet_quest_update_hunt].self, count: (Int(packetLength) - (2 + 2 + 2)) / packet_quest_update_hunt.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -4428,7 +4428,7 @@ public struct packet_quest_hunt_info: BinaryDecodable, BinaryEncodable, Sendable
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        info = try decoder.decode([packet_quest_hunt_info_sub].self, count: (Int(packetLength) - (2 + 2)) / (4 + 4 + 2 + 2))
+        info = try decoder.decode([packet_quest_hunt_info_sub].self, count: (Int(packetLength) - (2 + 2)) / packet_quest_hunt_info_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -4846,7 +4846,7 @@ public struct PACKET_ZC_ITEM_ENTRY: BinaryDecodable, BinaryEncodable, Sendable {
 
 public struct PACKET_ZC_ADD_ITEM_TO_STORE: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 2 + 4 + 4 + 1 + 1 + 1 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 1 + 1)
+        (2 + 2 + 4 + 4 + 1 + 1 + 1 + EQUIPSLOTINFO.size + (ItemOptions.size * 5) + 1 + 1)
     }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
@@ -4940,7 +4940,7 @@ public struct PACKET_ZC_ACK_TOUSESKILL: BinaryDecodable, BinaryEncodable, Sendab
 
 public struct PACKET_ZC_ADD_ITEM_TO_CART: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 2 + 4 + 4 + 1 + 1 + 1 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 1 + 1)
+        (2 + 2 + 4 + 4 + 1 + 1 + 1 + EQUIPSLOTINFO.size + (ItemOptions.size * 5) + 1 + 1)
     }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
@@ -5128,7 +5128,7 @@ public struct PACKET_ZC_SPRITE_CHANGE: BinaryDecodable, BinaryEncodable, Sendabl
 
 public struct PACKET_ZC_ADD_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 4 + 1 + 4 + 1 + 1 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 4 + 2 + 1 + 1)
+        (2 + 4 + 1 + 4 + 1 + 1 + EQUIPSLOTINFO.size + (ItemOptions.size * 5) + 4 + 2 + 1 + 1)
     }
     public var packetType: Int16 = 0
     public var itemId: UInt32 = 0
@@ -5219,7 +5219,7 @@ public struct PACKET_ZC_CASH_ITEM_DELETE: BinaryDecodable, BinaryEncodable, Send
 
 public struct PACKET_ZC_ITEM_PICKUP_PARTY: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 4 + 4 + 1 + 1 + ((4 * 4)) + 2 + 1 + 1 + 1)
+        (2 + 4 + 4 + 1 + 1 + EQUIPSLOTINFO.size + 2 + 1 + 1 + 1)
     }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
@@ -5415,7 +5415,7 @@ public struct PACKET_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER: BinaryDecodable, Bi
 
 public struct PACKET_CZ_REQ_ITEMREPAIR2: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + (2 + 4 + ((4 * 4)) + 1 + 1))
+        (2 + REPAIRITEM_INFO2.size)
     }
     public var packetType: Int16 = 0
     public var item: REPAIRITEM_INFO2 = REPAIRITEM_INFO2()
@@ -5433,7 +5433,7 @@ public struct PACKET_CZ_REQ_ITEMREPAIR2: BinaryDecodable, BinaryEncodable, Senda
 
 public struct PACKET_CZ_REQ_ITEMREPAIR1: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + (2 + 4 + 1 + ((4 * 4))))
+        (2 + REPAIRITEM_INFO1.size)
     }
     public var packetType: Int16 = 0
     public var item: REPAIRITEM_INFO1 = REPAIRITEM_INFO1()
@@ -5528,7 +5528,7 @@ public struct PACKET_ZC_ACK_SCHEDULER_CASHITEM: BinaryDecodable, BinaryEncodable
         packetLength = try decoder.decode(Int16.self)
         count = try decoder.decode(Int16.self)
         tabNum = try decoder.decode(Int16.self)
-        items = try decoder.decode([PACKET_ZC_ACK_SCHEDULER_CASHITEM_sub].self, count: (Int(packetLength) - (2 + 2 + 2 + 2)) / (4 + 4))
+        items = try decoder.decode([PACKET_ZC_ACK_SCHEDULER_CASHITEM_sub].self, count: (Int(packetLength) - (2 + 2 + 2 + 2)) / PACKET_ZC_ACK_SCHEDULER_CASHITEM_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -5541,7 +5541,7 @@ public struct PACKET_ZC_ACK_SCHEDULER_CASHITEM: BinaryDecodable, BinaryEncodable
 
 public struct PACKET_ZC_PC_PURCHASE_MYITEMLIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (4 + 2 + 2 + 1 + 4 + 1 + 1 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 1 + 1)
+        (4 + 2 + 2 + 1 + 4 + 1 + 1 + EQUIPSLOTINFO.size + (ItemOptions.size * 5) + 1 + 1)
     }
     public var price: UInt32 = 0
     public var index: Int16 = 0
@@ -5599,7 +5599,7 @@ public struct PACKET_ZC_PC_PURCHASE_MYITEMLIST: BinaryDecodable, BinaryEncodable
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         AID = try decoder.decode(UInt32.self)
-        items = try decoder.decode([PACKET_ZC_PC_PURCHASE_MYITEMLIST_sub].self, count: (Int(packetLength) - (2 + 2 + 4)) / (4 + 2 + 2 + 1 + 4 + 1 + 1 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 1 + 1))
+        items = try decoder.decode([PACKET_ZC_PC_PURCHASE_MYITEMLIST_sub].self, count: (Int(packetLength) - (2 + 2 + 4)) / PACKET_ZC_PC_PURCHASE_MYITEMLIST_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -5651,7 +5651,7 @@ public struct PACKET_ZC_PC_PURCHASE_ITEMLIST: BinaryDecodable, BinaryEncodable, 
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        items = try decoder.decode([PACKET_ZC_PC_PURCHASE_ITEMLIST_sub].self, count: (Int(packetLength) - (2 + 2)) / (4 + 4 + 4 + 1 + 2 + 4))
+        items = try decoder.decode([PACKET_ZC_PC_PURCHASE_ITEMLIST_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_ZC_PC_PURCHASE_ITEMLIST_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -5690,7 +5690,7 @@ public struct PACKET_CZ_PC_PURCHASE_ITEMLIST: BinaryDecodable, BinaryEncodable, 
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        items = try decoder.decode([PACKET_CZ_PC_PURCHASE_ITEMLIST_sub].self, count: (Int(packetLength) - (2 + 2)) / (2 + 4))
+        items = try decoder.decode([PACKET_CZ_PC_PURCHASE_ITEMLIST_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_CZ_PC_PURCHASE_ITEMLIST_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -5739,7 +5739,7 @@ public struct PACKET_CZ_REQ_OPEN_BUYING_STORE: BinaryDecodable, BinaryEncodable,
         zenyLimit = try decoder.decode(UInt32.self)
         result = try decoder.decode(UInt8.self)
         storeName = try decoder.decode(String.self, lengthOfBytes: 80)
-        items = try decoder.decode([PACKET_CZ_REQ_OPEN_BUYING_STORE_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 1 + 80)) / (4 + 2 + 4))
+        items = try decoder.decode([PACKET_CZ_REQ_OPEN_BUYING_STORE_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 1 + 80)) / PACKET_CZ_REQ_OPEN_BUYING_STORE_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -5791,7 +5791,7 @@ public struct PACKET_ZC_MYITEMLIST_BUYING_STORE: BinaryDecodable, BinaryEncodabl
         packetLength = try decoder.decode(Int16.self)
         AID = try decoder.decode(UInt32.self)
         zenyLimit = try decoder.decode(UInt32.self)
-        items = try decoder.decode([PACKET_ZC_MYITEMLIST_BUYING_STORE_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 4)) / (4 + 2 + 1 + 4))
+        items = try decoder.decode([PACKET_ZC_MYITEMLIST_BUYING_STORE_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 4)) / PACKET_ZC_MYITEMLIST_BUYING_STORE_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -5804,7 +5804,7 @@ public struct PACKET_ZC_MYITEMLIST_BUYING_STORE: BinaryDecodable, BinaryEncodabl
 
 public struct PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC_sub: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (4 + 2 + 2 + 1 + 4 + 1 + 1 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 4 + 2 + 1 + 1)
+        (4 + 2 + 2 + 1 + 4 + 1 + 1 + EQUIPSLOTINFO.size + (ItemOptions.size * 5) + 4 + 2 + 1 + 1)
     }
     public var price: UInt32 = 0
     public var amount: UInt16 = 0
@@ -5870,7 +5870,7 @@ public struct PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC: BinaryDecodable, BinaryEnco
         packetLength = try decoder.decode(Int16.self)
         AID = try decoder.decode(UInt32.self)
         venderId = try decoder.decode(UInt32.self)
-        items = try decoder.decode([PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 4)) / (4 + 2 + 2 + 1 + 4 + 1 + 1 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 4 + 2 + 1 + 1))
+        items = try decoder.decode([PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 4)) / PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -5923,7 +5923,7 @@ public struct PACKET_ZC_ACK_ITEMLIST_BUYING_STORE: BinaryDecodable, BinaryEncoda
         AID = try decoder.decode(UInt32.self)
         storeId = try decoder.decode(UInt32.self)
         zenyLimit = try decoder.decode(UInt32.self)
-        items = try decoder.decode([PACKET_ZC_ACK_ITEMLIST_BUYING_STORE_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 4 + 4)) / (4 + 2 + 1 + 4))
+        items = try decoder.decode([PACKET_ZC_ACK_ITEMLIST_BUYING_STORE_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 4 + 4)) / PACKET_ZC_ACK_ITEMLIST_BUYING_STORE_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -5972,7 +5972,7 @@ public struct PACKET_CZ_REQ_TRADE_BUYING_STORE: BinaryDecodable, BinaryEncodable
         packetLength = try decoder.decode(Int16.self)
         AID = try decoder.decode(UInt32.self)
         storeId = try decoder.decode(UInt32.self)
-        items = try decoder.decode([PACKET_CZ_REQ_TRADE_BUYING_STORE_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 4)) / (2 + 4 + 2))
+        items = try decoder.decode([PACKET_CZ_REQ_TRADE_BUYING_STORE_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 4)) / PACKET_CZ_REQ_TRADE_BUYING_STORE_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -6014,7 +6014,7 @@ public struct PACKET_ZC_MAKABLEITEMLIST: BinaryDecodable, BinaryEncodable, Senda
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        items = try decoder.decode([PACKET_ZC_MAKABLEITEMLIST_sub].self, count: (Int(packetLength) - (2 + 2)) / (4 + (4 * 3)))
+        items = try decoder.decode([PACKET_ZC_MAKABLEITEMLIST_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_ZC_MAKABLEITEMLIST_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -6050,7 +6050,7 @@ public struct PACKET_ZC_MAKINGARROW_LIST: BinaryDecodable, BinaryEncodable, Send
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        items = try decoder.decode([PACKET_ZC_MAKINGARROW_LIST_sub].self, count: (Int(packetLength) - (2 + 2)) / (4))
+        items = try decoder.decode([PACKET_ZC_MAKINGARROW_LIST_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_ZC_MAKINGARROW_LIST_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -6116,7 +6116,7 @@ public struct PACKET_ZC_REPAIRITEMLIST: BinaryDecodable, BinaryEncodable, Sendab
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        items = try decoder.decode([REPAIRITEM_INFO2].self, count: (Int(packetLength) - (2 + 2)) / (2 + 4 + ((4 * 4)) + 1 + 1))
+        items = try decoder.decode([REPAIRITEM_INFO2].self, count: (Int(packetLength) - (2 + 2)) / REPAIRITEM_INFO2.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -6127,7 +6127,7 @@ public struct PACKET_ZC_REPAIRITEMLIST: BinaryDecodable, BinaryEncodable, Sendab
 
 public struct PACKET_ZC_NOTIFY_WEAPONITEMLIST_sub: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 4 + 1 + ((4 * 4)))
+        (2 + 4 + 1 + EQUIPSLOTINFO.size)
     }
     public var index: Int16 = 0
     public var itemId: UInt32 = 0
@@ -6161,7 +6161,7 @@ public struct PACKET_ZC_NOTIFY_WEAPONITEMLIST: BinaryDecodable, BinaryEncodable,
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        items = try decoder.decode([PACKET_ZC_NOTIFY_WEAPONITEMLIST_sub].self, count: (Int(packetLength) - (2 + 2)) / (2 + 4 + 1 + ((4 * 4))))
+        items = try decoder.decode([PACKET_ZC_NOTIFY_WEAPONITEMLIST_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_ZC_NOTIFY_WEAPONITEMLIST_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -6199,7 +6199,7 @@ public struct PACKET_ZC_MAKINGITEM_LIST: BinaryDecodable, BinaryEncodable, Senda
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         makeItem = try decoder.decode(UInt16.self)
-        items = try decoder.decode([PACKET_ZC_MAKINGITEM_LIST_sub].self, count: (Int(packetLength) - (2 + 2 + 2)) / (4))
+        items = try decoder.decode([PACKET_ZC_MAKINGITEM_LIST_sub].self, count: (Int(packetLength) - (2 + 2 + 2)) / PACKET_ZC_MAKINGITEM_LIST_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -6249,7 +6249,7 @@ public struct PACKET_ZC_PC_CASH_POINT_ITEMLIST: BinaryDecodable, BinaryEncodable
         packetLength = try decoder.decode(Int16.self)
         cashPoints = try decoder.decode(UInt32.self)
         kafraPoints = try decoder.decode(UInt32.self)
-        items = try decoder.decode([PACKET_ZC_PC_CASH_POINT_ITEMLIST_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 4)) / (4 + 4 + 1 + 4))
+        items = try decoder.decode([PACKET_ZC_PC_CASH_POINT_ITEMLIST_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 4)) / PACKET_ZC_PC_CASH_POINT_ITEMLIST_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -6294,7 +6294,7 @@ public struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM: BinaryDecodable, BinaryEncodable
         packetLength = try decoder.decode(Int16.self)
         kafraPoints = try decoder.decode(UInt32.self)
         count = try decoder.decode(UInt16.self)
-        items = try decoder.decode([PACKET_CZ_PC_BUY_CASH_POINT_ITEM_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 2)) / (2 + 4))
+        items = try decoder.decode([PACKET_CZ_PC_BUY_CASH_POINT_ITEM_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 2)) / PACKET_CZ_PC_BUY_CASH_POINT_ITEM_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -6342,7 +6342,7 @@ public struct PACKET_CZ_SEARCH_STORE_INFO: BinaryDecodable, BinaryEncodable, Sen
         minPrice = try decoder.decode(UInt32.self)
         itemsCount = try decoder.decode(UInt8.self)
         cardsCount = try decoder.decode(UInt8.self)
-        items = try decoder.decode([PACKET_CZ_SEARCH_STORE_INFO_item].self, count: (Int(packetLength) - (2 + 2 + 1 + 4 + 4 + 1 + 1)) / (4))
+        items = try decoder.decode([PACKET_CZ_SEARCH_STORE_INFO_item].self, count: (Int(packetLength) - (2 + 2 + 1 + 4 + 4 + 1 + 1)) / PACKET_CZ_SEARCH_STORE_INFO_item.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -6418,7 +6418,7 @@ public struct PACKET_ZC_SSILIST_ITEM_CLICK_ACK: BinaryDecodable, BinaryEncodable
 
 public struct PACKET_ZC_SEARCH_STORE_INFO_ACK_sub: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (4 + 4 + 80 + 4 + 1 + 4 + 2 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 1 + 1)
+        (4 + 4 + 80 + 4 + 1 + 4 + 2 + EQUIPSLOTINFO.size + (ItemOptions.size * 5) + 1 + 1)
     }
     public var storeId: UInt32 = 0
     public var AID: UInt32 = 0
@@ -6481,7 +6481,7 @@ public struct PACKET_ZC_SEARCH_STORE_INFO_ACK: BinaryDecodable, BinaryEncodable,
         firstPage = try decoder.decode(UInt8.self)
         nextPage = try decoder.decode(UInt8.self)
         usesCount = try decoder.decode(UInt8.self)
-        items = try decoder.decode([PACKET_ZC_SEARCH_STORE_INFO_ACK_sub].self, count: (Int(packetLength) - (2 + 2 + 1 + 1 + 1)) / (4 + 4 + 80 + 4 + 1 + 4 + 2 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 1 + 1))
+        items = try decoder.decode([PACKET_ZC_SEARCH_STORE_INFO_ACK_sub].self, count: (Int(packetLength) - (2 + 2 + 1 + 1 + 1)) / PACKET_ZC_SEARCH_STORE_INFO_ACK_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -6495,7 +6495,7 @@ public struct PACKET_ZC_SEARCH_STORE_INFO_ACK: BinaryDecodable, BinaryEncodable,
 
 public struct packet_achievement_list: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 2 + 4 + 4 + 2 + 4 + 4 + ((4 + 1 + (4 * 10) + 4 + 1) * 10))
+        (2 + 2 + 4 + 4 + 2 + 4 + 4 + (ach_list_info.size * 10))
     }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
@@ -6532,7 +6532,7 @@ public struct packet_achievement_list: BinaryDecodable, BinaryEncodable, Sendabl
 
 public struct packet_achievement_update: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 4 + 2 + 4 + 4 + (4 + 1 + (4 * 10) + 4 + 1))
+        (2 + 4 + 2 + 4 + 4 + ach_list_info.size)
     }
     public var packetType: Int16 = 0
     public var total_points: UInt32 = 0
@@ -6717,7 +6717,7 @@ public struct PACKET_ZC_WARPLIST: BinaryDecodable, BinaryEncodable, Sendable {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         skillId = try decoder.decode(UInt16.self)
-        maps = try decoder.decode([PACKET_ZC_WARPLIST_sub].self, count: (Int(packetLength) - (2 + 2 + 2)) / (16))
+        maps = try decoder.decode([PACKET_ZC_WARPLIST_sub].self, count: (Int(packetLength) - (2 + 2 + 2)) / PACKET_ZC_WARPLIST_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -7026,7 +7026,7 @@ public struct PACKET_ZC_AUTOSPELLLIST: BinaryDecodable, BinaryEncodable, Sendabl
 
 public struct PACKET_ZC_CHANGE_ITEM_OPTION: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 2 + 1 + ((4 * 4)) + ((2 + 2 + 1) * 5) + 1 + 1)
+        (2 + 2 + 1 + EQUIPSLOTINFO.size + (ItemOptions.size * 5) + 1 + 1)
     }
     public var packetType: Int16 = 0
     public var index: Int16 = 0
@@ -7337,7 +7337,7 @@ public struct PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO: BinaryDecodable, BinaryEncod
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        list = try decoder.decode([PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO_sub].self, count: (Int(packetLength) - (2 + 2)) / (4 + 1 + 4 + 4 + 4 + 4 + 4 + 2 + 4))
+        list = try decoder.decode([PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -7397,7 +7397,7 @@ public struct PACKET_CZ_NPC_BARTER_MARKET_PURCHASE: BinaryDecodable, BinaryEncod
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        list = try decoder.decode([PACKET_CZ_NPC_BARTER_MARKET_PURCHASE_sub].self, count: (Int(packetLength) - (2 + 2)) / (4 + 4 + 2 + 4))
+        list = try decoder.decode([PACKET_CZ_NPC_BARTER_MARKET_PURCHASE_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_CZ_NPC_BARTER_MARKET_PURCHASE_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -7616,7 +7616,7 @@ public struct PACKET_ZC_BAN_LIST: BinaryDecodable, BinaryEncodable, Sendable {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        chars = try decoder.decode([PACKET_ZC_BAN_LIST_sub].self, count: (Int(packetLength) - (2 + 2)) / (4 + 40 + 24))
+        chars = try decoder.decode([PACKET_ZC_BAN_LIST_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_ZC_BAN_LIST_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -7694,7 +7694,7 @@ public struct PACKET_ZC_MERGE_ITEM_OPEN: BinaryDecodable, BinaryEncodable, Senda
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        items = try decoder.decode([PACKET_ZC_MERGE_ITEM_OPEN_sub].self, count: (Int(packetLength) - (2 + 2)) / (2))
+        items = try decoder.decode([PACKET_ZC_MERGE_ITEM_OPEN_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_ZC_MERGE_ITEM_OPEN_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -7800,7 +7800,7 @@ public struct PACKET_ZC_REFINING_MATERIAL_LIST: BinaryDecodable, BinaryEncodable
         packetLength = try decoder.decode(Int16.self)
         itemIndex = try decoder.decode(Int16.self)
         blacksmithBlessing = try decoder.decode(Int8.self)
-        req = try decoder.decode([PACKET_ZC_REFINING_MATERIAL_LIST_SUB].self, count: (Int(packetLength) - (2 + 2 + 2 + 1)) / (4 + 1 + 4))
+        req = try decoder.decode([PACKET_ZC_REFINING_MATERIAL_LIST_SUB].self, count: (Int(packetLength) - (2 + 2 + 2 + 1)) / PACKET_ZC_REFINING_MATERIAL_LIST_SUB.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -7931,7 +7931,7 @@ public struct PACKET_ZC_EQUIPMENT_EFFECT: BinaryDecodable, BinaryEncodable, Send
 
 public struct PACKET_ZC_ADD_SKILL: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + (2 + 4 + 2 + 2 + 2 + 1 + 2))
+        (2 + SKILLDATA.size)
     }
     public var packetType: Int16 = 0
     public var skill: SKILLDATA = SKILLDATA()
@@ -7959,7 +7959,7 @@ public struct PACKET_ZC_SKILLINFO_LIST: BinaryDecodable, BinaryEncodable, Sendab
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        skills = try decoder.decode([SKILLDATA].self, count: (Int(packetLength) - (2 + 2)) / (2 + 4 + 2 + 2 + 2 + 1 + 2))
+        skills = try decoder.decode([SKILLDATA].self, count: (Int(packetLength) - (2 + 2)) / SKILLDATA.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -8039,7 +8039,7 @@ public struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT: BinaryDecodable, BinaryEncod
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         result = try decoder.decode(UInt16.self)
-        list = try decoder.decode([PACKET_ZC_NPC_MARKET_PURCHASE_RESULT_sub].self, count: (Int(packetLength) - (2 + 2 + 2)) / (4 + 2 + 4))
+        list = try decoder.decode([PACKET_ZC_NPC_MARKET_PURCHASE_RESULT_sub].self, count: (Int(packetLength) - (2 + 2 + 2)) / PACKET_ZC_NPC_MARKET_PURCHASE_RESULT_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -8235,7 +8235,7 @@ public struct PACKET_CZ_REQ_RANDOM_COMBINE_ITEM: BinaryDecodable, BinaryEncodabl
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         itemId = try decoder.decode(Int32.self)
-        items = try decoder.decode([PACKET_CZ_REQ_RANDOM_COMBINE_ITEM_sub].self, count: (Int(packetLength) - (2 + 2 + 4)) / (2 + 2))
+        items = try decoder.decode([PACKET_CZ_REQ_RANDOM_COMBINE_ITEM_sub].self, count: (Int(packetLength) - (2 + 2 + 4)) / PACKET_CZ_REQ_RANDOM_COMBINE_ITEM_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -8418,7 +8418,7 @@ public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2: BinaryDecodabl
 
 public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (4 + 2 + 4 + 4 + 4 + 4 + 2 + 4 + 4 + ((4 + 2 + 4 + 2) * 1))
+        (4 + 2 + 4 + 4 + 4 + 4 + 2 + 4 + 4 + (PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2.size * 1))
     }
     public var nameid: UInt32 = 0
     public var type: UInt16 = 0
@@ -8473,7 +8473,7 @@ public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO: BinaryDecodable, Bi
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         items_count = try decoder.decode(Int32.self)
-        items = try decoder.decode([PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub].self, count: (Int(packetLength) - (2 + 2 + 4)) / (4 + 2 + 4 + 4 + 4 + 4 + 2 + 4 + 4 + ((4 + 2 + 4 + 2) * 1)))
+        items = try decoder.decode([PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub].self, count: (Int(packetLength) - (2 + 2 + 4)) / PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -8516,7 +8516,7 @@ public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE: BinaryDecodable, Bi
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        list = try decoder.decode([PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE_sub].self, count: (Int(packetLength) - (2 + 2)) / (4 + 4 + 4))
+        list = try decoder.decode([PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -8706,7 +8706,7 @@ public struct PACKET_ZC_PERSONAL_INFOMATION: BinaryDecodable, BinaryEncodable, S
         total_exp = try decoder.decode(Int32.self)
         total_death = try decoder.decode(Int32.self)
         total_drop = try decoder.decode(Int32.self)
-        details = try decoder.decode([PACKET_ZC_PERSONAL_INFOMATION_SUB].self, count: (Int(packetLength) - (2 + 2 + 4 + 4 + 4)) / (1 + 4 + 4 + 4))
+        details = try decoder.decode([PACKET_ZC_PERSONAL_INFOMATION_SUB].self, count: (Int(packetLength) - (2 + 2 + 4 + 4 + 4)) / PACKET_ZC_PERSONAL_INFOMATION_SUB.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -8958,7 +8958,7 @@ public struct PACKET_ZC_MEMBERMGR_INFO: BinaryDecodable, BinaryEncodable, Sendab
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        guildMemberInfo = try decoder.decode([GUILD_MEMBER_INFO].self, count: (Int(packetLength) - (2 + 2)) / (4 + 4 + 2 + 2 + 2 + 2 + 2 + 4 + 4 + 4 + 4 + 24))
+        guildMemberInfo = try decoder.decode([GUILD_MEMBER_INFO].self, count: (Int(packetLength) - (2 + 2)) / GUILD_MEMBER_INFO.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -9035,7 +9035,7 @@ public struct PACKET_ZC_GUILD_INFO: BinaryDecodable, BinaryEncodable, Sendable {
 
 public struct PACKET_ZC_POSITION_ID_NAME_INFO: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 2 + ((4 + 24) * 20))
+        (2 + 2 + (PACKET_ZC_POSITION_ID_NAME_INFO_sub.size * 20))
     }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
@@ -9091,7 +9091,7 @@ public struct PACKET_ZC_POSITION_INFO: BinaryDecodable, BinaryEncodable, Sendabl
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        posInfo = try decoder.decode([PACKET_ZC_POSITION_INFO_sub].self, count: (Int(packetLength) - (2 + 2)) / (4 + 4 + 4 + 4))
+        posInfo = try decoder.decode([PACKET_ZC_POSITION_INFO_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_ZC_POSITION_INFO_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -9114,7 +9114,7 @@ public struct PACKET_ZC_GUILD_SKILLINFO: BinaryDecodable, BinaryEncodable, Senda
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         skillPoint = try decoder.decode(Int16.self)
-        skillInfo = try decoder.decode([GUILD_SKILLDATA].self, count: (Int(packetLength) - (2 + 2 + 2)) / (2 + 4 + 2 + 2 + 2 + 24 + 1))
+        skillInfo = try decoder.decode([GUILD_SKILLDATA].self, count: (Int(packetLength) - (2 + 2 + 2)) / GUILD_SKILLDATA.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -9136,7 +9136,7 @@ public struct PACKET_ZC_MYGUILD_BASIC_INFO: BinaryDecodable, BinaryEncodable, Se
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        rgInfo = try decoder.decode([RELATED_GUILD_INFO].self, count: (Int(packetLength) - (2 + 2)) / (4 + 4 + 24))
+        rgInfo = try decoder.decode([RELATED_GUILD_INFO].self, count: (Int(packetLength) - (2 + 2)) / RELATED_GUILD_INFO.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -9817,7 +9817,7 @@ public struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST: BinaryDecodable, BinaryEnco
         blessing_info = try decoder.decode(GRADE_ENCHANT_BLESSING.self)
         protect_itemid = try decoder.decode(Int32.self)
         protect_amount = try decoder.decode(Int32.self)
-        material_info = try decoder.decode([GRADE_ENCHANT_MATERIAL].self, count: (Int(packetLength) - (2 + 2 + 2 + 4 + (4 + 4 + 4 + 4) + 4 + 4)) / (4 + 4 + 4 + 4 + 1))
+        material_info = try decoder.decode([GRADE_ENCHANT_MATERIAL].self, count: (Int(packetLength) - (2 + 2 + 2 + 4 + GRADE_ENCHANT_BLESSING.size + 4 + 4)) / GRADE_ENCHANT_MATERIAL.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -10436,7 +10436,7 @@ public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC: BinaryDecodable, BinaryEnco
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         AID = try decoder.decode(UInt32.self)
-        list = try decoder.decode([CZ_PURCHASE_ITEM_FROMMC].self, count: (Int(packetLength) - (2 + 2 + 4)) / (2 + 2))
+        list = try decoder.decode([CZ_PURCHASE_ITEM_FROMMC].self, count: (Int(packetLength) - (2 + 2 + 4)) / CZ_PURCHASE_ITEM_FROMMC.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -10462,7 +10462,7 @@ public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC2: BinaryDecodable, BinaryEnc
         packetLength = try decoder.decode(Int16.self)
         AID = try decoder.decode(UInt32.self)
         UniqueID = try decoder.decode(UInt32.self)
-        list = try decoder.decode([CZ_PURCHASE_ITEM_FROMMC].self, count: (Int(packetLength) - (2 + 2 + 4 + 4)) / (2 + 2))
+        list = try decoder.decode([CZ_PURCHASE_ITEM_FROMMC].self, count: (Int(packetLength) - (2 + 2 + 4 + 4)) / CZ_PURCHASE_ITEM_FROMMC.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -11069,7 +11069,7 @@ public struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST: BinaryDecodable, BinaryEncodabl
         packetLength = try decoder.decode(Int16.self)
         count = try decoder.decode(UInt16.self)
         kafraPoints = try decoder.decode(UInt32.self)
-        items = try decoder.decode([PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub].self, count: (Int(packetLength) - (2 + 2 + 2 + 4)) / (4 + 4 + 2))
+        items = try decoder.decode([PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub].self, count: (Int(packetLength) - (2 + 2 + 2 + 4)) / PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -11241,7 +11241,7 @@ public struct PACKET_ZC_ACK_COUNT_BARGAIN_SALE_ITEM: BinaryDecodable, BinaryEnco
 
 public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (4 + 4 + 4 + 1 + 4 + 8 + 1 + 2 + ((4 * 4)) + 24 + 24 + 1)
+        (4 + 4 + 4 + 1 + 4 + 8 + 1 + 2 + EQUIPSLOTINFO.size + 24 + 24 + 1)
     }
     public var id: UInt32 = 0
     public var itemId: UInt32 = 0
@@ -11305,7 +11305,7 @@ public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG: BinaryDecodable, BinaryEncodable, 
         packetLength = try decoder.decode(Int16.self)
         result = try decoder.decode(UInt16.self)
         amount = try decoder.decode(UInt16.self)
-        items = try decoder.decode([PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub].self, count: (Int(packetLength) - (2 + 2 + 2 + 2)) / (4 + 4 + 4 + 1 + 4 + 8 + 1 + 2 + ((4 * 4)) + 24 + 24 + 1))
+        items = try decoder.decode([PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub].self, count: (Int(packetLength) - (2 + 2 + 2 + 2)) / PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -11543,7 +11543,7 @@ public struct PACKET_ZC_REPUTE_INFO: BinaryDecodable, BinaryEncodable, Sendable 
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         success = try decoder.decode(UInt8.self)
-        list = try decoder.decode([PACKET_ZC_REPUTE_INFO_sub].self, count: (Int(packetLength) - (2 + 2 + 1)) / (8 + 8))
+        list = try decoder.decode([PACKET_ZC_REPUTE_INFO_sub].self, count: (Int(packetLength) - (2 + 2 + 1)) / PACKET_ZC_REPUTE_INFO_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -11632,7 +11632,7 @@ public struct PACKET_ZC_FRIENDS_LIST: BinaryDecodable, BinaryEncodable, Sendable
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        friends = try decoder.decode([PACKET_ZC_FRIENDS_LIST_sub].self, count: (Int(packetLength) - (2 + 2)) / (4 + 4 + 24))
+        friends = try decoder.decode([PACKET_ZC_FRIENDS_LIST_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_ZC_FRIENDS_LIST_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -11671,7 +11671,7 @@ public struct PACKET_CZ_PC_SELL_ITEMLIST: BinaryDecodable, BinaryEncodable, Send
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        sellList = try decoder.decode([PACKET_CZ_PC_SELL_ITEMLIST_sub].self, count: (Int(packetLength) - (2 + 2)) / (2 + 2))
+        sellList = try decoder.decode([PACKET_CZ_PC_SELL_ITEMLIST_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_CZ_PC_SELL_ITEMLIST_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -11713,7 +11713,7 @@ public struct PACKET_CZ_REQ_CHANGE_MEMBERPOS: BinaryDecodable, BinaryEncodable, 
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        list = try decoder.decode([PACKET_CZ_REQ_CHANGE_MEMBERPOS_sub].self, count: (Int(packetLength) - (2 + 2)) / (4 + 4 + 4))
+        list = try decoder.decode([PACKET_CZ_REQ_CHANGE_MEMBERPOS_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_CZ_REQ_CHANGE_MEMBERPOS_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -12109,7 +12109,7 @@ public struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2: BinaryDecodable, BinaryEncodable
         packetLength = try decoder.decode(Int16.self)
         tab = try decoder.decode(UInt32.self)
         count = try decoder.decode(Int16.self)
-        items = try decoder.decode([PACKET_ZC_ACK_SE_CASH_ITEM_LIST2_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 2)) / (4 + 4))
+        items = try decoder.decode([PACKET_ZC_ACK_SE_CASH_ITEM_LIST2_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 2)) / PACKET_ZC_ACK_SE_CASH_ITEM_LIST2_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -12597,7 +12597,7 @@ public struct PACKET_ZC_HOSKILLINFO_LIST: BinaryDecodable, BinaryEncodable, Send
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        skills = try decoder.decode([PACKET_ZC_HOSKILLINFO_LIST_sub].self, count: (Int(packetLength) - (2 + 2)) / (2 + 2 + 2 + 2 + 2 + 2 + 24 + 1))
+        skills = try decoder.decode([PACKET_ZC_HOSKILLINFO_LIST_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_ZC_HOSKILLINFO_LIST_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -12817,7 +12817,7 @@ public struct PACKET_ZC_PC_SELL_ITEMLIST: BinaryDecodable, BinaryEncodable, Send
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        items = try decoder.decode([PACKET_ZC_PC_SELL_ITEMLIST_sub].self, count: (Int(packetLength) - (2 + 2)) / (2 + 4 + 4))
+        items = try decoder.decode([PACKET_ZC_PC_SELL_ITEMLIST_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_ZC_PC_SELL_ITEMLIST_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -13664,7 +13664,7 @@ public struct PACKET_ZC_ENTER_ROOM: BinaryDecodable, BinaryEncodable, Sendable {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         chatId = try decoder.decode(UInt32.self)
-        members = try decoder.decode([PACKET_ZC_ENTER_ROOM_sub].self, count: (Int(packetLength) - (2 + 2 + 4)) / (4 + 24))
+        members = try decoder.decode([PACKET_ZC_ENTER_ROOM_sub].self, count: (Int(packetLength) - (2 + 2 + 4)) / PACKET_ZC_ENTER_ROOM_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -14761,7 +14761,7 @@ public struct PACKET_CZ_ALCHEMIST_RANK: BinaryDecodable, BinaryEncodable, Sendab
 
 public struct PACKET_ZC_BLACKSMITH_RANK: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + (10 + (4 * 10)))
+        (2 + RANKLIST.size)
     }
     public var packetType: Int16 = 0
     public var list: RANKLIST = RANKLIST()
@@ -14779,7 +14779,7 @@ public struct PACKET_ZC_BLACKSMITH_RANK: BinaryDecodable, BinaryEncodable, Senda
 
 public struct PACKET_ZC_ALCHEMIST_RANK: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + (10 + (4 * 10)))
+        (2 + RANKLIST.size)
     }
     public var packetType: Int16 = 0
     public var list: RANKLIST = RANKLIST()
@@ -14875,7 +14875,7 @@ public struct PACKET_CZ_TAEKWON_RANK: BinaryDecodable, BinaryEncodable, Sendable
 
 public struct PACKET_ZC_TAEKWON_RANK: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + (10 + (4 * 10)))
+        (2 + RANKLIST.size)
     }
     public var packetType: Int16 = 0
     public var list: RANKLIST = RANKLIST()
@@ -14929,7 +14929,7 @@ public struct PACKET_CZ_KILLER_RANK: BinaryDecodable, BinaryEncodable, Sendable 
 
 public struct PACKET_ZC_KILLER_RANK: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + (10 + (4 * 10)))
+        (2 + RANKLIST.size)
     }
     public var packetType: Int16 = 0
     public var list: RANKLIST = RANKLIST()
@@ -14984,7 +14984,7 @@ public struct PACKET_ZC_ACK_RANKING_sub: BinaryDecodable, BinaryEncodable, Senda
 
 public struct PACKET_ZC_ACK_RANKING: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 2 + (10 + (4 * 10)) + 4)
+        (2 + 2 + RANKLIST.size + 4)
     }
     public var packetType: Int16 = 0
     public var type: UInt16 = 0
@@ -16285,7 +16285,7 @@ public struct PACKET_ZC_WHISPER_LIST: BinaryDecodable, BinaryEncodable, Sendable
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        names = try decoder.decode([PACKET_ZC_WHISPER_LIST_sub].self, count: (Int(packetLength) - (2 + 2)) / (24))
+        names = try decoder.decode([PACKET_ZC_WHISPER_LIST_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_ZC_WHISPER_LIST_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -16388,7 +16388,7 @@ public struct ItemOptions: BinaryDecodable, BinaryEncodable, Sendable {
 
 public struct NORMALITEM_INFO: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 4 + 1 + 2 + 4 + ((4 * 4)) + 4 + 1)
+        (2 + 4 + 1 + 2 + 4 + EQUIPSLOTINFO.size + 4 + 1)
     }
     public var index: Int16 = 0
     public var ITID: UInt32 = 0
@@ -16424,7 +16424,7 @@ public struct NORMALITEM_INFO: BinaryDecodable, BinaryEncodable, Sendable {
 
 public struct EQUIPITEM_INFO: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 4 + 1 + 4 + 4 + ((4 * 4)) + 4 + 2 + 2 + 1 + ((2 + 2 + 1) * 5) + 1 + 1 + 1)
+        (2 + 4 + 1 + 4 + 4 + EQUIPSLOTINFO.size + 4 + 2 + 2 + 1 + (ItemOptions.size * 5) + 1 + 1 + 1)
     }
     public var index: Int16 = 0
     public var ITID: UInt32 = 0
@@ -16500,7 +16500,7 @@ public struct hotkey_data: BinaryDecodable, BinaryEncodable, Sendable {
 
 public struct REPAIRITEM_INFO2: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 4 + ((4 * 4)) + 1 + 1)
+        (2 + 4 + EQUIPSLOTINFO.size + 1 + 1)
     }
     public var index: Int16 = 0
     public var itemId: UInt32 = 0
@@ -16527,7 +16527,7 @@ public struct REPAIRITEM_INFO2: BinaryDecodable, BinaryEncodable, Sendable {
 
 public struct REPAIRITEM_INFO1: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
-        (2 + 4 + 1 + ((4 * 4)))
+        (2 + 4 + 1 + EQUIPSLOTINFO.size)
     }
     public var index: Int16 = 0
     public var itemId: UInt32 = 0
