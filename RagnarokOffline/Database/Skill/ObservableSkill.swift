@@ -17,7 +17,8 @@ class ObservableSkill {
     private let mode: DatabaseMode
     private let skill: Skill
 
-    var localizedName: String?
+    private let localizedName: String?
+
     var iconImage: CGImage?
     var localizedDescription: String?
 
@@ -51,18 +52,15 @@ class ObservableSkill {
         return attributes
     }
 
-    init(mode: DatabaseMode, skill: Skill) {
+    init(mode: DatabaseMode, skill: Skill) async {
         self.mode = mode
         self.skill = skill
+
+        self.localizedName = await ScriptManager.default.localizedSkillName(forSkillID: skill.id)
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Skill, Value>) -> Value {
         skill[keyPath: keyPath]
-    }
-
-    @MainActor
-    func fetchLocalizedName() async {
-        localizedName = await ScriptManager.default.localizedSkillName(forSkillID: skill.id)
     }
 
     @MainActor

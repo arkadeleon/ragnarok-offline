@@ -10,13 +10,14 @@ import RODatabase
 struct SkillProvider: DatabaseRecordProvider {
     func records(for mode: DatabaseMode) async -> [ObservableSkill] {
         let database = SkillDatabase.database(for: mode)
-        let skills = await database.skills().map { skill in
-            ObservableSkill(mode: mode, skill: skill)
-        }
+        let skills = await database.skills()
+
+        var records: [ObservableSkill] = []
         for skill in skills {
-            await skill.fetchLocalizedName()
+            let record = await ObservableSkill(mode: mode, skill: skill)
+            records.append(record)
         }
-        return skills
+        return records
     }
 
     func records(matching searchText: String, in skills: [ObservableSkill]) async -> [ObservableSkill] {

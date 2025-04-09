@@ -10,27 +10,27 @@ import RODatabase
 struct ItemProvider: DatabaseRecordProvider {
     func records(for mode: DatabaseMode) async -> [ObservableItem] {
         let database = ItemDatabase.database(for: mode)
-        let usableItems = await database.usableItems().map { item in
-            ObservableItem(mode: mode, item: item)
-        }
+        let usableItems = await database.usableItems()
+
+        var items: [ObservableItem] = []
         for item in usableItems {
-            await item.fetchLocalizedName()
+            let item = await ObservableItem(mode: mode, item: item)
+            items.append(item)
         }
-        return usableItems
+        return items
     }
 
     func moreRecords(for mode: DatabaseMode) async -> [ObservableItem] {
         let database = ItemDatabase.database(for: mode)
-        let equipItems = await database.equipItems().map { item in
-            ObservableItem(mode: mode, item: item)
-        }
-        let etcItems = await database.etcItems().map { item in
-            ObservableItem(mode: mode, item: item)
-        }
+        let equipItems = await database.equipItems()
+        let etcItems = await database.etcItems()
+
+        var items: [ObservableItem] = []
         for item in equipItems + etcItems {
-            await item.fetchLocalizedName()
+            let item = await ObservableItem(mode: mode, item: item)
+            items.append(item)
         }
-        return equipItems + etcItems
+        return items
     }
 
     func records(matching searchText: String, in items: [ObservableItem]) async -> [ObservableItem] {

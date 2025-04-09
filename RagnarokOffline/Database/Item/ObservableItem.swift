@@ -27,7 +27,8 @@ class ObservableItem {
     private let mode: DatabaseMode
     private let item: Item
 
-    var localizedName: String?
+    private let localizedName: String?
+
     var iconImage: CGImage?
     var previewImage: CGImage?
     var localizedDescription: String?
@@ -128,18 +129,15 @@ class ObservableItem {
             .joined(separator: "\n")
     }
 
-    init(mode: DatabaseMode, item: Item) {
+    init(mode: DatabaseMode, item: Item) async {
         self.mode = mode
         self.item = item
+
+        self.localizedName = await ItemInfoTable.current.localizedIdentifiedItemName(forItemID: item.id)
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Item, Value>) -> Value {
         item[keyPath: keyPath]
-    }
-
-    @MainActor
-    func fetchLocalizedName() async {
-        localizedName = await ItemInfoTable.current.localizedIdentifiedItemName(forItemID: item.id)
     }
 
     @MainActor

@@ -157,11 +157,8 @@ class ObservableMonster {
             var mvpDropItems: [DropItem] = []
             for (index, drop) in mvpDrops.enumerated() {
                 if let item = await itemDatabase.item(forAegisName: drop.item) {
-                    let dropItem = DropItem(
-                        index: index,
-                        drop: drop,
-                        item: ObservableItem(mode: mode, item: item)
-                    )
+                    let item = await ObservableItem(mode: mode, item: item)
+                    let dropItem = DropItem(index: index, drop: drop, item: item)
                     mvpDropItems.append(dropItem)
                 }
             }
@@ -172,11 +169,8 @@ class ObservableMonster {
             var dropItems: [DropItem] = []
             for (index, drop) in drops.enumerated() {
                 if let item = await itemDatabase.item(forAegisName: drop.item) {
-                    let dropItem = DropItem(
-                        index: index,
-                        drop: drop,
-                        item: ObservableItem(mode: mode, item: item)
-                    )
+                    let item = await ObservableItem(mode: mode, item: item)
+                    let dropItem = DropItem(index: index, drop: drop, item: item)
                     dropItems.append(dropItem)
                 }
             }
