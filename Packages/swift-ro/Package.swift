@@ -148,6 +148,7 @@ let package = Package(
             name: "ROResources",
             dependencies: [
                 .product(name: "Lua", package: "swift-lua"),
+                "ROConstants",
                 "ROCore",
                 "ROFileFormats",
             ],

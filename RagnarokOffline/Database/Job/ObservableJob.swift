@@ -11,6 +11,7 @@ import ROConstants
 import ROCore
 import RODatabase
 import RORendering
+import ROResources
 
 @Observable
 @dynamicMemberLookup
@@ -39,11 +40,13 @@ class ObservableJob {
     private let mode: DatabaseMode
     private let job: Job
 
+    private let localizedName: String?
+
     var animatedImage: AnimatedImage?
     var skills: [ObservableSkill] = []
 
     var displayName: String {
-        job.id.stringValue
+        localizedName ?? job.id.stringValue
     }
 
     var attributes: [DatabaseRecordAttribute] {
@@ -102,6 +105,8 @@ class ObservableJob {
     init(mode: DatabaseMode, job: Job) {
         self.mode = mode
         self.job = job
+
+        self.localizedName = MessageStringTable.current.localizedJobName(forJobID: job.id)
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Job, Value>) -> Value {
