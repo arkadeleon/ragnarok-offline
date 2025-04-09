@@ -195,166 +195,20 @@ struct GeneratePacketsCommand: ParsableCommand {
             }
         }
 
-        for structDecl in structDecls + referencedStructDecls {
-            if structDecl.name == "packet_quest_list_info" {
-                continue
-            }
-
-            var properties: [String] = []
-            var decodes: [String] = []
-            var encodes: [String] = []
-
-            for (f, field) in structDecl.fields.enumerated() {
-                switch field.type {
-                case .structure, .array, .string:
-                    properties.append("""
-                        public var \(field.name): \(field.type.annotation) = \(field.type.initialValue)
-                    """)
-                case .fixedSizeArray(let structure, let size):
-                    properties.append("""
-                        @FixedSizeArray(size: \(size), initialValue: \(structure.initialValue))
-                        public var \(field.name): \(field.type.annotation)
-                    """)
-                case .fixedLengthString(let lengthOfBytes):
-                    properties.append("""
-                        @FixedLengthString(lengthOfBytes: \(lengthOfBytes))
-                        public var \(field.name): \(field.type.annotation)
-                    """)
-                }
-
-                var decodeExpr = ""
-                switch field.type {
-                case .structure(let structure):
-                    decodeExpr = """
-                            \(field.name) = try decoder.decode(\(structure.name).self)
-                    """
-                case .array(let structure):
-                    let sizes = structDecl.fields[0..<f].map {
-                        byteCount(forFieldType: $0.type, structDecls: structDecls + referencedStructDecls)
-                    }
-                    let remaining = "(Int(packetLength) - (\(sizes.joined(separator: " + "))))"
-                    let structByteCount = byteCount(forStructRef: structure, structDecls: structDecls + referencedStructDecls)
-                    decodeExpr = """
-                            \(field.name) = try decoder.decode([\(structure.name)].self, count: \(remaining) / \(structByteCount))
-                    """
-                case .fixedSizeArray(let structure, let size):
-                    decodeExpr = """
-                            \(field.name) = try decoder.decode([\(structure.name)].self, count: \(size))
-                    """
-                case .string:
-                    let sizes = structDecl.fields[0..<f].map {
-                        byteCount(forFieldType: $0.type, structDecls: structDecls + referencedStructDecls)
-                    }
-                    let remaining = "(Int(packetLength) - (\(sizes.joined(separator: " + "))))"
-                    decodeExpr = """
-                            \(field.name) = try decoder.decode(String.self, lengthOfBytes: \(remaining))
-                    """
-                case .fixedLengthString(let lengthOfBytes):
-                    decodeExpr = """
-                            \(field.name) = try decoder.decode(String.self, lengthOfBytes: \(lengthOfBytes))
-                    """
-                }
-                if structDecl.name == "packet_quest_add_header", field.name == "objectives" {
-                    decodeExpr = """
-                            \(field.name) = try decoder.decode([\(field.type.structRef!.name)].self, count: Int(count))
-                    """
-                }
-                decodes.append(decodeExpr)
-
-                switch field.type {
-                case .structure, .array, .fixedSizeArray, .string:
-                    encodes.append("""
-                            try encoder.encode(\(field.name))
-                    """)
-                case .fixedLengthString(let lengthOfBytes):
-                    encodes.append("""
-                            try encoder.encode(\(field.name), lengthOfBytes: \(lengthOfBytes))
-                    """)
-                }
-            }
-
-            output.append("""
-            
-            public struct \(structDecl.name): BinaryDecodable, BinaryEncodable, Sendable {
-                public static var size: Int {
-                    \(byteCount(forCustomStructNamed: structDecl.name, structDecls: structDecls + referencedStructDecls))
-                }
-            \(properties.joined(separator: "\n"))
-                public init() {
-                }
-                public init(from decoder: BinaryDecoder) throws {
-            \(decodes.joined(separator: "\n"))
-                }
-                public func encode(to encoder: BinaryEncoder) throws {
-            \(encodes.joined(separator: "\n"))
-                }
-            }
-            
-            """)
+        var convertibleStructDecls = structDecls + referencedStructDecls
+        convertibleStructDecls.removeAll { structDecl in
+            structDecl.name == "packet_quest_list_info"
         }
+
+        let converter = PacketStructConverter(structDecls: convertibleStructDecls)
+        let outputs = converter.convertAll()
+
+        output.append("\n")
+        output.append(outputs.joined(separator: "\n\n"))
+        output.append("\n")
 
         let outputURL = generatedDirectory.appending(path: "\(outputName).swift")
         try output.write(to: outputURL, atomically: true, encoding: .utf8)
-    }
-
-    func byteCount(forCustomStructNamed name: String, structDecls: [StructDecl]) -> String {
-        let structDecl = structDecls.first {
-            $0.name == name
-        }!
-        let size = structDecl.fields.map {
-            byteCount(forFieldType: $0.type, structDecls: structDecls)
-        }.joined(separator: " + ")
-        return size.contains("?") ? "-1" : "(\(size))"
-    }
-
-    func byteCount(forStructRef structRef: StructureType, structDecls: [StructDecl]) -> String {
-        switch structRef {
-        case .char:
-            return "1"
-        case .int8:
-            return "1"
-        case .uint8:
-            return "1"
-        case .int16:
-            return "2"
-        case .uint16:
-            return "2"
-        case .int32:
-            return "4"
-        case .uint32:
-            return "4"
-        case .int64:
-            return "8"
-        case .uint64:
-            return "8"
-        case .float:
-            return "4"
-        case .double:
-            return "8"
-        case .custom(let name):
-            let structDecl = structDecls.first {
-                $0.name == name
-            }!
-            let size = structDecl.fields.map {
-                byteCount(forFieldType: $0.type, structDecls: structDecls)
-            }.joined(separator: " + ")
-            return size.contains("?") ? "-1" : "\(name).size"
-        }
-    }
-
-    func byteCount(forFieldType fieldType: FieldType, structDecls: [StructDecl]) -> String {
-        switch fieldType {
-        case .structure(let structRef):
-            byteCount(forStructRef: structRef, structDecls: structDecls)
-        case .array:
-            "?"
-        case .fixedSizeArray(let structRef, let size):
-            "(" + byteCount(forStructRef: structRef, structDecls: structDecls) + " * \(size))"
-        case .string:
-            "?"
-        case .fixedLengthString(let lengthOfBytes):
-            "\(lengthOfBytes)"
-        }
     }
 
     // MARK: - generate packetdb
