@@ -90,6 +90,10 @@ extension MapSession {
             self.postEvent(event)
         }
 
+        // See `clif_statusupack`
+        subscription.subscribe(to: PACKET_ZC_STATUS_CHANGE_ACK.self) { packet in
+        }
+
         // See `clif_attackrange`
         subscription.subscribe(to: PACKET_ZC_ATTACK_RANGE.self) { [unowned self] packet in
             let event = PlayerEvents.AttackRangeChanged(packet: packet)
@@ -134,5 +138,25 @@ extension MapSession {
         packet.direction = direction
 
         client.sendPacket(packet)
+    }
+
+    public func incrementStatusProperty(_ sp: StatusProperty, by amount: Int) {
+        switch sp {
+        case .str, .agi, .vit, .int, .dex, .luk:
+            var packet = PACKET_CZ_STATUS_CHANGE()
+            packet.statusID = Int16(sp.rawValue)
+            packet.amount = Int8(amount)
+
+            client.sendPacket(packet)
+        case .pow, .sta, .wis, .spl, .con, .crt:
+            var packet = PACKET_CZ_ADVANCED_STATUS_CHANGE()
+            packet.packetType = HEADER_CZ_ADVANCED_STATUS_CHANGE
+            packet.type = Int16(sp.rawValue)
+            packet.amount = Int16(amount)
+
+            client.sendPacket(packet)
+        default:
+            break
+        }
     }
 }

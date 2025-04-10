@@ -5,11 +5,13 @@
 //  Created by Leon Li on 2025/4/8.
 //
 
+import ROConstants
 import ROGame
 import SwiftUI
 
 struct StatusView: View {
     var status: Player.Status
+    var onIncrementStatusProperty: (StatusProperty) -> Void
 
     var body: some View {
         VStack(spacing: 0) {
@@ -52,16 +54,22 @@ struct StatusView: View {
                 VStack(spacing: 2) {
                     Group {
                         GameButton("basic_interface/arw_right.bmp") {
+                            onIncrementStatusProperty(.str)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
+                            onIncrementStatusProperty(.agi)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
+                            onIncrementStatusProperty(.vit)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
+                            onIncrementStatusProperty(.int)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
+                            onIncrementStatusProperty(.dex)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
+                            onIncrementStatusProperty(.luk)
                         }
                     }
                     .frame(width: 14, height: 14)
@@ -107,8 +115,14 @@ struct StatusView: View {
             .frame(width: 280, height: 123)
         }
     }
+
+    init(status: Player.Status, onIncrementStatusProperty: @escaping (StatusProperty) -> Void) {
+        self.status = status
+        self.onIncrementStatusProperty = onIncrementStatusProperty
+    }
 }
 
 #Preview {
-    StatusView(status: Player.Status())
+    StatusView(status: Player.Status()) { _ in
+    }
 }

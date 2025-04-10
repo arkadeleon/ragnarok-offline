@@ -35,7 +35,9 @@ struct MapView<Content>: View where Content: View {
                         if let presentedMenuItem {
                             switch presentedMenuItem {
                             case .status:
-                                StatusView(status: status)
+                                StatusView(status: status) { sp in
+                                    mapSession.incrementStatusProperty(sp, by: 1)
+                                }
                             }
                         }
                     }
