@@ -72,12 +72,16 @@ struct FilesView: View {
         }
         .sheet(isPresented: $isHelpPresented) {
             NavigationStack {
-                FileHelpView()
+                FileHelpView {
+                    isHelpPresented.toggle()
+                }
             }
         }
         .sheet(item: $fileToPreview) { file in
             NavigationStack {
-                FilePreviewTabView(files: filteredFiles.filter({ $0.canPreview }), currentFile: file)
+                FilePreviewTabView(files: filteredFiles.filter({ $0.canPreview }), currentFile: file) {
+                    fileToPreview = nil
+                }
             }
         }
         .task {

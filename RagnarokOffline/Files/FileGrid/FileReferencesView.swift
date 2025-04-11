@@ -9,8 +9,7 @@ import SwiftUI
 
 struct FileReferencesView: View {
     var file: File
-
-    @Environment(\.dismiss) private var dismiss
+    var onDone: () -> Void
 
     @State private var referenceFiles: [File] = []
     @State private var fileToPreview: File?
@@ -25,19 +24,20 @@ struct FileReferencesView: View {
                 FileGridCell(file: file)
             }
             .buttonStyle(.plain)
+            .fileContextMenu(file: file)
         }
         .navigationTitle("References")
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button("Done") {
-                    dismiss()
-                }
+                Button("Done", action: onDone)
             }
         }
         .sheet(item: $fileToPreview) { file in
             NavigationStack {
-                FilePreviewTabView(files: referenceFiles.filter({ $0.canPreview }), currentFile: file)
+                FilePreviewTabView(files: referenceFiles.filter({ $0.canPreview }), currentFile: file) {
+                    fileToPreview = nil
+                }
             }
         }
         .task {
@@ -47,5 +47,6 @@ struct FileReferencesView: View {
 }
 
 #Preview {
-    FileReferencesView(file: .previewGND)
+    FileReferencesView(file: .previewGND) {
+    }
 }

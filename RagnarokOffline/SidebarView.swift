@@ -173,14 +173,9 @@ struct SidebarView: View {
             }
             .sheet(isPresented: $isSettingsPresented) {
                 NavigationStack {
-                    SettingsView()
-                        .toolbar {
-                            ToolbarItem(placement: .confirmationAction) {
-                                Button("Done") {
-                                    isSettingsPresented.toggle()
-                                }
-                            }
-                        }
+                    SettingsView {
+                        isSettingsPresented.toggle()
+                    }
                 }
             }
         }

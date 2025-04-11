@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FileHelpView: View {
-    @Environment(\.dismiss) private var dismiss
+    var onDone: () -> Void
 
     var body: some View {
         ScrollView {
@@ -50,10 +50,17 @@ struct FileHelpView: View {
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button("Done") {
-                    dismiss()
-                }
+                Button("Done", action: onDone)
             }
         }
+    }
+
+    init(onDone: @escaping () -> Void) {
+        self.onDone = onDone
+    }
+}
+
+#Preview {
+    FileHelpView {
     }
 }

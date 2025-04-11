@@ -47,7 +47,9 @@ struct ContentView: View {
             }
             .sheet(item: $incomingFile) { file in
                 NavigationStack {
-                    FilePreviewTabView(files: [file], currentFile: file)
+                    FilePreviewTabView(files: [file], currentFile: file) {
+                        incomingFile = nil
+                    }
                 }
             }
         }

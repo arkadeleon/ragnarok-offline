@@ -80,12 +80,16 @@ struct FileContextMenu: ViewModifier {
             }
             .sheet(isPresented: $isJSONViewerPresented) {
                 NavigationStack {
-                    FileJSONViewer(file: file)
+                    FileJSONViewer(file: file) {
+                        isJSONViewerPresented.toggle()
+                    }
                 }
             }
             .sheet(isPresented: $isReferencesPresented) {
                 NavigationStack {
-                    FileReferencesView(file: file)
+                    FileReferencesView(file: file) {
+                        isReferencesPresented.toggle()
+                    }
                 }
             }
     }

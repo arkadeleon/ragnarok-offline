@@ -9,8 +9,7 @@ import SwiftUI
 
 struct FileJSONViewer: View {
     var file: File
-
-    @Environment(\.dismiss) private var dismiss
+    var onDone: () -> Void
 
     @State private var htmlString = ""
 
@@ -21,9 +20,7 @@ struct FileJSONViewer: View {
             .navigationTitle("JSON Viewer")
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") {
-                        dismiss()
-                    }
+                    Button("Done", action: onDone)
                 }
             }
             .task {
@@ -36,15 +33,18 @@ struct FileJSONViewer: View {
             .toolbarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") {
-                        dismiss()
-                    }
+                    Button("Done", action: onDone)
                 }
             }
             .task {
                 await loadHTMLString()
             }
         #endif
+    }
+
+    init(file: File, onDone: @escaping () -> Void) {
+        self.file = file
+        self.onDone = onDone
     }
 
     private func loadHTMLString() async {
@@ -76,5 +76,6 @@ struct FileJSONViewer: View {
 }
 
 #Preview {
-    FileJSONViewer(file: .previewRSW)
+    FileJSONViewer(file: .previewRSW) {
+    }
 }

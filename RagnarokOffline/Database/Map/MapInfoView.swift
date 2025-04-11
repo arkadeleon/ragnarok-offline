@@ -67,7 +67,9 @@ struct MapInfoView: View {
         .navigationTitle(map.displayName)
         .sheet(item: $fileToPreview) { file in
             NavigationStack {
-                FilePreviewTabView(files: files, currentFile: file)
+                FilePreviewTabView(files: files, currentFile: file) {
+                    fileToPreview = nil
+                }
             }
         }
         .task {

@@ -10,8 +10,7 @@ import SwiftUI
 struct FilePreviewTabView: View {
     var files: [File]
     @State var currentFile: File
-
-    @Environment(\.dismiss) private var dismiss
+    var onDone: () -> Void
 
     var body: some View {
         #if os(macOS)
@@ -23,9 +22,7 @@ struct FilePreviewTabView: View {
                     ShareLink(item: currentFile, preview: SharePreview(currentFile.name))
                 }
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
+                    Button("Done", action: onDone)
                 }
             }
         #else
@@ -43,13 +40,17 @@ struct FilePreviewTabView: View {
                 ShareLink(item: currentFile, preview: SharePreview(currentFile.name))
             }
             ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
+                Button(action: onDone) {
                     Image(systemName: "chevron.left")
                 }
             }
         }
         #endif
+    }
+
+    init(files: [File], currentFile: File, onDone: @escaping () -> Void) {
+        self.files = files
+        self.currentFile = currentFile
+        self.onDone = onDone
     }
 }
