@@ -14,6 +14,7 @@ struct MapView<Content>: View where Content: View {
     var content: () -> Content
 
     @State private var status: Player.Status?
+    @State private var inventory = Inventory()
 
     @State private var presentedMenuItem: MenuItem?
 
@@ -38,6 +39,8 @@ struct MapView<Content>: View where Content: View {
                                 StatusView(status: status) { sp in
                                     mapSession.incrementStatusProperty(sp, by: 1)
                                 }
+                            case .inventory:
+                                InventoryView(inventory: inventory)
                             }
                         }
                     }
@@ -50,6 +53,9 @@ struct MapView<Content>: View where Content: View {
             .onReceive(mapSession.publisher(for: PlayerEvents.Moved.self), perform: scene.onPlayerMoved)
             .onReceive(mapSession.publisher(for: PlayerEvents.StatusChanged.self)) { event in
                 status = event.status
+            }
+            .onReceive(mapSession.publisher(for: InventoryEvents.Listed.self)) { event in
+                inventory = event.inventory
             }
             .onReceive(mapSession.publisher(for: MapObjectEvents.Spawned.self), perform: scene.onMapObjectSpawned)
             .onReceive(mapSession.publisher(for: MapObjectEvents.Moved.self), perform: scene.onMapObjectMoved)

@@ -17,15 +17,19 @@ struct GameImage<Content>: View where Content: View {
     @State private var image: CGImage?
 
     var body: some View {
-        ZStack {
-            if let image {
-                content(image)
+        contentView
+            .task {
+                let components = name.split(separator: "/").map(String.init)
+                let path = ResourcePath.userInterface.appending(components: components)
+                image = try? await ResourceManager.default.image(at: path, removesMagentaPixels: true)
             }
-        }
-        .task {
-            let components = name.split(separator: "/").map(String.init)
-            let path = ResourcePath.userInterface.appending(components: components)
-            image = try? await ResourceManager.default.image(at: path, removesMagentaPixels: true)
+    }
+
+    @ViewBuilder private var contentView: some View {
+        if let image {
+            content(image)
+        } else {
+            Image(decorative: "")
         }
     }
 
@@ -46,4 +50,6 @@ struct GameImage<Content>: View where Content: View {
 
 #Preview {
     GameImage("win_msgbox.bmp")
+        .frame(width: 280, height: 120)
+        .padding()
 }

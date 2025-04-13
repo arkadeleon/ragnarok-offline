@@ -9,6 +9,7 @@ import SwiftUI
 
 enum MenuItem {
     case status
+    case inventory
 }
 
 struct MenuView: View {
@@ -40,8 +41,8 @@ struct MenuView: View {
                         }
                         .disabled(true)
                         GameButton("menu_icon/bt_item.bmp") {
+                            action(.inventory)
                         }
-                        .disabled(true)
                         GameButton("menu_icon/bt_skill.bmp") {
                         }
                         .disabled(true)

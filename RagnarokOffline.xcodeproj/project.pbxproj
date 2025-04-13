@@ -50,6 +50,9 @@
 		354668C72CA9344600CE2D11 /* CommandMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354668C62CA9344100CE2D11 /* CommandMessage.swift */; };
 		3546C3D32C6D9DC9002A1321 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3546C3D22C6D9DC9002A1321 /* Conversation.swift */; };
 		355471D92DA520D4004704F2 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355471D82DA520D1004704F2 /* StatusView.swift */; };
+		355471DB2DA80601004704F2 /* InventoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355471DA2DA805F6004704F2 /* InventoryView.swift */; };
+		355471DD2DA83642004704F2 /* InventoryItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355471DC2DA8363E004704F2 /* InventoryItemView.swift */; };
+		355471DF2DA89F77004704F2 /* GameTitleBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355471DE2DA89F69004704F2 /* GameTitleBar.swift */; };
 		355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC18B2B8F25C0002F0586 /* WebView.swift */; };
 		355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC1912B9056E5002F0586 /* FileContextMenu.swift */; };
 		3561E3462D703CF000255442 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3561E3452D703CED00255442 /* Logger.swift */; };
@@ -230,6 +233,9 @@
 		354668C62CA9344100CE2D11 /* CommandMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandMessage.swift; sourceTree = "<group>"; };
 		3546C3D22C6D9DC9002A1321 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		355471D82DA520D1004704F2 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
+		355471DA2DA805F6004704F2 /* InventoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryView.swift; sourceTree = "<group>"; };
+		355471DC2DA8363E004704F2 /* InventoryItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryItemView.swift; sourceTree = "<group>"; };
+		355471DE2DA89F69004704F2 /* GameTitleBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTitleBar.swift; sourceTree = "<group>"; };
 		355BC18B2B8F25C0002F0586 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		355BC1912B9056E5002F0586 /* FileContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileContextMenu.swift; sourceTree = "<group>"; };
 		3561E3452D703CED00255442 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -508,6 +514,8 @@
 				357742562D005FAA00F2CE8D /* CharMakeView.swift */,
 				357742572D005FAA00F2CE8D /* CharSelectView.swift */,
 				357742582D005FAA00F2CE8D /* CharServerListView.swift */,
+				355471DA2DA805F6004704F2 /* InventoryView.swift */,
+				355471DC2DA8363E004704F2 /* InventoryItemView.swift */,
 				357742592D005FAA00F2CE8D /* LoginView.swift */,
 				356B64842D99A18B00DAD679 /* MapView.swift */,
 				356B647C2D951E3C00DAD679 /* MapView2DContent.swift */,
@@ -526,6 +534,7 @@
 				3577425D2D005FAA00F2CE8D /* GameButton.swift */,
 				3577425E2D005FAA00F2CE8D /* GameImage.swift */,
 				356B64862DA240C200DAD679 /* GameText.swift */,
+				355471DE2DA89F69004704F2 /* GameTitleBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -896,6 +905,7 @@
 				35BDF7062C9B0AF200CCAB8F /* SettingsItem.swift in Sources */,
 				351468DD2C50F53A0061D7F9 /* ServerCell.swift in Sources */,
 				35BE552F2BD94053003715C3 /* AsyncContentView.swift in Sources */,
+				355471DF2DA89F77004704F2 /* GameTitleBar.swift in Sources */,
 				3594DD552BF5FB6E00575F3D /* GNDFilePreviewView.swift in Sources */,
 				3514BF622B4560730065ED89 /* MonsterInfoView.swift in Sources */,
 				3514BF5E2B4557950065ED89 /* MonsterDatabaseView.swift in Sources */,
@@ -908,6 +918,7 @@
 				3536BDAD2CCA72840098950E /* ConsoleView.swift in Sources */,
 				35BE55352BD9574E003715C3 /* AnimatedImageView.swift in Sources */,
 				35652B452B960D2D0075AD71 /* MapCell.swift in Sources */,
+				355471DB2DA80601004704F2 /* InventoryView.swift in Sources */,
 				35BE55312BD94D79003715C3 /* AudioFilePreviewView.swift in Sources */,
 				35B422F62BEF76F700681AA2 /* DatabaseRecordAttribute.swift in Sources */,
 				351EE3012C08B86A0012BC9E /* MapImageView.swift in Sources */,
@@ -950,6 +961,7 @@
 				35B422E02BECAB6E00681AA2 /* MonsterSummonInfoView.swift in Sources */,
 				35BE555A2BDAA929003715C3 /* SPRFilePreviewView.swift in Sources */,
 				35239E032BC29F660039F7D5 /* EmptyContentView.swift in Sources */,
+				355471DD2DA83642004704F2 /* InventoryItemView.swift in Sources */,
 				3546C3D32C6D9DC9002A1321 /* Conversation.swift in Sources */,
 				352B140F2C22DCA40097E643 /* ObservableMonster.swift in Sources */,
 				35B33BA52BF465E700EF28F5 /* RealityCubeView.swift in Sources */,

@@ -15,12 +15,7 @@ struct StatusView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            ZStack {
-                GameImage("basic_interface/titlebar_mid.bmp") { image in
-                    image.resizable()
-                }
-            }
-            .frame(width: 280, height: 17)
+            GameTitleBar()
 
             ZStack(alignment: .topLeading) {
                 GameImage("statuswnd/w_statwin_bg.bmp")
@@ -112,8 +107,9 @@ struct StatusView: View {
                 }
                 .offset(x: 221, y: 5)
             }
-            .frame(width: 280, height: 123)
+            .frame(height: 123)
         }
+        .frame(width: 280)
     }
 
     init(status: Player.Status, onIncrementStatusProperty: @escaping (StatusProperty) -> Void) {
@@ -125,4 +121,5 @@ struct StatusView: View {
 #Preview {
     StatusView(status: Player.Status()) { _ in
     }
+    .padding()
 }

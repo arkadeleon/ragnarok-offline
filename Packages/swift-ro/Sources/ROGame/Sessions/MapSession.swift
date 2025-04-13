@@ -17,6 +17,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     let eventSubject = PassthroughSubject<any Event, Never>()
 
     var player = Player()
+    var inventory = Inventory()
     var pendingNPCDialog: NPCDialog?
 
     private var timerSubscription: AnyCancellable?
@@ -165,19 +166,24 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
     private func subscribeToInventoryPackets(with subscription: inout ClientSubscription) {
         // See `clif_inventoryStart`
-        subscription.subscribe(to: PACKET_ZC_INVENTORY_START.self) { packet in
+        subscription.subscribe(to: PACKET_ZC_INVENTORY_START.self) { [unowned self] packet in
+            self.inventory = Inventory()
         }
 
         // See `clif_inventorylist`
-        subscription.subscribe(to: packet_itemlist_normal.self) { packet in
+        subscription.subscribe(to: packet_itemlist_normal.self) { [unowned self] packet in
+            self.inventory.stackableItems = packet.list.map(Inventory.StackableItem.init)
         }
 
         // See `clif_inventorylist`
-        subscription.subscribe(to: packet_itemlist_equip.self) { packet in
+        subscription.subscribe(to: packet_itemlist_equip.self) { [unowned self] packet in
+            self.inventory.equippableItems = packet.list.map(Inventory.EquippableItem.init)
         }
 
         // See `clif_inventoryEnd`
-        subscription.subscribe(to: PACKET_ZC_INVENTORY_END.self) { packet in
+        subscription.subscribe(to: PACKET_ZC_INVENTORY_END.self) { [unowned self] packet in
+            let event = InventoryEvents.Listed(inventory: self.inventory)
+            self.postEvent(event)
         }
 
         // See `clif_additem`
