@@ -11,6 +11,7 @@ import ROGame
 import RORendering
 import ROResources
 import Spatial
+import SwiftUI
 
 class MapScene3D: MapSceneProtocol {
     let mapName: String
@@ -33,6 +34,37 @@ class MapScene3D: MapSceneProtocol {
 
     private let tileEntityManager: TileEntityManager
     private let monsterEntityManager: SpriteEntityManager
+
+    var tileTapGesture: some Gesture {
+        SpatialTapGesture()
+            .targetedToEntity(where: .has(TileComponent.self))
+            .onEnded { [unowned self] event in
+                if let component = event.entity.components[TileComponent.self] {
+                    let position = SIMD2(Int16(component.x), Int16(component.y))
+                    self.mapSceneDelegate?.mapScene(self, didTapTileAt: position)
+                }
+            }
+    }
+
+    var mapObjectTapGesture: some Gesture {
+        SpatialTapGesture()
+            .targetedToEntity(where: .has(MapObjectComponent.self))
+            .onEnded { [unowned self] event in
+                if let component = event.entity.components[MapObjectComponent.self] {
+                    self.mapSceneDelegate?.mapScene(self, didTapMapObject: component.object)
+                }
+            }
+    }
+
+    var mapItemTapGesture: some Gesture {
+        SpatialTapGesture()
+            .targetedToEntity(where: .has(MapItemComponent.self))
+            .onEnded { [unowned self] event in
+                if let component = event.entity.components[MapItemComponent.self] {
+                    self.mapSceneDelegate?.mapScene(self, didTapMapItem: component.item)
+                }
+            }
+    }
 
     init(mapName: String, world: WorldResource, player: MapObject) {
         self.mapName = mapName

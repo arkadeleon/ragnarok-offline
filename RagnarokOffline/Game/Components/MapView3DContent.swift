@@ -29,33 +29,8 @@ struct MapView3DContent: View {
                     scene.distance = distance
                 }
         }
-        .gesture(
-            SpatialTapGesture()
-                .targetedToEntity(where: .has(TileComponent.self))
-                .onEnded { event in
-                    if let component = event.entity.components[TileComponent.self] {
-                        let position = SIMD2(Int16(component.x), Int16(component.y))
-                        scene.mapSceneDelegate?.mapScene(scene, didTapTileAt: position)
-                    }
-                }
-        )
-        .gesture(
-            SpatialTapGesture()
-                .targetedToEntity(where: .has(MapObjectComponent.self))
-                .onEnded { event in
-                    if let component = event.entity.components[MapObjectComponent.self] {
-                        scene.mapSceneDelegate?.mapScene(scene, didTapMapObject: component.object)
-                    }
-                }
-        )
-        .gesture(
-            SpatialTapGesture()
-                .targetedToEntity(where: .has(MapItemComponent.self))
-                .onEnded { event in
-                    if let component = event.entity.components[MapItemComponent.self] {
-                        scene.mapSceneDelegate?.mapScene(scene, didTapMapItem: component.item)
-                    }
-                }
-        )
+        .gesture(scene.tileTapGesture)
+        .gesture(scene.mapObjectTapGesture)
+        .gesture(scene.mapItemTapGesture)
     }
 }
