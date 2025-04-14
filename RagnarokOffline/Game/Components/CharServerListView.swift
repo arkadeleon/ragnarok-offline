@@ -9,8 +9,8 @@ import RONetwork
 import SwiftUI
 
 struct CharServerListView: View {
-    var gameSession: GameSession
     var charServers: [CharServerInfo]
+    var onSelectCharServer: (CharServerInfo) -> Void
 
     var body: some View {
         ZStack {
@@ -27,7 +27,7 @@ struct CharServerListView: View {
                     Spacer()
 
                     GameButton("btn_ok.bmp") {
-                        gameSession.selectCharServer(charServers[0])
+                        onSelectCharServer(charServers[0])
                     }
 
                     GameButton("btn_cancel.bmp") {
@@ -39,8 +39,16 @@ struct CharServerListView: View {
         }
         .frame(width: 280, height: 120)
     }
+
+    init(charServers: [CharServerInfo], onSelectCharServer: @escaping (CharServerInfo) -> Void) {
+        self.charServers = charServers
+        self.onSelectCharServer = onSelectCharServer
+    }
 }
 
 #Preview {
-    CharServerListView(gameSession: GameSession(), charServers: [])
+    CharServerListView(charServers: []) { charServer in
+        // Select char server.
+    }
+    .padding()
 }

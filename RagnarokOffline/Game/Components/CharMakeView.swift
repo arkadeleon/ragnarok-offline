@@ -9,8 +9,8 @@ import ROPackets
 import SwiftUI
 
 struct CharMakeView: View {
-    var gameSession: GameSession
     var slot: UInt8
+    var onMakeChar: (CharInfo) -> Void
 
     @State private var name = ""
     @State private var str: UInt8 = 1
@@ -52,7 +52,7 @@ struct CharMakeView: View {
                             char.luk = luk
                             char.slot = slot
 
-                            gameSession.charSession?.makeChar(char: char)
+                            onMakeChar(char)
                         }
 
                         GameButton("btn_cancel.bmp") {
@@ -65,8 +65,16 @@ struct CharMakeView: View {
             .frame(width: 576, height: 342)
         }
     }
+
+    init(slot: UInt8, onMakeChar: @escaping (CharInfo) -> Void) {
+        self.slot = slot
+        self.onMakeChar = onMakeChar
+    }
 }
 
 #Preview {
-    CharMakeView(gameSession: GameSession(), slot: 0)
+    CharMakeView(slot: 0) { char in
+        // Make char.
+    }
+    .padding()
 }

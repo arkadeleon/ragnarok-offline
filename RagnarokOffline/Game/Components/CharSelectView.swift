@@ -9,8 +9,9 @@ import ROPackets
 import SwiftUI
 
 struct CharSelectView: View {
-    var gameSession: GameSession
     var chars: [CharInfo]
+    var onSelectChar: (CharInfo) -> Void
+    var onMakeChar: (UInt8) -> Void
 
     @State private var slot1: CharInfo?
     @State private var slot2: CharInfo?
@@ -108,13 +109,13 @@ struct CharSelectView: View {
 
                         if let selectedSlot, selectedChar == nil {
                             GameButton("btn_make.bmp") {
-                                gameSession.scene = .charMake(selectedSlot)
+                                onMakeChar(selectedSlot)
                             }
                         }
 
                         if let selectedChar {
                             GameButton("btn_ok.bmp") {
-                                gameSession.charSession?.selectChar(slot: selectedChar.slot)
+                                onSelectChar(selectedChar)
                             }
                         }
 
@@ -133,6 +134,12 @@ struct CharSelectView: View {
             slot3 = chars.count > 2 ? chars[2] : nil
         }
     }
+
+    init(chars: [CharInfo], onSelectChar: @escaping (CharInfo) -> Void, onMakeChar: @escaping (UInt8) -> Void) {
+        self.chars = chars
+        self.onSelectChar = onSelectChar
+        self.onMakeChar = onMakeChar
+    }
 }
 
 #Preview {
@@ -148,8 +155,10 @@ struct CharSelectView: View {
         return char
     }()
 
-    CharSelectView(
-        gameSession: GameSession(),
-        chars: [char]
-    )
+    CharSelectView(chars: [char]) { char in
+        // Select char.
+    } onMakeChar: { slot in
+        // Make char.
+    }
+    .padding()
 }

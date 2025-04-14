@@ -72,7 +72,7 @@ struct InventoryView: View {
 }
 
 #Preview {
-    var inventory: Inventory {
+    let inventory = {
         var item1 = Inventory.StackableItem()
         item1.itemID = 501
 
@@ -82,7 +82,7 @@ struct InventoryView: View {
         var inventory = Inventory()
         inventory.stackableItems = [item1, item2]
         return inventory
-    }
+    }()
 
     InventoryView(inventory: inventory)
         .padding()

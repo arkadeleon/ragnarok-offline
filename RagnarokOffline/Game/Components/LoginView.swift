@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    var gameSession: GameSession
+    var onLogin: (String, String) -> Void
 
     @State private var username = ClientSettings.shared.username
     @State private var password = ClientSettings.shared.password
@@ -55,7 +55,7 @@ struct LoginView: View {
                         ClientSettings.shared.username = username
                         ClientSettings.shared.password = password
 
-                        gameSession.login(username: username, password: password)
+                        onLogin(username, password)
                     }
 
                     GameButton("login_interface/btn_exit.bmp") {
@@ -67,8 +67,15 @@ struct LoginView: View {
         }
         .frame(width: 280, height: 120)
     }
+
+    init(onLogin: @escaping (String, String) -> Void) {
+        self.onLogin = onLogin
+    }
 }
 
 #Preview {
-    LoginView(gameSession: GameSession())
+    LoginView { username, password in
+        // Login.
+    }
+    .padding()
 }

@@ -110,6 +110,7 @@ struct MenuView: View {
 }
 
 #Preview {
-    MenuView { _ in
+    MenuView { item in
+        // Perform action.
     }
 }

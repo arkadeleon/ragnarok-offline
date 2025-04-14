@@ -84,28 +84,38 @@ struct StatusView: View {
                 }
                 .offset(x: 87, y: 6)
 
-                VStack(spacing: 2) {
-                    Group {
-                        GameText("\(status.atk) + \(status.atk2)")
-                        GameText("\(status.matk) + \(status.matk2)")
-                        GameText("\(status.hit)")
-                        GameText("\(status.critical)")
-                    }
-                    .frame(width: 54, height: 14, alignment: .trailing)
-                }
-                .offset(x: 134, y: 5)
+                HStack {
+                    Spacer()
 
-                VStack(spacing: 2) {
-                    Group {
-                        GameText("\(status.def) + \(status.def2)")
-                        GameText("\(status.mdef) + \(status.mdef2)")
-                        GameText("\(status.flee) + \(status.flee2)")
-                        GameText("\(status.aspd)")
-                        GameText("\(status.statusPoint)")
+                    VStack(alignment: .trailing, spacing: 2) {
+                        Group {
+                            GameText("\(status.atk) + \(status.atk2)")
+                            GameText("\(status.matk) + \(status.matk2)")
+                            GameText("\(status.hit)")
+                            GameText("\(status.critical)")
+                        }
+                        .frame(height: 14)
                     }
-                    .frame(width: 54, height: 14, alignment: .trailing)
+                    .padding(.top, 5)
+                    .padding(.trailing, 92)
                 }
-                .offset(x: 221, y: 5)
+
+                HStack {
+                    Spacer()
+
+                    VStack(alignment: .trailing, spacing: 2) {
+                        Group {
+                            GameText("\(status.def) + \(status.def2)")
+                            GameText("\(status.mdef) + \(status.mdef2)")
+                            GameText("\(status.flee) + \(status.flee2)")
+                            GameText("\(status.aspd)")
+                            GameText("\(status.statusPoint)")
+                        }
+                        .frame(height: 14)
+                    }
+                    .padding(.top, 5)
+                    .padding(.trailing, 5)
+                }
             }
             .frame(height: 123)
         }
@@ -119,7 +129,8 @@ struct StatusView: View {
 }
 
 #Preview {
-    StatusView(status: Player.Status()) { _ in
+    StatusView(status: Player.Status()) { sp in
+        // Increment status property.
     }
     .padding()
 }
