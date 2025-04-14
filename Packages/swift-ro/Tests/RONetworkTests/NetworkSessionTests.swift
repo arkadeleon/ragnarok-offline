@@ -1,5 +1,5 @@
 //
-//  GameSessionTests.swift
+//  NetworkSessionTests.swift
 //  RagnarokOfflineTests
 //
 //  Created by Leon Li on 2024/8/8.
@@ -10,10 +10,10 @@ import rAthenaLogin
 import rAthenaChar
 import rAthenaMap
 import rAthenaResources
-import RONetwork
-@testable import ROGame
+import ROPackets
+@testable import RONetwork
 
-final class GameSessionTests: XCTestCase {
+final class NetworkSessionTests: XCTestCase {
     var account: AccountInfo!
     var charServers: [CharServerInfo]!
     var char: CharInfo!
@@ -56,7 +56,7 @@ final class GameSessionTests: XCTestCase {
 //        await MapServer.shared.stop()
     }
 
-    func testGameSession() async throws {
+    func testNetworkSession() async throws {
         // MARK: - Start login session
 
         let loginSession = LoginSession(address: "127.0.0.1", port: 6900)

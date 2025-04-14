@@ -9,6 +9,7 @@ import Combine
 import Observation
 import ROGame
 import RONetwork
+import ROPackets
 import SwiftUI
 
 enum ConversationScene {

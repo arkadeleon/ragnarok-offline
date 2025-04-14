@@ -5,8 +5,7 @@
 //  Created by Leon Li on 2025/3/27.
 //
 
-import ROConstants
-import ROGame
+import RONetwork
 
 @MainActor
 protocol MapSceneProtocol {

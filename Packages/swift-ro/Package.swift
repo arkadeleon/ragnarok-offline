@@ -28,6 +28,9 @@ let package = Package(
             name: "RONetwork",
             targets: ["RONetwork"]),
         .library(
+            name: "ROPackets",
+            targets: ["ROPackets"]),
+        .library(
             name: "RORenderers",
             targets: ["RORenderers"]),
         .library(
@@ -101,25 +104,33 @@ let package = Package(
                 "RORendering",
                 "ROResources",
             ]),
+        .target(
+            name: "RONetwork",
+            dependencies: [
+                "ROConstants",
+                "ROCore",
+                "ROPackets",
+                "ROResources",
+            ]),
         .testTarget(
-            name: "ROGameTests",
+            name: "RONetworkTests",
             dependencies: [
                 .product(name: "rAthenaCommon", package: "swift-rathena"),
                 .product(name: "rAthenaLogin", package: "swift-rathena"),
                 .product(name: "rAthenaChar", package: "swift-rathena"),
                 .product(name: "rAthenaMap", package: "swift-rathena"),
                 .product(name: "rAthenaResources", package: "swift-rathena"),
-                "ROGame",
+                "RONetwork",
             ]),
         .target(
-            name: "RONetwork",
+            name: "ROPackets",
             dependencies: [
                 "ROCore",
             ]),
         .testTarget(
-            name: "RONetworkTests",
+            name: "ROPacketsTests",
             dependencies: [
-                "RONetwork",
+                "ROPackets",
             ]),
         .target(
             name: "RORenderers",

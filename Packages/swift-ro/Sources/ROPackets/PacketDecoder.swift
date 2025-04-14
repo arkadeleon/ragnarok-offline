@@ -13,8 +13,11 @@ enum PacketDecodingError: Error {
     case unknownPacket(Int16)
 }
 
-final class PacketDecoder {
-    func decode(from data: Data) throws -> [any RegisteredPacket] {
+final public class PacketDecoder {
+    public init() {
+    }
+
+    public func decode(from data: Data) throws -> [any RegisteredPacket] {
         var packets: [any RegisteredPacket] = []
 
         let stream = MemoryStream(data: data)

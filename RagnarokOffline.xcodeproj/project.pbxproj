@@ -130,6 +130,7 @@
 		35B575FE2D1BB34200FC12BB /* CharacterSimulatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B575FD2D1BB33B00FC12BB /* CharacterSimulatorView.swift */; };
 		35B695EA2A305EF6006F1904 /* MetalCubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695E92A305EF6006F1904 /* MetalCubeView.swift */; };
 		35B695EC2A307164006F1904 /* MetalCubeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B695EB2A307164006F1904 /* MetalCubeScene.swift */; };
+		35BA9BA92DACAAF0008C13E1 /* ROPackets in Frameworks */ = {isa = PBXBuildFile; productRef = 35BA9BA82DACAAF0008C13E1 /* ROPackets */; };
 		35BDF7042C9B0AED00CCAB8F /* ClientSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF7032C9B0AED00CCAB8F /* ClientSettings.swift */; };
 		35BDF7062C9B0AF200CCAB8F /* SettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF7052C9B0AF200CCAB8F /* SettingsItem.swift */; };
 		35BE55292BD92D52003715C3 /* TextFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55282BD92D52003715C3 /* TextFilePreviewView.swift */; };
@@ -360,6 +361,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */,
+				35BA9BA92DACAAF0008C13E1 /* ROPackets in Frameworks */,
 				358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */,
 				3579DF942D637BFC00B8C98A /* RORendering in Frameworks */,
 				358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */,
@@ -803,6 +805,7 @@
 				357960A92D356D26003D9CEF /* ROGame */,
 				3579DF932D637BFC00B8C98A /* RORendering */,
 				353725EC2D83FDF2008590F6 /* Highlight */,
+				35BA9BA82DACAAF0008C13E1 /* ROPackets */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -1304,6 +1307,10 @@
 		3590B23D2CE5EA9F007A0AED /* ROServer */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ROServer;
+		};
+		35BA9BA82DACAAF0008C13E1 /* ROPackets */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ROPackets;
 		};
 		35C8AF072D31781C0033B3DB /* ROResources */ = {
 			isa = XCSwiftPackageProductDependency;

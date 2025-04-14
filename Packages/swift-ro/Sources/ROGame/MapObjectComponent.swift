@@ -6,6 +6,7 @@
 //
 
 import RealityKit
+import RONetwork
 
 public struct MapObjectComponent: Component {
     public var object: MapObject

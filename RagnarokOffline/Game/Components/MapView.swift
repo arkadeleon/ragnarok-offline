@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/3/30.
 //
 
-import ROGame
+import RONetwork
 import SwiftUI
 
 struct MapView<Content>: View where Content: View {

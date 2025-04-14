@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/4/2.
 //
 
-import RONetwork
+import ROPackets
 
 extension MapSession {
     func subscribeToMapItemPackets(with subscription: inout ClientSubscription) {

@@ -6,8 +6,8 @@
 //
 
 import ROConstants
-import ROGame
 import RONetwork
+import ROPackets
 import SwiftUI
 
 struct BasicInfoView: View {

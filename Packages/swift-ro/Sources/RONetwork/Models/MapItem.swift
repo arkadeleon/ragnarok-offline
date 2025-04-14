@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/4/2.
 //
 
-import RONetwork
+import ROPackets
 
 /// Represents an item dropped on a map.
 public struct MapItem: Sendable {

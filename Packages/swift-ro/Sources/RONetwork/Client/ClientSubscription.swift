@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2025/3/26.
 //
 
+import ROPackets
+
 public typealias ClientErrorHandler = @Sendable (_ error: ClientError) -> Void
 
 public struct ClientSubscription {

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/11/29.
 //
 
-import RONetwork
+import ROPackets
 
 extension MapSession {
     func subscribeToNPCPackets(with subscription: inout ClientSubscription) {

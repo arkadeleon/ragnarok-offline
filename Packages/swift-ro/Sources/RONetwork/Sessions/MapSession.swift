@@ -7,7 +7,7 @@
 
 import Combine
 import Foundation
-import RONetwork
+import ROPackets
 
 final public class MapSession: SessionProtocol, @unchecked Sendable {
     public private(set) var account: AccountInfo

@@ -7,7 +7,7 @@
 
 import Combine
 import Foundation
-import RONetwork
+import ROPackets
 
 final public class LoginSession: SessionProtocol, @unchecked Sendable {
     let client: Client

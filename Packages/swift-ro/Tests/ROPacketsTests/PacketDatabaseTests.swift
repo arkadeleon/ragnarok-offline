@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import RONetwork
+@testable import ROPackets
 
 final class PacketDatabaseTests: XCTestCase {
     func testPacketDatabase() async throws {

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/4/1.
 //
 
-import RONetwork
+import ROPackets
 
 public enum MapItemEvents {
     public struct Spawned: Event {

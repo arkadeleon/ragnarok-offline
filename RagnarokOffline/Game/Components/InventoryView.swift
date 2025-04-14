@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/4/10.
 //
 
-import ROGame
+import RONetwork
 import SwiftUI
 
 struct InventoryView: View {

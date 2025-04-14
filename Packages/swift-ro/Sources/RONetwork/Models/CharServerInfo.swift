@@ -6,7 +6,7 @@
 //
 
 import Darwin
-import RONetwork
+import ROPackets
 
 public struct CharServerInfo: Sendable {
     public let ip: String

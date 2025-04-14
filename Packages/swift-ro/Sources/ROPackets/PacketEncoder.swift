@@ -8,8 +8,11 @@
 import Foundation
 import ROCore
 
-final class PacketEncoder {
-    func encode(_ packet: some BinaryEncodable) throws -> Data {
+final public class PacketEncoder {
+    public init() {
+    }
+
+    public func encode(_ packet: some BinaryEncodable) throws -> Data {
         let stream = MemoryStream()
         defer {
             stream.close()

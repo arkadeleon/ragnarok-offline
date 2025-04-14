@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/9/25.
 //
 
-import RONetwork
+import ROPackets
 import ROResources
 
 public enum AuthenticationEvents {

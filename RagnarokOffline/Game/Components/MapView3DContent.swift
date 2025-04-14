@@ -6,7 +6,6 @@
 //
 
 import RealityKit
-import ROGame
 import SwiftUI
 
 struct MapView3DContent: View {

@@ -6,7 +6,7 @@
 //
 
 import ROConstants
-import RONetwork
+import ROPackets
 
 public struct Player: Sendable {
     public var position: SIMD2<Int16> = .zero

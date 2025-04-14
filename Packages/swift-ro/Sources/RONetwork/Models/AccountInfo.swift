@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2025/3/29.
 //
 
-import RONetwork
-
 public struct AccountInfo: Sendable {
     public let langType: UInt16 = 1
 

@@ -6,7 +6,7 @@
 //
 
 import ROConstants
-import RONetwork
+import ROPackets
 
 extension MapSession {
     func subscribeToPlayerPackets(with subscription: inout ClientSubscription) {

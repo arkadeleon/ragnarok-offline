@@ -8,6 +8,7 @@
 import RealityKit
 import ROCore
 import ROGame
+import RONetwork
 import RORendering
 import ROResources
 import Spatial

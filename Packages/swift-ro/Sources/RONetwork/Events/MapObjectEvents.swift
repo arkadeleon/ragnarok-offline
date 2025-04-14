@@ -6,7 +6,7 @@
 //
 
 import ROConstants
-import RONetwork
+import ROPackets
 
 public enum MapObjectEvents {
     public struct Spawned: Event {

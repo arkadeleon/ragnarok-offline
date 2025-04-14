@@ -6,7 +6,7 @@
 //
 
 import ROConstants
-import RONetwork
+import ROPackets
 
 public struct Inventory: Sendable {
     public var stackableItems: [StackableItem]

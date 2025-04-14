@@ -6,7 +6,7 @@
 //
 
 import ROConstants
-import RONetwork
+import ROPackets
 
 // See `clif_bl_type`
 public enum MapObjectType: Int, Sendable {

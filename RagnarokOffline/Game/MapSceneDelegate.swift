@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/3/27.
 //
 
-import ROGame
+import RONetwork
 
 protocol MapSceneDelegate: AnyObject {
     func mapSceneDidFinishLoading(_ scene: any MapSceneProtocol)
