@@ -259,7 +259,7 @@ class MapScene3D: MapSceneProtocol {
         }
     }
 
-    func onMapItemSpawned(_ event: MapItemEvents.Spawned) {
+    func onItemSpawned(_ event: ItemEvents.Spawned) {
         Task {
             let actions = try await SpriteAction.actions(forItemID: Int(event.item.itemID))
             let entity = SpriteEntity(actions: actions)
@@ -271,7 +271,7 @@ class MapScene3D: MapSceneProtocol {
         }
     }
 
-    func onMapItemVanished(_ event: MapItemEvents.Vanished) {
+    func onItemVanished(_ event: ItemEvents.Vanished) {
         if let entity = rootEntity.findEntity(named: "\(event.objectID)") {
             entity.removeFromParent()
         }

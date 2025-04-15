@@ -54,17 +54,17 @@ struct MapView<Content>: View where Content: View {
             .onReceive(mapSession.publisher(for: PlayerEvents.StatusChanged.self)) { event in
                 status = event.status
             }
-            .onReceive(mapSession.publisher(for: InventoryEvents.Listed.self)) { event in
+            .onReceive(mapSession.publisher(for: ItemEvents.Listed.self)) { event in
                 inventory = event.inventory
             }
+            .onReceive(mapSession.publisher(for: ItemEvents.Spawned.self), perform: scene.onItemSpawned)
+            .onReceive(mapSession.publisher(for: ItemEvents.Vanished.self), perform: scene.onItemVanished)
             .onReceive(mapSession.publisher(for: MapObjectEvents.Spawned.self), perform: scene.onMapObjectSpawned)
             .onReceive(mapSession.publisher(for: MapObjectEvents.Moved.self), perform: scene.onMapObjectMoved)
             .onReceive(mapSession.publisher(for: MapObjectEvents.Stopped.self), perform: scene.onMapObjectStopped)
             .onReceive(mapSession.publisher(for: MapObjectEvents.Vanished.self), perform: scene.onMapObjectVanished)
             .onReceive(mapSession.publisher(for: MapObjectEvents.StateChanged.self), perform: scene.onMapObjectStateChanged)
             .onReceive(mapSession.publisher(for: MapObjectEvents.ActionPerformed.self), perform: scene.onMapObjectActionPerformed)
-            .onReceive(mapSession.publisher(for: MapItemEvents.Spawned.self), perform: scene.onMapItemSpawned)
-            .onReceive(mapSession.publisher(for: MapItemEvents.Vanished.self), perform: scene.onMapItemVanished)
     }
 
     init(mapSession: MapSession, scene: any MapSceneProtocol, @ViewBuilder content: @escaping () -> Content) {

@@ -69,11 +69,10 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         subscribeToMapPackets(with: &subscription)
         subscribeToPlayerPackets(with: &subscription)
         subscribeToAchievementPackets(with: &subscription)
-        subscribeToInventoryPackets(with: &subscription)
         subscribeToMailPackets(with: &subscription)
         subscribeToRodexPackets(with: &subscription)
         subscribeToNPCPackets(with: &subscription)
-        subscribeToMapItemPackets(with: &subscription)
+        subscribeToItemPackets(with: &subscription)
         subscribeToMapObjectPackets(with: &subscription)
         subscribeToPartyPackets(with: &subscription)
 
@@ -161,37 +160,6 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         subscription.subscribe(to: PACKET_ZC_ACH_UPDATE.self) { [unowned self] packet in
             let event = AchievementEvents.Updated()
             self.postEvent(event)
-        }
-    }
-
-    private func subscribeToInventoryPackets(with subscription: inout ClientSubscription) {
-        // See `clif_inventoryStart`
-        subscription.subscribe(to: PACKET_ZC_INVENTORY_START.self) { [unowned self] packet in
-            self.inventory = Inventory()
-        }
-
-        // See `clif_inventorylist`
-        subscription.subscribe(to: packet_itemlist_normal.self) { [unowned self] packet in
-            self.inventory.stackableItems = packet.list.map(Inventory.StackableItem.init)
-        }
-
-        // See `clif_inventorylist`
-        subscription.subscribe(to: packet_itemlist_equip.self) { [unowned self] packet in
-            self.inventory.equippableItems = packet.list.map(Inventory.EquippableItem.init)
-        }
-
-        // See `clif_inventoryEnd`
-        subscription.subscribe(to: PACKET_ZC_INVENTORY_END.self) { [unowned self] packet in
-            let event = InventoryEvents.Listed(inventory: self.inventory)
-            self.postEvent(event)
-        }
-
-        // See `clif_additem`
-        subscription.subscribe(to: PACKET_ZC_ITEM_PICKUP_ACK.self) { packet in
-        }
-
-        // See `clif_dropitem`
-        subscription.subscribe(to: PACKET_ZC_ITEM_THROW_ACK.self) { packet in
         }
     }
 

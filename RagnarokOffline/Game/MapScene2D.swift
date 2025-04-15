@@ -189,9 +189,9 @@ class MapScene2D: SKScene, MapSceneProtocol {
     func onMapObjectActionPerformed(_ event: MapObjectEvents.ActionPerformed) {
     }
 
-    func onMapItemSpawned(_ event: MapItemEvents.Spawned) {
+    func onItemSpawned(_ event: ItemEvents.Spawned) {
     }
 
-    func onMapItemVanished(_ event: MapItemEvents.Vanished) {
+    func onItemVanished(_ event: ItemEvents.Vanished) {
     }
 }
