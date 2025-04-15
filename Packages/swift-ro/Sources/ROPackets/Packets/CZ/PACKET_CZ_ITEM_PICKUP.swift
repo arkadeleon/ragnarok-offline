@@ -11,11 +11,11 @@ let ENTRY_CZ_ITEM_PICKUP = packetDatabase.entry(forFunctionName: "clif_parse_Tak
 
 public struct PACKET_CZ_ITEM_PICKUP: BinaryEncodable {
     public let packetType: Int16
-    public var itemAID: UInt32
+    public var objectID: UInt32
 
     public init() {
         packetType = ENTRY_CZ_ITEM_PICKUP.packetType
-        itemAID = 0
+        objectID = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {
@@ -24,7 +24,7 @@ public struct PACKET_CZ_ITEM_PICKUP: BinaryEncodable {
 
         var data = [UInt8](repeating: 0, count: Int(packetLength))
         data.replaceSubrange(from: 0, with: packetType)
-        data.replaceSubrange(from: offsets[0], with: itemAID)
+        data.replaceSubrange(from: offsets[0], with: objectID)
 
         try encoder.encode(data)
     }

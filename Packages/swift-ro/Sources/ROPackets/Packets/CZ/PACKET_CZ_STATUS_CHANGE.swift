@@ -20,7 +20,7 @@ public struct PACKET_CZ_STATUS_CHANGE: BinaryEncodable {
         amount = 0
     }
 
-    public func encode(to encoder: ROCore.BinaryEncoder) throws {
+    public func encode(to encoder: BinaryEncoder) throws {
         let packetLength = ENTRY_CZ_STATUS_CHANGE.packetLength
         let offsets = ENTRY_CZ_STATUS_CHANGE.offsets
 

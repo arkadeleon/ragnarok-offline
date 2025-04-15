@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2025/4/2.
 //
 
+import ROConstants
 import ROPackets
 
 extension MapSession {
@@ -59,11 +60,66 @@ extension MapSession {
             let event = ItemEvents.Thrown(packet: packet)
             self.postEvent(event)
         }
+
+        // See `clif_useitemack`
+        subscription.subscribe(to: PACKET_ZC_USE_ITEM_ACK.self) { [unowned self] packet in
+            let event = ItemEvents.Used(packet: packet)
+            self.postEvent(event)
+        }
+
+        // See `clif_equipitemack`
+        subscription.subscribe(to: PACKET_ZC_REQ_WEAR_EQUIP_ACK.self) { [unowned self] packet in
+            let event = ItemEvents.Equipped(packet: packet)
+            self.postEvent(event)
+        }
+
+        // See `clif_unequipitemack`
+        subscription.subscribe(to: PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK.self) { [unowned self] packet in
+            let event = ItemEvents.Unequipped(packet: packet)
+            self.postEvent(event)
+        }
     }
 
+    // See `clif_parse_TakeItem`
     public func pickUpItem(objectID: UInt32) {
         var packet = PACKET_CZ_ITEM_PICKUP()
-        packet.itemAID = objectID
+        packet.objectID = objectID
+
+        client.sendPacket(packet)
+    }
+
+    // See `clif_parse_DropItem`
+    public func throwItem(at index: Int, amount: Int) {
+        var packet = PACKET_CZ_ITEM_THROW()
+        packet.index = UInt16(index)
+        packet.amount = Int16(amount)
+
+        client.sendPacket(packet)
+    }
+
+    // See `clif_parse_UseItem`
+    public func useItem(at index: Int, by accountID: UInt32) {
+        var packet = PACKET_CZ_USE_ITEM()
+        packet.index = UInt16(index)
+        packet.accountID = accountID
+
+        client.sendPacket(packet)
+    }
+
+    // See `clif_parse_EquipItem`
+    public func equipItem(at index: Int, location: EquipPositions) {
+        var packet = PACKET_CZ_REQ_WEAR_EQUIP()
+        packet.packetType = HEADER_CZ_REQ_WEAR_EQUIP
+        packet.index = UInt16(index)
+        packet.position = UInt32(location.rawValue)
+
+        client.sendPacket(packet)
+    }
+
+    // See `clif_parse_UnequipItem`
+    public func unequipItem(at index: Int) {
+        var packet = PACKET_CZ_REQ_TAKEOFF_EQUIP()
+        packet.index = UInt16(index)
 
         client.sendPacket(packet)
     }
