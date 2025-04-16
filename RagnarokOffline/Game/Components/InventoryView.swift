@@ -10,80 +10,113 @@ import SwiftUI
 
 struct InventoryView: View {
     var inventory: Inventory
+    var onUseItem: (InventoryItem) -> Void
+    var onEquipItem: (InventoryItem) -> Void
+
+    @State private var items: [InventoryItem] = []
 
     var body: some View {
         VStack(spacing: 0) {
             GameTitleBar()
 
-            HStack(spacing: 0) {
-                ZStack {
+            ZStack(alignment: .topLeading) {
+                HStack(spacing: 0) {
                     GameImage("basic_interface/itemwin_left.bmp") { image in
                         image.resizable(resizingMode: .tile)
                     }
+                    .frame(width: 20)
 
-                    VStack {
-                        Button {
-                        } label: {
-                            GameText("I\nt\ne\nm")
-                                .multilineTextAlignment(.center)
-                        }
-                        .buttonStyle(.plain)
+                    GameImage("basic_interface/itemwin_mid.bmp") { image in
+                        image.resizable(resizingMode: .tile)
                     }
-                }
-                .frame(width: 20)
+                    .offset(x: 16)
 
-                Grid(horizontalSpacing: 0, verticalSpacing: 0) {
-                    ForEach(0..<8) { y in
-                        GridRow {
-                            ForEach(0..<7) { x in
-                                itemView(at: y * 7 + x)
+                    GameImage("basic_interface/itemwin_right.bmp") { image in
+                        image.resizable(resizingMode: .tile)
+                    }
+                    .frame(width: 20)
+                }
+                .background(.white)
+
+                VStack {
+                    Button {
+                        items = inventory.usableItems
+                    } label: {
+                        GameText("I\nt\ne\nm")
+                            .multilineTextAlignment(.center)
+                            .frame(height: 66)
+                    }
+                    .buttonStyle(.plain)
+
+                    Button {
+                        items = inventory.equippableItems
+                    } label: {
+                        GameText("G\ne\na\nr")
+                            .multilineTextAlignment(.center)
+                            .frame(height: 66)
+                    }
+                    .buttonStyle(.plain)
+                }
+                .frame(width: 20, height: 264)
+
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 32, maximum: 32), spacing: 0)], spacing: 0) {
+                    ForEach(items, id: \.index) { item in
+                        InventoryItemView(item: item) {
+                            if item.isUsable {
+                                Button {
+                                    onUseItem(item)
+                                } label: {
+                                    GameText("Use")
+                                }
+                            }
+
+                            if item.isEquippable {
+                                Button {
+                                    onEquipItem(item)
+                                } label: {
+                                    GameText("Equip")
+                                }
                             }
                         }
                     }
                 }
-                .padding(.leading, 16)
-                .padding(.bottom, 16)
-                .background(.white)
-
-                GameImage("basic_interface/itemwin_right.bmp") { image in
-                    image.resizable(resizingMode: .tile)
-                }
-                .frame(width: 20)
+                .frame(width: 32 * 7)
+                .offset(x: 36)
             }
-            .frame(height: 272)
+            .frame(height: 264)
 
-            HStack(spacing: 0) {
-                GameImage("basic_interface/btnbar_left.bmp")
-
-                GameImage("basic_interface/btnbar_mid.bmp") { image in
-                    image.resizable()
-                }
-
-                GameImage("basic_interface/btnbar_right.bmp")
-            }
-            .frame(height: 21)
+            GameBottomBar()
         }
         .frame(width: 280)
+        .task {
+            items = inventory.usableItems
+        }
     }
 
-    private func itemView(at index: Int) -> InventoryItemView {
-        index < inventory.stackableItems.count ? InventoryItemView(item: inventory.stackableItems[index]) : InventoryItemView()
+    init(inventory: Inventory, onUseItem: @escaping (InventoryItem) -> Void, onEquipItem: @escaping (InventoryItem) -> Void) {
+        self.inventory = inventory
+        self.onUseItem = onUseItem
+        self.onEquipItem = onEquipItem
     }
 }
 
 #Preview {
     let inventory = {
-        var item1 = Inventory.StackableItem()
+        var item1 = InventoryItem()
+        item1.index = 0
         item1.itemID = 501
+        item1.type = .healing
 
-        var item2 = Inventory.StackableItem()
+        var item2 = InventoryItem()
+        item2.index = 1
         item2.itemID = 502
+        item2.type = .healing
 
         var inventory = Inventory()
-        inventory.stackableItems = [item1, item2]
+        inventory.append(items: [item1, item2])
         return inventory
     }()
 
-    InventoryView(inventory: inventory)
+    InventoryView(inventory: inventory, onUseItem: { _ in }, onEquipItem: { _ in })
         .padding()
 }

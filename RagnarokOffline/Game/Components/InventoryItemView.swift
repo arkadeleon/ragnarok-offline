@@ -9,71 +9,48 @@ import RONetwork
 import ROResources
 import SwiftUI
 
-struct InventoryItemView: View {
-    enum Item {
-        case none
-        case stackable(Inventory.StackableItem)
-        case equippable(Inventory.EquippableItem)
-    }
-
-    var item: InventoryItemView.Item
+struct InventoryItemView<Actions>: View where Actions: View {
+    var item: InventoryItem
+    var actions: () -> Actions
 
     @State private var iconImage: CGImage?
-    @State private var count: Int?
 
     var body: some View {
-        ZStack {
-            GameImage("basic_interface/itemwin_mid.bmp")
+        Menu(content: actions) {
+            ZStack {
+                if let iconImage {
+                    Image(decorative: iconImage, scale: 1)
+                }
 
-            if let iconImage {
-                Image(decorative: iconImage, scale: 1)
-            }
-
-            if let count {
-                GameText("\(count)")
+                GameText("\(item.amount)")
                     .offset(x: 5, y: 10)
             }
+            .frame(width: 32, height: 32)
         }
-        .frame(width: 32, height: 32)
+        .buttonStyle(.plain)
         .task {
-            switch item {
-            case .none:
-                break
-            case .stackable(let item):
-                if let path = await ResourcePath(itemIconImagePathWithItemID: item.itemID) {
-                    iconImage = try? await ResourceManager.default.image(at: path, removesMagentaPixels: true)
-                }
-                count = item.count
-            case .equippable(let item):
-                if let path = await ResourcePath(itemIconImagePathWithItemID: item.itemID) {
-                    iconImage = try? await ResourceManager.default.image(at: path, removesMagentaPixels: true)
-                }
-                count = nil
+            if let path = await ResourcePath(itemIconImagePathWithItemID: item.itemID) {
+                iconImage = try? await ResourceManager.default.image(at: path, removesMagentaPixels: true)
             }
         }
     }
 
-    init() {
-        self.item = .none
-    }
-
-    init(item: Inventory.StackableItem) {
-        self.item = .stackable(item)
-    }
-
-    init(item: Inventory.EquippableItem) {
-        self.item = .equippable(item)
+    init(item: InventoryItem, @ViewBuilder actions: @escaping () -> Actions) {
+        self.item = item
+        self.actions = actions
     }
 }
 
 #Preview {
     let item = {
-        var item = Inventory.StackableItem()
+        var item = InventoryItem()
         item.itemID = 501
-        item.count = 1
+        item.amount = 1
         return item
     }()
 
-    InventoryItemView(item: item)
-        .padding()
+    InventoryItemView(item: item) {
+        GameText("Use")
+    }
+    .padding()
 }

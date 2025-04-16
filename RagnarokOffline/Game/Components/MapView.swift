@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2025/3/30.
 //
 
+import ROConstants
 import RONetwork
 import SwiftUI
 
@@ -36,11 +37,9 @@ struct MapView<Content>: View where Content: View {
                         if let presentedMenuItem {
                             switch presentedMenuItem {
                             case .status:
-                                StatusView(status: status) { sp in
-                                    mapSession.incrementStatusProperty(sp, by: 1)
-                                }
+                                StatusView(status: status, onIncrementStatusProperty: onIncrementStatusProperty)
                             case .inventory:
-                                InventoryView(inventory: inventory)
+                                InventoryView(inventory: inventory, onUseItem: onUseItem, onEquipItem: onEquipItem)
                             }
                         }
                     }
@@ -54,7 +53,10 @@ struct MapView<Content>: View where Content: View {
             .onReceive(mapSession.publisher(for: PlayerEvents.StatusChanged.self)) { event in
                 status = event.status
             }
-            .onReceive(mapSession.publisher(for: ItemEvents.Listed.self)) { event in
+            .onReceive(mapSession.publisher(for: ItemEvents.ListReceived.self)) { event in
+                inventory = event.inventory
+            }
+            .onReceive(mapSession.publisher(for: ItemEvents.ListUpdated.self)) { event in
                 inventory = event.inventory
             }
             .onReceive(mapSession.publisher(for: ItemEvents.Spawned.self), perform: scene.onItemSpawned)
@@ -71,5 +73,18 @@ struct MapView<Content>: View where Content: View {
         self.mapSession = mapSession
         self.scene = scene
         self.content = content
+    }
+
+    private func onIncrementStatusProperty(_ sp: StatusProperty) {
+        mapSession.incrementStatusProperty(sp, by: 1)
+    }
+
+    private func onUseItem(_ item: InventoryItem) {
+        let accountID = mapSession.account.accountID
+        mapSession.useItem(at: item.index, by: accountID)
+    }
+
+    private func onEquipItem(_ item: InventoryItem) {
+        mapSession.equipItem(at: item.index, location: item.location)
     }
 }

@@ -9,7 +9,15 @@ import ROConstants
 import ROPackets
 
 public enum ItemEvents {
-    public struct Listed: Event {
+    public struct ListReceived: Event {
+        public let inventory: Inventory
+
+        init(inventory: Inventory) {
+            self.inventory = inventory
+        }
+    }
+
+    public struct ListUpdated: Event {
         public let inventory: Inventory
 
         init(inventory: Inventory) {

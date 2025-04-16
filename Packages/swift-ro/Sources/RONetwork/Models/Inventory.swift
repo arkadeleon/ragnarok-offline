@@ -9,72 +9,47 @@ import ROConstants
 import ROPackets
 
 public struct Inventory: Sendable {
-    public var stackableItems: [StackableItem]
-    public var equippableItems: [EquippableItem]
+    public internal(set) var items: [Int : InventoryItem]
+
+    public var usableItems: [InventoryItem] {
+        let usableItems = items.values.filter { $0.isUsable }
+        return usableItems.sorted()
+    }
+
+    public var equippableItems: [InventoryItem] {
+        let equippableItems = items.values.filter { $0.isEquippable }
+        return equippableItems.sorted()
+    }
+
+    public var etcItems: [InventoryItem] {
+        let etcItems = items.values.filter { $0.isEtc }
+        return etcItems.sorted()
+    }
 
     public init() {
-        stackableItems = []
-        equippableItems = []
+        items = [:]
     }
-}
 
-extension Inventory {
-    public struct StackableItem: Sendable {
-        public var index: Int
-        public var itemID: Int
-        public var itemType: ItemType
-        public var count: Int
-        public var equipState: EquipPositions
-        public var cards: [Int]
-
-        public init() {
-            index = 0
-            itemID = 0
-            itemType = .etc
-            count = 0
-            equipState = EquipPositions(rawValue: 0)
-            cards = [0, 0, 0, 0]
-        }
-
-        public init(item: NORMALITEM_INFO) {
-            index = Int(item.index)
-            itemID = Int(item.ITID)
-            itemType = ItemType(rawValue: Int(item.type)) ?? .etc
-            count = Int(item.count)
-            equipState = EquipPositions(rawValue: Int(item.WearState))
-            cards = item.slot.card.map(Int.init)
+    public mutating func append(items: [InventoryItem]) {
+        for item in items {
+            self.items[item.index] = item
         }
     }
-}
 
-extension Inventory {
-    public struct EquippableItem: Sendable {
-        public var index: Int
-        public var itemID: Int
-        public var itemType: ItemType
-        public var location: EquipPositions
-        public var equipState: EquipPositions
-        public var refiningLevel: Int
-        public var cards: [Int]
+    mutating func append(items: [NORMALITEM_INFO]) {
+        let items = items.map(InventoryItem.init)
+        append(items: items)
+    }
 
-        public init() {
-            index = 0
-            itemID = 0
-            itemType = .etc
-            location = EquipPositions(rawValue: 0)
-            equipState = EquipPositions(rawValue: 0)
-            refiningLevel = 0
-            cards = [0, 0, 0, 0]
-        }
+    mutating func append(items: [EQUIPITEM_INFO]) {
+        let items = items.map(InventoryItem.init)
+        append(items: items)
+    }
 
-        public init(item: EQUIPITEM_INFO) {
-            index = Int(item.index)
-            itemID = Int(item.ITID)
-            itemType = ItemType(rawValue: Int(item.type)) ?? .etc
-            location = EquipPositions(rawValue: Int(item.location))
-            equipState = EquipPositions(rawValue: Int(item.WearState))
-            refiningLevel = Int(item.RefiningLevel)
-            cards = item.slot.card.map(Int.init)
+    mutating func updateItem(at index: Int, amount: Int) {
+        if var item = items[index] {
+            item.amount = amount
+            items[index] = item
         }
     }
 }
