@@ -117,6 +117,7 @@ final public class Client: Sendable {
                         let decoder = PacketDecoder()
                         let packets = try decoder.decode(from: remaining)
                         for packet in packets {
+                            logger.info("Received packet: \(String(describing: packet))")
                             packetContinuation.yield(packet)
                         }
                     } catch {

@@ -34,7 +34,6 @@ final public class PacketDecoder {
             if let registeredPacket = registeredPackets[packetType] {
                 let packet = try registeredPacket.init(from: decoder)
                 packets.append(packet)
-                logger.info("Decoded packet: \(String(describing: packet))")
             } else if let entry = packetDatabase.entriesByPacketType[packetType] {
                 if entry.packetLength == -1 {
                     let packetType = try decoder.decode(Int16.self)
