@@ -129,8 +129,6 @@ struct StatusView: View {
 }
 
 #Preview {
-    StatusView(status: Player.Status()) { sp in
-        // Increment status property.
-    }
-    .padding()
+    StatusView(status: Player.Status(), onIncrementStatusProperty: { _ in })
+        .padding()
 }

@@ -65,4 +65,9 @@ extension Array where Element == UInt8 {
         let subrange = lowerBound..<(lowerBound + bytes.count)
         replaceSubrange(subrange, with: bytes)
     }
+
+    @inlinable mutating func replaceSubrange(from lowerBound: Int, with data: Data) {
+        let subrange = lowerBound..<(lowerBound + data.count)
+        replaceSubrange(subrange, with: data)
+    }
 }

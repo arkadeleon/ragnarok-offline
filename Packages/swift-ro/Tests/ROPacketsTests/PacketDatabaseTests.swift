@@ -22,5 +22,7 @@ final class PacketDatabaseTests: XCTestCase {
         XCTAssertEqual(ENTRY_CZ_ITEM_THROW.packetType, 0x363)
         XCTAssertEqual(ENTRY_CZ_USE_ITEM.packetType, 0x439)
         XCTAssertEqual(ENTRY_CZ_REQ_TAKEOFF_EQUIP.packetType, 0xab)
+
+        XCTAssertEqual(ENTRY_CZ_REQUEST_CHAT.packetType, 0xf3)
     }
 }

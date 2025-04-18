@@ -69,8 +69,4 @@ public enum MapObjectEvents {
             self.actionType = DamageType(rawValue: Int(packet.type)) ?? .normal
         }
     }
-
-    public struct MessageReceived: Event {
-        public let message: String
-    }
 }

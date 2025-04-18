@@ -266,8 +266,8 @@ class Conversation {
         }
         .store(in: &subscriptions)
 
-        mapSession.subscribe(to: PlayerEvents.MessageReceived.self) { [unowned self] event in
-            self.messages.append(.serverText("Player message display: \(event.message)"))
+        mapSession.subscribe(to: ChatEvents.MessageReceived.self) { [unowned self] event in
+            self.messages.append(.serverText("\(event.content)"))
         }
         .store(in: &subscriptions)
 

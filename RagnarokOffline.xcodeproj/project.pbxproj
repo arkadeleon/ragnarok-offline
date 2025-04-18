@@ -150,6 +150,7 @@
 		35C8AF082D31781C0033B3DB /* ROResources in Frameworks */ = {isa = PBXBuildFile; productRef = 35C8AF072D31781C0033B3DB /* ROResources */; };
 		35C8F8F02D1025D0005603CD /* NPCDialogOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C8F8EF2D1025CA005603CD /* NPCDialogOverlayView.swift */; };
 		35CFDA392DAF4B230070B707 /* GameBottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CFDA382DAF4B1F0070B707 /* GameBottomBar.swift */; };
+		35CFDA3B2DAFF4E40070B707 /* ChatBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CFDA3A2DAFF4E00070B707 /* ChatBoxView.swift */; };
 		35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */; };
 		35E27A832BC96AC800C11076 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A822BC96AC800C11076 /* Message.swift */; };
 		35E27A852BC96B3000C11076 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E27A842BC96B3000C11076 /* MessageCell.swift */; };
@@ -331,6 +332,7 @@
 		35BF5BE12C65B5D8006A3487 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		35C8F8EF2D1025CA005603CD /* NPCDialogOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPCDialogOverlayView.swift; sourceTree = "<group>"; };
 		35CFDA382DAF4B1F0070B707 /* GameBottomBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBottomBar.swift; sourceTree = "<group>"; };
+		35CFDA3A2DAFF4E00070B707 /* ChatBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBoxView.swift; sourceTree = "<group>"; };
 		35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabaseView.swift; sourceTree = "<group>"; };
 		35E27A822BC96AC800C11076 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		35E27A842BC96B3000C11076 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
@@ -518,8 +520,9 @@
 				357742562D005FAA00F2CE8D /* CharMakeView.swift */,
 				357742572D005FAA00F2CE8D /* CharSelectView.swift */,
 				357742582D005FAA00F2CE8D /* CharServerListView.swift */,
-				355471DA2DA805F6004704F2 /* InventoryView.swift */,
+				35CFDA3A2DAFF4E00070B707 /* ChatBoxView.swift */,
 				355471DC2DA8363E004704F2 /* InventoryItemView.swift */,
+				355471DA2DA805F6004704F2 /* InventoryView.swift */,
 				357742592D005FAA00F2CE8D /* LoginView.swift */,
 				356B64842D99A18B00DAD679 /* MapView.swift */,
 				356B647C2D951E3C00DAD679 /* MapView2DContent.swift */,
@@ -1033,6 +1036,7 @@
 				3599BD572C3FB5020010DBE7 /* FileThumbnailView.swift in Sources */,
 				35239DF92BBDB7B50039F7D5 /* MonsterProvider.swift in Sources */,
 				35B422E22BEDEBD000681AA2 /* ResponsiveView.swift in Sources */,
+				35CFDA3B2DAFF4E40070B707 /* ChatBoxView.swift in Sources */,
 				35B422D02BEB68F600681AA2 /* PetProvider.swift in Sources */,
 				3599BD4A2C3F90250010DBE7 /* File+DevelopmentPreview.swift in Sources */,
 				351EE2F82C0735390012BC9E /* TransferableAnimatedImage.swift in Sources */,

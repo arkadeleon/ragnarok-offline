@@ -13,14 +13,6 @@ public enum PlayerEvents {
         public let toPosition: SIMD2<Int16>
     }
 
-    public struct MessageReceived: Event {
-        public let message: String
-
-        init(packet: PACKET_ZC_NOTIFY_PLAYERCHAT) {
-            self.message = packet.Message
-        }
-    }
-
     public struct StatusChanged: Event {
         public let status: Player.Status
     }

@@ -46,6 +46,9 @@ struct MapView<Content>: View where Content: View {
                     .ignoresSafeArea()
                 }
             }
+            .overlay(alignment: .bottomLeading) {
+                ChatBoxView(onSubmitMessage: onSubmitMessage)
+            }
             .overlay {
                 NPCDialogOverlayView(mapSession: mapSession)
             }
@@ -86,5 +89,9 @@ struct MapView<Content>: View where Content: View {
 
     private func onEquipItem(_ item: InventoryItem) {
         mapSession.equipItem(at: item.index, location: item.location)
+    }
+
+    private func onSubmitMessage(_ message: String) {
+        mapSession.sendMessage("\(mapSession.char.name) : \(message)")
     }
 }

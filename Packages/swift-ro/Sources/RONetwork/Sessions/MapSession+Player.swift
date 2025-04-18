@@ -22,12 +22,6 @@ extension MapSession {
             self.postEvent(event)
         }
 
-        // See `clif_displaymessage`
-        subscription.subscribe(to: PACKET_ZC_NOTIFY_PLAYERCHAT.self) { [unowned self] packet in
-            let event = PlayerEvents.MessageReceived(packet: packet)
-            self.postEvent(event)
-        }
-
         // See `clif_initialstatus`
         subscription.subscribe(to: PACKET_ZC_STATUS.self) { [unowned self] packet in
             self.player.status.update(with: packet)

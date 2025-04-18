@@ -75,9 +75,14 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         subscribeToItemPackets(with: &subscription)
         subscribeToMapObjectPackets(with: &subscription)
         subscribeToPartyPackets(with: &subscription)
+        subscribeToChatPackets(with: &subscription)
 
         // See `clif_reputation_list`
         subscription.subscribe(to: PACKET_ZC_REPUTE_INFO.self) { packet in
+        }
+
+        // See `clif_broadcast`
+        subscription.subscribe(to: PACKET_ZC_BROADCAST.self) { packet in
         }
 
         // See `clif_broadcast2`
@@ -232,17 +237,87 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         // See `clif_skill_nodamage`
         subscription.subscribe(to: PACKET_ZC_USE_SKILL.self) { [unowned self] packet in
         }
-
-        // See `clif_channel_msg` and `clif_messagecolor_target`
-        subscription.subscribe(to: PACKET_ZC_NPC_CHAT.self) { [unowned self] packet in
-            let event = MapObjectEvents.MessageReceived(message: packet.message)
-            self.postEvent(event)
-        }
     }
 
     private func subscribeToPartyPackets(with subscription: inout ClientSubscription) {
         // See `clif_partyinvitationstate`
         subscription.subscribe(to: PACKET_ZC_PARTY_CONFIG.self) { packet in
+        }
+    }
+
+    private func subscribeToChatPackets(with subscription: inout ClientSubscription) {
+        // See `clif_GlobalMessage`
+        subscription.subscribe(to: PACKET_ZC_NOTIFY_CHAT.self) { [unowned self] packet in
+            let event = ChatEvents.MessageReceived(
+                type: .public,
+                senderObjectID: packet.GID,
+                content: packet.Message
+            )
+            self.postEvent(event)
+        }
+
+        // See `clif_wis_message`
+        subscription.subscribe(to: PACKET_ZC_WHISPER.self) { [unowned self] packet in
+            let event = ChatEvents.MessageReceived(
+                type: .private,
+                senderObjectID: packet.senderGID,
+                senderName: packet.sender,
+                content: packet.message
+            )
+            self.postEvent(event)
+        }
+
+        // See `clif_displaymessage`
+        subscription.subscribe(to: PACKET_ZC_NOTIFY_PLAYERCHAT.self) { [unowned self] packet in
+            let event = ChatEvents.MessageReceived(
+                type: .`self`,
+                content: packet.Message
+            )
+            self.postEvent(event)
+        }
+
+        // See `clif_displaymessage` and `clif_channel_msg` and `clif_messagecolor_target`
+        subscription.subscribe(to: PACKET_ZC_NPC_CHAT.self) { [unowned self] packet in
+            let event = ChatEvents.MessageReceived(
+                type: .channel,
+                senderObjectID: packet.accountID,
+                content: packet.message,
+                color: packet.color
+            )
+            self.postEvent(event)
+        }
+
+        // See `clif_party_message`
+        subscription.subscribe(to: PACKET_ZC_NOTIFY_CHAT_PARTY.self) { [unowned self] packet in
+            let event = ChatEvents.MessageReceived(
+                type: .party,
+                senderObjectID: UInt32(packet.AID),
+                content: packet.chatMsg
+            )
+            self.postEvent(event)
+        }
+
+        // See `clif_guild_message`
+        subscription.subscribe(to: PACKET_ZC_GUILD_CHAT.self) { [unowned self] packet in
+            let event = ChatEvents.MessageReceived(
+                type: .guild,
+                content: packet.message
+            )
+            self.postEvent(event)
+        }
+
+        // See `clif_bg_message`
+//        subscription.subscribe(to: ZC_BATTLEFIELD_CHAT) { packet in
+//        }
+
+        // See `clif_clan_message`
+        subscription.subscribe(to: PACKET_ZC_NOTIFY_CLAN_CHAT.self) { [unowned self] packet in
+            let event = ChatEvents.MessageReceived(
+                type: .clan,
+                senderName: packet.MemberName,
+                content: packet.Message
+            )
+            self.postEvent(event)
         }
     }
 
@@ -266,6 +341,21 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         let packet = PACKET_CZ_NOTIFY_ACTORINIT()
 
         client.sendPacket(packet)
+    }
+
+    public func sendMessage(_ message: String) {
+        if message.hasPrefix("%") {
+//            PACKET_CZ_REQUEST_CHAT_PARTY
+        } else if message.hasPrefix("$") {
+//            PACKET_CZ_GUILD_CHAT
+        } else if message.hasPrefix("/cl") {
+//            PACKET_CZ_CLAN_CHAT
+        } else {
+            var packet = PACKET_CZ_REQUEST_CHAT()
+            packet.message = message
+
+            client.sendPacket(packet)
+        }
     }
 
     func postEvent(_ event: some Event) {
