@@ -12,6 +12,7 @@ struct MessagesView: View {
 
     @State private var position = ScrollPosition(idType: UUID.self)
 
+    @State private var pendingMessageContent: String = ""
     @State private var pendingCommand: CommandMessage.Command?
     @State private var commandParameters: [String] = []
 
@@ -41,22 +42,24 @@ struct MessagesView: View {
             }
         }
         .safeAreaInset(edge: .bottom, spacing: 0) {
-            ScrollView(.horizontal) {
-                HStack(spacing: 16) {
+            HStack(spacing: 16) {
+                TextField("Message", text: $pendingMessageContent)
+                    .textFieldStyle(.roundedBorder)
+                    .onSubmit {
+                        sendPendingMessage()
+                    }
+
+                Menu {
                     ForEach(conversation.availableCommands, id: \.rawValue) { command in
                         Button(command.rawValue) {
-                            Task {
-                                await executeCommand(command)
-                            }
+                            executeCommand(command)
                         }
-                        .buttonStyle(.bordered)
-                        .buttonBorderShape(.capsule)
                     }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
                 }
-                .frame(maxWidth: .infinity)
-                .padding()
             }
-            .scrollIndicators(.never)
+            .padding()
             .background(.bar)
         }
         .background(.background)
@@ -74,16 +77,28 @@ struct MessagesView: View {
             }
 
             Button("Send") {
-                Task {
-                    await sendPendingCommand()
-                }
+                sendPendingCommand()
             }
         }
     }
 
-    private func executeCommand(_ command: CommandMessage.Command) async {
+    private func sendPendingMessage() {
+        guard !pendingMessageContent.isEmpty else {
+            return
+        }
+
+        if let command = CommandMessage.Command(rawValue: pendingMessageContent.lowercased()) {
+            executeCommand(command)
+        } else {
+            conversation.sendMessage(pendingMessageContent)
+        }
+
+        pendingMessageContent = ""
+    }
+
+    private func executeCommand(_ command: CommandMessage.Command) {
         if command.arguments.isEmpty {
-            await conversation.sendCommand(command)
+            conversation.sendCommand(command)
         } else {
             pendingCommand = command
             commandParameters = Array(repeating: "", count: command.arguments.count)
@@ -91,8 +106,8 @@ struct MessagesView: View {
         }
     }
 
-    private func sendPendingCommand() async {
-        await conversation.sendCommand(pendingCommand!, parameters: commandParameters)
+    private func sendPendingCommand() {
+        conversation.sendCommand(pendingCommand!, parameters: commandParameters)
         pendingCommand = nil
         commandParameters = []
     }

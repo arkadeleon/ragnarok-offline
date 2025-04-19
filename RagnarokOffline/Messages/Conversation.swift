@@ -64,7 +64,16 @@ class Conversation {
     private var subscriptions = Set<AnyCancellable>()
 
     @MainActor
-    func sendCommand(_ command: CommandMessage.Command, parameters: [String] = []) async {
+    func sendMessage(_ content: String) {
+        messages.append(.clientText(content))
+
+        if let mapSession {
+            mapSession.sendMessage(content)
+        }
+    }
+
+    @MainActor
+    func sendCommand(_ command: CommandMessage.Command, parameters: [String] = []) {
         messages.append(.command(command, parameters: parameters))
 
         switch command {

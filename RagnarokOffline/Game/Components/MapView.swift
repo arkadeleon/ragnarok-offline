@@ -92,6 +92,6 @@ struct MapView<Content>: View where Content: View {
     }
 
     private func onSubmitMessage(_ message: String) {
-        mapSession.sendMessage("\(mapSession.char.name) : \(message)")
+        mapSession.sendMessage(message)
     }
 }

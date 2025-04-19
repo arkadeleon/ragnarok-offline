@@ -352,7 +352,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 //            PACKET_CZ_CLAN_CHAT
         } else {
             var packet = PACKET_CZ_REQUEST_CHAT()
-            packet.message = message
+            packet.message = "\(char.name) : \(message)"
 
             client.sendPacket(packet)
         }
