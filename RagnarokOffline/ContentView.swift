@@ -17,7 +17,7 @@ struct ContentView: View {
 
     @State private var incomingFile: File?
 
-    @State private var conversation = Conversation()
+    @State private var chatSession = ChatSession()
     @State private var gameSession = GameSession()
 
     var body: some View {
@@ -60,8 +60,8 @@ struct ContentView: View {
         switch item {
         case .files:
             FilesView(title: "Files", directory: clientDirectory)
-        case .messages:
-            MessagesView(conversation: conversation)
+        case .chat:
+            ChatView(chatSession: chatSession)
         case .game:
             GameView(gameSession: gameSession)
         case .cube:

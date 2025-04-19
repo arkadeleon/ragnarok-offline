@@ -1,5 +1,5 @@
 //
-//  Conversation.swift
+//  ChatSession.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/8/15.
@@ -7,12 +7,10 @@
 
 import Combine
 import Observation
-import ROGame
 import RONetwork
 import ROPackets
-import SwiftUI
 
-enum ConversationScene {
+enum ChatScene {
     case login
     case selectCharServer
     case selectChar
@@ -20,12 +18,12 @@ enum ConversationScene {
 }
 
 @Observable
-class Conversation {
+class ChatSession {
     @MainActor
     var messages: [any Message] = []
 
     @MainActor
-    var scene: ConversationScene = .login
+    var scene: ChatScene = .login
 
     @MainActor
     var playerPosition: SIMD2<Int16>?

@@ -10,7 +10,7 @@ import SwiftUI
 
 enum SidebarItem: Hashable {
     case files
-    case messages
+    case chat
     case game
     case cube
     case loginServer
@@ -44,8 +44,8 @@ struct SidebarView: View {
                 }
 
                 #if DEBUG
-                NavigationLink(value: SidebarItem.messages) {
-                    Label("Messages", systemImage: "message")
+                NavigationLink(value: SidebarItem.chat) {
+                    Label("Chat", systemImage: "message")
                 }
 
                 NavigationLink(value: SidebarItem.game) {

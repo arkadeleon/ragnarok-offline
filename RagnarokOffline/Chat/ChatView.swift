@@ -1,5 +1,5 @@
 //
-//  MessagesView.swift
+//  ChatView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/3/27.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct MessagesView: View {
-    var conversation: Conversation
+struct ChatView: View {
+    var chatSession: ChatSession
 
     @State private var position = ScrollPosition(idType: UUID.self)
 
@@ -21,7 +21,7 @@ struct MessagesView: View {
     var body: some View {
         ScrollView {
             LazyVStack {
-                ForEach(conversation.messages, id: \.id) { message in
+                ForEach(chatSession.messages, id: \.id) { message in
                     MessageCell(message: message)
                         .id(message.id)
                 }
@@ -30,12 +30,12 @@ struct MessagesView: View {
         }
         .scrollPosition($position)
         .onAppear {
-            if let id = conversation.messages.last?.id {
+            if let id = chatSession.messages.last?.id {
                 position.scrollTo(id: id)
             }
         }
-        .onChange(of: conversation.messages.count) {
-            if let id = conversation.messages.last?.id {
+        .onChange(of: chatSession.messages.count) {
+            if let id = chatSession.messages.last?.id {
                 withAnimation {
                     position.scrollTo(id: id)
                 }
@@ -50,7 +50,7 @@ struct MessagesView: View {
                     }
 
                 Menu {
-                    ForEach(conversation.availableCommands, id: \.rawValue) { command in
+                    ForEach(chatSession.availableCommands, id: \.rawValue) { command in
                         Button(command.rawValue) {
                             executeCommand(command)
                         }
@@ -63,7 +63,7 @@ struct MessagesView: View {
             .background(.bar)
         }
         .background(.background)
-        .navigationTitle("Messages")
+        .navigationTitle("Chat")
         .alert(pendingCommand?.rawValue ?? "", isPresented: $isCommandAlertPresented) {
             ForEach(0..<(pendingCommand?.arguments.count ?? 0), id: \.self) { index in
                 TextField(pendingCommand?.arguments[index] ?? "", text: $commandParameters[index])
@@ -90,7 +90,7 @@ struct MessagesView: View {
         if let command = CommandMessage.Command(rawValue: pendingMessageContent.lowercased()) {
             executeCommand(command)
         } else {
-            conversation.sendMessage(pendingMessageContent)
+            chatSession.sendMessage(pendingMessageContent)
         }
 
         pendingMessageContent = ""
@@ -98,7 +98,7 @@ struct MessagesView: View {
 
     private func executeCommand(_ command: CommandMessage.Command) {
         if command.arguments.isEmpty {
-            conversation.sendCommand(command)
+            chatSession.sendCommand(command)
         } else {
             pendingCommand = command
             commandParameters = Array(repeating: "", count: command.arguments.count)
@@ -107,12 +107,12 @@ struct MessagesView: View {
     }
 
     private func sendPendingCommand() {
-        conversation.sendCommand(pendingCommand!, parameters: commandParameters)
+        chatSession.sendCommand(pendingCommand!, parameters: commandParameters)
         pendingCommand = nil
         commandParameters = []
     }
 }
 
 #Preview {
-    MessagesView(conversation: Conversation())
+    ChatView(chatSession: ChatSession())
 }
