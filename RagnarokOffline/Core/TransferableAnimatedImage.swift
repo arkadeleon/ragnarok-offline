@@ -16,16 +16,18 @@ struct TransferableAnimatedImage: Hashable {
 
 extension TransferableAnimatedImage: Transferable {
     static var transferRepresentation: some TransferRepresentation {
-        FileRepresentation(exportedContentType: .png) { transferableAnimatedImage in
-            guard let data = transferableAnimatedImage.animatedImage.pngData() else {
-                throw NSError(domain: kCFErrorDomainCGImageMetadata as String, code: Int(CGImageMetadataErrors.unknown.rawValue))
+        DataRepresentation(exportedContentType: .png) {
+            if let pngData = $0.animatedImage.pngData() {
+                return pngData
+            } else {
+                throw NSError(
+                    domain: kCFErrorDomainCGImageMetadata as String,
+                    code: Int(CGImageMetadataErrors.unknown.rawValue)
+                )
             }
-
-            let url = FileManager.default.temporaryDirectory.appending(path: transferableAnimatedImage.filename)
-            try data.write(to: url)
-
-            let file = SentTransferredFile(url)
-            return file
+        }
+        .suggestedFileName {
+            $0.filename + ".png"
         }
     }
 }

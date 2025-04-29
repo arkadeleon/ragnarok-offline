@@ -35,7 +35,7 @@ struct ACTFilePreviewView: View {
                                 .contextMenu {
                                     AnimatedImageShareLink(
                                         animatedImage: action.animatedImage,
-                                        filename: String(format: "%@.%03d.png", file.name, action.index)
+                                        filename: String(format: "%@.%03d", file.name, action.index)
                                     )
                                 }
                         }

@@ -31,7 +31,7 @@ struct SPRFilePreviewView: View {
                             .frame(width: section.spriteSize.width, height: section.spriteSize.height)
                             .contextMenu {
                                 ShareLink(
-                                    item: TransferableImage(name: String(format: "%@.%03d.png", file.name, sprite.index), image: sprite.image),
+                                    item: TransferableImage(image: sprite.image, filename: String(format: "%@.%03d", file.name, sprite.index)),
                                     preview: SharePreview(file.name, image: Image(sprite.image, scale: 1, label: Text(verbatim: "")))
                                 )
                             }

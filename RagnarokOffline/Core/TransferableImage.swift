@@ -9,22 +9,24 @@ import CoreTransferable
 import ImageIO
 
 struct TransferableImage: Hashable {
-    var name: String
     var image: CGImage
+    var filename: String
 }
 
 extension TransferableImage: Transferable {
     static var transferRepresentation: some TransferRepresentation {
-        FileRepresentation(exportedContentType: .png) { transferableImage in
-            guard let data = transferableImage.image.pngData() else {
-                throw NSError(domain: kCFErrorDomainCGImageMetadata as String, code: Int(CGImageMetadataErrors.unknown.rawValue))
+        DataRepresentation(exportedContentType: .png) {
+            if let pngData = $0.image.pngData() {
+                return pngData
+            } else {
+                throw NSError(
+                    domain: kCFErrorDomainCGImageMetadata as String,
+                    code: Int(CGImageMetadataErrors.unknown.rawValue)
+                )
             }
-
-            let url = FileManager.default.temporaryDirectory.appending(path: transferableImage.name)
-            try data.write(to: url)
-
-            let file = SentTransferredFile(url)
-            return file
+        }
+        .suggestedFileName {
+            $0.filename + ".png"
         }
     }
 }
