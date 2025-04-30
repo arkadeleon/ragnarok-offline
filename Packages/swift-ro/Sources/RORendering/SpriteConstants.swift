@@ -1,5 +1,5 @@
 //
-//  JobNames.swift
+//  SpriteConstants.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2025/2/11.
@@ -1483,4 +1483,11 @@ let jobNamesForWeapon: [Int : (String, String)] = [
     4314: ("HYPER_NOVICE", "HYPER_NOVICE_RIDING"),
     4315: ("SPIRIT_HANDLER", "SPIRIT_HANDLER_RIDING"),
     4316: ("SKY_EMPEROR", "SKY_EMPEROR2"),
+]
+
+let shieldNames: [Int : String] = [
+    1: "_가드",
+    2: "_버클러",
+    3: "_쉴드",
+    4: "_미러쉴드",
 ]
