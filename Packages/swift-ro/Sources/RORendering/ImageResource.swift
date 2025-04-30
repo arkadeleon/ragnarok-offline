@@ -36,7 +36,7 @@ extension ResourcePath {
             return nil
         }
 
-        self = .userInterface + ["item", "\(resourceName).bmp"]
+        self = ResourcePath.userInterfaceDirectory.appending(["item", "\(resourceName).bmp"])
     }
 
     public init?(itemPreviewImagePathWithItemID itemID: Int) async {
@@ -44,15 +44,15 @@ extension ResourcePath {
             return nil
         }
 
-        self = .userInterface + ["collection", "\(resourceName).bmp"]
+        self = ResourcePath.userInterfaceDirectory.appending(["collection", "\(resourceName).bmp"])
     }
 
     public init(skillIconImagePathWithSkillAegisName skillAegisName: String) {
-        self = .userInterface + ["item", "\(skillAegisName).bmp"]
+        self = ResourcePath.userInterfaceDirectory.appending(["item", "\(skillAegisName).bmp"])
     }
 
     public init(mapImagePathWithMapName mapName: String) {
-        self = .userInterface + ["map", "\(mapName).bmp"]
+        self = ResourcePath.userInterfaceDirectory.appending(["map", "\(mapName).bmp"])
     }
 
     public init?(statusIconImagePathWithStatusID statusID: Int) async {
@@ -60,6 +60,6 @@ extension ResourcePath {
             return nil
         }
 
-        self = .effectPath + [iconName]
+        self = ResourcePath.effectDirectory.appending(iconName)
     }
 }

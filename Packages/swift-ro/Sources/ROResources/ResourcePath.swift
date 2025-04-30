@@ -8,10 +8,6 @@
 import Foundation
 
 public struct ResourcePath: ExpressibleByArrayLiteral, Sendable {
-    public static func + (lhs: ResourcePath, rhs: ResourcePath) -> ResourcePath {
-        ResourcePath(components: lhs.components + rhs.components)
-    }
-
     public let components: [String]
 
     public init(components: [String]) {
@@ -22,11 +18,15 @@ public struct ResourcePath: ExpressibleByArrayLiteral, Sendable {
         self.components = elements
     }
 
-    public func appending(component: String) -> ResourcePath {
+    public func appending(_ path: ResourcePath) -> ResourcePath {
+        ResourcePath(components: components + path.components)
+    }
+
+    public func appending(_ component: String) -> ResourcePath {
         ResourcePath(components: components + [component])
     }
 
-    public func appending(components: [String]) -> ResourcePath {
+    public func appending(_ components: [String]) -> ResourcePath {
         ResourcePath(components: self.components + components)
     }
 
@@ -42,13 +42,19 @@ public struct ResourcePath: ExpressibleByArrayLiteral, Sendable {
 }
 
 extension ResourcePath {
-    public static let scriptPath: ResourcePath = ["data", "luafiles514", "lua files"]
-    public static let modelPath: ResourcePath = ["data", "model"]
-    public static let palettePath: ResourcePath = ["data", "palette"]
-    public static let spritePath: ResourcePath = ["data", "sprite"]
-    public static let texturePath: ResourcePath = ["data", "texture"]
-    public static let effectPath: ResourcePath = ["data", "texture", "effect"]
-    public static let userInterface: ResourcePath = ["data", "texture", "유저인터페이스"]
+    public static let scriptDirectory: ResourcePath = ["data", "luafiles514", "lua files"]
+    public static let modelDirectory: ResourcePath = ["data", "model"]
+    public static let paletteDirectory: ResourcePath = ["data", "palette"]
+    public static let spriteDirectory: ResourcePath = ["data", "sprite"]
+    public static let textureDirectory: ResourcePath = ["data", "texture"]
+    public static let effectDirectory: ResourcePath = ["data", "texture", "effect"]
+    public static let userInterfaceDirectory: ResourcePath = ["data", "texture", "유저인터페이스"]
+}
+
+extension ResourcePath {
+    public static func + (lhs: ResourcePath, rhs: ResourcePath) -> ResourcePath {
+        ResourcePath(components: lhs.components + rhs.components)
+    }
 }
 
 extension URL {

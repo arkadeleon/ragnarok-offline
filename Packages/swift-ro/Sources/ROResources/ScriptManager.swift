@@ -165,7 +165,7 @@ public actor ScriptManager {
 
     private func loadScript(at path: ResourcePath) async {
         do {
-            let path = ResourcePath.scriptPath + path
+            let path = ResourcePath.scriptDirectory.appending(path)
             let data = try await resourceManager.contentsOfResource(at: path)
             try context.load(data)
         } catch {

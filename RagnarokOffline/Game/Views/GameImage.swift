@@ -20,7 +20,7 @@ struct GameImage<Content>: View where Content: View {
         contentView
             .task {
                 let components = name.split(separator: "/").map(String.init)
-                let path = ResourcePath.userInterface.appending(components: components)
+                let path = ResourcePath.userInterfaceDirectory.appending(components)
                 image = try? await ResourceManager.default.image(at: path, removesMagentaPixels: true)
             }
     }

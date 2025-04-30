@@ -36,7 +36,7 @@ extension Entity {
         var materials: [any Material] = []
         for textureName in textureNames {
             let components = textureName.split(separator: "\\").map(String.init)
-            let texturePath = ResourcePath.texturePath.appending(components: components)
+            let texturePath = ResourcePath.textureDirectory.appending(components)
             let textureImage = try? await ResourceManager.default.image(at: texturePath, removesMagentaPixels: true)
 
             guard let textureImage else {

@@ -14,7 +14,7 @@ enum ResourceError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .resourceNotFound(let path):
-            String(localized: "Resource not found at: \(path.components.joined(separator: "/"))")
+            String(localized: "Resource not found at \(path.components.joined(separator: "/"))")
         }
     }
 }

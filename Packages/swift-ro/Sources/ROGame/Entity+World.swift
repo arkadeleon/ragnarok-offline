@@ -26,7 +26,7 @@ extension Entity {
             for modelName in uniqueModelNames {
                 taskGroup.addTask {
                     let components = modelName.split(separator: "\\").map(String.init)
-                    let modelPath = ResourcePath.modelPath.appending(components: components)
+                    let modelPath = ResourcePath.modelDirectory.appending(components)
                     let model = try await ResourceManager.default.model(at: modelPath)
                     let modelEntity = try await Entity.modelEntity(model: model)
                     return (modelName, modelEntity)
@@ -76,7 +76,7 @@ extension Entity {
         var materials: [any Material] = []
         for textureName in textureNames {
             let components = textureName.split(separator: "\\").map(String.init)
-            let texturePath = ResourcePath.texturePath.appending(components: components)
+            let texturePath = ResourcePath.textureDirectory.appending(components)
             let textureImage = try? await ResourceManager.default.image(at: texturePath)
 
             guard let textureImage else {

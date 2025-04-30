@@ -131,9 +131,9 @@ extension ResourcePath {
         }
 
         if jobID.isDoram {
-            return .spritePath + ["도람족", "몸통", gender.name, "\(jobName)_\(gender.name)"]
+            return ResourcePath.spriteDirectory.appending(["도람족", "몸통", gender.name, "\(jobName)_\(gender.name)"])
         } else {
-            return .spritePath + ["인간족", "몸통", gender.name, "\(jobName)_\(gender.name)"]
+            return ResourcePath.spriteDirectory.appending(["인간족", "몸통", gender.name, "\(jobName)_\(gender.name)"])
         }
     }
 
@@ -147,9 +147,9 @@ extension ResourcePath {
         }
 
         if jobID.isDoram {
-            return .spritePath + ["도람족", "몸통", gender.name, "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(costumeID)"]
+            return ResourcePath.spriteDirectory.appending(["도람족", "몸통", gender.name, "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(costumeID)"])
         } else {
-            return .spritePath + ["인간족", "몸통", gender.name, "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(costumeID)"]
+            return ResourcePath.spriteDirectory.appending(["인간족", "몸통", gender.name, "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(costumeID)"])
         }
     }
 
@@ -159,9 +159,9 @@ extension ResourcePath {
         }
 
         if jobID.isDoram {
-            return .spritePath + ["도람족", "머리통", gender.name, "\(hairStyleID)_\(gender.name)"]
+            return ResourcePath.spriteDirectory.appending(["도람족", "머리통", gender.name, "\(hairStyleID)_\(gender.name)"])
         } else {
-            return .spritePath + ["인간족", "머리통", gender.name, "\(hairStyleID)_\(gender.name)"]
+            return ResourcePath.spriteDirectory.appending(["인간족", "머리통", gender.name, "\(hairStyleID)_\(gender.name)"])
         }
     }
 
@@ -175,13 +175,13 @@ extension ResourcePath {
         }
 
         if jobID.isNPC {
-            return .spritePath + ["npc", jobName]
+            return ResourcePath.spriteDirectory.appending(["npc", jobName])
         } else if jobID.isMercenary {
-            return .spritePath + ["인간족", "몸통", jobName]
+            return ResourcePath.spriteDirectory.appending(["인간족", "몸통", jobName])
         } else if jobID.isHomunculus {
-            return .spritePath + ["homun", jobName]
+            return ResourcePath.spriteDirectory.appending(["homun", jobName])
         } else if jobID.isMonster {
-            return .spritePath + ["몬스터", jobName]
+            return ResourcePath.spriteDirectory.appending(["몬스터", jobName])
         } else {
             return nil
         }
@@ -221,20 +221,20 @@ extension ResourcePath {
             }
 
             if jobID.isDoram {
-                return .spritePath + ["도람족", jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)\(isSlash ? "_검광" : "")"]
+                return ResourcePath.spriteDirectory.appending(["도람족", jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)\(isSlash ? "_검광" : "")"])
             } else {
-                return .spritePath + ["인간족", jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)\(isSlash ? "_검광" : "")"]
+                return ResourcePath.spriteDirectory.appending(["인간족", jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)\(isSlash ? "_검광" : "")"])
             }
         } else {
-            let mercenaryPath: ResourcePath = .spritePath + ["인간족", "용병"]
+            let mercenaryPath = ResourcePath.spriteDirectory.appending(["인간족", "용병"])
 
             switch jobID.rawValue {
             case 6017...6026:
-                return mercenaryPath + ["활용병_활"]
+                return mercenaryPath.appending("활용병_활")
             case 6027...6036:
-                return mercenaryPath + ["창용병_창"]
+                return mercenaryPath.appending("창용병_창")
             default:
-                return mercenaryPath + ["검용병_검"]
+                return mercenaryPath.appending("검용병_검")
             }
         }
     }
@@ -249,9 +249,9 @@ extension ResourcePath {
         }
 
         if let shieldName = shieldNames[shieldID] {
-            return .spritePath + ["방패", jobName, "\(jobName)_\(gender.name)\(shieldName)"]
+            return ResourcePath.spriteDirectory.appending(["방패", jobName, "\(jobName)_\(gender.name)\(shieldName)"])
         } else {
-            return .spritePath + ["방패", jobName, "\(jobName)_\(gender.name)_\(shieldID)_방패"]
+            return ResourcePath.spriteDirectory.appending(["방패", jobName, "\(jobName)_\(gender.name)_\(shieldID)_방패"])
         }
     }
 
@@ -260,7 +260,7 @@ extension ResourcePath {
             return nil
         }
 
-        return .spritePath + ["악세사리", gender.name, "\(gender.name)\(accessoryName)"]
+        return ResourcePath.spriteDirectory.appending(["악세사리", gender.name, "\(gender.name)\(accessoryName)"])
     }
 
     static func garmentSprite(jobID: UniformJobID, garmentID: Int, gender: Gender, checkEnglish: Bool = false, useFallback: Bool = false) async -> ResourcePath? {
@@ -274,9 +274,9 @@ extension ResourcePath {
         }
 
         if useFallback {
-            return .spritePath + ["로브", robeName, robeName]
+            return ResourcePath.spriteDirectory.appending(["로브", robeName, robeName])
         } else {
-            return .spritePath + ["로브", robeName, gender.name, "\(jobName)_\(gender.name)"]
+            return ResourcePath.spriteDirectory.appending(["로브", robeName, gender.name, "\(jobName)_\(gender.name)"])
         }
     }
 
@@ -287,7 +287,7 @@ extension ResourcePath {
 
         if jobID.isMadogear && madoType == .suit {
             let jobName = alternativeMadogearJobName(jobID: jobID, madoType: madoType)
-            return ["\(jobName)_\(gender.name)"]
+            return ["data", "imf", "\(jobName)_\(gender.name)"]
         }
 
         guard let jobName = jobNamesForIMF[jobID.rawValue] else {
@@ -304,7 +304,7 @@ extension ResourcePath {
 
         if jobID.isMadogear && madoType == .suit {
             let jobName = alternativeMadogearJobName(jobID: jobID, madoType: madoType)
-            return ["몸", "\(jobName)_\(gender.name)_\(clothesColorID)"]
+            return ResourcePath.paletteDirectory.appending(["몸", "\(jobName)_\(gender.name)_\(clothesColorID)"])
         }
 
         guard let jobName = jobNamesForPalette[jobID.rawValue] else {
@@ -312,9 +312,9 @@ extension ResourcePath {
         }
 
         if jobID.isDoram {
-            return .palettePath + ["도람족", "body", "\(jobName)_\(gender.name)_\(clothesColorID)"]
+            return ResourcePath.paletteDirectory.appending(["도람족", "body", "\(jobName)_\(gender.name)_\(clothesColorID)"])
         } else {
-            return .palettePath + ["몸", "\(jobName)_\(gender.name)_\(clothesColorID)"]
+            return ResourcePath.paletteDirectory.appending(["몸", "\(jobName)_\(gender.name)_\(clothesColorID)"])
         }
     }
 
@@ -325,7 +325,7 @@ extension ResourcePath {
 
         if jobID.isMadogear && madoType == .suit {
             let jobName = alternativeMadogearJobName(jobID: jobID, madoType: madoType)
-            return .palettePath + ["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"]
+            return ResourcePath.paletteDirectory.appending(["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"])
         }
 
         guard let jobName = jobNamesForPalette[jobID.rawValue] else {
@@ -333,9 +333,9 @@ extension ResourcePath {
         }
 
         if jobID.isDoram {
-            return .palettePath + ["도람족", "body", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"]
+            return ResourcePath.paletteDirectory.appending(["도람족", "body", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"])
         } else {
-            return .palettePath + ["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"]
+            return ResourcePath.paletteDirectory.appending(["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"])
         }
     }
 
@@ -345,9 +345,9 @@ extension ResourcePath {
         }
 
         if jobID.isDoram {
-            return .palettePath + ["도람족", "머리", "머리\(hairStyleID)_\(gender.name)_\(hairColorID)"]
+            return ResourcePath.paletteDirectory.appending(["도람족", "머리", "머리\(hairStyleID)_\(gender.name)_\(hairColorID)"])
         } else {
-            return .palettePath + ["머리", "머리\(hairStyleID)_\(gender.name)_\(hairColorID)"]
+            return ResourcePath.paletteDirectory.appending(["머리", "머리\(hairStyleID)_\(gender.name)_\(hairColorID)"])
         }
     }
 
@@ -378,10 +378,10 @@ extension ResourcePath {
             return nil
         }
 
-        self = .spritePath + ["아이템", "\(resourceName)"]
+        self = ResourcePath.spriteDirectory.appending(["아이템", "\(resourceName)"])
     }
 
     public init(skillSpritePathWithSkillName skillName: String) {
-        self = .spritePath + ["아이템", "\(skillName)"]
+        self = ResourcePath.spriteDirectory.appending(["아이템", "\(skillName)"])
     }
 }
