@@ -9,7 +9,7 @@ import CoreGraphics
 import ROCore
 import ROFileFormats
 
-struct SpriteRenderNode: Sendable {
+struct SpriteRenderNode {
     static let null = SpriteRenderNode()
 
     var image: CGImage?
@@ -22,8 +22,8 @@ struct SpriteRenderNode: Sendable {
 }
 
 extension SpriteRenderNode {
-    init(actionNodeWithSprite sprite: SpriteResource, actionIndex: Int, headDirection: HeadDirection, scale: CGFloat) {
-        guard let action = sprite.action(at: actionIndex) else {
+    init(actionNodeWithPart part: ResolvedSprite.Part, actionIndex: Int, headDirection: HeadDirection, scale: CGFloat) {
+        guard let action = part.sprite.action(at: actionIndex) else {
             self = .null
             return
         }
@@ -33,7 +33,7 @@ extension SpriteRenderNode {
 
         if let actionType = PlayerActionType(rawValue: actionIndex / 8),
            actionType == .idle || actionType == .sit {
-            switch sprite.part {
+            switch part.semantic {
             case .playerBody:
                 startFrameIndex = headDirection.rawValue
                 endFrameIndex = startFrameIndex + 1
@@ -50,7 +50,7 @@ extension SpriteRenderNode {
         var children: [SpriteRenderNode] = []
 
         for frameIndex in startFrameIndex..<endFrameIndex {
-            let frameNode = SpriteRenderNode(frameNodeWithSprite: sprite, actionIndex: actionIndex, frameIndex: frameIndex, scale: scale)
+            let frameNode = SpriteRenderNode(frameNodeWithPart: part, actionIndex: actionIndex, frameIndex: frameIndex, scale: scale)
             children.append(frameNode)
             bounds = bounds.union(frameNode.bounds)
         }
@@ -58,19 +58,19 @@ extension SpriteRenderNode {
         self = SpriteRenderNode(bounds: bounds, children: children)
     }
 
-    init(frameNodeWithSprite sprite: SpriteResource, actionIndex: Int, frameIndex: Int, scale: CGFloat) {
-        guard let action = sprite.action(at: actionIndex),
-              let frame = sprite.frame(at: [actionIndex, frameIndex]) else {
+    init(frameNodeWithPart part: ResolvedSprite.Part, actionIndex: Int, frameIndex: Int, scale: CGFloat) {
+        guard let action = part.sprite.action(at: actionIndex),
+              let frame = part.sprite.frame(at: [actionIndex, frameIndex]) else {
             self = .null
             return
         }
 
         var parentOffset: SIMD2<Int32> = .zero
 
-        if let parent = sprite.parent {
+        if let parent = part.sprite.parent {
             var parentFrameIndex = frameIndex
 
-            if sprite.part == .headgear,
+            if part.semantic == .headgear,
                let actionType = PlayerActionType(rawValue: actionIndex / 8),
                actionType == .idle || actionType == .sit {
                 let frameCount = action.frames.count / 3
@@ -91,7 +91,7 @@ extension SpriteRenderNode {
         var children: [SpriteRenderNode] = []
 
         for layer in frame.layers {
-            let layerNode = SpriteRenderNode(layerNodeWithSprite: sprite, layer: layer, parentOffset: parentOffset, scale: scale)
+            let layerNode = SpriteRenderNode(layerNodeWithPart: part, layer: layer, parentOffset: parentOffset, scale: scale)
             children.append(layerNode)
             bounds = bounds.union(layerNode.bounds)
         }
@@ -99,8 +99,8 @@ extension SpriteRenderNode {
         self = SpriteRenderNode(bounds: bounds, children: children)
     }
 
-    init(layerNodeWithSprite sprite: SpriteResource, layer: ACT.Layer, parentOffset: SIMD2<Int32>, scale: CGFloat) {
-        guard let image = sprite.image(for: layer) else {
+    init(layerNodeWithPart part: ResolvedSprite.Part, layer: ACT.Layer, parentOffset: SIMD2<Int32>, scale: CGFloat) {
+        guard let image = part.sprite.image(for: layer) else {
             self = .null
             return
         }

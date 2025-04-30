@@ -140,9 +140,9 @@ class ObservableMonster {
         if animatedImage == nil {
             let jobID = UniformJobID(rawValue: monster.id)
             let spriteResolver = SpriteResolver(resourceManager: .default)
-            let sprites = await spriteResolver.resolve(jobID: jobID, configuration: SpriteConfiguration())
+            let resolvedSprite = await spriteResolver.resolve(jobID: jobID, configuration: SpriteConfiguration())
 
-            let spriteRenderer = SpriteRenderer(sprites: sprites)
+            let spriteRenderer = SpriteRenderer(resolvedSprite: resolvedSprite)
             animatedImage = await spriteRenderer.renderAction(at: 0, headDirection: .straight)
         }
     }

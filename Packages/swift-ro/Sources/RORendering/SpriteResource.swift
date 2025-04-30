@@ -11,25 +11,11 @@ import ROConstants
 import ROFileFormats
 import ROResources
 
-enum SpritePart {
-    case main
-    case playerBody
-    case playerHead
-    case headgear
-    case garment
-    case weapon
-    case shield
-    case shadow
-}
-
 final public class SpriteResource: @unchecked Sendable {
     public let act: ACT
     public let spr: SPR
 
     var parent: SpriteResource?
-
-    var part: SpritePart = .main
-    var orderByPart = 0
 
     var palette: PaletteResource?
 

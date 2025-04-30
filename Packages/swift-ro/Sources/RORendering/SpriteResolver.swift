@@ -15,7 +15,22 @@ final public class SpriteResolver: Sendable {
         self.resourceManager = resourceManager
     }
 
-    public func resolve(jobID: UniformJobID, configuration: SpriteConfiguration) async -> [SpriteResource] {
+    public func resolve(itemID: Int) async -> ResolvedSprite {
+        var resolvedSprite = ResolvedSprite()
+
+        if let path = await ResourcePath(itemSpritePathWithItemID: itemID) {
+            do {
+                let sprite = try await resourceManager.sprite(at: path)
+                resolvedSprite.append(sprite, semantic: .main)
+            } catch {
+                logger.warning("\(error.localizedDescription)")
+            }
+        }
+
+        return resolvedSprite
+    }
+
+    public func resolve(jobID: UniformJobID, configuration: SpriteConfiguration) async -> ResolvedSprite {
         if jobID.isPlayer {
             await resolvePlayer(jobID: jobID, configuration: configuration)
         } else {
@@ -23,17 +38,17 @@ final public class SpriteResolver: Sendable {
         }
     }
 
-    func resolvePlayer(jobID: UniformJobID, configuration: SpriteConfiguration) async -> [SpriteResource] {
+    func resolvePlayer(jobID: UniformJobID, configuration: SpriteConfiguration) async -> ResolvedSprite {
         let gender = configuration.gender
         let hairStyleID = configuration.hairStyleID
         let madoType = configuration.madoType
 
-        var sprites: [SpriteResource] = []
+        var resolvedSprite = ResolvedSprite()
 
         // Shadow
         do {
             let shadowSprite = try await shadowSprite(jobID: jobID)
-            sprites.append(shadowSprite)
+            resolvedSprite.append(shadowSprite, semantic: .shadow)
         } catch {
             logger.warning("\(error.localizedDescription)")
         }
@@ -41,7 +56,7 @@ final public class SpriteResolver: Sendable {
         // Body
         let bodySprite = await playerBodySprite(jobID: jobID, configuration: configuration)
         if let bodySprite {
-            sprites.append(bodySprite)
+            resolvedSprite.append(bodySprite, semantic: .playerBody)
         }
 
         // Head
@@ -59,9 +74,8 @@ final public class SpriteResolver: Sendable {
             do {
                 let headSprite = try await resourceManager.sprite(at: headSpritePath)
                 headSprite.parent = bodySprite
-                headSprite.part = .playerHead
                 headSprite.palette = headPalette
-                sprites.append(headSprite)
+                resolvedSprite.append(headSprite, semantic: .playerHead)
             } catch {
                 logger.warning("\(error.localizedDescription)")
             }
@@ -72,9 +86,7 @@ final public class SpriteResolver: Sendable {
            let weaponSpritePath = await ResourcePath.weaponSprite(jobID: jobID, weaponID: weaponID, isSlash: false, gender: gender, madoType: madoType) {
             do {
                 let weaponSprite = try await resourceManager.sprite(at: weaponSpritePath)
-                weaponSprite.part = .weapon
-                weaponSprite.orderByPart = 0
-                sprites.append(weaponSprite)
+                resolvedSprite.append(weaponSprite, semantic: .weapon, order: 0)
             } catch {
                 logger.warning("\(error.localizedDescription)")
             }
@@ -85,9 +97,7 @@ final public class SpriteResolver: Sendable {
            let weaponSlashSpritePath = await ResourcePath.weaponSprite(jobID: jobID, weaponID: weaponID, isSlash: true, gender: gender, madoType: madoType) {
             do {
                 let weaponSlashSprite = try await resourceManager.sprite(at: weaponSlashSpritePath)
-                weaponSlashSprite.part = .weapon
-                weaponSlashSprite.orderByPart = 1
-                sprites.append(weaponSlashSprite)
+                resolvedSprite.append(weaponSlashSprite, semantic: .weapon, order: 1)
             } catch {
                 logger.warning("\(error.localizedDescription)")
             }
@@ -98,8 +108,7 @@ final public class SpriteResolver: Sendable {
            let shieldSpritePath = await ResourcePath.shieldSprite(jobID: jobID, shieldID: shieldID, gender: gender) {
             do {
                 let shieldSprite = try await resourceManager.sprite(at: shieldSpritePath)
-                shieldSprite.part = .shield
-                sprites.append(shieldSprite)
+                resolvedSprite.append(shieldSprite, semantic: .shield)
             } catch {
                 logger.warning("\(error.localizedDescription)")
             }
@@ -114,12 +123,10 @@ final public class SpriteResolver: Sendable {
             do {
                 let headgearSprite = try await resourceManager.sprite(at: headgearSpritePath)
                 headgearSprite.parent = bodySprite
-                headgearSprite.part = .headgear
-                headgearSprite.orderByPart = i
 
                 // TODO: Handle headgear offset for Doram
 
-                sprites.append(headgearSprite)
+                resolvedSprite.append(headgearSprite, semantic: .headgear, order: i)
             } catch {
                 logger.warning("\(error.localizedDescription)")
             }
@@ -127,16 +134,16 @@ final public class SpriteResolver: Sendable {
 
         // Garment
 
-        return sprites
+        return resolvedSprite
     }
 
-    func resolveNonPlayer(jobID: UniformJobID, configuration: SpriteConfiguration) async -> [SpriteResource] {
-        var sprites: [SpriteResource] = []
+    func resolveNonPlayer(jobID: UniformJobID, configuration: SpriteConfiguration) async -> ResolvedSprite {
+        var resolvedSprite = ResolvedSprite()
 
         // Shadow
         do {
             let shadowSprite = try await shadowSprite(jobID: jobID)
-            sprites.append(shadowSprite)
+            resolvedSprite.append(shadowSprite, semantic: .shadow)
         } catch {
             logger.warning("\(error.localizedDescription)")
         }
@@ -144,19 +151,18 @@ final public class SpriteResolver: Sendable {
         if let bodySpritePath = await ResourcePath.nonPlayerSprite(jobID: jobID) {
             do {
                 let bodySprite = try await resourceManager.sprite(at: bodySpritePath)
-                sprites.append(bodySprite)
+                resolvedSprite.append(bodySprite, semantic: .main)
             } catch {
                 logger.warning("\(error.localizedDescription)")
             }
         }
 
-        return sprites
+        return resolvedSprite
     }
 
     private func shadowSprite(jobID: UniformJobID) async throws -> SpriteResource {
         let shadowSpritePath = ResourcePath.spritePath.appending(component: "shadow")
         let shadowSprite = try await resourceManager.sprite(at: shadowSpritePath)
-        shadowSprite.part = .shadow
 
         if let shadowFactor = await ScriptManager.default.shadowFactor(forJobID: jobID.rawValue), shadowFactor >= 0 {
             shadowSprite.scaleFactor = shadowFactor
@@ -208,7 +214,6 @@ final public class SpriteResolver: Sendable {
             }
         }
 
-        bodySprite?.part = .playerBody
         bodySprite?.palette = bodyPalette
 
         return bodySprite

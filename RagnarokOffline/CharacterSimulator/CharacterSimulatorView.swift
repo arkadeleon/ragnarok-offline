@@ -14,7 +14,7 @@ import SwiftUI
 struct CharacterSimulatorView: View {
     @State private var configuration = CharacterConfiguration()
 
-    @State private var sprites: [SpriteResource] = []
+    @State private var resolvedSprite: ResolvedSprite?
     @State private var animatedImage: AnimatedImage?
 
     var body: some View {
@@ -53,87 +53,87 @@ struct CharacterSimulatorView: View {
         }
         .navigationTitle("Character Simulator")
         .task {
-            await reloadSprites()
-            await reloadAnimatedImage()
+            await resolveSprite()
+            await renderSprite()
         }
         .onChange(of: configuration.jobID) {
             Task {
-                await reloadSprites()
-                await reloadAnimatedImage()
+                await resolveSprite()
+                await renderSprite()
             }
         }
         .onChange(of: configuration.gender) {
             Task {
-                await reloadSprites()
-                await reloadAnimatedImage()
+                await resolveSprite()
+                await renderSprite()
             }
         }
         .onChange(of: configuration.clothesColorID) {
             Task {
-                await reloadSprites()
-                await reloadAnimatedImage()
+                await resolveSprite()
+                await renderSprite()
             }
         }
         .onChange(of: configuration.hairStyleID) {
             Task {
-                await reloadSprites()
-                await reloadAnimatedImage()
+                await resolveSprite()
+                await renderSprite()
             }
         }
         .onChange(of: configuration.hairColorID) {
             Task {
-                await reloadSprites()
-                await reloadAnimatedImage()
+                await resolveSprite()
+                await renderSprite()
             }
         }
         .onChange(of: configuration.upperHeadgear) {
             Task {
-                await reloadSprites()
-                await reloadAnimatedImage()
+                await resolveSprite()
+                await renderSprite()
             }
         }
         .onChange(of: configuration.middleHeadgear) {
             Task {
-                await reloadSprites()
-                await reloadAnimatedImage()
+                await resolveSprite()
+                await renderSprite()
             }
         }
         .onChange(of: configuration.lowerHeadgear) {
             Task {
-                await reloadSprites()
-                await reloadAnimatedImage()
+                await resolveSprite()
+                await renderSprite()
             }
         }
         .onChange(of: configuration.weaponType) {
             Task {
-                await reloadSprites()
-                await reloadAnimatedImage()
+                await resolveSprite()
+                await renderSprite()
             }
         }
         .onChange(of: configuration.shieldID) {
             Task {
-                await reloadSprites()
-                await reloadAnimatedImage()
+                await resolveSprite()
+                await renderSprite()
             }
         }
         .onChange(of: configuration.actionType) {
             Task {
-                await reloadAnimatedImage()
+                await renderSprite()
             }
         }
         .onChange(of: configuration.direction) {
             Task {
-                await reloadAnimatedImage()
+                await renderSprite()
             }
         }
         .onChange(of: configuration.headDirection) {
             Task {
-                await reloadAnimatedImage()
+                await renderSprite()
             }
         }
     }
 
-    private func reloadSprites() async {
+    private func resolveSprite() async {
         let jobID = UniformJobID(rawValue: configuration.jobID.rawValue)
 
         var spriteConfiguration = SpriteConfiguration()
@@ -146,11 +146,15 @@ struct CharacterSimulatorView: View {
         spriteConfiguration.shieldID = configuration.shieldID
 
         let spriteResolver = SpriteResolver(resourceManager: .default)
-        sprites = await spriteResolver.resolve(jobID: jobID, configuration: spriteConfiguration)
+        resolvedSprite = await spriteResolver.resolve(jobID: jobID, configuration: spriteConfiguration)
     }
 
-    private func reloadAnimatedImage() async {
-        let spriteRenderer = SpriteRenderer(sprites: sprites)
+    private func renderSprite() async {
+        guard let resolvedSprite else {
+            return
+        }
+
+        let spriteRenderer = SpriteRenderer(resolvedSprite: resolvedSprite)
         let actionIndex = configuration.actionType.rawValue * 8 + configuration.direction.rawValue
         animatedImage = await spriteRenderer.renderAction(at: actionIndex, headDirection: configuration.headDirection)
     }

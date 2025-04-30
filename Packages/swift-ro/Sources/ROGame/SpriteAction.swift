@@ -18,8 +18,8 @@ final public class SpriteAction: Sendable {
     public let frameHeight: Float
     public let frameInterval: Float
 
-    public init(sprites: [SpriteResource], actionIndex: Int) async throws {
-        let spriteRenderer = SpriteRenderer(sprites: sprites)
+    public init(resolvedSprite: ResolvedSprite, actionIndex: Int) async throws {
+        let spriteRenderer = SpriteRenderer(resolvedSprite: resolvedSprite)
         let animatedImage = await spriteRenderer.renderAction(at: actionIndex, headDirection: .straight)
 
         let frameCount = animatedImage.frames.count
@@ -53,10 +53,17 @@ final public class SpriteAction: Sendable {
 }
 
 extension SpriteAction {
+    public static func actions(forItemID itemID: Int) async throws -> [SpriteAction] {
+        let spriteResolver = SpriteResolver(resourceManager: .default)
+        let resolvedSprite = await spriteResolver.resolve(itemID: itemID)
+
+        let action = try await SpriteAction(resolvedSprite: resolvedSprite, actionIndex: 0)
+        return [action]
+    }
+
     public static func actions(forJobID jobID: UniformJobID, configuration: SpriteConfiguration) async throws -> [SpriteAction] {
         let spriteResolver = SpriteResolver(resourceManager: .default)
-
-        let sprites = await spriteResolver.resolve(jobID: jobID, configuration: configuration)
+        let resolvedSprite = await spriteResolver.resolve(jobID: jobID, configuration: configuration)
 
         var actions: [SpriteAction] = []
 
@@ -64,7 +71,7 @@ extension SpriteAction {
             for actionType in PlayerActionType.allCases {
                 for direction in BodyDirection.allCases {
                     let actionIndex = actionType.rawValue * 8 + direction.rawValue
-                    let action = try await SpriteAction(sprites: sprites, actionIndex: actionIndex)
+                    let action = try await SpriteAction(resolvedSprite: resolvedSprite, actionIndex: actionIndex)
                     actions.append(action)
                 }
             }
@@ -74,28 +81,18 @@ extension SpriteAction {
             for actionType in actionTypes {
                 for direction in BodyDirection.allCases {
                     let actionIndex = actionType.rawValue * 8 + direction.rawValue
-                    let action = try await SpriteAction(sprites: sprites, actionIndex: actionIndex)
+                    let action = try await SpriteAction(resolvedSprite: resolvedSprite, actionIndex: actionIndex)
                     actions.append(action)
                 }
             }
         } else {
             for direction in BodyDirection.allCases {
                 let actionIndex = direction.rawValue
-                let action = try await SpriteAction(sprites: sprites, actionIndex: actionIndex)
+                let action = try await SpriteAction(resolvedSprite: resolvedSprite, actionIndex: actionIndex)
                 actions.append(action)
             }
         }
 
         return actions
-    }
-
-    public static func actions(forItemID itemID: Int) async throws -> [SpriteAction] {
-        guard let path = await ResourcePath(itemSpritePathWithItemID: itemID) else {
-            return []
-        }
-
-        let sprite = try await ResourceManager.default.sprite(at: path)
-        let action = try await SpriteAction(sprites: [sprite], actionIndex: 0)
-        return [action]
     }
 }

@@ -67,7 +67,7 @@ struct ACTFilePreviewView: View {
         let spr = try SPR(data: sprData)
 
         let sprite = SpriteResource(act: act, spr: spr)
-        let spriteRenderer = SpriteRenderer(sprites: [sprite])
+        let spriteRenderer = SpriteRenderer(sprite: sprite)
 
         var animatedImages: [AnimatedImage] = []
         for actionIndex in 0..<act.actions.count {

@@ -128,11 +128,15 @@ public enum HeadDirection: Int, CaseIterable, CustomStringConvertible, Sendable 
 }
 
 final public class SpriteRenderer: Sendable {
-    public let sprites: [SpriteResource]
+    public let resolvedSprite: ResolvedSprite
     public let scale: CGFloat = 2
 
-    public init(sprites: [SpriteResource]) {
-        self.sprites = sprites
+    public init(sprite: SpriteResource) {
+        self.resolvedSprite = ResolvedSprite(sprite: sprite)
+    }
+
+    public init(resolvedSprite: ResolvedSprite) {
+        self.resolvedSprite = resolvedSprite
     }
 
     public func renderAction(at actionIndex: Int, headDirection: HeadDirection) async -> AnimatedImage {
@@ -140,17 +144,17 @@ final public class SpriteRenderer: Sendable {
         var bounds: CGRect = .null
         var frameCount = 0
 
-        for sprite in sprites {
-            let actionIndex = (sprite.part == .shadow ? 0 : actionIndex)
-            let scale = self.scale * sprite.scaleFactor
+        for part in resolvedSprite.parts {
+            let actionIndex = (part.semantic == .shadow ? 0 : actionIndex)
+            let scale = self.scale * part.sprite.scaleFactor
 
             let actionNode = SpriteRenderNode(
-                actionNodeWithSprite: sprite,
+                actionNodeWithPart: part,
                 actionIndex: actionIndex,
                 headDirection: headDirection,
                 scale: scale
             )
-            actionNodes.append((sprite, actionNode))
+            actionNodes.append((part.sprite, actionNode))
 
             bounds = bounds.union(actionNode.bounds)
 
@@ -190,8 +194,8 @@ final public class SpriteRenderer: Sendable {
         let frameHeight = bounds.size.height / scale
 
         var frameInterval: CGFloat = 1 / 12
-        if let mainSprite = sprites.first(where: { $0.part == .main || $0.part == .playerBody }),
-           let action = mainSprite.action(at: actionIndex) {
+        if let mainPart = resolvedSprite.mainPart,
+           let action = mainPart.sprite.action(at: actionIndex) {
             frameInterval = CGFloat(action.animationSpeed) * 25 / 1000
         }
 
