@@ -61,13 +61,13 @@ extension SpriteAction {
         return [action]
     }
 
-    public static func actions(forJobID jobID: UniformJobID, configuration: SpriteConfiguration) async throws -> [SpriteAction] {
+    public static func actions(forJob job: UniformJob, configuration: SpriteConfiguration) async throws -> [SpriteAction] {
         let spriteResolver = SpriteResolver(resourceManager: .default)
-        let resolvedSprite = await spriteResolver.resolve(jobID: jobID, configuration: configuration)
+        let resolvedSprite = await spriteResolver.resolve(job: job, configuration: configuration)
 
         var actions: [SpriteAction] = []
 
-        if jobID.isPlayer {
+        if job.isPlayer {
             for actionType in PlayerActionType.allCases {
                 for direction in BodyDirection.allCases {
                     let actionIndex = actionType.rawValue * 8 + direction.rawValue
@@ -75,7 +75,7 @@ extension SpriteAction {
                     actions.append(action)
                 }
             }
-        } else if jobID.isMonster {
+        } else if job.isMonster {
             // It seems that die action type is a little bit different.
             let actionTypes: [MonsterActionType] = [.idle, .walk, .attack, .hurt]
             for actionType in actionTypes {

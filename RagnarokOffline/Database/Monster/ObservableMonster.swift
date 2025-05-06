@@ -138,9 +138,9 @@ class ObservableMonster {
     @MainActor
     func fetchAnimatedImage() async {
         if animatedImage == nil {
-            let jobID = UniformJobID(rawValue: monster.id)
+            let job = UniformJob(rawValue: monster.id)
             let spriteResolver = SpriteResolver(resourceManager: .default)
-            let resolvedSprite = await spriteResolver.resolve(jobID: jobID, configuration: SpriteConfiguration())
+            let resolvedSprite = await spriteResolver.resolve(job: job, configuration: SpriteConfiguration())
 
             let spriteRenderer = SpriteRenderer(resolvedSprite: resolvedSprite)
             animatedImage = await spriteRenderer.renderAction(at: 0, headDirection: .straight)

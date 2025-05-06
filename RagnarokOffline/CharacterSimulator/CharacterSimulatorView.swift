@@ -134,7 +134,7 @@ struct CharacterSimulatorView: View {
     }
 
     private func resolveSprite() async {
-        let jobID = UniformJobID(rawValue: configuration.jobID.rawValue)
+        let job = UniformJob(rawValue: configuration.jobID.rawValue)
 
         var spriteConfiguration = SpriteConfiguration()
         spriteConfiguration.gender = configuration.gender
@@ -147,7 +147,7 @@ struct CharacterSimulatorView: View {
         spriteConfiguration.garment = configuration.garment?.view ?? 0
 
         let spriteResolver = SpriteResolver(resourceManager: .default)
-        resolvedSprite = await spriteResolver.resolve(jobID: jobID, configuration: spriteConfiguration)
+        resolvedSprite = await spriteResolver.resolve(job: job, configuration: spriteConfiguration)
     }
 
     private func renderSprite() async {
@@ -173,7 +173,7 @@ struct CharacterSimulatorView2: View {
         } update: { content in
             if let entity = content.entities.first as? SpriteEntity {
                 Task {
-                    let jobID = UniformJobID(rawValue: configuration.jobID.rawValue)
+                    let job = UniformJob(rawValue: configuration.jobID.rawValue)
 
                     var spriteConfiguration = SpriteConfiguration()
                     spriteConfiguration.gender = configuration.gender
@@ -185,7 +185,7 @@ struct CharacterSimulatorView2: View {
                     spriteConfiguration.headgears = configuration.headgears
                     spriteConfiguration.garment = configuration.garment?.view ?? 0
 
-                    let actions = try await SpriteAction.actions(forJobID: jobID, configuration: spriteConfiguration)
+                    let actions = try await SpriteAction.actions(forJob: job, configuration: spriteConfiguration)
 
                     let spriteComponent = SpriteComponent(actions: actions)
                     entity.components.set(spriteComponent)

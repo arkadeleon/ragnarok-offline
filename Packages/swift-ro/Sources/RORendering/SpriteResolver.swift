@@ -30,15 +30,15 @@ final public class SpriteResolver: Sendable {
         return resolvedSprite
     }
 
-    public func resolve(jobID: UniformJobID, configuration: SpriteConfiguration) async -> ResolvedSprite {
-        if jobID.isPlayer {
-            await resolvePlayer(jobID: jobID, configuration: configuration)
+    public func resolve(job: UniformJob, configuration: SpriteConfiguration) async -> ResolvedSprite {
+        if job.isPlayer {
+            await resolvePlayer(job: job, configuration: configuration)
         } else {
-            await resolveNonPlayer(jobID: jobID, configuration: configuration)
+            await resolveNonPlayer(job: job, configuration: configuration)
         }
     }
 
-    func resolvePlayer(jobID: UniformJobID, configuration: SpriteConfiguration) async -> ResolvedSprite {
+    func resolvePlayer(job: UniformJob, configuration: SpriteConfiguration) async -> ResolvedSprite {
         let gender = configuration.gender
         let hairStyle = configuration.hairStyle
         let hairColor = configuration.hairColor
@@ -50,23 +50,23 @@ final public class SpriteResolver: Sendable {
 
         // Shadow
         do {
-            let shadowSprite = try await shadowSprite(jobID: jobID)
+            let shadowSprite = try await shadowSprite(job: job)
             resolvedSprite.append(shadowSprite, semantic: .shadow)
         } catch {
             logger.warning("Shadow sprite error: \(error.localizedDescription)")
         }
 
         // Body
-        let bodySprite = await playerBodySprite(jobID: jobID, configuration: configuration)
+        let bodySprite = await playerBodySprite(job: job, configuration: configuration)
         if let bodySprite {
             resolvedSprite.append(bodySprite, semantic: .playerBody)
         }
 
         // Head
-        if let headSpritePath = ResourcePath.playerHeadSprite(jobID: jobID, hairStyle: hairStyle, gender: gender) {
+        if let headSpritePath = ResourcePath.playerHeadSprite(job: job, hairStyle: hairStyle, gender: gender) {
             var headPalette: PaletteResource?
             if hairColor > -1 {
-                if let headPalettePath = ResourcePath.headPalette(jobID: jobID, hairStyle: hairStyle, hairColor: hairColor, gender: gender) {
+                if let headPalettePath = ResourcePath.headPalette(job: job, hairStyle: hairStyle, hairColor: hairColor, gender: gender) {
                     do {
                         headPalette = try await resourceManager.palette(at: headPalettePath)
                     } catch {
@@ -86,8 +86,8 @@ final public class SpriteResolver: Sendable {
         }
 
         // Weapon
-        if weapon > 0 && !jobID.isMadogear {
-            if let weaponSpritePath = await ResourcePath.weaponSprite(jobID: jobID, weapon: weapon, isSlash: false, gender: gender, madoType: madoType) {
+        if weapon > 0 && !job.isMadogear {
+            if let weaponSpritePath = await ResourcePath.weaponSprite(job: job, weapon: weapon, isSlash: false, gender: gender, madoType: madoType) {
                 do {
                     let weaponSprite = try await resourceManager.sprite(at: weaponSpritePath)
                     resolvedSprite.append(weaponSprite, semantic: .weapon, order: 0)
@@ -99,7 +99,7 @@ final public class SpriteResolver: Sendable {
 
         // Weapon Slash
         if weapon > 0 {
-            if let weaponSlashSpritePath = await ResourcePath.weaponSprite(jobID: jobID, weapon: weapon, isSlash: true, gender: gender, madoType: madoType) {
+            if let weaponSlashSpritePath = await ResourcePath.weaponSprite(job: job, weapon: weapon, isSlash: true, gender: gender, madoType: madoType) {
                 do {
                     let weaponSlashSprite = try await resourceManager.sprite(at: weaponSlashSpritePath)
                     resolvedSprite.append(weaponSlashSprite, semantic: .weapon, order: 1)
@@ -111,7 +111,7 @@ final public class SpriteResolver: Sendable {
 
         // Shield
         if shield > 0 {
-            if let shieldSpritePath = await ResourcePath.shieldSprite(jobID: jobID, shield: shield, gender: gender) {
+            if let shieldSpritePath = await ResourcePath.shieldSprite(job: job, shield: shield, gender: gender) {
                 do {
                     let shieldSprite = try await resourceManager.sprite(at: shieldSpritePath)
                     resolvedSprite.append(shieldSprite, semantic: .shield)
@@ -148,18 +148,18 @@ final public class SpriteResolver: Sendable {
         return resolvedSprite
     }
 
-    func resolveNonPlayer(jobID: UniformJobID, configuration: SpriteConfiguration) async -> ResolvedSprite {
+    func resolveNonPlayer(job: UniformJob, configuration: SpriteConfiguration) async -> ResolvedSprite {
         var resolvedSprite = ResolvedSprite()
 
         // Shadow
         do {
-            let shadowSprite = try await shadowSprite(jobID: jobID)
+            let shadowSprite = try await shadowSprite(job: job)
             resolvedSprite.append(shadowSprite, semantic: .shadow)
         } catch {
             logger.warning("Shadow sprite error: \(error.localizedDescription)")
         }
 
-        if let bodySpritePath = await ResourcePath.nonPlayerSprite(jobID: jobID) {
+        if let bodySpritePath = await ResourcePath.nonPlayerSprite(job: job) {
             do {
                 let bodySprite = try await resourceManager.sprite(at: bodySpritePath)
                 resolvedSprite.append(bodySprite, semantic: .main)
@@ -171,18 +171,18 @@ final public class SpriteResolver: Sendable {
         return resolvedSprite
     }
 
-    private func shadowSprite(jobID: UniformJobID) async throws -> SpriteResource {
+    private func shadowSprite(job: UniformJob) async throws -> SpriteResource {
         let shadowSpritePath = ResourcePath.spriteDirectory.appending("shadow")
         let shadowSprite = try await resourceManager.sprite(at: shadowSpritePath)
 
-        if let shadowFactor = await ScriptManager.default.shadowFactor(forJobID: jobID.rawValue), shadowFactor >= 0 {
+        if let shadowFactor = await ScriptManager.default.shadowFactor(forJobID: job.rawValue), shadowFactor >= 0 {
             shadowSprite.scaleFactor = shadowFactor
         }
 
         return shadowSprite
     }
 
-    private func playerBodySprite(jobID: UniformJobID, configuration: SpriteConfiguration) async -> SpriteResource? {
+    private func playerBodySprite(job: UniformJob, configuration: SpriteConfiguration) async -> SpriteResource? {
         let gender = configuration.gender
         let clothesColor = configuration.clothesColor
         let outfit = configuration.outfit
@@ -192,7 +192,7 @@ final public class SpriteResolver: Sendable {
         var bodyPalette: PaletteResource?
 
         if outfit > 0 {
-            if let bodySpritePath = await ResourcePath.playerBodyAltSprite(jobID: jobID, gender: gender, costumeID: outfit, madoType: madoType) {
+            if let bodySpritePath = await ResourcePath.playerBodyAltSprite(job: job, gender: gender, costumeID: outfit, madoType: madoType) {
                 do {
                     bodySprite = try await resourceManager.sprite(at: bodySpritePath)
                 } catch {
@@ -201,7 +201,7 @@ final public class SpriteResolver: Sendable {
             }
 
             if clothesColor > -1 {
-                if let bodyPalettePath = ResourcePath.bodyAltPalette(jobID: jobID, clothesColor: clothesColor, gender: gender, costumeID: outfit, madoType: madoType) {
+                if let bodyPalettePath = ResourcePath.bodyAltPalette(job: job, clothesColor: clothesColor, gender: gender, costumeID: outfit, madoType: madoType) {
                     do {
                         bodyPalette = try await resourceManager.palette(at: bodyPalettePath)
                     } catch {
@@ -210,7 +210,7 @@ final public class SpriteResolver: Sendable {
                 }
             }
         } else {
-            if let bodySpritePath = await ResourcePath.playerBodySprite(jobID: jobID, gender: gender, madoType: madoType) {
+            if let bodySpritePath = await ResourcePath.playerBodySprite(job: job, gender: gender, madoType: madoType) {
                 do {
                     bodySprite = try await resourceManager.sprite(at: bodySpritePath)
                 } catch {
@@ -219,7 +219,7 @@ final public class SpriteResolver: Sendable {
             }
 
             if clothesColor > -1 {
-                if let bodyPalettePath = ResourcePath.bodyPalette(jobID: jobID, clothesColor: clothesColor, gender: gender, madoType: madoType) {
+                if let bodyPalettePath = ResourcePath.bodyPalette(job: job, clothesColor: clothesColor, gender: gender, madoType: madoType) {
                     do {
                         bodyPalette = try await resourceManager.palette(at: bodyPalettePath)
                     } catch {

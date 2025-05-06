@@ -121,83 +121,83 @@ extension ResourceManager {
 }
 
 extension ResourcePath {
-    static func playerBodySprite(jobID: UniformJobID, gender: Gender, madoType: MadoType = .robot) async -> ResourcePath? {
-        guard jobID.isPlayer else {
+    static func playerBodySprite(job: UniformJob, gender: Gender, madoType: MadoType = .robot) async -> ResourcePath? {
+        guard job.isPlayer else {
             return nil
         }
 
-        guard let jobName = await jobSpriteName(jobID: jobID, madoType: madoType) else {
+        guard let jobName = await jobSpriteName(job: job, madoType: madoType) else {
             return nil
         }
 
-        if jobID.isDoram {
+        if job.isDoram {
             return ResourcePath.spriteDirectory.appending(["도람족", "몸통", gender.name, "\(jobName)_\(gender.name)"])
         } else {
             return ResourcePath.spriteDirectory.appending(["인간족", "몸통", gender.name, "\(jobName)_\(gender.name)"])
         }
     }
 
-    static func playerBodyAltSprite(jobID: UniformJobID, gender: Gender, costumeID: Int, madoType: MadoType = .robot) async -> ResourcePath? {
-        guard jobID.isPlayer else {
+    static func playerBodyAltSprite(job: UniformJob, gender: Gender, costumeID: Int, madoType: MadoType = .robot) async -> ResourcePath? {
+        guard job.isPlayer else {
             return nil
         }
 
-        guard let jobName = await jobSpriteName(jobID: jobID, madoType: madoType) else {
+        guard let jobName = await jobSpriteName(job: job, madoType: madoType) else {
             return nil
         }
 
-        if jobID.isDoram {
+        if job.isDoram {
             return ResourcePath.spriteDirectory.appending(["도람족", "몸통", gender.name, "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(costumeID)"])
         } else {
             return ResourcePath.spriteDirectory.appending(["인간족", "몸통", gender.name, "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(costumeID)"])
         }
     }
 
-    static func playerHeadSprite(jobID: UniformJobID, hairStyle: Int, gender: Gender) -> ResourcePath? {
-        guard jobID.isPlayer else {
+    static func playerHeadSprite(job: UniformJob, hairStyle: Int, gender: Gender) -> ResourcePath? {
+        guard job.isPlayer else {
             return nil
         }
 
-        if jobID.isDoram {
+        if job.isDoram {
             return ResourcePath.spriteDirectory.appending(["도람족", "머리통", gender.name, "\(hairStyle)_\(gender.name)"])
         } else {
             return ResourcePath.spriteDirectory.appending(["인간족", "머리통", gender.name, "\(hairStyle)_\(gender.name)"])
         }
     }
 
-    static func nonPlayerSprite(jobID: UniformJobID) async -> ResourcePath? {
-        guard !jobID.isPlayer else {
+    static func nonPlayerSprite(job: UniformJob) async -> ResourcePath? {
+        guard !job.isPlayer else {
             return nil
         }
 
-        guard let jobName = await jobSpriteName(jobID: jobID) else {
+        guard let jobName = await jobSpriteName(job: job) else {
             return nil
         }
 
-        if jobID.isNPC {
+        if job.isNPC {
             return ResourcePath.spriteDirectory.appending(["npc", jobName])
-        } else if jobID.isMercenary {
+        } else if job.isMercenary {
             return ResourcePath.spriteDirectory.appending(["인간족", "몸통", jobName])
-        } else if jobID.isHomunculus {
+        } else if job.isHomunculus {
             return ResourcePath.spriteDirectory.appending(["homun", jobName])
-        } else if jobID.isMonster {
+        } else if job.isMonster {
             return ResourcePath.spriteDirectory.appending(["몬스터", jobName])
         } else {
             return nil
         }
     }
 
-    static func weaponSprite(jobID: UniformJobID, weapon: Int, isSlash: Bool = false, gender: Gender, madoType: MadoType = .robot) async -> ResourcePath? {
-        guard jobID.isPlayer || jobID.isMercenary else {
+    static func weaponSprite(job: UniformJob, weapon: Int, isSlash: Bool = false, gender: Gender, madoType: MadoType = .robot) async -> ResourcePath? {
+        guard job.isPlayer || job.isMercenary else {
             return nil
         }
 
-        if jobID.isPlayer {
-            let isMadogear = jobID.isMadogear
+        if job.isPlayer {
+            let isMadogear = job.isMadogear
             let isAlternativeMadogear = isMadogear && madoType == .suit
-            let madogearJobName = isAlternativeMadogear ? alternativeMadogearJobName(jobID: jobID, madoType: madoType) : ""
+            let madogearJobName = isAlternativeMadogear ? alternativeMadogearJobName(job: job, madoType: madoType) : ""
 
-            guard var jobName = jobNamesForWeapon[jobID.rawValue] else {
+            guard var jobName = jobNamesForWeapon[job.rawValue] else {
                 return nil
             }
 
@@ -220,7 +220,7 @@ extension ResourcePath {
                 return nil
             }
 
-            if jobID.isDoram {
+            if job.isDoram {
                 return ResourcePath.spriteDirectory.appending(["도람족", jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)\(isSlash ? "_검광" : "")"])
             } else {
                 return ResourcePath.spriteDirectory.appending(["인간족", jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)\(isSlash ? "_검광" : "")"])
@@ -228,7 +228,7 @@ extension ResourcePath {
         } else {
             let mercenaryPath = ResourcePath.spriteDirectory.appending(["인간족", "용병"])
 
-            switch jobID.rawValue {
+            switch job.rawValue {
             case 6017...6026:
                 return mercenaryPath.appending("활용병_활")
             case 6027...6036:
@@ -239,12 +239,12 @@ extension ResourcePath {
         }
     }
 
-    static func shieldSprite(jobID: UniformJobID, shield: Int, gender: Gender) async -> ResourcePath? {
-        guard jobID.isPlayer else {
+    static func shieldSprite(job: UniformJob, shield: Int, gender: Gender) async -> ResourcePath? {
+        guard job.isPlayer else {
             return nil
         }
 
-        guard let jobName = await jobSpriteName(jobID: jobID) else {
+        guard let jobName = await jobSpriteName(job: job) else {
             return nil
         }
 
@@ -263,12 +263,12 @@ extension ResourcePath {
         return ResourcePath.spriteDirectory.appending(["악세사리", gender.name, "\(gender.name)\(accessoryName)"])
     }
 
-    static func garmentSprite(jobID: UniformJobID, garment: Int, gender: Gender, checkEnglish: Bool = false, useFallback: Bool = false) async -> ResourcePath? {
-        guard jobID.isPlayer else {
+    static func garmentSprite(job: UniformJob, garment: Int, gender: Gender, checkEnglish: Bool = false, useFallback: Bool = false) async -> ResourcePath? {
+        guard job.isPlayer else {
             return nil
         }
 
-        guard let jobName = await jobSpriteName(jobID: jobID),
+        guard let jobName = await jobSpriteName(job: job),
               let robeName = await ScriptManager.default.robeName(forRobeID: garment, checkEnglish: checkEnglish) else {
             return nil
         }
@@ -280,91 +280,91 @@ extension ResourcePath {
         }
     }
 
-    static func imf(jobID: UniformJobID, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
-        guard jobID.isPlayer else {
+    static func imf(job: UniformJob, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
+        guard job.isPlayer else {
             return nil
         }
 
-        if jobID.isMadogear && madoType == .suit {
-            let jobName = alternativeMadogearJobName(jobID: jobID, madoType: madoType)
+        if job.isMadogear && madoType == .suit {
+            let jobName = alternativeMadogearJobName(job: job, madoType: madoType)
             return ["data", "imf", "\(jobName)_\(gender.name)"]
         }
 
-        guard let jobName = jobNamesForIMF[jobID.rawValue] else {
+        guard let jobName = jobNamesForIMF[job.rawValue] else {
             return nil
         }
 
         return ["data", "imf", "\(jobName)_\(gender.name)"]
     }
 
-    static func bodyPalette(jobID: UniformJobID, clothesColor: Int, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
-        guard jobID.isPlayer else {
+    static func bodyPalette(job: UniformJob, clothesColor: Int, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
+        guard job.isPlayer else {
             return nil
         }
 
-        if jobID.isMadogear && madoType == .suit {
-            let jobName = alternativeMadogearJobName(jobID: jobID, madoType: madoType)
+        if job.isMadogear && madoType == .suit {
+            let jobName = alternativeMadogearJobName(job: job, madoType: madoType)
             return ResourcePath.paletteDirectory.appending(["몸", "\(jobName)_\(gender.name)_\(clothesColor)"])
         }
 
-        guard let jobName = jobNamesForPalette[jobID.rawValue] else {
+        guard let jobName = jobNamesForPalette[job.rawValue] else {
             return nil
         }
 
-        if jobID.isDoram {
+        if job.isDoram {
             return ResourcePath.paletteDirectory.appending(["도람족", "body", "\(jobName)_\(gender.name)_\(clothesColor)"])
         } else {
             return ResourcePath.paletteDirectory.appending(["몸", "\(jobName)_\(gender.name)_\(clothesColor)"])
         }
     }
 
-    static func bodyAltPalette(jobID: UniformJobID, clothesColor: Int, gender: Gender, costumeID: Int, madoType: MadoType = .robot) -> ResourcePath? {
-        guard jobID.isPlayer else {
+    static func bodyAltPalette(job: UniformJob, clothesColor: Int, gender: Gender, costumeID: Int, madoType: MadoType = .robot) -> ResourcePath? {
+        guard job.isPlayer else {
             return nil
         }
 
-        if jobID.isMadogear && madoType == .suit {
-            let jobName = alternativeMadogearJobName(jobID: jobID, madoType: madoType)
+        if job.isMadogear && madoType == .suit {
+            let jobName = alternativeMadogearJobName(job: job, madoType: madoType)
             return ResourcePath.paletteDirectory.appending(["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColor)_\(costumeID)"])
         }
 
-        guard let jobName = jobNamesForPalette[jobID.rawValue] else {
+        guard let jobName = jobNamesForPalette[job.rawValue] else {
             return nil
         }
 
-        if jobID.isDoram {
+        if job.isDoram {
             return ResourcePath.paletteDirectory.appending(["도람족", "body", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColor)_\(costumeID)"])
         } else {
             return ResourcePath.paletteDirectory.appending(["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColor)_\(costumeID)"])
         }
     }
 
-    static func headPalette(jobID: UniformJobID, hairStyle: Int, hairColor: Int, gender: Gender) -> ResourcePath? {
-        guard jobID.isPlayer else {
+    static func headPalette(job: UniformJob, hairStyle: Int, hairColor: Int, gender: Gender) -> ResourcePath? {
+        guard job.isPlayer else {
             return nil
         }
 
-        if jobID.isDoram {
+        if job.isDoram {
             return ResourcePath.paletteDirectory.appending(["도람족", "머리", "머리\(hairStyle)_\(gender.name)_\(hairColor)"])
         } else {
             return ResourcePath.paletteDirectory.appending(["머리", "머리\(hairStyle)_\(gender.name)_\(hairColor)"])
         }
     }
 
-    private static func jobSpriteName(jobID: UniformJobID, madoType: MadoType = .robot) async -> String? {
-        if jobID.isPlayer {
-            if jobID.isMadogear && madoType == .suit {
-                return alternativeMadogearJobName(jobID: jobID, madoType: madoType)
+    private static func jobSpriteName(job: UniformJob, madoType: MadoType = .robot) async -> String? {
+        if job.isPlayer {
+            if job.isMadogear && madoType == .suit {
+                return alternativeMadogearJobName(job: job, madoType: madoType)
             } else {
-                return jobNamesForSprite[jobID.rawValue]
+                return jobNamesForSprite[job.rawValue]
             }
         } else {
-            return await ScriptManager.default.jobName(forJobID: jobID.rawValue)
+            return await ScriptManager.default.jobName(forJobID: job.rawValue)
         }
     }
 
-    private static func alternativeMadogearJobName(jobID: UniformJobID, madoType: MadoType) -> String {
-        if [4086, 4087, 4112].contains(jobID.rawValue) {
+    private static func alternativeMadogearJobName(job: UniformJob, madoType: MadoType) -> String {
+        if [4086, 4087, 4112].contains(job.rawValue) {
             return "마도아머"
         } else {
             return "meister_madogear2"
