@@ -107,9 +107,7 @@ class MapScene3D: MapSceneProtocol {
         tileEntityManager.addTileEntities(for: player.position)
 
         do {
-            let job = UniformJob(rawValue: player.job)
-
-            var configuration = SpriteConfiguration()
+            var configuration = SpriteConfiguration(job: player.job)
             configuration.gender = player.gender
             configuration.hairStyle = player.hairStyle
             configuration.hairColor = player.hairColor
@@ -119,7 +117,7 @@ class MapScene3D: MapSceneProtocol {
             configuration.headgears = [player.headTop, player.headMid, player.headBottom]
             configuration.garment = player.garment
 
-            let actions = try await SpriteAction.actions(forJob: job, configuration: configuration)
+            let actions = try await SpriteAction.actions(forConfiguration: configuration)
             let spriteComponent = SpriteComponent(actions: actions)
             playerEntity.components.set(spriteComponent)
         } catch {
@@ -203,8 +201,7 @@ class MapScene3D: MapSceneProtocol {
             entity.transform = transform
         } else {
             Task {
-                let job = UniformJob(rawValue: event.object.job)
-                if let monsterEntity = await monsterEntityManager.entity(forJob: job) {
+                if let monsterEntity = await monsterEntityManager.entity(forJob: event.object.job) {
                     monsterEntity.name = "\(event.object.objectID)"
                     monsterEntity.transform = transform(for: event.object.position)
                     monsterEntity.isEnabled = (event.object.effectState != .cloak)
@@ -222,8 +219,7 @@ class MapScene3D: MapSceneProtocol {
             entity.walk(to: transform, direction: .south, duration: 1)
         } else {
             Task {
-                let job = UniformJob(rawValue: event.object.job)
-                if let monsterEntity = await monsterEntityManager.entity(forJob: job) {
+                if let monsterEntity = await monsterEntityManager.entity(forJob: event.object.job) {
                     monsterEntity.name = "\(event.object.objectID)"
                     monsterEntity.transform = transform(for: event.toPosition)
                     monsterEntity.isEnabled = (event.object.effectState != .cloak)

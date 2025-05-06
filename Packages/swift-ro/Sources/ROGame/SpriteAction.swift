@@ -55,19 +55,19 @@ final public class SpriteAction: Sendable {
 extension SpriteAction {
     public static func actions(forItemID itemID: Int) async throws -> [SpriteAction] {
         let spriteResolver = SpriteResolver(resourceManager: .default)
-        let resolvedSprite = await spriteResolver.resolve(itemID: itemID)
+        let resolvedSprite = await spriteResolver.resolveSprite(forItemID: itemID)
 
         let action = try await SpriteAction(resolvedSprite: resolvedSprite, actionIndex: 0)
         return [action]
     }
 
-    public static func actions(forJob job: UniformJob, configuration: SpriteConfiguration) async throws -> [SpriteAction] {
+    public static func actions(forConfiguration configuration: SpriteConfiguration) async throws -> [SpriteAction] {
         let spriteResolver = SpriteResolver(resourceManager: .default)
-        let resolvedSprite = await spriteResolver.resolve(job: job, configuration: configuration)
+        let resolvedSprite = await spriteResolver.resolveSprite(with: configuration)
 
         var actions: [SpriteAction] = []
 
-        if job.isPlayer {
+        if configuration.job.isPlayer {
             for actionType in PlayerActionType.allCases {
                 for direction in BodyDirection.allCases {
                     let actionIndex = actionType.rawValue * 8 + direction.rawValue
@@ -75,7 +75,7 @@ extension SpriteAction {
                     actions.append(action)
                 }
             }
-        } else if job.isMonster {
+        } else if configuration.job.isMonster {
             // It seems that die action type is a little bit different.
             let actionTypes: [MonsterActionType] = [.idle, .walk, .attack, .hurt]
             for actionType in actionTypes {

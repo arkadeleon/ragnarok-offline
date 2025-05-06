@@ -15,7 +15,7 @@ final public class SpriteResolver: Sendable {
         self.resourceManager = resourceManager
     }
 
-    public func resolve(itemID: Int) async -> ResolvedSprite {
+    public func resolveSprite(forItemID itemID: Int) async -> ResolvedSprite {
         var resolvedSprite = ResolvedSprite()
 
         if let path = await ResourcePath(itemSpritePathWithItemID: itemID) {
@@ -30,15 +30,16 @@ final public class SpriteResolver: Sendable {
         return resolvedSprite
     }
 
-    public func resolve(job: UniformJob, configuration: SpriteConfiguration) async -> ResolvedSprite {
-        if job.isPlayer {
-            await resolvePlayer(job: job, configuration: configuration)
+    public func resolveSprite(with configuration: SpriteConfiguration) async -> ResolvedSprite {
+        if configuration.job.isPlayer {
+            await resolvePlayerSprite(with: configuration)
         } else {
-            await resolveNonPlayer(job: job, configuration: configuration)
+            await resolveNonPlayerSprite(with: configuration)
         }
     }
 
-    func resolvePlayer(job: UniformJob, configuration: SpriteConfiguration) async -> ResolvedSprite {
+    func resolvePlayerSprite(with configuration: SpriteConfiguration) async -> ResolvedSprite {
+        let job = configuration.job
         let gender = configuration.gender
         let hairStyle = configuration.hairStyle
         let hairColor = configuration.hairColor
@@ -148,7 +149,9 @@ final public class SpriteResolver: Sendable {
         return resolvedSprite
     }
 
-    func resolveNonPlayer(job: UniformJob, configuration: SpriteConfiguration) async -> ResolvedSprite {
+    func resolveNonPlayerSprite(with configuration: SpriteConfiguration) async -> ResolvedSprite {
+        let job = configuration.job
+
         var resolvedSprite = ResolvedSprite()
 
         // Shadow

@@ -15,8 +15,8 @@ final class SpriteRendererTests: XCTestCase {
         let resourceManager = ResourceManager(baseURL: baseURL)
         let spriteResolver = SpriteResolver(resourceManager: resourceManager)
 
-        let configuration = SpriteConfiguration()
-        let resolvedSprite = await spriteResolver.resolve(job: 0, configuration: configuration)
+        let configuration = SpriteConfiguration(job: 0)
+        let resolvedSprite = await spriteResolver.resolveSprite(with: configuration)
         XCTAssertEqual(resolvedSprite.parts.count, 2)
 
         let spriteRenderer = SpriteRenderer(resolvedSprite: resolvedSprite)

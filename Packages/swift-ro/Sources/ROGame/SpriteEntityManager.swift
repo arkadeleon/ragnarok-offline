@@ -9,19 +9,20 @@ import RealityKit
 import RORendering
 
 public actor SpriteEntityManager {
-    var entitiesByJob: [UniformJob : SpriteEntity] = [:]
+    var entitiesByJob: [Int : SpriteEntity] = [:]
 
     public init() {
     }
 
-    public func entity(forJob job: UniformJob) async -> SpriteEntity? {
+    public func entity(forJob job: Int) async -> SpriteEntity? {
         if let entity = entitiesByJob[job] {
             let entityClone = await entity.clone(recursive: true)
             return entityClone
         }
 
         do {
-            let actions = try await SpriteAction.actions(forJob: job, configuration: SpriteConfiguration())
+            let configuration = SpriteConfiguration(job: job)
+            let actions = try await SpriteAction.actions(forConfiguration: configuration)
             let entity = await SpriteEntity(actions: actions)
             entitiesByJob[job] = entity
             return entity

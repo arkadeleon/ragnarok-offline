@@ -50,3 +50,17 @@ struct CharacterConfiguration {
         headDirection = .straight
     }
 }
+
+extension SpriteConfiguration {
+    init(configuration: CharacterConfiguration) {
+        self.init(job: configuration.jobID.rawValue)
+        self.gender = configuration.gender
+        self.hairStyle = configuration.hairStyle
+        self.hairColor = configuration.hairColor
+        self.clothesColor = configuration.clothesColor
+        self.weapon = configuration.weaponType.rawValue
+        self.shield = configuration.shield
+        self.headgears = configuration.headgears
+        self.garment = configuration.garment?.view ?? 0
+    }
+}

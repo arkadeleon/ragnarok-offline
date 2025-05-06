@@ -8,6 +8,7 @@
 import ROConstants
 
 public struct SpriteConfiguration: Sendable {
+    public let job: UniformJob
     public var gender: Gender
     public var hairStyle: Int
     public var hairColor: Int
@@ -19,16 +20,17 @@ public struct SpriteConfiguration: Sendable {
     public var outfit: Int
     public var madoType: MadoType
 
-    public init() {
-        gender = .male
-        hairStyle = 1
-        hairColor = -1
-        clothesColor = -1
-        weapon = 0
-        shield = 0
-        headgears = []
-        garment = 0
-        outfit = 0
-        madoType = .robot
+    public init(job: Int) {
+        self.job = UniformJob(rawValue: job)
+        self.gender = .male
+        self.hairStyle = 1
+        self.hairColor = -1
+        self.clothesColor = -1
+        self.weapon = 0
+        self.shield = 0
+        self.headgears = []
+        self.garment = 0
+        self.outfit = 0
+        self.madoType = .robot
     }
 }

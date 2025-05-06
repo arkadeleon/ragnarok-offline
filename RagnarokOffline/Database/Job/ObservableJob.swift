@@ -116,9 +116,10 @@ class ObservableJob {
     @MainActor
     func fetchAnimatedImage() async {
         if animatedImage == nil {
-            let job = UniformJob(rawValue: job.id.rawValue)
+            let configuration = SpriteConfiguration(job: job.id.rawValue)
+
             let spriteResolver = SpriteResolver(resourceManager: .default)
-            let resolvedSprite = await spriteResolver.resolve(job: job, configuration: SpriteConfiguration())
+            let resolvedSprite = await spriteResolver.resolveSprite(with: configuration)
 
             let spriteRenderer = SpriteRenderer(resolvedSprite: resolvedSprite)
             animatedImage = await spriteRenderer.renderAction(at: 0, headDirection: .straight)

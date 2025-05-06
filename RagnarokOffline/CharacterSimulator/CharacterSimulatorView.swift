@@ -134,20 +134,10 @@ struct CharacterSimulatorView: View {
     }
 
     private func resolveSprite() async {
-        let job = UniformJob(rawValue: configuration.jobID.rawValue)
-
-        var spriteConfiguration = SpriteConfiguration()
-        spriteConfiguration.gender = configuration.gender
-        spriteConfiguration.hairStyle = configuration.hairStyle
-        spriteConfiguration.hairColor = configuration.hairColor
-        spriteConfiguration.clothesColor = configuration.clothesColor
-        spriteConfiguration.weapon = configuration.weaponType.rawValue
-        spriteConfiguration.shield = configuration.shield
-        spriteConfiguration.headgears = configuration.headgears
-        spriteConfiguration.garment = configuration.garment?.view ?? 0
+        let configuration = SpriteConfiguration(configuration: configuration)
 
         let spriteResolver = SpriteResolver(resourceManager: .default)
-        resolvedSprite = await spriteResolver.resolve(job: job, configuration: spriteConfiguration)
+        resolvedSprite = await spriteResolver.resolveSprite(with: configuration)
     }
 
     private func renderSprite() async {
@@ -173,19 +163,9 @@ struct CharacterSimulatorView2: View {
         } update: { content in
             if let entity = content.entities.first as? SpriteEntity {
                 Task {
-                    let job = UniformJob(rawValue: configuration.jobID.rawValue)
+                    let configuration = SpriteConfiguration(configuration: configuration)
 
-                    var spriteConfiguration = SpriteConfiguration()
-                    spriteConfiguration.gender = configuration.gender
-                    spriteConfiguration.clothesColor = configuration.clothesColor
-                    spriteConfiguration.hairStyle = configuration.hairStyle
-                    spriteConfiguration.hairColor = configuration.hairColor
-                    spriteConfiguration.weapon = configuration.weaponType.rawValue
-                    spriteConfiguration.shield = configuration.shield
-                    spriteConfiguration.headgears = configuration.headgears
-                    spriteConfiguration.garment = configuration.garment?.view ?? 0
-
-                    let actions = try await SpriteAction.actions(forJob: job, configuration: spriteConfiguration)
+                    let actions = try await SpriteAction.actions(forConfiguration: configuration)
 
                     let spriteComponent = SpriteComponent(actions: actions)
                     entity.components.set(spriteComponent)
