@@ -153,15 +153,15 @@ extension ResourcePath {
         }
     }
 
-    static func playerHeadSprite(jobID: UniformJobID, hairStyleID: Int, gender: Gender) -> ResourcePath? {
+    static func playerHeadSprite(jobID: UniformJobID, hairStyle: Int, gender: Gender) -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
 
         if jobID.isDoram {
-            return ResourcePath.spriteDirectory.appending(["도람족", "머리통", gender.name, "\(hairStyleID)_\(gender.name)"])
+            return ResourcePath.spriteDirectory.appending(["도람족", "머리통", gender.name, "\(hairStyle)_\(gender.name)"])
         } else {
-            return ResourcePath.spriteDirectory.appending(["인간족", "머리통", gender.name, "\(hairStyleID)_\(gender.name)"])
+            return ResourcePath.spriteDirectory.appending(["인간족", "머리통", gender.name, "\(hairStyle)_\(gender.name)"])
         }
     }
 
@@ -187,7 +187,7 @@ extension ResourcePath {
         }
     }
 
-    static func weaponSprite(jobID: UniformJobID, weaponID: Int, isSlash: Bool = false, gender: Gender, madoType: MadoType = .robot) async -> ResourcePath? {
+    static func weaponSprite(jobID: UniformJobID, weapon: Int, isSlash: Bool = false, gender: Gender, madoType: MadoType = .robot) async -> ResourcePath? {
         guard jobID.isPlayer || jobID.isMercenary else {
             return nil
         }
@@ -205,13 +205,13 @@ extension ResourcePath {
                 jobName = (jobName.0, madogearJobName)
             }
 
-            var weaponName = await ScriptManager.default.weaponName(forWeaponID: weaponID)
+            var weaponName = await ScriptManager.default.weaponName(forWeaponID: weapon)
 
             if weaponName == nil && !isMadogear {
-                if let realWeaponID = await ScriptManager.default.realWeaponID(forWeaponID: weaponID) {
+                if let realWeaponID = await ScriptManager.default.realWeaponID(forWeaponID: weapon) {
                     weaponName = await ScriptManager.default.weaponName(forWeaponID: realWeaponID)
                     if weaponName == nil {
-                        weaponName = "_\(weaponID)"
+                        weaponName = "_\(weapon)"
                     }
                 }
             }
@@ -239,7 +239,7 @@ extension ResourcePath {
         }
     }
 
-    static func shieldSprite(jobID: UniformJobID, shieldID: Int, gender: Gender) async -> ResourcePath? {
+    static func shieldSprite(jobID: UniformJobID, shield: Int, gender: Gender) async -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
@@ -248,28 +248,28 @@ extension ResourcePath {
             return nil
         }
 
-        if let shieldName = shieldNames[shieldID] {
+        if let shieldName = shieldNames[shield] {
             return ResourcePath.spriteDirectory.appending(["방패", jobName, "\(jobName)_\(gender.name)\(shieldName)"])
         } else {
-            return ResourcePath.spriteDirectory.appending(["방패", jobName, "\(jobName)_\(gender.name)_\(shieldID)_방패"])
+            return ResourcePath.spriteDirectory.appending(["방패", jobName, "\(jobName)_\(gender.name)_\(shield)_방패"])
         }
     }
 
-    static func headgearSprite(headgearID: Int, gender: Gender) async -> ResourcePath? {
-        guard let accessoryName = await ScriptManager.default.accessoryName(forAccessoryID: headgearID) else {
+    static func headgearSprite(headgear: Int, gender: Gender) async -> ResourcePath? {
+        guard let accessoryName = await ScriptManager.default.accessoryName(forAccessoryID: headgear) else {
             return nil
         }
 
         return ResourcePath.spriteDirectory.appending(["악세사리", gender.name, "\(gender.name)\(accessoryName)"])
     }
 
-    static func garmentSprite(jobID: UniformJobID, garmentID: Int, gender: Gender, checkEnglish: Bool = false, useFallback: Bool = false) async -> ResourcePath? {
+    static func garmentSprite(jobID: UniformJobID, garment: Int, gender: Gender, checkEnglish: Bool = false, useFallback: Bool = false) async -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
 
         guard let jobName = await jobSpriteName(jobID: jobID),
-              let robeName = await ScriptManager.default.robeName(forRobeID: garmentID, checkEnglish: checkEnglish) else {
+              let robeName = await ScriptManager.default.robeName(forRobeID: garment, checkEnglish: checkEnglish) else {
             return nil
         }
 
@@ -297,14 +297,14 @@ extension ResourcePath {
         return ["data", "imf", "\(jobName)_\(gender.name)"]
     }
 
-    static func bodyPalette(jobID: UniformJobID, clothesColorID: Int, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
+    static func bodyPalette(jobID: UniformJobID, clothesColor: Int, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
 
         if jobID.isMadogear && madoType == .suit {
             let jobName = alternativeMadogearJobName(jobID: jobID, madoType: madoType)
-            return ResourcePath.paletteDirectory.appending(["몸", "\(jobName)_\(gender.name)_\(clothesColorID)"])
+            return ResourcePath.paletteDirectory.appending(["몸", "\(jobName)_\(gender.name)_\(clothesColor)"])
         }
 
         guard let jobName = jobNamesForPalette[jobID.rawValue] else {
@@ -312,20 +312,20 @@ extension ResourcePath {
         }
 
         if jobID.isDoram {
-            return ResourcePath.paletteDirectory.appending(["도람족", "body", "\(jobName)_\(gender.name)_\(clothesColorID)"])
+            return ResourcePath.paletteDirectory.appending(["도람족", "body", "\(jobName)_\(gender.name)_\(clothesColor)"])
         } else {
-            return ResourcePath.paletteDirectory.appending(["몸", "\(jobName)_\(gender.name)_\(clothesColorID)"])
+            return ResourcePath.paletteDirectory.appending(["몸", "\(jobName)_\(gender.name)_\(clothesColor)"])
         }
     }
 
-    static func bodyAltPalette(jobID: UniformJobID, clothesColorID: Int, gender: Gender, costumeID: Int, madoType: MadoType = .robot) -> ResourcePath? {
+    static func bodyAltPalette(jobID: UniformJobID, clothesColor: Int, gender: Gender, costumeID: Int, madoType: MadoType = .robot) -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
 
         if jobID.isMadogear && madoType == .suit {
             let jobName = alternativeMadogearJobName(jobID: jobID, madoType: madoType)
-            return ResourcePath.paletteDirectory.appending(["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"])
+            return ResourcePath.paletteDirectory.appending(["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColor)_\(costumeID)"])
         }
 
         guard let jobName = jobNamesForPalette[jobID.rawValue] else {
@@ -333,21 +333,21 @@ extension ResourcePath {
         }
 
         if jobID.isDoram {
-            return ResourcePath.paletteDirectory.appending(["도람족", "body", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"])
+            return ResourcePath.paletteDirectory.appending(["도람족", "body", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColor)_\(costumeID)"])
         } else {
-            return ResourcePath.paletteDirectory.appending(["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColorID)_\(costumeID)"])
+            return ResourcePath.paletteDirectory.appending(["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColor)_\(costumeID)"])
         }
     }
 
-    static func headPalette(jobID: UniformJobID, hairStyleID: Int, hairColorID: Int, gender: Gender) -> ResourcePath? {
+    static func headPalette(jobID: UniformJobID, hairStyle: Int, hairColor: Int, gender: Gender) -> ResourcePath? {
         guard jobID.isPlayer else {
             return nil
         }
 
         if jobID.isDoram {
-            return ResourcePath.paletteDirectory.appending(["도람족", "머리", "머리\(hairStyleID)_\(gender.name)_\(hairColorID)"])
+            return ResourcePath.paletteDirectory.appending(["도람족", "머리", "머리\(hairStyle)_\(gender.name)_\(hairColor)"])
         } else {
-            return ResourcePath.paletteDirectory.appending(["머리", "머리\(hairStyleID)_\(gender.name)_\(hairColorID)"])
+            return ResourcePath.paletteDirectory.appending(["머리", "머리\(hairStyle)_\(gender.name)_\(hairColor)"])
         }
     }
 

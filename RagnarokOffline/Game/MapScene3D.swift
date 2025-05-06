@@ -107,7 +107,19 @@ class MapScene3D: MapSceneProtocol {
         tileEntityManager.addTileEntities(for: player.position)
 
         do {
-            let actions = try await SpriteAction.actions(forJobID: 0, configuration: SpriteConfiguration())
+            let jobID = UniformJobID(rawValue: player.job)
+
+            var configuration = SpriteConfiguration()
+            configuration.gender = player.gender
+            configuration.hairStyle = player.hairStyle
+            configuration.hairColor = player.hairColor
+            configuration.clothesColor = player.clothesColor
+            configuration.weapon = player.weapon
+            configuration.shield = player.shield
+            configuration.headgears = [player.headTop, player.headMid, player.headBottom]
+            configuration.garment = player.garment
+
+            let actions = try await SpriteAction.actions(forJobID: jobID, configuration: configuration)
             let spriteComponent = SpriteComponent(actions: actions)
             playerEntity.components.set(spriteComponent)
         } catch {

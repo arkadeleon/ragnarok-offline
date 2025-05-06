@@ -13,9 +13,9 @@ import SwiftUI
 struct CharacterConfigurationView: View {
     @Binding var configuration: CharacterConfiguration
 
-    @State private var upperHeadgears: [Item] = []
-    @State private var middleHeadgears: [Item] = []
-    @State private var lowerHeadgears: [Item] = []
+    @State private var headTopItems: [Item] = []
+    @State private var headMidItems: [Item] = []
+    @State private var headBottomItems: [Item] = []
 
     var body: some View {
         Form {
@@ -30,52 +30,28 @@ struct CharacterConfigurationView: View {
                 Text(Gender.male.stringValue).tag(Gender.male)
             }
 
-            Picker("Clothes Color", selection: $configuration.clothesColorID) {
-                Text("Default").tag(Int?.none)
-
-                // 0...7
-                ForEach(0..<8) { clothesColorID in
-                    Text(clothesColorID.formatted()).tag(clothesColorID)
-                }
-            }
-
-            Picker("Hair Style", selection: $configuration.hairStyleID) {
+            Picker("Hair Style", selection: $configuration.hairStyle) {
                 // 1...42
-                ForEach(1..<43) { hairStyleID in
-                    Text(hairStyleID.formatted()).tag(hairStyleID)
+                ForEach(1..<43) { hairStyle in
+                    Text(hairStyle.formatted()).tag(hairStyle)
                 }
             }
 
-            Picker("Hair Color", selection: $configuration.hairColorID) {
-                Text("Default").tag(Int?.none)
+            Picker("Hair Color", selection: $configuration.hairColor) {
+                Text("Default").tag(-1)
 
                 // 0...8
-                ForEach(0..<9) { hairColorID in
-                    Text(hairColorID.formatted()).tag(hairColorID)
+                ForEach(0..<9) { hairColor in
+                    Text(hairColor.formatted()).tag(hairColor)
                 }
             }
 
-            Picker("Upper Headgear", selection: $configuration.upperHeadgear) {
-                Text("None").tag(Item?.none)
+            Picker("Clothes Color", selection: $configuration.clothesColor) {
+                Text("Default").tag(-1)
 
-                ForEach(upperHeadgears) { headgear in
-                    Text(headgear.name).tag(headgear)
-                }
-            }
-
-            Picker("Middle Headgear", selection: $configuration.middleHeadgear) {
-                Text("None").tag(Item?.none)
-
-                ForEach(middleHeadgears) { headgear in
-                    Text(headgear.name).tag(headgear)
-                }
-            }
-
-            Picker("Lower Headgear", selection: $configuration.lowerHeadgear) {
-                Text("None").tag(Item?.none)
-
-                ForEach(lowerHeadgears) { headgear in
-                    Text(headgear.name).tag(headgear)
+                // 0...7
+                ForEach(0..<8) { clothesColor in
+                    Text(clothesColor.formatted()).tag(clothesColor)
                 }
             }
 
@@ -87,15 +63,39 @@ struct CharacterConfigurationView: View {
                 Text(ItemType.weapon.localizedStringResource)
             }
 
-            Picker(selection: $configuration.shieldID) {
-                Text("None").tag(Int?.none)
+            Picker(selection: $configuration.shield) {
+                Text("None").tag(0)
 
                 // 1...4
-                ForEach(1..<5) { shieldID in
-                    Text(shieldID.formatted()).tag(shieldID)
+                ForEach(1..<5) { shield in
+                    Text(shield.formatted()).tag(shield)
                 }
             } label: {
                 Text(WeaponType.w_shield.localizedStringResource)
+            }
+
+            Picker("Head Top", selection: $configuration.headTop) {
+                Text("None").tag(Item?.none)
+
+                ForEach(headTopItems) { item in
+                    Text(item.name).tag(item)
+                }
+            }
+
+            Picker("Head Mid", selection: $configuration.headMid) {
+                Text("None").tag(Item?.none)
+
+                ForEach(headMidItems) { item in
+                    Text(item.name).tag(item)
+                }
+            }
+
+            Picker("Head Bottom", selection: $configuration.headBottom) {
+                Text("None").tag(Item?.none)
+
+                ForEach(headBottomItems) { item in
+                    Text(item.name).tag(item)
+                }
             }
 
             Picker("Action", selection: $configuration.actionType) {
@@ -119,9 +119,9 @@ struct CharacterConfigurationView: View {
         .formStyle(.grouped)
         .task {
             let equipItems = await ItemDatabase.renewal.equipItems()
-            upperHeadgears = equipItems.filter({ $0.type == .armor && $0.locations.contains(.head_top) })
-            middleHeadgears = equipItems.filter({ $0.type == .armor && $0.locations.contains(.head_mid) })
-            lowerHeadgears = equipItems.filter({ $0.type == .armor && $0.locations.contains(.head_low) })
+            headTopItems = equipItems.filter({ $0.type == .armor && $0.locations.contains(.head_top) })
+            headMidItems = equipItems.filter({ $0.type == .armor && $0.locations.contains(.head_mid) })
+            headBottomItems = equipItems.filter({ $0.type == .armor && $0.locations.contains(.head_low) })
         }
     }
 }

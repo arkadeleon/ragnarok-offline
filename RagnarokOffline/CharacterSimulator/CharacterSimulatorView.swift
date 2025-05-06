@@ -68,37 +68,19 @@ struct CharacterSimulatorView: View {
                 await renderSprite()
             }
         }
-        .onChange(of: configuration.clothesColorID) {
+        .onChange(of: configuration.hairStyle) {
             Task {
                 await resolveSprite()
                 await renderSprite()
             }
         }
-        .onChange(of: configuration.hairStyleID) {
+        .onChange(of: configuration.hairColor) {
             Task {
                 await resolveSprite()
                 await renderSprite()
             }
         }
-        .onChange(of: configuration.hairColorID) {
-            Task {
-                await resolveSprite()
-                await renderSprite()
-            }
-        }
-        .onChange(of: configuration.upperHeadgear) {
-            Task {
-                await resolveSprite()
-                await renderSprite()
-            }
-        }
-        .onChange(of: configuration.middleHeadgear) {
-            Task {
-                await resolveSprite()
-                await renderSprite()
-            }
-        }
-        .onChange(of: configuration.lowerHeadgear) {
+        .onChange(of: configuration.clothesColor) {
             Task {
                 await resolveSprite()
                 await renderSprite()
@@ -110,7 +92,25 @@ struct CharacterSimulatorView: View {
                 await renderSprite()
             }
         }
-        .onChange(of: configuration.shieldID) {
+        .onChange(of: configuration.shield) {
+            Task {
+                await resolveSprite()
+                await renderSprite()
+            }
+        }
+        .onChange(of: configuration.headTop) {
+            Task {
+                await resolveSprite()
+                await renderSprite()
+            }
+        }
+        .onChange(of: configuration.headMid) {
+            Task {
+                await resolveSprite()
+                await renderSprite()
+            }
+        }
+        .onChange(of: configuration.headBottom) {
             Task {
                 await resolveSprite()
                 await renderSprite()
@@ -138,12 +138,13 @@ struct CharacterSimulatorView: View {
 
         var spriteConfiguration = SpriteConfiguration()
         spriteConfiguration.gender = configuration.gender
-        spriteConfiguration.clothesColorID = configuration.clothesColorID
-        spriteConfiguration.hairStyleID = configuration.hairStyleID
-        spriteConfiguration.hairColorID = configuration.hairColorID
-        spriteConfiguration.headgearIDs = configuration.headgearIDs
-        spriteConfiguration.weaponID = configuration.weaponType.rawValue
-        spriteConfiguration.shieldID = configuration.shieldID
+        spriteConfiguration.hairStyle = configuration.hairStyle
+        spriteConfiguration.hairColor = configuration.hairColor
+        spriteConfiguration.clothesColor = configuration.clothesColor
+        spriteConfiguration.weapon = configuration.weaponType.rawValue
+        spriteConfiguration.shield = configuration.shield
+        spriteConfiguration.headgears = configuration.headgears
+        spriteConfiguration.garment = configuration.garment?.view ?? 0
 
         let spriteResolver = SpriteResolver(resourceManager: .default)
         resolvedSprite = await spriteResolver.resolve(jobID: jobID, configuration: spriteConfiguration)
@@ -176,12 +177,13 @@ struct CharacterSimulatorView2: View {
 
                     var spriteConfiguration = SpriteConfiguration()
                     spriteConfiguration.gender = configuration.gender
-                    spriteConfiguration.clothesColorID = configuration.clothesColorID
-                    spriteConfiguration.hairStyleID = configuration.hairStyleID
-                    spriteConfiguration.hairColorID = configuration.hairColorID
-                    spriteConfiguration.headgearIDs = configuration.headgearIDs
-                    spriteConfiguration.weaponID = configuration.weaponType.rawValue
-                    spriteConfiguration.shieldID = configuration.shieldID
+                    spriteConfiguration.clothesColor = configuration.clothesColor
+                    spriteConfiguration.hairStyle = configuration.hairStyle
+                    spriteConfiguration.hairColor = configuration.hairColor
+                    spriteConfiguration.weapon = configuration.weaponType.rawValue
+                    spriteConfiguration.shield = configuration.shield
+                    spriteConfiguration.headgears = configuration.headgears
+                    spriteConfiguration.garment = configuration.garment?.view ?? 0
 
                     let actions = try await SpriteAction.actions(forJobID: jobID, configuration: spriteConfiguration)
 

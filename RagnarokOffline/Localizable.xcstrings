@@ -275,7 +275,16 @@
     "Hair Style" : {
 
     },
+    "Head Bottom" : {
+
+    },
     "Head Direction" : {
+
+    },
+    "Head Mid" : {
+
+    },
+    "Head Top" : {
 
     },
     "Help" : {
@@ -356,9 +365,6 @@
     "Locations" : {
 
     },
-    "Lower Headgear" : {
-
-    },
     "Luk" : {
 
     },
@@ -387,9 +393,6 @@
 
     },
     "Message" : {
-
-    },
-    "Middle Headgear" : {
 
     },
     "Minimum Attack" : {
@@ -564,9 +567,6 @@
 
     },
     "Unequip Script" : {
-
-    },
-    "Upper Headgear" : {
 
     },
     "View" : {

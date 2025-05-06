@@ -12,27 +12,39 @@ import RORendering
 struct CharacterConfiguration {
     var jobID: JobID
     var gender: Gender
-    var clothesColorID: Int?
-    var hairStyleID: Int
-    var hairColorID: Int?
-    var upperHeadgear: Item?
-    var middleHeadgear: Item?
-    var lowerHeadgear: Item?
+    var hairStyle: Int
+    var hairColor: Int
+    var clothesColor: Int
     var weaponType: WeaponType
-    var shieldID: Int?
+    var shield: Int
+    var headTop: Item?
+    var headMid: Item?
+    var headBottom: Item?
+    var garment: Item?
+
     var actionType: PlayerActionType
     var direction: BodyDirection
     var headDirection: HeadDirection
 
-    var headgearIDs: [Int] {
-        [upperHeadgear, middleHeadgear, lowerHeadgear].compactMap({ $0?.view })
+    var headgears: [Int] {
+        [headTop, headMid, headBottom].map {
+            $0?.view ?? 0
+        }
     }
 
     init() {
         jobID = .novice
         gender = .male
-        hairStyleID = 1
+        hairStyle = 1
+        hairColor = -1
+        clothesColor = -1
         weaponType = .w_fist
+        shield = 0
+        headTop = nil
+        headMid = nil
+        headBottom = nil
+        garment = nil
+
         actionType = .idle
         direction = .south
         headDirection = .straight

@@ -40,7 +40,10 @@ final public class SpriteResolver: Sendable {
 
     func resolvePlayer(jobID: UniformJobID, configuration: SpriteConfiguration) async -> ResolvedSprite {
         let gender = configuration.gender
-        let hairStyleID = configuration.hairStyleID
+        let hairStyle = configuration.hairStyle
+        let hairColor = configuration.hairColor
+        let weapon = configuration.weapon
+        let shield = configuration.shield
         let madoType = configuration.madoType
 
         var resolvedSprite = ResolvedSprite()
@@ -60,14 +63,15 @@ final public class SpriteResolver: Sendable {
         }
 
         // Head
-        if let headSpritePath = ResourcePath.playerHeadSprite(jobID: jobID, hairStyleID: hairStyleID, gender: gender) {
+        if let headSpritePath = ResourcePath.playerHeadSprite(jobID: jobID, hairStyle: hairStyle, gender: gender) {
             var headPalette: PaletteResource?
-            if let hairColorID = configuration.hairColorID,
-               let headPalettePath = ResourcePath.headPalette(jobID: jobID, hairStyleID: hairStyleID, hairColorID: hairColorID, gender: gender) {
-                do {
-                    headPalette = try await resourceManager.palette(at: headPalettePath)
-                } catch {
-                    logger.warning("Head palette error: \(error.localizedDescription)")
+            if hairColor > -1 {
+                if let headPalettePath = ResourcePath.headPalette(jobID: jobID, hairStyle: hairStyle, hairColor: hairColor, gender: gender) {
+                    do {
+                        headPalette = try await resourceManager.palette(at: headPalettePath)
+                    } catch {
+                        logger.warning("Head palette error: \(error.localizedDescription)")
+                    }
                 }
             }
 
@@ -82,41 +86,48 @@ final public class SpriteResolver: Sendable {
         }
 
         // Weapon
-        if let weaponID = configuration.weaponID, !jobID.isMadogear,
-           let weaponSpritePath = await ResourcePath.weaponSprite(jobID: jobID, weaponID: weaponID, isSlash: false, gender: gender, madoType: madoType) {
-            do {
-                let weaponSprite = try await resourceManager.sprite(at: weaponSpritePath)
-                resolvedSprite.append(weaponSprite, semantic: .weapon, order: 0)
-            } catch {
-                logger.warning("Weapon sprite error: \(error.localizedDescription)")
+        if weapon > 0 && !jobID.isMadogear {
+            if let weaponSpritePath = await ResourcePath.weaponSprite(jobID: jobID, weapon: weapon, isSlash: false, gender: gender, madoType: madoType) {
+                do {
+                    let weaponSprite = try await resourceManager.sprite(at: weaponSpritePath)
+                    resolvedSprite.append(weaponSprite, semantic: .weapon, order: 0)
+                } catch {
+                    logger.warning("Weapon sprite error: \(error.localizedDescription)")
+                }
             }
         }
 
         // Weapon Slash
-        if let weaponID = configuration.weaponID,
-           let weaponSlashSpritePath = await ResourcePath.weaponSprite(jobID: jobID, weaponID: weaponID, isSlash: true, gender: gender, madoType: madoType) {
-            do {
-                let weaponSlashSprite = try await resourceManager.sprite(at: weaponSlashSpritePath)
-                resolvedSprite.append(weaponSlashSprite, semantic: .weapon, order: 1)
-            } catch {
-                logger.warning("Weapon sprite error: \(error.localizedDescription)")
+        if weapon > 0 {
+            if let weaponSlashSpritePath = await ResourcePath.weaponSprite(jobID: jobID, weapon: weapon, isSlash: true, gender: gender, madoType: madoType) {
+                do {
+                    let weaponSlashSprite = try await resourceManager.sprite(at: weaponSlashSpritePath)
+                    resolvedSprite.append(weaponSlashSprite, semantic: .weapon, order: 1)
+                } catch {
+                    logger.warning("Weapon sprite error: \(error.localizedDescription)")
+                }
             }
         }
 
         // Shield
-        if let shieldID = configuration.shieldID,
-           let shieldSpritePath = await ResourcePath.shieldSprite(jobID: jobID, shieldID: shieldID, gender: gender) {
-            do {
-                let shieldSprite = try await resourceManager.sprite(at: shieldSpritePath)
-                resolvedSprite.append(shieldSprite, semantic: .shield)
-            } catch {
-                logger.warning("Shield sprite error: \(error.localizedDescription)")
+        if shield > 0 {
+            if let shieldSpritePath = await ResourcePath.shieldSprite(jobID: jobID, shield: shield, gender: gender) {
+                do {
+                    let shieldSprite = try await resourceManager.sprite(at: shieldSpritePath)
+                    resolvedSprite.append(shieldSprite, semantic: .shield)
+                } catch {
+                    logger.warning("Shield sprite error: \(error.localizedDescription)")
+                }
             }
         }
 
         // Headgears
-        for (i, headgearID) in configuration.headgearIDs.enumerated() {
-            guard let headgearSpritePath = await ResourcePath.headgearSprite(headgearID: headgearID, gender: gender) else {
+        for (i, headgear) in configuration.headgears.enumerated() {
+            guard headgear > 0 else {
+                continue
+            }
+
+            guard let headgearSpritePath = await ResourcePath.headgearSprite(headgear: headgear, gender: gender) else {
                 continue
             }
 
@@ -173,13 +184,15 @@ final public class SpriteResolver: Sendable {
 
     private func playerBodySprite(jobID: UniformJobID, configuration: SpriteConfiguration) async -> SpriteResource? {
         let gender = configuration.gender
+        let clothesColor = configuration.clothesColor
+        let outfit = configuration.outfit
         let madoType = configuration.madoType
 
         var bodySprite: SpriteResource?
         var bodyPalette: PaletteResource?
 
-        if let outfitID = configuration.outfitID {
-            if let bodySpritePath = await ResourcePath.playerBodyAltSprite(jobID: jobID, gender: gender, costumeID: outfitID, madoType: madoType) {
+        if outfit > 0 {
+            if let bodySpritePath = await ResourcePath.playerBodyAltSprite(jobID: jobID, gender: gender, costumeID: outfit, madoType: madoType) {
                 do {
                     bodySprite = try await resourceManager.sprite(at: bodySpritePath)
                 } catch {
@@ -187,12 +200,13 @@ final public class SpriteResolver: Sendable {
                 }
             }
 
-            if let clothesColorID = configuration.clothesColorID,
-               let bodyPalettePath = ResourcePath.bodyAltPalette(jobID: jobID, clothesColorID: clothesColorID, gender: gender, costumeID: outfitID, madoType: madoType) {
-                do {
-                    bodyPalette = try await resourceManager.palette(at: bodyPalettePath)
-                } catch {
-                    logger.warning("Body sprite error: \(error.localizedDescription)")
+            if clothesColor > -1 {
+                if let bodyPalettePath = ResourcePath.bodyAltPalette(jobID: jobID, clothesColor: clothesColor, gender: gender, costumeID: outfit, madoType: madoType) {
+                    do {
+                        bodyPalette = try await resourceManager.palette(at: bodyPalettePath)
+                    } catch {
+                        logger.warning("Body sprite error: \(error.localizedDescription)")
+                    }
                 }
             }
         } else {
@@ -204,12 +218,13 @@ final public class SpriteResolver: Sendable {
                 }
             }
 
-            if let clothesColorID = configuration.clothesColorID,
-               let bodyPalettePath = ResourcePath.bodyPalette(jobID: jobID, clothesColorID: clothesColorID, gender: gender, madoType: madoType) {
-                do {
-                    bodyPalette = try await resourceManager.palette(at: bodyPalettePath)
-                } catch {
-                    logger.warning("Body sprite error: \(error.localizedDescription)")
+            if clothesColor > -1 {
+                if let bodyPalettePath = ResourcePath.bodyPalette(jobID: jobID, clothesColor: clothesColor, gender: gender, madoType: madoType) {
+                    do {
+                        bodyPalette = try await resourceManager.palette(at: bodyPalettePath)
+                    } catch {
+                        logger.warning("Body sprite error: \(error.localizedDescription)")
+                    }
                 }
             }
         }
