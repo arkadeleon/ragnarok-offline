@@ -77,8 +77,8 @@ extension SpriteAction {
     public static func actions(for composedSprite: ComposedSprite) async throws -> [SpriteAction] {
         var actions: [SpriteAction] = []
 
-        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: composedSprite.configuration.job.rawValue)
-        let actionCount = availableActionTypes.count * BodyDirection.allCases.count
+        let availableActionTypes = ComposedSprite.ActionType.availableActionTypes(forJobID: composedSprite.configuration.job.rawValue)
+        let actionCount = availableActionTypes.count * ComposedSprite.Direction.allCases.count
         for actionIndex in 0..<actionCount {
             let action = try await SpriteAction(composedSprite: composedSprite, actionIndex: actionIndex)
             actions.append(action)

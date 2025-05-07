@@ -21,7 +21,7 @@ final class SpriteRendererTests: XCTestCase {
         XCTAssertEqual(composedSprite.parts.count, 2)
 
         let spriteRenderer = SpriteRenderer()
-        let actionIndex = SpriteActionType.walk.calculateActionIndex(forJobID: jobID, direction: .south)
+        let actionIndex = ComposedSprite.ActionType.walk.calculateActionIndex(forJobID: jobID, direction: .south)
         let animatedImage = await spriteRenderer.render(composedSprite: composedSprite, actionIndex: actionIndex, headDirection: .straight)
         XCTAssertEqual(animatedImage.frames.count, 8)
         XCTAssertEqual(animatedImage.frameWidth, 40)

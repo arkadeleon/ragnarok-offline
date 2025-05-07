@@ -31,7 +31,7 @@ public class SpriteEntity: Entity {
         components.set(spriteComponent)
     }
 
-    public func runActionType(_ actionType: SpriteActionType, direction: BodyDirection, repeats: Bool) {
+    public func runActionType(_ actionType: ComposedSprite.ActionType, direction: ComposedSprite.Direction, repeats: Bool) {
         guard let mapObjectComponent = components[MapObjectComponent.self] else {
             return
         }
@@ -61,12 +61,12 @@ public class SpriteEntity: Entity {
         }
     }
 
-    public func walk(to target: Transform, direction: BodyDirection, duration: TimeInterval) {
+    public func walk(to target: Transform, direction: ComposedSprite.Direction, duration: TimeInterval) {
         guard let mapObjectComponent = components[MapObjectComponent.self] else {
             return
         }
 
-        let actionIndex = SpriteActionType.walk.calculateActionIndex(forJobID: mapObjectComponent.object.job, direction: direction)
+        let actionIndex = ComposedSprite.ActionType.walk.calculateActionIndex(forJobID: mapObjectComponent.object.job, direction: direction)
 
         generateModel(forActionAt: actionIndex)
 

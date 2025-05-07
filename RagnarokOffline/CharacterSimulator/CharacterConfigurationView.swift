@@ -99,19 +99,19 @@ struct CharacterConfigurationView: View {
             }
 
             Picker("Action", selection: $configuration.actionType) {
-                ForEach(SpriteActionType.availableActionTypes(forJobID: configuration.jobID.rawValue), id: \.rawValue) { actionType in
+                ForEach(ComposedSprite.ActionType.availableActionTypes(forJobID: configuration.jobID.rawValue), id: \.rawValue) { actionType in
                     Text(actionType.description).tag(actionType)
                 }
             }
 
             Picker("Direction", selection: $configuration.direction) {
-                ForEach(BodyDirection.allCases, id: \.rawValue) { direction in
+                ForEach(ComposedSprite.Direction.allCases, id: \.rawValue) { direction in
                     Text(direction.description).tag(direction)
                 }
             }
 
             Picker("Head Direction", selection: $configuration.headDirection) {
-                ForEach(HeadDirection.allCases, id: \.rawValue) { headDirection in
+                ForEach(ComposedSprite.HeadDirection.allCases, id: \.rawValue) { headDirection in
                     Text(headDirection.description).tag(headDirection)
                 }
             }

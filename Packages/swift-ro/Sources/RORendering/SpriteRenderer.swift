@@ -44,7 +44,7 @@ final public class SpriteRenderer: Sendable {
         return animatedImage
     }
 
-    public func render(composedSprite: ComposedSprite, actionIndex: Int, headDirection: HeadDirection) async -> AnimatedImage {
+    public func render(composedSprite: ComposedSprite, actionIndex: Int, headDirection: ComposedSprite.HeadDirection) async -> AnimatedImage {
         var actionNodes: [SpriteRenderNode] = []
         var bounds: CGRect = .null
         var frameCount = 0

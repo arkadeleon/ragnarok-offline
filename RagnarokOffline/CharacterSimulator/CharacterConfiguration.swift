@@ -22,9 +22,9 @@ struct CharacterConfiguration {
     var headBottom: Item?
     var garment: Item?
 
-    var actionType: SpriteActionType
-    var direction: BodyDirection
-    var headDirection: HeadDirection
+    var actionType: ComposedSprite.ActionType
+    var direction: ComposedSprite.Direction
+    var headDirection: ComposedSprite.HeadDirection
 
     var headgears: [Int] {
         [headTop, headMid, headBottom].map {
