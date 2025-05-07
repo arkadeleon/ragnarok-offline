@@ -44,7 +44,14 @@ final public class SpriteRenderer: Sendable {
         return animatedImage
     }
 
-    public func render(composedSprite: ComposedSprite, actionIndex: Int, headDirection: ComposedSprite.HeadDirection) async -> AnimatedImage {
+    public func render(
+        composedSprite: ComposedSprite,
+        actionType: ComposedSprite.ActionType,
+        direction: ComposedSprite.Direction,
+        headDirection: ComposedSprite.HeadDirection
+    ) async -> AnimatedImage {
+        let actionIndex = actionType.calculateActionIndex(forJobID: composedSprite.configuration.job.rawValue, direction: direction)
+
         var actionNodes: [SpriteRenderNode] = []
         var bounds: CGRect = .null
         var frameCount = 0
@@ -55,6 +62,7 @@ final public class SpriteRenderer: Sendable {
 
             let actionNode = SpriteRenderNode(
                 actionNodeWithPart: part,
+                actionType: actionType,
                 actionIndex: actionIndex,
                 headDirection: headDirection,
                 scale: scale

@@ -25,13 +25,6 @@ final public class SpriteAction: Sendable {
         try await self.init(animatedImage: animatedImage)
     }
 
-    public convenience init(composedSprite: ComposedSprite, actionIndex: Int) async throws {
-        let spriteRenderer = SpriteRenderer()
-        let animatedImage = await spriteRenderer.render(composedSprite: composedSprite, actionIndex: actionIndex, headDirection: .straight)
-
-        try await self.init(animatedImage: animatedImage)
-    }
-
     init(animatedImage: AnimatedImage) async throws {
         let frameCount = animatedImage.frames.count
 
@@ -77,11 +70,21 @@ extension SpriteAction {
     public static func actions(for composedSprite: ComposedSprite) async throws -> [SpriteAction] {
         var actions: [SpriteAction] = []
 
+        let spriteRenderer = SpriteRenderer()
+
         let availableActionTypes = ComposedSprite.ActionType.availableActionTypes(forJobID: composedSprite.configuration.job.rawValue)
-        let actionCount = availableActionTypes.count * ComposedSprite.Direction.allCases.count
-        for actionIndex in 0..<actionCount {
-            let action = try await SpriteAction(composedSprite: composedSprite, actionIndex: actionIndex)
-            actions.append(action)
+
+        for actionType in availableActionTypes {
+            for direction in ComposedSprite.Direction.allCases {
+                let animatedImage = await spriteRenderer.render(
+                    composedSprite: composedSprite,
+                    actionType: actionType,
+                    direction: direction,
+                    headDirection: .straight
+                )
+                let action = try await SpriteAction(animatedImage: animatedImage)
+                actions.append(action)
+            }
         }
 
         return actions

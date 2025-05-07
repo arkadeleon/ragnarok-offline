@@ -144,8 +144,12 @@ struct CharacterSimulatorView: View {
         }
 
         let spriteRenderer = SpriteRenderer()
-        let actionIndex = configuration.actionType.calculateActionIndex(forJobID: configuration.jobID.rawValue, direction: configuration.direction)
-        animatedImage = await spriteRenderer.render(composedSprite: composedSprite, actionIndex: actionIndex, headDirection: configuration.headDirection)
+        animatedImage = await spriteRenderer.render(
+            composedSprite: composedSprite,
+            actionType: configuration.actionType,
+            direction: configuration.direction,
+            headDirection: configuration.headDirection
+        )
     }
 }
 

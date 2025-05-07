@@ -53,7 +53,7 @@ extension SpriteRenderNode {
         self = SpriteRenderNode(bounds: bounds, children: children)
     }
 
-    init(actionNodeWithPart part: ComposedSprite.Part, actionIndex: Int, headDirection: ComposedSprite.HeadDirection, scale: CGFloat) {
+    init(actionNodeWithPart part: ComposedSprite.Part, actionType: ComposedSprite.ActionType, actionIndex: Int, headDirection: ComposedSprite.HeadDirection, scale: CGFloat) {
         guard let action = part.sprite.action(at: actionIndex) else {
             self = .null
             return
@@ -62,8 +62,7 @@ extension SpriteRenderNode {
         var startFrameIndex = action.frames.startIndex
         var endFrameIndex = action.frames.endIndex
 
-        if let actionType = ComposedSprite.ActionType(forPlayerActionIndex: actionIndex),
-           actionType == .idle || actionType == .sit {
+        if actionType == .idle || actionType == .sit {
             switch part.semantic {
             case .playerBody:
                 startFrameIndex = headDirection.rawValue
@@ -81,7 +80,7 @@ extension SpriteRenderNode {
         var children: [SpriteRenderNode] = []
 
         for frameIndex in startFrameIndex..<endFrameIndex {
-            let frameNode = SpriteRenderNode(frameNodeWithPart: part, actionIndex: actionIndex, frameIndex: frameIndex, scale: scale)
+            let frameNode = SpriteRenderNode(frameNodeWithPart: part, actionType: actionType, actionIndex: actionIndex, frameIndex: frameIndex, scale: scale)
             children.append(frameNode)
             bounds = bounds.union(frameNode.bounds)
         }
@@ -89,7 +88,7 @@ extension SpriteRenderNode {
         self = SpriteRenderNode(bounds: bounds, children: children)
     }
 
-    init(frameNodeWithPart part: ComposedSprite.Part, actionIndex: Int, frameIndex: Int, scale: CGFloat) {
+    init(frameNodeWithPart part: ComposedSprite.Part, actionType: ComposedSprite.ActionType, actionIndex: Int, frameIndex: Int, scale: CGFloat) {
         guard let action = part.sprite.action(at: actionIndex),
               let frame = part.sprite.frame(at: [actionIndex, frameIndex]) else {
             self = .null
@@ -101,9 +100,7 @@ extension SpriteRenderNode {
         if let parent = part.sprite.parent {
             var parentFrameIndex = frameIndex
 
-            if part.semantic == .headgear,
-               let actionType = ComposedSprite.ActionType(forPlayerActionIndex: actionIndex),
-               actionType == .idle || actionType == .sit {
+            if part.semantic == .headgear && (actionType == .idle || actionType == .sit) {
                 let frameCount = action.frames.count / 3
                 parentFrameIndex = frameIndex / frameCount
             }

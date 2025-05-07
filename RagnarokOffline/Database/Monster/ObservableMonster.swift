@@ -142,7 +142,7 @@ class ObservableMonster {
             let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .default)
 
             let spriteRenderer = SpriteRenderer()
-            animatedImage = await spriteRenderer.render(composedSprite: composedSprite, actionIndex: 0, headDirection: .straight)
+            animatedImage = await spriteRenderer.render(composedSprite: composedSprite, actionType: .idle, direction: .south, headDirection: .straight)
         }
     }
 
