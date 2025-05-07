@@ -107,7 +107,7 @@ class MapScene3D: MapSceneProtocol {
         tileEntityManager.addTileEntities(for: player.position)
 
         do {
-            var configuration = SpriteConfiguration(job: player.job)
+            var configuration = SpriteConfiguration(jobID: player.job)
             configuration.gender = player.gender
             configuration.hairStyle = player.hairStyle
             configuration.hairColor = player.hairColor
@@ -126,7 +126,8 @@ class MapScene3D: MapSceneProtocol {
 
         playerEntity.name = "\(player.objectID)"
         playerEntity.transform = transform(for: player.position)
-        playerEntity.runPlayerAction(.idle, direction: .south, repeats: true)
+        playerEntity.components.set(MapObjectComponent(object: player))
+        playerEntity.runActionType(.idle, direction: .south, repeats: true)
 
         rootEntity.addChild(playerEntity)
 
@@ -201,12 +202,12 @@ class MapScene3D: MapSceneProtocol {
             entity.transform = transform
         } else {
             Task {
-                if let monsterEntity = await monsterEntityManager.entity(forJob: event.object.job) {
+                if let monsterEntity = await monsterEntityManager.entity(forJobID: event.object.job) {
                     monsterEntity.name = "\(event.object.objectID)"
                     monsterEntity.transform = transform(for: event.object.position)
                     monsterEntity.isEnabled = (event.object.effectState != .cloak)
                     monsterEntity.components.set(MapObjectComponent(object: event.object))
-                    monsterEntity.runPlayerAction(.idle, direction: .south, repeats: true)
+                    monsterEntity.runActionType(.idle, direction: .south, repeats: true)
                     rootEntity.addChild(monsterEntity)
                 }
             }
@@ -219,12 +220,12 @@ class MapScene3D: MapSceneProtocol {
             entity.walk(to: transform, direction: .south, duration: 1)
         } else {
             Task {
-                if let monsterEntity = await monsterEntityManager.entity(forJob: event.object.job) {
+                if let monsterEntity = await monsterEntityManager.entity(forJobID: event.object.job) {
                     monsterEntity.name = "\(event.object.objectID)"
                     monsterEntity.transform = transform(for: event.toPosition)
                     monsterEntity.isEnabled = (event.object.effectState != .cloak)
                     monsterEntity.components.set(MapObjectComponent(object: event.object))
-                    monsterEntity.runPlayerAction(.idle, direction: .south, repeats: true)
+                    monsterEntity.runActionType(.idle, direction: .south, repeats: true)
                     rootEntity.addChild(monsterEntity)
                 }
             }
@@ -254,13 +255,13 @@ class MapScene3D: MapSceneProtocol {
         if let entity = rootEntity.findEntity(named: "\(event.sourceObjectID)") as? SpriteEntity {
             switch event.actionType {
             case .normal, .endure, .multi_hit, .multi_hit_endure, .critical, .lucy_dodge, .multi_hit_critical:
-                entity.runPlayerAction(.attack, direction: .south, repeats: false)
+                entity.runActionType(.attack, direction: .south, repeats: false)
             case .pickup_item:
-                entity.runPlayerAction(.pickup, direction: .south, repeats: false)
+                entity.runActionType(.pickup, direction: .south, repeats: false)
             case .sit_down:
-                entity.runPlayerAction(.sit, direction: .south, repeats: true)
+                entity.runActionType(.sit, direction: .south, repeats: true)
             case .stand_up:
-                entity.runPlayerAction(.idle, direction: .south, repeats: true)
+                entity.runActionType(.idle, direction: .south, repeats: true)
             default:
                 break
             }

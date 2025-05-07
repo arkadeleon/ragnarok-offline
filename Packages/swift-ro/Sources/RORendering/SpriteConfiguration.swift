@@ -20,8 +20,8 @@ public struct SpriteConfiguration: Sendable {
     public var outfit: Int
     public var madoType: MadoType
 
-    public init(job: Int) {
-        self.job = UniformJob(rawValue: job)
+    public init(jobID: Int) {
+        self.job = UniformJob(rawValue: jobID)
         self.gender = .male
         self.hairStyle = 1
         self.hairColor = -1

@@ -15,12 +15,13 @@ final class SpriteRendererTests: XCTestCase {
         let resourceManager = ResourceManager(baseURL: baseURL)
         let spriteResolver = SpriteResolver(resourceManager: resourceManager)
 
-        let configuration = SpriteConfiguration(job: 0)
+        let jobID = 0
+        let configuration = SpriteConfiguration(jobID: jobID)
         let resolvedSprite = await spriteResolver.resolveSprite(with: configuration)
         XCTAssertEqual(resolvedSprite.parts.count, 2)
 
         let spriteRenderer = SpriteRenderer(resolvedSprite: resolvedSprite)
-        let actionIndex = PlayerActionType.walk.rawValue * 8 + BodyDirection.south.rawValue
+        let actionIndex = SpriteActionType.walk.calculateActionIndex(forJobID: jobID, direction: .south)
         let animatedImage = await spriteRenderer.renderAction(at: actionIndex, headDirection: .straight)
         XCTAssertEqual(animatedImage.frames.count, 8)
         XCTAssertEqual(animatedImage.frameWidth, 40)

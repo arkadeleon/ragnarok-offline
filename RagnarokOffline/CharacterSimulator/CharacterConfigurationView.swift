@@ -99,7 +99,7 @@ struct CharacterConfigurationView: View {
             }
 
             Picker("Action", selection: $configuration.actionType) {
-                ForEach(PlayerActionType.allCases, id: \.rawValue) { actionType in
+                ForEach(SpriteActionType.availableActionTypes(forJobID: configuration.jobID.rawValue), id: \.rawValue) { actionType in
                     Text(actionType.description).tag(actionType)
                 }
             }

@@ -67,30 +67,11 @@ extension SpriteAction {
 
         var actions: [SpriteAction] = []
 
-        if configuration.job.isPlayer {
-            for actionType in PlayerActionType.allCases {
-                for direction in BodyDirection.allCases {
-                    let actionIndex = actionType.rawValue * 8 + direction.rawValue
-                    let action = try await SpriteAction(resolvedSprite: resolvedSprite, actionIndex: actionIndex)
-                    actions.append(action)
-                }
-            }
-        } else if configuration.job.isMonster {
-            // It seems that die action type is a little bit different.
-            let actionTypes: [MonsterActionType] = [.idle, .walk, .attack, .hurt]
-            for actionType in actionTypes {
-                for direction in BodyDirection.allCases {
-                    let actionIndex = actionType.rawValue * 8 + direction.rawValue
-                    let action = try await SpriteAction(resolvedSprite: resolvedSprite, actionIndex: actionIndex)
-                    actions.append(action)
-                }
-            }
-        } else {
-            for direction in BodyDirection.allCases {
-                let actionIndex = direction.rawValue
-                let action = try await SpriteAction(resolvedSprite: resolvedSprite, actionIndex: actionIndex)
-                actions.append(action)
-            }
+        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: configuration.job.rawValue)
+        let actionCount = availableActionTypes.count * BodyDirection.allCases.count
+        for actionIndex in 0..<actionCount {
+            let action = try await SpriteAction(resolvedSprite: resolvedSprite, actionIndex: actionIndex)
+            actions.append(action)
         }
 
         return actions

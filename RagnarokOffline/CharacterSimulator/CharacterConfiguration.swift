@@ -22,7 +22,7 @@ struct CharacterConfiguration {
     var headBottom: Item?
     var garment: Item?
 
-    var actionType: PlayerActionType
+    var actionType: SpriteActionType
     var direction: BodyDirection
     var headDirection: HeadDirection
 
@@ -53,7 +53,7 @@ struct CharacterConfiguration {
 
 extension SpriteConfiguration {
     init(configuration: CharacterConfiguration) {
-        self.init(job: configuration.jobID.rawValue)
+        self.init(jobID: configuration.jobID.rawValue)
         self.gender = configuration.gender
         self.hairStyle = configuration.hairStyle
         self.hairColor = configuration.hairColor

@@ -146,7 +146,7 @@ struct CharacterSimulatorView: View {
         }
 
         let spriteRenderer = SpriteRenderer(resolvedSprite: resolvedSprite)
-        let actionIndex = configuration.actionType.rawValue * 8 + configuration.direction.rawValue
+        let actionIndex = configuration.actionType.calculateActionIndex(forJobID: configuration.jobID.rawValue, direction: configuration.direction)
         animatedImage = await spriteRenderer.renderAction(at: actionIndex, headDirection: configuration.headDirection)
     }
 }
@@ -170,7 +170,7 @@ struct CharacterSimulatorView2: View {
                     let spriteComponent = SpriteComponent(actions: actions)
                     entity.components.set(spriteComponent)
 
-                    entity.runPlayerAction(.walk, direction: .south, repeats: true)
+                    entity.runActionType(.walk, direction: .south, repeats: true)
                 }
             }
         } placeholder: {

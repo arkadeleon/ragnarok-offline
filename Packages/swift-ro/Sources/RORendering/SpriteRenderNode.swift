@@ -31,7 +31,7 @@ extension SpriteRenderNode {
         var startFrameIndex = action.frames.startIndex
         var endFrameIndex = action.frames.endIndex
 
-        if let actionType = PlayerActionType(rawValue: actionIndex / 8),
+        if let actionType = SpriteActionType(forPlayerActionIndex: actionIndex),
            actionType == .idle || actionType == .sit {
             switch part.semantic {
             case .playerBody:
@@ -71,7 +71,7 @@ extension SpriteRenderNode {
             var parentFrameIndex = frameIndex
 
             if part.semantic == .headgear,
-               let actionType = PlayerActionType(rawValue: actionIndex / 8),
+               let actionType = SpriteActionType(forPlayerActionIndex: actionIndex),
                actionType == .idle || actionType == .sit {
                 let frameCount = action.frames.count / 3
                 parentFrameIndex = frameIndex / frameCount

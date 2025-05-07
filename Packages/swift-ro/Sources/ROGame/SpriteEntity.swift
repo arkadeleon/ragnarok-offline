@@ -31,8 +31,12 @@ public class SpriteEntity: Entity {
         components.set(spriteComponent)
     }
 
-    public func runPlayerAction(_ actionType: PlayerActionType, direction: BodyDirection, repeats: Bool) {
-        let actionIndex = actionType.rawValue * 8 + direction.rawValue
+    public func runActionType(_ actionType: SpriteActionType, direction: BodyDirection, repeats: Bool) {
+        guard let mapObjectComponent = components[MapObjectComponent.self] else {
+            return
+        }
+
+        let actionIndex = actionType.calculateActionIndex(forJobID: mapObjectComponent.object.job, direction: direction)
 
         generateModel(forActionAt: actionIndex)
 
@@ -58,12 +62,16 @@ public class SpriteEntity: Entity {
     }
 
     public func walk(to target: Transform, direction: BodyDirection, duration: TimeInterval) {
-        let actionIndex = PlayerActionType.walk.rawValue * 8 + direction.rawValue
+        guard let mapObjectComponent = components[MapObjectComponent.self] else {
+            return
+        }
+
+        let actionIndex = SpriteActionType.walk.calculateActionIndex(forJobID: mapObjectComponent.object.job, direction: direction)
 
         generateModel(forActionAt: actionIndex)
 
         do {
-            let walkAnimation = try generateWalkAnimation(withTarget: target, direction: direction, duration: duration)
+            let walkAnimation = try generateWalkAnimation(withTarget: target, actionIndex: actionIndex, duration: duration)
             stopAllAnimations()
             playAnimation(walkAnimation)
         } catch {
@@ -118,8 +126,7 @@ public class SpriteEntity: Entity {
         return spriteAnimation
     }
 
-    private func generateWalkAnimation(withTarget target: Transform, direction: BodyDirection, duration: TimeInterval) throws -> AnimationResource {
-        let actionIndex = PlayerActionType.walk.rawValue * 8 + direction.rawValue
+    private func generateWalkAnimation(withTarget target: Transform, actionIndex: Int, duration: TimeInterval) throws -> AnimationResource {
         let spriteAnimation = try generateAnimation(forActionAt: actionIndex, repeats: true, trimDuration: duration)
 
         let moveAction = FromToByAction(to: target, timing: .linear)
