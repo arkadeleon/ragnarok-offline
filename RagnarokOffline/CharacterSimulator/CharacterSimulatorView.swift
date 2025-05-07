@@ -134,7 +134,7 @@ struct CharacterSimulatorView: View {
     }
 
     private func composeSprite() async {
-        let configuration = SpriteConfiguration(configuration: configuration)
+        let configuration = ComposedSprite.Configuration(configuration: configuration)
         composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .default)
     }
 
@@ -161,7 +161,7 @@ struct CharacterSimulatorView2: View {
         } update: { content in
             if let entity = content.entities.first as? SpriteEntity {
                 Task {
-                    let configuration = SpriteConfiguration(configuration: configuration)
+                    let configuration = ComposedSprite.Configuration(configuration: configuration)
                     let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .default)
 
                     let actions = try await SpriteAction.actions(for: composedSprite)

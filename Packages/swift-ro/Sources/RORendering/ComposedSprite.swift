@@ -8,7 +8,7 @@
 import ROResources
 
 public struct ComposedSprite: Sendable {
-    public let configuration: SpriteConfiguration
+    public let configuration: ComposedSprite.Configuration
     public let resourceManager: ResourceManager
 
     var parts: [ComposedSprite.Part] = []
@@ -19,7 +19,7 @@ public struct ComposedSprite: Sendable {
         }
     }
 
-    public init(configuration: SpriteConfiguration, resourceManager: ResourceManager) async {
+    public init(configuration: ComposedSprite.Configuration, resourceManager: ResourceManager) async {
         self.configuration = configuration
         self.resourceManager = resourceManager
 
@@ -174,7 +174,7 @@ public struct ComposedSprite: Sendable {
         return shadowSprite
     }
 
-    private func playerBodySprite(job: UniformJob, configuration: SpriteConfiguration) async -> SpriteResource? {
+    private func playerBodySprite(job: UniformJob, configuration: ComposedSprite.Configuration) async -> SpriteResource? {
         let gender = configuration.gender
         let clothesColor = configuration.clothesColor
         let outfit = configuration.outfit

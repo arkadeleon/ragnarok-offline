@@ -107,7 +107,7 @@ class MapScene3D: MapSceneProtocol {
         tileEntityManager.addTileEntities(for: player.position)
 
         do {
-            var configuration = SpriteConfiguration(jobID: player.job)
+            var configuration = ComposedSprite.Configuration(jobID: player.job)
             configuration.gender = player.gender
             configuration.hairStyle = player.hairStyle
             configuration.hairColor = player.hairColor

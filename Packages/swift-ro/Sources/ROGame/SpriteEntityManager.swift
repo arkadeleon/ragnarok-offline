@@ -21,7 +21,7 @@ public actor SpriteEntityManager {
         }
 
         do {
-            let configuration = SpriteConfiguration(jobID: jobID)
+            let configuration = ComposedSprite.Configuration(jobID: jobID)
             let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .default)
             let actions = try await SpriteAction.actions(for: composedSprite)
             let entity = await SpriteEntity(actions: actions)

@@ -51,7 +51,7 @@ struct CharacterConfiguration {
     }
 }
 
-extension SpriteConfiguration {
+extension ComposedSprite.Configuration {
     init(configuration: CharacterConfiguration) {
         self.init(jobID: configuration.jobID.rawValue)
         self.gender = configuration.gender

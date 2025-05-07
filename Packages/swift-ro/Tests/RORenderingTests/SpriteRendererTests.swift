@@ -15,7 +15,7 @@ final class SpriteRendererTests: XCTestCase {
         let resourceManager = ResourceManager(baseURL: baseURL)
 
         let jobID = 0
-        let configuration = SpriteConfiguration(jobID: jobID)
+        let configuration = ComposedSprite.Configuration(jobID: jobID)
 
         let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
         XCTAssertEqual(composedSprite.parts.count, 2)
