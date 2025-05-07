@@ -13,16 +13,16 @@ final class SpriteRendererTests: XCTestCase {
     func testSpriteRenderer() async throws {
         let baseURL = Bundle.module.resourceURL!
         let resourceManager = ResourceManager(baseURL: baseURL)
-        let spriteResolver = SpriteResolver(resourceManager: resourceManager)
 
         let jobID = 0
         let configuration = SpriteConfiguration(jobID: jobID)
-        let resolvedSprite = await spriteResolver.resolveSprite(with: configuration)
-        XCTAssertEqual(resolvedSprite.parts.count, 2)
+
+        let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
+        XCTAssertEqual(composedSprite.parts.count, 2)
 
         let spriteRenderer = SpriteRenderer()
         let actionIndex = SpriteActionType.walk.calculateActionIndex(forJobID: jobID, direction: .south)
-        let animatedImage = await spriteRenderer.render(resolvedSprite: resolvedSprite, actionIndex: actionIndex, headDirection: .straight)
+        let animatedImage = await spriteRenderer.render(composedSprite: composedSprite, actionIndex: actionIndex, headDirection: .straight)
         XCTAssertEqual(animatedImage.frames.count, 8)
         XCTAssertEqual(animatedImage.frameWidth, 40)
         XCTAssertEqual(animatedImage.frameHeight, 95)

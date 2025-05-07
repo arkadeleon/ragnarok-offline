@@ -14,7 +14,7 @@ import SwiftUI
 struct CharacterSimulatorView: View {
     @State private var configuration = CharacterConfiguration()
 
-    @State private var resolvedSprite: ResolvedSprite?
+    @State private var composedSprite: ComposedSprite?
     @State private var animatedImage: AnimatedImage?
 
     var body: some View {
@@ -53,66 +53,66 @@ struct CharacterSimulatorView: View {
         }
         .navigationTitle("Character Simulator")
         .task {
-            await resolveSprite()
+            await composeSprite()
             await renderSprite()
         }
         .onChange(of: configuration.jobID) {
             Task {
-                await resolveSprite()
+                await composeSprite()
                 await renderSprite()
             }
         }
         .onChange(of: configuration.gender) {
             Task {
-                await resolveSprite()
+                await composeSprite()
                 await renderSprite()
             }
         }
         .onChange(of: configuration.hairStyle) {
             Task {
-                await resolveSprite()
+                await composeSprite()
                 await renderSprite()
             }
         }
         .onChange(of: configuration.hairColor) {
             Task {
-                await resolveSprite()
+                await composeSprite()
                 await renderSprite()
             }
         }
         .onChange(of: configuration.clothesColor) {
             Task {
-                await resolveSprite()
+                await composeSprite()
                 await renderSprite()
             }
         }
         .onChange(of: configuration.weaponType) {
             Task {
-                await resolveSprite()
+                await composeSprite()
                 await renderSprite()
             }
         }
         .onChange(of: configuration.shield) {
             Task {
-                await resolveSprite()
+                await composeSprite()
                 await renderSprite()
             }
         }
         .onChange(of: configuration.headTop) {
             Task {
-                await resolveSprite()
+                await composeSprite()
                 await renderSprite()
             }
         }
         .onChange(of: configuration.headMid) {
             Task {
-                await resolveSprite()
+                await composeSprite()
                 await renderSprite()
             }
         }
         .onChange(of: configuration.headBottom) {
             Task {
-                await resolveSprite()
+                await composeSprite()
                 await renderSprite()
             }
         }
@@ -133,21 +133,19 @@ struct CharacterSimulatorView: View {
         }
     }
 
-    private func resolveSprite() async {
+    private func composeSprite() async {
         let configuration = SpriteConfiguration(configuration: configuration)
-
-        let spriteResolver = SpriteResolver(resourceManager: .default)
-        resolvedSprite = await spriteResolver.resolveSprite(with: configuration)
+        composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .default)
     }
 
     private func renderSprite() async {
-        guard let resolvedSprite else {
+        guard let composedSprite else {
             return
         }
 
         let spriteRenderer = SpriteRenderer()
         let actionIndex = configuration.actionType.calculateActionIndex(forJobID: configuration.jobID.rawValue, direction: configuration.direction)
-        animatedImage = await spriteRenderer.render(resolvedSprite: resolvedSprite, actionIndex: actionIndex, headDirection: configuration.headDirection)
+        animatedImage = await spriteRenderer.render(composedSprite: composedSprite, actionIndex: actionIndex, headDirection: configuration.headDirection)
     }
 }
 
@@ -164,8 +162,9 @@ struct CharacterSimulatorView2: View {
             if let entity = content.entities.first as? SpriteEntity {
                 Task {
                     let configuration = SpriteConfiguration(configuration: configuration)
+                    let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .default)
 
-                    let actions = try await SpriteAction.actions(forConfiguration: configuration, resourceManager: .default)
+                    let actions = try await SpriteAction.actions(for: composedSprite)
 
                     let spriteComponent = SpriteComponent(actions: actions)
                     entity.components.set(spriteComponent)

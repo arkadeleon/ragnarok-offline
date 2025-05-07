@@ -117,7 +117,9 @@ class MapScene3D: MapSceneProtocol {
             configuration.headgears = [player.headTop, player.headMid, player.headBottom]
             configuration.garment = player.garment
 
-            let actions = try await SpriteAction.actions(forConfiguration: configuration, resourceManager: .default)
+            let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .default)
+
+            let actions = try await SpriteAction.actions(for: composedSprite)
             let spriteComponent = SpriteComponent(actions: actions)
             playerEntity.components.set(spriteComponent)
         } catch {

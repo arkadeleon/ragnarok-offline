@@ -53,7 +53,7 @@ extension SpriteRenderNode {
         self = SpriteRenderNode(bounds: bounds, children: children)
     }
 
-    init(actionNodeWithPart part: ResolvedSprite.Part, actionIndex: Int, headDirection: HeadDirection, scale: CGFloat) {
+    init(actionNodeWithPart part: ComposedSprite.Part, actionIndex: Int, headDirection: HeadDirection, scale: CGFloat) {
         guard let action = part.sprite.action(at: actionIndex) else {
             self = .null
             return
@@ -89,7 +89,7 @@ extension SpriteRenderNode {
         self = SpriteRenderNode(bounds: bounds, children: children)
     }
 
-    init(frameNodeWithPart part: ResolvedSprite.Part, actionIndex: Int, frameIndex: Int, scale: CGFloat) {
+    init(frameNodeWithPart part: ComposedSprite.Part, actionIndex: Int, frameIndex: Int, scale: CGFloat) {
         guard let action = part.sprite.action(at: actionIndex),
               let frame = part.sprite.frame(at: [actionIndex, frameIndex]) else {
             self = .null

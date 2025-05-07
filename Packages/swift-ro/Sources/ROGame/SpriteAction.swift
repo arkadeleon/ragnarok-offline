@@ -25,9 +25,9 @@ final public class SpriteAction: Sendable {
         try await self.init(animatedImage: animatedImage)
     }
 
-    public convenience init(resolvedSprite: ResolvedSprite, actionIndex: Int) async throws {
+    public convenience init(composedSprite: ComposedSprite, actionIndex: Int) async throws {
         let spriteRenderer = SpriteRenderer()
-        let animatedImage = await spriteRenderer.render(resolvedSprite: resolvedSprite, actionIndex: actionIndex, headDirection: .straight)
+        let animatedImage = await spriteRenderer.render(composedSprite: composedSprite, actionIndex: actionIndex, headDirection: .straight)
 
         try await self.init(animatedImage: animatedImage)
     }
@@ -74,16 +74,13 @@ extension SpriteAction {
         return [action]
     }
 
-    public static func actions(forConfiguration configuration: SpriteConfiguration, resourceManager: ResourceManager) async throws -> [SpriteAction] {
-        let spriteResolver = SpriteResolver(resourceManager: resourceManager)
-        let resolvedSprite = await spriteResolver.resolveSprite(with: configuration)
-
+    public static func actions(for composedSprite: ComposedSprite) async throws -> [SpriteAction] {
         var actions: [SpriteAction] = []
 
-        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: configuration.job.rawValue)
+        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: composedSprite.configuration.job.rawValue)
         let actionCount = availableActionTypes.count * BodyDirection.allCases.count
         for actionIndex in 0..<actionCount {
-            let action = try await SpriteAction(resolvedSprite: resolvedSprite, actionIndex: actionIndex)
+            let action = try await SpriteAction(composedSprite: composedSprite, actionIndex: actionIndex)
             actions.append(action)
         }
 

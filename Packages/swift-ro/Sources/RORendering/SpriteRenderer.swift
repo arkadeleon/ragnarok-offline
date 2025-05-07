@@ -44,12 +44,12 @@ final public class SpriteRenderer: Sendable {
         return animatedImage
     }
 
-    public func render(resolvedSprite: ResolvedSprite, actionIndex: Int, headDirection: HeadDirection) async -> AnimatedImage {
+    public func render(composedSprite: ComposedSprite, actionIndex: Int, headDirection: HeadDirection) async -> AnimatedImage {
         var actionNodes: [SpriteRenderNode] = []
         var bounds: CGRect = .null
         var frameCount = 0
 
-        for part in resolvedSprite.parts {
+        for part in composedSprite.parts {
             let actionIndex = (part.semantic == .shadow ? 0 : actionIndex)
             let scale = self.scale * part.sprite.scaleFactor
 
@@ -72,7 +72,7 @@ final public class SpriteRenderer: Sendable {
         let frameHeight = bounds.size.height / scale
 
         let frameInterval: CGFloat
-        if let mainPart = resolvedSprite.mainPart,
+        if let mainPart = composedSprite.mainPart,
            let action = mainPart.sprite.action(at: actionIndex) {
             frameInterval = CGFloat(action.animationSpeed) * 25 / 1000
         } else {
