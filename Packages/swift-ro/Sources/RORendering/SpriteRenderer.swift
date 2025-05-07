@@ -9,19 +9,43 @@ import CoreGraphics
 import ROCore
 
 final public class SpriteRenderer: Sendable {
-    public let resolvedSprite: ResolvedSprite
-    public let scale: CGFloat = 2
+    public let scale: CGFloat
 
-    public init(sprite: SpriteResource) {
-        self.resolvedSprite = ResolvedSprite(sprite: sprite)
+    public init(scale: CGFloat = 2) {
+        self.scale = scale
     }
 
-    public init(resolvedSprite: ResolvedSprite) {
-        self.resolvedSprite = resolvedSprite
+    public func render(sprite: SpriteResource, actionIndex: Int) async -> AnimatedImage {
+        let actionNode = SpriteRenderNode(
+            actionNodeWithSprite: sprite,
+            actionIndex: actionIndex,
+            scale: scale
+        )
+
+        let frames = render(actionNodes: [actionNode], bounds: actionNode.bounds, frameCount: actionNode.children.count)
+
+        let frameWidth = actionNode.bounds.size.width / scale
+        let frameHeight = actionNode.bounds.size.height / scale
+
+        let frameInterval: CGFloat
+        if let action = sprite.action(at: actionIndex) {
+            frameInterval = CGFloat(action.animationSpeed) * 25 / 1000
+        } else {
+            frameInterval = 1 / 12
+        }
+
+        let animatedImage = AnimatedImage(
+            frames: frames,
+            frameWidth: frameWidth,
+            frameHeight: frameHeight,
+            frameInterval: frameInterval,
+            frameScale: scale
+        )
+        return animatedImage
     }
 
-    public func renderAction(at actionIndex: Int, headDirection: HeadDirection) async -> AnimatedImage {
-        var actionNodes: [(SpriteResource, SpriteRenderNode)] = []
+    public func render(resolvedSprite: ResolvedSprite, actionIndex: Int, headDirection: HeadDirection) async -> AnimatedImage {
+        var actionNodes: [SpriteRenderNode] = []
         var bounds: CGRect = .null
         var frameCount = 0
 
@@ -35,20 +59,45 @@ final public class SpriteRenderer: Sendable {
                 headDirection: headDirection,
                 scale: scale
             )
-            actionNodes.append((part.sprite, actionNode))
+            actionNodes.append(actionNode)
 
             bounds = bounds.union(actionNode.bounds)
 
             frameCount = max(frameCount, actionNode.children.count)
         }
 
+        let frames = render(actionNodes: actionNodes, bounds: bounds, frameCount: frameCount)
+
+        let frameWidth = bounds.size.width / scale
+        let frameHeight = bounds.size.height / scale
+
+        let frameInterval: CGFloat
+        if let mainPart = resolvedSprite.mainPart,
+           let action = mainPart.sprite.action(at: actionIndex) {
+            frameInterval = CGFloat(action.animationSpeed) * 25 / 1000
+        } else {
+            frameInterval = 1 / 12
+        }
+
+        let animatedImage = AnimatedImage(
+            frames: frames,
+            frameWidth: frameWidth,
+            frameHeight: frameHeight,
+            frameInterval: frameInterval,
+            frameScale: scale
+        )
+        return animatedImage
+    }
+
+    private func render(actionNodes: [SpriteRenderNode], bounds: CGRect, frameCount: Int) -> [CGImage?] {
         var frames: [CGImage?] = []
+
         let renderer = CGImageRenderer(size: bounds.size, flipped: true)
 
         for frameIndex in 0..<frameCount {
             let image = renderer.image { cgContext in
                 cgContext.clear(CGRect(origin: .zero, size: bounds.size))
-                for (sprite, actionNode) in actionNodes {
+                for actionNode in actionNodes {
                     let frameIndex = frameIndex % actionNode.children.count
                     let frameNode = actionNode.children[frameIndex]
                     for layerNode in frameNode.children {
@@ -71,22 +120,6 @@ final public class SpriteRenderer: Sendable {
             frames.append(image)
         }
 
-        let frameWidth = bounds.size.width / scale
-        let frameHeight = bounds.size.height / scale
-
-        var frameInterval: CGFloat = 1 / 12
-        if let mainPart = resolvedSprite.mainPart,
-           let action = mainPart.sprite.action(at: actionIndex) {
-            frameInterval = CGFloat(action.animationSpeed) * 25 / 1000
-        }
-
-        let animatedImage = AnimatedImage(
-            frames: frames,
-            frameWidth: frameWidth,
-            frameHeight: frameHeight,
-            frameInterval: frameInterval,
-            frameScale: scale
-        )
-        return animatedImage
+        return frames
     }
 }

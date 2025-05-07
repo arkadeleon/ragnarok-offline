@@ -143,8 +143,8 @@ class ObservableMonster {
             let spriteResolver = SpriteResolver(resourceManager: .default)
             let resolvedSprite = await spriteResolver.resolveSprite(with: configuration)
 
-            let spriteRenderer = SpriteRenderer(resolvedSprite: resolvedSprite)
-            animatedImage = await spriteRenderer.renderAction(at: 0, headDirection: .straight)
+            let spriteRenderer = SpriteRenderer()
+            animatedImage = await spriteRenderer.render(resolvedSprite: resolvedSprite, actionIndex: 0, headDirection: .straight)
         }
     }
 

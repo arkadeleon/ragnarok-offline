@@ -117,7 +117,7 @@ class MapScene3D: MapSceneProtocol {
             configuration.headgears = [player.headTop, player.headMid, player.headBottom]
             configuration.garment = player.garment
 
-            let actions = try await SpriteAction.actions(forConfiguration: configuration)
+            let actions = try await SpriteAction.actions(forConfiguration: configuration, resourceManager: .default)
             let spriteComponent = SpriteComponent(actions: actions)
             playerEntity.components.set(spriteComponent)
         } catch {
@@ -270,7 +270,7 @@ class MapScene3D: MapSceneProtocol {
 
     func onItemSpawned(_ event: ItemEvents.Spawned) {
         Task {
-            let actions = try await SpriteAction.actions(forItemID: Int(event.item.itemID))
+            let actions = try await SpriteAction.actions(forItemID: Int(event.item.itemID), resourceManager: .default)
             let entity = SpriteEntity(actions: actions)
             entity.name = "\(event.item.objectID)"
             entity.transform = transform(for: event.item.position)

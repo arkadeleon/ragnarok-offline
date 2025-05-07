@@ -22,6 +22,37 @@ struct SpriteRenderNode {
 }
 
 extension SpriteRenderNode {
+    init(actionNodeWithSprite sprite: SpriteResource, actionIndex: Int, scale: CGFloat) {
+        guard let action = sprite.action(at: actionIndex) else {
+            self = .null
+            return
+        }
+
+        var bounds: CGRect = .null
+        var children: [SpriteRenderNode] = []
+
+        for frame in action.frames {
+            let frameNode = SpriteRenderNode(frameNodeWithSprite: sprite, frame: frame, scale: scale)
+            children.append(frameNode)
+            bounds = bounds.union(frameNode.bounds)
+        }
+
+        self = SpriteRenderNode(bounds: bounds, children: children)
+    }
+
+    init(frameNodeWithSprite sprite: SpriteResource, frame: ACT.Frame, scale: CGFloat) {
+        var bounds: CGRect = .null
+        var children: [SpriteRenderNode] = []
+
+        for layer in frame.layers {
+            let layerNode = SpriteRenderNode(layerNodeWithSprite: sprite, layer: layer, parentOffset: .zero, scale: scale)
+            children.append(layerNode)
+            bounds = bounds.union(layerNode.bounds)
+        }
+
+        self = SpriteRenderNode(bounds: bounds, children: children)
+    }
+
     init(actionNodeWithPart part: ResolvedSprite.Part, actionIndex: Int, headDirection: HeadDirection, scale: CGFloat) {
         guard let action = part.sprite.action(at: actionIndex) else {
             self = .null
@@ -91,7 +122,7 @@ extension SpriteRenderNode {
         var children: [SpriteRenderNode] = []
 
         for layer in frame.layers {
-            let layerNode = SpriteRenderNode(layerNodeWithPart: part, layer: layer, parentOffset: parentOffset, scale: scale)
+            let layerNode = SpriteRenderNode(layerNodeWithSprite: part.sprite, layer: layer, parentOffset: parentOffset, scale: scale)
             children.append(layerNode)
             bounds = bounds.union(layerNode.bounds)
         }
@@ -99,8 +130,8 @@ extension SpriteRenderNode {
         self = SpriteRenderNode(bounds: bounds, children: children)
     }
 
-    init(layerNodeWithPart part: ResolvedSprite.Part, layer: ACT.Layer, parentOffset: SIMD2<Int32>, scale: CGFloat) {
-        guard let image = part.sprite.image(for: layer) else {
+    init(layerNodeWithSprite sprite: SpriteResource, layer: ACT.Layer, parentOffset: SIMD2<Int32>, scale: CGFloat) {
+        guard let image = sprite.image(for: layer) else {
             self = .null
             return
         }

@@ -15,21 +15,6 @@ final public class SpriteResolver: Sendable {
         self.resourceManager = resourceManager
     }
 
-    public func resolveSprite(forItemID itemID: Int) async -> ResolvedSprite {
-        var resolvedSprite = ResolvedSprite()
-
-        if let path = await ResourcePath(itemSpritePathWithItemID: itemID) {
-            do {
-                let sprite = try await resourceManager.sprite(at: path)
-                resolvedSprite.append(sprite, semantic: .main)
-            } catch {
-                logger.warning("\(error.localizedDescription)")
-            }
-        }
-
-        return resolvedSprite
-    }
-
     public func resolveSprite(with configuration: SpriteConfiguration) async -> ResolvedSprite {
         if configuration.job.isPlayer {
             await resolvePlayerSprite(with: configuration)

@@ -20,9 +20,9 @@ final class SpriteRendererTests: XCTestCase {
         let resolvedSprite = await spriteResolver.resolveSprite(with: configuration)
         XCTAssertEqual(resolvedSprite.parts.count, 2)
 
-        let spriteRenderer = SpriteRenderer(resolvedSprite: resolvedSprite)
+        let spriteRenderer = SpriteRenderer()
         let actionIndex = SpriteActionType.walk.calculateActionIndex(forJobID: jobID, direction: .south)
-        let animatedImage = await spriteRenderer.renderAction(at: actionIndex, headDirection: .straight)
+        let animatedImage = await spriteRenderer.render(resolvedSprite: resolvedSprite, actionIndex: actionIndex, headDirection: .straight)
         XCTAssertEqual(animatedImage.frames.count, 8)
         XCTAssertEqual(animatedImage.frameWidth, 40)
         XCTAssertEqual(animatedImage.frameHeight, 95)

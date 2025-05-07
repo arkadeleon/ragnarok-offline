@@ -145,9 +145,9 @@ struct CharacterSimulatorView: View {
             return
         }
 
-        let spriteRenderer = SpriteRenderer(resolvedSprite: resolvedSprite)
+        let spriteRenderer = SpriteRenderer()
         let actionIndex = configuration.actionType.calculateActionIndex(forJobID: configuration.jobID.rawValue, direction: configuration.direction)
-        animatedImage = await spriteRenderer.renderAction(at: actionIndex, headDirection: configuration.headDirection)
+        animatedImage = await spriteRenderer.render(resolvedSprite: resolvedSprite, actionIndex: actionIndex, headDirection: configuration.headDirection)
     }
 }
 
@@ -165,7 +165,7 @@ struct CharacterSimulatorView2: View {
                 Task {
                     let configuration = SpriteConfiguration(configuration: configuration)
 
-                    let actions = try await SpriteAction.actions(forConfiguration: configuration)
+                    let actions = try await SpriteAction.actions(forConfiguration: configuration, resourceManager: .default)
 
                     let spriteComponent = SpriteComponent(actions: actions)
                     entity.components.set(spriteComponent)

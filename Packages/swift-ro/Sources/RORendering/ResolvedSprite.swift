@@ -18,12 +18,6 @@ public struct ResolvedSprite: Sendable {
         self.parts = []
     }
 
-    init(sprite: SpriteResource) {
-        self.parts = [
-            ResolvedSprite.Part(sprite: sprite, semantic: .main)
-        ]
-    }
-
     mutating func append(_ sprite: SpriteResource, semantic: ResolvedSprite.Part.Semantic, order: Int = 0) {
         let part = ResolvedSprite.Part(sprite: sprite, semantic: semantic, orderBySemantic: order)
         parts.append(part)

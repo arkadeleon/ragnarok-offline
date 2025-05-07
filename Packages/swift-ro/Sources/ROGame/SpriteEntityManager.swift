@@ -22,7 +22,7 @@ public actor SpriteEntityManager {
 
         do {
             let configuration = SpriteConfiguration(jobID: jobID)
-            let actions = try await SpriteAction.actions(forConfiguration: configuration)
+            let actions = try await SpriteAction.actions(forConfiguration: configuration, resourceManager: .default)
             let entity = await SpriteEntity(actions: actions)
             entitiesByJobID[jobID] = entity
             return entity
