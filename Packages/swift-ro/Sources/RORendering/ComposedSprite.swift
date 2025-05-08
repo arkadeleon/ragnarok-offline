@@ -12,6 +12,8 @@ public struct ComposedSprite: Sendable {
     public let resourceManager: ResourceManager
     public let scriptManager: ScriptManager
 
+    private let pathProvider: ResourcePathProvider
+
     var parts: [ComposedSprite.Part] = []
 
     var mainPart: ComposedSprite.Part? {
@@ -28,6 +30,8 @@ public struct ComposedSprite: Sendable {
         self.configuration = configuration
         self.resourceManager = resourceManager
         self.scriptManager = scriptManager
+
+        self.pathProvider = ResourcePathProvider(scriptManager: scriptManager)
 
         if configuration.job.isPlayer {
             await composePlayerSprite()
@@ -61,10 +65,10 @@ public struct ComposedSprite: Sendable {
         }
 
         // Head
-        if let headSpritePath = ResourcePath.playerHeadSprite(job: job, hairStyle: hairStyle, gender: gender) {
+        if let headSpritePath = pathProvider.playerHeadSpritePath(job: job, hairStyle: hairStyle, gender: gender) {
             var headPalette: PaletteResource?
             if hairColor > -1 {
-                if let headPalettePath = ResourcePath.headPalette(job: job, hairStyle: hairStyle, hairColor: hairColor, gender: gender) {
+                if let headPalettePath = pathProvider.playerHeadPalettePath(job: job, hairStyle: hairStyle, hairColor: hairColor, gender: gender) {
                     do {
                         headPalette = try await resourceManager.palette(at: headPalettePath)
                     } catch {
@@ -85,7 +89,7 @@ public struct ComposedSprite: Sendable {
 
         // Weapon
         if weapon > 0 && !job.isMadogear {
-            if let weaponSpritePath = await ResourcePath.weaponSprite(job: job, weapon: weapon, isSlash: false, gender: gender, madoType: madoType) {
+            if let weaponSpritePath = await pathProvider.weaponSpritePath(job: job, weapon: weapon, isSlash: false, gender: gender, madoType: madoType) {
                 do {
                     let weaponSprite = try await resourceManager.sprite(at: weaponSpritePath)
                     append(weaponSprite, semantic: .weapon, order: 0)
@@ -97,7 +101,7 @@ public struct ComposedSprite: Sendable {
 
         // Weapon Slash
         if weapon > 0 {
-            if let weaponSlashSpritePath = await ResourcePath.weaponSprite(job: job, weapon: weapon, isSlash: true, gender: gender, madoType: madoType) {
+            if let weaponSlashSpritePath = await pathProvider.weaponSpritePath(job: job, weapon: weapon, isSlash: true, gender: gender, madoType: madoType) {
                 do {
                     let weaponSlashSprite = try await resourceManager.sprite(at: weaponSlashSpritePath)
                     append(weaponSlashSprite, semantic: .weapon, order: 1)
@@ -109,7 +113,7 @@ public struct ComposedSprite: Sendable {
 
         // Shield
         if shield > 0 {
-            if let shieldSpritePath = await ResourcePath.shieldSprite(job: job, shield: shield, gender: gender) {
+            if let shieldSpritePath = await pathProvider.shieldSpritePath(job: job, shield: shield, gender: gender) {
                 do {
                     let shieldSprite = try await resourceManager.sprite(at: shieldSpritePath)
                     append(shieldSprite, semantic: .shield)
@@ -125,7 +129,7 @@ public struct ComposedSprite: Sendable {
                 continue
             }
 
-            guard let headgearSpritePath = await ResourcePath.headgearSprite(headgear: headgear, gender: gender) else {
+            guard let headgearSpritePath = await pathProvider.headgearSpritePath(headgear: headgear, gender: gender) else {
                 continue
             }
 
@@ -143,7 +147,7 @@ public struct ComposedSprite: Sendable {
 
         // Garment
         if garment > 0 && !job.isMadogear {
-            if let garmentSpritePath = await ResourcePath.garmentSprite(job: job, garment: garment, gender: gender) {
+            if let garmentSpritePath = await pathProvider.garmentSpritePath(job: job, garment: garment, gender: gender) {
                 do {
                     let garmentSprite = try await resourceManager.sprite(at: garmentSpritePath)
                     append(garmentSprite, semantic: .garment)
@@ -165,7 +169,7 @@ public struct ComposedSprite: Sendable {
             logger.warning("Shadow sprite error: \(error.localizedDescription)")
         }
 
-        if let bodySpritePath = await ResourcePath.nonPlayerSprite(job: job) {
+        if let bodySpritePath = await pathProvider.nonPlayerSpritePath(job: job) {
             do {
                 let bodySprite = try await resourceManager.sprite(at: bodySpritePath)
                 append(bodySprite, semantic: .main)
@@ -181,7 +185,7 @@ public struct ComposedSprite: Sendable {
     }
 
     private func shadowSprite(job: UniformJob) async throws -> SpriteResource {
-        let shadowSpritePath = ResourcePath.spriteDirectory.appending("shadow")
+        let shadowSpritePath = pathProvider.shadowSpritePath()
         let shadowSprite = try await resourceManager.sprite(at: shadowSpritePath)
 
         if let shadowFactor = await scriptManager.shadowFactor(forJobID: job.rawValue), shadowFactor >= 0 {
@@ -201,7 +205,7 @@ public struct ComposedSprite: Sendable {
         var bodyPalette: PaletteResource?
 
         if outfit > 0 {
-            if let bodySpritePath = await ResourcePath.playerBodyAltSprite(job: job, gender: gender, costumeID: outfit, madoType: madoType) {
+            if let bodySpritePath = await pathProvider.alternatePlayerBodySpritePath(job: job, gender: gender, costumeID: outfit, madoType: madoType) {
                 do {
                     bodySprite = try await resourceManager.sprite(at: bodySpritePath)
                 } catch {
@@ -210,7 +214,7 @@ public struct ComposedSprite: Sendable {
             }
 
             if clothesColor > -1 {
-                if let bodyPalettePath = ResourcePath.bodyAltPalette(job: job, clothesColor: clothesColor, gender: gender, costumeID: outfit, madoType: madoType) {
+                if let bodyPalettePath = pathProvider.alternatePlayerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, costumeID: outfit, madoType: madoType) {
                     do {
                         bodyPalette = try await resourceManager.palette(at: bodyPalettePath)
                     } catch {
@@ -219,7 +223,7 @@ public struct ComposedSprite: Sendable {
                 }
             }
         } else {
-            if let bodySpritePath = await ResourcePath.playerBodySprite(job: job, gender: gender, madoType: madoType) {
+            if let bodySpritePath = await pathProvider.playerBodySpritePath(job: job, gender: gender, madoType: madoType) {
                 do {
                     bodySprite = try await resourceManager.sprite(at: bodySpritePath)
                 } catch {
@@ -228,7 +232,7 @@ public struct ComposedSprite: Sendable {
             }
 
             if clothesColor > -1 {
-                if let bodyPalettePath = ResourcePath.bodyPalette(job: job, clothesColor: clothesColor, gender: gender, madoType: madoType) {
+                if let bodyPalettePath = pathProvider.playerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, madoType: madoType) {
                     do {
                         bodyPalette = try await resourceManager.palette(at: bodyPalettePath)
                     } catch {
