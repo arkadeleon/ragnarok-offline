@@ -143,7 +143,8 @@ class ObservableItem {
     @MainActor
     func fetchIconImage() async {
         if iconImage == nil {
-            if let path = await ResourcePath(itemIconImagePathWithItemID: item.id) {
+            let pathProvider = ResourcePathProvider(scriptManager: .default)
+            if let path = await pathProvider.itemIconImagePath(itemID: item.id) {
                 iconImage = try? await ResourceManager.default.image(at: path, removesMagentaPixels: true)
             }
         }
@@ -151,7 +152,8 @@ class ObservableItem {
 
     @MainActor
     func fetchDetail() async {
-        if let previewImagePath = await ResourcePath(itemPreviewImagePathWithItemID: item.id) {
+        let pathProvider = ResourcePathProvider(scriptManager: .default)
+        if let previewImagePath = await pathProvider.itemPreviewImagePath(itemID: item.id) {
             previewImage = try? await ResourceManager.default.image(at: previewImagePath, removesMagentaPixels: true)
         }
 

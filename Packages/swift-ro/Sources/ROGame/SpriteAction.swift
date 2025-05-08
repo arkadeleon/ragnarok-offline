@@ -57,16 +57,6 @@ final public class SpriteAction: Sendable {
 }
 
 extension SpriteAction {
-    public static func actions(forItemID itemID: Int, resourceManager: ResourceManager) async throws -> [SpriteAction] {
-        guard let path = await ResourcePath(itemSpritePathWithItemID: itemID) else {
-            return []
-        }
-
-        let sprite = try await resourceManager.sprite(at: path)
-        let action = try await SpriteAction(sprite: sprite, actionIndex: 0)
-        return [action]
-    }
-
     public static func actions(for composedSprite: ComposedSprite) async throws -> [SpriteAction] {
         var actions: [SpriteAction] = []
 

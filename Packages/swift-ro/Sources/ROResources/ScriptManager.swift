@@ -102,34 +102,34 @@ public actor ScriptManager {
 
         await loadLocalScript("itemInfo", locale: .korean)
 
-        await loadScript(at: ["datainfo", "accessoryid.lub"])
-        await loadScript(at: ["datainfo", "accname.lub"])
-        await loadScript(at: ["datainfo", "accname_f.lub"])
+        await loadScript(at: ["datainfo", "accessoryid"])
+        await loadScript(at: ["datainfo", "accname"])
+        await loadScript(at: ["datainfo", "accname_f"])
 
-        await loadScript(at: ["datainfo", "enumvar.lub"])
+        await loadScript(at: ["datainfo", "enumvar"])
         await loadLocalScript("addrandomoptionnametable", locale: .korean)
-        await loadScript(at: ["datainfo", "addrandomoption_f.lub"])
+        await loadScript(at: ["datainfo", "addrandomoption_f"])
 
-        await loadScript(at: ["datainfo", "jobidentity.lub"])
-        await loadScript(at: ["datainfo", "npcidentity.lub"])
-        await loadScript(at: ["datainfo", "jobname.lub"])
-        await loadScript(at: ["datainfo", "jobname_f.lub"])
+        await loadScript(at: ["datainfo", "jobidentity"])
+        await loadScript(at: ["datainfo", "npcidentity"])
+        await loadScript(at: ["datainfo", "jobname"])
+        await loadScript(at: ["datainfo", "jobname_f"])
 
-        await loadScript(at: ["datainfo", "shadowtable.lub"])
-        await loadScript(at: ["datainfo", "shadowtable_f.lub"])
+        await loadScript(at: ["datainfo", "shadowtable"])
+        await loadScript(at: ["datainfo", "shadowtable_f"])
 
-        await loadScript(at: ["datainfo", "spriterobeid.lub"])
-        await loadScript(at: ["datainfo", "spriterobename.lub"])
-        await loadScript(at: ["datainfo", "spriterobename_f.lub"])
+        await loadScript(at: ["datainfo", "spriterobeid"])
+        await loadScript(at: ["datainfo", "spriterobename"])
+        await loadScript(at: ["datainfo", "spriterobename_f"])
 
-        await loadScript(at: ["datainfo", "weapontable.lub"])
-        await loadScript(at: ["datainfo", "weapontable_f.lub"])
+        await loadScript(at: ["datainfo", "weapontable"])
+        await loadScript(at: ["datainfo", "weapontable_f"])
 
-        await loadScript(at: ["skillinfoz", "jobinheritlist.lub"])
-        await loadScript(at: ["skillinfoz", "skillid.lub"])
+        await loadScript(at: ["skillinfoz", "jobinheritlist"])
+        await loadScript(at: ["skillinfoz", "skillid"])
         await loadLocalScript("skillinfolist", locale: locale)
         await loadLocalScript("skilldescript", locale: locale)
-//        await loadScript(at: ["skillinfoz", "skillinfo_f.lub"])
+//        await loadScript(at: ["skillinfoz", "skillinfo_f"])
 
         await loadScript(at: ["spreditinfo", "smalllayerdir_female"])
         await loadScript(at: ["spreditinfo", "smalllayerdir_male"])
@@ -179,7 +179,7 @@ public actor ScriptManager {
 
     private func loadScript(at path: ResourcePath) async {
         do {
-            let path = ResourcePath.scriptDirectory.appending(path)
+            let path = ResourcePath.scriptDirectory.appending(path).appendingPathExtension("lub")
             let data = try await resourceManager.contentsOfResource(at: path)
             try context.load(data)
         } catch {

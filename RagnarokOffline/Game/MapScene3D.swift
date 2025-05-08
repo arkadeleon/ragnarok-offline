@@ -142,7 +142,8 @@ class MapScene3D: MapSceneProtocol {
         camera.transform = cameraTransform(for: player.position)
         rootEntity.addChild(camera)
 
-        if let bgmPath = await ResourcePath(mapBGMPathWithMapName: mapName) {
+        let pathProvider = ResourcePathProvider(scriptManager: .default)
+        if let bgmPath = await pathProvider.mapBGMPath(mapName: mapName) {
             let bgmURL = ResourceManager.default.baseURL.appending(path: bgmPath)
             let configuration = AudioFileResource.Configuration(shouldLoop: true, calibration: .relative(dBSPL: 20 * log10(10)))
             if let audio = try? await AudioFileResource(contentsOf: bgmURL, withName: mapName, configuration: configuration) {
@@ -276,8 +277,15 @@ class MapScene3D: MapSceneProtocol {
 
     func onItemSpawned(_ event: ItemEvents.Spawned) {
         Task {
-            let actions = try await SpriteAction.actions(forItemID: Int(event.item.itemID), resourceManager: .default)
-            let entity = SpriteEntity(actions: actions)
+            let pathProvider = ResourcePathProvider(scriptManager: .default)
+            guard let path = await pathProvider.itemSpritePath(itemID: Int(event.item.itemID)) else {
+                return
+            }
+
+            let sprite = try await ResourceManager.default.sprite(at: path)
+            let action = try await SpriteAction(sprite: sprite, actionIndex: 0)
+
+            let entity = SpriteEntity(actions: [action])
             entity.name = "\(event.item.objectID)"
             entity.transform = transform(for: event.item.position)
             entity.components.set(MapItemComponent(item: event.item))

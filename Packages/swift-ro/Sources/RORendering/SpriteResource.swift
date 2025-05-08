@@ -371,17 +371,3 @@ extension ResourcePath {
         }
     }
 }
-
-extension ResourcePath {
-    public init?(itemSpritePathWithItemID itemID: Int) async {
-        guard let resourceName = await ScriptManager.default.identifiedItemResourceName(forItemID: itemID) else {
-            return nil
-        }
-
-        self = ResourcePath.spriteDirectory.appending(["아이템", "\(resourceName)"])
-    }
-
-    public init(skillSpritePathWithSkillName skillName: String) {
-        self = ResourcePath.spriteDirectory.appending(["아이템", "\(skillName)"])
-    }
-}

@@ -66,7 +66,8 @@ class ObservableSkill {
     @MainActor
     func fetchIconImage() async {
         if iconImage == nil {
-            let path = ResourcePath(skillIconImagePathWithSkillAegisName: skill.aegisName)
+            let pathProvider = ResourcePathProvider(scriptManager: .default)
+            let path = pathProvider.skillIconImagePath(skillAegisName: skill.aegisName)
             iconImage = try? await ResourceManager.default.image(at: path, removesMagentaPixels: true)
         }
     }
