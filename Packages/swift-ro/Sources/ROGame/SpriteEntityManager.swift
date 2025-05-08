@@ -7,11 +7,17 @@
 
 import RealityKit
 import RORendering
+import ROResources
 
 public actor SpriteEntityManager {
-    var entitiesByJobID: [Int : SpriteEntity] = [:]
+    public let resourceManager: ResourceManager
+    public let scriptManager: ScriptManager
 
-    public init() {
+    private var entitiesByJobID: [Int : SpriteEntity] = [:]
+
+    public init(resourceManager: ResourceManager, scriptManager: ScriptManager) {
+        self.resourceManager = resourceManager
+        self.scriptManager = scriptManager
     }
 
     public func entity(forJobID jobID: Int) async -> SpriteEntity? {
@@ -24,8 +30,8 @@ public actor SpriteEntityManager {
             let configuration = ComposedSprite.Configuration(jobID: jobID)
             let composedSprite = await ComposedSprite(
                 configuration: configuration,
-                resourceManager: .default,
-                scriptManager: .default
+                resourceManager: resourceManager,
+                scriptManager: scriptManager
             )
             let actions = try await SpriteAction.actions(for: composedSprite)
             let entity = await SpriteEntity(actions: actions)

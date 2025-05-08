@@ -141,8 +141,8 @@ class ObservableMonster {
             let configuration = ComposedSprite.Configuration(jobID: monster.id)
             let composedSprite = await ComposedSprite(
                 configuration: configuration,
-                resourceManager: .default,
-                scriptManager: .default
+                resourceManager: .shared,
+                scriptManager: .shared
             )
 
             let spriteRenderer = SpriteRenderer()

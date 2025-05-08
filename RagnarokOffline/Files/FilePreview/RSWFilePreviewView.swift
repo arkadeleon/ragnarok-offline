@@ -32,16 +32,16 @@ struct RSWFilePreviewView: View {
         let rsw = try RSW(data: data)
 
         let gatPath = ResourcePath(components: ["data", rsw.files.gat])
-        let gatData = try await ResourceManager.default.contentsOfResource(at: gatPath)
+        let gatData = try await ResourceManager.shared.contentsOfResource(at: gatPath)
         let gat = try GAT(data: gatData)
 
         let gndPath = ResourcePath(components: ["data", rsw.files.gnd])
-        let gndData = try await ResourceManager.default.contentsOfResource(at: gndPath)
+        let gndData = try await ResourceManager.shared.contentsOfResource(at: gndPath)
         let gnd = try GND(data: gndData)
 
         let world = WorldResource(gat: gat, gnd: gnd, rsw: rsw)
 
-        let worldEntity = try await Entity.worldEntity(world: world)
+        let worldEntity = try await Entity.worldEntity(world: world, resourceManager: .shared)
 
 //        let water = Water(gnd: gnd, rsw: rsw) { textureName in
 //            let path = GRFPath(components: ["data", "texture", textureName])

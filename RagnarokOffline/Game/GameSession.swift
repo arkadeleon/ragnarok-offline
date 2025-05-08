@@ -152,7 +152,7 @@ final class GameSession {
 
             Task {
                 let worldPath: ResourcePath = ["data", mapName]
-                let world = try await ResourceManager.default.world(at: worldPath)
+                let world = try await ResourceManager.shared.world(at: worldPath)
 
                 let player = MapObject(account: account, char: char, position: event.position)
 

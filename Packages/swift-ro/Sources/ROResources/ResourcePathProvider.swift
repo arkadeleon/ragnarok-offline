@@ -12,14 +12,6 @@ final public class ResourcePathProvider: Sendable {
         self.scriptManager = scriptManager
     }
 
-    public func mapBGMPath(mapName: String) async -> ResourcePath? {
-        guard let mp3Name = await MapMP3NameTable.default.mapMP3Name(forMapName: mapName) else {
-            return nil
-        }
-
-        return ["BGM", mp3Name]
-    }
-
     public func itemSpritePath(itemID: Int) async -> ResourcePath? {
         guard let resourceName = await scriptManager.identifiedItemResourceName(forItemID: itemID) else {
             return nil

@@ -143,8 +143,8 @@ struct CharacterSimulatorView: View {
         let configuration = ComposedSprite.Configuration(configuration: configuration)
         composedSprite = await ComposedSprite(
             configuration: configuration,
-            resourceManager: .default,
-            scriptManager: .default
+            resourceManager: .shared,
+            scriptManager: .shared
         )
     }
 
@@ -178,8 +178,8 @@ struct CharacterSimulatorView2: View {
                     let configuration = ComposedSprite.Configuration(configuration: configuration)
                     let composedSprite = await ComposedSprite(
                         configuration: configuration,
-                        resourceManager: .default,
-                        scriptManager: .default
+                        resourceManager: .shared,
+                        scriptManager: .shared
                     )
 
                     let actions = try await SpriteAction.actions(for: composedSprite)

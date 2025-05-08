@@ -147,6 +147,7 @@
 		35BE55622BDAB6EC003715C3 /* STRFilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55612BDAB6EC003715C3 /* STRFilePreviewView.swift */; };
 		35BE55642BDAB834003715C3 /* FilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE55632BDAB834003715C3 /* FilePreviewView.swift */; };
 		35BF5BE22C65B5D8006A3487 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BF5BE12C65B5D8006A3487 /* SidebarView.swift */; };
+		35C4BC7A2DCCAAAD007DA87E /* SharedResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C4BC792DCCAAA7007DA87E /* SharedResource.swift */; };
 		35C8AF082D31781C0033B3DB /* ROResources in Frameworks */ = {isa = PBXBuildFile; productRef = 35C8AF072D31781C0033B3DB /* ROResources */; };
 		35C8F8F02D1025D0005603CD /* NPCDialogOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C8F8EF2D1025CA005603CD /* NPCDialogOverlayView.swift */; };
 		35CFDA392DAF4B230070B707 /* GameBottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CFDA382DAF4B1F0070B707 /* GameBottomBar.swift */; };
@@ -330,6 +331,7 @@
 		35BE55612BDAB6EC003715C3 /* STRFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRFilePreviewView.swift; sourceTree = "<group>"; };
 		35BE55632BDAB834003715C3 /* FilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePreviewView.swift; sourceTree = "<group>"; };
 		35BF5BE12C65B5D8006A3487 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		35C4BC792DCCAAA7007DA87E /* SharedResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedResource.swift; sourceTree = "<group>"; };
 		35C8F8EF2D1025CA005603CD /* NPCDialogOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPCDialogOverlayView.swift; sourceTree = "<group>"; };
 		35CFDA382DAF4B1F0070B707 /* GameBottomBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBottomBar.swift; sourceTree = "<group>"; };
 		35CFDA3A2DAFF4E00070B707 /* ChatBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBoxView.swift; sourceTree = "<group>"; };
@@ -492,6 +494,7 @@
 				3594DD562BF5FCB600575F3D /* ModelViewer.swift */,
 				35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */,
 				35B422E12BEDEBD000681AA2 /* ResponsiveView.swift */,
+				35C4BC792DCCAAA7007DA87E /* SharedResource.swift */,
 				350A53582D8BC73A00539999 /* SizeClassSpecific.swift */,
 				351EE2F72C0735390012BC9E /* TransferableAnimatedImage.swift */,
 				351EE2F62C0735390012BC9E /* TransferableImage.swift */,
@@ -981,6 +984,7 @@
 				35BE55622BDAB6EC003715C3 /* STRFilePreviewView.swift in Sources */,
 				35E67C772CBF6E57006E42A3 /* RSW+JSON.swift in Sources */,
 				3514BF452B4526F40065ED89 /* ItemInfoView.swift in Sources */,
+				35C4BC7A2DCCAAAD007DA87E /* SharedResource.swift in Sources */,
 				35FEB6C62CDCC28F00F24A4A /* ObservableSkill.swift in Sources */,
 				35A2ABBE2B3ACB0A0026DAC2 /* ServerView.swift in Sources */,
 				354668C52CA9338500CE2D11 /* TextMessage.swift in Sources */,

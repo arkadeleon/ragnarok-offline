@@ -49,9 +49,9 @@ class ObservableMap {
     @MainActor
     func fetchImage() async {
         if image == nil {
-            let pathProvider = ResourcePathProvider(scriptManager: .default)
+            let pathProvider = ResourcePathProvider(scriptManager: .shared)
             let path = pathProvider.mapImagePath(mapName: map.name)
-            image = try? await ResourceManager.default.image(at: path, removesMagentaPixels: true)
+            image = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
         }
     }
 
@@ -97,9 +97,9 @@ class ObservableMap {
 
     @MainActor
     func fetchFiles() async -> [File] {
-        let gatLocator = try? await ResourceManager.default.locatorOfResource(at: ["data", "\(map.name).gat"])
-        let gndLocator = try? await ResourceManager.default.locatorOfResource(at: ["data", "\(map.name).gnd"])
-        let rswLocator = try? await ResourceManager.default.locatorOfResource(at: ["data", "\(map.name).rsw"])
+        let gatLocator = try? await ResourceManager.shared.locatorOfResource(at: ["data", "\(map.name).gat"])
+        let gndLocator = try? await ResourceManager.shared.locatorOfResource(at: ["data", "\(map.name).gnd"])
+        let rswLocator = try? await ResourceManager.shared.locatorOfResource(at: ["data", "\(map.name).rsw"])
 
         let locators = [gatLocator, gndLocator, rswLocator]
         let files = locators.compactMap({ $0 }).map(File.init)

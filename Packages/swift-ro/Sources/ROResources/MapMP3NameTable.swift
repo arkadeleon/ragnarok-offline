@@ -9,8 +9,6 @@ import Foundation
 import ROCore
 
 public actor MapMP3NameTable {
-    public static let `default` = MapMP3NameTable(resourceManager: .default)
-
     public let resourceManager: ResourceManager
 
     private var mapMP3NamesByRSW: [String : String] = [:]

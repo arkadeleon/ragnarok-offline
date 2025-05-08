@@ -30,13 +30,11 @@ public enum ResourceLocator {
 }
 
 public actor ResourceManager {
-    public static let `default` = ResourceManager(baseURL: .documentsDirectory)
-
     nonisolated public let baseURL: URL
 
     private let grfs: [GRFReference]
 
-    init(baseURL: URL) {
+    public init(baseURL: URL) {
         self.baseURL = baseURL
 
         let dataGRFURL = baseURL.appending(path: "data.grf")

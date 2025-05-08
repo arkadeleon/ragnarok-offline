@@ -42,7 +42,7 @@ struct GNDFilePreviewView: View {
 
         let gat = try GAT(data: gatData)
 
-        let groundEntity = try await Entity.groundEntity(gat: gat, gnd: gnd)
+        let groundEntity = try await Entity.groundEntity(gat: gat, gnd: gnd, resourceManager: .shared)
 
         let translation = simd_float4x4(translation: [-Float(gat.width / 2), 0, -Float(gat.height / 2)])
         let rotation = simd_float4x4(rotationX: radians(-90))

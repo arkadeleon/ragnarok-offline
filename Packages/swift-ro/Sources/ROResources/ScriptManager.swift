@@ -8,8 +8,6 @@
 @preconcurrency import Lua
 
 public actor ScriptManager {
-    public static let `default` = ScriptManager(locale: .current, resourceManager: .default)
-
     public let locale: Locale
     public let resourceManager: ResourceManager
 
@@ -142,8 +140,8 @@ public actor ScriptManager {
         await loadScript(at: ["spreditinfo", "_new_biglayerdir_male"])
         await loadScript(at: ["spreditinfo", "_new_2dlayerdir_f"])
 
-        await loadScript(at: ["offsetitempos", "offsetitempos"])
         await loadScript(at: ["offsetitempos", "offsetitempos_f"])
+        await loadScript(at: ["offsetitempos", "offsetitempos"])
 
         do {
             try context.parse("""

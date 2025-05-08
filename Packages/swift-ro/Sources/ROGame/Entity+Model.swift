@@ -13,7 +13,7 @@ import RORendering
 import ROResources
 
 extension Entity {
-    public static func modelEntity(model: ModelResource) async throws -> Entity {
+    public static func modelEntity(model: ModelResource, resourceManager: ResourceManager) async throws -> Entity {
         let instance = Model.createInstance(
             position: .zero,
             rotation: .zero,
@@ -22,11 +22,11 @@ extension Entity {
             height: 0
         )
 
-        let modelEntity = try await Entity.modelEntity(rsm: model.rsm, instance: instance)
+        let modelEntity = try await Entity.modelEntity(rsm: model.rsm, instance: instance, resourceManager: resourceManager)
         return modelEntity
     }
 
-    public static func modelEntity(rsm: RSM, instance: float4x4) async throws -> Entity {
+    public static func modelEntity(rsm: RSM, instance: float4x4, resourceManager: ResourceManager) async throws -> Entity {
         var textureNames = [String]()
         let model = Model(rsm: rsm, instance: instance) { textureName in
             textureNames.append(textureName)
@@ -37,7 +37,7 @@ extension Entity {
         for textureName in textureNames {
             let components = textureName.split(separator: "\\").map(String.init)
             let texturePath = ResourcePath.textureDirectory.appending(components)
-            let textureImage = try? await ResourceManager.default.image(at: texturePath, removesMagentaPixels: true)
+            let textureImage = try? await resourceManager.image(at: texturePath, removesMagentaPixels: true)
 
             guard let textureImage else {
                 materials.append(SimpleMaterial())

@@ -73,7 +73,7 @@ class MapScene3D: MapSceneProtocol {
         self.player = player
 
         tileEntityManager = TileEntityManager(gat: world.gat, rootEntity: rootEntity)
-        monsterEntityManager = SpriteEntityManager()
+        monsterEntityManager = SpriteEntityManager(resourceManager: .shared, scriptManager: .shared)
 
         MapItemComponent.registerComponent()
         MapObjectComponent.registerComponent()
@@ -98,7 +98,7 @@ class MapScene3D: MapSceneProtocol {
 
         let group = ModelSortGroup()
 
-        if let worldEntity = try? await Entity.worldEntity(world: world) {
+        if let worldEntity = try? await Entity.worldEntity(world: world, resourceManager: .shared) {
             worldEntity.components.set(ModelSortGroupComponent(group: group, order: 0))
             worldEntity.transform = Transform(rotation: simd_quatf(angle: radians(-180), axis: [1, 0, 0]))
             rootEntity.addChild(worldEntity)
@@ -119,8 +119,8 @@ class MapScene3D: MapSceneProtocol {
 
             let composedSprite = await ComposedSprite(
                 configuration: configuration,
-                resourceManager: .default,
-                scriptManager: .default
+                resourceManager: .shared,
+                scriptManager: .shared
             )
 
             let actions = try await SpriteAction.actions(for: composedSprite)
@@ -142,9 +142,9 @@ class MapScene3D: MapSceneProtocol {
         camera.transform = cameraTransform(for: player.position)
         rootEntity.addChild(camera)
 
-        let pathProvider = ResourcePathProvider(scriptManager: .default)
+        let pathProvider = ResourcePathProvider(scriptManager: .shared)
         if let bgmPath = await pathProvider.mapBGMPath(mapName: mapName) {
-            let bgmURL = ResourceManager.default.baseURL.appending(path: bgmPath)
+            let bgmURL = ResourceManager.shared.baseURL.appending(path: bgmPath)
             let configuration = AudioFileResource.Configuration(shouldLoop: true, calibration: .relative(dBSPL: 20 * log10(10)))
             if let audio = try? await AudioFileResource(contentsOf: bgmURL, withName: mapName, configuration: configuration) {
                 rootEntity.playAudio(audio)
@@ -277,12 +277,12 @@ class MapScene3D: MapSceneProtocol {
 
     func onItemSpawned(_ event: ItemEvents.Spawned) {
         Task {
-            let pathProvider = ResourcePathProvider(scriptManager: .default)
+            let pathProvider = ResourcePathProvider(scriptManager: .shared)
             guard let path = await pathProvider.itemSpritePath(itemID: Int(event.item.itemID)) else {
                 return
             }
 
-            let sprite = try await ResourceManager.default.sprite(at: path)
+            let sprite = try await ResourceManager.shared.sprite(at: path)
             let action = try await SpriteAction(sprite: sprite, actionIndex: 0)
 
             let entity = SpriteEntity(actions: [action])

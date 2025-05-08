@@ -50,9 +50,9 @@ class ObservableStatusChange {
     @MainActor
     func fetchIconImage() async {
         if iconImage == nil {
-            let pathProvider = ResourcePathProvider(scriptManager: .default)
+            let pathProvider = ResourcePathProvider(scriptManager: .shared)
             if let path = await pathProvider.statusIconImagePath(statusID: statusChange.icon.rawValue) {
-                iconImage = try? await ResourceManager.default.image(at: path)
+                iconImage = try? await ResourceManager.shared.image(at: path)
             }
         }
     }

@@ -143,18 +143,18 @@ class ObservableItem {
     @MainActor
     func fetchIconImage() async {
         if iconImage == nil {
-            let pathProvider = ResourcePathProvider(scriptManager: .default)
+            let pathProvider = ResourcePathProvider(scriptManager: .shared)
             if let path = await pathProvider.itemIconImagePath(itemID: item.id) {
-                iconImage = try? await ResourceManager.default.image(at: path, removesMagentaPixels: true)
+                iconImage = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
             }
         }
     }
 
     @MainActor
     func fetchDetail() async {
-        let pathProvider = ResourcePathProvider(scriptManager: .default)
+        let pathProvider = ResourcePathProvider(scriptManager: .shared)
         if let previewImagePath = await pathProvider.itemPreviewImagePath(itemID: item.id) {
-            previewImage = try? await ResourceManager.default.image(at: previewImagePath, removesMagentaPixels: true)
+            previewImage = try? await ResourceManager.shared.image(at: previewImagePath, removesMagentaPixels: true)
         }
 
         localizedDescription = await ItemInfoTable.current.localizedIdentifiedItemDescription(forItemID: item.id)

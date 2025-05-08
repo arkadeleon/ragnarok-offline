@@ -14,8 +14,8 @@ import RORendering
 import ROResources
 
 extension Entity {
-    public static func worldEntity(world: WorldResource) async throws -> Entity {
-        let groundEntity = try await Entity.groundEntity(gat: world.gat, gnd: world.gnd)
+    public static func worldEntity(world: WorldResource, resourceManager: ResourceManager) async throws -> Entity {
+        let groundEntity = try await Entity.groundEntity(gat: world.gat, gnd: world.gnd, resourceManager: resourceManager)
 
         let uniqueModelNames = Set(world.rsw.models.map({ $0.modelName }))
 
@@ -27,8 +27,8 @@ extension Entity {
                 taskGroup.addTask {
                     let components = modelName.split(separator: "\\").map(String.init)
                     let modelPath = ResourcePath.modelDirectory.appending(components)
-                    let model = try await ResourceManager.default.model(at: modelPath)
-                    let modelEntity = try await Entity.modelEntity(model: model)
+                    let model = try await resourceManager.model(at: modelPath)
+                    let modelEntity = try await Entity.modelEntity(model: model, resourceManager: resourceManager)
                     return (modelName, modelEntity)
                 }
             }
@@ -66,7 +66,7 @@ extension Entity {
         return groundEntity
     }
 
-    public static func groundEntity(gat: GAT, gnd: GND) async throws -> Entity {
+    public static func groundEntity(gat: GAT, gnd: GND, resourceManager: ResourceManager) async throws -> Entity {
         var textureNames = [String]()
         let ground = Ground(gat: gat, gnd: gnd) { textureName in
             textureNames.append(textureName)
@@ -77,7 +77,7 @@ extension Entity {
         for textureName in textureNames {
             let components = textureName.split(separator: "\\").map(String.init)
             let texturePath = ResourcePath.textureDirectory.appending(components)
-            let textureImage = try? await ResourceManager.default.image(at: texturePath)
+            let textureImage = try? await resourceManager.image(at: texturePath)
 
             guard let textureImage else {
                 materials.append(SimpleMaterial())

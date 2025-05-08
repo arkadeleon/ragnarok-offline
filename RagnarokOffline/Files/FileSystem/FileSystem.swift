@@ -31,7 +31,7 @@ class FileSystem {
         let contents = try grf.contentsOfEntry(at: grfPath)
 
         let path = grfPath.components.joined(separator: "/")
-        let url = ResourceManager.default.baseURL.appending(path: path)
+        let url = ResourceManager.shared.baseURL.appending(path: path)
         let directory = url.deletingLastPathComponent()
 
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)

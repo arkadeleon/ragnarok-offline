@@ -35,7 +35,7 @@ struct RSMFilePreviewView: View {
             height: 0
         )
 
-        let entity = try await Entity.modelEntity(rsm: rsm, instance: instance)
+        let entity = try await Entity.modelEntity(rsm: rsm, instance: instance, resourceManager: .shared)
         return entity
     }
 }

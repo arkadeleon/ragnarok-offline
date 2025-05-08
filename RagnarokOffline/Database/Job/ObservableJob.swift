@@ -119,8 +119,8 @@ class ObservableJob {
             let configuration = ComposedSprite.Configuration(jobID: job.id.rawValue)
             let composedSprite = await ComposedSprite(
                 configuration: configuration,
-                resourceManager: .default,
-                scriptManager: .default
+                resourceManager: .shared,
+                scriptManager: .shared
             )
 
             let spriteRenderer = SpriteRenderer()
