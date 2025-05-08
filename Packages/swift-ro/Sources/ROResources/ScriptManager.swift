@@ -83,7 +83,7 @@ public actor ScriptManager {
 
     // MARK: - Load & Call
 
-    private func call<T>(_ name: String, with args: [Any], to resultType: T.Type) async -> T? {
+    public func call<T>(_ name: String, with args: [Any], to resultType: T.Type) async -> T? {
         await loadScripts()
 
         do {
@@ -130,6 +130,20 @@ public actor ScriptManager {
         await loadLocalScript("skillinfolist", locale: locale)
         await loadLocalScript("skilldescript", locale: locale)
 //        await loadScript(at: ["skillinfoz", "skillinfo_f.lub"])
+
+        await loadScript(at: ["spreditinfo", "smalllayerdir_female"])
+        await loadScript(at: ["spreditinfo", "smalllayerdir_male"])
+        await loadScript(at: ["spreditinfo", "biglayerdir_female"])
+        await loadScript(at: ["spreditinfo", "biglayerdir_male"])
+        await loadScript(at: ["spreditinfo", "2dlayerdir_f"])
+        await loadScript(at: ["spreditinfo", "_new_smalllayerdir_female"])
+        await loadScript(at: ["spreditinfo", "_new_smalllayerdir_male"])
+        await loadScript(at: ["spreditinfo", "_new_biglayerdir_female"])
+        await loadScript(at: ["spreditinfo", "_new_biglayerdir_male"])
+        await loadScript(at: ["spreditinfo", "_new_2dlayerdir_f"])
+
+        await loadScript(at: ["offsetitempos", "offsetitempos"])
+        await loadScript(at: ["offsetitempos", "offsetitempos_f"])
 
         do {
             try context.parse("""

@@ -51,6 +51,15 @@ public actor ResourceManager {
         ]
     }
 
+    public func resourceExists(at path: ResourcePath) -> Bool {
+        do {
+            _ = try locatorOfResource(at: path)
+            return true
+        } catch {
+            return false
+        }
+    }
+
     public func locatorOfResource(at path: ResourcePath) throws -> ResourceLocator {
         let fileURL = baseURL.absoluteURL.appending(path: path)
         if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {

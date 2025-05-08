@@ -116,6 +116,12 @@ struct CharacterSimulatorView: View {
                 await renderSprite()
             }
         }
+        .onChange(of: configuration.garment) {
+            Task {
+                await composeSprite()
+                await renderSprite()
+            }
+        }
         .onChange(of: configuration.actionType) {
             Task {
                 await renderSprite()
@@ -135,7 +141,11 @@ struct CharacterSimulatorView: View {
 
     private func composeSprite() async {
         let configuration = ComposedSprite.Configuration(configuration: configuration)
-        composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .default)
+        composedSprite = await ComposedSprite(
+            configuration: configuration,
+            resourceManager: .default,
+            scriptManager: .default
+        )
     }
 
     private func renderSprite() async {
@@ -166,7 +176,11 @@ struct CharacterSimulatorView2: View {
             if let entity = content.entities.first as? SpriteEntity {
                 Task {
                     let configuration = ComposedSprite.Configuration(configuration: configuration)
-                    let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .default)
+                    let composedSprite = await ComposedSprite(
+                        configuration: configuration,
+                        resourceManager: .default,
+                        scriptManager: .default
+                    )
 
                     let actions = try await SpriteAction.actions(for: composedSprite)
 

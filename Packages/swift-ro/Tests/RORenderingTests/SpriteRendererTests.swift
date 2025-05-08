@@ -13,9 +13,10 @@ final class SpriteRendererTests: XCTestCase {
     func testSpriteRenderer() async throws {
         let baseURL = Bundle.module.resourceURL!
         let resourceManager = ResourceManager(baseURL: baseURL)
+        let scriptManager = ScriptManager(locale: .current, resourceManager: resourceManager)
 
         let configuration = ComposedSprite.Configuration(jobID: 0)
-        let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
+        let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: resourceManager, scriptManager: scriptManager)
         XCTAssertEqual(composedSprite.parts.count, 2)
 
         let spriteRenderer = SpriteRenderer()

@@ -16,6 +16,7 @@ struct CharacterConfigurationView: View {
     @State private var headTopItems: [Item] = []
     @State private var headMidItems: [Item] = []
     @State private var headBottomItems: [Item] = []
+    @State private var garmentItems: [Item] = []
 
     var body: some View {
         Form {
@@ -98,6 +99,16 @@ struct CharacterConfigurationView: View {
                 }
             }
 
+            Picker(selection: $configuration.garment) {
+                Text("None").tag(Item?.none)
+
+                ForEach(garmentItems) { item in
+                    Text(item.name).tag(item)
+                }
+            } label: {
+                Text(verbatim: "Garment")
+            }
+
             Picker("Action", selection: $configuration.actionType) {
                 ForEach(ComposedSprite.ActionType.availableActionTypes(forJobID: configuration.jobID.rawValue), id: \.rawValue) { actionType in
                     Text(actionType.description).tag(actionType)
@@ -122,6 +133,7 @@ struct CharacterConfigurationView: View {
             headTopItems = equipItems.filter({ $0.type == .armor && $0.locations.contains(.head_top) })
             headMidItems = equipItems.filter({ $0.type == .armor && $0.locations.contains(.head_mid) })
             headBottomItems = equipItems.filter({ $0.type == .armor && $0.locations.contains(.head_low) })
+            garmentItems = equipItems.filter({ $0.type == .armor && $0.locations.contains(.garment) && $0.view > 0 })
         }
     }
 }

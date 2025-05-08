@@ -10,6 +10,7 @@ import ROResources
 public struct ComposedSprite: Sendable {
     public let configuration: ComposedSprite.Configuration
     public let resourceManager: ResourceManager
+    public let scriptManager: ScriptManager
 
     var parts: [ComposedSprite.Part] = []
 
@@ -19,9 +20,14 @@ public struct ComposedSprite: Sendable {
         }
     }
 
-    public init(configuration: ComposedSprite.Configuration, resourceManager: ResourceManager) async {
+    public init(
+        configuration: ComposedSprite.Configuration,
+        resourceManager: ResourceManager,
+        scriptManager: ScriptManager
+    ) async {
         self.configuration = configuration
         self.resourceManager = resourceManager
+        self.scriptManager = scriptManager
 
         if configuration.job.isPlayer {
             await composePlayerSprite()
@@ -37,6 +43,7 @@ public struct ComposedSprite: Sendable {
         let hairColor = configuration.hairColor
         let weapon = configuration.weapon
         let shield = configuration.shield
+        let garment = configuration.garment
         let madoType = configuration.madoType
 
         // Shadow
@@ -135,6 +142,16 @@ public struct ComposedSprite: Sendable {
         }
 
         // Garment
+        if garment > 0 && !job.isMadogear {
+            if let garmentSpritePath = await ResourcePath.garmentSprite(job: job, garment: garment, gender: gender) {
+                do {
+                    let garmentSprite = try await resourceManager.sprite(at: garmentSpritePath)
+                    append(garmentSprite, semantic: .garment)
+                } catch {
+                    logger.warning("Garment sprite error: \(error.localizedDescription)")
+                }
+            }
+        }
     }
 
     mutating func composeNonPlayerSprite() async {
@@ -167,7 +184,7 @@ public struct ComposedSprite: Sendable {
         let shadowSpritePath = ResourcePath.spriteDirectory.appending("shadow")
         let shadowSprite = try await resourceManager.sprite(at: shadowSpritePath)
 
-        if let shadowFactor = await ScriptManager.default.shadowFactor(forJobID: job.rawValue), shadowFactor >= 0 {
+        if let shadowFactor = await scriptManager.shadowFactor(forJobID: job.rawValue), shadowFactor >= 0 {
             shadowSprite.scaleFactor = shadowFactor
         }
 
