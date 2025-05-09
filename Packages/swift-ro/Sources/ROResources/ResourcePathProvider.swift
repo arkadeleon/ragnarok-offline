@@ -6,7 +6,7 @@
 //
 
 final public class ResourcePathProvider: Sendable {
-    public let scriptManager: ScriptManager
+    package let scriptManager: ScriptManager
 
     public init(scriptManager: ScriptManager) {
         self.scriptManager = scriptManager

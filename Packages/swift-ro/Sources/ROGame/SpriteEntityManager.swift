@@ -10,8 +10,8 @@ import RORendering
 import ROResources
 
 public actor SpriteEntityManager {
-    public let resourceManager: ResourceManager
-    public let scriptManager: ScriptManager
+    package let resourceManager: ResourceManager
+    package let scriptManager: ScriptManager
 
     private var entitiesByJobID: [Int : SpriteEntity] = [:]
 

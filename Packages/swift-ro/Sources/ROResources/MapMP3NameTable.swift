@@ -9,7 +9,7 @@ import Foundation
 import ROCore
 
 public actor MapMP3NameTable {
-    public let resourceManager: ResourceManager
+    package let resourceManager: ResourceManager
 
     private var mapMP3NamesByRSW: [String : String] = [:]
     private var isLoaded = false

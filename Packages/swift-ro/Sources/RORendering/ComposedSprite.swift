@@ -9,9 +9,9 @@ import ROFileFormats
 import ROResources
 
 public struct ComposedSprite: Sendable {
-    public let configuration: ComposedSprite.Configuration
-    public let resourceManager: ResourceManager
-    public let scriptManager: ScriptManager
+    package let configuration: ComposedSprite.Configuration
+    package let resourceManager: ResourceManager
+    package let scriptManager: ScriptManager
 
     private let pathProvider: ResourcePathProvider
 

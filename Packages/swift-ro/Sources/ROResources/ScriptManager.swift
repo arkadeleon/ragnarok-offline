@@ -8,8 +8,8 @@
 @preconcurrency import Lua
 
 public actor ScriptManager {
-    public let locale: Locale
-    public let resourceManager: ResourceManager
+    let locale: Locale
+    package let resourceManager: ResourceManager
 
     private let context = LuaContext()
     private var isLoaded = false
