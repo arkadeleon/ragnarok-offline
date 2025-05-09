@@ -79,9 +79,19 @@ public actor ScriptManager {
         return result
     }
 
+    public func drawOnTop(forRobeID robeID: Int, genderID: Int, jobID: Int, actionIndex: Int, frameIndex: Int) async -> Bool {
+        let result = await call("_New_DrawOnTop", with: [robeID, genderID, jobID, actionIndex, frameIndex], to: Bool.self)
+        return result ?? false
+    }
+
+    public func isTopLayer(forRobeID robeID: Int) async -> Bool {
+        let result = await call("IsTopLayer", with: [robeID], to: Bool.self)
+        return result ?? false
+    }
+
     // MARK: - Load & Call
 
-    public func call<T>(_ name: String, with args: [Any], to resultType: T.Type) async -> T? {
+    private func call<T>(_ name: String, with args: [Any], to resultType: T.Type) async -> T? {
         await loadScripts()
 
         do {

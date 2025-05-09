@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2025/4/29.
 //
 
+import ROFileFormats
 import ROResources
 
 public struct ComposedSprite: Sendable {
@@ -15,6 +16,7 @@ public struct ComposedSprite: Sendable {
     private let pathProvider: ResourcePathProvider
 
     var parts: [ComposedSprite.Part] = []
+    var imf: IMF?
 
     var mainPart: ComposedSprite.Part? {
         parts.first {
@@ -35,6 +37,17 @@ public struct ComposedSprite: Sendable {
 
         if configuration.job.isPlayer {
             await composePlayerSprite()
+
+            if let imfPath = pathProvider.imfPath(job: configuration.job, gender: configuration.gender) {
+                do {
+                    let imfPath = imfPath.appendingPathExtension("imf")
+                    let imfData = try await resourceManager.contentsOfResource(at: imfPath)
+                    let imf = try IMF(data: imfData)
+                    self.imf = imf
+                } catch {
+                    logger.warning("IMF error: \(error.localizedDescription)")
+                }
+            }
         } else {
             await composeNonPlayerSprite()
         }
@@ -47,7 +60,6 @@ public struct ComposedSprite: Sendable {
         let hairColor = configuration.hairColor
         let weapon = configuration.weapon
         let shield = configuration.shield
-        let garment = configuration.garment
         let madoType = configuration.madoType
 
         // Shadow
@@ -146,15 +158,8 @@ public struct ComposedSprite: Sendable {
         }
 
         // Garment
-        if garment > 0 && !job.isMadogear {
-            if let garmentSpritePath = await pathProvider.garmentSpritePath(job: job, garment: garment, gender: gender) {
-                do {
-                    let garmentSprite = try await resourceManager.sprite(at: garmentSpritePath)
-                    append(garmentSprite, semantic: .garment)
-                } catch {
-                    logger.warning("Garment sprite error: \(error.localizedDescription)")
-                }
-            }
+        if let garmentSpritePart = await garmentSpritePart() {
+            parts.append(garmentSpritePart)
         }
     }
 
@@ -246,6 +251,31 @@ public struct ComposedSprite: Sendable {
 
         return bodySprite
     }
+
+    private func garmentSpritePart() async -> ComposedSprite.Part? {
+        let job = configuration.job
+        let gender = configuration.gender
+        let garment = configuration.garment
+
+        guard garment > 0 && !job.isMadogear else {
+            return nil
+        }
+
+        guard let garmentSpritePath = await pathProvider.garmentSpritePath(job: job, garment: garment, gender: gender) else {
+            return nil
+        }
+
+        let garmentSprite: SpriteResource
+        do {
+            garmentSprite = try await resourceManager.sprite(at: garmentSpritePath)
+        } catch {
+            logger.warning("Garment sprite error: \(error.localizedDescription)")
+            return nil
+        }
+
+        let garmentSpritePart = ComposedSprite.Part(sprite: garmentSprite, semantic: .garment)
+        return garmentSpritePart
+    }
 }
 
 extension ComposedSprite {
@@ -254,10 +284,10 @@ extension ComposedSprite {
             case main
             case playerBody
             case playerHead
-            case headgear
-            case garment
             case weapon
             case shield
+            case headgear
+            case garment
             case shadow
         }
 

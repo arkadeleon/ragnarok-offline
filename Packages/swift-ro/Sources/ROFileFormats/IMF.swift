@@ -75,3 +75,28 @@ extension IMF {
         }
     }
 }
+
+extension IMF {
+    public func priority(at indexPath: IndexPath) -> Int32? {
+        let layerIndex = indexPath[0]
+        let actionIndex = indexPath[1]
+        let frameIndex = indexPath[2]
+
+        guard 0..<layers.count ~= layerIndex else {
+            return nil
+        }
+
+        let layer = layers[layerIndex]
+        guard 0..<layer.actions.count ~= actionIndex else {
+            return nil
+        }
+
+        let action = layer.actions[actionIndex]
+        guard 0..<action.frames.count ~= frameIndex else {
+            return nil
+        }
+
+        let frame = action.frames[frameIndex]
+        return frame.priority
+    }
+}
