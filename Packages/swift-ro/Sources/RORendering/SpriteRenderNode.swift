@@ -23,7 +23,7 @@ struct SpriteRenderNode {
 
 extension SpriteRenderNode {
     init(actionNodeWithSprite sprite: SpriteResource, actionIndex: Int, scale: CGFloat) {
-        guard let action = sprite.action(at: actionIndex) else {
+        guard let action = sprite.act.action(at: actionIndex) else {
             self = .null
             return
         }
@@ -54,7 +54,7 @@ extension SpriteRenderNode {
     }
 
     init(actionNodeWithPart part: ComposedSprite.Part, actionType: ComposedSprite.ActionType, actionIndex: Int, headDirection: ComposedSprite.HeadDirection, scale: CGFloat) {
-        guard let action = part.sprite.action(at: actionIndex) else {
+        guard let action = part.sprite.act.action(at: actionIndex) else {
             self = .null
             return
         }
@@ -89,15 +89,15 @@ extension SpriteRenderNode {
     }
 
     init(frameNodeWithPart part: ComposedSprite.Part, actionType: ComposedSprite.ActionType, actionIndex: Int, frameIndex: Int, scale: CGFloat) {
-        guard let action = part.sprite.action(at: actionIndex),
-              let frame = part.sprite.frame(at: [actionIndex, frameIndex]) else {
+        guard let action = part.sprite.act.action(at: actionIndex),
+              let frame = part.sprite.act.frame(at: [actionIndex, frameIndex]) else {
             self = .null
             return
         }
 
         var parentOffset: SIMD2<Int32> = .zero
 
-        if let parent = part.sprite.parent {
+        if let parent = part.parent {
             var parentFrameIndex = frameIndex
 
             if part.semantic == .headgear && (actionType == .idle || actionType == .sit) {
@@ -105,7 +105,7 @@ extension SpriteRenderNode {
                 parentFrameIndex = frameIndex / frameCount
             }
 
-            if let parentFrame = parent.frame(at: [actionIndex, parentFrameIndex]),
+            if let parentFrame = parent.act.frame(at: [actionIndex, parentFrameIndex]),
                let parentAnchorPoint = parentFrame.anchorPoints.first {
                 parentOffset = [parentAnchorPoint.x, parentAnchorPoint.y]
             }

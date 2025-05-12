@@ -161,3 +161,31 @@ extension ACT {
         }
     }
 }
+
+extension ACT {
+    public func action(at actionIndex: Int) -> ACT.Action? {
+        guard 0..<actions.count ~= actionIndex else {
+            return nil
+        }
+
+        let action = actions[actionIndex]
+        return action
+    }
+
+    public func frame(at indexPath: IndexPath) -> ACT.Frame? {
+        let actionIndex = indexPath[0]
+        let frameIndex = indexPath[1]
+
+        guard 0..<actions.count ~= actionIndex else {
+            return nil
+        }
+
+        let action = actions[actionIndex]
+        guard 0..<action.frames.count ~= frameIndex else {
+            return nil
+        }
+
+        let frame = action.frames[frameIndex]
+        return frame
+    }
+}

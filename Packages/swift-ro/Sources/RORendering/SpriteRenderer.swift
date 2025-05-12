@@ -29,7 +29,7 @@ final public class SpriteRenderer: Sendable {
         let (frames, frameWidth, frameHeight) = render(actionNode: actionNode)
 
         let frameInterval: CGFloat
-        if let action = sprite.action(at: actionIndex) {
+        if let action = sprite.act.action(at: actionIndex) {
             frameInterval = CGFloat(action.animationSpeed) * 25 / 1000
         } else {
             frameInterval = 1 / 12
@@ -101,7 +101,7 @@ final public class SpriteRenderer: Sendable {
 
         let frameInterval: CGFloat
         if let mainPart = composedSprite.mainPart,
-           let action = mainPart.sprite.action(at: actionIndex) {
+           let action = mainPart.sprite.act.action(at: actionIndex) {
             frameInterval = CGFloat(action.animationSpeed) * 25 / 1000
         } else {
             frameInterval = 1 / 12

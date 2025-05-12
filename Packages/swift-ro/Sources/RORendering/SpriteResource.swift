@@ -14,8 +14,6 @@ final public class SpriteResource: @unchecked Sendable {
     public let act: ACT
     public let spr: SPR
 
-    var parent: SpriteResource?
-
     var palette: PaletteResource?
 
     var scaleFactor: CGFloat = 1
@@ -29,32 +27,6 @@ final public class SpriteResource: @unchecked Sendable {
 
         indexedSpriteImages = Array(repeating: nil, count: Int(spr.indexedSpriteCount))
         rgbaSpriteImages = Array(repeating: nil, count: Int(spr.rgbaSpriteCount))
-    }
-
-    func action(at actionIndex: Int) -> ACT.Action? {
-        guard 0..<act.actions.count ~= actionIndex else {
-            return nil
-        }
-
-        let action = act.actions[actionIndex]
-        return action
-    }
-
-    func frame(at indexPath: IndexPath) -> ACT.Frame? {
-        let actionIndex = indexPath[0]
-        let frameIndex = indexPath[1]
-
-        guard 0..<act.actions.count ~= actionIndex else {
-            return nil
-        }
-
-        let action = act.actions[actionIndex]
-        guard 0..<action.frames.count ~= frameIndex else {
-            return nil
-        }
-
-        let frame = action.frames[frameIndex]
-        return frame
     }
 
     func image(for layer: ACT.Layer) -> CGImage? {
