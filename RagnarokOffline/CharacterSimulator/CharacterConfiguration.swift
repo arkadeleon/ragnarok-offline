@@ -49,6 +49,18 @@ struct CharacterConfiguration {
         direction = .south
         headDirection = .straight
     }
+
+    mutating func rotateClockwise() {
+        let count = ComposedSprite.Direction.allCases.count
+        let rawValue = (direction.rawValue + 1) % count
+        direction = ComposedSprite.Direction(rawValue: rawValue)!
+    }
+
+    mutating func rotateCounterClockwise() {
+        let count = ComposedSprite.Direction.allCases.count
+        let rawValue = (direction.rawValue + count - 1) % count
+        direction = ComposedSprite.Direction(rawValue: rawValue)!
+    }
 }
 
 extension ComposedSprite.Configuration {

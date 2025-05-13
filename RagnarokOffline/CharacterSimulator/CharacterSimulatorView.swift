@@ -20,13 +20,8 @@ struct CharacterSimulatorView: View {
     var body: some View {
         ResponsiveView {
             VStack(spacing: 0) {
-                ZStack {
-                    if let animatedImage {
-                        AnimatedImageView(animatedImage: animatedImage)
-                            .scaleEffect(2)
-                    }
-                }
-                .frame(minHeight: 0, maxHeight: 300)
+                CharacterRenderingView(configuration: $configuration, animatedImage: animatedImage)
+                    .frame(minHeight: 0, maxHeight: 300)
 
                 Divider()
 
@@ -35,13 +30,8 @@ struct CharacterSimulatorView: View {
             }
         } regular: {
             HStack {
-                ZStack {
-                    if let animatedImage {
-                        AnimatedImageView(animatedImage: animatedImage)
-                            .scaleEffect(2)
-                    }
-                }
-                .frame(minWidth: 0, maxWidth: .infinity)
+                CharacterRenderingView(configuration: $configuration, animatedImage: animatedImage)
+                    .frame(minWidth: 0, maxWidth: .infinity)
 
                 CharacterConfigurationView(configuration: $configuration)
                     .frame(minWidth: 0, maxWidth: .infinity)
