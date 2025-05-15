@@ -13,7 +13,7 @@ final class NPCDatabaseTests: XCTestCase {
         let database = NPCDatabase.prerenewal
 
         let poring = await MonsterDatabase.prerenewal.monster(forAegisName: "PORING")!
-        let poringMonsterSpawns = await database.monsterSpawns(forMonster: poring)
+        let poringMonsterSpawns = await database.monsterSpawns(for: poring)
         XCTAssertEqual(poringMonsterSpawns.count, 28)
 
         let prtfild08MonsterSpawns = await database.monsterSpawns(forMapName: "prt_fild08")
@@ -24,7 +24,7 @@ final class NPCDatabaseTests: XCTestCase {
         let database = NPCDatabase.renewal
 
         let poring = await MonsterDatabase.renewal.monster(forAegisName: "PORING")!
-        let poringMonsterSpawns = await database.monsterSpawns(forMonster: poring)
+        let poringMonsterSpawns = await database.monsterSpawns(for: poring)
         XCTAssertEqual(poringMonsterSpawns.count, 16)
 
         let prtfild08MonsterSpawns = await database.monsterSpawns(forMapName: "prt_fild08")

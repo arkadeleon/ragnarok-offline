@@ -54,7 +54,7 @@ final public class SpriteResource: @unchecked Sendable {
             }
 
             let index = spriteIndex
-            let image = spr.image(forSpriteAt: index, palette: palette?.pal)
+            let image = spr.imageForSprite(at: index, palette: palette?.pal)
             indexedSpriteImages[spriteIndex] = image
 
             return image
@@ -68,7 +68,7 @@ final public class SpriteResource: @unchecked Sendable {
             }
 
             let index = indexedSpriteCount + spriteIndex
-            let image = spr.image(forSpriteAt: index, palette: palette?.pal)
+            let image = spr.imageForSprite(at: index, palette: palette?.pal)
             rgbaSpriteImages[spriteIndex] = image
 
             return image

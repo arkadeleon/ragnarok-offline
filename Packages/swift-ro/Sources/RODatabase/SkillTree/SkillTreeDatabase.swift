@@ -58,7 +58,7 @@ public actor SkillTreeDatabase {
         _skillTrees
     }
 
-    public func skillTree(forJobID jobID: JobID) -> SkillTree? {
+    public func skillTree(for jobID: JobID) -> SkillTree? {
         _skillTreesByJobID[jobID]
     }
 }

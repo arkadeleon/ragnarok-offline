@@ -83,7 +83,7 @@ class FileThumbnailGenerator {
 
             let spr = try SPR(data: data)
 
-            guard let image = spr.image(forSpriteAt: 0) else {
+            guard let image = spr.imageForSprite(at: 0) else {
                 return nil
             }
 

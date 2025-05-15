@@ -49,7 +49,7 @@ public struct MessageStringTable: Sendable {
         messageStrings[index]
     }
 
-    public func localizedJobName(forJobID jobID: JobID) -> String? {
+    public func localizedJobName(for jobID: JobID) -> String? {
         switch jobID {
         case .novice:
             messageStrings[1681]

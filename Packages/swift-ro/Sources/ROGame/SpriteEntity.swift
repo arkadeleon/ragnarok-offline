@@ -38,7 +38,7 @@ public class SpriteEntity: Entity {
 
         let actionIndex = actionType.calculateActionIndex(forJobID: mapObjectComponent.object.job, direction: direction)
 
-        generateModel(forActionAt: actionIndex)
+        generateModelForAction(at: actionIndex)
 
         do {
             let animation = try generateAnimation(forActionAt: actionIndex, repeats: repeats)
@@ -50,7 +50,7 @@ public class SpriteEntity: Entity {
     }
 
     public func runAction(_ actionIndex: Int, repeats: Bool) {
-        generateModel(forActionAt: actionIndex)
+        generateModelForAction(at: actionIndex)
 
         do {
             let animation = try generateAnimation(forActionAt: actionIndex, repeats: repeats)
@@ -68,7 +68,7 @@ public class SpriteEntity: Entity {
 
         let actionIndex = ComposedSprite.ActionType.walk.calculateActionIndex(forJobID: mapObjectComponent.object.job, direction: direction)
 
-        generateModel(forActionAt: actionIndex)
+        generateModelForAction(at: actionIndex)
 
         do {
             let walkAnimation = try generateWalkAnimation(withTarget: target, actionIndex: actionIndex, duration: duration)
@@ -79,7 +79,7 @@ public class SpriteEntity: Entity {
         }
     }
 
-    private func generateModel(forActionAt actionIndex: Int) {
+    private func generateModelForAction(at actionIndex: Int) {
         guard let spriteComponent = components[SpriteComponent.self],
               actionIndex < spriteComponent.actions.count else {
             return

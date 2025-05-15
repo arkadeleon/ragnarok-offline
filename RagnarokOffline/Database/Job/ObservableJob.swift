@@ -106,7 +106,7 @@ class ObservableJob {
         self.mode = mode
         self.job = job
 
-        self.localizedName = MessageStringTable.current.localizedJobName(forJobID: job.id)
+        self.localizedName = MessageStringTable.current.localizedJobName(for: job.id)
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Job, Value>) -> Value {
@@ -138,7 +138,7 @@ class ObservableJob {
         let skillDatabase = SkillDatabase.database(for: mode)
         let skillTreeDatabase = SkillTreeDatabase.database(for: mode)
 
-        if let skillTree = await skillTreeDatabase.skillTree(forJobID: job.id)?.tree {
+        if let skillTree = await skillTreeDatabase.skillTree(for: job.id)?.tree {
             var skills: [ObservableSkill] = []
             for s in skillTree {
                 if let skill = await skillDatabase.skill(forAegisName: s.name) {

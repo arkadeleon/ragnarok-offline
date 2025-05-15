@@ -185,7 +185,7 @@ class ObservableMonster {
             self.dropItems = dropItems
         }
 
-        let monsterSpawns = await npcDatabase.monsterSpawns(forMonster: monster)
+        let monsterSpawns = await npcDatabase.monsterSpawns(for: monster)
         var spawnMaps: [SpawnMap] = []
         for monsterSpawn in monsterSpawns {
             if let map = await mapDatabase.map(forName: monsterSpawn.mapName) {

@@ -61,22 +61,22 @@ class ObservableStatusChange {
     func fetchDetail() async {
         let database = StatusChangeDatabase.database(for: mode)
 
-        let fail = await database.statusChanges(forIDs: Array(statusChange.fail ?? []))
+        let fail = await database.statusChanges(for: Array(statusChange.fail ?? []))
         self.fail = fail.map { statusChange in
             ObservableStatusChange(mode: mode, statusChange: statusChange)
         }
 
-        let endOnStart = await database.statusChanges(forIDs: Array(statusChange.endOnStart ?? []))
+        let endOnStart = await database.statusChanges(for: Array(statusChange.endOnStart ?? []))
         self.endOnStart = endOnStart.map { statusChange in
             ObservableStatusChange(mode: mode, statusChange: statusChange)
         }
 
-        let endReturn = await database.statusChanges(forIDs: Array(statusChange.endReturn ?? []))
+        let endReturn = await database.statusChanges(for: Array(statusChange.endReturn ?? []))
         self.endReturn = endReturn.map { statusChange in
             ObservableStatusChange(mode: mode, statusChange: statusChange)
         }
 
-        let endOnEnd = await database.statusChanges(forIDs: Array(statusChange.endOnEnd ?? []))
+        let endOnEnd = await database.statusChanges(for: Array(statusChange.endOnEnd ?? []))
         self.endOnEnd = endOnEnd.map { statusChange in
             ObservableStatusChange(mode: mode, statusChange: statusChange)
         }

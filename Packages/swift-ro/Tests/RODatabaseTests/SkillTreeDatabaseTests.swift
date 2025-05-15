@@ -12,7 +12,7 @@ final class SkillTreeDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
         let database = SkillTreeDatabase.prerenewal
 
-        let acolyte = await database.skillTree(forJobID: .acolyte)!
+        let acolyte = await database.skillTree(for: .acolyte)!
         XCTAssertEqual(acolyte.job, .acolyte)
         XCTAssertEqual(acolyte.inherit, [.novice])
         XCTAssertEqual(acolyte.tree?.count, 15)
@@ -21,12 +21,12 @@ final class SkillTreeDatabaseTests: XCTestCase {
     func testRenewal() async throws {
         let database = SkillTreeDatabase.renewal
 
-        let acolyte = await database.skillTree(forJobID: .acolyte)!
+        let acolyte = await database.skillTree(for: .acolyte)!
         XCTAssertEqual(acolyte.job, .acolyte)
         XCTAssertEqual(acolyte.inherit, [.novice])
         XCTAssertEqual(acolyte.tree?.count, 15)
 
-        let archBishop = await database.skillTree(forJobID: .arch_bishop)!
+        let archBishop = await database.skillTree(for: .arch_bishop)!
         XCTAssertEqual(archBishop.job, .arch_bishop)
         XCTAssertEqual(archBishop.inherit, [.novice, .acolyte, .priest])
         XCTAssertEqual(archBishop.tree?.count, 22)

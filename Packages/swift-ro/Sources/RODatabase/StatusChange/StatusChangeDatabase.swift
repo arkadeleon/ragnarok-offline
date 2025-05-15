@@ -58,13 +58,13 @@ public actor StatusChangeDatabase {
         _statusChanges
     }
 
-    public func statusChange(forID statusChangeID: StatusChangeID) -> StatusChange? {
+    public func statusChange(for statusChangeID: StatusChangeID) -> StatusChange? {
         _statusChangesByID[statusChangeID]
     }
 
-    public func statusChanges(forIDs statusChangeIDs: [StatusChangeID]) -> [StatusChange] {
+    public func statusChanges(for statusChangeIDs: [StatusChangeID]) -> [StatusChange] {
         statusChangeIDs.compactMap {
-            statusChange(forID: $0)
+            statusChange(for: $0)
         }
     }
 }

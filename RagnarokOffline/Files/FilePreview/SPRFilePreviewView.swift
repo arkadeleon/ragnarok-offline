@@ -50,7 +50,7 @@ struct SPRFilePreviewView: View {
         let spr = try SPR(data: data)
 
         let images = (0..<spr.sprites.count).compactMap { index in
-            spr.image(forSpriteAt: index)
+            spr.imageForSprite(at: index)
         }
 
         let size = images.reduce(CGSize(width: 80, height: 80)) { size, image in

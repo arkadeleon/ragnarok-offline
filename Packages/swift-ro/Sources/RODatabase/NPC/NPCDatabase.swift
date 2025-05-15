@@ -41,7 +41,7 @@ public actor NPCDatabase {
         self.mode = mode
     }
 
-    public func monsterSpawns(forMonster monster: Monster) -> [MonsterSpawn] {
+    public func monsterSpawns(for monster: Monster) -> [MonsterSpawn] {
         restoreScripts()
 
         let monsterSpawns = monsterSpawns.filter { monsterSpawn in

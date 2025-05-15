@@ -15,7 +15,7 @@ extension SPR {
         var rgbaImages = [CGImage?]()
 
         for (index, sprite) in sprites.enumerated() {
-            let image = image(forSpriteAt: index, palette: palette)
+            let image = imageForSprite(at: index, palette: palette)
             switch sprite.type {
             case .indexed:
                 indexedImages.append(image)
@@ -31,7 +31,7 @@ extension SPR {
         return imagesBySpriteType
     }
 
-    public func image(forSpriteAt index: Int, palette: PAL? = nil) -> CGImage? {
+    public func imageForSprite(at index: Int, palette: PAL? = nil) -> CGImage? {
         let sprite = sprites[index]
         let width = Int(sprite.width)
         let height = Int(sprite.height)
