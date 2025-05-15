@@ -1,18 +1,18 @@
 //
-//  ResourcePathProvider.swift
+//  ResourcePathGenerator.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2025/5/8.
 //
 
-final public class ResourcePathProvider: Sendable {
+final public class ResourcePathGenerator: Sendable {
     package let scriptManager: ScriptManager
 
     public init(scriptManager: ScriptManager) {
         self.scriptManager = scriptManager
     }
 
-    public func itemSpritePath(itemID: Int) async -> ResourcePath? {
+    public func generateItemSpritePath(itemID: Int) async -> ResourcePath? {
         guard let resourceName = await scriptManager.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
@@ -20,11 +20,11 @@ final public class ResourcePathProvider: Sendable {
         return ResourcePath.spriteDirectory.appending(["아이템", "\(resourceName)"])
     }
 
-    public func skillSpritePath(skillAegisName: String) -> ResourcePath {
+    public func generateSkillSpritePath(skillAegisName: String) -> ResourcePath {
         ResourcePath.spriteDirectory.appending(["아이템", "\(skillAegisName)"])
     }
 
-    public func itemIconImagePath(itemID: Int) async -> ResourcePath? {
+    public func generateItemIconImagePath(itemID: Int) async -> ResourcePath? {
         guard let resourceName = await scriptManager.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
@@ -32,7 +32,7 @@ final public class ResourcePathProvider: Sendable {
         return ResourcePath.userInterfaceDirectory.appending(["item", "\(resourceName).bmp"])
     }
 
-    public func itemPreviewImagePath(itemID: Int) async -> ResourcePath? {
+    public func generateItemPreviewImagePath(itemID: Int) async -> ResourcePath? {
         guard let resourceName = await scriptManager.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
@@ -40,15 +40,15 @@ final public class ResourcePathProvider: Sendable {
         return ResourcePath.userInterfaceDirectory.appending(["collection", "\(resourceName).bmp"])
     }
 
-    public func skillIconImagePath(skillAegisName: String) -> ResourcePath {
+    public func generateSkillIconImagePath(skillAegisName: String) -> ResourcePath {
         ResourcePath.userInterfaceDirectory.appending(["item", "\(skillAegisName).bmp"])
     }
 
-    public func mapImagePath(mapName: String) -> ResourcePath {
+    public func generateMapImagePath(mapName: String) -> ResourcePath {
         ResourcePath.userInterfaceDirectory.appending(["map", "\(mapName).bmp"])
     }
 
-    public func statusIconImagePath(statusID: Int) async -> ResourcePath? {
+    public func generateStatusIconImagePath(statusID: Int) async -> ResourcePath? {
         guard let iconName = await StatusInfoTable.current.iconName(forStatusID: statusID) else {
             return nil
         }

@@ -13,8 +13,8 @@ final class SpriteResourceTests: XCTestCase {
     func testSpriteResourcePath() async throws {
         let resourceManager = ResourceManager(baseURL: Bundle.module.resourceURL!)
         let scriptManager = ScriptManager(locale: .current, resourceManager: resourceManager)
-        let pathProvider = ResourcePathProvider(scriptManager: scriptManager)
-        let path = await pathProvider.playerBodySpritePath(job: 0, gender: .male)!
+        let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
+        let path = await pathGenerator.generatePlayerBodySpritePath(job: 0, gender: .male)!
         XCTAssertEqual(path.components, ["data", "sprite", "인간족", "몸통", "남", "초보자_남"])
     }
 }

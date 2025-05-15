@@ -62,7 +62,7 @@ class MapScene2D: SKScene, MapSceneProtocol {
 
         for y in 0..<width {
             for x in 0..<height {
-                if world.gat.tile(atX: x, y: y).isWalkable {
+                if world.gat.tileAt(x: x, y: y).isWalkable {
                     let tileNode = SKSpriteNode()
                     tileNode.name = "tile"
                     tileNode.position = CGPoint(x: Int(x) * tileSize, y: Int(y) * tileSize)

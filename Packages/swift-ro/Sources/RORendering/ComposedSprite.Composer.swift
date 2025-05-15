@@ -13,14 +13,14 @@ extension ComposedSprite {
         let resourceManager: ResourceManager
         let scriptManager: ScriptManager
 
-        private let pathProvider: ResourcePathProvider
+        private let pathGenerator: ResourcePathGenerator
 
         init(configuration: ComposedSprite.Configuration, resourceManager: ResourceManager, scriptManager: ScriptManager) {
             self.configuration = configuration
             self.resourceManager = resourceManager
             self.scriptManager = scriptManager
 
-            self.pathProvider = ResourcePathProvider(scriptManager: scriptManager)
+            self.pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
         }
 
         func composePlayerSprite() async -> [ComposedSprite.Part] {
@@ -81,7 +81,7 @@ extension ComposedSprite {
             }
 
             // Body
-            if let bodySpritePath = await pathProvider.nonPlayerSpritePath(job: configuration.job) {
+            if let bodySpritePath = await pathGenerator.generateNonPlayerSpritePath(job: configuration.job) {
                 do {
                     let bodySprite = try await resourceManager.sprite(at: bodySpritePath)
                     let bodyPart = ComposedSprite.Part(sprite: bodySprite, semantic: .main)
@@ -97,7 +97,7 @@ extension ComposedSprite {
         private func shadowPart() async -> ComposedSprite.Part? {
             let shadowSprite: SpriteResource
             do {
-                let spritePath = pathProvider.shadowSpritePath()
+                let spritePath = pathGenerator.generateShadowSpritePath()
                 shadowSprite = try await resourceManager.sprite(at: spritePath)
             } catch {
                 logger.warning("Shadow sprite error: \(error.localizedDescription)")
@@ -123,7 +123,7 @@ extension ComposedSprite {
             var bodyPalette: PaletteResource?
 
             if outfit > 0 {
-                if let spritePath = await pathProvider.alternatePlayerBodySpritePath(job: job, gender: gender, costumeID: outfit, madoType: madoType) {
+                if let spritePath = await pathGenerator.generateAlternatePlayerBodySpritePath(job: job, gender: gender, costumeID: outfit, madoType: madoType) {
                     do {
                         bodySprite = try await resourceManager.sprite(at: spritePath)
                     } catch {
@@ -132,7 +132,7 @@ extension ComposedSprite {
                 }
 
                 if clothesColor > -1 {
-                    if let palettePath = pathProvider.alternatePlayerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, costumeID: outfit, madoType: madoType) {
+                    if let palettePath = pathGenerator.generateAlternatePlayerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, costumeID: outfit, madoType: madoType) {
                         do {
                             bodyPalette = try await resourceManager.palette(at: palettePath)
                         } catch {
@@ -141,7 +141,7 @@ extension ComposedSprite {
                     }
                 }
             } else {
-                if let spritePath = await pathProvider.playerBodySpritePath(job: job, gender: gender, madoType: madoType) {
+                if let spritePath = await pathGenerator.generatePlayerBodySpritePath(job: job, gender: gender, madoType: madoType) {
                     do {
                         bodySprite = try await resourceManager.sprite(at: spritePath)
                     } catch {
@@ -150,7 +150,7 @@ extension ComposedSprite {
                 }
 
                 if clothesColor > -1 {
-                    if let palettePath = pathProvider.playerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, madoType: madoType) {
+                    if let palettePath = pathGenerator.generatePlayerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, madoType: madoType) {
                         do {
                             bodyPalette = try await resourceManager.palette(at: palettePath)
                         } catch {
@@ -176,13 +176,13 @@ extension ComposedSprite {
             let hairStyle = configuration.hairStyle
             let hairColor = configuration.hairColor
 
-            guard let spritePath = pathProvider.playerHeadSpritePath(job: job, hairStyle: hairStyle, gender: gender) else {
+            guard let spritePath = pathGenerator.generatePlayerHeadSpritePath(job: job, hairStyle: hairStyle, gender: gender) else {
                 return nil
             }
 
             var headPalette: PaletteResource?
             if hairColor > -1 {
-                if let palettePath = pathProvider.playerHeadPalettePath(job: job, hairStyle: hairStyle, hairColor: hairColor, gender: gender) {
+                if let palettePath = pathGenerator.generatePlayerHeadPalettePath(job: job, hairStyle: hairStyle, hairColor: hairColor, gender: gender) {
                     do {
                         headPalette = try await resourceManager.palette(at: palettePath)
                     } catch {
@@ -216,7 +216,7 @@ extension ComposedSprite {
                 return nil
             }
 
-            guard let spritePath = await pathProvider.weaponSpritePath(job: job, weapon: weapon, isSlash: false, gender: gender, madoType: madoType) else {
+            guard let spritePath = await pathGenerator.generateWeaponSpritePath(job: job, weapon: weapon, isSlash: false, gender: gender, madoType: madoType) else {
                 return nil
             }
 
@@ -242,7 +242,7 @@ extension ComposedSprite {
                 return nil
             }
 
-            guard let spritePath = await pathProvider.weaponSpritePath(job: job, weapon: weapon, isSlash: true, gender: gender, madoType: madoType) else {
+            guard let spritePath = await pathGenerator.generateWeaponSpritePath(job: job, weapon: weapon, isSlash: true, gender: gender, madoType: madoType) else {
                 return nil
             }
 
@@ -267,7 +267,7 @@ extension ComposedSprite {
                 return nil
             }
 
-            guard let spritePath = await pathProvider.shieldSpritePath(job: job, shield: shield, gender: gender) else {
+            guard let spritePath = await pathGenerator.generateShieldSpritePath(job: job, shield: shield, gender: gender) else {
                 return nil
             }
 
@@ -291,7 +291,7 @@ extension ComposedSprite {
                 return nil
             }
 
-            guard let spritePath = await pathProvider.headgearSpritePath(headgear: headgear, gender: gender) else {
+            guard let spritePath = await pathGenerator.generateHeadgearSpritePath(headgear: headgear, gender: gender) else {
                 return nil
             }
 
@@ -320,7 +320,7 @@ extension ComposedSprite {
                 return nil
             }
 
-            guard let spritePath = await pathProvider.garmentSpritePath(job: job, garment: garment, gender: gender) else {
+            guard let spritePath = await pathGenerator.generateGarmentSpritePath(job: job, garment: garment, gender: gender) else {
                 return nil
             }
 

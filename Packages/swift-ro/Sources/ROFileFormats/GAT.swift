@@ -71,7 +71,7 @@ extension GAT {
 }
 
 extension GAT {
-    public func tile(atX x: Int, y: Int) -> GAT.Tile {
+    public func tileAt(x: Int, y: Int) -> GAT.Tile {
         let index = x + y * Int(width)
         let tile = tiles[index]
         return tile

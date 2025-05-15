@@ -142,8 +142,8 @@ class MapScene3D: MapSceneProtocol {
         camera.transform = cameraTransform(for: player.position)
         rootEntity.addChild(camera)
 
-        let pathProvider = ResourcePathProvider(scriptManager: .shared)
-        if let bgmPath = await pathProvider.mapBGMPath(mapName: mapName) {
+        let pathGenerator = ResourcePathGenerator(scriptManager: .shared)
+        if let bgmPath = await pathGenerator.generateMapBGMPath(mapName: mapName) {
             let bgmURL = ResourceManager.shared.baseURL.appending(path: bgmPath)
             let configuration = AudioFileResource.Configuration(shouldLoop: true, calibration: .relative(dBSPL: 20 * log10(10)))
             if let audio = try? await AudioFileResource(contentsOf: bgmURL, withName: mapName, configuration: configuration) {
@@ -182,7 +182,7 @@ class MapScene3D: MapSceneProtocol {
     }
 
     private func position3D(for position2D: SIMD2<Int16>) -> SIMD3<Float> {
-        let altitude = world.gat.tile(atX: Int(position2D.x), y: Int(position2D.y)).averageAltitude
+        let altitude = world.gat.tileAt(x: Int(position2D.x), y: Int(position2D.y)).averageAltitude
         let position: SIMD3<Float> = [
             Float(position2D.x),
             -altitude / 5,
@@ -277,8 +277,8 @@ class MapScene3D: MapSceneProtocol {
 
     func onItemSpawned(_ event: ItemEvents.Spawned) {
         Task {
-            let pathProvider = ResourcePathProvider(scriptManager: .shared)
-            guard let path = await pathProvider.itemSpritePath(itemID: Int(event.item.itemID)) else {
+            let pathGenerator = ResourcePathGenerator(scriptManager: .shared)
+            guard let path = await pathGenerator.generateItemSpritePath(itemID: Int(event.item.itemID)) else {
                 return
             }
 

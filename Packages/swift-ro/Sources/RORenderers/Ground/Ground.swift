@@ -26,7 +26,7 @@ public struct Ground {
     public init(gat: GAT, gnd: GND, textureProvider: (String) -> (any MTLTexture)?) {
         width = Int(gat.width)
         height = Int(gat.height)
-        altitude = gat.tile(atX: width / 2, y: height / 2).averageAltitude
+        altitude = gat.tileAt(x: width / 2, y: height / 2).averageAltitude
 
         meshes = gnd.textures.map { textureName in
             let texture = textureProvider(textureName)

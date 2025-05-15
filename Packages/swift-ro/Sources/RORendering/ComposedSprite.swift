@@ -42,8 +42,8 @@ final public class ComposedSprite: Sendable {
         if configuration.job.isPlayer {
             parts = await composer.composePlayerSprite()
 
-            let pathProvider = ResourcePathProvider(scriptManager: scriptManager)
-            if let imfPath = pathProvider.imfPath(job: configuration.job, gender: configuration.gender) {
+            let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
+            if let imfPath = pathGenerator.generateIMFPath(job: configuration.job, gender: configuration.gender) {
                 do {
                     let imfPath = imfPath.appendingPathExtension("imf")
                     let imfData = try await resourceManager.contentsOfResource(at: imfPath)

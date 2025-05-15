@@ -44,7 +44,7 @@ public class TileEntityManager {
                 tileEntity.components.set(TileComponent(x: x, y: y))
 
                 if 0..<Int(gat.width) ~= x && 0..<Int(gat.height) ~= y {
-                    let tile = gat.tile(atX: x, y: y)
+                    let tile = gat.tileAt(x: x, y: y)
                     let altitude = tile.averageAltitude / 5
                     tileEntity.position = [Float(x) + 0.5, -altitude, -(Float(y) + 0.5)]
 
@@ -76,7 +76,7 @@ public class TileEntityManager {
                 tileEntity.components.set(TileComponent(x: x, y: y))
 
                 if 0..<Int(gat.width) ~= x && 0..<Int(gat.height) ~= y {
-                    let tile = gat.tile(atX: x, y: y)
+                    let tile = gat.tileAt(x: x, y: y)
                     let altitude = tile.averageAltitude / 5
                     tileEntity.position = [Float(x) + 0.5, -altitude, -(Float(y) + 0.5)]
 

@@ -74,7 +74,7 @@ extension Map {
             self.cells = cells
         }
 
-        public func cell(atX x: Int16, y: Int16) -> Map.Cell {
+        public func cellAt(x: Int16, y: Int16) -> Map.Cell {
             let index = Int(x) + Int(y) * Int(xs)
             let cell = cells[index]
             return cell

@@ -19,8 +19,8 @@ extension MapMP3NameTable {
     static let shared = MapMP3NameTable(resourceManager: .shared)
 }
 
-extension ResourcePathProvider {
-    func mapBGMPath(mapName: String) async -> ResourcePath? {
+extension ResourcePathGenerator {
+    func generateMapBGMPath(mapName: String) async -> ResourcePath? {
         guard let mp3Name = await MapMP3NameTable.shared.mapMP3Name(forMapName: mapName) else {
             return nil
         }
