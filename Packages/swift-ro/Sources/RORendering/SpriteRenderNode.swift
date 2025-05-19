@@ -128,7 +128,12 @@ extension SpriteRenderNode {
     }
 
     init(layerNodeWithSprite sprite: SpriteResource, layer: ACT.Layer, parentOffset: SIMD2<Int32>, scale: CGFloat) {
-        guard let image = sprite.image(for: layer), layer.color.alpha != 0 else {
+        guard layer.color.alpha != 0 else {
+            self = .null
+            return
+        }
+
+        guard let image = sprite.image(for: layer), image.width * image.height > 1 else {
             self = .null
             return
         }
