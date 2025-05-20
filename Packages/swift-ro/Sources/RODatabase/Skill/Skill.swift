@@ -448,7 +448,7 @@ extension Skill {
         public var ammoAmount: EitherNode<Int, [Int]>
 
         /// Special state required to cast. (Default: None)
-        public var state: String?
+        public var state: SkillStateRequirement
 
         /// Status change required to cast. (Default: nullptr)
         public var status: [String]
@@ -652,7 +652,7 @@ extension Skill {
             self.weapon = try container.decodeIfPresent([WeaponType : Bool].self, forKey: .weapon)?.unorderedKeys ?? []
             self.ammo = try container.decodeIfPresent([AmmoType : Bool].self, forKey: .ammo)?.unorderedKeys ?? []
             self.ammoAmount = try container.decodeIfPresent(EitherNode<Int, [LevelAmmoAmount]>.self, forKey: .ammoAmount)?.mapRight { $0.map { $0.ammoAmount } } ?? .left(0)
-            self.state = try container.decodeIfPresent(String.self, forKey: .state)
+            self.state = try container.decodeIfPresent(SkillStateRequirement.self, forKey: .state) ?? .none
             self.status = try container.decodeIfPresent([String : Bool].self, forKey: .status)?.keys.map({ $0 }) ?? []
             self.spiritSphereCost = try container.decodeIfPresent(EitherNode<Int, [LevelSpiritSphereCost]>.self, forKey: .spiritSphereCost)?.mapRight { $0.map { $0.spiritSphereCost } } ?? .left(0)
             self.itemCost = try container.decodeIfPresent([LevelItemCost].self, forKey: .itemCost) ?? []
@@ -666,10 +666,10 @@ extension Skill {
     public struct Unit: Decodable, Equatable, Hashable, Sendable {
 
         /// Skill unit ID.
-        public var id: String
+        public var id: SkillUnitID
 
         /// Alternate skill unit ID. (Default: 0)
-        public var alternateId: String?
+        public var alternateId: SkillUnitID?
 
         /// Skill unit layout. (Default: 0)
         public var layout: EitherNode<Int, [Int]>
@@ -726,8 +726,8 @@ extension Skill {
 
         public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.id = try container.decode(String.self, forKey: .id)
-            self.alternateId = try container.decodeIfPresent(String.self, forKey: .alternateId)
+            self.id = try container.decode(SkillUnitID.self, forKey: .id)
+            self.alternateId = try container.decodeIfPresent(SkillUnitID.self, forKey: .alternateId)
             self.layout = try container.decodeIfPresent(EitherNode<Int, [LevelLayout]>.self, forKey: .layout)?.mapRight { $0.map { $0.layout } } ?? .left(0)
             self.range = try container.decodeIfPresent(EitherNode<Int, [LevelRange]>.self, forKey: .range)?.mapRight { $0.map { $0.range } } ?? .left(0)
             self.interval = try container.decodeIfPresent(Int.self, forKey: .interval) ?? 0

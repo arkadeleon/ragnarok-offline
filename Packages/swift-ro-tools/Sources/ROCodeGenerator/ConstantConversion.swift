@@ -54,6 +54,16 @@ let allConstantConversions: [ConstantConversion] = [
     ),
     .cEnum(
         source: "common/mmo.hpp",
+        type: "e_guild_skill",
+        exclude: [
+            "GD_SKILLBASE",
+            "GD_MAX",
+        ],
+        outputType: "GuildSkillID",
+        extensions: [.decodable]
+    ),
+    .cEnum(
+        source: "common/mmo.hpp",
         type: "e_job",
         prefix: "JOB_",
         exclude: [
@@ -372,6 +382,29 @@ let allConstantConversions: [ConstantConversion] = [
         ],
         outputType: "SkillUnitFlag",
         extensions: [.decodable]
+    ),
+    .cEnum(
+        source: "map/skill.hpp",
+        type: "e_require_state",
+        prefix: "ST_",
+        outputType: "SkillStateRequirement",
+        extensions: [.decodable]
+    ),
+    .cEnum(
+        source: "map/skill.hpp",
+        type: "e_skill",
+        outputType: "SkillID",
+        extensions: [.decodable]
+    ),
+    .cEnum(
+        source: "map/skill.hpp",
+        type: "e_skill_unit_id",
+        prefix: "UNT_",
+        exclude: [
+            "UNT_MAX",
+        ],
+        outputType: "SkillUnitID",
+        extensions: [.rawRepresentable, .decodable]
     ),
     // MARK: - map/status.hpp
     .cEnum(
