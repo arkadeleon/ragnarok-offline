@@ -1014,6 +1014,7 @@ public enum StatusChangeID: Int, CaseIterable, Sendable {
     case sbunshin = 1024
     case contents_34 = 1025
     case contents_35 = 1026
+    case noaction = 1027
 }
 
 extension StatusChangeID: CodingKey {
@@ -2026,6 +2027,7 @@ extension StatusChangeID: CodingKey {
         case .sbunshin: "SBUNSHIN"
         case .contents_34: "CONTENTS_34"
         case .contents_35: "CONTENTS_35"
+        case .noaction: "NOACTION"
         }
     }
 
@@ -3038,6 +3040,7 @@ extension StatusChangeID: CodingKey {
         case "SBUNSHIN": self = .sbunshin
         case "CONTENTS_34": self = .contents_34
         case "CONTENTS_35": self = .contents_35
+        case "NOACTION": self = .noaction
         default: return nil
         }
     }
