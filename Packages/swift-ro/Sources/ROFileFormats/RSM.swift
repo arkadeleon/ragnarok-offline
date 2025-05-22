@@ -16,8 +16,6 @@ public struct RSM: BinaryDecodable, Sendable {
     public var shadeType: Int32
     public var alpha: UInt8
 
-    public var textures: [String] = []
-
     public var rootNodes: [String] = []
     public var nodes: [RSM.Node] = []
 
@@ -49,6 +47,8 @@ public struct RSM: BinaryDecodable, Sendable {
         } else {
             alpha = 255
         }
+
+        var textures: [String] = []
 
         if version >= "2.3" {
             let fps = try decoder.decode(Float.self)
@@ -93,7 +93,8 @@ public struct RSM: BinaryDecodable, Sendable {
 
         let nodeCount = try decoder.decode(Int32.self)
         for _ in 0..<nodeCount {
-            let node = try decoder.decode(RSM.Node.self, configuration: version)
+            let configuration = RSM.Node.BinaryDecodingConfiguration(version: version, textures: textures)
+            let node = try decoder.decode(RSM.Node.self, configuration: configuration)
             nodes.append(node)
         }
 
@@ -129,6 +130,11 @@ extension RSM {
 
 extension RSM {
     public struct Node: BinaryDecodableWithConfiguration, Sendable {
+        public struct BinaryDecodingConfiguration {
+            public var version: String
+            public var textures: [String]
+        }
+
         public struct TextureVertex: Sendable {
             public var color: UInt32
             public var u: Float
@@ -139,7 +145,6 @@ extension RSM {
         public var parentName: String
 
         public var textures: [String] = []
-        public var textureIndices: [Int32] = []
 
         public var transformationMatrix: simd_float3x3
         public var offset: SIMD3<Float>
@@ -157,7 +162,9 @@ extension RSM {
         public var rotationKeyframes: [RSM.RotationKeyframe] = []
         public var positionKeyframes: [RSM.PositionKeyframe] = []
 
-        public init(from decoder: BinaryDecoder, configuration version: String) throws {
+        public init(from decoder: BinaryDecoder, configuration: BinaryDecodingConfiguration) throws {
+            let version = configuration.version
+
             if version >= "2.2" {
                 let nameLength = try decoder.decode(Int32.self)
                 name = try decoder.decode(String.self, lengthOfBytes: Int(nameLength))
@@ -171,17 +178,17 @@ extension RSM {
 
             if version >= "2.3" {
                 let textureCount = try decoder.decode(Int32.self)
-                for textureIndex in 0..<textureCount {
+                for _ in 0..<textureCount {
                     let textureNameLength = try decoder.decode(Int32.self)
                     let textureName = try decoder.decode(String.self, lengthOfBytes: Int(textureNameLength))
                     textures.append(textureName)
-                    textureIndices.append(textureIndex)
                 }
             } else {
                 let textureCount = try decoder.decode(Int32.self)
                 for _ in 0..<textureCount {
                     let textureIndex = try decoder.decode(Int32.self)
-                    textureIndices.append(textureIndex)
+                    let textureName = configuration.textures[Int(textureIndex)]
+                    textures.append(textureName)
                 }
             }
 

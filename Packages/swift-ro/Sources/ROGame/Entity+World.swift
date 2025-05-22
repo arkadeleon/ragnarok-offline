@@ -19,8 +19,10 @@ extension Entity {
 
         let uniqueModelNames = Set(world.rsw.models.map({ $0.modelName }))
 
+        metric.beginMeasuring("Load model entities")
+
         let modelEntitiesByName = await withThrowingTaskGroup(
-            of: (modelName: String, modelEntity: Entity).self,
+            of: Entity.self,
             returning: [String : Entity].self
         ) { taskGroup in
             for modelName in uniqueModelNames {
@@ -28,19 +30,25 @@ extension Entity {
                     let components = modelName.split(separator: "\\").map(String.init)
                     let modelPath = ResourcePath.modelDirectory.appending(components)
                     let model = try await resourceManager.model(at: modelPath)
-                    let modelEntity = try await Entity.modelEntity(model: model, resourceManager: resourceManager)
-                    return (modelName, modelEntity)
+                    let modelEntity = try await Entity.modelEntity(model: model, name: modelName, resourceManager: resourceManager)
+                    return modelEntity
                 }
             }
 
             var modelEntitiesByName: [String : Entity] = [:]
-            while !taskGroup.isEmpty {
-                if let result = try? await taskGroup.next() {
-                    modelEntitiesByName[result.modelName] = result.modelEntity
+
+            do {
+                for try await modelEntity in taskGroup {
+                    modelEntitiesByName[modelEntity.name] = modelEntity
                 }
+            } catch {
+                logger.warning("\(error.localizedDescription)")
             }
+
             return modelEntitiesByName
         }
+
+        metric.endMeasuring("Load model entities")
 
         for model in world.rsw.models {
             guard let modelEntity = modelEntitiesByName[model.modelName] else {

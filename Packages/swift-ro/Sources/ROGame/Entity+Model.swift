@@ -13,7 +13,7 @@ import RORendering
 import ROResources
 
 extension Entity {
-    public static func modelEntity(model: ModelResource, resourceManager: ResourceManager) async throws -> Entity {
+    public static func modelEntity(model: ModelResource, name: String, resourceManager: ResourceManager) async throws -> Entity {
         let instance = Model.createInstance(
             position: .zero,
             rotation: .zero,
@@ -22,11 +22,14 @@ extension Entity {
             height: 0
         )
 
+        logger.debug("\(name): \(model.rsm.version)")
+
         let modelEntity = try await Entity.modelEntity(rsm: model.rsm, instance: instance, resourceManager: resourceManager)
+        modelEntity.name = name
         return modelEntity
     }
 
-    public static func modelEntity(rsm: RSM, instance: float4x4, resourceManager: ResourceManager) async throws -> Entity {
+    public static func modelEntity(rsm: RSM, instance: simd_float4x4, resourceManager: ResourceManager) async throws -> Entity {
         let model = Model(rsm: rsm, instance: instance)
 
         var materials: [any Material] = []

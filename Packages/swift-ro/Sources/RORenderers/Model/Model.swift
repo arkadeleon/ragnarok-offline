@@ -55,25 +55,11 @@ public struct Model {
             }
         }
 
-        meshes = rsm.textures.map { textureName in
-            let mesh = ModelMesh(textureName: textureName)
-            return mesh
-        }
-
-        if rsm.version >= "2.3" {
-            for wrapper in wrappers {
-                let ms = wrapper.compile(rsm: rsm, instance_matrix: instance, boundingBox: boundingBox)
-                for (i, m) in ms.enumerated() {
-                    let mesh = ModelMesh(vertices: m, textureName: wrapper.node.textures[i])
-                    meshes.append(mesh)
-                }
-            }
-        } else {
-            for wrapper in wrappers {
-                let ms = wrapper.compile(rsm: rsm, instance_matrix: instance, boundingBox: boundingBox)
-                for (i, m) in ms.enumerated() {
-                    meshes[i].vertices.append(contentsOf: m)
-                }
+        for wrapper in wrappers {
+            let ms = wrapper.compile(rsm: rsm, instance_matrix: instance, boundingBox: boundingBox)
+            for (textureName, vertices) in ms {
+                let mesh = ModelMesh(vertices: vertices, textureName: textureName)
+                meshes.append(mesh)
             }
         }
     }
@@ -161,7 +147,7 @@ class ModelNodeWrapper {
         }
     }
 
-    func compile(rsm: RSM, instance_matrix: simd_float4x4, boundingBox: ModelBoundingBox) -> [[ModelVertex]] {
+    func compile(rsm: RSM, instance_matrix: simd_float4x4, boundingBox: ModelBoundingBox) -> [String : [ModelVertex]] {
         var shadeGroup = [[SIMD3<Float>]](repeating: [], count: 32)
         var shadeGroupUsed = [Bool](repeating: false, count: 32)
 
@@ -187,8 +173,10 @@ class ModelNodeWrapper {
 
         var face_normal = [SIMD3<Float>](repeating: .zero, count: node.faces.count)
 
-        let maxTexture = node.textureIndices.max() ?? -1
-        var mesh = [[ModelVertex]](repeating: [], count: Int(maxTexture) + 1)
+        var mesh: [String : [ModelVertex]] = [:]
+        for textureName in node.textures {
+            mesh[textureName] = []
+        }
 
         switch rsm.shadeType {
         case RSM.RSMShadingType.none.rawValue:
@@ -268,10 +256,11 @@ class ModelNodeWrapper {
         }
     }
 
-    func generate_mesh_FLAT(vert: [SIMD3<Float>], norm: [SIMD3<Float>], alpha: UInt8, mesh: inout [[ModelVertex]]) {
+    func generate_mesh_FLAT(vert: [SIMD3<Float>], norm: [SIMD3<Float>], alpha: UInt8, mesh: inout [String : [ModelVertex]]) {
         var k = 0
         for face in node.faces {
-            let t = Int(node.textureIndices[Int(face.textureIndex)])
+            let textureIndex = Int(face.textureIndex)
+            let textureName = node.textures[textureIndex]
 
             for j in 0..<3 {
                 let a = Int(face.vertexIndices[j])
@@ -282,22 +271,23 @@ class ModelNodeWrapper {
                     normal: norm[k],
                     textureCoordinate: [
                         node.tvertices[b].u,
-                        node.tvertices[b].v
+                        node.tvertices[b].v,
                     ],
                     alpha: Float(alpha) / 255
                 )
-                mesh[t].append(vertex)
+                mesh[textureName]?.append(vertex)
             }
 
             k += 1
         }
     }
 
-    func generate_mesh_SMOOTH(vert: [SIMD3<Float>], shadeGroup: [[SIMD3<Float>]], alpha: UInt8, mesh: inout [[ModelVertex]]) {
+    func generate_mesh_SMOOTH(vert: [SIMD3<Float>], shadeGroup: [[SIMD3<Float>]], alpha: UInt8, mesh: inout [String : [ModelVertex]]) {
         for face in node.faces {
             let norm = shadeGroup[Int(face.smoothGroup[0])]
 
-            let t = Int(node.textureIndices[Int(face.textureIndex)])
+            let textureIndex = Int(face.textureIndex)
+            let textureName = node.textures[textureIndex]
 
             for j in 0..<3 {
                 let a = Int(face.vertexIndices[j])
@@ -308,11 +298,11 @@ class ModelNodeWrapper {
                     normal: norm[a],
                     textureCoordinate: [
                         node.tvertices[b].u,
-                        node.tvertices[b].v
+                        node.tvertices[b].v,
                     ],
                     alpha: Float(alpha) / 255
                 )
-                mesh[t].append(vertex)
+                mesh[textureName]?.append(vertex)
             }
         }
     }
