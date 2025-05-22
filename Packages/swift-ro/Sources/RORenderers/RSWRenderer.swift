@@ -18,13 +18,20 @@ public class RSWRenderer: Renderer {
 
     public let camera: Camera
 
-    public init(device: any MTLDevice, ground: Ground, water: Water, models: [Model]) throws {
+    public init(
+        device: any MTLDevice,
+        ground: Ground,
+        water: Water,
+        models: [Model],
+        textures: [String : any MTLTexture],
+        waterTextures: [any MTLTexture]
+    ) throws {
         self.device = device
 
         let library = ROCreateShadersLibrary(device)!
-        groundRenderer = try GroundRenderer(device: device, library: library, ground: ground)
-        waterRenderer = try WaterRenderer(device: device, library: library, water: water)
-        modelRenderer = try ModelRenderer(device: device, library: library, models: models)
+        groundRenderer = try GroundRenderer(device: device, library: library, ground: ground, textures: textures)
+        waterRenderer = try WaterRenderer(device: device, library: library, water: water, textures: waterTextures)
+        modelRenderer = try ModelRenderer(device: device, library: library, models: models, textures: textures)
 
         camera = Camera()
         camera.defaultDistance = -ground.altitude / 5 + 200
@@ -33,8 +40,12 @@ public class RSWRenderer: Renderer {
         camera.farZ = 500
     }
 
-    public func render(atTime time: CFTimeInterval, viewport: CGRect, commandBuffer: any MTLCommandBuffer, renderPassDescriptor: MTLRenderPassDescriptor) {
-
+    public func render(
+        atTime time: CFTimeInterval,
+        viewport: CGRect,
+        commandBuffer: any MTLCommandBuffer,
+        renderPassDescriptor: MTLRenderPassDescriptor
+    ) {
 //        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .store

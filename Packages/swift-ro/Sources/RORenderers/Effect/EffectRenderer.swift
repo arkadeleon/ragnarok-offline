@@ -14,6 +14,7 @@ class EffectRenderer {
     let depthStencilState: (any MTLDepthStencilState)?
 
     let effect: Effect
+    let textures: [String : any MTLTexture]
 
     let fog = Fog(
         use: false,
@@ -24,7 +25,7 @@ class EffectRenderer {
         color: [1, 1, 1]
     )
 
-    init(device: any MTLDevice, library: any MTLLibrary, effect: Effect) throws {
+    init(device: any MTLDevice, library: any MTLLibrary, effect: Effect, textures: [String : any MTLTexture]) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "effectVertexShader")
@@ -48,14 +49,16 @@ class EffectRenderer {
         self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
 
         self.effect = effect
+        self.textures = textures
     }
 
-    func render(atTime time: CFTimeInterval,
-                renderCommandEncoder: any MTLRenderCommandEncoder,
-                modelMatrix: simd_float4x4,
-                viewMatrix: simd_float4x4,
-                projectionMatrix: simd_float4x4) {
-
+    func render(
+        atTime time: CFTimeInterval,
+        renderCommandEncoder: any MTLRenderCommandEncoder,
+        modelMatrix: simd_float4x4,
+        viewMatrix: simd_float4x4,
+        projectionMatrix: simd_float4x4
+    ) {
         let device = renderCommandEncoder.device
 
         let frameIndex = Int(time * CFTimeInterval(effect.fps)) % effect.frames.count
@@ -97,7 +100,8 @@ class EffectRenderer {
 
             renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
-            renderCommandEncoder.setFragmentTexture(sprite.texture, index: 0)
+            let texture = textures[sprite.textureName]
+            renderCommandEncoder.setFragmentTexture(texture, index: 0)
 
             renderCommandEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: sprite.vertices.count)
         }

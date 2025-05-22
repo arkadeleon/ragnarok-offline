@@ -5,19 +5,17 @@
 //  Created by Leon Li on 2023/11/27.
 //
 
-import Metal
 import ROFileFormats
 import ROShaders
 
 public struct WaterMesh {
     public var vertices: [WaterVertex] = []
-    public var textures: [(any MTLTexture)?] = []
 }
 
 public struct Water {
     public var mesh: WaterMesh
 
-    public init(gnd: GND, rsw: RSW, textureProvider: (String) -> (any MTLTexture)?) {
+    public init(gnd: GND, rsw: RSW) {
         var vertices: [WaterVertex] = []
 
         let width = Int(gnd.width)
@@ -73,13 +71,6 @@ public struct Water {
             }
         }
 
-        var textures: [(any MTLTexture)?] = []
-        for i in 0..<32 {
-            let textureName = String(format: "워터\\water%03d.jpg", i)
-            let texture = textureProvider(textureName)
-            textures.append(texture)
-        }
-
-        mesh = WaterMesh(vertices: vertices, textures: textures)
+        mesh = WaterMesh(vertices: vertices)
     }
 }

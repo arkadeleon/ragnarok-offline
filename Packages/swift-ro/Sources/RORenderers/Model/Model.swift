@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2023/11/27.
 //
 
-import Metal
 import ROCore
 import ROFileFormats
 import ROShaders
@@ -13,7 +12,7 @@ import simd
 
 public struct ModelMesh {
     public var vertices: [ModelVertex] = []
-    public var texture: (any MTLTexture)?
+    public var textureName: String
 }
 
 public struct ModelBoundingBox {
@@ -33,7 +32,7 @@ public struct Model {
     public var meshes: [ModelMesh] = []
     public var boundingBox: ModelBoundingBox
 
-    public init(rsm: RSM, instance: simd_float4x4, textureProvider: (String) -> (any MTLTexture)?) {
+    public init(rsm: RSM, instance: simd_float4x4) {
         boundingBox = ModelBoundingBox()
 
         let wrappers = rsm.nodes.map(ModelNodeWrapper.init)
@@ -57,8 +56,7 @@ public struct Model {
         }
 
         meshes = rsm.textures.map { textureName in
-            let texture = textureProvider(textureName)
-            let mesh = ModelMesh(texture: texture)
+            let mesh = ModelMesh(textureName: textureName)
             return mesh
         }
 
@@ -66,7 +64,7 @@ public struct Model {
             for wrapper in wrappers {
                 let ms = wrapper.compile(rsm: rsm, instance_matrix: instance, boundingBox: boundingBox)
                 for (i, m) in ms.enumerated() {
-                    let mesh = ModelMesh(vertices: m, texture: textureProvider(wrapper.node.textures[i]))
+                    let mesh = ModelMesh(vertices: m, textureName: wrapper.node.textures[i])
                     meshes.append(mesh)
                 }
             }

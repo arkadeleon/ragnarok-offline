@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2023/11/24.
 //
 
-import Metal
 import ROFileFormats
 import ROShaders
 
@@ -13,7 +12,7 @@ public struct Effect {
     public var fps: Int
     public var frames: [Frame] = []
 
-    public init(str: STR, textureProvider: (String) -> (any MTLTexture)?) {
+    public init(str: STR) {
         fps = Int(str.fps)
 
         let frameCount = str.maxKeyframeIndex + 1
@@ -58,7 +57,6 @@ public struct Effect {
                 }
 
                 let textureName = layer.textures[Int(from.textureIndex)]
-                let texture = textureProvider(textureName)
 
                 // Static frame (or frame that can't be updated)
                 if (toId != fromId + 1 || to?.frameIndex != from.frameIndex) {
@@ -68,7 +66,14 @@ public struct Effect {
                         continue
                     }
 
-                    let sprite = Sprite(uv: from.uv, xy: from.xy, texture: texture, position: from.position, angle: from.angle, color: from.color)
+                    let sprite = Sprite(
+                        uv: from.uv,
+                        xy: from.xy,
+                        textureName: textureName,
+                        position: from.position,
+                        angle: from.angle,
+                        color: from.color
+                    )
                     sprites.append(sprite)
 
                     continue
@@ -85,7 +90,14 @@ public struct Effect {
                 let angle = from.angle + to.angle * Float(delta)
                 let color = from.color + to.color * Float(delta)
 
-                let sprite = Sprite(uv: uv, xy: xy, texture: texture, position: position, angle: angle, color: color)
+                let sprite = Sprite(
+                    uv: uv,
+                    xy: xy,
+                    textureName: textureName,
+                    position: position,
+                    angle: angle,
+                    color: color
+                )
                 sprites.append(sprite)
 
 //                switch (to.anitype) {
@@ -126,13 +138,20 @@ extension Effect {
 extension Effect {
     public struct Sprite {
         public var vertices: [EffectVertex] = []
-        public var texture: (any MTLTexture)?
+        public var textureName: String
 
         public var position: SIMD2<Float>
         public var angle: Float
         public var color: SIMD4<Float>
 
-        init(uv: SIMD8<Float>, xy: SIMD8<Float>, texture: (any MTLTexture)?, position: SIMD2<Float>, angle: Float, color: SIMD4<Float>) {
+        init(
+            uv: SIMD8<Float>,
+            xy: SIMD8<Float>,
+            textureName: String,
+            position: SIMD2<Float>,
+            angle: Float,
+            color: SIMD4<Float>
+        ) {
             let v0 = EffectVertex(
                 position: [xy[0], xy[4]],
                 textureCoordinate: [0, 0]   // [uv[0], uv[1]]
@@ -152,7 +171,7 @@ extension Effect {
 
             vertices = [v0, v1, v2, v3]
 
-            self.texture = texture
+            self.textureName = textureName
 
             self.position = position
             self.angle = angle

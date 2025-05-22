@@ -16,15 +16,19 @@ public class STRRenderer: Renderer {
 
     public let camera = Camera()
 
-    public init(device: any MTLDevice, effect: Effect) throws {
+    public init(device: any MTLDevice, effect: Effect, textures: [String : any MTLTexture]) throws {
         self.device = device
 
         let library = ROCreateShadersLibrary(device)!
-        effectRenderer = try EffectRenderer(device: device, library: library, effect: effect)
+        effectRenderer = try EffectRenderer(device: device, library: library, effect: effect, textures: textures)
     }
 
-    public func render(atTime time: CFTimeInterval, viewport: CGRect, commandBuffer: any MTLCommandBuffer, renderPassDescriptor: MTLRenderPassDescriptor) {
-
+    public func render(
+        atTime time: CFTimeInterval,
+        viewport: CGRect,
+        commandBuffer: any MTLCommandBuffer,
+        renderPassDescriptor: MTLRenderPassDescriptor
+    ) {
 //        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .store

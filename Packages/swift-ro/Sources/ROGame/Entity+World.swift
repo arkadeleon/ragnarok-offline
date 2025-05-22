@@ -67,15 +67,11 @@ extension Entity {
     }
 
     public static func groundEntity(gat: GAT, gnd: GND, resourceManager: ResourceManager) async throws -> Entity {
-        var textureNames = [String]()
-        let ground = Ground(gat: gat, gnd: gnd) { textureName in
-            textureNames.append(textureName)
-            return nil
-        }
+        let ground = Ground(gat: gat, gnd: gnd)
 
         var materials: [any Material] = []
-        for textureName in textureNames {
-            let components = textureName.split(separator: "\\").map(String.init)
+        for mesh in ground.meshes {
+            let components = mesh.textureName.split(separator: "\\").map(String.init)
             let texturePath = ResourcePath.textureDirectory.appending(components)
             let textureImage = try? await resourceManager.image(at: texturePath)
 
@@ -84,7 +80,7 @@ extension Entity {
                 continue
             }
 
-            let textureResource = try? await TextureResource(image: textureImage, withName: textureName, options: .init(semantic: .color))
+            let textureResource = try? await TextureResource(image: textureImage, withName: mesh.textureName, options: .init(semantic: .color))
 
             guard let textureResource else {
                 materials.append(SimpleMaterial())

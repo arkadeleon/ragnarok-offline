@@ -48,8 +48,12 @@ class MetalCubeRenderer: Renderer {
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)!
     }
 
-    func render(atTime time: CFTimeInterval, viewport: CGRect, commandBuffer: any MTLCommandBuffer, renderPassDescriptor: MTLRenderPassDescriptor) {
-
+    func render(
+        atTime time: CFTimeInterval,
+        viewport: CGRect,
+        commandBuffer: any MTLCommandBuffer,
+        renderPassDescriptor: MTLRenderPassDescriptor
+    ) {
         renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .store
@@ -70,7 +74,12 @@ class MetalCubeRenderer: Renderer {
         renderCommandEncoder.endEncoding()
     }
 
-    func render(_ object: Object3D, atTime time: CFTimeInterval, encoder: any MTLRenderCommandEncoder, size: CGSize) {
+    func render(
+        _ object: Object3D,
+        atTime time: CFTimeInterval,
+        encoder: any MTLRenderCommandEncoder,
+        size: CGSize
+    ) {
         scene.camera.update(size: size)
 
         let modelMatrix = matrix_rotate(matrix_identity_float4x4, Float(radians(time.truncatingRemainder(dividingBy: 8) * 360 / 8)), [0.5, 1, 0])

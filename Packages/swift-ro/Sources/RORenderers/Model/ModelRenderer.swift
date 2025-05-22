@@ -14,6 +14,7 @@ class ModelRenderer {
     let depthStencilState: (any MTLDepthStencilState)?
 
     let models: [Model]
+    let textures: [String : any MTLTexture]
 
     let fog = Fog(
         use: false,
@@ -31,7 +32,7 @@ class ModelRenderer {
         direction: [0, 1, 0]
     )
 
-    init(device: any MTLDevice, library: any MTLLibrary, models: [Model]) throws {
+    init(device: any MTLDevice, library: any MTLLibrary, models: [Model], textures: [String : any MTLTexture]) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "modelVertexShader")
@@ -55,15 +56,17 @@ class ModelRenderer {
         self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
 
         self.models = models
+        self.textures = textures
     }
 
-    func render(atTime time: CFTimeInterval,
-                renderCommandEncoder: any MTLRenderCommandEncoder,
-                modelMatrix: simd_float4x4,
-                viewMatrix: simd_float4x4,
-                projectionMatrix: simd_float4x4,
-                normalMatrix: simd_float3x3) {
-
+    func render(
+        atTime time: CFTimeInterval,
+        renderCommandEncoder: any MTLRenderCommandEncoder,
+        modelMatrix: simd_float4x4,
+        viewMatrix: simd_float4x4,
+        projectionMatrix: simd_float4x4,
+        normalMatrix: simd_float3x3
+    ) {
         let device = renderCommandEncoder.device
 
         var vertexUniforms = ModelVertexUniforms(
@@ -105,7 +108,8 @@ class ModelRenderer {
 
                 renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
 
-                renderCommandEncoder.setFragmentTexture(mesh.texture, index: 0)
+                let texture = textures[mesh.textureName]
+                renderCommandEncoder.setFragmentTexture(texture, index: 0)
 
                 renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: mesh.vertices.count)
             }

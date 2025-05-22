@@ -27,15 +27,11 @@ extension Entity {
     }
 
     public static func modelEntity(rsm: RSM, instance: float4x4, resourceManager: ResourceManager) async throws -> Entity {
-        var textureNames = [String]()
-        let model = Model(rsm: rsm, instance: instance) { textureName in
-            textureNames.append(textureName)
-            return nil
-        }
+        let model = Model(rsm: rsm, instance: instance)
 
         var materials: [any Material] = []
-        for textureName in textureNames {
-            let components = textureName.split(separator: "\\").map(String.init)
+        for mesh in model.meshes {
+            let components = mesh.textureName.split(separator: "\\").map(String.init)
             let texturePath = ResourcePath.textureDirectory.appending(components)
             let textureImage = try? await resourceManager.image(at: texturePath, removesMagentaPixels: true)
 
@@ -44,7 +40,7 @@ extension Entity {
                 continue
             }
 
-            let textureResource = try? await TextureResource(image: textureImage, withName: textureName, options: .init(semantic: .color))
+            let textureResource = try? await TextureResource(image: textureImage, withName: mesh.textureName, options: .init(semantic: .color))
 
             guard let textureResource else {
                 materials.append(SimpleMaterial())

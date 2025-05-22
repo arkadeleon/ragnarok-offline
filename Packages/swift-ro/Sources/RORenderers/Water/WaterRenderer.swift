@@ -14,6 +14,7 @@ class WaterRenderer {
     let depthStencilState: (any MTLDepthStencilState)?
 
     let water: Water
+    let textures: [any MTLTexture]
 
     var waveSpeed: Float = 0
     var waveHeight: Float = 0
@@ -38,7 +39,7 @@ class WaterRenderer {
         direction: [0, 1, 0]
     )
 
-    init(device: any MTLDevice, library: any MTLLibrary, water: Water) throws {
+    init(device: any MTLDevice, library: any MTLLibrary, water: Water, textures: [any MTLTexture]) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "waterVertexShader")
@@ -62,14 +63,16 @@ class WaterRenderer {
         self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
 
         self.water = water
+        self.textures = textures
     }
 
-    func render(atTime time: CFTimeInterval,
-                renderCommandEncoder: any MTLRenderCommandEncoder,
-                modelMatrix: simd_float4x4,
-                viewMatrix: simd_float4x4,
-                projectionMatrix: simd_float4x4) {
-
+    func render(
+        atTime time: CFTimeInterval,
+        renderCommandEncoder: any MTLRenderCommandEncoder,
+        modelMatrix: simd_float4x4,
+        viewMatrix: simd_float4x4,
+        projectionMatrix: simd_float4x4
+    ) {
         let device = renderCommandEncoder.device
 
         let frame = Float(time * 60)
@@ -112,7 +115,7 @@ class WaterRenderer {
 
         renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
-        let texture = water.mesh.textures[Int(frame / animSpeed) % water.mesh.textures.count]
+        let texture = textures[Int(frame / animSpeed) % textures.count]
         renderCommandEncoder.setFragmentTexture(texture, index: 0)
 
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: water.mesh.vertices.count)

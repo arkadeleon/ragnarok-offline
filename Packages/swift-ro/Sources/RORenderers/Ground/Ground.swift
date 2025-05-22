@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2023/11/27.
 //
 
-import Metal
 import ROCore
 import ROFileFormats
 import ROShaders
@@ -13,7 +12,7 @@ import simd
 
 public struct GroundMesh {
     public var vertices: [GroundVertex] = []
-    public var texture: (any MTLTexture)?
+    public var textureName: String
 }
 
 public struct Ground {
@@ -23,14 +22,13 @@ public struct Ground {
 
     public var meshes: [GroundMesh] = []
 
-    public init(gat: GAT, gnd: GND, textureProvider: (String) -> (any MTLTexture)?) {
+    public init(gat: GAT, gnd: GND) {
         width = Int(gat.width)
         height = Int(gat.height)
         altitude = gat.tileAt(x: width / 2, y: height / 2).averageAltitude
 
         meshes = gnd.textures.map { textureName in
-            let texture = textureProvider(textureName)
-            let mesh = GroundMesh(texture: texture)
+            let mesh = GroundMesh(textureName: textureName)
             return mesh
         }
 

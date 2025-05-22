@@ -40,26 +40,31 @@ struct STRFilePreviewView: View {
         }
 
         let str = try STR(data: data)
+        let effect = Effect(str: str)
 
         let device = MTLCreateSystemDefaultDevice()!
         let textureLoader = MTKTextureLoader(device: device)
+        var textures: [String : any MTLTexture] = [:]
 
-        var texturesByName: [String : any MTLTexture] = [:]
+        for frame in effect.frames {
+            for sprite in frame.sprites {
+                let textureName = sprite.textureName
+                if let _ = textures[textureName] {
+                    continue
+                }
 
-        let effect = Effect(str: str) { textureName in
-            if let texture = texturesByName[textureName] {
-                return texture
+                let texturePath = path.parent.appending([textureName])
+                guard let data = try? grf.contentsOfEntry(at: texturePath) else {
+                    continue
+                }
+
+                if let texture = textureLoader.newTexture(bmpData: data) {
+                    textures[textureName] = texture
+                }
             }
-            let texturePath = path.parent.appending([textureName])
-            guard let data = try? grf.contentsOfEntry(at: texturePath) else {
-                return nil
-            }
-            let texture = textureLoader.newTexture(bmpData: data)
-            texturesByName[textureName] = texture
-            return texture
         }
 
-        let renderer = try STRRenderer(device: device, effect: effect)
+        let renderer = try STRRenderer(device: device, effect: effect, textures: textures)
         return renderer
     }
 }
