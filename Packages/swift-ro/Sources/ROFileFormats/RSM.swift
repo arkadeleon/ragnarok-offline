@@ -382,16 +382,16 @@ extension RSM {
 
     public struct RotationKeyframe: BinaryDecodable, Sendable {
         public var frame: Int32
-        public var quaternion: SIMD4<Float>
+        public var quaternion: simd_quatf
 
         public init(from decoder: BinaryDecoder) throws {
             frame = try decoder.decode(Int32.self)
-            quaternion = try [
-                decoder.decode(Float.self),
-                decoder.decode(Float.self),
-                decoder.decode(Float.self),
-                decoder.decode(Float.self),
-            ]
+            quaternion = try simd_quatf(
+                ix: decoder.decode(Float.self),
+                iy: decoder.decode(Float.self),
+                iz: decoder.decode(Float.self),
+                r: decoder.decode(Float.self)
+            )
         }
     }
 

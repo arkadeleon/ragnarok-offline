@@ -93,7 +93,7 @@ extension RSM.RotationKeyframe {
         """
         {
           "frame": \(frame),
-          "quaternion": \(quaternion.json)
+          "quaternion": \(quaternion.debugDescription.quoted)
         }
         """
     }

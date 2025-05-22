@@ -117,9 +117,13 @@ class ModelNodeWrapper {
         transformForChildren = matrix_translate(transformForChildren, node.position)
 
         if node.rotationKeyframes.count == 0 {
-//            transformForChildren = SGLMath.rotate(transformForChildren, rotangle, rotaxis)
+            let quaternion = simd_quatf(angle: node.rotationAngle, axis: node.rotationAxis)
+            let rotationMatrix = simd_float4x4(quaternion)
+            transformForChildren *= rotationMatrix
         } else {
-            transformForChildren = rotateQuat(transformForChildren, w: node.rotationKeyframes[0].quaternion)
+            let quaternion = node.rotationKeyframes[0].quaternion
+            let rotationMatrix = simd_float4x4(quaternion)
+            transformForChildren *= rotationMatrix
         }
 
         transformForChildren = matrix_scale(transformForChildren, node.scale)
