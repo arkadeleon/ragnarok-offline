@@ -30,18 +30,18 @@ public class Camera {
 
     public private(set) var sensitivity: Float = 0.1
 
-    public var projectionMatrix: float4x4 {
+    public var projectionMatrix: simd_float4x4 {
         perspective(radians(fovy), aspectRatio, nearZ, farZ)
     }
 
-    public var viewMatrix: float4x4 {
+    public var viewMatrix: simd_float4x4 {
         if target == position {
-            let translationMatrix = float4x4(translation: target)
-            let rotationMatrix = float4x4(rotationXYZ: rotation)
+            let translationMatrix = simd_float4x4(translation: target)
+            let rotationMatrix = simd_float4x4(rotationXYZ: rotation)
             return (translationMatrix * rotationMatrix).inverse
         } else {
-            let translationMatrix = float4x4(translation: position)
-            let rotationMatrix = float4x4(rotationXYZ: rotation)
+            let translationMatrix = simd_float4x4(translation: position)
+            let rotationMatrix = simd_float4x4(rotationXYZ: rotation)
             return (translationMatrix * rotationMatrix).inverse
         }
     }
@@ -63,7 +63,7 @@ public class Camera {
         rotation.y = Float(dragTranslation.x) * sensitivity
         rotation.x = max(-.pi / 2, min(rotation.x, .pi / 2))
 
-        let rotationMatrix = float4x4(rotationXYZ: [-rotation.x, rotation.y, 0])
+        let rotationMatrix = simd_float4x4(rotationXYZ: [-rotation.x, rotation.y, 0])
         let distanceVector: SIMD4<Float> = [0, 0, -distance, 0]
         let rotatedVector = rotationMatrix * distanceVector
         position = target + [rotatedVector.x, rotatedVector.y, rotatedVector.z]

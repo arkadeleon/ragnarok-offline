@@ -53,7 +53,7 @@ public class RSWRenderer: Renderer {
         let viewMatrix = camera.viewMatrix
         let projectionMatrix = camera.projectionMatrix
 
-        let normalMatrix = float3x3(modelMatrix).inverse.transpose
+        let normalMatrix = simd_float3x3(modelMatrix).inverse.transpose
 
         guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return

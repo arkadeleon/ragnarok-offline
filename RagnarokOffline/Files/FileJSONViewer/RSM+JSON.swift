@@ -33,7 +33,7 @@ extension RSM.Node {
           "name": \(name.quoted),
           "parentName": \(parentName.quoted),
           "textures": \(textures.map(\.quoted).json),
-          "textureIndexes": \(textureIndexes.json),
+          "textureIndices": \(textureIndices.json),
           "transformationMatrix": \(transformationMatrix.debugDescription.quoted),
           "offset": \(offset.json),
           "position": \(position.json),
@@ -67,11 +67,11 @@ extension RSM.Face {
     var json: String {
         """
         {
-          "vertidx": \(vertidx.json),
-          "tvertidx": \(tvertidx.json),
+          "vertexIndices": \(vertexIndices.json),
+          "tvertexIndices": \(tvertexIndices.json),
           "textureIndex": \(textureIndex),
           "padding": \(padding),
-          "twoSide": \(twoSide),
+          "twoSided": \(twoSided),
           "smoothGroup": \(smoothGroup.json)
         }
         """
@@ -83,9 +83,7 @@ extension RSM.ScaleKeyframe {
         """
         {
           "frame": \(frame),
-          "sx": \(sx),
-          "sy": \(sy),
-          "sz": \(sz),
+          "scale": \(scale),
           "data": \(data)
         }
         """
@@ -108,9 +106,7 @@ extension RSM.PositionKeyframe {
         """
         {
           "frame": \(frame),
-          "px": \(px),
-          "py": \(py),
-          "pz": \(pz),
+          "position": \(position),
           "data": \(data)
         }
         """

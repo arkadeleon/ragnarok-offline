@@ -52,6 +52,7 @@ public struct RSM: BinaryDecodable, Sendable {
 
         if version >= "2.3" {
             let fps = try decoder.decode(Float.self)
+            animationLength = Int32(ceilf(Float(animationLength) * fps))
 
             let rootNodeCount = try decoder.decode(Int32.self)
             for _ in 0..<rootNodeCount {
@@ -59,20 +60,15 @@ public struct RSM: BinaryDecodable, Sendable {
                 let rootNodeName = try decoder.decode(String.self, lengthOfBytes: Int(nodeNameLength))
                 rootNodes.append(rootNodeName)
             }
-
-            let nodeCount = try decoder.decode(Int32.self)
-            for _ in 0..<nodeCount {
-                let node = try decoder.decode(RSM.Node.self, configuration: version)
-                nodes.append(node)
-            }
         } else if version >= "2.2" {
             let fps = try decoder.decode(Float.self)
+            animationLength = Int32(ceilf(Float(animationLength) * fps))
 
             let textureCount = try decoder.decode(Int32.self)
             for _ in 0..<textureCount {
                 let textureNameLength = try decoder.decode(Int32.self)
-                let texture = try decoder.decode(String.self, lengthOfBytes: Int(textureNameLength), encoding: .koreanEUC)
-                textures.append(texture)
+                let textureName = try decoder.decode(String.self, lengthOfBytes: Int(textureNameLength), encoding: .koreanEUC)
+                textures.append(textureName)
             }
 
             let rootNodeCount = try decoder.decode(Int32.self)
@@ -80,12 +76,6 @@ public struct RSM: BinaryDecodable, Sendable {
                 let nodeNameLength = try decoder.decode(Int32.self)
                 let rootNodeName = try decoder.decode(String.self, lengthOfBytes: Int(nodeNameLength))
                 rootNodes.append(rootNodeName)
-            }
-
-            let nodeCount = try decoder.decode(Int32.self)
-            for _ in 0..<nodeCount {
-                let node = try decoder.decode(RSM.Node.self, configuration: version)
-                nodes.append(node)
             }
         } else {
             // Reserved
@@ -93,18 +83,18 @@ public struct RSM: BinaryDecodable, Sendable {
 
             let textureCount = try decoder.decode(Int32.self)
             for _ in 0..<textureCount {
-                let texture = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .koreanEUC)
-                textures.append(texture)
+                let textureName = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .koreanEUC)
+                textures.append(textureName)
             }
 
-            let rootNode = try decoder.decode(String.self, lengthOfBytes: 40)
-            rootNodes.append(rootNode)
+            let rootNodeName = try decoder.decode(String.self, lengthOfBytes: 40)
+            rootNodes.append(rootNodeName)
+        }
 
-            let nodeCount = try decoder.decode(Int32.self)
-            for _ in 0..<nodeCount {
-                let node = try decoder.decode(RSM.Node.self, configuration: version)
-                nodes.append(node)
-            }
+        let nodeCount = try decoder.decode(Int32.self)
+        for _ in 0..<nodeCount {
+            let node = try decoder.decode(RSM.Node.self, configuration: version)
+            nodes.append(node)
         }
 
         if rootNodes.isEmpty, let firstNode = nodes.first {
@@ -149,9 +139,9 @@ extension RSM {
         public var parentName: String
 
         public var textures: [String] = []
-        public var textureIndexes: [Int32] = []
+        public var textureIndices: [Int32] = []
 
-        public var transformationMatrix: float3x3
+        public var transformationMatrix: simd_float3x3
         public var offset: SIMD3<Float>
         public var position: SIMD3<Float>
         public var rotationAngle: Float
@@ -183,35 +173,34 @@ extension RSM {
                 let textureCount = try decoder.decode(Int32.self)
                 for textureIndex in 0..<textureCount {
                     let textureNameLength = try decoder.decode(Int32.self)
-                    let texture = try decoder.decode(String.self, lengthOfBytes: Int(textureNameLength))
-                    textures.append(texture)
-                    textureIndexes.append(textureIndex)
+                    let textureName = try decoder.decode(String.self, lengthOfBytes: Int(textureNameLength))
+                    textures.append(textureName)
+                    textureIndices.append(textureIndex)
                 }
             } else {
                 let textureCount = try decoder.decode(Int32.self)
                 for _ in 0..<textureCount {
-                    let texture = try decoder.decode(Int32.self)
-                    textureIndexes.append(texture)
+                    let textureIndex = try decoder.decode(Int32.self)
+                    textureIndices.append(textureIndex)
                 }
             }
 
-            transformationMatrix = try float3x3(
-                [
-                    decoder.decode(Float.self),
-                    decoder.decode(Float.self),
-                    decoder.decode(Float.self),
-                ],
-                [
-                    decoder.decode(Float.self),
-                    decoder.decode(Float.self),
-                    decoder.decode(Float.self),
-                ],
-                [
-                    decoder.decode(Float.self),
-                    decoder.decode(Float.self),
-                    decoder.decode(Float.self),
-                ]
-            )
+            let col0: SIMD3<Float> = try [
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+            ]
+            let col1: SIMD3<Float> = try [
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+            ]
+            let col2: SIMD3<Float> = try [
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+            ]
+            transformationMatrix = simd_float3x3(col0, col1, col2)
 
             offset = try [
                 decoder.decode(Float.self),
@@ -259,7 +248,7 @@ extension RSM {
                 if version >= "1.2" {
                     color = try decoder.decode(UInt32.self)
                 } else {
-                    color = 0xFFFFFFFF
+                    color = 0xffffffff
                 }
                 let u = try decoder.decode(Float.self)
                 let v = try decoder.decode(Float.self)
@@ -295,37 +284,34 @@ extension RSM {
                 }
             }
 
-//            if (version >= 2.3) {
-//                count = reader.Int32();
-//
-//                for (int i = 0; i < count; i++) {
-//                    int textureId = reader.Int32();
-//                    int amountTextureAnimations = reader.Int32();
-//
-//                    for (int j = 0; j < amountTextureAnimations; j++) {
-//                        int type = reader.Int32();
-//                        int amountFrames = reader.Int32();
-//
-//                        for (int k = 0; k < amountFrames; k++) {
-//                            _textureKeyFrameGroup.AddTextureKeyFrame(textureId, type, new TextureKeyFrame {
-//                                Frame = reader.Int32(),
-//                                Offset = reader.Float()
-//                            });
-//                        }
-//                    }
-//                }
-//            }
+            if version >= "2.3" {
+                let textureAnimationCount = try decoder.decode(Int32.self)
+                for _ in 0..<textureAnimationCount {
+                    let textureIndex = try decoder.decode(Int32.self)
+
+                    let textureAnimationCount = try decoder.decode(Int32.self)
+                    for _ in 0..<textureAnimationCount {
+                        let type = try decoder.decode(Int32.self)
+
+                        let frameCount = try decoder.decode(Int32.self)
+                        for _ in 0..<frameCount {
+                            let frame = try decoder.decode(Int32.self)
+                            let data = try decoder.decode(Float.self)
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
 extension RSM {
     public struct Face: BinaryDecodableWithConfiguration, Sendable {
-        public var vertidx: SIMD3<UInt16>
-        public var tvertidx: SIMD3<UInt16>
-        public var textureIndex: UInt16
-        public var padding: UInt16
-        public var twoSide: Int32
+        public var vertexIndices: SIMD3<Int16>
+        public var tvertexIndices: SIMD3<Int16>
+        public var textureIndex: Int16
+        public var padding: Int16
+        public var twoSided: Int32
         public var smoothGroup: SIMD3<Int32>
 
         public init(from decoder: BinaryDecoder, configuration version: String) throws {
@@ -334,22 +320,22 @@ extension RSM {
                 length = try decoder.decode(Int32.self)
             }
 
-            vertidx = try [
-                decoder.decode(UInt16.self),
-                decoder.decode(UInt16.self),
-                decoder.decode(UInt16.self),
+            vertexIndices = try [
+                decoder.decode(Int16.self),
+                decoder.decode(Int16.self),
+                decoder.decode(Int16.self),
             ]
-            tvertidx = try [
-                decoder.decode(UInt16.self),
-                decoder.decode(UInt16.self),
-                decoder.decode(UInt16.self),
+            tvertexIndices = try [
+                decoder.decode(Int16.self),
+                decoder.decode(Int16.self),
+                decoder.decode(Int16.self),
             ]
-            textureIndex = try decoder.decode(UInt16.self)
-            padding = try decoder.decode(UInt16.self)
-            twoSide = try decoder.decode(Int32.self)
+            textureIndex = try decoder.decode(Int16.self)
+            padding = try decoder.decode(Int16.self)
+            twoSided = try decoder.decode(Int32.self)
 
             if version >= "1.2" {
-                let smooth: Int32 = try decoder.decode(Int32.self)
+                let smooth = try decoder.decode(Int32.self)
                 smoothGroup = [smooth, smooth, smooth]
 
                 if length > 24 {
@@ -373,16 +359,16 @@ extension RSM {
 extension RSM {
     public struct ScaleKeyframe: BinaryDecodable, Sendable {
         public var frame: Int32
-        public var sx: Float
-        public var sy: Float
-        public var sz: Float
+        public var scale: SIMD3<Float>
         public var data: Float
 
         public init(from decoder: BinaryDecoder) throws {
             frame = try decoder.decode(Int32.self)
-            sx = try decoder.decode(Float.self)
-            sy = try decoder.decode(Float.self)
-            sz = try decoder.decode(Float.self)
+            scale = try [
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+            ]
             data = try decoder.decode(Float.self)
         }
     }
@@ -404,16 +390,16 @@ extension RSM {
 
     public struct PositionKeyframe: BinaryDecodable, Sendable {
         public var frame: Int32
-        public var px: Float
-        public var py: Float
-        public var pz: Float
+        public var position: SIMD3<Float>
         public var data: Int32
 
         public init(from decoder: BinaryDecoder) throws {
             frame = try decoder.decode(Int32.self)
-            px = try decoder.decode(Float.self)
-            py = try decoder.decode(Float.self)
-            pz = try decoder.decode(Float.self)
+            position = try [
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+            ]
             data = try decoder.decode(Int32.self)
         }
     }
