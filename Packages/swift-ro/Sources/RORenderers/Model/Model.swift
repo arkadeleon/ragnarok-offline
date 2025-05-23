@@ -134,7 +134,7 @@ class ModelNodeWrapper {
             transform = matrix_translate(transform, node.offset)
 //        }
 
-        transform = transform * simd_float4x4(node.transformationMatrix)
+        transform = transform * simd_float4x4(node.transformMatrix)
 
         let matrix = worldTransform
         for vertex in node.vertices {
@@ -163,7 +163,7 @@ class ModelNodeWrapper {
 //            matrix = matrix_translate(matrix, node.offset)
 //        }
 //
-//        matrix = matrix * simd_float4x4(node.transformationMatrix)
+//        matrix = matrix * simd_float4x4(node.transformMatrix)
 
         // modelMatrix = instance * translate * worldTransform
         let modelViewMat = instance_matrix * matrix

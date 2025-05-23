@@ -146,7 +146,7 @@ extension RSM {
 
         public var textures: [String] = []
 
-        public var transformationMatrix: simd_float3x3
+        public var transformMatrix: simd_float3x3
         public var offset: SIMD3<Float>
         public var position: SIMD3<Float>
         public var rotationAngle: Float
@@ -207,7 +207,7 @@ extension RSM {
                 decoder.decode(Float.self),
                 decoder.decode(Float.self),
             ]
-            transformationMatrix = simd_float3x3(col0, col1, col2)
+            transformMatrix = simd_float3x3(col0, col1, col2)
 
             offset = try [
                 decoder.decode(Float.self),

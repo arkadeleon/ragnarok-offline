@@ -32,7 +32,7 @@ extension RSM.Node {
           "name": \(name.quoted),
           "parentName": \(parentName.quoted),
           "textures": \(textures.map(\.quoted).json),
-          "transformationMatrix": \(transformationMatrix.debugDescription.quoted),
+          "transformMatrix": \(transformMatrix.debugDescription.quoted),
           "offset": \(offset.json),
           "position": \(position.json),
           "rotationAngle": \(rotationAngle),
