@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/11/29.
 //
 
-import ROCore
+import BinaryIO
 
 public let HEADER_CZ_REQ_NEXT_SCRIPT: Int16 = 0xb9
 

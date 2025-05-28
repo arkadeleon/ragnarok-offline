@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2020/5/12.
 //
 
+import BinaryIO
 import Foundation
-import ROCore
 import simd
 
 public struct RSM: BinaryDecodable, Sendable {

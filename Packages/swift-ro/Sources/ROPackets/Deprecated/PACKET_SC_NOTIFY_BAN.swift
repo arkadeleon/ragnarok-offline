@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/3/27.
 //
 
-import ROCore
+import BinaryIO
 
 /// See `logclif_sent_auth_result` or `chclif_send_auth_result` or `clif_authfail_fd`
 @available(*, deprecated, message: "Use generated struct instead.")

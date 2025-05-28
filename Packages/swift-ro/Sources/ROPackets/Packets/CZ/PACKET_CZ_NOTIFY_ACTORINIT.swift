@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/23.
 //
 
-import ROCore
+import BinaryIO
 
 /// See `clif_parse_LoadEndAck`
 public struct PACKET_CZ_NOTIFY_ACTORINIT: EncodablePacket {

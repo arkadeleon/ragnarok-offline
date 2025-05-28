@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/12.
 //
 
-import ROCore
+import BinaryIO
 
 /// See `chclif_charlist_notify`
 public struct PACKET_HC_CHARLIST_NOTIFY: DecodablePacket, Sendable {

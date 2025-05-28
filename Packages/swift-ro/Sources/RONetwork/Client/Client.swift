@@ -5,9 +5,9 @@
 //  Created by Leon Li on 2024/8/12.
 //
 
+import BinaryIO
 import Foundation
 import Network
-import ROCore
 import ROPackets
 
 public enum ClientError: Error {

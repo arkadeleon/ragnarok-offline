@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/4/8.
 //
 
-import ROCore
+import BinaryIO
 
 /// See `logclif_parse_keepalive`
 @available(*, deprecated, message: "Use generated struct instead.")

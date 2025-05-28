@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/12/6.
 //
 
-import ROCore
+import BinaryIO
 
 public let HEADER_CZ_CHOOSE_MENU: Int16 = 0xb8
 

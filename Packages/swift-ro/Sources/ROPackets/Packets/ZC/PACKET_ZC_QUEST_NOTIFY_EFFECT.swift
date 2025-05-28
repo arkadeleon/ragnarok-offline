@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/3/26.
 //
 
-import ROCore
+import BinaryIO
 
 public let HEADER_ZC_QUEST_NOTIFY_EFFECT: Int16 = 0x446
 

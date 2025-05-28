@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/3/24.
 //
 
-import ROCore
+import BinaryIO
 
 public typealias RegisteredPacket = BinaryDecodable & Sendable
 

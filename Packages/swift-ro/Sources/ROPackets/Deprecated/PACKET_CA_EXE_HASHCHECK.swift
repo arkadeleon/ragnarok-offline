@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/3/26.
 //
 
-import ROCore
+import BinaryIO
 
 @available(*, deprecated, message: "Use generated struct instead.")
 public struct _PACKET_CA_EXE_HASHCHECK: EncodablePacket {

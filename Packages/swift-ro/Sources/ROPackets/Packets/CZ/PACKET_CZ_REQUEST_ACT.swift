@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/23.
 //
 
-import ROCore
+import BinaryIO
 
 let ENTRY_CZ_REQUEST_ACT = packetDatabase.entry(forFunctionName: "clif_parse_ActionRequest")!
 

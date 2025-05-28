@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/28.
 //
 
-import ROCore
+import BinaryIO
 
 @available(*, deprecated, message: "Use generated struct instead.")
 public struct _ItemOptions: BinaryDecodable, Sendable {

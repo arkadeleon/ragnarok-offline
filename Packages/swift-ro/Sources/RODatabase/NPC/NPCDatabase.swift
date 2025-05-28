@@ -5,9 +5,9 @@
 //  Created by Leon Li on 2024/3/11.
 //
 
+import BinaryIO
 import Foundation
 import rAthenaResources
-import ROCore
 
 enum NPCDatabaseError: Error {
     case invalidFile(URL)

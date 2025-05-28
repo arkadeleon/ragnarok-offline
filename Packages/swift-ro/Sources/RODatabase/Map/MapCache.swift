@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/12/2.
 //
 
+import BinaryIO
 import Foundation
-import ROCore
 
 struct MapCache: BinaryDecodable {
     var fileSize: UInt32

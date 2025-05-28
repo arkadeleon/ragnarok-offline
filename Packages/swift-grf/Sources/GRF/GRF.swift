@@ -1,17 +1,18 @@
 //
 //  GRF.swift
-//  RagnarokOffline
+//  GRF
 //
 //  Created by Leon Li on 2020/5/1.
 //
 
+import BinaryIO
 import CoreFoundation
 import DataCompression
 import Foundation
-import ROCore
 
 public enum GRFError: Error {
     case invalidURL(URL)
+    case invalidHeader(String, expected: String)
     case invalidVersion(UInt32)
     case invalidEntryPath(String)
     case dataCorrupted(Data)
@@ -54,7 +55,7 @@ extension GRF {
         public init(from decoder: BinaryDecoder) throws {
             magic = try decoder.decode(String.self, lengthOfBytes: 15)
             guard magic == "Master of Magic" else {
-                throw FileFormatError.invalidHeader(magic, expected: "Master of Magic")
+                throw GRFError.invalidHeader(magic, expected: "Master of Magic")
             }
 
             key = try decoder.decode([UInt8].self, count: 15)
@@ -147,7 +148,7 @@ extension GRF {
             position += 17
         }
 
-        public func data(from stream: any ROCore.Stream) throws -> Data {
+        public func data(from stream: any BinaryIO.Stream) throws -> Data {
             try stream.seek(GRF.Header.size + Int(offset), origin: .begin)
 
             let decoder = BinaryDecoder(stream: stream)
@@ -167,4 +168,13 @@ extension GRF {
             return data
         }
     }
+}
+
+extension String.Encoding {
+    static let koreanEUC: String.Encoding = {
+        let cfStringEncoding = CFStringEncoding(CFStringEncodings.EUC_KR.rawValue)
+        let nsStringEncoding = CFStringConvertEncodingToNSStringEncoding(cfStringEncoding)
+        let stringEncoding = String.Encoding(rawValue: nsStringEncoding)
+        return stringEncoding
+    }()
 }

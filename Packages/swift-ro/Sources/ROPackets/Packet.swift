@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ROCore
+import BinaryIO
 
 public protocol Packet {
     var packetType: Int16 { get }

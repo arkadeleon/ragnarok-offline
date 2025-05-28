@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/3/14.
 //
 
+import BinaryIO
 import Foundation
-import ROCore
 
 public struct IMF: BinaryDecodable, Sendable {
     public var version: Float

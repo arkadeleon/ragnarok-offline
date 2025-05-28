@@ -1,22 +1,24 @@
 //
 //  GRFReference.swift
-//  RagnarokOffline
+//  GRF
 //
 //  Created by Leon Li on 2020/8/17.
 //
 
+import BinaryIO
 import Foundation
-import ROCore
 
 public class GRFReference {
     public let url: URL
 
     private lazy var grf: GRF? = {
-        metric.beginMeasuring("Load GRF")
+        let beginTime = CFAbsoluteTimeGetCurrent()
+        logger.info("Begin loading GRF")
 
         let grf = try? GRF(url: url)
 
-        metric.endMeasuring("Load GRF")
+        let endTime = CFAbsoluteTimeGetCurrent()
+        logger.info("End loading GRF (\(endTime - beginTime)s)")
 
         return grf
     }()
@@ -26,7 +28,8 @@ public class GRFReference {
             return []
         }
 
-        metric.beginMeasuring("Load GRF directories")
+        let beginTime = CFAbsoluteTimeGetCurrent()
+        logger.info("Begin loading GRF directories")
 
         var directories = Set(grf.table.entries.map({ $0.path.parent }))
         for directory in directories {
@@ -37,7 +40,8 @@ public class GRFReference {
             } while !parent.string.isEmpty
         }
 
-        metric.endMeasuring("Load GRF directories")
+        let endTime = CFAbsoluteTimeGetCurrent()
+        logger.info("End loading GRF directories (\(endTime - beginTime)s)")
 
         return directories
     }()
@@ -47,14 +51,16 @@ public class GRFReference {
             return [:]
         }
 
-        metric.beginMeasuring("Load GRF entries")
+        let beginTime = CFAbsoluteTimeGetCurrent()
+        logger.info("Begin loading GRF entries")
 
         let entries = Dictionary(
             grf.table.entries.map({ ($0.path.string.uppercased(), $0) }),
             uniquingKeysWith: { (first, _) in first }
         )
 
-        metric.endMeasuring("Load GRF entries")
+        let endTime = CFAbsoluteTimeGetCurrent()
+        logger.info("End loading GRF entries (\(endTime - beginTime)s)")
 
         return entries
     }()

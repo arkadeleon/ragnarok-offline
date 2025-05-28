@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2021/7/5.
 //
 
-import ROCore
+import BinaryIO
 
 /// See `logclif_parse_reqauth_raw`
 @available(*, deprecated, message: "Use generated struct instead.")

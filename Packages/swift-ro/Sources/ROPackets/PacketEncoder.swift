@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ROCore
+import BinaryIO
 
 final public class PacketEncoder {
     public init() {

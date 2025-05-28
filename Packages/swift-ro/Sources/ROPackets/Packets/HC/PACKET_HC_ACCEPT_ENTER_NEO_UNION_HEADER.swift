@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/12.
 //
 
-import ROCore
+import BinaryIO
 
 /// See `chclif_mmo_send082d`
 public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER: DecodablePacket, Sendable {

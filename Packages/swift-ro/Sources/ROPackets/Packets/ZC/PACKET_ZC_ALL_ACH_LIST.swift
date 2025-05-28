@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/28.
 //
 
-import ROCore
+import BinaryIO
 
 /// See `clif_achievement_list_all`
 public struct PACKET_ZC_ALL_ACH_LIST: BinaryDecodable, Sendable {

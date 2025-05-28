@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/22.
 //
 
-import ROCore
+import BinaryIO
 
 public let HEADER_ZC_NOTIFY_PLAYERCHAT: Int16 = 0x8e
 

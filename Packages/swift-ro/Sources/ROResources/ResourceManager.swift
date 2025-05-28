@@ -7,8 +7,8 @@
 
 import CoreGraphics
 import Foundation
+import GRF
 import ROCore
-import ROFileFormats
 
 enum ResourceError: LocalizedError {
     case resourceNotFound(ResourcePath)

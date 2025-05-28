@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/22.
 //
 
-import ROCore
+import BinaryIO
 
 let ENTRY_CZ_CHANGE_DIRECTION = packetDatabase.entry(forFunctionName: "clif_parse_ChangeDir")!
 

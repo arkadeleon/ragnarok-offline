@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2021/7/6.
 //
 
-import ROCore
+import BinaryIO
 
 /// See `chclif_parse_charselect`
 public struct PACKET_CH_SELECT_CHAR: EncodablePacket {

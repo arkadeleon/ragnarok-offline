@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/3/26.
 //
 
-import ROCore
+import BinaryIO
 
 public struct PACKET_ZC_MAPPROPERTY_R2: BinaryDecodable, Sendable {
     public var packetType: Int16

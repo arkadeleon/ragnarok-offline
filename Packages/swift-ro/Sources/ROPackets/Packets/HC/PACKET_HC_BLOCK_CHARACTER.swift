@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/12.
 //
 
-import ROCore
+import BinaryIO
 
 /// See `chclif_block_character`
 public struct PACKET_HC_BLOCK_CHARACTER: DecodablePacket, Sendable {

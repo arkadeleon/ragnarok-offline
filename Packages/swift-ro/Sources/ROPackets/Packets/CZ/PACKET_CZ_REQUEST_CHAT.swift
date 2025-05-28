@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ROCore
+import BinaryIO
 
 let ENTRY_CZ_REQUEST_CHAT = packetDatabase.entry(forFunctionName: "clif_parse_GlobalMessage")!
 

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/28.
 //
 
-import ROCore
+import BinaryIO
 
 public let HEADER_ZC_MAIL_RECEIVE: Int16 = 0x24a
 

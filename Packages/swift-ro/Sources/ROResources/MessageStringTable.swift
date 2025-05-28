@@ -5,9 +5,9 @@
 //  Created by Leon Li on 2024/6/14.
 //
 
+import BinaryIO
 import Foundation
 import ROConstants
-import ROCore
 
 public struct MessageStringTable: Sendable {
     public static let current = MessageStringTable(locale: .current)

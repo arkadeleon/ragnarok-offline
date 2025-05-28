@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/24.
 //
 
-import ROCore
+import BinaryIO
 
 /// See `clif_walkok`
 @available(*, deprecated, message: "Use generated struct instead.")

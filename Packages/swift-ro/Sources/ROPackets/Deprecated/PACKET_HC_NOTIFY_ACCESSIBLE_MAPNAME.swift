@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/4/9.
 //
 
-import ROCore
+import BinaryIO
 
 /// See `chclif_accessible_maps`
 @available(*, deprecated, message: "Use generated struct instead.")

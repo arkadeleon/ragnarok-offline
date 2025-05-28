@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2020/6/22.
 //
 
+import BinaryIO
 import Foundation
-import ROCore
 
 public struct GND: BinaryDecodable, Sendable {
     public var header: String

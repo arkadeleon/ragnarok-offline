@@ -316,6 +316,8 @@
 		35B575FD2D1BB33B00FC12BB /* CharacterSimulatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSimulatorView.swift; sourceTree = "<group>"; };
 		35B695E92A305EF6006F1904 /* MetalCubeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalCubeView.swift; sourceTree = "<group>"; };
 		35B695EB2A307164006F1904 /* MetalCubeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalCubeScene.swift; sourceTree = "<group>"; };
+		35B842132DE70D5500B14E18 /* swift-grf */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-grf"; path = "Packages/swift-grf"; sourceTree = "<group>"; };
+		35B842142DE7121B00B14E18 /* swift-binary-io */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-binary-io"; path = "Packages/swift-binary-io"; sourceTree = "<group>"; };
 		35BDF7032C9B0AED00CCAB8F /* ClientSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSettings.swift; sourceTree = "<group>"; };
 		35BDF7052C9B0AF200CCAB8F /* SettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsItem.swift; sourceTree = "<group>"; };
 		35BE55282BD92D52003715C3 /* TextFilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFilePreviewView.swift; sourceTree = "<group>"; };
@@ -752,6 +754,8 @@
 		35E27A8C2BCC111400C11076 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
+				35B842142DE7121B00B14E18 /* swift-binary-io */,
+				35B842132DE70D5500B14E18 /* swift-grf */,
 				3506D11D2C00887700903A47 /* swift-ro */,
 				3535EC802CC0A6890012ACF0 /* swift-ro-tools */,
 			);

@@ -5,9 +5,9 @@
 //  Created by Leon Li on 2024/5/28.
 //
 
+import BinaryIO
 import Foundation
 import Lua
-import ROCore
 
 public actor ItemInfoTable {
     enum ItemDataSource {

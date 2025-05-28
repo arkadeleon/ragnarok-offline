@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2025/2/28.
 //
 
+import GRF
 import ROFileFormats
 
 extension File {

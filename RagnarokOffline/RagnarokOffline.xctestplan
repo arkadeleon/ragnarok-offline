@@ -14,6 +14,20 @@
   "testTargets" : [
     {
       "target" : {
+        "containerPath" : "container:Packages\/swift-binary-io",
+        "identifier" : "BinaryIOTests",
+        "name" : "BinaryIOTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/swift-ro",
+        "identifier" : "RORenderingTests",
+        "name" : "RORenderingTests"
+      }
+    },
+    {
+      "target" : {
         "containerPath" : "container:Packages\/swift-ro",
         "identifier" : "ROResourcesTests",
         "name" : "ROResourcesTests"
@@ -29,8 +43,15 @@
     {
       "target" : {
         "containerPath" : "container:Packages\/swift-ro",
-        "identifier" : "RORenderingTests",
-        "name" : "RORenderingTests"
+        "identifier" : "RODatabaseTests",
+        "name" : "RODatabaseTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/swift-ro",
+        "identifier" : "RONetworkTests",
+        "name" : "RONetworkTests"
       }
     },
     {
@@ -42,16 +63,9 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Packages\/swift-ro",
-        "identifier" : "RODatabaseTests",
-        "name" : "RODatabaseTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/swift-ro",
-        "identifier" : "RONetworkTests",
-        "name" : "RONetworkTests"
+        "containerPath" : "container:Packages\/swift-grf",
+        "identifier" : "GRFTests",
+        "name" : "GRFTests"
       }
     }
   ],

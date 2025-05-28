@@ -6,7 +6,7 @@
 //
 
 import Darwin
-import ROCore
+import BinaryIO
 
 public struct MapServerInfo: BinaryDecodable, Sendable {
     public var ip: String

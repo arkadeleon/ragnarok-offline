@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/4/9.
 //
 
-import ROCore
+import BinaryIO
 
 let ENTRY_CZ_STATUS_CHANGE = packetDatabase.entry(forFunctionName: "clif_parse_StatusUp")!
 

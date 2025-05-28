@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2020/7/1.
 //
 
+import BinaryIO
 import Foundation
-import ROCore
 
 public struct PAL: BinaryDecodable, Sendable {
     public var colors: [RGBAColor] = []

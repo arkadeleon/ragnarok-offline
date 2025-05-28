@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/11/28.
 //
 
-import ROCore
+import BinaryIO
 
 public let HEADER_ZC_NPC_CHAT: Int16 = 0x2c1
 

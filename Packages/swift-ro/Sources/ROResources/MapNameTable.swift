@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/5/27.
 //
 
+import BinaryIO
 import Foundation
-import ROCore
 
 public struct MapNameTable: Sendable {
     public static let current = MapNameTable(locale: .current)

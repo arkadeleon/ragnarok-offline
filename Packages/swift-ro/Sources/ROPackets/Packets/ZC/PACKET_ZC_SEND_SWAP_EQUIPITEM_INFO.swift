@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/3/26.
 //
 
-import ROCore
+import BinaryIO
 
 public let HEADER_ZC_SEND_SWAP_EQUIPITEM_INFO: Int16 = 0xa9b
 

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/4/2.
 //
 
-import ROCore
+import BinaryIO
 
 let ENTRY_CZ_ITEM_PICKUP = packetDatabase.entry(forFunctionName: "clif_parse_TakeItem")!
 

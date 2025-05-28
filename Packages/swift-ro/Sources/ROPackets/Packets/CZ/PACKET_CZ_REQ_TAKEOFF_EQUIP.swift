@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/4/15.
 //
 
-import ROCore
+import BinaryIO
 
 let ENTRY_CZ_REQ_TAKEOFF_EQUIP = packetDatabase.entry(forFunctionName: "clif_parse_UnequipItem")!
 

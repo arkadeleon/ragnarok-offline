@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/27.
 //
 
-import ROCore
+import BinaryIO
 
 /// See `clif_cartcount`
 @available(*, deprecated, message: "Use generated struct instead.")

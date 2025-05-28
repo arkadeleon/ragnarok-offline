@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/4/8.
 //
 
-import ROCore
+import BinaryIO
 
 /// See `chclif_parse_char_delete2_cancel`
 public struct PACKET_CH_DELETE_CHAR_CANCEL: EncodablePacket {

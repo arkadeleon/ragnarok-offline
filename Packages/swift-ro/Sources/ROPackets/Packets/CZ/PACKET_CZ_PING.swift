@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/4/8.
 //
 
-import ROCore
+import BinaryIO
 
 /// See `chclif_parse_keepalive`
 public struct PACKET_CZ_PING: EncodablePacket {

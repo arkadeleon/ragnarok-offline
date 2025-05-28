@@ -47,6 +47,8 @@ let package = Package(
             targets: ["ROShaders"]),
     ],
     dependencies: [
+        .package(path: "../swift-binary-io"),
+        .package(path: "../swift-grf"),
         .package(path: "../../swift-lua"),
         .package(path: "../../swift-rathena"),
         .package(url: "https://github.com/mw99/DataCompression.git", from: "3.8.0"),
@@ -59,6 +61,7 @@ let package = Package(
         .target(
             name: "RODatabase",
             dependencies: [
+                .product(name: "BinaryIO", package: "swift-binary-io"),
                 .product(name: "rAthenaCommon", package: "swift-rathena"),
                 .product(name: "rAthenaResources", package: "swift-rathena"),
                 .product(name: "ryml", package: "swift-rathena"),
@@ -80,7 +83,7 @@ let package = Package(
         .target(
             name: "ROFileFormats",
             dependencies: [
-                "DataCompression",
+                .product(name: "BinaryIO", package: "swift-binary-io"),
                 "ROCore",
             ]),
         .testTarget(
@@ -89,8 +92,6 @@ let package = Package(
                 "ROFileFormats"
             ],
             resources: [
-                .copy("Resources/data"),
-                .copy("Resources/test.grf"),
                 .copy("Resources/cursors.act"),
             ]),
         .target(
@@ -107,8 +108,8 @@ let package = Package(
         .target(
             name: "RONetwork",
             dependencies: [
+                .product(name: "BinaryIO", package: "swift-binary-io"),
                 "ROConstants",
-                "ROCore",
                 "ROPackets",
                 "ROResources",
             ]),
@@ -125,7 +126,7 @@ let package = Package(
         .target(
             name: "ROPackets",
             dependencies: [
-                "ROCore",
+                .product(name: "BinaryIO", package: "swift-binary-io"),
             ]),
         .testTarget(
             name: "ROPacketsTests",
@@ -158,10 +159,10 @@ let package = Package(
         .target(
             name: "ROResources",
             dependencies: [
+                .product(name: "GRF", package: "swift-grf"),
                 .product(name: "Lua", package: "swift-lua"),
                 "ROConstants",
                 "ROCore",
-                "ROFileFormats",
             ],
             resources: [
                 .process("Resources"),

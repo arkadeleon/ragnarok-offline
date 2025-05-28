@@ -6,8 +6,8 @@
 //
 
 import Foundation
+import GRF
 import Observation
-import ROFileFormats
 import ROResources
 import UniformTypeIdentifiers
 

@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2020/5/19.
 //
 
+import BinaryIO
 import Foundation
-import ROCore
 
 public struct RSW: BinaryDecodable, Sendable {
     public var header: String

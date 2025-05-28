@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/23.
 //
 
-import ROCore
+import BinaryIO
 
 let ENTRY_CZ_REQUEST_TIME = packetDatabase.entry(forFunctionName: "clif_parse_TickSend")!
 

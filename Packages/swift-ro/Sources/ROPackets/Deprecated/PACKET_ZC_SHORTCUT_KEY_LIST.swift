@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/29.
 //
 
-import ROCore
+import BinaryIO
 
 /// See `clif_hotkeys_send`
 @available(*, deprecated, message: "Use generated struct instead.")

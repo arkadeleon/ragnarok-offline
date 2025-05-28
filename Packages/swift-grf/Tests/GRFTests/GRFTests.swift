@@ -1,13 +1,13 @@
 //
 //  GRFTests.swift
-//  RagnarokOfflineTests
+//  GRFTests
 //
 //  Created by Leon Li on 2020/5/4.
 //
 
 import XCTest
-import ROCore
-@testable import ROFileFormats
+import BinaryIO
+@testable import GRF
 
 final class GRFTests: XCTestCase {
     func testGRF() throws {

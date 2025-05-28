@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2021/7/6.
 //
 
-import ROCore
+import BinaryIO
 
 /// See `logclif_auth_failed`
 @available(*, deprecated, message: "Use generated struct instead.")

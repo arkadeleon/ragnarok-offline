@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/2/1.
 //
 
+import BinaryIO
 import Foundation
-import ROCore
 
 public actor MapMP3NameTable {
     package let resourceManager: ResourceManager

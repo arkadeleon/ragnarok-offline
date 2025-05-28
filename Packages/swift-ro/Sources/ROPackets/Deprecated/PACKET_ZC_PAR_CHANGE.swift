@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/8/22.
 //
 
-import ROCore
+import BinaryIO
 
 /// See `clif_par_change`
 @available(*, deprecated, message: "Use generated struct instead.")
