@@ -24,13 +24,13 @@ class FileSystem {
     }
 
     func extractFile(_ file: File) throws {
-        guard case .grfEntry(let grf, let grfPath) = file.node else {
+        guard case .grfEntry(let grf, let entry) = file.node else {
             return
         }
 
-        let contents = try grf.contentsOfEntry(at: grfPath)
+        let contents = try grf.contentsOfEntry(at: entry.path)
 
-        let path = grfPath.components.joined(separator: "/")
+        let path = entry.path.components.joined(separator: "/")
         let url = ResourceManager.shared.baseURL.appending(path: path)
         let directory = url.deletingLastPathComponent()
 

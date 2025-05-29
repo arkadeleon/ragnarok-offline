@@ -7,12 +7,12 @@
 
 import Foundation
 
-public struct DES {
-    let mask: [UInt8] = [
+struct DES {
+    private let mask: [UInt8] = [
         0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01
     ]
 
-    let initialPermutationTable: [UInt8] = [
+    private let initialPermutationTable: [UInt8] = [
         58, 50, 42, 34, 26, 18, 10,  2,
         60, 52, 44, 36, 28, 20, 12,  4,
         62, 54, 46, 38, 30, 22, 14,  6,
@@ -23,7 +23,7 @@ public struct DES {
         63, 55, 47, 39, 31, 23, 15,  7
     ]
 
-    let finalPermutationTable: [UInt8] = [
+    private let finalPermutationTable: [UInt8] = [
         40,  8, 48, 16, 56, 24, 64, 32,
         39,  7, 47, 15, 55, 23, 63, 31,
         38,  6, 46, 14, 54, 22, 62, 30,
@@ -34,7 +34,7 @@ public struct DES {
         33,  1, 41,  9, 49, 17, 57, 25
     ]
 
-    let transpositionTable: [UInt8] = [
+    private let transpositionTable: [UInt8] = [
         16,  7, 20, 21,
         29, 12, 28, 17,
          1, 15, 23, 26,
@@ -45,7 +45,7 @@ public struct DES {
         22, 11,  4, 25
     ]
 
-    let substitutionBoxTable: [[UInt8]] = [
+    private let substitutionBoxTable: [[UInt8]] = [
         [
             0xef, 0x03, 0x41, 0xfd, 0xd8, 0x74, 0x1e, 0x47,  0x26, 0xef, 0xfb, 0x22, 0xb3, 0xd8, 0x84, 0x1e,
             0x39, 0xac, 0xa7, 0x60, 0x62, 0xc1, 0xcd, 0xba,  0x5c, 0x96, 0x90, 0x59, 0x05, 0x3b, 0x7a, 0x85,
@@ -69,7 +69,7 @@ public struct DES {
         ]
     ]
 
-    let shuffleDecTable: [UInt8] = {
+    private let shuffleDecTable: [UInt8] = {
         var out: [UInt8] = Array(repeating: 0, count: 256)
         var list: [UInt8] = [0x00, 0x2b, 0x6c, 0x80, 0x01, 0x68, 0x48, 0x77, 0x60, 0xff, 0xb9, 0xc0, 0xfe, 0xeb]
 
@@ -87,10 +87,7 @@ public struct DES {
         return out
     }()
 
-    public init() {
-    }
-
-    public func decodeFull(buf: inout [UInt8], len: Int, entrylen: Int) {
+    func decodeFull(buf: inout [UInt8], len: Int, entrylen: Int) {
         let nblocks = len >> 3
 
         // compute number of digits of the entry length
@@ -133,7 +130,7 @@ public struct DES {
         }
     }
 
-    public func decodeHeader(buf: inout [UInt8], len: Int) {
+    func decodeHeader(buf: inout [UInt8], len: Int) {
         let nblocks = len >> 3
 
         var i = 0

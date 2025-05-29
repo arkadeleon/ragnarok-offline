@@ -26,7 +26,7 @@ enum ResourceError: LocalizedError {
 
 public enum ResourceLocator {
     case url(URL)
-    case grfPath(GRFReference, GRFPath)
+    case grfEntry(GRFReference, GRFEntryNode)
 }
 
 public actor ResourceManager {
@@ -71,8 +71,8 @@ public actor ResourceManager {
 
         let grfPath = GRFPath(components: path.components)
         for grf in grfs {
-            if let _ = grf.entry(at: grfPath) {
-                return .grfPath(grf, grfPath)
+            if let entry = grf.entry(at: grfPath) {
+                return .grfEntry(grf, entry)
             }
         }
 
@@ -92,8 +92,8 @@ public actor ResourceManager {
         case .url(let url):
             let data = try Data(contentsOf: url)
             return data
-        case .grfPath(let grf, let grfPath):
-            let data = try grf.contentsOfEntry(at: grfPath)
+        case .grfEntry(let grf, let entry):
+            let data = try grf.contentsOfEntry(at: entry.path)
             return data
         }
     }

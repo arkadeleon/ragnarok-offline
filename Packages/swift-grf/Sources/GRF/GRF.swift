@@ -18,11 +18,11 @@ public enum GRFError: Error {
     case dataCorrupted(Data)
 }
 
-public struct GRF {
-    public var header: GRF.Header
-    public var table: GRF.Table
+struct GRF {
+    var header: GRF.Header
+    var table: GRF.Table
 
-    public init(url: URL) throws {
+    init(url: URL) throws {
         guard let stream = FileStream(url: url) else {
             throw GRFError.invalidURL(url)
         }
@@ -42,17 +42,17 @@ public struct GRF {
 }
 
 extension GRF {
-    public struct Header: BinaryDecodable {
+    struct Header: BinaryDecodable {
         static let size = 0x2e
 
-        public var magic: String
-        public var key: [UInt8]
-        public var fileTableOffset: UInt32
-        public var seed: UInt32
-        public var fileCount: UInt32
-        public var version: UInt32
+        var magic: String
+        var key: [UInt8]
+        var fileTableOffset: UInt32
+        var seed: UInt32
+        var fileCount: UInt32
+        var version: UInt32
 
-        public init(from decoder: BinaryDecoder) throws {
+        init(from decoder: BinaryDecoder) throws {
             magic = try decoder.decode(String.self, lengthOfBytes: 15)
             guard magic == "Master of Magic" else {
                 throw GRFError.invalidHeader(magic, expected: "Master of Magic")
@@ -70,15 +70,15 @@ extension GRF {
 }
 
 extension GRF {
-    public struct Table: BinaryDecodableWithConfiguration {
+    struct Table: BinaryDecodableWithConfiguration {
         static let size = 0x08
 
-        public var tableSizeCompressed: UInt32
-        public var tableSize: UInt32
+        var tableSizeCompressed: UInt32
+        var tableSize: UInt32
 
-        public var entries: [GRF.Entry] = []
+        var entries: [GRF.Entry] = []
 
-        public init(from decoder: BinaryDecoder, configuration header: GRF.Header) throws {
+        init(from decoder: BinaryDecoder, configuration header: GRF.Header) throws {
             switch header.version {
             case 0x102, 0x103:
                 throw GRFError.invalidVersion(header.version)
@@ -121,13 +121,13 @@ extension GRF {
         static let encryptHeader = GRF.EntryType(rawValue: 0x04) // encryption mode 1 (header DES only)
     }
 
-    public struct Entry {
-        public var path: GRFPath
-        public var sizeCompressed: UInt32
-        public var sizeCompressedAligned: UInt32
-        public var size: UInt32
-        public var type: UInt8
-        public var offset: UInt32
+    struct Entry: Codable {
+        var path: GRFPath
+        var sizeCompressed: UInt32
+        var sizeCompressedAligned: UInt32
+        var size: UInt32
+        var type: UInt8
+        var offset: UInt32
 
         init(data: Data, position: inout Int) throws {
             guard let index = data[position...].firstIndex(of: 0) else {
@@ -148,7 +148,7 @@ extension GRF {
             position += 17
         }
 
-        public func data(from stream: any BinaryIO.Stream) throws -> Data {
+        func data(from stream: any BinaryIO.Stream) throws -> Data {
             try stream.seek(GRF.Header.size + Int(offset), origin: .begin)
 
             let decoder = BinaryDecoder(stream: stream)

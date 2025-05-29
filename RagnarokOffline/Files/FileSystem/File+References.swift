@@ -27,10 +27,14 @@ extension File {
                 return []
             }
 
-            let referenceFiles = gnd.textures.map { textureName in
+            var referenceFiles: [File] = []
+            for textureName in gnd.textures {
                 let path = GRFPath(components: ["data", "texture", textureName])
-                let file = FileNode.grfEntry(grf, path)
-                return File(node: file)
+                guard let entry = grf.entry(at: path) else {
+                    continue
+                }
+                let file = File(node: .grfEntry(grf, entry))
+                referenceFiles.append(file)
             }
             return referenceFiles
         case .rsw:
@@ -43,7 +47,10 @@ extension File {
             var referenceFiles: [File] = []
             for model in rsw.models {
                 let path = GRFPath(components: ["data", "model", model.modelName])
-                let file = File(node: .grfEntry(grf, path))
+                guard let entry = grf.entry(at: path) else {
+                    continue
+                }
+                let file = File(node: .grfEntry(grf, entry))
                 if !referenceFiles.contains(file) {
                     referenceFiles.append(file)
                 }

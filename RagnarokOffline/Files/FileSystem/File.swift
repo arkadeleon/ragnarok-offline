@@ -16,7 +16,7 @@ enum FileNode {
     case regularFile(URL)
     case grf(GRFReference)
     case grfDirectory(GRFReference, GRFPath)
-    case grfEntry(GRFReference, GRFPath)
+    case grfEntry(GRFReference, GRFEntryNode)
 }
 
 @Observable
@@ -36,13 +36,13 @@ class File: Hashable, Identifiable {
             url
         case .grf(let grf):
             grf.url
-        case .grfDirectory(let grf, let directory):
-            grf.url.appending(queryItems: [
-                URLQueryItem(name: "path", value: directory.string)
-            ])
-        case .grfEntry(let grf, let path):
+        case .grfDirectory(let grf, let path):
             grf.url.appending(queryItems: [
                 URLQueryItem(name: "path", value: path.string)
+            ])
+        case .grfEntry(let grf, let entry):
+            grf.url.appending(queryItems: [
+                URLQueryItem(name: "path", value: entry.path.string)
             ])
         }
     }()
@@ -56,10 +56,10 @@ class File: Hashable, Identifiable {
             url.lastPathComponent
         case .grf(let grf):
             grf.url.lastPathComponent
-        case .grfDirectory(_, let directory):
-            directory.lastComponent
-        case .grfEntry(_, let path):
+        case .grfDirectory(_, let path):
             path.lastComponent
+        case .grfEntry(_, let entry):
+            entry.path.lastComponent
         }
     }()
 
@@ -80,10 +80,10 @@ class File: Hashable, Identifiable {
             url.pathExtension
         case .grf(let grf):
             grf.url.pathExtension
-        case .grfDirectory(_, let directory):
-            directory.extension
-        case .grfEntry(_, let path):
+        case .grfDirectory(_, let path):
             path.extension
+        case .grfEntry(_, let entry):
+            entry.path.extension
         }
 
         let utType = UTType(filenameExtension: filenameExtension)
@@ -120,8 +120,8 @@ class File: Hashable, Identifiable {
         switch locator {
         case .url(let url):
             node = .regularFile(url)
-        case .grfPath(let grf, let grfPath):
-            node = .grfEntry(grf, grfPath)
+        case .grfEntry(let grf, let entry):
+            node = .grfEntry(grf, entry)
         }
     }
 
@@ -141,9 +141,8 @@ class File: Hashable, Identifiable {
             return size
         case .grfDirectory:
             return 0
-        case .grfEntry(let grf, let path):
-            let size = grf.entry(at: path)?.size ?? 0
-            return Int(size)
+        case .grfEntry(_, let entry):
+            return entry.size
         }
     }
 
@@ -157,8 +156,8 @@ class File: Hashable, Identifiable {
             nil
         case .grfDirectory:
             nil
-        case .grfEntry(let grf, let path):
-            try? grf.contentsOfEntry(at: path)
+        case .grfEntry(let grf, let entry):
+            try? grf.contentsOfEntry(at: entry.path)
         }
     }
 
@@ -187,15 +186,17 @@ class File: Hashable, Identifiable {
             let path = GRFPath(components: ["data"])
             let file = File(node: .grfDirectory(grf, path))
             return await file.files()
-        case .grfDirectory(let grf, let directory):
+        case .grfDirectory(let grf, let path):
+            guard let directory = grf.directory(at: path) else {
+                return []
+            }
             var files: [File] = []
-            let (directories, entries) = grf.contentsOfDirectory(directory)
-            for directory in directories {
-                let file = File(node: .grfDirectory(grf, directory))
+            for subdirectory in directory.subdirectories {
+                let file = File(node: .grfDirectory(grf, subdirectory.path))
                 files.append(file)
             }
-            for entry in entries {
-                let file = File(node: .grfEntry(grf, entry.path))
+            for entry in directory.entries {
+                let file = File(node: .grfEntry(grf, entry))
                 files.append(file)
             }
             return files.sorted()
@@ -215,9 +216,12 @@ class File: Hashable, Identifiable {
             let path = GRFPath(components: ["data"])
             let file = File(node: .grfDirectory(grf, path))
             return await file.fileCount()
-        case .grfDirectory(let grf, let directory):
-            let (directories, entries) = grf.contentsOfDirectory(directory)
-            return directories.count + entries.count
+        case .grfDirectory(let grf, let path):
+            if let directory = grf.directory(at: path) {
+                return directory.subdirectories.count + directory.entries.count
+            } else {
+                return 0
+            }
         case .grfEntry:
             return 0
         }
