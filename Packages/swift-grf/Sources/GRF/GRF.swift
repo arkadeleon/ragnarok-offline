@@ -133,7 +133,7 @@ extension GRF {
                 throw GRFError.dataCorrupted(data)
             }
 
-            let name = String(data: data[position..<index], encoding: .koreanEUC) ?? ""
+            let name = String(data: data[position..<index], encoding: .isoLatin1) ?? ""
             path = GRFPath(string: name)
 
             position = index + 1
@@ -166,13 +166,4 @@ extension GRF {
             return data
         }
     }
-}
-
-extension String.Encoding {
-    static let koreanEUC: String.Encoding = {
-        let cfStringEncoding = CFStringEncoding(CFStringEncodings.EUC_KR.rawValue)
-        let nsStringEncoding = CFStringConvertEncodingToNSStringEncoding(cfStringEncoding)
-        let stringEncoding = String.Encoding(rawValue: nsStringEncoding)
-        return stringEncoding
-    }()
 }

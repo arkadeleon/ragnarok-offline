@@ -46,7 +46,7 @@ public struct GND: BinaryDecodable, Sendable {
         let textureNameLength = try decoder.decode(Int32.self)
 
         for _ in 0..<textureCount {
-            let texture = try decoder.decode(String.self, lengthOfBytes: Int(textureNameLength), encoding: .koreanEUC)
+            let texture = try decoder.decode(String.self, lengthOfBytes: Int(textureNameLength), encoding: .isoLatin1)
             textures.append(texture)
         }
 

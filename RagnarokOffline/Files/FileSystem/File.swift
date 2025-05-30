@@ -57,9 +57,9 @@ class File: Hashable, Identifiable {
         case .grf(let grf):
             grf.url.lastPathComponent
         case .grfDirectory(_, let path):
-            path.lastComponent
+            path.lastComponent.transcoding(from: .isoLatin1, to: .koreanEUC) ?? path.lastComponent
         case .grfEntry(_, let entry):
-            entry.path.lastComponent
+            entry.path.lastComponent.transcoding(from: .isoLatin1, to: .koreanEUC) ?? entry.path.lastComponent
         }
     }()
 

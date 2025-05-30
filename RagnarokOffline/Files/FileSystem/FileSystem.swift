@@ -30,7 +30,7 @@ class FileSystem {
 
         let contents = try grf.contentsOfEntry(at: entry.path)
 
-        let path = entry.path.components.joined(separator: "/")
+        let path = entry.path.components.map({ $0.transcoding(from: .isoLatin1, to: .koreanEUC) ?? $0 }).joined(separator: "/")
         let url = ResourceManager.shared.baseURL.appending(path: path)
         let directory = url.deletingLastPathComponent()
 

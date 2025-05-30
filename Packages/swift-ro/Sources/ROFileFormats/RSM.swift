@@ -67,7 +67,7 @@ public struct RSM: BinaryDecodable, Sendable {
             let textureCount = try decoder.decode(Int32.self)
             for _ in 0..<textureCount {
                 let textureNameLength = try decoder.decode(Int32.self)
-                let textureName = try decoder.decode(String.self, lengthOfBytes: Int(textureNameLength), encoding: .koreanEUC)
+                let textureName = try decoder.decode(String.self, lengthOfBytes: Int(textureNameLength), encoding: .isoLatin1)
                 textures.append(textureName)
             }
 
@@ -83,7 +83,7 @@ public struct RSM: BinaryDecodable, Sendable {
 
             let textureCount = try decoder.decode(Int32.self)
             for _ in 0..<textureCount {
-                let textureName = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .koreanEUC)
+                let textureName = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .isoLatin1)
                 textures.append(textureName)
             }
 

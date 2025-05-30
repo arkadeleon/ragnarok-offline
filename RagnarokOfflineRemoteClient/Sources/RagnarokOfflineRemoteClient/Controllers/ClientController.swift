@@ -22,7 +22,7 @@ struct ClientController: RouteCollection {
     }
 
     func files(req: Request) async throws -> String {
-        let components = req.url.path.dropFirst(13).split(separator: "/").map(String.init)
+        let components = req.url.path.dropFirst(13).split(separator: "/").map({ $0.removingPercentEncoding ?? "" })
         let path = GRFPath(components: components)
         let directory = grf.directory(at: path)
         let json = try JSONEncoder().encode(directory)
@@ -30,7 +30,7 @@ struct ClientController: RouteCollection {
     }
 
     func file(req: Request) async throws -> Response {
-        let components = req.url.path.dropFirst(13).split(separator: "/").map(String.init)
+        let components = req.url.path.dropFirst(13).split(separator: "/").map({ $0.removingPercentEncoding ?? "" })
         let path = GRFPath(components: components)
         let data = try grf.contentsOfEntry(at: path)
         return Response(body: .init(data: data))

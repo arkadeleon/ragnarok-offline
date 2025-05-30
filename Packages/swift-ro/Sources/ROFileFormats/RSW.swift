@@ -234,7 +234,7 @@ extension RSW {
 
             public init(from decoder: BinaryDecoder, configuration version: String) throws {
                 if version >= "1.3" {
-                    name = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .koreanEUC)
+                    name = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .isoLatin1)
                     animationType = try decoder.decode(Int32.self)
                     animationSpeed = try decoder.decode(Float.self)
                     blockType = try decoder.decode(Int32.self)
@@ -245,7 +245,7 @@ extension RSW {
                     blockType = 0
                 }
 
-                modelName = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .koreanEUC)
+                modelName = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .isoLatin1)
                 nodeName = try  decoder.decode(String.self, lengthOfBytes: 80, encoding: .isoLatin1)
                 position = try [
                     decoder.decode(Float.self) / 5,
@@ -274,7 +274,7 @@ extension RSW {
             public var range: Float
 
             public init(from decoder: BinaryDecoder, configuration version: String) throws {
-                name = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .koreanEUC)
+                name = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .isoLatin1)
                 position = try [
                     decoder.decode(Float.self) / 5,
                     decoder.decode(Float.self) / 5,
@@ -298,7 +298,7 @@ extension RSW {
             public var cycle: Float
 
             public init(from decoder: BinaryDecoder, configuration version: String) throws {
-                name = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .koreanEUC)
+                name = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .isoLatin1)
                 waveName = try decoder.decode(String.self, lengthOfBytes: 80)
                 position = try [
                     decoder.decode(Float.self) / 5,
@@ -326,7 +326,7 @@ extension RSW {
             public var parameters: SIMD4<Float>
 
             public init(from decoder: BinaryDecoder, configuration version: String) throws {
-                name = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .koreanEUC)
+                name = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .isoLatin1)
                 position = try [
                     decoder.decode(Float.self) / 5,
                     decoder.decode(Float.self) / 5,

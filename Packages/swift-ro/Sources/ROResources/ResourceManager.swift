@@ -69,7 +69,8 @@ public actor ResourceManager {
             return .url(fileURL)
         }
 
-        let grfPath = GRFPath(components: path.components)
+        let components = path.components.map({ $0.transcoding(from: .koreanEUC, to: .isoLatin1) ?? $0 })
+        let grfPath = GRFPath(components: components)
         for grf in grfs {
             if let entry = grf.entry(at: grfPath) {
                 return .grfEntry(grf, entry)
