@@ -8,17 +8,29 @@
 import BinaryIO
 import Foundation
 
+#if canImport(OSLog)
+import OSLog
+#endif
+
 public class GRFReference {
     public let url: URL
 
+    #if canImport(OSLog)
+    private let logger = Logger(subsystem: "swift-grf", category: "grf")
+    #endif
+
     private lazy var grf: GRF? = {
+        #if canImport(OSLog)
         let beginTime = CFAbsoluteTimeGetCurrent()
-        print("GRF: Begin loading")
+        logger.info("GRF: Begin loading")
+        #endif
 
         let grf = try? GRF(url: url)
 
+        #if canImport(OSLog)
         let endTime = CFAbsoluteTimeGetCurrent()
-        print("GRF: End loading (\(endTime - beginTime)s)")
+        logger.info("GRF: End loading (\(endTime - beginTime)s)")
+        #endif
 
         return grf
     }()
@@ -28,8 +40,10 @@ public class GRFReference {
             return []
         }
 
+        #if canImport(OSLog)
         let beginTime = CFAbsoluteTimeGetCurrent()
-        print("GRF: Begin loading directories")
+        logger.info("GRF: Begin loading directories")
+        #endif
 
         var directories = Set(grf.table.entries.map({ $0.path.parent }))
         for directory in directories {
@@ -40,8 +54,10 @@ public class GRFReference {
             } while !parent.string.isEmpty
         }
 
+        #if canImport(OSLog)
         let endTime = CFAbsoluteTimeGetCurrent()
-        print("GRF: End loading directories (\(endTime - beginTime)s)")
+        logger.info("GRF: End loading directories (\(endTime - beginTime)s)")
+        #endif
 
         return directories
     }()
@@ -51,16 +67,20 @@ public class GRFReference {
             return [:]
         }
 
+        #if canImport(OSLog)
         let beginTime = CFAbsoluteTimeGetCurrent()
-        print("GRF: Begin loading entries")
+        logger.info("GRF: Begin loading entries")
+        #endif
 
         let entries = Dictionary(
             grf.table.entries.map({ ($0.path.string.uppercased(), $0) }),
             uniquingKeysWith: { (first, _) in first }
         )
 
+        #if canImport(OSLog)
         let endTime = CFAbsoluteTimeGetCurrent()
-        print("GRF: End loading entries (\(endTime - beginTime)s)")
+        logger.info("GRF: End loading entries (\(endTime - beginTime)s)")
+        #endif
 
         return entries
     }()
@@ -74,8 +94,10 @@ public class GRFReference {
             return nil
         }
 
+        #if canImport(OSLog)
         let beginTime = CFAbsoluteTimeGetCurrent()
-        print("GRF: Begin loading directory at \(path.string)")
+        logger.info("GRF: Begin loading directory at \(path.string)")
+        #endif
 
         let subdirectories = directories
             .filter { $0.parent == path }
@@ -87,8 +109,10 @@ public class GRFReference {
             .map(GRFEntryNode.init)
             .sorted(using: KeyPathComparator(\.path.string))
 
+        #if canImport(OSLog)
         let endTime = CFAbsoluteTimeGetCurrent()
-        print("GRF: End loading directory at \(path.string) (\(endTime - beginTime)s)")
+        logger.info("GRF: End loading directory at \(path.string) (\(endTime - beginTime)s)")
+        #endif
 
         return GRFDirectoryNode(subdirectories: subdirectories, entries: entries)
     }
