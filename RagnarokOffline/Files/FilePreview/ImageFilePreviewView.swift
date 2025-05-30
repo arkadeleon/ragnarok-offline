@@ -6,6 +6,7 @@
 //
 
 import ROFileFormats
+import SwiftGzip
 import SwiftUI
 
 struct ImageFilePreviewView: View {
@@ -26,9 +27,8 @@ struct ImageFilePreviewView: View {
 
         switch file.utType {
         case .ebm:
-            guard let decompressedData = data.unzip() else {
-                throw FilePreviewError.invalidImageFile
-            }
+            let decompressor = GzipDecompressor()
+            let decompressedData = try await decompressor.unzip(data: data)
             guard let imageSource = CGImageSourceCreateWithData(decompressedData as CFData, nil) else {
                 throw FilePreviewError.invalidImageFile
             }

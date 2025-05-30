@@ -5,11 +5,11 @@
 //  Created by Leon Li on 2023/4/23.
 //
 
-import DataCompression
 import Foundation
 import ImageIO
 import ROCore
 import ROFileFormats
+import SwiftGzip
 
 class FileThumbnailGenerator {
     func generateThumbnail(for request: FileThumbnailRequest) async throws -> FileThumbnail? {
@@ -39,11 +39,14 @@ class FileThumbnailGenerator {
 
             return FileThumbnail(cgImage: thumbnail)
         case .ebm:
-            guard let data = await request.file.contents()?.unzip() else {
+            guard let data = await request.file.contents() else {
                 return nil
             }
 
-            guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil) else {
+            let decompressor = GzipDecompressor()
+            let decompressedData = try await decompressor.unzip(data: data)
+
+            guard let imageSource = CGImageSourceCreateWithData(decompressedData as CFData, nil) else {
                 return nil
             }
 

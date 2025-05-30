@@ -1,13 +1,22 @@
 {
-  "originHash" : "445b1714adc9ca0ef860bb3c06318da57ba5451860099a192000b6f50df8b5e6",
+  "originHash" : "995ad22ee27d34442a83283ce57112aa20f15b64f907d727b208f56bec7f7f13",
   "pins" : [
     {
-      "identity" : "datacompression",
+      "identity" : "czlib",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mw99/DataCompression.git",
+      "location" : "https://github.com/Kitura/CZlib.git",
       "state" : {
-        "revision" : "5ab15951321b08b74511601cbd0497667649d70b",
-        "version" : "3.8.0"
+        "branch" : "master",
+        "revision" : "e0fcc798170767e687088ce3441d4c04ea573aab"
+      }
+    },
+    {
+      "identity" : "swift-gzip",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/arkadeleon/swift-gzip.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "601e0da4678ce52ad2aa93a3ca9156bf185252cb"
       }
     }
   ],

@@ -51,7 +51,7 @@ let package = Package(
         .package(path: "../swift-grf"),
         .package(path: "../../swift-lua"),
         .package(path: "../../swift-rathena"),
-        .package(url: "https://github.com/mw99/DataCompression.git", from: "3.8.0"),
+        .package(url: "https://github.com/arkadeleon/swift-gzip.git", branch: "main"),
     ],
     targets: [
         .target(
@@ -65,7 +65,7 @@ let package = Package(
                 .product(name: "rAthenaCommon", package: "swift-rathena"),
                 .product(name: "rAthenaResources", package: "swift-rathena"),
                 .product(name: "ryml", package: "swift-rathena"),
-                "DataCompression",
+                .product(name: "SwiftGzip", package: "swift-gzip"),
                 "ROConstants",
                 "ROCore",
             ],

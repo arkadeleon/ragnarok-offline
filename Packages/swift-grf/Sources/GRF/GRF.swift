@@ -7,8 +7,8 @@
 
 import BinaryIO
 import CoreFoundation
-import DataCompression
 import Foundation
+import SwiftGzip
 
 public enum GRFError: Error {
     case invalidURL(URL)
@@ -86,10 +86,9 @@ extension GRF {
                 tableSizeCompressed = try decoder.decode(UInt32.self)
                 tableSize = try decoder.decode(UInt32.self)
 
+                let decompressor = GzipDecompressor()
                 let compressedData = try decoder.decode([UInt8].self, count: Int(tableSizeCompressed))
-                guard let data = Data(compressedData).unzip() else {
-                    throw GRFError.dataCorrupted(Data(compressedData))
-                }
+                let data = try decompressor.unzip(data: Data(compressedData))
 
                 var position = 0
                 for _ in 0..<header.fileCount {
@@ -162,9 +161,8 @@ extension GRF {
                 des.decodeHeader(buf: &bytes, len: Int(sizeCompressedAligned))
             }
 
-            guard let data = Data(bytes).unzip() else {
-                throw GRFError.dataCorrupted(Data(bytes))
-            }
+            let decompressor = GzipDecompressor()
+            let data = try decompressor.unzip(data: Data(bytes))
             return data
         }
     }

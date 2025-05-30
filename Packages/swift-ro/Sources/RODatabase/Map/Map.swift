@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/3/4.
 //
 
-import DataCompression
 import Foundation
+import SwiftGzip
 
 public struct Map: Equatable, Hashable, Sendable {
 
@@ -62,7 +62,10 @@ extension Map {
             self.xs = xs
             self.ys = ys
 
-            guard let decompressedData = Data(data).unzip(), decompressedData.count == Int(xs) * Int(ys) else {
+            let decompressor = GzipDecompressor()
+            guard let decompressedData = try? decompressor.unzip(bytes: data),
+                  decompressedData.count == Int(xs) * Int(ys)
+            else {
                 return nil
             }
 
