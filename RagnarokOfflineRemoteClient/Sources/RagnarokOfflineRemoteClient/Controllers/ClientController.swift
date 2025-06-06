@@ -9,30 +9,46 @@ import GRF
 import Vapor
 
 struct ClientController: RouteCollection {
-    let grf: GRFReference
+    let resourcesDirectory: URL
+    let grfs: [GRFReference]
 
     init(resourcesDirectory: String) {
-        let url = URL(fileURLWithPath: resourcesDirectory).appending(component: "data.grf")
-        self.grf = GRFReference(url: url)
+        self.resourcesDirectory = URL(fileURLWithPath: resourcesDirectory)
+
+        let grfURL = URL(fileURLWithPath: resourcesDirectory).appending(component: "data.grf")
+        self.grfs = [
+            GRFReference(url: grfURL),
+        ]
     }
 
     func boot(routes: any RoutesBuilder) throws {
-        routes.get("client", "files", "**", use: files)
-        routes.get("client", "file", "**", use: file)
+        routes.get("client", "**", use: client)
     }
 
-    func files(req: Request) async throws -> String {
-        let components = req.url.path.dropFirst(13).split(separator: "/").map({ $0.removingPercentEncoding ?? "" })
-        let path = GRFPath(components: components)
-        let directory = grf.directory(at: path)
-        let json = try JSONEncoder().encode(directory)
-        return String(data: json, encoding: .utf8) ?? ""
-    }
+    func client(req: Request) async throws -> Response {
+        guard req.url.path.hasPrefix("/client/") else {
+            return Response(status: .badRequest)
+        }
 
-    func file(req: Request) async throws -> Response {
-        let components = req.url.path.dropFirst(13).split(separator: "/").map({ $0.removingPercentEncoding ?? "" })
-        let path = GRFPath(components: components)
-        let data = try grf.contentsOfEntry(at: path)
-        return Response(body: .init(data: data))
+        guard let path = req.url.path.dropFirst("/client/".count).removingPercentEncoding else {
+            return Response(status: .badRequest)
+        }
+
+        let fileURL = resourcesDirectory.appending(path: path)
+        if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
+            let data = try Data(contentsOf: fileURL)
+            return Response(body: .init(data: data))
+        }
+
+        let components = path.split(separator: "/").map(String.init)
+        let grfPath = GRFPath(components: components)
+        for grf in grfs {
+            if let _ = grf.entry(at: grfPath) {
+                let data = try grf.contentsOfEntry(at: grfPath)
+                return Response(body: .init(data: data))
+            }
+        }
+
+        return Response(status: .notFound)
     }
 }
