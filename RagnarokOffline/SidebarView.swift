@@ -9,15 +9,14 @@ import ROServer
 import SwiftUI
 
 enum SidebarItem: Hashable {
-    case files
-    case chat
-    case game
-    case cube
+    case clientFiles
+
+    case serverFiles
     case loginServer
     case charServer
     case mapServer
     case webServer
-    case serverFiles
+
     case itemDatabase
     case jobDatabase
     case mapDatabase
@@ -26,36 +25,28 @@ enum SidebarItem: Hashable {
     case petDatabase
     case skillDatabase
     case statusChangeDatabase
+
     case characterSimulator
+    case chat
+    case game
+    case cube
 }
 
 struct SidebarView: View {
     var selection: Binding<SidebarItem?>?
 
+    @State private var isClientSectionExpanded = true
+    @State private var isServerSectionExpanded = true
     @State private var isDatabaseSectionExpanded = true
     @State private var isToolsSectionExpanded = true
     @State private var isSettingsPresented = false
 
     var body: some View {
         List(selection: selection) {
-            Section {
-                NavigationLink(value: SidebarItem.files) {
+            Section(isExpanded: $isClientSectionExpanded) {
+                NavigationLink(value: SidebarItem.clientFiles) {
                     Label("Files", systemImage: "folder")
                 }
-
-                #if DEBUG
-                NavigationLink(value: SidebarItem.chat) {
-                    Label("Chat", systemImage: "message")
-                }
-
-                NavigationLink(value: SidebarItem.game) {
-                    Label("Game", systemImage: "macwindow")
-                }
-
-                NavigationLink(value: SidebarItem.cube) {
-                    Label("Cube", systemImage: "cube")
-                }
-                #endif
             } header: {
                 Text("Client")
                     .font(.title3)
@@ -64,7 +55,13 @@ struct SidebarView: View {
                     .textCase(nil)
             }
 
-            Section {
+            Section(isExpanded: $isServerSectionExpanded) {
+                #if DEBUG
+                NavigationLink(value: SidebarItem.serverFiles) {
+                    Label("Files", systemImage: "folder")
+                }
+                #endif
+
                 NavigationLink(value: SidebarItem.loginServer) {
                     ServerCell(server: .login)
                 }
@@ -80,12 +77,6 @@ struct SidebarView: View {
                 NavigationLink(value: SidebarItem.webServer) {
                     ServerCell(server: .web)
                 }
-
-                #if DEBUG
-                NavigationLink(value: SidebarItem.serverFiles) {
-                    Label("Server Files", systemImage: "folder")
-                }
-                #endif
 
                 Button {
                     Task {
@@ -150,6 +141,20 @@ struct SidebarView: View {
                 NavigationLink(value: SidebarItem.characterSimulator) {
                     Label("Character Simulator", systemImage: "person")
                 }
+
+                #if DEBUG
+                NavigationLink(value: SidebarItem.chat) {
+                    Label("Chat", systemImage: "message")
+                }
+
+                NavigationLink(value: SidebarItem.game) {
+                    Label("Game", systemImage: "macwindow")
+                }
+
+                NavigationLink(value: SidebarItem.cube) {
+                    Label("Cube", systemImage: "cube")
+                }
+                #endif
             } header: {
                 Text("Tools")
                     .font(.title3)

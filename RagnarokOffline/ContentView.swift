@@ -10,7 +10,7 @@ import ROResources
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedItem: SidebarItem? = .files
+    @State private var selectedItem: SidebarItem? = .clientFiles
 
     @State private var clientDirectory = File(node: .directory(ResourceManager.shared.localURL))
     @State private var serverDirectory = File(node: .directory(ServerResourceManager.default.workingDirectoryURL))
@@ -58,14 +58,10 @@ struct ContentView: View {
     @ViewBuilder
     private func detail(for item: SidebarItem) -> some View {
         switch item {
-        case .files:
+        case .clientFiles:
             FilesView(title: "Files", directory: clientDirectory)
-        case .chat:
-            ChatView(chatSession: chatSession)
-        case .game:
-            GameView(gameSession: gameSession)
-        case .cube:
-            RealityCubeView()
+        case .serverFiles:
+            FilesView(title: "Files", directory: serverDirectory)
         case .loginServer:
             ServerView(server: .login)
         case .charServer:
@@ -74,8 +70,6 @@ struct ContentView: View {
             ServerView(server: .map)
         case .webServer:
             ServerView(server: .web)
-        case .serverFiles:
-            FilesView(title: "Server Files", directory: serverDirectory)
         case .itemDatabase:
             ItemDatabaseView()
         case .jobDatabase:
@@ -94,6 +88,12 @@ struct ContentView: View {
             StatusChangeDatabaseView()
         case .characterSimulator:
             CharacterSimulatorView()
+        case .chat:
+            ChatView(chatSession: chatSession)
+        case .game:
+            GameView(gameSession: gameSession)
+        case .cube:
+            RealityCubeView()
         }
     }
 
