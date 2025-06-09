@@ -12,7 +12,7 @@ public actor ScriptManager {
     package let resourceManager: ResourceManager
 
     private let context = LuaContext()
-    private var isLoaded = false
+    private var loadTask: Task<Void, Never>? = nil
 
     public init(locale: Locale, resourceManager: ResourceManager) {
         self.locale = locale
@@ -104,85 +104,88 @@ public actor ScriptManager {
     }
 
     private func loadScripts() async {
-        if isLoaded {
+        if let task = loadTask {
+            await task.value
             return
         }
 
-        await loadLocalScript("itemInfo", locale: .korean)
+        let task = Task {
+            await loadLocalScript("itemInfo", locale: .korean)
 
-        await loadScript(at: ["datainfo", "accessoryid"])
-        await loadScript(at: ["datainfo", "accname"])
-        await loadScript(at: ["datainfo", "accname_f"])
+            await loadScript(at: ["datainfo", "accessoryid"])
+            await loadScript(at: ["datainfo", "accname"])
+            await loadScript(at: ["datainfo", "accname_f"])
 
-        await loadScript(at: ["datainfo", "enumvar"])
-        await loadLocalScript("addrandomoptionnametable", locale: .korean)
-        await loadScript(at: ["datainfo", "addrandomoption_f"])
+            await loadScript(at: ["datainfo", "enumvar"])
+            await loadLocalScript("addrandomoptionnametable", locale: .korean)
+            await loadScript(at: ["datainfo", "addrandomoption_f"])
 
-        await loadScript(at: ["datainfo", "jobidentity"])
-        await loadScript(at: ["datainfo", "npcidentity"])
-        await loadScript(at: ["datainfo", "jobname"])
-        await loadScript(at: ["datainfo", "jobname_f"])
+            await loadScript(at: ["datainfo", "jobidentity"])
+            await loadScript(at: ["datainfo", "npcidentity"])
+            await loadScript(at: ["datainfo", "jobname"])
+            await loadScript(at: ["datainfo", "jobname_f"])
 
-        await loadScript(at: ["datainfo", "shadowtable"])
-        await loadScript(at: ["datainfo", "shadowtable_f"])
+            await loadScript(at: ["datainfo", "shadowtable"])
+            await loadScript(at: ["datainfo", "shadowtable_f"])
 
-        await loadScript(at: ["datainfo", "spriterobeid"])
-        await loadScript(at: ["datainfo", "spriterobename"])
-        await loadScript(at: ["datainfo", "spriterobename_f"])
+            await loadScript(at: ["datainfo", "spriterobeid"])
+            await loadScript(at: ["datainfo", "spriterobename"])
+            await loadScript(at: ["datainfo", "spriterobename_f"])
 
-        await loadScript(at: ["datainfo", "weapontable"])
-        await loadScript(at: ["datainfo", "weapontable_f"])
+            await loadScript(at: ["datainfo", "weapontable"])
+            await loadScript(at: ["datainfo", "weapontable_f"])
 
-        await loadScript(at: ["skillinfoz", "jobinheritlist"])
-        await loadScript(at: ["skillinfoz", "skillid"])
-        await loadLocalScript("skillinfolist", locale: locale)
-        await loadLocalScript("skilldescript", locale: locale)
-//        await loadScript(at: ["skillinfoz", "skillinfo_f"])
+            await loadScript(at: ["skillinfoz", "jobinheritlist"])
+            await loadScript(at: ["skillinfoz", "skillid"])
+            await loadLocalScript("skillinfolist", locale: locale)
+            await loadLocalScript("skilldescript", locale: locale)
+//            await loadScript(at: ["skillinfoz", "skillinfo_f"])
 
-        await loadScript(at: ["spreditinfo", "smalllayerdir_female"])
-        await loadScript(at: ["spreditinfo", "smalllayerdir_male"])
-        await loadScript(at: ["spreditinfo", "biglayerdir_female"])
-        await loadScript(at: ["spreditinfo", "biglayerdir_male"])
-        await loadScript(at: ["spreditinfo", "2dlayerdir_f"])
-        await loadScript(at: ["spreditinfo", "_new_smalllayerdir_female"])
-        await loadScript(at: ["spreditinfo", "_new_smalllayerdir_male"])
-        await loadScript(at: ["spreditinfo", "_new_biglayerdir_female"])
-        await loadScript(at: ["spreditinfo", "_new_biglayerdir_male"])
-        await loadScript(at: ["spreditinfo", "_new_2dlayerdir_f"])
+            await loadScript(at: ["spreditinfo", "smalllayerdir_female"])
+            await loadScript(at: ["spreditinfo", "smalllayerdir_male"])
+            await loadScript(at: ["spreditinfo", "biglayerdir_female"])
+            await loadScript(at: ["spreditinfo", "biglayerdir_male"])
+            await loadScript(at: ["spreditinfo", "2dlayerdir_f"])
+            await loadScript(at: ["spreditinfo", "_new_smalllayerdir_female"])
+            await loadScript(at: ["spreditinfo", "_new_smalllayerdir_male"])
+            await loadScript(at: ["spreditinfo", "_new_biglayerdir_female"])
+            await loadScript(at: ["spreditinfo", "_new_biglayerdir_male"])
+            await loadScript(at: ["spreditinfo", "_new_2dlayerdir_f"])
 
-        await loadScript(at: ["offsetitempos", "offsetitempos_f"])
-        await loadScript(at: ["offsetitempos", "offsetitempos"])
+            await loadScript(at: ["offsetitempos", "offsetitempos_f"])
+            await loadScript(at: ["offsetitempos", "offsetitempos"])
 
-        do {
-            try context.parse("""
-            function unidentifiedItemResourceName(itemID)
-                return tbl[itemID]["unidentifiedResourceName"]
-            end
-            function identifiedItemResourceName(itemID)
-                return tbl[itemID]["identifiedResourceName"]
-            end
-            function itemSlotCount(itemID)
-                return tbl[itemID]["slotCount"]
-            end
-            """)
-        } catch {
-            logger.warning("\(error.localizedDescription)")
+            do {
+                try context.parse("""
+                function unidentifiedItemResourceName(itemID)
+                    return tbl[itemID]["unidentifiedResourceName"]
+                end
+                function identifiedItemResourceName(itemID)
+                    return tbl[itemID]["identifiedResourceName"]
+                end
+                function itemSlotCount(itemID)
+                    return tbl[itemID]["slotCount"]
+                end
+                """)
+            } catch {
+                logger.warning("\(error.localizedDescription)")
+            }
+
+            do {
+                try context.parse("""
+                function GetSkillName(skillID)
+                    return SKILL_INFO_LIST[skillID]["SkillName"]
+                end
+                function GetSkillDescript(skillID)
+                    return SKILL_DESCRIPT[skillID]
+                end
+                """)
+            } catch {
+                logger.warning("\(error.localizedDescription)")
+            }
         }
-
-        do {
-            try context.parse("""
-            function GetSkillName(skillID)
-                return SKILL_INFO_LIST[skillID]["SkillName"]
-            end
-            function GetSkillDescript(skillID)
-                return SKILL_DESCRIPT[skillID]
-            end
-            """)
-        } catch {
-            logger.warning("\(error.localizedDescription)")
-        }
-
-        isLoaded = true
+        loadTask = task
+        await task.value
     }
 
     private func loadScript(at path: ResourcePath) async {

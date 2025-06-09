@@ -9,10 +9,15 @@ import XCTest
 @testable import ROResources
 
 final class ScriptManagerTests: XCTestCase {
-    let scriptManager = ScriptManager(
-        locale: .korean,
-        resourceManager: ResourceManager(baseURL: Bundle.module.resourceURL!)
-    )
+    let scriptManager: ScriptManager = {
+        let localURL = Bundle.module.resourceURL!
+        let resourceManager = ResourceManager(localURL: localURL, remoteURL: nil)
+        let scriptManager = ScriptManager(
+            locale: .korean,
+            resourceManager: resourceManager
+        )
+        return scriptManager
+    }()
 
     func testItemResourceName() async throws {
         let redPotion = await scriptManager.identifiedItemResourceName(forItemID: 501)

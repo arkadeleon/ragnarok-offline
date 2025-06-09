@@ -12,6 +12,7 @@ class ClientSettings {
 
     @SettingsItem("client.service_type", defaultValue: .korea) var serviceType: ServiceType
     @SettingsItem("client.item_info_source", defaultValue: .lua) var itemInfoSource: ItemInfoSource
+    @SettingsItem("client.remote_client", defaultValue: "http://ragnarokoffline.online/client") var remoteClient: String
     @SettingsItem("client.server_address", defaultValue: "127.0.0.1") var serverAddress: String
     @SettingsItem("client.server_port", defaultValue: "6900") var serverPort: String
     @SettingsItem("client.username", defaultValue: "") var username: String

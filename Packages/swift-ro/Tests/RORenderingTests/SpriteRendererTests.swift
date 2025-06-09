@@ -11,8 +11,8 @@ import XCTest
 
 final class SpriteRendererTests: XCTestCase {
     func testSpriteRenderer() async throws {
-        let baseURL = Bundle.module.resourceURL!
-        let resourceManager = ResourceManager(baseURL: baseURL)
+        let localURL = Bundle.module.resourceURL!
+        let resourceManager = ResourceManager(localURL: localURL, remoteURL: nil)
         let scriptManager = ScriptManager(locale: .current, resourceManager: resourceManager)
 
         let configuration = ComposedSprite.Configuration(jobID: 0)

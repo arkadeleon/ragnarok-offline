@@ -57,6 +57,12 @@ extension ResourcePath {
     }
 }
 
+extension ResourcePath: CustomStringConvertible {
+    public var description: String {
+        components.joined(separator: "/")
+    }
+}
+
 extension URL {
     public func appending(path: ResourcePath, directoryHint: URL.DirectoryHint = .inferFromPath) -> URL {
         let path = path.components.joined(separator: "/")

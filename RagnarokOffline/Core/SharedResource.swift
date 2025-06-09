@@ -5,10 +5,14 @@
 //  Created by Leon Li on 2025/5/8.
 //
 
+import Foundation
 import ROResources
 
 extension ResourceManager {
-    static let shared = ResourceManager(baseURL: .documentsDirectory)
+    static let shared = ResourceManager(
+        localURL: .documentsDirectory,
+        remoteURL: URL(string: ClientSettings.shared.remoteClient)
+    )
 }
 
 extension ScriptManager {

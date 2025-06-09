@@ -9,7 +9,11 @@ import XCTest
 @testable import ROResources
 
 final class SkillInfoTableTests: XCTestCase {
-    let resourceManager = ResourceManager(baseURL: Bundle.module.resourceURL!)
+    let resourceManager: ResourceManager = {
+        let localURL = Bundle.module.resourceURL!
+        let resourceManager = ResourceManager(localURL: localURL, remoteURL: nil)
+        return resourceManager
+    }()
 
     func testChineseSimplified() async throws {
         let locale = Locale(languageCode: .chinese, script: .hanSimplified)

@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2025/3/27.
 //
 
+import AVFAudio
 import RealityKit
 import ROCore
 import ROGame
@@ -144,10 +145,11 @@ class MapScene3D: MapSceneProtocol {
 
         let pathGenerator = ResourcePathGenerator(scriptManager: .shared)
         if let bgmPath = await pathGenerator.generateMapBGMPath(mapName: mapName) {
-            let bgmURL = ResourceManager.shared.baseURL.appending(path: bgmPath)
-            let configuration = AudioFileResource.Configuration(shouldLoop: true, calibration: .relative(dBSPL: 20 * log10(10)))
-            if let audio = try? await AudioFileResource(contentsOf: bgmURL, withName: mapName, configuration: configuration) {
-                rootEntity.playAudio(audio)
+            if let buffer = await ResourceManager.shared.audio(at: bgmPath) {
+                let configuration = AudioBufferResource.Configuration(shouldLoop: true, calibration: .relative(dBSPL: 20 * log10(10)))
+                if let audio = try? AudioBufferResource(buffer: buffer, configuration: configuration) {
+                    rootEntity.playAudio(audio)
+                }
             }
         }
 

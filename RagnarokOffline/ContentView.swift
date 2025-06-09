@@ -12,7 +12,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var selectedItem: SidebarItem? = .files
 
-    @State private var clientDirectory = File(node: .directory(ResourceManager.shared.baseURL))
+    @State private var clientDirectory = File(node: .directory(ResourceManager.shared.localURL))
     @State private var serverDirectory = File(node: .directory(ServerResourceManager.default.workingDirectoryURL))
 
     @State private var incomingFile: File?

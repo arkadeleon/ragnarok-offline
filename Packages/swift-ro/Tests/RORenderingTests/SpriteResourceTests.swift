@@ -11,7 +11,8 @@ import XCTest
 
 final class SpriteResourceTests: XCTestCase {
     func testSpriteResourcePath() async throws {
-        let resourceManager = ResourceManager(baseURL: Bundle.module.resourceURL!)
+        let localURL = Bundle.module.resourceURL!
+        let resourceManager = ResourceManager(localURL: localURL, remoteURL: nil)
         let scriptManager = ScriptManager(locale: .current, resourceManager: resourceManager)
         let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
         let path = await pathGenerator.generatePlayerBodySpritePath(job: 0, gender: .male)!

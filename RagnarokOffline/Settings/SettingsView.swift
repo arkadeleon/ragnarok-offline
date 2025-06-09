@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     enum Field: Hashable {
+        case remoteClient
         case serverAddress
         case serverPort
     }
@@ -17,6 +18,7 @@ struct SettingsView: View {
 
     @State private var serviceType = ClientSettings.shared.serviceType
     @State private var itemInfoSource = ClientSettings.shared.itemInfoSource
+    @State private var remoteClient = ClientSettings.shared.remoteClient
     @State private var serverAddress = ClientSettings.shared.serverAddress
     @State private var serverPort = ClientSettings.shared.serverPort
 
@@ -53,14 +55,20 @@ struct SettingsView: View {
                     }
                 }
 
+                LabeledContent("Remote Client") {
+                    TextField(String(), text: $remoteClient)
+                        .multilineTextAlignment(.trailing)
+                        .focused($focusedField, equals: .remoteClient)
+                }
+
                 LabeledContent("Server Address") {
-                    TextField("Server Address", text: $serverAddress)
+                    TextField(String(), text: $serverAddress)
                         .multilineTextAlignment(.trailing)
                         .focused($focusedField, equals: .serverAddress)
                 }
 
                 LabeledContent("Server Port") {
-                    TextField("Server Port", text: $serverPort)
+                    TextField(String(), text: $serverPort)
                         .multilineTextAlignment(.trailing)
                         .focused($focusedField, equals: .serverPort)
                 }
@@ -69,10 +77,22 @@ struct SettingsView: View {
         .navigationTitle("Settings")
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button("Done", action: onDone)
+                Button("Done") {
+                    focusedField = nil
+                    onDone()
+                }
             }
         }
         .onChange(of: focusedField) { oldValue, newValue in
+            if oldValue == SettingsView.Field.remoteClient {
+                let regex = /^(https?:\/\/)?([a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}|localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d{1,5})?(\/[^\s]*)?$/
+                if let _ = try? regex.wholeMatch(in: remoteClient) {
+                    ClientSettings.shared.remoteClient = remoteClient
+                } else {
+                    remoteClient = ClientSettings.shared.remoteClient
+                }
+            }
+
             if oldValue == SettingsView.Field.serverAddress {
                 let regex = /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}|localhost)$/
                 if let _ = try? regex.wholeMatch(in: serverAddress) {

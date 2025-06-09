@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2025/2/14.
 //
 
+import AVFAudio
 import CoreGraphics
 import Foundation
 import GRF
@@ -30,18 +31,20 @@ public enum ResourceLocator {
 }
 
 public actor ResourceManager {
-    nonisolated public let baseURL: URL
+    nonisolated public let localURL: URL
+    nonisolated public let remoteURL: URL?
 
-    private let grfs: [GRFReference]
+    private let localGRFs: [GRFReference]
 
-    public init(baseURL: URL) {
-        self.baseURL = baseURL
+    public init(localURL: URL, remoteURL: URL?) {
+        self.localURL = localURL
+        self.remoteURL = remoteURL
 
-        let dataGRFURL = baseURL.appending(path: "data.grf")
+        let dataGRFURL = localURL.appending(path: "data.grf")
 
         if !FileManager.default.fileExists(atPath: dataGRFURL.path()) {
             let data = Data()
-            let url = baseURL.appending(path: "Copy data.grf Here")
+            let url = localURL.appending(path: "Copy data.grf Here")
             do {
                 try data.write(to: url)
             } catch {
@@ -49,7 +52,7 @@ public actor ResourceManager {
             }
         }
 
-        grfs = [
+        localGRFs = [
             GRFReference(url: dataGRFURL),
         ]
     }
@@ -64,14 +67,14 @@ public actor ResourceManager {
     }
 
     public func locatorOfResource(at path: ResourcePath) throws -> ResourceLocator {
-        let fileURL = baseURL.absoluteURL.appending(path: path)
+        let fileURL = localURL.absoluteURL.appending(path: path)
         if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
             return .url(fileURL)
         }
 
         let components = path.components.map({ $0.transcoding(from: .koreanEUC, to: .isoLatin1) ?? $0 })
         let grfPath = GRFPath(components: components)
-        for grf in grfs {
+        for grf in localGRFs {
             if let entry = grf.entry(at: grfPath) {
                 return .grfEntry(grf, entry)
             }
@@ -88,17 +91,43 @@ public actor ResourceManager {
     }
 
     public func contentsOfResource(at path: ResourcePath) async throws -> Data {
-        let locator = try locatorOfResource(at: path)
-        switch locator {
-        case .url(let url):
-            let data = try Data(contentsOf: url)
-            return data
-        case .grfEntry(let grf, let entry):
-            let data = try grf.contentsOfEntry(at: entry.path)
+        let fileURL = localURL.absoluteURL.appending(path: path)
+        if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
+            let data = try Data(contentsOf: fileURL)
             return data
         }
-    }
 
+        let components = path.components.map({ $0.transcoding(from: .koreanEUC, to: .isoLatin1) ?? $0 })
+        let grfPath = GRFPath(components: components)
+        for grf in localGRFs {
+            if let entry = grf.entry(at: grfPath) {
+                let data = try grf.contentsOfEntry(at: entry.path)
+                return data
+            }
+        }
+
+        #if DEBUG
+        if let fileURL = Bundle.main.resourceURL?.appending(path: path),
+           FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
+            let data = try Data(contentsOf: fileURL)
+            return data
+        }
+        #endif
+
+        if let remoteURL {
+            logger.info("Start downloading resource: \(path)")
+
+            let path = ResourcePath(components: path.components.map({ $0.transcoding(from: .koreanEUC, to: .isoLatin1) ?? $0 }))
+            let remoteResourceURL = remoteURL.appending(path: path)
+            let (data, _) = try await URLSession.shared.data(from: remoteResourceURL)
+            return data
+        }
+
+        throw ResourceError.resourceNotFound(path)
+    }
+}
+
+extension ResourceManager {
     public func image(at path: ResourcePath, removesMagentaPixels: Bool = false) async throws -> CGImage {
         let data = try await contentsOfResource(at: path)
 
@@ -111,6 +140,40 @@ public actor ResourceManager {
             return image
         } else {
             throw ResourceError.cannotCreateImage
+        }
+    }
+}
+
+extension ResourceManager {
+    public func audio(at path: ResourcePath) async -> AVAudioBuffer? {
+        guard let data = try? await contentsOfResource(at: path) else {
+            return nil
+        }
+
+        // Create a temporary file
+        let uuid = UUID().uuidString
+        let tempURL = URL.temporaryDirectory.appending(path: uuid)
+
+        do {
+            try data.write(to: tempURL)
+            let audioFile = try AVAudioFile(forReading: tempURL)
+
+            let buffer = AVAudioPCMBuffer(
+                pcmFormat: audioFile.processingFormat,
+                frameCapacity: AVAudioFrameCount(audioFile.length)
+            )
+
+            if let buffer {
+                try audioFile.read(into: buffer)
+            }
+
+            // Clean up
+            try? FileManager.default.removeItem(at: tempURL)
+
+            return buffer
+        } catch {
+            try? FileManager.default.removeItem(at: tempURL)
+            return nil
         }
     }
 }
