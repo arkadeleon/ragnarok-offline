@@ -18,7 +18,7 @@ struct CharacterSimulatorView: View {
     @State private var animatedImage: AnimatedImage?
 
     var body: some View {
-        ResponsiveView {
+        AdaptiveView {
             VStack(spacing: 0) {
                 CharacterRenderingView(configuration: $configuration, animatedImage: animatedImage)
                     .frame(minHeight: 0, maxHeight: 300)

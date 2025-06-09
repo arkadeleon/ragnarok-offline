@@ -11,7 +11,7 @@ struct ItemDatabaseView: View {
     @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .item)
 
     var body: some View {
-        ResponsiveView {
+        AdaptiveView {
             List(database.filteredRecords) { item in
                 NavigationLink(value: item) {
                     ItemCell(item: item)

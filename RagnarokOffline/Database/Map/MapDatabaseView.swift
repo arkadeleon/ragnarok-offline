@@ -11,7 +11,7 @@ struct MapDatabaseView: View {
     @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .map)
 
     var body: some View {
-        ResponsiveView {
+        AdaptiveView {
             List(database.filteredRecords) { map in
                 NavigationLink(value: map) {
                     MapCell(map: map)

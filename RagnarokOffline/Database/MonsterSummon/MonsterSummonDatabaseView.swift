@@ -12,7 +12,7 @@ struct MonsterSummonDatabaseView: View {
     @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .monsterSummon)
 
     var body: some View {
-        ResponsiveView {
+        AdaptiveView {
             List(database.filteredRecords) { monsterSummon in
                 NavigationLink(monsterSummon.displayName, value: monsterSummon)
             }

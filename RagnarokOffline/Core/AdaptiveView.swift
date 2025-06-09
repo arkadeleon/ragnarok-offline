@@ -1,5 +1,5 @@
 //
-//  ResponsiveView.swift
+//  AdaptiveView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/5/10.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ResponsiveView<Compact, Regular>: View where Compact: View, Regular: View {
+struct AdaptiveView<Compact, Regular>: View where Compact: View, Regular: View {
     @ViewBuilder var compact: () -> Compact
     @ViewBuilder var regular: () -> Regular
 
@@ -23,7 +23,7 @@ struct ResponsiveView<Compact, Regular>: View where Compact: View, Regular: View
 }
 
 #Preview {
-    ResponsiveView {
+    AdaptiveView {
         List {
         }
     } regular: {

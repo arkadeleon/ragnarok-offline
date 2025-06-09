@@ -121,7 +121,7 @@
 		35B422DC2BECAA1800681AA2 /* MonsterSummonProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422DB2BECAA1800681AA2 /* MonsterSummonProvider.swift */; };
 		35B422DE2BECAB6100681AA2 /* MonsterSummonDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422DD2BECAB6100681AA2 /* MonsterSummonDatabaseView.swift */; };
 		35B422E02BECAB6E00681AA2 /* MonsterSummonInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422DF2BECAB6E00681AA2 /* MonsterSummonInfoView.swift */; };
-		35B422E22BEDEBD000681AA2 /* ResponsiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422E12BEDEBD000681AA2 /* ResponsiveView.swift */; };
+		35B422E22BEDEBD000681AA2 /* AdaptiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422E12BEDEBD000681AA2 /* AdaptiveView.swift */; };
 		35B422EF2BEF091F00681AA2 /* ObservableDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422EE2BEF091F00681AA2 /* ObservableDatabase.swift */; };
 		35B422F22BEF5F3000681AA2 /* StatusChangeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422F12BEF5F3000681AA2 /* StatusChangeProvider.swift */; };
 		35B422F42BEF602500681AA2 /* StatusChangeDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422F32BEF602500681AA2 /* StatusChangeDatabaseView.swift */; };
@@ -307,7 +307,7 @@
 		35B422DB2BECAA1800681AA2 /* MonsterSummonProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterSummonProvider.swift; sourceTree = "<group>"; };
 		35B422DD2BECAB6100681AA2 /* MonsterSummonDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterSummonDatabaseView.swift; sourceTree = "<group>"; };
 		35B422DF2BECAB6E00681AA2 /* MonsterSummonInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterSummonInfoView.swift; sourceTree = "<group>"; };
-		35B422E12BEDEBD000681AA2 /* ResponsiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsiveView.swift; sourceTree = "<group>"; };
+		35B422E12BEDEBD000681AA2 /* AdaptiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveView.swift; sourceTree = "<group>"; };
 		35B422EE2BEF091F00681AA2 /* ObservableDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableDatabase.swift; sourceTree = "<group>"; };
 		35B422F12BEF5F3000681AA2 /* StatusChangeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeProvider.swift; sourceTree = "<group>"; };
 		35B422F32BEF602500681AA2 /* StatusChangeDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeDatabaseView.swift; sourceTree = "<group>"; };
@@ -484,6 +484,7 @@
 		355BC18A2B8F25A6002F0586 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				35B422E12BEDEBD000681AA2 /* AdaptiveView.swift */,
 				359B3EF52D7E82C200E0B3AF /* AnimatedImageShareLink.swift */,
 				35BE55342BD9574E003715C3 /* AnimatedImageView.swift */,
 				35BE552E2BD94053003715C3 /* AsyncContentView.swift */,
@@ -497,7 +498,6 @@
 				35BE555B2BDAAFBF003715C3 /* MetalView.swift */,
 				3594DD562BF5FCB600575F3D /* ModelViewer.swift */,
 				35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */,
-				35B422E12BEDEBD000681AA2 /* ResponsiveView.swift */,
 				35C4BC792DCCAAA7007DA87E /* SharedResource.swift */,
 				350A53582D8BC73A00539999 /* SizeClassSpecific.swift */,
 				351EE2F72C0735390012BC9E /* TransferableAnimatedImage.swift */,
@@ -1047,7 +1047,7 @@
 				35BE55292BD92D52003715C3 /* TextFilePreviewView.swift in Sources */,
 				3599BD572C3FB5020010DBE7 /* FileThumbnailView.swift in Sources */,
 				35239DF92BBDB7B50039F7D5 /* MonsterProvider.swift in Sources */,
-				35B422E22BEDEBD000681AA2 /* ResponsiveView.swift in Sources */,
+				35B422E22BEDEBD000681AA2 /* AdaptiveView.swift in Sources */,
 				35CFDA3B2DAFF4E40070B707 /* ChatBoxView.swift in Sources */,
 				35B422D02BEB68F600681AA2 /* PetProvider.swift in Sources */,
 				3599BD4A2C3F90250010DBE7 /* File+DevelopmentPreview.swift in Sources */,

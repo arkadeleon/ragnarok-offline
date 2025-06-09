@@ -11,7 +11,7 @@ struct SkillDatabaseView: View {
     @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .skill)
 
     var body: some View {
-        ResponsiveView {
+        AdaptiveView {
             List(database.filteredRecords) { skill in
                 NavigationLink(value: skill) {
                     SkillCell(skill: skill)

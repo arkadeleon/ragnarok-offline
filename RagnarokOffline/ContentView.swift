@@ -22,7 +22,7 @@ struct ContentView: View {
 
     var body: some View {
         AsyncContentView(load: load) {
-            ResponsiveView {
+            AdaptiveView {
                 NavigationStack {
                     SidebarView(selection: nil)
                         .navigationDestination(for: SidebarItem.self) { item in

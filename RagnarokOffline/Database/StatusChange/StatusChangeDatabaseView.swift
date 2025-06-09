@@ -11,7 +11,7 @@ struct StatusChangeDatabaseView: View {
     @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .statusChange)
 
     var body: some View {
-        ResponsiveView {
+        AdaptiveView {
             List(database.filteredRecords) { statusChange in
                 NavigationLink(value: statusChange) {
                     StatusChangeCell(statusChange: statusChange)
