@@ -245,8 +245,12 @@ struct GeneratePacketsCommand: ParsableCommand {
                 if addpacket.inner![2].findNode(where: { $0.kind == "UnaryOperator" && $0.opcode == "-" }) != nil {
                     packetLength = "-" + packetLength
                 }
+            } else if let desugaredQualType = packetLengthNode.argType?.desugaredQualType {
+                packetLength = "\(desugaredQualType).size"
+            } else if let qualType = packetLengthNode.argType?.qualType {
+                packetLength = "\(qualType).size"
             } else {
-                packetLength = "\(packetLengthNode.argType!.desugaredQualType!).size"
+                packetLength = ""
             }
 
             let functionNameNode = addpacket.inner![3].findNode { node in

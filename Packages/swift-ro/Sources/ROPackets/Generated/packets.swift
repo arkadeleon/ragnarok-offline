@@ -141,7 +141,6 @@ public let HEADER_CZ_SE_CASHSHOP_OPEN2: Int16 = 0xb6d
 public let HEADER_CZ_GET_ACCOUNT_LIMTIED_SALE_LIST: Int16 = 0xb4c
 public let HEADER_ZC_SE_CASHSHOP_OPEN: Int16 = 0xb6e
 public let HEADER_CZ_NPC_EXPANDED_BARTER_MARKET_CLOSE: Int16 = 0xb58
-public let HEADER_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO: Int16 = 0xb79
 public let HEADER_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE: Int16 = 0xb57
 public let HEADER_ZC_STATE_CHANGE: Int16 = 0x229
 public let HEADER_ZC_AUTORUN_SKILL: Int16 = 0x147
@@ -470,6 +469,8 @@ public let HEADER_ZC_WHISPER_LIST: Int16 = 0xd4
 public let HEADER_CZ_ALLY_CHAT: Int16 = 0xbdd
 public let HEADER_CZ_REQ_REPORT_USER: Int16 = 0xbe2
 public let HEADER_CZ_QUEST_STATUS_REQ: Int16 = 0xbf3
+public let HEADER_CZ_MOVE_ITEM_TO_PERSONAL: Int16 = 0xc22
+public let HEADER_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO: Int16 = 0xb79
 public let HEADER_ZC_NOTIFY_CHAT: Int16 = 0x8d
 public let HEADER_ZC_ITEM_ENTRY: Int16 = 0x9d
 public let HEADER_ZC_MVP_GETTING_ITEM: Int16 = 0x10a
@@ -8392,97 +8393,6 @@ public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_CLOSE: BinaryDecodable, Binar
     }
 }
 
-public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2: BinaryDecodable, BinaryEncodable, Sendable {
-    public static var size: Int {
-        (4 + 2 + 4 + 2)
-    }
-    public var nameid: UInt32 = 0
-    public var refine_level: UInt16 = 0
-    public var amount: UInt32 = 0
-    public var type: UInt16 = 0
-    public init() {
-    }
-    public init(from decoder: BinaryDecoder) throws {
-        nameid = try decoder.decode(UInt32.self)
-        refine_level = try decoder.decode(UInt16.self)
-        amount = try decoder.decode(UInt32.self)
-        type = try decoder.decode(UInt16.self)
-    }
-    public func encode(to encoder: BinaryEncoder) throws {
-        try encoder.encode(nameid)
-        try encoder.encode(refine_level)
-        try encoder.encode(amount)
-        try encoder.encode(type)
-    }
-}
-
-public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub: BinaryDecodable, BinaryEncodable, Sendable {
-    public static var size: Int {
-        (4 + 2 + 4 + 4 + 4 + 4 + 2 + 4 + 4 + (PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2.size * 1))
-    }
-    public var nameid: UInt32 = 0
-    public var type: UInt16 = 0
-    public var amount: UInt32 = 0
-    public var weight: UInt32 = 0
-    public var index: UInt32 = 0
-    public var zeny: UInt32 = 0
-    public var viewSprite: UInt16 = 0
-    public var location: UInt32 = 0
-    public var currency_count: UInt32 = 0
-    @FixedSizeArray(size: 1, initialValue: PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2())
-    public var currencies: [PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2]
-    public init() {
-    }
-    public init(from decoder: BinaryDecoder) throws {
-        nameid = try decoder.decode(UInt32.self)
-        type = try decoder.decode(UInt16.self)
-        amount = try decoder.decode(UInt32.self)
-        weight = try decoder.decode(UInt32.self)
-        index = try decoder.decode(UInt32.self)
-        zeny = try decoder.decode(UInt32.self)
-        viewSprite = try decoder.decode(UInt16.self)
-        location = try decoder.decode(UInt32.self)
-        currency_count = try decoder.decode(UInt32.self)
-        currencies = try decoder.decode([PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2].self, count: 1)
-    }
-    public func encode(to encoder: BinaryEncoder) throws {
-        try encoder.encode(nameid)
-        try encoder.encode(type)
-        try encoder.encode(amount)
-        try encoder.encode(weight)
-        try encoder.encode(index)
-        try encoder.encode(zeny)
-        try encoder.encode(viewSprite)
-        try encoder.encode(location)
-        try encoder.encode(currency_count)
-        try encoder.encode(currencies)
-    }
-}
-
-public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO: BinaryDecodable, BinaryEncodable, Sendable {
-    public static var size: Int {
-        -1
-    }
-    public var packetType: Int16 = 0
-    public var packetLength: Int16 = 0
-    public var items_count: Int32 = 0
-    public var items: [PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub] = []
-    public init() {
-    }
-    public init(from decoder: BinaryDecoder) throws {
-        packetType = try decoder.decode(Int16.self)
-        packetLength = try decoder.decode(Int16.self)
-        items_count = try decoder.decode(Int32.self)
-        items = try decoder.decode([PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub].self, count: (Int(packetLength) - (2 + 2 + 4)) / PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub.size)
-    }
-    public func encode(to encoder: BinaryEncoder) throws {
-        try encoder.encode(packetType)
-        try encoder.encode(packetLength)
-        try encoder.encode(items_count)
-        try encoder.encode(items)
-    }
-}
-
 public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE_sub: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
         (4 + 4 + 4)
@@ -16346,6 +16256,121 @@ public struct PACKET_CZ_QUEST_STATUS_REQ: BinaryDecodable, BinaryEncodable, Send
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
+    }
+}
+
+public struct PACKET_CZ_MOVE_ITEM_TO_PERSONAL: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 2 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var unknown: UInt32 = 0
+    public var index: UInt16 = 0
+    public var amount: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        unknown = try decoder.decode(UInt32.self)
+        index = try decoder.decode(UInt16.self)
+        amount = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(unknown)
+        try encoder.encode(index)
+        try encoder.encode(amount)
+    }
+}
+
+public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 2 + 4 + 2)
+    }
+    public var nameid: UInt32 = 0
+    public var refine_level: UInt16 = 0
+    public var amount: UInt32 = 0
+    public var type: UInt16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        nameid = try decoder.decode(UInt32.self)
+        refine_level = try decoder.decode(UInt16.self)
+        amount = try decoder.decode(UInt32.self)
+        type = try decoder.decode(UInt16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(nameid)
+        try encoder.encode(refine_level)
+        try encoder.encode(amount)
+        try encoder.encode(type)
+    }
+}
+
+public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 2 + 4 + 4 + 4 + 4 + 2 + 4 + 4 + (PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2.size * 1))
+    }
+    public var nameid: UInt32 = 0
+    public var type: UInt16 = 0
+    public var amount: UInt32 = 0
+    public var weight: UInt32 = 0
+    public var index: UInt32 = 0
+    public var zeny: UInt32 = 0
+    public var viewSprite: UInt16 = 0
+    public var location: UInt32 = 0
+    public var currency_count: UInt32 = 0
+    @FixedSizeArray(size: 1, initialValue: PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2())
+    public var currencies: [PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2]
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        nameid = try decoder.decode(UInt32.self)
+        type = try decoder.decode(UInt16.self)
+        amount = try decoder.decode(UInt32.self)
+        weight = try decoder.decode(UInt32.self)
+        index = try decoder.decode(UInt32.self)
+        zeny = try decoder.decode(UInt32.self)
+        viewSprite = try decoder.decode(UInt16.self)
+        location = try decoder.decode(UInt32.self)
+        currency_count = try decoder.decode(UInt32.self)
+        currencies = try decoder.decode([PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2].self, count: 1)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(nameid)
+        try encoder.encode(type)
+        try encoder.encode(amount)
+        try encoder.encode(weight)
+        try encoder.encode(index)
+        try encoder.encode(zeny)
+        try encoder.encode(viewSprite)
+        try encoder.encode(location)
+        try encoder.encode(currency_count)
+        try encoder.encode(currencies)
+    }
+}
+
+public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var items_count: Int32 = 0
+    public var items: [PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub] = []
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        items_count = try decoder.decode(Int32.self)
+        items = try decoder.decode([PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub].self, count: (Int(packetLength) - (2 + 2 + 4)) / PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub.size)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(items_count)
+        try encoder.encode(items)
     }
 }
 
