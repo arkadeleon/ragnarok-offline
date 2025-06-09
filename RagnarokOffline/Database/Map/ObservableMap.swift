@@ -8,7 +8,6 @@
 import CoreGraphics
 import Observation
 import RODatabase
-import RORendering
 import ROResources
 
 @Observable
@@ -93,18 +92,6 @@ class ObservableMap {
             }
         }
         self.spawnMonsters = spawnMonsters
-    }
-
-    @MainActor
-    func fetchFiles() async -> [File] {
-        let gatLocator = try? await ResourceManager.shared.locatorOfResource(at: ["data", "\(map.name).gat"])
-        let gndLocator = try? await ResourceManager.shared.locatorOfResource(at: ["data", "\(map.name).gnd"])
-        let rswLocator = try? await ResourceManager.shared.locatorOfResource(at: ["data", "\(map.name).rsw"])
-
-        let locators = [gatLocator, gndLocator, rswLocator]
-        let files = locators.compactMap({ $0 }).map(File.init)
-
-        return files
     }
 }
 

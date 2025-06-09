@@ -12,8 +12,7 @@ struct MapInfoView: View {
 
     @Environment(\.horizontalSizeClass) private var sizeClass
 
-    @State private var files: [File] = []
-    @State private var fileToPreview: File?
+    @State private var isMapViewerPresented = false
 
     var body: some View {
         ScrollView {
@@ -44,37 +43,24 @@ struct MapInfoView: View {
                         .padding(.vertical, vSpacing(sizeClass))
                     }
                 }
-
-                if !files.isEmpty {
-                    DatabaseRecordSectionView("Files") {
-                        LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
-                            ForEach(files) { file in
-                                Button {
-                                    fileToPreview = file
-                                } label: {
-                                    FileGridCell(file: file)
-                                }
-                                .buttonStyle(.plain)
-                                .fileContextMenu(file: file)
-                            }
-                        }
-                        .padding(.vertical, vSpacing(sizeClass))
-                    }
-                }
             }
         }
         .background(.background)
         .navigationTitle(map.displayName)
-        .sheet(item: $fileToPreview) { file in
+        .toolbar {
+            Button("View") {
+                isMapViewerPresented.toggle()
+            }
+        }
+        .sheet(isPresented: $isMapViewerPresented) {
             NavigationStack {
-                FilePreviewTabView(files: files, currentFile: file) {
-                    fileToPreview = nil
+                MapViewer(mapName: map.name) {
+                    isMapViewerPresented.toggle()
                 }
             }
         }
         .task {
             await map.fetchDetail()
-            files = await map.fetchFiles()
         }
     }
 }

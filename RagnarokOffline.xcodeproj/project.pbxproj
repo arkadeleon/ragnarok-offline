@@ -77,6 +77,7 @@
 		3577426A2D005FAA00F2CE8D /* MapView3DContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3577425A2D005FAA00F2CE8D /* MapView3DContent.swift */; };
 		3577426B2D005FAA00F2CE8D /* GameImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3577425E2D005FAA00F2CE8D /* GameImage.swift */; };
 		3577426C2D005FAA00F2CE8D /* GameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3577425D2D005FAA00F2CE8D /* GameButton.swift */; };
+		3577D3732DF6CC8E00EDAFE8 /* MapViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3577D3722DF6CC8A00EDAFE8 /* MapViewer.swift */; };
 		3579609F2D3564B0003D9CEF /* UTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357960962D3564B0003D9CEF /* UTTypes.swift */; };
 		357960A02D3564B0003D9CEF /* FileThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3579609A2D3564B0003D9CEF /* FileThumbnail.swift */; };
 		357960A32D3564B0003D9CEF /* FileThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3579609B2D3564B0003D9CEF /* FileThumbnailGenerator.swift */; };
@@ -265,6 +266,7 @@
 		3577425E2D005FAA00F2CE8D /* GameImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameImage.swift; sourceTree = "<group>"; };
 		357742602D005FAA00F2CE8D /* GameSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSession.swift; sourceTree = "<group>"; };
 		357742612D005FAA00F2CE8D /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		3577D3722DF6CC8A00EDAFE8 /* MapViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewer.swift; sourceTree = "<group>"; };
 		357960962D3564B0003D9CEF /* UTTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTTypes.swift; sourceTree = "<group>"; };
 		357960992D3564B0003D9CEF /* FileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
 		3579609A2D3564B0003D9CEF /* FileThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileThumbnail.swift; sourceTree = "<group>"; };
@@ -514,6 +516,7 @@
 				35652B442B960D2D0075AD71 /* MapCell.swift */,
 				351EE3002C08B86A0012BC9E /* MapImageView.swift */,
 				35652B462B960D370075AD71 /* MapInfoView.swift */,
+				3577D3722DF6CC8A00EDAFE8 /* MapViewer.swift */,
 				35239DFE2BBEF4510039F7D5 /* MapProvider.swift */,
 				35FEB6C12CDC845800F24A4A /* ObservableMap.swift */,
 			);
@@ -1023,6 +1026,7 @@
 				35B422F22BEF5F3000681AA2 /* StatusChangeProvider.swift in Sources */,
 				35CFDA392DAF4B230070B707 /* GameBottomBar.swift in Sources */,
 				353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */,
+				3577D3732DF6CC8E00EDAFE8 /* MapViewer.swift in Sources */,
 				35B422DA2BECA87400681AA2 /* ObservableMonsterSummon.swift in Sources */,
 				357F96BA2C4AA48400B3231B /* ImageGrid.swift in Sources */,
 				3514BF842B4801E20065ED89 /* JobGridCell.swift in Sources */,
