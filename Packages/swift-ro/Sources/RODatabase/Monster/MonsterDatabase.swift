@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RapidYAML
 import rAthenaResources
 import ROCore
 
