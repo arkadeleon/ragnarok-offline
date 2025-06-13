@@ -7,6 +7,7 @@
 
 import CoreGraphics
 import Observation
+import rAthenaCommon
 import ROConstants
 import ROCore
 import RODatabase
@@ -74,20 +75,23 @@ class ObservableJob {
     }
 
     var baseLevels: [BaseLevelStats] {
-        (0..<job.maxBaseLevel).map { level in
+        let maxBaseLevel = job.maxBaseLevel ?? RA_MAX_LEVEL
+        let baseLevels = (1...maxBaseLevel).map { level in
             BaseLevelStats(
                 level: level,
-                baseExp: job.baseExp[level],
-                baseHp: job.baseHp[level],
-                baseSp: job.baseSp[level]
+                baseExp: job.baseExp[level] ?? 0,
+                baseHp: job.baseHp[level] ?? 0,
+                baseSp: job.baseSp[level] ?? 0
             )
         }
+        return baseLevels
     }
 
     var jobLevels: [JobLevelStats] {
-        (0..<job.maxJobLevel).map { level in
+        let maxJobLevel = job.maxJobLevel ?? RA_MAX_LEVEL
+        let jobLevels = (1...maxJobLevel).map { level in
             let bonusStats = Parameter.allCases.compactMap { parameter in
-                if let value = job.bonusStats[level][parameter], value > 0 {
+                if let value = job.bonusStats[level]?[parameter], value > 0 {
                     return "\(parameter.stringValue)(+\(value))"
                 } else {
                     return nil
@@ -96,10 +100,11 @@ class ObservableJob {
 
             return JobLevelStats(
                 level: level,
-                jobExp: job.jobExp[level],
+                jobExp: job.jobExp[level] ?? 0,
                 bonusStats: bonusStats
             )
         }
+        return jobLevels
     }
 
     init(mode: DatabaseMode, job: Job) {

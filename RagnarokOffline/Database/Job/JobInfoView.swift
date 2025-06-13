@@ -46,7 +46,7 @@ struct JobInfoView: View {
                     LazyVStack(spacing: 10) {
                         ForEach(job.baseLevels) { levelStats in
                             HStack {
-                                Text((levelStats.level + 1).formatted())
+                                Text((levelStats.level).formatted())
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
                                 Text(levelStats.baseExp.formatted())
@@ -84,7 +84,7 @@ struct JobInfoView: View {
                     LazyVStack(spacing: 10) {
                         ForEach(job.jobLevels) { levelStats in
                             HStack {
-                                Text((levelStats.level + 1).formatted())
+                                Text((levelStats.level).formatted())
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
                                 Text(levelStats.jobExp.formatted())

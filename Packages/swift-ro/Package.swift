@@ -47,7 +47,6 @@ let package = Package(
         .package(path: "../swift-binary-io"),
         .package(path: "../swift-grf"),
         .package(path: "../../swift-lua"),
-        .package(path: "../../swift-rathena"),
         .package(url: "https://github.com/arkadeleon/swift-gzip.git", branch: "main"),
         .package(url: "https://github.com/arkadeleon/swift-rapidyaml.git", branch: "master"),
     ],
@@ -60,7 +59,6 @@ let package = Package(
             name: "RODatabase",
             dependencies: [
                 .product(name: "BinaryIO", package: "swift-binary-io"),
-                .product(name: "rAthenaCommon", package: "swift-rathena"),
                 .product(name: "SwiftGzip", package: "swift-gzip"),
                 .product(name: "RapidYAML", package: "swift-rapidyaml"),
                 "ROConstants",

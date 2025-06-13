@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2024/1/10.
 //
 
-import rAthenaCommon
 import ROConstants
 
 struct JobExpStats: Decodable {
@@ -14,13 +13,13 @@ struct JobExpStats: Decodable {
     var jobs: Set<JobID>
 
     /// Maximum base level. (Default: MAX_LEVEL)
-    var maxBaseLevel: Int
+    var maxBaseLevel: Int?
 
     /// Base experience per level.
     var baseExp: [LevelExp]
 
     /// Maximum job level. (Default: MAX_LEVEL)
-    var maxJobLevel: Int
+    var maxJobLevel: Int?
 
     /// Job experience per level.
     var jobExp: [LevelExp]
@@ -37,9 +36,9 @@ struct JobExpStats: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         self.jobs = try container.decode([JobID : Bool].self, forKey: .jobs).unorderedKeys
-        self.maxBaseLevel = try container.decodeIfPresent(Int.self, forKey: .maxBaseLevel) ?? RA_MAX_LEVEL
+        self.maxBaseLevel = try container.decodeIfPresent(Int.self, forKey: .maxBaseLevel)
         self.baseExp = try container.decodeIfPresent([JobExpStats.LevelExp].self, forKey: .baseExp) ?? []
-        self.maxJobLevel = try container.decodeIfPresent(Int.self, forKey: .maxJobLevel) ?? RA_MAX_LEVEL
+        self.maxJobLevel = try container.decodeIfPresent(Int.self, forKey: .maxJobLevel)
         self.jobExp = try container.decodeIfPresent([JobExpStats.LevelExp].self, forKey: .jobExp) ?? []
     }
 }

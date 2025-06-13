@@ -37,31 +37,31 @@ public struct Job: Equatable, Hashable, Identifiable, Sendable {
     public var baseASPD: [WeaponType : Int]
 
     /// Job level bonus stats/traits.
-    public var bonusStats: [[Parameter : Int]]
+    public var bonusStats: [Int : [Parameter : Int]]
 
     /// Maximum stats/traits applicable. (Default: battle_config::max_*_parameter)
     public var maxStats: [Parameter : Int]?
 
     /// Maximum base level. (Default: MAX_LEVEL)
-    public var maxBaseLevel: Int
+    public var maxBaseLevel: Int?
 
     /// Base experience per level.
-    public var baseExp: [Int]
+    public var baseExp: [Int : Int]
 
     /// Maximum job level. (Default: MAX_LEVEL)
-    public var maxJobLevel: Int
+    public var maxJobLevel: Int?
 
     /// Job experience per level.
-    public var jobExp: [Int]
+    public var jobExp: [Int : Int]
 
     /// Base HP per base level.
-    public var baseHp: [Int]
+    public var baseHp: [Int : Int]
 
     /// Base SP per base level.
-    public var baseSp: [Int]
+    public var baseSp: [Int : Int]
 
     /// Base AP per base level.
-    public var baseAp: [Int]
+    public var baseAp: [Int : Int]
 
     init?(jobID: JobID, basicStatsList: [JobBasicStats], aspdStatsList: [JobASPDStats], expStatsList: [JobExpStats], basePointsStatsList: [JobBasePointsStats]) {
         guard let basicStats = basicStatsList.first(where: { $0.jobs.contains(jobID) }),
@@ -88,42 +88,41 @@ public struct Job: Equatable, Hashable, Identifiable, Sendable {
         self.baseASPD = aspdStats.baseASPD
 
         self.maxBaseLevel = baseExpStats.maxBaseLevel
-        self.baseExp = (1...maxBaseLevel).map { level in
-            baseExpStats.baseExp.first(where: { $0.level == level })?.exp ?? 0
-        }
+
+        let baseExp = baseExpStats.baseExp.map({ ($0.level, $0.exp) })
+        self.baseExp = Dictionary(baseExp, uniquingKeysWith: { (_, last) in last })
 
         self.maxJobLevel = jobExpStats.maxJobLevel
-        self.jobExp = (1...maxJobLevel).map { level in
-            jobExpStats.jobExp.first(where: { $0.level == level })?.exp ?? 0
-        }
 
-        self.baseHp = (1...maxBaseLevel).map { level in
-            baseHpPointsStats.baseHp.first(where: { $0.level == level })?.hp ?? 0
-        }
+        let jobExp = jobExpStats.jobExp.map({ ($0.level, $0.exp) })
+        self.jobExp = Dictionary(jobExp, uniquingKeysWith: { (_, last) in last })
 
-        self.baseSp = (1...maxBaseLevel).map { level in
-            baseSpPointsStats.baseSp.first(where: { $0.level == level })?.sp ?? 0
-        }
+        let baseHp = baseHpPointsStats.baseHp.map({ ($0.level, $0.hp) })
+        self.baseHp = Dictionary(baseHp, uniquingKeysWith: { (_, last) in last })
 
-        self.baseAp = Array(repeating: 0, count: maxBaseLevel)
+        let baseSp = baseSpPointsStats.baseSp.map({ ($0.level, $0.sp) })
+        self.baseSp = Dictionary(baseSp, uniquingKeysWith: { (_, last) in last })
 
-        self.bonusStats = (1...maxJobLevel).map { level in
-            let levelBonusStats = basicStats.bonusStats.first(where: { $0.level == level })
-            return [
-                .str: levelBonusStats?.str ?? 0,
-                .agi: levelBonusStats?.agi ?? 0,
-                .vit: levelBonusStats?.vit ?? 0,
-                .int: levelBonusStats?.int ?? 0,
-                .dex: levelBonusStats?.dex ?? 0,
-                .luk: levelBonusStats?.luk ?? 0,
-                .pow: levelBonusStats?.pow ?? 0,
-                .sta: levelBonusStats?.sta ?? 0,
-                .wis: levelBonusStats?.wis ?? 0,
-                .spl: levelBonusStats?.spl ?? 0,
-                .con: levelBonusStats?.con ?? 0,
-                .crt: levelBonusStats?.crt ?? 0
-            ]
+        let baseAp = baseSpPointsStats.baseAp.map({ ($0.level, $0.ap) })
+        self.baseAp = Dictionary(baseAp, uniquingKeysWith: { (_, last) in last })
+
+        let bonusStats = basicStats.bonusStats.map {
+            var stats: [Parameter : Int] = [:]
+            stats[.str] = $0.str
+            stats[.agi] = $0.agi
+            stats[.vit] = $0.vit
+            stats[.int] = $0.int
+            stats[.dex] = $0.dex
+            stats[.luk] = $0.luk
+            stats[.pow] = $0.pow
+            stats[.sta] = $0.sta
+            stats[.wis] = $0.wis
+            stats[.spl] = $0.spl
+            stats[.con] = $0.con
+            stats[.crt] = $0.crt
+            return ($0.level, stats)
         }
+        self.bonusStats = Dictionary(bonusStats, uniquingKeysWith: { (_, last) in last })
     }
 }
 
