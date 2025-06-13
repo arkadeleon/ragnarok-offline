@@ -11,33 +11,33 @@
 @preconcurrency import rAthenaMap
 @preconcurrency import rAthenaWeb
 
-final public class ServerWrapper: Sendable {
-    public static let login = ServerWrapper(server: LoginServer.shared)
-    public static let char = ServerWrapper(server: CharServer.shared)
-    public static let map = ServerWrapper(server: MapServer.shared)
-    public static let web = ServerWrapper(server: WebServer.shared)
+final class ServerWrapper: Sendable {
+    static let login = ServerWrapper(server: LoginServer.shared)
+    static let char = ServerWrapper(server: CharServer.shared)
+    static let map = ServerWrapper(server: MapServer.shared)
+    static let web = ServerWrapper(server: WebServer.shared)
 
     private let server: Server
 
     private let statusSubject: CurrentValueSubject<ServerWrapper.Status, Never>
     private let statusSubscription: AnyCancellable
-    public let statusPublisher: AnyPublisher<ServerWrapper.Status, Never>
+    let statusPublisher: AnyPublisher<ServerWrapper.Status, Never>
 
     private let consoleMessagesSubject: CurrentValueSubject<[AttributedString], Never>
     private let consoleMessagesSubscription: AnyCancellable
-    public let consoleMessagesPublisher: AnyPublisher<[AttributedString], Never>
+    let consoleMessagesPublisher: AnyPublisher<[AttributedString], Never>
 
     private let consoleActionSubject = PassthroughSubject<ServerWrapper.ConsoleAction, Never>()
 
-    public var name: String {
+    var name: String {
         server.name
     }
 
-    public var status: ServerWrapper.Status {
+    var status: ServerWrapper.Status {
         statusSubject.value
     }
 
-    public var consoleMessages: [AttributedString] {
+    var consoleMessages: [AttributedString] {
         consoleMessagesSubject.value
     }
 
@@ -87,21 +87,21 @@ final public class ServerWrapper: Sendable {
         consoleMessagesPublisher = consoleMessagesSubject.eraseToAnyPublisher()
     }
 
-    public func start() async -> Bool {
+    func start() async -> Bool {
         await server.start()
     }
 
-    public func stop() async -> Bool {
+    func stop() async -> Bool {
         await server.stop()
     }
 
-    public func clearConsole() {
+    func clearConsole() {
         consoleActionSubject.send(.clear)
     }
 }
 
 extension ServerWrapper {
-    public enum Status: CustomLocalizedStringResourceConvertible {
+    enum Status: CustomLocalizedStringResourceConvertible {
         case notStarted
         case starting
         case running
@@ -125,7 +125,7 @@ extension ServerWrapper {
             }
         }
 
-        public var localizedStringResource: LocalizedStringResource {
+        var localizedStringResource: LocalizedStringResource {
             switch self {
             case .notStarted: "NOT STARTED"
             case .starting: "STARTING"

@@ -40,9 +40,6 @@ let package = Package(
             name: "ROResources",
             targets: ["ROResources"]),
         .library(
-            name: "ROServer",
-            targets: ["ROServer"]),
-        .library(
             name: "ROShaders",
             targets: ["ROShaders"]),
     ],
@@ -173,14 +170,6 @@ let package = Package(
             ],
             resources: [
                 .copy("Resources/data"),
-            ]),
-        .target(
-            name: "ROServer",
-            dependencies: [
-                .product(name: "rAthenaLogin", package: "swift-rathena"),
-                .product(name: "rAthenaChar", package: "swift-rathena"),
-                .product(name: "rAthenaMap", package: "swift-rathena"),
-                .product(name: "rAthenaWeb", package: "swift-rathena"),
             ]),
         .target(
             name: "ROShaders",

@@ -452,6 +452,9 @@
     "None" : {
 
     },
+    "NOT STARTED" : {
+
+    },
     "Pet Database" : {
 
     },
@@ -477,6 +480,9 @@
 
     },
     "Retaliate Rate" : {
+
+    },
+    "RUNNING" : {
 
     },
     "Script" : {
@@ -539,10 +545,19 @@
     "Start All Servers" : {
 
     },
+    "STARTING" : {
+
+    },
     "Status" : {
 
     },
     "Status Change Database" : {
+
+    },
+    "STOPPED" : {
+
+    },
+    "STOPPING" : {
 
     },
     "Str" : {
