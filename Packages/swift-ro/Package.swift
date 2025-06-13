@@ -69,17 +69,11 @@ let package = Package(
                 .product(name: "RapidYAML", package: "swift-rapidyaml"),
                 "ROConstants",
                 "ROCore",
-            ],
-            swiftSettings: [
-                .interoperabilityMode(.Cxx),
             ]),
         .testTarget(
             name: "RODatabaseTests",
             dependencies: [
                 "RODatabase",
-            ],
-            swiftSettings: [
-                .interoperabilityMode(.Cxx),
             ]),
         .target(
             name: "ROFileFormats",
