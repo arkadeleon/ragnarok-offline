@@ -9,7 +9,7 @@ import RODatabase
 
 struct MonsterProvider: DatabaseRecordProvider {
     func records(for mode: DatabaseMode) async -> [ObservableMonster] {
-        let database = MonsterDatabase.database(for: mode)
+        let database = MonsterDatabase.shared
         let monsters = await database.monsters().map { monster in
             ObservableMonster(mode: mode, monster: monster)
         }

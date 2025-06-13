@@ -9,8 +9,8 @@ import RODatabase
 
 struct MonsterSummonProvider: DatabaseRecordProvider {
     func records(for mode: DatabaseMode) async -> [ObservableMonsterSummon] {
-        let monsterSummonDatabase = MonsterSummonDatabase.database(for: mode)
-        let monsterSummons = await monsterSummonDatabase.monsterSummons().map { monsterSummon in
+        let database = MonsterSummonDatabase.shared
+        let monsterSummons = await database.monsterSummons().map { monsterSummon in
             ObservableMonsterSummon(mode: mode, monsterSummon: monsterSummon)
         }
         return monsterSummons

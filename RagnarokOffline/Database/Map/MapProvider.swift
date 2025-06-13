@@ -9,7 +9,7 @@ import RODatabase
 
 struct MapProvider: DatabaseRecordProvider {
     func records(for mode: DatabaseMode) async -> [ObservableMap] {
-        let database = MapDatabase.database(for: mode)
+        let database = MapDatabase.shared
         let maps = await database.maps().map { map in
             ObservableMap(mode: mode, map: map)
         }

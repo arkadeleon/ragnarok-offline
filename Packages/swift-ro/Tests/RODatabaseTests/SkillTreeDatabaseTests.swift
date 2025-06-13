@@ -10,7 +10,8 @@ import XCTest
 
 final class SkillTreeDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let database = SkillTreeDatabase.prerenewal
+        let sourceURL = Bundle.module.resourceURL!
+        let database = SkillTreeDatabase(sourceURL: sourceURL, mode: .prerenewal)
 
         let acolyte = await database.skillTree(for: .acolyte)!
         XCTAssertEqual(acolyte.job, .acolyte)
@@ -19,7 +20,8 @@ final class SkillTreeDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let database = SkillTreeDatabase.renewal
+        let sourceURL = Bundle.module.resourceURL!
+        let database = SkillTreeDatabase(sourceURL: sourceURL, mode: .renewal)
 
         let acolyte = await database.skillTree(for: .acolyte)!
         XCTAssertEqual(acolyte.job, .acolyte)

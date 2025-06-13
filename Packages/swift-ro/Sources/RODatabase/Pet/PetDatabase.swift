@@ -7,20 +7,10 @@
 
 import Foundation
 import RapidYAML
-import rAthenaResources
 import ROCore
 
 public actor PetDatabase {
-    public static let prerenewal = PetDatabase(mode: .prerenewal)
-    public static let renewal = PetDatabase(mode: .renewal)
-
-    public static func database(for mode: DatabaseMode) -> PetDatabase {
-        switch mode {
-        case .prerenewal: .prerenewal
-        case .renewal: .renewal
-        }
-    }
-
+    public let sourceURL: URL
     public let mode: DatabaseMode
 
     private lazy var _pets: [Pet] = {
@@ -29,8 +19,7 @@ public actor PetDatabase {
         do {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: "db/\(mode.path)/pet_db.yml")
+            let url = sourceURL.appending(path: "db/\(mode.path)/pet_db.yml")
             let data = try Data(contentsOf: url)
             let pets = try decoder.decode(ListNode<Pet>.self, from: data).body
 
@@ -51,7 +40,8 @@ public actor PetDatabase {
         )
     }()
 
-    private init(mode: DatabaseMode) {
+    public init(sourceURL: URL, mode: DatabaseMode) {
+        self.sourceURL = sourceURL
         self.mode = mode
     }
 

@@ -7,20 +7,10 @@
 
 import Foundation
 import RapidYAML
-import rAthenaResources
 import ROCore
 
 public actor MonsterSummonDatabase {
-    public static let prerenewal = MonsterSummonDatabase(mode: .prerenewal)
-    public static let renewal = MonsterSummonDatabase(mode: .renewal)
-
-    public static func database(for mode: DatabaseMode) -> MonsterSummonDatabase {
-        switch mode {
-        case .prerenewal: .prerenewal
-        case .renewal: .renewal
-        }
-    }
-
+    public let sourceURL: URL
     public let mode: DatabaseMode
 
     private lazy var _monsterSummons: [MonsterSummon] = {
@@ -29,8 +19,7 @@ public actor MonsterSummonDatabase {
         do {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: "db/\(mode.path)/mob_summon.yml")
+            let url = sourceURL.appending(path: "db/\(mode.path)/mob_summon.yml")
             let data = try Data(contentsOf: url)
             let monsterSummons = try decoder.decode(ListNode<MonsterSummon>.self, from: data).body
 
@@ -51,7 +40,8 @@ public actor MonsterSummonDatabase {
         )
     }()
 
-    private init(mode: DatabaseMode) {
+    public init(sourceURL: URL, mode: DatabaseMode) {
+        self.sourceURL = sourceURL
         self.mode = mode
     }
 

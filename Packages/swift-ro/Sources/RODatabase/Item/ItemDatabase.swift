@@ -7,20 +7,10 @@
 
 import Foundation
 import RapidYAML
-import rAthenaResources
 import ROCore
 
 public actor ItemDatabase {
-    public static let prerenewal = ItemDatabase(mode: .prerenewal)
-    public static let renewal = ItemDatabase(mode: .renewal)
-
-    public static func database(for mode: DatabaseMode) -> ItemDatabase {
-        switch mode {
-        case .prerenewal: .prerenewal
-        case .renewal: .renewal
-        }
-    }
-
+    public let sourceURL: URL
     public let mode: DatabaseMode
 
     private lazy var _usableItems: [Item] = {
@@ -29,8 +19,7 @@ public actor ItemDatabase {
         do {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: "db/\(mode.path)/item_db_usable.yml")
+            let url = sourceURL.appending(path: "db/\(mode.path)/item_db_usable.yml")
             let data = try Data(contentsOf: url)
             let usableItems = try decoder.decode(ListNode<Item>.self, from: data).body
 
@@ -50,8 +39,7 @@ public actor ItemDatabase {
         do {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: "db/\(mode.path)/item_db_equip.yml")
+            let url = sourceURL.appending(path: "db/\(mode.path)/item_db_equip.yml")
             let data = try Data(contentsOf: url)
             let equipItems = try decoder.decode(ListNode<Item>.self, from: data).body
 
@@ -71,8 +59,7 @@ public actor ItemDatabase {
         do {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: "db/\(mode.path)/item_db_etc.yml")
+            let url = sourceURL.appending(path: "db/\(mode.path)/item_db_etc.yml")
             let data = try Data(contentsOf: url)
             let etcItems = try decoder.decode(ListNode<Item>.self, from: data).body
 
@@ -104,7 +91,8 @@ public actor ItemDatabase {
         )
     }()
 
-    private init(mode: DatabaseMode) {
+    public init(sourceURL: URL, mode: DatabaseMode) {
+        self.sourceURL = sourceURL
         self.mode = mode
     }
 

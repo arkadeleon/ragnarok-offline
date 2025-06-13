@@ -7,19 +7,9 @@
 
 import BinaryIO
 import Foundation
-import rAthenaResources
 
 public actor MapDatabase {
-    public static let prerenewal = MapDatabase(mode: .prerenewal)
-    public static let renewal = MapDatabase(mode: .renewal)
-
-    public static func database(for mode: DatabaseMode) -> MapDatabase {
-        switch mode {
-        case .prerenewal: .prerenewal
-        case .renewal: .renewal
-        }
-    }
-
+    public let sourceURL: URL
     public let mode: DatabaseMode
 
     private lazy var _maps: [Map] = {
@@ -29,10 +19,8 @@ public actor MapDatabase {
 
         do {
             let mapCacheURLs = [
-                ServerResourceManager.default.sourceURL
-                    .appending(path: "db/map_cache.dat"),
-                ServerResourceManager.default.sourceURL
-                    .appending(path: "db/\(mode.path)/map_cache.dat"),
+                sourceURL.appending(path: "db/map_cache.dat"),
+                sourceURL.appending(path: "db/\(mode.path)/map_cache.dat"),
             ]
             for mapCacheURL in mapCacheURLs {
                 guard let decoder = BinaryDecoder(url: mapCacheURL) else {
@@ -54,8 +42,7 @@ public actor MapDatabase {
         metric.beginMeasuring("Load map index")
 
         do {
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: "db/map_index.txt")
+            let url = sourceURL.appending(path: "db/map_index.txt")
             let string = try String(contentsOf: url, encoding: .utf8)
 
             var index = 0
@@ -101,7 +88,8 @@ public actor MapDatabase {
         )
     }()
 
-    private init(mode: DatabaseMode) {
+    public init(sourceURL: URL, mode: DatabaseMode) {
+        self.sourceURL = sourceURL
         self.mode = mode
     }
 

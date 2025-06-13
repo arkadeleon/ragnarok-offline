@@ -1,0 +1,34 @@
+Header:
+  Type: ITEM_DB
+  Version: 3
+
+Body:
+  - Id: 501
+    AegisName: Red_Potion
+    Name: Red Potion
+    Type: Healing
+    Buy: 50
+    Weight: 70
+    Script: |
+      itemheal rand(45,65),0;
+  - Id: 601
+    AegisName: Wing_Of_Fly
+    Name: Fly Wing
+    Type: Delayconsume
+    Buy: 60
+    Weight: 50
+    Flags:
+      BuyingStore: true
+    Script: |
+      itemskill "AL_TELEPORT",1;
+  - Id: 604
+    AegisName: Branch_Of_Dead_Tree
+    Name: Dead Branch
+    Type: Usable
+    Buy: 50
+    Weight: 50
+    Flags:
+      BuyingStore: true
+      DeadBranch: true
+    Script: |
+      monster "this",-1,-1,"--ja--",-1-MOBG_BRANCH_OF_DEAD_TREE,1,"";

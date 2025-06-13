@@ -1,0 +1,95 @@
+Header:
+  Type: ITEM_DB
+  Version: 3
+
+Body:
+  - Id: 1101
+    AegisName: Sword
+    Name: Sword
+    Type: Weapon
+    SubType: 1hSword
+    Buy: 100
+    Weight: 500
+    Attack: 25
+    Range: 1
+    Slots: 3
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Novice: true
+      Rogue: true
+      SuperNovice: true
+      Swordman: true
+      Thief: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 1
+    EquipLevelMin: 2
+    Refineable: true
+  - Id: 1637
+    AegisName: Eraser
+    Name: Eraser
+    Type: Weapon
+    SubType: Staff
+    Buy: 20
+    Weight: 500
+    Attack: 80
+    MagicAttack: 170
+    Range: 1
+    Jobs:
+      Acolyte: true
+      Mage: true
+      Monk: true
+      Priest: true
+      Sage: true
+      Wizard: true
+    Classes:
+      Upper: true
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      bonus bInt,3;
+      bonus bDex,2;
+      bonus bSPrecovRate,8;
+      bonus5 bAutoSpell,"NPC_WIDESOULDRAIN",(getrefine()>9?3:1),5,BF_MAGIC,0;
+  - Id: 2105
+    AegisName: Shield
+    Name: Shield
+    Type: Armor
+    Buy: 56000
+    Weight: 1300
+    Defense: 60
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 3
+  - Id: 2222
+    AegisName: Turban
+    Name: Turban
+    Type: Armor
+    Buy: 4500
+    Weight: 300
+    Defense: 5
+    Jobs:
+      All: true
+      Novice: false
+      SuperNovice: false
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 7

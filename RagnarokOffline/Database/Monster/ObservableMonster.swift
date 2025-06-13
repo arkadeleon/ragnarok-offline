@@ -157,9 +157,9 @@ class ObservableMonster {
 
     @MainActor
     func fetchDetail() async {
-        let itemDatabase = ItemDatabase.database(for: mode)
-        let mapDatabase = MapDatabase.database(for: mode)
-        let npcDatabase = NPCDatabase.database(for: mode)
+        let itemDatabase = ItemDatabase.shared
+        let mapDatabase = MapDatabase.shared
+        let npcDatabase = NPCDatabase.shared
 
         if let mvpDrops = monster.mvpDrops {
             var mvpDropItems: [DropItem] = []

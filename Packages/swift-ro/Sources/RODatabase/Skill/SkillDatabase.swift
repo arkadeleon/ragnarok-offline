@@ -7,20 +7,10 @@
 
 import Foundation
 import RapidYAML
-import rAthenaResources
 import ROCore
 
 public actor SkillDatabase {
-    public static let prerenewal = SkillDatabase(mode: .prerenewal)
-    public static let renewal = SkillDatabase(mode: .renewal)
-
-    public static func database(for mode: DatabaseMode) -> SkillDatabase {
-        switch mode {
-        case .prerenewal: .prerenewal
-        case .renewal: .renewal
-        }
-    }
-
+    public let sourceURL: URL
     public let mode: DatabaseMode
 
     private lazy var _skills: [Skill] = {
@@ -29,8 +19,7 @@ public actor SkillDatabase {
         do {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: "db/\(mode.path)/skill_db.yml")
+            let url = sourceURL.appending(path: "db/\(mode.path)/skill_db.yml")
             let data = try Data(contentsOf: url)
             let skills = try decoder.decode(ListNode<Skill>.self, from: data).body
 
@@ -58,7 +47,8 @@ public actor SkillDatabase {
         )
     }()
 
-    private init(mode: DatabaseMode) {
+    public init(sourceURL: URL, mode: DatabaseMode) {
+        self.sourceURL = sourceURL
         self.mode = mode
     }
 

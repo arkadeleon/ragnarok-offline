@@ -159,7 +159,7 @@ class ObservableItem {
 
         localizedDescription = await ItemInfoTable.current.localizedIdentifiedItemDescription(forItemID: item.id)
 
-        let monsterDatabase = MonsterDatabase.database(for: mode)
+        let monsterDatabase = MonsterDatabase.shared
         let monsters = await monsterDatabase.monsters()
 
         var droppingMonsters: [DroppingMonster] = []

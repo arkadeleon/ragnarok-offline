@@ -3,12 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		3506D11C2C00526A00903A47 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3506D11B2C00526A00903A47 /* File.swift */; };
 		3506D11F2C00EF5400903A47 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3506D11E2C00EF5400903A47 /* Localizable.xcstrings */; };
+		350A006B2DFA515B00CBED9F /* SharedDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350A006A2DFA515700CBED9F /* SharedDatabase.swift */; };
 		350A53592D8BC74100539999 /* SizeClassSpecific.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350A53582D8BC73A00539999 /* SizeClassSpecific.swift */; };
 		351426C42C11BF9600B076BE /* FileReferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351426C32C11BF9600B076BE /* FileReferencesView.swift */; };
 		351468DD2C50F53A0061D7F9 /* ServerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351468DC2C50F53A0061D7F9 /* ServerCell.swift */; };
@@ -53,6 +54,7 @@
 		355471DB2DA80601004704F2 /* InventoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355471DA2DA805F6004704F2 /* InventoryView.swift */; };
 		355471DD2DA83642004704F2 /* InventoryItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355471DC2DA8363E004704F2 /* InventoryItemView.swift */; };
 		355471DF2DA89F77004704F2 /* GameTitleBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355471DE2DA89F69004704F2 /* GameTitleBar.swift */; };
+		3558A3AC2DFBECDB0038DFC3 /* rAthenaResources in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3AB2DFBECDB0038DFC3 /* rAthenaResources */; };
 		355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC18B2B8F25C0002F0586 /* WebView.swift */; };
 		355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC1912B9056E5002F0586 /* FileContextMenu.swift */; };
 		3561E3462D703CF000255442 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3561E3452D703CED00255442 /* Logger.swift */; };
@@ -197,6 +199,7 @@
 		3506D11B2C00526A00903A47 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		3506D11D2C00887700903A47 /* swift-ro */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-ro"; path = "Packages/swift-ro"; sourceTree = "<group>"; };
 		3506D11E2C00EF5400903A47 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		350A006A2DFA515700CBED9F /* SharedDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDatabase.swift; sourceTree = "<group>"; };
 		350A53582D8BC73A00539999 /* SizeClassSpecific.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeClassSpecific.swift; sourceTree = "<group>"; };
 		351426C32C11BF9600B076BE /* FileReferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileReferencesView.swift; sourceTree = "<group>"; };
 		351468DC2C50F53A0061D7F9 /* ServerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerCell.swift; sourceTree = "<group>"; };
@@ -380,6 +383,7 @@
 				3590B23E2CE5EA9F007A0AED /* ROServer in Frameworks */,
 				353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */,
 				35C8AF082D31781C0033B3DB /* ROResources in Frameworks */,
+				3558A3AC2DFBECDB0038DFC3 /* rAthenaResources in Frameworks */,
 				357960AA2D356D26003D9CEF /* ROGame in Frameworks */,
 				353725ED2D83FDF2008590F6 /* Highlight in Frameworks */,
 			);
@@ -500,6 +504,7 @@
 				35BE555B2BDAAFBF003715C3 /* MetalView.swift */,
 				3594DD562BF5FCB600575F3D /* ModelViewer.swift */,
 				35239E042BC2D5D60039F7D5 /* ProgressHUD.swift */,
+				350A006A2DFA515700CBED9F /* SharedDatabase.swift */,
 				35C4BC792DCCAAA7007DA87E /* SharedResource.swift */,
 				350A53582D8BC73A00539999 /* SizeClassSpecific.swift */,
 				351EE2F72C0735390012BC9E /* TransferableAnimatedImage.swift */,
@@ -825,6 +830,7 @@
 				3579DF932D637BFC00B8C98A /* RORendering */,
 				353725EC2D83FDF2008590F6 /* Highlight */,
 				35BA9BA82DACAAF0008C13E1 /* ROPackets */,
+				3558A3AB2DFBECDB0038DFC3 /* rAthenaResources */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -870,6 +876,7 @@
 			mainGroup = 35B3B8CB2A08BEA600B4540B;
 			packageReferences = (
 				353725EB2D83FDF2008590F6 /* XCRemoteSwiftPackageReference "swift-highlight" */,
+				3558A3AA2DFBECDB0038DFC3 /* XCLocalSwiftPackageReference "swift-rathena" */,
 			);
 			productRefGroup = 35B3B8D52A08BEA600B4540B /* Products */;
 			projectDirPath = "";
@@ -980,6 +987,7 @@
 				356B64892DA245F000DAD679 /* BasicInfoView.swift in Sources */,
 				3582FFCC2B8DBD3300E746D7 /* FileGridCell.swift in Sources */,
 				35FEB6AD2CD8BE4E00F24A4A /* DatabaseRoot.swift in Sources */,
+				350A006B2DFA515B00CBED9F /* SharedDatabase.swift in Sources */,
 				356B647F2D95573C00DAD679 /* MapSceneDelegate.swift in Sources */,
 				35B422E02BECAB6E00681AA2 /* MonsterSummonInfoView.swift in Sources */,
 				35BE555A2BDAA929003715C3 /* SPRFilePreviewView.swift in Sources */,
@@ -1289,6 +1297,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		3558A3AA2DFBECDB0038DFC3 /* XCLocalSwiftPackageReference "swift-rathena" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "swift-rathena";
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		353725EB2D83FDF2008590F6 /* XCRemoteSwiftPackageReference "swift-highlight" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -1309,6 +1324,10 @@
 		353AFBDB2BC779BE00F613A8 /* RODatabase */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RODatabase;
+		};
+		3558A3AB2DFBECDB0038DFC3 /* rAthenaResources */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = rAthenaResources;
 		};
 		357960A92D356D26003D9CEF /* ROGame */ = {
 			isa = XCSwiftPackageProductDependency;

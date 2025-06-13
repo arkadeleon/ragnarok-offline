@@ -58,8 +58,8 @@ class ObservableMap {
     func fetchDetail() async {
         await fetchImage()
 
-        let monsterDatabase = MonsterDatabase.database(for: mode)
-        let npcDatabase = NPCDatabase.database(for: mode)
+        let monsterDatabase = MonsterDatabase.shared
+        let npcDatabase = NPCDatabase.shared
 
         let monsterSpawns = await npcDatabase.monsterSpawns(forMapName: map.name)
         var spawnMonsters: [SpawnMonster] = []

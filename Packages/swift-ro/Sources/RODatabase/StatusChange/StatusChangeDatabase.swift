@@ -7,20 +7,10 @@
 
 import Foundation
 import RapidYAML
-import rAthenaResources
 import ROConstants
 
 public actor StatusChangeDatabase {
-    public static let prerenewal = StatusChangeDatabase(mode: .prerenewal)
-    public static let renewal = StatusChangeDatabase(mode: .renewal)
-
-    public static func database(for mode: DatabaseMode) -> StatusChangeDatabase {
-        switch mode {
-        case .prerenewal: .prerenewal
-        case .renewal: .renewal
-        }
-    }
-
+    public let sourceURL: URL
     public let mode: DatabaseMode
 
     private lazy var _statusChanges: [StatusChange] = {
@@ -29,8 +19,7 @@ public actor StatusChangeDatabase {
         do {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: "db/\(mode.path)/status.yml")
+            let url = sourceURL.appending(path: "db/\(mode.path)/status.yml")
             let data = try Data(contentsOf: url)
             let statusChanges = try decoder.decode(ListNode<StatusChange>.self, from: data).body
 
@@ -51,7 +40,8 @@ public actor StatusChangeDatabase {
         )
     }()
 
-    private init(mode: DatabaseMode) {
+    public init(sourceURL: URL, mode: DatabaseMode) {
+        self.sourceURL = sourceURL
         self.mode = mode
     }
 

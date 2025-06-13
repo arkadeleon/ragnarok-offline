@@ -1,0 +1,170 @@
+Header:
+  Type: MOB_DB
+  Version: 5
+
+Body:
+  - Id: 1002
+    AegisName: PORING
+    Name: Poring
+    Level: 1
+    Hp: 55
+    BaseExp: 150
+    JobExp: 40
+    Attack: 1
+    Attack2: 1
+    Defense: 2
+    MagicDefense: 5
+    Str: 6
+    Int: 0
+    Dex: 6
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    ClientAttackMotion: 288
+    DamageMotion: 480
+    Ai: 02
+    Drops:
+      - Item: Jellopy
+        Index: 0
+        Rate: 7000
+      - Item: Knife_
+        Index: 1
+        Rate: 100
+#       RandomOptionGroup: 30L
+      - Item: Sticky_Mucus
+        Index: 2
+        Rate: 400
+      - Item: Apple
+        Index: 3
+        Rate: 1000
+      - Item: Wing_Of_Fly
+        Index: 4
+        Rate: 500
+      - Item: Apple
+        Index: 5
+        Rate: 150
+      - Item: Unripe_Apple
+        Index: 6
+        Rate: 20
+      - Item: Poring_Card
+        Index: 7
+        Rate: 20
+        StealProtected: true
+  - Id: 1016
+    AegisName: ARCHER_SKELETON
+    Name: Archer Skeleton
+    Level: 50
+    Hp: 1458
+    BaseExp: 436
+    JobExp: 327
+    Attack: 101
+    Attack2: 23
+    Defense: 47
+    MagicDefense: 10
+    Str: 30
+    Agi: 29
+    Vit: 20
+    Int: 10
+    Dex: 35
+    Luk: 5
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    RaceGroups:
+      Clocktower: true
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 2864
+    AttackMotion: 864
+    ClientAttackMotion: 672
+    DamageMotion: 576
+    Ai: 05
+    Drops:
+      - Item: Skel_Bone
+        Rate: 2250
+      - Item: Oridecon_Stone
+        Rate: 35
+      - Item: Apple_Of_Archer
+        Rate: 2
+      - Item: Great_Bow_
+        Rate: 18
+      - Item: Fire_Arrow_Container
+        Rate: 30
+      - Item: Red_Herb
+        Rate: 900
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Archer_Skeleton_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 1038
+    AegisName: OSIRIS
+    Name: Osiris
+    Level: 68
+    Hp: 1175840
+    BaseExp: 122760
+    JobExp: 100440
+    MvpExp: 61380
+    Attack: 1980
+    Attack2: 1503
+    Defense: 172
+    MagicDefense: 164
+    Str: 97
+    Agi: 99
+    Vit: 86
+    Int: 131
+    Dex: 165
+    Luk: 67
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 1072
+    AttackMotion: 672
+    ClientAttackMotion: 192
+    DamageMotion: 384
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Bs_Making_S
+        Rate: 5000
+      - Item: Seed_Of_Yggdrasil
+        Rate: 3000
+      - Item: Osiris_Doll
+        Rate: 500
+    Drops:
+      - Item: Shadowdecon
+        Rate: 50
+      - Item: Assasin_Dagger
+        Rate: 75
+      - Item: Crown
+        Rate: 100
+      - Item: Jamadhar_
+        Rate: 300
+      - Item: Sacred_Marks
+        Rate: 500
+      - Item: Spinx_Helm
+        Rate: 75
+      - Item: Cakram
+        Rate: 50
+      - Item: Osiris_Card
+        Rate: 1
+        StealProtected: true

@@ -10,7 +10,8 @@ import XCTest
 
 final class SkillDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let database = SkillDatabase.prerenewal
+        let sourceURL = Bundle.module.resourceURL!
+        let database = SkillDatabase(sourceURL: sourceURL, mode: .prerenewal)
 
         let napalmBeat = await database.skill(forAegisName: "MG_NAPALMBEAT")!
         XCTAssertEqual(napalmBeat.id, 11)
@@ -54,7 +55,8 @@ final class SkillDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let database = SkillDatabase.renewal
+        let sourceURL = Bundle.module.resourceURL!
+        let database = SkillDatabase(sourceURL: sourceURL, mode: .renewal)
 
         let napalmBeat = await database.skill(forAegisName: "MG_NAPALMBEAT")!
         XCTAssertEqual(napalmBeat.id, 11)

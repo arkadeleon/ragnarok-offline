@@ -10,20 +10,22 @@ import XCTest
 
 final class MapDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let database = MapDatabase.prerenewal
+        let sourceURL = Bundle.module.resourceURL!
+        let database = MapDatabase(sourceURL: sourceURL, mode: .prerenewal)
 
-        let new_11 = await database.map(forName: "new_1-1")!
-        let grid = new_11.grid()!
-        let startCell = grid.cellAt(x: 53, y: 111)
-        XCTAssertEqual(startCell.isWalkable, true)
+        let alberta = await database.map(forName: "alberta")!
+        let grid = alberta.grid()!
+        XCTAssertEqual(grid.xs, 280)
+        XCTAssertEqual(grid.ys, 280)
     }
 
     func testRenewal() async throws {
-        let database = MapDatabase.renewal
+        let sourceURL = Bundle.module.resourceURL!
+        let database = MapDatabase(sourceURL: sourceURL, mode: .renewal)
 
-        let iz_int = await database.map(forName: "iz_int")!
-        let grid = iz_int.grid()!
-        let startCell = grid.cellAt(x: 18, y: 26)
-        XCTAssertEqual(startCell.isWalkable, true)
+        let alberta = await database.map(forName: "alberta")!
+        let grid = alberta.grid()!
+        XCTAssertEqual(grid.xs, 280)
+        XCTAssertEqual(grid.ys, 280)
     }
 }

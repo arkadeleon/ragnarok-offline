@@ -135,8 +135,8 @@ class ObservableJob {
 
     @MainActor
     func fetchDetail() async {
-        let skillDatabase = SkillDatabase.database(for: mode)
-        let skillTreeDatabase = SkillTreeDatabase.database(for: mode)
+        let skillDatabase = SkillDatabase.shared
+        let skillTreeDatabase = SkillTreeDatabase.shared
 
         if let skillTree = await skillTreeDatabase.skillTree(for: job.id)?.tree {
             var skills: [ObservableSkill] = []

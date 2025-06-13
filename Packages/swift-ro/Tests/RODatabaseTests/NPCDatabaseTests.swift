@@ -10,24 +10,28 @@ import XCTest
 
 final class NPCDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let database = NPCDatabase.prerenewal
+        let sourceURL = Bundle.module.resourceURL!
+        let npcDatabase = NPCDatabase(sourceURL: sourceURL, mode: .prerenewal)
+        let monsterDatabase = MonsterDatabase(sourceURL: sourceURL, mode: .prerenewal)
 
-        let poring = await MonsterDatabase.prerenewal.monster(forAegisName: "PORING")!
-        let poringMonsterSpawns = await database.monsterSpawns(for: poring)
-        XCTAssertEqual(poringMonsterSpawns.count, 28)
+        let poring = await monsterDatabase.monster(forAegisName: "PORING")!
+        let poringMonsterSpawns = await npcDatabase.monsterSpawns(for: poring)
+        XCTAssertEqual(poringMonsterSpawns.count, 1)
 
-        let prtfild08MonsterSpawns = await database.monsterSpawns(forMapName: "prt_fild08")
+        let prtfild08MonsterSpawns = await npcDatabase.monsterSpawns(forMapName: "prt_fild08")
         XCTAssertEqual(prtfild08MonsterSpawns.count, 4)
     }
 
     func testRenewal() async throws {
-        let database = NPCDatabase.renewal
+        let sourceURL = Bundle.module.resourceURL!
+        let npcDatabase = NPCDatabase(sourceURL: sourceURL, mode: .renewal)
+        let monsterDatabase = MonsterDatabase(sourceURL: sourceURL, mode: .renewal)
 
-        let poring = await MonsterDatabase.renewal.monster(forAegisName: "PORING")!
-        let poringMonsterSpawns = await database.monsterSpawns(for: poring)
-        XCTAssertEqual(poringMonsterSpawns.count, 16)
+        let poring = await monsterDatabase.monster(forAegisName: "PORING")!
+        let poringMonsterSpawns = await npcDatabase.monsterSpawns(for: poring)
+        XCTAssertEqual(poringMonsterSpawns.count, 6)
 
-        let prtfild08MonsterSpawns = await database.monsterSpawns(forMapName: "prt_fild08")
-        XCTAssertEqual(prtfild08MonsterSpawns.count, 26)
+        let prtfild08MonsterSpawns = await npcDatabase.monsterSpawns(forMapName: "prt_fild08")
+        XCTAssertEqual(prtfild08MonsterSpawns.count, 21)
     }
 }

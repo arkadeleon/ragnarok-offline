@@ -1,0 +1,96 @@
+Header:
+  Type: MOB_SUMMONABLE_DB
+  Version: 1
+
+Body:
+  - Group: Bloody_Dead_Branch
+    Default: BAPHOMET
+    Summon:
+      - Mob: OSIRIS
+        Rate: 500000
+      - Mob: BAPHOMET
+        Rate: 500000
+      - Mob: DOPPELGANGER
+        Rate: 500000
+      - Mob: MISTRESS
+        Rate: 500000
+      - Mob: GOLDEN_BUG
+        Rate: 500000
+      - Mob: ORK_HERO
+        Rate: 500000
+      - Mob: ANGELING
+        Rate: 500000
+      - Mob: DRAKE
+        Rate: 500000
+      - Mob: EDDGA
+        Rate: 500000
+      - Mob: GHOSTRING
+        Rate: 500000
+      - Mob: MAYA
+        Rate: 500000
+      - Mob: MOONLIGHT
+        Rate: 500000
+      - Mob: PHARAOH
+        Rate: 500000
+      - Mob: PHREEONI
+        Rate: 500000
+      - Mob: ORC_LORD
+        Rate: 500000
+      - Mob: KNIGHT_OF_WINDSTORM
+        Rate: 500000
+      - Mob: GARM
+        Rate: 500000
+      - Mob: DARK_LORD
+        Rate: 500000
+      - Mob: TURTLE_GENERAL
+        Rate: 500000
+      - Mob: LORD_OF_DEATH
+        Rate: 500000
+      - Mob: ARCHANGELING
+        Rate: 500000
+      - Mob: DRACULA
+        Rate: 500000
+      - Mob: DARK_SNAKE_LORD
+        Rate: 500000
+      - Mob: INCANTATION_SAMURAI
+        Rate: 500000
+      - Mob: AMON_RA
+        Rate: 500000
+      - Mob: DEVILING
+        Rate: 500000
+      - Mob: TAO_GUNKA
+        Rate: 500000
+      - Mob: RSX_0806
+        Rate: 500000
+      - Mob: BACSOJIN_
+        Rate: 500000
+      - Mob: B_YGNIZEM
+        Rate: 500000
+      - Mob: APOCALIPS_H
+        Rate: 500000
+      - Mob: LADY_TANEE
+        Rate: 500000
+      - Mob: THANATOS
+        Rate: 500000
+      - Mob: DETALE
+        Rate: 500000
+      - Mob: KIEL_
+        Rate: 500000
+      - Mob: RANDGRIS
+        Rate: 500000
+      - Mob: GLOOMUNDERNIGHT
+        Rate: 500000
+      - Mob: KTULLANUX
+        Rate: 500000
+      - Mob: ATROCE
+        Rate: 1000000
+      - Mob: IFRIT
+        Rate: 500000
+      - Mob: FALLINGBISHOP
+        Rate: 500000
+      - Mob: BEELZEBUB
+        Rate: 500000
+      - Mob: GOPINICH
+        Rate: 500000
+      - Mob: S_NYDHOG
+        Rate: 500000

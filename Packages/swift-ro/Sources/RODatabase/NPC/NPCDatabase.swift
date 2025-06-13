@@ -7,23 +7,13 @@
 
 import BinaryIO
 import Foundation
-import rAthenaResources
 
 enum NPCDatabaseError: Error {
     case invalidFile(URL)
 }
 
 public actor NPCDatabase {
-    public static let prerenewal = NPCDatabase(mode: .prerenewal)
-    public static let renewal = NPCDatabase(mode: .renewal)
-
-    public static func database(for mode: DatabaseMode) -> NPCDatabase {
-        switch mode {
-        case .prerenewal: .prerenewal
-        case .renewal: .renewal
-        }
-    }
-
+    public let sourceURL: URL
     public let mode: DatabaseMode
 
     private var mapFlags: [MapFlag] = []
@@ -37,7 +27,8 @@ public actor NPCDatabase {
 
     private var isCached = false
 
-    private init(mode: DatabaseMode) {
+    public init(sourceURL: URL, mode: DatabaseMode) {
+        self.sourceURL = sourceURL
         self.mode = mode
     }
 
@@ -64,8 +55,7 @@ public actor NPCDatabase {
             metric.beginMeasuring("Load NPC database")
 
             do {
-                let url = ServerResourceManager.default.sourceURL
-                    .appending(path: "npc/\(mode.path)/scripts_main.conf")
+                let url = sourceURL.appending(path: "npc/\(mode.path)/scripts_main.conf")
                 try import_conf_file(url: url)
 
                 metric.endMeasuring("Load NPC database")
@@ -100,8 +90,7 @@ public actor NPCDatabase {
 
             let w1 = words[0]
             let w2 = words[1]
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: w2)
+            let url = sourceURL.appending(path: w2)
 
             switch w1 {
             case "npc":

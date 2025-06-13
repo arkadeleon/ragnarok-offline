@@ -10,7 +10,8 @@ import XCTest
 
 final class StatusChangeDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let database = StatusChangeDatabase.prerenewal
+        let sourceURL = Bundle.module.resourceURL!
+        let database = StatusChangeDatabase(sourceURL: sourceURL, mode: .prerenewal)
 
         let stone = await database.statusChange(for: .stone)!
         XCTAssertEqual(stone.status, .stone)
@@ -26,7 +27,8 @@ final class StatusChangeDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let database = StatusChangeDatabase.renewal
+        let sourceURL = Bundle.module.resourceURL!
+        let database = StatusChangeDatabase(sourceURL: sourceURL, mode: .renewal)
 
         let stone = await database.statusChange(for: .stone)!
         XCTAssertEqual(stone.status, .stone)

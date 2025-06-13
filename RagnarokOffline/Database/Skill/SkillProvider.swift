@@ -9,7 +9,7 @@ import RODatabase
 
 struct SkillProvider: DatabaseRecordProvider {
     func records(for mode: DatabaseMode) async -> [ObservableSkill] {
-        let database = SkillDatabase.database(for: mode)
+        let database = SkillDatabase.shared
         let skills = await database.skills()
 
         var records: [ObservableSkill] = []

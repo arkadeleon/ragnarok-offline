@@ -10,7 +10,8 @@ import XCTest
 
 final class MonsterSummonDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let database = MonsterSummonDatabase.prerenewal
+        let sourceURL = Bundle.module.resourceURL!
+        let database = MonsterSummonDatabase(sourceURL: sourceURL, mode: .prerenewal)
 
         let bloodyDeadBranch = await database.monsterSummon(forGroup: "Bloody_Dead_Branch")!
         XCTAssertEqual(bloodyDeadBranch.default, "BAPHOMET")
@@ -18,7 +19,8 @@ final class MonsterSummonDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let database = MonsterSummonDatabase.renewal
+        let sourceURL = Bundle.module.resourceURL!
+        let database = MonsterSummonDatabase(sourceURL: sourceURL, mode: .renewal)
 
         let bloodyDeadBranch = await database.monsterSummon(forGroup: "BLOODY_DEAD_BRANCH")!
         XCTAssertEqual(bloodyDeadBranch.default, "BAPHOMET")

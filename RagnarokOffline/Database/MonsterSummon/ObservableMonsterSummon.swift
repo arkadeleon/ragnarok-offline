@@ -41,7 +41,7 @@ class ObservableMonsterSummon {
 
     @MainActor
     func fetchDetail() async {
-        let monsterDatabase = MonsterDatabase.database(for: mode)
+        let monsterDatabase = MonsterDatabase.shared
 
         if let monster = await monsterDatabase.monster(forAegisName: monsterSummon.default) {
             defaultMonster = ObservableMonster(mode: mode, monster: monster)

@@ -9,7 +9,7 @@ import RODatabase
 
 struct ItemProvider: DatabaseRecordProvider {
     func records(for mode: DatabaseMode) async -> [ObservableItem] {
-        let database = ItemDatabase.database(for: mode)
+        let database = ItemDatabase.shared
         let usableItems = await database.usableItems()
 
         var items: [ObservableItem] = []
@@ -21,7 +21,7 @@ struct ItemProvider: DatabaseRecordProvider {
     }
 
     func moreRecords(for mode: DatabaseMode) async -> [ObservableItem] {
-        let database = ItemDatabase.database(for: mode)
+        let database = ItemDatabase.shared
         let equipItems = await database.equipItems()
         let etcItems = await database.etcItems()
 

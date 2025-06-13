@@ -9,7 +9,7 @@ import RODatabase
 
 struct JobProvider: DatabaseRecordProvider {
     func records(for mode: DatabaseMode) async -> [ObservableJob] {
-        let database = JobDatabase.database(for: mode)
+        let database = JobDatabase.shared
         let jobs = await database.jobs().map { job in
             ObservableJob(mode: mode, job: job)
         }

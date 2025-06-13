@@ -8,6 +8,7 @@
 import Observation
 import RODatabase
 
+@MainActor
 protocol DatabaseRecordProvider {
     associatedtype Record
 
@@ -23,6 +24,7 @@ extension DatabaseRecordProvider {
     }
 }
 
+@MainActor
 @Observable
 class ObservableDatabase<RecordProvider> where RecordProvider: DatabaseRecordProvider {
     let mode: DatabaseMode

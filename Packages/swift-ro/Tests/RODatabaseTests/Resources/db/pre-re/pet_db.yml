@@ -1,0 +1,20 @@
+Header:
+  Type: PET_DB
+  Version: 1
+
+Body:
+  - Mob: PORING
+    TameItem: Unripe_Apple
+    EggItem: Poring_Egg
+    EquipItem: Backpack
+    FoodItem: Apple_Juice
+    Fullness: 3
+    IntimacyFed: 50
+    CaptureRate: 2000
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bLuk,2;
+        bonus bCritical,1;
+      }

@@ -7,20 +7,10 @@
 
 import Foundation
 import RapidYAML
-import rAthenaResources
 import ROConstants
 
 public actor SkillTreeDatabase {
-    public static let prerenewal = SkillTreeDatabase(mode: .prerenewal)
-    public static let renewal = SkillTreeDatabase(mode: .renewal)
-
-    public static func database(for mode: DatabaseMode) -> SkillTreeDatabase {
-        switch mode {
-        case .prerenewal: .prerenewal
-        case .renewal: .renewal
-        }
-    }
-
+    public let sourceURL: URL
     public let mode: DatabaseMode
 
     private lazy var _skillTrees: [SkillTree] = {
@@ -29,8 +19,7 @@ public actor SkillTreeDatabase {
         do {
             let decoder = YAMLDecoder()
 
-            let url = ServerResourceManager.default.sourceURL
-                .appending(path: "db/\(mode.path)/skill_tree.yml")
+            let url = sourceURL.appending(path: "db/\(mode.path)/skill_tree.yml")
             let data = try Data(contentsOf: url)
             let skillTrees = try decoder.decode(ListNode<SkillTree>.self, from: data).body
 
@@ -51,7 +40,8 @@ public actor SkillTreeDatabase {
         )
     }()
 
-    private init(mode: DatabaseMode) {
+    public init(sourceURL: URL, mode: DatabaseMode) {
+        self.sourceURL = sourceURL
         self.mode = mode
     }
 

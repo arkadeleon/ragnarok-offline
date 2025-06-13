@@ -10,7 +10,8 @@ import XCTest
 
 final class MonsterDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let database = MonsterDatabase.prerenewal
+        let sourceURL = Bundle.module.resourceURL!
+        let database = MonsterDatabase(sourceURL: sourceURL, mode: .prerenewal)
 
         let poring = await database.monster(forAegisName: "PORING")!
         XCTAssertEqual(poring.aegisName, "PORING")
@@ -83,7 +84,8 @@ final class MonsterDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let database = MonsterDatabase.renewal
+        let sourceURL = Bundle.module.resourceURL!
+        let database = MonsterDatabase(sourceURL: sourceURL, mode: .renewal)
 
         let poring = await database.monster(forAegisName: "PORING")!
         XCTAssertEqual(poring.aegisName, "PORING")

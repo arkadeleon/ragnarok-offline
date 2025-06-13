@@ -64,7 +64,6 @@ let package = Package(
             dependencies: [
                 .product(name: "BinaryIO", package: "swift-binary-io"),
                 .product(name: "rAthenaCommon", package: "swift-rathena"),
-                .product(name: "rAthenaResources", package: "swift-rathena"),
                 .product(name: "SwiftGzip", package: "swift-gzip"),
                 .product(name: "RapidYAML", package: "swift-rapidyaml"),
                 "ROConstants",
@@ -74,6 +73,10 @@ let package = Package(
             name: "RODatabaseTests",
             dependencies: [
                 "RODatabase",
+            ],
+            resources: [
+                .copy("Resources/db"),
+                .copy("Resources/npc"),
             ]),
         .target(
             name: "ROFileFormats",

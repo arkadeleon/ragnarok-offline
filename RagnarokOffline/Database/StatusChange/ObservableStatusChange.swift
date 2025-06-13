@@ -59,7 +59,7 @@ class ObservableStatusChange {
 
     @MainActor
     func fetchDetail() async {
-        let database = StatusChangeDatabase.database(for: mode)
+        let database = StatusChangeDatabase.shared
 
         let fail = await database.statusChanges(for: Array(statusChange.fail ?? []))
         self.fail = fail.map { statusChange in

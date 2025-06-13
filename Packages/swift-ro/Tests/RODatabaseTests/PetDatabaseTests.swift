@@ -10,7 +10,8 @@ import XCTest
 
 final class PetDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let database = PetDatabase.prerenewal
+        let sourceURL = Bundle.module.resourceURL!
+        let database = PetDatabase(sourceURL: sourceURL, mode: .prerenewal)
 
         let poring = await database.pet(forAegisName: "PORING")!
         XCTAssertEqual(poring.monster, "PORING")
@@ -25,7 +26,8 @@ final class PetDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let database = PetDatabase.renewal
+        let sourceURL = Bundle.module.resourceURL!
+        let database = PetDatabase(sourceURL: sourceURL, mode: .renewal)
 
         let poring = await database.pet(forAegisName: "PORING")!
         XCTAssertEqual(poring.monster, "PORING")

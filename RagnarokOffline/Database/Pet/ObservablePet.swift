@@ -59,7 +59,7 @@ class ObservablePet {
     @MainActor
     func fetchMonster() async {
         if monster == nil {
-            let monsterDatabase = MonsterDatabase.database(for: mode)
+            let monsterDatabase = MonsterDatabase.shared
             if let monster = await monsterDatabase.monster(forAegisName: pet.monster) {
                 self.monster = ObservableMonster(mode: mode, monster: monster)
             }
@@ -68,7 +68,7 @@ class ObservablePet {
 
     @MainActor
     func fetchDetail() async {
-        let itemDatabase = ItemDatabase.database(for: mode)
+        let itemDatabase = ItemDatabase.shared
 
         if let tameItem = pet.tameItem {
             if let item = await itemDatabase.item(forAegisName: tameItem) {

@@ -123,7 +123,7 @@ struct CharacterConfigurationView: View {
         }
         .formStyle(.grouped)
         .task {
-            let equipItems = await ItemDatabase.renewal.equipItems()
+            let equipItems = await ItemDatabase.shared.equipItems()
             headTopItems = equipItems.filter({ $0.type == .armor && $0.locations.contains(.head_top) })
             headMidItems = equipItems.filter({ $0.type == .armor && $0.locations.contains(.head_mid) })
             headBottomItems = equipItems.filter({ $0.type == .armor && $0.locations.contains(.head_low) })
