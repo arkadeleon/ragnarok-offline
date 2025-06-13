@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -65,6 +65,17 @@
 		3558A3B92DFC22EA0038DFC3 /* rAthenaMap in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3B72DFC22EA0038DFC3 /* rAthenaMap */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3558A3BB2DFC22EA0038DFC3 /* rAthenaWeb in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3BA2DFC22EA0038DFC3 /* rAthenaWeb */; };
 		3558A3BC2DFC22EA0038DFC3 /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3BA2DFC22EA0038DFC3 /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3558A3D12DFC28410038DFC3 /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3D02DFC28410038DFC3 /* rAthenaChar */; };
+		3558A3D22DFC28410038DFC3 /* rAthenaChar in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3D02DFC28410038DFC3 /* rAthenaChar */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3558A3D42DFC28410038DFC3 /* rAthenaLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3D32DFC28410038DFC3 /* rAthenaLogin */; };
+		3558A3D52DFC28410038DFC3 /* rAthenaLogin in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3D32DFC28410038DFC3 /* rAthenaLogin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3558A3D72DFC28410038DFC3 /* rAthenaMap in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3D62DFC28410038DFC3 /* rAthenaMap */; };
+		3558A3D82DFC28410038DFC3 /* rAthenaMap in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3D62DFC28410038DFC3 /* rAthenaMap */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3558A3DA2DFC28410038DFC3 /* rAthenaResources in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3D92DFC28410038DFC3 /* rAthenaResources */; };
+		3558A3DC2DFC28410038DFC3 /* rAthenaWeb in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3DB2DFC28410038DFC3 /* rAthenaWeb */; };
+		3558A3DD2DFC28410038DFC3 /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3DB2DFC28410038DFC3 /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3558A3E02DFC288D0038DFC3 /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3DF2DFC288D0038DFC3 /* rAthenaCommon */; };
+		3558A3E22DFC28960038DFC3 /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3E12DFC28960038DFC3 /* rAthenaCommon */; };
 		355BC18C2B8F25C0002F0586 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC18B2B8F25C0002F0586 /* WebView.swift */; };
 		355BC1922B9056E5002F0586 /* FileContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355BC1912B9056E5002F0586 /* FileContextMenu.swift */; };
 		3561E3462D703CF000255442 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3561E3452D703CED00255442 /* Logger.swift */; };
@@ -191,7 +202,31 @@
 		35FEB6C62CDCC28F00F24A4A /* ObservableSkill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6C52CDCC28500F24A4A /* ObservableSkill.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3558A3C52DFC25AE0038DFC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 35B3B8CC2A08BEA600B4540B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 35B3B8D32A08BEA600B4540B;
+			remoteInfo = RagnarokOffline;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
+		3558A3DE2DFC28410038DFC3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3558A3D82DFC28410038DFC3 /* rAthenaMap in Embed Frameworks */,
+				3558A3D52DFC28410038DFC3 /* rAthenaLogin in Embed Frameworks */,
+				3558A3D22DFC28410038DFC3 /* rAthenaChar in Embed Frameworks */,
+				3558A3DD2DFC28410038DFC3 /* rAthenaWeb in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		35B3BA442A08C74700B4540B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -260,6 +295,7 @@
 		355471DE2DA89F69004704F2 /* GameTitleBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTitleBar.swift; sourceTree = "<group>"; };
 		3558A3AD2DFC22260038DFC3 /* ServerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerWrapper.swift; sourceTree = "<group>"; };
 		3558A3AF2DFC222E0038DFC3 /* ANSIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANSIColor.swift; sourceTree = "<group>"; };
+		3558A3C12DFC25AD0038DFC3 /* RagnarokOfflineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RagnarokOfflineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		355BC18B2B8F25C0002F0586 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		355BC1912B9056E5002F0586 /* FileContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileContextMenu.swift; sourceTree = "<group>"; };
 		3561E3452D703CED00255442 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -385,7 +421,24 @@
 		35FEB6C52CDCC28500F24A4A /* ObservableSkill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableSkill.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		3558A3C22DFC25AD0038DFC3 /* RagnarokOfflineTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = RagnarokOfflineTests; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
+		3558A3BE2DFC25AD0038DFC3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3558A3D72DFC28410038DFC3 /* rAthenaMap in Frameworks */,
+				3558A3E02DFC288D0038DFC3 /* rAthenaCommon in Frameworks */,
+				3558A3D42DFC28410038DFC3 /* rAthenaLogin in Frameworks */,
+				3558A3DA2DFC28410038DFC3 /* rAthenaResources in Frameworks */,
+				3558A3DC2DFC28410038DFC3 /* rAthenaWeb in Frameworks */,
+				3558A3D12DFC28410038DFC3 /* rAthenaChar in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		35B3B8D12A08BEA600B4540B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -397,6 +450,7 @@
 				3579DF942D637BFC00B8C98A /* RORendering in Frameworks */,
 				358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */,
 				353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */,
+				3558A3E22DFC28960038DFC3 /* rAthenaCommon in Frameworks */,
 				3558A3B22DFC22EA0038DFC3 /* rAthenaChar in Frameworks */,
 				3558A3B82DFC22EA0038DFC3 /* rAthenaMap in Frameworks */,
 				3558A3BB2DFC22EA0038DFC3 /* rAthenaWeb in Frameworks */,
@@ -674,6 +728,7 @@
 			isa = PBXGroup;
 			children = (
 				35B3B8D62A08BEA600B4540B /* RagnarokOffline */,
+				3558A3C22DFC25AD0038DFC3 /* RagnarokOfflineTests */,
 				35E27A8C2BCC111400C11076 /* Packages */,
 				35B3B8D52A08BEA600B4540B /* Products */,
 				351EE2F32C06F7A90012BC9E /* Frameworks */,
@@ -684,6 +739,7 @@
 			isa = PBXGroup;
 			children = (
 				35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */,
+				3558A3C12DFC25AD0038DFC3 /* RagnarokOfflineTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -825,6 +881,36 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3558A3C02DFC25AD0038DFC3 /* RagnarokOfflineTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3558A3C72DFC25AE0038DFC3 /* Build configuration list for PBXNativeTarget "RagnarokOfflineTests" */;
+			buildPhases = (
+				3558A3BD2DFC25AD0038DFC3 /* Sources */,
+				3558A3BE2DFC25AD0038DFC3 /* Frameworks */,
+				3558A3BF2DFC25AD0038DFC3 /* Resources */,
+				3558A3DE2DFC28410038DFC3 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3558A3C62DFC25AE0038DFC3 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				3558A3C22DFC25AD0038DFC3 /* RagnarokOfflineTests */,
+			);
+			name = RagnarokOfflineTests;
+			packageProductDependencies = (
+				3558A3D02DFC28410038DFC3 /* rAthenaChar */,
+				3558A3D32DFC28410038DFC3 /* rAthenaLogin */,
+				3558A3D62DFC28410038DFC3 /* rAthenaMap */,
+				3558A3D92DFC28410038DFC3 /* rAthenaResources */,
+				3558A3DB2DFC28410038DFC3 /* rAthenaWeb */,
+				3558A3DF2DFC288D0038DFC3 /* rAthenaCommon */,
+			);
+			productName = RagnarokOfflineTests;
+			productReference = 3558A3C12DFC25AD0038DFC3 /* RagnarokOfflineTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		35B3B8D32A08BEA600B4540B /* RagnarokOffline */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 35B3B8F82A08BEA700B4540B /* Build configuration list for PBXNativeTarget "RagnarokOffline" */;
@@ -854,6 +940,7 @@
 				3558A3B42DFC22EA0038DFC3 /* rAthenaLogin */,
 				3558A3B72DFC22EA0038DFC3 /* rAthenaMap */,
 				3558A3BA2DFC22EA0038DFC3 /* rAthenaWeb */,
+				3558A3E12DFC28960038DFC3 /* rAthenaCommon */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -866,10 +953,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1430;
+				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1510;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
+					3558A3C02DFC25AD0038DFC3 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 35B3B8D32A08BEA600B4540B;
+					};
 					35B3B8D32A08BEA600B4540B = {
 						CreatedOnToolsVersion = 14.3;
 					};
@@ -906,11 +997,19 @@
 			projectRoot = "";
 			targets = (
 				35B3B8D32A08BEA600B4540B /* RagnarokOffline */,
+				3558A3C02DFC25AD0038DFC3 /* RagnarokOfflineTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3558A3BF2DFC25AD0038DFC3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		35B3B8D22A08BEA600B4540B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -926,6 +1025,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3558A3BD2DFC25AD0038DFC3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		35B3B8D02A08BEA600B4540B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1094,7 +1200,70 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		3558A3C62DFC25AE0038DFC3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 35B3B8D32A08BEA600B4540B /* RagnarokOffline */;
+			targetProxy = 3558A3C52DFC25AE0038DFC3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		3558A3C82DFC25AE0038DFC3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GG76KD534U;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.arkadeleon.ragnarok-offline-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RagnarokOffline.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RagnarokOffline";
+				XROS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		3558A3C92DFC25AE0038DFC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GG76KD534U;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.arkadeleon.ragnarok-offline-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RagnarokOffline.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RagnarokOffline";
+				XROS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
 		35B3B8F62A08BEA700B4540B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1302,6 +1471,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3558A3C72DFC25AE0038DFC3 /* Build configuration list for PBXNativeTarget "RagnarokOfflineTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3558A3C82DFC25AE0038DFC3 /* Debug */,
+				3558A3C92DFC25AE0038DFC3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		35B3B8CF2A08BEA600B4540B /* Build configuration list for PBXProject "RagnarokOffline" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1373,6 +1551,41 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3558A3AA2DFBECDB0038DFC3 /* XCLocalSwiftPackageReference "swift-rathena" */;
 			productName = rAthenaWeb;
+		};
+		3558A3D02DFC28410038DFC3 /* rAthenaChar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3558A3AA2DFBECDB0038DFC3 /* XCLocalSwiftPackageReference "swift-rathena" */;
+			productName = rAthenaChar;
+		};
+		3558A3D32DFC28410038DFC3 /* rAthenaLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3558A3AA2DFBECDB0038DFC3 /* XCLocalSwiftPackageReference "swift-rathena" */;
+			productName = rAthenaLogin;
+		};
+		3558A3D62DFC28410038DFC3 /* rAthenaMap */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3558A3AA2DFBECDB0038DFC3 /* XCLocalSwiftPackageReference "swift-rathena" */;
+			productName = rAthenaMap;
+		};
+		3558A3D92DFC28410038DFC3 /* rAthenaResources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3558A3AA2DFBECDB0038DFC3 /* XCLocalSwiftPackageReference "swift-rathena" */;
+			productName = rAthenaResources;
+		};
+		3558A3DB2DFC28410038DFC3 /* rAthenaWeb */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3558A3AA2DFBECDB0038DFC3 /* XCLocalSwiftPackageReference "swift-rathena" */;
+			productName = rAthenaWeb;
+		};
+		3558A3DF2DFC288D0038DFC3 /* rAthenaCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3558A3AA2DFBECDB0038DFC3 /* XCLocalSwiftPackageReference "swift-rathena" */;
+			productName = rAthenaCommon;
+		};
+		3558A3E12DFC28960038DFC3 /* rAthenaCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3558A3AA2DFBECDB0038DFC3 /* XCLocalSwiftPackageReference "swift-rathena" */;
+			productName = rAthenaCommon;
 		};
 		357960A92D356D26003D9CEF /* ROGame */ = {
 			isa = XCSwiftPackageProductDependency;

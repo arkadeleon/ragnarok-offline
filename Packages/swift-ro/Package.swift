@@ -111,11 +111,6 @@ let package = Package(
         .testTarget(
             name: "RONetworkTests",
             dependencies: [
-                .product(name: "rAthenaCommon", package: "swift-rathena"),
-                .product(name: "rAthenaLogin", package: "swift-rathena"),
-                .product(name: "rAthenaChar", package: "swift-rathena"),
-                .product(name: "rAthenaMap", package: "swift-rathena"),
-                .product(name: "rAthenaResources", package: "swift-rathena"),
                 "RONetwork",
             ]),
         .target(

@@ -34,6 +34,19 @@
             default = "YES">
          </TestPlanReference>
       </TestPlans>
+      <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3558A3C02DFC25AD0038DFC3"
+               BuildableName = "RagnarokOfflineTests.xctest"
+               BlueprintName = "RagnarokOfflineTests"
+               ReferencedContainer = "container:RagnarokOffline.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
