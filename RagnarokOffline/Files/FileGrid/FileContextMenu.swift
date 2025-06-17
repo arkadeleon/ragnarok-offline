@@ -9,15 +9,13 @@ import SwiftUI
 
 struct FileContextMenu: ViewModifier {
     var file: File
-    var onPreview: ((File) -> Void)?
     var onDelete: ((File) -> Void)?
 
     @State private var isJSONViewerPresented = false
     @State private var isReferencesPresented = false
 
-    init(file: File, onPreview: ((File) -> Void)? = nil, onDelete: ((File) -> Void)? = nil) {
+    init(file: File, onDelete: ((File) -> Void)? = nil) {
         self.file = file
-        self.onPreview = onPreview
         self.onDelete = onDelete
     }
 
@@ -25,14 +23,6 @@ struct FileContextMenu: ViewModifier {
         content
             .contextMenu {
                 Section {
-                    if let onPreview, file.canPreview {
-                        Button {
-                            onPreview(file)
-                        } label: {
-                            Label("Preview", systemImage: "eye")
-                        }
-                    }
-
                     if file.jsonRepresentable {
                         Button {
                             isJSONViewerPresented.toggle()
@@ -96,8 +86,8 @@ struct FileContextMenu: ViewModifier {
 }
 
 extension View {
-    func fileContextMenu(file: File, onPreview: ((File) -> Void)? = nil, onDelete: ((File) -> Void)? = nil) -> some View {
-        modifier(FileContextMenu(file: file, onPreview: onPreview, onDelete: onDelete))
+    func fileContextMenu(file: File, onDelete: ((File) -> Void)? = nil) -> some View {
+        modifier(FileContextMenu(file: file, onDelete: onDelete))
     }
 }
 

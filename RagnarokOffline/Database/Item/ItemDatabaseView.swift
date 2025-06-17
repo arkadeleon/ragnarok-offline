@@ -45,7 +45,7 @@ struct ItemDatabaseView: View {
         }
         .navigationTitle("Item Database")
         .databaseRoot($database) {
-            ContentUnavailableView("No Items", systemImage: "leaf.fill")
+            ContentUnavailableView("No Results", systemImage: "leaf.fill")
         }
     }
 }

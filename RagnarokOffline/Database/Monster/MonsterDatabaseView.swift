@@ -19,7 +19,7 @@ struct MonsterDatabaseView: View {
         }
         .navigationTitle("Monster Database")
         .databaseRoot($database) {
-            ContentUnavailableView("No Monsters", systemImage: "pawprint.fill")
+            ContentUnavailableView("No Results", systemImage: "pawprint.fill")
         }
     }
 }

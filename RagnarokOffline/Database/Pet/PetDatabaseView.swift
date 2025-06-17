@@ -21,7 +21,7 @@ struct PetDatabaseView: View {
         }
         .navigationTitle("Pet Database")
         .databaseRoot($database) {
-            ContentUnavailableView("No Pets", systemImage: "pawprint.fill")
+            ContentUnavailableView("No Results", systemImage: "pawprint.fill")
         }
     }
 }

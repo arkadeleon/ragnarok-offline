@@ -28,7 +28,7 @@ struct StatusChangeDatabaseView: View {
         }
         .navigationTitle("Status Change Database")
         .databaseRoot($database) {
-            ContentUnavailableView("No Status Changes", systemImage: "moon.zzz.fill")
+            ContentUnavailableView("No Results", systemImage: "moon.zzz.fill")
         }
     }
 }

@@ -36,7 +36,7 @@ struct MapDatabaseView: View {
         }
         .navigationTitle("Map Database")
         .databaseRoot($database) {
-            ContentUnavailableView("No Maps", systemImage: "map.fill")
+            ContentUnavailableView("No Results", systemImage: "map.fill")
         }
     }
 }

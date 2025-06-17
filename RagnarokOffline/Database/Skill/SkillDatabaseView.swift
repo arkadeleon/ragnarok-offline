@@ -39,7 +39,7 @@ struct SkillDatabaseView: View {
         }
         .navigationTitle("Skill Database")
         .databaseRoot($database) {
-            ContentUnavailableView("No Skills", systemImage: "arrow.up.heart.fill")
+            ContentUnavailableView("No Results", systemImage: "arrow.up.heart.fill")
         }
     }
 }

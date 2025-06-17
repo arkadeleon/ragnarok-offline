@@ -38,7 +38,7 @@ struct FilesView: View {
                     FileGridCell(file: file)
                 }
                 .buttonStyle(.plain)
-                .fileContextMenu(file: file, onPreview: previewFile, onDelete: deleteFile)
+                .fileContextMenu(file: file, onDelete: deleteFile)
             }
         }
         .background(.background)
@@ -110,10 +110,6 @@ struct FilesView: View {
                 file.name.localizedStandardContains(searchText)
             }
         }
-    }
-
-    private func previewFile(_ file: File) {
-        fileToPreview = file
     }
 
     private func deleteFile(_ file: File) {

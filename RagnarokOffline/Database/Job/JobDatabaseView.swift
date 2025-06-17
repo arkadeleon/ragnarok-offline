@@ -19,7 +19,7 @@ struct JobDatabaseView: View {
         }
         .navigationTitle("Job Database")
         .databaseRoot($database) {
-            ContentUnavailableView("No Jobs", systemImage: "person.fill")
+            ContentUnavailableView("No Results", systemImage: "person.fill")
         }
     }
 }

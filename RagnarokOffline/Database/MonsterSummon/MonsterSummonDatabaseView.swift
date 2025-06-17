@@ -36,7 +36,7 @@ struct MonsterSummonDatabaseView: View {
         }
         .navigationTitle("Monster Summon Database")
         .databaseRoot($database) {
-            ContentUnavailableView("No Monster Summons", systemImage: "pawprint.fill")
+            ContentUnavailableView("No Results", systemImage: "pawprint.fill")
         }
     }
 }
