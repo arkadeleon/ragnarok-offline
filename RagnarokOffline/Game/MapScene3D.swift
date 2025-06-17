@@ -108,16 +108,7 @@ class MapScene3D: MapSceneProtocol {
         tileEntityManager.addTileEntities(for: player.position)
 
         do {
-            var configuration = ComposedSprite.Configuration(jobID: player.job)
-            configuration.gender = player.gender
-            configuration.hairStyle = player.hairStyle
-            configuration.hairColor = player.hairColor
-            configuration.clothesColor = player.clothesColor
-            configuration.weapon = player.weapon
-            configuration.shield = player.shield
-            configuration.headgears = [player.headTop, player.headMid, player.headBottom]
-            configuration.garment = player.garment
-
+            let configuration = ComposedSprite.Configuration(mapObject: player)
             let composedSprite = await ComposedSprite(
                 configuration: configuration,
                 resourceManager: .shared,
@@ -211,7 +202,7 @@ class MapScene3D: MapSceneProtocol {
             entity.transform = transform
         } else {
             Task {
-                if let monsterEntity = await monsterEntityManager.entity(forJobID: event.object.job) {
+                if let monsterEntity = await monsterEntityManager.entity(for: event.object) {
                     monsterEntity.name = "\(event.object.objectID)"
                     monsterEntity.transform = transform(for: event.object.position)
                     monsterEntity.isEnabled = (event.object.effectState != .cloak)
@@ -229,7 +220,7 @@ class MapScene3D: MapSceneProtocol {
             entity.walk(to: transform, direction: .south, duration: 1)
         } else {
             Task {
-                if let monsterEntity = await monsterEntityManager.entity(forJobID: event.object.job) {
+                if let monsterEntity = await monsterEntityManager.entity(for: event.object) {
                     monsterEntity.name = "\(event.object.objectID)"
                     monsterEntity.transform = transform(for: event.toPosition)
                     monsterEntity.isEnabled = (event.object.effectState != .cloak)
