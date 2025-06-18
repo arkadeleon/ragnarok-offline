@@ -6,9 +6,67 @@
 //
 
 import ROConstants
+import ROGame
 import RONetwork
 import RORendering
 import SpriteKit
+
+private let tileSize = 32
+
+class MapObjectNode: SKSpriteNode {
+    var gridPosition: SIMD2<Int>
+
+    init(mapObject: MapObject) {
+        self.gridPosition = [
+            Int(mapObject.position.x),
+            Int(mapObject.position.y),
+        ]
+
+        let color: SKColor =
+        switch mapObject.type {
+        case .pc: .cyan
+        case .monster: .red
+        case .npc, .npc2: .yellow
+        default: .cyan
+        }
+
+        let size = CGSize(width: tileSize, height: tileSize)
+
+        super.init(texture: nil, color: color, size: size)
+
+        self.position = CGPoint(
+            x: Int(mapObject.position.x) * tileSize,
+            y: Int(mapObject.position.y) * tileSize
+        )
+        self.zPosition = 1
+        self.isHidden = (mapObject.effectState == .cloak)
+        self.name = "\(mapObject.objectID)"
+        self.anchorPoint = CGPoint(x: 0, y: 0)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func move(through path: [SIMD2<Int>]) {
+        var actions: [SKAction] = []
+
+        for position in path.dropFirst() {
+            let location = CGPoint(
+                x: position.x * tileSize,
+                y: position.y * tileSize
+            )
+
+            actions.append(.move(to: location, duration: 0.2))
+            actions.append(.run {
+                self.gridPosition = position
+            })
+        }
+
+        removeAction(forKey: "move")
+        run(SKAction.sequence(actions), withKey: "move")
+    }
+}
 
 class MapScene2D: SKScene, MapSceneProtocol {
     let mapName: String
@@ -17,26 +75,22 @@ class MapScene2D: SKScene, MapSceneProtocol {
 
     weak var mapSceneDelegate: (any MapSceneDelegate)?
 
-    private let tileSize = 20
-
-    private let playerNode: SKNode
+    private let playerNode: MapObjectNode
     private var mapObjects: [UInt32 : MapObject] = [:]
+
+    private let pathfinder: Pathfinder
 
     init(mapName: String, world: WorldResource, player: MapObject) {
         self.mapName = mapName
         self.world = world
         self.player = player
 
-        let playerNode = SKSpriteNode()
-        playerNode.position = CGPoint(
-            x: Int(player.position.x) * tileSize,
-            y: Int(player.position.y) * tileSize
-        )
+        let playerNode = MapObjectNode(mapObject: player)
+        playerNode.color = .blue
         playerNode.zPosition = 2
-        playerNode.color = .white
-        playerNode.anchorPoint = CGPoint(x: 0, y: 0)
-        playerNode.size = CGSize(width: tileSize, height: tileSize)
         self.playerNode = playerNode
+
+        self.pathfinder = Pathfinder(gat: world.gat)
 
         super.init(size: .zero)
 
@@ -65,7 +119,7 @@ class MapScene2D: SKScene, MapSceneProtocol {
                 if world.gat.tileAt(x: x, y: y).isWalkable {
                     let tileNode = SKSpriteNode()
                     tileNode.name = "tile"
-                    tileNode.position = CGPoint(x: Int(x) * tileSize, y: Int(y) * tileSize)
+                    tileNode.position = CGPoint(x: x * tileSize, y: y * tileSize)
                     tileNode.zPosition = 0
                     tileNode.color = .green
                     tileNode.anchorPoint = CGPoint(x: 0, y: 0)
@@ -125,43 +179,57 @@ class MapScene2D: SKScene, MapSceneProtocol {
     // MARK: - MapSceneProtocol
 
     func onPlayerMoved(_ event: PlayerEvents.Moved) {
-        let location = CGPoint(x: Int(event.toPosition.x) * tileSize, y: Int(event.toPosition.y) * tileSize)
+        let playerNode = playerNode
+        let startPosition: SIMD2<Int> = playerNode.gridPosition
+        let endPosition: SIMD2<Int> = [Int(event.toPosition.x), Int(event.toPosition.y)]
+        let path = pathfinder.findPath(from: startPosition, to: endPosition)
 
-        let playerAction = SKAction.move(to: location, duration: 0.2)
-        playerNode.run(playerAction)
+        var playerActions: [SKAction] = []
+        var cameraActions: [SKAction] = []
 
-        let cameraAction = SKAction.move(to: location, duration: 0.2)
-        camera?.run(cameraAction)
+        for position in path.dropFirst() {
+            let location = CGPoint(x: position.x * tileSize, y: position.y * tileSize)
+
+            let playerAction = SKAction.move(to: location, duration: 0.2)
+            playerActions.append(playerAction)
+            playerActions.append(SKAction.run {
+                playerNode.gridPosition = position
+            })
+
+            let cameraAction = SKAction.move(to: location, duration: 0.2)
+            cameraActions.append(cameraAction)
+        }
+
+        playerNode.removeAction(forKey: "move")
+        playerNode.run(SKAction.sequence(playerActions), withKey: "move")
+
+        camera?.removeAction(forKey: "move")
+        camera?.run(SKAction.sequence(cameraActions), withKey: "move")
     }
 
     func onMapObjectSpawned(_ event: MapObjectEvents.Spawned) {
-        if let objectNode = childNode(withName: "\(event.object.objectID)") {
+        if let objectNode = childNode(withName: "\(event.object.objectID)") as? MapObjectNode {
             let location = CGPoint(x: Int(event.object.position.x) * tileSize, y: Int(event.object.position.y) * tileSize)
             let action = SKAction.move(to: location, duration: 0)
             objectNode.run(action)
         } else {
-            let objectNode = SKLabelNode()
-            objectNode.name = "\(event.object.objectID)"
-            objectNode.position = CGPoint(x: Int(event.object.position.x) * tileSize, y: Int(event.object.position.y) * tileSize)
-            objectNode.zPosition = 1
-            objectNode.isHidden = (event.object.effectState == .cloak)
-            objectNode.text = event.object.name
+            let objectNode = MapObjectNode(mapObject: event.object)
             addChild(objectNode)
         }
     }
 
     func onMapObjectMoved(_ event: MapObjectEvents.Moved) {
-        if let objectNode = childNode(withName: "\(event.object.objectID)") {
-            let location = CGPoint(x: Int(event.toPosition.x) * tileSize, y: Int(event.toPosition.y) * tileSize)
-            let action = SKAction.move(to: location, duration: 0.2)
-            objectNode.run(action)
+        if let objectNode = childNode(withName: "\(event.object.objectID)") as? MapObjectNode {
+            let startPosition: SIMD2<Int> = objectNode.gridPosition
+            let endPosition: SIMD2<Int> = [
+                Int(event.toPosition.x),
+                Int(event.toPosition.y),
+            ]
+            let path = pathfinder.findPath(from: startPosition, to: endPosition)
+
+            objectNode.move(through: path)
         } else {
-            let objectNode = SKLabelNode()
-            objectNode.name = "\(event.object.objectID)"
-            objectNode.position = CGPoint(x: Int(event.toPosition.x) * tileSize, y: Int(event.toPosition.y) * tileSize)
-            objectNode.zPosition = 1
-            objectNode.isHidden = (event.object.effectState == .cloak)
-            objectNode.text = event.object.name
+            let objectNode = MapObjectNode(mapObject: event.object)
             addChild(objectNode)
         }
     }

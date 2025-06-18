@@ -156,13 +156,13 @@ final class GameSession {
 
                 let player = MapObject(account: account, char: char, position: event.position)
 
-//                let scene = MapScene2D(mapName: mapName, world: world, player: player)
-//                scene.mapSceneDelegate = self
-//                self.scene = .map2D(scene)
-
-                let scene = MapScene3D(mapName: mapName, world: world, player: player)
+                let scene = MapScene2D(mapName: mapName, world: world, player: player)
                 scene.mapSceneDelegate = self
-                self.scene = .map3D(scene)
+                self.scene = .map2D(scene)
+
+//                let scene = MapScene3D(mapName: mapName, world: world, player: player)
+//                scene.mapSceneDelegate = self
+//                self.scene = .map3D(scene)
             }
         }
         .store(in: &subscriptions)
