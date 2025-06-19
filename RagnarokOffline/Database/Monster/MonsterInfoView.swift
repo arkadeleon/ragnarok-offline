@@ -24,6 +24,7 @@ struct MonsterInfoView: View {
                     }
                 }
                 .frame(height: 200)
+                .stretchy()
 
                 DatabaseRecordSectionView("Info", attributes: monster.attributes)
 

@@ -27,6 +27,7 @@ struct ItemInfoView: View {
                     }
                 }
                 .frame(height: 200)
+                .stretchy()
 
                 DatabaseRecordSectionView("Info", attributes: item.attributes)
 

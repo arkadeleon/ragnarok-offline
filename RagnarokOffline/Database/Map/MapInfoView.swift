@@ -29,6 +29,7 @@ struct MapInfoView: View {
                     }
                 }
                 .frame(height: 200)
+                .stretchy()
 
                 if !map.spawnMonsters.isEmpty {
                     DatabaseRecordSectionView("Spawn Monsters") {

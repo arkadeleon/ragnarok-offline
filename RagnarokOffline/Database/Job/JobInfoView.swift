@@ -23,6 +23,7 @@ struct JobInfoView: View {
                     }
                 }
                 .frame(height: 200)
+                .stretchy()
 
                 DatabaseRecordSectionView("Info", attributes: job.attributes)
 
