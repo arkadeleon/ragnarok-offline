@@ -1,5 +1,5 @@
 //
-//  SkillInfoView.swift
+//  SkillDetailView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/3.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SkillInfoView: View {
+struct SkillDetailView: View {
     var skill: ObservableSkill
 
     var body: some View {

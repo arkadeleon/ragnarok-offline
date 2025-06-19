@@ -1,5 +1,5 @@
 //
-//  PetInfoView.swift
+//  PetDetailView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/5/8.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PetInfoView: View {
+struct PetDetailView: View {
     var pet: ObservablePet
 
     @Environment(\.horizontalSizeClass) private var sizeClass

@@ -1,5 +1,5 @@
 //
-//  JobInfoView.swift
+//  JobDetailView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/5.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct JobInfoView: View {
+struct JobDetailView: View {
     var job: ObservableJob
 
     var body: some View {

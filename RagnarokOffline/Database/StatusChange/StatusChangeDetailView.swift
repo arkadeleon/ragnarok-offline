@@ -1,5 +1,5 @@
 //
-//  StatusChangeInfoView.swift
+//  StatusChangeDetailView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/11/4.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StatusChangeInfoView: View {
+struct StatusChangeDetailView: View {
     var statusChange: ObservableStatusChange
 
     var body: some View {

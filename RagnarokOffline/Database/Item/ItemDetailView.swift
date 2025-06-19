@@ -1,5 +1,5 @@
 //
-//  ItemInfoView.swift
+//  ItemDetailView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/3.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ItemInfoView: View {
+struct ItemDetailView: View {
     var item: ObservableItem
 
     @Environment(\.horizontalSizeClass) private var sizeClass

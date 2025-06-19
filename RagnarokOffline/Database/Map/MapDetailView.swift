@@ -1,5 +1,5 @@
 //
-//  MapInfoView.swift
+//  MapDetailView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/3/4.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MapInfoView: View {
+struct MapDetailView: View {
     var map: ObservableMap
 
     @Environment(\.horizontalSizeClass) private var sizeClass

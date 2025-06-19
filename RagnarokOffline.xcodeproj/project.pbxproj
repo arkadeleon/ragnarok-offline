@@ -13,14 +13,14 @@
 		350A53592D8BC74100539999 /* SizeClassSpecific.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350A53582D8BC73A00539999 /* SizeClassSpecific.swift */; };
 		351426C42C11BF9600B076BE /* FileReferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351426C32C11BF9600B076BE /* FileReferencesView.swift */; };
 		351468DD2C50F53A0061D7F9 /* ServerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351468DC2C50F53A0061D7F9 /* ServerCell.swift */; };
-		3514BF452B4526F40065ED89 /* ItemInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF442B4526F40065ED89 /* ItemInfoView.swift */; };
+		3514BF452B4526F40065ED89 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF442B4526F40065ED89 /* ItemDetailView.swift */; };
 		3514BF5B2B454A040065ED89 /* SkillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF5A2B454A040065ED89 /* SkillCell.swift */; };
 		3514BF5E2B4557950065ED89 /* MonsterDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF5D2B4557950065ED89 /* MonsterDatabaseView.swift */; };
 		3514BF602B455EF90065ED89 /* MonsterGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF5F2B455EF90065ED89 /* MonsterGridCell.swift */; };
-		3514BF622B4560730065ED89 /* MonsterInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF612B4560730065ED89 /* MonsterInfoView.swift */; };
+		3514BF622B4560730065ED89 /* MonsterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF612B4560730065ED89 /* MonsterDetailView.swift */; };
 		3514BF822B4801D70065ED89 /* JobDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF812B4801D70065ED89 /* JobDatabaseView.swift */; };
 		3514BF842B4801E20065ED89 /* JobGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF832B4801E20065ED89 /* JobGridCell.swift */; };
-		3514BF862B4801EB0065ED89 /* JobInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF852B4801EB0065ED89 /* JobInfoView.swift */; };
+		3514BF862B4801EB0065ED89 /* JobDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3514BF852B4801EB0065ED89 /* JobDetailView.swift */; };
 		351EE2F82C0735390012BC9E /* TransferableAnimatedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2F72C0735390012BC9E /* TransferableAnimatedImage.swift */; };
 		351EE2F92C0735390012BC9E /* TransferableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2F62C0735390012BC9E /* TransferableImage.swift */; };
 		351EE2FD2C0880A00012BC9E /* SkillIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351EE2FC2C0880A00012BC9E /* SkillIconImageView.swift */; };
@@ -44,7 +44,7 @@
 		353725EF2D83FE6C008590F6 /* HighlightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353725EE2D83FE67008590F6 /* HighlightTextView.swift */; };
 		353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 353AFBDB2BC779BE00F613A8 /* RODatabase */; };
 		353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */; };
-		353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F172B44FFE100605E92 /* SkillInfoView.swift */; };
+		353B4F182B44FFE100605E92 /* SkillDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F172B44FFE100605E92 /* SkillDetailView.swift */; };
 		353B4F1C2B451F1300605E92 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353B4F1B2B451F1300605E92 /* ItemCell.swift */; };
 		354535252D04A8090099B7EF /* MapScene2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354535242D04A8030099B7EF /* MapScene2D.swift */; };
 		354668C52CA9338500CE2D11 /* TextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354668C42CA9338000CE2D11 /* TextMessage.swift */; };
@@ -81,7 +81,7 @@
 		3561E3462D703CF000255442 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3561E3452D703CED00255442 /* Logger.swift */; };
 		35652B432B960D100075AD71 /* MapDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B422B960D100075AD71 /* MapDatabaseView.swift */; };
 		35652B452B960D2D0075AD71 /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B442B960D2D0075AD71 /* MapCell.swift */; };
-		35652B472B960D370075AD71 /* MapInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B462B960D370075AD71 /* MapInfoView.swift */; };
+		35652B472B960D370075AD71 /* MapDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35652B462B960D370075AD71 /* MapDetailView.swift */; };
 		356B647D2D951E3F00DAD679 /* MapView2DContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356B647C2D951E3C00DAD679 /* MapView2DContent.swift */; };
 		356B647F2D95573C00DAD679 /* MapSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356B647E2D95573700DAD679 /* MapSceneDelegate.swift */; };
 		356B64812D95577F00DAD679 /* MapSceneProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356B64802D95577B00DAD679 /* MapSceneProtocol.swift */; };
@@ -141,11 +141,11 @@
 		35B422D02BEB68F600681AA2 /* PetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422CF2BEB68F600681AA2 /* PetProvider.swift */; };
 		35B422D22BEB6C7C00681AA2 /* PetDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422D12BEB6C7C00681AA2 /* PetDatabaseView.swift */; };
 		35B422D42BEB785500681AA2 /* ObservablePet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422D32BEB785500681AA2 /* ObservablePet.swift */; };
-		35B422D62BEB7ED800681AA2 /* PetInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422D52BEB7ED800681AA2 /* PetInfoView.swift */; };
+		35B422D62BEB7ED800681AA2 /* PetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422D52BEB7ED800681AA2 /* PetDetailView.swift */; };
 		35B422DA2BECA87400681AA2 /* ObservableMonsterSummon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422D92BECA87400681AA2 /* ObservableMonsterSummon.swift */; };
 		35B422DC2BECAA1800681AA2 /* MonsterSummonProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422DB2BECAA1800681AA2 /* MonsterSummonProvider.swift */; };
 		35B422DE2BECAB6100681AA2 /* MonsterSummonDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422DD2BECAB6100681AA2 /* MonsterSummonDatabaseView.swift */; };
-		35B422E02BECAB6E00681AA2 /* MonsterSummonInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422DF2BECAB6E00681AA2 /* MonsterSummonInfoView.swift */; };
+		35B422E02BECAB6E00681AA2 /* MonsterSummonDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422DF2BECAB6E00681AA2 /* MonsterSummonDetailView.swift */; };
 		35B422E22BEDEBD000681AA2 /* AdaptiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422E12BEDEBD000681AA2 /* AdaptiveView.swift */; };
 		35B422EF2BEF091F00681AA2 /* ObservableDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422EE2BEF091F00681AA2 /* ObservableDatabase.swift */; };
 		35B422F22BEF5F3000681AA2 /* StatusChangeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B422F12BEF5F3000681AA2 /* StatusChangeProvider.swift */; };
@@ -196,7 +196,7 @@
 		35F1E2102D891776008523FC /* File+Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F1E20F2D891772008523FC /* File+Icon.swift */; };
 		35F50CCC2BB4615F00B36455 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F50CCB2BB4615F00B36455 /* ChatView.swift */; };
 		35FEB6AD2CD8BE4E00F24A4A /* DatabaseRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */; };
-		35FEB6AF2CD8C90300F24A4A /* StatusChangeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */; };
+		35FEB6AF2CD8C90300F24A4A /* StatusChangeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6AE2CD8C90300F24A4A /* StatusChangeDetailView.swift */; };
 		35FEB6BA2CDB18D300F24A4A /* ObservableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6B92CDB18CC00F24A4A /* ObservableItem.swift */; };
 		35FEB6C02CDC5E9D00F24A4A /* ObservableJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6BF2CDC5E9200F24A4A /* ObservableJob.swift */; };
 		35FEB6C22CDC845E00F24A4A /* ObservableMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEB6C12CDC845800F24A4A /* ObservableMap.swift */; };
@@ -253,14 +253,14 @@
 		350A53582D8BC73A00539999 /* SizeClassSpecific.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeClassSpecific.swift; sourceTree = "<group>"; };
 		351426C32C11BF9600B076BE /* FileReferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileReferencesView.swift; sourceTree = "<group>"; };
 		351468DC2C50F53A0061D7F9 /* ServerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerCell.swift; sourceTree = "<group>"; };
-		3514BF442B4526F40065ED89 /* ItemInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemInfoView.swift; sourceTree = "<group>"; };
+		3514BF442B4526F40065ED89 /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		3514BF5A2B454A040065ED89 /* SkillCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillCell.swift; sourceTree = "<group>"; };
 		3514BF5D2B4557950065ED89 /* MonsterDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDatabaseView.swift; sourceTree = "<group>"; };
 		3514BF5F2B455EF90065ED89 /* MonsterGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterGridCell.swift; sourceTree = "<group>"; };
-		3514BF612B4560730065ED89 /* MonsterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterInfoView.swift; sourceTree = "<group>"; };
+		3514BF612B4560730065ED89 /* MonsterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetailView.swift; sourceTree = "<group>"; };
 		3514BF812B4801D70065ED89 /* JobDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDatabaseView.swift; sourceTree = "<group>"; };
 		3514BF832B4801E20065ED89 /* JobGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobGridCell.swift; sourceTree = "<group>"; };
-		3514BF852B4801EB0065ED89 /* JobInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInfoView.swift; sourceTree = "<group>"; };
+		3514BF852B4801EB0065ED89 /* JobDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailView.swift; sourceTree = "<group>"; };
 		351EE2F62C0735390012BC9E /* TransferableImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferableImage.swift; sourceTree = "<group>"; };
 		351EE2F72C0735390012BC9E /* TransferableAnimatedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferableAnimatedImage.swift; sourceTree = "<group>"; };
 		351EE2FC2C0880A00012BC9E /* SkillIconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillIconImageView.swift; sourceTree = "<group>"; };
@@ -285,7 +285,7 @@
 		3536BDAC2CCA72840098950E /* ConsoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleView.swift; sourceTree = "<group>"; };
 		353725EE2D83FE67008590F6 /* HighlightTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightTextView.swift; sourceTree = "<group>"; };
 		353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillDatabaseView.swift; sourceTree = "<group>"; };
-		353B4F172B44FFE100605E92 /* SkillInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillInfoView.swift; sourceTree = "<group>"; };
+		353B4F172B44FFE100605E92 /* SkillDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillDetailView.swift; sourceTree = "<group>"; };
 		353B4F1B2B451F1300605E92 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		354535242D04A8030099B7EF /* MapScene2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapScene2D.swift; sourceTree = "<group>"; };
 		354668C42CA9338000CE2D11 /* TextMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessage.swift; sourceTree = "<group>"; };
@@ -303,7 +303,7 @@
 		3561E3452D703CED00255442 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		35652B422B960D100075AD71 /* MapDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDatabaseView.swift; sourceTree = "<group>"; };
 		35652B442B960D2D0075AD71 /* MapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
-		35652B462B960D370075AD71 /* MapInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInfoView.swift; sourceTree = "<group>"; };
+		35652B462B960D370075AD71 /* MapDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDetailView.swift; sourceTree = "<group>"; };
 		356B647C2D951E3C00DAD679 /* MapView2DContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView2DContent.swift; sourceTree = "<group>"; };
 		356B647E2D95573700DAD679 /* MapSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSceneDelegate.swift; sourceTree = "<group>"; };
 		356B64802D95577B00DAD679 /* MapSceneProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSceneProtocol.swift; sourceTree = "<group>"; };
@@ -362,11 +362,11 @@
 		35B422CF2BEB68F600681AA2 /* PetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetProvider.swift; sourceTree = "<group>"; };
 		35B422D12BEB6C7C00681AA2 /* PetDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDatabaseView.swift; sourceTree = "<group>"; };
 		35B422D32BEB785500681AA2 /* ObservablePet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePet.swift; sourceTree = "<group>"; };
-		35B422D52BEB7ED800681AA2 /* PetInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetInfoView.swift; sourceTree = "<group>"; };
+		35B422D52BEB7ED800681AA2 /* PetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetailView.swift; sourceTree = "<group>"; };
 		35B422D92BECA87400681AA2 /* ObservableMonsterSummon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMonsterSummon.swift; sourceTree = "<group>"; };
 		35B422DB2BECAA1800681AA2 /* MonsterSummonProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterSummonProvider.swift; sourceTree = "<group>"; };
 		35B422DD2BECAB6100681AA2 /* MonsterSummonDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterSummonDatabaseView.swift; sourceTree = "<group>"; };
-		35B422DF2BECAB6E00681AA2 /* MonsterSummonInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterSummonInfoView.swift; sourceTree = "<group>"; };
+		35B422DF2BECAB6E00681AA2 /* MonsterSummonDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterSummonDetailView.swift; sourceTree = "<group>"; };
 		35B422E12BEDEBD000681AA2 /* AdaptiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveView.swift; sourceTree = "<group>"; };
 		35B422EE2BEF091F00681AA2 /* ObservableDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableDatabase.swift; sourceTree = "<group>"; };
 		35B422F12BEF5F3000681AA2 /* StatusChangeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeProvider.swift; sourceTree = "<group>"; };
@@ -417,7 +417,7 @@
 		35F1E20F2D891772008523FC /* File+Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+Icon.swift"; sourceTree = "<group>"; };
 		35F50CCB2BB4615F00B36455 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		35FEB6AC2CD8BE4A00F24A4A /* DatabaseRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRoot.swift; sourceTree = "<group>"; };
-		35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeInfoView.swift; sourceTree = "<group>"; };
+		35FEB6AE2CD8C90300F24A4A /* StatusChangeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusChangeDetailView.swift; sourceTree = "<group>"; };
 		35FEB6B92CDB18CC00F24A4A /* ObservableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableItem.swift; sourceTree = "<group>"; };
 		35FEB6BF2CDC5E9200F24A4A /* ObservableJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableJob.swift; sourceTree = "<group>"; };
 		35FEB6C12CDC845800F24A4A /* ObservableMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMap.swift; sourceTree = "<group>"; };
@@ -474,7 +474,7 @@
 				35D2CEB52B553EDD00365E8E /* ItemDatabaseView.swift */,
 				353B4F1B2B451F1300605E92 /* ItemCell.swift */,
 				351EE3042C08BF3A0012BC9E /* ItemIconImageView.swift */,
-				3514BF442B4526F40065ED89 /* ItemInfoView.swift */,
+				3514BF442B4526F40065ED89 /* ItemDetailView.swift */,
 				35239E002BC29A4E0039F7D5 /* ItemProvider.swift */,
 				35FEB6B92CDB18CC00F24A4A /* ObservableItem.swift */,
 			);
@@ -487,7 +487,7 @@
 				353B4F0F2B43AED300605E92 /* SkillDatabaseView.swift */,
 				3514BF5A2B454A040065ED89 /* SkillCell.swift */,
 				351EE2FC2C0880A00012BC9E /* SkillIconImageView.swift */,
-				353B4F172B44FFE100605E92 /* SkillInfoView.swift */,
+				353B4F172B44FFE100605E92 /* SkillDetailView.swift */,
 				35239DFC2BBEF1C80039F7D5 /* SkillProvider.swift */,
 				35FEB6C52CDCC28500F24A4A /* ObservableSkill.swift */,
 			);
@@ -499,7 +499,7 @@
 			children = (
 				3514BF5D2B4557950065ED89 /* MonsterDatabaseView.swift */,
 				3514BF5F2B455EF90065ED89 /* MonsterGridCell.swift */,
-				3514BF612B4560730065ED89 /* MonsterInfoView.swift */,
+				3514BF612B4560730065ED89 /* MonsterDetailView.swift */,
 				35239DF82BBDB7B50039F7D5 /* MonsterProvider.swift */,
 				352B140E2C22DCA40097E643 /* ObservableMonster.swift */,
 			);
@@ -511,7 +511,7 @@
 			children = (
 				3514BF812B4801D70065ED89 /* JobDatabaseView.swift */,
 				3514BF832B4801E20065ED89 /* JobGridCell.swift */,
-				3514BF852B4801EB0065ED89 /* JobInfoView.swift */,
+				3514BF852B4801EB0065ED89 /* JobDetailView.swift */,
 				35239DFA2BBEEF890039F7D5 /* JobProvider.swift */,
 				35FEB6BF2CDC5E9200F24A4A /* ObservableJob.swift */,
 			);
@@ -598,7 +598,7 @@
 				35652B422B960D100075AD71 /* MapDatabaseView.swift */,
 				35652B442B960D2D0075AD71 /* MapCell.swift */,
 				351EE3002C08B86A0012BC9E /* MapImageView.swift */,
-				35652B462B960D370075AD71 /* MapInfoView.swift */,
+				35652B462B960D370075AD71 /* MapDetailView.swift */,
 				3577D3722DF6CC8A00EDAFE8 /* MapViewer.swift */,
 				35239DFE2BBEF4510039F7D5 /* MapProvider.swift */,
 				35FEB6C12CDC845800F24A4A /* ObservableMap.swift */,
@@ -800,7 +800,7 @@
 			isa = PBXGroup;
 			children = (
 				35B422D12BEB6C7C00681AA2 /* PetDatabaseView.swift */,
-				35B422D52BEB7ED800681AA2 /* PetInfoView.swift */,
+				35B422D52BEB7ED800681AA2 /* PetDetailView.swift */,
 				35B422CF2BEB68F600681AA2 /* PetProvider.swift */,
 				35B422D32BEB785500681AA2 /* ObservablePet.swift */,
 			);
@@ -811,7 +811,7 @@
 			isa = PBXGroup;
 			children = (
 				35B422DD2BECAB6100681AA2 /* MonsterSummonDatabaseView.swift */,
-				35B422DF2BECAB6E00681AA2 /* MonsterSummonInfoView.swift */,
+				35B422DF2BECAB6E00681AA2 /* MonsterSummonDetailView.swift */,
 				35B422DB2BECAA1800681AA2 /* MonsterSummonProvider.swift */,
 				35B422D92BECA87400681AA2 /* ObservableMonsterSummon.swift */,
 			);
@@ -823,7 +823,7 @@
 			children = (
 				35B422F32BEF602500681AA2 /* StatusChangeDatabaseView.swift */,
 				3589B7B12D495C1500155884 /* StatusChangeCell.swift */,
-				35FEB6AE2CD8C90300F24A4A /* StatusChangeInfoView.swift */,
+				35FEB6AE2CD8C90300F24A4A /* StatusChangeDetailView.swift */,
 				35B422F12BEF5F3000681AA2 /* StatusChangeProvider.swift */,
 				35FEB6C32CDCBED400F24A4A /* ObservableStatusChange.swift */,
 			);
@@ -1059,7 +1059,7 @@
 				351EE69D2D71FCE70061F81F /* File+Compare.swift in Sources */,
 				35B575FE2D1BB34200FC12BB /* CharacterSimulatorView.swift in Sources */,
 				35B3B8DA2A08BEA600B4540B /* ContentView.swift in Sources */,
-				3514BF862B4801EB0065ED89 /* JobInfoView.swift in Sources */,
+				3514BF862B4801EB0065ED89 /* JobDetailView.swift in Sources */,
 				35B33BA22BF3BDCE00EF28F5 /* RealityCubeViewController.swift in Sources */,
 				35BE555E2BDAAFFF003715C3 /* RSMFilePreviewView.swift in Sources */,
 				3514BF822B4801D70065ED89 /* JobDatabaseView.swift in Sources */,
@@ -1072,7 +1072,7 @@
 				355471DF2DA89F77004704F2 /* GameTitleBar.swift in Sources */,
 				3594DD552BF5FB6E00575F3D /* GNDFilePreviewView.swift in Sources */,
 				3581A8CC2E03C1DA001F9086 /* DatabaseRecordDetailView.swift in Sources */,
-				3514BF622B4560730065ED89 /* MonsterInfoView.swift in Sources */,
+				3514BF622B4560730065ED89 /* MonsterDetailView.swift in Sources */,
 				3514BF5E2B4557950065ED89 /* MonsterDatabaseView.swift in Sources */,
 				35FEB6BA2CDB18D300F24A4A /* ObservableItem.swift in Sources */,
 				356B64812D95577F00DAD679 /* MapSceneProtocol.swift in Sources */,
@@ -1097,7 +1097,7 @@
 				35E67C712CBF6C1F006E42A3 /* File+JSON.swift in Sources */,
 				35E67C722CBF6C1F006E42A3 /* FileJSONViewer.swift in Sources */,
 				35B422EF2BEF091F00681AA2 /* ObservableDatabase.swift in Sources */,
-				35FEB6AF2CD8C90300F24A4A /* StatusChangeInfoView.swift in Sources */,
+				35FEB6AF2CD8C90300F24A4A /* StatusChangeDetailView.swift in Sources */,
 				35F1E2102D891776008523FC /* File+Icon.swift in Sources */,
 				35B3B9F82A08C01600B4540B /* Shaders.metal in Sources */,
 				35239DFB2BBEEF890039F7D5 /* JobProvider.swift in Sources */,
@@ -1126,20 +1126,20 @@
 				35FEB6AD2CD8BE4E00F24A4A /* DatabaseRoot.swift in Sources */,
 				350A006B2DFA515B00CBED9F /* SharedDatabase.swift in Sources */,
 				356B647F2D95573C00DAD679 /* MapSceneDelegate.swift in Sources */,
-				35B422E02BECAB6E00681AA2 /* MonsterSummonInfoView.swift in Sources */,
+				35B422E02BECAB6E00681AA2 /* MonsterSummonDetailView.swift in Sources */,
 				35BE555A2BDAA929003715C3 /* SPRFilePreviewView.swift in Sources */,
 				35239E032BC29F660039F7D5 /* EmptyContentView.swift in Sources */,
 				355471DD2DA83642004704F2 /* InventoryItemView.swift in Sources */,
 				3546C3D32C6D9DC9002A1321 /* ChatSession.swift in Sources */,
 				352B140F2C22DCA40097E643 /* ObservableMonster.swift in Sources */,
 				35B33BA52BF465E700EF28F5 /* RealityCubeView.swift in Sources */,
-				35652B472B960D370075AD71 /* MapInfoView.swift in Sources */,
+				35652B472B960D370075AD71 /* MapDetailView.swift in Sources */,
 				3582FFC62B8C830D00E746D7 /* SettingsView.swift in Sources */,
 				35F1E20E2D846757008523FC /* IMF+JSON.swift in Sources */,
 				353B4F102B43AED300605E92 /* SkillDatabaseView.swift in Sources */,
 				35BE55622BDAB6EC003715C3 /* STRFilePreviewView.swift in Sources */,
 				35E67C772CBF6E57006E42A3 /* RSW+JSON.swift in Sources */,
-				3514BF452B4526F40065ED89 /* ItemInfoView.swift in Sources */,
+				3514BF452B4526F40065ED89 /* ItemDetailView.swift in Sources */,
 				35C4BC7A2DCCAAAD007DA87E /* SharedResource.swift in Sources */,
 				35FEB6C62CDCC28F00F24A4A /* ObservableSkill.swift in Sources */,
 				3558A3AE2DFC22260038DFC3 /* ServerWrapper.swift in Sources */,
@@ -1147,7 +1147,7 @@
 				354668C52CA9338500CE2D11 /* TextMessage.swift in Sources */,
 				35BE55602BDAB2A7003715C3 /* RSWFilePreviewView.swift in Sources */,
 				35BE55642BDAB834003715C3 /* FilePreviewView.swift in Sources */,
-				35B422D62BEB7ED800681AA2 /* PetInfoView.swift in Sources */,
+				35B422D62BEB7ED800681AA2 /* PetDetailView.swift in Sources */,
 				35B3B8D82A08BEA600B4540B /* RagnarokOfflineApp.swift in Sources */,
 				35B422DC2BECAA1800681AA2 /* MonsterSummonProvider.swift in Sources */,
 				3579DF9D2D67541D00B8C98A /* CharacterConfiguration.swift in Sources */,
@@ -1171,7 +1171,7 @@
 				35D2CEB62B553EDD00365E8E /* ItemDatabaseView.swift in Sources */,
 				35B422F22BEF5F3000681AA2 /* StatusChangeProvider.swift in Sources */,
 				35CFDA392DAF4B230070B707 /* GameBottomBar.swift in Sources */,
-				353B4F182B44FFE100605E92 /* SkillInfoView.swift in Sources */,
+				353B4F182B44FFE100605E92 /* SkillDetailView.swift in Sources */,
 				3577D3732DF6CC8E00EDAFE8 /* MapViewer.swift in Sources */,
 				35B422DA2BECA87400681AA2 /* ObservableMonsterSummon.swift in Sources */,
 				357F96BA2C4AA48400B3231B /* ImageGrid.swift in Sources */,

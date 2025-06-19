@@ -1,5 +1,5 @@
 //
-//  MonsterSummonInfoView.swift
+//  MonsterSummonDetailView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/5/9.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MonsterSummonInfoView: View {
+struct MonsterSummonDetailView: View {
     var monsterSummon: ObservableMonsterSummon
 
     @Environment(\.horizontalSizeClass) private var sizeClass

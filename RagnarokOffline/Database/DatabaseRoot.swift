@@ -28,28 +28,28 @@ struct DatabaseRoot<RecordProvider, Empty>: ViewModifier where RecordProvider: D
                 }
             }
             .navigationDestination(for: ObservableItem.self) { item in
-                ItemInfoView(item: item)
+                ItemDetailView(item: item)
             }
             .navigationDestination(for: ObservableJob.self) { job in
-                JobInfoView(job: job)
+                JobDetailView(job: job)
             }
             .navigationDestination(for: ObservableMap.self) { map in
-                MapInfoView(map: map)
+                MapDetailView(map: map)
             }
             .navigationDestination(for: ObservableMonster.self) { monster in
-                MonsterInfoView(monster: monster)
+                MonsterDetailView(monster: monster)
             }
             .navigationDestination(for: ObservableMonsterSummon.self) { monsterSummon in
-                MonsterSummonInfoView(monsterSummon: monsterSummon)
+                MonsterSummonDetailView(monsterSummon: monsterSummon)
             }
             .navigationDestination(for: ObservablePet.self) { pet in
-                PetInfoView(pet: pet)
+                PetDetailView(pet: pet)
             }
             .navigationDestination(for: ObservableSkill.self) { skill in
-                SkillInfoView(skill: skill)
+                SkillDetailView(skill: skill)
             }
             .navigationDestination(for: ObservableStatusChange.self) { statusChange in
-                StatusChangeInfoView(statusChange: statusChange)
+                StatusChangeDetailView(statusChange: statusChange)
             }
             .searchable(text: $database.searchText, placement: searchFieldPlacement(sizeClass))
             .onSubmit(of: .search) {

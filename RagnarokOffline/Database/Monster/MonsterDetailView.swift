@@ -1,5 +1,5 @@
 //
-//  MonsterInfoView.swift
+//  MonsterDetailView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/1/3.
@@ -8,7 +8,7 @@
 import ROCore
 import SwiftUI
 
-struct MonsterInfoView: View {
+struct MonsterDetailView: View {
     var monster: ObservableMonster
 
     var body: some View {
