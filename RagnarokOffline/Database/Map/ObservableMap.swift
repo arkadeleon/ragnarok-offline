@@ -13,7 +13,7 @@ import ROResources
 @Observable
 @dynamicMemberLookup
 class ObservableMap {
-    struct SpawnMonster: Identifiable {
+    struct SpawningMonster: Identifiable {
         var monster: ObservableMonster
         var spawn: MonsterSpawn
 
@@ -28,7 +28,7 @@ class ObservableMap {
     private let localizedName: String?
 
     var image: CGImage?
-    var spawnMonsters: [SpawnMonster] = []
+    var spawningMonsters: [SpawningMonster] = []
 
     var displayName: String {
         localizedName ?? map.name
@@ -62,7 +62,7 @@ class ObservableMap {
         let npcDatabase = NPCDatabase.shared
 
         let monsterSpawns = await npcDatabase.monsterSpawns(forMapName: map.name)
-        var spawnMonsters: [SpawnMonster] = []
+        var spawningMonsters: [SpawningMonster] = []
         var monsters: [Monster] = []
         for monsterSpawn in monsterSpawns {
             if let monsterID = monsterSpawn.monsterID {
@@ -70,11 +70,11 @@ class ObservableMap {
                     if !monsters.contains(monster) {
                         monsters.append(monster)
 
-                        let spawnMonster = SpawnMonster(
+                        let spawningMonster = SpawningMonster(
                             monster: ObservableMonster(mode: mode, monster: monster),
                             spawn: monsterSpawn
                         )
-                        spawnMonsters.append(spawnMonster)
+                        spawningMonsters.append(spawningMonster)
                     }
                 }
             } else if let monsterAegisName = monsterSpawn.monsterAegisName {
@@ -82,16 +82,16 @@ class ObservableMap {
                     if !monsters.contains(monster) {
                         monsters.append(monster)
 
-                        let spawnMonster = SpawnMonster(
+                        let spawningMonster = SpawningMonster(
                             monster: ObservableMonster(mode: mode, monster: monster),
                             spawn: monsterSpawn
                         )
-                        spawnMonsters.append(spawnMonster)
+                        spawningMonsters.append(spawningMonster)
                     }
                 }
             }
         }
-        self.spawnMonsters = spawnMonsters
+        self.spawningMonsters = spawningMonsters
     }
 }
 

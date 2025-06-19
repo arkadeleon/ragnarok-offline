@@ -13,36 +13,33 @@ struct MonsterSummonInfoView: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
 
     var body: some View {
-        ScrollView {
-            LazyVStack(pinnedViews: .sectionHeaders) {
-                if let defaultMonster = monsterSummon.defaultMonster {
-                    DatabaseRecordSectionView("Default") {
-                        LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
-                            NavigationLink(value: defaultMonster) {
-                                MonsterGridCell(monster: defaultMonster, secondaryText: nil)
+        DatabaseRecordDetailView {
+            if let defaultMonster = monsterSummon.defaultMonster {
+                DatabaseRecordSectionView("Default") {
+                    LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
+                        NavigationLink(value: defaultMonster) {
+                            MonsterGridCell(monster: defaultMonster, secondaryText: nil)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    .padding(.vertical, vSpacing(sizeClass))
+                }
+            }
+
+            if let summonMonsters = monsterSummon.summonMonsters {
+                DatabaseRecordSectionView("Summon") {
+                    LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
+                        ForEach(summonMonsters) { summonMonster in
+                            NavigationLink(value: summonMonster.monster) {
+                                MonsterGridCell(monster: summonMonster.monster, secondaryText: summonMonster.rate.formatted())
                             }
                             .buttonStyle(.plain)
                         }
-                        .padding(.vertical, vSpacing(sizeClass))
                     }
-                }
-
-                if let summonMonsters = monsterSummon.summonMonsters {
-                    DatabaseRecordSectionView("Summon") {
-                        LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
-                            ForEach(summonMonsters) { summonMonster in
-                                NavigationLink(value: summonMonster.monster) {
-                                    MonsterGridCell(monster: summonMonster.monster, secondaryText: summonMonster.rate.formatted())
-                                }
-                                .buttonStyle(.plain)
-                            }
-                        }
-                        .padding(.vertical, vSpacing(sizeClass))
-                    }
+                    .padding(.vertical, vSpacing(sizeClass))
                 }
             }
         }
-        .background(.background)
         .navigationTitle(monsterSummon.displayName)
         .task {
             await monsterSummon.fetchDetail()

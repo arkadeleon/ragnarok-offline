@@ -14,21 +14,15 @@ struct DatabaseRecordSectionView<Content, Header>: View where Content: View, Hea
     @Environment(\.horizontalSizeClass) private var sizeClass
 
     var body: some View {
-        Section {
-            VStack(spacing: 0) {
-                Divider()
-                content()
-                Divider()
-            }
-            .padding(.horizontal, hSpacing(sizeClass))
-        } header: {
+        VStack(spacing: 0) {
             header()
-                .font(.headline)
-                .foregroundStyle(Color.secondary)
+                .font(.title3)
+                .fontWeight(.semibold)
+                .foregroundStyle(Color.primary)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, hSpacing(sizeClass))
                 .padding(.vertical)
-                .background(.background.opacity(0.75))
+
+            content()
         }
     }
 
@@ -71,7 +65,6 @@ struct DatabaseRecordSectionTextContent: View {
         Text(text)
             .monospaced(monospaced)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.vertical)
     }
 
     init(text: String, monospaced: Bool) {
@@ -86,14 +79,16 @@ struct DatabaseRecordSectionAttributesContent: View {
     var body: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], spacing: 10) {
             ForEach(attributes) { attribute in
-                LabeledContent {
-                    Text(attribute.value)
-                } label: {
-                    Text(attribute.name)
+                VStack {
+                    HStack {
+                        Text(attribute.name)
+                            .foregroundStyle(Color.secondary)
+                        Spacer()
+                        Text(attribute.value)
+                    }
                 }
             }
         }
-        .padding(.vertical, 10)
     }
 }
 
@@ -110,6 +105,7 @@ struct DatabaseRecordSectionAttributesContent: View {
             }
         }
     }
+    .padding()
 }
 
 #Preview {
@@ -119,4 +115,5 @@ struct DatabaseRecordSectionAttributesContent: View {
         DatabaseRecordAttribute(name: "Level", value: 1),
         DatabaseRecordAttribute(name: "HP", value: 55),
     ])
+    .padding()
 }

@@ -15,38 +15,35 @@ struct MapInfoView: View {
     @State private var isMapViewerPresented = false
 
     var body: some View {
-        ScrollView {
-            LazyVStack(pinnedViews: .sectionHeaders) {
-                ZStack {
-                    if let mapImage = map.image {
-                        Image(mapImage, scale: 1, label: Text(map.displayName))
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    } else {
-                        Image(systemName: "map")
-                            .font(.system(size: 100, weight: .thin))
-                            .foregroundStyle(Color.secondary)
-                    }
+        DatabaseRecordDetailView {
+            ZStack {
+                if let mapImage = map.image {
+                    Image(mapImage, scale: 1, label: Text(map.displayName))
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                } else {
+                    Image(systemName: "map")
+                        .font(.system(size: 100, weight: .thin))
+                        .foregroundStyle(Color.secondary)
                 }
-                .frame(height: 200)
-                .stretchy()
+            }
+            .frame(height: 200)
+            .stretchy()
 
-                if !map.spawnMonsters.isEmpty {
-                    DatabaseRecordSectionView("Spawn Monsters") {
-                        LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
-                            ForEach(map.spawnMonsters) { spawnMonster in
-                                NavigationLink(value: spawnMonster.monster) {
-                                    MonsterGridCell(monster: spawnMonster.monster, secondaryText: "(\(spawnMonster.spawn.amount)x)")
-                                }
-                                .buttonStyle(.plain)
+            if !map.spawningMonsters.isEmpty {
+                DatabaseRecordSectionView("Monsters") {
+                    LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
+                        ForEach(map.spawningMonsters) { spawningMonster in
+                            NavigationLink(value: spawningMonster.monster) {
+                                MonsterGridCell(monster: spawningMonster.monster, secondaryText: "(\(spawningMonster.spawn.amount)x)")
                             }
+                            .buttonStyle(.plain)
                         }
-                        .padding(.vertical, vSpacing(sizeClass))
                     }
+                    .padding(.vertical, vSpacing(sizeClass))
                 }
             }
         }
-        .background(.background)
         .navigationTitle(map.displayName)
         .toolbar {
             Button("View") {

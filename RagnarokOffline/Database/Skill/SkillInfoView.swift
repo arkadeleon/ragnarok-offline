@@ -11,16 +11,13 @@ struct SkillInfoView: View {
     var skill: ObservableSkill
 
     var body: some View {
-        ScrollView {
-            LazyVStack(pinnedViews: .sectionHeaders) {
-                DatabaseRecordSectionView("Info", attributes: skill.attributes)
+        DatabaseRecordDetailView {
+            DatabaseRecordSectionView("Info", attributes: skill.attributes)
 
-                if let localizedDescription = skill.localizedDescription {
-                    DatabaseRecordSectionView("Description", text: localizedDescription)
-                }
+            if let localizedDescription = skill.localizedDescription {
+                DatabaseRecordSectionView("Description", text: localizedDescription)
             }
         }
-        .background(.background)
         .navigationTitle(skill.displayName)
         .task {
             await skill.fetchDetail()

@@ -13,62 +13,58 @@ struct PetInfoView: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
 
     var body: some View {
-        ScrollView {
-            LazyVStack(pinnedViews: .sectionHeaders) {
-                if let monster = pet.monster {
-                    DatabaseRecordSectionView("Monster") {
-                        LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
-                            NavigationLink(value: monster) {
-                                MonsterGridCell(monster: monster, secondaryText: nil)
-                            }
-                            .buttonStyle(.plain)
+        DatabaseRecordDetailView {
+            if let monster = pet.monster {
+                DatabaseRecordSectionView("Monster") {
+                    LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
+                        NavigationLink(value: monster) {
+                            MonsterGridCell(monster: monster, secondaryText: nil)
                         }
-                        .padding(.vertical, vSpacing(sizeClass))
+                        .buttonStyle(.plain)
                     }
-                }
-
-                DatabaseRecordSectionView("Items") {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        if let tameItem = pet.tameItem {
-                            NavigationLink(value: tameItem) {
-                                ItemCell(item: tameItem, secondaryText: "(Tame Item)")
-                            }
-                            .buttonStyle(.plain)
-                        }
-                        if let eggItem = pet.eggItem {
-                            NavigationLink(value: eggItem) {
-                                ItemCell(item: eggItem, secondaryText: "(Egg Item)")
-                            }
-                            .buttonStyle(.plain)
-                        }
-                        if let equipItem = pet.equipItem {
-                            NavigationLink(value: equipItem) {
-                                ItemCell(item: equipItem, secondaryText: "(Equip Item)")
-                            }
-                            .buttonStyle(.plain)
-                        }
-                        if let foodItem = pet.foodItem {
-                            NavigationLink(value: foodItem) {
-                                ItemCell(item: foodItem, secondaryText: "(Food Item)")
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    }
-                    .padding(.vertical, 20)
-                }
-
-                DatabaseRecordSectionView("Info", attributes: pet.attributes)
-
-                if let script = pet.script?.trimmingCharacters(in: .whitespacesAndNewlines) {
-                    DatabaseRecordSectionView("Script", text: script, monospaced: true)
-                }
-
-                if let supportScript = pet.supportScript?.trimmingCharacters(in: .whitespacesAndNewlines) {
-                    DatabaseRecordSectionView("Support Script", text: supportScript, monospaced: true)
+                    .padding(.vertical, vSpacing(sizeClass))
                 }
             }
+
+            DatabaseRecordSectionView("Items") {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                    if let tameItem = pet.tameItem {
+                        NavigationLink(value: tameItem) {
+                            ItemCell(item: tameItem, secondaryText: "(Tame Item)")
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    if let eggItem = pet.eggItem {
+                        NavigationLink(value: eggItem) {
+                            ItemCell(item: eggItem, secondaryText: "(Egg Item)")
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    if let equipItem = pet.equipItem {
+                        NavigationLink(value: equipItem) {
+                            ItemCell(item: equipItem, secondaryText: "(Equip Item)")
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    if let foodItem = pet.foodItem {
+                        NavigationLink(value: foodItem) {
+                            ItemCell(item: foodItem, secondaryText: "(Food Item)")
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+
+            DatabaseRecordSectionView("Info", attributes: pet.attributes)
+
+            if let script = pet.script?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                DatabaseRecordSectionView("Script", text: script, monospaced: true)
+            }
+
+            if let supportScript = pet.supportScript?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                DatabaseRecordSectionView("Support Script", text: supportScript, monospaced: true)
+            }
         }
-        .background(.background)
         .navigationTitle(pet.displayName)
         .task {
             await pet.fetchDetail()

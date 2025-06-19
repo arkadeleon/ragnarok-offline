@@ -616,7 +616,7 @@
         }
       }
     },
-    "Dropping Monsters" : {
+    "Dropped By" : {
 
     },
     "Drops" : {
@@ -1040,6 +1040,9 @@
 
     },
     "Monster Summon Database" : {
+
+    },
+    "Monsters" : {
 
     },
     "MVP Drops" : {
@@ -1774,9 +1777,6 @@
 
     },
     "SP Increase" : {
-
-    },
-    "Spawn Monsters" : {
 
     },
     "Special Performance" : {
