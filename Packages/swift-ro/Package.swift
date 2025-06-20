@@ -46,8 +46,8 @@ let package = Package(
     dependencies: [
         .package(path: "../swift-binary-io"),
         .package(path: "../swift-grf"),
-        .package(path: "../../swift-lua"),
         .package(url: "https://github.com/arkadeleon/swift-gzip.git", branch: "main"),
+        .package(url: "https://github.com/arkadeleon/swift-lua.git", branch: "master"),
         .package(url: "https://github.com/arkadeleon/swift-rapidyaml.git", branch: "master"),
     ],
     targets: [
