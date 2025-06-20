@@ -11,6 +11,7 @@ import BinaryIO
 
 final class GRFTests: XCTestCase {
     func testGRF() throws {
+        // Test data source: https://github.com/arminherling/GRF
         let resourceURL = Bundle.module.resourceURL!
         let grfURL = resourceURL.appending(path: "test.grf")
         let grf = try GRF(url: grfURL)
@@ -24,7 +25,7 @@ final class GRFTests: XCTestCase {
         XCTAssertEqual(grf.table.entries[5].path.string, "data\\loading00.jpg")
         XCTAssertEqual(grf.table.entries[6].path.string, "data\\monstertalktable.xml")
         XCTAssertEqual(grf.table.entries[7].path.string, "data\\resnametable.txt")
-        XCTAssertEqual(grf.table.entries[8].path.string, "data\\t2_배경1-1.bmp")
+        XCTAssertEqual(grf.table.entries[8].path.string, "data\\t2_¹è°æ1-1.bmp")
 
         let files = [
             resourceURL.appending(path: "data/0_Tex1.bmp"),
@@ -35,7 +36,7 @@ final class GRFTests: XCTestCase {
             resourceURL.appending(path: "data/loading00.jpg"),
             resourceURL.appending(path: "data/monstertalktable.xml"),
             resourceURL.appending(path: "data/resnametable.txt"),
-            resourceURL.appending(path: "data/t2_배경1-1.bmp"),
+            resourceURL.appending(path: "data/t2_¹è°æ1-1.bmp"),
         ]
 
         let stream = FileStream(url: grfURL)!

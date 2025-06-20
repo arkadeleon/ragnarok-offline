@@ -15,11 +15,11 @@ final class JobDatabaseTests: XCTestCase {
 
         let novice = await database.jobs().first(where: { $0.id == .novice })!
         XCTAssertEqual(novice.baseASPD[.w_fist], 500)
-        XCTAssertEqual(novice.bonusStats[1][.luk], 1)
-        XCTAssertEqual(novice.baseExp[0], 9)
-        XCTAssertEqual(novice.jobExp[0], 10)
-        XCTAssertEqual(novice.baseHp[0], 40)
-        XCTAssertEqual(novice.baseSp[0], 11)
+        XCTAssertEqual(novice.bonusStats[2]![.luk], 1)
+        XCTAssertEqual(novice.baseExp[1], 9)
+        XCTAssertEqual(novice.jobExp[1], 10)
+        XCTAssertEqual(novice.baseHp[1], 40)
+        XCTAssertEqual(novice.baseSp[1], 11)
     }
 
     func testRenewal() async throws {
@@ -28,10 +28,10 @@ final class JobDatabaseTests: XCTestCase {
 
         let novice = await database.jobs().first(where: { $0.id == .novice })!
         XCTAssertEqual(novice.baseASPD[.w_fist], 40)
-        XCTAssertEqual(novice.bonusStats[1][.luk], 1)
-        XCTAssertEqual(novice.baseExp[0], 548)
-        XCTAssertEqual(novice.jobExp[0], 10)
-        XCTAssertEqual(novice.baseHp[0], 40)
-        XCTAssertEqual(novice.baseSp[0], 11)
+        XCTAssertEqual(novice.bonusStats[2]![.luk], 1)
+        XCTAssertEqual(novice.baseExp[1], 548)
+        XCTAssertEqual(novice.jobExp[1], 10)
+        XCTAssertEqual(novice.baseHp[1], 40)
+        XCTAssertEqual(novice.baseSp[1], 11)
     }
 }
