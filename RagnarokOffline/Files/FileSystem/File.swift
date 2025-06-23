@@ -14,9 +14,9 @@ import UniformTypeIdentifiers
 enum FileNode {
     case directory(URL)
     case regularFile(URL)
-    case grf(GRFReference)
-    case grfDirectory(GRFReference, GRFPath)
-    case grfEntry(GRFReference, GRFEntryNode)
+    case grfArchive(GRFArchive)
+    case grfArchiveDirectory(GRFArchive, GRFPath)
+    case grfArchiveEntry(GRFArchive, GRFEntryNode)
 }
 
 @Observable
@@ -34,14 +34,14 @@ class File: Hashable, Identifiable {
             url
         case .regularFile(let url):
             url
-        case .grf(let grf):
-            grf.url
-        case .grfDirectory(let grf, let path):
-            grf.url.appending(queryItems: [
+        case .grfArchive(let grfArchive):
+            grfArchive.url
+        case .grfArchiveDirectory(let grfArchive, let path):
+            grfArchive.url.appending(queryItems: [
                 URLQueryItem(name: "path", value: path.string)
             ])
-        case .grfEntry(let grf, let entry):
-            grf.url.appending(queryItems: [
+        case .grfArchiveEntry(let grfArchive, let entry):
+            grfArchive.url.appending(queryItems: [
                 URLQueryItem(name: "path", value: entry.path.string)
             ])
         }
@@ -54,11 +54,11 @@ class File: Hashable, Identifiable {
             url.lastPathComponent
         case .regularFile(let url):
             url.lastPathComponent
-        case .grf(let grf):
-            grf.url.lastPathComponent
-        case .grfDirectory(_, let path):
+        case .grfArchive(let grfArchive):
+            grfArchive.url.lastPathComponent
+        case .grfArchiveDirectory(_, let path):
             path.lastComponent.transcoding(from: .isoLatin1, to: .koreanEUC) ?? path.lastComponent
-        case .grfEntry(_, let entry):
+        case .grfArchiveEntry(_, let entry):
             entry.path.lastComponent.transcoding(from: .isoLatin1, to: .koreanEUC) ?? entry.path.lastComponent
         }
     }()
@@ -69,7 +69,7 @@ class File: Hashable, Identifiable {
             return .folder
         }
 
-        if case .grfDirectory = node {
+        if case .grfArchiveDirectory = node {
             return .directory
         }
 
@@ -78,11 +78,11 @@ class File: Hashable, Identifiable {
             url.pathExtension
         case .regularFile(let url):
             url.pathExtension
-        case .grf(let grf):
-            grf.url.pathExtension
-        case .grfDirectory(_, let path):
+        case .grfArchive(let grfArchive):
+            grfArchive.url.pathExtension
+        case .grfArchiveDirectory(_, let path):
             path.extension
-        case .grfEntry(_, let entry):
+        case .grfArchiveEntry(_, let entry):
             entry.path.extension
         }
 
@@ -96,18 +96,18 @@ class File: Hashable, Identifiable {
 
     var isDirectory: Bool {
         switch node {
-        case .directory, .grfDirectory:
+        case .directory, .grfArchiveDirectory:
             true
-        case .regularFile, .grf, .grfEntry:
+        case .regularFile, .grfArchive, .grfArchiveEntry:
             false
         }
     }
 
     var hasFiles: Bool {
         switch node {
-        case .directory, .grf, .grfDirectory:
+        case .directory, .grfArchive, .grfArchiveDirectory:
             true
-        case .regularFile, .grfEntry:
+        case .regularFile, .grfArchiveEntry:
             false
         }
     }
@@ -120,8 +120,8 @@ class File: Hashable, Identifiable {
         switch locator {
         case .url(let url):
             node = .regularFile(url)
-        case .grfEntry(let grf, let entry):
-            node = .grfEntry(grf, entry)
+        case .grfArchiveEntry(let grfArchive, let entry):
+            node = .grfArchiveEntry(grfArchive, entry)
         }
     }
 
@@ -136,12 +136,12 @@ class File: Hashable, Identifiable {
         case .regularFile(let url):
             let size = (try? url.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
             return size
-        case .grf(let grf):
-            let size = (try? grf.url.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
+        case .grfArchive(let grfArchive):
+            let size = (try? grfArchive.url.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
             return size
-        case .grfDirectory:
+        case .grfArchiveDirectory:
             return 0
-        case .grfEntry(_, let entry):
+        case .grfArchiveEntry(_, let entry):
             return entry.size
         }
     }
@@ -152,12 +152,12 @@ class File: Hashable, Identifiable {
             nil
         case .regularFile(let url):
             try? Data(contentsOf: url)
-        case .grf:
+        case .grfArchive:
             nil
-        case .grfDirectory:
+        case .grfArchiveDirectory:
             nil
-        case .grfEntry(let grf, let entry):
-            try? grf.contentsOfEntry(at: entry.path)
+        case .grfArchiveEntry(let grfArchive, let entry):
+            try? await grfArchive.contentsOfEntry(at: entry.path)
         }
     }
 
@@ -168,8 +168,8 @@ class File: Hashable, Identifiable {
             let files = urls.map({ $0.resolvingSymlinksInPath() }).map { url -> File in
                 switch url.pathExtension.lowercased() {
                 case "grf":
-                    let grf = GRFReference(url: url)
-                    return File(node: .grf(grf))
+                    let grfArchive = GRFArchive(url: url)
+                    return File(node: .grfArchive(grfArchive))
                 default:
                     let values = try? url.resourceValues(forKeys: [.isDirectoryKey])
                     if values?.isDirectory == true {
@@ -182,25 +182,25 @@ class File: Hashable, Identifiable {
             return files.sorted()
         case .regularFile:
             return []
-        case .grf(let grf):
+        case .grfArchive(let grfArchive):
             let path = GRFPath(components: ["data"])
-            let file = File(node: .grfDirectory(grf, path))
+            let file = File(node: .grfArchiveDirectory(grfArchive, path))
             return await file.files()
-        case .grfDirectory(let grf, let path):
-            guard let directory = grf.directory(at: path) else {
+        case .grfArchiveDirectory(let grfArchive, let path):
+            guard let directory = await grfArchive.directory(at: path) else {
                 return []
             }
             var files: [File] = []
             for subdirectory in directory.subdirectories {
-                let file = File(node: .grfDirectory(grf, subdirectory.path))
+                let file = File(node: .grfArchiveDirectory(grfArchive, subdirectory.path))
                 files.append(file)
             }
             for entry in directory.entries {
-                let file = File(node: .grfEntry(grf, entry))
+                let file = File(node: .grfArchiveEntry(grfArchive, entry))
                 files.append(file)
             }
             return files.sorted()
-        case .grfEntry:
+        case .grfArchiveEntry:
             return []
         }
     }
@@ -212,17 +212,17 @@ class File: Hashable, Identifiable {
             return urls.count
         case .regularFile:
             return 0
-        case .grf(let grf):
+        case .grfArchive(let grfArchive):
             let path = GRFPath(components: ["data"])
-            let file = File(node: .grfDirectory(grf, path))
+            let file = File(node: .grfArchiveDirectory(grfArchive, path))
             return await file.fileCount()
-        case .grfDirectory(let grf, let path):
-            if let directory = grf.directory(at: path) {
+        case .grfArchiveDirectory(let grfArchive, let path):
+            if let directory = await grfArchive.directory(at: path) {
                 return directory.subdirectories.count + directory.entries.count
             } else {
                 return 0
             }
-        case .grfEntry:
+        case .grfArchiveEntry:
             return 0
         }
     }

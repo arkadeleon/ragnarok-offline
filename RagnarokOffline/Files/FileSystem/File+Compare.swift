@@ -13,15 +13,15 @@ extension File {
 
         func compare(_ lhs: File, _ rhs: File) -> ComparisonResult {
             let lhsRank = switch lhs.node {
-            case .directory, .grfDirectory: 0
-            case .grf: 1
-            case .regularFile, .grfEntry: 2
+            case .directory, .grfArchiveDirectory: 0
+            case .grfArchive: 1
+            case .regularFile, .grfArchiveEntry: 2
             }
 
             let rhsRank = switch rhs.node {
-            case .directory, .grfDirectory: 0
-            case .grf: 1
-            case .regularFile, .grfEntry: 2
+            case .directory, .grfArchiveDirectory: 0
+            case .grfArchive: 1
+            case .regularFile, .grfArchiveEntry: 2
             }
 
             if lhsRank == rhsRank {
@@ -36,15 +36,15 @@ extension File {
 extension File: Comparable {
     static func < (lhs: File, rhs: File) -> Bool {
         let lhsRank = switch lhs.node {
-        case .directory, .grfDirectory: 0
-        case .grf: 1
-        case .regularFile, .grfEntry: 2
+        case .directory, .grfArchiveDirectory: 0
+        case .grfArchive: 1
+        case .regularFile, .grfArchiveEntry: 2
         }
 
         let rhsRank = switch rhs.node {
-        case .directory, .grfDirectory: 0
-        case .grf: 1
-        case .regularFile, .grfEntry: 2
+        case .directory, .grfArchiveDirectory: 0
+        case .grfArchive: 1
+        case .regularFile, .grfArchiveEntry: 2
         }
 
         if lhsRank == rhsRank {

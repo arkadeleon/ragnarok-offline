@@ -1,5 +1,5 @@
 //
-//  GRFReference.swift
+//  GRFArchive.swift
 //  GRF
 //
 //  Created by Leon Li on 2020/8/17.
@@ -12,8 +12,8 @@ import Foundation
 import OSLog
 #endif
 
-public class GRFReference {
-    public let url: URL
+public actor GRFArchive {
+    nonisolated public let url: URL
 
     #if canImport(OSLog)
     private let logger = Logger(subsystem: "swift-grf", category: "grf")

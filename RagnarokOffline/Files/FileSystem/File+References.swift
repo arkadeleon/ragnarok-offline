@@ -21,7 +21,7 @@ extension File {
     func referenceFiles() async -> [File] {
         switch utType {
         case .gnd:
-            guard case .grfEntry(let grf, _) = node,
+            guard case .grfArchiveEntry(let grfArchive, _) = node,
                   let data = await contents(),
                   let gnd = try? GND(data: data) else {
                 return []
@@ -30,15 +30,15 @@ extension File {
             var referenceFiles: [File] = []
             for textureName in gnd.textures {
                 let path = GRFPath(components: ["data", "texture", textureName])
-                guard let entry = grf.entry(at: path) else {
+                guard let entry = await grfArchive.entry(at: path) else {
                     continue
                 }
-                let file = File(node: .grfEntry(grf, entry))
+                let file = File(node: .grfArchiveEntry(grfArchive, entry))
                 referenceFiles.append(file)
             }
             return referenceFiles
         case .rsw:
-            guard case .grfEntry(let grf, _) = node,
+            guard case .grfArchiveEntry(let grfArchive, _) = node,
                   let data = await contents(),
                   let rsw = try? RSW(data: data) else {
                 return []
@@ -47,10 +47,10 @@ extension File {
             var referenceFiles: [File] = []
             for model in rsw.models {
                 let path = GRFPath(components: ["data", "model", model.modelName])
-                guard let entry = grf.entry(at: path) else {
+                guard let entry = await grfArchive.entry(at: path) else {
                     continue
                 }
-                let file = File(node: .grfEntry(grf, entry))
+                let file = File(node: .grfArchiveEntry(grfArchive, entry))
                 if !referenceFiles.contains(file) {
                     referenceFiles.append(file)
                 }

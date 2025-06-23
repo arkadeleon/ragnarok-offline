@@ -16,19 +16,19 @@ class FileSystem {
 
     func canExtractFile(_ file: File) -> Bool {
         switch file.node {
-        case .grfEntry:
+        case .grfArchiveEntry:
             true
         default:
             false
         }
     }
 
-    func extractFile(_ file: File) throws {
-        guard case .grfEntry(let grf, let entry) = file.node else {
+    func extractFile(_ file: File) async throws {
+        guard case .grfArchiveEntry(let grfArchive, let entry) = file.node else {
             return
         }
 
-        let contents = try grf.contentsOfEntry(at: entry.path)
+        let contents = try await grfArchive.contentsOfEntry(at: entry.path)
 
         let path = entry.path.components.map({ $0.transcoding(from: .isoLatin1, to: .koreanEUC) ?? $0 }).joined(separator: "/")
         let url = ResourceManager.shared.localURL.appending(path: path)
@@ -40,7 +40,7 @@ class FileSystem {
 
     func canDeleteFile(_ file: File) -> Bool {
         switch file.node {
-        case .directory, .regularFile, .grf:
+        case .directory, .regularFile, .grfArchive:
             true
         default:
             false
@@ -49,7 +49,7 @@ class FileSystem {
 
     func deleteFile(_ file: File) throws {
         switch file.node {
-        case .directory, .regularFile, .grf:
+        case .directory, .regularFile, .grfArchive:
             try FileManager.default.removeItem(at: file.url)
         default:
             break

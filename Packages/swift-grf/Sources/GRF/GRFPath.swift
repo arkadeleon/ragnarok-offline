@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/2/28.
 //
 
-final public class GRFPath: Hashable {
+final public class GRFPath: Hashable, @unchecked Sendable {
     public static func == (lhs: GRFPath, rhs: GRFPath) -> Bool {
         lhs.string == rhs.string
     }

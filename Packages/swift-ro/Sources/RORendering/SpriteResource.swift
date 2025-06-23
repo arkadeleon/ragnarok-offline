@@ -79,12 +79,13 @@ final public class SpriteResource: @unchecked Sendable {
 extension ResourceManager {
     public func sprite(at path: ResourcePath) async throws -> SpriteResource {
         let actPath = path.appendingPathExtension("act")
-        let actData = try await contentsOfResource(at: actPath)
-        let act = try ACT(data: actData)
+        async let actData = contentsOfResource(at: actPath)
 
         let sprPath = path.appendingPathExtension("spr")
-        let sprData = try await contentsOfResource(at: sprPath)
-        let spr = try SPR(data: sprData)
+        async let sprData = contentsOfResource(at: sprPath)
+
+        let act = try ACT(data: await actData)
+        let spr = try SPR(data: await sprData)
 
         let sprite = SpriteResource(act: act, spr: spr)
         return sprite

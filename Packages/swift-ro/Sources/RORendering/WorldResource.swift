@@ -23,16 +23,17 @@ final public class WorldResource: Sendable {
 extension ResourceManager {
     public func world(at path: ResourcePath) async throws -> WorldResource {
         let gatPath = path.appendingPathExtension("gat")
-        let gatData = try await contentsOfResource(at: gatPath)
-        let gat = try GAT(data: gatData)
+        async let gatData = contentsOfResource(at: gatPath)
 
         let gndPath = path.appendingPathExtension("gnd")
-        let gndData = try await contentsOfResource(at: gndPath)
-        let gnd = try GND(data: gndData)
+        async let gndData = contentsOfResource(at: gndPath)
 
         let rswPath = path.appendingPathExtension("rsw")
-        let rswData = try await contentsOfResource(at: rswPath)
-        let rsw = try RSW(data: rswData)
+        async let rswData = contentsOfResource(at: rswPath)
+
+        let gat = try GAT(data: await gatData)
+        let gnd = try GND(data: await gndData)
+        let rsw = try RSW(data: await rswData)
 
         let world = WorldResource(gat: gat, gnd: gnd, rsw: rsw)
         return world

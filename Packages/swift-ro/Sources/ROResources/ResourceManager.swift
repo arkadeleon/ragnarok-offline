@@ -27,14 +27,14 @@ enum ResourceError: LocalizedError {
 
 public enum ResourceLocator {
     case url(URL)
-    case grfEntry(GRFReference, GRFEntryNode)
+    case grfArchiveEntry(GRFArchive, GRFEntryNode)
 }
 
-public actor ResourceManager {
-    nonisolated public let localURL: URL
-    nonisolated public let remoteURL: URL?
+final public class ResourceManager: Sendable {
+    public let localURL: URL
+    public let remoteURL: URL?
 
-    private let localGRFs: [GRFReference]
+    private let localGRFArchives: [GRFArchive]
 
     public init(localURL: URL, remoteURL: URL?) {
         self.localURL = localURL
@@ -52,21 +52,12 @@ public actor ResourceManager {
             }
         }
 
-        localGRFs = [
-            GRFReference(url: dataGRFURL),
+        localGRFArchives = [
+            GRFArchive(url: dataGRFURL),
         ]
     }
 
-    public func resourceExists(at path: ResourcePath) -> Bool {
-        do {
-            _ = try locatorOfResource(at: path)
-            return true
-        } catch {
-            return false
-        }
-    }
-
-    public func locatorOfResource(at path: ResourcePath) throws -> ResourceLocator {
+    public func locatorOfResource(at path: ResourcePath) async throws -> ResourceLocator {
         let fileURL = localURL.absoluteURL.appending(path: path)
         if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
             return .url(fileURL)
@@ -74,9 +65,9 @@ public actor ResourceManager {
 
         let components = path.components.map({ $0.transcoding(from: .koreanEUC, to: .isoLatin1) ?? $0 })
         let grfPath = GRFPath(components: components)
-        for grf in localGRFs {
-            if let entry = grf.entry(at: grfPath) {
-                return .grfEntry(grf, entry)
+        for grfArchive in localGRFArchives {
+            if let entry = await grfArchive.entry(at: grfPath) {
+                return .grfArchiveEntry(grfArchive, entry)
             }
         }
 
@@ -99,9 +90,9 @@ public actor ResourceManager {
 
         let components = path.components.map({ $0.transcoding(from: .koreanEUC, to: .isoLatin1) ?? $0 })
         let grfPath = GRFPath(components: components)
-        for grf in localGRFs {
-            if let entry = grf.entry(at: grfPath) {
-                let data = try grf.contentsOfEntry(at: entry.path)
+        for grfArchive in localGRFArchives {
+            if let entry = await grfArchive.entry(at: grfPath) {
+                let data = try await grfArchive.contentsOfEntry(at: entry.path)
                 return data
             }
         }

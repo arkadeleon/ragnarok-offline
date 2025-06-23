@@ -32,12 +32,13 @@ struct RSWFilePreviewView: View {
         let rsw = try RSW(data: data)
 
         let gatPath = ResourcePath(components: ["data", rsw.files.gat])
-        let gatData = try await ResourceManager.shared.contentsOfResource(at: gatPath)
-        let gat = try GAT(data: gatData)
+        async let gatData = ResourceManager.shared.contentsOfResource(at: gatPath)
 
         let gndPath = ResourcePath(components: ["data", rsw.files.gnd])
-        let gndData = try await ResourceManager.shared.contentsOfResource(at: gndPath)
-        let gnd = try GND(data: gndData)
+        async let gndData = ResourceManager.shared.contentsOfResource(at: gndPath)
+
+        let gat = try GAT(data: await gatData)
+        let gnd = try GND(data: await gndData)
 
         let world = WorldResource(gat: gat, gnd: gnd, rsw: rsw)
 

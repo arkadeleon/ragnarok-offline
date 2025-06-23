@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/5/29.
 //
 
-public class GRFDirectoryNode: Codable {
+public class GRFDirectoryNode: Codable, @unchecked Sendable {
     public let subdirectories: [GRFSubdirectoryNode]
     public let entries: [GRFEntryNode]
 
@@ -15,7 +15,7 @@ public class GRFDirectoryNode: Codable {
     }
 }
 
-public class GRFSubdirectoryNode: Codable {
+public class GRFSubdirectoryNode: Codable, @unchecked Sendable {
     public let path: GRFPath
 
     init(path: GRFPath) {
@@ -23,7 +23,7 @@ public class GRFSubdirectoryNode: Codable {
     }
 }
 
-public class GRFEntryNode: Codable {
+public class GRFEntryNode: Codable, @unchecked Sendable {
     public let path: GRFPath
     public let size: Int
 

@@ -33,9 +33,9 @@ struct GNDFilePreviewView: View {
             var gatURL = url.deletingPathExtension()
             gatURL.appendPathExtension("gat")
             gatData = try Data(contentsOf: gatURL)
-        case .grfEntry(let grf, let entry):
+        case .grfArchiveEntry(let grfArchive, let entry):
             let gatPath = entry.path.replacingExtension("gat")
-            gatData = try grf.contentsOfEntry(at: gatPath)
+            gatData = try await grfArchive.contentsOfEntry(at: gatPath)
         default:
             throw FilePreviewError.invalidACTFile
         }

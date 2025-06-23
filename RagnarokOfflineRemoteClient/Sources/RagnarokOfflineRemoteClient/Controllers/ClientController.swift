@@ -10,22 +10,27 @@ import Vapor
 
 struct ClientController: RouteCollection {
     let resourcesDirectory: URL
-    let grfs: [GRFReference]
+
+    private let grfArchives: [GRFArchive]
+    private let cache: NSCache<NSString, NSData>
 
     init(resourcesDirectory: String) {
         self.resourcesDirectory = URL(fileURLWithPath: resourcesDirectory)
 
         let grfURL = URL(fileURLWithPath: resourcesDirectory).appending(component: "data.grf")
-        self.grfs = [
-            GRFReference(url: grfURL),
+        self.grfArchives = [
+            GRFArchive(url: grfURL),
         ]
+
+        self.cache = NSCache()
+        self.cache.totalCostLimit = 512 * 1024 * 1024
     }
 
     func boot(routes: any RoutesBuilder) throws {
         routes.get("client", "**", use: client)
     }
 
-    func client(req: Request) async throws -> Response {
+    private func client(req: Request) async throws -> Response {
         guard req.url.path.hasPrefix("/client/") else {
             return Response(status: .badRequest)
         }
@@ -40,11 +45,16 @@ struct ClientController: RouteCollection {
             return Response(body: .init(data: data))
         }
 
+        if let data = cache.object(forKey: path as NSString) {
+            return Response(body: .init(data: data as Data))
+        }
+
         let components = path.split(separator: "/").map(String.init)
         let grfPath = GRFPath(components: components)
-        for grf in grfs {
-            if let _ = grf.entry(at: grfPath) {
-                let data = try grf.contentsOfEntry(at: grfPath)
+        for grfArchive in grfArchives {
+            if let _ = await grfArchive.entry(at: grfPath) {
+                let data = try await grfArchive.contentsOfEntry(at: grfPath)
+                cache.setObject(data as NSData, forKey: path as NSString, cost: data.count)
                 return Response(body: .init(data: data))
             }
         }

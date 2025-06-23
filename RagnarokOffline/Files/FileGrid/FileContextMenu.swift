@@ -43,10 +43,12 @@ struct FileContextMenu: ViewModifier {
                 Section {
                     if FileSystem.shared.canExtractFile(file) {
                         Button {
-                            do {
-                                try FileSystem.shared.extractFile(file)
-                            } catch {
-                                logger.warning("\(error.localizedDescription)")
+                            Task {
+                                do {
+                                    try await FileSystem.shared.extractFile(file)
+                                } catch {
+                                    logger.warning("\(error.localizedDescription)")
+                                }
                             }
                         } label: {
                             Label("Extract", systemImage: "arrow.up.bin")

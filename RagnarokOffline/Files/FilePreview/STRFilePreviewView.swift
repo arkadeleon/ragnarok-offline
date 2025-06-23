@@ -35,7 +35,7 @@ struct STRFilePreviewView: View {
     }
 
     nonisolated private func loadSTRFile() async throws -> STRRenderer {
-        guard case .grfEntry(let grf, let entry) = file.node, let data = await file.contents() else {
+        guard case .grfArchiveEntry(let grfArchive, let entry) = file.node, let data = await file.contents() else {
             throw FilePreviewError.invalidSTRFile
         }
 
@@ -54,7 +54,7 @@ struct STRFilePreviewView: View {
                 }
 
                 let texturePath = entry.path.parent.appending([textureName])
-                guard let data = try? grf.contentsOfEntry(at: texturePath) else {
+                guard let data = try? await grfArchive.contentsOfEntry(at: texturePath) else {
                     continue
                 }
 
