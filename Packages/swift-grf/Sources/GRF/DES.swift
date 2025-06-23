@@ -144,6 +144,19 @@ struct DES {
         // the rest is plaintext, done.
     }
 
+    func decodeFileName(fileName: [UInt8]) -> [UInt8] {
+        var fileName = fileName
+
+        let nblocks = fileName.count >> 3
+
+        for i in 0..<nblocks {
+            nibbleSwap(&fileName[(i * 8)..<(i * 8 + 8)])
+            decryptBlock(&fileName[(i * 8)..<(i * 8 + 8)])
+        }
+
+        return fileName
+    }
+
     private func decryptBlock(_ src: inout ArraySlice<UInt8>) {
         initialPermutation(&src)
         roundFunction(&src)
@@ -246,5 +259,18 @@ struct DES {
         tmp[7] = shuffleDecTable[Int(src[src.startIndex + 7])]
 
         src[...] = tmp[...]
+    }
+
+    private func nibbleSwap(_ src: inout ArraySlice<UInt8>) {
+        let index = src.startIndex
+
+        src[index + 0] = (src[index + 0] << 4) | (src[index + 0] >> 4)
+        src[index + 1] = (src[index + 1] << 4) | (src[index + 1] >> 4)
+        src[index + 2] = (src[index + 2] << 4) | (src[index + 2] >> 4)
+        src[index + 3] = (src[index + 3] << 4) | (src[index + 3] >> 4)
+        src[index + 4] = (src[index + 4] << 4) | (src[index + 4] >> 4)
+        src[index + 5] = (src[index + 5] << 4) | (src[index + 5] >> 4)
+        src[index + 6] = (src[index + 6] << 4) | (src[index + 6] >> 4)
+        src[index + 7] = (src[index + 7] << 4) | (src[index + 7] >> 4)
     }
 }

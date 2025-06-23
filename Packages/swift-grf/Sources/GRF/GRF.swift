@@ -81,7 +81,63 @@ extension GRF {
         init(from decoder: BinaryDecoder, configuration header: GRF.Header) throws {
             switch header.version {
             case 0x102, 0x103:
-                throw GRFError.invalidVersion(header.version)
+                tableSizeCompressed = 0
+                tableSize = 0
+
+                let data = try decoder.decode([UInt8].self, count: decoder.bytesRemaining)
+                let des = DES()
+
+                var position = 0
+                for _ in 0..<header.fileCount {
+                    let nameLength = data[position] - 6
+
+                    let position2 = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position, as: UInt32.self) }
+                    position += 4
+
+                    let encodedName = [UInt8](data[(position + 2)..<(position + 2 + Int(nameLength))])
+                    var decodedName = des.decodeFileName(fileName: encodedName)
+                    decodedName = decodedName.prefix(while: { $0 != 0 })
+                    let name = String(data: Data(decodedName), encoding: .isoLatin1) ?? ""
+                    let path = GRFPath(string: name)
+
+                    position += Int(position2)
+
+                    let compressedSizeBase = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position, as: UInt32.self) }
+                    position += 4
+
+                    let compressedSizeAligned = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position, as: UInt32.self) }
+                    position += 4
+
+                    let decompressedSize = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position, as: UInt32.self) }
+                    position += 4
+
+                    var type = data[position]
+                    switch path.extension.lowercased() {
+                    case "act", "gat", "gnd", "str":
+                        type |= GRF.EntryType.encryptHeader.rawValue
+                    default:
+                        type |= GRF.EntryType.encryptMixed.rawValue
+                    }
+                    position += 1
+
+                    let dataOffset = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position, as: UInt32.self) }
+                    position += 4
+
+                    let entry = GRF.Entry(
+                        path: GRFPath(string: name),
+                        sizeCompressed: compressedSizeBase - decompressedSize - 715,
+                        sizeCompressedAligned: compressedSizeAligned - 37579,
+                        size: decompressedSize,
+                        type: type,
+                        offset: dataOffset
+                    )
+
+                    if entry.type & GRF.EntryType.file.rawValue == 0 {
+                        continue
+                    }
+
+                    entries.append(entry)
+                }
             case 0x200:
                 tableSizeCompressed = try decoder.decode(UInt32.self)
                 tableSize = try decoder.decode(UInt32.self)
@@ -127,6 +183,15 @@ extension GRF {
         var size: UInt32
         var type: UInt8
         var offset: UInt32
+
+        init(path: GRFPath, sizeCompressed: UInt32, sizeCompressedAligned: UInt32, size: UInt32, type: UInt8, offset: UInt32) {
+            self.path = path
+            self.sizeCompressed = sizeCompressed
+            self.sizeCompressedAligned = sizeCompressedAligned
+            self.size = size
+            self.type = type
+            self.offset = offset
+        }
 
         init(data: Data, position: inout Int) throws {
             guard let index = data[position...].firstIndex(of: 0) else {
