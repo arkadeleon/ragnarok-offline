@@ -33,7 +33,9 @@ let package = Package(
             dependencies: ["GRF"],
             resources: [
                 .copy("Resources/data"),
-                .copy("Resources/test.grf"),
+                .copy("Resources/test102.grf"),
+                .copy("Resources/test103.grf"),
+                .copy("Resources/test200.grf"),
             ]
         ),
     ]

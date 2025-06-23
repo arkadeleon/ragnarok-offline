@@ -9,11 +9,11 @@ import XCTest
 import BinaryIO
 @testable import GRF
 
+// Test data source: https://github.com/arminherling/GRF
 final class GRFTests: XCTestCase {
     func testGRF() throws {
-        // Test data source: https://github.com/arminherling/GRF
         let resourceURL = Bundle.module.resourceURL!
-        let grfURL = resourceURL.appending(path: "test.grf")
+        let grfURL = resourceURL.appending(path: "test200.grf")
         let grf = try GRF(url: grfURL)
 
         XCTAssertEqual(grf.table.entries.count, 9)

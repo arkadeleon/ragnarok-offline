@@ -53,18 +53,18 @@ extension GRF {
         var version: UInt32
 
         init(from decoder: BinaryDecoder) throws {
-            magic = try decoder.decode(String.self, lengthOfBytes: 15)
+            magic = try decoder.decode(String.self, lengthOfBytes: 16)
             guard magic == "Master of Magic" else {
                 throw GRFError.invalidHeader(magic, expected: "Master of Magic")
             }
 
-            key = try decoder.decode([UInt8].self, count: 15)
+            key = try decoder.decode([UInt8].self, count: 14)
             fileTableOffset = try decoder.decode(UInt32.self)
             seed = try decoder.decode(UInt32.self)
-            fileCount = try decoder.decode(UInt32.self)
+            let fileCount = try decoder.decode(UInt32.self)
             version = try decoder.decode(UInt32.self)
 
-            fileCount = fileCount - seed - 7
+            self.fileCount = fileCount - seed - 7
         }
     }
 }
