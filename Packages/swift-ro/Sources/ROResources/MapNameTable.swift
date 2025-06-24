@@ -19,7 +19,7 @@ public struct MapNameTable: Sendable {
 
         self.mapNamesByRSW = {
             guard let url = Bundle.module.url(forResource: "mapnametable", withExtension: "txt", locale: locale),
-                  let stream = FileStream(url: url) else {
+                  let stream = FileStream(forReadingFrom: url) else {
                 return [:]
             }
 

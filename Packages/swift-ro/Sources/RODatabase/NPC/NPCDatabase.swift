@@ -68,7 +68,7 @@ public actor NPCDatabase {
     }
 
     private func import_conf_file(url: URL) throws {
-        guard let stream = FileStream(url: url) else {
+        guard let stream = FileStream(forReadingFrom: url) else {
             throw NPCDatabaseError.invalidFile(url)
         }
 
@@ -106,7 +106,7 @@ public actor NPCDatabase {
     }
 
     private func add_npc_file(url: URL) throws {
-        guard let stream = FileStream(url: url) else {
+        guard let stream = FileStream(forReadingFrom: url) else {
             throw NPCDatabaseError.invalidFile(url)
         }
 

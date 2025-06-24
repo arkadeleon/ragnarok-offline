@@ -126,7 +126,7 @@ public actor GRFArchive {
             throw GRFError.invalidEntryPath(path.string)
         }
 
-        guard let stream = FileStream(url: url) else {
+        guard let stream = FileStream(forReadingFrom: url) else {
             throw GRFError.invalidURL(url)
         }
 

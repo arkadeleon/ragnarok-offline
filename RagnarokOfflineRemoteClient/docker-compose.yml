@@ -18,9 +18,10 @@ x-shared_environment: &shared_environment
   
 services:
   app:
-    image: ragnarokofflineremoteclient:latest
+    image: ragnarok-offline-remote-client:latest
     build:
-      context: .
+      context: ..
+      dockerfile: RagnarokOfflineRemoteClient/Dockerfile
     environment:
       <<: *shared_environment
     ports:

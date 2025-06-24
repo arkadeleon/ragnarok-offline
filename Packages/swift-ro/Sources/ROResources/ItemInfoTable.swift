@@ -49,7 +49,7 @@ public actor ItemInfoTable {
         } else {
             let identifiedItemNamesByID: [Int : Data] = {
                 guard let url = Bundle.module.url(forResource: "idnum2itemdisplaynametable", withExtension: "txt", locale: locale),
-                      let stream = FileStream(url: url) else {
+                      let stream = FileStream(forReadingFrom: url) else {
                     return [:]
                 }
 
@@ -80,7 +80,7 @@ public actor ItemInfoTable {
 
             let identifiedItemDescriptionsByID: [Int : Data] = {
                 guard let url = Bundle.module.url(forResource: "idnum2itemdesctable", withExtension: "txt", locale: locale),
-                      let stream = FileStream(url: url) else {
+                      let stream = FileStream(forReadingFrom: url) else {
                     return [:]
                 }
 

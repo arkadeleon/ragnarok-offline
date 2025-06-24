@@ -25,7 +25,7 @@ public class BinaryDecoder {
     }
 
     public init?(url: URL) {
-        guard let stream = FileStream(url: url) else {
+        guard let stream = FileStream(forReadingFrom: url) else {
             return nil
         }
         self.stream = stream

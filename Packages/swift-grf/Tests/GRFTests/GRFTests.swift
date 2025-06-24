@@ -44,7 +44,7 @@ func grf(path: String) async throws {
         resourceURL.appending(path: "data/t2_¹è°æ1-1.bmp"),
     ]
 
-    let stream = FileStream(url: grfURL)!
+    let stream = FileStream(forReadingFrom: grfURL)!
     defer {
         stream.close()
     }

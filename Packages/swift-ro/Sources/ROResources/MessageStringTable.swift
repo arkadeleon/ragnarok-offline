@@ -20,7 +20,7 @@ public struct MessageStringTable: Sendable {
 
         self.messageStrings = {
             guard let url = Bundle.module.url(forResource: "msgstringtable", withExtension: "txt", locale: locale),
-                  let stream = FileStream(url: url) else {
+                  let stream = FileStream(forReadingFrom: url) else {
                 return []
             }
 

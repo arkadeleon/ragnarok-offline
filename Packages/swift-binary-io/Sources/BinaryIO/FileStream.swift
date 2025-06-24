@@ -16,8 +16,8 @@ public class FileStream: Stream {
         ftell(file)
     }
 
-    public init?(url: URL) {
-        guard let file = fopen(url.path.cString(using: .utf8), "rw+") else {
+    public init?(forReadingFrom url: URL) {
+        guard let file = fopen(url.path.cString(using: .utf8), "r") else {
             return nil
         }
 
@@ -26,6 +26,17 @@ public class FileStream: Stream {
         fseek(file, 0, SEEK_END)
         self.length = ftell(file)
         fseek(file, 0, SEEK_SET)
+    }
+
+    public init?(forWritingTo url: URL) {
+        guard let file = fopen(url.path.cString(using: .utf8), "w") else {
+            return nil
+        }
+
+        self.file = file
+
+        fseek(file, 0, SEEK_END)
+        self.length = ftell(file)
     }
 
     public func close() {
