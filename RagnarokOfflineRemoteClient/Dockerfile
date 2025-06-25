@@ -50,8 +50,8 @@ RUN find -L "$(swift build --package-path /build/RagnarokOfflineRemoteClient -c 
 
 # Copy any resources from the public directory and views directory if the directories exist
 # Ensure that by default, neither the directory nor any of its contents are writable.
-RUN [ -d /build/RagnarokOfflineRemoteClient/Public ] && { cp -R /build/RagnarokOfflineRemoteClient/Public ./Public && chmod -R a-w ./Public; } || true
-RUN [ -d /build/RagnarokOfflineRemoteClient/Resources ] && { cp -R /build/RagnarokOfflineRemoteClient/Resources ./Resources && chmod -R a-w ./Resources; } || true
+RUN [ -d /build/RagnarokOfflineRemoteClient/Public ] && { mv /build/RagnarokOfflineRemoteClient/Public ./Public && chmod -R a-w ./Public; } || true
+RUN [ -d /build/RagnarokOfflineRemoteClient/Resources ] && { mv /build/RagnarokOfflineRemoteClient/Resources ./Resources && chmod -R a-w ./Resources; } || true
 
 # ================================
 # Run image

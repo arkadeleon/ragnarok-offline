@@ -32,17 +32,17 @@ struct ClientController: RouteCollection {
 
     private func client(req: Request) async throws -> Response {
         guard req.url.path.hasPrefix("/client/") else {
-            return Response(status: .badRequest)
+            throw Abort(.badRequest)
         }
 
         guard let path = req.url.path.dropFirst("/client/".count).removingPercentEncoding else {
-            return Response(status: .badRequest)
+            throw Abort(.badRequest)
         }
 
         let fileURL = resourcesDirectory.appending(path: path)
-        if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
-            let data = try Data(contentsOf: fileURL)
-            return Response(body: .init(data: data))
+        let filePath = fileURL.path(percentEncoded: false)
+        if FileManager.default.fileExists(atPath: filePath) {
+            return try await req.fileio.asyncStreamFile(at: filePath)
         }
 
         if let data = cache.object(forKey: path as NSString) {
@@ -59,6 +59,6 @@ struct ClientController: RouteCollection {
             }
         }
 
-        return Response(status: .notFound)
+        throw Abort(.notFound)
     }
 }
