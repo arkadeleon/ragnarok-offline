@@ -12,7 +12,6 @@ struct ClientController: RouteCollection {
     let resourcesDirectory: URL
 
     private let grfArchives: [GRFArchive]
-    private let cache: NSCache<NSString, NSData>
 
     init(resourcesDirectory: String) {
         self.resourcesDirectory = URL(fileURLWithPath: resourcesDirectory)
@@ -21,9 +20,6 @@ struct ClientController: RouteCollection {
         self.grfArchives = [
             GRFArchive(url: grfURL),
         ]
-
-        self.cache = NSCache()
-        self.cache.totalCostLimit = 512 * 1024 * 1024
     }
 
     func boot(routes: any RoutesBuilder) throws {
@@ -45,16 +41,11 @@ struct ClientController: RouteCollection {
             return try await req.fileio.asyncStreamFile(at: filePath)
         }
 
-        if let data = cache.object(forKey: path as NSString) {
-            return Response(body: .init(data: data as Data))
-        }
-
         let components = path.split(separator: "/").map(String.init)
         let grfPath = GRFPath(components: components)
         for grfArchive in grfArchives {
             if let _ = await grfArchive.entry(at: grfPath) {
                 let data = try await grfArchive.contentsOfEntry(at: grfPath)
-                cache.setObject(data as NSData, forKey: path as NSString, cost: data.count)
                 return Response(body: .init(data: data))
             }
         }
