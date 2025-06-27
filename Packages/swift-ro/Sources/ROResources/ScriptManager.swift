@@ -11,8 +11,7 @@ public actor ScriptManager {
     let locale: Locale
     package let resourceManager: ResourceManager
 
-    private let context = LuaContext()
-    private var loadTask: Task<Void, Never>? = nil
+    private var loadTask: Task<LuaContext, Never>? = nil
 
     public init(locale: Locale, resourceManager: ResourceManager) {
         self.locale = locale
@@ -92,7 +91,7 @@ public actor ScriptManager {
     // MARK: - Load & Call
 
     private func call<T>(_ name: String, with args: [Any], to resultType: T.Type) async -> T? {
-        await loadScripts()
+        let context = await loadContext()
 
         do {
             let result = try context.call(name, with: args)
@@ -103,57 +102,58 @@ public actor ScriptManager {
         }
     }
 
-    private func loadScripts() async {
+    private func loadContext() async -> LuaContext {
         if let task = loadTask {
-            await task.value
-            return
+            return await task.value
         }
 
-        let task = Task {
-            await loadLocalScript("itemInfo", locale: .korean)
+        let task = Task<LuaContext, Never> {
+            let context = LuaContext()
 
-            await loadScript(at: ["datainfo", "accessoryid"])
-            await loadScript(at: ["datainfo", "accname"])
-            await loadScript(at: ["datainfo", "accname_f"])
+            await loadLocalScript("itemInfo", locale: .korean, in: context)
 
-            await loadScript(at: ["datainfo", "enumvar"])
-            await loadLocalScript("addrandomoptionnametable", locale: .korean)
-            await loadScript(at: ["datainfo", "addrandomoption_f"])
+            await loadScript(at: ["datainfo", "accessoryid"], in: context)
+            await loadScript(at: ["datainfo", "accname"], in: context)
+            await loadScript(at: ["datainfo", "accname_f"], in: context)
 
-            await loadScript(at: ["datainfo", "jobidentity"])
-            await loadScript(at: ["datainfo", "npcidentity"])
-            await loadScript(at: ["datainfo", "jobname"])
-            await loadScript(at: ["datainfo", "jobname_f"])
+            await loadScript(at: ["datainfo", "enumvar"], in: context)
+            await loadLocalScript("addrandomoptionnametable", locale: .korean, in: context)
+            await loadScript(at: ["datainfo", "addrandomoption_f"], in: context)
 
-            await loadScript(at: ["datainfo", "shadowtable"])
-            await loadScript(at: ["datainfo", "shadowtable_f"])
+            await loadScript(at: ["datainfo", "jobidentity"], in: context)
+            await loadScript(at: ["datainfo", "npcidentity"], in: context)
+            await loadScript(at: ["datainfo", "jobname"], in: context)
+            await loadScript(at: ["datainfo", "jobname_f"], in: context)
 
-            await loadScript(at: ["datainfo", "spriterobeid"])
-            await loadScript(at: ["datainfo", "spriterobename"])
-            await loadScript(at: ["datainfo", "spriterobename_f"])
+            await loadScript(at: ["datainfo", "shadowtable"], in: context)
+            await loadScript(at: ["datainfo", "shadowtable_f"], in: context)
 
-            await loadScript(at: ["datainfo", "weapontable"])
-            await loadScript(at: ["datainfo", "weapontable_f"])
+            await loadScript(at: ["datainfo", "spriterobeid"], in: context)
+            await loadScript(at: ["datainfo", "spriterobename"], in: context)
+            await loadScript(at: ["datainfo", "spriterobename_f"], in: context)
 
-            await loadScript(at: ["skillinfoz", "jobinheritlist"])
-            await loadScript(at: ["skillinfoz", "skillid"])
-            await loadLocalScript("skillinfolist", locale: locale)
-            await loadLocalScript("skilldescript", locale: locale)
-//            await loadScript(at: ["skillinfoz", "skillinfo_f"])
+            await loadScript(at: ["datainfo", "weapontable"], in: context)
+            await loadScript(at: ["datainfo", "weapontable_f"], in: context)
 
-            await loadScript(at: ["spreditinfo", "smalllayerdir_female"])
-            await loadScript(at: ["spreditinfo", "smalllayerdir_male"])
-            await loadScript(at: ["spreditinfo", "biglayerdir_female"])
-            await loadScript(at: ["spreditinfo", "biglayerdir_male"])
-            await loadScript(at: ["spreditinfo", "2dlayerdir_f"])
-            await loadScript(at: ["spreditinfo", "_new_smalllayerdir_female"])
-            await loadScript(at: ["spreditinfo", "_new_smalllayerdir_male"])
-            await loadScript(at: ["spreditinfo", "_new_biglayerdir_female"])
-            await loadScript(at: ["spreditinfo", "_new_biglayerdir_male"])
-            await loadScript(at: ["spreditinfo", "_new_2dlayerdir_f"])
+            await loadScript(at: ["skillinfoz", "jobinheritlist"], in: context)
+            await loadScript(at: ["skillinfoz", "skillid"], in: context)
+            await loadLocalScript("skillinfolist", locale: locale, in: context)
+            await loadLocalScript("skilldescript", locale: locale, in: context)
+//            await loadScript(at: ["skillinfoz", "skillinfo_f"], in: context)
 
-            await loadScript(at: ["offsetitempos", "offsetitempos_f"])
-            await loadScript(at: ["offsetitempos", "offsetitempos"])
+            await loadScript(at: ["spreditinfo", "smalllayerdir_female"], in: context)
+            await loadScript(at: ["spreditinfo", "smalllayerdir_male"], in: context)
+            await loadScript(at: ["spreditinfo", "biglayerdir_female"], in: context)
+            await loadScript(at: ["spreditinfo", "biglayerdir_male"], in: context)
+            await loadScript(at: ["spreditinfo", "2dlayerdir_f"], in: context)
+            await loadScript(at: ["spreditinfo", "_new_smalllayerdir_female"], in: context)
+            await loadScript(at: ["spreditinfo", "_new_smalllayerdir_male"], in: context)
+            await loadScript(at: ["spreditinfo", "_new_biglayerdir_female"], in: context)
+            await loadScript(at: ["spreditinfo", "_new_biglayerdir_male"], in: context)
+            await loadScript(at: ["spreditinfo", "_new_2dlayerdir_f"], in: context)
+
+            await loadScript(at: ["offsetitempos", "offsetitempos_f"], in: context)
+            await loadScript(at: ["offsetitempos", "offsetitempos"], in: context)
 
             do {
                 try context.parse("""
@@ -183,12 +183,15 @@ public actor ScriptManager {
             } catch {
                 logger.warning("\(error.localizedDescription)")
             }
+
+            return context
         }
         loadTask = task
-        await task.value
+
+        return await task.value
     }
 
-    private func loadScript(at path: ResourcePath) async {
+    private func loadScript(at path: ResourcePath, in context: LuaContext) async {
         do {
             let path = ResourcePath.scriptDirectory.appending(path).appendingPathExtension("lub")
             let data = try await resourceManager.contentsOfResource(at: path)
@@ -198,7 +201,7 @@ public actor ScriptManager {
         }
     }
 
-    private func loadLocalScript(_ name: String, locale: Locale) async {
+    private func loadLocalScript(_ name: String, locale: Locale, in context: LuaContext) async {
         guard let url = Bundle.module.url(forResource: name, withExtension: "lub", locale: locale) else {
             return
         }
