@@ -9,9 +9,9 @@ import RealityKit
 import RONetwork
 
 public struct MapObjectComponent: Component {
-    public var object: MapObject
+    public var mapObject: MapObject
 
-    public init(object: MapObject) {
-        self.object = object
+    public init(mapObject: MapObject) {
+        self.mapObject = mapObject
     }
 }

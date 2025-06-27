@@ -9,10 +9,6 @@ import Foundation
 import RealityKit
 import RORendering
 
-enum SpriteAnimationError: Error {
-    case actionIndexOutOfRange
-}
-
 public class SpriteEntity: Entity {
     public required init() {
         super.init()
@@ -21,83 +17,104 @@ public class SpriteEntity: Entity {
         components.set(inputTargetComponent)
     }
 
-    public init(actions: [SpriteAction]) {
+    public init(animations: [SpriteAnimation]) {
         super.init()
 
         let inputTargetComponent = InputTargetComponent()
         components.set(inputTargetComponent)
 
-        let spriteComponent = SpriteComponent(actions: actions)
+        let spriteComponent = SpriteComponent(animations: animations)
         components.set(spriteComponent)
     }
 
-    public func runActionType(_ actionType: ComposedSprite.ActionType, direction: ComposedSprite.Direction, repeats: Bool) {
-        guard let mapObjectComponent = components[MapObjectComponent.self] else {
+    public func playSpriteAnimation(_ actionType: ComposedSprite.ActionType, direction: ComposedSprite.Direction, repeats: Bool) {
+        guard let mapObject = components[MapObjectComponent.self]?.mapObject,
+              let animations = components[SpriteComponent.self]?.animations else {
             return
         }
 
-        let actionIndex = actionType.calculateActionIndex(forJobID: mapObjectComponent.object.job, direction: direction)
+        let animationIndex = actionType.calculateActionIndex(forJobID: mapObject.job, direction: direction)
+        guard animationIndex < animations.count else {
+            return
+        }
 
-        generateModelForAction(at: actionIndex)
+        stopAllAnimations()
 
         do {
-            let animation = try generateAnimation(forActionAt: actionIndex, repeats: repeats)
-            stopAllAnimations()
-            playAnimation(animation)
+            let animation = animations[animationIndex]
+            let duration = (repeats ? .infinity : animation.duration)
+            let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration)
+            playAnimation(actionAnimation)
         } catch {
             logger.warning("\(error.localizedDescription)")
         }
     }
 
-    public func runAction(_ actionIndex: Int, repeats: Bool) {
-        generateModelForAction(at: actionIndex)
+    public func playSpriteAnimation(at animationIndex: Int, repeats: Bool) {
+        guard let animations = components[SpriteComponent.self]?.animations,
+              animationIndex < animations.count else {
+            return
+        }
+
+        stopAllAnimations()
 
         do {
-            let animation = try generateAnimation(forActionAt: actionIndex, repeats: repeats)
-            stopAllAnimations()
-            playAnimation(animation)
+            let animation = animations[animationIndex]
+            let duration = (repeats ? .infinity : animation.duration)
+            let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration)
+            playAnimation(actionAnimation)
         } catch {
             logger.warning("\(error.localizedDescription)")
         }
     }
 
     public func walk(to target: Transform, direction: ComposedSprite.Direction, duration: TimeInterval) {
-        guard let mapObjectComponent = components[MapObjectComponent.self] else {
+        guard let mapObject = components[MapObjectComponent.self]?.mapObject,
+              let animations = components[SpriteComponent.self]?.animations else {
             return
         }
 
-        let actionIndex = ComposedSprite.ActionType.walk.calculateActionIndex(forJobID: mapObjectComponent.object.job, direction: direction)
+        let animationIndex = ComposedSprite.ActionType.walk.calculateActionIndex(forJobID: mapObject.job, direction: direction)
+        guard animationIndex < animations.count else {
+            return
+        }
 
-        generateModelForAction(at: actionIndex)
+        stopAllAnimations()
 
         do {
-            let walkAnimation = try generateWalkAnimation(withTarget: target, actionIndex: actionIndex, duration: duration)
-            stopAllAnimations()
-            playAnimation(walkAnimation)
+            let animation = animations[animationIndex]
+            let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration)
+
+            let moveAction = FromToByAction(to: target, timing: .linear)
+            let moveAnimation = try AnimationResource.makeActionAnimation(for: moveAction, duration: duration, bindTarget: .transform)
+
+            let animationResource = try AnimationResource.group(with: [actionAnimation, moveAnimation])
+            playAnimation(animationResource)
         } catch {
             logger.warning("\(error.localizedDescription)")
         }
     }
 
-    private func generateModelForAction(at actionIndex: Int) {
-        guard let spriteComponent = components[SpriteComponent.self],
-              actionIndex < spriteComponent.actions.count else {
+    @available(*, deprecated)
+    private func generateModelForAnimation(at animationIndex: Int) {
+        guard let animations = components[SpriteComponent.self]?.animations,
+              animationIndex < animations.count else {
             return
         }
 
-        let action = spriteComponent.actions[actionIndex]
+        let animation = animations[animationIndex]
 
-        let width = action.frameWidth / 32
-        let height = action.frameHeight / 32
+        let width = animation.frameWidth / 32
+        let height = animation.frameHeight / 32
 
         // Create material.
         var material = PhysicallyBasedMaterial()
         material.blending = .transparent(opacity: 1.0)
         material.opacityThreshold = 0.0001
 
-        if let texture = action.texture {
+        if let texture = animation.texture {
             material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(texture))
-            material.textureCoordinateTransform = PhysicallyBasedMaterial.TextureCoordinateTransform(scale: [1 / Float(action.frameCount), 1])
+            material.textureCoordinateTransform = MaterialParameterTypes.TextureCoordinateTransform(scale: [1 / Float(animation.frameCount), 1])
         }
 
         // Create model component.
@@ -113,34 +130,13 @@ public class SpriteEntity: Entity {
         )
         components.set(collisionComponent)
     }
-
-    private func generateAnimation(forActionAt actionIndex: Int, repeats: Bool, trimDuration: TimeInterval? = nil) throws -> AnimationResource {
-        guard let spriteComponent = components[SpriteComponent.self],
-              actionIndex < spriteComponent.actions.count else {
-            throw SpriteAnimationError.actionIndexOutOfRange
-        }
-
-        let action = spriteComponent.actions[actionIndex]
-
-        let spriteAnimation = try AnimationResource.generateSpriteAnimation(for: action, repeats: repeats, trimDuration: trimDuration)
-        return spriteAnimation
-    }
-
-    private func generateWalkAnimation(withTarget target: Transform, actionIndex: Int, duration: TimeInterval) throws -> AnimationResource {
-        let spriteAnimation = try generateAnimation(forActionAt: actionIndex, repeats: true, trimDuration: duration)
-
-        let moveAction = FromToByAction(to: target, timing: .linear)
-        let moveAnimation = try AnimationResource.makeActionAnimation(for: moveAction, duration: duration, bindTarget: .transform)
-
-        let animation = try AnimationResource.group(with: [spriteAnimation, moveAnimation])
-        return animation
-    }
 }
 
 extension AnimationResource {
-    static func generateSpriteAnimation(for action: SpriteAction, repeats: Bool, trimDuration: TimeInterval? = nil) throws -> AnimationResource {
-        var frames: [SIMD2<Float>] = (0..<action.frameCount).map { frameIndex in
-            [Float(frameIndex) / Float(action.frameCount), 0]
+    @available(*, deprecated)
+    static func generate(with animation: SpriteAnimation, repeats: Bool, trimDuration: TimeInterval? = nil) throws -> AnimationResource {
+        var frames: [SIMD2<Float>] = (0..<animation.frameCount).map { frameIndex in
+            [Float(frameIndex) / Float(animation.frameCount), 0]
         }
         if repeats {
             frames = Array(repeating: frames, count: 100).flatMap({ $0 })
@@ -149,13 +145,19 @@ extension AnimationResource {
             frames: frames,
             name: "action",
             tweenMode: .hold,
-            frameInterval: action.frameInterval,
+            frameInterval: Float(animation.frameInterval),
             isAdditive: false,
             bindTarget: .material(0).textureCoordinate.offset,
             repeatMode: repeats ? .repeat : .none,
             trimDuration: trimDuration
         )
-        let animation = try AnimationResource.generate(with: animationDefinition)
-        return animation
+        let animationResource = try AnimationResource.generate(with: animationDefinition)
+        return animationResource
+    }
+
+    static func makeActionAnimation(with animation: SpriteAnimation, duration: TimeInterval) throws -> AnimationResource {
+        let action = PlaySpriteAnimationAction(animation: animation)
+        let actionAnimation = try makeActionAnimation(for: action, duration: duration)
+        return actionAnimation
     }
 }

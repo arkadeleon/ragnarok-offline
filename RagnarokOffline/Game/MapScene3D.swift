@@ -52,8 +52,8 @@ class MapScene3D: MapSceneProtocol {
         SpatialTapGesture()
             .targetedToEntity(where: .has(MapObjectComponent.self))
             .onEnded { [unowned self] event in
-                if let component = event.entity.components[MapObjectComponent.self] {
-                    self.mapSceneDelegate?.mapScene(self, didTapMapObject: component.object)
+                if let mapObject = event.entity.components[MapObjectComponent.self]?.mapObject {
+                    self.mapSceneDelegate?.mapScene(self, didTapMapObject: mapObject)
                 }
             }
     }
@@ -62,8 +62,8 @@ class MapScene3D: MapSceneProtocol {
         SpatialTapGesture()
             .targetedToEntity(where: .has(MapItemComponent.self))
             .onEnded { [unowned self] event in
-                if let component = event.entity.components[MapItemComponent.self] {
-                    self.mapSceneDelegate?.mapScene(self, didTapMapItem: component.item)
+                if let mapItem = event.entity.components[MapItemComponent.self]?.mapItem {
+                    self.mapSceneDelegate?.mapScene(self, didTapMapItem: mapItem)
                 }
             }
     }
@@ -81,9 +81,14 @@ class MapScene3D: MapSceneProtocol {
         SpriteComponent.registerComponent()
         TileComponent.registerComponent()
 
+        PlaySpriteAnimationAction.registerAction()
+        PlaySpriteAnimationActionHandler.register { _ in
+            PlaySpriteAnimationActionHandler()
+        }
+
         FromToByAction<Transform>.subscribe(to: .terminated) { event in
             if let spriteEntity = event.targetEntity as? SpriteEntity {
-                spriteEntity.runAction(0, repeats: true)
+                spriteEntity.playSpriteAnimation(at: 0, repeats: true)
             }
         }
     }
@@ -115,8 +120,8 @@ class MapScene3D: MapSceneProtocol {
                 scriptManager: .shared
             )
 
-            let actions = try await SpriteAction.actions(for: composedSprite)
-            let spriteComponent = SpriteComponent(actions: actions)
+            let animations = try await SpriteAnimation.animations(for: composedSprite)
+            let spriteComponent = SpriteComponent(animations: animations)
             playerEntity.components.set(spriteComponent)
         } catch {
             logger.warning("\(error.localizedDescription)")
@@ -124,8 +129,8 @@ class MapScene3D: MapSceneProtocol {
 
         playerEntity.name = "\(player.objectID)"
         playerEntity.transform = transform(for: player.position)
-        playerEntity.components.set(MapObjectComponent(object: player))
-        playerEntity.runActionType(.idle, direction: .south, repeats: true)
+        playerEntity.components.set(MapObjectComponent(mapObject: player))
+        playerEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
 
         rootEntity.addChild(playerEntity)
 
@@ -202,12 +207,12 @@ class MapScene3D: MapSceneProtocol {
             entity.transform = transform
         } else {
             Task {
-                if let monsterEntity = await monsterEntityManager.entity(for: event.object) {
+                if let monsterEntity = try? await monsterEntityManager.entity(for: event.object) {
                     monsterEntity.name = "\(event.object.objectID)"
                     monsterEntity.transform = transform(for: event.object.position)
                     monsterEntity.isEnabled = (event.object.effectState != .cloak)
-                    monsterEntity.components.set(MapObjectComponent(object: event.object))
-                    monsterEntity.runActionType(.idle, direction: .south, repeats: true)
+                    monsterEntity.components.set(MapObjectComponent(mapObject: event.object))
+                    monsterEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
                     rootEntity.addChild(monsterEntity)
                 }
             }
@@ -220,12 +225,12 @@ class MapScene3D: MapSceneProtocol {
             entity.walk(to: transform, direction: .south, duration: 1)
         } else {
             Task {
-                if let monsterEntity = await monsterEntityManager.entity(for: event.object) {
+                if let monsterEntity = try? await monsterEntityManager.entity(for: event.object) {
                     monsterEntity.name = "\(event.object.objectID)"
                     monsterEntity.transform = transform(for: event.toPosition)
                     monsterEntity.isEnabled = (event.object.effectState != .cloak)
-                    monsterEntity.components.set(MapObjectComponent(object: event.object))
-                    monsterEntity.runActionType(.idle, direction: .south, repeats: true)
+                    monsterEntity.components.set(MapObjectComponent(mapObject: event.object))
+                    monsterEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
                     rootEntity.addChild(monsterEntity)
                 }
             }
@@ -255,13 +260,13 @@ class MapScene3D: MapSceneProtocol {
         if let entity = rootEntity.findEntity(named: "\(event.sourceObjectID)") as? SpriteEntity {
             switch event.actionType {
             case .normal, .endure, .multi_hit, .multi_hit_endure, .critical, .lucy_dodge, .multi_hit_critical:
-                entity.runActionType(.attack, direction: .south, repeats: false)
+                entity.playSpriteAnimation(.attack, direction: .south, repeats: false)
             case .pickup_item:
-                entity.runActionType(.pickup, direction: .south, repeats: false)
+                entity.playSpriteAnimation(.pickup, direction: .south, repeats: false)
             case .sit_down:
-                entity.runActionType(.sit, direction: .south, repeats: true)
+                entity.playSpriteAnimation(.sit, direction: .south, repeats: true)
             case .stand_up:
-                entity.runActionType(.idle, direction: .south, repeats: true)
+                entity.playSpriteAnimation(.idle, direction: .south, repeats: true)
             default:
                 break
             }
@@ -276,13 +281,13 @@ class MapScene3D: MapSceneProtocol {
             }
 
             let sprite = try await ResourceManager.shared.sprite(at: path)
-            let action = try await SpriteAction(sprite: sprite, actionIndex: 0)
+            let animation = try await SpriteAnimation(sprite: sprite, actionIndex: 0)
 
-            let entity = SpriteEntity(actions: [action])
+            let entity = SpriteEntity(animations: [animation])
             entity.name = "\(event.item.objectID)"
             entity.transform = transform(for: event.item.position)
-            entity.components.set(MapItemComponent(item: event.item))
-            entity.runAction(0, repeats: true)
+            entity.components.set(MapItemComponent(mapItem: event.item))
+            entity.playSpriteAnimation(at: 0, repeats: true)
             rootEntity.addChild(entity)
         }
     }

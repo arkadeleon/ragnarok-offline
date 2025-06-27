@@ -1,22 +1,27 @@
 //
-//  SpriteAction.swift
+//  SpriteAnimation.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2025/2/25.
 //
 
 import CoreGraphics
+import Foundation
 import RealityKit
 import ROCore
 import RORendering
 import ROResources
 
-final public class SpriteAction: Sendable {
+final public class SpriteAnimation: Sendable {
     public let texture: TextureResource?
     public let frameCount: Int
     public let frameWidth: Float
     public let frameHeight: Float
-    public let frameInterval: Float
+    public let frameInterval: TimeInterval
+
+    public var duration: TimeInterval {
+        frameInterval * TimeInterval(frameCount)
+    }
 
     public convenience init(sprite: SpriteResource, actionIndex: Int) async throws {
         let spriteRenderer = SpriteRenderer()
@@ -52,13 +57,13 @@ final public class SpriteAction: Sendable {
         self.frameCount = frameCount
         self.frameWidth = Float(frameWidth)
         self.frameHeight = Float(frameHeight)
-        self.frameInterval = Float(animatedImage.frameInterval)
+        self.frameInterval = animatedImage.frameInterval
     }
 }
 
-extension SpriteAction {
-    public static func actions(for composedSprite: ComposedSprite) async throws -> [SpriteAction] {
-        var actions: [SpriteAction] = []
+extension SpriteAnimation {
+    public static func animations(for composedSprite: ComposedSprite) async throws -> [SpriteAnimation] {
+        var animations: [SpriteAnimation] = []
 
         let spriteRenderer = SpriteRenderer()
 
@@ -72,11 +77,11 @@ extension SpriteAction {
                     direction: direction,
                     headDirection: .straight
                 )
-                let action = try await SpriteAction(animatedImage: animatedImage)
-                actions.append(action)
+                let animation = try await SpriteAnimation(animatedImage: animatedImage)
+                animations.append(animation)
             }
         }
 
-        return actions
+        return animations
     }
 }

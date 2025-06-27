@@ -14,36 +14,37 @@ public actor SpriteEntityManager {
     package let resourceManager: ResourceManager
     package let scriptManager: ScriptManager
 
-    private var entitiesByJobID: [Int : SpriteEntity] = [:]
+    private var tasksByJobID: [Int : Task<SpriteEntity, any Error>] = [:]
 
     public init(resourceManager: ResourceManager, scriptManager: ScriptManager) {
         self.resourceManager = resourceManager
         self.scriptManager = scriptManager
     }
 
-    public func entity(for mapObject: MapObject) async -> SpriteEntity? {
-        if let entity = entitiesByJobID[mapObject.job] {
+    public func entity(for mapObject: MapObject) async throws -> SpriteEntity {
+        if let task = tasksByJobID[mapObject.job] {
+            let entity = try await task.value
             let entityClone = await entity.clone(recursive: true)
             return entityClone
         }
 
-        do {
-            let configuration = ComposedSprite.Configuration(mapObject: mapObject)
+        let configuration = ComposedSprite.Configuration(mapObject: mapObject)
+        let task = Task {
             let composedSprite = await ComposedSprite(
                 configuration: configuration,
                 resourceManager: resourceManager,
                 scriptManager: scriptManager
             )
-            let actions = try await SpriteAction.actions(for: composedSprite)
-            let entity = await SpriteEntity(actions: actions)
-
-            if !configuration.job.isPlayer {
-                entitiesByJobID[mapObject.job] = entity
-            }
-
+            let animations = try await SpriteAnimation.animations(for: composedSprite)
+            let entity = await SpriteEntity(animations: animations)
             return entity
-        } catch {
-            return nil
+        }
+
+        if configuration.job.isPlayer {
+            return try await task.value
+        } else {
+            tasksByJobID[mapObject.job] = task
+            return try await task.value
         }
     }
 }

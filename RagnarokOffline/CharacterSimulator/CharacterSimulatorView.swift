@@ -172,12 +172,12 @@ struct CharacterSimulatorView2: View {
                         scriptManager: .shared
                     )
 
-                    let actions = try await SpriteAction.actions(for: composedSprite)
+                    let animations = try await SpriteAnimation.animations(for: composedSprite)
 
-                    let spriteComponent = SpriteComponent(actions: actions)
+                    let spriteComponent = SpriteComponent(animations: animations)
                     entity.components.set(spriteComponent)
 
-                    entity.runActionType(.walk, direction: .south, repeats: true)
+                    entity.playSpriteAnimation(.walk, direction: .south, repeats: true)
                 }
             }
         } placeholder: {

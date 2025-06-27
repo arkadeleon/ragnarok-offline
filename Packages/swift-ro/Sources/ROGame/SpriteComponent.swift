@@ -8,9 +8,9 @@
 import RealityKit
 
 public struct SpriteComponent: Component {
-    public var actions: [SpriteAction]
+    public var animations: [SpriteAnimation]
 
-    public init(actions: [SpriteAction]) {
-        self.actions = actions
+    public init(animations: [SpriteAnimation]) {
+        self.animations = animations
     }
 }
