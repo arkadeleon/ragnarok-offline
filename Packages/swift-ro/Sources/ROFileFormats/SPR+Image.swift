@@ -32,6 +32,10 @@ extension SPR {
     }
 
     public func imageForSprite(at index: Int, palette: PAL? = nil) -> CGImage? {
+        guard 0..<sprites.count ~= index else {
+            return nil
+        }
+
         let sprite = sprites[index]
         let width = Int(sprite.width)
         let height = Int(sprite.height)
