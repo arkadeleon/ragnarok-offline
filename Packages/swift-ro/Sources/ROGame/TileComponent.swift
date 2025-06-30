@@ -8,11 +8,9 @@
 import RealityKit
 
 public struct TileComponent: Component {
-    public var x: Int
-    public var y: Int
+    public var position: SIMD2<Int>
 
-    public init(x: Int, y: Int) {
-        self.x = x
-        self.y = y
+    public init(position: SIMD2<Int>) {
+        self.position = position
     }
 }

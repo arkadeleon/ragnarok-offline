@@ -142,8 +142,8 @@ final class NetworkSessionTests: XCTestCase {
         mapSession.requestMove(to: [27, 30])
 
         for await event in mapSession.eventStream(for: PlayerEvents.Moved.self).prefix(1) {
-            XCTAssertEqual(event.fromPosition, [18, 26])
-            XCTAssertEqual(event.toPosition, [27, 30])
+            XCTAssertEqual(event.startPosition, [18, 26])
+            XCTAssertEqual(event.endPosition, [27, 30])
         }
 
         for await event in mapSession.eventStream(for: MapEvents.Changed.self).prefix(1) {

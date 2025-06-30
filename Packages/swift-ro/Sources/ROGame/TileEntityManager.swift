@@ -21,11 +21,11 @@ public class TileEntityManager {
         self.rootEntity = rootEntity
     }
 
-    public func addTileEntities(for position: SIMD2<Int16>) {
+    public func addTileEntities(for position: SIMD2<Int>) {
         for relativeX in (-range)...(range) {
             for relativeY in (-range)...(range) {
-                let x = Int(position.x) + relativeX
-                let y = Int(position.y) + relativeY
+                let x = position.x + relativeX
+                let y = position.y + relativeY
 
                 let tileEntity = ModelEntity()
                 tileEntity.name = "tile"
@@ -41,7 +41,7 @@ public class TileEntityManager {
                     .generateBox(width: 1, height: 0, depth: 1)
                 ]))
                 tileEntity.components.set(InputTargetComponent())
-                tileEntity.components.set(TileComponent(x: x, y: y))
+                tileEntity.components.set(TileComponent(position: SIMD2(x: x, y: y)))
 
                 if 0..<Int(gat.width) ~= x && 0..<Int(gat.height) ~= y {
                     let tile = gat.tileAt(x: x, y: y)
@@ -65,15 +65,15 @@ public class TileEntityManager {
         }
     }
 
-    public func updateTileEntities(for position: SIMD2<Int16>) {
+    public func updateTileEntities(for position: SIMD2<Int>) {
         for relativeX in (-range)...(range) {
             for relativeY in (-range)...(range) {
-                let x = Int(position.x) + relativeX
-                let y = Int(position.y) + relativeY
+                let x = position.x + relativeX
+                let y = position.y + relativeY
 
                 let tileEntity = tileEntities[SIMD2(x: relativeX, y: relativeY)]!
 
-                tileEntity.components.set(TileComponent(x: x, y: y))
+                tileEntity.components.set(TileComponent(position: SIMD2(x: x, y: y)))
 
                 if 0..<Int(gat.width) ~= x && 0..<Int(gat.height) ~= y {
                     let tile = gat.tileAt(x: x, y: y)

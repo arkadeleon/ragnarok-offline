@@ -9,8 +9,8 @@ import ROPackets
 
 public enum PlayerEvents {
     public struct Moved: Event {
-        public let fromPosition: SIMD2<Int16>
-        public let toPosition: SIMD2<Int16>
+        public let startPosition: SIMD2<Int>
+        public let endPosition: SIMD2<Int>
     }
 
     public struct StatusChanged: Event {

@@ -13,12 +13,10 @@ extension MapSession {
         // See `clif_walkok`
         subscription.subscribe(to: PACKET_ZC_NOTIFY_PLAYERMOVE.self) { [unowned self] packet in
             let moveData = MoveData(data: packet.moveData)
-            let fromPosition = SIMD2(moveData.x0, moveData.y0)
-            let toPosition = SIMD2(moveData.x1, moveData.y1)
+            let startPosition = SIMD2(x: Int(moveData.x0), y: Int(moveData.y0))
+            let endPosition = SIMD2(x: Int(moveData.x1), y: Int(moveData.y1))
 
-            self.player.position = toPosition
-
-            let event = PlayerEvents.Moved(fromPosition: fromPosition, toPosition: toPosition)
+            let event = PlayerEvents.Moved(startPosition: startPosition, endPosition: endPosition)
             self.postEvent(event)
         }
 
@@ -102,10 +100,10 @@ extension MapSession {
     /// Request move to position.
     ///
     /// Send ``PACKET_CZ_REQUEST_MOVE``
-    public func requestMove(to position: SIMD2<Int16>) {
+    public func requestMove(to position: SIMD2<Int>) {
         var packet = PACKET_CZ_REQUEST_MOVE()
-        packet.x = position.x
-        packet.y = position.y
+        packet.x = Int16(position.x)
+        packet.y = Int16(position.y)
 
         client.sendPacket(packet)
     }

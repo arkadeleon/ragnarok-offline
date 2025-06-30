@@ -26,7 +26,7 @@ class ChatSession {
     var scene: ChatScene = .login
 
     @MainActor
-    var playerPosition: SIMD2<Int16>?
+    var playerPosition: SIMD2<Int>?
 
     @MainActor
     var availableCommands: [CommandMessage.Command] {
@@ -268,8 +268,8 @@ class ChatSession {
         .store(in: &subscriptions)
 
         mapSession.subscribe(to: PlayerEvents.Moved.self) { [unowned self] event in
-            self.playerPosition = event.toPosition
-            self.messages.append(.serverText("Player moved from \(event.fromPosition) to \(event.toPosition)"))
+            self.playerPosition = event.endPosition
+            self.messages.append(.serverText("Player moved from \(event.startPosition) to \(event.endPosition)"))
         }
         .store(in: &subscriptions)
 

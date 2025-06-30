@@ -11,18 +11,18 @@ import ROPackets
 public enum MapObjectEvents {
     public struct Spawned: Event {
         public let object: MapObject
-        public let position: SIMD2<Int16>
+        public let position: SIMD2<Int>
     }
 
     public struct Moved: Event {
         public let object: MapObject
-        public let fromPosition: SIMD2<Int16>
-        public let toPosition: SIMD2<Int16>
+        public let startPosition: SIMD2<Int>
+        public let endPosition: SIMD2<Int>
     }
 
     public struct Stopped: Event {
         public let objectID: UInt32
-        public let position: SIMD2<Int16>
+        public let position: SIMD2<Int>
     }
 
     public struct Vanished: Event {

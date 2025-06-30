@@ -146,9 +146,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     private func subscribeToMapPackets(with subscription: inout ClientSubscription) {
         // See `clif_changemap`
         subscription.subscribe(to: PACKET_ZC_NPCACK_MAPMOVE.self) { [unowned self] packet in
-            let position = SIMD2(Int16(packet.xPos), Int16(packet.yPos))
-            self.player.position = position
-
+            let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
             let event = MapEvents.Changed(mapName: packet.mapName, position: position)
             self.postEvent(event)
         }
@@ -174,7 +172,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
             let object = MapObject(packet: packet)
 
             let posDir = PosDir(data: packet.PosDir)
-            let position = SIMD2(posDir.x, posDir.y)
+            let position = SIMD2(x: Int(posDir.x), y: Int(posDir.y))
 
             let event = MapObjectEvents.Spawned(object: object, position: position)
             self.postEvent(event)
@@ -185,7 +183,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
             let object = MapObject(packet: packet)
 
             let posDir = PosDir(data: packet.PosDir)
-            let position = SIMD2(posDir.x, posDir.y)
+            let position = SIMD2(x: Int(posDir.x), y: Int(posDir.y))
 
             let event = MapObjectEvents.Spawned(object: object, position: position)
             self.postEvent(event)
@@ -196,17 +194,17 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
             let object = MapObject(packet: packet)
 
             let moveData = MoveData(data: packet.MoveData)
-            let fromPosition = SIMD2(moveData.x0, moveData.y0)
-            let toPosition = SIMD2(moveData.x1, moveData.y1)
+            let startPosition = SIMD2(x: Int(moveData.x0), y: Int(moveData.y0))
+            let endPosition = SIMD2(x: Int(moveData.x1), y: Int(moveData.y1))
 
-            let event = MapObjectEvents.Moved(object: object, fromPosition: fromPosition, toPosition: toPosition)
+            let event = MapObjectEvents.Moved(object: object, startPosition: startPosition, endPosition: endPosition)
             self.postEvent(event)
         }
 
         // See `clif_fixpos`
         subscription.subscribe(to: PACKET_ZC_STOPMOVE.self) { [unowned self] packet in
             let objectID = packet.AID
-            let position: SIMD2<Int16> = [Int16(packet.xPos), Int16(packet.yPos)]
+            let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
             let event = MapObjectEvents.Stopped(objectID: objectID, position: position)
             self.postEvent(event)
         }

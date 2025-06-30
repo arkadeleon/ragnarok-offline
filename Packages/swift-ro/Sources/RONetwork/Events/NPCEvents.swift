@@ -26,14 +26,11 @@ public enum NPCEvents {
 
     public struct MinimapMarkPositionReceived: Event {
         public let npcID: UInt32
-        public let position: SIMD2<Int16>
+        public let position: SIMD2<Int>
 
         init(packet: PACKET_ZC_COMPASS) {
             self.npcID = packet.npcId
-            self.position = [
-                Int16(packet.xPos),
-                Int16(packet.yPos),
-            ]
+            self.position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
         }
     }
 }

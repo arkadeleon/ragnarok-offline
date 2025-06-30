@@ -178,7 +178,7 @@ extension GameSession: MapSceneDelegate {
         mapSession?.notifyMapLoaded()
     }
 
-    func mapScene(_ scene: any MapSceneProtocol, didTapTileAt position: SIMD2<Int16>) {
+    func mapScene(_ scene: any MapSceneProtocol, didTapTileAt position: SIMD2<Int>) {
         mapSession?.requestMove(to: position)
     }
 

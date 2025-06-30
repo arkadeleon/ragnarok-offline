@@ -61,7 +61,7 @@ extension Entity {
             var meshDescriptor = MeshDescriptor()
             meshDescriptor.positions = MeshBuffer(mesh.vertices.map({ $0.position }))
             meshDescriptor.normals = MeshBuffer(mesh.vertices.map({ $0.normal }))
-            meshDescriptor.textureCoordinates = MeshBuffer(mesh.vertices.map({ SIMD2($0.textureCoordinate.x, 1.0 - $0.textureCoordinate.y) }))
+            meshDescriptor.textureCoordinates = MeshBuffer(mesh.vertices.map({ SIMD2(x: $0.textureCoordinate.x, y: 1.0 - $0.textureCoordinate.y) }))
 
             let indices = (0..<meshDescriptor.positions.count).map(UInt32.init)
             meshDescriptor.primitives = .triangles(indices + indices.reversed())

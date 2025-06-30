@@ -27,14 +27,7 @@ public enum ItemEvents {
 
     public struct Spawned: Event {
         public let item: MapItem
-
-        init(packet: PACKET_ZC_ITEM_ENTRY) {
-            self.item = MapItem(packet: packet)
-        }
-
-        init(packet: packet_dropflooritem) {
-            self.item = MapItem(packet: packet)
-        }
+        public let position: SIMD2<Int>
     }
 
     public struct Vanished: Event {
