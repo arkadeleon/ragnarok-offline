@@ -99,6 +99,7 @@ final class NetworkSessionTests: XCTestCase {
         for await event in charSession.eventStream(for: CharEvents.MakeAccepted.self).prefix(1) {
             char = event.char
             XCTAssertEqual(event.char.name, "Leon")
+            XCTAssertEqual(event.char.speed, 150)
         }
 
         // MARK: - Select a char

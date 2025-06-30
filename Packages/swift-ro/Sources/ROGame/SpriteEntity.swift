@@ -43,7 +43,7 @@ public class SpriteEntity: Entity {
         do {
             let animation = animations[animationIndex]
             let duration = (repeats ? .infinity : animation.duration)
-            let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration)
+            let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration, actionEnded: nil)
             playAnimation(actionAnimation)
         } catch {
             logger.warning("\(error.localizedDescription)")
@@ -61,34 +61,74 @@ public class SpriteEntity: Entity {
         do {
             let animation = animations[animationIndex]
             let duration = (repeats ? .infinity : animation.duration)
-            let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration)
+            let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration, actionEnded: nil)
             playAnimation(actionAnimation)
         } catch {
             logger.warning("\(error.localizedDescription)")
         }
     }
 
-    public func walk(to target: Transform, direction: ComposedSprite.Direction, duration: TimeInterval) {
+    public func walk(through path: [(position: SIMD2<Int>, transform: Transform)]) {
         guard let mapObject = components[MapObjectComponent.self]?.mapObject,
               let animations = components[SpriteComponent.self]?.animations else {
-            return
-        }
-
-        let animationIndex = ComposedSprite.ActionType.walk.calculateActionIndex(forJobID: mapObject.job, direction: direction)
-        guard animationIndex < animations.count else {
             return
         }
 
         stopAllAnimations()
 
         do {
-            let animation = animations[animationIndex]
-            let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration)
+            let speed = TimeInterval(mapObject.speed) / 1000
 
-            let moveAction = FromToByAction(to: target, timing: .linear)
-            let moveAnimation = try AnimationResource.makeActionAnimation(for: moveAction, duration: duration, bindTarget: .transform)
+            var animationSequence: [AnimationResource] = []
+            for i in 1..<path.count {
+                let sourcePosition = path[i - 1].position
+                let targetPosition = path[i].position
 
-            let animationResource = try AnimationResource.group(with: [actionAnimation, moveAnimation])
+                let direction: ComposedSprite.Direction
+                let duration: TimeInterval
+                switch (targetPosition &- sourcePosition) {
+                case [-1, -1]:
+                    direction = .southwest
+                    duration = speed * sqrt(2)
+                case [-1, 0]:
+                    direction = .west
+                    duration = speed
+                case [-1, 1]:
+                    direction = .northwest
+                    duration = speed * sqrt(2)
+                case [0, 1]:
+                    direction = .north
+                    duration = speed
+                case [1, 1]:
+                    direction = .northeast
+                    duration = speed * sqrt(2)
+                case [1, 0]:
+                    direction = .east
+                    duration = speed
+                case [1, -1]:
+                    direction = .southeast
+                    duration = speed * sqrt(2)
+                default:
+                    direction = .south
+                    duration = speed
+                }
+
+                let animationIndex = ComposedSprite.ActionType.walk.calculateActionIndex(forJobID: mapObject.job, direction: direction)
+                let animation = animations[animationIndex]
+                let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration) {
+                    self.components[MapObjectComponent.self]?.position = targetPosition
+                }
+
+                let sourceTransform = path[i - 1].transform
+                let targetTransform = path[i].transform
+                let moveAction = FromToByAction(from: sourceTransform, to: targetTransform, timing: .linear)
+                let moveAnimation = try AnimationResource.makeActionAnimation(for: moveAction, duration: duration, bindTarget: .transform)
+
+                let groupAnimation = try AnimationResource.group(with: [actionAnimation, moveAnimation])
+                animationSequence.append(groupAnimation)
+            }
+
+            let animationResource = try AnimationResource.sequence(with: animationSequence)
             playAnimation(animationResource)
         } catch {
             logger.warning("\(error.localizedDescription)")
@@ -155,8 +195,8 @@ extension AnimationResource {
         return animationResource
     }
 
-    static func makeActionAnimation(with animation: SpriteAnimation, duration: TimeInterval) throws -> AnimationResource {
-        let action = PlaySpriteAnimationAction(animation: animation)
+    static func makeActionAnimation(with animation: SpriteAnimation, duration: TimeInterval, actionEnded: (() -> Void)?) throws -> AnimationResource {
+        let action = PlaySpriteAnimationAction(animation: animation, actionEnded: actionEnded)
         let actionAnimation = try makeActionAnimation(for: action, duration: duration)
         return actionAnimation
     }

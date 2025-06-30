@@ -10,8 +10,10 @@ import RONetwork
 
 public struct MapItemComponent: Component {
     public var mapItem: MapItem
+    public var position: SIMD2<Int>
 
-    public init(mapItem: MapItem) {
+    public init(mapItem: MapItem, position: SIMD2<Int>) {
         self.mapItem = mapItem
+        self.position = position
     }
 }

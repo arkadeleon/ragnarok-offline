@@ -172,14 +172,22 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         // See `clif_spawn_unit`
         subscription.subscribe(to: packet_spawn_unit.self) { [unowned self] packet in
             let object = MapObject(packet: packet)
-            let event = MapObjectEvents.Spawned(object: object)
+
+            let posDir = PosDir(data: packet.PosDir)
+            let position = SIMD2(posDir.x, posDir.y)
+
+            let event = MapObjectEvents.Spawned(object: object, position: position)
             self.postEvent(event)
         }
 
         // See `clif_set_unit_idle`
         subscription.subscribe(to: packet_idle_unit.self) { [unowned self] packet in
             let object = MapObject(packet: packet)
-            let event = MapObjectEvents.Spawned(object: object)
+
+            let posDir = PosDir(data: packet.PosDir)
+            let position = SIMD2(posDir.x, posDir.y)
+
+            let event = MapObjectEvents.Spawned(object: object, position: position)
             self.postEvent(event)
         }
 

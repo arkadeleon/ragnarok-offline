@@ -49,9 +49,7 @@ public struct MapObject: Sendable {
     public let healthState: StatusChangeOption2
     public let effectState: StatusChangeOption
 
-    public let position: SIMD2<Int16>
-
-    public init(account: AccountInfo, char: CharInfo, position: SIMD2<Int16>) {
+    public init(account: AccountInfo, char: CharInfo) {
         self.objectID = account.accountID
         self.type = .pc
         self.name = char.name
@@ -72,8 +70,6 @@ public struct MapObject: Sendable {
         self.bodyState = StatusChangeOption1(rawValue: Int(char.bodyState)) ?? .none
         self.healthState = StatusChangeOption2(rawValue: Int(char.healthState)) ?? .none
         self.effectState = StatusChangeOption(rawValue: Int(char.effectState)) ?? .nothing
-
-        self.position = position
     }
 
     init(packet: packet_spawn_unit) {
@@ -97,9 +93,6 @@ public struct MapObject: Sendable {
         self.bodyState = StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none
         self.healthState = StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none
         self.effectState = StatusChangeOption(rawValue: Int(packet.effectState)) ?? .nothing
-
-        let posDir = PosDir(data: packet.PosDir)
-        self.position = [posDir.x, posDir.y]
     }
 
     init(packet: packet_idle_unit) {
@@ -123,9 +116,6 @@ public struct MapObject: Sendable {
         self.bodyState = StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none
         self.healthState = StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none
         self.effectState = StatusChangeOption(rawValue: Int(packet.effectState)) ?? .nothing
-
-        let posDir = PosDir(data: packet.PosDir)
-        self.position = [posDir.x, posDir.y]
     }
 
     init(packet: packet_unit_walking) {
@@ -149,8 +139,5 @@ public struct MapObject: Sendable {
         self.bodyState = StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none
         self.healthState = StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none
         self.effectState = StatusChangeOption(rawValue: Int(packet.effectState)) ?? .nothing
-
-        let moveData = MoveData(data: packet.MoveData)
-        self.position = [moveData.x1, moveData.y1]
     }
 }

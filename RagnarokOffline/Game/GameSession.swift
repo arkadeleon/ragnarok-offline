@@ -154,13 +154,13 @@ final class GameSession {
                 let worldPath: ResourcePath = ["data", mapName]
                 let world = try await ResourceManager.shared.world(at: worldPath)
 
-                let player = MapObject(account: account, char: char, position: event.position)
+                let player = MapObject(account: account, char: char)
 
-//                let scene = MapScene2D(mapName: mapName, world: world, player: player)
+//                let scene = MapScene2D(mapName: mapName, world: world, player: player, playerPosition: event.position)
 //                scene.mapSceneDelegate = self
 //                self.scene = .map2D(scene)
 
-                let scene = MapScene3D(mapName: mapName, world: world, player: player)
+                let scene = MapScene3D(mapName: mapName, world: world, player: player, playerPosition: event.position)
                 scene.mapSceneDelegate = self
                 self.scene = .map3D(scene)
             }

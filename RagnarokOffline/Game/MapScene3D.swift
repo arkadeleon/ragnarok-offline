@@ -19,6 +19,7 @@ class MapScene3D: MapSceneProtocol {
     let mapName: String
     let world: WorldResource
     let player: MapObject
+    let playerPosition: SIMD2<Int16>
 
     let rootEntity = Entity()
 
@@ -36,6 +37,8 @@ class MapScene3D: MapSceneProtocol {
 
     private let tileEntityManager: TileEntityManager
     private let monsterEntityManager: SpriteEntityManager
+
+    private let pathfinder: Pathfinder
 
     var tileTapGesture: some Gesture {
         SpatialTapGesture()
@@ -68,13 +71,16 @@ class MapScene3D: MapSceneProtocol {
             }
     }
 
-    init(mapName: String, world: WorldResource, player: MapObject) {
+    init(mapName: String, world: WorldResource, player: MapObject, playerPosition: SIMD2<Int16>) {
         self.mapName = mapName
         self.world = world
         self.player = player
+        self.playerPosition = playerPosition
 
-        tileEntityManager = TileEntityManager(gat: world.gat, rootEntity: rootEntity)
-        monsterEntityManager = SpriteEntityManager(resourceManager: .shared, scriptManager: .shared)
+        self.tileEntityManager = TileEntityManager(gat: world.gat, rootEntity: rootEntity)
+        self.monsterEntityManager = SpriteEntityManager(resourceManager: .shared, scriptManager: .shared)
+
+        self.pathfinder = Pathfinder(gat: world.gat)
 
         MapItemComponent.registerComponent()
         MapObjectComponent.registerComponent()
@@ -110,7 +116,7 @@ class MapScene3D: MapSceneProtocol {
             rootEntity.addChild(worldEntity)
         }
 
-        tileEntityManager.addTileEntities(for: player.position)
+        tileEntityManager.addTileEntities(for: playerPosition)
 
         do {
             let configuration = ComposedSprite.Configuration(mapObject: player)
@@ -127,16 +133,21 @@ class MapScene3D: MapSceneProtocol {
             logger.warning("\(error.localizedDescription)")
         }
 
+        let playerPosition: SIMD2<Int> = [
+            Int(playerPosition.x),
+            Int(playerPosition.y),
+        ]
+
         playerEntity.name = "\(player.objectID)"
-        playerEntity.transform = transform(for: player.position)
-        playerEntity.components.set(MapObjectComponent(mapObject: player))
+        playerEntity.transform = transform(for: playerPosition)
+        playerEntity.components.set(MapObjectComponent(mapObject: player, position: playerPosition))
         playerEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
 
         rootEntity.addChild(playerEntity)
 
         let cameraComponent = PerspectiveCameraComponent(near: 2, far: 300, fieldOfViewInDegrees: 15)
         camera.components.set(cameraComponent)
-        camera.transform = cameraTransform(for: player.position)
+        camera.transform = cameraTransform(for: playerPosition)
         rootEntity.addChild(camera)
 
         let pathGenerator = ResourcePathGenerator(scriptManager: .shared)
@@ -152,7 +163,7 @@ class MapScene3D: MapSceneProtocol {
         mapSceneDelegate?.mapSceneDidFinishLoading(self)
     }
 
-    private func transform(for position2D: SIMD2<Int16>) -> Transform {
+    private func transform(for position2D: SIMD2<Int>) -> Transform {
         let scale: SIMD3<Float> = [1, sqrtf(2), 1]
         let rotation = simd_quatf(angle: radians(0), axis: [1, 0, 0])
         let translation = position3D(for: position2D)
@@ -160,7 +171,7 @@ class MapScene3D: MapSceneProtocol {
         return transform
     }
 
-    private func cameraTransform(for position2D: SIMD2<Int16>) -> Transform {
+    private func cameraTransform(for position2D: SIMD2<Int>) -> Transform {
         let target = position3D(for: position2D)
         let transform = cameraTransform(for: target)
         return transform
@@ -179,8 +190,8 @@ class MapScene3D: MapSceneProtocol {
         return cameraHelper.transform
     }
 
-    private func position3D(for position2D: SIMD2<Int16>) -> SIMD3<Float> {
-        let altitude = world.gat.tileAt(x: Int(position2D.x), y: Int(position2D.y)).averageAltitude
+    private func position3D(for position2D: SIMD2<Int>) -> SIMD3<Float> {
+        let altitude = world.gat.tileAt(x: position2D.x, y: position2D.y).averageAltitude
         let position: SIMD3<Float> = [
             Float(position2D.x),
             -altitude / 5,
@@ -192,26 +203,53 @@ class MapScene3D: MapSceneProtocol {
     // MARK: - MapSceneProtocol
 
     func onPlayerMoved(_ event: PlayerEvents.Moved) {
-        let transform = transform(for: event.toPosition)
-        playerEntity.walk(to: transform, direction: .south, duration: 1)
+        let startPosition = playerEntity.components[MapObjectComponent.self]?.position ?? [Int(event.fromPosition.x), Int(event.fromPosition.y)]
+        let endPosition: SIMD2<Int> = [
+            Int(event.toPosition.x),
+            Int(event.toPosition.y),
+        ]
+        let path = pathfinder.findPath(from: startPosition, to: endPosition)
+        let path2 = path.map({ ($0, transform(for: $0)) })
 
-        let cameraTransform = cameraTransform(for: event.toPosition)
-        camera.move(to: cameraTransform, relativeTo: nil, duration: 1, timingFunction: .linear)
+        playerEntity.walk(through: path2)
+
+        do {
+            let speed = TimeInterval(playerEntity.components[MapObjectComponent.self]?.mapObject.speed ?? 0) / 1000
+
+            var cameraAnimationSequence: [AnimationResource] = []
+            for i in 1..<path.count {
+                let source = cameraTransform(for: path[i - 1])
+                let target = cameraTransform(for: path[i])
+                let moveAction = FromToByAction(from: source, to: target, timing: .linear)
+                let moveAnimation = try AnimationResource.makeActionAnimation(for: moveAction, duration: speed, bindTarget: .transform)
+                cameraAnimationSequence.append(moveAnimation)
+            }
+            let animationResource = try AnimationResource.sequence(with: cameraAnimationSequence)
+            camera.playAnimation(animationResource)
+        } catch {
+
+        }
 
         tileEntityManager.updateTileEntities(for: event.toPosition)
     }
 
     func onMapObjectSpawned(_ event: MapObjectEvents.Spawned) {
         if let entity = rootEntity.findEntity(named: "\(event.object.objectID)") as? SpriteEntity {
-            let transform = transform(for: event.object.position)
+            let position: SIMD2<Int> = [Int(event.position.x), Int(event.position.y)]
+            let transform = transform(for: position)
             entity.transform = transform
+            entity.components[MapObjectComponent.self]?.position = position
         } else {
             Task {
                 if let monsterEntity = try? await monsterEntityManager.entity(for: event.object) {
+                    let position: SIMD2<Int> = [
+                        Int(event.position.x),
+                        Int(event.position.y),
+                    ]
                     monsterEntity.name = "\(event.object.objectID)"
-                    monsterEntity.transform = transform(for: event.object.position)
+                    monsterEntity.transform = transform(for: position)
                     monsterEntity.isEnabled = (event.object.effectState != .cloak)
-                    monsterEntity.components.set(MapObjectComponent(mapObject: event.object))
+                    monsterEntity.components.set(MapObjectComponent(mapObject: event.object, position: position))
                     monsterEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
                     rootEntity.addChild(monsterEntity)
                 }
@@ -221,15 +259,25 @@ class MapScene3D: MapSceneProtocol {
 
     func onMapObjectMoved(_ event: MapObjectEvents.Moved) {
         if let entity = rootEntity.findEntity(named: "\(event.object.objectID)") as? SpriteEntity {
-            let transform = transform(for: event.toPosition)
-            entity.walk(to: transform, direction: .south, duration: 1)
+            let startPosition = entity.components[MapObjectComponent.self]?.position ?? [Int(event.fromPosition.x), Int(event.fromPosition.y)]
+            let endPosition: SIMD2<Int> = [
+                Int(event.toPosition.x),
+                Int(event.toPosition.y),
+            ]
+            let path = pathfinder.findPath(from: startPosition, to: endPosition)
+            let path2 = path.map({ ($0, transform(for: $0)) })
+            entity.walk(through: path2)
         } else {
             Task {
                 if let monsterEntity = try? await monsterEntityManager.entity(for: event.object) {
+                    let position: SIMD2<Int> = [
+                        Int(event.toPosition.x),
+                        Int(event.toPosition.y),
+                    ]
                     monsterEntity.name = "\(event.object.objectID)"
-                    monsterEntity.transform = transform(for: event.toPosition)
+                    monsterEntity.transform = transform(for: position)
                     monsterEntity.isEnabled = (event.object.effectState != .cloak)
-                    monsterEntity.components.set(MapObjectComponent(mapObject: event.object))
+                    monsterEntity.components.set(MapObjectComponent(mapObject: event.object, position: position))
                     monsterEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
                     rootEntity.addChild(monsterEntity)
                 }
@@ -239,8 +287,8 @@ class MapScene3D: MapSceneProtocol {
 
     func onMapObjectStopped(_ event: MapObjectEvents.Stopped) {
         if let entity = rootEntity.findEntity(named: "\(event.objectID)") as? SpriteEntity {
-            let transform = transform(for: event.position)
-            entity.walk(to: transform, direction: .south, duration: 0)
+            let transform = transform(for: [Int(event.position.x), Int(event.position.y)])
+            entity.transform = transform
         }
     }
 
@@ -283,10 +331,15 @@ class MapScene3D: MapSceneProtocol {
             let sprite = try await ResourceManager.shared.sprite(at: path)
             let animation = try await SpriteAnimation(sprite: sprite, actionIndex: 0)
 
+            let position: SIMD2<Int> = [
+                Int(event.item.position.x),
+                Int(event.item.position.y),
+            ]
+
             let entity = SpriteEntity(animations: [animation])
             entity.name = "\(event.item.objectID)"
-            entity.transform = transform(for: event.item.position)
-            entity.components.set(MapItemComponent(mapItem: event.item))
+            entity.transform = transform(for: position)
+            entity.components.set(MapItemComponent(mapItem: event.item, position: position))
             entity.playSpriteAnimation(at: 0, repeats: true)
             rootEntity.addChild(entity)
         }

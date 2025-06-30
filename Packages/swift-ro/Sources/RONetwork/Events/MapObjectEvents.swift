@@ -11,6 +11,7 @@ import ROPackets
 public enum MapObjectEvents {
     public struct Spawned: Event {
         public let object: MapObject
+        public let position: SIMD2<Int16>
     }
 
     public struct Moved: Event {

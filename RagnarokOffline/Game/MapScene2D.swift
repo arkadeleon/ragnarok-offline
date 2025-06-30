@@ -16,10 +16,10 @@ private let tileSize = 32
 class MapObjectNode: SKSpriteNode {
     var gridPosition: SIMD2<Int>
 
-    init(mapObject: MapObject) {
+    init(mapObject: MapObject, position: SIMD2<Int16>) {
         self.gridPosition = [
-            Int(mapObject.position.x),
-            Int(mapObject.position.y),
+            Int(position.x),
+            Int(position.y),
         ]
 
         let color: SKColor =
@@ -35,8 +35,8 @@ class MapObjectNode: SKSpriteNode {
         super.init(texture: nil, color: color, size: size)
 
         self.position = CGPoint(
-            x: Int(mapObject.position.x) * tileSize,
-            y: Int(mapObject.position.y) * tileSize
+            x: Int(position.x) * tileSize,
+            y: Int(position.y) * tileSize
         )
         self.zPosition = 1
         self.isHidden = (mapObject.effectState == .cloak)
@@ -72,6 +72,7 @@ class MapScene2D: SKScene, MapSceneProtocol {
     let mapName: String
     let world: WorldResource
     let player: MapObject
+    let playerPosition: SIMD2<Int16>
 
     weak var mapSceneDelegate: (any MapSceneDelegate)?
 
@@ -80,12 +81,13 @@ class MapScene2D: SKScene, MapSceneProtocol {
 
     private let pathfinder: Pathfinder
 
-    init(mapName: String, world: WorldResource, player: MapObject) {
+    init(mapName: String, world: WorldResource, player: MapObject, playerPosition: SIMD2<Int16>) {
         self.mapName = mapName
         self.world = world
         self.player = player
+        self.playerPosition = playerPosition
 
-        let playerNode = MapObjectNode(mapObject: player)
+        let playerNode = MapObjectNode(mapObject: player, position: playerPosition)
         playerNode.color = .blue
         playerNode.zPosition = 2
         self.playerNode = playerNode
@@ -209,11 +211,11 @@ class MapScene2D: SKScene, MapSceneProtocol {
 
     func onMapObjectSpawned(_ event: MapObjectEvents.Spawned) {
         if let objectNode = childNode(withName: "\(event.object.objectID)") as? MapObjectNode {
-            let location = CGPoint(x: Int(event.object.position.x) * tileSize, y: Int(event.object.position.y) * tileSize)
+            let location = CGPoint(x: Int(event.position.x) * tileSize, y: Int(event.position.y) * tileSize)
             let action = SKAction.move(to: location, duration: 0)
             objectNode.run(action)
         } else {
-            let objectNode = MapObjectNode(mapObject: event.object)
+            let objectNode = MapObjectNode(mapObject: event.object, position: event.position)
             addChild(objectNode)
         }
     }
@@ -229,7 +231,7 @@ class MapScene2D: SKScene, MapSceneProtocol {
 
             objectNode.move(through: path)
         } else {
-            let objectNode = MapObjectNode(mapObject: event.object)
+            let objectNode = MapObjectNode(mapObject: event.object, position: event.toPosition)
             addChild(objectNode)
         }
     }

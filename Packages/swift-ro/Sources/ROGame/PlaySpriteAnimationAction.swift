@@ -8,15 +8,18 @@
 import Foundation
 import RealityKit
 
-public struct PlaySpriteAnimationAction: EntityAction {
+@MainActor
+public struct PlaySpriteAnimationAction: @preconcurrency EntityAction {
     public let animation: SpriteAnimation
+    public let actionEnded: (() -> Void)?
 
     public var animatedValueType: (any AnimatableData.Type)? {
         nil
     }
 
-    public init(animation: SpriteAnimation) {
+    public init(animation: SpriteAnimation, actionEnded: (() -> Void)?) {
         self.animation = animation
+        self.actionEnded = actionEnded
     }
 }
 
@@ -76,6 +79,10 @@ public struct PlaySpriteAnimationActionHandler: @preconcurrency ActionHandlerPro
                 scale: [1 / Float(animation.frameCount), 1]
             )
         }
+    }
+
+    public func actionEnded(event: EventType) {
+        event.action.actionEnded?()
     }
 }
 
