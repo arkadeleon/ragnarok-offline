@@ -9,23 +9,23 @@ import ROConstants
 import ROPackets
 
 public struct PickedUpItem: Sendable {
-    public var index: Int
-    public var count: Int
-    public var itemID: Int
-    public var isIdentified: Bool
-    public var isDamaged: Bool
-    public var slots: [Int]
-    public var location: EquipPositions
-    public var itemType: ItemType
+    public let index: Int
+    public let count: Int
+    public let itemID: Int
+    public let isIdentified: Bool
+    public let isDamaged: Bool
+    public let slots: [Int]
+    public let location: EquipPositions
+    public let itemType: ItemType
 
     init(packet: PACKET_ZC_ITEM_PICKUP_ACK) {
-        index = Int(packet.Index)
-        count = Int(packet.count)
-        itemID = Int(packet.nameid)
-        isIdentified = (packet.IsIdentified != 0)
-        isDamaged = (packet.IsDamaged != 0)
-        slots = packet.slot.card.map(Int.init)
-        location = EquipPositions(rawValue: Int(packet.location))
-        itemType = ItemType(rawValue: Int(packet.type)) ?? .etc
+        self.index = Int(packet.Index)
+        self.count = Int(packet.count)
+        self.itemID = Int(packet.nameid)
+        self.isIdentified = (packet.IsIdentified != 0)
+        self.isDamaged = (packet.IsDamaged != 0)
+        self.slots = packet.slot.card.map(Int.init)
+        self.location = EquipPositions(rawValue: Int(packet.location))
+        self.itemType = ItemType(rawValue: Int(packet.type)) ?? .etc
     }
 }

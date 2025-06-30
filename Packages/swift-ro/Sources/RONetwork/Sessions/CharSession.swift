@@ -55,7 +55,8 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
         // See `chclif_send_auth_result`
         subscription.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
-            let event = AuthenticationEvents.Banned(packet: packet)
+            let message = BannedMessage(packet: packet)
+            let event = AuthenticationEvents.Banned(message: message)
             self.postEvent(event)
         }
 
@@ -75,7 +76,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     private func subscribeToCharServerPackets(with subscription: inout ClientSubscription) {
         // 0x6b
         subscription.subscribe(to: PACKET_HC_ACCEPT_ENTER_NEO_UNION.self) { [unowned self] packet in
-            let event = CharServerEvents.Accepted(packet: packet)
+            let event = CharServerEvents.Accepted(chars: packet.chars)
             self.postEvent(event)
         }
 
@@ -87,13 +88,19 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
         // 0x71, 0xac5
         subscription.subscribe(to: PACKET_HC_NOTIFY_ZONESVR.self) { [unowned self] packet in
-            let event = CharServerEvents.NotifyMapServer(packet: packet)
+            let event = CharServerEvents.NotifyMapServer(
+                charID: packet.charID,
+                mapName: packet.mapName,
+                mapServer: packet.mapServer
+            )
             self.postEvent(event)
         }
 
         // 0x840
         subscription.subscribe(to: PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self) { [unowned self] packet in
-            let event = CharServerEvents.NotifyAccessibleMaps(packet: packet)
+            let event = CharServerEvents.NotifyAccessibleMaps(
+                accessibleMaps: packet.maps.map(AccessibleMapInfo.init)
+            )
             self.postEvent(event)
         }
     }
@@ -101,7 +108,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     private func subscribeToCharPackets(with subscription: inout ClientSubscription) {
         // 0x6d
         subscription.subscribe(to: PACKET_HC_ACCEPT_MAKECHAR.self) { [unowned self] packet in
-            let event = CharEvents.MakeAccepted(packet: packet)
+            let event = CharEvents.MakeAccepted(char: packet.char)
             self.postEvent(event)
         }
 
@@ -119,7 +126,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
         // 0x70
         subscription.subscribe(to: PACKET_HC_REFUSE_DELETECHAR.self) { [unowned self] packet in
-            let event = CharEvents.DeleteRefused(packet: packet)
+            let event = CharEvents.DeleteRefused(message: "")
             self.postEvent(event)
         }
 
@@ -129,7 +136,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
                 let event = CharEvents.DeleteAccepted()
                 self.postEvent(event)
             } else {
-                let event = CharEvents.DeleteRefused(packet: packet)
+                let event = CharEvents.DeleteRefused(message: "")
                 self.postEvent(event)
             }
         }
@@ -142,7 +149,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
         // 0x828
         subscription.subscribe(to: PACKET_HC_DELETE_CHAR_RESERVED.self) { [unowned self] packet in
-            let event = CharEvents.DeletionDateResponse(packet: packet)
+            let event = CharEvents.DeletionDateResponse(deletionDate: packet.deletionDate)
             self.postEvent(event)
         }
     }
@@ -171,7 +178,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
         client.receiveDataAndPacket(count: 4) { data in
             let accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
-            self.account.accountID = accountID
+            self.account.update(accountID: accountID)
         }
     }
 

@@ -23,7 +23,13 @@ public enum ChatEvents {
         public let content: String
         public let color: UInt32
 
-        init(type: ChatEvents.MessageReceived.MessageType, senderObjectID: UInt32 = 0, senderName: String = "", content: String, color: UInt32 = 0) {
+        init(
+            type: ChatEvents.MessageReceived.MessageType,
+            senderObjectID: UInt32 = 0,
+            senderName: String = "",
+            content: String,
+            color: UInt32 = 0
+        ) {
             self.type = type
             self.senderObjectID = senderObjectID
             self.senderName = senderName

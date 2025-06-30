@@ -33,19 +33,24 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
 
         // See `logclif_auth_ok`
         subscription.subscribe(to: PACKET_AC_ACCEPT_LOGIN.self) { [unowned self] packet in
-            let event = LoginEvents.Accepted(packet: packet)
+            let event = LoginEvents.Accepted(
+                account: AccountInfo(packet: packet),
+                charServers: packet.char_servers.map(CharServerInfo.init)
+            )
             self.postEvent(event)
         }
 
         // See `logclif_auth_failed`
         subscription.subscribe(to: PACKET_AC_REFUSE_LOGIN.self) { [unowned self] packet in
-            let event = LoginEvents.Refused(packet: packet)
+            let message = LoginRefusedMessage(packet: packet)
+            let event = LoginEvents.Refused(message: message)
             self.postEvent(event)
         }
 
         // See `logclif_sent_auth_result`
         subscription.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
-            let event = AuthenticationEvents.Banned(packet: packet)
+            let message = BannedMessage(packet: packet)
+            let event = AuthenticationEvents.Banned(message: message)
             self.postEvent(event)
         }
 

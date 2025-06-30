@@ -22,8 +22,8 @@ extension MapSession {
 
         // See `clif_initialstatus`
         subscription.subscribe(to: PACKET_ZC_STATUS.self) { [unowned self] packet in
-            self.player.status.update(with: packet)
-            let event = PlayerEvents.StatusChanged(status: self.player.status)
+            self.status.update(with: packet)
+            let event = PlayerEvents.StatusChanged(status: self.status)
             self.postEvent(event)
         }
 
@@ -33,8 +33,8 @@ extension MapSession {
                 return
             }
 
-            self.player.status.update(property: sp, value: Int(packet.count))
-            let event = PlayerEvents.StatusChanged(status: self.player.status)
+            self.status.update(property: sp, value: Int(packet.count))
+            let event = PlayerEvents.StatusChanged(status: self.status)
             self.postEvent(event)
         }
 
@@ -44,8 +44,8 @@ extension MapSession {
                 return
             }
 
-            self.player.status.update(property: sp, value: Int(packet.amount))
-            let event = PlayerEvents.StatusChanged(status: self.player.status)
+            self.status.update(property: sp, value: Int(packet.amount))
+            let event = PlayerEvents.StatusChanged(status: self.status)
             self.postEvent(event)
         }
 
@@ -55,8 +55,8 @@ extension MapSession {
                 return
             }
 
-            self.player.status.update(property: sp, value: Int(packet.amount))
-            let event = PlayerEvents.StatusChanged(status: self.player.status)
+            self.status.update(property: sp, value: Int(packet.amount))
+            let event = PlayerEvents.StatusChanged(status: self.status)
             self.postEvent(event)
         }
 
@@ -66,8 +66,8 @@ extension MapSession {
                 return
             }
 
-            self.player.status.update(property: sp, value: Int(packet.value))
-            let event = PlayerEvents.StatusChanged(status: self.player.status)
+            self.status.update(property: sp, value: Int(packet.value))
+            let event = PlayerEvents.StatusChanged(status: self.status)
             self.postEvent(event)
         }
 
@@ -77,8 +77,8 @@ extension MapSession {
                 return
             }
 
-            self.player.status.update(property: sp, value: Int(packet.defaultStatus), value2: Int(packet.plusStatus))
-            let event = PlayerEvents.StatusChanged(status: self.player.status)
+            self.status.update(property: sp, value: Int(packet.defaultStatus), value2: Int(packet.plusStatus))
+            let event = PlayerEvents.StatusChanged(status: self.status)
             self.postEvent(event)
         }
 
@@ -88,7 +88,7 @@ extension MapSession {
 
         // See `clif_attackrange`
         subscription.subscribe(to: PACKET_ZC_ATTACK_RANGE.self) { [unowned self] packet in
-            let event = PlayerEvents.AttackRangeChanged(packet: packet)
+            let event = PlayerEvents.AttackRangeChanged(value: Int(packet.currentAttRange))
             self.postEvent(event)
         }
 

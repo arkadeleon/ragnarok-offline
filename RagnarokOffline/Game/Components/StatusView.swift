@@ -10,7 +10,7 @@ import RONetwork
 import SwiftUI
 
 struct StatusView: View {
-    var status: Player.Status
+    var status: CharacterStatus
     var onIncrementStatusProperty: (StatusProperty) -> Void
 
     var body: some View {
@@ -122,13 +122,13 @@ struct StatusView: View {
         .frame(width: 280)
     }
 
-    init(status: Player.Status, onIncrementStatusProperty: @escaping (StatusProperty) -> Void) {
+    init(status: CharacterStatus, onIncrementStatusProperty: @escaping (StatusProperty) -> Void) {
         self.status = status
         self.onIncrementStatusProperty = onIncrementStatusProperty
     }
 }
 
 #Preview {
-    StatusView(status: Player.Status(), onIncrementStatusProperty: { _ in })
+    StatusView(status: CharacterStatus(), onIncrementStatusProperty: { _ in })
         .padding()
 }

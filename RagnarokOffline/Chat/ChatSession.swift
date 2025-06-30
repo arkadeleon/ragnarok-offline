@@ -155,13 +155,13 @@ class ChatSession {
 
         loginSession.subscribe(to: LoginEvents.Refused.self) { [unowned self] event in
             self.messages.append(.serverText("Refused"))
-            self.messages.append(.serverText(event.message))
+            self.messages.append(.serverText(event.message.rawValue))
         }
         .store(in: &subscriptions)
 
         loginSession.subscribe(to: AuthenticationEvents.Banned.self) { [unowned self] event in
             self.messages.append(.serverText("Banned"))
-            self.messages.append(.serverText(event.message))
+            self.messages.append(.serverText(event.message.rawValue))
         }
         .store(in: &subscriptions)
 
@@ -235,7 +235,7 @@ class ChatSession {
 
         charSession.subscribe(to: AuthenticationEvents.Banned.self) { [unowned self] event in
             self.messages.append(.serverText("Banned"))
-            self.messages.append(.serverText(event.message))
+            self.messages.append(.serverText(event.message.rawValue))
         }
         .store(in: &subscriptions)
 

@@ -80,13 +80,16 @@ extension MapSession {
 
         // See `clif_cutin`
         subscription.subscribe(to: PACKET_ZC_SHOW_IMAGE.self) { [unowned self] packet in
-            let event = NPCEvents.ImageReceived(packet: packet)
+            let event = NPCEvents.ImageReceived(image: packet.image)
             self.postEvent(event)
         }
 
         // See `clif_viewpoint`
         subscription.subscribe(to: PACKET_ZC_COMPASS.self) { [unowned self] packet in
-            let event = NPCEvents.MinimapMarkPositionReceived(packet: packet)
+            let event = NPCEvents.MinimapMarkPositionReceived(
+                npcID: packet.npcId,
+                position: SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
+            )
             self.postEvent(event)
         }
     }

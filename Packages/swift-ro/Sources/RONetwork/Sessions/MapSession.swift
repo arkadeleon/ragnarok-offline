@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import ROConstants
 import ROPackets
 
 final public class MapSession: SessionProtocol, @unchecked Sendable {
@@ -16,7 +17,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
 
-    var player = Player()
+    var status = CharacterStatus()
     var inventory = Inventory()
     var pendingNPCDialog: NPCDialog?
 
@@ -46,7 +47,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // 0x283
         subscription.subscribe(to: PACKET_ZC_AID.self) { [unowned self] packet in
-            self.account.accountID = packet.accountID
+            self.account.update(accountID: packet.accountID)
         }
 
         // See `clif_hotkeys_send`
@@ -91,7 +92,8 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_authfail_fd`
         subscription.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
-            let event = AuthenticationEvents.Banned(packet: packet)
+            let message = BannedMessage(packet: packet)
+            let event = AuthenticationEvents.Banned(message: message)
             self.postEvent(event)
         }
 
@@ -128,7 +130,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         if PACKET_VERSION < 20070521 {
             client.receiveDataAndPacket(count: 4) { data in
                 let accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
-                self.account.accountID = accountID
+                self.account.update(accountID: accountID)
             }
         } else {
             client.receivePacket()
@@ -218,7 +220,11 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_changed_dir`
         subscription.subscribe(to: PACKET_ZC_CHANGE_DIRECTION.self) { [unowned self] packet in
-            let event = MapObjectEvents.DirectionChanged(packet: packet)
+            let event = MapObjectEvents.DirectionChanged(
+                objectID: packet.srcId,
+                headDirection: packet.headDir,
+                direction: packet.dir
+            )
             self.postEvent(event)
         }
 
@@ -230,13 +236,22 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_changeoption_target`
         subscription.subscribe(to: PACKET_ZC_STATE_CHANGE.self) { [unowned self] packet in
-            let event = MapObjectEvents.StateChanged(packet: packet)
+            let event = MapObjectEvents.StateChanged(
+                objectID: packet.AID,
+                bodyState: StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none,
+                healthState: StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none,
+                effectState: StatusChangeOption(rawValue: Int(packet.effectState)) ?? .nothing
+            )
             self.postEvent(event)
         }
 
         // See `clif_damage` and `clif_takeitem` and `clif_sitting` and `clif_standing`
         subscription.subscribe(to: PACKET_ZC_NOTIFY_ACT.self) { [unowned self] packet in
-            let event = MapObjectEvents.ActionPerformed(packet: packet)
+            let event = MapObjectEvents.ActionPerformed(
+                sourceObjectID: UInt32(packet.srcID),
+                targetObjectID: UInt32(packet.targetID),
+                actionType: DamageType(rawValue: Int(packet.type)) ?? .normal
+            )
             self.postEvent(event)
         }
 

@@ -7,9 +7,9 @@
 
 // See `WBUFPOS`
 struct PosDir {
-    var x: Int16
-    var y: Int16
-    var dir: UInt8
+    let x: Int16
+    let y: Int16
+    let dir: UInt8
 
     init(data: [UInt8]) {
         var p: UInt32 = 0
@@ -19,12 +19,12 @@ struct PosDir {
             pointer[0] = data[2]
         }
 
-        dir = UInt8(truncatingIfNeeded: p) & 0x0f
+        self.dir = UInt8(truncatingIfNeeded: p) & 0x0f
 
         p = p >> 4
-        y = Int16(truncatingIfNeeded: p) & 0x03ff
+        self.y = Int16(truncatingIfNeeded: p) & 0x03ff
 
         p = p >> 10
-        x = Int16(truncatingIfNeeded: p) & 0x03ff
+        self.x = Int16(truncatingIfNeeded: p) & 0x03ff
     }
 }

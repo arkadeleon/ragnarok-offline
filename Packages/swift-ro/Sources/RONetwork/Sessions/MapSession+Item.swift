@@ -51,25 +51,32 @@ extension MapSession {
 
         // See `clif_clearflooritem`
         subscription.subscribe(to: PACKET_ZC_ITEM_DISAPPEAR.self) { [unowned self] packet in
-            let event = ItemEvents.Vanished(packet: packet)
+            let event = ItemEvents.Vanished(objectID: packet.itemAid)
             self.postEvent(event)
         }
 
         // See `clif_additem`
         subscription.subscribe(to: PACKET_ZC_ITEM_PICKUP_ACK.self) { [unowned self] packet in
-            let event = ItemEvents.PickedUp(packet: packet)
+            let item = PickedUpItem(packet: packet)
+            let event = ItemEvents.PickedUp(item: item)
             self.postEvent(event)
         }
 
         // See `clif_dropitem`
         subscription.subscribe(to: PACKET_ZC_ITEM_THROW_ACK.self) { [unowned self] packet in
-            let event = ItemEvents.Thrown(packet: packet)
+            let item = ThrownItem(packet: packet)
+            let event = ItemEvents.Thrown(item: item)
             self.postEvent(event)
         }
 
         // See `clif_useitemack`
         subscription.subscribe(to: PACKET_ZC_USE_ITEM_ACK.self) { [unowned self] packet in
-            let event = ItemEvents.Used(packet: packet)
+            let item = UsedItem(packet: packet)
+            let event = ItemEvents.Used(
+                item: item,
+                accountID: packet.AID,
+                success: (packet.result != 0)
+            )
             self.postEvent(event)
 
             self.inventory.updateItem(at: Int(packet.index), amount: Int(packet.amount))
@@ -80,13 +87,21 @@ extension MapSession {
 
         // See `clif_equipitemack`
         subscription.subscribe(to: PACKET_ZC_REQ_WEAR_EQUIP_ACK.self) { [unowned self] packet in
-            let event = ItemEvents.Equipped(packet: packet)
+            let item = EquippedItem(packet: packet)
+            let event = ItemEvents.Equipped(
+                item: item,
+                success: (packet.result != 0)
+            )
             self.postEvent(event)
         }
 
         // See `clif_unequipitemack`
         subscription.subscribe(to: PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK.self) { [unowned self] packet in
-            let event = ItemEvents.Unequipped(packet: packet)
+            let item = UnequippedItem(packet: packet)
+            let event = ItemEvents.Unequipped(
+                item: item,
+                success: (packet.flag != 0)
+            )
             self.postEvent(event)
         }
     }

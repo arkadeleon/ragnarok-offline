@@ -12,7 +12,7 @@ import SwiftUI
 
 struct BasicInfoView: View {
     var char: CharInfo
-    var status: Player.Status
+    var status: CharacterStatus
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -62,6 +62,6 @@ struct BasicInfoView: View {
 }
 
 #Preview {
-    BasicInfoView(char: CharInfo(), status: Player.Status())
+    BasicInfoView(char: CharInfo(), status: CharacterStatus())
         .padding()
 }

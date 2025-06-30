@@ -129,13 +129,13 @@ final class NetworkSessionTests: XCTestCase {
 
         sleep(1)
 
-        let player = mapSession.player
-        XCTAssertEqual(player.status.str, 1)
-        XCTAssertEqual(player.status.agi, 1)
-        XCTAssertEqual(player.status.vit, 1)
-        XCTAssertEqual(player.status.int, 1)
-        XCTAssertEqual(player.status.dex, 1)
-        XCTAssertEqual(player.status.luk, 1)
+        let status = mapSession.status
+        XCTAssertEqual(status.str, 1)
+        XCTAssertEqual(status.agi, 1)
+        XCTAssertEqual(status.vit, 1)
+        XCTAssertEqual(status.int, 1)
+        XCTAssertEqual(status.dex, 1)
+        XCTAssertEqual(status.luk, 1)
 
         // MARK: - Move to warp
 

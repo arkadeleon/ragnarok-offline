@@ -14,7 +14,7 @@ struct MapView<Content>: View where Content: View {
     var scene: any MapSceneProtocol
     var content: () -> Content
 
-    @State private var status: Player.Status?
+    @State private var status: CharacterStatus?
     @State private var inventory = Inventory()
 
     @State private var presentedMenuItem: MenuItem?
