@@ -23,9 +23,9 @@ enum GameScene {
     case map3D(_ scene: MapScene3D)
 }
 
+@MainActor
 @Observable
 final class GameSession {
-    @MainActor
     var scene: GameScene = .login
 
     @ObservationIgnored
@@ -44,7 +44,6 @@ final class GameSession {
     @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
 
-    @MainActor
     func login(username: String, password: String) {
         startLoginSession()
 
@@ -53,7 +52,6 @@ final class GameSession {
         loginSession?.keepAlive(username: username)
     }
 
-    @MainActor
     func selectCharServer(_ charServer: CharServerInfo) {
         startCharSession(charServer)
     }
@@ -173,7 +171,7 @@ final class GameSession {
     }
 }
 
-extension GameSession: MapSceneDelegate {
+extension GameSession: @preconcurrency MapSceneDelegate {
     func mapSceneDidFinishLoading(_ scene: any MapSceneProtocol) {
         mapSession?.notifyMapLoaded()
     }

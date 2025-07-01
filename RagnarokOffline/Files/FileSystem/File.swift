@@ -25,16 +25,13 @@ enum FileNode {
     case grfArchiveEntry(GRFArchive, GRFEntryNode)
 }
 
+@MainActor
 @Observable
-class File: Hashable, Identifiable {
-    static func == (lhs: File, rhs: File) -> Bool {
-        lhs.url == rhs.url
-    }
-
+final class File {
     let node: FileNode
 
     @ObservationIgnored
-    lazy var url: URL = {
+    nonisolated lazy var url: URL = {
         switch node {
         case .directory(let url):
             url
@@ -54,7 +51,7 @@ class File: Hashable, Identifiable {
     }()
 
     @ObservationIgnored
-    lazy var name: String = {
+    nonisolated lazy var name: String = {
         switch node {
         case .directory(let url):
             url.lastPathComponent
@@ -70,7 +67,7 @@ class File: Hashable, Identifiable {
     }()
 
     @ObservationIgnored
-    lazy var utType: UTType? = {
+    nonisolated lazy var utType: UTType? = {
         if case .directory = node {
             return .folder
         }
@@ -95,10 +92,6 @@ class File: Hashable, Identifiable {
         let utType = UTType(filenameExtension: filenameExtension)
         return utType
     }()
-
-    var id: URL {
-        url
-    }
 
     var isDirectory: Bool {
         switch node {
@@ -129,10 +122,6 @@ class File: Hashable, Identifiable {
         case .grfArchiveEntry(let grfArchive, let entry):
             node = .grfArchiveEntry(grfArchive, entry)
         }
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(url)
     }
 
     func size() async -> Int {
@@ -262,5 +251,23 @@ extension File {
         default:
             return false
         }
+    }
+}
+
+extension File: @preconcurrency Equatable {
+    static func == (lhs: File, rhs: File) -> Bool {
+        lhs.url == rhs.url
+    }
+}
+
+extension File: @preconcurrency Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(url)
+    }
+}
+
+extension File: @preconcurrency Identifiable {
+    var id: URL {
+        url
     }
 }

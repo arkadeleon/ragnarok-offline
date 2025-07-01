@@ -10,15 +10,16 @@ import ROResources
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.clientDirectory) private var clientDirectory: File!
+    @Environment(\.serverDirectory) private var serverDirectory: File!
+
+    @Environment(\.loginServer) private var loginServer: ServerWrapper!
+    @Environment(\.charServer) private var charServer: ServerWrapper!
+    @Environment(\.mapServer) private var mapServer: ServerWrapper!
+    @Environment(\.webServer) private var webServer: ServerWrapper!
+
     @State private var selectedItem: SidebarItem? = .clientFiles
-
-    @State private var clientDirectory = File(node: .directory(ResourceManager.shared.localURL))
-    @State private var serverDirectory = File(node: .directory(ServerResourceManager.default.workingDirectoryURL))
-
     @State private var incomingFile: File?
-
-    @State private var chatSession = ChatSession()
-    @State private var gameSession = GameSession()
 
     var body: some View {
         AsyncContentView(load: load) {
@@ -63,13 +64,13 @@ struct ContentView: View {
         case .serverFiles:
             FilesView(title: "Files", directory: serverDirectory)
         case .loginServer:
-            ServerView(server: .login)
+            ServerView(server: loginServer)
         case .charServer:
-            ServerView(server: .char)
+            ServerView(server: charServer)
         case .mapServer:
-            ServerView(server: .map)
+            ServerView(server: mapServer)
         case .webServer:
-            ServerView(server: .web)
+            ServerView(server: webServer)
         case .itemDatabase:
             ItemDatabaseView()
         case .jobDatabase:
@@ -89,9 +90,9 @@ struct ContentView: View {
         case .characterSimulator:
             CharacterSimulatorView()
         case .chat:
-            ChatView(chatSession: chatSession)
+            ChatView()
         case .game:
-            GameView(gameSession: gameSession)
+            GameView()
         case .cube:
             RealityCubeView()
         }

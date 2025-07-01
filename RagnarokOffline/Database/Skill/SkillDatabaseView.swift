@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SkillDatabaseView: View {
-    @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .skill)
+    @Environment(ObservableDatabase<SkillProvider>.self) private var database
 
     var body: some View {
         AdaptiveView {
@@ -25,7 +25,7 @@ struct SkillDatabaseView: View {
                         SkillIconImageView(skill: skill)
                             .frame(width: 40)
                         Text(skill.displayName)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .frame(minWidth: 160, maxWidth: .infinity, alignment: .leading)
                         Text(skill.maxLevel.formatted())
                             .frame(width: 80, alignment: .leading)
                             .foregroundStyle(Color.secondary)
@@ -38,12 +38,18 @@ struct SkillDatabaseView: View {
             .listStyle(.plain)
         }
         .navigationTitle("Skill Database")
-        .databaseRoot($database) {
+        .databaseRoot(database) {
             ContentUnavailableView("No Results", systemImage: "arrow.up.heart.fill")
         }
     }
 }
 
-#Preview {
+#Preview("Pre-Renewal Skill Database") {
     SkillDatabaseView()
+        .environment(ObservableDatabase(mode: .prerenewal, recordProvider: .skill))
+}
+
+#Preview("Renewal Skill Database") {
+    SkillDatabaseView()
+        .environment(ObservableDatabase(mode: .renewal, recordProvider: .skill))
 }

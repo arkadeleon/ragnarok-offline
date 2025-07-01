@@ -26,7 +26,7 @@ extension DatabaseRecordProvider {
 
 @MainActor
 @Observable
-class ObservableDatabase<RecordProvider> where RecordProvider: DatabaseRecordProvider {
+final class ObservableDatabase<RecordProvider> where RecordProvider: DatabaseRecordProvider {
     let mode: DatabaseMode
     let recordProvider: RecordProvider
 

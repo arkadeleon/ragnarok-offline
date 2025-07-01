@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ItemDatabaseView: View {
-    @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .item)
+    @Environment(ObservableDatabase<ItemProvider>.self) private var database
 
     var body: some View {
         AdaptiveView {
@@ -25,7 +25,7 @@ struct ItemDatabaseView: View {
                         ItemIconImageView(item: item)
                             .frame(width: 40)
                         Text(item.displayName)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .frame(minWidth: 160, maxWidth: .infinity, alignment: .leading)
                         Text(item.type.localizedStringResource)
                             .frame(width: 160, alignment: .leading)
                             .foregroundStyle(Color.secondary)
@@ -44,12 +44,18 @@ struct ItemDatabaseView: View {
             .listStyle(.plain)
         }
         .navigationTitle("Item Database")
-        .databaseRoot($database) {
+        .databaseRoot(database) {
             ContentUnavailableView("No Results", systemImage: "leaf.fill")
         }
     }
 }
 
-#Preview {
+#Preview("Pre-Renewal Item Database") {
     ItemDatabaseView()
+        .environment(ObservableDatabase(mode: .prerenewal, recordProvider: .item))
+}
+
+#Preview("Renewal Item Database") {
+    ItemDatabaseView()
+        .environment(ObservableDatabase(mode: .renewal, recordProvider: .item))
 }

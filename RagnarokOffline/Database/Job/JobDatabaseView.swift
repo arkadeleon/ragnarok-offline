@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct JobDatabaseView: View {
-    @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .job)
+    @Environment(ObservableDatabase<JobProvider>.self) private var database
 
     var body: some View {
         ImageGrid(database.filteredRecords) { job in
@@ -18,12 +18,18 @@ struct JobDatabaseView: View {
             .buttonStyle(.plain)
         }
         .navigationTitle("Job Database")
-        .databaseRoot($database) {
+        .databaseRoot(database) {
             ContentUnavailableView("No Results", systemImage: "person.fill")
         }
     }
 }
 
-#Preview {
+#Preview("Pre-Renewal Job Database") {
     JobDatabaseView()
+        .environment(ObservableDatabase(mode: .prerenewal, recordProvider: .job))
+}
+
+#Preview("Renewal Job Database") {
+    JobDatabaseView()
+        .environment(ObservableDatabase(mode: .renewal, recordProvider: .job))
 }

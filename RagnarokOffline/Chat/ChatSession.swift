@@ -17,18 +17,15 @@ enum ChatScene {
     case map
 }
 
+@MainActor
 @Observable
-class ChatSession {
-    @MainActor
+final class ChatSession {
     var messages: [any Message] = []
 
-    @MainActor
     var scene: ChatScene = .login
 
-    @MainActor
     var playerPosition: SIMD2<Int>?
 
-    @MainActor
     var availableCommands: [CommandMessage.Command] {
         switch scene {
         case .login:
@@ -61,7 +58,6 @@ class ChatSession {
     @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
 
-    @MainActor
     func sendMessage(_ content: String) {
         messages.append(.clientText(content))
 
@@ -70,7 +66,6 @@ class ChatSession {
         }
     }
 
-    @MainActor
     func sendCommand(_ command: CommandMessage.Command, parameters: [String] = []) {
         messages.append(.command(command, parameters: parameters))
 

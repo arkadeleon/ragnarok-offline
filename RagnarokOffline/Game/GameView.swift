@@ -10,7 +10,7 @@ import ROPackets
 import SwiftUI
 
 struct GameView: View {
-    var gameSession: GameSession
+    @Environment(GameSession.self) private var gameSession
 
     var body: some View {
         ZStack {
@@ -59,5 +59,6 @@ struct GameView: View {
 }
 
 #Preview {
-    GameView(gameSession: GameSession())
+    GameView()
+        .environment(GameSession())
 }

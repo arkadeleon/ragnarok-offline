@@ -5,19 +5,17 @@
 //  Created by Leon Li on 2023/12/26.
 //
 
+import rAthenaCommon
 import SwiftUI
 
 struct ServerView: View {
     var server: ServerWrapper
 
-    @State private var status: ServerWrapper.Status
-    @State private var consoleMessages: [AttributedString]
-
     var body: some View {
         ZStack {
-            ConsoleView(messages: consoleMessages)
+            ConsoleView(messages: server.consoleMessages)
 
-            if status == .notStarted {
+            if server.status == .notStarted {
                 Button {
                     Task {
                         await server.start()
@@ -36,7 +34,7 @@ struct ServerView: View {
         .background(.background)
         .navigationTitle(server.name)
         .toolbar {
-            if status == .stopped {
+            if server.status == .stopped {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         Task {
@@ -48,7 +46,7 @@ struct ServerView: View {
                 }
             }
 
-            if status == .running {
+            if server.status == .running {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         Task {
@@ -68,21 +66,9 @@ struct ServerView: View {
                 }
             }
         }
-        .onReceive(server.statusPublisher.receive(on: RunLoop.main)) { status in
-            self.status = status
-        }
-        .onReceive(server.consoleMessagesPublisher.throttle(for: 0.1, scheduler: RunLoop.main, latest: true)) { consoleMessages in
-            self.consoleMessages = consoleMessages
-        }
-    }
-
-    init(server: ServerWrapper) {
-        self.server = server
-        _status = State(initialValue: server.status)
-        _consoleMessages = State(initialValue: server.consoleMessages)
     }
 }
 
 #Preview {
-    ServerView(server: .login)
+    ServerView(server: ServerWrapper(server: Server()))
 }

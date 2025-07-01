@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MonsterDatabaseView: View {
-    @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .monster)
+    @Environment(ObservableDatabase<MonsterProvider>.self) private var database
 
     var body: some View {
         ImageGrid(database.filteredRecords) { monster in
@@ -18,12 +18,18 @@ struct MonsterDatabaseView: View {
             .buttonStyle(.plain)
         }
         .navigationTitle("Monster Database")
-        .databaseRoot($database) {
+        .databaseRoot(database) {
             ContentUnavailableView("No Results", systemImage: "pawprint.fill")
         }
     }
 }
 
-#Preview {
+#Preview("Pre-Renewal Monster Database") {
     MonsterDatabaseView()
+        .environment(ObservableDatabase(mode: .prerenewal, recordProvider: .monster))
+}
+
+#Preview("Renewal Monster Database") {
+    MonsterDatabaseView()
+        .environment(ObservableDatabase(mode: .renewal, recordProvider: .monster))
 }

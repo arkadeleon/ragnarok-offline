@@ -9,7 +9,7 @@ import SwiftUI
 import RODatabase
 
 struct MonsterSummonDatabaseView: View {
-    @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .monsterSummon)
+    @Environment(ObservableDatabase<MonsterSummonProvider>.self) private var database
 
     var body: some View {
         AdaptiveView {
@@ -35,12 +35,18 @@ struct MonsterSummonDatabaseView: View {
             .listStyle(.plain)
         }
         .navigationTitle("Monster Summon Database")
-        .databaseRoot($database) {
+        .databaseRoot(database) {
             ContentUnavailableView("No Results", systemImage: "pawprint.fill")
         }
     }
 }
 
-#Preview {
+#Preview("Pre-Renewal Monster Summon Database") {
     MonsterSummonDatabaseView()
+        .environment(ObservableDatabase(mode: .prerenewal, recordProvider: .monsterSummon))
+}
+
+#Preview("Renewal Monster Summon Database") {
+    MonsterSummonDatabaseView()
+        .environment(ObservableDatabase(mode: .renewal, recordProvider: .monsterSummon))
 }

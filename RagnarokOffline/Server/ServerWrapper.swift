@@ -6,53 +6,39 @@
 //
 
 @preconcurrency import Combine
-@preconcurrency import rAthenaLogin
-@preconcurrency import rAthenaChar
-@preconcurrency import rAthenaMap
-@preconcurrency import rAthenaWeb
+@preconcurrency import rAthenaCommon
 
-final class ServerWrapper: Sendable {
-    static let login = ServerWrapper(server: LoginServer.shared)
-    static let char = ServerWrapper(server: CharServer.shared)
-    static let map = ServerWrapper(server: MapServer.shared)
-    static let web = ServerWrapper(server: WebServer.shared)
-
+@MainActor
+@Observable
+final class ServerWrapper {
     private let server: Server
-
-    private let statusSubject: CurrentValueSubject<ServerWrapper.Status, Never>
-    private let statusSubscription: AnyCancellable
-    let statusPublisher: AnyPublisher<ServerWrapper.Status, Never>
-
-    private let consoleMessagesSubject: CurrentValueSubject<[AttributedString], Never>
-    private let consoleMessagesSubscription: AnyCancellable
-    let consoleMessagesPublisher: AnyPublisher<[AttributedString], Never>
-
-    private let consoleActionSubject = PassthroughSubject<ServerWrapper.ConsoleAction, Never>()
 
     var name: String {
         server.name
     }
 
-    var status: ServerWrapper.Status {
-        statusSubject.value
-    }
+    var status: ServerWrapper.Status
 
-    var consoleMessages: [AttributedString] {
-        consoleMessagesSubject.value
-    }
+    var consoleMessages: [AttributedString]
+
+    private let consoleActionSubject = PassthroughSubject<ServerWrapper.ConsoleAction, Never>()
+
+    @ObservationIgnored
+    private var subscriptions = Set<AnyCancellable>()
 
     init(server: Server) {
         self.server = server
+        self.status = ServerWrapper.Status(status: server.status)
+        self.consoleMessages = []
 
-        statusSubject = CurrentValueSubject(ServerWrapper.Status(status: server.status))
-        statusSubscription = server.publisher(for: \.status)
+        server.publisher(for: \.status)
             .map(ServerWrapper.Status.init)
-            .subscribe(statusSubject)
-        statusPublisher = statusSubject.eraseToAnyPublisher()
+            .receive(on: RunLoop.main)
+            .assign(to: \.status, on: self)
+            .store(in: &subscriptions)
 
         let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.server-output", qos: .userInitiated)
-        consoleMessagesSubject = CurrentValueSubject([])
-        consoleMessagesSubscription = NotificationCenter.default.publisher(for: .ServerDidOutputData, object: server)
+        NotificationCenter.default.publisher(for: .ServerDidOutputData, object: server)
             .receive(on: queue)
             .map {
                 let data = $0.userInfo![ServerOutputDataKey] as! Data
@@ -83,8 +69,9 @@ final class ServerWrapper: Sendable {
                     return []
                 }
             }
-            .subscribe(consoleMessagesSubject)
-        consoleMessagesPublisher = consoleMessagesSubject.eraseToAnyPublisher()
+            .throttle(for: 0.1, scheduler: RunLoop.main, latest: true)
+            .assign(to: \.consoleMessages, on: self)
+            .store(in: &subscriptions)
     }
 
     func start() async -> Bool {

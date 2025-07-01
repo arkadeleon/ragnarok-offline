@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MapDatabaseView: View {
-    @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .map)
+    @Environment(ObservableDatabase<MapProvider>.self) private var database
 
     var body: some View {
         AdaptiveView {
@@ -35,12 +35,18 @@ struct MapDatabaseView: View {
             .listStyle(.plain)
         }
         .navigationTitle("Map Database")
-        .databaseRoot($database) {
+        .databaseRoot(database) {
             ContentUnavailableView("No Results", systemImage: "map.fill")
         }
     }
 }
 
-#Preview {
+#Preview("Pre-Renewal Map Database") {
     MapDatabaseView()
+        .environment(ObservableDatabase(mode: .prerenewal, recordProvider: .map))
+}
+
+#Preview("Renewal Map Database") {
+    MapDatabaseView()
+        .environment(ObservableDatabase(mode: .renewal, recordProvider: .map))
 }

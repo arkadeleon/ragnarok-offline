@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PetDatabaseView: View {
-    @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .pet)
+    @Environment(ObservableDatabase<PetProvider>.self) private var database
 
     var body: some View {
         ImageGrid(database.filteredRecords) { pet in
@@ -20,12 +20,18 @@ struct PetDatabaseView: View {
             }
         }
         .navigationTitle("Pet Database")
-        .databaseRoot($database) {
+        .databaseRoot(database) {
             ContentUnavailableView("No Results", systemImage: "pawprint.fill")
         }
     }
 }
 
-#Preview {
+#Preview("Pre-Renewal Pet Database") {
     PetDatabaseView()
+        .environment(ObservableDatabase(mode: .prerenewal, recordProvider: .pet))
+}
+
+#Preview("Renewal Pet Database") {
+    PetDatabaseView()
+        .environment(ObservableDatabase(mode: .renewal, recordProvider: .pet))
 }

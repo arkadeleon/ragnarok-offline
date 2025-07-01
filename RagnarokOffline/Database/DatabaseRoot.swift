@@ -9,7 +9,7 @@ import RODatabase
 import SwiftUI
 
 struct DatabaseRoot<RecordProvider, Empty>: ViewModifier where RecordProvider: DatabaseRecordProvider, Empty: View {
-    @Binding var database: ObservableDatabase<RecordProvider>
+    @Bindable var database: ObservableDatabase<RecordProvider>
     @ViewBuilder var empty: () -> Empty
 
     @Environment(\.horizontalSizeClass) private var sizeClass
@@ -70,7 +70,7 @@ struct DatabaseRoot<RecordProvider, Empty>: ViewModifier where RecordProvider: D
 
 extension View {
     func databaseRoot<RecordProvider, Empty>(
-        _ database: Binding<ObservableDatabase<RecordProvider>>,
+        _ database: ObservableDatabase<RecordProvider>,
         @ViewBuilder empty: @escaping () -> Empty
     ) -> some View where RecordProvider: DatabaseRecordProvider, Empty: View {
         modifier(DatabaseRoot(database: database, empty: empty))

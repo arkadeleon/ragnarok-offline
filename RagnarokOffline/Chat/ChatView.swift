@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChatView: View {
-    var chatSession: ChatSession
+    @Environment(ChatSession.self) private var chatSession
 
     @State private var position = ScrollPosition(idType: UUID.self)
 
@@ -114,5 +114,6 @@ struct ChatView: View {
 }
 
 #Preview {
-    ChatView(chatSession: ChatSession())
+    ChatView()
+        .environment(ChatSession())
 }

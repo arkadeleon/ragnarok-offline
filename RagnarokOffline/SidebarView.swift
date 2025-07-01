@@ -34,6 +34,11 @@ enum SidebarItem: Hashable {
 struct SidebarView: View {
     var selection: Binding<SidebarItem?>?
 
+    @Environment(\.loginServer) private var loginServer: ServerWrapper!
+    @Environment(\.charServer) private var charServer: ServerWrapper!
+    @Environment(\.mapServer) private var mapServer: ServerWrapper!
+    @Environment(\.webServer) private var webServer: ServerWrapper!
+
     @State private var isClientSectionExpanded = true
     @State private var isServerSectionExpanded = true
     @State private var isDatabaseSectionExpanded = true
@@ -62,19 +67,19 @@ struct SidebarView: View {
                 #endif
 
                 NavigationLink(value: SidebarItem.loginServer) {
-                    ServerCell(server: .login)
+                    ServerCell(server: loginServer)
                 }
 
                 NavigationLink(value: SidebarItem.charServer) {
-                    ServerCell(server: .char)
+                    ServerCell(server: charServer)
                 }
 
                 NavigationLink(value: SidebarItem.mapServer) {
-                    ServerCell(server: .map)
+                    ServerCell(server: mapServer)
                 }
 
                 NavigationLink(value: SidebarItem.webServer) {
-                    ServerCell(server: .web)
+                    ServerCell(server: webServer)
                 }
 
                 Button {
@@ -189,16 +194,16 @@ struct SidebarView: View {
     private func startAllServers() async {
         await withTaskGroup(of: Bool.self) { taskGroup in
             taskGroup.addTask {
-                await ServerWrapper.login.start()
+                await loginServer.start()
             }
             taskGroup.addTask {
-                await ServerWrapper.char.start()
+                await charServer.start()
             }
             taskGroup.addTask {
-                await ServerWrapper.map.start()
+                await mapServer.start()
             }
             taskGroup.addTask {
-                await ServerWrapper.web.start()
+                await webServer.start()
             }
         }
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StatusChangeDatabaseView: View {
-    @State private var database = ObservableDatabase(mode: .renewal, recordProvider: .statusChange)
+    @Environment(ObservableDatabase<StatusChangeProvider>.self) private var database
 
     var body: some View {
         AdaptiveView {
@@ -27,12 +27,18 @@ struct StatusChangeDatabaseView: View {
             .listStyle(.plain)
         }
         .navigationTitle("Status Change Database")
-        .databaseRoot($database) {
+        .databaseRoot(database) {
             ContentUnavailableView("No Results", systemImage: "moon.zzz.fill")
         }
     }
 }
 
-#Preview {
+#Preview("Pre-Renewal Status Change Database") {
     StatusChangeDatabaseView()
+        .environment(ObservableDatabase(mode: .prerenewal, recordProvider: .statusChange))
+}
+
+#Preview("Renewal Status Change Database") {
+    StatusChangeDatabaseView()
+        .environment(ObservableDatabase(mode: .renewal, recordProvider: .statusChange))
 }
