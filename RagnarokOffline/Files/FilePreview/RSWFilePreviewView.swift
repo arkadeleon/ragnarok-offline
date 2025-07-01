@@ -24,11 +24,8 @@ struct RSWFilePreviewView: View {
         }
     }
 
-    nonisolated private func loadRSWFile() async throws -> Entity {
-        guard let data = await file.contents() else {
-            throw FilePreviewError.invalidRSWFile
-        }
-
+    private func loadRSWFile() async throws -> Entity {
+        let data = try await file.contents()
         let rsw = try RSW(data: data)
 
         let gatPath = ResourcePath(components: ["data", rsw.files.gat])
@@ -62,12 +59,10 @@ struct RSWFilePreviewView: View {
         let scaleFactor = 2 / Float(max(gat.width, gat.height))
         let scale = simd_float4x4(scale: [scaleFactor, scaleFactor, scaleFactor])
 
-        await MainActor.run {
-            worldEntity.transform.matrix = scale * rotation * translation
-        }
+        worldEntity.transform.matrix = scale * rotation * translation
 
-        let entity = await Entity()
-        await entity.addChild(worldEntity)
+        let entity = Entity()
+        entity.addChild(worldEntity)
 
         return entity
     }

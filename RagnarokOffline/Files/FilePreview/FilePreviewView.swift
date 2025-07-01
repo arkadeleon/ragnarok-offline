@@ -7,19 +7,6 @@
 
 import SwiftUI
 
-enum FilePreviewError: Error {
-    case invalidTextFile
-    case invalidImageFile
-    case invalidAudioFile
-    case invalidACTFile
-    case invalidGATFile
-    case invalidGNDFile
-    case invalidRSMFile
-    case invalidRSWFile
-    case invalidSPRFile
-    case invalidSTRFile
-}
-
 struct FilePreviewView: View {
     var file: File
 

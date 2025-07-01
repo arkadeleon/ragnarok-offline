@@ -42,18 +42,16 @@ struct SPRFilePreviewView: View {
         }
     }
 
-    nonisolated private func loadSPRFile() async throws -> SpriteSection {
-        guard let data = await file.contents() else {
-            throw FilePreviewError.invalidSPRFile
-        }
-
+    private func loadSPRFile() async throws -> SpriteSection {
+        let data = try await file.contents()
         let spr = try SPR(data: data)
 
         let images = (0..<spr.sprites.count).compactMap { index in
             spr.imageForSprite(at: index)
         }
 
-        let size = images.reduce(CGSize(width: 80, height: 80)) { size, image in
+        let minimumSize = CGSize(width: 80, height: 80)
+        let size = images.reduce(minimumSize) { size, image in
             CGSize(
                 width: max(size.width, CGFloat(image.width)),
                 height: max(size.height, CGFloat(image.height))

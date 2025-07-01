@@ -20,11 +20,8 @@ struct RSMFilePreviewView: View {
         }
     }
 
-    nonisolated private func loadRSMFile() async throws -> Entity {
-        guard let data = await file.contents() else {
-            throw FilePreviewError.invalidRSMFile
-        }
-
+    private func loadRSMFile() async throws -> Entity {
+        let data = try await file.contents()
         let rsm = try RSM(data: data)
 
         let instance = Model.createInstance(

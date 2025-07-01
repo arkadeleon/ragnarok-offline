@@ -20,11 +20,8 @@ struct GNDFilePreviewView: View {
         }
     }
 
-    nonisolated private func loadGNDFile() async throws -> Entity {
-        guard let data = await file.contents() else {
-            throw FilePreviewError.invalidGNDFile
-        }
-
+    private func loadGNDFile() async throws -> Entity {
+        let data = try await file.contents()
         let gnd = try GND(data: data)
 
         let gatData: Data
@@ -37,7 +34,7 @@ struct GNDFilePreviewView: View {
             let gatPath = entry.path.replacingExtension("gat")
             gatData = try await grfArchive.contentsOfEntry(at: gatPath)
         default:
-            throw FilePreviewError.invalidACTFile
+            throw FileError.fileIsDirectory
         }
 
         let gat = try GAT(data: gatData)
@@ -49,12 +46,10 @@ struct GNDFilePreviewView: View {
         let scaleFactor = 2 / Float(max(gat.width, gat.height))
         let scale = simd_float4x4(scale: [scaleFactor, scaleFactor, scaleFactor])
 
-        await MainActor.run {
-            groundEntity.transform.matrix = scale * rotation * translation
-        }
+        groundEntity.transform.matrix = scale * rotation * translation
 
-        let entity = await Entity()
-        await entity.addChild(groundEntity)
+        let entity = Entity()
+        entity.addChild(groundEntity)
 
         return entity
     }

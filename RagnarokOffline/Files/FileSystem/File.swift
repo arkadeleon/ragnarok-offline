@@ -11,6 +11,12 @@ import Observation
 import ROResources
 import UniformTypeIdentifiers
 
+enum FileError: Error {
+    case fileIsDirectory
+    case imageGenerationFailed
+    case stringConversionFailed
+}
+
 enum FileNode {
     case directory(URL)
     case regularFile(URL)
@@ -146,18 +152,18 @@ class File: Hashable, Identifiable {
         }
     }
 
-    func contents() async -> Data? {
+    func contents() async throws -> Data {
         switch node {
         case .directory:
-            nil
+            throw FileError.fileIsDirectory
         case .regularFile(let url):
-            try? Data(contentsOf: url)
+            try Data(contentsOf: url)
         case .grfArchive:
-            nil
+            throw FileError.fileIsDirectory
         case .grfArchiveDirectory:
-            nil
+            throw FileError.fileIsDirectory
         case .grfArchiveEntry(let grfArchive, let entry):
-            try? await grfArchive.contentsOfEntry(at: entry.path)
+            try await grfArchive.contentsOfEntry(at: entry.path)
         }
     }
 

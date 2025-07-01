@@ -20,34 +20,28 @@ struct ImageFilePreviewView: View {
         }
     }
 
-    nonisolated private func loadImageFile() async throws -> CGImage {
-        guard let data = await file.contents() else {
-            throw FilePreviewError.invalidImageFile
-        }
+    private func loadImageFile() async throws -> CGImage {
+        let data = try await file.contents()
 
         switch file.utType {
         case .ebm:
             let decompressor = GzipDecompressor()
             let decompressedData = try await decompressor.unzip(data: data)
-            guard let imageSource = CGImageSourceCreateWithData(decompressedData as CFData, nil) else {
-                throw FilePreviewError.invalidImageFile
-            }
-            guard let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil) else {
-                throw FilePreviewError.invalidImageFile
+            guard let imageSource = CGImageSourceCreateWithData(decompressedData as CFData, nil),
+                  let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil) else {
+                throw FileError.imageGenerationFailed
             }
             return image
         case .pal:
             let pal = try PAL(data: data)
             guard let image = pal.image(at: CGSize(width: 256, height: 256)) else {
-                throw FilePreviewError.invalidImageFile
+                throw FileError.imageGenerationFailed
             }
             return image
         default:
-            guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil) else {
-                throw FilePreviewError.invalidImageFile
-            }
-            guard let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil) else {
-                throw FilePreviewError.invalidImageFile
+            guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
+                  let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil) else {
+                throw FileError.imageGenerationFailed
             }
             return image
         }

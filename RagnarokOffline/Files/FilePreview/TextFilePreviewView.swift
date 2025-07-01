@@ -17,10 +17,8 @@ struct TextFilePreviewView: View {
         }
     }
 
-    nonisolated private func loadTextFile() async throws -> String {
-        guard var data = await file.contents() else {
-            throw FilePreviewError.invalidTextFile
-        }
+    private func loadTextFile() async throws -> String {
+        var data = try await file.contents()
 
         switch file.utType {
         case .lub:
@@ -36,7 +34,7 @@ struct TextFilePreviewView: View {
         NSString.stringEncoding(for: data, convertedString: &convertedString, usedLossyConversion: nil)
 
         guard let convertedString else {
-            throw FilePreviewError.invalidTextFile
+            throw FileError.stringConversionFailed
         }
 
         return convertedString as String

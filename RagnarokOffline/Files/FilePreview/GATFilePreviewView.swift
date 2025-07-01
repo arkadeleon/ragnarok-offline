@@ -19,15 +19,12 @@ struct GATFilePreviewView: View {
         }
     }
 
-    nonisolated private func loadGATFile() async throws -> CGImage {
-        guard let gatData = await file.contents() else {
-            throw FilePreviewError.invalidGATFile
-        }
-
-        let gat = try GAT(data: gatData)
+    private func loadGATFile() async throws -> CGImage {
+        let data = try await file.contents()
+        let gat = try GAT(data: data)
 
         guard let image = gat.image() else {
-            throw FilePreviewError.invalidGATFile
+            throw FileError.imageGenerationFailed
         }
 
         return image

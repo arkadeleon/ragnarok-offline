@@ -48,11 +48,8 @@ struct AudioFilePreviewView: View {
         }
     }
 
-    nonisolated private func loadAudioFile() async throws -> AVAudioPlayer {
-        guard let data = await file.contents() else {
-            throw FilePreviewError.invalidAudioFile
-        }
-
+    private func loadAudioFile() async throws -> AVAudioPlayer {
+        let data = try await file.contents()
         let player = try AVAudioPlayer(data: data)
 
         self.player = player

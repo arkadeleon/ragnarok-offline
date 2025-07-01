@@ -22,7 +22,7 @@ extension File {
         switch utType {
         case .gnd:
             guard case .grfArchiveEntry(let grfArchive, _) = node,
-                  let data = await contents(),
+                  let data = try? await contents(),
                   let gnd = try? GND(data: data) else {
                 return []
             }
@@ -39,7 +39,7 @@ extension File {
             return referenceFiles
         case .rsw:
             guard case .grfArchiveEntry(let grfArchive, _) = node,
-                  let data = await contents(),
+                  let data = try? await contents(),
                   let rsw = try? RSW(data: data) else {
                 return []
             }

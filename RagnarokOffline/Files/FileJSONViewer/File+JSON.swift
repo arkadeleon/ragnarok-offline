@@ -23,7 +23,7 @@ extension File {
             return nil
         }
 
-        guard let data = await contents() else {
+        guard let data = try? await contents() else {
             return nil
         }
 

@@ -34,11 +34,12 @@ struct STRFilePreviewView: View {
         }
     }
 
-    nonisolated private func loadSTRFile() async throws -> STRRenderer {
-        guard case .grfArchiveEntry(let grfArchive, let entry) = file.node, let data = await file.contents() else {
-            throw FilePreviewError.invalidSTRFile
+    private func loadSTRFile() async throws -> STRRenderer {
+        guard case .grfArchiveEntry(let grfArchive, let entry) = file.node else {
+            throw FileError.fileIsDirectory
         }
 
+        let data = try await file.contents()
         let str = try STR(data: data)
         let effect = Effect(str: str)
 

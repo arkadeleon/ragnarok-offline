@@ -46,10 +46,8 @@ struct ACTFilePreviewView: View {
         }
     }
 
-    nonisolated private func loadACTFile() async throws -> [ActionSection] {
-        guard let actData = await file.contents() else {
-            throw FilePreviewError.invalidACTFile
-        }
+    private func loadACTFile() async throws -> [ActionSection] {
+        let actData = try await file.contents()
 
         let sprData: Data
         switch file.node {
@@ -60,7 +58,7 @@ struct ACTFilePreviewView: View {
             let sprPath = entry.path.replacingExtension("spr")
             sprData = try await grfArchive.contentsOfEntry(at: sprPath)
         default:
-            throw FilePreviewError.invalidACTFile
+            throw FileError.fileIsDirectory
         }
 
         let act = try ACT(data: actData)
@@ -76,7 +74,8 @@ struct ACTFilePreviewView: View {
         }
 
         if animatedImages.count % 8 != 0 {
-            let size = animatedImages.reduce(CGSize(width: 80, height: 80)) { size, animatedImage in
+            let minimumSize = CGSize(width: 80, height: 80)
+            let size = animatedImages.reduce(minimumSize) { size, animatedImage in
                 CGSize(
                     width: max(size.width, animatedImage.frameWidth),
                     height: max(size.height, animatedImage.frameHeight)
@@ -93,7 +92,8 @@ struct ACTFilePreviewView: View {
                 let startIndex = sectionIndex * 8
                 let endIndex = (sectionIndex + 1) * 8
                 let animatedImages = Array(animatedImages[startIndex..<endIndex])
-                let size = animatedImages.reduce(CGSize(width: 80, height: 80)) { size, animatedImage in
+                let minimumSize = CGSize(width: 80, height: 80)
+                let size = animatedImages.reduce(minimumSize) { size, animatedImage in
                     CGSize(
                         width: max(size.width, animatedImage.frameWidth),
                         height: max(size.height, animatedImage.frameHeight)

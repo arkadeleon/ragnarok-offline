@@ -19,9 +19,7 @@ class FileThumbnailGenerator {
 
         switch utType {
         case let utType where utType.conforms(to: .image):
-            guard let data = await request.file.contents() else {
-                return nil
-            }
+            let data = try await request.file.contents()
 
             guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil) else {
                 return nil
@@ -39,9 +37,7 @@ class FileThumbnailGenerator {
 
             return FileThumbnail(cgImage: thumbnail)
         case .ebm:
-            guard let data = await request.file.contents() else {
-                return nil
-            }
+            let data = try await request.file.contents()
 
             let decompressor = GzipDecompressor()
             let decompressedData = try await decompressor.unzip(data: data)
@@ -56,10 +52,7 @@ class FileThumbnailGenerator {
 
             return FileThumbnail(cgImage: thumbnail)
         case .gat:
-            guard let data = await request.file.contents() else {
-                return nil
-            }
-
+            let data = try await request.file.contents()
             let gat = try GAT(data: data)
 
             guard let image = gat.image() else {
@@ -68,10 +61,7 @@ class FileThumbnailGenerator {
 
             return FileThumbnail(cgImage: image)
         case .pal:
-            guard let data = await request.file.contents() else {
-                return nil
-            }
-
+            let data = try await request.file.contents()
             let pal = try PAL(data: data)
 
             guard let image = pal.image(at: CGSize(width: 32 * request.scale, height: 32 * request.scale)) else {
@@ -80,10 +70,7 @@ class FileThumbnailGenerator {
 
             return FileThumbnail(cgImage: image)
         case .spr:
-            guard let data = await request.file.contents() else {
-                return nil
-            }
-
+            let data = try await request.file.contents()
             let spr = try SPR(data: data)
 
             guard let image = spr.imageForSprite(at: 0) else {

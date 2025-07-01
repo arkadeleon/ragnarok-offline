@@ -31,7 +31,7 @@ extension File: Transferable {
         case .regularFile, .grfArchive:
             return url
         case .grfArchiveEntry:
-            guard let data = await contents() else {
+            guard let data = try? await contents() else {
                 return nil
             }
             do {
