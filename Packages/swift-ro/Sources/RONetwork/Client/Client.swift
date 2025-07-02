@@ -10,13 +10,13 @@ import Foundation
 import Network
 import ROPackets
 
-public enum ClientError: Error {
+enum ClientError: Error {
     case decoding(any Error)
     case encoding(any Error)
     case network(NWError)
 }
 
-final public class Client: Sendable {
+final class Client: Sendable {
     private let name: String
     private let connection: NWConnection
 
@@ -26,7 +26,7 @@ final public class Client: Sendable {
     private let packetStream: AsyncStream<any RegisteredPacket>
     private let packetContinuation: AsyncStream<any RegisteredPacket>.Continuation
 
-    public init(name: String, address: String, port: UInt16) {
+    init(name: String, address: String, port: UInt16) {
         self.name = name
         self.connection = NWConnection(
             host: NWEndpoint.Host(address),
@@ -43,7 +43,7 @@ final public class Client: Sendable {
         self.packetContinuation = packetContinuation
     }
 
-    public func connect(with subscription: ClientSubscription) {
+    func connect(with subscription: ClientSubscription) {
         let name = name
         connection.stateUpdateHandler = { state in
             logger.info("\(name) client \(String(describing: state))")
@@ -74,7 +74,7 @@ final public class Client: Sendable {
         }
     }
 
-    public func disconnect() {
+    func disconnect() {
         connection.stateUpdateHandler = nil
 
         connection.cancel()
@@ -83,7 +83,7 @@ final public class Client: Sendable {
         packetContinuation.finish()
     }
 
-    public func sendPacket(_ packet: some BinaryEncodable) {
+    func sendPacket(_ packet: some BinaryEncodable) {
         do {
             let encoder = PacketEncoder()
             let data = try encoder.encode(packet)
@@ -100,7 +100,7 @@ final public class Client: Sendable {
         }
     }
 
-    public func receiveDataAndPacket(count: Int, completion: @escaping @Sendable (_ data: Data) -> Void) {
+    func receiveDataAndPacket(count: Int, completion: @escaping @Sendable (_ data: Data) -> Void) {
         connection.receive(minimumIncompleteLength: count, maximumLength: 65536) { [weak self] content, _, _, error in
             guard let self else {
                 return
@@ -135,7 +135,7 @@ final public class Client: Sendable {
         }
     }
 
-    public func receivePacket() {
+    func receivePacket() {
         connection.receive(minimumIncompleteLength: 2, maximumLength: 65536) { [weak self] content, _, _, error in
             guard let self else {
                 return

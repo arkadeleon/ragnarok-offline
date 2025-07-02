@@ -7,20 +7,17 @@
 
 import ROPackets
 
-public typealias ClientErrorHandler = @Sendable (_ error: ClientError) -> Void
+typealias ClientErrorHandler = @Sendable (_ error: ClientError) -> Void
 
-public struct ClientSubscription {
+struct ClientSubscription {
     var errorHandlers: [ClientErrorHandler] = []
     var packetHandlers: [any PacketHandlerProtocol] = []
 
-    public init() {
-    }
-
-    public mutating func subscribe(to type: ClientError.Type, _ handler: @escaping ClientErrorHandler) {
+    mutating func subscribe(to type: ClientError.Type, _ handler: @escaping ClientErrorHandler) {
         errorHandlers.append(handler)
     }
 
-    public mutating func subscribe<P>(to type: P.Type, _ handler: @escaping @Sendable (P) -> Void) where P: RegisteredPacket {
+    mutating func subscribe<P>(to type: P.Type, _ handler: @escaping @Sendable (P) -> Void) where P: RegisteredPacket {
         let packetHandler = PacketHandler(type: type, handler: handler)
         packetHandlers.append(packetHandler)
     }
