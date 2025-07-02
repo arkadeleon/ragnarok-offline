@@ -5,13 +5,14 @@
 //  Created by Leon Li on 2025/4/10.
 //
 
+import ROGame
 import RONetwork
 import SwiftUI
 
 struct InventoryView: View {
     var inventory: Inventory
-    var onUseItem: (InventoryItem) -> Void
-    var onEquipItem: (InventoryItem) -> Void
+
+    @Environment(GameSession.self) private var gameSession
 
     @State private var items: [InventoryItem] = []
 
@@ -64,7 +65,7 @@ struct InventoryView: View {
                         InventoryItemView(item: item) {
                             if item.isUsable {
                                 Button {
-                                    onUseItem(item)
+                                    gameSession.useItem(item)
                                 } label: {
                                     GameText("Use")
                                 }
@@ -72,7 +73,7 @@ struct InventoryView: View {
 
                             if item.isEquippable {
                                 Button {
-                                    onEquipItem(item)
+                                    gameSession.equipItem(item)
                                 } label: {
                                     GameText("Equip")
                                 }
@@ -91,12 +92,6 @@ struct InventoryView: View {
         .task {
             items = inventory.usableItems
         }
-    }
-
-    init(inventory: Inventory, onUseItem: @escaping (InventoryItem) -> Void, onEquipItem: @escaping (InventoryItem) -> Void) {
-        self.inventory = inventory
-        self.onUseItem = onUseItem
-        self.onEquipItem = onEquipItem
     }
 }
 
@@ -117,6 +112,7 @@ struct InventoryView: View {
         return inventory
     }()
 
-    InventoryView(inventory: inventory, onUseItem: { _ in }, onEquipItem: { _ in })
+    InventoryView(inventory: inventory)
         .padding()
+        .environment(GameSession())
 }

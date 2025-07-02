@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2025/2/14.
 //
 
-import AVFAudio
 import CoreGraphics
 import Foundation
 import GRF
@@ -131,40 +130,6 @@ extension ResourceManager {
             return image
         } else {
             throw ResourceError.cannotCreateImage
-        }
-    }
-}
-
-extension ResourceManager {
-    public func audio(at path: ResourcePath) async -> AVAudioBuffer? {
-        guard let data = try? await contentsOfResource(at: path) else {
-            return nil
-        }
-
-        // Create a temporary file
-        let uuid = UUID().uuidString
-        let tempURL = URL.temporaryDirectory.appending(path: uuid)
-
-        do {
-            try data.write(to: tempURL)
-            let audioFile = try AVAudioFile(forReading: tempURL)
-
-            let buffer = AVAudioPCMBuffer(
-                pcmFormat: audioFile.processingFormat,
-                frameCapacity: AVAudioFrameCount(audioFile.length)
-            )
-
-            if let buffer {
-                try audioFile.read(into: buffer)
-            }
-
-            // Clean up
-            try? FileManager.default.removeItem(at: tempURL)
-
-            return buffer
-        } catch {
-            try? FileManager.default.removeItem(at: tempURL)
-            return nil
         }
     }
 }

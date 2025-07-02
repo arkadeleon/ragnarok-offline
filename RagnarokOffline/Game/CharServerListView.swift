@@ -5,12 +5,14 @@
 //  Created by Leon Li on 2024/9/10.
 //
 
+import ROGame
 import RONetwork
 import SwiftUI
 
 struct CharServerListView: View {
     var charServers: [CharServerInfo]
-    var onSelectCharServer: (CharServerInfo) -> Void
+
+    @Environment(GameSession.self) private var gameSession
 
     var body: some View {
         ZStack {
@@ -27,7 +29,7 @@ struct CharServerListView: View {
                     Spacer()
 
                     GameButton("btn_ok.bmp") {
-                        onSelectCharServer(charServers[0])
+                        gameSession.selectCharServer(charServers[0])
                     }
 
                     GameButton("btn_cancel.bmp") {
@@ -40,15 +42,13 @@ struct CharServerListView: View {
         .frame(width: 280, height: 120)
     }
 
-    init(charServers: [CharServerInfo], onSelectCharServer: @escaping (CharServerInfo) -> Void) {
+    init(charServers: [CharServerInfo]) {
         self.charServers = charServers
-        self.onSelectCharServer = onSelectCharServer
     }
 }
 
 #Preview {
-    CharServerListView(charServers: []) { charServer in
-        // Select char server.
-    }
-    .padding()
+    CharServerListView(charServers: [])
+        .padding()
+        .environment(GameSession())
 }

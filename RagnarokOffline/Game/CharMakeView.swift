@@ -5,12 +5,14 @@
 //  Created by Leon Li on 2024/9/10.
 //
 
+import ROGame
 import ROPackets
 import SwiftUI
 
 struct CharMakeView: View {
     var slot: UInt8
-    var onMakeChar: (CharInfo) -> Void
+
+    @Environment(GameSession.self) private var gameSession
 
     @State private var name = ""
     @State private var str: UInt8 = 1
@@ -52,7 +54,7 @@ struct CharMakeView: View {
                             char.luk = luk
                             char.slot = slot
 
-                            onMakeChar(char)
+                            gameSession.makeChar(char: char)
                         }
 
                         GameButton("btn_cancel.bmp") {
@@ -65,16 +67,10 @@ struct CharMakeView: View {
             .frame(width: 576, height: 342)
         }
     }
-
-    init(slot: UInt8, onMakeChar: @escaping (CharInfo) -> Void) {
-        self.slot = slot
-        self.onMakeChar = onMakeChar
-    }
 }
 
 #Preview {
-    CharMakeView(slot: 0) { char in
-        // Make char.
-    }
-    .padding()
+    CharMakeView(slot: 0)
+        .padding()
+        .environment(GameSession())
 }

@@ -6,7 +6,6 @@
 //
 
 import ROConstants
-import ROGame
 import RONetwork
 import RORendering
 import SpriteKit

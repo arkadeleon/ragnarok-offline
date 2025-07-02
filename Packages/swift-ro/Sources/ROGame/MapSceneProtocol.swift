@@ -8,7 +8,7 @@
 import RONetwork
 
 @MainActor
-protocol MapSceneProtocol {
+public protocol MapSceneProtocol {
     func onPlayerMoved(_ event: PlayerEvents.Moved)
 
     func onItemSpawned(_ event: ItemEvents.Spawned)

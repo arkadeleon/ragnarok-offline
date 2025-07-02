@@ -9,19 +9,19 @@ import RealityKit
 import ROFileFormats
 
 @MainActor
-public class TileEntityManager {
-    public let gat: GAT
-    public let rootEntity: Entity
+final class TileEntityManager {
+    let gat: GAT
+    let rootEntity: Entity
 
     private let range: Int = 17
     private var tileEntities: [SIMD2<Int> : ModelEntity] = [:]
 
-    public init(gat: GAT, rootEntity: Entity) {
+    init(gat: GAT, rootEntity: Entity) {
         self.gat = gat
         self.rootEntity = rootEntity
     }
 
-    public func addTileEntities(for position: SIMD2<Int>) {
+    func addTileEntities(for position: SIMD2<Int>) {
         for relativeX in (-range)...(range) {
             for relativeY in (-range)...(range) {
                 let x = position.x + relativeX
@@ -65,7 +65,7 @@ public class TileEntityManager {
         }
     }
 
-    public func updateTileEntities(for position: SIMD2<Int>) {
+    func updateTileEntities(for position: SIMD2<Int>) {
         for relativeX in (-range)...(range) {
             for relativeY in (-range)...(range) {
                 let x = position.x + relativeX

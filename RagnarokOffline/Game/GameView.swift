@@ -5,56 +5,32 @@
 //  Created by Leon Li on 2024/9/5.
 //
 
-import RONetwork
-import ROPackets
+import ROGame
 import SwiftUI
 
 struct GameView: View {
     @Environment(GameSession.self) private var gameSession
 
     var body: some View {
-        ZStack {
-            switch gameSession.scene {
+        Group {
+            switch gameSession.phase {
             case .login:
-                LoginView(onLogin: login)
+                LoginView()
             case .charServerList(let charServers):
-                CharServerListView(charServers: charServers, onSelectCharServer: selectCharServer)
+                CharServerListView(charServers: charServers)
             case .charSelect(let chars):
-                CharSelectView(chars: chars, onSelectChar: selectChar, onMakeChar: makeChar)
+                CharSelectView(chars: chars)
             case .charMake(let slot):
-                CharMakeView(slot: slot, onMakeChar: makeChar)
+                CharMakeView(slot: slot)
             case .mapLoading:
                 ProgressView()
-            case .map2D(let scene):
-                MapView(mapSession: gameSession.mapSession!, scene: scene) {
-                    MapView2DContent(scene: scene)
-                }
-            case .map3D(let scene):
-                MapView(mapSession: gameSession.mapSession!, scene: scene) {
-                    MapView3DContent(scene: scene)
-                }
+            case .map(let scene):
+                MapView(scene: scene)
             }
         }
-    }
-
-    private func login(username: String, password: String) {
-        gameSession.login(username: username, password: password)
-    }
-
-    private func selectCharServer(charServer: CharServerInfo) {
-        gameSession.selectCharServer(charServer)
-    }
-
-    private func selectChar(char: CharInfo) {
-        gameSession.charSession?.selectChar(slot: char.slot)
-    }
-
-    private func makeChar(slot: UInt8) {
-        gameSession.scene = .charMake(slot)
-    }
-
-    private func makeChar(char: CharInfo) {
-        gameSession.charSession?.makeChar(char: char)
+        .task {
+            gameSession.start(resourceManager: .shared, scriptManager: .shared)
+        }
     }
 }
 

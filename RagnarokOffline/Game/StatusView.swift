@@ -6,12 +6,14 @@
 //
 
 import ROConstants
+import ROGame
 import RONetwork
 import SwiftUI
 
 struct StatusView: View {
     var status: CharacterStatus
-    var onIncrementStatusProperty: (StatusProperty) -> Void
+
+    @Environment(GameSession.self) private var gameSession
 
     var body: some View {
         VStack(spacing: 0) {
@@ -49,22 +51,22 @@ struct StatusView: View {
                 VStack(spacing: 2) {
                     Group {
                         GameButton("basic_interface/arw_right.bmp") {
-                            onIncrementStatusProperty(.str)
+                            gameSession.incrementStatusProperty(.str)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
-                            onIncrementStatusProperty(.agi)
+                            gameSession.incrementStatusProperty(.agi)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
-                            onIncrementStatusProperty(.vit)
+                            gameSession.incrementStatusProperty(.vit)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
-                            onIncrementStatusProperty(.int)
+                            gameSession.incrementStatusProperty(.int)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
-                            onIncrementStatusProperty(.dex)
+                            gameSession.incrementStatusProperty(.dex)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
-                            onIncrementStatusProperty(.luk)
+                            gameSession.incrementStatusProperty(.luk)
                         }
                     }
                     .frame(width: 14, height: 14)
@@ -121,14 +123,10 @@ struct StatusView: View {
         }
         .frame(width: 280)
     }
-
-    init(status: CharacterStatus, onIncrementStatusProperty: @escaping (StatusProperty) -> Void) {
-        self.status = status
-        self.onIncrementStatusProperty = onIncrementStatusProperty
-    }
 }
 
 #Preview {
-    StatusView(status: CharacterStatus(), onIncrementStatusProperty: { _ in })
+    StatusView(status: CharacterStatus())
         .padding()
+        .environment(GameSession())
 }

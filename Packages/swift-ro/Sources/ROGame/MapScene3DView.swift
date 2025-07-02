@@ -1,5 +1,5 @@
 //
-//  MapView3DContent.swift
+//  MapScene3DView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/9/10.
@@ -8,7 +8,7 @@
 import RealityKit
 import SwiftUI
 
-struct MapView3DContent: View {
+struct MapScene3DView: View {
     var scene: MapScene3D
 
     @State private var distance: Float = 80
@@ -31,5 +31,8 @@ struct MapView3DContent: View {
         .gesture(scene.tileTapGesture)
         .gesture(scene.mapObjectTapGesture)
         .gesture(scene.mapItemTapGesture)
+        .onDisappear {
+            scene.unload()
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 import RONetwork
 
+@MainActor
 protocol MapSceneDelegate: AnyObject {
     func mapSceneDidFinishLoading(_ scene: any MapSceneProtocol)
     func mapScene(_ scene: any MapSceneProtocol, didTapTileAt position: SIMD2<Int>)

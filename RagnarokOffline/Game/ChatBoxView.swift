@@ -5,10 +5,11 @@
 //  Created by Leon Li on 2025/4/16.
 //
 
+import ROGame
 import SwiftUI
 
 struct ChatBoxView: View {
-    var onSubmitMessage: (String) -> Void
+    @Environment(GameSession.self) private var gameSession
 
     @State private var message = ""
 
@@ -27,19 +28,16 @@ struct ChatBoxView: View {
                 #endif
                 .disableAutocorrection(true)
                 .onSubmit {
-                    onSubmitMessage(message)
+                    gameSession.sendMessage(message)
                     message = ""
                 }
         }
         .frame(width: 280)
     }
-
-    init(onSubmitMessage: @escaping (String) -> Void) {
-        self.onSubmitMessage = onSubmitMessage
-    }
 }
 
 #Preview {
-    ChatBoxView(onSubmitMessage: { _ in })
+    ChatBoxView()
         .padding()
+        .environment(GameSession())
 }

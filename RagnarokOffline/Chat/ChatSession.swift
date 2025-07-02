@@ -10,24 +10,24 @@ import Observation
 import RONetwork
 import ROPackets
 
-enum ChatScene {
-    case login
-    case selectCharServer
-    case selectChar
-    case map
-}
-
 @MainActor
 @Observable
 final class ChatSession {
-    var messages: [any Message] = []
+    enum Phase {
+        case login
+        case selectCharServer
+        case selectChar
+        case map
+    }
 
-    var scene: ChatScene = .login
+    var phase: ChatSession.Phase = .login
+
+    var messages: [any Message] = []
 
     var playerPosition: SIMD2<Int>?
 
     var availableCommands: [CommandMessage.Command] {
-        switch scene {
+        switch phase {
         case .login:
             [.login]
         case .selectCharServer:
@@ -40,13 +40,6 @@ final class ChatSession {
     }
 
     @ObservationIgnored
-    private var loginSession: LoginSession?
-    @ObservationIgnored
-    private var charSession: CharSession?
-    @ObservationIgnored
-    private var mapSession: MapSession?
-
-    @ObservationIgnored
     private var account: AccountInfo?
 
     @ObservationIgnored
@@ -54,6 +47,13 @@ final class ChatSession {
 
     @ObservationIgnored
     private var chars: [CharInfo] = []
+
+    @ObservationIgnored
+    private var loginSession: LoginSession?
+    @ObservationIgnored
+    private var charSession: CharSession?
+    @ObservationIgnored
+    private var mapSession: MapSession?
 
     @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
@@ -135,7 +135,7 @@ final class ChatSession {
             self.account = event.account
             self.charServers = event.charServers
 
-            self.scene = .selectCharServer
+            self.phase = .selectCharServer
 
             self.messages.append(.serverText("Accepted"))
 
@@ -179,7 +179,7 @@ final class ChatSession {
 
         charSession.subscribe(to: CharServerEvents.Accepted.self) { [unowned self] event in
             self.chars = event.chars
-            self.scene = .selectChar
+            self.phase = .selectChar
 
             self.messages.append(.serverText("Accepted"))
 
@@ -206,7 +206,7 @@ final class ChatSession {
         .store(in: &subscriptions)
 
         charSession.subscribe(to: CharServerEvents.NotifyMapServer.self) { [unowned self] event in
-            self.scene = .map
+            self.phase = .map
 
             self.messages.append(.serverText("Entered map: \(event.mapName)"))
 

@@ -15,7 +15,7 @@ enum MenuItem {
 struct MenuView: View {
     var action: (MenuItem) -> Void
 
-    @State private var isExpanded = true
+    @State private var isExpanded = false
 
     var body: some View {
         VStack(spacing: 0) {

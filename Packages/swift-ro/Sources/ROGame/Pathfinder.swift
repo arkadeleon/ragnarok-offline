@@ -8,18 +8,18 @@
 import Foundation
 import ROFileFormats
 
-final public class Pathfinder: Sendable {
-    private let gat: GAT
-    private let width: Int
-    private let height: Int
+final class Pathfinder: Sendable {
+    let gat: GAT
+    let width: Int
+    let height: Int
 
-    public init(gat: GAT) {
+    init(gat: GAT) {
         self.gat = gat
         self.width = Int(gat.width)
         self.height = Int(gat.height)
     }
 
-    public func findPath(from start: SIMD2<Int>, to end: SIMD2<Int>) -> [SIMD2<Int>] {
+    func findPath(from start: SIMD2<Int>, to end: SIMD2<Int>) -> [SIMD2<Int>] {
         // Check if start and end positions are valid and walkable
         guard isValidAndWalkable(position: start) && isValidAndWalkable(position: end) else {
             return []

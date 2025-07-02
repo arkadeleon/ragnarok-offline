@@ -5,10 +5,11 @@
 //  Created by Leon Li on 2024/9/4.
 //
 
+import ROGame
 import SwiftUI
 
 struct LoginView: View {
-    var onLogin: (String, String) -> Void
+    @Environment(GameSession.self) private var gameSession
 
     @State private var username = ClientSettings.shared.username
     @State private var password = ClientSettings.shared.password
@@ -52,10 +53,13 @@ struct LoginView: View {
                     Spacer()
 
                     GameButton("login_interface/btn_connect.bmp") {
+                        let serverAddress = ClientSettings.shared.serverAddress
+                        let serverPort = ClientSettings.shared.serverPort
+
+                        gameSession.login(serverAddress: serverAddress, serverPort: serverPort, username: username, password: password)
+
                         ClientSettings.shared.username = username
                         ClientSettings.shared.password = password
-
-                        onLogin(username, password)
                     }
 
                     GameButton("login_interface/btn_exit.bmp") {
@@ -67,15 +71,10 @@ struct LoginView: View {
         }
         .frame(width: 280, height: 120)
     }
-
-    init(onLogin: @escaping (String, String) -> Void) {
-        self.onLogin = onLogin
-    }
 }
 
 #Preview {
-    LoginView { username, password in
-        // Login.
-    }
-    .padding()
+    LoginView()
+        .padding()
+        .environment(GameSession())
 }

@@ -8,7 +8,6 @@
 import AVFAudio
 import RealityKit
 import ROCore
-import ROGame
 import RONetwork
 import RORendering
 import ROResources
@@ -20,6 +19,9 @@ class MapScene3D: MapSceneProtocol {
     let world: WorldResource
     let player: MapObject
     let playerPosition: SIMD2<Int>
+
+    let resourceManager: ResourceManager
+    let scriptManager: ScriptManager
 
     let rootEntity = Entity()
 
@@ -36,7 +38,7 @@ class MapScene3D: MapSceneProtocol {
     private let cameraHelper = Entity()
 
     private let tileEntityManager: TileEntityManager
-    private let monsterEntityManager: SpriteEntityManager
+    private let spriteEntityManager: SpriteEntityManager
 
     private let pathfinder: Pathfinder
 
@@ -70,14 +72,17 @@ class MapScene3D: MapSceneProtocol {
             }
     }
 
-    init(mapName: String, world: WorldResource, player: MapObject, playerPosition: SIMD2<Int>) {
+    init(mapName: String, world: WorldResource, player: MapObject, playerPosition: SIMD2<Int>, resourceManager: ResourceManager, scriptManager: ScriptManager) {
         self.mapName = mapName
         self.world = world
         self.player = player
         self.playerPosition = playerPosition
 
+        self.resourceManager = resourceManager
+        self.scriptManager = scriptManager
+
         self.tileEntityManager = TileEntityManager(gat: world.gat, rootEntity: rootEntity)
-        self.monsterEntityManager = SpriteEntityManager(resourceManager: .shared, scriptManager: .shared)
+        self.spriteEntityManager = SpriteEntityManager(resourceManager: resourceManager, scriptManager: scriptManager)
 
         self.pathfinder = Pathfinder(gat: world.gat)
 
@@ -90,26 +95,20 @@ class MapScene3D: MapSceneProtocol {
         PlaySpriteAnimationActionHandler.register { _ in
             PlaySpriteAnimationActionHandler()
         }
+    }
 
+    func load() async {
         FromToByAction<Transform>.subscribe(to: .terminated) { event in
             if let spriteEntity = event.targetEntity as? SpriteEntity {
                 spriteEntity.playSpriteAnimation(at: 0, repeats: true)
             }
         }
-    }
 
-    deinit {
-        FromToByAction<Transform>.unsubscribeAll()
-
-        rootEntity.stopAllAudio()
-    }
-
-    func load() async {
         rootEntity.addChild(cameraHelper)
 
         let group = ModelSortGroup()
 
-        if let worldEntity = try? await Entity.worldEntity(world: world, resourceManager: .shared) {
+        if let worldEntity = try? await Entity.worldEntity(world: world, resourceManager: resourceManager) {
             worldEntity.components.set(ModelSortGroupComponent(group: group, order: 0))
             worldEntity.transform = Transform(rotation: simd_quatf(angle: radians(-180), axis: [1, 0, 0]))
             rootEntity.addChild(worldEntity)
@@ -121,8 +120,8 @@ class MapScene3D: MapSceneProtocol {
             let configuration = ComposedSprite.Configuration(mapObject: player)
             let composedSprite = await ComposedSprite(
                 configuration: configuration,
-                resourceManager: .shared,
-                scriptManager: .shared
+                resourceManager: resourceManager,
+                scriptManager: scriptManager
             )
 
             let animations = try await SpriteAnimation.animations(for: composedSprite)
@@ -144,17 +143,26 @@ class MapScene3D: MapSceneProtocol {
         camera.transform = cameraTransform(for: playerPosition)
         rootEntity.addChild(camera)
 
-        let pathGenerator = ResourcePathGenerator(scriptManager: .shared)
-        if let bgmPath = await pathGenerator.generateMapBGMPath(mapName: mapName) {
-            if let buffer = await ResourceManager.shared.audio(at: bgmPath) {
-                let configuration = AudioBufferResource.Configuration(shouldLoop: true, calibration: .relative(dBSPL: 20 * log10(10)))
-                if let audio = try? AudioBufferResource(buffer: buffer, configuration: configuration) {
-                    rootEntity.playAudio(audio)
+        let mapMP3NameTable = MapMP3NameTable(resourceManager: resourceManager)
+        if let mp3Name = await mapMP3NameTable.mapMP3Name(forMapName: mapName) {
+            let bgmPath: ResourcePath = ["BGM", mp3Name]
+            if let bgmData = try? await resourceManager.contentsOfResource(at: bgmPath) {
+                if let buffer = audio(with: bgmData) {
+                    let configuration = AudioBufferResource.Configuration(shouldLoop: true, calibration: .relative(dBSPL: 20 * log10(10)))
+                    if let audio = try? AudioBufferResource(buffer: buffer, configuration: configuration) {
+                        rootEntity.playAudio(audio)
+                    }
                 }
             }
         }
 
         mapSceneDelegate?.mapSceneDidFinishLoading(self)
+    }
+
+    func unload() {
+        FromToByAction<Transform>.unsubscribeAll()
+
+        rootEntity.stopAllAudio()
     }
 
     private func transform(for position2D: SIMD2<Int>) -> Transform {
@@ -194,6 +202,34 @@ class MapScene3D: MapSceneProtocol {
         return position + [0.5, 2, 0]
     }
 
+    private func audio(with data: Data) -> AVAudioBuffer? {
+        // Create a temporary file
+        let uuid = UUID().uuidString
+        let tempURL = URL.temporaryDirectory.appending(path: uuid)
+
+        do {
+            try data.write(to: tempURL)
+            let audioFile = try AVAudioFile(forReading: tempURL)
+
+            let buffer = AVAudioPCMBuffer(
+                pcmFormat: audioFile.processingFormat,
+                frameCapacity: AVAudioFrameCount(audioFile.length)
+            )
+
+            if let buffer {
+                try audioFile.read(into: buffer)
+            }
+
+            // Clean up
+            try? FileManager.default.removeItem(at: tempURL)
+
+            return buffer
+        } catch {
+            try? FileManager.default.removeItem(at: tempURL)
+            return nil
+        }
+    }
+
     // MARK: - MapSceneProtocol
 
     func onPlayerMoved(_ event: PlayerEvents.Moved) {
@@ -231,13 +267,13 @@ class MapScene3D: MapSceneProtocol {
             entity.components[MapObjectComponent.self]?.position = event.position
         } else {
             Task {
-                if let monsterEntity = try? await monsterEntityManager.entity(for: event.object) {
-                    monsterEntity.name = "\(event.object.objectID)"
-                    monsterEntity.transform = transform(for: event.position)
-                    monsterEntity.isEnabled = (event.object.effectState != .cloak)
-                    monsterEntity.components.set(MapObjectComponent(mapObject: event.object, position: event.position))
-                    monsterEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
-                    rootEntity.addChild(monsterEntity)
+                if let entity = try? await spriteEntityManager.entity(for: event.object) {
+                    entity.name = "\(event.object.objectID)"
+                    entity.transform = transform(for: event.position)
+                    entity.isEnabled = (event.object.effectState != .cloak)
+                    entity.components.set(MapObjectComponent(mapObject: event.object, position: event.position))
+                    entity.playSpriteAnimation(.idle, direction: .south, repeats: true)
+                    rootEntity.addChild(entity)
                 }
             }
         }
@@ -252,13 +288,13 @@ class MapScene3D: MapSceneProtocol {
             entity.walk(through: path2)
         } else {
             Task {
-                if let monsterEntity = try? await monsterEntityManager.entity(for: event.object) {
-                    monsterEntity.name = "\(event.object.objectID)"
-                    monsterEntity.transform = transform(for: event.endPosition)
-                    monsterEntity.isEnabled = (event.object.effectState != .cloak)
-                    monsterEntity.components.set(MapObjectComponent(mapObject: event.object, position: event.endPosition))
-                    monsterEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
-                    rootEntity.addChild(monsterEntity)
+                if let entity = try? await spriteEntityManager.entity(for: event.object) {
+                    entity.name = "\(event.object.objectID)"
+                    entity.transform = transform(for: event.endPosition)
+                    entity.isEnabled = (event.object.effectState != .cloak)
+                    entity.components.set(MapObjectComponent(mapObject: event.object, position: event.endPosition))
+                    entity.playSpriteAnimation(.idle, direction: .south, repeats: true)
+                    rootEntity.addChild(entity)
                 }
             }
         }
@@ -302,12 +338,12 @@ class MapScene3D: MapSceneProtocol {
 
     func onItemSpawned(_ event: ItemEvents.Spawned) {
         Task {
-            let pathGenerator = ResourcePathGenerator(scriptManager: .shared)
+            let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
             guard let path = await pathGenerator.generateItemSpritePath(itemID: Int(event.item.itemID)) else {
                 return
             }
 
-            let sprite = try await ResourceManager.shared.sprite(at: path)
+            let sprite = try await resourceManager.sprite(at: path)
             let animation = try await SpriteAnimation(sprite: sprite, actionIndex: 0)
 
             let entity = SpriteEntity(animations: [animation])

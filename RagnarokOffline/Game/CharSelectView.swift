@@ -5,13 +5,14 @@
 //  Created by Leon Li on 2024/9/10.
 //
 
+import ROGame
 import ROPackets
 import SwiftUI
 
 struct CharSelectView: View {
     var chars: [CharInfo]
-    var onSelectChar: (CharInfo) -> Void
-    var onMakeChar: (UInt8) -> Void
+
+    @Environment(GameSession.self) private var gameSession
 
     @State private var slot1: CharInfo?
     @State private var slot2: CharInfo?
@@ -109,13 +110,13 @@ struct CharSelectView: View {
 
                         if let selectedSlot, selectedChar == nil {
                             GameButton("btn_make.bmp") {
-                                onMakeChar(selectedSlot)
+                                gameSession.makeChar(slot: selectedSlot)
                             }
                         }
 
                         if let selectedChar {
                             GameButton("btn_ok.bmp") {
-                                onSelectChar(selectedChar)
+                                gameSession.selectChar(char: selectedChar)
                             }
                         }
 
@@ -134,12 +135,6 @@ struct CharSelectView: View {
             slot3 = chars.count > 2 ? chars[2] : nil
         }
     }
-
-    init(chars: [CharInfo], onSelectChar: @escaping (CharInfo) -> Void, onMakeChar: @escaping (UInt8) -> Void) {
-        self.chars = chars
-        self.onSelectChar = onSelectChar
-        self.onMakeChar = onMakeChar
-    }
 }
 
 #Preview {
@@ -155,10 +150,7 @@ struct CharSelectView: View {
         return char
     }()
 
-    CharSelectView(chars: [char]) { char in
-        // Select char.
-    } onMakeChar: { slot in
-        // Make char.
-    }
-    .padding()
+    CharSelectView(chars: [char])
+        .padding()
+        .environment(GameSession())
 }

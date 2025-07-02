@@ -10,21 +10,22 @@ import RONetwork
 import RORendering
 import ROResources
 
-public actor SpriteEntityManager {
-    package let resourceManager: ResourceManager
-    package let scriptManager: ScriptManager
+@MainActor
+final class SpriteEntityManager {
+    let resourceManager: ResourceManager
+    let scriptManager: ScriptManager
 
     private var tasksByJobID: [Int : Task<SpriteEntity, any Error>] = [:]
 
-    public init(resourceManager: ResourceManager, scriptManager: ScriptManager) {
+    init(resourceManager: ResourceManager, scriptManager: ScriptManager) {
         self.resourceManager = resourceManager
         self.scriptManager = scriptManager
     }
 
-    public func entity(for mapObject: MapObject) async throws -> SpriteEntity {
+    func entity(for mapObject: MapObject) async throws -> SpriteEntity {
         if let task = tasksByJobID[mapObject.job] {
             let entity = try await task.value
-            let entityClone = await entity.clone(recursive: true)
+            let entityClone = entity.clone(recursive: true)
             return entityClone
         }
 
@@ -36,7 +37,7 @@ public actor SpriteEntityManager {
                 scriptManager: scriptManager
             )
             let animations = try await SpriteAnimation.animations(for: composedSprite)
-            let entity = await SpriteEntity(animations: animations)
+            let entity = SpriteEntity(animations: animations)
             return entity
         }
 
@@ -50,7 +51,7 @@ public actor SpriteEntityManager {
 }
 
 extension ComposedSprite.Configuration {
-    public init(mapObject: MapObject) {
+    init(mapObject: MapObject) {
         let job = UniformJob(rawValue: mapObject.job)
 
         let hairStyles: [Int] = if job.isDoram {

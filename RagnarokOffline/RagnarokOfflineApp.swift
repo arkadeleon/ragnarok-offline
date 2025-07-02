@@ -10,6 +10,7 @@ import rAthenaChar
 import rAthenaMap
 import rAthenaWeb
 import rAthenaResources
+import ROGame
 import ROResources
 import SwiftUI
 
