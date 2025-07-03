@@ -111,10 +111,19 @@ class MapScene3D: MapSceneProtocol {
         if let worldEntity = try? await Entity.worldEntity(world: world, resourceManager: resourceManager) {
             worldEntity.components.set(ModelSortGroupComponent(group: group, order: 0))
             worldEntity.transform = Transform(rotation: simd_quatf(angle: radians(-180), axis: [1, 0, 0]))
+
+            if let audioResource = await audioResource(forMapName: mapName) {
+                worldEntity.components.set(AudioLibraryComponent(resources: [
+                    "BGM": audioResource
+                ]))
+                worldEntity.components.set(AmbientAudioComponent())
+                worldEntity.playAudio(audioResource)
+            }
+
             rootEntity.addChild(worldEntity)
         }
 
-        tileEntityManager.addTileEntities(for: playerPosition)
+        tileEntityManager.addTileEntities(forPosition: playerPosition)
 
         do {
             let configuration = ComposedSprite.Configuration(mapObject: player)
@@ -142,19 +151,6 @@ class MapScene3D: MapSceneProtocol {
         camera.components.set(cameraComponent)
         camera.transform = cameraTransform(for: playerPosition)
         rootEntity.addChild(camera)
-
-        let mapMP3NameTable = MapMP3NameTable(resourceManager: resourceManager)
-        if let mp3Name = await mapMP3NameTable.mapMP3Name(forMapName: mapName) {
-            let bgmPath: ResourcePath = ["BGM", mp3Name]
-            if let bgmData = try? await resourceManager.contentsOfResource(at: bgmPath) {
-                if let buffer = audio(with: bgmData) {
-                    let configuration = AudioBufferResource.Configuration(shouldLoop: true, calibration: .relative(dBSPL: 20 * log10(10)))
-                    if let audio = try? AudioBufferResource(buffer: buffer, configuration: configuration) {
-                        rootEntity.playAudio(audio)
-                    }
-                }
-            }
-        }
 
         mapSceneDelegate?.mapSceneDidFinishLoading(self)
     }
@@ -202,7 +198,27 @@ class MapScene3D: MapSceneProtocol {
         return position + [0.5, 2, 0]
     }
 
-    private func audio(with data: Data) -> AVAudioBuffer? {
+    private func audioResource(forMapName: String) async -> AudioResource? {
+        let mapMP3NameTable = MapMP3NameTable(resourceManager: resourceManager)
+        guard let mp3Name = await mapMP3NameTable.mapMP3Name(forMapName: mapName) else {
+            return nil
+        }
+
+        let bgmPath: ResourcePath = ["BGM", mp3Name]
+        guard let bgmData = try? await resourceManager.contentsOfResource(at: bgmPath) else {
+            return nil
+        }
+
+        guard let audioBuffer = audioBuffer(with: bgmData) else {
+            return nil
+        }
+
+        let configuration = AudioBufferResource.Configuration(shouldLoop: true)
+        let audioResource = try? AudioBufferResource(buffer: audioBuffer, configuration: configuration)
+        return audioResource
+    }
+
+    private func audioBuffer(with data: Data) -> AVAudioBuffer? {
         // Create a temporary file
         let uuid = UUID().uuidString
         let tempURL = URL.temporaryDirectory.appending(path: uuid)
@@ -257,7 +273,7 @@ class MapScene3D: MapSceneProtocol {
 
         }
 
-        tileEntityManager.updateTileEntities(for: event.endPosition)
+        tileEntityManager.updateTileEntities(forPosition: event.endPosition)
     }
 
     func onMapObjectSpawned(_ event: MapObjectEvents.Spawned) {

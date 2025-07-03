@@ -21,7 +21,7 @@ final class TileEntityManager {
         self.rootEntity = rootEntity
     }
 
-    func addTileEntities(for position: SIMD2<Int>) {
+    func addTileEntities(forPosition position: SIMD2<Int>) {
         for relativeX in (-range)...(range) {
             for relativeY in (-range)...(range) {
                 let x = position.x + relativeX
@@ -65,7 +65,7 @@ final class TileEntityManager {
         }
     }
 
-    func updateTileEntities(for position: SIMD2<Int>) {
+    func updateTileEntities(forPosition position: SIMD2<Int>) {
         for relativeX in (-range)...(range) {
             for relativeY in (-range)...(range) {
                 let x = position.x + relativeX
