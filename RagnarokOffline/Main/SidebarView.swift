@@ -39,10 +39,11 @@ struct SidebarView: View {
     @Environment(\.mapServer) private var mapServer: ServerWrapper!
     @Environment(\.webServer) private var webServer: ServerWrapper!
 
-    @State private var isClientSectionExpanded = true
-    @State private var isServerSectionExpanded = true
-    @State private var isDatabaseSectionExpanded = true
-    @State private var isToolsSectionExpanded = true
+    @AppStorage("clientSectionExpanded") private var isClientSectionExpanded = true
+    @AppStorage("serverSectionExpanded") private var isServerSectionExpanded = true
+    @AppStorage("databaseSectionExpanded") private var isDatabaseSectionExpanded = true
+    @AppStorage("toolsSectionExpanded") private var isToolsSectionExpanded = true
+
     @State private var isSettingsPresented = false
 
     var body: some View {
