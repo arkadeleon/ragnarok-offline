@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct MapDatabaseView: View {
-    @Environment(ObservableDatabase<MapProvider>.self) private var database
+    @Environment(AppModel.self) private var appModel
+
+    private var database: ObservableDatabase<MapProvider> {
+        appModel.mapDatabase
+    }
 
     var body: some View {
         AdaptiveView {
@@ -25,9 +29,9 @@ struct MapDatabaseView: View {
                         MapImageView(map: map)
                             .frame(width: 40)
                         Text(map.displayName)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .frame(minWidth: 160, maxWidth: .infinity, alignment: .leading)
                         Text(map.name)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .frame(minWidth: 120, maxWidth: .infinity, alignment: .leading)
                             .foregroundStyle(Color.secondary)
                     }
                 }
@@ -42,11 +46,17 @@ struct MapDatabaseView: View {
 }
 
 #Preview("Pre-Renewal Map Database") {
-    MapDatabaseView()
-        .environment(ObservableDatabase(mode: .prerenewal, recordProvider: .map))
+    @Previewable @State var appModel = AppModel()
+    appModel.mapDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .map)
+
+    return MapDatabaseView()
+        .environment(appModel)
 }
 
 #Preview("Renewal Map Database") {
-    MapDatabaseView()
-        .environment(ObservableDatabase(mode: .renewal, recordProvider: .map))
+    @Previewable @State var appModel = AppModel()
+    appModel.mapDatabase = ObservableDatabase(mode: .renewal, recordProvider: .map)
+
+    return MapDatabaseView()
+        .environment(appModel)
 }

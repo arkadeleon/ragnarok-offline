@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct MonsterDatabaseView: View {
-    @Environment(ObservableDatabase<MonsterProvider>.self) private var database
+    @Environment(AppModel.self) private var appModel
+
+    private var database: ObservableDatabase<MonsterProvider> {
+        appModel.monsterDatabase
+    }
 
     var body: some View {
         ImageGrid(database.filteredRecords) { monster in
@@ -25,11 +29,17 @@ struct MonsterDatabaseView: View {
 }
 
 #Preview("Pre-Renewal Monster Database") {
-    MonsterDatabaseView()
-        .environment(ObservableDatabase(mode: .prerenewal, recordProvider: .monster))
+    @Previewable @State var appModel = AppModel()
+    appModel.monsterDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .monster)
+
+    return MonsterDatabaseView()
+        .environment(appModel)
 }
 
 #Preview("Renewal Monster Database") {
-    MonsterDatabaseView()
-        .environment(ObservableDatabase(mode: .renewal, recordProvider: .monster))
+    @Previewable @State var appModel = AppModel()
+    appModel.monsterDatabase = ObservableDatabase(mode: .renewal, recordProvider: .monster)
+
+    return MonsterDatabaseView()
+        .environment(appModel)
 }

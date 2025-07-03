@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct ItemDatabaseView: View {
-    @Environment(ObservableDatabase<ItemProvider>.self) private var database
+    @Environment(AppModel.self) private var appModel
+
+    private var database: ObservableDatabase<ItemProvider> {
+        appModel.itemDatabase
+    }
 
     var body: some View {
         AdaptiveView {
@@ -51,11 +55,17 @@ struct ItemDatabaseView: View {
 }
 
 #Preview("Pre-Renewal Item Database") {
-    ItemDatabaseView()
-        .environment(ObservableDatabase(mode: .prerenewal, recordProvider: .item))
+    @Previewable @State var appModel = AppModel()
+    appModel.itemDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .item)
+
+    return ItemDatabaseView()
+        .environment(appModel)
 }
 
 #Preview("Renewal Item Database") {
-    ItemDatabaseView()
-        .environment(ObservableDatabase(mode: .renewal, recordProvider: .item))
+    @Previewable @State var appModel = AppModel()
+    appModel.itemDatabase = ObservableDatabase(mode: .renewal, recordProvider: .item)
+
+    return ItemDatabaseView()
+        .environment(appModel)
 }

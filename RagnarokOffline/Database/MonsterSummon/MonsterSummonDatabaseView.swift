@@ -9,7 +9,11 @@ import SwiftUI
 import RODatabase
 
 struct MonsterSummonDatabaseView: View {
-    @Environment(ObservableDatabase<MonsterSummonProvider>.self) private var database
+    @Environment(AppModel.self) private var appModel
+
+    private var database: ObservableDatabase<MonsterSummonProvider> {
+        appModel.monsterSummonDatabase
+    }
 
     var body: some View {
         AdaptiveView {
@@ -22,12 +26,12 @@ struct MonsterSummonDatabaseView: View {
                 NavigationLink(value: monsterSummon) {
                     HStack {
                         Text(monsterSummon.displayName)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .frame(minWidth: 160, maxWidth: .infinity, alignment: .leading)
                         Text(monsterSummon.default)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .frame(minWidth: 120, maxWidth: .infinity, alignment: .leading)
                             .foregroundStyle(Color.secondary)
                         Text("\(monsterSummon.summon.count) monsters")
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .frame(minWidth: 120, maxWidth: .infinity, alignment: .leading)
                             .foregroundStyle(Color.secondary)
                     }
                 }
@@ -42,11 +46,17 @@ struct MonsterSummonDatabaseView: View {
 }
 
 #Preview("Pre-Renewal Monster Summon Database") {
-    MonsterSummonDatabaseView()
-        .environment(ObservableDatabase(mode: .prerenewal, recordProvider: .monsterSummon))
+    @Previewable @State var appModel = AppModel()
+    appModel.monsterSummonDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .monsterSummon)
+
+    return MonsterSummonDatabaseView()
+        .environment(appModel)
 }
 
 #Preview("Renewal Monster Summon Database") {
-    MonsterSummonDatabaseView()
-        .environment(ObservableDatabase(mode: .renewal, recordProvider: .monsterSummon))
+    @Previewable @State var appModel = AppModel()
+    appModel.monsterSummonDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .monsterSummon)
+
+    return MonsterSummonDatabaseView()
+        .environment(appModel)
 }

@@ -10,13 +10,7 @@ import ROResources
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(\.clientDirectory) private var clientDirectory: File!
-    @Environment(\.serverDirectory) private var serverDirectory: File!
-
-    @Environment(\.loginServer) private var loginServer: ServerWrapper!
-    @Environment(\.charServer) private var charServer: ServerWrapper!
-    @Environment(\.mapServer) private var mapServer: ServerWrapper!
-    @Environment(\.webServer) private var webServer: ServerWrapper!
+    @Environment(AppModel.self) private var appModel
 
     @State private var selectedItem: SidebarItem? = .clientFiles
     @State private var incomingFile: File?
@@ -60,17 +54,17 @@ struct ContentView: View {
     private func detail(for item: SidebarItem) -> some View {
         switch item {
         case .clientFiles:
-            FilesView(title: "Files", directory: clientDirectory)
+            FilesView(title: "Files", directory: appModel.clientDirectory)
         case .serverFiles:
-            FilesView(title: "Files", directory: serverDirectory)
+            FilesView(title: "Files", directory: appModel.serverDirectory)
         case .loginServer:
-            ServerView(server: loginServer)
+            ServerView(server: appModel.loginServer)
         case .charServer:
-            ServerView(server: charServer)
+            ServerView(server: appModel.charServer)
         case .mapServer:
-            ServerView(server: mapServer)
+            ServerView(server: appModel.mapServer)
         case .webServer:
-            ServerView(server: webServer)
+            ServerView(server: appModel.webServer)
         case .itemDatabase:
             ItemDatabaseView()
         case .jobDatabase:

@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct JobDatabaseView: View {
-    @Environment(ObservableDatabase<JobProvider>.self) private var database
+    @Environment(AppModel.self) private var appModel
+
+    private var database: ObservableDatabase<JobProvider> {
+        appModel.jobDatabase
+    }
 
     var body: some View {
         ImageGrid(database.filteredRecords) { job in
@@ -25,11 +29,17 @@ struct JobDatabaseView: View {
 }
 
 #Preview("Pre-Renewal Job Database") {
-    JobDatabaseView()
-        .environment(ObservableDatabase(mode: .prerenewal, recordProvider: .job))
+    @Previewable @State var appModel = AppModel()
+    appModel.jobDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .job)
+
+    return JobDatabaseView()
+        .environment(appModel)
 }
 
 #Preview("Renewal Job Database") {
-    JobDatabaseView()
-        .environment(ObservableDatabase(mode: .renewal, recordProvider: .job))
+    @Previewable @State var appModel = AppModel()
+    appModel.jobDatabase = ObservableDatabase(mode: .renewal, recordProvider: .job)
+
+    return JobDatabaseView()
+        .environment(appModel)
 }

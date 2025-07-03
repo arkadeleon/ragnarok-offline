@@ -34,10 +34,7 @@ enum SidebarItem: Hashable {
 struct SidebarView: View {
     var selection: Binding<SidebarItem?>?
 
-    @Environment(\.loginServer) private var loginServer: ServerWrapper!
-    @Environment(\.charServer) private var charServer: ServerWrapper!
-    @Environment(\.mapServer) private var mapServer: ServerWrapper!
-    @Environment(\.webServer) private var webServer: ServerWrapper!
+    @Environment(AppModel.self) private var appModel
 
     @AppStorage("clientSectionExpanded") private var isClientSectionExpanded = true
     @AppStorage("serverSectionExpanded") private var isServerSectionExpanded = true
@@ -68,19 +65,19 @@ struct SidebarView: View {
                 #endif
 
                 NavigationLink(value: SidebarItem.loginServer) {
-                    ServerCell(server: loginServer)
+                    ServerCell(server: appModel.loginServer)
                 }
 
                 NavigationLink(value: SidebarItem.charServer) {
-                    ServerCell(server: charServer)
+                    ServerCell(server: appModel.charServer)
                 }
 
                 NavigationLink(value: SidebarItem.mapServer) {
-                    ServerCell(server: mapServer)
+                    ServerCell(server: appModel.mapServer)
                 }
 
                 NavigationLink(value: SidebarItem.webServer) {
-                    ServerCell(server: webServer)
+                    ServerCell(server: appModel.webServer)
                 }
 
                 Button {
@@ -195,16 +192,16 @@ struct SidebarView: View {
     private func startAllServers() async {
         await withTaskGroup(of: Bool.self) { taskGroup in
             taskGroup.addTask {
-                await loginServer.start()
+                await appModel.loginServer.start()
             }
             taskGroup.addTask {
-                await charServer.start()
+                await appModel.charServer.start()
             }
             taskGroup.addTask {
-                await mapServer.start()
+                await appModel.mapServer.start()
             }
             taskGroup.addTask {
-                await webServer.start()
+                await appModel.webServer.start()
             }
         }
     }

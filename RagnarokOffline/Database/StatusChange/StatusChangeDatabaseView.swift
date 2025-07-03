@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct StatusChangeDatabaseView: View {
-    @Environment(ObservableDatabase<StatusChangeProvider>.self) private var database
+    @Environment(AppModel.self) private var appModel
+
+    private var database: ObservableDatabase<StatusChangeProvider> {
+        appModel.statusChangeDatabase
+    }
 
     var body: some View {
         AdaptiveView {
@@ -34,11 +38,17 @@ struct StatusChangeDatabaseView: View {
 }
 
 #Preview("Pre-Renewal Status Change Database") {
-    StatusChangeDatabaseView()
-        .environment(ObservableDatabase(mode: .prerenewal, recordProvider: .statusChange))
+    @Previewable @State var appModel = AppModel()
+    appModel.statusChangeDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .statusChange)
+
+    return StatusChangeDatabaseView()
+        .environment(appModel)
 }
 
 #Preview("Renewal Status Change Database") {
-    StatusChangeDatabaseView()
-        .environment(ObservableDatabase(mode: .renewal, recordProvider: .statusChange))
+    @Previewable @State var appModel = AppModel()
+    appModel.statusChangeDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .statusChange)
+
+    return StatusChangeDatabaseView()
+        .environment(appModel)
 }
