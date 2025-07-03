@@ -6,6 +6,12 @@
 //
 
 import Foundation
+import ROCore
+
+public func L2K(_ path: ResourcePath) -> ResourcePath {
+    let components = path.components.map(L2K)
+    return ResourcePath(components: components)
+}
 
 public struct ResourcePath: ExpressibleByArrayLiteral, Sendable {
     public let components: [String]
@@ -48,7 +54,7 @@ extension ResourcePath {
     public static let spriteDirectory: ResourcePath = ["data", "sprite"]
     public static let textureDirectory: ResourcePath = ["data", "texture"]
     public static let effectDirectory: ResourcePath = ["data", "texture", "effect"]
-    public static let userInterfaceDirectory: ResourcePath = ["data", "texture", "유저인터페이스"]
+    public static let userInterfaceDirectory: ResourcePath = ["data", "texture", K2L("유저인터페이스")]
 }
 
 extension ResourcePath {

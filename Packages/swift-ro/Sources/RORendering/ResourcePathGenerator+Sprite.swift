@@ -6,6 +6,7 @@
 //
 
 import ROConstants
+import ROCore
 import ROResources
 
 extension ResourcePathGenerator {
@@ -23,9 +24,9 @@ extension ResourcePathGenerator {
         }
 
         if job.isDoram {
-            return ResourcePath.spriteDirectory.appending(["도람족", "몸통", gender.name, "\(jobName)_\(gender.name)"])
+            return ResourcePath.spriteDirectory.appending([K2L("도람족"), K2L("몸통"), gender.name, "\(jobName)_\(gender.name)"])
         } else {
-            return ResourcePath.spriteDirectory.appending(["인간족", "몸통", gender.name, "\(jobName)_\(gender.name)"])
+            return ResourcePath.spriteDirectory.appending([K2L("인간족"), K2L("몸통"), gender.name, "\(jobName)_\(gender.name)"])
         }
     }
 
@@ -39,9 +40,9 @@ extension ResourcePathGenerator {
         }
 
         if job.isDoram {
-            return ResourcePath.spriteDirectory.appending(["도람족", "몸통", gender.name, "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(costumeID)"])
+            return ResourcePath.spriteDirectory.appending([K2L("도람족"), K2L("몸통"), gender.name, "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(costumeID)"])
         } else {
-            return ResourcePath.spriteDirectory.appending(["인간족", "몸통", gender.name, "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(costumeID)"])
+            return ResourcePath.spriteDirectory.appending([K2L("인간족"), K2L("몸통"), gender.name, "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(costumeID)"])
         }
     }
 
@@ -51,9 +52,9 @@ extension ResourcePathGenerator {
         }
 
         if job.isDoram {
-            return ResourcePath.spriteDirectory.appending(["도람족", "머리통", gender.name, "\(hairStyle)_\(gender.name)"])
+            return ResourcePath.spriteDirectory.appending([K2L("도람족"), K2L("머리통"), gender.name, "\(hairStyle)_\(gender.name)"])
         } else {
-            return ResourcePath.spriteDirectory.appending(["인간족", "머리통", gender.name, "\(hairStyle)_\(gender.name)"])
+            return ResourcePath.spriteDirectory.appending([K2L("인간족"), K2L("머리통"), gender.name, "\(hairStyle)_\(gender.name)"])
         }
     }
 
@@ -69,11 +70,11 @@ extension ResourcePathGenerator {
         if job.isNPC {
             return ResourcePath.spriteDirectory.appending(["npc", jobName])
         } else if job.isMercenary {
-            return ResourcePath.spriteDirectory.appending(["인간족", "몸통", jobName])
+            return ResourcePath.spriteDirectory.appending([K2L("인간족"), K2L("몸통"), jobName])
         } else if job.isHomunculus {
             return ResourcePath.spriteDirectory.appending(["homun", jobName])
         } else if job.isMonster {
-            return ResourcePath.spriteDirectory.appending(["몬스터", jobName])
+            return ResourcePath.spriteDirectory.appending([K2L("몬스터"), jobName])
         } else {
             return nil
         }
@@ -89,7 +90,7 @@ extension ResourcePathGenerator {
             let isSuitMadogear = isMadogear && madoType == .suit
             let madogearJobName = isSuitMadogear ? suitMadogearJobName(for: job) : ""
 
-            guard var jobName = jobNamesForWeapon[job.rawValue] else {
+            guard var jobName = jobNameForWeapon(job.rawValue) else {
                 return nil
             }
 
@@ -113,20 +114,20 @@ extension ResourcePathGenerator {
             }
 
             if job.isDoram {
-                return ResourcePath.spriteDirectory.appending(["도람족", jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)\(isSlash ? "_검광" : "")"])
+                return ResourcePath.spriteDirectory.appending([K2L("도람족"), jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)" + (isSlash ? K2L("_검광") : "")])
             } else {
-                return ResourcePath.spriteDirectory.appending(["인간족", jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)\(isSlash ? "_검광" : "")"])
+                return ResourcePath.spriteDirectory.appending([K2L("인간족"), jobName.0, "\(jobName.1)_\(gender.name)\(weaponName)" + (isSlash ? K2L("_검광") : "")])
             }
         } else {
-            let mercenaryPath = ResourcePath.spriteDirectory.appending(["인간족", "용병"])
+            let mercenaryPath = ResourcePath.spriteDirectory.appending([K2L("인간족"), K2L("용병")])
 
             switch job.rawValue {
             case 6017...6026:
-                return mercenaryPath.appending("활용병_활")
+                return mercenaryPath.appending(K2L("활용병_활"))
             case 6027...6036:
-                return mercenaryPath.appending("창용병_창")
+                return mercenaryPath.appending(K2L("창용병_창"))
             default:
-                return mercenaryPath.appending("검용병_검")
+                return mercenaryPath.appending(K2L("검용병_검"))
             }
         }
     }
@@ -140,10 +141,10 @@ extension ResourcePathGenerator {
             return nil
         }
 
-        if let shieldName = shieldNames[shield] {
-            return ResourcePath.spriteDirectory.appending(["방패", jobName, "\(jobName)_\(gender.name)\(shieldName)"])
+        if let shieldName = shieldName(shield) {
+            return ResourcePath.spriteDirectory.appending([K2L("방패"), jobName, "\(jobName)_\(gender.name)\(shieldName)"])
         } else {
-            return ResourcePath.spriteDirectory.appending(["방패", jobName, "\(jobName)_\(gender.name)_\(shield)_방패"])
+            return ResourcePath.spriteDirectory.appending([K2L("방패"), jobName, "\(jobName)_\(gender.name)_\(shield)" + K2L("_방패")])
         }
     }
 
@@ -152,7 +153,7 @@ extension ResourcePathGenerator {
             return nil
         }
 
-        return ResourcePath.spriteDirectory.appending(["악세사리", gender.name, "\(gender.name)\(accessoryName)"])
+        return ResourcePath.spriteDirectory.appending([K2L("악세사리"), gender.name, "\(gender.name)\(accessoryName)"])
     }
 
     func generateGarmentSpritePath(job: UniformJob, garment: Int, gender: Gender, checkEnglish: Bool = false, useFallback: Bool = false) async -> ResourcePath? {
@@ -166,9 +167,9 @@ extension ResourcePathGenerator {
         }
 
         if useFallback {
-            return ResourcePath.spriteDirectory.appending(["로브", robeName, robeName])
+            return ResourcePath.spriteDirectory.appending([K2L("로브"), robeName, robeName])
         } else {
-            return ResourcePath.spriteDirectory.appending(["로브", robeName, gender.name, "\(jobName)_\(gender.name)"])
+            return ResourcePath.spriteDirectory.appending([K2L("로브"), robeName, gender.name, "\(jobName)_\(gender.name)"])
         }
     }
 
@@ -179,17 +180,17 @@ extension ResourcePathGenerator {
 
         if job.isMadogear && madoType == .suit {
             let jobName = suitMadogearJobName(for: job)
-            return ResourcePath.paletteDirectory.appending(["몸", "\(jobName)_\(gender.name)_\(clothesColor)"])
+            return ResourcePath.paletteDirectory.appending([K2L("몸"), "\(jobName)_\(gender.name)_\(clothesColor)"])
         }
 
-        guard let jobName = jobNamesForPalette[job.rawValue] else {
+        guard let jobName = jobNameForPalette(job.rawValue) else {
             return nil
         }
 
         if job.isDoram {
-            return ResourcePath.paletteDirectory.appending(["도람족", "body", "\(jobName)_\(gender.name)_\(clothesColor)"])
+            return ResourcePath.paletteDirectory.appending([K2L("도람족"), "body", "\(jobName)_\(gender.name)_\(clothesColor)"])
         } else {
-            return ResourcePath.paletteDirectory.appending(["몸", "\(jobName)_\(gender.name)_\(clothesColor)"])
+            return ResourcePath.paletteDirectory.appending([K2L("몸"), "\(jobName)_\(gender.name)_\(clothesColor)"])
         }
     }
 
@@ -200,17 +201,17 @@ extension ResourcePathGenerator {
 
         if job.isMadogear && madoType == .suit {
             let jobName = suitMadogearJobName(for: job)
-            return ResourcePath.paletteDirectory.appending(["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColor)_\(costumeID)"])
+            return ResourcePath.paletteDirectory.appending([K2L("몸"), "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColor)_\(costumeID)"])
         }
 
-        guard let jobName = jobNamesForPalette[job.rawValue] else {
+        guard let jobName = jobNameForPalette(job.rawValue) else {
             return nil
         }
 
         if job.isDoram {
-            return ResourcePath.paletteDirectory.appending(["도람족", "body", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColor)_\(costumeID)"])
+            return ResourcePath.paletteDirectory.appending([K2L("도람족"), "body", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColor)_\(costumeID)"])
         } else {
-            return ResourcePath.paletteDirectory.appending(["몸", "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColor)_\(costumeID)"])
+            return ResourcePath.paletteDirectory.appending([K2L("몸"), "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColor)_\(costumeID)"])
         }
     }
 
@@ -220,9 +221,9 @@ extension ResourcePathGenerator {
         }
 
         if job.isDoram {
-            return ResourcePath.paletteDirectory.appending(["도람족", "머리", "머리\(hairStyle)_\(gender.name)_\(hairColor)"])
+            return ResourcePath.paletteDirectory.appending([K2L("도람족"), K2L("머리"), K2L("머리") + "\(hairStyle)_\(gender.name)_\(hairColor)"])
         } else {
-            return ResourcePath.paletteDirectory.appending(["머리", "머리\(hairStyle)_\(gender.name)_\(hairColor)"])
+            return ResourcePath.paletteDirectory.appending([K2L("머리"), K2L("머리") + "\(hairStyle)_\(gender.name)_\(hairColor)"])
         }
     }
 
@@ -236,7 +237,7 @@ extension ResourcePathGenerator {
             return ["data", "imf", "\(jobName)_\(gender.name)"]
         }
 
-        guard let jobName = jobNamesForIMF[job.rawValue] else {
+        guard let jobName = jobNameForIMF(job.rawValue) else {
             return nil
         }
 
@@ -248,7 +249,7 @@ extension ResourcePathGenerator {
             if job.isMadogear && madoType == .suit {
                 return suitMadogearJobName(for: job)
             } else {
-                return jobNamesForSprite[job.rawValue]
+                return jobNameForSprite(job.rawValue)
             }
         } else {
             return await scriptManager.jobName(forJobID: job.rawValue)
@@ -258,9 +259,19 @@ extension ResourcePathGenerator {
     private func suitMadogearJobName(for job: UniformJob) -> String {
         switch job.rawValue {
         case 4086, 4087, 4112:
-            "마도아머"
+            K2L("마도아머")
         default:
             "meister_madogear2"
+        }
+    }
+}
+
+extension Gender {
+    var name: String {
+        switch self {
+        case .female: K2L("여")
+        case .male: K2L("남")
+        case .both: ""
         }
     }
 }

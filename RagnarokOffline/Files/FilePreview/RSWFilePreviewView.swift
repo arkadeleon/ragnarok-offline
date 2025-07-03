@@ -25,17 +25,30 @@ struct RSWFilePreviewView: View {
     }
 
     private func loadRSWFile() async throws -> Entity {
-        let data = try await file.contents()
-        let rsw = try RSW(data: data)
+        let rswData = try await file.contents()
+        let rsw = try RSW(data: rswData)
 
-        let gatPath = ResourcePath(components: ["data", rsw.files.gat])
-        async let gatData = ResourceManager.shared.contentsOfResource(at: gatPath)
+        let gatData: Data
+        let gndData: Data
+        switch file.node {
+        case .regularFile(let url):
+            let gatURL = url.deletingPathExtension().appendingPathExtension("gat")
+            gatData = try Data(contentsOf: gatURL)
 
-        let gndPath = ResourcePath(components: ["data", rsw.files.gnd])
-        async let gndData = ResourceManager.shared.contentsOfResource(at: gndPath)
+            let gndURL = url.deletingPathExtension().appendingPathExtension("gnd")
+            gndData = try Data(contentsOf: gndURL)
+        case .grfArchiveEntry(let grfArchive, let entry):
+            let gatPath = entry.path.replacingExtension("gat")
+            gatData = try await grfArchive.contentsOfEntry(at: gatPath)
 
-        let gat = try GAT(data: await gatData)
-        let gnd = try GND(data: await gndData)
+            let gndPath = entry.path.replacingExtension("gnd")
+            gndData = try await grfArchive.contentsOfEntry(at: gndPath)
+        default:
+            throw FileError.fileIsDirectory
+        }
+
+        let gat = try GAT(data: gatData)
+        let gnd = try GND(data: gndData)
 
         let world = WorldResource(gat: gat, gnd: gnd, rsw: rsw)
 

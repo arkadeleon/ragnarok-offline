@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import ROCore
 @testable import ROResources
 
 final class ScriptManagerTests: XCTestCase {
@@ -21,16 +22,16 @@ final class ScriptManagerTests: XCTestCase {
 
     func testItemResourceName() async throws {
         let redPotion = await scriptManager.identifiedItemResourceName(forItemID: 501)
-        XCTAssertEqual(redPotion, "빨간포션")
+        XCTAssertEqual(redPotion, K2L("빨간포션"))
     }
 
     func testAccessoryName() async throws {
         let goggles = await scriptManager.accessoryName(forAccessoryID: 1)
-        XCTAssertEqual(goggles, "_고글")
+        XCTAssertEqual(goggles, K2L("_고글"))
     }
 
     func testItemRandomOptionName() async throws {
-        let mhp = await scriptManager.itemRandomOptionName(forItemRandomOptionID: 1)
+        let mhp = await scriptManager.localizedItemRandomOptionName(forItemRandomOptionID: 1)
         XCTAssertEqual(mhp, "MHP + %d")
     }
 
@@ -41,7 +42,7 @@ final class ScriptManagerTests: XCTestCase {
 
     func testRobeName() async throws {
         let wings = await scriptManager.robeName(forRobeID: 1, checkEnglish: false)
-        XCTAssertEqual(wings, "천사날개")
+        XCTAssertEqual(wings, K2L("천사날개"))
     }
 
     func testShadowFactor() async throws {
@@ -54,7 +55,7 @@ final class ScriptManagerTests: XCTestCase {
 
     func testWeaponName() async throws {
         let shortsword = await scriptManager.weaponName(forWeaponID: 1)
-        XCTAssertEqual(shortsword, "_단검")
+        XCTAssertEqual(shortsword, K2L("_단검"))
 
         let mainGauche = await scriptManager.realWeaponID(forWeaponID: 31)
         XCTAssertEqual(mainGauche, 1)

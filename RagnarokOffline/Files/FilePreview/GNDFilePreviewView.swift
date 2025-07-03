@@ -21,14 +21,13 @@ struct GNDFilePreviewView: View {
     }
 
     private func loadGNDFile() async throws -> Entity {
-        let data = try await file.contents()
-        let gnd = try GND(data: data)
+        let gndData = try await file.contents()
+        let gnd = try GND(data: gndData)
 
         let gatData: Data
         switch file.node {
         case .regularFile(let url):
-            var gatURL = url.deletingPathExtension()
-            gatURL.appendPathExtension("gat")
+            let gatURL = url.deletingPathExtension().appendingPathExtension("gat")
             gatData = try Data(contentsOf: gatURL)
         case .grfArchiveEntry(let grfArchive, let entry):
             let gatPath = entry.path.replacingExtension("gat")

@@ -8,6 +8,7 @@
 import Foundation
 import GRF
 import Observation
+import ROCore
 import ROResources
 import UniformTypeIdentifiers
 
@@ -60,9 +61,9 @@ final class File {
         case .grfArchive(let grfArchive):
             grfArchive.url.lastPathComponent
         case .grfArchiveDirectory(_, let path):
-            path.lastComponent.transcoding(from: .isoLatin1, to: .koreanEUC) ?? path.lastComponent
+            L2K(path.lastComponent)
         case .grfArchiveEntry(_, let entry):
-            entry.path.lastComponent.transcoding(from: .isoLatin1, to: .koreanEUC) ?? entry.path.lastComponent
+            L2K(entry.path.lastComponent)
         }
     }()
 

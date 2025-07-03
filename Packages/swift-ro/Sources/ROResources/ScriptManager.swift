@@ -20,17 +20,15 @@ public actor ScriptManager {
 
     public func identifiedItemResourceName(forItemID itemID: Int) async -> String? {
         let result = await call("identifiedItemResourceName", with: [itemID], to: String.self)
-        let itemResourceName = result?.transcoding(from: .isoLatin1, to: .koreanEUC)
-        return itemResourceName
+        return result
     }
 
     public func accessoryName(forAccessoryID accessoryID: Int) async -> String? {
         let result = await call("ReqAccName", with: [accessoryID], to: String.self)
-        let accessoryName = result?.transcoding(from: .isoLatin1, to: .koreanEUC)
-        return accessoryName
+        return result
     }
 
-    public func itemRandomOptionName(forItemRandomOptionID itemRandomOptionID: Int) async -> String? {
+    public func localizedItemRandomOptionName(forItemRandomOptionID itemRandomOptionID: Int) async -> String? {
         let result = await call("GetVarOptionName", with: [itemRandomOptionID], to: String.self)
         let itemRandomOptionName = result?.transcoding(from: .isoLatin1, to: locale.language.preferredEncoding)
         return itemRandomOptionName
@@ -43,8 +41,7 @@ public actor ScriptManager {
 
     public func robeName(forRobeID robeID: Int, checkEnglish: Bool) async -> String? {
         let result = await call("ReqRobSprName_V2", with: [robeID, checkEnglish], to: String.self)
-        let robeName = result?.transcoding(from: .isoLatin1, to: .koreanEUC)
-        return robeName
+        return result
     }
 
     public func shadowFactor(forJobID jobID: Int) async -> Double? {
@@ -69,8 +66,7 @@ public actor ScriptManager {
 
     public func weaponName(forWeaponID weaponID: Int) async -> String? {
         let result = await call("ReqWeaponName", with: [weaponID], to: String.self)
-        let weaponName = result?.transcoding(from: .isoLatin1, to: .koreanEUC)
-        return weaponName
+        return result
     }
 
     public func realWeaponID(forWeaponID weaponID: Int) async -> Int? {

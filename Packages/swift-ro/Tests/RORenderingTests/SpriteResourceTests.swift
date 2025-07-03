@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import ROCore
 @testable import RORendering
 @testable import ROResources
 
@@ -16,6 +17,6 @@ final class SpriteResourceTests: XCTestCase {
         let scriptManager = ScriptManager(locale: .current, resourceManager: resourceManager)
         let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
         let path = await pathGenerator.generatePlayerBodySpritePath(job: 0, gender: .male)!
-        XCTAssertEqual(path.components, ["data", "sprite", "인간족", "몸통", "남", "초보자_남"])
+        XCTAssertEqual(path.components, ["data", "sprite", K2L("인간족"), K2L("몸통"), K2L("남"), K2L("초보자_남")])
     }
 }

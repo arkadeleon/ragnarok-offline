@@ -40,30 +40,18 @@ final public class ResourceManager: Sendable {
         self.remoteURL = remoteURL
 
         let dataGRFURL = localURL.appending(path: "data.grf")
-
-        if !FileManager.default.fileExists(atPath: dataGRFURL.path()) {
-            let data = Data()
-            let url = localURL.appending(path: "Copy data.grf Here")
-            do {
-                try data.write(to: url)
-            } catch {
-                logger.warning("\(error.localizedDescription)")
-            }
-        }
-
         localGRFArchives = [
             GRFArchive(url: dataGRFURL),
         ]
     }
 
     public func locatorOfResource(at path: ResourcePath) async throws -> ResourceLocator {
-        let fileURL = localURL.absoluteURL.appending(path: path)
+        let fileURL = localURL.absoluteURL.appending(path: L2K(path))
         if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
             return .url(fileURL)
         }
 
-        let components = path.components.map({ $0.transcoding(from: .koreanEUC, to: .isoLatin1) ?? $0 })
-        let grfPath = GRFPath(components: components)
+        let grfPath = GRFPath(components: path.components)
         for grfArchive in localGRFArchives {
             if let entry = await grfArchive.entry(at: grfPath) {
                 return .grfArchiveEntry(grfArchive, entry)
@@ -71,7 +59,7 @@ final public class ResourceManager: Sendable {
         }
 
         #if DEBUG
-        if let fileURL = Bundle.main.resourceURL?.appending(path: path),
+        if let fileURL = Bundle.main.resourceURL?.appending(path: L2K(path)),
            FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
             return .url(fileURL)
         }
@@ -81,14 +69,13 @@ final public class ResourceManager: Sendable {
     }
 
     public func contentsOfResource(at path: ResourcePath) async throws -> Data {
-        let fileURL = localURL.absoluteURL.appending(path: path)
+        let fileURL = localURL.absoluteURL.appending(path: L2K(path))
         if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
             let data = try Data(contentsOf: fileURL)
             return data
         }
 
-        let components = path.components.map({ $0.transcoding(from: .koreanEUC, to: .isoLatin1) ?? $0 })
-        let grfPath = GRFPath(components: components)
+        let grfPath = GRFPath(components: path.components)
         for grfArchive in localGRFArchives {
             if let entry = await grfArchive.entry(at: grfPath) {
                 let data = try await grfArchive.contentsOfEntry(at: entry.path)
@@ -97,7 +84,7 @@ final public class ResourceManager: Sendable {
         }
 
         #if DEBUG
-        if let fileURL = Bundle.main.resourceURL?.appending(path: path),
+        if let fileURL = Bundle.main.resourceURL?.appending(path: L2K(path)),
            FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
             let data = try Data(contentsOf: fileURL)
             return data
@@ -107,9 +94,12 @@ final public class ResourceManager: Sendable {
         if let remoteURL {
             logger.info("Start downloading resource: \(path)")
 
-            let path = ResourcePath(components: path.components.map({ $0.transcoding(from: .koreanEUC, to: .isoLatin1) ?? $0 }))
             let remoteResourceURL = remoteURL.appending(path: path)
             let (data, _) = try await URLSession.shared.data(from: remoteResourceURL)
+
+            try? FileManager.default.createDirectory(at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try? data.write(to: fileURL)
+
             return data
         }
 

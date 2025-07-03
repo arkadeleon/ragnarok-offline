@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ROCore
 import ROResources
 
 class FileSystem {
@@ -30,7 +31,7 @@ class FileSystem {
 
         let contents = try await grfArchive.contentsOfEntry(at: entry.path)
 
-        let path = entry.path.components.map({ $0.transcoding(from: .isoLatin1, to: .koreanEUC) ?? $0 }).joined(separator: "/")
+        let path = entry.path.components.map(L2K).joined(separator: "/")
         let url = ResourceManager.shared.localURL.appending(path: path)
         let directory = url.deletingLastPathComponent()
 

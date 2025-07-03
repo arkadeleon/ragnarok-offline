@@ -5,7 +5,29 @@
 //  Created by Leon Li on 2025/2/11.
 //
 
-let jobNamesForIMF: [Int : String] = [
+import ROCore
+
+func jobNameForIMF(_ jobID: Int) -> String? {
+    jobNamesForIMF[jobID].flatMap(K2L)
+}
+
+func jobNameForSprite(_ jobID: Int) -> String? {
+    jobNamesForSprite[jobID].flatMap(K2L)
+}
+
+func jobNameForPalette(_ jobID: Int) -> String? {
+    jobNamesForPalette[jobID].flatMap(K2L)
+}
+
+func jobNameForWeapon(_ jobID: Int) -> (String, String)? {
+    jobNamesForWeapon[jobID].flatMap({ (K2L($0.0), K2L($0.1)) })
+}
+
+func shieldName(_ shieldID: Int) -> String? {
+    shieldNames[shieldID].flatMap(K2L)
+}
+
+fileprivate let jobNamesForIMF: [Int : String] = [
     0: "초보자",
     1: "검사",
     2: "마법사",
@@ -375,7 +397,7 @@ let jobNamesForIMF: [Int : String] = [
     4316: "SKY_EMPEROR2",
 ]
 
-let jobNamesForSprite: [Int : String] = [
+fileprivate let jobNamesForSprite: [Int : String] = [
     0: "초보자",
     1: "검사",
     2: "마법사",
@@ -745,7 +767,7 @@ let jobNamesForSprite: [Int : String] = [
     4316: "SKY_EMPEROR2",
 ]
 
-let jobNamesForPalette: [Int : String] = [
+fileprivate let jobNamesForPalette: [Int : String] = [
     0: "초보자",
     1: "검사",
     2: "마법사",
@@ -1115,7 +1137,7 @@ let jobNamesForPalette: [Int : String] = [
     4316: "SKY_EMPEROR2",
 ]
 
-let jobNamesForWeapon: [Int : (String, String)] = [
+fileprivate let jobNamesForWeapon: [Int : (String, String)] = [
     0: ("초보자", "초보자"),
     1: ("검사", "검사"),
     2: ("마법사", "마법사"),
@@ -1485,7 +1507,7 @@ let jobNamesForWeapon: [Int : (String, String)] = [
     4316: ("SKY_EMPEROR", "SKY_EMPEROR2"),
 ]
 
-let shieldNames: [Int : String] = [
+fileprivate let shieldNames: [Int : String] = [
     1: "_가드",
     2: "_버클러",
     3: "_쉴드",

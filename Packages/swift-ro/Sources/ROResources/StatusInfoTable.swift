@@ -22,12 +22,8 @@ public actor StatusInfoTable {
     public func iconName(forStatusID statusID: Int) async -> String? {
         let context = await loadContext()
 
-        guard let result = try? context.call("statusIconName", with: [statusID]) as? String else {
-            return nil
-        }
-
-        let iconName = result.transcoding(from: .isoLatin1, to: .koreanEUC)
-        return iconName
+        let result = try? context.call("statusIconName", with: [statusID]) as? String
+        return result
     }
 
     public func localizedDescription(forStatusID statusID: Int) async -> String? {

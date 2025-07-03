@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2025/5/8.
 //
 
+import ROCore
+
 final public class ResourcePathGenerator: Sendable {
     package let scriptManager: ScriptManager
 
@@ -17,11 +19,11 @@ final public class ResourcePathGenerator: Sendable {
             return nil
         }
 
-        return ResourcePath.spriteDirectory.appending(["아이템", "\(resourceName)"])
+        return ResourcePath.spriteDirectory.appending([K2L("아이템"), "\(resourceName)"])
     }
 
     public func generateSkillSpritePath(skillAegisName: String) -> ResourcePath {
-        ResourcePath.spriteDirectory.appending(["아이템", "\(skillAegisName)"])
+        ResourcePath.spriteDirectory.appending([K2L("아이템"), "\(skillAegisName)"])
     }
 
     public func generateItemIconImagePath(itemID: Int) async -> ResourcePath? {
