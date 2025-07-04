@@ -6,14 +6,15 @@
 //
 
 @preconcurrency import Lua
+import Synchronization
 
 final public class ScriptManager: Resource {
     let locale: Locale
-    let context: LuaContext
+    let context: Mutex<LuaContext>
 
     init(locale: Locale, context: LuaContext) {
         self.locale = locale
-        self.context = context
+        self.context = Mutex(context)
     }
 
     public func identifiedItemResourceName(forItemID itemID: Int) -> String? {
@@ -83,12 +84,14 @@ final public class ScriptManager: Resource {
     }
 
     private func call<T>(_ name: String, with args: [Any], to resultType: T.Type) -> T? {
-        do {
-            let result = try context.call(name, with: args)
-            return result as? T
-        } catch {
-            logger.warning("\(error.localizedDescription)")
-            return nil
+        context.withLock {
+            do {
+                let result = try $0.call(name, with: args)
+                return result as? T
+            } catch {
+                logger.warning("\(error.localizedDescription)")
+                return nil
+            }
         }
     }
 }

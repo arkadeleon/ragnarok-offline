@@ -133,7 +133,8 @@ class ObservableItem {
         self.mode = mode
         self.item = item
 
-        self.localizedName = await ItemInfoTable.current.localizedIdentifiedItemName(forItemID: item.id)
+        let itemInfoTable = await ResourceManager.shared.itemInfoTable()
+        self.localizedName = itemInfoTable.localizedIdentifiedItemName(forItemID: item.id)
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Item, Value>) -> Value {
@@ -159,7 +160,8 @@ class ObservableItem {
             previewImage = try? await ResourceManager.shared.image(at: previewImagePath, removesMagentaPixels: true)
         }
 
-        localizedDescription = await ItemInfoTable.current.localizedIdentifiedItemDescription(forItemID: item.id)
+        let itemInfoTable = await ResourceManager.shared.itemInfoTable()
+        localizedDescription = itemInfoTable.localizedIdentifiedItemDescription(forItemID: item.id)
 
         let monsterDatabase = MonsterDatabase.shared
         let monsters = await monsterDatabase.monsters()
