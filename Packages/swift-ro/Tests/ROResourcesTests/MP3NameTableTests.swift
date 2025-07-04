@@ -1,5 +1,5 @@
 //
-//  MapMP3NameTableTests.swift
+//  MP3NameTableTests.swift
 //  RagnarokOfflineTests
 //
 //  Created by Leon Li on 2025/2/1.
@@ -8,13 +8,13 @@
 import XCTest
 @testable import ROResources
 
-final class MapMP3NameTableTests: XCTestCase {
-    func testMapMP3NameTable() async throws {
+final class MP3NameTableTests: XCTestCase {
+    func testMP3NameTable() async throws {
         let localURL = Bundle.module.resourceURL!
         let resourceManager = ResourceManager(localURL: localURL, remoteURL: nil)
-        let mapMP3NameTable = MapMP3NameTable(resourceManager: resourceManager)
+        let mp3NameTable = await resourceManager.mp3NameTable()
 
-        let prt_fild08 = await mapMP3NameTable.mapMP3Name(forMapName: "prt_fild08")
+        let prt_fild08 = mp3NameTable.mp3Name(forMapName: "prt_fild08")
         XCTAssertEqual(prt_fild08, "12.mp3")
     }
 }

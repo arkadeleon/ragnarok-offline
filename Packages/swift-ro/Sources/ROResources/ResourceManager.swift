@@ -9,6 +9,10 @@ import CoreGraphics
 import Foundation
 import GRF
 import ROCore
+import Synchronization
+
+public protocol Resource: Sendable {
+}
 
 enum ResourceError: LocalizedError {
     case resourceNotFound(ResourcePath)
@@ -32,6 +36,8 @@ public enum ResourceLocator {
 final public class ResourceManager: Sendable {
     public let localURL: URL
     public let remoteURL: URL?
+
+    let tasks = Mutex<[String : Task<any Resource, Never>]>([:])
 
     private let localGRFArchives: [GRFArchive]
 

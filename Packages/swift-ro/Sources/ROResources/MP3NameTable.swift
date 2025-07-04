@@ -1,5 +1,5 @@
 //
-//  MapMP3NameTable.swift
+//  MP3NameTable.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2025/2/1.
@@ -8,36 +8,34 @@
 import BinaryIO
 import Foundation
 
-public actor MapMP3NameTable {
-    package let resourceManager: ResourceManager
+final public class MP3NameTable: Resource {
+    let mp3NamesByRSW: [String : String]
 
-    private var loadTask: Task<[String : String], Never>?
-
-    public init(resourceManager: ResourceManager) {
-        self.resourceManager = resourceManager
+    init(mp3NamesByRSW: [String : String] = [:]) {
+        self.mp3NamesByRSW = mp3NamesByRSW
     }
 
-    public func mapMP3Name(forMapName mapName: String) async -> String? {
-        let mapMP3NamesByRSW = await loadTable()
-        let mapMP3Name = mapMP3NamesByRSW[mapName]
-        return mapMP3Name
+    public func mp3Name(forMapName mapName: String) -> String? {
+        mp3NamesByRSW[mapName]
     }
+}
 
-    private func loadTable() async -> [String : String] {
-        if let task = loadTask {
-            return await task.value
+extension ResourceManager {
+    public func mp3NameTable() async -> MP3NameTable {
+        if let task = tasks.withLock({ $0["MP3NameTable"] }) {
+            return await task.value as! MP3NameTable
         }
 
-        let task = Task<[String : String], Never> {
+        let task = Task<any Resource, Never> {
             let data: Data
             do {
-                data = try await resourceManager.contentsOfResource(at: ["data", "mp3nametable.txt"])
+                data = try await contentsOfResource(at: ["data", "mp3nametable.txt"])
             } catch {
                 logger.warning("\(error.localizedDescription)")
-                return [:]
+                return MP3NameTable()
             }
 
-            var mapMP3NamesByRSW: [String : String] = [:]
+            var mp3NamesByRSW: [String : String] = [:]
 
             let stream = MemoryStream(data: data)
 
@@ -55,17 +53,20 @@ public actor MapMP3NameTable {
                 if columns.count >= 2 {
                     let rsw = columns[0]
                         .replacingOccurrences(of: ".rsw", with: "")
-                    let mapMP3Name = columns[1]
+                    let mp3Name = columns[1]
                         .trimmingCharacters(in: .whitespaces)
                         .replacingOccurrences(of: "bgm\\\\", with: "")
-                    mapMP3NamesByRSW[rsw] = mapMP3Name
+                    mp3NamesByRSW[rsw] = mp3Name
                 }
             }
 
-            return mapMP3NamesByRSW
+            return MP3NameTable(mp3NamesByRSW: mp3NamesByRSW)
         }
-        loadTask = task
 
-        return await task.value
+        tasks.withLock {
+            $0["MP3NameTable"] = task
+        }
+
+        return await task.value as! MP3NameTable
     }
 }

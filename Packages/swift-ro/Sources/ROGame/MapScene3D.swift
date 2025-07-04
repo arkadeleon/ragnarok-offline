@@ -199,8 +199,7 @@ class MapScene3D: MapSceneProtocol {
     }
 
     private func audioResource(forMapName: String) async -> AudioResource? {
-        let mapMP3NameTable = MapMP3NameTable(resourceManager: resourceManager)
-        guard let mp3Name = await mapMP3NameTable.mapMP3Name(forMapName: mapName) else {
+        guard let mp3Name = await resourceManager.mp3NameTable().mp3Name(forMapName: mapName) else {
             return nil
         }
 
