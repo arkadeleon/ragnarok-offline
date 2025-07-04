@@ -14,12 +14,12 @@ extension ResourcePathGenerator {
         ResourcePath.spriteDirectory.appending("shadow")
     }
 
-    func generatePlayerBodySpritePath(job: UniformJob, gender: Gender, madoType: MadoType = .robot) async -> ResourcePath? {
+    func generatePlayerBodySpritePath(job: UniformJob, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
         guard job.isPlayer else {
             return nil
         }
 
-        guard let jobName = await jobSpriteName(for: job, madoType: madoType) else {
+        guard let jobName = jobSpriteName(for: job, madoType: madoType) else {
             return nil
         }
 
@@ -30,12 +30,12 @@ extension ResourcePathGenerator {
         }
     }
 
-    func generateAlternatePlayerBodySpritePath(job: UniformJob, gender: Gender, costumeID: Int, madoType: MadoType = .robot) async -> ResourcePath? {
+    func generateAlternatePlayerBodySpritePath(job: UniformJob, gender: Gender, costumeID: Int, madoType: MadoType = .robot) -> ResourcePath? {
         guard job.isPlayer else {
             return nil
         }
 
-        guard let jobName = await jobSpriteName(for: job, madoType: madoType) else {
+        guard let jobName = jobSpriteName(for: job, madoType: madoType) else {
             return nil
         }
 
@@ -58,12 +58,12 @@ extension ResourcePathGenerator {
         }
     }
 
-    func generateNonPlayerSpritePath(job: UniformJob) async -> ResourcePath? {
+    func generateNonPlayerSpritePath(job: UniformJob) -> ResourcePath? {
         guard !job.isPlayer else {
             return nil
         }
 
-        guard let jobName = await jobSpriteName(for: job) else {
+        guard let jobName = jobSpriteName(for: job) else {
             return nil
         }
 
@@ -80,7 +80,7 @@ extension ResourcePathGenerator {
         }
     }
 
-    func generateWeaponSpritePath(job: UniformJob, weapon: Int, isSlash: Bool = false, gender: Gender, madoType: MadoType = .robot) async -> ResourcePath? {
+    func generateWeaponSpritePath(job: UniformJob, weapon: Int, isSlash: Bool = false, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
         guard job.isPlayer || job.isMercenary else {
             return nil
         }
@@ -98,11 +98,11 @@ extension ResourcePathGenerator {
                 jobName = (jobName.0, madogearJobName)
             }
 
-            var weaponName = await scriptManager.weaponName(forWeaponID: weapon)
+            var weaponName = scriptManager.weaponName(forWeaponID: weapon)
 
             if weaponName == nil && !isMadogear {
-                if let realWeaponID = await scriptManager.realWeaponID(forWeaponID: weapon) {
-                    weaponName = await scriptManager.weaponName(forWeaponID: realWeaponID)
+                if let realWeaponID = scriptManager.realWeaponID(forWeaponID: weapon) {
+                    weaponName = scriptManager.weaponName(forWeaponID: realWeaponID)
                     if weaponName == nil {
                         weaponName = "_\(weapon)"
                     }
@@ -132,12 +132,12 @@ extension ResourcePathGenerator {
         }
     }
 
-    func generateShieldSpritePath(job: UniformJob, shield: Int, gender: Gender) async -> ResourcePath? {
+    func generateShieldSpritePath(job: UniformJob, shield: Int, gender: Gender) -> ResourcePath? {
         guard job.isPlayer else {
             return nil
         }
 
-        guard let jobName = await jobSpriteName(for: job) else {
+        guard let jobName = jobSpriteName(for: job) else {
             return nil
         }
 
@@ -148,21 +148,21 @@ extension ResourcePathGenerator {
         }
     }
 
-    func generateHeadgearSpritePath(headgear: Int, gender: Gender) async -> ResourcePath? {
-        guard let accessoryName = await scriptManager.accessoryName(forAccessoryID: headgear) else {
+    func generateHeadgearSpritePath(headgear: Int, gender: Gender) -> ResourcePath? {
+        guard let accessoryName = scriptManager.accessoryName(forAccessoryID: headgear) else {
             return nil
         }
 
         return ResourcePath.spriteDirectory.appending([K2L("악세사리"), gender.name, "\(gender.name)\(accessoryName)"])
     }
 
-    func generateGarmentSpritePath(job: UniformJob, garment: Int, gender: Gender, checkEnglish: Bool = false, useFallback: Bool = false) async -> ResourcePath? {
+    func generateGarmentSpritePath(job: UniformJob, garment: Int, gender: Gender, checkEnglish: Bool = false, useFallback: Bool = false) -> ResourcePath? {
         guard job.isPlayer else {
             return nil
         }
 
-        guard let jobName = await jobSpriteName(for: job),
-              let robeName = await scriptManager.robeName(forRobeID: garment, checkEnglish: checkEnglish) else {
+        guard let jobName = jobSpriteName(for: job),
+              let robeName = scriptManager.robeName(forRobeID: garment, checkEnglish: checkEnglish) else {
             return nil
         }
 
@@ -244,15 +244,15 @@ extension ResourcePathGenerator {
         return ["data", "imf", "\(jobName)_\(gender.name)"]
     }
 
-    private func jobSpriteName(for job: UniformJob, madoType: MadoType = .robot) async -> String? {
+    private func jobSpriteName(for job: UniformJob, madoType: MadoType = .robot) -> String? {
         if job.isPlayer {
             if job.isMadogear && madoType == .suit {
-                return suitMadogearJobName(for: job)
+                suitMadogearJobName(for: job)
             } else {
-                return jobNameForSprite(job.rawValue)
+                jobNameForSprite(job.rawValue)
             }
         } else {
-            return await scriptManager.jobName(forJobID: job.rawValue)
+            scriptManager.jobName(forJobID: job.rawValue)
         }
     }
 

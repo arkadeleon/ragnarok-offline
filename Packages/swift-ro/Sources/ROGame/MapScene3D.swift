@@ -347,8 +347,9 @@ class MapScene3D: MapSceneProtocol {
 
     func onItemSpawned(_ event: ItemEvents.Spawned) {
         Task {
-            let pathGenerator = ResourcePathGenerator(resourceManager: resourceManager)
-            guard let path = await pathGenerator.generateItemSpritePath(itemID: Int(event.item.itemID)) else {
+            let scriptManager = await resourceManager.scriptManager()
+            let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
+            guard let path = pathGenerator.generateItemSpritePath(itemID: Int(event.item.itemID)) else {
                 return
             }
 

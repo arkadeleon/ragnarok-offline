@@ -189,7 +189,7 @@ final public class SpriteRenderer: Sendable {
         }
 
         let zIndexForGarment: () async -> Int = {
-            let drawOnTop = await scriptManager.drawOnTop(
+            let drawOnTop = scriptManager.drawOnTop(
                 forRobeID: configuration.garment,
                 genderID: configuration.gender.rawValue,
                 jobID: configuration.job.rawValue,
@@ -197,7 +197,7 @@ final public class SpriteRenderer: Sendable {
                 frameIndex: frameIndex
             )
             if drawOnTop {
-                let isTopLayer = await scriptManager.isTopLayer(forRobeID: configuration.garment)
+                let isTopLayer = scriptManager.isTopLayer(forRobeID: configuration.garment)
                 if isTopLayer {
                     return 25
                 } else {

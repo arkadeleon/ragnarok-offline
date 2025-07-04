@@ -143,8 +143,9 @@ class ObservableItem {
     @MainActor
     func fetchIconImage() async {
         if iconImage == nil {
-            let pathGenerator = ResourcePathGenerator(resourceManager: .shared)
-            if let path = await pathGenerator.generateItemIconImagePath(itemID: item.id) {
+            let scriptManager = await ResourceManager.shared.scriptManager()
+            let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
+            if let path = pathGenerator.generateItemIconImagePath(itemID: item.id) {
                 iconImage = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
             }
         }
@@ -152,8 +153,9 @@ class ObservableItem {
 
     @MainActor
     func fetchDetail() async {
-        let pathGenerator = ResourcePathGenerator(resourceManager: .shared)
-        if let previewImagePath = await pathGenerator.generateItemPreviewImagePath(itemID: item.id) {
+        let scriptManager = await ResourceManager.shared.scriptManager()
+        let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
+        if let previewImagePath = pathGenerator.generateItemPreviewImagePath(itemID: item.id) {
             previewImage = try? await ResourceManager.shared.image(at: previewImagePath, removesMagentaPixels: true)
         }
 

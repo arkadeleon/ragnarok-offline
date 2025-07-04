@@ -12,13 +12,17 @@ extension ComposedSprite {
         let configuration: ComposedSprite.Configuration
         let resourceManager: ResourceManager
 
-        private let pathGenerator: ResourcePathGenerator
+        private var pathGenerator: ResourcePathGenerator {
+            get async {
+                let scriptManager = await resourceManager.scriptManager()
+                let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
+                return pathGenerator
+            }
+        }
 
         init(configuration: ComposedSprite.Configuration, resourceManager: ResourceManager) {
             self.configuration = configuration
             self.resourceManager = resourceManager
-
-            self.pathGenerator = ResourcePathGenerator(resourceManager: resourceManager)
         }
 
         func composePlayerSprite() async -> [ComposedSprite.Part] {
@@ -95,7 +99,7 @@ extension ComposedSprite {
         private func shadowPart() async -> ComposedSprite.Part? {
             let shadowSprite: SpriteResource
             do {
-                let spritePath = pathGenerator.generateShadowSpritePath()
+                let spritePath = await pathGenerator.generateShadowSpritePath()
                 shadowSprite = try await resourceManager.sprite(at: spritePath)
             } catch {
                 logger.warning("Shadow sprite error: \(error.localizedDescription)")
@@ -130,7 +134,7 @@ extension ComposedSprite {
                 }
 
                 if clothesColor > -1 {
-                    if let palettePath = pathGenerator.generateAlternatePlayerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, costumeID: outfit, madoType: madoType) {
+                    if let palettePath = await pathGenerator.generateAlternatePlayerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, costumeID: outfit, madoType: madoType) {
                         do {
                             bodyPalette = try await resourceManager.palette(at: palettePath)
                         } catch {
@@ -148,7 +152,7 @@ extension ComposedSprite {
                 }
 
                 if clothesColor > -1 {
-                    if let palettePath = pathGenerator.generatePlayerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, madoType: madoType) {
+                    if let palettePath = await pathGenerator.generatePlayerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, madoType: madoType) {
                         do {
                             bodyPalette = try await resourceManager.palette(at: palettePath)
                         } catch {
@@ -174,13 +178,13 @@ extension ComposedSprite {
             let hairStyle = configuration.hairStyle
             let hairColor = configuration.hairColor
 
-            guard let spritePath = pathGenerator.generatePlayerHeadSpritePath(job: job, hairStyle: hairStyle, gender: gender) else {
+            guard let spritePath = await pathGenerator.generatePlayerHeadSpritePath(job: job, hairStyle: hairStyle, gender: gender) else {
                 return nil
             }
 
             var headPalette: PaletteResource?
             if hairColor > -1 {
-                if let palettePath = pathGenerator.generatePlayerHeadPalettePath(job: job, hairStyle: hairStyle, hairColor: hairColor, gender: gender) {
+                if let palettePath = await pathGenerator.generatePlayerHeadPalettePath(job: job, hairStyle: hairStyle, hairColor: hairColor, gender: gender) {
                     do {
                         headPalette = try await resourceManager.palette(at: palettePath)
                     } catch {

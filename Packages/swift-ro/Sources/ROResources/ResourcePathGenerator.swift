@@ -8,20 +8,14 @@
 import ROCore
 
 final public class ResourcePathGenerator: Sendable {
-    package let resourceManager: ResourceManager
+    package let scriptManager: ScriptManager
 
-    package var scriptManager: ScriptManager {
-        get async {
-            await resourceManager.scriptManager()
-        }
+    public init(scriptManager: ScriptManager) {
+        self.scriptManager = scriptManager
     }
 
-    public init(resourceManager: ResourceManager) {
-        self.resourceManager = resourceManager
-    }
-
-    public func generateItemSpritePath(itemID: Int) async -> ResourcePath? {
-        guard let resourceName = await scriptManager.identifiedItemResourceName(forItemID: itemID) else {
+    public func generateItemSpritePath(itemID: Int) -> ResourcePath? {
+        guard let resourceName = scriptManager.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
 
@@ -32,16 +26,16 @@ final public class ResourcePathGenerator: Sendable {
         ResourcePath.spriteDirectory.appending([K2L("아이템"), "\(skillAegisName)"])
     }
 
-    public func generateItemIconImagePath(itemID: Int) async -> ResourcePath? {
-        guard let resourceName = await scriptManager.identifiedItemResourceName(forItemID: itemID) else {
+    public func generateItemIconImagePath(itemID: Int) -> ResourcePath? {
+        guard let resourceName = scriptManager.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
 
         return ResourcePath.userInterfaceDirectory.appending(["item", "\(resourceName).bmp"])
     }
 
-    public func generateItemPreviewImagePath(itemID: Int) async -> ResourcePath? {
-        guard let resourceName = await scriptManager.identifiedItemResourceName(forItemID: itemID) else {
+    public func generateItemPreviewImagePath(itemID: Int) -> ResourcePath? {
+        guard let resourceName = scriptManager.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
 

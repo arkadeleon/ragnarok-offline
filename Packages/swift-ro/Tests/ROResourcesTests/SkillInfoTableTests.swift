@@ -15,7 +15,7 @@ final class SkillInfoTableTests: XCTestCase {
         let locale = Locale(languageCode: .chinese, script: .hanSimplified)
         let resourceManager = ResourceManager(locale: locale, localURL: localURL, remoteURL: nil)
         let scriptManager = await resourceManager.scriptManager()
-        let heal = await scriptManager.localizedSkillName(forSkillID: 28)
+        let heal = scriptManager.localizedSkillName(forSkillID: 28)
         XCTAssertEqual(heal, "治愈术")
     }
 
@@ -23,7 +23,7 @@ final class SkillInfoTableTests: XCTestCase {
         let locale = Locale(languageCode: .chinese, script: .hanTraditional)
         let resourceManager = ResourceManager(locale: locale, localURL: localURL, remoteURL: nil)
         let scriptManager = await resourceManager.scriptManager()
-        let heal = await scriptManager.localizedSkillName(forSkillID: 28)
+        let heal = scriptManager.localizedSkillName(forSkillID: 28)
         XCTAssertEqual(heal, "治癒術")
     }
 
@@ -31,7 +31,7 @@ final class SkillInfoTableTests: XCTestCase {
         let locale = Locale(languageCode: .english)
         let resourceManager = ResourceManager(locale: locale, localURL: localURL, remoteURL: nil)
         let scriptManager = await resourceManager.scriptManager()
-        let heal = await scriptManager.localizedSkillName(forSkillID: 28)
+        let heal = scriptManager.localizedSkillName(forSkillID: 28)
         XCTAssertEqual(heal, "Heal")
     }
 
@@ -39,7 +39,7 @@ final class SkillInfoTableTests: XCTestCase {
         let locale = Locale(languageCode: .french)
         let resourceManager = ResourceManager(locale: locale, localURL: localURL, remoteURL: nil)
         let scriptManager = await resourceManager.scriptManager()
-        let heal = await scriptManager.localizedSkillName(forSkillID: 28)
+        let heal = scriptManager.localizedSkillName(forSkillID: 28)
         XCTAssertEqual(heal, "Heal")
     }
 
@@ -47,7 +47,7 @@ final class SkillInfoTableTests: XCTestCase {
         let locale = Locale(languageCode: .german)
         let resourceManager = ResourceManager(locale: locale, localURL: localURL, remoteURL: nil)
         let scriptManager = await resourceManager.scriptManager()
-        let heal = await scriptManager.localizedSkillName(forSkillID: 28)
+        let heal = scriptManager.localizedSkillName(forSkillID: 28)
         XCTAssertEqual(heal, "Heal")
     }
 
@@ -55,7 +55,7 @@ final class SkillInfoTableTests: XCTestCase {
         let locale = Locale(languageCode: .indonesian)
         let resourceManager = ResourceManager(locale: locale, localURL: localURL, remoteURL: nil)
         let scriptManager = await resourceManager.scriptManager()
-        let heal = await scriptManager.localizedSkillName(forSkillID: 28)
+        let heal = scriptManager.localizedSkillName(forSkillID: 28)
         XCTAssertEqual(heal, "Heal")
     }
 
@@ -63,7 +63,7 @@ final class SkillInfoTableTests: XCTestCase {
         let locale = Locale(languageCode: .italian)
         let resourceManager = ResourceManager(locale: locale, localURL: localURL, remoteURL: nil)
         let scriptManager = await resourceManager.scriptManager()
-        let heal = await scriptManager.localizedSkillName(forSkillID: 28)
+        let heal = scriptManager.localizedSkillName(forSkillID: 28)
         XCTAssertEqual(heal, "Heal")
     }
 
@@ -71,7 +71,7 @@ final class SkillInfoTableTests: XCTestCase {
         let locale = Locale(languageCode: .japanese)
         let resourceManager = ResourceManager(locale: locale, localURL: localURL, remoteURL: nil)
         let scriptManager = await resourceManager.scriptManager()
-        let heal = await scriptManager.localizedSkillName(forSkillID: 28)
+        let heal = scriptManager.localizedSkillName(forSkillID: 28)
         XCTAssertEqual(heal, "ヒール")
     }
 
@@ -79,7 +79,7 @@ final class SkillInfoTableTests: XCTestCase {
         let locale = Locale(languageCode: .korean)
         let resourceManager = ResourceManager(locale: locale, localURL: localURL, remoteURL: nil)
         let scriptManager = await resourceManager.scriptManager()
-        let heal = await scriptManager.localizedSkillName(forSkillID: 28)
+        let heal = scriptManager.localizedSkillName(forSkillID: 28)
         XCTAssertEqual(heal, "힐")
     }
 
@@ -87,7 +87,7 @@ final class SkillInfoTableTests: XCTestCase {
         let locale = Locale(languageCode: .portuguese, languageRegion: .brazil)
         let resourceManager = ResourceManager(locale: locale, localURL: localURL, remoteURL: nil)
         let scriptManager = await resourceManager.scriptManager()
-        let heal = await scriptManager.localizedSkillName(forSkillID: 28)
+        let heal = scriptManager.localizedSkillName(forSkillID: 28)
         XCTAssertEqual(heal, "Curar")
     }
 
@@ -95,7 +95,7 @@ final class SkillInfoTableTests: XCTestCase {
         let locale = Locale(languageCode: .russian)
         let resourceManager = ResourceManager(locale: locale, localURL: localURL, remoteURL: nil)
         let scriptManager = await resourceManager.scriptManager()
-        let heal = await scriptManager.localizedSkillName(forSkillID: 28)
+        let heal = scriptManager.localizedSkillName(forSkillID: 28)
         XCTAssertEqual(heal, "Лечение")
     }
 
@@ -103,7 +103,7 @@ final class SkillInfoTableTests: XCTestCase {
         let locale = Locale(languageCode: .spanish)
         let resourceManager = ResourceManager(locale: locale, localURL: localURL, remoteURL: nil)
         let scriptManager = await resourceManager.scriptManager()
-        let heal = await scriptManager.localizedSkillName(forSkillID: 28)
+        let heal = scriptManager.localizedSkillName(forSkillID: 28)
         XCTAssertEqual(heal, "Heal")
     }
 
@@ -111,7 +111,7 @@ final class SkillInfoTableTests: XCTestCase {
         let locale = Locale(languageCode: .thai)
         let resourceManager = ResourceManager(locale: locale, localURL: localURL, remoteURL: nil)
         let scriptManager = await resourceManager.scriptManager()
-        let heal = await scriptManager.localizedSkillName(forSkillID: 28)
+        let heal = scriptManager.localizedSkillName(forSkillID: 28)
         XCTAssertEqual(heal, "Heal")
     }
 
@@ -119,7 +119,7 @@ final class SkillInfoTableTests: XCTestCase {
         let locale = Locale(languageCode: .turkish)
         let resourceManager = ResourceManager(locale: locale, localURL: localURL, remoteURL: nil)
         let scriptManager = await resourceManager.scriptManager()
-        let heal = await scriptManager.localizedSkillName(forSkillID: 28)
+        let heal = scriptManager.localizedSkillName(forSkillID: 28)
         XCTAssertEqual(heal, "Heal")
     }
 }
