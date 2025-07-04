@@ -122,7 +122,7 @@ class ObservableItem {
             .joined(separator: "\n")
     }
 
-    var locations: String {
+    var displayLocations: String {
         OptionSetSequence(item.locations)
             .sorted(using: KeyPathComparator(\.rawValue))
             .map { "- \($0.stringValue)" }

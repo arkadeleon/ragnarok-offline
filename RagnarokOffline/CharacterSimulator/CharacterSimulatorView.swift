@@ -12,28 +12,27 @@ import RORendering
 import SwiftUI
 
 struct CharacterSimulatorView: View {
-    @State private var configuration = CharacterConfiguration()
-
-    @State private var composedSprite: ComposedSprite?
-    @State private var animatedImage: AnimatedImage?
+    @Environment(AppModel.self) private var appModel
 
     var body: some View {
+        @Bindable var characterSimulator = appModel.characterSimulator
+
         AdaptiveView {
             VStack(spacing: 0) {
-                CharacterRenderingView(configuration: $configuration, animatedImage: animatedImage)
+                CharacterRenderingView()
                     .frame(minHeight: 0, maxHeight: 300)
 
                 Divider()
 
-                CharacterConfigurationView(configuration: $configuration)
+                CharacterConfigurationView()
                     .frame(minHeight: 0, maxHeight: .infinity)
             }
         } regular: {
             HStack {
-                CharacterRenderingView(configuration: $configuration, animatedImage: animatedImage)
+                CharacterRenderingView()
                     .frame(minWidth: 0, maxWidth: .infinity)
 
-                CharacterConfigurationView(configuration: $configuration)
+                CharacterConfigurationView()
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .background(.background.secondary)
                     .scrollContentBackground(.hidden)
@@ -43,118 +42,13 @@ struct CharacterSimulatorView: View {
         }
         .navigationTitle("Character Simulator")
         .task {
-            await composeSprite()
-            await renderSprite()
+            characterSimulator.renderSprite()
         }
-        .onChange(of: configuration.jobID) {
-            Task {
-                await composeSprite()
-                await renderSprite()
-            }
-        }
-        .onChange(of: configuration.gender) {
-            Task {
-                await composeSprite()
-                await renderSprite()
-            }
-        }
-        .onChange(of: configuration.hairStyle) {
-            Task {
-                await composeSprite()
-                await renderSprite()
-            }
-        }
-        .onChange(of: configuration.hairColor) {
-            Task {
-                await composeSprite()
-                await renderSprite()
-            }
-        }
-        .onChange(of: configuration.clothesColor) {
-            Task {
-                await composeSprite()
-                await renderSprite()
-            }
-        }
-        .onChange(of: configuration.weaponType) {
-            Task {
-                await composeSprite()
-                await renderSprite()
-            }
-        }
-        .onChange(of: configuration.shield) {
-            Task {
-                await composeSprite()
-                await renderSprite()
-            }
-        }
-        .onChange(of: configuration.headTop) {
-            Task {
-                await composeSprite()
-                await renderSprite()
-            }
-        }
-        .onChange(of: configuration.headMid) {
-            Task {
-                await composeSprite()
-                await renderSprite()
-            }
-        }
-        .onChange(of: configuration.headBottom) {
-            Task {
-                await composeSprite()
-                await renderSprite()
-            }
-        }
-        .onChange(of: configuration.garment) {
-            Task {
-                await composeSprite()
-                await renderSprite()
-            }
-        }
-        .onChange(of: configuration.actionType) {
-            Task {
-                await renderSprite()
-            }
-        }
-        .onChange(of: configuration.direction) {
-            Task {
-                await renderSprite()
-            }
-        }
-        .onChange(of: configuration.headDirection) {
-            Task {
-                await renderSprite()
-            }
-        }
-    }
-
-    private func composeSprite() async {
-        let configuration = ComposedSprite.Configuration(configuration: configuration)
-        composedSprite = await ComposedSprite(
-            configuration: configuration,
-            resourceManager: .shared,
-            scriptManager: .shared
-        )
-    }
-
-    private func renderSprite() async {
-        guard let composedSprite else {
-            return
-        }
-
-        let spriteRenderer = SpriteRenderer()
-        animatedImage = await spriteRenderer.render(
-            composedSprite: composedSprite,
-            actionType: configuration.actionType,
-            direction: configuration.direction,
-            headDirection: configuration.headDirection
-        )
     }
 }
 
 struct CharacterSimulatorView2: View {
-    @State private var configuration = CharacterConfiguration()
+    @State private var configuration = CharacterSimulator.Configuration()
 
     var body: some View {
         RealityView { content in
@@ -189,5 +83,6 @@ struct CharacterSimulatorView2: View {
 #Preview {
     NavigationStack {
         CharacterSimulatorView()
+            .environment(AppModel())
     }
 }

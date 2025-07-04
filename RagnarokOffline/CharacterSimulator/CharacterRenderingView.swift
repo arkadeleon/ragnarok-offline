@@ -9,19 +9,22 @@ import ROCore
 import SwiftUI
 
 struct CharacterRenderingView: View {
-    @Binding var configuration: CharacterConfiguration
-    var animatedImage: AnimatedImage?
+    @Environment(AppModel.self) private var appModel
+
+    private var characterSimulator: CharacterSimulator {
+        appModel.characterSimulator
+    }
 
     var body: some View {
         ZStack {
-            if let animatedImage {
+            if let animatedImage = characterSimulator.animatedImage {
                 AnimatedImageView(animatedImage: animatedImage)
                     .scaleEffect(2)
             }
 
             HStack {
                 Button {
-                    configuration.rotateClockwise()
+                    characterSimulator.configuration.rotateClockwise()
                 } label: {
                     Image(systemName: "arrow.clockwise")
                 }
@@ -33,7 +36,7 @@ struct CharacterRenderingView: View {
                 Spacer()
 
                 Button {
-                    configuration.rotateCounterClockwise()
+                    characterSimulator.configuration.rotateCounterClockwise()
                 } label: {
                     Image(systemName: "arrow.counterclockwise")
                 }
@@ -48,7 +51,6 @@ struct CharacterRenderingView: View {
 }
 
 #Preview {
-    @Previewable @State var configuration = CharacterConfiguration()
-
-    CharacterRenderingView(configuration: $configuration, animatedImage: nil)
+    CharacterRenderingView()
+        .environment(AppModel())
 }

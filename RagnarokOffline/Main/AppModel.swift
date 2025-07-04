@@ -32,4 +32,6 @@ final class AppModel {
     var petDatabase = ObservableDatabase(mode: .renewal, recordProvider: .pet)
     var skillDatabase = ObservableDatabase(mode: .renewal, recordProvider: .skill)
     var statusChangeDatabase = ObservableDatabase(mode: .renewal, recordProvider: .statusChange)
+
+    let characterSimulator = CharacterSimulator()
 }

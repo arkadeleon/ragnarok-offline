@@ -9,7 +9,7 @@ import ROFileFormats
 import ROResources
 
 final public class ComposedSprite: Sendable {
-    package let configuration: ComposedSprite.Configuration
+    public let configuration: ComposedSprite.Configuration
     package let resourceManager: ResourceManager
     package let scriptManager: ScriptManager
 

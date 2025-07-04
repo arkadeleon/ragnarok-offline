@@ -35,7 +35,7 @@ struct ItemDetailView: View {
 
                 DatabaseRecordSectionView("Classes", text: item.classes)
 
-                DatabaseRecordSectionView("Locations", text: item.locations)
+                DatabaseRecordSectionView("Locations", text: item.displayLocations)
             }
 
             if let localizedDescription = item.localizedDescription {

@@ -6,39 +6,40 @@
 //
 
 import ROConstants
-import RODatabase
 import RORendering
 import SwiftUI
 
 struct CharacterConfigurationView: View {
-    @Binding var configuration: CharacterConfiguration
+    @Environment(AppModel.self) private var appModel
 
-    @State private var headTopItems: [Item] = []
-    @State private var headMidItems: [Item] = []
-    @State private var headBottomItems: [Item] = []
-    @State private var garmentItems: [Item] = []
+    @State private var headTopItems: [ObservableItem] = []
+    @State private var headMidItems: [ObservableItem] = []
+    @State private var headBottomItems: [ObservableItem] = []
+    @State private var garmentItems: [ObservableItem] = []
 
     var body: some View {
+        @Bindable var characterSimulator = appModel.characterSimulator
+
         Form {
-            Picker("Job", selection: $configuration.jobID) {
+            Picker("Job", selection: $characterSimulator.configuration.jobID) {
                 ForEach(JobID.allCases, id: \.rawValue) { jobID in
                     Text(jobID.stringValue).tag(jobID)
                 }
             }
 
-            Picker("Gender", selection: $configuration.gender) {
+            Picker("Gender", selection: $characterSimulator.configuration.gender) {
                 Text(Gender.female.stringValue).tag(Gender.female)
                 Text(Gender.male.stringValue).tag(Gender.male)
             }
 
-            Picker("Hair Style", selection: $configuration.hairStyle) {
+            Picker("Hair Style", selection: $characterSimulator.configuration.hairStyle) {
                 // 1...42
                 ForEach(1..<43) { hairStyle in
                     Text(hairStyle.formatted()).tag(hairStyle)
                 }
             }
 
-            Picker("Hair Color", selection: $configuration.hairColor) {
+            Picker("Hair Color", selection: $characterSimulator.configuration.hairColor) {
                 Text("Default").tag(-1)
 
                 // 0...8
@@ -47,7 +48,7 @@ struct CharacterConfigurationView: View {
                 }
             }
 
-            Picker("Clothes Color", selection: $configuration.clothesColor) {
+            Picker("Clothes Color", selection: $characterSimulator.configuration.clothesColor) {
                 Text("Default").tag(-1)
 
                 // 0...7
@@ -56,7 +57,7 @@ struct CharacterConfigurationView: View {
                 }
             }
 
-            Picker(selection: $configuration.weaponType) {
+            Picker(selection: $characterSimulator.configuration.weaponType) {
                 ForEach(WeaponType.allCases, id: \.rawValue) { weaponType in
                     Text(weaponType.localizedStringResource).tag(weaponType)
                 }
@@ -64,7 +65,7 @@ struct CharacterConfigurationView: View {
                 Text(ItemType.weapon.localizedStringResource)
             }
 
-            Picker(selection: $configuration.shield) {
+            Picker(selection: $characterSimulator.configuration.shield) {
                 Text("None").tag(0)
 
                 // 1...4
@@ -75,47 +76,47 @@ struct CharacterConfigurationView: View {
                 Text(WeaponType.w_shield.localizedStringResource)
             }
 
-            Picker("Head Top", selection: $configuration.headTop) {
-                Text("None").tag(Item?.none)
+            Picker("Head Top", selection: $characterSimulator.configuration.headTop) {
+                Text("None").tag(ObservableItem?.none)
 
                 ForEach(headTopItems) { item in
-                    Text(item.name).tag(item)
+                    Text(item.displayName).tag(item)
                 }
             }
 
-            Picker("Head Mid", selection: $configuration.headMid) {
-                Text("None").tag(Item?.none)
+            Picker("Head Mid", selection: $characterSimulator.configuration.headMid) {
+                Text("None").tag(ObservableItem?.none)
 
                 ForEach(headMidItems) { item in
-                    Text(item.name).tag(item)
+                    Text(item.displayName).tag(item)
                 }
             }
 
-            Picker("Head Bottom", selection: $configuration.headBottom) {
-                Text("None").tag(Item?.none)
+            Picker("Head Bottom", selection: $characterSimulator.configuration.headBottom) {
+                Text("None").tag(ObservableItem?.none)
 
                 ForEach(headBottomItems) { item in
-                    Text(item.name).tag(item)
+                    Text(item.displayName).tag(item)
                 }
             }
 
-            Picker(selection: $configuration.garment) {
-                Text("None").tag(Item?.none)
+            Picker(selection: $characterSimulator.configuration.garment) {
+                Text("None").tag(ObservableItem?.none)
 
                 ForEach(garmentItems) { item in
-                    Text(item.name).tag(item)
+                    Text(item.displayName).tag(item)
                 }
             } label: {
                 Text(verbatim: "Garment")
             }
 
-            Picker("Action", selection: $configuration.actionType) {
-                ForEach(ComposedSprite.ActionType.availableActionTypes(forJobID: configuration.jobID.rawValue), id: \.rawValue) { actionType in
+            Picker("Action", selection: $characterSimulator.configuration.actionType) {
+                ForEach(ComposedSprite.ActionType.availableActionTypes(forJobID: characterSimulator.configuration.jobID.rawValue), id: \.rawValue) { actionType in
                     Text(actionType.description).tag(actionType)
                 }
             }
 
-            Picker("Head Direction", selection: $configuration.headDirection) {
+            Picker("Head Direction", selection: $characterSimulator.configuration.headDirection) {
                 ForEach(ComposedSprite.HeadDirection.allCases, id: \.rawValue) { headDirection in
                     Text(headDirection.description).tag(headDirection)
                 }
@@ -123,17 +124,18 @@ struct CharacterConfigurationView: View {
         }
         .formStyle(.grouped)
         .task {
-            let equipItems = await ItemDatabase.shared.equipItems()
-            headTopItems = equipItems.filter({ $0.type == .armor && $0.locations.contains(.head_top) })
-            headMidItems = equipItems.filter({ $0.type == .armor && $0.locations.contains(.head_mid) })
-            headBottomItems = equipItems.filter({ $0.type == .armor && $0.locations.contains(.head_low) })
-            garmentItems = equipItems.filter({ $0.type == .armor && $0.locations.contains(.garment) && $0.view > 0 })
+            await appModel.itemDatabase.fetchRecords()
+
+            let items = appModel.itemDatabase.records
+            headTopItems = items.filter({ $0.type == .armor && $0.locations.contains(.head_top) })
+            headMidItems = items.filter({ $0.type == .armor && $0.locations.contains(.head_mid) })
+            headBottomItems = items.filter({ $0.type == .armor && $0.locations.contains(.head_low) })
+            garmentItems = items.filter({ $0.type == .armor && $0.locations.contains(.garment) && $0.view > 0 })
         }
     }
 }
 
 #Preview {
-    @Previewable @State var configuration = CharacterConfiguration()
-
-    CharacterConfigurationView(configuration: $configuration)
+    CharacterConfigurationView()
+        .environment(AppModel())
 }

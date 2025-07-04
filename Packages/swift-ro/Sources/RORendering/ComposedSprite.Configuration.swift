@@ -8,7 +8,7 @@
 import ROConstants
 
 extension ComposedSprite {
-    public struct Configuration: Sendable {
+    public struct Configuration: Equatable, Sendable {
         public let job: UniformJob
         public var gender: Gender
         public var hairStyle: Int
