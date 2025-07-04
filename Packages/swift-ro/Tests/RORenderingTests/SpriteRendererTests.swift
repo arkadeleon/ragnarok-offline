@@ -12,11 +12,10 @@ import XCTest
 final class SpriteRendererTests: XCTestCase {
     func testSpriteRenderer() async throws {
         let localURL = Bundle.module.resourceURL!
-        let resourceManager = ResourceManager(localURL: localURL, remoteURL: nil)
-        let scriptManager = ScriptManager(locale: .current, resourceManager: resourceManager)
+        let resourceManager = ResourceManager(locale: .current, localURL: localURL, remoteURL: nil)
 
         let configuration = ComposedSprite.Configuration(jobID: 0)
-        let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: resourceManager, scriptManager: scriptManager)
+        let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
         XCTAssertEqual(composedSprite.parts.count, 2)
 
         let spriteRenderer = SpriteRenderer()

@@ -11,7 +11,6 @@ import ROResources
 final public class ComposedSprite: Sendable {
     public let configuration: ComposedSprite.Configuration
     package let resourceManager: ResourceManager
-    package let scriptManager: ScriptManager
 
     let parts: [ComposedSprite.Part]
     let imf: IMF?
@@ -22,27 +21,18 @@ final public class ComposedSprite: Sendable {
         }
     }
 
-    public init(
-        configuration: ComposedSprite.Configuration,
-        resourceManager: ResourceManager,
-        scriptManager: ScriptManager
-    ) async {
+    public init(configuration: ComposedSprite.Configuration, resourceManager: ResourceManager) async {
         self.configuration = configuration
         self.resourceManager = resourceManager
-        self.scriptManager = scriptManager
 
-        let composer = ComposedSprite.Composer(
-            configuration: configuration,
-            resourceManager: resourceManager,
-            scriptManager: scriptManager
-        )
+        let composer = ComposedSprite.Composer(configuration: configuration, resourceManager: resourceManager)
 
         var imf: IMF?
 
         if configuration.job.isPlayer {
             parts = await composer.composePlayerSprite()
 
-            let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
+            let pathGenerator = ResourcePathGenerator(resourceManager: resourceManager)
             if let imfPath = pathGenerator.generateIMFPath(job: configuration.job, gender: configuration.gender) {
                 do {
                     let imfPath = imfPath.appendingPathExtension("imf")

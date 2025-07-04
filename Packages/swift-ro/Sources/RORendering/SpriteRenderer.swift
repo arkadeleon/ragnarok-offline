@@ -180,7 +180,7 @@ final public class SpriteRenderer: Sendable {
         }
 
         let configuration = composedSprite.configuration
-        let scriptManager = composedSprite.scriptManager
+        let scriptManager = await composedSprite.resourceManager.scriptManager()
         let imf = composedSprite.imf
 
         let isNorth = switch direction {

@@ -11,7 +11,7 @@ import XCTest
 final class MP3NameTableTests: XCTestCase {
     func testMP3NameTable() async throws {
         let localURL = Bundle.module.resourceURL!
-        let resourceManager = ResourceManager(localURL: localURL, remoteURL: nil)
+        let resourceManager = ResourceManager(locale: .current, localURL: localURL, remoteURL: nil)
         let mp3NameTable = await resourceManager.mp3NameTable()
 
         let prt_fild08 = mp3NameTable.mp3Name(forMapName: "prt_fild08")

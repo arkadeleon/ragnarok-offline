@@ -56,7 +56,7 @@ class ObservableSkill {
         self.mode = mode
         self.skill = skill
 
-        self.localizedName = await ScriptManager.shared.localizedSkillName(forSkillID: skill.id)
+        self.localizedName = await ResourceManager.shared.scriptManager().localizedSkillName(forSkillID: skill.id)
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Skill, Value>) -> Value {
@@ -66,7 +66,7 @@ class ObservableSkill {
     @MainActor
     func fetchIconImage() async {
         if iconImage == nil {
-            let pathGenerator = ResourcePathGenerator(scriptManager: .shared)
+            let pathGenerator = ResourcePathGenerator(resourceManager: .shared)
             let path = pathGenerator.generateSkillIconImagePath(skillAegisName: skill.aegisName)
             iconImage = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
         }
@@ -74,7 +74,7 @@ class ObservableSkill {
 
     @MainActor
     func fetchDetail() async {
-        localizedDescription = await ScriptManager.shared.localizedSkillDescription(forSkillID: skill.id)
+        localizedDescription = await ResourceManager.shared.scriptManager().localizedSkillDescription(forSkillID: skill.id)
     }
 }
 

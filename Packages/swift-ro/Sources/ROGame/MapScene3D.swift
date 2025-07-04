@@ -21,7 +21,6 @@ class MapScene3D: MapSceneProtocol {
     let playerPosition: SIMD2<Int>
 
     let resourceManager: ResourceManager
-    let scriptManager: ScriptManager
 
     let rootEntity = Entity()
 
@@ -72,17 +71,16 @@ class MapScene3D: MapSceneProtocol {
             }
     }
 
-    init(mapName: String, world: WorldResource, player: MapObject, playerPosition: SIMD2<Int>, resourceManager: ResourceManager, scriptManager: ScriptManager) {
+    init(mapName: String, world: WorldResource, player: MapObject, playerPosition: SIMD2<Int>, resourceManager: ResourceManager) {
         self.mapName = mapName
         self.world = world
         self.player = player
         self.playerPosition = playerPosition
 
         self.resourceManager = resourceManager
-        self.scriptManager = scriptManager
 
         self.tileEntityManager = TileEntityManager(gat: world.gat, rootEntity: rootEntity)
-        self.spriteEntityManager = SpriteEntityManager(resourceManager: resourceManager, scriptManager: scriptManager)
+        self.spriteEntityManager = SpriteEntityManager(resourceManager: resourceManager)
 
         self.pathfinder = Pathfinder(gat: world.gat)
 
@@ -127,11 +125,7 @@ class MapScene3D: MapSceneProtocol {
 
         do {
             let configuration = ComposedSprite.Configuration(mapObject: player)
-            let composedSprite = await ComposedSprite(
-                configuration: configuration,
-                resourceManager: resourceManager,
-                scriptManager: scriptManager
-            )
+            let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
 
             let animations = try await SpriteAnimation.animations(for: composedSprite)
             let spriteComponent = SpriteComponent(animations: animations)
@@ -353,7 +347,7 @@ class MapScene3D: MapSceneProtocol {
 
     func onItemSpawned(_ event: ItemEvents.Spawned) {
         Task {
-            let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
+            let pathGenerator = ResourcePathGenerator(resourceManager: resourceManager)
             guard let path = await pathGenerator.generateItemSpritePath(itemID: Int(event.item.itemID)) else {
                 return
             }

@@ -122,11 +122,7 @@ class ObservableJob {
     func fetchAnimatedImage() async {
         if animatedImage == nil {
             let configuration = ComposedSprite.Configuration(jobID: job.id.rawValue)
-            let composedSprite = await ComposedSprite(
-                configuration: configuration,
-                resourceManager: .shared,
-                scriptManager: .shared
-            )
+            let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .shared)
 
             let spriteRenderer = SpriteRenderer()
             animatedImage = await spriteRenderer.render(

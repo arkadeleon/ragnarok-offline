@@ -82,11 +82,7 @@ final class CharacterSimulator {
             if let composedSprite, composedSprite.configuration == configuration {
                 // Do nothing
             } else {
-                composedSprite = await ComposedSprite(
-                    configuration: configuration,
-                    resourceManager: .shared,
-                    scriptManager: .shared
-                )
+                composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .shared)
             }
 
             guard let composedSprite else {

@@ -43,9 +43,6 @@ final public class GameSession {
     private var resourceManager: ResourceManager?
 
     @ObservationIgnored
-    private var scriptManager: ScriptManager?
-
-    @ObservationIgnored
     var loginSession: LoginSession?
     @ObservationIgnored
     var charSession: CharSession?
@@ -60,9 +57,8 @@ final public class GameSession {
 
     // MARK: - Public
 
-    public func start(resourceManager: ResourceManager, scriptManager: ScriptManager) {
+    public func start(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
-        self.scriptManager = scriptManager
     }
 
     public func login(serverAddress: String, serverPort: String, username: String, password: String) {
@@ -244,7 +240,7 @@ final public class GameSession {
     }
 
     private func startMapSession(char: CharInfo, mapServer: MapServerInfo) {
-        guard let account = charSession?.account, let resourceManager, let scriptManager else {
+        guard let account = charSession?.account, let resourceManager else {
             return
         }
 
@@ -272,8 +268,7 @@ final public class GameSession {
                     world: world,
                     player: player,
                     playerPosition: event.position,
-                    resourceManager: resourceManager,
-                    scriptManager: scriptManager
+                    resourceManager: resourceManager
                 )
 
                 scene.mapSceneDelegate = self

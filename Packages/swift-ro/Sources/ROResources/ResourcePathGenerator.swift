@@ -8,10 +8,16 @@
 import ROCore
 
 final public class ResourcePathGenerator: Sendable {
-    package let scriptManager: ScriptManager
+    package let resourceManager: ResourceManager
 
-    public init(scriptManager: ScriptManager) {
-        self.scriptManager = scriptManager
+    package var scriptManager: ScriptManager {
+        get async {
+            await resourceManager.scriptManager()
+        }
+    }
+
+    public init(resourceManager: ResourceManager) {
+        self.resourceManager = resourceManager
     }
 
     public func generateItemSpritePath(itemID: Int) async -> ResourcePath? {

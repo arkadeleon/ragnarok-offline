@@ -10,11 +10,8 @@ import ROResources
 
 extension ResourceManager {
     static let shared = ResourceManager(
+        locale: .current,
         localURL: .documentsDirectory,
         remoteURL: URL(string: ClientSettings.shared.remoteClient)
     )
-}
-
-extension ScriptManager {
-    static let shared = ScriptManager(locale: .current, resourceManager: .shared)
 }

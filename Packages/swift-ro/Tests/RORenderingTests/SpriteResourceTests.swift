@@ -13,9 +13,8 @@ import ROCore
 final class SpriteResourceTests: XCTestCase {
     func testSpriteResourcePath() async throws {
         let localURL = Bundle.module.resourceURL!
-        let resourceManager = ResourceManager(localURL: localURL, remoteURL: nil)
-        let scriptManager = ScriptManager(locale: .current, resourceManager: resourceManager)
-        let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
+        let resourceManager = ResourceManager(locale: .current, localURL: localURL, remoteURL: nil)
+        let pathGenerator = ResourcePathGenerator(resourceManager: resourceManager)
         let path = await pathGenerator.generatePlayerBodySpritePath(job: 0, gender: .male)!
         XCTAssertEqual(path.components, ["data", "sprite", K2L("인간족"), K2L("몸통"), K2L("남"), K2L("초보자_남")])
     }

@@ -7,15 +7,13 @@
 
 @preconcurrency import Lua
 
-public actor ScriptManager {
+final public class ScriptManager: Resource {
     let locale: Locale
-    package let resourceManager: ResourceManager
+    let context: LuaContext
 
-    private var loadTask: Task<LuaContext, Never>? = nil
-
-    public init(locale: Locale, resourceManager: ResourceManager) {
+    init(locale: Locale, context: LuaContext) {
         self.locale = locale
-        self.resourceManager = resourceManager
+        self.context = context
     }
 
     public func identifiedItemResourceName(forItemID itemID: Int) async -> String? {
@@ -84,11 +82,7 @@ public actor ScriptManager {
         return result ?? false
     }
 
-    // MARK: - Load & Call
-
     private func call<T>(_ name: String, with args: [Any], to resultType: T.Type) async -> T? {
-        let context = await loadContext()
-
         do {
             let result = try context.call(name, with: args)
             return result as? T
@@ -97,13 +91,15 @@ public actor ScriptManager {
             return nil
         }
     }
+}
 
-    private func loadContext() async -> LuaContext {
-        if let task = loadTask {
-            return await task.value
+extension ResourceManager {
+    public func scriptManager() async -> ScriptManager {
+        if let task = tasks.withLock({ $0["ScriptManager"] }) {
+            return await task.value as! ScriptManager
         }
 
-        let task = Task<LuaContext, Never> {
+        let task = Task<any Resource, Never> {
             let context = LuaContext()
 
             await loadLocalScript("itemInfo", locale: .korean, in: context)
@@ -180,17 +176,20 @@ public actor ScriptManager {
                 logger.warning("\(error.localizedDescription)")
             }
 
-            return context
+            return ScriptManager(locale: locale, context: context)
         }
-        loadTask = task
 
-        return await task.value
+        tasks.withLock {
+            $0["ScriptManager"] = task
+        }
+
+        return await task.value as! ScriptManager
     }
 
     private func loadScript(at path: ResourcePath, in context: LuaContext) async {
         do {
             let path = ResourcePath.scriptDirectory.appending(path).appendingPathExtension("lub")
-            let data = try await resourceManager.contentsOfResource(at: path)
+            let data = try await contentsOfResource(at: path)
             try context.load(data)
         } catch {
             logger.warning("\(error.localizedDescription)")

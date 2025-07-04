@@ -48,7 +48,7 @@ class ObservableMap {
     @MainActor
     func fetchImage() async {
         if image == nil {
-            let pathGenerator = ResourcePathGenerator(scriptManager: .shared)
+            let pathGenerator = ResourcePathGenerator(resourceManager: .shared)
             let path = pathGenerator.generateMapImagePath(mapName: map.name)
             image = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
         }

@@ -34,6 +34,7 @@ public enum ResourceLocator {
 }
 
 final public class ResourceManager: Sendable {
+    public let locale: Locale
     public let localURL: URL
     public let remoteURL: URL?
 
@@ -41,7 +42,8 @@ final public class ResourceManager: Sendable {
 
     private let localGRFArchives: [GRFArchive]
 
-    public init(localURL: URL, remoteURL: URL?) {
+    public init(locale: Locale, localURL: URL, remoteURL: URL?) {
+        self.locale = locale
         self.localURL = localURL
         self.remoteURL = remoteURL
 

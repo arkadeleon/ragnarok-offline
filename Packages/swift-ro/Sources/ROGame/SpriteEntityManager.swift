@@ -13,13 +13,11 @@ import ROResources
 @MainActor
 final class SpriteEntityManager {
     let resourceManager: ResourceManager
-    let scriptManager: ScriptManager
 
     private var tasksByJobID: [Int : Task<SpriteEntity, any Error>] = [:]
 
-    init(resourceManager: ResourceManager, scriptManager: ScriptManager) {
+    init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
-        self.scriptManager = scriptManager
     }
 
     func entity(for mapObject: MapObject) async throws -> SpriteEntity {
@@ -31,11 +29,7 @@ final class SpriteEntityManager {
 
         let configuration = ComposedSprite.Configuration(mapObject: mapObject)
         let task = Task {
-            let composedSprite = await ComposedSprite(
-                configuration: configuration,
-                resourceManager: resourceManager,
-                scriptManager: scriptManager
-            )
+            let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
             let animations = try await SpriteAnimation.animations(for: composedSprite)
             let entity = SpriteEntity(animations: animations)
             return entity

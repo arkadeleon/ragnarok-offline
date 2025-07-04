@@ -11,16 +11,14 @@ extension ComposedSprite {
     class Composer {
         let configuration: ComposedSprite.Configuration
         let resourceManager: ResourceManager
-        let scriptManager: ScriptManager
 
         private let pathGenerator: ResourcePathGenerator
 
-        init(configuration: ComposedSprite.Configuration, resourceManager: ResourceManager, scriptManager: ScriptManager) {
+        init(configuration: ComposedSprite.Configuration, resourceManager: ResourceManager) {
             self.configuration = configuration
             self.resourceManager = resourceManager
-            self.scriptManager = scriptManager
 
-            self.pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
+            self.pathGenerator = ResourcePathGenerator(resourceManager: resourceManager)
         }
 
         func composePlayerSprite() async -> [ComposedSprite.Part] {
@@ -104,7 +102,7 @@ extension ComposedSprite {
                 return nil
             }
 
-            if let shadowFactor = await scriptManager.shadowFactor(forJobID: configuration.job.rawValue), shadowFactor >= 0 {
+            if let shadowFactor = await resourceManager.scriptManager().shadowFactor(forJobID: configuration.job.rawValue), shadowFactor >= 0 {
                 shadowSprite.scaleFactor = shadowFactor
             }
 

@@ -60,11 +60,7 @@ struct CharacterSimulatorView2: View {
             if let entity = content.entities.first as? SpriteEntity {
                 Task {
                     let configuration = ComposedSprite.Configuration(configuration: configuration)
-                    let composedSprite = await ComposedSprite(
-                        configuration: configuration,
-                        resourceManager: .shared,
-                        scriptManager: .shared
-                    )
+                    let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .shared)
 
                     let animations = try await SpriteAnimation.animations(for: composedSprite)
 

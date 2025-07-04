@@ -139,11 +139,7 @@ class ObservableMonster {
     func fetchAnimatedImage() async {
         if animatedImage == nil {
             let configuration = ComposedSprite.Configuration(jobID: monster.id)
-            let composedSprite = await ComposedSprite(
-                configuration: configuration,
-                resourceManager: .shared,
-                scriptManager: .shared
-            )
+            let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .shared)
 
             let spriteRenderer = SpriteRenderer()
             animatedImage = await spriteRenderer.render(

@@ -29,7 +29,7 @@ struct GameView: View {
             }
         }
         .task {
-            gameSession.start(resourceManager: .shared, scriptManager: .shared)
+            gameSession.start(resourceManager: .shared)
         }
     }
 }
