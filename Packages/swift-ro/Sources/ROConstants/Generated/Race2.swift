@@ -47,6 +47,8 @@ public enum Race2: Int, CaseIterable, Sendable {
     case edda_arunafeltz = 38
     case lasagna = 39
     case glast_heim_abyss = 40
+    case destroyed_valkyrie_realm = 41
+    case encroached_gephenia = 42
 }
 
 extension Race2: CodingKey {
@@ -92,6 +94,8 @@ extension Race2: CodingKey {
         case .edda_arunafeltz: "EDDA_ARUNAFELTZ"
         case .lasagna: "LASAGNA"
         case .glast_heim_abyss: "GLAST_HEIM_ABYSS"
+        case .destroyed_valkyrie_realm: "DESTROYED_VALKYRIE_REALM"
+        case .encroached_gephenia: "ENCROACHED_GEPHENIA"
         }
     }
 
@@ -137,6 +141,8 @@ extension Race2: CodingKey {
         case "EDDA_ARUNAFELTZ": self = .edda_arunafeltz
         case "LASAGNA": self = .lasagna
         case "GLAST_HEIM_ABYSS": self = .glast_heim_abyss
+        case "DESTROYED_VALKYRIE_REALM": self = .destroyed_valkyrie_realm
+        case "ENCROACHED_GEPHENIA": self = .encroached_gephenia
         default: return nil
         }
     }

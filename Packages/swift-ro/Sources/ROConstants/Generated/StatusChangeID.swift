@@ -1015,6 +1015,17 @@ public enum StatusChangeID: Int, CaseIterable, Sendable {
     case contents_34 = 1025
     case contents_35 = 1026
     case noaction = 1027
+    case c_buff_3 = 1028
+    case c_buff_4 = 1029
+    case c_buff_5 = 1030
+    case c_buff_6 = 1031
+    case contents_15 = 1032
+    case contents_16 = 1033
+    case contents_17 = 1034
+    case contents_18 = 1035
+    case contents_19 = 1036
+    case contents_20 = 1037
+    case overcoming_crisis = 1038
 }
 
 extension StatusChangeID: CodingKey {
@@ -2028,6 +2039,17 @@ extension StatusChangeID: CodingKey {
         case .contents_34: "CONTENTS_34"
         case .contents_35: "CONTENTS_35"
         case .noaction: "NOACTION"
+        case .c_buff_3: "C_BUFF_3"
+        case .c_buff_4: "C_BUFF_4"
+        case .c_buff_5: "C_BUFF_5"
+        case .c_buff_6: "C_BUFF_6"
+        case .contents_15: "CONTENTS_15"
+        case .contents_16: "CONTENTS_16"
+        case .contents_17: "CONTENTS_17"
+        case .contents_18: "CONTENTS_18"
+        case .contents_19: "CONTENTS_19"
+        case .contents_20: "CONTENTS_20"
+        case .overcoming_crisis: "OVERCOMING_CRISIS"
         }
     }
 
@@ -3041,6 +3063,17 @@ extension StatusChangeID: CodingKey {
         case "CONTENTS_34": self = .contents_34
         case "CONTENTS_35": self = .contents_35
         case "NOACTION": self = .noaction
+        case "C_BUFF_3": self = .c_buff_3
+        case "C_BUFF_4": self = .c_buff_4
+        case "C_BUFF_5": self = .c_buff_5
+        case "C_BUFF_6": self = .c_buff_6
+        case "CONTENTS_15": self = .contents_15
+        case "CONTENTS_16": self = .contents_16
+        case "CONTENTS_17": self = .contents_17
+        case "CONTENTS_18": self = .contents_18
+        case "CONTENTS_19": self = .contents_19
+        case "CONTENTS_20": self = .contents_20
+        case "OVERCOMING_CRISIS": self = .overcoming_crisis
         default: return nil
         }
     }

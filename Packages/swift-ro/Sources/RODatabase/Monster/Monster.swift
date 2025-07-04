@@ -117,6 +117,12 @@ public struct Monster: Decodable, Equatable, Hashable, Identifiable, Sendable {
     /// Rate at which the monster will receive incoming damage. (Default: 100)
     public var damageTaken: Int
 
+    /// Monster group ID. (Default: 0)
+    public var groupID: Int
+
+    /// Monster title. (Default: None)
+    public var title: String?
+
     /// Aegis monster type AI behavior. (Default: 06)
     public var ai: MonsterAI
 
@@ -169,6 +175,8 @@ public struct Monster: Decodable, Equatable, Hashable, Identifiable, Sendable {
         case clientAttackMotion = "ClientAttackMotion"
         case damageMotion = "DamageMotion"
         case damageTaken = "DamageTaken"
+        case groupID = "GroupId"
+        case title = "Title"
         case ai = "Ai"
         case `class` = "Class"
         case modes = "Modes"
@@ -214,6 +222,8 @@ public struct Monster: Decodable, Equatable, Hashable, Identifiable, Sendable {
         self.clientAttackMotion = try container.decodeIfPresent(Int.self, forKey: .clientAttackMotion) ?? self.attackMotion
         self.damageMotion = try container.decodeIfPresent(Int.self, forKey: .damageMotion) ?? 0
         self.damageTaken = try container.decodeIfPresent(Int.self, forKey: .damageTaken) ?? 100
+        self.groupID = try container.decodeIfPresent(Int.self, forKey: .groupID) ?? 0
+        self.title = try container.decodeIfPresent(String.self, forKey: .title)
         self.ai = try container.decodeIfPresent(MonsterAI.self, forKey: .ai) ?? ._06
         self.class = try container.decodeIfPresent(MonsterClass.self, forKey: .class) ?? .normal
         self.modes = try container.decodeIfPresent([MonsterMode : Bool].self, forKey: .modes)?.unorderedKeys

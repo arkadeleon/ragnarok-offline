@@ -1452,8 +1452,19 @@ public enum OfficialStatusChangeID: Int, CaseIterable, Sendable {
     case efst_contents_33 = 1491
     case efst_contents_34 = 1492
     case efst_contents_35 = 1493
+    case efst_contents_36 = 1494
+    case efst_contents_37 = 1495
+    case efst_contents_38 = 1496
+    case efst_contents_39 = 1497
     case efst_c_buff_1 = 1509
     case efst_c_buff_2 = 1510
+    case efst_c_buff_3 = 1511
+    case efst_c_buff_4 = 1512
+    case efst_c_buff_5 = 1513
+    case efst_c_buff_6 = 1514
+    case efst_c_buff_7 = 1515
+    case efst_c_buff_8 = 1516
+    case efst_c_buff_9 = 1517
     case efst_chasing = 1560
     case efst_mystery_powder = 1665
     case efst_wild_walk = 1666
@@ -2912,8 +2923,19 @@ extension OfficialStatusChangeID: CodingKey {
         case .efst_contents_33: "EFST_CONTENTS_33"
         case .efst_contents_34: "EFST_CONTENTS_34"
         case .efst_contents_35: "EFST_CONTENTS_35"
+        case .efst_contents_36: "EFST_CONTENTS_36"
+        case .efst_contents_37: "EFST_CONTENTS_37"
+        case .efst_contents_38: "EFST_CONTENTS_38"
+        case .efst_contents_39: "EFST_CONTENTS_39"
         case .efst_c_buff_1: "EFST_C_BUFF_1"
         case .efst_c_buff_2: "EFST_C_BUFF_2"
+        case .efst_c_buff_3: "EFST_C_BUFF_3"
+        case .efst_c_buff_4: "EFST_C_BUFF_4"
+        case .efst_c_buff_5: "EFST_C_BUFF_5"
+        case .efst_c_buff_6: "EFST_C_BUFF_6"
+        case .efst_c_buff_7: "EFST_C_BUFF_7"
+        case .efst_c_buff_8: "EFST_C_BUFF_8"
+        case .efst_c_buff_9: "EFST_C_BUFF_9"
         case .efst_chasing: "EFST_CHASING"
         case .efst_mystery_powder: "EFST_MYSTERY_POWDER"
         case .efst_wild_walk: "EFST_WILD_WALK"
@@ -4372,8 +4394,19 @@ extension OfficialStatusChangeID: CodingKey {
         case "EFST_CONTENTS_33": self = .efst_contents_33
         case "EFST_CONTENTS_34": self = .efst_contents_34
         case "EFST_CONTENTS_35": self = .efst_contents_35
+        case "EFST_CONTENTS_36": self = .efst_contents_36
+        case "EFST_CONTENTS_37": self = .efst_contents_37
+        case "EFST_CONTENTS_38": self = .efst_contents_38
+        case "EFST_CONTENTS_39": self = .efst_contents_39
         case "EFST_C_BUFF_1": self = .efst_c_buff_1
         case "EFST_C_BUFF_2": self = .efst_c_buff_2
+        case "EFST_C_BUFF_3": self = .efst_c_buff_3
+        case "EFST_C_BUFF_4": self = .efst_c_buff_4
+        case "EFST_C_BUFF_5": self = .efst_c_buff_5
+        case "EFST_C_BUFF_6": self = .efst_c_buff_6
+        case "EFST_C_BUFF_7": self = .efst_c_buff_7
+        case "EFST_C_BUFF_8": self = .efst_c_buff_8
+        case "EFST_C_BUFF_9": self = .efst_c_buff_9
         case "EFST_CHASING": self = .efst_chasing
         case "EFST_MYSTERY_POWDER": self = .efst_mystery_powder
         case "EFST_WILD_WALK": self = .efst_wild_walk

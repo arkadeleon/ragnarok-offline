@@ -11,7 +11,7 @@ public enum StatusChangeOption2: Int, CaseIterable, Sendable {
     case poison = 0x1
     case curse = 0x2
     case silence = 0x4
-    case signumcrucis = 0x8
+    case confusion = 0x8
     case blind = 0x10
     case angelus = 0x20
     case bleeding = 0x40
@@ -26,7 +26,7 @@ extension StatusChangeOption2: CodingKey {
         case .poison: "POISON"
         case .curse: "CURSE"
         case .silence: "SILENCE"
-        case .signumcrucis: "SIGNUMCRUCIS"
+        case .confusion: "CONFUSION"
         case .blind: "BLIND"
         case .angelus: "ANGELUS"
         case .bleeding: "BLEEDING"
@@ -41,7 +41,7 @@ extension StatusChangeOption2: CodingKey {
         case "POISON": self = .poison
         case "CURSE": self = .curse
         case "SILENCE": self = .silence
-        case "SIGNUMCRUCIS": self = .signumcrucis
+        case "CONFUSION": self = .confusion
         case "BLIND": self = .blind
         case "ANGELUS": self = .angelus
         case "BLEEDING": self = .bleeding
