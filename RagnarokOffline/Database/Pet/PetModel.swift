@@ -1,5 +1,5 @@
 //
-//  ObservablePet.swift
+//  PetModel.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/5/8.
@@ -10,15 +10,15 @@ import RODatabase
 
 @Observable
 @dynamicMemberLookup
-class ObservablePet {
+final class PetModel {
     private let mode: DatabaseMode
     private let pet: Pet
 
-    var monster: ObservableMonster?
-    var tameItem: ObservableItem?
-    var eggItem: ObservableItem?
-    var equipItem: ObservableItem?
-    var foodItem: ObservableItem?
+    var monster: MonsterModel?
+    var tameItem: ItemModel?
+    var eggItem: ItemModel?
+    var equipItem: ItemModel?
+    var foodItem: ItemModel?
 
     var displayName: String {
         monster?.displayName ?? pet.monster
@@ -61,7 +61,7 @@ class ObservablePet {
         if monster == nil {
             let monsterDatabase = MonsterDatabase.shared
             if let monster = await monsterDatabase.monster(forAegisName: pet.monster) {
-                self.monster = ObservableMonster(mode: mode, monster: monster)
+                self.monster = MonsterModel(mode: mode, monster: monster)
             }
         }
     }
@@ -72,41 +72,41 @@ class ObservablePet {
 
         if let tameItem = pet.tameItem {
             if let item = await itemDatabase.item(forAegisName: tameItem) {
-                self.tameItem = await ObservableItem(mode: mode, item: item)
+                self.tameItem = await ItemModel(mode: mode, item: item)
             }
         }
 
         if let item = await itemDatabase.item(forAegisName: pet.eggItem) {
-            self.eggItem = await ObservableItem(mode: mode, item: item)
+            self.eggItem = await ItemModel(mode: mode, item: item)
         }
 
         if let equipItem = pet.equipItem {
             if let item = await itemDatabase.item(forAegisName: equipItem) {
-                self.equipItem = await ObservableItem(mode: mode, item: item)
+                self.equipItem = await ItemModel(mode: mode, item: item)
             }
         }
 
         if let foodItem = pet.foodItem {
             if let item = await itemDatabase.item(forAegisName: foodItem) {
-                self.foodItem = await ObservableItem(mode: mode, item: item)
+                self.foodItem = await ItemModel(mode: mode, item: item)
             }
         }
     }
 }
 
-extension ObservablePet: Equatable {
-    static func == (lhs: ObservablePet, rhs: ObservablePet) -> Bool {
+extension PetModel: Equatable {
+    static func == (lhs: PetModel, rhs: PetModel) -> Bool {
         lhs.pet.monster == rhs.pet.monster
     }
 }
 
-extension ObservablePet: Hashable {
+extension PetModel: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(pet.monster)
     }
 }
 
-extension ObservablePet: Identifiable {
+extension PetModel: Identifiable {
     var id: String {
         pet.monster
     }

@@ -10,7 +10,7 @@ import SwiftUI
 struct JobDatabaseView: View {
     @Environment(AppModel.self) private var appModel
 
-    private var database: ObservableDatabase<JobProvider> {
+    private var database: DatabaseModel<JobProvider> {
         appModel.jobDatabase
     }
 
@@ -30,7 +30,7 @@ struct JobDatabaseView: View {
 
 #Preview("Pre-Renewal Job Database") {
     @Previewable @State var appModel = AppModel()
-    appModel.jobDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .job)
+    appModel.jobDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .job)
 
     return JobDatabaseView()
         .environment(appModel)
@@ -38,7 +38,7 @@ struct JobDatabaseView: View {
 
 #Preview("Renewal Job Database") {
     @Previewable @State var appModel = AppModel()
-    appModel.jobDatabase = ObservableDatabase(mode: .renewal, recordProvider: .job)
+    appModel.jobDatabase = DatabaseModel(mode: .renewal, recordProvider: .job)
 
     return JobDatabaseView()
         .environment(appModel)

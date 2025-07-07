@@ -24,14 +24,14 @@ final class AppModel {
     let mapServer = ServerWrapper(server: MapServer.shared)
     let webServer = ServerWrapper(server: WebServer.shared)
 
-    var itemDatabase = ObservableDatabase(mode: .renewal, recordProvider: .item)
-    var jobDatabase = ObservableDatabase(mode: .renewal, recordProvider: .job)
-    var mapDatabase = ObservableDatabase(mode: .renewal, recordProvider: .map)
-    var monsterDatabase = ObservableDatabase(mode: .renewal, recordProvider: .monster)
-    var monsterSummonDatabase = ObservableDatabase(mode: .renewal, recordProvider: .monsterSummon)
-    var petDatabase = ObservableDatabase(mode: .renewal, recordProvider: .pet)
-    var skillDatabase = ObservableDatabase(mode: .renewal, recordProvider: .skill)
-    var statusChangeDatabase = ObservableDatabase(mode: .renewal, recordProvider: .statusChange)
+    var itemDatabase = DatabaseModel(mode: .renewal, recordProvider: .item)
+    var jobDatabase = DatabaseModel(mode: .renewal, recordProvider: .job)
+    var mapDatabase = DatabaseModel(mode: .renewal, recordProvider: .map)
+    var monsterDatabase = DatabaseModel(mode: .renewal, recordProvider: .monster)
+    var monsterSummonDatabase = DatabaseModel(mode: .renewal, recordProvider: .monsterSummon)
+    var petDatabase = DatabaseModel(mode: .renewal, recordProvider: .pet)
+    var skillDatabase = DatabaseModel(mode: .renewal, recordProvider: .skill)
+    var statusChangeDatabase = DatabaseModel(mode: .renewal, recordProvider: .statusChange)
 
     let characterSimulator = CharacterSimulator()
 }

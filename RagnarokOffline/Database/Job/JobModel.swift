@@ -1,5 +1,5 @@
 //
-//  ObservableJob.swift
+//  JobModel.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/11/7.
@@ -16,7 +16,7 @@ import ROResources
 
 @Observable
 @dynamicMemberLookup
-class ObservableJob {
+final class JobModel {
     struct BaseLevelStats: Identifiable {
         var level: Int
         var baseExp: Int
@@ -44,7 +44,7 @@ class ObservableJob {
     private let localizedName: String?
 
     var animatedImage: AnimatedImage?
-    var skills: [ObservableSkill] = []
+    var skills: [SkillModel] = []
 
     var displayName: String {
         localizedName ?? job.id.stringValue
@@ -140,10 +140,10 @@ class ObservableJob {
         let skillTreeDatabase = SkillTreeDatabase.shared
 
         if let skillTree = await skillTreeDatabase.skillTree(for: job.id)?.tree {
-            var skills: [ObservableSkill] = []
+            var skills: [SkillModel] = []
             for s in skillTree {
                 if let skill = await skillDatabase.skill(forAegisName: s.name) {
-                    let skill = await ObservableSkill(mode: mode, skill: skill)
+                    let skill = await SkillModel(mode: mode, skill: skill)
                     skills.append(skill)
                 }
             }
@@ -152,19 +152,19 @@ class ObservableJob {
     }
 }
 
-extension ObservableJob: Equatable {
-    static func == (lhs: ObservableJob, rhs: ObservableJob) -> Bool {
+extension JobModel: Equatable {
+    static func == (lhs: JobModel, rhs: JobModel) -> Bool {
         lhs.job.id == rhs.job.id
     }
 }
 
-extension ObservableJob: Hashable {
+extension JobModel: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(job.id)
     }
 }
 
-extension ObservableJob: Identifiable {
+extension JobModel: Identifiable {
     var id: JobID {
         job.id
     }

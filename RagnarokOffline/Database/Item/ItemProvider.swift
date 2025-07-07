@@ -8,32 +8,32 @@
 import RODatabase
 
 struct ItemProvider: DatabaseRecordProvider {
-    func records(for mode: DatabaseMode) async -> [ObservableItem] {
+    func records(for mode: DatabaseMode) async -> [ItemModel] {
         let database = ItemDatabase.shared
         let usableItems = await database.usableItems()
 
-        var items: [ObservableItem] = []
+        var items: [ItemModel] = []
         for item in usableItems {
-            let item = await ObservableItem(mode: mode, item: item)
+            let item = await ItemModel(mode: mode, item: item)
             items.append(item)
         }
         return items
     }
 
-    func moreRecords(for mode: DatabaseMode) async -> [ObservableItem] {
+    func moreRecords(for mode: DatabaseMode) async -> [ItemModel] {
         let database = ItemDatabase.shared
         let equipItems = await database.equipItems()
         let etcItems = await database.etcItems()
 
-        var items: [ObservableItem] = []
+        var items: [ItemModel] = []
         for item in equipItems + etcItems {
-            let item = await ObservableItem(mode: mode, item: item)
+            let item = await ItemModel(mode: mode, item: item)
             items.append(item)
         }
         return items
     }
 
-    func records(matching searchText: String, in items: [ObservableItem]) async -> [ObservableItem] {
+    func records(matching searchText: String, in items: [ItemModel]) async -> [ItemModel] {
         if searchText.hasPrefix("#") {
             if let itemID = Int(searchText.dropFirst()),
                let item = items.first(where: { $0.id == itemID }) {

@@ -12,10 +12,10 @@ import SwiftUI
 struct CharacterConfigurationView: View {
     @Environment(AppModel.self) private var appModel
 
-    @State private var headTopItems: [ObservableItem] = []
-    @State private var headMidItems: [ObservableItem] = []
-    @State private var headBottomItems: [ObservableItem] = []
-    @State private var garmentItems: [ObservableItem] = []
+    @State private var headTopItems: [ItemModel] = []
+    @State private var headMidItems: [ItemModel] = []
+    @State private var headBottomItems: [ItemModel] = []
+    @State private var garmentItems: [ItemModel] = []
 
     var body: some View {
         @Bindable var characterSimulator = appModel.characterSimulator
@@ -77,7 +77,7 @@ struct CharacterConfigurationView: View {
             }
 
             Picker("Head Top", selection: $characterSimulator.configuration.headTop) {
-                Text("None").tag(ObservableItem?.none)
+                Text("None").tag(ItemModel?.none)
 
                 ForEach(headTopItems) { item in
                     Text(item.displayName).tag(item)
@@ -85,7 +85,7 @@ struct CharacterConfigurationView: View {
             }
 
             Picker("Head Mid", selection: $characterSimulator.configuration.headMid) {
-                Text("None").tag(ObservableItem?.none)
+                Text("None").tag(ItemModel?.none)
 
                 ForEach(headMidItems) { item in
                     Text(item.displayName).tag(item)
@@ -93,7 +93,7 @@ struct CharacterConfigurationView: View {
             }
 
             Picker("Head Bottom", selection: $characterSimulator.configuration.headBottom) {
-                Text("None").tag(ObservableItem?.none)
+                Text("None").tag(ItemModel?.none)
 
                 ForEach(headBottomItems) { item in
                     Text(item.displayName).tag(item)
@@ -101,7 +101,7 @@ struct CharacterConfigurationView: View {
             }
 
             Picker(selection: $characterSimulator.configuration.garment) {
-                Text("None").tag(ObservableItem?.none)
+                Text("None").tag(ItemModel?.none)
 
                 ForEach(garmentItems) { item in
                     Text(item.displayName).tag(item)

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MonsterSummonDetailView: View {
-    var monsterSummon: ObservableMonsterSummon
+    var monsterSummon: MonsterSummonModel
 
     @Environment(\.horizontalSizeClass) private var sizeClass
 

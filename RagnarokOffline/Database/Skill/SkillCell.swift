@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SkillCell: View {
-    var skill: ObservableSkill
+    var skill: SkillModel
 
     var body: some View {
         HStack {

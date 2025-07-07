@@ -1,5 +1,5 @@
 //
-//  ObservableDatabase.swift
+//  DatabaseModel.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/5/11.
@@ -26,7 +26,7 @@ extension DatabaseRecordProvider {
 
 @MainActor
 @Observable
-final class ObservableDatabase<RecordProvider> where RecordProvider: DatabaseRecordProvider {
+final class DatabaseModel<RecordProvider> where RecordProvider: DatabaseRecordProvider {
     typealias Record = RecordProvider.Record
 
     let mode: DatabaseMode

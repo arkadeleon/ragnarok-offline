@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StatusChangeDetailView: View {
-    var statusChange: ObservableStatusChange
+    var statusChange: StatusChangeModel
 
     var body: some View {
         DatabaseRecordDetailView {

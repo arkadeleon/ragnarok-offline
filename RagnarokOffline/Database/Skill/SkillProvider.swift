@@ -8,19 +8,19 @@
 import RODatabase
 
 struct SkillProvider: DatabaseRecordProvider {
-    func records(for mode: DatabaseMode) async -> [ObservableSkill] {
+    func records(for mode: DatabaseMode) async -> [SkillModel] {
         let database = SkillDatabase.shared
         let skills = await database.skills()
 
-        var records: [ObservableSkill] = []
+        var records: [SkillModel] = []
         for skill in skills {
-            let record = await ObservableSkill(mode: mode, skill: skill)
+            let record = await SkillModel(mode: mode, skill: skill)
             records.append(record)
         }
         return records
     }
 
-    func records(matching searchText: String, in skills: [ObservableSkill]) async -> [ObservableSkill] {
+    func records(matching searchText: String, in skills: [SkillModel]) async -> [SkillModel] {
         if searchText.hasPrefix("#") {
             if let skillID = Int(searchText.dropFirst()),
                let skill = skills.first(where: { $0.id == skillID }) {

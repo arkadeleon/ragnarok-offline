@@ -8,15 +8,15 @@
 import RODatabase
 
 struct JobProvider: DatabaseRecordProvider {
-    func records(for mode: DatabaseMode) async -> [ObservableJob] {
+    func records(for mode: DatabaseMode) async -> [JobModel] {
         let database = JobDatabase.shared
         let jobs = await database.jobs().map { job in
-            ObservableJob(mode: mode, job: job)
+            JobModel(mode: mode, job: job)
         }
         return jobs
     }
 
-    func records(matching searchText: String, in jobs: [ObservableJob]) async -> [ObservableJob] {
+    func records(matching searchText: String, in jobs: [JobModel]) async -> [JobModel] {
         jobs.filter { job in
             job.displayName.localizedStandardContains(searchText)
         }

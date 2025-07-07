@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PetDetailView: View {
-    var pet: ObservablePet
+    var pet: PetModel
 
     @Environment(\.horizontalSizeClass) private var sizeClass
 

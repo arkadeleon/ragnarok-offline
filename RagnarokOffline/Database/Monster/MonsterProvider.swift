@@ -8,15 +8,15 @@
 import RODatabase
 
 struct MonsterProvider: DatabaseRecordProvider {
-    func records(for mode: DatabaseMode) async -> [ObservableMonster] {
+    func records(for mode: DatabaseMode) async -> [MonsterModel] {
         let database = MonsterDatabase.shared
         let monsters = await database.monsters().map { monster in
-            ObservableMonster(mode: mode, monster: monster)
+            MonsterModel(mode: mode, monster: monster)
         }
         return monsters
     }
 
-    func records(matching searchText: String, in monsters: [ObservableMonster]) async -> [ObservableMonster] {
+    func records(matching searchText: String, in monsters: [MonsterModel]) async -> [MonsterModel] {
         if searchText.hasPrefix("#") {
             if let monsterID = Int(searchText.dropFirst()),
                let monster = monsters.first(where: { $0.id == monsterID }) {

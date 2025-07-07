@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ItemCell: View {
-    var item: ObservableItem
+    var item: ItemModel
     var secondaryText: String?
 
     var body: some View {

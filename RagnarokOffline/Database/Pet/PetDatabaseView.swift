@@ -10,7 +10,7 @@ import SwiftUI
 struct PetDatabaseView: View {
     @Environment(AppModel.self) private var appModel
 
-    private var database: ObservableDatabase<PetProvider> {
+    private var database: DatabaseModel<PetProvider> {
         appModel.petDatabase
     }
 
@@ -32,7 +32,7 @@ struct PetDatabaseView: View {
 
 #Preview("Pre-Renewal Pet Database") {
     @Previewable @State var appModel = AppModel()
-    appModel.petDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .pet)
+    appModel.petDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .pet)
 
     return PetDatabaseView()
         .environment(appModel)
@@ -40,7 +40,7 @@ struct PetDatabaseView: View {
 
 #Preview("Renewal Pet Database") {
     @Previewable @State var appModel = AppModel()
-    appModel.petDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .pet)
+    appModel.petDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .pet)
 
     return PetDatabaseView()
         .environment(appModel)

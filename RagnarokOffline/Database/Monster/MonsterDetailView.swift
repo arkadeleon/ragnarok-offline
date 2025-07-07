@@ -9,7 +9,7 @@ import ROCore
 import SwiftUI
 
 struct MonsterDetailView: View {
-    var monster: ObservableMonster
+    var monster: MonsterModel
 
     var body: some View {
         DatabaseRecordDetailView {

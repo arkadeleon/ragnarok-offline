@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MapCell: View {
-    var map: ObservableMap
+    var map: MapModel
     var secondaryText: String?
 
     var body: some View {

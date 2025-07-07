@@ -21,10 +21,10 @@ final class CharacterSimulator {
         var clothesColor: Int
         var weaponType: WeaponType
         var shield: Int
-        var headTop: ObservableItem?
-        var headMid: ObservableItem?
-        var headBottom: ObservableItem?
-        var garment: ObservableItem?
+        var headTop: ItemModel?
+        var headMid: ItemModel?
+        var headBottom: ItemModel?
+        var garment: ItemModel?
 
         var actionType: ComposedSprite.ActionType
         var direction: ComposedSprite.Direction

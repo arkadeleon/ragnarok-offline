@@ -10,7 +10,7 @@ import SwiftUI
 struct ItemDatabaseView: View {
     @Environment(AppModel.self) private var appModel
 
-    private var database: ObservableDatabase<ItemProvider> {
+    private var database: DatabaseModel<ItemProvider> {
         appModel.itemDatabase
     }
 
@@ -56,7 +56,7 @@ struct ItemDatabaseView: View {
 
 #Preview("Pre-Renewal Item Database") {
     @Previewable @State var appModel = AppModel()
-    appModel.itemDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .item)
+    appModel.itemDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .item)
 
     return ItemDatabaseView()
         .environment(appModel)
@@ -64,7 +64,7 @@ struct ItemDatabaseView: View {
 
 #Preview("Renewal Item Database") {
     @Previewable @State var appModel = AppModel()
-    appModel.itemDatabase = ObservableDatabase(mode: .renewal, recordProvider: .item)
+    appModel.itemDatabase = DatabaseModel(mode: .renewal, recordProvider: .item)
 
     return ItemDatabaseView()
         .environment(appModel)

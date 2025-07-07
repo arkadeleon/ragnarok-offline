@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MonsterGridCell: View {
-    var monster: ObservableMonster
+    var monster: MonsterModel
     var secondaryText: String?
 
     var body: some View {

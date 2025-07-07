@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct JobDetailView: View {
-    var job: ObservableJob
+    var job: JobModel
 
     var body: some View {
         DatabaseRecordDetailView {

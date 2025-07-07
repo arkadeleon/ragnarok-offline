@@ -10,7 +10,7 @@ import SwiftUI
 struct MonsterDatabaseView: View {
     @Environment(AppModel.self) private var appModel
 
-    private var database: ObservableDatabase<MonsterProvider> {
+    private var database: DatabaseModel<MonsterProvider> {
         appModel.monsterDatabase
     }
 
@@ -30,7 +30,7 @@ struct MonsterDatabaseView: View {
 
 #Preview("Pre-Renewal Monster Database") {
     @Previewable @State var appModel = AppModel()
-    appModel.monsterDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .monster)
+    appModel.monsterDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .monster)
 
     return MonsterDatabaseView()
         .environment(appModel)
@@ -38,7 +38,7 @@ struct MonsterDatabaseView: View {
 
 #Preview("Renewal Monster Database") {
     @Previewable @State var appModel = AppModel()
-    appModel.monsterDatabase = ObservableDatabase(mode: .renewal, recordProvider: .monster)
+    appModel.monsterDatabase = DatabaseModel(mode: .renewal, recordProvider: .monster)
 
     return MonsterDatabaseView()
         .environment(appModel)

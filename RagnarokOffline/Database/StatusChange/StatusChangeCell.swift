@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StatusChangeCell: View {
-    var statusChange: ObservableStatusChange
+    var statusChange: StatusChangeModel
 
     var body: some View {
         HStack {

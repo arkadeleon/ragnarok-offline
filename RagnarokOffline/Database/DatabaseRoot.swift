@@ -9,7 +9,7 @@ import RODatabase
 import SwiftUI
 
 struct DatabaseRoot<RecordProvider, Empty>: ViewModifier where RecordProvider: DatabaseRecordProvider, Empty: View {
-    @Bindable var database: ObservableDatabase<RecordProvider>
+    @Bindable var database: DatabaseModel<RecordProvider>
     @ViewBuilder var empty: () -> Empty
 
     @Environment(\.horizontalSizeClass) private var sizeClass
@@ -27,28 +27,28 @@ struct DatabaseRoot<RecordProvider, Empty>: ViewModifier where RecordProvider: D
                     empty()
                 }
             }
-            .navigationDestination(for: ObservableItem.self) { item in
+            .navigationDestination(for: ItemModel.self) { item in
                 ItemDetailView(item: item)
             }
-            .navigationDestination(for: ObservableJob.self) { job in
+            .navigationDestination(for: JobModel.self) { job in
                 JobDetailView(job: job)
             }
-            .navigationDestination(for: ObservableMap.self) { map in
+            .navigationDestination(for: MapModel.self) { map in
                 MapDetailView(map: map)
             }
-            .navigationDestination(for: ObservableMonster.self) { monster in
+            .navigationDestination(for: MonsterModel.self) { monster in
                 MonsterDetailView(monster: monster)
             }
-            .navigationDestination(for: ObservableMonsterSummon.self) { monsterSummon in
+            .navigationDestination(for: MonsterSummonModel.self) { monsterSummon in
                 MonsterSummonDetailView(monsterSummon: monsterSummon)
             }
-            .navigationDestination(for: ObservablePet.self) { pet in
+            .navigationDestination(for: PetModel.self) { pet in
                 PetDetailView(pet: pet)
             }
-            .navigationDestination(for: ObservableSkill.self) { skill in
+            .navigationDestination(for: SkillModel.self) { skill in
                 SkillDetailView(skill: skill)
             }
-            .navigationDestination(for: ObservableStatusChange.self) { statusChange in
+            .navigationDestination(for: StatusChangeModel.self) { statusChange in
                 StatusChangeDetailView(statusChange: statusChange)
             }
             .searchable(text: $database.searchText, placement: searchFieldPlacement(sizeClass))
@@ -70,7 +70,7 @@ struct DatabaseRoot<RecordProvider, Empty>: ViewModifier where RecordProvider: D
 
 extension View {
     func databaseRoot<RecordProvider, Empty>(
-        _ database: ObservableDatabase<RecordProvider>,
+        _ database: DatabaseModel<RecordProvider>,
         @ViewBuilder empty: @escaping () -> Empty
     ) -> some View where RecordProvider: DatabaseRecordProvider, Empty: View {
         modifier(DatabaseRoot(database: database, empty: empty))

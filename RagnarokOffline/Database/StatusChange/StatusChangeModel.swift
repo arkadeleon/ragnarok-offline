@@ -1,5 +1,5 @@
 //
-//  ObservableStatusChange.swift
+//  StatusChangeModel.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/11/7.
@@ -14,15 +14,15 @@ import ROResources
 
 @Observable
 @dynamicMemberLookup
-class ObservableStatusChange {
+final class StatusChangeModel {
     private let mode: DatabaseMode
     private let statusChange: StatusChange
 
     var iconImage: CGImage?
-    var fail: [ObservableStatusChange] = []
-    var endOnStart: [ObservableStatusChange] = []
-    var endReturn: [ObservableStatusChange] = []
-    var endOnEnd: [ObservableStatusChange] = []
+    var fail: [StatusChangeModel] = []
+    var endOnStart: [StatusChangeModel] = []
+    var endReturn: [StatusChangeModel] = []
+    var endOnEnd: [StatusChangeModel] = []
     var localizedDescription: String?
 
     var displayName: String {
@@ -64,41 +64,41 @@ class ObservableStatusChange {
 
         let fail = await database.statusChanges(for: Array(statusChange.fail ?? []))
         self.fail = fail.map { statusChange in
-            ObservableStatusChange(mode: mode, statusChange: statusChange)
+            StatusChangeModel(mode: mode, statusChange: statusChange)
         }
 
         let endOnStart = await database.statusChanges(for: Array(statusChange.endOnStart ?? []))
         self.endOnStart = endOnStart.map { statusChange in
-            ObservableStatusChange(mode: mode, statusChange: statusChange)
+            StatusChangeModel(mode: mode, statusChange: statusChange)
         }
 
         let endReturn = await database.statusChanges(for: Array(statusChange.endReturn ?? []))
         self.endReturn = endReturn.map { statusChange in
-            ObservableStatusChange(mode: mode, statusChange: statusChange)
+            StatusChangeModel(mode: mode, statusChange: statusChange)
         }
 
         let endOnEnd = await database.statusChanges(for: Array(statusChange.endOnEnd ?? []))
         self.endOnEnd = endOnEnd.map { statusChange in
-            ObservableStatusChange(mode: mode, statusChange: statusChange)
+            StatusChangeModel(mode: mode, statusChange: statusChange)
         }
 
         localizedDescription = await StatusInfoTable.current.localizedDescription(forStatusID: statusChange.icon.rawValue)
     }
 }
 
-extension ObservableStatusChange: Equatable {
-    static func == (lhs: ObservableStatusChange, rhs: ObservableStatusChange) -> Bool {
+extension StatusChangeModel: Equatable {
+    static func == (lhs: StatusChangeModel, rhs: StatusChangeModel) -> Bool {
         lhs.statusChange.status == rhs.statusChange.status
     }
 }
 
-extension ObservableStatusChange: Hashable {
+extension StatusChangeModel: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(statusChange.status)
     }
 }
 
-extension ObservableStatusChange: Identifiable {
+extension StatusChangeModel: Identifiable {
     var id: StatusChangeID {
         statusChange.status
     }

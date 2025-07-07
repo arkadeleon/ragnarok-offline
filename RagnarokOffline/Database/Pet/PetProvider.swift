@@ -8,10 +8,10 @@
 import RODatabase
 
 struct PetProvider: DatabaseRecordProvider {
-    func records(for mode: DatabaseMode) async -> [ObservablePet] {
+    func records(for mode: DatabaseMode) async -> [PetModel] {
         let database = PetDatabase.shared
         let pets = await database.pets().map { pet in
-            ObservablePet(mode: mode, pet: pet)
+            PetModel(mode: mode, pet: pet)
         }
         for pet in pets {
             await pet.fetchMonster()
@@ -19,7 +19,7 @@ struct PetProvider: DatabaseRecordProvider {
         return pets
     }
 
-    func records(matching searchText: String, in pets: [ObservablePet]) async -> [ObservablePet] {
+    func records(matching searchText: String, in pets: [PetModel]) async -> [PetModel] {
         pets.filter { pet in
             pet.displayName.localizedStandardContains(searchText)
         }

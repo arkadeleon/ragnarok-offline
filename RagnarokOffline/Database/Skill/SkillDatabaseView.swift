@@ -10,7 +10,7 @@ import SwiftUI
 struct SkillDatabaseView: View {
     @Environment(AppModel.self) private var appModel
 
-    private var database: ObservableDatabase<SkillProvider> {
+    private var database: DatabaseModel<SkillProvider> {
         appModel.skillDatabase
     }
 
@@ -50,7 +50,7 @@ struct SkillDatabaseView: View {
 
 #Preview("Pre-Renewal Skill Database") {
     @Previewable @State var appModel = AppModel()
-    appModel.skillDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .skill)
+    appModel.skillDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .skill)
 
     return SkillDatabaseView()
         .environment(appModel)
@@ -58,7 +58,7 @@ struct SkillDatabaseView: View {
 
 #Preview("Renewal Skill Database") {
     @Previewable @State var appModel = AppModel()
-    appModel.skillDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .skill)
+    appModel.skillDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .skill)
 
     return SkillDatabaseView()
         .environment(appModel)

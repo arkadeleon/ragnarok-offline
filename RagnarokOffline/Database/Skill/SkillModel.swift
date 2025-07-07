@@ -1,5 +1,5 @@
 //
-//  ObservableSkill.swift
+//  SkillModel.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/11/7.
@@ -13,7 +13,7 @@ import ROResources
 
 @Observable
 @dynamicMemberLookup
-class ObservableSkill {
+final class SkillModel {
     private let mode: DatabaseMode
     private let skill: Skill
 
@@ -79,19 +79,19 @@ class ObservableSkill {
     }
 }
 
-extension ObservableSkill: Equatable {
-    static func == (lhs: ObservableSkill, rhs: ObservableSkill) -> Bool {
+extension SkillModel: Equatable {
+    static func == (lhs: SkillModel, rhs: SkillModel) -> Bool {
         lhs.skill.id == rhs.skill.id
     }
 }
 
-extension ObservableSkill: Hashable {
+extension SkillModel: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(skill.id)
     }
 }
 
-extension ObservableSkill: Identifiable {
+extension SkillModel: Identifiable {
     var id: Int {
         skill.id
     }

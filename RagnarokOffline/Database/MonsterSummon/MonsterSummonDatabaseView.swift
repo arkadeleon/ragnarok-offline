@@ -11,7 +11,7 @@ import RODatabase
 struct MonsterSummonDatabaseView: View {
     @Environment(AppModel.self) private var appModel
 
-    private var database: ObservableDatabase<MonsterSummonProvider> {
+    private var database: DatabaseModel<MonsterSummonProvider> {
         appModel.monsterSummonDatabase
     }
 
@@ -47,7 +47,7 @@ struct MonsterSummonDatabaseView: View {
 
 #Preview("Pre-Renewal Monster Summon Database") {
     @Previewable @State var appModel = AppModel()
-    appModel.monsterSummonDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .monsterSummon)
+    appModel.monsterSummonDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .monsterSummon)
 
     return MonsterSummonDatabaseView()
         .environment(appModel)
@@ -55,7 +55,7 @@ struct MonsterSummonDatabaseView: View {
 
 #Preview("Renewal Monster Summon Database") {
     @Previewable @State var appModel = AppModel()
-    appModel.monsterSummonDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .monsterSummon)
+    appModel.monsterSummonDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .monsterSummon)
 
     return MonsterSummonDatabaseView()
         .environment(appModel)

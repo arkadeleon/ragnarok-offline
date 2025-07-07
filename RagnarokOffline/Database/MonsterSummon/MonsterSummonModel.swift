@@ -1,5 +1,5 @@
 //
-//  ObservableMonsterSummon.swift
+//  MonsterSummonModel.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/5/9.
@@ -10,9 +10,9 @@ import RODatabase
 
 @Observable
 @dynamicMemberLookup
-class ObservableMonsterSummon {
+final class MonsterSummonModel {
     struct Summon: Identifiable {
-        var monster: ObservableMonster
+        var monster: MonsterModel
         var rate: Int
 
         var id: Int {
@@ -23,7 +23,7 @@ class ObservableMonsterSummon {
     private let mode: DatabaseMode
     private let monsterSummon: MonsterSummon
 
-    var defaultMonster: ObservableMonster?
+    var defaultMonster: MonsterModel?
     var summonMonsters: [Summon]?
 
     var displayName: String {
@@ -44,14 +44,14 @@ class ObservableMonsterSummon {
         let monsterDatabase = MonsterDatabase.shared
 
         if let monster = await monsterDatabase.monster(forAegisName: monsterSummon.default) {
-            defaultMonster = ObservableMonster(mode: mode, monster: monster)
+            defaultMonster = MonsterModel(mode: mode, monster: monster)
         }
 
         var summonMonsters: [Summon] = []
         for summon in monsterSummon.summon {
             if let monster = await monsterDatabase.monster(forAegisName: summon.monster) {
                 let summon = Summon(
-                    monster: ObservableMonster(mode: mode, monster: monster),
+                    monster: MonsterModel(mode: mode, monster: monster),
                     rate: summon.rate
                 )
                 summonMonsters.append(summon)
@@ -61,19 +61,19 @@ class ObservableMonsterSummon {
     }
 }
 
-extension ObservableMonsterSummon: Equatable {
-    static func == (lhs: ObservableMonsterSummon, rhs: ObservableMonsterSummon) -> Bool {
+extension MonsterSummonModel: Equatable {
+    static func == (lhs: MonsterSummonModel, rhs: MonsterSummonModel) -> Bool {
         lhs.monsterSummon.group == rhs.monsterSummon.group
     }
 }
 
-extension ObservableMonsterSummon: Hashable {
+extension MonsterSummonModel: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(monsterSummon.group)
     }
 }
 
-extension ObservableMonsterSummon: Identifiable {
+extension MonsterSummonModel: Identifiable {
     var id: String {
         monsterSummon.group
     }

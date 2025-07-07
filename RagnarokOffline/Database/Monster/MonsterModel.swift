@@ -1,5 +1,5 @@
 //
-//  ObservableMonster.swift
+//  MonsterModel.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/6/19.
@@ -15,11 +15,11 @@ import ROResources
 
 @Observable
 @dynamicMemberLookup
-class ObservableMonster {
+final class MonsterModel {
     struct DropItem: Identifiable {
         var index: Int
         var drop: Monster.Drop
-        var item: ObservableItem
+        var item: ItemModel
 
         var id: Int {
             index
@@ -27,7 +27,7 @@ class ObservableMonster {
     }
 
     struct SpawnMap: Identifiable {
-        var map: ObservableMap
+        var map: MapModel
         var monsterSpawn: MonsterSpawn
 
         var id: String {
@@ -161,7 +161,7 @@ class ObservableMonster {
             var mvpDropItems: [DropItem] = []
             for (index, drop) in mvpDrops.enumerated() {
                 if let item = await itemDatabase.item(forAegisName: drop.item) {
-                    let item = await ObservableItem(mode: mode, item: item)
+                    let item = await ItemModel(mode: mode, item: item)
                     let dropItem = DropItem(index: index, drop: drop, item: item)
                     mvpDropItems.append(dropItem)
                 }
@@ -173,7 +173,7 @@ class ObservableMonster {
             var dropItems: [DropItem] = []
             for (index, drop) in drops.enumerated() {
                 if let item = await itemDatabase.item(forAegisName: drop.item) {
-                    let item = await ObservableItem(mode: mode, item: item)
+                    let item = await ItemModel(mode: mode, item: item)
                     let dropItem = DropItem(index: index, drop: drop, item: item)
                     dropItems.append(dropItem)
                 }
@@ -187,7 +187,7 @@ class ObservableMonster {
             if let map = await mapDatabase.map(forName: monsterSpawn.mapName) {
                 if !spawnMaps.contains(where: { $0.map.name == map.name }) {
                     let spawnMap = SpawnMap(
-                        map: ObservableMap(mode: mode, map: map),
+                        map: MapModel(mode: mode, map: map),
                         monsterSpawn: monsterSpawn
                     )
                     spawnMaps.append(spawnMap)
@@ -198,19 +198,19 @@ class ObservableMonster {
     }
 }
 
-extension ObservableMonster: Equatable {
-    static func == (lhs: ObservableMonster, rhs: ObservableMonster) -> Bool {
+extension MonsterModel: Equatable {
+    static func == (lhs: MonsterModel, rhs: MonsterModel) -> Bool {
         lhs.monster.id == rhs.monster.id
     }
 }
 
-extension ObservableMonster: Hashable {
+extension MonsterModel: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(monster.id)
     }
 }
 
-extension ObservableMonster: Identifiable {
+extension MonsterModel: Identifiable {
     var id: Int {
         monster.id
     }

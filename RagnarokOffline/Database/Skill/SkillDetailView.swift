@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SkillDetailView: View {
-    var skill: ObservableSkill
+    var skill: SkillModel
 
     var body: some View {
         DatabaseRecordDetailView {

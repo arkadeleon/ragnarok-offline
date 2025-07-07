@@ -10,7 +10,7 @@ import SwiftUI
 struct MapDatabaseView: View {
     @Environment(AppModel.self) private var appModel
 
-    private var database: ObservableDatabase<MapProvider> {
+    private var database: DatabaseModel<MapProvider> {
         appModel.mapDatabase
     }
 
@@ -47,7 +47,7 @@ struct MapDatabaseView: View {
 
 #Preview("Pre-Renewal Map Database") {
     @Previewable @State var appModel = AppModel()
-    appModel.mapDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .map)
+    appModel.mapDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .map)
 
     return MapDatabaseView()
         .environment(appModel)
@@ -55,7 +55,7 @@ struct MapDatabaseView: View {
 
 #Preview("Renewal Map Database") {
     @Previewable @State var appModel = AppModel()
-    appModel.mapDatabase = ObservableDatabase(mode: .renewal, recordProvider: .map)
+    appModel.mapDatabase = DatabaseModel(mode: .renewal, recordProvider: .map)
 
     return MapDatabaseView()
         .environment(appModel)

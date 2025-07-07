@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct JobGridCell: View {
-    var job: ObservableJob
+    var job: JobModel
 
     var body: some View {
         ImageGridCell(title: job.displayName) {

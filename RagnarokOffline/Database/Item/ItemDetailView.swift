@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ItemDetailView: View {
-    var item: ObservableItem
+    var item: ItemModel
 
     @Environment(\.horizontalSizeClass) private var sizeClass
 

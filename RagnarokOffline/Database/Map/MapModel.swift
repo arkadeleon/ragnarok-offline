@@ -1,5 +1,5 @@
 //
-//  ObservableMap.swift
+//  MapModel.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/11/7.
@@ -12,9 +12,9 @@ import ROResources
 
 @Observable
 @dynamicMemberLookup
-class ObservableMap {
+final class MapModel {
     struct SpawningMonster: Identifiable {
-        var monster: ObservableMonster
+        var monster: MonsterModel
         var spawn: MonsterSpawn
 
         var id: Int {
@@ -72,7 +72,7 @@ class ObservableMap {
                         monsters.append(monster)
 
                         let spawningMonster = SpawningMonster(
-                            monster: ObservableMonster(mode: mode, monster: monster),
+                            monster: MonsterModel(mode: mode, monster: monster),
                             spawn: monsterSpawn
                         )
                         spawningMonsters.append(spawningMonster)
@@ -84,7 +84,7 @@ class ObservableMap {
                         monsters.append(monster)
 
                         let spawningMonster = SpawningMonster(
-                            monster: ObservableMonster(mode: mode, monster: monster),
+                            monster: MonsterModel(mode: mode, monster: monster),
                             spawn: monsterSpawn
                         )
                         spawningMonsters.append(spawningMonster)
@@ -96,19 +96,19 @@ class ObservableMap {
     }
 }
 
-extension ObservableMap: Equatable {
-    static func == (lhs: ObservableMap, rhs: ObservableMap) -> Bool {
+extension MapModel: Equatable {
+    static func == (lhs: MapModel, rhs: MapModel) -> Bool {
         lhs.map.name == rhs.map.name
     }
 }
 
-extension ObservableMap: Hashable {
+extension MapModel: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(map.name)
     }
 }
 
-extension ObservableMap: Identifiable {
+extension MapModel: Identifiable {
     var id: String {
         map.name
     }

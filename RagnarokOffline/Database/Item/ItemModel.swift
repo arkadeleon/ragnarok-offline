@@ -1,5 +1,5 @@
 //
-//  ObservableItem.swift
+//  ItemModel.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/11/6.
@@ -14,9 +14,9 @@ import ROResources
 
 @Observable
 @dynamicMemberLookup
-class ObservableItem {
+final class ItemModel {
     struct DroppingMonster: Identifiable {
-        var monster: ObservableMonster
+        var monster: MonsterModel
         var drop: Monster.Drop
 
         var id: Int {
@@ -172,7 +172,7 @@ class ObservableItem {
             for drop in drops {
                 if drop.item == item.aegisName {
                     let droppingMonster = DroppingMonster(
-                        monster: ObservableMonster(mode: mode, monster: monster),
+                        monster: MonsterModel(mode: mode, monster: monster),
                         drop: drop
                     )
                     droppingMonsters.append(droppingMonster)
@@ -184,19 +184,19 @@ class ObservableItem {
     }
 }
 
-extension ObservableItem: Equatable {
-    static func == (lhs: ObservableItem, rhs: ObservableItem) -> Bool {
+extension ItemModel: Equatable {
+    static func == (lhs: ItemModel, rhs: ItemModel) -> Bool {
         lhs.item.id == rhs.item.id
     }
 }
 
-extension ObservableItem: Hashable {
+extension ItemModel: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(item.id)
     }
 }
 
-extension ObservableItem: Identifiable {
+extension ItemModel: Identifiable {
     var id: Int {
         item.id
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ItemIconImageView: View {
-    var item: ObservableItem
+    var item: ItemModel
 
     var body: some View {
         ZStack {

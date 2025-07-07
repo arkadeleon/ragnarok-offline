@@ -10,7 +10,7 @@ import SwiftUI
 struct StatusChangeDatabaseView: View {
     @Environment(AppModel.self) private var appModel
 
-    private var database: ObservableDatabase<StatusChangeProvider> {
+    private var database: DatabaseModel<StatusChangeProvider> {
         appModel.statusChangeDatabase
     }
 
@@ -39,7 +39,7 @@ struct StatusChangeDatabaseView: View {
 
 #Preview("Pre-Renewal Status Change Database") {
     @Previewable @State var appModel = AppModel()
-    appModel.statusChangeDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .statusChange)
+    appModel.statusChangeDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .statusChange)
 
     return StatusChangeDatabaseView()
         .environment(appModel)
@@ -47,7 +47,7 @@ struct StatusChangeDatabaseView: View {
 
 #Preview("Renewal Status Change Database") {
     @Previewable @State var appModel = AppModel()
-    appModel.statusChangeDatabase = ObservableDatabase(mode: .prerenewal, recordProvider: .statusChange)
+    appModel.statusChangeDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .statusChange)
 
     return StatusChangeDatabaseView()
         .environment(appModel)

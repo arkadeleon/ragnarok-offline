@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MapDetailView: View {
-    var map: ObservableMap
+    var map: MapModel
 
     @Environment(\.horizontalSizeClass) private var sizeClass
 

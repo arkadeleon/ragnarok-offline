@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MapImageView: View {
-    var map: ObservableMap
+    var map: MapModel
 
     var body: some View {
         ZStack {
