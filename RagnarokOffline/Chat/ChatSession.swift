@@ -9,6 +9,7 @@ import Combine
 import Observation
 import RONetwork
 import ROPackets
+import ROResources
 
 @MainActor
 @Observable
@@ -150,13 +151,24 @@ final class ChatSession {
 
         loginSession.subscribe(to: LoginEvents.Refused.self) { [unowned self] event in
             self.messages.append(.serverText("Refused"))
-            self.messages.append(.serverText(event.message.rawValue))
+
+            Task {
+                let messageStringTable = await ResourceManager.shared.messageStringTable()
+                let message = messageStringTable.localizedMessageString(at: event.message.messageCode)
+                    .replacingOccurrences(of: "%s", with: event.message.unblockTime)
+                self.messages.append(.serverText(message))
+            }
         }
         .store(in: &subscriptions)
 
         loginSession.subscribe(to: AuthenticationEvents.Banned.self) { [unowned self] event in
             self.messages.append(.serverText("Banned"))
-            self.messages.append(.serverText(event.message.rawValue))
+
+            Task {
+                let messageStringTable = await ResourceManager.shared.messageStringTable()
+                let message = messageStringTable.localizedMessageString(at: event.message.messageCode)
+                self.messages.append(.serverText(message))
+            }
         }
         .store(in: &subscriptions)
 
@@ -230,7 +242,12 @@ final class ChatSession {
 
         charSession.subscribe(to: AuthenticationEvents.Banned.self) { [unowned self] event in
             self.messages.append(.serverText("Banned"))
-            self.messages.append(.serverText(event.message.rawValue))
+
+            Task {
+                let messageStringTable = await ResourceManager.shared.messageStringTable()
+                let message = messageStringTable.localizedMessageString(at: event.message.messageCode)
+                self.messages.append(.serverText(message))
+            }
         }
         .store(in: &subscriptions)
 

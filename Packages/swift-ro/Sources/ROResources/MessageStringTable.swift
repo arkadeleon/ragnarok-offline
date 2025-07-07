@@ -9,40 +9,11 @@ import BinaryIO
 import Foundation
 import ROConstants
 
-public struct MessageStringTable: Sendable {
-    public static let current = MessageStringTable(locale: .current)
-
-    let locale: Locale
+final public class MessageStringTable: Resource {
     let messageStrings: [String]
 
-    init(locale: Locale) {
-        self.locale = locale
-
-        self.messageStrings = {
-            guard let url = Bundle.module.url(forResource: "msgstringtable", withExtension: "txt", locale: locale),
-                  let stream = FileStream(forReadingFrom: url) else {
-                return []
-            }
-
-            let reader = StreamReader(stream: stream, delimiter: "\r\n")
-            defer {
-                reader.close()
-            }
-
-            let encoding = locale.language.preferredEncoding
-
-            var messageStrings: [String] = []
-
-            while let line = reader.readLine() {
-                var messageString = line.transcoding(from: .isoLatin1, to: encoding) ?? ""
-                if messageString.hasSuffix("#") {
-                    messageString.removeLast()
-                }
-                messageStrings.append(messageString)
-            }
-
-            return messageStrings
-        }()
+    init(messageStrings: [String] = []) {
+        self.messageStrings = messageStrings
     }
 
     public func localizedMessageString(at index: Int) -> String {
@@ -362,5 +333,45 @@ public struct MessageStringTable: Sendable {
         case .sky_emperor2:
             nil
         }
+    }
+}
+
+extension ResourceManager {
+    public func messageStringTable() async -> MessageStringTable {
+        if let task = tasks.withLock({ $0["MessageStringTable"] }) {
+            return await task.value as! MessageStringTable
+        }
+
+        let task = Task<any Resource, Never> {
+            guard let url = Bundle.module.url(forResource: "msgstringtable", withExtension: "txt", locale: locale),
+                  let stream = FileStream(forReadingFrom: url) else {
+                return MessageStringTable()
+            }
+
+            let reader = StreamReader(stream: stream, delimiter: "\r\n")
+            defer {
+                reader.close()
+            }
+
+            let encoding = locale.language.preferredEncoding
+
+            var messageStrings: [String] = []
+
+            while let line = reader.readLine() {
+                var messageString = line.transcoding(from: .isoLatin1, to: encoding) ?? ""
+                if messageString.hasSuffix("#") {
+                    messageString.removeLast()
+                }
+                messageStrings.append(messageString)
+            }
+
+            return MessageStringTable(messageStrings: messageStrings)
+        }
+
+        tasks.withLock {
+            $0["MessageStringTable"] = task
+        }
+
+        return await task.value as! MessageStringTable
     }
 }

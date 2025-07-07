@@ -13,6 +13,9 @@ struct JobProvider: DatabaseRecordProvider {
         let jobs = await database.jobs().map { job in
             JobModel(mode: mode, job: job)
         }
+        for job in jobs {
+            await job.fetchLocalizedName()
+        }
         return jobs
     }
 

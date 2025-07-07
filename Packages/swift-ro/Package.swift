@@ -104,7 +104,6 @@ let package = Package(
                 .product(name: "BinaryIO", package: "swift-binary-io"),
                 "ROConstants",
                 "ROPackets",
-                "ROResources",
             ]),
         .testTarget(
             name: "RONetworkTests",

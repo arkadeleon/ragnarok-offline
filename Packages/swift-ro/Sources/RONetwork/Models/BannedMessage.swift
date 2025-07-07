@@ -6,10 +6,9 @@
 //
 
 import ROPackets
-import ROResources
 
 public struct BannedMessage: Sendable {
-    public let rawValue: String
+    public let messageCode: Int
 
     init(packet: PACKET_SC_NOTIFY_BAN) {
         let messageCode = switch packet.result {
@@ -29,6 +28,6 @@ public struct BannedMessage: Sendable {
         default : 3
         }
 
-        self.rawValue = MessageStringTable.current.localizedMessageString(at: messageCode)
+        self.messageCode = messageCode
     }
 }

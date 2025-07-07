@@ -6,10 +6,10 @@
 //
 
 import ROPackets
-import ROResources
 
 public struct LoginRefusedMessage: Sendable {
-    public let rawValue: String
+    public let messageCode: Int
+    public let unblockTime: String
 
     init(packet: PACKET_AC_REFUSE_LOGIN) {
         let messageCode = switch packet.error {
@@ -38,7 +38,7 @@ public struct LoginRefusedMessage: Sendable {
         default : 9
         }
 
-        self.rawValue = MessageStringTable.current.localizedMessageString(at: messageCode)
-            .replacingOccurrences(of: "%s", with: packet.unblock_time)
+        self.messageCode = messageCode
+        self.unblockTime = packet.unblock_time
     }
 }
