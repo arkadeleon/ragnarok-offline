@@ -8,19 +8,28 @@
 import BinaryIO
 import Foundation
 
-public struct MapNameTable: Sendable {
-    public static let current = MapNameTable(locale: .current)
-
-    let locale: Locale
+final public class MapNameTable: Resource {
     let mapNamesByRSW: [String : String]
 
-    init(locale: Locale) {
-        self.locale = locale
+    init(mapNamesByRSW: [String : String] = [:]) {
+        self.mapNamesByRSW = mapNamesByRSW
+    }
 
-        self.mapNamesByRSW = {
+    public func localizedMapName(forMapName mapName: String) -> String? {
+        mapNamesByRSW[mapName]
+    }
+}
+
+extension ResourceManager {
+    public func mapNameTable() async -> MapNameTable {
+        if let task = tasks.withLock({ $0["MapNameTable"] }) {
+            return await task.value as! MapNameTable
+        }
+
+        let task = Task<any Resource, Never> {
             guard let url = Bundle.module.url(forResource: "mapnametable", withExtension: "txt", locale: locale),
                   let stream = FileStream(forReadingFrom: url) else {
-                return [:]
+                return MapNameTable()
             }
 
             let reader = StreamReader(stream: stream, delimiter: "\r\n")
@@ -48,11 +57,13 @@ public struct MapNameTable: Sendable {
                 }
             }
 
-            return mapNamesByRSW
-        }()
-    }
+            return MapNameTable(mapNamesByRSW: mapNamesByRSW)
+        }
 
-    public func localizedMapName(forMapName mapName: String) -> String? {
-        mapNamesByRSW[mapName]
+        tasks.withLock {
+            $0["MapNameTable"] = task
+        }
+
+        return await task.value as! MapNameTable
     }
 }

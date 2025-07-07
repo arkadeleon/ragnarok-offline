@@ -25,7 +25,7 @@ final class MapModel {
     private let mode: DatabaseMode
     private let map: Map
 
-    private let localizedName: String?
+    private var localizedName: String?
 
     var image: CGImage?
     var spawningMonsters: [SpawningMonster] = []
@@ -37,12 +37,15 @@ final class MapModel {
     init(mode: DatabaseMode, map: Map) {
         self.mode = mode
         self.map = map
-
-        self.localizedName = MapNameTable.current.localizedMapName(forMapName: map.name)
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Map, Value>) -> Value {
         map[keyPath: keyPath]
+    }
+
+    func fetchLocalizedName() async {
+        let mapNameTable = await ResourceManager.shared.mapNameTable()
+        self.localizedName = mapNameTable.localizedMapName(forMapName: map.name)
     }
 
     @MainActor

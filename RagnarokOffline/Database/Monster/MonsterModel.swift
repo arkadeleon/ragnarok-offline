@@ -152,9 +152,8 @@ final class MonsterModel {
     }
 
     @MainActor
-    func fetchDetail() async {
+    func fetchDetail(mapDatabase: DatabaseModel<MapProvider>) async {
         let itemDatabase = ItemDatabase.shared
-        let mapDatabase = MapDatabase.shared
         let npcDatabase = NPCDatabase.shared
 
         if let mvpDrops = monster.mvpDrops {
@@ -187,7 +186,7 @@ final class MonsterModel {
             if let map = await mapDatabase.map(forName: monsterSpawn.mapName) {
                 if !spawnMaps.contains(where: { $0.map.name == map.name }) {
                     let spawnMap = SpawnMap(
-                        map: MapModel(mode: mode, map: map),
+                        map: map,
                         monsterSpawn: monsterSpawn
                     )
                     spawnMaps.append(spawnMap)
