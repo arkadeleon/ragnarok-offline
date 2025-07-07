@@ -96,11 +96,13 @@ class ObservableMap {
     }
 }
 
-extension ObservableMap: Hashable {
+extension ObservableMap: Equatable {
     static func == (lhs: ObservableMap, rhs: ObservableMap) -> Bool {
         lhs.map.name == rhs.map.name
     }
+}
 
+extension ObservableMap: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(map.name)
     }

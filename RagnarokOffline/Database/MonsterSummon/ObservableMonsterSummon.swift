@@ -61,11 +61,13 @@ class ObservableMonsterSummon {
     }
 }
 
-extension ObservableMonsterSummon: Hashable {
+extension ObservableMonsterSummon: Equatable {
     static func == (lhs: ObservableMonsterSummon, rhs: ObservableMonsterSummon) -> Bool {
         lhs.monsterSummon.group == rhs.monsterSummon.group
     }
+}
 
+extension ObservableMonsterSummon: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(monsterSummon.group)
     }

@@ -79,11 +79,13 @@ class ObservableSkill {
     }
 }
 
-extension ObservableSkill: Hashable {
+extension ObservableSkill: Equatable {
     static func == (lhs: ObservableSkill, rhs: ObservableSkill) -> Bool {
         lhs.skill.id == rhs.skill.id
     }
+}
 
+extension ObservableSkill: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(skill.id)
     }

@@ -86,11 +86,13 @@ class ObservableStatusChange {
     }
 }
 
-extension ObservableStatusChange: Hashable {
+extension ObservableStatusChange: Equatable {
     static func == (lhs: ObservableStatusChange, rhs: ObservableStatusChange) -> Bool {
         lhs.statusChange.status == rhs.statusChange.status
     }
+}
 
+extension ObservableStatusChange: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(statusChange.status)
     }

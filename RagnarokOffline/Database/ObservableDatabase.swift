@@ -10,7 +10,7 @@ import RODatabase
 
 @MainActor
 protocol DatabaseRecordProvider {
-    associatedtype Record
+    associatedtype Record: Identifiable
 
     func records(for mode: DatabaseMode) async -> [Record]
     func moreRecords(for mode: DatabaseMode) async -> [Record]
@@ -27,13 +27,16 @@ extension DatabaseRecordProvider {
 @MainActor
 @Observable
 final class ObservableDatabase<RecordProvider> where RecordProvider: DatabaseRecordProvider {
+    typealias Record = RecordProvider.Record
+
     let mode: DatabaseMode
     let recordProvider: RecordProvider
 
     var loadStatus: LoadStatus = .notYetLoaded
     var searchText = ""
-    var records: [RecordProvider.Record] = []
-    var filteredRecords: [RecordProvider.Record] = []
+    var records: [Record] = []
+    var recordsByID: [Record.ID : Record] = [:]
+    var filteredRecords: [Record] = []
 
     init(mode: DatabaseMode, recordProvider: RecordProvider) {
         self.mode = mode
@@ -48,7 +51,10 @@ final class ObservableDatabase<RecordProvider> where RecordProvider: DatabaseRec
         loadStatus = .loading
 
         records = await recordProvider.records(for: mode)
-
+        recordsByID = Dictionary(
+            records.map({ ($0.id, $0) }),
+            uniquingKeysWith: { (first, _) in first }
+        )
         await filterRecords()
 
         loadStatus = .loaded
@@ -56,6 +62,11 @@ final class ObservableDatabase<RecordProvider> where RecordProvider: DatabaseRec
         let moreRecords = await recordProvider.moreRecords(for: mode)
         if !records.isEmpty, !moreRecords.isEmpty {
             records += moreRecords
+            recordsByID = Dictionary(
+                records.map({ ($0.id, $0) }),
+                uniquingKeysWith: { (first, _) in first }
+            )
+            await filterRecords()
         }
     }
 
@@ -65,5 +76,9 @@ final class ObservableDatabase<RecordProvider> where RecordProvider: DatabaseRec
         } else {
             filteredRecords = await recordProvider.records(matching: searchText, in: records)
         }
+    }
+
+    func record(forID id: Record.ID) -> Record? {
+        recordsByID[id]
     }
 }

@@ -198,11 +198,13 @@ class ObservableMonster {
     }
 }
 
-extension ObservableMonster: Hashable {
+extension ObservableMonster: Equatable {
     static func == (lhs: ObservableMonster, rhs: ObservableMonster) -> Bool {
         lhs.monster.id == rhs.monster.id
     }
+}
 
+extension ObservableMonster: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(monster.id)
     }

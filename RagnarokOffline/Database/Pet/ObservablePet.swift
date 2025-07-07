@@ -94,11 +94,13 @@ class ObservablePet {
     }
 }
 
-extension ObservablePet: Hashable {
+extension ObservablePet: Equatable {
     static func == (lhs: ObservablePet, rhs: ObservablePet) -> Bool {
         lhs.pet.monster == rhs.pet.monster
     }
+}
 
+extension ObservablePet: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(pet.monster)
     }

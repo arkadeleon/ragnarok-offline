@@ -152,11 +152,13 @@ class ObservableJob {
     }
 }
 
-extension ObservableJob: Hashable {
+extension ObservableJob: Equatable {
     static func == (lhs: ObservableJob, rhs: ObservableJob) -> Bool {
         lhs.job.id == rhs.job.id
     }
+}
 
+extension ObservableJob: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(job.id)
     }
