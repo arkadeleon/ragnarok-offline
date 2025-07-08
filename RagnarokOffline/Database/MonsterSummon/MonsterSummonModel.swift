@@ -40,20 +40,17 @@ final class MonsterSummonModel {
     }
 
     @MainActor
-    func fetchDetail() async {
-        let monsterDatabase = MonsterDatabase.shared
+    func fetchDetail(monsterDatabase: DatabaseModel<MonsterProvider>) async {
+        await monsterDatabase.fetchRecords()
 
-        if let monster = await monsterDatabase.monster(forAegisName: monsterSummon.default) {
-            defaultMonster = MonsterModel(mode: mode, monster: monster)
+        if let monster = monsterDatabase.monster(forAegisName: monsterSummon.default) {
+            defaultMonster = monster
         }
 
         var summonMonsters: [Summon] = []
         for summon in monsterSummon.summon {
-            if let monster = await monsterDatabase.monster(forAegisName: summon.monster) {
-                let summon = Summon(
-                    monster: MonsterModel(mode: mode, monster: monster),
-                    rate: summon.rate
-                )
+            if let monster = monsterDatabase.monster(forAegisName: summon.monster) {
+                let summon = Summon(monster: monster, rate: summon.rate)
                 summonMonsters.append(summon)
             }
         }

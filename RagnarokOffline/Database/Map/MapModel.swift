@@ -59,37 +59,32 @@ final class MapModel {
     }
 
     @MainActor
-    func fetchDetail() async {
+    func fetchDetail(monsterDatabase: DatabaseModel<MonsterProvider>) async {
         await fetchImage()
 
-        let monsterDatabase = MonsterDatabase.shared
         let npcDatabase = NPCDatabase.shared
+
+        await monsterDatabase.fetchRecords()
 
         let monsterSpawns = await npcDatabase.monsterSpawns(forMapName: map.name)
         var spawningMonsters: [SpawningMonster] = []
-        var monsters: [Monster] = []
+        var monsters: [MonsterModel] = []
         for monsterSpawn in monsterSpawns {
             if let monsterID = monsterSpawn.monsterID {
-                if let monster = await monsterDatabase.monster(forID: monsterID) {
+                if let monster = monsterDatabase.monster(forID: monsterID) {
                     if !monsters.contains(monster) {
                         monsters.append(monster)
 
-                        let spawningMonster = SpawningMonster(
-                            monster: MonsterModel(mode: mode, monster: monster),
-                            spawn: monsterSpawn
-                        )
+                        let spawningMonster = SpawningMonster(monster: monster, spawn: monsterSpawn)
                         spawningMonsters.append(spawningMonster)
                     }
                 }
             } else if let monsterAegisName = monsterSpawn.monsterAegisName {
-                if let monster = await monsterDatabase.monster(forAegisName: monsterAegisName) {
+                if let monster = monsterDatabase.monster(forAegisName: monsterAegisName) {
                     if !monsters.contains(monster) {
                         monsters.append(monster)
 
-                        let spawningMonster = SpawningMonster(
-                            monster: MonsterModel(mode: mode, monster: monster),
-                            spawn: monsterSpawn
-                        )
+                        let spawningMonster = SpawningMonster(monster: monster, spawn: monsterSpawn)
                         spawningMonsters.append(spawningMonster)
                     }
                 }

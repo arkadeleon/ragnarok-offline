@@ -38,7 +38,7 @@ final class MonsterModel {
     private let mode: DatabaseMode
     private let monster: Monster
 
-    private let localizedName: String?
+    private var localizedName: String?
 
     var animatedImage: AnimatedImage?
     var mvpDropItems: [DropItem] = []
@@ -127,12 +127,15 @@ final class MonsterModel {
     init(mode: DatabaseMode, monster: Monster) {
         self.mode = mode
         self.monster = monster
-
-        self.localizedName = MonsterNameTable.current.localizedMonsterName(forMonsterID: monster.id)
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Monster, Value>) -> Value {
         monster[keyPath: keyPath]
+    }
+
+    func fetchLocalizedName() async {
+        let monsterNameTable = await ResourceManager.shared.monsterNameTable()
+        self.localizedName = monsterNameTable.localizedMonsterName(forMonsterID: monster.id)
     }
 
     @MainActor
@@ -155,6 +158,8 @@ final class MonsterModel {
     func fetchDetail(mapDatabase: DatabaseModel<MapProvider>) async {
         let itemDatabase = ItemDatabase.shared
         let npcDatabase = NPCDatabase.shared
+
+        await mapDatabase.fetchRecords()
 
         if let mvpDrops = monster.mvpDrops {
             var mvpDropItems: [DropItem] = []
@@ -183,7 +188,7 @@ final class MonsterModel {
         let monsterSpawns = await npcDatabase.monsterSpawns(for: monster)
         var spawnMaps: [SpawnMap] = []
         for monsterSpawn in monsterSpawns {
-            if let map = await mapDatabase.map(forName: monsterSpawn.mapName) {
+            if let map = mapDatabase.map(forName: monsterSpawn.mapName) {
                 if !spawnMaps.contains(where: { $0.map.name == map.name }) {
                     let spawnMap = SpawnMap(
                         map: map,

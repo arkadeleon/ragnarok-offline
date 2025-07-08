@@ -12,6 +12,8 @@ struct MapDetailView: View {
 
     @Environment(\.horizontalSizeClass) private var sizeClass
 
+    @Environment(AppModel.self) private var appModel
+
     @State private var isMapViewerPresented = false
 
     var body: some View {
@@ -58,7 +60,7 @@ struct MapDetailView: View {
             }
         }
         .task {
-            await map.fetchDetail()
+            await map.fetchDetail(monsterDatabase: appModel.monsterDatabase)
         }
     }
 }

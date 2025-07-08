@@ -57,11 +57,10 @@ final class PetModel {
     }
 
     @MainActor
-    func fetchMonster() async {
+    func fetchMonster(monsterDatabase: DatabaseModel<MonsterProvider>) {
         if monster == nil {
-            let monsterDatabase = MonsterDatabase.shared
-            if let monster = await monsterDatabase.monster(forAegisName: pet.monster) {
-                self.monster = MonsterModel(mode: mode, monster: monster)
+            if let monster = monsterDatabase.monster(forAegisName: pet.monster) {
+                self.monster = monster
             }
         }
     }

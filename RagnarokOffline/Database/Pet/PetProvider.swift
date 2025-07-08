@@ -13,10 +13,14 @@ struct PetProvider: DatabaseRecordProvider {
         let pets = await database.pets().map { pet in
             PetModel(mode: mode, pet: pet)
         }
-        for pet in pets {
-            await pet.fetchMonster()
-        }
         return pets
+    }
+
+    func prefetchRecords(_ pets: [PetModel], appModel: AppModel) async {
+        await appModel.monsterDatabase.fetchRecords()
+        for pet in pets {
+            pet.fetchMonster(monsterDatabase: appModel.monsterDatabase)
+        }
     }
 
     func records(matching searchText: String, in pets: [PetModel]) async -> [PetModel] {

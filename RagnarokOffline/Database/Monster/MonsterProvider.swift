@@ -13,6 +13,9 @@ struct MonsterProvider: DatabaseRecordProvider {
         let monsters = await database.monsters().map { monster in
             MonsterModel(mode: mode, monster: monster)
         }
+        for monster in monsters {
+            await monster.fetchLocalizedName()
+        }
         return monsters
     }
 
@@ -36,5 +39,15 @@ struct MonsterProvider: DatabaseRecordProvider {
 extension DatabaseRecordProvider where Self == MonsterProvider {
     static var monster: MonsterProvider {
         MonsterProvider()
+    }
+}
+
+extension DatabaseModel where RecordProvider == MonsterProvider {
+    func monster(forID id: Int) -> MonsterModel? {
+        recordsByID[id]
+    }
+
+    func monster(forAegisName aegisName: String) -> MonsterModel? {
+        records.first(where: { $0.aegisName == aegisName })
     }
 }

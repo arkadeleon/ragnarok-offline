@@ -6,21 +6,29 @@
 //
 
 import Foundation
-import Lua
 
-public struct MonsterNameTable: Sendable {
-    public static let current = MonsterNameTable(locale: .current)
-
-    let locale: Locale
+final public class MonsterNameTable: Resource {
     let monsterNamesByID: [Int : String]
 
-    init(locale: Locale) {
-        self.locale = locale
+    init(monsterNamesByID: [Int : String] = [:]) {
+        self.monsterNamesByID = monsterNamesByID
+    }
 
-        self.monsterNamesByID = {
+    public func localizedMonsterName(forMonsterID monsterID: Int) -> String? {
+        monsterNamesByID[monsterID]
+    }
+}
+
+extension ResourceManager {
+    public func monsterNameTable() async -> MonsterNameTable {
+        if let task = tasks.withLock({ $0["MonsterNameTable"] }) {
+            return await task.value as! MonsterNameTable
+        }
+
+        let task = Task<any Resource, Never> {
             guard let url = Bundle.module.url(forResource: "mobname", withExtension: "txt", locale: locale),
                   let string = try? String(contentsOf: url, encoding: .utf8) else {
-                return [:]
+                return MonsterNameTable()
             }
 
             var monsterNamesByID: [Int : String] = [:]
@@ -40,11 +48,13 @@ public struct MonsterNameTable: Sendable {
                 }
             }
 
-            return monsterNamesByID
-        }()
-    }
+            return MonsterNameTable(monsterNamesByID: monsterNamesByID)
+        }
 
-    public func localizedMonsterName(forMonsterID monsterID: Int) -> String? {
-        monsterNamesByID[monsterID]
+        tasks.withLock {
+            $0["MonsterNameTable"] = task
+        }
+
+        return await task.value as! MonsterNameTable
     }
 }

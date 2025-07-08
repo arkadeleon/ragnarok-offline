@@ -33,9 +33,7 @@ extension DatabaseRecordProvider where Self == MapProvider {
 }
 
 extension DatabaseModel where RecordProvider == MapProvider {
-    func map(forName name: String) async -> MapModel? {
-        await fetchRecords()
-        let map = record(forID: name)
-        return map
+    func map(forName name: String) -> MapModel? {
+        recordsByID[name]
     }
 }

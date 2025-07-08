@@ -12,6 +12,8 @@ struct ItemDetailView: View {
 
     @Environment(\.horizontalSizeClass) private var sizeClass
 
+    @Environment(AppModel.self) private var appModel
+
     var body: some View {
         DatabaseRecordDetailView {
             ZStack {
@@ -70,7 +72,7 @@ struct ItemDetailView: View {
         }
         .navigationTitle(item.displayName)
         .task {
-            await item.fetchDetail()
+            await item.fetchDetail(monsterDatabase: appModel.monsterDatabase)
         }
     }
 }

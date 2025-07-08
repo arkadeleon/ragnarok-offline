@@ -153,7 +153,7 @@ final class ItemModel {
     }
 
     @MainActor
-    func fetchDetail() async {
+    func fetchDetail(monsterDatabase: DatabaseModel<MonsterProvider>) async {
         let scriptManager = await ResourceManager.shared.scriptManager()
         let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
         if let previewImagePath = pathGenerator.generateItemPreviewImagePath(itemID: item.id) {
@@ -163,18 +163,15 @@ final class ItemModel {
         let itemInfoTable = await ResourceManager.shared.itemInfoTable()
         localizedDescription = itemInfoTable.localizedIdentifiedItemDescription(forItemID: item.id)
 
-        let monsterDatabase = MonsterDatabase.shared
-        let monsters = await monsterDatabase.monsters()
+        await monsterDatabase.fetchRecords()
+        let monsters = monsterDatabase.records
 
         var droppingMonsters: [DroppingMonster] = []
         for monster in monsters {
             let drops = (monster.mvpDrops ?? []) + (monster.drops ?? [])
             for drop in drops {
                 if drop.item == item.aegisName {
-                    let droppingMonster = DroppingMonster(
-                        monster: MonsterModel(mode: mode, monster: monster),
-                        drop: drop
-                    )
+                    let droppingMonster = DroppingMonster(monster: monster, drop: drop)
                     droppingMonsters.append(droppingMonster)
                     break
                 }
