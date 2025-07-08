@@ -63,6 +63,18 @@ final public class ScriptManager: Resource {
         return skillDescription
     }
 
+    public func statusIconName(forStatusID statusID: Int) -> String? {
+        let result = call("statusIconName", with: [statusID], to: String.self)
+        return result
+    }
+
+    public func localizedStatusDescription(forStatusID statusID: Int) -> String? {
+        let result = call("statusDescription", with: [statusID], to: String
+            .self)
+        let statusDescription = result?.transcoding(from: .isoLatin1, to: .koreanEUC)
+        return statusDescription
+    }
+
     public func weaponName(forWeaponID weaponID: Int) -> String? {
         let result = call("ReqWeaponName", with: [weaponID], to: String.self)
         return result
@@ -136,6 +148,10 @@ extension ResourceManager {
             await loadLocalScript("skilldescript", locale: locale, in: context)
 //            await loadScript(at: ["skillinfoz", "skillinfo_f"], in: context)
 
+            await loadScript(at: ["stateicon", "efstids"], in: context)
+            await loadScript(at: ["stateicon", "stateiconimginfo"], in: context)
+            await loadLocalScript("stateiconinfo", locale: .korean, in: context)
+
             await loadScript(at: ["spreditinfo", "smalllayerdir_female"], in: context)
             await loadScript(at: ["spreditinfo", "smalllayerdir_male"], in: context)
             await loadScript(at: ["spreditinfo", "biglayerdir_female"], in: context)
@@ -173,6 +189,36 @@ extension ResourceManager {
                 end
                 function GetSkillDescript(skillID)
                     return SKILL_DESCRIPT[skillID]
+                end
+                """)
+            } catch {
+                logger.warning("\(error.localizedDescription)")
+            }
+
+            do {
+                try context.parse("""
+                function statusIconName(statusID)
+                    local gold = StateIconImgList[PRIORITY_GOLD][statusID]
+                    local red = StateIconImgList[PRIORITY_RED][statusID]
+                    local blue = StateIconImgList[PRIORITY_BLUE][statusID]
+                    local green = StateIconImgList[PRIORITY_GREEN][statusID]
+                    local white = StateIconImgList[PRIORITY_WHITE][statusID]
+                    if gold ~= nil then
+                        return gold
+                    elseif red ~= nil then
+                        return red
+                    elseif blue ~= nil then
+                        return blue
+                    elseif green ~= nil then
+                        return green
+                    elseif white ~= nil then
+                        return white
+                    else
+                        return nil
+                    end
+                end
+                function statusDescription(statusID)
+                    return StateIconList[statusID]["descript"][1][1]
                 end
                 """)
             } catch {

@@ -52,7 +52,7 @@ final class StatusChangeModel {
         if iconImage == nil {
             let scriptManager = await ResourceManager.shared.scriptManager()
             let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
-            if let path = await pathGenerator.generateStatusIconImagePath(statusID: statusChange.icon.rawValue) {
+            if let path = pathGenerator.generateStatusIconImagePath(statusID: statusChange.icon.rawValue) {
                 iconImage = try? await ResourceManager.shared.image(at: path)
             }
         }
@@ -82,7 +82,8 @@ final class StatusChangeModel {
             StatusChangeModel(mode: mode, statusChange: statusChange)
         }
 
-        localizedDescription = await StatusInfoTable.current.localizedDescription(forStatusID: statusChange.icon.rawValue)
+        let scriptManager = await ResourceManager.shared.scriptManager()
+        localizedDescription = scriptManager.localizedStatusDescription(forStatusID: statusChange.icon.rawValue)
     }
 }
 

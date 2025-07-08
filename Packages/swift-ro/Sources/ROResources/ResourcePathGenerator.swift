@@ -50,8 +50,8 @@ final public class ResourcePathGenerator: Sendable {
         ResourcePath.userInterfaceDirectory.appending(["map", "\(mapName).bmp"])
     }
 
-    public func generateStatusIconImagePath(statusID: Int) async -> ResourcePath? {
-        guard let iconName = await StatusInfoTable.current.iconName(forStatusID: statusID) else {
+    public func generateStatusIconImagePath(statusID: Int) -> ResourcePath? {
+        guard let iconName = scriptManager.statusIconName(forStatusID: statusID) else {
             return nil
         }
 
