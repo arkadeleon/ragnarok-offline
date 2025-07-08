@@ -105,8 +105,9 @@ final public class ResourceManager: Sendable {
             let remoteResourceURL = remoteURL.appending(path: path)
             let (data, _) = try await URLSession.shared.data(from: remoteResourceURL)
 
-            try? FileManager.default.createDirectory(at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
-            try? data.write(to: fileURL)
+            let cacheURL = localURL.absoluteURL.appending(path: "Caches").appending(path: L2K(path))
+            try? FileManager.default.createDirectory(at: cacheURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try? data.write(to: cacheURL)
 
             return data
         }
