@@ -12,14 +12,17 @@ extension PAL {
     public func image(at size: CGSize) -> CGImage? {
         let width = Int(size.width)
         let height = Int(size.height)
+        let colorSpace = CGColorSpace(name: CGColorSpace.sRGB)!
+        let bitmapInfo = CGBitmapInfo.byteOrderDefault.rawValue | CGImageAlphaInfo.premultipliedLast.rawValue
+
         guard let context = CGContext(
             data: nil,
             width: width,
             height: height,
             bitsPerComponent: 8,
             bytesPerRow: width * 4,
-            space: CGColorSpaceCreateDeviceRGB(),
-            bitmapInfo: CGBitmapInfo.byteOrderDefault.rawValue | CGImageAlphaInfo.premultipliedLast.rawValue
+            space: colorSpace,
+            bitmapInfo: bitmapInfo
         ) else {
             return nil
         }

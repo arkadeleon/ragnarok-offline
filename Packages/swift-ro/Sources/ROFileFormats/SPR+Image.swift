@@ -39,7 +39,7 @@ extension SPR {
         let sprite = sprites[index]
         let width = Int(sprite.width)
         let height = Int(sprite.height)
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let colorSpace = CGColorSpace(name: CGColorSpace.sRGB)!
 
         switch sprite.type {
         case .indexed:

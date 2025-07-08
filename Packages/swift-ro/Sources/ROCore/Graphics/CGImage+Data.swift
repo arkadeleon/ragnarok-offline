@@ -27,7 +27,7 @@ extension CGImage {
         )
         let targetSize = availableRect.size
 
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let colorSpace = CGColorSpace(name: CGColorSpace.sRGB)!
         let bitmapInfo = CGImageAlphaInfo.premultipliedFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
 
         guard let context = CGContext(
@@ -52,7 +52,7 @@ extension CGImage {
 
 extension CGImage {
     public func removingMagentaPixels() -> CGImage? {
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let colorSpace = CGColorSpace(name: CGColorSpace.sRGB)!
         let bitmapInfo = CGImageAlphaInfo.premultipliedFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
 
         guard let context = CGContext(

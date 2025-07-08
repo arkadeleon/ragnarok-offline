@@ -13,7 +13,7 @@ extension GAT {
         let width = Int(width)
         let height = Int(height)
 
-        let colorSpace = CGColorSpaceCreateDeviceGray()
+        let colorSpace = CGColorSpace(name: CGColorSpace.genericGrayGamma2_2)!
 
         let byteOrder = CGBitmapInfo.byteOrderDefault
         let alphaInfo = CGImageAlphaInfo.none
