@@ -14,8 +14,8 @@ extension ComposedSprite {
 
         private var pathGenerator: ResourcePathGenerator {
             get async {
-                let scriptManager = await resourceManager.scriptManager()
-                let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
+                let scriptContext = await resourceManager.scriptContext()
+                let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
                 return pathGenerator
             }
         }
@@ -106,7 +106,7 @@ extension ComposedSprite {
                 return nil
             }
 
-            if let shadowFactor = await resourceManager.scriptManager().shadowFactor(forJobID: configuration.job.rawValue), shadowFactor >= 0 {
+            if let shadowFactor = await resourceManager.scriptContext().shadowFactor(forJobID: configuration.job.rawValue), shadowFactor >= 0 {
                 shadowSprite.scaleFactor = shadowFactor
             }
 

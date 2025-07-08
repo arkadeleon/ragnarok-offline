@@ -1,5 +1,5 @@
 //
-//  ScriptManager.swift
+//  ScriptContext.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2025/3/3.
@@ -8,7 +8,7 @@
 @preconcurrency import Lua
 import Synchronization
 
-final public class ScriptManager: Resource {
+final public class ScriptContext: Resource {
     let locale: Locale
     let context: Mutex<LuaContext>
 
@@ -109,9 +109,9 @@ final public class ScriptManager: Resource {
 }
 
 extension ResourceManager {
-    public func scriptManager() async -> ScriptManager {
-        if let task = tasks.withLock({ $0["ScriptManager"] }) {
-            return await task.value as! ScriptManager
+    public func scriptContext() async -> ScriptContext {
+        if let task = tasks.withLock({ $0["ScriptContext"] }) {
+            return await task.value as! ScriptContext
         }
 
         let task = Task<any Resource, Never> {
@@ -225,14 +225,14 @@ extension ResourceManager {
                 logger.warning("\(error.localizedDescription)")
             }
 
-            return ScriptManager(locale: locale, context: context)
+            return ScriptContext(locale: locale, context: context)
         }
 
         tasks.withLock {
-            $0["ScriptManager"] = task
+            $0["ScriptContext"] = task
         }
 
-        return await task.value as! ScriptManager
+        return await task.value as! ScriptContext
     }
 
     private func loadScript(at path: ResourcePath, in context: LuaContext) async {

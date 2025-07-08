@@ -180,7 +180,7 @@ final public class SpriteRenderer: Sendable {
         }
 
         let configuration = composedSprite.configuration
-        let scriptManager = await composedSprite.resourceManager.scriptManager()
+        let scriptContext = await composedSprite.resourceManager.scriptContext()
         let imf = composedSprite.imf
 
         let isNorth = switch direction {
@@ -189,7 +189,7 @@ final public class SpriteRenderer: Sendable {
         }
 
         let zIndexForGarment: () async -> Int = {
-            let drawOnTop = scriptManager.drawOnTop(
+            let drawOnTop = scriptContext.drawOnTop(
                 forRobeID: configuration.garment,
                 genderID: configuration.gender.rawValue,
                 jobID: configuration.job.rawValue,
@@ -197,7 +197,7 @@ final public class SpriteRenderer: Sendable {
                 frameIndex: frameIndex
             )
             if drawOnTop {
-                let isTopLayer = scriptManager.isTopLayer(forRobeID: configuration.garment)
+                let isTopLayer = scriptContext.isTopLayer(forRobeID: configuration.garment)
                 if isTopLayer {
                     return 25
                 } else {

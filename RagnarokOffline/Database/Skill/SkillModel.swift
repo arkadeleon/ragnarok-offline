@@ -56,7 +56,7 @@ final class SkillModel {
         self.mode = mode
         self.skill = skill
 
-        self.localizedName = await ResourceManager.shared.scriptManager().localizedSkillName(forSkillID: skill.id)
+        self.localizedName = await ResourceManager.shared.scriptContext().localizedSkillName(forSkillID: skill.id)
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Skill, Value>) -> Value {
@@ -66,8 +66,8 @@ final class SkillModel {
     @MainActor
     func fetchIconImage() async {
         if iconImage == nil {
-            let scriptManager = await ResourceManager.shared.scriptManager()
-            let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
+            let scriptContext = await ResourceManager.shared.scriptContext()
+            let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
             let path = pathGenerator.generateSkillIconImagePath(skillAegisName: skill.aegisName)
             iconImage = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
         }
@@ -75,7 +75,7 @@ final class SkillModel {
 
     @MainActor
     func fetchDetail() async {
-        localizedDescription = await ResourceManager.shared.scriptManager().localizedSkillDescription(forSkillID: skill.id)
+        localizedDescription = await ResourceManager.shared.scriptContext().localizedSkillDescription(forSkillID: skill.id)
     }
 }
 

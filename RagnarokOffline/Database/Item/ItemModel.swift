@@ -144,8 +144,8 @@ final class ItemModel {
     @MainActor
     func fetchIconImage() async {
         if iconImage == nil {
-            let scriptManager = await ResourceManager.shared.scriptManager()
-            let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
+            let scriptContext = await ResourceManager.shared.scriptContext()
+            let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
             if let path = pathGenerator.generateItemIconImagePath(itemID: item.id) {
                 iconImage = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
             }
@@ -154,8 +154,8 @@ final class ItemModel {
 
     @MainActor
     func fetchDetail(monsterDatabase: DatabaseModel<MonsterProvider>) async {
-        let scriptManager = await ResourceManager.shared.scriptManager()
-        let pathGenerator = ResourcePathGenerator(scriptManager: scriptManager)
+        let scriptContext = await ResourceManager.shared.scriptContext()
+        let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
         if let previewImagePath = pathGenerator.generateItemPreviewImagePath(itemID: item.id) {
             previewImage = try? await ResourceManager.shared.image(at: previewImagePath, removesMagentaPixels: true)
         }

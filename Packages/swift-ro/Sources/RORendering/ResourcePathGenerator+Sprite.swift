@@ -98,11 +98,11 @@ extension ResourcePathGenerator {
                 jobName = (jobName.0, madogearJobName)
             }
 
-            var weaponName = scriptManager.weaponName(forWeaponID: weapon)
+            var weaponName = scriptContext.weaponName(forWeaponID: weapon)
 
             if weaponName == nil && !isMadogear {
-                if let realWeaponID = scriptManager.realWeaponID(forWeaponID: weapon) {
-                    weaponName = scriptManager.weaponName(forWeaponID: realWeaponID)
+                if let realWeaponID = scriptContext.realWeaponID(forWeaponID: weapon) {
+                    weaponName = scriptContext.weaponName(forWeaponID: realWeaponID)
                     if weaponName == nil {
                         weaponName = "_\(weapon)"
                     }
@@ -149,7 +149,7 @@ extension ResourcePathGenerator {
     }
 
     func generateHeadgearSpritePath(headgear: Int, gender: Gender) -> ResourcePath? {
-        guard let accessoryName = scriptManager.accessoryName(forAccessoryID: headgear) else {
+        guard let accessoryName = scriptContext.accessoryName(forAccessoryID: headgear) else {
             return nil
         }
 
@@ -162,7 +162,7 @@ extension ResourcePathGenerator {
         }
 
         guard let jobName = jobSpriteName(for: job),
-              let robeName = scriptManager.robeName(forRobeID: garment, checkEnglish: checkEnglish) else {
+              let robeName = scriptContext.robeName(forRobeID: garment, checkEnglish: checkEnglish) else {
             return nil
         }
 
@@ -252,7 +252,7 @@ extension ResourcePathGenerator {
                 jobNameForSprite(job.rawValue)
             }
         } else {
-            scriptManager.jobName(forJobID: job.rawValue)
+            scriptContext.jobName(forJobID: job.rawValue)
         }
     }
 

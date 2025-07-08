@@ -8,14 +8,14 @@
 import ROCore
 
 final public class ResourcePathGenerator: Sendable {
-    package let scriptManager: ScriptManager
+    package let scriptContext: ScriptContext
 
-    public init(scriptManager: ScriptManager) {
-        self.scriptManager = scriptManager
+    public init(scriptContext: ScriptContext) {
+        self.scriptContext = scriptContext
     }
 
     public func generateItemSpritePath(itemID: Int) -> ResourcePath? {
-        guard let resourceName = scriptManager.identifiedItemResourceName(forItemID: itemID) else {
+        guard let resourceName = scriptContext.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
 
@@ -27,7 +27,7 @@ final public class ResourcePathGenerator: Sendable {
     }
 
     public func generateItemIconImagePath(itemID: Int) -> ResourcePath? {
-        guard let resourceName = scriptManager.identifiedItemResourceName(forItemID: itemID) else {
+        guard let resourceName = scriptContext.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
 
@@ -35,7 +35,7 @@ final public class ResourcePathGenerator: Sendable {
     }
 
     public func generateItemPreviewImagePath(itemID: Int) -> ResourcePath? {
-        guard let resourceName = scriptManager.identifiedItemResourceName(forItemID: itemID) else {
+        guard let resourceName = scriptContext.identifiedItemResourceName(forItemID: itemID) else {
             return nil
         }
 
@@ -51,7 +51,7 @@ final public class ResourcePathGenerator: Sendable {
     }
 
     public func generateStatusIconImagePath(statusID: Int) -> ResourcePath? {
-        guard let iconName = scriptManager.statusIconName(forStatusID: statusID) else {
+        guard let iconName = scriptContext.statusIconName(forStatusID: statusID) else {
             return nil
         }
 
