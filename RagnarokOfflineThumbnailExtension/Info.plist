@@ -8,6 +8,8 @@
 		<dict>
 			<key>QLSupportedContentTypes</key>
 			<array>
+				<string>kr.co.gravity.gat</string>
+				<string>kr.co.gravity.pal</string>
 				<string>kr.co.gravity.spr</string>
 			</array>
 			<key>QLThumbnailMinimumDimension</key>

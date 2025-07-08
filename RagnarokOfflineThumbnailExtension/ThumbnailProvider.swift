@@ -35,10 +35,30 @@ class ThumbnailProvider: QLThumbnailProvider {
     private func thumbnail(for request: QLFileThumbnailRequest) throws -> CGImage {
         let pathExtension = request.fileURL.pathExtension.lowercased()
         switch pathExtension {
+        case "gat":
+            let data = try Data(contentsOf: request.fileURL)
+            let gat = try GAT(data: data)
+
+            if let thumbnail = gat.image() {
+                return thumbnail
+            } else {
+                throw ThumbnailProviderError.generationFailed
+            }
+        case "pal":
+            let data = try Data(contentsOf: request.fileURL)
+            let pal = try PAL(data: data)
+
+            let size = CGSize(width: 32 * request.scale, height: 32 * request.scale)
+            if let thumbnail = pal.image(at: size) {
+                return thumbnail
+            } else {
+                throw ThumbnailProviderError.generationFailed
+            }
         case "spr":
             guard let decoder = BinaryDecoder(url: request.fileURL) else {
                 throw ThumbnailProviderError.generationFailed
             }
+
             let spr = try decoder.decode(SPR.self)
             if let thumbnail = spr.imageForSprite(at: 0) {
                 return thumbnail

@@ -64,7 +64,8 @@ class FileThumbnailGenerator {
             let data = try await request.file.contents()
             let pal = try PAL(data: data)
 
-            guard let image = pal.image(at: CGSize(width: 32 * request.scale, height: 32 * request.scale)) else {
+            let size = CGSize(width: 32 * request.scale, height: 32 * request.scale)
+            guard let image = pal.image(at: size) else {
                 return nil
             }
 
