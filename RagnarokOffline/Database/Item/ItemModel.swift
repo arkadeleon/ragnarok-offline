@@ -80,7 +80,7 @@ final class ItemModel {
 
         switch item.type {
         case .weapon, .armor:
-            attributes.append(.init(name: "Gender", value: item.gender.stringValue))
+            attributes.append(.init(name: "Gender", value: item.gender.localizedName))
         default:
             break
         }

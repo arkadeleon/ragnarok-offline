@@ -1,5 +1,5 @@
 //
-//  FBundleDescription+Moduleile.swift
+//  BundleDescription+Module.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/7/12.

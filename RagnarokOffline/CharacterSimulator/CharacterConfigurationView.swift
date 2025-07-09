@@ -28,8 +28,8 @@ struct CharacterConfigurationView: View {
             }
 
             Picker("Gender", selection: $characterSimulator.configuration.gender) {
-                Text(Gender.female.stringValue).tag(Gender.female)
-                Text(Gender.male.stringValue).tag(Gender.male)
+                Text(Gender.female.localizedName).tag(Gender.female)
+                Text(Gender.male.localizedName).tag(Gender.male)
             }
 
             Picker("Hair Style", selection: $characterSimulator.configuration.hairStyle) {
