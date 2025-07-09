@@ -12,7 +12,7 @@ struct GameView: View {
     @Environment(GameSession.self) private var gameSession
 
     var body: some View {
-        Group {
+        ZStack {
             switch gameSession.phase {
             case .login:
                 LoginView()
@@ -23,7 +23,7 @@ struct GameView: View {
             case .charMake(let slot):
                 CharMakeView(slot: slot)
             case .mapLoading:
-                ProgressView()
+                MapLoadingView(progress: 0)
             case .map(let scene):
                 MapView(scene: scene)
             }

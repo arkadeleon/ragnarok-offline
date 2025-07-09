@@ -238,9 +238,9 @@ class MapScene3D: MapSceneProtocol {
             return nil
         }
     }
+}
 
-    // MARK: - MapSceneProtocol
-
+extension MapScene3D: MapEventHandlerProtocol {
     func onPlayerMoved(_ event: PlayerEvents.Moved) {
         let startPosition = playerEntity.components[MapObjectComponent.self]?.position ?? event.startPosition
         let endPosition = event.endPosition

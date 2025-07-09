@@ -170,9 +170,9 @@ class MapScene2D: SKScene, MapSceneProtocol {
         }
     }
     #endif
+}
 
-    // MARK: - MapSceneProtocol
-
+extension MapScene2D: MapEventHandlerProtocol {
     func onPlayerMoved(_ event: PlayerEvents.Moved) {
         let playerNode = playerNode
         let startPosition = playerNode.gridPosition

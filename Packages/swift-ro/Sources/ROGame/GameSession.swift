@@ -273,7 +273,8 @@ final public class GameSession {
 
                 scene.mapSceneDelegate = self
 
-                self.prepareMapScene(scene)
+                await self.loadMapScene(scene)
+
                 self.phase = .map(scene)
             }
         }
@@ -309,9 +310,18 @@ final public class GameSession {
         self.mapSession = mapSession
     }
 
-    private func prepareMapScene(_ scene: any MapSceneProtocol) {
+    private func loadMapScene<S>(_ scene: S) async where S: MapSceneProtocol & MapEventHandlerProtocol {
         guard let mapSession else {
             return
+        }
+
+        switch scene {
+        case let scene as MapScene2D:
+            break
+        case let scene as MapScene3D:
+            await scene.load()
+        default:
+            break
         }
 
         mapSession.subscribe(to: PlayerEvents.Moved.self) { event in

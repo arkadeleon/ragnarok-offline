@@ -15,7 +15,6 @@ struct MapScene3DView: View {
 
     var body: some View {
         RealityView { content in
-            await scene.load()
             content.add(scene.rootEntity)
         } update: { content in
         } placeholder: {
