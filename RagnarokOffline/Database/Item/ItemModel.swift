@@ -48,13 +48,13 @@ final class ItemModel {
         attributes.append(.init(name: "ID", value: "#\(item.id)"))
         attributes.append(.init(name: "Aegis Name", value: item.aegisName))
         attributes.append(.init(name: "Name", value: item.name))
-        attributes.append(.init(name: "Type", value: item.type.localizedStringResource))
+        attributes.append(.init(name: "Type", value: item.type.localizedName))
 
         switch item.subType {
         case .none:
             break
         case .weapon(let weaponType):
-            attributes.append(.init(name: "Weapon Type", value: weaponType.localizedStringResource))
+            attributes.append(.init(name: "Weapon Type", value: weaponType.localizedName))
         case .ammo(let ammoType):
             attributes.append(.init(name: "Ammo Type", value: ammoType.stringValue))
         case .card(let cardType):

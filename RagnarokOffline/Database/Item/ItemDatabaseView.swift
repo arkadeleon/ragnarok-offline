@@ -30,7 +30,7 @@ struct ItemDatabaseView: View {
                             .frame(width: 40)
                         Text(item.displayName)
                             .frame(minWidth: 160, maxWidth: .infinity, alignment: .leading)
-                        Text(item.type.localizedStringResource)
+                        Text(item.type.localizedName)
                             .frame(width: 160, alignment: .leading)
                             .foregroundStyle(Color.secondary)
                         Text(item.buy.formatted() + "z")

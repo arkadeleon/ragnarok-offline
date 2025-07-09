@@ -7,19 +7,29 @@
 
 import Foundation
 
-extension Race: CustomLocalizedStringResourceConvertible {
-    public var localizedStringResource: LocalizedStringResource {
+extension Race {
+    public var localizedName: LocalizedStringResource {
         switch self {
-        case .formless: .init("Formless", bundle: .module)
-        case .undead: .init("Undead", bundle: .module)
-        case .brute: .init("Brute", bundle: .module)
-        case .plant: .init("Plant", bundle: .module)
-        case .insect: .init("Insect", bundle: .module)
-        case .fish: .init("Fish", bundle: .module)
-        case .demon: .init("Demon", bundle: .module)
-        case .demihuman: .init("Demi-Human", bundle: .module)
-        case .angel: .init("Angel", bundle: .module)
-        case .dragon: .init("Dragon", bundle: .module)
+        case .formless:
+            LocalizedStringResource("Formless", table: "Race", bundle: .module, comment: "The name of a race.")
+        case .undead:
+            LocalizedStringResource("Undead", table: "Race", bundle: .module, comment: "The name of a race.")
+        case .brute:
+            LocalizedStringResource("Brute", table: "Race", bundle: .module, comment: "The name of a race.")
+        case .plant:
+            LocalizedStringResource("Plant", table: "Race", bundle: .module, comment: "The name of a race.")
+        case .insect:
+            LocalizedStringResource("Insect", table: "Race", bundle: .module, comment: "The name of a race.")
+        case .fish:
+            LocalizedStringResource("Fish", table: "Race", bundle: .module, comment: "The name of a race.")
+        case .demon:
+            LocalizedStringResource("Demon", table: "Race", bundle: .module, comment: "The name of a race.")
+        case .demihuman:
+            LocalizedStringResource("Demi-Human", table: "Race", bundle: .module, comment: "The name of a race.")
+        case .angel:
+            LocalizedStringResource("Angel", table: "Race", bundle: .module, comment: "The name of a race.")
+        case .dragon:
+            LocalizedStringResource("Dragon", table: "Race", bundle: .module, comment: "The name of a race.")
         }
     }
 }

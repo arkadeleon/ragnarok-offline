@@ -59,10 +59,10 @@ struct CharacterConfigurationView: View {
 
             Picker(selection: $characterSimulator.configuration.weaponType) {
                 ForEach(WeaponType.allCases, id: \.rawValue) { weaponType in
-                    Text(weaponType.localizedStringResource).tag(weaponType)
+                    Text(weaponType.localizedName).tag(weaponType)
                 }
             } label: {
-                Text(ItemType.weapon.localizedStringResource)
+                Text(ItemType.weapon.localizedName)
             }
 
             Picker(selection: $characterSimulator.configuration.shield) {
@@ -73,7 +73,7 @@ struct CharacterConfigurationView: View {
                     Text(shield.formatted()).tag(shield)
                 }
             } label: {
-                Text(WeaponType.w_shield.localizedStringResource)
+                Text(WeaponType.w_shield.localizedName)
             }
 
             Picker("Head Top", selection: $characterSimulator.configuration.headTop) {

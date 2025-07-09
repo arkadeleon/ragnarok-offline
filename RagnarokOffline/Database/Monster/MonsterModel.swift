@@ -92,7 +92,7 @@ final class MonsterModel {
         attributes.append(.init(name: "Chase Range", value: monster.chaseRange))
 
         attributes.append(.init(name: "Size", value: monster.size.stringValue))
-        attributes.append(.init(name: "Race", value: monster.race.localizedStringResource))
+        attributes.append(.init(name: "Race", value: monster.race.localizedName))
 
         attributes.append(.init(name: "Element", value: monster.element.stringValue))
         attributes.append(.init(name: "Element Level", value: monster.elementLevel))

@@ -67,7 +67,7 @@ final class JobModel {
     var baseASPD: [DatabaseRecordAttribute] {
         WeaponType.allCases.compactMap { weaponType in
             if let aspd = job.baseASPD[weaponType] {
-                DatabaseRecordAttribute(name: weaponType.localizedStringResource, value: aspd)
+                DatabaseRecordAttribute(name: weaponType.localizedName, value: aspd)
             } else {
                 nil
             }
