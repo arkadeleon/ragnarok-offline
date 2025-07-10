@@ -20,12 +20,12 @@ final class NetworkSessionTests: XCTestCase {
     var mapServer: MapServerInfo!
 
     override func setUp() async throws {
-        let url = ServerResourceManager.default.workingDirectoryURL
+        let url = ServerResourceManager.shared.workingDirectoryURL
         if FileManager.default.fileExists(atPath: url.path()) {
             try FileManager.default.removeItem(at: url)
         }
 
-        try ServerResourceManager.default.prepareWorkingDirectory()
+        try await ServerResourceManager.shared.prepareWorkingDirectory()
 
         Task {
             let messages = NotificationCenter.default.notifications(named: .ServerDidOutputData)

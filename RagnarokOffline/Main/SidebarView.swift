@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/8/9.
 //
 
+import rAthenaResources
 import SwiftUI
 
 enum SidebarItem: Hashable {
@@ -82,7 +83,7 @@ struct SidebarView: View {
 
                 Button {
                     Task {
-                        await startAllServers()
+                        try await startAllServers()
                     }
                 } label: {
                     Label("Start All Servers", systemImage: "play")
@@ -189,21 +190,13 @@ struct SidebarView: View {
         #endif
     }
 
-    private func startAllServers() async {
-        await withTaskGroup(of: Bool.self) { taskGroup in
-            taskGroup.addTask {
-                await appModel.loginServer.start()
-            }
-            taskGroup.addTask {
-                await appModel.charServer.start()
-            }
-            taskGroup.addTask {
-                await appModel.mapServer.start()
-            }
-            taskGroup.addTask {
-                await appModel.webServer.start()
-            }
-        }
+    private func startAllServers() async throws {
+        async let startLoginServer = appModel.loginServer.start()
+        async let startCharServer = appModel.charServer.start()
+        async let startMapServer = appModel.mapServer.start()
+        async let startWebServer = appModel.webServer.start()
+
+        _ = try await (startLoginServer, startCharServer, startMapServer, startWebServer)
     }
 }
 

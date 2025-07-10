@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2023/1/13.
 //
 
-import rAthenaResources
-import ROResources
 import SwiftUI
 
 struct ContentView: View {
@@ -16,35 +14,33 @@ struct ContentView: View {
     @State private var incomingFile: File?
 
     var body: some View {
-        AsyncContentView(load: load) {
-            AdaptiveView {
-                NavigationStack {
-                    SidebarView(selection: nil)
-                        .navigationDestination(for: SidebarItem.self) { item in
-                            detail(for: item)
-                                .toolbarTitleDisplayMode(.inline)
-                        }
-                }
-            } regular: {
-                NavigationSplitView {
-                    SidebarView(selection: $selectedItem)
-                } detail: {
-                    if let item = selectedItem {
-                        NavigationStack {
-                            detail(for: item)
-                                .toolbarTitleDisplayMode(.inline)
-                        }
+        AdaptiveView {
+            NavigationStack {
+                SidebarView(selection: nil)
+                    .navigationDestination(for: SidebarItem.self) { item in
+                        detail(for: item)
+                            .toolbarTitleDisplayMode(.inline)
+                    }
+            }
+        } regular: {
+            NavigationSplitView {
+                SidebarView(selection: $selectedItem)
+            } detail: {
+                if let item = selectedItem {
+                    NavigationStack {
+                        detail(for: item)
+                            .toolbarTitleDisplayMode(.inline)
                     }
                 }
             }
-            .onOpenURL { url in
-                incomingFile = File(node: .regularFile(url))
-            }
-            .sheet(item: $incomingFile) { file in
-                NavigationStack {
-                    FilePreviewTabView(files: [file], currentFile: file) {
-                        incomingFile = nil
-                    }
+        }
+        .onOpenURL { url in
+            incomingFile = File(node: .regularFile(url))
+        }
+        .sheet(item: $incomingFile) { file in
+            NavigationStack {
+                FilePreviewTabView(files: [file], currentFile: file) {
+                    incomingFile = nil
                 }
             }
         }
@@ -89,14 +85,6 @@ struct ContentView: View {
             GameView()
         case .cube:
             RealityCubeView()
-        }
-    }
-
-    private func load() async throws {
-        do {
-            try ServerResourceManager.default.prepareWorkingDirectory()
-        } catch {
-            logger.warning("\(error.localizedDescription)")
         }
     }
 }

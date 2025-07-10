@@ -17,7 +17,7 @@ import ROResources
 @Observable
 final class AppModel {
     let clientDirectory = File(node: .directory(ResourceManager.shared.localURL))
-    let serverDirectory = File(node: .directory(ServerResourceManager.default.workingDirectoryURL))
+    let serverDirectory = File(node: .directory(ServerResourceManager.shared.workingDirectoryURL))
 
     let loginServer = ServerModel(server: LoginServer.shared)
     let charServer = ServerModel(server: CharServer.shared)

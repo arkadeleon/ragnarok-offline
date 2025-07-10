@@ -5,8 +5,9 @@
 //  Created by Leon Li on 2024/11/14.
 //
 
-@preconcurrency import Combine
-@preconcurrency import rAthenaCommon
+import Combine
+import rAthenaCommon
+import rAthenaResources
 
 @MainActor
 @Observable
@@ -74,8 +75,9 @@ final class ServerModel {
             .store(in: &subscriptions)
     }
 
-    func start() async -> Bool {
-        await server.start()
+    func start() async throws -> Bool {
+        try await ServerResourceManager.shared.prepareWorkingDirectory()
+        return await server.start()
     }
 
     func stop() async -> Bool {

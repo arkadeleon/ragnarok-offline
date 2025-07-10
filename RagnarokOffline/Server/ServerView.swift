@@ -18,7 +18,7 @@ struct ServerView: View {
             if server.status == .notStarted {
                 Button {
                     Task {
-                        await server.start()
+                        try await server.start()
                     }
                 } label: {
                     Image(systemName: "play")
@@ -38,7 +38,7 @@ struct ServerView: View {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         Task {
-                            await server.start()
+                            try await server.start()
                         }
                     } label: {
                         Image(systemName: "play.fill")
