@@ -31,7 +31,7 @@ final class ItemModel {
 
     var iconImage: CGImage?
     var previewImage: CGImage?
-    var localizedDescription: String?
+    var localizedDescription: AttributedString?
     var droppingMonsters: [DroppingMonster] = []
 
     var displayName: String {
@@ -161,7 +161,9 @@ final class ItemModel {
         }
 
         let itemInfoTable = await ResourceManager.shared.itemInfoTable()
-        localizedDescription = itemInfoTable.localizedIdentifiedItemDescription(forItemID: item.id)
+        if let itemDescription = itemInfoTable.localizedIdentifiedItemDescription(forItemID: item.id) {
+            localizedDescription = AttributedString(description: itemDescription)
+        }
 
         await monsterDatabase.fetchRecords()
         let monsters = monsterDatabase.records

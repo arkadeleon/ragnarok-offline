@@ -6,6 +6,7 @@
 //
 
 import CoreGraphics
+import Foundation
 import Observation
 import RODatabase
 import RORendering
@@ -20,7 +21,7 @@ final class SkillModel {
     private let localizedName: String?
 
     var iconImage: CGImage?
-    var localizedDescription: String?
+    var localizedDescription: AttributedString?
 
     var displayName: String {
         localizedName ?? skill.name
@@ -75,7 +76,9 @@ final class SkillModel {
 
     @MainActor
     func fetchDetail() async {
-        localizedDescription = await ResourceManager.shared.scriptContext().localizedSkillDescription(forSkillID: skill.id)
+        if let skillDescription = await ResourceManager.shared.scriptContext().localizedSkillDescription(forSkillID: skill.id) {
+            localizedDescription = AttributedString(description: skillDescription)
+        }
     }
 }
 

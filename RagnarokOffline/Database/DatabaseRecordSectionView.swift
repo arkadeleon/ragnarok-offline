@@ -47,6 +47,15 @@ struct DatabaseRecordSectionView<Content, Header>: View where Content: View, Hea
         }
     }
 
+    init(_ titleKey: LocalizedStringKey, text: AttributedString) where Content == DatabaseRecordSectionTextContent, Header == Text {
+        self.content = {
+            DatabaseRecordSectionTextContent(text: text)
+        }
+        self.header = {
+            Text(titleKey)
+        }
+    }
+
     init(_ titleKey: LocalizedStringKey, attributes: [DatabaseRecordAttribute]) where Content == DatabaseRecordSectionAttributesContent, Header == Text {
         self.content = {
             DatabaseRecordSectionAttributesContent(attributes: attributes)
@@ -58,18 +67,19 @@ struct DatabaseRecordSectionView<Content, Header>: View where Content: View, Hea
 }
 
 struct DatabaseRecordSectionTextContent: View {
-    var text: String
-    var monospaced: Bool
+    var text: Text
 
     var body: some View {
-        Text(text)
-            .monospaced(monospaced)
-            .frame(maxWidth: .infinity, alignment: .leading)
+        text.frame(maxWidth: .infinity, alignment: .leading)
     }
 
     init(text: String, monospaced: Bool) {
-        self.text = text
-        self.monospaced = monospaced
+        self.text = Text(text)
+            .monospaced(monospaced)
+    }
+
+    init(text: AttributedString) {
+        self.text = Text(text)
     }
 }
 
