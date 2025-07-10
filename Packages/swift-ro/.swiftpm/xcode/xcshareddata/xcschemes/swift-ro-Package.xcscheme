@@ -1,26 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1600"
+   LastUpgradeVersion = "1640"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES"
       buildArchitectures = "Automatic">
       <BuildActionEntries>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ROClientResources"
-               BuildableName = "ROClientResources"
-               BlueprintName = "ROClientResources"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
@@ -71,37 +57,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ROFileSystem"
-               BuildableName = "ROFileSystem"
-               BlueprintName = "ROFileSystem"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "ROGame"
                BuildableName = "ROGame"
                BlueprintName = "ROGame"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ROLocalizations"
-               BuildableName = "ROLocalizations"
-               BlueprintName = "ROLocalizations"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -127,9 +85,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "RORenderers"
-               BuildableName = "RORenderers"
-               BlueprintName = "RORenderers"
+               BlueprintIdentifier = "ROPackets"
+               BuildableName = "ROPackets"
+               BlueprintName = "ROPackets"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -141,9 +99,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ROShaders"
-               BuildableName = "ROShaders"
-               BlueprintName = "ROShaders"
+               BlueprintIdentifier = "RORenderers"
+               BuildableName = "RORenderers"
+               BlueprintName = "RORenderers"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -183,23 +141,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ROServer"
-               BuildableName = "ROServer"
-               BlueprintName = "ROServer"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ROPackets"
-               BuildableName = "ROPackets"
-               BlueprintName = "ROPackets"
+               BlueprintIdentifier = "ROShaders"
+               BuildableName = "ROShaders"
+               BlueprintName = "ROShaders"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -229,16 +173,6 @@
                BlueprintIdentifier = "ROFileFormatsTests"
                BuildableName = "ROFileFormatsTests"
                BlueprintName = "ROFileFormatsTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ROLocalizationsTests"
-               BuildableName = "ROLocalizationsTests"
-               BlueprintName = "ROLocalizationsTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -304,9 +238,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "ROClientResources"
-            BuildableName = "ROClientResources"
-            BlueprintName = "ROClientResources"
+            BlueprintIdentifier = "ROCore"
+            BuildableName = "ROCore"
+            BlueprintName = "ROCore"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>
