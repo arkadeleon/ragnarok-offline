@@ -9,7 +9,7 @@ import rAthenaCommon
 import SwiftUI
 
 struct ServerCell: View {
-    var server: ServerWrapper
+    var server: ServerModel
 
     var body: some View {
         LabeledContent {
@@ -22,5 +22,5 @@ struct ServerCell: View {
 }
 
 #Preview {
-    ServerCell(server: ServerWrapper(server: Server()))
+    ServerCell(server: ServerModel(server: Server()))
 }

@@ -1,5 +1,5 @@
 //
-//  ServerWrapper.swift
+//  ServerModel.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/11/14.
@@ -10,29 +10,29 @@
 
 @MainActor
 @Observable
-final class ServerWrapper {
+final class ServerModel {
     private let server: Server
 
     var name: String {
         server.name
     }
 
-    var status: ServerWrapper.Status
+    var status: ServerModel.Status
 
     var consoleMessages: [AttributedString]
 
-    private let consoleActionSubject = PassthroughSubject<ServerWrapper.ConsoleAction, Never>()
+    private let consoleActionSubject = PassthroughSubject<ServerModel.ConsoleAction, Never>()
 
     @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
 
     init(server: Server) {
         self.server = server
-        self.status = ServerWrapper.Status(status: server.status)
+        self.status = ServerModel.Status(status: server.status)
         self.consoleMessages = []
 
         server.publisher(for: \.status)
-            .map(ServerWrapper.Status.init)
+            .map(ServerModel.Status.init)
             .receive(on: RunLoop.main)
             .assign(to: \.status, on: self)
             .store(in: &subscriptions)
@@ -42,7 +42,7 @@ final class ServerWrapper {
             .receive(on: queue)
             .map {
                 let data = $0.userInfo![ServerOutputDataKey] as! Data
-                let consoleAction = ServerWrapper.ConsoleAction(data: data)
+                let consoleAction = ServerModel.ConsoleAction(data: data)
                 return consoleAction
             }
             .merge(with: consoleActionSubject)
@@ -87,7 +87,7 @@ final class ServerWrapper {
     }
 }
 
-extension ServerWrapper {
+extension ServerModel {
     enum Status: CustomLocalizedStringResourceConvertible {
         case notStarted
         case starting

@@ -19,10 +19,10 @@ final class AppModel {
     let clientDirectory = File(node: .directory(ResourceManager.shared.localURL))
     let serverDirectory = File(node: .directory(ServerResourceManager.default.workingDirectoryURL))
 
-    let loginServer = ServerWrapper(server: LoginServer.shared)
-    let charServer = ServerWrapper(server: CharServer.shared)
-    let mapServer = ServerWrapper(server: MapServer.shared)
-    let webServer = ServerWrapper(server: WebServer.shared)
+    let loginServer = ServerModel(server: LoginServer.shared)
+    let charServer = ServerModel(server: CharServer.shared)
+    let mapServer = ServerModel(server: MapServer.shared)
+    let webServer = ServerModel(server: WebServer.shared)
 
     var itemDatabase = DatabaseModel(mode: .renewal, recordProvider: .item)
     var jobDatabase = DatabaseModel(mode: .renewal, recordProvider: .job)

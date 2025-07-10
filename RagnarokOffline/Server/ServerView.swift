@@ -9,7 +9,7 @@ import rAthenaCommon
 import SwiftUI
 
 struct ServerView: View {
-    var server: ServerWrapper
+    var server: ServerModel
 
     var body: some View {
         ZStack {
@@ -70,5 +70,5 @@ struct ServerView: View {
 }
 
 #Preview {
-    ServerView(server: ServerWrapper(server: Server()))
+    ServerView(server: ServerModel(server: Server()))
 }
