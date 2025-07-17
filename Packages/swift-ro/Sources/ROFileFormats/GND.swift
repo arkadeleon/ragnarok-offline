@@ -8,9 +8,9 @@
 import BinaryIO
 import Foundation
 
-public struct GND: BinaryDecodable, Sendable {
+public struct GND: FileFormat {
     public var header: String
-    public var version: String
+    public var version: FileFormatVersion
     public var width: Int32
     public var height: Int32
     public var zoom: Float
@@ -23,11 +23,6 @@ public struct GND: BinaryDecodable, Sendable {
 
     public var cubes: [GND.Cube] = []
 
-    public init(data: Data) throws {
-        let decoder = BinaryDecoder(data: data)
-        self = try decoder.decode(GND.self)
-    }
-
     public init(from decoder: BinaryDecoder) throws {
         header = try decoder.decode(String.self, lengthOfBytes: 4)
         guard header == "GRGN" else {
@@ -36,7 +31,7 @@ public struct GND: BinaryDecodable, Sendable {
 
         let major = try decoder.decode(UInt8.self)
         let minor = try decoder.decode(UInt8.self)
-        version = "\(major).\(minor)"
+        version = FileFormatVersion(major: major, minor: minor)
 
         width = try decoder.decode(Int32.self)
         height = try decoder.decode(Int32.self)

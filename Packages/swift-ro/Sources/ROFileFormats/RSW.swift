@@ -8,9 +8,9 @@
 import BinaryIO
 import Foundation
 
-public struct RSW: BinaryDecodable, Sendable {
+public struct RSW: FileFormat {
     public var header: String
-    public var version: String
+    public var version: FileFormatVersion
     public var files: RSW.Files
     public var water: RSW.Water
     public var light: RSW.Light
@@ -20,11 +20,6 @@ public struct RSW: BinaryDecodable, Sendable {
     public var sounds: [RSW.Object.Sound] = []
     public var effects: [RSW.Object.Effect] = []
 
-    public init(data: Data) throws {
-        let decoder = BinaryDecoder(data: data)
-        self = try decoder.decode(RSW.self)
-    }
-
     public init(from decoder: BinaryDecoder) throws {
         header = try decoder.decode(String.self, lengthOfBytes: 4)
         guard header == "GRSW" else {
@@ -33,7 +28,7 @@ public struct RSW: BinaryDecodable, Sendable {
 
         let major = try decoder.decode(UInt8.self)
         let minor = try decoder.decode(UInt8.self)
-        version = "\(major).\(minor)"
+        version = FileFormatVersion(major: major, minor: minor)
 
         if version >= "2.5" {
             // Build number
@@ -84,7 +79,7 @@ extension RSW {
         public var gat: String
         public var src: String
 
-        public init(from decoder: BinaryDecoder, configuration version: String) throws {
+        public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
             ini = try decoder.decode(String.self, lengthOfBytes: 40)
 
             gnd = try decoder.decode(String.self, lengthOfBytes: 40)
@@ -109,7 +104,7 @@ extension RSW {
         public var wavePitch: Float
         public var animSpeed: Int32
 
-        public init(from decoder: BinaryDecoder, configuration version: String) throws {
+        public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
             if version >= "2.6" {
                 level = 0
                 type = 0
@@ -159,7 +154,7 @@ extension RSW {
         public var ambientBlue: Float
         public var opacity: Float
 
-        public init(from decoder: BinaryDecoder, configuration version: String) throws {
+        public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
             if version >= "1.5" {
                 longitude = try decoder.decode(Int32.self)
                 latitude = try decoder.decode(Int32.self)
@@ -196,7 +191,7 @@ extension RSW {
         public var left: Int32
         public var right: Int32
 
-        public init(from decoder: BinaryDecoder, configuration version: String) throws {
+        public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
             if version >= "1.6" {
                 top = try decoder.decode(Int32.self)
                 bottom = try decoder.decode(Int32.self)
@@ -232,7 +227,7 @@ extension RSW {
             public var rotation: SIMD3<Float>
             public var scale: SIMD3<Float>
 
-            public init(from decoder: BinaryDecoder, configuration version: String) throws {
+            public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
                 if version >= "1.3" {
                     name = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .isoLatin1)
                     animationType = try decoder.decode(Int32.self)
@@ -273,7 +268,7 @@ extension RSW {
             public var diffuseBlue: Float
             public var range: Float
 
-            public init(from decoder: BinaryDecoder, configuration version: String) throws {
+            public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
                 name = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .isoLatin1)
                 position = try [
                     decoder.decode(Float.self) / 5,
@@ -297,7 +292,7 @@ extension RSW {
             public var range: Float
             public var cycle: Float
 
-            public init(from decoder: BinaryDecoder, configuration version: String) throws {
+            public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
                 name = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .isoLatin1)
                 waveName = try decoder.decode(String.self, lengthOfBytes: 80)
                 position = try [
@@ -325,7 +320,7 @@ extension RSW {
             public var delay: Float
             public var parameters: SIMD4<Float>
 
-            public init(from decoder: BinaryDecoder, configuration version: String) throws {
+            public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
                 name = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .isoLatin1)
                 position = try [
                     decoder.decode(Float.self) / 5,

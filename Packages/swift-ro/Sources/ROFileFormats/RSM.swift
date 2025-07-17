@@ -9,9 +9,9 @@ import BinaryIO
 import Foundation
 import simd
 
-public struct RSM: BinaryDecodable, Sendable {
+public struct RSM: FileFormat {
     public var header: String
-    public var version: String
+    public var version: FileFormatVersion
     public var animationLength: Int32
     public var shadeType: Int32
     public var alpha: UInt8
@@ -23,11 +23,6 @@ public struct RSM: BinaryDecodable, Sendable {
 
     public var volumeBoxes: [RSM.VolumeBox] = []
 
-    public init(data: Data) throws {
-        let decoder = BinaryDecoder(data: data)
-        self = try decoder.decode(RSM.self)
-    }
-
     public init(from decoder: BinaryDecoder) throws {
         header = try decoder.decode(String.self, lengthOfBytes: 4)
         guard header == "GRSM" else {
@@ -36,7 +31,7 @@ public struct RSM: BinaryDecodable, Sendable {
 
         let major = try decoder.decode(UInt8.self)
         let minor = try decoder.decode(UInt8.self)
-        version = "\(major).\(minor)"
+        version = FileFormatVersion(major: major, minor: minor)
 
         animationLength = try decoder.decode(Int32.self)
 
@@ -131,7 +126,7 @@ extension RSM {
 extension RSM {
     public struct Node: BinaryDecodableWithConfiguration, Sendable {
         public struct BinaryDecodingConfiguration {
-            public var version: String
+            public var version: FileFormatVersion
             public var textures: [String]
         }
 
@@ -321,7 +316,7 @@ extension RSM {
         public var twoSided: Int32
         public var smoothGroup: SIMD3<Int32>
 
-        public init(from decoder: BinaryDecoder, configuration version: String) throws {
+        public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
             var length: Int32 = -1
             if version >= "2.2" {
                 length = try decoder.decode(Int32.self)
@@ -419,7 +414,7 @@ extension RSM {
         public var rotation: SIMD3<Float>
         public var flag: Int32
 
-        public init(from decoder: BinaryDecoder, configuration version: String) throws {
+        public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
             size = try [
                 decoder.decode(Float.self),
                 decoder.decode(Float.self),

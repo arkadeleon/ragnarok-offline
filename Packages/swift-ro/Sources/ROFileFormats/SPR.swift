@@ -8,18 +8,13 @@
 import BinaryIO
 import Foundation
 
-public struct SPR: BinaryDecodable, Sendable {
+public struct SPR: FileFormat {
     public var header: String
-    public var version: String
+    public var version: FileFormatVersion
     public var indexedSpriteCount: Int16
     public var rgbaSpriteCount: Int16
     public var sprites: [SPR.Sprite] = []
     public var palette: PAL?
-
-    public init(data: Data) throws {
-        let decoder = BinaryDecoder(data: data)
-        self = try decoder.decode(SPR.self)
-    }
 
     public init(from decoder: BinaryDecoder) throws {
         header = try decoder.decode(String.self, lengthOfBytes: 2)
@@ -29,7 +24,7 @@ public struct SPR: BinaryDecodable, Sendable {
 
         let minor = try decoder.decode(UInt8.self)
         let major = try decoder.decode(UInt8.self)
-        version = "\(major).\(minor)"
+        version = FileFormatVersion(major: major, minor: minor)
 
         indexedSpriteCount = try decoder.decode(Int16.self)
 

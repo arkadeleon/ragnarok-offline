@@ -8,16 +8,11 @@
 import BinaryIO
 import Foundation
 
-public struct ACT: BinaryDecodable, Sendable {
+public struct ACT: FileFormat {
     public var header: String
-    public var version: String
+    public var version: FileFormatVersion
     public var actions: [ACT.Action] = []
     public var sounds: [String] = []
-
-    public init(data: Data) throws {
-        let decoder = BinaryDecoder(data: data)
-        self = try decoder.decode(ACT.self)
-    }
 
     public init(from decoder: BinaryDecoder) throws {
         header = try decoder.decode(String.self, lengthOfBytes: 2)
@@ -27,7 +22,7 @@ public struct ACT: BinaryDecodable, Sendable {
 
         let minor = try decoder.decode(UInt8.self)
         let major = try decoder.decode(UInt8.self)
-        version = "\(major).\(minor)"
+        version = FileFormatVersion(major: major, minor: minor)
 
         let actionCount = try decoder.decode(Int16.self)
 
@@ -60,7 +55,7 @@ extension ACT {
         public var frames: [ACT.Frame] = []
         public var animationSpeed: Float = 6
 
-        public init(from decoder: BinaryDecoder, configuration version: String) throws {
+        public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
             let frameCount = try decoder.decode(Int32.self)
             for _ in 0..<frameCount {
                 let frame = try decoder.decode(ACT.Frame.self, configuration: version)
@@ -76,7 +71,7 @@ extension ACT {
         public var soundIndex: Int32 = -1
         public var anchorPoints: [ACT.AnchorPoint] = []
 
-        public init(from decoder: BinaryDecoder, configuration version: String) throws {
+        public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
             // Range1 and Range2, seems to be unused.
             _ = try decoder.decode([UInt8].self, count: 32)
 
@@ -113,7 +108,7 @@ extension ACT {
         public var width: Int32 = 0
         public var height: Int32 = 0
 
-        public init(from decoder: BinaryDecoder, configuration version: String) throws {
+        public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
             offset = try [
                 decoder.decode(Int32.self),
                 decoder.decode(Int32.self),

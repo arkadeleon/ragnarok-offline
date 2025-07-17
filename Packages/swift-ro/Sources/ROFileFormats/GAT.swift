@@ -8,17 +8,12 @@
 import BinaryIO
 import Foundation
 
-public struct GAT: BinaryDecodable, Sendable {
+public struct GAT: FileFormat {
     public var header: String
-    public var version: String
+    public var version: FileFormatVersion
     public var width: Int32
     public var height: Int32
     public var tiles: [GAT.Tile] = []
-
-    public init(data: Data) throws {
-        let decoder = BinaryDecoder(data: data)
-        self = try decoder.decode(GAT.self)
-    }
 
     public init(from decoder: BinaryDecoder) throws {
         header = try decoder.decode(String.self, lengthOfBytes: 4)
@@ -28,7 +23,7 @@ public struct GAT: BinaryDecodable, Sendable {
 
         let major = try decoder.decode(UInt8.self)
         let minor = try decoder.decode(UInt8.self)
-        version = "\(major).\(minor)"
+        version = FileFormatVersion(major: major, minor: minor)
 
         width = try decoder.decode(Int32.self)
         height = try decoder.decode(Int32.self)

@@ -8,17 +8,12 @@
 import BinaryIO
 import Foundation
 
-public struct STR: BinaryDecodable, Sendable {
+public struct STR: FileFormat {
     public var header: String
-    public var version: String
+    public var version: FileFormatVersion
     public var fps: Int32
     public var maxKeyframeIndex: Int32
     public var layers: [STR.Layer] = []
-
-    public init(data: Data) throws {
-        let decoder = BinaryDecoder(data: data)
-        self = try decoder.decode(STR.self)
-    }
 
     public init(from decoder: BinaryDecoder) throws {
         header = try decoder.decode(String.self, lengthOfBytes: 4)
@@ -28,7 +23,7 @@ public struct STR: BinaryDecodable, Sendable {
 
         let major = try decoder.decode(UInt8.self)
         let minor = try decoder.decode(UInt8.self)
-        version = "\(major).\(minor)"
+        version = FileFormatVersion(major: major, minor: minor)
 
         _ = try decoder.decode([UInt8].self, count: 2)
 

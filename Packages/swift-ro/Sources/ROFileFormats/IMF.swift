@@ -8,15 +8,10 @@
 import BinaryIO
 import Foundation
 
-public struct IMF: BinaryDecodable, Sendable {
+public struct IMF: FileFormat {
     public var version: Float
     public var checksum: Int32
     public var layers: [IMF.Layer] = []
-
-    public init(data: Data) throws {
-        let decoder = BinaryDecoder(data: data)
-        self = try decoder.decode(IMF.self)
-    }
 
     public init(from decoder: BinaryDecoder) throws {
         version = try decoder.decode(Float.self)

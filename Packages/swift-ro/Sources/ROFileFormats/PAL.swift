@@ -8,13 +8,8 @@
 import BinaryIO
 import Foundation
 
-public struct PAL: BinaryDecodable, Sendable {
+public struct PAL: FileFormat {
     public var colors: [RGBAColor] = []
-
-    public init(data: Data) throws {
-        let decoder = BinaryDecoder(data: data)
-        self = try decoder.decode(PAL.self)
-    }
 
     public init(from decoder: BinaryDecoder) throws {
         for _ in 0..<256 {
