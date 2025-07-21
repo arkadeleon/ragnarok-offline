@@ -76,6 +76,11 @@ struct FileJSONViewer: View {
 }
 
 #Preview {
-    FileJSONViewer(file: .previewRSW) {
+    AsyncContentView {
+        try await File.previewRSW()
+    } content: { file in
+        FileJSONViewer(file: file) {
+        }
     }
+    .frame(width: 400, height: 300)
 }

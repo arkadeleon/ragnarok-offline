@@ -49,5 +49,10 @@ struct FileGridCell: View {
 }
 
 #Preview {
-    FileGridCell(file: .previewGAT)
+    AsyncContentView {
+        try await File.previewGAT()
+    } content: { file in
+        FileGridCell(file: file)
+    }
+    .frame(width: 80, height: 120)
 }

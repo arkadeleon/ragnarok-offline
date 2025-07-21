@@ -68,5 +68,10 @@ struct SPRFilePreviewView: View {
 }
 
 #Preview {
-    SPRFilePreviewView(file: .previewSPR)
+    AsyncContentView {
+        try await File.previewSPR()
+    } content: { file in
+        SPRFilePreviewView(file: file)
+    }
+    .frame(width: 400, height: 300)
 }

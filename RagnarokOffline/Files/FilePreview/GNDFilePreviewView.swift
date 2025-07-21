@@ -55,5 +55,10 @@ struct GNDFilePreviewView: View {
 }
 
 #Preview {
-    GNDFilePreviewView(file: .previewGND)
+    AsyncContentView {
+        try await File.previewGND()
+    } content: { file in
+        GNDFilePreviewView(file: file)
+    }
+    .frame(width: 400, height: 300)
 }

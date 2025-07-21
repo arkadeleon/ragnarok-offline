@@ -124,5 +124,6 @@ struct FilesView: View {
 }
 
 #Preview {
-    FilesView(title: "", directory: .previewDataDirectory)
+    FilesView(title: "", directory: .previewGRF())
+        .frame(width: 400, height: 300)
 }

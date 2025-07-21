@@ -28,7 +28,7 @@ enum ResourceError: LocalizedError {
     }
 }
 
-public enum ResourceLocator {
+public enum ResourceLocator: Sendable {
     case url(URL)
     case grfArchiveEntry(GRFArchive, GRFEntryNode)
 }
@@ -66,13 +66,6 @@ final public class ResourceManager: Sendable {
             }
         }
 
-        #if DEBUG
-        if let fileURL = Bundle.main.resourceURL?.appending(path: L2K(path)),
-           FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
-            return .url(fileURL)
-        }
-        #endif
-
         throw ResourceError.resourceNotFound(path)
     }
 
@@ -90,14 +83,6 @@ final public class ResourceManager: Sendable {
                 return data
             }
         }
-
-        #if DEBUG
-        if let fileURL = Bundle.main.resourceURL?.appending(path: L2K(path)),
-           FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
-            let data = try Data(contentsOf: fileURL)
-            return data
-        }
-        #endif
 
         if let remoteURL {
             logger.info("Start downloading resource: \(path)")

@@ -111,5 +111,10 @@ struct ACTFilePreviewView: View {
 }
 
 #Preview {
-    ACTFilePreviewView(file: .previewACT)
+    AsyncContentView {
+        try await File.previewACT()
+    } content: { file in
+        ACTFilePreviewView(file: file)
+    }
+    .frame(width: 400, height: 300)
 }

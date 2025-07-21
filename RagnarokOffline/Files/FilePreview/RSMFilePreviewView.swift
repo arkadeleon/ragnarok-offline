@@ -38,5 +38,10 @@ struct RSMFilePreviewView: View {
 }
 
 #Preview {
-    RSMFilePreviewView(file: .previewRSM)
+    AsyncContentView {
+        try await File.previewRSM()
+    } content: { file in
+        RSMFilePreviewView(file: file)
+    }
+    .frame(width: 400, height: 300)
 }

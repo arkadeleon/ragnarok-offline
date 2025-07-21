@@ -6,47 +6,51 @@
 //
 
 import Foundation
+import GRF
+import ROCore
+import ROResources
 
 extension File {
-    static var previewDataDirectory: File {
-        let url = Bundle.main.resourceURL!.appending(path: "data")
-        let file = File(node: .directory(url))
+    static func previewGRF() -> File {
+        let url = ResourceManager.shared.localURL.appending(path: "data.grf")
+        let grfArchive = GRFArchive(url: url)
+        let file = File(node: .grfArchive(grfArchive))
         return file
     }
 
-    static var previewACT: File {
-        let url = Bundle.main.resourceURL!.appending(path: "data/sprite/cursors.act")
-        let file = File(node: .regularFile(url))
+    static func previewACT() async throws -> File {
+        let locator = try await ResourceManager.shared.locatorOfResource(at: ["data", "sprite", "cursors.act"])
+        let file = File(locator)
         return file
     }
 
-    static var previewGAT: File {
-        let url = Bundle.main.resourceURL!.appending(path: "data/iz_int.gat")
-        let file = File(node: .regularFile(url))
+    static func previewGAT() async throws -> File {
+        let locator = try await ResourceManager.shared.locatorOfResource(at: ["data", "iz_int.gat"])
+        let file = File(locator)
         return file
     }
 
-    static var previewGND: File {
-        let url = Bundle.main.resourceURL!.appending(path: "data/iz_int.gnd")
-        let file = File(node: .regularFile(url))
+    static func previewGND() async throws -> File {
+        let locator = try await ResourceManager.shared.locatorOfResource(at: ["data", "iz_int.gnd"])
+        let file = File(locator)
         return file
     }
 
-    static var previewRSM: File {
-        let url = Bundle.main.resourceURL!.appending(path: "data/model/내부소품/철다리.rsm")
-        let file = File(node: .regularFile(url))
+    static func previewRSM() async throws -> File {
+        let locator = try await ResourceManager.shared.locatorOfResource(at: ["data", "model", K2L("내부소품"), K2L("철다리.rsm")])
+        let file = File(locator)
         return file
     }
 
-    static var previewRSW: File {
-        let url = Bundle.main.resourceURL!.appending(path: "data/iz_int.rsw")
-        let file = File(node: .regularFile(url))
+    static func previewRSW() async throws -> File {
+        let locator = try await ResourceManager.shared.locatorOfResource(at: ["data", "iz_int.rsw"])
+        let file = File(locator)
         return file
     }
 
-    static var previewSPR: File {
-        let url = Bundle.main.resourceURL!.appending(path: "data/sprite/cursors.spr")
-        let file = File(node: .regularFile(url))
+    static func previewSPR() async throws -> File {
+        let locator = try await ResourceManager.shared.locatorOfResource(at: ["data", "sprite", "cursors.spr"])
+        let file = File(locator)
         return file
     }
 }

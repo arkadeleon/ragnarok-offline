@@ -32,5 +32,10 @@ struct GATFilePreviewView: View {
 }
 
 #Preview {
-    GATFilePreviewView(file: .previewGAT)
+    AsyncContentView {
+        try await File.previewGAT()
+    } content: { file in
+        GATFilePreviewView(file: file)
+    }
+    .frame(width: 400, height: 300)
 }

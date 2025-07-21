@@ -94,6 +94,11 @@ extension View {
 }
 
 #Preview {
-    Text(File.previewRSW.name)
-        .fileContextMenu(file: .previewRSW)
+    AsyncContentView {
+        try await File.previewRSW()
+    } content: { file in
+        Text(file.name)
+            .fileContextMenu(file: file)
+    }
+    .frame(width: 100, height: 50)
 }

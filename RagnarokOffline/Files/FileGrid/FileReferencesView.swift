@@ -47,6 +47,11 @@ struct FileReferencesView: View {
 }
 
 #Preview {
-    FileReferencesView(file: .previewGND) {
+    AsyncContentView {
+        try await File.previewGND()
+    } content: { file in
+        FileReferencesView(file: file) {
+        }
     }
+    .frame(width: 400, height: 300)
 }

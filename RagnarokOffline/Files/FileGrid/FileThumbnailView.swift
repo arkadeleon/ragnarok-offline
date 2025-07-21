@@ -48,11 +48,20 @@ struct FileThumbnailView: View {
 }
 
 #Preview {
-    HStack {
-        FileThumbnailView(file: .previewDataDirectory)
-        FileThumbnailView(file: .previewGAT)
-        FileThumbnailView(file: .previewGND)
-        FileThumbnailView(file: .previewRSW)
-        FileThumbnailView(file: .previewSPR)
+    AsyncContentView {
+        try await [
+            File.previewGRF(),
+            File.previewGAT(),
+            File.previewGND(),
+            File.previewRSW(),
+            File.previewSPR(),
+        ]
+    } content: { files in
+        HStack {
+            ForEach(files) { file in
+                FileThumbnailView(file: file)
+            }
+        }
     }
+    .frame(width: 400, height: 100)
 }
