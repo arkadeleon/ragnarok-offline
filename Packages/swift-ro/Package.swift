@@ -83,9 +83,6 @@ let package = Package(
             name: "ROFileFormatsTests",
             dependencies: [
                 "ROFileFormats"
-            ],
-            resources: [
-                .copy("Resources/cursors.act"),
             ]),
         .target(
             name: "ROGame",

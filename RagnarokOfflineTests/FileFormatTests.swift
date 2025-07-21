@@ -1,17 +1,18 @@
 //
-//  ACTTests.swift
+//  FileFormatTests.swift
 //  RagnarokOfflineTests
 //
 //  Created by Leon Li on 2024/10/12.
 //
 
 import XCTest
+@testable import RagnarokOffline
 @testable import ROFileFormats
+@testable import ROResources
 
-final class ACTTests: XCTestCase {
-    func testACT() throws {
-        let url = Bundle.module.url(forResource: "cursors", withExtension: "act")!
-        let data = try Data(contentsOf: url)
+final class FileFormatTests: XCTestCase {
+    func testACT() async throws {
+        let data = try await ResourceManager.shared.contentsOfResource(at: ["data", "sprite", "cursors.act"])
         let act = try ACT(data: data)
 
         XCTAssertEqual(act.header, "AC")
