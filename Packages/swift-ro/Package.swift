@@ -136,9 +136,6 @@ let package = Package(
             name: "RORenderingTests",
             dependencies: [
                 "RORendering",
-            ],
-            resources: [
-                .copy("Resources/data"),
             ]),
         .target(
             name: "ROResources",
