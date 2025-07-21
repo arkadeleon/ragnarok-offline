@@ -11,14 +11,35 @@ import Vapor
 struct ClientController: RouteCollection {
     let resourcesDirectory: URL
 
-    private let grfArchives: [GRFArchive]
+    private let languages: [String]
+    private let grfArchivesByLanguage: [String : [GRFArchive]]
 
     init(resourcesDirectory: String) {
-        self.resourcesDirectory = URL(fileURLWithPath: resourcesDirectory)
+        let resourcesDirectory = URL(fileURLWithPath: resourcesDirectory)
 
-        let grfURL = URL(fileURLWithPath: resourcesDirectory).appending(component: "data.grf")
-        self.grfArchives = [
-            GRFArchive(url: grfURL),
+        self.resourcesDirectory = resourcesDirectory
+
+        self.languages = [
+            "de",
+            "en",
+            "es",
+            "fr",
+            "id",
+            "it",
+            "ja",
+            "ko",
+            "pt-BR",
+            "ru",
+            "th",
+            "tr",
+            "zh-Hans",
+            "zh-Hant",
+        ]
+
+        self.grfArchivesByLanguage = [
+            "ko": [
+                GRFArchive(url: resourcesDirectory.appending(components: "ko", "data.grf")),
+            ],
         ]
     }
 
@@ -35,18 +56,31 @@ struct ClientController: RouteCollection {
             throw Abort(.badRequest)
         }
 
-        let fileURL = resourcesDirectory.appending(path: path)
+        let components = path.split(separator: "/").map(String.init)
+        guard components.count > 0 else {
+            throw Abort(.badRequest)
+        }
+
+        let language: String
+        if let acceptLanguage = req.headers.first(name: .acceptLanguage) {
+            language = languages.first(where: { $0.starts(with: acceptLanguage) || acceptLanguage.starts(with: $0) }) ?? "ko"
+        } else {
+            language = "ko"
+        }
+
+        let fileURL = resourcesDirectory.appending(path: language).appending(path: path)
         let filePath = fileURL.path(percentEncoded: false)
         if FileManager.default.fileExists(atPath: filePath) {
             return try await req.fileio.asyncStreamFile(at: filePath)
         }
 
-        let components = path.split(separator: "/").map(String.init)
-        let grfPath = GRFPath(components: components)
-        for grfArchive in grfArchives {
-            if let _ = await grfArchive.entry(at: grfPath) {
-                let data = try await grfArchive.contentsOfEntry(at: grfPath)
-                return Response(body: .init(data: data))
+        if let grfArchives = grfArchivesByLanguage[language] {
+            let grfPath = GRFPath(components: components)
+            for grfArchive in grfArchives {
+                if let _ = await grfArchive.entry(at: grfPath) {
+                    let data = try await grfArchive.contentsOfEntry(at: grfPath)
+                    return Response(body: .init(data: data))
+                }
             }
         }
 
