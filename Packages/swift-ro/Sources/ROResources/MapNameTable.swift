@@ -21,17 +21,22 @@ final public class MapNameTable: Resource {
 }
 
 extension ResourceManager {
-    public func mapNameTable() async -> MapNameTable {
-        if let task = tasks.withLock({ $0["MapNameTable"] }) {
+    public func mapNameTable(for locale: Locale) async -> MapNameTable {
+        let localeIdentifier = locale.identifier(.bcp47)
+        let taskIdentifier = "MapNameTable-\(localeIdentifier)"
+
+        if let task = tasks.withLock({ $0[taskIdentifier] }) {
             return await task.value as! MapNameTable
         }
 
         let task = Task<any Resource, Never> {
-            guard let url = Bundle.module.url(forResource: "mapnametable", withExtension: "txt", locale: locale),
-                  let stream = FileStream(forReadingFrom: url) else {
+            let path = ResourcePath(components: ["data", "mapnametable.txt"])
+
+            guard let data = try? await contentsOfResource(at: path, locale: locale) else {
                 return MapNameTable()
             }
 
+            let stream = MemoryStream(data: data)
             let reader = StreamReader(stream: stream, delimiter: "\r\n")
             defer {
                 reader.close()
@@ -61,7 +66,7 @@ extension ResourceManager {
         }
 
         tasks.withLock {
-            $0["MapNameTable"] = task
+            $0[taskIdentifier] = task
         }
 
         return await task.value as! MapNameTable

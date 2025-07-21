@@ -44,7 +44,7 @@ final class MapModel {
     }
 
     func fetchLocalizedName() async {
-        let mapNameTable = await ResourceManager.shared.mapNameTable()
+        let mapNameTable = await ResourceManager.shared.mapNameTable(for: .current)
         self.localizedName = mapNameTable.localizedMapName(forMapName: map.name)
     }
 

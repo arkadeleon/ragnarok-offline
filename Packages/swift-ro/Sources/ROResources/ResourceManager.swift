@@ -69,7 +69,7 @@ final public class ResourceManager: Sendable {
         throw ResourceError.resourceNotFound(path)
     }
 
-    public func contentsOfResource(at path: ResourcePath) async throws -> Data {
+    public func contentsOfResource(at path: ResourcePath, locale: Locale? = nil) async throws -> Data {
         let fileURL = localURL.absoluteURL.appending(path: L2K(path))
         if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
             let data = try Data(contentsOf: fileURL)
@@ -88,7 +88,11 @@ final public class ResourceManager: Sendable {
             logger.info("Start downloading resource: \(path)")
 
             let remoteResourceURL = remoteURL.appending(path: path)
-            let (data, _) = try await URLSession.shared.data(from: remoteResourceURL)
+            var request = URLRequest(url: remoteResourceURL, cachePolicy: .reloadIgnoringLocalCacheData)
+            if let locale {
+                request.setValue(locale.identifier(.bcp47), forHTTPHeaderField: "Accept-Language")
+            }
+            let (data, _) = try await URLSession.shared.data(for: request)
 
             let cacheURL = localURL.absoluteURL.appending(path: "Caches").appending(path: L2K(path))
             try? FileManager.default.createDirectory(at: cacheURL.deletingLastPathComponent(), withIntermediateDirectories: true)
