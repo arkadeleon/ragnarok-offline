@@ -92,7 +92,11 @@ final public class ResourceManager: Sendable {
             if let locale {
                 request.setValue(locale.identifier(.bcp47), forHTTPHeaderField: "Accept-Language")
             }
-            let (data, _) = try await URLSession.shared.data(for: request)
+            let (data, response) = try await URLSession.shared.data(for: request)
+
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                throw ResourceError.resourceNotFound(path)
+            }
 
             let cacheURL = localURL.absoluteURL.appending(path: "Caches").appending(path: L2K(path))
             try? FileManager.default.createDirectory(at: cacheURL.deletingLastPathComponent(), withIntermediateDirectories: true)

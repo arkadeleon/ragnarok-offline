@@ -67,18 +67,21 @@ final public class ItemInfoTable: Resource {
 }
 
 extension ResourceManager {
-    public func itemInfoTable() async -> ItemInfoTable {
-        if let task = tasks.withLock({ $0["ItemInfoTable"] }) {
+    public func itemInfoTable(for locale: Locale) async -> ItemInfoTable {
+        let localeIdentifier = locale.identifier(.bcp47)
+        let taskIdentifier = "ItemInfoTable-\(localeIdentifier)"
+
+        if let task = tasks.withLock({ $0[taskIdentifier] }) {
             return await task.value as! ItemInfoTable
         }
 
         let task = Task<any Resource, Never> {
-            if let url = Bundle.module.url(forResource: "itemInfo", withExtension: "lub", locale: locale) {
+            let itemInfoPath = ResourcePath(components: ["System", "itemInfo.lub"])
+            if let itemInfoData = try? await contentsOfResource(at: itemInfoPath, locale: locale) {
                 let context = LuaContext()
 
                 do {
-                    let data = try Data(contentsOf: url)
-                    try context.load(data)
+                    try context.load(itemInfoData)
 
                     try context.parse("""
                     function unidentifiedItemDisplayName(itemID)
@@ -100,12 +103,13 @@ extension ResourceManager {
 
                 return ItemInfoTable(locale: locale, context: context)
             } else {
-                let identifiedItemNamesByID: [Int : Data] = {
-                    guard let url = Bundle.module.url(forResource: "idnum2itemdisplaynametable", withExtension: "txt", locale: locale),
-                          let stream = FileStream(forReadingFrom: url) else {
+                let identifiedItemNamesByID: [Int : Data] = await {
+                    let path = ResourcePath(components: ["data", "idnum2itemdisplaynametable.txt"])
+                    guard let data = try? await contentsOfResource(at: path, locale: locale) else {
                         return [:]
                     }
 
+                    let stream = MemoryStream(data: data)
                     let reader = StreamReader(stream: stream, delimiter: "\r\n")
                     defer {
                         reader.close()
@@ -131,12 +135,13 @@ extension ResourceManager {
                     return identifiedItemNamesByID
                 }()
 
-                let identifiedItemDescriptionsByID: [Int : Data] = {
-                    guard let url = Bundle.module.url(forResource: "idnum2itemdesctable", withExtension: "txt", locale: locale),
-                          let stream = FileStream(forReadingFrom: url) else {
+                let identifiedItemDescriptionsByID: [Int : Data] = await {
+                    let path = ResourcePath(components: ["data", "idnum2itemdesctable.txt"])
+                    guard let data = try? await contentsOfResource(at: path, locale: locale) else {
                         return [:]
                     }
 
+                    let stream = MemoryStream(data: data)
                     let reader = StreamReader(stream: stream, delimiter: "\r\n#\r\n")
                     defer {
                         reader.close()
@@ -172,7 +177,7 @@ extension ResourceManager {
         }
 
         tasks.withLock {
-            $0["ItemInfoTable"] = task
+            $0[taskIdentifier] = task
         }
 
         return await task.value as! ItemInfoTable

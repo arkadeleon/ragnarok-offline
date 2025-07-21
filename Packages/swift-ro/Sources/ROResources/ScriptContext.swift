@@ -117,7 +117,13 @@ extension ResourceManager {
         let task = Task<any Resource, Never> {
             let context = LuaContext()
 
-            await loadLocalScript("itemInfo", locale: .korean, in: context)
+            do {
+                let path = ResourcePath(components: ["System", "itemInfo.lub"])
+                let data = try await contentsOfResource(at: path, locale: .korean)
+                try context.load(data)
+            } catch {
+                logger.warning("\(error.localizedDescription)")
+            }
 
             await loadScript(at: ["datainfo", "accessoryid"], in: context)
             await loadScript(at: ["datainfo", "accname"], in: context)

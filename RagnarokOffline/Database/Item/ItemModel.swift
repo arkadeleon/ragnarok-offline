@@ -133,7 +133,7 @@ final class ItemModel {
         self.mode = mode
         self.item = item
 
-        let itemInfoTable = await ResourceManager.shared.itemInfoTable()
+        let itemInfoTable = await ResourceManager.shared.itemInfoTable(for: .current)
         self.localizedName = itemInfoTable.localizedIdentifiedItemName(forItemID: item.id)
     }
 
@@ -160,7 +160,7 @@ final class ItemModel {
             previewImage = try? await ResourceManager.shared.image(at: previewImagePath, removesMagentaPixels: true)
         }
 
-        let itemInfoTable = await ResourceManager.shared.itemInfoTable()
+        let itemInfoTable = await ResourceManager.shared.itemInfoTable(for: .current)
         if let itemDescription = itemInfoTable.localizedIdentifiedItemDescription(forItemID: item.id) {
             localizedDescription = AttributedString(description: itemDescription)
         }
