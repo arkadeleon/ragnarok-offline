@@ -109,8 +109,11 @@ final public class ScriptContext: Resource {
 }
 
 extension ResourceManager {
-    public func scriptContext() async -> ScriptContext {
-        if let task = tasks.withLock({ $0["ScriptContext"] }) {
+    public func scriptContext(for locale: Locale) async -> ScriptContext {
+        let localeIdentifier = locale.identifier(.bcp47)
+        let taskIdentifier = "ScriptContext-\(localeIdentifier)"
+
+        if let task = tasks.withLock({ $0[taskIdentifier] }) {
             return await task.value as! ScriptContext
         }
 
@@ -130,7 +133,7 @@ extension ResourceManager {
             await loadScript(at: ["datainfo", "accname_f"], in: context)
 
             await loadScript(at: ["datainfo", "enumvar"], in: context)
-            await loadLocalScript("addrandomoptionnametable", locale: .korean, in: context)
+            await loadScript(at: ["datainfo", "addrandomoptionnametable"], locale: locale, in: context)
             await loadScript(at: ["datainfo", "addrandomoption_f"], in: context)
 
             await loadScript(at: ["datainfo", "jobidentity"], in: context)
@@ -150,13 +153,13 @@ extension ResourceManager {
 
             await loadScript(at: ["skillinfoz", "jobinheritlist"], in: context)
             await loadScript(at: ["skillinfoz", "skillid"], in: context)
-            await loadLocalScript("skillinfolist", locale: locale, in: context)
-            await loadLocalScript("skilldescript", locale: locale, in: context)
+            await loadScript(at: ["skillinfoz", "skillinfolist"], locale: locale, in: context)
+            await loadScript(at: ["skillinfoz", "skilldescript"], locale: locale, in: context)
 //            await loadScript(at: ["skillinfoz", "skillinfo_f"], in: context)
 
             await loadScript(at: ["stateicon", "efstids"], in: context)
             await loadScript(at: ["stateicon", "stateiconimginfo"], in: context)
-            await loadLocalScript("stateiconinfo", locale: .korean, in: context)
+            await loadScript(at: ["stateicon", "stateiconinfo"], locale: locale, in: context)
 
             await loadScript(at: ["spreditinfo", "smalllayerdir_female"], in: context)
             await loadScript(at: ["spreditinfo", "smalllayerdir_male"], in: context)
@@ -235,29 +238,16 @@ extension ResourceManager {
         }
 
         tasks.withLock {
-            $0["ScriptContext"] = task
+            $0[taskIdentifier] = task
         }
 
         return await task.value as! ScriptContext
     }
 
-    private func loadScript(at path: ResourcePath, in context: LuaContext) async {
+    private func loadScript(at path: ResourcePath, locale: Locale = .korean, in context: LuaContext) async {
         do {
             let path = ResourcePath.scriptDirectory.appending(path).appendingPathExtension("lub")
-            let data = try await contentsOfResource(at: path)
-            try context.load(data)
-        } catch {
-            logger.warning("\(error.localizedDescription)")
-        }
-    }
-
-    private func loadLocalScript(_ name: String, locale: Locale, in context: LuaContext) async {
-        guard let url = Bundle.module.url(forResource: name, withExtension: "lub", locale: locale) else {
-            return
-        }
-
-        do {
-            let data = try Data(contentsOf: url)
+            let data = try await contentsOfResource(at: path, locale: locale)
             try context.load(data)
         } catch {
             logger.warning("\(error.localizedDescription)")

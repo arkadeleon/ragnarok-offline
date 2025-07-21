@@ -29,7 +29,7 @@ struct InventoryItemView<Actions>: View where Actions: View {
         }
         .buttonStyle(.plain)
         .task {
-            let scriptContext = await ResourceManager.shared.scriptContext()
+            let scriptContext = await ResourceManager.shared.scriptContext(for: .current)
             let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
             if let path = pathGenerator.generateItemIconImagePath(itemID: item.itemID) {
                 iconImage = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)

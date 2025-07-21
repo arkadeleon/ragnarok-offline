@@ -10,18 +10,20 @@ import ROConstants
 @testable import ROResources
 
 final class StatusInfoTableTests: XCTestCase {
-    let localURL = Bundle.module.resourceURL!
+    let resourceManager = ResourceManager(
+        locale: .current,
+        localURL: Bundle.main.resourceURL!,
+        remoteURL: URL(string: "http://127.0.0.1:8080/client")
+    )
 
     func testIconName() async throws {
-        let resourceManager = ResourceManager(locale: .current, localURL: localURL, remoteURL: nil)
-        let scriptContext = await resourceManager.scriptContext()
+        let scriptContext = await resourceManager.scriptContext(for: .current)
         let swordclan = scriptContext.statusIconName(forStatusID: OfficialStatusChangeID.efst_swordclan.rawValue)
         XCTAssertEqual(swordclan, "SWORDCLAN.TGA")
     }
 
     func testLocalizedDescription() async throws {
-        let resourceManager = ResourceManager(locale: .current, localURL: localURL, remoteURL: nil)
-        let scriptContext = await resourceManager.scriptContext()
+        let scriptContext = await resourceManager.scriptContext(for: .korean)
         let provoke = scriptContext.localizedStatusDescription(forStatusID: OfficialStatusChangeID.efst_provoke.rawValue)
         XCTAssertEqual(provoke, "프로보크(Provoke)")
     }

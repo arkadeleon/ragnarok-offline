@@ -153,9 +153,6 @@ let package = Package(
             dependencies: [
                 "ROConstants",
                 "ROResources",
-            ],
-            resources: [
-                .copy("Resources/data"),
             ]),
         .target(
             name: "ROShaders",
