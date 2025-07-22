@@ -122,7 +122,7 @@ extension ResourceManager {
 
             do {
                 let path = ResourcePath(components: ["System", "itemInfo.lub"])
-                let data = try await contentsOfResource(at: path, locale: .korean)
+                let data = try await contentsOfResource(at: path)
                 try context.load(data)
             } catch {
                 logger.warning("\(error.localizedDescription)")
@@ -133,7 +133,7 @@ extension ResourceManager {
             await loadScript(at: ["datainfo", "accname_f"], in: context)
 
             await loadScript(at: ["datainfo", "enumvar"], in: context)
-            await loadScript(at: ["datainfo", "addrandomoptionnametable"], locale: locale, in: context)
+            await loadLocalizedScript(at: ["datainfo", "addrandomoptionnametable"], locale: locale, in: context)
             await loadScript(at: ["datainfo", "addrandomoption_f"], in: context)
 
             await loadScript(at: ["datainfo", "jobidentity"], in: context)
@@ -153,13 +153,13 @@ extension ResourceManager {
 
             await loadScript(at: ["skillinfoz", "jobinheritlist"], in: context)
             await loadScript(at: ["skillinfoz", "skillid"], in: context)
-            await loadScript(at: ["skillinfoz", "skillinfolist"], locale: locale, in: context)
-            await loadScript(at: ["skillinfoz", "skilldescript"], locale: locale, in: context)
+            await loadLocalizedScript(at: ["skillinfoz", "skillinfolist"], locale: locale, in: context)
+            await loadLocalizedScript(at: ["skillinfoz", "skilldescript"], locale: locale, in: context)
 //            await loadScript(at: ["skillinfoz", "skillinfo_f"], in: context)
 
             await loadScript(at: ["stateicon", "efstids"], in: context)
             await loadScript(at: ["stateicon", "stateiconimginfo"], in: context)
-            await loadScript(at: ["stateicon", "stateiconinfo"], locale: locale, in: context)
+            await loadLocalizedScript(at: ["stateicon", "stateiconinfo"], locale: locale, in: context)
 
             await loadScript(at: ["spreditinfo", "smalllayerdir_female"], in: context)
             await loadScript(at: ["spreditinfo", "smalllayerdir_male"], in: context)
@@ -244,10 +244,20 @@ extension ResourceManager {
         return await task.value as! ScriptContext
     }
 
-    private func loadScript(at path: ResourcePath, locale: Locale = .korean, in context: LuaContext) async {
+    private func loadScript(at path: ResourcePath, in context: LuaContext) async {
         do {
             let path = ResourcePath.scriptDirectory.appending(path).appendingPathExtension("lub")
-            let data = try await contentsOfResource(at: path, locale: locale)
+            let data = try await contentsOfResource(at: path)
+            try context.load(data)
+        } catch {
+            logger.warning("\(error.localizedDescription)")
+        }
+    }
+
+    private func loadLocalizedScript(at path: ResourcePath, locale: Locale, in context: LuaContext) async {
+        do {
+            let path = ResourcePath.scriptDirectory.appending(path).appendingPathExtension("lub")
+            let data = try await contentsOfLocalizedResource(at: path, locale: locale)
             try context.load(data)
         } catch {
             logger.warning("\(error.localizedDescription)")

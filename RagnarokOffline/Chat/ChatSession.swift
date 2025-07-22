@@ -153,7 +153,7 @@ final class ChatSession {
             self.messages.append(.serverText("Refused"))
 
             Task {
-                let messageStringTable = await ResourceManager.shared.messageStringTable()
+                let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
                 let message = messageStringTable.localizedMessageString(at: event.message.messageCode)
                     .replacingOccurrences(of: "%s", with: event.message.unblockTime)
                 self.messages.append(.serverText(message))
@@ -165,7 +165,7 @@ final class ChatSession {
             self.messages.append(.serverText("Banned"))
 
             Task {
-                let messageStringTable = await ResourceManager.shared.messageStringTable()
+                let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
                 let message = messageStringTable.localizedMessageString(at: event.message.messageCode)
                 self.messages.append(.serverText(message))
             }
@@ -244,7 +244,7 @@ final class ChatSession {
             self.messages.append(.serverText("Banned"))
 
             Task {
-                let messageStringTable = await ResourceManager.shared.messageStringTable()
+                let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
                 let message = messageStringTable.localizedMessageString(at: event.message.messageCode)
                 self.messages.append(.serverText(message))
             }

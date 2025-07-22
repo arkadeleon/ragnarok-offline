@@ -29,7 +29,7 @@ extension ResourceManager {
         let task = Task<any Resource, Never> {
             let data: Data
             do {
-                data = try await contentsOfResource(at: ["data", "mp3nametable.txt"], locale: .korean)
+                data = try await contentsOfResource(at: ["data", "mp3nametable.txt"])
             } catch {
                 logger.warning("\(error.localizedDescription)")
                 return MP3NameTable()

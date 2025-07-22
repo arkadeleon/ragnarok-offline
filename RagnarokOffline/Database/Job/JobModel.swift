@@ -117,7 +117,7 @@ final class JobModel {
     }
 
     func fetchLocalizedName() async {
-        let messageStringTable = await ResourceManager.shared.messageStringTable()
+        let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
         self.localizedName = messageStringTable.localizedJobName(for: job.id)
     }
 

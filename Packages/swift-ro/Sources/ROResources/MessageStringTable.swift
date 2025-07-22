@@ -337,17 +337,21 @@ final public class MessageStringTable: Resource {
 }
 
 extension ResourceManager {
-    public func messageStringTable() async -> MessageStringTable {
-        if let task = tasks.withLock({ $0["MessageStringTable"] }) {
+    public func messageStringTable(for locale: Locale) async -> MessageStringTable {
+        let localeIdentifier = locale.identifier(.bcp47)
+        let taskIdentifier = "MessageStringTable-\(localeIdentifier)"
+
+        if let task = tasks.withLock({ $0[taskIdentifier] }) {
             return await task.value as! MessageStringTable
         }
 
         let task = Task<any Resource, Never> {
-            guard let url = Bundle.module.url(forResource: "msgstringtable", withExtension: "txt", locale: locale),
-                  let stream = FileStream(forReadingFrom: url) else {
+            let path = ResourcePath(components: ["data", "msgstringtable.txt"])
+            guard let data = try? await contentsOfLocalizedResource(at: path, locale: locale) else {
                 return MessageStringTable()
             }
 
+            let stream = MemoryStream(data: data)
             let reader = StreamReader(stream: stream, delimiter: "\r\n")
             defer {
                 reader.close()
@@ -369,7 +373,7 @@ extension ResourceManager {
         }
 
         tasks.withLock {
-            $0["MessageStringTable"] = task
+            $0[taskIdentifier] = task
         }
 
         return await task.value as! MessageStringTable

@@ -13,7 +13,7 @@ import ROCore
 final class SpriteResourceTests: XCTestCase {
     func testSpriteResourcePath() async throws {
         let localURL = Bundle.module.resourceURL!
-        let resourceManager = ResourceManager(locale: .current, localURL: localURL, remoteURL: nil)
+        let resourceManager = ResourceManager(localURL: localURL, remoteURL: nil)
         let scriptContext = await resourceManager.scriptContext(for: .current)
         let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
         let path = pathGenerator.generatePlayerBodySpritePath(job: 0, gender: .male)!

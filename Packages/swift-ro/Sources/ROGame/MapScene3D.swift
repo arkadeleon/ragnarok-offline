@@ -197,7 +197,7 @@ class MapScene3D: MapSceneProtocol {
             return nil
         }
 
-        let bgmPath: ResourcePath = ["BGM", mp3Name]
+        let bgmPath = ResourcePath(components: ["BGM", mp3Name])
         guard let bgmData = try? await resourceManager.contentsOfResource(at: bgmPath) else {
             return nil
         }

@@ -11,15 +11,15 @@ import Vapor
 struct ClientController: RouteCollection {
     let resourcesDirectory: URL
 
-    private let languages: [String]
-    private let grfArchivesByLanguage: [String : [GRFArchive]]
+    private let locales: [String]
+    private let grfArchivesByLocale: [String : [GRFArchive]]
 
     init(resourcesDirectory: String) {
         let resourcesDirectory = URL(fileURLWithPath: resourcesDirectory)
 
         self.resourcesDirectory = resourcesDirectory
 
-        self.languages = [
+        self.locales = [
             "de",
             "en",
             "es",
@@ -36,7 +36,7 @@ struct ClientController: RouteCollection {
             "zh-Hant",
         ]
 
-        self.grfArchivesByLanguage = [
+        self.grfArchivesByLocale = [
             "ko": [
                 GRFArchive(url: resourcesDirectory.appending(components: "ko", "data.grf")),
             ],
@@ -61,20 +61,18 @@ struct ClientController: RouteCollection {
             throw Abort(.badRequest)
         }
 
-        let language: String
-        if let acceptLanguage = req.headers.first(name: .acceptLanguage) {
-            language = languages.first(where: { $0.starts(with: acceptLanguage) || acceptLanguage.starts(with: $0) }) ?? "ko"
-        } else {
-            language = "ko"
+        var locale = "ko"
+        if let l = req.headers.first(name: "RO-Locale"), locales.contains(l) {
+            locale = l
         }
 
-        let fileURL = resourcesDirectory.appending(path: language).appending(path: path)
+        let fileURL = resourcesDirectory.appending(path: locale).appending(path: path)
         let filePath = fileURL.path(percentEncoded: false)
         if FileManager.default.fileExists(atPath: filePath) {
             return try await req.fileio.asyncStreamFile(at: filePath)
         }
 
-        if let grfArchives = grfArchivesByLanguage[language] {
+        if let grfArchives = grfArchivesByLocale[locale] {
             let grfPath = GRFPath(components: components)
             for grfArchive in grfArchives {
                 if let _ = await grfArchive.entry(at: grfPath) {

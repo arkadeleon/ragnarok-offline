@@ -32,7 +32,7 @@ extension ResourceManager {
         let task = Task<any Resource, Never> {
             let path = ResourcePath(components: ["data", "mapnametable.txt"])
 
-            guard let data = try? await contentsOfResource(at: path, locale: locale) else {
+            guard let data = try? await contentsOfLocalizedResource(at: path, locale: locale) else {
                 return MapNameTable()
             }
 

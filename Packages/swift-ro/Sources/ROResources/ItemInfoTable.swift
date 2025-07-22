@@ -77,7 +77,7 @@ extension ResourceManager {
 
         let task = Task<any Resource, Never> {
             let itemInfoPath = ResourcePath(components: ["System", "itemInfo.lub"])
-            if let itemInfoData = try? await contentsOfResource(at: itemInfoPath, locale: locale) {
+            if let itemInfoData = try? await contentsOfLocalizedResource(at: itemInfoPath, locale: locale) {
                 let context = LuaContext()
 
                 do {
@@ -105,7 +105,7 @@ extension ResourceManager {
             } else {
                 let identifiedItemNamesByID: [Int : Data] = await {
                     let path = ResourcePath(components: ["data", "idnum2itemdisplaynametable.txt"])
-                    guard let data = try? await contentsOfResource(at: path, locale: locale) else {
+                    guard let data = try? await contentsOfLocalizedResource(at: path, locale: locale) else {
                         return [:]
                     }
 
@@ -137,7 +137,7 @@ extension ResourceManager {
 
                 let identifiedItemDescriptionsByID: [Int : Data] = await {
                     let path = ResourcePath(components: ["data", "idnum2itemdesctable.txt"])
-                    guard let data = try? await contentsOfResource(at: path, locale: locale) else {
+                    guard let data = try? await contentsOfLocalizedResource(at: path, locale: locale) else {
                         return [:]
                     }
 

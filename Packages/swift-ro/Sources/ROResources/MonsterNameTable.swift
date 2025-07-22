@@ -20,8 +20,11 @@ final public class MonsterNameTable: Resource {
 }
 
 extension ResourceManager {
-    public func monsterNameTable() async -> MonsterNameTable {
-        if let task = tasks.withLock({ $0["MonsterNameTable"] }) {
+    public func monsterNameTable(for locale: Locale) async -> MonsterNameTable {
+        let localeIdentifier = locale.identifier(.bcp47)
+        let taskIdentifier = "MonsterNameTable-\(localeIdentifier)"
+
+        if let task = tasks.withLock({ $0[taskIdentifier] }) {
             return await task.value as! MonsterNameTable
         }
 
@@ -52,7 +55,7 @@ extension ResourceManager {
         }
 
         tasks.withLock {
-            $0["MonsterNameTable"] = task
+            $0[taskIdentifier] = task
         }
 
         return await task.value as! MonsterNameTable

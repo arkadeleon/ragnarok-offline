@@ -10,7 +10,6 @@ import XCTest
 
 final class ItemInfoTableTests: XCTestCase {
     let resourceManager = ResourceManager(
-        locale: .current,
         localURL: Bundle.main.resourceURL!,
         remoteURL: URL(string: "http://127.0.0.1:8080/client")
     )

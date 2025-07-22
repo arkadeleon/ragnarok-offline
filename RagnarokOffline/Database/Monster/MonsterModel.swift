@@ -134,7 +134,7 @@ final class MonsterModel {
     }
 
     func fetchLocalizedName() async {
-        let monsterNameTable = await ResourceManager.shared.monsterNameTable()
+        let monsterNameTable = await ResourceManager.shared.monsterNameTable(for: .current)
         self.localizedName = monsterNameTable.localizedMonsterName(forMonsterID: monster.id)
     }
 
