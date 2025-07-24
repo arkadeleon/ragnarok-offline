@@ -34,28 +34,24 @@ struct ServerView: View {
         .background(.background)
         .navigationTitle(server.name)
         .toolbar {
-            if server.status == .stopped {
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        Task {
-                            try await server.start()
-                        }
-                    } label: {
-                        Image(systemName: "play.fill")
+            ToolbarItemGroup(placement: .primaryAction) {
+                Button {
+                    Task {
+                        await server.stop()
                     }
+                } label: {
+                    Image(systemName: "stop.fill")
                 }
-            }
+                .disabled(stopDisabled)
 
-            if server.status == .running {
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        Task {
-                            await server.stop()
-                        }
-                    } label: {
-                        Image(systemName: "stop.fill")
+                Button {
+                    Task {
+                        try await server.start()
                     }
+                } label: {
+                    Image(systemName: "play.fill")
                 }
+                .disabled(startDisabled)
             }
 
             ToolbarItem(placement: .primaryAction) {
@@ -65,6 +61,20 @@ struct ServerView: View {
                     Image(systemName: "trash")
                 }
             }
+        }
+    }
+
+    private var startDisabled: Bool {
+        switch server.status {
+        case .notStarted, .stopped: false
+        case .starting, .running, .stopping: true
+        }
+    }
+
+    private var stopDisabled: Bool {
+        switch server.status {
+        case .notStarted, .starting, .stopping, .stopped: true
+        case .running: false
         }
     }
 }

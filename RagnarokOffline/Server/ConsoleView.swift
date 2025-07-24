@@ -21,6 +21,7 @@ struct ConsoleView: View {
                         .lineLimit(1)
                 }
             }
+            .padding(.horizontal)
         }
         .scrollPosition($position)
         .onAppear {
