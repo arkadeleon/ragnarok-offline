@@ -154,9 +154,10 @@ final class ChatSession {
 
             Task {
                 let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
-                let message = messageStringTable.localizedMessageString(at: event.message.messageCode)
-                    .replacingOccurrences(of: "%s", with: event.message.unblockTime)
-                self.messages.append(.serverText(message))
+                if let message = messageStringTable.localizedMessageString(forID: event.message.messageID) {
+                    let message = message.replacingOccurrences(of: "%s", with: event.message.unblockTime)
+                    self.messages.append(.serverText(message))
+                }
             }
         }
         .store(in: &subscriptions)
@@ -166,8 +167,9 @@ final class ChatSession {
 
             Task {
                 let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
-                let message = messageStringTable.localizedMessageString(at: event.message.messageCode)
-                self.messages.append(.serverText(message))
+                if let message = messageStringTable.localizedMessageString(forID: event.message.messageID) {
+                    self.messages.append(.serverText(message))
+                }
             }
         }
         .store(in: &subscriptions)
@@ -245,8 +247,9 @@ final class ChatSession {
 
             Task {
                 let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
-                let message = messageStringTable.localizedMessageString(at: event.message.messageCode)
-                self.messages.append(.serverText(message))
+                if let message = messageStringTable.localizedMessageString(forID: event.message.messageID) {
+                    self.messages.append(.serverText(message))
+                }
             }
         }
         .store(in: &subscriptions)

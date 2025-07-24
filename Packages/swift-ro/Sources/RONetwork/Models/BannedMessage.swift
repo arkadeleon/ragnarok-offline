@@ -8,10 +8,10 @@
 import ROPackets
 
 public struct BannedMessage: Sendable {
-    public let messageCode: Int
+    public let messageID: Int
 
     init(packet: PACKET_SC_NOTIFY_BAN) {
-        let messageCode = switch packet.result {
+        let messageID = switch packet.result {
         case   0: 3     // Server closed
         case   1: 4     // Server closed
         case   2: 5     // Someone has already logged in with this id
@@ -28,6 +28,6 @@ public struct BannedMessage: Sendable {
         default : 3
         }
 
-        self.messageCode = messageCode
+        self.messageID = messageID
     }
 }

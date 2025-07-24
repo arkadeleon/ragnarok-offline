@@ -8,11 +8,11 @@
 import ROPackets
 
 public struct LoginRefusedMessage: Sendable {
-    public let messageCode: Int
+    public let messageID: Int
     public let unblockTime: String
 
     init(packet: PACKET_AC_REFUSE_LOGIN) {
-        let messageCode = switch packet.error {
+        let messageID = switch packet.error {
         case   0: 6     // Unregistered ID
         case   1: 7     // Incorrect Password
         case   2: 8     // This ID is expired
@@ -38,7 +38,7 @@ public struct LoginRefusedMessage: Sendable {
         default : 9
         }
 
-        self.messageCode = messageCode
+        self.messageID = messageID
         self.unblockTime = packet.unblock_time
     }
 }

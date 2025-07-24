@@ -10,66 +10,66 @@ import Foundation
 import ROConstants
 
 final public class MessageStringTable: Resource {
-    let messageStrings: [String]
+    let messageStringsByID: [Int : String]
 
-    init(messageStrings: [String] = []) {
-        self.messageStrings = messageStrings
+    init(messageStringsByID: [Int : String] = [:]) {
+        self.messageStringsByID = messageStringsByID
     }
 
-    public func localizedMessageString(at index: Int) -> String {
-        messageStrings[index]
+    public func localizedMessageString(forID messageID: Int) -> String? {
+        messageStringsByID[messageID]
     }
 
     public func localizedJobName(for jobID: JobID) -> String? {
         switch jobID {
         case .novice:
-            messageStrings[1681]
+            messageStringsByID[1681]
         case .swordman:
-            messageStrings[1630]
+            messageStringsByID[1630]
         case .mage:
-            messageStrings[1631]
+            messageStringsByID[1631]
         case .archer:
-            messageStrings[1632]
+            messageStringsByID[1632]
         case .acolyte:
-            messageStrings[1633]
+            messageStringsByID[1633]
         case .merchant:
-            messageStrings[1634]
+            messageStringsByID[1634]
         case .thief:
-            messageStrings[1635]
+            messageStringsByID[1635]
         case .knight, .knight2:
-            messageStrings[1636]
+            messageStringsByID[1636]
         case .priest:
-            messageStrings[1637]
+            messageStringsByID[1637]
         case .wizard:
-            messageStrings[1638]
+            messageStringsByID[1638]
         case .blacksmith:
-            messageStrings[1639]
+            messageStringsByID[1639]
         case .hunter:
-            messageStrings[1640]
+            messageStringsByID[1640]
         case .assassin:
-            messageStrings[1641]
+            messageStringsByID[1641]
         case .crusader, .crusader2:
-            messageStrings[1642]
+            messageStringsByID[1642]
         case .monk:
-            messageStrings[1643]
+            messageStringsByID[1643]
         case .sage:
-            messageStrings[1644]
+            messageStringsByID[1644]
         case .rogue:
-            messageStrings[1645]
+            messageStringsByID[1645]
         case .alchemist:
-            messageStrings[1646]
+            messageStringsByID[1646]
         case .bard:
-            messageStrings[1647]
+            messageStringsByID[1647]
         case .dancer:
-            messageStrings[1648]
+            messageStringsByID[1648]
         case .wedding:
             nil
         case .super_novice:
-            messageStrings[1683]
+            messageStringsByID[1683]
         case .gunslinger:
-            messageStrings[1684]
+            messageStringsByID[1684]
         case .ninja:
-            messageStrings[1685]
+            messageStringsByID[1685]
         case .xmas:
             nil
         case .summer:
@@ -81,45 +81,45 @@ final public class MessageStringTable: Resource {
         case .summer2:
             nil
         case .novice_high:
-            messageStrings[1682]
+            messageStringsByID[1682]
         case .swordman_high:
-            messageStrings[1662]
+            messageStringsByID[1662]
         case .mage_high:
-            messageStrings[1663]
+            messageStringsByID[1663]
         case .archer_high:
-            messageStrings[1664]
+            messageStringsByID[1664]
         case .acolyte_high:
-            messageStrings[1665]
+            messageStringsByID[1665]
         case .merchant_high:
-            messageStrings[1666]
+            messageStringsByID[1666]
         case .thief_high:
-            messageStrings[1667]
+            messageStringsByID[1667]
         case .lord_knight, .lord_knight2:
-            messageStrings[1668]
+            messageStringsByID[1668]
         case .high_priest:
-            messageStrings[1669]
+            messageStringsByID[1669]
         case .high_wizard:
-            messageStrings[1670]
+            messageStringsByID[1670]
         case .whitesmith:
-            messageStrings[1671]
+            messageStringsByID[1671]
         case .sniper:
-            messageStrings[1672]
+            messageStringsByID[1672]
         case .assassin_cross:
-            messageStrings[1673]
+            messageStringsByID[1673]
         case .paladin, .paladin2:
-            messageStrings[1674]
+            messageStringsByID[1674]
         case .champion:
-            messageStrings[1675]
+            messageStringsByID[1675]
         case .professor:
-            messageStrings[1676]
+            messageStringsByID[1676]
         case .stalker:
-            messageStrings[1677]
+            messageStringsByID[1677]
         case .creator:
-            messageStrings[1678]
+            messageStringsByID[1678]
         case .clown:
-            messageStrings[1679]
+            messageStringsByID[1679]
         case .gypsy:
-            messageStrings[1680]
+            messageStringsByID[1680]
         case .baby:
             nil
         case .baby_swordman:
@@ -167,11 +167,11 @@ final public class MessageStringTable: Resource {
         case .super_baby:
             nil
         case .taekwon:
-            messageStrings[1686]
+            messageStringsByID[1686]
         case .star_gladiator, .star_gladiator2:
-            messageStrings[1687]
+            messageStringsByID[1687]
         case .soul_linker:
-            messageStrings[1688]
+            messageStringsByID[1688]
         case .gangsi:
             nil
         case .death_knight:
@@ -179,31 +179,31 @@ final public class MessageStringTable: Resource {
         case .dark_collector:
             nil
         case .rune_knight, .rune_knight_t, .rune_knight2, .rune_knight_t2:
-            messageStrings[1649]
+            messageStringsByID[1649]
         case .warlock, .warlock_t:
-            messageStrings[1650]
+            messageStringsByID[1650]
         case .ranger, .ranger_t, .ranger2, .ranger_t2:
-            messageStrings[1651]
+            messageStringsByID[1651]
         case .arch_bishop, .arch_bishop_t:
-            messageStrings[1652]
+            messageStringsByID[1652]
         case .mechanic, .mechanic_t, .mechanic2, .mechanic_t2:
-            messageStrings[1653]
+            messageStringsByID[1653]
         case .guillotine_cross, .guillotine_cross_t:
-            messageStrings[1654]
+            messageStringsByID[1654]
         case .royal_guard, .royal_guard_t, .royal_guard2, .royal_guard_t2:
-            messageStrings[1655]
+            messageStringsByID[1655]
         case .sorcerer, .sorcerer_t:
-            messageStrings[1656]
+            messageStringsByID[1656]
         case .minstrel, .minstrel_t:
-            messageStrings[1657]
+            messageStringsByID[1657]
         case .wanderer, .wanderer_t:
-            messageStrings[1658]
+            messageStringsByID[1658]
         case .sura, .sura_t:
-            messageStrings[1659]
+            messageStringsByID[1659]
         case .genetic, .genetic_t:
-            messageStrings[1660]
+            messageStringsByID[1660]
         case .shadow_chaser, .shadow_chaser_t:
-            messageStrings[1661]
+            messageStringsByID[1661]
         case .baby_rune_knight:
             nil
         case .baby_warlock:
@@ -359,17 +359,19 @@ extension ResourceManager {
 
             let encoding = locale.language.preferredEncoding
 
-            var messageStrings: [String] = []
+            var lineNumber = 0
+            var messageStringsByID: [Int : String] = [:]
 
             while let line = reader.readLine() {
                 var messageString = line.transcoding(from: .isoLatin1, to: encoding) ?? ""
                 if messageString.hasSuffix("#") {
                     messageString.removeLast()
                 }
-                messageStrings.append(messageString)
+                messageStringsByID[lineNumber] = messageString
+                lineNumber += 1
             }
 
-            return MessageStringTable(messageStrings: messageStrings)
+            return MessageStringTable(messageStringsByID: messageStringsByID)
         }
 
         tasks.withLock {
