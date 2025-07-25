@@ -6,11 +6,12 @@
 //
 
 import XCTest
+import rAthenaResources
 @testable import RODatabase
 
 final class MonsterSummonDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let sourceURL = Bundle.module.resourceURL!
+        let sourceURL = ServerResourceManager.shared.sourceURL
         let database = MonsterSummonDatabase(sourceURL: sourceURL, mode: .prerenewal)
 
         let bloodyDeadBranch = await database.monsterSummon(forGroup: "Bloody_Dead_Branch")!
@@ -19,7 +20,7 @@ final class MonsterSummonDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let sourceURL = Bundle.module.resourceURL!
+        let sourceURL = ServerResourceManager.shared.sourceURL
         let database = MonsterSummonDatabase(sourceURL: sourceURL, mode: .renewal)
 
         let bloodyDeadBranch = await database.monsterSummon(forGroup: "BLOODY_DEAD_BRANCH")!

@@ -6,11 +6,12 @@
 //
 
 import XCTest
+import rAthenaResources
 @testable import RODatabase
 
 final class SkillDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let sourceURL = Bundle.module.resourceURL!
+        let sourceURL = ServerResourceManager.shared.sourceURL
         let database = SkillDatabase(sourceURL: sourceURL, mode: .prerenewal)
 
         let napalmBeat = await database.skill(forAegisName: "MG_NAPALMBEAT")!
@@ -55,7 +56,7 @@ final class SkillDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let sourceURL = Bundle.module.resourceURL!
+        let sourceURL = ServerResourceManager.shared.sourceURL
         let database = SkillDatabase(sourceURL: sourceURL, mode: .renewal)
 
         let napalmBeat = await database.skill(forAegisName: "MG_NAPALMBEAT")!

@@ -6,11 +6,12 @@
 //
 
 import XCTest
+import rAthenaResources
 @testable import RODatabase
 
 final class StatusChangeDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let sourceURL = Bundle.module.resourceURL!
+        let sourceURL = ServerResourceManager.shared.sourceURL
         let database = StatusChangeDatabase(sourceURL: sourceURL, mode: .prerenewal)
 
         let stone = await database.statusChange(for: .stone)!
@@ -27,7 +28,7 @@ final class StatusChangeDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let sourceURL = Bundle.module.resourceURL!
+        let sourceURL = ServerResourceManager.shared.sourceURL
         let database = StatusChangeDatabase(sourceURL: sourceURL, mode: .renewal)
 
         let stone = await database.statusChange(for: .stone)!

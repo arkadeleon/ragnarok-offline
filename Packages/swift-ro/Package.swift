@@ -68,10 +68,6 @@ let package = Package(
             name: "RODatabaseTests",
             dependencies: [
                 "RODatabase",
-            ],
-            resources: [
-                .copy("Resources/db"),
-                .copy("Resources/npc"),
             ]),
         .target(
             name: "ROFileFormats",

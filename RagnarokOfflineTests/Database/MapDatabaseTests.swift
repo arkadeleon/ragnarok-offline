@@ -6,11 +6,12 @@
 //
 
 import XCTest
+import rAthenaResources
 @testable import RODatabase
 
 final class MapDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let sourceURL = Bundle.module.resourceURL!
+        let sourceURL = ServerResourceManager.shared.sourceURL
         let database = MapDatabase(sourceURL: sourceURL, mode: .prerenewal)
 
         let alberta = await database.map(forName: "alberta")!
@@ -20,7 +21,7 @@ final class MapDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let sourceURL = Bundle.module.resourceURL!
+        let sourceURL = ServerResourceManager.shared.sourceURL
         let database = MapDatabase(sourceURL: sourceURL, mode: .renewal)
 
         let alberta = await database.map(forName: "alberta")!

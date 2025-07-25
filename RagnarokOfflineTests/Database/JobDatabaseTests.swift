@@ -6,11 +6,12 @@
 //
 
 import XCTest
+import rAthenaResources
 @testable import RODatabase
 
 final class JobDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let sourceURL = Bundle.module.resourceURL!
+        let sourceURL = ServerResourceManager.shared.sourceURL
         let database = JobDatabase(sourceURL: sourceURL, mode: .prerenewal)
 
         let novice = await database.jobs().first(where: { $0.id == .novice })!
@@ -23,7 +24,7 @@ final class JobDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let sourceURL = Bundle.module.resourceURL!
+        let sourceURL = ServerResourceManager.shared.sourceURL
         let database = JobDatabase(sourceURL: sourceURL, mode: .renewal)
 
         let novice = await database.jobs().first(where: { $0.id == .novice })!

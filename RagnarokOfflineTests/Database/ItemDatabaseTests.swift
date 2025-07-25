@@ -6,7 +6,8 @@
 //
 
 import XCTest
-import ROConstants
+import rAthenaResources
+@testable import ROConstants
 @testable import RODatabase
 
 final class ItemDatabaseTests: XCTestCase {
@@ -19,7 +20,7 @@ final class ItemDatabaseTests: XCTestCase {
     }
 
     func testPrerenewal() async throws {
-        let sourceURL = Bundle.module.resourceURL!
+        let sourceURL = ServerResourceManager.shared.sourceURL
         let database = ItemDatabase(sourceURL: sourceURL, mode: .prerenewal)
 
         let redPotion = await database.item(forAegisName: "Red_Potion")!
@@ -126,7 +127,7 @@ final class ItemDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let sourceURL = Bundle.module.resourceURL!
+        let sourceURL = ServerResourceManager.shared.sourceURL
         let database = ItemDatabase(sourceURL: sourceURL, mode: .renewal)
 
         let redPotion = await database.item(forAegisName: "Red_Potion")!

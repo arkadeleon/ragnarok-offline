@@ -6,11 +6,12 @@
 //
 
 import XCTest
+import rAthenaResources
 @testable import RODatabase
 
 final class PetDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let sourceURL = Bundle.module.resourceURL!
+        let sourceURL = ServerResourceManager.shared.sourceURL
         let database = PetDatabase(sourceURL: sourceURL, mode: .prerenewal)
 
         let poring = await database.pet(forAegisName: "PORING")!
@@ -26,7 +27,7 @@ final class PetDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let sourceURL = Bundle.module.resourceURL!
+        let sourceURL = ServerResourceManager.shared.sourceURL
         let database = PetDatabase(sourceURL: sourceURL, mode: .renewal)
 
         let poring = await database.pet(forAegisName: "PORING")!
