@@ -32,29 +32,47 @@ extension Entity {
     public static func modelEntity(rsm: RSM, instance: simd_float4x4, resourceManager: ResourceManager) async throws -> Entity {
         let model = Model(rsm: rsm, instance: instance)
 
-        var materials: [any Material] = []
-        for mesh in model.meshes {
-            let components = mesh.textureName.split(separator: "\\").map(String.init)
-            let texturePath = ResourcePath.textureDirectory.appending(components)
-            let textureImage = try? await resourceManager.image(at: texturePath, removesMagentaPixels: true)
+        let textureResources = await withTaskGroup(
+            of: (String, TextureResource?).self,
+            returning: [String : TextureResource].self
+        ) { taskGroup in
+            for mesh in model.meshes {
+                let textureName = mesh.textureName
+                taskGroup.addTask {
+                    let components = textureName.split(separator: "\\").map(String.init)
+                    let texturePath = ResourcePath.textureDirectory.appending(components)
+                    let textureImage = try? await resourceManager.image(at: texturePath, removesMagentaPixels: true)
+                    guard let textureImage else {
+                        return (textureName, nil)
+                    }
 
-            guard let textureImage else {
-                materials.append(SimpleMaterial())
-                continue
+                    let textureResource = try? await TextureResource(
+                        image: textureImage,
+                        withName: textureName,
+                        options: TextureResource.CreateOptions(semantic: .color)
+                    )
+                    return (textureName, textureResource)
+                }
             }
 
-            let textureResource = try? await TextureResource(image: textureImage, withName: mesh.textureName, options: .init(semantic: .color))
-
-            guard let textureResource else {
-                materials.append(SimpleMaterial())
-                continue
+            var textureResources: [String : TextureResource] = [:]
+            for await (textureName, textureResource) in taskGroup {
+                textureResources[textureName] = textureResource
             }
+            return textureResources
+        }
 
-            var material = PhysicallyBasedMaterial()
-            material.baseColor = .init(texture: .init(textureResource))
-            material.blending = .transparent(opacity: 1.0)
-            material.opacityThreshold = 0.9999
-            materials.append(material)
+        let materials = model.meshes.map { mesh -> any Material in
+            if let textureResource = textureResources[mesh.textureName] {
+                var material = PhysicallyBasedMaterial()
+                material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(textureResource))
+                material.blending = .transparent(opacity: 1.0)
+                material.opacityThreshold = 0.9999
+                return material
+            } else {
+                let material = SimpleMaterial()
+                return material
+            }
         }
 
         let meshDescriptors = model.meshes.enumerated().map { (index, mesh) in
