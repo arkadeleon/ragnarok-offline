@@ -11,7 +11,7 @@ import rAthenaChar
 import rAthenaMap
 import rAthenaResources
 @testable import RONetwork
-import ROPackets
+@testable import ROPackets
 
 final class NetworkSessionTests: XCTestCase {
     var account: AccountInfo!

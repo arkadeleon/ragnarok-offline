@@ -6,14 +6,10 @@
 //
 
 import XCTest
-@testable import RagnarokOffline
 @testable import ROResources
 
 final class MapNameTableTests: XCTestCase {
-    let resourceManager = ResourceManager(
-        localURL: Bundle.main.resourceURL!,
-        remoteURL: URL(string: "http://127.0.0.1:8080/client")
-    )
+    let resourceManager = ResourceManager.testing
 
     func testChineseSimplified() async throws {
         let locale = Locale(languageCode: .chinese, script: .hanSimplified)

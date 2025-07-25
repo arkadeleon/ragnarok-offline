@@ -10,10 +10,7 @@ import ROConstants
 @testable import ROResources
 
 final class StatusInfoTableTests: XCTestCase {
-    let resourceManager = ResourceManager(
-        localURL: Bundle.main.resourceURL!,
-        remoteURL: URL(string: "http://127.0.0.1:8080/client")
-    )
+    let resourceManager = ResourceManager.testing
 
     func testIconName() async throws {
         let scriptContext = await resourceManager.scriptContext(for: .current)

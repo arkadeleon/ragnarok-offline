@@ -6,13 +6,14 @@
 //
 
 import XCTest
-@testable import RagnarokOffline
 @testable import ROFileFormats
 @testable import ROResources
 
 final class FileFormatTests: XCTestCase {
+    let resourceManager = ResourceManager.testing
+
     func testACT() async throws {
-        let data = try await ResourceManager.shared.contentsOfResource(at: ["data", "sprite", "cursors.act"])
+        let data = try await resourceManager.contentsOfResource(at: ["data", "sprite", "cursors.act"])
         let act = try ACT(data: data)
 
         XCTAssertEqual(act.header, "AC")

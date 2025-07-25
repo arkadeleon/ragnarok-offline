@@ -9,10 +9,7 @@ import XCTest
 @testable import ROResources
 
 final class MP3NameTableTests: XCTestCase {
-    let resourceManager = ResourceManager(
-        localURL: Bundle.main.resourceURL!,
-        remoteURL: URL(string: "http://127.0.0.1:8080/client")
-    )
+    let resourceManager = ResourceManager.testing
 
     func testMP3NameTable() async throws {
         let mp3NameTable = await resourceManager.mp3NameTable()

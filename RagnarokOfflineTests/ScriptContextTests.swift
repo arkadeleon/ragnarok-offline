@@ -6,14 +6,11 @@
 //
 
 import XCTest
-import ROCore
+@testable import ROCore
 @testable import ROResources
 
 final class ScriptContextTests: XCTestCase {
-    let resourceManager = ResourceManager(
-        localURL: Bundle.main.resourceURL!,
-        remoteURL: URL(string: "http://127.0.0.1:8080/client")
-    )
+    let resourceManager = ResourceManager.testing
 
     var scriptContext: ScriptContext {
         get async {
