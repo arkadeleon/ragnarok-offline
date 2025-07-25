@@ -93,20 +93,21 @@ class MapScene3D: MapSceneProtocol {
         PlaySpriteAnimationActionHandler.register { _ in
             PlaySpriteAnimationActionHandler()
         }
-    }
 
-    func load() async {
         FromToByAction<Transform>.subscribe(to: .terminated) { event in
             if let spriteEntity = event.targetEntity as? SpriteEntity {
                 spriteEntity.playSpriteAnimation(at: 0, repeats: true)
             }
         }
+    }
 
+    func load() async {
         rootEntity.addChild(cameraHelper)
 
         let group = ModelSortGroup()
 
         if let worldEntity = try? await Entity.worldEntity(world: world, resourceManager: resourceManager) {
+            worldEntity.name = mapName
             worldEntity.components.set(ModelSortGroupComponent(group: group, order: 0))
             worldEntity.transform = Transform(rotation: simd_quatf(angle: radians(-180), axis: [1, 0, 0]))
 
@@ -150,9 +151,9 @@ class MapScene3D: MapSceneProtocol {
     }
 
     func unload() {
-        FromToByAction<Transform>.unsubscribeAll()
-
-        rootEntity.stopAllAudio()
+        if let worldEntity = rootEntity.findEntity(named: mapName) {
+            worldEntity.stopAllAudio()
+        }
     }
 
     private func transform(for position2D: SIMD2<Int>) -> Transform {
@@ -192,8 +193,9 @@ class MapScene3D: MapSceneProtocol {
         return position + [0.5, 2, 0]
     }
 
-    private func audioResource(forMapName: String) async -> AudioResource? {
-        guard let mp3Name = await resourceManager.mp3NameTable().mp3Name(forMapName: mapName) else {
+    private func audioResource(forMapName mapName: String) async -> AudioResource? {
+        let mp3NameTable = await resourceManager.mp3NameTable()
+        guard let mp3Name = mp3NameTable.mp3Name(forMapName: mapName) else {
             return nil
         }
 

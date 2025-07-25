@@ -52,6 +52,9 @@ final public class GameSession {
     @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
 
+    @ObservationIgnored
+    private var sceneSubscriptions = Set<AnyCancellable>()
+
     public init() {
     }
 
@@ -247,6 +250,19 @@ final public class GameSession {
         let mapSession = MapSession(account: account, char: char, mapServer: mapServer)
 
         mapSession.subscribe(to: MapEvents.Changed.self) { event in
+            if case .map(let scene) = self.phase {
+                switch scene {
+                case let scene as MapScene2D:
+                    break
+                case let scene as MapScene3D:
+                    scene.unload()
+                default:
+                    break
+                }
+
+                self.sceneSubscriptions.removeAll()
+            }
+
             self.phase = .mapLoading
 
             Task {
@@ -327,47 +343,47 @@ final public class GameSession {
         mapSession.subscribe(to: PlayerEvents.Moved.self) { event in
             scene.onPlayerMoved(event)
         }
-        .store(in: &subscriptions)
+        .store(in: &sceneSubscriptions)
 
         mapSession.subscribe(to: ItemEvents.Spawned.self) { event in
             scene.onItemSpawned(event)
         }
-        .store(in: &subscriptions)
+        .store(in: &sceneSubscriptions)
 
         mapSession.subscribe(to: ItemEvents.Vanished.self) { event in
             scene.onItemVanished(event)
         }
-        .store(in: &subscriptions)
+        .store(in: &sceneSubscriptions)
 
         mapSession.subscribe(to: MapObjectEvents.Spawned.self) { event in
             scene.onMapObjectSpawned(event)
         }
-        .store(in: &subscriptions)
+        .store(in: &sceneSubscriptions)
 
         mapSession.subscribe(to: MapObjectEvents.Moved.self) { event in
             scene.onMapObjectMoved(event)
         }
-        .store(in: &subscriptions)
+        .store(in: &sceneSubscriptions)
 
         mapSession.subscribe(to: MapObjectEvents.Stopped.self) { event in
             scene.onMapObjectStopped(event)
         }
-        .store(in: &subscriptions)
+        .store(in: &sceneSubscriptions)
 
         mapSession.subscribe(to: MapObjectEvents.Vanished.self) { event in
             scene.onMapObjectVanished(event)
         }
-        .store(in: &subscriptions)
+        .store(in: &sceneSubscriptions)
 
         mapSession.subscribe(to: MapObjectEvents.StateChanged.self) { event in
             scene.onMapObjectStateChanged(event)
         }
-        .store(in: &subscriptions)
+        .store(in: &sceneSubscriptions)
 
         mapSession.subscribe(to: MapObjectEvents.ActionPerformed.self) { event in
             scene.onMapObjectActionPerformed(event)
         }
-        .store(in: &subscriptions)
+        .store(in: &sceneSubscriptions)
     }
 }
 

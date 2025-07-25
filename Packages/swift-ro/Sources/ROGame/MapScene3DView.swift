@@ -30,8 +30,5 @@ struct MapScene3DView: View {
         .gesture(scene.tileTapGesture)
         .gesture(scene.mapObjectTapGesture)
         .gesture(scene.mapItemTapGesture)
-        .onDisappear {
-            scene.unload()
-        }
     }
 }
