@@ -26,15 +26,13 @@ struct ServerView: View {
                         .padding(15)
                 }
                 .buttonStyle(.bordered)
-                #if !os(macOS)
                 .buttonBorderShape(.circle)
-                #endif
             }
         }
         .background(.background)
         .navigationTitle(server.name)
         .toolbar {
-            ToolbarItemGroup(placement: .primaryAction) {
+            ToolbarItemGroup {
                 Button {
                     Task {
                         await server.stop()
@@ -54,7 +52,7 @@ struct ServerView: View {
                 .disabled(startDisabled)
             }
 
-            ToolbarItem(placement: .primaryAction) {
+            ToolbarItem {
                 Button {
                     server.clearConsole()
                 } label: {

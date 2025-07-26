@@ -12,11 +12,14 @@ struct ServerCell: View {
     var server: ServerModel
 
     var body: some View {
-        LabeledContent {
+        HStack {
+            Label(server.name, systemImage: "terminal")
+
+            Spacer()
+
             Text(server.status.localizedStringResource)
                 .font(.footnote)
-        } label: {
-            Label(server.name, systemImage: "terminal")
+                .foregroundStyle(Color.secondary)
         }
     }
 }
