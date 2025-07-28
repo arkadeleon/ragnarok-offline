@@ -85,22 +85,15 @@ struct SidebarView: View {
                 NavigationLink(value: SidebarItem.webServer) {
                     ServerCell(server: appModel.webServer)
                 }
-
-                Button {
-                    Task {
-                        try await startAllServers()
-                    }
-                } label: {
-                    Label("Start All Servers", systemImage: "play")
-                }
-                .buttonStyle(.plain)
-                .foregroundStyle(.link)
             } header: {
                 Text("Server")
                     .font(.title3)
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.primary)
                     .textCase(nil)
+            }
+            .sectionActions {
+                StartAllServersButton()
             }
 
             Section(isExpanded: $isDatabaseSectionExpanded) {
@@ -193,15 +186,6 @@ struct SidebarView: View {
             }
         }
         #endif
-    }
-
-    private func startAllServers() async throws {
-        async let startLoginServer = appModel.loginServer.start()
-        async let startCharServer = appModel.charServer.start()
-        async let startMapServer = appModel.mapServer.start()
-        async let startWebServer = appModel.webServer.start()
-
-        _ = try await (startLoginServer, startCharServer, startMapServer, startWebServer)
     }
 }
 
