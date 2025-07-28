@@ -36,14 +36,16 @@ public enum ResourceLocator: Sendable {
 final public class ResourceManager: Sendable {
     public let localURL: URL
     public let remoteURL: URL?
+    public let cachesURL: URL?
 
     let tasks = Mutex<[String : Task<any Resource, Never>]>([:])
 
     private let localGRFArchives: [GRFArchive]
 
-    public init(localURL: URL, remoteURL: URL?) {
+    public init(localURL: URL, remoteURL: URL? = nil, cachesURL: URL? = nil) {
         self.localURL = localURL
         self.remoteURL = remoteURL
+        self.cachesURL = cachesURL
 
         let dataGRFURL = localURL.appending(path: "data.grf")
         localGRFArchives = [
@@ -82,6 +84,14 @@ final public class ResourceManager: Sendable {
             }
         }
 
+        if let cachesURL {
+            let cachedFileURL = cachesURL.absoluteURL.appending(path: L2K(path))
+            if FileManager.default.fileExists(atPath: cachedFileURL.path(percentEncoded: false)) {
+                let data = try Data(contentsOf: cachedFileURL)
+                return data
+            }
+        }
+
         if let remoteURL {
             logger.info("Start downloading resource: \(path)")
 
@@ -93,9 +103,11 @@ final public class ResourceManager: Sendable {
                 throw ResourceError.resourceNotFound(path)
             }
 
-            let cacheURL = localURL.absoluteURL.appending(path: "Caches").appending(path: L2K(path))
-            try? FileManager.default.createDirectory(at: cacheURL.deletingLastPathComponent(), withIntermediateDirectories: true)
-            try? data.write(to: cacheURL)
+            if let cachesURL {
+                let cachedFileURL = cachesURL.appending(path: L2K(path))
+                try? FileManager.default.createDirectory(at: cachedFileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+                try? data.write(to: cachedFileURL)
+            }
 
             return data
         }
@@ -120,6 +132,14 @@ final public class ResourceManager: Sendable {
             }
         }
 
+        if let cachesURL {
+            let cachedFileURL = cachesURL.absoluteURL.appending(path: L2K(path))
+            if FileManager.default.fileExists(atPath: cachedFileURL.path(percentEncoded: false)) {
+                let data = try Data(contentsOf: cachedFileURL)
+                return data
+            }
+        }
+
         if let remoteURL {
             logger.info("Start downloading resource: \(path)")
 
@@ -136,9 +156,11 @@ final public class ResourceManager: Sendable {
                 throw ResourceError.resourceNotFound(path)
             }
 
-            let cacheURL = localURL.absoluteURL.appending(path: "Caches").appending(path: L2K(path))
-            try? FileManager.default.createDirectory(at: cacheURL.deletingLastPathComponent(), withIntermediateDirectories: true)
-            try? data.write(to: cacheURL)
+            if let cachesURL {
+                let cachedFileURL = cachesURL.appending(path: L2K(path))
+                try? FileManager.default.createDirectory(at: cachedFileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+                try? data.write(to: cachedFileURL)
+            }
 
             return data
         }

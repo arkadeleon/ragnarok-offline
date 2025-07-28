@@ -51,6 +51,8 @@ struct ContentView: View {
         switch item {
         case .clientFiles:
             FilesView(title: "Files", directory: appModel.clientDirectory)
+        case .clientCachedFiles:
+            FilesView(title: "Cached Files", directory: appModel.clientCachesDirectory)
         case .serverFiles:
             FilesView(title: "Files", directory: appModel.serverDirectory)
         case .loginServer:

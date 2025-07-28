@@ -8,9 +8,13 @@
 import Foundation
 import ROResources
 
+let localClientURL = URL.documentsDirectory
+let remoteClientCachesURL = URL.cachesDirectory.appending(path: "com.github.arkadeleon.ragnarok-offline-remote-client")
+
 extension ResourceManager {
     static let shared = ResourceManager(
-        localURL: .documentsDirectory,
-        remoteURL: URL(string: ClientSettings.shared.remoteClient)
+        localURL: localClientURL,
+        remoteURL: URL(string: ClientSettings.shared.remoteClient),
+        cachesURL: remoteClientCachesURL
     )
 }

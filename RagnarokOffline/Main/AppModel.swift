@@ -16,9 +16,10 @@ import ROResources
 @MainActor
 @Observable
 final class AppModel {
-    let clientDirectory = File(node: .directory(ResourceManager.shared.localURL))
-    let serverDirectory = File(node: .directory(ServerResourceManager.shared.workingDirectoryURL))
+    let clientDirectory = File(node: .directory(localClientURL))
+    let clientCachesDirectory = File(node: .directory(remoteClientCachesURL))
 
+    let serverDirectory = File(node: .directory(ServerResourceManager.shared.workingDirectoryURL))
     let loginServer = ServerModel(server: LoginServer.shared)
     let charServer = ServerModel(server: CharServer.shared)
     let mapServer = ServerModel(server: MapServer.shared)

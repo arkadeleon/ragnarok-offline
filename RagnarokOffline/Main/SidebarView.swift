@@ -10,6 +10,7 @@ import SwiftUI
 
 enum SidebarItem: Hashable {
     case clientFiles
+    case clientCachedFiles
 
     case serverFiles
     case loginServer
@@ -49,6 +50,10 @@ struct SidebarView: View {
             Section(isExpanded: $isClientSectionExpanded) {
                 NavigationLink(value: SidebarItem.clientFiles) {
                     Label("Files", systemImage: "folder")
+                }
+
+                NavigationLink(value: SidebarItem.clientCachedFiles) {
+                    Label("Cached Files", systemImage: "folder")
                 }
             } header: {
                 Text("Client")
