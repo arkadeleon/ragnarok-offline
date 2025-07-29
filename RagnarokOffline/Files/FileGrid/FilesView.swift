@@ -83,6 +83,7 @@ struct FilesView: View {
                     fileToPreview = nil
                 }
             }
+            .presentationSizing(.page)
         }
         .task {
             await load()

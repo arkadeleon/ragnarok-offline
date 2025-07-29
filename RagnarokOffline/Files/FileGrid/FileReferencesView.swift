@@ -39,6 +39,7 @@ struct FileReferencesView: View {
                     fileToPreview = nil
                 }
             }
+            .presentationSizing(.page)
         }
         .task {
             referenceFiles = await file.referenceFiles()

@@ -43,6 +43,7 @@ struct ContentView: View {
                     incomingFile = nil
                 }
             }
+            .presentationSizing(.page)
         }
     }
 

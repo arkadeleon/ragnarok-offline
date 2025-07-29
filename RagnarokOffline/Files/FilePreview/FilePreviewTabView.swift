@@ -15,13 +15,12 @@ struct FilePreviewTabView: View {
     var body: some View {
         #if os(macOS)
         FilePreviewView(file: currentFile)
-            .frame(height: 400)
             .navigationTitle(currentFile.name)
             .toolbar {
-                ToolbarItem(placement: .automatic) {
+                ToolbarItem {
                     ShareLink(item: currentFile, preview: SharePreview(currentFile.name))
                 }
-                ToolbarItem(placement: .cancellationAction) {
+                ToolbarItem(placement: .confirmationAction) {
                     Button("Done", action: onDone)
                 }
             }
@@ -36,13 +35,11 @@ struct FilePreviewTabView: View {
         .navigationTitle(currentFile.name)
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem {
                 ShareLink(item: currentFile, preview: SharePreview(currentFile.name))
             }
-            ToolbarItem(placement: .topBarLeading) {
-                Button(action: onDone) {
-                    Image(systemName: "chevron.left")
-                }
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Done", action: onDone)
             }
         }
         #endif

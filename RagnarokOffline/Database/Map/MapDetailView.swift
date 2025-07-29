@@ -14,7 +14,7 @@ struct MapDetailView: View {
 
     @Environment(AppModel.self) private var appModel
 
-    @State private var isMapViewerPresented = false
+    @State private var mapForMapViewer: MapModel?
 
     var body: some View {
         DatabaseRecordDetailView {
@@ -49,15 +49,16 @@ struct MapDetailView: View {
         .navigationTitle(map.displayName)
         .toolbar {
             Button("View") {
-                isMapViewerPresented.toggle()
+                mapForMapViewer = map
             }
         }
-        .sheet(isPresented: $isMapViewerPresented) {
+        .sheet(item: $mapForMapViewer) { map in
             NavigationStack {
                 MapViewer(mapName: map.name) {
-                    isMapViewerPresented.toggle()
+                    mapForMapViewer = nil
                 }
             }
+            .presentationSizing(.page)
         }
         .task {
             await map.fetchDetail(monsterDatabase: appModel.monsterDatabase)

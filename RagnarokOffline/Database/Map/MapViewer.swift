@@ -30,7 +30,7 @@ struct MapViewer: View {
     }
 
     private func loadEntity() async throws -> Entity {
-        let worldPath: ResourcePath = ["data", mapName]
+        let worldPath = ResourcePath(components: ["data", mapName])
         let world = try await ResourceManager.shared.world(at: worldPath)
 
         let worldEntity = try await Entity.worldEntity(world: world, resourceManager: .shared)
