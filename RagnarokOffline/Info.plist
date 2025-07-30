@@ -5,6 +5,8 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 			<key>CFBundleTypeName</key>
 			<string>Gravity Ragnarok Files</string>
 			<key>LSHandlerRank</key>
@@ -15,6 +17,8 @@
 			</array>
 		</dict>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 			<key>CFBundleTypeName</key>
 			<string>Action</string>
 			<key>LSHandlerRank</key>
@@ -25,6 +29,8 @@
 			</array>
 		</dict>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 			<key>CFBundleTypeName</key>
 			<string>Emblem</string>
 			<key>LSHandlerRank</key>
@@ -35,6 +41,8 @@
 			</array>
 		</dict>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 			<key>CFBundleTypeName</key>
 			<string>Altitude</string>
 			<key>LSHandlerRank</key>
@@ -45,6 +53,8 @@
 			</array>
 		</dict>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 			<key>CFBundleTypeName</key>
 			<string>Ground</string>
 			<key>LSHandlerRank</key>
@@ -55,6 +65,8 @@
 			</array>
 		</dict>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 			<key>CFBundleTypeName</key>
 			<string>Palette</string>
 			<key>LSHandlerRank</key>
@@ -65,6 +77,8 @@
 			</array>
 		</dict>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 			<key>CFBundleTypeName</key>
 			<string>Model</string>
 			<key>LSHandlerRank</key>
@@ -75,6 +89,8 @@
 			</array>
 		</dict>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 			<key>CFBundleTypeName</key>
 			<string>World</string>
 			<key>LSHandlerRank</key>
@@ -85,6 +101,8 @@
 			</array>
 		</dict>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 			<key>CFBundleTypeName</key>
 			<string>Sprite</string>
 			<key>LSHandlerRank</key>
@@ -95,6 +113,8 @@
 			</array>
 		</dict>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 			<key>CFBundleTypeName</key>
 			<string>Effect</string>
 			<key>LSHandlerRank</key>
@@ -105,6 +125,8 @@
 			</array>
 		</dict>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 			<key>CFBundleTypeName</key>
 			<string>Lua</string>
 			<key>LSHandlerRank</key>
@@ -115,6 +137,8 @@
 			</array>
 		</dict>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 			<key>CFBundleTypeName</key>
 			<string>Lub</string>
 			<key>LSHandlerRank</key>
@@ -125,6 +149,8 @@
 			</array>
 		</dict>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 			<key>CFBundleTypeName</key>
 			<string>IMF</string>
 			<key>LSHandlerRank</key>
