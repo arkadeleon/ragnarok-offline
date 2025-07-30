@@ -43,6 +43,7 @@ struct SidebarView: View {
     @AppStorage("databaseSectionExpanded") private var isDatabaseSectionExpanded = true
     @AppStorage("toolsSectionExpanded") private var isToolsSectionExpanded = true
 
+    @State private var isHelpPresented = false
     @State private var isSettingsPresented = false
 
     var body: some View {
@@ -166,26 +167,39 @@ struct SidebarView: View {
         }
         .listStyle(.sidebar)
         .navigationTitle(String("Ragnarok Offline"))
-        #if DEBUG
         .toolbar {
             Menu {
+                Button {
+                    isHelpPresented.toggle()
+                } label: {
+                    Label("Help", systemImage: "questionmark.circle")
+                }
+
+                #if DEBUG
                 Button {
                     isSettingsPresented.toggle()
                 } label: {
                     Label("Settings", systemImage: "gearshape")
                 }
+                #endif
             } label: {
                 Image(systemName: "ellipsis.circle")
             }
-            .sheet(isPresented: $isSettingsPresented) {
-                NavigationStack {
-                    SettingsView {
-                        isSettingsPresented.toggle()
-                    }
+        }
+        .sheet(isPresented: $isHelpPresented) {
+            NavigationStack {
+                HelpView {
+                    isHelpPresented.toggle()
                 }
             }
         }
-        #endif
+        .sheet(isPresented: $isSettingsPresented) {
+            NavigationStack {
+                SettingsView {
+                    isSettingsPresented.toggle()
+                }
+            }
+        }
     }
 }
 

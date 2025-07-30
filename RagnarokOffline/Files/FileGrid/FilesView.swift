@@ -18,7 +18,6 @@ struct FilesView: View {
     @State private var files: [File] = []
     @State private var filteredFiles: [File] = []
 
-    @State private var isHelpPresented = false
     @State private var fileToPreview: File?
 
     var body: some View {
@@ -56,26 +55,12 @@ struct FilesView: View {
             FilesView(title: file.name, directory: file)
         }
         .navigationTitle(title)
-        .toolbar {
-            Button {
-                isHelpPresented.toggle()
-            } label: {
-                Image(systemName: "questionmark.circle")
-            }
-        }
         .searchable(text: $searchText, placement: searchFieldPlacement(sizeClass))
         .onSubmit(of: .search) {
             filterFiles()
         }
         .onChange(of: searchText) {
             filterFiles()
-        }
-        .sheet(isPresented: $isHelpPresented) {
-            NavigationStack {
-                FileHelpView {
-                    isHelpPresented.toggle()
-                }
-            }
         }
         .sheet(item: $fileToPreview) { file in
             NavigationStack {
