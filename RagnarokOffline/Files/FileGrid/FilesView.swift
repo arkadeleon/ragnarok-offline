@@ -55,6 +55,17 @@ struct FilesView: View {
             FilesView(title: file.name, directory: file)
         }
         .navigationTitle(title)
+        .toolbar {
+            #if os(macOS)
+            if directory.utType == .folder {
+                Button {
+                    NSWorkspace.shared.activateFileViewerSelecting([directory.url])
+                } label: {
+                    Image(systemName: "folder")
+                }
+            }
+            #endif
+        }
         .searchable(text: $searchText, placement: searchFieldPlacement(sizeClass))
         .onSubmit(of: .search) {
             filterFiles()
