@@ -13,10 +13,13 @@ struct JobProvider: DatabaseRecordProvider {
         let jobs = await database.jobs().map { job in
             JobModel(mode: mode, job: job)
         }
+        return jobs
+    }
+
+    func prefetchRecords(_ jobs: [JobModel], appModel: AppModel) async {
         for job in jobs {
             await job.fetchLocalizedName()
         }
-        return jobs
     }
 
     func records(matching searchText: String, in jobs: [JobModel]) async -> [JobModel] {

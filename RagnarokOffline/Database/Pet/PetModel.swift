@@ -71,25 +71,30 @@ final class PetModel {
 
         if let tameItem = pet.tameItem {
             if let item = await itemDatabase.item(forAegisName: tameItem) {
-                self.tameItem = await ItemModel(mode: mode, item: item)
+                self.tameItem = ItemModel(mode: mode, item: item)
             }
         }
 
         if let item = await itemDatabase.item(forAegisName: pet.eggItem) {
-            self.eggItem = await ItemModel(mode: mode, item: item)
+            self.eggItem = ItemModel(mode: mode, item: item)
         }
 
         if let equipItem = pet.equipItem {
             if let item = await itemDatabase.item(forAegisName: equipItem) {
-                self.equipItem = await ItemModel(mode: mode, item: item)
+                self.equipItem = ItemModel(mode: mode, item: item)
             }
         }
 
         if let foodItem = pet.foodItem {
             if let item = await itemDatabase.item(forAegisName: foodItem) {
-                self.foodItem = await ItemModel(mode: mode, item: item)
+                self.foodItem = ItemModel(mode: mode, item: item)
             }
         }
+
+        await tameItem?.fetchLocalizedName()
+        await eggItem?.fetchLocalizedName()
+        await equipItem?.fetchLocalizedName()
+        await foodItem?.fetchLocalizedName()
     }
 }
 

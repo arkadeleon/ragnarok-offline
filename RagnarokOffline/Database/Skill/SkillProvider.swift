@@ -10,14 +10,16 @@ import RODatabase
 struct SkillProvider: DatabaseRecordProvider {
     func records(for mode: DatabaseMode) async -> [SkillModel] {
         let database = SkillDatabase.shared
-        let skills = await database.skills()
-
-        var records: [SkillModel] = []
-        for skill in skills {
-            let record = await SkillModel(mode: mode, skill: skill)
-            records.append(record)
+        let skills = await database.skills().map { skill in
+            SkillModel(mode: mode, skill: skill)
         }
-        return records
+        return skills
+    }
+
+    func prefetchRecords(_ skills: [SkillModel], appModel: AppModel) async {
+        for skill in skills {
+            await skill.fetchLocalizedName()
+        }
     }
 
     func records(matching searchText: String, in skills: [SkillModel]) async -> [SkillModel] {

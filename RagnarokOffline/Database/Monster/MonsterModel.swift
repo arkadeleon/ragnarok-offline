@@ -38,8 +38,7 @@ final class MonsterModel {
     private let mode: DatabaseMode
     private let monster: Monster
 
-    private var localizedName: String?
-
+    var localizedName: String?
     var animatedImage: AnimatedImage?
     var mvpDropItems: [DropItem] = []
     var dropItems: [DropItem] = []
@@ -165,7 +164,7 @@ final class MonsterModel {
             var mvpDropItems: [DropItem] = []
             for (index, drop) in mvpDrops.enumerated() {
                 if let item = await itemDatabase.item(forAegisName: drop.item) {
-                    let item = await ItemModel(mode: mode, item: item)
+                    let item = ItemModel(mode: mode, item: item)
                     let dropItem = DropItem(index: index, drop: drop, item: item)
                     mvpDropItems.append(dropItem)
                 }
@@ -177,7 +176,7 @@ final class MonsterModel {
             var dropItems: [DropItem] = []
             for (index, drop) in drops.enumerated() {
                 if let item = await itemDatabase.item(forAegisName: drop.item) {
-                    let item = await ItemModel(mode: mode, item: item)
+                    let item = ItemModel(mode: mode, item: item)
                     let dropItem = DropItem(index: index, drop: drop, item: item)
                     dropItems.append(dropItem)
                 }
@@ -199,6 +198,14 @@ final class MonsterModel {
             }
         }
         self.spawnMaps = spawnMaps
+
+        for dropItem in mvpDropItems {
+            await dropItem.item.fetchLocalizedName()
+        }
+
+        for dropItem in dropItems {
+            await dropItem.item.fetchLocalizedName()
+        }
     }
 }
 

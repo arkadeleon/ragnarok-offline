@@ -13,10 +13,13 @@ struct MonsterProvider: DatabaseRecordProvider {
         let monsters = await database.monsters().map { monster in
             MonsterModel(mode: mode, monster: monster)
         }
+        return monsters
+    }
+
+    func prefetchRecords(_ monsters: [MonsterModel], appModel: AppModel) async {
         for monster in monsters {
             await monster.fetchLocalizedName()
         }
-        return monsters
     }
 
     func records(matching searchText: String, in monsters: [MonsterModel]) async -> [MonsterModel] {

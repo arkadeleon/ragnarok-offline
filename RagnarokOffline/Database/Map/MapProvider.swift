@@ -13,10 +13,13 @@ struct MapProvider: DatabaseRecordProvider {
         let maps = await database.maps().map { map in
             MapModel(mode: mode, map: map)
         }
+        return maps
+    }
+
+    func prefetchRecords(_ maps: [MapModel], appModel: AppModel) async {
         for map in maps {
             await map.fetchLocalizedName()
         }
-        return maps
     }
 
     func records(matching searchText: String, in maps: [MapModel]) async -> [MapModel] {

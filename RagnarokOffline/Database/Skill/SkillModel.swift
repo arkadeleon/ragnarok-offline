@@ -18,8 +18,7 @@ final class SkillModel {
     private let mode: DatabaseMode
     private let skill: Skill
 
-    private let localizedName: String?
-
+    var localizedName: String?
     var iconImage: CGImage?
     var localizedDescription: AttributedString?
 
@@ -53,16 +52,18 @@ final class SkillModel {
         return attributes
     }
 
-    init(mode: DatabaseMode, skill: Skill) async {
+    init(mode: DatabaseMode, skill: Skill) {
         self.mode = mode
         self.skill = skill
-
-        let scriptContext = await ResourceManager.shared.scriptContext(for: .current)
-        self.localizedName = scriptContext.localizedSkillName(forSkillID: skill.id)
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Skill, Value>) -> Value {
         skill[keyPath: keyPath]
+    }
+
+    func fetchLocalizedName() async {
+        let scriptContext = await ResourceManager.shared.scriptContext(for: .current)
+        localizedName = scriptContext.localizedSkillName(forSkillID: skill.id)
     }
 
     @MainActor

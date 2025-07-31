@@ -25,8 +25,7 @@ final class MapModel {
     private let mode: DatabaseMode
     private let map: Map
 
-    private var localizedName: String?
-
+    var localizedName: String?
     var image: CGImage?
     var spawningMonsters: [SpawningMonster] = []
 

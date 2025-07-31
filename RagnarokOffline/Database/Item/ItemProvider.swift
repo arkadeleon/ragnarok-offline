@@ -12,10 +12,8 @@ struct ItemProvider: DatabaseRecordProvider {
         let database = ItemDatabase.shared
         let usableItems = await database.usableItems()
 
-        var items: [ItemModel] = []
-        for item in usableItems {
-            let item = await ItemModel(mode: mode, item: item)
-            items.append(item)
+        let items = usableItems.map { item in
+            ItemModel(mode: mode, item: item)
         }
         return items
     }
@@ -25,12 +23,16 @@ struct ItemProvider: DatabaseRecordProvider {
         let equipItems = await database.equipItems()
         let etcItems = await database.etcItems()
 
-        var items: [ItemModel] = []
-        for item in equipItems + etcItems {
-            let item = await ItemModel(mode: mode, item: item)
-            items.append(item)
+        let items = (equipItems + etcItems).map { item in
+            ItemModel(mode: mode, item: item)
         }
         return items
+    }
+
+    func prefetchRecords(_ items: [ItemModel], appModel: AppModel) async {
+        for item in items {
+            await item.fetchLocalizedName()
+        }
     }
 
     func records(matching searchText: String, in items: [ItemModel]) async -> [ItemModel] {

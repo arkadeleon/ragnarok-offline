@@ -41,8 +41,7 @@ final class JobModel {
     private let mode: DatabaseMode
     private let job: Job
 
-    private var localizedName: String?
-
+    var localizedName: String?
     var animatedImage: AnimatedImage?
     var skills: [SkillModel] = []
 
@@ -146,11 +145,15 @@ final class JobModel {
             var skills: [SkillModel] = []
             for s in skillTree {
                 if let skill = await skillDatabase.skill(forAegisName: s.name) {
-                    let skill = await SkillModel(mode: mode, skill: skill)
+                    let skill = SkillModel(mode: mode, skill: skill)
                     skills.append(skill)
                 }
             }
             self.skills = skills
+        }
+
+        for skill in skills {
+            await skill.fetchLocalizedName()
         }
     }
 }

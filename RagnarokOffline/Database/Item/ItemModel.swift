@@ -27,8 +27,7 @@ final class ItemModel {
     private let mode: DatabaseMode
     private let item: Item
 
-    private let localizedName: String?
-
+    var localizedName: String?
     var iconImage: CGImage?
     var previewImage: CGImage?
     var localizedDescription: AttributedString?
@@ -129,16 +128,18 @@ final class ItemModel {
             .joined(separator: "\n")
     }
 
-    init(mode: DatabaseMode, item: Item) async {
+    init(mode: DatabaseMode, item: Item) {
         self.mode = mode
         self.item = item
-
-        let itemInfoTable = await ResourceManager.shared.itemInfoTable(for: .current)
-        self.localizedName = itemInfoTable.localizedIdentifiedItemName(forItemID: item.id)
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Item, Value>) -> Value {
         item[keyPath: keyPath]
+    }
+
+    func fetchLocalizedName() async {
+        let itemInfoTable = await ResourceManager.shared.itemInfoTable(for: .current)
+        localizedName = itemInfoTable.localizedIdentifiedItemName(forItemID: item.id)
     }
 
     @MainActor
