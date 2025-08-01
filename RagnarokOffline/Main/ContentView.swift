@@ -18,9 +18,10 @@ struct ContentView: View {
             NavigationStack {
                 SidebarView(selection: nil)
                     .navigationDestination(for: SidebarItem.self) { item in
-                        detail(for: item)
+                        detailView(for: item)
                             .toolbarTitleDisplayMode(.inline)
                     }
+                    .navigationDestinationsForModels()
             }
         } regular: {
             NavigationSplitView {
@@ -28,8 +29,9 @@ struct ContentView: View {
             } detail: {
                 if let item = selectedItem {
                     NavigationStack {
-                        detail(for: item)
+                        detailView(for: item)
                             .toolbarTitleDisplayMode(.inline)
+                            .navigationDestinationsForModels()
                     }
                 }
             }
@@ -48,7 +50,7 @@ struct ContentView: View {
     }
 
     @ViewBuilder
-    private func detail(for item: SidebarItem) -> some View {
+    private func detailView(for item: SidebarItem) -> some View {
         switch item {
         case .clientFiles:
             FilesView(title: "Files", directory: appModel.clientDirectory)
@@ -89,5 +91,38 @@ struct ContentView: View {
         case .cube:
             RealityCubeView()
         }
+    }
+}
+
+extension View {
+    func navigationDestinationsForModels() -> some View {
+        self
+            .navigationDestination(for: File.self) { file in
+                FilesView(title: file.name, directory: file)
+            }
+            .navigationDestination(for: ItemModel.self) { item in
+                ItemDetailView(item: item)
+            }
+            .navigationDestination(for: JobModel.self) { job in
+                JobDetailView(job: job)
+            }
+            .navigationDestination(for: MapModel.self) { map in
+                MapDetailView(map: map)
+            }
+            .navigationDestination(for: MonsterModel.self) { monster in
+                MonsterDetailView(monster: monster)
+            }
+            .navigationDestination(for: MonsterSummonModel.self) { monsterSummon in
+                MonsterSummonDetailView(monsterSummon: monsterSummon)
+            }
+            .navigationDestination(for: PetModel.self) { pet in
+                PetDetailView(pet: pet)
+            }
+            .navigationDestination(for: SkillModel.self) { skill in
+                SkillDetailView(skill: skill)
+            }
+            .navigationDestination(for: StatusChangeModel.self) { statusChange in
+                StatusChangeDetailView(statusChange: statusChange)
+            }
     }
 }

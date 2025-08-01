@@ -29,30 +29,6 @@ struct DatabaseRoot<RecordProvider, Empty>: ViewModifier where RecordProvider: D
                     empty()
                 }
             }
-            .navigationDestination(for: ItemModel.self) { item in
-                ItemDetailView(item: item)
-            }
-            .navigationDestination(for: JobModel.self) { job in
-                JobDetailView(job: job)
-            }
-            .navigationDestination(for: MapModel.self) { map in
-                MapDetailView(map: map)
-            }
-            .navigationDestination(for: MonsterModel.self) { monster in
-                MonsterDetailView(monster: monster)
-            }
-            .navigationDestination(for: MonsterSummonModel.self) { monsterSummon in
-                MonsterSummonDetailView(monsterSummon: monsterSummon)
-            }
-            .navigationDestination(for: PetModel.self) { pet in
-                PetDetailView(pet: pet)
-            }
-            .navigationDestination(for: SkillModel.self) { skill in
-                SkillDetailView(skill: skill)
-            }
-            .navigationDestination(for: StatusChangeModel.self) { statusChange in
-                StatusChangeDetailView(statusChange: statusChange)
-            }
             .searchable(text: $database.searchText, placement: searchFieldPlacement(sizeClass))
             .onSubmit(of: .search) {
                 Task {

@@ -22,8 +22,6 @@ extension Entity {
             height: 0
         )
 
-        logger.debug("\(name): \(model.rsm.version)")
-
         let modelEntity = try await Entity.modelEntity(rsm: model.rsm, instance: instance, resourceManager: resourceManager)
         modelEntity.name = name
         return modelEntity

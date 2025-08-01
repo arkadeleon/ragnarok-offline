@@ -51,9 +51,6 @@ struct FilesView: View {
                 ContentUnavailableView("No Files", systemImage: "folder.fill")
             }
         }
-        .navigationDestination(for: File.self) { file in
-            FilesView(title: file.name, directory: file)
-        }
         .navigationTitle(title)
         .toolbar {
             #if os(macOS)

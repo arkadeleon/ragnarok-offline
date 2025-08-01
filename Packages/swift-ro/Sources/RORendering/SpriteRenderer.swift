@@ -144,7 +144,6 @@ final public class SpriteRenderer: Sendable {
                     actionIndex: actionIndex,
                     frameIndex: frameIndex
                 )
-                logger.info("action: \(actionIndex), frame: \(frameIndex), part: \(String(describing: part.semantic)), zIndex: \(zIndex)")
                 sortedActionNodes.append((actionNode, zIndex))
             }
             sortedActionNodes.sort {
