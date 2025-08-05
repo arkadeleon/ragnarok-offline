@@ -10,8 +10,14 @@ import Foundation
 final public class MonsterNameTable: Resource {
     let monsterNamesByID: [Int : String]
 
-    init(monsterNamesByID: [Int : String] = [:]) {
-        self.monsterNamesByID = monsterNamesByID
+    init() {
+        self.monsterNamesByID = [:]
+    }
+
+    init(contentsOf url: URL) throws {
+        let decoder = JSONDecoder()
+        let data = try Data(contentsOf: url)
+        self.monsterNamesByID = try decoder.decode([Int : String].self, from: data)
     }
 
     public func localizedMonsterName(forMonsterID monsterID: Int) -> String? {
@@ -29,29 +35,12 @@ extension ResourceManager {
         }
 
         let task = Task<any Resource, Never> {
-            guard let url = Bundle.module.url(forResource: "mobname", withExtension: "txt", locale: locale),
-                  let string = try? String(contentsOf: url, encoding: .utf8) else {
+            if let url = Bundle.module.url(forResource: "MonsterName", withExtension: "json", locale: locale),
+               let monsterNameTable = try? MonsterNameTable(contentsOf: url) {
+                return monsterNameTable
+            } else {
                 return MonsterNameTable()
             }
-
-            var monsterNamesByID: [Int : String] = [:]
-
-            let lines = string.split(separator: "\n")
-            for line in lines {
-                if line.trimmingCharacters(in: .whitespaces).starts(with: "//") {
-                    continue
-                }
-
-                let columns = line.split(separator: ",")
-                if columns.count >= 2 {
-                    if let monsterID = Int(String(columns[0])) {
-                        let monsterName = String(columns[1])
-                        monsterNamesByID[monsterID] = monsterName
-                    }
-                }
-            }
-
-            return MonsterNameTable(monsterNamesByID: monsterNamesByID)
         }
 
         tasks.withLock {

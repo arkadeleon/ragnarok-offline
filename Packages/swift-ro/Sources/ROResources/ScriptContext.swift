@@ -27,12 +27,6 @@ final public class ScriptContext: Resource {
         return result
     }
 
-    public func localizedItemRandomOptionName(forItemRandomOptionID itemRandomOptionID: Int) -> String? {
-        let result = call("GetVarOptionName", with: [itemRandomOptionID], to: String.self)
-        let itemRandomOptionName = result?.transcoding(from: .isoLatin1, to: locale.language.preferredEncoding)
-        return itemRandomOptionName
-    }
-
     public func jobName(forJobID jobID: Int) -> String? {
         let result = call("ReqJobName", with: [jobID], to: String.self)
         return result
@@ -48,31 +42,9 @@ final public class ScriptContext: Resource {
         return result
     }
 
-    public func localizedSkillName(forSkillID skillID: Int) -> String? {
-        let result = call("GetSkillName", with: [skillID], to: String.self)
-        let skillName = result?
-            .transcoding(from: .isoLatin1, to: locale.language.preferredEncoding)
-        return skillName
-    }
-
-    public func localizedSkillDescription(forSkillID skillID: Int) -> String? {
-        let result = call("GetSkillDescript", with: [skillID], to: [String].self)
-        let skillDescription = result?
-            .joined(separator: "\n")
-            .transcoding(from: .isoLatin1, to: locale.language.preferredEncoding)
-        return skillDescription
-    }
-
     public func statusIconName(forStatusID statusID: Int) -> String? {
         let result = call("statusIconName", with: [statusID], to: String.self)
         return result
-    }
-
-    public func localizedStatusDescription(forStatusID statusID: Int) -> String? {
-        let result = call("statusDescription", with: [statusID], to: String
-            .self)
-        let statusDescription = result?.transcoding(from: .isoLatin1, to: .koreanEUC)
-        return statusDescription
     }
 
     public func weaponName(forWeaponID weaponID: Int) -> String? {
@@ -126,10 +98,6 @@ extension ResourceManager {
             async let accname = script(at: ["datainfo", "accname"])
             async let accname_f = script(at: ["datainfo", "accname_f"])
 
-            async let enumvar = script(at: ["datainfo", "enumvar"])
-            async let addrandomoptionnametable = localizedScript(at: ["datainfo", "addrandomoptionnametable"], locale: locale)
-            async let addrandomoption_f = script(at: ["datainfo", "addrandomoption_f"])
-
             async let jobidentity = script(at: ["datainfo", "jobidentity"])
             async let npcidentity = script(at: ["datainfo", "npcidentity"])
             async let jobname = script(at: ["datainfo", "jobname"])
@@ -145,15 +113,8 @@ extension ResourceManager {
             async let weapontable = script(at: ["datainfo", "weapontable"])
             async let weapontable_f = script(at: ["datainfo", "weapontable_f"])
 
-            async let jobinheritlist = script(at: ["skillinfoz", "jobinheritlist"])
-            async let skillid = script(at: ["skillinfoz", "skillid"])
-            async let skillinfolist = localizedScript(at: ["skillinfoz", "skillinfolist"], locale: locale)
-            async let skilldescript = localizedScript(at: ["skillinfoz", "skilldescript"], locale: locale)
-//            async let skillinfo_f = script(at: ["skillinfoz", "skillinfo_f"])
-
             async let efstids = script(at: ["stateicon", "efstids"])
             async let stateiconimginfo = script(at: ["stateicon", "stateiconimginfo"])
-            async let stateiconinfo = localizedScript(at: ["stateicon", "stateiconinfo"], locale: locale)
 
             async let smalllayerdir_female = script(at: ["spreditinfo", "smalllayerdir_female"])
             async let smalllayerdir_male = script(at: ["spreditinfo", "smalllayerdir_male"])
@@ -175,10 +136,6 @@ extension ResourceManager {
             await loadScript(accname, in: context)
             await loadScript(accname_f, in: context)
 
-            await loadScript(enumvar, in: context)
-            await loadScript(addrandomoptionnametable, in: context)
-            await loadScript(addrandomoption_f, in: context)
-
             await loadScript(jobidentity, in: context)
             await loadScript(npcidentity, in: context)
             await loadScript(jobname, in: context)
@@ -194,15 +151,8 @@ extension ResourceManager {
             await loadScript(weapontable, in: context)
             await loadScript(weapontable_f, in: context)
 
-            await loadScript(jobinheritlist, in: context)
-            await loadScript(skillid, in: context)
-            await loadScript(skillinfolist, in: context)
-            await loadScript(skilldescript, in: context)
-//            await loadScript(skillinfo_f, in: context)
-
             await loadScript(efstids, in: context)
             await loadScript(stateiconimginfo, in: context)
-            await loadScript(stateiconinfo, in: context)
 
             await loadScript(smalllayerdir_female, in: context)
             await loadScript(smalllayerdir_male, in: context)
@@ -302,17 +252,6 @@ extension ResourceManager {
         do {
             let path = ResourcePath.scriptDirectory.appending(path).appendingPathExtension("lub")
             let data = try await contentsOfResource(at: path)
-            return .success(data)
-        } catch {
-            logger.warning("\(error.localizedDescription)")
-            return .failure(error)
-        }
-    }
-
-    private func localizedScript(at path: ResourcePath, locale: Locale) async -> Result<Data, any Error> {
-        do {
-            let path = ResourcePath.scriptDirectory.appending(path).appendingPathExtension("lub")
-            let data = try await contentsOfLocalizedResource(at: path, locale: locale)
             return .success(data)
         } catch {
             logger.warning("\(error.localizedDescription)")

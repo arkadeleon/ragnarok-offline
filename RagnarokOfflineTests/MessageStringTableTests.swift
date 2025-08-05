@@ -14,7 +14,7 @@ final class MessageStringTableTests: XCTestCase {
     func testChineseSimplified() async throws {
         let locale = Locale(languageCode: .chinese, script: .hanSimplified)
         let messageStringTable = await resourceManager.messageStringTable(for: locale)
-        let doYouAgree = messageStringTable.localizedMessageString(forID: 1)
+        let doYouAgree = messageStringTable.localizedMessageString(forID: 0)
         XCTAssertEqual(doYouAgree, "请问是否同意?")
     }
 

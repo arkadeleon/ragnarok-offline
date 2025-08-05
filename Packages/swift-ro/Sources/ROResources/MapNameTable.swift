@@ -5,14 +5,19 @@
 //  Created by Leon Li on 2024/5/27.
 //
 
-import BinaryIO
 import Foundation
 
 final public class MapNameTable: Resource {
     let mapNamesByRSW: [String : String]
 
-    init(mapNamesByRSW: [String : String] = [:]) {
-        self.mapNamesByRSW = mapNamesByRSW
+    init() {
+        self.mapNamesByRSW = [:]
+    }
+
+    init(contentsOf url: URL) throws {
+        let decoder = JSONDecoder()
+        let data = try Data(contentsOf: url)
+        self.mapNamesByRSW = try decoder.decode([String : String].self, from: data)
     }
 
     public func localizedMapName(forMapName mapName: String) -> String? {
@@ -30,39 +35,12 @@ extension ResourceManager {
         }
 
         let task = Task<any Resource, Never> {
-            let path = ResourcePath(components: ["data", "mapnametable.txt"])
-
-            guard let data = try? await contentsOfLocalizedResource(at: path, locale: locale) else {
+            if let url = Bundle.module.url(forResource: "MapName", withExtension: "json", locale: locale),
+               let mapNameTable = try? MapNameTable(contentsOf: url) {
+                return mapNameTable
+            } else {
                 return MapNameTable()
             }
-
-            let stream = MemoryStream(data: data)
-            let reader = StreamReader(stream: stream, delimiter: "\r\n")
-            defer {
-                reader.close()
-            }
-
-            let encoding = locale.language.preferredEncoding
-
-            var mapNamesByRSW: [String : String] = [:]
-
-            while let line = reader.readLine() {
-                if line.trimmingCharacters(in: .whitespaces).starts(with: "//") {
-                    continue
-                }
-
-                let columns = line.split(separator: "#")
-                if columns.count >= 2 {
-                    let rsw = columns[0]
-                        .replacingOccurrences(of: ".rsw", with: "")
-                    let mapName = columns[1]
-                        .trimmingCharacters(in: .whitespaces)
-                        .transcoding(from: .isoLatin1, to: encoding)
-                    mapNamesByRSW[rsw] = mapName
-                }
-            }
-
-            return MapNameTable(mapNamesByRSW: mapNamesByRSW)
         }
 
         tasks.withLock {

@@ -29,7 +29,7 @@ final class MapNameTableTests: XCTestCase {
         let locale = Locale(languageCode: .english)
         let mapNameTable = await resourceManager.mapNameTable(for: locale)
         let prontera = mapNameTable.localizedMapName(forMapName: "prontera")
-        XCTAssertEqual(prontera, "Prontera City, Capitol of Rune-Midgarts")
+        XCTAssertEqual(prontera, "Prontera City, Capitol of Rune-Midgard")
     }
 
     func testFrench() async throws {

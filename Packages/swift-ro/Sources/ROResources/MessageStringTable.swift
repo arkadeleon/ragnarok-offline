@@ -5,15 +5,20 @@
 //  Created by Leon Li on 2024/6/14.
 //
 
-import BinaryIO
 import Foundation
 import ROConstants
 
 final public class MessageStringTable: Resource {
     let messageStringsByID: [Int : String]
 
-    init(messageStringsByID: [Int : String] = [:]) {
-        self.messageStringsByID = messageStringsByID
+    init() {
+        self.messageStringsByID = [:]
+    }
+
+    init(contentsOf url: URL) throws {
+        let decoder = JSONDecoder()
+        let data = try Data(contentsOf: url)
+        self.messageStringsByID = try decoder.decode([Int : String].self, from: data)
     }
 
     public func localizedMessageString(forID messageID: Int) -> String? {
@@ -346,32 +351,12 @@ extension ResourceManager {
         }
 
         let task = Task<any Resource, Never> {
-            let path = ResourcePath(components: ["data", "msgstringtable.txt"])
-            guard let data = try? await contentsOfLocalizedResource(at: path, locale: locale) else {
+            if let url = Bundle.module.url(forResource: "MessageString", withExtension: "json", locale: locale),
+               let messageStringTable = try? MessageStringTable(contentsOf: url) {
+                return messageStringTable
+            } else {
                 return MessageStringTable()
             }
-
-            let stream = MemoryStream(data: data)
-            let reader = StreamReader(stream: stream, delimiter: "\r\n")
-            defer {
-                reader.close()
-            }
-
-            let encoding = locale.language.preferredEncoding
-
-            var lineNumber = 0
-            var messageStringsByID: [Int : String] = [:]
-
-            while let line = reader.readLine() {
-                var messageString = line.transcoding(from: .isoLatin1, to: encoding) ?? ""
-                if messageString.hasSuffix("#") {
-                    messageString.removeLast()
-                }
-                messageStringsByID[lineNumber] = messageString
-                lineNumber += 1
-            }
-
-            return MessageStringTable(messageStringsByID: messageStringsByID)
         }
 
         tasks.withLock {

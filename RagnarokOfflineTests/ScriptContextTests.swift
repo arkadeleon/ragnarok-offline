@@ -29,7 +29,8 @@ final class ScriptContextTests: XCTestCase {
     }
 
     func testItemRandomOptionName() async throws {
-        let mhp = await scriptContext.localizedItemRandomOptionName(forItemRandomOptionID: 1)
+        let itemRandomOptionNameTable = await resourceManager.itemRandomOptionNameTable(for: .korean)
+        let mhp = itemRandomOptionNameTable.localizedItemRandomOptionName(forID: 1)
         XCTAssertEqual(mhp, "MHP + %d")
     }
 

@@ -62,8 +62,8 @@ final class SkillModel {
     }
 
     func fetchLocalizedName() async {
-        let scriptContext = await ResourceManager.shared.scriptContext(for: .current)
-        localizedName = scriptContext.localizedSkillName(forSkillID: skill.id)
+        let skillInfoTable = await ResourceManager.shared.skillInfoTable(for: .current)
+        localizedName = skillInfoTable.localizedSkillName(forSkillID: skill.id)
     }
 
     @MainActor
@@ -78,8 +78,8 @@ final class SkillModel {
 
     @MainActor
     func fetchDetail() async {
-        let scriptContext = await ResourceManager.shared.scriptContext(for: .current)
-        if let skillDescription = scriptContext.localizedSkillDescription(forSkillID: skill.id) {
+        let skillInfoTable = await ResourceManager.shared.skillInfoTable(for: .current)
+        if let skillDescription = skillInfoTable.localizedSkillDescription(forSkillID: skill.id) {
             localizedDescription = AttributedString(description: skillDescription)
         }
     }

@@ -1,0 +1,2378 @@
+{
+  "0000" : {
+    "statusDescription" : "프로보크(Provoke)"
+  },
+  "0001" : {
+    "statusDescription" : "인듀어(Endure)"
+  },
+  "0002" : {
+    "statusDescription" : "투핸드 퀴큰(Two Hand Quicken)"
+  },
+  "0003" : {
+    "statusDescription" : "집중력 향상(Attention concentrate)"
+  },
+  "0004" : {
+    "statusDescription" : "하이딩(Hiding)"
+  },
+  "0005" : {
+    "statusDescription" : "클로킹(Cloaking)"
+  },
+  "0006" : {
+    "statusDescription" : "인챈트 포이즌(Enchant Poison)"
+  },
+  "0007" : {
+    "statusDescription" : "포이즌 리액트(Poison React)"
+  },
+  "0008" : {
+    "statusDescription" : "콰그마이어(Quagmire)"
+  },
+  "0009" : {
+    "statusDescription" : "안젤루스(Angelus)"
+  },
+  "0010" : {
+    "statusDescription" : "블레싱(Blessing)"
+  },
+  "0011" : {
+    "statusDescription" : "시그넘 크루시스(Signum Crucis)"
+  },
+  "0012" : {
+    "statusDescription" : "민첩성 증가(Increase agility)"
+  },
+  "0013" : {
+    "statusDescription" : "민첩성 감소(Decrease agility)"
+  },
+  "0014" : {
+    "statusDescription" : "슬로우 포이즌(Slow Poison)"
+  },
+  "0015" : {
+    "statusDescription" : "임포시티오 마누스(Impositio Manus)"
+  },
+  "0016" : {
+    "statusDescription" : "수프라기움(Suffragium)"
+  },
+  "0017" : {
+    "statusDescription" : "아스페르시오(Aspersio)"
+  },
+  "0018" : {
+    "statusDescription" : "%s"
+  },
+  "0019" : {
+    "statusDescription" : "기리에 엘레이손(Kyrie Eleison)"
+  },
+  "0020" : {
+    "statusDescription" : "마니피캇(Magnificat)"
+  },
+  "0021" : {
+    "statusDescription" : "글로리아(Gloria)"
+  },
+  "0022" : {
+    "statusDescription" : "렉스 에테르나(Lex Aeterna)"
+  },
+  "0023" : {
+    "statusDescription" : "아드레날린 러쉬(Adrenaline Rush)"
+  },
+  "0024" : {
+    "statusDescription" : "웨폰 퍼펙션(Weapon Perfection)"
+  },
+  "0025" : {
+    "statusDescription" : "오버 트러스트(Over Thrust)"
+  },
+  "0026" : {
+    "statusDescription" : "맥시마이즈 파워(Maximize Power)"
+  },
+  "0027" : {
+    "statusDescription" : "탈 것 대여 중"
+  },
+  "0028" : {
+    "statusDescription" : "팔콘리 마스터리(Falconry Mastery)"
+  },
+  "0029" : {
+    "statusDescription" : "죽은척하기"
+  },
+  "0030" : {
+    "statusDescription" : "고성방가"
+  },
+  "0031" : {
+    "statusDescription" : "에너지 코트 (Energy Coat)"
+  },
+  "0032" : {
+    "statusDescription" : "방어구 파괴 상태"
+  },
+  "0033" : {
+    "statusDescription" : "무기 파괴 상태"
+  },
+  "0034" : {
+    "statusDescription" : "환각 상태"
+  },
+  "0035" : {
+    "statusDescription" : "무게 70% 이상"
+  },
+  "0036" : {
+    "statusDescription" : "무게 90% 이상"
+  },
+  "0037" : {
+    "statusDescription" : "집중의 포션"
+  },
+  "0038" : {
+    "statusDescription" : "각성의 포션"
+  },
+  "0039" : {
+    "statusDescription" : "%s"
+  },
+  "0041" : {
+    "statusDescription" : "%s"
+  },
+  "0042" : {
+    "statusDescription" : "이동속도 증가"
+  },
+  "0050" : {
+    "statusDescription" : "무기 장착해제 상태"
+  },
+  "0051" : {
+    "statusDescription" : "방패 장착해제 상태"
+  },
+  "0052" : {
+    "statusDescription" : "갑옷 장착해제 상태"
+  },
+  "0053" : {
+    "statusDescription" : "투구 장착해제 상태"
+  },
+  "0054" : {
+    "statusDescription" : "케미칼 프로텍션(웨폰) (Chemical Protection Weapon)"
+  },
+  "0055" : {
+    "statusDescription" : "케미칼 프로텍션(쉴드) (Chemical Protection Shield)"
+  },
+  "0056" : {
+    "statusDescription" : "케미칼 프로텍션(아머) (Chemical Protection armor)"
+  },
+  "0057" : {
+    "statusDescription" : "케미칼 프로텍션(헬름) (Chemical Protection Helm)"
+  },
+  "0058" : {
+    "statusDescription" : "오토 가드 (Auto Guard)"
+  },
+  "0059" : {
+    "statusDescription" : "리플렉트 쉴드 (Reflect Shield)"
+  },
+  "0061" : {
+    "statusDescription" : "신의 뜻 (Providence)"
+  },
+  "0062" : {
+    "statusDescription" : "디펜더 (Defender)"
+  },
+  "0064" : {
+    "statusDescription" : "무기에 속성 부여"
+  },
+  "0065" : {
+    "statusDescription" : "오토 스펠 (Auto Spell)"
+  },
+  "0068" : {
+    "statusDescription" : "스피어 퀴큰 (Spear Quicken)"
+  },
+  "0070" : {
+    "statusDescription" : "휘파람"
+  },
+  "0071" : {
+    "statusDescription" : "석양의 어쌔신 크로스"
+  },
+  "0072" : {
+    "statusDescription" : "브라기의 시"
+  },
+  "0073" : {
+    "statusDescription" : "이둔의 사과"
+  },
+  "0074" : {
+    "statusDescription" : "흥얼거림"
+  },
+  "0075" : {
+    "statusDescription" : "나를 잊지 말아요"
+  },
+  "0076" : {
+    "statusDescription" : "행운의 키스"
+  },
+  "0077" : {
+    "statusDescription" : "당신을 위한 서비스"
+  },
+  "0078" : {
+    "statusDescription" : "김서방 돈 벌었네"
+  },
+  "0079" : {
+    "statusDescription" : "영원의 혼돈"
+  },
+  "0080" : {
+    "statusDescription" : "전장의 북소리"
+  },
+  "0081" : {
+    "statusDescription" : "니벨룽겐의 반지"
+  },
+  "0082" : {
+    "statusDescription" : "울부 짖는 로키"
+  },
+  "0083" : {
+    "statusDescription" : "심연 속으로"
+  },
+  "0084" : {
+    "statusDescription" : "불사신 지크프리드"
+  },
+  "0087" : {
+    "statusDescription" : "금강불괴 (金剛不壞)"
+  },
+  "0088" : {
+    "statusDescription" : "아수라 패황권"
+  },
+  "0090" : {
+    "statusDescription" : "프레임 런쳐 (Flame Launcher)"
+  },
+  "0091" : {
+    "statusDescription" : "프로스트 웨폰 (Frost Weapon)"
+  },
+  "0092" : {
+    "statusDescription" : "라이트닝 로더 (Lightning Loader)"
+  },
+  "0093" : {
+    "statusDescription" : "사이즈믹 웨폰 (Seismic Weapon)"
+  },
+  "0097" : {
+    "statusDescription" : "언데드 속성 적용"
+  },
+  "0103" : {
+    "statusDescription" : "오라 블레이드"
+  },
+  "0104" : {
+    "statusDescription" : "패링 (Parrying)"
+  },
+  "0105" : {
+    "statusDescription" : "컨센트레이션"
+  },
+  "0106" : {
+    "statusDescription" : "텐션 릴렉스 (Tension Relax)"
+  },
+  "0108" : {
+    "statusDescription" : "세크리 파이스"
+  },
+  "0110" : {
+    "statusDescription" : "아숨프티오 (Assumptio)"
+  },
+  "0112" : {
+    "statusDescription" : "%s"
+  },
+  "0113" : {
+    "statusDescription" : "마법력 증폭"
+  },
+  "0114" : {
+    "statusDescription" : "치명적인 독 부여 (Enchant Deadly Poison)"
+  },
+  "0115" : {
+    "statusDescription" : "트루 사이트 (True Sight)"
+  },
+  "0116" : {
+    "statusDescription" : "윈드 워크 (Wind Walk)"
+  },
+  "0117" : {
+    "statusDescription" : "멜트다운 (Meltdown)"
+  },
+  "0118" : {
+    "statusDescription" : "카트 부스트 (Cart Boost)"
+  },
+  "0120" : {
+    "statusDescription" : "소드 리젝트"
+  },
+  "0121" : {
+    "statusDescription" : "마리오네뜨 컨트롤 (시전)"
+  },
+  "0122" : {
+    "statusDescription" : "마리오네뜨 컨트롤 (대상)"
+  },
+  "0124" : {
+    "statusDescription" : "출혈 상태"
+  },
+  "0125" : {
+    "statusDescription" : "조인트 비트(Joint Beat)"
+  },
+  "0130" : {
+    "statusDescription" : "엄마 아빠 사랑해요"
+  },
+  "0132" : {
+    "statusDescription" : "오토 버서크 (Auto Berserk)"
+  },
+  "0135" : {
+    "statusDescription" : "회오리 준비"
+  },
+  "0137" : {
+    "statusDescription" : "찍기 준비"
+  },
+  "0139" : {
+    "statusDescription" : "차기 준비"
+  },
+  "0141" : {
+    "statusDescription" : "카운터 준비"
+  },
+  "0143" : {
+    "statusDescription" : "낙법"
+  },
+  "0145" : {
+    "statusDescription" : "스퍼트"
+  },
+  "0146" : {
+    "statusDescription" : "%s"
+  },
+  "0147" : {
+    "statusDescription" : "풀 아드레날린러쉬"
+  },
+  "0148" : {
+    "statusDescription" : "%s"
+  },
+  "0149" : {
+    "statusDescription" : "영혼 부여 상태"
+  },
+  "0150" : {
+    "statusDescription" : "%s"
+  },
+  "0151" : {
+    "statusDescription" : "%s"
+  },
+  "0156" : {
+    "statusDescription" : "카이젤"
+  },
+  "0157" : {
+    "statusDescription" : "카아히"
+  },
+  "0158" : {
+    "statusDescription" : "카우프"
+  },
+  "0161" : {
+    "statusDescription" : "원핸드 퀴큰"
+  },
+  "0169" : {
+    "statusDescription" : "태양의 안락함"
+  },
+  "0170" : {
+    "statusDescription" : "달의 안락함"
+  },
+  "0171" : {
+    "statusDescription" : "별의 안락함"
+  },
+  "0181" : {
+    "statusDescription" : "프리저브 (Preserve)"
+  },
+  "0182" : {
+    "statusDescription" : "%s"
+  },
+  "0186" : {
+    "statusDescription" : "더블캐스팅 (Double Casting)"
+  },
+  "0188" : {
+    "statusDescription" : "오버트러스트 맥스 (Overthrust Max)"
+  },
+  "0191" : {
+    "statusDescription" : "운명의 타로 카드 (Tarot Card of Fate)"
+  },
+  "0197" : {
+    "statusDescription" : "슈링크(Shrink)"
+  },
+  "0198" : {
+    "statusDescription" : "사이트 블래스터(Sight Blaster)"
+  },
+  "0200" : {
+    "statusDescription" : "클로즈 컨파인(Close Confine)"
+  },
+  "0201" : {
+    "statusDescription" : "클로즈 컨파인(Close Confine)"
+  },
+  "0203" : {
+    "statusDescription" : "매드니스 캔슬러(Madness Canceler)"
+  },
+  "0204" : {
+    "statusDescription" : "개틀링 피버(Gatling Fever)"
+  },
+  "0205" : {
+    "statusDescription" : "즐거운 휴식"
+  },
+  "0206" : {
+    "statusDescription" : "매미허물 벗기"
+  },
+  "0207" : {
+    "statusDescription" : "환영분신"
+  },
+  "0208" : {
+    "statusDescription" : "염(念)"
+  },
+  "0209" : {
+    "statusDescription" : "애드저스트먼트(Adjustment)"
+  },
+  "0210" : {
+    "statusDescription" : "인크리징 어큐러시(Increasing Accuracy)"
+  },
+  "0217" : {
+    "statusDescription" : "그리폰 탑승 중"
+  },
+  "0241" : {
+    "statusDescription" : "%s"
+  },
+  "0242" : {
+    "statusDescription" : "%s"
+  },
+  "0243" : {
+    "statusDescription" : "%s"
+  },
+  "0244" : {
+    "statusDescription" : "%s"
+  },
+  "0245" : {
+    "statusDescription" : "%s"
+  },
+  "0246" : {
+    "statusDescription" : "%s"
+  },
+  "0247" : {
+    "statusDescription" : "%s"
+  },
+  "0248" : {
+    "statusDescription" : "%s"
+  },
+  "0249" : {
+    "statusDescription" : "%s"
+  },
+  "0250" : {
+    "statusDescription" : "%s"
+  },
+  "0251" : {
+    "statusDescription" : "%s"
+  },
+  "0252" : {
+    "statusDescription" : "%s"
+  },
+  "0271" : {
+    "statusDescription" : "%s"
+  },
+  "0272" : {
+    "statusDescription" : "%s"
+  },
+  "0273" : {
+    "statusDescription" : "%s"
+  },
+  "0274" : {
+    "statusDescription" : "%s"
+  },
+  "0275" : {
+    "statusDescription" : "%s"
+  },
+  "0276" : {
+    "statusDescription" : "%s"
+  },
+  "0282" : {
+    "statusDescription" : "슬로우 캐스트"
+  },
+  "0286" : {
+    "statusDescription" : "치명적인 상처"
+  },
+  "0289" : {
+    "statusDescription" : "%s"
+  },
+  "0290" : {
+    "statusDescription" : "물리 방어 포션"
+  },
+  "0291" : {
+    "statusDescription" : "마법 방어 포션"
+  },
+  "0292" : {
+    "statusDescription" : "회복력 향상포션"
+  },
+  "0293" : {
+    "statusDescription" : "소형 생명수"
+  },
+  "0294" : {
+    "statusDescription" : "중형 생명수"
+  },
+  "0295" : {
+    "statusDescription" : "연마제"
+  },
+  "0296" : {
+    "statusDescription" : "환영의 술잔"
+  },
+  "0297" : {
+    "statusDescription" : "대환단"
+  },
+  "0298" : {
+    "statusDescription" : "%s"
+  },
+  "0299" : {
+    "statusDescription" : "태청단"
+  },
+  "0300" : {
+    "statusDescription" : "SP 소모량 감소포션"
+  },
+  "0301" : {
+    "statusDescription" : "상태이상 저항포션"
+  },
+  "0302" : {
+    "statusDescription" : "속성 변화 스크롤"
+  },
+  "0304" : {
+    "statusDescription" : "지옥의 권능"
+  },
+  "0312" : {
+    "statusDescription" : "%s"
+  },
+  "0313" : {
+    "statusDescription" : "%s"
+  },
+  "0314" : {
+    "statusDescription" : "천사의 수호"
+  },
+  "0316" : {
+    "statusDescription" : "엔첸트 블레이드 (Enchant Blade)"
+  },
+  "0318" : {
+    "statusDescription" : "노씨즈 룬 스톤 ; 리플래쉬 (Refresh)"
+  },
+  "0319" : {
+    "statusDescription" : "튜리서드 룬 스톤 : 자이언트 그로스"
+  },
+  "0320" : {
+    "statusDescription" : "하갈라즈 룬 스톤 ; 스톤 하드 스킨 (Stone Hard Skin)"
+  },
+  "0321" : {
+    "statusDescription" : "아이샤 룬 스톤 : 바이탈리티 액티베이션"
+  },
+  "0322" : {
+    "statusDescription" : "에이시르 룬 스톤 : 파이팅 스피릿"
+  },
+  "0323" : {
+    "statusDescription" : "우르즈 룬 스톤 ;  어번던스 (Abundance)"
+  },
+  "0331" : {
+    "statusDescription" : "라우다 아그누스 (LAUDAAGNUS)"
+  },
+  "0332" : {
+    "statusDescription" : "라우다라무스 (LAUDARAMUS)"
+  },
+  "0333" : {
+    "statusDescription" : "클로킹 익시드 (CLOAKING EXCEED \/ 향상된 클로킹)"
+  },
+  "0334" : {
+    "statusDescription" : "할루시네이션 워크 (HALLUCINATIONWALK \/ 환영보)"
+  },
+  "0336" : {
+    "statusDescription" : "레노바티오 (RENOVATIO \/ 정화)"
+  },
+  "0337" : {
+    "statusDescription" : "웨폰 블로킹 (WEAPON BLOCKING \/ 튕겨내기)"
+  },
+  "0340" : {
+    "statusDescription" : "엑스피아티오"
+  },
+  "0341" : {
+    "statusDescription" : "포이즈닝 웨폰 (POISONING WEAPON \/ 맹독 무기)"
+  },
+  "0342" : {
+    "statusDescription" : "톡신 (신경마비 독)"
+  },
+  "0343" : {
+    "statusDescription" : "패럴라이즈 (감각마비 독)"
+  },
+  "0344" : {
+    "statusDescription" : "베놈 블리드 (체력저하 독)"
+  },
+  "0345" : {
+    "statusDescription" : "매직 머쉬룸 (웃음 버섯 독)"
+  },
+  "0346" : {
+    "statusDescription" : "데스 허트 (상처오염 독)"
+  },
+  "0347" : {
+    "statusDescription" : "파이렉시아 (열병 독)"
+  },
+  "0348" : {
+    "statusDescription" : "오블리비언 커즈 (망각의 재)"
+  },
+  "0349" : {
+    "statusDescription" : "리치 엔드 (거머리 독)"
+  },
+  "0351" : {
+    "statusDescription" : "빙결 상태"
+  },
+  "0352" : {
+    "statusDescription" : "피어 브리즈 (FEAR BREEZE \/ 산들바람의 공포)"
+  },
+  "0354" : {
+    "statusDescription" : "마쉬 오브 어비스 (MARSH OF ABYSS \/ 심연의 늪)"
+  },
+  "0355" : {
+    "statusDescription" : "리코그나이즈드 스펠 (RECOGNIZED SPELL \/ 마법의 이해)"
+  },
+  "0356" : {
+    "statusDescription" : "스테이시스"
+  },
+  "0357" : {
+    "statusDescription" : "워그 라이더 (WUG RIDER \/ 늑대 기수)"
+  },
+  "0361" : {
+    "statusDescription" : "액셀레이션"
+  },
+  "0362" : {
+    "statusDescription" : "호버링"
+  },
+  "0368" : {
+    "statusDescription" : "타오군 카 스크롤"
+  },
+  "0369" : {
+    "statusDescription" : "미스트레스 스크롤"
+  },
+  "0370" : {
+    "statusDescription" : "오크히어로 스크롤"
+  },
+  "0371" : {
+    "statusDescription" : "오크로드 스크롤"
+  },
+  "0373" : {
+    "statusDescription" : "오버 히트 (Over Heat)"
+  },
+  "0374" : {
+    "statusDescription" : "셰이프 쉬프트"
+  },
+  "0375" : {
+    "statusDescription" : "인프라레드 스캔"
+  },
+  "0376" : {
+    "statusDescription" : "마그네틱 필드"
+  },
+  "0377" : {
+    "statusDescription" : "뉴트럴 배리어"
+  },
+  "0379" : {
+    "statusDescription" : "스텔스 필드"
+  },
+  "0381" : {
+    "statusDescription" : "마누크의 호기"
+  },
+  "0382" : {
+    "statusDescription" : "마누크의 의지"
+  },
+  "0383" : {
+    "statusDescription" : "핀귀큘라의 열매절임"
+  },
+  "0384" : {
+    "statusDescription" : "루시올라의 꿀쨈"
+  },
+  "0385" : {
+    "statusDescription" : "리프로듀스"
+  },
+  "0386" : {
+    "statusDescription" : "마누크의 신념"
+  },
+  "0387" : {
+    "statusDescription" : "코르누스의 눈물"
+  },
+  "0388" : {
+    "statusDescription" : "%s"
+  },
+  "0389" : {
+    "statusDescription" : "%s"
+  },
+  "0390" : {
+    "statusDescription" : "리플렉트 데미지 리덕션"
+  },
+  "0391" : {
+    "statusDescription" : "포스 오브 뱅가드"
+  },
+  "0393" : {
+    "statusDescription" : "오토 섀도우 스펠"
+  },
+  "0394" : {
+    "statusDescription" : "섀도우 폼"
+  },
+  "0397" : {
+    "statusDescription" : "쉴드 스펠 - 魔"
+  },
+  "0399" : {
+    "statusDescription" : "바디 페인팅"
+  },
+  "0400" : {
+    "statusDescription" : "익시드 브레이크"
+  },
+  "0401" : {
+    "statusDescription" : "아도라무스 (ADORAMUS \/ 찬미가)"
+  },
+  "0402" : {
+    "statusDescription" : "프레스티지"
+  },
+  "0403" : {
+    "statusDescription" : "인비지빌리티 (투명화)"
+  },
+  "0404" : {
+    "statusDescription" : "데들리 인펙트"
+  },
+  "0405" : {
+    "statusDescription" : "밴딩"
+  },
+  "0407" : {
+    "statusDescription" : "인스피레이션"
+  },
+  "0408" : {
+    "statusDescription" : "마스커레이드 : 이너베이션 (가면 : 탈력)"
+  },
+  "0409" : {
+    "statusDescription" : "마스커레이드 : 그루미 (가면 : 우울)"
+  },
+  "0410" : {
+    "statusDescription" : "잠룡승천(潛龍昇天)"
+  },
+  "0411" : {
+    "statusDescription" : "마스커레이드 : 이그노어런스 (가면 : 무지)"
+  },
+  "0412" : {
+    "statusDescription" : "마스커레이드 : 레이지네스 (가면 : 게으름)"
+  },
+  "0413" : {
+    "statusDescription" : "섬전보(閃電步)"
+  },
+  "0414" : {
+    "statusDescription" : "아까라제"
+  },
+  "0415" : {
+    "statusDescription" : "마스커레이드 : 언럭키 (가면 : 불운)"
+  },
+  "0416" : {
+    "statusDescription" : "주박진"
+  },
+  "0417" : {
+    "statusDescription" : "주박진"
+  },
+  "0418" : {
+    "statusDescription" : "마스커레이드 : 위크니스 (가면 : 쇠약)"
+  },
+  "0421" : {
+    "statusDescription" : "액세서리 장착해제 상태"
+  },
+  "0423" : {
+    "statusDescription" : "교황 쿠키"
+  },
+  "0425" : {
+    "statusDescription" : "점혈 - 구(點穴-球)"
+  },
+  "0426" : {
+    "statusDescription" : "점혈 - 반(點穴-反)"
+  },
+  "0427" : {
+    "statusDescription" : "점혈 - 활(點穴-活)"
+  },
+  "0429" : {
+    "statusDescription" : "스윙 댄스"
+  },
+  "0430" : {
+    "statusDescription" : "연인들을 위한 심포니"
+  },
+  "0435" : {
+    "statusDescription" : "깊은 잠 상태"
+  },
+  "0436" : {
+    "statusDescription" : "순환하는 자연의 소리"
+  },
+  "0437" : {
+    "statusDescription" : "냉동 상태"
+  },
+  "0438" : {
+    "statusDescription" : "수줍은 하루의 우울"
+  },
+  "0439" : {
+    "statusDescription" : "마나의 노래"
+  },
+  "0441" : {
+    "statusDescription" : "워그와 함께 춤을"
+  },
+  "0442" : {
+    "statusDescription" : "풍차를 향해 돌격"
+  },
+  "0443" : {
+    "statusDescription" : "메아리의 노래"
+  },
+  "0444" : {
+    "statusDescription" : "하모나이즈"
+  },
+  "0445" : {
+    "statusDescription" : "스트라이킹"
+  },
+  "0446" : {
+    "statusDescription" : "워머"
+  },
+  "0447" : {
+    "statusDescription" : "달빛의 세레나데"
+  },
+  "0448" : {
+    "statusDescription" : "광란"
+  },
+  "0450" : {
+    "statusDescription" : "애널라이즈"
+  },
+  "0451" : {
+    "statusDescription" : "레라드의 이슬"
+  },
+  "0452" : {
+    "statusDescription" : "멜로디 오브 싱크"
+  },
+  "0453" : {
+    "statusDescription" : "비욘드 오브 워 크라이"
+  },
+  "0454" : {
+    "statusDescription" : "언리미티드 허밍 보이스"
+  },
+  "0461" : {
+    "statusDescription" : "카트 부스트"
+  },
+  "0463" : {
+    "statusDescription" : "가시나무 덫"
+  },
+  "0464" : {
+    "statusDescription" : "블러드 서커"
+  },
+  "0470" : {
+    "statusDescription" : "하울링 오브 만드라고라"
+  },
+  "0472" : {
+    "statusDescription" : "세크라멘트 (SECRAMENT \/ 성사 ; 聖事)"
+  },
+  "0473" : {
+    "statusDescription" : "아숨프티오 (Assumptio)"
+  },
+  "0476" : {
+    "statusDescription" : "복통"
+  },
+  "0480" : {
+    "statusDescription" : "HP 증가 포션"
+  },
+  "0481" : {
+    "statusDescription" : "SP 증가 포션"
+  },
+  "0482" : {
+    "statusDescription" : "농축 화이트 포션Z"
+  },
+  "0483" : {
+    "statusDescription" : "비타타500"
+  },
+  "0484" : {
+    "statusDescription" : "농축 샐러마인즙"
+  },
+  "0490" : {
+    "statusDescription" : "바큠 익스트림"
+  },
+  "0491" : {
+    "statusDescription" : "세비지 통구이"
+  },
+  "0492" : {
+    "statusDescription" : "칵테일 워그 블러드"
+  },
+  "0493" : {
+    "statusDescription" : "마이너 양지머리"
+  },
+  "0494" : {
+    "statusDescription" : "시로마 아이스티"
+  },
+  "0495" : {
+    "statusDescription" : "드로세라 허브 찜"
+  },
+  "0496" : {
+    "statusDescription" : "쁘띠 꼬리 국수"
+  },
+  "0573" : {
+    "statusDescription" : "모라 베리"
+  },
+  "0576" : {
+    "statusDescription" : "마비"
+  },
+  "0577" : {
+    "statusDescription" : "페인 킬러"
+  },
+  "0578" : {
+    "statusDescription" : "신속한 생명수"
+  },
+  "0579" : {
+    "statusDescription" : "활성화 포션"
+  },
+  "0580" : {
+    "statusDescription" : "재생의 빛"
+  },
+  "0581" : {
+    "statusDescription" : "오버드 부스트"
+  },
+  "0583" : {
+    "statusDescription" : "오딘의 힘"
+  },
+  "0584" : {
+    "statusDescription" : "파이터 모드"
+  },
+  "0605" : {
+    "statusDescription" : "마그마 플로"
+  },
+  "0606" : {
+    "statusDescription" : "그래니틱 아머"
+  },
+  "0607" : {
+    "statusDescription" : "파이로클래스틱"
+  },
+  "0608" : {
+    "statusDescription" : "화산재"
+  },
+  "0611" : {
+    "statusDescription" : "마법캔디"
+  },
+  "0613" : {
+    "statusDescription" : "탑승 상태"
+  },
+  "0616" : {
+    "statusDescription" : "매크로 후딜레이"
+  },
+  "0618" : {
+    "statusDescription" : "말랑도 고양이 캔"
+  },
+  "0620" : {
+    "statusDescription" : "크러쉬 스트라이크"
+  },
+  "0621" : {
+    "statusDescription" : "몬스터 변신"
+  },
+  "0622" : {
+    "statusDescription" : "앉기"
+  },
+  "0630" : {
+    "statusDescription" : "매크로 사용"
+  },
+  "0632" : {
+    "statusDescription" : "%s"
+  },
+  "0633" : {
+    "statusDescription" : "%s"
+  },
+  "0634" : {
+    "statusDescription" : "%s"
+  },
+  "0635" : {
+    "statusDescription" : "%s"
+  },
+  "0636" : {
+    "statusDescription" : "%s"
+  },
+  "0637" : {
+    "statusDescription" : "회복 불가 상태"
+  },
+  "0638" : {
+    "statusDescription" : "%s"
+  },
+  "0639" : {
+    "statusDescription" : "%s"
+  },
+  "0640" : {
+    "statusDescription" : "DEF가 특정 퍼센트로 고정"
+  },
+  "0641" : {
+    "statusDescription" : "MDEF가 특정 퍼센트로 고정"
+  },
+  "0646" : {
+    "statusDescription" : "명경지수 (明鏡止水)"
+  },
+  "0647" : {
+    "statusDescription" : "ASPD 강화 포션"
+  },
+  "0650" : {
+    "statusDescription" : "응원 폭죽"
+  },
+  "0652" : {
+    "statusDescription" : "열 여섯번째의 밤"
+  },
+  "0654" : {
+    "statusDescription" : "그림자 밟기"
+  },
+  "0655" : {
+    "statusDescription" : "허무의 그림자"
+  },
+  "0656" : {
+    "statusDescription" : "그림자무사"
+  },
+  "0657" : {
+    "statusDescription" : "일그러진 초승달"
+  },
+  "0658" : {
+    "statusDescription" : "고대 정령의 대부적"
+  },
+  "0659" : {
+    "statusDescription" : "흐린 달빛의 환상"
+  },
+  "0660" : {
+    "statusDescription" : "불길한 붉은 달빛"
+  },
+  "0662" : {
+    "statusDescription" : "전투약"
+  },
+  "0663" : {
+    "statusDescription" : "고급전투약"
+  },
+  "0664" : {
+    "statusDescription" : "레드 부스터"
+  },
+  "0666" : {
+    "statusDescription" : "미스틱 파우더"
+  },
+  "0670" : {
+    "statusDescription" : "신묘한 생명수"
+  },
+  "0675" : {
+    "statusDescription" : "풍성한 꽃가지"
+  },
+  "0676" : {
+    "statusDescription" : "수호의 빛"
+  },
+  "0677" : {
+    "statusDescription" : "강력한 힘이 내 몸에서"
+  },
+  "0678" : {
+    "statusDescription" : "만들어 준 마법방패로"
+  },
+  "0679" : {
+    "statusDescription" : "성스러운 마법이"
+  },
+  "0680" : {
+    "statusDescription" : "대마법 방어 에너지가"
+  },
+  "0681" : {
+    "statusDescription" : "모든 능력치가"
+  },
+  "0682" : {
+    "statusDescription" : "모든 방어력이"
+  },
+  "0683" : {
+    "statusDescription" : "MHP와 MSP가"
+  },
+  "0685" : {
+    "statusDescription" : "올마이티"
+  },
+  "0686" : {
+    "statusDescription" : "서리거인의 피"
+  },
+  "0687" : {
+    "statusDescription" : "골렘의 핵"
+  },
+  "0688" : {
+    "statusDescription" : "요정의눈물(스턴)"
+  },
+  "0689" : {
+    "statusDescription" : "요정의눈물(석화)"
+  },
+  "0690" : {
+    "statusDescription" : "요정의눈물(동빙)"
+  },
+  "0691" : {
+    "statusDescription" : "요정의눈물(수면)"
+  },
+  "0692" : {
+    "statusDescription" : "요정의눈물(저주)"
+  },
+  "0693" : {
+    "statusDescription" : "요정의눈물(침묵)"
+  },
+  "0694" : {
+    "statusDescription" : "요정의눈물(암흑)"
+  },
+  "0697" : {
+    "statusDescription" : "어패류 몬스터에게 주는"
+  },
+  "0698" : {
+    "statusDescription" : "어패류 몬스터에게 주는"
+  },
+  "0699" : {
+    "statusDescription" : "어패류 몬스터에게서"
+  },
+  "0700" : {
+    "statusDescription" : "어패류 몬스터에게서"
+  },
+  "0702" : {
+    "statusDescription" : "인간형 몬스터에게 주는"
+  },
+  "0703" : {
+    "statusDescription" : "인간형 몬스터에게 주는"
+  },
+  "0704" : {
+    "statusDescription" : "인간형 몬스터에게서"
+  },
+  "0705" : {
+    "statusDescription" : "에너지 축적 중"
+  },
+  "0706" : {
+    "statusDescription" : "에너지 축적 중"
+  },
+  "0707" : {
+    "statusDescription" : "에너지 축적 중"
+  },
+  "0710" : {
+    "statusDescription" : "동빙폭탄"
+  },
+  "0711" : {
+    "statusDescription" : "펜릴의 힘"
+  },
+  "0715" : {
+    "statusDescription" : "풍요의 노래"
+  },
+  "0716" : {
+    "statusDescription" : "오페르토리움"
+  },
+  "0717" : {
+    "statusDescription" : "텔레키네시스 인텐스"
+  },
+  "0720" : {
+    "statusDescription" : "풀 스로틀"
+  },
+  "0721" : {
+    "statusDescription" : "리바운드"
+  },
+  "0722" : {
+    "statusDescription" : "언리밋"
+  },
+  "0723" : {
+    "statusDescription" : "왕의 가호"
+  },
+  "0724" : {
+    "statusDescription" : "MAX ATK"
+  },
+  "0725" : {
+    "statusDescription" : "MIN ATK"
+  },
+  "0726" : {
+    "statusDescription" : "MAX MATK"
+  },
+  "0727" : {
+    "statusDescription" : "MIN MATK"
+  },
+  "0730" : {
+    "statusDescription" : "검은 손톱"
+  },
+  "0731" : {
+    "statusDescription" : "LUK 증가"
+  },
+  "0732" : {
+    "statusDescription" : "ATK, MATK %증가"
+  },
+  "0733" : {
+    "statusDescription" : "HP, SP 회복력 향상"
+  },
+  "0736" : {
+    "statusDescription" : "냉기"
+  },
+  "0737" : {
+    "statusDescription" : "화상"
+  },
+  "0741" : {
+    "statusDescription" : "뉴오즈의 엉뚱함"
+  },
+  "0742" : {
+    "statusDescription" : "아이구의 의지"
+  },
+  "0743" : {
+    "statusDescription" : "로테르트의 허세"
+  },
+  "0744" : {
+    "statusDescription" : "겔카의 수줍음"
+  },
+  "0745" : {
+    "statusDescription" : "아랑의 천진난만함"
+  },
+  "0746" : {
+    "statusDescription" : "밍민의 세밀함"
+  },
+  "0747" : {
+    "statusDescription" : "로엘의 진지함"
+  },
+  "0748" : {
+    "statusDescription" : "루나인의 세침함"
+  },
+  "0749" : {
+    "statusDescription" : "라기의 썰렁함"
+  },
+  "0750" : {
+    "statusDescription" : "멜로디잭의 불필요함"
+  },
+  "0751" : {
+    "statusDescription" : "보자의 컵"
+  },
+  "0752" : {
+    "statusDescription" : "바인드 트랩"
+  },
+  "0753" : {
+    "statusDescription" : "이터널 체인"
+  },
+  "0755" : {
+    "statusDescription" : "크림즌 마커"
+  },
+  "0756" : {
+    "statusDescription" : "하울링 마인"
+  },
+  "0758" : {
+    "statusDescription" : "플래티넘 알터"
+  },
+  "0759" : {
+    "statusDescription" : "히트 배럴"
+  },
+  "0760" : {
+    "statusDescription" : "안티 매터리얼 블래스트"
+  },
+  "0762" : {
+    "statusDescription" : "소드 클랜"
+  },
+  "0763" : {
+    "statusDescription" : "아크완드 클랜"
+  },
+  "0764" : {
+    "statusDescription" : "골든메이스 클랜"
+  },
+  "0765" : {
+    "statusDescription" : "크로스보우 클랜"
+  },
+  "0766" : {
+    "statusDescription" : "강력한 30초"
+  },
+  "0767" : {
+    "statusDescription" : "똑똑한 30초"
+  },
+  "0768" : {
+    "statusDescription" : "체력의 30초"
+  },
+  "0769" : {
+    "statusDescription" : "마력의 30초"
+  },
+  "0770" : {
+    "statusDescription" : "가벼운 30초"
+  },
+  "0771" : {
+    "statusDescription" : "빨라진 30초"
+  },
+  "0772" : {
+    "statusDescription" : "든든한 30초"
+  },
+  "0773" : {
+    "statusDescription" : "안전한 30초"
+  },
+  "0774" : {
+    "statusDescription" : "운좋은 30초"
+  },
+  "0775" : {
+    "statusDescription" : "잘맞는 30초"
+  },
+  "0776" : {
+    "statusDescription" : "산 자와 죽은 자의 경계에 있습니다!"
+  },
+  "0777" : {
+    "statusDescription" : "단오절 축제"
+  },
+  "0778" : {
+    "statusDescription" : "후유증"
+  },
+  "0780" : {
+    "statusDescription" : "%s"
+  },
+  "0783" : {
+    "statusDescription" : "소갈비찜"
+  },
+  "0784" : {
+    "statusDescription" : "돼지갈비찜"
+  },
+  "0785" : {
+    "statusDescription" : "속성강화"
+  },
+  "0786" : {
+    "statusDescription" : "속성강화"
+  },
+  "0787" : {
+    "statusDescription" : "속성강화"
+  },
+  "0788" : {
+    "statusDescription" : "속성강화"
+  },
+  "0789" : {
+    "statusDescription" : "속성강화"
+  },
+  "0790" : {
+    "statusDescription" : "속성강화"
+  },
+  "0815" : {
+    "statusDescription" : "점핑 클랜"
+  },
+  "0844" : {
+    "statusDescription" : "시간의 조각 응집중"
+  },
+  "0865" : {
+    "statusDescription" : "봉인된 베르제브브"
+  },
+  "0867" : {
+    "statusDescription" : "한정판 파워 부스터"
+  },
+  "0873" : {
+    "statusDescription" : "빛나는 성수"
+  },
+  "0875" : {
+    "statusDescription" : "석화"
+  },
+  "0876" : {
+    "statusDescription" : "동빙"
+  },
+  "0877" : {
+    "statusDescription" : "스턴"
+  },
+  "0878" : {
+    "statusDescription" : "수면"
+  },
+  "0880" : {
+    "statusDescription" : "석화 진행 중"
+  },
+  "0881" : {
+    "statusDescription" : "발화"
+  },
+  "0882" : {
+    "statusDescription" : "격리"
+  },
+  "0883" : {
+    "statusDescription" : "독"
+  },
+  "0884" : {
+    "statusDescription" : "저주"
+  },
+  "0885" : {
+    "statusDescription" : "침묵"
+  },
+  "0886" : {
+    "statusDescription" : "혼란"
+  },
+  "0890" : {
+    "statusDescription" : "치명적인 독"
+  },
+  "0891" : {
+    "statusDescription" : "공포"
+  },
+  "0892" : {
+    "statusDescription" : "벚꽃 찰떡"
+  },
+  "0893" : {
+    "statusDescription" : "웅크리기"
+  },
+  "0894" : {
+    "statusDescription" : "가루뿌리기"
+  },
+  "0896" : {
+    "statusDescription" : "뿌리휘감기"
+  },
+  "0897" : {
+    "statusDescription" : "무기에 무속성 부여"
+  },
+  "0898" : {
+    "statusDescription" : "무기에 수속성 부여"
+  },
+  "0899" : {
+    "statusDescription" : "무기에 지속성 부여"
+  },
+  "0900" : {
+    "statusDescription" : "무기에 화속성 부여"
+  },
+  "0901" : {
+    "statusDescription" : "무기에 풍속성 부여"
+  },
+  "0902" : {
+    "statusDescription" : "무기에 독속성 부여"
+  },
+  "0903" : {
+    "statusDescription" : "무기에 성속성 부여"
+  },
+  "0904" : {
+    "statusDescription" : "무기에 암속성 부여"
+  },
+  "0905" : {
+    "statusDescription" : "무기에 염속성 부여"
+  },
+  "0906" : {
+    "statusDescription" : "무기에 불사속성 부여"
+  },
+  "0907" : {
+    "statusDescription" : "무속성 내성"
+  },
+  "0908" : {
+    "statusDescription" : "수속성 내성"
+  },
+  "0909" : {
+    "statusDescription" : "지속성 내성"
+  },
+  "0910" : {
+    "statusDescription" : "화속성 내성"
+  },
+  "0911" : {
+    "statusDescription" : "풍속성 내성"
+  },
+  "0912" : {
+    "statusDescription" : "독속성 내성"
+  },
+  "0913" : {
+    "statusDescription" : "성속성 내성"
+  },
+  "0914" : {
+    "statusDescription" : "암속성 내성"
+  },
+  "0915" : {
+    "statusDescription" : "염속성 내성"
+  },
+  "0916" : {
+    "statusDescription" : "불사속성 내성"
+  },
+  "0917" : {
+    "statusDescription" : "물린상처"
+  },
+  "0918" : {
+    "statusDescription" : "아크라우스대시"
+  },
+  "0919" : {
+    "statusDescription" : "참치파티"
+  },
+  "0920" : {
+    "statusDescription" : "새우떼"
+  },
+  "0921" : {
+    "statusDescription" : "새우의신선함"
+  },
+  "0922" : {
+    "statusDescription" : "%s"
+  },
+  "0923" : {
+    "statusDescription" : "%s"
+  },
+  "0924" : {
+    "statusDescription" : "%s"
+  },
+  "0933" : {
+    "statusDescription" : "숨기"
+  },
+  "0935" : {
+    "statusDescription" : "깔루냐 밀크"
+  },
+  "0936" : {
+    "statusDescription" : "바질"
+  },
+  "0937" : {
+    "statusDescription" : "혼구슬"
+  },
+  "0938" : {
+    "statusDescription" : "드랍율 향상"
+  },
+  "0939" : {
+    "statusDescription" : "경험치 향상"
+  },
+  "0940" : {
+    "statusDescription" : "잡 경험치 향상"
+  },
+  "0941" : {
+    "statusDescription" : "데스페널티 하락"
+  },
+  "0942" : {
+    "statusDescription" : "창고 확장"
+  },
+  "0950" : {
+    "statusDescription" : "히스"
+  },
+  "0952" : {
+    "statusDescription" : "냥 그라스"
+  },
+  "0953" : {
+    "statusDescription" : "채터링"
+  },
+  "0961" : {
+    "statusDescription" : "그루밍"
+  },
+  "0962" : {
+    "statusDescription" : "새우의 가호"
+  },
+  "0963" : {
+    "statusDescription" : "강화포션SS"
+  },
+  "0964" : {
+    "statusDescription" : "강화포션SC"
+  },
+  "0965" : {
+    "statusDescription" : "강화포션AC"
+  },
+  "0966" : {
+    "statusDescription" : "매지컬 블릿"
+  },
+  "0983" : {
+    "statusDescription" : "드랍율 향상"
+  },
+  "0984" : {
+    "statusDescription" : "경험치 향상"
+  },
+  "0985" : {
+    "statusDescription" : "잡 경험치 향상"
+  },
+  "0988" : {
+    "statusDescription" : "공격력 증가"
+  },
+  "0989" : {
+    "statusDescription" : "SP 소모량 감소"
+  },
+  "0990" : {
+    "statusDescription" : "글로벌 쿨타임 감소"
+  },
+  "0992" : {
+    "statusDescription" : "엄마 아빠 힘내세요."
+  },
+  "0995" : {
+    "statusDescription" : "소형 마나수"
+  },
+  "0996" : {
+    "statusDescription" : "빛나는 방어 스크롤"
+  },
+  "1000" : {
+    "statusDescription" : "회피율 증가"
+  },
+  "1001" : {
+    "statusDescription" : "무덤의 가호"
+  },
+  "1002" : {
+    "statusDescription" : "무덤의 가호"
+  },
+  "1003" : {
+    "statusDescription" : "무덤의 가호"
+  },
+  "1004" : {
+    "statusDescription" : "무덤의 가호"
+  },
+  "1013" : {
+    "statusDescription" : "모든 기본 스테이터스 감소"
+  },
+  "1014" : {
+    "statusDescription" : "중력 증가"
+  },
+  "1027" : {
+    "statusDescription" : "특제 쿠키"
+  },
+  "1031" : {
+    "statusDescription" : "공격력 증가"
+  },
+  "1032" : {
+    "statusDescription" : "마법 공격력 증가"
+  },
+  "1033" : {
+    "statusDescription" : "공격 속도 증가"
+  },
+  "1035" : {
+    "statusDescription" : "달의 빛"
+  },
+  "1036" : {
+    "statusDescription" : "태양의 빛"
+  },
+  "1037" : {
+    "statusDescription" : "별의 빛"
+  },
+  "1038" : {
+    "statusDescription" : "달의 자세"
+  },
+  "1039" : {
+    "statusDescription" : "우주의 자세"
+  },
+  "1040" : {
+    "statusDescription" : "태양의 자세"
+  },
+  "1041" : {
+    "statusDescription" : "별의 징표"
+  },
+  "1042" : {
+    "statusDescription" : "삭월"
+  },
+  "1043" : {
+    "statusDescription" : "별의 자세"
+  },
+  "1044" : {
+    "statusDescription" : "차원의 서"
+  },
+  "1047" : {
+    "statusDescription" : "창성의 서"
+  },
+  "1048" : {
+    "statusDescription" : "유성 낙하"
+  },
+  "1050" : {
+    "statusDescription" : "중력 조절"
+  },
+  "1053" : {
+    "statusDescription" : "영혼 축적"
+  },
+  "1054" : {
+    "statusDescription" : "영혼 수확"
+  },
+  "1055" : {
+    "statusDescription" : "영혼 결속"
+  },
+  "1056" : {
+    "statusDescription" : "그림자의 영혼 부여"
+  },
+  "1057" : {
+    "statusDescription" : "요정의 영혼 부여"
+  },
+  "1058" : {
+    "statusDescription" : "매의 영혼 부여"
+  },
+  "1059" : {
+    "statusDescription" : "골렘의 영혼 부여"
+  },
+  "1060" : {
+    "statusDescription" : "영혼 분열"
+  },
+  "1065" : {
+    "statusDescription" : "인피니티 드링크"
+  },
+  "1083" : {
+    "statusDescription" : "사냥꾼의 만찬"
+  },
+  "1084" : {
+    "statusDescription" : "드랍율 향상"
+  },
+  "1085" : {
+    "statusDescription" : "경험치 향상"
+  },
+  "1088" : {
+    "statusDescription" : "합주 피로 상태"
+  },
+  "1089" : {
+    "statusDescription" : "임기 응변"
+  },
+  "1095" : {
+    "statusDescription" : "안실라 (ANCILLA \/ 보조하는 자)"
+  },
+  "1107" : {
+    "statusDescription" : "카운터 상태"
+  },
+  "1121" : {
+    "statusDescription" : "아숨프티오"
+  },
+  "1122" : {
+    "statusDescription" : "바실리카"
+  },
+  "1123" : {
+    "statusDescription" : "말랑도 고양이 캔2"
+  },
+  "1125" : {
+    "statusDescription" : "사령의 저주"
+  },
+  "1126" : {
+    "statusDescription" : "사운드 오브 디스트럭션"
+  },
+  "1130" : {
+    "statusDescription" : "천사의 가호"
+  },
+  "1132" : {
+    "statusDescription" : "이벤트 강력해져라!"
+  },
+  "1133" : {
+    "statusDescription" : "이벤트 똑똑해져라!"
+  },
+  "1135" : {
+    "statusDescription" : "이벤트 날렵해져라!"
+  },
+  "1136" : {
+    "statusDescription" : "아담한 꽃가지"
+  },
+  "1137" : {
+    "statusDescription" : "벚꽃 찰떡"
+  },
+  "1141" : {
+    "statusDescription" : "서리 상태"
+  },
+  "1142" : {
+    "statusDescription" : "마력 중독"
+  },
+  "1150" : {
+    "statusDescription" : "데들리 프로젝션"
+  },
+  "1151" : {
+    "statusDescription" : "디스트럭티브 허리케인"
+  },
+  "1152" : {
+    "statusDescription" : "클라이막스"
+  },
+  "1154" : {
+    "statusDescription" : "럭스 아니마 룬 스톤 : 럭스 아니마"
+  },
+  "1155" : {
+    "statusDescription" : "입욕제A"
+  },
+  "1156" : {
+    "statusDescription" : "입욕제B"
+  },
+  "1157" : {
+    "statusDescription" : "입욕제C"
+  },
+  "1158" : {
+    "statusDescription" : "아로마 오일"
+  },
+  "1160" : {
+    "statusDescription" : "강인한 신념"
+  },
+  "1161" : {
+    "statusDescription" : "신실한 신념"
+  },
+  "1162" : {
+    "statusDescription" : "굳건한 신념"
+  },
+  "1165" : {
+    "statusDescription" : "헬즈 플랜트"
+  },
+  "1167" : {
+    "statusDescription" : "포격 지점 설정"
+  },
+  "1169" : {
+    "statusDescription" : "골든 이그제"
+  },
+  "1170" : {
+    "statusDescription" : "레드허브 액티베이션"
+  },
+  "1171" : {
+    "statusDescription" : "블루허브 액티베이션"
+  },
+  "1172" : {
+    "statusDescription" : "서번트 웨폰"
+  },
+  "1173" : {
+    "statusDescription" : "서번트 웨폰 표식"
+  },
+  "1174" : {
+    "statusDescription" : "챠징 피어스"
+  },
+  "1176" : {
+    "statusDescription" : "드래고닉 오라"
+  },
+  "1178" : {
+    "statusDescription" : "비고르"
+  },
+  "1182" : {
+    "statusDescription" : "바일런트 퀘이크"
+  },
+  "1183" : {
+    "statusDescription" : "올 블룸"
+  },
+  "1184" : {
+    "statusDescription" : "크리스탈 임팩트"
+  },
+  "1190" : {
+    "statusDescription" : "성유세례"
+  },
+  "1192" : {
+    "statusDescription" : "쉐도우 익시드"
+  },
+  "1193" : {
+    "statusDescription" : "댄싱 나이프"
+  },
+  "1194" : {
+    "statusDescription" : "포텐트 베넘"
+  },
+  "1195" : {
+    "statusDescription" : "인챈팅 쉐도우"
+  },
+  "1197" : {
+    "statusDescription" : "메디알레"
+  },
+  "1198" : {
+    "statusDescription" : "아르구투스 비타"
+  },
+  "1199" : {
+    "statusDescription" : "아르구투스 텔룸"
+  },
+  "1200" : {
+    "statusDescription" : "프레센스 아치에스"
+  },
+  "1201" : {
+    "statusDescription" : "콤페텐티아"
+  },
+  "1202" : {
+    "statusDescription" : "가드 스탠스"
+  },
+  "1203" : {
+    "statusDescription" : "어택 스탠스"
+  },
+  "1204" : {
+    "statusDescription" : "가디언 쉴드"
+  },
+  "1205" : {
+    "statusDescription" : "칠흑"
+  },
+  "1206" : {
+    "statusDescription" : "고요"
+  },
+  "1207" : {
+    "statusDescription" : "무기력"
+  },
+  "1208" : {
+    "statusDescription" : "급냉"
+  },
+  "1209" : {
+    "statusDescription" : "졸도"
+  },
+  "1210" : {
+    "statusDescription" : "격류"
+  },
+  "1211" : {
+    "statusDescription" : "결정화"
+  },
+  "1212" : {
+    "statusDescription" : "화재"
+  },
+  "1213" : {
+    "statusDescription" : "불행"
+  },
+  "1214" : {
+    "statusDescription" : "강독"
+  },
+  "1215" : {
+    "statusDescription" : "우울"
+  },
+  "1216" : {
+    "statusDescription" : "성화"
+  },
+  "1217" : {
+    "statusDescription" : "리바운드 쉴드"
+  },
+  "1220" : {
+    "statusDescription" : "홀리 쉴드"
+  },
+  "1221" : {
+    "statusDescription" : "얼티메이트 세크리파이스"
+  },
+  "1222" : {
+    "statusDescription" : "그랜드 저지먼트"
+  },
+  "1223" : {
+    "statusDescription" : "쉴드 슈팅"
+  },
+  "1226" : {
+    "statusDescription" : "인챈팅 쉐도우"
+  },
+  "1227" : {
+    "statusDescription" : "렐리지오"
+  },
+  "1228" : {
+    "statusDescription" : "베네딕툼"
+  },
+  "1230" : {
+    "statusDescription" : "제1격 : 낙인"
+  },
+  "1231" : {
+    "statusDescription" : "심판의 낙인"
+  },
+  "1232" : {
+    "statusDescription" : "제2장 : 심판자"
+  },
+  "1233" : {
+    "statusDescription" : "최종장 : 멸마의 불꽃"
+  },
+  "1234" : {
+    "statusDescription" : "제1장 : 신념의 힘"
+  },
+  "1235" : {
+    "statusDescription" : "액스 스톰프"
+  },
+  "1236" : {
+    "statusDescription" : "공격 장치 활성화"
+  },
+  "1237" : {
+    "statusDescription" : "방어 장치 활성화"
+  },
+  "1242" : {
+    "statusDescription" : "스트립 쉐도우"
+  },
+  "1243" : {
+    "statusDescription" : "어비스 대거"
+  },
+  "1244" : {
+    "statusDescription" : "프롬 디 어비스"
+  },
+  "1245" : {
+    "statusDescription" : "어비스 슬레이어"
+  },
+  "1247" : {
+    "statusDescription" : "쉐도우 프로텍션"
+  },
+  "1248" : {
+    "statusDescription" : "리서치 리포트"
+  },
+  "1249" : {
+    "statusDescription" : "지옥 나무의 가루"
+  },
+  "1250" : {
+    "statusDescription" : "윈드 사인"
+  },
+  "1252" : {
+    "statusDescription" : "캘러미티 가일"
+  },
+  "1256" : {
+    "statusDescription" : "미스틱 심포니"
+  },
+  "1257" : {
+    "statusDescription" : "소나타 오브 크바시르"
+  },
+  "1258" : {
+    "statusDescription" : "사운드 블렌드"
+  },
+  "1259" : {
+    "statusDescription" : "게페니아 녹턴"
+  },
+  "1260" : {
+    "statusDescription" : "마인워커 랩소디"
+  },
+  "1261" : {
+    "statusDescription" : "뮤지컬 인터루드"
+  },
+  "1262" : {
+    "statusDescription" : "저녁 노을의 세레나데"
+  },
+  "1263" : {
+    "statusDescription" : "프론테라 행진곡"
+  },
+  "1271" : {
+    "statusDescription" : "스펠 인챈팅"
+  },
+  "1303" : {
+    "statusDescription" : "콜 호문클루스"
+  },
+  "1310" : {
+    "statusDescription" : "안개 독"
+  },
+  "1313" : {
+    "statusDescription" : "바위 벽"
+  },
+  "1315" : {
+    "statusDescription" : "오버 브랜드 레디"
+  },
+  "1316" : {
+    "statusDescription" : "쉴드 스펠"
+  },
+  "1318" : {
+    "statusDescription" : "구름 독"
+  },
+  "1319" : {
+    "statusDescription" : "스포어 익스플로젼"
+  },
+  "1326" : {
+    "statusDescription" : "폭기혈 활성화"
+  },
+  "1330" : {
+    "statusDescription" : "스트립 쉐도우"
+  },
+  "1331" : {
+    "statusDescription" : "스트립 쉐도우"
+  },
+  "1332" : {
+    "statusDescription" : "스트립 쉐도우"
+  },
+  "1333" : {
+    "statusDescription" : "스트립 쉐도우"
+  },
+  "1334" : {
+    "statusDescription" : "스트립 쉐도우"
+  },
+  "1335" : {
+    "statusDescription" : "스트립 쉐도우"
+  },
+  "1336" : {
+    "statusDescription" : "스트립 쉐도우"
+  },
+  "1337" : {
+    "statusDescription" : "커스 오브 레드 큐브"
+  },
+  "1338" : {
+    "statusDescription" : "커스 오브 블루 큐브"
+  },
+  "1341" : {
+    "statusDescription" : "만다라"
+  },
+  "1342" : {
+    "statusDescription" : "골든에 튜느"
+  },
+  "1343" : {
+    "statusDescription" : "템퍼링"
+  },
+  "1345" : {
+    "statusDescription" : "집중 조준 활성화"
+  },
+  "1347" : {
+    "statusDescription" : "그레네이드 프래그먼트"
+  },
+  "1348" : {
+    "statusDescription" : "그레네이드 프래그먼트"
+  },
+  "1349" : {
+    "statusDescription" : "그레네이드 프래그먼트"
+  },
+  "1350" : {
+    "statusDescription" : "그레네이드 프래그먼트"
+  },
+  "1351" : {
+    "statusDescription" : "그레네이드 프래그먼트"
+  },
+  "1352" : {
+    "statusDescription" : "그레네이드 프래그먼트"
+  },
+  "1353" : {
+    "statusDescription" : "오토 파이어링 런처"
+  },
+  "1354" : {
+    "statusDescription" : "히든 카드"
+  },
+  "1355" : {
+    "statusDescription" : "그레네이드 마스터리"
+  },
+  "1356" : {
+    "statusDescription" : "수호부"
+  },
+  "1357" : {
+    "statusDescription" : "무사부"
+  },
+  "1358" : {
+    "statusDescription" : "법사부"
+  },
+  "1359" : {
+    "statusDescription" : "오행부"
+  },
+  "1360" : {
+    "statusDescription" : "동쪽의 가호"
+  },
+  "1361" : {
+    "statusDescription" : "서쪽의 가호"
+  },
+  "1362" : {
+    "statusDescription" : "남쪽의 가호"
+  },
+  "1363" : {
+    "statusDescription" : "북쪽의 가호"
+  },
+  "1364" : {
+    "statusDescription" : "사방오행의 가호"
+  },
+  "1365" : {
+    "statusDescription" : "천지신령"
+  },
+  "1366" : {
+    "statusDescription" : "호고공"
+  },
+  "1367" : {
+    "statusDescription" : "귀설 바다축제"
+  },
+  "1368" : {
+    "statusDescription" : "귀설 모래축제"
+  },
+  "1369" : {
+    "statusDescription" : "귀설 거칠게 요동치기"
+  },
+  "1370" : {
+    "statusDescription" : "현록의 오색뿔"
+  },
+  "1371" : {
+    "statusDescription" : "현록의 오색뿔"
+  },
+  "1372" : {
+    "statusDescription" : "현록의 오색뿔"
+  },
+  "1373" : {
+    "statusDescription" : "현록의 오색뿔"
+  },
+  "1374" : {
+    "statusDescription" : "현록의 오색뿔"
+  },
+  "1375" : {
+    "statusDescription" : "현록의 오색뿔"
+  },
+  "1376" : {
+    "statusDescription" : "현록의 오색뿔"
+  },
+  "1377" : {
+    "statusDescription" : "급속 교감"
+  },
+  "1378" : {
+    "statusDescription" : "영물의 축복"
+  },
+  "1379" : {
+    "statusDescription" : "영물의 축복 부작용"
+  },
+  "1380" : {
+    "statusDescription" : "쉴드 체인 러쉬"
+  },
+  "1381" : {
+    "statusDescription" : "혹한"
+  },
+  "1382" : {
+    "statusDescription" : "그라운드 그라비테이션"
+  },
+  "1383" : {
+    "statusDescription" : "한계돌파"
+  },
+  "1384" : {
+    "statusDescription" : "룰 브레이킹"
+  },
+  "1385" : {
+    "statusDescription" : "일출"
+  },
+  "1386" : {
+    "statusDescription" : "정오"
+  },
+  "1387" : {
+    "statusDescription" : "일몰"
+  },
+  "1388" : {
+    "statusDescription" : "월출"
+  },
+  "1389" : {
+    "statusDescription" : "자정"
+  },
+  "1390" : {
+    "statusDescription" : "월몰"
+  },
+  "1391" : {
+    "statusDescription" : "천명낙성"
+  },
+  "1392" : {
+    "statusDescription" : "천기합일"
+  },
+  "1393" : {
+    "statusDescription" : "그림자 은신"
+  },
+  "1395" : {
+    "statusDescription" : "악몽"
+  },
+  "1396" : {
+    "statusDescription" : "국수 축제 - 파르팔레"
+  },
+  "1397" : {
+    "statusDescription" : "국수 축제 - 크림 새우 파스타"
+  },
+  "1398" : {
+    "statusDescription" : "국수 축제 - 토마토 국수"
+  },
+  "1399" : {
+    "statusDescription" : "국수 축제 - 잔치 국수"
+  },
+  "1400" : {
+    "statusDescription" : "국수 축제 - 간장 비빔 국수"
+  },
+  "1402" : {
+    "statusDescription" : "퀘이크"
+  },
+  "1403" : {
+    "statusDescription" : "러쉬"
+  },
+  "1425" : {
+    "statusDescription" : "이동속도 증가"
+  },
+  "1426" : {
+    "statusDescription" : "공격속도 증가"
+  },
+  "1427" : {
+    "statusDescription" : "MHP 증가"
+  },
+  "1428" : {
+    "statusDescription" : "MSP 증가"
+  },
+  "1429" : {
+    "statusDescription" : "HIT 증가"
+  },
+  "1430" : {
+    "statusDescription" : "DEF 증가"
+  },
+  "1431" : {
+    "statusDescription" : "MDEF 증가"
+  },
+  "1432" : {
+    "statusDescription" : "주인공 버프"
+  },
+  "1433" : {
+    "statusDescription" : "주인공 버프"
+  },
+  "1434" : {
+    "statusDescription" : "주인공 버프"
+  },
+  "1435" : {
+    "statusDescription" : "주인공 버프"
+  },
+  "1439" : {
+    "statusDescription" : "주인공 버프"
+  },
+  "1440" : {
+    "statusDescription" : "주인공 버프"
+  },
+  "1441" : {
+    "statusDescription" : "주인공 버프"
+  },
+  "1442" : {
+    "statusDescription" : "주인공 버프"
+  },
+  "1443" : {
+    "statusDescription" : "주인공 버프"
+  },
+  "1444" : {
+    "statusDescription" : "헤로스리아 퍼플 허브잼"
+  },
+  "1445" : {
+    "statusDescription" : "헤로스리아 레드 허브잼"
+  },
+  "1446" : {
+    "statusDescription" : "헤로스리아 블루 허브잼"
+  },
+  "1447" : {
+    "statusDescription" : "헤로스리아 옐로우 허브잼"
+  },
+  "1448" : {
+    "statusDescription" : "헤로스리아 화이트 허브잼"
+  },
+  "1449" : {
+    "statusDescription" : "헤로스리아 성주의 가호"
+  },
+  "1453" : {
+    "statusDescription" : "타겟 마커 상태"
+  },
+  "1454" : {
+    "statusDescription" : "봉인 상태"
+  },
+  "1455" : {
+    "statusDescription" : "서리 폭풍 상태"
+  },
+  "1456" : {
+    "statusDescription" : "기절 상태"
+  },
+  "1457" : {
+    "statusDescription" : "따스한 방패"
+  },
+  "1459" : {
+    "statusDescription" : "역린찹쌀떡"
+  },
+  "1460" : {
+    "statusDescription" : "새해 갈비찜"
+  },
+  "1461" : {
+    "statusDescription" : "새해 떡국"
+  },
+  "1462" : {
+    "statusDescription" : "루나포마의 축복(공격력)"
+  },
+  "1463" : {
+    "statusDescription" : "루나포마의 축복(속도)"
+  },
+  "1464" : {
+    "statusDescription" : "루나포마의 축복(용\/식물)"
+  },
+  "1465" : {
+    "statusDescription" : "루나포마의 축복(악마\/불사)"
+  },
+  "1466" : {
+    "statusDescription" : "루나포마의 축복(무\/어패)"
+  },
+  "1467" : {
+    "statusDescription" : "루나포마의 축복(동물\/천사)"
+  },
+  "1468" : {
+    "statusDescription" : "루나포마의 축복(인간\/곤충)"
+  },
+  "1469" : {
+    "statusDescription" : "몽블랑 케이크"
+  },
+  "1470" : {
+    "statusDescription" : "벚꽃 찰떡"
+  },
+  "1471" : {
+    "statusDescription" : "달콤한 크레이프"
+  },
+  "1472" : {
+    "statusDescription" : "풍성한 꽃가지"
+  },
+  "1473" : {
+    "statusDescription" : "여름 잔치 국수"
+  },
+  "1474" : {
+    "statusDescription" : "허브 오징어 통구이"
+  },
+  "1475" : {
+    "statusDescription" : "달콤한 수박 푸딩"
+  },
+  "1476" : {
+    "statusDescription" : "시원한 수박쥬스"
+  },
+  "1477" : {
+    "statusDescription" : "시원한 팥빙수"
+  },
+  "1478" : {
+    "statusDescription" : "고메 버터 팝콘"
+  },
+  "1479" : {
+    "statusDescription" : "사랑의 케이크"
+  },
+  "1480" : {
+    "statusDescription" : "기념 버프"
+  },
+  "1481" : {
+    "statusDescription" : "던전 버프"
+  },
+  "1482" : {
+    "statusDescription" : "던전 버프"
+  },
+  "1483" : {
+    "statusDescription" : "던전 버프"
+  },
+  "1484" : {
+    "statusDescription" : "학술제 비밀 문서"
+  },
+  "1485" : {
+    "statusDescription" : "학술제 쌀과자"
+  },
+  "1486" : {
+    "statusDescription" : "학술제 버터과자"
+  },
+  "1487" : {
+    "statusDescription" : "학술제 커피스틱"
+  },
+  "1488" : {
+    "statusDescription" : "추석 송편"
+  },
+  "1489" : {
+    "statusDescription" : "두툼한 고기 샌드위치"
+  },
+  "1490" : {
+    "statusDescription" : "따끈한 뱅쇼"
+  },
+  "1491" : {
+    "statusDescription" : "부드러운 에그노그"
+  },
+  "1492" : {
+    "statusDescription" : "페스티 쿠키"
+  },
+  "1493" : {
+    "statusDescription" : "스노우 쿠키"
+  },
+  "1509" : {
+    "statusDescription" : "포스 부스터"
+  },
+  "1510" : {
+    "statusDescription" : "스피드 부스터"
+  },
+  "1560" : {
+    "statusDescription" : "체이싱"
+  },
+  "1665" : {
+    "statusDescription" : "미스터리 파우더"
+  },
+  "1666" : {
+    "statusDescription" : "와일드 워크"
+  },
+  "1667" : {
+    "statusDescription" : "사색부 : 화"
+  },
+  "1668" : {
+    "statusDescription" : "사색부 : 수"
+  },
+  "1669" : {
+    "statusDescription" : "사색부 : 풍"
+  },
+  "1670" : {
+    "statusDescription" : "사색부 : 지"
+  },
+  "1671" : {
+    "statusDescription" : "위기극복"
+  }
+}

@@ -82,8 +82,8 @@ final class StatusChangeModel {
             StatusChangeModel(mode: mode, statusChange: statusChange)
         }
 
-        let scriptContext = await ResourceManager.shared.scriptContext(for: .current)
-        localizedDescription = scriptContext.localizedStatusDescription(forStatusID: statusChange.icon.rawValue)
+        let statusInfoTable = await ResourceManager.shared.statusInfoTable(for: .current)
+        localizedDescription = statusInfoTable.localizedStatusDescription(forStatusID: statusChange.icon.rawValue)
     }
 }
 

@@ -19,8 +19,8 @@ final class StatusInfoTableTests: XCTestCase {
     }
 
     func testLocalizedDescription() async throws {
-        let scriptContext = await resourceManager.scriptContext(for: .korean)
-        let provoke = scriptContext.localizedStatusDescription(forStatusID: OfficialStatusChangeID.efst_provoke.rawValue)
+        let statusInfoTable = await resourceManager.statusInfoTable(for: .korean)
+        let provoke = statusInfoTable.localizedStatusDescription(forStatusID: OfficialStatusChangeID.efst_provoke.rawValue)
         XCTAssertEqual(provoke, "프로보크(Provoke)")
     }
 }
