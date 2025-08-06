@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FilesView: View {
-    var title: String
+    var titleKey: LocalizedStringKey?
     var directory: File
 
     @Environment(\.horizontalSizeClass) private var sizeClass
@@ -83,6 +83,19 @@ struct FilesView: View {
         }
     }
 
+    private var title: Text {
+        if let titleKey {
+            Text(titleKey)
+        } else {
+            Text(directory.name)
+        }
+    }
+
+    init(_ titleKey: LocalizedStringKey? = nil, directory: File) {
+        self.titleKey = titleKey
+        self.directory = directory
+    }
+
     private func load() async {
         guard loadStatus == .notYetLoaded else {
             return
@@ -118,6 +131,6 @@ struct FilesView: View {
 }
 
 #Preview {
-    FilesView(title: "", directory: .previewGRF())
+    FilesView(directory: .previewGRF())
         .frame(width: 400, height: 300)
 }

@@ -53,11 +53,11 @@ struct ContentView: View {
     private func detailView(for item: SidebarItem) -> some View {
         switch item {
         case .clientFiles:
-            FilesView(title: "Files", directory: appModel.clientDirectory)
+            FilesView("Files", directory: appModel.clientDirectory)
         case .clientCachedFiles:
-            FilesView(title: "Cached Files", directory: appModel.clientCachesDirectory)
+            FilesView("Cached Files", directory: appModel.clientCachesDirectory)
         case .serverFiles:
-            FilesView(title: "Files", directory: appModel.serverDirectory)
+            FilesView("Files", directory: appModel.serverDirectory)
         case .loginServer:
             ServerView(server: appModel.loginServer)
         case .charServer:
@@ -98,7 +98,7 @@ extension View {
     func navigationDestinationsForModels() -> some View {
         self
             .navigationDestination(for: File.self) { file in
-                FilesView(title: file.name, directory: file)
+                FilesView(directory: file)
             }
             .navigationDestination(for: ItemModel.self) { item in
                 ItemDetailView(item: item)
