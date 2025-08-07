@@ -22,7 +22,7 @@ final public class GameSession {
         case charSelect(_ chars: [CharInfo])
         case charMake(_ slot: UInt8)
         case mapLoading
-        case map(_ scene: any MapSceneProtocol)
+        case map(_ scene: MapScene)
     }
 
     public private(set) var phase: GameSession.Phase = .login
@@ -251,14 +251,7 @@ final public class GameSession {
 
         mapSession.subscribe(to: MapEvents.Changed.self) { event in
             if case .map(let scene) = self.phase {
-                switch scene {
-                case let scene as MapScene2D:
-                    break
-                case let scene as MapScene3D:
-                    scene.unload()
-                default:
-                    break
-                }
+                scene.unload()
 
                 self.sceneSubscriptions.removeAll()
             }
@@ -272,21 +265,13 @@ final public class GameSession {
 
                 let player = MapObject(account: account, char: char)
 
-//                let scene = MapScene2D(
-//                    mapName: mapName,
-//                    world: world,
-//                    player: player,
-//                    playerPosition: event.position
-//                )
-
-                let scene = MapScene3D(
+                let scene = MapScene(
                     mapName: mapName,
                     world: world,
                     player: player,
                     playerPosition: event.position,
                     resourceManager: resourceManager
                 )
-
                 scene.mapSceneDelegate = self
 
                 await self.loadMapScene(scene)
@@ -326,19 +311,12 @@ final public class GameSession {
         self.mapSession = mapSession
     }
 
-    private func loadMapScene<S>(_ scene: S) async where S: MapSceneProtocol & MapEventHandlerProtocol {
+    private func loadMapScene(_ scene: MapScene) async {
         guard let mapSession else {
             return
         }
 
-        switch scene {
-        case let scene as MapScene2D:
-            break
-        case let scene as MapScene3D:
-            await scene.load()
-        default:
-            break
-        }
+        await scene.load()
 
         mapSession.subscribe(to: PlayerEvents.Moved.self) { event in
             scene.onPlayerMoved(event)
@@ -388,15 +366,15 @@ final public class GameSession {
 }
 
 extension GameSession: MapSceneDelegate {
-    func mapSceneDidFinishLoading(_ scene: any MapSceneProtocol) {
+    func mapSceneDidFinishLoading(_ scene: MapScene) {
         mapSession?.notifyMapLoaded()
     }
 
-    func mapScene(_ scene: any MapSceneProtocol, didTapTileAt position: SIMD2<Int>) {
+    func mapScene(_ scene: MapScene, didTapTileAt position: SIMD2<Int>) {
         mapSession?.requestMove(to: position)
     }
 
-    func mapScene(_ scene: any MapSceneProtocol, didTapMapObject object: MapObject) {
+    func mapScene(_ scene: MapScene, didTapMapObject object: MapObject) {
         switch object.type {
         case .monster:
             mapSession?.requestAction(._repeat, onTarget: object.objectID)
@@ -407,11 +385,11 @@ extension GameSession: MapSceneDelegate {
         }
     }
 
-    func mapScene(_ scene: any MapSceneProtocol, didTapMapObjectWith objectID: UInt32) {
+    func mapScene(_ scene: MapScene, didTapMapObjectWith objectID: UInt32) {
         mapSession?.talkToNPC(objectID: objectID)
     }
 
-    func mapScene(_ scene: any MapSceneProtocol, didTapMapItem item: MapItem) {
+    func mapScene(_ scene: MapScene, didTapMapItem item: MapItem) {
         mapSession?.pickUpItem(objectID: item.objectID)
     }
 }

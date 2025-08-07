@@ -9,28 +9,20 @@ import Foundation
 import RealityKit
 
 @MainActor
-public struct PlaySpriteAnimationAction: @preconcurrency EntityAction {
-    public let animation: SpriteAnimation
-    public let actionEnded: (() -> Void)?
+struct PlaySpriteAnimationAction: @preconcurrency EntityAction {
+    let animation: SpriteAnimation
+    let actionEnded: (() -> Void)?
 
-    public var animatedValueType: (any AnimatableData.Type)? {
+    var animatedValueType: (any AnimatableData.Type)? {
         nil
-    }
-
-    public init(animation: SpriteAnimation, actionEnded: (() -> Void)?) {
-        self.animation = animation
-        self.actionEnded = actionEnded
     }
 }
 
 @MainActor
-public struct PlaySpriteAnimationActionHandler: @preconcurrency ActionHandlerProtocol {
-    public typealias ActionType = PlaySpriteAnimationAction
+struct PlaySpriteAnimationActionHandler: @preconcurrency ActionHandlerProtocol {
+    typealias ActionType = PlaySpriteAnimationAction
 
-    public init() {
-    }
-
-    public func actionStarted(event: EventType) {
+    func actionStarted(event: EventType) {
         guard let entity = event.playbackController.entity else {
             return
         }
@@ -64,7 +56,7 @@ public struct PlaySpriteAnimationActionHandler: @preconcurrency ActionHandlerPro
         entity.components.set(collisionComponent)
     }
 
-    public func actionUpdated(event: EventType) {
+    func actionUpdated(event: EventType) {
         guard let entity = event.playbackController.entity else {
             return
         }
@@ -81,7 +73,7 @@ public struct PlaySpriteAnimationActionHandler: @preconcurrency ActionHandlerPro
         }
     }
 
-    public func actionEnded(event: EventType) {
+    func actionEnded(event: EventType) {
         event.action.actionEnded?()
     }
 }

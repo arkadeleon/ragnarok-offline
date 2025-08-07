@@ -7,10 +7,6 @@
 
 import RealityKit
 
-public struct TileComponent: Component {
-    public var position: SIMD2<Int>
-
-    public init(position: SIMD2<Int>) {
-        self.position = position
-    }
+struct TileComponent: Component {
+    var position: SIMD2<Int>
 }

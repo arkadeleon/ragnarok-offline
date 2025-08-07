@@ -7,10 +7,6 @@
 
 import RealityKit
 
-public struct SpriteComponent: Component {
-    public var animations: [SpriteAnimation]
-
-    public init(animations: [SpriteAnimation]) {
-        self.animations = animations
-    }
+struct SpriteComponent: Component {
+    var animations: [SpriteAnimation]
 }

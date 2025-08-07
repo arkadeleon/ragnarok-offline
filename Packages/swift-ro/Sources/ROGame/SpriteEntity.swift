@@ -9,15 +9,15 @@ import Foundation
 import RealityKit
 import RORendering
 
-public class SpriteEntity: Entity {
-    public required init() {
+class SpriteEntity: Entity {
+    required init() {
         super.init()
 
         let inputTargetComponent = InputTargetComponent()
         components.set(inputTargetComponent)
     }
 
-    public init(animations: [SpriteAnimation]) {
+    init(animations: [SpriteAnimation]) {
         super.init()
 
         let inputTargetComponent = InputTargetComponent()
@@ -27,7 +27,7 @@ public class SpriteEntity: Entity {
         components.set(spriteComponent)
     }
 
-    public func playSpriteAnimation(_ actionType: ComposedSprite.ActionType, direction: ComposedSprite.Direction, repeats: Bool) {
+    func playSpriteAnimation(_ actionType: ComposedSprite.ActionType, direction: ComposedSprite.Direction, repeats: Bool) {
         guard let mapObject = components[MapObjectComponent.self]?.mapObject,
               let animations = components[SpriteComponent.self]?.animations else {
             return
@@ -50,7 +50,7 @@ public class SpriteEntity: Entity {
         }
     }
 
-    public func playSpriteAnimation(at animationIndex: Int, repeats: Bool) {
+    func playSpriteAnimation(at animationIndex: Int, repeats: Bool) {
         guard let animations = components[SpriteComponent.self]?.animations,
               animationIndex < animations.count else {
             return
@@ -68,7 +68,7 @@ public class SpriteEntity: Entity {
         }
     }
 
-    public func walk(through path: [(position: SIMD2<Int>, transform: Transform)]) {
+    func walk(through path: [(position: SIMD2<Int>, transform: Transform)]) {
         guard let mapObject = components[MapObjectComponent.self]?.mapObject,
               let animations = components[SpriteComponent.self]?.animations else {
             return

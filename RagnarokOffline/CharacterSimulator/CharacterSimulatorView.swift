@@ -5,10 +5,6 @@
 //  Created by Leon Li on 2024/12/25.
 //
 
-import RealityKit
-import ROCore
-import ROGame
-import RORendering
 import SwiftUI
 
 struct CharacterSimulatorView: View {
@@ -43,35 +39,6 @@ struct CharacterSimulatorView: View {
         .navigationTitle("Character Simulator")
         .task {
             characterSimulator.renderSprite()
-        }
-    }
-}
-
-struct CharacterSimulatorView2: View {
-    @State private var configuration = CharacterSimulator.Configuration()
-
-    var body: some View {
-        RealityView { content in
-            let entity = SpriteEntity()
-            entity.name = "character"
-            entity.position = [0, 0, 0]
-            content.add(entity)
-        } update: { content in
-            if let entity = content.entities.first as? SpriteEntity {
-                Task {
-                    let configuration = ComposedSprite.Configuration(configuration: configuration)
-                    let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .shared)
-
-                    let animations = try await SpriteAnimation.animations(for: composedSprite)
-
-                    let spriteComponent = SpriteComponent(animations: animations)
-                    entity.components.set(spriteComponent)
-
-                    entity.playSpriteAnimation(.walk, direction: .south, repeats: true)
-                }
-            }
-        } placeholder: {
-            ProgressView()
         }
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import ROFileFormats
 
-final class Pathfinder: Sendable {
+final class Pathfinder {
     let gat: GAT
     let width: Int
     let height: Int

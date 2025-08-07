@@ -8,12 +8,7 @@
 import RealityKit
 import RONetwork
 
-public struct MapItemComponent: Component {
-    public var mapItem: MapItem
-    public var position: SIMD2<Int>
-
-    public init(mapItem: MapItem, position: SIMD2<Int>) {
-        self.mapItem = mapItem
-        self.position = position
-    }
+struct MapItemComponent: Component {
+    var mapItem: MapItem
+    var position: SIMD2<Int>
 }

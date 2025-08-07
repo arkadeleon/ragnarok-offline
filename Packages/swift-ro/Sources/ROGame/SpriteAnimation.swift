@@ -12,18 +12,18 @@ import ROCore
 import RORendering
 import ROResources
 
-final public class SpriteAnimation: Sendable {
-    public let texture: TextureResource?
-    public let frameCount: Int
-    public let frameWidth: Float
-    public let frameHeight: Float
-    public let frameInterval: TimeInterval
+final class SpriteAnimation {
+    let texture: TextureResource?
+    let frameCount: Int
+    let frameWidth: Float
+    let frameHeight: Float
+    let frameInterval: TimeInterval
 
-    public var duration: TimeInterval {
+    var duration: TimeInterval {
         frameInterval * TimeInterval(frameCount)
     }
 
-    public convenience init(sprite: SpriteResource, actionIndex: Int) async throws {
+    convenience init(sprite: SpriteResource, actionIndex: Int) async throws {
         let spriteRenderer = SpriteRenderer()
         let animatedImage = await spriteRenderer.render(sprite: sprite, actionIndex: actionIndex)
 
@@ -62,7 +62,7 @@ final public class SpriteAnimation: Sendable {
 }
 
 extension SpriteAnimation {
-    public static func animations(for composedSprite: ComposedSprite) async throws -> [SpriteAnimation] {
+    static func animations(for composedSprite: ComposedSprite) async throws -> [SpriteAnimation] {
         var animations: [SpriteAnimation] = []
 
         let spriteRenderer = SpriteRenderer()

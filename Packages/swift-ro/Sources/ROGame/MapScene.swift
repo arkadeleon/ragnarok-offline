@@ -1,5 +1,5 @@
 //
-//  MapScene3D.swift
+//  MapScene.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2025/3/27.
@@ -14,7 +14,17 @@ import ROResources
 import Spatial
 import SwiftUI
 
-class MapScene3D: MapSceneProtocol {
+@MainActor
+protocol MapSceneDelegate: AnyObject {
+    func mapSceneDidFinishLoading(_ scene: MapScene)
+    func mapScene(_ scene: MapScene, didTapTileAt position: SIMD2<Int>)
+    func mapScene(_ scene: MapScene, didTapMapObject object: MapObject)
+    func mapScene(_ scene: MapScene, didTapMapObjectWith objectID: UInt32)
+    func mapScene(_ scene: MapScene, didTapMapItem item: MapItem)
+}
+
+@MainActor
+public class MapScene {
     let mapName: String
     let world: WorldResource
     let player: MapObject
@@ -22,11 +32,11 @@ class MapScene3D: MapSceneProtocol {
 
     let resourceManager: ResourceManager
 
-    let rootEntity = Entity()
+    public let rootEntity = Entity()
 
     weak var mapSceneDelegate: (any MapSceneDelegate)?
 
-    var distance: Float = 80 {
+    public var distance: Float = 80 {
         didSet {
             camera.transform = cameraTransform(for: playerEntity.position)
         }
@@ -41,7 +51,7 @@ class MapScene3D: MapSceneProtocol {
 
     private let pathfinder: Pathfinder
 
-    var tileTapGesture: some Gesture {
+    public var tileTapGesture: some Gesture {
         SpatialTapGesture()
             .targetedToEntity(where: .has(TileComponent.self))
             .onEnded { [unowned self] event in
@@ -51,7 +61,7 @@ class MapScene3D: MapSceneProtocol {
             }
     }
 
-    var mapObjectTapGesture: some Gesture {
+    public var mapObjectTapGesture: some Gesture {
         SpatialTapGesture()
             .targetedToEntity(where: .has(MapObjectComponent.self))
             .onEnded { [unowned self] event in
@@ -61,7 +71,7 @@ class MapScene3D: MapSceneProtocol {
             }
     }
 
-    var mapItemTapGesture: some Gesture {
+    public var mapItemTapGesture: some Gesture {
         SpatialTapGesture()
             .targetedToEntity(where: .has(MapItemComponent.self))
             .onEnded { [unowned self] event in
@@ -242,7 +252,7 @@ class MapScene3D: MapSceneProtocol {
     }
 }
 
-extension MapScene3D: MapEventHandlerProtocol {
+extension MapScene: MapEventHandlerProtocol {
     func onPlayerMoved(_ event: PlayerEvents.Moved) {
         let startPosition = playerEntity.components[MapObjectComponent.self]?.position ?? event.startPosition
         let endPosition = event.endPosition
