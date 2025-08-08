@@ -16,6 +16,9 @@ import ROResources
 @MainActor
 @Observable
 final class AppModel {
+    let mainWindowID = "Main"
+    let gameImmersiveSpaceID = "Game"
+
     let clientDirectory = File(node: .directory(localClientURL))
     let clientCachesDirectory = File(node: .directory(remoteClientCachesURL))
 

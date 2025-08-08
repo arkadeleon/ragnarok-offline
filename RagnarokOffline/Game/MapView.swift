@@ -12,22 +12,32 @@ import SwiftUI
 struct MapView: View {
     var scene: MapScene
 
+    @Environment(AppModel.self) private var appModel
     @Environment(GameSession.self) private var gameSession
+
+    #if os(visionOS)
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    #endif
 
     @State private var distance: Float = 80
     @State private var presentedMenuItem: MenuItem?
 
     var body: some View {
-        RealityView { content in
-            content.add(scene.rootEntity)
-        } update: { content in
-        } placeholder: {
-            ProgressView()
+        ZStack {
+            #if os(visionOS)
+            Text("Game")
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            #else
+            MapSceneView(scene: scene)
+            #endif
         }
-        .ignoresSafeArea()
-        .gesture(scene.tileTapGesture)
-        .gesture(scene.mapObjectTapGesture)
-        .gesture(scene.mapItemTapGesture)
+        #if os(visionOS)
+        .onAppear {
+            Task {
+                await openImmersiveSpace(id: appModel.gameImmersiveSpaceID)
+            }
+        }
+        #endif
         .overlay(alignment: .topLeading) {
             if let char = gameSession.char, let status = gameSession.status {
                 VStack(alignment: .leading, spacing: 0) {
