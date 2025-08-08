@@ -7,21 +7,24 @@
 
 import SwiftUI
 
-struct GameText: View {
-    var string: String
+struct GameText: ViewModifier {
     var size: CGFloat
+    var color: Color
 
-    var body: some View {
-        Text(string)
+    func body(content: Content) -> some View {
+        content
             .font(.custom("Arial", fixedSize: size))
+            .foregroundStyle(color)
     }
+}
 
-    init(_ string: String, size: CGFloat = 12) {
-        self.string = string
-        self.size = size
+extension View {
+    func gameText(size: CGFloat = 12, color: Color = .black) -> some View {
+        modifier(GameText(size: size, color: color))
     }
 }
 
 #Preview {
-    GameText("Novice")
+    Text(verbatim: "Novice")
+        .gameText()
 }

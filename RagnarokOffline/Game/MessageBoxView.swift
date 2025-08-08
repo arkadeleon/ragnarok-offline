@@ -15,7 +15,8 @@ struct MessageBoxView: View {
         ZStack {
             GameImage("win_msgbox.bmp")
 
-            GameText(message)
+            Text(message)
+                .gameText()
         }
         .frame(width: 280, height: 120)
     }

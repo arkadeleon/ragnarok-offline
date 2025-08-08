@@ -29,11 +29,11 @@ struct CharMakeView: View {
 
                 TextField(String(), text: $name)
                     .textFieldStyle(.plain)
-                    .font(.custom("Arial", fixedSize: 12))
                     #if !os(macOS)
                     .textInputAutocapitalization(.never)
                     #endif
                     .disableAutocorrection(true)
+                    .gameText()
                     .frame(width: 101, height: 18)
                     .offset(x: 61, y: 244)
 

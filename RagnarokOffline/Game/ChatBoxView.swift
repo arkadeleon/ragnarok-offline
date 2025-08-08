@@ -22,11 +22,11 @@ struct ChatBoxView: View {
 
             TextField(String(), text: $message)
                 .textFieldStyle(.roundedBorder)
-                .font(.custom("Arial", fixedSize: 12))
                 #if !os(macOS)
                 .textInputAutocapitalization(.never)
                 #endif
                 .disableAutocorrection(true)
+                .gameText()
                 .onSubmit {
                     gameSession.sendMessage(message)
                     message = ""

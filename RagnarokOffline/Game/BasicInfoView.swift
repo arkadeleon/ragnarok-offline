@@ -18,31 +18,37 @@ struct BasicInfoView: View {
         ZStack(alignment: .topLeading) {
             GameImage("basic_interface/basewin_bg2.bmp")
 
-            GameText(char.name)
+            Text(char.name)
+                .gameText()
                 .offset(x: 10, y: 20)
 
-            GameText(JobID(rawValue: Int(char.job))?.stringValue ?? "")
+            Text(JobID(rawValue: Int(char.job))?.stringValue ?? "")
+                .gameText()
                 .offset(x: 10, y: 33)
 
             VStack {
-                GameText("HP")
-                GameText("SP")
+                Text(verbatim: "HP")
+                Text(verbatim: "SP")
             }
+            .gameText()
             .offset(x: 15, y: 50)
 
             VStack {
                 Group {
-                    GameText("\(status.hp) / \(status.maxHp)", size: 10)
-                    GameText("\(status.sp) / \(status.maxSp)", size: 10)
+                    Text(verbatim: "\(status.hp) / \(status.maxHp)")
+                    Text(verbatim: "\(status.sp) / \(status.maxSp)")
                 }
+                .gameText(size: 10)
                 .frame(width: 135, height: 8)
             }
             .offset(x: 35, y: 53)
 
-            GameText("Base Lv. \(status.baseLevel)")
+            Text(verbatim: "Base Lv. \(status.baseLevel)")
+                .gameText()
                 .offset(x: 15, y: 86)
 
-            GameText("Job Lv. \(status.jobLevel)")
+            Text(verbatim: "Job Lv. \(status.jobLevel)")
+                .gameText()
                 .offset(x: 15, y: 97)
 
             VStack {
@@ -51,7 +57,8 @@ struct BasicInfoView: View {
                 HStack {
                     Spacer()
 
-                    GameText("Weight : \(status.weight) / \(status.maxWeight) Zeny : \(status.zeny)")
+                    Text(verbatim: "Weight : \(status.weight) / \(status.maxWeight) Zeny : \(status.zeny)")
+                        .gameText()
                         .padding(.bottom, 3)
                         .padding(.trailing, 5)
                 }

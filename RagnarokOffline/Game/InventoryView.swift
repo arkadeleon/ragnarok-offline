@@ -43,7 +43,8 @@ struct InventoryView: View {
                     Button {
                         items = inventory.usableItems
                     } label: {
-                        GameText("I\nt\ne\nm")
+                        Text(verbatim: "I\nt\ne\nm")
+                            .gameText()
                             .multilineTextAlignment(.center)
                             .frame(height: 66)
                     }
@@ -52,7 +53,8 @@ struct InventoryView: View {
                     Button {
                         items = inventory.equippableItems
                     } label: {
-                        GameText("G\ne\na\nr")
+                        Text(verbatim: "G\ne\na\nr")
+                            .gameText()
                             .multilineTextAlignment(.center)
                             .frame(height: 66)
                     }
@@ -67,7 +69,7 @@ struct InventoryView: View {
                                 Button {
                                     gameSession.useItem(item)
                                 } label: {
-                                    GameText("Use")
+                                    Text(verbatim: "Use")
                                 }
                             }
 
@@ -75,7 +77,7 @@ struct InventoryView: View {
                                 Button {
                                     gameSession.equipItem(item)
                                 } label: {
-                                    GameText("Equip")
+                                    Text(verbatim: "Equip")
                                 }
                             }
                         }

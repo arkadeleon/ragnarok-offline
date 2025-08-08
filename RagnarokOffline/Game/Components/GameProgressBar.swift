@@ -28,8 +28,8 @@ struct GameProgressBar: View {
             }
             .frame(width: 240)
 
-            GameText("\(Int(progress / 100))%")
-                .foregroundColor(Color(#colorLiteral(red: 1, green: 1, blue: 0, alpha: 1)))
+            Text(verbatim: "\(Int(progress / 100))%")
+                .gameText(color: Color(#colorLiteral(red: 1, green: 1, blue: 0, alpha: 1)))
         }
     }
 }

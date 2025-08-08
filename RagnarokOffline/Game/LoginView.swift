@@ -20,21 +20,21 @@ struct LoginView: View {
 
             TextField(String(), text: $username)
                 .textFieldStyle(.plain)
-                .font(.custom("Arial", fixedSize: 12))
                 #if !os(macOS)
                 .textInputAutocapitalization(.never)
                 #endif
                 .disableAutocorrection(true)
+                .gameText()
                 .frame(width: 127, height: 18)
                 .offset(x: 91, y: 29)
 
             TextField(String(), text: $password)
                 .textFieldStyle(.plain)
-                .font(.custom("Arial", fixedSize: 12))
                 #if !os(macOS)
                 .textInputAutocapitalization(.never)
                 #endif
                 .disableAutocorrection(true)
+                .gameText()
                 .frame(width: 127, height: 18)
                 .offset(x: 91, y: 61)
 

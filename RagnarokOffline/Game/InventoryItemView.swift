@@ -22,7 +22,8 @@ struct InventoryItemView<Actions>: View where Actions: View {
                     Image(decorative: iconImage, scale: 1)
                 }
 
-                GameText("\(item.amount)")
+                Text(verbatim: "\(item.amount)")
+                    .gameText()
                     .offset(x: 5, y: 10)
             }
             .frame(width: 32, height: 32)
@@ -52,7 +53,7 @@ struct InventoryItemView<Actions>: View where Actions: View {
     }()
 
     InventoryItemView(item: item) {
-        GameText("Use")
+        Text(verbatim: "Use")
     }
     .padding()
 }
