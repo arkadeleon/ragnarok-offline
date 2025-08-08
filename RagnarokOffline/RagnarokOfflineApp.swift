@@ -15,7 +15,7 @@ struct RagnarokOfflineApp: App {
     @State private var gameSession = GameSession()
 
     #if os(visionOS)
-    @State private var immersionStyle: any ImmersionStyle = ProgressiveImmersionStyle(immersion: 0.1...0.5, initialAmount: 0.15)
+    @State private var immersionStyle: any ImmersionStyle = ProgressiveImmersionStyle(immersion: 0.1...0.5, initialAmount: 0.2)
     #endif
 
     var body: some Scene {

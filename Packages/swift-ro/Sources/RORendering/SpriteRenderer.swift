@@ -269,10 +269,8 @@ final public class SpriteRenderer: Sendable {
             cgContext.concatenate(layerNode.transform)
             cgContext.scaleBy(x: 1, y: -1)
             cgContext.draw(layerImage, in: layerNode.frame)
-            #if DEBUG
-            cgContext.setStrokeColor(CGColor(gray: 0, alpha: 1))
-            cgContext.stroke(layerNode.frame)
-            #endif
+//            cgContext.setStrokeColor(CGColor(gray: 0, alpha: 1))
+//            cgContext.stroke(layerNode.frame)
             cgContext.restoreGState()
         }
     }

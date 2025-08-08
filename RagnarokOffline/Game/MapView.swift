@@ -66,7 +66,7 @@ struct MapView: View {
             ChatBoxView()
         }
         .overlay(alignment: .bottomTrailing) {
-            Slider(value: $distance, in: 2...300)
+            Slider(value: $distance, in: 3...100)
                 .onChange(of: distance) {
                     scene.distance = distance
                 }

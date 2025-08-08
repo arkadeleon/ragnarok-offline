@@ -38,18 +38,22 @@ public class MapScene {
 
     public var distance: Float = 80 {
         didSet {
-            camera.transform = cameraTransform(for: playerEntity.position)
+            rootEntity.findEntity(named: "camera")?.components[WorldCameraComponent.self]?.radius = distance
         }
     }
 
     private let playerEntity = SpriteEntity()
-    private let camera = Entity()
-    private let cameraHelper = Entity()
 
     private let tileEntityManager: TileEntityManager
     private let spriteEntityManager: SpriteEntityManager
 
     private let pathfinder: Pathfinder
+
+    #if os(visionOS)
+    let elevation: Float = radians(15)
+    #else
+    let elevation: Float = radians(45)
+    #endif
 
     public var tileTapGesture: some Gesture {
         SpatialTapGesture()
@@ -112,8 +116,6 @@ public class MapScene {
     }
 
     func load() async {
-        rootEntity.addChild(cameraHelper)
-
         let group = ModelSortGroup()
 
         if let worldEntity = try? await Entity.worldEntity(world: world, resourceManager: resourceManager) {
@@ -152,10 +154,7 @@ public class MapScene {
 
         rootEntity.addChild(playerEntity)
 
-        let cameraComponent = PerspectiveCameraComponent(near: 2, far: 300, fieldOfViewInDegrees: 15)
-        camera.components.set(cameraComponent)
-        camera.transform = cameraTransform(for: playerPosition)
-        rootEntity.addChild(camera)
+        _ = setupWorldCamera(target: playerEntity)
 
         mapSceneDelegate?.mapSceneDidFinishLoading(self)
     }
@@ -166,31 +165,51 @@ public class MapScene {
         }
     }
 
+    /// Performs any necessary setup of the world camera.
+    /// - Parameter target: The entity to orient the camera toward.
+    private func setupWorldCamera(target: Entity) -> Entity {
+        // Set the available bounds for the camera orientation.
+        let elevationBounds: ClosedRange<Float> = (.zero)...radians(60)
+        let initialElevation = elevation
+
+        // Create a world camera component, which acts as a target camera,
+        // where it repositions the scene to orient toward the owning entity.
+        var worldCameraComponent = WorldCameraComponent(
+            azimuth: 0,
+            elevation: initialElevation,
+            radius: 3,
+            bounds: WorldCameraComponent.CameraBounds(elevation: elevationBounds)
+        )
+        #if os(visionOS)
+        // The way that RealityKit orients immersive views isn't the same as a portal.
+        // This offset brings the target a bit closer to the center of the view.
+        // The system also modifies this in `PyroPandaView/RealityView`.
+        worldCameraComponent.radius = 15
+        worldCameraComponent.targetOffset = [0, -0.75, 0]
+        #else
+        worldCameraComponent.radius = 80
+        worldCameraComponent.targetOffset = [0, 0.5, 0]
+        #endif
+
+        let followComponent = FollowComponent(targetId: target.id, smoothing: [3, 1.2, 3])
+
+        let worldCamera = Entity(components: worldCameraComponent, followComponent)
+        worldCamera.name = "camera"
+        #if !os(visionOS)
+        worldCamera.addChild(Entity(components: PerspectiveCameraComponent(near: 2, far: 300, fieldOfViewInDegrees: 15)))
+        #endif
+
+        let simulationParent = PhysicsSimulationComponent.nearestSimulationEntity(for: target)
+        worldCamera.setParent(simulationParent ?? target.parent)
+        return worldCamera
+    }
+
     private func transform(for position2D: SIMD2<Int>) -> Transform {
-        let scale: SIMD3<Float> = [1, sqrtf(2), 1]
+        let scale: SIMD3<Float> = [1, 1 / cosf(elevation), 1]
         let rotation = simd_quatf(angle: radians(0), axis: [1, 0, 0])
         let translation = position3D(for: position2D)
         let transform = Transform(scale: scale, rotation: rotation, translation: translation)
         return transform
-    }
-
-    private func cameraTransform(for position2D: SIMD2<Int>) -> Transform {
-        let target = position3D(for: position2D)
-        let transform = cameraTransform(for: target)
-        return transform
-    }
-
-    private func cameraTransform(for target: SIMD3<Float>) -> Transform {
-        var position = target + [0, distance, 0]
-        var point = Point3D(position)
-        point = point.rotated(
-            by: simd_quatd(angle: radians(45), axis: [1, 0, 0]),
-            around: Point3D(target)
-        )
-        position = SIMD3(point)
-
-        cameraHelper.look(at: target, from: position, upVector: [0, 0, -1], relativeTo: nil)
-        return cameraHelper.transform
     }
 
     private func position3D(for position2D: SIMD2<Int>) -> SIMD3<Float> {
@@ -200,7 +219,7 @@ public class MapScene {
             -altitude / 5,
             -Float(position2D.y),
         ]
-        return position + [0.5, 2, 0]
+        return position + SpriteEntity.pivot
     }
 
     private func audioResource(forMapName mapName: String) async -> AudioResource? {
@@ -256,27 +275,11 @@ extension MapScene: MapEventHandlerProtocol {
     func onPlayerMoved(_ event: PlayerEvents.Moved) {
         let startPosition = playerEntity.components[MapObjectComponent.self]?.position ?? event.startPosition
         let endPosition = event.endPosition
-        let path = pathfinder.findPath(from: startPosition, to: endPosition)
-        let path2 = path.map({ ($0, transform(for: $0)) })
-
-        playerEntity.walk(through: path2)
-
-        do {
-            let speed = TimeInterval(playerEntity.components[MapObjectComponent.self]?.mapObject.speed ?? 0) / 1000
-
-            var cameraAnimationSequence: [AnimationResource] = []
-            for i in 1..<path.count {
-                let source = cameraTransform(for: path[i - 1])
-                let target = cameraTransform(for: path[i])
-                let moveAction = FromToByAction(from: source, to: target, timing: .linear)
-                let moveAnimation = try AnimationResource.makeActionAnimation(for: moveAction, duration: speed, bindTarget: .transform)
-                cameraAnimationSequence.append(moveAnimation)
-            }
-            let animationResource = try AnimationResource.sequence(with: cameraAnimationSequence)
-            camera.playAnimation(animationResource)
-        } catch {
-
+        let path = pathfinder.findPath(from: startPosition, to: endPosition).map { position in
+            (position, world.gat.tileAt(x: position.x, y: position.y).averageAltitude)
         }
+
+        playerEntity.walk(through: path, scale: [1, 1 / cosf(elevation), 1])
 
         tileEntityManager.updateTileEntities(forPosition: event.endPosition)
     }
@@ -304,9 +307,10 @@ extension MapScene: MapEventHandlerProtocol {
         if let entity = rootEntity.findEntity(named: "\(event.object.objectID)") as? SpriteEntity {
             let startPosition = entity.components[MapObjectComponent.self]?.position ?? event.startPosition
             let endPosition = event.endPosition
-            let path = pathfinder.findPath(from: startPosition, to: endPosition)
-            let path2 = path.map({ ($0, transform(for: $0)) })
-            entity.walk(through: path2)
+            let path = pathfinder.findPath(from: startPosition, to: endPosition).map { position in
+                (position, world.gat.tileAt(x: position.x, y: position.y).averageAltitude)
+            }
+            entity.walk(through: path, scale: [1, 1 / cosf(elevation), 1])
         } else {
             Task {
                 if let entity = try? await spriteEntityManager.entity(for: event.object) {

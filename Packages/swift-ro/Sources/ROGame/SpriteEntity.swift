@@ -10,6 +10,8 @@ import RealityKit
 import RORendering
 
 class SpriteEntity: Entity {
+    static let pivot: SIMD3<Float> = [0.5, 2, 0]
+
     required init() {
         super.init()
 
@@ -68,7 +70,7 @@ class SpriteEntity: Entity {
         }
     }
 
-    func walk(through path: [(position: SIMD2<Int>, transform: Transform)]) {
+    func walk(through path: [(position: SIMD2<Int>, altitude: Float)], scale: SIMD3<Float>) {
         guard let mapObject = components[MapObjectComponent.self]?.mapObject,
               let animations = components[SpriteComponent.self]?.animations else {
             return
@@ -119,9 +121,28 @@ class SpriteEntity: Entity {
                     self.components[MapObjectComponent.self]?.position = targetPosition
                 }
 
-                let sourceTransform = path[i - 1].transform
-                let targetTransform = path[i].transform
-                let moveAction = FromToByAction(from: sourceTransform, to: targetTransform, timing: .linear)
+                let sourceAltitude = path[i - 1].altitude
+                let targetAltitude = path[i].altitude
+
+                let sourceTransform = Transform(
+                    scale: scale,
+                    translation: [
+                        Float(sourcePosition.x),
+                        -sourceAltitude / 5,
+                        -Float(sourcePosition.y)
+                    ] + SpriteEntity.pivot
+                )
+
+                let targetTransform = Transform(
+                    scale: scale,
+                    translation: [
+                        Float(targetPosition.x),
+                        -targetAltitude / 5,
+                        -Float(targetPosition.y)
+                    ] + SpriteEntity.pivot
+                )
+
+                let moveAction = FromToByAction(from: sourceTransform, to: targetTransform, mode: .parent, timing: .linear)
                 let moveAnimation = try AnimationResource.makeActionAnimation(for: moveAction, duration: duration, bindTarget: .transform)
 
                 let groupAnimation = try AnimationResource.group(with: [actionAnimation, moveAnimation])
