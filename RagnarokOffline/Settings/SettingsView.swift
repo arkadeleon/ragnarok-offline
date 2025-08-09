@@ -16,8 +16,6 @@ struct SettingsView: View {
 
     var onDone: () -> Void
 
-    @State private var serviceType = ClientSettings.shared.serviceType
-    @State private var itemInfoSource = ClientSettings.shared.itemInfoSource
     @State private var remoteClient = ClientSettings.shared.remoteClient
     @State private var serverAddress = ClientSettings.shared.serverAddress
     @State private var serverPort = ClientSettings.shared.serverPort
@@ -25,36 +23,8 @@ struct SettingsView: View {
     @FocusState private var focusedField: SettingsView.Field?
 
     var body: some View {
-        let serviceTypeBinding = Binding {
-            serviceType
-        } set: {
-            self.serviceType = $0
-            ClientSettings.shared.serviceType = $0
-        }
-
-        let itemInfoSourceBinding = Binding {
-            itemInfoSource
-        } set: {
-            self.itemInfoSource = $0
-            ClientSettings.shared.itemInfoSource = $0
-        }
-
         Form {
             Section("Client") {
-                Picker("Service Type", selection: serviceTypeBinding) {
-                    ForEach(ClientSettings.ServiceType.allCases, id: \.rawValue) { serviceType in
-                        Text(serviceType.description)
-                            .tag(serviceType)
-                    }
-                }
-
-                Picker("Item Info Source", selection: itemInfoSourceBinding) {
-                    ForEach(ClientSettings.ItemInfoSource.allCases, id: \.rawValue) { itemInfoSource in
-                        Text(itemInfoSource.description)
-                            .tag(itemInfoSource)
-                    }
-                }
-
                 LabeledContent("Remote Client") {
                     TextField(String(), text: $remoteClient)
                         .multilineTextAlignment(.trailing)
