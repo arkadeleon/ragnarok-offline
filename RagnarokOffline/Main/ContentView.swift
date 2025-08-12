@@ -89,7 +89,7 @@ struct ContentView: View {
         case .game:
             GameView()
         case .cube:
-            RealityCubeView()
+            CubeView()
         }
     }
 }
