@@ -15,7 +15,9 @@ struct GNDFilePreviewView: View {
     var file: File
 
     var body: some View {
-        AsyncContentView(load: loadGNDFile) { entity in
+        AsyncContentView {
+            try await loadGNDFile()
+        } content: { entity in
             ModelViewer(entity: entity)
         }
     }

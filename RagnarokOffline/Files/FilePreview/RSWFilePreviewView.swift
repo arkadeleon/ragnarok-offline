@@ -19,7 +19,9 @@ struct RSWFilePreviewView: View {
     @State private var magnification: CGFloat = 1
 
     var body: some View {
-        AsyncContentView(load: loadRSWFile) { entity in
+        AsyncContentView {
+            try await loadRSWFile()
+        } content: { entity in
             ModelViewer(entity: entity)
         }
     }

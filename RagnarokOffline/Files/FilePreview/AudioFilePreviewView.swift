@@ -15,7 +15,9 @@ struct AudioFilePreviewView: View {
     @State private var isPlaying = false
 
     var body: some View {
-        AsyncContentView(load: loadAudioFile) { player in
+        AsyncContentView {
+            try await loadAudioFile()
+        } content: { player in
             if !isPlaying {
                 Button {
                     player.play()

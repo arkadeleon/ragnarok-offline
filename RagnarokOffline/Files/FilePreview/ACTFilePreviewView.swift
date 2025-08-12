@@ -25,7 +25,9 @@ struct ACTFilePreviewView: View {
     var file: File
 
     var body: some View {
-        AsyncContentView(load: loadACTFile) { sections in
+        AsyncContentView {
+            try await loadACTFile()
+        } content: { sections in
             ScrollView {
                 ForEach(sections, id: \.index) { section in
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: section.actionSize.width), spacing: 16)], spacing: 32) {

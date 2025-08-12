@@ -17,7 +17,9 @@ struct MapViewer: View {
     var onDone: () -> Void
 
     var body: some View {
-        AsyncContentView(load: loadEntity) { entity in
+        AsyncContentView {
+            try await loadEntity()
+        } content: { entity in
             ModelViewer(entity: entity)
         }
         .navigationTitle(mapName)

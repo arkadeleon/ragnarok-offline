@@ -12,7 +12,9 @@ struct GATFilePreviewView: View {
     var file: File
 
     var body: some View {
-        AsyncContentView(load: loadGATFile) { image in
+        AsyncContentView {
+            try await loadGATFile()
+        } content: { image in
             Image(image, scale: 1, label: Text(file.name))
                 .resizable()
                 .aspectRatio(contentMode: .fit)

@@ -15,7 +15,9 @@ struct RSMFilePreviewView: View {
     var file: File
 
     var body: some View {
-        AsyncContentView(load: loadRSMFile) { entity in
+        AsyncContentView {
+            try await loadRSMFile()
+        } content: { entity in
             ModelViewer(entity: entity)
         }
     }

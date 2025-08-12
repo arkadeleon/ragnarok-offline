@@ -23,7 +23,9 @@ struct SPRFilePreviewView: View {
     var file: File
 
     var body: some View {
-        AsyncContentView(load: loadSPRFile) { section in
+        AsyncContentView {
+            try await loadSPRFile()
+        } content: { section in
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: section.spriteSize.width), spacing: 16)], spacing: 32) {
                     ForEach(section.sprites, id: \.index) { sprite in

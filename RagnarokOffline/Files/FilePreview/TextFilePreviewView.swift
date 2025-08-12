@@ -12,7 +12,9 @@ struct TextFilePreviewView: View {
     var file: File
 
     var body: some View {
-        AsyncContentView(load: loadTextFile) { text in
+        AsyncContentView {
+            try await loadTextFile()
+        } content: { text in
             HighlightTextView(text: text)
         }
     }

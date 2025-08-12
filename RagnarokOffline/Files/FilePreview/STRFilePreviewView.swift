@@ -16,7 +16,9 @@ struct STRFilePreviewView: View {
     @State private var magnification: CGFloat = 1
 
     var body: some View {
-        AsyncContentView(load: loadSTRFile) { renderer in
+        AsyncContentView {
+            try await loadSTRFile()
+        } content: { renderer in
             #if os(visionOS)
             EmptyView()
             #else

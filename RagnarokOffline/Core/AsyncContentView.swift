@@ -49,8 +49,8 @@ struct AsyncContentView<Value, Content>: View where Content: View {
 
 #Preview {
     AsyncContentView {
-        "Content"
-    } content: { text in
-        Text(text)
+        try await Task.sleep(for: .seconds(1))
+    } content: {
+        Image(systemName: "square.and.arrow.down.badge.checkmark")
     }
 }
