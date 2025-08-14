@@ -31,6 +31,7 @@ struct AsyncContentView<Value, Content>: View where Content: View {
                 content(value)
             case .failed(let error):
                 Text(error.localizedDescription)
+                    .frame(width: 200)
                     .multilineTextAlignment(.center)
             }
         }

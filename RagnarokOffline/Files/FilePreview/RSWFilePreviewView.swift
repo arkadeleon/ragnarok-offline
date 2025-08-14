@@ -56,19 +56,6 @@ struct RSWFilePreviewView: View {
 
         let worldEntity = try await Entity.worldEntity(world: world, resourceManager: .shared)
 
-//        let water = Water(gnd: gnd, rsw: rsw)
-//
-//        var textures: [(any MTLTexture)?] = []
-//        for i in 0..<32 {
-//            let textureName = String(format: "워터\\water%03d.jpg", i)
-//            let path = GRFPath(components: ["data", "texture", textureName])
-//            guard let data = try? grf.contentsOfEntry(at: path) else {
-//                continue
-//            }
-//            let texture = textureLoader.newTexture(bmpData: data)
-//            textures.append(texture)
-//        }
-
         let translation = simd_float4x4(translation: [-Float(gat.width / 2), 0, -Float(gat.height / 2)])
         let rotation = simd_float4x4(rotationX: radians(-90))
         let scaleFactor = 2 / Float(max(gat.width, gat.height))

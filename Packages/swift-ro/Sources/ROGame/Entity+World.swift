@@ -17,6 +17,9 @@ extension Entity {
     public static func worldEntity(world: WorldResource, resourceManager: ResourceManager) async throws -> Entity {
         let groundEntity = try await Entity.groundEntity(gat: world.gat, gnd: world.gnd, resourceManager: resourceManager)
 
+        let waterEntity = try await Entity.waterEntity(gnd: world.gnd, rsw: world.rsw, resourceManager: resourceManager)
+        groundEntity.addChild(waterEntity)
+
         let uniqueModelNames = Set(world.rsw.models.map({ $0.modelName }))
 
         metric.beginMeasuring("Load model entities")
@@ -135,5 +138,98 @@ extension Entity {
 
         let groundEntity = ModelEntity(mesh: mesh, materials: materials)
         return groundEntity
+    }
+
+    public static func waterEntity(gnd: GND, rsw: RSW, resourceManager: ResourceManager) async throws -> Entity {
+        let water = Water(gnd: gnd, rsw: rsw)
+
+        if water.mesh.vertices.isEmpty {
+            return Entity()
+        }
+
+        let textureImage = await withTaskGroup(
+            of: (Int, CGImage?).self,
+            returning: CGImage?.self
+        ) { taskGroup in
+            for i in 0..<32 {
+                let textureName = String(format: "water%03d.jpg", i)
+                let texturePath = ResourcePath.textureDirectory.appending([K2L("워터"), textureName])
+                taskGroup.addTask {
+                    let image = try? await resourceManager.image(at: texturePath)
+                    return (i, image)
+                }
+            }
+
+            var textureImages: [Int : CGImage?] = [:]
+            for await (index, image) in taskGroup {
+                textureImages[index] = image
+            }
+
+            let size = CGSize(width: 128 * textureImages.count, height: 128)
+            let renderer = CGImageRenderer(size: size, flipped: false)
+            let image = renderer.image { cgContext in
+                for textureIndex in 0..<textureImages.count {
+                    if let image = textureImages[textureIndex], let image {
+                        let rect = CGRect(x: 128 * textureIndex, y: 0, width: 128, height: 128)
+                        cgContext.draw(image, in: rect)
+                    }
+                }
+            }
+            return image
+        }
+
+        let material: any Material = try await {
+            if let textureImage {
+                let textureResource = try await TextureResource(
+                    image: textureImage,
+                    withName: "water",
+                    options: TextureResource.CreateOptions(semantic: .color)
+                )
+                var material = PhysicallyBasedMaterial()
+                material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(textureResource))
+                material.textureCoordinateTransform = MaterialParameterTypes.TextureCoordinateTransform(scale: [1 / 32, 1])
+                return material
+            } else {
+                return SimpleMaterial()
+            }
+        }()
+
+        let mesh = try await {
+            var meshDescriptor = MeshDescriptor()
+            meshDescriptor.positions = MeshBuffer(water.mesh.vertices.map({ $0.position }))
+            meshDescriptor.textureCoordinates = MeshBuffer(water.mesh.vertices.map({
+                SIMD2(x: $0.textureCoordinate.x, y: $0.textureCoordinate.y)
+            }))
+
+            let indices = (0..<meshDescriptor.positions.count).map(UInt32.init)
+            meshDescriptor.primitives = .triangles(indices)
+
+            meshDescriptor.materials = .allFaces(0)
+
+            let mesh = try await MeshResource(from: [meshDescriptor])
+            return mesh
+        }()
+
+        let waterEntity = Entity(components: [
+            ModelComponent(mesh: mesh, materials: [material]),
+            OpacityComponent(opacity: 0.6),
+        ])
+
+        let frames: [SIMD2<Float>] = (0..<32).map { frameIndex in
+            [Float(frameIndex) / 32, 0]
+        }
+        let animationDefinition = SampledAnimation(
+            frames: frames,
+            name: "flow",
+            tweenMode: .hold,
+            frameInterval: 1 / 30,
+            isAdditive: false,
+            bindTarget: .material(0).textureCoordinate.offset,
+            repeatMode: .repeat
+        )
+        let animationResource = try AnimationResource.generate(with: animationDefinition)
+        waterEntity.playAnimation(animationResource)
+
+        return waterEntity
     }
 }

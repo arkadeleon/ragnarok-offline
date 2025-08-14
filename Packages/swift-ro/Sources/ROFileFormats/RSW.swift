@@ -128,7 +128,7 @@ extension RSW {
                 wavePitch = try decoder.decode(Float.self)
             } else {
                 type = 0
-                waveHeight = 1
+                waveHeight = 5
                 waveSpeed = 2
                 wavePitch = 50
             }

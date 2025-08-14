@@ -139,6 +139,6 @@ extension GND {
 
 extension GND.Cube {
     public var lowestAltitude: Float {
-        [bottomLeftAltitude, bottomRightAltitude, topLeftAltitude, topRightAltitude].min()!
+        [bottomLeftAltitude, bottomRightAltitude, topLeftAltitude, topRightAltitude].max()!
     }
 }
