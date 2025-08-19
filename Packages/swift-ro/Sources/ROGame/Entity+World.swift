@@ -185,21 +185,27 @@ extension Entity {
             return image
         }
 
-        let material: any Material = try await {
-            if let textureImage {
-                let textureResource = try await TextureResource(
-                    image: textureImage,
-                    withName: "water",
-                    options: TextureResource.CreateOptions(semantic: .color)
-                )
-                var material = PhysicallyBasedMaterial()
-                material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(textureResource))
-                material.textureCoordinateTransform = MaterialParameterTypes.TextureCoordinateTransform(scale: [1 / 32, 1])
-                return material
-            } else {
-                return SimpleMaterial()
-            }
-        }()
+        let textureResource: TextureResource?
+        if let textureImage {
+            textureResource = try await TextureResource(
+                image: textureImage,
+                withName: "water",
+                options: TextureResource.CreateOptions(semantic: .color)
+            )
+        } else {
+            textureResource = nil
+        }
+
+        let materials: [any Material]
+        if let textureResource {
+            var material = PhysicallyBasedMaterial()
+            material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(textureResource))
+            material.textureCoordinateTransform = MaterialParameterTypes.TextureCoordinateTransform(scale: [1 / Float(32), 1])
+            materials = [material]
+        } else {
+            let material = SimpleMaterial()
+            materials = [material]
+        }
 
         let mesh = try await {
             var descriptor = MeshDescriptor(name: "water")
@@ -218,7 +224,7 @@ extension Entity {
         }()
 
         let waterEntity = Entity(components: [
-            ModelComponent(mesh: mesh, materials: [material]),
+            ModelComponent(mesh: mesh, materials: materials),
             OpacityComponent(opacity: 0.6),
         ])
 

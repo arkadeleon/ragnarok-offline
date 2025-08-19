@@ -12,7 +12,7 @@ import ROCore
 import RORendering
 import ROResources
 
-final class SpriteAnimation {
+final class SpriteAnimation: Sendable {
     let texture: TextureResource?
     let frameCount: Int
     let frameWidth: Float
