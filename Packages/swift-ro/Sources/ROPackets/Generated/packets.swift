@@ -323,8 +323,11 @@ public let HEADER_ZC_ITEM_THROW_ACK: Int16 = 0xaf
 public let HEADER_ZC_DELETE_ITEM_FROM_BODY: Int16 = 0x7fa
 public let HEADER_ZC_CARTOFF: Int16 = 0x12b
 public let HEADER_ZC_ACK_GUILD_MENUINTERFACE: Int16 = 0x14e
+public let HEADER_ZC_ACK_CHANGE_GUILD_POSITIONINFO: Int16 = 0x174
 public let HEADER_ZC_NOTIFY_POSITION_TO_GUILDM: Int16 = 0x1eb
 public let HEADER_ZC_GUILD_CHAT: Int16 = 0x17f
+public let HEADER_ZC_UPDATE_CHARSTAT: Int16 = 0x1f2
+public let HEADER_ZC_ACK_REQ_CHANGE_MEMBERS: Int16 = 0x156
 public let HEADER_ZC_STATUS: Int16 = 0xbd
 public let HEADER_ZC_NOTIFY_MAPINFO: Int16 = 0x189
 public let HEADER_ZC_ACK_REMEMBER_WARPPOINT: Int16 = 0x11e
@@ -385,6 +388,7 @@ public let HEADER_CZ_PARTY_JOIN_REQ: Int16 = 0x2c4
 public let HEADER_CZ_PARTY_JOIN_REQ_ACK: Int16 = 0x2c7
 public let HEADER_ZC_HO_PAR_CHANGE: Int16 = 0xba5
 public let HEADER_ZC_EL_PAR_CHANGE: Int16 = 0x81e
+public let HEADER_CZ_REQ_EMOTION: Int16 = 0xbf
 public let HEADER_ZC_NOTIFY_ACT: Int16 = 0x8c8
 public let HEADER_CZ_REQUEST_MOVENPC: Int16 = 0x232
 public let HEADER_ZC_NPCSPRITE_CHANGE: Int16 = 0x1b0
@@ -13004,6 +13008,55 @@ public struct PACKET_ZC_ACK_GUILD_MENUINTERFACE: BinaryDecodable, BinaryEncodabl
     }
 }
 
+public struct PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 4 + 4 + 24)
+    }
+    public var positionID: Int32 = 0
+    public var mode: Int32 = 0
+    public var ranking: Int32 = 0
+    public var payRate: Int32 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var posName: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        positionID = try decoder.decode(Int32.self)
+        mode = try decoder.decode(Int32.self)
+        ranking = try decoder.decode(Int32.self)
+        payRate = try decoder.decode(Int32.self)
+        posName = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(positionID)
+        try encoder.encode(mode)
+        try encoder.encode(ranking)
+        try encoder.encode(payRate)
+        try encoder.encode(posName, lengthOfBytes: 24)
+    }
+}
+
+public struct PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var posInfo: [PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub] = []
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        posInfo = try decoder.decode([PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub.size)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(posInfo)
+    }
+}
+
 public struct PACKET_ZC_NOTIFY_POSITION_TO_GUILDM: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
         (2 + 4 + 2 + 2)
@@ -13046,6 +13099,81 @@ public struct PACKET_ZC_GUILD_CHAT: BinaryDecodable, BinaryEncodable, Sendable {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(message)
+    }
+}
+
+public struct PACKET_ZC_UPDATE_CHARSTAT: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 4 + 4 + 4 + 2 + 2 + 2)
+    }
+    public var packetType: Int16 = 0
+    public var aid: UInt32 = 0
+    public var cid: UInt32 = 0
+    public var status: UInt32 = 0
+    public var gender: UInt16 = 0
+    public var hairStyle: UInt16 = 0
+    public var hairColor: UInt16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        aid = try decoder.decode(UInt32.self)
+        cid = try decoder.decode(UInt32.self)
+        status = try decoder.decode(UInt32.self)
+        gender = try decoder.decode(UInt16.self)
+        hairStyle = try decoder.decode(UInt16.self)
+        hairColor = try decoder.decode(UInt16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(aid)
+        try encoder.encode(cid)
+        try encoder.encode(status)
+        try encoder.encode(gender)
+        try encoder.encode(hairStyle)
+        try encoder.encode(hairColor)
+    }
+}
+
+public struct PACKET_ZC_ACK_REQ_CHANGE_MEMBERS_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 4 + 4)
+    }
+    public var accId: UInt32 = 0
+    public var charId: UInt32 = 0
+    public var positionID: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        accId = try decoder.decode(UInt32.self)
+        charId = try decoder.decode(UInt32.self)
+        positionID = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(accId)
+        try encoder.encode(charId)
+        try encoder.encode(positionID)
+    }
+}
+
+public struct PACKET_ZC_ACK_REQ_CHANGE_MEMBERS: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        -1
+    }
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var members: [PACKET_ZC_ACK_REQ_CHANGE_MEMBERS_sub] = []
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        members = try decoder.decode([PACKET_ZC_ACK_REQ_CHANGE_MEMBERS_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_ZC_ACK_REQ_CHANGE_MEMBERS_sub.size)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(members)
     }
 }
 
@@ -14379,6 +14507,24 @@ public struct PACKET_ZC_EL_PAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendabl
         try encoder.encode(packetType)
         try encoder.encode(type)
         try encoder.encode(value)
+    }
+}
+
+public struct PACKET_CZ_REQ_EMOTION: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (2 + 1)
+    }
+    public var packetType: Int16 = 0
+    public var emotion_type: UInt8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        emotion_type = try decoder.decode(UInt8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(emotion_type)
     }
 }
 
