@@ -26,73 +26,13 @@ enum FileNode {
     case grfArchiveEntry(GRFArchive, GRFEntryNode)
 }
 
-@MainActor
 @Observable
-final class File {
+final class File: Sendable {
     let node: FileNode
 
-    @ObservationIgnored
-    nonisolated lazy var url: URL = {
-        switch node {
-        case .directory(let url):
-            url
-        case .regularFile(let url):
-            url
-        case .grfArchive(let grfArchive):
-            grfArchive.url
-        case .grfArchiveDirectory(let grfArchive, let path):
-            grfArchive.url.appending(queryItems: [
-                URLQueryItem(name: "path", value: path.string)
-            ])
-        case .grfArchiveEntry(let grfArchive, let entry):
-            grfArchive.url.appending(queryItems: [
-                URLQueryItem(name: "path", value: entry.path.string)
-            ])
-        }
-    }()
-
-    @ObservationIgnored
-    nonisolated lazy var name: String = {
-        switch node {
-        case .directory(let url):
-            url.lastPathComponent
-        case .regularFile(let url):
-            url.lastPathComponent
-        case .grfArchive(let grfArchive):
-            grfArchive.url.lastPathComponent
-        case .grfArchiveDirectory(_, let path):
-            L2K(path.lastComponent)
-        case .grfArchiveEntry(_, let entry):
-            L2K(entry.path.lastComponent)
-        }
-    }()
-
-    @ObservationIgnored
-    nonisolated lazy var utType: UTType? = {
-        if case .directory = node {
-            return .folder
-        }
-
-        if case .grfArchiveDirectory = node {
-            return .directory
-        }
-
-        let filenameExtension = switch node {
-        case .directory(let url):
-            url.pathExtension
-        case .regularFile(let url):
-            url.pathExtension
-        case .grfArchive(let grfArchive):
-            grfArchive.url.pathExtension
-        case .grfArchiveDirectory(_, let path):
-            path.extension
-        case .grfArchiveEntry(_, let entry):
-            entry.path.extension
-        }
-
-        let utType = UTType(filenameExtension: filenameExtension)
-        return utType
-    }()
+    let url: URL
+    let name: String
+    let `extension`: String
 
     var isDirectory: Bool {
         switch node {
@@ -112,17 +52,74 @@ final class File {
         }
     }
 
-    init(node: FileNode) {
-        self.node = node
+    var utType: UTType? {
+        switch node {
+        case .directory:
+            return .folder
+        case .grfArchiveDirectory:
+            return .directory
+        case .regularFile, .grfArchive, .grfArchiveEntry:
+            let utType = UTType(filenameExtension: self.extension)
+            return utType
+        }
     }
 
-    init(_ locator: ResourceLocator) {
-        switch locator {
-        case .url(let url):
-            node = .regularFile(url)
+    init(node: FileNode) {
+        self.node = node
+
+        self.url = switch node {
+        case .directory(let url):
+            url
+        case .regularFile(let url):
+            url
+        case .grfArchive(let grfArchive):
+            grfArchive.url
+        case .grfArchiveDirectory(let grfArchive, let path):
+            grfArchive.url.appending(queryItems: [
+                URLQueryItem(name: "path", value: path.string)
+            ])
         case .grfArchiveEntry(let grfArchive, let entry):
-            node = .grfArchiveEntry(grfArchive, entry)
+            grfArchive.url.appending(queryItems: [
+                URLQueryItem(name: "path", value: entry.path.string)
+            ])
         }
+
+        self.name = switch node {
+        case .directory(let url):
+            url.lastPathComponent
+        case .regularFile(let url):
+            url.lastPathComponent
+        case .grfArchive(let grfArchive):
+            grfArchive.url.lastPathComponent
+        case .grfArchiveDirectory(_, let path):
+            L2K(path.lastComponent)
+        case .grfArchiveEntry(_, let entry):
+            L2K(entry.path.lastComponent)
+        }
+
+        self.extension = switch node {
+        case .directory(let url):
+            url.pathExtension
+        case .regularFile(let url):
+            url.pathExtension
+        case .grfArchive(let grfArchive):
+            grfArchive.url.pathExtension
+        case .grfArchiveDirectory(_, let path):
+            path.extension
+        case .grfArchiveEntry(_, let entry):
+            entry.path.extension
+        }
+    }
+
+    convenience init(_ locator: ResourceLocator) {
+        let node: FileNode = switch locator {
+        case .url(let url):
+            .regularFile(url)
+        case .grfArchiveEntry(let grfArchive, let entry):
+            .grfArchiveEntry(grfArchive, entry)
+        }
+
+        self.init(node: node)
     }
 
     func size() async -> Int {
@@ -255,19 +252,19 @@ extension File {
     }
 }
 
-extension File: @preconcurrency Equatable {
+extension File: Equatable {
     static func == (lhs: File, rhs: File) -> Bool {
         lhs.url == rhs.url
     }
 }
 
-extension File: @preconcurrency Hashable {
+extension File: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(url)
     }
 }
 
-extension File: @preconcurrency Identifiable {
+extension File: Identifiable {
     var id: URL {
         url
     }
