@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/3/27.
 //
 
+import AsyncAlgorithms
 import Combine
 import Foundation
 import ROPackets
@@ -13,7 +14,7 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
     let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
 
-    private var timerSubscription: AnyCancellable?
+    private var timerTask: Task<Void, Never>?
 
     public var eventPublisher: AnyPublisher<any Event, Never> {
         eventSubject.eraseToAnyPublisher()
@@ -60,7 +61,8 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
     public func stop() {
         client.disconnect()
 
-        timerSubscription = nil
+        timerTask?.cancel()
+        timerTask = nil
     }
 
     /// Login.
@@ -88,16 +90,20 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
     ///
     /// Send ``PACKET_CA_CONNECT_INFO_CHANGED`` every 10 seconds.
     public func keepAlive(username: String) {
-        timerSubscription = Timer.publish(every: 10, on: .main, in: .common)
-            .autoconnect()
-            .sink { [weak self] _ in
+        let timer = AsyncTimerSequence(interval: .seconds(10), clock: .continuous)
+
+        let client = client
+
+        timerTask = Task {
+            for await _ in timer {
                 // See `logclif_parse_keepalive`
                 var packet = PACKET_CA_CONNECT_INFO_CHANGED()
                 packet.packetType = HEADER_CA_CONNECT_INFO_CHANGED
                 packet.name = username
 
-                self?.client.sendPacket(packet)
+                client.sendPacket(packet)
             }
+        }
     }
 
     private func postEvent(_ event: some Event) {

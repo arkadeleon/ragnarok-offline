@@ -46,6 +46,7 @@ let package = Package(
     dependencies: [
         .package(path: "../swift-binary-io"),
         .package(path: "../swift-grf"),
+        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
         .package(url: "https://github.com/arkadeleon/swift-gzip.git", branch: "main"),
         .package(url: "https://github.com/arkadeleon/swift-lua.git", branch: "master"),
         .package(url: "https://github.com/arkadeleon/swift-rapidyaml.git", branch: "master"),
@@ -94,6 +95,7 @@ let package = Package(
         .target(
             name: "RONetwork",
             dependencies: [
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "BinaryIO", package: "swift-binary-io"),
                 "ROConstants",
                 "ROPackets",

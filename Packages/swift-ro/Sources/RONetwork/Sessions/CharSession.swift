@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/8/8.
 //
 
+import AsyncAlgorithms
 import Combine
 import Foundation
 import ROPackets
@@ -15,7 +16,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     let client: Client
     let eventSubject = PassthroughSubject<any Event, Never>()
 
-    private var timerSubscription: AnyCancellable?
+    private var timerTask: Task<Void, Never>?
 
     public var eventPublisher: AnyPublisher<any Event, Never> {
         eventSubject.eraseToAnyPublisher()
@@ -70,7 +71,8 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     public func stop() {
         client.disconnect()
 
-        timerSubscription = nil
+        timerTask?.cancel()
+        timerTask = nil
     }
 
     private func subscribeToCharServerPackets(with subscription: inout ClientSubscription) {
@@ -186,16 +188,19 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     ///
     /// Send ``PACKET_CZ_PING`` every 12 seconds.
     private func keepAlive() {
-        let accountID = account.accountID
+        let timer = AsyncTimerSequence(interval: .seconds(12), clock: .continuous)
 
-        timerSubscription = Timer.publish(every: 12, on: .main, in: .common)
-            .autoconnect()
-            .sink { [weak self] _ in
+        let accountID = account.accountID
+        let client = client
+
+        timerTask = Task {
+            for await _ in timer {
                 var packet = PACKET_CZ_PING()
                 packet.accountID = accountID
 
-                self?.client.sendPacket(packet)
+                client.sendPacket(packet)
             }
+        }
     }
 
     /// Make char.

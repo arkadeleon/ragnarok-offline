@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/8/22.
 //
 
+import AsyncAlgorithms
 import Combine
 import Foundation
 import ROConstants
@@ -21,7 +22,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     var inventory = Inventory()
     var pendingNPCDialog: NPCDialog?
 
-    private var timerSubscription: AnyCancellable?
+    private var timerTask: Task<Void, Never>?
 
     public var eventPublisher: AnyPublisher<any Event, Never> {
         eventSubject.eraseToAnyPublisher()
@@ -107,7 +108,8 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     public func stop() {
         client.disconnect()
 
-        timerSubscription = nil
+        timerTask?.cancel()
+        timerTask = nil
     }
 
     /// Enter.
@@ -346,16 +348,19 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     ///
     /// Send ``PACKET_CZ_REQUEST_TIME`` every 10 seconds.
     private func keepAlive() {
-        let startTime = Date.now
+        let timer = AsyncTimerSequence(interval: .seconds(10), clock: .continuous)
 
-        timerSubscription = Timer.publish(every: 10, on: .main, in: .common)
-            .autoconnect()
-            .sink { [weak self] _ in
+        let startTime = Date.now
+        let client = client
+
+        timerTask = Task {
+            for await _ in timer {
                 var packet = PACKET_CZ_REQUEST_TIME()
                 packet.clientTime = UInt32(Date.now.timeIntervalSince(startTime))
 
-                self?.client.sendPacket(packet)
+                client.sendPacket(packet)
             }
+        }
     }
 
     public func notifyMapLoaded() {
