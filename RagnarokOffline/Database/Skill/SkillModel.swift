@@ -61,6 +61,7 @@ final class SkillModel {
         skill[keyPath: keyPath]
     }
 
+    @MainActor
     func fetchLocalizedName() async {
         let skillInfoTable = await ResourceManager.shared.skillInfoTable(for: .current)
         localizedName = skillInfoTable.localizedSkillName(forSkillID: skill.id)

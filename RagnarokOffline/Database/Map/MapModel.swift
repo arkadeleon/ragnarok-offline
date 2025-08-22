@@ -42,6 +42,7 @@ final class MapModel {
         map[keyPath: keyPath]
     }
 
+    @MainActor
     func fetchLocalizedName() async {
         let mapNameTable = await ResourceManager.shared.mapNameTable(for: .current)
         self.localizedName = mapNameTable.localizedMapName(forMapName: map.name)

@@ -7,7 +7,7 @@
 
 import CoreGraphics
 
-class FileThumbnail {
+final class FileThumbnail: Sendable {
     let cgImage: CGImage
 
     init(cgImage: CGImage) {

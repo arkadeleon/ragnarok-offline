@@ -137,6 +137,7 @@ final class ItemModel {
         item[keyPath: keyPath]
     }
 
+    @MainActor
     func fetchLocalizedName() async {
         let itemInfoTable = await ResourceManager.shared.itemInfoTable(for: .current)
         localizedName = itemInfoTable.localizedIdentifiedItemName(forItemID: item.id)

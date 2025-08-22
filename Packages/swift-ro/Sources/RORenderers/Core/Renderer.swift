@@ -7,6 +7,7 @@
 
 import Metal
 
+@MainActor
 public protocol Renderer {
     var device: any MTLDevice { get }
     var colorPixelFormat: MTLPixelFormat { get }

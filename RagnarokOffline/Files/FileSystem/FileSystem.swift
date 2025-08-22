@@ -9,7 +9,7 @@ import Foundation
 import ROCore
 import ROResources
 
-class FileSystem {
+final class FileSystem: @unchecked Sendable {
     static let shared = FileSystem()
 
     let thumbnailGenerator = FileThumbnailGenerator()

@@ -14,7 +14,7 @@ enum AsyncContentStatus<Value> {
     case failed(any Error)
 }
 
-struct AsyncContentView<Value, Content>: View where Content: View {
+struct AsyncContentView<Value, Content>: View where Value: Sendable, Content: View {
     var load: () async throws -> Value
     @ViewBuilder var content: (Value) -> Content
 

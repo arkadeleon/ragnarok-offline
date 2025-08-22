@@ -132,6 +132,7 @@ final class MonsterModel {
         monster[keyPath: keyPath]
     }
 
+    @MainActor
     func fetchLocalizedName() async {
         let monsterNameTable = await ResourceManager.shared.monsterNameTable(for: .current)
         self.localizedName = monsterNameTable.localizedMonsterName(forMonsterID: monster.id)

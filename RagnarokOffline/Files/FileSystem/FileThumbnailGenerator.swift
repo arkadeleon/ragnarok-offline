@@ -11,7 +11,7 @@ import ROCore
 import ROFileFormats
 import SwiftGzip
 
-class FileThumbnailGenerator {
+final class FileThumbnailGenerator: Sendable {
     func generateThumbnail(for request: FileThumbnailRequest) async throws -> FileThumbnail? {
         guard let utType = request.file.utType else {
             return nil
