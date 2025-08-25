@@ -67,7 +67,7 @@ final class NetworkSessionTests: XCTestCase {
         let password = "ragnarok"
         loginSession.login(username: username, password: password)
 
-        for await event in loginSession.eventStream(for: LoginEvents.Accepted.self).prefix(1) {
+        for await event in loginSession.events(for: LoginEvents.Accepted.self).prefix(1) {
             account = event.account
             charServers = event.charServers
 
@@ -80,7 +80,7 @@ final class NetworkSessionTests: XCTestCase {
 
         charSession.start()
 
-        for await event in charSession.eventStream(for: CharServerEvents.Accepted.self).prefix(1) {
+        for await event in charSession.events(for: CharServerEvents.Accepted.self).prefix(1) {
             XCTAssertEqual(event.chars.count, 0)
         }
 
@@ -96,7 +96,7 @@ final class NetworkSessionTests: XCTestCase {
         char.luk = 1
         charSession.makeChar(char: char)
 
-        for await event in charSession.eventStream(for: CharEvents.MakeAccepted.self).prefix(1) {
+        for await event in charSession.events(for: CharEvents.MakeAccepted.self).prefix(1) {
             char = event.char
             XCTAssertEqual(event.char.name, "Leon")
             XCTAssertEqual(event.char.speed, 150)
@@ -106,7 +106,7 @@ final class NetworkSessionTests: XCTestCase {
 
         charSession.selectChar(slot: 0)
 
-        for await event in charSession.eventStream(for: CharServerEvents.NotifyMapServer.self).prefix(1) {
+        for await event in charSession.events(for: CharServerEvents.NotifyMapServer.self).prefix(1) {
             mapServer = event.mapServer
 
             XCTAssertEqual(event.charID, char.charID)
@@ -118,7 +118,7 @@ final class NetworkSessionTests: XCTestCase {
 
         mapSession.start()
 
-        for await event in mapSession.eventStream(for: MapEvents.Changed.self).prefix(1) {
+        for await event in mapSession.events(for: MapEvents.Changed.self).prefix(1) {
             XCTAssertEqual(event.position, [18, 26])
 
             // Load map.
@@ -141,12 +141,12 @@ final class NetworkSessionTests: XCTestCase {
 
         mapSession.requestMove(to: [27, 30])
 
-        for await event in mapSession.eventStream(for: PlayerEvents.Moved.self).prefix(1) {
+        for await event in mapSession.events(for: PlayerEvents.Moved.self).prefix(1) {
             XCTAssertEqual(event.startPosition, [18, 26])
             XCTAssertEqual(event.endPosition, [27, 30])
         }
 
-        for await event in mapSession.eventStream(for: MapEvents.Changed.self).prefix(1) {
+        for await event in mapSession.events(for: MapEvents.Changed.self).prefix(1) {
             XCTAssertEqual(event.position, [51, 30])
 
             // Load map.
@@ -156,7 +156,7 @@ final class NetworkSessionTests: XCTestCase {
         }
 
         var mapObjects: [MapObject] = []
-        for await event in mapSession.eventStream(for: MapObjectEvents.Spawned.self).prefix(4) {
+        for await event in mapSession.events(for: MapObjectEvents.Spawned.self).prefix(4) {
             mapObjects.append(event.object)
         }
 

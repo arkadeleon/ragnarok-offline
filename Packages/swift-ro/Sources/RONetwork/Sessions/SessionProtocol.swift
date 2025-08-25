@@ -16,15 +16,6 @@ public protocol SessionProtocol {
 }
 
 extension SessionProtocol {
-    public func publisher<E>(for event: E.Type) -> AnyPublisher<E, Never> where E: Event {
-        eventPublisher
-            .compactMap { e in
-                e as? E
-            }
-            .receive(on: DispatchQueue.main, options: DispatchQueue.SchedulerOptions(qos: .userInteractive))
-            .eraseToAnyPublisher()
-    }
-
     public func subscribe<E>(to event: E.Type, handler: @escaping @MainActor (E) -> Void) -> AnyCancellable where E: Event {
         eventPublisher
             .compactMap { e in
@@ -38,14 +29,16 @@ extension SessionProtocol {
             }
     }
 
-    public func eventStream<E>(for event: E.Type) -> AsyncStream<E> where E: Event {
+    public func events<E>(for event: E.Type) -> some AsyncSequence<E, Never> where E: Event {
         AsyncStream { continuation in
             let subscription = eventPublisher
-                .compactMap { event in
-                    event as? E
+                .compactMap { e in
+                    e as? E
                 }
-                .sink { event in
-                    continuation.yield(event)
+                .sink { completion in
+                    continuation.finish()
+                } receiveValue: { e in
+                    continuation.yield(e)
                 }
             continuation.onTermination = { termination in
                 subscription.cancel()
