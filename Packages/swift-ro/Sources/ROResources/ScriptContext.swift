@@ -113,6 +113,9 @@ extension ResourceManager {
             async let weapontable = script(at: ["datainfo", "weapontable"])
             async let weapontable_f = script(at: ["datainfo", "weapontable_f"])
 
+            async let jobinheritlist = script(at: ["skillinfoz", "jobinheritlist"])
+            async let skillid = script(at: ["skillinfoz", "skillid"])
+
             async let efstids = script(at: ["stateicon", "efstids"])
             async let stateiconimginfo = script(at: ["stateicon", "stateiconimginfo"])
 
@@ -150,6 +153,9 @@ extension ResourceManager {
 
             await loadScript(weapontable, in: context)
             await loadScript(weapontable_f, in: context)
+
+            await loadScript(jobinheritlist, in: context)
+            await loadScript(skillid, in: context)
 
             await loadScript(efstids, in: context)
             await loadScript(stateiconimginfo, in: context)
