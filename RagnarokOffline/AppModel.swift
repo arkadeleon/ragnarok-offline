@@ -23,6 +23,8 @@ final class AppModel {
     let mainWindowID = "Main"
     let gameImmersiveSpaceID = "Game"
 
+    let fileSystem = FileSystem()
+
     let clientDirectory = File(node: .directory(localClientURL))
     let clientCachesDirectory = File(node: .directory(remoteClientCachesURL))
 

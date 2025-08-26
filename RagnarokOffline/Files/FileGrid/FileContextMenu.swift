@@ -11,13 +11,10 @@ struct FileContextMenu: ViewModifier {
     var file: File
     var onDelete: ((File) -> Void)?
 
+    @Environment(FileSystem.self) private var fileSystem
+
     @State private var isJSONViewerPresented = false
     @State private var isReferencesPresented = false
-
-    init(file: File, onDelete: ((File) -> Void)? = nil) {
-        self.file = file
-        self.onDelete = onDelete
-    }
 
     func body(content: Content) -> some View {
         content
@@ -41,11 +38,12 @@ struct FileContextMenu: ViewModifier {
                 }
 
                 Section {
-                    if FileSystem.shared.canExtractFile(file) {
+                    if fileSystem.canExtractFile(file) {
                         Button {
+                            let fileSystem = fileSystem
                             Task {
                                 do {
-                                    try await FileSystem.shared.extractFile(file)
+                                    try await fileSystem.extractFile(file)
                                 } catch {
                                     logger.warning("\(error.localizedDescription)")
                                 }
@@ -61,9 +59,14 @@ struct FileContextMenu: ViewModifier {
                 }
 
                 Section {
-                    if let onDelete, FileSystem.shared.canDeleteFile(file) {
+                    if fileSystem.canDeleteFile(file) {
                         Button(role: .destructive) {
-                            onDelete(file)
+                            do {
+                                try fileSystem.deleteFile(file)
+                                onDelete?(file)
+                            } catch {
+                                logger.warning("\(error)")
+                            }
                         } label: {
                             Label("Delete", image: "trash")
                         }
@@ -101,4 +104,5 @@ extension View {
             .fileContextMenu(file: file)
     }
     .frame(width: 100, height: 50)
+    .environment(FileSystem())
 }

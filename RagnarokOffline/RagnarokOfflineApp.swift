@@ -22,6 +22,7 @@ struct RagnarokOfflineApp: App {
         WindowGroup(id: appModel.mainWindowID) {
             ContentView()
                 .environment(appModel)
+                .environment(appModel.fileSystem)
                 .environment(chatSession)
                 .environment(gameSession)
         }

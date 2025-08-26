@@ -11,6 +11,7 @@ struct FileThumbnailView: View {
     var file: File
 
     @Environment(\.displayScale) private var displayScale
+    @Environment(FileSystem.self) private var fileSystem
 
     @State private var thumbnail: FileThumbnail?
 
@@ -42,7 +43,9 @@ struct FileThumbnailView: View {
             }
         }
         .task {
-            thumbnail = try? await file.fetchThumbnail(size: CGSize(width: 80, height: 80), scale: displayScale)
+            let size = CGSize(width: 80, height: 80)
+            let request = FileThumbnailRequest(file: file, size: size, scale: displayScale)
+            thumbnail = try? await fileSystem.thumbnail(for: request)
         }
     }
 }
@@ -64,4 +67,5 @@ struct FileThumbnailView: View {
         }
     }
     .frame(width: 400, height: 100)
+    .environment(FileSystem())
 }

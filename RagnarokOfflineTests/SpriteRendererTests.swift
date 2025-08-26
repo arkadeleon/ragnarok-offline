@@ -13,7 +13,7 @@ import XCTest
 final class SpriteRendererTests: XCTestCase {
     func testSpriteRenderer() async throws {
         let configuration = ComposedSprite.Configuration(jobID: 0)
-        let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .shared)
+        let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .testing)
         XCTAssertEqual(composedSprite.parts.count, 3)
 
         let spriteRenderer = SpriteRenderer()

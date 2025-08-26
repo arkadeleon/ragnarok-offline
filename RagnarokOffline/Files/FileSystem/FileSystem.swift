@@ -7,11 +7,9 @@
 
 import Foundation
 import ROCore
-import ROResources
 
-final class FileSystem: @unchecked Sendable {
-    static let shared = FileSystem()
-
+@Observable
+final class FileSystem {
     let thumbnailGenerator = FileThumbnailGenerator()
     let thumbnailCache = NSCache<NSURL, FileThumbnail>()
 
@@ -32,7 +30,7 @@ final class FileSystem: @unchecked Sendable {
         let contents = try await grfArchive.contentsOfEntry(at: entry.path)
 
         let path = entry.path.components.map(L2K).joined(separator: "/")
-        let url = ResourceManager.shared.localURL.appending(path: path)
+        let url = grfArchive.url.deletingLastPathComponent().appending(path: path)
         let directory = url.deletingLastPathComponent()
 
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
@@ -57,6 +55,7 @@ final class FileSystem: @unchecked Sendable {
         }
     }
 
+    @MainActor
     func thumbnail(for request: FileThumbnailRequest) async throws -> FileThumbnail? {
         try Task.checkCancellation()
 

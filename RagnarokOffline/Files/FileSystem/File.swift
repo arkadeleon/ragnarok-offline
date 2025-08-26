@@ -219,12 +219,6 @@ final class File: Sendable {
             return 0
         }
     }
-
-    func fetchThumbnail(size: CGSize, scale: CGFloat) async throws -> FileThumbnail? {
-        let request = FileThumbnailRequest(file: self, size: size, scale: scale)
-        let thumbnail = try await FileSystem.shared.thumbnail(for: request)
-        return thumbnail
-    }
 }
 
 extension File {

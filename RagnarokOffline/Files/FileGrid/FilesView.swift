@@ -27,7 +27,7 @@ struct FilesView: View {
                     FileGridCell(file: file)
                 }
                 .buttonStyle(.plain)
-                .fileContextMenu(file: file, onDelete: deleteFile)
+                .fileContextMenu(file: file, onDelete: onDeleteFile)
             } else {
                 Button {
                     if file.canPreview {
@@ -37,7 +37,7 @@ struct FilesView: View {
                     FileGridCell(file: file)
                 }
                 .buttonStyle(.plain)
-                .fileContextMenu(file: file, onDelete: deleteFile)
+                .fileContextMenu(file: file, onDelete: onDeleteFile)
             }
         }
         .background(.background)
@@ -119,14 +119,9 @@ struct FilesView: View {
         }
     }
 
-    private func deleteFile(_ file: File) {
-        do {
-            try FileSystem.shared.deleteFile(file)
-            files.removeAll(where: { $0 == file })
-            filterFiles()
-        } catch {
-            logger.warning("\(error.localizedDescription)")
-        }
+    private func onDeleteFile(_ file: File) {
+        files.removeAll(where: { $0 == file })
+        filterFiles()
     }
 }
 
