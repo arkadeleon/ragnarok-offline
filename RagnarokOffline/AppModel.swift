@@ -13,6 +13,10 @@ import rAthenaWeb
 import rAthenaResources
 import ROResources
 
+let localClientURL = URL.documentsDirectory
+let remoteClientURL = URL(string: "http://ragnarokoffline.online/client")
+let remoteClientCachesURL = URL.cachesDirectory.appending(path: "com.github.arkadeleon.ragnarok-offline-remote-client")
+
 @MainActor
 @Observable
 final class AppModel {
@@ -38,4 +42,12 @@ final class AppModel {
     var statusChangeDatabase = DatabaseModel(mode: .renewal, recordProvider: .statusChange)
 
     let characterSimulator = CharacterSimulator()
+}
+
+extension ResourceManager {
+    static let shared = ResourceManager(
+        localURL: localClientURL,
+        remoteURL: remoteClientURL,
+        cachesURL: remoteClientCachesURL
+    )
 }

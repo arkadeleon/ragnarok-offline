@@ -8,29 +8,31 @@
 import SwiftUI
 
 struct SettingsView: View {
-    enum Field: Hashable {
-        case remoteClient
+    var onDone: () -> Void
+
+    @State private var serverAddress = ClientSettings.shared.serverAddress
+    @State private var serverPort = ClientSettings.shared.serverPort
+
+    private enum Field: Hashable {
         case serverAddress
         case serverPort
     }
 
-    var onDone: () -> Void
-
-    @State private var remoteClient = ClientSettings.shared.remoteClient
-    @State private var serverAddress = ClientSettings.shared.serverAddress
-    @State private var serverPort = ClientSettings.shared.serverPort
-
     @FocusState private var focusedField: SettingsView.Field?
 
     var body: some View {
+        let remoteClient = Binding {
+            ClientSettings.shared.remoteClient
+        } set: {
+            ClientSettings.shared.remoteClient = $0
+        }
+
         Form {
             Section("Client") {
-                LabeledContent("Remote Client") {
-                    TextField(String(), text: $remoteClient)
-                        .multilineTextAlignment(.trailing)
-                        .focused($focusedField, equals: .remoteClient)
-                }
+                Toggle("Remote Client", isOn: remoteClient)
+            }
 
+            Section("Game") {
                 LabeledContent("Server Address") {
                     TextField(String(), text: $serverAddress)
                         .multilineTextAlignment(.trailing)
@@ -54,15 +56,6 @@ struct SettingsView: View {
             }
         }
         .onChange(of: focusedField) { oldValue, newValue in
-            if oldValue == SettingsView.Field.remoteClient {
-                let regex = /^(https?:\/\/)?([a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}|localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d{1,5})?(\/[^\s]*)?$/
-                if let _ = try? regex.wholeMatch(in: remoteClient) {
-                    ClientSettings.shared.remoteClient = remoteClient
-                } else {
-                    remoteClient = ClientSettings.shared.remoteClient
-                }
-            }
-
             if oldValue == SettingsView.Field.serverAddress {
                 let regex = /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}|localhost)$/
                 if let _ = try? regex.wholeMatch(in: serverAddress) {
@@ -81,10 +74,6 @@ struct SettingsView: View {
                 }
             }
         }
-    }
-
-    init(onDone: @escaping () -> Void) {
-        self.onDone = onDone
     }
 }
 

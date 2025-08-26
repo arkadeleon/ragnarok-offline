@@ -11,7 +11,7 @@ import Foundation
 class ClientSettings {
     static let shared = ClientSettings()
 
-    @SettingsItem("client.remote_client", defaultValue: remoteClientURL!.absoluteString) var remoteClient: String
+    @SettingsItem("client.remote_client", defaultValue: true) var remoteClient: Bool
 
     @SettingsItem("client.server_address", defaultValue: "127.0.0.1") var serverAddress: String
     @SettingsItem("client.server_port", defaultValue: "6900") var serverPort: String
