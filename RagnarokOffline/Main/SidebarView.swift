@@ -50,7 +50,7 @@ struct SidebarView: View {
         List(selection: selection) {
             Section(isExpanded: $isClientSectionExpanded) {
                 NavigationLink(value: SidebarItem.clientFiles) {
-                    Label("Files", systemImage: "folder")
+                    Label("Local Files", systemImage: "folder")
                 }
 
                 NavigationLink(value: SidebarItem.clientCachedFiles) {
@@ -67,7 +67,7 @@ struct SidebarView: View {
             Section(isExpanded: $isServerSectionExpanded) {
                 #if DEBUG
                 NavigationLink(value: SidebarItem.serverFiles) {
-                    Label("Files", systemImage: "folder")
+                    Label("Server Files", systemImage: "folder")
                 }
                 #endif
 

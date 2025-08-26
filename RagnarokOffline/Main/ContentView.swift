@@ -53,11 +53,11 @@ struct ContentView: View {
     private func detailView(for item: SidebarItem) -> some View {
         switch item {
         case .clientFiles:
-            FilesView("Files", directory: appModel.clientDirectory)
+            FilesView("Local Files", directory: appModel.clientDirectory)
         case .clientCachedFiles:
             FilesView("Cached Files", directory: appModel.clientCachesDirectory)
         case .serverFiles:
-            FilesView("Files", directory: appModel.serverDirectory)
+            FilesView("Server Files", directory: appModel.serverDirectory)
         case .loginServer:
             ServerView(server: appModel.loginServer)
         case .charServer:
