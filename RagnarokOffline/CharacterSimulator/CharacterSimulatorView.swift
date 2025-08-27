@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct CharacterSimulatorView: View {
-    @Environment(AppModel.self) private var appModel
+    @Environment(CharacterSimulator.self) private var characterSimulator
 
     var body: some View {
-        @Bindable var characterSimulator = appModel.characterSimulator
-
         AdaptiveView {
             VStack(spacing: 0) {
                 CharacterRenderingView()
@@ -38,7 +36,7 @@ struct CharacterSimulatorView: View {
         }
         .navigationTitle("Character Simulator")
         .task {
-            characterSimulator.renderSprite()
+            await characterSimulator.renderSprite()
         }
     }
 }
@@ -46,6 +44,7 @@ struct CharacterSimulatorView: View {
 #Preview {
     NavigationStack {
         CharacterSimulatorView()
-            .environment(AppModel())
     }
+    .environment(CharacterSimulator())
+    .environment(DatabaseModel(mode: .renewal, recordProvider: .item))
 }

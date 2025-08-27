@@ -69,34 +69,34 @@ final class CharacterSimulator {
 
     var configuration = CharacterSimulator.Configuration() {
         didSet {
-            renderSprite()
+            Task {
+                await renderSprite()
+            }
         }
     }
 
     var composedSprite: ComposedSprite?
     var animatedImage: AnimatedImage?
 
-    func renderSprite() {
-        Task {
-            let configuration = ComposedSprite.Configuration(configuration: self.configuration)
-            if let composedSprite, composedSprite.configuration == configuration {
-                // Do nothing
-            } else {
-                composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .shared)
-            }
-
-            guard let composedSprite else {
-                return
-            }
-
-            let spriteRenderer = SpriteRenderer()
-            animatedImage = await spriteRenderer.render(
-                composedSprite: composedSprite,
-                actionType: self.configuration.actionType,
-                direction: self.configuration.direction,
-                headDirection: self.configuration.headDirection
-            )
+    func renderSprite() async {
+        let configuration = ComposedSprite.Configuration(configuration: self.configuration)
+        if let composedSprite, composedSprite.configuration == configuration {
+            // Do nothing
+        } else {
+            composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .shared)
         }
+
+        guard let composedSprite else {
+            return
+        }
+
+        let spriteRenderer = SpriteRenderer()
+        animatedImage = await spriteRenderer.render(
+            composedSprite: composedSprite,
+            actionType: self.configuration.actionType,
+            direction: self.configuration.direction,
+            headDirection: self.configuration.headDirection
+        )
     }
 }
 

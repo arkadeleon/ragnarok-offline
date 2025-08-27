@@ -84,6 +84,8 @@ struct ContentView: View {
             StatusChangeDatabaseView()
         case .characterSimulator:
             CharacterSimulatorView()
+                .environment(appModel.characterSimulator)
+                .environment(appModel.itemDatabase)
         case .chat:
             ChatView()
         case .game:

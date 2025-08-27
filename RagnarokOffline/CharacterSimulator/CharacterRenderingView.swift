@@ -9,11 +9,7 @@ import ROCore
 import SwiftUI
 
 struct CharacterRenderingView: View {
-    @Environment(AppModel.self) private var appModel
-
-    private var characterSimulator: CharacterSimulator {
-        appModel.characterSimulator
-    }
+    @Environment(CharacterSimulator.self) private var characterSimulator
 
     var body: some View {
         ZStack {
@@ -52,5 +48,5 @@ struct CharacterRenderingView: View {
 
 #Preview {
     CharacterRenderingView()
-        .environment(AppModel())
+        .environment(CharacterSimulator())
 }
