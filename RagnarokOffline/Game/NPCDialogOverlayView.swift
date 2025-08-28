@@ -88,13 +88,13 @@ struct NPCMenuDialogView: View {
 }
 
 #Preview {
-    var message = """
+    let message = """
     [Wounded]
     Wow! Thanks a lot!
     I don't know how this happened to our ship
     but we should go to see the captain.
     """
-    var hasNextMessage = true
+    let hasNextMessage = true
 
     NPCMessageDialogView(message: message, hasNextMessage: hasNextMessage)
         .environment(GameSession.previewing)
