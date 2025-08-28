@@ -115,5 +115,5 @@ struct ChatView: View {
 
 #Preview {
     ChatView()
-        .environment(ChatSession())
+        .environment(ChatSession.previewing)
 }

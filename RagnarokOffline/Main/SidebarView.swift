@@ -202,6 +202,7 @@ struct SidebarView: View {
                 SettingsView {
                     isSettingsPresented.toggle()
                 }
+                .environment(appModel.settings)
             }
         }
     }

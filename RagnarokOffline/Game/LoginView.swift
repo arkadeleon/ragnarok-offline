@@ -9,10 +9,11 @@ import ROGame
 import SwiftUI
 
 struct LoginView: View {
+    @Environment(AppModel.self) private var appModel
     @Environment(GameSession.self) private var gameSession
 
-    @State private var username = ClientSettings.shared.username
-    @State private var password = ClientSettings.shared.password
+    @State private var username = ""
+    @State private var password = ""
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -53,13 +54,13 @@ struct LoginView: View {
                     Spacer()
 
                     GameButton("login_interface/btn_connect.bmp") {
-                        let serverAddress = ClientSettings.shared.serverAddress
-                        let serverPort = ClientSettings.shared.serverPort
+                        gameSession.login(
+                            username: username,
+                            password: password
+                        )
 
-                        gameSession.login(serverAddress: serverAddress, serverPort: serverPort, username: username, password: password)
-
-                        ClientSettings.shared.username = username
-                        ClientSettings.shared.password = password
+                        appModel.settings.username = username
+                        appModel.settings.password = password
                     }
 
                     GameButton("login_interface/btn_exit.bmp") {
@@ -70,11 +71,16 @@ struct LoginView: View {
             }
         }
         .frame(width: 280, height: 120)
+        .onAppear {
+            username = appModel.settings.username
+            password = appModel.settings.password
+        }
     }
 }
 
 #Preview {
     LoginView()
         .padding()
-        .environment(GameSession())
+        .environment(AppModel())
+        .environment(GameSession.previewing)
 }

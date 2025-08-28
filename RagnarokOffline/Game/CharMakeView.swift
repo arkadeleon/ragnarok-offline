@@ -72,5 +72,5 @@ struct CharMakeView: View {
 #Preview {
     CharMakeView(slot: 0)
         .padding()
-        .environment(GameSession())
+        .environment(GameSession.previewing)
 }

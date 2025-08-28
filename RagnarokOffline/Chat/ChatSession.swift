@@ -14,6 +14,9 @@ import ROResources
 @MainActor
 @Observable
 final class ChatSession {
+    let serverAddress: String
+    let serverPort: String
+
     enum Phase {
         case login
         case selectCharServer
@@ -58,6 +61,11 @@ final class ChatSession {
 
     @ObservationIgnored
     private var subscriptions = Set<AnyCancellable>()
+
+    init(serverAddress: String, serverPort: String) {
+        self.serverAddress = serverAddress
+        self.serverPort = serverPort
+    }
 
     func sendMessage(_ content: String) {
         messages.append(.clientText(content))
@@ -125,12 +133,11 @@ final class ChatSession {
     }
 
     private func startLoginSession() {
-        let address = ClientSettings.shared.serverAddress
-        guard let port = UInt16(ClientSettings.shared.serverPort) else {
+        guard let serverPort = UInt16(serverPort) else {
             return
         }
 
-        let loginSession = LoginSession(address: address, port: port)
+        let loginSession = LoginSession(address: serverAddress, port: serverPort)
 
         loginSession.subscribe(to: LoginEvents.Accepted.self) { [unowned self] event in
             self.account = event.account
@@ -297,4 +304,8 @@ final class ChatSession {
 
         self.mapSession = mapSession
     }
+}
+
+extension ChatSession {
+    static let previewing = ChatSession(serverAddress: "127.0.0.1", serverPort: "6900")
 }

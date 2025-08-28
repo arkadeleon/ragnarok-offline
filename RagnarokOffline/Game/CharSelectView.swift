@@ -157,5 +157,5 @@ struct CharSelectView: View {
 
     CharSelectView(chars: [char])
         .padding()
-        .environment(GameSession())
+        .environment(GameSession.previewing)
 }

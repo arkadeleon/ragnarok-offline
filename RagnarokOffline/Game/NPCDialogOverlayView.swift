@@ -97,5 +97,5 @@ struct NPCMenuDialogView: View {
     var hasNextMessage = true
 
     NPCMessageDialogView(message: message, hasNextMessage: hasNextMessage)
-        .environment(GameSession())
+        .environment(GameSession.previewing)
 }

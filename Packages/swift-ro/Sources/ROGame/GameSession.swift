@@ -18,6 +18,10 @@ import ROResources
 final public class GameSession {
     public let immersiveSpaceID = "Game"
 
+    let serverAddress: String
+    let serverPort: String
+    let resourceManager: ResourceManager
+
     public enum Phase {
         case login
         case charServerList(_ charServers: [CharServerInfo])
@@ -42,9 +46,6 @@ final public class GameSession {
     public private(set) var dialog: NPCDialog?
 
     @ObservationIgnored
-    private var resourceManager: ResourceManager?
-
-    @ObservationIgnored
     var loginSession: LoginSession?
     @ObservationIgnored
     var charSession: CharSession?
@@ -57,17 +58,16 @@ final public class GameSession {
     @ObservationIgnored
     private var sceneSubscriptions = Set<AnyCancellable>()
 
-    public init() {
+    public init(serverAddress: String, serverPort: String, resourceManager: ResourceManager) {
+        self.serverAddress = serverAddress
+        self.serverPort = serverPort
+        self.resourceManager = resourceManager
     }
 
     // MARK: - Public
 
-    public func start(resourceManager: ResourceManager) {
-        self.resourceManager = resourceManager
-    }
-
-    public func login(serverAddress: String, serverPort: String, username: String, password: String) {
-        startLoginSession(serverAddress: serverAddress, serverPort: serverPort)
+    public func login(username: String, password: String) {
+        startLoginSession()
 
         loginSession?.login(username: username, password: password)
 
@@ -162,7 +162,7 @@ final public class GameSession {
 
     // MARK: - Private
 
-    private func startLoginSession(serverAddress: String, serverPort: String) {
+    private func startLoginSession() {
         guard let serverPort = UInt16(serverPort) else {
             return
         }
@@ -245,10 +245,11 @@ final public class GameSession {
     }
 
     private func startMapSession(char: CharInfo, mapServer: MapServerInfo) {
-        guard let account = charSession?.account, let resourceManager else {
+        guard let account = charSession?.account else {
             return
         }
 
+        let resourceManager = resourceManager
         let mapSession = MapSession(account: account, char: char, mapServer: mapServer)
 
         mapSession.subscribe(to: MapEvents.Changed.self) { event in

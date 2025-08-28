@@ -133,5 +133,5 @@ struct StatusView: View {
 #Preview {
     StatusView(status: CharacterStatus())
         .padding()
-        .environment(GameSession())
+        .environment(GameSession.previewing)
 }

@@ -51,5 +51,5 @@ struct CharServerListView: View {
 #Preview {
     CharServerListView(charServers: [])
         .padding()
-        .environment(GameSession())
+        .environment(GameSession.previewing)
 }

@@ -10,8 +10,10 @@ import SwiftUI
 struct SettingsView: View {
     var onDone: () -> Void
 
-    @State private var serverAddress = ClientSettings.shared.serverAddress
-    @State private var serverPort = ClientSettings.shared.serverPort
+    @Environment(SettingsModel.self) private var settings
+
+    @State private var serverAddress = ""
+    @State private var serverPort = ""
 
     private enum Field: Hashable {
         case serverAddress
@@ -22,9 +24,9 @@ struct SettingsView: View {
 
     var body: some View {
         let remoteClient = Binding {
-            ClientSettings.shared.remoteClient
+            settings.remoteClient
         } set: {
-            ClientSettings.shared.remoteClient = $0
+            settings.remoteClient = $0
         }
 
         Form {
@@ -55,22 +57,26 @@ struct SettingsView: View {
                 }
             }
         }
+        .onAppear {
+            serverAddress = settings.serverAddress
+            serverPort = settings.serverPort
+        }
         .onChange(of: focusedField) { oldValue, newValue in
             if oldValue == SettingsView.Field.serverAddress {
                 let regex = /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}|localhost)$/
                 if let _ = try? regex.wholeMatch(in: serverAddress) {
-                    ClientSettings.shared.serverAddress = serverAddress
+                    settings.serverAddress = serverAddress
                 } else {
-                    serverAddress = ClientSettings.shared.serverAddress
+                    serverAddress = settings.serverAddress
                 }
             }
 
             if oldValue == SettingsView.Field.serverPort {
                 let regex = /^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0-9]{1,4}))$/
                 if let _ = try? regex.wholeMatch(in: serverPort) {
-                    ClientSettings.shared.serverPort = serverPort
+                    settings.serverPort = serverPort
                 } else {
-                    serverPort = ClientSettings.shared.serverPort
+                    serverPort = settings.serverPort
                 }
             }
         }
@@ -78,6 +84,9 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView {
+    NavigationStack {
+        SettingsView {
+        }
     }
+    .environment(SettingsModel())
 }

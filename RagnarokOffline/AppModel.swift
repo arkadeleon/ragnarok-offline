@@ -6,13 +6,13 @@
 //
 
 import Observation
+import ROGame
+import ROResources
 import rAthenaLogin
 import rAthenaChar
 import rAthenaMap
 import rAthenaWeb
 import rAthenaResources
-import ROGame
-import ROResources
 
 let localClientURL = URL.documentsDirectory
 let remoteClientURL = URL(string: "http://ragnarokoffline.online/client")
@@ -22,6 +22,8 @@ let remoteClientCachesURL = URL.cachesDirectory.appending(path: "com.github.arka
 @Observable
 final class AppModel {
     let mainWindowID = "Main"
+
+    let settings = SettingsModel()
 
     let fileSystem = FileSystem()
 
@@ -45,8 +47,21 @@ final class AppModel {
 
     let characterSimulator = CharacterSimulator()
 
-    let chatSession = ChatSession()
-    let gameSession = GameSession()
+    let chatSession: ChatSession
+    let gameSession: GameSession
+
+    init() {
+        chatSession = ChatSession(
+            serverAddress: settings.serverAddress,
+            serverPort: settings.serverPort
+        )
+
+        gameSession = GameSession(
+            serverAddress: settings.serverAddress,
+            serverPort: settings.serverPort,
+            resourceManager: .shared
+        )
+    }
 }
 
 extension ResourceManager {

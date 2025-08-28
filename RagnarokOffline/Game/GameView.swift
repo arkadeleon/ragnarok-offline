@@ -28,13 +28,10 @@ struct GameView: View {
                 MapView(scene: scene)
             }
         }
-        .task {
-            gameSession.start(resourceManager: .shared)
-        }
     }
 }
 
 #Preview {
     GameView()
-        .environment(GameSession())
+        .environment(GameSession.previewing)
 }
