@@ -11,6 +11,7 @@ import rAthenaChar
 import rAthenaMap
 import rAthenaWeb
 import rAthenaResources
+import ROGame
 import ROResources
 
 let localClientURL = URL.documentsDirectory
@@ -21,7 +22,6 @@ let remoteClientCachesURL = URL.cachesDirectory.appending(path: "com.github.arka
 @Observable
 final class AppModel {
     let mainWindowID = "Main"
-    let gameImmersiveSpaceID = "Game"
 
     let fileSystem = FileSystem()
 
@@ -44,6 +44,9 @@ final class AppModel {
     var statusChangeDatabase = DatabaseModel(mode: .renewal, recordProvider: .statusChange)
 
     let characterSimulator = CharacterSimulator()
+
+    let chatSession = ChatSession()
+    let gameSession = GameSession()
 }
 
 extension ResourceManager {

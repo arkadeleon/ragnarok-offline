@@ -11,7 +11,8 @@ import SwiftUI
 struct MonsterDetailView: View {
     var monster: MonsterModel
 
-    @Environment(AppModel.self) private var appModel
+    @Environment(DatabaseModel<ItemProvider>.self) private var itemDatabase
+    @Environment(DatabaseModel<MapProvider>.self) private var mapDatabase
 
     var body: some View {
         DatabaseRecordDetailView {
@@ -79,7 +80,7 @@ struct MonsterDetailView: View {
         .navigationTitle(monster.displayName)
         .task {
             await monster.fetchAnimatedImage()
-            await monster.fetchDetail(mapDatabase: appModel.mapDatabase)
+            await monster.fetchDetail(mapDatabase: mapDatabase)
         }
     }
 }

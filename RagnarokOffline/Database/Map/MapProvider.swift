@@ -16,7 +16,7 @@ struct MapProvider: DatabaseRecordProvider {
         return maps
     }
 
-    func prefetchRecords(_ maps: [MapModel], appModel: AppModel) async {
+    func prefetchRecords(_ maps: [MapModel]) async {
         for map in maps {
             await map.fetchLocalizedName()
         }

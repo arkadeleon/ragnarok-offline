@@ -16,7 +16,7 @@ struct MonsterProvider: DatabaseRecordProvider {
         return monsters
     }
 
-    func prefetchRecords(_ monsters: [MonsterModel], appModel: AppModel) async {
+    func prefetchRecords(_ monsters: [MonsterModel]) async {
         for monster in monsters {
             await monster.fetchLocalizedName()
         }

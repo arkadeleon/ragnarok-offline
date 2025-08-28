@@ -11,8 +11,7 @@ struct MonsterSummonDetailView: View {
     var monsterSummon: MonsterSummonModel
 
     @Environment(\.horizontalSizeClass) private var sizeClass
-
-    @Environment(AppModel.self) private var appModel
+    @Environment(DatabaseModel<MonsterProvider>.self) private var monsterDatabase
 
     var body: some View {
         DatabaseRecordDetailView {
@@ -44,7 +43,7 @@ struct MonsterSummonDetailView: View {
         }
         .navigationTitle(monsterSummon.displayName)
         .task {
-            await monsterSummon.fetchDetail(monsterDatabase: appModel.monsterDatabase)
+            await monsterSummon.fetchDetail(monsterDatabase: monsterDatabase)
         }
     }
 }

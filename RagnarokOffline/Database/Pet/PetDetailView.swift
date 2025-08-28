@@ -11,6 +11,7 @@ struct PetDetailView: View {
     var pet: PetModel
 
     @Environment(\.horizontalSizeClass) private var sizeClass
+    @Environment(DatabaseModel<ItemProvider>.self) private var itemDatabase
 
     var body: some View {
         DatabaseRecordDetailView {

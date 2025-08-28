@@ -15,15 +15,10 @@ protocol DatabaseRecordProvider {
     func records(for mode: DatabaseMode) async -> [Record]
     func moreRecords(for mode: DatabaseMode) async -> [Record]
 
-    func prefetchRecords(_ records: [Record], appModel: AppModel) async
-
     func records(matching searchText: String, in records: [Record]) async -> [Record]
 }
 
 extension DatabaseRecordProvider {
-    func prefetchRecords(_ records: [Record], appModel: AppModel) async {
-    }
-
     func moreRecords(for mode: DatabaseMode) async -> [Record] {
         []
     }
@@ -73,10 +68,6 @@ final class DatabaseModel<RecordProvider> where RecordProvider: DatabaseRecordPr
             )
             await filterRecords()
         }
-    }
-
-    func prefetchRecords(appModel: AppModel) async {
-        await recordProvider.prefetchRecords(records, appModel: appModel)
     }
 
     func filterRecords() async {

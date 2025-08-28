@@ -8,11 +8,8 @@
 import SwiftUI
 
 struct PetDatabaseView: View {
-    @Environment(AppModel.self) private var appModel
-
-    private var database: DatabaseModel<PetProvider> {
-        appModel.petDatabase
-    }
+    @Environment(DatabaseModel<PetProvider>.self) private var database
+    @Environment(DatabaseModel<MonsterProvider>.self) private var monsterDatabase
 
     var body: some View {
         ImageGrid(database.filteredRecords) { pet in
@@ -27,21 +24,25 @@ struct PetDatabaseView: View {
         .databaseRoot(database) {
             ContentUnavailableView("No Results", systemImage: "pawprint.fill")
         }
+        .task {
+            await database.fetchRecords()
+            await database.recordProvider.prefetchRecords(database.records, monsterDatabase: monsterDatabase)
+        }
     }
 }
 
 #Preview("Pre-Renewal Pet Database") {
-    @Previewable @State var appModel = AppModel()
-    appModel.petDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .pet)
-
-    return PetDatabaseView()
-        .environment(appModel)
+    NavigationStack {
+        PetDatabaseView()
+    }
+    .environment(DatabaseModel(mode: .prerenewal, recordProvider: .pet))
+    .environment(DatabaseModel(mode: .prerenewal, recordProvider: .monster))
 }
 
 #Preview("Renewal Pet Database") {
-    @Previewable @State var appModel = AppModel()
-    appModel.petDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .pet)
-
-    return PetDatabaseView()
-        .environment(appModel)
+    NavigationStack {
+        PetDatabaseView()
+    }
+    .environment(DatabaseModel(mode: .renewal, recordProvider: .pet))
+    .environment(DatabaseModel(mode: .renewal, recordProvider: .monster))
 }

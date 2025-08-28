@@ -8,11 +8,7 @@
 import SwiftUI
 
 struct ItemDatabaseView: View {
-    @Environment(AppModel.self) private var appModel
-
-    private var database: DatabaseModel<ItemProvider> {
-        appModel.itemDatabase
-    }
+    @Environment(DatabaseModel<ItemProvider>.self) private var database
 
     var body: some View {
         AdaptiveView {
@@ -51,21 +47,23 @@ struct ItemDatabaseView: View {
         .databaseRoot(database) {
             ContentUnavailableView("No Results", systemImage: "leaf.fill")
         }
+        .task {
+            await database.fetchRecords()
+            await database.recordProvider.prefetchRecords(database.records)
+        }
     }
 }
 
 #Preview("Pre-Renewal Item Database") {
-    @Previewable @State var appModel = AppModel()
-    appModel.itemDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .item)
-
-    return ItemDatabaseView()
-        .environment(appModel)
+    NavigationStack {
+        ItemDatabaseView()
+    }
+    .environment(DatabaseModel(mode: .prerenewal, recordProvider: .item))
 }
 
 #Preview("Renewal Item Database") {
-    @Previewable @State var appModel = AppModel()
-    appModel.itemDatabase = DatabaseModel(mode: .renewal, recordProvider: .item)
-
-    return ItemDatabaseView()
-        .environment(appModel)
+    NavigationStack {
+        ItemDatabaseView()
+    }
+    .environment(DatabaseModel(mode: .renewal, recordProvider: .item))
 }

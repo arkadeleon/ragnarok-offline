@@ -8,11 +8,7 @@
 import SwiftUI
 
 struct SkillDatabaseView: View {
-    @Environment(AppModel.self) private var appModel
-
-    private var database: DatabaseModel<SkillProvider> {
-        appModel.skillDatabase
-    }
+    @Environment(DatabaseModel<SkillProvider>.self) private var database
 
     var body: some View {
         AdaptiveView {
@@ -45,21 +41,23 @@ struct SkillDatabaseView: View {
         .databaseRoot(database) {
             ContentUnavailableView("No Results", systemImage: "arrow.up.heart.fill")
         }
+        .task {
+            await database.fetchRecords()
+            await database.recordProvider.prefetchRecords(database.records)
+        }
     }
 }
 
 #Preview("Pre-Renewal Skill Database") {
-    @Previewable @State var appModel = AppModel()
-    appModel.skillDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .skill)
-
-    return SkillDatabaseView()
-        .environment(appModel)
+    NavigationStack {
+        SkillDatabaseView()
+    }
+    .environment(DatabaseModel(mode: .prerenewal, recordProvider: .skill))
 }
 
 #Preview("Renewal Skill Database") {
-    @Previewable @State var appModel = AppModel()
-    appModel.skillDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .skill)
-
-    return SkillDatabaseView()
-        .environment(appModel)
+    NavigationStack {
+        SkillDatabaseView()
+    }
+    .environment(DatabaseModel(mode: .renewal, recordProvider: .skill))
 }

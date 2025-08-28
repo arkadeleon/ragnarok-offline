@@ -8,11 +8,7 @@
 import SwiftUI
 
 struct MonsterDatabaseView: View {
-    @Environment(AppModel.self) private var appModel
-
-    private var database: DatabaseModel<MonsterProvider> {
-        appModel.monsterDatabase
-    }
+    @Environment(DatabaseModel<MonsterProvider>.self) private var database
 
     var body: some View {
         ImageGrid(database.filteredRecords) { monster in
@@ -25,21 +21,23 @@ struct MonsterDatabaseView: View {
         .databaseRoot(database) {
             ContentUnavailableView("No Results", systemImage: "pawprint.fill")
         }
+        .task {
+            await database.fetchRecords()
+            await database.recordProvider.prefetchRecords(database.records)
+        }
     }
 }
 
 #Preview("Pre-Renewal Monster Database") {
-    @Previewable @State var appModel = AppModel()
-    appModel.monsterDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .monster)
-
-    return MonsterDatabaseView()
-        .environment(appModel)
+    NavigationStack {
+        MonsterDatabaseView()
+    }
+    .environment(DatabaseModel(mode: .prerenewal, recordProvider: .monster))
 }
 
 #Preview("Renewal Monster Database") {
-    @Previewable @State var appModel = AppModel()
-    appModel.monsterDatabase = DatabaseModel(mode: .renewal, recordProvider: .monster)
-
-    return MonsterDatabaseView()
-        .environment(appModel)
+    NavigationStack {
+        MonsterDatabaseView()
+    }
+    .environment(DatabaseModel(mode: .renewal, recordProvider: .monster))
 }

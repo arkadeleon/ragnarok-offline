@@ -16,7 +16,7 @@ struct SkillProvider: DatabaseRecordProvider {
         return skills
     }
 
-    func prefetchRecords(_ skills: [SkillModel], appModel: AppModel) async {
+    func prefetchRecords(_ skills: [SkillModel]) async {
         for skill in skills {
             await skill.fetchLocalizedName()
         }

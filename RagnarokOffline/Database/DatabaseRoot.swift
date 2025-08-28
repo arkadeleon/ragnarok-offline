@@ -14,8 +14,6 @@ struct DatabaseRoot<RecordProvider, Empty>: ViewModifier where RecordProvider: D
 
     @Environment(\.horizontalSizeClass) private var sizeClass
 
-    @Environment(AppModel.self) private var appModel
-
     func body(content: Content) -> some View {
         content
             .background(.background)
@@ -39,10 +37,6 @@ struct DatabaseRoot<RecordProvider, Empty>: ViewModifier where RecordProvider: D
                 Task {
                     await database.filterRecords()
                 }
-            }
-            .task {
-                await database.fetchRecords()
-                await database.prefetchRecords(appModel: appModel)
             }
     }
 }

@@ -16,10 +16,10 @@ struct PetProvider: DatabaseRecordProvider {
         return pets
     }
 
-    func prefetchRecords(_ pets: [PetModel], appModel: AppModel) async {
-        await appModel.monsterDatabase.fetchRecords()
+    func prefetchRecords(_ pets: [PetModel], monsterDatabase: DatabaseModel<MonsterProvider>) async {
+        await monsterDatabase.fetchRecords()
         for pet in pets {
-            pet.fetchMonster(monsterDatabase: appModel.monsterDatabase)
+            pet.fetchMonster(monsterDatabase: monsterDatabase)
         }
     }
 

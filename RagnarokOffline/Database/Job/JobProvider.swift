@@ -16,7 +16,7 @@ struct JobProvider: DatabaseRecordProvider {
         return jobs
     }
 
-    func prefetchRecords(_ jobs: [JobModel], appModel: AppModel) async {
+    func prefetchRecords(_ jobs: [JobModel]) async {
         for job in jobs {
             await job.fetchLocalizedName()
         }

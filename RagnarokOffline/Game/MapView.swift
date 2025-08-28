@@ -12,7 +12,6 @@ import SwiftUI
 struct MapView: View {
     var scene: MapScene
 
-    @Environment(AppModel.self) private var appModel
     @Environment(GameSession.self) private var gameSession
 
     #if os(visionOS)
@@ -34,7 +33,7 @@ struct MapView: View {
         #if os(visionOS)
         .onAppear {
             Task {
-                await openImmersiveSpace(id: appModel.gameImmersiveSpaceID)
+                await openImmersiveSpace(id: gameSession.immersiveSpaceID)
             }
         }
         #endif

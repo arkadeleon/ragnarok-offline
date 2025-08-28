@@ -8,11 +8,7 @@
 import SwiftUI
 
 struct JobDatabaseView: View {
-    @Environment(AppModel.self) private var appModel
-
-    private var database: DatabaseModel<JobProvider> {
-        appModel.jobDatabase
-    }
+    @Environment(DatabaseModel<JobProvider>.self) private var database
 
     var body: some View {
         ImageGrid(database.filteredRecords) { job in
@@ -25,21 +21,23 @@ struct JobDatabaseView: View {
         .databaseRoot(database) {
             ContentUnavailableView("No Results", systemImage: "person.fill")
         }
+        .task {
+            await database.fetchRecords()
+            await database.recordProvider.prefetchRecords(database.records)
+        }
     }
 }
 
 #Preview("Pre-Renewal Job Database") {
-    @Previewable @State var appModel = AppModel()
-    appModel.jobDatabase = DatabaseModel(mode: .prerenewal, recordProvider: .job)
-
-    return JobDatabaseView()
-        .environment(appModel)
+    NavigationStack {
+        JobDatabaseView()
+    }
+    .environment(DatabaseModel(mode: .prerenewal, recordProvider: .job))
 }
 
 #Preview("Renewal Job Database") {
-    @Previewable @State var appModel = AppModel()
-    appModel.jobDatabase = DatabaseModel(mode: .renewal, recordProvider: .job)
-
-    return JobDatabaseView()
-        .environment(appModel)
+    NavigationStack {
+        JobDatabaseView()
+    }
+    .environment(DatabaseModel(mode: .renewal, recordProvider: .job))
 }

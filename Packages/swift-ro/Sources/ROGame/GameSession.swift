@@ -16,6 +16,8 @@ import ROResources
 @MainActor
 @Observable
 final public class GameSession {
+    public let immersiveSpaceID = "Game"
+
     public enum Phase {
         case login
         case charServerList(_ charServers: [CharServerInfo])

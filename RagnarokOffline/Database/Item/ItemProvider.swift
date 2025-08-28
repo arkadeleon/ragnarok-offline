@@ -29,7 +29,7 @@ struct ItemProvider: DatabaseRecordProvider {
         return items
     }
 
-    func prefetchRecords(_ items: [ItemModel], appModel: AppModel) async {
+    func prefetchRecords(_ items: [ItemModel]) async {
         for item in items {
             await item.fetchLocalizedName()
         }

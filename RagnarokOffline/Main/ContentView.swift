@@ -21,7 +21,7 @@ struct ContentView: View {
                         detailView(for: item)
                             .toolbarTitleDisplayMode(.inline)
                     }
-                    .navigationDestinationsForModels()
+                    .navigationDestinations(appModel: appModel)
             }
         } regular: {
             NavigationSplitView {
@@ -31,7 +31,7 @@ struct ContentView: View {
                     NavigationStack {
                         detailView(for: item)
                             .toolbarTitleDisplayMode(.inline)
-                            .navigationDestinationsForModels()
+                            .navigationDestinations(appModel: appModel)
                     }
                 }
             }
@@ -54,10 +54,13 @@ struct ContentView: View {
         switch item {
         case .clientFiles:
             FilesView("Local Files", directory: appModel.clientDirectory)
+                .environment(appModel.fileSystem)
         case .clientCachedFiles:
             FilesView("Cached Files", directory: appModel.clientCachesDirectory)
+                .environment(appModel.fileSystem)
         case .serverFiles:
             FilesView("Server Files", directory: appModel.serverDirectory)
+                .environment(appModel.fileSystem)
         case .loginServer:
             ServerView(server: appModel.loginServer)
         case .charServer:
@@ -68,28 +71,39 @@ struct ContentView: View {
             ServerView(server: appModel.webServer)
         case .itemDatabase:
             ItemDatabaseView()
+                .environment(appModel.itemDatabase)
         case .jobDatabase:
             JobDatabaseView()
+                .environment(appModel.jobDatabase)
         case .mapDatabase:
             MapDatabaseView()
+                .environment(appModel.mapDatabase)
         case .monsterDatabase:
             MonsterDatabaseView()
+                .environment(appModel.monsterDatabase)
         case .monsterSummonDatabase:
             MonsterSummonDatabaseView()
+                .environment(appModel.monsterSummonDatabase)
         case .petDatabase:
             PetDatabaseView()
+                .environment(appModel.petDatabase)
+                .environment(appModel.monsterDatabase)
         case .skillDatabase:
             SkillDatabaseView()
+                .environment(appModel.skillDatabase)
         case .statusChangeDatabase:
             StatusChangeDatabaseView()
+                .environment(appModel.statusChangeDatabase)
         case .characterSimulator:
             CharacterSimulatorView()
                 .environment(appModel.characterSimulator)
                 .environment(appModel.itemDatabase)
         case .chat:
             ChatView()
+                .environment(appModel.chatSession)
         case .game:
             GameView()
+                .environment(appModel.gameSession)
         case .cube:
             CubeView()
         }
@@ -97,28 +111,35 @@ struct ContentView: View {
 }
 
 extension View {
-    func navigationDestinationsForModels() -> some View {
+    func navigationDestinations(appModel: AppModel) -> some View {
         self
             .navigationDestination(for: File.self) { file in
                 FilesView(directory: file)
+                    .environment(appModel.fileSystem)
             }
             .navigationDestination(for: ItemModel.self) { item in
                 ItemDetailView(item: item)
+                    .environment(appModel.monsterDatabase)
             }
             .navigationDestination(for: JobModel.self) { job in
                 JobDetailView(job: job)
             }
             .navigationDestination(for: MapModel.self) { map in
                 MapDetailView(map: map)
+                    .environment(appModel.monsterDatabase)
             }
             .navigationDestination(for: MonsterModel.self) { monster in
                 MonsterDetailView(monster: monster)
+                    .environment(appModel.itemDatabase)
+                    .environment(appModel.mapDatabase)
             }
             .navigationDestination(for: MonsterSummonModel.self) { monsterSummon in
                 MonsterSummonDetailView(monsterSummon: monsterSummon)
+                    .environment(appModel.monsterDatabase)
             }
             .navigationDestination(for: PetModel.self) { pet in
                 PetDetailView(pet: pet)
+                    .environment(appModel.itemDatabase)
             }
             .navigationDestination(for: SkillModel.self) { skill in
                 SkillDetailView(skill: skill)
