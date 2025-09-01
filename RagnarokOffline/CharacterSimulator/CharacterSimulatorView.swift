@@ -46,5 +46,5 @@ struct CharacterSimulatorView: View {
         CharacterSimulatorView()
     }
     .environment(CharacterSimulator())
-    .environment(DatabaseModel(mode: .renewal, recordProvider: .item))
+    .environment(DatabaseModel(mode: .renewal))
 }

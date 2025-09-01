@@ -36,14 +36,7 @@ final class AppModel {
     let mapServer = ServerModel(server: MapServer.shared)
     let webServer = ServerModel(server: WebServer.shared)
 
-    var itemDatabase = DatabaseModel(mode: .renewal, recordProvider: .item)
-    var jobDatabase = DatabaseModel(mode: .renewal, recordProvider: .job)
-    var mapDatabase = DatabaseModel(mode: .renewal, recordProvider: .map)
-    var monsterDatabase = DatabaseModel(mode: .renewal, recordProvider: .monster)
-    var monsterSummonDatabase = DatabaseModel(mode: .renewal, recordProvider: .monsterSummon)
-    var petDatabase = DatabaseModel(mode: .renewal, recordProvider: .pet)
-    var skillDatabase = DatabaseModel(mode: .renewal, recordProvider: .skill)
-    var statusChangeDatabase = DatabaseModel(mode: .renewal, recordProvider: .statusChange)
+    let database = DatabaseModel(mode: .renewal)
 
     let characterSimulator = CharacterSimulator()
 

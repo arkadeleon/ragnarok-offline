@@ -71,33 +71,32 @@ struct ContentView: View {
             ServerView(server: appModel.webServer)
         case .itemDatabase:
             ItemDatabaseView()
-                .environment(appModel.itemDatabase)
+                .environment(appModel.database)
         case .jobDatabase:
             JobDatabaseView()
-                .environment(appModel.jobDatabase)
+                .environment(appModel.database)
         case .mapDatabase:
             MapDatabaseView()
-                .environment(appModel.mapDatabase)
+                .environment(appModel.database)
         case .monsterDatabase:
             MonsterDatabaseView()
-                .environment(appModel.monsterDatabase)
+                .environment(appModel.database)
         case .monsterSummonDatabase:
             MonsterSummonDatabaseView()
-                .environment(appModel.monsterSummonDatabase)
+                .environment(appModel.database)
         case .petDatabase:
             PetDatabaseView()
-                .environment(appModel.petDatabase)
-                .environment(appModel.monsterDatabase)
+                .environment(appModel.database)
         case .skillDatabase:
             SkillDatabaseView()
-                .environment(appModel.skillDatabase)
+                .environment(appModel.database)
         case .statusChangeDatabase:
             StatusChangeDatabaseView()
-                .environment(appModel.statusChangeDatabase)
+                .environment(appModel.database)
         case .characterSimulator:
             CharacterSimulatorView()
                 .environment(appModel.characterSimulator)
-                .environment(appModel.itemDatabase)
+                .environment(appModel.database)
         case .chat:
             ChatView()
                 .environment(appModel.chatSession)
@@ -119,33 +118,35 @@ extension View {
             }
             .navigationDestination(for: ItemModel.self) { item in
                 ItemDetailView(item: item)
-                    .environment(appModel.monsterDatabase)
+                    .environment(appModel.database)
             }
             .navigationDestination(for: JobModel.self) { job in
                 JobDetailView(job: job)
+                    .environment(appModel.database)
             }
             .navigationDestination(for: MapModel.self) { map in
                 MapDetailView(map: map)
-                    .environment(appModel.monsterDatabase)
+                    .environment(appModel.database)
             }
             .navigationDestination(for: MonsterModel.self) { monster in
                 MonsterDetailView(monster: monster)
-                    .environment(appModel.itemDatabase)
-                    .environment(appModel.mapDatabase)
+                    .environment(appModel.database)
             }
             .navigationDestination(for: MonsterSummonModel.self) { monsterSummon in
                 MonsterSummonDetailView(monsterSummon: monsterSummon)
-                    .environment(appModel.monsterDatabase)
+                    .environment(appModel.database)
             }
             .navigationDestination(for: PetModel.self) { pet in
                 PetDetailView(pet: pet)
-                    .environment(appModel.itemDatabase)
+                    .environment(appModel.database)
             }
             .navigationDestination(for: SkillModel.self) { skill in
                 SkillDetailView(skill: skill)
+                    .environment(appModel.database)
             }
             .navigationDestination(for: StatusChangeModel.self) { statusChange in
                 StatusChangeDetailView(statusChange: statusChange)
+                    .environment(appModel.database)
             }
     }
 }

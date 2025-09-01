@@ -10,6 +10,10 @@ import SwiftUI
 struct JobDetailView: View {
     var job: JobModel
 
+    @Environment(DatabaseModel.self) private var database
+
+    @State private var skills: [SkillModel] = []
+
     var body: some View {
         DatabaseRecordDetailView {
             ZStack {
@@ -28,10 +32,10 @@ struct JobDetailView: View {
 
             DatabaseRecordSectionView("Base ASPD", attributes: job.baseASPD)
 
-            if !job.skills.isEmpty {
+            if !skills.isEmpty {
                 DatabaseRecordSectionView("Skills") {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        ForEach(job.skills) { skill in
+                        ForEach(skills) { skill in
                             NavigationLink(value: skill) {
                                 SkillCell(skill: skill)
                             }
@@ -118,7 +122,9 @@ struct JobDetailView: View {
         .navigationTitle(job.displayName)
         .task {
             await job.fetchAnimatedImage()
-            await job.fetchDetail()
+        }
+        .task {
+            skills = await database.skills(for: job.id)
         }
     }
 }

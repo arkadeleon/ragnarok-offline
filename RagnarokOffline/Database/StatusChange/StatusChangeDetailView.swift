@@ -10,6 +10,8 @@ import SwiftUI
 struct StatusChangeDetailView: View {
     var statusChange: StatusChangeModel
 
+    @Environment(DatabaseModel.self) private var database
+
     var body: some View {
         DatabaseRecordDetailView {
             DatabaseRecordSectionView("Info", attributes: statusChange.attributes)
@@ -76,7 +78,7 @@ struct StatusChangeDetailView: View {
         }
         .navigationTitle(statusChange.displayName)
         .task {
-            await statusChange.fetchDetail()
+            await statusChange.fetchDetail(database: database)
         }
     }
 }

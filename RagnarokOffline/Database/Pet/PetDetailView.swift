@@ -11,7 +11,7 @@ struct PetDetailView: View {
     var pet: PetModel
 
     @Environment(\.horizontalSizeClass) private var sizeClass
-    @Environment(DatabaseModel<ItemProvider>.self) private var itemDatabase
+    @Environment(DatabaseModel.self) private var database
 
     var body: some View {
         DatabaseRecordDetailView {
@@ -68,7 +68,7 @@ struct PetDetailView: View {
         }
         .navigationTitle(pet.displayName)
         .task {
-            await pet.fetchDetail()
+            await pet.fetchDetail(database: database)
         }
     }
 }

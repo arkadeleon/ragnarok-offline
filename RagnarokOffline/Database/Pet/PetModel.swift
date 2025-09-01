@@ -20,6 +20,10 @@ final class PetModel {
     var equipItem: ItemModel?
     var foodItem: ItemModel?
 
+    var aegisName: String {
+        pet.monster
+    }
+
     var displayName: String {
         monster?.displayName ?? pet.monster
     }
@@ -57,44 +61,20 @@ final class PetModel {
     }
 
     @MainActor
-    func fetchMonster(monsterDatabase: DatabaseModel<MonsterProvider>) {
-        if monster == nil {
-            if let monster = monsterDatabase.monster(forAegisName: pet.monster) {
-                self.monster = monster
-            }
-        }
-    }
-
-    @MainActor
-    func fetchDetail() async {
-        let itemDatabase = ItemDatabase.shared
-
+    func fetchDetail(database: DatabaseModel) async {
         if let tameItem = pet.tameItem {
-            if let item = await itemDatabase.item(forAegisName: tameItem) {
-                self.tameItem = ItemModel(mode: mode, item: item)
-            }
+            self.tameItem = await database.item(forAegisName: tameItem)
         }
 
-        if let item = await itemDatabase.item(forAegisName: pet.eggItem) {
-            self.eggItem = ItemModel(mode: mode, item: item)
-        }
+        eggItem = await database.item(forAegisName: pet.eggItem)
 
         if let equipItem = pet.equipItem {
-            if let item = await itemDatabase.item(forAegisName: equipItem) {
-                self.equipItem = ItemModel(mode: mode, item: item)
-            }
+            self.equipItem = await database.item(forAegisName: equipItem)
         }
 
         if let foodItem = pet.foodItem {
-            if let item = await itemDatabase.item(forAegisName: foodItem) {
-                self.foodItem = ItemModel(mode: mode, item: item)
-            }
+            self.foodItem = await database.item(forAegisName: foodItem)
         }
-
-        await tameItem?.fetchLocalizedName()
-        await eggItem?.fetchLocalizedName()
-        await equipItem?.fetchLocalizedName()
-        await foodItem?.fetchLocalizedName()
     }
 }
 

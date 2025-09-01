@@ -59,27 +59,21 @@ final class StatusChangeModel {
     }
 
     @MainActor
-    func fetchDetail() async {
-        let database = StatusChangeDatabase.shared
-
-        let fail = await database.statusChanges(for: Array(statusChange.fail ?? []))
-        self.fail = fail.map { statusChange in
-            StatusChangeModel(mode: mode, statusChange: statusChange)
+    func fetchDetail(database: DatabaseModel) async {
+        if let fail = statusChange.fail {
+            self.fail = await database.statusChanges(for: Array(fail))
         }
 
-        let endOnStart = await database.statusChanges(for: Array(statusChange.endOnStart ?? []))
-        self.endOnStart = endOnStart.map { statusChange in
-            StatusChangeModel(mode: mode, statusChange: statusChange)
+        if let endOnStart = statusChange.endOnStart {
+            self.endOnStart = await database.statusChanges(for: Array(endOnStart))
         }
 
-        let endReturn = await database.statusChanges(for: Array(statusChange.endReturn ?? []))
-        self.endReturn = endReturn.map { statusChange in
-            StatusChangeModel(mode: mode, statusChange: statusChange)
+        if let endReturn = statusChange.endReturn {
+            self.endReturn = await database.statusChanges(for: Array(endReturn))
         }
 
-        let endOnEnd = await database.statusChanges(for: Array(statusChange.endOnEnd ?? []))
-        self.endOnEnd = endOnEnd.map { statusChange in
-            StatusChangeModel(mode: mode, statusChange: statusChange)
+        if let endOnEnd = statusChange.endOnEnd {
+            self.endOnEnd = await database.statusChanges(for: Array(endOnEnd))
         }
 
         let statusInfoTable = await ResourceManager.shared.statusInfoTable(for: .current)

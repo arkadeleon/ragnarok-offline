@@ -9,16 +9,19 @@ import SwiftUI
 import RODatabase
 
 struct MonsterSummonDatabaseView: View {
-    @Environment(DatabaseModel<MonsterSummonProvider>.self) private var database
+    @Environment(DatabaseModel.self) private var database
+
+    @State private var searchText = ""
+    @State private var filteredMonsterSummons: [MonsterSummonModel] = []
 
     var body: some View {
         AdaptiveView {
-            List(database.filteredRecords) { monsterSummon in
+            List(filteredMonsterSummons) { monsterSummon in
                 NavigationLink(monsterSummon.displayName, value: monsterSummon)
             }
             .listStyle(.plain)
         } regular: {
-            List(database.filteredRecords) { monsterSummon in
+            List(filteredMonsterSummons) { monsterSummon in
                 NavigationLink(value: monsterSummon) {
                     HStack {
                         Text(monsterSummon.displayName)
@@ -35,12 +38,33 @@ struct MonsterSummonDatabaseView: View {
             .listStyle(.plain)
         }
         .navigationTitle("Monster Summon Database")
-        .databaseRoot(database) {
-            ContentUnavailableView("No Results", systemImage: "pawprint.fill")
+        .background(.background)
+        .overlay {
+            if database.monsterSummons.isEmpty {
+                ProgressView()
+            } else if !searchText.isEmpty && filteredMonsterSummons.isEmpty {
+                ContentUnavailableView("No Results", systemImage: "pawprint.fill")
+            }
+        }
+        .searchable(text: $searchText)
+        .task(id: searchText) {
+            filteredMonsterSummons = await monsterSummons(matching: searchText, in: database.monsterSummons)
         }
         .task {
-            await database.fetchRecords()
+            await database.fetchMonsterSummons()
+            filteredMonsterSummons = await monsterSummons(matching: searchText, in: database.monsterSummons)
         }
+    }
+
+    private func monsterSummons(matching searchText: String, in monsterSummons: [MonsterSummonModel]) async -> [MonsterSummonModel] {
+        if searchText.isEmpty {
+            return monsterSummons
+        }
+
+        let filteredMonsterSummons = monsterSummons.filter { monsterSummon in
+            monsterSummon.displayName.localizedStandardContains(searchText)
+        }
+        return filteredMonsterSummons
     }
 }
 
@@ -48,12 +72,12 @@ struct MonsterSummonDatabaseView: View {
     NavigationStack {
         MonsterSummonDatabaseView()
     }
-    .environment(DatabaseModel(mode: .prerenewal, recordProvider: .monsterSummon))
+    .environment(DatabaseModel(mode: .prerenewal))
 }
 
 #Preview("Renewal Monster Summon Database") {
     NavigationStack {
         MonsterSummonDatabaseView()
     }
-    .environment(DatabaseModel(mode: .renewal, recordProvider: .monsterSummon))
+    .environment(DatabaseModel(mode: .renewal))
 }

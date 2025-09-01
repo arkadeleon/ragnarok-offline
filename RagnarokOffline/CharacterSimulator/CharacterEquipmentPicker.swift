@@ -12,7 +12,7 @@ struct CharacterEquipmentPicker: View {
     var predicate: (ItemModel) -> Bool
     @Binding var selection: ItemModel?
 
-    @Environment(DatabaseModel<ItemProvider>.self) private var itemDatabase
+    @Environment(DatabaseModel.self) private var database
 
     @State private var isPicking = false
     @State private var searchText = ""
@@ -93,10 +93,8 @@ struct CharacterEquipmentPicker: View {
         }
         .searchable(text: $searchText)
         .task {
-            await itemDatabase.fetchRecords()
-
-            let items = itemDatabase.records
-            self.items = items.filter(predicate)
+            await database.fetchItems()
+            items = database.items.filter(predicate)
         }
     }
 
@@ -120,12 +118,14 @@ struct CharacterEquipmentPicker: View {
 #Preview {
     @Previewable @State var selection: ItemModel? = nil
 
-    CharacterEquipmentPicker(
-        "Items",
-        predicate: { item in
-            true
-        },
-        selection: $selection
-    )
-    .environment(DatabaseModel(mode: .renewal, recordProvider: .item))
+    List {
+        CharacterEquipmentPicker(
+            "Items",
+            predicate: { item in
+                true
+            },
+            selection: $selection
+        )
+    }
+    .environment(DatabaseModel(mode: .renewal))
 }

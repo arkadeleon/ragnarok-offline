@@ -8,18 +8,21 @@
 import SwiftUI
 
 struct SkillDatabaseView: View {
-    @Environment(DatabaseModel<SkillProvider>.self) private var database
+    @Environment(DatabaseModel.self) private var database
+
+    @State private var searchText = ""
+    @State private var filteredSkills: [SkillModel] = []
 
     var body: some View {
         AdaptiveView {
-            List(database.filteredRecords) { skill in
+            List(filteredSkills) { skill in
                 NavigationLink(value: skill) {
                     SkillCell(skill: skill)
                 }
             }
             .listStyle(.plain)
         } regular: {
-            List(database.filteredRecords) { skill in
+            List(filteredSkills) { skill in
                 NavigationLink(value: skill) {
                     HStack {
                         SkillIconImageView(skill: skill)
@@ -38,13 +41,42 @@ struct SkillDatabaseView: View {
             .listStyle(.plain)
         }
         .navigationTitle("Skill Database")
-        .databaseRoot(database) {
-            ContentUnavailableView("No Results", systemImage: "arrow.up.heart.fill")
+        .background(.background)
+        .overlay {
+            if database.skills.isEmpty {
+                ProgressView()
+            } else if !searchText.isEmpty && filteredSkills.isEmpty {
+                ContentUnavailableView("No Results", systemImage: "arrow.up.heart.fill")
+            }
+        }
+        .searchable(text: $searchText)
+        .task(id: searchText) {
+            filteredSkills = await skills(matching: searchText, in: database.skills)
         }
         .task {
-            await database.fetchRecords()
-            await database.recordProvider.prefetchRecords(database.records)
+            await database.fetchSkills()
+            filteredSkills = await skills(matching: searchText, in: database.skills)
         }
+    }
+
+    private func skills(matching searchText: String, in skills: [SkillModel]) async -> [SkillModel] {
+        if searchText.isEmpty {
+            return skills
+        }
+
+        if searchText.hasPrefix("#") {
+            if let skillID = Int(searchText.dropFirst()),
+               let skill = skills.first(where: { $0.id == skillID }) {
+                return [skill]
+            } else {
+                return []
+            }
+        }
+
+        let filteredSkills = skills.filter { skill in
+            skill.displayName.localizedStandardContains(searchText)
+        }
+        return filteredSkills
     }
 }
 
@@ -52,12 +84,12 @@ struct SkillDatabaseView: View {
     NavigationStack {
         SkillDatabaseView()
     }
-    .environment(DatabaseModel(mode: .prerenewal, recordProvider: .skill))
+    .environment(DatabaseModel(mode: .prerenewal))
 }
 
 #Preview("Renewal Skill Database") {
     NavigationStack {
         SkillDatabaseView()
     }
-    .environment(DatabaseModel(mode: .renewal, recordProvider: .skill))
+    .environment(DatabaseModel(mode: .renewal))
 }

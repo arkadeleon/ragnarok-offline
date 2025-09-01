@@ -11,8 +11,9 @@ struct MapDetailView: View {
     var map: MapModel
 
     @Environment(\.horizontalSizeClass) private var sizeClass
-    @Environment(DatabaseModel<MonsterProvider>.self) private var monsterDatabase
+    @Environment(DatabaseModel.self) private var database
 
+    @State private var spawningMonsters: [SpawningMonster] = []
     @State private var mapForMapViewer: MapModel?
 
     var body: some View {
@@ -31,10 +32,10 @@ struct MapDetailView: View {
             .frame(height: 200)
             .stretchy()
 
-            if !map.spawningMonsters.isEmpty {
+            if !spawningMonsters.isEmpty {
                 DatabaseRecordSectionView("Monsters") {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
-                        ForEach(map.spawningMonsters) { spawningMonster in
+                        ForEach(spawningMonsters) { spawningMonster in
                             NavigationLink(value: spawningMonster.monster) {
                                 MonsterGridCell(monster: spawningMonster.monster, secondaryText: "(\(spawningMonster.spawn.amount)x)")
                             }
@@ -60,7 +61,10 @@ struct MapDetailView: View {
             .presentationSizing(.page)
         }
         .task {
-            await map.fetchDetail(monsterDatabase: monsterDatabase)
+            await map.fetchImage()
+        }
+        .task {
+            spawningMonsters = await database.spawningMonsters(forMapName: map.name)
         }
     }
 }

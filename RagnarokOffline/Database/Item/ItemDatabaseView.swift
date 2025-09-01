@@ -8,18 +8,21 @@
 import SwiftUI
 
 struct ItemDatabaseView: View {
-    @Environment(DatabaseModel<ItemProvider>.self) private var database
+    @Environment(DatabaseModel.self) private var database
+
+    @State private var searchText = ""
+    @State private var filteredItems: [ItemModel] = []
 
     var body: some View {
         AdaptiveView {
-            List(database.filteredRecords) { item in
+            List(filteredItems) { item in
                 NavigationLink(value: item) {
                     ItemCell(item: item)
                 }
             }
             .listStyle(.plain)
         } regular: {
-            List(database.filteredRecords) { item in
+            List(filteredItems) { item in
                 NavigationLink(value: item) {
                     HStack {
                         ItemIconImageView(item: item)
@@ -44,13 +47,42 @@ struct ItemDatabaseView: View {
             .listStyle(.plain)
         }
         .navigationTitle("Item Database")
-        .databaseRoot(database) {
-            ContentUnavailableView("No Results", systemImage: "leaf.fill")
+        .background(.background)
+        .overlay {
+            if database.items.isEmpty {
+                ProgressView()
+            } else if !searchText.isEmpty && filteredItems.isEmpty {
+                ContentUnavailableView("No Results", systemImage: "leaf.fill")
+            }
+        }
+        .searchable(text: $searchText)
+        .task(id: searchText) {
+            filteredItems = await items(matching: searchText, in: database.items)
         }
         .task {
-            await database.fetchRecords()
-            await database.recordProvider.prefetchRecords(database.records)
+            await database.fetchItems()
+            filteredItems = await items(matching: searchText, in: database.items)
         }
+    }
+
+    private func items(matching searchText: String, in items: [ItemModel]) async -> [ItemModel] {
+        if searchText.isEmpty {
+            return items
+        }
+
+        if searchText.hasPrefix("#") {
+            if let itemID = Int(searchText.dropFirst()),
+               let item = items.first(where: { $0.id == itemID }) {
+                return [item]
+            } else {
+                return []
+            }
+        }
+
+        let filteredItems = items.filter { item in
+            item.displayName.localizedStandardContains(searchText)
+        }
+        return filteredItems
     }
 }
 
@@ -58,12 +90,12 @@ struct ItemDatabaseView: View {
     NavigationStack {
         ItemDatabaseView()
     }
-    .environment(DatabaseModel(mode: .prerenewal, recordProvider: .item))
+    .environment(DatabaseModel(mode: .prerenewal))
 }
 
 #Preview("Renewal Item Database") {
     NavigationStack {
         ItemDatabaseView()
     }
-    .environment(DatabaseModel(mode: .renewal, recordProvider: .item))
+    .environment(DatabaseModel(mode: .renewal))
 }

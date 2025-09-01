@@ -8,18 +8,21 @@
 import SwiftUI
 
 struct MapDatabaseView: View {
-    @Environment(DatabaseModel<MapProvider>.self) private var database
+    @Environment(DatabaseModel.self) private var database
+
+    @State private var searchText = ""
+    @State private var filteredMaps: [MapModel] = []
 
     var body: some View {
         AdaptiveView {
-            List(database.filteredRecords) { map in
+            List(filteredMaps) { map in
                 NavigationLink(value: map) {
                     MapCell(map: map)
                 }
             }
             .listStyle(.plain)
         } regular: {
-            List(database.filteredRecords) { map in
+            List(filteredMaps) { map in
                 NavigationLink(value: map) {
                     HStack {
                         MapImageView(map: map)
@@ -35,13 +38,33 @@ struct MapDatabaseView: View {
             .listStyle(.plain)
         }
         .navigationTitle("Map Database")
-        .databaseRoot(database) {
-            ContentUnavailableView("No Results", systemImage: "map.fill")
+        .background(.background)
+        .overlay {
+            if database.maps.isEmpty {
+                ProgressView()
+            } else if !searchText.isEmpty && filteredMaps.isEmpty {
+                ContentUnavailableView("No Results", systemImage: "map.fill")
+            }
+        }
+        .searchable(text: $searchText)
+        .task(id: searchText) {
+            filteredMaps = await maps(matching: searchText, in: database.maps)
         }
         .task {
-            await database.fetchRecords()
-            await database.recordProvider.prefetchRecords(database.records)
+            await database.fetchMaps()
+            filteredMaps = await maps(matching: searchText, in: database.maps)
         }
+    }
+
+    private func maps(matching searchText: String, in maps: [MapModel]) async -> [MapModel] {
+        if searchText.isEmpty {
+            return maps
+        }
+
+        let filteredMaps = maps.filter { map in
+            map.displayName.localizedStandardContains(searchText)
+        }
+        return filteredMaps
     }
 }
 
@@ -49,12 +72,12 @@ struct MapDatabaseView: View {
     NavigationStack {
         MapDatabaseView()
     }
-    .environment(DatabaseModel(mode: .prerenewal, recordProvider: .map))
+    .environment(DatabaseModel(mode: .prerenewal))
 }
 
 #Preview("Renewal Map Database") {
     NavigationStack {
         MapDatabaseView()
     }
-    .environment(DatabaseModel(mode: .renewal, recordProvider: .map))
+    .environment(DatabaseModel(mode: .renewal))
 }

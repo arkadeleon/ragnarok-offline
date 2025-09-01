@@ -16,33 +16,11 @@ import ROResources
 @Observable
 @dynamicMemberLookup
 final class MonsterModel {
-    struct DropItem: Identifiable {
-        var index: Int
-        var drop: Monster.Drop
-        var item: ItemModel
-
-        var id: Int {
-            index
-        }
-    }
-
-    struct SpawnMap: Identifiable {
-        var map: MapModel
-        var monsterSpawn: MonsterSpawn
-
-        var id: String {
-            map.name
-        }
-    }
-
     private let mode: DatabaseMode
     private let monster: Monster
 
     var localizedName: String?
     var animatedImage: AnimatedImage?
-    var mvpDropItems: [DropItem] = []
-    var dropItems: [DropItem] = []
-    var spawnMaps: [SpawnMap] = []
 
     var displayName: String {
         localizedName ?? monster.name
@@ -151,61 +129,6 @@ final class MonsterModel {
                 direction: .south,
                 headDirection: .straight
             )
-        }
-    }
-
-    @MainActor
-    func fetchDetail(mapDatabase: DatabaseModel<MapProvider>) async {
-        let itemDatabase = ItemDatabase.shared
-        let npcDatabase = NPCDatabase.shared
-
-        await mapDatabase.fetchRecords()
-
-        if let mvpDrops = monster.mvpDrops {
-            var mvpDropItems: [DropItem] = []
-            for (index, drop) in mvpDrops.enumerated() {
-                if let item = await itemDatabase.item(forAegisName: drop.item) {
-                    let item = ItemModel(mode: mode, item: item)
-                    let dropItem = DropItem(index: index, drop: drop, item: item)
-                    mvpDropItems.append(dropItem)
-                }
-            }
-            self.mvpDropItems = mvpDropItems
-        }
-
-        if let drops = monster.drops {
-            var dropItems: [DropItem] = []
-            for (index, drop) in drops.enumerated() {
-                if let item = await itemDatabase.item(forAegisName: drop.item) {
-                    let item = ItemModel(mode: mode, item: item)
-                    let dropItem = DropItem(index: index, drop: drop, item: item)
-                    dropItems.append(dropItem)
-                }
-            }
-            self.dropItems = dropItems
-        }
-
-        let monsterSpawns = await npcDatabase.monsterSpawns(for: monster)
-        var spawnMaps: [SpawnMap] = []
-        for monsterSpawn in monsterSpawns {
-            if let map = mapDatabase.map(forName: monsterSpawn.mapName) {
-                if !spawnMaps.contains(where: { $0.map.name == map.name }) {
-                    let spawnMap = SpawnMap(
-                        map: map,
-                        monsterSpawn: monsterSpawn
-                    )
-                    spawnMaps.append(spawnMap)
-                }
-            }
-        }
-        self.spawnMaps = spawnMaps
-
-        for dropItem in mvpDropItems {
-            await dropItem.item.fetchLocalizedName()
-        }
-
-        for dropItem in dropItems {
-            await dropItem.item.fetchLocalizedName()
         }
     }
 }

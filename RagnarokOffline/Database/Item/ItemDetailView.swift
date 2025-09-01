@@ -11,7 +11,9 @@ struct ItemDetailView: View {
     var item: ItemModel
 
     @Environment(\.horizontalSizeClass) private var sizeClass
-    @Environment(DatabaseModel<MonsterProvider>.self) private var monsterDatabase
+    @Environment(DatabaseModel.self) private var database
+
+    @State private var droppingMonsters: [DroppingMonster] = []
 
     var body: some View {
         DatabaseRecordDetailView {
@@ -55,10 +57,10 @@ struct ItemDetailView: View {
                 DatabaseRecordSectionView("Unequip Script", text: unEquipScript, monospaced: true)
             }
 
-            if !item.droppingMonsters.isEmpty {
+            if !droppingMonsters.isEmpty {
                 DatabaseRecordSectionView("Dropped By") {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
-                        ForEach(item.droppingMonsters) { droppingMonster in
+                        ForEach(droppingMonsters) { droppingMonster in
                             NavigationLink(value: droppingMonster.monster) {
                                 MonsterGridCell(monster: droppingMonster.monster, secondaryText: "(" + (Double(droppingMonster.drop.rate) / 100).formatted() + "%)")
                             }
@@ -71,7 +73,10 @@ struct ItemDetailView: View {
         }
         .navigationTitle(item.displayName)
         .task {
-            await item.fetchDetail(monsterDatabase: monsterDatabase)
+            await item.fetchDetail()
+        }
+        .task {
+            droppingMonsters = await database.droppingMonsters(forItemAegisName: item.aegisName)
         }
     }
 }

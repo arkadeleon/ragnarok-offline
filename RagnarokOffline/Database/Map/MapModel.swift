@@ -13,21 +13,11 @@ import ROResources
 @Observable
 @dynamicMemberLookup
 final class MapModel {
-    struct SpawningMonster: Identifiable {
-        var monster: MonsterModel
-        var spawn: MonsterSpawn
-
-        var id: Int {
-            monster.id
-        }
-    }
-
     private let mode: DatabaseMode
     private let map: Map
 
     var localizedName: String?
     var image: CGImage?
-    var spawningMonsters: [SpawningMonster] = []
 
     var displayName: String {
         localizedName ?? map.name
@@ -56,41 +46,6 @@ final class MapModel {
             let path = pathGenerator.generateMapImagePath(mapName: map.name)
             image = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
         }
-    }
-
-    @MainActor
-    func fetchDetail(monsterDatabase: DatabaseModel<MonsterProvider>) async {
-        await fetchImage()
-
-        let npcDatabase = NPCDatabase.shared
-
-        await monsterDatabase.fetchRecords()
-
-        let monsterSpawns = await npcDatabase.monsterSpawns(forMapName: map.name)
-        var spawningMonsters: [SpawningMonster] = []
-        var monsters: [MonsterModel] = []
-        for monsterSpawn in monsterSpawns {
-            if let monsterID = monsterSpawn.monsterID {
-                if let monster = monsterDatabase.monster(forID: monsterID) {
-                    if !monsters.contains(monster) {
-                        monsters.append(monster)
-
-                        let spawningMonster = SpawningMonster(monster: monster, spawn: monsterSpawn)
-                        spawningMonsters.append(spawningMonster)
-                    }
-                }
-            } else if let monsterAegisName = monsterSpawn.monsterAegisName {
-                if let monster = monsterDatabase.monster(forAegisName: monsterAegisName) {
-                    if !monsters.contains(monster) {
-                        monsters.append(monster)
-
-                        let spawningMonster = SpawningMonster(monster: monster, spawn: monsterSpawn)
-                        spawningMonsters.append(spawningMonster)
-                    }
-                }
-            }
-        }
-        self.spawningMonsters = spawningMonsters
     }
 }
 

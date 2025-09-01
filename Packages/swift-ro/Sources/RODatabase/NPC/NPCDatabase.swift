@@ -41,6 +41,15 @@ public actor NPCDatabase {
         return monsterSpawns
     }
 
+    public func monsterSpawns(for monster: (id: Int, aegisName: String)) -> [MonsterSpawn] {
+        restoreScripts()
+
+        let monsterSpawns = monsterSpawns.filter { monsterSpawn in
+            monsterSpawn.monsterID == monster.id || monsterSpawn.monsterAegisName == monster.aegisName
+        }
+        return monsterSpawns
+    }
+
     public func monsterSpawns(forMapName mapName: String) -> [MonsterSpawn] {
         restoreScripts()
 

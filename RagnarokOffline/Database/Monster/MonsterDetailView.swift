@@ -11,8 +11,11 @@ import SwiftUI
 struct MonsterDetailView: View {
     var monster: MonsterModel
 
-    @Environment(DatabaseModel<ItemProvider>.self) private var itemDatabase
-    @Environment(DatabaseModel<MapProvider>.self) private var mapDatabase
+    @Environment(DatabaseModel.self) private var database
+
+    @State private var mvpDropItems: [DropItem] = []
+    @State private var dropItems: [DropItem] = []
+    @State private var spawnMaps: [SpawnMap] = []
 
     var body: some View {
         DatabaseRecordDetailView {
@@ -38,10 +41,10 @@ struct MonsterDetailView: View {
                 DatabaseRecordSectionView("Modes", text: modes)
             }
 
-            if !monster.mvpDropItems.isEmpty {
+            if !mvpDropItems.isEmpty {
                 DatabaseRecordSectionView("MVP Drops") {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        ForEach(monster.mvpDropItems) { dropItem in
+                        ForEach(mvpDropItems) { dropItem in
                             NavigationLink(value: dropItem.item) {
                                 ItemCell(item: dropItem.item, secondaryText: "(" + (Double(dropItem.drop.rate) / 100).formatted() + "%)")
                             }
@@ -51,10 +54,10 @@ struct MonsterDetailView: View {
                 }
             }
 
-            if !monster.dropItems.isEmpty {
+            if !dropItems.isEmpty {
                 DatabaseRecordSectionView("Drops") {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        ForEach(monster.dropItems) { dropItem in
+                        ForEach(dropItems) { dropItem in
                             NavigationLink(value: dropItem.item) {
                                 ItemCell(item: dropItem.item, secondaryText: "(" + (Double(dropItem.drop.rate) / 100).formatted() + "%)")
                             }
@@ -64,10 +67,10 @@ struct MonsterDetailView: View {
                 }
             }
 
-            if !monster.spawnMaps.isEmpty {
+            if !spawnMaps.isEmpty {
                 DatabaseRecordSectionView("Maps") {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        ForEach(monster.spawnMaps) { spawnMap in
+                        ForEach(spawnMaps) { spawnMap in
                             NavigationLink(value: spawnMap.map) {
                                 MapCell(map: spawnMap.map, secondaryText: "(\(spawnMap.monsterSpawn.amount)x)")
                             }
@@ -80,7 +83,20 @@ struct MonsterDetailView: View {
         .navigationTitle(monster.displayName)
         .task {
             await monster.fetchAnimatedImage()
-            await monster.fetchDetail(mapDatabase: mapDatabase)
+        }
+        .task {
+            if let mvpDrops = monster.mvpDrops {
+                mvpDropItems = await database.dropItems(for: mvpDrops)
+            }
+        }
+        .task {
+            if let drops = monster.drops {
+                dropItems = await database.dropItems(for: drops)
+            }
+        }
+        .task {
+            let monster = (monster.id, monster.aegisName)
+            spawnMaps = await database.spawnMaps(for: monster)
         }
     }
 }

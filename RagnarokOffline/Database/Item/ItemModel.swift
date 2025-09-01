@@ -15,15 +15,6 @@ import ROResources
 @Observable
 @dynamicMemberLookup
 final class ItemModel {
-    struct DroppingMonster: Identifiable {
-        var monster: MonsterModel
-        var drop: Monster.Drop
-
-        var id: Int {
-            monster.id
-        }
-    }
-
     private let mode: DatabaseMode
     private let item: Item
 
@@ -31,7 +22,6 @@ final class ItemModel {
     var iconImage: CGImage?
     var previewImage: CGImage?
     var localizedDescription: AttributedString?
-    var droppingMonsters: [DroppingMonster] = []
 
     var displayName: String {
         var displayName = localizedName ?? item.name
@@ -155,7 +145,7 @@ final class ItemModel {
     }
 
     @MainActor
-    func fetchDetail(monsterDatabase: DatabaseModel<MonsterProvider>) async {
+    func fetchDetail() async {
         let scriptContext = await ResourceManager.shared.scriptContext(for: .current)
         let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
         if let previewImagePath = pathGenerator.generateItemPreviewImagePath(itemID: item.id) {
@@ -166,22 +156,6 @@ final class ItemModel {
         if let itemDescription = itemInfoTable.localizedIdentifiedItemDescription(forItemID: item.id) {
             localizedDescription = AttributedString(description: itemDescription)
         }
-
-        await monsterDatabase.fetchRecords()
-        let monsters = monsterDatabase.records
-
-        var droppingMonsters: [DroppingMonster] = []
-        for monster in monsters {
-            let drops = (monster.mvpDrops ?? []) + (monster.drops ?? [])
-            for drop in drops {
-                if drop.item == item.aegisName {
-                    let droppingMonster = DroppingMonster(monster: monster, drop: drop)
-                    droppingMonsters.append(droppingMonster)
-                    break
-                }
-            }
-        }
-        self.droppingMonsters = droppingMonsters
     }
 }
 

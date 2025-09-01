@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct PetDatabaseView: View {
-    @Environment(DatabaseModel<PetProvider>.self) private var database
-    @Environment(DatabaseModel<MonsterProvider>.self) private var monsterDatabase
+    @Environment(DatabaseModel.self) private var database
+
+    @State private var searchText = ""
+    @State private var filteredPets: [PetModel] = []
 
     var body: some View {
-        ImageGrid(database.filteredRecords) { pet in
+        ImageGrid(filteredPets) { pet in
             if let monster = pet.monster {
                 NavigationLink(value: pet) {
                     MonsterGridCell(monster: monster, secondaryText: nil)
@@ -21,13 +23,33 @@ struct PetDatabaseView: View {
             }
         }
         .navigationTitle("Pet Database")
-        .databaseRoot(database) {
-            ContentUnavailableView("No Results", systemImage: "pawprint.fill")
+        .background(.background)
+        .overlay {
+            if database.pets.isEmpty {
+                ProgressView()
+            } else if !searchText.isEmpty && filteredPets.isEmpty {
+                ContentUnavailableView("No Results", systemImage: "pawprint.fill")
+            }
+        }
+        .searchable(text: $searchText)
+        .task(id: searchText) {
+            filteredPets = await pets(matching: searchText, in: database.pets)
         }
         .task {
-            await database.fetchRecords()
-            await database.recordProvider.prefetchRecords(database.records, monsterDatabase: monsterDatabase)
+            await database.fetchPets()
+            filteredPets = await pets(matching: searchText, in: database.pets)
         }
+    }
+
+    private func pets(matching searchText: String, in pets: [PetModel]) async -> [PetModel] {
+        if searchText.isEmpty {
+            return pets
+        }
+
+        let filteredPets = pets.filter { pet in
+            pet.displayName.localizedStandardContains(searchText)
+        }
+        return filteredPets
     }
 }
 
@@ -35,14 +57,12 @@ struct PetDatabaseView: View {
     NavigationStack {
         PetDatabaseView()
     }
-    .environment(DatabaseModel(mode: .prerenewal, recordProvider: .pet))
-    .environment(DatabaseModel(mode: .prerenewal, recordProvider: .monster))
+    .environment(DatabaseModel(mode: .prerenewal))
 }
 
 #Preview("Renewal Pet Database") {
     NavigationStack {
         PetDatabaseView()
     }
-    .environment(DatabaseModel(mode: .renewal, recordProvider: .pet))
-    .environment(DatabaseModel(mode: .renewal, recordProvider: .monster))
+    .environment(DatabaseModel(mode: .renewal))
 }

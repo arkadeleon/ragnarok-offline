@@ -43,7 +43,6 @@ final class JobModel {
 
     var localizedName: String?
     var animatedImage: AnimatedImage?
-    var skills: [SkillModel] = []
 
     var displayName: String {
         localizedName ?? job.id.stringValue
@@ -134,27 +133,6 @@ final class JobModel {
                 direction: .south,
                 headDirection: .straight
             )
-        }
-    }
-
-    @MainActor
-    func fetchDetail() async {
-        let skillDatabase = SkillDatabase.shared
-        let skillTreeDatabase = SkillTreeDatabase.shared
-
-        if let skillTree = await skillTreeDatabase.skillTree(for: job.id)?.tree {
-            var skills: [SkillModel] = []
-            for s in skillTree {
-                if let skill = await skillDatabase.skill(forAegisName: s.name) {
-                    let skill = SkillModel(mode: mode, skill: skill)
-                    skills.append(skill)
-                }
-            }
-            self.skills = skills
-        }
-
-        for skill in skills {
-            await skill.fetchLocalizedName()
         }
     }
 }

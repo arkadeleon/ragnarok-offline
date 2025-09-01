@@ -128,5 +128,5 @@ struct CharacterConfigurationView: View {
 #Preview {
     CharacterConfigurationView()
         .environment(CharacterSimulator())
-        .environment(DatabaseModel(mode: .renewal, recordProvider: .item))
+        .environment(DatabaseModel(mode: .renewal))
 }

@@ -8,23 +8,46 @@
 import SwiftUI
 
 struct JobDatabaseView: View {
-    @Environment(DatabaseModel<JobProvider>.self) private var database
+    @Environment(DatabaseModel.self) private var database
+
+    @State private var searchText = ""
+    @State private var filteredJobs: [JobModel] = []
 
     var body: some View {
-        ImageGrid(database.filteredRecords) { job in
+        ImageGrid(filteredJobs) { job in
             NavigationLink(value: job) {
                 JobGridCell(job: job)
             }
             .buttonStyle(.plain)
         }
         .navigationTitle("Job Database")
-        .databaseRoot(database) {
-            ContentUnavailableView("No Results", systemImage: "person.fill")
+        .background(.background)
+        .overlay {
+            if database.jobs.isEmpty {
+                ProgressView()
+            } else if !searchText.isEmpty && filteredJobs.isEmpty {
+                ContentUnavailableView("No Results", systemImage: "person.fill")
+            }
+        }
+        .searchable(text: $searchText)
+        .task(id: searchText) {
+            filteredJobs = await jobs(matching: searchText, in: database.jobs)
         }
         .task {
-            await database.fetchRecords()
-            await database.recordProvider.prefetchRecords(database.records)
+            await database.fetchJobs()
+            filteredJobs = await jobs(matching: searchText, in: database.jobs)
         }
+    }
+
+    private func jobs(matching searchText: String, in jobs: [JobModel]) async -> [JobModel] {
+        if searchText.isEmpty {
+            return jobs
+        }
+
+        let filteredJobs = jobs.filter { job in
+            job.displayName.localizedStandardContains(searchText)
+        }
+        return filteredJobs
     }
 }
 
@@ -32,12 +55,12 @@ struct JobDatabaseView: View {
     NavigationStack {
         JobDatabaseView()
     }
-    .environment(DatabaseModel(mode: .prerenewal, recordProvider: .job))
+    .environment(DatabaseModel(mode: .prerenewal))
 }
 
 #Preview("Renewal Job Database") {
     NavigationStack {
         JobDatabaseView()
     }
-    .environment(DatabaseModel(mode: .renewal, recordProvider: .job))
+    .environment(DatabaseModel(mode: .renewal))
 }
