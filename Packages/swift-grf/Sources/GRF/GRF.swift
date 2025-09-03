@@ -8,11 +8,12 @@
 import BinaryIO
 import CoreFoundation
 import Foundation
+import SWCompression
 import SwiftGzip
 
 public enum GRFError: Error {
     case invalidURL(URL)
-    case invalidHeader(String, expected: String)
+    case invalidHeader([UInt8])
     case invalidVersion(UInt32)
     case invalidEntryPath(String)
     case dataCorrupted(Data)
@@ -45,26 +46,37 @@ extension GRF {
     struct Header: BinaryDecodable {
         static let size = 0x2e
 
-        var magic: String
+        var magic: [UInt8]
         var key: [UInt8]
-        var fileTableOffset: UInt32
-        var seed: UInt32
+        var fileTableOffset: UInt64
         var fileCount: UInt32
         var version: UInt32
 
         init(from decoder: BinaryDecoder) throws {
-            magic = try decoder.decode(String.self, lengthOfBytes: 16)
-            guard magic == "Master of Magic" else {
-                throw GRFError.invalidHeader(magic, expected: "Master of Magic")
+            let masterOfMagic = Array("Master of Magic\0".utf8)
+            let eventHorizon = Array("Event Horizon\0RL".utf8)
+
+            magic = try decoder.decode([UInt8].self, count: 16)
+            key = try decoder.decode([UInt8].self, count: 14)
+
+            switch magic {
+            case masterOfMagic:
+                let fileTableOffset = try decoder.decode(UInt32.self)
+                self.fileTableOffset = UInt64(fileTableOffset)
+
+                let seed = try decoder.decode(UInt32.self)
+                let fileCount = try decoder.decode(UInt32.self)
+                self.fileCount = fileCount - seed - 7
+            case eventHorizon:
+                let fileTableOffset = try decoder.decode(UInt64.self)
+                self.fileTableOffset = fileTableOffset + 4
+
+                fileCount = try decoder.decode(UInt32.self)
+            default:
+                throw GRFError.invalidHeader(magic)
             }
 
-            key = try decoder.decode([UInt8].self, count: 14)
-            fileTableOffset = try decoder.decode(UInt32.self)
-            seed = try decoder.decode(UInt32.self)
-            let fileCount = try decoder.decode(UInt32.self)
             version = try decoder.decode(UInt32.self)
-
-            self.fileCount = fileCount - seed - 7
         }
     }
 }
@@ -91,7 +103,9 @@ extension GRF {
                 for _ in 0..<header.fileCount {
                     let nameLength = data[position] - 6
 
-                    let position2 = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position, as: UInt32.self) }
+                    let position2 = data.withUnsafeBytes {
+                        $0.loadUnaligned(fromByteOffset: position, as: UInt32.self)
+                    }
                     position += 4
 
                     let encodedName = [UInt8](data[(position + 2)..<(position + 2 + Int(nameLength))])
@@ -102,13 +116,19 @@ extension GRF {
 
                     position += Int(position2)
 
-                    let compressedSizeBase = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position, as: UInt32.self) }
+                    let compressedSizeBase = data.withUnsafeBytes {
+                        $0.loadUnaligned(fromByteOffset: position, as: UInt32.self)
+                    }
                     position += 4
 
-                    let compressedSizeAligned = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position, as: UInt32.self) }
+                    let compressedSizeAligned = data.withUnsafeBytes {
+                        $0.loadUnaligned(fromByteOffset: position, as: UInt32.self)
+                    }
                     position += 4
 
-                    let decompressedSize = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position, as: UInt32.self) }
+                    let decompressedSize = data.withUnsafeBytes {
+                        $0.loadUnaligned(fromByteOffset: position, as: UInt32.self)
+                    }
                     position += 4
 
                     var type = data[position]
@@ -120,8 +140,14 @@ extension GRF {
                     }
                     position += 1
 
-                    let dataOffset = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position, as: UInt32.self) }
+                    let dataOffset = data.withUnsafeBytes {
+                        UInt64($0.loadUnaligned(fromByteOffset: position, as: UInt32.self))
+                    }
                     position += 4
+
+                    if type & GRF.EntryType.file.rawValue == 0 {
+                        continue
+                    }
 
                     let entry = GRF.Entry(
                         path: GRFPath(string: name),
@@ -131,29 +157,76 @@ extension GRF {
                         type: type,
                         offset: dataOffset
                     )
-
-                    if entry.type & GRF.EntryType.file.rawValue == 0 {
-                        continue
-                    }
-
                     entries.append(entry)
                 }
-            case 0x200:
+            case 0x200, 0x300:
                 tableSizeCompressed = try decoder.decode(UInt32.self)
                 tableSize = try decoder.decode(UInt32.self)
 
-                let decompressor = GzipDecompressor()
                 let compressedData = try decoder.decode([UInt8].self, count: Int(tableSizeCompressed))
-                let data = try decompressor.unzip(data: Data(compressedData))
+
+                let data: Data
+                if compressedData.first == 0 {
+                    data = try LZMA.decompress(data: Data(compressedData))
+                } else {
+                    let decompressor = GzipDecompressor()
+                    data = try decompressor.unzip(data: Data(compressedData))
+                }
 
                 var position = 0
                 for _ in 0..<header.fileCount {
-                    let entry = try GRF.Entry(data: data, position: &position)
+                    guard let index = data[position...].firstIndex(of: 0) else {
+                        throw GRFError.dataCorrupted(data)
+                    }
 
-                    if entry.type & GRF.EntryType.file.rawValue == 0 {
+                    let name = String(data: data[position..<index], encoding: .isoLatin1) ?? ""
+                    let path = GRFPath(string: name)
+
+                    position = index + 1
+
+                    let sizeCompressed = data.withUnsafeBytes {
+                        $0.loadUnaligned(fromByteOffset: position, as: UInt32.self)
+                    }
+                    position += 4
+
+                    let sizeCompressedAligned = data.withUnsafeBytes {
+                        $0.loadUnaligned(fromByteOffset: position, as: UInt32.self)
+                    }
+                    position += 4
+
+                    let size = data.withUnsafeBytes {
+                        $0.loadUnaligned(fromByteOffset: position, as: UInt32.self)
+                    }
+                    position += 4
+
+                    let type = data[position]
+                    position += 1
+
+                    let offset: UInt64
+                    if header.version == 0x200 {
+                        offset = data.withUnsafeBytes {
+                            UInt64($0.loadUnaligned(fromByteOffset: position, as: UInt32.self))
+                        }
+                        position += 4
+                    } else {
+                        offset = data.withUnsafeBytes {
+                            $0.loadUnaligned(fromByteOffset: position, as: UInt64.self)
+                        }
+                        position += 8
+                    }
+
+                    if type & GRF.EntryType.file.rawValue == 0 {
                         continue
                     }
 
+                    let entry = GRF.Entry(
+                        path: path,
+                        sizeCompressed: sizeCompressed,
+                        sizeCompressedAligned: sizeCompressedAligned,
+                        size: size,
+                        type: type,
+                        offset: offset
+                    )
                     entries.append(entry)
                 }
             default:
@@ -182,35 +255,7 @@ extension GRF {
         var sizeCompressedAligned: UInt32
         var size: UInt32
         var type: UInt8
-        var offset: UInt32
-
-        init(path: GRFPath, sizeCompressed: UInt32, sizeCompressedAligned: UInt32, size: UInt32, type: UInt8, offset: UInt32) {
-            self.path = path
-            self.sizeCompressed = sizeCompressed
-            self.sizeCompressedAligned = sizeCompressedAligned
-            self.size = size
-            self.type = type
-            self.offset = offset
-        }
-
-        init(data: Data, position: inout Int) throws {
-            guard let index = data[position...].firstIndex(of: 0) else {
-                throw GRFError.dataCorrupted(data)
-            }
-
-            let name = String(data: data[position..<index], encoding: .isoLatin1) ?? ""
-            path = GRFPath(string: name)
-
-            position = index + 1
-
-            sizeCompressed = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position, as: UInt32.self) }
-            sizeCompressedAligned = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position + 4, as: UInt32.self) }
-            size = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position + 8, as: UInt32.self) }
-            type = data[position + 12]
-            offset = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: position + 13, as: UInt32.self) }
-
-            position += 17
-        }
+        var offset: UInt64
 
         func data(from stream: any BinaryIO.Stream) throws -> Data {
             try stream.seek(GRF.Header.size + Int(offset), origin: .begin)
@@ -226,9 +271,14 @@ extension GRF {
                 des.decodeHeader(buf: &bytes, len: Int(sizeCompressedAligned))
             }
 
-            let decompressor = GzipDecompressor()
-            let data = try decompressor.unzip(data: Data(bytes))
-            return data
+            if bytes.first == 0 {
+                let data = try LZMA.decompress(data: Data(bytes))
+                return data
+            } else {
+                let decompressor = GzipDecompressor()
+                let data = try decompressor.unzip(data: Data(bytes))
+                return data
+            }
         }
     }
 }
