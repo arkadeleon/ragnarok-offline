@@ -28,53 +28,53 @@ final public class MessageStringTable: Resource {
     public func localizedJobName(for jobID: JobID) -> String? {
         switch jobID {
         case .novice:
-            messageStringsByID[1681]
+            messageStringsByID[1680]
         case .swordman:
-            messageStringsByID[1630]
+            messageStringsByID[1629]
         case .mage:
-            messageStringsByID[1631]
+            messageStringsByID[1630]
         case .archer:
-            messageStringsByID[1632]
+            messageStringsByID[1631]
         case .acolyte:
-            messageStringsByID[1633]
+            messageStringsByID[1632]
         case .merchant:
-            messageStringsByID[1634]
+            messageStringsByID[1633]
         case .thief:
-            messageStringsByID[1635]
+            messageStringsByID[1634]
         case .knight, .knight2:
-            messageStringsByID[1636]
+            messageStringsByID[1635]
         case .priest:
-            messageStringsByID[1637]
+            messageStringsByID[1636]
         case .wizard:
-            messageStringsByID[1638]
+            messageStringsByID[1637]
         case .blacksmith:
-            messageStringsByID[1639]
+            messageStringsByID[1638]
         case .hunter:
-            messageStringsByID[1640]
+            messageStringsByID[1639]
         case .assassin:
-            messageStringsByID[1641]
+            messageStringsByID[1640]
         case .crusader, .crusader2:
-            messageStringsByID[1642]
+            messageStringsByID[1641]
         case .monk:
-            messageStringsByID[1643]
+            messageStringsByID[1642]
         case .sage:
-            messageStringsByID[1644]
+            messageStringsByID[1643]
         case .rogue:
-            messageStringsByID[1645]
+            messageStringsByID[1644]
         case .alchemist:
-            messageStringsByID[1646]
+            messageStringsByID[1645]
         case .bard:
-            messageStringsByID[1647]
+            messageStringsByID[1646]
         case .dancer:
-            messageStringsByID[1648]
+            messageStringsByID[1647]
         case .wedding:
             nil
         case .super_novice:
-            messageStringsByID[1683]
+            messageStringsByID[1682]
         case .gunslinger:
-            messageStringsByID[1684]
+            messageStringsByID[1683]
         case .ninja:
-            messageStringsByID[1685]
+            messageStringsByID[1684]
         case .xmas:
             nil
         case .summer:
@@ -86,45 +86,45 @@ final public class MessageStringTable: Resource {
         case .summer2:
             nil
         case .novice_high:
-            messageStringsByID[1682]
+            messageStringsByID[1681]
         case .swordman_high:
-            messageStringsByID[1662]
+            messageStringsByID[1661]
         case .mage_high:
-            messageStringsByID[1663]
+            messageStringsByID[1662]
         case .archer_high:
-            messageStringsByID[1664]
+            messageStringsByID[1663]
         case .acolyte_high:
-            messageStringsByID[1665]
+            messageStringsByID[1664]
         case .merchant_high:
-            messageStringsByID[1666]
+            messageStringsByID[1665]
         case .thief_high:
-            messageStringsByID[1667]
+            messageStringsByID[1666]
         case .lord_knight, .lord_knight2:
-            messageStringsByID[1668]
+            messageStringsByID[1667]
         case .high_priest:
-            messageStringsByID[1669]
+            messageStringsByID[1668]
         case .high_wizard:
-            messageStringsByID[1670]
+            messageStringsByID[1669]
         case .whitesmith:
-            messageStringsByID[1671]
+            messageStringsByID[1670]
         case .sniper:
-            messageStringsByID[1672]
+            messageStringsByID[1671]
         case .assassin_cross:
-            messageStringsByID[1673]
+            messageStringsByID[1672]
         case .paladin, .paladin2:
-            messageStringsByID[1674]
+            messageStringsByID[1673]
         case .champion:
-            messageStringsByID[1675]
+            messageStringsByID[1674]
         case .professor:
-            messageStringsByID[1676]
+            messageStringsByID[1675]
         case .stalker:
-            messageStringsByID[1677]
+            messageStringsByID[1676]
         case .creator:
-            messageStringsByID[1678]
+            messageStringsByID[1677]
         case .clown:
-            messageStringsByID[1679]
+            messageStringsByID[1678]
         case .gypsy:
-            messageStringsByID[1680]
+            messageStringsByID[1679]
         case .baby:
             nil
         case .baby_swordman:
@@ -172,11 +172,11 @@ final public class MessageStringTable: Resource {
         case .super_baby:
             nil
         case .taekwon:
-            messageStringsByID[1686]
+            messageStringsByID[1685]
         case .star_gladiator, .star_gladiator2:
-            messageStringsByID[1687]
+            messageStringsByID[1686]
         case .soul_linker:
-            messageStringsByID[1688]
+            messageStringsByID[1687]
         case .gangsi:
             nil
         case .death_knight:
@@ -184,31 +184,31 @@ final public class MessageStringTable: Resource {
         case .dark_collector:
             nil
         case .rune_knight, .rune_knight_t, .rune_knight2, .rune_knight_t2:
-            messageStringsByID[1649]
+            messageStringsByID[1648]
         case .warlock, .warlock_t:
-            messageStringsByID[1650]
+            messageStringsByID[1649]
         case .ranger, .ranger_t, .ranger2, .ranger_t2:
-            messageStringsByID[1651]
+            messageStringsByID[1650]
         case .arch_bishop, .arch_bishop_t:
-            messageStringsByID[1652]
+            messageStringsByID[1651]
         case .mechanic, .mechanic_t, .mechanic2, .mechanic_t2:
-            messageStringsByID[1653]
+            messageStringsByID[1652]
         case .guillotine_cross, .guillotine_cross_t:
-            messageStringsByID[1654]
+            messageStringsByID[1653]
         case .royal_guard, .royal_guard_t, .royal_guard2, .royal_guard_t2:
-            messageStringsByID[1655]
+            messageStringsByID[1654]
         case .sorcerer, .sorcerer_t:
-            messageStringsByID[1656]
+            messageStringsByID[1655]
         case .minstrel, .minstrel_t:
-            messageStringsByID[1657]
+            messageStringsByID[1656]
         case .wanderer, .wanderer_t:
-            messageStringsByID[1658]
+            messageStringsByID[1657]
         case .sura, .sura_t:
-            messageStringsByID[1659]
+            messageStringsByID[1658]
         case .genetic, .genetic_t:
-            messageStringsByID[1660]
+            messageStringsByID[1659]
         case .shadow_chaser, .shadow_chaser_t:
-            messageStringsByID[1661]
+            messageStringsByID[1660]
         case .baby_rune_knight:
             nil
         case .baby_warlock:
