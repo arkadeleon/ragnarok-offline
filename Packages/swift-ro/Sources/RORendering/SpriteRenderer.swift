@@ -17,16 +17,30 @@ final public class SpriteRenderer: Sendable {
         self.scale = scale
     }
 
+    public struct Animation: Sendable {
+        public let frames: [CGImage?]
+        public let frameWidth: CGFloat
+        public let frameHeight: CGFloat
+        public let frameInterval: CGFloat
+        public let scale: CGFloat
+
+        /// The pivot point represents the offset to the center point.
+        public let pivot: CGPoint
+    }
+
     // MARK: - Render Sprite
 
-    public func render(sprite: SpriteResource, actionIndex: Int) async -> AnimatedImage {
+    public func render(sprite: SpriteResource, actionIndex: Int) async -> SpriteRenderer.Animation {
         let actionNode = SpriteRenderNode(
             actionNodeWithSprite: sprite,
             actionIndex: actionIndex,
             scale: scale
         )
 
-        let (frames, frameWidth, frameHeight) = render(actionNode: actionNode)
+        let (frames, bounds) = render(actionNode: actionNode)
+
+        let frameWidth = bounds.size.width / scale
+        let frameHeight = bounds.size.height / scale
 
         let frameInterval: CGFloat
         if let action = sprite.act.action(at: actionIndex) {
@@ -35,17 +49,22 @@ final public class SpriteRenderer: Sendable {
             frameInterval = 1 / 12
         }
 
-        let animatedImage = AnimatedImage(
+        let pivotX = (0 - bounds.midX) / scale
+        let pivotY = (0 - bounds.midY) / scale
+        let pivot = CGPoint(x: pivotX, y: pivotY)
+
+        let animatedImage = SpriteRenderer.Animation(
             frames: frames,
             frameWidth: frameWidth,
             frameHeight: frameHeight,
             frameInterval: frameInterval,
-            frameScale: scale
+            scale: scale,
+            pivot: pivot
         )
         return animatedImage
     }
 
-    private func render(actionNode: SpriteRenderNode) -> (frames: [CGImage?], frameWidth: CGFloat, frameHeight: CGFloat) {
+    private func render(actionNode: SpriteRenderNode) -> (frames: [CGImage?], bounds: CGRect) {
         let bounds = actionNode.bounds
         let frameCount = actionNode.children.count
 
@@ -60,10 +79,7 @@ final public class SpriteRenderer: Sendable {
             frames.append(image)
         }
 
-        let frameWidth = bounds.size.width / scale
-        let frameHeight = bounds.size.height / scale
-
-        return (frames, frameWidth, frameHeight)
+        return (frames, bounds)
     }
 
     // MARK: - Render Composed Sprite
@@ -73,8 +89,11 @@ final public class SpriteRenderer: Sendable {
         actionType: ComposedSprite.ActionType,
         direction: ComposedSprite.Direction,
         headDirection: ComposedSprite.HeadDirection
-    ) async -> AnimatedImage {
-        let actionIndex = actionType.calculateActionIndex(forJobID: composedSprite.configuration.job.rawValue, direction: direction)
+    ) async -> SpriteRenderer.Animation {
+        let actionIndex = actionType.calculateActionIndex(
+            forJobID: composedSprite.configuration.job.rawValue,
+            direction: direction
+        )
 
         var actionNodes: [(SpriteRenderNode, ComposedSprite.Part)] = []
 
@@ -92,12 +111,15 @@ final public class SpriteRenderer: Sendable {
             actionNodes.append((actionNode, part))
         }
 
-        let (frames, frameWidth, frameHeight) = await render(
+        let (frames, bounds) = await render(
             composedSprite: composedSprite,
             actionIndex: actionIndex,
             actionNodes: actionNodes,
             direction: direction
         )
+
+        let frameWidth = bounds.size.width / scale
+        let frameHeight = bounds.size.height / scale
 
         let frameInterval: CGFloat
         if let mainPart = composedSprite.mainPart,
@@ -107,12 +129,17 @@ final public class SpriteRenderer: Sendable {
             frameInterval = 1 / 12
         }
 
-        let animatedImage = AnimatedImage(
+        let pivotX = (0 - bounds.midX) / scale
+        let pivotY = (0 - bounds.midY) / scale
+        let pivot = CGPoint(x: pivotX, y: pivotY)
+
+        let animatedImage = SpriteRenderer.Animation(
             frames: frames,
             frameWidth: frameWidth,
             frameHeight: frameHeight,
             frameInterval: frameInterval,
-            frameScale: scale
+            scale: scale,
+            pivot: pivot
         )
         return animatedImage
     }
@@ -122,7 +149,7 @@ final public class SpriteRenderer: Sendable {
         actionIndex: Int,
         actionNodes: [(SpriteRenderNode, ComposedSprite.Part)],
         direction: ComposedSprite.Direction
-    ) async -> (frames: [CGImage?], frameWidth: CGFloat, frameHeight: CGFloat) {
+    ) async -> (frames: [CGImage?], bounds: CGRect) {
         var bounds: CGRect = .null
         var frameCount = 0
 
@@ -161,10 +188,7 @@ final public class SpriteRenderer: Sendable {
             frames.append(image)
         }
 
-        let frameWidth = bounds.size.width / scale
-        let frameHeight = bounds.size.height / scale
-
-        return (frames, frameWidth, frameHeight)
+        return (frames, bounds)
     }
 
     private func zIndex(

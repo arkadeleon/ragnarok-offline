@@ -16,7 +16,7 @@ struct AnimatedImageView: View {
     var body: some View {
         TimelineView(.periodic(from: startDate, by: animatedImage.frameInterval)) { context in
             if let frame = frame(at: context.date) {
-                Image(frame, scale: animatedImage.frameScale, label: Text(verbatim: ""))
+                Image(frame, scale: animatedImage.scale, label: Text(verbatim: ""))
             }
         }
     }

@@ -25,22 +25,22 @@ final class SpriteAnimation: Sendable {
 
     convenience init(sprite: SpriteResource, actionIndex: Int) async throws {
         let spriteRenderer = SpriteRenderer()
-        let animatedImage = await spriteRenderer.render(sprite: sprite, actionIndex: actionIndex)
+        let animation = await spriteRenderer.render(sprite: sprite, actionIndex: actionIndex)
 
-        try await self.init(animatedImage: animatedImage)
+        try await self.init(animation: animation)
     }
 
-    init(animatedImage: AnimatedImage) async throws {
-        let frameCount = animatedImage.frames.count
+    init(animation: SpriteRenderer.Animation) async throws {
+        let frameCount = animation.frames.count
 
-        let frameWidth = animatedImage.frameWidth
-        let frameHeight = animatedImage.frameHeight
+        let frameWidth = animation.frameWidth
+        let frameHeight = animation.frameHeight
 
         let size = CGSize(width: frameWidth * CGFloat(frameCount), height: frameHeight)
         let renderer = CGImageRenderer(size: size, flipped: false)
         let image = renderer.image { cgContext in
             for frameIndex in 0..<frameCount {
-                if let frame = animatedImage.frames[frameIndex] {
+                if let frame = animation.frames[frameIndex] {
                     let rect = CGRect(x: frameWidth * CGFloat(frameIndex), y: 0, width: frameWidth, height: frameHeight)
                     cgContext.draw(frame, in: rect)
                 }
@@ -57,7 +57,7 @@ final class SpriteAnimation: Sendable {
         self.frameCount = frameCount
         self.frameWidth = Float(frameWidth)
         self.frameHeight = Float(frameHeight)
-        self.frameInterval = animatedImage.frameInterval
+        self.frameInterval = animation.frameInterval
     }
 }
 
@@ -71,13 +71,13 @@ extension SpriteAnimation {
 
         for actionType in availableActionTypes {
             for direction in ComposedSprite.Direction.allCases {
-                let animatedImage = await spriteRenderer.render(
+                let anim = await spriteRenderer.render(
                     composedSprite: composedSprite,
                     actionType: actionType,
                     direction: direction,
                     headDirection: .straight
                 )
-                let animation = try await SpriteAnimation(animatedImage: animatedImage)
+                let animation = try await SpriteAnimation(animation: anim)
                 animations.append(animation)
             }
         }

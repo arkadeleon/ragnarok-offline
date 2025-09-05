@@ -21,7 +21,7 @@ extension ACT.Action {
             frameWidth: bounds.size.width,
             frameHeight: bounds.size.height,
             frameInterval: frameInterval,
-            frameScale: 1
+            scale: 1
         )
         return animatedImage
     }

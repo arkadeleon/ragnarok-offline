@@ -27,6 +27,6 @@ final class SpriteRendererTests: XCTestCase {
         XCTAssertEqual(animatedImage.frameWidth, 40)
         XCTAssertEqual(animatedImage.frameHeight, 95)
         XCTAssertEqual(animatedImage.frameInterval, 75 / 1000)
-        XCTAssertEqual(animatedImage.frameScale, 2)
+        XCTAssertEqual(animatedImage.scale, 2)
     }
 }

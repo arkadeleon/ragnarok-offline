@@ -76,7 +76,7 @@ final class CharacterSimulator {
     }
 
     var composedSprite: ComposedSprite?
-    var animatedImage: AnimatedImage?
+    var animation: SpriteRenderer.Animation?
 
     func renderSprite() async {
         let configuration = ComposedSprite.Configuration(configuration: self.configuration)
@@ -91,7 +91,7 @@ final class CharacterSimulator {
         }
 
         let spriteRenderer = SpriteRenderer()
-        animatedImage = await spriteRenderer.render(
+        animation = await spriteRenderer.render(
             composedSprite: composedSprite,
             actionType: self.configuration.actionType,
             direction: self.configuration.direction,

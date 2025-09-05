@@ -127,12 +127,13 @@ final class JobModel {
             let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .shared)
 
             let spriteRenderer = SpriteRenderer()
-            animatedImage = await spriteRenderer.render(
+            let animation = await spriteRenderer.render(
                 composedSprite: composedSprite,
                 actionType: .idle,
                 direction: .south,
                 headDirection: .straight
             )
+            animatedImage = AnimatedImage(animation: animation)
         }
     }
 }

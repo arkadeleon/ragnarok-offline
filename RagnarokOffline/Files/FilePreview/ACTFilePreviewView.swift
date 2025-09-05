@@ -71,7 +71,8 @@ struct ACTFilePreviewView: View {
 
         var animatedImages: [AnimatedImage] = []
         for actionIndex in 0..<act.actions.count {
-            let animatedImage = await spriteRenderer.render(sprite: sprite, actionIndex: actionIndex)
+            let animation = await spriteRenderer.render(sprite: sprite, actionIndex: actionIndex)
+            let animatedImage = AnimatedImage(animation: animation)
             animatedImages.append(animatedImage)
         }
 

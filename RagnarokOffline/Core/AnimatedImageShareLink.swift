@@ -13,8 +13,8 @@ struct AnimatedImageShareLink: View {
     var filename: String
 
     private var previewImage: Image {
-        if let firstFrame = animatedImage.frames.first, let firstFrame {
-            Image(firstFrame, scale: animatedImage.frameScale, label: Text(filename))
+        if let firstFrame = animatedImage.firstFrame {
+            Image(firstFrame, scale: animatedImage.scale, label: Text(filename))
         } else {
             Image(systemName: "livephoto")
         }

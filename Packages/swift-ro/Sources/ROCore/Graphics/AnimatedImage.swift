@@ -14,18 +14,18 @@ public struct AnimatedImage: Hashable, Sendable {
     public var frameWidth: CGFloat
     public var frameHeight: CGFloat
     public var frameInterval: CGFloat
-    public var frameScale: CGFloat
+    public var scale: CGFloat
 
     public var firstFrame: CGImage? {
         frames.first ?? nil
     }
 
-    public init(frames: [CGImage?], frameWidth: CGFloat, frameHeight: CGFloat, frameInterval: CGFloat, frameScale: CGFloat) {
+    public init(frames: [CGImage?], frameWidth: CGFloat, frameHeight: CGFloat, frameInterval: CGFloat, scale: CGFloat) {
         self.frames = frames
         self.frameWidth = frameWidth
         self.frameHeight = frameHeight
         self.frameInterval = frameInterval
-        self.frameScale = frameScale
+        self.scale = scale
     }
 
     public func pngData() -> Data? {

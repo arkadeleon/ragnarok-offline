@@ -13,7 +13,8 @@ struct JobGridCell: View {
     var body: some View {
         ImageGridCell(title: job.displayName) {
             if let animatedImage = job.animatedImage, let firstFrame = animatedImage.firstFrame {
-                Image(firstFrame, scale: animatedImage.frameScale * 1.5, label: Text(job.displayName))
+                Image(firstFrame, scale: animatedImage.scale, label: Text(job.displayName))
+                    .scaleEffect(2 / 3)
             } else {
                 Image(systemName: "person")
                     .font(.system(size: 50, weight: .thin))

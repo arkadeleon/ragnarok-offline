@@ -18,7 +18,7 @@ struct JobDetailView: View {
         DatabaseRecordDetailView {
             ZStack {
                 if let animatedImage = job.animatedImage, let firstFrame = animatedImage.firstFrame {
-                    Image(firstFrame, scale: animatedImage.frameScale, label: Text(job.displayName))
+                    Image(firstFrame, scale: animatedImage.scale, label: Text(job.displayName))
                 } else {
                     Image(systemName: "person")
                         .font(.system(size: 100, weight: .thin))

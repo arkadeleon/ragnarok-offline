@@ -13,8 +13,10 @@ struct CharacterRenderingView: View {
 
     var body: some View {
         ZStack {
-            if let animatedImage = characterSimulator.animatedImage {
-                AnimatedImageView(animatedImage: animatedImage)
+            if let animation = characterSimulator.animation {
+                AnimatedImageView(animatedImage: AnimatedImage(animation: animation))
+                    .offset(x: -animation.pivot.x, y: -animation.pivot.y)
+                    .offset(y: 50)
                     .scaleEffect(2)
             }
 
