@@ -53,7 +53,7 @@ final public class SpriteRenderer: Sendable {
         let pivotY = (0 - bounds.midY) / scale
         let pivot = CGPoint(x: pivotX, y: pivotY)
 
-        let animatedImage = SpriteRenderer.Animation(
+        let animation = SpriteRenderer.Animation(
             frames: frames,
             frameWidth: frameWidth,
             frameHeight: frameHeight,
@@ -61,7 +61,7 @@ final public class SpriteRenderer: Sendable {
             scale: scale,
             pivot: pivot
         )
-        return animatedImage
+        return animation
     }
 
     private func render(actionNode: SpriteRenderNode) -> (frames: [CGImage?], bounds: CGRect) {
@@ -133,7 +133,7 @@ final public class SpriteRenderer: Sendable {
         let pivotY = (0 - bounds.midY) / scale
         let pivot = CGPoint(x: pivotX, y: pivotY)
 
-        let animatedImage = SpriteRenderer.Animation(
+        let animation = SpriteRenderer.Animation(
             frames: frames,
             frameWidth: frameWidth,
             frameHeight: frameHeight,
@@ -141,7 +141,7 @@ final public class SpriteRenderer: Sendable {
             scale: scale,
             pivot: pivot
         )
-        return animatedImage
+        return animation
     }
 
     private func render(

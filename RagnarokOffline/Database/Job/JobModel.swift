@@ -9,7 +9,6 @@ import CoreGraphics
 import Observation
 import rAthenaCommon
 import ROConstants
-import ROCore
 import RODatabase
 import RORendering
 import ROResources

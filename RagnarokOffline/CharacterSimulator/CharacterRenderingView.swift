@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2025/5/13.
 //
 
-import ROCore
 import SwiftUI
 
 struct CharacterRenderingView: View {

@@ -17,16 +17,16 @@ final class SpriteRendererTests: XCTestCase {
         XCTAssertEqual(composedSprite.parts.count, 3)
 
         let spriteRenderer = SpriteRenderer()
-        let animatedImage = await spriteRenderer.render(
+        let animation = await spriteRenderer.render(
             composedSprite: composedSprite,
             actionType: .walk,
             direction: .south,
             headDirection: .straight
         )
-        XCTAssertEqual(animatedImage.frames.count, 8)
-        XCTAssertEqual(animatedImage.frameWidth, 40)
-        XCTAssertEqual(animatedImage.frameHeight, 95)
-        XCTAssertEqual(animatedImage.frameInterval, 75 / 1000)
-        XCTAssertEqual(animatedImage.scale, 2)
+        XCTAssertEqual(animation.frames.count, 8)
+        XCTAssertEqual(animation.frameWidth, 40)
+        XCTAssertEqual(animation.frameHeight, 95)
+        XCTAssertEqual(animation.frameInterval, 75 / 1000)
+        XCTAssertEqual(animation.scale, 2)
     }
 }

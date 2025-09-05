@@ -1,5 +1,5 @@
 //
-//  ACT+AnimatedImage.swift
+//  ACT+Animation.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2023/11/14.
@@ -8,22 +8,28 @@
 import QuartzCore
 import ROCore
 
+public struct ACTAnimation: Sendable {
+    public let frames: [CGImage?]
+    public let frameWidth: CGFloat
+    public let frameHeight: CGFloat
+    public let frameInterval: CGFloat
+}
+
 extension ACT.Action {
-    public func animatedImage(using imagesBySpriteType: [SPR.SpriteType : [CGImage?]]) -> AnimatedImage {
+    public func animation(using imagesBySpriteType: [SPR.SpriteType : [CGImage?]]) -> ACTAnimation {
         let bounds = calculateBounds(using: imagesBySpriteType)
 
         let frames = self.frames.compactMap { frame -> CGImage? in
             frame.image(in: bounds, using: imagesBySpriteType)
         }
         let frameInterval = CGFloat(animationSpeed) * 25 / 1000
-        let animatedImage = AnimatedImage(
+        let animation = ACTAnimation(
             frames: frames,
             frameWidth: bounds.size.width,
             frameHeight: bounds.size.height,
-            frameInterval: frameInterval,
-            scale: 1
+            frameInterval: frameInterval
         )
-        return animatedImage
+        return animation
     }
 
     func calculateBounds(using imagesBySpriteType: [SPR.SpriteType : [CGImage?]]) -> CGRect {

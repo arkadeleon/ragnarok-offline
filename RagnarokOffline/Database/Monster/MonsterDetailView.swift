@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2024/1/3.
 //
 
-import ROCore
 import SwiftUI
 
 struct MonsterDetailView: View {
