@@ -249,7 +249,7 @@ extension GRF {
         static let encryptHeader = GRF.EntryType(rawValue: 0x04) // encryption mode 1 (header DES only)
     }
 
-    struct Entry: Codable {
+    struct Entry {
         var path: GRFPath
         var sizeCompressed: UInt32
         var sizeCompressedAligned: UInt32

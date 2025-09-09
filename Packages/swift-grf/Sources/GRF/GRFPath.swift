@@ -5,7 +5,9 @@
 //  Created by Leon Li on 2025/2/28.
 //
 
-final public class GRFPath: Hashable, @unchecked Sendable {
+import Synchronization
+
+final public class GRFPath: Hashable, Sendable {
     public static func == (lhs: GRFPath, rhs: GRFPath) -> Bool {
         lhs.string == rhs.string
     }
@@ -13,8 +15,14 @@ final public class GRFPath: Hashable, @unchecked Sendable {
     /// A string representation of the path.
     public let string: String
 
+    private let _parent = AtomicLazyReference<GRFPath>()
+
     /// The parent path.
-    public lazy var parent: GRFPath = {
+    public var parent: GRFPath {
+        if let parent = _parent.load() {
+            return parent
+        }
+
         let parent: GRFPath
         let startIndex = string.startIndex
         if let endIndex = string.lastIndex(of: "\\") {
@@ -23,8 +31,9 @@ final public class GRFPath: Hashable, @unchecked Sendable {
         } else {
             parent = GRFPath(string: "")
         }
-        return parent
-    }()
+
+        return _parent.storeIfNil(parent)
+    }
 
     /// The components.
     public var components: [String] {
