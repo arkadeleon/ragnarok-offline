@@ -19,7 +19,6 @@ let package = Package(
     dependencies: [
         .package(path: "../swift-binary-io"),
         .package(url: "https://github.com/arkadeleon/swift-gzip.git", branch: "main"),
-        .package(url: "https://github.com/tsolomko/SWCompression.git", from: "4.8.0"),
     ],
     targets: [
         .target(
@@ -27,7 +26,6 @@ let package = Package(
             dependencies: [
                 .product(name: "BinaryIO", package: "swift-binary-io"),
                 .product(name: "SwiftGzip", package: "swift-gzip"),
-                "SWCompression",
             ]
         ),
         .testTarget(

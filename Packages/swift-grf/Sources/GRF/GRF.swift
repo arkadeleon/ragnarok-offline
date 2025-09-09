@@ -8,7 +8,6 @@
 import BinaryIO
 import CoreFoundation
 import Foundation
-import SWCompression
 import SwiftGzip
 
 public enum GRFError: Error {
@@ -17,6 +16,7 @@ public enum GRFError: Error {
     case invalidVersion(UInt32)
     case invalidEntryPath(String)
     case dataCorrupted(Data)
+    case lzmaCompressionIsNotSupported
 }
 
 struct GRF {
@@ -164,14 +164,12 @@ extension GRF {
                 tableSize = try decoder.decode(UInt32.self)
 
                 let compressedData = try decoder.decode([UInt8].self, count: Int(tableSizeCompressed))
-
-                let data: Data
                 if compressedData.first == 0 {
-                    data = try LZMA.decompress(data: Data(compressedData))
-                } else {
-                    let decompressor = GzipDecompressor()
-                    data = try decompressor.unzip(data: Data(compressedData))
+                    throw GRFError.lzmaCompressionIsNotSupported
                 }
+
+                let decompressor = GzipDecompressor()
+                let data = try decompressor.unzip(data: Data(compressedData))
 
                 var position = 0
                 for _ in 0..<header.fileCount {
@@ -272,13 +270,12 @@ extension GRF {
             }
 
             if bytes.first == 0 {
-                let data = try LZMA.decompress(data: Data(bytes))
-                return data
-            } else {
-                let decompressor = GzipDecompressor()
-                let data = try decompressor.unzip(data: Data(bytes))
-                return data
+                throw GRFError.lzmaCompressionIsNotSupported
             }
+
+            let decompressor = GzipDecompressor()
+            let data = try decompressor.unzip(data: Data(bytes))
+            return data
         }
     }
 }

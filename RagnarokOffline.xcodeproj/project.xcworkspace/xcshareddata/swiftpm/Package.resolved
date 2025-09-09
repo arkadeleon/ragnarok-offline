@@ -1,15 +1,6 @@
 {
-  "originHash" : "21c0c59164ac5c9b28a059f18130da276710bfc78875c26637e9a5b7a654a30a",
+  "originHash" : "6435bee130e2b94e7ceaa05818a757985138f0c52b996f6e1829c3fbc8d59a46",
   "pins" : [
-    {
-      "identity" : "bitbytedata",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tsolomko/BitByteData",
-      "state" : {
-        "revision" : "cdcdc5177ad536cfb11b95c620f926a81014b7fe",
-        "version" : "2.0.4"
-      }
-    },
     {
       "identity" : "czlib",
       "kind" : "remoteSourceControl",
@@ -17,15 +8,6 @@
       "state" : {
         "branch" : "master",
         "revision" : "e0fcc798170767e687088ce3441d4c04ea573aab"
-      }
-    },
-    {
-      "identity" : "swcompression",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tsolomko/SWCompression.git",
-      "state" : {
-        "revision" : "390e0b0af8dd19a600005a242a89e570ff482e09",
-        "version" : "4.8.6"
       }
     },
     {
