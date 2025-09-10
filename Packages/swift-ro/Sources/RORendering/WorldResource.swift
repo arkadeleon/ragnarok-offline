@@ -31,9 +31,9 @@ extension ResourceManager {
         let rswPath = path.appendingPathExtension("rsw")
         async let rswData = contentsOfResource(at: rswPath)
 
-        let gat = try GAT(data: await gatData)
-        let gnd = try GND(data: await gndData)
-        let rsw = try RSW(data: await rswData)
+        let gat = try await GAT(data: gatData)
+        let gnd = try await GND(data: gndData)
+        let rsw = try await RSW(data: rswData)
 
         let world = WorldResource(gat: gat, gnd: gnd, rsw: rsw)
         return world

@@ -34,13 +34,14 @@ final public class ComposedSprite: Sendable {
 
             let scriptContext = await resourceManager.scriptContext(for: .current)
             let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+
             if let imfPath = pathGenerator.generateIMFPath(job: configuration.job, gender: configuration.gender) {
                 do {
                     let imfPath = imfPath.appendingPathExtension("imf")
                     let imfData = try await resourceManager.contentsOfResource(at: imfPath)
                     imf = try IMF(data: imfData)
                 } catch {
-                    logger.warning("IMF error: \(error.localizedDescription)")
+                    logger.warning("IMF error: \(error)")
                 }
             }
         } else {

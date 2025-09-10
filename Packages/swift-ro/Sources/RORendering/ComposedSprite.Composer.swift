@@ -8,17 +8,9 @@
 import ROResources
 
 extension ComposedSprite {
-    class Composer {
+    final class Composer {
         let configuration: ComposedSprite.Configuration
         let resourceManager: ResourceManager
-
-        private var pathGenerator: ResourcePathGenerator {
-            get async {
-                let scriptContext = await resourceManager.scriptContext(for: .current)
-                let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
-                return pathGenerator
-            }
-        }
 
         init(configuration: ComposedSprite.Configuration, resourceManager: ResourceManager) {
             self.configuration = configuration
@@ -26,317 +18,431 @@ extension ComposedSprite {
         }
 
         func composePlayerSprite() async -> [ComposedSprite.Part] {
-            var parts: [ComposedSprite.Part] = []
+            let configuration = configuration
+            let resourceManager = resourceManager
 
-            // Shadow
-            if let shadowPart = await shadowPart() {
-                parts.append(shadowPart)
-            }
+            let parts = await withTaskGroup(
+                of: ComposedSprite.Part?.self,
+                returning: [ComposedSprite.Part].self
+            ) { taskGroup in
+                var parts: [ComposedSprite.Part] = []
 
-            // Body
-            let bodyPart = await playerBodyPart()
-            if let bodyPart {
-                parts.append(bodyPart)
-            }
-
-            // Head
-            if let headPart = await playerHeadPart(parent: bodyPart) {
-                parts.append(headPart)
-            }
-
-            // Weapon
-            if let weaponPart = await weaponPart() {
-                parts.append(weaponPart)
-            }
-
-            // Weapon Slash
-            if let weaponSlashPart = await weaponSlashPart() {
-                parts.append(weaponSlashPart)
-            }
-
-            // Shield
-            if let shieldPart = await shieldPart() {
-                parts.append(shieldPart)
-            }
-
-            // Headgears
-            for index in 0..<configuration.headgears.count {
-                if let headgearPart = await headgearPart(at: index, parent: bodyPart) {
-                    parts.append(headgearPart)
+                // Body
+                let bodyPart = await ComposedSprite.Part.generatePlayerBodyPart(
+                    configuration: configuration,
+                    resourceManager: resourceManager
+                )
+                if let bodyPart {
+                    parts.append(bodyPart)
                 }
-            }
 
-            // Garment
-            if let garmentPart = await garmentPart() {
-                parts.append(garmentPart)
+                // Head
+                taskGroup.addTask {
+                    var headPart = await ComposedSprite.Part.generatePlayerHeadPart(
+                        configuration: configuration,
+                        resourceManager: resourceManager
+                    )
+                    headPart?.parent = bodyPart?.sprite
+                    return headPart
+                }
+
+                // Weapon
+                taskGroup.addTask {
+                    await ComposedSprite.Part.generateWeaponPart(
+                        configuration: configuration,
+                        resourceManager: resourceManager
+                    )
+                }
+
+                // Weapon Slash
+                taskGroup.addTask {
+                    await ComposedSprite.Part.generateWeaponSlashPart(
+                        configuration: configuration,
+                        resourceManager: resourceManager
+                    )
+                }
+
+                // Shield
+                taskGroup.addTask {
+                    await ComposedSprite.Part.generateShieldPart(
+                        configuration: configuration,
+                        resourceManager: resourceManager
+                    )
+                }
+
+                // Headgears
+                for headgearIndex in 0..<configuration.headgears.count {
+                    taskGroup.addTask {
+                        var headgearPart = await ComposedSprite.Part.generateHeadgearPart(
+                            configuration: configuration,
+                            headgearIndex: headgearIndex,
+                            resourceManager: resourceManager
+                        )
+                        headgearPart?.parent = bodyPart?.sprite
+                        return headgearPart
+                    }
+                }
+
+                // Garment
+                taskGroup.addTask {
+                    await ComposedSprite.Part.generateGarmentPart(
+                        configuration: configuration,
+                        resourceManager: resourceManager
+                    )
+                }
+
+                // Shadow
+                taskGroup.addTask {
+                    await ComposedSprite.Part.generateShadowPart(
+                        configuration: configuration,
+                        resourceManager: resourceManager
+                    )
+                }
+
+                for await part in taskGroup.compactMap({ $0 }) {
+                    parts.append(part)
+                }
+
+                return parts
             }
 
             return parts
         }
 
         func composeNonPlayerSprite() async -> [ComposedSprite.Part] {
-            var parts: [ComposedSprite.Part] = []
+            let configuration = configuration
+            let resourceManager = resourceManager
 
-            // Shadow
-            if let shadowPart = await shadowPart() {
-                parts.append(shadowPart)
-            }
+            let parts = await withTaskGroup(
+                of: ComposedSprite.Part?.self,
+                returning: [ComposedSprite.Part].self
+            ) { taskGroup in
+                var parts: [ComposedSprite.Part] = []
 
-            // Body
-            if let bodySpritePath = await pathGenerator.generateNonPlayerSpritePath(job: configuration.job) {
-                do {
-                    let bodySprite = try await resourceManager.sprite(at: bodySpritePath)
-                    let bodyPart = ComposedSprite.Part(sprite: bodySprite, semantic: .main)
-                    parts.append(bodyPart)
-                } catch {
-                    logger.warning("Body sprite error: \(error.localizedDescription)")
+                // Body
+                taskGroup.addTask {
+                    let scriptContext = await resourceManager.scriptContext(for: .current)
+                    let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+
+                    guard let bodySpritePath = pathGenerator.generateNonPlayerSpritePath(job: configuration.job) else {
+                        return nil
+                    }
+
+                    do {
+                        let bodySprite = try await resourceManager.sprite(at: bodySpritePath)
+                        let bodyPart = ComposedSprite.Part(sprite: bodySprite, semantic: .main)
+                        return bodyPart
+                    } catch {
+                        logger.warning("Body sprite error: \(error)")
+                        return nil
+                    }
                 }
+
+                // Shadow
+                taskGroup.addTask {
+                    await ComposedSprite.Part.generateShadowPart(
+                        configuration: configuration,
+                        resourceManager: resourceManager
+                    )
+                }
+
+                for await part in taskGroup.compactMap({ $0 }) {
+                    parts.append(part)
+                }
+
+                return parts
             }
 
             return parts
         }
+    }
+}
 
-        private func shadowPart() async -> ComposedSprite.Part? {
-            let shadowSprite: SpriteResource
-            do {
-                let spritePath = await pathGenerator.generateShadowSpritePath()
-                shadowSprite = try await resourceManager.sprite(at: spritePath)
-            } catch {
-                logger.warning("Shadow sprite error: \(error.localizedDescription)")
-                return nil
+extension ComposedSprite.Part {
+    static func generatePlayerBodyPart(
+        configuration: ComposedSprite.Configuration,
+        resourceManager: ResourceManager,
+    ) async -> ComposedSprite.Part? {
+        let job = configuration.job
+        let gender = configuration.gender
+        let clothesColor = configuration.clothesColor
+        let outfit = configuration.outfit
+        let madoType = configuration.madoType
+
+        let scriptContext = await resourceManager.scriptContext(for: .current)
+        let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+
+        var bodySprite: SpriteResource?
+        var bodyPalette: PaletteResource?
+
+        if outfit > 0 {
+            if let spritePath = pathGenerator.generateAlternatePlayerBodySpritePath(job: job, gender: gender, costumeID: outfit, madoType: madoType) {
+                do {
+                    bodySprite = try await resourceManager.sprite(at: spritePath)
+                } catch {
+                    logger.warning("Body sprite error: \(error)")
+                }
             }
 
-            let scriptContext = await resourceManager.scriptContext(for: .current)
-            if let shadowFactor = scriptContext.shadowFactor(forJobID: configuration.job.rawValue), shadowFactor >= 0 {
-                shadowSprite.scaleFactor = shadowFactor
-            }
-
-            let shadowPart = ComposedSprite.Part(sprite: shadowSprite, semantic: .shadow)
-            return shadowPart
-        }
-
-        private func playerBodyPart() async -> ComposedSprite.Part? {
-            let job = configuration.job
-            let gender = configuration.gender
-            let clothesColor = configuration.clothesColor
-            let outfit = configuration.outfit
-            let madoType = configuration.madoType
-
-            var bodySprite: SpriteResource?
-            var bodyPalette: PaletteResource?
-
-            if outfit > 0 {
-                if let spritePath = await pathGenerator.generateAlternatePlayerBodySpritePath(job: job, gender: gender, costumeID: outfit, madoType: madoType) {
+            if clothesColor > -1 {
+                if let palettePath = pathGenerator.generateAlternatePlayerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, costumeID: outfit, madoType: madoType) {
                     do {
-                        bodySprite = try await resourceManager.sprite(at: spritePath)
+                        bodyPalette = try await resourceManager.palette(at: palettePath)
                     } catch {
-                        logger.warning("Body sprite error: \(error.localizedDescription)")
+                        logger.warning("Body sprite error: \(error)")
                     }
                 }
+            }
+        } else {
+            if let spritePath = pathGenerator.generatePlayerBodySpritePath(job: job, gender: gender, madoType: madoType) {
+                do {
+                    bodySprite = try await resourceManager.sprite(at: spritePath)
+                } catch {
+                    logger.warning("Body sprite error: \(error)")
+                }
+            }
 
-                if clothesColor > -1 {
-                    if let palettePath = await pathGenerator.generateAlternatePlayerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, costumeID: outfit, madoType: madoType) {
-                        do {
-                            bodyPalette = try await resourceManager.palette(at: palettePath)
-                        } catch {
-                            logger.warning("Body sprite error: \(error.localizedDescription)")
-                        }
-                    }
-                }
-            } else {
-                if let spritePath = await pathGenerator.generatePlayerBodySpritePath(job: job, gender: gender, madoType: madoType) {
+            if clothesColor > -1 {
+                if let palettePath = pathGenerator.generatePlayerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, madoType: madoType) {
                     do {
-                        bodySprite = try await resourceManager.sprite(at: spritePath)
+                        bodyPalette = try await resourceManager.palette(at: palettePath)
                     } catch {
-                        logger.warning("Body sprite error: \(error.localizedDescription)")
-                    }
-                }
-
-                if clothesColor > -1 {
-                    if let palettePath = await pathGenerator.generatePlayerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, madoType: madoType) {
-                        do {
-                            bodyPalette = try await resourceManager.palette(at: palettePath)
-                        } catch {
-                            logger.warning("Body sprite error: \(error.localizedDescription)")
-                        }
+                        logger.warning("Body sprite error: \(error)")
                     }
                 }
             }
-
-            guard let bodySprite else {
-                return nil
-            }
-
-            bodySprite.palette = bodyPalette
-
-            let bodyPart = ComposedSprite.Part(sprite: bodySprite, semantic: .playerBody)
-            return bodyPart
         }
 
-        private func playerHeadPart(parent: ComposedSprite.Part?) async -> ComposedSprite.Part? {
-            let job = configuration.job
-            let gender = configuration.gender
-            let hairStyle = configuration.hairStyle
-            let hairColor = configuration.hairColor
+        guard let bodySprite else {
+            return nil
+        }
 
-            guard let spritePath = await pathGenerator.generatePlayerHeadSpritePath(job: job, hairStyle: hairStyle, gender: gender) else {
-                return nil
-            }
+        bodySprite.palette = bodyPalette
 
-            var headPalette: PaletteResource?
-            if hairColor > -1 {
-                if let palettePath = await pathGenerator.generatePlayerHeadPalettePath(job: job, hairStyle: hairStyle, hairColor: hairColor, gender: gender) {
-                    do {
-                        headPalette = try await resourceManager.palette(at: palettePath)
-                    } catch {
-                        logger.warning("Head palette error: \(error.localizedDescription)")
-                    }
+        let bodyPart = ComposedSprite.Part(sprite: bodySprite, semantic: .playerBody)
+        return bodyPart
+    }
+
+    static func generatePlayerHeadPart(
+        configuration: ComposedSprite.Configuration,
+        resourceManager: ResourceManager
+    ) async -> ComposedSprite.Part? {
+        let job = configuration.job
+        let gender = configuration.gender
+        let hairStyle = configuration.hairStyle
+        let hairColor = configuration.hairColor
+
+        let scriptContext = await resourceManager.scriptContext(for: .current)
+        let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+
+        guard let spritePath = pathGenerator.generatePlayerHeadSpritePath(job: job, hairStyle: hairStyle, gender: gender) else {
+            return nil
+        }
+
+        var headPalette: PaletteResource?
+        if hairColor > -1 {
+            if let palettePath = pathGenerator.generatePlayerHeadPalettePath(job: job, hairStyle: hairStyle, hairColor: hairColor, gender: gender) {
+                do {
+                    headPalette = try await resourceManager.palette(at: palettePath)
+                } catch {
+                    logger.warning("Head palette error: \(error)")
                 }
             }
-
-            let headSprite: SpriteResource
-            do {
-                headSprite = try await resourceManager.sprite(at: spritePath)
-                headSprite.palette = headPalette
-            } catch {
-                logger.warning("Head sprite error: \(error.localizedDescription)")
-                return nil
-            }
-
-            var headPart = ComposedSprite.Part(sprite: headSprite, semantic: .playerHead)
-            headPart.parent = parent?.sprite
-
-            return headPart
         }
 
-        private func weaponPart() async -> ComposedSprite.Part? {
-            let job = configuration.job
-            let gender = configuration.gender
-            let weapon = configuration.weapon
-            let madoType = configuration.madoType
-
-            guard weapon > 0 && !job.isMadogear else {
-                return nil
-            }
-
-            guard let spritePath = await pathGenerator.generateWeaponSpritePath(job: job, weapon: weapon, isSlash: false, gender: gender, madoType: madoType) else {
-                return nil
-            }
-
-            let weaponSprite: SpriteResource
-            do {
-                weaponSprite = try await resourceManager.sprite(at: spritePath)
-            } catch {
-                logger.warning("Weapon sprite error: \(error.localizedDescription)")
-                return nil
-            }
-
-            let weaponPart = ComposedSprite.Part(sprite: weaponSprite, semantic: .weapon, orderBySemantic: 0)
-            return weaponPart
+        let headSprite: SpriteResource
+        do {
+            headSprite = try await resourceManager.sprite(at: spritePath)
+            headSprite.palette = headPalette
+        } catch {
+            logger.warning("Head sprite error: \(error)")
+            return nil
         }
 
-        private func weaponSlashPart() async -> ComposedSprite.Part? {
-            let job = configuration.job
-            let gender = configuration.gender
-            let weapon = configuration.weapon
-            let madoType = configuration.madoType
+        let headPart = ComposedSprite.Part(sprite: headSprite, semantic: .playerHead)
+        return headPart
+    }
 
-            guard weapon > 0 else {
-                return nil
-            }
+    static func generateWeaponPart(
+        configuration: ComposedSprite.Configuration,
+        resourceManager: ResourceManager
+    ) async -> ComposedSprite.Part? {
+        let job = configuration.job
+        let gender = configuration.gender
+        let weapon = configuration.weapon
+        let madoType = configuration.madoType
 
-            guard let spritePath = await pathGenerator.generateWeaponSpritePath(job: job, weapon: weapon, isSlash: true, gender: gender, madoType: madoType) else {
-                return nil
-            }
-
-            let weaponSlashSprite: SpriteResource
-            do {
-                weaponSlashSprite = try await resourceManager.sprite(at: spritePath)
-            } catch {
-                logger.warning("Weapon sprite error: \(error.localizedDescription)")
-                return nil
-            }
-
-            let weaponSlashPart = ComposedSprite.Part(sprite: weaponSlashSprite, semantic: .weapon, orderBySemantic: 1)
-            return weaponSlashPart
+        guard weapon > 0 && !job.isMadogear else {
+            return nil
         }
 
-        private func shieldPart() async -> ComposedSprite.Part? {
-            let job = configuration.job
-            let gender = configuration.gender
-            let shield = configuration.shield
+        let scriptContext = await resourceManager.scriptContext(for: .current)
+        let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
 
-            guard shield > 0 else {
-                return nil
-            }
-
-            guard let spritePath = await pathGenerator.generateShieldSpritePath(job: job, shield: shield, gender: gender) else {
-                return nil
-            }
-
-            let shieldSprite: SpriteResource
-            do {
-                shieldSprite = try await resourceManager.sprite(at: spritePath)
-            } catch {
-                logger.warning("Shield sprite error: \(error.localizedDescription)")
-                return nil
-            }
-
-            let shieldPart = ComposedSprite.Part(sprite: shieldSprite, semantic: .shield)
-            return shieldPart
+        guard let spritePath = pathGenerator.generateWeaponSpritePath(job: job, weapon: weapon, isSlash: false, gender: gender, madoType: madoType) else {
+            return nil
         }
 
-        private func headgearPart(at index: Int, parent: ComposedSprite.Part?) async -> ComposedSprite.Part? {
-            let gender = configuration.gender
-            let headgear = configuration.headgears[index]
-
-            guard headgear > 0 else {
-                return nil
-            }
-
-            guard let spritePath = await pathGenerator.generateHeadgearSpritePath(headgear: headgear, gender: gender) else {
-                return nil
-            }
-
-            let headgearSprite: SpriteResource
-            do {
-                headgearSprite = try await resourceManager.sprite(at: spritePath)
-            } catch {
-                logger.warning("Headgear sprite error: \(error.localizedDescription)")
-                return nil
-            }
-
-            // TODO: Handle headgear offset for Doram
-
-            var headgearPart = ComposedSprite.Part(sprite: headgearSprite, semantic: .headgear, orderBySemantic: index)
-            headgearPart.parent = parent?.sprite
-
-            return headgearPart
+        let weaponSprite: SpriteResource
+        do {
+            weaponSprite = try await resourceManager.sprite(at: spritePath)
+        } catch {
+            logger.warning("Weapon sprite error: \(error)")
+            return nil
         }
 
-        private func garmentPart() async -> ComposedSprite.Part? {
-            let job = configuration.job
-            let gender = configuration.gender
-            let garment = configuration.garment
+        let weaponPart = ComposedSprite.Part(sprite: weaponSprite, semantic: .weapon, orderBySemantic: 0)
+        return weaponPart
+    }
 
-            guard garment > 0 && !job.isMadogear else {
-                return nil
-            }
+    static func generateWeaponSlashPart(
+        configuration: ComposedSprite.Configuration,
+        resourceManager: ResourceManager
+    ) async -> ComposedSprite.Part? {
+        let job = configuration.job
+        let gender = configuration.gender
+        let weapon = configuration.weapon
+        let madoType = configuration.madoType
 
-            guard let spritePath = await pathGenerator.generateGarmentSpritePath(job: job, garment: garment, gender: gender) else {
-                return nil
-            }
-
-            let garmentSprite: SpriteResource
-            do {
-                garmentSprite = try await resourceManager.sprite(at: spritePath)
-            } catch {
-                logger.warning("Garment sprite error: \(error.localizedDescription)")
-                return nil
-            }
-
-            let garmentPart = ComposedSprite.Part(sprite: garmentSprite, semantic: .garment)
-            return garmentPart
+        guard weapon > 0 else {
+            return nil
         }
+
+        let scriptContext = await resourceManager.scriptContext(for: .current)
+        let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+
+        guard let spritePath = pathGenerator.generateWeaponSpritePath(job: job, weapon: weapon, isSlash: true, gender: gender, madoType: madoType) else {
+            return nil
+        }
+
+        let weaponSlashSprite: SpriteResource
+        do {
+            weaponSlashSprite = try await resourceManager.sprite(at: spritePath)
+        } catch {
+            logger.warning("Weapon sprite error: \(error)")
+            return nil
+        }
+
+        let weaponSlashPart = ComposedSprite.Part(sprite: weaponSlashSprite, semantic: .weapon, orderBySemantic: 1)
+        return weaponSlashPart
+    }
+
+    static func generateShieldPart(
+        configuration: ComposedSprite.Configuration,
+        resourceManager: ResourceManager
+    ) async -> ComposedSprite.Part? {
+        let job = configuration.job
+        let gender = configuration.gender
+        let shield = configuration.shield
+
+        guard shield > 0 else {
+            return nil
+        }
+
+        let scriptContext = await resourceManager.scriptContext(for: .current)
+        let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+
+        guard let spritePath = pathGenerator.generateShieldSpritePath(job: job, shield: shield, gender: gender) else {
+            return nil
+        }
+
+        let shieldSprite: SpriteResource
+        do {
+            shieldSprite = try await resourceManager.sprite(at: spritePath)
+        } catch {
+            logger.warning("Shield sprite error: \(error)")
+            return nil
+        }
+
+        let shieldPart = ComposedSprite.Part(sprite: shieldSprite, semantic: .shield)
+        return shieldPart
+    }
+
+    static func generateHeadgearPart(
+        configuration: ComposedSprite.Configuration,
+        headgearIndex: Int,
+        resourceManager: ResourceManager,
+    ) async -> ComposedSprite.Part? {
+        let gender = configuration.gender
+        let headgear = configuration.headgears[headgearIndex]
+
+        guard headgear > 0 else {
+            return nil
+        }
+
+        let scriptContext = await resourceManager.scriptContext(for: .current)
+        let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+
+        guard let spritePath = pathGenerator.generateHeadgearSpritePath(headgear: headgear, gender: gender) else {
+            return nil
+        }
+
+        let headgearSprite: SpriteResource
+        do {
+            headgearSprite = try await resourceManager.sprite(at: spritePath)
+        } catch {
+            logger.warning("Headgear sprite error: \(error)")
+            return nil
+        }
+
+        // TODO: Handle headgear offset for Doram
+
+        let headgearPart = ComposedSprite.Part(sprite: headgearSprite, semantic: .headgear, orderBySemantic: headgearIndex)
+        return headgearPart
+    }
+
+    static func generateGarmentPart(
+        configuration: ComposedSprite.Configuration,
+        resourceManager: ResourceManager
+    ) async -> ComposedSprite.Part? {
+        let job = configuration.job
+        let gender = configuration.gender
+        let garment = configuration.garment
+
+        guard garment > 0 && !job.isMadogear else {
+            return nil
+        }
+
+        let scriptContext = await resourceManager.scriptContext(for: .current)
+        let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+
+        guard let spritePath = pathGenerator.generateGarmentSpritePath(job: job, garment: garment, gender: gender) else {
+            return nil
+        }
+
+        let garmentSprite: SpriteResource
+        do {
+            garmentSprite = try await resourceManager.sprite(at: spritePath)
+        } catch {
+            logger.warning("Garment sprite error: \(error)")
+            return nil
+        }
+
+        let garmentPart = ComposedSprite.Part(sprite: garmentSprite, semantic: .garment)
+        return garmentPart
+    }
+
+    static func generateShadowPart(
+        configuration: ComposedSprite.Configuration,
+        resourceManager: ResourceManager
+    ) async -> ComposedSprite.Part? {
+        let scriptContext = await resourceManager.scriptContext(for: .current)
+        let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+
+        let shadowSprite: SpriteResource
+        do {
+            let spritePath = pathGenerator.generateShadowSpritePath()
+            shadowSprite = try await resourceManager.sprite(at: spritePath)
+        } catch {
+            logger.warning("Shadow sprite error: \(error)")
+            return nil
+        }
+
+        if let shadowFactor = scriptContext.shadowFactor(forJobID: configuration.job.rawValue), shadowFactor >= 0 {
+            shadowSprite.scaleFactor = shadowFactor
+        }
+
+        let shadowPart = ComposedSprite.Part(sprite: shadowSprite, semantic: .shadow)
+        return shadowPart
     }
 }

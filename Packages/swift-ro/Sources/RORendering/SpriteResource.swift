@@ -84,8 +84,8 @@ extension ResourceManager {
         let sprPath = path.appendingPathExtension("spr")
         async let sprData = contentsOfResource(at: sprPath)
 
-        let act = try ACT(data: await actData)
-        let spr = try SPR(data: await sprData)
+        let act = try await ACT(data: actData)
+        let spr = try await SPR(data: sprData)
 
         let sprite = SpriteResource(act: act, spr: spr)
         return sprite
