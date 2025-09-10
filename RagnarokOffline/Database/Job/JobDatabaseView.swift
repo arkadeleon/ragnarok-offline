@@ -18,7 +18,6 @@ struct JobDatabaseView: View {
             NavigationLink(value: job) {
                 JobGridCell(job: job)
             }
-            .buttonStyle(.plain)
         }
         .navigationTitle("Job Database")
         .background(.background)

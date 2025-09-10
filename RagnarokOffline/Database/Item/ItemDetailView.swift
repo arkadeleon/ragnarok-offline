@@ -64,7 +64,6 @@ struct ItemDetailView: View {
                             NavigationLink(value: droppingMonster.monster) {
                                 MonsterGridCell(monster: droppingMonster.monster, secondaryText: "(" + (Double(droppingMonster.drop.rate) / 100).formatted() + "%)")
                             }
-                            .buttonStyle(.plain)
                         }
                     }
                     .padding(.vertical, vSpacing(sizeClass))

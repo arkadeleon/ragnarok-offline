@@ -18,6 +18,7 @@ struct ImageGrid<Content>: View where Content: View {
                 .padding(.horizontal, hSpacing(sizeClass))
                 .padding(.vertical, vSpacing(sizeClass))
         }
+        .buttonStyle(.borderless)
     }
 
     init(@ViewBuilder content: @escaping () -> Content) {

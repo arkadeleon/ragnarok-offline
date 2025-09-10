@@ -47,7 +47,6 @@ struct MonsterDetailView: View {
                             NavigationLink(value: dropItem.item) {
                                 ItemCell(item: dropItem.item, secondaryText: "(" + (Double(dropItem.drop.rate) / 100).formatted() + "%)")
                             }
-                            .buttonStyle(.plain)
                         }
                     }
                 }
@@ -60,7 +59,6 @@ struct MonsterDetailView: View {
                             NavigationLink(value: dropItem.item) {
                                 ItemCell(item: dropItem.item, secondaryText: "(" + (Double(dropItem.drop.rate) / 100).formatted() + "%)")
                             }
-                            .buttonStyle(.plain)
                         }
                     }
                 }
@@ -73,7 +71,6 @@ struct MonsterDetailView: View {
                             NavigationLink(value: spawnMap.map) {
                                 MapCell(map: spawnMap.map, secondaryText: "(\(spawnMap.monsterSpawn.amount)x)")
                             }
-                            .buttonStyle(.plain)
                         }
                     }
                 }

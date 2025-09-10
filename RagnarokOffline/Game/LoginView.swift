@@ -43,7 +43,7 @@ struct LoginView: View {
             } label: {
                 GameImage("login_interface/chk_saveoff.bmp")
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.borderless)
             .frame(width: 38, height: 10)
             .offset(x: 232, y: 32)
 

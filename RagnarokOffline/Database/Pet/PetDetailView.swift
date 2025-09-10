@@ -21,7 +21,6 @@ struct PetDetailView: View {
                         NavigationLink(value: monster) {
                             MonsterGridCell(monster: monster, secondaryText: nil)
                         }
-                        .buttonStyle(.plain)
                     }
                     .padding(.vertical, vSpacing(sizeClass))
                 }
@@ -33,25 +32,21 @@ struct PetDetailView: View {
                         NavigationLink(value: tameItem) {
                             ItemCell(item: tameItem, secondaryText: "(Tame Item)")
                         }
-                        .buttonStyle(.plain)
                     }
                     if let eggItem = pet.eggItem {
                         NavigationLink(value: eggItem) {
                             ItemCell(item: eggItem, secondaryText: "(Egg Item)")
                         }
-                        .buttonStyle(.plain)
                     }
                     if let equipItem = pet.equipItem {
                         NavigationLink(value: equipItem) {
                             ItemCell(item: equipItem, secondaryText: "(Equip Item)")
                         }
-                        .buttonStyle(.plain)
                     }
                     if let foodItem = pet.foodItem {
                         NavigationLink(value: foodItem) {
                             ItemCell(item: foodItem, secondaryText: "(Food Item)")
                         }
-                        .buttonStyle(.plain)
                     }
                 }
             }

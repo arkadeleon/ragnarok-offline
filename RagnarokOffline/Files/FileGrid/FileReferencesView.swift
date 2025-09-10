@@ -23,7 +23,6 @@ struct FileReferencesView: View {
             } label: {
                 FileGridCell(file: file)
             }
-            .buttonStyle(.plain)
             .fileContextMenu(file: file)
         }
         .navigationTitle("References")

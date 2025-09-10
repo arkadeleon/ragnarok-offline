@@ -57,7 +57,6 @@ struct CharacterEquipmentPicker: View {
                     }
                 }
             }
-            .buttonStyle(.plain)
 
             ForEach(filteredItems) { item in
                 Button {
@@ -73,7 +72,6 @@ struct CharacterEquipmentPicker: View {
                         }
                     }
                 }
-                .buttonStyle(.plain)
             }
         }
         .listStyle(.plain)

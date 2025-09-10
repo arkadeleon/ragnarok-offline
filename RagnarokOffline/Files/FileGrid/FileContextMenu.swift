@@ -68,7 +68,7 @@ struct FileContextMenu: ViewModifier {
                                 logger.warning("\(error)")
                             }
                         } label: {
-                            Label("Delete", image: "trash")
+                            Label("Delete", systemImage: "trash")
                         }
                     }
                 }

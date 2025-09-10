@@ -39,7 +39,6 @@ struct JobDetailView: View {
                             NavigationLink(value: skill) {
                                 SkillCell(skill: skill)
                             }
-                            .buttonStyle(.plain)
                         }
                     }
                 }

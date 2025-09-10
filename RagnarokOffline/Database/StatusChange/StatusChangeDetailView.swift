@@ -23,7 +23,6 @@ struct StatusChangeDetailView: View {
                             NavigationLink(value: statusChange) {
                                 Text(statusChange.displayName)
                             }
-                            .buttonStyle(.plain)
                         }
                     }
                 }
@@ -36,7 +35,6 @@ struct StatusChangeDetailView: View {
                             NavigationLink(value: statusChange) {
                                 Text(statusChange.displayName)
                             }
-                            .buttonStyle(.plain)
                         }
                     }
                 }
@@ -49,7 +47,6 @@ struct StatusChangeDetailView: View {
                             NavigationLink(value: statusChange) {
                                 Text(statusChange.displayName)
                             }
-                            .buttonStyle(.plain)
                         }
                     }
                 }
@@ -62,7 +59,6 @@ struct StatusChangeDetailView: View {
                             NavigationLink(value: statusChange) {
                                 Text(statusChange.displayName)
                             }
-                            .buttonStyle(.plain)
                         }
                     }
                 }

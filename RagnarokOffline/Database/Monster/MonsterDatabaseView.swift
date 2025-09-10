@@ -18,7 +18,6 @@ struct MonsterDatabaseView: View {
             NavigationLink(value: monster) {
                 MonsterGridCell(monster: monster, secondaryText: nil)
             }
-            .buttonStyle(.plain)
         }
         .navigationTitle("Monster Database")
         .background(.background)

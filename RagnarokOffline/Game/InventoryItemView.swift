@@ -28,7 +28,7 @@ struct InventoryItemView<Actions>: View where Actions: View {
             }
             .frame(width: 32, height: 32)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.borderless)
         .task {
             let scriptContext = await ResourceManager.shared.scriptContext(for: .current)
             let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)

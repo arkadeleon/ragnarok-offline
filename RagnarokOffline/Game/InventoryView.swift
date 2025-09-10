@@ -48,7 +48,7 @@ struct InventoryView: View {
                             .multilineTextAlignment(.center)
                             .frame(height: 66)
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.borderless)
 
                     Button {
                         items = inventory.equippableItems
@@ -58,7 +58,7 @@ struct InventoryView: View {
                             .multilineTextAlignment(.center)
                             .frame(height: 66)
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.borderless)
                 }
                 .frame(width: 20, height: 264)
 

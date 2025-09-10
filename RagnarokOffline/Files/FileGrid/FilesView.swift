@@ -26,7 +26,6 @@ struct FilesView: View {
                 NavigationLink(value: file) {
                     FileGridCell(file: file)
                 }
-                .buttonStyle(.plain)
                 .fileContextMenu(file: file, onDelete: onDeleteFile)
             } else {
                 Button {
@@ -36,7 +35,6 @@ struct FilesView: View {
                 } label: {
                     FileGridCell(file: file)
                 }
-                .buttonStyle(.plain)
                 .fileContextMenu(file: file, onDelete: onDeleteFile)
             }
         }

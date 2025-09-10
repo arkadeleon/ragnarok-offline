@@ -48,7 +48,7 @@ struct CharSelectView: View {
                     Text(slot1?.name ?? "Empty")
                         .gameText()
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.borderless)
                 .frame(width: 139, height: 144)
                 .offset(x: 60, y: 44)
 
@@ -58,7 +58,7 @@ struct CharSelectView: View {
                     Text(slot2?.name ?? "Empty")
                         .gameText()
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.borderless)
                 .frame(width: 139, height: 144)
                 .offset(x: 224, y: 44)
 
@@ -68,7 +68,7 @@ struct CharSelectView: View {
                     Text(slot3?.name ?? "Empty")
                         .gameText()
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.borderless)
                 .frame(width: 139, height: 144)
                 .offset(x: 386, y: 44)
 

@@ -29,6 +29,7 @@ struct DatabaseRecordDetailView<Content>: View where Content: View {
             .padding(.horizontal, hSpacing(sizeClass))
         }
         .background(.background)
+        .buttonStyle(.borderless)
     }
 }
 

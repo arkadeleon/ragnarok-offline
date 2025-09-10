@@ -15,7 +15,7 @@ struct GameButton: View {
         Button(action: action) {
             GameImage(imageName)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.borderless)
     }
 
     init(_ imageName: String, action: @escaping () -> Void) {
