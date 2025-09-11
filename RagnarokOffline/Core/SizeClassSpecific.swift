@@ -18,15 +18,3 @@ func vSpacing(_ sizeClass: UserInterfaceSizeClass?) -> CGFloat {
 func imageGridItem(_ sizeClass: UserInterfaceSizeClass?) -> GridItem {
     GridItem(.adaptive(minimum: 100), spacing: hSpacing(sizeClass))
 }
-
-func searchFieldPlacement(_ sizeClass: UserInterfaceSizeClass?) -> SearchFieldPlacement {
-    #if os(macOS)
-    .automatic
-    #else
-    if sizeClass == .compact {
-        .navigationBarDrawer(displayMode: .always)
-    } else {
-        .automatic
-    }
-    #endif
-}

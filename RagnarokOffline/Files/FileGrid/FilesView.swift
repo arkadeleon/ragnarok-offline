@@ -11,8 +11,6 @@ struct FilesView: View {
     var titleKey: LocalizedStringKey?
     var directory: File
 
-    @Environment(\.horizontalSizeClass) private var sizeClass
-
     @State private var loadStatus: LoadStatus = .notYetLoaded
     @State private var searchText = ""
     @State private var files: [File] = []
@@ -61,7 +59,7 @@ struct FilesView: View {
             }
             #endif
         }
-        .searchable(text: $searchText, placement: searchFieldPlacement(sizeClass))
+        .searchable(text: $searchText)
         .onSubmit(of: .search) {
             filterFiles()
         }
