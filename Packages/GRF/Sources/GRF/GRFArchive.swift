@@ -16,7 +16,7 @@ public actor GRFArchive {
     nonisolated public let url: URL
 
     #if canImport(OSLog)
-    private let logger = Logger(subsystem: "swift-grf", category: "grf")
+    private let logger = Logger(subsystem: "grf", category: "grf")
     #endif
 
     private lazy var grf: GRF? = {

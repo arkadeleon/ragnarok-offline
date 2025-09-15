@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-grf",
+    name: "GRF",
     platforms: [
         .macOS(.v15),
         .iOS(.v18),
@@ -17,14 +17,14 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../swift-binary-io"),
+        .package(path: "../BinaryIO"),
         .package(url: "https://github.com/arkadeleon/swift-gzip.git", branch: "main"),
     ],
     targets: [
         .target(
             name: "GRF",
             dependencies: [
-                .product(name: "BinaryIO", package: "swift-binary-io"),
+                "BinaryIO",
                 .product(name: "SwiftGzip", package: "swift-gzip"),
             ]
         ),

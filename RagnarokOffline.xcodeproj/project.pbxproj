@@ -126,8 +126,6 @@
 		35DCADA92E77D71000CA1988 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"swift-binary-io",
-				"swift-grf",
 				"swift-ro",
 				"swift-ro-tools",
 			);

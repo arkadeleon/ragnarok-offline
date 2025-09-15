@@ -44,8 +44,8 @@ let package = Package(
             targets: ["ROShaders"]),
     ],
     dependencies: [
-        .package(path: "../swift-binary-io"),
-        .package(path: "../swift-grf"),
+        .package(path: "../BinaryIO"),
+        .package(path: "../GRF"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
         .package(url: "https://github.com/arkadeleon/swift-gzip.git", branch: "main"),
         .package(url: "https://github.com/arkadeleon/swift-lua.git", branch: "master"),
@@ -59,11 +59,11 @@ let package = Package(
         .target(
             name: "RODatabase",
             dependencies: [
-                .product(name: "BinaryIO", package: "swift-binary-io"),
-                .product(name: "SwiftGzip", package: "swift-gzip"),
-                .product(name: "RapidYAML", package: "swift-rapidyaml"),
+                "BinaryIO",
                 "ROConstants",
                 "ROCore",
+                .product(name: "SwiftGzip", package: "swift-gzip"),
+                .product(name: "RapidYAML", package: "swift-rapidyaml"),
             ]),
         .testTarget(
             name: "RODatabaseTests",
@@ -73,7 +73,7 @@ let package = Package(
         .target(
             name: "ROFileFormats",
             dependencies: [
-                .product(name: "BinaryIO", package: "swift-binary-io"),
+                "BinaryIO",
                 "ROCore",
             ]),
         .testTarget(
@@ -95,10 +95,10 @@ let package = Package(
         .target(
             name: "RONetwork",
             dependencies: [
-                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
-                .product(name: "BinaryIO", package: "swift-binary-io"),
+                "BinaryIO",
                 "ROConstants",
                 "ROPackets",
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
             ]),
         .testTarget(
             name: "RONetworkTests",
@@ -108,7 +108,7 @@ let package = Package(
         .target(
             name: "ROPackets",
             dependencies: [
-                .product(name: "BinaryIO", package: "swift-binary-io"),
+                "BinaryIO",
             ]),
         .testTarget(
             name: "ROPacketsTests",
@@ -138,10 +138,10 @@ let package = Package(
         .target(
             name: "ROResources",
             dependencies: [
-                .product(name: "GRF", package: "swift-grf"),
-                .product(name: "Lua", package: "swift-lua"),
+                "GRF",
                 "ROConstants",
                 "ROCore",
+                .product(name: "Lua", package: "swift-lua"),
             ],
             resources: [
                 .process("Resources"),

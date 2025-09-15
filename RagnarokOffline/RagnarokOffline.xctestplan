@@ -14,13 +14,6 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:Packages\/swift-binary-io",
-        "identifier" : "BinaryIOTests",
-        "name" : "BinaryIOTests"
-      }
-    },
-    {
-      "target" : {
         "containerPath" : "container:Packages\/swift-ro",
         "identifier" : "ROResourcesTests",
         "name" : "ROResourcesTests"
@@ -52,13 +45,6 @@
         "containerPath" : "container:Packages\/swift-ro",
         "identifier" : "RONetworkTests",
         "name" : "RONetworkTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/swift-grf",
-        "identifier" : "GRFTests",
-        "name" : "GRFTests"
       }
     },
     {

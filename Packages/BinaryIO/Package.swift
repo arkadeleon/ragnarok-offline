@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-binary-io",
+    name: "BinaryIO",
     platforms: [
         .macOS(.v15),
         .iOS(.v18),
