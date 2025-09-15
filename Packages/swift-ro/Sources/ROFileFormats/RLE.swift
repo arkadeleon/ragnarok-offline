@@ -7,11 +7,9 @@
 
 import Foundation
 
-public struct RLE {
-    public init() {
-    }
-
-    public func decompress(_ data: Data) -> Data {
+/// Run-Length Encoding
+struct RLE {
+    func decompress(_ data: Data) -> Data {
         var decompressedData = Data()
 
         var index = 0
