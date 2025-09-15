@@ -17,18 +17,18 @@ extension ComposedSprite {
             self.resourceManager = resourceManager
         }
 
-        func composePlayerSprite() async -> [ComposedSprite.Part] {
+        func composePlayerSprite() async throws -> [ComposedSprite.Part] {
             let configuration = configuration
             let resourceManager = resourceManager
 
-            let parts = await withTaskGroup(
+            let parts = try await withThrowingTaskGroup(
                 of: ComposedSprite.Part?.self,
                 returning: [ComposedSprite.Part].self
             ) { taskGroup in
                 var parts: [ComposedSprite.Part] = []
 
                 // Body
-                let bodyPart = await ComposedSprite.Part.generatePlayerBodyPart(
+                let bodyPart = try await ComposedSprite.Part.generatePlayerBodyPart(
                     configuration: configuration,
                     resourceManager: resourceManager
                 )
@@ -38,7 +38,7 @@ extension ComposedSprite {
 
                 // Head
                 taskGroup.addTask {
-                    var headPart = await ComposedSprite.Part.generatePlayerHeadPart(
+                    var headPart = try await ComposedSprite.Part.generatePlayerHeadPart(
                         configuration: configuration,
                         resourceManager: resourceManager
                     )
@@ -48,7 +48,7 @@ extension ComposedSprite {
 
                 // Weapon
                 taskGroup.addTask {
-                    await ComposedSprite.Part.generateWeaponPart(
+                    try await ComposedSprite.Part.generateWeaponPart(
                         configuration: configuration,
                         resourceManager: resourceManager
                     )
@@ -56,7 +56,7 @@ extension ComposedSprite {
 
                 // Weapon Slash
                 taskGroup.addTask {
-                    await ComposedSprite.Part.generateWeaponSlashPart(
+                    try await ComposedSprite.Part.generateWeaponSlashPart(
                         configuration: configuration,
                         resourceManager: resourceManager
                     )
@@ -64,7 +64,7 @@ extension ComposedSprite {
 
                 // Shield
                 taskGroup.addTask {
-                    await ComposedSprite.Part.generateShieldPart(
+                    try await ComposedSprite.Part.generateShieldPart(
                         configuration: configuration,
                         resourceManager: resourceManager
                     )
@@ -73,7 +73,7 @@ extension ComposedSprite {
                 // Headgears
                 for headgearIndex in 0..<configuration.headgears.count {
                     taskGroup.addTask {
-                        var headgearPart = await ComposedSprite.Part.generateHeadgearPart(
+                        var headgearPart = try await ComposedSprite.Part.generateHeadgearPart(
                             configuration: configuration,
                             headgearIndex: headgearIndex,
                             resourceManager: resourceManager
@@ -85,7 +85,7 @@ extension ComposedSprite {
 
                 // Garment
                 taskGroup.addTask {
-                    await ComposedSprite.Part.generateGarmentPart(
+                    try await ComposedSprite.Part.generateGarmentPart(
                         configuration: configuration,
                         resourceManager: resourceManager
                     )
@@ -93,13 +93,13 @@ extension ComposedSprite {
 
                 // Shadow
                 taskGroup.addTask {
-                    await ComposedSprite.Part.generateShadowPart(
+                    try await ComposedSprite.Part.generateShadowPart(
                         configuration: configuration,
                         resourceManager: resourceManager
                     )
                 }
 
-                for await part in taskGroup.compactMap({ $0 }) {
+                for try await part in taskGroup.compactMap({ $0 }) {
                     parts.append(part)
                 }
 
@@ -109,11 +109,11 @@ extension ComposedSprite {
             return parts
         }
 
-        func composeNonPlayerSprite() async -> [ComposedSprite.Part] {
+        func composeNonPlayerSprite() async throws -> [ComposedSprite.Part] {
             let configuration = configuration
             let resourceManager = resourceManager
 
-            let parts = await withTaskGroup(
+            let parts = try await withThrowingTaskGroup(
                 of: ComposedSprite.Part?.self,
                 returning: [ComposedSprite.Part].self
             ) { taskGroup in
@@ -128,25 +128,20 @@ extension ComposedSprite {
                         return nil
                     }
 
-                    do {
-                        let bodySprite = try await resourceManager.sprite(at: bodySpritePath)
-                        let bodyPart = ComposedSprite.Part(sprite: bodySprite, semantic: .main)
-                        return bodyPart
-                    } catch {
-                        logger.warning("Body sprite error: \(error)")
-                        return nil
-                    }
+                    let bodySprite = try await resourceManager.sprite(at: bodySpritePath)
+                    let bodyPart = ComposedSprite.Part(sprite: bodySprite, semantic: .main)
+                    return bodyPart
                 }
 
                 // Shadow
                 taskGroup.addTask {
-                    await ComposedSprite.Part.generateShadowPart(
+                    try await ComposedSprite.Part.generateShadowPart(
                         configuration: configuration,
                         resourceManager: resourceManager
                     )
                 }
 
-                for await part in taskGroup.compactMap({ $0 }) {
+                for try await part in taskGroup.compactMap({ $0 }) {
                     parts.append(part)
                 }
 
@@ -162,7 +157,7 @@ extension ComposedSprite.Part {
     static func generatePlayerBodyPart(
         configuration: ComposedSprite.Configuration,
         resourceManager: ResourceManager,
-    ) async -> ComposedSprite.Part? {
+    ) async throws -> ComposedSprite.Part? {
         let job = configuration.job
         let gender = configuration.gender
         let clothesColor = configuration.clothesColor
@@ -177,11 +172,7 @@ extension ComposedSprite.Part {
 
         if outfit > 0 {
             if let spritePath = pathGenerator.generateAlternatePlayerBodySpritePath(job: job, gender: gender, costumeID: outfit, madoType: madoType) {
-                do {
-                    bodySprite = try await resourceManager.sprite(at: spritePath)
-                } catch {
-                    logger.warning("Body sprite error: \(error)")
-                }
+                bodySprite = try await resourceManager.sprite(at: spritePath)
             }
 
             if clothesColor > -1 {
@@ -189,17 +180,13 @@ extension ComposedSprite.Part {
                     do {
                         bodyPalette = try await resourceManager.palette(at: palettePath)
                     } catch {
-                        logger.warning("Body sprite error: \(error)")
+                        logger.warning("Body sprite palette error: \(error)")
                     }
                 }
             }
         } else {
             if let spritePath = pathGenerator.generatePlayerBodySpritePath(job: job, gender: gender, madoType: madoType) {
-                do {
-                    bodySprite = try await resourceManager.sprite(at: spritePath)
-                } catch {
-                    logger.warning("Body sprite error: \(error)")
-                }
+                bodySprite = try await resourceManager.sprite(at: spritePath)
             }
 
             if clothesColor > -1 {
@@ -207,7 +194,7 @@ extension ComposedSprite.Part {
                     do {
                         bodyPalette = try await resourceManager.palette(at: palettePath)
                     } catch {
-                        logger.warning("Body sprite error: \(error)")
+                        logger.warning("Body sprite palette error: \(error)")
                     }
                 }
             }
@@ -226,7 +213,7 @@ extension ComposedSprite.Part {
     static func generatePlayerHeadPart(
         configuration: ComposedSprite.Configuration,
         resourceManager: ResourceManager
-    ) async -> ComposedSprite.Part? {
+    ) async throws -> ComposedSprite.Part? {
         let job = configuration.job
         let gender = configuration.gender
         let hairStyle = configuration.hairStyle
@@ -250,14 +237,8 @@ extension ComposedSprite.Part {
             }
         }
 
-        let headSprite: SpriteResource
-        do {
-            headSprite = try await resourceManager.sprite(at: spritePath)
-            headSprite.palette = headPalette
-        } catch {
-            logger.warning("Head sprite error: \(error)")
-            return nil
-        }
+        let headSprite = try await resourceManager.sprite(at: spritePath)
+        headSprite.palette = headPalette
 
         let headPart = ComposedSprite.Part(sprite: headSprite, semantic: .playerHead)
         return headPart
@@ -266,7 +247,7 @@ extension ComposedSprite.Part {
     static func generateWeaponPart(
         configuration: ComposedSprite.Configuration,
         resourceManager: ResourceManager
-    ) async -> ComposedSprite.Part? {
+    ) async throws -> ComposedSprite.Part? {
         let job = configuration.job
         let gender = configuration.gender
         let weapon = configuration.weapon
@@ -283,13 +264,7 @@ extension ComposedSprite.Part {
             return nil
         }
 
-        let weaponSprite: SpriteResource
-        do {
-            weaponSprite = try await resourceManager.sprite(at: spritePath)
-        } catch {
-            logger.warning("Weapon sprite error: \(error)")
-            return nil
-        }
+        let weaponSprite = try await resourceManager.sprite(at: spritePath)
 
         let weaponPart = ComposedSprite.Part(sprite: weaponSprite, semantic: .weapon, orderBySemantic: 0)
         return weaponPart
@@ -298,7 +273,7 @@ extension ComposedSprite.Part {
     static func generateWeaponSlashPart(
         configuration: ComposedSprite.Configuration,
         resourceManager: ResourceManager
-    ) async -> ComposedSprite.Part? {
+    ) async throws -> ComposedSprite.Part? {
         let job = configuration.job
         let gender = configuration.gender
         let weapon = configuration.weapon
@@ -315,13 +290,7 @@ extension ComposedSprite.Part {
             return nil
         }
 
-        let weaponSlashSprite: SpriteResource
-        do {
-            weaponSlashSprite = try await resourceManager.sprite(at: spritePath)
-        } catch {
-            logger.warning("Weapon sprite error: \(error)")
-            return nil
-        }
+        let weaponSlashSprite = try await resourceManager.sprite(at: spritePath)
 
         let weaponSlashPart = ComposedSprite.Part(sprite: weaponSlashSprite, semantic: .weapon, orderBySemantic: 1)
         return weaponSlashPart
@@ -330,7 +299,7 @@ extension ComposedSprite.Part {
     static func generateShieldPart(
         configuration: ComposedSprite.Configuration,
         resourceManager: ResourceManager
-    ) async -> ComposedSprite.Part? {
+    ) async throws -> ComposedSprite.Part? {
         let job = configuration.job
         let gender = configuration.gender
         let shield = configuration.shield
@@ -346,13 +315,7 @@ extension ComposedSprite.Part {
             return nil
         }
 
-        let shieldSprite: SpriteResource
-        do {
-            shieldSprite = try await resourceManager.sprite(at: spritePath)
-        } catch {
-            logger.warning("Shield sprite error: \(error)")
-            return nil
-        }
+        let shieldSprite = try await resourceManager.sprite(at: spritePath)
 
         let shieldPart = ComposedSprite.Part(sprite: shieldSprite, semantic: .shield)
         return shieldPart
@@ -362,7 +325,7 @@ extension ComposedSprite.Part {
         configuration: ComposedSprite.Configuration,
         headgearIndex: Int,
         resourceManager: ResourceManager,
-    ) async -> ComposedSprite.Part? {
+    ) async throws -> ComposedSprite.Part? {
         let gender = configuration.gender
         let headgear = configuration.headgears[headgearIndex]
 
@@ -377,13 +340,7 @@ extension ComposedSprite.Part {
             return nil
         }
 
-        let headgearSprite: SpriteResource
-        do {
-            headgearSprite = try await resourceManager.sprite(at: spritePath)
-        } catch {
-            logger.warning("Headgear sprite error: \(error)")
-            return nil
-        }
+        let headgearSprite = try await resourceManager.sprite(at: spritePath)
 
         // TODO: Handle headgear offset for Doram
 
@@ -394,7 +351,7 @@ extension ComposedSprite.Part {
     static func generateGarmentPart(
         configuration: ComposedSprite.Configuration,
         resourceManager: ResourceManager
-    ) async -> ComposedSprite.Part? {
+    ) async throws -> ComposedSprite.Part? {
         let job = configuration.job
         let gender = configuration.gender
         let garment = configuration.garment
@@ -410,13 +367,7 @@ extension ComposedSprite.Part {
             return nil
         }
 
-        let garmentSprite: SpriteResource
-        do {
-            garmentSprite = try await resourceManager.sprite(at: spritePath)
-        } catch {
-            logger.warning("Garment sprite error: \(error)")
-            return nil
-        }
+        let garmentSprite = try await resourceManager.sprite(at: spritePath)
 
         let garmentPart = ComposedSprite.Part(sprite: garmentSprite, semantic: .garment)
         return garmentPart
@@ -425,18 +376,12 @@ extension ComposedSprite.Part {
     static func generateShadowPart(
         configuration: ComposedSprite.Configuration,
         resourceManager: ResourceManager
-    ) async -> ComposedSprite.Part? {
+    ) async throws -> ComposedSprite.Part {
         let scriptContext = await resourceManager.scriptContext(for: .current)
         let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
 
-        let shadowSprite: SpriteResource
-        do {
-            let spritePath = pathGenerator.generateShadowSpritePath()
-            shadowSprite = try await resourceManager.sprite(at: spritePath)
-        } catch {
-            logger.warning("Shadow sprite error: \(error)")
-            return nil
-        }
+        let spritePath = pathGenerator.generateShadowSpritePath()
+        let shadowSprite = try await resourceManager.sprite(at: spritePath)
 
         if let shadowFactor = scriptContext.shadowFactor(forJobID: configuration.job.rawValue), shadowFactor >= 0 {
             shadowSprite.scaleFactor = shadowFactor

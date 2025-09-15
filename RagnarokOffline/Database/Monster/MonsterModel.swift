@@ -117,19 +117,27 @@ final class MonsterModel {
 
     @MainActor
     func fetchAnimatedImage() async {
-        if animatedImage == nil {
-            let configuration = ComposedSprite.Configuration(jobID: monster.id)
-            let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .shared)
-
-            let spriteRenderer = SpriteRenderer()
-            let animation = await spriteRenderer.render(
-                composedSprite: composedSprite,
-                actionType: .idle,
-                direction: .south,
-                headDirection: .straight
-            )
-            animatedImage = AnimatedImage(animation: animation)
+        if animatedImage != nil {
+            return
         }
+
+        let composedSprite: ComposedSprite
+        do {
+            let configuration = ComposedSprite.Configuration(jobID: monster.id)
+            composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: .shared)
+        } catch {
+            logger.warning("Composed sprite error: \(error)")
+            return
+        }
+
+        let spriteRenderer = SpriteRenderer()
+        let animation = await spriteRenderer.render(
+            composedSprite: composedSprite,
+            actionType: .idle,
+            direction: .south,
+            headDirection: .straight
+        )
+        animatedImage = AnimatedImage(animation: animation)
     }
 }
 

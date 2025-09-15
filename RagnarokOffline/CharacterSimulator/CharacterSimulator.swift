@@ -83,7 +83,11 @@ final class CharacterSimulator {
         if let composedSprite, composedSprite.configuration == configuration {
             // Do nothing
         } else {
-            composedSprite = await ComposedSprite(configuration: configuration, resourceManager: .shared)
+            do {
+                composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: .shared)
+            } catch {
+                logger.warning("Composed sprite error: \(error)")
+            }
         }
 
         guard let composedSprite else {

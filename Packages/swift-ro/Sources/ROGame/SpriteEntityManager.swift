@@ -29,7 +29,7 @@ final class SpriteEntityManager {
 
         let configuration = ComposedSprite.Configuration(mapObject: mapObject)
         let task = Task {
-            let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
+            let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
             let animations = try await SpriteAnimation.animations(for: composedSprite)
             let entity = SpriteEntity(animations: animations)
             return entity

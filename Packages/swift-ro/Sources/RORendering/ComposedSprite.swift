@@ -21,34 +21,30 @@ final public class ComposedSprite: Sendable {
         }
     }
 
-    public init(configuration: ComposedSprite.Configuration, resourceManager: ResourceManager) async {
+    public init(configuration: ComposedSprite.Configuration, resourceManager: ResourceManager) async throws {
         self.configuration = configuration
         self.resourceManager = resourceManager
 
         let composer = ComposedSprite.Composer(configuration: configuration, resourceManager: resourceManager)
 
-        var imf: IMF?
-
         if configuration.job.isPlayer {
-            parts = await composer.composePlayerSprite()
+            parts = try await composer.composePlayerSprite()
 
             let scriptContext = await resourceManager.scriptContext(for: .current)
             let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
 
             if let imfPath = pathGenerator.generateIMFPath(job: configuration.job, gender: configuration.gender) {
-                do {
-                    let imfPath = imfPath.appendingPathExtension("imf")
-                    let imfData = try await resourceManager.contentsOfResource(at: imfPath)
-                    imf = try IMF(data: imfData)
-                } catch {
-                    logger.warning("IMF error: \(error)")
-                }
+                let imfPath = imfPath.appendingPathExtension("imf")
+                let imfData = try await resourceManager.contentsOfResource(at: imfPath)
+                imf = try IMF(data: imfData)
+            } else {
+                imf = nil
             }
         } else {
-            parts = await composer.composeNonPlayerSprite()
-        }
+            parts = try await composer.composeNonPlayerSprite()
 
-        self.imf = imf
+            imf = nil
+        }
     }
 }
 

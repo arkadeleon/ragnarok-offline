@@ -138,7 +138,7 @@ public class MapScene {
 
         do {
             let configuration = ComposedSprite.Configuration(mapObject: player)
-            let composedSprite = await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
+            let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
 
             let animations = try await SpriteAnimation.animations(for: composedSprite)
             let spriteComponent = SpriteComponent(animations: animations)
