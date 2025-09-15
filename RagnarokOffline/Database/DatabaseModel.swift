@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ROConstants
+import Constants
 import RODatabase
 import rAthenaResources
 

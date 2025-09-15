@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ROConstants
+import Constants
 
 final public class MessageStringTable: Resource {
     let messageStringsByID: [Int : String]

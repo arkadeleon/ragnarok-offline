@@ -8,7 +8,7 @@
 import Metal
 import MetalKit
 import RealityKit
-import ROConstants
+import Constants
 import ROCore
 import ROFileFormats
 

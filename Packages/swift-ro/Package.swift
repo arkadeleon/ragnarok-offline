@@ -45,6 +45,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../BinaryIO"),
+        .package(path: "../Constants"),
         .package(path: "../GRF"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
         .package(url: "https://github.com/arkadeleon/swift-gzip.git", branch: "main"),
@@ -53,14 +54,12 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "ROConstants"),
-        .target(
             name: "ROCore"),
         .target(
             name: "RODatabase",
             dependencies: [
                 "BinaryIO",
-                "ROConstants",
+                "Constants",
                 "ROCore",
                 .product(name: "SwiftGzip", package: "swift-gzip"),
                 .product(name: "RapidYAML", package: "swift-rapidyaml"),
@@ -84,7 +83,7 @@ let package = Package(
         .target(
             name: "ROGame",
             dependencies: [
-                "ROConstants",
+                "Constants",
                 "ROCore",
                 "ROFileFormats",
                 "RONetwork",
@@ -96,7 +95,7 @@ let package = Package(
             name: "RONetwork",
             dependencies: [
                 "BinaryIO",
-                "ROConstants",
+                "Constants",
                 "ROPackets",
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
             ]),
@@ -125,7 +124,7 @@ let package = Package(
         .target(
             name: "RORendering",
             dependencies: [
-                "ROConstants",
+                "Constants",
                 "ROCore",
                 "ROFileFormats",
                 "ROResources",
@@ -138,8 +137,8 @@ let package = Package(
         .target(
             name: "ROResources",
             dependencies: [
+                "Constants",
                 "GRF",
-                "ROConstants",
                 "ROCore",
                 .product(name: "Lua", package: "swift-lua"),
             ],
@@ -149,7 +148,7 @@ let package = Package(
         .testTarget(
             name: "ROResourcesTests",
             dependencies: [
-                "ROConstants",
+                "Constants",
                 "ROResources",
             ]),
         .target(

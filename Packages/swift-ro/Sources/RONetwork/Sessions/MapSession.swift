@@ -8,7 +8,7 @@
 import AsyncAlgorithms
 import Combine
 import Foundation
-import ROConstants
+import Constants
 import ROPackets
 
 final public class MapSession: SessionProtocol, @unchecked Sendable {

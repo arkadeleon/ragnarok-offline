@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/6/30.
 //
 
-import ROConstants
+import Constants
 import ROPackets
 
 public struct UnequippedItem: Sendable {

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/12/18.
 //
 
-import ROConstants
+import Constants
 import ROPackets
 
 extension MapSession {

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/9/25.
 //
 
-import ROConstants
+import Constants
 
 public enum MapObjectEvents {
     public struct Spawned: Event {

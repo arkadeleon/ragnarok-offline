@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/1/16.
 //
 
-import ROConstants
+import Constants
 
 public struct SkillTree: Decodable, Equatable, Hashable, Sendable {
 

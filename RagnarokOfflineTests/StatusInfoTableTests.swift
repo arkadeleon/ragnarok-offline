@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import ROConstants
+import Constants
 @testable import ROResources
 
 final class StatusInfoTableTests: XCTestCase {
