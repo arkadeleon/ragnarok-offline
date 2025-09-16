@@ -7,7 +7,7 @@
 
 import CoreGraphics
 import FileFormats
-import RORendering
+import SpriteRendering
 
 struct AnimatedImage: Hashable, Sendable {
     var frames: [CGImage?]

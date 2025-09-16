@@ -7,7 +7,7 @@
 
 import Constants
 import Observation
-import RORendering
+import SpriteRendering
 
 @MainActor
 @Observable

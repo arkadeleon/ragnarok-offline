@@ -10,8 +10,8 @@ import CoreGraphics
 import Observation
 import rAthenaCommon
 import RODatabase
-import RORendering
 import ResourceManagement
+import SpriteRendering
 
 @Observable
 @dynamicMemberLookup

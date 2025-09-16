@@ -1,0 +1,33 @@
+{
+  "originHash" : "d00c1393ade3561ed007cb73a22bcfde190f5245ada88d216376b5bf168845c4",
+  "pins" : [
+    {
+      "identity" : "czlib",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Kitura/CZlib.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "e0fcc798170767e687088ce3441d4c04ea573aab"
+      }
+    },
+    {
+      "identity" : "swift-gzip",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/arkadeleon/swift-gzip.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "601e0da4678ce52ad2aa93a3ca9156bf185252cb"
+      }
+    },
+    {
+      "identity" : "swift-lua",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/arkadeleon/swift-lua.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "06ee34fc258592f582e8a8fe4562ec2801023efc"
+      }
+    }
+  ],
+  "version" : 3
+}

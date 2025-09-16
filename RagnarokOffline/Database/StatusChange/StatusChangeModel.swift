@@ -9,7 +9,7 @@ import Constants
 import CoreGraphics
 import Observation
 import RODatabase
-import RORendering
+import ROGame
 import ResourceManagement
 
 @Observable

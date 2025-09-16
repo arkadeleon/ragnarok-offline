@@ -7,7 +7,7 @@
 
 import Foundation
 import RealityKit
-import RORendering
+import SpriteRendering
 
 class SpriteEntity: Entity {
     static let pivot: SIMD3<Float> = [0.5, 2, 0]

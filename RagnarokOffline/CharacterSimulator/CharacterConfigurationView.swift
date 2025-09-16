@@ -6,7 +6,7 @@
 //
 
 import Constants
-import RORendering
+import SpriteRendering
 import SwiftUI
 
 struct CharacterConfigurationView: View {

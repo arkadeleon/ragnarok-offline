@@ -8,7 +8,7 @@
 import XCTest
 import ResourceManagement
 import TextEncoding
-@testable import RORendering
+@testable import SpriteRendering
 
 final class SpriteResourceTests: XCTestCase {
     let resourceManager = ResourceManager(localURL: Bundle.main.resourceURL!)

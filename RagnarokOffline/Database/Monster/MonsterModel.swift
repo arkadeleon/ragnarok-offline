@@ -9,8 +9,8 @@ import CoreGraphics
 import Foundation
 import Observation
 import RODatabase
-import RORendering
 import ResourceManagement
+import SpriteRendering
 
 @Observable
 @dynamicMemberLookup

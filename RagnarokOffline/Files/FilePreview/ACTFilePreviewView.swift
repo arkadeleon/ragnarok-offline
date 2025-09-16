@@ -6,7 +6,7 @@
 //
 
 import FileFormats
-import RORendering
+import SpriteRendering
 import SwiftUI
 
 struct ACTFilePreviewView: View {

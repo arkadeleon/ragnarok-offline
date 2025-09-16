@@ -7,11 +7,11 @@
 
 import AVFAudio
 import NetworkClient
-import RORendering
 import RealityKit
 import ResourceManagement
 import SGLMath
 import Spatial
+import SpriteRendering
 import SwiftUI
 
 @MainActor

@@ -7,8 +7,7 @@
 
 import XCTest
 import ResourceManagement
-@testable import RagnarokOffline
-@testable import RORendering
+@testable import SpriteRendering
 
 final class SpriteRendererTests: XCTestCase {
     func testSpriteRenderer() async throws {

@@ -6,9 +6,9 @@
 //
 
 import NetworkClient
-import RORendering
 import RealityKit
 import ResourceManagement
+import SpriteRendering
 
 @MainActor
 final class SpriteEntityManager {

@@ -8,9 +8,9 @@
 import CoreGraphics
 import Foundation
 import ImageRendering
-import RORendering
 import RealityKit
 import ResourceManagement
+import SpriteRendering
 
 final class SpriteAnimation: Sendable {
     let texture: TextureResource?

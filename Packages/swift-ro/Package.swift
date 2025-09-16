@@ -18,9 +18,6 @@ let package = Package(
         .library(
             name: "ROGame",
             targets: ["ROGame"]),
-        .library(
-            name: "RORendering",
-            targets: ["RORendering"]),
     ],
     dependencies: [
         .package(path: "../BinaryIO"),
@@ -32,6 +29,7 @@ let package = Package(
         .package(path: "../PerformanceMetric"),
         .package(path: "../ResourceManagement"),
         .package(path: "../SGLMath"),
+        .package(path: "../SpriteRendering"),
         .package(path: "../TextEncoding"),
         .package(url: "https://github.com/arkadeleon/swift-gzip.git", branch: "main"),
         .package(url: "https://github.com/arkadeleon/swift-rapidyaml.git", branch: "master"),
@@ -60,23 +58,10 @@ let package = Package(
                 "MetalRenderers",
                 "NetworkClient",
                 "PerformanceMetric",
-                "RORendering",
+                "SpriteRendering",
                 "ResourceManagement",
                 "SGLMath",
                 "TextEncoding",
-            ]),
-        .target(
-            name: "RORendering",
-            dependencies: [
-                "Constants",
-                "FileFormats",
-                "ResourceManagement",
-                "TextEncoding",
-            ]),
-        .testTarget(
-            name: "RORenderingTests",
-            dependencies: [
-                "RORendering",
             ]),
     ]
 )

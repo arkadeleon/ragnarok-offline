@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/9/9.
 //
 
-import RORendering
+import ROGame
 import ResourceManagement
 import SwiftUI
 
