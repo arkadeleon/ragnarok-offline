@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/6/14.
 //
 
-import Foundation
 import Constants
+import Foundation
 
 final public class MessageStringTable: Resource {
     let messageStringsByID: [Int : String]

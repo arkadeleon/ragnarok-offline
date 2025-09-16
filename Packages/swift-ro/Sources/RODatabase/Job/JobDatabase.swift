@@ -5,9 +5,9 @@
 //  Created by Leon Li on 2024/3/11.
 //
 
+import Constants
 import Foundation
 import RapidYAML
-import Constants
 
 public actor JobDatabase {
     public let sourceURL: URL

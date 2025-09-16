@@ -6,8 +6,8 @@
 //
 
 import Constants
-import RONetwork
-import ROPackets
+import NetworkClient
+import NetworkPackets
 import SwiftUI
 
 struct BasicInfoView: View {

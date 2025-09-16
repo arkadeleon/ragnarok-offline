@@ -6,9 +6,9 @@
 //
 
 import Combine
+import NetworkClient
+import NetworkPackets
 import Observation
-import RONetwork
-import ROPackets
 import ROResources
 
 @MainActor

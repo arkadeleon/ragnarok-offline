@@ -6,8 +6,8 @@
 //
 
 import Constants
+import NetworkClient
 import ROGame
-import RONetwork
 import SwiftUI
 
 struct StatusView: View {

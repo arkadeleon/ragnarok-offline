@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/7/8.
 //
 
-import RONetwork
+import NetworkClient
 
 @MainActor
 protocol MapEventHandlerProtocol {

@@ -5,9 +5,9 @@
 //  Created by Leon Li on 2024/5/10.
 //
 
+import Constants
 import Foundation
 import RapidYAML
-import Constants
 
 public actor StatusChangeDatabase {
     public let sourceURL: URL

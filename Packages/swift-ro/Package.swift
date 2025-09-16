@@ -19,12 +19,6 @@ let package = Package(
             name: "ROGame",
             targets: ["ROGame"]),
         .library(
-            name: "RONetwork",
-            targets: ["RONetwork"]),
-        .library(
-            name: "ROPackets",
-            targets: ["ROPackets"]),
-        .library(
             name: "RORenderers",
             targets: ["RORenderers"]),
         .library(
@@ -43,10 +37,10 @@ let package = Package(
         .package(path: "../FileFormats"),
         .package(path: "../GRF"),
         .package(path: "../ImageRendering"),
+        .package(path: "../NetworkClient"),
         .package(path: "../PerformanceMetric"),
         .package(path: "../SGLMath"),
         .package(path: "../TextEncoding"),
-        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
         .package(url: "https://github.com/arkadeleon/swift-gzip.git", branch: "main"),
         .package(url: "https://github.com/arkadeleon/swift-lua.git", branch: "master"),
         .package(url: "https://github.com/arkadeleon/swift-rapidyaml.git", branch: "master"),
@@ -72,36 +66,13 @@ let package = Package(
                 "Constants",
                 "FileFormats",
                 "ImageRendering",
+                "NetworkClient",
                 "PerformanceMetric",
-                "RONetwork",
                 "RORenderers",
                 "RORendering",
                 "ROResources",
                 "SGLMath",
                 "TextEncoding",
-            ]),
-        .target(
-            name: "RONetwork",
-            dependencies: [
-                "BinaryIO",
-                "Constants",
-                "ROPackets",
-                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
-            ]),
-        .testTarget(
-            name: "RONetworkTests",
-            dependencies: [
-                "RONetwork",
-            ]),
-        .target(
-            name: "ROPackets",
-            dependencies: [
-                "BinaryIO",
-            ]),
-        .testTarget(
-            name: "ROPacketsTests",
-            dependencies: [
-                "ROPackets",
             ]),
         .target(
             name: "RORenderers",

@@ -6,10 +6,10 @@
 //
 
 import Combine
-import Observation
 import Constants
-import RONetwork
-import ROPackets
+import Observation
+import NetworkClient
+import NetworkPackets
 import RORendering
 import ROResources
 

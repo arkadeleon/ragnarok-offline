@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/3/18.
 //
 
+import NetworkClient
 import RealityKit
-import RONetwork
 import RORendering
 import ROResources
 

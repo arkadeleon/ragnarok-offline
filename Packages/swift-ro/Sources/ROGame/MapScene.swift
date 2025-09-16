@@ -6,8 +6,8 @@
 //
 
 import AVFAudio
+import NetworkClient
 import RealityKit
-import RONetwork
 import RORendering
 import ROResources
 import SGLMath

@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/4/2.
 //
 
+import NetworkClient
 import RealityKit
-import RONetwork
 
 struct MapObjectComponent: Component {
     var mapObject: MapObject

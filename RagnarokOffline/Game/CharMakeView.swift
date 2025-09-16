@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/9/10.
 //
 
+import NetworkPackets
 import ROGame
-import ROPackets
 import SwiftUI
 
 struct CharMakeView: View {
