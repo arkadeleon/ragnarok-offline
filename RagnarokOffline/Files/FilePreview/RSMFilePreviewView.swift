@@ -6,7 +6,6 @@
 //
 
 import RealityKit
-import ROCore
 import ROFileFormats
 import RORenderers
 import SwiftUI

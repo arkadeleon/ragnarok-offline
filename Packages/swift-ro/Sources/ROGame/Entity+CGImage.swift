@@ -5,11 +5,11 @@
 //  Created by Leon Li on 2024/12/24.
 //
 
+import Constants
+import ImageRendering
 import Metal
 import MetalKit
 import RealityKit
-import Constants
-import ROCore
 import ROFileFormats
 
 extension Entity {

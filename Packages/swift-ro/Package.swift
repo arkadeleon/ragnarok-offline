@@ -47,6 +47,7 @@ let package = Package(
         .package(path: "../BinaryIO"),
         .package(path: "../Constants"),
         .package(path: "../GRF"),
+        .package(path: "../ImageRendering"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
         .package(url: "https://github.com/arkadeleon/swift-gzip.git", branch: "main"),
         .package(url: "https://github.com/arkadeleon/swift-lua.git", branch: "master"),
@@ -73,6 +74,7 @@ let package = Package(
             name: "ROFileFormats",
             dependencies: [
                 "BinaryIO",
+                "ImageRendering",
                 "ROCore",
             ]),
         .testTarget(
@@ -84,6 +86,7 @@ let package = Package(
             name: "ROGame",
             dependencies: [
                 "Constants",
+                "ImageRendering",
                 "ROCore",
                 "ROFileFormats",
                 "RONetwork",
@@ -149,6 +152,7 @@ let package = Package(
             name: "ROResourcesTests",
             dependencies: [
                 "Constants",
+                "ImageRendering",
                 "ROResources",
             ]),
         .target(

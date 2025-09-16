@@ -8,7 +8,7 @@
 import CoreGraphics
 import Foundation
 import GRF
-import ROCore
+import ImageRendering
 import Synchronization
 
 public protocol Resource: Sendable {

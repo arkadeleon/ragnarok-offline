@@ -6,6 +6,7 @@
 //
 
 import CoreGraphics
+import ImageRendering
 import RealityKit
 import ROCore
 import ROFileFormats

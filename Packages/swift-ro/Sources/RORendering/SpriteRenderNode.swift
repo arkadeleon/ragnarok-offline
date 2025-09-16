@@ -6,7 +6,6 @@
 //
 
 import CoreGraphics
-import ROCore
 import ROFileFormats
 
 struct SpriteRenderNode {

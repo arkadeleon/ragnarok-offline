@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2024/10/16.
 //
 
-import ROCore
 import ROFileFormats
 
 extension RGBAColor {

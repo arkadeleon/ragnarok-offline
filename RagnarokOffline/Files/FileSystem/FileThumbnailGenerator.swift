@@ -7,7 +7,6 @@
 
 import Foundation
 import ImageIO
-import ROCore
 import ROFileFormats
 import SwiftGzip
 

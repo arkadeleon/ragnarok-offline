@@ -7,8 +7,8 @@
 
 import CoreGraphics
 import Foundation
+import ImageRendering
 import RealityKit
-import ROCore
 import RORendering
 import ROResources
 

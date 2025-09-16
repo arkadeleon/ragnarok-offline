@@ -7,7 +7,7 @@
 
 import CoreGraphics
 import Foundation
-import ROCore
+import ImageRendering
 import ROResources
 
 final public class SpriteRenderer: Sendable {

@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2024/4/25.
 //
 
-import ROCore
 import ROFileFormats
 import SwiftUI
 

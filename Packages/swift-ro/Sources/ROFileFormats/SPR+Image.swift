@@ -7,7 +7,7 @@
 
 import CoreGraphics
 import Foundation
-import ROCore
+import ImageRendering
 
 extension SPR {
     public func imagesBySpriteType(palette: PAL? = nil) -> [SPR.SpriteType : [CGImage?]] {
