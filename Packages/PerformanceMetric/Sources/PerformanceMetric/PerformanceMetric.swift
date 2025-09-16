@@ -6,12 +6,11 @@
 //
 
 import OSLog
-import Synchronization
 
 final public class PerformanceMetric: Sendable {
     let logger: Logger
 
-    private let records = Mutex<[String : Double]>([:])
+    private let records = OSAllocatedUnfairLock(initialState: [String : Double]())
 
     public init(logger: Logger) {
         self.logger = logger
@@ -28,10 +27,12 @@ final public class PerformanceMetric: Sendable {
 
     public func endMeasuring(_ name: String) {
         #if DEBUG
-        records.withLock {
-            guard let beginTime = $0[name] else {
-                return
-            }
+        let beginTime = records.withLock {
+            let beginTime = $0[name]
+            return beginTime
+        }
+
+        if let beginTime {
             let endTime = CFAbsoluteTimeGetCurrent()
             logger.info("\(name) (\(endTime - beginTime)s)")
         }
@@ -40,15 +41,17 @@ final public class PerformanceMetric: Sendable {
 
     public func endMeasuring(_ name: String, _ error: any Error) {
         #if DEBUG
-        records.withLock {
-            guard let beginTime = $0[name] else {
-                return
-            }
+        let beginTime = records.withLock {
+            let beginTime = $0[name]
+            return beginTime
+        }
+
+        if let beginTime {
             let endTime = CFAbsoluteTimeGetCurrent()
-            logger.warning("\(name) (\(endTime - beginTime)s) \(error.localizedDescription)")
+            logger.warning("\(name) (\(endTime - beginTime)s) \(error)")
         }
         #else
-        logger.warning("\(name) \(error.localizedDescription)")
+        logger.warning("\(name) \(error)")
         #endif
     }
 }
