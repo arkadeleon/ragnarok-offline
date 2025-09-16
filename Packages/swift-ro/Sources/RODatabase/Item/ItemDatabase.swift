@@ -7,7 +7,6 @@
 
 import Foundation
 import RapidYAML
-import ROCore
 
 public actor ItemDatabase {
     public let sourceURL: URL

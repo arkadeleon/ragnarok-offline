@@ -13,9 +13,6 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "ROCore",
-            targets: ["ROCore"]),
-        .library(
             name: "RODatabase",
             targets: ["RODatabase"]),
         .library(
@@ -49,6 +46,7 @@ let package = Package(
         .package(path: "../GRF"),
         .package(path: "../ImageRendering"),
         .package(path: "../PerformanceMetric"),
+        .package(path: "../SGLMath"),
         .package(path: "../TextEncoding"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
         .package(url: "https://github.com/arkadeleon/swift-gzip.git", branch: "main"),
@@ -56,8 +54,6 @@ let package = Package(
         .package(url: "https://github.com/arkadeleon/swift-rapidyaml.git", branch: "master"),
     ],
     targets: [
-        .target(
-            name: "ROCore"),
         .target(
             name: "RODatabase",
             dependencies: [
@@ -90,12 +86,12 @@ let package = Package(
                 "Constants",
                 "ImageRendering",
                 "PerformanceMetric",
-                "ROCore",
                 "ROFileFormats",
                 "RONetwork",
                 "RORenderers",
                 "RORendering",
                 "ROResources",
+                "SGLMath",
                 "TextEncoding",
             ]),
         .target(
@@ -124,9 +120,9 @@ let package = Package(
         .target(
             name: "RORenderers",
             dependencies: [
-                "ROCore",
                 "ROFileFormats",
                 "ROShaders",
+                "SGLMath",
             ]),
         .target(
             name: "RORendering",

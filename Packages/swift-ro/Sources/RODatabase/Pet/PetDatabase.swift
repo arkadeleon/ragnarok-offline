@@ -7,7 +7,6 @@
 
 import Foundation
 import RapidYAML
-import ROCore
 
 public actor PetDatabase {
     public let sourceURL: URL

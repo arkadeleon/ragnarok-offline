@@ -6,10 +6,10 @@
 //
 
 import RealityKit
-import ROCore
 import ROFileFormats
 import RORendering
 import ROResources
+import SGLMath
 import SwiftUI
 
 struct RSWFilePreviewView: View {

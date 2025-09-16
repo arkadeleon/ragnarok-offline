@@ -8,11 +8,11 @@
 import CoreGraphics
 import ImageRendering
 import RealityKit
-import ROCore
 import ROFileFormats
 import RORenderers
 import RORendering
 import ROResources
+import SGLMath
 import TextEncoding
 
 extension Entity {

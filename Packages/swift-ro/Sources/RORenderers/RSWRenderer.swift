@@ -6,8 +6,8 @@
 //
 
 import Metal
-import ROCore
 import ROShaders
+import SGLMath
 
 public class RSWRenderer: Renderer {
     public let device: any MTLDevice
