@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import ROCore
+import TextEncoding
 @testable import RORendering
 @testable import ROResources
 

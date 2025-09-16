@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/2/11.
 //
 
-import ROCore
+import TextEncoding
 
 func jobNameForIMF(_ jobID: Int) -> String? {
     jobNamesForIMF[jobID].flatMap(K2L)

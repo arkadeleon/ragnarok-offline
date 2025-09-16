@@ -6,8 +6,8 @@
 //
 
 import Constants
-import ROCore
 import ROResources
+import TextEncoding
 
 extension ResourcePathGenerator {
     func generateShadowSpritePath() -> ResourcePath {

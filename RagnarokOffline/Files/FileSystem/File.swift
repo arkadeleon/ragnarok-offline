@@ -8,8 +8,8 @@
 import Foundation
 import GRF
 import Observation
-import ROCore
 import ROResources
+import TextEncoding
 import UniformTypeIdentifiers
 
 enum FileError: Error {

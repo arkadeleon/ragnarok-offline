@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/5/8.
 //
 
-import ROCore
+import TextEncoding
 
 final public class ResourcePathGenerator: Sendable {
     package let scriptContext: ScriptContext

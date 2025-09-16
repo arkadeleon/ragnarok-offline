@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ROCore
+import TextEncoding
 
 @Observable
 final class FileSystem {

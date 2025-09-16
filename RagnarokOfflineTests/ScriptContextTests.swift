@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import ROCore
+import TextEncoding
 @testable import ROResources
 
 final class ScriptContextTests: XCTestCase {

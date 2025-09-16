@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ROCore
+import TextEncoding
 
 public func L2K(_ path: ResourcePath) -> ResourcePath {
     let components = path.components.map(L2K)

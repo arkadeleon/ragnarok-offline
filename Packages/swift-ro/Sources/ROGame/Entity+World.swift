@@ -13,6 +13,7 @@ import ROFileFormats
 import RORenderers
 import RORendering
 import ROResources
+import TextEncoding
 
 extension Entity {
     public static func worldEntity(world: WorldResource, resourceManager: ResourceManager) async throws -> Entity {

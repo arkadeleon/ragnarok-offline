@@ -7,8 +7,8 @@
 
 import Foundation
 import GRF
-import ROCore
 import ROResources
+import TextEncoding
 
 extension File {
     static func previewGRF() -> File {
