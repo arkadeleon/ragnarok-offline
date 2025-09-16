@@ -6,8 +6,8 @@
 //
 
 import Metal
+import MetalShaders
 import simd
-import ROShaders
 
 class WaterRenderer {
     let renderPipelineState: any MTLRenderPipelineState

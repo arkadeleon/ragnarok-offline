@@ -7,8 +7,8 @@
 
 import CoreGraphics
 import FileFormats
+import MetalRenderers
 import RealityKit
-import RORenderers
 import RORendering
 import ROResources
 

@@ -7,7 +7,7 @@
 
 import FileFormats
 import MetalKit
-import RORenderers
+import MetalRenderers
 import SwiftUI
 
 struct STRFilePreviewView: View {

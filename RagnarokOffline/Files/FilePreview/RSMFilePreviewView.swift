@@ -6,8 +6,8 @@
 //
 
 import FileFormats
+import MetalRenderers
 import RealityKit
-import RORenderers
 import SwiftUI
 
 struct RSMFilePreviewView: View {

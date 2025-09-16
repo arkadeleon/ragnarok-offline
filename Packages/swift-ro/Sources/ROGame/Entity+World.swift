@@ -8,8 +8,8 @@
 import CoreGraphics
 import FileFormats
 import ImageRendering
+import MetalRenderers
 import RealityKit
-import RORenderers
 import RORendering
 import ROResources
 import SGLMath

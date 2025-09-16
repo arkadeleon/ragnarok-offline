@@ -6,7 +6,7 @@
 //
 
 import MetalKit
-import RORenderers
+import MetalRenderers
 import SwiftUI
 
 #if os(iOS)

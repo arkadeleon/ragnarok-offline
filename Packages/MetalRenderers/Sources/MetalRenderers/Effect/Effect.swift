@@ -6,7 +6,7 @@
 //
 
 import FileFormats
-import ROShaders
+import MetalShaders
 
 public struct Effect {
     public var fps: Int

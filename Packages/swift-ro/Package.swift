@@ -19,17 +19,11 @@ let package = Package(
             name: "ROGame",
             targets: ["ROGame"]),
         .library(
-            name: "RORenderers",
-            targets: ["RORenderers"]),
-        .library(
             name: "RORendering",
             targets: ["RORendering"]),
         .library(
             name: "ROResources",
             targets: ["ROResources"]),
-        .library(
-            name: "ROShaders",
-            targets: ["ROShaders"]),
     ],
     dependencies: [
         .package(path: "../BinaryIO"),
@@ -37,6 +31,7 @@ let package = Package(
         .package(path: "../FileFormats"),
         .package(path: "../GRF"),
         .package(path: "../ImageRendering"),
+        .package(path: "../MetalRenderers"),
         .package(path: "../NetworkClient"),
         .package(path: "../PerformanceMetric"),
         .package(path: "../SGLMath"),
@@ -66,20 +61,13 @@ let package = Package(
                 "Constants",
                 "FileFormats",
                 "ImageRendering",
+                "MetalRenderers",
                 "NetworkClient",
                 "PerformanceMetric",
-                "RORenderers",
                 "RORendering",
                 "ROResources",
                 "SGLMath",
                 "TextEncoding",
-            ]),
-        .target(
-            name: "RORenderers",
-            dependencies: [
-                "FileFormats",
-                "ROShaders",
-                "SGLMath",
             ]),
         .target(
             name: "RORendering",
@@ -111,14 +99,6 @@ let package = Package(
                 "Constants",
                 "ImageRendering",
                 "ROResources",
-            ]),
-        .target(
-            name: "ROShaders",
-            resources: [
-                .process("Effect/EffectShaders.metal"),
-                .process("Ground/GroundShaders.metal"),
-                .process("Model/ModelShaders.metal"),
-                .process("Water/WaterShaders.metal"),
             ]),
     ]
 )
