@@ -48,6 +48,7 @@ let package = Package(
         .package(path: "../Constants"),
         .package(path: "../GRF"),
         .package(path: "../ImageRendering"),
+        .package(path: "../PerformanceMetric"),
         .package(path: "../TextEncoding"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
         .package(url: "https://github.com/arkadeleon/swift-gzip.git", branch: "main"),
@@ -62,7 +63,7 @@ let package = Package(
             dependencies: [
                 "BinaryIO",
                 "Constants",
-                "ROCore",
+                "PerformanceMetric",
                 .product(name: "SwiftGzip", package: "swift-gzip"),
                 .product(name: "RapidYAML", package: "swift-rapidyaml"),
             ]),
@@ -76,7 +77,7 @@ let package = Package(
             dependencies: [
                 "BinaryIO",
                 "ImageRendering",
-                "ROCore",
+                "PerformanceMetric",
             ]),
         .testTarget(
             name: "ROFileFormatsTests",
@@ -88,6 +89,7 @@ let package = Package(
             dependencies: [
                 "Constants",
                 "ImageRendering",
+                "PerformanceMetric",
                 "ROCore",
                 "ROFileFormats",
                 "RONetwork",

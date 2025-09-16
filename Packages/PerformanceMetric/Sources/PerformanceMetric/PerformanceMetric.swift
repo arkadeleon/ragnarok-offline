@@ -1,5 +1,5 @@
 //
-//  Metric.swift
+//  PerformanceMetric.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2025/3/21.
@@ -8,7 +8,7 @@
 import OSLog
 import Synchronization
 
-final public class Metric: Sendable {
+final public class PerformanceMetric: Sendable {
     let logger: Logger
 
     private let records = Mutex<[String : Double]>([:])

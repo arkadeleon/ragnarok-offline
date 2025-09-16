@@ -6,7 +6,7 @@
 //
 
 import OSLog
-import ROCore
+import PerformanceMetric
 
 let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "game")
-let metric = Metric(logger: logger)
+let metric = PerformanceMetric(logger: logger)
