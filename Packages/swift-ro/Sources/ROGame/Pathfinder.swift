@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/6/17.
 //
 
+import FileFormats
 import Foundation
-import ROFileFormats
 
 final class Pathfinder {
     let gat: GAT

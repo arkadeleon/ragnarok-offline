@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/10/15.
 //
 
+import FileFormats
 import Foundation
-import ROFileFormats
 
 extension File {
     var jsonRepresentable: Bool {

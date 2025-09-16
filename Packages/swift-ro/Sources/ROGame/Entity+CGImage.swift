@@ -6,11 +6,11 @@
 //
 
 import Constants
+import FileFormats
 import ImageRendering
 import Metal
 import MetalKit
 import RealityKit
-import ROFileFormats
 
 extension Entity {
     static func loadHP() async throws -> Entity {

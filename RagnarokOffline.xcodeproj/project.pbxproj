@@ -31,14 +31,13 @@
 		3558A3E22DFC28960038DFC3 /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3E12DFC28960038DFC3 /* rAthenaCommon */; };
 		357960AA2D356D26003D9CEF /* ROGame in Frameworks */ = {isa = PBXBuildFile; productRef = 357960A92D356D26003D9CEF /* ROGame */; };
 		3579DF942D637BFC00B8C98A /* RORendering in Frameworks */ = {isa = PBXBuildFile; productRef = 3579DF932D637BFC00B8C98A /* RORendering */; };
-		358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C662BC7707400FAF45D /* ROFileFormats */; };
 		358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6C2BC7707400FAF45D /* RONetwork */; };
 		358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */ = {isa = PBXBuildFile; productRef = 358D4C6E2BC7707400FAF45D /* RORenderers */; };
 		359915452E0EA35500D94655 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 359915442E0EA35500D94655 /* QuickLookThumbnailing.framework */; };
 		3599154C2E0EA35500D94655 /* RagnarokOfflineThumbnailExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 359915432E0EA35500D94655 /* RagnarokOfflineThumbnailExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		359915532E0ED4A600D94655 /* ROFileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 359915522E0ED4A600D94655 /* ROFileFormats */; };
 		35BA9BA92DACAAF0008C13E1 /* ROPackets in Frameworks */ = {isa = PBXBuildFile; productRef = 35BA9BA82DACAAF0008C13E1 /* ROPackets */; };
 		35C8AF082D31781C0033B3DB /* ROResources in Frameworks */ = {isa = PBXBuildFile; productRef = 35C8AF072D31781C0033B3DB /* ROResources */; };
+		35EDF07F2E79383F00569C38 /* FileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 35EDF07E2E79383F00569C38 /* FileFormats */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,8 +157,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				359915532E0ED4A600D94655 /* ROFileFormats in Frameworks */,
 				359915452E0EA35500D94655 /* QuickLookThumbnailing.framework in Frameworks */,
+				35EDF07F2E79383F00569C38 /* FileFormats in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,7 +169,6 @@
 				3558A3B52DFC22EA0038DFC3 /* rAthenaLogin in Frameworks */,
 				358D4C6D2BC7707400FAF45D /* RONetwork in Frameworks */,
 				35BA9BA92DACAAF0008C13E1 /* ROPackets in Frameworks */,
-				358D4C672BC7707400FAF45D /* ROFileFormats in Frameworks */,
 				3579DF942D637BFC00B8C98A /* RORendering in Frameworks */,
 				358D4C6F2BC7707400FAF45D /* RORenderers in Frameworks */,
 				353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */,
@@ -268,7 +266,7 @@
 			);
 			name = RagnarokOfflineThumbnailExtension;
 			packageProductDependencies = (
-				359915522E0ED4A600D94655 /* ROFileFormats */,
+				35EDF07E2E79383F00569C38 /* FileFormats */,
 			);
 			productName = RagnarokOfflineThumbnailExtension;
 			productReference = 359915432E0EA35500D94655 /* RagnarokOfflineThumbnailExtension.appex */;
@@ -295,7 +293,6 @@
 			);
 			name = RagnarokOffline;
 			packageProductDependencies = (
-				358D4C662BC7707400FAF45D /* ROFileFormats */,
 				358D4C6C2BC7707400FAF45D /* RONetwork */,
 				358D4C6E2BC7707400FAF45D /* RORenderers */,
 				353AFBDB2BC779BE00F613A8 /* RODatabase */,
@@ -911,10 +908,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = RORendering;
 		};
-		358D4C662BC7707400FAF45D /* ROFileFormats */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ROFileFormats;
-		};
 		358D4C6C2BC7707400FAF45D /* RONetwork */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RONetwork;
@@ -923,10 +916,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = RORenderers;
 		};
-		359915522E0ED4A600D94655 /* ROFileFormats */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ROFileFormats;
-		};
 		35BA9BA82DACAAF0008C13E1 /* ROPackets */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ROPackets;
@@ -934,6 +923,10 @@
 		35C8AF072D31781C0033B3DB /* ROResources */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ROResources;
+		};
+		35EDF07E2E79383F00569C38 /* FileFormats */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FileFormats;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -16,9 +16,6 @@ let package = Package(
             name: "RODatabase",
             targets: ["RODatabase"]),
         .library(
-            name: "ROFileFormats",
-            targets: ["ROFileFormats"]),
-        .library(
             name: "ROGame",
             targets: ["ROGame"]),
         .library(
@@ -43,6 +40,7 @@ let package = Package(
     dependencies: [
         .package(path: "../BinaryIO"),
         .package(path: "../Constants"),
+        .package(path: "../FileFormats"),
         .package(path: "../GRF"),
         .package(path: "../ImageRendering"),
         .package(path: "../PerformanceMetric"),
@@ -69,24 +67,12 @@ let package = Package(
                 "RODatabase",
             ]),
         .target(
-            name: "ROFileFormats",
-            dependencies: [
-                "BinaryIO",
-                "ImageRendering",
-                "PerformanceMetric",
-            ]),
-        .testTarget(
-            name: "ROFileFormatsTests",
-            dependencies: [
-                "ROFileFormats"
-            ]),
-        .target(
             name: "ROGame",
             dependencies: [
                 "Constants",
+                "FileFormats",
                 "ImageRendering",
                 "PerformanceMetric",
-                "ROFileFormats",
                 "RONetwork",
                 "RORenderers",
                 "RORendering",
@@ -120,7 +106,7 @@ let package = Package(
         .target(
             name: "RORenderers",
             dependencies: [
-                "ROFileFormats",
+                "FileFormats",
                 "ROShaders",
                 "SGLMath",
             ]),
@@ -128,7 +114,7 @@ let package = Package(
             name: "RORendering",
             dependencies: [
                 "Constants",
-                "ROFileFormats",
+                "FileFormats",
                 "ROResources",
                 "TextEncoding",
             ]),

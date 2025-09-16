@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/2/28.
 //
 
+import FileFormats
 import GRF
-import ROFileFormats
 
 extension File {
     var hasReferences: Bool {

@@ -6,8 +6,8 @@
 //
 
 import CoreGraphics
+import FileFormats
 import Foundation
-import ROFileFormats
 import ROResources
 
 final public class SpriteResource: @unchecked Sendable {

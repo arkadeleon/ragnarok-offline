@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import ROFileFormats
+@testable import FileFormats
 @testable import ROResources
 
 final class FileFormatTests: XCTestCase {

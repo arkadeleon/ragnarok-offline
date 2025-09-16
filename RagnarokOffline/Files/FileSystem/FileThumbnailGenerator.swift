@@ -5,9 +5,9 @@
 //  Created by Leon Li on 2023/4/23.
 //
 
+import FileFormats
 import Foundation
 import ImageIO
-import ROFileFormats
 import SwiftGzip
 
 final class FileThumbnailGenerator: Sendable {

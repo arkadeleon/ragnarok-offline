@@ -7,8 +7,8 @@
 
 import AVFoundation
 import BinaryIO
+import FileFormats
 import QuickLookThumbnailing
-import ROFileFormats
 
 enum ThumbnailProviderError: Error {
     case unsupportedFileFormat

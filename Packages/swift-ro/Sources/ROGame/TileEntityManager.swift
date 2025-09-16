@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/3/20.
 //
 
+import FileFormats
 import RealityKit
-import ROFileFormats
 
 @MainActor
 final class TileEntityManager {

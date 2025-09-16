@@ -6,7 +6,7 @@
 //
 
 import CoreGraphics
-import ROFileFormats
+import FileFormats
 import RORendering
 
 struct AnimatedImage: Hashable, Sendable {
