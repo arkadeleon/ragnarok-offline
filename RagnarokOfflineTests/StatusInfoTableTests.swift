@@ -7,7 +7,7 @@
 
 import XCTest
 import Constants
-@testable import ROResources
+@testable import ResourceManagement
 
 final class StatusInfoTableTests: XCTestCase {
     let resourceManager = ResourceManager.testing

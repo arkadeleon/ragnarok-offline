@@ -9,7 +9,7 @@ import Combine
 import NetworkClient
 import NetworkPackets
 import Observation
-import ROResources
+import ResourceManagement
 
 @MainActor
 @Observable

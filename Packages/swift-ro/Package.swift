@@ -21,23 +21,19 @@ let package = Package(
         .library(
             name: "RORendering",
             targets: ["RORendering"]),
-        .library(
-            name: "ROResources",
-            targets: ["ROResources"]),
     ],
     dependencies: [
         .package(path: "../BinaryIO"),
         .package(path: "../Constants"),
         .package(path: "../FileFormats"),
-        .package(path: "../GRF"),
         .package(path: "../ImageRendering"),
         .package(path: "../MetalRenderers"),
         .package(path: "../NetworkClient"),
         .package(path: "../PerformanceMetric"),
+        .package(path: "../ResourceManagement"),
         .package(path: "../SGLMath"),
         .package(path: "../TextEncoding"),
         .package(url: "https://github.com/arkadeleon/swift-gzip.git", branch: "main"),
-        .package(url: "https://github.com/arkadeleon/swift-lua.git", branch: "master"),
         .package(url: "https://github.com/arkadeleon/swift-rapidyaml.git", branch: "master"),
     ],
     targets: [
@@ -65,7 +61,7 @@ let package = Package(
                 "NetworkClient",
                 "PerformanceMetric",
                 "RORendering",
-                "ROResources",
+                "ResourceManagement",
                 "SGLMath",
                 "TextEncoding",
             ]),
@@ -74,31 +70,13 @@ let package = Package(
             dependencies: [
                 "Constants",
                 "FileFormats",
-                "ROResources",
+                "ResourceManagement",
                 "TextEncoding",
             ]),
         .testTarget(
             name: "RORenderingTests",
             dependencies: [
                 "RORendering",
-            ]),
-        .target(
-            name: "ROResources",
-            dependencies: [
-                "Constants",
-                "GRF",
-                "TextEncoding",
-                .product(name: "Lua", package: "swift-lua"),
-            ],
-            resources: [
-                .process("Resources"),
-            ]),
-        .testTarget(
-            name: "ROResourcesTests",
-            dependencies: [
-                "Constants",
-                "ImageRendering",
-                "ROResources",
             ]),
     ]
 )

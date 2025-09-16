@@ -6,7 +6,7 @@
 //
 
 import NetworkClient
-import ROResources
+import ResourceManagement
 import SwiftUI
 
 struct InventoryItemView<Actions>: View where Actions: View {

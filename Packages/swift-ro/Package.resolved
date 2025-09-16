@@ -1,5 +1,5 @@
 {
-  "originHash" : "286634423fc73314c3e2a194f49e712f659dc8f22e17bec8922eccfae04d46f2",
+  "originHash" : "399f43e8bb8cfa2b3d7734e74c06339119c1d79c782835d038f99a3c5c1ae8d1",
   "pins" : [
     {
       "identity" : "czlib",
@@ -43,7 +43,7 @@
       "location" : "https://github.com/arkadeleon/swift-lua.git",
       "state" : {
         "branch" : "master",
-        "revision" : "182567bbe2408383c49afebdb013d1a6e82ec5ff"
+        "revision" : "06ee34fc258592f582e8a8fe4562ec2801023efc"
       }
     },
     {

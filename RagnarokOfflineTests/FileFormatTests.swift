@@ -6,8 +6,8 @@
 //
 
 import XCTest
+import ResourceManagement
 @testable import FileFormats
-@testable import ROResources
 
 final class FileFormatTests: XCTestCase {
     let resourceManager = ResourceManager.testing

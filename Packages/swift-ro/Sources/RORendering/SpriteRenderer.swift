@@ -8,7 +8,7 @@
 import CoreGraphics
 import Foundation
 import ImageRendering
-import ROResources
+import ResourceManagement
 
 final public class SpriteRenderer: Sendable {
     public let scale: CGFloat

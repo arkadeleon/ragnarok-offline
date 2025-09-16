@@ -11,7 +11,7 @@ import Observation
 import NetworkClient
 import NetworkPackets
 import RORendering
-import ROResources
+import ResourceManagement
 
 @MainActor
 @Observable

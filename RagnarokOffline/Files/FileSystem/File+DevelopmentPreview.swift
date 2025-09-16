@@ -7,7 +7,7 @@
 
 import Foundation
 import GRF
-import ROResources
+import ResourceManagement
 import TextEncoding
 
 extension File {

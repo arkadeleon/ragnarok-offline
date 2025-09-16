@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ROResources
+import ResourceManagement
 
 extension ResourceManager {
     static let testing = ResourceManager(

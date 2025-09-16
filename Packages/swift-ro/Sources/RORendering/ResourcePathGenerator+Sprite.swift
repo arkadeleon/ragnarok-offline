@@ -6,7 +6,7 @@
 //
 
 import Constants
-import ROResources
+import ResourceManagement
 import TextEncoding
 
 extension ResourcePathGenerator {

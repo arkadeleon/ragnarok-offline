@@ -8,7 +8,7 @@
 import TextEncoding
 
 final public class ResourcePathGenerator: Sendable {
-    package let scriptContext: ScriptContext
+    public let scriptContext: ScriptContext
 
     public init(scriptContext: ScriptContext) {
         self.scriptContext = scriptContext

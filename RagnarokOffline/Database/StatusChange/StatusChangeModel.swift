@@ -10,7 +10,7 @@ import CoreGraphics
 import Observation
 import RODatabase
 import RORendering
-import ROResources
+import ResourceManagement
 
 @Observable
 @dynamicMemberLookup

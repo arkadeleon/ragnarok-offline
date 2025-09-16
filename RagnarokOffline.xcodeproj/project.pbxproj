@@ -33,7 +33,6 @@
 		3579DF942D637BFC00B8C98A /* RORendering in Frameworks */ = {isa = PBXBuildFile; productRef = 3579DF932D637BFC00B8C98A /* RORendering */; };
 		359915452E0EA35500D94655 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 359915442E0EA35500D94655 /* QuickLookThumbnailing.framework */; };
 		3599154C2E0EA35500D94655 /* RagnarokOfflineThumbnailExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 359915432E0EA35500D94655 /* RagnarokOfflineThumbnailExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		35C8AF082D31781C0033B3DB /* ROResources in Frameworks */ = {isa = PBXBuildFile; productRef = 35C8AF072D31781C0033B3DB /* ROResources */; };
 		35EDF07F2E79383F00569C38 /* FileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 35EDF07E2E79383F00569C38 /* FileFormats */; };
 /* End PBXBuildFile section */
 
@@ -170,7 +169,6 @@
 				3558A3B22DFC22EA0038DFC3 /* rAthenaChar in Frameworks */,
 				3558A3B82DFC22EA0038DFC3 /* rAthenaMap in Frameworks */,
 				3558A3BB2DFC22EA0038DFC3 /* rAthenaWeb in Frameworks */,
-				35C8AF082D31781C0033B3DB /* ROResources in Frameworks */,
 				3558A3AC2DFBECDB0038DFC3 /* rAthenaResources in Frameworks */,
 				357960AA2D356D26003D9CEF /* ROGame in Frameworks */,
 				353725ED2D83FDF2008590F6 /* Highlight in Frameworks */,
@@ -288,7 +286,6 @@
 			name = RagnarokOffline;
 			packageProductDependencies = (
 				353AFBDB2BC779BE00F613A8 /* RODatabase */,
-				35C8AF072D31781C0033B3DB /* ROResources */,
 				357960A92D356D26003D9CEF /* ROGame */,
 				3579DF932D637BFC00B8C98A /* RORendering */,
 				353725EC2D83FDF2008590F6 /* Highlight */,
@@ -898,10 +895,6 @@
 		3579DF932D637BFC00B8C98A /* RORendering */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RORendering;
-		};
-		35C8AF072D31781C0033B3DB /* ROResources */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ROResources;
 		};
 		35EDF07E2E79383F00569C38 /* FileFormats */ = {
 			isa = XCSwiftPackageProductDependency;

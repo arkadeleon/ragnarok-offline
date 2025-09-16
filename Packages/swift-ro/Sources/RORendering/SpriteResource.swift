@@ -8,7 +8,7 @@
 import CoreGraphics
 import FileFormats
 import Foundation
-import ROResources
+import ResourceManagement
 
 final public class SpriteResource: @unchecked Sendable {
     public let act: ACT

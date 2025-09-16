@@ -6,12 +6,12 @@
 //
 
 import XCTest
+import ResourceManagement
 import TextEncoding
 @testable import RORendering
-@testable import ROResources
 
 final class SpriteResourceTests: XCTestCase {
-    let resourceManager = ResourceManager(localURL: Bundle.module.resourceURL!)
+    let resourceManager = ResourceManager(localURL: Bundle.main.resourceURL!)
 
     func testSpriteResourcePath() async throws {
         let scriptContext = await resourceManager.scriptContext(for: .current)

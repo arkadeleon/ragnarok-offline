@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import ROResources
+@testable import ResourceManagement
 
 final class MonsterNameTableTests: XCTestCase {
     let resourceManager = ResourceManager(localURL: Bundle.module.resourceURL!)

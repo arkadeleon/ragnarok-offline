@@ -7,9 +7,9 @@
 
 import AVFAudio
 import NetworkClient
-import RealityKit
 import RORendering
-import ROResources
+import RealityKit
+import ResourceManagement
 import SGLMath
 import Spatial
 import SwiftUI

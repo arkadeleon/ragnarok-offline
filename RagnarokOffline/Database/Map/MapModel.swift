@@ -8,7 +8,7 @@
 import CoreGraphics
 import Observation
 import RODatabase
-import ROResources
+import ResourceManagement
 
 @Observable
 @dynamicMemberLookup

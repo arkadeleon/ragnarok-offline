@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import ROResources
+@testable import ResourceManagement
 
 final class MapNameTableTests: XCTestCase {
     let resourceManager = ResourceManager.testing

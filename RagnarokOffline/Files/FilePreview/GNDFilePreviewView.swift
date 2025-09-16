@@ -7,7 +7,7 @@
 
 import FileFormats
 import RealityKit
-import ROResources
+import ResourceManagement
 import SGLMath
 import SwiftUI
 

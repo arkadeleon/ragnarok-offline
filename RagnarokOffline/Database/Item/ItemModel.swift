@@ -10,7 +10,7 @@ import Foundation
 import Observation
 import RODatabase
 import RORendering
-import ROResources
+import ResourceManagement
 
 @Observable
 @dynamicMemberLookup

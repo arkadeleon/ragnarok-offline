@@ -6,7 +6,7 @@
 //
 
 import RORendering
-import ROResources
+import ResourceManagement
 import SwiftUI
 
 struct GameImage<Content>: View where Content: View {

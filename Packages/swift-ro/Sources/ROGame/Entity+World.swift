@@ -9,9 +9,9 @@ import CoreGraphics
 import FileFormats
 import ImageRendering
 import MetalRenderers
-import RealityKit
 import RORendering
-import ROResources
+import RealityKit
+import ResourceManagement
 import SGLMath
 import TextEncoding
 

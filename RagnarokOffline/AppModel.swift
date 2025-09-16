@@ -7,7 +7,7 @@
 
 import Observation
 import ROGame
-import ROResources
+import ResourceManagement
 import rAthenaLogin
 import rAthenaChar
 import rAthenaMap

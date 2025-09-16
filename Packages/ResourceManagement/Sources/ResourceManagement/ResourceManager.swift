@@ -5,10 +5,8 @@
 //  Created by Leon Li on 2025/2/14.
 //
 
-import CoreGraphics
 import Foundation
 import GRF
-import ImageRendering
 import Synchronization
 
 public protocol Resource: Sendable {
@@ -16,14 +14,11 @@ public protocol Resource: Sendable {
 
 enum ResourceError: LocalizedError {
     case resourceNotFound(ResourcePath)
-    case cannotCreateImage
 
     var errorDescription: String? {
         switch self {
         case .resourceNotFound(let path):
             String(localized: "Resource not found at \(path.components.joined(separator: "/"))")
-        case .cannotCreateImage:
-            String(localized: "Cannot create image")
         }
     }
 }
@@ -113,22 +108,5 @@ final public class ResourceManager: Sendable {
         }
 
         throw ResourceError.resourceNotFound(path)
-    }
-}
-
-extension ResourceManager {
-    public func image(at path: ResourcePath, removesMagentaPixels: Bool = false) async throws -> CGImage {
-        let data = try await contentsOfResource(at: path)
-
-        var image = CGImageCreateWithData(data)
-        if removesMagentaPixels {
-            image = image?.removingMagentaPixels()
-        }
-
-        if let image {
-            return image
-        } else {
-            throw ResourceError.cannotCreateImage
-        }
     }
 }

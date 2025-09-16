@@ -11,7 +11,7 @@ import Observation
 import rAthenaCommon
 import RODatabase
 import RORendering
-import ROResources
+import ResourceManagement
 
 @Observable
 @dynamicMemberLookup

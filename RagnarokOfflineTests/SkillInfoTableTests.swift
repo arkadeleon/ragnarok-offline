@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import ROResources
+@testable import ResourceManagement
 
 final class SkillInfoTableTests: XCTestCase {
     let resourceManager = ResourceManager.testing

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/5/12.
 //
 
-import ROResources
+import ResourceManagement
 
 extension ComposedSprite {
     final class Composer {

@@ -8,9 +8,9 @@
 import CoreGraphics
 import FileFormats
 import MetalRenderers
-import RealityKit
 import RORendering
-import ROResources
+import RealityKit
+import ResourceManagement
 
 extension Entity {
     public static func modelEntity(model: ModelResource, name: String, resourceManager: ResourceManager) async throws -> Entity {

@@ -6,7 +6,7 @@
 //
 
 import FileFormats
-import ROResources
+import ResourceManagement
 
 final public class ComposedSprite: Sendable {
     public let configuration: ComposedSprite.Configuration

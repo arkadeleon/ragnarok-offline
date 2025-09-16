@@ -8,7 +8,7 @@
 import Foundation
 import GRF
 import Observation
-import ROResources
+import ResourceManagement
 import TextEncoding
 import UniformTypeIdentifiers
 

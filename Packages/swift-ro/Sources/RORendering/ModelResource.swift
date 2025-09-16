@@ -6,7 +6,7 @@
 //
 
 import FileFormats
-import ROResources
+import ResourceManagement
 
 final public class ModelResource: Sendable {
     public let rsm: RSM
