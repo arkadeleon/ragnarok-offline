@@ -5,10 +5,10 @@
 //  Created by Leon Li on 2023/4/23.
 //
 
+import DataCompression
 import FileFormats
 import Foundation
 import ImageIO
-import SwiftGzip
 
 final class FileThumbnailGenerator: Sendable {
     func generateThumbnail(for request: FileThumbnailRequest) async throws -> FileThumbnail? {

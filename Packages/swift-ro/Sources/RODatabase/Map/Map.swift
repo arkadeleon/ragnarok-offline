@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/3/4.
 //
 
+import DataCompression
 import Foundation
-import SwiftGzip
 
 public struct Map: Equatable, Hashable, Sendable {
 

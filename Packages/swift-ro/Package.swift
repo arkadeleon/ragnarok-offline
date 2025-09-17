@@ -22,6 +22,7 @@ let package = Package(
     dependencies: [
         .package(path: "../BinaryIO"),
         .package(path: "../Constants"),
+        .package(path: "../DataCompression"),
         .package(path: "../FileFormats"),
         .package(path: "../ImageRendering"),
         .package(path: "../MetalRenderers"),
@@ -31,7 +32,6 @@ let package = Package(
         .package(path: "../SGLMath"),
         .package(path: "../SpriteRendering"),
         .package(path: "../WorldRendering"),
-        .package(url: "https://github.com/arkadeleon/swift-gzip.git", branch: "main"),
         .package(url: "https://github.com/arkadeleon/swift-rapidyaml.git", branch: "master"),
     ],
     targets: [
@@ -40,8 +40,8 @@ let package = Package(
             dependencies: [
                 "BinaryIO",
                 "Constants",
+                "DataCompression",
                 "PerformanceMetric",
-                .product(name: "SwiftGzip", package: "swift-gzip"),
                 .product(name: "RapidYAML", package: "swift-rapidyaml"),
             ]),
         .testTarget(
@@ -58,9 +58,9 @@ let package = Package(
                 "MetalRenderers",
                 "NetworkClient",
                 "PerformanceMetric",
-                "SpriteRendering",
                 "ResourceManagement",
                 "SGLMath",
+                "SpriteRendering",
                 "WorldRendering",
             ]),
     ]

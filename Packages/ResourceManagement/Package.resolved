@@ -1,24 +1,6 @@
 {
-  "originHash" : "6381a5da07b157f6a6326780fa238387838fd1867c7c99b0cf0fe8d1a8cdd903",
+  "originHash" : "2cd56bef73d85c9562a21152ef7febc875c6adeae9d42638fef2e9c84f807ef2",
   "pins" : [
-    {
-      "identity" : "czlib",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Kitura/CZlib.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "e0fcc798170767e687088ce3441d4c04ea573aab"
-      }
-    },
-    {
-      "identity" : "swift-gzip",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/arkadeleon/swift-gzip.git",
-      "state" : {
-        "branch" : "main",
-        "revision" : "601e0da4678ce52ad2aa93a3ca9156bf185252cb"
-      }
-    },
     {
       "identity" : "swift-lua",
       "kind" : "remoteSourceControl",
