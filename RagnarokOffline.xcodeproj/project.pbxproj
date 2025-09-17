@@ -120,8 +120,21 @@
 		35DCADA92E77D71000CA1988 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				BinaryIO,
+				Constants,
+				FileFormats,
+				GRF,
+				ImageRendering,
+				MetalRenderers,
+				NetworkClient,
+				PerformanceMetric,
+				ResourceManagement,
+				SGLMath,
+				SpriteRendering,
 				"swift-ro",
 				"swift-ro-tools",
+				TextEncoding,
+				WorldRendering,
 			);
 			target = 35B3B8D32A08BEA600B4540B /* RagnarokOffline */;
 		};
